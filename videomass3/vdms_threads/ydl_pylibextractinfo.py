@@ -26,11 +26,12 @@ This file is part of Videomass.
 """
 import os
 import sys
-from pubsub import pub
 from threading import Thread
 import wx
+from pubsub import pub
 if 'youtube_dl' in sys.modules:
     import youtube_dl
+
 
 
 class MyLogger(object):

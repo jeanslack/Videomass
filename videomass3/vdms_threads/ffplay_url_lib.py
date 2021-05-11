@@ -1,41 +1,41 @@
 # -*- coding: UTF-8 -*-
-# Name: ffplay_url_lib.py
-# Porpose: playback online media streams with ffplay player using
-#          youtube_dl embedding on code.
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: September.09.2020 *-pycodestyle- compatible*
-#########################################################
-# This file is part of Videomass.
+"""
+Name: ffplay_url_lib.py
+Porpose: playback online media streams with ffplay player using
+         youtube_dl embedding on code.
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.11.2021 *-pycodestyle- compatible*
+########################################################
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+This file is part of Videomass.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 import sys
 from threading import Thread
-import time
+import wx
 from pubsub import pub
 from videomass3.vdms_io import IO_tools
 if 'youtube_dl' in sys.modules:
     import youtube_dl
 
 
-def msg_Error(msg):
+def msg_error(msg):
     """
     Receive error messages via wxCallafter
     """
@@ -43,7 +43,7 @@ def msg_Error(msg):
 # ------------------------------------------------------------------------#
 
 
-def msg_Warning(msg):
+def msg_warning(msg):
     """
     Receive info messages via wxCallafter
     """
@@ -58,6 +58,7 @@ class MyLogger(object):
     <https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd31
     57df2457df7274d0c842421945#embedding-youtube-dl>
     """
+
     def debug(self, msg):
         # print('DEBUG: ', msg)
         if '[download]' in msg:  # ...in processing
@@ -75,11 +76,11 @@ class MyLogger(object):
 
     def warning(self, msg):
         """send warning messages to masg_"""
-        wx.CallAfter(msg_Warning, msg)
+        wx.CallAfter(msg_warning, msg)
 
     def error(self, msg):
         """send message errors"""
-        wx.CallAfter(msg_Error, msg)
+        wx.CallAfter(msg_error, msg)
 # -------------------------------------------------------------------------#
 
 
@@ -122,7 +123,7 @@ class Download_Stream(Thread):
 
         if (Download_Stream.OS == 'Windows' or '/tmp/.mount_' in sys.executable
             or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
-             sys.argv[0]))) + '/AppRun')):
+                sys.argv[0]))) + '/AppRun')):
 
             self.nocheckcertificate = True
 
@@ -142,19 +143,19 @@ class Download_Stream(Thread):
             return
 
         ydl_opts = {
-                'format': self.quality,
-                'outtmpl': '{}/{}'.format(self.outputdir, self.outtmpl),
-                'restrictfilenames': True,
-                'nopart': True,  # see --no-part by --help
-                'ignoreerrors': True,
-                'continue': True,
-                'no_warnings': False,
-                'noplaylist': True,
-                'no_color': True,
-                'nocheckcertificate': self.nocheckcertificate,
-                'ffmpeg_location': '{}'.format(Download_Stream.FFMPEG_URL),
-                'logger': MyLogger(),
-                    }
+            'format': self.quality,
+            'outtmpl': '{}/{}'.format(self.outputdir, self.outtmpl),
+            'restrictfilenames': True,
+            'nopart': True,  # see --no-part by --help
+            'ignoreerrors': True,
+            'continue': True,
+            'no_warnings': False,
+            'noplaylist': True,
+            'no_color': True,
+            'nocheckcertificate': self.nocheckcertificate,
+            'ffmpeg_location': '{}'.format(Download_Stream.FFMPEG_URL),
+            'logger': MyLogger(),
+        }
 
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download(["{}".format(self.url)])

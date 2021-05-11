@@ -1678,7 +1678,7 @@ class AV_Conv(wx.Panel):
         retcode = audiodialog.ShowModal()
 
         if retcode == wx.ID_OK:
-            data = audiodialog.GetValue()
+            data = audiodialog.getvalue()
             self.opt["AudioChannel"] = data[0]
             self.opt["AudioRate"] = data[1]
             self.opt["AudioBitrate"] = data[2]
@@ -2578,8 +2578,7 @@ class AV_Conv(wx.Panel):
                 defaultDir=os.path.join(AV_Conv.self.appdata['confdir'],
                                         'presets'),
                 wildcard="Videomass presets (*.prst;)|*.prst;",
-                style=wx.FD_OPEN |
-                wx.FD_FILE_MUST_EXIST) as fileDialog:
+                style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
 
             if fileDialog.ShowModal() == wx.ID_CANCEL:
                 return

@@ -25,16 +25,17 @@ This file is part of Videomass.
 """
 import os
 import sys
-import itertools
-import time
-from pubsub import pub
 from threading import Thread
+import time
+import itertools
 import wx
+from pubsub import pub
 if 'youtube_dl' in sys.modules:
     import youtube_dl
 
 
-def logWrite(cmd, sterr, logname, logdir):
+
+def logwrite(cmd, sterr, logname, logdir):
     """
     writes youtube-dl commands and status error during
     threads below
@@ -216,7 +217,7 @@ class Ydl_DL_Pylib(Thread):
                     'progress_hooks': [my_hook],
                         }
 
-            logWrite(ydl_opts,
+            logwrite(ydl_opts,
                      '',
                      self.logname,
                      Ydl_DL_Pylib.appdata['logdir'],

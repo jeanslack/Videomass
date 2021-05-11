@@ -24,19 +24,18 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import sys
-import itertools
+from threading import Thread
 import time
+import itertools
 import subprocess
 import platform
+import wx
+from pubsub import pub
 if not platform.system() == 'Windows':
     import shlex
-from pubsub import pub
-from threading import Thread
-import wx
 
 
-def logWrite(cmd, sterr, logname, logdir):
+def logwrite(cmd, sterr, logname, logdir):
     """
     writes youtube-dl commands and status error during
     threads below
@@ -154,7 +153,7 @@ class Ydl_DL_Exec(Thread):
                          fname=url,
                          end='',
                          )
-            logWrite(com,
+            logwrite(com,
                      '',
                      self.logname,
                      Ydl_DL_Exec.LOGDIR,
@@ -173,9 +172,9 @@ class Ydl_DL_Exec(Thread):
                                       stderr=subprocess.STDOUT,
                                       bufsize=1,
                                       universal_newlines=True,
-                                      startupinfo=info,) as p:
+                                      startupinfo=info,) as proc:
 
-                    for line in p.stdout:
+                    for line in proc.stdout:
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_YDL_EXECUTABLE_EVT",
                                      output=line,
@@ -183,20 +182,20 @@ class Ydl_DL_Exec(Thread):
                                      status=0,
                                      )
                         if self.stop_work_thread:  # break second 'for' loop
-                            p.terminate()
+                            proc.terminate()
                             break
 
-                    if p.wait():  # error
+                    if proc.wait():  # error
                         if 'line' not in locals():
                             line = Ydl_DL_Exec.LINE_MSG
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_YDL_EXECUTABLE_EVT",
                                      output=line,
                                      duration=100,
-                                     status=p.wait(),
+                                     status=proc.wait(),
                                      )
-                        logWrite('',
-                                 "Exit status: %s" % p.wait(),
+                        logwrite('',
+                                 "Exit status: %s" % proc.wait(),
                                  self.logname,
                                  Ydl_DL_Exec.LOGDIR,
                                  )  # append exit error number
@@ -220,7 +219,7 @@ class Ydl_DL_Exec(Thread):
                 break
 
             if self.stop_work_thread:  # break first 'for' loop
-                p.terminate()
+                proc.terminate()
                 break
 
         time.sleep(.5)
@@ -292,18 +291,18 @@ class Ydl_EI_Exec(Thread):
             info = subprocess.STARTUPINFO()
             info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         try:
-            p = subprocess.Popen(cmd,
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.STDOUT,
-                                 universal_newlines=True,
-                                 startupinfo=info,
+            proc = subprocess.Popen(cmd,
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.STDOUT,
+                                    universal_newlines=True,
+                                    startupinfo=info,
                                  )
-            out = p.communicate()
+            out = proc.communicate()
 
         except OSError as oserr:  # executable do not exist
             self.status = ('%s' % oserr, 'error')
         else:
-            if p.returncode:  # if returncode == 1
+            if proc.returncode:  # if returncode == 1
                 if (not out[0] and not out[1] and
                         platform.system() == 'Windows'):
                     self.status = Ydl_EI_Exec.LINE_MSG, 'error'

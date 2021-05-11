@@ -43,17 +43,22 @@ builtins.__dict__['_'] = wx.GetTranslation
 
 class Videomass(wx.App):
     """
-    bootstrap the wxPython system and initialize the underlying gui toolkit
-    and others requirements Before starting the Videomass main frame.
+    bootstrap the wxPython system and initialize the
+    underlying gui toolkit and others requirements Before
+    starting the Videomass main frame.
 
     """
 
     def __init__(self, redirect=True, filename=None):
         """
-        redirect=False will send print statements to a console window (in use)
-        redirect=True will be sent to a little textbox window.
-        filename=None Redirect sys.stdout and sys.stderr to a popup window.
-        filename='path/to/file.txt' Redirect sys.stdout and sys.stderr to file
+        - redirect=False will send print statements to a console
+          window (in use)
+        - redirect=True will be sent to a little textbox window.
+        - filename=None Redirect sys.stdout and sys.stderr
+          to a popup window.
+        - filename='path/to/file.txt' Redirect sys.stdout
+          and sys.stderr to file
+
         See main() function below to settings it.
 
         """
@@ -107,7 +112,7 @@ class Videomass(wx.App):
         ckydl = self.check_youtube_dl()
         ckffmpeg = self.check_ffmpeg()
         if ckydl is True or ckffmpeg is True:
-            self.wizard(self.iconset['videomass'] )
+            self.wizard(self.iconset['videomass'])
             return True
 
         if not os.path.exists(os.path.join(self.appset['cachedir'], 'tmp')):
@@ -127,7 +132,9 @@ class Videomass(wx.App):
 
     def check_youtube_dl(self):
         """
-        check youtube-dl
+        check youtube-dl based on operative
+        system and bultin package
+
         """
         if self.appset['ostype'] == 'Windows':
             execname = 'youtube-dl.exe'
@@ -159,7 +166,8 @@ class Videomass(wx.App):
 
     def check_ffmpeg(self):
         """
-        Get the FFmpeg's executables
+        Get the FFmpeg's executables. On Unix/Unix like systems
+        perform check for permissions.
         """
         for link in [self.appset['ffmpeg_bin'],
                      self.appset['ffprobe_bin'],
@@ -175,7 +183,7 @@ class Videomass(wx.App):
                     return True
 
         if not self.appset['ostype'] == 'Windows':
-            #  check for permissions when linked locally
+            # check for permissions when linked locally
             for link in [self.appset['ffmpeg_bin'],
                          self.appset['ffprobe_bin'],
                          self.appset['ffplay_bin']
@@ -195,8 +203,9 @@ class Videomass(wx.App):
 
     def wizard(self, wizardicon):
         """
-        Show a temporary dialog for setup during first start time
-        of the Videomass application.
+        Show an initial dialog to setup the application
+        during the first launch.
+
         """
         from videomass3.vdms_dialogs.wizard_dlg import Wizard
         main_frame = Wizard(wizardicon)

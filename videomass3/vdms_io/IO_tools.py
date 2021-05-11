@@ -139,7 +139,7 @@ def probeInfo(filename):
     metadata = FFProbe(get.appset['ffprobe_bin'], filename,
                        parse=False, writer='json')
 
-    if metadata.ERROR():  # first checks for errors:
+    if metadata.error_check():  # first checks for errors:
         err = metadata.error
         return (None, err)
 

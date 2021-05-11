@@ -24,19 +24,19 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import itertools
 import os
+from threading import Thread
+import time
+import itertools
 import subprocess
 import platform
+import wx
+from pubsub import pub
 if not platform.system() == 'Windows':
     import shlex
-import time
-from pubsub import pub
-from threading import Thread
-import wx
 
 
-def logWrite(cmd, sterr, logname, logdir):
+def logwrite(cmd, sterr, logname, logdir):
     """
     writes ffmpeg commands and status error during threads below
     """
@@ -100,7 +100,7 @@ class OnePass(Thread):
         self.time_seq = timeseq  # a time segment
 
         Thread.__init__(self)
-        """initialize"""
+
         self.start()  # start the thread (va in self.run())
 
     def run(self):
@@ -144,7 +144,7 @@ class OnePass(Thread):
                          fname=files,
                          end='',
                          )
-            logWrite(com,
+            logwrite(com,
                      '',
                      self.logname,
                      OnePass.appdata['logdir'],
@@ -161,8 +161,8 @@ class OnePass(Thread):
                                       stderr=subprocess.PIPE,
                                       bufsize=1,
                                       universal_newlines=True,
-                                      startupinfo=info,) as p:
-                    for line in p.stderr:
+                                      startupinfo=info,) as proc:
+                    for line in proc.stderr:
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
                                      output=line,
@@ -170,18 +170,18 @@ class OnePass(Thread):
                                      status=0,
                                      )
                         if self.stop_work_thread:
-                            p.terminate()
+                            proc.terminate()
                             break  # break second 'for' loop
 
-                    if p.wait():  # error
+                    if proc.wait():  # error
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
                                      output=line,
                                      duration=duration,
-                                     status=p.wait(),
+                                     status=proc.wait(),
                                      )
-                        logWrite('',
-                                 "Exit status: %s" % p.wait(),
+                        logwrite('',
+                                 "Exit status: %s" % proc.wait(),
                                  self.logname,
                                  OnePass.appdata['logdir'],
                                  )  # append exit error number
@@ -194,10 +194,10 @@ class OnePass(Thread):
                                      end='ok'
                                      )
             except (OSError, FileNotFoundError) as err:
-                e = "%s\n  %s" % (err, OnePass.NOT_EXIST_MSG)
+                excepterr = "%s\n  %s" % (err, OnePass.NOT_EXIST_MSG)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
-                             count=e,
+                             count=excepterr,
                              duration=0,
                              fname=files,
                              end='error',
@@ -205,7 +205,7 @@ class OnePass(Thread):
                 break
 
             if self.stop_work_thread:
-                p.terminate()
+                proc.terminate()
                 break  # break second 'for' loop
 
         time.sleep(.5)

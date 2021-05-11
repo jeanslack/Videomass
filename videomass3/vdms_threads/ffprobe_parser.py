@@ -1,36 +1,38 @@
 # -*- coding: UTF-8 -*-
-# Name: ffprobe_parser.py
-# Porpose: cross-platform parsing class for ffprobe
-# Compatibility: Python3, Python2
-# Platform: all platforms
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.06.2020 *-pycodestyle- compatible*
-#########################################################
+"""
+Name: ffprobe_parser.py
+Porpose: cross-platform parsing class for ffprobe
+Compatibility: Python3, Python2
+Platform: all platforms
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.11.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import subprocess
 import platform
 import re
+if not platform.system() == 'Windows':
+    import shlex
 
 
-class FFProbe(object):
+class FFProbe():
     """
     FFProbe wraps the ffprobe command and pulls the data into
     an object form:
@@ -51,7 +53,7 @@ class FFProbe(object):
         After referencing the above class, use a convenient way to handle
         possible exceptions, example:
 
-            if data.ERROR():
+            if data.error_check():
                 print ("Some Error:  %s" % (data.error))
                 return
             else:
@@ -85,7 +87,7 @@ class FFProbe(object):
             After referencing the above class, use a convenient way to handle
             possible exceptions, example:
 
-                if data.ERROR():
+                if data.error_check():
                     print ("Some Error:  %s" % (data.error))
                     return
 
@@ -112,7 +114,7 @@ class FFProbe(object):
             After referencing the above class, use a convenient way to handle
             possible exceptions, example:
 
-                if data.ERROR():
+                if data.error_check():
                     print ("Some Error:  %s" % (data.error))
                     return
 
@@ -150,6 +152,7 @@ class FFProbe(object):
         <https://github.com/simonh10/ffprobe/blob/master/ffprobe/ffprobe.py>
 
     """
+
     def __init__(self, FFPROBE_URL, filename, parse=True,
                  pretty=True, select=None, entries=None,
                  show_format=True, show_streams=True, writer=None):
@@ -212,7 +215,6 @@ class FFProbe(object):
                                                                 writer
                                                                 )
         if not platform.system() == 'Windows':
-            import shlex
             cmnd = shlex.split(cmnd)
             info = None
         else:
@@ -220,24 +222,23 @@ class FFProbe(object):
             info = subprocess.STARTUPINFO()
             info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         try:
-            p = subprocess.Popen(cmnd,
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE,
-                                 universal_newlines=True,
-                                 startupinfo=info,
-                                 )
-            output, error = p.communicate()
+            with subprocess.Popen(cmnd,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE,
+                                  universal_newlines=True,
+                                  startupinfo=info,
+                                  ) as proc:
+                output, error = proc.communicate()
+                if proc.returncode:
+                    self.error = error
+                if parse:
+                    self.parser(output)
+                else:
+                    self.writer = output
 
-        except (OSError, FileNotFoundError) as e:
-            self.error = e
+        except (OSError, FileNotFoundError) as err:
+            self.error = err
             return
-
-        if p.returncode:
-            self.error = error
-        if parse:
-            self.parser(output)
-        else:
-            self.writer = output
     # -------------------------------------------------------------#
 
     def parser(self, output):
@@ -247,25 +248,25 @@ class FFProbe(object):
         """
         probing = output.split('\n')  # create list with strings element
 
-        for s in probing:
-            if re.match('\\[STREAM\\]', s):
+        for streams in probing:
+            if re.match('\\[STREAM\\]', streams):
                 self.datalines = []
 
-            elif re.match('\\[\\/STREAM\\]', s):
+            elif re.match('\\[\\/STREAM\\]', streams):
                 self.mediastreams.append(self.datalines)
                 self.datalines = []
             else:
-                self.datalines.append(s)
+                self.datalines.append(streams)
 
-        for f in probing:
-            if re.match('\\[FORMAT\\]', f):
+        for fformat in probing:
+            if re.match('\\[FORMAT\\]', fformat):
                 self.datalines = []
 
-            elif re.match('\\[\\/FORMAT\\]', f):
+            elif re.match('\\[\\/FORMAT\\]', fformat):
                 self.mediaformat.append(self.datalines)
                 self.datalines = []
             else:
-                self.datalines.append(f)
+                self.datalines.append(fformat)
 
     # --------------------------------------------------------------#
 
@@ -312,6 +313,21 @@ class FFProbe(object):
         return self._format
     # --------------------------------------------------------------#
 
+    def get_title(self):  # TEST  must be tested
+        """
+        Get filename from format and return title
+        """
+        video_list = self.data_format()  # get video format for video title
+
+        for title in video_list[0]:
+            if 'filename=' in title:
+                vtitle = title.split('=')[1]
+                break
+            vtitle = 'Title unknown'
+
+        return vtitle
+    # --------------------------------------------------------------#
+
     def get_audio_codec_name(self):
         """
         Return title and list of possible audio codec name and
@@ -333,45 +349,39 @@ class FFProbe(object):
         if astream == []:
             # audio_lang.append('no audio stream')
             return None, None
-        else:
-            n = len(astream)
-            for a in range(n):
-                (key, value) = astream[a][0].strip().split('=')
-                for b in astream[a]:
-                    (key, value) = b.strip().split('=')
-                    if "codec_name" in key:
-                        acod = value
-                    if "stream_tags" in key:
-                        lang = value
-                    if "TAG:language" in key:
-                        lang = value
-                    if "index" in key:
-                        indx = value
-                    if key == "sample_rate":
-                        srate = value
-                    if key == "bits_per_sample":
-                        bits = value
-                    if key == "channel_layout":
-                        chan = value
-                    if key == "bit_rate":
-                        bitr = value
 
-                audio_lang.append("index: %s | codec: %s | language: %s "
-                                  "| sampe rate: %s | bit: %s | channels: %s "
-                                  "| bit rate: %s" % (indx, acod, lang,
-                                                      srate, bits, chan,
-                                                      bitr)
-                                  )
-        video_list = self.data_format()  # get video format for video title
+        count = len(astream)
+        for num in range(count):
+            (key, value) = astream[num][0].strip().split('=')
+            for aud in astream[num]:
+                (key, value) = aud.strip().split('=')
+                if "codec_name" in key:
+                    acod = value
+                if "stream_tags" in key:
+                    lang = value
+                if "TAG:language" in key:
+                    lang = value
+                if "index" in key:
+                    indx = value
+                if key == "sample_rate":
+                    srate = value
+                if key == "bits_per_sample":
+                    bits = value
+                if key == "channel_layout":
+                    chan = value
+                if key == "bit_rate":
+                    bitr = value
 
-        for t in video_list[0]:
-            if 'filename=' in t:
-                vtitle = t.split('=')[1]
-                break
-            else:
-                vtitle = 'Title unknown'
+            audio_lang.append("index: %s | codec: %s | language: %s "
+                              "| sampe rate: %s | bit: %s | channels: %s "
+                              "| bit rate: %s" % (indx, acod, lang,
+                                                  srate, bits, chan,
+                                                  bitr)
+                              )
+        # TEST  must be tested
+        title = self.get_title()
 
-        return audio_lang, vtitle
+        return audio_lang, title
     # ----------------------------------------------------------------#
 
     def custom_output(self):
@@ -394,11 +404,11 @@ class FFProbe(object):
         return self.writer
     # ----------------------------------------------------------------#
 
-    def ERROR(self):
+    def error_check(self):
         """
         check for errors on stderr of the ffprobe command. It also
         handles the IOError exception. You can use this interface
         before using all other methods of this class.
+
         """
-        if self.error:
-            return self.error
+        return self.error if self.error else None

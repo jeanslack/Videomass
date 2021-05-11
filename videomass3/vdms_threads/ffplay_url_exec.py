@@ -26,16 +26,15 @@ This file is part of Videomass.
 """
 import os
 import sys
-import platform
-import subprocess
-if not platform.system() == 'Windows':
-    import shlex
 from threading import Thread
-import time
-from pubsub import pub
+import subprocess
+import platform
 import wx
+from pubsub import pub
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_io.make_filelog import write_log  # write initial log
+if not platform.system() == 'Windows':
+    import shlex
 if 'youtube_dl' in sys.modules:
     import youtube_dl
 
@@ -45,7 +44,6 @@ def msg_error(msg, title="Videomass"):
     Receive error messages
     """
     wx.MessageBox("%s" % (msg), title, wx.ICON_ERROR)
-
 # ------------------------------------------------------------------------#
 
 
@@ -135,11 +133,10 @@ class Exec_Download_Stream(Thread):
 
         if Exec_Download_Stream.EXCEPTION:
             wx.CallAfter(msg_error, Exec_Download_Stream.EXCEPTION)
-            self.logError(Exec_Download_Stream.EXCEPTION)  # append log error
+            self.logerror(Exec_Download_Stream.EXCEPTION)  # append log error
             return
 
         Thread.__init__(self)
-        """initialize Thread class"""
     # ----------------------------------------------------------------------#
 
     def run(self):
@@ -157,7 +154,7 @@ class Exec_Download_Stream(Thread):
                               self.url,
                               Exec_Download_Stream.appdata['ffmpeg_bin'],
                               ))
-        self.logWrite(cmd)  # append log cmd
+        self.logwrite(cmd)  # append log cmd
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
             info = None
@@ -171,9 +168,9 @@ class Exec_Download_Stream(Thread):
                                   stderr=subprocess.STDOUT,
                                   bufsize=1,
                                   universal_newlines=True,
-                                  startupinfo=info,) as p:
+                                  startupinfo=info,) as proc:
 
-                for line in p.stdout:
+                for line in proc.stdout:
                     if not self.stop_work_thread:
                         if '[download]' in line:  # ...in processing
                             if 'Destination' in line:
@@ -185,24 +182,24 @@ class Exec_Download_Stream(Thread):
                                                 output=line.split()[1]
                                                 )
                     else:  # self.stop_work_thread:
-                        p.terminate()
+                        proc.terminate()
                         break
 
-                if p.wait():  # error at end process
+                if proc.wait():  # error at end process
                     if 'line' not in locals():
                         line = Exec_Download_Stream.LINE_MSG
                     if '[download]' in line:
                         return
                     wx.CallAfter(msg_error,
                                  line,
-                                 'Videomass: Error %s' % p.wait()
+                                 'Videomass: Error %s' % proc.wait()
                                  )
-                    self.logError(line)  # append log error
+                    self.logerror(line)  # append log error
                     return
 
         except OSError as err:
             wx.CallAfter(msg_error, err, 'Videomass: OSError')
-            self.logError(err)  # append log error
+            self.logerror(err)  # append log error
             return
     # --------------------------------------------------------------------#
 
@@ -213,7 +210,7 @@ class Exec_Download_Stream(Thread):
         self.stop_work_thread = True
     # ----------------------------------------------------------------#
 
-    def logWrite(self, cmd):
+    def logwrite(self, cmd):
         """
         write ffplay command log
         """
@@ -221,7 +218,7 @@ class Exec_Download_Stream(Thread):
             log.write("%s\n" % (cmd))
     # ----------------------------------------------------------------#
 
-    def logError(self, error):
+    def logerror(self, error):
         """
         write ffplay errors
         """
@@ -231,7 +228,7 @@ class Exec_Download_Stream(Thread):
 # ------------------------------------------------------------------------#
 
 
-class Exec_Streaming(object):
+class Exec_Streaming():
     """
     Handling Threads to download and playback media streams via
     youtube-dl and ffplay executables.
@@ -274,7 +271,6 @@ class Exec_Streaming(object):
         """
         if not Exec_Download_Stream.EXCEPTION:
             Exec_Streaming.DOWNLOAD.start()
-        return
 
 # --------- RECEIVER LISTENERS
 
@@ -288,8 +284,6 @@ def stop_download_listener(filename):
     Exec_Streaming.DOWNLOAD.stop()
     Exec_Streaming.DOWNLOAD.join()
 
-    return
-
 
 def start_palying_listener(output):
     """
@@ -299,4 +293,3 @@ def start_palying_listener(output):
     """
     IO_tools.stream_play(output, '', Exec_Streaming.TIMESTAMP,
                          Exec_Streaming.AUTOEXIT)
-    return

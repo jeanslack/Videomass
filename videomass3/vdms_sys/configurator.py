@@ -172,7 +172,8 @@ class DataSource():
 
     def get_fileconf(self):
         """
-        Get videomass configuration data from videomass.conf .
+        Get videomass configuration data from videomass.conf.
+        Returns a dict object.
 
         This method performs the following main steps:
 
@@ -263,9 +264,10 @@ class DataSource():
 
     def icons_set(self, icontheme):
         """
-        Determines icon assignment based on the configuration file and
-        returns a pathnames list of each icon (see `Set icon themes map:`,
-        on paragraph `6- GUI setup` by Videomass.conf)
+        Determines icons set assignment defined on the configuration
+        file (see `Set icon themes map:`, on paragraph `6- GUI setup`
+        by Videomass.conf).
+        Returns a icontheme dict object.
 
         """
         keys = ('videomass', 'A/V-Conv', 'startconv', 'fileproperties',

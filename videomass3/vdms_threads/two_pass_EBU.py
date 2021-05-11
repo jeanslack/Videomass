@@ -23,19 +23,19 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import itertools
 import os
+from threading import Thread
+import time
+import itertools
 import subprocess
 import platform
+import wx
+from pubsub import pub
 if not platform.system() == 'Windows':
     import shlex
-import time
-from pubsub import pub
-from threading import Thread
-import wx
 
 
-def logWrite(cmd, sterr, logname, logdir):
+def logwrite(cmd, sterr, logname, logdir):
     """
     writes ffmpeg commands and status error during threads below
     """
@@ -139,7 +139,7 @@ class Loudnorm(Thread):
                          fname=files,
                          end='',
                          )
-            logWrite(cmd,
+            logwrite(cmd,
                      '',
                      self.logname,
                      Loudnorm.appdata['logdir']
@@ -156,9 +156,9 @@ class Loudnorm(Thread):
                                       stderr=subprocess.PIPE,
                                       bufsize=1,
                                       universal_newlines=True,
-                                      startupinfo=info,) as p1:
+                                      startupinfo=info,) as proc1:
 
-                    for line in p1.stderr:
+                    for line in proc1.stderr:
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
                                      output=line,
@@ -166,22 +166,22 @@ class Loudnorm(Thread):
                                      status=0
                                      )
                         if self.stop_work_thread:  # break first 'for' loop
-                            p1.terminate()
+                            proc1.terminate()
                             break
 
                         for k in summary.keys():
                             if line.startswith(k):
                                 summary[k] = line.split(':')[1].split()[0]
 
-                    if p1.wait():  # will add '..failed' to txtctrl
+                    if proc1.wait():  # will add '..failed' to txtctrl
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
                                      output=line,
                                      duration=duration,
-                                     status=p1.wait(),
+                                     status=proc1.wait(),
                                      )
-                        logWrite('',
-                                 "Exit status: %s" % p1.wait(),
+                        logwrite('',
+                                 "Exit status: %s" % proc1.wait(),
                                  self.logname,
                                  Loudnorm.appdata['logdir'],
                                  )  # append exit error number
@@ -199,10 +199,10 @@ class Loudnorm(Thread):
                 break
 
             if self.stop_work_thread:  # break first 'for' loop
-                p1.terminate()
+                proc1.terminate()
                 break  # fermo il ciclo for, altrimenti passa avanti
 
-            if p1.wait() == 0:  # will add '..terminated' to txtctrl
+            if proc1.wait() == 0:  # will add '..terminated' to txtctrl
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count='',
@@ -247,7 +247,7 @@ class Loudnorm(Thread):
                          fname=files,
                          end='',
                          )
-            logWrite(cmd, '', self.logname, Loudnorm.appdata['logdir'])
+            logwrite(cmd, '', self.logname, Loudnorm.appdata['logdir'])
 
             if not Loudnorm.OS == 'Windows':
                 pass2 = shlex.split(pass2)
@@ -259,9 +259,9 @@ class Loudnorm(Thread):
                                   stderr=subprocess.PIPE,
                                   bufsize=1,
                                   universal_newlines=True,
-                                  startupinfo=info,) as p2:
+                                  startupinfo=info,) as proc2:
 
-                for line2 in p2.stderr:
+                for line2 in proc2.stderr:
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line2,
@@ -269,27 +269,27 @@ class Loudnorm(Thread):
                                  status=0,
                                  )
                     if self.stop_work_thread:  # break first 'for' loop
-                        p2.terminate()
+                        proc2.terminate()
                         break
 
-                if p2.wait():  # will add '..failed' to txtctrl
+                if proc2.wait():  # will add '..failed' to txtctrl
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line,
                                  duration=duration,
-                                 status=p2.wait(),
+                                 status=proc2.wait(),
                                  )
-                    logWrite('',
-                             "Exit status: %s" % p2.wait(),
+                    logwrite('',
+                             "Exit status: %s" % proc2.wait(),
                              self.logname,
                              Loudnorm.appdata['logdir'],
                              )  # append exit error number
 
             if self.stop_work_thread:  # break first 'for' loop
-                p2.terminate()
+                proc2.terminate()
                 break  # fermo il ciclo for, altrimenti passa avanti
 
-            if p2.wait() == 0:  # will add '..terminated' to txtctrl
+            if proc2.wait() == 0:  # will add '..terminated' to txtctrl
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count='',

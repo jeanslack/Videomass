@@ -24,17 +24,17 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+from threading import Thread
+import time
 import subprocess
 import platform
+import wx
+from pubsub import pub
 if not platform.system() == 'Windows':
     import shlex
-import time
-from pubsub import pub
-from threading import Thread
-import wx
 
 
-def logWrite(cmd, sterr, logname, logdir):
+def logwrite(cmd, sterr, logname, logdir):
     """
     writes ffmpeg commands and status error during threads below
     """
@@ -65,7 +65,7 @@ from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 """
 
 
-class Concat_Demuxer(Thread):
+class ConcatDemuxer(Thread):
     """
     This class represents a separate thread for running processes,
     which need to read the stdout/stderr in real time.
@@ -78,7 +78,7 @@ class Concat_Demuxer(Thread):
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ---------------------------------------------------------------
 
-    def __init__(self, varargs, duration, logname, timeseq):
+    def __init__(self, varargs, duration, logname):
         """
         Some attribute can be empty, this depend from conversion type.
 
@@ -132,7 +132,7 @@ class Concat_Demuxer(Thread):
                      fname=", ".join(self.filelist),
                      end='',
                      )
-        logWrite(com,
+        logwrite(com,
                  '',
                  self.logname,
                  Concat_Demuxer.appdata['logdir'],
@@ -149,8 +149,8 @@ class Concat_Demuxer(Thread):
                                   stderr=subprocess.PIPE,
                                   bufsize=1,
                                   universal_newlines=True,
-                                  startupinfo=info,) as p:
-                for line in p.stderr:
+                                  startupinfo=info,) as proc:
+                for line in proc.stderr:
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line,
@@ -158,18 +158,18 @@ class Concat_Demuxer(Thread):
                                  status=0,
                                  )
                     if self.stop_work_thread:
-                        p.terminate()
+                        proc.terminate()
                         break  # break second 'for' loop
 
-                if p.wait():  # error
+                if proc.wait():  # error
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line,
                                  duration=self.duration,
-                                 status=p.wait(),
+                                 status=proc.wait(),
                                  )
-                    logWrite('',
-                             "Exit status: %s" % p.wait(),
+                    logwrite('',
+                             "Exit status: %s" % proc.wait(),
                              self.logname,
                              Concat_Demuxer.appdata['logdir'],
                              )  # append exit error number
@@ -182,17 +182,17 @@ class Concat_Demuxer(Thread):
                                  end='ok'
                                  )
         except (OSError, FileNotFoundError) as err:
-            e = "%s\n  %s" % (err, Concat_Demuxer.NOT_EXIST_MSG)
+            excepterr = "%s\n  %s" % (err, Concat_Demuxer.NOT_EXIST_MSG)
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
-                         count=e,
+                         count=excepterr,
                          duration=0,
                          fname=", ".join(self.filelist),
                          end='error',
                          )
 
         if self.stop_work_thread:
-            p.terminate()
+            proc.terminate()
 
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")

@@ -33,7 +33,7 @@ class GuiTestCase(unittest.TestCase):
     def setUp(self):
         """Method called to prepare the test fixture"""
 
-        self.app = Videomass3.Videomass(redirect=False)
+        self.app = vdms3.Videomass(redirect=False)
 
     def tearDown(self):
         """

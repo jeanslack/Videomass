@@ -209,9 +209,9 @@ def detect_binaries(platform, executable, additionaldir=None):
     via which function, if not found try to find it on the
     optional `additionaldir` .
 
-        If both failed return ('not installed', None)
-        If found on the O.S. return (None, executable)
-        If found on the additionaldir return ('provided', executable).
+        If both failed, return ('not installed', None)
+        If found on the O.S., return (None, executable)
+        If found on the additionaldir, return ('provided', executable).
 
     platform = platform name get by `platform.system()`
     executable = name of executable without extension

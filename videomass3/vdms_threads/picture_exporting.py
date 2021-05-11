@@ -24,17 +24,17 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+from threading import Thread
+import time
 import subprocess
 import platform
+import wx
+from pubsub import pub
 if not platform.system() == 'Windows':
     import shlex
-import time
-from pubsub import pub
-from threading import Thread
-import wx
 
 
-def logWrite(cmd, sterr, logname, logdir):
+def logwrite(cmd, sterr, logname, logdir):
     """
     writes ffmpeg commands and status error during threads below
     """
@@ -115,7 +115,7 @@ class PicturesFromVideo(Thread):
                      fname=self.fname,
                      end='',
                      )
-        logWrite(com,
+        logwrite(com,
                  '',
                  self.logname,
                  PicturesFromVideo.appdata['logdir'],
@@ -132,8 +132,8 @@ class PicturesFromVideo(Thread):
                                   stderr=subprocess.PIPE,
                                   bufsize=1,
                                   universal_newlines=True,
-                                  startupinfo=info,) as p:
-                for line in p.stderr:
+                                  startupinfo=info,) as proc:
+                for line in proc.stderr:
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line,
@@ -141,18 +141,18 @@ class PicturesFromVideo(Thread):
                                  status=0,
                                  )
                     if self.stop_work_thread:  # break second 'for' loop
-                        p.terminate()
+                        proc.terminate()
                         break
 
-                if p.wait():  # error
+                if proc.wait():  # error
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line,
                                  duration=self.duration,
-                                 status=p.wait(),
+                                 status=proc.wait(),
                                  )
-                    logWrite('',
-                             "Exit status: %s" % p.wait(),
+                    logwrite('',
+                             "Exit status: %s" % proc.wait(),
                              self.logname,
                              PicturesFromVideo.appdata['logdir'],
                              )  # append exit error number

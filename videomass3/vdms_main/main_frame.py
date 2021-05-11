@@ -392,8 +392,9 @@ class MainFrame(wx.Frame):
                  _("Muxers and demuxers available for used FFmpeg."))
         ckformats = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSeparator()
-        ckcoders = ffmpegButton.Append(wx.ID_ANY, _("Encoders"), _("Shows "
-                                                                   "available encoders for FFmpeg"))
+        ckcoders = ffmpegButton.Append(wx.ID_ANY, _("Encoders"),
+                                       _("Shows available encoders for FFmpeg")
+                                       )
         dscrp = (_("Decoders"), _("Shows available decoders for FFmpeg"))
         ckdecoders = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffplayButton = wx.Menu()  # ffplay sub menu
@@ -760,10 +761,9 @@ class MainFrame(wx.Frame):
                                        'version', 'version.txt')
 
         if not os.path.isfile(presetsdir):
-            pcopy = copydir_recursively(
-                os.path.dirname(presetsrecovery),
-                os.path.dirname(os.path.dirname(presetsdir)))
-
+            copydir_recursively(os.path.dirname(presetsrecovery),
+                                os.path.dirname(os.path.dirname(presetsdir))
+                                )
         with open(presetsdir, "r", encoding='utf8') as vers:
             fread = vers.read().strip()
 
@@ -1018,11 +1018,11 @@ class MainFrame(wx.Frame):
         Open the log directory with file manager
 
         """
-        if not os.path.exists(MainFrame.LOGDIR):
+        if not os.path.exists(self.appdata['logdir']):
             wx.MessageBox(_("There are no logs to show."),
                           "Videomass", wx.ICON_INFORMATION, self)
             return
-        IO_tools.openpath(MainFrame.LOGDIR)
+        IO_tools.openpath(self.appdata['logdir'])
     # ------------------------------------------------------------------#
 
     def openConf(self, event):

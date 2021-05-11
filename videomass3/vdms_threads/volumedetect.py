@@ -23,14 +23,14 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-import wx
 import os
-from pubsub import pub
+from threading import Thread
 import subprocess
 import platform
+import wx
+from pubsub import pub
 if not platform.system() == 'Windows':
     import shlex
-from threading import Thread
 from videomass3.vdms_io.make_filelog import write_log  # write initial log
 
 
@@ -80,7 +80,8 @@ class VolumeDetectThread(Thread):
         the thread.data method (see IO_tools).
         NOTE: wx.callafter(pub...) do not send data to pop-up
               dialog, but a empty string that is useful to get
-              the end of the process to close of the pop-up.
+              the end of the process to close of the pop-up
+
         """
         volume = list()
 
@@ -91,7 +92,7 @@ class VolumeDetectThread(Thread):
                                                      files,
                                                      self.audiomap,
                                                      self.nul)
-            self.logWrite(cmd)
+            self.logwrite(cmd)
 
             if not platform.system() == 'Windows':
                 cmd = shlex.split(cmd)
@@ -100,20 +101,20 @@ class VolumeDetectThread(Thread):
                 info = subprocess.STARTUPINFO()
                 info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             try:
-                p = subprocess.Popen(cmd,
-                                     stdout=subprocess.PIPE,
-                                     stderr=subprocess.STDOUT,
-                                     universal_newlines=True,
-                                     startupinfo=info,
-                                     )
-                output = p.communicate()
+                proc = subprocess.Popen(cmd,
+                                        stdout=subprocess.PIPE,
+                                        stderr=subprocess.STDOUT,
+                                        universal_newlines=True,
+                                        startupinfo=info,
+                                        )
+                output = proc.communicate()
 
-            except (OSError, FileNotFoundError) as e:  # ffmpeg do not exist
-                self.status = e
+            except (OSError, FileNotFoundError) as err:  # ffmpeg do not exist
+                self.status = err
                 break
 
             else:
-                if p.returncode:  # if error occurred
+                if proc.returncode:  # if error occurred
                     self.status = output[0]
                     break
                 else:
@@ -130,7 +131,7 @@ class VolumeDetectThread(Thread):
         self.data = (volume, self.status)
 
         if self.status:
-            self.logError()
+            self.logerror()
 
         wx.CallAfter(pub.sendMessage,
                      "RESULT_EVT",
@@ -138,7 +139,7 @@ class VolumeDetectThread(Thread):
                      )
     # ----------------------------------------------------------------#
 
-    def logWrite(self, cmd):
+    def logwrite(self, cmd):
         """
         write ffmpeg command log
         """
@@ -146,7 +147,7 @@ class VolumeDetectThread(Thread):
             log.write("%s\n" % (cmd))
     # ----------------------------------------------------------------#
 
-    def logError(self):
+    def logerror(self):
         """
         write ffmpeg volumedected errors
         """
