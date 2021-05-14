@@ -83,6 +83,7 @@ class PicturesFromVideo(Thread):
         progress bar
         """
         self.stop_work_thread = False  # process terminate
+        self.outputdir = varargs[3]  # output directory
         self.cmd = varargs[4]  # comand set on single pass
         self.duration = duration[0]  # duration list
         self.time_seq = timeseq  # a time segment
@@ -91,7 +92,6 @@ class PicturesFromVideo(Thread):
         self.fname = varargs[1]  # file name
 
         Thread.__init__(self)
-        """initialize"""
         self.start()  # start the thread (va in self.run())
 
     def run(self):
@@ -105,14 +105,16 @@ class PicturesFromVideo(Thread):
                              self.fname,
                              self.cmd,
                              ))
-        count = 'File %s/%s' % ('1', '1',)
-        com = "%s\n%s" % (count, cmd)
+        count = 'File 1/1'
+        com = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
+               '[COMMAND]:\n%s' % (count, self.fname, self.outputdir, cmd))
 
         wx.CallAfter(pub.sendMessage,
                      "COUNT_EVT",
                      count=count,
+                     fsource='Source:  "%s"' % self.fname,
+                     destination='Destination:  "%s"' % self.outputdir,
                      duration=self.duration,
-                     fname=self.fname,
                      end='',
                      )
         logwrite(com,
@@ -161,17 +163,19 @@ class PicturesFromVideo(Thread):
                     wx.CallAfter(pub.sendMessage,
                                  "COUNT_EVT",
                                  count='',
+                                 fsource='',
+                                 destination='',
                                  duration='',
-                                 fname='',
                                  end='ok'
                                  )
         except (OSError, FileNotFoundError) as err:
-            e = "%s\n  %s" % (err, PicturesFromVideo.NOT_EXIST_MSG)
+            excepterr = "%s\n  %s" % (err, PicturesFromVideo.NOT_EXIST_MSG)
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
-                         count=e,
+                         count=excepterr,
+                         fsource='',
+                         destination='',
                          duration=0,
-                         fname=self.fname,
                          end='error',
                          )
         time.sleep(.5)

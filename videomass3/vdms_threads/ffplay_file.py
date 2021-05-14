@@ -50,7 +50,7 @@ def msg_info(msg):
     wx.MessageBox("FFplay:  %s" % (msg), "Videomass", wx.ICON_INFORMATION)
 
 
-class File_Play(Thread):
+class FilePlay(Thread):
     """
     Playback local file with ffplay media player via subprocess.Popen
     class (ffplay is a player which need x-window-terminal-emulator)

@@ -24,7 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
 import sys
 from threading import Thread
 import wx
@@ -33,13 +32,13 @@ if 'youtube_dl' in sys.modules:
     import youtube_dl
 
 
-
 class MyLogger(object):
     """
     Intercepts youtube-dl's output by setting a logger object .
     Log messages to a logging.Logger instance.
-    https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#embedding-youtube-dl
+    <https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#embedding-youtube-dl>
     """
+
     def __init__(self):
         """
         make attribute to log messages error
@@ -47,27 +46,37 @@ class MyLogger(object):
         self.msg_error = []
 
     def debug(self, msg):
+        """
+        Get debug messages
+        """
         pass
 
     def warning(self, msg):
+        """
+        Get warning messages
+        """
         pass
 
     def error(self, msg):
+        """
+        Get error messages
+        """
         self.msg_error.append(msg)
 
     def get_message(self):
         """
         get message error from error method
         """
-        return None if not len(self.msg_error) else self.msg_error.pop()
+        return None if len(self.msg_error) == 0 else self.msg_error.pop()
 
 
-class Ydl_EI_Pylib(Thread):
+class YtdlLibEI(Thread):
     """
     Embed youtube-dl as module into a separated thread in order
     to get output during process (see help(youtube_dl.YoutubeDL) ) .
 
     """
+
     def __init__(self, url):
         """
         Attributes defined here:
@@ -84,11 +93,11 @@ class Ydl_EI_Pylib(Thread):
             self.nocheckcertificate = False
 
         Thread.__init__(self)
-        """initialize"""
         self.start()  # start the thread (va in self.run())
 
     def run(self):
         """
+        Defines options to extract_info with youtube_dl
         """
         mylogger = MyLogger()
         ydl_opts = {'ignoreerrors': True,

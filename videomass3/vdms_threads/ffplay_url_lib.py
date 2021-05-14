@@ -84,7 +84,7 @@ class MyLogger(object):
 # -------------------------------------------------------------------------#
 
 
-class Download_Stream(Thread):
+class DownloadStream(Thread):
     """
     Download media stream to the videomass cache directory with
     the same quality defined in the `quality` parameter.
@@ -118,10 +118,10 @@ class Download_Stream(Thread):
         self.stop_work_thread = False  # process terminate value
         self.url = url  # single url
         self.quality = quality  # output quality e.g. worst, best, Format code
-        self.outputdir = Download_Stream.TMP  # pathname destination
+        self.outputdir = DownloadStream.TMP  # pathname destination
         self.outtmpl = '%(title)s_{}.%(ext)s'.format(self.quality)  # filename
 
-        if (Download_Stream.OS == 'Windows' or '/tmp/.mount_' in sys.executable
+        if (DownloadStream.OS == 'Windows' or '/tmp/.mount_' in sys.executable
             or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
                 sys.argv[0]))) + '/AppRun')):
 
@@ -137,7 +137,7 @@ class Download_Stream(Thread):
     def run(self):
         """
         This atipic method is called by start() method after the instance
-        this class. see Lib_Streaming class below.
+        this class. see LibStreaming class below.
         """
         if self.stop_work_thread:
             return
@@ -153,7 +153,7 @@ class Download_Stream(Thread):
             'noplaylist': True,
             'no_color': True,
             'nocheckcertificate': self.nocheckcertificate,
-            'ffmpeg_location': '{}'.format(Download_Stream.FFMPEG_URL),
+            'ffmpeg_location': '{}'.format(DownloadStream.FFMPEG_URL),
             'logger': MyLogger(),
         }
 
@@ -169,7 +169,7 @@ class Download_Stream(Thread):
 # ------------------------------------------------------------------------#
 
 
-class Lib_Streaming(object):
+class LibStreaming(object):
     """
     Handling Threads to download and playback media streams via
     youtube-dl library and ffmpeg executables.
@@ -188,23 +188,23 @@ class Lib_Streaming(object):
         - Topic "START_FFPLAY_EVT" subscribes the start playing
           running ffplay at a certain time.
         - Topic "STOP_DOWNLOAD_EVT" subscribes a stop download listener
-          which call the stop() method of `Download_Stream` class to
+          which call the stop() method of `DownloadStream` class to
           stop the download when ffplay has finished or been closed by
           the user.
         """
         pub.subscribe(stop_download_listener, "STOP_DOWNLOAD_EVT")
         pub.subscribe(start_palying_listener, "START_FFPLAY_EVT")
 
-        Lib_Streaming.DOWNLOAD = Download_Stream(url, quality)
+        LibStreaming.DOWNLOAD = DownloadStream(url, quality)
 
         self.start_download()
     # ----------------------------------------------------------------#
 
     def start_download(self):
         """
-        call Download_Stream(Thread) to run() method
+        call DownloadStream(Thread) to run() method
         """
-        Lib_Streaming.DOWNLOAD.start()
+        LibStreaming.DOWNLOAD.start()
         return
 
 # --------- RECEIVER LISTENERS
@@ -212,11 +212,11 @@ class Lib_Streaming(object):
 
 def stop_download_listener(filename):
     """
-    Receive message from ffplay_file.File_Play class
+    Receive message from ffplay_file.FilePlay class
     for handle interruption
     """
-    Lib_Streaming.DOWNLOAD.stop()
-    Lib_Streaming.DOWNLOAD.join()  # if join, wait end process
+    LibStreaming.DOWNLOAD.stop()
+    LibStreaming.DOWNLOAD.join()  # if join, wait end process
 
 
 def start_palying_listener(output):

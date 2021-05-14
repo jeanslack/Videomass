@@ -85,7 +85,7 @@ class TwoPass(Thread):
         """
         self.stop_work_thread = False  # process terminate
         self.filelist = varargs[1]  # list of files (elements)
-        self.passList = varargs[5]  # comand list set for double-pass
+        self.passlist = varargs[5]  # comand list set for double-pass
         self.outputdir = varargs[3]  # output path
         self.extoutput = varargs[2]  # format (extension)
         self.duration = duration  # duration list
@@ -97,7 +97,6 @@ class TwoPass(Thread):
         self.nul = 'NUL' if TwoPass.OS == 'Windows' else '/dev/null'
 
         Thread.__init__(self)
-        """initialize"""
         self.start()  # start the thread (va in self.run())
 
     def run(self):
@@ -117,6 +116,9 @@ class TwoPass(Thread):
             filename = os.path.splitext(basename)[0]  # nome senza ext
             source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
             outext = source_ext if not self.extoutput else self.extoutput
+            outputfile = os.path.join(folders, '%s%s.%s' % (filename,
+                                                            TwoPass.SUFFIX,
+                                                            outext))
 
             # --------------- first pass
             pass1 = ('"%s" %s %s -i "%s" %s %s '
@@ -124,18 +126,20 @@ class TwoPass(Thread):
                                 TwoPass.appdata['ffmpegloglev'],
                                 self.time_seq,
                                 files,
-                                self.passList[0],
+                                self.passlist[0],
                                 TwoPass.appdata['ffthreads'],
                                 self.nul,
                                 ))
             self.count += 1
             count = 'File %s/%s - Pass One' % (self.count, self.countmax)
-            cmd = "%s\n%s" % (count, pass1)
+            cmd = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
+                   '[COMMAND]:\n%s' % (count, files, self.nul, pass1))
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
+                         fsource='Source:  "%s"' % files,
+                         destination='Destination:  "%s"' % self.nul,
                          duration=duration,
-                         fname=files,
                          end='',
                          )
             logwrite(cmd,
@@ -182,12 +186,13 @@ class TwoPass(Thread):
                                  )  # append exit error number
 
             except (OSError, FileNotFoundError) as err:
-                e = "%s\n  %s" % (err, TwoPass.NOT_EXIST_MSG)
+                excepterr = "%s\n  %s" % (err, TwoPass.NOT_EXIST_MSG)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
-                             count=e,
+                             count=excepterr,
+                             fsource='',
+                             destination='',
                              duration=0,
-                             fname=files,
                              end='error',
                              )
                 break
@@ -200,31 +205,32 @@ class TwoPass(Thread):
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count='',
+                             fsource='',
+                             destination='',
                              duration='',
-                             fname='',
                              end='ok'
                              )
             # --------------- second pass ----------------#
             pass2 = ('"%s" %s %s -i "%s" %s %s %s '
-                     '-y "%s/%s%s.%s"' % (TwoPass.appdata['ffmpeg_bin'],
-                                          TwoPass.appdata['ffmpegloglev'],
-                                          self.time_seq,
-                                          files,
-                                          self.passList[1],
-                                          volume,
-                                          TwoPass.appdata['ffthreads'],
-                                          folders,
-                                          filename,
-                                          TwoPass.SUFFIX,
-                                          outext,
-                                          ))
-            count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
-            cmd = "%s\n%s" % (count, pass2)
+                     '-y "%s"' % (TwoPass.appdata['ffmpeg_bin'],
+                                  TwoPass.appdata['ffmpegloglev'],
+                                  self.time_seq,
+                                  files,
+                                  self.passlist[1],
+                                  volume,
+                                  TwoPass.appdata['ffthreads'],
+                                  outputfile,
+                                  ))
+            count = 'File %s/%s - Pass Two' % (self.count, self.countmax)
+            cmd = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
+                   '[COMMAND]:\n%s' % (count, files, outputfile, pass2))
+
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
+                         fsource='Source:  "%s"' % files,
+                         destination='Destination:  "%s"' % outputfile,
                          duration=duration,
-                         fname=files,
                          end='',
                          )
             logwrite(cmd, '', self.logname, TwoPass.appdata['logdir'])
@@ -273,8 +279,9 @@ class TwoPass(Thread):
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count='',
+                             fsource='',
+                             destination='',
                              duration='',
-                             fname='',
                              end='ok'
                              )
         time.sleep(.5)

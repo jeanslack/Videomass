@@ -932,13 +932,16 @@ class MainFrame(wx.Frame):
         """
         Show miniframe to view log files
         """
-        if not os.path.exists(MainFrame.LOGDIR):
+        if not os.path.exists(self.appdata['logdir']):
             wx.MessageBox(_("There are no logs to show."),
                           "Videomass", wx.ICON_INFORMATION, self)
             return
 
         else:
-            mf = ShowLogs(self, MainFrame.LOGDIR, self.appdata['ostype'])
+            mf = ShowLogs(self,
+                          self.appdata['logdir'],
+                          self.appdata['ostype']
+                          )
             mf.Show()
     # ------------------------------------------------------------------#
 

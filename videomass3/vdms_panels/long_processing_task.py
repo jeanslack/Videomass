@@ -28,8 +28,8 @@ import os
 from pubsub import pub
 import wx
 from videomass3.vdms_io.make_filelog import write_log
-from videomass3.vdms_threads.ydl_pylibdownloader import Ydl_DL_Pylib
-from videomass3.vdms_threads.ydl_executable import Ydl_DL_Exec
+from videomass3.vdms_threads.ydl_pylibdownloader import YtdlLibDL
+from videomass3.vdms_threads.ydl_executable import YtdlExecDL
 from videomass3.vdms_threads.one_pass import OnePass
 from videomass3.vdms_threads.two_pass import TwoPass
 from videomass3.vdms_threads.two_pass_EBU import Loudnorm
@@ -242,11 +242,11 @@ class LogOut(wx.Panel):
                                                )
         elif varargs[0] == 'youtube_dl python package':  # as import youtube_dl
             self.ckbx_text.Hide()
-            self.PARENT_THREAD = Ydl_DL_Pylib(varargs, self.logname)
+            self.PARENT_THREAD = YtdlLibDL(varargs, self.logname)
 
         elif varargs[0] == 'youtube-dl executable':  # as youtube-dl exec.
             self.ckbx_text.Hide()
-            self.PARENT_THREAD = Ydl_DL_Exec(varargs, self.logname)
+            self.PARENT_THREAD = YtdlExecDL(varargs, self.logname)
     # ----------------------------------------------------------------------
 
     def youtubedl_from_import(self, output, duration, status):
@@ -416,7 +416,7 @@ class LogOut(wx.Panel):
                 # write a row error into file log
     # ----------------------------------------------------------------------
 
-    def update_count(self, count, duration, fname, end):
+    def update_count(self, count, fsource, destination, duration, end):
         """
         Receive message from first 'for' loop in the thread process.
         This method can be used even for non-loop threads.
@@ -425,10 +425,14 @@ class LogOut(wx.Panel):
         if end == 'ok':
             self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.SUCCESS))
             self.OutText.AppendText(LogOut.MSG_done)
-            if self.labPerc.GetLabel()[1] != '100%':
-                newlab = self.labPerc.GetLabel().split()
-                newlab[1] = '100%'
-                self.labPerc.SetLabel(" ".join(newlab))
+            try:
+                if self.labPerc.GetLabel()[1] != '100%':
+                    newlab = self.labPerc.GetLabel().split()
+                    newlab[1] = '100%'
+                    self.labPerc.SetLabel(" ".join(newlab))
+            except IndexError:
+                self.labPerc.SetLabel('')
+
             return
         # if STATUS_ERROR == 1:
         if end == 'error':
@@ -439,7 +443,12 @@ class LogOut(wx.Panel):
             self.barProg.SetRange(duration)  # set overall duration range
             self.barProg.SetValue(0)  # reset bar progress
             self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.NORM_TEXT))
-            self.OutText.AppendText('\n%s : "%s"\n' % (count, fname))
+            self.OutText.AppendText('\n%s\n' % (count))
+            self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.INFO))
+            self.OutText.AppendText('%s\n' % (fsource))
+            if destination:
+                self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.DEBUG))
+                self.OutText.AppendText('%s\n' % (destination))
 
     # ----------------------------------------------------------------------
     def end_proc(self):

@@ -1023,7 +1023,6 @@ class Downloader(wx.Panel):
                        f'{nooverwrites}',
                        f'{restrictfn}',
                        ]
-            print('PRIMO >>>> ', cmd)
 
             self.parent.switch_to_processing('youtube-dl executable',
                                              urls,

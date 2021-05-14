@@ -120,28 +120,31 @@ class OnePass(Thread):
             filename = os.path.splitext(basename)[0]  # nome senza estensione
             source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
             outext = source_ext if not self.extoutput else self.extoutput
-
+            outputfile = os.path.join(folders, '%s%s.%s' % (filename,
+                                                            OnePass.SUFFIX,
+                                                            outext
+                                                            ))
             cmd = ('"%s" %s %s -i "%s" %s %s %s '
-                   '-y "%s/%s%s.%s"' % (OnePass.appdata['ffmpeg_bin'],
-                                        self.time_seq,
-                                        OnePass.appdata['ffmpegloglev'],
-                                        files,
-                                        self.command,
-                                        volume,
-                                        OnePass.appdata['ffthreads'],
-                                        folders,
-                                        filename,
-                                        OnePass.SUFFIX,
-                                        outext,
-                                        ))
+                   '-y "%s"' % (OnePass.appdata['ffmpeg_bin'],
+                                self.time_seq,
+                                OnePass.appdata['ffmpegloglev'],
+                                files,
+                                self.command,
+                                volume,
+                                OnePass.appdata['ffthreads'],
+                                outputfile,
+                                ))
             self.count += 1
-            count = 'File %s/%s' % (self.count, self.countmax,)
-            com = "%s\n%s" % (count, cmd)
+            count = 'File %s/%s' % (self.count, self.countmax)
+            com = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
+                   '[COMMAND]:\n%s' % (count, files, outputfile, cmd))
+
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
+                         fsource='Source:  "%s"' % files,
+                         destination='Destination:  "%s"' % outputfile,
                          duration=duration,
-                         fname=files,
                          end='',
                          )
             logwrite(com,
@@ -189,8 +192,9 @@ class OnePass(Thread):
                         wx.CallAfter(pub.sendMessage,
                                      "COUNT_EVT",
                                      count='',
+                                     fsource='',
+                                     destination='',
                                      duration='',
-                                     fname='',
                                      end='ok'
                                      )
             except (OSError, FileNotFoundError) as err:
@@ -198,8 +202,9 @@ class OnePass(Thread):
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=excepterr,
+                             fsource='',
+                             destination='',
                              duration=0,
-                             fname=files,
                              end='error',
                              )
                 break

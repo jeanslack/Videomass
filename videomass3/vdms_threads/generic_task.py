@@ -6,7 +6,7 @@ Compatibility: Python3 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2020 *-pycodestyle- compatible*
+Rev: May.11.2021 *-pycodestyle- compatible*
 ########################################################
 
 This file is part of Videomass.
@@ -24,12 +24,12 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+from threading import Thread
 import platform
 import subprocess
+import wx
 if not platform.system() == 'Windows':
     import shlex
-from threading import Thread
-import wx
 
 
 class FFmpegGenericTask(Thread):
@@ -66,7 +66,6 @@ class FFmpegGenericTask(Thread):
         self.status = None
 
         Thread.__init__(self)
-        ''' constructor'''
         self.start()
     # ----------------------------------------------------------------#
 
@@ -90,21 +89,21 @@ class FFmpegGenericTask(Thread):
             info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 
         try:
-            p = subprocess.Popen(command,
-                                 stderr=subprocess.PIPE,
-                                 universal_newlines=True,
-                                 startupinfo=info,
-                                 )
-            error = p.communicate()
+            with subprocess.Popen(command,
+                                  stderr=subprocess.PIPE,
+                                  universal_newlines=True,
+                                  startupinfo=info,
+                                  ) as proc:
+
+                error = proc.communicate()
+
+                if proc.returncode:  # ffmpeg error
+                    if error[1]:
+                        self.status = error[1]
+                    else:
+                        self.status = "Unrecognized error"
+                    return
 
         except OSError as err:  # command not found
             self.status = err
             return
-
-        else:
-            if p.returncode:  # ffmpeg error
-                if error[1]:
-                    self.status = error[1]
-                else:
-                    self.status = "Unrecognized error"
-                return

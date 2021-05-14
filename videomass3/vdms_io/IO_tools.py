@@ -29,7 +29,7 @@ import stat
 import shutil
 import requests
 import wx
-from videomass3.vdms_threads.ffplay_file import File_Play
+from videomass3.vdms_threads.ffplay_file import FilePlay
 from videomass3.vdms_threads import (ffplay_url_exec,
                                      # ffplay_url_lib,
                                      generic_downloads,
@@ -43,8 +43,8 @@ from videomass3.vdms_threads.check_bin import (ff_conf,
                                                ff_topics,
                                                )
 from videomass3.vdms_threads.opendir import browse
-from videomass3.vdms_threads.ydl_pylibextractinfo import Ydl_EI_Pylib
-from videomass3.vdms_threads.ydl_executable import Ydl_EI_Exec
+from videomass3.vdms_threads.ydl_pylibextractinfo import YtdlLibEI
+from videomass3.vdms_threads.ydl_executable import YtdlExecEI
 
 from videomass3.vdms_frames import (ffmpeg_conf,
                                     ffmpeg_formats,
@@ -83,7 +83,7 @@ def stream_play(filepath, tseq, param, autoexit):
     tseq = tseq if tseq != "-ss 00:00:00.000 -t 00:00:00.000" else ''
     try:
         with open(filepath):
-            thread = File_Play(filepath,
+            thread = FilePlay(filepath,
                                tseq,
                                param,
                                get.appset['logdir'],
@@ -118,12 +118,12 @@ def url_play(url, quality, timestamp, autoexit):
     get = wx.GetApp()  # get data from bootstrap
     youtube_dl = get.appset['PYLIBYDL']
 
-    dowl = ffplay_url_exec.Exec_Streaming(timestamp, autoexit, url, quality)
+    dowl = ffplay_url_exec.ExecStreaming(timestamp, autoexit, url, quality)
     """
     if youtube_dl is not None:  # run youtube-dl executable
-        dowl = ffplay_url_exec.Exec_Streaming(url, quality)
+        dowl = ffplay_url_exec.ExecStreaming(url, quality)
     else:  # run youtube_dl library
-        dowl = ffplay_url_lib.Lib_Streaming(url, quality)
+        dowl = ffplay_url_lib.LibStreaming(url, quality)
     """
 
 # -----------------------------------------------------------------------#
@@ -284,12 +284,12 @@ def youtubedl_getstatistics(url):
     youtube_dl python package and show a wait pop-up dialog .
     youtube_dl module.
     example without pop-up dialog:
-    thread = Ydl_EI_Pylib(url)
+    thread = YtdlLibEI(url)
     thread.join()
     data = thread.data
     yield data
     """
-    thread = Ydl_EI_Pylib(url)
+    thread = YtdlLibEI(url)
     loadDlg = PopupDialog(None,
                           _("Videomass - Loading..."),
                           _("\nWait....\nRetrieving required data.\n"))
@@ -307,7 +307,7 @@ def youtube_getformatcode_exec(url):
     executable, (e.g. `youtube-dl -F url`) .
     While waiting, a pop-up dialog is shown.
     """
-    thread = Ydl_EI_Exec(url)
+    thread = YtdlExecEI(url)
     loadDlg = PopupDialog(None,
                           _("Videomass - Loading..."),
                           _("\nWait....\nRetrieving required data.\n"))
@@ -345,7 +345,7 @@ def youtubedl_update(cmd, waitmsg):
     the local copy (not installed by the package manager) of youtube-dl.
     While waiting, a pop-up dialog is shown.
     """
-    thread = youtubedlupdater.Command_Execution(cmd)
+    thread = youtubedlupdater.CmdExec(cmd)
 
     loadDlg = PopupDialog(None, _("Videomass - Loading..."), waitmsg)
     loadDlg.ShowModal()
@@ -389,7 +389,7 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
         except OSError as err:
             return None, err
 
-    thread = generic_downloads.File_Downloading(url, executable)
+    thread = generic_downloads.FileDownloading(url, executable)
     loadDlg = PopupDialog(None, _("Videomass - Downloading..."), msg)
     loadDlg.ShowModal()
     # thread.join()
@@ -451,7 +451,7 @@ def get_github_releases(url, keyname):
 def get_presets(url, dest, msg):
     """
     """
-    thread = generic_downloads.File_Downloading(url, dest)
+    thread = generic_downloads.FileDownloading(url, dest)
     loadDlg = PopupDialog(None, _("Videomass - Downloading..."), msg)
     loadDlg.ShowModal()
     # thread.join()
@@ -472,7 +472,7 @@ def appimage_update_youtube_dl(appimage):
     log = os.path.join(get.appset['logdir'], logname)
     logfile = write_log(logname, get.appset['logdir'])  # write log file first
 
-    thread = youtubedlupdater.Update_Youtube_dl_Appimage(log, appimage)
+    thread = youtubedlupdater.UpdateYoutubedlAppimage(log, appimage)
 
     waitmsg = _('...Be patient, this can take a few minutes.')
 

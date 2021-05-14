@@ -46,7 +46,7 @@ class FFprobeTestCase(unittest.TestCase):
         invalid executable.
 
         """
-        if self.data.ERROR():
+        if self.data.error_check():
             self.assertRaises(AssertionError)
             self.assertEqual(self.data.data_format(), [])
 
@@ -58,7 +58,7 @@ class FFprobeTestCase(unittest.TestCase):
         or ffprobe.exe for MS
 
         """
-        if not self.data.ERROR():
+        if not self.data.error_check():
             self.assertEqual(self.data.error, False)
             self.assertTrue(self.data.data_format())
 

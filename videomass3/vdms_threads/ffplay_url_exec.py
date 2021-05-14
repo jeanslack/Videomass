@@ -7,7 +7,10 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: May.09.2021
+pycodestyle: OK
+flake8: --ignore F821, W504
+pylint: --ignore E0602, E1101
 ########################################################
 This file is part of Videomass.
 
@@ -47,7 +50,7 @@ def msg_error(msg, title="Videomass"):
 # ------------------------------------------------------------------------#
 
 
-class Exec_Download_Stream(Thread):
+class DownloadStreamExec(Thread):
     """
     Download media stream to the videomass cache directory with
     the same quality defined in the `quality` parameter. The download
@@ -113,27 +116,27 @@ class Exec_Download_Stream(Thread):
             obtained typing `youtube-dl -F <link>`
 
         """
-        self.tmp = os.path.join(Exec_Download_Stream.appdata['cachedir'],
+        self.tmp = os.path.join(DownloadStreamExec.appdata['cachedir'],
                                 'tmp')
-        self.logf = os.path.join(Exec_Download_Stream.appdata['logdir'],
+        self.logf = os.path.join(DownloadStreamExec.appdata['logdir'],
                                  'ffplay.log')
         self.stop_work_thread = False  # process terminate value
         self.url = url
         self.quality = quality
 
         if (platform.system() == 'Windows' or
-                Exec_Download_Stream.appdata['app'] == 'appimage'):
+                DownloadStreamExec.appdata['app'] == 'appimage'):
 
             self.ssl = '--no-check-certificate'
 
         else:
             self.ssl = ''
 
-        write_log('ffplay.log', Exec_Download_Stream.appdata['logdir'])
+        write_log('ffplay.log', DownloadStreamExec.appdata['logdir'])
 
-        if Exec_Download_Stream.EXCEPTION:
-            wx.CallAfter(msg_error, Exec_Download_Stream.EXCEPTION)
-            self.logerror(Exec_Download_Stream.EXCEPTION)  # append log error
+        if DownloadStreamExec.EXCEPTION:
+            wx.CallAfter(msg_error, DownloadStreamExec.EXCEPTION)
+            self.logerror(DownloadStreamExec.EXCEPTION)  # append log error
             return
 
         Thread.__init__(self)
@@ -147,12 +150,12 @@ class Exec_Download_Stream(Thread):
                '"{2}/%(title)s_{3}.%(ext)s" --continue --format {3} '
                '--no-playlist --no-part --ignore-config '
                '--restrict-filenames "{4}" --ffmpeg-location '
-               '"{5}"'.format(Exec_Download_Stream.EXECYDL,
+               '"{5}"'.format(DownloadStreamExec.EXECYDL,
                               self.ssl,
                               self.tmp,
                               self.quality,
                               self.url,
-                              Exec_Download_Stream.appdata['ffmpeg_bin'],
+                              DownloadStreamExec.appdata['ffmpeg_bin'],
                               ))
         self.logwrite(cmd)  # append log cmd
         if not platform.system() == 'Windows':
@@ -187,7 +190,7 @@ class Exec_Download_Stream(Thread):
 
                 if proc.wait():  # error at end process
                     if 'line' not in locals():
-                        line = Exec_Download_Stream.LINE_MSG
+                        line = DownloadStreamExec.LINE_MSG
                     if '[download]' in line:
                         return
                     wx.CallAfter(msg_error,
@@ -228,7 +231,7 @@ class Exec_Download_Stream(Thread):
 # ------------------------------------------------------------------------#
 
 
-class Exec_Streaming():
+class ExecStreaming():
     """
     Handling Threads to download and playback media streams via
     youtube-dl and ffplay executables.
@@ -249,7 +252,7 @@ class Exec_Streaming():
         - Topic "START_FFPLAY_EVT" subscribes the start playing
           running ffplay at a certain time.
         - Topic "STOP_DOWNLOAD_EVT" subscribes a stop download listener
-          which call the stop() method of `Download_Stream` class to
+          which call the stop() method of `DownloadStreamExec` class to
           stop the download when ffplay has finished or been closed by
           the user.
 
@@ -257,39 +260,39 @@ class Exec_Streaming():
         pub.subscribe(stop_download_listener, "STOP_DOWNLOAD_EVT")
         pub.subscribe(start_palying_listener, "START_FFPLAY_EVT")
 
-        Exec_Streaming.DOWNLOAD = Exec_Download_Stream(url, quality)
-        Exec_Streaming.TIMESTAMP = timestamp
-        Exec_Streaming.AUTOEXIT = autoexit
+        ExecStreaming.DOWNLOAD = DownloadStreamExec(url, quality)
+        ExecStreaming.TIMESTAMP = timestamp
+        ExecStreaming.AUTOEXIT = autoexit
 
         self.start_download()
     # ----------------------------------------------------------------#
 
     def start_download(self):
         """
-        call Exec_Download_Stream(Thread) to run() method
+        call DownloadStreamExec(Thread) to run() method
 
         """
-        if not Exec_Download_Stream.EXCEPTION:
-            Exec_Streaming.DOWNLOAD.start()
+        if not DownloadStreamExec.EXCEPTION:
+            ExecStreaming.DOWNLOAD.start()
 
 # --------- RECEIVER LISTENERS
 
 
 def stop_download_listener(filename):
     """
-    Receive message from ffplay_file.File_Play class
+    Receive message from ffplay_file.FilePlay class
     for handle interruption
 
     """
-    Exec_Streaming.DOWNLOAD.stop()
-    Exec_Streaming.DOWNLOAD.join()
+    ExecStreaming.DOWNLOAD.stop()
+    ExecStreaming.DOWNLOAD.join()
 
 
 def start_palying_listener(output):
     """
-    Riceive message from Exec_Download_Stream class to start
+    Riceive message from DownloadStreamExec class to start
     ffplay in at a given time.
 
     """
-    IO_tools.stream_play(output, '', Exec_Streaming.TIMESTAMP,
-                         Exec_Streaming.AUTOEXIT)
+    IO_tools.stream_play(output, '', ExecStreaming.TIMESTAMP,
+                         ExecStreaming.AUTOEXIT)

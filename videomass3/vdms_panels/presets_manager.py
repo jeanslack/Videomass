@@ -933,7 +933,7 @@ class PrstPan(wx.Panel):
             self.parent.switch_to_processing('savepictures',
                                              clicked,
                                              None,
-                                             None,
+                                             outputdir,
                                              command,
                                              None,
                                              None,

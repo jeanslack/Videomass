@@ -5,7 +5,11 @@ videomass (3.4.3-1) UNRELEASED; urgency=medium
     This occured when the log directory has not yet created.
   * YouTube Downloader: added a new checkbox to restrict filenames (see #21)
   * Fixed #21
-  * some code refactor (pylint)
+  * Improved information and text formatting on log files
+  * Provided more log information about output monitoring, such as source and
+    destination file names
+  * Removed `-map 0:v?` From Loudnorm filter code because it causes failure.
+  * some code refactor (based on flake8/pylint)
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 02 May 2021 20:49:00 +0200
 

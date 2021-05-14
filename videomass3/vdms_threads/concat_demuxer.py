@@ -92,7 +92,7 @@ class ConcatDemuxer(Thread):
         self.countmax = len(varargs[1])  # length file list
         self.logname = logname  # title name of file log
         # need to escaping some chars
-        self.ftext = os.path.join(Concat_Demuxer.CACHEDIR, 'tmp', 'flist.txt')
+        self.ftext = os.path.join(ConcatDemuxer.CACHEDIR, 'tmp', 'flist.txt')
         escaped = [e.replace(r"'", r"'\'") for e in self.filelist]
         with open(self.ftext, 'w', encoding='utf8') as txt:
             txt.write('\n'.join(["file '%s'" % x for x in escaped]))
@@ -110,32 +110,37 @@ class ConcatDemuxer(Thread):
         filename = os.path.splitext(basename)[0]  # nome senza estensione
         source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
         outext = source_ext if not self.extoutput else self.extoutput
-
+        outputfile = os.path.join(self.outputdir,
+                                  '%s%s.%s' % (filename,
+                                               ConcatDemuxer.SUFFIX,
+                                               outext)
+                                  )
         cmd = ('"%s" %s -f concat -safe 0 -i "%s" -map 0:v? -map_chapters 0 '
                '-map 0:s? -map 0:a? -map_metadata 0 %s -c copy %s -y '
-               '"%s/%s%s.%s"' % (Concat_Demuxer.appdata['ffmpeg_bin'],
-                                 Concat_Demuxer.appdata['ffmpegloglev'],
-                                 self.ftext,
-                                 self.command,
-                                 Concat_Demuxer.appdata['ffthreads'],
-                                 self.outputdir,
-                                 filename,
-                                 Concat_Demuxer.SUFFIX,
-                                 outext,
-                                 ))
-        count = '%s files to concat' % (self.countmax,)
-        com = "%s\n%s" % (count, cmd)
+               '"%s"' % (ConcatDemuxer.appdata['ffmpeg_bin'],
+                         ConcatDemuxer.appdata['ffmpegloglev'],
+                         self.ftext,
+                         self.command,
+                         ConcatDemuxer.appdata['ffthreads'],
+                         outputfile,
+                         ))
+        count = '%s Files to concat' % (self.countmax,)
+        com = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
+               '[COMMAND]:\n%s' % (count, self.filelist, outputfile, cmd))
+
         wx.CallAfter(pub.sendMessage,
                      "COUNT_EVT",
                      count=count,
+                     fsource='Source:  %s' % self.filelist,
+                     destination='Destination:  "%s"' % outputfile,
                      duration=self.duration,
-                     fname=", ".join(self.filelist),
+                     # fname=", ".join(self.filelist),
                      end='',
                      )
         logwrite(com,
                  '',
                  self.logname,
-                 Concat_Demuxer.appdata['logdir'],
+                 ConcatDemuxer.appdata['logdir'],
                  )  # write n/n + command only
 
         if not platform.system() == 'Windows':
@@ -171,23 +176,25 @@ class ConcatDemuxer(Thread):
                     logwrite('',
                              "Exit status: %s" % proc.wait(),
                              self.logname,
-                             Concat_Demuxer.appdata['logdir'],
+                             ConcatDemuxer.appdata['logdir'],
                              )  # append exit error number
                 else:  # ok
                     wx.CallAfter(pub.sendMessage,
                                  "COUNT_EVT",
                                  count='',
+                                 fsource='',
+                                 destination='',
                                  duration='',
-                                 fname='',
                                  end='ok'
                                  )
         except (OSError, FileNotFoundError) as err:
-            excepterr = "%s\n  %s" % (err, Concat_Demuxer.NOT_EXIST_MSG)
+            excepterr = "%s\n  %s" % (err, ConcatDemuxer.NOT_EXIST_MSG)
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=excepterr,
+                         fsource='',
+                         destination='',
                          duration=0,
-                         fname=", ".join(self.filelist),
                          end='error',
                          )
 

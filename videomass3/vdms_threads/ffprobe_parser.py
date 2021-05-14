@@ -336,52 +336,41 @@ class FFProbe():
         This method is useful for exemple to saving audio content as
         audio track.
         """
-        astream = self.audio_stream()  # get audio stream
-        audio_lang = []
-        acod = ''  # audio codec
-        lang = 'unknown'  # language
-        indx = ''  # index
-        srate = ''  # smple_rate
-        bits = ''  # bit_per_sample (raw only)
-        chan = ''  # channel_layout
-        bitr = ''  # bit_rate (codec compressed only)
-
-        if astream == []:
+        if not self.audio_stream():
             # audio_lang.append('no audio stream')
             return None, None
+
+        astream = self.audio_stream()  # get audio stream
+        audio_lang = []
 
         count = len(astream)
         for num in range(count):
             (key, value) = astream[num][0].strip().split('=')
             for aud in astream[num]:
                 (key, value) = aud.strip().split('=')
-                if "codec_name" in key:
-                    acod = value
+                acod = value if "codec_name" in key else ''  # audio codec
                 if "stream_tags" in key:
                     lang = value
-                if "TAG:language" in key:
-                    lang = value
-                if "index" in key:
-                    indx = value
-                if key == "sample_rate":
-                    srate = value
-                if key == "bits_per_sample":
-                    bits = value
-                if key == "channel_layout":
-                    chan = value
-                if key == "bit_rate":
-                    bitr = value
+                else:
+                    if "TAG:language" in key:
+                        lang = value
+                    else:
+                        lang = 'unknown'
+                lang = value if "stream_tags" in key else langunknown  # lang
+                lang = value if "TAG:language" in key else langunknown  # lang
+                indx = value if "index" in key else ''
+                srate = value if key == "sample_rate" else ''
+                bits = value if key == "bits_per_sample" else ''
+                chan = value if key == "channel_layout" else ''
+                bitr = value if key == "bit_rate" else ''
 
             audio_lang.append("index: %s | codec: %s | language: %s "
                               "| sampe rate: %s | bit: %s | channels: %s "
-                              "| bit rate: %s" % (indx, acod, lang,
-                                                  srate, bits, chan,
-                                                  bitr)
+                              "| bit rate: %s" % (indx, acod, lang, srate,
+                                                  bits, chan, bitr)
                               )
         # TEST  must be tested
-        title = self.get_title()
-
-        return audio_lang, title
+        return audio_lang, self.get_title()
     # ----------------------------------------------------------------#
 
     def custom_output(self):
