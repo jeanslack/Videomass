@@ -7,8 +7,10 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.11.2021 *-pycodestyle- compatible*
-########################################################
+Rev: May.11.2021
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 
 This file is part of Videomass.
 
@@ -30,7 +32,7 @@ import sys
 from threading import Thread
 import wx
 from pubsub import pub
-from videomass3.vdms_io import IO_tools
+from videomass3.vdms_io import io_tools
 if 'youtube_dl' in sys.modules:
     import youtube_dl
 
@@ -224,5 +226,5 @@ def start_palying_listener(output):
     Riceive messages from MyLogger to start
     ffplay in at a given time.
     """
-    IO_tools.stream_play(output, '', '')
+    io_tools.stream_play(output, '', '')
     return

@@ -32,7 +32,7 @@ from videomass3.vdms_threads.ydl_pylibdownloader import YtdlLibDL
 from videomass3.vdms_threads.ydl_executable import YtdlExecDL
 from videomass3.vdms_threads.one_pass import OnePass
 from videomass3.vdms_threads.two_pass import TwoPass
-from videomass3.vdms_threads.two_pass_EBU import Loudnorm
+from videomass3.vdms_threads.two_pass_ebu import Loudnorm
 from videomass3.vdms_threads.picture_exporting import PicturesFromVideo
 from videomass3.vdms_threads.video_stabilization import VidStab
 from videomass3.vdms_threads.concat_demuxer import ConcatDemuxer

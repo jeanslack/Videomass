@@ -6,8 +6,11 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.11.2021 *-pycodestyle- compatible*
-########################################################
+Rev: May.11.2021
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
+
 This file is part of Videomass.
 
    Videomass is free software: you can redistribute it and/or modify
@@ -149,6 +152,7 @@ class CmdExec(Thread):
                      status=''
                      )
 # ---------------------------------------------------------------------#
+
 
 '''
 class UpgradeLatest(Thread):

@@ -53,8 +53,8 @@ class Mediainfo(wx.MiniFrame):
     def __init__(self, data, OS):
         """
         self.data: list object containing ffprobe data. See FFprobe
-        class on vdms_threads/ffprobe_parser.py and probeInfo on
-        vdms_io/IO_tools.py
+        class on vdms_threads/ffprobe_parser.py and probe_getinfo on
+        vdms_io/io_tools.py
         """
         self.data = data
         msg = _('Display of selected items in text format')

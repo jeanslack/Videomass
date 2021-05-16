@@ -30,8 +30,8 @@ import wx
 import wx.lib.scrolledpanel as scrolled
 import wx.lib.agw.floatspin as FS
 from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass3.vdms_io.IO_tools import volumeDetectProcess
-from videomass3.vdms_io.IO_tools import stream_play
+from videomass3.vdms_io.io_tools import volume_detect_process
+from videomass3.vdms_io.io_tools import stream_play
 from videomass3.vdms_io.checkup import check_files
 from videomass3.vdms_dialogs.epilogue import Formula
 from videomass3.vdms_dialogs import audiodialogs
@@ -1195,7 +1195,7 @@ class AV_Conv(wx.Panel):
             self.opt['Interlace'], self.opt['Denoiser'] = "", ""
             self.opt["Vidstabtransform"], self.opt["Unsharp"] = "", ""
             self.opt["Vidstabdetect"], self.opt["Makeduo"] = "", False
-            self.opt["VFilters"] = "", ""
+            self.opt["VFilters"] = ""
 
             self.btn_videosize.SetBackgroundColour(wx.NullColour)
             self.btn_crop.SetBackgroundColour(wx.NullColour)
@@ -1843,10 +1843,10 @@ class AV_Conv(wx.Panel):
         self.time_seq = self.parent.time_seq  # from -ss to -t will be analyzed
         target = self.spin_target.GetValue()
 
-        data = volumeDetectProcess(self.parent.file_src,
-                                   self.time_seq,
-                                   self.opt["AudioInMap"][0]
-                                   )
+        data = volume_detect_process(self.parent.file_src,
+                                     self.time_seq,
+                                     self.opt["AudioInMap"][0]
+                                     )
         if data[1]:
             wx.MessageBox("%s" % data[1], "Videomass", wx.ICON_ERROR)
             return
@@ -2575,8 +2575,7 @@ class AV_Conv(wx.Panel):
 
         with wx.FileDialog(
                 None, _("Save the new profile on..."),
-                defaultDir=os.path.join(AV_Conv.self.appdata['confdir'],
-                                        'presets'),
+                defaultDir=os.path.join(self.appdata['confdir'], 'presets'),
                 wildcard="Videomass presets (*.prst;)|*.prst;",
                 style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
 

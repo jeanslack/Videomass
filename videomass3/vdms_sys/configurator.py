@@ -6,7 +6,10 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: April.21.2021 *-pycodestyle- compatible*
+Rev: April.21.2021
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 
  This file is part of Videomass.
 
@@ -132,7 +135,7 @@ class DataSource():
 
             elif ('/tmp/.mount_' in sys.executable or os.path.exists(
                   os.path.dirname(os.path.dirname(os.path.dirname(
-                      sys.argv[0]))) + '/AppRun')):
+                  sys.argv[0]))) + '/AppRun')):
                 # embedded on python appimage
                 print('Embedded on python appimage')
                 self.apptype = 'appimage'

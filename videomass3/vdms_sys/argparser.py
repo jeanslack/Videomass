@@ -6,8 +6,10 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: September.11.2020 *-pycodestyle- compatible*
-########################################################
+Rev: September.11.2020
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 
 This file is part of Videomass.
 
@@ -49,9 +51,9 @@ def args():
                         action="store_true",
                         )
 
-    args = parser.parse_args()
+    argmts = parser.parse_args()
 
-    if args.check:
+    if argmts.check:
         listing = ['ffmpeg',
                    'ffprobe',
                    'ffplay',
@@ -68,12 +70,10 @@ def args():
                 print("\t%s '%s' ..Ok" % (opt, required))
             else:
                 print("\t%s '%s' ..Not Installed" % (opt, required))
-        return
 
-    elif args.version:
-        cr = current_release()
-        print('%s version %s released on %s' % (cr[0], cr[2], cr[3]))
-        return
+    elif argmts.version:
+        crel = current_release()
+        print('%s version %s released on %s' % (crel[0], crel[2], crel[3]))
+
     else:
         print("Type 'videomass -h' for help.")
-        return

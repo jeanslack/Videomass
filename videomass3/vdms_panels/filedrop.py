@@ -28,7 +28,7 @@ import os
 import sys
 import wx
 from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass3.vdms_io import IO_tools
+from videomass3.vdms_io import io_tools
 from videomass3.vdms_utils.utils import get_milliseconds
 
 
@@ -84,7 +84,7 @@ class MyListCtrl(wx.ListCtrl):
             return
 
         if not [x for x in self.data if x['format']['filename'] == path]:
-            data = IO_tools.probeInfo(path)
+            data = io_tools.probe_getinfo(path)
 
             if data[1]:
                 self.parent.statusbar_msg(data[1], MyListCtrl.RED,
@@ -322,7 +322,7 @@ class FileDnD(wx.Panel):
                 tstamp = '-vf "%s"' % (self.parent.cmdtimestamp)
             else:
                 tstamp = ""
-            IO_tools.stream_play(item, self.parent.time_seq,
+            io_tools.stream_play(item, self.parent.time_seq,
                                  tstamp, self.parent.autoexit
                                  )
     # ----------------------------------------------------------------------

@@ -24,7 +24,7 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-from videomass3.vdms_io import IO_tools
+from videomass3.vdms_io import io_tools
 import wx
 import re
 
@@ -57,7 +57,7 @@ class FFmpeg_Search(wx.MiniFrame):
 
         """
         self.oS = OS
-        self.row = None  # output text from `IO_tools.findtopic(topic)'
+        self.row = None  # output text from `io_tools.findtopic(topic)'
         get = wx.GetApp()  # get data from bootstrap
 
         wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
@@ -204,7 +204,7 @@ class FFmpeg_Search(wx.MiniFrame):
         else:
             self.texthelp.Clear()  # reset textctrl
             topic = arg_opt[self.cmbx_choice.GetValue()]
-            self.row = IO_tools.findtopic(topic)
+            self.row = io_tools.findtopic(topic)
 
             if self.row:
                 self.texthelp.AppendText(self.row)

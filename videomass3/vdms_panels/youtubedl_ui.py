@@ -27,7 +27,7 @@ This file is part of Videomass.
 import sys
 import wx
 import wx.lib.scrolledpanel as scrolled
-from videomass3.vdms_io import IO_tools
+from videomass3.vdms_io import io_tools
 from videomass3.vdms_utils.utils import format_bytes
 from videomass3.vdms_utils.utils import timehuman
 from videomass3.vdms_frames.ydl_mediainfo import YDL_Mediainfo
@@ -455,7 +455,7 @@ class Downloader(wx.Panel):
             elif self.choice.GetSelection() == 3:
                 quality = self.fcode.GetItemText(item, 0)
 
-            IO_tools.url_play(url, quality, tstamp, self.parent.autoexit)
+            io_tools.url_play(url, quality, tstamp, self.parent.autoexit)
     # ----------------------------------------------------------------------
 
     def get_libraryformatcode(self):
@@ -479,7 +479,7 @@ class Downloader(wx.Panel):
         self.fcode.InsertColumn(8, (_('Size')), width=100)
         index = 0
         for link in self.parent.data_url:
-            data = IO_tools.youtubedl_getstatistics(link)
+            data = io_tools.youtubedl_getstatistics(link)
             for meta in data:
                 if meta[1]:
                     # self.parent.statusbar_msg('Youtube Downloader', None)
@@ -522,7 +522,7 @@ class Downloader(wx.Panel):
         otherwise return None as exit staus.
         """
         for link in self.parent.data_url:
-            data = IO_tools.youtubedl_getstatistics(link)
+            data = io_tools.youtubedl_getstatistics(link)
             for meta in data:
                 if meta[1]:
                     # self.parent.statusbar_msg('Youtube Downloader', None)
@@ -573,7 +573,7 @@ class Downloader(wx.Panel):
 
         index = 0
         for link in self.parent.data_url:
-            data = IO_tools.youtube_getformatcode_exec(link)
+            data = io_tools.youtube_getformatcode_exec(link)
             for meta in data:
                 if meta[1]:
                     wx.MessageBox(meta[0], 'Videomass', wx.ICON_ERROR)

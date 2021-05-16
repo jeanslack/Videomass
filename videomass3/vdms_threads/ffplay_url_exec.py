@@ -8,10 +8,10 @@ Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: May.09.2021
-pycodestyle: OK
-flake8: --ignore F821, W504
-pylint: --ignore E0602, E1101
-########################################################
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
+
 This file is part of Videomass.
 
    Videomass is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ import subprocess
 import platform
 import wx
 from pubsub import pub
-from videomass3.vdms_io import IO_tools
+from videomass3.vdms_io import io_tools
 from videomass3.vdms_io.make_filelog import write_log  # write initial log
 if not platform.system() == 'Windows':
     import shlex
@@ -294,5 +294,5 @@ def start_palying_listener(output):
     ffplay in at a given time.
 
     """
-    IO_tools.stream_play(output, '', ExecStreaming.TIMESTAMP,
+    io_tools.stream_play(output, '', ExecStreaming.TIMESTAMP,
                          ExecStreaming.AUTOEXIT)

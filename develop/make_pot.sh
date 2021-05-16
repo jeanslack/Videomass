@@ -49,7 +49,7 @@ $XGETTEXT -d videomass "../vdms3.py" \
 "../vdms_frames/showlogs.py" \
 "../vdms_frames/ydl_mediainfo.py" \
 "../vdms_io/checkup.py" \
-"../vdms_io/IO_tools.py" \
+"../vdms_io/io_tools.py" \
 "../vdms_io/presets_manager_properties.py" \
 "../vdms_main/main_frame.py" \
 "../vdms_panels/av_conversions.py" \
@@ -65,7 +65,7 @@ $XGETTEXT -d videomass "../vdms3.py" \
 "../vdms_threads/ffprobe_parser.py" \
 "../vdms_threads/one_pass.py" \
 "../vdms_threads/picture_exporting.py" \
-"../vdms_threads/two_pass_EBU.py" \
+"../vdms_threads/two_pass_ebu.py" \
 "../vdms_threads/two_pass.py" \
 "../vdms_threads/volumedetect.py" \
 "../vdms_threads/ydl_executable.py" \

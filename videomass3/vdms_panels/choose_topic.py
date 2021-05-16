@@ -28,7 +28,7 @@ import os
 import sys
 import wx
 from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass3.vdms_io import IO_tools
+from videomass3.vdms_io import io_tools
 from videomass3.vdms_sys.msg_info import current_release
 
 
@@ -38,7 +38,7 @@ def ydl_latest():
     """
     url = ("https://api.github.com/repos/ytdl-org/youtube-dl"
            "/releases/latest")
-    latest = IO_tools.get_github_releases(url, "tag_name")
+    latest = io_tools.get_github_releases(url, "tag_name")
 
     if latest[0] in ['request error:', 'response error:']:
         wx.MessageBox("%s %s" % (latest[0], latest[1]),
@@ -242,7 +242,7 @@ class Choose_Topic(wx.Panel):
                 if not latest:
                     return
                 else:
-                    upgrade = IO_tools.youtubedl_upgrade(latest[0],
+                    upgrade = io_tools.youtubedl_upgrade(latest[0],
                                                          self.appdata['EXECYDL']
                                                          )
                 if upgrade[1]:  # failed

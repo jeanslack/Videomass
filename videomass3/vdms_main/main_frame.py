@@ -46,7 +46,7 @@ from videomass3.vdms_panels import av_conversions
 from videomass3.vdms_panels import concatenate
 from videomass3.vdms_panels.long_processing_task import LogOut
 from videomass3.vdms_panels import presets_manager
-from videomass3.vdms_io import IO_tools
+from videomass3.vdms_io import io_tools
 from videomass3.vdms_sys.msg_info import current_release
 from videomass3.vdms_utils.utils import get_milliseconds
 from videomass3.vdms_utils.utils import copydir_recursively
@@ -588,7 +588,7 @@ class MainFrame(wx.Frame):
         Open the download folder with file manager
 
         """
-        IO_tools.openpath(self.appdata['outputdownload'])
+        io_tools.openpath(self.appdata['outputdownload'])
     # -------------------------------------------------------------------#
 
     def openMyconversions(self, event):
@@ -596,7 +596,7 @@ class MainFrame(wx.Frame):
         Open the conversions folder with file manager
 
         """
-        IO_tools.openpath(self.appdata['outputfile'])
+        io_tools.openpath(self.appdata['outputfile'])
     # -------------------------------------------------------------------#
 
     def openMydownloads_tmp(self, event):
@@ -604,7 +604,7 @@ class MainFrame(wx.Frame):
         Open the temporary download folder with file manager
 
         """
-        IO_tools.openpath(self.outpath_ydl)
+        io_tools.openpath(self.outpath_ydl)
     # -------------------------------------------------------------------#
 
     def openMyconversions_tmp(self, event):
@@ -612,7 +612,7 @@ class MainFrame(wx.Frame):
         Open the temporary conversions folder with file manager
 
         """
-        IO_tools.openpath(self.outpath_ffmpeg)
+        io_tools.openpath(self.outpath_ffmpeg)
     # -------------------------------------------------------------------#
 
     def Quiet(self, event):
@@ -644,7 +644,7 @@ class MainFrame(wx.Frame):
             """
             url = ("https://api.github.com/repos/ytdl-org/youtube-dl"
                    "/releases/latest")
-            latest = IO_tools.get_github_releases(url, "tag_name")
+            latest = io_tools.get_github_releases(url, "tag_name")
 
             if latest[0] in ['request error:', 'response error:']:
                 wx.MessageBox("%s %s" % (latest[0], latest[1]),
@@ -673,7 +673,7 @@ class MainFrame(wx.Frame):
             if not ck:
                 return
             else:
-                upgrade = IO_tools.youtubedl_upgrade(ck[0],
+                upgrade = io_tools.youtubedl_upgrade(ck[0],
                                                      self.appdata['EXECYDL'],
                                                      upgrade=True)
             if upgrade[1]:  # failed
@@ -715,7 +715,7 @@ class MainFrame(wx.Frame):
                         return
                     appimage = fileDialog.GetPath()
 
-                upgrade = IO_tools.appimage_update_youtube_dl(appimage)
+                upgrade = io_tools.appimage_update_youtube_dl(appimage)
 
                 if upgrade == 'success':
                     if wx.MessageBox(_(
@@ -767,7 +767,7 @@ class MainFrame(wx.Frame):
         with open(presetsdir, "r", encoding='utf8') as vers:
             fread = vers.read().strip()
 
-        newversion = IO_tools.get_github_releases(url, "tag_name")
+        newversion = io_tools.get_github_releases(url, "tag_name")
 
         if newversion[0] in ['request error:', 'response error:']:
             wx.MessageBox("%s %s" % (newversion[0], newversion[1]),
@@ -798,7 +798,7 @@ class MainFrame(wx.Frame):
         else:
             return
 
-        tarball = IO_tools.get_github_releases(url, "tarball_url")
+        tarball = io_tools.get_github_releases(url, "tarball_url")
 
         if tarball[0] in ['request error:', 'response error:']:
             wx.MessageBox("%s %s" % (tarbal[0], tarbal[1]),
@@ -808,7 +808,7 @@ class MainFrame(wx.Frame):
         name = 'Videomass-presets-%s.tar.gz' % tarball[0].split('/v')[-1]
         pathname = os.path.join(path, name)
         msg = _('\nWait....\nThe archive is being downloaded\n')
-        download = IO_tools.get_presets(tarball[0], pathname, msg)
+        download = io_tools.get_presets(tarball[0], pathname, msg)
 
         if download[1]:
             wx.MessageBox("%s" % download[1], 'ERROR', wx.ICON_ERROR, self)
@@ -823,34 +823,34 @@ class MainFrame(wx.Frame):
 
     def Check_conf(self, event):
         """
-        Call IO_tools.test_conf
+        Call io_tools.test_conf
 
         """
-        IO_tools.test_conf()
+        io_tools.test_conf()
     # ------------------------------------------------------------------#
 
     def Check_formats(self, event):
         """
-        IO_tools.test_formats
+        io_tools.test_formats
 
         """
-        IO_tools.test_formats()
+        io_tools.test_formats()
     # ------------------------------------------------------------------#
 
     def Check_enc(self, event):
         """
-        IO_tools.test_encoders
+        io_tools.test_encoders
 
         """
-        IO_tools.test_codecs('-encoders')
+        io_tools.test_codecs('-encoders')
     # ------------------------------------------------------------------#
 
     def Check_dec(self, event):
         """
-        IO_tools.test_encoders
+        io_tools.test_encoders
 
         """
-        IO_tools.test_codecs('-decoders')
+        io_tools.test_codecs('-decoders')
     # ------------------------------------------------------------------#
 
     def durinPlayng(self, event):
@@ -876,7 +876,7 @@ class MainFrame(wx.Frame):
             return this
         else:
             if os.path.exists(self.appdata['EXECYDL']):
-                this = IO_tools.youtubedl_update([self.appdata['EXECYDL'],
+                this = io_tools.youtubedl_update([self.appdata['EXECYDL'],
                                                   '--version'],
                                                  waitmsg)
                 if this[1]:  # failed
@@ -905,7 +905,7 @@ class MainFrame(wx.Frame):
         """
         url = ("https://api.github.com/repos/ytdl-org/youtube-dl"
                "/releases/latest")
-        latest = IO_tools.get_github_releases(url, "tag_name")
+        latest = io_tools.get_github_releases(url, "tag_name")
 
         if latest[0] in ['request error:', 'response error:']:
             wx.MessageBox("%s %s" % (latest[0], latest[1]),
@@ -1025,7 +1025,7 @@ class MainFrame(wx.Frame):
             wx.MessageBox(_("There are no logs to show."),
                           "Videomass", wx.ICON_INFORMATION, self)
             return
-        IO_tools.openpath(self.appdata['logdir'])
+        io_tools.openpath(self.appdata['logdir'])
     # ------------------------------------------------------------------#
 
     def openConf(self, event):
@@ -1033,7 +1033,7 @@ class MainFrame(wx.Frame):
         Open the configuration folder with file manager
 
         """
-        IO_tools.openpath(self.appdata['confdir'])
+        io_tools.openpath(self.appdata['confdir'])
     # -------------------------------------------------------------------#
 
     def openCache(self, event):
@@ -1044,7 +1044,7 @@ class MainFrame(wx.Frame):
             wx.MessageBox(_("cache folder has not been created yet."),
                           "Videomass", wx.ICON_INFORMATION, self)
             return
-        IO_tools.openpath(self.appdata['cachedir'])
+        io_tools.openpath(self.appdata['cachedir'])
     # ------------------------------------------------------------------#
     # --------- Menu  Preferences  ###
 
@@ -1198,7 +1198,7 @@ class MainFrame(wx.Frame):
         this = current_release()  # this version
         url = ("https://api.github.com/repos/jeanslack/"
                "Videomass/releases/latest")
-        version = IO_tools.get_github_releases(url, "tag_name")
+        version = io_tools.get_github_releases(url, "tag_name")
 
         if version[0] in ['request error:', 'response error:']:
             wx.MessageBox("%s %s" % (version[0], version[1]),

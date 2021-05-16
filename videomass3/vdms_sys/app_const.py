@@ -1,10 +1,12 @@
 # -*- coding: UTF-8 -*-
-# Author:  Werner F. Bruhin
-# Purpose: Application constants
-# Created: 06/04/2012
-#
-# Edited by Gianluca (jeanslack) Pernigotto
-# Update: November 29 2020 (update with Russian language)
+"""
+Author:  Werner F. Bruhin
+Purpose: Application constants
+Created: 06/04/2012
+
+Edited by Gianluca (jeanslack) Pernigotto
+Update: November 29 2020 (update with Russian language)
+"""
 
 import wx
 

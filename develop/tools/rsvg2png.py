@@ -65,10 +65,10 @@ def svg2png(delete, paths, parameters,
     else:
         outext = 'png'
 
-    for k, v in parameters.items():
-        if v:
-            cmd.append(k)
-            cmd.append(str(v))
+    for key, val in parameters.items():
+        if val:
+            cmd.append(key)
+            cmd.append(str(val))
 
     for path in paths:
         for files in glob.iglob(os.path.join(path, recurs, '*.svg'),
@@ -82,22 +82,23 @@ def svg2png(delete, paths, parameters,
             else:
                 command = cmd + [files, '-o', saveto]
             try:
-                p = subprocess.run(command,
-                                   capture_output=True,
-                                   universal_newlines=True
-                                   )
+                proc = subprocess.run(command,
+                                      capture_output=True,
+                                      universal_newlines=True,
+                                      check=True,
+                                      )
             except FileNotFoundError:
-                return ("ERROR: 'rsvg-convert': Command not found")
+                return "ERROR: 'rsvg-convert': Command not found"
 
-            if p.returncode:
-                return "ARGS: %s\nERROR: %s" % (p.args, p.stderr)
+            if proc.returncode:
+                return "ARGS: %s\nERROR: %s" % (proc.args, proc.stderr)
 
-            elif delete:
+            if delete:
                 try:
                     os.remove(files)
                 except OSError as err:
                     return "ERROR: %s" % err
-    return
+    return None
     # -------------------------------------------------------------------#
 
 
@@ -162,8 +163,8 @@ def main():
                         )
     args = parser.parse_args()
 
-    for p in args.paths:
-        if not os.path.isdir(p):
+    for pth in args.paths:
+        if not os.path.isdir(pth):
             raise NotADirectoryError("Invalid or inexistent pathname for "
                                      "inputdir '%s'" % p)
 
