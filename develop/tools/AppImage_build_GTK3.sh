@@ -33,7 +33,7 @@ else
     TEMP_BASE=/tmp
 fi
 
-PYTHON_APPIMAGE=python3.8.9-cp38-cp38-manylinux1_x86_64.AppImage
+PYTHON_APPIMAGE=python3.8.10-cp38-cp38-manylinux1_x86_64.AppImage
 PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.8/${PYTHON_APPIMAGE}
 WX_PYTHON_WHEEL=wxPython-4.1.0-cp38-cp38-linux_x86_64.whl
 
