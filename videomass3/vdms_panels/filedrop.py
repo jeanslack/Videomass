@@ -74,11 +74,12 @@ class MyListCtrl(wx.ListCtrl):
                                       MyListCtrl.WHITE)
             return
 
-        elif os.path.isdir(path):
+        if os.path.isdir(path):
             self.parent.statusbar_msg(msg_dir, MyListCtrl.ORANGE,
                                       MyListCtrl.WHITE)
             return
-        elif os.path.splitext(os.path.basename(path))[1] == '':
+
+        if os.path.splitext(os.path.basename(path))[1] == '':
             self.parent.statusbar_msg(msg_noext, MyListCtrl.ORANGE,
                                       MyListCtrl.WHITE)
             return

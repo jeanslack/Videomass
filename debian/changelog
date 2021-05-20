@@ -14,7 +14,7 @@ videomass (3.4.3-1) UNRELEASED; urgency=medium
     format for '(,' (,: Invalid argument` .
   * some code refactor (based on flake8/pylint)
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 02 May 2021 20:49:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 20 May 2021 14:57:00 +0200
 
 videomass (3.4.2-1) UNRELEASED; urgency=medium
 

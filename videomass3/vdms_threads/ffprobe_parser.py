@@ -316,66 +316,6 @@ class FFProbe():
         return self._format
     # --------------------------------------------------------------#
 
-    def get_title(self):  # TEST  must be tested
-        """
-        Get filename from format and return title
-        """
-        video_list = self.data_format()  # get video format for video title
-
-        for title in video_list[0]:
-            if 'filename=' in title:
-                vtitle = title.split('=')[1]
-                break
-            vtitle = 'Title unknown'
-
-        return vtitle
-    # --------------------------------------------------------------#
-
-    def get_audio_codec_name(self):
-        """
-        Return title and list of possible audio codec name and
-        tag language into a video with one or more audio streams.
-        If not audio stream in video return None.
-        This method is useful for exemple to saving audio content as
-        audio track.
-        """
-        if not self.audio_stream():
-            # audio_lang.append('no audio stream')
-            return None, None
-
-        astream = self.audio_stream()  # get audio stream
-        audio_lang = []
-
-        count = len(astream)
-        for num in range(count):
-            (key, value) = astream[num][0].strip().split('=')
-            for aud in astream[num]:
-                (key, value) = aud.strip().split('=')
-                acod = value if "codec_name" in key else ''  # audio codec
-                if "stream_tags" in key:
-                    lang = value
-                else:
-                    if "TAG:language" in key:
-                        lang = value
-                    else:
-                        lang = 'unknown'
-                lang = value if "stream_tags" in key else langunknown  # lang
-                lang = value if "TAG:language" in key else langunknown  # lang
-                indx = value if "index" in key else ''
-                srate = value if key == "sample_rate" else ''
-                bits = value if key == "bits_per_sample" else ''
-                chan = value if key == "channel_layout" else ''
-                bitr = value if key == "bit_rate" else ''
-
-            audio_lang.append("index: %s | codec: %s | language: %s "
-                              "| sampe rate: %s | bit: %s | channels: %s "
-                              "| bit rate: %s" % (indx, acod, lang, srate,
-                                                  bits, chan, bitr)
-                              )
-        # TEST  must be tested
-        return audio_lang, self.get_title()
-    # ----------------------------------------------------------------#
-
     def custom_output(self):
         """
         Print output defined by writer argument. To use this feature

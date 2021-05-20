@@ -145,13 +145,17 @@ def copy_restore(src, dest):
     """
     copy a specific file from src to dest. If dest exists,
     it will be overwritten with src without confirmation.
-    If src does not exists return FileNotFoundError.
     """
     try:
         shutil.copyfile(str(src), str(dest))
     except FileNotFoundError as err:
+        # file src not exists
         return err
-    except Exception as err:
+    except SameFileError as err:
+        # src and dest are the same file and same dir.
+        return err
+    except OSError as err:
+        # The dest location must be writable
         return err
 
     return None
@@ -172,7 +176,9 @@ def copydir_recursively(source, destination, extraname=None):
         dest = os.path.join(destination, os.path.basename(source))
     try:
         shutil.copytree(str(source), str(dest))
-    except Exception as err:
+
+    except FileExistsError as err:
+        # dest dir already exists
         return err
 
     return None
@@ -196,7 +202,8 @@ def copy_on(ext, source, destination):
     for fln in files:
         try:
             shutil.copy(fln, '%s' % (destination))
-        except Exception as error:
+        except IOError as error:
+            # problems with permissions
             return error
     return None
 # ------------------------------------------------------------------#

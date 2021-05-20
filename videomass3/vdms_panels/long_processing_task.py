@@ -60,8 +60,8 @@ def pairwise(iterable):
     two-elements-in-a-list>
 
     """
-    a = iter(iterable)  # list_iterator object
-    return zip(a, a)  # zip object pairs from list iterable object
+    itobj = iter(iterable)  # list_iterator object
+    return zip(itobj, itobj)  # zip object pairs from list iterable object
 # ----------------------------------------------------------------------#
 
 
@@ -140,15 +140,14 @@ class LogOut(wx.Panel):
 
         """
         self.parent = parent  # main frame
-        self.PARENT_THREAD = None  # the instantiated thread
-        self.ABORT = False  # if True set to abort current process
-        self.ERROR = False  # if True, all the tasks was failed
+        self.thread_type = None  # the instantiated thread
+        self.abort = False  # if True set to abort current process
+        self.error = False  # if True, all the tasks was failed
         self.previus = None  # panel name from which it starts
         self.logname = None  # example: AV_conversions.log
         self.result = None  # result of the final process
 
         wx.Panel.__init__(self, parent=parent)
-        """ Constructor """
 
         infolbl = _("Process log:")
         lbl = wx.StaticText(self, label=infolbl)
@@ -217,36 +216,36 @@ class LogOut(wx.Panel):
         write_log(self.logname, LogOut.appdata['logdir'])  # initial file LOG
 
         if varargs[0] == 'onepass':  # from Audio/Video Conv.
-            self.PARENT_THREAD = OnePass(varargs, duration,
+            self.thread_type = OnePass(varargs, duration,
                                          self.logname, time_seq,
                                          )
         elif varargs[0] == 'twopass':  # from Video Conv.
-            self.PARENT_THREAD = TwoPass(varargs, duration,
+            self.thread_type = TwoPass(varargs, duration,
                                          self.logname, time_seq
                                          )
         elif varargs[0] == 'two pass EBU':  # from Audio/Video Conv.
-            self.PARENT_THREAD = Loudnorm(varargs, duration,
+            self.thread_type = Loudnorm(varargs, duration,
                                           self.logname, time_seq
                                           )
         elif varargs[0] == 'savepictures':
-            self.PARENT_THREAD = PicturesFromVideo(varargs, duration,
+            self.thread_type = PicturesFromVideo(varargs, duration,
                                                    self.logname, time_seq
                                                    )
         elif varargs[0] == 'libvidstab':  # from Audio/Video Conv.
-            self.PARENT_THREAD = VidStab(varargs, duration,
+            self.thread_type = VidStab(varargs, duration,
                                          self.logname, time_seq
                                          )
         elif varargs[0] == 'concat_demuxer':  # from Concatenation Demuxer
-            self.PARENT_THREAD = ConcatDemuxer(varargs, duration,
+            self.thread_type = ConcatDemuxer(varargs, duration,
                                                self.logname,
                                                )
         elif varargs[0] == 'youtube_dl python package':  # as import youtube_dl
             self.ckbx_text.Hide()
-            self.PARENT_THREAD = YtdlLibDL(varargs, self.logname)
+            self.thread_type = YtdlLibDL(varargs, self.logname)
 
         elif varargs[0] == 'youtube-dl executable':  # as youtube-dl exec.
             self.ckbx_text.Hide()
-            self.PARENT_THREAD = YtdlExecDL(varargs, self.logname)
+            self.thread_type = YtdlExecDL(varargs, self.logname)
     # ----------------------------------------------------------------------
 
     def youtubedl_from_import(self, output, duration, status):
@@ -438,7 +437,7 @@ class LogOut(wx.Panel):
         if end == 'error':
             self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.WARN))
             self.OutText.AppendText('\n%s\n' % (count))
-            self.ERROR = True
+            self.error = True
         else:
             self.barProg.SetRange(duration)  # set overall duration range
             self.barProg.SetValue(0)  # reset bar progress
@@ -455,11 +454,11 @@ class LogOut(wx.Panel):
         """
         At the end of the process
         """
-        if self.ERROR is True:
+        if self.error is True:
             self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.ERROR_2))
             self.OutText.AppendText(LogOut.MSG_taskfailed + '\n')
 
-        elif self.ABORT is True:
+        elif self.abort is True:
             self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.ABORT))
             self.OutText.AppendText(LogOut.MSG_interrupted + '\n')
 
@@ -477,19 +476,19 @@ class LogOut(wx.Panel):
         self.OutText.AppendText('\n')
         self.button_stop.Enable(False)
         self.button_close.Enable(True)
-        self.PARENT_THREAD = None
+        self.thread_type = None
     # ----------------------------------------------------------------------
 
     def on_stop(self, event):
         """
         The user change idea and was stop process
         """
-        self.PARENT_THREAD.stop()
+        self.thread_type.stop()
         self.parent.statusbar_msg(_("wait... I'm aborting"), 'GOLDENROD',
                                   LogOut.WHITE)
-        self.PARENT_THREAD.join()
+        self.thread_type.join()
         self.parent.statusbar_msg(_("...Interrupted"), None)
-        self.ABORT = True
+        self.abort = True
 
         event.Skip()
     # ----------------------------------------------------------------------
@@ -505,7 +504,7 @@ class LogOut(wx.Panel):
             self.button_close.Enable(False)
             self.parent.panelShown(self.previus)  # retrieve at previusly panel
 
-        if self.PARENT_THREAD is not None:
+        if self.thread_type is not None:
             if wx.MessageBox(_('There are still processes running.. if you '
                                'want to stop them, use the "Abort" button.\n\n'
                                'Do you want to kill application?'),
@@ -518,9 +517,9 @@ class LogOut(wx.Panel):
         self.ckbx_text.Show()
         self.button_stop.Enable(True)
         self.button_close.Enable(False)
-        self.PARENT_THREAD = None
-        self.ABORT = False
-        self.ERROR = False
+        self.thread_type = None
+        self.abort = False
+        self.error = False
         self.logname = None
         self.result = None
         # self.OutText.Clear()

@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-May 02, 2021 V.3.4.3
+May 20, 2021 V.3.4.3
 
   * Update Portuguese (BR) translation (thanks to Samuel)
   * Fixed `FileNotFoundError` traceback during youtube-dl update on AppImage.
