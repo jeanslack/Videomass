@@ -38,45 +38,59 @@ if not platform.system() == 'Windows':
 class FFProbe():
     """
     FFProbe wraps the ffprobe command and pulls the data into
-    an object form:
+    an object form. The `parse` argument defines the parser's behavior.
 
-    `data = FFProbe(FFPROBE_URL, filename_url, parse=True,
-                    pretty=True, select=None, entries=None,
-                    show_format=True, show_streams=True, writer=None)`
+    If you specify `parser=True' (default) which give an auto-parsed output
+    in a object list for each instance (see examples below). The `select`,
+    `entries`, and `writer` arguments will be ignored;
 
-   The `parse` argument defines the parser's behavior; `parse=True` get
-   an automatically parsed output with four list-type sections while the
-   `select`, `entries`,` writer` arguments will be ignored; `parse=False`
-   you get a customized output characterized by the arguments you define.
+    If you specify `parse=False` you  get a customized output characterized
+    by the arguments you define. Note that in this case the output given by
+    custom_output() instance will always be given in a string object.
+    For instance, if you use `writer=json' you must use `eval' function
+    to obtain a dict object.
 
     ---------------------
-    USE with `parse=True`:
+    USE with `parse=True` (default):
     ---------------------
 
-        After referencing the above class, use a convenient way to handle
-        possible exceptions, example:
+    >>> from ffprobe_parser import FFProbe
+
+    >>> data = FFProbe('ffprobe_url',
+                       'filename_url',
+                       parse=True,
+                       pretty=True,
+                       select=None,
+                       entries=None,
+                       show_format=True,
+                       show_streams=True,
+                       writer=None
+                       )
+
+        First handle possible exceptions, example:
 
             if data.error_check():
                 print ("Some Error:  %s" % (data.error))
-                return
-            else:
-                print (data.video_stream())
-                print (data.audio_stream())
-                print (data.subtitle_stream())
-                print (data.data_format())
 
-            format_dict = dict()
-            for line in data.data_format():
-                for items in line:
-                    if '=' in items:
-                        k, v = items.split('=')
-                        k, v = k.strip(), v.strip()
-                        data_format[k] = v
-            print (data_format)
+            else:
+                video = data.video_stream()
+                audio = data.audio_stream()
+                subtitle = data.subtitle_stream()
+                dataformat = data.data_format())
+
+                formatdict = dict()
+                for items in dataformat:
+                    for line in items:
+                        if '=' in line:
+                            k, v = line.split('=')
+                            formatdict[k.strip()] = v.strip()
+                print(formatdict)
 
     ----------------------
     USE with `parse=False`:
     ----------------------
+
+    >>> from ffprobe_parser import FFProbe
 
         Get simple output data:
         -----------------------
@@ -87,16 +101,13 @@ class FFProbe():
                             writer='xml')
                             )`
 
-            After referencing the above class, use a convenient way to handle
-            possible exceptions, example:
+            First handle possible exceptions, example:
 
                 if data.error_check():
-                    print ("Some Error:  %s" % (data.error))
-                    return
+                    print("Some Error:  %s" % (data.error))
 
-            then, get your custom output:
-
-                print(data.custom_output())
+                else:
+                    print(data.custom_output())
 
         To get a kind of output:
         ------------------------
@@ -108,22 +119,18 @@ class FFProbe():
                             parse=False,
                             pretty=True,
                             select='a:0',
-                            entries='stream=code_type',
+                            entries='stream=codec_type',
                             show_format=False,
                             show_streams=False,
                             writer='compact=nk=1:p=0'
                             )`
 
-            After referencing the above class, use a convenient way to handle
-            possible exceptions, example:
+            First handle possible exceptions, example:
 
                 if data.error_check():
-                    print ("Some Error:  %s" % (data.error))
-                    return
-
-            then, get your custom output:
-
-                print(data.custom_output().strip())
+                    print("Some Error:  %s" % (data.error))
+                else:
+                    print(data.custom_output().strip())
 
             The `entries` arg is the key to search some entry on sections
 
