@@ -636,7 +636,7 @@ class Setup(wx.Dialog):
     def set_Suffix(self, event):
         """Set a custom suffix to append at the output file names"""
         msg = _('Enter only alphanumeric characters. You can also use the '
-                'hyphen ("-") and the underscore ("_"). Blank spaces are '
+                'hyphen ("-") and the underscore ("_"). Spaces are '
                 'not allowed.')
         suffix = self.text_suffix.GetValue()
 

@@ -91,7 +91,7 @@ class PageOne(wx.Panel):
         img = img.ConvertToBitmap()
         bitmap_vdms = wx.StaticBitmap(self, wx.ID_ANY, img)
         lab1 = wx.StaticText(self, wx.ID_ANY,
-                             _("Welcome to Videomass Wizard!"))
+                             _("Welcome to the Videomass Wizard!"))
         lab2 = wx.StaticText(self, wx.ID_ANY, PageOne.MSG2,
                              style=wx.ST_ELLIPSIZE_END |
                              wx.ALIGN_CENTRE_HORIZONTAL

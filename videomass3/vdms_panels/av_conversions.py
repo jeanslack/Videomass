@@ -1834,8 +1834,8 @@ class AV_Conv(wx.Panel):
 
         """
         msg2 = (_('Audio normalization is required only for some files'))
-        msg3 = (_("Audio normalization will not be applied because it's "
-                  "equal to the source"))
+        msg3 = (_("Audio normalization will not be applied because the "
+                  "source signal is equal"))
         if self.normdetails:
             del self.normdetails[:]
 
@@ -2260,7 +2260,7 @@ class AV_Conv(wx.Panel):
             opt1, opt2 = '-pass 1', '-pass 2'
 
         if self.cmb_Vcod.GetValue() == "Copy":
-            cmd_1 = (f'{self.opt["AudioInMap"][0]} '
+            cmd_1 = (f'-map 0:v? {self.opt["AudioInMap"][0]} '
                      f'-filter:a: {loudfilter} '
                      f'-vn -sn {opt1} {self.opt["AspectRatio"]} '
                      f'{self.opt["FPS"]} -f null'
@@ -2574,7 +2574,7 @@ class AV_Conv(wx.Panel):
             parameters = self.audio_stdProc([], [], 0, 'save as profile')
 
         with wx.FileDialog(
-                None, _("Save the new profile on..."),
+                None, _("Save the new profile to..."),
                 defaultDir=os.path.join(self.appdata['confdir'], 'presets'),
                 wildcard="Videomass presets (*.prst;)|*.prst;",
                 style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:

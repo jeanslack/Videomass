@@ -42,7 +42,7 @@ class FFmpeg_Codecs(wx.MiniFrame):
         if close videomass also close parent window:
         """
         if type_opt == '-encoders':
-            cod = _('CODING ABILITY')
+            cod = _('CODING CAPABILITY')
             colctrl = 'ORANGE'
             title = _("FFmpeg encoders")
         else:

@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 3.4.1\n"
+"Project-Id-Version: Videomass 3.4.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-16 13:12+0200\n"
-"PO-Revision-Date: 2021-05-16 13:13+0200\n"
+"POT-Creation-Date: 2021-06-01 10:06+0200\n"
+"PO-Revision-Date: 2021-06-01 10:20+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -273,7 +273,7 @@ msgstr "Filtri Denoiser"
 msgid ""
 "nlmeans:\n"
 "Denoise frames using Non-Local Means algorithm is capable of restoring video "
-"sequences with even strong noise. It is ideal for enhancing the quality of "
+"sequences, even with strong noise. It is ideal for enhancing the quality of "
 "old VHS tapes."
 msgstr ""
 "nlmeans:\n"
@@ -396,7 +396,7 @@ msgid "[OPTALGO] optimization algorithm"
 msgstr "[OPTALGO] algoritmo di ottimizzazione"
 
 #: ../vdms_dialogs/filter_stab.py:171
-msgid "[CROP] Specify how to deal borders at movement compensation"
+msgid "[CROP] Specify how to deal with borders at movement compensation"
 msgstr ""
 "[CROP] Specificare come trattare i bordi alla compensazione del movimento"
 
@@ -498,12 +498,12 @@ msgstr ""
 #: ../vdms_dialogs/filter_stab.py:304
 msgid ""
 "Set the camera path optimization algorithm. Values are: ‘gauss’: gaussian "
-"kernel low-pass filter on camera motion (default) ‘avg’ averaging on "
+"kernel low-pass filter on camera motion (default), and ‘avg’: averaging on "
 "transformations"
 msgstr ""
 "Imposta l'algoritmo di ottimizzazione del percorso della fotocamera. I "
 "valori sono: \"gauss\": filtro passa-basso del kernel gaussiano sul "
-"movimento della fotocamera (impostazione predefinita) media \"avg\" sulle "
+"movimento della fotocamera (predefinito), e media \"avg\" per le "
 "trasformazioni"
 
 #: ../vdms_dialogs/filter_stab.py:308
@@ -655,7 +655,7 @@ msgid "Click the \"Next\" button to get started"
 msgstr "Fare clic sul pulsante \"Successivo\" per iniziare"
 
 #: ../vdms_dialogs/wizard_dlg.py:94
-msgid "Welcome to Videomass Wizard!"
+msgid "Welcome to the Videomass Wizard!"
 msgstr "Benvenuti nell'assistente di Videomass!"
 
 #: ../vdms_dialogs/wizard_dlg.py:135
@@ -1138,7 +1138,7 @@ msgstr "Imposta una posizione persistente per salvare i file esportati"
 #: ../vdms_dialogs/settings.py:638
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
-"the underscore (\"_\"). Blank spaces are not allowed."
+"the underscore (\"_\"). Spaces are not allowed."
 msgstr ""
 "Immettere solo caratteri alfanumerici. È inoltre possibile utilizzare il "
 "trattino (\"-\") e il trattino basso (\"_\"). Non sono ammessi spazi vuoti."
@@ -1201,8 +1201,8 @@ msgid "DISABLED:"
 msgstr "DISABILITATO:"
 
 #: ../vdms_frames/ffmpeg_codecs.py:45
-msgid "CODING ABILITY"
-msgstr "ABILITÀ DI CODIFICA"
+msgid "CODING CAPABILITY"
+msgstr "CAPACITÀ DI DECODIFICA"
 
 #: ../vdms_frames/ffmpeg_codecs.py:47
 msgid "FFmpeg encoders"
@@ -1993,7 +1993,7 @@ msgstr "Sistema"
 msgid "Goto"
 msgstr "Vai"
 
-#: ../vdms_main/main_frame.py:475 ../vdms_panels/filedrop.py:238
+#: ../vdms_main/main_frame.py:475 ../vdms_panels/filedrop.py:239
 msgid "Set up a temporary folder for conversions"
 msgstr "Imposta una cartella temporanea per le conversioni"
 
@@ -2798,9 +2798,9 @@ msgstr "La normalizzazione audio è richiesta solo per alcuni files"
 
 #: ../vdms_panels/av_conversions.py:1837
 msgid ""
-"Audio normalization will not be applied because it's equal to the source"
+"Audio normalization will not be applied because the source signal is equal"
 msgstr ""
-"La normalizzazione audio non sarà applicata perchè uguale alla sorgente"
+"La normalizzazione audio non sarà applicata perché uguale alla sorgente"
 
 #: ../vdms_panels/av_conversions.py:2027
 msgid ""
@@ -2978,7 +2978,7 @@ msgstr ""
 "Gestionale Predefiniti."
 
 #: ../vdms_panels/av_conversions.py:2577
-msgid "Save the new profile on..."
+msgid "Save the new profile to..."
 msgstr "Salva il nuovo profilo su..."
 
 #: ../vdms_panels/av_conversions.py:2586
@@ -3084,7 +3084,7 @@ msgid "youtube-dl is disabled. Check your preferences."
 msgstr "youtube-dl è disabilitato. Controlla le tue preferenze."
 
 #: ../vdms_panels/choose_topic.py:236 ../vdms_panels/youtubedl_ui.py:857
-#: ../vdms_panels/long_processing_task.py:512
+#: ../vdms_panels/long_processing_task.py:511
 #: ../vdms_panels/presets_manager.py:491 ../vdms_panels/presets_manager.py:534
 #: ../vdms_panels/presets_manager.py:602 ../vdms_panels/presets_manager.py:628
 #: ../vdms_panels/presets_manager.py:770 ../vdms_panels/presets_manager.py:803
@@ -3095,7 +3095,7 @@ msgstr "Prego confermare"
 msgid ""
 "ERROR: {}\n"
 "\n"
-"youtube-dl is not embedded on AppImage."
+"youtube-dl is not embedded in AppImage."
 msgstr ""
 "ERRORE: {0}\n"
 "\n"
@@ -3163,7 +3163,8 @@ msgstr "1.4 Concatenare file multimediali (demuxer)"
 
 #: ../vdms_panels/concatenate.py:137
 msgid "For more information, visit the official FFmpeg documentation:"
-msgstr "For more information, visit the official FFmpeg documentation:"
+msgstr ""
+"Per ulteriori informazioni, visita la documentazione ufficiale di FFmpeg:"
 
 #: ../vdms_panels/concatenate.py:177
 msgid "At least two files are required to perform concatenation."
@@ -3325,7 +3326,7 @@ msgstr "fps"
 msgid "Audio Codec"
 msgstr "Codec Audio"
 
-#: ../vdms_panels/youtubedl_ui.py:479 ../vdms_panels/filedrop.py:219
+#: ../vdms_panels/youtubedl_ui.py:479 ../vdms_panels/filedrop.py:220
 msgid "Size"
 msgstr "Dimensione"
 
@@ -3365,58 +3366,58 @@ msgstr ""
 msgid "Invalid filename. Contains double quotes"
 msgstr "Nome del file non valido. Contiene virgolette doppie"
 
-#: ../vdms_panels/filedrop.py:122
+#: ../vdms_panels/filedrop.py:123
 #, python-format
 msgid "Duplicate files are rejected: > '%s'"
 msgstr "I files duplicati sono rifiutati: > '%s'"
 
-#: ../vdms_panels/filedrop.py:185
+#: ../vdms_panels/filedrop.py:186
 msgid "Drag one or more files below"
 msgstr "Trascina uno o più file qui sotto"
 
-#: ../vdms_panels/filedrop.py:191 ../vdms_panels/filedrop.py:285
-#: ../vdms_panels/filedrop.py:301
+#: ../vdms_panels/filedrop.py:192 ../vdms_panels/filedrop.py:286
+#: ../vdms_panels/filedrop.py:302
 msgid "Play"
 msgstr "Riproduci"
 
-#: ../vdms_panels/filedrop.py:216
+#: ../vdms_panels/filedrop.py:217
 msgid "File Name"
 msgstr "Nome File"
 
-#: ../vdms_panels/filedrop.py:217 ../vdms_panels/timeline.py:123
+#: ../vdms_panels/filedrop.py:218 ../vdms_panels/timeline.py:123
 msgid "Duration"
 msgstr "Durata"
 
-#: ../vdms_panels/filedrop.py:218
+#: ../vdms_panels/filedrop.py:219
 msgid "Media type"
 msgstr "Tipo di media"
 
-#: ../vdms_panels/filedrop.py:236
+#: ../vdms_panels/filedrop.py:237
 msgid "Remove the selected file from the list"
 msgstr "Rimuovi il file selezionato dall'elenco"
 
-#: ../vdms_panels/filedrop.py:237
+#: ../vdms_panels/filedrop.py:238
 msgid "Delete all files from the list"
 msgstr "Elimina tutti i file dall'elenco"
 
-#: ../vdms_panels/filedrop.py:240
+#: ../vdms_panels/filedrop.py:241
 msgid "Play the selected files in the list"
 msgstr "Riproduci i file selezionati nell'elenco"
 
-#: ../vdms_panels/filedrop.py:241 ../vdms_panels/textdrop.py:88
+#: ../vdms_panels/filedrop.py:242 ../vdms_panels/textdrop.py:88
 msgid "Destination folder"
 msgstr "Cartella di destinazione"
 
-#: ../vdms_panels/filedrop.py:286 ../vdms_panels/filedrop.py:304
+#: ../vdms_panels/filedrop.py:287 ../vdms_panels/filedrop.py:305
 #: ../vdms_panels/presets_manager.py:132
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: ../vdms_panels/filedrop.py:315 ../vdms_panels/filedrop.py:336
+#: ../vdms_panels/filedrop.py:316 ../vdms_panels/filedrop.py:337
 msgid "No file selected"
 msgstr "Nessun file selezionato"
 
-#: ../vdms_panels/filedrop.py:318 ../vdms_panels/filedrop.py:339
+#: ../vdms_panels/filedrop.py:319 ../vdms_panels/filedrop.py:340
 msgid "Add Files"
 msgstr "Aggiungi Files"
 
@@ -3460,39 +3461,39 @@ msgstr ""
 "\n"
 "[Videomass]: Completato, ma non tutto è andato a buon fine.\n"
 
-#: ../vdms_panels/long_processing_task.py:153
+#: ../vdms_panels/long_processing_task.py:152
 msgid "Process log:"
 msgstr "Log di processo:"
 
-#: ../vdms_panels/long_processing_task.py:162
+#: ../vdms_panels/long_processing_task.py:161
 msgid "Suppress excess output"
 msgstr "Sopprime l'output in eccesso"
 
-#: ../vdms_panels/long_processing_task.py:166
+#: ../vdms_panels/long_processing_task.py:165
 msgid "Abort"
 msgstr "Interrompere"
 
-#: ../vdms_panels/long_processing_task.py:182
+#: ../vdms_panels/long_processing_task.py:181
 msgid "If activated, hides some output messages."
 msgstr "Se attivato, nasconde l'output di troppo."
 
-#: ../vdms_panels/long_processing_task.py:184
+#: ../vdms_panels/long_processing_task.py:183
 msgid "Stops current process"
 msgstr "Interrompe il processo corrente"
 
-#: ../vdms_panels/long_processing_task.py:473
+#: ../vdms_panels/long_processing_task.py:472
 msgid "...Finished"
 msgstr "...Terminato"
 
-#: ../vdms_panels/long_processing_task.py:488
+#: ../vdms_panels/long_processing_task.py:487
 msgid "wait... I'm aborting"
 msgstr "attendi... Sto interrompendo"
 
-#: ../vdms_panels/long_processing_task.py:491
+#: ../vdms_panels/long_processing_task.py:490
 msgid "...Interrupted"
 msgstr "...Interrotto"
 
-#: ../vdms_panels/long_processing_task.py:509
+#: ../vdms_panels/long_processing_task.py:508
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
@@ -3915,6 +3916,9 @@ msgstr ""
 "Richiede MSVCR100.dll\n"
 "Per risolvere il problema installare: Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
+
+#~ msgid "CODING ABILITY"
+#~ msgstr "ABILITÀ DI CODIFICA"
 
 #~ msgid "webpage documentation"
 #~ msgstr "Documentazione ufficiale"

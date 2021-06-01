@@ -168,8 +168,8 @@ class Vidstab(wx.Dialog):
                         wx.ALIGN_CENTER_VERTICAL, 5
                         )
         self.rdb_crop = wx.RadioBox(self, wx.ID_ANY,
-                                    (_("[CROP] Specify how to deal borders "
-                                        "at movement compensation")),
+                                    (_("[CROP] Specify how to deal with "
+                                        "borders at movement compensation")),
                                     choices=[("keep"), ("black")],
                                     majorDimension=1,
                                     style=wx.RA_SPECIFY_ROWS
@@ -303,7 +303,7 @@ class Vidstab(wx.Dialog):
         self.spin_smooth.SetToolTip(tip)
         tip = _('Set the camera path optimization algorithm. Values are: '
                 '‘gauss’: gaussian kernel low-pass filter on camera motion '
-                '(default) ‘avg’ averaging on transformations')
+                '(default), and ‘avg’: averaging on transformations')
         self.rdb_optalgo.SetToolTip(tip)
         tip = _('Set maximal angle in radians (degree*PI/180) to rotate '
                 'frames. Default value is -1, meaning no limit.')

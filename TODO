@@ -5,6 +5,8 @@ URGENCY: to do soon
 
 --------------
 URGENCY: high
+
+EBU audio normalization does not work properly with video streams
 --------------
 
 Need code refactoring

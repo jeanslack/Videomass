@@ -134,9 +134,9 @@ class Conc_Demuxer(wx.Panel):
         sizer_link1 = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_link1)
         self.lbl_msg2 = wx.StaticText(self, wx.ID_ANY,
-                                      label=(_("For more information, "
+                                      label=_("For more information, "
                                                "visit the official FFmpeg "
-                                               "documentation:"))
+                                               "documentation:")
                                       )
         link1 = hpl.HyperLinkCtrl(self, -1, "3.4 concat",
                                   URL="https://ffmpeg.org/ffmpeg-formats."
