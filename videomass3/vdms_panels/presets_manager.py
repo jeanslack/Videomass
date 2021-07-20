@@ -50,7 +50,7 @@ class PrstPan(wx.Panel):
     AZURE_NEON = 158, 201, 232
     # set colour in HTML rappresentetion:
     AZURE = '#15a6a6'  # or rgb form (wx.Colour(217,255,255))
-    YELLOW = '#a29500'
+    YELLOW = '#bd9f00'
     RED = '#ea312d'
     ORANGE = '#f28924'
     GREENOLIVE = '#8aab3c'

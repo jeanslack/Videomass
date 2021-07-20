@@ -62,9 +62,9 @@ class MainFrame(wx.Frame):
     AZURE_NEON = 158, 201, 232
     YELLOW_LMN = 255, 255, 0
     BLUE = 0, 7, 12
-    # set widget colours with html rappresentetion:
+    # set widget colours with html rappresentation:
     ORANGE = '#f28924'
-    YELLOW = '#a29500'
+    YELLOW = '#bd9f00'
     LIMEGREEN = '#87A615'
     DARK_BROWN = '#262222'
     WHITE = '#fbf4f4'

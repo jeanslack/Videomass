@@ -39,11 +39,11 @@ class MyListCtrl(wx.ListCtrl):
     """
     AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
     RED = '#ea312d'
-    YELLOW = '#a29500'
+    YELLOW = '#bd9f00'
     GREENOLIVE = '#6aaf23'
     ORANGE = '#f28924'
-    WHITE = '#fbf4f4'
-    BLACK = '#060505'
+    WHITE = '#fbf4f4'  # white for background status bar
+    BLACK = '#060505'  # black for background status bar
     # ----------------------------------------------------------------------
 
     def __init__(self, parent):
@@ -122,7 +122,7 @@ class MyListCtrl(wx.ListCtrl):
         else:
             mess = _("Duplicate files are rejected: > '%s'") % path
             self.parent.statusbar_msg(mess, MyListCtrl.YELLOW,
-                                      MyListCtrl.WHITE)
+                                      MyListCtrl.BLACK)
     # ----------------------------------------------------------------------#
 
 
@@ -157,8 +157,10 @@ class FileDnD(wx.Panel):
     Panel for dragNdrop files queue. Accept one or more files.
     """
     # CONSTANTS:
-    WHITE = '#fbf4f4'
-    BLACK = '#060505'
+
+    YELLOW = '#bd9f00'
+    WHITE = '#fbf4f4'  # white for background status bar
+    BLACK = '#060505'  # black for background status bar
 
     def __init__(self, parent, iconplay):
         """Constructor. This will initiate with an id and a title"""
@@ -313,8 +315,8 @@ class FileDnD(wx.Panel):
 
         """
         if not self.selected:
-            self.parent.statusbar_msg(_('No file selected'), 'GOLDENROD',
-                                      FileDnD.WHITE)
+            self.parent.statusbar_msg(_('No file selected'), FileDnD.YELLOW,
+                                      FileDnD.BLACK)
         else:
             self.parent.statusbar_msg(_('Add Files'), None)
             index = self.flCtrl.GetFocusedItem()
@@ -334,8 +336,8 @@ class FileDnD(wx.Panel):
 
         """
         if not self.selected:
-            self.parent.statusbar_msg(_('No file selected'), 'GOLDENROD',
-                                      FileDnD.WHITE)
+            self.parent.statusbar_msg(_('No file selected'), FileDnD.YELLOW,
+                                      FileDnD.BLACK)
         else:
             self.parent.statusbar_msg(_('Add Files'), None)
 

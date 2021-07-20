@@ -94,7 +94,8 @@ class Downloader(wx.Panel):
     D_GREEN = '#008000'
     RED = '#ff0000ff'
     GREEN = '#008000'
-    YELLOW = '#bd9f00ff'
+    #YELLOW = '#bd9f00ff'
+    YELLOW = '#bd9f00'
     WHITE = '#fbf4f4'  # white for background status bar
     BLACK = '#060505'  # black for background status bar
 

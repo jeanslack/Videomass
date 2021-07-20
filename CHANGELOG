@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-June 01, 2021 V.3.4.3
+July 20, 2021 V.3.4.3
 
   * Update Portuguese (BR) translation (thanks to Samuel)
   * Fixed `FileNotFoundError` traceback during youtube-dl update on AppImage.
@@ -23,6 +23,7 @@ June 01, 2021 V.3.4.3
     format for '(,' (,: Invalid argument` .
   * some code refactor (based on flake8/pylint)
   * Dutch translation completed.
+  * Added Spanish language support (Thanks to José)
 
 
 +------------------------------------+

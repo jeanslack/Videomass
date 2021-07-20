@@ -52,7 +52,7 @@ class AV_Conv(wx.Panel):
     """
     # colour rappresentetion in html
     AZURE = '#15a6a6'
-    YELLOW = '#a29500'
+    YELLOW = '#bd9f00'
     RED = '#ea312d'
     ORANGE = '#f28924'
     GREENOLIVE = '#6aaf23'
