@@ -15,7 +15,7 @@ videomass (3.4.3-1) UNRELEASED; urgency=medium
   * some code refactor (based on flake8/pylint)
   * Dutch translation completed.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 01 June 2021 10:35:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 01 Jun 2021 10:35:00 +0200
 
 videomass (3.4.2-1) UNRELEASED; urgency=medium
 
