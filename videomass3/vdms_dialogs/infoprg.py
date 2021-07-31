@@ -69,6 +69,7 @@ def info(parent, videomass_icon):
     info.AddTranslator("ChourS <ChourS2008@yandex.ru> (ru_RU)")
     info.AddTranslator("Roelof Berkepeis <roelof@imoma.eu> (nl_NL)")
     info.AddTranslator("Samuel (pt_BR)")
+    info.AddTranslator("katnatek <https://blogdrake.net/> (es_ES)")
     # info.AddTranslator("Nestor Blanco <random@mail.es> (es_ES)")
     info.SetArtists(
         ['Gianluca Pernigotto <jeanlucperni@gmail.com>',
