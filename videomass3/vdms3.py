@@ -119,7 +119,7 @@ class Videomass(wx.App):
             return True
 
         if not os.path.exists(os.path.join(self.appset['cachedir'], 'tmp')):
-            try:  # make temporary folde on cache dir
+            try:  # make temporary folder on cache dir
                 tmp = os.path.join(self.appset['cachedir'], 'tmp')
                 os.makedirs(tmp, mode=0o777)
             except OSError as err:

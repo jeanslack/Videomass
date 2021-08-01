@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Jan.26.2021 *-pycodestyle- compatible*
+# Rev: July.31.2021 *-pycodestyle- compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -69,7 +69,7 @@ def info(parent, videomass_icon):
     info.AddTranslator("ChourS <ChourS2008@yandex.ru> (ru_RU)")
     info.AddTranslator("Roelof Berkepeis <roelof@imoma.eu> (nl_NL)")
     info.AddTranslator("Samuel (pt_BR)")
-    info.AddTranslator("katnatek <https://blogdrake.net/> (es_ES)")
+    info.AddTranslator("katnatek from blogdrake (es_ES)")
     # info.AddTranslator("Nestor Blanco <random@mail.es> (es_ES)")
     info.SetArtists(
         ['Gianluca Pernigotto <jeanlucperni@gmail.com>',

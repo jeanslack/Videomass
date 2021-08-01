@@ -1,5 +1,5 @@
 
-Update: Dec 30 2020
+Update: Aug 01 2021
 -----------------------
 
 When you run the program for the first time, the contents of this folder will
@@ -9,6 +9,8 @@ conventions of each operating system which are:
         Linux:       '~/.config/videomass'
         MacOs:       '~/Library/Application Support/videomass'
         Windows:     'C:\Users\username\AppData\Roaming\videomass'
+
+Not for portable mode (which does not require installation) for some pyinstaller packages. 
 
 `videomass.conf` is Videomass main configuration file and is used to store
 user preferences and to import essential data for the application.

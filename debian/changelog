@@ -14,8 +14,10 @@ videomass (3.4.3-1) UNRELEASED; urgency=medium
     format for '(,' (,: Invalid argument` .
   * some code refactor (based on flake8/pylint)
   * Dutch translation completed.
+  * Added Spanish language support (Thanks to katnatek from blogdrake.net)
+  * Fixed #25
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 01 Jun 2021 10:35:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 01 Aug 2021 23:36:00 +0200
 
 videomass (3.4.2-1) UNRELEASED; urgency=medium
 
