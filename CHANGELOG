@@ -17,7 +17,6 @@ Aug 01, 2021 V.3.4.3
   * Improved information and text formatting on log files
   * Provided more log information about output monitoring, such as source and
     destination file names
-  * Removed `-map 0:v?` From Loudnorm filter code because it causes failure.
   * Fixed #24, bug when resetting video filters: The value of the "VFilter"
     key caused failure with error status `Unable to find a suitable output
     format for '(,' (,: Invalid argument` .

@@ -2268,7 +2268,7 @@ class AV_Conv(wx.Panel):
             cmd_2 = (
                 f'{self.opt["VideoCodec"]} {opt2} {self.opt["AspectRatio"]} '
                 f'{self.opt["FPS"]} {self.opt["PixFmt"]} '
-                f'{self.opt["WebOptim"]} -map_chapters 0 '
+                f'{self.opt["WebOptim"]} -map 0:v? -map_chapters 0 '
                 f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
                 f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
                 f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
@@ -2304,7 +2304,7 @@ class AV_Conv(wx.Panel):
                      f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
                      f'{self.opt["FPS"]} {self.opt["VFilters"]} '
                      f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
-                     f'{self.opt["AudioInMap"][0]}  '
+                     f'-map 0:v? {self.opt["AudioInMap"][0]}  '
                      f'{opt1} -sn -filter:a: {loudfilter} '
                      f'-f {AV_Conv.MUXERS[self.opt["OutputFormat"]]}'
                      )
@@ -2318,7 +2318,7 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
                 f'{self.opt["FPS"]} {self.opt["VFilters"]} '
                 f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
-                f'-map_chapters 0 {opt2} '
+                f'-map 0:v? -map_chapters 0 {opt2} '
                 f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
                 f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
                 f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
