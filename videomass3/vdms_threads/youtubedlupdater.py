@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.11.2021
+Rev: Aug.02.2021
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -264,7 +264,7 @@ class UpdateYoutubedlAppimage(Thread):
         except FileNotFoundError as err:
             self.status = err
 
-        if p.returncode:
+        if proc.returncode:
             self.status = "EXIT: %s\nERROR: %s" % (proc.returncode,
                                                    proc.stderr)
         wx.CallAfter(pub.sendMessage,

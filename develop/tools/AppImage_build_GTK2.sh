@@ -101,6 +101,7 @@ fi
 # install videomass and its dependencies
 if [ -f $REPO_ROOT/dist/videomass-*.whl ]; then
     $APP_DIR/AppRun -m pip install $REPO_ROOT/dist/videomass-*.whl
+
 else
     $APP_DIR/AppRun -m pip install videomass
 fi

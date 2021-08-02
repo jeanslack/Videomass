@@ -8,7 +8,7 @@ Platform: all
 Writer: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2014-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: Aug.02.2021 *-pycodestyle- compatible*
 ########################################################
 
 This file is part of Videomass.
@@ -56,8 +56,8 @@ def source_build():
                      "wheel>=0.34.2",
                      "twine>=3.1.1"
                      ]
-        long_description = open('README.md').read()
-        long_description_content_type = 'text/markdown'
+        long_descript = open('README.md').read()
+        long_description_ct = 'text/markdown'
 
     else:  # e.g. to make a Debian source package, include wxpython.
         inst_req = ["wxpython>=4.0.3",
@@ -65,10 +65,10 @@ def source_build():
                     "requests>=2.21.0",
                     ]
         setup_req = []
-        long_description = drel[1]
-        long_description_content_type = 'text'
+        long_descript = drel[1]
+        long_description_ct = 'text'
 
-    list_exclude = ['']
+    excluded = ['']
     # pathnames must be relative-path
     if platform.system() == 'Windows':
         data_f = [('share/pixmaps', ['videomass3/art/icons/videomass.png'])]
@@ -96,14 +96,14 @@ def source_build():
     setup(name=crel[1],
           version=crel[2],
           description=drel[0],
-          long_description=long_description,
-          long_description_content_type=long_description_content_type,
+          long_description=long_descript,
+          long_description_content_type=long_description_ct,
           author=crel[6][0],
           author_email=crel[7],
           url=crel[5],
           license=drel[2],
           platforms=["All"],
-          packages=find_packages(exclude=list_exclude),
+          packages=find_packages(exclude=excluded),
           data_files=data_f,
           package_data={"videomass3": ["art/icons/*", "locale/*"]
                         },
@@ -116,8 +116,8 @@ def source_build():
           include_package_data=True,
           zip_safe=False,
           python_requires=">=3.6.9, <4",
-          inst_req=inst_req,
-          setup_req=setup_req,
+          install_requires=inst_req,
+          setup_requires=setup_req,
           entry_points={'gui_scripts':
                         ['videomass = videomass3.vdms3:main']},
           classifiers=[
