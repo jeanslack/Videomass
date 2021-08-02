@@ -55,15 +55,65 @@ def get_pyinstaller():
     if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
         print('getattr frozen, hasattr _MEIPASS')
         frozen, meipass = True, True
-        path = getattr(sys, '_MEIPASS', os.path.abspath(__file__))
-        data_location = path
+        mpath = getattr(sys, '_MEIPASS', os.path.abspath(__file__))
+        data_locat = mpath
 
     else:
         frozen, meipass = False, False
-        path = os.path.realpath(os.path.abspath(__file__))
-        data_location = os.path.dirname(os.path.dirname(path))
+        mpath = os.path.realpath(os.path.abspath(__file__))
+        data_locat = os.path.dirname(os.path.dirname(mpath))
 
-    return(frozen, meipass, path, data_location)
+    return frozen, meipass, mpath, data_locat
+
+
+def conventional_paths():
+    """
+    Establish the conventional paths based on OS by installation
+
+    """
+    user_name = os.path.expanduser('~')
+
+    if platform.system() == 'Windows':
+        dirpath = "\\AppData\\Roaming\\videomass\\videomass.conf"
+        file_conf = os.path.join(user_name + dirpath)
+        dir_conf = os.path.join(user_name + "\\AppData\\Roaming\\videomass")
+        log_dir = os.path.join(dir_conf, 'log')  # logs
+        cache_dir = os.path.join(dir_conf, 'cache')  # updates executable
+
+    elif platform.system() == "Darwin":
+        dirpath = "Library/Application Support/videomass/videomass.conf"
+        file_conf = os.path.join(user_name, dirpath)
+        dir_conf = os.path.join(user_name, os.path.dirname(dirpath))
+        log_dir = os.path.join(user_name, "Library/Logs/videomass")
+        cache_dir = os.path.join(user_name, "Library/Caches/videomass")
+
+    else:  # Linux, FreeBsd, etc.
+        dirpath = ".config/videomass/videomass.conf"
+        file_conf = os.path.join(user_name, dirpath)
+        dir_conf = os.path.join(user_name, ".config/videomass")
+        log_dir = os.path.join(user_name, ".local/share/videomass/log")
+        cache_dir = os.path.join(user_name, ".cache/videomass")
+
+    return file_conf, dir_conf, log_dir, cache_dir
+
+
+def portable_paths(portdir):
+    """
+    Make portable-data paths based on OS by a portable mode
+
+    """
+    if platform.system() == 'Windows':
+        file_conf = portdir + "\\portable_data\\videomass.conf"
+        dir_conf = portdir + "\\portable_data"
+        log_dir = os.path.join(dir_conf, 'log')  # logs
+        cache_dir = os.path.join(dir_conf, 'cache')  # updates executable
+    else:
+        file_conf = portdir + "/portable_data/videomass.conf"
+        dir_conf = portdir + "/portable_data"
+        log_dir = os.path.join(dir_conf, 'log')  # logs
+        cache_dir = os.path.join(dir_conf, 'cache')  # updates executable
+
+    return file_conf, dir_conf, log_dir, cache_dir
 
 
 class DataSource():
@@ -73,79 +123,45 @@ class DataSource():
     paths based on the program execution and/or where it's
     installed.
     """
-    frozen, meipass, path, data_location = get_pyinstaller()
-    OS = platform.system()
+    FROZEN, MEIPASS, MPATH, DATA_LOCAT = get_pyinstaller()
 
-    if frozen and meipass and os.path.isdir(os.path.join(portdir,
+    portdir = os.path.dirname(sys.executable)
+    if FROZEN and MEIPASS and os.path.isdir(os.path.join(portdir,
                                                          'portable_data')):
-        portdir = os.path.dirname(sys.executable)
-        # make portable-data paths based on OS by a portable mode
-        if OS == 'Windows':
-            DIRPATH = portdir + "\\portable_data\\videomass.conf"
-            FILE_CONF = DIRPATH
-            DIR_CONF = portdir + "\\portable_data"
-            LOG_DIR = os.path.join(DIR_CONF, 'log')  # logs
-            CACHE_DIR = os.path.join(DIR_CONF, 'cache')  # updates executable
-        else:
-            DIRPATH = portdir + "/portable_data/videomass.conf"
-            FILE_CONF = DIRPATH
-            DIR_CONF = portdir + "/portable_data"
-            LOG_DIR = os.path.join(DIR_CONF, 'log')  # logs
-            CACHE_DIR = os.path.join(DIR_CONF, 'cache')  # updates executable
+        FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = portable_paths(portdir)
+
     else:
-        USER_NAME = os.path.expanduser('~')
-        # Establish the conventional paths based on OS by installation
-        if OS == 'Windows':
-            DIRPATH = "\\AppData\\Roaming\\videomass\\videomass.conf"
-            FILE_CONF = os.path.join(USER_NAME + DIRPATH)
-            DIR_CONF = os.path.join(USER_NAME + "\\AppData\\Roaming\\videomass")
-            LOG_DIR = os.path.join(DIR_CONF, 'log')  # logs
-            CACHE_DIR = os.path.join(DIR_CONF, 'cache')  # updates executable
-
-        elif OS == "Darwin":
-            DIRPATH = "Library/Application Support/videomass/videomass.conf"
-            FILE_CONF = os.path.join(USER_NAME, DIRPATH)
-            DIR_CONF = os.path.join(USER_NAME, os.path.dirname(DIRPATH))
-            LOG_DIR = os.path.join(USER_NAME, "Library/Logs/videomass")
-            CACHE_DIR = os.path.join(USER_NAME, "Library/Caches/videomass")
-
-        else:  # Linux, FreeBsd, etc.
-            DIRPATH = ".config/videomass/videomass.conf"
-            FILE_CONF = os.path.join(USER_NAME, DIRPATH)
-            DIR_CONF = os.path.join(USER_NAME, ".config/videomass")
-            LOG_DIR = os.path.join(USER_NAME, ".local/share/videomass/log")
-            CACHE_DIR = os.path.join(USER_NAME, ".cache/videomass")
+        FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = conventional_paths()
     # -------------------------------------------------------------------
 
     def __init__(self):
         """
-        Given the paths defined by `data_location` (a configuration
+        Given the paths defined by `DATA_LOCAT` (a configuration
         folder for recovery > `self.srcpath`, a set of icons >
         `self.icodir` and a folder for the locale > `self.localepath`),
         it performs the initialization described in DataSource.
-        """
 
-        #### frozen, meipass, path, data_location = get_pyinstaller()
+        """
         self.apptype = None  # appimage, pyinstaller on None
         self.workdir = os.path.dirname(os.path.dirname
-                                       (os.path.dirname(DataSource.path))
+                                       (os.path.dirname(DataSource.MPATH))
                                        )
-        self.localepath = os.path.join(DataSource.data_location, 'locale')
-        self.srcpath = os.path.join(DataSource.data_location, 'share')
-        self.icodir = os.path.join(DataSource.data_location, 'art', 'icons')
-        self.ffmpeg_pkg = os.path.join(DataSource.data_location, 'FFMPEG')
+        self.localepath = os.path.join(DataSource.DATA_LOCAT, 'locale')
+        self.srcpath = os.path.join(DataSource.DATA_LOCAT, 'share')
+        self.icodir = os.path.join(DataSource.DATA_LOCAT, 'art', 'icons')
+        self.ffmpeg_pkg = os.path.join(DataSource.DATA_LOCAT, 'FFMPEG')
         launcher = os.path.isfile('%s/launcher' % self.workdir)
 
-        if DataSource.frozen and DataSource.meipass or launcher:
-            print('frozen=%s meipass=%s launcher=%s' % (DataSource.frozen,
-                                                        DataSource.meipass,
+        if DataSource.FROZEN and DataSource.MEIPASS or launcher:
+            print('frozen=%s meipass=%s launcher=%s' % (DataSource.FROZEN,
+                                                        DataSource.MEIPASS,
                                                         launcher
                                                         ))
             self.apptype = 'pyinstaller' if launcher is False else None
             self.videomass_icon = "%s/videomass.png" % self.icodir
 
         else:
-            if DataSource.OS == 'Windows':  # Installed with pip command
+            if platform.system() == 'Windows':  # Installed with pip command
                 print('Win32 executable=%s' % sys.executable)
                 # HACK check this
                 # dirname = os.path.dirname(sys.executable)
@@ -155,7 +171,7 @@ class DataSource():
 
             elif ('/tmp/.mount_' in sys.executable or os.path.exists(
                   os.path.dirname(os.path.dirname(os.path.dirname(
-                  sys.argv[0]))) + '/AppRun')):
+                      sys.argv[0]))) + '/AppRun')):
                 # embedded on python appimage
                 print('Embedded on python appimage')
                 self.apptype = 'appimage'
@@ -250,7 +266,7 @@ class DataSource():
             if dconf:
                 copyerr, userconf = dconf, None
 
-        return ({'ostype': DataSource.OS,
+        return ({'ostype': platform.system(),
                  'srcpath': self.srcpath,
                  'fatalerr': copyerr,
                  'localepath': self.localepath,

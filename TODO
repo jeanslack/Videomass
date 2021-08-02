@@ -6,7 +6,12 @@ URGENCY: to do soon
 --------------
 URGENCY: high
 
-EBU audio normalization does not work properly with video streams
+- Windows: MSVCR100 is required to use youtube-dl.exe with Videomass
+  compiled with pyinstaller. If MSVCR100 has not been installed, the
+  Videomass functions related to youtube-dl may generate unclear problems
+  to the user.
+  To avoid this you may need to improve the error messages and prevent
+  youtube-dl from installing and updating if MSVCR100 is not installed.
 --------------
 
 Need code refactoring

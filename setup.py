@@ -133,6 +133,7 @@ def source_build():
         'Natural Language :: Russian',
         'Natural Language :: Dutch',
         'Natural Language :: Portuguese (Brazilian)',
+        'Natural Language :: Spanish',
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.7',
         "Programming Language :: Python :: 3.8",
