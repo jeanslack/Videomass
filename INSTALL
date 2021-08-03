@@ -51,6 +51,11 @@ Build as wheel: (Linux, MacOs, FreeBSD, Windows, etc.)
 
     $ python3 setup.py sdist bdist_wheel
 
+    or
+
+    $ python3 -m build
+
+    For more info visit: https://packaging.python.org/tutorials/packaging-projects/
 #--------------------------------------------------------------------------#
 
 Make a Debian source package from upstream source code:

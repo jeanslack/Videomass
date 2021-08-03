@@ -136,7 +136,7 @@ class CmdExec(Thread):
                         self.status = (_('Requires MSVCR100.dll\nTo resolve '
                                          'this problem install: Microsoft '
                                          'Visual C++ 2010 Redistributable '
-                                         'Package (x86)', 'error'))
+                                         'Package (x86)'), 'error')
                     else:
                         self.status = (out[0], 'error')
                 else:

@@ -11,7 +11,7 @@ URGENCY: high
   Videomass functions related to youtube-dl may generate unclear problems
   to the user.
   To avoid this you may need to improve the error messages and prevent
-  youtube-dl from installing and updating if MSVCR100 is not installed.
+  youtube-dl from installing and updating if MSVCR100 is not installed.[FIXED]
 --------------
 
 Need code refactoring
@@ -20,7 +20,8 @@ Need code refactoring
 URGENCY: low
 -------------
 
-- Make combobox to choose other colors for the crop rectangle selection.
+- Crop filter: Make combobox to choose other colors for the crop
+  rectangle selection.
 
 - Youtube-Downloader: With "default" option it downloads the best quality
   precompiled video, which isn't the best quality overall. With "download

@@ -652,6 +652,9 @@ class MainFrame(wx.Frame):
                 return None
 
             this = self.ydl_used(self, False)
+            if not this:
+                return None
+
             if latest[0].strip() == this:
                 wx.MessageBox(_('youtube-dl is already '
                                 'up-to-date {}').format(this),

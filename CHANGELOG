@@ -24,6 +24,7 @@ Aug 01, 2021 V.3.4.3
   * Dutch translation completed.
   * Added Spanish language support (Thanks to katnatek from blogdrake.net)
   * Fixed #25
+  * Fixed error message when MSVCR100.dll is not installed on Windows.
 
 
 +------------------------------------+
