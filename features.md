@@ -4,7 +4,7 @@
 - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
 - Batch processing.
 - Advanced log management.
-- Multi language support (en, it, ru, nl, pt (brazilian))
+- Multi language support (english, Italian, Russian, Dutch, Portuguese (Brazilian), Spanish )
 
 ## Features with FFmpeg
 - Drag and drop to add multiple files simultaneously.
@@ -28,9 +28,9 @@
     - Download audio and video splitted.
     - Download Audio only (you can choose various formats).
     - Download videos and audio by 'format code' with audio merging.
-- Shows download statistics separately (using youtube_dl library only).
+- Shows download statistics separately (only using youtube_dl library).
 - Ability to playback individual URLs and different qualities.
-- Ability to download all playlist from any URLs.
+- Ability to download all playlist.
 - Embed thumbnail in audio file (via [atomicparsley](http://atomicparsley.sourceforge.net/)).
 - Add metadata to file.
 - Write subtitles to video.

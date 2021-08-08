@@ -16,10 +16,9 @@ streams and downloading videos via youtube-dl.
 
 Videomass is a project created by Gianluca Pernigotto (jeanslack) and it was
 written in Python3 with the wxPython4 "Phoenix", then it is cross-platform and
-work on Linux, Mac-Os, MS-Windows and FreeBSD.
+works on Linux, Mac-Os, MS-Windows and FreeBSD.
 
 ## What is FFmpeg?
-![Image](/images/FFmpeg2.png)
 
 FFmpeg is a separate project, not connected to Videomass. *"FFmpeg is a
 complete, cross-platform solution to record, convert and stream audio and video.
