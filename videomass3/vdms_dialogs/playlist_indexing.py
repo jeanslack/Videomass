@@ -275,7 +275,7 @@ class Indexing(wx.Dialog):
         if event.GetColumn() in (0, 1):
             event.Veto()
         else:
-            event.Skip()
+            event.Skip()  # or event.Allow()
     # ------------------------------------------------------------------#
 
     def on_reset(self, event):
