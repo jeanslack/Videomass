@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: Aug.14.2021 *-pycodestyle- compatible*
 ########################################################
 
 This file is part of Videomass.
@@ -32,6 +32,7 @@ from videomass3.vdms_utils.utils import format_bytes
 from videomass3.vdms_utils.utils import timehuman
 from videomass3.vdms_frames.ydl_mediainfo import YDL_Mediainfo
 from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass3.vdms_dialogs.playlist_indexing import Indexing
 
 if not hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
     import wx.lib.mixins.listctrl as listmix
@@ -98,6 +99,7 @@ class Downloader(wx.Panel):
     YELLOW = '#bd9f00'
     WHITE = '#fbf4f4'  # white for background status bar
     BLACK = '#060505'  # black for background status bar
+    VIOLET = '#D64E93'
 
     if appdata['icontheme'] in ('Breeze-Blues',
                                 'Videomass-Colours'):
@@ -145,9 +147,12 @@ class Downloader(wx.Panel):
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpplay = get_bmp(Downloader.icons['preview'], ((16, 16)))
+            bmplistindx = get_bmp(Downloader.icons['listindx'], ((16, 16)))
         else:
             bmpplay = wx.Bitmap(Downloader.icons['preview'],
                                 wx.BITMAP_TYPE_ANY)
+            bmplistindx = wx.Bitmap(Downloader.icons['listindx'],
+                                    wx.BITMAP_TYPE_ANY)
 
         self.opt = {("NO_PLAYLIST"): [True, "--no-playlist"],
                     ("THUMB"): [False, ""],
@@ -157,6 +162,7 @@ class Downloader(wx.Panel):
                     ("A_QUALITY"): ["best", "best"],
                     ("SUBTITLES"): [False, ""],
                     }
+        self.plidx = {'': ''}
         self.info = list()  # has data information for Show More button
         self.format_dict = dict()  # format codes order with URL matching
         self.oldwx = None  # test result of hasattr EVT_LIST_ITEM_CHECKED
@@ -187,7 +193,7 @@ class Downloader(wx.Panel):
                               )
         boxoptions.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
         boxoptions.Add((5, 5))
-        panelscroll = scrolled.ScrolledPanel(self, -1, size=(260, 500),
+        panelscroll = scrolled.ScrolledPanel(self, -1, size=(260, 700),
                                              style=wx.TAB_TRAVERSAL |
                                              wx.BORDER_THEME, name="panelscr",
                                              )
@@ -234,6 +240,14 @@ class Downloader(wx.Panel):
                                    (_('Download all videos in playlist'))
                                    )
         fgs1.Add(self.ckbx_pl, 0, wx.ALL, 5)
+
+        self.btn_plidx = wx.Button(panelscroll, wx.ID_ANY,
+                                   (_('Playlist Editor'))
+                                   )
+        self.btn_plidx.SetBitmap(bmplistindx, wx.LEFT)
+        fgs1.Add(self.btn_plidx, 0, wx.ALL | wx.EXPAND, 5)
+        self.btn_plidx.Disable()
+
         self.ckbx_thumb = wx.CheckBox(panelscroll, wx.ID_ANY,
                                       (_('Embed thumbnail in audio file'))
                                       )
@@ -316,6 +330,7 @@ class Downloader(wx.Panel):
         self.cmbx_aq.Bind(wx.EVT_COMBOBOX, self.on_Aq)
         self.Bind(wx.EVT_BUTTON, self.playSelurl, self.btn_play)
         self.ckbx_pl.Bind(wx.EVT_CHECKBOX, self.on_Playlist)
+        self.btn_plidx.Bind(wx.EVT_BUTTON, self.on_Playlist_idx)
         self.ckbx_thumb.Bind(wx.EVT_CHECKBOX, self.on_Thumbnails)
         self.ckbx_meta.Bind(wx.EVT_CHECKBOX, self.on_Metadata)
         self.ckbx_sb.Bind(wx.EVT_CHECKBOX, self.on_Subtitles)
@@ -358,8 +373,8 @@ class Downloader(wx.Panel):
                     self.codText.AppendText('- %s\n' % (Downloader.MSG_2))
             return
 
-        if not self.parent.sb.GetStatusText() == 'Youtube Downloader':
-            self.parent.statusbar_msg('Youtube Downloader', None)
+        if not self.parent.sb.GetStatusText() == 'Ready':
+            self.parent.statusbar_msg('Ready', None)
 
         if Downloader.appdata['PYLIBYDL'] is not None:  # isn't used as module
             viddisp, auddisp = 'video ', 'audio '
@@ -483,7 +498,7 @@ class Downloader(wx.Panel):
             data = io_tools.youtubedl_getstatistics(link)
             for meta in data:
                 if meta[1]:
-                    # self.parent.statusbar_msg('Youtube Downloader', None)
+                    # self.parent.statusbar_msg('Ready', None)
                     wx.MessageBox(meta[1], 'Videomass', wx.ICON_ERROR)
                     return True
 
@@ -526,7 +541,7 @@ class Downloader(wx.Panel):
             data = io_tools.youtubedl_getstatistics(link)
             for meta in data:
                 if meta[1]:
-                    # self.parent.statusbar_msg('Youtube Downloader', None)
+                    # self.parent.statusbar_msg('Ready', None)
                     wx.MessageBox(meta[1], 'Videomass', wx.ICON_ERROR)
                     del self.info[:]
                     return True
@@ -609,8 +624,8 @@ class Downloader(wx.Panel):
         Populate list control with new incoming as urls and
         related resolutions.
         """
-        if not self.parent.sb.GetStatusText() == 'Youtube Downloader':
-            self.parent.statusbar_msg('Youtube Downloader', None)
+        #if not self.parent.sb.GetStatusText() == 'Ready':
+            #self.parent.statusbar_msg('Ready', None)
         self.fcode.ClearAll()
         if self.oldwx is False:
             self.fcode.EnableCheckBoxes(enable=False)
@@ -698,12 +713,13 @@ class Downloader(wx.Panel):
             self.on_urls_list('')
 
         elif self.choice.GetSelection() == 3:
-            if [url for url in self.parent.data_url if 'playlist' in url]:
-                # prevent KeyError: 'format_id'
-                wx.MessageBox(_("Unable to get format codes on playlists"),
-                              "Videomass", wx.ICON_ERROR, self)
-                self.choice.SetSelection(0)
-                return
+            #if [url for url in self.parent.data_url if 'playlist' or
+                #'channel' in url]:
+                ## prevent KeyError: 'format_id'
+                #wx.MessageBox(_("Unable to get format codes on playlists"),
+                              #"Videomass", wx.ICON_ERROR, self)
+                #self.choice.SetSelection(0)
+                #return
             self.labtxt.Show(), self.codText.Show()
             self.Layout()
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
@@ -763,8 +779,33 @@ class Downloader(wx.Panel):
     def on_Playlist(self, event):
         if self.ckbx_pl.IsChecked():
             self.opt["NO_PLAYLIST"] = [False, "--yes-playlist"]
+            self.btn_plidx.Enable()
         else:
             self.opt["NO_PLAYLIST"] = [True, "--no-playlist"]
+            self.btn_plidx.SetBackgroundColour(wx.NullColour)
+            self.btn_plidx.Disable()
+            self.plidx = {'': ''}
+    # -----------------------------------------------------------------#
+
+    def on_Playlist_idx(self, event):
+        """
+        Set up custom indexing when you download playlists
+        """
+
+        idxdialog = Indexing(self, self.parent.data_url, self.plidx)
+        retcode = idxdialog.ShowModal()
+        if retcode == wx.ID_OK:
+            data = idxdialog.GetValue()
+            if not data:
+                self.btn_plidx.SetBackgroundColour(wx.NullColour)
+                self.plidx = {'': ''}
+            else:
+                self.btn_plidx.SetBackgroundColour(
+                    wx.Colour(Downloader.VIOLET))
+                self.plidx = data
+        else:
+            idxdialog.Destroy()
+            return
     # -----------------------------------------------------------------#
 
     def on_Thumbnails(self, event):
@@ -846,15 +887,14 @@ class Downloader(wx.Panel):
     def on_start(self):
         """
         Builds command string to use with an embed youtube_dl as
-        python library or using standard youtube-dl command line
-        with subprocess. This depends on some cases.
+        python library or using standard youtube-dl command line.
         """
         urls = self.parent.data_url
 
         if not self.ckbx_pl.IsChecked():
-            if [url for url in urls if 'playlist' in url]:
-                if wx.MessageBox(_('The URLs contain playlists. Are '
-                                   'you sure you want to continue?'),
+            if [url for url in urls if 'playlist' or 'channel' in url]:
+                if wx.MessageBox(_('The URLs contain playlists or channels. '
+                                   'Are you sure you want to continue?'),
                                  _('Please confirm'), wx.ICON_QUESTION |
                                  wx.YES_NO, self) == wx.NO:
                     return
@@ -890,6 +930,7 @@ class Downloader(wx.Panel):
                 code = []
                 data = {'format': self.opt["V_QUALITY"][0],
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
+                        'playlist_items': self.plidx,
                         'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
                         'outtmpl': '{0}.%(ext)s'.format(_id),
@@ -906,6 +947,7 @@ class Downloader(wx.Panel):
                 data = {'format': '%svideo,%saudio' %
                         (self.opt["V_QUALITY"][0], self.opt["A_QUALITY"][0]),
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
+                        'playlist_items': self.plidx,
                         'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
                         'outtmpl': '{0}.f%(format_id)s.%(ext)s'.format(_id),
@@ -921,6 +963,7 @@ class Downloader(wx.Panel):
                 code = []
                 data = {'format': 'best',
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
+                        'playlist_items': self.plidx,
                         'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
                         'outtmpl': '{0}.%(ext)s'.format(_id),
@@ -940,6 +983,7 @@ class Downloader(wx.Panel):
                     return
                 data = {'format': '',
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
+                        'playlist_items': self.plidx,
                         'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
                         'outtmpl': '{0}.f%(format_id)s.%(ext)s'.format(_id),
@@ -982,6 +1026,7 @@ class Downloader(wx.Panel):
                        ('{0}.%(ext)s'.format(_id)),
                        f'{nooverwrites}',
                        f'{restrictfn}',
+                       self.plidx,
                        ]
 
             if self.choice.GetSelection() == 1:  # audio files + video files
@@ -996,6 +1041,7 @@ class Downloader(wx.Panel):
                        ('{0}.f%(format_id)s.%(ext)s'.format(_id)),
                        f'{nooverwrites}',
                        f'{restrictfn}',
+                       self.plidx,
                        ]
 
             elif self.choice.GetSelection() == 2:  # audio only
@@ -1008,6 +1054,7 @@ class Downloader(wx.Panel):
                        ('{0}.%(ext)s'.format(_id)),
                        f'{nooverwrites}',
                        f'{restrictfn}',
+                       self.plidx,
                        ]
 
             if self.choice.GetSelection() == 3:  # format code
@@ -1023,8 +1070,8 @@ class Downloader(wx.Panel):
                        ('{0}.f%(format_id)s.%(ext)s'.format(_id)),
                        f'{nooverwrites}',
                        f'{restrictfn}',
+                       self.plidx,
                        ]
-
             self.parent.switch_to_processing('youtube-dl executable',
                                              urls,
                                              '',

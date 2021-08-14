@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: Aug.14.2021 *-pycodestyle- compatible*
 ########################################################
 
 This file is part of Videomass.
@@ -1499,6 +1499,9 @@ class MainFrame(wx.Frame):
             self.ytDownloader.on_Choice(self)
             del self.ytDownloader.info[:]
             self.ytDownloader.format_dict.clear()
+            self.ytDownloader.ckbx_pl.SetValue(False)
+            self.ytDownloader.on_Playlist(self)
+
         else:
             self.statusbar_msg(_('Ready'), None)
 

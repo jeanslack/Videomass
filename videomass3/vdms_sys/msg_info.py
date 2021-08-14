@@ -6,7 +6,7 @@ Compatibility: Python3, Python2
 author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 copyr: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 lic: GPL3
-Rev: May.15.2021
+Rev: Aug.12.2021
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -39,8 +39,8 @@ def current_release():
     """
     release_name = 'Videomass'
     program_name = 'videomass'
-    version = '3.4.3'
-    release = 'May 20 2021'
+    version = '3.4.4'
+    release = 'Aug 12 2021'
     copyr = '2013-2021'
     website = 'http://jeanslack.github.io/Videomass/'
     author = ('Gianluca Pernigotto', '(aka jeanslack)')

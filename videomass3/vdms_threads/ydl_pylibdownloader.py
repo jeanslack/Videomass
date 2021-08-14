@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021
+Rev: Aug.12.2021
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -233,6 +233,7 @@ class YtdlLibDL(Thread):
                 'no_warnings': False,
                 'writethumbnail': self.opt['writethumbnail'],
                 'noplaylist': self.opt['noplaylist'],
+                'playlist_items': self.opt['playlist_items'].get(url, None),
                 'nooverwrites': self.opt['nooverwrites'],
                 'no_color': True,
                 'nocheckcertificate': self.nocheckcertificate,

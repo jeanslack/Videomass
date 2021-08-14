@@ -315,7 +315,7 @@ class DataSource():
                 'denoiser', 'statistics', 'settings', 'audiovolume',
                 'youtube', 'presets_manager', 'profile_add', 'profile_del',
                 'profile_edit', 'previous', 'next', 'startdownload',
-                'download_properties', 'stabilizer')
+                'download_properties', 'stabilizer', 'listindx')
 
         ext = 'svg' if 'wx.svg' in sys.modules else 'png'
 
@@ -373,7 +373,8 @@ class DataSource():
                    '%s/go-next.%s' % (choose.get('x22'), ext),
                    '%s/download.%s' % (choose.get('x22'), ext),
                    '%s/statistics.%s' % (choose.get('x22'), ext),
-                   '%s/stabilizer.%s' % (choose.get('x16'), ext)
+                   '%s/stabilizer.%s' % (choose.get('x16'), ext),
+                   '%s/playlist-append.%s' % (choose.get('x16'), ext)
                    )
         values = [os.path.join(norm) for norm in iconset]  # normalize pathns
 

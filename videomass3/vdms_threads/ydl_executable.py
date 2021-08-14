@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.12.2021
+Rev: Aug.13.2021
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -100,6 +100,7 @@ class YtdlExecDL(Thread):
                      'outtmpl': varargs[4][1],
                      'nooverwrites': varargs[4][2],
                      'restrictfn': varargs[4][3],
+                     'pl_items': varargs[4][4],
                      'code': varargs[6],
                      'outputdir': varargs[3]
                      }
@@ -132,9 +133,15 @@ class YtdlExecDL(Thread):
             else:
                 outtmpl = self.args['outtmpl']
 
+            if self.args['pl_items'].get(url):
+                pl_items = ('--playlist-items %s ' %
+                            self.args['pl_items'].get(url))
+            else:
+                pl_items = ''
+
             format_code = '--format %s' % (code) if code else ''
             cmd = ('"{0}" {1} --newline --ignore-errors {8} -o '
-                   '"{2}/{3}" {4} {5} --ignore-config {9} "{6}" '
+                   '"{2}/{3}" {4} {5} {10} --ignore-config {9} "{6}" '
                    '--ffmpeg-location "{7}"'.format(YtdlExecDL.EXECYDL,
                                                     self.ssl,
                                                     self.args['outputdir'],
@@ -145,6 +152,7 @@ class YtdlExecDL(Thread):
                                                     YtdlExecDL.FFMPEG_URL,
                                                     self.args['nooverwrites'],
                                                     self.args['restrictfn'],
+                                                    pl_items,
                                                     ))
             self.count += 1
             count = 'URL %s/%s' % (self.count, self.countmax)

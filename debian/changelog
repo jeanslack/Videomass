@@ -1,3 +1,14 @@
+videomass (3.4.4-1) UNRELEASED; urgency=medium
+
+  * Fixed `NameError: name 'm' is not defined` on utils.timehuman()
+  * Implemented the indexing function of the playlists on the Youtube
+    Downloader panel.
+  * Created the editor for the selection and download of playlists, which
+    has useful log functions.
+  * Fixed status bar messages on Youtube downloader.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 12 Aug 2021 14:33:00 +0200
+
 videomass (3.4.3-1) UNRELEASED; urgency=medium
 
   * Update Portuguese (BR) translation (thanks to Samuel)
