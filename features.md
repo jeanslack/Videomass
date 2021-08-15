@@ -30,10 +30,13 @@
     - Download videos and audio by 'format code' with audio merging.
 - Shows download statistics separately (only using youtube_dl library).
 - Ability to playback individual URLs and different qualities.
-- Ability to download all playlist.
+- Ability to download playlists.
+- Ability to index items to download in playlists, including indices and ranges.
 - Embed thumbnail in audio file (via [atomicparsley](http://atomicparsley.sourceforge.net/)).
 - Add metadata to file.
 - Write subtitles to video.
-- Ability to keep youtube-dl backend updated (depends by setting).
+- Ability to include IDs in filenames. 
+- Ability to restrict file names.
+- Ability to keep youtube-dl backend updated (depends by installer / app).
 
 [Home](index.md)
