@@ -8,7 +8,7 @@ Change Log:
 
 
 +------------------------------------+
-Aug 14, 2021 V.3.4.4
+Aug 19, 2021 V.3.4.4
 
   * Fixed `NameError: name 'm' is not defined` on utils.timehuman()
   * Implemented the indexing function of the playlists on the Youtube
@@ -16,6 +16,8 @@ Aug 14, 2021 V.3.4.4
   * Created the editor for the selection and download of playlists, which
     has useful log functions.
   * Fixed status bar messages on Youtube downloader.
+  * To resolve issues with the FFmpeg demuxer, single quoted filenames
+    will be rejected.
 
 
 +------------------------------------+

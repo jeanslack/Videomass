@@ -228,7 +228,7 @@ class Choose_Topic(wx.Panel):
             return
 
         elif self.appdata['app'] == 'pyinstaller':
-            #elif self.appdata['app'] != 'pyinstaller':  # use for debug
+            # elif self.appdata['app'] != 'pyinstaller':  # use for debug
             # EXECYDL: /path/youtube-dl if used else False
             if os.path.isfile(self.appdata['EXECYDL']):
                 self.parent.switch_text_import(self, 'Youtube Downloader')

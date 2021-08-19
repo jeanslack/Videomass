@@ -457,12 +457,12 @@ class Downloader(wx.Panel):
                                       Downloader.BLACK)
             return
         else:
-            self.parent.statusbar_msg(_('YouTube Downloader'), None)
+            self.parent.statusbar_msg(_('Ready'), None)
             item = self.fcode.GetFocusedItem()
             url = self.fcode.GetItemText(item, 1)
-            if 'playlist' in url:
+            if 'playlist' in url or 'channel' in url:
                 # prevent opening too many of ffplay windows
-                wx.MessageBox(_('Videomass cannot play playlists for now'),
+                wx.MessageBox(_('Videomass cannot play channel or playlists.'),
                               _('Videomass'), wx.ICON_INFORMATION, self)
                 return
 
@@ -623,9 +623,8 @@ class Downloader(wx.Panel):
         """
         Populate list control with new incoming as urls and
         related resolutions.
+
         """
-        #if not self.parent.sb.GetStatusText() == 'Ready':
-            #self.parent.statusbar_msg('Ready', None)
         self.fcode.ClearAll()
         if self.oldwx is False:
             self.fcode.EnableCheckBoxes(enable=False)
@@ -683,11 +682,16 @@ class Downloader(wx.Panel):
 
     # -----------------------------------------------------------------#
 
-    def on_Choice(self, event):
+    def on_Choice(self, event, statusmsg=True):
         """
         - Enable or disable some widgets during switching choice box.
         - Set media quality parameter for on_urls_list method
         """
+
+        if statusmsg is True:
+            if not self.parent.sb.GetStatusText() == 'Ready':
+                self.parent.statusbar_msg(_('Ready'), None)
+
         self.codText.Clear()
         self.btn_play.Disable()
 
@@ -713,13 +717,14 @@ class Downloader(wx.Panel):
             self.on_urls_list('')
 
         elif self.choice.GetSelection() == 3:
-            #if [url for url in self.parent.data_url if 'playlist' or
-                #'channel' in url]:
-                ## prevent KeyError: 'format_id'
-                #wx.MessageBox(_("Unable to get format codes on playlists"),
-                              #"Videomass", wx.ICON_ERROR, self)
-                #self.choice.SetSelection(0)
-                #return
+            if [url for url in self.parent.data_url if 'playlist' in url
+                or 'channel' in url]:
+                # prevent KeyError: 'format_id'
+                wx.MessageBox(_("Unable to get format codes on playlists "
+                                "and channels"),
+                              "Videomass", wx.ICON_ERROR, self)
+                self.choice.SetSelection(0)
+                return
             self.labtxt.Show(), self.codText.Show()
             self.Layout()
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()

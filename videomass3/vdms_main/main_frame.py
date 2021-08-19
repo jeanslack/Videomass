@@ -1496,7 +1496,7 @@ class MainFrame(wx.Frame):
                 self.statusbar_msg(msg[0], msg[1], msg[2])
             self.data_url = data
             self.ytDownloader.choice.SetSelection(0)
-            self.ytDownloader.on_Choice(self)
+            self.ytDownloader.on_Choice(self, statusmsg=False)
             del self.ytDownloader.info[:]
             self.ytDownloader.format_dict.clear()
             self.ytDownloader.ckbx_pl.SetValue(False)

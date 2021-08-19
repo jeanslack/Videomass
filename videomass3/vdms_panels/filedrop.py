@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: Aug.19.2021 *-pycodestyle- compatible*
 ########################################################
 
 This file is part of Videomass.
@@ -67,9 +67,9 @@ class MyListCtrl(wx.ListCtrl):
         msg_noext = _("File without format extension: please give an "
                       "appropriate extension to the file name, example "
                       "'.mkv', '.avi', '.mp3', etc.")
-        msg_badfn = _("Invalid filename. Contains double quotes")
+        msg_badfn = _("Invalid filename. Contains double or single quotes")
 
-        if '"' in path:
+        if '"' in path or "'" in path:
             self.parent.statusbar_msg(msg_badfn, MyListCtrl.ORANGE,
                                       MyListCtrl.WHITE)
             return

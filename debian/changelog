@@ -6,8 +6,10 @@ videomass (3.4.4-1) UNRELEASED; urgency=medium
   * Created the editor for the selection and download of playlists, which
     has useful log functions.
   * Fixed status bar messages on Youtube downloader.
+  * To resolve issues with the FFmpeg demuxer, single quoted filenames
+    will be rejected.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 12 Aug 2021 14:33:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 20 Aug 2021 00:05:00 +0200
 
 videomass (3.4.3-1) UNRELEASED; urgency=medium
 
