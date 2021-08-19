@@ -3,7 +3,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2020/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: June.30.2020
+# Rev: August.20.2021
 #
 # Make a new `videomass.po` file on '../../videomass3/locale'.
 # The previus videomass.po file will be overwrite with new one
@@ -36,6 +36,7 @@ $XGETTEXT -d videomass "../vdms3.py" \
 "../vdms_dialogs/filter_transpose.py" \
 "../vdms_dialogs/wizard_dlg.py" \
 "../vdms_dialogs/infoprg.py" \
+"../vdms_dialogs/playlist_indexing.py" \
 "../vdms_dialogs/presets_addnew.py" \
 "../vdms_dialogs/set_timestamp.py" \
 "../vdms_dialogs/settings.py" \

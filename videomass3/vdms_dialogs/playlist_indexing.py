@@ -46,7 +46,7 @@ class ListCtrl(wx.ListCtrl,
 
     def populate(self):
         """populate with default colums"""
-        self.InsertColumn(0, _('#'), width=30)
+        self.InsertColumn(0, '#', width=30)
         self.InsertColumn(1, _('URL'), width=400)
         self.InsertColumn(2, _('Playlist Items'), width=200)
 

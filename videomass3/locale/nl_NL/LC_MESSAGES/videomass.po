@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-01 10:06+0200\n"
-"PO-Revision-Date: 2021-06-01 10:22+0200\n"
+"POT-Creation-Date: 2021-08-20 00:17+0200\n"
+"PO-Revision-Date: 2021-08-20 00:18+0200\n"
 "Last-Translator: Roelof Berkepeis <roelof@imoma.eu>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -119,6 +119,7 @@ msgstr "Breedte"
 #: ../vdms_dialogs/filter_crop.py:256 ../vdms_dialogs/filter_deinterlace.py:119
 #: ../vdms_dialogs/filter_denoisers.py:85 ../vdms_dialogs/filter_scale.py:186
 #: ../vdms_dialogs/filter_stab.py:259 ../vdms_dialogs/filter_transpose.py:109
+#: ../vdms_dialogs/playlist_indexing.py:143
 #: ../vdms_panels/av_conversions.py:536
 msgid "Reset"
 msgstr "Reset"
@@ -126,6 +127,7 @@ msgstr "Reset"
 #: ../vdms_dialogs/filter_crop.py:260 ../vdms_dialogs/filter_deinterlace.py:118
 #: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:184
 #: ../vdms_dialogs/filter_stab.py:257 ../vdms_dialogs/filter_transpose.py:113
+#: ../vdms_dialogs/playlist_indexing.py:142
 #: ../vdms_dialogs/set_timestamp.py:145
 msgid "Apply"
 msgstr "Toepassen"
@@ -789,6 +791,64 @@ msgstr "Klaar!"
 msgid "Cross-platform graphical interface for FFmpeg and youtube-dl.\n"
 msgstr ""
 "Multiplatform grafische gebruikersomgeving voor FFmpeg en youtube-dl.\n"
+
+#: ../vdms_dialogs/playlist_indexing.py:50 ../vdms_frames/ydl_mediainfo.py:90
+msgid "URL"
+msgstr "URL"
+
+#: ../vdms_dialogs/playlist_indexing.py:51
+msgid "Playlist Items"
+msgstr ""
+
+#: ../vdms_dialogs/playlist_indexing.py:83
+msgid ""
+"Click on \"Playlist Items\" column to specify indices of the videos in the "
+"playlist separated by commas like: \"1,2,5,8\" if you want to download "
+"videos indexed 1, 2, 5, 8 in the playlist.\n"
+"\n"
+"You can specify range: \"1-3,7,10-13 it will download the videos at index 1, "
+"2, 3, 7, 10, 11, 12 and 13.\n"
+msgstr ""
+
+#: ../vdms_dialogs/playlist_indexing.py:124
+msgid "Playlist video items to download"
+msgstr ""
+
+#: ../vdms_dialogs/playlist_indexing.py:195
+msgid ""
+"ERROR: Enter only digits, commas and hyphens. If you have multiple items, "
+"use commas to separate them. Use the hyphen for the range. Spaces are not "
+"allowed."
+msgstr ""
+
+#: ../vdms_dialogs/playlist_indexing.py:198
+msgid "ERROR: You have to start and end with a digit."
+msgstr ""
+
+#: ../vdms_dialogs/playlist_indexing.py:199
+msgid "ERROR: Make sure the hyphen is in the middle of two digits."
+msgstr ""
+
+#: ../vdms_dialogs/playlist_indexing.py:201
+msgid ""
+"ERROR: A range must include only two digits and a hyphen, for example "
+"\"20-25\" ."
+msgstr ""
+
+#: ../vdms_dialogs/playlist_indexing.py:203
+msgid ""
+"ERROR: Make sure you use commas only to separate indices and / or ranges, "
+"for example \"1,3,5,10-15\""
+msgstr ""
+
+#: ../vdms_dialogs/playlist_indexing.py:205
+msgid "ERROR: The entered string contains redundant characters."
+msgstr ""
+
+#: ../vdms_dialogs/playlist_indexing.py:206
+msgid ""
+"WARNING: The URL contains a channel. Unable to determine playlist indexing."
+msgstr ""
 
 #: ../vdms_dialogs/presets_addnew.py:38
 msgid ""
@@ -1554,10 +1614,6 @@ msgstr "Statistieken viewer"
 msgid "TITLE SELECTION"
 msgstr "TITEL SELECTIE"
 
-#: ../vdms_frames/ydl_mediainfo.py:90
-msgid "URL"
-msgstr "URL"
-
 #: ../vdms_io/checkup.py:50
 #, python-format
 msgid ""
@@ -1704,17 +1760,18 @@ msgstr ""
 "kolom en probeer de \"Herstel allen...\" knop te drukken"
 
 #: ../vdms_main/main_frame.py:189 ../vdms_main/main_frame.py:243
-#: ../vdms_main/main_frame.py:1448 ../vdms_main/main_frame.py:1480
-#: ../vdms_main/main_frame.py:1500 ../vdms_main/main_frame.py:1555
-#: ../vdms_main/main_frame.py:1606 ../vdms_main/main_frame.py:1658
+#: ../vdms_main/main_frame.py:1451 ../vdms_main/main_frame.py:1483
+#: ../vdms_main/main_frame.py:1506 ../vdms_main/main_frame.py:1561
+#: ../vdms_main/main_frame.py:1612 ../vdms_main/main_frame.py:1664
+#: ../vdms_panels/youtubedl_ui.py:460 ../vdms_panels/youtubedl_ui.py:693
 msgid "Ready"
 msgstr "Gereed"
 
-#: ../vdms_main/main_frame.py:242 ../vdms_panels/youtubedl_ui.py:450
+#: ../vdms_main/main_frame.py:242 ../vdms_panels/youtubedl_ui.py:466
 msgid "Videomass"
 msgstr "Videomass"
 
-#: ../vdms_main/main_frame.py:285 ../vdms_main/main_frame.py:1389
+#: ../vdms_main/main_frame.py:285 ../vdms_main/main_frame.py:1392
 msgid "Drag at least one file"
 msgstr "Sleep minstens een bestand"
 
@@ -1970,7 +2027,7 @@ msgstr "Systeem"
 msgid "Goto"
 msgstr "Ga naar"
 
-#: ../vdms_main/main_frame.py:475 ../vdms_panels/filedrop.py:239
+#: ../vdms_main/main_frame.py:475 ../vdms_panels/filedrop.py:241
 msgid "Set up a temporary folder for conversions"
 msgstr "Stel een tijdelijke folder in voor conversies"
 
@@ -2067,11 +2124,11 @@ msgstr "Over Videomass"
 msgid "Help"
 msgstr "Help"
 
-#: ../vdms_main/main_frame.py:656
+#: ../vdms_main/main_frame.py:659
 msgid "youtube-dl is already up-to-date {}"
 msgstr "youtube-dl is reeds up-to-date {}"
 
-#: ../vdms_main/main_frame.py:662
+#: ../vdms_main/main_frame.py:665
 #, python-brace-format
 msgid ""
 "youtube-dl version {0} is available and will replace the old version {1}\n"
@@ -2082,11 +2139,11 @@ msgstr ""
 "\n"
 "Wilt u nu updaten?"
 
-#: ../vdms_main/main_frame.py:684
+#: ../vdms_main/main_frame.py:687
 msgid "Successful! youtube-dl is up-to-date"
 msgstr "Succesvol! youtube-dl is up-to-date"
 
-#: ../vdms_main/main_frame.py:694
+#: ../vdms_main/main_frame.py:697
 msgid ""
 "To update youtube_dl it is necessary to rebuild the Videomass AppImage. This "
 "procedure will be completely automatic and will only require you to select "
@@ -2100,11 +2157,11 @@ msgstr ""
 "\n"
 "Wilt u doorgaan?"
 
-#: ../vdms_main/main_frame.py:704
+#: ../vdms_main/main_frame.py:707
 msgid "Select the 'Videomass-{}-x86_64.AppImage' file to update"
 msgstr "Selecteer het 'Videomass-{}-x86_64.AppImage' bestand om te updaten"
 
-#: ../vdms_main/main_frame.py:722
+#: ../vdms_main/main_frame.py:725
 #, python-brace-format
 msgid ""
 "Successful! youtube-dl is up-to-date ({0})\n"
@@ -2115,7 +2172,7 @@ msgstr ""
 "\n"
 "Herstart is nodig. Wilt u Videomass nu afsluiten?"
 
-#: ../vdms_main/main_frame.py:732
+#: ../vdms_main/main_frame.py:735
 msgid ""
 "Failed! For details consult:\n"
 "{}/youtube_dl-update-on-AppImage.log"
@@ -2123,11 +2180,11 @@ msgstr ""
 "Mislukt! Voor details raadpleeg:\n"
 "{}/youtube_dl-update-on-AppImage.log"
 
-#: ../vdms_main/main_frame.py:738
+#: ../vdms_main/main_frame.py:741
 msgid "Failed! {}"
 msgstr "Gefaald! {}"
 
-#: ../vdms_main/main_frame.py:744
+#: ../vdms_main/main_frame.py:747
 msgid ""
 "It looks like you installed youtube-dl with a package manager. Please use "
 "that to update."
@@ -2135,20 +2192,20 @@ msgstr ""
 "Het lijkt erop dat u youtube-dl geinstalleerd heeft met een package manager. "
 "Gebruik die a.u.b. voor update."
 
-#: ../vdms_main/main_frame.py:777
+#: ../vdms_main/main_frame.py:780
 #, python-brace-format
 msgid "There is a new version available {0}"
 msgstr "Er is een nieuwe versie beschikbaar {0}"
 
-#: ../vdms_main/main_frame.py:781
+#: ../vdms_main/main_frame.py:784
 msgid "No new version available"
 msgstr "Geen nieuwe versie beschikbaar"
 
-#: ../vdms_main/main_frame.py:794
+#: ../vdms_main/main_frame.py:797
 msgid "Choose a download folder"
 msgstr "Kies een download folder"
 
-#: ../vdms_main/main_frame.py:810
+#: ../vdms_main/main_frame.py:813
 msgid ""
 "\n"
 "Wait....\n"
@@ -2158,12 +2215,12 @@ msgstr ""
 "Wacht....\n"
 "Het archief wordt gedownload\n"
 
-#: ../vdms_main/main_frame.py:817
+#: ../vdms_main/main_frame.py:820
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "Succesvol gedownload naar \"{0}\""
 
-#: ../vdms_main/main_frame.py:869
+#: ../vdms_main/main_frame.py:872
 msgid ""
 "\n"
 "Wait....\n"
@@ -2173,11 +2230,11 @@ msgstr ""
 "Wacht....\n"
 "Controleer geinstalleerde versie\n"
 
-#: ../vdms_main/main_frame.py:873 ../vdms_main/main_frame.py:888
+#: ../vdms_main/main_frame.py:876 ../vdms_main/main_frame.py:891
 msgid "You are using youtube-dl version {}"
 msgstr "U gebruikt youtube-dl versie {}"
 
-#: ../vdms_main/main_frame.py:895
+#: ../vdms_main/main_frame.py:898
 #, python-brace-format
 msgid ""
 "ERROR: {0}\n"
@@ -2188,41 +2245,41 @@ msgstr ""
 "\n"
 "youtube-dl is nog niet geinstalleerd."
 
-#: ../vdms_main/main_frame.py:916
+#: ../vdms_main/main_frame.py:919
 #, python-brace-format
 msgid "Latest version available: {0}"
 msgstr "Laatst beschikbare versie: {0}"
 
-#: ../vdms_main/main_frame.py:936 ../vdms_main/main_frame.py:1025
+#: ../vdms_main/main_frame.py:939 ../vdms_main/main_frame.py:1028
 msgid "There are no logs to show."
 msgstr "Er bestaan geen logs om te tonen."
 
-#: ../vdms_main/main_frame.py:973 ../vdms_main/main_frame.py:984
-#: ../vdms_main/main_frame.py:1006
+#: ../vdms_main/main_frame.py:976 ../vdms_main/main_frame.py:987
+#: ../vdms_main/main_frame.py:1009
 msgid "No files added yet"
 msgstr "Nog geen bestanden toegevoegd"
 
-#: ../vdms_main/main_frame.py:995
+#: ../vdms_main/main_frame.py:998
 msgid "No URLs added yet"
 msgstr "Nog geen URLs toegevoegd"
 
-#: ../vdms_main/main_frame.py:1044
+#: ../vdms_main/main_frame.py:1047
 msgid "cache folder has not been created yet."
 msgstr "cache folder is nog niet gemaakt."
 
-#: ../vdms_main/main_frame.py:1058
+#: ../vdms_main/main_frame.py:1061
 msgid "Choose a temporary destination for conversions"
 msgstr "Kies een tijdelijke bestemming voor de conversies"
 
-#: ../vdms_main/main_frame.py:1078
+#: ../vdms_main/main_frame.py:1081
 msgid "Choose a temporary destination for downloads"
 msgstr "Kies een tijdelijke bestemming voor de downloads"
 
-#: ../vdms_main/main_frame.py:1111
+#: ../vdms_main/main_frame.py:1114
 msgid "Default destination folders successfully restored"
 msgstr "Standaard bestemming-folders succesvol hersteld"
 
-#: ../vdms_main/main_frame.py:1217
+#: ../vdms_main/main_frame.py:1220
 #, python-brace-format
 msgid ""
 "\n"
@@ -2245,11 +2302,11 @@ msgstr ""
 "\n"
 "De laatste versie {1} is beschikbaar\n"
 
-#: ../vdms_main/main_frame.py:1222 ../vdms_main/main_frame.py:1230
+#: ../vdms_main/main_frame.py:1225 ../vdms_main/main_frame.py:1233
 msgid "Checking for newer version"
 msgstr "Nieuwere versie wordt nagegaan"
 
-#: ../vdms_main/main_frame.py:1226
+#: ../vdms_main/main_frame.py:1229
 #, python-brace-format
 msgid ""
 "\n"
@@ -2272,108 +2329,108 @@ msgstr ""
 "\n"
 "U gebruikt de laatste versie\n"
 
-#: ../vdms_main/main_frame.py:1312
+#: ../vdms_main/main_frame.py:1315
 msgid "Go to the previous panel"
 msgstr "Ga naar vorig panel"
 
-#: ../vdms_main/main_frame.py:1313
+#: ../vdms_main/main_frame.py:1316
 msgid "Back"
 msgstr "Terug"
 
-#: ../vdms_main/main_frame.py:1317
+#: ../vdms_main/main_frame.py:1320
 msgid "Go to the next panel"
 msgstr "Ga naar volgende panel"
 
-#: ../vdms_main/main_frame.py:1318
+#: ../vdms_main/main_frame.py:1321
 msgid "Next"
 msgstr "Volgende"
 
-#: ../vdms_main/main_frame.py:1324
+#: ../vdms_main/main_frame.py:1327
 msgid "Gathers information of multimedia streams"
 msgstr "Wint informatie in over multimedia streams"
 
-#: ../vdms_main/main_frame.py:1325
+#: ../vdms_main/main_frame.py:1328
 msgid "Media Streams"
 msgstr "Media Streams"
 
-#: ../vdms_main/main_frame.py:1329
+#: ../vdms_main/main_frame.py:1332
 msgid "Shows download statistics and information"
 msgstr "Toont download-statistieken en -informatie"
 
-#: ../vdms_main/main_frame.py:1330
+#: ../vdms_main/main_frame.py:1333
 msgid "Statistics"
 msgstr "Statistieken"
 
-#: ../vdms_main/main_frame.py:1335
+#: ../vdms_main/main_frame.py:1338
 msgid "Add a new profile from this panel with the current settings"
 msgstr "Voeg een nieuw profiel toe van dit panel met de huidige instellingen"
 
-#: ../vdms_main/main_frame.py:1336
+#: ../vdms_main/main_frame.py:1339
 msgid "Add Profile"
 msgstr "Voeg profiel toe"
 
-#: ../vdms_main/main_frame.py:1342
+#: ../vdms_main/main_frame.py:1345
 msgid "Convert using FFmpeg"
 msgstr "Converteer met FFmpeg"
 
-#: ../vdms_main/main_frame.py:1343
+#: ../vdms_main/main_frame.py:1346
 msgid "Convert"
 msgstr "Converteer"
 
-#: ../vdms_main/main_frame.py:1347
+#: ../vdms_main/main_frame.py:1350
 msgid "Download files using youtube-dl"
 msgstr "Download bestanden met youtube-dl"
 
-#: ../vdms_main/main_frame.py:1348
+#: ../vdms_main/main_frame.py:1351
 msgid "Download"
 msgstr "Download"
 
-#: ../vdms_main/main_frame.py:1405
+#: ../vdms_main/main_frame.py:1408
 msgid "Append at least one URL"
 msgstr "Voeg minstens een URL toe"
 
-#: ../vdms_main/main_frame.py:1412
+#: ../vdms_main/main_frame.py:1415
 msgid "Invalid URL: \"{}\""
 msgstr "Ongeldige URL: \"{}\""
 
-#: ../vdms_main/main_frame.py:1449
+#: ../vdms_main/main_frame.py:1452
 msgid "Videomass - Queued Files"
 msgstr "Videomass - Wachtrij Bestanden"
 
-#: ../vdms_main/main_frame.py:1481
+#: ../vdms_main/main_frame.py:1484
 msgid "Videomass - Queued URLs"
 msgstr "Videomass - Wachtrij URLs"
 
-#: ../vdms_main/main_frame.py:1491
+#: ../vdms_main/main_frame.py:1494
 msgid "URL list changed, please check the settings again."
 msgstr "URL lijst gewijzigd, ga a.u.b. de instellingen na."
 
-#: ../vdms_main/main_frame.py:1502
+#: ../vdms_main/main_frame.py:1508
 msgid "Videomass - YouTube Downloader"
 msgstr "Videomass - YouTube Downloader"
 
-#: ../vdms_main/main_frame.py:1538 ../vdms_main/main_frame.py:1590
-#: ../vdms_main/main_frame.py:1642
+#: ../vdms_main/main_frame.py:1544 ../vdms_main/main_frame.py:1596
+#: ../vdms_main/main_frame.py:1648
 msgid "File list changed, please check the settings again."
 msgstr "Bestanden-lijst gewijzigd, ga a.u.b. de instellingen na."
 
-#: ../vdms_main/main_frame.py:1557
+#: ../vdms_main/main_frame.py:1563
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - AV Conversies"
 
-#: ../vdms_main/main_frame.py:1608
+#: ../vdms_main/main_frame.py:1614
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - Presets Manager"
 
-#: ../vdms_main/main_frame.py:1660
+#: ../vdms_main/main_frame.py:1666
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Aaneenschakel Demuxer"
 
-#: ../vdms_main/main_frame.py:1692
+#: ../vdms_main/main_frame.py:1698
 msgid "Viewing last log"
 msgstr "Laatste log-berichten bekijken"
 
-#: ../vdms_main/main_frame.py:1700
+#: ../vdms_main/main_frame.py:1706
 msgid ""
 "Cannot continue: The duration in the timeline exceeds the duration of some "
 "queued files."
@@ -2381,11 +2438,11 @@ msgstr ""
 "Doorgaan is onmogelijk: de duur op de tijdslijn overschrijdt de duur van "
 "enkele wachtrij bestanden."
 
-#: ../vdms_main/main_frame.py:1705 ../vdms_main/main_frame.py:1710
+#: ../vdms_main/main_frame.py:1711 ../vdms_main/main_frame.py:1716
 msgid "Processing..."
 msgstr "Uitvoering bezig..."
 
-#: ../vdms_main/main_frame.py:1712
+#: ../vdms_main/main_frame.py:1718
 msgid "Videomass - Output Monitor"
 msgstr "Videomass - Output Monitor"
 
@@ -2481,7 +2538,7 @@ msgstr "Afstemmen"
 msgid "Video Filters"
 msgstr "Video Filters"
 
-#: ../vdms_panels/av_conversions.py:530 ../vdms_panels/youtubedl_ui.py:227
+#: ../vdms_panels/av_conversions.py:530 ../vdms_panels/youtubedl_ui.py:234
 msgid "Preview"
 msgstr "Voorvertoning"
 
@@ -2976,7 +3033,7 @@ msgstr "AV-Conversies"
 msgid "Concatenate media files"
 msgstr "Media files aaneenschakelen"
 
-#: ../vdms_panels/choose_topic.py:116 ../vdms_panels/youtubedl_ui.py:444
+#: ../vdms_panels/choose_topic.py:116
 msgid "YouTube Downloader"
 msgstr "YouTube Downloader"
 
@@ -3053,7 +3110,7 @@ msgstr ""
 msgid "youtube-dl is disabled. Check your preferences."
 msgstr "youtube-dl is uitgezet. Controleer uw voorkeuren."
 
-#: ../vdms_panels/choose_topic.py:236 ../vdms_panels/youtubedl_ui.py:857
+#: ../vdms_panels/choose_topic.py:237 ../vdms_panels/youtubedl_ui.py:903
 #: ../vdms_panels/long_processing_task.py:511
 #: ../vdms_panels/presets_manager.py:491 ../vdms_panels/presets_manager.py:534
 #: ../vdms_panels/presets_manager.py:602 ../vdms_panels/presets_manager.py:628
@@ -3061,7 +3118,7 @@ msgstr "youtube-dl is uitgezet. Controleer uw voorkeuren."
 msgid "Please confirm"
 msgstr "Bevestig dit"
 
-#: ../vdms_panels/choose_topic.py:267
+#: ../vdms_panels/choose_topic.py:268
 msgid ""
 "ERROR: {}\n"
 "\n"
@@ -3071,7 +3128,7 @@ msgstr ""
 "\n"
 "youtube-dl is niet besloten in AppImage."
 
-#: ../vdms_panels/choose_topic.py:273
+#: ../vdms_panels/choose_topic.py:274
 msgid ""
 "ERROR: {}\n"
 "\n"
@@ -3172,58 +3229,62 @@ msgstr ""
 "Output Formaat\n"
 "Tijd Periode"
 
-#: ../vdms_panels/youtubedl_ui.py:82
+#: ../vdms_panels/youtubedl_ui.py:83
 msgid ""
 "At least one \"Format Code\" must be checked for each URL selected in green."
 msgstr ""
 "Minstens een \"Formaat Code\" moet gezet zijn voor elke URL, groen "
 "geselecteerd."
 
-#: ../vdms_panels/youtubedl_ui.py:84
+#: ../vdms_panels/youtubedl_ui.py:85
 msgid "Function available only if you choose \"Download by format code\""
 msgstr "Functie is alleen beschikbaar als u \"Download op formaat code\" kiest"
 
-#: ../vdms_panels/youtubedl_ui.py:130
+#: ../vdms_panels/youtubedl_ui.py:133
 msgid "Default"
 msgstr "Standaard"
 
-#: ../vdms_panels/youtubedl_ui.py:131
+#: ../vdms_panels/youtubedl_ui.py:134
 msgid "Download audio and video splitted"
 msgstr "Download audio en video afzonderlijk"
 
-#: ../vdms_panels/youtubedl_ui.py:132
+#: ../vdms_panels/youtubedl_ui.py:135
 msgid "Download Audio only"
 msgstr "Download alleen Audio"
 
-#: ../vdms_panels/youtubedl_ui.py:133
+#: ../vdms_panels/youtubedl_ui.py:136
 msgid "Download by format code"
 msgstr "Download op formaat code"
 
-#: ../vdms_panels/youtubedl_ui.py:169
+#: ../vdms_panels/youtubedl_ui.py:176
 msgid "Options"
 msgstr "Opties"
 
-#: ../vdms_panels/youtubedl_ui.py:233
+#: ../vdms_panels/youtubedl_ui.py:240
 msgid "Download all videos in playlist"
 msgstr "Download alle videos in de playlist"
 
-#: ../vdms_panels/youtubedl_ui.py:237
+#: ../vdms_panels/youtubedl_ui.py:245
+msgid "Playlist Editor"
+msgstr ""
+
+#: ../vdms_panels/youtubedl_ui.py:252
 msgid "Embed thumbnail in audio file"
 msgstr "Plaats thumbnail in audio bestand"
 
-#: ../vdms_panels/youtubedl_ui.py:241
+#: ../vdms_panels/youtubedl_ui.py:256
 msgid "Add metadata to file"
 msgstr "Voeg metadata aan bestand toe"
 
-#: ../vdms_panels/youtubedl_ui.py:245
+#: ../vdms_panels/youtubedl_ui.py:260
 msgid "Write subtitles to video"
 msgstr "Schrijf ondertitels naar video"
 
-#: ../vdms_panels/youtubedl_ui.py:250
+#: ../vdms_panels/youtubedl_ui.py:265
 msgid "Prevent overwriting files"
 msgstr "Voorkom overschrijven bestanden"
 
-#: ../vdms_panels/youtubedl_ui.py:255
+#: ../vdms_panels/youtubedl_ui.py:270
 msgid ""
 "Include the video ID\n"
 "in the file names"
@@ -3231,83 +3292,90 @@ msgstr ""
 "Voeg de video ID toe\n"
 "aan de bestandsnamen"
 
-#: ../vdms_panels/youtubedl_ui.py:261
+#: ../vdms_panels/youtubedl_ui.py:276
 msgid "Restrict file names"
 msgstr "Beperk bestandsnamen"
 
-#: ../vdms_panels/youtubedl_ui.py:285
+#: ../vdms_panels/youtubedl_ui.py:300
 msgid "Help viewer"
 msgstr "Hulp viewer"
 
-#: ../vdms_panels/youtubedl_ui.py:309 ../vdms_panels/youtubedl_ui.py:411
-#: ../vdms_panels/youtubedl_ui.py:427
+#: ../vdms_panels/youtubedl_ui.py:324 ../vdms_panels/youtubedl_ui.py:427
+#: ../vdms_panels/youtubedl_ui.py:443
 msgid "Play selected url"
 msgstr "Speel geselecteerde url af"
 
-#: ../vdms_panels/youtubedl_ui.py:439
+#: ../vdms_panels/youtubedl_ui.py:455
 msgid "An item must be selected in the URLs checklist"
 msgstr "Een item moet geselecteerd zijn in de URL lijst"
 
-#: ../vdms_panels/youtubedl_ui.py:449
-msgid "Videomass cannot play playlists for now"
+#: ../vdms_panels/youtubedl_ui.py:465
+#, fuzzy
+#| msgid "Videomass cannot play playlists for now"
+msgid "Videomass cannot play channel or playlists."
 msgstr "Deze versie van Videomass kan geen playlist afspelen"
 
-#: ../vdms_panels/youtubedl_ui.py:471 ../vdms_panels/youtubedl_ui.py:568
+#: ../vdms_panels/youtubedl_ui.py:487 ../vdms_panels/youtubedl_ui.py:584
 msgid "Format Code"
 msgstr "Formaat Code"
 
-#: ../vdms_panels/youtubedl_ui.py:472 ../vdms_panels/youtubedl_ui.py:569
-#: ../vdms_panels/youtubedl_ui.py:617
+#: ../vdms_panels/youtubedl_ui.py:488 ../vdms_panels/youtubedl_ui.py:585
+#: ../vdms_panels/youtubedl_ui.py:632
 msgid "Url"
 msgstr "Url"
 
-#: ../vdms_panels/youtubedl_ui.py:473 ../vdms_panels/youtubedl_ui.py:570
-#: ../vdms_panels/youtubedl_ui.py:618
+#: ../vdms_panels/youtubedl_ui.py:489 ../vdms_panels/youtubedl_ui.py:586
+#: ../vdms_panels/youtubedl_ui.py:633
 msgid "Title"
 msgstr "Titel"
 
-#: ../vdms_panels/youtubedl_ui.py:474 ../vdms_panels/youtubedl_ui.py:571
+#: ../vdms_panels/youtubedl_ui.py:490 ../vdms_panels/youtubedl_ui.py:587
 msgid "Extension"
 msgstr "Extensie"
 
-#: ../vdms_panels/youtubedl_ui.py:475
+#: ../vdms_panels/youtubedl_ui.py:491
 msgid "Resolution"
 msgstr "Resolutie"
 
-#: ../vdms_panels/youtubedl_ui.py:476
+#: ../vdms_panels/youtubedl_ui.py:492
 msgid "Video Codec"
 msgstr "Video Codec"
 
-#: ../vdms_panels/youtubedl_ui.py:477
+#: ../vdms_panels/youtubedl_ui.py:493
 msgid "fps"
 msgstr "fps"
 
-#: ../vdms_panels/youtubedl_ui.py:478
+#: ../vdms_panels/youtubedl_ui.py:494
 msgid "Audio Codec"
 msgstr "Audio Codec"
 
-#: ../vdms_panels/youtubedl_ui.py:479 ../vdms_panels/filedrop.py:220
+#: ../vdms_panels/youtubedl_ui.py:495 ../vdms_panels/filedrop.py:222
 msgid "Size"
 msgstr "Grootte"
 
-#: ../vdms_panels/youtubedl_ui.py:572
+#: ../vdms_panels/youtubedl_ui.py:588
 msgid "Resolution note"
 msgstr "Resolutie notitie"
 
-#: ../vdms_panels/youtubedl_ui.py:619
+#: ../vdms_panels/youtubedl_ui.py:634
 msgid "Quality"
 msgstr "Kwaliteit"
 
-#: ../vdms_panels/youtubedl_ui.py:639
+#: ../vdms_panels/youtubedl_ui.py:654
 msgid "Sorry, this feature is disabled."
 msgstr "Sorry, deze mogelijkheid is afgesloten."
 
-#: ../vdms_panels/youtubedl_ui.py:702
-msgid "Unable to get format codes on playlists"
+#: ../vdms_panels/youtubedl_ui.py:723
+#, fuzzy
+#| msgid "Unable to get format codes on playlists"
+msgid "Unable to get format codes on playlists and channels"
 msgstr "Onmogelijk om playlist formaat codes te verkrijgen"
 
-#: ../vdms_panels/youtubedl_ui.py:855
-msgid "The URLs contain playlists. Are you sure you want to continue?"
+#: ../vdms_panels/youtubedl_ui.py:901
+#, fuzzy
+#| msgid "The URLs contain playlists. Are you sure you want to continue?"
+msgid ""
+"The URLs contain playlists or channels. Are you sure you want to continue?"
 msgstr "De URLs bevatten playlists. Wilt u toch doorgaan?"
 
 #: ../vdms_panels/filedrop.py:66
@@ -3323,7 +3391,9 @@ msgstr ""
 "de bestandsnaam, bijv. '.mkv', '.avi', '.mp3', etc."
 
 #: ../vdms_panels/filedrop.py:70
-msgid "Invalid filename. Contains double quotes"
+#, fuzzy
+#| msgid "Invalid filename. Contains double quotes"
+msgid "Invalid filename. Contains double or single quotes"
 msgstr "Ongeldige bestandsnaam. Bevat dubbele aanhalingstekens"
 
 #: ../vdms_panels/filedrop.py:123
@@ -3331,53 +3401,53 @@ msgstr "Ongeldige bestandsnaam. Bevat dubbele aanhalingstekens"
 msgid "Duplicate files are rejected: > '%s'"
 msgstr "Gelijke bestanden zijn overgeslagen: > '%s'"
 
-#: ../vdms_panels/filedrop.py:186
+#: ../vdms_panels/filedrop.py:188
 msgid "Drag one or more files below"
 msgstr "Sleep een of meer bestanden hieronder"
 
-#: ../vdms_panels/filedrop.py:192 ../vdms_panels/filedrop.py:286
-#: ../vdms_panels/filedrop.py:302
+#: ../vdms_panels/filedrop.py:194 ../vdms_panels/filedrop.py:288
+#: ../vdms_panels/filedrop.py:304
 msgid "Play"
 msgstr "Speel"
 
-#: ../vdms_panels/filedrop.py:217
+#: ../vdms_panels/filedrop.py:219
 msgid "File Name"
 msgstr "Bestandsnaam"
 
-#: ../vdms_panels/filedrop.py:218 ../vdms_panels/timeline.py:123
+#: ../vdms_panels/filedrop.py:220 ../vdms_panels/timeline.py:123
 msgid "Duration"
 msgstr "Duur"
 
-#: ../vdms_panels/filedrop.py:219
+#: ../vdms_panels/filedrop.py:221
 msgid "Media type"
 msgstr "Media type"
 
-#: ../vdms_panels/filedrop.py:237
+#: ../vdms_panels/filedrop.py:239
 msgid "Remove the selected file from the list"
 msgstr "Verwijder het geselecteerde bestand uit de lijst"
 
-#: ../vdms_panels/filedrop.py:238
+#: ../vdms_panels/filedrop.py:240
 msgid "Delete all files from the list"
 msgstr "Verwijder alle bestanden uit de lijst"
 
-#: ../vdms_panels/filedrop.py:241
+#: ../vdms_panels/filedrop.py:243
 msgid "Play the selected files in the list"
 msgstr "Speel de geselecteerde bestanden in de lijst af"
 
-#: ../vdms_panels/filedrop.py:242 ../vdms_panels/textdrop.py:88
+#: ../vdms_panels/filedrop.py:244 ../vdms_panels/textdrop.py:88
 msgid "Destination folder"
 msgstr "Bestemming folder"
 
-#: ../vdms_panels/filedrop.py:287 ../vdms_panels/filedrop.py:305
+#: ../vdms_panels/filedrop.py:289 ../vdms_panels/filedrop.py:307
 #: ../vdms_panels/presets_manager.py:132
 msgid "Remove"
 msgstr "Verwijder"
 
-#: ../vdms_panels/filedrop.py:316 ../vdms_panels/filedrop.py:337
+#: ../vdms_panels/filedrop.py:318 ../vdms_panels/filedrop.py:339
 msgid "No file selected"
 msgstr "Geen bestand geselecteerd"
 
-#: ../vdms_panels/filedrop.py:319 ../vdms_panels/filedrop.py:340
+#: ../vdms_panels/filedrop.py:321 ../vdms_panels/filedrop.py:342
 msgid "Add Files"
 msgstr "Voeg bestanden toe"
 
@@ -3847,11 +3917,11 @@ msgid "Is 'ffmpeg' installed on your system?"
 msgstr "Is 'ffmpeg' geïnstalleerd op uw systeem?"
 
 #: ../vdms_threads/ydl_executable.py:74 ../vdms_threads/ydl_executable.py:81
-#: ../vdms_threads/ydl_executable.py:258 ../vdms_threads/ydl_executable.py:265
+#: ../vdms_threads/ydl_executable.py:266 ../vdms_threads/ydl_executable.py:273
 msgid "Unrecognized error"
 msgstr "Onherkenbare error"
 
-#: ../vdms_threads/ydl_executable.py:77 ../vdms_threads/ydl_executable.py:261
+#: ../vdms_threads/ydl_executable.py:77 ../vdms_threads/ydl_executable.py:269
 msgid ""
 "\n"
 "Requires MSVCR100.dll\n"

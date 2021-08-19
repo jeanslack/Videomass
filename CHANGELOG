@@ -8,7 +8,7 @@ Change Log:
 
 
 +------------------------------------+
-Aug 19, 2021 V.3.4.4
+Aug 20, 2021 V.3.4.4
 
   * Fixed `NameError: name 'm' is not defined` on utils.timehuman()
   * Implemented the indexing function of the playlists on the Youtube
