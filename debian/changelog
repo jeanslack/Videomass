@@ -8,8 +8,9 @@ videomass (3.4.4-1) UNRELEASED; urgency=medium
   * Fixed status bar messages on Youtube downloader.
   * To resolve issues with the FFmpeg demuxer, single quoted filenames
     will be rejected.
+  * Update translations in Russian, Spanish and Italian language.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 20 Aug 2021 00:05:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 20 Aug 2021 21:10:00 +0200
 
 videomass (3.4.3-1) UNRELEASED; urgency=medium
 

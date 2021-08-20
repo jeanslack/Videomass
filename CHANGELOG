@@ -18,6 +18,7 @@ Aug 20, 2021 V.3.4.4
   * Fixed status bar messages on Youtube downloader.
   * To resolve issues with the FFmpeg demuxer, single quoted filenames
     will be rejected.
+  * Update translations in Russian, Spanish and Italian language.
 
 
 +------------------------------------+
