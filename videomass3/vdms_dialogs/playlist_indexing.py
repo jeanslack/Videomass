@@ -196,8 +196,7 @@ class Indexing(wx.Dialog):
                      'have multiple items, use commas to separate them. Use '
                      'the hyphen for the range. Spaces are not allowed.')
         errdigit2 = _('ERROR: You have to start and end with a digit.')
-        errhyph = _('ERROR: Make sure the hyphen is in the middle of two '
-                    'digits.')
+        errhyph = _('ERROR: Make sure the hyphen is between two digits.')
         errhyph3 = _('ERROR: A range must include only two digits and a '
                      'hyphen, for example "20-25" .')
         errcomma = _('ERROR: Make sure you use commas only to separate '
