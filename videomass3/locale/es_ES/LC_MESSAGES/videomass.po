@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 3.4.4Report-Msgid-Bugs-To:\n"
+"Project-Id-Version: Videomass 3.4.4 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-20 10:23+0200\n"
-"PO-Revision-Date: 2021-08-20 10:24+0200\n"
+"POT-Creation-Date: 2021-08-20 20:53+0200\n"
+"PO-Revision-Date: 2021-08-20 21:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: j.alberto.vc@gmail.com\n"
 "Language: es\n"
@@ -797,7 +797,7 @@ msgstr "URL"
 
 #: ../vdms_dialogs/playlist_indexing.py:51
 msgid "Playlist Items"
-msgstr ""
+msgstr "Contenido de la Lista"
 
 #: ../vdms_dialogs/playlist_indexing.py:83
 msgid ""
@@ -805,13 +805,19 @@ msgid ""
 "playlist separated by commas like: \"1,2,5,8\" if you want to download "
 "videos indexed 1, 2, 5, 8 in the playlist.\n"
 "\n"
-"You can specify range: \"1-3,7,10-13 it will download the videos at index 1, "
-"2, 3, 7, 10, 11, 12 and 13.\n"
+"You can specify range: \"1-3,7,10-13\" it will download the videos at index "
+"1, 2, 3, 7, 10, 11, 12 and 13.\n"
 msgstr ""
+"Presione en la columna \"Contenido de la Lista\" para especificar indices de "
+"los videos separados por comas en la lista de reproducción ej: \"1,2,5,8\" "
+"si desea descargar los videos con los indices 1, 2, 5, 8 de la lista.\n"
+"\n"
+"Puede especificar rangos: \"1-3,7,10-13\" descargara los videos con los "
+"indices 1, 2, 3, 7, 10, 11, 12 y 13.\n"
 
 #: ../vdms_dialogs/playlist_indexing.py:124
 msgid "Playlist video items to download"
-msgstr ""
+msgstr "Indices de video a descargar de la Lista"
 
 #: ../vdms_dialogs/playlist_indexing.py:195
 msgid ""
@@ -819,35 +825,41 @@ msgid ""
 "use commas to separate them. Use the hyphen for the range. Spaces are not "
 "allowed."
 msgstr ""
+"ERROR: Teclee solo dígitos, comas y guiones. Si tiene múltiples indices, use "
+"comas para separarlos. Use el guion para rangos. No se admiten Espacios."
 
 #: ../vdms_dialogs/playlist_indexing.py:198
 msgid "ERROR: You have to start and end with a digit."
-msgstr ""
+msgstr "ERROR: Tiene que iniciar y terminar con un digito."
 
 #: ../vdms_dialogs/playlist_indexing.py:199
 msgid "ERROR: Make sure the hyphen is between two digits."
-msgstr ""
+msgstr "ERROR: Asegúrese de que el guion esta entre dos dígitos."
 
 #: ../vdms_dialogs/playlist_indexing.py:200
 msgid ""
 "ERROR: A range must include only two digits and a hyphen, for example "
 "\"20-25\" ."
 msgstr ""
+"ERROR: Un rango solo debe incluir dos dígitos y un guion, ejemplo \"20-25\" ."
 
 #: ../vdms_dialogs/playlist_indexing.py:202
 msgid ""
 "ERROR: Make sure you use commas only to separate indices and / or ranges, "
 "for example \"1,3,5,10-15\""
 msgstr ""
+"ERROR: Asegúrese de usar comas solo para separar indices y / o rangos, "
+"ejemplo \"1,3,5,10-15\""
 
 #: ../vdms_dialogs/playlist_indexing.py:204
 msgid "ERROR: The entered string contains redundant characters."
-msgstr ""
+msgstr "ERROR: La cadena contiene caracteres redundantes."
 
 #: ../vdms_dialogs/playlist_indexing.py:205
 msgid ""
 "WARNING: The URL contains a channel. Unable to determine playlist indexing."
 msgstr ""
+"WARNING: La URL contiene un canal. Imposible determinar lista de indices."
 
 #: ../vdms_dialogs/presets_addnew.py:38
 msgid ""
@@ -1988,7 +2000,7 @@ msgstr "Monitor de Salida\tShift+O"
 
 #: ../vdms_main/main_frame.py:456
 msgid "Keeps track of the output for debugging errors"
-msgstr "Mantener rastro de la salida para depuración de errores "
+msgstr "Mantener rastro de la salida para depuración de errores"
 
 #: ../vdms_main/main_frame.py:460
 msgid "Configuration folder"
@@ -3257,7 +3269,7 @@ msgstr "Descargar todos los videos en la lista de reproducción"
 
 #: ../vdms_panels/youtubedl_ui.py:245
 msgid "Playlist Editor"
-msgstr ""
+msgstr "Editor de Lista de Reproducción"
 
 #: ../vdms_panels/youtubedl_ui.py:252
 msgid "Embed thumbnail in audio file"
@@ -3301,10 +3313,8 @@ msgid "An item must be selected in the URLs checklist"
 msgstr "Se debe seleccionar en la lista de URLs"
 
 #: ../vdms_panels/youtubedl_ui.py:465
-#, fuzzy
-#| msgid "Videomass cannot play playlists for now"
 msgid "Videomass cannot play channel or playlists."
-msgstr "Videomass no puede reproducir listas de reporoducción"
+msgstr "Videomass no puede reproducir listas de reproducción."
 
 #: ../vdms_panels/youtubedl_ui.py:487 ../vdms_panels/youtubedl_ui.py:584
 msgid "Format Code"
@@ -3357,18 +3367,16 @@ msgid "Sorry, this feature is disabled."
 msgstr "Lo siento, característica desabilitada."
 
 #: ../vdms_panels/youtubedl_ui.py:723
-#, fuzzy
-#| msgid "Unable to get format codes on playlists"
 msgid "Unable to get format codes on playlists and channels"
-msgstr "Fallo al obtener códigos de formato de la lista de reproducción"
+msgstr ""
+"Imposible obtener códigos de formato desde lista de reproducción y canales"
 
 #: ../vdms_panels/youtubedl_ui.py:901
-#, fuzzy
-#| msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgid ""
 "The URLs contain playlists or channels. Are you sure you want to continue?"
 msgstr ""
-"Las URLs contienen listas de reproducción. ¿Seguro que desea continuar?"
+"Las URLs contienen listas de reproducción o canales. ¿Seguro que desea "
+"continuar?"
 
 #: ../vdms_panels/filedrop.py:66
 msgid "Directories are not allowed, just add files, please."
@@ -3383,10 +3391,8 @@ msgstr ""
 "ejemplo '.mkv', '.avi','.mp3', etc."
 
 #: ../vdms_panels/filedrop.py:70
-#, fuzzy
-#| msgid "Invalid filename. Contains double quotes"
 msgid "Invalid filename. Contains double or single quotes"
-msgstr "Nombre de archivo invalido, Contiene comillas dobles"
+msgstr "Nombre de archivo invalido, Contiene comillas dobles o sencillas"
 
 #: ../vdms_panels/filedrop.py:123
 #, python-format
