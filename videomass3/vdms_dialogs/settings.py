@@ -568,8 +568,8 @@ class Setup(wx.Dialog):
             self.text_suffix.Enable()
             self.ckbx_dir.SetValue(True)
             self.btn_FFpath.Disable(), self.txtctrl_FFpath.Disable()
-            if not self.appdata['filesufix'] == 'none':
-                self.text_suffix.AppendText(self.appdata['filesufix'])
+            if not self.appdata['filesuffix'] == 'none':
+                self.text_suffix.AppendText(self.appdata['filesuffix'])
 
         if self.appdata['playlistsubfolder'] == 'false':
             self.ckbx_playlist.SetValue(False)

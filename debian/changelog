@@ -9,8 +9,12 @@ videomass (3.4.4-1) UNRELEASED; urgency=medium
   * To resolve issues with the FFmpeg demuxer, single quoted filenames
     will be rejected.
   * Update translations in Russian, Spanish and Italian language.
+  * Fixed #30 `KeyError: 'filesufix', which prevented the setup dialog from
+    opening.
+  * Fixed #29 `ValueError: too many values to unpack (expected 3)`, which
+    prevented checking for new versions of Videomass.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 20 Aug 2021 21:10:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 22 Aug 2021 10:30:00 +0200
 
 videomass (3.4.3-1) UNRELEASED; urgency=medium
 

@@ -1209,7 +1209,7 @@ class MainFrame(wx.Frame):
             return
 
         else:
-            version = version[0].split('v')[1]
+            version = version[0].split('v.')[1]
             newmajor, newminor, newmicro = version.split('.')
             new_version = int('%s%s%s' % (newmajor, newminor, newmicro))
             major, minor, micro = this[2].split('.')

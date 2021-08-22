@@ -99,8 +99,7 @@ class Indexing(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         '''constructor'''
 
-        # Add widget controls
-        #tID = wx.NewIdRef()
+        # ------ Add widget controls
         self.lctrl = ListCtrl(self,
                               wx.ID_ANY,
                               style=wx.LC_REPORT |
@@ -118,7 +117,6 @@ class Indexing(wx.Dialog):
         self.tctrl.SetBackgroundColour(Indexing.BACKGROUND)
         self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.FOREGROUND))
         self.tctrl.AppendText('%s' % Indexing.HELPME)
-        # self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.FOREGROUND))
 
         # ----------------------Properties----------------------#
         self.SetTitle(_('Playlist video items to download'))
@@ -136,34 +134,31 @@ class Indexing(wx.Dialog):
                                             wx.NORMAL))
             self.tctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL,
                                           wx.NORMAL))
-        # ----- confirm buttons section
-        btn_help = wx.Button(self, wx.ID_HELP, "")
-        btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
-        btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
         # ------ set Layout
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
         sizer_1.Add(self.lctrl, 0, wx.ALL | wx.EXPAND, 5)
         grid_sizer_1 = wx.GridSizer(1, 1, 0, 0)
         sizer_1.Add(grid_sizer_1, 1, wx.EXPAND, 0)
         grid_sizer_1.Add(self.tctrl, 0, wx.ALL | wx.EXPAND, 5)
-        # confirm btn section:
+
+        # ------ bottom layout for buttons
         gridBtn = wx.GridSizer(1, 2, 0, 0)
-        gridhelp = wx.GridSizer(1, 1, 0, 0)
-        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridBtn.Add(gridhelp)
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
-        gridexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
+        gridBtn.Add(btn_reset, 0, wx.ALL, 5)
+        btn_close = wx.Button(self, wx.ID_CANCEL, "")
+        gridexit.Add(btn_close, 0, wx.ALL, 5)
+        self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
+        gridexit.Add(self.btn_ok, 0, wx.ALL, 5)
         gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
-        # final settings:
+
+        # ------ final settings:
         sizer_1.Add(gridBtn, 0, wx.EXPAND)
         self.SetSizer(sizer_1)
         sizer_1.Fit(self)
         self.Layout()
 
-        # set listctrl data:
+        # ------ set listctrl data:
         index = 0
         for link in url:
             self.lctrl.InsertItem(index, str(index + 1))
@@ -177,11 +172,9 @@ class Indexing(wx.Dialog):
         # ----------------------Binding (EVT)----------------------#
         self.lctrl.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self.on_edit_begin)
         self.lctrl.Bind(wx.EVT_LIST_END_LABEL_EDIT, self.on_edit_end)
-        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
-        #self.Bind(wx.EVT_CLOSE, self.on_close)
 
     # ----------------------Event handler (callback)----------------------#
 
@@ -289,23 +282,6 @@ class Indexing(wx.Dialog):
         self.tctrl.Clear()
         self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.FOREGROUND))
         self.tctrl.AppendText('%s' % Indexing.HELPME)
-    # ------------------------------------------------------------------#
-
-    def on_help(self, event):
-        """
-        Open default web browser via Python Web-browser controller.
-        see <https://docs.python.org/3.8/library/webbrowser.html>
-        """
-        #if Indexing.appdata['GETLANG'] in Indexing.appdata['SUPP_LANGs']:
-            #lang = Indexing.appdata['GETLANG'].split('_')[0]
-            #page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    #'languages/%s/4-Video_filters_%s.pdf' % (lang, lang))
-        #else:
-            #page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    #'languages/en/4-Video_filters_en.pdf')
-
-        #webbrowser.open(page)
-        pass
     # ------------------------------------------------------------------#
 
     def on_close(self, event):

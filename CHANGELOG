@@ -8,7 +8,7 @@ Change Log:
 
 
 +------------------------------------+
-Aug 20, 2021 V.3.4.4
+Aug 22, 2021 V.3.4.4
 
   * Fixed `NameError: name 'm' is not defined` on utils.timehuman()
   * Implemented the indexing function of the playlists on the Youtube
@@ -19,6 +19,10 @@ Aug 20, 2021 V.3.4.4
   * To resolve issues with the FFmpeg demuxer, single quoted filenames
     will be rejected.
   * Update translations in Russian, Spanish and Italian language.
+  * Fixed #30 `KeyError: 'filesufix', which prevented the setup dialog from
+    opening.
+  * Fixed #29 `ValueError: too many values to unpack (expected 3)`, which
+    prevented checking for new versions of Videomass.
 
 
 +------------------------------------+
@@ -40,7 +44,6 @@ Aug 01, 2021 V.3.4.3
   * Added Spanish language support (Thanks to katnatek from blogdrake.net)
   * Fixed #25
   * Fixed error message when MSVCR100.dll is not installed on Windows.
-
 
 +------------------------------------+
 Apr 24, 2021 V.3.4.2

@@ -250,7 +250,7 @@ class Crop(wx.Dialog):
         boxctrl.Add(self.axis_Y, 0, wx.CENTRE)
         label_Y = wx.StaticText(self, wx.ID_ANY, ("Y"))
         boxctrl.Add(label_Y, 0, wx.BOTTOM | wx.CENTRE, 5)
-        # bottom layout
+        # bottom layout for buttons
         gridBtn = wx.GridSizer(1, 2, 0, 0)
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
         btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
