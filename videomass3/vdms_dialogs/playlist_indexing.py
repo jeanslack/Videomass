@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.09.2021 *-pycodestyle- compatible*
+Rev: Aug.22.2021 *-pycodestyle- compatible*
 ########################################################
 
 This file is part of Videomass.
@@ -24,7 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
 import wx
 import wx.lib.mixins.listctrl as listmix
 
@@ -97,7 +96,6 @@ class Indexing(wx.Dialog):
         self.data = data
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        '''constructor'''
 
         # ------ Add widget controls
         self.lctrl = ListCtrl(self,
@@ -125,15 +123,11 @@ class Indexing(wx.Dialog):
         self.tctrl.SetMinSize((800, 200))
 
         if Indexing.OS == 'Darwin':
-            self.lctrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL,
-                                            wx.NORMAL))
-            self.tctrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL,
-                                          wx.BOLD))
+            self.lctrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            self.tctrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.BOLD))
         else:
-            self.lctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL,
-                                            wx.NORMAL))
-            self.tctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL,
-                                          wx.NORMAL))
+            self.lctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            self.tctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
         # ------ set Layout
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
         sizer_1.Add(self.lctrl, 0, wx.ALL | wx.EXPAND, 5)
@@ -142,18 +136,18 @@ class Indexing(wx.Dialog):
         grid_sizer_1.Add(self.tctrl, 0, wx.ALL | wx.EXPAND, 5)
 
         # ------ bottom layout for buttons
-        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        grid_btn = wx.GridSizer(1, 2, 0, 0)
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
         btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
-        gridBtn.Add(btn_reset, 0, wx.ALL, 5)
+        grid_btn.Add(btn_reset, 0, wx.ALL, 5)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         gridexit.Add(btn_close, 0, wx.ALL, 5)
         self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
         gridexit.Add(self.btn_ok, 0, wx.ALL, 5)
-        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
+        grid_btn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
 
         # ------ final settings:
-        sizer_1.Add(gridBtn, 0, wx.EXPAND)
+        sizer_1.Add(grid_btn, 0, wx.EXPAND)
         self.SetSizer(sizer_1)
         sizer_1.Fit(self)
         self.Layout()
@@ -164,9 +158,9 @@ class Indexing(wx.Dialog):
             self.lctrl.InsertItem(index, str(index + 1))
             self.lctrl.SetItem(index, 1, link)
             if not self.data == {'': ''}:
-                for k,v in self.data.items():
-                    if k == link:
-                        self.lctrl.SetItem(index, 2, v)
+                for key, val in self.data.items():
+                    if key == link:
+                        self.lctrl.SetItem(index, 2, val)
             index += 1
 
         # ----------------------Binding (EVT)----------------------#
@@ -199,17 +193,18 @@ class Indexing(wx.Dialog):
                     'playlist indexing.')
 
         row_id = event.GetIndex()  # Get the current row
-        col_id = event.GetColumn ()  # Get the current column
+        # col_id = event.GetColumn()  # Get the current column
         new_data = event.GetLabel()  # Get the changed data
         # cols = self.lctrl.GetColumnCount()  # Get the total number of col
         # rows = self.lctrl.GetItemCount()  # Get the total number of rows
 
         if not new_data == '':
 
-            last = len(new_data)-1
+            last = len(new_data) - 1
             csplit = new_data.split(',')  # split by commas
             hsplit = new_data.split('-')  # split by hyphens
-            allow = ['-', ',','0','1','2','3','4','5','6','7','8','9']
+            allow = ['-', ',', '0', '1', '2', '3',
+                     '4', '5', '6', '7', '8', '9']
 
             if 'channel' in self.lctrl.GetItem(row_id, 1).GetText():
                 self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.YELLOW))
@@ -219,7 +214,6 @@ class Indexing(wx.Dialog):
                 self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.RED))
                 self.tctrl.AppendText('\n%s: %s' % (date, errdigit))
                 event.Veto()  # only enter digits, commas and hyphens
-                #break
             elif not new_data[0].isdigit() or not new_data[last].isdigit():
                 self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.RED))
                 self.tctrl.AppendText('\n%s: %s' % (date, errdigit2))
@@ -248,15 +242,6 @@ class Indexing(wx.Dialog):
             else:
                 self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.GREEN))
                 self.tctrl.AppendText('\n%s: Assigned: %s ' % (date, new_data))
-
-        # uncomment for debug
-        # print('current row: %s\ncurrent column: %s\ndata entered: '
-              # '%s\ntotal columns: %s\ntotal rows: %s\n' % (row_id,
-                                                           # col_id,
-                                                           # new_data,
-                                                           # cols,
-                                                           # rows
-                                                           # ))
     # ------------------------------------------------------------------#
 
     def on_edit_begin(self, event):
@@ -274,10 +259,9 @@ class Indexing(wx.Dialog):
         """
         Reset all items on editable columns and clear log messages
         """
-        index = 0
-        for it in self.urls:
-            self.lctrl.SetItem(index, 2, '')
-            index += 1
+        rows = self.lctrl.GetItemCount()  # Get the total number of rows
+        for row in range(rows):
+            self.lctrl.SetItem(row, 2, '')
 
         self.tctrl.Clear()
         self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.FOREGROUND))
@@ -285,7 +269,9 @@ class Indexing(wx.Dialog):
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
-
+        """
+        Close the dialog
+        """
         event.Skip()
     # ------------------------------------------------------------------#
 

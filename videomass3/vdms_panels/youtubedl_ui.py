@@ -95,7 +95,7 @@ class Downloader(wx.Panel):
     D_GREEN = '#008000'
     RED = '#ff0000ff'
     GREEN = '#008000'
-    #YELLOW = '#bd9f00ff'
+    # YELLOW = '#bd9f00ff'
     YELLOW = '#bd9f00'
     WHITE = '#fbf4f4'  # white for background status bar
     BLACK = '#060505'  # black for background status bar
@@ -717,12 +717,14 @@ class Downloader(wx.Panel):
             self.on_urls_list('')
 
         elif self.choice.GetSelection() == 3:
-            if [url for url in self.parent.data_url if 'playlist' in url
-                or 'channel' in url]:
-                # prevent KeyError: 'format_id'
+            ceckurls = [url for url in self.parent.data_url if 'playlist'
+                        in url or 'channel' in url]
+            if ceckurls:
+
                 wx.MessageBox(_("Unable to get format codes on playlists "
                                 "and channels"),
                               "Videomass", wx.ICON_ERROR, self)
+                # prevent KeyError: 'format_id'
                 self.choice.SetSelection(0)
                 return
             self.labtxt.Show(), self.codText.Show()
