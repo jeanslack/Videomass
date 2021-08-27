@@ -13,8 +13,9 @@ videomass (3.4.4-1) UNRELEASED; urgency=medium
     opening.
   * Fixed #29 `ValueError: too many values to unpack (expected 3)`, which
     prevented checking for new versions of Videomass.
+  * Update Videomass site and links.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 22 Aug 2021 10:30:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 27 Aug 2021 18:28:00 +0200
 
 videomass (3.4.3-1) UNRELEASED; urgency=medium
 
