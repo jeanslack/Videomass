@@ -98,4 +98,3 @@ always within the same unpacked directory:
 * [Videomass on PyPi](https://pypi.org/project/videomass/)
 * [Development](https://github.com/jeanslack/Videomass)
 * [Official download page](https://github.com/jeanslack/Videomass/releases)
-* [Alternative download page](https://sourceforge.net/projects/videomass2/)

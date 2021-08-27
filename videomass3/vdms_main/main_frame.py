@@ -1158,7 +1158,7 @@ class MainFrame(wx.Frame):
         Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        page = 'https://jeanslack.github.io/Videomass/User Guide/'
+        page = 'https://jeanslack.github.io/Videomass/videomass_use.html'
         webbrowser.open(page)
     # ------------------------------------------------------------------#
 
