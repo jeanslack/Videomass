@@ -9,7 +9,7 @@ nav_order: 2
 
 Minimum requirements:
 - MacOS **High Sierra** to up.   
-- The binary is compiled for **Mac OS X 10.13.6 64-bit** and later. It will not run on earlier versions.
+- The binary is compiled for **MacOS 10.13.6 64-bit** and later. It does not work on versions earlier than 10.13.6.
 
 ### Limitations 
 For some functional limitations related to the above packages see 

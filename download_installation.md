@@ -3,18 +3,15 @@ layout: page
 title: Download and Installation
 has_children: true
 nav_order: 5
-permalink: /Download/
 ---
 # Download and installation
 ---
 
-Please note that Videomass is available for the major PC operating systems, and 
+Videomass is available for the major PC operating systems, and 
 is also hosted on [PyPi](https://pypi.org/project/videomass/), but it needs the 
 Python interpreter to work.   
 For more information visit the [Installing from PyPi with pip command](https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-pip-command) 
 wiki page.
 
-Alternatively, choose your operating system from Table of Contents or submenus, 
-and follow the instructions to download, install or run the executable. 
-
-
+Alternatively, choose your operating system and follow the instructions to 
+download, install or run the executable.

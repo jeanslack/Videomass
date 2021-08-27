@@ -3,7 +3,6 @@ layout: page
 title: Getting Started
 has_children: true
 nav_order: 6
-permalink: /User Guide/
 ---
 ## User Guide
 - [English](Pages/User-guide-languages/en/Index_en.md)

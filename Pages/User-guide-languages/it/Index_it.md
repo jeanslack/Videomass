@@ -1,4 +1,9 @@
-[Back](../../../videomass_use.md)
+---
+layout: default
+title: Italian
+parent: User Guide
+grand_parent: Getting Started
+---
 
 This page is Working in progress.
 
@@ -6,5 +11,3 @@ This page is Working in progress.
 - [Startup and Setup](2-Startup_and_Setup_it.pdf)
 - [Presets Manager](3-Presets_Manager_it.pdf)
 - [Video Filters](4-Video_filters_it.pdf)
-
-[Back](../../../videomass_use.md)

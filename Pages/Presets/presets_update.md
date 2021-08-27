@@ -2,7 +2,7 @@
 layout: default
 title: Presets Update
 parent: Getting Started
-nav_order: 1
+nav_order: 2
 ---
 
 # How to update new presets versions

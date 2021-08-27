@@ -2,7 +2,6 @@
 layout: page
 title: Features
 nav_order: 3
-permalink: /Features/
 ---
 
 ## General Features

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: MS-Windows
+title: Windows
 parent: Download and Installation
 nav_order: 3
 ---

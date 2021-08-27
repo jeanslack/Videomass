@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Gnu/Linux
+title: Linux
 parent: Download and Installation
 nav_order: 1
 ---

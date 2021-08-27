@@ -1,4 +1,9 @@
-[Back](../../../videomass_use.md)
+---
+layout: default
+title: Russian
+parent: User Guide
+grand_parent: Getting Started
+---
 
 This page is Working in progress.
 
@@ -7,4 +12,3 @@ This page is Working in progress.
 - [Presets Manager](3-Presets_Manager_ru.pdf)
 - [Video Filters](4-Video_filters_ru.pdf)
 
-[Back](../../../videomass_use.md)

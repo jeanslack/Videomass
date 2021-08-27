@@ -2,7 +2,6 @@
 layout: page
 title: Screenshots
 nav_order: 4
-permalink: /Screenshots/
 ---   
 
 ![Image](/images/screenshots/HomePanel.png)   
