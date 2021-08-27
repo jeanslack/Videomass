@@ -2,7 +2,7 @@
 layout: page
 title: Getting Started
 has_children: true
-permalink: /videomass_use.html/
+permalink: /User Guide/
 ---
 ## User Guide
 - [English](Pages/User-guide-languages/en/Index_en.md)
