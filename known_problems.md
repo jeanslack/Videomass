@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Known Problems
+nav_order: 7
 permalink: /Known Problems/
 ---
 

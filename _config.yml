@@ -18,7 +18,7 @@ title: "Videomass"
 remote_theme: pmarsceill/just-the-docs
 
 # Color scheme currently only supports "dark", "light"/nil (default), or a custom scheme that you define
-color_scheme: "dark"
+color_scheme: "light"
 
 # Set a path/url to a logo that will be displayed instead of the title
 logo: "/images/logo.png"
@@ -36,4 +36,4 @@ aux_links_new_tab: true
 # Back to top link
 back_to_top: true
 back_to_top_text: "Back to top"
-footer_content: "Copyright &copy; 2015-2021 Gianluca Pernigotto aka jeanslack. Distributed by an <a href=\"https://github.com/jeanslack/Videomass/blob/gh-pages/LICENSE.txt\">GPL3 license.</a>"
+footer_content: "Copyright &copy; 2015-2021 Gianluca Pernigotto - aka jeanslack. Distributed by an <a href=\"https://github.com/jeanslack/Videomass/blob/gh-pages/LICENSE.txt\">GPL3 license.</a>"

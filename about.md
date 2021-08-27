@@ -1,11 +1,11 @@
 ---
 layout: page
 title: About
+nav_order: 2
 permalink: /about/
 ---
 
 ## What is Videomass?
-![Image](/images/videomass.png)
 
 Videomass is a cross-platform GUI designed for [FFmpeg](https://www.ffmpeg.org/) 
 enthusiasts who need to manage custom profiles to automate conversion/transcoding 
