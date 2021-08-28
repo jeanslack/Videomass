@@ -112,11 +112,8 @@ class Indexing(wx.Dialog):
                                  wx.TE_READONLY |
                                  wx.TE_RICH2
                                  )
-        self.tctrl.SetBackgroundColour(Indexing.BACKGROUND)
-        self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.FOREGROUND))
-        self.tctrl.AppendText('%s' % Indexing.HELPME)
 
-        # ----------------------Properties----------------------#
+        # ------ Properties
         self.SetTitle(_('Playlist video items to download'))
         self.SetMinSize((800, 400))
         self.lctrl.SetMinSize((800, 200))
@@ -128,6 +125,11 @@ class Indexing(wx.Dialog):
         else:
             self.lctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             self.tctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+
+        self.tctrl.SetBackgroundColour(Indexing.BACKGROUND)
+        self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.FOREGROUND))
+        self.tctrl.AppendText('%s' % Indexing.HELPME)
+
         # ------ set Layout
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
         sizer_1.Add(self.lctrl, 0, wx.ALL | wx.EXPAND, 5)
