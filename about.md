@@ -4,7 +4,9 @@ title: About
 nav_order: 8
 ---
 
-## What is Videomass?
+# What is Videomass?
+
+---
 
 Videomass is a cross-platform GUI designed for [FFmpeg](https://www.ffmpeg.org/) 
 enthusiasts who need to manage custom profiles to automate conversion/transcoding 
@@ -18,11 +20,11 @@ It features graphical tools for viewing, analyzing and processing multimedia
 streams and downloading videos via youtube-dl.  
 
 Videomass is a project created and maintained by Gianluca Pernigotto (jeanslack) and it was
-written in Python3 with the wxPython4 "Phoenix", then it is cross-platform and
-works on Linux, Mac-Os, MS-Windows and FreeBSD.
+written in Python3 with the wxPython4 "Phoenix" toolkit, then it is cross-platform and
+works on Linux, MacOs, MS-Windows and FreeBSD.
 
-Videomass Logo and related artworks are created by Gianluca Pernigotto (jeanslack) 
-and Breeze Icon.
+Videomass Logo and related artworks are created by Gianluca Pernigotto 
+(jeanslack) and by [KDE/Breeze Icons](https://github.com/KDE/breeze-icons).
 
 ---
 
@@ -42,11 +44,12 @@ sources are available at [FFmpeg.org](https://www.ffmpeg.org/)
 ## What is youtube-dl?
 
 [youtube_dl](http://ytdl-org.github.io/youtube-dl/) is a command-line program to
-download videos from YouTube.com and a few more sites. It requires the Python
-interpreter, version 2.6, 2.7, or 3.2+, and it is not platform specific.
-It should work on your Unix box, on Windows or on macOS. It is released to the
-public domain, which means you can modify it, redistribute it or use it however
-you like.
+download videos from YouTube.com and a few 
+[more sites](http://ytdl-org.github.io/youtube-dl/supportedsites.html). 
+It requires the Python interpreter, version 2.6, 2.7, or 3.2+, and it is not 
+platform specific. It should work on your Unix box, on Windows or on macOS. It 
+is released to the public domain, which means you can modify it, redistribute 
+it or use it however you like.
 
 ---
 
@@ -57,4 +60,11 @@ you like.
 - Dutch translation by Roelof Berkepeis
 - Spanish translation by katnatek from [https://blogdrake.net/](https://blogdrake.net/) 
 - Portuguese (Brazialian) translation by Samuel
+
+---
+
+## Special Thanks
+
+To Roelof Berkepeis and ChourS for their suggestions and valuable help.
+
 

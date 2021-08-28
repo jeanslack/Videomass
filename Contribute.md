@@ -4,6 +4,10 @@ title: Contribute
 nav_order: 7
 ---
 
+# Can i contribute?
+
+---
+
 Videomass is [free software](https://en.wikipedia.org/wiki/Free_software); it needs your contribution!
 There are several ways to help the development of Videomass:
 
@@ -35,8 +39,8 @@ If you want to translate offline, please read
 ## Packaging
 
 Installation package of Videomass is currently available for Ubuntu (ppa), 
-MXLinux and SparkyLinux. Packaging for other distros still needs to be done. 
-Also, we would be very glad if anyone can push Videomass into the official 
+MX-Linux and SparkyLinux. Packaging for other distros still needs to be done. 
+Also, I would be very glad if anyone can push Videomass into the official 
 repositories of any distribution.
 
 ---

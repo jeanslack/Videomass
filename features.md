@@ -3,8 +3,9 @@ layout: page
 title: Features
 nav_order: 2
 ---
+# General Features
+---
 
-## General Features
 - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
 - Batch processing.
 - Advanced log management.
