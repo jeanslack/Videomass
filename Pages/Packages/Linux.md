@@ -5,6 +5,8 @@ parent: Downloads
 nav_order: 1
 ---
 
+---
+
 ## Ubuntu PPA
 This PPA currently publishes packages for Ubuntu 20.04 Focal and Ubuntu 20.10 Groovy (for now)   
 
