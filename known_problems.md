@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Known Problems
-nav_order: 7
+nav_order: 6
 ---
 
 # Known problems and solutions of Videomass

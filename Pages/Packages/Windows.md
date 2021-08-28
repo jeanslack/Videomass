@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Windows
-parent: Download and Installation
+parent: Downloads
 nav_order: 3
 ---
   

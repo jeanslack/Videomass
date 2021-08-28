@@ -2,6 +2,6 @@
 layout: default
 title: User Guide
 has_children: true
-parent: Getting Started
+parent: Documentation
 nav_order: 1
 ---

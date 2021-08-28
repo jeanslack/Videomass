@@ -2,7 +2,7 @@
 layout: default
 title: English
 parent: User Guide
-grand_parent: Getting Started
+grand_parent: Documentation
 ---
 
 This page is Working in progress.

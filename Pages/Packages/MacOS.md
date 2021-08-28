@@ -1,7 +1,7 @@
 ---
 layout: default
 title: MacOS
-parent: Download and Installation
+parent: Downloads
 nav_order: 2
 ---
 

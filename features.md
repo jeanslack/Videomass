@@ -1,14 +1,14 @@
 ---
 layout: page
 title: Features
-nav_order: 3
+nav_order: 2
 ---
 
 ## General Features
 - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
 - Batch processing.
 - Advanced log management.
-- Multi language support (english, Italian, Russian, Dutch, Portuguese (Brazilian), Spanish )
+- Multi language support (English, Italian, Russian, Dutch, Portuguese (Brazilian), Spanish )
 
 ## Features with FFmpeg
 - Drag and drop to add multiple files simultaneously.
@@ -31,8 +31,8 @@ nav_order: 3
     - Default (choosing between 'best' or 'worst' qualities).
     - Download audio and video splitted.
     - Download Audio only (you can choose various formats).
-    - Download videos and audio by 'format code' with audio merging.
-- Shows download statistics separately (only using youtube_dl library).
+    - Download checked videos and audio by 'format code' with ability to audio merging.
+- Shows download statistics.
 - Ability to playback individual URLs and different qualities.
 - Ability to download playlists.
 - Ability to index items to download in playlists, including indices and ranges.
@@ -41,5 +41,5 @@ nav_order: 3
 - Write subtitles to video.
 - Ability to include IDs in filenames. 
 - Ability to restrict file names.
-- Ability to keep youtube-dl backend updated (depends by installer / app).
+- Ability to keep youtube-dl backend updated (only available for *.AppImage, *.exe and *.app packages).
 

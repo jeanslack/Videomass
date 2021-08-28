@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About
-nav_order: 2
+nav_order: 8
 ---
 
 ## What is Videomass?
@@ -17,9 +17,14 @@ codecs.
 It features graphical tools for viewing, analyzing and processing multimedia 
 streams and downloading videos via youtube-dl.  
 
-Videomass is a project created by Gianluca Pernigotto (jeanslack) and it was
+Videomass is a project created and maintained by Gianluca Pernigotto (jeanslack) and it was
 written in Python3 with the wxPython4 "Phoenix", then it is cross-platform and
 works on Linux, Mac-Os, MS-Windows and FreeBSD.
+
+Videomass Logo and related artworks are created by Gianluca Pernigotto (jeanslack) 
+and Breeze Icon.
+
+---
 
 ## What is FFmpeg?
 
@@ -32,6 +37,8 @@ of versions of FFmpeg packaged with Videomass on the installers for Windows and
 MacOS, FFmpeg is licensed under the GPL. Complete FFmpeg documentation and
 sources are available at [FFmpeg.org](https://www.ffmpeg.org/)
 
+---
+
 ## What is youtube-dl?
 
 [youtube_dl](http://ytdl-org.github.io/youtube-dl/) is a command-line program to
@@ -40,3 +47,14 @@ interpreter, version 2.6, 2.7, or 3.2+, and it is not platform specific.
 It should work on your Unix box, on Windows or on macOS. It is released to the
 public domain, which means you can modify it, redistribute it or use it however
 you like.
+
+---
+
+## Translators
+
+- Italian translation by jeanslack
+- Russian translation by ChourS
+- Dutch translation by Roelof Berkepeis
+- Spanish translation by katnatek from [https://blogdrake.net/](https://blogdrake.net/) 
+- Portuguese (Brazialian) translation by Samuel
+

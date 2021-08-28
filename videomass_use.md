@@ -1,13 +1,17 @@
 ---
 layout: page
-title: Getting Started
+title: Documentation
 has_children: true
-nav_order: 6
+nav_order: 5
 ---
 ## User Guide
 - [English](Pages/User-guide-languages/en/Index_en.md)
 - [Russian](Pages/User-guide-languages/ru/Index_ru.md)
 - [Italian](Pages/User-guide-languages/it/Index_it.md)
+
+Source files of the documentation are hosted on 
+[github](https://github.com/jeanslack/Videomass/tree/gh-pages/Pages/User-guide-languages). 
+Pull requests are welcomed.
 
 ## Demo videos and screencasts
 
