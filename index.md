@@ -20,5 +20,11 @@ graphical interface for [youtube-dl](http://ytdl-org.github.io/youtube-dl/)
 [Get started now](videomass_use.md){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } 
 [View it on GitHub](https://github.com/jeanslack/Videomass){: .btn .fs-5 .mb-4 .mb-md-0 }
 
+---
+
+If you like Videomass, maybe you can make me some donation:
+
+[Donate](https://flattr.com/@gianlu){: .btn .btn-purple .fs-5 .mb-4 .mb-md-0 .mr-2 }
+
 
 

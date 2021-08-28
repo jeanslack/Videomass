@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Presets Update
-parent: Getting Started
+parent: Documentation
 nav_order: 2
 ---
 

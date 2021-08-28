@@ -9,6 +9,14 @@ There are several ways to help the development of Videomass:
 
 ---
 
+## Donations
+
+If you like Videomass, maybe you can make me some donation:   
+
+[Donate](https://flattr.com/@gianlu){: .btn .btn-purple .fs-5 .mb-4 .mb-md-0 .mr-2 }
+
+---
+
 ## Source Code
 
 The git repository of Videomass is hosted on [GitHub](https://github.com/jeanslack/Videomass).
