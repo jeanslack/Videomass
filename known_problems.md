@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Known Problems
+has_children: true
 nav_order: 6
 ---
 
@@ -22,7 +23,5 @@ error on the Videomass 'Log viewing console' and the conversion process will fai
 multithreading enhancement is not enabled by default and needs be manually
 activated with the `-row-mt 1` switch. Note that this feature is not available
 if you are using an older version of the FFmpeg (eg Version 3.1.5) and should
-be disabled when using this encoder.
-
-- [Other issues](https://github.com/jeanslack/Videomass/issues)     
+be disabled when using this encoder.   
 

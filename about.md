@@ -19,9 +19,10 @@ codecs.
 It features graphical tools for viewing, analyzing and processing multimedia 
 streams and downloading videos via youtube-dl.  
 
-Videomass is a project created and maintained by Gianluca Pernigotto (jeanslack) and it was
-written in Python3 with the wxPython4 "Phoenix" toolkit, then it is cross-platform and
-works on Linux, MacOs, MS-Windows and FreeBSD.
+Videomass is a project created and maintained by Gianluca Pernigotto (jeanslack) 
+and it was written in [Python3](https://www.python.org/) with the 
+[wxPython4 "Phoenix"](https://www.wxpython.org/) toolkit, then it is cross-platform 
+and works on Linux, MacOs, Windows and FreeBSD.   
 
 Videomass Logo and related artworks are created by Gianluca Pernigotto 
 (jeanslack) and by [KDE/Breeze Icons](https://github.com/KDE/breeze-icons).
@@ -44,8 +45,8 @@ sources are available at [FFmpeg.org](https://www.ffmpeg.org/)
 ## What is youtube-dl?
 
 [youtube_dl](http://ytdl-org.github.io/youtube-dl/) is a command-line program to
-download videos from YouTube.com and a few 
-[more sites](http://ytdl-org.github.io/youtube-dl/supportedsites.html). 
+download videos from YouTube.com and a few more sites 
+(actually, the list is [long](http://ytdl-org.github.io/youtube-dl/supportedsites.html)). 
 It requires the Python interpreter, version 2.6, 2.7, or 3.2+, and it is not 
 platform specific. It should work on your Unix box, on Windows or on macOS. It 
 is released to the public domain, which means you can modify it, redistribute 
