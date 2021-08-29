@@ -1176,14 +1176,15 @@ class MainFrame(wx.Frame):
 
     def Translations(self, event):
         """Display translation how to on github"""
-        page = ('https://github.com/jeanslack/Videomass/blob/'
-                'master/docs/localization_guidelines.md')
+        page = ('https://jeanslack.github.io/Videomass/Contribute.html'
+                '#traslating')
         webbrowser.open(page)
     # ------------------------------------------------------------------#
 
     def Donation(self, event):
         """Display donation page on github"""
-        page = 'https://jeanslack.github.io/Videomass/donation.html'
+        page = ('https://jeanslack.github.io/Videomass/Contribute.html'
+                '#donations')
         webbrowser.open(page)
     # ------------------------------------------------------------------#
 
