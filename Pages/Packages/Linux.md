@@ -32,7 +32,7 @@ Then run the program:
 
 *Please, Replace "?" with version in use.*
 
-[Videomass.AppImage GTK2](https://github.com/jeanslack/Videomass/releases/download/v.3.4.3/Videomass-3.4.3-x86_64.AppImage){: .btn .btn-green }   
+[Videomass.AppImage GTK2](https://github.com/jeanslack/Videomass/releases/download/v.3.4.4/Videomass-3.4.4-x86_64.AppImage){: .btn .btn-green }   
 
 Successfully tested on the following Linux distributions:   
 * Ubuntu 16.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)

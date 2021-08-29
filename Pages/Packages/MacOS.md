@@ -7,7 +7,7 @@ nav_order: 2
 
 ---
 
-[Videomass.dmg](https://github.com/jeanslack/Videomass/releases/download/v.3.4.3/Videomass-v3.4.3-x86_64.dmg){: .btn .btn-green }   
+[Videomass.dmg](https://github.com/jeanslack/Videomass/releases/download/v.3.4.4/Videomass-v3.4.4-x86_64.dmg){: .btn .btn-green }   
 
 Minimum requirements:
 - MacOS **High Sierra** to up.   

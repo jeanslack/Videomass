@@ -36,7 +36,7 @@ nav_order: 2
 - Shows download statistics.
 - Ability to playback individual URLs and different qualities.
 - Ability to download playlists.
-- Ability to index items to download in playlists, including indices and ranges.
+- ability to index playlists 
 - Embed thumbnail in audio file (via [atomicparsley](http://atomicparsley.sourceforge.net/)).
 - Add metadata to file.
 - Write subtitles to video.
