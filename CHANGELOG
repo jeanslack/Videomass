@@ -6,6 +6,11 @@ License: GPL3
 
 Change Log:
 
++------------------------------------+
+Aug 29, 2021 V.3.4.5
+
+  * Fixed "The URLs contain playlists..." even when URLs do not contain
+    playlists
 
 +------------------------------------+
 Aug 29, 2021 V.3.4.4
@@ -22,7 +27,6 @@ Aug 29, 2021 V.3.4.4
   * Fixed #29 `ValueError: too many values to unpack (expected 3)`, which
     prevented checking for new versions of Videomass.
   * Update Videomass site and links.
-
 
 +------------------------------------+
 Aug 01, 2021 V.3.4.3
