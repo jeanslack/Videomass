@@ -127,8 +127,6 @@ class Indexing(wx.Dialog):
             self.tctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
 
         self.tctrl.SetBackgroundColour(Indexing.BACKGROUND)
-        self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.FOREGROUND))
-        self.tctrl.AppendText('%s' % Indexing.HELPME)
 
         # ------ set Layout
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
@@ -171,6 +169,30 @@ class Indexing(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+
+        self.textstyle()
+
+    def textstyle(self):
+        """
+        clear log messages and set text style on textctrl box
+        """
+
+        self.tctrl.Clear()
+        self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.FOREGROUND))
+        self.tctrl.AppendText('%s' % Indexing.HELPME)
+    # ------------------------------------------------------------------#
+
+    def GetValue(self):
+        """
+        This method return values via the interface GetValue()
+        """
+        diz = {}
+        index = 0
+        for rows in self.urls:
+            if self.lctrl.GetItem(index, 2).GetText():
+                diz[rows] = self.lctrl.GetItem(index, 2).GetText()
+            index += 1
+        return diz
 
     # ----------------------Event handler (callback)----------------------#
 
@@ -265,9 +287,7 @@ class Indexing(wx.Dialog):
         for row in range(rows):
             self.lctrl.SetItem(row, 2, '')
 
-        self.tctrl.Clear()
-        self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.FOREGROUND))
-        self.tctrl.AppendText('%s' % Indexing.HELPME)
+        self.textstyle()
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
@@ -289,16 +309,3 @@ class Indexing(wx.Dialog):
         self.GetValue()
         # self.Destroy()
         event.Skip()
-    # ------------------------------------------------------------------#
-
-    def GetValue(self):
-        """
-        This method return values via the interface GetValue()
-        """
-        diz = {}
-        index = 0
-        for rows in self.urls:
-            if self.lctrl.GetItem(index, 2).GetText():
-                diz[rows] = self.lctrl.GetItem(index, 2).GetText()
-            index += 1
-        return diz
