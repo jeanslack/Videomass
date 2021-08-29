@@ -899,7 +899,7 @@ class Downloader(wx.Panel):
         urls = self.parent.data_url
 
         if not self.ckbx_pl.IsChecked():
-            if [url for url in urls if 'playlist' or 'channel' in url]:
+            if [url for url in urls if 'playlist' in url or 'channel' in url]:
                 if wx.MessageBox(_('The URLs contain playlists or channels. '
                                    'Are you sure you want to continue?'),
                                  _('Please confirm'), wx.ICON_QUESTION |
