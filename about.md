@@ -8,8 +8,8 @@ nav_order: 8
 
 ---
 
-Videomass is a cross-platform GUI designed for [FFmpeg](https://www.ffmpeg.org/) 
-enthusiasts who need to manage custom profiles to automate conversion/transcoding 
+Videomass is a GUI designed for [FFmpeg](https://www.ffmpeg.org/) 
+enthusiasts, who need to manage custom profiles to automate conversion/transcoding 
 processes.   
 
 It is based on an advanced use of presets and profiles in order to use most of 
@@ -17,12 +17,13 @@ the [FFmpeg](https://www.ffmpeg.org/) commands without limits of formats and
 codecs.   
 
 It features graphical tools for viewing, analyzing and processing multimedia 
-streams and downloading videos via youtube-dl.  
+streams and downloading videos via [youtube-dl](http://ytdl-org.github.io/youtube-dl/).  
 
-Videomass is a project created and maintained by Gianluca Pernigotto (jeanslack) 
-and it was written in [Python3](https://www.python.org/) with the 
-[wxPython4 "Phoenix"](https://www.wxpython.org/) toolkit, then it is cross-platform 
-and works on Linux, MacOs, Windows and FreeBSD.   
+Videomass is [Free Software](https://en.wikipedia.org/wiki/Free_software), created 
+and maintained by [Gianluca Pernigotto (jeanslack)](https://github.com/jeanslack); 
+it was written in [Python3](https://www.python.org/) with the 
+[wxPython4](https://www.wxpython.org/) toolkit; it is cross-platform and works on 
+Linux, MacOs, Windows and FreeBSD.   
 
 Videomass Logo and related artworks are created by Gianluca Pernigotto 
 (jeanslack) and by [KDE/Breeze Icons](https://github.com/KDE/breeze-icons).
