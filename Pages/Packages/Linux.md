@@ -32,7 +32,7 @@ Then run the program:
 
 *Please, Replace "?" with version in use.*
 
-[Videomass.AppImage GTK2](https://github.com/jeanslack/Videomass/releases/download/v.3.4.4/Videomass-3.4.4-x86_64.AppImage){: .btn .btn-green }   
+[Videomass.AppImage GTK2](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.4.4-x86_64.AppImage){: .btn .btn-green }   
 
 Successfully tested on the following Linux distributions:   
 * Ubuntu 16.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
@@ -51,3 +51,6 @@ Successfully tested on the following Linux distributions:
 * Manjaro Linux 20.0.3 (Lysia) x86_64
 
 Minimum requirements, **Ubuntu 16.04 LTS x86_64** to up.   
+
+For any application-related issues, please read 
+[Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.   

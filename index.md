@@ -9,7 +9,7 @@ permalink: /
 # Videomass
 {: .fs-9 }
 
-# Is a FOSS cross-platform GUI for FFmpeg and Youtube-dl
+# It is a FOSS cross-platform GUI for FFmpeg and Youtube-dl
 {: .fs-6 }
 
 Designed for [FFmpeg](https://www.ffmpeg.org/) enthusiasts and users who need a 
@@ -22,7 +22,8 @@ graphical interface for [youtube-dl](http://ytdl-org.github.io/youtube-dl/)
 
 ---
 
-If you like Videomass, maybe you can make me some donation:
+If you like Videomass, maybe you can make some donations to promote the 
+development of the application:   
 
 [Donate](https://flattr.com/@gianlu){: .btn .btn-purple .fs-5 .mb-4 .mb-md-0 .mr-2 }
 

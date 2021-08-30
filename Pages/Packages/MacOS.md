@@ -7,12 +7,12 @@ nav_order: 2
 
 ---
 
-[Videomass.dmg](https://github.com/jeanslack/Videomass/releases/download/v.3.4.4/Videomass-v3.4.4-x86_64.dmg){: .btn .btn-green }   
+[Videomass.dmg](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.4-x86_64.dmg){: .btn .btn-green }   
 
 Minimum requirements:
 - MacOS **High Sierra** to up.   
-- The binary is compiled for **MacOS 10.13.6 64-bit** and later. It does not work on versions earlier than 10.13.6.
+- The binary is compiled for **MacOS 10.13.6 64-bit** and later. 
+It does not work on versions earlier than 10.13.6.   
 
-### Limitations 
-For some functional limitations related to the above packages see 
-[Known Problems](https://jeanslack.github.io/Videomass/Known%20Problems/).   
+For any application-related issues, please read 
+[Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.  
