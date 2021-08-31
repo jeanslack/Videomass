@@ -8,18 +8,28 @@ nav_order: 1
 ---
 
 ## Ubuntu PPA
-This PPA currently publishes packages for Ubuntu 20.04 Focal and Ubuntu 20.10 Groovy (for now)   
+This PPA currently publishes packages for Ubuntu, including official and 
+derivative distributions.   
 
-- To install Videomass add this [PPA](https://launchpad.net/~jeanslack/+archive/ubuntu/videomass) to your system:   
+- Ubuntu 18.04 Bionic
+- Ubuntu 20.04 Focal 
+- Ubuntu 20.10 Groovy
+- Ubuntu 21.04 Hirsute
+- Ubuntu 21.10 Impish   
 
-    `$ sudo add-apt-repository ppa:jeanslack/videomass`   
-    `$ sudo apt-get update`   
-    `$ sudo apt install python3-videomass` 
+To install Videomass add this 
+[PPA](https://launchpad.net/~jeanslack/+archive/ubuntu/videomass) to your system: 
+  
+
+`$ sudo add-apt-repository ppa:jeanslack/videomass`   
+`$ sudo apt-get update`  
+`$ sudo apt install python3-videomass`   
     
 ---
 
 ## AppImage
-Videomass AppImage is available with porting for the GTK2 engine, which only supports the x86_64 architecture.   
+Videomass [AppImage](https://en.wikipedia.org/wiki/AppImage) is available with 
+porting for the GTK2 engine, which only supports the x86_64 architecture.   
 Note that Videomass AppImages **do not include** FFmpeg which must be installed separately.       
 
 **Important:** before starting Videomass as AppImage it is necessary to give execution permissions:   

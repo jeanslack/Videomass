@@ -8,7 +8,7 @@ nav_order: 7
 
 ---
 
-Videomass is [free software](https://en.wikipedia.org/wiki/Free_software); it needs your contribution!
+Videomass is [free (libre) software](https://en.wikipedia.org/wiki/Free_software); it needs your contribution!
 There are several ways to help the development of Videomass:
 
 ---

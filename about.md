@@ -10,17 +10,18 @@ nav_order: 8
 
 Videomass is a GUI designed for [FFmpeg](https://www.ffmpeg.org/) 
 enthusiasts, who need to manage custom profiles to automate conversion/transcoding 
-processes.   
+processes even with multiple files in series (batch processing).      
 
 It is based on an advanced use of presets and profiles in order to use most of 
-the [FFmpeg](https://www.ffmpeg.org/) commands without limits of formats and 
-codecs.   
+the [FFmpeg](https://www.ffmpeg.org/) commands without limits of 
+[formats](https://ffmpeg.org/ffmpeg-formats.html) and 
+[codecs](https://ffmpeg.org/ffmpeg-codecs.html).   
 
 It features graphical tools for viewing, analyzing and processing multimedia 
 streams and downloading videos via [youtube-dl](http://ytdl-org.github.io/youtube-dl/).  
 
-Videomass is [Free Software](https://en.wikipedia.org/wiki/Free_software), created 
-and maintained by [Gianluca Pernigotto (jeanslack)](https://github.com/jeanslack); 
+Videomass is [Free (libre) Software](https://en.wikipedia.org/wiki/Free_software), 
+created and maintained by [Gianluca Pernigotto (jeanslack)](https://github.com/jeanslack); 
 it was written in [Python3](https://www.python.org/) with the 
 [wxPython4](https://www.wxpython.org/) toolkit; it is cross-platform and works on 
 Linux, MacOs, Windows and FreeBSD.   

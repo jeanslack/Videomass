@@ -2,14 +2,14 @@
 layout: default
 title: Home
 nav_order: 1
-description: "Videomass is a free, open source and cross-platform GUI for FFmpeg and Youtube-dl."
+description: "Videomass is a free (libre), open source and cross-platform GUI for FFmpeg and Youtube-dl."
 permalink: /
 ---
 
 # Videomass
 {: .fs-9 }
 
-# It is a FOSS cross-platform GUI for FFmpeg and Youtube-dl
+# It is a [FLOSS](https://www.gnu.org/philosophy/floss-and-foss.en.html), cross-platform GUI for FFmpeg and Youtube-dl
 {: .fs-6 }
 
 Designed for [FFmpeg](https://www.ffmpeg.org/) enthusiasts and users who need a 
