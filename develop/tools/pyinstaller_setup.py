@@ -7,7 +7,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.18.2020
+Rev: Aug.31.2021
 ########################################################
 
 This file is part of Videomass.
@@ -384,6 +384,79 @@ class MakePyinstallerBuild(Data):
             ])
 
 
+def make_portable():
+    """
+    Optionally, create a portable_data folder for Videomass
+    that cannot be shared by your systems.
+    """
+    here = Data.here
+    portabledir = 'portable_data'
+
+    def makedir(dist):
+        """
+        make portable_data folder
+        """
+        if not os.path.exists(dist):
+            try:
+                os.mkdir(dist)
+            except OSError as err:
+                sys.exit('ERROR: %s' % err)
+            else:
+                sys.exit('\nSUCCESS: "portable_data" folder is created\n')
+        else:
+            sys.exit('INFO: "portable_data" folder already exists')
+
+    if platform.system() == 'Windows':
+        dist = os.path.join(here, +
+                            '\\dist\\Videomass\\videomass3\\%s' % portabledir)
+        makedir(dist)
+
+    elif platform.system() == 'Darwin':
+        dist = os.path.join(here +
+                            '/dist/Videomass.app/MacOS/%s' % portabledir)
+        makedir(dist)
+
+    else:
+        dist = os.path.join(here, 'dist', portabledir)
+        makedir(dist)
+
+
+def not_portable():
+    """
+    delete portable_data folder if exists
+    """
+    here = Data.here
+    portabledir = 'portable_data'
+
+    def deletedir(dist):
+        """
+        delete portable_data including its content
+        """
+        if os.path.exists(dist):
+            try:
+                shutil.rmtree(dist)
+            except OSError as err:
+                sys.exit("ERROR: %s" % (err.strerror))
+            else:
+                sys.exit('\nSUCCESS: "portable_data" folder removed\n')
+        else:
+            sys.exit('INFO: no such directory named "portable_data"')
+
+    if platform.system() == 'Windows':
+        dist = os.path.join(here, +
+                            '\\dist\\Videomass\\videomass3\\%s' % portabledir)
+        deletedir(dist)
+
+    elif platform.system() == 'Darwin':
+        dist = os.path.join(here +
+                            '/dist/Videomass.app/MacOS/%s' % portabledir)
+        deletedir(dist)
+
+    else:
+        dist = os.path.join(here, 'dist', portabledir)
+        deletedir(dist)
+
+
 def main():
     """
     Users inputs parser (positional/optional arguments)
@@ -427,16 +500,40 @@ def main():
         wrap = MakePyinstallerBuild()
         wrap.check()
         wrap.usemodule()
+        wrap = MakePyinstallerBuild()
+        wrap.check()
+        wrap.run_pyinst(os.path.join(Data.here, 'videomass.spec'))
+        portable = input('Want you like make stand-alone executable really '
+                         'portable? y/n  ')
+        if str(portable) == 'y' or str(portable) == 'Y':
+            make_portable()
+        else:
+            not_portable()
 
     elif args.genspec_build:
         wrap = MakePyinstallerBuild()
         wrap.check()
         wrap.genspec(build=True)
+        wrap = MakePyinstallerBuild()
+        wrap.check()
+        wrap.run_pyinst(os.path.join(Data.here, 'videomass.spec'))
+        portable = input('Want you like make stand-alone executable really '
+                         'portable? y/n  ')
+        if portable == 'y' or portable == 'Y':
+            make_portable()
+        else:
+            not_portable()
 
     elif args.start_build:
         wrap = MakePyinstallerBuild()
         wrap.check()
         wrap.run_pyinst(os.path.join(Data.here, 'videomass.spec'))
+        portable = input('Want you like make stand-alone executable really '
+                         'portable? y/n  ')
+        if portable == 'y' or portable == 'Y':
+            make_portable()
+        else:
+            not_portable()
 
     else:
         print("\nType 'pyinstaller_setup.py -h' for help.\n")

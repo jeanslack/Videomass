@@ -802,7 +802,7 @@ class Downloader(wx.Panel):
         idxdialog = Indexing(self, self.parent.data_url, self.plidx)
         retcode = idxdialog.ShowModal()
         if retcode == wx.ID_OK:
-            data = idxdialog.GetValue()
+            data = idxdialog.getvalue()
             if not data:
                 self.btn_plidx.SetBackgroundColour(wx.NullColour)
                 self.plidx = {'': ''}

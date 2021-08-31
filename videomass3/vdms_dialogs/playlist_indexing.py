@@ -182,9 +182,9 @@ class Indexing(wx.Dialog):
         self.tctrl.AppendText('%s' % Indexing.HELPME)
     # ------------------------------------------------------------------#
 
-    def GetValue(self):
+    def getvalue(self):
         """
-        This method return values via the interface GetValue()
+        This method return values via the interface getvalue()
         """
         diz = {}
         index = 0
@@ -306,6 +306,6 @@ class Indexing(wx.Dialog):
         Event.Skip(), work correctly here. Sometimes needs to disable
         it for needs to maintain the view of the window (for exemple).
         """
-        self.GetValue()
+        self.getvalue()
         # self.Destroy()
         event.Skip()

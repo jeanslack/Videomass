@@ -74,9 +74,11 @@ class YtdlExecDL(Thread):
         LINE_MSG = _('Unrecognized error')
     else:
         if os.path.isfile(EXECYDL):
-            LINE_MSG = (_('\nRequires MSVCR100.dll\nTo resolve this problem '
-                          'install: Microsoft Visual C++ 2010 Redistributable '
-                          'Package (x86)'))
+            LINE_MSG = ('\nERROR: MSVCR100.dll is missing!\nPlease, install: '
+                        '"Microsoft Visual C++ 2010 Redistributable Package '
+                        '(x86)"\nwhich can be found at:\n'
+                        'https://download.microsoft.com/download/1/6/5/165255'
+                        'E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe\n')
         else:
             LINE_MSG = _('Unrecognized error')
     # -----------------------------------------------------------------------#

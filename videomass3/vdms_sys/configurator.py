@@ -120,15 +120,22 @@ class DataSource():
     """
     DataSource class determines the Videomass's configuration
     according to the Operating System and define the environment
-    paths based on the program execution and/or where it's
-    installed.
+    paths based on the program execution and/or where it's installed.
+
+    NOTE: For develop. test, add this line to use portable data during
+          a local source code execution (NOT OTHER):
+        elif os.path.isdir(os.path.join(DATA_LOCAT,'portable_data')):
+            (FILE_CONF,
+             DIR_CONF,
+             LOG_DIR,
+             CACHE_DIR) = portable_paths(DATA_LOCAT)
     """
     FROZEN, MEIPASS, MPATH, DATA_LOCAT = get_pyinstaller()
+    portdirname = os.path.dirname(sys.executable)
+    portdir = os.path.join(portdirname, 'portable_data')
 
-    portdir = os.path.dirname(sys.executable)
-    if FROZEN and MEIPASS and os.path.isdir(os.path.join(portdir,
-                                                         'portable_data')):
-        FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = portable_paths(portdir)
+    if FROZEN and MEIPASS and os.path.isdir(portdir):
+        FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = portable_paths(portdirname)
 
     else:
         FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = conventional_paths()

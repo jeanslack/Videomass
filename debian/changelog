@@ -1,9 +1,13 @@
 videomass (3.4.5-1) UNRELEASED; urgency=medium
 
   * Fixed "The URLs contain playlists..." even when URLs do not contain
-    playlists
+    playlists.
+  * Fixed error message on Output Console, which not appearing at all when
+    MSVCR100.dll is missing on Windows.
+  * The stand-alone executable for macOS now keeps all application data inside
+    the program folder by default
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 29 Aug 2021 12:08:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 31 Aug 2021 15:57:00 +0200
 
 videomass (3.4.4-1) UNRELEASED; urgency=medium
 
