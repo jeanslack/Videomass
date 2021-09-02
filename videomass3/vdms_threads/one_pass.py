@@ -87,7 +87,7 @@ class OnePass(Thread):
         If the format/container is not changed on a conversion, the
         'extoutput' attribute will have an empty value.
         The 'volume' attribute may also have an empty value, but it will
-        have no influence on the type of conversion.
+        no affect as well.
         """
         self.stop_work_thread = False  # process terminate
         self.filelist = varargs[1]  # list of files (items)
@@ -103,7 +103,7 @@ class OnePass(Thread):
 
         Thread.__init__(self)
 
-        self.start()  # start the thread (va in self.run())
+        self.start()  # start the thread
 
     def run(self):
         """

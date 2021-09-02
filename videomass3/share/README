@@ -22,14 +22,14 @@ UPDATE:
 From 29 August 2021 (specifically from Videomass v.3.4.4), the possibility of
 keeping all application data inside the program folder is introduced. This
 feature can only be implemented with stand-alone (preferably portable)
-executables created with pyinstaller, which include Videomass_portable.exe,
-Videomass.app and videomass (for Linux).
+executables created with pyinstaller, and currently includes
+Videomass_portable.exe for Windows and Videomass.app for MacOS.
 
-For Videomass*.AppImage users: If you would like the Videomass*.AppImage to
+AppImage users: If you would like the Videomass*.AppImage to
 store its data alongside the Videomass*.AppImage rather than in your home
-directory, then you can place a directory named:
+directory, the AppImage natively has this capability, just enable the
+appropriate option, type:
 
-    'Videomass-3.4.2-x86_64.AppImage.home'
-
-For more info, type
     `$ Videomass*.AppImage --appimage-help`
+
+to view appimage options.

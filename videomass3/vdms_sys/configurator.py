@@ -51,6 +51,12 @@ def get_pyinstaller():
     """
     Get pyinstaller-based package attributes to determine
     how to use sys.executable
+    When a bundled app starts up, the bootloader sets the sys.frozen
+    attribute and stores the absolute path to the bundle folder
+    in sys._MEIPASS.
+    For a one-folder bundle, this is the path to that folder.
+    For a one-file bundle, this is the path to the temporary folder
+    created by the bootloader.
     """
     if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
         print('getattr frozen, hasattr _MEIPASS')
@@ -119,34 +125,48 @@ def portable_paths(portdir):
 class DataSource():
     """
     DataSource class determines the Videomass's configuration
-    according to the Operating System and define the environment
-    paths based on the program execution and/or where it's installed.
+    according to the used Operating System (Linux/*BSD, MacOS, Windows).
+    Remember that all specifications defined in this class refer
+    only to the following packaging methods:
 
-    NOTE: For develop. test, add this line to use portable data during
-          a local source code execution (NOT OTHER):
-        elif os.path.isdir(os.path.join(DATA_LOCAT,'portable_data')):
-            (FILE_CONF,
-             DIR_CONF,
-             LOG_DIR,
-             CACHE_DIR) = portable_paths(DATA_LOCAT)
+        - Videomass Python package by PyPi (cross-platform, multiuser/user)
+        - Linux's distributions packaging (multiuser)
+        - Bundled app by pyinstaller (windowed for MacOs and Windows)
+        - AppImage for Linux (user)
+
+        * multiuser: root installation
+        * user: local installation
+
     """
+    # NOTE: For develop. test, add this line to use portable data during
+          # a local source code execution (NOT OTHER):
+        # elif os.path.isdir(os.path.join(DATA_LOCAT,'portable_data')):
+            # (FILE_CONF,
+             # DIR_CONF,
+             # LOG_DIR,
+             # CACHE_DIR) = portable_paths(DATA_LOCAT)
+
     FROZEN, MEIPASS, MPATH, DATA_LOCAT = get_pyinstaller()
     portdirname = os.path.dirname(sys.executable)
     portdir = os.path.join(portdirname, 'portable_data')
 
     if FROZEN and MEIPASS and os.path.isdir(portdir):
+        # if portdir is true, make application really portable
         FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = portable_paths(portdirname)
 
     else:
+        #
         FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = conventional_paths()
     # -------------------------------------------------------------------
 
     def __init__(self):
         """
-        Given the paths defined by `DATA_LOCAT` (a configuration
-        folder for recovery > `self.srcpath`, a set of icons >
-        `self.icodir` and a folder for the locale > `self.localepath`),
-        it performs the initialization described in DataSource.
+        Given the pathnames defined by `DATA_LOCAT` it performs
+        the initialization described in DataSource.
+
+            `self.srcpath` > configuration folder for recovery
+            `self.icodir` > set of icons
+            `self.localepath` > locale folder
 
         """
         self.apptype = None  # appimage, pyinstaller on None
@@ -218,7 +238,7 @@ class DataSource():
 
     def get_fileconf(self):
         """
-        Get videomass configuration data from videomass.conf.
+        Get videomass configuration data by videomass.conf file.
         Returns a dict object.
 
         This method performs the following main steps:
@@ -230,7 +250,7 @@ class DataSource():
             3) Checks presets folder; if not exists try to restore from
                self.srcpath
 
-        Note that when `copyerr` is not False, it causes a fatal error on
+        Note that when `copyerr` is not False, it raise a fatal error on
         videomass bootstrap.
         """
         copyerr = False
