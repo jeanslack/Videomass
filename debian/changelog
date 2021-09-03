@@ -4,11 +4,14 @@ videomass (3.4.5-1) UNRELEASED; urgency=medium
     playlists.
   * Fixed error message on Output Console, which not appearing at all when
     MSVCR100.dll is missing on Windows.
-  * The stand-alone executable for macOS now keeps all application data inside
-    the program folder by default
-  * Improved pyinstaller_setup.py script to automate bundles on some O.S.
+  * Videomass.app for macOS: All application data such as configuration folder
+    are self-contained inside the app by default.
+  * Improved pyinstaller_setup.py script to automate bundle building.
+  * Updated AppImage to work on the oldest supported Ubuntu LTS release
+    (currently Ubuntu 18.04).
+  * Updated travis.yml for travis CI testings.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 03 Sep 2021 02:06:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 03 Sep 2021 19:11:00 +0200
 
 videomass (3.4.4-1) UNRELEASED; urgency=medium
 

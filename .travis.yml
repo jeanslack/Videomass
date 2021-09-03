@@ -1,9 +1,9 @@
 os: linux
-dist: xenial
+dist: bionic
 sources:
-    - deb http://us.archive.ubuntu.com/ubuntu/ xenial xenial-updates xenial-security main universe
-    - deb http://us.archive.ubuntu.com/ubuntu/ xenial-updates main universe
-    - deb http://us.archive.ubuntu.com/ubuntu/ xenial-security main universe
+    - deb http://us.archive.ubuntu.com/ubuntu/ bionic bionic-updates bionic-security main universe
+    - deb http://us.archive.ubuntu.com/ubuntu/ bionic-updates main universe
+    - deb http://us.archive.ubuntu.com/ubuntu/ bionic-security main universe
 env:
     global:
         - DISPLAY=:99
@@ -19,7 +19,7 @@ install:
     - pip install PyPubSub
     - pip install requests
     - pip install youtube_dl
-    - pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-16.04 wxPython
+    - pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython
 script:
     - Xvfb :99 -screen 0 800x600x24 >/dev/null 2>&1 &
     # run tests
@@ -29,6 +29,6 @@ script:
     # make a videomass source dist and wheel
     - python setup.py sdist bdist_wheel
     # build appimage
-    - bash develop/tools/AppImage_build_GTK2.sh
+    - bash develop/tools/AppImage_build.sh
 after_script:
     - killall Xvfb

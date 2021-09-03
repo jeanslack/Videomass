@@ -7,6 +7,9 @@ dist
 build
 videomass.egg-info
 deb_dist
+videomass
+videomass.spec
+Videomass.spec
 *.tar.gz
 ENV
 env

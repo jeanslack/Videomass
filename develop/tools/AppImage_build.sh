@@ -2,7 +2,7 @@
 #
 # Description: Build a `Videomass-*-x86_64.AppImage` starting
 #              from a `PYTHON_APPIMAGE` and `WX_PYTHON_WHEEL` .
-#              Note that this appimage work on GTK2 toolkit only.
+#              Note that this appimage work on GTK3 toolkit only.
 #
 # if you plan to install extra packages, extract the AppImage, e.g. as:
 #
@@ -15,7 +15,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Create: Oct.02.2020
-# Update: Feb.09.2021
+# Update: Sep.03.2021
 ###################################################################
 
 set -x  # Print commands and their arguments as they are executed.
@@ -33,10 +33,11 @@ else
     TEMP_BASE=/tmp
 fi
 
-PYTHON_APPIMAGE=python3.8.11-cp38-cp38-manylinux1_x86_64.AppImage
-PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.8/${PYTHON_APPIMAGE}
-WX_PYTHON_WHEEL=wxPython-4.1.1-cp38-cp38-linux_x86_64.whl
-WX_PYTHON_URL=https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-16.04
+PYTHON_APPIMAGE=python3.9.6-cp39-cp39-manylinux1_x86_64.AppImage
+PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.9/${PYTHON_APPIMAGE}
+
+WX_PYTHON_WHEEL=wxPython-4.1.1-cp39-cp39-linux_x86_64.whl
+WX_PYTHON_URL=https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04
 
 BUILD_DIR=$(mktemp -d -p "$TEMP_BASE" videomass-AppImage-build-XXXXXX)
 APP_DIR="$BUILD_DIR/AppDir"
@@ -68,13 +69,13 @@ if [ ! -d usr ] || [ ! -d lib ]; then
     wget -c http://security.ubuntu.com/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb \
         http://security.ubuntu.com/ubuntu/pool/main/libj/libjpeg-turbo/libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb \
             http://nl.archive.ubuntu.com/ubuntu/pool/universe/s/sndio/libsndio6.1_1.1.0-2_amd64.deb \
-                http://security.ubuntu.com/ubuntu/pool/universe/libs/libsdl2/libsdl2-2.0-0_2.0.4+dfsg1-2ubuntu2.16.04.2_amd64.deb
+                http://security.ubuntu.com/ubuntu/pool/universe/libs/libsdl2/libsdl2-2.0-0_2.0.8+dfsg1-1ubuntu1.18.04.4_amd64.deb
 
     # extract data from .deb files
     ar -x libpng12-0_1.2.54-1ubuntu1.1_amd64.deb data.tar.xz && tar -xf data.tar.xz
     ar -x libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb data.tar.xz && tar -xf data.tar.xz
     ar -x libsndio6.1_1.1.0-2_amd64.deb data.tar.xz && tar -xf data.tar.xz
-    ar -x libsdl2-2.0-0_2.0.4+dfsg1-2ubuntu2.16.04.2_amd64.deb data.tar.xz && tar -xf data.tar.xz
+    ar -x libsdl2-2.0-0_2.0.8+dfsg1-1ubuntu1.18.04.4_amd64.deb data.tar.xz && tar -xf data.tar.xz
 fi
 
 # copy shared libraries
@@ -83,7 +84,7 @@ cp -r usr/ $APP_DIR/
 
 # move some libraries to link when needed by starting appimage
 mkdir $APP_DIR/x86_64-linux-gnu
-mv $APP_DIR/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0.4.0 \
+mv $APP_DIR/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0.8.0 \
     $APP_DIR/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 \
         $APP_DIR/usr/lib/x86_64-linux-gnu/libsndio.so.6.1 \
             $APP_DIR/x86_64-linux-gnu
@@ -91,7 +92,7 @@ mv $APP_DIR/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0.4.0 \
 # Update pip first
 $APP_DIR/AppRun -m pip install -U pip
 
-# installing wxPython binary wheel (GTK2 porting)
+# installing wxPython binary wheel (GTK3 porting)
 if [ -f "$OLD_CWD/$WX_PYTHON_WHEEL" ]; then
     $APP_DIR/AppRun -m pip install -U "$OLD_CWD/$WX_PYTHON_WHEEL"
 else
@@ -149,7 +150,7 @@ export ARCH=x86_64
 
 # retrieve the Videomass version from the package metadata
 export VERSION=$(cat \
-    $APP_DIR/opt/python*/lib/python3.8/site-packages/videomass-*.dist-info/METADATA \
+    $APP_DIR/opt/python*/lib/python3.9/site-packages/videomass-*.dist-info/METADATA \
         | grep "^Version:.*" | cut -d " " -f 2)
 
 # Now, build AppImage using linuxdeploy

@@ -2,26 +2,22 @@
 # -*- coding: UTF-8 -*-
 """
 Name: pyinstaller_setup.py
-Porpose: Setup the videomass building with pyinstaller
+Porpose: Setup the videomass building trought pyinstaller
 Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Sept.03.2021
 ########################################################
-
 This file is part of Videomass.
-
     Videomass is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-
     Videomass is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-
     You should have received a copy of the GNU General Public License
     along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
@@ -44,7 +40,7 @@ except ModuleNotFoundError as error:
 
 def data(here=HERE):
     """
-    Returns a dict object on the Videomass data
+    Returns a dict object of the Videomass data
     """
     release = current_release()  # Gets data list
 
@@ -82,7 +78,6 @@ class PyinstallerBuild():
    my feature) for the Videomass bundles support on Linux,
    MacOS and Windows operative systems, automating the entire
    data management.
-
    """
 
     def __init__(self, onedf='--onedir'):
@@ -90,17 +85,20 @@ class PyinstallerBuild():
         """
         self.onedf = onedf  # is None if --start_build option is given
         getdata = data()
-        datas = (f"--add-data '{getdata['ART']}':'art' "
-                 f"--add-data '{getdata['LOCALE']}':'locale' "
-                 f"--add-data '{getdata['SHARE']}':'share' "
-                 f"--add-data '{getdata['FFMPEG']}':'FFMPEG' "
-                 f"--add-data '{getdata['AUTH']}':'DOC' "
-                 f"--add-data '{getdata['BUGS']}':'DOC' "
-                 f"--add-data '{getdata['CHANGELOG']}':'DOC' "
-                 f"--add-data '{getdata['COPYING']}':'DOC' "
-                 f"--add-data '{getdata['INSTALL']}':'DOC' "
-                 f"--add-data '{getdata['README']}':'DOC' "
-                 f"--add-data '{getdata['TODO']}':'DOC'"
+
+        sep = ';' if platform.system() == 'Windows' else ':'
+
+        datas = (f"--add-data {getdata['ART']}{sep}art "
+                 f"--add-data {getdata['LOCALE']}{sep}locale "
+                 f"--add-data {getdata['SHARE']}{sep}share "
+                 f"--add-data {getdata['FFMPEG']}{sep}FFMPEG "
+                 f"--add-data {getdata['AUTH']}{sep}DOC "
+                 f"--add-data {getdata['BUGS']}{sep}DOC "
+                 f"--add-data {getdata['CHANGELOG']}{sep}DOC "
+                 f"--add-data {getdata['COPYING']}{sep}DOC "
+                 f"--add-data {getdata['INSTALL']}{sep}DOC "
+                 f"--add-data {getdata['README']}{sep}DOC "
+                 f"--add-data {getdata['TODO']}{sep}DOC "
                  )
 
         self.linuxspec = (f"--name {getdata['PRG_NAME']} {onedf} --windowed "
@@ -152,7 +150,6 @@ class PyinstallerBuild():
     def clean_buildingdir(self, here=HERE):
         """
         Asks the user if they want to clean-up building directories.
-
         """
 
         clean = input('Want you remove "dist" and "build" folders '
@@ -175,17 +172,12 @@ class PyinstallerBuild():
         """
         Generate a videomass.spec file for the specified platform.
         Support for the following platforms is expected:
-
             [Windows, Darwin, Linux]
-
         The videomass.spec file will be saved in the root directory
         of the videomass sources. To running videomass.spec is required
         ``pyinstaller``.
-
         To use videomass.spec type:
-
             `pyinstaller videomass.spec`
-
         or use this script with option -s to start the building by
         an existing videomass.spec file.
         """
@@ -229,10 +221,9 @@ class PyinstallerBuild():
     def run_pyinst(self, here=HERE):
         """
         wrap `pyinstaller --clean videomass.spec`
-
         """
         if platform.system() == 'Windows':
-            specfile = os.path.join(here, 'Videomass.spec')
+            specfile = os.path.join(here, 'videomass.spec')
 
         elif platform.system() == 'Darwin':
             specfile = os.path.join(here, 'Videomass.spec')
@@ -261,7 +252,6 @@ def make_portable(here=HERE):
     Note:
        with `--onedir` option, the 'portable_data' directory should
        be inside the videomass directory.
-
         with `--onefile` option, the 'portable_data' directory should
         be next to the videomass directory.
     """
@@ -335,7 +325,7 @@ def main():
     Users inputs parser (positional/optional arguments)
     """
     parser = argparse.ArgumentParser(
-        description='Wrap the pyinstaller setup for Videomass',)
+        description='Wrap the pyinstaller setup for Videomass application',)
     parser.add_argument(
         '-g', '--gen_spec',
         help="Generate a videomass.spec file to start building with.",
@@ -343,8 +333,7 @@ def main():
     )
     parser.add_argument(
         '-gb', '--genspec_build',
-        help="Generate a videomass.spec file and start directly "
-        "with building.",
+        help="Generate a videomass.spec file and start for building.",
         action="store_true",
     )
     parser.add_argument(
