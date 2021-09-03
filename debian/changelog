@@ -6,8 +6,9 @@ videomass (3.4.5-1) UNRELEASED; urgency=medium
     MSVCR100.dll is missing on Windows.
   * The stand-alone executable for macOS now keeps all application data inside
     the program folder by default
+  * Improved pyinstaller_setup.py script to automate bundles on some O.S.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 31 Aug 2021 15:57:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 03 Sep 2021 02:06:00 +0200
 
 videomass (3.4.4-1) UNRELEASED; urgency=medium
 

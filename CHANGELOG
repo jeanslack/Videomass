@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Aug 31, 2021 V.3.4.5
+Sep 03, 2021 V.3.4.5
 
   * Fixed "The URLs contain playlists..." even when URLs do not contain
     playlists.
@@ -15,6 +15,7 @@ Aug 31, 2021 V.3.4.5
     MSVCR100.dll is missing on Windows.
   * The stand-alone executable for macOS now keeps all application data inside
     the program folder by default.
+  * Improved pyinstaller_setup.py script to automate bundles on some O.S.
 
 +------------------------------------+
 Aug 29, 2021 V.3.4.4
