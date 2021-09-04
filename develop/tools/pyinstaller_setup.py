@@ -31,13 +31,13 @@ import subprocess
 
 this = os.path.realpath(os.path.abspath(__file__))
 HERE = os.path.dirname(os.path.dirname(os.path.dirname(this)))
-BINARY = os.path.join(HERE, 'bin', 'videomass')
 sys.path.insert(0, HERE)
 try:
     from videomass3.vdms_sys.msg_info import current_release
 except ModuleNotFoundError as error:
     sys.exit(error)
 
+BINARY = os.path.join(HERE, 'bin', 'videomass')
 SPECFILE = os.path.join(HERE, 'videomass.spec')
 
 
@@ -226,7 +226,7 @@ def genspec(options, specfile=SPECFILE, addopts=None):
                         "jeanslack.videomass')\n")
         arr[idx] = ("             bundle_identifier='com."
                     "jeanslack.videomass',\n")
-        newspec = ''.join(arr) + self.additional_darwinspec
+        newspec = ''.join(arr) + addopts
         with open(specfile, 'w', encoding='utf8') as specf:
             specf.write(newspec)
 # --------------------------------------------------------#
