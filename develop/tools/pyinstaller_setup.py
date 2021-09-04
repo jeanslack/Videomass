@@ -335,53 +335,54 @@ def main():
     """
     Users inputs parser (positional/optional arguments)
     """
+    def checkin():
+        """
+        """
+        if not platform.system() in ('Windows', 'Darwin', 'Linux'):
+            sys.exit("\nERROR: Unsupported platform. Maybe you "
+                     "could create a 'spec' file using this command:\n"
+                     "pyi-makespec [options] videomass.py\n"
+                     )
+
+        wrap = PyinstallerSpec(onefile_onedir())
+
+        if platform.system() == 'Linux':
+            getopts = wrap.linux_platform()
+            genspec(getopts)
+
+        elif platform.system() == 'Darwin':
+            getopts = wrap.darwin_platform()
+            genspec(getopts[0], addopts=getopts[1])
+
+        elif platform.system() == 'Windows':
+            getopts = wrap.windows_platform()
+            genspec(getopts)
+    # ----------------------------------------------#
+
     parser = argparse.ArgumentParser(
         description='Wrap the pyinstaller setup for Videomass application',)
     parser.add_argument(
         '-g', '--gen_spec',
-        help="Generate a videomass.spec file to start building with.",
+        help="Generates a ready-to-use videomass.spec file.",
         action="store_true",
     )
     parser.add_argument(
         '-gb', '--genspec_build',
-        help="Generate a videomass.spec file and start for building.",
+        help="Generate a videomass.spec file and start building bundle.",
         action="store_true",
     )
     parser.add_argument(
         '-s', '--start_build',
-        help="Start the building by an existing videomass.spec file.",
+        help="Start the building bundle by an existing videomass.spec file.",
         action="store_true",
     )
     args = parser.parse_args()
 
-    if not platform.system() in ('Windows', 'Darwin', 'Linux'):
-        sys.exit("\nERROR: Unsupported platform. You could create a "
-                 "spec file using this command:\n"
-                 "   pyi-makespec [options] videomass.py\n"
-                 )
     if args.gen_spec:
-        wrap = PyinstallerSpec(onefile_onedir())
-        if platform.system() == 'Linux':
-            getopts = wrap.linux_platform()
-            genspec(getopts)
-        elif platform.system() == 'Darwin':
-            getopts = wrap.darwin_platform()
-            genspec(getopts[0], addopts=getopts[1])
-        elif platform.system() == 'Windows':
-            getopts = wrap.windows_platform()
-            genspec(getopts)
+        checkin()
 
     elif args.genspec_build:
-        wrap = PyinstallerSpec(onefile_onedir())
-        if platform.system() == 'Linux':
-            getopts = wrap.linux_platform()
-            genspec(getopts)
-        elif platform.system() == 'Darwin':
-            getopts = wrap.darwin_platform()
-            genspec(getopts[0], addopts=getopts[1])
-        elif platform.system() == 'Windows':
-            getopts = wrap.windows_platform()
-            genspec(getopts)
+        checkin()
         run_pyinst()
         make_portable()
 
