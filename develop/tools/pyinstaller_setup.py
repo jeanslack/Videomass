@@ -354,7 +354,7 @@ def main():
     )
     args = parser.parse_args()
 
-    if not platform.system() in ('Window', 'Darwin', 'Linux'):
+    if not platform.system() in ('Windows', 'Darwin', 'Linux'):
         sys.exit("\nERROR: Unsupported platform. You could create a "
                  "spec file using this command:\n"
                  "   pyi-makespec [options] videomass.py\n"

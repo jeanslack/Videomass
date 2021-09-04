@@ -462,7 +462,7 @@ class Downloader(wx.Panel):
             url = self.fcode.GetItemText(item, 1)
             if 'playlist' in url or 'channel' in url:
                 # prevent opening too many of ffplay windows
-                wx.MessageBox(_('Videomass cannot play channel or playlists.'),
+                wx.MessageBox(_('Videomass cannot play channels or playlists.'),
                               _('Videomass'), wx.ICON_INFORMATION, self)
                 return
 
@@ -899,12 +899,18 @@ class Downloader(wx.Panel):
         urls = self.parent.data_url
 
         if not self.ckbx_pl.IsChecked():
-            if [url for url in urls if 'playlist' in url or 'channel' in url]:
-                if wx.MessageBox(_('The URLs contain playlists or channels. '
+            if [url for url in urls if 'playlist' in url]:
+                if wx.MessageBox(_('The URLs contain playlists. '
                                    'Are you sure you want to continue?'),
                                  _('Please confirm'), wx.ICON_QUESTION |
                                  wx.YES_NO, self) == wx.NO:
                     return
+        if [url for url in urls if 'channel' in url]:
+            if wx.MessageBox(_('The URLs contain channels. '
+                                'Are you sure you want to continue?'),
+                                _('Please confirm'), wx.ICON_QUESTION |
+                                wx.YES_NO, self) == wx.NO:
+                return
 
         if self.ckbx_id.IsChecked():
             _id = '%(title).100s-%(id)s'
