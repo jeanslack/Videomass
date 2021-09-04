@@ -19,6 +19,7 @@ Sep 03, 2021 V.3.4.5
   * Updated AppImage to work on the oldest supported Ubuntu LTS release
     (currently Ubuntu 18.04).
   * Updated travis.yml for travis CI testings.
+  * fix #32
 
 +------------------------------------+
 Aug 29, 2021 V.3.4.4

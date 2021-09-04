@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.01.2021
+Rev: Sep.04.2021
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -201,13 +201,6 @@ class DataSource():
                       sys.argv[0]))) + '/AppRun')):
                 # embedded on python appimage
                 print('Embedded on python appimage')
-                self.apptype = 'appimage'
-                userbase = os.path.dirname(os.path.dirname(sys.argv[0]))
-                pixmaps = '/share/pixmaps/videomass.png'
-                self.videomass_icon = os.path.join(userbase + pixmaps)
-
-            elif 'usr/bin/videomass' in sys.argv[0]:
-                print('Embedded on python appimage externally')
                 self.apptype = 'appimage'
                 userbase = os.path.dirname(os.path.dirname(sys.argv[0]))
                 pixmaps = '/share/pixmaps/videomass.png'

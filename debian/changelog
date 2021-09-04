@@ -10,8 +10,9 @@ videomass (3.4.5-1) UNRELEASED; urgency=medium
   * Updated AppImage to work on the oldest supported Ubuntu LTS release
     (currently Ubuntu 18.04).
   * Updated travis.yml for travis CI testings.
+  * fix #32
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 03 Sep 2021 19:11:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 03 Sep 2021 21:59:00 +0200
 
 videomass (3.4.4-1) UNRELEASED; urgency=medium
 
