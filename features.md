@@ -3,7 +3,7 @@ layout: page
 title: Features
 nav_order: 2
 ---
-# General Features
+# Features
 ---
 
 - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
@@ -11,7 +11,8 @@ nav_order: 2
 - Advanced log management.
 - Multi language support (English, Italian, Russian, Dutch, Portuguese (Brazilian), Spanish )
 
-## Features with FFmpeg
+## Using FFmpeg
+---
 - Drag and drop to add multiple files simultaneously.
 - Fully customizable presets and profiles.
 - Possibility to create your new presets and profiles from scratch.
@@ -25,7 +26,8 @@ nav_order: 2
 - Timeline: duration and seek are set with the sliders.
 - The timeline has a display for viewing the time selection.
 
-## Features with youtube-dl
+## Using youtube-dl
+---
 - Add multiple URLs simultaneously.
 - Download multiple URLs from YouTube and more sites, 
 [over 200](http://ytdl-org.github.io/youtube-dl/supportedsites.html).
