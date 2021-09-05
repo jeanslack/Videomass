@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 Name: get_bmpfromSvg.py
-Porpose: return bmp image from a scalable vector graphic (svg format)
+Porpose: return bmp image from a scalable vector graphic format (svg)
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -32,7 +32,7 @@ except ModuleNotFoundError:
 
 def get_bmp(imgfile, size):
     """
-    Given a file  and a size, converts to bmp
+    Given a file and a size, converts to bmp
     """
 
     img = SVGimage.CreateFromFile(imgfile)

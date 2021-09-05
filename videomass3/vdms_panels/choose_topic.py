@@ -164,7 +164,7 @@ class Choose_Topic(wx.Panel):
                 welcome.SetForegroundColour('#171b12')  # black
                 version.SetForegroundColour('#171b12')  # black
 
-        self.Bind(wx.EVT_BUTTON, self.on_Video, self.avconv)
+        self.Bind(wx.EVT_BUTTON, self.on_Conv, self.avconv)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)
         self.Bind(wx.EVT_BUTTON, self.on_Conc, self.conc)
         self.Bind(wx.EVT_BUTTON, self.on_YoutubeDL, self.youtube)
@@ -177,7 +177,7 @@ class Choose_Topic(wx.Panel):
         self.parent.switch_file_import(self, 'Presets Manager')
     # ------------------------------------------------------------------#
 
-    def on_Video(self, event):
+    def on_Conv(self, event):
         """
         Open drag N drop interface to switch on AVconversions panel
         """

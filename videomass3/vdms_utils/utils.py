@@ -39,6 +39,7 @@ def format_bytes(num):
     strings human readable, e.g.
     out = format_bytes(9909043.20)
     It return a string digit with metric suffix
+
     """
     unit = ["B", "KiB", "MiB", "GiB", "TiB",
             "PiB", "EiB", "ZiB", "YiB"]
@@ -60,6 +61,7 @@ def to_bytes(string):
     Convert given size string to bytes, e.g.
     out = to_bytes('9.45MiB')
     It return a number 'float' object.
+
     """
     value = 0.0
     unit = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
@@ -79,6 +81,7 @@ def get_seconds(timeformat):
     """
     This is the old implementation to get time human to seconds,
     e.g. get_seconds('00:02:00'). Return int(seconds) object.
+
     """
     if timeformat == 'N/A':
         return int('0')
