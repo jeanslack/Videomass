@@ -5,10 +5,10 @@ has_children: true
 nav_order: 6
 ---
 
-# Known problems and solutions of Videomass
+# Known problems and solutions
 -------------------------------------------
 
-## Common problems
+## Common errors
 
 - If you are using an earlier version of FFmpeg equal to or less than 3.1.5, the
 _nlmeans_ filter it may not have been implemented yet, since it exists only in

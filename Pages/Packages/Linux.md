@@ -28,9 +28,8 @@ To install Videomass add this
 ---
 
 ## AppImage
-Videomass [AppImage](https://en.wikipedia.org/wiki/AppImage) is available with 
-porting for the GTK3 engine, which only supports the x86_64 architecture.   
-Note that Videomass AppImages **do not include** FFmpeg which must be installed separately.       
+Videomass [AppImage](https://en.wikipedia.org/wiki/AppImage) only supports x86_64 
+architecture and **does not include** FFmpeg which must be installed separately.         
 
 **Important:** before starting Videomass as AppImage it is necessary to give execution permissions:   
 
@@ -40,7 +39,7 @@ Then run the program:
 
 `$ ./Videomass-3.4.5-x86_64.AppImage`   
 
-[Videomass.AppImage GTK2](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.4.5-x86_64.AppImage){: .btn .btn-green }   
+[Get AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.4.5-x86_64.AppImage){: .btn .btn-green }   
 
 Successfully tested on the following Linux distributions:   
 * Xubuntu 18.04 LTS x86_64 

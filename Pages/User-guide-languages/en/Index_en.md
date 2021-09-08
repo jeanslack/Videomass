@@ -1,7 +1,7 @@
 ---
 layout: default
 title: English
-parent: User Guide
+parent: User's Guide
 grand_parent: Documentation
 ---
 

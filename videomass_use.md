@@ -7,7 +7,7 @@ nav_order: 5
 # Documentation
 ---
 
-Click on the **User Guide** menu and choose a language for online documentation.   
+For online documentation, click the **User's Guide** menu to choose a language.   
 
 ---
 

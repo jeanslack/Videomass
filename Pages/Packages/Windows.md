@@ -7,8 +7,8 @@ nav_order: 3
 
 ---
   
-[Videomass.exe](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.5-x86_64-Setup.exe){: .btn .btn-green } 
-[Videomass-portable.7z](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.5-x86_64-portable.7z){: .btn .btn-green }     
+[Get installer](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.5-x86_64-Setup.exe){: .btn .btn-green } 
+[Get portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.5-x86_64-portable.7z){: .btn .btn-green }     
 
 Minimum requirements:
 - Microsoft **Windows 7** to up (64-bit only)
