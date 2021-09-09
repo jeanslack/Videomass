@@ -10,9 +10,12 @@ nav_order: 2
 [Get disk image](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.5-x86_64.dmg){: .btn .btn-green }   
 
 Minimum requirements:
-- MacOS **High Sierra** to up.   
-- The binary is compiled for **MacOS 10.13.6 64-bit** and later. 
-It does not work on versions earlier than 10.13.6.   
+- [macOS High Sierra](https://en.wikipedia.org/wiki/MacOS_High_Sierra) 10.13.6 x64.   
+- [x86_64](https://en.wikipedia.org/wiki/X86-64) architecture.   
+
+**Please note**   
+Videomass does not work on versions earlier than 10.13.6.   
 
 For any application-related issues, please read 
-[Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.  
+[Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.
+{: .fs-3 .text-grey-dk-100} 

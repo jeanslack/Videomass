@@ -7,7 +7,9 @@ nav_order: 1
 
 ---
 
-## Ubuntu PPA
+# Ubuntu PPA
+
+---
 This PPA currently publishes packages for Ubuntu, including official and 
 derivative distributions.   
 
@@ -24,22 +26,31 @@ To install Videomass add this
 `$ sudo add-apt-repository ppa:jeanslack/videomass`   
 `$ sudo apt-get update`  
 `$ sudo apt install python3-videomass`   
+
+For any other application-related issues, please read 
+[Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.
+{: .fs-3 .text-grey-dk-100} 
     
 ---
 
-## AppImage
-Videomass [AppImage](https://en.wikipedia.org/wiki/AppImage) only supports x86_64 
-architecture and **does not include** FFmpeg which must be installed separately.         
+# AppImage
+{: .d-inline-block } 
 
-**Important:** before starting Videomass as AppImage it is necessary to give execution permissions:   
+Portable
+{: .label .label-purple }   
 
-`$ chmod a+x ./Videomass-3.4.5-x86_64.AppImage`   
+About [AppImage](https://appimage.org/) format   
+{: .fs-3 .text-grey-dk-100}
 
-Then run the program:   
+---
 
-`$ ./Videomass-3.4.5-x86_64.AppImage`   
+[Get AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.4.5-x86_64.AppImage){: .btn .btn-green } 
 
-[Get AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.4.5-x86_64.AppImage){: .btn .btn-green }   
+Minimum requirements:   
+- All [Ubuntu flavors](https://ubuntu.com/download/flavours) based on 
+[18.04 LTS x86_64](https://releases.ubuntu.com/18.04.5/) version.
+- [x86_64](https://en.wikipedia.org/wiki/X86-64) architecture.
+- [FFmpeg](https://www.ffmpeg.org/) version 3.1.5  
 
 Successfully tested on the following Linux distributions:   
 * Xubuntu 18.04 LTS x86_64 
@@ -47,9 +58,8 @@ Successfully tested on the following Linux distributions:
 * Debian 10 buster x86_64
 * Debian 11 bullseye x86_64
 * Fedora 32 x86_64 (Workstation Edition) 
-* Manjaro Linux 20.0.3 (Lysia) x86_64
-
-Minimum requirements, **Ubuntu 18.04 LTS x86_64** to up.   
+* Manjaro Linux 20.0.3 (Lysia) x86_64    
 
 For any application-related issues, please read 
-[Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.   
+[Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.
+{: .fs-3 .text-grey-dk-100}   

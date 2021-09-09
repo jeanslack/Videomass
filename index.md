@@ -14,7 +14,7 @@ permalink: /
 
 Designed for [FFmpeg](https://www.ffmpeg.org/) enthusiasts and users who need a 
 graphical interface for [youtube-dl](http://ytdl-org.github.io/youtube-dl/)
-{: .fs-4 .fw-300 }
+{: .fs-3 .fw-300 }
 
 [Downloads](download_installation.md){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } 
 [Get started now](videomass_use.md){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } 
@@ -23,7 +23,8 @@ graphical interface for [youtube-dl](http://ytdl-org.github.io/youtube-dl/)
 ---
 
 If you like Videomass, maybe you can make some donations to promote the 
-development of the application:   
+development of the application:
+{: .fs-3 .fw-300 }   
 
 [Donate](https://flattr.com/@gianlu){: .btn .btn-purple .fs-5 .mb-4 .mb-md-0 .mr-2 }
 
