@@ -1,4 +1,4 @@
-include launcher README.md AUTHORS BUGS CHANGELOG INSTALL COPYING TODO
+include launcher README.md AUTHORS BUGS CHANGELOG INSTALL LICENSE TODO
 include tests/*
 include bin/videomass
 recursive-include debian *

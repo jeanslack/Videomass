@@ -1,40 +1,43 @@
 # -*- coding: UTF-8 -*-
-# Name: pictures_exporting.py
-# Porpose: FFmpeg long processing task on save as pictures
-# Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
-#########################################################
-# This file is part of Videomass.
+"""
+Name: pictures_exporting.py
+Porpose: FFmpeg long processing task on save as pictures
+Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+This file is part of Videomass.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#########################################################
-import wx
-import subprocess
-import platform
-if not platform.system() == 'Windows':
-    import shlex
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 from threading import Thread
 import time
+import subprocess
+import platform
+import wx
 from pubsub import pub
+if not platform.system() == 'Windows':
+    import shlex
 
 
-def logWrite(cmd, sterr, logname, logdir):
+def logwrite(cmd, sterr, logname, logdir):
     """
     writes ffmpeg commands and status error during threads below
     """
@@ -70,12 +73,8 @@ class PicturesFromVideo(Thread):
     single processes to save video sequences as pictures.
 
     """
-    # get videomass wx.App attribute
-    get = wx.GetApp()
-    OS = get.OS
-    LOGDIR = get.LOGdir
-    FFMPEG_URL = get.FFMPEG_url
-    FFMPEG_LOGLEV = get.FFMPEG_loglev
+    get = wx.GetApp()  # get videomass wx.App attribute
+    appdata = get.appset
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ------------------------------------------------------
 
@@ -87,6 +86,7 @@ class PicturesFromVideo(Thread):
         progress bar
         """
         self.stop_work_thread = False  # process terminate
+        self.outputdir = varargs[3]  # output directory
         self.cmd = varargs[4]  # comand set on single pass
         self.duration = duration[0]  # duration list
         self.time_seq = timeseq  # a time segment
@@ -95,36 +95,38 @@ class PicturesFromVideo(Thread):
         self.fname = varargs[1]  # file name
 
         Thread.__init__(self)
-        """initialize"""
         self.start()  # start the thread (va in self.run())
 
     def run(self):
         """
         Subprocess initialize thread.
         """
-        cmd = ('"%s" %s %s -i "%s" %s ' % (PicturesFromVideo.FFMPEG_URL,
-                                           self.time_seq,
-                                           PicturesFromVideo.FFMPEG_LOGLEV,
-                                           self.fname,
-                                           self.cmd,
-                                         ))
-        count = 'File %s/%s' % ('1', '1',)
-        com = "%s\n%s" % (count, cmd)
+        cmd = ('"%s" %s %s -i '
+               '"%s" %s ' % (PicturesFromVideo.appdata['ffmpeg_bin'],
+                             self.time_seq,
+                             PicturesFromVideo.appdata['ffmpegloglev'],
+                             self.fname,
+                             self.cmd,
+                             ))
+        count = 'File 1/1'
+        com = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
+               '[COMMAND]:\n%s' % (count, self.fname, self.outputdir, cmd))
 
         wx.CallAfter(pub.sendMessage,
                      "COUNT_EVT",
                      count=count,
+                     fsource='Source:  "%s"' % self.fname,
+                     destination='Destination:  "%s"' % self.outputdir,
                      duration=self.duration,
-                     fname=self.fname,
                      end='',
                      )
-        logWrite(com,
+        logwrite(com,
                  '',
                  self.logname,
-                 PicturesFromVideo.LOGDIR,
+                 PicturesFromVideo.appdata['logdir'],
                  )  # write n/n + command only
 
-        if not PicturesFromVideo.OS == 'Windows':
+        if not PicturesFromVideo.appdata['ostype'] == 'Windows':
             cmd = shlex.split(cmd)
             info = None
         else:  # Hide subprocess window on MS Windows
@@ -135,8 +137,8 @@ class PicturesFromVideo(Thread):
                                   stderr=subprocess.PIPE,
                                   bufsize=1,
                                   universal_newlines=True,
-                                  startupinfo=info,) as p:
-                for line in p.stderr:
+                                  startupinfo=info,) as proc:
+                for line in proc.stderr:
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line,
@@ -144,37 +146,39 @@ class PicturesFromVideo(Thread):
                                  status=0,
                                  )
                     if self.stop_work_thread:  # break second 'for' loop
-                        p.terminate()
+                        proc.terminate()
                         break
 
-                if p.wait():  # error
+                if proc.wait():  # error
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line,
                                  duration=self.duration,
-                                 status=p.wait(),
+                                 status=proc.wait(),
                                  )
-                    logWrite('',
-                             "Exit status: %s" % p.wait(),
+                    logwrite('',
+                             "Exit status: %s" % proc.wait(),
                              self.logname,
-                             PicturesFromVideo.LOGDIR,
+                             PicturesFromVideo.appdata['logdir'],
                              )  # append exit error number
 
                 else:  # status ok
                     wx.CallAfter(pub.sendMessage,
                                  "COUNT_EVT",
                                  count='',
+                                 fsource='',
+                                 destination='',
                                  duration='',
-                                 fname='',
                                  end='ok'
                                  )
         except (OSError, FileNotFoundError) as err:
-            e = "%s\n  %s" % (err, PicturesFromVideo.NOT_EXIST_MSG)
+            excepterr = "%s\n  %s" % (err, PicturesFromVideo.NOT_EXIST_MSG)
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
-                         count=e,
+                         count=excepterr,
+                         fsource='',
+                         destination='',
                          duration=0,
-                         fname=self.fname,
                          end='error',
                          )
         time.sleep(.5)

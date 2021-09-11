@@ -1,437 +1,395 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-
-#########################################################
-# Name: pyinstaller_setup.py
-# Porpose: Wrap the videomass building with pyinstaller
-# Compatibility: Python3
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: June.18.2020
-#########################################################
-
-# This file is part of Videomass.
-
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
+"""
+Name: pyinstaller_setup.py
+Porpose: Setup the videomass.spec and build bundle via Pyinstaller
+Compatibility: Python3
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: Sept.04.2021
+########################################################
+This file is part of Videomass.
+    Videomass is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    Videomass is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 import sys
 import shutil
 import platform
 import argparse
+import time
+import subprocess
+
+this = os.path.realpath(os.path.abspath(__file__))
+HERE = os.path.dirname(os.path.dirname(os.path.dirname(this)))
+sys.path.insert(0, HERE)
+try:
+    from videomass3.vdms_sys.msg_info import current_release
+except ModuleNotFoundError as error:
+    sys.exit(error)
+
+BINARY = os.path.join(HERE, 'bin', 'videomass')
+SPECFILE = os.path.join(HERE, 'videomass.spec')
 
 
-class Data(object):
+def data(here=HERE):
     """
-    Get data from current sources code directory
+    Returns a dict object of the Videomass data
+    and pathnames needed to spec file.
+    """
+    release = current_release()  # Gets data list
+
+    return dict(RLS_NAME=release[0],  # first letter is Uppercase
+                PRG_NAME=release[1],  # first letter is lower
+                VERSION=release[2],
+                RELEASE=release[3],
+                COPYRIGHT=release[4],
+                WEBSITE=release[5],
+                AUTHOR=release[6],
+                EMAIL=release[7],
+                COMMENT=release[8],
+                ART=os.path.join(here, 'videomass3', 'art'),
+                LOCALE=os.path.join(here, 'videomass3', 'locale'),
+                SHARE=os.path.join(here, 'videomass3', 'share'),
+                FFMPEG=os.path.join(here, 'videomass3', 'FFMPEG'),
+                NOTICE=os.path.join(here, 'videomass3',
+                                    'FFMPEG', 'NOTICE.rtf'),
+                AUTH=os.path.join(here, 'AUTHORS'),
+                BUGS=os.path.join(here, 'BUGS'),
+                CHANGELOG=os.path.join(here, 'CHANGELOG'),
+                COPYING=os.path.join(here, 'LICENSE'),
+                INSTALL=os.path.join(here, 'INSTALL'),
+                README=os.path.join(here, 'README.md'),
+                TODO=os.path.join(here, 'TODO'),
+                ICNS=os.path.join(here, 'videomass3',
+                                  'art', 'videomass.icns'),
+                ICO=os.path.join(here, 'videomass3', 'art', 'videomass.ico'),
+                )
+
+
+class PyinstallerSpec():
+    """
+    This class structures the information data flow,
+    arranges the paths of the files and directories
+    and manages the options to generate a videomass.spec
+    file based to the operating system in use.
 
     """
-    this = os.path.realpath(os.path.abspath(__file__))
-    here = os.path.dirname(os.path.dirname(os.path.dirname(this)))
-    binary = os.path.join(here, 'bin', 'videomass')
-    sys.path.insert(0, here)
+
+    def __init__(self, onedf='--onedir'):
+        """
+        The following OS's are supported:
+        Linux, MacOS and MS-Windows
+        """
+        self.onedf = onedf  # is None if --start_build option is given
+        self.getdata = data()
+        sep = ';' if platform.system() == 'Windows' else ':'
+
+        self.datas = (f"--add-data {self.getdata['ART']}{sep}art "
+                      f"--add-data {self.getdata['LOCALE']}{sep}locale "
+                      f"--add-data {self.getdata['SHARE']}{sep}share "
+                      f"--add-data {self.getdata['FFMPEG']}{sep}FFMPEG "
+                      f"--add-data {self.getdata['AUTH']}{sep}DOC "
+                      f"--add-data {self.getdata['BUGS']}{sep}DOC "
+                      f"--add-data {self.getdata['CHANGELOG']}{sep}DOC "
+                      f"--add-data {self.getdata['COPYING']}{sep}DOC "
+                      f"--add-data {self.getdata['INSTALL']}{sep}DOC "
+                      f"--add-data {self.getdata['README']}{sep}DOC "
+                      f"--add-data {self.getdata['TODO']}{sep}DOC "
+                      )
+    # ---------------------------------------------------------#
+
+    def windows_platform(self):
+        """
+        Set options flags and spec file pathname
+        on MS-Windows platform.
+        """
+        options = (f"--name {self.getdata['RLS_NAME']} {self.onedf} "
+                   f"--windowed --noconsole --icon {self.getdata['ICO']} "
+                   f"--exclude-module youtube_dl {self.datas} ")
+
+        return options
+    # ---------------------------------------------------------#
+
+    def darwin_platform(self):
+        """
+        Set options flags and spec file pathname
+        on MacOS platform.
+        FIXME : use codesign identity when pyinstaller is fixed to v.4.5.2
+        """
+        rlsname = self.getdata['RLS_NAME']
+        version = self.getdata['VERSION']
+        cright = self.getdata['COPYRIGHT']
+
+        opts = (f"--name '{rlsname}' {self.onedf} "
+                f"--windowed --noconsole --icon "
+                f"'{self.getdata['ICNS']}' --osx-bundle-identifier "
+                f"'com.jeanslack.videomass' "
+                # f"--codesign-identity IDENTITY "
+                # f"--osx-entitlements-file FILENAME "
+                f"--exclude-module 'youtube_dl' {self.datas} ")
+
+        plist = (
+            f"""             info_plist={{# 'LSEnvironment': '$0',
+             'NSPrincipalClass': 'NSApplication',
+             'NSAppleScriptEnabled': False,
+             'CFBundleName': '{rlsname}',
+             'CFBundleDisplayName': '{rlsname}',
+             'CFBundleGetInfoString': "Making {rlsname}",
+             'CFBundleIdentifier': "com.jeanslack.videomass",
+             'CFBundleVersion': '{version}',
+             'CFBundleShortVersionString': '{version}',
+             'NSHumanReadableCopyright':'Copyright {cright}, '
+                                        'Gianluca Pernigotto, '
+                                        'All Rights Reserved',}})
+""")
+
+        return opts, plist
+    # ---------------------------------------------------------#
+
+    def linux_platform(self):
+        """
+        Set options flags and spec file pathname
+        on Linux platform.
+        """
+        options = (f"--name {self.getdata['PRG_NAME']} {self.onedf} "
+                   f"--windowed --noconsole --exclude-module youtube_dl "
+                   f"{self.datas} ")
+
+        return options
+# --------------------------------------------------------#
+
+
+def onefile_onedir():
+    """
+    Pyinstaller offer two options to generate stand-alone executables.
+    The `--onedir` option is the default.
+    """
+    onedf = input('\nChoose from the following options:\n'
+                  '[1] Create a one-folder bundle containing an '
+                  'executable (default)\n'
+                  '[2] Create a one-file bundled executable\n'
+                  '(1/2) ')
+
+    return '--onefile' if onedf == '2' else '--onedir'
+# --------------------------------------------------------#
+
+
+def fetch_exec(binary=BINARY, here=HERE):
+    """
+    fetch the videomass binary on bin folder
+    """
+    if not os.path.exists(os.path.join(here, 'videomass')):  # binary
+        if os.path.isfile(binary):
+            try:
+                shutil.copyfile(binary, os.path.join(here, 'videomass'))
+            except FileNotFoundError as err:
+                sys.exit(err)
+        else:
+            sys.exit("ERROR: no 'bin/videomass' file found on videomass "
+                     "base sources directory.")
+# --------------------------------------------------------#
+
+
+def genspec(options, specfile=SPECFILE, addplist=None):
+    """
+    Generate a videomass.spec file for platform in use.
+    Support for the following platforms is expected:
+            [Windows, Darwin, Linux]
+    The videomass.spec file will be saved in the root directory
+    of the videomass sources.
+    To running videomass.spec is required ``pyinstaller``.
+    To use videomass.spec type:
+        `pyinstaller videomass.spec`
+    or use this script with option -s to start the building by
+    an existing videomass.spec file.
+    """
     try:
-        from videomass3.vdms_sys.msg_info import current_release
-    except ModuleNotFoundError as error:
-        sys.exit(error)
+        subprocess.run('pyi-makespec %s videomass' % options,
+                       shell=True, check=True)
+    except subprocess.CalledProcessError as err:
+        sys.exit('\nERROR: %s\n' % err)
 
-    cr = current_release()  # Gets informations
-    RLS_NAME = cr[0]  # first letter is Uppercase
-    PRG_NAME = cr[1]  # first letter is lower
-    VERSION = cr[2]
-    RELEASE = cr[3]
-    COPYRIGHT = cr[4]
-    WEBSITE = cr[5]
-    AUTHOR = cr[6]
-    EMAIL = cr[7]
-    COMMENT = cr[8]
-    ART = os.path.join(here, 'videomass3', 'art')
-    LOCALE = os.path.join(here, 'videomass3', 'locale')
-    SHARE = os.path.join(here, 'videomass3', 'share')
-    FFMPEG = os.path.join(here, 'videomass3', 'FFMPEG')
-    NOTICE = os.path.join(FFMPEG, 'NOTICE.rtf')
-    AUTH = os.path.join(here, 'AUTHORS')
-    BUGS = os.path.join(here, 'BUGS')
-    CHANGELOG = os.path.join(here, 'CHANGELOG')
-    COPYING = os.path.join(here, 'LICENSE')
-    INSTALL = os.path.join(here, 'INSTALL')
-    README = os.path.join(here, 'README.md')
-    TODO = os.path.join(here, 'TODO')
-    ICNS = os.path.join(here, 'videomass3', 'art', 'videomass.icns')
-    ICO = os.path.join(here, 'videomass3', 'art', 'videomass.ico')
+    if platform.system() == 'Darwin' and addplist is not None:
+        with open(specfile, 'r', encoding='utf8') as specf:
+            arr = specf.readlines()
 
-    WIN32_TEMPL = f"""# -*- mode: python ; coding: utf-8 -*-
-
-block_cipher = None
+        idx = arr.index("             bundle_identifier='com."
+                        "jeanslack.videomass')\n")
+        arr[idx] = ("             bundle_identifier='com."
+                    "jeanslack.videomass',\n")
+        newspec = ''.join(arr) + addplist
+        with open(specfile, 'w', encoding='utf8') as specf:
+            specf.write(newspec)
+# --------------------------------------------------------#
 
 
-a = Analysis(['{PRG_NAME}'],
-            pathex=[r'{here}'],
-            binaries=[],
-            datas=[(r'{ART}', 'art'),
-                    (r'{LOCALE}', 'locale'),
-                    (r'{SHARE}', 'share'),
-                    (r'{FFMPEG}', 'FFMPEG'),
-                    (r'{NOTICE}', 'DOC'),
-                    (r'{AUTH}', 'DOC'),
-                    (r'{BUGS}', 'DOC'),
-                    (r'{CHANGELOG}', 'DOC'),
-                    (r'{COPYING}', 'DOC'),
-                    (r'{INSTALL}', 'DOC'),
-                    (r'{README}', 'DOC'),
-                    (r'{TODO}', 'DOC')],
-            hiddenimports=[],
-            hookspath=[],
-            runtime_hooks=[],
-            excludes=['youtube_dl'],
-            win_no_prefer_redirects=False,
-            win_private_assemblies=False,
-            cipher=block_cipher,
-            noarchive=False)
-pyz = PYZ(a.pure, a.zipped_data,
-            cipher=block_cipher)
-exe = EXE(pyz,
-        a.scripts,
-        [],
-        exclude_binaries=True,
-        name='{RLS_NAME}',
-        debug=False,
-        bootloader_ignore_signals=False,
-        strip=False,
-        upx=True,
-        console=False,
-        icon=r'{ICO}')
-coll = COLLECT(exe,
-            a.binaries,
-            a.zipfiles,
-            a.datas,
-            strip=False,
-            upx=True,
-            upx_exclude=[],
-            name='{RLS_NAME}')
-"""
-
-    DARWIN_TEMPL = f"""# -*- mode: python ; coding: utf-8 -*-
-
-block_cipher = None
-
-
-a = Analysis(['{PRG_NAME}'],
-            pathex=['{here}'],
-            binaries=[],
-            datas=[('{ART}', 'art'),
-                    ('{LOCALE}', 'locale'),
-                    ('{SHARE}', 'share'),
-                    ('{FFMPEG}', 'FFMPEG'),
-                    ('{AUTH}', 'DOC'),
-                    ('{BUGS}', 'DOC'),
-                    ('{CHANGELOG}', 'DOC'),
-                    ('{COPYING}', 'DOC'),
-                    ('{INSTALL}', 'DOC'),
-                    ('{README}', 'DOC'),
-                    ('{TODO}', 'DOC')],
-            hiddenimports=[],
-            hookspath=[],
-            runtime_hooks=[],
-            excludes=['youtube_dl'],
-            win_no_prefer_redirects=False,
-            win_private_assemblies=False,
-            cipher=block_cipher,
-            noarchive=False)
-pyz = PYZ(a.pure, a.zipped_data,
-            cipher=block_cipher)
-exe = EXE(pyz,
-        a.scripts,
-        [],
-        exclude_binaries=True,
-        name='{RLS_NAME}',
-        debug=False,
-        bootloader_ignore_signals=False,
-        strip=False,
-        upx=True,
-        console=False,
-        icon='{ICNS}')
-coll = COLLECT(exe,
-            a.binaries,
-            a.zipfiles,
-            a.datas,
-            strip=False,
-            upx=True,
-            upx_exclude=[],
-            name='{RLS_NAME}')
-app = BUNDLE(coll,
-            name='{RLS_NAME}.app',
-            icon='{ICNS}',
-            bundle_identifier='com.jeanslack.videomass',
-            info_plist={{
-                # 'LSEnvironment': '$0',
-                'NSPrincipalClass': 'NSApplication',
-                'NSAppleScriptEnabled': False,
-                'CFBundleName': '{RLS_NAME}',
-                'CFBundleDisplayName': '{RLS_NAME}',
-                'CFBundleGetInfoString': "Making {RLS_NAME}",
-                'CFBundleIdentifier': "com.jeanslack.videomass",
-                'CFBundleVersion': '{VERSION}',
-                'CFBundleShortVersionString': '{VERSION}',
-                'NSHumanReadableCopyright': 'Copyright {COPYRIGHT}, '
-                                            'Gianluca Pernigotto, '
-                                            'All Rights Reserved',
-                                            }})
-"""
-
-    LINUX_TEMPL = f"""# -*- mode: python ; coding: utf-8 -*-
-
-block_cipher = None
-
-
-a = Analysis(['{PRG_NAME}'],
-            pathex=['{here}'],
-            binaries=[],
-            datas=[('{ART}', 'art'),
-                    ('{LOCALE}', 'locale'),
-                    ('{SHARE}', 'share'),
-                    ('{FFMPEG}', 'FFMPEG'),
-                    ('{AUTH}', 'DOC'),
-                    ('{BUGS}', 'DOC'),
-                    ('{CHANGELOG}', 'DOC'),
-                    ('{COPYING}', 'DOC'),
-                    ('{INSTALL}', 'DOC'),
-                    ('{README}', 'DOC'),
-                    ('{TODO}', 'DOC')],
-            hiddenimports=[],
-            hookspath=[],
-            runtime_hooks=[],
-            excludes=['youtube_dl'],
-            win_no_prefer_redirects=False,
-            win_private_assemblies=False,
-            cipher=block_cipher,
-            noarchive=False)
-pyz = PYZ(a.pure, a.zipped_data,
-            cipher=block_cipher)
-exe = EXE(pyz,
-        a.scripts,
-        a.binaries,
-        a.zipfiles,
-        a.datas,
-        [],
-        name='{PRG_NAME}',
-        debug=False,
-        bootloader_ignore_signals=False,
-        strip=False,
-        upx=True,
-        upx_exclude=[],
-        runtime_tmpdir=None,
-        console=False )
-"""
-
-
-class MakePyinstallerBuild(Data):
+def clean_buildingdirs(here=HERE):
     """
-    Wrap the pyinstaller building for Videomass
-
+    called by run_pyinst().
+    Asks the user if they want to clean-up building
+    directories, usually "dist" and "build" dirs.
     """
-    def check(self):
-        """
-        Check some integrity of sources
 
-        """
-        if not os.path.exists(os.path.join(self.here, 'videomass')):  # binary
-            if os.path.isfile(self.binary):
-                try:
-                    shutil.copyfile(self.binary, os.path.join(self.here,
-                                                              'videomass'))
-                except FileNotFoundError as err:
-                    sys.exit(err)
-            else:
-                sys.exit("ERROR: no 'bin/videomass' file found on videomass "
-                         "base sources directory.")
+    clean = input('Want you remove "dist" and "build" folders '
+                  'before building (y/n)? ')
+    if clean in ('y', 'Y'):
+        if os.path.exists(os.path.join(here, 'dist')):
+            try:
+                shutil.rmtree(os.path.join(here, 'dist'))
+            except OSError as err:
+                sys.exit("ERROR: %s" % (err.strerror))
 
-    def genspec(self, build=False):
-        """
-        Generate a videomass.spec file on the specified platform.
-        The valid platforms to work are only Windows and MacOs and Linux.
-        The videomass.spec file will be saved in the root directory
-        of the videomass sources.
-        To running videomass.spec is required ``pyinstaller``.
-        To use videomass.spec type:
+        if os.path.exists(os.path.join(here, 'build')):
+            try:
+                shutil.rmtree(os.path.join(here, 'build'))
+            except OSError as err:
+                sys.exit("ERROR: %s" % (err.strerror))
+# --------------------------------------------------------#
 
-            `pyinstaller videomass.spec`
 
-        or use option -gb to generate and start with building too.
-        """
-        if platform.system() == 'Windows':
-            contents = self.WIN32_TEMPL
-        elif platform.system() == 'Darwin':
-            contents = self.DARWIN_TEMPL
-        elif platform.system() == 'Linux':
-            contents = self.LINUX_TEMPL
-        else:
-            sys.exit("Unsupported platform. You create a spec file "
-                     "using this command:\n"
-                     "   pyi-makespec options videomass.py\n")
-
-        specfile = os.path.join(self.here, 'videomass.spec')
-
-        with open(specfile, 'w') as spec:
-            spec.write(contents)
-        print("ready videomass.spec on '%s'" % self.here)
-        if build:
-            self.run_pyinst(specfile)
-
-    def run_pyinst(self, specfile):
-        """
-        wrap `pyinstaller videomass.spec`
-        """
-        if os.path.exists(specfile) and os.path.isfile(specfile):
-            os.system("pyinstaller --clean %s" % specfile)
-            print("\npyinstaller_setup.py: Build finished.\n")
-        else:
-            sys.exit("ERROR: no such file videomass.spec")
-
-    def usemodule(self):
-        """
-        Run pyinstaller from Python code starting to build a
-        videomass bundle and videomass.spec too.
-        To use this function is required ``pyinstaller``.
-        """
+def run_pyinst(specfile=SPECFILE):
+    """
+    wrap `pyinstaller --clean videomass.spec`
+    """
+    if os.path.exists(specfile) and os.path.isfile(specfile):
+        clean_buildingdirs()  # remove temp folders
+        fetch_exec()  # fetch videomass binary
+        time.sleep(1)
         try:
-            import PyInstaller.__main__
-        except ModuleNotFoundError as error:
-            sys.exit('ERROR: %s - pyinstaller is required.' % error)
+            subprocess.run('pyinstaller --clean %s' % specfile,
+                           shell=True, check=True)
+        except subprocess.CalledProcessError as err:
+            sys.exit('\nERROR: %s\n' % err)
 
-        if platform.system() == 'Windows':
-            PyInstaller.__main__.run([
-                                '--name=Videomass',
-                                '--windowed',
-                                '--add-data=%s;art' % self.ART,
-                                '--add-data=%s;locale' % self.LOCALE,
-                                '--add-data=%s;share' % self.SHARE,
-                                '--add-data=%s;FFMPEG' % self.FFMPEG,
-                                '--add-data=%s;DOC' % self.NOTICE,
-                                # doc
-                                '--add-data=%s;DOC' % self.AUTH,
-                                '--add-data=%s;DOC' % self.BUGS,
-                                '--add-data=%s;DOC' % self.CHANGELOG,
-                                '--add-data=%s;DOC' % self.COPYING,
-                                '--add-data=%s;DOC' % self.INSTALL,
-                                '--add-data=%s;DOC' % self.README,
-                                '--add-data=%s;DOC' % self.TODO,
-                                '--exclude-module=youtube_dl',
-                                '--icon=%s' % self.ICO,
-                                'videomass',
-                                ])
+        print("\nSUCCESS: pyinstaller_setup.py: Build finished.\n")
+    else:
+        sys.exit("ERROR: no such file %s" % specfile)
+# --------------------------------------------------------#
 
-        elif platform.system() == 'Darwin':
-            PyInstaller.__main__.run([
-                            '--name=Videomass',
-                            '--windowed',
-                            # '--onefile',
-                            '--osx-bundle-identifier=com.jeanslack.videomass',
-                            '--add-data=%s:art' % self.ART,
-                            '--add-data=%s:locale' % self.LOCALE,
-                            '--add-data=%s:share' % self.SHARE,
-                            '--add-data=%s:FFMPEG' % self.FFMPEG,
-                            # doc
-                            '--add-data=%s:DOC' % self.AUTH,
-                            '--add-data=%s:DOC' % self.BUGS,
-                            '--add-data=%s:DOC' % self.CHANGELOG,
-                            '--add-data=%s:DOC' % self.COPYING,
-                            '--add-data=%s:DOC' % self.INSTALL,
-                            '--add-data=%s:DOC' % self.README,
-                            '--add-data=%s:DOC' % self.TODO,
-                            '--exclude-module=youtube_dl',
-                            '--icon=%s' % self.ICNS,
-                            'videomass',
-                            ])
 
-        elif platform.system() in ('Linux', 'FreeBSD'):
-            PyInstaller.__main__.run([
-                                '--name=videomass',
-                                '--windowed',  # console=False
-                                '--onefile',
-                                '--add-data=%s:art' % self.ART,
-                                '--add-data=%s:locale' % self.LOCALE,
-                                '--add-data=%s:share' % self.SHARE,
-                                '--add-data=%s:FFMPEG' % self.FFMPEG,
-                                # doc
-                                '--add-data=%s:DOC' % self.AUTH,
-                                '--add-data=%s:DOC' % self.BUGS,
-                                '--add-data=%s:DOC' % self.CHANGELOG,
-                                '--add-data=%s:DOC' % self.COPYING,
-                                '--add-data=%s:DOC' % self.INSTALL,
-                                '--add-data=%s:DOC' % self.README,
-                                '--add-data=%s:DOC' % self.TODO,
-                                '--exclude-module=youtube_dl',
-                                'videomass',
-                                ])
+def make_portable(here=HERE):
+    """
+    Optionally, you can create a portable_data folder for Videomass
+    stand-alone executable to keep all application data inside
+    the program folder.
+    Note:
+       with `--onedir` option, the 'portable_data' directory should
+       be inside the videomass directory.
+        with `--onefile` option, the 'portable_data' directory should
+        be next to the videomass directory.
+    """
+    portable = input('Do you want to keep all application data inside '
+                     'the program folder? (makes stand-alone executable '
+                     'fully portable and stealth) (y/n) ')
+    if portable in ('y', 'Y'):
+        portabledir = 'portable_data'
+    else:
+        return
+
+    def makedir(datashare):
+        """
+        make portable_data folder
+        """
+        if not os.path.exists(datashare):
+            try:
+                os.mkdir(datashare)
+            except OSError as err:
+                sys.exit('ERROR: %s' % err)
+            else:
+                sys.exit('\nDONE: "portable_data" folder is created\n')
+        else:
+            sys.exit('INFO: "portable_data" folder already exists')
+
+    if platform.system() == 'Windows':
+        if os.path.exists(os.path.join(here, 'dist', 'Videomass.exe')):
+            datashare = os.path.join(here, 'dist', portabledir)
+        else:
+            datashare = os.path.join(here, 'dist', 'Videomass', portabledir)
+
+    elif platform.system() == 'Darwin':
+        if os.path.exists(os.path.join(here, 'dist', 'Videomass.app')):
+            datashare = os.path.join(here, 'dist', 'Videomass.app',
+                                     'Contents', 'MacOS', portabledir)
+        else:
+            datashare = os.path.join(here, 'dist', portabledir)
+    else:
+        if os.path.isfile(os.path.join(here, 'dist', 'videomass')):
+            datashare = os.path.join(here, 'dist', portabledir)
+        else:
+            datashare = os.path.join(here, 'dist', 'videomass', portabledir)
+
+    makedir(datashare)
+# --------------------------------------------------------#
 
 
 def main():
     """
     Users inputs parser (positional/optional arguments)
     """
-    parser = argparse.ArgumentParser(
-                description='Wrap the pyinstaller setup for Videomass',)
-    parser.add_argument(
-                '-g', '--gen_spec',
-                help="Generate a videomass.spec file to start building with, "
-                     "but NOT start to building the bundle",
-                action="store_true",
-                       )
+    def checkin():
+        """
+        """
+        if not platform.system() in ('Windows', 'Darwin', 'Linux'):
+            sys.exit("\nERROR: Unsupported platform. Maybe you "
+                     "could create a 'spec' file using this command:\n"
+                     "pyi-makespec [options] videomass.py\n"
+                     )
 
+        wrap = PyinstallerSpec(onefile_onedir())
+
+        if platform.system() == 'Linux':
+            getopts = wrap.linux_platform()
+            genspec(getopts)
+
+        elif platform.system() == 'Darwin':
+            getopts = wrap.darwin_platform()
+            genspec(getopts[0], addplist=getopts[1])
+
+        elif platform.system() == 'Windows':
+            getopts = wrap.windows_platform()
+            genspec(getopts)
+    # ----------------------------------------------#
+
+    parser = argparse.ArgumentParser(
+        description='Wrap the pyinstaller setup for Videomass application',)
     parser.add_argument(
-                '-m', '--use_module',
-                help=("Start building by import PyInstaller.__main__ module\n"
-                      "Warning: using this option pyinstaller will "
-                      "overwrite the previously generated .spec file "
-                      "each time"),
-                action="store_true",
-                       )
+        '-g', '--gen_spec',
+        help="Generates a ready-to-use videomass.spec file.",
+        action="store_true",
+    )
     parser.add_argument(
-                '-gb', '--genspec_build',
-                help="Generate a videomass.spec file and start directly "
-                     "with building. Warning: same as the -m option",
-                action="store_true",
-                       )
+        '-gb', '--genspec_build',
+        help="Generate a videomass.spec file and start building bundle.",
+        action="store_true",
+    )
     parser.add_argument(
-                '-s', '--start_build',
-                help="Start the building by an existing videomass.spec file",
-                action="store_true",
-                       )
+        '-s', '--start_build',
+        help="Start the building bundle by an existing videomass.spec file.",
+        action="store_true",
+    )
     args = parser.parse_args()
 
     if args.gen_spec:
-        wrap = MakePyinstallerBuild()
-        wrap.check()
-        wrap.genspec()
-
-    elif args.use_module:
-        wrap = MakePyinstallerBuild()
-        wrap.check()
-        wrap.usemodule()
+        checkin()
 
     elif args.genspec_build:
-        wrap = MakePyinstallerBuild()
-        wrap.check()
-        wrap.genspec(build=True)
+        checkin()
+        run_pyinst()
+        make_portable()
 
     elif args.start_build:
-        wrap = MakePyinstallerBuild()
-        wrap.check()
-        wrap.run_pyinst(os.path.join(Data.here, 'videomass.spec'))
+        run_pyinst()
+        make_portable()
 
     else:
         print("\nType 'pyinstaller_setup.py -h' for help.\n")

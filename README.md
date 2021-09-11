@@ -1,5 +1,5 @@
 # **Videomass** is a cross-platform GUI for FFmpeg and youtube-dl.
-[![Image](https://img.shields.io/static/v1?label=python&logo=python&message=3.7%20|%203.8&color=blue)](https://www.python.org/downloads/)
+[![Image](https://img.shields.io/static/v1?label=python&logo=python&message=3.7%20|%203.8|%203.9&color=blue)](https://www.python.org/downloads/)
 [![image](https://img.shields.io/badge/wxpython-phoenix-green)](https://www.wxpython.org/)
 [![Image](https://img.shields.io/badge/license-GPLv3-orange)](https://github.com/jeanslack/Videomass/blob/master/LICENSE)
 ![image](https://img.shields.io/badge/platform-linux%20|%20freebsd%20|%20macos%20|%20windows-brigthgreen)
@@ -87,8 +87,8 @@ Videomass can also be run in interactive mode with the Python interpreter,
 always within the same unpacked directory:   
 
 ```Python
->>> from videomass3 import Videomass3
->>> Videomass3.main()
+>>> from videomass3 import vdms3
+>>> vdms3.main()
 ```
 
 # Resources
@@ -98,4 +98,3 @@ always within the same unpacked directory:
 * [Videomass on PyPi](https://pypi.org/project/videomass/)
 * [Development](https://github.com/jeanslack/Videomass)
 * [Official download page](https://github.com/jeanslack/Videomass/releases)
-* [Alternative download page](https://sourceforge.net/projects/videomass2/)

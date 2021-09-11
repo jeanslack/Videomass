@@ -21,7 +21,7 @@ except ImportError as error:
     sys.exit(error)
 
 else:
-    from videomass3 import Videomass3
+    from videomass3 import vdms3
 
 
 class GuiTestCase(unittest.TestCase):
@@ -33,7 +33,7 @@ class GuiTestCase(unittest.TestCase):
     def setUp(self):
         """Method called to prepare the test fixture"""
 
-        self.app = Videomass3.Videomass(redirect=False)
+        self.app = vdms3.Videomass(redirect=False)
 
     def tearDown(self):
         """

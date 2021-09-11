@@ -1,0 +1,18 @@
+[
+    {
+        "Name": "Remove a specific audio stream",
+        "Description": "Remove a specific audio stream from video by providing an index, for example -0: a: 1, -0: a: 2, etc. ",
+        "First_pass": "-map 0 -map -0:a:1 -map 0:v? -map_chapters 0 -map 0:s? -map_metadata 0 -c copy",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "copy"
+    },
+    {
+        "Name": "Remove all audio streams",
+        "Description": "deselects all audio streams from the input",
+        "First_pass": "-map 0 -map -0:a -map 0:v? -map_chapters 0 -map 0:s? -map_metadata 0 -c copy",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "copy"
+    }
+]

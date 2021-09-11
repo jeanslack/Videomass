@@ -1,33 +1,35 @@
 # -*- coding: UTF-8 -*-
-# File Name: preset_manager_properties.py
-# Porpose: management of properties of the preset manager panel
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Jan.17.2021 *PEP8 compatible*
-#########################################################
+"""
+File Name: preset_manager_properties.py
+Porpose: management of properties of the preset manager panel
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.16.2021
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 
-#########################################################
-
-import wx
 import os
 import json
+import wx
 
 
 def supported_formats(supp, file_sources):
@@ -43,8 +45,8 @@ def supported_formats(supp, file_sources):
             if os.path.splitext(src)[1].split('.')[1] not in items:
                 exclude.append(src)
         if exclude:
-            for x in exclude:
-                file_sources.remove(x)
+            for xex in exclude:
+                file_sources.remove(xex)
             if not file_sources:
                 wx.MessageBox(_("The selected profile is not suitable to "
                                 "convert the following file formats:"
@@ -52,9 +54,9 @@ def supported_formats(supp, file_sources):
                               "Videomass",
                               wx.ICON_INFORMATION | wx.OK,
                               )
-                return
+                return None
 
-    return (file_sources)
+    return file_sources
 # ----------------------------------------------------------------------#
 
 
@@ -75,8 +77,8 @@ def json_data(arg):
 
     """
     try:
-        with open(arg, 'r', encoding='utf8') as f:
-            data = json.load(f)
+        with open(arg, 'r', encoding='utf8') as fln:
+            data = json.load(fln)
 
     except json.decoder.JSONDecodeError as err:
         msg = _('Invalid preset loaded.\nIt is recommended to remove it or '
@@ -107,8 +109,8 @@ def delete_profiles(path, name):
     """
     Profile deletion from Presets manager panel
     """
-    with open(path, 'r', encoding='utf8') as f:
-        data = json.load(f)
+    with open(path, 'r', encoding='utf8') as fln:
+        data = json.load(fln)
 
     new_data = [obj for obj in data if not obj["Name"] == name]
 
@@ -123,11 +125,11 @@ def preserve_old_profiles(new, old):
     replaced with new presets.
 
     """
-    with open(new, 'r', encoding='utf8') as f:
-        incoming = json.load(f)
+    with open(new, 'r', encoding='utf8') as newf:
+        incoming = json.load(newf)
 
-    with open(old, 'r', encoding='utf8') as f:
-        outcoming = json.load(f)
+    with open(old, 'r', encoding='utf8') as oldf:
+        outcoming = json.load(oldf)
 
     items_new = {value["Name"]: value for value in incoming}
     items_old = {value["Name"]: value for value in outcoming}
@@ -138,7 +140,7 @@ def preserve_old_profiles(new, old):
     if not diff_keys:
         return False
 
-    backup = [items_old[x] for x in diff_keys]
+    backup = [items_old[xio] for xio in diff_keys]
 
     data = incoming + backup
     data.sort(key=lambda s: s["Name"])  # make sorted by name

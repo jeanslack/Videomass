@@ -1,38 +1,39 @@
 # -*- coding: UTF-8 -*-
-# Name: IO_tools.py
-# Porpose: input/output redirection to processes (aka threads)
-# Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Dec.28.2020 *PEP8 compatible*
-#########################################################
+"""
+Name: io_tools.py
+Porpose: input/output redirection to processes (aka threads)
+Compatibility: Python3, wxPython4 Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
-import shutil
 import stat
+import shutil
 import requests
-from videomass3.vdms_threads.ffplay_file import File_Play
+import wx
+from videomass3.vdms_threads.ffplay_file import FilePlay
 from videomass3.vdms_threads import (ffplay_url_exec,
-                                     ffplay_url_lib,
+                                     # ffplay_url_lib,
                                      generic_downloads,
                                      youtubedlupdater,
                                      )
@@ -44,14 +45,15 @@ from videomass3.vdms_threads.check_bin import (ff_conf,
                                                ff_topics,
                                                )
 from videomass3.vdms_threads.opendir import browse
-from videomass3.vdms_threads.ydl_pylibextractinfo import Ydl_EI_Pylib
-from videomass3.vdms_threads.ydl_executable import Ydl_EI_Exec
+from videomass3.vdms_threads.ydl_pylibextractinfo import YtdlLibEI
+from videomass3.vdms_threads.ydl_executable import YtdlExecEI
 
 from videomass3.vdms_frames import (ffmpeg_conf,
                                     ffmpeg_formats,
                                     ffmpeg_codecs,
                                     )
 from videomass3.vdms_dialogs.popup import PopupDialog
+from videomass3.vdms_io.make_filelog import write_log  # write initial log
 
 
 def stream_info(title, filepath):
@@ -64,8 +66,8 @@ def stream_info(title, filepath):
         with open(filepath):
             miniframe = Mediainfo(title,
                                   filepath,
-                                  get.FFPROBE_url,
-                                  get.OS,
+                                  get.appset['ffprobe_bin'],
+                                  get.appset['ostype'],
                                   )
             miniframe.Show()
 
@@ -83,14 +85,14 @@ def stream_play(filepath, tseq, param, autoexit):
     tseq = tseq if tseq != "-ss 00:00:00.000 -t 00:00:00.000" else ''
     try:
         with open(filepath):
-            thread = File_Play(filepath,
-                               tseq,
-                               param,
-                               get.LOGdir,
-                               get.FFPLAY_url,
-                               get.FFPLAY_loglev,
-                               autoexit
-                               )
+            FilePlay(filepath,
+                     tseq,
+                     param,
+                     get.appset['logdir'],
+                     get.appset['ffplay_bin'],
+                     get.appset['ffplayloglev'],
+                     autoexit
+                     )
             # thread.join() > attende fine thread, se no ritorna subito
             # error = thread.data
     except IOError:
@@ -115,30 +117,31 @@ def url_play(url, quality, timestamp, autoexit):
     See https://github.com/ytdl-org/youtube-dl/issues/16175
 
     """
-    get = wx.GetApp()  # get data from bootstrap
-    youtube_dl = get.pylibYdl
-
-    dowl = ffplay_url_exec.Exec_Streaming(timestamp, autoexit, url, quality)
+    ffplay_url_exec.ExecStreaming(timestamp, autoexit, url, quality)
     """
+    get = wx.GetApp()  # get data from bootstrap
+    youtube_dl = get.appset['PYLIBYDL']
+
     if youtube_dl is not None:  # run youtube-dl executable
-        dowl = ffplay_url_exec.Exec_Streaming(url, quality)
+        dowl = ffplay_url_exec.ExecStreaming(url, quality)
     else:  # run youtube_dl library
-        dowl = ffplay_url_lib.Lib_Streaming(url, quality)
+        dowl = ffplay_url_lib.LibStreaming(url, quality)
     """
 
 # -----------------------------------------------------------------------#
 
 
-def probeInfo(filename):
+def probe_getinfo(filename):
     """
     Get data stream informations during dragNdrop action.
     It is called by MyListCtrl(wx.ListCtrl) only.
     Return tuple object with two items: (data, None) or (None, error).
     """
     get = wx.GetApp()
-    metadata = FFProbe(get.FFPROBE_url, filename, parse=False, writer='json')
+    metadata = FFProbe(get.appset['ffprobe_bin'], filename,
+                       parse=False, writer='json')
 
-    if metadata.ERROR():  # first checks for errors:
+    if metadata.error_check():  # first checks for errors:
         err = metadata.error
         return (None, err)
 
@@ -148,21 +151,25 @@ def probeInfo(filename):
 # -------------------------------------------------------------------------#
 
 
-def volumeDetectProcess(filelist, time_seq, audiomap):
+def volume_detect_process(filelist, time_seq, audiomap):
     """
     Run thread to get audio peak level data and show a
     pop-up dialog with message.
     """
     get = wx.GetApp()
-    thread = VolumeDetectThread(time_seq, filelist, audiomap,
-                                get.LOGdir, get.FFMPEG_url)
-    loadDlg = PopupDialog(None,
+    thread = VolumeDetectThread(time_seq,
+                                filelist,
+                                audiomap,
+                                get.appset['logdir'],
+                                get.appset['ffmpeg_bin']
+                                )
+    dlgload = PopupDialog(None,
                           _("Videomass - Loading..."),
                           _("\nWait....\nAudio peak analysis.\n"))
-    loadDlg.ShowModal()
+    dlgload.ShowModal()
     # thread.join()
     data = thread.data
-    loadDlg.Destroy()
+    dlgload.Destroy()
 
     return data
 # -------------------------------------------------------------------------#
@@ -176,21 +183,21 @@ def test_conf():
 
     """
     get = wx.GetApp()
-    out = ff_conf(get.FFMPEG_url, get.OS)
+    out = ff_conf(get.appset['ffmpeg_bin'], get.appset['ostype'])
     if 'Not found' in out[0]:
         wx.MessageBox("\n{0}".format(out[1]),
                       "Videomass",
                       wx.ICON_ERROR,
                       None)
         return
-    else:
-        miniframe = ffmpeg_conf.Checkconf(out,
-                                          get.FFMPEG_url,
-                                          get.FFPROBE_url,
-                                          get.FFPLAY_url,
-                                          get.OS,
-                                          )
-        miniframe.Show()
+
+    miniframe = ffmpeg_conf.Checkconf(out,
+                                      get.appset['ffmpeg_bin'],
+                                      get.appset['ffprobe_bin'],
+                                      get.appset['ffplay_bin'],
+                                      get.appset['ostype'],
+                                      )
+    miniframe.Show()
 # -------------------------------------------------------------------------#
 
 
@@ -201,16 +208,16 @@ def test_formats():
 
     """
     get = wx.GetApp()
-    diction = ff_formats(get.FFMPEG_url, get.OS)
+    diction = ff_formats(get.appset['ffmpeg_bin'], get.appset['ostype'])
     if 'Not found' in diction.keys():
         wx.MessageBox("\n{0}".format(diction['Not found']),
                       "Videomass",
                       wx.ICON_ERROR,
                       None)
         return
-    else:
-        miniframe = ffmpeg_formats.FFmpeg_formats(diction, get.OS)
-        miniframe.Show()
+
+    miniframe = ffmpeg_formats.FFmpeg_formats(diction, get.appset['ostype'])
+    miniframe.Show()
 # -------------------------------------------------------------------------#
 
 
@@ -222,16 +229,22 @@ def test_codecs(type_opt):
 
     """
     get = wx.GetApp()
-    diction = ff_codecs(get.FFMPEG_url, type_opt, get.OS)
+    diction = ff_codecs(get.appset['ffmpeg_bin'],
+                        type_opt,
+                        get.appset['ostype']
+                        )
     if 'Not found' in diction.keys():
         wx.MessageBox("\n{0}".format(diction['Not found']),
                       "Videomass",
                       wx.ICON_ERROR,
                       None)
         return
-    else:
-        miniframe = ffmpeg_codecs.FFmpeg_Codecs(diction, get.OS, type_opt)
-        miniframe.Show()
+
+    miniframe = ffmpeg_codecs.FFmpeg_Codecs(diction,
+                                            get.appset['ostype'],
+                                            type_opt
+                                            )
+    miniframe.Show()
 # -------------------------------------------------------------------------#
 
 
@@ -242,13 +255,13 @@ def findtopic(topic):
 
     """
     get = wx.GetApp()
-    retcod = ff_topics(get.FFMPEG_url, topic, get.OS)
+    retcod = ff_topics(get.appset['ffmpeg_bin'], topic, get.appset['ostype'])
 
     if 'Not found' in retcod[0]:
-        s = ("\n{0}".format(retcod[1]))
-        return(s)
-    else:
-        return(retcod[1])
+        notf = ("\n{0}".format(retcod[1]))
+        return notf
+
+    return retcod[1]
 # -------------------------------------------------------------------------#
 
 
@@ -259,7 +272,7 @@ def openpath(where):
 
     """
     get = wx.GetApp()
-    ret = browse(get.OS, where)
+    ret = browse(get.appset['ostype'], where)
     if ret:
         wx.MessageBox(ret, 'Videomass', wx.ICON_ERROR, None)
 # -------------------------------------------------------------------------#
@@ -271,19 +284,19 @@ def youtubedl_getstatistics(url):
     youtube_dl python package and show a wait pop-up dialog .
     youtube_dl module.
     example without pop-up dialog:
-    thread = Ydl_EI_Pylib(url)
+    thread = YtdlLibEI(url)
     thread.join()
     data = thread.data
     yield data
     """
-    thread = Ydl_EI_Pylib(url)
-    loadDlg = PopupDialog(None,
+    thread = YtdlLibEI(url)
+    dlgload = PopupDialog(None,
                           _("Videomass - Loading..."),
                           _("\nWait....\nRetrieving required data.\n"))
-    loadDlg.ShowModal()
+    dlgload.ShowModal()
     # thread.join()
     data = thread.data
-    loadDlg.Destroy()
+    dlgload.Destroy()
     yield data
 # --------------------------------------------------------------------------#
 
@@ -294,14 +307,14 @@ def youtube_getformatcode_exec(url):
     executable, (e.g. `youtube-dl -F url`) .
     While waiting, a pop-up dialog is shown.
     """
-    thread = Ydl_EI_Exec(url)
-    loadDlg = PopupDialog(None,
+    thread = YtdlExecEI(url)
+    dlgload = PopupDialog(None,
                           _("Videomass - Loading..."),
                           _("\nWait....\nRetrieving required data.\n"))
-    loadDlg.ShowModal()
+    dlgload.ShowModal()
     # thread.join()
     data = thread.data
-    loadDlg.Destroy()
+    dlgload.Destroy()
     yield data
 # --------------------------------------------------------------------------#
 
@@ -314,12 +327,12 @@ def youtubedl_latest(url):
     """
     thread = youtubedlupdater.CheckNewRelease(url)
 
-    loadDlg = PopupDialog(None, _("Videomass - Reading..."),
+    dlgload = PopupDialog(None, _("Videomass - Reading..."),
                           _("\nWait....\nCheck for update.\n"))
-    loadDlg.ShowModal()
+    dlgload.ShowModal()
     # thread.join()
     latest = thread.data
-    loadDlg.Destroy()
+    dlgload.Destroy()
 
     return latest'''
 # --------------------------------------------------------------------------#
@@ -332,13 +345,13 @@ def youtubedl_update(cmd, waitmsg):
     the local copy (not installed by the package manager) of youtube-dl.
     While waiting, a pop-up dialog is shown.
     """
-    thread = youtubedlupdater.Command_Execution(cmd)
+    thread = youtubedlupdater.CmdExec(cmd)
 
-    loadDlg = PopupDialog(None, _("Videomass - Loading..."), waitmsg)
-    loadDlg.ShowModal()
+    dlgload = PopupDialog(None, _("Videomass - Loading..."), waitmsg)
+    dlgload.ShowModal()
     # thread.join()
     update = thread.data
-    loadDlg.Destroy()
+    dlgload.Destroy()
 
     return update
 # --------------------------------------------------------------------------#
@@ -350,7 +363,7 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
     or youtube-dl.exe . While waiting, a pop-up dialog is shown.
     """
     get = wx.GetApp()  # get videomass wx.App attribute
-    if get.OS == 'Windows':
+    if get.appset['ostype'] == 'Windows':
         url = ('https://youtube-dl.org/downloads/latest/youtube-dl.exe')
     else:
         url = ('https://yt-dl.org/downloads/latest/youtube-dl')
@@ -376,12 +389,12 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
         except OSError as err:
             return None, err
 
-    thread = generic_downloads.File_Downloading(url, executable)
-    loadDlg = PopupDialog(None, _("Videomass - Downloading..."), msg)
-    loadDlg.ShowModal()
+    thread = generic_downloads.FileDownloading(url, executable)
+    dlgload = PopupDialog(None, _("Videomass - Downloading..."), msg)
+    dlgload.ShowModal()
     # thread.join()
     status = thread.data
-    loadDlg.Destroy()
+    dlgload.Destroy()
 
     if os.path.exists('%s_OLD' % executable):
         # remove outdated back-up
@@ -397,8 +410,8 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
     if not name == 'youtube-dl.exe':
         # make it executable by everyone
         if os.path.isfile(executable):
-            st = os.stat(executable)
-            os.chmod(executable, st.st_mode | stat.S_IXUSR |
+            stsys = os.stat(executable)
+            os.chmod(executable, stsys.st_mode | stat.S_IXUSR |
                      stat.S_IXGRP | stat.S_IXOTH)
     return status
 # --------------------------------------------------------------------------#
@@ -430,20 +443,21 @@ def get_github_releases(url, keyname):
 
     if not_found[0]:
         return not_found
-    else:
-        return version, None
+
+    return version, None
 # --------------------------------------------------------------------------#
 
 
 def get_presets(url, dest, msg):
     """
+    get latest Videomass presets
     """
-    thread = generic_downloads.File_Downloading(url, dest)
-    loadDlg = PopupDialog(None, _("Videomass - Downloading..."), msg)
-    loadDlg.ShowModal()
+    thread = generic_downloads.FileDownloading(url, dest)
+    dlgload = PopupDialog(None, _("Videomass - Downloading..."), msg)
+    dlgload.ShowModal()
     # thread.join()
     status = thread.data
-    loadDlg.Destroy()
+    dlgload.Destroy()
 
     return status
 # --------------------------------------------------------------------------#
@@ -455,23 +469,26 @@ def appimage_update_youtube_dl(appimage):
     package inside Videomass AppImage.
     """
     get = wx.GetApp()  # get data from bootstrap
-    log = os.path.join(get.LOGdir, 'youtube_dl-update-on-AppImage.log')
-    thread = youtubedlupdater.Update_Youtube_dl_Appimage(log, appimage)
+    logname = 'youtube_dl-update-on-AppImage.log'
+    log = os.path.join(get.appset['logdir'], logname)
+    write_log(logname, get.appset['logdir'])  # write log file first
+
+    thread = youtubedlupdater.UpdateYoutubedlAppimage(log, appimage)
 
     waitmsg = _('...Be patient, this can take a few minutes.')
 
-    loadDlg = PopupDialog(None, _("Videomass - Updating..."), waitmsg)
-    loadDlg.ShowModal()
+    dlgload = PopupDialog(None, _("Videomass - Updating..."), waitmsg)
+    dlgload.ShowModal()
     # thread.join()
     update = thread.status
-    loadDlg.Destroy()
+    dlgload.Destroy()
 
     if update:
         return update
 
     ret = None
-    with open(log, 'r', encoding='utf8') as f:
-        for line in f:
+    with open(log, 'r', encoding='utf8') as fln:
+        for line in fln:
             if '**Successfully updated**\n' in line:
                 ret = 'success'
     return 'success' if ret == 'success' else 'error'

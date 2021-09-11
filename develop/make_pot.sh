@@ -3,7 +3,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2020/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: June.30.2020
+# Rev: August.20.2021
 #
 # Make a new `videomass.po` file on '../../videomass3/locale'.
 # The previus videomass.po file will be overwrite with new one
@@ -26,7 +26,7 @@ elif [ "$PLATFORM" = "Linux" ]; then
     XGETTEXT="xgettext"
 fi
 
-$XGETTEXT -d videomass "../Videomass3.py" \
+$XGETTEXT -d videomass "../vdms3.py" \
 "../vdms_dialogs/audiodialogs.py" \
 "../vdms_dialogs/filter_crop.py" \
 "../vdms_dialogs/filter_deinterlace.py" \
@@ -36,6 +36,7 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_dialogs/filter_transpose.py" \
 "../vdms_dialogs/wizard_dlg.py" \
 "../vdms_dialogs/infoprg.py" \
+"../vdms_dialogs/playlist_indexing.py" \
 "../vdms_dialogs/presets_addnew.py" \
 "../vdms_dialogs/set_timestamp.py" \
 "../vdms_dialogs/settings.py" \
@@ -49,7 +50,7 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_frames/showlogs.py" \
 "../vdms_frames/ydl_mediainfo.py" \
 "../vdms_io/checkup.py" \
-"../vdms_io/IO_tools.py" \
+"../vdms_io/io_tools.py" \
 "../vdms_io/presets_manager_properties.py" \
 "../vdms_main/main_frame.py" \
 "../vdms_panels/av_conversions.py" \
@@ -65,7 +66,7 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_threads/ffprobe_parser.py" \
 "../vdms_threads/one_pass.py" \
 "../vdms_threads/picture_exporting.py" \
-"../vdms_threads/two_pass_EBU.py" \
+"../vdms_threads/two_pass_ebu.py" \
 "../vdms_threads/two_pass.py" \
 "../vdms_threads/volumedetect.py" \
 "../vdms_threads/ydl_executable.py" \

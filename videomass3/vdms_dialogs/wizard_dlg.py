@@ -1,32 +1,32 @@
 # -*- coding: UTF-8 -*-
-# Name: wizard_dlg.py
-# Porpose: wizard setup dialog
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Jan.09.2020 *PEP8 compatible*
-#########################################################
+"""
+Name: wizard_dlg.py
+Porpose: wizard setup dialog
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 import sys
+import wx
 from videomass3.vdms_utils.utils import detect_binaries
 
 
@@ -74,7 +74,7 @@ class PageOne(wx.Panel):
 
     """
     get = wx.GetApp()
-    OS = get.OS
+    OS = get.appset['ostype']
     MSG2 = (_("Please take a moment to set up the application"))
     MSG3 = (_('Click the "Next" button to get started'))
 
@@ -91,7 +91,7 @@ class PageOne(wx.Panel):
         img = img.ConvertToBitmap()
         bitmap_vdms = wx.StaticBitmap(self, wx.ID_ANY, img)
         lab1 = wx.StaticText(self, wx.ID_ANY,
-                             _("Welcome to Videomass Wizard!"))
+                             _("Welcome to the Videomass Wizard!"))
         lab2 = wx.StaticText(self, wx.ID_ANY, PageOne.MSG2,
                              style=wx.ST_ELLIPSIZE_END |
                              wx.ALIGN_CENTRE_HORIZONTAL
@@ -129,8 +129,8 @@ class PageTwo(wx.Panel):
 
     """
     get = wx.GetApp()
-    OS = get.OS
-    FFMPEG_LOCALDIR = get.FFMPEGlocaldir
+    OS = get.appset['ostype']
+    FFMPEG_LOCALDIR = get.appset['FFMPEG_videomass_pkg']
 
     MSG0 = (_('Videomass is an application based on FFmpeg\n'))
 
@@ -159,7 +159,7 @@ class PageTwo(wx.Panel):
                              wx.ALIGN_CENTRE_HORIZONTAL
                              )
         lab1 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG1,
-                              style=wx.ALIGN_CENTRE_HORIZONTAL)
+                             style=wx.ALIGN_CENTRE_HORIZONTAL)
         lab2 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG2)
         lab3 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG3)
         self.detectBtn = wx.Button(self, wx.ID_ANY, _("Auto-detection"),
@@ -183,7 +183,7 @@ class PageTwo(wx.Panel):
         # layout
         sizer_base.Add((0, 50), 0)
         sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
-        #sizer_base.Add((0, 5), 0)
+        # sizer_base.Add((0, 5), 0)
         sizer_base.Add(lab1, 0, wx.CENTER | wx.EXPAND)
         sizer_base.Add((0, 40), 0)
         sizer_base.Add(sizerText, 0, wx.CENTER)
@@ -271,8 +271,7 @@ class PageThree(wx.Panel):
 
     """
     get = wx.GetApp()
-    OS = get.OS
-    FFMPEG_LOCALDIR = get.FFMPEGlocaldir
+    OS = get.appset['ostype']
 
     MSG0 = (_('Locating FFmpeg executables\n'))
 
@@ -405,13 +404,12 @@ class PageThree(wx.Panel):
 
 class PageFour(wx.Panel):
     """
-    The PageFour panel asks the user if they want to enable
-    youtube-dl. This panel determines whether the PageFive
-    panel is displayed or not.
+    The PageFour panel asks the user if they want
+    to enable youtube-dl.
 
     """
     get = wx.GetApp()
-    OS = get.OS
+    OS = get.appset['ostype']
 
     MSG0 = _('Videomass has a simple graphical\ninterface for youtube-dl\n')
 
@@ -470,114 +468,7 @@ class PageFour(wx.Panel):
         if self.ckbx_yn.IsChecked() is False:
             self.parent.youtubedl = 'disabled'
         else:
-            self.parent.youtubedl = None
-        '''
-
-
-class PageFive(wx.Panel):
-    """
-    Shows a wizard panel to set downloader preferences aka youtube-dl.
-    The display of this panel depends on the PageFour panel settings;
-    if the PageFour panel checkbox is True then this panel is shown.
-
-    """
-    get = wx.GetApp()
-    OS = get.OS
-    CACHEDIR = get.CACHEdir
-
-    MSG0 = _('Choose how you want to use youtube-dl\n')
-
-    MSG1 = _('Videomass can use youtube-dl internally as a Python\n'
-             'module (recommended) or as an executable file. The\n'
-             'executable file can be downloaded and updated from\n'
-             'Videomass itself and will be placed on:')
-
-    MSG2 = _('Notice: This version of Videomass can\n'
-             'only use youtube-dl as local executable')
-    #  if AppImage
-    if ('/tmp/.mount_' in sys.executable or os.path.exists(
-        os.path.dirname(os.path.dirname(os.path.dirname(
-         sys.argv[0]))) + '/AppRun')):
-
-        dldlist = [
-                _('Use the one included in the AppImage (recommended)'),
-                _('Use a local copy of youtube-dl')]
-    else:
-        dldlist = [
-                _('Use the one installed in your O.S. (recommended)'),
-                _('Use a local copy of youtube-dl updatable by Videomass')]
-
-    def __init__(self, parent):
-        """
-        The display of information messages may vary depending
-        on the type of installer or type of embedding (usually
-        on AppImage and pyinstaller packages)
-
-        NOTE: note the pass statement on `choose_Youtubedl`
-        the values of this panel are get by Wizard.wizard_Finish method
-
-        """
-        wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
-        """constructor"""
-
-        self.parent = parent
-        sizer_base = wx.BoxSizer(wx.VERTICAL)
-        sizerText = wx.BoxSizer(wx.VERTICAL)
-        self.rdbDownloader = wx.RadioBox(self, wx.ID_ANY,
-                                         (_("Downloader preferences")),
-                                         choices=PageFive.dldlist,
-                                         majorDimension=1,
-                                         style=wx.RA_SPECIFY_COLS
-                                         )
-        sizer_base.Add((0, 50), 0)
-        lab0 = wx.StaticText(self, wx.ID_ANY, PageFive.MSG0,
-                             style=wx.ST_ELLIPSIZE_END |
-                             wx.ALIGN_CENTRE_HORIZONTAL
-                             )
-        sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 40), 0)
-        lab1 = wx.StaticText(self, wx.ID_ANY, PageFive.MSG1)
-        sizer_base.Add(sizerText, 0, wx.CENTER)
-
-        sizerText.Add(lab1, 0, wx.CENTER | wx.EXPAND)
-        labpath = wx.StaticText(self, wx.ID_ANY, PageFive.CACHEDIR,
-                                style=wx.ALIGN_CENTRE_HORIZONTAL)
-        sizer_base.Add((0, 15), 0)
-        sizer_base.Add(labpath, 0, wx.CENTER | wx.EXPAND, 5)
-        sizer_base.Add((0, 15), 0)
-        sizer_base.Add(self.rdbDownloader, 0, wx.CENTER | wx.ALL, 10)
-        sizer_base.Add((0, 15), 0)
-        #  if pyinstaller packages
-        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-            lab2 = wx.StaticText(self, wx.ID_ANY, PageFive.MSG2,
-                                 style=wx.ALIGN_CENTRE_HORIZONTAL)
-            lab2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            sizer_base.Add(lab2, 0, wx.CENTER | wx.EXPAND)
-            self.rdbDownloader.SetSelection(1)
-            self.rdbDownloader.Disable()
-
-        if PageFive.OS == 'Darwin':
-            lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-
-        else:
-            lab0.SetFont(wx.Font(12, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-
-        self.SetSizer(sizer_base)
-        sizer_base.Fit(self)
-        self.Layout()
-
-        self.Bind(wx.EVT_RADIOBOX, self.choose_Youtubedl, self.rdbDownloader)
-
-    def choose_Youtubedl(self, event):
-        """
-        the values are get on Wizard.wizard_Finish method
-        """
-        pass
-        '''
-        if self.rdbDownloader.GetSelection() == 0:
-            self.parent.youtubedl = 'system'
-        elif self.rdbDownloader.GetSelection() == 1:
-            self.parent.youtubedl = 'local'
+            self.parent.youtubedl = 'enable'
         '''
 
 
@@ -587,7 +478,7 @@ class PageFinish(wx.Panel):
 
     """
     get = wx.GetApp()
-    OS = get.OS
+    OS = get.appset['ostype']
     MSG0 = _("Wizard completed successfully!\n")
     MSG1 = (_("Remember that you can always change these settings "
               "later, through the Setup dialog."))
@@ -643,9 +534,8 @@ class Wizard(wx.Dialog):
 
     """
     get = wx.GetApp()
-    getfileconf = get.FILEconf
-    YDLPREF = get.YDL_pref
-    OS = get.OS
+    getfileconf = get.appset['fileconfpath']
+    OS = get.appset['ostype']
 
     def __init__(self, icon_videomass):
         """
@@ -664,18 +554,16 @@ class Wizard(wx.Dialog):
         self.pageOne = PageOne(self, icon_videomass)  # start...
         self.pageTwo = PageTwo(self)  # choose ffmpeg modality
         self.pageThree = PageThree(self)  # browse for ffmpeg binaries
-        self.pageFour = PageFour(self)  # choose youtube-dl modality
-        self.pageFive = PageFive(self)  # choose youtube-dl binaries
+        self.pageFour = PageFour(self)  # enable or disable youtube-dl
         self.pageFinish = PageFinish(self)  # ...end
         #  hide panels
-        self.pageTwo.Hide(), self.pageThree.Hide(), self.pageFour.Hide()
-        self.pageFive.Hide(), self.pageFinish.Hide()
+        self.pageTwo.Hide(), self.pageThree.Hide()
+        self.pageFour.Hide(), self.pageFinish.Hide()
         #  adds panels to sizer
         mainSizer.Add(self.pageOne, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageTwo, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageThree, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageFour, 1, wx.ALL | wx.EXPAND, 5)
-        mainSizer.Add(self.pageFive, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageFinish, 1, wx.ALL | wx.EXPAND, 5)
         # bottom side layout
         gridBtn = wx.GridSizer(1, 2, 0, 0)
@@ -746,16 +634,8 @@ class Wizard(wx.Dialog):
                               ("Videomass"), wx.ICON_INFORMATION, self)
 
         elif self.pageFour.IsShown():
-            self.pageOne.Hide(), self.pageTwo.Hide(), self.pageFour.Hide()
-
-            if self.pageFour.ckbx_yn.IsChecked():
-                self.pageFive.Show()
-            else:
-                self.pageFinish.Show()
-                self.btnNext.SetLabel(_('Finish'))
-
-        elif self.pageFive.IsShown():
-            self.pageFive.Hide(), self.pageFinish.Show()
+            self.pageOne.Hide(), self.pageTwo.Hide()
+            self.pageFour.Hide(), self.pageFinish.Show()
             self.btnNext.SetLabel(_('Finish'))
 
         self.Layout()
@@ -783,38 +663,23 @@ class Wizard(wx.Dialog):
             else:
                 self.pageFour.Hide(), self.pageThree.Show()
 
-        elif self.pageFive.IsShown():
-            self.pageFive.Hide(), self.pageFour.Show()
-
         elif self.pageFinish.IsShown():
             self.btnNext.SetLabel(_('Next >'))
             self.pageFinish.Hide()
-            if self.pageFour.ckbx_yn.IsChecked():
-                self.pageFive.Show()
-            else:
-                self.pageFour.Show()
+            self.pageFour.Show()
 
         self.Layout()
     # -------------------------------------------------------------------#
 
     def wizard_Finish(self):
         """
-        Get all settings and call `write_changes` to applies changes.
-        If `rdbDownloader` is disabled means that use Videomass with
-        pyinstaller (pyinstaller does not allow to update easily
-        youtube-dl package, only uses youtube-dl executable).
+        Get all settings and call `write_changes`
+        to applies changes.
 
         """
         if self.pageFour.ckbx_yn.IsChecked():
+            youtubedl = 'enabled'
 
-            if not self.pageFive.rdbDownloader.IsEnabled():
-                youtubedl = 'local'  # usually pyinstaller packages
-
-            elif self.pageFive.rdbDownloader.GetSelection() == 0:
-                youtubedl = 'system'
-
-            elif self.pageFive.rdbDownloader.GetSelection() == 1:
-                youtubedl = 'local'
         else:
             youtubedl = 'disabled'
 

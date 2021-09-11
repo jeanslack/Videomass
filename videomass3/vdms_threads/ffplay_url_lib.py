@@ -1,41 +1,43 @@
 # -*- coding: UTF-8 -*-
-# Name: ffplay_url_lib.py
-# Porpose: playback online media streams with ffplay player using
-#          youtube_dl embedding on code.
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: September.09.2020 *PEP8 compatible*
-#########################################################
-# This file is part of Videomass.
+"""
+Name: ffplay_url_lib.py
+Porpose: playback online media streams with ffplay player using
+         youtube_dl embedding on code.
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.11.2021
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+This file is part of Videomass.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 import sys
 from threading import Thread
-import time
+import wx
 from pubsub import pub
-from videomass3.vdms_io import IO_tools
+from videomass3.vdms_io import io_tools
 if 'youtube_dl' in sys.modules:
     import youtube_dl
 
 
-def msg_Error(msg):
+def msg_error(msg):
     """
     Receive error messages via wxCallafter
     """
@@ -43,7 +45,7 @@ def msg_Error(msg):
 # ------------------------------------------------------------------------#
 
 
-def msg_Warning(msg):
+def msg_warning(msg):
     """
     Receive info messages via wxCallafter
     """
@@ -58,6 +60,7 @@ class MyLogger(object):
     <https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd31
     57df2457df7274d0c842421945#embedding-youtube-dl>
     """
+
     def debug(self, msg):
         # print('DEBUG: ', msg)
         if '[download]' in msg:  # ...in processing
@@ -75,15 +78,15 @@ class MyLogger(object):
 
     def warning(self, msg):
         """send warning messages to masg_"""
-        wx.CallAfter(msg_Warning, msg)
+        wx.CallAfter(msg_warning, msg)
 
     def error(self, msg):
         """send message errors"""
-        wx.CallAfter(msg_Error, msg)
+        wx.CallAfter(msg_error, msg)
 # -------------------------------------------------------------------------#
 
 
-class Download_Stream(Thread):
+class DownloadStream(Thread):
     """
     Download media stream to the videomass cache directory with
     the same quality defined in the `quality` parameter.
@@ -117,12 +120,12 @@ class Download_Stream(Thread):
         self.stop_work_thread = False  # process terminate value
         self.url = url  # single url
         self.quality = quality  # output quality e.g. worst, best, Format code
-        self.outputdir = Download_Stream.TMP  # pathname destination
+        self.outputdir = DownloadStream.TMP  # pathname destination
         self.outtmpl = '%(title)s_{}.%(ext)s'.format(self.quality)  # filename
 
-        if (Download_Stream.OS == 'Windows' or '/tmp/.mount_' in sys.executable
+        if (DownloadStream.OS == 'Windows' or '/tmp/.mount_' in sys.executable
             or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
-             sys.argv[0]))) + '/AppRun')):
+                sys.argv[0]))) + '/AppRun')):
 
             self.nocheckcertificate = True
 
@@ -136,25 +139,25 @@ class Download_Stream(Thread):
     def run(self):
         """
         This atipic method is called by start() method after the instance
-        this class. see Lib_Streaming class below.
+        this class. see LibStreaming class below.
         """
         if self.stop_work_thread:
             return
 
         ydl_opts = {
-                'format': self.quality,
-                'outtmpl': '{}/{}'.format(self.outputdir, self.outtmpl),
-                'restrictfilenames': True,
-                'nopart': True,  # see --no-part by --help
-                'ignoreerrors': True,
-                'continue': True,
-                'no_warnings': False,
-                'noplaylist': True,
-                'no_color': True,
-                'nocheckcertificate': self.nocheckcertificate,
-                'ffmpeg_location': '{}'.format(Download_Stream.FFMPEG_URL),
-                'logger': MyLogger(),
-                    }
+            'format': self.quality,
+            'outtmpl': '{}/{}'.format(self.outputdir, self.outtmpl),
+            'restrictfilenames': True,
+            'nopart': True,  # see --no-part by --help
+            'ignoreerrors': True,
+            'continue': True,
+            'no_warnings': False,
+            'noplaylist': True,
+            'no_color': True,
+            'nocheckcertificate': self.nocheckcertificate,
+            'ffmpeg_location': '{}'.format(DownloadStream.FFMPEG_URL),
+            'logger': MyLogger(),
+        }
 
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download(["{}".format(self.url)])
@@ -168,7 +171,7 @@ class Download_Stream(Thread):
 # ------------------------------------------------------------------------#
 
 
-class Lib_Streaming(object):
+class LibStreaming(object):
     """
     Handling Threads to download and playback media streams via
     youtube-dl library and ffmpeg executables.
@@ -187,23 +190,23 @@ class Lib_Streaming(object):
         - Topic "START_FFPLAY_EVT" subscribes the start playing
           running ffplay at a certain time.
         - Topic "STOP_DOWNLOAD_EVT" subscribes a stop download listener
-          which call the stop() method of `Download_Stream` class to
+          which call the stop() method of `DownloadStream` class to
           stop the download when ffplay has finished or been closed by
           the user.
         """
         pub.subscribe(stop_download_listener, "STOP_DOWNLOAD_EVT")
         pub.subscribe(start_palying_listener, "START_FFPLAY_EVT")
 
-        Lib_Streaming.DOWNLOAD = Download_Stream(url, quality)
+        LibStreaming.DOWNLOAD = DownloadStream(url, quality)
 
         self.start_download()
     # ----------------------------------------------------------------#
 
     def start_download(self):
         """
-        call Download_Stream(Thread) to run() method
+        call DownloadStream(Thread) to run() method
         """
-        Lib_Streaming.DOWNLOAD.start()
+        LibStreaming.DOWNLOAD.start()
         return
 
 # --------- RECEIVER LISTENERS
@@ -211,11 +214,11 @@ class Lib_Streaming(object):
 
 def stop_download_listener(filename):
     """
-    Receive message from ffplay_file.File_Play class
+    Receive message from ffplay_file.FilePlay class
     for handle interruption
     """
-    Lib_Streaming.DOWNLOAD.stop()
-    Lib_Streaming.DOWNLOAD.join()  # if join, wait end process
+    LibStreaming.DOWNLOAD.stop()
+    LibStreaming.DOWNLOAD.join()  # if join, wait end process
 
 
 def start_palying_listener(output):
@@ -223,5 +226,5 @@ def start_palying_listener(output):
     Riceive messages from MyLogger to start
     ffplay in at a given time.
     """
-    IO_tools.stream_play(output, '', '')
+    io_tools.stream_play(output, '', '')
     return

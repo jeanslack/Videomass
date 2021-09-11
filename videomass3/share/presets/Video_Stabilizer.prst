@@ -1,0 +1,18 @@
+[
+    {
+        "Name": "Make video duo",
+        "Description": "Merges the original video with the stabilized video, which is useful for comparing the result",
+        "First_pass": "-vf \"[in] pad=2*iw:ih [left]; movie=stabilized video file name.mkv [right]; [left][right] overlay=main_w/2:0 [out]\"",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Stabilize shaky videos ",
+        "Description": "Useful filter for stabilizing shaky videos (requires libvidstab enabled on FFmpeg)",
+        "First_pass": "-an -sn -pix_fmt yuv420p -vf vidstabdetect=shakiness=5:accuracy=15:stepsize=6:mincontrast=0.25:tripod=0:show=0 -f null",
+        "Second_pass": "-c:v libx264 -crf 23 -vf vidstabtransform=smoothing=15:optalgo=gauss:maxshift=-1:maxangle=-1:crop=keep:invert=0:relative=1:zoom=0:optzoom=1:zoomspeed=0.25:interpol=bilinear:tripod=0,unsharp=5:5:0.8:3:3:0.4 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a: copy -map 0:a? -map_metadata 0",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    }
+]

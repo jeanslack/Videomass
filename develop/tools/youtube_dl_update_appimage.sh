@@ -25,7 +25,7 @@
 set -e  # stop if error
 
 MACHINE_ARCH=$(arch)
-SITEPKG="squashfs-root/opt/python3.8/lib/python3.8/site-packages"
+SITEPKG="squashfs-root/opt/python3.9/lib/python3.9/site-packages"
 APPIMAGE=$1  # selected videomass appimage pathname
 BASENAME="$(basename $APPIMAGE)"  # videomass name
 DIRNAME="$(dirname $APPIMAGE)"  # videomass directory
@@ -60,13 +60,13 @@ $APPIMAGE --appimage-extract
 export PATH="$(pwd)/squashfs-root/usr/bin:$PATH"
 
 # update pip
-./squashfs-root/opt/python3.8/bin/python3.8 -m pip install -U --target=$SITEPKG pip
+./squashfs-root/opt/python3.9/bin/python3.9 -m pip install -U --target=$SITEPKG pip
 
 # update certifi
-./squashfs-root/opt/python3.8/bin/python3.8 -m pip install -U --target=$SITEPKG certifi
+./squashfs-root/opt/python3.9/bin/python3.9 -m pip install -U --target=$SITEPKG certifi
 
 # update youtube_dl package
-./squashfs-root/opt/python3.8/bin/python3.8 -m pip install -U --target=$SITEPKG youtube_dl
+./squashfs-root/opt/python3.9/bin/python3.9 -m pip install -U --target=$SITEPKG youtube_dl
 
 # retrieve the Videomass version from the package metadata
 export VERSION=$(cat $SITEPKG/videomass-*.dist-info/METADATA | \

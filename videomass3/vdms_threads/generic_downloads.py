@@ -1,43 +1,48 @@
 # -*- coding: UTF-8 -*-
-# Name: generic_downloads.py
-# Porpose: generic network download operation
-# Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Oct.03.2020 *PEP8 compatible*
-#########################################################
-# This file is part of Videomass.
+"""
+Name: generic_downloads.py
+Porpose: generic network download operation
+Compatibility: Python3, wxPython4 Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.1.2021
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+This file is part of Videomass.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#########################################################
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import shutil
 import ssl
 import urllib.request
+from threading import Thread
+import requests
 import wx
 from pubsub import pub
-from threading import Thread
 
 
-class File_Downloading(Thread):
+class FileDownloading(Thread):
     """
     'FileDownloading' is a generic network download operation
     via `urllib.request`. It is used to download small files
     and save them on filesystem.
 
     """
+
     def __init__(self, url, filename):
         """
         Attributes defined here:
@@ -53,8 +58,6 @@ class File_Downloading(Thread):
         self.status = None
 
         Thread.__init__(self)
-        """initialize"""
-
         self.start()  # start the thread (va in self.run())
     # ----------------------------------------------------------------#
 
@@ -68,7 +71,7 @@ class File_Downloading(Thread):
         page = urllib.request.Request(self.url, headers=headers)
         try:
             with urllib.request.urlopen(page, context=context) as \
-                 response, open(self.filename, 'wb') as out_file:
+                    response, open(self.filename, 'wb') as out_file:
                 shutil.copyfileobj(response, out_file)
 
             self.status = self.url, None
@@ -94,8 +97,6 @@ def download_bigfile(url, filename):
     download big files and save them on filesystem.
 
     """
-    import requests
-
     # ------------------------------------------
     # this section is an example to get tarball_url name from github.
     # Use `get_github_releases(url, keyname)` function on IO module
@@ -105,10 +106,10 @@ def download_bigfile(url, filename):
     tarball = response.json()["tarball_url"]
     # -------------------------------------------
 
-    with requests.get(tarball, stream=True) as dw:
-        dw.raise_for_status()
-        with open(filename, 'wb', encoding='utf8') as f:
-            for chunk in dw.iter_content(chunk_size=8192):
-                f.write(chunk)
+    with requests.get(tarball, stream=True) as dwnl:
+        dwnl.raise_for_status()
+        with open(filename, 'wb', encoding='utf8') as fname:
+            for chunk in dwnl.iter_content(chunk_size=8192):
+                fname.write(chunk)
 
     return filename

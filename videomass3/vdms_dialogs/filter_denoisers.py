@@ -1,31 +1,31 @@
 # -*- coding: UTF-8 -*-
-# Name: filter_denoiser.py
-# Porpose: Show dialog to get denoiser data based on FFmpeg syntax
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: November.24.2020 *PEP8 compatible*
-#########################################################
+"""
+Name: filter_denoiser.py
+Porpose: Show dialog to get denoiser data based on FFmpeg syntax
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import webbrowser
+import wx
 
 
 class Denoisers(wx.Dialog):
@@ -35,8 +35,7 @@ class Denoisers(wx.Dialog):
 
     """
     get = wx.GetApp()
-    GET_LANG = get.GETlang
-    SUPPLANG = get.SUPP_langs
+    appdata = get.appset
 
     def __init__(self, parent, denoiser):
         """
@@ -127,7 +126,7 @@ class Denoisers(wx.Dialog):
         # set Properties
         self.SetTitle(_("Denoiser filters"))
         tool = _('nlmeans:\nDenoise frames using Non-Local Means algorithm '
-                 'is capable of restoring video sequences with even strong '
+                 'is capable of restoring video sequences, even with strong '
                  'noise. It is ideal for enhancing the quality of old VHS '
                  'tapes.')
         self.ckbx_nlmeans.SetToolTip(tool)
@@ -261,8 +260,8 @@ class Denoisers(wx.Dialog):
         Open default web browser via Python Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        if Denoisers.GET_LANG in Denoisers.SUPPLANG:
-            lang = Denoisers.GET_LANG.split('_')[0]
+        if Denoisers.appdata['GETLANG'] in Denoisers.appdata['SUPP_LANGs']:
+            lang = Denoisers.appdata['GETLANG'].split('_')[0]
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
                     'languages/%s/4-Video_filters_%s.pdf' % (lang, lang))
         else:

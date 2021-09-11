@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Gen.01.2020 *PEP8 compatible*
+# Rev: Gen.01.2020 *-pycodestyle- compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -33,9 +33,6 @@ class Set_Timestamp(wx.Dialog):
     (timestamp) during playback with FFplay.
 
     """
-    # get videomass wx.App attribute
-    get = wx.GetApp()
-    OS = get.OS  # ID of the operative system:
 
     def __init__(self, parent, tscurrent):
         """
@@ -60,6 +57,9 @@ class Set_Timestamp(wx.Dialog):
         https://ffmpeg.org/ffmpeg-utils.html#color-syntax
 
         """
+        get = wx.GetApp()  # get videomass wx.App attribute
+        self.appdata = get.appset
+
         items = tscurrent.split(':')
         for i in items:
             if 'fontsize=' in i:
@@ -246,9 +246,9 @@ class Set_Timestamp(wx.Dialog):
         """
         ptshms = r"%{pts\:hms}"
 
-        if Set_Timestamp.OS == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             tsfont = '/Library/Fonts/Arial.ttf'
-        elif Set_Timestamp.OS == 'Windows':
+        elif self.appdata['ostype'] == 'Windows':
             tsfont = 'C:\\Windows\\Fonts\\Arial.ttf'
         else:
             tsfont = 'Arial'

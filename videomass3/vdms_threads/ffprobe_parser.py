@@ -1,77 +1,96 @@
 # -*- coding: UTF-8 -*-
-# Name: ffprobe_parser.py
-# Porpose: cross-platform parsing class for ffprobe
-# Compatibility: Python3, Python2
-# Platform: all platforms
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
-#########################################################
+"""
+Name: ffprobe_parser.py
+Porpose: cross-platform parsing class for ffprobe
+Compatibility: Python3, Python2
+Platform: all platforms
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.11.2021
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import subprocess
 import platform
 import re
+if not platform.system() == 'Windows':
+    import shlex
 
 
-class FFProbe(object):
+class FFProbe():
     """
     FFProbe wraps the ffprobe command and pulls the data into
-    an object form:
+    an object form. The `parse` argument defines the parser's behavior.
 
-    `data = FFProbe(FFPROBE_URL, filename_url, parse=True,
-                    pretty=True, select=None, entries=None,
-                    show_format=True, show_streams=True, writer=None)`
+    If you specify `parser=True' (default) which give an auto-parsed output
+    in a object list for each instance (see examples below). The `select`,
+    `entries`, and `writer` arguments will be ignored;
 
-   The `parse` argument defines the parser's behavior; `parse=True` get
-   an automatically parsed output with four list-type sections while the
-   `select`, `entries`,` writer` arguments will be ignored; `parse=False`
-   you get a customized output characterized by the arguments you define.
+    If you specify `parse=False` you  get a customized output characterized
+    by the arguments you define. Note that in this case the output given by
+    custom_output() instance will always be given in a string object.
+    For instance, if you use `writer=json' you must use `eval' function
+    to obtain a dict object.
 
     ---------------------
-    USE with `parse=True`:
+    USE with `parse=True` (default):
     ---------------------
 
-        After referencing the above class, use a convenient way to handle
-        possible exceptions, example:
+    >>> from ffprobe_parser import FFProbe
 
-            if data.ERROR():
+    >>> data = FFProbe('ffprobe_url',
+                       'filename_url',
+                       parse=True,
+                       pretty=True,
+                       select=None,
+                       entries=None,
+                       show_format=True,
+                       show_streams=True,
+                       writer=None
+                       )
+
+        First handle possible exceptions, example:
+
+            if data.error_check():
                 print ("Some Error:  %s" % (data.error))
-                return
-            else:
-                print (data.video_stream())
-                print (data.audio_stream())
-                print (data.subtitle_stream())
-                print (data.data_format())
 
-            format_dict = dict()
-            for line in data.data_format():
-                for items in line:
-                    if '=' in items:
-                        k, v = items.split('=')
-                        k, v = k.strip(), v.strip()
-                        data_format[k] = v
-            print (data_format)
+            else:
+                video = data.video_stream()
+                audio = data.audio_stream()
+                subtitle = data.subtitle_stream()
+                dataformat = data.data_format())
+
+                formatdict = dict()
+                for items in dataformat:
+                    for line in items:
+                        if '=' in line:
+                            k, v = line.split('=')
+                            formatdict[k.strip()] = v.strip()
+                print(formatdict)
 
     ----------------------
     USE with `parse=False`:
     ----------------------
+
+    >>> from ffprobe_parser import FFProbe
 
         Get simple output data:
         -----------------------
@@ -82,16 +101,13 @@ class FFProbe(object):
                             writer='xml')
                             )`
 
-            After referencing the above class, use a convenient way to handle
-            possible exceptions, example:
+            First handle possible exceptions, example:
 
-                if data.ERROR():
-                    print ("Some Error:  %s" % (data.error))
-                    return
+                if data.error_check():
+                    print("Some Error:  %s" % (data.error))
 
-            then, get your custom output:
-
-                print(data.custom_output())
+                else:
+                    print(data.custom_output())
 
         To get a kind of output:
         ------------------------
@@ -103,22 +119,18 @@ class FFProbe(object):
                             parse=False,
                             pretty=True,
                             select='a:0',
-                            entries='stream=code_type',
+                            entries='stream=codec_type',
                             show_format=False,
                             show_streams=False,
                             writer='compact=nk=1:p=0'
                             )`
 
-            After referencing the above class, use a convenient way to handle
-            possible exceptions, example:
+            First handle possible exceptions, example:
 
-                if data.ERROR():
-                    print ("Some Error:  %s" % (data.error))
-                    return
-
-            then, get your custom output:
-
-                print(data.custom_output().strip())
+                if data.error_check():
+                    print("Some Error:  %s" % (data.error))
+                else:
+                    print(data.custom_output().strip())
 
             The `entries` arg is the key to search some entry on sections
 
@@ -150,6 +162,7 @@ class FFProbe(object):
         <https://github.com/simonh10/ffprobe/blob/master/ffprobe/ffprobe.py>
 
     """
+
     def __init__(self, FFPROBE_URL, filename, parse=True,
                  pretty=True, select=None, entries=None,
                  show_format=True, show_streams=True, writer=None):
@@ -212,7 +225,6 @@ class FFProbe(object):
                                                                 writer
                                                                 )
         if not platform.system() == 'Windows':
-            import shlex
             cmnd = shlex.split(cmnd)
             info = None
         else:
@@ -220,24 +232,23 @@ class FFProbe(object):
             info = subprocess.STARTUPINFO()
             info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         try:
-            p = subprocess.Popen(cmnd,
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE,
-                                 universal_newlines=True,
-                                 startupinfo=info,
-                                 )
-            output, error = p.communicate()
+            with subprocess.Popen(cmnd,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE,
+                                  universal_newlines=True,
+                                  startupinfo=info,
+                                  ) as proc:
+                output, error = proc.communicate()
+                if proc.returncode:
+                    self.error = error
+                if parse:
+                    self.parser(output)
+                else:
+                    self.writer = output
 
-        except (OSError, FileNotFoundError) as e:
-            self.error = e
+        except (OSError, FileNotFoundError) as err:
+            self.error = err
             return
-
-        if p.returncode:
-            self.error = error
-        if parse:
-            self.parser(output)
-        else:
-            self.writer = output
     # -------------------------------------------------------------#
 
     def parser(self, output):
@@ -247,25 +258,25 @@ class FFProbe(object):
         """
         probing = output.split('\n')  # create list with strings element
 
-        for s in probing:
-            if re.match('\\[STREAM\\]', s):
+        for streams in probing:
+            if re.match('\\[STREAM\\]', streams):
                 self.datalines = []
 
-            elif re.match('\\[\\/STREAM\\]', s):
+            elif re.match('\\[\\/STREAM\\]', streams):
                 self.mediastreams.append(self.datalines)
                 self.datalines = []
             else:
-                self.datalines.append(s)
+                self.datalines.append(streams)
 
-        for f in probing:
-            if re.match('\\[FORMAT\\]', f):
+        for fformat in probing:
+            if re.match('\\[FORMAT\\]', fformat):
                 self.datalines = []
 
-            elif re.match('\\[\\/FORMAT\\]', f):
+            elif re.match('\\[\\/FORMAT\\]', fformat):
                 self.mediaformat.append(self.datalines)
                 self.datalines = []
             else:
-                self.datalines.append(f)
+                self.datalines.append(fformat)
 
     # --------------------------------------------------------------#
 
@@ -312,68 +323,6 @@ class FFProbe(object):
         return self._format
     # --------------------------------------------------------------#
 
-    def get_audio_codec_name(self):
-        """
-        Return title and list of possible audio codec name and
-        tag language into a video with one or more audio streams.
-        If not audio stream in video return None.
-        This method is useful for exemple to saving audio content as
-        audio track.
-        """
-        astream = self.audio_stream()  # get audio stream
-        audio_lang = []
-        acod = ''  # audio codec
-        lang = 'unknown'  # language
-        indx = ''  # index
-        srate = ''  # smple_rate
-        bits = ''  # bit_per_sample (raw only)
-        chan = ''  # channel_layout
-        bitr = ''  # bit_rate (codec compressed only)
-
-        if astream == []:
-            # audio_lang.append('no audio stream')
-            return None, None
-        else:
-            n = len(astream)
-            for a in range(n):
-                (key, value) = astream[a][0].strip().split('=')
-                for b in astream[a]:
-                    (key, value) = b.strip().split('=')
-                    if "codec_name" in key:
-                        acod = value
-                    if "stream_tags" in key:
-                        lang = value
-                    if "TAG:language" in key:
-                        lang = value
-                    if "index" in key:
-                        indx = value
-                    if key == "sample_rate":
-                        srate = value
-                    if key == "bits_per_sample":
-                        bits = value
-                    if key == "channel_layout":
-                        chan = value
-                    if key == "bit_rate":
-                        bitr = value
-
-                audio_lang.append("index: %s | codec: %s | language: %s "
-                                  "| sampe rate: %s | bit: %s | channels: %s "
-                                  "| bit rate: %s" % (indx, acod, lang,
-                                                      srate, bits, chan,
-                                                      bitr)
-                                  )
-        video_list = self.data_format()  # get video format for video title
-
-        for t in video_list[0]:
-            if 'filename=' in t:
-                vtitle = t.split('=')[1]
-                break
-            else:
-                vtitle = 'Title unknown'
-
-        return audio_lang, vtitle
-    # ----------------------------------------------------------------#
-
     def custom_output(self):
         """
         Print output defined by writer argument. To use this feature
@@ -394,11 +343,11 @@ class FFProbe(object):
         return self.writer
     # ----------------------------------------------------------------#
 
-    def ERROR(self):
+    def error_check(self):
         """
         check for errors on stderr of the ffprobe command. It also
         handles the IOError exception. You can use this interface
         before using all other methods of this class.
+
         """
-        if self.error:
-            return self.error
+        return self.error if self.error else None

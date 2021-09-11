@@ -1,11 +1,24 @@
 #Files mentioned in this file will be ignored by git
 *.pyc
+*.eggs
+*.log
+*.mbtree
 dist
 build
+videomass.egg-info
 deb_dist
+videomass
+videomass.spec
+Videomass.spec
+*.tar.gz
+ENV
+env
+*.spec
+*.AppImage
 *.egg-info
 Pipfile
 Pipfile.lock
 *.DS_Store
 *.directory
+*.kate-swp
 *~

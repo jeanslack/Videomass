@@ -1,10 +1,82 @@
-videomass (3.4.0-1) UNRELEASED; urgency=medium
+videomass (3.4.5-1) UNRELEASED; urgency=medium
+
+  * Fixed "The URLs contain playlists..." even when URLs do not contain
+    playlists.
+  * Fixed error message on Output Console, which not appearing at all when
+    MSVCR100.dll is missing on Windows.
+  * Videomass.app for macOS: All application data such as configuration folder
+    are self-contained inside the app by default.
+  * Improved pyinstaller_setup.py script to automate bundle building.
+  * Updated AppImage to work on the oldest supported Ubuntu LTS release
+    (currently Ubuntu 18.04).
+  * Updated travis.yml for travis CI testings.
+  * fix #32
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 03 Sep 2021 21:59:00 +0200
+
+videomass (3.4.4-1) UNRELEASED; urgency=medium
+
+  * Fixed `NameError: name 'm' is not defined` on utils.timehuman()
+  * Add indexing function for playlists on the Youtube Downloader panel.
+  * Add new editor for playlists selection, which has useful log functions.
+  * Improved status bar messages on Youtube downloader panel.
+  * To resolve issues with the FFmpeg demuxer, single quoted filenames
+    will be rejected.
+  * Update translations in Russian, Spanish and Italian language.
+  * Fixed #30 `KeyError: 'filesufix', which prevented the setup dialog from
+    opening.
+  * Fixed #29 `ValueError: too many values to unpack (expected 3)`, which
+    prevented checking for new versions of Videomass.
+  * Update Videomass site and links.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 29 Aug 2021 12:08:00 +0200
+
+videomass (3.4.3-1) UNRELEASED; urgency=medium
+
+  * Update Portuguese (BR) translation (thanks to Samuel)
+  * Fixed `FileNotFoundError` traceback during youtube-dl update on AppImage.
+    This occured when the log directory has not yet created.
+  * YouTube Downloader: added a new checkbox to restrict filenames (see #21)
+  * Fixed #21
+  * Improved information and text formatting on log files
+  * Provided more log information about output monitoring, such as source and
+    destination file names
+  * Fixed #24, bug when resetting video filters: The value of the "VFilter"
+    key caused failure with error status `Unable to find a suitable output
+    format for '(,' (,: Invalid argument` .
+  * some code refactor (based on flake8/pylint)
+  * Dutch translation completed.
+  * Added Spanish language support (Thanks to katnatek from blogdrake.net)
+  * Fixed #25
+  * Fixed error message when MSVCR100.dll is not installed on Windows.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 03 Aug 2021 15:44:00 +0200
+
+videomass (3.4.2-1) UNRELEASED; urgency=medium
+
+  * MS-Windows: Fixed issue with opening the Explorer file browser on default
+    folders.
+  * youtube-dl: Removed some choice options. Now there is only the option to
+    enable or disable it.
+  * youtube-dl: only packages built with pyinstaller use a local copy of
+    the youtube-dl executable. Otherwise youtube-dl will always be used as
+    a Python module, if enabled.
+  * Fixed wizard dialog.
+  * Fixed setup dialog.
+  * Concat demuxer: fixed inconsistencies on UI
+  * Fix `NameError: name EXECYDL is not defined`. This occurred running
+    Videomass on MS-Windows when youtube-dl python module was not installed.
+  * Improved youtube-dl tab on Setup dialog.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 24 Apr 2021 19:01:00 +0200
+
+videomass (3.4.1-1) UNRELEASED; urgency=medium
 
   * Update Russian translation
   * Fixed gauge progress issues with some ffmpeg encoder.
   * Fixed percentage progress issues with some ffmpeg encoder
   * Fixed missing string to get exception 'FileNotFoundError' on MessageBox()
-    of `on_Audio_analyzes` function (av_conversions.py, presets_manager.py)
+    of `on_Audio_analyzes` function (av_conversions.py)
   * Fixed missing double quotes on ffmpeg URL, giving `[Errno 2] file or
     directory does not exist`, which occurred when the path has whitespace.
   * Fixed exception not showing up when playing ffplay.
@@ -26,15 +98,19 @@ videomass (3.4.0-1) UNRELEASED; urgency=medium
   * AV-Conversions: resizing filter, fixed some incorrect values on displays
     after setting.
   * AV-Conversions: improved order of applying video filters.
-  * Preview and playback now have auto-exit activation.
+  * Preview and playback: added auto-exit checkbox on Settings menu.
   * Fixed #20
-  * Translated into Brazilian Portuguese, thanks to Samuel.
-  * Improved accuracy of the crop filter selection.
+  * Translated into Portuguese (Brazilian), thanks to Samuel.
+  * Improved accuracy of the crop filter on the area selection.
   * Play button removed on toolbar as confusing.
   * Improved enabling and disabling of buttons during some actions.
   * The Streams Info button is now also enabled on the queued files panel.
+  * Removed automations on Presets manager as confusing.
+  * Added useful panel for media concatenation (concat demuxer)
+  * Setup dialog: added pip3 command on text control to facilitate
+    copy and paste.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 04 Apr 2021 14:58:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 18 Apr 2021 09:46:00 +0200
 
 videomass (3.3.8-1) UNRELEASED; urgency=medium
 

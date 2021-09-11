@@ -1,84 +1,57 @@
 # -*- coding: UTF-8 -*-
-# Name: settings.py
-# Porpose: videomass setup dialog
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Dec.31.2020
-#########################################################
+"""
+Name: settings.py
+Porpose: videomass setup dialog
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.08.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 import sys
 import webbrowser
+import wx
+import wx.lib.agw.hyperlink as hpl
 from videomass3.vdms_utils.utils import detect_binaries
 
 
 class Setup(wx.Dialog):
     """
     Main settings of the videomass program and configuration storing.
-    """
-    # get videomass wx.App attribute
-    get = wx.GetApp()
-    OS = get.OS
-    FF_THREADS = get.FFthreads
-    PWD = get.WORKdir
-    FILE_CONF = get.FILEconf
-    FFMPEG_LINK = get.FFMPEG_url
-    FFPLAY_LINK = get.FFPLAY_url
-    FFPROBE_LINK = get.FFPROBE_url
-    FFMPEG_LOGLEVEL = get.FFMPEG_loglev
-    FFPLAY_LOGLEVEL = get.FFPLAY_loglev
-    FFMPEG_CHECK = get.FFMPEG_check
-    FFPROBE_CHECK = get.FFPROBE_check
-    FFPLAY_CHECK = get.FFPLAY_check
-    FF_LOCALDIR = get.FFMPEGlocaldir
-    FF_OUTPATH = get.FFMPEGoutdir
-    YDL_OUTPATH = get.YDLoutdir
-    YDL_SUBFOLD = get.PLAYLISTsubfolder
-    SAMEDIR = get.SAMEdir
-    FILESUFFIX = get.FILEsuffix
-    TBSIZE = get.TBsize
-    TBPOS = get.TBpos
-    TBTEXT = get.TBtext
-    CLEARCACHE = get.CLEARcache
-    YDL_PREF = get.YDL_pref
-    EXECYDL = get.execYdl
-    SITEPKGYDL = get.YDLsite
-    GET_LANG = get.GETlang
-    SUPPLANG = get.SUPP_langs
 
+    """
     FFPLAY_LOGLEV = [("quiet (Show nothing at all)"),
                      ("fatal (Only show fatal errors)"),
                      ("error (Show all errors)"),
                      ("warning (Show all warnings and errors)"),
-                     ("info (Show informative messages during processing)")]
-
+                     ("info (Show informative messages during processing)")
+                     ]
     FFMPEG_LOGLEV = [("error (Show all errors)"),
                      ("warning (Show all warnings and errors)"),
                      ("info (Show informative messages during processing)"),
                      ("verbose (Same as `info`, except more verbose.)"),
-                     ("debug (Show everything, including debugging info.)")]
+                     ("debug (Show everything, including debugging info.)")
+                     ]
     # -----------------------------------------------------------------
 
-    def __init__(self, parent, iconset):
+    def __init__(self, parent):
         """
         NOTE 0): self.rowsNum attribute is a sorted list with a exatly number
                  index corresponding to each read line of the videomass.conf.
@@ -91,11 +64,13 @@ class Setup(wx.Dialog):
                  - ROW, is the current numeric rows on the file configuration
                  - VALUE, is the value as writing in the file configuration
         """
+        get = wx.GetApp()
+        self.appdata = get.appset
 
         # Make a items list of
         self.rowsNum = []  # rows number list
         dic = {}  # used for debug
-        with open(Setup.FILE_CONF, 'r', encoding='utf8') as f:
+        with open(self.appdata['fileconfpath'], 'r', encoding='utf8') as f:
             self.full_list = f.readlines()
         for a, b in enumerate(self.full_list):
             if not b.startswith('#'):
@@ -109,13 +84,7 @@ class Setup(wx.Dialog):
         for n, k in enumerate(sorted(dic)):
             print(n, ' -------> ', k, ' --> ', dic[k])
         """
-        dirname = os.path.expanduser('~')  # /home/user/
-        self.pathFF = dirname if not Setup.FF_OUTPATH else Setup.FF_OUTPATH
-        self.pathYDL = dirname if not Setup.YDL_OUTPATH else Setup.YDL_OUTPATH
-        self.iconset = iconset
-        self.getfileconf = Setup.FILE_CONF
-
-        if Setup.OS == 'Windows':
+        if self.appdata['ostype'] == 'Windows':
             self.ffmpeg = 'ffmpeg.exe'
             self.ffprobe = 'ffprobe.exe'
             self.ffplay = 'ffplay.exe'
@@ -144,7 +113,7 @@ class Setup(wx.Dialog):
                                           style=wx.TE_READONLY
                                           )
         sizeFFdirdest.Add(self.txtctrl_FFpath, 1, wx.ALL, 5)
-        self.txtctrl_FFpath.AppendText(self.pathFF)
+        self.txtctrl_FFpath.AppendText(self.appdata['outputfile'])
 
         self.btn_FFpath = wx.Button(tabOne, wx.ID_ANY, _("Browse.."))
         sizeFFdirdest.Add(self.btn_FFpath, 0, wx.RIGHT |
@@ -173,7 +142,7 @@ class Setup(wx.Dialog):
                                            style=wx.TE_READONLY
                                            )
         sizeYDLdirdest.Add(self.txtctrl_YDLpath, 1, wx.ALL | wx.CENTER, 5)
-        self.txtctrl_YDLpath.AppendText(self.pathYDL)
+        self.txtctrl_YDLpath.AppendText(self.appdata['outputdownload'])
         self.btn_YDLpath = wx.Button(tabOne, wx.ID_ANY, _("Browse.."))
         sizeYDLdirdest.Add(self.btn_YDLpath, 0, wx.RIGHT |
                            wx.ALIGN_CENTER_VERTICAL |
@@ -251,8 +220,8 @@ class Setup(wx.Dialog):
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALIGN_CENTER_HORIZONTAL, 5
                        )
-        self.spinctrl_threads = wx.SpinCtrl(tabTwo, wx.ID_ANY,
-                                            "%s" % Setup.FF_THREADS[9:],
+        self.spinctrl_threads = wx.SpinCtrl(tabTwo, wx.ID_ANY, "%s" %
+                                            self.appdata['ffthreads'][9:],
                                             size=(-1, -1), min=0, max=32,
                                             style=wx.TE_PROCESS_ENTER
                                             )
@@ -270,11 +239,35 @@ class Setup(wx.Dialog):
         sizerYdl.Add((0, 15))
         labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (''))
         sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
+
+        if self.appdata['app'] not in ('pyinstaller', 'appimage'):
+            url = ('https://packaging.python.org/tutorials/'
+                   'installing-packages/#upgrading-packages')
+            static0 = _("How to upgrade a Python package")
+            instpkg = hpl.HyperLinkCtrl(self.tabThree, -1, static0, URL=url)
+            sizerYdl.Add(instpkg, 0, wx.ALL | wx.CENTRE, 2)
+
+        if self.appdata['ostype'] == 'Windows':
+            url = ('https://www.microsoft.com/en-US/download/'
+                   'details.aspx?id=5555')
+            static1 = _("Required: Microsoft Visual C++ 2010 Redistributable "
+                        "Package (x86)")
+            MSVCR = hpl.HyperLinkCtrl(self.tabThree, -1, static1, URL=url)
+            sizerYdl.Add(MSVCR, 0, wx.ALL | wx.CENTRE, 2)
+
+        elif (self.appdata['ostype'] == 'Linux' and
+              self.appdata['app'] not in ('pyinstaller', 'appimage')):
+            url = ('https://packaging.python.org/guides/'
+                   'installing-using-linux-tools/')
+            static2 = _("How to install pip on your Linux distribution")
+            instpip = hpl.HyperLinkCtrl(self.tabThree, -1, static2, URL=url)
+            sizerYdl.Add(instpip, 0, wx.ALL | wx.CENTRE, 2)
         sizerYdl.Add((0, 15))
+
         self.rdbDownloader = wx.RadioBox(self.tabThree, wx.ID_ANY,
                                          (_("Downloader preferences")),
                                          choices=[_('Disable youtube-dl'),
-                                                  '', ''],
+                                                  _('Enable youtube-dl')],
                                          majorDimension=1,
                                          style=wx.RA_SPECIFY_COLS
                                          )
@@ -290,54 +283,49 @@ class Setup(wx.Dialog):
         grdydlLoc.Add(self.ydlPath, 1, wx.ALL | wx.EXPAND, 5)
 
         # ---- BEGIN set youtube-dl radiobox
-        if ('/tmp/.mount_' in sys.executable or os.path.exists(
-            os.path.dirname(os.path.dirname(os.path.dirname(
-             sys.argv[0]))) + '/AppRun')):
-
-            self.rdbDownloader.SetItemLabel(1, _('Use the one included in the '
-                                                 'AppImage (recommended)'))
-            self.rdbDownloader.SetItemLabel(2, _('Use a local copy of '
-                                                 'youtube-dl'))
-            tip1 = _('Menu bar > Tools > Update youtube-dl')
-            tip2 = _('Menu bar > Tools > Update youtube-dl')
-
-        else:
-            self.rdbDownloader.SetItemLabel(1, _('Use the one installed in '
-                                                 'your O.S. (recommended)'))
-            self.rdbDownloader.SetItemLabel(2, _('Use a local copy of '
-                                                 'youtube-dl updatable by '
-                                                 'Videomass'))
-            tip1 = _('Menu bar > Tools > Update youtube-dl')
-            tip2 = ('\npip3 install -U youtube-dl\n')
-
         ydlmsg = _('Make sure you are using the latest available version of\n'
                    'youtube-dl. This allows you to avoid download problems.\n')
 
-        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-            self.rdbDownloader.EnableItem(1, enable=False)
+        if self.appdata['app'] == 'pyinstaller':
+            tip1 = _('Menu bar > Tools > Update youtube-dl')
             labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
 
+            if self.appdata['enable_youtubedl'] == 'disabled':
+                self.rdbDownloader.SetSelection(0)
+                self.ydlPath.WriteText(_('Disabled'))
+            else:
+                self.rdbDownloader.SetSelection(1)
+                if os.path.exists(self.appdata['EXECYDL']):
+                    self.ydlPath.WriteText(str(self.appdata['EXECYDL']))
+                else:
+                    self.ydlPath.WriteText(_('Not found'))
 
-        if Setup.YDL_PREF == 'disabled':
-            self.rdbDownloader.SetSelection(0)
-            self.ydlPath.WriteText(_('Disabled'))
+        elif self.appdata['app'] == 'appimage':
+            tip1 = _('Menu bar > Tools > Update youtube-dl')
+            labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
+
+            if self.appdata['enable_youtubedl'] == 'disabled':
+                self.rdbDownloader.SetSelection(0)
+                self.ydlPath.WriteText(_('Disabled'))
+            else:
+                self.rdbDownloader.SetSelection(1)
+                if self.appdata['YDLSITE'] is None:
+                    self.ydlPath.WriteText(_('Not Installed'))
+                else:
+                    self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
+
+        else:
             labydl0.SetLabel('%s' % (ydlmsg))
 
-        elif Setup.YDL_PREF == 'system':
-            self.rdbDownloader.SetSelection(1)
-            labydl0.SetLabel('%s%s' % (ydlmsg, tip2))
-            if Setup.SITEPKGYDL is None:
-                self.ydlPath.WriteText(_('Not Installed'))
+            if self.appdata['enable_youtubedl'] == 'disabled':
+                self.rdbDownloader.SetSelection(0)
+                self.ydlPath.WriteText(_('Disabled'))
             else:
-                self.ydlPath.WriteText(str(Setup.SITEPKGYDL))
-
-        elif Setup.YDL_PREF == 'local':
-            self.rdbDownloader.SetSelection(2)
-            labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
-            if os.path.exists(Setup.EXECYDL):
-                self.ydlPath.WriteText(str(Setup.EXECYDL))
-            else:
-                self.ydlPath.WriteText(_('Not found'))
+                self.rdbDownloader.SetSelection(1)
+                if self.appdata['YDLSITE'] is None:
+                    self.ydlPath.WriteText(_('Not Installed'))
+                else:
+                    self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
         # ---- END
 
         # ----
@@ -458,7 +446,7 @@ class Setup(wx.Dialog):
         # ----------------------Properties----------------------#
         self.SetTitle(_("Videomass Setup"))
         # set font
-        if Setup.OS == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             labfile.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdown.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labcache.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -520,58 +508,58 @@ class Setup(wx.Dialog):
         Setting enable/disable in according to the configuration file
 
         """
-        self.cmbx_icons.SetValue(str(self.iconset))
-        self.cmbx_iconsSize.SetValue(str(Setup.TBSIZE))
-        self.rdbTBpref.SetSelection(int(Setup.TBPOS))
+        self.cmbx_icons.SetValue(str(self.appdata['icontheme']))
+        self.cmbx_iconsSize.SetValue(str(self.appdata['toolbarsize']))
+        self.rdbTBpref.SetSelection(int(self.appdata['toolbarpos']))
 
-        if Setup.CLEARCACHE == 'false':
+        if self.appdata['clearcache'] == 'false':
             self.checkbox_cacheclr.SetValue(False)
         else:
             self.checkbox_cacheclr.SetValue(True)
 
         for s in range(self.rdbFFplay.GetCount()):
-            if (Setup.FFPLAY_LOGLEVEL.split()[1] in
+            if (self.appdata['ffplayloglev'].split()[1] in
                self.rdbFFplay.GetString(s).split()[0]):
                 self.rdbFFplay.SetSelection(s)
 
         for s in range(self.rdbFFmpeg.GetCount()):
-            if (Setup.FFMPEG_LOGLEVEL.split()[1] in
+            if (self.appdata['ffmpegloglev'].split()[1] in
                self.rdbFFmpeg.GetString(s).split()[0]):
                 self.rdbFFmpeg.SetSelection(s)
 
-        if Setup.FFMPEG_CHECK == 'false':
+        if self.appdata['ffmpeg_local'] == 'false':
             self.btn_pathFFmpeg.Disable()
             self.txtctrl_ffmpeg.Disable()
-            self.txtctrl_ffmpeg.AppendText(Setup.FFMPEG_LINK)
+            self.txtctrl_ffmpeg.AppendText(self.appdata['ffmpeg_bin'])
             self.checkbox_exeFFmpeg.SetValue(False)
         else:
-            self.txtctrl_ffmpeg.AppendText(Setup.FFMPEG_LINK)
+            self.txtctrl_ffmpeg.AppendText(self.appdata['ffmpeg_bin'])
             self.checkbox_exeFFmpeg.SetValue(True)
 
-        if Setup.FFPROBE_CHECK == 'false':
+        if self.appdata['ffprobe_local'] == 'false':
             self.btn_pathFFprobe.Disable()
             self.txtctrl_ffprobe.Disable()
-            self.txtctrl_ffprobe.AppendText(Setup.FFPROBE_LINK)
+            self.txtctrl_ffprobe.AppendText(self.appdata['ffprobe_bin'])
             self.checkbox_exeFFprobe.SetValue(False)
         else:
-            self.txtctrl_ffprobe.AppendText(Setup.FFPROBE_LINK)
+            self.txtctrl_ffprobe.AppendText(self.appdata['ffprobe_bin'])
             self.checkbox_exeFFprobe.SetValue(True)
 
-        if Setup.FFPLAY_CHECK == 'false':
+        if self.appdata['ffplay_local'] == 'false':
             self.btn_pathFFplay.Disable()
             self.txtctrl_ffplay.Disable()
-            self.txtctrl_ffplay.AppendText(Setup.FFPLAY_LINK)
+            self.txtctrl_ffplay.AppendText(self.appdata['ffplay_bin'])
             self.checkbox_exeFFplay.SetValue(False)
         else:
-            self.txtctrl_ffplay.AppendText(Setup.FFPLAY_LINK)
+            self.txtctrl_ffplay.AppendText(self.appdata['ffplay_bin'])
             self.checkbox_exeFFplay.SetValue(True)
 
-        if Setup.TBTEXT == 'show':
+        if self.appdata['toolbartext'] == 'show':
             self.checkbox_tbtext.SetValue(True)
         else:
             self.checkbox_tbtext.SetValue(False)
 
-        if Setup.SAMEDIR == 'false':
+        if self.appdata['outputfile_samedir'] == 'false':
             self.lab_suffix.Disable()
             self.text_suffix.Disable()
             self.ckbx_dir.SetValue(False)
@@ -580,10 +568,10 @@ class Setup(wx.Dialog):
             self.text_suffix.Enable()
             self.ckbx_dir.SetValue(True)
             self.btn_FFpath.Disable(), self.txtctrl_FFpath.Disable()
-            if not Setup.FILESUFFIX == 'none':
-                self.text_suffix.AppendText(Setup.FILESUFFIX)
+            if not self.appdata['filesuffix'] == 'none':
+                self.text_suffix.AppendText(self.appdata['filesuffix'])
 
-        if Setup.YDL_SUBFOLD == 'false':
+        if self.appdata['playlistsubfolder'] == 'false':
             self.ckbx_playlist.SetValue(False)
         else:
             self.ckbx_playlist.SetValue(True)
@@ -648,7 +636,7 @@ class Setup(wx.Dialog):
     def set_Suffix(self, event):
         """Set a custom suffix to append at the output file names"""
         msg = _('Enter only alphanumeric characters. You can also use the '
-                'hyphen ("-") and the underscore ("_"). Blank spaces are '
+                'hyphen ("-") and the underscore ("_"). Spaces are '
                 'not allowed.')
         suffix = self.text_suffix.GetValue()
 
@@ -695,8 +683,10 @@ class Setup(wx.Dialog):
             self.txtctrl_ffmpeg.Disable()
             self.full_list[self.rowsNum[5]] = 'false\n'
 
-            status = detect_binaries(Setup.OS, self.ffmpeg, Setup.FF_LOCALDIR)
-
+            status = detect_binaries(self.appdata['ostype'],
+                                     self.ffmpeg,
+                                     self.appdata['FFMPEG_videomass_pkg']
+                                     )
             if status[0] == 'not installed':
                 self.txtctrl_ffmpeg.Clear()
                 self.txtctrl_ffmpeg.write(status[0])
@@ -734,8 +724,10 @@ class Setup(wx.Dialog):
             self.txtctrl_ffprobe.Disable()
             self.full_list[self.rowsNum[7]] = 'false\n'
 
-            status = detect_binaries(Setup.OS, self.ffprobe, Setup.FF_LOCALDIR)
-
+            status = detect_binaries(self.appdata['ostype'],
+                                     self.ffprobe,
+                                     self.appdata['FFMPEG_videomass_pkg']
+                                     )
             if status[0] == 'not installed':
                 self.txtctrl_ffprobe.Clear()
                 self.txtctrl_ffprobe.write(status[0])
@@ -773,8 +765,10 @@ class Setup(wx.Dialog):
             self.txtctrl_ffplay.Disable()
             self.full_list[self.rowsNum[9]] = 'false\n'
 
-            status = detect_binaries(Setup.OS, self.ffplay, Setup.FF_LOCALDIR)
-
+            status = detect_binaries(self.appdata['ostype'],
+                                     self.ffplay,
+                                     self.appdata['FFMPEG_videomass_pkg']
+                                     )
             if status[0] == 'not installed':
                 self.txtctrl_ffplay.Clear()
                 self.txtctrl_ffplay.write(status[0])
@@ -851,9 +845,7 @@ class Setup(wx.Dialog):
         if self.rdbDownloader.GetSelection() == 0:
             self.full_list[self.rowsNum[16]] = 'disabled\n'
         elif self.rdbDownloader.GetSelection() == 1:
-            self.full_list[self.rowsNum[16]] = 'system\n'
-        elif self.rdbDownloader.GetSelection() == 2:
-            self.full_list[self.rowsNum[16]] = 'local\n'
+            self.full_list[self.rowsNum[16]] = 'enabled\n'
     # --------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -861,8 +853,8 @@ class Setup(wx.Dialog):
         Open default web browser via Python Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        if Setup.GET_LANG in Setup.SUPPLANG:
-            lang = Setup.GET_LANG.split('_')[0]
+        if self.appdata['GETLANG'] in self.appdata['SUPP_LANGs']:
+            lang = self.appdata['GETLANG'].split('_')[0]
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
                     'languages/%s/2-Startup_and_Setup_%s.pdf' % (lang, lang))
         else:
@@ -885,9 +877,9 @@ class Setup(wx.Dialog):
         """
         Applies all changes writing the new entries
         """
-        with open(self.getfileconf, 'w', encoding='utf8') as fconf:
+        with open(self.appdata['fileconfpath'], 'w', encoding='utf8') as f:
             for i in self.full_list:
-                fconf.write('%s' % i)
+                f.write('%s' % i)
         # self.Destroy() # WARNING on mac not close corretly, on linux ok
         self.okmsg()
         self.Close()

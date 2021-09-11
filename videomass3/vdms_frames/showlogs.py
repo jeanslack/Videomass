@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Oct.26.2020 *PEP8 compatible*
+# Rev: Oct.26.2020 *-pycodestyle- compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -95,10 +95,12 @@ class ShowLogs(wx.MiniFrame):
                                     )
         self.textdata.SetMinSize((700, 300))
 
-        if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
+        if get.appset['icontheme'] in ('Breeze-Blues', 'Videomass-Colours'):
             self.textdata.SetBackgroundColour(ShowLogs.SOLARIZED)
             self.textdata.SetDefaultStyle(wx.TextAttr(ShowLogs.GREY))
-        elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
+        elif get.appset['icontheme'] in ('Breeze-Blues',
+                                         'Breeze-Dark',
+                                         'Videomass-Dark'):
             self.textdata.SetBackgroundColour(ShowLogs.DARK_SLATE)
             self.textdata.SetDefaultStyle(wx.TextAttr(ShowLogs.HEAVENLY))
         else:

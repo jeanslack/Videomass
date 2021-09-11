@@ -1,41 +1,43 @@
 # -*- coding: UTF-8 -*-
-# Name: one_pass.py
-# Porpose: FFmpeg long processing task on one pass conversion
-# Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
-#########################################################
-# This file is part of Videomass.
+"""
+Name: one_pass.py
+Porpose: FFmpeg long processing task on one pass conversion
+Compatibility: Python3, wxPython4 Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+This file is part of Videomass.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#########################################################
-import wx
-import subprocess
-import platform
-if not platform.system() == 'Windows':
-    import shlex
-import itertools
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 from threading import Thread
 import time
+import subprocess
+import platform
+import wx
 from pubsub import pub
+if not platform.system() == 'Windows':
+    import shlex
 
 
-def logWrite(cmd, sterr, logname, logdir):
+def logwrite(cmd, sterr, logname, logdir):
     """
     writes ffmpeg commands and status error during threads below
     """
@@ -66,30 +68,23 @@ from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 """
 
 
-class Concat_Demuxer(Thread):
+class ConcatDemuxer(Thread):
     """
     This class represents a separate thread for running processes,
     which need to read the stdout/stderr in real time.
 
     """
-    # get videomass wx.App attribute
-    get = wx.GetApp()
-    LOGDIR = get.LOGdir
-    CACHEDIR = get.CACHEdir
-    FFMPEG_URL = get.FFMPEG_url
-    FFMPEG_LOGLEV = get.FFMPEG_loglev
-    FF_THREADS = get.FFthreads
-    SUFFIX = '' if get.FILEsuffix == 'none' else get.FILEsuffix
+    get = wx.GetApp()  # get videomass wx.App attribute
+    appdata = get.appset
+    CACHEDIR = appdata['cachedir']
+    SUFFIX = '' if appdata['filesuffix'] == 'none' else appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ---------------------------------------------------------------
 
-    def __init__(self, varargs, duration, logname, timeseq):
+    def __init__(self, varargs, duration, logname):
         """
         Some attribute can be empty, this depend from conversion type.
-        If the format/container is not changed on a conversion, the
-        'extoutput' attribute will have an empty value.
-        The 'volume' attribute may also have an empty value, but it will
-        have no influence on the type of conversion.
+
         """
         self.stop_work_thread = False  # process terminate
         self.filelist = varargs[1]  # list of files (items)
@@ -99,54 +94,57 @@ class Concat_Demuxer(Thread):
         self.duration = sum(duration)  # duration list
         self.countmax = len(varargs[1])  # length file list
         self.logname = logname  # title name of file log
-
-        self.filetext = os.path.join(Concat_Demuxer.CACHEDIR, 'tmp',
-                                     'myfiles.txt')
-        escaped = [e.replace(r"'", r"\'") for e in self.filelist]
-        with open(self.filetext, 'w', encoding='utf8') as txt:
+        # need to escaping some chars
+        self.ftext = os.path.join(ConcatDemuxer.CACHEDIR, 'tmp', 'flist.txt')
+        escaped = [e.replace(r"'", r"'\'") for e in self.filelist]
+        with open(self.ftext, 'w', encoding='utf8') as txt:
             txt.write('\n'.join(["file '%s'" % x for x in escaped]))
 
-
         Thread.__init__(self)
-        """initialize"""
-        self.start()  # start the thread (va in self.run())
+
+        self.start()
 
     def run(self):
         """
         Subprocess initialize thread.
-        """
 
+        """
         basename = os.path.basename(self.filelist[0])  # nome file senza path
         filename = os.path.splitext(basename)[0]  # nome senza estensione
         source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
         outext = source_ext if not self.extoutput else self.extoutput
-
+        outputfile = os.path.join(self.outputdir,
+                                  '%s%s.%s' % (filename,
+                                               ConcatDemuxer.SUFFIX,
+                                               outext)
+                                  )
         cmd = ('"%s" %s -f concat -safe 0 -i "%s" -map 0:v? -map_chapters 0 '
                '-map 0:s? -map 0:a? -map_metadata 0 %s -c copy %s -y '
-               '"%s/%s%s.%s"' % (Concat_Demuxer.FFMPEG_URL,
-                                 Concat_Demuxer.FFMPEG_LOGLEV,
-                                 self.filetext,
-                                 self.command,
-                                 Concat_Demuxer.FF_THREADS,
-                                 self.outputdir,
-                                 filename,
-                                 Concat_Demuxer.SUFFIX,
-                                 outext,
-                                 ))
-        count = 'Concatenate %s File' % (self.countmax,)
-        com = "%s\n%s" % (count, cmd)
+               '"%s"' % (ConcatDemuxer.appdata['ffmpeg_bin'],
+                         ConcatDemuxer.appdata['ffmpegloglev'],
+                         self.ftext,
+                         self.command,
+                         ConcatDemuxer.appdata['ffthreads'],
+                         outputfile,
+                         ))
+        count = '%s Files to concat' % (self.countmax,)
+        com = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
+               '[COMMAND]:\n%s' % (count, self.filelist, outputfile, cmd))
+
         wx.CallAfter(pub.sendMessage,
-                        "COUNT_EVT",
-                        count=count,
-                        duration=self.duration,
-                        fname=", ".join(self.filelist),
-                        end='',
-                        )
-        logWrite(com,
-                    '',
-                    self.logname,
-                    Concat_Demuxer.LOGDIR,
-                    )  # write n/n + command only
+                     "COUNT_EVT",
+                     count=count,
+                     fsource='Source:  %s' % self.filelist,
+                     destination='Destination:  "%s"' % outputfile,
+                     duration=self.duration,
+                     # fname=", ".join(self.filelist),
+                     end='',
+                     )
+        logwrite(com,
+                 '',
+                 self.logname,
+                 ConcatDemuxer.appdata['logdir'],
+                 )  # write n/n + command only
 
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
@@ -156,53 +154,55 @@ class Concat_Demuxer(Thread):
             info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         try:
             with subprocess.Popen(cmd,
-                                    stderr=subprocess.PIPE,
-                                    bufsize=1,
-                                    universal_newlines=True,
-                                    startupinfo=info,) as p:
-                for line in p.stderr:
+                                  stderr=subprocess.PIPE,
+                                  bufsize=1,
+                                  universal_newlines=True,
+                                  startupinfo=info,) as proc:
+                for line in proc.stderr:
                     wx.CallAfter(pub.sendMessage,
-                                    "UPDATE_EVT",
-                                    output=line,
-                                    duration=self.duration,
-                                    status=0,
-                                    )
+                                 "UPDATE_EVT",
+                                 output=line,
+                                 duration=self.duration,
+                                 status=0,
+                                 )
                     if self.stop_work_thread:
-                        p.terminate()
+                        proc.terminate()
                         break  # break second 'for' loop
 
-                if p.wait():  # error
+                if proc.wait():  # error
                     wx.CallAfter(pub.sendMessage,
-                                    "UPDATE_EVT",
-                                    output=line,
-                                    duration=self.duration,
-                                    status=p.wait(),
-                                    )
-                    logWrite('',
-                                "Exit status: %s" % p.wait(),
-                                self.logname,
-                                Concat_Demuxer.LOGDIR,
-                                )  # append exit error number
+                                 "UPDATE_EVT",
+                                 output=line,
+                                 duration=self.duration,
+                                 status=proc.wait(),
+                                 )
+                    logwrite('',
+                             "Exit status: %s" % proc.wait(),
+                             self.logname,
+                             ConcatDemuxer.appdata['logdir'],
+                             )  # append exit error number
                 else:  # ok
                     wx.CallAfter(pub.sendMessage,
-                                    "COUNT_EVT",
-                                    count='',
-                                    duration='',
-                                    fname='',
-                                    end='ok'
-                                    )
+                                 "COUNT_EVT",
+                                 count='',
+                                 fsource='',
+                                 destination='',
+                                 duration='',
+                                 end='ok'
+                                 )
         except (OSError, FileNotFoundError) as err:
-            e = "%s\n  %s" % (err, Concat_Demuxer.NOT_EXIST_MSG)
+            excepterr = "%s\n  %s" % (err, ConcatDemuxer.NOT_EXIST_MSG)
             wx.CallAfter(pub.sendMessage,
-                            "COUNT_EVT",
-                            count=e,
-                            duration=0,
-                            fname=", ".join(self.filelist),
-                            end='error',
-                            )
+                         "COUNT_EVT",
+                         count=excepterr,
+                         fsource='',
+                         destination='',
+                         duration=0,
+                         end='error',
+                         )
 
         if self.stop_work_thread:
-            p.terminate()
+            proc.terminate()
 
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")

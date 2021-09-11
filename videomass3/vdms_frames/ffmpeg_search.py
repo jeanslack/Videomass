@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Oct.04.2020 *PEP8 compatible*
+# Rev: Oct.04.2020 *-pycodestyle- compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -24,7 +24,7 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-from videomass3.vdms_io import IO_tools
+from videomass3.vdms_io import io_tools
 import wx
 import re
 
@@ -57,7 +57,7 @@ class FFmpeg_Search(wx.MiniFrame):
 
         """
         self.oS = OS
-        self.row = None  # output text from `IO_tools.findtopic(topic)'
+        self.row = None  # output text from `io_tools.findtopic(topic)'
         get = wx.GetApp()  # get data from bootstrap
 
         wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
@@ -103,10 +103,12 @@ class FFmpeg_Search(wx.MiniFrame):
                                     wx.TE_RICH2 |
                                     wx.HSCROLL
                                     )
-        if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
+        if get.appset['icontheme'] in ('Breeze-Blues', 'Videomass-Colours'):
             self.texthelp.SetBackgroundColour(FFmpeg_Search.SOLARIZED)
             self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.GREY))
-        elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
+        elif get.appset['icontheme'] in ('Breeze-Blues',
+                                         'Breeze-Dark',
+                                         'Videomass-Dark'):
             self.texthelp.SetBackgroundColour(FFmpeg_Search.DARK_SLATE)
             self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.HEAVENLY))
         else:
@@ -202,7 +204,7 @@ class FFmpeg_Search(wx.MiniFrame):
         else:
             self.texthelp.Clear()  # reset textctrl
             topic = arg_opt[self.cmbx_choice.GetValue()]
-            self.row = IO_tools.findtopic(topic)
+            self.row = io_tools.findtopic(topic)
 
             if self.row:
                 self.texthelp.AppendText(self.row)

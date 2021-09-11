@@ -1,42 +1,44 @@
 # -*- coding: UTF-8 -*-
-# Name: Ydl_DL_Exec.py
-# Porpose: long processing task with youtube-dl executable
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Feb.02.2021 *PEP8 compatible*
-#########################################################
-# This file is part of Videomass.
+"""
+Name: YtdlExecDL.py
+Porpose: long processing task with youtube-dl executable
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: Aug.13.2021
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+This file is part of Videomass.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#########################################################
-import wx
-import subprocess
-import platform
-if not platform.system() == 'Windows':
-    import shlex
-import itertools
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
-import sys
 from threading import Thread
 import time
+import itertools
+import subprocess
+import platform
+import wx
 from pubsub import pub
+if not platform.system() == 'Windows':
+    import shlex
 
 
-def logWrite(cmd, sterr, logname, logdir):
+def logwrite(cmd, sterr, logname, logdir):
     """
     writes youtube-dl commands and status error during
     threads below
@@ -50,19 +52,20 @@ def logWrite(cmd, sterr, logname, logdir):
         log.write(apnd)
 
 
-class Ydl_DL_Exec(Thread):
+class YtdlExecDL(Thread):
     """
-    Ydl_DL_Exec represents a separate thread for running
+    YtdlExecDL represents a separate thread for running
     youtube-dl executable with subprocess class to download
     media and capture its stdout/stderr output in real time .
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute
-    LOGDIR = get.LOGdir
-    FFMPEG_URL = get.FFMPEG_url
-    EXECYDL = get.execYdl
+    LOGDIR = get.appset['logdir']
+    FFMPEG_URL = get.appset['ffmpeg_bin']
+    EXECYDL = get.appset['EXECYDL']
+    APPTYPE = get.appset['app']
 
-    if get.PLAYLISTsubfolder == 'true':
+    if get.appset['playlistsubfolder'] == 'true':
         SUBDIR = '%(uploader)s/%(playlist_title)s/%(playlist_index)s - '
     else:
         SUBDIR = ''
@@ -71,9 +74,11 @@ class Ydl_DL_Exec(Thread):
         LINE_MSG = _('Unrecognized error')
     else:
         if os.path.isfile(EXECYDL):
-            LINE_MSG = (_('\nRequires MSVCR100.dll\nTo resolve this problem '
-                          'install: Microsoft Visual C++ 2010 Redistributable '
-                          'Package (x86)'))
+            LINE_MSG = ('\nERROR: MSVCR100.dll is missing!\nPlease, install: '
+                        '"Microsoft Visual C++ 2010 Redistributable Package '
+                        '(x86)"\nwhich can be found at:\n'
+                        'https://download.microsoft.com/download/1/6/5/165255'
+                        'E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe\n')
         else:
             LINE_MSG = _('Unrecognized error')
     # -----------------------------------------------------------------------#
@@ -82,36 +87,38 @@ class Ydl_DL_Exec(Thread):
         """
         Attributes defined here:
         self.stop_work_thread:  process terminate value
-        self.urls:          urls list
-        self.opt:           option strings to adding
-        self.outtmpl:       options template to renaming on pathname
-        self.code:          Format Code, else empty string ''
-        self.outputdir:     pathname destination
-        self.count:         increases with the progressive account elements
-        self.countmax:      length of self.urls
+        self.args['urls']:          urls list
+        self.args['opt']:           option strings to adding
+        self.args['outtmpl']:       options template to renaming on pathname
+        self.args['code']:          Format Code, else empty string ''
+        self.args['outputdir']:     pathname destination
+        self.count:         increases with the progressive loops
+        self.countmax:      length of self.args['urls']
         self.logname:       title log name for logging
 
         """
+        self.args = {'urls': varargs[1],
+                     'opt': varargs[4][0],
+                     'outtmpl': varargs[4][1],
+                     'nooverwrites': varargs[4][2],
+                     'restrictfn': varargs[4][3],
+                     'pl_items': varargs[4][4],
+                     'code': varargs[6],
+                     'outputdir': varargs[3]
+                     }
         self.stop_work_thread = False  # process terminate
-        self.urls = varargs[1]
-        self.opt = varargs[4][0]
-        self.outtmpl = varargs[4][1]
-        self.nooverwrites = varargs[4][2]
-        self.code = varargs[6]
-        self.outputdir = varargs[3]
         self.count = 0
         self.countmax = len(varargs[1])
         self.logname = logname
-        if (platform.system() == 'Windows' or '/tmp/.mount_' in sys.executable
-            or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
-             sys.argv[0]))) + '/AppRun')):
+
+        if (platform.system() == 'Windows' or
+                YtdlExecDL.APPTYPE == 'appimage'):
             self.ssl = '--no-check-certificate'
 
         else:
             self.ssl = ''
 
         Thread.__init__(self)
-        """initialize"""
         self.start()  # start the thread (va in self.run())
 
     def run(self):
@@ -119,43 +126,54 @@ class Ydl_DL_Exec(Thread):
         Subprocess initialize thread.
 
         """
-        for url, code in itertools.zip_longest(self.urls,
-                                               self.code,
+        for url, code in itertools.zip_longest(self.args['urls'],
+                                               self.args['code'],
                                                fillvalue='',
                                                ):
-            if 'playlist' in url or '--yes-playlist' in self.opt:
-                outtmpl = Ydl_DL_Exec.SUBDIR + self.outtmpl
+            if 'playlist' in url or '--yes-playlist' in self.args['opt']:
+                outtmpl = YtdlExecDL.SUBDIR + self.args['outtmpl']
             else:
-                outtmpl = self.outtmpl
+                outtmpl = self.args['outtmpl']
+
+            if self.args['pl_items'].get(url):
+                pl_items = ('--playlist-items %s ' %
+                            self.args['pl_items'].get(url))
+            else:
+                pl_items = ''
 
             format_code = '--format %s' % (code) if code else ''
             cmd = ('"{0}" {1} --newline --ignore-errors {8} -o '
-                   '"{2}/{3}" {4} {5} --ignore-config --restrict-filenames '
-                   '"{6}" --ffmpeg-location "{7}"'.format(
-                                                        Ydl_DL_Exec.EXECYDL,
-                                                        self.ssl,
-                                                        self.outputdir,
-                                                        outtmpl,
-                                                        format_code,
-                                                        self.opt,
-                                                        url,
-                                                        Ydl_DL_Exec.FFMPEG_URL,
-                                                        self.nooverwrites,
-                                                        ))
+                   '"{2}/{3}" {4} {5} {10} --ignore-config {9} "{6}" '
+                   '--ffmpeg-location "{7}"'.format(YtdlExecDL.EXECYDL,
+                                                    self.ssl,
+                                                    self.args['outputdir'],
+                                                    outtmpl,
+                                                    format_code,
+                                                    self.args['opt'],
+                                                    url,
+                                                    YtdlExecDL.FFMPEG_URL,
+                                                    self.args['nooverwrites'],
+                                                    self.args['restrictfn'],
+                                                    pl_items,
+                                                    ))
             self.count += 1
-            count = 'URL %s/%s' % (self.count, self.countmax,)
-            com = "%s\n%s" % (count, cmd)
+            count = 'URL %s/%s' % (self.count, self.countmax)
+            dest = 'Destination:  "%s"' % self.args['outputdir']
+            com = ('%s\nSource: %s\n%s\n\n'
+                   '[COMMAND]\n%s' % (count, url, dest, cmd))
+
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
+                         fsource='Source: %s' % url,
+                         destination=dest,
                          duration=100,
-                         fname=url,
                          end='',
                          )
-            logWrite(com,
+            logwrite(com,
                      '',
                      self.logname,
-                     Ydl_DL_Exec.LOGDIR,
+                     YtdlExecDL.LOGDIR,
                      )  # write n/n + command only
 
             if not platform.system() == 'Windows':
@@ -171,9 +189,9 @@ class Ydl_DL_Exec(Thread):
                                       stderr=subprocess.STDOUT,
                                       bufsize=1,
                                       universal_newlines=True,
-                                      startupinfo=info,) as p:
+                                      startupinfo=info,) as proc:
 
-                    for line in p.stdout:
+                    for line in proc.stdout:
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_YDL_EXECUTABLE_EVT",
                                      output=line,
@@ -181,44 +199,46 @@ class Ydl_DL_Exec(Thread):
                                      status=0,
                                      )
                         if self.stop_work_thread:  # break second 'for' loop
-                            p.terminate()
+                            proc.terminate()
                             break
 
-                    if p.wait():  # error
+                    if proc.wait():  # error
                         if 'line' not in locals():
-                            line = Ydl_DL_Exec.LINE_MSG
+                            line = YtdlExecDL.LINE_MSG
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_YDL_EXECUTABLE_EVT",
                                      output=line,
                                      duration=100,
-                                     status=p.wait(),
+                                     status=proc.wait(),
                                      )
-                        logWrite('',
-                                 "Exit status: %s" % p.wait(),
+                        logwrite('',
+                                 "Exit status: %s" % proc.wait(),
                                  self.logname,
-                                 Ydl_DL_Exec.LOGDIR,
+                                 YtdlExecDL.LOGDIR,
                                  )  # append exit error number
                     else:  # ok
                         wx.CallAfter(pub.sendMessage,
                                      "COUNT_EVT",
                                      count='',
+                                     fsource='',
+                                     destination='',
                                      duration='',
-                                     fname='',
                                      end='ok'
                                      )
             except (OSError, FileNotFoundError) as err:
-                e = "%s" % err
+                excepterr = "%s" % err
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
-                             count=e,
+                             count=excepterr,
+                             fsource='',
+                             destination='',
                              duration=0,
-                             fname=url,
                              end='error',
                              )
                 break
 
             if self.stop_work_thread:  # break first 'for' loop
-                p.terminate()
+                proc.terminate()
                 break
 
         time.sleep(.5)
@@ -233,15 +253,17 @@ class Ydl_DL_Exec(Thread):
 # ------------------------------------------------------------------------#
 
 
-class Ydl_EI_Exec(Thread):
+class YtdlExecEI(Thread):
     """
-    Ydl_EI_Exec it is a separate thread to run youtube-dl executable
+    YtdlExecEI it is a separate thread to run youtube-dl executable
     with subprocess class to get 'Format code' data and exit status
     from stdout/stderr output .
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute
-    EXECYDL = get.execYdl
+    EXECYDL = get.appset['EXECYDL']
+    APPTYPE = get.appset['app']
+
     if not platform.system() == 'Windows':
         LINE_MSG = _('Unrecognized error')
     else:
@@ -255,20 +277,19 @@ class Ydl_EI_Exec(Thread):
 
     def __init__(self, url):
         """
-        self.urls:          urls list
+        self.url:          urls list
         """
         self.url = url
         self.status = None
         self.data = None
-        if (platform.system() == 'Windows' or '/tmp/.mount_' in sys.executable
-            or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
-             sys.argv[0]))) + '/AppRun')):
+
+        if (platform.system() == 'Windows' or
+                YtdlExecEI.APPTYPE == 'appimage'):
             self.ssl = '--no-check-certificate'
         else:
             self.ssl = ''
 
         Thread.__init__(self)
-        """initialize"""
         self.start()  # start the thread (va in self.run())
 
     def run(self):
@@ -277,7 +298,7 @@ class Ydl_EI_Exec(Thread):
 
         """
         cmd = ('"{0}" {1} --newline --ignore-errors --ignore-config '
-               '--restrict-filenames -F "{2}"'.format(Ydl_EI_Exec.EXECYDL,
+               '--restrict-filenames -F "{2}"'.format(YtdlExecEI.EXECYDL,
                                                       self.ssl,
                                                       self.url))
         if not platform.system() == 'Windows':
@@ -288,25 +309,26 @@ class Ydl_EI_Exec(Thread):
             info = subprocess.STARTUPINFO()
             info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         try:
-            p = subprocess.Popen(cmd,
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.STDOUT,
-                                 universal_newlines=True,
-                                 startupinfo=info,
-                                 )
-            out = p.communicate()
+            with subprocess.Popen(cmd,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.STDOUT,
+                                  universal_newlines=True,
+                                  startupinfo=info,
+                                  ) as proc:
+
+                out = proc.communicate()
+
+                if proc.returncode:  # if returncode == 1
+                    if (not out[0] and not out[1] and
+                            platform.system() == 'Windows'):
+                        self.status = YtdlExecEI.LINE_MSG, 'error'
+                    else:
+                        self.status = (out[0], 'error')
+                else:
+                    self.status = (out[0], out[1])
 
         except OSError as oserr:  # executable do not exist
             self.status = ('%s' % oserr, 'error')
-        else:
-            if p.returncode:  # if returncode == 1
-                if (not out[0] and not out[1] and
-                        platform.system() == 'Windows'):
-                    self.status = Ydl_EI_Exec.LINE_MSG, 'error'
-                else:
-                    self.status = (out[0], 'error')
-            else:
-                self.status = (out[0], out[1])
 
         self.data = self.status
 

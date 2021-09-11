@@ -1,13 +1,7 @@
 # Help to translate videomass to other languages
 -----------------
 
-### Updates an existing translation
-The following languages have not yet been translated:   
-- de_DE   (German)
-- en_GB   (English)
-- es_ES   (Spanish)
-- fr_FR   (French)
-- pl_PL   (Polish)   
+### Updates an existing translation  
 
 You can choose the language you prefer to translate (even those not yet existing).
 

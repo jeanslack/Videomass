@@ -1,52 +1,56 @@
 # -*- coding: UTF-8 -*-
-# Name: utils.py
-# Porpose: It groups useful functions that are called several times
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: January.05.2021 *PEP8 compatible*
-#########################################################
+"""
+Name: utils.py
+Porpose: It groups useful functions that are called several times
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.16.2021
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 
-#########################################################
 import shutil
 import os
 import glob
 import math
 
 
-def format_bytes(n):
+def format_bytes(num):
     """
     Given a float number (bytes) returns size output
     strings human readable, e.g.
     out = format_bytes(9909043.20)
     It return a string digit with metric suffix
+
     """
     unit = ["B", "KiB", "MiB", "GiB", "TiB",
             "PiB", "EiB", "ZiB", "YiB"]
     const = 1024.0
-    if n == 0.0:  # if 0.0 or 0 raise ValueError: math domain error
+    if num == 0.0:  # if 0.0 or 0 raise ValueError: math domain error
         exponent = 0
     else:
-        exponent = int(math.log(n, const))  # get unit index
+        exponent = int(math.log(num, const))  # get unit index
 
     suffix = unit[exponent]  # unit index
-    output_value = n / (const ** exponent)
+    output_value = num / (const ** exponent)
 
     return "%.2f%s" % (output_value, suffix)
 # ------------------------------------------------------------------------
@@ -57,6 +61,7 @@ def to_bytes(string):
     Convert given size string to bytes, e.g.
     out = to_bytes('9.45MiB')
     It return a number 'float' object.
+
     """
     value = 0.0
     unit = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
@@ -65,9 +70,8 @@ def to_bytes(string):
     for index, metric in enumerate(reversed(unit)):
         if metric in string:
             value = float(string.split(metric)[0])
+            exponent = index * (-1) + (len(unit) - 1)
             break
-
-    exponent = index * (-1) + (len(unit) - 1)
 
     return round(value * (const ** exponent), 2)
 # ------------------------------------------------------------------------
@@ -77,14 +81,15 @@ def get_seconds(timeformat):
     """
     This is the old implementation to get time human to seconds,
     e.g. get_seconds('00:02:00'). Return int(seconds) object.
+
     """
     if timeformat == 'N/A':
         return int('0')
 
     pos = timeformat.split(':')
-    h, m, s = int(pos[0]), int(pos[1]), float(pos[2])
+    hours, minutes, seconds = int(pos[0]), int(pos[1]), float(pos[2])
 
-    return (h * 3600 + m * 60 + s)
+    return hours * 3600 + minutes * 60 + seconds
 # ------------------------------------------------------------------------
 
 
@@ -96,9 +101,9 @@ def timehuman(seconds):
     in time format i.e '00:38:20' .
 
     """
-    m, s = divmod(seconds, 60)
-    h, m = divmod(m, 60)
-    return "%02d:%02d:%02d" % (h, m, s)
+    minutes, seconds = divmod(seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    return "%02d:%02d:%02d" % (hours, minutes, seconds)
 # ------------------------------------------------------------------------
 
 
@@ -132,10 +137,10 @@ def milliseconds2timeformat(milliseconds):
     Returns a string object in time format.
 
     """
-    m, s = divmod(milliseconds, 60000)
-    h, m = divmod(m, 60)
-    sec = float(s) / 1000
-    return "%02d:%02d:%06.3f" % (h, m, sec)
+    minutes, sec = divmod(milliseconds, 60000)
+    hours, minutes = divmod(minutes, 60)
+    seconds = float(sec) / 1000
+    return "%02d:%02d:%06.3f" % (hours, minutes, seconds)
 # ------------------------------------------------------------------------
 
 
@@ -143,16 +148,20 @@ def copy_restore(src, dest):
     """
     copy a specific file from src to dest. If dest exists,
     it will be overwritten with src without confirmation.
-    If src does not exists return FileNotFoundError.
     """
     try:
         shutil.copyfile(str(src), str(dest))
     except FileNotFoundError as err:
+        # file src not exists
         return err
-    except Exception as err:
+    except SameFileError as err:
+        # src and dest are the same file and same dir.
+        return err
+    except OSError as err:
+        # The dest location must be writable
         return err
 
-    return
+    return None
 # ------------------------------------------------------------------#
 
 
@@ -170,7 +179,9 @@ def copydir_recursively(source, destination, extraname=None):
         dest = os.path.join(destination, os.path.basename(source))
     try:
         shutil.copytree(str(source), str(dest))
-    except Exception as err:
+
+    except FileExistsError as err:
+        # dest dir already exists
         return err
 
     return None
@@ -191,10 +202,11 @@ def copy_on(ext, source, destination):
     files = glob.glob("%s/*.%s" % (source, ext))
     if not files:
         return 'Error: No such file with ".%s" format found' % ext
-    for f in files:
+    for fln in files:
         try:
-            shutil.copy(f, '%s' % (destination))
-        except Exception as error:
+            shutil.copy(fln, '%s' % (destination))
+        except IOError as error:
+            # problems with permissions
             return error
     return None
 # ------------------------------------------------------------------#
@@ -209,9 +221,9 @@ def detect_binaries(platform, executable, additionaldir=None):
     via which function, if not found try to find it on the
     optional `additionaldir` .
 
-        If both failed return ('not installed', None)
-        If found on the O.S. return (None, executable)
-        If found on the additionaldir return ('provided', executable).
+        If both failed, return ('not installed', None)
+        If found on the O.S., return (None, executable)
+        If found on the additionaldir, return ('provided', executable).
 
     platform = platform name get by `platform.system()`
     executable = name of executable without extension
@@ -243,8 +255,8 @@ def detect_binaries(platform, executable, additionaldir=None):
 
         if additionaldir:  # check onto additionaldir
 
-            if not os.path.isfile(os.path.join("%s" % additionaldir,
-                                               "bin", "%s" % executable)):
+            if not os.path.isfile(os.path.join("%s" % additionaldir, "bin",
+                                               "%s" % executable)):
                 provided = False
 
             else:
@@ -252,17 +264,11 @@ def detect_binaries(platform, executable, additionaldir=None):
 
             if not provided:
                 return 'not installed', None
+            # only if ffmpeg is not installed, offer it if found
+            return 'provided', os.path.join("%s" % additionaldir,
+                                            "bin", "%s" % executable)
+        return 'not installed', None
 
-            else:
-                # only if ffmpeg is not installed, offer it if found
-                return 'provided', os.path.join("%s" % additionaldir,
-                                                "bin", "%s" % executable)
-        else:
-            return 'not installed', None
-
-    else:  # only for MacOs
-        if local:
-            return None, "/usr/local/bin/%s" % executable
-
-        else:
-            return None, shutil.which(executable)
+    if local:  # only for MacOs
+        return None, "/usr/local/bin/%s" % executable
+    return None, shutil.which(executable)

@@ -4,7 +4,7 @@
 # Created: 06/04/2012
 #
 # Edited by Gianluca (jeanslack) Pernigotto
-# Update: November 29 2020 (update with Russian language)
+# Update: July 20 2021 (update with Spanish language)
 
 import wx
 
@@ -16,4 +16,5 @@ supLang = {"en": wx.LANGUAGE_ENGLISH,
            "ru": wx.LANGUAGE_RUSSIAN,
            "nl": wx.LANGUAGE_DUTCH,
            "pt": wx.LANGUAGE_PORTUGUESE_BRAZILIAN,
+           "es": wx.LANGUAGE_SPANISH,
            }

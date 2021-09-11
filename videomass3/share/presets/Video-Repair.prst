@@ -1,0 +1,50 @@
+[
+    {
+        "Name": "Repair any video format",
+        "Description": "Try to repair any video format and save it in mkv format",
+        "First_pass": "-c copy",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Repair \"mp4\" video format",
+        "Description": "Try to repair video files in mp4 format",
+        "First_pass": "-c copy -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "mp4",
+        "Output_extension": "mp4"
+    },
+    {
+        "Name": "Repair \"mkv\" video format",
+        "Description": "Try to repair video files in mkv format",
+        "First_pass": "-c copy -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "mkv",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Repair \"avi\" video format",
+        "Description": "Try to repair video files in avi format",
+        "First_pass": "-c copy -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "avi",
+        "Output_extension": "avi"
+    },
+    {
+        "Name": "Repair \"webm\" video format",
+        "Description": "Try to repair video files in webm format",
+        "First_pass": "-c copy -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "webm",
+        "Output_extension": "webm"
+    },
+    {
+        "Name": "Repair \"ogv\" video format",
+        "Description": "Try to repair video files in ogv format",
+        "First_pass": "-c copy -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "ogv",
+        "Output_extension": "ogv"
+    }
+]

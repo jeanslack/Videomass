@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: December.14.2020 *PEP8 compatible*
+# Rev: December.14.2020 *-pycodestyle- compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -50,7 +50,7 @@ class PrstPan(wx.Panel):
     AZURE_NEON = 158, 201, 232
     # set colour in HTML rappresentetion:
     AZURE = '#15a6a6'  # or rgb form (wx.Colour(217,255,255))
-    YELLOW = '#a29500'
+    YELLOW = '#bd9f00'
     RED = '#ea312d'
     ORANGE = '#f28924'
     GREENOLIVE = '#8aab3c'
@@ -225,7 +225,7 @@ class PrstPan(wx.Panel):
                                      )
         grd_cmd.Add(box_cmd1, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_1cmd = wx.TextCtrl(self, wx.ID_ANY, "",
-                                    size=(-1, 100), style=wx.TE_MULTILINE |
+                                    size=(-1, 120), style=wx.TE_MULTILINE |
                                     wx.TE_PROCESS_ENTER
                                     )
         box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 5)
@@ -234,7 +234,7 @@ class PrstPan(wx.Panel):
                                      )
         grd_cmd.Add(box_cmd2, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_2cmd = wx.TextCtrl(self, wx.ID_ANY, "",
-                                    size=(-1, 100), style=wx.TE_MULTILINE |
+                                    size=(-1, 120), style=wx.TE_MULTILINE |
                                     wx.TE_PROCESS_ENTER
                                     )
         box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND, 5)
@@ -867,14 +867,7 @@ class PrstPan(wx.Panel):
         """
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
         pass2 = " ".join(self.txt_2cmd.GetValue().split())
-
-        if 'loudnorm=' in pass1:
-            typeproc = 'two pass EBU'
-            loudnorm = [ebu for ebu in pass1.split() if 'loudnorm=' in ebu][0]
-
-        else:  # two-pass std
-            typeproc, loudnorm = 'twopass', ''
-
+        typeproc = 'twopass'
         valupdate = self.update_dict(cntmax, typeproc)
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
 
@@ -884,7 +877,7 @@ class PrstPan(wx.Panel):
                                              outext,
                                              destdir,
                                              None,
-                                             [pass1, pass2, loudnorm],
+                                             [pass1, pass2],
                                              '',
                                              '',
                                              self.logname,
@@ -940,7 +933,7 @@ class PrstPan(wx.Panel):
             self.parent.switch_to_processing('savepictures',
                                              clicked,
                                              None,
-                                             None,
+                                             outputdir,
                                              command,
                                              None,
                                              None,

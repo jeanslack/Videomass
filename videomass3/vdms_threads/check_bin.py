@@ -1,72 +1,75 @@
 # -*- coding: UTF-8 -*-
-# Name: check_bin.py
-# Porpose: Gets the output to display the features of FFmpeg
-# Compatibility: Python3 (Unix, Windows)
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
-#########################################################
+"""
+Name: check_bin.py
+Porpose: Gets the output to display the features of FFmpeg
+Compatibility: Python3 (Unix, Windows)
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.15.2021
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 
-#########################################################
 import subprocess
 
 
-def subp(args, OS):
+def subp(args, ostype):
     """
     Execute commands which *do not* need to read the stdout/stderr in
     real time.
 
     Parameters:
         [*args* command list object]
-        *OS* result of the platform.system()
+        *ostype* result of the platform.system()
 
     """
     cmd = []
     for opt in args:
         cmd.append(opt)
 
-    if OS == 'Windows':
+    if ostype == 'Windows':
         cmd = ' '.join(cmd)
         info = subprocess.STARTUPINFO()
         info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     else:
         info = None
     try:
-        p = subprocess.Popen(cmd,
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.STDOUT,
-                             universal_newlines=True,  # mod text
-                             startupinfo=info,
-                             )
-        out = p.communicate()
+        with subprocess.Popen(cmd,
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.STDOUT,
+                              universal_newlines=True,  # mod text
+                              startupinfo=info,
+                              ) as proc:
+            out = proc.communicate()
+
+            if proc.returncode:  # if returncode == 1
+                return('Not found', out[0])
 
     except (OSError, FileNotFoundError) as oserr:  # if ffmpeg do not exist
         return('Not found', oserr)
-
-    if p.returncode:  # if returncode == 1
-        return('Not found', out[0])
 
     return ('None', out[0])
 # -----------------------------------------------------------#
 
 
-def ff_conf(FFMPEG_LINK, OS):
+def ff_conf(ffmpeg_url, ostype):
     """
     Receive output of the passed command to parse
     configuration messages of FFmpeg
@@ -81,7 +84,7 @@ def ff_conf(FFMPEG_LINK, OS):
     """
 
     # ------- grab generic informations:
-    version = subp([FFMPEG_LINK, '-loglevel', 'error', '-version'], OS)
+    version = subp([ffmpeg_url, '-loglevel', 'error', '-version'], ostype)
 
     if 'Not found' in version[0]:
         return(version[0], version[1])
@@ -96,7 +99,7 @@ def ff_conf(FFMPEG_LINK, OS):
             info.append(vers.strip())
 
     # ------- grab buildconf:
-    build = subp([FFMPEG_LINK, '-loglevel', 'error', '-buildconf'], OS)
+    build = subp([ffmpeg_url, '-loglevel', 'error', '-buildconf'], ostype)
 
     if 'Not found' in build[0]:
         return(build[0], build[1])
@@ -121,7 +124,7 @@ def ff_conf(FFMPEG_LINK, OS):
 # -------------------------------------------------------------------#
 
 
-def ff_formats(FFMPEG_LINK, OS):
+def ff_formats(ffmpeg_url, ostype):
     """
     Receive output of *ffmpeg -formats* command and return a
     ditionary with the follow keys and values:
@@ -133,10 +136,10 @@ def ff_formats(FFMPEG_LINK, OS):
     """
 
     # ------- grab buildconf:
-    ret = subp([FFMPEG_LINK, '-loglevel', 'error', '-formats'], OS)
+    ret = subp([ffmpeg_url, '-loglevel', 'error', '-formats'], ostype)
 
     if 'Not found' in ret[0]:
-        return({ret[0]: ret[1], '': '', '': ''})
+        return {ret[0]: ret[1]}
 
     frmt = ret[1].split('\n')
 
@@ -144,19 +147,19 @@ def ff_formats(FFMPEG_LINK, OS):
            'Muxing Supported': [],
            'Mux/Demux Supported': [],
            }
-    for f in frmt:
-        if f.strip().startswith('D '):
-            dic['Demuxing Supported'].append(f.replace('D', '', 1).strip())
-        elif f.strip().startswith('E '):
-            dic['Muxing Supported'].append(f.replace('E', '', 1).strip())
-        elif f.strip().startswith('DE '):
-            dic['Mux/Demux Supported'].append(f.replace('DE', '', 1).strip())
+    for its in frmt:
+        if its.strip().startswith('D '):
+            dic['Demuxing Supported'].append(its.replace('D', '', 1).strip())
+        elif its.strip().startswith('E '):
+            dic['Muxing Supported'].append(its.replace('E', '', 1).strip())
+        elif its.strip().startswith('DE '):
+            dic['Mux/Demux Supported'].append(its.replace('DE', '', 1).strip())
 
-    return(dic)
+    return dic
 # -------------------------------------------------------------------#
 
 
-def ff_codecs(FFMPEG_LINK, type_opt, OS):
+def ff_codecs(ffmpeg_url, type_opt, ostype):
     """
     Receive output of *ffmpeg -encoders* or *ffmpeg -decoders*
     command and return a ditionary with the follow keys and values:
@@ -176,7 +179,7 @@ def ff_codecs(FFMPEG_LINK, type_opt, OS):
     """
 
     # ------- grab encoders or decoders output:
-    ret = subp([FFMPEG_LINK, '-loglevel', 'error', type_opt], OS)
+    ret = subp([ffmpeg_url, '-loglevel', 'error', type_opt], ostype)
 
     if 'Not found' in ret[0]:
         return({ret[0], ret[1]})
@@ -185,32 +188,32 @@ def ff_codecs(FFMPEG_LINK, type_opt, OS):
 
     dic = {'Video': [], 'Audio': [], 'Subtitle': []}
 
-    for f in codecs:
-        if f.strip().startswith('V'):
-            if 'V..... = Video' not in f:
-                dic['Video'].append(f.strip())
+    for sup in codecs:
+        if sup.strip().startswith('V'):
+            if 'V..... = Video' not in sup:
+                dic['Video'].append(sup.strip())
 
-        elif f.strip().startswith('A'):
-            if 'A..... = Audio' not in f:
-                dic['Audio'].append(f.strip())
+        elif sup.strip().startswith('A'):
+            if 'A..... = Audio' not in sup:
+                dic['Audio'].append(sup.strip())
 
-        elif f.strip().startswith('S'):
-            if 'S..... = Subtitle' not in f:
-                dic['Subtitle'].append(f.strip())
+        elif sup.strip().startswith('S'):
+            if 'S..... = Subtitle' not in sup:
+                dic['Subtitle'].append(sup.strip())
 
-    return(dic)
+    return dic
 # -------------------------------------------------------------------#
 
 
-def ff_topics(FFMPEG_LINK, topic, OS):
+def ff_topics(ffmpeg_url, topic, ostype):
     """
     Get output of the options help command of FFmpeg.
     Note that the 'topic' parameter is always a list.
     """
 
     # ------ get output:
-    arr = [FFMPEG_LINK, '-loglevel', 'error'] + topic
-    ret = subp(arr, OS)
+    arr = [ffmpeg_url, '-loglevel', 'error'] + topic
+    ret = subp(arr, ostype)
 
     if 'Not found' in ret[0]:
         return(ret[0], ret[1])
