@@ -6,12 +6,16 @@ nav_order: 2
 # Features
 ---
 
+## Main features
+{: .bg-green-300}
+---
 - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
 - Batch processing.
 - Advanced log management.
 - Multi language support (English, Italian, Russian, Dutch, Portuguese (Brazilian), Spanish )
 
 ## Using FFmpeg
+{: .bg-green-300}
 ---
 - Drag and drop to add multiple files simultaneously.
 - Fully customizable presets and profiles.
@@ -27,6 +31,7 @@ nav_order: 2
 - The timeline has a display for viewing the time selection.
 
 ## Using youtube-dl
+{: .bg-green-300}
 ---
 - Add multiple URLs simultaneously.
 - Download multiple URLs from YouTube and more sites, 

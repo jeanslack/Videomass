@@ -4,14 +4,19 @@ title: Documentation
 has_children: true
 nav_order: 5
 ---
+
 # Documentation
----
 
-For online documentation, click the **User's Guide** menu to choose a language.   
+--- 
 
----
+## Online documentation
+{: .bg-green-300}
+
+For online documentation, go to the [User's Guide](Pages/User_Guide.html) menu 
+and choose an available language.  
 
 ## Demo videos and screencasts
+{: .bg-green-300}
 
 ### How to trim using the Timeline tool  
 <iframe width="200" height="153" src="https://www.youtube.com/embed/1IRGWN7DQKE" title="YouTube video player" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

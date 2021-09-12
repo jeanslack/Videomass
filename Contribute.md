@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Contribute
+has_children: true
 nav_order: 7
 ---
 
@@ -14,6 +15,7 @@ There are several ways to help the development of Videomass:
 ---
 
 ## Donations
+{: .bg-green-300}
 
 If you like Videomass, maybe you can make some donations to promote the 
 development of the application:    
@@ -23,6 +25,7 @@ development of the application:
 ---
 
 ## Source Code
+{: .bg-green-300}
 
 The git repository of Videomass is hosted on [GitHub](https://github.com/jeanslack/Videomass).
 You can clone the repository anonymously by the following command:   
@@ -31,13 +34,15 @@ You can clone the repository anonymously by the following command:
 ---  
 
 ## Traslating
+{: .bg-green-300}
 
 If you want to translate offline, please read 
-[localization guidalines](https://github.com/jeanslack/Videomass/blob/master/docs/localization_guidelines.md)
+[Translate Videomass Offline](Pages/Localization_Guidelines)
 
 ---
 
 ## Packaging
+{: .bg-green-300}
 
 Installation package of Videomass is currently available for Ubuntu (ppa), 
 MX-Linux and SparkyLinux. Packaging for other distros still needs to be done. 
@@ -47,6 +52,7 @@ repositories of any distribution.
 ---
 
 ## Writing Documentation
+{: .bg-green-300}
 
 User documentation of Videomass is still a work in progress. The source files 
 are hosted on [github](https://github.com/jeanslack/Videomass/tree/gh-pages/Pages/User-guide-languages). 
