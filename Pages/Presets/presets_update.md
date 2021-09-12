@@ -16,6 +16,7 @@ versions of the presets and also of downloading them has been implemented.
 To use new presets, follow the steps below.
 
 ## By Videomass Application
+{: .bg-green-300}
 
 - Launch the Videomass application.
 - Check if there are new versions on the menu bar > tools, then click on "Check for new presets" .
@@ -27,6 +28,7 @@ To use new presets, follow the steps below.
 - The new presets should appear in the drop-down menu.
 
 ## Downloading from the development page
+{: .bg-green-300}
 
 - Go to [Videomass-presets page](https://github.com/jeanslack/Videomass-presets)
 - Download the [latest release](https://github.com/jeanslack/Videomass-presets/releases) available

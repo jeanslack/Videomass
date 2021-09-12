@@ -25,11 +25,9 @@ a `.pot` file.
 > Specifically, the [videomass.pot](https://github.com/jeanslack/Videomass/blob/master/videomass3/locale/videomass.pot) 
 > file is just a template that contains the new strings not yet translated and should 
 > never be modified directly. The [videomass.po](https://github.com/jeanslack/Videomass/blob/master/videomass3/locale/it_IT/LC_MESSAGES/videomass.po) 
-> file can instead be edited for translation or updated with the latest strings 
-> not yet translated, i.e. by importing `videomass.pot` file (see below).
+> file can instead be edited for translation and updated with the latest strings 
+> not yet translated, see below.
 {: .text-grey-dk-100}
-
-#### Let's go
 
 - Download [latest](https://github.com/jeanslack/Videomass/releases/latest) release of Videomass
 
@@ -63,7 +61,7 @@ you can always resume your work from where you left off.
 [Python3](https://www.python.org/), [wxPython](https://www.wxpython.org/), 
 [PyPubSub](https://pypubsub.readthedocs.io/en/v4.0.3/), [requests](https://docs.python-requests.org/en/master/) 
 and [youtube-dl](https://youtube-dl.org/) are installed. Visit the Videomass 
-[wiki](https://github.com/jeanslack/Videomass/wiki/Installing-and-Dependencies) 
+[wiki](https://github.com/jeanslack/Videomass/wiki/Installing-dependencies) 
 page for installation details. 
 
 - Try your new tranlation by open a terminal window, `cd` on the `Videomass` 
@@ -76,6 +74,8 @@ request](https://github.com/jeanslack/Videomass/pulls) or send me your
 I will be grateful!!
 
 At your disposal for clarification.
+
+-----------------
 
 ## Start with a new translation
 {: .bg-green-300}
@@ -131,7 +131,7 @@ you can always resume your work from where you left off. This generates (compile
 [Python3](https://www.python.org/), [wxPython](https://www.wxpython.org/), 
 [PyPubSub](https://pypubsub.readthedocs.io/en/v4.0.3/), [requests](https://docs.python-requests.org/en/master/) 
 and [youtube-dl](https://youtube-dl.org/) are installed. Visit the Videomass 
-[wiki](https://github.com/jeanslack/Videomass/wiki/Installing-and-Dependencies) 
+[wiki](https://github.com/jeanslack/Videomass/wiki/Installing-dependencies) 
 page for installation details. 
 
 - Open the `Videomass/videomass3/vdms_SYS/app_const.py` file with your favorite 
