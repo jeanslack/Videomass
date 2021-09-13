@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.10.2021
+Rev: Sep.13.2021
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -80,12 +80,13 @@ class Videomass(wx.App):
                        }
         self.data = DataSource()  # instance data
         self.appset.update(self.data.get_fileconf())  # data system
+        expuser = os.path.expanduser('~')
 
         if self.appset['outputfile'] == 'none':
-            self.appset['outputfile'] = os.path.expanduser('~')
+            self.appset['outputfile'] = self.appset['getpath'](expuser)
 
         if self.appset['outputdownload'] == 'none':
-            self.appset['outputdownload'] = os.path.expanduser('~')
+            self.appset['outputdownload'] = self.appset['getpath'](expuser)
 
         self.iconset = self.data.icons_set(self.appset['icontheme'])
 
@@ -145,10 +146,9 @@ class Videomass(wx.App):
             execname = 'youtube-dl'
 
         if self.appset['app'] == 'pyinstaller':
-            self.appset['EXECYDL'] = os.path.join(self.appset['cachedir'],
-                                                  execname)
+            this = os.path.join(self.appset['cachedir'], execname)
+            self.appset['EXECYDL'] = self.appset['getpath'](this)
             self.appset['PYLIBYDL'] = 'no module loaded'
-
         else:
 
             if self.appset['enable_youtubedl'] == 'disabled':
@@ -157,9 +157,11 @@ class Videomass(wx.App):
             elif self.appset['enable_youtubedl'] == 'enabled':
                 win, nix = '\\__init__.py', '/__init__.py'
                 pkg = win if self.appset['ostype'] == 'Windows' else nix
+
                 try:
                     import youtube_dl
-                    self.appset['YDLSITE'] = youtube_dl.__file__.split(pkg)[0]
+                    this = youtube_dl.__file__.split(pkg)[0]
+                    self.appset['YDLSITE'] = self.appset['getpath'](this)
 
                 except (ModuleNotFoundError, ImportError) as nomodule:
                     self.appset['PYLIBYDL'] = nomodule
@@ -170,7 +172,7 @@ class Videomass(wx.App):
     def check_ffmpeg(self):
         """
         Get the FFmpeg's executables. On Unix/Unix like systems
-        perform check for permissions.
+        perform a check for permissions.
         """
         for link in [self.appset['ffmpeg_bin'],
                      self.appset['ffprobe_bin'],

@@ -91,15 +91,16 @@ class DownloadStreamExec(Thread):
             # see also inspect: `inspect.getfile(youtube_dl)`
             # or the best: shutil.which('python')
             pypath = youtube_dl.__file__.split('lib')[0]
-            EXECYDL = os.path.join(pypath, pyname[0], pyname[1])
+            pathexec = os.path.join(pypath, pyname[0], pyname[1])
+            EXECYDL = appdata['getpath'](pathexec)
         else:
             EXECYDL = False
 
     if platform.system() == 'Windows':
         if os.path.isfile(EXECYDL):
             LINE_MSG = ('\nRequires MSVCR100.dll\nTo resolve this problem '
-                        'install: Microsoft Visual C++ 2010 Redistributable '
-                        'Package (x86)')
+                        'install: Required: Microsoft Visual C++ 2010 '
+                        'Service Pack 1 Redistributable Package (x86)')
         else:
             LINE_MSG = ('Unrecognized error')
     else:

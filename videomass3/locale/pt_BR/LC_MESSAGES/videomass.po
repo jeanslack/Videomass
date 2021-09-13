@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.4 pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-04 16:50+0200\n"
-"PO-Revision-Date: 2021-09-04 16:55+0200\n"
+"POT-Creation-Date: 2021-09-12 16:47+0200\n"
+"PO-Revision-Date: 2021-09-12 16:54+0200\n"
 "Last-Translator: Samuel / http://littlesvr.ca/ostd/\n"
 "Language-Team: Samuel / http://littlesvr.ca/ostd/\n"
 "Language: pt_BR\n"
@@ -118,7 +118,7 @@ msgstr "Largura"
 #: ../vdms_dialogs/filter_crop.py:256 ../vdms_dialogs/filter_deinterlace.py:119
 #: ../vdms_dialogs/filter_denoisers.py:85 ../vdms_dialogs/filter_scale.py:186
 #: ../vdms_dialogs/filter_stab.py:259 ../vdms_dialogs/filter_transpose.py:109
-#: ../vdms_dialogs/playlist_indexing.py:141
+#: ../vdms_dialogs/playlist_indexing.py:137
 #: ../vdms_panels/av_conversions.py:536
 msgid "Reset"
 msgstr "Resetar"
@@ -126,7 +126,7 @@ msgstr "Resetar"
 #: ../vdms_dialogs/filter_crop.py:260 ../vdms_dialogs/filter_deinterlace.py:118
 #: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:184
 #: ../vdms_dialogs/filter_stab.py:257 ../vdms_dialogs/filter_transpose.py:113
-#: ../vdms_dialogs/playlist_indexing.py:145
+#: ../vdms_dialogs/playlist_indexing.py:141
 #: ../vdms_dialogs/set_timestamp.py:145
 msgid "Apply"
 msgstr "Aplicar"
@@ -802,7 +802,7 @@ msgstr "URL"
 msgid "Playlist Items"
 msgstr ""
 
-#: ../vdms_dialogs/playlist_indexing.py:82
+#: ../vdms_dialogs/playlist_indexing.py:86
 msgid ""
 "Click on \"Playlist Items\" column to specify indices of the videos in the "
 "playlist separated by commas like: \"1,2,5,8\" if you want to download "
@@ -812,44 +812,45 @@ msgid ""
 "1, 2, 3, 7, 10, 11, 12 and 13.\n"
 msgstr ""
 
-#: ../vdms_dialogs/playlist_indexing.py:117
+#: ../vdms_dialogs/playlist_indexing.py:122
 msgid "Playlist video items to download"
 msgstr ""
 
-#: ../vdms_dialogs/playlist_indexing.py:206
+#: ../vdms_dialogs/playlist_indexing.py:211
 msgid ""
 "ERROR: Enter only digits, commas and hyphens. If you have multiple items, "
 "use commas to separate them. Use the hyphen for the range. Spaces are not "
 "allowed."
 msgstr ""
 
-#: ../vdms_dialogs/playlist_indexing.py:209
+#: ../vdms_dialogs/playlist_indexing.py:215
 msgid "ERROR: You have to start and end with a digit."
 msgstr ""
 
-#: ../vdms_dialogs/playlist_indexing.py:210
+#: ../vdms_dialogs/playlist_indexing.py:217
 msgid "ERROR: Make sure the hyphen is between two digits."
 msgstr ""
 
-#: ../vdms_dialogs/playlist_indexing.py:211
+#: ../vdms_dialogs/playlist_indexing.py:219
 msgid ""
 "ERROR: A range must include only two digits and a hyphen, for example "
 "\"20-25\" ."
 msgstr ""
 
-#: ../vdms_dialogs/playlist_indexing.py:213
+#: ../vdms_dialogs/playlist_indexing.py:221
 msgid ""
 "ERROR: Make sure you use commas only to separate indices and / or ranges, "
 "for example \"1,3,5,10-15\""
 msgstr ""
 
-#: ../vdms_dialogs/playlist_indexing.py:215
+#: ../vdms_dialogs/playlist_indexing.py:224
 msgid "ERROR: The entered string contains redundant characters."
 msgstr ""
 
-#: ../vdms_dialogs/playlist_indexing.py:216
+#: ../vdms_dialogs/playlist_indexing.py:282
 msgid ""
-"WARNING: The URL contains a channel. Unable to determine playlist indexing."
+"WARNING: The selected URL does not refer to a playlist. Only lines marked "
+"green can be indexed."
 msgstr ""
 
 #: ../vdms_dialogs/presets_addnew.py:38
@@ -1046,7 +1047,11 @@ msgid "How to upgrade a Python package"
 msgstr "Como atualizar um pacote Python"
 
 #: ../vdms_dialogs/settings.py:253
-msgid "Required: Microsoft Visual C++ 2010 Redistributable Package (x86)"
+#, fuzzy
+#| msgid "Required: Microsoft Visual C++ 2010 Redistributable Package (x86)"
+msgid ""
+"Required: Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package "
+"(x86)"
 msgstr "Obrigatório: Pacote Redistribuível do Microsoft Visual C ++ 2010 (x86)"
 
 #: ../vdms_dialogs/settings.py:262
@@ -1762,14 +1767,14 @@ msgstr ""
 "coluna de predefinições e tente clicar no botão \"Restaurar tudo ...\""
 
 #: ../vdms_main/main_frame.py:189 ../vdms_main/main_frame.py:243
-#: ../vdms_main/main_frame.py:1452 ../vdms_main/main_frame.py:1484
-#: ../vdms_main/main_frame.py:1507 ../vdms_main/main_frame.py:1562
-#: ../vdms_main/main_frame.py:1613 ../vdms_main/main_frame.py:1665
-#: ../vdms_panels/youtubedl_ui.py:460 ../vdms_panels/youtubedl_ui.py:693
+#: ../vdms_main/main_frame.py:1458 ../vdms_main/main_frame.py:1490
+#: ../vdms_main/main_frame.py:1513 ../vdms_main/main_frame.py:1568
+#: ../vdms_main/main_frame.py:1619 ../vdms_main/main_frame.py:1671
+#: ../vdms_panels/youtubedl_ui.py:460 ../vdms_panels/youtubedl_ui.py:694
 msgid "Ready"
 msgstr "Pronto"
 
-#: ../vdms_main/main_frame.py:242 ../vdms_panels/youtubedl_ui.py:466
+#: ../vdms_main/main_frame.py:242
 msgid "Videomass"
 msgstr "Videomass"
 
@@ -2398,44 +2403,48 @@ msgstr "Anexe pelo menos um URL"
 msgid "Invalid URL: \"{}\""
 msgstr "URL inválido: \"{}\""
 
-#: ../vdms_main/main_frame.py:1453
+#: ../vdms_main/main_frame.py:1420
+msgid "ERROR: Multiple URL's are the same"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:1459
 msgid "Videomass - Queued Files"
 msgstr "Videomass - arquivos enfileirados"
 
-#: ../vdms_main/main_frame.py:1485
+#: ../vdms_main/main_frame.py:1491
 msgid "Videomass - Queued URLs"
 msgstr "Videomass - URLs enfileirados"
 
-#: ../vdms_main/main_frame.py:1495
+#: ../vdms_main/main_frame.py:1501
 msgid "URL list changed, please check the settings again."
 msgstr "Lista de URLs alterada, verifique as configurações novamente."
 
-#: ../vdms_main/main_frame.py:1509
+#: ../vdms_main/main_frame.py:1515
 msgid "Videomass - YouTube Downloader"
 msgstr "Videomass - Baixar vídeos"
 
-#: ../vdms_main/main_frame.py:1545 ../vdms_main/main_frame.py:1597
-#: ../vdms_main/main_frame.py:1649
+#: ../vdms_main/main_frame.py:1551 ../vdms_main/main_frame.py:1603
+#: ../vdms_main/main_frame.py:1655
 msgid "File list changed, please check the settings again."
 msgstr "Lista de arquivos alterada, verifique as configurações novamente."
 
-#: ../vdms_main/main_frame.py:1564
+#: ../vdms_main/main_frame.py:1570
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - Conversões AV"
 
-#: ../vdms_main/main_frame.py:1615
+#: ../vdms_main/main_frame.py:1621
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - Gerenciador de predefinições"
 
-#: ../vdms_main/main_frame.py:1667
+#: ../vdms_main/main_frame.py:1673
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Concatenate Demuxer"
 
-#: ../vdms_main/main_frame.py:1699
+#: ../vdms_main/main_frame.py:1705
 msgid "Viewing last log"
 msgstr "Visualizando o último log"
 
-#: ../vdms_main/main_frame.py:1707
+#: ../vdms_main/main_frame.py:1713
 msgid ""
 "Cannot continue: The duration in the timeline exceeds the duration of some "
 "queued files."
@@ -2443,11 +2452,11 @@ msgstr ""
 "Não é possível continuar: a duração na linha do tempo excede a duração de "
 "alguns arquivos enfileirados."
 
-#: ../vdms_main/main_frame.py:1712 ../vdms_main/main_frame.py:1717
+#: ../vdms_main/main_frame.py:1718 ../vdms_main/main_frame.py:1723
 msgid "Processing..."
 msgstr "Processando..."
 
-#: ../vdms_main/main_frame.py:1719
+#: ../vdms_main/main_frame.py:1725
 msgid "Videomass - Output Monitor"
 msgstr "Videomass - Monitor de Saída"
 
@@ -3113,8 +3122,8 @@ msgstr ""
 msgid "youtube-dl is disabled. Check your preferences."
 msgstr "youtube-dl está desativado. Verifique suas preferências."
 
-#: ../vdms_panels/choose_topic.py:237 ../vdms_panels/youtubedl_ui.py:905
-#: ../vdms_panels/youtubedl_ui.py:911
+#: ../vdms_panels/choose_topic.py:237 ../vdms_panels/youtubedl_ui.py:916
+#: ../vdms_panels/youtubedl_ui.py:922
 #: ../vdms_panels/long_processing_task.py:511
 #: ../vdms_panels/presets_manager.py:491 ../vdms_panels/presets_manager.py:534
 #: ../vdms_panels/presets_manager.py:602 ../vdms_panels/presets_manager.py:628
@@ -3314,73 +3323,78 @@ msgid "An item must be selected in the URLs checklist"
 msgstr "Um item deve ser selecionado na lista de verificação de URLs"
 
 #: ../vdms_panels/youtubedl_ui.py:465
-#, fuzzy
-#| msgid "Videomass cannot play channel or playlists."
-msgid "Videomass cannot play channels or playlists."
-msgstr "Videomass não pode reproduzir lista de reprodução por enquanto."
+msgid ""
+"Cannot play playlists / channels or URLs containing multiple videos listed."
+msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:487 ../vdms_panels/youtubedl_ui.py:584
+#: ../vdms_panels/youtubedl_ui.py:488 ../vdms_panels/youtubedl_ui.py:585
 msgid "Format Code"
 msgstr "Código de Formato"
 
-#: ../vdms_panels/youtubedl_ui.py:488 ../vdms_panels/youtubedl_ui.py:585
-#: ../vdms_panels/youtubedl_ui.py:632
+#: ../vdms_panels/youtubedl_ui.py:489 ../vdms_panels/youtubedl_ui.py:586
+#: ../vdms_panels/youtubedl_ui.py:633
 msgid "Url"
 msgstr "Url"
 
-#: ../vdms_panels/youtubedl_ui.py:489 ../vdms_panels/youtubedl_ui.py:586
-#: ../vdms_panels/youtubedl_ui.py:633
+#: ../vdms_panels/youtubedl_ui.py:490 ../vdms_panels/youtubedl_ui.py:587
+#: ../vdms_panels/youtubedl_ui.py:634
 msgid "Title"
 msgstr "Título"
 
-#: ../vdms_panels/youtubedl_ui.py:490 ../vdms_panels/youtubedl_ui.py:587
+#: ../vdms_panels/youtubedl_ui.py:491 ../vdms_panels/youtubedl_ui.py:588
 msgid "Extension"
 msgstr "Extensão"
 
-#: ../vdms_panels/youtubedl_ui.py:491
+#: ../vdms_panels/youtubedl_ui.py:492
 msgid "Resolution"
 msgstr "Resolução"
 
-#: ../vdms_panels/youtubedl_ui.py:492
+#: ../vdms_panels/youtubedl_ui.py:493
 msgid "Video Codec"
 msgstr "Codec de vídeo"
 
-#: ../vdms_panels/youtubedl_ui.py:493
+#: ../vdms_panels/youtubedl_ui.py:494
 msgid "fps"
 msgstr "quadros por segundo"
 
-#: ../vdms_panels/youtubedl_ui.py:494
+#: ../vdms_panels/youtubedl_ui.py:495
 msgid "Audio Codec"
 msgstr "Codec de áudio"
 
-#: ../vdms_panels/youtubedl_ui.py:495 ../vdms_panels/filedrop.py:222
+#: ../vdms_panels/youtubedl_ui.py:496 ../vdms_panels/filedrop.py:222
 msgid "Size"
 msgstr "Tamanho"
 
-#: ../vdms_panels/youtubedl_ui.py:588
+#: ../vdms_panels/youtubedl_ui.py:589
 msgid "Resolution note"
 msgstr "Nota de resolução"
 
-#: ../vdms_panels/youtubedl_ui.py:634
+#: ../vdms_panels/youtubedl_ui.py:635
 msgid "Quality"
 msgstr "Qualidade"
 
-#: ../vdms_panels/youtubedl_ui.py:654
+#: ../vdms_panels/youtubedl_ui.py:655
 msgid "Sorry, this feature is disabled."
 msgstr "Desculpe, este recurso está desativado."
 
-#: ../vdms_panels/youtubedl_ui.py:724
+#: ../vdms_panels/youtubedl_ui.py:725
 #, fuzzy
 #| msgid "Unable to get format codes on playlists"
-msgid "Unable to get format codes on playlists and channels"
+msgid ""
+"Unable to get format codes on playlists / channels or URLs containing "
+"multiple videos listed."
 msgstr "Não é possível obter códigos de formato nas listas de reprodução"
 
-#: ../vdms_panels/youtubedl_ui.py:903
+#: ../vdms_panels/youtubedl_ui.py:794
+msgid "URLs have no playlist references"
+msgstr ""
+
+#: ../vdms_panels/youtubedl_ui.py:914
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr ""
 "Os URLs contêm listas de reprodução. Você tem certeza que quer continuar?"
 
-#: ../vdms_panels/youtubedl_ui.py:909
+#: ../vdms_panels/youtubedl_ui.py:920
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "Os URLs contêm canais . Você tem certeza que quer continuar?"
 
@@ -3953,6 +3967,11 @@ msgstr ""
 "Requer MSVCR100.dll\n"
 "Para resolver esse problema, instale: Microsoft Visual C ++ 2010 "
 "Redistributable Package (x86)"
+
+#, fuzzy
+#~| msgid "Videomass cannot play channel or playlists."
+#~ msgid "Videomass cannot play channels or playlists."
+#~ msgstr "Videomass não pode reproduzir lista de reprodução por enquanto."
 
 #~ msgid "CODING ABILITY"
 #~ msgstr "CAPACIDADE DE CODIFICAÇÃO"

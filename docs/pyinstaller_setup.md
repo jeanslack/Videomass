@@ -21,7 +21,7 @@ Packaging
    
    - `python3 -m pip install --user requests`
 
-- Install wxPython (see [Installing-and-Dependencies](https://github.com/jeanslack/Videomass/wiki/Installing-and-Dependencies) )
+- Install wxPython (see [Installing dependencies](https://github.com/jeanslack/Videomass/wiki/Installing-dependencies) )
 for more details.
 
 - Download the [Videomass](https://github.com/jeanslack/Videomass) using 

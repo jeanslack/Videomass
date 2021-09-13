@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: Sep.13.2021 *-pycodestyle- compatible*
 ########################################################
 
 This file is part of Videomass.
@@ -130,6 +130,7 @@ class PageTwo(wx.Panel):
     """
     get = wx.GetApp()
     OS = get.appset['ostype']
+    GETPATH = get.appset['getpath']
     FFMPEG_LOCALDIR = get.appset['FFMPEG_videomass_pkg']
 
     MSG0 = (_('Videomass is an application based on FFmpeg\n'))
@@ -260,7 +261,7 @@ class PageTwo(wx.Panel):
         self.parent.ffplay = path[2]
         self.parent.btnNext.Enable()
         self.detectBtn.Disable(), self.locateBtn.Enable()
-        self.labFFpath.SetLabel('...Found: "%s"' % path[0])
+        self.labFFpath.SetLabel('...Found: "%s"' % PageTwo.GETPATH(path[0]))
         self.Layout()
 
 
@@ -272,6 +273,7 @@ class PageThree(wx.Panel):
     """
     get = wx.GetApp()
     OS = get.appset['ostype']
+    GETPATH = get.appset['getpath']
 
     MSG0 = (_('Locating FFmpeg executables\n'))
 
@@ -366,8 +368,9 @@ class PageThree(wx.Panel):
             if dlgfile.ShowModal() == wx.ID_OK:
                 if os.path.basename(dlgfile.GetPath()) == self.ffmpeg:
                     self.ffmpegTxt.Clear()
-                    self.ffmpegTxt.write(dlgfile.GetPath())
-                    self.parent.ffmpeg = dlgfile.GetPath()
+                    ffmpegpath = PageThree.GETPATH(dlgfile.GetPath())
+                    self.ffmpegTxt.write(ffmpegpath)
+                    self.parent.ffmpeg = ffmpegpath
 
     def on_ffprobe(self, event):
         """
@@ -382,8 +385,9 @@ class PageThree(wx.Panel):
             if dlgfile.ShowModal() == wx.ID_OK:
                 if os.path.basename(dlgfile.GetPath()) == self.ffprobe:
                     self.ffprobeTxt.Clear()
-                    self.ffprobeTxt.write(dlgfile.GetPath())
-                    self.parent.ffprobe = dlgfile.GetPath()
+                    ffprobepath = PageThree.GETPATH(dlgfile.GetPath())
+                    self.ffprobeTxt.write(ffprobepath)
+                    self.parent.ffprobe = ffprobepath
 
     def on_ffplay(self, event):
         """
@@ -398,8 +402,9 @@ class PageThree(wx.Panel):
             if dlgfile.ShowModal() == wx.ID_OK:
                 if os.path.basename(dlgfile.GetPath()) == self.ffplay:
                     self.ffplayTxt.Clear()
-                    self.ffplayTxt.write(dlgfile.GetPath())
-                    self.parent.ffplay = dlgfile.GetPath()
+                    ffplaypath = PageThree.GETPATH(dlgfile.GetPath())
+                    self.ffplayTxt.write(ffplaypath)
+                    self.parent.ffplay = ffplaypath
 
 
 class PageFour(wx.Panel):

@@ -10,20 +10,18 @@ conventions of each operating system which are:
         MacOs:       '~/Library/Application Support/videomass'
         Windows:     'C:\Users\username\AppData\Roaming\videomass'
 
-`videomass.conf` is Videomass main configuration file and is used to store
-user preferences and to import essential data for the application.
+`videomass.conf` is the main configuration file and is used to store
+user preferences and to import application data.
 
 Furthermore, the Videomass configuration directory is also used to load
-the presets inside the 'presets/' folder. All presets files have the format
-extension `.prst` and contain text with JSON data structure.
+files into 'presets/' folder. Files format into 'preset' folder is `.prst`.
+These files are Videomass presets and contain JSON data type.
 
-UPDATE:
+UPDATE: v3.4.6
 
-From 29 August 2021 (specifically from Videomass v.3.4.4), the possibility of
-keeping all application data inside the program folder is introduced. This
-feature can only be implemented with stand-alone (preferably portable)
-executables created with pyinstaller, and currently includes
-Videomass_portable.exe for Windows and Videomass.app for MacOS.
+To keep all application data inside the program folder, create a folder named
+"portable_data" . Remember that if this folder is found, only relative paths
+will be provided. Otherwise they will be absolute paths.
 
 AppImage users: If you would like the Videomass*.AppImage to
 store its data alongside the Videomass*.AppImage rather than in your home

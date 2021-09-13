@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.14.2021 *-pycodestyle- compatible*
+Rev: Sep.13.2021 *-pycodestyle- compatible*
 ########################################################
 
 This file is part of Videomass.
@@ -1061,7 +1061,8 @@ class MainFrame(wx.Frame):
         dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
                                        "conversions"))
         if dialdir.ShowModal() == wx.ID_OK:
-            self.outpath_ffmpeg = '%s' % (dialdir.GetPath())
+            getpath = self.appdata['getpath'](dialdir.GetPath())
+            self.outpath_ffmpeg = '%s' % getpath
             self.fileDnDTarget.on_file_save(self.outpath_ffmpeg)
             self.fileDnDTarget.file_dest = self.outpath_ffmpeg
 
@@ -1081,7 +1082,8 @@ class MainFrame(wx.Frame):
         dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
                                        "downloads"))
         if dialdir.ShowModal() == wx.ID_OK:
-            self.outpath_ydl = '%s' % (dialdir.GetPath())
+            getpath = self.appdata['getpath'](dialdir.GetPath())
+            self.outpath_ydl = '%s' % getpath
             self.textDnDTarget.on_file_save(self.outpath_ydl)
             self.textDnDTarget.file_dest = self.outpath_ydl
 
@@ -1176,8 +1178,8 @@ class MainFrame(wx.Frame):
 
     def Translations(self, event):
         """Display translation how to on github"""
-        page = ('https://jeanslack.github.io/Videomass/Contribute.html'
-                '#traslating')
+        page = ('https://jeanslack.github.io/Videomass/Pages/'
+                'Localization_Guidelines.html')
         webbrowser.open(page)
     # ------------------------------------------------------------------#
 
