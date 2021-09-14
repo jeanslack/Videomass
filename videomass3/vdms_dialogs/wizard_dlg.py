@@ -256,9 +256,9 @@ class PageTwo(wx.Panel):
                              wx.ICON_QUESTION | wx.YES_NO,  None) == wx.NO:
                 return
 
-        self.parent.ffmpeg = path[0]
-        self.parent.ffprobe = path[1]
-        self.parent.ffplay = path[2]
+        self.parent.ffmpeg = PageTwo.GETPATH(path[0])
+        self.parent.ffprobe = PageTwo.GETPATH(path[1])
+        self.parent.ffplay = PageTwo.GETPATH(path[2])
         self.parent.btnNext.Enable()
         self.detectBtn.Disable(), self.locateBtn.Enable()
         self.labFFpath.SetLabel('...Found: "%s"' % PageTwo.GETPATH(path[0]))

@@ -80,13 +80,17 @@ class Videomass(wx.App):
                        }
         self.data = DataSource()  # instance data
         self.appset.update(self.data.get_fileconf())  # data system
-        expuser = os.path.expanduser('~')
+
+        if self.appset['relpath']  is True:
+            outputdir = os.path.join(os.getcwd(), 'portable_data')
+        else:
+            outputdir = os.path.expanduser('~')
 
         if self.appset['outputfile'] == 'none':
-            self.appset['outputfile'] = self.appset['getpath'](expuser)
+            self.appset['outputfile'] = self.appset['getpath'](outputdir)
 
         if self.appset['outputdownload'] == 'none':
-            self.appset['outputdownload'] = self.appset['getpath'](expuser)
+            self.appset['outputdownload'] = self.appset['getpath'](outputdir)
 
         self.iconset = self.data.icons_set(self.appset['icontheme'])
 

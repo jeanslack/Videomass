@@ -137,10 +137,6 @@ class DataSource():
         * multiuser: root installation
         * user: local installation
 
-    NOTE: For develop. test, add this line to use portable data during
-          a local source code execution (NOT OTHER)
-          Remember to add /portable_data folder within videomass3/
-
     """
     FROZEN, MEIPASS, MPATH, DATA_LOCAT = get_pyinstaller()
     portdirname = os.path.dirname(sys.executable)
@@ -149,15 +145,16 @@ class DataSource():
     if FROZEN and MEIPASS and os.path.isdir(portdir):
         # if portdir is true, make application really portable
         FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = portable_paths(portdirname)
-        PORTABLE = True
+        RELPATH = True if platform.system() == 'Windows' else False
 
     elif os.path.isdir(os.path.join(DATA_LOCAT, 'portable_data')):
+        # Remember to add portable_data/ folder within videomass3/
         FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = portable_paths(DATA_LOCAT)
-        PORTABLE = True
+        RELPATH = False
 
     else:
         FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = conventional_paths()
-        PORTABLE = False
+        RELPATH = False
     # -------------------------------------------------------------------
 
     def __init__(self):
@@ -288,7 +285,7 @@ class DataSource():
                 copyerr, userconf = dconf, None
 
         getpath = (lambda path: os.path.relpath(path) if
-                   DataSource.PORTABLE else path)
+                   DataSource.RELPATH else path)
 
         return ({'ostype': platform.system(),
                  'srcpath': getpath(self.srcpath),
@@ -301,7 +298,7 @@ class DataSource():
                  'cachedir': getpath(DataSource.CACHE_DIR),
                  'FFMPEG_videomass_pkg': getpath(self.ffmpeg_pkg),
                  'app': self.apptype,
-                 'portable': DataSource.PORTABLE,
+                 'relpath': DataSource.RELPATH,
                  'getpath': getpath,
                  'confversion': userconf[0],
                  'outputfile': userconf[1],
