@@ -63,19 +63,19 @@ class NormalizationList(wx.MiniFrame):
                                  wx.ID_ANY,
                                  (_('Post-normalization references:')
                                   ))
-        self.btnRed = wx.Button(self.panel, wx.ID_ANY, ("?"), size=(30, -1))
-        self.btnRed.SetBackgroundColour(wx.Colour(233, 80, 77))  # #e9504d
-        self.btnRed.SetForegroundColour(wx.Colour(0, 0, 0))
+        self.btn_red = wx.Button(self.panel, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btn_red.SetBackgroundColour(wx.Colour(233, 80, 77))  # #e9504d
+        self.btn_red.SetForegroundColour(wx.Colour(0, 0, 0))
         txtred = wx.StaticText(self.panel, wx.ID_ANY, (_("=  Clipped peaks")))
 
-        self.btnGrey = wx.Button(self.panel, wx.ID_ANY, ("?"), size=(30, -1))
-        self.btnGrey.SetBackgroundColour(wx.Colour(100, 100, 100))  # #646464
-        self.btnGrey.SetForegroundColour(wx.Colour(0, 0, 0))
+        self.btn_grey = wx.Button(self.panel, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btn_grey.SetBackgroundColour(wx.Colour(100, 100, 100))  # #646464
+        self.btn_grey.SetForegroundColour(wx.Colour(0, 0, 0))
         txtgrey = wx.StaticText(self.panel, wx.ID_ANY, (_("=  No changes")))
 
-        self.btnYell = wx.Button(self.panel, wx.ID_ANY, ("?"), size=(30, -1))
-        self.btnYell.SetBackgroundColour(wx.Colour(198, 180, 38))  # #C6B426
-        self.btnYell.SetForegroundColour(wx.Colour(0, 0, 0))
+        self.btn_yell = wx.Button(self.panel, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btn_yell.SetBackgroundColour(wx.Colour(198, 180, 38))  # #C6B426
+        self.btn_yell.SetForegroundColour(wx.Colour(0, 0, 0))
         txtyell = wx.StaticText(self.panel,
                                 wx.ID_ANY, (_("=  Below max peak")))
 
@@ -85,19 +85,19 @@ class NormalizationList(wx.MiniFrame):
         sizer.Add(normlist, 1, wx.EXPAND | wx.ALL, 5)
         sizer.Add(descript, 0, wx.ALL, 10)
         grid_list = wx.FlexGridSizer(1, 6, 0, 0)
-        grid_list.Add(self.btnRed, 1, wx.ALL, 5)
+        grid_list.Add(self.btn_red, 1, wx.ALL, 5)
         grid_list.Add(txtred, 1,
                       wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL |
                       wx.ALIGN_CENTER_HORIZONTAL, 5
                       )
-        grid_list.Add(self.btnGrey, 1, wx.ALL, 5)
+        grid_list.Add(self.btn_grey, 1, wx.ALL, 5)
         grid_list.Add(txtgrey, 1,
                       wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL |
                       wx.ALIGN_CENTER_HORIZONTAL, 5
                       )
-        grid_list.Add(self.btnYell, 1, wx.ALL, 5)
+        grid_list.Add(self.btn_yell, 1, wx.ALL, 5)
         grid_list.Add(txtyell, 1,
                       wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL |
@@ -126,9 +126,9 @@ class NormalizationList(wx.MiniFrame):
             txtyell.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
 
         # ----------------------Binding (EVT)------------------------#
-        self.Bind(wx.EVT_BUTTON, self.on_red, self.btnRed)
-        self.Bind(wx.EVT_BUTTON, self.on_grey, self.btnGrey)
-        self.Bind(wx.EVT_BUTTON, self.on_yellow, self.btnYell)
+        self.Bind(wx.EVT_BUTTON, self.on_red, self.btn_red)
+        self.Bind(wx.EVT_BUTTON, self.on_grey, self.btn_grey)
+        self.Bind(wx.EVT_BUTTON, self.on_yellow, self.btn_yell)
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
 

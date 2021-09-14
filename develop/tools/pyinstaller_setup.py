@@ -124,6 +124,7 @@ class PyinstallerSpec():
         """
         Set options flags and spec file pathname
         on MacOS platform.
+        FIXME : use codesign identity when pyinstaller is fixed to v.4.5.2
         """
         rlsname = self.getdata['RLS_NAME']
         version = self.getdata['VERSION']
@@ -137,7 +138,7 @@ class PyinstallerSpec():
                 # f"--osx-entitlements-file FILENAME "
                 f"--exclude-module 'youtube_dl' {self.datas} ")
 
-        additional_opts = (
+        plist = (
             f"""             info_plist={{# 'LSEnvironment': '$0',
              'NSPrincipalClass': 'NSApplication',
              'NSAppleScriptEnabled': False,
@@ -152,7 +153,7 @@ class PyinstallerSpec():
                                         'All Rights Reserved',}})
 """)
 
-        return opts, additional_opts
+        return opts, plist
     # ---------------------------------------------------------#
 
     def linux_platform(self):
@@ -199,7 +200,7 @@ def fetch_exec(binary=BINARY, here=HERE):
 # --------------------------------------------------------#
 
 
-def genspec(options, specfile=SPECFILE, addopts=None):
+def genspec(options, specfile=SPECFILE, addplist=None):
     """
     Generate a videomass.spec file for platform in use.
     Support for the following platforms is expected:
@@ -218,7 +219,7 @@ def genspec(options, specfile=SPECFILE, addopts=None):
     except subprocess.CalledProcessError as err:
         sys.exit('\nERROR: %s\n' % err)
 
-    if platform.system() == 'Darwin' and addopts is not None:
+    if platform.system() == 'Darwin' and addplist is not None:
         with open(specfile, 'r', encoding='utf8') as specf:
             arr = specf.readlines()
 
@@ -226,7 +227,7 @@ def genspec(options, specfile=SPECFILE, addopts=None):
                         "jeanslack.videomass')\n")
         arr[idx] = ("             bundle_identifier='com."
                     "jeanslack.videomass',\n")
-        newspec = ''.join(arr) + addopts
+        newspec = ''.join(arr) + addplist
         with open(specfile, 'w', encoding='utf8') as specf:
             specf.write(newspec)
 # --------------------------------------------------------#
@@ -352,7 +353,7 @@ def main():
 
         elif platform.system() == 'Darwin':
             getopts = wrap.darwin_platform()
-            genspec(getopts[0], addopts=getopts[1])
+            genspec(getopts[0], addplist=getopts[1])
 
         elif platform.system() == 'Windows':
             getopts = wrap.windows_platform()

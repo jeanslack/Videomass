@@ -460,10 +460,11 @@ class Downloader(wx.Panel):
             self.parent.statusbar_msg(_('Ready'), None)
             item = self.fcode.GetFocusedItem()
             url = self.fcode.GetItemText(item, 1)
-            if 'playlist' in url or 'channel' in url:
+            if '/watch' not in url:
                 # prevent opening too many of ffplay windows
-                wx.MessageBox(_('Videomass cannot play channels or playlists.'),
-                              _('Videomass'), wx.ICON_INFORMATION, self)
+                wx.MessageBox(_("Cannot play playlists / channels or URLs "
+                                "containing multiple videos listed."),
+                              "Videomass", wx.ICON_INFORMATION, self)
                 return
 
             if self.choice.GetSelection() in [0, 1, 2]:
@@ -717,13 +718,14 @@ class Downloader(wx.Panel):
             self.on_urls_list('')
 
         elif self.choice.GetSelection() == 3:
-            ceckurls = [url for url in self.parent.data_url if 'playlist'
-                        in url or 'channel' in url]
-            if ceckurls:
 
-                wx.MessageBox(_("Unable to get format codes on playlists "
-                                "and channels"),
-                              "Videomass", wx.ICON_ERROR, self)
+            ceckurls = [url for url in self.parent.data_url if '/watch'
+                        not in url]
+            if ceckurls:
+                wx.MessageBox(_("Unable to get format codes on playlists / "
+                                "channels or URLs containing multiple "
+                                "videos listed."),
+                              "Videomass", wx.ICON_INFORMATION, self)
                 # prevent KeyError: 'format_id'
                 self.choice.SetSelection(0)
                 return
@@ -784,9 +786,18 @@ class Downloader(wx.Panel):
     # -----------------------------------------------------------------#
 
     def on_Playlist(self, event):
+
         if self.ckbx_pl.IsChecked():
+            playlist = [url for url in self.parent.data_url
+                        if '/playlist?list' in url]
+            if not playlist:
+                wx.MessageBox(_("URLs have no playlist references"),
+                              "Videomass", wx.ICON_INFORMATION, self)
+                self.ckbx_pl.SetValue(False)
+                return
             self.opt["NO_PLAYLIST"] = [False, "--yes-playlist"]
             self.btn_plidx.Enable()
+
         else:
             self.opt["NO_PLAYLIST"] = [True, "--no-playlist"]
             self.btn_plidx.SetBackgroundColour(wx.NullColour)
@@ -907,9 +918,9 @@ class Downloader(wx.Panel):
                     return
         if [url for url in urls if 'channel' in url]:
             if wx.MessageBox(_('The URLs contain channels. '
-                                'Are you sure you want to continue?'),
-                                _('Please confirm'), wx.ICON_QUESTION |
-                                wx.YES_NO, self) == wx.NO:
+                               'Are you sure you want to continue?'),
+                             _('Please confirm'), wx.ICON_QUESTION |
+                             wx.YES_NO, self) == wx.NO:
                 return
 
         if self.ckbx_id.IsChecked():

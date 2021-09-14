@@ -63,22 +63,26 @@ class Indexing(wx.Dialog):
                                    'Videomass-Colours'):
         BACKGROUND = '#11303eff'
         FOREGROUND = '#959595'
-        YELLOW = '#dfb72f'
+        WARN = '#dfb72f'  # YELLOW for warning text messages
+        ERROR = '#EA312D'  # LIGHTRED for errors 2
+        SUCCESS = '#1EA41E'  # GREEN when it is successful
 
     elif get.appset['icontheme'] in ('Breeze-Blues',
                                      'Breeze-Dark',
                                      'Videomass-Dark'):
         BACKGROUND = '#1c2027ff'
         FOREGROUND = '#87ceebff'
-        YELLOW = '#dfb72f'
+        WARN = '#dfb72f'  # YELLOW for warning text messages
+        ERROR = '#EA312D'  # LIGHTRED for errors 2
+        SUCCESS = '#1EA41E'  # GREEN when it is successful
 
     else:
         BACKGROUND = '#e6e6faff'
         FOREGROUND = '#191970ff'
-        YELLOW = '#988313'
+        WARN = '#988313'  # YELLOW for warning text messages
+        ERROR = '#c8120b'  # LIGHTRED for errors 2
+        SUCCESS = '#008000'  # DARK_GREEN when it is successful
 
-    GREEN = '#008000'
-    RED = '#ff0000ff'
     HELPME = _('Click on "Playlist Items" column to specify indices of '
                'the videos in the playlist separated by commas like: '
                '"1,2,5,8" if you want to download videos indexed 1, 2, '
@@ -86,11 +90,12 @@ class Indexing(wx.Dialog):
                'You can specify range: "1-3,7,10-13" it will download the '
                'videos at index 1, 2, 3, 7, 10, 11, 12 and 13.\n'
                )
+    LINECOLOUR = (24, 104, 24, 255)
 
     def __init__(self, parent, url, data):
         """
-        NOTE constructor:: with 'None' not depend from videomass.
-        With 'parent, -1' if close videomass also close mediainfo window
+        NOTE Use 'parent, -1' param. to make parent, use 'None' otherwise
+
         """
         self.urls = url
         self.data = data
@@ -119,15 +124,6 @@ class Indexing(wx.Dialog):
         self.lctrl.SetMinSize((800, 200))
         self.tctrl.SetMinSize((800, 200))
 
-        if Indexing.OS == 'Darwin':
-            self.lctrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            self.tctrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.BOLD))
-        else:
-            self.lctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            self.tctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-
-        self.tctrl.SetBackgroundColour(Indexing.BACKGROUND)
-
         # ------ set Layout
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
         sizer_1.Add(self.lctrl, 0, wx.ALL | wx.EXPAND, 5)
@@ -152,16 +148,28 @@ class Indexing(wx.Dialog):
         sizer_1.Fit(self)
         self.Layout()
 
-        # ------ set listctrl data:
         index = 0
+
         for link in url:
             self.lctrl.InsertItem(index, str(index + 1))
             self.lctrl.SetItem(index, 1, link)
+            if '/playlist?list' in link:
+                self.lctrl.SetItemBackgroundColour(index, Indexing.LINECOLOUR)
+
             if not self.data == {'': ''}:
                 for key, val in self.data.items():
                     if key == link:
                         self.lctrl.SetItem(index, 2, val)
             index += 1
+
+        if Indexing.OS == 'Darwin':
+            self.lctrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            self.tctrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        else:
+            self.lctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            self.tctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+
+        self.tctrl.SetBackgroundColour(Indexing.BACKGROUND)
 
         # ----------------------Binding (EVT)----------------------#
         self.lctrl.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self.on_edit_begin)
@@ -187,94 +195,103 @@ class Indexing(wx.Dialog):
         This method return values via the interface getvalue()
         """
         diz = {}
-        index = 0
-        for rows in self.urls:
-            if self.lctrl.GetItem(index, 2).GetText():
-                diz[rows] = self.lctrl.GetItem(index, 2).GetText()
-            index += 1
+        for row, url in enumerate(self.urls):
+            if self.lctrl.GetItem(row, 2).GetText():
+                diz[url] = self.lctrl.GetItem(row, 2).GetText()
         return diz
 
     # ----------------------Event handler (callback)----------------------#
 
     def on_edit_end(self, event):
         """
-        A check is made on the strings entered
+        Checking the strings entered
         """
         wxd = wx.DateTime.Now()
         date = wxd.Format('%H:%M:%S')
-
-        errdigit = _('ERROR: Enter only digits, commas and hyphens. If you '
-                     'have multiple items, use commas to separate them. Use '
-                     'the hyphen for the range. Spaces are not allowed.')
-        errdigit2 = _('ERROR: You have to start and end with a digit.')
-        errhyph = _('ERROR: Make sure the hyphen is between two digits.')
-        errhyph3 = _('ERROR: A range must include only two digits and a '
-                     'hyphen, for example "20-25" .')
-        errcomma = _('ERROR: Make sure you use commas only to separate '
-                     'indices and / or ranges, for example "1,3,5,10-15"')
-        errgen = _('ERROR: The entered string contains redundant characters.')
-        errchan = _('WARNING: The URL contains a channel. Unable to determine '
-                    'playlist indexing.')
-
-        row_id = event.GetIndex()  # Get the current row
+        msg = dict(errdigit=_('ERROR: Enter only digits, commas and hyphens. '
+                              'If you have multiple items, use commas to '
+                              'separate them. Use the hyphen for the range. '
+                              'Spaces are not allowed.'),
+                   errdigit2=_('ERROR: You have to start and end with '
+                               'a digit.'),
+                   errhyph=_('ERROR: Make sure the hyphen is between '
+                             'two digits.'),
+                   errhyph3=_('ERROR: A range must include only two digits '
+                              'and a hyphen, for example "20-25" .'),
+                   errcomma=_('ERROR: Make sure you use commas only to '
+                              'separate indices and / or ranges, for example '
+                              '"1,3,5,10-15"'),
+                   errgen=_('ERROR: The entered string contains redundant '
+                            'characters.'),
+                   )
+        # row_id = event.GetIndex()  # Get the current row
         # col_id = event.GetColumn()  # Get the current column
         new_data = event.GetLabel()  # Get the changed data
         # cols = self.lctrl.GetColumnCount()  # Get the total number of col
         # rows = self.lctrl.GetItemCount()  # Get the total number of rows
 
         if not new_data == '':
-
             last = len(new_data) - 1
             csplit = new_data.split(',')  # split by commas
             hsplit = new_data.split('-')  # split by hyphens
             allow = ['-', ',', '0', '1', '2', '3',
                      '4', '5', '6', '7', '8', '9']
 
-            if 'channel' in self.lctrl.GetItem(row_id, 1).GetText():
-                self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.YELLOW))
-                self.tctrl.AppendText('\n%s: %s' % (date, errchan))
-                event.Veto()  # contain channel
-            elif [char for char in new_data if char not in allow]:
-                self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.RED))
-                self.tctrl.AppendText('\n%s: %s' % (date, errdigit))
-                event.Veto()  # only enter digits, commas and hyphens
-            elif not new_data[0].isdigit() or not new_data[last].isdigit():
-                self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.RED))
-                self.tctrl.AppendText('\n%s: %s' % (date, errdigit2))
-                event.Veto()  # must start with digit
-            elif [hyph for hyph in csplit if hyph.startswith('-')]:
-                self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.RED))
-                self.tctrl.AppendText('\n%s: %s' % (date, errhyph))
-                event.Veto()  # malformed
-            elif [hyph for hyph in csplit if hyph.endswith('-')]:
-                self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.RED))
-                self.tctrl.AppendText('\n%s: %s' % (date, errhyph))
-                event.Veto()  # malformed
-            elif [comma for comma in hsplit if comma.startswith(',')]:
-                self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.RED))
-                self.tctrl.AppendText('\n%s: %s' % (date, errcomma))
-                event.Veto()  # malformed
-            elif '' in csplit or '' in hsplit:
-                self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.RED))
-                self.tctrl.AppendText('\n%s: %s' % (date, errgen))
-                event.Veto()  # malformed
-            elif [rng.split('-') for rng in csplit if '-' in rng
-                  if len(rng.split('-')) > 2]:
-                self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.RED))
-                self.tctrl.AppendText('\n%s: %s' % (date, errhyph3))
-                event.Veto()  # range must include two digits and one hyphen
-            else:
-                self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.GREEN))
-                self.tctrl.AppendText('\n%s: Assigned: %s ' % (date, new_data))
+            keywords = {'char': ([char for char in new_data
+                                  if char not in allow],
+                                 '\n%s: %s' % (date, msg['errdigit'])),
+                        'startsdigit': (not new_data[0].isdigit(),
+                                        '\n%s: %s' % (date, msg['errdigit2'])),
+                        'endsdigit': (not new_data[last].isdigit(),
+                                      '\n%s: %s' % (date, msg['errdigit2'])),
+                        'starshyph': ([hyph for hyph in csplit if
+                                       hyph.startswith('-')],
+                                      '\n%s: %s' % (date, msg['errhyph'])),
+                        'endshyph': ([hyph for hyph in csplit if
+                                      hyph.endswith('-')],
+                                     '\n%s: %s' % (date, msg['errhyph'])),
+                        'startscomma': ([comma for comma in hsplit if
+                                         comma.startswith(',')],
+                                        '\n%s: %s' % (date, msg['errcomma'])),
+                        'redund1': ('' in csplit,
+                                    '\n%s: %s' % (date, msg['errgen'])),
+                        'redund2': ('' in hsplit,
+                                    '\n%s: %s' % (date, msg['errgen'])),
+                        'errrange': ([rng.split('-') for rng in csplit if
+                                      '-' in rng if len(rng.split('-')) > 2],
+                                     '\n%s: %s' % (date, msg['errhyph3']))}
+            for key in keywords:
+                if keywords[key][0]:
+                    self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.ERROR))
+                    self.tctrl.AppendText(keywords[key][1])
+                    event.Veto()
+                    return
+
+            self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.SUCCESS))
+            self.tctrl.AppendText('\n%s: Assigned: %s ' % (date, new_data))
     # ------------------------------------------------------------------#
 
     def on_edit_begin(self, event):
         """
         Columns 0 and 1 must not be editable.
         """
+        row_id = event.GetIndex()
+
+        wxd = wx.DateTime.Now()
+        date = wxd.Format('%H:%M:%S')
+        invalidmsg = _('WARNING: The selected URL does not refer to a '
+                       'playlist. Only lines marked green can be indexed.')
+        colour = Indexing.LINECOLOUR
 
         if event.GetColumn() in (0, 1):
             event.Veto()
+        elif event.GetColumn() == 2:
+            if self.lctrl.GetItemBackgroundColour(row_id) != colour:
+                self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.WARN))
+                self.tctrl.AppendText('\n%s: %s' % (date, invalidmsg))
+                event.Veto()
+            else:
+                event.Skip()  # or event.Allow()
         else:
             event.Skip()  # or event.Allow()
     # ------------------------------------------------------------------#

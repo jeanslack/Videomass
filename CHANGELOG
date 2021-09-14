@@ -7,6 +7,20 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Sep 15, 2021 V.3.4.6
+
+  * Fixed Multiple URL's are the same.
+  * Improved playlist indexing dialog.
+  * Improved playlist management on YouTube Downloader panel.
+  * Fixed #34 "[WinError 6] The handle is invalid" (pyinstaller `--onefile`
+    option cause this issue on Windows).
+  * Fixed #35 "Using relative paths when the app is portable" (Windows only)
+  * Some code refactoring
+  * Improved videomass.conf changing to v3.2
+  * New "Check for Latest Version" dialog with redirect to download page based
+    on operating system.
+
++------------------------------------+
 Sep 03, 2021 V.3.4.5
 
   * Fixed "The URLs contain playlists..." even when URLs do not contain

@@ -217,28 +217,28 @@ class LogOut(wx.Panel):
 
         if varargs[0] == 'onepass':  # from Audio/Video Conv.
             self.thread_type = OnePass(varargs, duration,
-                                         self.logname, time_seq,
-                                         )
+                                       self.logname, time_seq,
+                                       )
         elif varargs[0] == 'twopass':  # from Video Conv.
             self.thread_type = TwoPass(varargs, duration,
-                                         self.logname, time_seq
-                                         )
+                                       self.logname, time_seq
+                                       )
         elif varargs[0] == 'two pass EBU':  # from Audio/Video Conv.
             self.thread_type = Loudnorm(varargs, duration,
-                                          self.logname, time_seq
-                                          )
+                                        self.logname, time_seq
+                                        )
         elif varargs[0] == 'savepictures':
             self.thread_type = PicturesFromVideo(varargs, duration,
-                                                   self.logname, time_seq
-                                                   )
+                                                 self.logname, time_seq
+                                                 )
         elif varargs[0] == 'libvidstab':  # from Audio/Video Conv.
             self.thread_type = VidStab(varargs, duration,
-                                         self.logname, time_seq
-                                         )
+                                       self.logname, time_seq
+                                       )
         elif varargs[0] == 'concat_demuxer':  # from Concatenation Demuxer
             self.thread_type = ConcatDemuxer(varargs, duration,
-                                               self.logname,
-                                               )
+                                             self.logname,
+                                             )
         elif varargs[0] == 'youtube_dl python package':  # as import youtube_dl
             self.ckbx_text.Hide()
             self.thread_type = YtdlLibDL(varargs, self.logname)

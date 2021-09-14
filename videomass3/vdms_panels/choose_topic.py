@@ -198,22 +198,11 @@ class Choose_Topic(wx.Panel):
         requires installation.
 
         """
-        if self.oS == 'Windows':
-            msg_windows = (_(
-                        '- Requires: Microsoft Visual C++ 2010 '
-                        'Redistributable Package (x86)\n\nfor major '
-                        'information visit: <http://ytdl-org.github.io'
-                        '/youtube-dl/download.html>\n\n'
-                        ))
-        else:
-            msg_windows = ''
-
         msg_required = (_(
                  'To download videos from YouTube.com and other video sites, '
                  'you need an updated version of youtube-dl.\n\n'
-                 '{}'
                  '...Do you want to download youtube-dl locally now?'
-                 )).format(msg_windows)
+                 ))
 
         msg_ready = (_(
                     'Successful! \n\n'
@@ -243,11 +232,11 @@ class Choose_Topic(wx.Panel):
                 if not latest:
                     return
                 else:
-                    upgrade = io_tools.youtubedl_upgrade(latest[0],
-                                                         self.appdata['EXECYDL']
-                                                         )
-                if upgrade[1]:  # failed
-                    wx.MessageBox("%s" % (upgrade[1]),
+                    upgrd = io_tools.youtubedl_upgrade(latest[0],
+                                                       self.appdata['EXECYDL']
+                                                       )
+                if upgrd[1]:  # failed
+                    wx.MessageBox("%s" % (upgrd[1]),
                                   "Videomass", wx.ICON_ERROR, self)
                     return
                 else:

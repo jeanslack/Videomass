@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.04.2021
+Rev: Sep.13.2021
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -138,14 +138,6 @@ class DataSource():
         * user: local installation
 
     """
-    # NOTE: For develop. test, add this line to use portable data during
-          # a local source code execution (NOT OTHER):
-        # elif os.path.isdir(os.path.join(DATA_LOCAT,'portable_data')):
-            # (FILE_CONF,
-             # DIR_CONF,
-             # LOG_DIR,
-             # CACHE_DIR) = portable_paths(DATA_LOCAT)
-
     FROZEN, MEIPASS, MPATH, DATA_LOCAT = get_pyinstaller()
     portdirname = os.path.dirname(sys.executable)
     portdir = os.path.join(portdirname, 'portable_data')
@@ -153,10 +145,16 @@ class DataSource():
     if FROZEN and MEIPASS and os.path.isdir(portdir):
         # if portdir is true, make application really portable
         FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = portable_paths(portdirname)
+        RELPATH = True if platform.system() == 'Windows' else False
+
+    elif os.path.isdir(os.path.join(DATA_LOCAT, 'portable_data')):
+        # Remember to add portable_data/ folder within videomass3/
+        FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = portable_paths(DATA_LOCAT)
+        RELPATH = False
 
     else:
-        #
         FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = conventional_paths()
+        RELPATH = False
     # -------------------------------------------------------------------
 
     def __init__(self):
@@ -254,7 +252,7 @@ class DataSource():
                 userconf = parsing_fileconf(DataSource.FILE_CONF)
                 if not userconf:
                     existfileconf = False
-                if float(userconf[0]) != 3.1:
+                if float(userconf[0]) != 3.2:
                     existfileconf = False
             else:
                 existfileconf = False
@@ -286,28 +284,33 @@ class DataSource():
             if dconf:
                 copyerr, userconf = dconf, None
 
+        getpath = (lambda path: os.path.relpath(path) if
+                   DataSource.RELPATH else path)
+
         return ({'ostype': platform.system(),
-                 'srcpath': self.srcpath,
+                 'srcpath': getpath(self.srcpath),
                  'fatalerr': copyerr,
-                 'localepath': self.localepath,
-                 'fileconfpath': DataSource.FILE_CONF,
-                 'workdir': self.workdir,
-                 'confdir': DataSource.DIR_CONF,
-                 'logdir': DataSource.LOG_DIR,
-                 'cachedir': DataSource.CACHE_DIR,
-                 'FFMPEG_videomass_pkg': self.ffmpeg_pkg,
+                 'localepath': getpath(self.localepath),
+                 'fileconfpath': getpath(DataSource.FILE_CONF),
+                 'workdir': getpath(self.workdir),
+                 'confdir': getpath(DataSource.DIR_CONF),
+                 'logdir': getpath(DataSource.LOG_DIR),
+                 'cachedir': getpath(DataSource.CACHE_DIR),
+                 'FFMPEG_videomass_pkg': getpath(self.ffmpeg_pkg),
                  'app': self.apptype,
+                 'relpath': DataSource.RELPATH,
+                 'getpath': getpath,
                  'confversion': userconf[0],
                  'outputfile': userconf[1],
                  'ffthreads': userconf[2],
                  'ffplayloglev': userconf[3],
                  'ffmpegloglev': userconf[4],
                  'ffmpeg_local': userconf[5],
-                 'ffmpeg_bin': userconf[6],
+                 'ffmpeg_bin': getpath(userconf[6]),
                  'ffprobe_local': userconf[7],
-                 'ffprobe_bin': userconf[8],
+                 'ffprobe_bin': getpath(userconf[8]),
                  'ffplay_local': userconf[9],
-                 'ffplay_bin': userconf[10],
+                 'ffplay_bin': getpath(userconf[10]),
                  'icontheme': userconf[11],
                  'toolbarsize': userconf[12],
                  'toolbarpos': userconf[13],

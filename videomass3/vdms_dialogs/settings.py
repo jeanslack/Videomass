@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.08.2021 *-pycodestyle- compatible*
+Rev: Sep.13.2021 *-pycodestyle- compatible*
 ########################################################
 
 This file is part of Videomass.
@@ -248,10 +248,10 @@ class Setup(wx.Dialog):
             sizerYdl.Add(instpkg, 0, wx.ALL | wx.CENTRE, 2)
 
         if self.appdata['ostype'] == 'Windows':
-            url = ('https://www.microsoft.com/en-US/download/'
-                   'details.aspx?id=5555')
-            static1 = _("Required: Microsoft Visual C++ 2010 Redistributable "
-                        "Package (x86)")
+            url = ('https://download.microsoft.com/download/1/6/5/165255E7-'
+                   '1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe')
+            static1 = _("Required: Microsoft Visual C++ 2010 Service Pack 1 "
+                        "Redistributable Package (x86)")
             MSVCR = hpl.HyperLinkCtrl(self.tabThree, -1, static1, URL=url)
             sizerYdl.Add(MSVCR, 0, wx.ALL | wx.CENTRE, 2)
 
@@ -592,8 +592,9 @@ class Setup(wx.Dialog):
 
         if dlg.ShowModal() == wx.ID_OK:
             self.txtctrl_YDLpath.Clear()
-            self.txtctrl_YDLpath.AppendText(dlg.GetPath())
-            self.full_list[self.rowsNum[19]] = '%s\n' % (dlg.GetPath())
+            getpath = self.appdata['getpath'](dlg.GetPath())
+            self.txtctrl_YDLpath.AppendText(getpath)
+            self.full_list[self.rowsNum[19]] = '%s\n' % (getpath)
             dlg.Destroy()
     # ---------------------------------------------------------------------#
 
@@ -614,8 +615,9 @@ class Setup(wx.Dialog):
 
         if dlg.ShowModal() == wx.ID_OK:
             self.txtctrl_FFpath.Clear()
-            self.txtctrl_FFpath.AppendText(dlg.GetPath())
-            self.full_list[self.rowsNum[1]] = '%s\n' % (dlg.GetPath())
+            getpath = self.appdata['getpath'](dlg.GetPath())
+            self.txtctrl_FFpath.AppendText(getpath)
+            self.full_list[self.rowsNum[1]] = '%s\n' % (getpath)
             dlg.Destroy()
     # --------------------------------------------------------------------#
 
@@ -693,8 +695,9 @@ class Setup(wx.Dialog):
                 self.full_list[self.rowsNum[6]] = '%s\n' % 'none'
             else:
                 self.txtctrl_ffmpeg.Clear()
-                self.txtctrl_ffmpeg.write(status[1])
-                self.full_list[self.rowsNum[6]] = '%s\n' % status[1]
+                getpath = self.appdata['getpath'](status[1])
+                self.txtctrl_ffmpeg.write(getpath)
+                self.full_list[self.rowsNum[6]] = '%s\n' % getpath
     # --------------------------------------------------------------------#
 
     def open_path_ffmpeg(self, event):
@@ -708,8 +711,9 @@ class Setup(wx.Dialog):
             if fd.ShowModal() == wx.ID_OK:
                 if os.path.basename(fd.GetPath()) == self.ffmpeg:
                     self.txtctrl_ffmpeg.Clear()
-                    self.txtctrl_ffmpeg.write(fd.GetPath())
-                    self.full_list[self.rowsNum[6]] = '%s\n' % (fd.GetPath())
+                    getpath = self.appdata['getpath'](fd.GetPath())
+                    self.txtctrl_ffmpeg.write(getpath)
+                    self.full_list[self.rowsNum[6]] = '%s\n' % (getpath)
     # --------------------------------------------------------------------#
 
     def exeFFprobe(self, event):
@@ -734,8 +738,9 @@ class Setup(wx.Dialog):
                 self.full_list[self.rowsNum[8]] = '%s\n' % 'none'
             else:
                 self.txtctrl_ffprobe.Clear()
-                self.txtctrl_ffprobe.write(status[1])
-                self.full_list[self.rowsNum[8]] = '%s\n' % status[1]
+                getpath = self.appdata['getpath'](status[1])
+                self.txtctrl_ffprobe.write(getpath)
+                self.full_list[self.rowsNum[8]] = '%s\n' % getpath
     # --------------------------------------------------------------------#
 
     def open_path_ffprobe(self, event):
@@ -749,8 +754,9 @@ class Setup(wx.Dialog):
             if fd.ShowModal() == wx.ID_OK:
                 if os.path.basename(fd.GetPath()) == self.ffprobe:
                     self.txtctrl_ffprobe.Clear()
-                    self.txtctrl_ffprobe.write(fd.GetPath())
-                    self.full_list[self.rowsNum[8]] = '%s\n' % (fd.GetPath())
+                    getpath = self.appdata['getpath'](fd.GetPath())
+                    self.txtctrl_ffprobe.write(getpath)
+                    self.full_list[self.rowsNum[8]] = '%s\n' % (getpath)
     # --------------------------------------------------------------------#
 
     def exeFFplay(self, event):
@@ -775,8 +781,9 @@ class Setup(wx.Dialog):
                 self.full_list[self.rowsNum[10]] = '%s\n' % 'none'
             else:
                 self.txtctrl_ffplay.Clear()
-                self.txtctrl_ffplay.write(status[1])
-                self.full_list[self.rowsNum[10]] = '%s\n' % status[1]
+                getpath = self.appdata['getpath'](status[1])
+                self.txtctrl_ffplay.write(getpath)
+                self.full_list[self.rowsNum[10]] = '%s\n' % getpath
     # --------------------------------------------------------------------#
 
     def open_path_ffplay(self, event):
@@ -790,8 +797,9 @@ class Setup(wx.Dialog):
             if fd.ShowModal() == wx.ID_OK:
                 if os.path.basename(fd.GetPath()) == self.ffplay:
                     self.txtctrl_ffplay.Clear()
-                    self.txtctrl_ffplay.write(fd.GetPath())
-                    self.full_list[self.rowsNum[10]] = '%s\n' % (fd.GetPath())
+                    getpath = self.appdata['getpath'](fd.GetPath())
+                    self.txtctrl_ffplay.write(getpath)
+                    self.full_list[self.rowsNum[10]] = '%s\n' % (getpath)
     # ---------------------------------------------------------------------#
 
     def on_Iconthemes(self, event):
