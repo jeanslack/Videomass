@@ -58,8 +58,8 @@ class CheckNewVersion(wx.Dialog):
                                  wx.TE_AUTO_URL |
                                  wx.TE_CENTRE,
                                  )
-        self.btnget = wx.Button(self, wx.ID_ANY, _("Get Latest Version"))
-        self.btnok = wx.Button(self, wx.ID_OK, "")
+        btn_get = wx.Button(self, wx.ID_ANY, _("Get Latest Version"))
+        btn_ok = wx.Button(self, wx.ID_OK, "")
 
         # ------ Properties
         self.SetTitle(_("Checking for newer version"))
@@ -71,19 +71,18 @@ class CheckNewVersion(wx.Dialog):
         sizer.Add(self.tctrl, 0, wx.ALL | wx.EXPAND, 5)
 
         btngrid = wx.FlexGridSizer(1, 2, 0, 0)
-        btngrid.Add(self.btnget, 0, wx.ALL, 5)
-        btngrid.Add(self.btnok, 0, wx.ALL, 5)
+        btngrid.Add(btn_get, 0, wx.ALL, 5)
+        btngrid.Add(btn_ok, 0, wx.ALL, 5)
         sizer.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         self.SetSizer(sizer)
         sizer.Fit(self)
         self.Layout()
 
-        self.tctrl.SetBackgroundColour('#2a2a31')
+        self.tctrl.SetBackgroundColour('#26262d')
 
         # ----------------------Binding (EVT)----------------------#
-
-        self.Bind(wx.EVT_BUTTON, self.on_ok, self.btnok)
-        self.Bind(wx.EVT_BUTTON, self.on_get, self.btnget)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.on_get, btn_get)
 
         self.textstyle()
 
@@ -95,7 +94,7 @@ class CheckNewVersion(wx.Dialog):
         defmsg2 = _('\n\nThis is Videomass v.{0}\n\n').format(self.curvers)
 
         self.tctrl.Clear()
-        self.tctrl.SetDefaultStyle(wx.TextAttr('#714bc4'))
+        self.tctrl.SetDefaultStyle(wx.TextAttr('#8442f0'))
         self.tctrl.AppendText('%s' % defmsg1)
 
         if CheckNewVersion.OS == 'Darwin':
@@ -105,8 +104,6 @@ class CheckNewVersion(wx.Dialog):
 
         self.tctrl.SetDefaultStyle(wx.TextAttr('#2a7fffff'))
         self.tctrl.AppendText('%s' % defmsg2)
-
-        self.tctrl.SetDefaultStyle(wx.TextAttr('#2a7fffff'))
         self.tctrl.AppendText('%s' % self.msg)
     # ------------------------------------------------------------------#
 
@@ -152,4 +149,4 @@ class CheckNewVersion(wx.Dialog):
         The dialog box is auto-destroyed
 
         """
-        self.Destroy()
+        event.Skip()

@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.13.2021
+Rev: Sep.14.2021
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -82,7 +82,15 @@ class Videomass(wx.App):
         self.appset.update(self.data.get_fileconf())  # data system
 
         if self.appset['relpath'] is True:
-            outputdir = os.path.join(os.getcwd(), 'portable_data')
+            outputdir = os.path.join(os.getcwd(), 'My_Files')
+            if not os.path.exists(outputdir):
+
+                try:  # make a files folder
+                    os.mkdir(outputdir, mode=0o777)
+
+                except OSError as err:
+                    wx.MessageBox('%s' % err, 'Videomass', wx.ICON_STOP)
+                    return False
         else:
             outputdir = os.path.expanduser('~')
 
