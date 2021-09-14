@@ -93,14 +93,14 @@ class CheckNewVersion(wx.Dialog):
         defmsg1 = _('\n\nNew releases fix bugs and offer new features.')
         defmsg2 = _('\n\nThis is Videomass v.{0}\n\n').format(self.curvers)
 
-        self.tctrl.Clear()
-        self.tctrl.SetDefaultStyle(wx.TextAttr('#8442f0'))
-        self.tctrl.AppendText('%s' % defmsg1)
-
         if CheckNewVersion.OS == 'Darwin':
             self.tctrl.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.BOLD))
         else:
             self.tctrl.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
+
+        self.tctrl.Clear()
+        self.tctrl.SetDefaultStyle(wx.TextAttr('#8442f0'))
+        self.tctrl.AppendText('%s' % defmsg1)
 
         self.tctrl.SetDefaultStyle(wx.TextAttr('#2a7fffff'))
         self.tctrl.AppendText('%s' % defmsg2)

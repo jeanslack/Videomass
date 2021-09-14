@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-14 15:40+0200\n"
+"POT-Creation-Date: 2021-09-14 23:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../vdms3.py:109
+#: ../vdms3.py:117
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -25,7 +25,7 @@ msgid ""
 "Sorry, cannot continue.."
 msgstr ""
 
-#: ../vdms3.py:203
+#: ../vdms3.py:211
 msgid ""
 "Permission denied: {}\n"
 "\n"
@@ -1051,14 +1051,14 @@ msgstr ""
 msgid "Checking for newer version"
 msgstr ""
 
-#: ../vdms_dialogs/videomass_check_version.py:94
+#: ../vdms_dialogs/videomass_check_version.py:93
 msgid ""
 "\n"
 "\n"
 "New releases fix bugs and offer new features."
 msgstr ""
 
-#: ../vdms_dialogs/videomass_check_version.py:95
+#: ../vdms_dialogs/videomass_check_version.py:94
 #, python-brace-format
 msgid ""
 "\n"
@@ -2059,6 +2059,11 @@ msgstr ""
 
 #: ../vdms_main/main_frame.py:1117
 msgid "Default destination folders successfully restored"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:1223
+#, python-brace-format
+msgid "A new release is available - v.{0}\n"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:1226

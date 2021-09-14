@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-14 15:40+0200\n"
-"PO-Revision-Date: 2021-09-14 15:43+0200\n"
+"POT-Creation-Date: 2021-09-14 23:47+0200\n"
+"PO-Revision-Date: 2021-09-14 23:51+0200\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: ../vdms3.py:109
+#: ../vdms3.py:117
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -31,7 +31,7 @@ msgstr ""
 "\n"
 "Извините, не могу продолжить.."
 
-#: ../vdms3.py:203
+#: ../vdms3.py:211
 msgid ""
 "Permission denied: {}\n"
 "\n"
@@ -1238,14 +1238,14 @@ msgstr "Показать последнюю версию..."
 msgid "Checking for newer version"
 msgstr "Проверить последнюю версию"
 
-#: ../vdms_dialogs/videomass_check_version.py:94
+#: ../vdms_dialogs/videomass_check_version.py:93
 msgid ""
 "\n"
 "\n"
 "New releases fix bugs and offer new features."
 msgstr ""
 
-#: ../vdms_dialogs/videomass_check_version.py:95
+#: ../vdms_dialogs/videomass_check_version.py:94
 #, python-brace-format
 msgid ""
 "\n"
@@ -2354,6 +2354,12 @@ msgstr "Выберите временное место для загрузок"
 #: ../vdms_main/main_frame.py:1117
 msgid "Default destination folders successfully restored"
 msgstr "Папки назначения по умолчанию успешно восстановлены"
+
+#: ../vdms_main/main_frame.py:1223
+#, fuzzy, python-brace-format
+#| msgid "There is a new version available {0}"
+msgid "A new release is available - v.{0}\n"
+msgstr "Доступна новая версия {0}"
 
 #: ../vdms_main/main_frame.py:1226
 msgid "You are using a development version that has not yet been released!\n"

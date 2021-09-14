@@ -20,8 +20,9 @@ These files are Videomass presets and contain JSON data type.
 UPDATE: v3.4.6
 
 To keep all application data inside the program folder, create a folder named
-"portable_data" . Remember that if this folder is found, only relative paths
-will be provided. Otherwise they will be absolute paths.
+"portable_data" . On MS-Windows, if this folder is in the "appdata" of the
+standalone executable, only relative paths will be provided. In all other cases
+they will be absolute paths.
 
 AppImage users: If you would like the Videomass*.AppImage to
 store its data alongside the Videomass*.AppImage rather than in your home

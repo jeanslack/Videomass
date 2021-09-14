@@ -1220,7 +1220,7 @@ class MainFrame(wx.Frame):
             this_version = int('%s%s%s' % (major, minor, micro))
 
             if new_version > this_version:
-                msg = ('A new release is available - '
+                msg = _('A new release is available - '
                        'v.{0}\n').format(version)
             elif this_version > new_version:
                 msg = _('You are using a development version '

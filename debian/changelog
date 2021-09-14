@@ -5,12 +5,13 @@ videomass (3.4.6-1) UNRELEASED; urgency=medium
   * Improved playlist management on YouTube Downloader panel.
   * Fixed #34 "[WinError 6] The handle is invalid" (pyinstaller `--onefile`
     option cause this issue on Windows).
-  * Fixed #35 "Using relative paths when the app is portable"
+  * Fixed #35 "Using relative paths when the app is portable" (Windows only)
   * Some code refactoring
   * Improved videomass.conf changing to v3.2
-  * New "Check for newer version" dialog.
+  * New "Check for Latest Version" dialog with redirect to download page based
+    on operating system.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 14 Sep 2021 15:28:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 15 Sep 2021 00:06:00 +0200
 
 videomass (3.4.5-1) UNRELEASED; urgency=medium
 

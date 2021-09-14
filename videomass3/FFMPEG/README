@@ -3,7 +3,7 @@ Purpose of the FFMPEG directory
 ========================================
 
 This folder can optionally host static builds of ffmpeg, ffprobe and ffplay,
-which will only be used if no FFmpeg is installed in the OS. While it is
+which will ONLY BE USED if no FFmpeg is installed in the OS. While it is
 generally not recommended to use this approach, it can be useful, for instance,
 to make a Videomass bundle (e.g. via pyinstaller or AppImage, etc.) that can be
 run in standalone mode embedding FFmpeg binaries without need to install
