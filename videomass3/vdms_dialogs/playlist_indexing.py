@@ -94,8 +94,8 @@ class Indexing(wx.Dialog):
 
     def __init__(self, parent, url, data):
         """
-        NOTE constructor:: with 'None' not depend from videomass.
-        With 'parent, -1' if close videomass also close mediainfo window
+        NOTE Use 'parent, -1' param. to make parent, use 'None' otherwise
+
         """
         self.urls = url
         self.data = data
@@ -164,7 +164,7 @@ class Indexing(wx.Dialog):
 
         if Indexing.OS == 'Darwin':
             self.lctrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            self.tctrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.BOLD))
+            self.tctrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
             self.lctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             self.tctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))

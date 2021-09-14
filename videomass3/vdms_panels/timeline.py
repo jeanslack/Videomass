@@ -98,7 +98,6 @@ class Timeline(wx.Panel):
 
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
 
-
         # self.font = wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL,
         #                    wx.FONTWEIGHT_BOLD, False, 'Courier 10 Pitch'
         #                    )

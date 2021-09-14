@@ -33,6 +33,7 @@ from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass3.vdms_dialogs import settings
 from videomass3.vdms_dialogs import set_timestamp
 from videomass3.vdms_dialogs import infoprg
+from videomass3.vdms_dialogs import videomass_check_version
 from videomass3.vdms_frames import while_playing
 from videomass3.vdms_frames import ffmpeg_search
 from videomass3.vdms_frames.mediainfo import Mediainfo
@@ -1219,22 +1220,21 @@ class MainFrame(wx.Frame):
             this_version = int('%s%s%s' % (major, minor, micro))
 
             if new_version > this_version:
-                wx.MessageBox(_(
-                    '\n\nNew releases fix bugs and offer new features'
-                    '\n\nThis is Videomass version {0}\n\n'
-                    '<https://pypi.org/project/videomass/>\n\n'
-                    'The latest version {1} is available\n').format(this[2],
-                                                                    check[0]),
-                    _("Checking for newer version"),
-                    wx.ICON_INFORMATION | wx.CENTRE, self)
+                msg = ('A new release is available - '
+                       'v.{0}\n').format(version)
+            elif this_version > new_version:
+                msg = _('You are using a development version '
+                        'that has not yet been released!\n')
             else:
-                wx.MessageBox(_(
-                    '\n\nNew releases fix bugs and offer new features'
-                    '\n\nThis is Videomass version {0}\n\n'
-                    '<https://pypi.org/project/videomass/>\n\n'
-                    'You are using the latest version\n').format(this[2]),
-                    _("Checking for newer version"),
-                    wx.ICON_INFORMATION | wx.CENTRE, self)
+                msg = _('Congratulation! You are already '
+                        'using the latest version.\n')
+
+            dlg = videomass_check_version.CheckNewVersion(self,
+                                                          msg,
+                                                          version,
+                                                          this[2]
+                                                          )
+            dlg.ShowModal()
     # -------------------------------------------------------------------#
 
     def Info(self, event):
@@ -1421,9 +1421,8 @@ class MainFrame(wx.Frame):
             if len(set(data)) != len(data):  # equal URLS
                 wx.MessageBox(_("ERROR: Multiple URL's are the "
                                 "same").format(url),
-                                "Videomass", wx.ICON_ERROR, self)
+                              "Videomass", wx.ICON_ERROR, self)
                 return
-
 
             self.switch_youtube_downloader(self, data)
     # ------------------------------------------------------------------#

@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sep 13, 2021 V.3.4.6
+Sep 14, 2021 V.3.4.6
 
   * Fixed Multiple URL's are the same.
   * Improved playlist indexing dialog.
@@ -17,6 +17,7 @@ Sep 13, 2021 V.3.4.6
   * Fixed #35 "Using relative paths when the app is portable"
   * Some code refactoring
   * Improved videomass.conf changing to v3.2
+  * New "Check for newer version" dialog.
 
 +------------------------------------+
 Sep 03, 2021 V.3.4.5

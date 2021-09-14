@@ -81,7 +81,7 @@ class Videomass(wx.App):
         self.data = DataSource()  # instance data
         self.appset.update(self.data.get_fileconf())  # data system
 
-        if self.appset['relpath']  is True:
+        if self.appset['relpath'] is True:
             outputdir = os.path.join(os.getcwd(), 'portable_data')
         else:
             outputdir = os.path.expanduser('~')

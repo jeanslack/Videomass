@@ -8,8 +8,9 @@ videomass (3.4.6-1) UNRELEASED; urgency=medium
   * Fixed #35 "Using relative paths when the app is portable"
   * Some code refactoring
   * Improved videomass.conf changing to v3.2
+  * New "Check for newer version" dialog.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 13 Sep 2021 15:27:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 14 Sep 2021 15:28:00 +0200
 
 videomass (3.4.5-1) UNRELEASED; urgency=medium
 

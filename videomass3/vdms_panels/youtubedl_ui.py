@@ -460,7 +460,7 @@ class Downloader(wx.Panel):
             self.parent.statusbar_msg(_('Ready'), None)
             item = self.fcode.GetFocusedItem()
             url = self.fcode.GetItemText(item, 1)
-            if not '/watch' in url:
+            if '/watch' not in url:
                 # prevent opening too many of ffplay windows
                 wx.MessageBox(_("Cannot play playlists / channels or URLs "
                                 "containing multiple videos listed."),
@@ -719,8 +719,8 @@ class Downloader(wx.Panel):
 
         elif self.choice.GetSelection() == 3:
 
-            ceckurls = [url for url in self.parent.data_url if not
-                        '/watch' in url]
+            ceckurls = [url for url in self.parent.data_url if '/watch'
+                        not in url]
             if ceckurls:
                 wx.MessageBox(_("Unable to get format codes on playlists / "
                                 "channels or URLs containing multiple "
@@ -918,9 +918,9 @@ class Downloader(wx.Panel):
                     return
         if [url for url in urls if 'channel' in url]:
             if wx.MessageBox(_('The URLs contain channels. '
-                                'Are you sure you want to continue?'),
-                                _('Please confirm'), wx.ICON_QUESTION |
-                                wx.YES_NO, self) == wx.NO:
+                               'Are you sure you want to continue?'),
+                             _('Please confirm'), wx.ICON_QUESTION |
+                             wx.YES_NO, self) == wx.NO:
                 return
 
         if self.ckbx_id.IsChecked():
