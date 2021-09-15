@@ -44,7 +44,7 @@ About [AppImage](https://appimage.org/) format
 
 ---
 
-[Get AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.4.5-x86_64.AppImage){: .btn .btn-green } 
+[Get AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.4.6-x86_64.AppImage){: .btn .btn-green } 
 
 Minimum requirements:   
 - All [Ubuntu flavors](https://ubuntu.com/download/flavours) based on 
