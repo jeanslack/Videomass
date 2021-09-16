@@ -44,8 +44,11 @@ If you want to translate offline, please read
 ## Packaging
 {: .bg-green-300}
 
-Installation package of Videomass is currently available for Ubuntu (ppa), 
-MX-Linux and SparkyLinux. Packaging for other distros still needs to be done. 
+Installation package of Videomass is currently available for Ubuntu/Mint by this  
+[PPA](https://launchpad.net/~jeanslack/+archive/ubuntu/videomass), 
+MX-Linux by [repo test](https://mxlinux.org/community-repos/) and 
+[SparkyLinux](https://sparkylinux.org/videomass/). 
+Packaging for other distros still needs to be done. 
 Also, I would be very glad if anyone can push Videomass into the official 
 repositories of any distribution.
 
