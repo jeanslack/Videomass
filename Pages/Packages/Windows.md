@@ -2,13 +2,13 @@
 layout: default
 title: Windows
 parent: Downloads
-nav_order: 3
+nav_order: 4
 ---
 
 ---
   
-[Get installer](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64-Setup.exe){: .btn .btn-green } 
-[Get portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64-portable.7z){: .btn .btn-green }     
+[Videomass 3.4.6 Installer](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64-Setup.exe){: .btn .btn-green } 
+[Videomass 3.4.6 Portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64-portable.7z){: .btn .btn-green }     
 
 Minimum requirements:
 - [Microsoft Windows 10](https://en.wikipedia.org/wiki/Windows_10)

@@ -2,14 +2,13 @@
 layout: default
 title: Linux
 parent: Downloads
-nav_order: 1
+nav_order: 2
 ---
 
 ---
 
-# Ubuntu PPA
+## Ubuntu/Mint PPA
 
----
 This PPA currently publishes packages for Ubuntu, including official and 
 derivative distributions.   
 
@@ -30,10 +29,9 @@ To install Videomass add this
 For any other application-related issues, please read 
 [Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.
 {: .fs-3 .text-grey-dk-100}   
-
 ---
 
-# AppImage
+## AppImage
 {: .d-inline-block } 
 
 Portable
@@ -44,7 +42,7 @@ About [AppImage](https://appimage.org/) format
 
 ---
 
-[Get AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.4.6-x86_64.AppImage){: .btn .btn-green } 
+[Videomass 3.4.6 AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.4.6-x86_64.AppImage){: .btn .btn-green } 
 
 Minimum requirements:   
 - All [Ubuntu flavors](https://ubuntu.com/download/flavours) based on 

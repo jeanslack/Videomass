@@ -22,7 +22,7 @@ streams and downloading videos via [youtube-dl](http://ytdl-org.github.io/youtub
 
 Videomass is [Free (libre) Software](https://en.wikipedia.org/wiki/Free_software), 
 created and maintained by [Gianluca Pernigotto (jeanslack)](https://github.com/jeanslack); 
-it was written in [Python3](https://www.python.org/) with the 
+it was written in [Python3](https://www.python.org/) using the 
 [wxPython4](https://www.wxpython.org/) toolkit; it is cross-platform and works on 
 Linux, MacOs, Windows and FreeBSD.   
 
