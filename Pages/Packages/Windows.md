@@ -48,11 +48,12 @@ Minimum requirements:
 - [Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package (x86)](https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe).
 - [Microsoft C Runtime](https://www.microsoft.com/en-us/download/details.aspx?id=48145)
 
-This is a fully portable and ready-to-use experimental implementation of Videomass in a [Python
-embeddable package](https://docs.python.org/3/using/windows.html#the-embeddable-package). 
+This is a fully portable and ready-to-use experimental implementation of the 
+[Python embeddable package](https://docs.python.org/3/using/windows.html#the-embeddable-package), 
+which has been optimized to include Videomass and its dependencies. 
 An embeddable-package is a portable Python distribution completely isolated from 
-other installed Python versions, which has been optimized to include Videomass 
-and its dependencies.   
+the user’s system, including environment variables, system registry settings, and 
+installed packages.   
 
 For any other application-related issues, please read 
 [Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.
