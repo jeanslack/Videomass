@@ -8,28 +8,51 @@ nav_order: 4
 ---
   
 [Videomass 3.4.6 Installer](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64-Setup.exe){: .btn .btn-green } 
-[Videomass 3.4.6 Portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64-portable.7z){: .btn .btn-green }     
+[Videomass 3.4.6 Portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64-portable.7z){: .btn .btn-green } 
+[Pyembed package](#pyembed-package){: .btn .btn-blue }   
 
 Minimum requirements:
-- [Microsoft Windows 10](https://en.wikipedia.org/wiki/Windows_10)
+- [Microsoft Windows 8 / 10](https://en.wikipedia.org/wiki/Windows_10)
 - [x86_64](https://en.wikipedia.org/wiki/X86-64) architecture. 
 - [Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package (x86)](https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe).   
 
-## Important note
+### Important note
 {: .bg-red-300}
 
-A lot of antivirus vendors detect Videomass.exe as malicious. Since
-these are false positives, to resolve this problem the only thing to do is 
-to submit the Videomass.exe file to your antivirus vendor for advanced analysis
-and making a False Positive claim. 
+A lot of antivirus vendors detect Videomass **installer** and **portable** as 
+malicious. Since these are false positives, to resolve this problem the only thing 
+to do is to submit the Videomass.exe file to your antivirus vendor for advanced 
+analysis and making a False Positive claim. 
 So, if you are still worried (or worse, scared) by the alarm cry of an overly 
-susceptible array of antivirus, you can always install [Python](https://www.python.org/), 
-then open a console in user mode and install Videomass: `py -m pip install videomass` .   
-You will have the exact same program but installed in a more Pythonic way and 
-certainly free from false positives.   
-Visit the Videomass 
-[wiki](https://github.com/jeanslack/Videomass/wiki/Installing-dependencies#ms-windows) 
-page for more installation [details](https://github.com/jeanslack/Videomass/wiki/Installing-dependencies).   
+susceptible array of antivirus, you can always try the new 
+[Pyembed package](#pyembed-package) or install Videomass from 
+[PyPi](https://pypi.org/project/videomass/). You will have the exact same program 
+but installed in a more Pythonic way and certainly free from false positives.   
+Visit the 
+[Installing-dependencies](https://github.com/jeanslack/Videomass/wiki/Installing-dependencies#ms-windows) 
+and then 
+[installation using pip](https://github.com/jeanslack/Videomass/wiki/Installation-using-pip) 
+wiki pages for more installation details.
+
+## Pyembed package
+{: .d-inline-block } 
+
+Experimental
+{: .label .label-purple }  
+
+[Videomass 3.4.6 pyembed](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-WIN-x86_64-pyembed.7z){: .btn .btn-green }
+
+Minimum requirements:   
+- [Microsoft Windows 8 / 10](https://en.wikipedia.org/wiki/Windows_10)
+- [x86_64](https://en.wikipedia.org/wiki/X86-64) architecture. 
+- [Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package (x86)](https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe).
+- [Microsoft C Runtime](https://www.microsoft.com/en-us/download/details.aspx?id=48145)
+
+This is a fully portable and ready-to-use experimental implementation of Videomass in a [Python
+embeddable package](https://docs.python.org/3/using/windows.html#the-embeddable-package). 
+An embeddable-package is a portable Python distribution completely isolated from 
+other installed Python versions, which has been optimized to include Videomass 
+and its dependencies.   
 
 For any other application-related issues, please read 
 [Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.
