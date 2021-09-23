@@ -9,9 +9,9 @@ env:
         - DISPLAY=:99
 language: python
 cache: pip
-python: "3.8"
+python: "3.9"
 before_install:
-    - python -m pip install -U pip
+    - python3 -m pip install -U pip
     - sudo apt-get update
     - sudo apt-get -y install libsdl2-2.0-0
 # install dependencies via pip
@@ -23,11 +23,11 @@ install:
 script:
     - Xvfb :99 -screen 0 800x600x24 >/dev/null 2>&1 &
     # run tests
-    - python tests/test_check_bin.py
-    - python tests/test_ffprobe.py
-    - python tests/test_display_GUI.py
+    - python3 tests/test_check_bin.py
+    - python3 tests/test_ffprobe.py
+    - python3 tests/test_display_GUI.py
     # make a videomass source dist and wheel
-    - python setup.py sdist bdist_wheel
+    - python3 setup.py sdist bdist_wheel
     # build appimage
     - bash develop/tools/AppImage_build.sh
 after_script:
