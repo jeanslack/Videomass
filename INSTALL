@@ -24,8 +24,8 @@ and executing the "launcher" script inside the root Videomass directory.
 
 Videomass can also be imported from the Python3 console (interactive mode):
 
-    >>> from videomass3 import vdms3
-    >>> vdms3.main()
+    >>> from videomass import gui_app
+    >>> gui_app.main()
 
 #--------------------------------------------------------------------------#
 

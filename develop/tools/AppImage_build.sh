@@ -124,7 +124,7 @@ rm $APP_DIR/python.png \
         $APP_DIR/usr/share/icons/hicolor/256x256/apps/python.png
 
 # copy new .desktop file
-cp -f $REPO_ROOT/videomass3/art/io.github.jeanslack.videomass.desktop \
+cp -f $REPO_ROOT/videomass/art/io.github.jeanslack.videomass.desktop \
     $APP_DIR/usr/share/applications/io.github.jeanslack.videomass.desktop
 
 # add pixmaps icon

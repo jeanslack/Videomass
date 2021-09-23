@@ -15,7 +15,7 @@ PATH = os.path.realpath(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(os.path.dirname(PATH)))
 
 try:
-    from videomass3.vdms_threads.ffprobe_parser import FFProbe
+    from videomass.vdms_threads.ffprobe_parser import FFProbe
 except ImportError as error:
     sys.exit(error)
 

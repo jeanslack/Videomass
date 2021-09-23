@@ -4,7 +4,7 @@ include bin/videomass
 recursive-include debian *
 recursive-include develop *
 recursive-include docs *
-recursive-include videomass3/art *
-recursive-include videomass3/share *
-recursive-include videomass3/locale *
-recursive-include videomass3/FFMPEG *
+recursive-include videomass/art *
+recursive-include videomass/share *
+recursive-include videomass/locale *
+recursive-include videomass/FFMPEG *

@@ -11,7 +11,7 @@ PATH = os.path.realpath(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(os.path.dirname(PATH)))
 
 try:
-    from videomass3.vdms_utils import utils
+    from videomass.vdms_utils import utils
 except ImportError as error:
     sys.exit(error)
 

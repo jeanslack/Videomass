@@ -8,7 +8,8 @@ Platform: all
 Writer: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2014-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.02.2021 *-pycodestyle- compatible*
+Rev: Sep.23.2021
+Code checker: pycodestyle, flake8, pylint .
 ########################################################
 
 This file is part of Videomass.
@@ -31,8 +32,8 @@ This file is part of Videomass.
 import sys
 import platform
 from setuptools import setup, find_packages
-from videomass3.vdms_sys.msg_info import current_release
-from videomass3.vdms_sys.msg_info import descriptions_release
+from videomass.vdms_sys.msg_info import current_release
+from videomass.vdms_sys.msg_info import descriptions_release
 
 
 def source_build():
@@ -71,25 +72,25 @@ def source_build():
     excluded = ['']
     # pathnames must be relative-path
     if platform.system() == 'Windows':
-        data_f = [('share/pixmaps', ['videomass3/art/icons/videomass.png'])]
+        data_f = [('share/pixmaps', ['videomass/art/icons/videomass.png'])]
 
     elif platform.system() == 'Darwin':
-        data_f = [('share/pixmaps', ['videomass3/art/icons/videomass.png']),
+        data_f = [('share/pixmaps', ['videomass/art/icons/videomass.png']),
                   ('share/man/man1', ['docs/man/man1/videomass.1.gz']),
                   ]
     else:
         data_f = [('share/applications',
-                   ['videomass3/art/io.github.jeanslack.videomass.desktop']),
+                   ['videomass/art/io.github.jeanslack.videomass.desktop']),
                   ('share/metainfo',
                    ['io.github.jeanslack.videomass.appdata.xml']),
-                  ('share/pixmaps', ['videomass3/art/icons/videomass.png']),
+                  ('share/pixmaps', ['videomass/art/icons/videomass.png']),
                   ('share/icons/hicolor/48x48/apps',
-                   ['videomass3/art/icons/hicolor/48x48/apps/videomass.png']),
+                   ['videomass/art/icons/hicolor/48x48/apps/videomass.png']),
                   ('share/icons/hicolor/256x256/apps',
-                   ['videomass3/art/icons/hicolor/256x256/apps/videomass.png']
+                   ['videomass/art/icons/hicolor/256x256/apps/videomass.png']
                    ),
                   ('share/icons/hicolor/scalable/apps',
-                   ['videomass3/art/icons/hicolor/scalable/apps/'
+                   ['videomass/art/icons/hicolor/scalable/apps/'
                     'videomass.svg']),
                   ('share/man/man1', ['docs/man/man1/videomass.1.gz']),
                   ]
@@ -105,9 +106,9 @@ def source_build():
           platforms=["All"],
           packages=find_packages(exclude=excluded),
           data_files=data_f,
-          package_data={"videomass3": ["art/icons/*", "locale/*"]
+          package_data={"videomass": ["art/icons/*", "locale/*"]
                         },
-          exclude_package_data={"videomass3": ["art/videomass.icns",
+          exclude_package_data={"videomass": ["art/videomass.icns",
                                                "art/videomass.ico",
                                                "locale/README",
                                                "locale/videomass.pot"
@@ -119,7 +120,7 @@ def source_build():
           install_requires=inst_req,
           setup_requires=setup_req,
           entry_points={'gui_scripts':
-                        ['videomass = videomass3.vdms3:main']},
+                        ['videomass = videomass.gui_app:main']},
           classifiers=[
         'Environment :: X11 Applications :: GTK',
         'Development Status :: 5 - Production/Stable',

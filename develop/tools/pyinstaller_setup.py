@@ -33,7 +33,7 @@ this = os.path.realpath(os.path.abspath(__file__))
 HERE = os.path.dirname(os.path.dirname(os.path.dirname(this)))
 sys.path.insert(0, HERE)
 try:
-    from videomass3.vdms_sys.msg_info import current_release
+    from videomass.vdms_sys.msg_info import current_release
 except ModuleNotFoundError as error:
     sys.exit(error)
 
@@ -57,11 +57,11 @@ def data(here=HERE):
                 AUTHOR=release[6],
                 EMAIL=release[7],
                 COMMENT=release[8],
-                ART=os.path.join(here, 'videomass3', 'art'),
-                LOCALE=os.path.join(here, 'videomass3', 'locale'),
-                SHARE=os.path.join(here, 'videomass3', 'share'),
-                FFMPEG=os.path.join(here, 'videomass3', 'FFMPEG'),
-                NOTICE=os.path.join(here, 'videomass3',
+                ART=os.path.join(here, 'videomass', 'art'),
+                LOCALE=os.path.join(here, 'videomass', 'locale'),
+                SHARE=os.path.join(here, 'videomass', 'share'),
+                FFMPEG=os.path.join(here, 'videomass', 'FFMPEG'),
+                NOTICE=os.path.join(here, 'videomass',
                                     'FFMPEG', 'NOTICE.rtf'),
                 AUTH=os.path.join(here, 'AUTHORS'),
                 BUGS=os.path.join(here, 'BUGS'),
@@ -70,9 +70,9 @@ def data(here=HERE):
                 INSTALL=os.path.join(here, 'INSTALL'),
                 README=os.path.join(here, 'README.md'),
                 TODO=os.path.join(here, 'TODO'),
-                ICNS=os.path.join(here, 'videomass3',
+                ICNS=os.path.join(here, 'videomass',
                                   'art', 'videomass.icns'),
-                ICO=os.path.join(here, 'videomass3', 'art', 'videomass.ico'),
+                ICO=os.path.join(here, 'videomass', 'art', 'videomass.ico'),
                 )
 
 

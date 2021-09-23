@@ -5,7 +5,7 @@
 # license: GPL3
 # Rev: August.20.2021
 #
-# Make a new `videomass.po` file on '../../videomass3/locale'.
+# Make a new `videomass.po` file on '../../videomass/locale'.
 # The previus videomass.po file will be overwrite with new one
 # incoming which will update latest strings for traslation .
 
@@ -13,7 +13,7 @@ PLATFORM=$(uname)  # command to show platform
 self="$(readlink -f -- $0)"  # this file
 here="${self%/*}"  # dirname of this file
 rootdir=$(dirname $here)  # base sources directory
-target="$rootdir/videomass3/locale"  # location to store new incoming
+target="$rootdir/videomass/locale"  # location to store new incoming
 
 cd $target
 
@@ -26,7 +26,7 @@ elif [ "$PLATFORM" = "Linux" ]; then
     XGETTEXT="xgettext"
 fi
 
-$XGETTEXT -d videomass "../vdms3.py" \
+$XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_dialogs/audiodialogs.py" \
 "../vdms_dialogs/filter_crop.py" \
 "../vdms_dialogs/filter_deinterlace.py" \
