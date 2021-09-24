@@ -7,6 +7,18 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Sep 24, 2021 V.3.4.7
+
+  * Fixed tests
+  * Added code implementation for Python embed package (Windows)
+  * code refactoring
+  * Changed package name from `videomass3` to `videomass`
+  * Changed main from `vdms3.py` to `gui_app.py`
+  * Fixed man page
+
++------------------------------------+
+
++------------------------------------+
 Sep 15, 2021 V.3.4.6
 
   * Fixed Multiple URL's are the same.

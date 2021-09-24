@@ -27,7 +27,7 @@ script:
     - python3 tests/test_ffprobe.py
     - python3 tests/test_display_GUI.py
     # make a videomass source dist and wheel
-    - python3 setup.py sdist bdist_wheel
+    - python3 -m build
     # build appimage
     - bash develop/tools/AppImage_build.sh
 after_script:

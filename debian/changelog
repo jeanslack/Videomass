@@ -1,3 +1,14 @@
+videomass (3.4.7-1) UNRELEASED; urgency=medium
+
+  * Fixed tests
+  * Added code implementation for Python embed package (Windows)
+  * code refactoring
+  * Changed package name from `videomass3` to `videomass`
+  * Changed main from `vdms3.py` to `gui_app.py`
+  * Fixed man page
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 24 Sep 2021 11:30:00 +0200
+
 videomass (3.4.6-1) UNRELEASED; urgency=medium
 
   * Fixed Multiple URL's are the same.
