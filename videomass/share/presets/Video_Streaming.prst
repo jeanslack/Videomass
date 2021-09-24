@@ -1,0 +1,66 @@
+[
+    {
+        "Name": "CBR MPEG-2 TS H.264",
+        "Description": "Keeping a constant bitrate, (MPEG-2 TS), for video streaming",
+        "First_pass": "-c:v libx264 -x264-params 'nal-hrd=cbr:force-cfr=1' -b:v 1M -minrate 1M -maxrate 1M -bufsize 2M -pix_fmt yuv420p -movflags faststart -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "ts"
+    },
+    {
+        "Name": "CBR webm VP9",
+        "Description": "Keeping a constant bitrate, for video streaming",
+        "First_pass": "-c:v libvpx-vp9 -b:v 1000k -minrate 1000k -maxrate 1000k -deadline good -cpu-used 0 -row-mt 1 -pix_fmt yuv420p -movflags faststart -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "webm"
+    },
+    {
+        "Name": "Constrained VBV H.264",
+        "Description": "Streaming under bandwidth constraints; live streaming (with CRF, 1-pass); VoD streaming (with target bitrate, 2-pass)",
+        "First_pass": "-an -sn -c:v libx264 -crf 23 -maxrate 1M -bufsize 2M -pass 1 -pix_fmt yuv420p -movflags faststart -f null",
+        "Second_pass": "-c:v libx264 -b:v 1M -maxrate 1M -bufsize 2M -pass 2 -pix_fmt yuv420p -movflags faststart -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Constrained VBV H.265",
+        "Description": "Streaming under bandwidth constraints; live streaming (with CRF, 1-pass); VoD streaming (with target bitrate, 2-pass)",
+        "First_pass": "-an -sn -c:v libx265 -crf 28 -x265-params pass=1:vbv-maxrate=1000:vbv-bufsize=2000 -pix_fmt yuv420p -movflags faststart -f null",
+        "Second_pass": "-c:v libx265 -b:v 1M -x265-params  pass=2:vbv-maxrate=1000:vbv-bufsize=2000 -pix_fmt yuv420p -movflags faststart -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Constrained VP9",
+        "Description": "Streaming under bandwidth constraints; live streaming (with CRF, 1-pass); VoD streaming (with target bitrate, 2-pass)",
+        "First_pass": "-an -sn -c:v libvpx-vp9 -crf 30 -b:v 2000k -deadline good -cpu-used 0 -row-mt 1 -pix_fmt yuv420p -movflags faststart -pass 1 -f null",
+        "Second_pass": "-c:v libvpx-vp9 -b:v 2000k -deadline good -cpu-used 0 -row-mt 1 -pix_fmt yuv420p -movflags faststart -map 0:v? -map_chapters 0 -pass 2 -map 0:s? -map 0:a? -map_metadata 0",
+        "Supported_list": "",
+        "Output_extension": "webm"
+    },
+    {
+        "Name": "Constrained ABR-VBV H.264",
+        "Description": "Streaming under bandwidth constraints; live streaming; VoD streaming (with target bitrate)",
+        "First_pass": "-an -sn -c:v libx264 -b:v 1M -maxrate 1M -bufsize 2M -pass 1 -pix_fmt yuv420p -movflags faststart -f null",
+        "Second_pass": "-c:v libx264 -b:v 1M -maxrate 1M -bufsize 2M -pass 2 -pix_fmt yuv420p -movflags faststart -map 0:v? -map_chapters 0 -pass 2 -map 0:s? -map 0:a? -map_metadata 0",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Constrained ABR-VBV H.265",
+        "Description": "Streaming under bandwidth constraints; live streaming; VoD streaming (with target bitrate)",
+        "First_pass": "-an -sn -c:v libx265 -b:v 1M -x265-params pass=1:vbv-maxrate=1000:vbv-bufsize=2000 -pix_fmt yuv420p -movflags faststart -f null",
+        "Second_pass": "-c:v libx265 -b:v 1M -x265-params pass=2:vbv-maxrate=1000:vbv-bufsize=2000 -pix_fmt yuv420p -movflags faststart -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Constrained ABR-VBV VP9",
+        "Description": "Streaming under bandwidth constraints; live streaming; VoD streaming (with target bitrate)",
+        "First_pass": "-an -sn -c:v libvpx-vp9 -b:v 1M -maxrate 1M -bufsize 2M -row-mt 1 -pass 1 -pix_fmt yuv420p -movflags faststart -f null",
+        "Second_pass": "-c:v libvpx-vp9 -b:v 1M -maxrate 1M -bufsize 2M -row-mt 1 -pass 2 -pix_fmt yuv420p -movflags faststart -map 0:v? -map_chapters 0 -pass 2 -map 0:s? -map 0:a? -map_metadata 0",
+        "Supported_list": "",
+        "Output_extension": "webm"
+    }
+]

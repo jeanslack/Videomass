@@ -1,0 +1,74 @@
+[
+    {
+        "Name": "Converts to AC3",
+        "Description": "Extract and convert first audio stream in Ac3 DVD - 192kbps",
+        "First_pass": "-vn -sn -map 0:1 -c:a:0 ac3 -b:a 192k -f ac3 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "ac3"
+    },
+    {
+        "Name": "Converts to FLAC",
+        "Description": "Extract and convert first audio stream in FLAC - stereo (lossless)",
+        "First_pass": "-vn -sn -map 0:1 -c:a:0 flac -compression_level 5 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "flac"
+    },
+    {
+        "Name": "Converts to MP3",
+        "Description": "Extract and convert first audio stream in MP3 - 320kbps",
+        "First_pass": "-vn -sn -map 0:1 -c:a:0 libmp3lame -b:a 320k -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mp3"
+    },
+    {
+        "Name": "Converts to m4a",
+        "Description": "Extract and convert first audio stream in MPEG4 audio - 112kbps",
+        "First_pass": "-vn -sn -map 0:1 -c:a:0 aac -b:a 112k -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "m4a"
+    },
+    {
+        "Name": "Converts to OGG",
+        "Description": "Extract and convert first audio stream in OGG - 128kbps, stereo, low quality from -aq 1 to -aq 10",
+        "First_pass": "-vn -sn -map 0:1 -c:a:0 libvorbis -aq 3 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "ogg"
+    },
+    {
+        "Name": "Converts to OPUS",
+        "Description": "Extract and convert first audio stream in OPUS with maximum quality from  0 to 10 compression level",
+        "First_pass": "-vn -sn -map 0:1 -c:a:0 libopus -compression_level 10 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "opus"
+    },
+    {
+        "Name": "Converts to WAV",
+        "Description": "Extract and convert first audio stream in WAV - 16 bit",
+        "First_pass": "-vn -sn -map 0:1 -c:a:0 pcm_s16le -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "wav"
+    },
+    {
+        "Name": "Converts to WAV for CD",
+        "Description": "Extract and convert first audio stream in WAV with bit depth 16 bit, sample rate 44.1 kHz",
+        "First_pass": "-vn -sn -map 0:1 -c:a:0 pcm_s16le -ar 44100 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "wav"
+    },
+    {
+        "Name": "Converts to WMA",
+        "Description": "Extract and convert first audio stream in wmav2 160kbps",
+        "First_pass": "-vn -sn -map 0:1 -c:a:0 wmav2 -b:a 160k -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "wma"
+    }
+]

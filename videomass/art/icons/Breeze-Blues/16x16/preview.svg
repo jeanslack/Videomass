@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 16 16"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="preview.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1057"
+     inkscape:window-height="721"
+     id="namedview10"
+     showgrid="false"
+     inkscape:zoom="14.75"
+     inkscape:cx="5.3701824"
+     inkscape:cy="8"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg8" />
+  <defs
+     id="defs3051">
+    <style
+       type="text/css"
+       id="current-color-scheme">
+      .ColorScheme-Text {
+        color:#eff0f1;
+      }
+      </style>
+  </defs>
+  <path
+     style="fill:#4169e1;fill-opacity:1;stroke:none"
+     d="M 8 3 A 8.999992 9 0 0 0 0.12304688 7.6679688 C 0.25199987 8.0299997 0.48029687 8.3451719 0.77929688 8.5761719 A 7.999993 8 0 0 1 8 4 A 4 4 0 0 0 4 8 A 4 4 0 0 0 8 12 A 4 4 0 0 0 12 8 A 4 4 0 0 0 8.3496094 4.0175781 A 7.999993 8 0 0 1 15.220703 8.5761719 C 15.522 8.3419999 15.752859 8.0302031 15.880859 7.6582031 A 8.999992 9 0 0 0 8 3 z M 8 5 A 3 3 0 0 1 11 8 A 3 3 0 0 1 8 11 A 3 3 0 0 1 5 8 A 3 3 0 0 1 8 5 z "
+     class="ColorScheme-Text"
+     id="path4" />
+  <path
+     d="M8 6A2 2 0 0 0 6 8 2 2 0 0 0 8 10 2 2 0 0 0 10 8 2 2 0 0 0 9.910156 7.412109 1 1 0 0 1 9 8 1 1 0 0 1 8 7 1 1 0 0 1 8.589844 6.089844 2 2 0 0 0 8 6"
+     style="fill:#da4453"
+     id="path6" />
+</svg>

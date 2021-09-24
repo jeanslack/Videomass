@@ -1,0 +1,26 @@
+[
+    {
+        "Name": "Video mkv H.264",
+        "Description": "achieving the best possible quality",
+        "First_pass": "-c:v libx264 -crf 23 -pix_fmt yuv420p -movflags faststart -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Video webm VP9",
+        "Description": "achieving the best possible quality",
+        "First_pass": "-c:v libvpx-vp9 -crf 30 -b:v 0 -deadline good -cpu-used 0 -row-mt 1 -pix_fmt yuv420p -movflags faststart -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "webm"
+    },
+    {
+        "Name": "Video mkv H.265",
+        "Description": "achieving the best possible quality",
+        "First_pass": "-c:v libx265 -crf 28 -pix_fmt yuv420p -movflags faststart -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    }
+]
