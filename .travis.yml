@@ -12,6 +12,7 @@ cache: pip
 python: "3.9"
 before_install:
     - python3 -m pip install -U pip
+    - python3 -m pip install -U build
     - sudo apt-get update
     - sudo apt-get -y install libsdl2-2.0-0
 # install dependencies via pip
