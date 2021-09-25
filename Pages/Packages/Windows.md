@@ -7,9 +7,9 @@ nav_order: 4
 
 ---
   
-[Videomass 3.4.6 Installer](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64-Setup.exe){: .btn .btn-green } 
-[Videomass 3.4.6 Portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64-portable.7z){: .btn .btn-green } 
-[Pyembed package](#pyembed-package){: .btn .btn-blue }   
+[Videomass 3.4.6 Installer](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64-Setup.exe){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
+[Videomass 3.4.6 Portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
+[Pyembed package](#pyembed-package){: .btn .fs-5 .mb-4 .mb-md-0 }   
 
 Minimum requirements:
 - [Microsoft Windows 8 / 10](https://en.wikipedia.org/wiki/Windows_10)
@@ -40,7 +40,7 @@ wiki pages for more installation details.
 Experimental
 {: .label .label-purple }  
 
-[Videomass 3.4.6 pyembed](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-WIN-x86_64-pyembed.7z){: .btn .btn-green }
+[Videomass 3.4.6 pyembed](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-WIN-x86_64-pyembed.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }
 
 Minimum requirements:   
 - [Microsoft Windows 8 / 10](https://en.wikipedia.org/wiki/Windows_10)

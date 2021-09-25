@@ -9,7 +9,7 @@ nav_order: 2
 
 ## Ubuntu/Mint PPA
 
-This PPA currently publishes packages for Ubuntu, including official and 
+This PPA currently publishes packages for [Ubuntu](https://ubuntu.com/), including official and 
 derivative distributions.   
 
 - [Ubuntu 18.04 Bionic](https://releases.ubuntu.com/18.04/)
@@ -31,7 +31,39 @@ For any other application-related issues, please read
 {: .fs-3 .text-grey-dk-100}   
 ---
 
-## AppImage
+## Mageia 8
+
+First you have to configure the Official [Mageia](https://www.mageia.org/en/) 
+repositories then:
+
+For i586 - 32bit systems
+{: .fs-3 .text-grey-dk-100}
+
+```
+urpmi.addmedia --wget --distrib https://ftp.blogdrake.net/mageia/mageia8/i586
+urpmi videomass
+exit
+```
+
+For x86_64 - 64bit systems
+{: .fs-3 .text-grey-dk-100}
+
+```
+urpmi.addmedia --wget --distrib https://ftp.blogdrake.net/mageia/mageia8/x86_64
+urpmi videomass
+exit
+```
+---
+
+## MX-Linux
+
+Videomass is available on 
+[test repo](https://mxlinux.org/community-repos/) 
+of [MX-Linux](https://mxlinux.org/)
+
+---
+
+## AppImage format
 {: .d-inline-block } 
 
 Portable
@@ -40,9 +72,7 @@ Portable
 About [AppImage](https://appimage.org/) format   
 {: .fs-3 .text-grey-dk-100}
 
----
-
-[Videomass 3.4.6 AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.4.6-x86_64.AppImage){: .btn .btn-green } 
+[Videomass 3.4.6 AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.4.6-x86_64.AppImage){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 } 
 
 Minimum requirements:   
 - All [Ubuntu flavors](https://ubuntu.com/download/flavours) based on 

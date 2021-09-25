@@ -7,7 +7,7 @@ nav_order: 3
 
 ---
 
-[Videomass 3.4.6 Disk Image](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64.dmg){: .btn .btn-green }   
+[Videomass 3.4.6 Disk Image](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64.dmg){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 } 
 
 Minimum requirements:
 - [macOS High Sierra](https://en.wikipedia.org/wiki/MacOS_High_Sierra) 10.13.6 x64.   
