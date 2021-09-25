@@ -33,13 +33,18 @@ For any other application-related issues, please read
 
 ## Mageia 8
 
-First you have to configure the Official [Mageia](https://www.mageia.org/en/) 
+Exists a third-party repository for Mageia 8 that have a rpm package for videomass.
+The repository comes from [BlogDrake](https://blogdrake.net/) The Official Community 
+for Spanish Talking Users.
+
+To add this repo, first you have to configure the Official [Mageia](https://www.mageia.org/en/) 
 repositories then:
 
 For i586 - 32bit systems
 {: .fs-3 .text-grey-dk-100}
 
 ```
+su -
 urpmi.addmedia --wget --distrib https://ftp.blogdrake.net/mageia/mageia8/i586
 urpmi videomass
 exit
@@ -49,6 +54,7 @@ For x86_64 - 64bit systems
 {: .fs-3 .text-grey-dk-100}
 
 ```
+su -
 urpmi.addmedia --wget --distrib https://ftp.blogdrake.net/mageia/mageia8/x86_64
 urpmi videomass
 exit
