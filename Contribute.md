@@ -44,13 +44,10 @@ If you want to translate offline, please read
 ## Packaging
 {: .bg-green-300}
 
-Installation package of Videomass is currently available for Ubuntu/Mint by this  
-[PPA](https://launchpad.net/~jeanslack/+archive/ubuntu/videomass), 
-MX-Linux by [repo test](https://mxlinux.org/community-repos/) and 
-[SparkyLinux](https://sparkylinux.org/videomass/). 
-Packaging for other distros still needs to be done. 
-Also, I would be very glad if anyone can push Videomass into the official 
-repositories of any distribution.
+A list of Videomass installation packages for Linux is available 
+[here](Pages/Packages/Linux). Packaging for other distros still needs to be done. 
+Also, I would be very glad if anyone can push Videomass into the official or 
+unofficial repositories of any distribution.
 
 ---
 
@@ -59,5 +56,5 @@ repositories of any distribution.
 
 User documentation of Videomass is still a work in progress. The source files 
 are hosted on [github](https://github.com/jeanslack/Videomass/tree/gh-pages/Pages/User-guide-languages). 
-You can contribute to its content by sending pull requests on GitHub or via 
-mail (jeanlucperni@gmail.com).
+You can contribute to its content by sending pull requests on GitHub or by 
+email <jeanlucperni@gmail.com> .
