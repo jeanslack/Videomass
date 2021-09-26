@@ -118,7 +118,7 @@ def get_pyinstaller():
 
 def conventional_paths():
     """
-    Establish the conventional paths based on OS by installation
+    Establish the conventional paths based on OS
 
     """
     user_name = os.path.expanduser('~')
@@ -149,7 +149,7 @@ def conventional_paths():
 
 def portable_paths(portdir):
     """
-    Make portable-data paths based on OS by a portable mode
+    Make portable-data paths based on OS
 
     """
     if platform.system() == 'Windows':
@@ -188,6 +188,11 @@ def set_outdir(outdir, relpath, apptype):
         outputdir = os.path.expanduser('~')
 
     return outputdir, None
+
+
+def msg(arg):
+    """print logging messages during startup"""
+    print('Info:', arg)
 
 
 class DataSource():
@@ -246,10 +251,9 @@ class DataSource():
         launcher = os.path.isfile('%s/launcher' % self.workdir)
 
         if DataSource.FROZEN and DataSource.MEIPASS or launcher:
-            print('frozen=%s meipass=%s launcher=%s' % (DataSource.FROZEN,
-                                                        DataSource.MEIPASS,
-                                                        launcher
-                                                        ))
+            msg('frozen=%s meipass=%s launcher=%s' % (DataSource.FROZEN,
+                                                      DataSource.MEIPASS,
+                                                      launcher))
             self.apptype = 'pyinstaller' if not launcher else None
             self.videomass_icon = "%s/videomass.png" % self.icodir
 
@@ -257,7 +261,7 @@ class DataSource():
               os.path.dirname(os.path.dirname(os.path.dirname(
                   sys.argv[0]))) + '/AppRun')):
             # embedded on python appimage
-            print('Embedded on python appimage')
+            msg('Embedded on python appimage')
             self.apptype = 'appimage'
             userbase = os.path.dirname(os.path.dirname(sys.argv[0]))
             pixmaps = '/share/pixmaps/videomass.png'
@@ -267,7 +271,7 @@ class DataSource():
             binarypath = shutil.which('videomass')
             if platform.system() == 'Windows':  # any other packages
                 exe = binarypath if binarypath else sys.executable
-                print('Win32 executable=%s' % exe)
+                msg('Win32 executable=%s' % exe)
                 # HACK check this
                 # dirname = os.path.dirname(sys.executable)
                 # pythonpath = os.path.join(dirname, 'Script', 'videomass')
@@ -277,19 +281,19 @@ class DataSource():
                     self.apptype = 'embed'
 
             elif binarypath == '/usr/local/bin/videomass':
-                print('executable=%s' % binarypath)
+                msg('executable=%s' % binarypath)
                 # pip as super user, usually Linux, MacOs, Unix
                 share = '/usr/local/share/pixmaps'
                 self.videomass_icon = share + '/videomass.png'
 
             elif binarypath == '/usr/bin/videomass':
-                print('executable=%s' % binarypath)
+                msg('executable=%s' % binarypath)
                 # installed via apt, rpm, etc, usually Linux
                 share = '/usr/share/pixmaps'
                 self.videomass_icon = share + "/videomass.png"
 
             else:
-                print('executable=%s' % binarypath)
+                msg('executable=%s' % binarypath)
                 # pip as normal user, usually Linux, MacOs, Unix
                 userbase = os.path.dirname(os.path.dirname(binarypath))
                 pixmaps = '/share/pixmaps/videomass.png'
