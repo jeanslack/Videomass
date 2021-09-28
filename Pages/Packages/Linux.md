@@ -2,10 +2,12 @@
 layout: default
 title: Linux
 parent: Downloads
-nav_order: 2
+nav_order: 3
 ---
 
 ---
+
+# Linux
 
 ## Ubuntu/Mint PPA
 
@@ -93,13 +95,13 @@ Portable
 About [AppImage](https://appimage.org/) format   
 {: .fs-3 .text-grey-dk-100}
 
-[Videomass 3.4.6 AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.4.6-x86_64.AppImage){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 } 
-
 Minimum requirements:   
 - All [Ubuntu flavors](https://ubuntu.com/download/flavours) based on 
 [18.04 LTS x86_64](https://releases.ubuntu.com/18.04.5/) version.
 - [x86_64](https://en.wikipedia.org/wiki/X86-64) architecture.
-- [FFmpeg](https://www.ffmpeg.org/) version 3.1.5  
+- [FFmpeg](https://www.ffmpeg.org/) version 3.1.5 
+
+[Videomass 3.4.6 AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.4.6-x86_64.AppImage){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }  
 
 Successfully tested on the following Linux distributions:   
 * [Xubuntu](https://xubuntu.org/) 18.04 LTS x86_64 

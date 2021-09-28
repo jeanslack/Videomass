@@ -1,17 +1,19 @@
 ---
 layout: default
-title: Python Package
+title: PyPy Package
 parent: Downloads
-nav_order: 5
+nav_order: 4
 ---
 
 ---
   
-## Python Package
+# PyPy Package
 
-[Videomass 3.4.6](https://pypi.org/project/videomass/){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 } 
+If Videomass is not available in your distribution packages, use the 
+[PyPI package](https://pypi.org/project/videomass/). On Linux some dependencies 
+have to be manually installed. More details can be found in the 
+[install instructions](https://github.com/jeanslack/Videomass/wiki/Installation-using-pip) .
 
-> To Learn how to install a Python package, read the documentation [here](https://packaging.python.org/tutorials/installing-packages/)
+> To Learn how to install a Python package, read the offcial documentation 
+[here](https://packaging.python.org/tutorials/installing-packages/)
 {: .fs-3 .text-grey-dk-100}
-
-You may also be interested in how to [install Videomass using pip](https://github.com/jeanslack/Videomass/wiki/Installation-using-pip) 
