@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: main_frame.py
 Porpose: top window main frame

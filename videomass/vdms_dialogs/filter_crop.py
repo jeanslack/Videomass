@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: filter_crop.py
 Porpose: Show dialog to get video crop values based on FFmpeg syntax

@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: concatenate.py
 Porpose: A simple concat demuxer UI
@@ -6,7 +6,10 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: Sep.29.2021
+Code checker:
+    - pycodestyle
+    - flake8: --ignore F821
 ########################################################
 
 This file is part of Videomass.
@@ -26,9 +29,9 @@ This file is part of Videomass.
 """
 import os
 import wx
+import wx.lib.agw.hyperlink as hpl
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_dialogs.epilogue import Formula
-import wx.lib.agw.hyperlink as hpl
 
 
 def compare_media_param(data):
@@ -40,19 +43,19 @@ def compare_media_param(data):
     otherwise it returns False.
 
     """
-    vcodec = list()  # video codec
-    acodec = list()  # audio codec
-    ahz = list()  # audio sample rate
-    size = list()  # width x height (frame dimensions if video)
+    vcodec = []  # video codec
+    acodec = []  # audio codec
+    ahz = []  # audio sample rate
+    size = []  # width x height (frame dimensions if video)
 
-    for s in data:
-        for i in s.get('streams'):
-            if i.get('codec_type') == 'video':
-                vcodec.append(i.get('codec_name'))
-                size.append('%sx%s' % (i.get('width'), i.get('height')))
-            if i.get('codec_type') == 'audio':
-                acodec.append(i.get('codec_name'))
-                ahz.append(i.get('sample_rate'))
+    for streams in data:
+        for items in streams.get('streams'):
+            if items.get('codec_type') == 'video':
+                vcodec.append(items.get('codec_name'))
+                size.append(f"{items.get('width')}x{items.get('height')}")
+            if items.get('codec_type') == 'audio':
+                acodec.append(items.get('codec_name'))
+                ahz.append(items.get('sample_rate'))
 
     for compare in (vcodec, acodec, ahz, size):
         if len(compare) == 1:
@@ -119,9 +122,9 @@ class Conc_Demuxer(wx.Panel):
                                       )
         if self.appdata['GETLANG'] in self.appdata['SUPP_LANGs']:
             lang = self.appdata['GETLANG'].split('_')[0]
-            page = ("https://jeanslack.github.io/Videomass/"
-                    "Pages/User-guide-languages/%s/1-User_"
-                    "Interface_Overview_%s.pdf" % (lang, lang))
+            page = (f"https://jeanslack.github.io/Videomass/"
+                    f"Pages/User-guide-languages/{lang}/1-User_"
+                    f"Interface_Overview_{lang}.pdf")
         else:
             page = ("https://jeanslack.github.io/Videomass/"
                     "Pages/User-guide-languages/en/1-User_"
@@ -201,7 +204,7 @@ class Conc_Demuxer(wx.Panel):
             return
 
         f_src, destin, countmax = checking
-        newfile = '%s%s.%s' % (fname, self.parent.suffix, ext)
+        newfile = f'{fname}{self.parent.suffix}.{ext}'
 
         self.concat_demuxer(self.parent.file_src, newfile,
                             destin[0], ext, logname)
@@ -238,6 +241,6 @@ class Conc_Demuxer(wx.Panel):
 
         formula = (_("SUMMARY\n\nFile to concatenate\nOutput filename\
                       \nDestination\nOutput Format\nTime Period"))
-        dictions = ("\n\n%s\n%s\n%s\n%s\n%s" % (lenfile, newfile, destdir,
-                                                ext, 'Not applicable',))
+        dictions = (f"\n\n{lenfile}\n{newfile}\n{destdir}\n{ext}\n"
+                    f"Not applicable")
         return formula, dictions

@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: youtubedl_ui.py
 Porpose: youtube-dl user interface
@@ -440,23 +440,23 @@ class Downloader(wx.Panel):
                                         'URLs checklist'), Downloader.YELLOW,
                                       Downloader.BLACK)
             return
-        else:
-            self.parent.statusbar_msg(_('Ready'), None)
-            item = self.fcode.GetFocusedItem()
-            url = self.fcode.GetItemText(item, 1)
-            if '/watch' not in url:
-                # prevent opening too many of ffplay windows
-                wx.MessageBox(_("Cannot play playlists / channels or URLs "
-                                "containing multiple videos listed."),
-                              "Videomass", wx.ICON_INFORMATION, self)
-                return
 
-            if self.choice.GetSelection() in [0, 1, 2]:
-                quality = self.fcode.GetItemText(item, 3)
-            elif self.choice.GetSelection() == 3:
-                quality = self.fcode.GetItemText(item, 0)
+        self.parent.statusbar_msg(_('Ready'), None)
+        item = self.fcode.GetFocusedItem()
+        url = self.fcode.GetItemText(item, 1)
+        if '/watch' not in url:
+            # prevent opening too many of ffplay windows
+            wx.MessageBox(_("Cannot play playlists / channels or URLs "
+                            "containing multiple videos listed."),
+                          "Videomass", wx.ICON_INFORMATION, self)
+            return
 
-            io_tools.url_play(url, quality, tstamp, self.parent.autoexit)
+        if self.choice.GetSelection() in [0, 1, 2]:
+            quality = self.fcode.GetItemText(item, 3)
+        elif self.choice.GetSelection() == 3:
+            quality = self.fcode.GetItemText(item, 0)
+
+        io_tools.url_play(url, quality, tstamp, self.parent.autoexit)
     # ----------------------------------------------------------------------
 
     def get_libraryformatcode(self):
@@ -768,6 +768,9 @@ class Downloader(wx.Panel):
     # -----------------------------------------------------------------#
 
     def on_Playlist(self, event):
+        """
+        Enable or disable the download of playlists
+        """
 
         if self.ckbx_pl.IsChecked():
             playlist = [url for url in self.parent.data_url
@@ -809,6 +812,9 @@ class Downloader(wx.Panel):
     # -----------------------------------------------------------------#
 
     def on_Thumbnails(self, event):
+        """
+        Enable or disable the tumbnails downloading
+        """
         if self.ckbx_thumb.IsChecked():
             self.opt["THUMB"] = [True, "--embed-thumbnail"]
         else:
@@ -816,6 +822,9 @@ class Downloader(wx.Panel):
     # -----------------------------------------------------------------#
 
     def on_Metadata(self, event):
+        """
+        Enable or disable writing metadata
+        """
         if self.ckbx_meta.IsChecked():
             self.opt["METADATA"] = [True, "--add-metadata"]
         else:
@@ -823,6 +832,9 @@ class Downloader(wx.Panel):
     # -----------------------------------------------------------------#
 
     def on_Subtitles(self, event):
+        """
+        enable or disable writing subtitles
+        """
         if self.ckbx_sb.IsChecked():
             self.opt["SUBTITLES"] = [True, "--write-auto-sub"]
         else:
@@ -913,8 +925,8 @@ class Downloader(wx.Panel):
         if Downloader.appdata['PYLIBYDL'] is None:  # is used as library
 
             logname = 'youtubedl_lib.log'
-            nooverwrites = True if self.ckbx_w.IsChecked() else False
-            restrictfn = True if self.ckbx_restrict_fn.IsChecked() else False
+            nooverwrites = self.ckbx_w.IsChecked() is True
+            restrictfn = self.ckbx_restrict_fn.IsChecked() is True
             postprocessors = []
 
             if self.choice.GetSelection() == 2:

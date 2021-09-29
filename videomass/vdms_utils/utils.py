@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: utils.py
 Porpose: It groups useful functions that are called several times

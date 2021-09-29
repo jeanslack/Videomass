@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: filter_scale.py
 Porpose: Show dialog to get scale data based on FFmpeg syntax

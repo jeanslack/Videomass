@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 
 # Name: set_timestamp.py
 # Porpose: set viewing attribute timestamp for FFplay

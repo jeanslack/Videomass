@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 File Name: checkup.py
 Porpose: input/output file check
@@ -8,7 +8,7 @@ Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: May.16.2021
 Code checker:
-    flake8: --ignore F821, W504
+    flake8: --ignore F821
     pylint: --ignore E0602, E1101
 ########################################################
 

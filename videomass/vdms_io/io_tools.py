@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: io_tools.py
 Porpose: input/output redirection to processes (aka threads)

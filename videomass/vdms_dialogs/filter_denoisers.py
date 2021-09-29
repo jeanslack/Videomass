@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: filter_denoiser.py
 Porpose: Show dialog to get denoiser data based on FFmpeg syntax

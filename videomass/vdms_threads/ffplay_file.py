@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 
 """
 Name: ffplay_file.py

@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 3.4.6\n"
+"Project-Id-Version: Videomass 3.4.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-24 12:32+0200\n"
-"PO-Revision-Date: 2021-09-24 12:33+0200\n"
+"POT-Creation-Date: 2021-09-30 00:17+0200\n"
+"PO-Revision-Date: 2021-09-30 00:20+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -17,10 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: ../gui_app.py:184
+#: ../gui_app.py:188
 msgid ""
 "Permission denied: {}\n"
 "\n"
@@ -110,7 +110,7 @@ msgstr "Larghezza"
 #: ../vdms_dialogs/filter_crop.py:256 ../vdms_dialogs/filter_deinterlace.py:119
 #: ../vdms_dialogs/filter_denoisers.py:85 ../vdms_dialogs/filter_scale.py:186
 #: ../vdms_dialogs/filter_stab.py:259 ../vdms_dialogs/filter_transpose.py:109
-#: ../vdms_dialogs/playlist_indexing.py:137
+#: ../vdms_dialogs/playlist_indexing.py:114
 #: ../vdms_panels/av_conversions.py:536
 msgid "Reset"
 msgstr "Azzera"
@@ -118,8 +118,8 @@ msgstr "Azzera"
 #: ../vdms_dialogs/filter_crop.py:260 ../vdms_dialogs/filter_deinterlace.py:118
 #: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:184
 #: ../vdms_dialogs/filter_stab.py:257 ../vdms_dialogs/filter_transpose.py:113
-#: ../vdms_dialogs/playlist_indexing.py:141
-#: ../vdms_dialogs/set_timestamp.py:145
+#: ../vdms_dialogs/playlist_indexing.py:118
+#: ../vdms_dialogs/set_timestamp.py:146
 msgid "Apply"
 msgstr "Applica"
 
@@ -488,8 +488,8 @@ msgstr ""
 
 #: ../vdms_dialogs/filter_stab.py:304
 msgid ""
-"Set the camera path optimization algorithm. Values are: ‘gauss’: gaussian "
-"kernel low-pass filter on camera motion (default), and ‘avg’: averaging on "
+"Set the camera path optimization algorithm. Values are: `gauss`: gaussian "
+"kernel low-pass filter on camera motion (default), and `avg`: averaging on "
 "transformations"
 msgstr ""
 "Imposta l'algoritmo di ottimizzazione del percorso della fotocamera. I "
@@ -508,8 +508,8 @@ msgstr ""
 #: ../vdms_dialogs/filter_stab.py:311
 msgid ""
 "Specify how to deal with borders that may be visible due to movement "
-"compensation. Values are: ‘keep’ keep image information from previous frame "
-"(default), ‘black’ fill the border black"
+"compensation. Values are: `keep` keep image information from previous frame "
+"(default), `black` fill the border black"
 msgstr ""
 "Specificare come trattare i bordi che possono essere visibili a causa della "
 "compensazione del movimento. I valori sono: \"conserva\" conserva le "
@@ -541,9 +541,9 @@ msgstr ""
 
 #: ../vdms_dialogs/filter_stab.py:325
 msgid ""
-"Set optimal zooming to avoid borders. Accepted values are: ‘0’ disabled, ‘1’ "
+"Set optimal zooming to avoid borders. Accepted values are: `0` disabled, `1` "
 "optimal static zoom value is determined (only very strong movements will "
-"lead to visible borders) (default), ‘2’ optimal adaptive zoom value is "
+"lead to visible borders) (default), `2` optimal adaptive zoom value is "
 "determined (no borders will be visible), see zoomspeed. Note that the value "
 "given at zoom is added to the one calculated here."
 msgstr ""
@@ -565,9 +565,9 @@ msgstr ""
 
 #: ../vdms_dialogs/filter_stab.py:336
 msgid ""
-"Specify type of interpolation. Available values are: ‘no’ no interpolation, "
-"‘linear’ linear only horizontal, ‘bilinear’ linear in both directions "
-"(default), ‘bicubic’ cubic in both directions (slow)"
+"Specify type of interpolation. Available values are: `no` no interpolation, "
+"`linear` linear only horizontal, `bilinear` linear in both directions "
+"(default), `bicubic` cubic in both directions (slow)"
 msgstr ""
 "Specificare il tipo di interpolazione. I valori disponibili sono: \"no\" "
 "nessuna interpolazione, \"linear\" lineare solo orizzontale, \"bilinear\" "
@@ -801,15 +801,15 @@ msgstr "Fatto!"
 msgid "Cross-platform graphical interface for FFmpeg and youtube-dl.\n"
 msgstr "Interfaccia grafica multi-piattaforma per FFmpeg e youtube-dl.\n"
 
-#: ../vdms_dialogs/playlist_indexing.py:49 ../vdms_frames/ydl_mediainfo.py:90
+#: ../vdms_dialogs/playlist_indexing.py:50 ../vdms_frames/ydl_mediainfo.py:72
 msgid "URL"
 msgstr "URL"
 
-#: ../vdms_dialogs/playlist_indexing.py:50
+#: ../vdms_dialogs/playlist_indexing.py:51
 msgid "Playlist Items"
 msgstr "Contenuto della playlist"
 
-#: ../vdms_dialogs/playlist_indexing.py:86
+#: ../vdms_dialogs/playlist_indexing.py:63
 msgid ""
 "Click on \"Playlist Items\" column to specify indices of the videos in the "
 "playlist separated by commas like: \"1,2,5,8\" if you want to download "
@@ -825,11 +825,11 @@ msgstr ""
 "È possibile specificare l'intervallo: \"1-3,7,10-13\" il quale scaricherà i "
 "video all'indice 1, 2, 3, 7, 10, 11, 12 e 13.\n"
 
-#: ../vdms_dialogs/playlist_indexing.py:122
+#: ../vdms_dialogs/playlist_indexing.py:99
 msgid "Playlist video items to download"
 msgstr "Elementi video della playlist da scaricare"
 
-#: ../vdms_dialogs/playlist_indexing.py:211
+#: ../vdms_dialogs/playlist_indexing.py:188
 msgid ""
 "ERROR: Enter only digits, commas and hyphens. If you have multiple items, "
 "use commas to separate them. Use the hyphen for the range. Spaces are not "
@@ -839,15 +839,15 @@ msgstr ""
 "virgole per separarli. Usa il trattino per l'intervallo. Non sono ammessi "
 "spazi."
 
-#: ../vdms_dialogs/playlist_indexing.py:215
+#: ../vdms_dialogs/playlist_indexing.py:192
 msgid "ERROR: You have to start and end with a digit."
 msgstr "ERRORE: devi iniziare e finire con una cifra."
 
-#: ../vdms_dialogs/playlist_indexing.py:217
+#: ../vdms_dialogs/playlist_indexing.py:194
 msgid "ERROR: Make sure the hyphen is between two digits."
 msgstr "ERRORE: assicurati che il trattino sia tra due cifre."
 
-#: ../vdms_dialogs/playlist_indexing.py:219
+#: ../vdms_dialogs/playlist_indexing.py:196
 msgid ""
 "ERROR: A range must include only two digits and a hyphen, for example "
 "\"20-25\" ."
@@ -855,7 +855,7 @@ msgstr ""
 "ERRORE: un intervallo deve includere solo due cifre e un trattino, ad "
 "esempio \"20-25\" ."
 
-#: ../vdms_dialogs/playlist_indexing.py:221
+#: ../vdms_dialogs/playlist_indexing.py:198
 msgid ""
 "ERROR: Make sure you use commas only to separate indices and / or ranges, "
 "for example \"1,3,5,10-15\""
@@ -863,11 +863,11 @@ msgstr ""
 "ERRORE: assicurati di utilizzare le virgole solo per separare gli indici e/o "
 "intervalli, ad esempio \"1,3,5,10-15\""
 
-#: ../vdms_dialogs/playlist_indexing.py:224
+#: ../vdms_dialogs/playlist_indexing.py:201
 msgid "ERROR: The entered string contains redundant characters."
 msgstr "ERRORE: la stringa immessa contiene caratteri ridondanti."
 
-#: ../vdms_dialogs/playlist_indexing.py:282
+#: ../vdms_dialogs/playlist_indexing.py:260
 msgid ""
 "WARNING: The selected URL does not refer to a playlist. Only lines marked "
 "green can be indexed."
@@ -904,7 +904,7 @@ msgstr ""
 msgid "Profile Name"
 msgstr "Nome Profilo"
 
-#: ../vdms_dialogs/presets_addnew.py:81 ../vdms_panels/presets_manager.py:373
+#: ../vdms_dialogs/presets_addnew.py:81 ../vdms_panels/presets_manager.py:374
 msgid "Description"
 msgstr "Descrizione"
 
@@ -957,27 +957,27 @@ msgstr "Profilo salvato con successo!"
 msgid "Successful changes!"
 msgstr "Modifiche riuscite!"
 
-#: ../vdms_dialogs/set_timestamp.py:84
+#: ../vdms_dialogs/set_timestamp.py:85
 msgid "Font Size"
 msgstr "Dimensione Font"
 
-#: ../vdms_dialogs/set_timestamp.py:108
+#: ../vdms_dialogs/set_timestamp.py:109
 msgid "Font Color"
 msgstr "Colore Font"
 
-#: ../vdms_dialogs/set_timestamp.py:118
+#: ../vdms_dialogs/set_timestamp.py:119
 msgid "Shadow Color"
 msgstr "Colore dell'ombra"
 
-#: ../vdms_dialogs/set_timestamp.py:129
+#: ../vdms_dialogs/set_timestamp.py:130
 msgid "Show text box"
 msgstr "Mostra casella di testo"
 
-#: ../vdms_dialogs/set_timestamp.py:133
+#: ../vdms_dialogs/set_timestamp.py:134
 msgid "Box Color"
 msgstr "Colore riquadro"
 
-#: ../vdms_dialogs/set_timestamp.py:153
+#: ../vdms_dialogs/set_timestamp.py:154
 msgid ""
 "The timestamp size does not auto-adjust to the video size, you have to set "
 "the size here"
@@ -985,7 +985,7 @@ msgstr ""
 "La dimensione del timestamp non si adatta automaticamente alla dimensione "
 "del video, devi impostare la dimensione qui"
 
-#: ../vdms_dialogs/set_timestamp.py:157
+#: ../vdms_dialogs/set_timestamp.py:158
 msgid "Timestamp settings"
 msgstr "Impostazioni timestamp"
 
@@ -1108,7 +1108,7 @@ msgid "Menu bar > Tools > Update youtube-dl"
 msgstr "Barra dei menu > Strumenti > Aggiorna youtube-dl"
 
 #: ../vdms_dialogs/settings.py:295 ../vdms_dialogs/settings.py:309
-#: ../vdms_dialogs/settings.py:322 ../vdms_frames/ffmpeg_conf.py:216
+#: ../vdms_dialogs/settings.py:322 ../vdms_frames/ffmpeg_conf.py:217
 #: ../vdms_panels/av_conversions.py:2452
 msgid "Disabled"
 msgstr "Disabilitato"
@@ -1216,15 +1216,15 @@ msgstr ""
 msgid "Changes will take effect once the program has been restarted"
 msgstr "Le modifiche avranno effetto una volta riavviato il programma"
 
-#: ../vdms_dialogs/videomass_check_version.py:61
+#: ../vdms_dialogs/videomass_check_version.py:64
 msgid "Get Latest Version"
 msgstr "Ottieni l'ultima versione"
 
-#: ../vdms_dialogs/videomass_check_version.py:65
+#: ../vdms_dialogs/videomass_check_version.py:68
 msgid "Checking for newer version"
 msgstr "Controllo della versione più recente"
 
-#: ../vdms_dialogs/videomass_check_version.py:93
+#: ../vdms_dialogs/videomass_check_version.py:96
 msgid ""
 "\n"
 "\n"
@@ -1234,7 +1234,7 @@ msgstr ""
 "\n"
 "Le nuove versioni risolvono bug e offrono nuove funzionalità."
 
-#: ../vdms_dialogs/videomass_check_version.py:94
+#: ../vdms_dialogs/videomass_check_version.py:97
 #, python-brace-format
 msgid ""
 "\n"
@@ -1247,159 +1247,159 @@ msgstr ""
 "Questo è Videomass v.{0}\n"
 "\n"
 
-#: ../vdms_frames/ffmpeg_conf.py:65
+#: ../vdms_frames/ffmpeg_conf.py:66
 msgid "Informations"
 msgstr "Informazioni"
 
-#: ../vdms_frames/ffmpeg_conf.py:76
+#: ../vdms_frames/ffmpeg_conf.py:77
 msgid "Flags settings"
 msgstr "Impostazioni dei flag"
 
-#: ../vdms_frames/ffmpeg_conf.py:86
+#: ../vdms_frames/ffmpeg_conf.py:87
 msgid "Flags enabled"
 msgstr "Flag abilitati"
 
-#: ../vdms_frames/ffmpeg_conf.py:96
+#: ../vdms_frames/ffmpeg_conf.py:97
 msgid "Flags disabled"
 msgstr "Flag disabilitati"
 
-#: ../vdms_frames/ffmpeg_conf.py:106
+#: ../vdms_frames/ffmpeg_conf.py:107
 msgid "FFmpeg configuration"
 msgstr "Configurazione di FFmpeg"
 
-#: ../vdms_frames/ffmpeg_conf.py:114
+#: ../vdms_frames/ffmpeg_conf.py:115
 msgid "flags"
 msgstr "flags"
 
-#: ../vdms_frames/ffmpeg_conf.py:115 ../vdms_frames/ffmpeg_conf.py:119
-#: ../vdms_frames/ffmpeg_conf.py:123
+#: ../vdms_frames/ffmpeg_conf.py:116 ../vdms_frames/ffmpeg_conf.py:120
+#: ../vdms_frames/ffmpeg_conf.py:124
 msgid "options"
 msgstr "opzioni"
 
-#: ../vdms_frames/ffmpeg_conf.py:118 ../vdms_frames/ffmpeg_conf.py:122
+#: ../vdms_frames/ffmpeg_conf.py:119 ../vdms_frames/ffmpeg_conf.py:123
 msgid "status"
 msgstr "stato"
 
-#: ../vdms_frames/ffmpeg_conf.py:157
+#: ../vdms_frames/ffmpeg_conf.py:158
 msgid "FFprobe   ...not found !"
 msgstr "FFprobe   ...non trovato !"
 
-#: ../vdms_frames/ffmpeg_conf.py:165
+#: ../vdms_frames/ffmpeg_conf.py:166
 msgid "FFplay   ...not found !"
 msgstr "FFplay   ...non trovato !"
 
-#: ../vdms_frames/ffmpeg_conf.py:199
+#: ../vdms_frames/ffmpeg_conf.py:200
 msgid "ENABLED:"
 msgstr "ABILITATO:"
 
-#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2452
+#: ../vdms_frames/ffmpeg_conf.py:204 ../vdms_panels/av_conversions.py:2452
 msgid "Enabled"
 msgstr "Abilitato"
 
-#: ../vdms_frames/ffmpeg_conf.py:212
+#: ../vdms_frames/ffmpeg_conf.py:213
 msgid "DISABLED:"
 msgstr "DISABILITATO:"
 
-#: ../vdms_frames/ffmpeg_codecs.py:45
+#: ../vdms_frames/ffmpeg_codecs.py:46
 msgid "CODING CAPABILITY"
 msgstr "CAPACITÀ DI DECODIFICA"
 
-#: ../vdms_frames/ffmpeg_codecs.py:47
+#: ../vdms_frames/ffmpeg_codecs.py:48
 msgid "FFmpeg encoders"
 msgstr "Codificatori di FFmpeg"
 
-#: ../vdms_frames/ffmpeg_codecs.py:49
+#: ../vdms_frames/ffmpeg_codecs.py:50
 msgid "DECODING CAPABILITY"
 msgstr "CAPACITÀ DI DECODIFICAZIONE"
 
-#: ../vdms_frames/ffmpeg_codecs.py:51
+#: ../vdms_frames/ffmpeg_codecs.py:52
 msgid "FFmpeg decoders"
 msgstr "Decodificatori di FFmpeg"
 
-#: ../vdms_frames/ffmpeg_codecs.py:71 ../vdms_panels/av_conversions.py:578
+#: ../vdms_frames/ffmpeg_codecs.py:72 ../vdms_panels/av_conversions.py:578
 msgid "Video"
 msgstr "Video"
 
-#: ../vdms_frames/ffmpeg_codecs.py:81 ../vdms_panels/av_conversions.py:745
+#: ../vdms_frames/ffmpeg_codecs.py:82 ../vdms_panels/av_conversions.py:745
 msgid "Audio"
 msgstr "Audio"
 
-#: ../vdms_frames/ffmpeg_codecs.py:91
+#: ../vdms_frames/ffmpeg_codecs.py:92
 msgid "Subtitle"
 msgstr "Sottotitolo"
 
-#: ../vdms_frames/ffmpeg_codecs.py:108 ../vdms_frames/ffmpeg_codecs.py:117
-#: ../vdms_frames/ffmpeg_codecs.py:126 ../vdms_frames/ffmpeg_formats.py:103
-#: ../vdms_frames/ffmpeg_formats.py:107 ../vdms_frames/ffmpeg_formats.py:111
+#: ../vdms_frames/ffmpeg_codecs.py:109 ../vdms_frames/ffmpeg_codecs.py:118
+#: ../vdms_frames/ffmpeg_codecs.py:127 ../vdms_frames/ffmpeg_formats.py:104
+#: ../vdms_frames/ffmpeg_formats.py:108 ../vdms_frames/ffmpeg_formats.py:112
 msgid "description"
 msgstr "descrizione"
 
-#: ../vdms_frames/ffmpeg_formats.py:65
+#: ../vdms_frames/ffmpeg_formats.py:66
 msgid "Demuxing only"
 msgstr "Solo demuxing"
 
-#: ../vdms_frames/ffmpeg_formats.py:76
+#: ../vdms_frames/ffmpeg_formats.py:77
 msgid "Muxing only"
 msgstr "Solo muxing"
 
-#: ../vdms_frames/ffmpeg_formats.py:87
+#: ../vdms_frames/ffmpeg_formats.py:88
 msgid "Demuxing/Muxing support"
 msgstr "Demuxing e muxing"
 
-#: ../vdms_frames/ffmpeg_formats.py:95
+#: ../vdms_frames/ffmpeg_formats.py:96
 msgid "FFmpeg file formats"
 msgstr "Formati File di FFmpeg"
 
-#: ../vdms_frames/ffmpeg_formats.py:102 ../vdms_frames/ffmpeg_formats.py:106
-#: ../vdms_frames/ffmpeg_formats.py:110
+#: ../vdms_frames/ffmpeg_formats.py:103 ../vdms_frames/ffmpeg_formats.py:107
+#: ../vdms_frames/ffmpeg_formats.py:111
 msgid "format"
 msgstr "formato"
 
-#: ../vdms_frames/shownormlist.py:56
+#: ../vdms_frames/shownormlist.py:57
 msgid "File name"
 msgstr "Nome file"
 
-#: ../vdms_frames/shownormlist.py:57
+#: ../vdms_frames/shownormlist.py:58
 msgid "Max volume dBFS"
 msgstr "Volume massimo dBFS"
 
-#: ../vdms_frames/shownormlist.py:58
+#: ../vdms_frames/shownormlist.py:59
 msgid "Mean volume dBFS"
 msgstr "Volume medio dBFS"
 
-#: ../vdms_frames/shownormlist.py:59
+#: ../vdms_frames/shownormlist.py:60
 msgid "Offset dBFS"
 msgstr "Offset dBFS"
 
-#: ../vdms_frames/shownormlist.py:60
+#: ../vdms_frames/shownormlist.py:61
 msgid "Result dBFS"
 msgstr "Risultato dBFS"
 
-#: ../vdms_frames/shownormlist.py:64
+#: ../vdms_frames/shownormlist.py:65
 msgid "Post-normalization references:"
 msgstr "Riferimenti post-normalizzazione:"
 
-#: ../vdms_frames/shownormlist.py:69
+#: ../vdms_frames/shownormlist.py:70
 msgid "=  Clipped peaks"
 msgstr "=  Picchi in clip"
 
-#: ../vdms_frames/shownormlist.py:74
+#: ../vdms_frames/shownormlist.py:75
 msgid "=  No changes"
 msgstr "=  Non cambia"
 
-#: ../vdms_frames/shownormlist.py:80
+#: ../vdms_frames/shownormlist.py:81
 msgid "=  Below max peak"
 msgstr "=  Sotto il picco max"
 
-#: ../vdms_frames/shownormlist.py:136 ../vdms_panels/av_conversions.py:1915
+#: ../vdms_frames/shownormlist.py:137 ../vdms_panels/av_conversions.py:1915
 msgid "RMS-based volume statistics"
 msgstr "Statistiche del volume basate su RMS"
 
-#: ../vdms_frames/shownormlist.py:158 ../vdms_panels/av_conversions.py:1913
+#: ../vdms_frames/shownormlist.py:159 ../vdms_panels/av_conversions.py:1913
 msgid "PEAK-based volume statistics"
 msgstr "Statistiche del volume basate sul PICCO"
 
-#: ../vdms_frames/shownormlist.py:180
+#: ../vdms_frames/shownormlist.py:181
 msgid ""
 "...It means the resulting audio will be clipped, because its volume is "
 "higher than the maximum 0 db level. This results in data loss and the audio "
@@ -1409,11 +1409,11 @@ msgstr ""
 "superiore al livello massimo di 0 db. Ciò comporterà la perdita di dati nel "
 "segnale audio e il suono potrebbe risultare distorto."
 
-#: ../vdms_frames/shownormlist.py:184
+#: ../vdms_frames/shownormlist.py:185
 msgid "When it's red..."
 msgstr "Quando è rosso..."
 
-#: ../vdms_frames/shownormlist.py:191
+#: ../vdms_frames/shownormlist.py:192
 msgid ""
 "...It means the resulting audio will not change, because it's equal to the "
 "source."
@@ -1421,11 +1421,11 @@ msgstr ""
 "...Significa che il segnale audio non cambierà, perché uguale a quello di "
 "origine."
 
-#: ../vdms_frames/shownormlist.py:193
+#: ../vdms_frames/shownormlist.py:194
 msgid "When it's grey..."
 msgstr "Quando è grigio..."
 
-#: ../vdms_frames/shownormlist.py:200
+#: ../vdms_frames/shownormlist.py:201
 msgid ""
 "...It means an audio signal will be produced with a lower volume than the "
 "original."
@@ -1433,11 +1433,11 @@ msgstr ""
 "...Significa che verrà prodotto un segnale audio con un volume inferiore a "
 "quello originale."
 
-#: ../vdms_frames/shownormlist.py:202
+#: ../vdms_frames/shownormlist.py:203
 msgid "When it's yellow..."
 msgstr "Quando è giallo..."
 
-#: ../vdms_frames/while_playing.py:46
+#: ../vdms_frames/while_playing.py:37
 msgid ""
 "q, ESC\n"
 "f\n"
@@ -1479,98 +1479,98 @@ msgstr ""
 "click destro del mouse\n"
 "click sinistro del mouse"
 
-#: ../vdms_frames/while_playing.py:97
+#: ../vdms_frames/while_playing.py:89
 msgid "Shortcut keys while playing with FFplay"
 msgstr "Scorciatoie da tastiera durante la riproduzione con FFplay"
 
-#: ../vdms_frames/ffmpeg_search.py:79 ../vdms_frames/ffmpeg_search.py:184
+#: ../vdms_frames/ffmpeg_search.py:69 ../vdms_frames/ffmpeg_search.py:163
 msgid "Topic List..."
 msgstr "Elenco Argomenti..."
 
-#: ../vdms_frames/ffmpeg_search.py:80 ../vdms_frames/ffmpeg_search.py:185
+#: ../vdms_frames/ffmpeg_search.py:70 ../vdms_frames/ffmpeg_search.py:164
 msgid "print basic options"
 msgstr "stampa le opzioni basilari"
 
-#: ../vdms_frames/ffmpeg_search.py:81 ../vdms_frames/ffmpeg_search.py:186
+#: ../vdms_frames/ffmpeg_search.py:71 ../vdms_frames/ffmpeg_search.py:165
 msgid "print more options"
 msgstr "stampa più opzioni"
 
-#: ../vdms_frames/ffmpeg_search.py:82 ../vdms_frames/ffmpeg_search.py:187
+#: ../vdms_frames/ffmpeg_search.py:72 ../vdms_frames/ffmpeg_search.py:166
 msgid "print all options (very long)"
 msgstr "stampa tutte la opzioni (molto lungo)"
 
-#: ../vdms_frames/ffmpeg_search.py:83 ../vdms_frames/ffmpeg_search.py:188
+#: ../vdms_frames/ffmpeg_search.py:73 ../vdms_frames/ffmpeg_search.py:167
 msgid "show available devices"
 msgstr "mostra i dispositivi disponibili"
 
-#: ../vdms_frames/ffmpeg_search.py:84 ../vdms_frames/ffmpeg_search.py:189
+#: ../vdms_frames/ffmpeg_search.py:74 ../vdms_frames/ffmpeg_search.py:168
 msgid "show available bit stream filters"
 msgstr "mostra i filtri bitstream disponibili"
 
-#: ../vdms_frames/ffmpeg_search.py:85 ../vdms_frames/ffmpeg_search.py:190
+#: ../vdms_frames/ffmpeg_search.py:75 ../vdms_frames/ffmpeg_search.py:169
 msgid "show available protocols"
 msgstr "mostra i protocolli disponibili"
 
-#: ../vdms_frames/ffmpeg_search.py:86 ../vdms_frames/ffmpeg_search.py:191
+#: ../vdms_frames/ffmpeg_search.py:76 ../vdms_frames/ffmpeg_search.py:170
 msgid "show available filters"
 msgstr "mostra i filtri disponibili"
 
-#: ../vdms_frames/ffmpeg_search.py:87 ../vdms_frames/ffmpeg_search.py:192
+#: ../vdms_frames/ffmpeg_search.py:77 ../vdms_frames/ffmpeg_search.py:171
 msgid "show available pixel formats"
 msgstr "mostra i pixel formats disponibili"
 
-#: ../vdms_frames/ffmpeg_search.py:88 ../vdms_frames/ffmpeg_search.py:193
+#: ../vdms_frames/ffmpeg_search.py:78 ../vdms_frames/ffmpeg_search.py:172
 msgid "show available audio sample formats"
 msgstr "mostra i formati di campionamento audio disponibili"
 
-#: ../vdms_frames/ffmpeg_search.py:89 ../vdms_frames/ffmpeg_search.py:194
+#: ../vdms_frames/ffmpeg_search.py:79 ../vdms_frames/ffmpeg_search.py:173
 msgid "show available color names"
 msgstr "mostra i nomi dei colori disponibili"
 
-#: ../vdms_frames/ffmpeg_search.py:90 ../vdms_frames/ffmpeg_search.py:195
+#: ../vdms_frames/ffmpeg_search.py:80 ../vdms_frames/ffmpeg_search.py:174
 msgid "list sources of the input device"
 msgstr "elenca le fonti del dispositivo di input"
 
-#: ../vdms_frames/ffmpeg_search.py:91 ../vdms_frames/ffmpeg_search.py:196
+#: ../vdms_frames/ffmpeg_search.py:81 ../vdms_frames/ffmpeg_search.py:175
 msgid "list sinks of the output device"
 msgstr "elenca i sink del dispositivo di output"
 
-#: ../vdms_frames/ffmpeg_search.py:92 ../vdms_frames/ffmpeg_search.py:197
+#: ../vdms_frames/ffmpeg_search.py:82 ../vdms_frames/ffmpeg_search.py:176
 msgid "show available HW acceleration methods"
 msgstr "mostra i metodi di accelerazione HW disponibili"
 
-#: ../vdms_frames/ffmpeg_search.py:97
+#: ../vdms_frames/ffmpeg_search.py:87
 msgid "help topic list"
 msgstr "elenco argomenti di aiuto"
 
-#: ../vdms_frames/ffmpeg_search.py:124
+#: ../vdms_frames/ffmpeg_search.py:103
 msgid "Choose a topic in the list"
 msgstr "Scegli un argomento nell'elenco"
 
-#: ../vdms_frames/ffmpeg_search.py:130
+#: ../vdms_frames/ffmpeg_search.py:109
 msgid "The search function allows you to find entries in the current topic"
 msgstr ""
 "La funzione di ricerca consente di trovare voci nell'argomento corrente"
 
-#: ../vdms_frames/ffmpeg_search.py:132
+#: ../vdms_frames/ffmpeg_search.py:111
 msgid "Ignore case"
 msgstr "Ignora maiuscole/minuscole"
 
-#: ../vdms_frames/ffmpeg_search.py:133
+#: ../vdms_frames/ffmpeg_search.py:112
 msgid "Ignore case distinctions: characters with different case will match."
 msgstr ""
 "Ignora le distinzioni tra maiuscole e minuscole, in modo che i caratteri che "
 "differiscono solo nel caso corrispondano tra loro."
 
-#: ../vdms_frames/ffmpeg_search.py:149 ../vdms_main/main_frame.py:367
+#: ../vdms_frames/ffmpeg_search.py:128 ../vdms_main/main_frame.py:367
 msgid "FFmpeg help topics"
 msgstr "Argomenti della guida di FFmpeg"
 
-#: ../vdms_frames/ffmpeg_search.py:202
+#: ../vdms_frames/ffmpeg_search.py:181
 msgid "First, choose a topic in the drop down list"
 msgstr "Scegli un argomento nel menu a discesa prima"
 
-#: ../vdms_frames/ffmpeg_search.py:215
+#: ../vdms_frames/ffmpeg_search.py:194
 msgid ""
 "\n"
 "  ..Nothing available"
@@ -1578,7 +1578,7 @@ msgstr ""
 "\n"
 "  ..Nessun dato disponibile"
 
-#: ../vdms_frames/ffmpeg_search.py:255
+#: ../vdms_frames/ffmpeg_search.py:234
 msgid ""
 "\n"
 "  ...Not found"
@@ -1586,7 +1586,7 @@ msgstr ""
 "\n"
 "  ..Non trovato"
 
-#: ../vdms_frames/ffmpeg_search.py:262
+#: ../vdms_frames/ffmpeg_search.py:241
 msgid ""
 "\n"
 "First, choose a topic in the drop down list"
@@ -1640,39 +1640,39 @@ msgstr "Parametri"
 msgid "Multimedia streams analyzer"
 msgstr "Analizzatore di flussi multimediali"
 
-#: ../vdms_frames/showlogs.py:86
+#: ../vdms_frames/showlogs.py:77
 msgid "Files"
 msgstr "File"
 
-#: ../vdms_frames/showlogs.py:88
+#: ../vdms_frames/showlogs.py:79
 msgid "Log messages"
 msgstr "Messaggi di registro"
 
-#: ../vdms_frames/showlogs.py:121
+#: ../vdms_frames/showlogs.py:103
 msgid "Refresh log messages"
 msgstr "Aggiorna i messaggi di registro"
 
-#: ../vdms_frames/showlogs.py:126
+#: ../vdms_frames/showlogs.py:108
 msgid "Clear log messages"
 msgstr "Cancella messaggi di registro"
 
-#: ../vdms_frames/showlogs.py:136
+#: ../vdms_frames/showlogs.py:118
 msgid "Showing log messages"
 msgstr "Visualizzazione dei messaggi di registro"
 
-#: ../vdms_frames/showlogs.py:163
+#: ../vdms_frames/showlogs.py:145
 msgid "Select a log file"
 msgstr "Seleziona un file di log"
 
-#: ../vdms_frames/showlogs.py:170
+#: ../vdms_frames/showlogs.py:152
 msgid "Are you sure you want to clear the selected log file?"
 msgstr "Sei sicuro di voler cancellare il file di registro selezionato?"
 
-#: ../vdms_frames/ydl_mediainfo.py:86
+#: ../vdms_frames/ydl_mediainfo.py:68
 msgid "Statistics viewer"
 msgstr "Visualizzatore di statistiche"
 
-#: ../vdms_frames/ydl_mediainfo.py:89
+#: ../vdms_frames/ydl_mediainfo.py:71
 msgid "TITLE SELECTION"
 msgstr "SELEZIONE TITOLO"
 
@@ -1824,7 +1824,7 @@ msgstr ""
 #: ../vdms_main/main_frame.py:1459 ../vdms_main/main_frame.py:1491
 #: ../vdms_main/main_frame.py:1514 ../vdms_main/main_frame.py:1569
 #: ../vdms_main/main_frame.py:1620 ../vdms_main/main_frame.py:1672
-#: ../vdms_panels/youtubedl_ui.py:460 ../vdms_panels/youtubedl_ui.py:694
+#: ../vdms_panels/youtubedl_ui.py:444 ../vdms_panels/youtubedl_ui.py:678
 msgid "Ready"
 msgstr "Pronto"
 
@@ -2576,7 +2576,7 @@ msgstr "Tune"
 msgid "Video Filters"
 msgstr "Filtri Video"
 
-#: ../vdms_panels/av_conversions.py:530 ../vdms_panels/youtubedl_ui.py:234
+#: ../vdms_panels/av_conversions.py:530 ../vdms_panels/youtubedl_ui.py:217
 msgid "Preview"
 msgstr "Anteprima"
 
@@ -2813,7 +2813,7 @@ msgstr ""
 msgid "Unable to preview Video Stabilizer filter"
 msgstr "Impossibile visualizzare in anteprima il filtro stabilizzatore video"
 
-#: ../vdms_panels/av_conversions.py:1220 ../vdms_panels/presets_manager.py:900
+#: ../vdms_panels/av_conversions.py:1220 ../vdms_panels/presets_manager.py:901
 msgid "A target file must be selected in the queued files"
 msgstr "È necessario selezionare un file di destinazione nei file in coda"
 
@@ -2896,11 +2896,11 @@ msgstr "%s file in coda"
 msgid "Off"
 msgstr "Spento"
 
-#: ../vdms_panels/av_conversions.py:2447 ../vdms_panels/presets_manager.py:953
+#: ../vdms_panels/av_conversions.py:2447 ../vdms_panels/presets_manager.py:954
 msgid "Unset"
 msgstr "Non settato"
 
-#: ../vdms_panels/av_conversions.py:2450 ../vdms_panels/presets_manager.py:956
+#: ../vdms_panels/av_conversions.py:2450 ../vdms_panels/presets_manager.py:957
 msgid "start  {} | duration  {}"
 msgstr "inizio  {} | durata  {}"
 
@@ -3134,12 +3134,12 @@ msgstr ""
 msgid "youtube-dl is disabled. Check your preferences."
 msgstr "youtube-dl è disabilitato. Controlla le tue preferenze."
 
-#: ../vdms_panels/choose_topic.py:226 ../vdms_panels/youtubedl_ui.py:916
-#: ../vdms_panels/youtubedl_ui.py:922
-#: ../vdms_panels/long_processing_task.py:511
-#: ../vdms_panels/presets_manager.py:491 ../vdms_panels/presets_manager.py:534
-#: ../vdms_panels/presets_manager.py:602 ../vdms_panels/presets_manager.py:628
-#: ../vdms_panels/presets_manager.py:770 ../vdms_panels/presets_manager.py:803
+#: ../vdms_panels/choose_topic.py:226 ../vdms_panels/youtubedl_ui.py:910
+#: ../vdms_panels/youtubedl_ui.py:916
+#: ../vdms_panels/long_processing_task.py:482
+#: ../vdms_panels/presets_manager.py:492 ../vdms_panels/presets_manager.py:535
+#: ../vdms_panels/presets_manager.py:603 ../vdms_panels/presets_manager.py:629
+#: ../vdms_panels/presets_manager.py:771 ../vdms_panels/presets_manager.py:804
 msgid "Please confirm"
 msgstr "Prego confermare"
 
@@ -3163,7 +3163,7 @@ msgstr ""
 "\n"
 "youtube-dl non è installato, usa il tuo gestore di pacchetti per installarlo."
 
-#: ../vdms_panels/concatenate.py:74
+#: ../vdms_panels/concatenate.py:77
 msgid ""
 "NOTE:\n"
 "\n"
@@ -3205,28 +3205,28 @@ msgstr ""
 "frequenza di\n"
 "  campionamento e gli stessi codec."
 
-#: ../vdms_panels/concatenate.py:117
+#: ../vdms_panels/concatenate.py:120
 msgid "For more details, see the Videomass User Guide:"
 msgstr "Per maggiori dettagli, consultare la Guida Utente Videomass:"
 
-#: ../vdms_panels/concatenate.py:130
+#: ../vdms_panels/concatenate.py:133
 msgid "1.4 Concatenate media files (demuxer)"
 msgstr "1.4 Concatenare file multimediali (demuxer)"
 
-#: ../vdms_panels/concatenate.py:137
+#: ../vdms_panels/concatenate.py:140
 msgid "For more information, visit the official FFmpeg documentation:"
 msgstr ""
 "Per ulteriori informazioni, visita la documentazione ufficiale di FFmpeg:"
 
-#: ../vdms_panels/concatenate.py:177
+#: ../vdms_panels/concatenate.py:180
 msgid "At least two files are required to perform concatenation."
 msgstr "Sono necessari almeno due file per eseguire la concatenazione."
 
-#: ../vdms_panels/concatenate.py:178 ../vdms_panels/concatenate.py:190
+#: ../vdms_panels/concatenate.py:181 ../vdms_panels/concatenate.py:193
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: ../vdms_panels/concatenate.py:187
+#: ../vdms_panels/concatenate.py:190
 msgid ""
 "The files do not have the same \"codec_types\", same \"sample_rate\" or same "
 "\"width\" or \"height\". Unable to proceed."
@@ -3234,12 +3234,12 @@ msgstr ""
 "I file non hanno gli stessi parametri come \"codec_types\", \"sample_rate"
 "\" , \"larghezza\" o \"altezza\". Impossibile procedere."
 
-#: ../vdms_panels/concatenate.py:216 ../vdms_panels/presets_manager.py:849
-#: ../vdms_panels/presets_manager.py:872 ../vdms_panels/presets_manager.py:908
+#: ../vdms_panels/concatenate.py:219 ../vdms_panels/presets_manager.py:850
+#: ../vdms_panels/presets_manager.py:873 ../vdms_panels/presets_manager.py:909
 msgid "Starts"
 msgstr "Avvio"
 
-#: ../vdms_panels/concatenate.py:239
+#: ../vdms_panels/concatenate.py:242
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3257,68 +3257,68 @@ msgstr ""
 "Formato in Uscita\n"
 "Segmento Tempo"
 
-#: ../vdms_panels/youtubedl_ui.py:83
+#: ../vdms_panels/youtubedl_ui.py:91
 msgid ""
 "At least one \"Format Code\" must be checked for each URL selected in green."
 msgstr ""
 "È necessario spuntare almeno un \"Codice Formato\" per ciascun URL "
 "selezionato in verde."
 
-#: ../vdms_panels/youtubedl_ui.py:85
+#: ../vdms_panels/youtubedl_ui.py:93
 msgid "Function available only if you choose \"Download by format code\""
 msgstr "Funzione disponibile solo se si sceglie \"Scarica per codice formato\""
 
-#: ../vdms_panels/youtubedl_ui.py:133
+#: ../vdms_panels/youtubedl_ui.py:113
 msgid "Default"
 msgstr "Predefinito"
 
-#: ../vdms_panels/youtubedl_ui.py:134
+#: ../vdms_panels/youtubedl_ui.py:114
 msgid "Download audio and video splitted"
 msgstr "Scarica audio e video divisi"
 
-#: ../vdms_panels/youtubedl_ui.py:135
+#: ../vdms_panels/youtubedl_ui.py:115
 msgid "Download Audio only"
 msgstr "Scarica solo il file audio"
 
-#: ../vdms_panels/youtubedl_ui.py:136
+#: ../vdms_panels/youtubedl_ui.py:116
 msgid "Download by format code"
 msgstr "Scarica per codice formato"
 
-#: ../vdms_panels/youtubedl_ui.py:176
+#: ../vdms_panels/youtubedl_ui.py:156
 msgid "Options"
 msgstr "Opzioni"
 
-#: ../vdms_panels/youtubedl_ui.py:240
+#: ../vdms_panels/youtubedl_ui.py:223
 msgid "Download all videos in playlist"
 msgstr ""
 "Scarica tutti i video\n"
 "della playlist"
 
-#: ../vdms_panels/youtubedl_ui.py:245
+#: ../vdms_panels/youtubedl_ui.py:228
 msgid "Playlist Editor"
 msgstr "Editor di Playlist"
 
-#: ../vdms_panels/youtubedl_ui.py:252
+#: ../vdms_panels/youtubedl_ui.py:235
 msgid "Embed thumbnail in audio file"
 msgstr ""
 "Aggiungi miniatura\n"
 "nel file audio"
 
-#: ../vdms_panels/youtubedl_ui.py:256
+#: ../vdms_panels/youtubedl_ui.py:239
 msgid "Add metadata to file"
 msgstr "Aggiungi i meta dati al file"
 
-#: ../vdms_panels/youtubedl_ui.py:260
+#: ../vdms_panels/youtubedl_ui.py:243
 msgid "Write subtitles to video"
 msgstr "Scrivi sottotitoli al video"
 
-#: ../vdms_panels/youtubedl_ui.py:265
+#: ../vdms_panels/youtubedl_ui.py:248
 msgid "Prevent overwriting files"
 msgstr ""
 "Impedisci la sovrascrittura\n"
 "dei file"
 
-#: ../vdms_panels/youtubedl_ui.py:270
+#: ../vdms_panels/youtubedl_ui.py:253
 msgid ""
 "Include the video ID\n"
 "in the file names"
@@ -3326,82 +3326,82 @@ msgstr ""
 "Includi l'ID video nei\n"
 "nomi del file"
 
-#: ../vdms_panels/youtubedl_ui.py:276
+#: ../vdms_panels/youtubedl_ui.py:259
 msgid "Restrict file names"
 msgstr "Limita i nomi dei file"
 
-#: ../vdms_panels/youtubedl_ui.py:300
+#: ../vdms_panels/youtubedl_ui.py:283
 msgid "Help viewer"
 msgstr "Visualizzatore di aiuto"
 
-#: ../vdms_panels/youtubedl_ui.py:324 ../vdms_panels/youtubedl_ui.py:427
-#: ../vdms_panels/youtubedl_ui.py:443
+#: ../vdms_panels/youtubedl_ui.py:308 ../vdms_panels/youtubedl_ui.py:411
+#: ../vdms_panels/youtubedl_ui.py:427
 msgid "Play selected url"
 msgstr "Riproduci l'URL selezionato"
 
-#: ../vdms_panels/youtubedl_ui.py:455
+#: ../vdms_panels/youtubedl_ui.py:439
 msgid "An item must be selected in the URLs checklist"
 msgstr ""
 "È necessario selezionare un elemento nell'elenco di controllo degli URL"
 
-#: ../vdms_panels/youtubedl_ui.py:465
+#: ../vdms_panels/youtubedl_ui.py:449
 msgid ""
 "Cannot play playlists / channels or URLs containing multiple videos listed."
 msgstr ""
 "Impossibile riprodurre playlist e/o canali o URL contenenti più video "
 "elencati."
 
-#: ../vdms_panels/youtubedl_ui.py:488 ../vdms_panels/youtubedl_ui.py:585
+#: ../vdms_panels/youtubedl_ui.py:472 ../vdms_panels/youtubedl_ui.py:569
 msgid "Format Code"
 msgstr "Codice Formato"
 
-#: ../vdms_panels/youtubedl_ui.py:489 ../vdms_panels/youtubedl_ui.py:586
-#: ../vdms_panels/youtubedl_ui.py:633
+#: ../vdms_panels/youtubedl_ui.py:473 ../vdms_panels/youtubedl_ui.py:570
+#: ../vdms_panels/youtubedl_ui.py:617
 msgid "Url"
 msgstr "Url"
 
-#: ../vdms_panels/youtubedl_ui.py:490 ../vdms_panels/youtubedl_ui.py:587
-#: ../vdms_panels/youtubedl_ui.py:634
+#: ../vdms_panels/youtubedl_ui.py:474 ../vdms_panels/youtubedl_ui.py:571
+#: ../vdms_panels/youtubedl_ui.py:618
 msgid "Title"
 msgstr "Titolo"
 
-#: ../vdms_panels/youtubedl_ui.py:491 ../vdms_panels/youtubedl_ui.py:588
+#: ../vdms_panels/youtubedl_ui.py:475 ../vdms_panels/youtubedl_ui.py:572
 msgid "Extension"
 msgstr "Estensione"
 
-#: ../vdms_panels/youtubedl_ui.py:492
+#: ../vdms_panels/youtubedl_ui.py:476
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: ../vdms_panels/youtubedl_ui.py:493
+#: ../vdms_panels/youtubedl_ui.py:477
 msgid "Video Codec"
 msgstr "Codec Video"
 
-#: ../vdms_panels/youtubedl_ui.py:494
+#: ../vdms_panels/youtubedl_ui.py:478
 msgid "fps"
 msgstr "fps"
 
-#: ../vdms_panels/youtubedl_ui.py:495
+#: ../vdms_panels/youtubedl_ui.py:479
 msgid "Audio Codec"
 msgstr "Codec Audio"
 
-#: ../vdms_panels/youtubedl_ui.py:496 ../vdms_panels/filedrop.py:222
+#: ../vdms_panels/youtubedl_ui.py:480 ../vdms_panels/filedrop.py:222
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../vdms_panels/youtubedl_ui.py:589
+#: ../vdms_panels/youtubedl_ui.py:573
 msgid "Resolution note"
 msgstr "Note sulla risoluzione"
 
-#: ../vdms_panels/youtubedl_ui.py:635
+#: ../vdms_panels/youtubedl_ui.py:619
 msgid "Quality"
 msgstr "Qualità"
 
-#: ../vdms_panels/youtubedl_ui.py:655
+#: ../vdms_panels/youtubedl_ui.py:639
 msgid "Sorry, this feature is disabled."
 msgstr "Spiacente, questa funzione è disabilitata."
 
-#: ../vdms_panels/youtubedl_ui.py:725
+#: ../vdms_panels/youtubedl_ui.py:709
 msgid ""
 "Unable to get format codes on playlists / channels or URLs containing "
 "multiple videos listed."
@@ -3409,15 +3409,15 @@ msgstr ""
 "Impossibile ottenere i codici di formato su playlist e/o canali o URL "
 "contenenti più video elencati."
 
-#: ../vdms_panels/youtubedl_ui.py:794
+#: ../vdms_panels/youtubedl_ui.py:779
 msgid "URLs have no playlist references"
 msgstr "Gli URL non hanno riferimenti a playlist"
 
-#: ../vdms_panels/youtubedl_ui.py:914
+#: ../vdms_panels/youtubedl_ui.py:908
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr "Gli URL contengono playlist. Sei sicuro di voler continuare?"
 
-#: ../vdms_panels/youtubedl_ui.py:920
+#: ../vdms_panels/youtubedl_ui.py:914
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "Gli URL contengono canali. Sei sicuro di voler continuare?"
 
@@ -3480,7 +3480,7 @@ msgid "Destination folder"
 msgstr "Cartella di destinazione"
 
 #: ../vdms_panels/filedrop.py:289 ../vdms_panels/filedrop.py:307
-#: ../vdms_panels/presets_manager.py:132
+#: ../vdms_panels/presets_manager.py:133
 msgid "Remove"
 msgstr "Rimuovi"
 
@@ -3532,39 +3532,39 @@ msgstr ""
 "\n"
 "[Videomass]: Completato, ma non tutto è andato a buon fine.\n"
 
-#: ../vdms_panels/long_processing_task.py:152
+#: ../vdms_panels/long_processing_task.py:122
 msgid "Process log:"
 msgstr "Log di processo:"
 
-#: ../vdms_panels/long_processing_task.py:161
+#: ../vdms_panels/long_processing_task.py:131
 msgid "Suppress excess output"
 msgstr "Sopprime l'output in eccesso"
 
-#: ../vdms_panels/long_processing_task.py:165
+#: ../vdms_panels/long_processing_task.py:135
 msgid "Abort"
 msgstr "Interrompere"
 
-#: ../vdms_panels/long_processing_task.py:181
+#: ../vdms_panels/long_processing_task.py:151
 msgid "If activated, hides some output messages."
 msgstr "Se attivato, nasconde l'output di troppo."
 
-#: ../vdms_panels/long_processing_task.py:183
+#: ../vdms_panels/long_processing_task.py:153
 msgid "Stops current process"
 msgstr "Interrompe il processo corrente"
 
-#: ../vdms_panels/long_processing_task.py:472
+#: ../vdms_panels/long_processing_task.py:443
 msgid "...Finished"
 msgstr "...Terminato"
 
-#: ../vdms_panels/long_processing_task.py:487
+#: ../vdms_panels/long_processing_task.py:458
 msgid "wait... I'm aborting"
 msgstr "attendi... Sto interrompendo"
 
-#: ../vdms_panels/long_processing_task.py:490
+#: ../vdms_panels/long_processing_task.py:461
 msgid "...Interrupted"
 msgstr "...Interrotto"
 
-#: ../vdms_panels/long_processing_task.py:508
+#: ../vdms_panels/long_processing_task.py:479
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
@@ -3576,143 +3576,143 @@ msgstr ""
 "\n"
 "Vuoi uccidere l'applicazione?"
 
-#: ../vdms_panels/presets_manager.py:108
+#: ../vdms_panels/presets_manager.py:109
 msgid "Presets"
 msgstr "Presets"
 
-#: ../vdms_panels/presets_manager.py:129
+#: ../vdms_panels/presets_manager.py:130
 msgid "New"
 msgstr "Nuovo"
 
-#: ../vdms_panels/presets_manager.py:142
+#: ../vdms_panels/presets_manager.py:143
 msgid "Export selected"
 msgstr "Esporta selezionato"
 
-#: ../vdms_panels/presets_manager.py:145
+#: ../vdms_panels/presets_manager.py:146
 msgid "Export all..."
 msgstr "Esporta tutti..."
 
-#: ../vdms_panels/presets_manager.py:156
+#: ../vdms_panels/presets_manager.py:157
 msgid "Import preset"
 msgstr "Importa preset"
 
-#: ../vdms_panels/presets_manager.py:159
+#: ../vdms_panels/presets_manager.py:160
 msgid "Import group"
 msgstr "Importa gruppo"
 
-#: ../vdms_panels/presets_manager.py:170
+#: ../vdms_panels/presets_manager.py:171
 msgid "Restore"
 msgstr "Ripristina"
 
-#: ../vdms_panels/presets_manager.py:174
+#: ../vdms_panels/presets_manager.py:175
 msgid "Restore all..."
 msgstr "Ripristina tutti..."
 
-#: ../vdms_panels/presets_manager.py:186
+#: ../vdms_panels/presets_manager.py:187
 msgid "Reload"
 msgstr "Ricarica"
 
-#: ../vdms_panels/presets_manager.py:200
+#: ../vdms_panels/presets_manager.py:201
 msgid "Profiles"
 msgstr "Profili"
 
-#: ../vdms_panels/presets_manager.py:205 ../vdms_panels/presets_manager.py:319
-#: ../vdms_panels/presets_manager.py:338
+#: ../vdms_panels/presets_manager.py:206 ../vdms_panels/presets_manager.py:320
+#: ../vdms_panels/presets_manager.py:339
 msgid "Add"
 msgstr "Aggiungi"
 
-#: ../vdms_panels/presets_manager.py:209 ../vdms_panels/presets_manager.py:322
-#: ../vdms_panels/presets_manager.py:342
+#: ../vdms_panels/presets_manager.py:210 ../vdms_panels/presets_manager.py:323
+#: ../vdms_panels/presets_manager.py:343
 msgid "Delete"
 msgstr "Cancella"
 
-#: ../vdms_panels/presets_manager.py:213 ../vdms_panels/presets_manager.py:320
-#: ../vdms_panels/presets_manager.py:340
+#: ../vdms_panels/presets_manager.py:214 ../vdms_panels/presets_manager.py:321
+#: ../vdms_panels/presets_manager.py:341
 msgid "Edit"
 msgstr "Modifica"
 
-#: ../vdms_panels/presets_manager.py:223
+#: ../vdms_panels/presets_manager.py:224
 msgid "One-Pass"
 msgstr "Passata Uno"
 
-#: ../vdms_panels/presets_manager.py:233
+#: ../vdms_panels/presets_manager.py:234
 msgid "Two-Pass"
 msgstr "Passata Due"
 
-#: ../vdms_panels/presets_manager.py:254
+#: ../vdms_panels/presets_manager.py:255
 msgid "Choose a preset and view its profiles"
 msgstr "Scegli un preset e visualizza i suoi profili"
 
-#: ../vdms_panels/presets_manager.py:255
+#: ../vdms_panels/presets_manager.py:256
 msgid "Create a new profile and save it in the selected preset"
 msgstr "Crea un nuovo profilo e salvalo nel preset selezionato"
 
-#: ../vdms_panels/presets_manager.py:257
+#: ../vdms_panels/presets_manager.py:258
 msgid "Delete the selected profile"
 msgstr "Cancella il profilo selezionato"
 
-#: ../vdms_panels/presets_manager.py:258
+#: ../vdms_panels/presets_manager.py:259
 msgid "Edit the selected profile"
 msgstr "Modifica il profilo selezionato"
 
-#: ../vdms_panels/presets_manager.py:259
+#: ../vdms_panels/presets_manager.py:260
 msgid "Create a new preset"
 msgstr "Crea un nuovo preset"
 
-#: ../vdms_panels/presets_manager.py:261
+#: ../vdms_panels/presets_manager.py:262
 msgid "Remove the selected preset from the Presets Manager"
 msgstr "Rimuovi il preset selezionato dal Gestionale Predefiniti"
 
-#: ../vdms_panels/presets_manager.py:263
+#: ../vdms_panels/presets_manager.py:264
 msgid "Export selected preset as copy"
 msgstr "Esporta il preset selezionato come copia"
 
-#: ../vdms_panels/presets_manager.py:265
+#: ../vdms_panels/presets_manager.py:266
 msgid "Export entire presets folder as copy"
 msgstr "Esporta l'intera directory dei preset come copia"
 
-#: ../vdms_panels/presets_manager.py:267
+#: ../vdms_panels/presets_manager.py:268
 msgid "Import a new preset or update an existing one"
 msgstr "Importa un nuovo preset o aggiornane uno di esistente"
 
-#: ../vdms_panels/presets_manager.py:269
+#: ../vdms_panels/presets_manager.py:270
 msgid "Import a group of presets from a folder and update existing ones"
 msgstr ""
 "Importa un gruppo di preset da una cartella e aggiorna quelli esistenti"
 
-#: ../vdms_panels/presets_manager.py:272
+#: ../vdms_panels/presets_manager.py:273
 msgid "Replace the selected preset with the Videomass default one"
 msgstr "Sostituisci il preset selezionato con quello predefinito di Videomass"
 
-#: ../vdms_panels/presets_manager.py:274
+#: ../vdms_panels/presets_manager.py:275
 msgid "Retrieve all Videomass default presets"
 msgstr "Recupera tutti i preset predefiniti di Videomass"
 
-#: ../vdms_panels/presets_manager.py:276
+#: ../vdms_panels/presets_manager.py:277
 msgid "Update the presets list"
 msgstr "Aggiorna la lista dei presets"
 
-#: ../vdms_panels/presets_manager.py:277
+#: ../vdms_panels/presets_manager.py:278
 msgid "First pass of the selected profile"
 msgstr "Primo passaggio del profilo selezionato"
 
-#: ../vdms_panels/presets_manager.py:279
+#: ../vdms_panels/presets_manager.py:280
 msgid "Second pass of the selected profile"
 msgstr "Secondo passaggio del profilo selezionato"
 
-#: ../vdms_panels/presets_manager.py:372
+#: ../vdms_panels/presets_manager.py:373
 msgid "Name"
 msgstr "Nome"
 
-#: ../vdms_panels/presets_manager.py:374
+#: ../vdms_panels/presets_manager.py:375
 msgid "Output Format"
 msgstr "Formato in Uscita"
 
-#: ../vdms_panels/presets_manager.py:375
+#: ../vdms_panels/presets_manager.py:376
 msgid "Supported Format List"
 msgstr "Elenco formati supportati"
 
-#: ../vdms_panels/presets_manager.py:393 ../vdms_panels/presets_manager.py:435
+#: ../vdms_panels/presets_manager.py:394 ../vdms_panels/presets_manager.py:436
 msgid ""
 "ERROR: Typing error on JSON keys: {}\n"
 "\n"
@@ -3724,15 +3724,15 @@ msgstr ""
 "File: \"{}\"\n"
 "Chiave malformata ?"
 
-#: ../vdms_panels/presets_manager.py:457
+#: ../vdms_panels/presets_manager.py:458
 msgid "Enter name for new preset"
 msgstr "Inserisci il nome per il nuovo preset"
 
-#: ../vdms_panels/presets_manager.py:470
+#: ../vdms_panels/presets_manager.py:471
 msgid "Cannot save current data in file '{}'."
 msgstr "Impossibile salvare i dati correnti nel file '{}'."
 
-#: ../vdms_panels/presets_manager.py:474
+#: ../vdms_panels/presets_manager.py:475
 msgid ""
 "'Successful!\n"
 "\n"
@@ -3742,7 +3742,7 @@ msgstr ""
 "\n"
 "È stato creato un nuovo preset vuoto."
 
-#: ../vdms_panels/presets_manager.py:488
+#: ../vdms_panels/presets_manager.py:489
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
 "\n"
@@ -3752,7 +3752,7 @@ msgstr ""
 "\n"
 "Sarà spostato nella sotto-cartella \"Removals\" sulla cartella dei presets."
 
-#: ../vdms_panels/presets_manager.py:502
+#: ../vdms_panels/presets_manager.py:503
 msgid ""
 "{}\n"
 "\n"
@@ -3762,40 +3762,40 @@ msgstr ""
 "\n"
 "Spiacente, rimozione non riuscita, impossibile continuare.."
 
-#: ../vdms_panels/presets_manager.py:512
+#: ../vdms_panels/presets_manager.py:513
 #, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
 msgstr "Il preset \"{0}\" è stato rimosso con successo"
 
-#: ../vdms_panels/presets_manager.py:527
+#: ../vdms_panels/presets_manager.py:528
 msgid "Choose a folder to save the selected preset"
 msgstr "Scegli una cartella per salvare il preset selezionato"
 
-#: ../vdms_panels/presets_manager.py:532
+#: ../vdms_panels/presets_manager.py:533
 msgid "A file with this name already exists, do you want to overwrite it?"
 msgstr "Esiste già un file con lo stesso nome, vuoi sovrascriverlo?"
 
-#: ../vdms_panels/presets_manager.py:546
+#: ../vdms_panels/presets_manager.py:547
 msgid "The preset was exported successfully"
 msgstr "Il preset è stato esportato con successo"
 
-#: ../vdms_panels/presets_manager.py:557
+#: ../vdms_panels/presets_manager.py:558
 msgid "Choose a folder to export all presets"
 msgstr "Scegli una cartella per esportare tutti i preset"
 
-#: ../vdms_panels/presets_manager.py:567
+#: ../vdms_panels/presets_manager.py:568
 msgid "All presets have been exported successfully"
 msgstr "Tutti i preset sono stati esportati correttamente"
 
-#: ../vdms_panels/presets_manager.py:579
+#: ../vdms_panels/presets_manager.py:580
 msgid "Import a new preset"
 msgstr "Importa un nuovo preset"
 
-#: ../vdms_panels/presets_manager.py:590
+#: ../vdms_panels/presets_manager.py:591
 msgid "Error, invalid preset: \"{}\""
 msgstr "Errore, preset non valido: \"{}\""
 
-#: ../vdms_panels/presets_manager.py:598
+#: ../vdms_panels/presets_manager.py:599
 msgid ""
 "This preset already exists and is about to be updated. Don't worry, it will "
 "keep all your saved profiles.\n"
@@ -3807,11 +3807,11 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:615
+#: ../vdms_panels/presets_manager.py:616
 msgid "A new preset was successfully imported"
 msgstr "Un nuovo preset è stato importato con successo"
 
-#: ../vdms_panels/presets_manager.py:625
+#: ../vdms_panels/presets_manager.py:626
 msgid ""
 "This will update the presets database. Don't worry, it will keep all your "
 "saved profiles.\n"
@@ -3823,15 +3823,15 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:632
+#: ../vdms_panels/presets_manager.py:633
 msgid "Import a new presets folder"
 msgstr "Importa una nuova cartella dei preset"
 
-#: ../vdms_panels/presets_manager.py:655
+#: ../vdms_panels/presets_manager.py:656
 msgid "The presets database has been successfully updated"
 msgstr "Il database dei preset è stato aggiornato con successo"
 
-#: ../vdms_panels/presets_manager.py:665
+#: ../vdms_panels/presets_manager.py:666
 msgid ""
 "Be careful! The selected preset will be overwritten with the default one. "
 "Your profiles may be deleted!\n"
@@ -3843,20 +3843,20 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:668 ../vdms_panels/presets_manager.py:694
+#: ../vdms_panels/presets_manager.py:669 ../vdms_panels/presets_manager.py:695
 msgid "Warning"
 msgstr "Avvertimento"
 
-#: ../vdms_panels/presets_manager.py:677
+#: ../vdms_panels/presets_manager.py:678
 msgid "Sorry, this preset is not part of default Videomass presets."
 msgstr ""
 "Spiacente, questo preset non fa parte dei presets predefiniti di Videomass."
 
-#: ../vdms_panels/presets_manager.py:683
+#: ../vdms_panels/presets_manager.py:684
 msgid "Successful recovery"
 msgstr "Ripristino riuscito"
 
-#: ../vdms_panels/presets_manager.py:692
+#: ../vdms_panels/presets_manager.py:693
 msgid ""
 "Be careful! This action will restore all presets to default ones. Your "
 "profiles may be deleted!\n"
@@ -3868,26 +3868,26 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:703
+#: ../vdms_panels/presets_manager.py:704
 msgid "All default presets have been successfully recovered"
 msgstr "Tutti i preset predefiniti sono stati ripristinati con successo"
 
-#: ../vdms_panels/presets_manager.py:722
+#: ../vdms_panels/presets_manager.py:723
 #, python-format
 msgid "Create a new profile on \"%s\" preset"
 msgstr "Crea un nuovo profilo sul preset \"%s\""
 
-#: ../vdms_panels/presets_manager.py:741 ../vdms_panels/presets_manager.py:764
-#: ../vdms_panels/presets_manager.py:787
+#: ../vdms_panels/presets_manager.py:742 ../vdms_panels/presets_manager.py:765
+#: ../vdms_panels/presets_manager.py:788
 msgid "First select a profile in the list"
 msgstr "Dovresti selezionare un profilo nella lista"
 
-#: ../vdms_panels/presets_manager.py:746
+#: ../vdms_panels/presets_manager.py:747
 #, python-format
 msgid "Edit profile of the \"%s\" preset: "
 msgstr "Modifica il profilo sul preset \"%s\": "
 
-#: ../vdms_panels/presets_manager.py:768
+#: ../vdms_panels/presets_manager.py:769
 msgid ""
 "Are you sure you want to delete the selected profile? It will no longer be "
 "possible to recover it."
@@ -3895,7 +3895,7 @@ msgstr ""
 "Sei sicuro di voler eliminare il profilo selezionato? non sarà più possibile "
 "recuperarlo."
 
-#: ../vdms_panels/presets_manager.py:798
+#: ../vdms_panels/presets_manager.py:799
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
@@ -3903,11 +3903,11 @@ msgstr ""
 "Il comando del profilo selezionato è stato cambiato manualmente.\n"
 "Vuoi applicarlo durante il processo di conversione?"
 
-#: ../vdms_panels/presets_manager.py:807
+#: ../vdms_panels/presets_manager.py:808
 msgid "Don't show this dialog again"
 msgstr "Non mostrare ancora questo dialogo"
 
-#: ../vdms_panels/presets_manager.py:960
+#: ../vdms_panels/presets_manager.py:961
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3988,7 +3988,6 @@ msgstr ""
 "Per risolvere il problema installare: Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
 
-#, python-brace-format
 #~ msgid ""
 #~ "{0}\n"
 #~ "\n"

@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 
 # Name: shownormlist.py
 # Porpose: Show audio volume data list (PEAK/RMS only)

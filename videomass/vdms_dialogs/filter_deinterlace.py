@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: filter_deinterlace.py
 Porpose: Show dialog to get deinterlace/interlace data based on FFmpeg syntax

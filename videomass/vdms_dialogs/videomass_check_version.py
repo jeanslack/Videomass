@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: videomass_check_version.py
 Porpose: shows informative messages on version in use and new releases

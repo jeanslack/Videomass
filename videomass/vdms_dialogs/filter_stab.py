@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: filter_stab.py
 Porpose: Show dialog to get vidstab data based on FFmpeg syntax
@@ -302,15 +302,15 @@ class Vidstab(wx.Dialog):
                 '0 is a special case where a static camera is simulated.')
         self.spin_smooth.SetToolTip(tip)
         tip = _('Set the camera path optimization algorithm. Values are: '
-                '‘gauss’: gaussian kernel low-pass filter on camera motion '
-                '(default), and ‘avg’: averaging on transformations')
+                '`gauss`: gaussian kernel low-pass filter on camera motion '
+                '(default), and `avg`: averaging on transformations')
         self.rdb_optalgo.SetToolTip(tip)
         tip = _('Set maximal angle in radians (degree*PI/180) to rotate '
                 'frames. Default value is -1, meaning no limit.')
         self.spin_maxangle.SetToolTip(tip)
         tip = _('Specify how to deal with borders that may be visible due to '
-                'movement compensation. Values are: ‘keep’ keep image '
-                'information from previous frame (default), ‘black’ fill the '
+                'movement compensation. Values are: `keep` keep image '
+                'information from previous frame (default), `black` fill the '
                 'border black')
         self.rdb_crop.SetToolTip(tip)
         tip = _('Invert transforms if checked. Default is unchecked.')
@@ -323,9 +323,9 @@ class Vidstab(wx.Dialog):
                 'Default value is 0 (no zoom).')
         self.spin_zoom.SetToolTip(tip)
         tip = _('Set optimal zooming to avoid borders. Accepted values are: '
-                '‘0’ disabled, ‘1’ optimal static zoom value is determined '
+                '`0` disabled, `1` optimal static zoom value is determined '
                 '(only very strong movements will lead to visible borders) '
-                '(default), ‘2’ optimal adaptive zoom value is determined '
+                '(default), `2` optimal adaptive zoom value is determined '
                 '(no borders will be visible), see zoomspeed. Note that the '
                 'value given at zoom is added to the one calculated here.')
         self.spin_optzoom.SetToolTip(tip)
@@ -333,9 +333,9 @@ class Vidstab(wx.Dialog):
                 'optzoom is set to 2). Range is from 0 to 5, default value '
                 'is 0.25.')
         self.spin_zoomspeed.SetToolTip(tip)
-        tip = _('Specify type of interpolation. Available values are: ‘no’ '
-                'no interpolation, ‘linear’ linear only horizontal, '
-                '‘bilinear’ linear in both directions (default), ‘bicubic’ '
+        tip = _('Specify type of interpolation. Available values are: `no` '
+                'no interpolation, `linear` linear only horizontal, '
+                '`bilinear` linear in both directions (default), `bicubic` '
                 'cubic in both directions (slow)')
         self.rdb_interpol.SetToolTip(tip)
         tip = _('Enable virtual tripod mode if checked, which is equivalent '

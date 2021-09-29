@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: two_pass_EBU.py
 Porpose: FFmpeg long processing task on 2 pass with EBU normalization

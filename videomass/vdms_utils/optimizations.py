@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 # Name: optimizations.py
 # Porpose: contains the optimization presets for av_conversions.py

@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: youtubedlupdater.py
 Porpose: update tasks

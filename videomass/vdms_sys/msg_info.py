@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: msg_info.py
 Porpose: Gets version, copyr and program Description

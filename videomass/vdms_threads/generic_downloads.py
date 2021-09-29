@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: generic_downloads.py
 Porpose: generic network download operation

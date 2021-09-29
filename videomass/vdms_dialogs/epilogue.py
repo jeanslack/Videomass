@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: epilogue.py
 Porpose: show dialog box before start process

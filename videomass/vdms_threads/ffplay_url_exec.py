@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: ffplay_url_exec.py
 Porpose: playback online media streams with ffplay player

@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: time_selection.py
 Porpose: show panel to set duration and time sequences

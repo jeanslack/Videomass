@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: one_pass.py
 Porpose: FFmpeg long processing task on one pass conversion

@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 FileName: av_conversions.py
 Porpose: audio/video conversions interface

@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: audiodialogs.py
 Porpose: Audio dialog for settings audio parameters

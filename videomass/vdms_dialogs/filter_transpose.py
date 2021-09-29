@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: filter_transpose.py
 Porpose: Show dialog to get video transpose data based on FFmpeg syntax

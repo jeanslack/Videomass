@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: wizard_dlg.py
 Porpose: wizard setup dialog

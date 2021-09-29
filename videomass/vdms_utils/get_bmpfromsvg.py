@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: get_bmpfromSvg.py
 Porpose: return bmp image from a scalable vector graphic format (svg)

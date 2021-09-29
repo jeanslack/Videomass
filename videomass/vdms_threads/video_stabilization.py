@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: video_stabilization.py
 Porpose: FFmpeg long processing vidstab

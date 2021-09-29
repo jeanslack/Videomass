@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 """
 Name: gui_app.py
 Porpose: bootstrap for Videomass app.

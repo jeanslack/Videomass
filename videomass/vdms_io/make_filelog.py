@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 File Name: make_filelog.py
 Porpose: log file generator

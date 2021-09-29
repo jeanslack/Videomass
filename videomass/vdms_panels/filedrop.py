@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: filedrop.py
 Porpose: files drag n drop interface

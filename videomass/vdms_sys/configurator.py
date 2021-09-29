@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: configurator.py
 Porpose: Set Videomass configuration on startup
@@ -103,7 +103,6 @@ def get_pyinstaller():
     created by the bootloader.
     """
     if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-        print('getattr frozen, hasattr _MEIPASS')
         frozen, meipass = True, True
         mpath = getattr(sys, '_MEIPASS', os.path.abspath(__file__))
         data_locat = mpath
@@ -398,7 +397,6 @@ class DataSource():
 
         return ({'ostype': platform.system(),
                  'srcpath': _relativize(self.srcpath),
-                 # 'fatalerr': fatalerror,
                  'localepath': _relativize(self.localepath),
                  'fileconfpath': _relativize(DataSource.FILE_CONF),
                  'workdir': _relativize(self.workdir),

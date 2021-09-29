@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 
 # Name: showlogs.py
 # Porpose: show logs data

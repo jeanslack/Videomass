@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: pictures_exporting.py
 Porpose: FFmpeg long processing task on save as pictures

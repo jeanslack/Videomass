@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: playlist_indexing.py
 Porpose: shows a dialog box for setting playlist indexing

@@ -1,4 +1,4 @@
-
+# -*- coding: UTF-8 -*-
 """
 Name: generic_task.py
 Porpose: Execute a generic task with FFmpeg
