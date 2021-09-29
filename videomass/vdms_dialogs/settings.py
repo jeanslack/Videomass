@@ -508,7 +508,7 @@ class Setup(wx.Dialog):
         Setting enable/disable in according to the configuration file
 
         """
-        self.cmbx_icons.SetValue(str(self.appdata['icontheme']))
+        self.cmbx_icons.SetValue(str(self.appdata['icontheme'][0]))
         self.cmbx_iconsSize.SetValue(str(self.appdata['toolbarsize']))
         self.rdbTBpref.SetSelection(int(self.appdata['toolbarpos']))
 

@@ -33,17 +33,6 @@ class ShowLogs(wx.MiniFrame):
     View log data from files within the log directory
 
     """
-    # COLORS html
-    # light
-    LAVENDER = '#e6e6faff'
-    NIGHT_BLUE = '#191970ff'
-    # dark
-    DARK_SLATE = '#1c2027ff'
-    HEAVENLY = '#87ceebff'
-    # breeze-blues
-    SOLARIZED = '#11303eff'
-    GREY = '#959595'
-
     # list of logs files to include
     LOGNAMES = ('volumedected.log',
                 'youtubedl_lib.log',
@@ -67,6 +56,7 @@ class ShowLogs(wx.MiniFrame):
         self.logdata = {}
         self.selected = None
         get = wx.GetApp()  # get data from bootstrap
+        colorscheme = get.appset['icontheme'][1]
 
         wx.MiniFrame.__init__(self, None, style=wx.CAPTION | wx.CLOSE_BOX |
                               wx.RESIZE_BORDER | wx.SYSTEM_MENU
@@ -95,17 +85,8 @@ class ShowLogs(wx.MiniFrame):
                                     )
         self.textdata.SetMinSize((700, 300))
 
-        if get.appset['icontheme'] in ('Breeze-Blues', 'Videomass-Colours'):
-            self.textdata.SetBackgroundColour(ShowLogs.SOLARIZED)
-            self.textdata.SetDefaultStyle(wx.TextAttr(ShowLogs.GREY))
-        elif get.appset['icontheme'] in ('Breeze-Blues',
-                                         'Breeze-Dark',
-                                         'Videomass-Dark'):
-            self.textdata.SetBackgroundColour(ShowLogs.DARK_SLATE)
-            self.textdata.SetDefaultStyle(wx.TextAttr(ShowLogs.HEAVENLY))
-        else:
-            self.textdata.SetBackgroundColour(ShowLogs.LAVENDER)
-            self.textdata.SetDefaultStyle(wx.TextAttr(ShowLogs.NIGHT_BLUE))
+        self.textdata.SetBackgroundColour(colorscheme['BACKGRD'])
+        self.textdata.SetDefaultStyle(wx.TextAttr(colorscheme['TXT3']))
 
         if OS == 'Darwin':
             self.textdata.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL,

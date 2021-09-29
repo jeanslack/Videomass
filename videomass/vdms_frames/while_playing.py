@@ -33,16 +33,6 @@ class While_Playing(wx.MiniFrame):
     useful when you use playback function with FFplay
 
     """
-    # light
-    LAVENDER = '#e6e6faff'
-    LIGHT_SLATE = '#778899ff'
-    # dark
-    DARK_SLATE = '#1c2027ff'
-    DARK_GREEN = '#008000'
-    LIGHT_GREY = '#959595'
-    # breeze-blues
-    SOLARIZED = '#11303eff'
-
     KEYS = (_("q, ESC\nf\np, SPC\nm\n9, 0\n/, *\na\nv\nt\nc\n"
               "w\ns\n\nleft/right\ndown/up\npage down/page up\n\n"
               "right mouse click\nleft mouse double-click"
@@ -69,6 +59,7 @@ class While_Playing(wx.MiniFrame):
     def __init__(self, OS):
 
         get = wx.GetApp()  # get data from bootstrap
+        colorscheme = get.appset['icontheme'][1]
 
         wx.MiniFrame.__init__(self, None, style=wx.CAPTION | wx.CLOSE_BOX |
                               wx.SYSTEM_MENU)
@@ -96,20 +87,9 @@ class While_Playing(wx.MiniFrame):
         # ----------------------Properties----------------------#
         self.SetTitle(_("Shortcut keys while playing with FFplay"))
 
-        if get.appset['icontheme'] in ('Breeze-Blues', 'Videomass-Colours'):
-            panel.SetBackgroundColour(wx.Colour(While_Playing.SOLARIZED))
-            label2.SetForegroundColour(wx.Colour(While_Playing.LIGHT_GREY))
-
-        elif get.appset['icontheme'] in ('Breeze-Blues',
-                                         'Breeze-Dark',
-                                         'Videomass-Dark'):
-            panel.SetBackgroundColour(wx.Colour(While_Playing.DARK_SLATE))
-            label2.SetForegroundColour(wx.Colour(While_Playing.LIGHT_GREY))
-        else:
-            panel.SetBackgroundColour(wx.Colour(While_Playing.LAVENDER))
-            label2.SetForegroundColour(wx.Colour(While_Playing.LIGHT_SLATE))
-
-        label1.SetForegroundColour(wx.Colour(While_Playing.DARK_GREEN))
+        panel.SetBackgroundColour(wx.Colour(colorscheme['BACKGRD']))
+        label2.SetForegroundColour(wx.Colour(colorscheme['TXT1']))
+        label1.SetForegroundColour(wx.Colour(colorscheme['ERR0']))
         # ---------------------- Layout ----------------------#
         gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)
         gr_s1.Add(label1, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)

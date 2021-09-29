@@ -6,7 +6,8 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.22.2021 *-pycodestyle- compatible*
+Rev: Sep.28.2021
+Code checker: pycodestyle / flake8 --ignore=F821,W503
 ########################################################
 
 This file is part of Videomass.
@@ -59,30 +60,6 @@ class Indexing(wx.Dialog):
     OS = get.appset['ostype']
     appdata = get.appset
 
-    if get.appset['icontheme'] in ('Breeze-Blues',
-                                   'Videomass-Colours'):
-        BACKGROUND = '#11303eff'
-        FOREGROUND = '#959595'
-        WARN = '#dfb72f'  # YELLOW for warning text messages
-        ERROR = '#EA312D'  # LIGHTRED for errors 2
-        SUCCESS = '#1EA41E'  # GREEN when it is successful
-
-    elif get.appset['icontheme'] in ('Breeze-Blues',
-                                     'Breeze-Dark',
-                                     'Videomass-Dark'):
-        BACKGROUND = '#1c2027ff'
-        FOREGROUND = '#87ceebff'
-        WARN = '#dfb72f'  # YELLOW for warning text messages
-        ERROR = '#EA312D'  # LIGHTRED for errors 2
-        SUCCESS = '#1EA41E'  # GREEN when it is successful
-
-    else:
-        BACKGROUND = '#e6e6faff'
-        FOREGROUND = '#191970ff'
-        WARN = '#988313'  # YELLOW for warning text messages
-        ERROR = '#c8120b'  # LIGHTRED for errors 2
-        SUCCESS = '#008000'  # DARK_GREEN when it is successful
-
     HELPME = _('Click on "Playlist Items" column to specify indices of '
                'the videos in the playlist separated by commas like: '
                '"1,2,5,8" if you want to download videos indexed 1, 2, '
@@ -90,13 +67,13 @@ class Indexing(wx.Dialog):
                'You can specify range: "1-3,7,10-13" it will download the '
                'videos at index 1, 2, 3, 7, 10, 11, 12 and 13.\n'
                )
-    LINECOLOUR = (24, 104, 24, 255)
 
     def __init__(self, parent, url, data):
         """
         NOTE Use 'parent, -1' param. to make parent, use 'None' otherwise
 
         """
+        self.clrs = Indexing.appdata['icontheme'][1]
         self.urls = url
         self.data = data
 
@@ -105,17 +82,17 @@ class Indexing(wx.Dialog):
         # ------ Add widget controls
         self.lctrl = ListCtrl(self,
                               wx.ID_ANY,
-                              style=wx.LC_REPORT |
-                              wx.SUNKEN_BORDER |
-                              wx.LC_SINGLE_SEL |
-                              wx.LC_HRULES |
-                              wx.LC_VRULES
+                              style=wx.LC_REPORT
+                              | wx.SUNKEN_BORDER
+                              | wx.LC_SINGLE_SEL
+                              | wx.LC_HRULES
+                              | wx.LC_VRULES
                               )
         self.tctrl = wx.TextCtrl(self,
                                  wx.ID_ANY, "",
-                                 style=wx.TE_MULTILINE |
-                                 wx.TE_READONLY |
-                                 wx.TE_RICH2
+                                 style=wx.TE_MULTILINE
+                                 | wx.TE_READONLY
+                                 | wx.TE_RICH2
                                  )
 
         # ------ Properties
@@ -154,7 +131,7 @@ class Indexing(wx.Dialog):
             self.lctrl.InsertItem(index, str(index + 1))
             self.lctrl.SetItem(index, 1, link)
             if '/playlist?list' in link:
-                self.lctrl.SetItemBackgroundColour(index, Indexing.LINECOLOUR)
+                self.lctrl.SetItemBackgroundColour(index, self.clrs['TXT3'])
 
             if not self.data == {'': ''}:
                 for key, val in self.data.items():
@@ -169,7 +146,7 @@ class Indexing(wx.Dialog):
             self.lctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             self.tctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
 
-        self.tctrl.SetBackgroundColour(Indexing.BACKGROUND)
+        self.tctrl.SetBackgroundColour(self.clrs['BACKGRD'])
 
         # ----------------------Binding (EVT)----------------------#
         self.lctrl.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self.on_edit_begin)
@@ -186,8 +163,8 @@ class Indexing(wx.Dialog):
         """
 
         self.tctrl.Clear()
-        self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.FOREGROUND))
-        self.tctrl.AppendText('%s' % Indexing.HELPME)
+        self.tctrl.SetDefaultStyle(wx.TextAttr(self.clrs['TXT1']))
+        self.tctrl.AppendText(f'{Indexing.HELPME}')
     # ------------------------------------------------------------------#
 
     def getvalue(self):
@@ -239,41 +216,42 @@ class Indexing(wx.Dialog):
 
             keywords = {'char': ([char for char in new_data
                                   if char not in allow],
-                                 '\n%s: %s' % (date, msg['errdigit'])),
+                                 f'\n{date}: {msg["errdigit"]}'),
                         'startsdigit': (not new_data[0].isdigit(),
-                                        '\n%s: %s' % (date, msg['errdigit2'])),
+                                        f'\n{date}: {msg["errdigit2"]}'),
                         'endsdigit': (not new_data[last].isdigit(),
-                                      '\n%s: %s' % (date, msg['errdigit2'])),
+                                      f'\n{date}: {msg["errdigit2"]}'),
                         'starshyph': ([hyph for hyph in csplit if
                                        hyph.startswith('-')],
-                                      '\n%s: %s' % (date, msg['errhyph'])),
+                                      f'\n{date}: {msg["errhyph"]}'),
                         'endshyph': ([hyph for hyph in csplit if
                                       hyph.endswith('-')],
-                                     '\n%s: %s' % (date, msg['errhyph'])),
+                                     f'\n{date}: {msg["errhyph"]}'),
                         'startscomma': ([comma for comma in hsplit if
                                          comma.startswith(',')],
-                                        '\n%s: %s' % (date, msg['errcomma'])),
+                                        f'\n{date}: {msg["errcomma"]}'),
                         'redund1': ('' in csplit,
-                                    '\n%s: %s' % (date, msg['errgen'])),
+                                    f'\n{date}: {msg["errgen"]}'),
                         'redund2': ('' in hsplit,
-                                    '\n%s: %s' % (date, msg['errgen'])),
+                                    f'\n{date}: {msg["errgen"]}'),
                         'errrange': ([rng.split('-') for rng in csplit if
                                       '-' in rng if len(rng.split('-')) > 2],
-                                     '\n%s: %s' % (date, msg['errhyph3']))}
-            for key in keywords:
-                if keywords[key][0]:
-                    self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.ERROR))
-                    self.tctrl.AppendText(keywords[key][1])
+                                     f'\n{date}: {msg["errhyph3"]}')}
+
+            for val in keywords.items():
+                if val[1][0]:
+                    self.tctrl.SetDefaultStyle(wx.TextAttr(self.clrs['ERR1']))
+                    self.tctrl.AppendText(val[1][1])
                     event.Veto()
                     return
 
-            self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.SUCCESS))
-            self.tctrl.AppendText('\n%s: Assigned: %s ' % (date, new_data))
+            self.tctrl.SetDefaultStyle(wx.TextAttr(self.clrs['TXT3']))
+            self.tctrl.AppendText(f'\n{date}: Assigned: {new_data} ')
     # ------------------------------------------------------------------#
 
     def on_edit_begin(self, event):
         """
-        Columns 0 and 1 must not be editable.
+        Columns 0 and 1 must not be editable for link without playlist.
         """
         row_id = event.GetIndex()
 
@@ -281,14 +259,16 @@ class Indexing(wx.Dialog):
         date = wxd.Format('%H:%M:%S')
         invalidmsg = _('WARNING: The selected URL does not refer to a '
                        'playlist. Only lines marked green can be indexed.')
-        colour = Indexing.LINECOLOUR
+
+        colour = self.clrs['TXT3']
 
         if event.GetColumn() in (0, 1):
             event.Veto()
         elif event.GetColumn() == 2:
+            # It looks like the HTML color codes are translated to RGB here
             if self.lctrl.GetItemBackgroundColour(row_id) != colour:
-                self.tctrl.SetDefaultStyle(wx.TextAttr(Indexing.WARN))
-                self.tctrl.AppendText('\n%s: %s' % (date, invalidmsg))
+                self.tctrl.SetDefaultStyle(wx.TextAttr(self.clrs['WARN']))
+                self.tctrl.AppendText(f'\n{date}: {invalidmsg}')
                 event.Veto()
             else:
                 event.Skip()  # or event.Allow()

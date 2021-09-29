@@ -37,11 +37,15 @@ try:
 except ModuleNotFoundError as error:
     sys.exit(error)
 
-BINARY = os.path.join(HERE, 'bin', 'videomass')
-SPECFILE = os.path.join(HERE, 'videomass.spec')
+SCRIPT = 'launcher'
+NAME = 'videomass'
+BINARY = os.path.join(HERE, SCRIPT)
+SPECFILE = os.path.join(HERE, '%s.spec' % NAME)
+#BINARY = os.path.join(HERE, 'bin', 'videomass')
+#SPECFILE = os.path.join(HERE, 'videomass.spec')
 
 
-def data(here=HERE):
+def data(here=HERE, name=NAME):
     """
     Returns a dict object of the Videomass data
     and pathnames needed to spec file.
@@ -50,6 +54,7 @@ def data(here=HERE):
 
     return dict(RLS_NAME=release[0],  # first letter is Uppercase
                 PRG_NAME=release[1],  # first letter is lower
+                NAME=name,
                 VERSION=release[2],
                 RELEASE=release[3],
                 COPYRIGHT=release[4],
@@ -161,7 +166,7 @@ class PyinstallerSpec():
         Set options flags and spec file pathname
         on Linux platform.
         """
-        options = (f"--name {self.getdata['PRG_NAME']} {self.onedf} "
+        options = (f"--name {self.getdata['NAME']} {self.onedf} "
                    f"--windowed --noconsole --exclude-module youtube_dl "
                    f"{self.datas} ")
 
@@ -184,23 +189,16 @@ def onefile_onedir():
 # --------------------------------------------------------#
 
 
-def fetch_exec(binary=BINARY, here=HERE):
+def fetch_exec(binary=BINARY):
     """
     fetch the videomass binary on bin folder
     """
-    if not os.path.exists(os.path.join(here, 'videomass')):  # binary
-        if os.path.isfile(binary):
-            try:
-                shutil.copyfile(binary, os.path.join(here, 'videomass'))
-            except FileNotFoundError as err:
-                sys.exit(err)
-        else:
-            sys.exit("ERROR: no 'bin/videomass' file found on videomass "
-                     "base sources directory.")
+    if not os.path.exists(binary):  # binary
+        sys.exit("ERROR: no file found named '%s'" % binary)
 # --------------------------------------------------------#
 
 
-def genspec(options, specfile=SPECFILE, addplist=None):
+def genspec(options, specfile=SPECFILE, addplist=None, script=SCRIPT):
     """
     Generate a videomass.spec file for platform in use.
     Support for the following platforms is expected:
@@ -214,7 +212,7 @@ def genspec(options, specfile=SPECFILE, addplist=None):
     an existing videomass.spec file.
     """
     try:
-        subprocess.run('pyi-makespec %s videomass' % options,
+        subprocess.run('pyi-makespec %s %s' % (options, script),
                        shell=True, check=True)
     except subprocess.CalledProcessError as err:
         sys.exit('\nERROR: %s\n' % err)

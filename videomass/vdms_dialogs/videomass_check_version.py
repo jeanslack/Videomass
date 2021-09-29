@@ -6,7 +6,8 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sept.14.2021 *-pycodestyle- compatible*
+Rev: Sept.28.2021
+Code checker: pycodestyle / flake8 --ignore=F821,W503
 ########################################################
 
 This file is part of Videomass.
@@ -36,6 +37,7 @@ class CheckNewVersion(wx.Dialog):
     get = wx.GetApp()  # get data from bootstrap
     OS = get.appset['ostype']
     APPTYPE = get.appset['app']
+    COLOR = get.appset['icontheme'][1]
 
     def __init__(self, parent, msg, newvers, this):
         """
@@ -45,6 +47,7 @@ class CheckNewVersion(wx.Dialog):
         self.msg = msg
         self.newvers = newvers
         self.curvers = this
+        self.color = CheckNewVersion.COLOR
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
 
@@ -52,11 +55,11 @@ class CheckNewVersion(wx.Dialog):
 
         self.tctrl = wx.TextCtrl(self,
                                  wx.ID_ANY, "",
-                                 style=wx.TE_MULTILINE |
-                                 wx.TE_READONLY |
-                                 wx.TE_RICH2 |
-                                 wx.TE_AUTO_URL |
-                                 wx.TE_CENTRE,
+                                 style=wx.TE_MULTILINE
+                                 | wx.TE_READONLY
+                                 | wx.TE_RICH2
+                                 | wx.TE_AUTO_URL
+                                 | wx.TE_CENTRE,
                                  )
         btn_get = wx.Button(self, wx.ID_ANY, _("Get Latest Version"))
         btn_ok = wx.Button(self, wx.ID_OK, "")
@@ -78,7 +81,7 @@ class CheckNewVersion(wx.Dialog):
         sizer.Fit(self)
         self.Layout()
 
-        self.tctrl.SetBackgroundColour('#26262d')
+        self.tctrl.SetBackgroundColour(self.color['BACKGRD'])
 
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
@@ -99,12 +102,12 @@ class CheckNewVersion(wx.Dialog):
             self.tctrl.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
 
         self.tctrl.Clear()
-        self.tctrl.SetDefaultStyle(wx.TextAttr('#8442f0'))
-        self.tctrl.AppendText('%s' % defmsg1)
+        self.tctrl.SetDefaultStyle(wx.TextAttr(self.color['TXT0']))
+        self.tctrl.AppendText(f'{defmsg1}')
 
-        self.tctrl.SetDefaultStyle(wx.TextAttr('#2a7fffff'))
-        self.tctrl.AppendText('%s' % defmsg2)
-        self.tctrl.AppendText('%s' % self.msg)
+        self.tctrl.SetDefaultStyle(wx.TextAttr(self.color['TXT3']))
+        self.tctrl.AppendText(f'{defmsg2}')
+        self.tctrl.AppendText(f'{self.msg}')
     # ------------------------------------------------------------------#
 
     def on_get(self, event):

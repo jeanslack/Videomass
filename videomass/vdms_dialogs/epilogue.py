@@ -8,8 +8,8 @@ Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: May.15.2020
 Code checker:
-    flake8: --ignore F821, W504
-    pylint: --ignore E0602, E1101
+    - pylint: --ignore E0602, E1101, C0415, E0611, R0901,
+    - pycodestyle
 
 This file is part of Videomass.
 
@@ -32,26 +32,17 @@ import wx
 
 class Formula(wx.Dialog):
     """
-   Show a dialog box before run process. It accept a couple
-   of tuples: settingss and parameters.
+    Show a dialog box before run process. It accept a couple
+    of tuples: settingss and parameters.
 
-   Example:
+    Example:
             settings = ("\nEXAMPLES:\n\\nExample 1:\nExample 2:\n etc."
             param = ("type 1\ntype 2\ntype 3\n etc."
     """
-    # light
-    LAVENDER = '#e6e6faff'
-    LIGHT_SLATE = '#778899ff'
-    # dark
-    DARK_SLATE = '#1c2027ff'
-    DARK_GREEN = '#008000'
-    LIGHT_GREY = '#959595'
-    # breeze-blues
-    SOLARIZED = '#11303eff'
-
     def __init__(self, parent, settings, param, title):
 
         get = wx.GetApp()  # get data from bootstrap
+        colorscheme = get.appset['icontheme'][1]
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
 
@@ -64,20 +55,9 @@ class Formula(wx.Dialog):
         # ----------------------Properties----------------------#
         self.SetTitle(title)
 
-        if get.appset['icontheme'] in ('Breeze-Blues', 'Videomass-Colours'):
-            panel.SetBackgroundColour(Formula.SOLARIZED)
-            label2.SetForegroundColour(Formula.LIGHT_GREY)
-
-        elif get.appset['icontheme'] in ('Breeze-Blues',
-                                         'Breeze-Dark',
-                                         'Videomass-Dark'):
-            panel.SetBackgroundColour(Formula.DARK_SLATE)
-            label2.SetForegroundColour(Formula.LIGHT_GREY)
-        else:
-            panel.SetBackgroundColour(Formula.LAVENDER)
-            label2.SetForegroundColour(Formula.LIGHT_SLATE)
-
-        label1.SetForegroundColour(Formula.DARK_GREEN)
+        panel.SetBackgroundColour(colorscheme['BACKGRD'])
+        label2.SetForegroundColour(colorscheme['TXT1'])
+        label1.SetForegroundColour(colorscheme['TXT3'])
         # ---------------------- Layout ----------------------#
         bs1 = wx.BoxSizer(wx.VERTICAL)
         gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)

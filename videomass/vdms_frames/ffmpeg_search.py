@@ -1,77 +1,66 @@
+"""
+Name: ffmpeg_search.py
+Porpose: Show a box to search FFmpeg topics
+Compatibility: Python3, wxPython4
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: Sep.28.2021
+Code checker:
+    - pycodestyle
+    - flake8: --ignore F821, W504, F401
+    - pylint: --ignore E0602, E1101, C0415, E0401, C0103
 
-# Name: ffmpeg_search.py
-# Porpose: Show a box to search FFmpeg topics
-# Compatibility: Python3, wxPython4
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Oct.04.2020 *-pycodestyle- compatible*
-#########################################################
+This file is part of Videomass.
 
-# This file is part of Videomass.
+    Videomass is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+    Videomass is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-from videomass.vdms_io import io_tools
-import wx
+"""
 import re
+import wx
+from videomass.vdms_io import io_tools
 
 
-class FFmpeg_Search(wx.MiniFrame):
+class FFmpegSearch(wx.MiniFrame):
     """
     Search and view all the FFmpeg help options. It has a real-time string
     search filter and is case-sensitive by default, but it is possible to
     ignore upper and lower case by activating the corresponding checkbox.
 
     """
-    GREY = '#959595'
-    DARK_BROWN = '#262222'
-
-    # COLORS html
-    # light
-    LAVENDER = '#e6e6faff'
-    NIGHT_BLUE = '#191970ff'
-    # dark
-    DARK_SLATE = '#1c2027ff'
-    HEAVENLY = '#87ceebff'
-    # breeze-blues
-    SOLARIZED = '#11303eff'
-    GREY = '#959595'
-
     def __init__(self, OS):
         """
         The list of topics in the combo box is part of the
         section given by the -h option on the FFmpeg command line.
 
+        Mode:
+            with 'None' not depend from parent:
+            wx.Frame.__init__(self, None)
+
+            With parent, -1:
+            wx.Frame.__init__(self, parent, -1)
+            if close videomass also close parent window
+
         """
-        self.oS = OS
+        self.opsys = OS
         self.row = None  # output text from `io_tools.findtopic(topic)'
         get = wx.GetApp()  # get data from bootstrap
+        colorscheme = get.appset['icontheme'][1]
 
         wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
                               wx.CLOSE_BOX | wx.SYSTEM_MENU
                               )
-        """
-        with 'None' not depend from parent:
-        wx.Frame.__init__(self, None)
-
-        With parent, -1:
-        wx.Frame.__init__(self, parent, -1)
-        if close videomass also close parent window
-
-        """
         # add panel
         self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
                               wx.BORDER_THEME)
@@ -103,19 +92,8 @@ class FFmpeg_Search(wx.MiniFrame):
                                     wx.TE_RICH2 |
                                     wx.HSCROLL
                                     )
-        if get.appset['icontheme'] in ('Breeze-Blues', 'Videomass-Colours'):
-            self.texthelp.SetBackgroundColour(FFmpeg_Search.SOLARIZED)
-            self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.GREY))
-        elif get.appset['icontheme'] in ('Breeze-Blues',
-                                         'Breeze-Dark',
-                                         'Videomass-Dark'):
-            self.texthelp.SetBackgroundColour(FFmpeg_Search.DARK_SLATE)
-            self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.HEAVENLY))
-        else:
-            self.texthelp.SetBackgroundColour(FFmpeg_Search.LAVENDER)
-            self.texthelp.SetDefaultStyle(
-                wx.TextAttr(FFmpeg_Search.NIGHT_BLUE))
-
+        self.texthelp.SetBackgroundColour(colorscheme['BACKGRD'])
+        self.texthelp.SetDefaultStyle(wx.TextAttr(colorscheme['TXT3']))
         if OS == 'Darwin':
             self.texthelp.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
@@ -157,24 +135,24 @@ class FFmpeg_Search(wx.MiniFrame):
         # EVT
         if not hasattr(wx, 'EVT_SEARCH'):
             self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN,
-                      self.on_type_Text, self.search)
+                      self.on_type_text, self.search)
         else:  # is wxPython >= 4.1
-            self.Bind(wx.EVT_SEARCH, self.on_type_Text, self.search)
+            self.Bind(wx.EVT_SEARCH, self.on_type_text, self.search)
 
         if not hasattr(wx, 'EVT_SEARCH_CANCEL'):
-            self.Bind(wx.EVT_SEARCHCTRL_CANCEL_BTN, self.on_Delete,
+            self.Bind(wx.EVT_SEARCHCTRL_CANCEL_BTN, self.on_delete,
                       self.search)
         else:  # is wxPython >= 4.1
-            self.Bind(wx.EVT_SEARCH_CANCEL, self.on_Delete, self.search)
+            self.Bind(wx.EVT_SEARCH_CANCEL, self.on_delete, self.search)
 
-        self.Bind(wx.EVT_COMBOBOX, self.on_Selected, self.cmbx_choice)
-        self.Bind(wx.EVT_TEXT, self.on_type_Text, self.search)
-        self.Bind(wx.EVT_CHECKBOX, self.on_Ckbx, self.case)
+        self.Bind(wx.EVT_COMBOBOX, self.on_selected, self.cmbx_choice)
+        self.Bind(wx.EVT_TEXT, self.on_type_text, self.search)
+        self.Bind(wx.EVT_CHECKBOX, self.on_ckbx, self.case)
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
     # ---------------------------------------------------------#
 
-    def on_Selected(self, event):
+    def on_selected(self, event):
         """
         Gets output given ffmpeg `-arg` and fills the textctrl.
         The topic options are values of the arg_opt dictionary.
@@ -210,12 +188,12 @@ class FFmpeg_Search(wx.MiniFrame):
                 self.texthelp.AppendText(self.row)
                 search = self.search.GetValue().strip()
                 if search:  # start already with text searching
-                    self.on_type_Text(self, True)
+                    self.on_type_text(self, True)
             else:
                 self.texthelp.AppendText(_("\n  ..Nothing available"))
     # --------------------------------------------------------------#
 
-    def on_type_Text(self, event, by_event=False):
+    def on_type_text(self, event, by_event=False):
         """
         Whenever text is entered it search the string typed on the search
         control and find on the current `self.row` output. The result is
@@ -229,12 +207,12 @@ class FFmpeg_Search(wx.MiniFrame):
         """
         if not by_event:  # in all other cases
             is_string = event.GetString()
-        else:  # only during certain events (see on_Selected, on_Ckbx)
+        else:  # only during certain events (see on_selected, on_ckbx)
             is_string = self.search.GetValue()
 
         if self.row and not is_string:
             self.texthelp.Clear()  # reset textctrl
-            self.texthelp.AppendText('%s' % self.row)
+            self.texthelp.AppendText(f'{self.row}')
             return
 
         if self.row and is_string:  # specified search (like grep does)
@@ -244,11 +222,11 @@ class FFmpeg_Search(wx.MiniFrame):
 
                 for lines in self.row.split('\n'):
                     if re.search(is_string, lines, re.IGNORECASE):
-                        find.append("%s\n" % lines)
+                        find.append(f"{lines}\n")
             else:  # is case sensitive
                 for lines in self.row.split('\n'):  # case sensitive
                     if is_string in lines:
-                        find.append("%s\n" % lines)
+                        find.append(f"{lines}\n")
 
             if not find:
                 self.texthelp.Clear()  # reset textctrl
@@ -262,17 +240,17 @@ class FFmpeg_Search(wx.MiniFrame):
                             "\nFirst, choose a topic in the drop down list"))
     # --------------------------------------------------------------#
 
-    def on_Ckbx(self, event):
+    def on_ckbx(self, event):
         """
         This event updates the quick search with or without case sensitivity
         """
-        self.on_type_Text(self, True)
+        self.on_type_text(self, True)
     # --------------------------------------------------------------#
 
-    def on_Delete(self, event):
+    def on_delete(self, event):
         """
         It does nothing, but it seems needed.
-        During deletion, the "on_type_Text" call is generated automatically
+        During deletion, the "on_type_text" call is generated automatically
         """
         return
     # --------------------------------------------------------------#

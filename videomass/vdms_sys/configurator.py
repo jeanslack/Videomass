@@ -1,7 +1,7 @@
 
 """
 Name: configurator.py
-Porpose: Set Videomass configuration and appearance on startup
+Porpose: Set Videomass configuration on startup
 Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -73,7 +73,7 @@ def checkconf(dirconf, fileconf, srcpath):
             existfileconf = False
 
         if existfileconf is False:  # try to restore only videomass.conf
-            fcopy = copy_restore('%s/videomass.conf' % srcpath, fileconf)
+            fcopy = copy_restore(f'{srcpath}/videomass.conf', fileconf)
             data = {'ERROR': fcopy} if fcopy else {'R': readconf(fileconf)}
 
         if not os.path.exists(os.path.join(dirconf, "presets")):
@@ -166,7 +166,7 @@ def portable_paths(portdir):
     return file_conf, dir_conf, log_dir, cache_dir
 
 
-def set_outdir(outdir, relpath, apptype):
+def get_outdir(outdir, relpath, apptype):
     """
     Set default or user-custom output folders
     """
@@ -190,8 +190,63 @@ def set_outdir(outdir, relpath, apptype):
     return outputdir, None
 
 
+def get_color_scheme(theme):
+    """
+    Returns the corrisponding colour scheme according to
+    chosen theme in ("Videomass-Light",
+                     "Videomass-Dark",
+                     "Videomass-Colours",
+                     "Breeze",
+                     "Breeze-Dark",
+                     "Breeze-Blues"
+                     )
+    """
+    if theme in ('Breeze-Blues', 'Videomass-Colours'):
+        c_scheme = {'BACKGRD': '#1c2027ff',  # DARK_SLATE background color
+                    'TXT0': '#FFFFFF',  # WHITE for title or URL in progress
+                    'TXT1': '#959595',  # GREY for all other text messages
+                    'ERR0': '#FF4A1B',  # ORANGE for error text messages
+                    'WARN': '#dfb72f',  # YELLOW for warning text messages
+                    'ERR1': '#EA312D',  # LIGHTRED for errors 2
+                    'SUCCESS': '#1EA41E',  # GREEN when it is successful
+                    'TXT2': '#3f5e6b',  # dark ciano
+                    'TXT3': '#11b584',  # medium light green
+                    'TXT4': '#87ceebff',  # light ciano
+                    }
+    elif theme in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
+        c_scheme = {'BACKGRD': '#232424',  # DARK Grey background color
+                    'TXT0': '#FFFFFF',  # WHITE for title or URL in progress
+                    'TXT1': '#959595',  # GREY for all other text messages
+                    'ERR0': '#FF4A1B',  # ORANGE for error text messages
+                    'WARN': '#dfb72f',  # YELLOW for warning text messages
+                    'ERR1': '#EA312D',  # LIGHTRED for errors 2
+                    'SUCCESS': '#1EA41E',  # GREEN when it is successful
+                    'TXT2': '#008000',  # dark green
+                    'TXT3': '#11b584',  # medium light green
+                    'TXT4': '#0ce3ac',  # light green
+                    }
+    elif theme in ('Breeze', 'Videomass-Light'):
+        c_scheme = {'BACKGRD': '#e6e6faff',  # LAVENDER background color
+                    'TXT0': '#1f1f1fff',  # BLACK for title or URL in progress
+                    'TXT1': '#778899ff',  # LIGHT_SLATE for all other text msg
+                    'ERR0': '#d25c07',  # ORANGE for error text messages
+                    'WARN': '#988313',  # YELLOW for warning text messages
+                    'ERR1': '#c8120b',  # LIGHTRED for errors 2
+                    'SUCCESS': '#008000',  # DARK_GREEN when it is successful
+                    'TXT2': '#008000',  # dark green
+                    'TXT3': '#008000',  # dark green
+                    'TXT4': '#0ce3ac',  # light green
+                    }
+    else:
+        c_scheme = {'ERROR': f'Unknow theme "{theme}"'}
+
+    return c_scheme
+
+
 def msg(arg):
-    """print logging messages during startup"""
+    """
+    print logging messages during startup
+    """
     print('Info:', arg)
 
 
@@ -248,14 +303,15 @@ class DataSource():
         self.srcpath = os.path.join(DataSource.DATA_LOCAT, 'share')
         self.icodir = os.path.join(DataSource.DATA_LOCAT, 'art', 'icons')
         self.ffmpeg_pkg = os.path.join(DataSource.DATA_LOCAT, 'FFMPEG')
-        launcher = os.path.isfile('%s/launcher' % self.workdir)
+        launcher = os.path.isfile(f'{self.workdir}/launcher')
 
         if DataSource.FROZEN and DataSource.MEIPASS or launcher:
-            msg('frozen=%s meipass=%s launcher=%s' % (DataSource.FROZEN,
-                                                      DataSource.MEIPASS,
-                                                      launcher))
+            msg(f'frozen={DataSource.FROZEN} '
+                f'meipass={DataSource.MEIPASS} '
+                f'launcher={launcher}')
+
             self.apptype = 'pyinstaller' if not launcher else None
-            self.videomass_icon = "%s/videomass.png" % self.icodir
+            self.videomass_icon = f"{self.icodir}/videomass.png"
 
         elif ('/tmp/.mount_' in sys.executable or os.path.exists(
               os.path.dirname(os.path.dirname(os.path.dirname(
@@ -271,7 +327,7 @@ class DataSource():
             binarypath = shutil.which('videomass')
             if platform.system() == 'Windows':  # any other packages
                 exe = binarypath if binarypath else sys.executable
-                msg('Win32 executable=%s' % exe)
+                msg(f'Win32 executable={exe}')
                 # HACK check this
                 # dirname = os.path.dirname(sys.executable)
                 # pythonpath = os.path.join(dirname, 'Script', 'videomass')
@@ -281,19 +337,19 @@ class DataSource():
                     self.apptype = 'embed'
 
             elif binarypath == '/usr/local/bin/videomass':
-                msg('executable=%s' % binarypath)
+                msg(f'executable={binarypath}')
                 # pip as super user, usually Linux, MacOs, Unix
                 share = '/usr/local/share/pixmaps'
                 self.videomass_icon = share + '/videomass.png'
 
             elif binarypath == '/usr/bin/videomass':
-                msg('executable=%s' % binarypath)
+                msg(f'executable={binarypath}')
                 # installed via apt, rpm, etc, usually Linux
                 share = '/usr/share/pixmaps'
                 self.videomass_icon = share + "/videomass.png"
 
             else:
-                msg('executable=%s' % binarypath)
+                msg(f'executable={binarypath}')
                 # pip as normal user, usually Linux, MacOs, Unix
                 userbase = os.path.dirname(os.path.dirname(binarypath))
                 pixmaps = '/share/pixmaps/videomass.png'
@@ -316,13 +372,18 @@ class DataSource():
             return userconf
         userconf = userconf['R']
 
+        # set color scheme
+        theme = get_color_scheme(userconf[11])
+        if theme.get('ERROR'):
+            return theme
+
         # set output directories
-        outfile = set_outdir(userconf[1], DataSource.RELPATH, self.apptype)
-        outdownl = set_outdir(userconf[19], DataSource.RELPATH, self.apptype)
+        outfile = get_outdir(userconf[1], DataSource.RELPATH, self.apptype)
+        outdownl = get_outdir(userconf[19], DataSource.RELPATH, self.apptype)
         if outfile[1]:
-            return {'ERROR': '%s' % outfile[1]}
+            return {'ERROR': f'{outfile[1]}'}
         if outdownl[1]:
-            return {'ERROR': '%s' % outdownl[1]}
+            return {'ERROR': f'{outdownl[1]}'}
 
         def _relativize(path, relative=DataSource.RELPATH):
             """
@@ -333,7 +394,7 @@ class DataSource():
             try:
                 return os.path.relpath(path) if relative else path
             except ValueError as error:
-                return {'ERROR': '%s' % error}
+                return {'ERROR': f'{error}'}
 
         return ({'ostype': platform.system(),
                  'srcpath': _relativize(self.srcpath),
@@ -359,7 +420,7 @@ class DataSource():
                  'ffprobe_bin': _relativize(userconf[8]),
                  'ffplay_local': userconf[9],
                  'ffplay_bin': _relativize(userconf[10]),
-                 'icontheme': userconf[11],
+                 'icontheme': (userconf[11], theme),
                  'toolbarsize': userconf[12],
                  'toolbarpos': userconf[13],
                  'toolbartext': userconf[14],
@@ -391,61 +452,61 @@ class DataSource():
         ext = 'svg' if 'wx.svg' in sys.modules else 'png'
 
         iconames = {'Videomass-Light':  # Videomass icons for light themes
-                    {'x48': '%s/Sign_Icons/48x48_light' % self.icodir,
-                     'x16': '%s/Videomass-Light/16x16' % self.icodir,
-                     'x22': '%s/Videomass-Light/24x24' % self.icodir},
+                    {'x48': f'{self.icodir}/Sign_Icons/48x48_light',
+                     'x16': f'{self.icodir}/Videomass-Light/16x16',
+                     'x22': f'{self.icodir}/Videomass-Light/24x24'},
                     'Videomass-Dark':  # Videomass icons for dark themes
-                    {'x48': '%s/Sign_Icons/48x48_dark' % self.icodir,
-                     'x16': '%s/Videomass-Dark/16x16' % self.icodir,
-                     'x22': '%s/Videomass-Dark/24x24' % self.icodir},
+                    {'x48': f'{self.icodir}/Sign_Icons/48x48_dark',
+                     'x16': f'{self.icodir}/Videomass-Dark/16x16',
+                     'x22': f'{self.icodir}/Videomass-Dark/24x24'},
                     'Videomass-Colours':  # Videomass icons for all themes
-                    {'x48': '%s/Sign_Icons/48x48' % self.icodir,
-                     'x16': '%s/Videomass-Colours/16x16' % self.icodir,
-                     'x22': '%s/Videomass-Colours/24x24' % self.icodir},
+                    {'x48': f'{self.icodir}/Sign_Icons/48x48',
+                     'x16': f'{self.icodir}/Videomass-Colours/16x16',
+                     'x22': f'{self.icodir}/Videomass-Colours/24x24'},
                     'Breeze':  # Breeze for light themes
-                    {'x48': '%s/Sign_Icons/48x48_light' % self.icodir,
-                     'x16': '%s/Breeze/16x16' % self.icodir,
-                     'x22': '%s/Breeze/22x22' % self.icodir},
+                    {'x48': f'{self.icodir}/Sign_Icons/48x48_light',
+                     'x16': f'{self.icodir}/Breeze/16x16',
+                     'x22': f'{self.icodir}/Breeze/22x22'},
                     'Breeze-Dark':  # breeze for dark themes
-                    {'x48': '%s/Sign_Icons/48x48_dark' % self.icodir,
-                     'x16': '%s/Breeze-Dark/16x16' % self.icodir,
-                     'x22': '%s/Breeze-Dark/22x22' % self.icodir},
+                    {'x48': f'{self.icodir}/Sign_Icons/48x48_dark',
+                     'x16': f'{self.icodir}/Breeze-Dark/16x16',
+                     'x22': f'{self.icodir}/Breeze-Dark/22x22'},
                     'Breeze-Blues':  # breeze custom colorized for all themes
-                    {'x48': '%s/Sign_Icons/48x48' % self.icodir,
-                     'x16': '%s/Breeze-Blues/16x16' % self.icodir,
-                     'x22': '%s/Breeze-Blues/22x22' % self.icodir}
+                    {'x48': f'{self.icodir}/Sign_Icons/48x48',
+                     'x16': f'{self.icodir}/Breeze-Blues/16x16',
+                     'x22': f'{self.icodir}/Breeze-Blues/22x22'}
                     }
 
         choose = iconames.get(icontheme)  # set appropriate icontheme
 
         iconset = (self.videomass_icon,
-                   '%s/icon_videoconversions.%s' % (choose.get('x48'), ext),
-                   '%s/convert.%s' % (choose.get('x22'), ext),
-                   '%s/properties.%s' % (choose.get('x22'), ext),
-                   '%s/playback.%s' % (choose.get('x16'), ext),
-                   '%s/icon_concat.%s' % (choose.get('x48'), ext),
-                   '%s/preview.%s' % (choose.get('x16'), ext),
-                   '%s/edit-clear.%s' % (choose.get('x16'), ext),
-                   '%s/profile-append.%s' % (choose.get('x22'), ext),
-                   '%s/transform-scale.%s' % (choose.get('x16'), ext),
-                   '%s/transform-crop.%s' % (choose.get('x16'), ext),
-                   '%s/transform-rotate.%s' % (choose.get('x16'), ext),
-                   '%s/deinterlace.%s' % (choose.get('x16'), ext),
-                   '%s/denoise.%s' % (choose.get('x16'), ext),
-                   '%s/statistics.%s' % (choose.get('x16'), ext),
-                   '%s/configure.%s' % (choose.get('x16'), ext),
-                   '%s/player-volume.%s' % (choose.get('x16'), ext),
-                   '%s/icon_youtube.%s' % (choose.get('x48'), ext),
-                   '%s/icon_prst_mng.%s' % (choose.get('x48'), ext),
-                   '%s/newprf.%s' % (choose.get('x16'), ext),
-                   '%s/delprf.%s' % (choose.get('x16'), ext),
-                   '%s/editprf.%s' % (choose.get('x16'), ext),
-                   '%s/go-previous.%s' % (choose.get('x22'), ext),
-                   '%s/go-next.%s' % (choose.get('x22'), ext),
-                   '%s/download.%s' % (choose.get('x22'), ext),
-                   '%s/statistics.%s' % (choose.get('x22'), ext),
-                   '%s/stabilizer.%s' % (choose.get('x16'), ext),
-                   '%s/playlist-append.%s' % (choose.get('x16'), ext)
+                   f"{choose.get('x48')}/icon_videoconversions.{ext}",
+                   f"{choose.get('x22')}/convert.{ext}",
+                   f"{choose.get('x22')}/properties.{ext}",
+                   f"{choose.get('x16')}/playback.{ext}",
+                   f"{choose.get('x48')}/icon_concat.{ext}",
+                   f"{choose.get('x16')}/preview.{ext}",
+                   f"{choose.get('x16')}/edit-clear.{ext}",
+                   f"{choose.get('x22')}/profile-append.{ext}",
+                   f"{choose.get('x16')}/transform-scale.{ext}",
+                   f"{choose.get('x16')}/transform-crop.{ext}",
+                   f"{choose.get('x16')}/transform-rotate.{ext}",
+                   f"{choose.get('x16')}/deinterlace.{ext}",
+                   f"{choose.get('x16')}/denoise.{ext}",
+                   f"{choose.get('x16')}/statistics.{ext}",
+                   f"{choose.get('x16')}/configure.{ext}",
+                   f"{choose.get('x16')}/player-volume.{ext}",
+                   f"{choose.get('x48')}/icon_youtube.{ext}",
+                   f"{choose.get('x48')}/icon_prst_mng.{ext}",
+                   f"{choose.get('x16')}/newprf.{ext}",
+                   f"{choose.get('x16')}/delprf.{ext}",
+                   f"{choose.get('x16')}/editprf.{ext}",
+                   f"{choose.get('x22')}/go-previous.{ext}",
+                   f"{choose.get('x22')}/go-next.{ext}",
+                   f"{choose.get('x22')}/download.{ext}",
+                   f"{choose.get('x22')}/statistics.{ext}",
+                   f"{choose.get('x16')}/stabilizer.{ext}",
+                   f"{choose.get('x16')}/playlist-append.{ext}",
                    )
         values = [os.path.join(norm) for norm in iconset]  # normalize pathns
 

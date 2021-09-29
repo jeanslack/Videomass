@@ -7,8 +7,9 @@ Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Sep.14.2021
 Code checker:
-    flake8: --ignore F821, W504
-    pylint: --ignore E0602, E1101
+    - pycodestyle
+    - flake8: --ignore F821, W504, F401
+    - pylint: --ignore E0602, E1101, C0415, E0401, C0103
 
 This file is part of Videomass.
 
@@ -77,6 +78,7 @@ class Videomass(wx.App):
                        }
         self.data = DataSource()  # instance data
         self.appset.update(self.data.get_fileconf())  # data system
+        self.iconset = None
 
         wx.App.__init__(self, redirect, filename)  # constructor
         wx.SystemOptions.SetOption("osx.openfiledialog.always-show-types", "1")
@@ -86,12 +88,12 @@ class Videomass(wx.App):
         """Bootstrap interface."""
 
         if self.appset.get('ERROR'):
-            wx.MessageBox('FATAL: {0}\n\nSorry, cannot continue..'.format(
-                          self.appset['ERROR']), 'Videomass', wx.ICON_STOP)
+            wx.MessageBox(f"FATAL: {self.appset['ERROR']}\n\nSorry, cannot "
+                          f"continue..", 'Videomass - ERROR', wx.ICON_STOP)
             return False
 
         self.appset['DISPLAY_SIZE'] = wx.GetDisplaySize()  # get monitor res
-        self.iconset = self.data.icons_set(self.appset['icontheme'])
+        self.iconset = self.data.icons_set(self.appset['icontheme'][0])
 
         # locale
         wx.Locale.AddCatalogLookupPathPrefix(self.appset['localepath'])
@@ -109,7 +111,7 @@ class Videomass(wx.App):
                 tmp = os.path.join(self.appset['cachedir'], 'tmp')
                 os.makedirs(tmp, mode=0o777)
             except OSError as err:
-                wx.MessageBox('%s' % err, 'Videomass', wx.ICON_STOP)
+                wx.MessageBox(f'{err}', 'Videomass', wx.ICON_STOP)
                 return False
 
         from videomass.vdms_main.main_frame import MainFrame
@@ -145,7 +147,8 @@ class Videomass(wx.App):
 
                 try:
                     import youtube_dl
-                    this = youtube_dl.__file__.split(pkg)[0]
+                    this = youtube_dl.__file__.split(pkg, maxsplit=1)[0]
+
                     self.appset['YDLSITE'] = self.appset['getpath'](this)
 
                 except (ModuleNotFoundError, ImportError) as nomodule:
@@ -169,7 +172,7 @@ class Videomass(wx.App):
                 if not which(link, mode=os.F_OK | os.X_OK, path=None):
                     return True
             else:
-                if not os.path.isfile("%s" % link):
+                if not os.path.isfile(f"{link}"):
                     return True
 
         if not self.appset['ostype'] == 'Windows':

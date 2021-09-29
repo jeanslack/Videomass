@@ -6,7 +6,8 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.14.2021 *-pycodestyle- compatible*
+Rev: Sep.28.2021
+Code checker: pycodestyle / flake8 --ignore=F821,W503
 ########################################################
 
 This file is part of Videomass.
@@ -30,7 +31,7 @@ import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_io import io_tools
 from videomass.vdms_utils.utils import format_bytes
 from videomass.vdms_utils.utils import timehuman
-from videomass.vdms_frames.ydl_mediainfo import YDL_Mediainfo
+from videomass.vdms_frames.ydl_mediainfo import YdlMediaInfo
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_dialogs.playlist_indexing import Indexing
 
@@ -79,53 +80,32 @@ class Downloader(wx.Panel):
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
     icons = get.iconset
-
-    MSG_1 = _('At least one "Format Code" must be checked for each '
-              'URL selected in green.')
-    MSG_2 = _('Function available only if you choose "Download by '
-              'format code"')
-    # light
-    LAVENDER = '#e6e6faff'
-    # dark
-    DARK_SLATE = '#1c2027ff'
-    # breeze-blues
-    SOLARIZED = '#11303eff'
-    # all
-    RED_VIOLET = '#de2689ff'
-    D_GREEN = '#008000'
-    RED = '#ff0000ff'
-    GREEN = '#008000'
-    # YELLOW = '#bd9f00ff'
+    BACKGRD = get.appset['icontheme'][1]['BACKGRD']
+    GREEN = get.appset['icontheme'][1]['TXT3']
+    RED = get.appset['icontheme'][1]['ERR1']
     YELLOW = '#bd9f00'
     WHITE = '#fbf4f4'  # white for background status bar
     BLACK = '#060505'  # black for background status bar
     VIOLET = '#D64E93'
 
-    if appdata['icontheme'] in ('Breeze-Blues',
-                                'Videomass-Colours'):
-        BACKGRD = SOLARIZED
+    MSG_1 = _('At least one "Format Code" must be checked for each '
+              'URL selected in green.')
+    MSG_2 = _('Function available only if you choose "Download by '
+              'format code"')
 
-    elif appdata['icontheme'] in ('Breeze-Blues',
-                                  'Breeze-Dark',
-                                  'Videomass-Dark'):
-        BACKGRD = DARK_SLATE
-
-    else:
-        BACKGRD = LAVENDER
-
-    VQUALITY = {('Best quality video'): ['', ''],
+    VQUALITY = {('Best quality video'): ['best', 'best'],
                 ('Worst quality video'): ['worst', 'worst']
                 }
-    AFORMATS = {
-        ("Default audio format"): ("best", "--extract-audio"),
-        ("wav"): ("wav", "--extract-audio --audio-format wav"),
-        ("mp3"): ("mp3", "--extract-audio --audio-format mp3"),
-        ("aac"): ("aac", "--extract-audio --audio-format aac"),
-        ("m4a"): ("m4a", "--extract-audio --audio-format m4a"),
-        ("vorbis"): ("vorbis", "--extract-audio --audio-format vorbis"),
-        ("opus"): ("opus", "--extract-audio --audio-format opus"),
-        ("flac"): ("flac", "--extract-audio --audio-format flac"),
-        }
+    AFORMATS = {("Default audio format"): ("best", "--extract-audio"),
+                ("wav"): ("wav", "--extract-audio --audio-format wav"),
+                ("mp3"): ("mp3", "--extract-audio --audio-format mp3"),
+                ("aac"): ("aac", "--extract-audio --audio-format aac"),
+                ("m4a"): ("m4a", "--extract-audio --audio-format m4a"),
+                ("vorbis"): ("vorbis",
+                             "--extract-audio --audio-format vorbis"),
+                ("opus"): ("opus", "--extract-audio --audio-format opus"),
+                ("flac"): ("flac", "--extract-audio --audio-format flac"),
+                }
 
     AQUALITY = {('Best quality audio'): ['best', 'best'],
                 ('Worst quality audio'): ['worst', 'worst']}
@@ -163,12 +143,12 @@ class Downloader(wx.Panel):
                     ("SUBTITLES"): [False, ""],
                     }
         self.plidx = {'': ''}
-        self.info = list()  # has data information for Show More button
-        self.format_dict = dict()  # format codes order with URL matching
+        self.info = []  # has data information for Show More button
+        self.format_dict = {}  # format codes order with URL matching
         self.oldwx = None  # test result of hasattr EVT_LIST_ITEM_CHECKED
 
         wx.Panel.__init__(self, parent, -1, style=wx.TAB_TRAVERSAL)
-        """constructor"""
+
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizer_div = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(sizer_div, 1, wx.EXPAND)
@@ -194,15 +174,16 @@ class Downloader(wx.Panel):
         boxoptions.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
         boxoptions.Add((5, 5))
         panelscroll = scrolled.ScrolledPanel(self, -1, size=(260, 700),
-                                             style=wx.TAB_TRAVERSAL |
-                                             wx.BORDER_THEME, name="panelscr",
+                                             style=wx.TAB_TRAVERSAL
+                                             | wx.BORDER_THEME,
+                                             name="panelscr",
                                              )
         fgs1 = wx.BoxSizer(wx.VERTICAL)
         # fgs1.Add((5, 5))
         self.cmbx_vq = wx.ComboBox(panelscroll, wx.ID_ANY,
                                    choices=list(Downloader.VQUALITY.keys()),
-                                   size=(-1, -1), style=wx.CB_DROPDOWN |
-                                   wx.CB_READONLY
+                                   size=(-1, -1), style=wx.CB_DROPDOWN
+                                   | wx.CB_READONLY
                                    )
         self.cmbx_vq.SetSelection(0)
         # grid_v.Add((20, 20), 0,)
@@ -210,7 +191,8 @@ class Downloader(wx.Panel):
         self.cmbx_aq = wx.ComboBox(panelscroll, wx.ID_ANY,
                                    choices=list(Downloader.AQUALITY.keys()),
                                    size=(-1, -1),
-                                   style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                   style=wx.CB_DROPDOWN
+                                   | wx.CB_READONLY
                                    )
         self.cmbx_aq.SetSelection(0)
         self.cmbx_aq.Disable()
@@ -219,7 +201,8 @@ class Downloader(wx.Panel):
         self.cmbx_af = wx.ComboBox(panelscroll, wx.ID_ANY,
                                    choices=list(Downloader.AFORMATS.keys()),
                                    size=(-1, -1),
-                                   style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                   style=wx.CB_DROPDOWN
+                                   | wx.CB_READONLY
                                    )
         self.cmbx_af.Disable()
         self.cmbx_af.SetSelection(0)
@@ -272,10 +255,10 @@ class Downloader(wx.Panel):
                                    )
         fgs1.Add(self.ckbx_id, 0, wx.ALL, 5)
 
-        self.ckbx_restrictFN = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                           (_('Restrict file names'))
-                                           )
-        fgs1.Add(self.ckbx_restrictFN, 0, wx.ALL, 5)
+        self.ckbx_restrict_fn = wx.CheckBox(panelscroll, wx.ID_ANY,
+                                            (_('Restrict file names'))
+                                            )
+        fgs1.Add(self.ckbx_restrict_fn, 0, wx.ALL, 5)
 
         boxoptions.Add(panelscroll, 0, wx.ALL | wx.CENTRE, 0)
 
@@ -286,40 +269,41 @@ class Downloader(wx.Panel):
         # -------------listctrl
         if hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
             self.oldwx = False
-            self.fcode = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
-                                     wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
+            self.fcode = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT
+                                     | wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
                                      )
         else:
             self.oldwx = True
-            tID = wx.NewIdRef()
-            self.fcode = TestListCtrl(self, tID, style=wx.LC_REPORT |
-                                      wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
+            t_id = wx.NewIdRef()
+            self.fcode = TestListCtrl(self, t_id, style=wx.LC_REPORT
+                                      | wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
                                       )
         boxlistctrl.Add(self.fcode, 1, wx.ALL | wx.EXPAND, 5)
         # -------------textctrl
         labtstr = _('Help viewer')
         self.labtxt = wx.StaticText(self, label=labtstr)
         sizer_base.Add(self.labtxt, 0, wx.LEFT, 5)
-        self.codText = wx.TextCtrl(self, wx.ID_ANY, "",
-                                   style=wx.TE_MULTILINE |
-                                   wx.TE_READONLY |
-                                   wx.TE_RICH2,
-                                   size=(-1, 100)
-                                   )
-        sizer_base.Add(self.codText, 0, wx.ALL | wx.EXPAND, 5)
+        self.cod_text = wx.TextCtrl(self, wx.ID_ANY, "",
+                                    style=wx.TE_MULTILINE
+                                    | wx.TE_READONLY
+                                    | wx.TE_RICH2,
+                                    size=(-1, 100)
+                                    )
+        sizer_base.Add(self.cod_text, 0, wx.ALL | wx.EXPAND, 5)
         # -----------------------
-        self.codText.Hide(), self.labtxt.Hide()
+        self.cod_text.Hide()
+        self.labtxt.Hide()
         self.SetSizer(sizer_base)
         self.Layout()
         # ----------------------- Properties
-        # WARNING do not append text on self.codText here,
+        # WARNING do not append text on self.cod_text here,
         # see `on_Choice meth.`
 
-        self.codText.SetBackgroundColour(Downloader.BACKGRD)
+        self.cod_text.SetBackgroundColour(Downloader.BACKGRD)
 
         if Downloader.appdata['ostype'] != 'Darwin':
             # self.labcode.SetLabelMarkup("<b>%s</b>" % labcstr)
-            self.labtxt.SetLabelMarkup("<b>%s</b>" % labtstr)
+            self.labtxt.SetLabelMarkup(f"<b>{labtstr}</b>")
         #  tooltips
         self.btn_play.SetToolTip(_('Play selected url'))
 
@@ -364,13 +348,13 @@ class Downloader(wx.Panel):
             `key=url: values=[Audio: code, Video: code]`
         """
         if not self.choice.GetSelection() == 3:
-            self.codText.Clear()
+            self.cod_text.Clear()
             num = self.fcode.GetItemCount()
             for idx in range(num):
                 if self.fcode.IsChecked(idx):
-                    self.codText.SetDefaultStyle(
+                    self.cod_text.SetDefaultStyle(
                         wx.TextAttr(Downloader.YELLOW))
-                    self.codText.AppendText('- %s\n' % (Downloader.MSG_2))
+                    self.cod_text.AppendText(f'- {Downloader.MSG_2}\n')
             return
 
         if not self.parent.sb.GetStatusText() == 'Ready':
@@ -402,14 +386,14 @@ class Downloader(wx.Panel):
                             dv = self.fcode.GetItemText(i, 0)
                             self.format_dict[url].append('Video: ' + dv)
 
-        self.codText.Clear()
+        self.cod_text.Clear()
         for k, v in self.format_dict.items():
             if not v:
-                self.codText.SetDefaultStyle(wx.TextAttr(Downloader.RED))
-                self.codText.AppendText('- %s :\n' % (k))
+                self.cod_text.SetDefaultStyle(wx.TextAttr(Downloader.RED))
+                self.cod_text.AppendText(f'- {k} :\n')
             else:
-                self.codText.SetDefaultStyle(wx.TextAttr(Downloader.D_GREEN))
-                self.codText.AppendText('- %s :  %s\n' % (k, v))
+                self.cod_text.SetDefaultStyle(wx.TextAttr(Downloader.GREEN))
+                self.cod_text.AppendText(f'- {k} :  {v}\n')
         # print(self.format_dict)
     # ----------------------------------------------------------------------
 
@@ -448,7 +432,7 @@ class Downloader(wx.Panel):
         """
         Playback urls
         """
-        tstamp = '-vf "%s"' % self.parent.cmdtimestamp if \
+        tstamp = f'-vf "{self.parent.cmdtimestamp}"' if \
                  self.parent.checktimestamp else ''
 
         if self.fcode.GetSelectedItemCount() == 0:
@@ -506,7 +490,7 @@ class Downloader(wx.Panel):
             formats = iter(meta[0].get('formats', [meta[0]]))
             for n, f in enumerate(formats):
                 if f.get('vcodec'):
-                    vcodec, fps = f['vcodec'], '%sfps' % f.get('fps')
+                    vcodec, fps = f['vcodec'], f"{f.get('fps')}fps"
                 else:
                     vcodec, fps = '', ''
                 if f.get('acodec'):
@@ -549,27 +533,27 @@ class Downloader(wx.Panel):
                 if 'entries' in meta[0]:
                     meta[0]['entries'][0]  # not parse all playlist
                 if 'duration' in meta[0]:
-                    ftime = '%s (%s sec.)' % (timehuman(meta[0]['duration']),
-                                              meta[0]['duration'])
+
+                    ftime = (f"{timehuman(meta[0]['duration'])} "
+                             f"({meta[0]['duration']} sec.)")
                 else:
                     ftime = 'N/A'
                 date = meta[0].get('upload_date')
-                self.info.append({
-                            'url': link,
-                            'title': meta[0].get('title'),
-                            'categories': meta[0].get('categories'),
-                            'license': meta[0].get('license'),
-                            'format': meta[0].get('format'),
-                            'upload_date': date,
-                            'uploader': meta[0].get('uploader'),
-                            'view': meta[0].get('view_count'),
-                            'like': meta[0].get('like_count'),
-                            'dislike': meta[0].get('dislike_count'),
-                            'average_rating': meta[0].get('average_rating'),
-                            'id': meta[0].get('id'),
-                            'duration': ftime,
-                            'description': meta[0].get('description'),
-                            })
+                self.info.append({'url': link,
+                                  'title': meta[0].get('title'),
+                                  'categories': meta[0].get('categories'),
+                                  'license': meta[0].get('license'),
+                                  'format': meta[0].get('format'),
+                                  'upload_date': date,
+                                  'uploader': meta[0].get('uploader'),
+                                  'view': meta[0].get('view_count'),
+                                  'like': meta[0].get('like_count'),
+                                  'dislike': meta[0].get('dislike_count'),
+                                  'avr_rat': meta[0].get('average_rating'),
+                                  'id': meta[0].get('id'),
+                                  'duration': ftime,
+                                  'description': meta[0].get('description'),
+                                  })
         return None
     # -----------------------------------------------------------------#
 
@@ -661,7 +645,7 @@ class Downloader(wx.Panel):
             if ret:
                 return
 
-        miniframe = YDL_Mediainfo(self.info, Downloader.appdata['ostype'])
+        miniframe = YdlMediaInfo(self.info, Downloader.appdata['ostype'])
         miniframe.Show()
     # -----------------------------------------------------------------#
 
@@ -693,26 +677,26 @@ class Downloader(wx.Panel):
             if not self.parent.sb.GetStatusText() == 'Ready':
                 self.parent.statusbar_msg(_('Ready'), None)
 
-        self.codText.Clear()
+        self.cod_text.Clear()
         self.btn_play.Disable()
 
         if self.choice.GetSelection() == 0:
             self.cmbx_af.Disable(), self.cmbx_aq.Disable()
-            self.cmbx_vq.Enable(), self.codText.Hide()
+            self.cmbx_vq.Enable(), self.cod_text.Hide()
             self.labtxt.Hide()
             self.Layout()
             self.on_urls_list(self.opt["V_QUALITY"][1])
 
         elif self.choice.GetSelection() == 1:
             self.cmbx_af.Disable(), self.cmbx_aq.Enable()
-            self.cmbx_vq.Enable(), self.codText.Hide()
+            self.cmbx_vq.Enable(), self.cod_text.Hide()
             self.labtxt.Hide()
             self.Layout()
-            self.on_urls_list('%svideo+%saudio' % (self.opt["V_QUALITY"][1],
-                                                   self.opt["A_QUALITY"][1]))
+            self.on_urls_list(f'{self.opt["V_QUALITY"][1]}video+'
+                              f'{self.opt["A_QUALITY"][1]}audio')
         elif self.choice.GetSelection() == 2:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
-            self.cmbx_af.Enable(), self.codText.Hide()
+            self.cmbx_af.Enable(), self.cod_text.Hide()
             self.labtxt.Hide()
             self.Layout()
             self.on_urls_list('')
@@ -729,7 +713,7 @@ class Downloader(wx.Panel):
                 # prevent KeyError: 'format_id'
                 self.choice.SetSelection(0)
                 return
-            self.labtxt.Show(), self.codText.Show()
+            self.labtxt.Show(), self.cod_text.Show()
             self.Layout()
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
             self.cmbx_af.Disable()
@@ -745,14 +729,13 @@ class Downloader(wx.Panel):
         index = 0
         if self.choice.GetSelection() == 0:
             # set 'best' parameters on both audio and video.
-            q = self.opt["V_QUALITY"][1]
+            quality = self.opt["V_QUALITY"][1]
         elif self.choice.GetSelection() == 1:
             # set the "worst" and "best" parameters independently
-            q = '%svideo+%saudio' % (self.opt["V_QUALITY"][1],
-                                     self.opt["A_QUALITY"][1]
-                                     )
+            quality = (f'{self.opt["V_QUALITY"][1]}video+'
+                       f'{self.opt["A_QUALITY"][1]}audio')
         for link in self.parent.data_url:
-            self.fcode.SetItem(index, 3, q)
+            self.fcode.SetItem(index, 3, quality)
             index += 1
     # -----------------------------------------------------------------#
 
@@ -777,11 +760,10 @@ class Downloader(wx.Panel):
             self.cmbx_aq.GetValue())
         index = 0
         # set string to audio and video qualities independently for player
-        q = '%svideo+%saudio' % (self.opt["V_QUALITY"][1],
-                                 self.opt["A_QUALITY"][1]
-                                 )
+        quality = (f'{self.opt["V_QUALITY"][1]}video+'
+                   f'{self.opt["A_QUALITY"][1]}audio')
         for link in self.parent.data_url:
-            self.fcode.SetItem(index, 3, q)
+            self.fcode.SetItem(index, 3, quality)
             index += 1
     # -----------------------------------------------------------------#
 
@@ -873,29 +855,29 @@ class Downloader(wx.Panel):
                         if i.startswith('Video: '):
                             index_1 += 1
                             if index_1 > 1:
-                                video += '/%s' % i.split('Video: ')[1]
+                                video += f"/{i.split('Video: ')[1]}"
                             else:
                                 video = i.split('Video: ')[1]
 
                         elif i.startswith('Audio: '):
                             index_2 += 1
                             if index_2 > 1:
-                                audio += '/%s' % i.split('Audio: ')[1]
+                                audio += f"/{i.split('Audio: ')[1]}"
                             else:
                                 audio = i.split('Audio: ')[1]
                         else:
                             index_1 += 1
                             if index_1 > 1:
-                                video += '/%s' % i.split('Video: ')[1]
+                                video += f"/{i.split('Video: ')[1]}"
                             else:
                                 video = i.split('Video: ')[1]
 
                 if video and audio:
-                    format_code.append('%s+%s' % (video, audio))
+                    format_code.append(f'{video}+{audio}')
                 elif video:
-                    format_code.append('%s' % video)
+                    format_code.append(f'{video}')
                 elif audio:
-                    format_code.append('%s' % audio)
+                    format_code.append(f'{audio}')
 
         if len(format_code) != len(urls):
             return None
@@ -913,14 +895,14 @@ class Downloader(wx.Panel):
             if [url for url in urls if 'playlist' in url]:
                 if wx.MessageBox(_('The URLs contain playlists. '
                                    'Are you sure you want to continue?'),
-                                 _('Please confirm'), wx.ICON_QUESTION |
-                                 wx.YES_NO, self) == wx.NO:
+                                 _('Please confirm'),
+                                 wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
                     return
         if [url for url in urls if 'channel' in url]:
             if wx.MessageBox(_('The URLs contain channels. '
                                'Are you sure you want to continue?'),
-                             _('Please confirm'), wx.ICON_QUESTION |
-                             wx.YES_NO, self) == wx.NO:
+                             _('Please confirm'),
+                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
                 return
 
         if self.ckbx_id.IsChecked():
@@ -932,7 +914,7 @@ class Downloader(wx.Panel):
 
             logname = 'youtubedl_lib.log'
             nooverwrites = True if self.ckbx_w.IsChecked() else False
-            restrictfn = True if self.ckbx_restrictFN.IsChecked() else False
+            restrictfn = True if self.ckbx_restrict_fn.IsChecked() else False
             postprocessors = []
 
             if self.choice.GetSelection() == 2:
@@ -957,7 +939,7 @@ class Downloader(wx.Panel):
                         'playlist_items': self.plidx,
                         'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': '{0}.%(ext)s'.format(_id),
+                        'outtmpl': f'{_id}.%(ext)s',
                         'extractaudio': False,
                         'addmetadata': self.opt["METADATA"][0],
                         'writesubtitles': self.opt["SUBTITLES"][0],
@@ -968,13 +950,13 @@ class Downloader(wx.Panel):
                         }
             if self.choice.GetSelection() == 1:  # audio files and video files
                 code = []
-                data = {'format': '%svideo,%saudio' %
-                        (self.opt["V_QUALITY"][0], self.opt["A_QUALITY"][0]),
+                data = {'format': (f'{self.opt["V_QUALITY"][0]}video,'
+                                   f'{self.opt["A_QUALITY"][0]}audio'),
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
                         'playlist_items': self.plidx,
                         'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': '{0}.f%(format_id)s.%(ext)s'.format(_id),
+                        'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
                         'extractaudio': False,
                         'addmetadata': self.opt["METADATA"][0],
                         'writesubtitles': self.opt["SUBTITLES"][0],
@@ -990,7 +972,7 @@ class Downloader(wx.Panel):
                         'playlist_items': self.plidx,
                         'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': '{0}.%(ext)s'.format(_id),
+                        'outtmpl': f'{_id}.%(ext)s',
                         'extractaudio': True,
                         'addmetadata': self.opt["METADATA"][0],
                         'writesubtitles': self.opt["SUBTITLES"][0],
@@ -1010,7 +992,7 @@ class Downloader(wx.Panel):
                         'playlist_items': self.plidx,
                         'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': '{0}.f%(format_id)s.%(ext)s'.format(_id),
+                        'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
                         'extractaudio': False,
                         'addmetadata': self.opt["METADATA"][0],
                         'writesubtitles': self.opt["SUBTITLES"][0],
@@ -1034,7 +1016,7 @@ class Downloader(wx.Panel):
 
             logname = 'youtubedl_exec.log'
             nooverwrites = '--no-overwrites' if self.ckbx_w.IsChecked() else ''
-            if self.ckbx_restrictFN.IsChecked():
+            if self.ckbx_restrict_fn.IsChecked():
                 restrictfn = '--restrict-filenames'
             else:
                 restrictfn = ''
@@ -1047,7 +1029,7 @@ class Downloader(wx.Panel):
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
                         f'{self.opt["NO_PLAYLIST"][1]}'),
-                       ('{0}.%(ext)s'.format(_id)),
+                       (f'{_id}.%(ext)s'),
                        f'{nooverwrites}',
                        f'{restrictfn}',
                        self.plidx,
@@ -1062,7 +1044,7 @@ class Downloader(wx.Panel):
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
                         f'{self.opt["NO_PLAYLIST"][1]}'),
-                       ('{0}.f%(format_id)s.%(ext)s'.format(_id)),
+                       (f'{_id}.f%(format_id)s.%(ext)s'),
                        f'{nooverwrites}',
                        f'{restrictfn}',
                        self.plidx,
@@ -1075,7 +1057,7 @@ class Downloader(wx.Panel):
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
                         f'{self.opt["NO_PLAYLIST"][1]}'),
-                       ('{0}.%(ext)s'.format(_id)),
+                       (f'{_id}.%(ext)s'),
                        f'{nooverwrites}',
                        f'{restrictfn}',
                        self.plidx,
@@ -1091,7 +1073,7 @@ class Downloader(wx.Panel):
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
                         f'{self.opt["NO_PLAYLIST"][1]}'),
-                       ('{0}.f%(format_id)s.%(ext)s'.format(_id)),
+                       (f'{_id}.f%(format_id)s.%(ext)s'),
                        f'{nooverwrites}',
                        f'{restrictfn}',
                        self.plidx,

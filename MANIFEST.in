@@ -1,6 +1,5 @@
 include launcher README.md AUTHORS BUGS CHANGELOG INSTALL LICENSE TODO
 include tests/*
-include bin/videomass
 recursive-include debian *
 recursive-include develop *
 recursive-include docs *

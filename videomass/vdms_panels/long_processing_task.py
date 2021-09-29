@@ -86,37 +86,6 @@ class LogOut(wx.Panel):
     MSG_completed = _('\n[Videomass]: Successfully completed !\n')
     MSG_unfinished = _('\n[Videomass]: completed, but not everything '
                        'was successful.\n')
-
-    # Colors used in HTML
-    if appdata['icontheme'] in ('Breeze-Blues', 'Videomass-Colours'):
-        BACKGROUND = '#11303eff'  # SOLARIZED background color for blues icons
-        NORM_TEXT = '#FFFFFF'  # WHITE for title or URL in progress
-        TEXT_2 = '#959595'  # GREY for all other text messages
-        ERROR = '#FF4A1B'  # ORANGE for error text messages
-        WARN = '#dfb72f'  # YELLOW for warning text messages
-        ERROR_2 = '#EA312D'  # LIGHTRED for errors 2
-        SUCCESS = '#1EA41E'  # GREEN when it is successful
-
-    elif appdata['icontheme'] in ('Breeze-Blues',
-                                  'Breeze-Dark',
-                                  'Videomass-Dark'):
-        BACKGROUND = '#1c2027ff'  # DARK_SLATE background color for dark theme
-        NORM_TEXT = '#FFFFFF'  # WHITE for title or URL in progress
-        TEXT_2 = '#959595'  # GREY for all other text messages
-        ERROR = '#FF4A1B'  # ORANGE for error text messages
-        WARN = '#dfb72f'  # YELLOW for warning text messages
-        ERROR_2 = '#EA312D'  # LIGHTRED for errors 2
-        SUCCESS = '#1EA41E'  # GREEN when it is successful
-
-    else:
-        BACKGROUND = '#e6e6faff'  # LAVENDER background color for light theme
-        NORM_TEXT = '#1f1f1fff'  # BLACK for title or URL in progress
-        TEXT_2 = '#778899ff'  # LIGHT_SLATE for all other text messages
-        ERROR = '#d25c07'  # ORANGE for error text messages
-        WARN = '#988313'  # YELLOW for warning text messages
-        ERROR_2 = '#c8120b'  # LIGHTRED for errors 2
-        SUCCESS = '#008000'  # DARK_GREEN when it is successful
-
     INFO = '#31BAA7'  # CYAN for info text messages
     DEBUG = '#3298FB'  # AZURE for debug messages
     FAILED = '#D21814'  # RED_DEEP if failed
@@ -146,38 +115,39 @@ class LogOut(wx.Panel):
         self.previus = None  # panel name from which it starts
         self.logname = None  # example: AV_conversions.log
         self.result = None  # result of the final process
+        self.clr = LogOut.appdata['icontheme'][1]
 
         wx.Panel.__init__(self, parent=parent)
 
         infolbl = _("Process log:")
         lbl = wx.StaticText(self, label=infolbl)
         if LogOut.appdata['ostype'] != 'Darwin':
-            lbl.SetLabelMarkup("<b>%s</b>" % infolbl)
-        self.OutText = wx.TextCtrl(self, wx.ID_ANY, "",
+            lbl.SetLabelMarkup(f"<b>{infolbl}</b>")
+        self.txtout = wx.TextCtrl(self, wx.ID_ANY, "",
                                    style=wx.TE_MULTILINE |
                                    wx.TE_READONLY |
                                    wx.TE_RICH2
                                    )
         self.ckbx_text = wx.CheckBox(self, wx.ID_ANY, (_("Suppress excess "
                                                          "output")))
-        self.barProg = wx.Gauge(self, wx.ID_ANY, range=0)
-        self.labPerc = wx.StaticText(self, label="")
+        self.barprog = wx.Gauge(self, wx.ID_ANY, range=0)
+        self.labperc = wx.StaticText(self, label="")
         self.button_stop = wx.Button(self, wx.ID_STOP, _("Abort"))
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((0, 10))
         sizer.Add(lbl, 0, wx.ALL, 5)
-        sizer.Add(self.OutText, 1, wx.EXPAND | wx.ALL, 5)
+        sizer.Add(self.txtout, 1, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.ckbx_text, 0, wx.ALL, 5)
-        sizer.Add(self.barProg, 0, wx.EXPAND | wx.ALL, 5)
-        sizer.Add(self.labPerc, 0, wx.ALL, 5)
+        sizer.Add(self.barprog, 0, wx.EXPAND | wx.ALL, 5)
+        sizer.Add(self.labperc, 0, wx.ALL, 5)
         # grid = wx.GridSizer(1, 2, 0, 0)
         grid = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(grid, 0, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         grid.Add(self.button_stop, 0, wx.EXPAND | wx.ALL, 5)
         grid.Add(self.button_close, 0, wx.EXPAND | wx.ALL, 5)
         # set_properties:
-        self.OutText.SetBackgroundColour(LogOut.BACKGROUND)
+        self.txtout.SetBackgroundColour(self.clr['BACKGRD'])
         self.ckbx_text.SetToolTip(_('If activated, hides some '
                                     'output messages.'))
         self.button_stop.SetToolTip(_("Stops current process"))
@@ -210,7 +180,8 @@ class LogOut(wx.Panel):
             self.button_close.Enable(True)
             return
 
-        self.OutText.Clear(), self.labPerc.SetLabel('')
+        self.txtout.Clear()
+        self.labperc.SetLabel('')
         self.logname = varargs[8]  # example: Videomass_VideoConversion.log
 
         write_log(self.logname, LogOut.appdata['logdir'])  # initial file LOG
@@ -254,44 +225,44 @@ class LogOut(wx.Panel):
         pubsub "UPDATE_YDL_FROM_IMPORT_EVT" .
         """
         if status == 'ERROR':
-            self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.ERROR))
-            self.OutText.AppendText('%s\n' % output)
-            self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.FAILED))
-            self.OutText.AppendText(LogOut.MSG_failed)
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
+            self.txtout.AppendText(f'{output}\n')
+            self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.FAILED))
+            self.txtout.AppendText(LogOut.MSG_failed)
             self.result = 'failed'
 
         elif status == 'WARNING':
-            self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.WARN))
-            self.OutText.AppendText('%s\n' % output)
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
+            self.txtout.AppendText(f'{output}\n')
 
         elif status == 'DEBUG':
             if '[download] Destination' in output:
-                self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.DEBUG))
-                self.OutText.AppendText('%s\n' % output)
+                self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.DEBUG))
+                self.txtout.AppendText(f'{output}\n')
 
             elif '[info]' in output:
-                self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.INFO))
-                self.OutText.AppendText('%s\n' % output)
+                self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.INFO))
+                self.txtout.AppendText(f'{output}\n')
 
             elif '[download]' not in output:
-                self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.TEXT_2))
-                self.OutText.AppendText('%s\n' % output)
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
+                self.txtout.AppendText(f'{output}\n')
 
-                with open(os.path.join(LogOut.appdata['logdir'],
-                                       self.logname), "a") as logerr:
-                    logerr.write("[YOUTUBE_DL]: %s > %s\n" % (status, output))
+                with open(os.path.join(LogOut.appdata['logdir'], self.logname),
+                          "a", encoding='utf8') as logerr:
+                    logerr.write(f"[YOUTUBE_DL]: {status} > {output}\n")
         elif status == 'DOWNLOAD':
-            self.labPerc.SetLabel("%s" % duration[0])
-            self.barProg.SetValue(duration[1])
+            self.labperc.SetLabel(f"{duration[0]}")
+            self.barprog.SetValue(duration[1])
 
         elif status == 'FINISHED':
-            self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.TEXT_2))
-            self.OutText.AppendText('%s\n' % duration)
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
+            self.txtout.AppendText(f'{duration}\n')
 
         if status in ['ERROR', 'WARNING']:
-            with open(os.path.join(LogOut.appdata['logdir'],
-                                   self.logname), "a") as logerr:
-                logerr.write("[YOUTUBE_DL]: %s\n" % (output))
+            with open(os.path.join(LogOut.appdata['logdir'], self.logname),
+                      "a", encoding='utf8') as logerr:
+                logerr.write(f"[YOUTUBE_DL]: {output}\n")
     # ---------------------------------------------------------------------#
 
     def youtubedl_exec(self, output, duration, status):
@@ -303,11 +274,11 @@ class LogOut(wx.Panel):
         if not status == 0:  # error, exit status of the p.wait
             if output:
                 if 'ERROR:' in output:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.ERROR))
-                    self.OutText.AppendText('%s\n' % output)
+                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
+                    self.txtout.AppendText(f'{output}\n')
 
-            self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.ERROR_2))
-            self.OutText.AppendText(LogOut.MSG_failed)
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR1']))
+            self.txtout.AppendText(LogOut.MSG_failed)
             self.result = 'failed'
             return
 
@@ -316,28 +287,28 @@ class LogOut(wx.Panel):
                 try:
                     i = float(output.split()[1].split('%')[0])
                 except ValueError:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.WARN))
-                    self.OutText.AppendText(' %s' % output)
+                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
+                    self.txtout.AppendText(f' {output}')
                 else:
-                    self.barProg.SetValue(i)
-                    self.labPerc.SetLabel("%s" % output)
+                    self.barprog.SetValue(i)
+                    self.labperc.SetLabel(f"{output}")
                     del output, duration
 
         else:  # append all others lines on the textctrl and log file
             if not self.ckbx_text.IsChecked():  # print the output
                 if '[info]' in output:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.INFO))
-                    self.OutText.AppendText(' %s' % output)
+                    self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.INFO))
+                    self.txtout.AppendText(f' {output}')
                 elif 'WARNING:' in output:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.WARN))
-                    self.OutText.AppendText(' %s' % output)
+                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
+                    self.txtout.AppendText(f' {output}')
                 elif 'ERROR:' not in output:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.TEXT_2))
-                    self.OutText.AppendText(' %s' % output)
+                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
+                    self.txtout.AppendText(f' {output}')
 
-            with open(os.path.join(LogOut.appdata['logdir'],
-                                   self.logname), "a") as logerr:
-                logerr.write("[YOUTUBE-DL]: %s" % (output))
+            with open(os.path.join(LogOut.appdata['logdir'], self.logname),
+                      "a", encoding='utf8') as logerr:
+                logerr.write(f"[YOUTUBE-DL]: {output}")
                 # write a row error into file log
 
     # ---------------------------------------------------------------------#
@@ -363,11 +334,11 @@ class LogOut(wx.Panel):
 
         """
         # if self.ckbx_text.IsChecked(): #ffmpeg output messages in real time:
-        #    self.OutText.AppendText(output)
+        #    self.txtout.AppendText(output)
 
         if not status == 0:  # error, exit status of the p.wait
-            self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.ERROR_2))
-            self.OutText.AppendText(LogOut.MSG_failed)
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR1']))
+            self.txtout.AppendText(LogOut.MSG_failed)
             self.result = 'failed'
             return  # must be return here
 
@@ -377,41 +348,41 @@ class LogOut(wx.Panel):
             ms = get_milliseconds(pos)
 
             if ms > duration:
-                self.barProg.SetValue(duration)
+                self.barprog.SetValue(duration)
             else:
-                self.barProg.SetValue(ms)
+                self.barprog.SetValue(ms)
 
             percentage = round((ms / duration) * 100 if duration != 0 else 100)
             out = [a for a in "=".join(output.split()).split('=') if a]
             ffprog = []
             for x, y in pairwise(out):
-                ffprog.append("%s: %s | " % (x, y))
-            self.labPerc.SetLabel("Processing... %s%% | %s" %
-                                  (str(int(percentage)), "".join(ffprog)))
+                ffprog.append(f"{x}: {y} | ")
+            self.labperc.SetLabel(f"Processing... {str(int(percentage))}%% | "
+                                  f"{''.join(ffprog)}")
             del output, duration
 
         else:  # append all others lines on the textctrl and log file
             if not self.ckbx_text.IsChecked():  # not print the output
                 if [x for x in ('info', 'Info') if x in output]:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.INFO))
-                    self.OutText.AppendText('%s' % output)
+                    self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.INFO))
+                    self.txtout.AppendText(f'{output}')
 
                 elif [x for x in ('Failed', 'failed', 'Error', 'error')
                       if x in output]:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.ERROR))
-                    self.OutText.AppendText('%s' % output)
+                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
+                    self.txtout.AppendText(f'{output}')
 
                 elif [x for x in ('warning', 'Warning') if x in output]:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.WARN))
-                    self.OutText.AppendText('%s' % output)
+                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
+                    self.txtout.AppendText(f'{output}')
 
                 else:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.TEXT_2))
-                    self.OutText.AppendText('%s' % output)
+                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
+                    self.txtout.AppendText(f'{output}')
 
-            with open(os.path.join(LogOut.appdata['logdir'],
-                                   self.logname), "a") as logerr:
-                logerr.write("[FFMPEG]: %s" % (output))
+            with open(os.path.join(LogOut.appdata['logdir'], self.logname),
+                      "a", encoding='utf8') as logerr:
+                logerr.write(f"[FFMPEG]: {output}")
                 # write a row error into file log
     # ----------------------------------------------------------------------
 
@@ -422,32 +393,32 @@ class LogOut(wx.Panel):
 
         """
         if end == 'ok':
-            self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.SUCCESS))
-            self.OutText.AppendText(LogOut.MSG_done)
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['SUCCESS']))
+            self.txtout.AppendText(LogOut.MSG_done)
             try:
-                if self.labPerc.GetLabel()[1] != '100%':
-                    newlab = self.labPerc.GetLabel().split()
+                if self.labperc.GetLabel()[1] != '100%':
+                    newlab = self.labperc.GetLabel().split()
                     newlab[1] = '100%'
-                    self.labPerc.SetLabel(" ".join(newlab))
+                    self.labperc.SetLabel(" ".join(newlab))
             except IndexError:
-                self.labPerc.SetLabel('')
+                self.labperc.SetLabel('')
 
             return
         # if STATUS_ERROR == 1:
         if end == 'error':
-            self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.WARN))
-            self.OutText.AppendText('\n%s\n' % (count))
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
+            self.txtout.AppendText(f'\n{count}\n')
             self.error = True
         else:
-            self.barProg.SetRange(duration)  # set overall duration range
-            self.barProg.SetValue(0)  # reset bar progress
-            self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.NORM_TEXT))
-            self.OutText.AppendText('\n%s\n' % (count))
-            self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.INFO))
-            self.OutText.AppendText('%s\n' % (fsource))
+            self.barprog.SetRange(duration)  # set overall duration range
+            self.barprog.SetValue(0)  # reset bar progress
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
+            self.txtout.AppendText(f'\n{count}\n')
+            self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.INFO))
+            self.txtout.AppendText(f'{fsource}\n')
             if destination:
-                self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.DEBUG))
-                self.OutText.AppendText('%s\n' % (destination))
+                self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.DEBUG))
+                self.txtout.AppendText(f'{destination}\n')
 
     # ----------------------------------------------------------------------
     def end_proc(self):
@@ -455,25 +426,25 @@ class LogOut(wx.Panel):
         At the end of the process
         """
         if self.error is True:
-            self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.ERROR_2))
-            self.OutText.AppendText(LogOut.MSG_taskfailed + '\n')
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR1']))
+            self.txtout.AppendText(LogOut.MSG_taskfailed + '\n')
 
         elif self.abort is True:
-            self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.ABORT))
-            self.OutText.AppendText(LogOut.MSG_interrupted + '\n')
+            self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.ABORT))
+            self.txtout.AppendText(LogOut.MSG_interrupted + '\n')
 
         else:
             if not self.result:
                 endmsg = LogOut.MSG_completed
-                self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.NORM_TEXT))
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
             else:
                 endmsg = LogOut.MSG_unfinished
-                self.OutText.SetDefaultStyle(wx.TextAttr(LogOut.WARN))
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
             self.parent.statusbar_msg(_('...Finished'), None)
-            self.OutText.AppendText(endmsg + '\n')
-            self.barProg.SetValue(0)
+            self.txtout.AppendText(endmsg + '\n')
+            self.barprog.SetValue(0)
 
-        self.OutText.AppendText('\n')
+        self.txtout.AppendText('\n')
         self.button_stop.Enable(False)
         self.button_close.Enable(True)
         self.thread_type = None
@@ -522,7 +493,7 @@ class LogOut(wx.Panel):
         self.error = False
         self.logname = None
         self.result = None
-        # self.OutText.Clear()
-        # self.labPerc.SetLabel('')
+        # self.txtout.Clear()
+        # self.labperc.SetLabel('')
         self.parent.panelShown(self.previus)  # retrieve at previusly panel
         # event.Skip()

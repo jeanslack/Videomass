@@ -629,7 +629,7 @@ class MainFrame(wx.Frame):
         Show a dialog box to help you find FFmpeg topics
 
         """
-        dlg = ffmpeg_search.FFmpeg_Search(self.appdata['ostype'])
+        dlg = ffmpeg_search.FFmpegSearch(self.appdata['ostype'])
         dlg.Show()
     # -------------------------------------------------------------------#
 

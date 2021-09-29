@@ -7,14 +7,17 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sep 24, 2021 V.3.4.7
+Sep 29, 2021 V.3.4.7
 
   * Fixed tests
-  * Added code implementation for Python embed package (Windows)
-  * code refactoring
+  * Added code implementation for Python embed package (Windows).
+  * Code refactoring.
   * Changed package name from `videomass3` to `videomass`
-  * Changed main from `vdms3.py` to `gui_app.py`
-  * Fixed man page
+  * Changed main from `vdms3.py` to `gui_app.py`.
+  * Fixed man page.
+  * Fixed video and audio qualities data on `YouTube Downloader` panel.
+  * Improved error handling during application startup.
+  * Made some cosmetic improvements.
 
 +------------------------------------+
 
