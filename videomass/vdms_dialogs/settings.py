@@ -285,12 +285,13 @@ class Setup(wx.Dialog):
         grdydlLoc.Add(self.ydlPath, 1, wx.ALL | wx.EXPAND, 5)
 
         # ---- BEGIN set youtube-dl radiobox
-        ydlmsg = _(f"Make sure you are using the latest available "
-                   f"version of\n'{self.appdata['downloader'][1]}'. "
-                   f"This allows you to avoid download problems.\n")
+        ydlmsg = _("Make sure you are using the latest available "
+                   "version of\n'{}'. This allows you to avoid download "
+                   "problems.\n").format(self.appdata['downloader'][1])
 
         if self.appdata['app'] == 'pyinstaller':
-            tip1 = _('Menu bar > Tools > Update YouTube Downloader')
+            tip1 = _('Menu bar > Tools > Update {}'
+                     ).format(self.appdata['downloader'][0])
             labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
 
             if self.appdata['downloader'][0] == 'Disable all':
@@ -307,7 +308,8 @@ class Setup(wx.Dialog):
                     self.ydlPath.WriteText(_('Not found'))
 
         elif self.appdata['app'] == 'appimage':
-            tip1 = _('Menu bar > Tools > Update YouTube Downloader')
+            tip1 = _('Menu bar > Tools > Update {}'
+                     ).format(self.appdata['downloader'][0])
             labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
 
             if self.appdata['downloader'][0] == 'Disable all':

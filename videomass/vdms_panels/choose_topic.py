@@ -7,7 +7,7 @@ Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Oct.21.2021
-Code checker: pycodestyle
+Code checker: pycodestyle, flake8 --ignore=F821
 ########################################################
 
 This file is part of Videomass.
@@ -47,7 +47,7 @@ def ydl_latest(downloader):
 
     if latest[0] in ['request error:', 'response error:']:
         wx.MessageBox("%s %s" % (latest[0], latest[1]),
-                      "%s" % latest[0], wx.ICON_ERROR, self)
+                      "%s" % latest[0], wx.ICON_ERROR, None)
         return None
 
     return latest
@@ -203,22 +203,20 @@ class Choose_Topic(wx.Panel):
         requires installation.
 
         """
-        msg_required = (_(f"To download videos from YouTube.com and other "
-                          f"video sites, you need an updated version of "
-                          f"{self.appdata['downloader'][1]}.\n\n"
-                          f"...Do you want to download "
-                          f"{self.appdata['downloader'][1]} locally now?"
-                          ))
+        msg_required = (_("To download videos from YouTube.com and other "
+                          "video sites, you need an updated version of "
+                          "{0}.\n\n"
+                          "...Do you want to download {0} locally now?"
+                          ).format(self.appdata['downloader'][1]))
 
-        msg_ready = (_(f"Successful! \n\n"
-                       f"Usually {self.appdata['downloader'][1]} is released "
-                       f"very often, make sure you always use the latest "
-                       f"version available: menu bar -> Tools -> "
-                       f"Update YouTube Downloader."
-                       ))
+        msg_ready = (_("Successful! \n\n"
+                       "Usually {0} is released very often, make sure you "
+                       "always use the latest version available: "
+                       "menu bar -> Tools -> Update {0}."
+                       ).format(self.appdata['downloader'][1]))
 
         if self.appdata['downloader'][0] == 'Disable all':
-            wx.MessageBox(_("The downloaders are disabled. "
+            wx.MessageBox(_("The downloader is disabled. "
                             "Check your preferences."),
                           "Videomass", wx.ICON_INFORMATION, self)
             return
@@ -260,15 +258,16 @@ class Choose_Topic(wx.Panel):
                 return
             else:
                 if self.appdata['app'] == 'appimage':
-                    wx.MessageBox(_(f"ERROR: {self.appdata['PYLIBYDL']}\n\n"
-                                    f"{self.appdata['downloader'][0]} is "
-                                    f"not embedded in AppImage."),
+                    wx.MessageBox(_("ERROR: {0}\n\n{1} is not embedded in the "
+                                    "AppImage."
+                                    ).format(self.appdata['PYLIBYDL'],
+                                             self.appdata['downloader'][0]),
                                   "Videomass", wx.ICON_ERROR, self)
                     return
                 else:
-                    wx.MessageBox(_(f"ERROR: {self.appdata['PYLIBYDL']}\n\n"
-                                    f"{self.appdata['downloader'][0]} is not "
-                                    f"installed, use your package manager "
-                                    f"to install it."
-                                    ), "Videomass", wx.ICON_ERROR, self)
+                    wx.MessageBox(_("ERROR: {0}\n\n{1} is not installed, "
+                                    "use your package manager to install it."
+                                    ).format(self.appdata['PYLIBYDL'],
+                                             self.appdata['downloader'][0]),
+                                  "Videomass", wx.ICON_ERROR, self)
                     return
