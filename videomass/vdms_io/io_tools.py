@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021
+Rev: Oct.01.2021
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -362,10 +362,14 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
     or youtube-dl.exe . While waiting, a pop-up dialog is shown.
     """
     get = wx.GetApp()  # get videomass wx.App attribute
-    if get.appset['ostype'] == 'Windows':
-        url = ('https://youtube-dl.org/downloads/latest/youtube-dl.exe')
-    else:
-        url = ('https://yt-dl.org/downloads/latest/youtube-dl')
+    ext = '.exe' if get.appset['ostype'] == 'Windows' else ''
+
+    if get.appset['downloader'][1] == 'youtube-dl':
+        url = (f'https://youtube-dl.org/downloads/latest/youtube-dl{ext}')
+
+    elif get.appset['downloader'][1] == 'yt-dlp':
+        url = (f'https://github.com/yt-dlp/yt-dlp/'
+               f'releases/latest/download/yt-dlp{ext}')
 
     name = os.path.basename(executable)
     if upgrade:
@@ -406,7 +410,7 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
             # come back previous status
             os.rename('%s_OLD' % executable, executable)
 
-    if not name == 'youtube-dl.exe':
+    if not get.appset['ostype'] == 'Windows':
         # make it executable by everyone
         if os.path.isfile(executable):
             stsys = os.stat(executable)

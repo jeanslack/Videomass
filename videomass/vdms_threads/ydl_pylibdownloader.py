@@ -34,6 +34,8 @@ import wx
 from pubsub import pub
 if 'youtube_dl' in sys.modules:
     import youtube_dl
+elif 'yt_dlp' in sys.modules:
+    import yt_dlp
 
 
 def logwrite(cmd, sterr, logname, logdir):
@@ -154,6 +156,7 @@ class YtdlLibDL(Thread):
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
     FFMPEG_URL = appdata['ffmpeg_bin']
+    DOWNLOADER = appdata['downloader']
 
     if appdata['playlistsubfolder'] == 'true':
         SUBDIR = '%(uploader)s/%(playlist_title)s/%(playlist_index)s - '
@@ -201,7 +204,7 @@ class YtdlLibDL(Thread):
                                                self.args['code'],
                                                fillvalue='',
                                                ):
-            if 'playlist' in url or not self.opt['noplaylist']:
+            if '/playlist?list' in url or not self.opt['noplaylist']:
                 outtmpl = YtdlLibDL.SUBDIR + self.opt['outtmpl']
             else:
                 outtmpl = self.opt['outtmpl']
@@ -249,8 +252,13 @@ class YtdlLibDL(Thread):
                      YtdlLibDL.appdata['logdir'],
                      )  # write n/n + command only
 
-            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                ydl.download(["{}".format(url)])
+            if YtdlLibDL.DOWNLOADER[0] == 'youtube_dl':
+                with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([f"{url}"])
+
+            elif YtdlLibDL.DOWNLOADER[0] == 'yt_dlp':
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([f"{url}"])
 
         wx.CallAfter(pub.sendMessage, "END_EVT")
 

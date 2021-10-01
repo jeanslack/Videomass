@@ -8,7 +8,7 @@ Platform: all
 Writer: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2014-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.23.2021
+Rev: Oct.01.2021
 Code checker: pycodestyle, flake8, pylint .
 ########################################################
 
@@ -27,8 +27,6 @@ This file is part of Videomass.
     You should have received a copy of the GNU General Public License
     along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-
-#########################################################
 import sys
 import platform
 from setuptools import setup, find_packages
@@ -51,6 +49,7 @@ def source_build():
                     "platform_system=='Darwin'",
                     "PyPubSub>=4.0.3",
                     "youtube_dl>=2020.1.1",
+                    "yt_dlp>=2021.9.2",
                     "requests>=2.21.0",
                     ]
         setup_req = ["setuptools>=47.1.1",

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.14.2021
+Rev: Oct.01.2021
 Code checker:
     - pycodestyle
     - flake8: --ignore F821, W504, F401
@@ -129,9 +129,9 @@ class Videomass(wx.App):
 
         """
         if self.appset['ostype'] == 'Windows':
-            execname = 'youtube-dl.exe'
+            execname = f"{self.appset['downloader'][1]}.exe"
         else:
-            execname = 'youtube-dl'
+            execname = self.appset['downloader'][1]
 
         if self.appset['app'] == 'pyinstaller':
             this = os.path.join(self.appset['cachedir'], execname)
@@ -139,23 +139,31 @@ class Videomass(wx.App):
             self.appset['PYLIBYDL'] = 'no module loaded'
         else:
 
-            if self.appset['enable_youtubedl'] == 'disabled':
+            if self.appset['downloader'][0] == 'Disable all':
                 self.appset['PYLIBYDL'] = 'no module loaded'
-
-            elif self.appset['enable_youtubedl'] == 'enabled':
+            else:
                 win, nix = '\\__init__.py', '/__init__.py'
                 pkg = win if self.appset['ostype'] == 'Windows' else nix
 
-                try:
-                    import youtube_dl
-                    this = youtube_dl.__file__.split(pkg, maxsplit=1)[0]
+                if self.appset['downloader'][0] == 'youtube_dl':
+                    try:
+                        import youtube_dl
+                        this = youtube_dl.__file__.split(pkg, maxsplit=1)[0]
+                        self.appset['YDLSITE'] = self.appset['getpath'](this)
 
-                    self.appset['YDLSITE'] = self.appset['getpath'](this)
+                    except (ModuleNotFoundError, ImportError) as nomodule:
+                        self.appset['PYLIBYDL'] = nomodule
 
-                except (ModuleNotFoundError, ImportError) as nomodule:
-                    self.appset['PYLIBYDL'] = nomodule
+                elif self.appset['downloader'][0] == 'yt_dlp':
+                    try:
+                        import yt_dlp
+                        this = yt_dlp.__file__.split(pkg, maxsplit=1)[0]
+                        self.appset['YDLSITE'] = self.appset['getpath'](this)
 
-        return True if self.appset['enable_youtubedl'] == 'false' else None
+                    except (ModuleNotFoundError, ImportError) as nomodule:
+                        self.appset['PYLIBYDL'] = nomodule
+
+        return True if self.appset['downloader'][0] == 'false' else None
     # -------------------------------------------------------------------
 
     def check_ffmpeg(self):

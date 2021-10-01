@@ -35,6 +35,8 @@ from pubsub import pub
 from videomass.vdms_io import io_tools
 if 'youtube_dl' in sys.modules:
     import youtube_dl
+elif 'yt_dlp' in sys.modules:
+    import yt_dlp
 
 
 def msg_error(msg):
@@ -107,6 +109,8 @@ class DownloadStream(Thread):
     FFMPEG_URL = get.FFMPEG_url
     CACHEDIR = get.CACHEdir
     TMP = get.TMP
+    APP = get.appset['appimage']
+    DOWNLOADER = get.appset['downloader'][0]
 
     def __init__(self, url, quality):
         """
@@ -123,12 +127,8 @@ class DownloadStream(Thread):
         self.outputdir = DownloadStream.TMP  # pathname destination
         self.outtmpl = '%(title)s_{}.%(ext)s'.format(self.quality)  # filename
 
-        if (DownloadStream.OS == 'Windows' or '/tmp/.mount_' in sys.executable
-            or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
-                sys.argv[0]))) + '/AppRun')):
-
+        if DownloadStream.OS == 'Windows' or DownloadStream.APP == 'appimage':
             self.nocheckcertificate = True
-
         else:
             self.nocheckcertificate = False
 
@@ -159,8 +159,13 @@ class DownloadStream(Thread):
             'logger': MyLogger(),
         }
 
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download(["{}".format(self.url)])
+        if DownloadStream.DOWNLOADER == 'yt_dlp':
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([f"{self.url}"])
+
+        elif DownloadStream.DOWNLOADER == 'youtube_dl':
+            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([f"{self.url}"])
     # --------------------------------------------------------------#
 
     def stop(self):

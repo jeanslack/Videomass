@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sep 29, 2021 V.3.4.7
+Oct 01, 2021 V.3.4.7
 
   * Fixed tests
   * Added code implementation for Python embed package (Windows).
@@ -18,8 +18,9 @@ Sep 29, 2021 V.3.4.7
   * Fixed video and audio qualities data on `YouTube Downloader` panel.
   * Improved error handling during application startup.
   * Made some cosmetic improvements.
-
-+------------------------------------+
+  * Added support for yt-dlp, an updated fork of youtube-dl downloader.
+  * Fixed #37 - Incorrect video and audio qualities values on YouTube
+    Downloader panel
 
 +------------------------------------+
 Sep 15, 2021 V.3.4.6

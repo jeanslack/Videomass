@@ -32,6 +32,8 @@ import wx
 from pubsub import pub
 if 'youtube_dl' in sys.modules:
     import youtube_dl
+elif 'yt_dlp' in sys.modules:
+    import yt_dlp
 
 
 class MyLogger(object):
@@ -89,7 +91,7 @@ class YtdlLibEI(Thread):
         self.appdata = get.appset
         self.url = url
         self.data = None
-        if self.appdata['ostype'] in ('appimage', 'Windows'):
+        if self.appdata['ostype'] == 'Windows':
             self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False
@@ -108,8 +110,14 @@ class YtdlLibEI(Thread):
                     'nocheckcertificate': self.nocheckcertificate,
                     'logger': mylogger,
                     }
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            meta = ydl.extract_info(self.url, download=False)
+
+        if self.appdata['downloader'][0] == 'youtube_dl':
+            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                meta = ydl.extract_info(self.url, download=False)
+
+        elif self.appdata['downloader'][0] == 'yt_dlp':
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                meta = ydl.extract_info(self.url, download=False)
 
         error = mylogger.get_message()
 

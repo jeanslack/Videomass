@@ -6,7 +6,8 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: Oct.21.2021
+Code checker: pycodestyle
 ########################################################
 
 This file is part of Videomass.
@@ -32,12 +33,16 @@ from videomass.vdms_io import io_tools
 from videomass.vdms_sys.msg_info import current_release
 
 
-def ydl_latest():
+def ydl_latest(downloader):
     """
     check for new releases of youtube-dl from
     """
-    url = ("https://api.github.com/repos/ytdl-org/youtube-dl"
-           "/releases/latest")
+    if downloader == 'youtube_dl':
+        url = ("https://api.github.com/repos/ytdl-org/youtube-dl"
+               "/releases/latest")
+    elif downloader == 'yt_dlp':
+        url = ("https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest")
+
     latest = io_tools.get_github_releases(url, "tag_name")
 
     if latest[0] in ['request error:', 'response error:']:
@@ -198,21 +203,23 @@ class Choose_Topic(wx.Panel):
         requires installation.
 
         """
-        msg_required = (_(
-                 'To download videos from YouTube.com and other video sites, '
-                 'you need an updated version of youtube-dl.\n\n'
-                 '...Do you want to download youtube-dl locally now?'
-                 ))
+        msg_required = (_(f"To download videos from YouTube.com and other "
+                          f"video sites, you need an updated version of "
+                          f"{self.appdata['downloader'][1]}.\n\n"
+                          f"...Do you want to download "
+                          f"{self.appdata['downloader'][1]} locally now?"
+                          ))
 
-        msg_ready = (_(
-                    'Successful! \n\n'
-                    'youtube-dl is very often updated, make sure you always '
-                    'use the latest version available: menu bar > Tools > '
-                    'Update youtube-dl.'
-                    ))
+        msg_ready = (_(f"Successful! \n\n"
+                       f"Usually {self.appdata['downloader'][1]} is released "
+                       f"very often, make sure you always use the latest "
+                       f"version available: menu bar -> Tools -> "
+                       f"Update YouTube Downloader."
+                       ))
 
-        if self.appdata['enable_youtubedl'] == 'disabled':
-            wx.MessageBox(_("youtube-dl is disabled. Check your preferences."),
+        if self.appdata['downloader'][0] == 'Disable all':
+            wx.MessageBox(_("The downloaders are disabled. "
+                            "Check your preferences."),
                           "Videomass", wx.ICON_INFORMATION, self)
             return
 
@@ -228,13 +235,12 @@ class Choose_Topic(wx.Panel):
                                  wx.YES_NO, self) == wx.NO:
                     return
 
-                latest = ydl_latest()
+                latest = ydl_latest(self.appdata['downloader'][0])
                 if not latest:
                     return
-                else:
-                    upgrd = io_tools.youtubedl_upgrade(latest[0],
-                                                       self.appdata['EXECYDL']
-                                                       )
+                upgrd = io_tools.youtubedl_upgrade(latest[0],
+                                                   self.appdata['EXECYDL']
+                                                   )
                 if upgrd[1]:  # failed
                     wx.MessageBox("%s" % (upgrd[1]),
                                   "Videomass", wx.ICON_ERROR, self)
@@ -254,15 +260,15 @@ class Choose_Topic(wx.Panel):
                 return
             else:
                 if self.appdata['app'] == 'appimage':
-                    wx.MessageBox(_("ERROR: {}\n\nyoutube-dl is not embedded "
-                                    "in AppImage."
-                                    ).format(self.appdata['PYLIBYDL']),
+                    wx.MessageBox(_(f"ERROR: {self.appdata['PYLIBYDL']}\n\n"
+                                    f"{self.appdata['downloader'][0]} is "
+                                    f"not embedded in AppImage."),
                                   "Videomass", wx.ICON_ERROR, self)
                     return
                 else:
-                    wx.MessageBox(_("ERROR: {}\n\nyoutube-dl is not "
-                                    "installed, use your package manager "
-                                    "to install it."
-                                    ).format(self.appdata['PYLIBYDL']),
-                                  "Videomass", wx.ICON_ERROR, self)
+                    wx.MessageBox(_(f"ERROR: {self.appdata['PYLIBYDL']}\n\n"
+                                    f"{self.appdata['downloader'][0]} is not "
+                                    f"installed, use your package manager "
+                                    f"to install it."
+                                    ), "Videomass", wx.ICON_ERROR, self)
                     return

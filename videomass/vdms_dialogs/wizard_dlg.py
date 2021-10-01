@@ -416,7 +416,8 @@ class PageFour(wx.Panel):
     get = wx.GetApp()
     OS = get.appset['ostype']
 
-    MSG0 = _('Videomass has a simple graphical\ninterface for youtube-dl\n')
+    MSG0 = _('Videomass has a simple graphical\n'
+             'interface for youtube-dl and yt-dlp\n')
 
     MSG1 = _('This feature allows you to download video and audio from\n'
              'many sites, including YouTube.com and even Facebook.')
@@ -440,6 +441,15 @@ class PageFour(wx.Panel):
         lab1 = wx.StaticText(self, wx.ID_ANY, PageFour.MSG1)
         descr = _(" Do you want to enable this feature?")
         self.ckbx_yn = wx.CheckBox(self, wx.ID_ANY, (descr))
+        self.rdbDownloader = wx.RadioBox(self, wx.ID_ANY,
+                                         (_("Downloader preferences")),
+                                         choices=[('youtube_dl'),
+                                                  ('yt_dlp')],
+                                         majorDimension=1,
+                                         style=wx.RA_SPECIFY_COLS
+                                         )
+        self.rdbDownloader.SetSelection(1)
+        self.rdbDownloader.Disable()
 
         if PageFour.OS == 'Darwin':
             lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
@@ -456,6 +466,8 @@ class PageFour(wx.Panel):
         sizerText.Add(lab1, 0, wx.CENTER | wx.EXPAND)
         sizerText.Add((0, 50), 0)
         sizerText.Add(self.ckbx_yn, 0, wx.CENTER | wx.ALL, 10)
+        sizerText.Add((0, 20), 0)
+        sizerText.Add(self.rdbDownloader, 0, wx.ALL | wx.EXPAND, 10)
         sizerText.Add((0, 50), 0)
 
         self.SetSizer(sizer_base)
@@ -468,7 +480,11 @@ class PageFour(wx.Panel):
         """
         the values are get on Wizard.wizard_Finish method
         """
-        pass
+        #pass
+        if self.ckbx_yn.IsChecked() is False:
+            self.rdbDownloader.Disable()
+        else:
+            self.rdbDownloader.Enable()
         '''
         if self.ckbx_yn.IsChecked() is False:
             self.parent.youtubedl = 'disabled'
@@ -683,10 +699,10 @@ class Wizard(wx.Dialog):
 
         """
         if self.pageFour.ckbx_yn.IsChecked():
-            youtubedl = 'enabled'
-
+            index = self.pageFour.rdbDownloader.GetSelection()
+            youtubedl = f'{self.pageFour.rdbDownloader.GetString(index)}'
         else:
-            youtubedl = 'disabled'
+            youtubedl = 'Disable all'
 
         if not self.pageTwo.locateBtn.IsEnabled():
             binfound = 'local'

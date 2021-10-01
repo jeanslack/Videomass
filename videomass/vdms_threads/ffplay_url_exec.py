@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021
+Rev: Oct.01.2021
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -40,6 +40,8 @@ if not platform.system() == 'Windows':
     import shlex
 if 'youtube_dl' in sys.modules:
     import youtube_dl
+elif 'yt_dlp' in sys.modules:
+    import yt_dlp
 
 
 def msg_error(msg, title="Videomass"):
@@ -72,11 +74,11 @@ class DownloadStreamExec(Thread):
     appdata = get.appset
 
     if platform.system() == 'Windows':
-        pyname = 'Scripts', 'youtube-dl.exe'
+        pyname = 'Scripts', f"{appdata['downloader'][1]}.exe"
     else:
-        pyname = 'bin', 'youtube-dl'
+        pyname = 'bin', appdata['downloader'][1]
 
-    if appdata['enable_youtubedl'] == 'disabled':
+    if appdata['downloader'][0] == 'Disable all':
         EXCEPTION = 'error: youtube-dl is disabled, check preferences.'
         EXECYDL = appdata['EXECYDL']
 
@@ -91,6 +93,10 @@ class DownloadStreamExec(Thread):
             # see also inspect: `inspect.getfile(youtube_dl)`
             # or the best: shutil.which('python')
             pypath = youtube_dl.__file__.split('lib')[0]
+            pathexec = os.path.join(pypath, pyname[0], pyname[1])
+            EXECYDL = appdata['getpath'](pathexec)
+        elif 'yt_dlp' in sys.modules:
+            pypath = yt_dlp.__file__.split('lib')[0]
             pathexec = os.path.join(pypath, pyname[0], pyname[1])
             EXECYDL = appdata['getpath'](pathexec)
         else:

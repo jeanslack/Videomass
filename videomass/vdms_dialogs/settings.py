@@ -6,7 +6,8 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.13.2021 *-pycodestyle- compatible*
+Rev: Oct.01.2021
+Code checker: pycodestyle
 ########################################################
 
 This file is part of Videomass.
@@ -266,8 +267,9 @@ class Setup(wx.Dialog):
 
         self.rdbDownloader = wx.RadioBox(self.tabThree, wx.ID_ANY,
                                          (_("Downloader preferences")),
-                                         choices=[_('Disable youtube-dl'),
-                                                  _('Enable youtube-dl')],
+                                         choices=[_('Disable all'),
+                                                  ('youtube_dl'),
+                                                  ('yt_dlp')],
                                          majorDimension=1,
                                          style=wx.RA_SPECIFY_COLS
                                          )
@@ -283,32 +285,39 @@ class Setup(wx.Dialog):
         grdydlLoc.Add(self.ydlPath, 1, wx.ALL | wx.EXPAND, 5)
 
         # ---- BEGIN set youtube-dl radiobox
-        ydlmsg = _('Make sure you are using the latest available version of\n'
-                   'youtube-dl. This allows you to avoid download problems.\n')
+        ydlmsg = _(f"Make sure you are using the latest available "
+                   f"version of\n'{self.appdata['downloader'][1]}'. "
+                   f"This allows you to avoid download problems.\n")
 
         if self.appdata['app'] == 'pyinstaller':
-            tip1 = _('Menu bar > Tools > Update youtube-dl')
+            tip1 = _('Menu bar > Tools > Update YouTube Downloader')
             labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
 
-            if self.appdata['enable_youtubedl'] == 'disabled':
+            if self.appdata['downloader'][0] == 'Disable all':
                 self.rdbDownloader.SetSelection(0)
                 self.ydlPath.WriteText(_('Disabled'))
             else:
-                self.rdbDownloader.SetSelection(1)
+                if self.appdata['downloader'][0] == 'youtube_dl':
+                    self.rdbDownloader.SetSelection(1)
+                elif self.appdata['downloader'][0] == 'yt_dlp':
+                    self.rdbDownloader.SetSelection(2)
                 if os.path.exists(self.appdata['EXECYDL']):
                     self.ydlPath.WriteText(str(self.appdata['EXECYDL']))
                 else:
                     self.ydlPath.WriteText(_('Not found'))
 
         elif self.appdata['app'] == 'appimage':
-            tip1 = _('Menu bar > Tools > Update youtube-dl')
+            tip1 = _('Menu bar > Tools > Update YouTube Downloader')
             labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
 
-            if self.appdata['enable_youtubedl'] == 'disabled':
+            if self.appdata['downloader'][0] == 'Disable all':
                 self.rdbDownloader.SetSelection(0)
                 self.ydlPath.WriteText(_('Disabled'))
             else:
-                self.rdbDownloader.SetSelection(1)
+                if self.appdata['downloader'][0] == 'youtube_dl':
+                    self.rdbDownloader.SetSelection(1)
+                elif self.appdata['downloader'][0] == 'yt_dlp':
+                    self.rdbDownloader.SetSelection(2)
                 if self.appdata['YDLSITE'] is None:
                     self.ydlPath.WriteText(_('Not Installed'))
                 else:
@@ -317,11 +326,14 @@ class Setup(wx.Dialog):
         else:
             labydl0.SetLabel('%s' % (ydlmsg))
 
-            if self.appdata['enable_youtubedl'] == 'disabled':
+            if self.appdata['downloader'][0] == 'Disable all':
                 self.rdbDownloader.SetSelection(0)
                 self.ydlPath.WriteText(_('Disabled'))
             else:
-                self.rdbDownloader.SetSelection(1)
+                if self.appdata['downloader'][0] == 'youtube_dl':
+                    self.rdbDownloader.SetSelection(1)
+                elif self.appdata['downloader'][0] == 'yt_dlp':
+                    self.rdbDownloader.SetSelection(2)
                 if self.appdata['YDLSITE'] is None:
                     self.ydlPath.WriteText(_('Not Installed'))
                 else:
@@ -330,7 +342,7 @@ class Setup(wx.Dialog):
 
         # ----
         self.tabThree.SetSizer(sizerYdl)
-        notebook.AddPage(self.tabThree, _("youtube-dl"))
+        notebook.AddPage(self.tabThree, _("Downloaders"))
 
         # -----tab 4
         tabFour = wx.Panel(notebook, wx.ID_ANY)
@@ -850,10 +862,15 @@ class Setup(wx.Dialog):
         """
         set youtube-dl preferences
         """
-        if self.rdbDownloader.GetSelection() == 0:
-            self.full_list[self.rowsNum[16]] = 'disabled\n'
-        elif self.rdbDownloader.GetSelection() == 1:
-            self.full_list[self.rowsNum[16]] = 'enabled\n'
+        index = self.rdbDownloader.GetSelection()
+        youtubedl = f'{self.rdbDownloader.GetString(index)}'
+        self.full_list[self.rowsNum[16]] = f'{youtubedl}\n'
+
+
+        #if self.rdbDownloader.GetSelection() == 0:
+            #self.full_list[self.rowsNum[16]] = 'disabled\n'
+        #elif self.rdbDownloader.GetSelection() == 1:
+            #self.full_list[self.rowsNum[16]] = 'enabled\n'
     # --------------------------------------------------------------------#
 
     def on_help(self, event):

@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.23.2021
+Rev: Oct.01.2021
 Code checker: pycodestyle, flake8, pylint .
 
  This file is part of Videomass.
@@ -67,7 +67,7 @@ def checkconf(dirconf, fileconf, srcpath):
             data = {'R': readconf(fileconf)}
             if not data['R']:
                 existfileconf = False
-            if float(data['R'][0]) != 3.2:  # version
+            if float(data['R'][0]) != 3.3:  # version
                 existfileconf = False
         else:
             existfileconf = False
@@ -395,6 +395,11 @@ class DataSource():
             except ValueError as error:
                 return {'ERROR': f'{error}'}
 
+        execlist = (('youtube_dl', 'youtube-dl'),
+                    ('yt_dlp', 'yt-dlp'),
+                    ('Disable all', ''),
+                    ('false', '')
+                    )
         return ({'ostype': platform.system(),
                  'srcpath': _relativize(self.srcpath),
                  'localepath': _relativize(self.localepath),
@@ -423,7 +428,8 @@ class DataSource():
                  'toolbarpos': userconf[13],
                  'toolbartext': userconf[14],
                  'clearcache': userconf[15],
-                 'enable_youtubedl': userconf[16],
+                 'downloader': [exe for exe in execlist if
+                                exe[0] == userconf[16]][0],
                  'outputfile_samedir': userconf[17],
                  'filesuffix': userconf[18],
                  'outputdownload': outdownl[0],

@@ -9,8 +9,9 @@ videomass (3.4.7-1) UNRELEASED; urgency=medium
   * Fixed video and audio qualities data on `YouTube Downloader` panel.
   * Improved error handling during application startup.
   * Made some cosmetic improvements.
+  * Added support for yt-dlp, an updated and well maintained youtube-dl fork.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 29 Sep 2021 14:24:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 01 Oct 2021 10:56:00 +0200
 
 videomass (3.4.6-1) UNRELEASED; urgency=medium
 
