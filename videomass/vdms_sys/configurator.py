@@ -211,6 +211,7 @@ def get_color_scheme(theme):
                     'TXT2': '#3f5e6b',  # dark ciano
                     'TXT3': '#11b584',  # medium light green
                     'TXT4': '#87ceebff',  # light ciano
+                    'TXT5': '#dd7ad0',  # LILLA
                     }
     elif theme in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
         c_scheme = {'BACKGRD': '#232424',  # DARK Grey background color
@@ -223,9 +224,10 @@ def get_color_scheme(theme):
                     'TXT2': '#008000',  # dark green
                     'TXT3': '#11b584',  # medium light green
                     'TXT4': '#0ce3ac',  # light green
+                    'TXT5': '#dd7ad0',  # LILLA
                     }
     elif theme in ('Breeze', 'Videomass-Light'):
-        c_scheme = {'BACKGRD': '#e6e6faff',  # LAVENDER background color
+        c_scheme = {'BACKGRD': '#f2efe6',  # BEIGE background color
                     'TXT0': '#1f1f1fff',  # BLACK for title or URL in progress
                     'TXT1': '#778899ff',  # LIGHT_SLATE for all other text msg
                     'ERR0': '#d25c07',  # ORANGE for error text messages
@@ -235,6 +237,7 @@ def get_color_scheme(theme):
                     'TXT2': '#008000',  # dark green
                     'TXT3': '#008000',  # dark green
                     'TXT4': '#0ce3ac',  # light green
+                    'TXT5': '#dd7ad0',  # LILLA
                     }
     else:
         c_scheme = {'ERROR': f'Unknow theme "{theme}"'}
@@ -395,11 +398,16 @@ class DataSource():
             except ValueError as error:
                 return {'ERROR': f'{error}'}
 
+        # set downloader
         execlist = (('youtube_dl', 'youtube-dl'),
                     ('yt_dlp', 'yt-dlp'),
-                    ('Disable all', ''),
+                    ('Disable all', 'Downloader'),
                     ('false', '')
                     )
+        downloader = [exe for exe in execlist if exe[0] == userconf[16]]
+        if not downloader:
+            return {'ERROR': f'Unknow downloader "{userconf[16]}"'}
+
         return ({'ostype': platform.system(),
                  'srcpath': _relativize(self.srcpath),
                  'localepath': _relativize(self.localepath),
@@ -428,8 +436,7 @@ class DataSource():
                  'toolbarpos': userconf[13],
                  'toolbartext': userconf[14],
                  'clearcache': userconf[15],
-                 'downloader': [exe for exe in execlist if
-                                exe[0] == userconf[16]][0],
+                 'downloader': downloader[0],
                  'outputfile_samedir': userconf[17],
                  'filesuffix': userconf[18],
                  'outputdownload': outdownl[0],

@@ -651,7 +651,8 @@ class Downloader(wx.Panel):
 
     def on_format_codes(self):
         """
-        Evaluate which method to call to enable download from "Format Code"
+        Evaluate which method to call to enable
+        download from "Format Code"
 
         """
         if Downloader.appdata['PYLIBYDL'] is not None:

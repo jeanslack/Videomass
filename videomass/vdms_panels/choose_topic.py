@@ -165,7 +165,7 @@ class Choose_Topic(wx.Panel):
                 welcome.SetForegroundColour('#777072')  # grey
                 version.SetForegroundColour('#777072')  # grey
             else:
-                self.SetBackgroundColour('#f2efe6')  # light azure
+                self.SetBackgroundColour('#f2efe6')  # beige
                 welcome.SetForegroundColour('#171b12')  # black
                 version.SetForegroundColour('#171b12')  # black
 
@@ -244,13 +244,10 @@ class Choose_Topic(wx.Panel):
                                   "Videomass", wx.ICON_ERROR, self)
                     return
                 else:
-                    wx.MessageBox(msg_ready, "Videomass", wx.ICON_INFORMATION,
-                                  self)
-                    self.parent.ydlused.Enable(True)
-                    self.parent.ydlupdate.Enable(True)
-                    return
-                return
-
+                    wx.MessageBox(_("{0}\n\nRe-start is required."
+                                    ).format(msg_ready),
+                                  "Videomass", wx.ICON_INFORMATION, self)
+                    self.parent.on_Kill()
         else:
             # PYLIBYDL: None if used else 'string error'
             if self.appdata['PYLIBYDL'] is None:

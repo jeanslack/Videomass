@@ -267,7 +267,7 @@ class Setup(wx.Dialog):
 
         self.rdbDownloader = wx.RadioBox(self.tabThree, wx.ID_ANY,
                                          (_("Downloader preferences")),
-                                         choices=[_('Disable all'),
+                                         choices=[('Disable all'),
                                                   ('youtube_dl'),
                                                   ('yt_dlp')],
                                          majorDimension=1,
@@ -292,7 +292,8 @@ class Setup(wx.Dialog):
         if self.appdata['app'] == 'pyinstaller':
             tip1 = _('Menu bar > Tools > Update {}'
                      ).format(self.appdata['downloader'][0])
-            labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
+            if self.appdata['downloader'][0] not in ('false', 'Disable all'):
+                labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
 
             if self.appdata['downloader'][0] == 'Disable all':
                 self.rdbDownloader.SetSelection(0)
@@ -310,7 +311,8 @@ class Setup(wx.Dialog):
         elif self.appdata['app'] == 'appimage':
             tip1 = _('Menu bar > Tools > Update {}'
                      ).format(self.appdata['downloader'][0])
-            labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
+            if self.appdata['downloader'][0] not in ('false', 'Disable all'):
+                labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
 
             if self.appdata['downloader'][0] == 'Disable all':
                 self.rdbDownloader.SetSelection(0)
@@ -326,7 +328,8 @@ class Setup(wx.Dialog):
                     self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
 
         else:
-            labydl0.SetLabel('%s' % (ydlmsg))
+            if self.appdata['downloader'][0] not in ('false', 'Disable all'):
+                labydl0.SetLabel('%s' % (ydlmsg))
 
             if self.appdata['downloader'][0] == 'Disable all':
                 self.rdbDownloader.SetSelection(0)
@@ -344,7 +347,7 @@ class Setup(wx.Dialog):
 
         # ----
         self.tabThree.SetSizer(sizerYdl)
-        notebook.AddPage(self.tabThree, _("Downloaders"))
+        notebook.AddPage(self.tabThree, _("Downloader"))
 
         # -----tab 4
         tabFour = wx.Panel(notebook, wx.ID_ANY)

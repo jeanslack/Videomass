@@ -287,7 +287,7 @@ class LogOut(wx.Panel):
                 try:
                     i = float(output.split()[1].split('%')[0])
                 except ValueError:
-                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
+                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT5']))
                     self.txtout.AppendText(f' {output}')
                 else:
                     self.barprog.SetValue(i)

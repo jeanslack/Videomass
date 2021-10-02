@@ -41,11 +41,11 @@ each operating system.
 - **[ffmpeg >=3.2](https://ffmpeg.org/)**
 - **[ffprobe](https://ffmpeg.org/ffprobe.html)** (usually bundled with ffmpeg)
 - **[ffplay](http://ffmpeg.org/ffplay.html)** (usually bundled with ffmpeg)
+- **[youtube-dl](https://pypi.org/project/youtube_dl/)**
 
 ### Optionals
-- **[atomicparsley](http://atomicparsley.sourceforge.net/)**
-- **[youtube-dl](https://pypi.org/project/youtube_dl/)**
 - **[yt-dlp](https://github.com/yt-dlp/yt-dlp)** (A fork of youtube-dl)
+- **[atomicparsley](http://atomicparsley.sourceforge.net/)**
 
 ### Install basic dependencies for your OS
 

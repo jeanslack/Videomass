@@ -420,7 +420,7 @@ class MainFrame(wx.Frame):
         dscrp = (_("Show the latest version..."),
                  _("Shows the latest version available on github.com"))
         self.ydllatest = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        viewButton.AppendSubMenu(ydlButton, self.appdata['downloader'][0])
+        viewButton.AppendSubMenu(ydlButton, self.appdata['downloader'][1])
         # timeline
         viewButton.AppendSeparator()
         dscrp = (_("Show Logs\tCtrl+L"),
@@ -648,6 +648,7 @@ class MainFrame(wx.Frame):
             if self.appdata['downloader'][0] == 'youtube_dl':
                 url = ("https://api.github.com/repos/ytdl-org/youtube-dl"
                        "/releases/latest")
+
             elif self.appdata['downloader'][0] == 'yt_dlp':
                 url = ("https://api.github.com/repos/yt-dlp/yt-dlp/"
                        "releases/latest")
@@ -695,10 +696,11 @@ class MainFrame(wx.Frame):
                               wx.ICON_ERROR, self)
                 return
 
-            wx.MessageBox(_("Successful! {} is up-to-date"
-                            ).format(self.appdata['downloader'][1]),
-                          'Videomass', wx.ICON_INFORMATION, self)
-            return
+            wx.MessageBox(_("Successful! {0} is up-to-date ({1})"
+                            "\n\nRe-start is required."
+                            ).format(self.appdata['downloader'][1], ck[0]),
+                          "Videomass", wx.ICON_INFORMATION, self)
+            self.on_Kill()
 
         elif self.appdata['app'] == 'appimage':
             ck = _check()
@@ -733,15 +735,11 @@ class MainFrame(wx.Frame):
                 upgrade = io_tools.appimage_update_youtube_dl(appimage)
 
                 if upgrade == 'success':
-                    if wx.MessageBox(_("Successful! {0} is up-to-date ({1})"
-                                       "\n\nRe-start is required. Do you "
-                                       "want to close Videomass now?"
-                                       ).format(self.appdata['downloader'][1],
-                                                ck[0]),
-                                     "Videomass", wx.ICON_QUESTION
-                                     | wx.YES_NO, self) == wx.NO:
-                        return
-
+                    wx.MessageBox(_("Successful! {0} is up-to-date ({1})"
+                                    "\n\nRe-start is required."
+                                    ).format(self.appdata['downloader'][1],
+                                             ck[0]),
+                                  "Videomass", wx.ICON_INFORMATION, self)
                     self.on_Kill()
 
                 elif upgrade == 'error':

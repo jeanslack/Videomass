@@ -82,6 +82,11 @@ class YtdlExecDL(Thread):
                         'E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe\n')
         else:
             LINE_MSG = _('Unrecognized error')
+
+    if get.appset['downloader'][0] == 'yt_dlp':
+        COMPAT = '--compat-options all'
+    else:
+        COMPAT = ''
     # -----------------------------------------------------------------------#
 
     def __init__(self, varargs, logname):
@@ -143,7 +148,7 @@ class YtdlExecDL(Thread):
                 pl_items = ''
 
             format_code = '--format %s' % (code) if code else ''
-            cmd = ('"{0}" {1} --newline --ignore-errors {8} -o '
+            cmd = ('"{0}" {11} {1} --newline --ignore-errors {8} -o '
                    '"{2}/{3}" {4} {5} {10} --ignore-config {9} "{6}" '
                    '--ffmpeg-location "{7}"'.format(YtdlExecDL.EXECYDL,
                                                     self.ssl,
@@ -156,6 +161,7 @@ class YtdlExecDL(Thread):
                                                     self.args['nooverwrites'],
                                                     self.args['restrictfn'],
                                                     pl_items,
+                                                    YtdlExecDL.COMPAT
                                                     ))
             self.count += 1
             count = 'URL %s/%s' % (self.count, self.countmax)
@@ -274,6 +280,11 @@ class YtdlExecEI(Thread):
                           'Package (x86)'))
         else:
             LINE_MSG = _('Unrecognized error')
+
+    if get.appset['downloader'][0] == 'yt_dlp':
+        COMPAT = '--compat-options all'
+    else:
+        COMPAT = ''
     # ---------------------------------------------------------------#
 
     def __init__(self, url):
@@ -298,10 +309,11 @@ class YtdlExecEI(Thread):
         Subprocess initialize thread.
 
         """
-        cmd = ('"{0}" {1} --newline --ignore-errors --ignore-config '
+        cmd = ('"{0}" {1} {3} --newline --ignore-errors --ignore-config '
                '--restrict-filenames -F "{2}"'.format(YtdlExecEI.EXECYDL,
                                                       self.ssl,
-                                                      self.url))
+                                                      self.url,
+                                                      YtdlExecEI.COMPAT))
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
             info = None
