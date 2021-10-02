@@ -9,25 +9,27 @@ env:
         - DISPLAY=:99
 language: python
 cache: pip
-python: "3.8"
+python: "3.9"
 before_install:
-    - python -m pip install -U pip
+    - python3 -m pip install -U pip
+    - python3 -m pip install -U build
     - sudo apt-get update
     - sudo apt-get -y install libsdl2-2.0-0
 # install dependencies via pip
 install:
-    - pip install PyPubSub
-    - pip install requests
-    - pip install youtube_dl
+    - python3 -m pip install PyPubSub
+    - python3 -m pip install requests
+    - python3 -m pip install youtube_dl
+    - python3 -m pip install yt-dlp
     - pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython
 script:
     - Xvfb :99 -screen 0 800x600x24 >/dev/null 2>&1 &
     # run tests
-    - python tests/test_check_bin.py
-    - python tests/test_ffprobe.py
-    - python tests/test_display_GUI.py
+    - python3 tests/test_check_bin.py
+    - python3 tests/test_ffprobe.py
+    - python3 tests/test_display_GUI.py
     # make a videomass source dist and wheel
-    - python setup.py sdist bdist_wheel
+    - python3 -m build
     # build appimage
     - bash develop/tools/AppImage_build.sh
 after_script:

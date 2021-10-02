@@ -20,7 +20,7 @@
 #
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Update: Oct.03.2020
+# Update: Oct.01.2021
 
 set -e  # stop if error
 
@@ -67,6 +67,8 @@ export PATH="$(pwd)/squashfs-root/usr/bin:$PATH"
 
 # update youtube_dl package
 ./squashfs-root/opt/python3.9/bin/python3.9 -m pip install -U --target=$SITEPKG youtube_dl
+# update youtube_dl package
+./squashfs-root/opt/python3.9/bin/python3.9 -m pip install -U --target=$SITEPKG yt_dlp
 
 # retrieve the Videomass version from the package metadata
 export VERSION=$(cat $SITEPKG/videomass-*.dist-info/METADATA | \

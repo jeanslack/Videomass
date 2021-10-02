@@ -33,15 +33,19 @@ this = os.path.realpath(os.path.abspath(__file__))
 HERE = os.path.dirname(os.path.dirname(os.path.dirname(this)))
 sys.path.insert(0, HERE)
 try:
-    from videomass3.vdms_sys.msg_info import current_release
+    from videomass.vdms_sys.msg_info import current_release
 except ModuleNotFoundError as error:
     sys.exit(error)
 
-BINARY = os.path.join(HERE, 'bin', 'videomass')
-SPECFILE = os.path.join(HERE, 'videomass.spec')
+SCRIPT = 'launcher'
+NAME = 'videomass'
+BINARY = os.path.join(HERE, SCRIPT)
+SPECFILE = os.path.join(HERE, '%s.spec' % NAME)
+#BINARY = os.path.join(HERE, 'bin', 'videomass')
+#SPECFILE = os.path.join(HERE, 'videomass.spec')
 
 
-def data(here=HERE):
+def data(here=HERE, name=NAME):
     """
     Returns a dict object of the Videomass data
     and pathnames needed to spec file.
@@ -50,6 +54,7 @@ def data(here=HERE):
 
     return dict(RLS_NAME=release[0],  # first letter is Uppercase
                 PRG_NAME=release[1],  # first letter is lower
+                NAME=name,
                 VERSION=release[2],
                 RELEASE=release[3],
                 COPYRIGHT=release[4],
@@ -57,11 +62,11 @@ def data(here=HERE):
                 AUTHOR=release[6],
                 EMAIL=release[7],
                 COMMENT=release[8],
-                ART=os.path.join(here, 'videomass3', 'art'),
-                LOCALE=os.path.join(here, 'videomass3', 'locale'),
-                SHARE=os.path.join(here, 'videomass3', 'share'),
-                FFMPEG=os.path.join(here, 'videomass3', 'FFMPEG'),
-                NOTICE=os.path.join(here, 'videomass3',
+                ART=os.path.join(here, 'videomass', 'art'),
+                LOCALE=os.path.join(here, 'videomass', 'locale'),
+                SHARE=os.path.join(here, 'videomass', 'share'),
+                FFMPEG=os.path.join(here, 'videomass', 'FFMPEG'),
+                NOTICE=os.path.join(here, 'videomass',
                                     'FFMPEG', 'NOTICE.rtf'),
                 AUTH=os.path.join(here, 'AUTHORS'),
                 BUGS=os.path.join(here, 'BUGS'),
@@ -70,9 +75,9 @@ def data(here=HERE):
                 INSTALL=os.path.join(here, 'INSTALL'),
                 README=os.path.join(here, 'README.md'),
                 TODO=os.path.join(here, 'TODO'),
-                ICNS=os.path.join(here, 'videomass3',
+                ICNS=os.path.join(here, 'videomass',
                                   'art', 'videomass.icns'),
-                ICO=os.path.join(here, 'videomass3', 'art', 'videomass.ico'),
+                ICO=os.path.join(here, 'videomass', 'art', 'videomass.ico'),
                 )
 
 
@@ -115,7 +120,8 @@ class PyinstallerSpec():
         """
         options = (f"--name {self.getdata['RLS_NAME']} {self.onedf} "
                    f"--windowed --noconsole --icon {self.getdata['ICO']} "
-                   f"--exclude-module youtube_dl {self.datas} ")
+                   f"--exclude-module youtube_dl --exclude-module 'yt_dlp' "
+                   f"{self.datas} ")
 
         return options
     # ---------------------------------------------------------#
@@ -136,7 +142,8 @@ class PyinstallerSpec():
                 f"'com.jeanslack.videomass' "
                 # f"--codesign-identity IDENTITY "
                 # f"--osx-entitlements-file FILENAME "
-                f"--exclude-module 'youtube_dl' {self.datas} ")
+                f"--exclude-module 'youtube_dl' --exclude-module 'yt_dlp' "
+                f"{self.datas} ")
 
         plist = (
             f"""             info_plist={{# 'LSEnvironment': '$0',
@@ -161,9 +168,9 @@ class PyinstallerSpec():
         Set options flags and spec file pathname
         on Linux platform.
         """
-        options = (f"--name {self.getdata['PRG_NAME']} {self.onedf} "
+        options = (f"--name {self.getdata['NAME']} {self.onedf} "
                    f"--windowed --noconsole --exclude-module youtube_dl "
-                   f"{self.datas} ")
+                   f"--exclude-module 'yt_dlp' {self.datas} ")
 
         return options
 # --------------------------------------------------------#
@@ -184,23 +191,16 @@ def onefile_onedir():
 # --------------------------------------------------------#
 
 
-def fetch_exec(binary=BINARY, here=HERE):
+def fetch_exec(binary=BINARY):
     """
     fetch the videomass binary on bin folder
     """
-    if not os.path.exists(os.path.join(here, 'videomass')):  # binary
-        if os.path.isfile(binary):
-            try:
-                shutil.copyfile(binary, os.path.join(here, 'videomass'))
-            except FileNotFoundError as err:
-                sys.exit(err)
-        else:
-            sys.exit("ERROR: no 'bin/videomass' file found on videomass "
-                     "base sources directory.")
+    if not os.path.exists(binary):  # binary
+        sys.exit("ERROR: no file found named '%s'" % binary)
 # --------------------------------------------------------#
 
 
-def genspec(options, specfile=SPECFILE, addplist=None):
+def genspec(options, specfile=SPECFILE, addplist=None, script=SCRIPT):
     """
     Generate a videomass.spec file for platform in use.
     Support for the following platforms is expected:
@@ -214,7 +214,7 @@ def genspec(options, specfile=SPECFILE, addplist=None):
     an existing videomass.spec file.
     """
     try:
-        subprocess.run('pyi-makespec %s videomass' % options,
+        subprocess.run('pyi-makespec %s %s' % (options, script),
                        shell=True, check=True)
     except subprocess.CalledProcessError as err:
         sys.exit('\nERROR: %s\n' % err)

@@ -14,7 +14,8 @@ the [FFmpeg](https://www.ffmpeg.org/) commands without limits of formats and
 codecs.   
 
 It features graphical tools for viewing, analyzing and processing multimedia 
-streams and downloading videos via [youtube-dl](https://youtube-dl.org/).   
+streams and downloading videos via [youtube-dl](https://youtube-dl.org/) or 
+[yt-dlp](https://github.com/yt-dlp/yt-dlp).   
 
 Videomass is written in Python3 with the wxPython-Phoenix toolkit.   
 
@@ -43,6 +44,7 @@ each operating system.
 - **[youtube-dl](https://pypi.org/project/youtube_dl/)**
 
 ### Optionals
+- **[yt-dlp](https://github.com/yt-dlp/yt-dlp)** (A fork of youtube-dl)
 - **[atomicparsley](http://atomicparsley.sourceforge.net/)**
 
 ### Install basic dependencies for your OS
@@ -87,8 +89,8 @@ Videomass can also be run in interactive mode with the Python interpreter,
 always within the same unpacked directory:   
 
 ```Python
->>> from videomass3 import vdms3
->>> vdms3.main()
+>>> from videomass import gui_app
+>>> videomass_app.main()
 ```
 
 # Resources

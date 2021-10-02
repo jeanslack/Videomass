@@ -7,6 +7,23 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Oct 02, 2021 V.3.4.7
+
+  * Fixed tests
+  * Added code implementation for Python embed package (Windows).
+  * Code refactoring.
+  * Changed package name from `videomass3` to `videomass`
+  * Changed main from `vdms3.py` to `gui_app.py`.
+  * Fixed man page.
+  * Fixed video and audio qualities data on `YouTube Downloader` panel.
+  * Improved error handling during application startup.
+  * Made some cosmetic improvements.
+  * Added support for yt-dlp, an updated fork of youtube-dl downloader.
+  * Fixed #37 - Incorrect video and audio qualities values on YouTube
+    Downloader panel
+  * New version of the videomass.conf configuration file changing to v3.3
+
++------------------------------------+
 Sep 15, 2021 V.3.4.6
 
   * Fixed Multiple URL's are the same.

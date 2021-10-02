@@ -16,7 +16,7 @@ PATH = os.path.realpath(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(os.path.dirname(PATH)))
 
 try:
-    from videomass3.vdms_threads.check_bin import ff_conf
+    from videomass.vdms_threads.check_bin import ff_conf
 except ImportError as error:
     sys.exit(error)
 

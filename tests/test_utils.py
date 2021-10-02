@@ -11,7 +11,7 @@ PATH = os.path.realpath(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(os.path.dirname(PATH)))
 
 try:
-    from videomass3.vdms_utils import utils
+    from videomass.vdms_utils import utils
 except ImportError as error:
     sys.exit(error)
 
@@ -62,21 +62,21 @@ class TestTimeSeconds(unittest.TestCase):
     """ Test case for the time_seconds function"""
 
     def test_to_seconds(self):
-        self.assertEqual(utils.time_seconds('00:00:00'), 0.0)
-        self.assertEqual(utils.time_seconds('00:00:55'), 55.0)
-        self.assertEqual(utils.time_seconds('00:50:23'), 3023.0)
-        self.assertEqual(utils.time_seconds('02:30:50'), 9050.0)
-        self.assertEqual(utils.time_seconds('N/A'), 0)
+        self.assertEqual(utils.get_seconds('00:00:00'), 0.0)
+        self.assertEqual(utils.get_seconds('00:00:55'), 55.0)
+        self.assertEqual(utils.get_seconds('00:50:23'), 3023.0)
+        self.assertEqual(utils.get_seconds('02:30:50'), 9050.0)
+        self.assertEqual(utils.get_seconds('N/A'), 0)
 
 
 class TestTimeHuman(unittest.TestCase):
     """ Test case for the time_human function"""
 
     def test_to_human(self):
-        self.assertEqual(utils.time_human(0.0), '0:00:00')
-        self.assertEqual(utils.time_human(55.0), '0:00:55')
-        self.assertEqual(utils.time_human(3023.0), '0:50:23')
-        self.assertEqual(utils.time_human(9050.0), '2:30:50')
+        self.assertEqual(utils.timehuman(0.0), '00:00:00')
+        self.assertEqual(utils.timehuman(55.0), '00:00:55')
+        self.assertEqual(utils.timehuman(3023.0), '00:50:23')
+        self.assertEqual(utils.timehuman(9050.0), '02:30:50')
 
 
 def main():

@@ -40,7 +40,7 @@ this = os.path.realpath(os.path.abspath(__file__))
 here = os.path.dirname(os.path.dirname(os.path.dirname(this)))
 sys.path.insert(0, here)
 try:
-    from videomass3.vdms_sys.msg_info import current_release
+    from videomass.vdms_sys.msg_info import current_release
 except ModuleNotFoundError as error:
     sys.exit(error)
 # here = os.path.dirname(this)
