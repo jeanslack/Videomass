@@ -93,8 +93,18 @@ class Downloader(wx.Panel):
     MSG_2 = _('Function available only if you choose "Download by '
               'format code"')
 
-    VQUALITY = {('Best quality video'): ['best', 'best'],
-                ('Worst quality video'): ['worst', 'worst']
+    VQUALITY = {('Best quality video 1080p'):
+                    ('bestvideo[height>=?1080]+bestaudio/best[height>=?1080]'),
+                ('video 720p'):
+                    ('bestvideo[height=?720]+worstaudio/best[height=?720]'),
+                ('video 480p'):
+                    ('worstvideo[height=?480]+worstaudio/best[height=?480]'),
+                ('video 360p'):
+                    ('best[height=?360]+best/best[height=?360]'),
+                ('video 240p'):
+                    ('worstvideo[height=?240]+worstaudio/best[height=?240]'),
+                ('Worst quality video 144p'):
+                    ('worstvideo[height<=?144]+worstaudio/worst[height<=?144]'),
                 }
     AFORMATS = {("Default audio format"): ("best", "--extract-audio"),
                 ("wav"): ("wav", "--extract-audio --audio-format wav"),
@@ -106,9 +116,8 @@ class Downloader(wx.Panel):
                 ("opus"): ("opus", "--extract-audio --audio-format opus"),
                 ("flac"): ("flac", "--extract-audio --audio-format flac"),
                 }
-
-    AQUALITY = {('Best quality audio'): ['best', 'best'],
-                ('Worst quality audio'): ['worst', 'worst']}
+    AQUALITY = {('Best quality audio'): ('bestaudio'),
+                ('Worst quality audio'): ('worstaudio')}
 
     CHOICE = [_('Default'),
               _('Download audio and video splitted'),
@@ -137,9 +146,10 @@ class Downloader(wx.Panel):
         self.opt = {("NO_PLAYLIST"): [True, "--no-playlist"],
                     ("THUMB"): [False, ""],
                     ("METADATA"): [False, ""],
-                    ("V_QUALITY"): ["best", "best"],
+                    ("V_QUALITY"): ("bestvideo[height"
+                                    ">=?1080]+bestaudio/best[height>=?1080]"),
                     ("A_FORMAT"): ["best", "--extract-audio"],
-                    ("A_QUALITY"): ["best", "best"],
+                    ("A_QUALITY"): ("bestaudio"),
                     ("SUBTITLES"): [False, ""],
                     }
         self.plidx = {'': ''}
@@ -451,8 +461,12 @@ class Downloader(wx.Panel):
                           "Videomass", wx.ICON_INFORMATION, self)
             return
 
-        if self.choice.GetSelection() in [0, 1, 2]:
-            quality = self.fcode.GetItemText(item, 3)
+        if self.choice.GetSelection() == 0:  # play video only
+            quality = self.fcode.GetItemText(item, 3).split('+')[0]
+        elif self.choice.GetSelection() == 1:  # play audio only
+            quality = self.fcode.GetItemText(item, 3).split(',')[1]
+        elif self.choice.GetSelection() == 2:
+            quality = 'bestaudio'
         elif self.choice.GetSelection() == 3:
             quality = self.fcode.GetItemText(item, 0)
 
@@ -686,15 +700,15 @@ class Downloader(wx.Panel):
             self.cmbx_vq.Enable(), self.cod_text.Hide()
             self.labtxt.Hide()
             self.Layout()
-            self.on_urls_list(self.opt["V_QUALITY"][1])
+            self.on_urls_list(self.opt["V_QUALITY"])
 
         elif self.choice.GetSelection() == 1:
             self.cmbx_af.Disable(), self.cmbx_aq.Enable()
             self.cmbx_vq.Enable(), self.cod_text.Hide()
             self.labtxt.Hide()
             self.Layout()
-            self.on_urls_list(f'{self.opt["V_QUALITY"][1]}video+'
-                              f'{self.opt["A_QUALITY"][1]}audio')
+            self.on_urls_list(f'{self.opt["V_QUALITY"].split("+")[0]},'
+                              f'{self.opt["A_QUALITY"]}')
         elif self.choice.GetSelection() == 2:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
             self.cmbx_af.Enable(), self.cod_text.Hide()
@@ -730,11 +744,11 @@ class Downloader(wx.Panel):
         index = 0
         if self.choice.GetSelection() == 0:
             # set 'best' parameters on both audio and video.
-            quality = self.opt["V_QUALITY"][1]
+            quality = self.opt["V_QUALITY"]
         elif self.choice.GetSelection() == 1:
             # set the "worst" and "best" parameters independently
-            quality = (f'{self.opt["V_QUALITY"][1]}video+'
-                       f'{self.opt["A_QUALITY"][1]}audio')
+            quality = (f'{self.opt["V_QUALITY"].split("+")[0]},'
+                       f'{self.opt["A_QUALITY"]}')
         for link in self.parent.data_url:
             self.fcode.SetItem(index, 3, quality)
             index += 1
@@ -761,8 +775,9 @@ class Downloader(wx.Panel):
             self.cmbx_aq.GetValue())
         index = 0
         # set string to audio and video qualities independently for player
-        quality = (f'{self.opt["V_QUALITY"][1]}video+'
-                   f'{self.opt["A_QUALITY"][1]}audio')
+
+        quality = (f'{self.opt["V_QUALITY"].split("+")[0]},'
+                   f'{self.opt["A_QUALITY"]}')
         for link in self.parent.data_url:
             self.fcode.SetItem(index, 3, quality)
             index += 1
@@ -947,7 +962,7 @@ class Downloader(wx.Panel):
 
             if self.choice.GetSelection() == 0:
                 code = []
-                data = {'format': self.opt["V_QUALITY"][0],
+                data = {'format': self.opt["V_QUALITY"],
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
                         'playlist_items': self.plidx,
                         'nooverwrites': nooverwrites,
@@ -963,8 +978,8 @@ class Downloader(wx.Panel):
                         }
             if self.choice.GetSelection() == 1:  # audio files and video files
                 code = []
-                data = {'format': (f'{self.opt["V_QUALITY"][0]}video,'
-                                   f'{self.opt["A_QUALITY"][0]}audio'),
+                data = {'format': (f'{self.opt["V_QUALITY"].split("+")[0]},'
+                                   f'{self.opt["A_QUALITY"]}'),
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
                         'playlist_items': self.plidx,
                         'nooverwrites': nooverwrites,
@@ -1037,7 +1052,7 @@ class Downloader(wx.Panel):
             if self.choice.GetSelection() == 0:  # default
                 code = []
                 cmd = [(f'--format '
-                        f'{self.opt["V_QUALITY"][1]} '
+                        f'{self.opt["V_QUALITY"]} '
                         f'{self.opt["METADATA"][1]} '
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
@@ -1051,8 +1066,8 @@ class Downloader(wx.Panel):
             if self.choice.GetSelection() == 1:  # audio files + video files
                 code = []
                 cmd = [(f'--format '
-                        f'{self.opt["V_QUALITY"][1]}video,'
-                        f'{self.opt["A_QUALITY"][1]}audio '
+                        f'{self.opt["V_QUALITY"].split("+")[0]},'
+                        f'{self.opt["A_QUALITY"]} '
                         f'{self.opt["METADATA"][1]} '
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '

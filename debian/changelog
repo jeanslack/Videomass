@@ -13,8 +13,9 @@ videomass (3.4.7-1) UNRELEASED; urgency=medium
   * Fixed #37 - Incorrect video and audio qualities values on YouTube
     Downloader panel
   * New version of the videomass.conf configuration file changing to v3.3
+  * Improved video quality selector on the YouTube Downloader panel.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 02 Oct 2021 17:52:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 03 Oct 2021 22:15:00 +0200
 
 videomass (3.4.6-1) UNRELEASED; urgency=medium
 

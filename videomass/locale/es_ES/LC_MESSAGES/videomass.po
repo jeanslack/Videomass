@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-02 10:51+0200\n"
-"PO-Revision-Date: 2021-10-02 10:57+0200\n"
+"POT-Creation-Date: 2021-10-03 11:53+0200\n"
+"PO-Revision-Date: 2021-10-03 11:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: j.alberto.vc@gmail.com\n"
 "Language: es\n"
@@ -1791,7 +1791,7 @@ msgstr ""
 #: ../vdms_main/main_frame.py:1479 ../vdms_main/main_frame.py:1511
 #: ../vdms_main/main_frame.py:1534 ../vdms_main/main_frame.py:1589
 #: ../vdms_main/main_frame.py:1640 ../vdms_main/main_frame.py:1692
-#: ../vdms_panels/youtubedl_ui.py:444 ../vdms_panels/youtubedl_ui.py:678
+#: ../vdms_panels/youtubedl_ui.py:444 ../vdms_panels/youtubedl_ui.py:679
 msgid "Ready"
 msgstr "Listo"
 
@@ -1862,7 +1862,7 @@ msgstr ""
 #: ../vdms_main/main_frame.py:375
 #, fuzzy
 #| msgid "Update to latest youtube-dl version"
-msgid "Update the donloader to the latest version"
+msgid "Update the downloader to the latest version"
 msgstr "Actualizar a ultima versión de youtube-dl"
 
 #: ../vdms_main/main_frame.py:378
@@ -3122,8 +3122,8 @@ msgstr ""
 msgid "The downloader is disabled. Check your preferences."
 msgstr "youtube-dl esta desactivado. Revise sus configuraciones."
 
-#: ../vdms_panels/choose_topic.py:231 ../vdms_panels/youtubedl_ui.py:910
-#: ../vdms_panels/youtubedl_ui.py:916
+#: ../vdms_panels/choose_topic.py:231 ../vdms_panels/youtubedl_ui.py:911
+#: ../vdms_panels/youtubedl_ui.py:917
 #: ../vdms_panels/long_processing_task.py:482
 #: ../vdms_panels/presets_manager.py:492 ../vdms_panels/presets_manager.py:535
 #: ../vdms_panels/presets_manager.py:603 ../vdms_panels/presets_manager.py:629
@@ -3393,7 +3393,7 @@ msgstr "Calidad"
 msgid "Sorry, this feature is disabled."
 msgstr "Lo siento, característica desabilitada."
 
-#: ../vdms_panels/youtubedl_ui.py:709
+#: ../vdms_panels/youtubedl_ui.py:710
 #, fuzzy
 #| msgid "Unable to get format codes on playlists and channels"
 msgid ""
@@ -3402,16 +3402,16 @@ msgid ""
 msgstr ""
 "Imposible obtener códigos de formato desde lista de reproducción y canales"
 
-#: ../vdms_panels/youtubedl_ui.py:779
+#: ../vdms_panels/youtubedl_ui.py:780
 msgid "URLs have no playlist references"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:908
+#: ../vdms_panels/youtubedl_ui.py:909
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr ""
 "Las URLs contienen listas de reproducción. ¿Seguro que desea continuar?"
 
-#: ../vdms_panels/youtubedl_ui.py:914
+#: ../vdms_panels/youtubedl_ui.py:915
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "Las URLs contienen canales. ¿Seguro que desea continuar?"
 
@@ -3954,11 +3954,11 @@ msgid "Is 'ffmpeg' installed on your system?"
 msgstr "¿Esta 'ffmpeg' instalado en su sistema?"
 
 #: ../vdms_threads/ydl_executable.py:74 ../vdms_threads/ydl_executable.py:84
-#: ../vdms_threads/ydl_executable.py:269 ../vdms_threads/ydl_executable.py:276
+#: ../vdms_threads/ydl_executable.py:275 ../vdms_threads/ydl_executable.py:282
 msgid "Unrecognized error"
 msgstr "Error desconocido"
 
-#: ../vdms_threads/ydl_executable.py:272
+#: ../vdms_threads/ydl_executable.py:278
 msgid ""
 "\n"
 "Requires MSVCR100.dll\n"

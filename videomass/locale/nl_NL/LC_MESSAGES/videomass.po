@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-02 10:51+0200\n"
-"PO-Revision-Date: 2021-10-02 10:57+0200\n"
+"POT-Creation-Date: 2021-10-03 11:53+0200\n"
+"PO-Revision-Date: 2021-10-03 11:56+0200\n"
 "Last-Translator: Roelof Berkepeis <roelof@imoma.eu>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -1809,7 +1809,7 @@ msgstr ""
 #: ../vdms_main/main_frame.py:1479 ../vdms_main/main_frame.py:1511
 #: ../vdms_main/main_frame.py:1534 ../vdms_main/main_frame.py:1589
 #: ../vdms_main/main_frame.py:1640 ../vdms_main/main_frame.py:1692
-#: ../vdms_panels/youtubedl_ui.py:444 ../vdms_panels/youtubedl_ui.py:678
+#: ../vdms_panels/youtubedl_ui.py:444 ../vdms_panels/youtubedl_ui.py:679
 msgid "Ready"
 msgstr "Gereed"
 
@@ -1880,7 +1880,7 @@ msgstr ""
 #: ../vdms_main/main_frame.py:375
 #, fuzzy
 #| msgid "Update to latest youtube-dl version"
-msgid "Update the donloader to the latest version"
+msgid "Update the downloader to the latest version"
 msgstr "Update naar laatste youtube-dl versie"
 
 #: ../vdms_main/main_frame.py:378
@@ -3144,8 +3144,8 @@ msgstr ""
 msgid "The downloader is disabled. Check your preferences."
 msgstr "youtube-dl is uitgezet. Controleer uw voorkeuren."
 
-#: ../vdms_panels/choose_topic.py:231 ../vdms_panels/youtubedl_ui.py:910
-#: ../vdms_panels/youtubedl_ui.py:916
+#: ../vdms_panels/choose_topic.py:231 ../vdms_panels/youtubedl_ui.py:911
+#: ../vdms_panels/youtubedl_ui.py:917
 #: ../vdms_panels/long_processing_task.py:482
 #: ../vdms_panels/presets_manager.py:492 ../vdms_panels/presets_manager.py:535
 #: ../vdms_panels/presets_manager.py:603 ../vdms_panels/presets_manager.py:629
@@ -3418,7 +3418,7 @@ msgstr "Kwaliteit"
 msgid "Sorry, this feature is disabled."
 msgstr "Sorry, deze mogelijkheid is afgesloten."
 
-#: ../vdms_panels/youtubedl_ui.py:709
+#: ../vdms_panels/youtubedl_ui.py:710
 #, fuzzy
 #| msgid "Unable to get format codes on playlists"
 msgid ""
@@ -3426,15 +3426,15 @@ msgid ""
 "multiple videos listed."
 msgstr "Onmogelijk om playlist formaat codes te verkrijgen"
 
-#: ../vdms_panels/youtubedl_ui.py:779
+#: ../vdms_panels/youtubedl_ui.py:780
 msgid "URLs have no playlist references"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:908
+#: ../vdms_panels/youtubedl_ui.py:909
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr "De URLs bevatten playlists. Wilt u toch doorgaan?"
 
-#: ../vdms_panels/youtubedl_ui.py:914
+#: ../vdms_panels/youtubedl_ui.py:915
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "De URLs bevatten kanalen. Wilt u toch doorgaan?"
 
@@ -3977,11 +3977,11 @@ msgid "Is 'ffmpeg' installed on your system?"
 msgstr "Is 'ffmpeg' geïnstalleerd op uw systeem?"
 
 #: ../vdms_threads/ydl_executable.py:74 ../vdms_threads/ydl_executable.py:84
-#: ../vdms_threads/ydl_executable.py:269 ../vdms_threads/ydl_executable.py:276
+#: ../vdms_threads/ydl_executable.py:275 ../vdms_threads/ydl_executable.py:282
 msgid "Unrecognized error"
 msgstr "Onherkenbare error"
 
-#: ../vdms_threads/ydl_executable.py:272
+#: ../vdms_threads/ydl_executable.py:278
 msgid ""
 "\n"
 "Requires MSVCR100.dll\n"

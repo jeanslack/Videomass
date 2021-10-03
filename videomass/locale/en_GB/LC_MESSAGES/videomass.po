@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-02 10:51+0200\n"
-"PO-Revision-Date: 2021-10-02 10:57+0200\n"
+"POT-Creation-Date: 2021-10-03 11:53+0200\n"
+"PO-Revision-Date: 2021-10-03 11:55+0200\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -1556,7 +1556,7 @@ msgstr ""
 #: ../vdms_main/main_frame.py:1479 ../vdms_main/main_frame.py:1511
 #: ../vdms_main/main_frame.py:1534 ../vdms_main/main_frame.py:1589
 #: ../vdms_main/main_frame.py:1640 ../vdms_main/main_frame.py:1692
-#: ../vdms_panels/youtubedl_ui.py:444 ../vdms_panels/youtubedl_ui.py:678
+#: ../vdms_panels/youtubedl_ui.py:444 ../vdms_panels/youtubedl_ui.py:679
 msgid "Ready"
 msgstr ""
 
@@ -1625,7 +1625,7 @@ msgid "Update {}"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:375
-msgid "Update the donloader to the latest version"
+msgid "Update the downloader to the latest version"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:378
@@ -2700,8 +2700,8 @@ msgstr ""
 msgid "The downloader is disabled. Check your preferences."
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:231 ../vdms_panels/youtubedl_ui.py:910
-#: ../vdms_panels/youtubedl_ui.py:916
+#: ../vdms_panels/choose_topic.py:231 ../vdms_panels/youtubedl_ui.py:911
+#: ../vdms_panels/youtubedl_ui.py:917
 #: ../vdms_panels/long_processing_task.py:482
 #: ../vdms_panels/presets_manager.py:492 ../vdms_panels/presets_manager.py:535
 #: ../vdms_panels/presets_manager.py:603 ../vdms_panels/presets_manager.py:629
@@ -2927,21 +2927,21 @@ msgstr ""
 msgid "Sorry, this feature is disabled."
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:709
+#: ../vdms_panels/youtubedl_ui.py:710
 msgid ""
 "Unable to get format codes on playlists / channels or URLs containing "
 "multiple videos listed."
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:779
+#: ../vdms_panels/youtubedl_ui.py:780
 msgid "URLs have no playlist references"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:908
+#: ../vdms_panels/youtubedl_ui.py:909
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:914
+#: ../vdms_panels/youtubedl_ui.py:915
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr ""
 
@@ -3428,11 +3428,11 @@ msgid "Is 'ffmpeg' installed on your system?"
 msgstr ""
 
 #: ../vdms_threads/ydl_executable.py:74 ../vdms_threads/ydl_executable.py:84
-#: ../vdms_threads/ydl_executable.py:269 ../vdms_threads/ydl_executable.py:276
+#: ../vdms_threads/ydl_executable.py:275 ../vdms_threads/ydl_executable.py:282
 msgid "Unrecognized error"
 msgstr ""
 
-#: ../vdms_threads/ydl_executable.py:272
+#: ../vdms_threads/ydl_executable.py:278
 msgid ""
 "\n"
 "Requires MSVCR100.dll\n"

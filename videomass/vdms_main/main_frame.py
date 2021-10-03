@@ -372,7 +372,7 @@ class MainFrame(wx.Frame):
         searchtopic = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
         dscrp = (_("Update {}").format(self.appdata['downloader'][1]),
-                 _("Update the donloader to the latest version"))
+                 _("Update the downloader to the latest version"))
         self.ydlupdate = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
         dscrp = (_("Check for new presets"),

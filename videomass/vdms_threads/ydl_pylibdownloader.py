@@ -226,6 +226,7 @@ class YtdlLibDL(Thread):
                 break
 
             ydl_opts = {
+                'compat_opts': 'all',
                 'format': format_code,
                 'extractaudio': self.opt['format'],
                 'outtmpl': '{}/{}'.format(self.args['outdir'], outtmpl),
