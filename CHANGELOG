@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Oct 03, 2021 V.3.4.7
+Oct 04, 2021 V.3.4.8
 
   * Fixed tests
   * Added code implementation for Python embed package (Windows).
@@ -22,6 +22,7 @@ Oct 03, 2021 V.3.4.7
     Downloader panel.
   * Improved video quality selector on the YouTube Downloader panel.
   * New version of the videomass.conf configuration file changing to v3.3
+  * Improved output debug colours and message texts.
 
 +------------------------------------+
 Sep 15, 2021 V.3.4.6

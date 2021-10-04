@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 3.4.7\n"
+"Project-Id-Version: Videomass 3.4.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-03 11:53+0200\n"
-"PO-Revision-Date: 2021-10-03 11:56+0200\n"
+"POT-Creation-Date: 2021-10-04 20:41+0200\n"
+"PO-Revision-Date: 2021-10-04 20:47+0200\n"
 "Last-Translator: Roelof Berkepeis <roelof@imoma.eu>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -1809,7 +1809,7 @@ msgstr ""
 #: ../vdms_main/main_frame.py:1479 ../vdms_main/main_frame.py:1511
 #: ../vdms_main/main_frame.py:1534 ../vdms_main/main_frame.py:1589
 #: ../vdms_main/main_frame.py:1640 ../vdms_main/main_frame.py:1692
-#: ../vdms_panels/youtubedl_ui.py:444 ../vdms_panels/youtubedl_ui.py:679
+#: ../vdms_panels/youtubedl_ui.py:459 ../vdms_panels/youtubedl_ui.py:698
 msgid "Ready"
 msgstr "Gereed"
 
@@ -2572,7 +2572,7 @@ msgstr "Afstemmen"
 msgid "Video Filters"
 msgstr "Video Filters"
 
-#: ../vdms_panels/av_conversions.py:530 ../vdms_panels/youtubedl_ui.py:217
+#: ../vdms_panels/av_conversions.py:530 ../vdms_panels/youtubedl_ui.py:232
 msgid "Preview"
 msgstr "Voorvertoning"
 
@@ -3144,9 +3144,9 @@ msgstr ""
 msgid "The downloader is disabled. Check your preferences."
 msgstr "youtube-dl is uitgezet. Controleer uw voorkeuren."
 
-#: ../vdms_panels/choose_topic.py:231 ../vdms_panels/youtubedl_ui.py:911
-#: ../vdms_panels/youtubedl_ui.py:917
-#: ../vdms_panels/long_processing_task.py:482
+#: ../vdms_panels/choose_topic.py:231 ../vdms_panels/youtubedl_ui.py:931
+#: ../vdms_panels/youtubedl_ui.py:937
+#: ../vdms_panels/long_processing_task.py:481
 #: ../vdms_panels/presets_manager.py:492 ../vdms_panels/presets_manager.py:535
 #: ../vdms_panels/presets_manager.py:603 ../vdms_panels/presets_manager.py:629
 #: ../vdms_panels/presets_manager.py:771 ../vdms_panels/presets_manager.py:804
@@ -3294,51 +3294,57 @@ msgstr ""
 msgid "Function available only if you choose \"Download by format code\""
 msgstr "Functie is alleen beschikbaar als u \"Download op formaat code\" kiest"
 
-#: ../vdms_panels/youtubedl_ui.py:113
+#: ../vdms_panels/youtubedl_ui.py:123
 msgid "Default"
 msgstr "Standaard"
 
-#: ../vdms_panels/youtubedl_ui.py:114
+#: ../vdms_panels/youtubedl_ui.py:124
 msgid "Download audio and video splitted"
 msgstr "Download audio en video afzonderlijk"
 
-#: ../vdms_panels/youtubedl_ui.py:115
+#: ../vdms_panels/youtubedl_ui.py:125
 msgid "Download Audio only"
 msgstr "Download alleen Audio"
 
-#: ../vdms_panels/youtubedl_ui.py:116
+#: ../vdms_panels/youtubedl_ui.py:126
 msgid "Download by format code"
 msgstr "Download op formaat code"
 
-#: ../vdms_panels/youtubedl_ui.py:156
+#: ../vdms_panels/youtubedl_ui.py:167
 msgid "Options"
 msgstr "Opties"
 
-#: ../vdms_panels/youtubedl_ui.py:223
+#: ../vdms_panels/youtubedl_ui.py:202
+msgid ""
+"Each format is indicative and may not be available, so it will be replaced "
+"with the closest one."
+msgstr ""
+
+#: ../vdms_panels/youtubedl_ui.py:238
 msgid "Download all videos in playlist"
 msgstr "Download alle videos in de playlist"
 
-#: ../vdms_panels/youtubedl_ui.py:228
+#: ../vdms_panels/youtubedl_ui.py:243
 msgid "Playlist Editor"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:235
+#: ../vdms_panels/youtubedl_ui.py:250
 msgid "Embed thumbnail in audio file"
 msgstr "Plaats thumbnail in audio bestand"
 
-#: ../vdms_panels/youtubedl_ui.py:239
+#: ../vdms_panels/youtubedl_ui.py:254
 msgid "Add metadata to file"
 msgstr "Voeg metadata aan bestand toe"
 
-#: ../vdms_panels/youtubedl_ui.py:243
+#: ../vdms_panels/youtubedl_ui.py:258
 msgid "Write subtitles to video"
 msgstr "Schrijf ondertitels naar video"
 
-#: ../vdms_panels/youtubedl_ui.py:248
+#: ../vdms_panels/youtubedl_ui.py:263
 msgid "Prevent overwriting files"
 msgstr "Voorkom overschrijven bestanden"
 
-#: ../vdms_panels/youtubedl_ui.py:253
+#: ../vdms_panels/youtubedl_ui.py:268
 msgid ""
 "Include the video ID\n"
 "in the file names"
@@ -3346,79 +3352,79 @@ msgstr ""
 "Voeg de video ID toe\n"
 "aan de bestandsnamen"
 
-#: ../vdms_panels/youtubedl_ui.py:259
+#: ../vdms_panels/youtubedl_ui.py:274
 msgid "Restrict file names"
 msgstr "Beperk bestandsnamen"
 
-#: ../vdms_panels/youtubedl_ui.py:283
+#: ../vdms_panels/youtubedl_ui.py:298
 msgid "Help viewer"
 msgstr "Hulp viewer"
 
-#: ../vdms_panels/youtubedl_ui.py:308 ../vdms_panels/youtubedl_ui.py:411
-#: ../vdms_panels/youtubedl_ui.py:427
+#: ../vdms_panels/youtubedl_ui.py:323 ../vdms_panels/youtubedl_ui.py:426
+#: ../vdms_panels/youtubedl_ui.py:442
 msgid "Play selected url"
 msgstr "Speel geselecteerde url af"
 
-#: ../vdms_panels/youtubedl_ui.py:439
+#: ../vdms_panels/youtubedl_ui.py:454
 msgid "An item must be selected in the URLs checklist"
 msgstr "Een item moet geselecteerd zijn in de URL lijst"
 
-#: ../vdms_panels/youtubedl_ui.py:449
+#: ../vdms_panels/youtubedl_ui.py:464
 msgid ""
 "Cannot play playlists / channels or URLs containing multiple videos listed."
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:472 ../vdms_panels/youtubedl_ui.py:569
+#: ../vdms_panels/youtubedl_ui.py:491 ../vdms_panels/youtubedl_ui.py:588
 msgid "Format Code"
 msgstr "Formaat Code"
 
-#: ../vdms_panels/youtubedl_ui.py:473 ../vdms_panels/youtubedl_ui.py:570
-#: ../vdms_panels/youtubedl_ui.py:617
+#: ../vdms_panels/youtubedl_ui.py:492 ../vdms_panels/youtubedl_ui.py:589
+#: ../vdms_panels/youtubedl_ui.py:636
 msgid "Url"
 msgstr "Url"
 
-#: ../vdms_panels/youtubedl_ui.py:474 ../vdms_panels/youtubedl_ui.py:571
-#: ../vdms_panels/youtubedl_ui.py:618
+#: ../vdms_panels/youtubedl_ui.py:493 ../vdms_panels/youtubedl_ui.py:590
+#: ../vdms_panels/youtubedl_ui.py:637
 msgid "Title"
 msgstr "Titel"
 
-#: ../vdms_panels/youtubedl_ui.py:475 ../vdms_panels/youtubedl_ui.py:572
+#: ../vdms_panels/youtubedl_ui.py:494 ../vdms_panels/youtubedl_ui.py:591
 msgid "Extension"
 msgstr "Extensie"
 
-#: ../vdms_panels/youtubedl_ui.py:476
+#: ../vdms_panels/youtubedl_ui.py:495
 msgid "Resolution"
 msgstr "Resolutie"
 
-#: ../vdms_panels/youtubedl_ui.py:477
+#: ../vdms_panels/youtubedl_ui.py:496
 msgid "Video Codec"
 msgstr "Video Codec"
 
-#: ../vdms_panels/youtubedl_ui.py:478
+#: ../vdms_panels/youtubedl_ui.py:497
 msgid "fps"
 msgstr "fps"
 
-#: ../vdms_panels/youtubedl_ui.py:479
+#: ../vdms_panels/youtubedl_ui.py:498
 msgid "Audio Codec"
 msgstr "Audio Codec"
 
-#: ../vdms_panels/youtubedl_ui.py:480 ../vdms_panels/filedrop.py:222
+#: ../vdms_panels/youtubedl_ui.py:499 ../vdms_panels/filedrop.py:222
 msgid "Size"
 msgstr "Grootte"
 
-#: ../vdms_panels/youtubedl_ui.py:573
+#: ../vdms_panels/youtubedl_ui.py:592
 msgid "Resolution note"
 msgstr "Resolutie notitie"
 
-#: ../vdms_panels/youtubedl_ui.py:619
+#: ../vdms_panels/youtubedl_ui.py:638
 msgid "Quality"
 msgstr "Kwaliteit"
 
-#: ../vdms_panels/youtubedl_ui.py:639
+#: ../vdms_panels/youtubedl_ui.py:658
 msgid "Sorry, this feature is disabled."
 msgstr "Sorry, deze mogelijkheid is afgesloten."
 
-#: ../vdms_panels/youtubedl_ui.py:710
+#: ../vdms_panels/youtubedl_ui.py:729
 #, fuzzy
 #| msgid "Unable to get format codes on playlists"
 msgid ""
@@ -3426,15 +3432,15 @@ msgid ""
 "multiple videos listed."
 msgstr "Onmogelijk om playlist formaat codes te verkrijgen"
 
-#: ../vdms_panels/youtubedl_ui.py:780
+#: ../vdms_panels/youtubedl_ui.py:800
 msgid "URLs have no playlist references"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:909
+#: ../vdms_panels/youtubedl_ui.py:929
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr "De URLs bevatten playlists. Wilt u toch doorgaan?"
 
-#: ../vdms_panels/youtubedl_ui.py:915
+#: ../vdms_panels/youtubedl_ui.py:935
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "De URLs bevatten kanalen. Wilt u toch doorgaan?"
 
@@ -3551,39 +3557,39 @@ msgstr ""
 "\n"
 "[Videomass]: afgerond, maar niet alles was succesvol.\n"
 
-#: ../vdms_panels/long_processing_task.py:122
+#: ../vdms_panels/long_processing_task.py:121
 msgid "Process log:"
 msgstr "Proces log:"
 
-#: ../vdms_panels/long_processing_task.py:131
+#: ../vdms_panels/long_processing_task.py:130
 msgid "Suppress excess output"
 msgstr "Onderdruk overvloedige output"
 
-#: ../vdms_panels/long_processing_task.py:135
+#: ../vdms_panels/long_processing_task.py:134
 msgid "Abort"
 msgstr "Afbreken"
 
-#: ../vdms_panels/long_processing_task.py:151
+#: ../vdms_panels/long_processing_task.py:150
 msgid "If activated, hides some output messages."
 msgstr "Verbergt bepaalde output berichten."
 
-#: ../vdms_panels/long_processing_task.py:153
+#: ../vdms_panels/long_processing_task.py:152
 msgid "Stops current process"
 msgstr "Stopt huidige proces"
 
-#: ../vdms_panels/long_processing_task.py:443
+#: ../vdms_panels/long_processing_task.py:442
 msgid "...Finished"
 msgstr "...Afgerond"
 
-#: ../vdms_panels/long_processing_task.py:458
+#: ../vdms_panels/long_processing_task.py:457
 msgid "wait... I'm aborting"
 msgstr "wacht... bezig met afbreken"
 
-#: ../vdms_panels/long_processing_task.py:461
+#: ../vdms_panels/long_processing_task.py:460
 msgid "...Interrupted"
 msgstr "...Interrupt"
 
-#: ../vdms_panels/long_processing_task.py:479
+#: ../vdms_panels/long_processing_task.py:478
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"

@@ -1,3 +1,22 @@
+videomass (3.4.8-1) UNRELEASED; urgency=medium
+
+  * Fixed tests
+  * Added code implementation for Python embed package (Windows).
+  * Some code refactoring.
+  * Changed package name from `videomass3` to `videomass`
+  * Changed main from `vdms3.py` to `gui_app.py`.
+  * Fixed man page.
+  * Improved error handling during application startup.
+  * Made some cosmetic improvements.
+  * Added support for yt-dlp, an updated fork of youtube-dl downloader.
+  * Fixed #37 - Incorrect video and audio qualities values on YouTube
+    Downloader panel.
+  * Improved video quality selector on the YouTube Downloader panel.
+  * New version of the videomass.conf configuration file changing to v3.3
+  * Improved output debug colours and message texts.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 04 Oct 2021 20:52:00 +0200
+
 videomass (3.4.7-1) UNRELEASED; urgency=medium
 
   * Fixed tests

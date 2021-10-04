@@ -236,7 +236,7 @@ class LogOut(wx.Panel):
 
         elif status == 'DEBUG':
             if '[download] Destination' in output:
-                self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.DEBUG))
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['DEBUG']))
                 self.txtout.AppendText(f'{output}\n')
 
             elif '[info]' in output:
@@ -413,10 +413,10 @@ class LogOut(wx.Panel):
             self.barprog.SetValue(0)  # reset bar progress
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
             self.txtout.AppendText(f'\n{count}\n')
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['INFO']))
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['DEBUG']))
             self.txtout.AppendText(f'{fsource}\n')
             if destination:
-                self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.DEBUG))
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['DEBUG']))
                 self.txtout.AppendText(f'{destination}\n')
 
     # ----------------------------------------------------------------------
@@ -435,7 +435,7 @@ class LogOut(wx.Panel):
         else:
             if not self.result:
                 endmsg = LogOut.MSG_completed
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT3']))
             else:
                 endmsg = LogOut.MSG_unfinished
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))

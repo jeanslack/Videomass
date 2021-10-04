@@ -199,8 +199,8 @@ class Downloader(wx.Panel):
         self.cmbx_vq.SetSelection(0)
         # grid_v.Add((20, 20), 0,)
         fgs1.Add(self.cmbx_vq, 0, wx.ALL | wx.EXPAND, 5)
-        tip = (_('The requested format is indicative and may not be '
-                 'available, so it will be replaced with the closest one.'))
+        tip = (_('Each format is indicative and may not be available, '
+                 'so it will be replaced with the closest one.'))
         self.cmbx_vq.SetToolTip(tip)
 
         self.cmbx_aq = wx.ComboBox(panelscroll, wx.ID_ANY,

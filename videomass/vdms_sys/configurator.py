@@ -207,12 +207,13 @@ def get_color_scheme(theme):
                     'ERR0': '#FF4A1B',  # ORANGE for error text messages
                     'WARN': '#dfb72f',  # YELLOW for warning text messages
                     'ERR1': '#EA312D',  # LIGHTRED for errors 2
-                    'SUCCESS': '#1EA41E',  # GREEN when it is successful
+                    'SUCCESS': '#30ec30',  # Light GREEN when it is successful
                     'TXT2': '#3f5e6b',  # dark ciano
                     'TXT3': '#11b584',  # medium light green
                     'TXT4': '#87ceebff',  # light ciano
                     'TXT5': '#dd7ad0',  # LILLA
-                    'INFO': '#31BAA7',  # CYAN for info text messages
+                    'INFO': '#3298FB',  # AZURE
+                    'DEBUG': '#11b584',  # medium light green
                     }
     elif theme in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
         c_scheme = {'BACKGRD': '#232424',  # DARK Grey background color
@@ -221,27 +222,28 @@ def get_color_scheme(theme):
                     'ERR0': '#FF4A1B',  # ORANGE for error text messages
                     'WARN': '#dfb72f',  # YELLOW for warning text messages
                     'ERR1': '#EA312D',  # LIGHTRED for errors 2
-                    'SUCCESS': '#1EA41E',  # GREEN when it is successful
+                    'SUCCESS': '#30ec30',  # Light GREEN when it is successful
                     'TXT2': '#008000',  # dark green
                     'TXT3': '#11b584',  # medium light green
                     'TXT4': '#0ce3ac',  # light green
                     'TXT5': '#dd7ad0',  # LILLA
-                    'INFO': '#31BAA7',  # CYAN for info text messages
+                    'INFO': '#118db5',  # AZURE
+                    'DEBUG': '#11b584',  # medium light green
                     }
     elif theme in ('Breeze', 'Videomass-Light'):
-        c_scheme = {#'BACKGRD': '#f2efe6',  # BEIGE background color
-                    'BACKGRD': '#b5c7c6',
+        c_scheme = {'BACKGRD': '#ced0d1',  # WHITE background color
                     'TXT0': '#1f1f1fff',  # BLACK for title or URL in progress
                     'TXT1': '#778899ff',  # LIGHT_SLATE for all other text msg
                     'ERR0': '#d25c07',  # ORANGE for error text messages
                     'WARN': '#988313',  # YELLOW for warning text messages
                     'ERR1': '#c8120b',  # LIGHTRED for errors 2
-                    'SUCCESS': '#008000',  # DARK_GREEN when it is successful
+                    'SUCCESS': '#35a735',  # DARK_GREEN when it is successful
                     'TXT2': '#008000',  # dark green
-                    'TXT3': '#008000',  # dark green
-                    'TXT4': '#0ce3ac',  # light green
+                    'TXT3': '#005c00',  # Light Green
+                    'TXT4': '#2651b8',  # blue
                     'TXT5': '#dd7ad0',  # LILLA
-                    'INFO': '#248779',  # CYAN for info text messages
+                    'INFO': '#3298FB',  # AZURE
+                    'DEBUG': '#005c00',  # Light Green
                     }
     else:
         c_scheme = {'ERROR': f'Unknow theme "{theme}"'}
