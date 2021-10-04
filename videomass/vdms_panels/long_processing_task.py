@@ -86,7 +86,6 @@ class LogOut(wx.Panel):
     MSG_completed = _('\n[Videomass]: Successfully completed !\n')
     MSG_unfinished = _('\n[Videomass]: completed, but not everything '
                        'was successful.\n')
-    INFO = '#31BAA7'  # CYAN for info text messages
     DEBUG = '#3298FB'  # AZURE for debug messages
     FAILED = '#D21814'  # RED_DEEP if failed
     ABORT = '#A41EA4'  # VIOLET if the user stops the processes
@@ -241,7 +240,7 @@ class LogOut(wx.Panel):
                 self.txtout.AppendText(f'{output}\n')
 
             elif '[info]' in output:
-                self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.INFO))
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['INFO']))
                 self.txtout.AppendText(f'{output}\n')
 
             elif '[download]' not in output:
@@ -297,7 +296,7 @@ class LogOut(wx.Panel):
         else:  # append all others lines on the textctrl and log file
             if not self.ckbx_text.IsChecked():  # print the output
                 if '[info]' in output:
-                    self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.INFO))
+                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['INFO']))
                     self.txtout.AppendText(f' {output}')
                 elif 'WARNING:' in output:
                     self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
@@ -364,7 +363,7 @@ class LogOut(wx.Panel):
         else:  # append all others lines on the textctrl and log file
             if not self.ckbx_text.IsChecked():  # not print the output
                 if [x for x in ('info', 'Info') if x in output]:
-                    self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.INFO))
+                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['INFO']))
                     self.txtout.AppendText(f'{output}')
 
                 elif [x for x in ('Failed', 'failed', 'Error', 'error')
@@ -414,7 +413,7 @@ class LogOut(wx.Panel):
             self.barprog.SetValue(0)  # reset bar progress
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
             self.txtout.AppendText(f'\n{count}\n')
-            self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.INFO))
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['INFO']))
             self.txtout.AppendText(f'{fsource}\n')
             if destination:
                 self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.DEBUG))

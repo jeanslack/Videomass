@@ -212,6 +212,7 @@ def get_color_scheme(theme):
                     'TXT3': '#11b584',  # medium light green
                     'TXT4': '#87ceebff',  # light ciano
                     'TXT5': '#dd7ad0',  # LILLA
+                    'INFO': '#31BAA7',  # CYAN for info text messages
                     }
     elif theme in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
         c_scheme = {'BACKGRD': '#232424',  # DARK Grey background color
@@ -225,9 +226,11 @@ def get_color_scheme(theme):
                     'TXT3': '#11b584',  # medium light green
                     'TXT4': '#0ce3ac',  # light green
                     'TXT5': '#dd7ad0',  # LILLA
+                    'INFO': '#31BAA7',  # CYAN for info text messages
                     }
     elif theme in ('Breeze', 'Videomass-Light'):
-        c_scheme = {'BACKGRD': '#f2efe6',  # BEIGE background color
+        c_scheme = {#'BACKGRD': '#f2efe6',  # BEIGE background color
+                    'BACKGRD': '#b5c7c6',
                     'TXT0': '#1f1f1fff',  # BLACK for title or URL in progress
                     'TXT1': '#778899ff',  # LIGHT_SLATE for all other text msg
                     'ERR0': '#d25c07',  # ORANGE for error text messages
@@ -238,6 +241,7 @@ def get_color_scheme(theme):
                     'TXT3': '#008000',  # dark green
                     'TXT4': '#0ce3ac',  # light green
                     'TXT5': '#dd7ad0',  # LILLA
+                    'INFO': '#248779',  # CYAN for info text messages
                     }
     else:
         c_scheme = {'ERROR': f'Unknow theme "{theme}"'}

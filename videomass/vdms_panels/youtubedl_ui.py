@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.28.2021
+Rev: Oct.03.2021
 Code checker: pycodestyle / flake8 --ignore=F821,W503
 ########################################################
 
@@ -93,18 +93,19 @@ class Downloader(wx.Panel):
     MSG_2 = _('Function available only if you choose "Download by '
               'format code"')
 
-    VQUALITY = {('Best quality video 1080p'):
-                    ('bestvideo[height>=?1080]+bestaudio/best[height>=?1080]'),
-                ('video 720p'):
-                    ('bestvideo[height=?720]+worstaudio/best[height=?720]'),
-                ('video 480p'):
-                    ('worstvideo[height=?480]+worstaudio/best[height=?480]'),
-                ('video 360p'):
-                    ('best[height=?360]+best/best[height=?360]'),
-                ('video 240p'):
-                    ('worstvideo[height=?240]+worstaudio/best[height=?240]'),
-                ('Worst quality video 144p'):
-                    ('worstvideo[height<=?144]+worstaudio/worst[height<=?144]'),
+    VQUALITY = {('Best quality video 1080p'): ('bestvideo[height<=?1080]'
+                                               '+bestaudio/best[height'
+                                               '<=?1080]'),
+                ('video 720p'): ('bestvideo[height<=?720]+worstaudio'
+                                 '/best[height<=?720]'),
+                ('video 480p'): ('worstvideo[height<=?480]+'
+                                 '/best[height<=?480]'),
+                ('video 360p'): ('best[height<=?360]+best/best[height<=?360]'),
+                ('video 240p'): ('worstvideo[height<=?240]+worstaudio'
+                                 '/best[height<=?240]'),
+                ('Worst quality video 144p'): ('worstvideo[height>=?144]'
+                                               '+worstaudio/worst[height'
+                                               '>=?144]'),
                 }
     AFORMATS = {("Default audio format"): ("best", "--extract-audio"),
                 ("wav"): ("wav", "--extract-audio --audio-format wav"),
@@ -147,7 +148,7 @@ class Downloader(wx.Panel):
                     ("THUMB"): [False, ""],
                     ("METADATA"): [False, ""],
                     ("V_QUALITY"): ("bestvideo[height"
-                                    ">=?1080]+bestaudio/best[height>=?1080]"),
+                                    "<=?1080]+bestaudio/best[height<=?1080]"),
                     ("A_FORMAT"): ["best", "--extract-audio"],
                     ("A_QUALITY"): ("bestaudio"),
                     ("SUBTITLES"): [False, ""],
@@ -198,6 +199,10 @@ class Downloader(wx.Panel):
         self.cmbx_vq.SetSelection(0)
         # grid_v.Add((20, 20), 0,)
         fgs1.Add(self.cmbx_vq, 0, wx.ALL | wx.EXPAND, 5)
+        tip = (_('The requested format is indicative and may not be '
+                 'available, so it will be replaced with the closest one.'))
+        self.cmbx_vq.SetToolTip(tip)
+
         self.cmbx_aq = wx.ComboBox(panelscroll, wx.ID_ANY,
                                    choices=list(Downloader.AQUALITY.keys()),
                                    size=(-1, -1),
@@ -707,7 +712,7 @@ class Downloader(wx.Panel):
             self.cmbx_vq.Enable(), self.cod_text.Hide()
             self.labtxt.Hide()
             self.Layout()
-            self.on_urls_list(f'{self.opt["V_QUALITY"].split("+")[0]},'
+            self.on_urls_list(f'{self.opt["V_QUALITY"].split("+", maxsplit=1)[0]},'
                               f'{self.opt["A_QUALITY"]}')
         elif self.choice.GetSelection() == 2:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
@@ -747,7 +752,7 @@ class Downloader(wx.Panel):
             quality = self.opt["V_QUALITY"]
         elif self.choice.GetSelection() == 1:
             # set the "worst" and "best" parameters independently
-            quality = (f'{self.opt["V_QUALITY"].split("+")[0]},'
+            quality = (f'{self.opt["V_QUALITY"].split("+", maxsplit=1)[0]},'
                        f'{self.opt["A_QUALITY"]}')
         for link in self.parent.data_url:
             self.fcode.SetItem(index, 3, quality)
@@ -776,7 +781,7 @@ class Downloader(wx.Panel):
         index = 0
         # set string to audio and video qualities independently for player
 
-        quality = (f'{self.opt["V_QUALITY"].split("+")[0]},'
+        quality = (f'{self.opt["V_QUALITY"].split("+", maxsplit=1)[0]},'
                    f'{self.opt["A_QUALITY"]}')
         for link in self.parent.data_url:
             self.fcode.SetItem(index, 3, quality)
@@ -978,7 +983,7 @@ class Downloader(wx.Panel):
                         }
             if self.choice.GetSelection() == 1:  # audio files and video files
                 code = []
-                data = {'format': (f'{self.opt["V_QUALITY"].split("+")[0]},'
+                data = {'format': (f'{self.opt["V_QUALITY"].split("+", maxsplit=1)[0]},'
                                    f'{self.opt["A_QUALITY"]}'),
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
                         'playlist_items': self.plidx,
@@ -1066,7 +1071,7 @@ class Downloader(wx.Panel):
             if self.choice.GetSelection() == 1:  # audio files + video files
                 code = []
                 cmd = [(f'--format '
-                        f'{self.opt["V_QUALITY"].split("+")[0]},'
+                        f'{self.opt["V_QUALITY"].split("+", maxsplit=1)[0]},'
                         f'{self.opt["A_QUALITY"]} '
                         f'{self.opt["METADATA"][1]} '
                         f'{self.opt["SUBTITLES"][1]} '

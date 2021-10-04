@@ -25,9 +25,15 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+import sys
 from shutil import which
 import argparse
 from videomass.vdms_sys.msg_info import current_release
+try:
+    import wx
+    MSGWX = f"{wx.version()})"
+except ModuleNotFoundError as errwx:
+    MSGWX = f"not installed! ({errwx})"
 
 
 def args():
@@ -38,7 +44,7 @@ def args():
         videomass -h
     """
     parser = argparse.ArgumentParser(description=('GUI for FFmpeg and '
-                                                  'youtube-dl'),)
+                                                  'youtube-dl/yt-dlp'),)
     parser.add_argument('-v', '--version',
                         help="show the current version and exit",
                         action="store_true",
@@ -72,7 +78,9 @@ def args():
 
     elif argmts.version:
         crel = current_release()
-        print(f'{crel[0]} version {crel[2]} released on {crel[3]}')
+        print(f'{crel[0]}: {crel[2]} ({crel[3]})')
+        print(f'Python: {sys.version}')
+        print(f'wxPython: {MSGWX}')
 
     else:
         print("Type 'videomass -h' for help.")
