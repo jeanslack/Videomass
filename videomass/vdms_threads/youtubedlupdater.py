@@ -82,78 +82,6 @@ class CheckNewRelease(Thread):
 '''
 # -------------------------------------------------------------------------#
 
-
-class CmdExec(Thread):
-    """
-    Executes generic command line with an executable, e.g.
-    - read the installed version of youtube-dl
-    - update the downloaded sources of youtube-dl
-
-    """
-
-    def __init__(self, cmd):
-        """
-        OS: Operative System id
-        self.cmd: command line list object
-        self.status: tuple object with exit status of the process
-        self.data: returned output of the self.status
-        """
-        self.ostype = platform.system()
-        self.cmd = cmd
-        self.data = None
-        self.status = None
-
-        Thread.__init__(self)
-        self.start()  # start the thread (va in self.run())
-    # ----------------------------------------------------------------#
-
-    def run(self):
-        """
-        Execute command line via subprocess class and get output
-        at the end of the process.
-        """
-        if self.ostype == 'Windows':
-            cmd = " ".join(self.cmd)
-            info = subprocess.STARTUPINFO()
-            info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-
-        else:
-            cmd = self.cmd
-            info = None
-
-        try:
-            with subprocess.Popen(cmd,
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.STDOUT,
-                                  universal_newlines=True,  # mod text
-                                  startupinfo=info,
-                                  ) as proc:
-
-                out = proc.communicate()
-
-                if proc.returncode:  # if returncode == 1
-                    if not out[0] and not out[1] and self.ostype == 'Windows':
-                        self.status = (_('Requires MSVCR100.dll\nTo resolve '
-                                         'this problem install: Microsoft '
-                                         'Visual C++ 2010 Redistributable '
-                                         'Package (x86)'), 'error')
-                    else:
-                        self.status = (out[0], 'error')
-                else:
-                    self.status = (out[0], out[1])
-
-        except (OSError, FileNotFoundError) as oserr:  # exec. do not exist
-            self.status = ('%s' % oserr, 'error')
-
-        self.data = self.status
-
-        wx.CallAfter(pub.sendMessage,
-                     "RESULT_EVT",
-                     status=''
-                     )
-# ---------------------------------------------------------------------#
-
-
 '''
 class UpgradeLatest(Thread):
     """
@@ -271,3 +199,23 @@ class UpdateYoutubedlAppimage(Thread):
                      "RESULT_EVT",
                      status=''
                      )
+
+
+def update_ydl_windows():
+    """
+    Prompt pkg update program via pip on Windows.
+    """
+    WELCOME_MESSAGE = f'\nCheck for "{mod}" update... Please wait...\n'
+    GOODBYE_MESSAGE = f'\nDone. Restart Videomass now.\nPress ENTER to exit.'
+
+    print(WELCOME_MESSAGE)
+    try:
+        cmd = subprocess.run([sys.executable, '-m', 'pip', 'install', '-U',
+                             'youtube_dl', 'yt_dlp'], shell=True, check=True)
+    except subprocess.CalledProcessError as err:
+        print('\nERROR: %s' % err)
+        input('\nPress ENTER to exit.')
+        return err
+    else:
+        input(GOODBYE_MESSAGE)
+        return

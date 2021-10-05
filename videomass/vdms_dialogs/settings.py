@@ -241,7 +241,7 @@ class Setup(wx.Dialog):
         labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (''))
         sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
 
-        if self.appdata['app'] not in ('pyinstaller', 'appimage'):
+        if self.appdata['app'] not in ('pyinstaller', 'appimage', 'embed'):
             url = ('https://packaging.python.org/tutorials/'
                    'installing-packages/#upgrading-packages')
             static0 = _("How to upgrade a Python package")
@@ -290,10 +290,6 @@ class Setup(wx.Dialog):
                    "problems.\n").format(self.appdata['downloader'][1])
 
         if self.appdata['app'] == 'pyinstaller':
-            tip1 = _('Menu bar > Tools > Update {}'
-                     ).format(self.appdata['downloader'][0])
-            if self.appdata['downloader'][0] not in ('false', 'Disable all'):
-                labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
 
             if self.appdata['downloader'][0] == 'Disable all':
                 self.rdbDownloader.SetSelection(0)
@@ -301,18 +297,19 @@ class Setup(wx.Dialog):
             else:
                 if self.appdata['downloader'][0] == 'youtube_dl':
                     self.rdbDownloader.SetSelection(1)
+
                 elif self.appdata['downloader'][0] == 'yt_dlp':
                     self.rdbDownloader.SetSelection(2)
-                if os.path.exists(self.appdata['EXECYDL']):
-                    self.ydlPath.WriteText(str(self.appdata['EXECYDL']))
+
+                if self.appdata['PYLIBYDL'] is None:
+                    self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
                 else:
                     self.ydlPath.WriteText(_('Not found'))
 
-        elif self.appdata['app'] == 'appimage':
+        elif self.appdata['app'] in ('appimage', 'embed'):
+
             tip1 = _('Menu bar > Tools > Update {}'
                      ).format(self.appdata['downloader'][0])
-            if self.appdata['downloader'][0] not in ('false', 'Disable all'):
-                labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
 
             if self.appdata['downloader'][0] == 'Disable all':
                 self.rdbDownloader.SetSelection(0)
@@ -320,29 +317,31 @@ class Setup(wx.Dialog):
             else:
                 if self.appdata['downloader'][0] == 'youtube_dl':
                     self.rdbDownloader.SetSelection(1)
+
                 elif self.appdata['downloader'][0] == 'yt_dlp':
                     self.rdbDownloader.SetSelection(2)
-                if self.appdata['YDLSITE'] is None:
-                    self.ydlPath.WriteText(_('Not Installed'))
-                else:
-                    self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
 
+                if self.appdata['PYLIBYDL'] is None:
+                    labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
+                    self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
+                else:
+                    self.ydlPath.WriteText(_('Not Installed'))
         else:
-            if self.appdata['downloader'][0] not in ('false', 'Disable all'):
-                labydl0.SetLabel('%s' % (ydlmsg))
-
             if self.appdata['downloader'][0] == 'Disable all':
                 self.rdbDownloader.SetSelection(0)
                 self.ydlPath.WriteText(_('Disabled'))
             else:
                 if self.appdata['downloader'][0] == 'youtube_dl':
                     self.rdbDownloader.SetSelection(1)
+
                 elif self.appdata['downloader'][0] == 'yt_dlp':
                     self.rdbDownloader.SetSelection(2)
-                if self.appdata['YDLSITE'] is None:
-                    self.ydlPath.WriteText(_('Not Installed'))
-                else:
+
+                if self.appdata['PYLIBYDL'] is None:
+                    labydl0.SetLabel('%s' % (ydlmsg))
                     self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
+                else:
+                    self.ydlPath.WriteText(_('Not Installed'))
         # ---- END
 
         # ----

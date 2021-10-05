@@ -32,11 +32,10 @@ import shutil
 import requests
 import wx
 from videomass.vdms_threads.ffplay_file import FilePlay
-from videomass.vdms_threads import (ffplay_url_exec,
-                                     # ffplay_url_lib,
-                                     generic_downloads,
-                                     youtubedlupdater,
-                                     )
+from videomass.vdms_threads import (ffplay_url_lib,
+                                    generic_downloads,
+                                    youtubedlupdater,
+                                    )
 from videomass.vdms_threads.ffprobe_parser import FFProbe
 from videomass.vdms_threads.volumedetect import VolumeDetectThread
 from videomass.vdms_threads.check_bin import (ff_conf,
@@ -46,7 +45,6 @@ from videomass.vdms_threads.check_bin import (ff_conf,
                                                )
 from videomass.vdms_threads.opendir import browse
 from videomass.vdms_threads.ydl_pylibextractinfo import YtdlLibEI
-from videomass.vdms_threads.ydl_executable import YtdlExecEI
 
 from videomass.vdms_frames import (ffmpeg_conf,
                                     ffmpeg_formats,
@@ -117,15 +115,7 @@ def url_play(url, quality, timestamp, autoexit):
     See https://github.com/ytdl-org/youtube-dl/issues/16175
 
     """
-    ffplay_url_exec.ExecStreaming(timestamp, autoexit, url, quality)
-
-    # get = wx.GetApp()  # get data from bootstrap
-    # youtube_dl = get.appset['PYLIBYDL']
-
-    # if youtube_dl is not None:  # run youtube-dl executable
-        # dowl = ffplay_url_exec.ExecStreaming(url, quality)
-    # else:  # run youtube_dl library
-        # dowl = ffplay_url_lib.LibStreaming(url, quality)
+    ffplay_url_lib.LibStreaming(timestamp, autoexit, url, quality)
 
 # -----------------------------------------------------------------------#
 
@@ -300,28 +290,10 @@ def youtubedl_getstatistics(url):
 # --------------------------------------------------------------------------#
 
 
-def youtube_getformatcode_exec(url):
-    """
-    Call the thread to get format code data object with youtube-dl
-    executable, (e.g. `youtube-dl -F url`) .
-    While waiting, a pop-up dialog is shown.
-    """
-    thread = YtdlExecEI(url)
-    dlgload = PopupDialog(None,
-                          _("Videomass - Loading..."),
-                          _("\nWait....\nRetrieving required data.\n"))
-    dlgload.ShowModal()
-    # thread.join()
-    data = thread.data
-    dlgload.Destroy()
-    yield data
-# --------------------------------------------------------------------------#
-
-
 '''
 def youtubedl_latest(url):
     """
-    Call the thread to read the latest version of youtube-dl via the web.
+    Call thread to read the latest version of youtube-dl via web.
     While waiting, a pop-up dialog is shown.
     """
     thread = youtubedlupdater.CheckNewRelease(url)
@@ -334,89 +306,6 @@ def youtubedl_latest(url):
     dlgload.Destroy()
 
     return latest'''
-# --------------------------------------------------------------------------#
-
-
-def youtubedl_update(cmd, waitmsg):
-    """
-    Call thread to execute generic tasks as updates youtube-dl executable
-    or read the installed version. All these tasks are intended only for
-    the local copy (not installed by the package manager) of youtube-dl.
-    While waiting, a pop-up dialog is shown.
-    """
-    thread = youtubedlupdater.CmdExec(cmd)
-
-    dlgload = PopupDialog(None, _("Videomass - Loading..."), waitmsg)
-    dlgload.ShowModal()
-    # thread.join()
-    update = thread.data
-    dlgload.Destroy()
-
-    return update
-# --------------------------------------------------------------------------#
-
-
-def youtubedl_upgrade(latest, executable, upgrade=False):
-    """
-    Run thread to download locally the latest version of youtube-dl
-    or youtube-dl.exe . While waiting, a pop-up dialog is shown.
-    """
-    get = wx.GetApp()  # get videomass wx.App attribute
-    ext = '.exe' if get.appset['ostype'] == 'Windows' else ''
-
-    if get.appset['downloader'][1] == 'youtube-dl':
-        url = (f'https://youtube-dl.org/downloads/latest/youtube-dl{ext}')
-
-    elif get.appset['downloader'][1] == 'yt-dlp':
-        url = (f'https://github.com/yt-dlp/yt-dlp/'
-               f'releases/latest/download/yt-dlp{ext}')
-
-    name = os.path.basename(executable)
-    if upgrade:
-        msg = _('\nWait....\nUpgrading {}\n').format(name)
-    else:
-        msg = _('\nWait....\nDownloading {}\n').format(name)
-
-    # url = ('https://github.com/ytdl-org/youtube-dl/releases/'
-           # 'download/%s/%s' % (latest, name))
-
-
-    if os.path.exists(executable):
-        try:  # make back-up for outdated
-            os.rename(executable, '%s_OLD' % executable)
-        except FileNotFoundError as err:
-            return None, err
-    elif not os.path.exists(os.path.dirname(executable)):
-        try:  # make cache dir
-            os.makedirs(os.path.dirname(executable), mode=0o777)
-        except OSError as err:
-            return None, err
-
-    thread = generic_downloads.FileDownloading(url, executable)
-    dlgload = PopupDialog(None, _("Videomass - Downloading..."), msg)
-    dlgload.ShowModal()
-    # thread.join()
-    status = thread.data
-    dlgload.Destroy()
-
-    if os.path.exists('%s_OLD' % executable):
-        # remove outdated back-up
-        if not status[1]:
-            if os.path.isfile('%s_OLD' % executable):
-                os.remove('%s_OLD' % executable)
-            elif os.path.isdir('%s_OLD' % executable):
-                shutil.rmtree('%s_OLD' % executable)
-        else:
-            # come back previous status
-            os.rename('%s_OLD' % executable, executable)
-
-    if not get.appset['ostype'] == 'Windows':
-        # make it executable by everyone
-        if os.path.isfile(executable):
-            stsys = os.stat(executable)
-            os.chmod(executable, stsys.st_mode | stat.S_IXUSR |
-                     stat.S_IXGRP | stat.S_IXOTH)
-    return status
 # --------------------------------------------------------------------------#
 
 
@@ -495,3 +384,26 @@ def appimage_update_youtube_dl(appimage):
             if '**Successfully updated**\n' in line:
                 ret = 'success'
     return 'success' if ret == 'success' else 'error'
+# --------------------------------------------------------------------------#
+
+
+def pyembed_update_youtube_dl():
+    """
+    Call appropriate thread to update or installing youtube_dl/yt-dlp
+    inside Videomass embed pkg.
+    """
+    get = wx.GetApp()  # get data from bootstrap
+
+    if get.appset['ostype'] == 'Windows':
+        thread = youtubedlupdater.update_ydl_windows(log, appimage)
+
+    waitmsg = _('...Be patient, this can take a few minutes.')
+
+    dlgload = PopupDialog(None, _("Videomass - Updating..."), waitmsg)
+    dlgload.ShowModal()
+    # thread.join()
+    update = thread.status
+    dlgload.Destroy()
+
+    return update
+

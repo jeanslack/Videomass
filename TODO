@@ -8,11 +8,13 @@ URGENCY: high
 
 - Improve message dialog with URLs inside, i.e. using `wx.lib.agw.hyperlink`.
   [ffplay_url_exe.py, Videomass version, youtube-dl update]
-- If the videomass version is higher than the official released one, the ID
-  should be beta
---------------
 
-Need code refactoring
+- Need code refactoring
+
+---------------
+URGENCY: medium
+----------------
+
 
 -------------
 URGENCY: low
@@ -25,10 +27,6 @@ URGENCY: low
   precompiled video, which isn't the best quality overall. With "download
   audio and video splitted" it downloads the best quality a/v streams.
   ...but these are also default behaviors on youtube-dl ?!
-
----------------
-URGENCY: medium
-----------------
 
 
 

@@ -101,15 +101,12 @@ class DownloadStream(Thread):
 
             "title_" + "quality" + ".format"
 
-    NOTE see also ffplay_url_exec.py on sources directory.
-
     """
     get = wx.GetApp()  # get videomass wx.App attribute
-    OS = get.OS
-    FFMPEG_URL = get.FFMPEG_url
-    CACHEDIR = get.CACHEdir
-    TMP = get.TMP
-    APP = get.appset['appimage']
+    OS = get.appset['ostype']
+    FFMPEG_URL = get.appset['ffmpeg_bin']
+    TMP = os.path.join(get.appset['cachedir'], 'tmp')
+    APP = get.appset['app']
     DOWNLOADER = get.appset['downloader'][0]
 
     def __init__(self, url, quality):
@@ -188,9 +185,11 @@ class LibStreaming(object):
 
     """
     DOWNLOAD = None  # set instance thread
+    TIMESTAMP = None
+    AUTOEXIT = None
     # ---------------------------------------------------------------#
 
-    def __init__(self, url=None, quality=None):
+    def __init__(self, timestamp, autoexit, url=None, quality=None):
         """
         - Topic "START_FFPLAY_EVT" subscribes the start playing
           running ffplay at a certain time.
@@ -203,6 +202,8 @@ class LibStreaming(object):
         pub.subscribe(start_palying_listener, "START_FFPLAY_EVT")
 
         LibStreaming.DOWNLOAD = DownloadStream(url, quality)
+        LibStreaming.TIMESTAMP = timestamp
+        LibStreaming.AUTOEXIT = autoexit
 
         self.start_download()
     # ----------------------------------------------------------------#
@@ -231,5 +232,9 @@ def start_palying_listener(output):
     Riceive messages from MyLogger to start
     ffplay in at a given time.
     """
-    io_tools.stream_play(output, '', '')
+    io_tools.stream_play(output,
+                         '',
+                         LibStreaming.TIMESTAMP,
+                         LibStreaming.AUTOEXIT
+                         )
     return

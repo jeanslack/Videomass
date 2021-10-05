@@ -70,7 +70,6 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_threads/two_pass_ebu.py" \
 "../vdms_threads/two_pass.py" \
 "../vdms_threads/volumedetect.py" \
-"../vdms_threads/ydl_executable.py" \
 "../vdms_threads/youtubedlupdater.py"
 
 if [ $? != 0 ]; then
