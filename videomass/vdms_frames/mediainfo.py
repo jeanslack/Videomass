@@ -33,22 +33,6 @@ class Mediainfo(wx.MiniFrame):
     """
     Display streams information from ffprobe json data.
     """
-    get = wx.GetApp()  # get data from bootstrap
-
-    if get.appset['icontheme'] in ('Breeze-Blues',
-                                   'Videomass-Colours'):
-        BACKGROUND = '#11303eff'
-        FOREGROUND = '#959595'
-
-    elif get.appset['icontheme'] in ('Breeze-Blues',
-                                     'Breeze-Dark',
-                                     'Videomass-Dark'):
-        BACKGROUND = '#1c2027ff'
-        FOREGROUND = '#87ceebff'
-
-    else:
-        BACKGROUND = '#e6e6faff'
-        FOREGROUND = '#191970ff'
 
     def __init__(self, data, OS):
         """
@@ -57,6 +41,8 @@ class Mediainfo(wx.MiniFrame):
         vdms_io/io_tools.py
         """
         self.data = data
+        get = wx.GetApp()  # get data from bootstrap
+        self.colorscheme = get.appset['icontheme'][1]
         msg = _('Display of selected items in text format')
         msg1 = _('Select items to view them in text format')
 
@@ -196,14 +182,14 @@ class Mediainfo(wx.MiniFrame):
         self.subtitle_ctrl.InsertColumn(0, _('References'), width=200)
         self.subtitle_ctrl.InsertColumn(1, _('Parameters'), width=500)
 
-        self.format_tags.SetBackgroundColour(Mediainfo.BACKGROUND)
-        self.format_tags.SetDefaultStyle(wx.TextAttr(Mediainfo.FOREGROUND))
-        self.video_tags.SetBackgroundColour(Mediainfo.BACKGROUND)
-        self.video_tags.SetDefaultStyle(wx.TextAttr(Mediainfo.FOREGROUND))
-        self.audio_tags.SetBackgroundColour(Mediainfo.BACKGROUND)
-        self.audio_tags.SetDefaultStyle(wx.TextAttr(Mediainfo.FOREGROUND))
-        self.sub_tags.SetBackgroundColour(Mediainfo.BACKGROUND)
-        self.sub_tags.SetDefaultStyle(wx.TextAttr(Mediainfo.FOREGROUND))
+        self.format_tags.SetBackgroundColour(self.colorscheme['BACKGRD'])
+        self.format_tags.SetDefaultStyle(wx.TextAttr(self.colorscheme['TXT3']))
+        self.video_tags.SetBackgroundColour(self.colorscheme['BACKGRD'])
+        self.video_tags.SetDefaultStyle(wx.TextAttr(self.colorscheme['TXT3']))
+        self.audio_tags.SetBackgroundColour(self.colorscheme['BACKGRD'])
+        self.audio_tags.SetDefaultStyle(wx.TextAttr(self.colorscheme['TXT3']))
+        self.sub_tags.SetBackgroundColour(self.colorscheme['BACKGRD'])
+        self.sub_tags.SetDefaultStyle(wx.TextAttr(self.colorscheme['TXT3']))
 
         self.format_ctrl.SetToolTip(msg1)
         self.video_ctrl.SetToolTip(msg1)
@@ -434,7 +420,7 @@ class Mediainfo(wx.MiniFrame):
                 select = self.data[self.data.index(x)]
                 num_items = self.format_ctrl.GetItemCount()
                 self.format_ctrl.InsertItem(num_items, 'DATA FORMAT:')
-                self.format_ctrl.SetItemBackgroundColour(index, "ORANGE")
+                self.format_ctrl.SetItemBackgroundColour(index, "BROWN")
                 index += 1
                 for k, v in x.get('format').items():
                     self.format_ctrl.InsertItem(index, str(k))

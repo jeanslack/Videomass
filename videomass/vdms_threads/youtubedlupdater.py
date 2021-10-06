@@ -28,185 +28,11 @@ This file is part of Videomass.
 """
 import subprocess
 import shlex
-import platform
 import sys
 import os
-import shutil
-import ssl
-import urllib.request
 from threading import Thread
 import wx
 from pubsub import pub
-
-
-'''
-class CheckNewRelease(Thread):
-    """
-    Read the latest version of youtube-dl on github website (see url) .
-    """
-    def __init__(self, url):
-        """
-        Attributes defined here:
-        self.data: tuple object with exit status of the process
-        """
-        self.url = url
-        self.data = None
-
-        Thread.__init__(self)
-        """initialize"""
-
-        self.start()  # start the thread (va in self.run())
-    # ----------------------------------------------------------------#
-
-    def run(self):
-        """
-        Check for new version release
-        """
-        # HACK fix soon the ssl certificate
-        ssl._create_default_https_context = ssl._create_unverified_context
-        try:
-            req = (urllib.request.build_opener().open(
-                   self.url).read().decode('utf-8').strip())
-            self.data = req, None
-
-        except urllib.error.HTTPError as error:
-            self.data = None, error
-
-        except urllib.error.URLError as error:
-            self.data = None, error
-
-        wx.CallAfter(pub.sendMessage,
-                     "RESULT_EVT",
-                     status=''
-                     )
-'''
-# -------------------------------------------------------------------------#
-
-
-class CmdExec(Thread):
-    """
-    Executes generic command line with an executable, e.g.
-    - read the installed version of youtube-dl
-    - update the downloaded sources of youtube-dl
-
-    """
-
-    def __init__(self, cmd):
-        """
-        OS: Operative System id
-        self.cmd: command line list object
-        self.status: tuple object with exit status of the process
-        self.data: returned output of the self.status
-        """
-        self.ostype = platform.system()
-        self.cmd = cmd
-        self.data = None
-        self.status = None
-
-        Thread.__init__(self)
-        self.start()  # start the thread (va in self.run())
-    # ----------------------------------------------------------------#
-
-    def run(self):
-        """
-        Execute command line via subprocess class and get output
-        at the end of the process.
-        """
-        if self.ostype == 'Windows':
-            cmd = " ".join(self.cmd)
-            info = subprocess.STARTUPINFO()
-            info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-
-        else:
-            cmd = self.cmd
-            info = None
-
-        try:
-            with subprocess.Popen(cmd,
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.STDOUT,
-                                  universal_newlines=True,  # mod text
-                                  startupinfo=info,
-                                  ) as proc:
-
-                out = proc.communicate()
-
-                if proc.returncode:  # if returncode == 1
-                    if not out[0] and not out[1] and self.ostype == 'Windows':
-                        self.status = (_('Requires MSVCR100.dll\nTo resolve '
-                                         'this problem install: Microsoft '
-                                         'Visual C++ 2010 Redistributable '
-                                         'Package (x86)'), 'error')
-                    else:
-                        self.status = (out[0], 'error')
-                else:
-                    self.status = (out[0], out[1])
-
-        except (OSError, FileNotFoundError) as oserr:  # exec. do not exist
-            self.status = ('%s' % oserr, 'error')
-
-        self.data = self.status
-
-        wx.CallAfter(pub.sendMessage,
-                     "RESULT_EVT",
-                     status=''
-                     )
-# ---------------------------------------------------------------------#
-
-
-'''
-class UpgradeLatest(Thread):
-    """
-    Download latest version of youtube-dl.exe, see self.url .
-    """
-
-    def __init__(self, url, dest):
-        """
-        Attributes defined here:
-        latest: latest version available .
-        self.dest: location pathname to download
-        self.data: returned output of the self.status
-        self.status: tuple object with exit status of the process
-
-        """
-        self.url = url
-        self.dest = dest
-        self.data = None
-        self.status = None
-
-        Thread.__init__(self)
-        self.start()  # start the thread (va in self.run())
-    # ----------------------------------------------------------------#
-
-    def run(self):
-        """
-        Check for new version release
-        """
-        # HACK fix soon the ssl certificate
-        context = ssl._create_unverified_context()
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        page = urllib.request.Request(self.url, headers=headers)
-        try:
-            with urllib.request.urlopen(page, context=context) as \
-                    response, open(self.dest, 'wb') as out_file:
-                shutil.copyfileobj(response, out_file)
-
-            self.status = self.url, None
-
-        except urllib.error.HTTPError as error:
-            self.status = None, error
-
-        except urllib.error.URLError as error:
-            self.status = None, error
-
-        self.data = self.status
-
-        wx.CallAfter(pub.sendMessage,
-                     "RESULT_EVT",
-                     status=''
-                     )
-'''
-# ---------------------------------------------------------------------#
 
 
 class UpdateYoutubedlAppimage(Thread):
@@ -243,11 +69,11 @@ class UpdateYoutubedlAppimage(Thread):
         exe = os.path.join(binpath + '/youtube_dl_update_appimage.sh')
         self.status = None
         self.cmd = shlex.split(
-            "xterm +hold -u8 -bg 'grey15' -fa 'Monospace' "
-            "-fs 9 -geometry 120x35 -title '..Updating "
-            "youtube_dl package on %s' -e '%s %s "
-            "2>&1 | tee %s'" % (name, exe, appimage, log)
-        )
+            f"xterm +hold -u8 -bg 'grey15' -fa 'Monospace' "
+            f"-fs 9 -geometry 120x35 -title '..Updating "
+            f"youtube_dl package on {name}' -e '{exe} {appimage} "
+            f"2>&1 | tee {log}'"
+            )
 
         Thread.__init__(self)
         self.start()  # start the thread
@@ -265,8 +91,7 @@ class UpdateYoutubedlAppimage(Thread):
             self.status = err
 
         if proc.returncode:
-            self.status = "EXIT: %s\nERROR: %s" % (proc.returncode,
-                                                   proc.stderr)
+            self.status = "EXIT: {proc.returncode}\nERROR: {proc.stderr}"
         wx.CallAfter(pub.sendMessage,
                      "RESULT_EVT",
                      status=''

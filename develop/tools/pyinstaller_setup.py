@@ -120,7 +120,7 @@ class PyinstallerSpec():
         """
         options = (f"--name {self.getdata['RLS_NAME']} {self.onedf} "
                    f"--windowed --noconsole --icon {self.getdata['ICO']} "
-                   f"--exclude-module youtube_dl --exclude-module 'yt_dlp' "
+                   # f"--exclude-module youtube_dl --exclude-module 'yt_dlp' "
                    f"{self.datas} ")
 
         return options
@@ -142,7 +142,7 @@ class PyinstallerSpec():
                 f"'com.jeanslack.videomass' "
                 # f"--codesign-identity IDENTITY "
                 # f"--osx-entitlements-file FILENAME "
-                f"--exclude-module 'youtube_dl' --exclude-module 'yt_dlp' "
+                # f"--exclude-module 'youtube_dl' --exclude-module 'yt_dlp' "
                 f"{self.datas} ")
 
         plist = (
@@ -169,8 +169,8 @@ class PyinstallerSpec():
         on Linux platform.
         """
         options = (f"--name {self.getdata['NAME']} {self.onedf} "
-                   f"--windowed --noconsole --exclude-module youtube_dl "
-                   f"--exclude-module 'yt_dlp' {self.datas} ")
+                   f"--windowed --noconsole {self.datas}"
+                   )
 
         return options
 # --------------------------------------------------------#

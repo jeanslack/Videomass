@@ -214,6 +214,8 @@ def get_color_scheme(theme):
                     'TXT5': '#dd7ad0',  # LILLA
                     'INFO': '#3298FB',  # AZURE
                     'DEBUG': '#11b584',  # medium light green
+                    'FAILED': '#D21814',  # RED_DEEP if failed
+                    'ABORT': '#A41EA4',  # VIOLET the user stops the processes
                     }
     elif theme in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
         c_scheme = {'BACKGRD': '#232424',  # DARK Grey background color
@@ -229,6 +231,8 @@ def get_color_scheme(theme):
                     'TXT5': '#dd7ad0',  # LILLA
                     'INFO': '#118db5',  # AZURE
                     'DEBUG': '#11b584',  # medium light green
+                    'FAILED': '#D21814',  # RED_DEEP if failed
+                    'ABORT': '#A41EA4',  # VIOLET the user stops the processes
                     }
     elif theme in ('Breeze', 'Videomass-Light'):
         c_scheme = {'BACKGRD': '#ced0d1',  # WHITE background color
@@ -244,6 +248,8 @@ def get_color_scheme(theme):
                     'TXT5': '#dd7ad0',  # LILLA
                     'INFO': '#3298FB',  # AZURE
                     'DEBUG': '#005c00',  # Light Green
+                    'FAILED': '#D21814',  # RED_DEEP if failed
+                    'ABORT': '#A41EA4',  # VIOLET the user stops the processes
                     }
     else:
         c_scheme = {'ERROR': f'Unknow theme "{theme}"'}

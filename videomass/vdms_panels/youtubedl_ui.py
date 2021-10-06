@@ -107,15 +107,14 @@ class Downloader(wx.Panel):
                                                '+worstaudio/worst[height'
                                                '>=?144]'),
                 }
-    AFORMATS = {("Default audio format"): ("best", "--extract-audio"),
-                ("wav"): ("wav", "--extract-audio --audio-format wav"),
-                ("mp3"): ("mp3", "--extract-audio --audio-format mp3"),
-                ("aac"): ("aac", "--extract-audio --audio-format aac"),
-                ("m4a"): ("m4a", "--extract-audio --audio-format m4a"),
-                ("vorbis"): ("vorbis",
-                             "--extract-audio --audio-format vorbis"),
-                ("opus"): ("opus", "--extract-audio --audio-format opus"),
-                ("flac"): ("flac", "--extract-audio --audio-format flac"),
+    AFORMATS = {("Default audio format"): ("best"),
+                ("wav"): ("wav"),
+                ("mp3"): ("mp3"),
+                ("aac"): ("aac"),
+                ("m4a"): ("m4a"),
+                ("vorbis"): ("vorbis"),
+                ("opus"): ("opus"),
+                ("flac"): ("flac"),
                 }
     AQUALITY = {('Best quality audio'): ('bestaudio'),
                 ('Worst quality audio'): ('worstaudio')}
@@ -144,14 +143,14 @@ class Downloader(wx.Panel):
             bmplistindx = wx.Bitmap(Downloader.icons['listindx'],
                                     wx.BITMAP_TYPE_ANY)
 
-        self.opt = {("NO_PLAYLIST"): [True, "--no-playlist"],
-                    ("THUMB"): [False, ""],
-                    ("METADATA"): [False, ""],
+        self.opt = {("NO_PLAYLIST"): True,
+                    ("THUMB"): False,
+                    ("METADATA"): False,
                     ("V_QUALITY"): ("bestvideo[height"
                                     "<=?1080]+bestaudio/best[height<=?1080]"),
-                    ("A_FORMAT"): ["best", "--extract-audio"],
-                    ("A_QUALITY"): ("bestaudio"),
-                    ("SUBTITLES"): [False, ""],
+                    ("A_FORMAT"): "best",
+                    ("A_QUALITY"): "bestaudio",
+                    ("SUBTITLES"): False,
                     }
         self.plidx = {'': ''}
         self.info = []  # has data information for Show More button
@@ -375,10 +374,7 @@ class Downloader(wx.Panel):
         if not self.parent.sb.GetStatusText() == 'Ready':
             self.parent.statusbar_msg('Ready', None)
 
-        if Downloader.appdata['PYLIBYDL'] is not None:  # isn't used as module
-            viddisp, auddisp = 'video ', 'audio '
-        else:
-            viddisp, auddisp = 'video', 'audio only'
+        viddisp, auddisp = 'video', 'audio only'
 
         if self.oldwx is False:
             check = self.fcode.IsItemChecked
@@ -478,7 +474,7 @@ class Downloader(wx.Panel):
         io_tools.url_play(url, quality, tstamp, self.parent.autoexit)
     # ----------------------------------------------------------------------
 
-    def get_libraryformatcode(self):
+    def get_formatcode(self):
         """
         Get URLs data and format codes by generator object
         *youtubedl_getstatistics* (using youtube_dl library) and set the list
@@ -576,53 +572,6 @@ class Downloader(wx.Panel):
         return None
     # -----------------------------------------------------------------#
 
-    def get_executableformatcode(self):
-        """
-        Get URLs format codes data by generator object (using executable)
-        *youtube_getformatcode_exec* and set list control. Return `True`
-        if `meta[1]` (error), otherwise return None as exit staus.
-        """
-        self.fcode.ClearAll()
-        if self.oldwx is False:
-            self.fcode.EnableCheckBoxes(enable=True)
-        self.fcode.InsertColumn(0, (_('Format Code')), width=120)
-        self.fcode.InsertColumn(1, (_('Url')), width=200)
-        self.fcode.InsertColumn(2, (_('Title')), width=50)
-        self.fcode.InsertColumn(3, (_('Extension')), width=80)
-        self.fcode.InsertColumn(4, (_('Resolution note')), width=500)
-
-        index = 0
-        for link in self.parent.data_url:
-            data = io_tools.youtube_getformatcode_exec(link)
-            for meta in data:
-                if meta[1]:
-                    wx.MessageBox(meta[0], 'Videomass', wx.ICON_ERROR)
-                    self.info = []
-                    return True
-                self.info.append(link)
-                i = 0
-                for count, fc in enumerate(meta[0].split('\n')):
-                    if not count > i:
-                        i += 1
-                    elif fc != '':
-                        self.fcode.InsertItem(index, fc.split()[0])
-                        self.fcode.SetItem(index, 1, link)
-                        self.fcode.SetItem(index, 2, 'N/A')
-                        self.fcode.SetItem(index, 3, fc.split()[1])
-                        note = ' '.join(fc.split()[2:])
-                        self.fcode.SetItem(index, 4, note)
-
-                        if i + 1 == count:
-                            self.fcode.SetItemBackgroundColour(index,
-                                                               Downloader.GREEN
-                                                               )
-                        index += 1
-
-                    if fc.startswith('format code '):
-                        i = count  # limit
-        return None
-    # -----------------------------------------------------------------#
-
     def on_urls_list(self, quality):
         """
         Populate list control with new incoming as urls and
@@ -653,12 +602,6 @@ class Downloader(wx.Panel):
         main frame when the 'Show More' button is pressed.
 
         """
-        if Downloader.appdata['PYLIBYDL'] is not None:
-            # YuotubeDL not used as module
-            wx.MessageBox(_('Sorry, this feature is disabled.'),
-                          'Videomass', wx.ICON_INFORMATION)
-            return
-
         if not self.info:
             ret = self.get_statistics()
             if ret:
@@ -674,16 +617,9 @@ class Downloader(wx.Panel):
         download from "Format Code"
 
         """
-        if Downloader.appdata['PYLIBYDL'] is not None:
-            # YuotubeDL isn't used as module
-            ret = self.get_executableformatcode()
-            if ret:
-                return  # do not enable fcode
-
-        else:
-            ret = self.get_libraryformatcode()
-            if ret:
-                return  # do not enable fcode
+        ret = self.get_formatcode()
+        if ret:
+            return  # do not enable fcode
 
     # -----------------------------------------------------------------#
 
@@ -801,11 +737,11 @@ class Downloader(wx.Panel):
                               "Videomass", wx.ICON_INFORMATION, self)
                 self.ckbx_pl.SetValue(False)
                 return
-            self.opt["NO_PLAYLIST"] = [False, "--yes-playlist"]
+            self.opt["NO_PLAYLIST"] = False
             self.btn_plidx.Enable()
 
         else:
-            self.opt["NO_PLAYLIST"] = [True, "--no-playlist"]
+            self.opt["NO_PLAYLIST"] = True
             self.btn_plidx.SetBackgroundColour(wx.NullColour)
             self.btn_plidx.Disable()
             self.plidx = {'': ''}
@@ -837,9 +773,9 @@ class Downloader(wx.Panel):
         Enable or disable the tumbnails downloading
         """
         if self.ckbx_thumb.IsChecked():
-            self.opt["THUMB"] = [True, "--embed-thumbnail"]
+            self.opt["THUMB"] = True
         else:
-            self.opt["THUMB"] = [False, ""]
+            self.opt["THUMB"] = False
     # -----------------------------------------------------------------#
 
     def on_Metadata(self, event):
@@ -847,9 +783,9 @@ class Downloader(wx.Panel):
         Enable or disable writing metadata
         """
         if self.ckbx_meta.IsChecked():
-            self.opt["METADATA"] = [True, "--add-metadata"]
+            self.opt["METADATA"] = True
         else:
-            self.opt["METADATA"] = [False, ""]
+            self.opt["METADATA"] = False
     # -----------------------------------------------------------------#
 
     def on_Subtitles(self, event):
@@ -857,14 +793,14 @@ class Downloader(wx.Panel):
         enable or disable writing subtitles
         """
         if self.ckbx_sb.IsChecked():
-            self.opt["SUBTITLES"] = [True, "--write-auto-sub"]
+            self.opt["SUBTITLES"] = True
         else:
-            self.opt["SUBTITLES"] = [False, ""]
+            self.opt["SUBTITLES"] = False
     # -----------------------------------------------------------------#
 
     def getformatcode(self, urls):
         """
-        Call by on on_Start. Return format code list
+        Called by on on_Start. Return format code list
 
         """
         format_code = []
@@ -943,182 +879,104 @@ class Downloader(wx.Panel):
         else:
             _id = '%(title).100s'
 
-        if Downloader.appdata['PYLIBYDL'] is None:  # is used as library
+        logname = 'youtubedl_lib.log'
+        nooverwrites = self.ckbx_w.IsChecked() is True
+        restrictfn = self.ckbx_restrict_fn.IsChecked() is True
+        postprocessors = []
 
-            logname = 'youtubedl_lib.log'
-            nooverwrites = self.ckbx_w.IsChecked() is True
-            restrictfn = self.ckbx_restrict_fn.IsChecked() is True
-            postprocessors = []
+        if self.choice.GetSelection() == 2:
+            postprocessors.append({'key': 'FFmpegExtractAudio',
+                                   'preferredcodec': self.opt["A_FORMAT"],
+                                   })
+        if self.opt["METADATA"]:
+            postprocessors.append({'key': 'FFmpegMetadata'})
 
-            if self.choice.GetSelection() == 2:
-                postprocessors.append({'key': 'FFmpegExtractAudio',
-                                       'preferredcodec':
-                                           self.opt["A_FORMAT"][0],
-                                       })
-            if self.opt["METADATA"][0]:
-                postprocessors.append({'key': 'FFmpegMetadata'})
+        if self.opt["THUMB"]:
+            postprocessors.append({'key': 'EmbedThumbnail',
+                                    'already_have_thumbnail': False
+                                    })
+        if self.opt["SUBTITLES"]:
+            postprocessors.append({'key': 'FFmpegEmbedSubtitle'})
 
-            if self.opt["THUMB"][0]:
-                postprocessors.append({'key': 'EmbedThumbnail',
-                                       'already_have_thumbnail': False
-                                       })
-            if self.opt["SUBTITLES"][0]:
-                postprocessors.append({'key': 'FFmpegEmbedSubtitle'})
-
-            if self.choice.GetSelection() == 0:
-                code = []
-                data = {'format': self.opt["V_QUALITY"],
-                        'noplaylist': self.opt["NO_PLAYLIST"][0],
-                        'playlist_items': self.plidx,
-                        'nooverwrites': nooverwrites,
-                        'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': f'{_id}.%(ext)s',
-                        'extractaudio': False,
-                        'addmetadata': self.opt["METADATA"][0],
-                        'writesubtitles': self.opt["SUBTITLES"][0],
-                        'writeautomaticsub': self.opt["SUBTITLES"][0],
-                        'allsubtitles': self.opt["SUBTITLES"][0],
-                        'postprocessors': postprocessors,
-                        'restrictfilenames': restrictfn,
-                        }
-            if self.choice.GetSelection() == 1:  # audio files and video files
-                code = []
-                data = {'format': (f'{self.opt["V_QUALITY"].split("+", maxsplit=1)[0]},'
-                                   f'{self.opt["A_QUALITY"]}'),
-                        'noplaylist': self.opt["NO_PLAYLIST"][0],
-                        'playlist_items': self.plidx,
-                        'nooverwrites': nooverwrites,
-                        'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
-                        'extractaudio': False,
-                        'addmetadata': self.opt["METADATA"][0],
-                        'writesubtitles': self.opt["SUBTITLES"][0],
-                        'writeautomaticsub': self.opt["SUBTITLES"][0],
-                        'allsubtitles': self.opt["SUBTITLES"][0],
-                        'postprocessors': postprocessors,
-                        'restrictfilenames': restrictfn,
-                        }
-            elif self.choice.GetSelection() == 2:  # audio only
-                code = []
-                data = {'format': 'best',
-                        'noplaylist': self.opt["NO_PLAYLIST"][0],
-                        'playlist_items': self.plidx,
-                        'nooverwrites': nooverwrites,
-                        'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': f'{_id}.%(ext)s',
-                        'extractaudio': True,
-                        'addmetadata': self.opt["METADATA"][0],
-                        'writesubtitles': self.opt["SUBTITLES"][0],
-                        'writeautomaticsub': self.opt["SUBTITLES"][0],
-                        'allsubtitles': self.opt["SUBTITLES"][0],
-                        'postprocessors': postprocessors,
-                        'restrictfilenames': restrictfn,
-                        }
-            if self.choice.GetSelection() == 3:  # format code
-                code = self.getformatcode(urls)
-                if not code:
-                    self.parent.statusbar_msg(Downloader.MSG_1, Downloader.RED,
-                                              Downloader.WHITE)
-                    return
-                data = {'format': '',
-                        'noplaylist': self.opt["NO_PLAYLIST"][0],
-                        'playlist_items': self.plidx,
-                        'nooverwrites': nooverwrites,
-                        'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
-                        'extractaudio': False,
-                        'addmetadata': self.opt["METADATA"][0],
-                        'writesubtitles': self.opt["SUBTITLES"][0],
-                        'writeautomaticsub': self.opt["SUBTITLES"][0],
-                        'allsubtitles': self.opt["SUBTITLES"][0],
-                        'postprocessors': postprocessors,
-                        'restrictfilenames': restrictfn,
-                        }
-            self.parent.switch_to_processing('youtube_dl python package',
-                                             urls,
-                                             '',
-                                             self.parent.outpath_ydl,
-                                             data,
-                                             None,
-                                             code,
-                                             '',
-                                             logname,
-                                             len(urls),
-                                             )
-        else:  # ----------- with youtube-dl command line execution
-
-            logname = 'youtubedl_exec.log'
-            nooverwrites = '--no-overwrites' if self.ckbx_w.IsChecked() else ''
-            if self.ckbx_restrict_fn.IsChecked():
-                restrictfn = '--restrict-filenames'
-            else:
-                restrictfn = ''
-
-            if self.choice.GetSelection() == 0:  # default
-                code = []
-                cmd = [(f'--format '
-                        f'{self.opt["V_QUALITY"]} '
-                        f'{self.opt["METADATA"][1]} '
-                        f'{self.opt["SUBTITLES"][1]} '
-                        f'{self.opt["THUMB"][1]} '
-                        f'{self.opt["NO_PLAYLIST"][1]}'),
-                       (f'{_id}.%(ext)s'),
-                       f'{nooverwrites}',
-                       f'{restrictfn}',
-                       self.plidx,
-                       ]
-
-            if self.choice.GetSelection() == 1:  # audio files + video files
-                code = []
-                cmd = [(f'--format '
-                        f'{self.opt["V_QUALITY"].split("+", maxsplit=1)[0]},'
-                        f'{self.opt["A_QUALITY"]} '
-                        f'{self.opt["METADATA"][1]} '
-                        f'{self.opt["SUBTITLES"][1]} '
-                        f'{self.opt["THUMB"][1]} '
-                        f'{self.opt["NO_PLAYLIST"][1]}'),
-                       (f'{_id}.f%(format_id)s.%(ext)s'),
-                       f'{nooverwrites}',
-                       f'{restrictfn}',
-                       self.plidx,
-                       ]
-
-            elif self.choice.GetSelection() == 2:  # audio only
-                code = []
-                cmd = [(f'{self.opt["A_FORMAT"][1]} '
-                        f'{self.opt["METADATA"][1]} '
-                        f'{self.opt["SUBTITLES"][1]} '
-                        f'{self.opt["THUMB"][1]} '
-                        f'{self.opt["NO_PLAYLIST"][1]}'),
-                       (f'{_id}.%(ext)s'),
-                       f'{nooverwrites}',
-                       f'{restrictfn}',
-                       self.plidx,
-                       ]
-
-            if self.choice.GetSelection() == 3:  # format code
-                code = self.getformatcode(urls)
-                if not code:
-                    self.parent.statusbar_msg(Downloader.MSG_1, Downloader.RED,
-                                              Downloader.WHITE)
-                    return
-                cmd = [(f'{self.opt["METADATA"][1]} '
-                        f'{self.opt["SUBTITLES"][1]} '
-                        f'{self.opt["THUMB"][1]} '
-                        f'{self.opt["NO_PLAYLIST"][1]}'),
-                       (f'{_id}.f%(format_id)s.%(ext)s'),
-                       f'{nooverwrites}',
-                       f'{restrictfn}',
-                       self.plidx,
-                       ]
-            self.parent.switch_to_processing('youtube-dl executable',
-                                             urls,
-                                             '',
-                                             self.parent.outpath_ydl,
-                                             cmd,
-                                             None,
-                                             code,
-                                             '',
-                                             logname,
-                                             len(urls),
-                                             )
+        if self.choice.GetSelection() == 0:
+            code = []
+            data = {'format': self.opt["V_QUALITY"],
+                    'noplaylist': self.opt["NO_PLAYLIST"],
+                    'playlist_items': self.plidx,
+                    'nooverwrites': nooverwrites,
+                    'writethumbnail': self.opt["THUMB"],
+                    'outtmpl': f'{_id}.%(ext)s',
+                    'extractaudio': False,
+                    'addmetadata': self.opt["METADATA"],
+                    'writesubtitles': self.opt["SUBTITLES"],
+                    'writeautomaticsub': self.opt["SUBTITLES"],
+                    'allsubtitles': self.opt["SUBTITLES"],
+                    'postprocessors': postprocessors,
+                    'restrictfilenames': restrictfn,
+                    }
+        elif self.choice.GetSelection() == 1:  # audio files and video files
+            code = []
+            data = {'format': (f'{self.opt["V_QUALITY"].split("+", maxsplit=1)[0]},'
+                               f'{self.opt["A_QUALITY"]}'),
+                    'noplaylist': self.opt["NO_PLAYLIST"],
+                    'playlist_items': self.plidx,
+                    'nooverwrites': nooverwrites,
+                    'writethumbnail': self.opt["THUMB"],
+                    'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
+                    'extractaudio': False,
+                    'addmetadata': self.opt["METADATA"],
+                    'writesubtitles': self.opt["SUBTITLES"],
+                    'writeautomaticsub': self.opt["SUBTITLES"],
+                    'allsubtitles': self.opt["SUBTITLES"],
+                    'postprocessors': postprocessors,
+                    'restrictfilenames': restrictfn,
+                    }
+        elif self.choice.GetSelection() == 2:  # audio only
+            code = []
+            data = {'format': 'best',
+                    'noplaylist': self.opt["NO_PLAYLIST"],
+                    'playlist_items': self.plidx,
+                    'nooverwrites': nooverwrites,
+                    'writethumbnail': self.opt["THUMB"],
+                    'outtmpl': f'{_id}.%(ext)s',
+                    'extractaudio': True,
+                    'addmetadata': self.opt["METADATA"],
+                    'writesubtitles': self.opt["SUBTITLES"],
+                    'writeautomaticsub': self.opt["SUBTITLES"],
+                    'allsubtitles': self.opt["SUBTITLES"],
+                    'postprocessors': postprocessors,
+                    'restrictfilenames': restrictfn,
+                    }
+        elif self.choice.GetSelection() == 3:  # format code
+            code = self.getformatcode(urls)
+            if not code:
+                self.parent.statusbar_msg(Downloader.MSG_1,
+                                          Downloader.RED,
+                                          Downloader.WHITE
+                                          )
+                return
+            data = {'format': '',
+                    'noplaylist': self.opt["NO_PLAYLIST"],
+                    'playlist_items': self.plidx,
+                    'nooverwrites': nooverwrites,
+                    'writethumbnail': self.opt["THUMB"],
+                    'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
+                    'extractaudio': False,
+                    'addmetadata': self.opt["METADATA"],
+                    'writesubtitles': self.opt["SUBTITLES"],
+                    'writeautomaticsub': self.opt["SUBTITLES"],
+                    'allsubtitles': self.opt["SUBTITLES"],
+                    'postprocessors': postprocessors,
+                    'restrictfilenames': restrictfn,
+                    }
+        self.parent.switch_to_processing('youtube_dl downloading',
+                                            urls,
+                                            '',
+                                            self.parent.outpath_ydl,
+                                            data,
+                                            None,
+                                            code,
+                                            '',
+                                            logname,
+                                            len(urls),
+                                            )

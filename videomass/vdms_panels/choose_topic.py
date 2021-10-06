@@ -29,29 +29,7 @@ import os
 import sys
 import wx
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_io import io_tools
 from videomass.vdms_sys.msg_info import current_release
-
-
-def ydl_latest(downloader):
-    """
-    check for new releases of youtube-dl from
-    """
-    if downloader == 'youtube_dl':
-        url = ("https://api.github.com/repos/ytdl-org/youtube-dl"
-               "/releases/latest")
-    elif downloader == 'yt_dlp':
-        url = ("https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest")
-
-    latest = io_tools.get_github_releases(url, "tag_name")
-
-    if latest[0] in ['request error:', 'response error:']:
-        wx.MessageBox("%s %s" % (latest[0], latest[1]),
-                      "%s" % latest[0], wx.ICON_ERROR, None)
-        return None
-
-    return latest
-# -----------------------------------------------------------------#
 
 
 class Choose_Topic(wx.Panel):
@@ -203,68 +181,20 @@ class Choose_Topic(wx.Panel):
         requires installation.
 
         """
-        msg_required = (_("To download videos from YouTube.com and other "
-                          "video sites, you need an updated version of "
-                          "{0}.\n\n"
-                          "...Do you want to download {0} locally now?"
-                          ).format(self.appdata['downloader'][1]))
-
-        msg_ready = (_("Successful! \n\n"
-                       "Usually {0} is released very often, make sure you "
-                       "always use the latest version available: "
-                       "menu bar -> Tools -> Update {0}."
-                       ).format(self.appdata['downloader'][1]))
-
         if self.appdata['downloader'][0] == 'Disable all':
             wx.MessageBox(_("The downloader is disabled. "
                             "Check your preferences."),
                           "Videomass", wx.ICON_INFORMATION, self)
             return
 
-        elif self.appdata['app'] == 'pyinstaller':
-            # elif self.appdata['app'] != 'pyinstaller':  # use for debug
-            # EXECYDL: /path/youtube-dl if used else False
-            if os.path.isfile(self.appdata['EXECYDL']):
-                self.parent.switch_text_import(self, 'Youtube Downloader')
-                return
-            else:
-                if wx.MessageBox(msg_required, _("Please confirm"),
-                                 wx.ICON_QUESTION |
-                                 wx.YES_NO, self) == wx.NO:
-                    return
-
-                latest = ydl_latest(self.appdata['downloader'][0])
-                if not latest:
-                    return
-                upgrd = io_tools.youtubedl_upgrade(latest[0],
-                                                   self.appdata['EXECYDL']
-                                                   )
-                if upgrd[1]:  # failed
-                    wx.MessageBox("%s" % (upgrd[1]),
-                                  "Videomass", wx.ICON_ERROR, self)
-                    return
-                else:
-                    wx.MessageBox(_("{0}\n\nRe-start is required."
-                                    ).format(msg_ready),
-                                  "Videomass", wx.ICON_INFORMATION, self)
-                    self.parent.on_Kill()
+        # PYLIBYDL: None if used else 'string error'
+        if self.appdata['PYLIBYDL'] is None:
+            self.parent.switch_text_import(self, 'Youtube Downloader')
+            return
         else:
-            # PYLIBYDL: None if used else 'string error'
-            if self.appdata['PYLIBYDL'] is None:
-                self.parent.switch_text_import(self, 'Youtube Downloader')
-                return
-            else:
-                if self.appdata['app'] == 'appimage':
-                    wx.MessageBox(_("ERROR: {0}\n\n{1} is not embedded in the "
-                                    "AppImage."
-                                    ).format(self.appdata['PYLIBYDL'],
-                                             self.appdata['downloader'][0]),
-                                  "Videomass", wx.ICON_ERROR, self)
-                    return
-                else:
-                    wx.MessageBox(_("ERROR: {0}\n\n{1} is not installed, "
-                                    "use your package manager to install it."
-                                    ).format(self.appdata['PYLIBYDL'],
-                                             self.appdata['downloader'][0]),
-                                  "Videomass", wx.ICON_ERROR, self)
-                    return
+            wx.MessageBox(_("ERROR: {0}\n\n{1} is not installed, "
+                            "use your package manager to install it."
+                            ).format(self.appdata['PYLIBYDL'],
+                                        self.appdata['downloader'][0]),
+                          "Videomass", wx.ICON_ERROR, self)
+            return

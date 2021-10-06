@@ -42,9 +42,9 @@ each operating system.
 - **[ffprobe](https://ffmpeg.org/ffprobe.html)** (usually bundled with ffmpeg)
 - **[ffplay](http://ffmpeg.org/ffplay.html)** (usually bundled with ffmpeg)
 - **[youtube-dl](https://pypi.org/project/youtube_dl/)**
+- **[yt-dlp](https://github.com/yt-dlp/yt-dlp)** (A fork of youtube-dl)
 
 ### Optionals
-- **[yt-dlp](https://github.com/yt-dlp/yt-dlp)** (A fork of youtube-dl)
 - **[atomicparsley](http://atomicparsley.sourceforge.net/)**
 
 ### Install basic dependencies for your OS
@@ -90,7 +90,7 @@ always within the same unpacked directory:
 
 ```Python
 >>> from videomass import gui_app
->>> videomass_app.main()
+>>> gui_app.main()
 ```
 
 # Resources

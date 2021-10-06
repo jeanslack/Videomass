@@ -27,16 +27,13 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import stat
-import shutil
 import requests
 import wx
 from videomass.vdms_threads.ffplay_file import FilePlay
-from videomass.vdms_threads import (ffplay_url_exec,
-                                     # ffplay_url_lib,
-                                     generic_downloads,
-                                     youtubedlupdater,
-                                     )
+from videomass.vdms_threads import (ffplay_url,
+                                    generic_downloads,
+                                    youtubedlupdater,
+                                    )
 from videomass.vdms_threads.ffprobe_parser import FFProbe
 from videomass.vdms_threads.volumedetect import VolumeDetectThread
 from videomass.vdms_threads.check_bin import (ff_conf,
@@ -45,8 +42,7 @@ from videomass.vdms_threads.check_bin import (ff_conf,
                                                ff_topics,
                                                )
 from videomass.vdms_threads.opendir import browse
-from videomass.vdms_threads.ydl_pylibextractinfo import YtdlLibEI
-from videomass.vdms_threads.ydl_executable import YtdlExecEI
+from videomass.vdms_threads.ydl_extractinfo import YdlExtractInfo
 
 from videomass.vdms_frames import (ffmpeg_conf,
                                     ffmpeg_formats,
@@ -63,7 +59,7 @@ def stream_info(title, filepath):
     """
     get = wx.GetApp()
     try:
-        with open(filepath):
+        with open(filepath, encoding='utf8'):
             miniframe = Mediainfo(title,
                                   filepath,
                                   get.appset['ffprobe_bin'],
@@ -84,7 +80,7 @@ def stream_play(filepath, tseq, param, autoexit):
     get = wx.GetApp()  # get data from bootstrap
     tseq = tseq if tseq != "-ss 00:00:00.000 -t 00:00:00.000" else ''
     try:
-        with open(filepath):
+        with open(filepath, encoding='utf8'):
             FilePlay(filepath,
                      tseq,
                      param,
@@ -117,15 +113,7 @@ def url_play(url, quality, timestamp, autoexit):
     See https://github.com/ytdl-org/youtube-dl/issues/16175
 
     """
-    ffplay_url_exec.ExecStreaming(timestamp, autoexit, url, quality)
-
-    # get = wx.GetApp()  # get data from bootstrap
-    # youtube_dl = get.appset['PYLIBYDL']
-
-    # if youtube_dl is not None:  # run youtube-dl executable
-        # dowl = ffplay_url_exec.ExecStreaming(url, quality)
-    # else:  # run youtube_dl library
-        # dowl = ffplay_url_lib.LibStreaming(url, quality)
+    ffplay_url.Streaming(timestamp, autoexit, url, quality)
 
 # -----------------------------------------------------------------------#
 
@@ -184,10 +172,7 @@ def test_conf():
     get = wx.GetApp()
     out = ff_conf(get.appset['ffmpeg_bin'], get.appset['ostype'])
     if 'Not found' in out[0]:
-        wx.MessageBox("\n{0}".format(out[1]),
-                      "Videomass",
-                      wx.ICON_ERROR,
-                      None)
+        wx.MessageBox(f"\n{out[1]}", "Videomass", wx.ICON_ERROR, None)
         return
 
     miniframe = ffmpeg_conf.Checkconf(out,
@@ -208,9 +193,8 @@ def test_formats():
     """
     get = wx.GetApp()
     diction = ff_formats(get.appset['ffmpeg_bin'], get.appset['ostype'])
-    if 'Not found' in diction.keys():
-        wx.MessageBox("\n{0}".format(diction['Not found']),
-                      "Videomass",
+    if 'Not found' in diction:
+        wx.MessageBox(f"\n{diction['Not found']}", "Videomass",
                       wx.ICON_ERROR,
                       None)
         return
@@ -232,9 +216,8 @@ def test_codecs(type_opt):
                         type_opt,
                         get.appset['ostype']
                         )
-    if 'Not found' in diction.keys():
-        wx.MessageBox("\n{0}".format(diction['Not found']),
-                      "Videomass",
+    if 'Not found' in diction:
+        wx.MessageBox(f"\n{diction['Not found']}", "Videomass",
                       wx.ICON_ERROR,
                       None)
         return
@@ -257,7 +240,7 @@ def findtopic(topic):
     retcod = ff_topics(get.appset['ffmpeg_bin'], topic, get.appset['ostype'])
 
     if 'Not found' in retcod[0]:
-        notf = ("\n{0}".format(retcod[1]))
+        notf = (f"\n{retcod[1]}")
         return notf
 
     return retcod[1]
@@ -280,15 +263,15 @@ def openpath(where):
 def youtubedl_getstatistics(url):
     """
     Call the thread to get extract info data object with
-    youtube_dl python package and show a wait pop-up dialog .
+    youtube_dl downloading and show a wait pop-up dialog .
     youtube_dl module.
     example without pop-up dialog:
-    thread = YtdlLibEI(url)
+    thread = YdlExtractInfo(url)
     thread.join()
     data = thread.data
     yield data
     """
-    thread = YtdlLibEI(url)
+    thread = YdlExtractInfo(url)
     dlgload = PopupDialog(None,
                           _("Videomass - Loading..."),
                           _("\nWait....\nRetrieving required data.\n"))
@@ -297,126 +280,6 @@ def youtubedl_getstatistics(url):
     data = thread.data
     dlgload.Destroy()
     yield data
-# --------------------------------------------------------------------------#
-
-
-def youtube_getformatcode_exec(url):
-    """
-    Call the thread to get format code data object with youtube-dl
-    executable, (e.g. `youtube-dl -F url`) .
-    While waiting, a pop-up dialog is shown.
-    """
-    thread = YtdlExecEI(url)
-    dlgload = PopupDialog(None,
-                          _("Videomass - Loading..."),
-                          _("\nWait....\nRetrieving required data.\n"))
-    dlgload.ShowModal()
-    # thread.join()
-    data = thread.data
-    dlgload.Destroy()
-    yield data
-# --------------------------------------------------------------------------#
-
-
-'''
-def youtubedl_latest(url):
-    """
-    Call the thread to read the latest version of youtube-dl via the web.
-    While waiting, a pop-up dialog is shown.
-    """
-    thread = youtubedlupdater.CheckNewRelease(url)
-
-    dlgload = PopupDialog(None, _("Videomass - Reading..."),
-                          _("\nWait....\nCheck for update.\n"))
-    dlgload.ShowModal()
-    # thread.join()
-    latest = thread.data
-    dlgload.Destroy()
-
-    return latest'''
-# --------------------------------------------------------------------------#
-
-
-def youtubedl_update(cmd, waitmsg):
-    """
-    Call thread to execute generic tasks as updates youtube-dl executable
-    or read the installed version. All these tasks are intended only for
-    the local copy (not installed by the package manager) of youtube-dl.
-    While waiting, a pop-up dialog is shown.
-    """
-    thread = youtubedlupdater.CmdExec(cmd)
-
-    dlgload = PopupDialog(None, _("Videomass - Loading..."), waitmsg)
-    dlgload.ShowModal()
-    # thread.join()
-    update = thread.data
-    dlgload.Destroy()
-
-    return update
-# --------------------------------------------------------------------------#
-
-
-def youtubedl_upgrade(latest, executable, upgrade=False):
-    """
-    Run thread to download locally the latest version of youtube-dl
-    or youtube-dl.exe . While waiting, a pop-up dialog is shown.
-    """
-    get = wx.GetApp()  # get videomass wx.App attribute
-    ext = '.exe' if get.appset['ostype'] == 'Windows' else ''
-
-    if get.appset['downloader'][1] == 'youtube-dl':
-        url = (f'https://youtube-dl.org/downloads/latest/youtube-dl{ext}')
-
-    elif get.appset['downloader'][1] == 'yt-dlp':
-        url = (f'https://github.com/yt-dlp/yt-dlp/'
-               f'releases/latest/download/yt-dlp{ext}')
-
-    name = os.path.basename(executable)
-    if upgrade:
-        msg = _('\nWait....\nUpgrading {}\n').format(name)
-    else:
-        msg = _('\nWait....\nDownloading {}\n').format(name)
-
-    # url = ('https://github.com/ytdl-org/youtube-dl/releases/'
-           # 'download/%s/%s' % (latest, name))
-
-
-    if os.path.exists(executable):
-        try:  # make back-up for outdated
-            os.rename(executable, '%s_OLD' % executable)
-        except FileNotFoundError as err:
-            return None, err
-    elif not os.path.exists(os.path.dirname(executable)):
-        try:  # make cache dir
-            os.makedirs(os.path.dirname(executable), mode=0o777)
-        except OSError as err:
-            return None, err
-
-    thread = generic_downloads.FileDownloading(url, executable)
-    dlgload = PopupDialog(None, _("Videomass - Downloading..."), msg)
-    dlgload.ShowModal()
-    # thread.join()
-    status = thread.data
-    dlgload.Destroy()
-
-    if os.path.exists('%s_OLD' % executable):
-        # remove outdated back-up
-        if not status[1]:
-            if os.path.isfile('%s_OLD' % executable):
-                os.remove('%s_OLD' % executable)
-            elif os.path.isdir('%s_OLD' % executable):
-                shutil.rmtree('%s_OLD' % executable)
-        else:
-            # come back previous status
-            os.rename('%s_OLD' % executable, executable)
-
-    if not get.appset['ostype'] == 'Windows':
-        # make it executable by everyone
-        if os.path.isfile(executable):
-            stsys = os.stat(executable)
-            os.chmod(executable, stsys.st_mode | stat.S_IXUSR |
-                     stat.S_IXGRP | stat.S_IXOTH)
-    return status
 # --------------------------------------------------------------------------#
 
 
@@ -439,7 +302,7 @@ def get_github_releases(url, keyname):
     else:
 
         try:
-            version = response.json()["%s" % keyname]
+            version = response.json()[f"{keyname}"]
 
         except Exception as err:
             not_found = 'response error:', err
@@ -495,3 +358,4 @@ def appimage_update_youtube_dl(appimage):
             if '**Successfully updated**\n' in line:
                 ret = 'success'
     return 'success' if ret == 'success' else 'error'
+# --------------------------------------------------------------------------#

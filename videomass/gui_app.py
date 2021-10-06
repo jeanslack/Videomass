@@ -68,8 +68,6 @@ class Videomass(wx.App):
         self.appset = {'DISPLAY_SIZE': None,
                        'PYLIBYDL': None,
                        # None if load as library else string
-                       'EXECYDL': False,
-                       # path to the executable
                        'YDLSITE': None,
                        # youtube-dl sitepackage/distpackage
                        'GETLANG': None,
@@ -133,35 +131,29 @@ class Videomass(wx.App):
         else:
             execname = self.appset['downloader'][1]
 
-        if self.appset['app'] == 'pyinstaller':
-            this = os.path.join(self.appset['cachedir'], execname)
-            self.appset['EXECYDL'] = self.appset['getpath'](this)
+        if self.appset['downloader'][0] == 'Disable all':
             self.appset['PYLIBYDL'] = 'no module loaded'
         else:
+            win, nix = '\\__init__.py', '/__init__.py'
+            pkg = win if self.appset['ostype'] == 'Windows' else nix
 
-            if self.appset['downloader'][0] == 'Disable all':
-                self.appset['PYLIBYDL'] = 'no module loaded'
-            else:
-                win, nix = '\\__init__.py', '/__init__.py'
-                pkg = win if self.appset['ostype'] == 'Windows' else nix
+            if self.appset['downloader'][0] == 'youtube_dl':
+                try:
+                    import youtube_dl
+                    this = youtube_dl.__file__.split(pkg, maxsplit=1)[0]
+                    self.appset['YDLSITE'] = self.appset['getpath'](this)
 
-                if self.appset['downloader'][0] == 'youtube_dl':
-                    try:
-                        import youtube_dl
-                        this = youtube_dl.__file__.split(pkg, maxsplit=1)[0]
-                        self.appset['YDLSITE'] = self.appset['getpath'](this)
+                except (ModuleNotFoundError, ImportError) as nomodule:
+                    self.appset['PYLIBYDL'] = nomodule
 
-                    except (ModuleNotFoundError, ImportError) as nomodule:
-                        self.appset['PYLIBYDL'] = nomodule
+            elif self.appset['downloader'][0] == 'yt_dlp':
+                try:
+                    import yt_dlp
+                    this = yt_dlp.__file__.split(pkg, maxsplit=1)[0]
+                    self.appset['YDLSITE'] = self.appset['getpath'](this)
 
-                elif self.appset['downloader'][0] == 'yt_dlp':
-                    try:
-                        import yt_dlp
-                        this = yt_dlp.__file__.split(pkg, maxsplit=1)[0]
-                        self.appset['YDLSITE'] = self.appset['getpath'](this)
-
-                    except (ModuleNotFoundError, ImportError) as nomodule:
-                        self.appset['PYLIBYDL'] = nomodule
+                except (ModuleNotFoundError, ImportError) as nomodule:
+                    self.appset['PYLIBYDL'] = nomodule
 
         return True if self.appset['downloader'][0] == 'false' else None
     # -------------------------------------------------------------------

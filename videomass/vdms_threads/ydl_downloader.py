@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-Name: ydl_pylibdownloader.py
+Name: ydl_downloader.py
 Porpose: long processing task with youtube_dl python library
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -71,7 +71,7 @@ class MyLogger(object):
         Get debug messages
         """
         wx.CallAfter(pub.sendMessage,
-                     "UPDATE_YDL_FROM_IMPORT_EVT",
+                     "UPDATE_YDL_EVT",
                      output=msg,
                      duration='',
                      status='DEBUG',
@@ -84,7 +84,7 @@ class MyLogger(object):
         """
         msg = 'WARNING: %s' % msg
         wx.CallAfter(pub.sendMessage,
-                     "UPDATE_YDL_FROM_IMPORT_EVT",
+                     "UPDATE_YDL_EVT",
                      output=msg,
                      duration='',
                      status='WARNING',
@@ -95,7 +95,7 @@ class MyLogger(object):
         Get error messages
         """
         wx.CallAfter(pub.sendMessage,
-                     "UPDATE_YDL_FROM_IMPORT_EVT",
+                     "UPDATE_YDL_EVT",
                      output=msg,
                      duration='',
                      status='ERROR',
@@ -118,7 +118,7 @@ def my_hook(data):
                     percent
                     )
         wx.CallAfter(pub.sendMessage,
-                     "UPDATE_YDL_FROM_IMPORT_EVT",
+                     "UPDATE_YDL_EVT",
                      output='',
                      duration=duration,
                      status='DOWNLOAD',)
@@ -133,7 +133,7 @@ def my_hook(data):
                      end='ok',
                      )
         wx.CallAfter(pub.sendMessage,
-                     "UPDATE_YDL_FROM_IMPORT_EVT",
+                     "UPDATE_YDL_EVT",
                      output='',
                      duration='Done downloading, now converting ...',
                      status='FINISHED',
@@ -141,7 +141,7 @@ def my_hook(data):
 # -------------------------------------------------------------------------#
 
 
-class YtdlLibDL(Thread):
+class YdlDownloader(Thread):
     """
     Embed youtube-dl as module into a separated thread in order
     to get output in real time during downloading and conversion .
@@ -185,8 +185,8 @@ class YtdlLibDL(Thread):
                      'countmax': len(varargs[1]),
                      }
 
-        if (YtdlLibDL.appdata['ostype'] == 'Windows' or
-                YtdlLibDL.appdata['app'] == 'appimage'):
+        if (YdlDownloader.appdata['ostype'] == 'Windows' or
+                YdlDownloader.appdata['app'] == 'appimage'):
             self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False
@@ -205,7 +205,7 @@ class YtdlLibDL(Thread):
                                                fillvalue='',
                                                ):
             if '/playlist?list' in url or not self.opt['noplaylist']:
-                outtmpl = YtdlLibDL.SUBDIR + self.opt['outtmpl']
+                outtmpl = YdlDownloader.SUBDIR + self.opt['outtmpl']
             else:
                 outtmpl = self.opt['outtmpl']
 
@@ -241,7 +241,7 @@ class YtdlLibDL(Thread):
                 'nooverwrites': self.opt['nooverwrites'],
                 'no_color': True,
                 'nocheckcertificate': self.nocheckcertificate,
-                'ffmpeg_location': '{}'.format(YtdlLibDL.FFMPEG_URL),
+                'ffmpeg_location': '{}'.format(YdlDownloader.FFMPEG_URL),
                 'postprocessors': self.opt['postprocessors'],
                 'logger': MyLogger(),
                 'progress_hooks': [my_hook],
@@ -250,14 +250,14 @@ class YtdlLibDL(Thread):
             logwrite(ydl_opts,
                      '',
                      self.args['logname'],
-                     YtdlLibDL.appdata['logdir'],
+                     YdlDownloader.appdata['logdir'],
                      )  # write n/n + command only
 
-            if YtdlLibDL.DOWNLOADER[0] == 'youtube_dl':
+            if YdlDownloader.DOWNLOADER[0] == 'youtube_dl':
                 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                     ydl.download([f"{url}"])
 
-            elif YtdlLibDL.DOWNLOADER[0] == 'yt_dlp':
+            elif YdlDownloader.DOWNLOADER[0] == 'yt_dlp':
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                     ydl.download([f"{url}"])
 

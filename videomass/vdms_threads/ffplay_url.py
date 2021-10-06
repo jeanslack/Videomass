@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-Name: ffplay_url_lib.py
+Name: ffplay_url.py
 Porpose: playback online media streams with ffplay player using
          youtube_dl embedding on code.
 Compatibility: Python3, wxPython Phoenix
@@ -101,15 +101,12 @@ class DownloadStream(Thread):
 
             "title_" + "quality" + ".format"
 
-    NOTE see also ffplay_url_exec.py on sources directory.
-
     """
     get = wx.GetApp()  # get videomass wx.App attribute
-    OS = get.OS
-    FFMPEG_URL = get.FFMPEG_url
-    CACHEDIR = get.CACHEdir
-    TMP = get.TMP
-    APP = get.appset['appimage']
+    OS = get.appset['ostype']
+    FFMPEG_URL = get.appset['ffmpeg_bin']
+    TMP = os.path.join(get.appset['cachedir'], 'tmp')
+    APP = get.appset['app']
     DOWNLOADER = get.appset['downloader'][0]
 
     def __init__(self, url, quality):
@@ -139,7 +136,7 @@ class DownloadStream(Thread):
     def run(self):
         """
         This atipic method is called by start() method after the instance
-        this class. see LibStreaming class below.
+        this class. see Streaming class below.
         """
         if self.stop_work_thread:
             return
@@ -176,7 +173,7 @@ class DownloadStream(Thread):
 # ------------------------------------------------------------------------#
 
 
-class LibStreaming(object):
+class Streaming(object):
     """
     Handling Threads to download and playback media streams via
     youtube-dl library and ffmpeg executables.
@@ -188,9 +185,11 @@ class LibStreaming(object):
 
     """
     DOWNLOAD = None  # set instance thread
+    TIMESTAMP = None
+    AUTOEXIT = None
     # ---------------------------------------------------------------#
 
-    def __init__(self, url=None, quality=None):
+    def __init__(self, timestamp, autoexit, url=None, quality=None):
         """
         - Topic "START_FFPLAY_EVT" subscribes the start playing
           running ffplay at a certain time.
@@ -202,7 +201,9 @@ class LibStreaming(object):
         pub.subscribe(stop_download_listener, "STOP_DOWNLOAD_EVT")
         pub.subscribe(start_palying_listener, "START_FFPLAY_EVT")
 
-        LibStreaming.DOWNLOAD = DownloadStream(url, quality)
+        Streaming.DOWNLOAD = DownloadStream(url, quality)
+        Streaming.TIMESTAMP = timestamp
+        Streaming.AUTOEXIT = autoexit
 
         self.start_download()
     # ----------------------------------------------------------------#
@@ -211,7 +212,7 @@ class LibStreaming(object):
         """
         call DownloadStream(Thread) to run() method
         """
-        LibStreaming.DOWNLOAD.start()
+        Streaming.DOWNLOAD.start()
         return
 
 # --------- RECEIVER LISTENERS
@@ -222,8 +223,8 @@ def stop_download_listener(filename):
     Receive message from ffplay_file.FilePlay class
     for handle interruption
     """
-    LibStreaming.DOWNLOAD.stop()
-    LibStreaming.DOWNLOAD.join()  # if join, wait end process
+    Streaming.DOWNLOAD.stop()
+    Streaming.DOWNLOAD.join()  # if join, wait end process
 
 
 def start_palying_listener(output):
@@ -231,5 +232,9 @@ def start_palying_listener(output):
     Riceive messages from MyLogger to start
     ffplay in at a given time.
     """
-    io_tools.stream_play(output, '', '')
+    io_tools.stream_play(output,
+                         '',
+                         Streaming.TIMESTAMP,
+                         Streaming.AUTOEXIT
+                         )
     return

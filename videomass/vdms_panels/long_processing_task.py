@@ -28,8 +28,7 @@ import os
 from pubsub import pub
 import wx
 from videomass.vdms_io.make_filelog import write_log
-from videomass.vdms_threads.ydl_pylibdownloader import YtdlLibDL
-from videomass.vdms_threads.ydl_executable import YtdlExecDL
+from videomass.vdms_threads.ydl_downloader import YdlDownloader
 from videomass.vdms_threads.one_pass import OnePass
 from videomass.vdms_threads.two_pass import TwoPass
 from videomass.vdms_threads.two_pass_ebu import Loudnorm
@@ -86,17 +85,9 @@ class LogOut(wx.Panel):
     MSG_completed = _('\n[Videomass]: Successfully completed !\n')
     MSG_unfinished = _('\n[Videomass]: completed, but not everything '
                        'was successful.\n')
-    DEBUG = '#3298FB'  # AZURE for debug messages
-    FAILED = '#D21814'  # RED_DEEP if failed
-    ABORT = '#A41EA4'  # VIOLET if the user stops the processes
+
     WHITE = '#fbf4f4'  # white for background status bar
     BLACK = '#060505'  # black for background status bar
-    # YELLOW = '#C8B72F'  # for warning text messages
-    # RED = '#ff0000ff'
-    # ORANGE_DEEP = '#E92D15'
-    # GREEN = '#008000'
-    # DARK_GREEN = '#008000'
-    # BLACK = '#242424'
     # ------------------------------------------------------------------#
 
     def __init__(self, parent):
@@ -159,8 +150,7 @@ class LogOut(wx.Panel):
         self.button_stop.Enable(True)
         self.button_close.Enable(False)
 
-        pub.subscribe(self.youtubedl_from_import, "UPDATE_YDL_FROM_IMPORT_EVT")
-        pub.subscribe(self.youtubedl_exec, "UPDATE_YDL_EXECUTABLE_EVT")
+        pub.subscribe(self.youtubedl_from_import, "UPDATE_YDL_EVT")
         pub.subscribe(self.update_display, "UPDATE_EVT")
         pub.subscribe(self.update_count, "COUNT_EVT")
         pub.subscribe(self.end_proc, "END_EVT")
@@ -209,24 +199,20 @@ class LogOut(wx.Panel):
             self.thread_type = ConcatDemuxer(varargs, duration,
                                              self.logname,
                                              )
-        elif varargs[0] == 'youtube_dl python package':  # as import youtube_dl
+        elif varargs[0] == 'youtube_dl downloading':  # as import youtube_dl
             self.ckbx_text.Hide()
-            self.thread_type = YtdlLibDL(varargs, self.logname)
-
-        elif varargs[0] == 'youtube-dl executable':  # as youtube-dl exec.
-            self.ckbx_text.Hide()
-            self.thread_type = YtdlExecDL(varargs, self.logname)
+            self.thread_type = YdlDownloader(varargs, self.logname)
     # ----------------------------------------------------------------------
 
     def youtubedl_from_import(self, output, duration, status):
         """
         Receiving output messages from youtube_dl library via
-        pubsub "UPDATE_YDL_FROM_IMPORT_EVT" .
+        pubsub "UPDATE_YDL_EVT" .
         """
         if status == 'ERROR':
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
             self.txtout.AppendText(f'{output}\n')
-            self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.FAILED))
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['FAILED']))
             self.txtout.AppendText(LogOut.MSG_failed)
             self.result = 'failed'
 
@@ -262,54 +248,6 @@ class LogOut(wx.Panel):
             with open(os.path.join(LogOut.appdata['logdir'], self.logname),
                       "a", encoding='utf8') as logerr:
                 logerr.write(f"[YOUTUBE_DL]: {output}\n")
-    # ---------------------------------------------------------------------#
-
-    def youtubedl_exec(self, output, duration, status):
-        """
-        Receiving output messages from youtube-dl command line execution
-        via pubsub "UPDATE_YDL_EXECUTABLE_EVT" .
-
-        """
-        if not status == 0:  # error, exit status of the p.wait
-            if output:
-                if 'ERROR:' in output:
-                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
-                    self.txtout.AppendText(f'{output}\n')
-
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR1']))
-            self.txtout.AppendText(LogOut.MSG_failed)
-            self.result = 'failed'
-            return
-
-        if '[download]' in output:  # ...in processing
-            if 'Destination' not in output:
-                try:
-                    i = float(output.split()[1].split('%')[0])
-                except ValueError:
-                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT5']))
-                    self.txtout.AppendText(f' {output}')
-                else:
-                    self.barprog.SetValue(i)
-                    self.labperc.SetLabel(f"{output}")
-                    del output, duration
-
-        else:  # append all others lines on the textctrl and log file
-            if not self.ckbx_text.IsChecked():  # print the output
-                if '[info]' in output:
-                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['INFO']))
-                    self.txtout.AppendText(f' {output}')
-                elif 'WARNING:' in output:
-                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
-                    self.txtout.AppendText(f' {output}')
-                elif 'ERROR:' not in output:
-                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
-                    self.txtout.AppendText(f' {output}')
-
-            with open(os.path.join(LogOut.appdata['logdir'], self.logname),
-                      "a", encoding='utf8') as logerr:
-                logerr.write(f"[YOUTUBE-DL]: {output}")
-                # write a row error into file log
-
     # ---------------------------------------------------------------------#
 
     def update_display(self, output, duration, status):
@@ -429,7 +367,7 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(LogOut.MSG_taskfailed + '\n')
 
         elif self.abort is True:
-            self.txtout.SetDefaultStyle(wx.TextAttr(LogOut.ABORT))
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ABORT']))
             self.txtout.AppendText(LogOut.MSG_interrupted + '\n')
 
         else:
