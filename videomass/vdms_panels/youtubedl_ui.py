@@ -93,19 +93,19 @@ class Downloader(wx.Panel):
     MSG_2 = _('Function available only if you choose "Download by '
               'format code"')
 
-    VQUALITY = {('Best quality video 1080p'): ('bestvideo[height<=?1080]'
-                                               '+bestaudio/best[height'
-                                               '<=?1080]'),
-                ('video 720p'): ('bestvideo[height<=?720]+worstaudio'
-                                 '/best[height<=?720]'),
-                ('video 480p'): ('worstvideo[height<=?480]+'
-                                 '/best[height<=?480]'),
-                ('video 360p'): ('best[height<=?360]+best/best[height<=?360]'),
-                ('video 240p'): ('worstvideo[height<=?240]+worstaudio'
-                                 '/best[height<=?240]'),
-                ('Worst quality video 144p'): ('worstvideo[height>=?144]'
-                                               '+worstaudio/worst[height'
-                                               '>=?144]'),
+    P1080 = 'bestvideo[height<=?1080]+bestaudio/best[height<=?1080]'
+    P720 = 'bestvideo[height<=?720]+bestaudio/best[height<=?720]'
+    P480 = 'bestvideo[height<=?480]+bestaudio/best[height<=?480]'
+    P360 = 'bestvideo[height<=?360]+bestaudio/best[height<=?360]'
+    P240 = 'bestvideo[height<=?240]+bestaudio/best[height<=?240]'
+    P144 = 'worstvideo[height>=?144]+worstaudio/worst[height>=?144]'
+
+    VQUALITY = {('Best quality video 1080p'): (P1080),
+                ('720p'): (P720),
+                ('480p'): (P480),
+                ('360p'): (P360),
+                ('240p'): (P240),
+                ('Worst quality video 144p'): (P144),
                 }
     AFORMATS = {("Default audio format"): ("best"),
                 ("wav"): ("wav"),
@@ -120,7 +120,7 @@ class Downloader(wx.Panel):
                 ('Worst quality audio'): ('worstaudio')}
 
     CHOICE = [_('Default'),
-              _('Download audio and video splitted'),
+              _('Download split audio and video'),
               _('Download Audio only'),
               _('Download by format code')
               ]
@@ -146,8 +146,7 @@ class Downloader(wx.Panel):
         self.opt = {("NO_PLAYLIST"): True,
                     ("THUMB"): False,
                     ("METADATA"): False,
-                    ("V_QUALITY"): ("bestvideo[height"
-                                    "<=?1080]+bestaudio/best[height<=?1080]"),
+                    ("V_QUALITY"): (Downloader.P1080),
                     ("A_FORMAT"): "best",
                     ("A_QUALITY"): "bestaudio",
                     ("SUBTITLES"): False,
@@ -198,8 +197,8 @@ class Downloader(wx.Panel):
         self.cmbx_vq.SetSelection(0)
         # grid_v.Add((20, 20), 0,)
         fgs1.Add(self.cmbx_vq, 0, wx.ALL | wx.EXPAND, 5)
-        tip = (_('Each format is indicative and may not be available, '
-                 'so it will be replaced with the closest one.'))
+        tip = (_('When not available, the chosen video resolution will '
+                 'be replaced with the closest one'))
         self.cmbx_vq.SetToolTip(tip)
 
         self.cmbx_aq = wx.ComboBox(panelscroll, wx.ID_ANY,

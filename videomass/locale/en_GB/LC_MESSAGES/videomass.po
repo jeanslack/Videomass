@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-06 18:08+0200\n"
-"PO-Revision-Date: 2021-10-06 18:10+0200\n"
+"POT-Creation-Date: 2021-10-07 11:20+0200\n"
+"PO-Revision-Date: 2021-10-07 11:20+0200\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -1541,7 +1541,7 @@ msgstr ""
 #: ../vdms_main/main_frame.py:1433 ../vdms_main/main_frame.py:1465
 #: ../vdms_main/main_frame.py:1488 ../vdms_main/main_frame.py:1543
 #: ../vdms_main/main_frame.py:1594 ../vdms_main/main_frame.py:1646
-#: ../vdms_panels/youtubedl_ui.py:455 ../vdms_panels/youtubedl_ui.py:634
+#: ../vdms_panels/youtubedl_ui.py:454 ../vdms_panels/youtubedl_ui.py:633
 msgid "Ready"
 msgstr ""
 
@@ -2225,7 +2225,7 @@ msgstr ""
 msgid "Video Filters"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:530 ../vdms_panels/youtubedl_ui.py:231
+#: ../vdms_panels/av_conversions.py:530 ../vdms_panels/youtubedl_ui.py:230
 msgid "Preview"
 msgstr ""
 
@@ -2731,7 +2731,7 @@ msgid "Default"
 msgstr ""
 
 #: ../vdms_panels/youtubedl_ui.py:123
-msgid "Download audio and video splitted"
+msgid "Download split audio and video"
 msgstr ""
 
 #: ../vdms_panels/youtubedl_ui.py:124
@@ -2742,123 +2742,123 @@ msgstr ""
 msgid "Download by format code"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:166
+#: ../vdms_panels/youtubedl_ui.py:165
 msgid "Options"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:201
+#: ../vdms_panels/youtubedl_ui.py:200
 msgid ""
-"Each format is indicative and may not be available, so it will be replaced "
-"with the closest one."
+"When not available, the chosen video resolution will be replaced with the "
+"closest one"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:237
+#: ../vdms_panels/youtubedl_ui.py:236
 msgid "Download all videos in playlist"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:242
+#: ../vdms_panels/youtubedl_ui.py:241
 msgid "Playlist Editor"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:249
+#: ../vdms_panels/youtubedl_ui.py:248
 msgid "Embed thumbnail in audio file"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:253
+#: ../vdms_panels/youtubedl_ui.py:252
 msgid "Add metadata to file"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:257
+#: ../vdms_panels/youtubedl_ui.py:256
 msgid "Write subtitles to video"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:262
+#: ../vdms_panels/youtubedl_ui.py:261
 msgid "Prevent overwriting files"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:267
+#: ../vdms_panels/youtubedl_ui.py:266
 msgid ""
 "Include the video ID\n"
 "in the file names"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:273
+#: ../vdms_panels/youtubedl_ui.py:272
 msgid "Restrict file names"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:297
+#: ../vdms_panels/youtubedl_ui.py:296
 msgid "Help viewer"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:322 ../vdms_panels/youtubedl_ui.py:422
-#: ../vdms_panels/youtubedl_ui.py:438
+#: ../vdms_panels/youtubedl_ui.py:321 ../vdms_panels/youtubedl_ui.py:421
+#: ../vdms_panels/youtubedl_ui.py:437
 msgid "Play selected url"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:450
+#: ../vdms_panels/youtubedl_ui.py:449
 msgid "An item must be selected in the URLs checklist"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:460
+#: ../vdms_panels/youtubedl_ui.py:459
 msgid ""
 "Cannot play playlists / channels or URLs containing multiple videos listed."
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:487
+#: ../vdms_panels/youtubedl_ui.py:486
 msgid "Format Code"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:488 ../vdms_panels/youtubedl_ui.py:585
+#: ../vdms_panels/youtubedl_ui.py:487 ../vdms_panels/youtubedl_ui.py:584
 msgid "Url"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:489 ../vdms_panels/youtubedl_ui.py:586
+#: ../vdms_panels/youtubedl_ui.py:488 ../vdms_panels/youtubedl_ui.py:585
 msgid "Title"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:490
+#: ../vdms_panels/youtubedl_ui.py:489
 msgid "Extension"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:491
+#: ../vdms_panels/youtubedl_ui.py:490
 msgid "Resolution"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:492
+#: ../vdms_panels/youtubedl_ui.py:491
 msgid "Video Codec"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:493
+#: ../vdms_panels/youtubedl_ui.py:492
 msgid "fps"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:494
+#: ../vdms_panels/youtubedl_ui.py:493
 msgid "Audio Codec"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:495 ../vdms_panels/filedrop.py:222
+#: ../vdms_panels/youtubedl_ui.py:494 ../vdms_panels/filedrop.py:222
 msgid "Size"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:587
+#: ../vdms_panels/youtubedl_ui.py:586
 msgid "Quality"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:665
+#: ../vdms_panels/youtubedl_ui.py:664
 msgid ""
 "Unable to get format codes on playlists / channels or URLs containing "
 "multiple videos listed."
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:736
+#: ../vdms_panels/youtubedl_ui.py:735
 msgid "URLs have no playlist references"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:865
+#: ../vdms_panels/youtubedl_ui.py:864
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:867 ../vdms_panels/youtubedl_ui.py:873
+#: ../vdms_panels/youtubedl_ui.py:866 ../vdms_panels/youtubedl_ui.py:872
 #: ../vdms_panels/long_processing_task.py:419
 #: ../vdms_panels/presets_manager.py:492 ../vdms_panels/presets_manager.py:535
 #: ../vdms_panels/presets_manager.py:603 ../vdms_panels/presets_manager.py:629
@@ -2866,7 +2866,7 @@ msgstr ""
 msgid "Please confirm"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:871
+#: ../vdms_panels/youtubedl_ui.py:870
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr ""
 

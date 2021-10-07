@@ -37,14 +37,13 @@ each operating system.
 - **[wxPython-Phoenix >= 4.0.3](https://wxpython.org/)**
 - **[PyPubSub >= 4.0.3](https://pypi.org/project/PyPubSub/)**
 - **[requests >= 2.21.0](https://pypi.org/project/requests/)**
-- **[pip](https://pypi.org/project/pip/)**
 - **[ffmpeg >=3.2](https://ffmpeg.org/)**
 - **[ffprobe](https://ffmpeg.org/ffprobe.html)** (usually bundled with ffmpeg)
 - **[ffplay](http://ffmpeg.org/ffplay.html)** (usually bundled with ffmpeg)
-- **[youtube-dl](https://pypi.org/project/youtube_dl/)**
-- **[yt-dlp](https://github.com/yt-dlp/yt-dlp)** (A fork of youtube-dl)
 
 ### Optionals
+- **[youtube-dl](https://pypi.org/project/youtube_dl/)**
+- **[yt-dlp](https://github.com/yt-dlp/yt-dlp)** (A fork of youtube-dl)
 - **[atomicparsley](http://atomicparsley.sourceforge.net/)**
 
 ### Install basic dependencies for your OS
