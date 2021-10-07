@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Oct 06, 2021 V.3.4.8
+Oct 07, 2021 V.3.5.0
 
   * Added support to a new downloader: yt-dlp, an updated fork of youtube-dl.
   * Now you can switch between youtube-dl and yt-dlp via setup dialog.
