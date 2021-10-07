@@ -17,8 +17,8 @@ Minimum requirements:
 - [Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package 
 (x86)](https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe). 
   
-[Videomass 3.4.6 Installer](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64-Setup.exe){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
-[Videomass 3.4.6 Portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-x86_64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
+[Videomass 3.5.0 Installer](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.5.0-x86_64-Setup.exe){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
+[Videomass 3.5.0 Portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.5.0-x86_64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
 [Pyembed package](#pyembed-package){: .btn .fs-5 .mb-4 .mb-md-0 }     
 
 ### Important note
@@ -46,7 +46,7 @@ Minimum requirements:
 - [Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package (x86)](https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe).
 - [Microsoft C Runtime](https://www.microsoft.com/en-us/download/details.aspx?id=48145)
 
-[Videomass 3.4.6 pyembed](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.4.6-WIN-x86_64-pyembed.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }
+[Videomass 3.5.0 pyembed](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.5.0-WIN-x86_64-pyembed.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }
 
 This is a fully portable and ready-to-use experimental implementation of the 
 [Python embeddable package](https://docs.python.org/3/using/windows.html#the-embeddable-package), 

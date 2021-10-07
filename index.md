@@ -9,11 +9,12 @@ permalink: /
 # Videomass
 {: .fs-9 }
 
-# It is a [FLOSS](https://www.gnu.org/philosophy/floss-and-foss.en.html), cross-platform GUI for FFmpeg and Youtube-dl
+# It is a [FLOSS](https://www.gnu.org/philosophy/floss-and-foss.en.html), cross-platform GUI for FFmpeg and youtube-dl
 {: .fs-6 }
 
 Designed for [FFmpeg](https://www.ffmpeg.org/) enthusiasts and users who need a 
-graphical interface for [youtube-dl](http://ytdl-org.github.io/youtube-dl/)
+graphical interface for [youtube-dl](http://ytdl-org.github.io/youtube-dl/) and 
+[yt-dlp](https://github.com/yt-dlp/yt-dlp)
 {: .fs-3 .fw-300 }
 
 [Get started now](videomass_use.md){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } 

@@ -18,7 +18,8 @@ the [FFmpeg](https://www.ffmpeg.org/) commands without limits of
 [codecs](https://ffmpeg.org/ffmpeg-codecs.html).   
 
 It features graphical tools for viewing, analyzing and processing multimedia 
-streams and downloading videos via [youtube-dl](http://ytdl-org.github.io/youtube-dl/).  
+streams and downloading videos via [youtube-dl](http://ytdl-org.github.io/youtube-dl/) 
+and/or [yt-dlp](https://github.com/yt-dlp/yt-dlp).  
 
 Videomass is [Free (libre) Software](https://en.wikipedia.org/wiki/Free_software), 
 created and maintained by [Gianluca Pernigotto (jeanslack)](https://github.com/jeanslack); 
@@ -53,6 +54,16 @@ It requires the Python interpreter, version 2.6, 2.7, or 3.2+, and it is not
 platform specific. It should work on your Unix box, on Windows or on macOS. It 
 is released to the public domain, which means you can modify it, redistribute 
 it or use it however you like.
+
+---
+
+## What is yt-dlp?
+
+yt-dlp is a [youtube-dl](http://ytdl-org.github.io/youtube-dl/) fork based on 
+the now inactive [youtube-dlc](https://github.com/blackjack4494/yt-dlc). The main 
+focus of this project is adding new features and patches while also keeping up 
+to date with the original project. The project development page can be found 
+[here](https://github.com/yt-dlp/yt-dlp).
 
 ---
 
