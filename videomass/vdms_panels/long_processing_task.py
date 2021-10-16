@@ -28,7 +28,7 @@ import os
 from pubsub import pub
 import wx
 from videomass.vdms_io.make_filelog import write_log
-from videomass.vdms_threads.ydl_pylibdownloader import YtdlLibDL
+from videomass.vdms_threads.ydl_downloader import YdlDownloader
 from videomass.vdms_threads.one_pass import OnePass
 from videomass.vdms_threads.two_pass import TwoPass
 from videomass.vdms_threads.two_pass_ebu import Loudnorm
@@ -150,7 +150,7 @@ class LogOut(wx.Panel):
         self.button_stop.Enable(True)
         self.button_close.Enable(False)
 
-        pub.subscribe(self.youtubedl_from_import, "UPDATE_YDL_FROM_IMPORT_EVT")
+        pub.subscribe(self.youtubedl_from_import, "UPDATE_YDL_EVT")
         pub.subscribe(self.update_display, "UPDATE_EVT")
         pub.subscribe(self.update_count, "COUNT_EVT")
         pub.subscribe(self.end_proc, "END_EVT")
@@ -199,15 +199,15 @@ class LogOut(wx.Panel):
             self.thread_type = ConcatDemuxer(varargs, duration,
                                              self.logname,
                                              )
-        elif varargs[0] == 'youtube_dl python package':  # as import youtube_dl
+        elif varargs[0] == 'youtube_dl downloading':  # as import youtube_dl
             self.ckbx_text.Hide()
-            self.thread_type = YtdlLibDL(varargs, self.logname)
+            self.thread_type = YdlDownloader(varargs, self.logname)
     # ----------------------------------------------------------------------
 
     def youtubedl_from_import(self, output, duration, status):
         """
         Receiving output messages from youtube_dl library via
-        pubsub "UPDATE_YDL_FROM_IMPORT_EVT" .
+        pubsub "UPDATE_YDL_EVT" .
         """
         if status == 'ERROR':
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))

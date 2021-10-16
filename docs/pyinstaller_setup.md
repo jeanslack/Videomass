@@ -1,36 +1,7 @@
 -----------------
-# Make bundle with pyinstaller
-
-Before proceeding, install the dependencies required for your operating system:   
-- [Gnu/Linux](#gnu-linux)
-- [MacOs](#mac-os)
-- [Windows](#ms-windows)
-
-Packaging    
-- [Make a Videomass bundle using pyinstaller](#building-the-bundle-with-pyinstaller)
+# Make Videomass bundle with pyinstaller on macOS
 
 -----------------
-# Gnu-Linux
-
-- Make sure you have at least Python version 3.6.9 or higher
-
-- Make sure you have `pip`, if not install it with your package manager.
-
-- Use `pip` to install PyPubSub
-   - `python3 -m pip install --user PyPubSub`
-   
-   - `python3 -m pip install --user requests`
-
-- Install wxPython (see [Installing dependencies](https://github.com/jeanslack/Videomass/wiki/Installing-dependencies) )
-for more details.
-
-- Download the [Videomass](https://github.com/jeanslack/Videomass) using 
-`git clone` command or download the ZIP archive by clicking on Code button 
-of the [github]((https://github.com/jeanslack/Videomass)) page and choose 
-`Download ZIP`, then extract the archive. 
-
------------------
-# Mac-Os
 
 One of the tools to easily install everything that is missing on MacOS is
 [homebrew](https://brew.sh/) tool. However, homebrew uses the "Command Line Tools"
@@ -91,44 +62,24 @@ guides to doing this are as follows:
 - <https://wiki.wxpython.org/wxPythonVirtualenvOnMac>
 - <https://www.metachris.com/2015/11/create-standalone-mac-os-x-applications-with-python-and-py2app/>
 
-- Make sure you have pip, then install:
+- Make sure you have pip, then install required dependencies:
    - `python -m pip install --user wxPython`
    
    - `python -m pip install --user PyPubSub`
    
    - `python -m pip install --user requests`
-
-- Download the [Videomass](https://github.com/jeanslack/Videomass) TAR or ZIP
-sources and extract the archive.
-
------------------
-# MS-Windows
-
-- Install Python>=3.7
-
-- Make sure you have pip, then install:
-   - `python -m pip install wxPython`
-
-   - `python -m pip install PyPubSub`
    
-   - `python -m pip install requests`
+   - `python -m pip install --user youtube-dl`
+   
+   - `python -m pip install --user yt-dlp`
 
 - Download the [Videomass](https://github.com/jeanslack/Videomass) TAR or ZIP
 sources and extract the archive.
 
------------------
-# Building the bundle with pyinstaller 
-
-- Make sure you have installed pyinstaller    
-`$ python3 -m pip install --user pyinstaller`   
+- Make sure you have installed pyinstaller `python3 -m pip install --user pyinstaller`   
 
 - Open root directory of the Videomass sources that you just extracted 
 from the archive  e.g. `$ cd Videomass`
 
 - Run `$ python3 develop/tools/pyinstaller_setup.py -h` script and choose the 
 building option you want:   
-
-    > <ins>**Note:**</ins>
-    >
-    > For debug on Windows, even enable `console=True` into videomass.spec, not for
-    > production and distribution.

@@ -28,113 +28,11 @@ This file is part of Videomass.
 """
 import subprocess
 import shlex
-import platform
 import sys
 import os
-import shutil
-import ssl
-import urllib.request
 from threading import Thread
 import wx
 from pubsub import pub
-
-
-'''
-class CheckNewRelease(Thread):
-    """
-    Read the latest version of youtube-dl on github website (see url) .
-    """
-    def __init__(self, url):
-        """
-        Attributes defined here:
-        self.data: tuple object with exit status of the process
-        """
-        self.url = url
-        self.data = None
-
-        Thread.__init__(self)
-        """initialize"""
-
-        self.start()  # start the thread (va in self.run())
-    # ----------------------------------------------------------------#
-
-    def run(self):
-        """
-        Check for new version release
-        """
-        # HACK fix soon the ssl certificate
-        ssl._create_default_https_context = ssl._create_unverified_context
-        try:
-            req = (urllib.request.build_opener().open(
-                   self.url).read().decode('utf-8').strip())
-            self.data = req, None
-
-        except urllib.error.HTTPError as error:
-            self.data = None, error
-
-        except urllib.error.URLError as error:
-            self.data = None, error
-
-        wx.CallAfter(pub.sendMessage,
-                     "RESULT_EVT",
-                     status=''
-                     )
-'''
-# -------------------------------------------------------------------------#
-
-'''
-class UpgradeLatest(Thread):
-    """
-    Download latest version of youtube-dl.exe, see self.url .
-    """
-
-    def __init__(self, url, dest):
-        """
-        Attributes defined here:
-        latest: latest version available .
-        self.dest: location pathname to download
-        self.data: returned output of the self.status
-        self.status: tuple object with exit status of the process
-
-        """
-        self.url = url
-        self.dest = dest
-        self.data = None
-        self.status = None
-
-        Thread.__init__(self)
-        self.start()  # start the thread (va in self.run())
-    # ----------------------------------------------------------------#
-
-    def run(self):
-        """
-        Check for new version release
-        """
-        # HACK fix soon the ssl certificate
-        context = ssl._create_unverified_context()
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        page = urllib.request.Request(self.url, headers=headers)
-        try:
-            with urllib.request.urlopen(page, context=context) as \
-                    response, open(self.dest, 'wb') as out_file:
-                shutil.copyfileobj(response, out_file)
-
-            self.status = self.url, None
-
-        except urllib.error.HTTPError as error:
-            self.status = None, error
-
-        except urllib.error.URLError as error:
-            self.status = None, error
-
-        self.data = self.status
-
-        wx.CallAfter(pub.sendMessage,
-                     "RESULT_EVT",
-                     status=''
-                     )
-'''
-# ---------------------------------------------------------------------#
 
 
 class UpdateYoutubedlAppimage(Thread):
@@ -171,11 +69,11 @@ class UpdateYoutubedlAppimage(Thread):
         exe = os.path.join(binpath + '/youtube_dl_update_appimage.sh')
         self.status = None
         self.cmd = shlex.split(
-            "xterm +hold -u8 -bg 'grey15' -fa 'Monospace' "
-            "-fs 9 -geometry 120x35 -title '..Updating "
-            "youtube_dl package on %s' -e '%s %s "
-            "2>&1 | tee %s'" % (name, exe, appimage, log)
-        )
+            f"xterm +hold -u8 -bg 'grey15' -fa 'Monospace' "
+            f"-fs 9 -geometry 120x35 -title '..Updating "
+            f"youtube_dl package on {name}' -e '{exe} {appimage} "
+            f"2>&1 | tee {log}'"
+            )
 
         Thread.__init__(self)
         self.start()  # start the thread
@@ -193,29 +91,8 @@ class UpdateYoutubedlAppimage(Thread):
             self.status = err
 
         if proc.returncode:
-            self.status = "EXIT: %s\nERROR: %s" % (proc.returncode,
-                                                   proc.stderr)
+            self.status = "EXIT: {proc.returncode}\nERROR: {proc.stderr}"
         wx.CallAfter(pub.sendMessage,
                      "RESULT_EVT",
                      status=''
                      )
-
-
-def update_ydl_windows():
-    """
-    Prompt pkg update program via pip on Windows.
-    """
-    WELCOME_MESSAGE = f'\nCheck for "{mod}" update... Please wait...\n'
-    GOODBYE_MESSAGE = f'\nDone. Restart Videomass now.\nPress ENTER to exit.'
-
-    print(WELCOME_MESSAGE)
-    try:
-        cmd = subprocess.run([sys.executable, '-m', 'pip', 'install', '-U',
-                             'youtube_dl', 'yt_dlp'], shell=True, check=True)
-    except subprocess.CalledProcessError as err:
-        print('\nERROR: %s' % err)
-        input('\nPress ENTER to exit.')
-        return err
-    else:
-        input(GOODBYE_MESSAGE)
-        return

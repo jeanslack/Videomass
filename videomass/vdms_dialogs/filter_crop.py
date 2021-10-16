@@ -498,8 +498,7 @@ class Crop(wx.Dialog):
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):
-        """22077??VvA
-
+        """
         if you enable self.Destroy(), it delete from memory all data
         event and no return correctly. It has the right behavior if not
         used here, because it is called in the main frame.

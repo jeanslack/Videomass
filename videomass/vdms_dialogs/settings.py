@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.01.2021
+Rev: Oct.11.2021
 Code checker: pycodestyle
 ########################################################
 
@@ -67,6 +67,7 @@ class Setup(wx.Dialog):
         """
         get = wx.GetApp()
         self.appdata = get.appset
+        self.parent = parent
 
         # Make a items list of
         self.rowsNum = []  # rows number list
@@ -306,7 +307,7 @@ class Setup(wx.Dialog):
                 else:
                     self.ydlPath.WriteText(_('Not found'))
 
-        elif self.appdata['app'] in ('appimage', 'embed'):
+        elif self.appdata['app'] == 'appimage':
 
             tip1 = _('Menu bar > Tools > Update {}'
                      ).format(self.appdata['downloader'][0])
@@ -411,6 +412,10 @@ class Setup(wx.Dialog):
                                 _("Shows the text in the toolbar buttons")))
         sizerAppearance.Add(self.checkbox_tbtext, 0, wx.ALL, 5)
 
+        self.checkbox_exit = wx.CheckBox(tabFour, wx.ID_ANY, (
+                              _("Warn on exit")))
+        sizerAppearance.Add(self.checkbox_exit, 0, wx.ALL, 5)
+
         tabFour.SetSizer(sizerAppearance)  # aggiungo il sizer su tab 4
         notebook.AddPage(tabFour, _("Appearance"))
 
@@ -510,6 +515,7 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_RADIOBOX, self.on_toolbarPos, self.rdbTBpref)
         self.Bind(wx.EVT_COMBOBOX, self.on_toolbarSize, self.cmbx_iconsSize)
         self.Bind(wx.EVT_CHECKBOX, self.on_toolbarText, self.checkbox_tbtext)
+        self.Bind(wx.EVT_CHECKBOX, self.exit_warn, self.checkbox_exit)
 
         self.Bind(wx.EVT_CHECKBOX, self.clear_Cache, self.checkbox_cacheclr)
         self.Bind(wx.EVT_RADIOBOX, self.on_Ydl_preferences, self.rdbDownloader)
@@ -574,6 +580,11 @@ class Setup(wx.Dialog):
             self.checkbox_tbtext.SetValue(True)
         else:
             self.checkbox_tbtext.SetValue(False)
+
+        if self.appdata['warnexiting'] == 'enable':
+            self.checkbox_exit.SetValue(True)
+        else:
+            self.checkbox_exit.SetValue(False)
 
         if self.appdata['outputfile_samedir'] == 'false':
             self.lab_suffix.Disable()
@@ -852,6 +863,18 @@ class Setup(wx.Dialog):
             self.full_list[self.rowsNum[14]] = 'hide\n'
     # --------------------------------------------------------------------#
 
+    def exit_warn(self, event):
+        """
+        Enable or disable the warning message before
+        exiting the program
+        """
+        if self.checkbox_exit.IsChecked():
+            self.full_list[self.rowsNum[21]] = 'enable\n'
+        else:
+            self.full_list[self.rowsNum[21]] = 'disable\n'
+    # --------------------------------------------------------------------#
+
+
     def clear_Cache(self, event):
         """
         if checked, set to clear cached data on exit
@@ -893,9 +916,20 @@ class Setup(wx.Dialog):
         webbrowser.open(page)
     # --------------------------------------------------------------------#
 
-    def okmsg(self):
-        wx.MessageBox(_("Changes will take effect once the program "
-                        "has been restarted"))
+    def getvalue(self):
+        """
+        Get user preferences on exiting the app
+        """
+
+        if wx.MessageBox(_("Changes will take effect once the program "
+                           "has been restarted.\n\n"
+                           "Do you want to exit the application now?"),
+                         _('Exit'),
+                         wx.ICON_QUESTION
+                         | wx.YES_NO, self) == wx.YES:
+            return True
+
+        return None
     # --------------------------------------------------------------------#
 
     def on_close(self, event):
@@ -910,5 +944,4 @@ class Setup(wx.Dialog):
             for i in self.full_list:
                 f.write('%s' % i)
         # self.Destroy() # WARNING on mac not close corretly, on linux ok
-        self.okmsg()
-        self.Close()
+        event.Skip()

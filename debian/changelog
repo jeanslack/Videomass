@@ -1,21 +1,41 @@
-videomass (3.4.8-1) UNRELEASED; urgency=medium
+videomass (3.5.1-1) UNRELEASED; urgency=medium
 
-  * Fixed tests
-  * Added code implementation for Python embed package (Windows).
+  * Fixed Ctrl+Q keybord shorcut does not work on Windows (see #39).
+  * #39 Added new check box 'Warn on exit' on setup dialog appearance tab.
+  * #39 Improved handling of exiting the application after making changes
+    to user preferences.
+  * [YOUTUBE-DOWNLOADER] Improved "Best quality video" selector to the best
+    quality overall.
+  * [YOUTUBE-DOWNLOADER] Improved "Worst quality video" selector to the worst
+    quality overall.
+  * [YOUTUBE-DOWNLOADER] Added video format selection when downloading videos.
+  * [YOUTUBE-DOWNLOADER] Fixed downloader not updating using Videomass AppImage
+    (due to incorrect code indentation).
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 15 Oct 2021 09:08:00 +0200
+
+videomass (3.5.0-1) UNRELEASED; urgency=medium
+
+  * Added support to a new downloader: yt-dlp, an updated fork of youtube-dl.
+  * Now you can switch between youtube-dl and yt-dlp via setup dialog.
+  * Fixed test files.
+  * Added code implementation for Python embed package (only for Windows).
   * Some code refactoring.
-  * Changed package name from `videomass3` to `videomass`
+  * Changed package name from `videomass3` to `videomass`.
   * Changed main from `vdms3.py` to `gui_app.py`.
   * Fixed man page.
   * Improved error handling during application startup.
   * Made some cosmetic improvements.
-  * Added support for yt-dlp, an updated fork of youtube-dl downloader.
   * Fixed #37 - Incorrect video and audio qualities values on YouTube
     Downloader panel.
   * Improved video quality selector on the YouTube Downloader panel.
-  * New version of the videomass.conf configuration file changing to v3.3
+  * New version of the videomass.conf configuration file v3.3
   * Improved output debug colours and message texts.
+  * Videomass bundles for Windows and macOS also include youtube-dl and yt-dlp.
+  * The code to run youtube-dl as subprocess (in some cases) has finally been
+    removed.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 04 Oct 2021 20:52:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 07 Oct 2021 12:51:00 +0200
 
 videomass (3.4.7-1) UNRELEASED; urgency=medium
 

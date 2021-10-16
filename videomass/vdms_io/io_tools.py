@@ -27,12 +27,10 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import stat
-import shutil
 import requests
 import wx
 from videomass.vdms_threads.ffplay_file import FilePlay
-from videomass.vdms_threads import (ffplay_url_lib,
+from videomass.vdms_threads import (ffplay_url,
                                     generic_downloads,
                                     youtubedlupdater,
                                     )
@@ -44,7 +42,7 @@ from videomass.vdms_threads.check_bin import (ff_conf,
                                                ff_topics,
                                                )
 from videomass.vdms_threads.opendir import browse
-from videomass.vdms_threads.ydl_pylibextractinfo import YtdlLibEI
+from videomass.vdms_threads.ydl_extractinfo import YdlExtractInfo
 
 from videomass.vdms_frames import (ffmpeg_conf,
                                     ffmpeg_formats,
@@ -61,7 +59,7 @@ def stream_info(title, filepath):
     """
     get = wx.GetApp()
     try:
-        with open(filepath):
+        with open(filepath, encoding='utf8'):
             miniframe = Mediainfo(title,
                                   filepath,
                                   get.appset['ffprobe_bin'],
@@ -82,7 +80,7 @@ def stream_play(filepath, tseq, param, autoexit):
     get = wx.GetApp()  # get data from bootstrap
     tseq = tseq if tseq != "-ss 00:00:00.000 -t 00:00:00.000" else ''
     try:
-        with open(filepath):
+        with open(filepath, encoding='utf8'):
             FilePlay(filepath,
                      tseq,
                      param,
@@ -115,7 +113,7 @@ def url_play(url, quality, timestamp, autoexit):
     See https://github.com/ytdl-org/youtube-dl/issues/16175
 
     """
-    ffplay_url_lib.LibStreaming(timestamp, autoexit, url, quality)
+    ffplay_url.Streaming(timestamp, autoexit, url, quality)
 
 # -----------------------------------------------------------------------#
 
@@ -174,10 +172,7 @@ def test_conf():
     get = wx.GetApp()
     out = ff_conf(get.appset['ffmpeg_bin'], get.appset['ostype'])
     if 'Not found' in out[0]:
-        wx.MessageBox("\n{0}".format(out[1]),
-                      "Videomass",
-                      wx.ICON_ERROR,
-                      None)
+        wx.MessageBox(f"\n{out[1]}", "Videomass", wx.ICON_ERROR, None)
         return
 
     miniframe = ffmpeg_conf.Checkconf(out,
@@ -198,9 +193,8 @@ def test_formats():
     """
     get = wx.GetApp()
     diction = ff_formats(get.appset['ffmpeg_bin'], get.appset['ostype'])
-    if 'Not found' in diction.keys():
-        wx.MessageBox("\n{0}".format(diction['Not found']),
-                      "Videomass",
+    if 'Not found' in diction:
+        wx.MessageBox(f"\n{diction['Not found']}", "Videomass",
                       wx.ICON_ERROR,
                       None)
         return
@@ -222,9 +216,8 @@ def test_codecs(type_opt):
                         type_opt,
                         get.appset['ostype']
                         )
-    if 'Not found' in diction.keys():
-        wx.MessageBox("\n{0}".format(diction['Not found']),
-                      "Videomass",
+    if 'Not found' in diction:
+        wx.MessageBox(f"\n{diction['Not found']}", "Videomass",
                       wx.ICON_ERROR,
                       None)
         return
@@ -247,7 +240,7 @@ def findtopic(topic):
     retcod = ff_topics(get.appset['ffmpeg_bin'], topic, get.appset['ostype'])
 
     if 'Not found' in retcod[0]:
-        notf = ("\n{0}".format(retcod[1]))
+        notf = (f"\n{retcod[1]}")
         return notf
 
     return retcod[1]
@@ -270,15 +263,15 @@ def openpath(where):
 def youtubedl_getstatistics(url):
     """
     Call the thread to get extract info data object with
-    youtube_dl python package and show a wait pop-up dialog .
+    youtube_dl downloading and show a wait pop-up dialog .
     youtube_dl module.
     example without pop-up dialog:
-    thread = YtdlLibEI(url)
+    thread = YdlExtractInfo(url)
     thread.join()
     data = thread.data
     yield data
     """
-    thread = YtdlLibEI(url)
+    thread = YdlExtractInfo(url)
     dlgload = PopupDialog(None,
                           _("Videomass - Loading..."),
                           _("\nWait....\nRetrieving required data.\n"))
@@ -287,25 +280,6 @@ def youtubedl_getstatistics(url):
     data = thread.data
     dlgload.Destroy()
     yield data
-# --------------------------------------------------------------------------#
-
-
-'''
-def youtubedl_latest(url):
-    """
-    Call thread to read the latest version of youtube-dl via web.
-    While waiting, a pop-up dialog is shown.
-    """
-    thread = youtubedlupdater.CheckNewRelease(url)
-
-    dlgload = PopupDialog(None, _("Videomass - Reading..."),
-                          _("\nWait....\nCheck for update.\n"))
-    dlgload.ShowModal()
-    # thread.join()
-    latest = thread.data
-    dlgload.Destroy()
-
-    return latest'''
 # --------------------------------------------------------------------------#
 
 
@@ -328,7 +302,7 @@ def get_github_releases(url, keyname):
     else:
 
         try:
-            version = response.json()["%s" % keyname]
+            version = response.json()[f"{keyname}"]
 
         except Exception as err:
             not_found = 'response error:', err
@@ -385,25 +359,3 @@ def appimage_update_youtube_dl(appimage):
                 ret = 'success'
     return 'success' if ret == 'success' else 'error'
 # --------------------------------------------------------------------------#
-
-
-def pyembed_update_youtube_dl():
-    """
-    Call appropriate thread to update or installing youtube_dl/yt-dlp
-    inside Videomass embed pkg.
-    """
-    get = wx.GetApp()  # get data from bootstrap
-
-    if get.appset['ostype'] == 'Windows':
-        thread = youtubedlupdater.update_ydl_windows(log, appimage)
-
-    waitmsg = _('...Be patient, this can take a few minutes.')
-
-    dlgload = PopupDialog(None, _("Videomass - Updating..."), waitmsg)
-    dlgload.ShowModal()
-    # thread.join()
-    update = thread.status
-    dlgload.Destroy()
-
-    return update
-

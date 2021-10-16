@@ -67,7 +67,7 @@ def checkconf(dirconf, fileconf, srcpath):
             data = {'R': readconf(fileconf)}
             if not data['R']:
                 existfileconf = False
-            if float(data['R'][0]) != 3.3:  # version
+            if float(data['R'][0]) != 3.4:  # version
                 existfileconf = False
         else:
             existfileconf = False
@@ -452,7 +452,8 @@ class DataSource():
                  'outputfile_samedir': userconf[17],
                  'filesuffix': userconf[18],
                  'outputdownload': outdownl[0],
-                 'playlistsubfolder': userconf[20]}
+                 'playlistsubfolder': userconf[20],
+                 'warnexiting': userconf[21]}
                 )
     # --------------------------------------------------------------------
 

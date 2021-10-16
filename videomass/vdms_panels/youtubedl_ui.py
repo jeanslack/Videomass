@@ -35,6 +35,34 @@ from videomass.vdms_frames.ydl_mediainfo import YdlMediaInfo
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_dialogs.playlist_indexing import Indexing
 
+
+def join_opts(optvideo=None, optaudio=None, vformat=None, selection=None):
+    """
+    Return a convenient string for audio/video selectors
+    """
+
+    if vformat == 'Default':
+        if selection == 0:
+            return optvideo
+
+        elif selection == 1:
+            return optvideo.replace('+', ',')
+    else:
+        vid = optvideo.split('+')[0]
+        vid = vid + f'[ext={vformat}]'
+        aqual, last = optvideo.split('+')[1].split('/')
+        aqual = aqual if not optaudio else optaudio
+
+        if selection == 0:
+            aformat = 'm4a' if vformat == 'mp4' else 'webm'
+            aud = aqual + f'[ext={aformat}]' + '/' + last
+            return f'{vid}+{aud}'
+
+        elif selection == 1:
+            aud = aqual + '[ext=m4a]' + '/' + last
+            return f'{vid},{aud}'
+
+
 if not hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
     import wx.lib.mixins.listctrl as listmix
 
@@ -90,38 +118,30 @@ class Downloader(wx.Panel):
 
     MSG_1 = _('At least one "Format Code" must be checked for each '
               'URL selected in green.')
-    MSG_2 = _('Function available only if you choose "Download by '
-              'format code"')
 
-    VQUALITY = {('Best quality video 1080p'): ('bestvideo[height<=?1080]'
-                                               '+bestaudio/best[height'
-                                               '<=?1080]'),
-                ('video 720p'): ('bestvideo[height<=?720]+worstaudio'
-                                 '/best[height<=?720]'),
-                ('video 480p'): ('worstvideo[height<=?480]+'
-                                 '/best[height<=?480]'),
-                ('video 360p'): ('best[height<=?360]+best/best[height<=?360]'),
-                ('video 240p'): ('worstvideo[height<=?240]+worstaudio'
-                                 '/best[height<=?240]'),
-                ('Worst quality video 144p'): ('worstvideo[height>=?144]'
-                                               '+worstaudio/worst[height'
-                                               '>=?144]'),
+    VQUALITY = {'Best quality video': 'bestvideo+bestaudio/best',
+                'p1080': 'bestvideo[height<=?1080]+bestaudio/best',
+                'p720': 'bestvideo[height<=?720]+bestaudio/best',
+                'p480': 'bestvideo[height<=?480]+bestaudio/best',
+                'p360': 'bestvideo[height<=?360]+bestaudio/best',
+                'p240': 'bestvideo[height<=?240]+bestaudio/best',
+                'p144': 'worstvideo[height>=?144]+worstaudio/worst',
+                'Worst quality video': 'worstvideo+worstaudio/worst',
                 }
-    AFORMATS = {("Default audio format"): ("best", "--extract-audio"),
-                ("wav"): ("wav", "--extract-audio --audio-format wav"),
-                ("mp3"): ("mp3", "--extract-audio --audio-format mp3"),
-                ("aac"): ("aac", "--extract-audio --audio-format aac"),
-                ("m4a"): ("m4a", "--extract-audio --audio-format m4a"),
-                ("vorbis"): ("vorbis",
-                             "--extract-audio --audio-format vorbis"),
-                ("opus"): ("opus", "--extract-audio --audio-format opus"),
-                ("flac"): ("flac", "--extract-audio --audio-format flac"),
+    AFORMATS = {("Default audio format"): ("best"),
+                ("wav"): ("wav"),
+                ("mp3"): ("mp3"),
+                ("aac"): ("aac"),
+                ("m4a"): ("m4a"),
+                ("vorbis"): ("vorbis"),
+                ("opus"): ("opus"),
+                ("flac"): ("flac"),
                 }
     AQUALITY = {('Best quality audio'): ('bestaudio'),
                 ('Worst quality audio'): ('worstaudio')}
 
     CHOICE = [_('Default'),
-              _('Download audio and video splitted'),
+              _('Download split audio and video'),
               _('Download Audio only'),
               _('Download by format code')
               ]
@@ -144,14 +164,13 @@ class Downloader(wx.Panel):
             bmplistindx = wx.Bitmap(Downloader.icons['listindx'],
                                     wx.BITMAP_TYPE_ANY)
 
-        self.opt = {("NO_PLAYLIST"): [True, "--no-playlist"],
-                    ("THUMB"): [False, ""],
-                    ("METADATA"): [False, ""],
-                    ("V_QUALITY"): ("bestvideo[height"
-                                    "<=?1080]+bestaudio/best[height<=?1080]"),
-                    ("A_FORMAT"): ["best", "--extract-audio"],
-                    ("A_QUALITY"): ("bestaudio"),
-                    ("SUBTITLES"): [False, ""],
+        self.opt = {("NO_PLAYLIST"): True,
+                    ("THUMB"): False,
+                    ("METADATA"): False,
+                    ("V_QUALITY"): Downloader.VQUALITY['Best quality video'],
+                    ("A_FORMAT"): "best",
+                    ("A_QUALITY"): "bestaudio",
+                    ("SUBTITLES"): False,
                     }
         self.plidx = {'': ''}
         self.info = []  # has data information for Show More button
@@ -184,7 +203,7 @@ class Downloader(wx.Panel):
                               )
         boxoptions.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
         boxoptions.Add((5, 5))
-        panelscroll = scrolled.ScrolledPanel(self, -1, size=(260, 700),
+        panelscroll = scrolled.ScrolledPanel(self, -1, size=(260, 900),
                                              style=wx.TAB_TRAVERSAL
                                              | wx.BORDER_THEME,
                                              name="panelscr",
@@ -199,9 +218,16 @@ class Downloader(wx.Panel):
         self.cmbx_vq.SetSelection(0)
         # grid_v.Add((20, 20), 0,)
         fgs1.Add(self.cmbx_vq, 0, wx.ALL | wx.EXPAND, 5)
-        tip = (_('Each format is indicative and may not be available, '
-                 'so it will be replaced with the closest one.'))
+        tip = (_('When not available, the chosen video resolution will '
+                 'be replaced with the closest one'))
         self.cmbx_vq.SetToolTip(tip)
+        self.rdbvideoformat = wx.RadioBox(panelscroll, wx.ID_ANY,
+                                          (_("Preferred Video format")),
+                                          choices=['Default', 'webm', 'mp4'],
+                                          majorDimension=1,
+                                          style=wx.RA_SPECIFY_COLS
+                                          )
+        fgs1.Add(self.rdbvideoformat, 0, wx.ALL | wx.EXPAND, 5)
 
         self.cmbx_aq = wx.ComboBox(panelscroll, wx.ID_ANY,
                                    choices=list(Downloader.AQUALITY.keys()),
@@ -325,7 +351,8 @@ class Downloader(wx.Panel):
         # ----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_Choice)
         self.cmbx_vq.Bind(wx.EVT_COMBOBOX, self.on_Vq)
-        self.cmbx_af.Bind(wx.EVT_COMBOBOX, self.on_Af)
+        self.rdbvideoformat.Bind(wx.EVT_RADIOBOX, self.on_vformat)
+        self.cmbx_af.Bind(wx.EVT_COMBOBOX, self.on_aformat)
         self.cmbx_aq.Bind(wx.EVT_COMBOBOX, self.on_Aq)
         self.Bind(wx.EVT_BUTTON, self.playSelurl, self.btn_play)
         self.ckbx_pl.Bind(wx.EVT_CHECKBOX, self.on_Playlist)
@@ -363,13 +390,6 @@ class Downloader(wx.Panel):
             `key=url: values=[Audio: code, Video: code]`
         """
         if not self.choice.GetSelection() == 3:
-            self.cod_text.Clear()
-            num = self.fcode.GetItemCount()
-            for idx in range(num):
-                if self.fcode.IsChecked(idx):
-                    self.cod_text.SetDefaultStyle(
-                        wx.TextAttr(Downloader.YELLOW))
-                    self.cod_text.AppendText(f'- {Downloader.MSG_2}\n')
             return
 
         if not self.parent.sb.GetStatusText() == 'Ready':
@@ -639,24 +659,39 @@ class Downloader(wx.Panel):
 
         if self.choice.GetSelection() == 0:
             self.cmbx_af.Disable(), self.cmbx_aq.Disable()
-            self.cmbx_vq.Enable(), self.cod_text.Hide()
+            self.cmbx_vq.Enable(), self.rdbvideoformat.Enable()
+            self.cod_text.Hide()
             self.labtxt.Hide()
             self.Layout()
-            self.on_urls_list(self.opt["V_QUALITY"])
+            index = self.rdbvideoformat.GetSelection()
+            vformat = self.rdbvideoformat.GetString(index)
+            quality = join_opts(optvideo=self.opt["V_QUALITY"],
+                                vformat=vformat,
+                                selection=self.choice.GetSelection()
+                                )
+            self.on_urls_list(quality)
 
         elif self.choice.GetSelection() == 1:
             self.cmbx_af.Disable(), self.cmbx_aq.Enable()
-            self.cmbx_vq.Enable(), self.cod_text.Hide()
+            self.cmbx_vq.Enable(), self.rdbvideoformat.Enable()
+            self.cod_text.Hide()
             self.labtxt.Hide()
             self.Layout()
-            self.on_urls_list(f'{self.opt["V_QUALITY"].split("+", maxsplit=1)[0]},'
-                              f'{self.opt["A_QUALITY"]}')
+            index = self.rdbvideoformat.GetSelection()
+            vformat = self.rdbvideoformat.GetString(index)
+            quality = join_opts(optvideo=self.opt["V_QUALITY"],
+                                vformat=vformat,
+                                selection=self.choice.GetSelection()
+                                )
+            self.on_urls_list(quality)
+
         elif self.choice.GetSelection() == 2:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
-            self.cmbx_af.Enable(), self.cod_text.Hide()
+            self.cmbx_af.Enable(), self.rdbvideoformat.Disable()
+            self.cod_text.Hide()
             self.labtxt.Hide()
             self.Layout()
-            self.on_urls_list('')
+            self.on_urls_list(f'bestaudio (format={self.cmbx_af.GetValue()})')
 
         elif self.choice.GetSelection() == 3:
 
@@ -673,30 +708,43 @@ class Downloader(wx.Panel):
             self.labtxt.Show(), self.cod_text.Show()
             self.Layout()
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
-            self.cmbx_af.Disable()
+            self.cmbx_af.Disable(), self.rdbvideoformat.Disable()
             self.on_format_codes()
     # -----------------------------------------------------------------#
 
     def on_Vq(self, event):
         """
-        Set video qualities on 'best' or 'worst' during combobox event
-        and self.choice selection == 0
+        Set video qualities during combobox event
         """
         self.opt["V_QUALITY"] = Downloader.VQUALITY[self.cmbx_vq.GetValue()]
-        index = 0
+        self.on_vformat(self)
+    # -----------------------------------------------------------------#
+
+    def on_vformat(self, event):
+        """
+        Set preferring video format during radiobox event
+        """
+        index = self.rdbvideoformat.GetSelection()
+        vformat = self.rdbvideoformat.GetString(index)
+
         if self.choice.GetSelection() == 0:
-            # set 'best' parameters on both audio and video.
-            quality = self.opt["V_QUALITY"]
+            quality = join_opts(optvideo=self.opt["V_QUALITY"],
+                                vformat=vformat,
+                                selection=self.choice.GetSelection()
+                                )
         elif self.choice.GetSelection() == 1:
-            # set the "worst" and "best" parameters independently
-            quality = (f'{self.opt["V_QUALITY"].split("+", maxsplit=1)[0]},'
-                       f'{self.opt["A_QUALITY"]}')
+            quality = join_opts(optvideo=self.opt["V_QUALITY"],
+                                optaudio=self.opt["A_QUALITY"],
+                                vformat=vformat,
+                                selection=self.choice.GetSelection()
+                                )
+        index = 0
         for link in self.parent.data_url:
             self.fcode.SetItem(index, 3, quality)
             index += 1
     # -----------------------------------------------------------------#
 
-    def on_Af(self, event):
+    def on_aformat(self, event):
         """
         Set audio format to exporting during combobox event
         and self.choice selection == 2
@@ -704,26 +752,20 @@ class Downloader(wx.Panel):
         self.opt["A_FORMAT"] = Downloader.AFORMATS.get(self.cmbx_af.GetValue())
         index = 0
         for link in self.parent.data_url:
-            self.fcode.SetItem(index, 3, '')
+            self.fcode.SetItem(index, 3,
+                               f'bestaudio (format={self.cmbx_af.GetValue()})')
             index += 1
     # -----------------------------------------------------------------#
 
     def on_Aq(self, event):
         """
-        Set audio qualities on 'best' or 'worst' during combobox event
+        Set audio qualities during combobox event
         and self.choice selection == 1
         """
         self.opt["A_QUALITY"] = Downloader.AQUALITY.get(
             self.cmbx_aq.GetValue())
-        index = 0
-        # set string to audio and video qualities independently for player
-
-        quality = (f'{self.opt["V_QUALITY"].split("+", maxsplit=1)[0]},'
-                   f'{self.opt["A_QUALITY"]}')
-        for link in self.parent.data_url:
-            self.fcode.SetItem(index, 3, quality)
-            index += 1
-    # -----------------------------------------------------------------#
+        self.on_vformat(self)
+    ## -----------------------------------------------------------------#
 
     def on_Playlist(self, event):
         """
@@ -738,11 +780,11 @@ class Downloader(wx.Panel):
                               "Videomass", wx.ICON_INFORMATION, self)
                 self.ckbx_pl.SetValue(False)
                 return
-            self.opt["NO_PLAYLIST"] = [False, "--yes-playlist"]
+            self.opt["NO_PLAYLIST"] = False
             self.btn_plidx.Enable()
 
         else:
-            self.opt["NO_PLAYLIST"] = [True, "--no-playlist"]
+            self.opt["NO_PLAYLIST"] = True
             self.btn_plidx.SetBackgroundColour(wx.NullColour)
             self.btn_plidx.Disable()
             self.plidx = {'': ''}
@@ -774,9 +816,9 @@ class Downloader(wx.Panel):
         Enable or disable the tumbnails downloading
         """
         if self.ckbx_thumb.IsChecked():
-            self.opt["THUMB"] = [True, "--embed-thumbnail"]
+            self.opt["THUMB"] = True
         else:
-            self.opt["THUMB"] = [False, ""]
+            self.opt["THUMB"] = False
     # -----------------------------------------------------------------#
 
     def on_Metadata(self, event):
@@ -784,9 +826,9 @@ class Downloader(wx.Panel):
         Enable or disable writing metadata
         """
         if self.ckbx_meta.IsChecked():
-            self.opt["METADATA"] = [True, "--add-metadata"]
+            self.opt["METADATA"] = True
         else:
-            self.opt["METADATA"] = [False, ""]
+            self.opt["METADATA"] = False
     # -----------------------------------------------------------------#
 
     def on_Subtitles(self, event):
@@ -794,9 +836,9 @@ class Downloader(wx.Panel):
         enable or disable writing subtitles
         """
         if self.ckbx_sb.IsChecked():
-            self.opt["SUBTITLES"] = [True, "--write-auto-sub"]
+            self.opt["SUBTITLES"] = True
         else:
-            self.opt["SUBTITLES"] = [False, ""]
+            self.opt["SUBTITLES"] = False
     # -----------------------------------------------------------------#
 
     def getformatcode(self, urls):
@@ -887,69 +929,67 @@ class Downloader(wx.Panel):
 
         if self.choice.GetSelection() == 2:
             postprocessors.append({'key': 'FFmpegExtractAudio',
-                                    'preferredcodec':
-                                        self.opt["A_FORMAT"][0],
-                                    })
-        if self.opt["METADATA"][0]:
+                                   'preferredcodec': self.opt["A_FORMAT"],
+                                   })
+        if self.opt["METADATA"]:
             postprocessors.append({'key': 'FFmpegMetadata'})
 
-        if self.opt["THUMB"][0]:
+        if self.opt["THUMB"]:
             postprocessors.append({'key': 'EmbedThumbnail',
                                     'already_have_thumbnail': False
                                     })
-        if self.opt["SUBTITLES"][0]:
+        if self.opt["SUBTITLES"]:
             postprocessors.append({'key': 'FFmpegEmbedSubtitle'})
 
         if self.choice.GetSelection() == 0:
             code = []
-            data = {'format': self.opt["V_QUALITY"],
-                    'noplaylist': self.opt["NO_PLAYLIST"][0],
+            data = {'format': self.fcode.GetItemText(0, 3),
+                    'noplaylist': self.opt["NO_PLAYLIST"],
                     'playlist_items': self.plidx,
                     'nooverwrites': nooverwrites,
-                    'writethumbnail': self.opt["THUMB"][0],
+                    'writethumbnail': self.opt["THUMB"],
                     'outtmpl': f'{_id}.%(ext)s',
                     'extractaudio': False,
-                    'addmetadata': self.opt["METADATA"][0],
-                    'writesubtitles': self.opt["SUBTITLES"][0],
-                    'writeautomaticsub': self.opt["SUBTITLES"][0],
-                    'allsubtitles': self.opt["SUBTITLES"][0],
+                    'addmetadata': self.opt["METADATA"],
+                    'writesubtitles': self.opt["SUBTITLES"],
+                    'writeautomaticsub': self.opt["SUBTITLES"],
+                    'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
                     'restrictfilenames': restrictfn,
                     }
-        if self.choice.GetSelection() == 1:  # audio files and video files
+        elif self.choice.GetSelection() == 1:  # audio files and video files
             code = []
-            data = {'format': (f'{self.opt["V_QUALITY"].split("+", maxsplit=1)[0]},'
-                               f'{self.opt["A_QUALITY"]}'),
-                    'noplaylist': self.opt["NO_PLAYLIST"][0],
+            data = {'format': self.fcode.GetItemText(0, 3),
+                    'noplaylist': self.opt["NO_PLAYLIST"],
                     'playlist_items': self.plidx,
                     'nooverwrites': nooverwrites,
-                    'writethumbnail': self.opt["THUMB"][0],
+                    'writethumbnail': self.opt["THUMB"],
                     'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
                     'extractaudio': False,
-                    'addmetadata': self.opt["METADATA"][0],
-                    'writesubtitles': self.opt["SUBTITLES"][0],
-                    'writeautomaticsub': self.opt["SUBTITLES"][0],
-                    'allsubtitles': self.opt["SUBTITLES"][0],
+                    'addmetadata': self.opt["METADATA"],
+                    'writesubtitles': self.opt["SUBTITLES"],
+                    'writeautomaticsub': self.opt["SUBTITLES"],
+                    'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
                     'restrictfilenames': restrictfn,
                     }
         elif self.choice.GetSelection() == 2:  # audio only
             code = []
-            data = {'format': 'best',
-                    'noplaylist': self.opt["NO_PLAYLIST"][0],
+            data = {'format': 'bestaudio',
+                    'noplaylist': self.opt["NO_PLAYLIST"],
                     'playlist_items': self.plidx,
                     'nooverwrites': nooverwrites,
-                    'writethumbnail': self.opt["THUMB"][0],
+                    'writethumbnail': self.opt["THUMB"],
                     'outtmpl': f'{_id}.%(ext)s',
                     'extractaudio': True,
-                    'addmetadata': self.opt["METADATA"][0],
-                    'writesubtitles': self.opt["SUBTITLES"][0],
-                    'writeautomaticsub': self.opt["SUBTITLES"][0],
-                    'allsubtitles': self.opt["SUBTITLES"][0],
+                    'addmetadata': self.opt["METADATA"],
+                    'writesubtitles': self.opt["SUBTITLES"],
+                    'writeautomaticsub': self.opt["SUBTITLES"],
+                    'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
                     'restrictfilenames': restrictfn,
                     }
-        if self.choice.GetSelection() == 3:  # format code
+        elif self.choice.GetSelection() == 3:  # format code
             code = self.getformatcode(urls)
             if not code:
                 self.parent.statusbar_msg(Downloader.MSG_1,
@@ -958,27 +998,27 @@ class Downloader(wx.Panel):
                                           )
                 return
             data = {'format': '',
-                    'noplaylist': self.opt["NO_PLAYLIST"][0],
+                    'noplaylist': self.opt["NO_PLAYLIST"],
                     'playlist_items': self.plidx,
                     'nooverwrites': nooverwrites,
-                    'writethumbnail': self.opt["THUMB"][0],
+                    'writethumbnail': self.opt["THUMB"],
                     'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
                     'extractaudio': False,
-                    'addmetadata': self.opt["METADATA"][0],
-                    'writesubtitles': self.opt["SUBTITLES"][0],
-                    'writeautomaticsub': self.opt["SUBTITLES"][0],
-                    'allsubtitles': self.opt["SUBTITLES"][0],
+                    'addmetadata': self.opt["METADATA"],
+                    'writesubtitles': self.opt["SUBTITLES"],
+                    'writeautomaticsub': self.opt["SUBTITLES"],
+                    'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
                     'restrictfilenames': restrictfn,
                     }
-        self.parent.switch_to_processing('youtube_dl python package',
-                                            urls,
-                                            '',
-                                            self.parent.outpath_ydl,
-                                            data,
-                                            None,
-                                            code,
-                                            '',
-                                            logname,
-                                            len(urls),
-                                            )
+        self.parent.switch_to_processing('youtube_dl downloading',
+                                         urls,
+                                         '',
+                                         self.parent.outpath_ydl,
+                                         data,
+                                         None,
+                                         code,
+                                         '',
+                                         logname,
+                                         len(urls),
+                                         )

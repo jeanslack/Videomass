@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-Name: ffplay_url_lib.py
+Name: ffplay_url.py
 Porpose: playback online media streams with ffplay player using
          youtube_dl embedding on code.
 Compatibility: Python3, wxPython Phoenix
@@ -136,7 +136,7 @@ class DownloadStream(Thread):
     def run(self):
         """
         This atipic method is called by start() method after the instance
-        this class. see LibStreaming class below.
+        this class. see Streaming class below.
         """
         if self.stop_work_thread:
             return
@@ -173,7 +173,7 @@ class DownloadStream(Thread):
 # ------------------------------------------------------------------------#
 
 
-class LibStreaming(object):
+class Streaming(object):
     """
     Handling Threads to download and playback media streams via
     youtube-dl library and ffmpeg executables.
@@ -201,9 +201,9 @@ class LibStreaming(object):
         pub.subscribe(stop_download_listener, "STOP_DOWNLOAD_EVT")
         pub.subscribe(start_palying_listener, "START_FFPLAY_EVT")
 
-        LibStreaming.DOWNLOAD = DownloadStream(url, quality)
-        LibStreaming.TIMESTAMP = timestamp
-        LibStreaming.AUTOEXIT = autoexit
+        Streaming.DOWNLOAD = DownloadStream(url, quality)
+        Streaming.TIMESTAMP = timestamp
+        Streaming.AUTOEXIT = autoexit
 
         self.start_download()
     # ----------------------------------------------------------------#
@@ -212,7 +212,7 @@ class LibStreaming(object):
         """
         call DownloadStream(Thread) to run() method
         """
-        LibStreaming.DOWNLOAD.start()
+        Streaming.DOWNLOAD.start()
         return
 
 # --------- RECEIVER LISTENERS
@@ -223,8 +223,8 @@ def stop_download_listener(filename):
     Receive message from ffplay_file.FilePlay class
     for handle interruption
     """
-    LibStreaming.DOWNLOAD.stop()
-    LibStreaming.DOWNLOAD.join()  # if join, wait end process
+    Streaming.DOWNLOAD.stop()
+    Streaming.DOWNLOAD.join()  # if join, wait end process
 
 
 def start_palying_listener(output):
@@ -234,7 +234,7 @@ def start_palying_listener(output):
     """
     io_tools.stream_play(output,
                          '',
-                         LibStreaming.TIMESTAMP,
-                         LibStreaming.AUTOEXIT
+                         Streaming.TIMESTAMP,
+                         Streaming.AUTOEXIT
                          )
     return
