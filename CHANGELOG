@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Oct 15, 2021 V.3.5.1
+Oct 20, 2021 V.3.5.1
 
   * Fixed Ctrl+Q keybord shorcut does not work on Windows (see #39).
   * #39 Added new check box 'Warn on exit' on setup dialog appearance tab.
@@ -20,6 +20,7 @@ Oct 15, 2021 V.3.5.1
   * [YOUTUBE-DOWNLOADER] Added video format selection when downloading videos.
   * [YOUTUBE-DOWNLOADER] Fixed downloader not updating using Videomass AppImage
     (due to incorrect code indentation).
+  * [YOUTUBE-DOWNLOADER] improved playlist indexing dialog.
 
 +------------------------------------+
 Oct 07, 2021 V.3.5.0

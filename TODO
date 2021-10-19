@@ -12,7 +12,7 @@ URGENCY: to do soon
 --------------
 URGENCY: high
 
-- [TEXT DIALOGS] Improve message dialog with URLs inside, i.e. using `wx.lib.agw.hyperlink`.
+- [TEXT DIALOGS] Improve message dialog within URLs, i.e. using `wx.lib.agw.hyperlink`.
   [ffplay_url_exe.py, Videomass version, youtube-dl update]
 
 - [CODE IMPROVING] Need code refactoring

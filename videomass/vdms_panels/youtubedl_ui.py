@@ -224,7 +224,7 @@ class Downloader(wx.Panel):
                  'be replaced with the closest one'))
         self.cmbx_vq.SetToolTip(tip)
         self.rdbvideoformat = wx.RadioBox(panelscroll, wx.ID_ANY,
-                                          (_("Preferred Video format")),
+                                          (_("Preferred video format")),
                                           choices=['Default', 'webm', 'mp4'],
                                           majorDimension=1,
                                           style=wx.RA_SPECIFY_COLS
@@ -345,7 +345,6 @@ class Downloader(wx.Panel):
         self.cod_text.SetBackgroundColour(Downloader.BACKGRD)
 
         if Downloader.appdata['ostype'] != 'Darwin':
-            # self.labcode.SetLabelMarkup("<b>%s</b>" % labcstr)
             self.labtxt.SetLabelMarkup(f"<b>{labtstr}</b>")
         #  tooltips
         self.btn_play.SetToolTip(_('Play selected url'))

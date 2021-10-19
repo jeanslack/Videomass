@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2020
+Rev: Oct.18.2021
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -38,14 +38,14 @@ if not platform.system() == 'Windows':
     import shlex
 
 
-def logwrite(cmd, sterr, logname, logdir):
+def logwrite(cmd, stderr, logname, logdir):
     """
     writes ffmpeg commands and status error during threads below
     """
-    if sterr:
-        apnd = "...%s\n\n" % (sterr)
+    if stderr:
+        apnd = f"...{stderr}\n\n"
     else:
-        apnd = "%s\n\n" % (cmd)
+        apnd = f"{cmd}\n\n"
 
     with open(os.path.join(logdir, logname), "a", encoding='utf8') as log:
         log.write(apnd)
@@ -53,26 +53,22 @@ def logwrite(cmd, sterr, logname, logdir):
 # ------------------------------ THREADS -------------------------------#
 
 
-"""
-NOTE MS Windows:
-
-subprocess.STARTUPINFO()
-
-https://stackoverflow.com/questions/1813872/running-
-a-process-in-pythonw-with-popen-without-a-console?lq=1>
-
-NOTE capturing output in real-time (Windows, Unix):
-
-https://stackoverflow.com/questions/1388753/how-to-get-output-
-from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
-
-"""
-
-
 class OnePass(Thread):
     """
     This class represents a separate thread for running processes,
     which need to read the stdout/stderr in real time.
+
+    NOTE MS Windows:
+
+    subprocess.STARTUPINFO()
+
+    https://stackoverflow.com/questions/1813872/running-
+    a-process-in-pythonw-with-popen-without-a-console?lq=1>
+
+    NOTE capturing output in real-time (Windows, Unix):
+
+    https://stackoverflow.com/questions/1388753/how-to-get-output-
+    from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute
@@ -118,34 +114,30 @@ class OnePass(Thread):
                                                 self.duration,
                                                 fillvalue='',
                                                 ):
+
             basename = os.path.basename(files)  # nome file senza path
             filename = os.path.splitext(basename)[0]  # nome senza estensione
             source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
             outext = source_ext if not self.extoutput else self.extoutput
-            outputfile = os.path.join(folders, '%s%s.%s' % (filename,
-                                                            OnePass.SUFFIX,
-                                                            outext
-                                                            ))
-            cmd = ('"%s" %s %s -i "%s" %s %s %s '
-                   '-y "%s"' % (OnePass.appdata['ffmpeg_bin'],
-                                self.time_seq,
-                                OnePass.appdata['ffmpegloglev'],
-                                files,
-                                self.command,
-                                volume,
-                                OnePass.appdata['ffthreads'],
-                                outputfile,
-                                ))
+            outputfile = os.path.join(folders, f'{filename}{OnePass.SUFFIX}'
+                                               f'.{outext}')
+
+            cmd = (f'"{OnePass.appdata["ffmpeg_bin"]}" {self.time_seq} '
+                   f'{OnePass.appdata["ffmpegloglev"]} -i "{files}" '
+                   f'{self.command} {volume} {OnePass.appdata["ffthreads"]} '
+                   f'-y "{outputfile}"')
+
             self.count += 1
-            count = 'File %s/%s' % (self.count, self.countmax)
-            com = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
-                   '[COMMAND]:\n%s' % (count, files, outputfile, cmd))
+
+            count = f'File {self.count}/{self.countmax}'
+            com = (f'{count}\nSource: "{files}"\nDestination: "{outputfile}"'
+                   f'\n\n[COMMAND]:\n{cmd}')
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource='Source:  "%s"' % files,
-                         destination='Destination:  "%s"' % outputfile,
+                         fsource=f'Source:  "{files}"',
+                         destination=f'Destination:  "{outputfile}"',
                          duration=duration,
                          end='',
                          )
@@ -179,14 +171,15 @@ class OnePass(Thread):
                             break  # break second 'for' loop
 
                     if proc.wait():  # error
+                        print('proc punto wait')
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
-                                     output=line,
+                                     output='',
                                      duration=duration,
                                      status=proc.wait(),
                                      )
                         logwrite('',
-                                 "Exit status: %s" % proc.wait(),
+                                 f"Exit status: {proc.wait()}",
                                  self.logname,
                                  OnePass.appdata['logdir'],
                                  )  # append exit error number
@@ -200,7 +193,7 @@ class OnePass(Thread):
                                      end='ok'
                                      )
             except (OSError, FileNotFoundError) as err:
-                excepterr = "%s\n  %s" % (err, OnePass.NOT_EXIST_MSG)
+                excepterr = f"{err}\n  {OnePass.NOT_EXIST_MSG}"
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=excepterr,

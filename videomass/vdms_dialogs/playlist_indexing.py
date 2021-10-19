@@ -25,6 +25,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+import re
 import wx
 import wx.lib.mixins.listctrl as listmix
 
@@ -173,80 +174,53 @@ class Indexing(wx.Dialog):
         """
         diz = {}
         for row, url in enumerate(self.urls):
-            if self.lctrl.GetItem(row, 2).GetText():
-                diz[url] = self.lctrl.GetItem(row, 2).GetText()
+            txt = self.lctrl.GetItem(row, 2).GetText()
+            if txt:
+                diz[url] = ''.join(txt.split())
         return diz
 
     # ----------------------Event handler (callback)----------------------#
 
     def on_edit_end(self, event):
         """
-        Checking the strings entered
+        Checking the strings entered by event
+
+        row_id = event.GetIndex()  # Get the current row
+        col_id = event.GetColumn()  # Get the current column
+        new_data = event.GetLabel()  # Get the changed data
+        cols = self.lctrl.GetColumnCount()  # Get the total number of col
+        rows = self.lctrl.GetItemCount()  # Get the total number of rows
         """
         wxd = wx.DateTime.Now()
         date = wxd.Format('%H:%M:%S')
-        msg = dict(errdigit=_('ERROR: Enter only digits, commas and hyphens. '
-                              'If you have multiple items, use commas to '
-                              'separate them. Use the hyphen for the range. '
-                              'Spaces are not allowed.'),
-                   errdigit2=_('ERROR: You have to start and end with '
-                               'a digit.'),
-                   errhyph=_('ERROR: Make sure the hyphen is between '
-                             'two digits.'),
-                   errhyph3=_('ERROR: A range must include only two digits '
-                              'and a hyphen, for example "20-25" .'),
-                   errcomma=_('ERROR: Make sure you use commas only to '
-                              'separate indices and / or ranges, for example '
-                              '"1,3,5,10-15"'),
-                   errgen=_('ERROR: The entered string contains redundant '
-                            'characters.'),
-                   )
-        # row_id = event.GetIndex()  # Get the current row
-        # col_id = event.GetColumn()  # Get the current column
         new_data = event.GetLabel()  # Get the changed data
-        # cols = self.lctrl.GetColumnCount()  # Get the total number of col
-        # rows = self.lctrl.GetItemCount()  # Get the total number of rows
+        errbeg = _('ERROR: You have entered invalid characters')
+        errend = _('please try again.')
 
-        if not new_data == '':
-            last = len(new_data) - 1
-            csplit = new_data.split(',')  # split by commas
-            hsplit = new_data.split('-')  # split by hyphens
-            allow = ['-', ',', '0', '1', '2', '3',
-                     '4', '5', '6', '7', '8', '9']
+        allow = ['-', ',', '0', '1', '2', '3',
+                 '4', '5', '6', '7', '8', '9', ' ']
 
-            keywords = {'char': ([char for char in new_data
-                                  if char not in allow],
-                                 f'\n{date}: {msg["errdigit"]}'),
-                        'startsdigit': (not new_data[0].isdigit(),
-                                        f'\n{date}: {msg["errdigit2"]}'),
-                        'endsdigit': (not new_data[last].isdigit(),
-                                      f'\n{date}: {msg["errdigit2"]}'),
-                        'starshyph': ([hyph for hyph in csplit if
-                                       hyph.startswith('-')],
-                                      f'\n{date}: {msg["errhyph"]}'),
-                        'endshyph': ([hyph for hyph in csplit if
-                                      hyph.endswith('-')],
-                                     f'\n{date}: {msg["errhyph"]}'),
-                        'startscomma': ([comma for comma in hsplit if
-                                         comma.startswith(',')],
-                                        f'\n{date}: {msg["errcomma"]}'),
-                        'redund1': ('' in csplit,
-                                    f'\n{date}: {msg["errgen"]}'),
-                        'redund2': ('' in hsplit,
-                                    f'\n{date}: {msg["errgen"]}'),
-                        'errrange': ([rng.split('-') for rng in csplit if
-                                      '-' in rng if len(rng.split('-')) > 2],
-                                     f'\n{date}: {msg["errhyph3"]}')}
+        string = ''.join(new_data.split())
 
-            for val in keywords.items():
-                if val[1][0]:
-                    self.tctrl.SetDefaultStyle(wx.TextAttr(self.clrs['ERR1']))
-                    self.tctrl.AppendText(val[1][1])
-                    event.Veto()
-                    return
+        if string != '':
+            err = None
+            char = [char for char in string if char not in allow]
+            if char:
+                err = ''.join(char)
+            else:
+                search = re.search('[a-z-A-Z][--]|^,|^-|,$'
+                                   '|-$|--$|-,|,-|,,+', string)
+                if search:
+                    err = search.group(0)
+
+            if err is not None:
+                self.tctrl.SetDefaultStyle(wx.TextAttr(self.clrs['ERR1']))
+                self.tctrl.AppendText(f'\n{date}: {errbeg}: "{err}", {errend}\n')
+                event.Veto()
+                return
 
             self.tctrl.SetDefaultStyle(wx.TextAttr(self.clrs['TXT3']))
-            self.tctrl.AppendText(f'\n{date}: Assigned: {new_data} ')
+            self.tctrl.AppendText(f'\n{date}: Assigned: "{string}"\n')
     # ------------------------------------------------------------------#
 
     def on_edit_begin(self, event):
@@ -268,7 +242,7 @@ class Indexing(wx.Dialog):
             # It looks like the HTML color codes are translated to RGB here
             if self.lctrl.GetItemBackgroundColour(row_id) != colour:
                 self.tctrl.SetDefaultStyle(wx.TextAttr(self.clrs['WARN']))
-                self.tctrl.AppendText(f'\n{date}: {invalidmsg}')
+                self.tctrl.AppendText(f'\n{date}: {invalidmsg}\n')
                 event.Veto()
             else:
                 event.Skip()  # or event.Allow()
