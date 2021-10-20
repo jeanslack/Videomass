@@ -143,7 +143,6 @@ def source_build():
         'Topic :: Multimedia :: Sound/Audio :: Conversion',
     ],
     )
-# ---------------------------------------------------------------------#
 
 
 if __name__ == '__main__':

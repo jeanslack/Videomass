@@ -314,9 +314,12 @@ class MainFrame(wx.Frame):
 
         # elif self.topicname:
         else:
-            if wx.MessageBox(_('Are you sure you want to exit?'), _('Exit'),
-                             wx.ICON_QUESTION | wx.YES_NO,
-                             self) == wx.YES:
+            if self.appdata['warnexiting'] == 'enable':
+                if wx.MessageBox(_('Are you sure you want to exit?'),
+                                 _('Exit'),  wx.ICON_QUESTION | wx.YES_NO,
+                                self) == wx.YES:
+                    self.Destroy()
+            else:
                 self.Destroy()
     # ------------------------------------------------------------------#
 
@@ -360,7 +363,7 @@ class MainFrame(wx.Frame):
                                                     dscrp[1])
         self.fold_downloads_tmp.Enable(False)
         fileButton.AppendSeparator()
-        exitItem = fileButton.Append(wx.ID_EXIT, _("Exit"),
+        exitItem = fileButton.Append(wx.ID_EXIT, _("Exit\tCtrl+Q"),
                                      _("Close Videomass"))
         self.menuBar.Append(fileButton, _("File"))
 
@@ -698,41 +701,41 @@ class MainFrame(wx.Frame):
                              | wx.YES_NO, self) == wx.NO:
                 return
 
-                cur = current_release()[2]
-                fname = _("Select the 'Videomass-{}-x86_64.AppImage' "
-                          "file to update").format(cur)
-                with wx.FileDialog(
-                        None, _(fname), defaultDir=os.path.expanduser('~'),
-                        wildcard=(f"*Videomass-{cur}-x86_64.AppImage "
-                                  f"(*Videomass-{cur}-x86_64.AppImage;)"
-                                  f"|*Videomass-{cur}-x86_64.AppImage;"),
-                        style=wx.FD_OPEN
-                        | wx.FD_FILE_MUST_EXIST) as fileDialog:
+            cur = current_release()[2]
+            fname = _("Select the 'Videomass-{}-x86_64.AppImage' "
+                        "file to update").format(cur)
+            with wx.FileDialog(
+                    None, _(fname), defaultDir=os.path.expanduser('~'),
+                    wildcard=(f"*Videomass-{cur}-x86_64.AppImage "
+                              f"(*Videomass-{cur}-x86_64.AppImage;)"
+                              f"|*Videomass-{cur}-x86_64.AppImage;"),
+                    style=wx.FD_OPEN
+                    | wx.FD_FILE_MUST_EXIST) as fileDialog:
 
-                    if fileDialog.ShowModal() == wx.ID_CANCEL:
-                        return
-                    appimage = fileDialog.GetPath()
+                if fileDialog.ShowModal() == wx.ID_CANCEL:
+                    return
+                appimage = fileDialog.GetPath()
 
-                upgrade = io_tools.appimage_update_youtube_dl(appimage)
+            upgrade = io_tools.appimage_update_youtube_dl(appimage)
 
-                if upgrade == 'success':
-                    wx.MessageBox(_("Successful! {0} is up-to-date ({1})"
-                                    "\n\nRe-start is required."
-                                    ).format(self.appdata['downloader'][1],
-                                             check[0]),
-                                  "Videomass", wx.ICON_INFORMATION, self)
-                    self.on_Kill()
+            if upgrade == 'success':
+                wx.MessageBox(_("Successful! {0} is up-to-date ({1})"
+                                "\n\nRe-start is required."
+                                ).format(self.appdata['downloader'][1],
+                                         check[0]),
+                              "Videomass", wx.ICON_INFORMATION, self)
+                self.on_Kill()
 
-                elif upgrade == 'error':
-                    msg = _("Failed! For details consult:\n{}"
-                            "/youtube_dl-update-on-AppImage.log"
-                            ).format(MainFrame.LOGDIR)
-                    wx.MessageBox(msg, 'ERROR', wx.ICON_ERROR, self)
+            elif upgrade == 'error':
+                msg = _("Failed! For details consult:\n{}"
+                        "/youtube_dl-update-on-AppImage.log"
+                        ).format(MainFrame.LOGDIR)
+                wx.MessageBox(msg, 'ERROR', wx.ICON_ERROR, self)
 
-                else:
-                    wx.MessageBox(_('Failed! {}').format(upgrade),
-                                  'ERROR', wx.ICON_ERROR, self)
-                return
+            else:
+                wx.MessageBox(_('Failed! {}').format(upgrade),
+                                'ERROR', wx.ICON_ERROR, self)
+            return
 
         else:
             wx.MessageBox('Unable to update', 'ERROR', wx.ICON_ERROR, self)
@@ -1121,11 +1124,17 @@ class MainFrame(wx.Frame):
 
     def Setup(self, event):
         """
-        Call the module setup for setting preferences
+        Call the module setup for setting user preferences.
+        Note, this dialog window is managed like filters dialogs
+        on 'av_conversions.AV_Conv' panel, being need to get the
+        return code here.
         """
-        # self.parent.Setup(self)
-        setup_dlg = settings.Setup(self)
-        setup_dlg.ShowModal()
+        with settings.Setup(self) as setup:
+            if setup.ShowModal() == wx.ID_OK:
+                if setup.getvalue() is True:
+                    self.on_Kill()  # (function) equal to self.Destroy()
+                # else:
+                    # handle other things here
     # ------------------------------------------------------------------#
     # --------- Menu Help  ###
 
@@ -1478,11 +1487,11 @@ class MainFrame(wx.Frame):
                 self.statusbar_msg(msg[0], msg[1], msg[2])
             self.data_url = data
             self.ytDownloader.choice.SetSelection(0)
-            self.ytDownloader.on_Choice(self, statusmsg=False)
+            self.ytDownloader.on_choicebox(self, statusmsg=False)
             del self.ytDownloader.info[:]
             self.ytDownloader.format_dict.clear()
             self.ytDownloader.ckbx_pl.SetValue(False)
-            self.ytDownloader.on_Playlist(self)
+            self.ytDownloader.on_playlist(self)
 
         else:
             self.statusbar_msg(_('Ready'), None)

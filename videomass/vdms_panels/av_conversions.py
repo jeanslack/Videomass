@@ -1319,40 +1319,37 @@ class AV_Conv(wx.Panel):
         if not sdf:
             return
 
-        sizing = Scale(self,
-                       self.opt["Scale"],
-                       self.opt["Setdar"],
-                       self.opt["Setsar"],
-                       sdf[0],  # width
-                       sdf[1],  # height
-                       )
-        retcode = sizing.ShowModal()
-        if retcode == wx.ID_OK:
-            data = sizing.GetValue()
-            if not data:
-                self.btn_videosize.SetBackgroundColour(wx.NullColour)
-                self.opt["Setdar"] = ""
-                self.opt["Setsar"] = ""
-                self.opt["Scale"] = ""
-            else:
-                self.btn_videosize.SetBackgroundColour(
-                    wx.Colour(AV_Conv.VIOLET))
-                if 'scale' in data:
-                    self.opt["Scale"] = data['scale']
-                else:
+        with Scale(self,
+                   self.opt["Scale"],
+                   self.opt["Setdar"],
+                   self.opt["Setsar"],
+                   sdf[0],  # width
+                   sdf[1],  # height
+                   ) as sizing:
+
+            if sizing.ShowModal() == wx.ID_OK:
+                data = sizing.getvalue()
+                if not data:
+                    self.btn_videosize.SetBackgroundColour(wx.NullColour)
+                    self.opt["Setdar"] = ""
+                    self.opt["Setsar"] = ""
                     self.opt["Scale"] = ""
-                if 'setdar' in data:
-                    self.opt['Setdar'] = data['setdar']
                 else:
-                    self.opt['Setdar'] = ""
-                if 'setsar' in data:
-                    self.opt['Setsar'] = data['setsar']
-                else:
-                    self.opt['Setsar'] = ""
-            self.video_filter_checker()
-        else:
-            sizing.Destroy()
-            return
+                    self.btn_videosize.SetBackgroundColour(
+                        wx.Colour(AV_Conv.VIOLET))
+                    if 'scale' in data:
+                        self.opt["Scale"] = data['scale']
+                    else:
+                        self.opt["Scale"] = ""
+                    if 'setdar' in data:
+                        self.opt['Setdar'] = data['setdar']
+                    else:
+                        self.opt['Setdar'] = ""
+                    if 'setsar' in data:
+                        self.opt['Setsar'] = data['setsar']
+                    else:
+                        self.opt['Setsar'] = ""
+                self.video_filter_checker()
     # -----------------------------------------------------------------#
 
     def on_Set_transpose(self, event):
@@ -1364,26 +1361,25 @@ class AV_Conv(wx.Panel):
         if not sdf:
             return
 
-        rotate = Transpose(self, self.opt["Orientation"][0],
-                           self.opt["Orientation"][1],
-                           sdf[0],  # width,
-                           sdf[1],  # height
-                           sdf[2],  # filename
-                           sdf[3],  # time
-                           )
-        retcode = rotate.ShowModal()
-        if retcode == wx.ID_OK:
-            data = rotate.GetValue()
-            self.opt["Orientation"][0] = data[0]  # cmd option
-            self.opt["Orientation"][1] = data[1]  # msg
-            if not data[0]:
-                self.btn_rotate.SetBackgroundColour(wx.NullColour)
-            else:
-                self.btn_rotate.SetBackgroundColour(wx.Colour(AV_Conv.VIOLET))
-            self.video_filter_checker()
-        else:
-            rotate.Destroy()
-            return
+        with Transpose(self,
+                       self.opt["Orientation"][0],
+                       self.opt["Orientation"][1],
+                       sdf[0],  # width,
+                       sdf[1],  # height
+                       sdf[2],  # filename
+                       sdf[3],  # time
+                       ) as rotate:
+
+            if rotate.ShowModal() == wx.ID_OK:
+                data = rotate.getvalue()
+                self.opt["Orientation"][0] = data[0]  # cmd option
+                self.opt["Orientation"][1] = data[1]  # msg
+                if not data[0]:
+                    self.btn_rotate.SetBackgroundColour(wx.NullColour)
+                else:
+                    self.btn_rotate.SetBackgroundColour(
+                        wx.Colour(AV_Conv.VIOLET))
+                self.video_filter_checker()
     # ------------------------------------------------------------------#
 
     def on_Set_crop(self, event):
@@ -1395,20 +1391,23 @@ class AV_Conv(wx.Panel):
         if not sdf:
             return
 
-        crop = Crop(self, self.opt["Crop"], sdf[0], sdf[1], sdf[2], sdf[3])
-        retcode = crop.ShowModal()
-        if retcode == wx.ID_OK:
-            data = crop.GetValue()
-            if not data:
-                self.btn_crop.SetBackgroundColour(wx.NullColour)
-                self.opt["Crop"] = ''
-            else:
-                self.btn_crop.SetBackgroundColour(wx.Colour(AV_Conv.VIOLET))
-                self.opt["Crop"] = 'crop=%s' % data
-            self.video_filter_checker()
-        else:
-            crop.Destroy()
-            return
+        with Crop(self,
+                  self.opt["Crop"],
+                  sdf[0],
+                  sdf[1],
+                  sdf[2],
+                  sdf[3]) as crop:
+
+            if crop.ShowModal() == wx.ID_OK:
+                data = crop.getvalue()
+                if not data:
+                    self.btn_crop.SetBackgroundColour(wx.NullColour)
+                    self.opt["Crop"] = ''
+                else:
+                    self.btn_crop.SetBackgroundColour(
+                        wx.Colour(AV_Conv.VIOLET))
+                    self.opt["Crop"] = 'crop=%s' % data
+                self.video_filter_checker()
     # ------------------------------------------------------------------#
 
     def on_Set_deinterlace(self, event):
@@ -1420,30 +1419,27 @@ class AV_Conv(wx.Panel):
         if not sdf:
             return
 
-        lacing = Deinterlace(self,
-                             self.opt["Deinterlace"],
-                             self.opt["Interlace"],
-                             )
-        retcode = lacing.ShowModal()
-        if retcode == wx.ID_OK:
-            data = lacing.GetValue()
-            if not data:
-                self.btn_lacing.SetBackgroundColour(wx.NullColour)
-                self.opt["Deinterlace"] = ''
-                self.opt["Interlace"] = ''
-            else:
-                self.btn_lacing.SetBackgroundColour(
-                    wx.Colour(AV_Conv.VIOLET))
-                if 'deinterlace' in data:
-                    self.opt["Deinterlace"] = data["deinterlace"]
-                    self.opt["Interlace"] = ''
-                elif 'interlace' in data:
-                    self.opt["Interlace"] = data["interlace"]
+        with Deinterlace(self,
+                         self.opt["Deinterlace"],
+                         self.opt["Interlace"],
+                         ) as lacing:
+
+            if lacing.ShowModal() == wx.ID_OK:
+                data = lacing.getvalue()
+                if not data:
+                    self.btn_lacing.SetBackgroundColour(wx.NullColour)
                     self.opt["Deinterlace"] = ''
-            self.video_filter_checker()
-        else:
-            lacing.Destroy()
-            return
+                    self.opt["Interlace"] = ''
+                else:
+                    self.btn_lacing.SetBackgroundColour(
+                        wx.Colour(AV_Conv.VIOLET))
+                    if 'deinterlace' in data:
+                        self.opt["Deinterlace"] = data["deinterlace"]
+                        self.opt["Interlace"] = ''
+                    elif 'interlace' in data:
+                        self.opt["Interlace"] = data["interlace"]
+                        self.opt["Deinterlace"] = ''
+                self.video_filter_checker()
     # ------------------------------------------------------------------#
 
     def on_Set_denoiser(self, event):
@@ -1457,21 +1453,18 @@ class AV_Conv(wx.Panel):
         if not sdf:
             return
 
-        den = Denoisers(self, self.opt["Denoiser"])
-        retcode = den.ShowModal()
-        if retcode == wx.ID_OK:
-            data = den.GetValue()
-            if not data:
-                self.btn_denois.SetBackgroundColour(wx.NullColour)
-                self.opt["Denoiser"] = ''
-            else:
-                self.btn_denois.SetBackgroundColour(
-                    wx.Colour(AV_Conv.VIOLET))
-                self.opt["Denoiser"] = data
-            self.video_filter_checker()
-        else:
-            den.Destroy()
-            return
+        with Denoisers(self, self.opt["Denoiser"]) as den:
+
+            if den.ShowModal() == wx.ID_OK:
+                data = den.getvalue()
+                if not data:
+                    self.btn_denois.SetBackgroundColour(wx.NullColour)
+                    self.opt["Denoiser"] = ''
+                else:
+                    self.btn_denois.SetBackgroundColour(
+                        wx.Colour(AV_Conv.VIOLET))
+                    self.opt["Denoiser"] = data
+                self.video_filter_checker()
     # ------------------------------------------------------------------#
 
     def on_Set_stabilizer(self, event):
@@ -1494,32 +1487,30 @@ class AV_Conv(wx.Panel):
                           )
             return
 
-        stab = Vidstab(self,
-                       self.opt["Vidstabdetect"],
-                       self.opt["Vidstabtransform"],
-                       self.opt["Unsharp"],
-                       self.opt["Makeduo"],
-                       )
-        retcode = stab.ShowModal()
-        if retcode == wx.ID_OK:
-            data = stab.GetValue()
-            if not data:
-                self.btn_vidstab.SetBackgroundColour(wx.NullColour)
-                self.opt["Vidstabdetect"] = ""
-                self.opt["Vidstabtransform"] = ""
-                self.opt["Unsharp"] = ""
-                self.opt["Makeduo"] = False
-            else:
-                self.btn_vidstab.SetBackgroundColour(wx.Colour(AV_Conv.VIOLET))
-                self.opt["Vidstabdetect"] = data[0]
-                self.opt['Vidstabtransform'] = data[1]
-                self.opt['Unsharp'] = data[2]
-                self.opt["Makeduo"] = data[3]
+        with Vidstab(self,
+                     self.opt["Vidstabdetect"],
+                     self.opt["Vidstabtransform"],
+                     self.opt["Unsharp"],
+                     self.opt["Makeduo"],
+                     ) as stab:
 
-            self.video_filter_checker()
-        else:
-            stab.Destroy()
-            return
+            if stab.ShowModal() == wx.ID_OK:
+                data = stab.getvalue()
+                if not data:
+                    self.btn_vidstab.SetBackgroundColour(wx.NullColour)
+                    self.opt["Vidstabdetect"] = ""
+                    self.opt["Vidstabtransform"] = ""
+                    self.opt["Unsharp"] = ""
+                    self.opt["Makeduo"] = False
+                else:
+                    self.btn_vidstab.SetBackgroundColour(
+                        wx.Colour(AV_Conv.VIOLET))
+                    self.opt["Vidstabdetect"] = data[0]
+                    self.opt['Vidstabtransform'] = data[1]
+                    self.opt['Unsharp'] = data[2]
+                    self.opt["Makeduo"] = data[3]
+
+                self.video_filter_checker()
     # ------------------------------------------------------------------#
 
     def on_Vaspect(self, event):
@@ -1667,55 +1658,54 @@ class AV_Conv(wx.Panel):
               data[0][1] is ffmpeg option command for audio channels and
               data[0][0] is a simple description for view.
         """
-        audiodialog = audiodialogs.AudioSettings(self,
-                                                 audio_type,
-                                                 self.opt["AudioRate"],
-                                                 self.opt["AudioDepth"],
-                                                 self.opt["AudioBitrate"],
-                                                 self.opt["AudioChannel"],
-                                                 title,
-                                                 )
-        retcode = audiodialog.ShowModal()
+        with audiodialogs.AudioSettings(self,
+                                        audio_type,
+                                        self.opt["AudioRate"],
+                                        self.opt["AudioDepth"],
+                                        self.opt["AudioBitrate"],
+                                        self.opt["AudioChannel"],
+                                        title,
+                                        ) as audiodialog:
 
-        if retcode == wx.ID_OK:
-            data = audiodialog.getvalue()
-            self.opt["AudioChannel"] = data[0]
-            self.opt["AudioRate"] = data[1]
-            self.opt["AudioBitrate"] = data[2]
-            if audio_type in ('wav', 'aiff', 'PCM'):
-                if 'Auto' in data[3][0]:  # [3] is the bit depth tupla
-                    self.opt["AudioCodec"] = ["-c:a:%s" %
-                                              self.opt["AudioOutMap"][1],
-                                              "pcm_s16le"
-                                              ]
-                else:
-                    self.opt["AudioCodec"] = ["-c:a:%s" %
-                                              self.opt["AudioOutMap"][1],
-                                              data[3][1]
-                                              ]
-                self.opt["AudioDepth"] = ("%s" % (data[3][0]), '')  # null
-            else:  # entra su tutti tranne wav aiff
-                self.opt["AudioDepth"] = data[3]
-        else:
-            data = None
-            audiodialog.Destroy()
-            return
+            if audiodialog.ShowModal() == wx.ID_OK:
+                data = audiodialog.getvalue()
+                self.opt["AudioChannel"] = data[0]
+                self.opt["AudioRate"] = data[1]
+                self.opt["AudioBitrate"] = data[2]
+                if audio_type in ('wav', 'aiff', 'PCM'):
+                    if 'Auto' in data[3][0]:  # [3] is the bit depth tupla
+                        self.opt["AudioCodec"] = ["-c:a:%s" %
+                                                  self.opt["AudioOutMap"][1],
+                                                  "pcm_s16le"
+                                                  ]
+                    else:
+                        self.opt["AudioCodec"] = ["-c:a:%s" %
+                                                  self.opt["AudioOutMap"][1],
+                                                  data[3][1]
+                                                  ]
+                    self.opt["AudioDepth"] = ("%s" % (data[3][0]), '')  # null
+                else:  # entra su tutti tranne wav aiff
+                    self.opt["AudioDepth"] = data[3]
+            else:
+                data = None
+                #audiodialog.Destroy()
+                return
 
-        self.txt_audio_options.Clear()
-        count = 0
-        for d in [self.opt["AudioRate"], data[3],
-                  self.opt["AudioBitrate"], self.opt["AudioChannel"]
-                  ]:
-            if d[1]:
-                count += 1
-                self.txt_audio_options.AppendText(" %s | " % d[0])
+            self.txt_audio_options.Clear()
+            count = 0
+            for d in [self.opt["AudioRate"], data[3],
+                      self.opt["AudioBitrate"], self.opt["AudioChannel"]
+                      ]:
+                if d[1]:
+                    count += 1
+                    self.txt_audio_options.AppendText(" %s | " % d[0])
 
-        if count == 0:
-            self.btn_aparam.SetBackgroundColour(wx.NullColour)
-        else:
-            self.btn_aparam.SetBackgroundColour(wx.Colour(AV_Conv.VIOLET))
+            if count == 0:
+                self.btn_aparam.SetBackgroundColour(wx.NullColour)
+            else:
+                self.btn_aparam.SetBackgroundColour(wx.Colour(AV_Conv.VIOLET))
 
-        audiodialog.Destroy()
+            #audiodialog.Destroy()
     # ------------------------------------------------------------------#
 
     def on_audioINstream(self, event):
@@ -2583,14 +2573,14 @@ class AV_Conv(wx.Panel):
                 return
             filename = os.path.splitext(fileDialog.GetPath())[0]
 
-            t = _('Create a new profile')
+            title = _('Create a new profile')
 
-        prstdialog = presets_addnew.MemPresets(self,
-                                               'addprofile',
-                                               os.path.basename(filename),
-                                               parameters,
-                                               t,
-                                               )
-        if prstdialog.ShowModal() == wx.ID_CANCEL:
-            return
+        with presets_addnew.MemPresets(self,'addprofile',
+                                       os.path.basename(filename),
+                                       parameters,
+                                       title,
+                                       ) as prstdialog:
+
+            if prstdialog.ShowModal() == wx.ID_CANCEL:
+                return
         self.parent.PrstsPanel.presets_Refresh(self)

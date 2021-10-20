@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.16.2021
+Rev: Oct.19.2021
 Code checker: pycodestyle, flake8, pylint .
 
 This file is part of Videomass.
@@ -50,7 +50,8 @@ def format_bytes(num):
     suffix = unit[exponent]  # unit index
     output_value = num / (const ** exponent)
 
-    return "%.2f%s" % (output_value, suffix)
+    # return "%.2f%s" % (output_value, suffix)
+    return f"{output_value:.2f}{suffix}"
 # ------------------------------------------------------------------------
 
 
@@ -101,16 +102,22 @@ def timehuman(seconds):
     """
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
-    return "%02d:%02d:%02d" % (hours, minutes, seconds)
+    # return "%02d:%02d:%02d" % (hours, minutes, seconds)
+    return f"{hours:02}:{minutes:02}:{seconds:02}"
 # ------------------------------------------------------------------------
 
 
 def get_milliseconds(timeformat):
     """
-    Convert time format to milliseconds (duration). Accepts various
-    forms of time unit string, e.g. '30.5', '00:00:00', '0:00:00',
-    '0:0:0', '00:00.000', '00:00:00.000. The first line adds leading
-    zeros to fill up possibly non-existing fields.
+    Convert time format to milliseconds (duration).
+    Accepts different forms of time unit string, e.g.
+
+        '30.5', '00:00:00', '0:00:00', '0:0:0',
+        '00:00.000', '00:00:00.000.
+
+    The first line adds leading zeros to fill up possibly
+    non-existing fields.
+
     Return an int object (milliseconds).
 
     HACK add 'N/A' (no time) to parser?
@@ -138,7 +145,8 @@ def milliseconds2timeformat(milliseconds):
     minutes, sec = divmod(milliseconds, 60000)
     hours, minutes = divmod(minutes, 60)
     seconds = float(sec) / 1000
-    return "%02d:%02d:%06.3f" % (hours, minutes, seconds)
+    # return "%02d:%02d:%06.3f" % (hours, minutes, seconds)
+    return f"{hours:02}:{minutes:02}:{seconds:06.3f}"
 # ------------------------------------------------------------------------
 
 
@@ -198,12 +206,12 @@ def copy_on(ext, source, destination):
     source: path to the source directory
     destination: path to the destination directory
     """
-    files = glob.glob("%s/*.%s" % (source, ext))
+    files = glob.glob(f"{source}/*.{ext}")
     if not files:
-        return 'Error: No such file with ".%s" format found' % ext
+        return f'Error: No such file with ".{ext}" format found'
     for fln in files:
         try:
-            shutil.copy(fln, '%s' % (destination))
+            shutil.copy(fln, f'{destination}')
         except IOError as error:
             # problems with permissions
             return error
@@ -240,7 +248,7 @@ def detect_binaries(platform, executable, additionaldir=None):
 
         elif platform == 'Darwin':
 
-            if os.path.isfile("/usr/local/bin/%s" % executable):
+            if os.path.isfile(f"/usr/local/bin/{executable}"):
                 local = True
                 installed = True
             else:
@@ -254,8 +262,8 @@ def detect_binaries(platform, executable, additionaldir=None):
 
         if additionaldir:  # check onto additionaldir
 
-            if not os.path.isfile(os.path.join("%s" % additionaldir, "bin",
-                                               "%s" % executable)):
+            if not os.path.isfile(os.path.join(f"{additionaldir}", "bin",
+                                               f"{executable}")):
                 provided = False
 
             else:
@@ -264,10 +272,10 @@ def detect_binaries(platform, executable, additionaldir=None):
             if not provided:
                 return 'not installed', None
             # only if ffmpeg is not installed, offer it if found
-            return 'provided', os.path.join("%s" % additionaldir,
-                                            "bin", "%s" % executable)
+            return 'provided', os.path.join(f"{additionaldir}",
+                                            "bin", f"{executable}")
         return 'not installed', None
 
     if local:  # only for MacOs
-        return None, "/usr/local/bin/%s" % executable
+        return None, f"/usr/local/bin/{executable}"
     return None, shutil.which(executable)

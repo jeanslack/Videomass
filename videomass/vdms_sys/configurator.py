@@ -67,7 +67,7 @@ def checkconf(dirconf, fileconf, srcpath):
             data = {'R': readconf(fileconf)}
             if not data['R']:
                 existfileconf = False
-            if float(data['R'][0]) != 3.3:  # version
+            if float(data['R'][0]) != 3.4:  # version
                 existfileconf = False
         else:
             existfileconf = False
@@ -209,11 +209,11 @@ def get_color_scheme(theme):
                     'ERR1': '#EA312D',  # LIGHTRED for errors 2
                     'SUCCESS': '#30ec30',  # Light GREEN when it is successful
                     'TXT2': '#3f5e6b',  # dark ciano
-                    'TXT3': '#11b584',  # medium light green
-                    'TXT4': '#87ceebff',  # light ciano
+                    'TXT3': '#11b584',  # medium green
+                    'TXT4': '#87ceebff',  # light azure
                     'TXT5': '#dd7ad0',  # LILLA
                     'INFO': '#3298FB',  # AZURE
-                    'DEBUG': '#11b584',  # medium light green
+                    'DEBUG': '#0ce3ac',  # light green
                     'FAILED': '#D21814',  # RED_DEEP if failed
                     'ABORT': '#A41EA4',  # VIOLET the user stops the processes
                     }
@@ -226,11 +226,11 @@ def get_color_scheme(theme):
                     'ERR1': '#EA312D',  # LIGHTRED for errors 2
                     'SUCCESS': '#30ec30',  # Light GREEN when it is successful
                     'TXT2': '#008000',  # dark green
-                    'TXT3': '#11b584',  # medium light green
-                    'TXT4': '#0ce3ac',  # light green
+                    'TXT3': '#11b584',  # medium green
+                    'TXT4': '#87ceebff',  # light azure
                     'TXT5': '#dd7ad0',  # LILLA
                     'INFO': '#118db5',  # AZURE
-                    'DEBUG': '#11b584',  # medium light green
+                    'DEBUG': '#0ce3ac',  # light green
                     'FAILED': '#D21814',  # RED_DEEP if failed
                     'ABORT': '#A41EA4',  # VIOLET the user stops the processes
                     }
@@ -452,7 +452,8 @@ class DataSource():
                  'outputfile_samedir': userconf[17],
                  'filesuffix': userconf[18],
                  'outputdownload': outdownl[0],
-                 'playlistsubfolder': userconf[20]}
+                 'playlistsubfolder': userconf[20],
+                 'warnexiting': userconf[21]}
                 )
     # --------------------------------------------------------------------
 

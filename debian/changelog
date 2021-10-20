@@ -1,3 +1,20 @@
+videomass (3.5.1-1) UNRELEASED; urgency=medium
+
+  * Fixed Ctrl+Q keybord shorcut does not work on Windows (see #39).
+  * #39 Added new check box 'Warn on exit' on setup dialog appearance tab.
+  * #39 Improved handling of exiting the application after making changes
+    to user preferences.
+  * [YOUTUBE-DOWNLOADER] Improved "Best quality video" selector to the best
+    quality overall.
+  * [YOUTUBE-DOWNLOADER] Improved "Worst quality video" selector to the worst
+    quality overall.
+  * [YOUTUBE-DOWNLOADER] Added video format selection when downloading videos.
+  * [YOUTUBE-DOWNLOADER] Fixed downloader not updating using Videomass AppImage
+    (due to incorrect code indentation).
+  * [YOUTUBE-DOWNLOADER] improved playlist indexing dialog.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 20 Oct 2021 00:14:00 +0200
+
 videomass (3.5.0-1) UNRELEASED; urgency=medium
 
   * Added support to a new downloader: yt-dlp, an updated fork of youtube-dl.

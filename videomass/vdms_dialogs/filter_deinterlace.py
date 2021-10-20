@@ -490,12 +490,12 @@ class Deinterlace(wx.Dialog):
         Event.Skip(), work correctly here. Sometimes needs to disable
         it for needs to maintain the view of the window (for exemple).
         """
-        self.GetValue()
+        self.getvalue()
         # self.Destroy()
         event.Skip()
     # ------------------------------------------------------------------#
 
-    def GetValue(self):
+    def getvalue(self):
         """
         This method return values via the interface GetValue()
         """

@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.11.2021
+Rev: Oct.18.2021
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -42,14 +42,14 @@ def msg_error(msg):
     """
     Receive error messages via wxCallafter
     """
-    wx.MessageBox("FFplay ERROR:  %s" % (msg), "Videomass", wx.ICON_ERROR)
+    wx.MessageBox(f"FFplay ERROR:  {msg}", "Videomass", wx.ICON_ERROR)
 
 
 def msg_info(msg):
     """
     Receive info messages via wxCallafter
     """
-    wx.MessageBox("FFplay:  %s" % (msg), "Videomass", wx.ICON_INFORMATION)
+    wx.MessageBox(f"FFplay:  {msg}", "Videomass", wx.ICON_INFORMATION)
 
 
 class FilePlay(Thread):
@@ -59,8 +59,15 @@ class FilePlay(Thread):
 
     """
 
-    def __init__(self, filepath, timeseq, param, logdir,
-                 ffplay_url, ffplay_loglev, autoexit):
+    def __init__(self,
+                 filepath,
+                 timeseq,
+                 param,
+                 logdir,
+                 ffplay_url,
+                 ffplay_loglev,
+                 autoexit
+                 ):
         """
         The self.FFPLAY_loglevel has flag 'error -hide_banner' by default,
         see videomass.conf for details.
@@ -89,14 +96,12 @@ class FilePlay(Thread):
 
         """
         # time.sleep(.5)
-        cmd = '"%s" %s %s %s -i "%s" %s' % (self.ffplay,
-                                            self.time_seq,
-                                            self.ffplay_loglev,
-                                            self.autoexit,
-                                            self.filename,
-                                            self.param
-                                            )
+
+        cmd = (f'"{self.ffplay}" {self.time_seq} {self.ffplay_loglev} '
+               f'{self.autoexit} -i "{self.filename}" {self.param}')
+
         self.logwrite(cmd)
+
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
             info = None
@@ -139,7 +144,7 @@ class FilePlay(Thread):
         write ffplay command log
         """
         with open(self.logf, "a", encoding='utf8') as log:
-            log.write("%s\n" % (cmd))
+            log.write(f"{cmd}\n")
     # ----------------------------------------------------------------#
 
     def logerror(self, error):
@@ -147,5 +152,5 @@ class FilePlay(Thread):
         write ffplay errors
         """
         with open(self.logf, "a", encoding='utf8') as logerr:
-            logerr.write("\n[FFMPEG] FFplay "
-                         "OUTPUT:\n%s\n" % (error))
+            logerr.write(f"\n[FFMPEG] FFplay "
+                         f"OUTPUT:\n{error}\n")

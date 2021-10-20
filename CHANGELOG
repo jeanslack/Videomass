@@ -7,6 +7,22 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Oct 20, 2021 V.3.5.1
+
+  * Fixed Ctrl+Q keybord shorcut does not work on Windows (see #39).
+  * #39 Added new check box 'Warn on exit' on setup dialog appearance tab.
+  * #39 Improved handling of exiting the application after making changes
+    to user preferences.
+  * [YOUTUBE-DOWNLOADER] Improved "Best quality video" selector to the best
+    quality overall.
+  * [YOUTUBE-DOWNLOADER] Improved "Worst quality video" selector to the worst
+    quality overall.
+  * [YOUTUBE-DOWNLOADER] Added video format selection when downloading videos.
+  * [YOUTUBE-DOWNLOADER] Fixed downloader not updating using Videomass AppImage
+    (due to incorrect code indentation).
+  * [YOUTUBE-DOWNLOADER] improved playlist indexing dialog.
+
++------------------------------------+
 Oct 07, 2021 V.3.5.0
 
   * Added support to a new downloader: yt-dlp, an updated fork of youtube-dl.
