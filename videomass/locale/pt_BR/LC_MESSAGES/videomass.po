@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.5.1 pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-20 00:06+0200\n"
-"PO-Revision-Date: 2021-10-20 00:10+0200\n"
+"POT-Creation-Date: 2021-10-21 16:59+0200\n"
+"PO-Revision-Date: 2021-10-21 17:01+0200\n"
 "Last-Translator: Samuel / http://littlesvr.ca/ostd/\n"
 "Language-Team: Samuel / http://littlesvr.ca/ostd/\n"
 "Language: pt_BR\n"
@@ -728,8 +728,8 @@ msgstr ""
 "nas caixas de texto abaixo clicando nos respectivos botões."
 
 #: ../vdms_dialogs/wizard_dlg.py:362 ../vdms_dialogs/wizard_dlg.py:379
-#: ../vdms_dialogs/wizard_dlg.py:396 ../vdms_dialogs/settings.py:732
-#: ../vdms_dialogs/settings.py:775 ../vdms_dialogs/settings.py:818
+#: ../vdms_dialogs/wizard_dlg.py:396 ../vdms_dialogs/settings.py:731
+#: ../vdms_dialogs/settings.py:774 ../vdms_dialogs/settings.py:817
 msgid "Choose the {} executable"
 msgstr "Escolha o {} executável"
 
@@ -757,7 +757,7 @@ msgstr ""
 msgid " Do you want to enable this feature?"
 msgstr " Você quer habilitar este recurso?"
 
-#: ../vdms_dialogs/wizard_dlg.py:445 ../vdms_dialogs/settings.py:270
+#: ../vdms_dialogs/wizard_dlg.py:445 ../vdms_dialogs/settings.py:269
 msgid "Downloader preferences"
 msgstr "Preferências do download"
 
@@ -835,15 +835,19 @@ msgstr ""
 msgid "Playlist video items to download"
 msgstr ""
 
-#: ../vdms_dialogs/playlist_indexing.py:197
-msgid "ERROR: You have entered invalid characters"
+#: ../vdms_dialogs/playlist_indexing.py:201
+msgid "ERROR: Invalid option"
 msgstr ""
 
-#: ../vdms_dialogs/playlist_indexing.py:198
+#: ../vdms_dialogs/playlist_indexing.py:202
 msgid "please try again."
 msgstr ""
 
-#: ../vdms_dialogs/playlist_indexing.py:234
+#: ../vdms_dialogs/playlist_indexing.py:203
+msgid "OK: Indexes to download"
+msgstr ""
+
+#: ../vdms_dialogs/playlist_indexing.py:231
 msgid ""
 "WARNING: The selected URL does not refer to a playlist. Only lines marked "
 "green can be indexed."
@@ -964,17 +968,17 @@ msgstr ""
 msgid "Timestamp settings"
 msgstr "Configurações de registro de data / hora"
 
-#: ../vdms_dialogs/settings.py:109
+#: ../vdms_dialogs/settings.py:108
 msgid "Where do you prefer to save your transcodes?"
 msgstr "Onde você prefere salvar suas transcodificações?"
 
-#: ../vdms_dialogs/settings.py:120 ../vdms_dialogs/settings.py:148
-#: ../vdms_dialogs/settings.py:178 ../vdms_dialogs/settings.py:190
-#: ../vdms_dialogs/settings.py:202
+#: ../vdms_dialogs/settings.py:119 ../vdms_dialogs/settings.py:147
+#: ../vdms_dialogs/settings.py:177 ../vdms_dialogs/settings.py:189
+#: ../vdms_dialogs/settings.py:201
 msgid "Browse.."
 msgstr "Navegar.."
 
-#: ../vdms_dialogs/settings.py:125
+#: ../vdms_dialogs/settings.py:124
 msgid ""
 "Save each file in the same\n"
 "folder as input file"
@@ -982,15 +986,15 @@ msgstr ""
 "Salve cada arquivo na mesmo\n"
 "pasta como um arquivo de entrada"
 
-#: ../vdms_dialogs/settings.py:130
+#: ../vdms_dialogs/settings.py:129
 msgid "Assign optional suffix to output file names:"
 msgstr "Atribua um sufixo opcional para nomes de arquivo de saída:"
 
-#: ../vdms_dialogs/settings.py:138
+#: ../vdms_dialogs/settings.py:137
 msgid "Where do you prefer to save your downloads?"
 msgstr "Onde você prefere salvar seus Downloads?"
 
-#: ../vdms_dialogs/settings.py:153
+#: ../vdms_dialogs/settings.py:152
 msgid ""
 "Auto-create subfolders\n"
 "when downloading playlists"
@@ -998,51 +1002,51 @@ msgstr ""
 "Criar subpastas automaticamente\n"
 "ao baixar listas de reprodução"
 
-#: ../vdms_dialogs/settings.py:158
+#: ../vdms_dialogs/settings.py:157
 msgid "Cache Settings"
 msgstr "Configurações de cache"
 
-#: ../vdms_dialogs/settings.py:162
+#: ../vdms_dialogs/settings.py:161
 msgid "Clear the cache when exiting the application"
 msgstr "Limpe o cache ao sair do aplicativo"
 
-#: ../vdms_dialogs/settings.py:166
+#: ../vdms_dialogs/settings.py:165
 msgid "File Preferences"
 msgstr "Preferências de arquivo"
 
-#: ../vdms_dialogs/settings.py:173
+#: ../vdms_dialogs/settings.py:172
 msgid "Path to the executables"
 msgstr "Caminho para os executáveis"
 
-#: ../vdms_dialogs/settings.py:177
+#: ../vdms_dialogs/settings.py:176
 msgid "Enable another location to run FFmpeg"
 msgstr "Habilite outro local para executar o FFmpeg"
 
-#: ../vdms_dialogs/settings.py:189
+#: ../vdms_dialogs/settings.py:188
 msgid "Enable another location to run FFprobe"
 msgstr "Habilite outro local para executar o FFprobe"
 
-#: ../vdms_dialogs/settings.py:201
+#: ../vdms_dialogs/settings.py:200
 msgid "Enable another location to run FFplay"
 msgstr "Habilite outro local para executar o FFplay"
 
-#: ../vdms_dialogs/settings.py:212
+#: ../vdms_dialogs/settings.py:211
 msgid "Other options"
 msgstr "Outras opções"
 
-#: ../vdms_dialogs/settings.py:218
+#: ../vdms_dialogs/settings.py:217
 msgid "Threads used for transcoding (from 0 to 32):"
 msgstr "Tópicos usados para transcodificação (de 0 a 32):"
 
-#: ../vdms_dialogs/settings.py:236
+#: ../vdms_dialogs/settings.py:235
 msgid "FFmpeg"
 msgstr "FFmpeg"
 
-#: ../vdms_dialogs/settings.py:248
+#: ../vdms_dialogs/settings.py:247
 msgid "How to upgrade a Python package"
 msgstr "Como atualizar um pacote Python"
 
-#: ../vdms_dialogs/settings.py:255
+#: ../vdms_dialogs/settings.py:254
 #, fuzzy
 #| msgid "Required: Microsoft Visual C++ 2010 Redistributable Package (x86)"
 msgid ""
@@ -1050,15 +1054,15 @@ msgid ""
 "(x86)"
 msgstr "Obrigatório: Pacote Redistribuível do Microsoft Visual C ++ 2010 (x86)"
 
-#: ../vdms_dialogs/settings.py:264
+#: ../vdms_dialogs/settings.py:263
 msgid "How to install pip on your Linux distribution"
 msgstr "Como instalar o pip na sua distribuição Linux"
 
-#: ../vdms_dialogs/settings.py:281
+#: ../vdms_dialogs/settings.py:280
 msgid "Current path:"
 msgstr "Caminho atual:"
 
-#: ../vdms_dialogs/settings.py:289
+#: ../vdms_dialogs/settings.py:288
 #, fuzzy
 #| msgid ""
 #| "Make sure you are using the latest available version of\n"
@@ -1070,37 +1074,37 @@ msgstr ""
 "Certifique-se de que está usando a versão mais recente disponível do\n"
 "youtube-dl. Isso permite evitar problemas de download.\n"
 
-#: ../vdms_dialogs/settings.py:297 ../vdms_dialogs/settings.py:317
-#: ../vdms_dialogs/settings.py:333 ../vdms_frames/ffmpeg_conf.py:217
-#: ../vdms_panels/av_conversions.py:2452
+#: ../vdms_dialogs/settings.py:296 ../vdms_dialogs/settings.py:316
+#: ../vdms_dialogs/settings.py:332 ../vdms_frames/ffmpeg_conf.py:217
+#: ../vdms_panels/av_conversions.py:2442
 msgid "Disabled"
 msgstr "Desabilitado"
 
-#: ../vdms_dialogs/settings.py:308
+#: ../vdms_dialogs/settings.py:307
 msgid "Not found"
 msgstr "Não encontrado"
 
-#: ../vdms_dialogs/settings.py:312
+#: ../vdms_dialogs/settings.py:311
 #, fuzzy
 #| msgid "Menu bar > Tools > Update youtube-dl"
 msgid "Menu bar > Tools > Update {}"
 msgstr "Barra de menu> Ferramentas> Atualizar youtube-dl"
 
-#: ../vdms_dialogs/settings.py:329 ../vdms_dialogs/settings.py:345
+#: ../vdms_dialogs/settings.py:328 ../vdms_dialogs/settings.py:344
 msgid "Not Installed"
 msgstr "Não Instalado"
 
-#: ../vdms_dialogs/settings.py:350
+#: ../vdms_dialogs/settings.py:349
 #, fuzzy
 #| msgid "Download"
 msgid "Downloader"
 msgstr "Download"
 
-#: ../vdms_dialogs/settings.py:356
+#: ../vdms_dialogs/settings.py:355
 msgid "Icon themes"
 msgstr "Tema de ícones"
 
-#: ../vdms_dialogs/settings.py:358
+#: ../vdms_dialogs/settings.py:357
 msgid ""
 "setting the icons will also change the background\n"
 "and foreground of some text fields."
@@ -1108,47 +1112,47 @@ msgstr ""
 "definir os ícones também mudará o fundo\n"
 "e primeiro plano de alguns campos de texto."
 
-#: ../vdms_dialogs/settings.py:380
+#: ../vdms_dialogs/settings.py:379
 msgid "Toolbar customization"
 msgstr "Personalização da barra de ferramentas"
 
-#: ../vdms_dialogs/settings.py:382
+#: ../vdms_dialogs/settings.py:381
 msgid "At the top of window (default)"
 msgstr "No topo da janela (padrão)"
 
-#: ../vdms_dialogs/settings.py:383
+#: ../vdms_dialogs/settings.py:382
 msgid "At the bottom of window"
 msgstr "Na parte inferior da janela"
 
-#: ../vdms_dialogs/settings.py:384
+#: ../vdms_dialogs/settings.py:383
 msgid "At the right of window"
 msgstr "À direita da janela"
 
-#: ../vdms_dialogs/settings.py:385
+#: ../vdms_dialogs/settings.py:384
 msgid "At the left of window"
 msgstr "À esquerda da janela"
 
-#: ../vdms_dialogs/settings.py:387
+#: ../vdms_dialogs/settings.py:386
 msgid "Place the toolbar"
 msgstr "Coloque a barra de ferramentas"
 
-#: ../vdms_dialogs/settings.py:397
+#: ../vdms_dialogs/settings.py:396
 msgid "Icon size:"
 msgstr "Tamanho dos ícones:"
 
-#: ../vdms_dialogs/settings.py:412
+#: ../vdms_dialogs/settings.py:411
 msgid "Shows the text in the toolbar buttons"
 msgstr "Mostra o texto nos botões da barra de ferramentas"
 
-#: ../vdms_dialogs/settings.py:416
+#: ../vdms_dialogs/settings.py:415
 msgid "Warn on exit"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:420
+#: ../vdms_dialogs/settings.py:419
 msgid "Appearance"
 msgstr "Aparência"
 
-#: ../vdms_dialogs/settings.py:427
+#: ../vdms_dialogs/settings.py:426
 msgid ""
 "The following settings affect output messages and\n"
 "the log messages during transcoding processes.\n"
@@ -1158,28 +1162,28 @@ msgstr ""
 "as mensagens de log durante os processos de transcodificação.\n"
 "Mude apenas se você souber o que está fazendo.\n"
 
-#: ../vdms_dialogs/settings.py:448
+#: ../vdms_dialogs/settings.py:447
 msgid "FFmpeg logging levels"
 msgstr "Níveis de registro FFmpeg"
 
-#: ../vdms_dialogs/settings.py:468
+#: ../vdms_dialogs/settings.py:467
 msgid "Videomass Setup"
 msgstr "Configurações do Videomass"
 
-#: ../vdms_dialogs/settings.py:494
+#: ../vdms_dialogs/settings.py:493
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr ""
 "Ao atribuir um sufixo adicional, você pode evitar a substituição de arquivos"
 
-#: ../vdms_dialogs/settings.py:616
+#: ../vdms_dialogs/settings.py:615
 msgid "Set a persistent location to save the file downloads"
 msgstr "Defina um local persistente para salvar os downloads de arquivos"
 
-#: ../vdms_dialogs/settings.py:639
+#: ../vdms_dialogs/settings.py:638
 msgid "Set a persistent location to save exported files"
 msgstr "Defina um local persistente para salvar os arquivos exportados"
 
-#: ../vdms_dialogs/settings.py:667
+#: ../vdms_dialogs/settings.py:666
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Spaces are not allowed."
@@ -1187,7 +1191,7 @@ msgstr ""
 "Insira apenas caracteres alfanuméricos. Você também pode usar o hífen (\"-"
 "\") e o sublinhado (\"_\"). Espaços em branco não são permitidos."
 
-#: ../vdms_dialogs/settings.py:924
+#: ../vdms_dialogs/settings.py:923
 #, fuzzy
 #| msgid "Changes will take effect once the program has been restarted"
 msgid ""
@@ -1196,7 +1200,7 @@ msgid ""
 "Do you want to exit the application now?"
 msgstr "As alterações entrarão em vigor assim que o programa for reiniciado"
 
-#: ../vdms_dialogs/settings.py:927 ../vdms_main/main_frame.py:319
+#: ../vdms_dialogs/settings.py:926 ../vdms_main/main_frame.py:319
 msgid "Exit"
 msgstr "Sair"
 
@@ -1271,7 +1275,7 @@ msgstr "FFplay ... não encontrado!"
 msgid "ENABLED:"
 msgstr "ATIVADO:"
 
-#: ../vdms_frames/ffmpeg_conf.py:204 ../vdms_panels/av_conversions.py:2452
+#: ../vdms_frames/ffmpeg_conf.py:204 ../vdms_panels/av_conversions.py:2442
 msgid "Enabled"
 msgstr "Ativado"
 
@@ -1370,11 +1374,11 @@ msgstr "= Sem alterações"
 msgid "=  Below max peak"
 msgstr "= Abaixo da altura máxima"
 
-#: ../vdms_frames/shownormlist.py:137 ../vdms_panels/av_conversions.py:1915
+#: ../vdms_frames/shownormlist.py:137 ../vdms_panels/av_conversions.py:1905
 msgid "RMS-based volume statistics"
 msgstr "Estatísticas de volume baseadas em RMS"
 
-#: ../vdms_frames/shownormlist.py:159 ../vdms_panels/av_conversions.py:1913
+#: ../vdms_frames/shownormlist.py:159 ../vdms_panels/av_conversions.py:1903
 msgid "PEAK-based volume statistics"
 msgstr "Estatísticas de volume baseadas em PEAK"
 
@@ -2761,15 +2765,15 @@ msgstr "Um arquivo de destino deve ser selecionado nos arquivos em fila"
 msgid "The file is not a frame or a video file"
 msgstr "O arquivo não é um frame ou um arquivo de vídeo"
 
-#: ../vdms_panels/av_conversions.py:1491
+#: ../vdms_panels/av_conversions.py:1484
 msgid "This filter is incompatible with 2-pass enabled"
 msgstr "Este filtro é incompatível com 2 passagens ativadas"
 
-#: ../vdms_panels/av_conversions.py:1624
+#: ../vdms_panels/av_conversions.py:1615
 msgid "No Audio"
 msgstr "Sem áudio"
 
-#: ../vdms_panels/av_conversions.py:1770
+#: ../vdms_panels/av_conversions.py:1760
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
@@ -2777,7 +2781,7 @@ msgstr ""
 "Ative a normalização de nível de altura, que produzirá um nível de altura "
 "máximo igual ao nível de destino definido."
 
-#: ../vdms_panels/av_conversions.py:1773
+#: ../vdms_panels/av_conversions.py:1763
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
@@ -2785,7 +2789,7 @@ msgstr ""
 "Ative a normalização baseada em RMS, que de acordo com o volume médio "
 "calcula a quantidade de ganho para atingir o mesmo sinal de potência média."
 
-#: ../vdms_panels/av_conversions.py:1777
+#: ../vdms_panels/av_conversions.py:1767
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"​loudnorm\" filter, which implements the EBU R128 algorithm."
@@ -2793,20 +2797,20 @@ msgstr ""
 "Ative a normalização de duas passagens. Ele normaliza o volume percebido "
 "usando o filtro \"loudnorm\", que implementa o algoritmo EBU R128."
 
-#: ../vdms_panels/av_conversions.py:1800
+#: ../vdms_panels/av_conversions.py:1790
 msgid "Audio normalization off"
 msgstr "Normalização de áudio desligada"
 
-#: ../vdms_panels/av_conversions.py:1836
+#: ../vdms_panels/av_conversions.py:1826
 msgid "Audio normalization is required only for some files"
 msgstr "A normalização de áudio é necessária apenas para alguns arquivos"
 
-#: ../vdms_panels/av_conversions.py:1837
+#: ../vdms_panels/av_conversions.py:1827
 msgid ""
 "Audio normalization will not be applied because the source signal is equal"
 msgstr "A normalização de áudio não será aplicada porque é igual à fonte"
 
-#: ../vdms_panels/av_conversions.py:2027
+#: ../vdms_panels/av_conversions.py:2017
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
 "audio volume data."
@@ -2814,36 +2818,36 @@ msgstr ""
 "Valores de volume não detectados! Clique no botão \"Detecção de volume\" "
 "para analisar os dados de volume do áudio."
 
-#: ../vdms_panels/av_conversions.py:2250
+#: ../vdms_panels/av_conversions.py:2240
 msgid "Audio/Video EBU normalization"
 msgstr "Normalização EBU de áudio / vídeo"
 
-#: ../vdms_panels/av_conversions.py:2356
+#: ../vdms_panels/av_conversions.py:2346
 msgid "Audio conversions"
 msgstr "Conversões de áudio"
 
-#: ../vdms_panels/av_conversions.py:2397
+#: ../vdms_panels/av_conversions.py:2387
 msgid "Audio EBU normalization"
 msgstr "Normalização EBU de áudio"
 
-#: ../vdms_panels/av_conversions.py:2433
+#: ../vdms_panels/av_conversions.py:2423
 #, python-format
 msgid "%s file in queue"
 msgstr "% s arquivo na fila"
 
-#: ../vdms_panels/av_conversions.py:2441
+#: ../vdms_panels/av_conversions.py:2431
 msgid "Off"
 msgstr "Desligado"
 
-#: ../vdms_panels/av_conversions.py:2447 ../vdms_panels/presets_manager.py:954
+#: ../vdms_panels/av_conversions.py:2437 ../vdms_panels/presets_manager.py:954
 msgid "Unset"
 msgstr "Não definido"
 
-#: ../vdms_panels/av_conversions.py:2450 ../vdms_panels/presets_manager.py:957
+#: ../vdms_panels/av_conversions.py:2440 ../vdms_panels/presets_manager.py:957
 msgid "start  {} | duration  {}"
 msgstr "iniciar {} | duração {}"
 
-#: ../vdms_panels/av_conversions.py:2456
+#: ../vdms_panels/av_conversions.py:2446
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2873,7 +2877,7 @@ msgstr ""
 "Período de tempo\n"
 "Mapa de entrada de áudio"
 
-#: ../vdms_panels/av_conversions.py:2477
+#: ../vdms_panels/av_conversions.py:2467
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2913,7 +2917,7 @@ msgstr ""
 "Mapa de Legendas\n"
 "Período de tempo"
 
-#: ../vdms_panels/av_conversions.py:2505
+#: ../vdms_panels/av_conversions.py:2495
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2975,17 +2979,17 @@ msgstr ""
 "Mapa de Legendas\n"
 "Período de tempo"
 
-#: ../vdms_panels/av_conversions.py:2559
+#: ../vdms_panels/av_conversions.py:2549
 msgid "Audio normalization processes cannot be saved on the Presets Manager."
 msgstr ""
 "Os processos de normalização de áudio não podem ser salvos no Gerenciador de "
 "Predefinições."
 
-#: ../vdms_panels/av_conversions.py:2577
+#: ../vdms_panels/av_conversions.py:2567
 msgid "Save the new profile to..."
 msgstr "Salve o novo perfil em ..."
 
-#: ../vdms_panels/av_conversions.py:2586
+#: ../vdms_panels/av_conversions.py:2576
 msgid "Create a new profile"
 msgstr "Criar um perfil novo"
 
@@ -3299,12 +3303,12 @@ msgstr "Não é possível obter códigos de formato nas listas de reprodução"
 msgid "URLs have no playlist references"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:918
+#: ../vdms_panels/youtubedl_ui.py:915
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr ""
 "Os URLs contêm listas de reprodução. Você tem certeza que quer continuar?"
 
-#: ../vdms_panels/youtubedl_ui.py:920 ../vdms_panels/youtubedl_ui.py:926
+#: ../vdms_panels/youtubedl_ui.py:917 ../vdms_panels/youtubedl_ui.py:923
 #: ../vdms_panels/long_processing_task.py:419
 #: ../vdms_panels/presets_manager.py:492 ../vdms_panels/presets_manager.py:535
 #: ../vdms_panels/presets_manager.py:603 ../vdms_panels/presets_manager.py:629
@@ -3312,7 +3316,7 @@ msgstr ""
 msgid "Please confirm"
 msgstr "Por favor confirme"
 
-#: ../vdms_panels/youtubedl_ui.py:924
+#: ../vdms_panels/youtubedl_ui.py:921
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "Os URLs contêm canais . Você tem certeza que quer continuar?"
 
