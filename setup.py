@@ -8,8 +8,8 @@ Platform: all
 Writer: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2014-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.01.2021
-Code checker: pycodestyle, flake8, pylint .
+Rev: Oct.22.2021
+Code checker: flake8, pylint
 ########################################################
 
 This file is part of Videomass.
@@ -56,7 +56,9 @@ def source_build():
                      "wheel>=0.34.2",
                      "twine>=3.1.1"
                      ]
-        long_descript = open('README.md').read()
+        with open('README.md', 'r', encoding='utf8') as readme:
+            long_descript = readme.read()
+
         long_description_ct = 'text/markdown'
 
     else:  # e.g. to make a Debian source package, include wxpython.
@@ -108,10 +110,10 @@ def source_build():
           package_data={"videomass": ["art/icons/*", "locale/*"]
                         },
           exclude_package_data={"videomass": ["art/videomass.icns",
-                                               "art/videomass.ico",
-                                               "locale/README",
-                                               "locale/videomass.pot"
-                                               ]
+                                              "art/videomass.ico",
+                                              "locale/README",
+                                              "locale/videomass.pot"
+                                              ]
                                 },
           include_package_data=True,
           zip_safe=False,

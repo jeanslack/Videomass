@@ -184,16 +184,22 @@ class Indexing(wx.Dialog):
     def on_edit_end(self, event):
         """
         Checking event-entered strings using REGEX:
+
             Allows min 0 to max 999 digits and does not allow
             numbers with leading zeroes like 07 or 005, allows
             a number separated by hyphen like 22-33 and supports
-            comma followed by a white space.
+            comma followed by a white space. Note that all white
+            spaces are stripped before come to parsing by REGEX:
+            see `string` var below.
+
+        Some event examples:
 
         row_id = event.GetIndex()  # Get the current row
         col_id = event.GetColumn()  # Get the current column
         new_data = event.GetLabel()  # Get the changed data
         cols = self.lctrl.GetColumnCount()  # Get the total number of col
         rows = self.lctrl.GetItemCount()  # Get the total number of rows
+
         """
         wxd = wx.DateTime.Now()
         date = wxd.Format('%H:%M:%S')
@@ -222,7 +228,8 @@ class Indexing(wx.Dialog):
 
     def on_edit_begin(self, event):
         """
-        Columns 0 and 1 must not be editable for link without playlist.
+        Columns 0 and 1 must not be editable for
+        link without playlist.
         """
         row_id = event.GetIndex()
 
