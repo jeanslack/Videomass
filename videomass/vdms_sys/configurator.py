@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.01.2021
+Rev: Nov.11.2021
 Code checker: pycodestyle, flake8, pylint .
 
  This file is part of Videomass.
@@ -26,6 +26,7 @@ Code checker: pycodestyle, flake8, pylint .
 """
 import os
 import sys
+import site
 import shutil
 import platform
 from videomass.vdms_utils.utils import copydir_recursively
@@ -365,7 +366,11 @@ class DataSource():
             else:
                 msg(f'executable={binarypath}')
                 # pip as normal user, usually Linux, MacOs, Unix
-                userbase = os.path.dirname(os.path.dirname(binarypath))
+                if binarypath is None:
+                    # need if user $PATH is not set yet
+                    userbase = site.getuserbase()
+                else:
+                    userbase = os.path.dirname(os.path.dirname(binarypath))
                 pixmaps = '/share/pixmaps/videomass.png'
                 self.videomass_icon = os.path.join(userbase + pixmaps)
     # ---------------------------------------------------------------------
@@ -402,13 +407,15 @@ class DataSource():
         def _relativize(path, relative=DataSource.RELPATH):
             """
             Returns a relative pathname if *relative* param is True.
-            If not, it returns the given pathname. This function is called
+            If not, it returns the given pathname. Also return the given
+            pathname if `ValueError` is raised. This function is called
             several times during program execution.
             """
             try:
                 return os.path.relpath(path) if relative else path
-            except ValueError as error:
-                return {'ERROR': f'{error}'}
+            except ValueError:
+                # return {'ERROR': f'{error}'}  # use `as error` here
+                return path
 
         # set downloader
         execlist = (('youtube_dl', 'youtube-dl'),

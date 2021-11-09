@@ -67,7 +67,6 @@ class Setup(wx.Dialog):
         """
         get = wx.GetApp()
         self.appdata = get.appset
-        self.parent = parent
 
         # Make a items list of
         self.rowsNum = []  # rows number list

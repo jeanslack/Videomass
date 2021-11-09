@@ -8,7 +8,6 @@ Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Oct.01.2021
 Code checker:
-    - pycodestyle
     - flake8: --ignore F821, W504, F401
     - pylint: --ignore E0602, E1101, C0415, E0401, C0103
 
@@ -122,15 +121,11 @@ class Videomass(wx.App):
 
     def check_youtube_dl(self):
         """
-        check youtube-dl based on operative
-        system and bultin package
+        Check for `youtube_dl` / `yt_dlp` modules.
+        NOTE that since Videomass v3.4.5, youtube-dl is
+        no longer used as an executable, but only as a python module.
 
         """
-        if self.appset['ostype'] == 'Windows':
-            execname = f"{self.appset['downloader'][1]}.exe"
-        else:
-            execname = self.appset['downloader'][1]
-
         if self.appset['downloader'][0] == 'Disable all':
             self.appset['PYLIBYDL'] = 'no module loaded'
         else:
@@ -198,7 +193,7 @@ class Videomass(wx.App):
     def wizard(self, wizardicon):
         """
         Show an initial dialog to setup the application
-        during the first launch.
+        during the first start-up.
 
         """
         from videomass.vdms_dialogs.wizard_dlg import Wizard

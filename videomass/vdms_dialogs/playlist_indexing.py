@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.28.2021
+Rev: Oct.21.2021
 Code checker: pycodestyle / flake8 --ignore=F821,W503
 ########################################################
 
@@ -183,49 +183,53 @@ class Indexing(wx.Dialog):
 
     def on_edit_end(self, event):
         """
-        Checking the strings entered by event
+        Checking event-entered strings using REGEX:
+
+            Allows min 0 to max 999 digits and does not allow
+            numbers with leading zeroes like 07 or 005, allows
+            a number separated by hyphen like 22-33 and supports
+            comma followed by a white space. Note that all white
+            spaces are stripped before come to parsing by REGEX:
+            see `string` var below.
+
+        Some event examples:
 
         row_id = event.GetIndex()  # Get the current row
         col_id = event.GetColumn()  # Get the current column
         new_data = event.GetLabel()  # Get the changed data
         cols = self.lctrl.GetColumnCount()  # Get the total number of col
         rows = self.lctrl.GetItemCount()  # Get the total number of rows
+
         """
         wxd = wx.DateTime.Now()
         date = wxd.Format('%H:%M:%S')
         new_data = event.GetLabel()  # Get the changed data
-        errbeg = _('ERROR: You have entered invalid characters')
+        errbeg = _('ERROR: Invalid option')
         errend = _('please try again.')
-
-        allow = ['-', ',', '0', '1', '2', '3',
-                 '4', '5', '6', '7', '8', '9', ' ']
-
+        assign = _('OK: Indexes to download')
         string = ''.join(new_data.split())
 
-        if string != '':
-            err = None
-            char = [char for char in string if char not in allow]
-            if char:
-                err = ''.join(char)
-            else:
-                search = re.search('[a-z-A-Z][--]|^,|^-|,$'
-                                   '|-$|--$|-,|,-|,,+', string)
-                if search:
-                    err = search.group(0)
+        if string == '':
+            event.Veto()
+            return
+        check = bool(re.search(r"^(?:[1-9]\d\d|[1-9]?\d)(?:-(?:[1-9]\d\d"
+                               r"|[1-9]?\d))?(?:,\s?(?:[1-9]\d\d|[1-9]?\d)"
+                               r"(?:-(?:[1-9]\d\d|[1-9]?\d))?)*$", string))
+        if check is not True:
+            self.tctrl.SetDefaultStyle(wx.TextAttr(self.clrs['ERR1']))
+            self.tctrl.AppendText(f'\n{date}: {errbeg}: '
+                                  f'"{new_data}", {errend}\n')
+            event.Veto()
+            return
 
-            if err is not None:
-                self.tctrl.SetDefaultStyle(wx.TextAttr(self.clrs['ERR1']))
-                self.tctrl.AppendText(f'\n{date}: {errbeg}: "{err}", {errend}\n')
-                event.Veto()
-                return
-
-            self.tctrl.SetDefaultStyle(wx.TextAttr(self.clrs['TXT3']))
-            self.tctrl.AppendText(f'\n{date}: Assigned: "{string}"\n')
+        self.tctrl.SetDefaultStyle(wx.TextAttr(self.clrs['TXT3']))
+        self.tctrl.AppendText(f'\n{date}: {assign}: "{string}"\n')
     # ------------------------------------------------------------------#
 
     def on_edit_begin(self, event):
         """
-        Columns 0 and 1 must not be editable for link without playlist.
+        Columns 0 and 1 must not be editable for
+        link without playlist.
         """
         row_id = event.GetIndex()
 

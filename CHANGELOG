@@ -7,6 +7,20 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Nov 09, 2021 V.3.5.2
+
+  * [YOUTUBE-DOWNLOADER] Added option to get 'Best' or 'Worst' of precompiled
+    videos. It may be useful to speed up video download containing both audio
+    and video, e.g. without download video and audio separately and then
+    executing the merging process with FFmpeg.
+  * [YOUTUBE-DOWNLOADER] Improved 'Get Statistics' and 'Download by Format Code'
+    features. This should improve exception management of unusual web site
+    data structures (like <http://zen.yandex.ru/>) and playlists, channels, etc.
+  * #41 Fixed mount point issue on external drives using relative paths on
+    MS-Windows. If "ValueError" is raised, it returns the absolute path given
+    instead of showing the error.
+
++------------------------------------+
 Oct 20, 2021 V.3.5.1
 
   * Fixed Ctrl+Q keybord shorcut does not work on Windows (see #39).

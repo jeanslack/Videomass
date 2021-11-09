@@ -19,9 +19,6 @@ URGENCY: high
 
 - [MINI FRAMES] change some mini-frame to dialog to make more confortable re-size adjustment.
 
-- Use a context manager to handle all modal dialogs. See setup dialog example
-  and apply it to video filters as well.
-
 ---------------
 URGENCY: medium
 ----------------

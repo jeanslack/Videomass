@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.28.2021
+Rev: Nov.05.2021
 Code checker:
     - pylint: --ignore E0602, E1101, C0415, E0611, R0901,
     - pycodestyle
@@ -98,7 +98,7 @@ class YdlMediaInfo(wx.MiniFrame):
 
         index = 0
         for url in self.data:
-            self.url_select.InsertItem(index, url['title'])
+            self.url_select.InsertItem(index, str(url['title']))
             self.url_select.SetItem(index, 1, url['url'])
             index += 1
 
@@ -121,20 +121,22 @@ class YdlMediaInfo(wx.MiniFrame):
 
         index = self.url_select.GetFocusedItem()
         item = self.url_select.GetItemText(index)
+        text = ('An error has occurred.\n'
+                'Unable to parse data from provided URL.')
 
         for info in self.data:
             if info['title'] == item:
-                text = (f"Categories:      {info['categories']}\n"
-                        f"License:         {info['license']}\n"
-                        f"Upload Date:     {info['upload_date']}\n"
-                        f"Uploader:        {info['uploader']}\n"
-                        f"View Count:      {info['view']}\n"
-                        f"Like Count:      {info['like']}\n"
-                        f"Dislike Count:   {info['dislike']}\n"
-                        f"Average Rating:  {info['avr_rat']}\n"
-                        f"ID:              {info['id']}\n"
-                        f"Duration:        {info['duration']}\n"
-                        f"Description:     {info['description']}\n"
+                text = (f"Categories:      {info.get('categories', 'N/A')}\n"
+                        f"License:         {info.get('license', 'N/A')}\n"
+                        f"Upload Date:     {info.get('upload_date', 'N/A')}\n"
+                        f"Uploader:        {info.get('uploader', 'N/A')}\n"
+                        f"View Count:      {info.get('view', 'N/A')}\n"
+                        f"Like Count:      {info.get('like', 'N/A')}\n"
+                        f"Dislike Count:   {info.get('dislike', 'N/A')}\n"
+                        f"Average Rating:  {info.get('avr_rat', 'N/A')}\n"
+                        f"ID:              {info.get('id', 'N/A')}\n"
+                        f"Duration:        {info.get('duration', 'N/A')}\n"
+                        f"Description:     {info.get('description', 'N/A')}\n"
                         )
         self.textctrl.AppendText(text)
     # ------------------------------------------------------------------#
