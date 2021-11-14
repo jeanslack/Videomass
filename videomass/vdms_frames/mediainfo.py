@@ -24,8 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
-import webbrowser
 import wx
 
 
@@ -420,7 +418,7 @@ class Mediainfo(wx.MiniFrame):
                 select = self.data[self.data.index(x)]
                 num_items = self.format_ctrl.GetItemCount()
                 self.format_ctrl.InsertItem(num_items, 'DATA FORMAT:')
-                self.format_ctrl.SetItemBackgroundColour(index, "BROWN")
+                self.format_ctrl.SetItemBackgroundColour(index, "SIENNA")
                 index += 1
                 for k, v in x.get('format').items():
                     self.format_ctrl.InsertItem(index, str(k))

@@ -7,8 +7,10 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Nov 09, 2021 V.3.5.2
+Nov 14, 2021 V.3.5.2
 
+  * Fixed `command not found` issue. In some cases using pip to install
+    Videomass the directory is not added to the $PATH.
   * [YOUTUBE-DOWNLOADER] Added option to get 'Best' or 'Worst' of precompiled
     videos. It may be useful to speed up video download containing both audio
     and video, e.g. without download video and audio separately and then
@@ -19,6 +21,10 @@ Nov 09, 2021 V.3.5.2
   * #41 Fixed mount point issue on external drives using relative paths on
     MS-Windows. If "ValueError" is raised, it returns the absolute path given
     instead of showing the error.
+  * [YOUTUBE-DOWNLOADER] Improved 'Download all videos in playlist' feature
+    when checked on URLs containing playlists.
+  * [YOUTUBE-DOWNLOADER] fixed audio quality when 'Download split audio
+    and video' option is selected.
 
 +------------------------------------+
 Oct 20, 2021 V.3.5.1

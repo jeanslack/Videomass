@@ -70,7 +70,7 @@ class Setup(wx.Dialog):
 
         # Make a items list of
         self.rowsNum = []  # rows number list
-        dic = {}  # used for debug
+        # dic = {}  # used for debug
         with open(self.appdata['fileconfpath'], 'r', encoding='utf8') as f:
             self.full_list = f.readlines()
         for a, b in enumerate(self.full_list):
@@ -873,7 +873,6 @@ class Setup(wx.Dialog):
             self.full_list[self.rowsNum[21]] = 'disable\n'
     # --------------------------------------------------------------------#
 
-
     def clear_Cache(self, event):
         """
         if checked, set to clear cached data on exit
@@ -891,12 +890,6 @@ class Setup(wx.Dialog):
         index = self.rdbDownloader.GetSelection()
         youtubedl = f'{self.rdbDownloader.GetString(index)}'
         self.full_list[self.rowsNum[16]] = f'{youtubedl}\n'
-
-
-        #if self.rdbDownloader.GetSelection() == 0:
-            #self.full_list[self.rowsNum[16]] = 'disabled\n'
-        #elif self.rdbDownloader.GetSelection() == 1:
-            #self.full_list[self.rowsNum[16]] = 'enabled\n'
     # --------------------------------------------------------------------#
 
     def on_help(self, event):

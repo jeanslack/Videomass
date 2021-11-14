@@ -7,7 +7,8 @@ Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Nov.05.2021
-Code checker: pycodestyle / flake8 --ignore=F821,W503
+Code checker: flake8 --ignore=F821,W503,
+              pylint disable=E0602, E1101, C0415, E0401, C0103, W0613
 ########################################################
 
 This file is part of Videomass.
@@ -39,28 +40,36 @@ from videomass.vdms_dialogs.playlist_indexing import Indexing
 def join_opts(optvideo=None, optaudio=None, vformat=None, selection=None):
     """
     Return a convenient string for audio/video selectors
-    """
 
-    if vformat == 'Default':
+    - optvideo = string given by self.opt["V_QUALITY"]
+    - optaudio = string given by self.opt["A_QUALITY"] on choice 2 only
+    - vformat = Preferred video format (Default, webm, mp4)
+    - selection = Current choice list selection (0, 1, 2, 3, 4)
+
+    """
+    if vformat == 'Default':  # Preferred video format
         if selection == 1:
             options = optvideo
 
         elif selection == 2:
-            options = optvideo.replace('+', ',')
+            vqual = optvideo.split('+')[0]
+            aqual, lqual = optvideo.split('+')[1].split('/')
+            aqual = aqual if not optaudio else optaudio
+            options = f'{vqual},{aqual}/{lqual}'
+
     else:
-        vid = optvideo.split('+')[0]
-        vid = vid + f'[ext={vformat}]'
-        aqual, last = optvideo.split('+')[1].split('/')
+        vqual = optvideo.split('+')[0] + f'[ext={vformat}]'
+        aqual, lqual = optvideo.split('+')[1].split('/')
         aqual = aqual if not optaudio else optaudio
 
         if selection == 1:
             aformat = 'm4a' if vformat == 'mp4' else 'webm'
-            aud = aqual + f'[ext={aformat}]' + '/' + last
-            options = f'{vid}+{aud}'
+            aqual = aqual + f'[ext={aformat}]'
+            options = f'{vqual}+{aqual}/{lqual}'
 
         elif selection == 2:
-            aud = aqual + '[ext=m4a]' + '/' + last
-            options = f'{vid},{aud}'
+            aqual = aqual + '[ext=m4a]'
+            options = f'{vqual},{aqual}/{lqual}'
 
     return options
 
@@ -121,18 +130,18 @@ class Downloader(wx.Panel):
     MSG_1 = _('At least one "Format Code" must be checked for each '
               'URL selected in green.')
 
-    VQUAL = {('Best quality video'): ('bestvideo+bestaudio/best'),
+    VQUAL = {('Best video resolution'): ('bestvideo+bestaudio/best'),
              ('p1080'): ('bestvideo[height<=?1080]+bestaudio/best'),
              ('p720'): ('bestvideo[height<=?720]+bestaudio/best'),
              ('p480'): ('bestvideo[height<=?480]+bestaudio/best'),
              ('p360'): ('bestvideo[height<=?360]+bestaudio/best'),
              ('p240'): ('bestvideo[height<=?240]+bestaudio/best'),
              ('p144'): ('worstvideo[height>=?144]+worstaudio/worst'),
-             ('Worst quality video'): ('worstvideo+worstaudio/worst'),
+             ('Worst video resolution'): ('worstvideo+worstaudio/worst'),
              }
     VPCOMP = {('Best precompiled video'): ('best'),
               ('Worst precompiled video'): ('worst'),
-                    }
+              }
     AFORMATS = {("Default audio format"): ("best"),
                 ("wav"): ("wav"),
                 ("mp3"): ("mp3"),
@@ -146,7 +155,7 @@ class Downloader(wx.Panel):
              ('Worst quality audio'): ('worstaudio')}
 
     CHOICE = [_('Precompiled Videos'),
-              _('Download videos by qualities'),
+              _('Download videos by resolution'),
               _('Download split audio and video'),
               _('Download Audio only'),
               _('Download by format code')
@@ -388,8 +397,8 @@ class Downloader(wx.Panel):
 
     def on_checkbox(self, event):
         """
-        get data from row in the enabled checkbox and set the values
-        on corresponding key depending if check or uncheck e.g.:
+        get data from the enabled checkbox and set the values
+        on corresponding key e.g.:
 
             `key=url: values=[Audio: code, Video: code]`
         """
@@ -485,13 +494,19 @@ class Downloader(wx.Panel):
         self.parent.statusbar_msg(_('Ready'), None)
         item = self.fcode.GetFocusedItem()
         url = self.fcode.GetItemText(item, 1)
-        if '/watch' not in url:
-            # prevent opening too many of ffplay windows
-            wx.MessageBox(_("Cannot play playlists / channels or URLs "
-                            "containing multiple videos listed."),
-                          "Videomass", wx.ICON_INFORMATION, self)
-            return
-
+        for unsupp in ('/playlists',
+                       '/channels',
+                       '/playlist',
+                       '/channel',
+                       '/videos',
+                       ):
+            if unsupp in url:
+                # prevent opening too many of ffplay windows
+                wx.MessageBox(_("Only one video can be played at a time.\n\n"
+                                "Unsupported '{0}':\n'{1}'"
+                                ).format(unsupp.split('/')[1], url),
+                              "Videomass", wx.ICON_INFORMATION, self)
+                return
 
         if self.choice.GetSelection() == 0:  # play video only
             quality = self.fcode.GetItemText(item, 3)
@@ -531,9 +546,7 @@ class Downloader(wx.Panel):
             data = io_tools.youtubedl_getstatistics(link)
             for meta in data:
                 if meta[1]:
-                    # self.parent.statusbar_msg('Ready', None)
-                    wx.MessageBox(meta[1], 'Videomass', wx.ICON_ERROR)
-                    return True
+                    return meta[1]
 
             formats = iter(meta[0].get('formats', [meta[0]]))
             for n, f in enumerate(formats):
@@ -550,7 +563,7 @@ class Downloader(wx.Panel):
                 else:
                     size = 'N/A'
 
-                formatid = f.get('format_id','UNSUPPORTED')
+                formatid = f.get('format_id', 'UNSUPPORTED')
                 self.fcode.InsertItem(index, formatid)
                 self.fcode.SetItem(index, 1, link)
                 self.fcode.SetItem(index, 2, meta[0].get('title', 'N/A'))
@@ -563,11 +576,10 @@ class Downloader(wx.Panel):
                 self.fcode.SetItem(index, 8, size)
                 if n == 0:
                     if formatid == 'UNSUPPORTED':
-                        self.fcode.SetItemBackgroundColour(index,
-                                                           Downloader.RED)
-                    else:
-                        self.fcode.SetItemBackgroundColour(index,
-                                                           Downloader.GREEN)
+                        return _("ERROR: Unable to get format codes.\n\n"
+                                 "Unsupported URL:\n'{0}'").format(link)
+
+                    self.fcode.SetItemBackgroundColour(index, Downloader.GREEN)
                 index += 1
         return None
     # ----------------------------------------------------------------------
@@ -596,7 +608,7 @@ class Downloader(wx.Panel):
             if 'duration' in meta[0]:
 
                 ftime = (f"{timehuman(meta[0]['duration'])} "
-                            f"({meta[0]['duration']} sec.)")
+                         f"({meta[0]['duration']} sec.)")
             else:
                 ftime = 'N/A'
 
@@ -656,8 +668,8 @@ class Downloader(wx.Panel):
                     wx.MessageBox(ret[1], 'Videomass', wx.ICON_ERROR)
                     del self.info[:]
                     return
-                else:
-                    self.info.append(ret[1])
+
+                self.info.append(ret[1])
 
         miniframe = YdlMediaInfo(self.info, Downloader.appdata['ostype'])
         miniframe.Show()
@@ -665,35 +677,46 @@ class Downloader(wx.Panel):
 
     def on_format_codes(self):
         """
-        Evaluate which method to call to enable
-        download from "Format Code"
+        Check data given by `self.get_formatcode()` method
+        which allow to enabling download from "Format Code"
 
         """
-        ceckurls = [url for url in self.parent.data_url if '/watch'
-                    not in url]
-        if ceckurls:
-            wx.MessageBox(_("Unable to get format codes on playlists / "
-                            "channels or URLs containing multiple "
-                            "videos listed."),
-                            "Videomass", wx.ICON_INFORMATION, self)
-            # prevent KeyError: 'format_id'
+        def _error(msg, infoicon):
+            if infoicon == 'information':
+                icon = wx.ICON_INFORMATION
+            elif infoicon == 'error':
+                icon = wx.ICON_ERROR
+
+            wx.MessageBox(msg, "Videomass", icon, self)
             self.choice.SetSelection(0)
             self.on_choicebox(self, False)
-            return
 
+        for url in self.parent.data_url:
+            for unsupp in ('/playlists',
+                           '/channels',
+                           '/playlist',
+                           '/channel',
+                           '/videos',
+                           ):
+                if unsupp in url:
+                    msg = _("Unable to get format codes on '{0}'\n\n"
+                            "Unsupported '{0}':\n'{1}'"
+                            ).format(unsupp.split('/')[1], url)
+                    _error(msg, 'information')
+                    return
 
         ret = self.get_formatcode()
         if ret:
-            return  # do not enable fcode
+            _error(ret, 'error')
+            return
 
     # -----------------------------------------------------------------#
 
     def on_choicebox(self, event, statusmsg=True):
         """
-        - Enable or disable some widgets during switching choice box.
-        - Set media quality parameter for on_urls_list method
-        """
+        Set widgets on switching choice box
 
+        """
         if statusmsg is True:
             if not self.parent.sb.GetStatusText() == 'Ready':
                 self.parent.statusbar_msg(_('Ready'), None)
@@ -754,7 +777,7 @@ class Downloader(wx.Panel):
             self.on_urls_list(f'bestaudio (format={self.cmbx_af.GetValue()})')
 
         elif self.choice.GetSelection() == 4:
-            self.labtxt.Show(),
+            self.labtxt.Show()
             self.cod_text.Show()
             self.Layout()
             self.cmbx_vq.Disable()
@@ -806,7 +829,7 @@ class Downloader(wx.Panel):
     def on_aformat(self, event):
         """
         Set audio format to exporting during combobox event
-        and self.choice selection == 2
+        and self.choice selection == 3
         """
         self.opt["A_FORMAT"] = Downloader.AFORMATS.get(self.cmbx_af.GetValue())
         index = 0
@@ -829,10 +852,9 @@ class Downloader(wx.Panel):
         """
         Enable or disable playlists downloading
         """
-
         if self.ckbx_pl.IsChecked():
             playlist = [url for url in self.parent.data_url
-                        if '/playlist?list' in url]
+                        if '/playlist' in url]
             if not playlist:
                 wx.MessageBox(_("URLs have no playlist references"),
                               "Videomass", wx.ICON_INFORMATION, self)
@@ -898,7 +920,7 @@ class Downloader(wx.Panel):
 
     def getformatcode(self, urls):
         """
-        Called by on on_Start. Return format code list
+        Called by `on_Start` method. Return format code list
 
         """
         format_code = []

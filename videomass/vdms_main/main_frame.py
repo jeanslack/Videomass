@@ -317,7 +317,7 @@ class MainFrame(wx.Frame):
             if self.appdata['warnexiting'] == 'enable':
                 if wx.MessageBox(_('Are you sure you want to exit?'),
                                  _('Exit'),  wx.ICON_QUESTION | wx.YES_NO,
-                                self) == wx.YES:
+                                 self) == wx.YES:
                     self.Destroy()
             else:
                 self.Destroy()
@@ -703,7 +703,7 @@ class MainFrame(wx.Frame):
 
             cur = current_release()[2]
             fname = _("Select the 'Videomass-{}-x86_64.AppImage' "
-                        "file to update").format(cur)
+                      "file to update").format(cur)
             with wx.FileDialog(
                     None, _(fname), defaultDir=os.path.expanduser('~'),
                     wildcard=(f"*Videomass-{cur}-x86_64.AppImage "
@@ -734,7 +734,7 @@ class MainFrame(wx.Frame):
 
             else:
                 wx.MessageBox(_('Failed! {}').format(upgrade),
-                                'ERROR', wx.ICON_ERROR, self)
+                              'ERROR', wx.ICON_ERROR, self)
             return
 
         else:

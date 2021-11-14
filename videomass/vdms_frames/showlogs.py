@@ -6,7 +6,8 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Oct.26.2020 *-pycodestyle- compatible*
+# Rev: Nov.14.2021
+# Code checker: flake8, pylint .
 #########################################################
 
 # This file is part of Videomass.
@@ -37,7 +38,6 @@ class ShowLogs(wx.MiniFrame):
     # list of logs files to include
     LOGNAMES = ('volumedected.log',
                 'youtubedl_lib.log',
-                'youtubedl_exec.log',
                 'AV_conversions.log',
                 'presets_manager.log',
                 'ffplay.log',
@@ -74,7 +74,7 @@ class ShowLogs(wx.MiniFrame):
                                       wx.LC_SINGLE_SEL
                                       )
         self.log_select.SetMinSize((700, 200))
-        self.log_select.InsertColumn(0, _('Files'), width=500)
+        self.log_select.InsertColumn(0, _('Log file list'), width=500)
         sizer_base.Add(self.log_select, 0, wx.ALL | wx.EXPAND, 5)
         labtxt = wx.StaticText(self.panel, label=_('Log messages'))
         sizer_base.Add(labtxt, 0, wx.ALL, 5)
@@ -100,12 +100,12 @@ class ShowLogs(wx.MiniFrame):
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grid_funcbtn = wx.BoxSizer(wx.HORIZONTAL)
         button_update = wx.Button(self.panel, wx.ID_REFRESH,
-                                  _("Refresh log messages"))
+                                  _("Refresh all log files"))
         grid_funcbtn.Add(button_update, 0, wx.ALL |
                          wx.ALIGN_CENTER_VERTICAL, 5
                          )
         button_clear = wx.Button(self.panel, wx.ID_CLEAR,
-                                 _("Clear log messages")
+                                 _("Clear selected log")
                                  )
         grid_funcbtn.Add(button_clear, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grdBtn.Add(grid_funcbtn)

@@ -25,7 +25,6 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import sys
 import wx
 from videomass.vdms_utils.utils import detect_binaries
 
@@ -36,7 +35,7 @@ def write_changes(fileconf, ffmpeg, ffplay, ffprobe, youtubedl, binfound):
 
     """
     rowsNum = []  # rows number list
-    dic = {}  # used for debug
+
     with open(fileconf, 'r', encoding='utf8') as f:
         full_list = f.readlines()
     for a, b in enumerate(full_list):
@@ -480,7 +479,6 @@ class PageFour(wx.Panel):
         """
         the values are get on Wizard.wizard_Finish method
         """
-        #pass
         if self.ckbx_yn.IsChecked() is False:
             self.rdbDownloader.Disable()
         else:

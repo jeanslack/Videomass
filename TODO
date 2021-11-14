@@ -7,8 +7,6 @@ URGENCY: to do soon
 
 - Fix the log names (because now there are no more executables)
 
-- [YOUTUBE-DOWNLOADER] Fix Console window during download [Windows] #38 (invalid)
-
 --------------
 URGENCY: high
 
@@ -32,8 +30,7 @@ URGENCY: low
 
 - Youtube-Downloader: With "default" option it downloads the best quality
   precompiled video, which isn't the best quality overall. With "download
-  audio and video splitted" it downloads the best quality a/v streams.
-  ...but these are also default behaviors on youtube-dl ?!
+  audio and video splitted" it downloads the best quality a/v streams. [FIXED]
 
 
 
