@@ -37,6 +37,7 @@ from videomass.vdms_dialogs import infoprg
 from videomass.vdms_dialogs import videomass_check_version
 from videomass.vdms_frames import while_playing
 from videomass.vdms_frames import ffmpeg_search
+from videomass.vdms_frames import user_notes
 from videomass.vdms_frames.mediainfo import Mediainfo
 from videomass.vdms_frames.showlogs import ShowLogs
 from videomass.vdms_panels import timeline
@@ -384,6 +385,12 @@ class MainFrame(wx.Frame):
         dscrp = (_("Download the latest presets"),
                  _("Download all Videomass presets locally from the homepage"))
         self.prstdownload = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        toolsButton.AppendSeparator()
+        dscrp = (_("User Memos"),
+                 _("Read and write memos with text search function."))
+        notepad = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        toolsButton.AppendSeparator()
+
         self.menuBar.Append(toolsButton, _("Tools"))
 
         # ------------------ View menu
@@ -548,6 +555,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.youtubedl_uptodater, self.ydlupdate)
         self.Bind(wx.EVT_MENU, self.prst_downloader, self.prstdownload)
         self.Bind(wx.EVT_MENU, self.prst_checkversion, self.prstcheck)
+        self.Bind(wx.EVT_MENU, self.reminder, notepad)
         # ---- VIEW ----
         self.Bind(wx.EVT_MENU, self.Check_conf, checkconf)
         self.Bind(wx.EVT_MENU, self.Check_formats, ckformats)
@@ -813,6 +821,15 @@ class MainFrame(wx.Frame):
                             '"{0}"').format(pathname), 'Videomass',
                           wx.ICON_INFORMATION, self)
             return
+    # -------------------------------------------------------------------#
+
+    def reminder(self, event):
+        """
+        Show a notepad dialog box
+
+        """
+        dlg = user_notes.Memos()
+        dlg.Show()
     # ------------------------------------------------------------------#
     # --------- Menu View ###
 
@@ -1715,7 +1732,10 @@ class MainFrame(wx.Frame):
         # Show the panel:
         self.ProcessPanel.Show()
         # self.SetTitle('Videomass')
-        [self.menuBar.EnableTop(x, False) for x in range(0, 5)]
+        [self.menuBar.EnableTop(x, False) for x in range(3, 5)]
+        if self.appdata['app'] == 'appimage':
+            self.ydlupdate.Enable(False)  # do not update during a process
+        self.viewtimeline.Enable(False)
         # Hide the tool bar
         self.toolbar.Hide()
         self.ProcessPanel.topic_thread(self.topicname, varargs,
@@ -1774,6 +1794,8 @@ class MainFrame(wx.Frame):
             self.switch_concat_demuxer(self)
 
         # Enable all top menu bar:
-        [self.menuBar.EnableTop(x, True) for x in range(0, 5)]
+        [self.menuBar.EnableTop(x, True) for x in range(3, 5)]
+        if self.appdata['app'] == 'appimage':
+            self.ydlupdate.Enable(True)
         # show buttons bar if the user has shown it:
         self.Layout()

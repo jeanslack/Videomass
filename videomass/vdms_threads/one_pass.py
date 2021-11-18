@@ -171,7 +171,6 @@ class OnePass(Thread):
                             break  # break second 'for' loop
 
                     if proc.wait():  # error
-                        print('proc punto wait')
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
                                      output='',

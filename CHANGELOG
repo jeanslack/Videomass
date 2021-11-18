@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Nov 14, 2021 V.3.5.2
+Nov 18, 2021 V.3.5.2
 
   * Fixed `command not found` issue. In some cases using pip to install
     Videomass the directory is not added to the $PATH.
@@ -25,6 +25,10 @@ Nov 14, 2021 V.3.5.2
     when checked on URLs containing playlists.
   * [YOUTUBE-DOWNLOADER] fixed audio quality when 'Download split audio
     and video' option is selected.
+  * [NEW] A notepad with text search function has been implemented (Request
+    made by @ChourS)
+  * During the processes some menu items have been enabled allowing you to
+    perform some useful actions.
 
 +------------------------------------+
 Oct 20, 2021 V.3.5.1
