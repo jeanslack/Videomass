@@ -213,8 +213,15 @@ class Memos(wx.Dialog):
                 self.textbox.SetStyle(num, num + lengh,
                                       wx.TextAttr("RED", "YELLOW"))
 
-        self.labcount.SetLabel(_('Find {0} occurrences that '
-                                 'match your search').format(str(count)))
+        if count == 1:
+            msg = _('Found {0} match in your search').format(str(count))
+        elif count == 0:
+            msg = _('No occurrences found: {0}').format(str(count))
+        else:
+            msg = _('Found {0} occurrences that '
+                    'match your search').format(str(count))
+
+        self.labcount.SetLabel(msg)
         # self.Layout()
     # --------------------------------------------------------------#
 

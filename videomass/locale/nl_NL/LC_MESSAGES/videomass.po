@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-19 17:56+0100\n"
-"PO-Revision-Date: 2021-11-19 17:58+0100\n"
+"POT-Creation-Date: 2021-11-19 18:35+0100\n"
+"PO-Revision-Date: 2021-11-19 18:39+0100\n"
 "Last-Translator: Roelof Berkepeis <roelof@imoma.eu>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -1248,19 +1248,29 @@ msgstr "Veranderingen waren succesvol!"
 msgid "Unexpected error: Unable to save changes."
 msgstr ""
 
-#: ../vdms_dialogs/user_notes.py:216
+#: ../vdms_dialogs/user_notes.py:217
 #, python-brace-format
-msgid "Find {0} occurrences that match your search"
+msgid "Found {0} match in your search"
 msgstr ""
 
-#: ../vdms_dialogs/user_notes.py:237
+#: ../vdms_dialogs/user_notes.py:219
+#, python-brace-format
+msgid "No occurrences found: {0}"
+msgstr ""
+
+#: ../vdms_dialogs/user_notes.py:221
+#, python-brace-format
+msgid "Found {0} occurrences that match your search"
+msgstr ""
+
+#: ../vdms_dialogs/user_notes.py:244
 msgid ""
 "\n"
 "The changes have not yet been applied.\n"
 "Do you want to save your changes now?"
 msgstr ""
 
-#: ../vdms_dialogs/user_notes.py:243
+#: ../vdms_dialogs/user_notes.py:250
 #, fuzzy
 #| msgid "Videomass - Presets Manager"
 msgid "Videomass - Save Changes"

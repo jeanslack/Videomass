@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-19 17:56+0100\n"
-"PO-Revision-Date: 2021-11-19 17:57+0100\n"
+"POT-Creation-Date: 2021-11-19 18:35+0100\n"
+"PO-Revision-Date: 2021-11-19 18:38+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -1239,12 +1239,22 @@ msgstr "Salvato con successo!"
 msgid "Unexpected error: Unable to save changes."
 msgstr "Errore imprevisto: impossibile salvare le modifiche."
 
-#: ../vdms_dialogs/user_notes.py:216
+#: ../vdms_dialogs/user_notes.py:217
 #, python-brace-format
-msgid "Find {0} occurrences that match your search"
+msgid "Found {0} match in your search"
+msgstr "Trovato {0} corrispondenza nella tua ricerca"
+
+#: ../vdms_dialogs/user_notes.py:219
+#, python-brace-format
+msgid "No occurrences found: {0}"
+msgstr "Nessuna occorrenza trovata: {0}"
+
+#: ../vdms_dialogs/user_notes.py:221
+#, python-brace-format
+msgid "Found {0} occurrences that match your search"
 msgstr "Trovate {0} occorrenze corrispondenti alla tua ricerca"
 
-#: ../vdms_dialogs/user_notes.py:237
+#: ../vdms_dialogs/user_notes.py:244
 msgid ""
 "\n"
 "The changes have not yet been applied.\n"
@@ -1254,7 +1264,7 @@ msgstr ""
 "Le modifiche non sono ancora state applicate.\n"
 "Vuoi salvare le tue modifiche adesso?"
 
-#: ../vdms_dialogs/user_notes.py:243
+#: ../vdms_dialogs/user_notes.py:250
 msgid "Videomass - Save Changes"
 msgstr "Videomass - Salva modifiche"
 
