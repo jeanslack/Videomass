@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.17.2021
+Rev: Nov.18.2021
 Code checker:
     - flake8: --ignore F821, W504, F401
     - pylint: --ignore E0602, E1101, C0415, E0401, C0103
@@ -28,7 +28,6 @@ This file is part of Videomass.
 
 """
 import os
-import re
 import wx
 
 
@@ -47,22 +46,16 @@ def check_notes(fname):
     return nts
 
 
-class Memos(wx.MiniFrame):
+class Memos(wx.Dialog):
     """
     Show and edit user notes / reminders with a real-time
     string search filter. The search function is case sensitive
     by default.
 
     """
-    def __init__(self):
+    def __init__(self, parent):
         """
-        Mode:
-           with 'None' it does not depend on the parent:
-            wx.Frame.__init__(self, None)
-
-            With parent, -1:
-            wx.Frame.__init__(self, parent, -1)
-            if close videomass also close parent window
+        Modal mode
 
         """
         get = wx.GetApp()  # get data from bootstrap
@@ -70,19 +63,10 @@ class Memos(wx.MiniFrame):
         curnotes = check_notes(self.filename)
         self.colorscheme = get.appset['icontheme'][1]
 
-        wx.MiniFrame.__init__(self,
-                              None,
-                              style=wx.RESIZE_BORDER
-                              | wx.CAPTION
-                              | wx.CLOSE_BOX
-                              | wx.SYSTEM_MENU
-                              )
-        # add panel
-        self.panel = wx.Panel(self,
-                              wx.ID_ANY,
-                              style=wx.TAB_TRAVERSAL
-                              | wx.BORDER_THEME)
-        self.textbox = wx.TextCtrl(self.panel, wx.ID_ANY,
+        wx.Dialog.__init__(self, parent, -1,
+                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
+                           )
+        self.textbox = wx.TextCtrl(self, wx.ID_ANY,
                                    "",
                                    # size=(550,400),
                                    style=wx.TE_MULTILINE
@@ -102,19 +86,23 @@ class Memos(wx.MiniFrame):
         else:
             self.textbox.AppendText(curnotes)
 
-        self.search = wx.SearchCtrl(self.panel,
+        self.search = wx.SearchCtrl(self,
                                     wx.ID_ANY,
                                     size=(400, 30),
                                     style=wx.TE_PROCESS_ENTER,
                                     )
         self.search.SetToolTip(_("Find matching entries in the text box"))
-        self.button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
-        self.button_save = wx.Button(self.panel, wx.ID_SAVE, "")
+
+        self.labcount = wx.StaticText(self, wx.ID_ANY, "")
+
+        self.button_close = wx.Button(self, wx.ID_CLOSE, "")
+        self.button_save = wx.Button(self, wx.ID_SAVE, "")
         self.button_save.Disable()
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.textbox, 1, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.search, 0, wx.ALL, 5)
+        sizer.Add(self.labcount, 0, wx.ALL | wx.EXPAND, 5)
         grid = wx.GridSizer(1, 2, 0, 0)
         sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         grid.Add(self.button_save, 1, wx.ALL, 5)
@@ -123,7 +111,7 @@ class Memos(wx.MiniFrame):
         self.SetTitle(_("User Memos"))
         self.SetMinSize((500, 500))
         # set_properties:
-        self.panel.SetSizer(sizer)
+        self.SetSizer(sizer)
         self.Fit()
         self.Layout()
 
@@ -188,22 +176,46 @@ class Memos(wx.MiniFrame):
         in yellow and the text should scroll to the first
         occurrence position.
 
+        NOTE: `re.finditer` works but does not find some chars
+              like 'this?' or 'like=' and give re.error with special
+              chars like '?', '=' .
+        count = 0
+        for match in re.finditer(findtext, text):
+            if match:
+                count += 1
+                self.textbox.SetStyle(match.start(), match.end(),
+                                    wx.TextAttr("RED", "YELLOW"))
+
         """
         findtext = event.GetString()  # the string to find
+        lengh = len(findtext)
         text = self.textbox.GetValue()  # the current text within textctrl
         self.textbox.SetStyle(0, len(text),
                               wx.TextAttr(self.colorscheme['TXT3'],
                                           self.colorscheme['BACKGRD'])
                               )
+        if findtext == "":
+            self.labcount.SetLabel("")
+            return
+
         for num, line in enumerate(text.split('\n')):
             if findtext in line:
+                # get long value from XYToPosition method
                 tolong = self.textbox.XYToPosition(line.index(findtext), num)
+                # use long value to set position with ShowPosition method
                 self.textbox.ShowPosition(tolong)
-                break
+                break  # find first occurrence and stop
 
-        for match in re.finditer(findtext, text):
-            self.textbox.SetStyle(match.start(), match.end(),
-                                  wx.TextAttr("RED", "YELLOW"))
+        count = 0
+        for num, match in enumerate(text):
+            if text.find(findtext, num) == num:
+                count += 1
+                self.textbox.SetStyle(num, num + lengh,
+                                      wx.TextAttr("RED", "YELLOW"))
+
+        self.labcount.SetLabel(_('Find {0} occurrences that '
+                                 'match your search').format(str(count)))
+        # self.Layout()
     # --------------------------------------------------------------#
 
     def on_delete(self, event):
@@ -220,19 +232,25 @@ class Memos(wx.MiniFrame):
         destroy dialog by Close button or by the X button on
         the title bar. If there are any changes in the text box,
         a dialog box appears with a question.
+
         """
+        msg = _("\nThe changes have not yet been applied.\n"
+                "Do you want to save your changes now?")
+
         if self.button_save.IsEnabled() is True:
             curnotes = check_notes(self.filename)
             if curnotes != self.textbox.GetValue():
-                if wx.MessageBox(_("\nThe changes have not yet been applied.\n"
-                                   "Do you want to save your changes now?"),
-                                 _("Videomass - Save Changes"),
-                                 wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
-                                 self) == wx.YES:
-
+                resp = wx.MessageBox(msg, _("Videomass - Save Changes"),
+                                     wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
+                                     self)
+                if resp == wx.YES:
                     ret = self.on_save(self)
                     if ret is False:
                         return
+
+                elif resp == wx.CANCEL:
+                    return
+
             self.Destroy()
 
         else:

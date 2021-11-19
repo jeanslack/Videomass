@@ -19,9 +19,12 @@ videomass (3.5.2-1) UNRELEASED; urgency=medium
   * [NEW] A notepad with text search function has been implemented (Request
     made by @ChourS)
   * During the processes some menu items have been enabled allowing you to
-    perform some more useful actions.
+    perform some useful actions.
+  * Improved Setup dialog with a new Miscellanea tab.
+  * Added the ability to delete the contents of log files when exiting the
+    application.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 18 Nov 2021 00:10:12 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 19 Nov 2021 00:17:34 +0200
 
 videomass (3.5.1-1) UNRELEASED; urgency=medium
 

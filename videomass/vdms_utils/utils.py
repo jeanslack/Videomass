@@ -219,6 +219,31 @@ def copy_on(ext, source, destination):
 # ------------------------------------------------------------------#
 
 
+def reset_logfile(filename):
+    """
+    Delete the contents of the file if it is not empty.
+    Please be careful as it assumes the file exists.
+
+    |          Mode          |  r   |  r+  |  w   |  w+  |  a   |  a+  |
+    | :--------------------: | :--: | :--: | :--: | :--: | :--: | :--: |
+    |          Read          |  +   |  +   |      |  +   |      |  +   |
+    |         Write          |      |  +   |  +   |  +   |  +   |  +   |
+    |         Create         |      |      |  +   |  +   |  +   |  +   |
+    |         Cover          |      |      |  +   |  +   |      |      |
+    | Point in the beginning |  +   |  +   |  +   |  +   |      |      |
+    |    Point in the end    |      |      |      |      |  +   |  +   |
+
+    """
+    with open(filename, "r+", encoding='utf8') as fname:
+        content = fname.read()
+        if content:
+            fname.flush()  # clear previous content readed
+            fname.seek(0)  # it places the file pointer to position 0
+            fname.write("")
+            fname.truncate()  # truncates the file to the current file point.
+# ------------------------------------------------------------------#
+
+
 def detect_binaries(platform, executable, additionaldir=None):
     """
     <https://stackoverflow.com/questions/11210104/check-if

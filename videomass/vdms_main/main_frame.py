@@ -35,9 +35,9 @@ from videomass.vdms_dialogs import settings
 from videomass.vdms_dialogs import set_timestamp
 from videomass.vdms_dialogs import infoprg
 from videomass.vdms_dialogs import videomass_check_version
+from videomass.vdms_dialogs import user_notes
 from videomass.vdms_frames import while_playing
 from videomass.vdms_frames import ffmpeg_search
-from videomass.vdms_frames import user_notes
 from videomass.vdms_frames.mediainfo import Mediainfo
 from videomass.vdms_frames.showlogs import ShowLogs
 from videomass.vdms_panels import timeline
@@ -828,8 +828,8 @@ class MainFrame(wx.Frame):
         Show a notepad dialog box
 
         """
-        dlg = user_notes.Memos()
-        dlg.Show()
+        dlg = user_notes.Memos(self)
+        dlg.ShowModal()
     # ------------------------------------------------------------------#
     # --------- Menu View ###
 
