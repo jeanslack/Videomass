@@ -22,9 +22,11 @@ videomass (3.5.2-1) UNRELEASED; urgency=medium
     perform some useful actions.
   * Improved Setup dialog with a new Miscellanea tab.
   * Added the ability to delete the contents of log files when exiting the
-    application.
+    application (see Setup dialog Miscellanea tab).
+  * Update Russian translation from @ChourS
+  * Update Italian translation from @jeanslack
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 19 Nov 2021 00:17:34 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 20 Nov 2021 12:01:00 +0200
 
 videomass (3.5.1-1) UNRELEASED; urgency=medium
 

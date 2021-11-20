@@ -219,10 +219,21 @@ def copy_on(ext, source, destination):
 # ------------------------------------------------------------------#
 
 
-def reset_logfile(filename):
+def del_filecontents(filename):
     """
     Delete the contents of the file if it is not empty.
     Please be careful as it assumes the file exists.
+
+    HOW to USE:
+
+        if fileExists is True:
+            try:
+                del_filecontents(logfile)
+            except Exception as err:
+                print("Unexpected error while deleting "
+                      "file contents:\n\n{0}").format(err)
+
+    MODE EXAMPLE SCHEME:
 
     |          Mode          |  r   |  r+  |  w   |  w+  |  a   |  a+  |
     | :--------------------: | :--: | :--: | :--: | :--: | :--: | :--: |

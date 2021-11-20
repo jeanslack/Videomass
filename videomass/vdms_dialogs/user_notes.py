@@ -53,7 +53,7 @@ class Memos(wx.Dialog):
     by default.
 
     """
-    def __init__(self, parent):
+    def __init__(self):
         """
         Modal mode
 
@@ -63,22 +63,18 @@ class Memos(wx.Dialog):
         curnotes = check_notes(self.filename)
         self.colorscheme = get.appset['icontheme'][1]
 
-        wx.Dialog.__init__(self, parent, -1,
+        wx.Dialog.__init__(self, None,
                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
                            )
         self.textbox = wx.TextCtrl(self, wx.ID_ANY,
                                    "",
                                    # size=(550,400),
                                    style=wx.TE_MULTILINE
-                                   | wx.TE_RICH2
+                                   | wx.TE_RICH
                                    | wx.HSCROLL
                                    )
         self.textbox.SetBackgroundColour(self.colorscheme['BACKGRD'])
         self.textbox.SetDefaultStyle(wx.TextAttr(self.colorscheme['TXT3']))
-        if get.appset['ostype'] == 'Darwin':
-            self.textbox.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        else:
-            self.textbox.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
 
         if curnotes is None:
             self.textbox.AppendText(_("Read and write memos with "
@@ -141,6 +137,10 @@ class Memos(wx.Dialog):
         This method catches any event made in the wx.TxtCtrl.
 
         """
+        if wx.version().startswith('4.0.7 '):
+            self.textbox.SetStyle(0, len(self.textbox.GetValue()),
+                                  wx.TextAttr(self.colorscheme['TXT3'],
+                                              self.colorscheme['BACKGRD']))
         if self.button_save.IsEnabled() is False:
             self.button_save.Enable()
     # ---------------------------------------------------------#
@@ -192,8 +192,8 @@ class Memos(wx.Dialog):
         text = self.textbox.GetValue()  # the current text within textctrl
         self.textbox.SetStyle(0, len(text),
                               wx.TextAttr(self.colorscheme['TXT3'],
-                                          self.colorscheme['BACKGRD'])
-                              )
+                                          self.colorscheme['BACKGRD']))
+
         if findtext == "":
             self.labcount.SetLabel("")
             return

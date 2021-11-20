@@ -31,7 +31,9 @@ Nov 19, 2021 V.3.5.2
     perform some useful actions.
   * Improved Setup dialog with a new Miscellanea tab.
   * Added the ability to delete the contents of log files when exiting the
-    application.
+    application (see Setup dialog Miscellanea tab).
+  * Update Russian translation from @ChourS
+  * Update Italian translation from @jeanslack
 
 +------------------------------------+
 Oct 20, 2021 V.3.5.1

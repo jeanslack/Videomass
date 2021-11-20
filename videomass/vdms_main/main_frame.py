@@ -828,8 +828,8 @@ class MainFrame(wx.Frame):
         Show a notepad dialog box
 
         """
-        dlg = user_notes.Memos(self)
-        dlg.ShowModal()
+        dlg = user_notes.Memos()
+        dlg.Show()
     # ------------------------------------------------------------------#
     # --------- Menu View ###
 

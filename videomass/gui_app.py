@@ -38,7 +38,7 @@ except ModuleNotFoundError:
 from videomass.vdms_sys.argparser import args
 from videomass.vdms_sys.configurator import DataSource
 from videomass.vdms_sys import app_const as appC
-from videomass.vdms_utils.utils import reset_logfile
+from videomass.vdms_utils.utils import del_filecontents
 
 # add translation macro to builtin similar to what gettext does
 builtins.__dict__['_'] = wx.GetTranslation
@@ -258,7 +258,7 @@ class Videomass(wx.App):
                     for logname in flist:
                         logfile = os.path.join(logdir, logname)
                         try:
-                            reset_logfile(logfile)
+                            del_filecontents(logfile)
                         except Exception as err:
                             wx.MessageBox(_("Unexpected error while deleting "
                                             "file contents:\n\n"
