@@ -16,8 +16,8 @@ videomass (3.5.2-1) UNRELEASED; urgency=medium
     when checked on URLs containing playlists.
   * [YOUTUBE-DOWNLOADER] fixed audio quality when 'Download split audio
     and video' option is selected.
-  * [NEW] A notepad with text search function has been implemented (Request
-    made by @ChourS)
+  * [NEW] Added the ability to read and write useful notes with deafault text
+    editor (Request made by @ChourS).
   * During the processes some menu items have been enabled allowing you to
     perform some useful actions.
   * Improved Setup dialog with a new Miscellanea tab.
@@ -26,7 +26,7 @@ videomass (3.5.2-1) UNRELEASED; urgency=medium
   * Update Russian translation from @ChourS
   * Update Italian translation from @jeanslack
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 20 Nov 2021 12:01:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 21 Nov 2021 01:39:00 +0200
 
 videomass (3.5.1-1) UNRELEASED; urgency=medium
 

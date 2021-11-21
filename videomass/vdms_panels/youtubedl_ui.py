@@ -140,6 +140,7 @@ class Downloader(wx.Panel):
              ('Worst video resolution'): ('worstvideo+worstaudio/worst'),
              }
     VPCOMP = {('Best precompiled video'): ('best'),
+              ('Medium precompiled video'): ('22'),
               ('Worst precompiled video'): ('worst'),
               }
     AFORMATS = {("Default audio format"): ("best"),

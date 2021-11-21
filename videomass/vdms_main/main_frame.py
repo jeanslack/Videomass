@@ -35,7 +35,6 @@ from videomass.vdms_dialogs import settings
 from videomass.vdms_dialogs import set_timestamp
 from videomass.vdms_dialogs import infoprg
 from videomass.vdms_dialogs import videomass_check_version
-from videomass.vdms_dialogs import user_notes
 from videomass.vdms_frames import while_playing
 from videomass.vdms_frames import ffmpeg_search
 from videomass.vdms_frames.mediainfo import Mediainfo
@@ -363,6 +362,12 @@ class MainFrame(wx.Frame):
         self.fold_downloads_tmp = fileButton.Append(wx.ID_ANY, dscrp[0],
                                                     dscrp[1])
         self.fold_downloads_tmp.Enable(False)
+
+        fileButton.AppendSeparator()
+        dscrp = (_("Work Notes\tCtrl+N"),
+                 _("Read and write useful notes and reminders."))
+        notepad = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+
         fileButton.AppendSeparator()
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit\tCtrl+Q"),
                                      _("Close Videomass"))
@@ -385,12 +390,6 @@ class MainFrame(wx.Frame):
         dscrp = (_("Download the latest presets"),
                  _("Download all Videomass presets locally from the homepage"))
         self.prstdownload = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        toolsButton.AppendSeparator()
-        dscrp = (_("User Memos"),
-                 _("Read and write memos with text search function."))
-        notepad = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        toolsButton.AppendSeparator()
-
         self.menuBar.Append(toolsButton, _("Tools"))
 
         # ------------------ View menu
@@ -549,13 +548,13 @@ class MainFrame(wx.Frame):
                   self.fold_convers_tmp)
         self.Bind(wx.EVT_MENU, self.openMydownloads_tmp,
                   self.fold_downloads_tmp)
+        self.Bind(wx.EVT_MENU, self.reminder, notepad)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         # ----TOOLS----
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
         self.Bind(wx.EVT_MENU, self.youtubedl_uptodater, self.ydlupdate)
         self.Bind(wx.EVT_MENU, self.prst_downloader, self.prstdownload)
         self.Bind(wx.EVT_MENU, self.prst_checkversion, self.prstcheck)
-        self.Bind(wx.EVT_MENU, self.reminder, notepad)
         # ---- VIEW ----
         self.Bind(wx.EVT_MENU, self.Check_conf, checkconf)
         self.Bind(wx.EVT_MENU, self.Check_formats, ckformats)
@@ -825,11 +824,25 @@ class MainFrame(wx.Frame):
 
     def reminder(self, event):
         """
-        Show a notepad dialog box
+        Call `io_tools.openpath` to open a 'user_memos.txt' file
+        with default GUI text editor. If 'user_memos.txt' file does
+        not exist a new empty file with the same name will be created.
 
         """
-        dlg = user_notes.Memos()
-        dlg.Show()
+        fname = os.path.join(self.appdata['confdir'], 'user_memos.txt')
+
+        if os.path.exists(fname) and os.path.isfile(fname):
+            io_tools.openpath(fname)
+        else:
+            try:
+                with open(fname, "w", encoding='utf8') as text:
+                    text.write("")
+            except Exception as err:
+                 wx.MessageBox(_("Unexpected error while creating file:\n\n"
+                                 "{0}").format(err),
+                               'Videomass', wx.ICON_ERROR, self)
+            else:
+                io_tools.openpath(fname)
     # ------------------------------------------------------------------#
     # --------- Menu View ###
 

@@ -40,7 +40,6 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_dialogs/presets_addnew.py" \
 "../vdms_dialogs/set_timestamp.py" \
 "../vdms_dialogs/settings.py" \
-"../vdms_dialogs/user_notes.py" \
 "../vdms_dialogs/videomass_check_version.py" \
 "../vdms_frames/ffmpeg_conf.py" \
 "../vdms_frames/ffmpeg_codecs.py" \
