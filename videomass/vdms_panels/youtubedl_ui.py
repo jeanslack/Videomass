@@ -139,10 +139,16 @@ class Downloader(wx.Panel):
              ('p144'): ('worstvideo[height>=?144]+worstaudio/worst'),
              ('Worst video resolution'): ('worstvideo+worstaudio/worst'),
              }
-    VPCOMP = {('Best precompiled video'): ('best'),
-              ('Medium precompiled video'): ('22'),
-              ('Worst precompiled video'): ('worst'),
-              }
+    if appdata['downloader'][0] == 'youtube_dl':
+        VPCOMP = {('Best precompiled video'): ('best'),
+                  ('Worst precompiled video'): ('worst'),
+                  }
+    elif appdata['downloader'][0] == 'yt_dlp':
+
+        VPCOMP = {('Best precompiled video'): ('best'),
+                  ('Medium precompiled video'): ('18'),
+                  ('Worst precompiled video'): ('worst'),
+                  }
     AFORMATS = {("Default audio format"): ("best"),
                 ("wav"): ("wav"),
                 ("mp3"): ("mp3"),

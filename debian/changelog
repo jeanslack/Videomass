@@ -2,10 +2,10 @@ videomass (3.5.2-1) UNRELEASED; urgency=medium
 
   * Fixed `command not found` issue. In some cases using pip to install
     Videomass the directory is not added to the $PATH.
-  * [YOUTUBE-DOWNLOADER] Added option to get 'Best' or 'Worst' of precompiled
-    videos. It may be useful to speed up video download containing both audio
-    and video, e.g. without download video and audio separately and then
-    executing the merging process with FFmpeg.
+  * [YOUTUBE-DOWNLOADER] Added option to get 'Best', 'Medium' and 'Worst' of
+    precompiled videos. It may be useful to speed up video download containing
+    both audio and video, e.g. without download video and audio separately and
+    then executing the merging process with FFmpeg.
   * [YOUTUBE-DOWNLOADER] Improved 'Get Statistics' and 'Download by Format Code'
     features. This should improve exception management of unusual web site
     data structures (like <http://zen.yandex.ru/>) and playlists, channels, etc.
@@ -26,7 +26,7 @@ videomass (3.5.2-1) UNRELEASED; urgency=medium
   * Update Russian translation from @ChourS
   * Update Italian translation from @jeanslack
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 21 Nov 2021 01:39:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 22 Nov 2021 09:40:00 +0200
 
 videomass (3.5.1-1) UNRELEASED; urgency=medium
 

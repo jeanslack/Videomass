@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 3.5.1\n"
+"Project-Id-Version: Videomass 3.5.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-21 01:31+0100\n"
-"PO-Revision-Date: 2021-11-21 01:35+0100\n"
+"PO-Revision-Date: 2021-11-22 11:26+0100\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -1856,14 +1856,12 @@ msgid "Open the temporary downloads folder"
 msgstr "Открыть папку временных загрузок"
 
 #: ../vdms_main/main_frame.py:367
-#, fuzzy
-#| msgid "Show Logs\tCtrl+L"
 msgid "Work Notes\tCtrl+N"
-msgstr "Показать log-журналы\tCtrl+L"
+msgstr "Рабочие заметки\tCtrl+N"
 
 #: ../vdms_main/main_frame.py:368
 msgid "Read and write useful notes and reminders."
-msgstr ""
+msgstr "Читайте и пишите полезные заметки и напоминания."
 
 #: ../vdms_main/main_frame.py:372
 msgid "Exit\tCtrl+Q"
@@ -2269,17 +2267,13 @@ msgid "Successfully downloaded to \"{0}\""
 msgstr "Успешно загружено в \"{0}\""
 
 #: ../vdms_main/main_frame.py:841
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Unexpected error while deleting file contents:\n"
-#| "\n"
-#| "{0}"
+#, python-brace-format
 msgid ""
 "Unexpected error while creating file:\n"
 "\n"
 "{0}"
 msgstr ""
-"Непредвиденная ошибка при удалении содержимого файла:\n"
+"Непредвиденная ошибка при создании файла:\n"
 "\n"
 "{0}"
 
