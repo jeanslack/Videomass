@@ -189,7 +189,7 @@ class Checkconf(wx.MiniFrame):
                     oth = others[a].strip().split('=')
                     (key, value) = oth[0], oth[1]
                     # (key, value) = others[a][0].strip().split('=')
-                    num_items = others_opt.GetItemCount()
+                    # num_items = others_opt.GetItemCount()
                     index += 1
                     others_opt.InsertItem(index, key)
                     others_opt.SetItem(index, 1, value)
@@ -202,7 +202,7 @@ class Checkconf(wx.MiniFrame):
             n = len(enable)
             for a in range(n):
                 (key, value) = _('Enabled'), enable[a]
-                num_items = enable_opt.GetItemCount()
+                # num_items = enable_opt.GetItemCount()
                 index += 1
                 enable_opt.InsertItem(index, key)
                 enable_opt.SetItem(index, 1, value)
@@ -215,7 +215,7 @@ class Checkconf(wx.MiniFrame):
             n = len(disable)
             for a in range(n):
                 (key, value) = _('Disabled'), disable[a]
-                num_items = disabled_opt.GetItemCount()
+                # num_items = disabled_opt.GetItemCount()
                 index += 1
                 disabled_opt.InsertItem(index, key)
                 disabled_opt.SetItem(index, 1, value)

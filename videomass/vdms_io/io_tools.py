@@ -37,17 +37,17 @@ from videomass.vdms_threads import (ffplay_url,
 from videomass.vdms_threads.ffprobe_parser import FFProbe
 from videomass.vdms_threads.volumedetect import VolumeDetectThread
 from videomass.vdms_threads.check_bin import (ff_conf,
-                                               ff_formats,
-                                               ff_codecs,
-                                               ff_topics,
-                                               )
+                                              ff_formats,
+                                              ff_codecs,
+                                              ff_topics,
+                                              )
 from videomass.vdms_threads.opendir import browse
 from videomass.vdms_threads.ydl_extractinfo import YdlExtractInfo
 
 from videomass.vdms_frames import (ffmpeg_conf,
-                                    ffmpeg_formats,
-                                    ffmpeg_codecs,
-                                    )
+                                   ffmpeg_formats,
+                                   ffmpeg_codecs,
+                                   )
 from videomass.vdms_dialogs.popup import PopupDialog
 from videomass.vdms_io.make_filelog import write_log  # write initial log
 

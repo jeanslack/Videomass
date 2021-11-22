@@ -1,0 +1,10 @@
+[flake8]
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    tests,
+    docs,
+max-line-length = 79
+extend-ignore = F821, W503

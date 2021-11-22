@@ -105,6 +105,11 @@ class Indexing(wx.Dialog):
         # ------ set Layout
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
         sizer_1.Add(self.lctrl, 0, wx.ALL | wx.EXPAND, 5)
+
+        labtstr = _('Help viewer')
+        lab = wx.StaticText(self, label=labtstr)
+        sizer_1.Add(lab, 0, wx.LEFT, 5)
+
         grid_sizer_1 = wx.GridSizer(1, 1, 0, 0)
         sizer_1.Add(grid_sizer_1, 1, wx.EXPAND, 0)
         grid_sizer_1.Add(self.tctrl, 0, wx.ALL | wx.EXPAND, 5)
@@ -131,7 +136,7 @@ class Indexing(wx.Dialog):
         for link in url:
             self.lctrl.InsertItem(index, str(index + 1))
             self.lctrl.SetItem(index, 1, link)
-            if '/playlist?list' in link:
+            if '/playlist' in link:
                 self.lctrl.SetItemBackgroundColour(index, self.clrs['TXT3'])
 
             if not self.data == {'': ''}:
@@ -146,6 +151,7 @@ class Indexing(wx.Dialog):
         else:
             self.lctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             self.tctrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            lab.SetLabelMarkup(f"<b>{labtstr}</b>")
 
         self.tctrl.SetBackgroundColour(self.clrs['BACKGRD'])
 

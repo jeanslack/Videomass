@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.01.2021
+Rev: Nov.18.2021
 Code checker:
     - flake8: --ignore F821, W504, F401
     - pylint: --ignore E0602, E1101, C0415, E0401, C0103
@@ -38,6 +38,7 @@ except ModuleNotFoundError:
 from videomass.vdms_sys.argparser import args
 from videomass.vdms_sys.configurator import DataSource
 from videomass.vdms_sys import app_const as appC
+from videomass.vdms_utils.utils import del_filecontents
 
 # add translation macro to builtin similar to what gettext does
 builtins.__dict__['_'] = wx.GetTranslation
@@ -248,6 +249,22 @@ class Videomass(wx.App):
                         os.remove(fcache)
                     elif os.path.isdir:
                         rmtree(fcache)
+
+        if self.appset['clearlogfiles'] == 'true':
+            logdir = self.appset['logdir']
+            if os.path.exists(logdir):
+                flist = os.listdir(logdir)
+                if flist:
+                    for logname in flist:
+                        logfile = os.path.join(logdir, logname)
+                        try:
+                            del_filecontents(logfile)
+                        except Exception as err:
+                            wx.MessageBox(_("Unexpected error while deleting "
+                                            "file contents:\n\n"
+                                            "{0}").format(err),
+                                          'Videomass', wx.ICON_STOP)
+                            return False
         return True
     # -------------------------------------------------------------------
 

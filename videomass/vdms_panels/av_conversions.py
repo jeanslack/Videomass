@@ -1688,7 +1688,7 @@ class AV_Conv(wx.Panel):
                     self.opt["AudioDepth"] = data[3]
             else:
                 data = None
-                #audiodialog.Destroy()
+                # audiodialog.Destroy()
                 return
 
             self.txt_audio_options.Clear()
@@ -1705,7 +1705,7 @@ class AV_Conv(wx.Panel):
             else:
                 self.btn_aparam.SetBackgroundColour(wx.Colour(AV_Conv.VIOLET))
 
-            #audiodialog.Destroy()
+            # audiodialog.Destroy()
     # ------------------------------------------------------------------#
 
     def on_audioINstream(self, event):
@@ -2575,7 +2575,7 @@ class AV_Conv(wx.Panel):
 
             title = _('Create a new profile')
 
-        with presets_addnew.MemPresets(self,'addprofile',
+        with presets_addnew.MemPresets(self, 'addprofile',
                                        os.path.basename(filename),
                                        parameters,
                                        title,
