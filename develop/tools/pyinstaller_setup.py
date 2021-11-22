@@ -41,8 +41,8 @@ SCRIPT = 'launcher'
 NAME = 'videomass'
 BINARY = os.path.join(HERE, SCRIPT)
 SPECFILE = os.path.join(HERE, '%s.spec' % NAME)
-#BINARY = os.path.join(HERE, 'bin', 'videomass')
-#SPECFILE = os.path.join(HERE, 'videomass.spec')
+# BINARY = os.path.join(HERE, 'bin', 'videomass')
+# SPECFILE = os.path.join(HERE, 'videomass.spec')
 
 
 def data(here=HERE, name=NAME):

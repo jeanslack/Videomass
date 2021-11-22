@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 Name: ffprobe_parser.py
-Porpose: cross-platform parsing class for ffprobe
+Porpose: cross-platform API for ffprobe
 Compatibility: Python3, Python2
 Platform: all platforms
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>

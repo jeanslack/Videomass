@@ -122,7 +122,7 @@ class FFmpegSearch(wx.MiniFrame):
         grid_src.Add(self.search, 0, wx.ALL, 0)
         grid_src.Add(self.case, 0,  wx.ALIGN_CENTER_VERTICAL, 5)
         sizer.Add(grid_src, 0, wx.ALL, 5)
-        sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=5)
+        sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         grid.Add(self.button_close, 1, wx.ALL, 5)
 
         self.SetTitle(_("FFmpeg help topics"))

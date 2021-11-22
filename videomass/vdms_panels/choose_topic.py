@@ -25,7 +25,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
 import sys
 import wx
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
@@ -195,6 +194,6 @@ class Choose_Topic(wx.Panel):
             wx.MessageBox(_("ERROR: {0}\n\n{1} is not installed, "
                             "use your package manager to install it."
                             ).format(self.appdata['PYLIBYDL'],
-                                        self.appdata['downloader'][0]),
+                                     self.appdata['downloader'][0]),
                           "Videomass", wx.ICON_ERROR, self)
             return

@@ -317,7 +317,7 @@ class MainFrame(wx.Frame):
             if self.appdata['warnexiting'] == 'enable':
                 if wx.MessageBox(_('Are you sure you want to exit?'),
                                  _('Exit'),  wx.ICON_QUESTION | wx.YES_NO,
-                                self) == wx.YES:
+                                 self) == wx.YES:
                     self.Destroy()
             else:
                 self.Destroy()
@@ -362,6 +362,12 @@ class MainFrame(wx.Frame):
         self.fold_downloads_tmp = fileButton.Append(wx.ID_ANY, dscrp[0],
                                                     dscrp[1])
         self.fold_downloads_tmp.Enable(False)
+
+        fileButton.AppendSeparator()
+        dscrp = (_("Work Notes\tCtrl+N"),
+                 _("Read and write useful notes and reminders."))
+        notepad = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+
         fileButton.AppendSeparator()
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit\tCtrl+Q"),
                                      _("Close Videomass"))
@@ -542,6 +548,7 @@ class MainFrame(wx.Frame):
                   self.fold_convers_tmp)
         self.Bind(wx.EVT_MENU, self.openMydownloads_tmp,
                   self.fold_downloads_tmp)
+        self.Bind(wx.EVT_MENU, self.reminder, notepad)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         # ----TOOLS----
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
@@ -703,7 +710,7 @@ class MainFrame(wx.Frame):
 
             cur = current_release()[2]
             fname = _("Select the 'Videomass-{}-x86_64.AppImage' "
-                        "file to update").format(cur)
+                      "file to update").format(cur)
             with wx.FileDialog(
                     None, _(fname), defaultDir=os.path.expanduser('~'),
                     wildcard=(f"*Videomass-{cur}-x86_64.AppImage "
@@ -734,7 +741,7 @@ class MainFrame(wx.Frame):
 
             else:
                 wx.MessageBox(_('Failed! {}').format(upgrade),
-                                'ERROR', wx.ICON_ERROR, self)
+                              'ERROR', wx.ICON_ERROR, self)
             return
 
         else:
@@ -813,6 +820,29 @@ class MainFrame(wx.Frame):
                             '"{0}"').format(pathname), 'Videomass',
                           wx.ICON_INFORMATION, self)
             return
+    # -------------------------------------------------------------------#
+
+    def reminder(self, event):
+        """
+        Call `io_tools.openpath` to open a 'user_memos.txt' file
+        with default GUI text editor. If 'user_memos.txt' file does
+        not exist a new empty file with the same name will be created.
+
+        """
+        fname = os.path.join(self.appdata['confdir'], 'user_memos.txt')
+
+        if os.path.exists(fname) and os.path.isfile(fname):
+            io_tools.openpath(fname)
+        else:
+            try:
+                with open(fname, "w", encoding='utf8') as text:
+                    text.write("")
+            except Exception as err:
+                 wx.MessageBox(_("Unexpected error while creating file:\n\n"
+                                 "{0}").format(err),
+                               'Videomass', wx.ICON_ERROR, self)
+            else:
+                io_tools.openpath(fname)
     # ------------------------------------------------------------------#
     # --------- Menu View ###
 
@@ -1715,7 +1745,10 @@ class MainFrame(wx.Frame):
         # Show the panel:
         self.ProcessPanel.Show()
         # self.SetTitle('Videomass')
-        [self.menuBar.EnableTop(x, False) for x in range(0, 5)]
+        [self.menuBar.EnableTop(x, False) for x in range(3, 5)]
+        if self.appdata['app'] == 'appimage':
+            self.ydlupdate.Enable(False)  # do not update during a process
+        self.viewtimeline.Enable(False)
         # Hide the tool bar
         self.toolbar.Hide()
         self.ProcessPanel.topic_thread(self.topicname, varargs,
@@ -1774,6 +1807,8 @@ class MainFrame(wx.Frame):
             self.switch_concat_demuxer(self)
 
         # Enable all top menu bar:
-        [self.menuBar.EnableTop(x, True) for x in range(0, 5)]
+        [self.menuBar.EnableTop(x, True) for x in range(3, 5)]
+        if self.appdata['app'] == 'appimage':
+            self.ydlupdate.Enable(True)
         # show buttons bar if the user has shown it:
         self.Layout()

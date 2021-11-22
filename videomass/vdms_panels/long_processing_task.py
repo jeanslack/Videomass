@@ -114,10 +114,10 @@ class LogOut(wx.Panel):
         if LogOut.appdata['ostype'] != 'Darwin':
             lbl.SetLabelMarkup(f"<b>{infolbl}</b>")
         self.txtout = wx.TextCtrl(self, wx.ID_ANY, "",
-                                   style=wx.TE_MULTILINE |
-                                   wx.TE_READONLY |
-                                   wx.TE_RICH2
-                                   )
+                                  style=wx.TE_MULTILINE |
+                                  wx.TE_READONLY |
+                                  wx.TE_RICH2
+                                  )
         self.ckbx_text = wx.CheckBox(self, wx.ID_ANY, (_("Suppress excess "
                                                          "output")))
         self.barprog = wx.Gauge(self, wx.ID_ANY, range=0)

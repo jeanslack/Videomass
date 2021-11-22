@@ -204,7 +204,7 @@ class YdlDownloader(Thread):
                                                self.args['code'],
                                                fillvalue='',
                                                ):
-            if '/playlist?list' in url or not self.opt['noplaylist']:
+            if '/playlist' in url or not self.opt['noplaylist']:
                 outtmpl = YdlDownloader.SUBDIR + self.opt['outtmpl']
             else:
                 outtmpl = self.opt['outtmpl']

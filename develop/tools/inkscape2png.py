@@ -47,8 +47,9 @@ import glob
 import argparse
 import sys
 
+
 def svg2png(delete, paths, parameters, outputdir,
-            formatext, recursive: bool=False):
+            formatext, recursive: bool = False):
     """
     Iterates on a generator given from `glob.iglob` method.
     glob treats filenames beginning with a dot (.) as special cases,
@@ -98,7 +99,7 @@ def svg2png(delete, paths, parameters, outputdir,
                                    capture_output=True,
                                    universal_newlines=True
                                    )
-            except FileNotFoundError as err:
+            except FileNotFoundError:
                 return ("ERROR: 'inkscape': Command not found")
 
             if p.returncode:
@@ -130,7 +131,7 @@ def main():
                 '-W',
                 required=False,
                 metavar='WIDTH',
-                #dest='<int>',
+                # dest='<int>',
                 type=int,
                 help="width; defaults to the SVG's width",
                     )
@@ -200,8 +201,7 @@ def main():
                               'You must provide an output pathname using the '
                               '-o argument.')
 
-
-    param = {'-w' : args.W, '-h' : args.H, '-d' : args.d}
+    param = {'-w': args.W, '-h': args.H, '-d': args.d}
 
     ret = svg2png(args.remove,
                   args.paths,

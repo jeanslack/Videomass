@@ -1,3 +1,33 @@
+videomass (3.5.2-1) UNRELEASED; urgency=medium
+
+  * Fixed `command not found` issue. In some cases using pip to install
+    Videomass the directory is not added to the $PATH.
+  * [YOUTUBE-DOWNLOADER] Added option to get 'Best', 'Medium' and 'Worst' of
+    precompiled videos. It may be useful to speed up video download containing
+    both audio and video, e.g. without download video and audio separately and
+    then executing the merging process with FFmpeg.
+  * [YOUTUBE-DOWNLOADER] Improved 'Get Statistics' and 'Download by Format Code'
+    features. This should improve exception management of unusual web site
+    data structures (like <http://zen.yandex.ru/>) and playlists, channels, etc.
+  * #41 Fixed mount point issue on external drives using relative paths on
+    MS-Windows. If "ValueError" is raised, it returns the absolute path given
+    instead of showing the error.
+  * [YOUTUBE-DOWNLOADER] Improved 'Download all videos in playlist' feature
+    when checked on URLs containing playlists.
+  * [YOUTUBE-DOWNLOADER] fixed audio quality when 'Download split audio
+    and video' option is selected.
+  * [NEW] Added the ability to read and write useful notes with deafault text
+    editor (Request made by @ChourS).
+  * During the processes some menu items have been enabled allowing you to
+    perform some useful actions.
+  * Improved Setup dialog with a new Miscellanea tab.
+  * Added the ability to delete the contents of log files when exiting the
+    application (see Setup dialog Miscellanea tab).
+  * Update Russian translation from @ChourS
+  * Update Italian translation from @jeanslack
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 22 Nov 2021 09:40:00 +0200
+
 videomass (3.5.1-1) UNRELEASED; urgency=medium
 
   * Fixed Ctrl+Q keybord shorcut does not work on Windows (see #39).

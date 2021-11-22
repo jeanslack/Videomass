@@ -3,7 +3,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2020/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: August.20.2021
+# Rev: Nov.18.2021
 #
 # Make a new `videomass.po` file on '../../videomass/locale'.
 # The previus videomass.po file will be overwrite with new one
