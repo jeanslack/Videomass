@@ -18,7 +18,7 @@ Minimum requirements:
 (x86)](https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe). 
   
 [Videomass 3.5.2 Installer](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.5.2-x86_64-Setup.exe){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
-[Videomass 3.5.2 Portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.5.2-x86_64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2}     
+[Videomass 3.5.2 Portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.5.2_x86_64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2}     
 
 ### Important note
 {: .bg-red-300}
