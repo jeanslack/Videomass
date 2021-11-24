@@ -1,9 +1,3 @@
-videomass (3.5.3-1) UNRELEASED; urgency=medium
-
-  * Update Spanish translation from @katnatek (https://blogdrake.net/)
-
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 24 Nov 2021 10:46:00 +0200
-
 videomass (3.5.2-1) UNRELEASED; urgency=medium
 
   * Fixed `command not found` issue. In some cases using pip to install

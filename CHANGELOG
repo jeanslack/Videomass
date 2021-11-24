@@ -7,11 +7,6 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Nov 24, 2021 V.3.5.3
-
-  * Update Spanish translation from @katnatek (https://blogdrake.net/)
-
-+------------------------------------+
 Nov 24, 2021 V.3.5.2
 
   * Fixed `command not found` issue. In some cases using pip to install
