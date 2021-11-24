@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 3.5.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-21 01:31+0100\n"
-"PO-Revision-Date: 2021-11-22 11:27+0100\n"
+"PO-Revision-Date: 2021-11-24 10:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: j.alberto.vc@gmail.com\n"
 "Language: es\n"
@@ -35,6 +35,9 @@ msgid ""
 "\n"
 "{0}"
 msgstr ""
+"Error inesperado al borrar contenido de archivo:\n"
+"\n"
+"{0}"
 
 #: ../vdms_dialogs/audiodialogs.py:229
 msgid ""
@@ -53,8 +56,8 @@ msgid ""
 "sampling frequency of 44100 kHz. If you are not sure, set to\n"
 "\"Auto\" and source values will be copied."
 msgstr ""
-"La Frecuencia de audio (o frecuencia de muestreo) es la frecuencia de "
-"muestreo\n"
+"La Frecuencia de audio (o frecuencia de muestreo) es la frecuencia de toma "
+"de  muestras\n"
 "del audio y se mide en Hertz. A mayor frecuencia,\n"
 "la fuente de sonido tendrá mayor fidelidad y  se incrementara\n"
 "el tamaño del archivo. Para calidad  CD , elija una\n"
@@ -717,15 +720,11 @@ msgid "Choose the {} executable"
 msgstr "Elija el  ejecutable de {}"
 
 #: ../vdms_dialogs/wizard_dlg.py:418
-#, fuzzy
-#| msgid ""
-#| "Videomass has a simple graphical\n"
-#| "interface for youtube-dl\n"
 msgid ""
 "Videomass has a simple graphical\n"
 "interface for youtube-dl and yt-dlp\n"
 msgstr ""
-"Videomass tiene una interfazl\n"
+"Videomass tiene una interfaz\n"
 "sencilla para youtube-dl\n"
 
 #: ../vdms_dialogs/wizard_dlg.py:421
@@ -830,15 +829,13 @@ msgstr "Visualizador  de ayuda"
 
 #: ../vdms_dialogs/playlist_indexing.py:213
 msgid "ERROR: Invalid option"
-msgstr ""
+msgstr "ERROR: Opción invalida"
 
 #: ../vdms_dialogs/playlist_indexing.py:214
 msgid "please try again."
-msgstr ""
+msgstr "favor de tratar de nuevo."
 
 #: ../vdms_dialogs/playlist_indexing.py:215
-#, fuzzy
-#| msgid "Playlist video items to download"
 msgid "OK: Indexes to download"
 msgstr "Indices de video a descargar de la Lista"
 
@@ -847,6 +844,8 @@ msgid ""
 "WARNING: The selected URL does not refer to a playlist. Only lines marked "
 "green can be indexed."
 msgstr ""
+"ADVERTENCIA: La URL no es una lista de reproducción. Solo las lineas "
+"marcadas en verde pueden indexarse."
 
 #: ../vdms_dialogs/presets_addnew.py:38
 msgid ""
@@ -965,20 +964,20 @@ msgid "Clear the cache when exiting the application"
 msgstr "Limpiar cache al salir de la aplicación"
 
 #: ../vdms_dialogs/settings.py:113
-#, fuzzy
-#| msgid "Clear the cache when exiting the application"
 msgid ""
 "Delete the contents of the log files\n"
 "when exiting the application"
-msgstr "Limpiar cache al salir de la aplicación"
+msgstr ""
+"Borrar archivos de registo\n"
+"al salir de la aplicación"
 
 #: ../vdms_dialogs/settings.py:118
 msgid "Warn on exit"
-msgstr ""
+msgstr "Esta por salir"
 
 #: ../vdms_dialogs/settings.py:122
 msgid "Miscellanea"
-msgstr ""
+msgstr "Miscelánea"
 
 #: ../vdms_dialogs/settings.py:128
 msgid "Where do you prefer to save your transcodes?"
@@ -1051,8 +1050,6 @@ msgid "How to upgrade a Python package"
 msgstr "Como actualizar un paquete de Python"
 
 #: ../vdms_dialogs/settings.py:266
-#, fuzzy
-#| msgid "Required: Microsoft Visual C++ 2010 Redistributable Package (x86)"
 msgid ""
 "Required: Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package "
 "(x86)"
@@ -1067,16 +1064,12 @@ msgid "Current path:"
 msgstr "Lugar actual:"
 
 #: ../vdms_dialogs/settings.py:300
-#, fuzzy
-#| msgid ""
-#| "Make sure you are using the latest available version of\n"
-#| "youtube-dl. This allows you to avoid download problems.\n"
 msgid ""
 "Make sure you are using the latest available version of\n"
 "'{}'. This allows you to avoid download problems.\n"
 msgstr ""
-"Asegurece de utilizar la ultima versión de\n"
-"youtube-dl. Esto le evita problemas con las descargas.\n"
+"Asegúrese de utilizar la ultima versión de\n"
+"'{}'. Esto le evita problemas con las descargas.\n"
 
 #: ../vdms_dialogs/settings.py:308 ../vdms_dialogs/settings.py:328
 #: ../vdms_dialogs/settings.py:344 ../vdms_frames/ffmpeg_conf.py:217
@@ -1089,20 +1082,16 @@ msgid "Not found"
 msgstr "No encontrado"
 
 #: ../vdms_dialogs/settings.py:323
-#, fuzzy
-#| msgid "Menu bar > Tools > Update youtube-dl"
 msgid "Menu bar > Tools > Update {}"
-msgstr "Menú  > Herramientas > Actualizar youtube-dl"
+msgstr "Menú  > Herramientas > Actualizar {}"
 
 #: ../vdms_dialogs/settings.py:340 ../vdms_dialogs/settings.py:356
 msgid "Not Installed"
 msgstr "No instalado"
 
 #: ../vdms_dialogs/settings.py:361
-#, fuzzy
-#| msgid "Download"
 msgid "Downloader"
-msgstr "Descargar"
+msgstr "Gestor"
 
 #: ../vdms_dialogs/settings.py:367
 msgid "Icon themes"
@@ -1191,13 +1180,14 @@ msgstr ""
 "guion bajo (\"_\"). No se permiten espacios."
 
 #: ../vdms_dialogs/settings.py:939
-#, fuzzy
-#| msgid "Changes will take effect once the program has been restarted"
 msgid ""
 "Changes will take effect once the program has been restarted.\n"
 "\n"
 "Do you want to exit the application now?"
-msgstr "Los cambios tendrán efecto al reiniciar el programa"
+msgstr ""
+"Los cambios tendrán efecto al reiniciar el programa.\n"
+"\n"
+"¿Quiere salir ahora?"
 
 #: ../vdms_dialogs/settings.py:942 ../vdms_main/main_frame.py:319
 msgid "Exit"
@@ -1205,7 +1195,7 @@ msgstr "Salir"
 
 #: ../vdms_dialogs/videomass_check_version.py:64
 msgid "Get Latest Version"
-msgstr ""
+msgstr "Obtenga la Ultima Version"
 
 #: ../vdms_dialogs/videomass_check_version.py:68
 msgid "Checking for newer version"
@@ -1217,6 +1207,9 @@ msgid ""
 "\n"
 "New releases fix bugs and offer new features."
 msgstr ""
+"\n"
+"\n"
+"Las nuevas versiones corrigen fallos y añaden características."
 
 #: ../vdms_dialogs/videomass_check_version.py:97
 #, python-brace-format
@@ -1226,6 +1219,10 @@ msgid ""
 "This is Videomass v.{0}\n"
 "\n"
 msgstr ""
+"\n"
+"\n"
+"Videomass versión. {0}\n"
+"\n"
 
 #: ../vdms_frames/ffmpeg_conf.py:66
 msgid "Informations"
@@ -1618,26 +1615,20 @@ msgid "Multimedia streams analyzer"
 msgstr "Analizador de flujos Multimedia"
 
 #: ../vdms_frames/showlogs.py:77
-#, fuzzy
-#| msgid "No file selected"
 msgid "Log file list"
-msgstr "No se ha seleccionado archivo"
+msgstr "Lista de archivos de registro"
 
 #: ../vdms_frames/showlogs.py:79
 msgid "Log messages"
 msgstr "Registro de mensajes"
 
 #: ../vdms_frames/showlogs.py:103
-#, fuzzy
-#| msgid "Select a log file"
 msgid "Refresh all log files"
-msgstr "Seleccionar archivo de registro"
+msgstr "Refrescar todos los registros"
 
 #: ../vdms_frames/showlogs.py:108
-#, fuzzy
-#| msgid "Play selected url"
 msgid "Clear selected log"
-msgstr "Reproducir url seleccionada"
+msgstr "Limpiar archivo de registro seleccionado"
 
 #: ../vdms_frames/showlogs.py:118
 msgid "Showing log messages"
@@ -1836,18 +1827,16 @@ msgid "Open the temporary downloads folder"
 msgstr "Abrir carpeta de Descargas temporales"
 
 #: ../vdms_main/main_frame.py:367
-#, fuzzy
-#| msgid "Show Logs\tCtrl+L"
 msgid "Work Notes\tCtrl+N"
-msgstr "Mostrar Registros\tCtrl+L"
+msgstr "Notas de trabajo\tCtrl+N"
 
 #: ../vdms_main/main_frame.py:368
 msgid "Read and write useful notes and reminders."
-msgstr ""
+msgstr "Lea y escriba recordatorios y notas."
 
 #: ../vdms_main/main_frame.py:372
 msgid "Exit\tCtrl+Q"
-msgstr ""
+msgstr "Salir\tCtrl+Q"
 
 #: ../vdms_main/main_frame.py:373
 msgid "Close Videomass"
@@ -1863,13 +1852,11 @@ msgstr "Una herramienta util para buscar temas de la ayuda de FFmpeg"
 
 #: ../vdms_main/main_frame.py:383
 msgid "Update {}"
-msgstr ""
+msgstr "Actualizar {}"
 
 #: ../vdms_main/main_frame.py:384
-#, fuzzy
-#| msgid "Update to latest youtube-dl version"
 msgid "Update the downloader to the latest version"
-msgstr "Actualizar a ultima versión de youtube-dl"
+msgstr "Actualizar a ultima versión del gestor de descargas"
 
 #: ../vdms_main/main_frame.py:387
 msgid "Check for new presets"
@@ -2157,34 +2144,22 @@ msgid "Help"
 msgstr "Ayuda"
 
 #: ../vdms_main/main_frame.py:673
-#, fuzzy, python-brace-format
-#| msgid "youtube-dl is already up-to-date {}"
+#, python-brace-format
 msgid "{0} is already up-to-date {1}"
-msgstr "youtube-dl ya esta actualizado {}"
+msgstr "{0} ya esta actualizado {1}"
 
 #: ../vdms_main/main_frame.py:678
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "youtube-dl version {0} is available and will replace the old version {1}\n"
-#| "\n"
-#| "Do you want to update now?"
+#, python-brace-format
 msgid ""
 "{0} version {1} is available and will replace the old version {2}\n"
 "\n"
 "Do you want to update now?"
 msgstr ""
-"youtube-dl versión {0} esta disponible y reemplazara a la versión {1}\n"
+"{0} versión {1} esta disponible y reemplazara a la versión {2}\n"
 "\n"
 "¿Desea actualizar?"
 
 #: ../vdms_main/main_frame.py:700
-#, fuzzy
-#| msgid ""
-#| "To update youtube_dl it is necessary to rebuild the Videomass AppImage. "
-#| "This procedure will be completely automatic and will only require you to "
-#| "select the location of the AppImage.\n"
-#| "\n"
-#| "Do you want to continue?"
 msgid ""
 "To update {} it is necessary to rebuild the Videomass AppImage. This "
 "procedure will be completely automatic and will only require you to select "
@@ -2192,9 +2167,9 @@ msgid ""
 "\n"
 "Do you want to continue?"
 msgstr ""
-"Para actualizar youtube_dl se requiere reconstruir la AppImage de "
-"Videomass . Este procedimiento es completamente automático y solo requiere "
-"que seleccione la localización de la AppImage.\n"
+"Para actualizar {}  se requiere reconstruir la AppImage de Videomass . Este "
+"procedimiento es completamente automático y solo requiere que seleccione la "
+"localización de la AppImage.\n"
 "\n"
 "¿Desea continuar?"
 
@@ -2203,19 +2178,15 @@ msgid "Select the 'Videomass-{}-x86_64.AppImage' file to update"
 msgstr "Seleccione el archivo 'Videomass-{}-x86_64.AppImage' para actualizar"
 
 #: ../vdms_main/main_frame.py:729
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Successful! youtube-dl is up-to-date ({0})\n"
-#| "\n"
-#| "Re-start is required. Do you want to close Videomass now?"
+#, python-brace-format
 msgid ""
 "Successful! {0} is up-to-date ({1})\n"
 "\n"
 "Re-start is required."
 msgstr ""
-"¡Exito! youtube-dl esta actualizado ({0})\n"
+"¡Éxito! {0} esta actualizado ({1})\n"
 "\n"
-"Se requiere reiniciar la aplicación. ¿Quiere cerrar Videomass ahora?"
+"Se requiere reiniciar la aplicación."
 
 #: ../vdms_main/main_frame.py:737
 msgid ""
@@ -2264,18 +2235,19 @@ msgid ""
 "\n"
 "{0}"
 msgstr ""
+"Error inesperado al crear archivo:\n"
+"\n"
+"{0}"
 
 #: ../vdms_main/main_frame.py:900
-#, fuzzy, python-brace-format
-#| msgid "You are using youtube-dl version {}"
+#, python-brace-format
 msgid "You are using '{0}' version {1}"
-msgstr "Esta utilizando youtube-dl versión {}"
+msgstr "Esta utilizando '{0}' versión {1}"
 
 #: ../vdms_main/main_frame.py:926
-#, fuzzy, python-brace-format
-#| msgid "Latest version available: {0}"
+#, python-brace-format
 msgid "{0}: Latest version available: {1}"
-msgstr "Ultima versión disponible: {0}"
+msgstr "La ultima versión de {0} esta disponible: {1}"
 
 #: ../vdms_main/main_frame.py:947 ../vdms_main/main_frame.py:1036
 msgid "There are no logs to show."
@@ -2309,15 +2281,15 @@ msgstr "Carpetas destino predeterminadas restablecidas con éxito"
 #: ../vdms_main/main_frame.py:1236
 #, python-brace-format
 msgid "A new release is available - v.{0}\n"
-msgstr ""
+msgstr "Una nueva versión esta disponible . {0}\n"
 
 #: ../vdms_main/main_frame.py:1239
 msgid "You are using a development version that has not yet been released!\n"
-msgstr ""
+msgstr "¡Esta utilizando una versión de desarrollo!\n"
 
 #: ../vdms_main/main_frame.py:1242
 msgid "Congratulation! You are already using the latest version.\n"
-msgstr ""
+msgstr "¡Felicitaciones! Ya esta utilizando la ultima versión versión.\n"
 
 #: ../vdms_main/main_frame.py:1331
 msgid "Go to the previous panel"
@@ -2385,7 +2357,7 @@ msgstr "URL invalida: \"{}\""
 
 #: ../vdms_main/main_frame.py:1435
 msgid "ERROR: Multiple URL's are the same"
-msgstr ""
+msgstr "ERROR: Varias URL repetidas"
 
 #: ../vdms_main/main_frame.py:1473
 msgid "Videomass - Queued Files"
@@ -3062,25 +3034,19 @@ msgstr ""
 "recodificar"
 
 #: ../vdms_panels/choose_topic.py:184
-#, fuzzy
-#| msgid "youtube-dl is disabled. Check your preferences."
 msgid "The downloader is disabled. Check your preferences."
-msgstr "youtube-dl esta desactivado. Revise sus configuraciones."
+msgstr "Gestor de descargas esta desactivado. Revise sus configuraciones."
 
 #: ../vdms_panels/choose_topic.py:194
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "ERROR: {}\n"
-#| "\n"
-#| "youtube-dl is not installed, use your package manager to install it."
+#, python-brace-format
 msgid ""
 "ERROR: {0}\n"
 "\n"
 "{1} is not installed, use your package manager to install it."
 msgstr ""
-"ERROR: {}\n"
+"ERROR: {0}\n"
 "\n"
-"youtube-dl no esta instalado, use su administrador de paquetes para hacerlo."
+"{1} no esta instalado, use su administrador de paquetes para hacerlo."
 
 #: ../vdms_panels/concatenate.py:77
 msgid ""
@@ -3178,16 +3144,12 @@ msgstr ""
 "Al menos un \"Código de Formato\" debe seleccionarse en las URL en verde."
 
 #: ../vdms_panels/youtubedl_ui.py:158
-#, fuzzy
-#| msgid "Welcome to Videomass"
 msgid "Precompiled Videos"
-msgstr "Bienvenido a Videomass"
+msgstr "Videos precompilados"
 
 #: ../vdms_panels/youtubedl_ui.py:159
-#, fuzzy
-#| msgid "Download all videos in playlist"
 msgid "Download videos by resolution"
-msgstr "Descargar todos los videos en la lista de reproducción"
+msgstr "Descargar videos según su resolución"
 
 #: ../vdms_panels/youtubedl_ui.py:160
 msgid "Download split audio and video"
@@ -3210,12 +3172,12 @@ msgid ""
 "When not available, the chosen video resolution will be replaced with the "
 "closest one"
 msgstr ""
+"Cuando no este disponible, la resolución elegida se reemplazara con la más "
+"cercana"
 
 #: ../vdms_panels/youtubedl_ui.py:240
-#, fuzzy
-#| msgid "Generates duo video for comparison"
 msgid "Preferred video format"
-msgstr "Generar video dual para comparaciones"
+msgstr "Formato de video preferido"
 
 #: ../vdms_panels/youtubedl_ui.py:279
 msgid "Download all videos in playlist"
@@ -3270,6 +3232,10 @@ msgid ""
 "Unsupported '{0}':\n"
 "'{1}'"
 msgstr ""
+"Solo se puede reproducir un video a la vez.\n"
+"\n"
+"No soportado '{0}':\n"
+"'{1}'"
 
 #: ../vdms_panels/youtubedl_ui.py:536
 msgid "Format Code"
@@ -3315,6 +3281,10 @@ msgid ""
 "Unsupported URL:\n"
 "'{0}'"
 msgstr ""
+"ERROR: No se puede obtener códigos de formato.\n"
+"\n"
+"URL no soportada:\n"
+"'{0}'"
 
 #: ../vdms_panels/youtubedl_ui.py:646
 msgid "Quality"
@@ -3328,10 +3298,14 @@ msgid ""
 "Unsupported '{0}':\n"
 "'{1}'"
 msgstr ""
+"No se puede obtener códigos de formato para '{0}'\n"
+"\n"
+"'{0}'  no soportado:\n"
+"'{1}'"
 
 #: ../vdms_panels/youtubedl_ui.py:860
 msgid "URLs have no playlist references"
-msgstr ""
+msgstr "La URL no es una lista de reproducción"
 
 #: ../vdms_panels/youtubedl_ui.py:986
 msgid "The URLs contain playlists. Are you sure you want to continue?"
@@ -3887,310 +3861,3 @@ msgstr "El tiempo máximo se refiere al del archivo con mayor duración"
 #: ../vdms_threads/two_pass_ebu.py:80 ../vdms_threads/two_pass.py:82
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "¿Esta 'ffmpeg' instalado en su sistema?"
-
-#, fuzzy
-#~| msgid "User Guide"
-#~ msgid "User Memos"
-#~ msgstr "Guía de usuario"
-
-#, fuzzy
-#~| msgid "Successful changes!"
-#~ msgid "Successfully saved!"
-#~ msgstr "¡Cambios exitosos!"
-
-#, fuzzy
-#~| msgid "Videomass - Presets Manager"
-#~ msgid "Videomass - Save Changes"
-#~ msgstr "Videomass - Administrador de Presets"
-
-#~ msgid "Cache Settings"
-#~ msgstr "Configurar Cache"
-
-#~ msgid "Files"
-#~ msgstr "Archivos"
-
-#~ msgid "Refresh log messages"
-#~ msgstr "Refrescar registro de mensajes"
-
-#~ msgid "Clear log messages"
-#~ msgstr "Limpiar registro de mensajes"
-
-#~ msgid "Default"
-#~ msgstr "Predeterminado"
-
-#, fuzzy
-#~| msgid "Unable to get format codes on playlists and channels"
-#~ msgid ""
-#~ "Unable to get format codes on playlists / channels or URLs containing "
-#~ "multiple videos listed."
-#~ msgstr ""
-#~ "Imposible obtener códigos de formato desde lista de reproducción y canales"
-
-#, fuzzy
-#~| msgid "ERROR: The entered string contains redundant characters."
-#~ msgid "ERROR: You have entered invalid characters"
-#~ msgstr "ERROR: La cadena contiene caracteres redundantes."
-
-#~ msgid ""
-#~ "ERROR: Enter only digits, commas and hyphens. If you have multiple items, "
-#~ "use commas to separate them. Use the hyphen for the range. Spaces are not "
-#~ "allowed."
-#~ msgstr ""
-#~ "ERROR: Teclee solo dígitos, comas y guiones. Si tiene múltiples indices, "
-#~ "use comas para separarlos. Use el guion para rangos. No se admiten "
-#~ "Espacios."
-
-#~ msgid "ERROR: You have to start and end with a digit."
-#~ msgstr "ERROR: Tiene que iniciar y terminar con un digito."
-
-#~ msgid "ERROR: Make sure the hyphen is between two digits."
-#~ msgstr "ERROR: Asegúrese de que el guion esta entre dos dígitos."
-
-#~ msgid ""
-#~ "ERROR: A range must include only two digits and a hyphen, for example "
-#~ "\"20-25\" ."
-#~ msgstr ""
-#~ "ERROR: Un rango solo debe incluir dos dígitos y un guion, ejemplo "
-#~ "\"20-25\" ."
-
-#~ msgid ""
-#~ "ERROR: Make sure you use commas only to separate indices and / or ranges, "
-#~ "for example \"1,3,5,10-15\""
-#~ msgstr ""
-#~ "ERROR: Asegúrese de usar comas solo para separar indices y / o rangos, "
-#~ "ejemplo \"1,3,5,10-15\""
-
-#~ msgid "Function available only if you choose \"Download by format code\""
-#~ msgstr ""
-#~ "Función disponible solo si elige \"Descargar por código de formato\""
-
-#~ msgid ""
-#~ "\n"
-#~ "Wait....\n"
-#~ "Upgrading {}\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Espere....\n"
-#~ "Actualizando {}\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "Wait....\n"
-#~ "Downloading {}\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Espere....\n"
-#~ "Descargando {}\n"
-
-#~ msgid ""
-#~ "It looks like you installed youtube-dl with a package manager. Please use "
-#~ "that to update."
-#~ msgstr ""
-#~ "Parece que instalo youtube-dl con un administrador de paquetes. Por favor "
-#~ "utilícelo para actualizar."
-
-#~ msgid ""
-#~ "\n"
-#~ "Wait....\n"
-#~ "Check installed version\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Espere....\n"
-#~ "Comprobando versión instalada\n"
-
-#, fuzzy
-#~| msgid ""
-#~| "ERROR: {0}\n"
-#~| "\n"
-#~| "youtube-dl has not been installed yet."
-#~ msgid ""
-#~ "ERROR: {0}\n"
-#~ "\n"
-#~ "'{1}' has not been installed yet."
-#~ msgstr ""
-#~ "ERROR: {0}\n"
-#~ "\n"
-#~ "youtube-dl no esta instalado."
-
-#, fuzzy
-#~| msgid ""
-#~| "To download videos from YouTube.com and other video sites, you need an "
-#~| "updated version of youtube-dl.\n"
-#~| "\n"
-#~| "{}...Do you want to download youtube-dl locally now?"
-#~ msgid ""
-#~ "To download videos from YouTube.com and other video sites, you need an "
-#~ "updated version of {0}.\n"
-#~ "\n"
-#~ "...Do you want to download {0} locally now?"
-#~ msgstr ""
-#~ "Para descargar videos de YouTube.com y otros sitios de videos, necesita "
-#~ "una versión actualizada de youtube-dl.\n"
-#~ "\n"
-#~ "{}...¿Quiere descargar youtube-dl ahora?"
-
-#, fuzzy
-#~| msgid ""
-#~| "Successful! \n"
-#~| "\n"
-#~| "youtube-dl is very often updated, make sure you always use the latest "
-#~| "version available: menu bar > Tools > Update youtube-dl."
-#~ msgid ""
-#~ "Successful! \n"
-#~ "\n"
-#~ "Usually {0} is released very often, make sure you always use the latest "
-#~ "version available: menu bar -> Tools -> Update {0}."
-#~ msgstr ""
-#~ "¡Exito! \n"
-#~ "\n"
-#~ "youtube-dl se actualiza muy frecuentemente, asegúrese de utilizar siempre "
-#~ "la ultima versión disponible: menú > Herramientas > Actualizar youtube-dl."
-
-#, fuzzy
-#~| msgid "Re-start is required"
-#~ msgid ""
-#~ "{0}\n"
-#~ "\n"
-#~ "Re-start is required."
-#~ msgstr "Reinicie la aplicación"
-
-#, fuzzy
-#~| msgid ""
-#~| "ERROR: {}\n"
-#~| "\n"
-#~| "youtube-dl is not embedded in AppImage."
-#~ msgid ""
-#~ "ERROR: {0}\n"
-#~ "\n"
-#~ "{1} is not embedded in the AppImage."
-#~ msgstr ""
-#~ "ERROR: {}\n"
-#~ "\n"
-#~ "youtube-dl no esta incluido en la AppImage."
-
-#~ msgid "Resolution note"
-#~ msgstr "Nota de Resolución"
-
-#~ msgid "Sorry, this feature is disabled."
-#~ msgstr "Lo siento, característica desabilitada."
-
-#~ msgid "Unrecognized error"
-#~ msgstr "Error desconocido"
-
-#~ msgid ""
-#~ "\n"
-#~ "Requires MSVCR100.dll\n"
-#~ "To resolve this problem install: Microsoft Visual C++ 2010 "
-#~ "Redistributable Package (x86)"
-#~ msgstr ""
-#~ "\n"
-#~ "Se requiere  MSVCR100.dll\n"
-#~ "Para solucionar el problema instale: Microsoft Visual C++ 2010 "
-#~ "Redistributable Package (x86)"
-
-#~ msgid ""
-#~ "Requires MSVCR100.dll\n"
-#~ "To resolve this problem install: Microsoft Visual C++ 2010 "
-#~ "Redistributable Package (x86)"
-#~ msgstr ""
-#~ "Se requiere MSVCR100.dll\n"
-#~ "Para solucionar el problema instale: Microsoft Visual C++ 2010 "
-#~ "Redistributable Package (x86)"
-
-#, fuzzy
-#~| msgid "Disabled"
-#~ msgid "Disable all"
-#~ msgstr "Deshabilitado"
-
-#, fuzzy
-#~| msgid "Successful! youtube-dl is up-to-date"
-#~ msgid "Successful! {} is up-to-date"
-#~ msgstr "¡Exito! youtube-dl esta actualizado"
-
-#~ msgid "Disable youtube-dl"
-#~ msgstr "Deshabilita youtube-dl"
-
-#~ msgid "Enable youtube-dl"
-#~ msgstr "Habilita youtube-dl"
-
-#~ msgid "youtube-dl"
-#~ msgstr "youtube-dl"
-
-#~ msgid "Update youtube-dl"
-#~ msgstr "Actualizar youtube-dl"
-
-#~ msgid "Youtube-dl"
-#~ msgstr "Youtube-dl"
-
-#~ msgid ""
-#~ "{0}\n"
-#~ "\n"
-#~ "Sorry, cannot continue.."
-#~ msgstr ""
-#~ "{0}\n"
-#~ "\n"
-#~ "Lo siento, no se puede continuar.."
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "New releases fix bugs and offer new features\n"
-#~ "\n"
-#~ "This is Videomass version {0}\n"
-#~ "\n"
-#~ "<https://pypi.org/project/videomass/>\n"
-#~ "\n"
-#~ "The latest version {1} is available\n"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "Las nuevas versiones corrigen fallos y ofrecen nuevas caracterizticas\n"
-#~ "\n"
-#~ "Esta es la versión {0} de Videomass \n"
-#~ "\n"
-#~ "<https://pypi.org/project/videomass/>\n"
-#~ "\n"
-#~ "La ultima versión {1} esta disponible\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "New releases fix bugs and offer new features\n"
-#~ "\n"
-#~ "This is Videomass version {0}\n"
-#~ "\n"
-#~ "<https://pypi.org/project/videomass/>\n"
-#~ "\n"
-#~ "You are using the latest version\n"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "Las nuevas versiones corrigen fallos y ofrecen nuevas características\n"
-#~ "\n"
-#~ "Esta es la versión {0} de Videomass \n"
-#~ "\n"
-#~ "<https://pypi.org/project/videomass/>\n"
-#~ "\n"
-#~ "Esta usando la ultima versión\n"
-
-#~ msgid ""
-#~ "- Requires: Microsoft Visual C++ 2010 Redistributable Package (x86)\n"
-#~ "\n"
-#~ "for major information visit: <http://ytdl-org.github.io/youtube-dl/"
-#~ "download.html>\n"
-#~ "\n"
-#~ msgstr ""
-#~ "- Requiere: Microsoft Visual C++ 2010 Redistributable Package (x86)\n"
-#~ "\n"
-#~ "para mayor información visite: <http://ytdl-org.github.io/youtube-dl/"
-#~ "download.html>\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "WARNING: The URL contains a channel. Unable to determine playlist "
-#~ "indexing."
-#~ msgstr ""
-#~ "WARNING: La URL contiene un canal. Imposible determinar lista de indices."
-
-#~ msgid "Videomass cannot play channels or playlists."
-#~ msgstr "Videomass no puede reproducir listas de reproducción."
