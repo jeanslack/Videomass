@@ -32,7 +32,7 @@ import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_io import io_tools
 from videomass.vdms_utils.utils import format_bytes
 from videomass.vdms_utils.utils import timehuman
-from videomass.vdms_frames.ydl_mediainfo import YdlMediaInfo
+from videomass.vdms_dialogs.ydl_mediainfo import YdlMediaInfo
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_dialogs.playlist_indexing import Indexing
 

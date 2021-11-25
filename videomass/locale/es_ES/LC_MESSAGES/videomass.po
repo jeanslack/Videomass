@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 3.5.2\n"
+"Project-Id-Version: Videomass 3.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-21 01:31+0100\n"
-"PO-Revision-Date: 2021-11-24 10:37+0100\n"
+"POT-Creation-Date: 2021-11-25 13:38+0100\n"
+"PO-Revision-Date: 2021-11-25 13:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: j.alberto.vc@gmail.com\n"
 "Language: es\n"
@@ -795,7 +795,7 @@ msgstr "¡Terminado!"
 msgid "Cross-platform graphical interface for FFmpeg and youtube-dl.\n"
 msgstr "Interfaz grafica multiplataforma para FFmpeg y youtube-dl.\n"
 
-#: ../vdms_dialogs/playlist_indexing.py:51 ../vdms_frames/ydl_mediainfo.py:72
+#: ../vdms_dialogs/playlist_indexing.py:51 ../vdms_dialogs/ydl_mediainfo.py:70
 msgid "URL"
 msgstr "URL"
 
@@ -823,7 +823,7 @@ msgstr ""
 msgid "Playlist video items to download"
 msgstr "Indices de video a descargar de la Lista"
 
-#: ../vdms_dialogs/playlist_indexing.py:109 ../vdms_panels/youtubedl_ui.py:339
+#: ../vdms_dialogs/playlist_indexing.py:109 ../vdms_panels/youtubedl_ui.py:345
 msgid "Help viewer"
 msgstr "Visualizador  de ayuda"
 
@@ -1224,6 +1224,88 @@ msgstr ""
 "Videomass versión. {0}\n"
 "\n"
 
+#: ../vdms_dialogs/ydl_mediainfo.py:66
+msgid "Statistics viewer"
+msgstr "Visualizado de Estadisticas"
+
+#: ../vdms_dialogs/ydl_mediainfo.py:69
+msgid "TITLE SELECTION"
+msgstr "SELECCIÓN DE TITULO"
+
+#: ../vdms_dialogs/mediainfo.py:47
+msgid "Display of selected items in text format"
+msgstr "Mostrar objetos seleccionados en formato texto"
+
+#: ../vdms_dialogs/mediainfo.py:48
+msgid "Select items to view them in text format"
+msgstr "Seleccionar objetos a ver en formato texto"
+
+#: ../vdms_dialogs/mediainfo.py:86
+msgid "Data Format"
+msgstr "Formato de Datos"
+
+#: ../vdms_dialogs/mediainfo.py:108
+msgid "Video Stream"
+msgstr "Flujo de Video"
+
+#: ../vdms_dialogs/mediainfo.py:129
+msgid "Audio Streams"
+msgstr "Flujos de Audio"
+
+#: ../vdms_dialogs/mediainfo.py:150
+msgid "Subtitle Streams"
+msgstr "Flujos de Subtítulos"
+
+#: ../vdms_dialogs/mediainfo.py:154
+msgid "Enable text format"
+msgstr "Habilitar formato texto"
+
+#: ../vdms_dialogs/mediainfo.py:170
+msgid "FILE SELECTION"
+msgstr "SELECCIÓN DE ARCHIVO"
+
+#: ../vdms_dialogs/mediainfo.py:172 ../vdms_dialogs/mediainfo.py:175
+#: ../vdms_dialogs/mediainfo.py:178 ../vdms_dialogs/mediainfo.py:181
+msgid "References"
+msgstr "Referencias"
+
+#: ../vdms_dialogs/mediainfo.py:173 ../vdms_dialogs/mediainfo.py:176
+#: ../vdms_dialogs/mediainfo.py:179 ../vdms_dialogs/mediainfo.py:182
+msgid "Parameters"
+msgstr "Parámetros"
+
+#: ../vdms_dialogs/mediainfo.py:199
+msgid "Multimedia streams analyzer"
+msgstr "Analizador de flujos Multimedia"
+
+#: ../vdms_dialogs/showlogs.py:75
+msgid "Log file list"
+msgstr "Lista de archivos de registro"
+
+#: ../vdms_dialogs/showlogs.py:77
+msgid "Log messages"
+msgstr "Registro de mensajes"
+
+#: ../vdms_dialogs/showlogs.py:101
+msgid "Refresh all log files"
+msgstr "Refrescar todos los registros"
+
+#: ../vdms_dialogs/showlogs.py:106
+msgid "Clear selected log"
+msgstr "Limpiar archivo de registro seleccionado"
+
+#: ../vdms_dialogs/showlogs.py:116
+msgid "Showing log messages"
+msgstr "Mostrando registro de mensajes"
+
+#: ../vdms_dialogs/showlogs.py:143
+msgid "Select a log file"
+msgstr "Seleccionar archivo de registro"
+
+#: ../vdms_dialogs/showlogs.py:150
+msgid "Are you sure you want to clear the selected log file?"
+msgstr "¿Seguro desea limpiar el archivo de registro?"
+
 #: ../vdms_frames/ffmpeg_conf.py:66
 msgid "Informations"
 msgstr "Informaciones"
@@ -1568,88 +1650,6 @@ msgstr ""
 "\n"
 "Primero, elija un tema en la lista desplegable"
 
-#: ../vdms_frames/mediainfo.py:44
-msgid "Display of selected items in text format"
-msgstr "Mostrar objetos seleccionados en formato texto"
-
-#: ../vdms_frames/mediainfo.py:45
-msgid "Select items to view them in text format"
-msgstr "Seleccionar objetos a ver en formato texto"
-
-#: ../vdms_frames/mediainfo.py:89
-msgid "Data Format"
-msgstr "Formato de Datos"
-
-#: ../vdms_frames/mediainfo.py:111
-msgid "Video Stream"
-msgstr "Flujo de Video"
-
-#: ../vdms_frames/mediainfo.py:132
-msgid "Audio Streams"
-msgstr "Flujos de Audio"
-
-#: ../vdms_frames/mediainfo.py:153
-msgid "Subtitle Streams"
-msgstr "Flujos de Subtítulos"
-
-#: ../vdms_frames/mediainfo.py:157
-msgid "Enable text format"
-msgstr "Habilitar formato texto"
-
-#: ../vdms_frames/mediainfo.py:169
-msgid "FILE SELECTION"
-msgstr "SELECCIÓN DE ARCHIVO"
-
-#: ../vdms_frames/mediainfo.py:171 ../vdms_frames/mediainfo.py:174
-#: ../vdms_frames/mediainfo.py:177 ../vdms_frames/mediainfo.py:180
-msgid "References"
-msgstr "Referencias"
-
-#: ../vdms_frames/mediainfo.py:172 ../vdms_frames/mediainfo.py:175
-#: ../vdms_frames/mediainfo.py:178 ../vdms_frames/mediainfo.py:181
-msgid "Parameters"
-msgstr "Parámetros"
-
-#: ../vdms_frames/mediainfo.py:198
-msgid "Multimedia streams analyzer"
-msgstr "Analizador de flujos Multimedia"
-
-#: ../vdms_frames/showlogs.py:77
-msgid "Log file list"
-msgstr "Lista de archivos de registro"
-
-#: ../vdms_frames/showlogs.py:79
-msgid "Log messages"
-msgstr "Registro de mensajes"
-
-#: ../vdms_frames/showlogs.py:103
-msgid "Refresh all log files"
-msgstr "Refrescar todos los registros"
-
-#: ../vdms_frames/showlogs.py:108
-msgid "Clear selected log"
-msgstr "Limpiar archivo de registro seleccionado"
-
-#: ../vdms_frames/showlogs.py:118
-msgid "Showing log messages"
-msgstr "Mostrando registro de mensajes"
-
-#: ../vdms_frames/showlogs.py:145
-msgid "Select a log file"
-msgstr "Seleccionar archivo de registro"
-
-#: ../vdms_frames/showlogs.py:152
-msgid "Are you sure you want to clear the selected log file?"
-msgstr "¿Seguro desea limpiar el archivo de registro?"
-
-#: ../vdms_frames/ydl_mediainfo.py:68
-msgid "Statistics viewer"
-msgstr "Visualizado de Estadisticas"
-
-#: ../vdms_frames/ydl_mediainfo.py:71
-msgid "TITLE SELECTION"
-msgstr "SELECCIÓN DE TITULO"
-
 #: ../vdms_io/checkup.py:50
 #, python-format
 msgid ""
@@ -1778,7 +1778,7 @@ msgstr ""
 #: ../vdms_main/main_frame.py:1472 ../vdms_main/main_frame.py:1504
 #: ../vdms_main/main_frame.py:1527 ../vdms_main/main_frame.py:1582
 #: ../vdms_main/main_frame.py:1633 ../vdms_main/main_frame.py:1685
-#: ../vdms_panels/youtubedl_ui.py:495 ../vdms_panels/youtubedl_ui.py:723
+#: ../vdms_panels/youtubedl_ui.py:501 ../vdms_panels/youtubedl_ui.py:729
 msgid "Ready"
 msgstr "Listo"
 
@@ -2504,7 +2504,7 @@ msgstr "Ajustar"
 msgid "Video Filters"
 msgstr "Filtros de Video"
 
-#: ../vdms_panels/av_conversions.py:530 ../vdms_panels/youtubedl_ui.py:273
+#: ../vdms_panels/av_conversions.py:530 ../vdms_panels/youtubedl_ui.py:279
 msgid "Preview"
 msgstr "Previsualizar"
 
@@ -3143,31 +3143,31 @@ msgid ""
 msgstr ""
 "Al menos un \"Código de Formato\" debe seleccionarse en las URL en verde."
 
-#: ../vdms_panels/youtubedl_ui.py:158
+#: ../vdms_panels/youtubedl_ui.py:164
 msgid "Precompiled Videos"
 msgstr "Videos precompilados"
 
-#: ../vdms_panels/youtubedl_ui.py:159
+#: ../vdms_panels/youtubedl_ui.py:165
 msgid "Download videos by resolution"
 msgstr "Descargar videos según su resolución"
 
-#: ../vdms_panels/youtubedl_ui.py:160
+#: ../vdms_panels/youtubedl_ui.py:166
 msgid "Download split audio and video"
 msgstr "Descargar por separado audio y video"
 
-#: ../vdms_panels/youtubedl_ui.py:161
+#: ../vdms_panels/youtubedl_ui.py:167
 msgid "Download Audio only"
 msgstr "Descargar solo Audio"
 
-#: ../vdms_panels/youtubedl_ui.py:162
+#: ../vdms_panels/youtubedl_ui.py:168
 msgid "Download by format code"
 msgstr "Descargar por código de formato"
 
-#: ../vdms_panels/youtubedl_ui.py:202
+#: ../vdms_panels/youtubedl_ui.py:208
 msgid "Options"
 msgstr "Opciones"
 
-#: ../vdms_panels/youtubedl_ui.py:236
+#: ../vdms_panels/youtubedl_ui.py:242
 msgid ""
 "When not available, the chosen video resolution will be replaced with the "
 "closest one"
@@ -3175,35 +3175,35 @@ msgstr ""
 "Cuando no este disponible, la resolución elegida se reemplazara con la más "
 "cercana"
 
-#: ../vdms_panels/youtubedl_ui.py:240
+#: ../vdms_panels/youtubedl_ui.py:246
 msgid "Preferred video format"
 msgstr "Formato de video preferido"
 
-#: ../vdms_panels/youtubedl_ui.py:279
+#: ../vdms_panels/youtubedl_ui.py:285
 msgid "Download all videos in playlist"
 msgstr "Descargar todos los videos en la lista de reproducción"
 
-#: ../vdms_panels/youtubedl_ui.py:284
+#: ../vdms_panels/youtubedl_ui.py:290
 msgid "Playlist Editor"
 msgstr "Editor de Lista de Reproducción"
 
-#: ../vdms_panels/youtubedl_ui.py:291
+#: ../vdms_panels/youtubedl_ui.py:297
 msgid "Embed thumbnail in audio file"
 msgstr "Empotrar miniatura en archivo de audio"
 
-#: ../vdms_panels/youtubedl_ui.py:295
+#: ../vdms_panels/youtubedl_ui.py:301
 msgid "Add metadata to file"
 msgstr "Añadir metadatos al archivo"
 
-#: ../vdms_panels/youtubedl_ui.py:299
+#: ../vdms_panels/youtubedl_ui.py:305
 msgid "Write subtitles to video"
 msgstr "Escribir subtítulos al video"
 
-#: ../vdms_panels/youtubedl_ui.py:304
+#: ../vdms_panels/youtubedl_ui.py:310
 msgid "Prevent overwriting files"
 msgstr "Evitar reescritura de archivos"
 
-#: ../vdms_panels/youtubedl_ui.py:309
+#: ../vdms_panels/youtubedl_ui.py:315
 msgid ""
 "Include the video ID\n"
 "in the file names"
@@ -3211,20 +3211,20 @@ msgstr ""
 "Incluir el ID de video\n"
 "en los nombres de archivo"
 
-#: ../vdms_panels/youtubedl_ui.py:315
+#: ../vdms_panels/youtubedl_ui.py:321
 msgid "Restrict file names"
 msgstr "Restringir los nombres de archivo"
 
-#: ../vdms_panels/youtubedl_ui.py:363 ../vdms_panels/youtubedl_ui.py:462
-#: ../vdms_panels/youtubedl_ui.py:478
+#: ../vdms_panels/youtubedl_ui.py:369 ../vdms_panels/youtubedl_ui.py:468
+#: ../vdms_panels/youtubedl_ui.py:484
 msgid "Play selected url"
 msgstr "Reproducir url seleccionada"
 
-#: ../vdms_panels/youtubedl_ui.py:490
+#: ../vdms_panels/youtubedl_ui.py:496
 msgid "An item must be selected in the URLs checklist"
 msgstr "Se debe seleccionar en la lista de URLs"
 
-#: ../vdms_panels/youtubedl_ui.py:506
+#: ../vdms_panels/youtubedl_ui.py:512
 #, python-brace-format
 msgid ""
 "Only one video can be played at a time.\n"
@@ -3237,43 +3237,43 @@ msgstr ""
 "No soportado '{0}':\n"
 "'{1}'"
 
-#: ../vdms_panels/youtubedl_ui.py:536
+#: ../vdms_panels/youtubedl_ui.py:542
 msgid "Format Code"
 msgstr "Código de Formato"
 
-#: ../vdms_panels/youtubedl_ui.py:537 ../vdms_panels/youtubedl_ui.py:644
+#: ../vdms_panels/youtubedl_ui.py:543 ../vdms_panels/youtubedl_ui.py:650
 msgid "Url"
 msgstr "Url"
 
-#: ../vdms_panels/youtubedl_ui.py:538 ../vdms_panels/youtubedl_ui.py:645
+#: ../vdms_panels/youtubedl_ui.py:544 ../vdms_panels/youtubedl_ui.py:651
 msgid "Title"
 msgstr "Titulo"
 
-#: ../vdms_panels/youtubedl_ui.py:539
+#: ../vdms_panels/youtubedl_ui.py:545
 msgid "Extension"
 msgstr "Extensión"
 
-#: ../vdms_panels/youtubedl_ui.py:540
+#: ../vdms_panels/youtubedl_ui.py:546
 msgid "Resolution"
 msgstr "Resolución"
 
-#: ../vdms_panels/youtubedl_ui.py:541
+#: ../vdms_panels/youtubedl_ui.py:547
 msgid "Video Codec"
 msgstr "Codec de Video"
 
-#: ../vdms_panels/youtubedl_ui.py:542
+#: ../vdms_panels/youtubedl_ui.py:548
 msgid "fps"
 msgstr "cps"
 
-#: ../vdms_panels/youtubedl_ui.py:543
+#: ../vdms_panels/youtubedl_ui.py:549
 msgid "Audio Codec"
 msgstr "Codec de Audio"
 
-#: ../vdms_panels/youtubedl_ui.py:544 ../vdms_panels/filedrop.py:222
+#: ../vdms_panels/youtubedl_ui.py:550 ../vdms_panels/filedrop.py:222
 msgid "Size"
 msgstr "Tamaño"
 
-#: ../vdms_panels/youtubedl_ui.py:580
+#: ../vdms_panels/youtubedl_ui.py:586
 #, python-brace-format
 msgid ""
 "ERROR: Unable to get format codes.\n"
@@ -3286,11 +3286,11 @@ msgstr ""
 "URL no soportada:\n"
 "'{0}'"
 
-#: ../vdms_panels/youtubedl_ui.py:646
+#: ../vdms_panels/youtubedl_ui.py:652
 msgid "Quality"
 msgstr "Calidad"
 
-#: ../vdms_panels/youtubedl_ui.py:703
+#: ../vdms_panels/youtubedl_ui.py:709
 #, python-brace-format
 msgid ""
 "Unable to get format codes on '{0}'\n"
@@ -3303,16 +3303,16 @@ msgstr ""
 "'{0}'  no soportado:\n"
 "'{1}'"
 
-#: ../vdms_panels/youtubedl_ui.py:860
+#: ../vdms_panels/youtubedl_ui.py:866
 msgid "URLs have no playlist references"
 msgstr "La URL no es una lista de reproducción"
 
-#: ../vdms_panels/youtubedl_ui.py:986
+#: ../vdms_panels/youtubedl_ui.py:992
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr ""
 "Las URLs contienen listas de reproducción. ¿Seguro que desea continuar?"
 
-#: ../vdms_panels/youtubedl_ui.py:988 ../vdms_panels/youtubedl_ui.py:994
+#: ../vdms_panels/youtubedl_ui.py:994 ../vdms_panels/youtubedl_ui.py:1000
 #: ../vdms_panels/long_processing_task.py:419
 #: ../vdms_panels/presets_manager.py:492 ../vdms_panels/presets_manager.py:535
 #: ../vdms_panels/presets_manager.py:603 ../vdms_panels/presets_manager.py:629
@@ -3320,7 +3320,7 @@ msgstr ""
 msgid "Please confirm"
 msgstr "Por favor Confirme"
 
-#: ../vdms_panels/youtubedl_ui.py:992
+#: ../vdms_panels/youtubedl_ui.py:998
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "Las URLs contienen canales. ¿Seguro que desea continuar?"
 

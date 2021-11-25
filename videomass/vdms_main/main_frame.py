@@ -37,8 +37,8 @@ from videomass.vdms_dialogs import infoprg
 from videomass.vdms_dialogs import videomass_check_version
 from videomass.vdms_frames import while_playing
 from videomass.vdms_frames import ffmpeg_search
-from videomass.vdms_frames.mediainfo import Mediainfo
-from videomass.vdms_frames.showlogs import ShowLogs
+from videomass.vdms_dialogs.mediainfo import Mediainfo
+from videomass.vdms_dialogs.showlogs import ShowLogs
 from videomass.vdms_panels import timeline
 from videomass.vdms_panels import choose_topic
 from videomass.vdms_panels import filedrop

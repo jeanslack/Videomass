@@ -1,36 +1,37 @@
 # -*- coding: UTF-8 -*-
-
-# Name: showlogs.py
-# Porpose: show logs data
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Nov.14.2021
-# Code checker: flake8, pylint .
+"""
+Name: showlogs.py
+Porpose: show logs data
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: Nov.25.2021
+Code checker:
+    - flake8: --ignore F821, W504, F401
+    - pylint: --ignore E0602, E1101, C0415, E0401, C0103
 #########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
+import wx
 
 
-class ShowLogs(wx.MiniFrame):
+class ShowLogs(wx.Dialog):
     """
     View log data from files within the log directory
 
@@ -59,15 +60,12 @@ class ShowLogs(wx.MiniFrame):
         get = wx.GetApp()  # get data from bootstrap
         colorscheme = get.appset['icontheme'][1]
 
-        wx.MiniFrame.__init__(self, None, style=wx.CAPTION | wx.CLOSE_BOX |
-                              wx.RESIZE_BORDER | wx.SYSTEM_MENU
-                              )
-
+        wx.Dialog.__init__(self, None,
+                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
+                           )
         # ----------------------Layout----------------------#
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
-                              wx.BORDER_THEME)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        self.log_select = wx.ListCtrl(self.panel,
+        self.log_select = wx.ListCtrl(self,
                                       wx.ID_ANY,
                                       style=wx.LC_REPORT |
                                       wx.SUNKEN_BORDER |
@@ -76,9 +74,9 @@ class ShowLogs(wx.MiniFrame):
         self.log_select.SetMinSize((700, 200))
         self.log_select.InsertColumn(0, _('Log file list'), width=500)
         sizer_base.Add(self.log_select, 0, wx.ALL | wx.EXPAND, 5)
-        labtxt = wx.StaticText(self.panel, label=_('Log messages'))
+        labtxt = wx.StaticText(self, label=_('Log messages'))
         sizer_base.Add(labtxt, 0, wx.ALL, 5)
-        self.textdata = wx.TextCtrl(self.panel,
+        self.textdata = wx.TextCtrl(self,
                                     wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
                                     wx.TE_READONLY |
@@ -99,18 +97,18 @@ class ShowLogs(wx.MiniFrame):
         # ------ btns bottom
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grid_funcbtn = wx.BoxSizer(wx.HORIZONTAL)
-        button_update = wx.Button(self.panel, wx.ID_REFRESH,
+        button_update = wx.Button(self, wx.ID_REFRESH,
                                   _("Refresh all log files"))
         grid_funcbtn.Add(button_update, 0, wx.ALL |
                          wx.ALIGN_CENTER_VERTICAL, 5
                          )
-        button_clear = wx.Button(self.panel, wx.ID_CLEAR,
+        button_clear = wx.Button(self, wx.ID_CLEAR,
                                  _("Clear selected log")
                                  )
         grid_funcbtn.Add(button_clear, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grdBtn.Add(grid_funcbtn)
         grdexit = wx.BoxSizer(wx.HORIZONTAL)
-        button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
+        button_close = wx.Button(self, wx.ID_CLOSE, "")
         grdexit.Add(button_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grdBtn.Add(grdexit, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         sizer_base.Add(grdBtn, 0, wx.ALL | wx.EXPAND, 0)
@@ -118,7 +116,7 @@ class ShowLogs(wx.MiniFrame):
         self.SetTitle(_('Showing log messages'))
         self.SetMinSize((700, 500))
         # ------ set sizer
-        self.panel.SetSizer(sizer_base)
+        self.SetSizer(sizer_base)
         self.Fit()
         self.Layout()
 
@@ -205,4 +203,7 @@ class ShowLogs(wx.MiniFrame):
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
+        """
+        Destroy this dialog
+        """
         self.Destroy()

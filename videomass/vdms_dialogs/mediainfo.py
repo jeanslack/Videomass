@@ -6,7 +6,10 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: Nov.25.2021
+Code checker:
+    - flake8: --ignore F821, W504, F401
+    - pylint: --ignore E0602, E1101, C0415, E0401, C0103
 ########################################################
 
 This file is part of Videomass.
@@ -27,7 +30,7 @@ This file is part of Videomass.
 import wx
 
 
-class Mediainfo(wx.MiniFrame):
+class Mediainfo(wx.Dialog):
     """
     Display streams information from ffprobe json data.
     """
@@ -44,17 +47,11 @@ class Mediainfo(wx.MiniFrame):
         msg = _('Display of selected items in text format')
         msg1 = _('Select items to view them in text format')
 
-        wx.MiniFrame.__init__(self, None, style=wx.CAPTION | wx.CLOSE_BOX |
-                              wx.RESIZE_BORDER | wx.SYSTEM_MENU
-                              )
-        '''NOTE constructor: with 'None' not depend from videomass.
-        With 'parent, -1' if close videomass also close mediainfo window'''
-
-        # add panel
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
-                              wx.BORDER_THEME)
+        wx.Dialog.__init__(self, None,
+                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
+                           )
         self.sizerBase = wx.BoxSizer(wx.VERTICAL)
-        self.file_select = wx.ListCtrl(self.panel,
+        self.file_select = wx.ListCtrl(self,
                                        wx.ID_ANY,
                                        style=wx.LC_REPORT |
                                        wx.SUNKEN_BORDER |
@@ -62,7 +59,7 @@ class Mediainfo(wx.MiniFrame):
                                        )
         self.sizerBase.Add(self.file_select, 0, wx.ALL | wx.EXPAND, 5)
 
-        notebook = wx.Notebook(self.panel, wx.ID_ANY)
+        notebook = wx.Notebook(self, wx.ID_ANY)
         grid_notebook = wx.GridSizer(1, 1, 0, 0)
         grid_notebook.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)
         self.sizerBase.Add(grid_notebook, 1, wx.EXPAND, 0)
@@ -152,8 +149,8 @@ class Mediainfo(wx.MiniFrame):
         nb_panel_4.SetSizer(sizer_tab4)
         notebook.AddPage(nb_panel_4, (_("Subtitle Streams")))
         #  bottom
-        button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
-        self.button_view = wx.ToggleButton(self.panel, wx.ID_ANY,
+        button_close = wx.Button(self, wx.ID_CLOSE, "")
+        self.button_view = wx.ToggleButton(self, wx.ID_ANY,
                                            _("Enable text format"))
         grid_btns = wx.GridSizer(1, 2, 0, 0)
         grid_btns.Add(self.button_view, 0, wx.ALL | wx.EXPAND, 5)
@@ -161,10 +158,14 @@ class Mediainfo(wx.MiniFrame):
         self.sizerBase.Add(grid_btns, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
 
         # ----------------------Properties----------------------#
-        self.format_tags.Hide(), self.format_stxt.Hide()
-        self.video_tags.Hide(), self.video_stxt.Hide()
-        self.audio_tags.Hide(), self.audio_stxt.Hide()
-        self.sub_tags.Hide(), self.sub_stxt.Hide()
+        self.format_tags.Hide()
+        self.format_stxt.Hide()
+        self.video_tags.Hide()
+        self.video_stxt.Hide()
+        self.audio_tags.Hide()
+        self.audio_stxt.Hide()
+        self.sub_tags.Hide()
+        self.sub_stxt.Hide()
 
         self.file_select.InsertColumn(0, _('FILE SELECTION'), width=700)
 
@@ -206,7 +207,7 @@ class Mediainfo(wx.MiniFrame):
         self.audio_tags.SetMinSize((-1, 100))
         self.sub_tags.SetMinSize((-1, 100))
 
-        self.panel.SetSizer(self.sizerBase)
+        self.SetSizer(self.sizerBase)
         # self.sizerBase.Fit(self)
         self.Fit()
         self.Layout()
@@ -251,15 +252,23 @@ class Mediainfo(wx.MiniFrame):
         Show or hide text boxes
         """
         if self.button_view.GetValue():
-            self.format_tags.Show(), self.format_stxt.Show()
-            self.video_tags.Show(), self.video_stxt.Show()
-            self.audio_tags.Show(), self.audio_stxt.Show()
-            self.sub_tags.Show(), self.sub_stxt.Show()
+            self.format_tags.Show()
+            self.format_stxt.Show()
+            self.video_tags.Show()
+            self.video_stxt.Show()
+            self.audio_tags.Show()
+            self.audio_stxt.Show()
+            self.sub_tags.Show()
+            self.sub_stxt.Show()
         else:
-            self.format_tags.Hide(), self.format_stxt.Hide()
-            self.video_tags.Hide(), self.video_stxt.Hide()
-            self.audio_tags.Hide(), self.audio_stxt.Hide()
-            self.sub_tags.Hide(), self.sub_stxt.Hide()
+            self.format_tags.Hide()
+            self.format_stxt.Hide()
+            self.video_tags.Hide()
+            self.video_stxt.Hide()
+            self.audio_tags.Hide()
+            self.audio_stxt.Hide()
+            self.sub_tags.Hide()
+            self.sub_stxt.Hide()
 
         self.format_tags.SetMinSize((-1, 100))
         self.video_tags.SetMinSize((-1, 100))
@@ -311,15 +320,15 @@ class Mediainfo(wx.MiniFrame):
         self.format_tags.Clear()
         if col0 == 'tags':
             tags = eval(col1)
-            for k, v in tags.items():
-                self.format_tags.AppendText('%s: %s\n' % (k, v))
+            for key, val in tags.items():
+                self.format_tags.AppendText(f'{key}: {val}\n')
         elif col0 == 'disposition':
             dispos = eval(col1)
-            for k, v in dispos.items():
-                self.format_tags.AppendText('%s: %s\n' % (k, v))
+            for key, val in dispos.items():
+                self.format_tags.AppendText(f'{key}: {val}\n')
 
         else:
-            self.format_tags.write('%s: %s' % (col0, col1))
+            self.format_tags.write(f'{col0}: {col1}')
     # ------------------------------------------------------------------#
 
     def on_video(self, event):
@@ -335,14 +344,14 @@ class Mediainfo(wx.MiniFrame):
         self.video_tags.Clear()
         if col0 == 'tags':
             tags = eval(col1)
-            for k, v in tags.items():
-                self.video_tags.AppendText('%s: %s\n' % (k, v))
+            for key, val in tags.items():
+                self.video_tags.AppendText(f'{key}: {val}\n')
         elif col0 == 'disposition':
             dispos = eval(col1)
-            for k, v in dispos.items():
-                self.video_tags.AppendText('%s: %s\n' % (k, v))
+            for key, val in dispos.items():
+                self.video_tags.AppendText(f'{key}: {val}\n')
         else:
-            self.video_tags.AppendText('%s: %s\n' % (col0, col1))
+            self.video_tags.AppendText(f'{col0}: {col1}\n')
     # ------------------------------------------------------------------#
 
     def on_audio(self, event):
@@ -358,14 +367,14 @@ class Mediainfo(wx.MiniFrame):
         self.audio_tags.Clear()
         if col0 == 'tags':
             tags = eval(col1)
-            for k, v in tags.items():
-                self.audio_tags.AppendText('%s: %s\n' % (k, v))
+            for key, val in tags.items():
+                self.audio_tags.AppendText(f'{key}: {val}\n')
         elif col0 == 'disposition':
             dispos = eval(col1)
-            for k, v in dispos.items():
-                self.audio_tags.AppendText('%s: %s\n' % (k, v))
+            for key, val in dispos.items():
+                self.audio_tags.AppendText(f'{key}: {val}\n')
         else:
-            self.audio_tags.AppendText('%s: %s\n' % (col0, col1))
+            self.audio_tags.AppendText(f'{col0}: {col1}\n')
     # ------------------------------------------------------------------#
 
     def on_sub(self, event):
@@ -382,14 +391,14 @@ class Mediainfo(wx.MiniFrame):
         self.sub_tags.Clear()
         if col0 == 'tags':
             tags = eval(col1)
-            for k, v in tags.items():
-                self.sub_tags.AppendText('%s: %s\n' % (k, v))
+            for key, val in tags.items():
+                self.sub_tags.AppendText(f'{key}: {val}\n')
         elif col0 == 'disposition':
             dispos = eval(col1)
-            for k, v in dispos.items():
-                self.sub_tags.AppendText('%s: %s\n' % (k, v))
+            for key, val in dispos.items():
+                self.sub_tags.AppendText(f'{key}: {val}\n')
         else:
-            self.sub_tags.AppendText('%s: %s\n' % (col0, col1))
+            self.sub_tags.AppendText(f'{col0}: {col1}\n')
     # ------------------------------------------------------------------#
 
     def on_select(self, event):
@@ -430,7 +439,7 @@ class Mediainfo(wx.MiniFrame):
             for t in select.get('streams'):
                 if t.get('codec_type') == 'video':
                     num_items = self.video_ctrl.GetItemCount()
-                    n = 'VIDEO INDEX %d' % t.get('index')
+                    n = f"VIDEO INDEX {t.get('index')}"
                     self.video_ctrl.InsertItem(num_items, n)
                     self.video_ctrl.SetItemBackgroundColour(index,
                                                             "SLATE BLUE")
@@ -443,7 +452,7 @@ class Mediainfo(wx.MiniFrame):
             for t in select.get('streams'):
                 if t.get('codec_type') == 'audio':
                     num_items = self.audio_ctrl.GetItemCount()
-                    n = 'AUDIO INDEX %d' % t.get('index')
+                    n = f"AUDIO INDEX {t.get('index')}"
                     self.audio_ctrl.InsertItem(num_items, n)
                     self.audio_ctrl.SetItemBackgroundColour(index, "GREEN")
                     index += 1
@@ -455,7 +464,7 @@ class Mediainfo(wx.MiniFrame):
             for t in select.get('streams'):
                 if t.get('codec_type') == 'subtitle':
                     num_items = self.subtitle_ctrl.GetItemCount()
-                    n = 'SUBTITLE INDEX %d' % t.get('index')
+                    n = f"SUBTITLE INDEX {t.get('index')}"
                     self.subtitle_ctrl.InsertItem(num_items, n)
                     self.subtitle_ctrl.SetItemBackgroundColour(index,
                                                                "GOLDENROD")
@@ -467,4 +476,7 @@ class Mediainfo(wx.MiniFrame):
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
+        """
+        Destroy this dialog
+        """
         self.Destroy()
