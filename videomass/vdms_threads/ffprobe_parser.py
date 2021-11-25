@@ -7,10 +7,10 @@ Platform: all platforms
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.11.2021
+Rev: Nov.25.2021
 Code checker:
-    flake8: --ignore F821, W504
-    pylint: --ignore E0602, E1101
+    - flake8: --ignore F821, W504, F401
+    - pylint: --ignore E0602, E1101, C0415, E0401, C0103
 ########################################################
 
 This file is part of Videomass.
@@ -202,28 +202,19 @@ class FFProbe():
         pretty = '-pretty' if pretty is True else 'no_pretty'
         show_format = '-show_format' if show_format is True else ''
         show_streams = '-show_streams' if show_streams is True else ''
-        select = '-select_streams %s' % select if select else ''
-        entries = '-show_entries %s' % entries if entries else ''
-        writer = '-of %s' % writer if writer else '-of default'
+        select = f'-select_streams {select}' if select else ''
+        entries = f'-show_entries {entries}' if entries else ''
+        writer = f'-of {writer}' if writer else '-of default'
 
         if parse:
-            cmnd = ('"%s" -i "%s" -v error %s %s %s '
-                    '-print_format default' % (FFPROBE_URL,
-                                               filename,
-                                               pretty,
-                                               show_format,
-                                               show_streams,)
-                    )
+
+            cmnd = (f'"{FFPROBE_URL}" -i "{filename}" -v error {pretty} '
+                    f'{show_format} {show_streams} -print_format default')
         else:
-            cmnd = '"%s" -i "%s" -v error %s %s %s %s %s %s' % (FFPROBE_URL,
-                                                                filename,
-                                                                pretty,
-                                                                select,
-                                                                entries,
-                                                                show_format,
-                                                                show_streams,
-                                                                writer
-                                                                )
+            cmnd = (f'"{FFPROBE_URL}" -i "{filename}" -v error {pretty} '
+                    f'{select} {entries} {show_format} {show_streams} '
+                    f'{writer}')
+
         if not platform.system() == 'Windows':
             cmnd = shlex.split(cmnd)
             info = None
