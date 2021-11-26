@@ -7,11 +7,12 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Nov 25, 2021 V.3.5.3
+Nov 26, 2021 V.3.5.3
 
   * Update Spanish translation from @katnatek
   * Changed some windows from mini-frame to dialog to make more confortable
     re-size adjustment.
+  * fixed Videomass no longer restarts after disabling the downloader #45
 
 +------------------------------------+
 Nov 22, 2021 V.3.5.2
