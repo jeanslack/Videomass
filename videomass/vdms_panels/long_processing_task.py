@@ -6,8 +6,11 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
-########################################################
+Rev: Nov.28.2021
+Code checker:
+    - flake8: --ignore F821, W504, F401
+    - pylint: --ignore E0602, E1101, C0415, E0401, C0103
+
 This file is part of Videomass.
 
    Videomass is free software: you can redistribute it and/or modify
@@ -27,6 +30,7 @@ from __future__ import unicode_literals
 import os
 from pubsub import pub
 import wx
+from videomass.vdms_dialogs.widget_utils import notification_area
 from videomass.vdms_io.make_filelog import write_log
 from videomass.vdms_threads.ydl_downloader import YdlDownloader
 from videomass.vdms_threads.one_pass import OnePass
@@ -80,11 +84,11 @@ class LogOut(wx.Panel):
     # used msg on text
     MSG_done = _('[Videomass]: SUCCESS !\n')
     MSG_failed = _('[Videomass]: FAILED !\n')
-    MSG_taskfailed = _('\n[Videomass]: Sorry, task failed !\n')
-    MSG_interrupted = _('\n[Videomass]: Interrupted Process !\n')
-    MSG_completed = _('\n[Videomass]: Successfully completed !\n')
-    MSG_unfinished = _('\n[Videomass]: completed, but not everything '
-                       'was successful.\n')
+    MSG_taskfailed = _('\nSorry, all task failed !')
+    MSG_fatalerror = _("\nThe process was stopped due to a fatal error.")
+    MSG_interrupted = _('\nInterrupted Process !')
+    MSG_completed = _('\nSuccessfully completed !')
+    MSG_unfinished = _('\nNot everything was successful.')
 
     WHITE = '#fbf4f4'  # white for background status bar
     BLACK = '#060505'  # black for background status bar
@@ -104,7 +108,8 @@ class LogOut(wx.Panel):
         self.error = False  # if True, all the tasks was failed
         self.previus = None  # panel name from which it starts
         self.logname = None  # example: AV_conversions.log
-        self.result = None  # result of the final process
+        self.result = []  # result of the final process
+        self.count = 0  # keeps track of the counts (see `update_count`)
         self.clr = LogOut.appdata['icontheme'][1]
 
         wx.Panel.__init__(self, parent=parent)
@@ -214,7 +219,7 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f'{output}\n')
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['FAILED']))
             self.txtout.AppendText(LogOut.MSG_failed)
-            self.result = 'failed'
+            self.result.append('failed')
 
         elif status == 'WARNING':
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
@@ -276,7 +281,7 @@ class LogOut(wx.Panel):
         if not status == 0:  # error, exit status of the p.wait
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR1']))
             self.txtout.AppendText(LogOut.MSG_failed)
-            self.result = 'failed'
+            self.result.append('failed')
             return  # must be return here
 
         if 'time=' in output:  # ...in processing
@@ -357,14 +362,18 @@ class LogOut(wx.Panel):
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['DEBUG']))
                 self.txtout.AppendText(f'{destination}\n')
 
+        self.count += 1
     # ----------------------------------------------------------------------
+
     def end_proc(self):
         """
         At the end of the process
         """
         if self.error is True:
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR1']))
-            self.txtout.AppendText(LogOut.MSG_taskfailed + '\n')
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
+            self.txtout.AppendText(LogOut.MSG_fatalerror + '\n')
+            notification_area(_("\nFatal Error !"), LogOut.MSG_fatalerror,
+                              wx.ICON_ERROR)
 
         elif self.abort is True:
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ABORT']))
@@ -373,10 +382,28 @@ class LogOut(wx.Panel):
         else:
             if not self.result:
                 endmsg = LogOut.MSG_completed
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT3']))
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
+                notification_area(endmsg,
+                                  _("Get your files at the "
+                                    "destination you specified"),
+                                  wx.ICON_INFORMATION,
+                                  )
             else:
-                endmsg = LogOut.MSG_unfinished
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
+                if len(self.result) == self.count:
+                    endmsg = LogOut.MSG_taskfailed
+                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
+                    notification_area(endmsg,
+                                      _("Please view the current log or "
+                                        "read the log file."),
+                                      wx.ICON_ERROR,)
+                else:
+                    endmsg = LogOut.MSG_unfinished
+                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
+                    notification_area(endmsg,
+                                      _("Please view the current log or "
+                                        "read the log file."),
+                                      wx.ICON_WARNING, timeout=10)
+
             self.parent.statusbar_msg(_('...Finished'), None)
             self.txtout.AppendText(endmsg + '\n')
             self.barprog.SetValue(0)
@@ -429,7 +456,8 @@ class LogOut(wx.Panel):
         self.abort = False
         self.error = False
         self.logname = None
-        self.result = None
+        self.result.clear()
+        self.count = 0
         # self.txtout.Clear()
         # self.labperc.SetLabel('')
         self.parent.panelShown(self.previus)  # retrieve at previusly panel

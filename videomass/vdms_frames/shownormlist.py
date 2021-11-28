@@ -1,31 +1,34 @@
 # -*- coding: UTF-8 -*-
+"""
+Name: shownormlist.py
+Porpose: Show audio volume data list (PEAK/RMS only)
+Compatibility: Python3, wxPython4
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: Nov.26.2021
+Code checker:
+    - flake8: --ignore F821, W504, F401
+    - pylint: --ignore E0602, E1101, C0415, E0401, C0103
+########################################################
 
-# Name: shownormlist.py
-# Porpose: Show audio volume data list (PEAK/RMS only)
-# Compatibility: Python3, wxPython4
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Jan.16.2021 *-pycodestyle- compatible*
-#########################################################
+This file is part of Videomass.
 
-# This file is part of Videomass.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import wx
+from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 
 
 class NormalizationList(wx.MiniFrame):
@@ -39,17 +42,20 @@ class NormalizationList(wx.MiniFrame):
         detailslist is a list of items list.
 
         """
-        wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
-                              wx.CLOSE_BOX | wx.SYSTEM_MENU
-                              )
-        """constructor"""
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
-                              wx.BORDER_THEME)
+        wx.MiniFrame.__init__(self,
+                              None,
+                              style=wx.RESIZE_BORDER
+                              | wx.CAPTION
+                              | wx.CLOSE_BOX
+                              | wx.SYSTEM_MENU)
+        self.panel = wx.Panel(self,
+                              wx.ID_ANY,
+                              style=wx.TAB_TRAVERSAL
+                              | wx.BORDER_THEME)
         normlist = wx.ListCtrl(self.panel,
                                wx.ID_ANY,
-                               style=wx.LC_REPORT |
-                               wx.SUNKEN_BORDER
-                               )
+                               style=wx.LC_REPORT
+                               | wx.SUNKEN_BORDER)
         # ----------------------Properties----------------------#
         self.SetTitle(_(title))
         self.SetMinSize((850, 400))
@@ -178,29 +184,74 @@ class NormalizationList(wx.MiniFrame):
         """
         event on button red
         """
-        wx.MessageBox(_("...It means the resulting audio will be clipped, "
-                        "because its volume is higher than the maximum 0 db "
-                        "level. This results in data loss and the audio may "
-                        "sound distorted."),
-                      _("When it's red..."), wx.ICON_INFORMATION, self)
+        msg = (_("When it's red...\n\n"
+                 "...It means the resulting audio will be clipped,\n"
+                 "because its volume is higher than the maximum 0 db\n"
+                 "level. This results in data loss and the audio may\n"
+                 "sound distorted."))
+
+        win = NormalTransientPopup(self,
+                                   wx.SIMPLE_BORDER,
+                                   msg,
+                                   (233, 80, 77),
+                                   (0, 0, 0))
+
+        # Show the popup right below or above the button
+        # depending on available screen space...
+        btn = event.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        win.Position(pos, (0, sz[1]))
+
+        win.Popup()
     # --------------------------------------------------------------#
 
     def on_grey(self, event):
         """
         event on button grey
         """
-        wx.MessageBox(_("...It means the resulting audio will not change, "
-                        "because it's equal to the source."),
-                      _("When it's grey..."), wx.ICON_INFORMATION, self)
+        msg = (_("When it's grey...\n\n"
+                 "...It means the resulting audio will not change,\n"
+                 "because it's equal to the source."))
+
+        win = NormalTransientPopup(self,
+                                   wx.SIMPLE_BORDER,
+                                   msg,
+                                   (100, 100, 100),
+                                   (250, 250, 250))
+
+        # Show the popup right below or above the button
+        # depending on available screen space...
+        btn = event.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        win.Position(pos, (0, sz[1]))
+
+        win.Popup()
     # --------------------------------------------------------------#
 
     def on_yellow(self, event):
         """
         event on button yellow
         """
-        wx.MessageBox(_("...It means an audio signal will be produced with "
-                        "a lower volume than the original."),
-                      _("When it's yellow..."), wx.ICON_INFORMATION, self)
+        msg = (_("When it's yellow...\n\n"
+                 "...It means an audio signal will be produced with\n"
+                 "a lower volume than the original."))
+
+        win = NormalTransientPopup(self,
+                                   wx.SIMPLE_BORDER,
+                                   msg,
+                                   (198, 180, 38),
+                                   (0, 0, 0))
+
+        # Show the popup right below or above the button
+        # depending on available screen space...
+        btn = event.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        win.Position(pos, (0, sz[1]))
+
+        win.Popup()
     # --------------------------------------------------------------#
 
     def on_close(self, event):

@@ -7,12 +7,18 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Nov 26, 2021 V.3.5.3
+Nov 27, 2021 V.3.5.3
 
   * Update Spanish translation from @katnatek
   * Changed some windows from mini-frame to dialog to make more confortable
     re-size adjustment.
-  * fixed Videomass no longer restarts after disabling the downloader #45
+  * fixed Videomass no longer restarts after disabling the downloader #45 .
+  * Improved button popups in the audio normalization window #47.
+  * Improved layout of `widget_utils.PopupDialog` + added
+    `ActivityIndicator` #47 .
+  * Improved end text messages on Process Log `wx.TextCtrl`.
+  * Added a Notification Area (aka "system tray") to display messages at the
+    end of processes #47 .
 
 +------------------------------------+
 Nov 22, 2021 V.3.5.2
