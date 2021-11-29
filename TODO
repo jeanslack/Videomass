@@ -18,8 +18,6 @@ URGENCY: high
 
 - [CODE IMPROVING] Need code refactoring
 
-- [MINI FRAMES] change some mini-frame to dialog to make more confortable re-size adjustment.
-
 ---------------
 URGENCY: medium
 ----------------
@@ -30,10 +28,6 @@ URGENCY: low
 
 - Crop filter: Make combobox to choose other colors for the crop
   rectangle selection.
-
-- Youtube-Downloader: With "default" option it downloads the best quality
-  precompiled video, which isn't the best quality overall. With "download
-  audio and video splitted" it downloads the best quality a/v streams. [FIXED]
 
 
 

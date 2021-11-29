@@ -7,7 +7,22 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Nov 24, 2021 V.3.5.2
+Nov 29, 2021 V.3.5.3
+
+  * Update Spanish translation from @katnatek
+  * Changed some windows from mini-frame to dialog to make more confortable
+    re-size adjustment.
+  * fixed Videomass no longer restarts after disabling the downloader #45 .
+  * Improved button popups in the audio normalization window #47.
+  * Changed vdms_dialogs/popup.py to vdms_dialogs/widget_utils.py
+  * Improved layout of `widget_utils.PopupDialog` + added
+    `ActivityIndicator` #47 .
+  * Improved debug text messages on Process Log panel.
+  * Added a Notification Area (aka "system tray") to display messages at the
+    end of processes #47 .
+
++------------------------------------+
+Nov 22, 2021 V.3.5.2
 
   * Fixed `command not found` issue. In some cases using pip to install
     Videomass the directory is not added to the $PATH.

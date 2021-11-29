@@ -6,10 +6,10 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.05.2021
+Rev: Nov.25.2021
 Code checker:
-    - pylint: --ignore E0602, E1101, C0415, E0611, R0901,
-    - pycodestyle
+    - flake8: --ignore F821, W504, F401
+    - pylint: --ignore E0602, E1101, C0415, E0401, C0103
 
 This file is part of Videomass.
 
@@ -29,7 +29,7 @@ This file is part of Videomass.
 import wx
 
 
-class YdlMediaInfo(wx.MiniFrame):
+class YdlMediaInfo(wx.Dialog):
     """
     Display streams information from youtube-dl data.
 
@@ -42,19 +42,17 @@ class YdlMediaInfo(wx.MiniFrame):
         self.data = data
         get = wx.GetApp()  # get data from bootstrap
         colorscheme = get.appset['icontheme'][1]
-        wx.MiniFrame.__init__(self, None, style=wx.CAPTION | wx.CLOSE_BOX |
-                              wx.RESIZE_BORDER | wx.SYSTEM_MENU
-                              )
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
-                              wx.BORDER_THEME)
+        wx.Dialog.__init__(self, None,
+                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
+                           )
         # Add widget controls
-        self.url_select = wx.ListCtrl(self.panel,
+        self.url_select = wx.ListCtrl(self,
                                       wx.ID_ANY,
                                       style=wx.LC_REPORT |
                                       wx.SUNKEN_BORDER |
                                       wx.LC_SINGLE_SEL
                                       )
-        self.textctrl = wx.TextCtrl(self.panel,
+        self.textctrl = wx.TextCtrl(self,
                                     wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
                                     wx.TE_READONLY |
@@ -62,7 +60,7 @@ class YdlMediaInfo(wx.MiniFrame):
                                     )
         self.textctrl.SetBackgroundColour(colorscheme['BACKGRD'])
         self.textctrl.SetDefaultStyle(wx.TextAttr(colorscheme['TXT3']))
-        button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
+        button_close = wx.Button(self, wx.ID_CLOSE, "")
 
         # ----------------------Properties----------------------#
         self.SetTitle(_('Statistics viewer'))
@@ -92,7 +90,7 @@ class YdlMediaInfo(wx.MiniFrame):
         grid_buttons = wx.GridSizer(1, 1, 0, 0)
         grid_buttons.Add(button_close, 1, wx.ALL, 5)
         sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
-        self.panel.SetSizer(sizer_1)
+        self.SetSizer(sizer_1)
         sizer_1.Fit(self)
         self.Layout()
 

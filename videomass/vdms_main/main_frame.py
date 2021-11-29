@@ -37,8 +37,8 @@ from videomass.vdms_dialogs import infoprg
 from videomass.vdms_dialogs import videomass_check_version
 from videomass.vdms_frames import while_playing
 from videomass.vdms_frames import ffmpeg_search
-from videomass.vdms_frames.mediainfo import Mediainfo
-from videomass.vdms_frames.showlogs import ShowLogs
+from videomass.vdms_dialogs.mediainfo import Mediainfo
+from videomass.vdms_dialogs.showlogs import ShowLogs
 from videomass.vdms_panels import timeline
 from videomass.vdms_panels import choose_topic
 from videomass.vdms_panels import filedrop
@@ -472,7 +472,7 @@ class MainFrame(wx.Frame):
         dscrp = (_("Configuration folder"),
                  _("Opens the Videomass configuration folder"))
         openconfdir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Log folder"),
+        dscrp = (_("Logs folder"),
                  _("Opens the Videomass log folder, if exists"))
         openlogdir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         dscrp = (_("Cache folder"),
@@ -809,7 +809,7 @@ class MainFrame(wx.Frame):
 
         name = 'Videomass-presets-%s.tar.gz' % tarball[0].split('/v')[-1]
         pathname = os.path.join(path, name)
-        msg = _('\nWait....\nThe archive is being downloaded\n')
+        msg = _('Wait....\nThe archive is being downloaded')
         download = io_tools.get_presets(tarball[0], pathname, msg)
 
         if download[1]:

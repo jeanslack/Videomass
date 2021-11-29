@@ -1,15 +1,15 @@
 # -*- coding: UTF-8 -*-
 """
-Name: popup.py
-Porpose: shows a small waiting dialogue
+Name: widget_utils.py
+Porpose: Features a set of useful wx widgets to use dynamically
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: April.06.2020
+Rev: Nov.27.2021
 Code checker:
-    flake8: --ignore F821, W504
-    pylint: --ignore E0602, E1101
+    - flake8: --ignore F821, W504, F401
+    - pylint: --ignore E0602, E1101, C0415, E0401, C0103
 
 This file is part of Videomass.
 
@@ -28,7 +28,50 @@ This file is part of Videomass.
 """
 
 import wx
+import wx.adv
 from pubsub import pub
+
+
+class NormalTransientPopup(wx.PopupTransientWindow):
+    """
+    Adds a bit of text and mouse movement to the wx.PopupWindow
+    """
+    def __init__(self, parent, style, message, backgrdcol, foregrdcol):
+        wx.PopupTransientWindow.__init__(self, parent, style)
+        panel = wx.Panel(self)
+        panel.SetBackgroundColour(backgrdcol)
+        st = wx.StaticText(panel, -1, message)
+        st.SetForegroundColour(wx.Colour(foregrdcol))
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(st, 0, wx.ALL, 5)
+        panel.SetSizer(sizer)
+
+        sizer.Fit(panel)
+        sizer.Fit(self)
+        self.Layout()
+
+
+def notification_area(title, message, flag, timeout=5):
+    """
+    Show the user a message on system tray (Notification Area)
+    """
+    notify = wx.adv.NotificationMessage(title=title,
+                                        message=message,
+                                        parent=None,
+                                        flags=flag
+                                        )
+
+    # Various options can be set after the message is created if desired.
+    # notify.SetFlags(# wx.ICON_INFORMATION
+    #                 wx.ICON_WARNING
+    #                 # wx.ICON_ERROR
+    #                 )
+    # notify.SetTitle("Wooot")
+    # notify.SetMessage("It's a message!")
+    # notify.SetParent(self)
+
+    notify.Show(timeout=timeout)  # 1 for short timeout, 100 for long timeout
+    # notify.Close()       # Hides the notification.
 
 
 class PopupDialog(wx.Dialog):
@@ -50,17 +93,23 @@ class PopupDialog(wx.Dialog):
         # Add sizers
         box = wx.BoxSizer(wx.VERTICAL)
         box2 = wx.BoxSizer(wx.HORIZONTAL)
-        # Add an Info graphic
-        bitmap = wx.Bitmap(32, 32)
-        bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION,
-                                          wx.ART_MESSAGE_BOX, (32, 32)
-                                          )
-        graphic = wx.StaticBitmap(self, -1, bitmap)
-        box2.Add(graphic, 0, wx.EXPAND | wx.ALL, 10)
+
+        if hasattr(wx, 'ActivityIndicator'):  # wxPython => 4.1
+            # activity add indicator
+            ai = wx.ActivityIndicator(self)
+            ai.Start()
+            box2.Add(ai, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL | wx.ALL, 10)
         # Add the message
-        message = wx.StaticText(self, -1, msg)
+        message = wx.StaticText(self, -1, msg, style=wx.ALIGN_CENTRE_VERTICAL)
         box2.Add(message, 0, wx.EXPAND | wx.ALL, 10)
         box.Add(box2, 0, wx.EXPAND)
+        # Add an Info graphic
+        bitmap = wx.Bitmap(48, 48)
+        bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION,
+                                          wx.ART_MESSAGE_BOX, (48, 48)
+                                          )
+        graphic = wx.StaticBitmap(self, -1, bitmap)
+        box2.Add(graphic, 0, wx.TOP | wx.ALL, 10)
         # Handle layout
         self.SetAutoLayout(True)
         self.SetSizer(box)
@@ -84,4 +133,5 @@ class PopupDialog(wx.Dialog):
         """
 
         # self.Destroy() # do not work
+        # self.ai.Stop()
         self.EndModal(1)

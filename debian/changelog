@@ -1,3 +1,19 @@
+videomass (3.5.3-1) UNRELEASED; urgency=medium
+
+  * Update Spanish translation from @katnatek
+  * Changed some windows from mini-frame to dialog to make more confortable
+    re-size adjustment.
+  * fixed Videomass no longer restarts after disabling the downloader #45 .
+  * Improved button popups in the audio normalization window #47.
+  * Changed vdms_dialogs/popup.py to vdms_dialogs/widget_utils.py
+  * Improved layout of `widget_utils.PopupDialog` + added
+    `ActivityIndicator` #47 .
+  * Improved debug text messages on Process Log panel.
+  * Added a Notification Area (aka "system tray") to display messages at the
+    end of processes #47 .
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 29 Nov 2021 16:43:00 +0200
+
 videomass (3.5.2-1) UNRELEASED; urgency=medium
 
   * Fixed `command not found` issue. In some cases using pip to install

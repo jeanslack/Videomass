@@ -48,7 +48,7 @@ from videomass.vdms_frames import (ffmpeg_conf,
                                    ffmpeg_formats,
                                    ffmpeg_codecs,
                                    )
-from videomass.vdms_dialogs.popup import PopupDialog
+from videomass.vdms_dialogs.widget_utils import PopupDialog
 from videomass.vdms_io.make_filelog import write_log  # write initial log
 
 
@@ -152,7 +152,7 @@ def volume_detect_process(filelist, time_seq, audiomap):
                                 )
     dlgload = PopupDialog(None,
                           _("Videomass - Loading..."),
-                          _("\nWait....\nAudio peak analysis.\n"))
+                          _("Wait....\nAudio peak analysis."))
     dlgload.ShowModal()
     # thread.join()
     data = thread.data
@@ -274,7 +274,7 @@ def youtubedl_getstatistics(url):
     thread = YdlExtractInfo(url)
     dlgload = PopupDialog(None,
                           _("Videomass - Loading..."),
-                          _("\nWait....\nRetrieving required data.\n"))
+                          _("Wait....\nRetrieving required data."))
     dlgload.ShowModal()
     # thread.join()
     data = thread.data
@@ -341,7 +341,7 @@ def appimage_update_youtube_dl(appimage):
 
     thread = youtubedlupdater.UpdateYoutubedlAppimage(log, appimage)
 
-    waitmsg = _('...Be patient, this can take a few minutes.')
+    waitmsg = _('Be patient...\nthis can take a few minutes.')
 
     dlgload = PopupDialog(None, _("Videomass - Updating..."), waitmsg)
     dlgload.ShowModal()

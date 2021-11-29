@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 3.5.2\n"
+"Project-Id-Version: Videomass 3.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-21 01:31+0100\n"
-"PO-Revision-Date: 2021-11-22 11:27+0100\n"
+"POT-Creation-Date: 2021-11-29 10:09+0100\n"
+"PO-Revision-Date: 2021-11-29 10:10+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -816,7 +816,7 @@ msgstr "Fatto!"
 msgid "Cross-platform graphical interface for FFmpeg and youtube-dl.\n"
 msgstr "Interfaccia grafica multi-piattaforma per FFmpeg e youtube-dl.\n"
 
-#: ../vdms_dialogs/playlist_indexing.py:51 ../vdms_frames/ydl_mediainfo.py:72
+#: ../vdms_dialogs/playlist_indexing.py:51 ../vdms_dialogs/ydl_mediainfo.py:70
 msgid "URL"
 msgstr "URL"
 
@@ -844,7 +844,7 @@ msgstr ""
 msgid "Playlist video items to download"
 msgstr "Elementi video della playlist da scaricare"
 
-#: ../vdms_dialogs/playlist_indexing.py:109 ../vdms_panels/youtubedl_ui.py:339
+#: ../vdms_dialogs/playlist_indexing.py:109 ../vdms_panels/youtubedl_ui.py:345
 msgid "Help viewer"
 msgstr "Visualizzatore di aiuto"
 
@@ -1173,7 +1173,7 @@ msgid ""
 "Change only if you know what you are doing.\n"
 msgstr ""
 "Le seguenti impostazioni influenzano i messaggi di output\n"
-"e i messaggi di log durante i processi di transcodifica.\n"
+"e i messaggi di registro durante i processi di transcodifica.\n"
 "Modificale solo se sai cosa stai facendo.\n"
 
 #: ../vdms_dialogs/settings.py:455
@@ -1249,6 +1249,88 @@ msgstr ""
 "\n"
 "Questo è Videomass v.{0}\n"
 "\n"
+
+#: ../vdms_dialogs/ydl_mediainfo.py:66
+msgid "Statistics viewer"
+msgstr "Visualizzatore di statistiche"
+
+#: ../vdms_dialogs/ydl_mediainfo.py:69
+msgid "TITLE SELECTION"
+msgstr "SELEZIONE TITOLO"
+
+#: ../vdms_dialogs/mediainfo.py:47
+msgid "Display of selected items in text format"
+msgstr "Visualizzazione degli elementi selezionati in formato testo"
+
+#: ../vdms_dialogs/mediainfo.py:48
+msgid "Select items to view them in text format"
+msgstr "Seleziona gli elementi per visualizzarli in formato testo"
+
+#: ../vdms_dialogs/mediainfo.py:86
+msgid "Data Format"
+msgstr "Formato"
+
+#: ../vdms_dialogs/mediainfo.py:108
+msgid "Video Stream"
+msgstr "Flusso Video"
+
+#: ../vdms_dialogs/mediainfo.py:129
+msgid "Audio Streams"
+msgstr "Flussi Audio"
+
+#: ../vdms_dialogs/mediainfo.py:150
+msgid "Subtitle Streams"
+msgstr "Flussi Sottotitoli"
+
+#: ../vdms_dialogs/mediainfo.py:154
+msgid "Enable text format"
+msgstr "Attiva formato testo"
+
+#: ../vdms_dialogs/mediainfo.py:170
+msgid "FILE SELECTION"
+msgstr "SELEZIONE FILE"
+
+#: ../vdms_dialogs/mediainfo.py:172 ../vdms_dialogs/mediainfo.py:175
+#: ../vdms_dialogs/mediainfo.py:178 ../vdms_dialogs/mediainfo.py:181
+msgid "References"
+msgstr "Riferimenti"
+
+#: ../vdms_dialogs/mediainfo.py:173 ../vdms_dialogs/mediainfo.py:176
+#: ../vdms_dialogs/mediainfo.py:179 ../vdms_dialogs/mediainfo.py:182
+msgid "Parameters"
+msgstr "Parametri"
+
+#: ../vdms_dialogs/mediainfo.py:199
+msgid "Multimedia streams analyzer"
+msgstr "Analizzatore di flussi multimediali"
+
+#: ../vdms_dialogs/showlogs.py:75
+msgid "Log file list"
+msgstr "Elenco file di registro"
+
+#: ../vdms_dialogs/showlogs.py:77
+msgid "Log messages"
+msgstr "Messaggi di registro"
+
+#: ../vdms_dialogs/showlogs.py:101
+msgid "Refresh all log files"
+msgstr "Aggiorna tutti i registri"
+
+#: ../vdms_dialogs/showlogs.py:106
+msgid "Clear selected log"
+msgstr "Cancella registro selezionato"
+
+#: ../vdms_dialogs/showlogs.py:116
+msgid "Showing log messages"
+msgstr "Visualizzazione dei messaggi di registro"
+
+#: ../vdms_dialogs/showlogs.py:143
+msgid "Select a log file"
+msgstr "Seleziona un file di registro"
+
+#: ../vdms_dialogs/showlogs.py:150
+msgid "Are you sure you want to clear the selected log file?"
+msgstr "Sei sicuro di voler cancellare il file di registro selezionato?"
 
 #: ../vdms_frames/ffmpeg_conf.py:66
 msgid "Informations"
@@ -1358,87 +1440,89 @@ msgstr "Formati File di FFmpeg"
 msgid "format"
 msgstr "formato"
 
-#: ../vdms_frames/shownormlist.py:57
+#: ../vdms_frames/shownormlist.py:63
 msgid "File name"
 msgstr "Nome file"
 
-#: ../vdms_frames/shownormlist.py:58
+#: ../vdms_frames/shownormlist.py:64
 msgid "Max volume dBFS"
 msgstr "Volume massimo dBFS"
 
-#: ../vdms_frames/shownormlist.py:59
+#: ../vdms_frames/shownormlist.py:65
 msgid "Mean volume dBFS"
 msgstr "Volume medio dBFS"
 
-#: ../vdms_frames/shownormlist.py:60
+#: ../vdms_frames/shownormlist.py:66
 msgid "Offset dBFS"
 msgstr "Offset dBFS"
 
-#: ../vdms_frames/shownormlist.py:61
+#: ../vdms_frames/shownormlist.py:67
 msgid "Result dBFS"
 msgstr "Risultato dBFS"
 
-#: ../vdms_frames/shownormlist.py:65
+#: ../vdms_frames/shownormlist.py:71
 msgid "Post-normalization references:"
 msgstr "Riferimenti post-normalizzazione:"
 
-#: ../vdms_frames/shownormlist.py:70
+#: ../vdms_frames/shownormlist.py:76
 msgid "=  Clipped peaks"
 msgstr "=  Picchi in clip"
 
-#: ../vdms_frames/shownormlist.py:75
+#: ../vdms_frames/shownormlist.py:81
 msgid "=  No changes"
 msgstr "=  Non cambia"
 
-#: ../vdms_frames/shownormlist.py:81
+#: ../vdms_frames/shownormlist.py:87
 msgid "=  Below max peak"
 msgstr "=  Sotto il picco max"
 
-#: ../vdms_frames/shownormlist.py:137 ../vdms_panels/av_conversions.py:1905
+#: ../vdms_frames/shownormlist.py:143 ../vdms_panels/av_conversions.py:1905
 msgid "RMS-based volume statistics"
 msgstr "Statistiche del volume basate su RMS"
 
-#: ../vdms_frames/shownormlist.py:159 ../vdms_panels/av_conversions.py:1903
+#: ../vdms_frames/shownormlist.py:165 ../vdms_panels/av_conversions.py:1903
 msgid "PEAK-based volume statistics"
 msgstr "Statistiche del volume basate sul PICCO"
 
-#: ../vdms_frames/shownormlist.py:181
+#: ../vdms_frames/shownormlist.py:187
 msgid ""
-"...It means the resulting audio will be clipped, because its volume is "
-"higher than the maximum 0 db level. This results in data loss and the audio "
-"may sound distorted."
+"When it's red...\n"
+"\n"
+"...It means the resulting audio will be clipped,\n"
+"because its volume is higher than the maximum 0 db\n"
+"level. This results in data loss and the audio may\n"
+"sound distorted."
 msgstr ""
-"...Significa che il risultato finale del segnale audio sarà tagliato, perché "
-"superiore al livello massimo di 0 db. Ciò comporterà la perdita di dati nel "
-"segnale audio e il suono potrebbe risultare distorto."
+"Quando è rosso...\n"
+"\n"
+"...Significa che il risultato finale del segnale audio\n"
+"sarà tagliato, perché superiore al livello massimo di 0 db.\n"
+"Ciò comporterà la perdita di dati nel segnale audio e\n"
+"il suono potrebbe risultare distorto."
 
-#: ../vdms_frames/shownormlist.py:185
-msgid "When it's red..."
-msgstr "Quando è rosso..."
-
-#: ../vdms_frames/shownormlist.py:192
+#: ../vdms_frames/shownormlist.py:213
 msgid ""
-"...It means the resulting audio will not change, because it's equal to the "
-"source."
+"When it's grey...\n"
+"\n"
+"...It means the resulting audio will not change,\n"
+"because it's equal to the source."
 msgstr ""
-"...Significa che il segnale audio non cambierà, perché uguale a quello di "
-"origine."
+"Quando è grigio...\n"
+"\n"
+"...Significa che il segnale audio non cambierà,\n"
+"perché uguale a quello di origine."
 
-#: ../vdms_frames/shownormlist.py:194
-msgid "When it's grey..."
-msgstr "Quando è grigio..."
-
-#: ../vdms_frames/shownormlist.py:201
+#: ../vdms_frames/shownormlist.py:237
 msgid ""
-"...It means an audio signal will be produced with a lower volume than the "
-"original."
+"When it's yellow...\n"
+"\n"
+"...It means an audio signal will be produced with\n"
+"a lower volume than the original."
 msgstr ""
-"...Significa che verrà prodotto un segnale audio con un volume inferiore a "
-"quello originale."
-
-#: ../vdms_frames/shownormlist.py:203
-msgid "When it's yellow..."
-msgstr "Quando è giallo..."
+"Quando è giallo...\n"
+"\n"
+"...Significa che verrà prodotto un segnale audio con\n"
+"un volume inferiore a quello originale."
 
 #: ../vdms_frames/while_playing.py:37
 msgid ""
@@ -1597,88 +1681,6 @@ msgstr ""
 "\n"
 "Prima, scegli un argomento nel menu a discesa"
 
-#: ../vdms_frames/mediainfo.py:44
-msgid "Display of selected items in text format"
-msgstr "Visualizzazione degli elementi selezionati in formato testo"
-
-#: ../vdms_frames/mediainfo.py:45
-msgid "Select items to view them in text format"
-msgstr "Seleziona gli elementi per visualizzarli in formato testo"
-
-#: ../vdms_frames/mediainfo.py:89
-msgid "Data Format"
-msgstr "Formato"
-
-#: ../vdms_frames/mediainfo.py:111
-msgid "Video Stream"
-msgstr "Flusso Video"
-
-#: ../vdms_frames/mediainfo.py:132
-msgid "Audio Streams"
-msgstr "Flussi Audio"
-
-#: ../vdms_frames/mediainfo.py:153
-msgid "Subtitle Streams"
-msgstr "Flussi Sottotitoli"
-
-#: ../vdms_frames/mediainfo.py:157
-msgid "Enable text format"
-msgstr "Attiva formato testo"
-
-#: ../vdms_frames/mediainfo.py:169
-msgid "FILE SELECTION"
-msgstr "SELEZIONE FILE"
-
-#: ../vdms_frames/mediainfo.py:171 ../vdms_frames/mediainfo.py:174
-#: ../vdms_frames/mediainfo.py:177 ../vdms_frames/mediainfo.py:180
-msgid "References"
-msgstr "Riferimenti"
-
-#: ../vdms_frames/mediainfo.py:172 ../vdms_frames/mediainfo.py:175
-#: ../vdms_frames/mediainfo.py:178 ../vdms_frames/mediainfo.py:181
-msgid "Parameters"
-msgstr "Parametri"
-
-#: ../vdms_frames/mediainfo.py:198
-msgid "Multimedia streams analyzer"
-msgstr "Analizzatore di flussi multimediali"
-
-#: ../vdms_frames/showlogs.py:77
-msgid "Log file list"
-msgstr "Elenco file di registro"
-
-#: ../vdms_frames/showlogs.py:79
-msgid "Log messages"
-msgstr "Messaggi di registro"
-
-#: ../vdms_frames/showlogs.py:103
-msgid "Refresh all log files"
-msgstr "Aggiorna tutti i registri"
-
-#: ../vdms_frames/showlogs.py:108
-msgid "Clear selected log"
-msgstr "Cancella registro selezionato"
-
-#: ../vdms_frames/showlogs.py:118
-msgid "Showing log messages"
-msgstr "Visualizzazione dei messaggi di registro"
-
-#: ../vdms_frames/showlogs.py:145
-msgid "Select a log file"
-msgstr "Seleziona un file di log"
-
-#: ../vdms_frames/showlogs.py:152
-msgid "Are you sure you want to clear the selected log file?"
-msgstr "Sei sicuro di voler cancellare il file di registro selezionato?"
-
-#: ../vdms_frames/ydl_mediainfo.py:68
-msgid "Statistics viewer"
-msgstr "Visualizzatore di statistiche"
-
-#: ../vdms_frames/ydl_mediainfo.py:71
-msgid "TITLE SELECTION"
-msgstr "SELEZIONE TITOLO"
-
 #: ../vdms_io/checkup.py:50
 #, python-format
 msgid ""
@@ -1731,31 +1733,31 @@ msgstr "Caricamento in corso..."
 
 #: ../vdms_io/io_tools.py:155
 msgid ""
-"\n"
 "Wait....\n"
-"Audio peak analysis.\n"
+"Audio peak analysis."
 msgstr ""
-"\n"
 "Attendi....\n"
-"Analisi livello di picco.\n"
+"Analisi livello di picco."
 
 #: ../vdms_io/io_tools.py:277
 msgid ""
-"\n"
 "Wait....\n"
-"Retrieving required data.\n"
+"Retrieving required data."
 msgstr ""
-"\n"
 "Attendi....\n"
-"Recupero i dati richiesti.\n"
+"Recupero i dati richiesti."
 
 #: ../vdms_io/io_tools.py:322
 msgid "Videomass - Downloading..."
 msgstr "Download in corso..."
 
 #: ../vdms_io/io_tools.py:344
-msgid "...Be patient, this can take a few minutes."
-msgstr "...Siate pazienti, l'operazione può richiedere alcuni minuti."
+msgid ""
+"Be patient...\n"
+"this can take a few minutes."
+msgstr ""
+"Siate pazienti...\n"
+"l'operazione può richiedere alcuni minuti."
 
 #: ../vdms_io/io_tools.py:346
 msgid "Videomass - Updating..."
@@ -1806,7 +1808,7 @@ msgstr ""
 #: ../vdms_main/main_frame.py:1472 ../vdms_main/main_frame.py:1504
 #: ../vdms_main/main_frame.py:1527 ../vdms_main/main_frame.py:1582
 #: ../vdms_main/main_frame.py:1633 ../vdms_main/main_frame.py:1685
-#: ../vdms_panels/youtubedl_ui.py:495 ../vdms_panels/youtubedl_ui.py:723
+#: ../vdms_panels/youtubedl_ui.py:501 ../vdms_panels/youtubedl_ui.py:729
 msgid "Ready"
 msgstr "Pronto"
 
@@ -1978,7 +1980,7 @@ msgstr "Mostra l'ultima versione disponibile su github.com"
 
 #: ../vdms_main/main_frame.py:435
 msgid "Show Logs\tCtrl+L"
-msgstr "Mostra Logs\tCtrl+L"
+msgstr "Mostra Registri\tCtrl+L"
 
 #: ../vdms_main/main_frame.py:436
 msgid "Viewing log messages"
@@ -2053,12 +2055,12 @@ msgid "Opens the Videomass configuration folder"
 msgstr "Apre la cartella di configurazione di Videomass"
 
 #: ../vdms_main/main_frame.py:475
-msgid "Log folder"
-msgstr "Cartella dei log"
+msgid "Logs folder"
+msgstr "Cartella dei registri"
 
 #: ../vdms_main/main_frame.py:476
 msgid "Opens the Videomass log folder, if exists"
-msgstr "Apre la cartella dei log videomass, se presenti"
+msgstr "Apre la cartella dei registri, se presenti"
 
 #: ../vdms_main/main_frame.py:478
 msgid "Cache folder"
@@ -2248,13 +2250,11 @@ msgstr "Scegli una cartella per il download"
 
 #: ../vdms_main/main_frame.py:812
 msgid ""
-"\n"
 "Wait....\n"
-"The archive is being downloaded\n"
+"The archive is being downloaded"
 msgstr ""
-"\n"
 "Attendi....\n"
-"L'archivio è in fase di download\n"
+"L'archivio è in fase di download"
 
 #: ../vdms_main/main_frame.py:819
 #, python-brace-format
@@ -2541,7 +2541,7 @@ msgstr "Tune"
 msgid "Video Filters"
 msgstr "Filtri Video"
 
-#: ../vdms_panels/av_conversions.py:530 ../vdms_panels/youtubedl_ui.py:273
+#: ../vdms_panels/av_conversions.py:530 ../vdms_panels/youtubedl_ui.py:279
 msgid "Preview"
 msgstr "Anteprima"
 
@@ -3186,31 +3186,31 @@ msgstr ""
 "È necessario spuntare almeno un \"Codice Formato\" per ciascun URL "
 "selezionato in verde."
 
-#: ../vdms_panels/youtubedl_ui.py:158
+#: ../vdms_panels/youtubedl_ui.py:164
 msgid "Precompiled Videos"
 msgstr "Video Precompilati"
 
-#: ../vdms_panels/youtubedl_ui.py:159
+#: ../vdms_panels/youtubedl_ui.py:165
 msgid "Download videos by resolution"
 msgstr "Scarica video in base alla risoluzione"
 
-#: ../vdms_panels/youtubedl_ui.py:160
+#: ../vdms_panels/youtubedl_ui.py:166
 msgid "Download split audio and video"
 msgstr "Scarica audio e video divisi"
 
-#: ../vdms_panels/youtubedl_ui.py:161
+#: ../vdms_panels/youtubedl_ui.py:167
 msgid "Download Audio only"
 msgstr "Scarica solo il file audio"
 
-#: ../vdms_panels/youtubedl_ui.py:162
+#: ../vdms_panels/youtubedl_ui.py:168
 msgid "Download by format code"
 msgstr "Scarica per codice formato"
 
-#: ../vdms_panels/youtubedl_ui.py:202
+#: ../vdms_panels/youtubedl_ui.py:208
 msgid "Options"
 msgstr "Opzioni"
 
-#: ../vdms_panels/youtubedl_ui.py:236
+#: ../vdms_panels/youtubedl_ui.py:242
 msgid ""
 "When not available, the chosen video resolution will be replaced with the "
 "closest one"
@@ -3218,41 +3218,41 @@ msgstr ""
 "Quando non disponibile, la risoluzione video selezionata verrà sostituita "
 "con quella più vicina"
 
-#: ../vdms_panels/youtubedl_ui.py:240
+#: ../vdms_panels/youtubedl_ui.py:246
 msgid "Preferred video format"
 msgstr "Formato video preferito"
 
-#: ../vdms_panels/youtubedl_ui.py:279
+#: ../vdms_panels/youtubedl_ui.py:285
 msgid "Download all videos in playlist"
 msgstr ""
 "Scarica tutti i video\n"
 "della playlist"
 
-#: ../vdms_panels/youtubedl_ui.py:284
+#: ../vdms_panels/youtubedl_ui.py:290
 msgid "Playlist Editor"
 msgstr "Editor di Playlist"
 
-#: ../vdms_panels/youtubedl_ui.py:291
+#: ../vdms_panels/youtubedl_ui.py:297
 msgid "Embed thumbnail in audio file"
 msgstr ""
 "Aggiungi miniatura\n"
 "nel file audio"
 
-#: ../vdms_panels/youtubedl_ui.py:295
+#: ../vdms_panels/youtubedl_ui.py:301
 msgid "Add metadata to file"
 msgstr "Aggiungi i meta dati al file"
 
-#: ../vdms_panels/youtubedl_ui.py:299
+#: ../vdms_panels/youtubedl_ui.py:305
 msgid "Write subtitles to video"
 msgstr "Scrivi sottotitoli al video"
 
-#: ../vdms_panels/youtubedl_ui.py:304
+#: ../vdms_panels/youtubedl_ui.py:310
 msgid "Prevent overwriting files"
 msgstr ""
 "Impedisci la sovrascrittura\n"
 "dei file"
 
-#: ../vdms_panels/youtubedl_ui.py:309
+#: ../vdms_panels/youtubedl_ui.py:315
 msgid ""
 "Include the video ID\n"
 "in the file names"
@@ -3260,21 +3260,21 @@ msgstr ""
 "Includi l'ID video nei\n"
 "nomi del file"
 
-#: ../vdms_panels/youtubedl_ui.py:315
+#: ../vdms_panels/youtubedl_ui.py:321
 msgid "Restrict file names"
 msgstr "Limita i nomi dei file"
 
-#: ../vdms_panels/youtubedl_ui.py:363 ../vdms_panels/youtubedl_ui.py:462
-#: ../vdms_panels/youtubedl_ui.py:478
+#: ../vdms_panels/youtubedl_ui.py:369 ../vdms_panels/youtubedl_ui.py:468
+#: ../vdms_panels/youtubedl_ui.py:484
 msgid "Play selected url"
 msgstr "Riproduci l'URL selezionato"
 
-#: ../vdms_panels/youtubedl_ui.py:490
+#: ../vdms_panels/youtubedl_ui.py:496
 msgid "An item must be selected in the URLs checklist"
 msgstr ""
 "È necessario selezionare un elemento nell'elenco di controllo degli URL"
 
-#: ../vdms_panels/youtubedl_ui.py:506
+#: ../vdms_panels/youtubedl_ui.py:512
 #, python-brace-format
 msgid ""
 "Only one video can be played at a time.\n"
@@ -3287,43 +3287,43 @@ msgstr ""
 "'{0}' non supportato:\n"
 "'{1}'"
 
-#: ../vdms_panels/youtubedl_ui.py:536
+#: ../vdms_panels/youtubedl_ui.py:542
 msgid "Format Code"
 msgstr "Codice Formato"
 
-#: ../vdms_panels/youtubedl_ui.py:537 ../vdms_panels/youtubedl_ui.py:644
+#: ../vdms_panels/youtubedl_ui.py:543 ../vdms_panels/youtubedl_ui.py:650
 msgid "Url"
 msgstr "Url"
 
-#: ../vdms_panels/youtubedl_ui.py:538 ../vdms_panels/youtubedl_ui.py:645
+#: ../vdms_panels/youtubedl_ui.py:544 ../vdms_panels/youtubedl_ui.py:651
 msgid "Title"
 msgstr "Titolo"
 
-#: ../vdms_panels/youtubedl_ui.py:539
+#: ../vdms_panels/youtubedl_ui.py:545
 msgid "Extension"
 msgstr "Estensione"
 
-#: ../vdms_panels/youtubedl_ui.py:540
+#: ../vdms_panels/youtubedl_ui.py:546
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: ../vdms_panels/youtubedl_ui.py:541
+#: ../vdms_panels/youtubedl_ui.py:547
 msgid "Video Codec"
 msgstr "Codec Video"
 
-#: ../vdms_panels/youtubedl_ui.py:542
+#: ../vdms_panels/youtubedl_ui.py:548
 msgid "fps"
 msgstr "fps"
 
-#: ../vdms_panels/youtubedl_ui.py:543
+#: ../vdms_panels/youtubedl_ui.py:549
 msgid "Audio Codec"
 msgstr "Codec Audio"
 
-#: ../vdms_panels/youtubedl_ui.py:544 ../vdms_panels/filedrop.py:222
+#: ../vdms_panels/youtubedl_ui.py:550 ../vdms_panels/filedrop.py:222
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../vdms_panels/youtubedl_ui.py:580
+#: ../vdms_panels/youtubedl_ui.py:586
 #, python-brace-format
 msgid ""
 "ERROR: Unable to get format codes.\n"
@@ -3336,11 +3336,11 @@ msgstr ""
 "URL non supportato:\n"
 "'{0}'"
 
-#: ../vdms_panels/youtubedl_ui.py:646
+#: ../vdms_panels/youtubedl_ui.py:652
 msgid "Quality"
 msgstr "Qualità"
 
-#: ../vdms_panels/youtubedl_ui.py:703
+#: ../vdms_panels/youtubedl_ui.py:709
 #, python-brace-format
 msgid ""
 "Unable to get format codes on '{0}'\n"
@@ -3353,23 +3353,23 @@ msgstr ""
 "'{0}' Non supportato:\n"
 "'{1}'"
 
-#: ../vdms_panels/youtubedl_ui.py:860
+#: ../vdms_panels/youtubedl_ui.py:866
 msgid "URLs have no playlist references"
 msgstr "Gli URL non hanno riferimenti a playlist"
 
-#: ../vdms_panels/youtubedl_ui.py:986
+#: ../vdms_panels/youtubedl_ui.py:992
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr "Gli URL contengono playlist. Sei sicuro di voler continuare?"
 
-#: ../vdms_panels/youtubedl_ui.py:988 ../vdms_panels/youtubedl_ui.py:994
-#: ../vdms_panels/long_processing_task.py:419
+#: ../vdms_panels/youtubedl_ui.py:994 ../vdms_panels/youtubedl_ui.py:1000
+#: ../vdms_panels/long_processing_task.py:445
 #: ../vdms_panels/presets_manager.py:492 ../vdms_panels/presets_manager.py:535
 #: ../vdms_panels/presets_manager.py:603 ../vdms_panels/presets_manager.py:629
 #: ../vdms_panels/presets_manager.py:771 ../vdms_panels/presets_manager.py:804
 msgid "Please confirm"
 msgstr "Prego confermare"
 
-#: ../vdms_panels/youtubedl_ui.py:992
+#: ../vdms_panels/youtubedl_ui.py:998
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "Gli URL contengono canali. Sei sicuro di voler continuare?"
 
@@ -3444,79 +3444,83 @@ msgstr "Nessun file selezionato"
 msgid "Add Files"
 msgstr "Aggiungi Files"
 
-#: ../vdms_panels/long_processing_task.py:81
-msgid "[Videomass]: SUCCESS !\n"
-msgstr "[Videomass]: SUCCESSO !\n"
-
-#: ../vdms_panels/long_processing_task.py:82
-msgid "[Videomass]: FAILED !\n"
-msgstr "[Videomass]: FALLITO !\n"
-
-#: ../vdms_panels/long_processing_task.py:83
-msgid ""
-"\n"
-"[Videomass]: Sorry, task failed !\n"
-msgstr ""
-"\n"
-" [Videomass]: Spiacente, attività non riuscita !\n"
-
-#: ../vdms_panels/long_processing_task.py:84
-msgid ""
-"\n"
-"[Videomass]: Interrupted Process !\n"
-msgstr ""
-"\n"
-"[Videomass]: Processo Interrotto !\n"
-
 #: ../vdms_panels/long_processing_task.py:85
-msgid ""
-"\n"
-"[Videomass]: Successfully completed !\n"
-msgstr ""
-"\n"
-"[Videomass]: Completato con successo !\n"
+msgid "[Videomass]: SUCCESS !"
+msgstr "[Videomass]: SUCCESSO !"
 
 #: ../vdms_panels/long_processing_task.py:86
-msgid ""
-"\n"
-"[Videomass]: completed, but not everything was successful.\n"
-msgstr ""
-"\n"
-"[Videomass]: Completato, ma non tutto è andato a buon fine.\n"
+msgid "[Videomass]: FAILED !"
+msgstr "[Videomass]: FALLITO !"
 
-#: ../vdms_panels/long_processing_task.py:112
+#: ../vdms_panels/long_processing_task.py:87
+msgid "Sorry, all task failed !"
+msgstr "Spiacente, tutte le attività sono fallite !"
+
+#: ../vdms_panels/long_processing_task.py:88
+msgid "The process was stopped due to a fatal error."
+msgstr "Il processo è stato interrotto a causa di un errore irreversibile."
+
+#: ../vdms_panels/long_processing_task.py:89
+msgid "Interrupted Process !"
+msgstr "Processo Interrotto !"
+
+#: ../vdms_panels/long_processing_task.py:90
+msgid "Successfully completed !"
+msgstr "Completato con successo !"
+
+#: ../vdms_panels/long_processing_task.py:91
+msgid "Not everything was successful."
+msgstr "Non tutto ha avuto successo."
+
+#: ../vdms_panels/long_processing_task.py:117
 msgid "Process log:"
 msgstr "Log di processo:"
 
-#: ../vdms_panels/long_processing_task.py:121
+#: ../vdms_panels/long_processing_task.py:126
 msgid "Suppress excess output"
 msgstr "Sopprime l'output in eccesso"
 
-#: ../vdms_panels/long_processing_task.py:125
+#: ../vdms_panels/long_processing_task.py:130
 msgid "Abort"
 msgstr "Interrompere"
 
-#: ../vdms_panels/long_processing_task.py:141
+#: ../vdms_panels/long_processing_task.py:146
 msgid "If activated, hides some output messages."
 msgstr "Se attivato, nasconde l'output di troppo."
 
-#: ../vdms_panels/long_processing_task.py:143
+#: ../vdms_panels/long_processing_task.py:148
 msgid "Stops current process"
 msgstr "Interrompe il processo corrente"
 
-#: ../vdms_panels/long_processing_task.py:380
+#: ../vdms_panels/long_processing_task.py:375
+msgid "Fatal Error !"
+msgstr "Errore Fatale !"
+
+#: ../vdms_panels/long_processing_task.py:386
+msgid "Get your files at the destination you specified"
+msgstr "Ottieni i tuoi file nella destinazione che hai specificato"
+
+#: ../vdms_panels/long_processing_task.py:394
+#: ../vdms_panels/long_processing_task.py:401
+msgid ""
+"Check the current output or read the related log file for more information."
+msgstr ""
+"Controlla l'output attuale o leggi il relativo file di registro per "
+"ulteriori informazioni."
+
+#: ../vdms_panels/long_processing_task.py:406
 msgid "...Finished"
 msgstr "...Terminato"
 
-#: ../vdms_panels/long_processing_task.py:395
+#: ../vdms_panels/long_processing_task.py:421
 msgid "wait... I'm aborting"
 msgstr "attendi... Sto interrompendo"
 
-#: ../vdms_panels/long_processing_task.py:398
+#: ../vdms_panels/long_processing_task.py:424
 msgid "...Interrupted"
 msgstr "...Interrotto"
 
-#: ../vdms_panels/long_processing_task.py:416
+#: ../vdms_panels/long_processing_task.py:442
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
@@ -3912,6 +3916,53 @@ msgstr "Il tempo massimo si riferisce al file con la durata maggiore"
 #: ../vdms_threads/two_pass_ebu.py:80 ../vdms_threads/two_pass.py:82
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' è installato sul tuo sistema?"
+
+#~ msgid "A notification from Videomass"
+#~ msgstr "Una notifica da Videomass"
+
+#~ msgid ""
+#~ "\n"
+#~ "[Videomass]: Sorry, task failed !\n"
+#~ msgstr ""
+#~ "\n"
+#~ " [Videomass]: Spiacente, attività non riuscita !\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "[Videomass]: An error has occurred !\n"
+#~ msgstr ""
+#~ "\n"
+#~ " [Videomass]: E' avvenuto un errore !\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "[Videomass]: Successfully completed !\n"
+#~ msgstr ""
+#~ "\n"
+#~ "[Videomass]: Completato con successo !\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "[Videomass]: completed, but not everything was successful.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "[Videomass]: Completato, ma non tutto è andato a buon fine.\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "An error has occurred !"
+#~ msgstr ""
+#~ "\n"
+#~ "E' avvenuto un errore !"
+
+#~ msgid "When it's red..."
+#~ msgstr "Quando è rosso..."
+
+#~ msgid "When it's grey..."
+#~ msgstr "Quando è grigio..."
+
+#~ msgid "When it's yellow..."
+#~ msgstr "Quando è giallo..."
 
 #~ msgid "User Memos"
 #~ msgstr "Memo Utente"

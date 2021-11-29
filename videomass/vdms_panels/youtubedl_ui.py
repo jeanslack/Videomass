@@ -32,7 +32,7 @@ import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_io import io_tools
 from videomass.vdms_utils.utils import format_bytes
 from videomass.vdms_utils.utils import timehuman
-from videomass.vdms_frames.ydl_mediainfo import YdlMediaInfo
+from videomass.vdms_dialogs.ydl_mediainfo import YdlMediaInfo
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_dialogs.playlist_indexing import Indexing
 
@@ -139,16 +139,16 @@ class Downloader(wx.Panel):
              ('p144'): ('worstvideo[height>=?144]+worstaudio/worst'),
              ('Worst video resolution'): ('worstvideo+worstaudio/worst'),
              }
-    if appdata['downloader'][0] == 'youtube_dl':
-        VPCOMP = {('Best precompiled video'): ('best'),
-                  ('Worst precompiled video'): ('worst'),
-                  }
-    elif appdata['downloader'][0] == 'yt_dlp':
-
+    if appdata['downloader'][0] == 'yt_dlp':
         VPCOMP = {('Best precompiled video'): ('best'),
                   ('Medium precompiled video'): ('18'),
                   ('Worst precompiled video'): ('worst'),
                   }
+    else:  # youtube-dl
+        VPCOMP = {('Best precompiled video'): ('best'),
+                  ('Worst precompiled video'): ('worst'),
+                  }
+
     AFORMATS = {("Default audio format"): ("best"),
                 ("wav"): ("wav"),
                 ("mp3"): ("mp3"),
