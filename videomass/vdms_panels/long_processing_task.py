@@ -82,13 +82,13 @@ class LogOut(wx.Panel):
     appdata = get.appset
 
     # used msg on text
-    MSG_done = _('[Videomass]: SUCCESS !\n')
-    MSG_failed = _('[Videomass]: FAILED !\n')
-    MSG_taskfailed = _('\nSorry, all task failed !')
-    MSG_fatalerror = _("\nThe process was stopped due to a fatal error.")
-    MSG_interrupted = _('\nInterrupted Process !')
-    MSG_completed = _('\nSuccessfully completed !')
-    MSG_unfinished = _('\nNot everything was successful.')
+    MSG_done = _('[Videomass]: SUCCESS !')
+    MSG_failed = _('[Videomass]: FAILED !')
+    MSG_taskfailed = _('Sorry, all task failed !')
+    MSG_fatalerror = _("The process was stopped due to a fatal error.")
+    MSG_interrupted = _('Interrupted Process !')
+    MSG_completed = _('Successfully completed !')
+    MSG_unfinished = _('Not everything was successful.')
 
     WHITE = '#fbf4f4'  # white for background status bar
     BLACK = '#060505'  # black for background status bar
@@ -218,7 +218,7 @@ class LogOut(wx.Panel):
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
             self.txtout.AppendText(f'{output}\n')
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['FAILED']))
-            self.txtout.AppendText(LogOut.MSG_failed)
+            self.txtout.AppendText(f"{LogOut.MSG_failed}\n")
             self.result.append('failed')
 
         elif status == 'WARNING':
@@ -280,7 +280,7 @@ class LogOut(wx.Panel):
 
         if not status == 0:  # error, exit status of the p.wait
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR1']))
-            self.txtout.AppendText(LogOut.MSG_failed)
+            self.txtout.AppendText(f"{LogOut.MSG_failed}\n")
             self.result.append('failed')
             return  # must be return here
 
@@ -336,7 +336,7 @@ class LogOut(wx.Panel):
         """
         if end == 'ok':
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['SUCCESS']))
-            self.txtout.AppendText(LogOut.MSG_done)
+            self.txtout.AppendText(f"{LogOut.MSG_done}\n")
             try:
                 if self.labperc.GetLabel()[1] != '100%':
                     newlab = self.labperc.GetLabel().split()
@@ -371,41 +371,40 @@ class LogOut(wx.Panel):
         """
         if self.error is True:
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
-            self.txtout.AppendText(LogOut.MSG_fatalerror + '\n')
-            notification_area(_("\nFatal Error !"), LogOut.MSG_fatalerror,
+            self.txtout.AppendText(f"\n{LogOut.MSG_fatalerror}\n")
+            notification_area(_("Fatal Error !"), LogOut.MSG_fatalerror,
                               wx.ICON_ERROR)
 
         elif self.abort is True:
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ABORT']))
-            self.txtout.AppendText(LogOut.MSG_interrupted + '\n')
+            self.txtout.AppendText(f"\n{LogOut.MSG_interrupted}\n")
 
         else:
             if not self.result:
                 endmsg = LogOut.MSG_completed
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
-                notification_area(endmsg,
-                                  _("Get your files at the "
-                                    "destination you specified"),
+                notification_area(endmsg, _("Get your files at the "
+                                            "destination you specified"),
                                   wx.ICON_INFORMATION,
                                   )
             else:
                 if len(self.result) == self.count:
                     endmsg = LogOut.MSG_taskfailed
                     self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
-                    notification_area(endmsg,
-                                      _("Please view the current log or "
-                                        "read the log file."),
+                    notification_area(endmsg, _("Check the current output "
+                                                "or read the related log "
+                                                "file for more information."),
                                       wx.ICON_ERROR,)
                 else:
                     endmsg = LogOut.MSG_unfinished
                     self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
-                    notification_area(endmsg,
-                                      _("Please view the current log or "
-                                        "read the log file."),
+                    notification_area(endmsg, _("Check the current output "
+                                                "or read the related log "
+                                                "file for more information."),
                                       wx.ICON_WARNING, timeout=10)
 
             self.parent.statusbar_msg(_('...Finished'), None)
-            self.txtout.AppendText(endmsg + '\n')
+            self.txtout.AppendText(f"\n{endmsg}\n")
             self.barprog.SetValue(0)
 
         self.txtout.AppendText('\n')

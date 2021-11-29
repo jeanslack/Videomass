@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-28 00:04+0100\n"
-"PO-Revision-Date: 2021-11-28 00:17+0100\n"
+"POT-Creation-Date: 2021-11-29 10:09+0100\n"
+"PO-Revision-Date: 2021-11-29 10:11+0100\n"
 "Last-Translator: \n"
 "Language-Team: j.alberto.vc@gmail.com\n"
 "Language: es\n"
@@ -3307,7 +3307,7 @@ msgstr ""
 "Las URLs contienen listas de reproducción. ¿Seguro que desea continuar?"
 
 #: ../vdms_panels/youtubedl_ui.py:994 ../vdms_panels/youtubedl_ui.py:1000
-#: ../vdms_panels/long_processing_task.py:442
+#: ../vdms_panels/long_processing_task.py:445
 #: ../vdms_panels/presets_manager.py:492 ../vdms_panels/presets_manager.py:535
 #: ../vdms_panels/presets_manager.py:603 ../vdms_panels/presets_manager.py:629
 #: ../vdms_panels/presets_manager.py:771 ../vdms_panels/presets_manager.py:804
@@ -3389,100 +3389,81 @@ msgstr "No se ha seleccionado archivo"
 msgid "Add Files"
 msgstr "Añadir Archivos"
 
-#: ../vdms_panels/long_processing_task.py:82
-msgid "[Videomass]: SUCCESS !\n"
-msgstr "[Videomass]: ¡EXITO !\n"
-
-#: ../vdms_panels/long_processing_task.py:83
-msgid "[Videomass]: FAILED !\n"
-msgstr "[Videomass]: ¡FALLO !\n"
-
-#: ../vdms_panels/long_processing_task.py:84
-msgid ""
-"\n"
-"Sorry, all task failed !"
-msgstr ""
-"\n"
-"¡Ha fallado la tarea !"
-
 #: ../vdms_panels/long_processing_task.py:85
-msgid ""
-"\n"
-"The process was stopped due to a fatal error."
-msgstr ""
+msgid "[Videomass]: SUCCESS !"
+msgstr "[Videomass]: ¡EXITO !"
 
 #: ../vdms_panels/long_processing_task.py:86
-msgid ""
-"\n"
-"Interrupted Process !"
-msgstr ""
-"\n"
-"¡Proceso Interrumpido !"
+msgid "[Videomass]: FAILED !"
+msgstr "[Videomass]: ¡FALLO !"
 
 #: ../vdms_panels/long_processing_task.py:87
-msgid ""
-"\n"
-"Successfully completed !"
-msgstr ""
-"\n"
-"¡Completado exitosamente !"
+msgid "Sorry, all task failed !"
+msgstr "¡Ha fallado la tarea !"
 
 #: ../vdms_panels/long_processing_task.py:88
-msgid ""
-"\n"
-"Not everything was successful."
+msgid "The process was stopped due to a fatal error."
 msgstr ""
-"\n"
-"No todo fue exitoso."
 
-#: ../vdms_panels/long_processing_task.py:114
+#: ../vdms_panels/long_processing_task.py:89
+msgid "Interrupted Process !"
+msgstr "¡Proceso Interrumpido !"
+
+#: ../vdms_panels/long_processing_task.py:90
+msgid "Successfully completed !"
+msgstr "¡Completado exitosamente !"
+
+#: ../vdms_panels/long_processing_task.py:91
+msgid "Not everything was successful."
+msgstr "No todo fue exitoso."
+
+#: ../vdms_panels/long_processing_task.py:117
 msgid "Process log:"
 msgstr "Registro del proceso:"
 
-#: ../vdms_panels/long_processing_task.py:123
+#: ../vdms_panels/long_processing_task.py:126
 msgid "Suppress excess output"
 msgstr "Elimina exceso de salida"
 
-#: ../vdms_panels/long_processing_task.py:127
+#: ../vdms_panels/long_processing_task.py:130
 msgid "Abort"
 msgstr "Abortar"
 
-#: ../vdms_panels/long_processing_task.py:143
+#: ../vdms_panels/long_processing_task.py:146
 msgid "If activated, hides some output messages."
 msgstr "Si se activa, algunos mensajes de salida se ocultan."
 
-#: ../vdms_panels/long_processing_task.py:145
+#: ../vdms_panels/long_processing_task.py:148
 msgid "Stops current process"
 msgstr "Detener proceso actual"
 
-#: ../vdms_panels/long_processing_task.py:371
-msgid ""
-"\n"
-"Fatal Error !"
+#: ../vdms_panels/long_processing_task.py:375
+msgid "Fatal Error !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:383
+#: ../vdms_panels/long_processing_task.py:386
 msgid "Get your files at the destination you specified"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:392
-#: ../vdms_panels/long_processing_task.py:399
-msgid "Please view the current log or read the log file."
+#: ../vdms_panels/long_processing_task.py:394
+#: ../vdms_panels/long_processing_task.py:401
+msgid ""
+"Check the current output or read the related log file for more information."
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:403
+#: ../vdms_panels/long_processing_task.py:406
 msgid "...Finished"
 msgstr "...Completado"
 
-#: ../vdms_panels/long_processing_task.py:418
+#: ../vdms_panels/long_processing_task.py:421
 msgid "wait... I'm aborting"
 msgstr "espere.. Abortando"
 
-#: ../vdms_panels/long_processing_task.py:421
+#: ../vdms_panels/long_processing_task.py:424
 msgid "...Interrupted"
 msgstr "...Interrumpido"
 
-#: ../vdms_panels/long_processing_task.py:439
+#: ../vdms_panels/long_processing_task.py:442
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"

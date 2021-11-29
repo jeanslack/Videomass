@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-28 00:04+0100\n"
-"PO-Revision-Date: 2021-11-28 00:22+0100\n"
+"POT-Creation-Date: 2021-11-29 10:09+0100\n"
+"PO-Revision-Date: 2021-11-29 10:15+0100\n"
 "Last-Translator: Roelof Berkepeis <roelof@imoma.eu>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -3372,7 +3372,7 @@ msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr "De URLs bevatten playlists. Wilt u toch doorgaan?"
 
 #: ../vdms_panels/youtubedl_ui.py:994 ../vdms_panels/youtubedl_ui.py:1000
-#: ../vdms_panels/long_processing_task.py:442
+#: ../vdms_panels/long_processing_task.py:445
 #: ../vdms_panels/presets_manager.py:492 ../vdms_panels/presets_manager.py:535
 #: ../vdms_panels/presets_manager.py:603 ../vdms_panels/presets_manager.py:629
 #: ../vdms_panels/presets_manager.py:771 ../vdms_panels/presets_manager.py:804
@@ -3456,101 +3456,81 @@ msgstr "Geen bestand geselecteerd"
 msgid "Add Files"
 msgstr "Voeg bestanden toe"
 
-#: ../vdms_panels/long_processing_task.py:82
-msgid "[Videomass]: SUCCESS !\n"
-msgstr "[Videomass]: SUCCES !\n"
-
-#: ../vdms_panels/long_processing_task.py:83
-msgid "[Videomass]: FAILED !\n"
-msgstr "[Videomass]: GEFAALD !\n"
-
-#: ../vdms_panels/long_processing_task.py:84
-msgid ""
-"\n"
-"Sorry, all task failed !"
-msgstr ""
-"\n"
-"Sorry, opdracht gefaald !"
-
 #: ../vdms_panels/long_processing_task.py:85
-msgid ""
-"\n"
-"The process was stopped due to a fatal error."
-msgstr ""
+msgid "[Videomass]: SUCCESS !"
+msgstr "[Videomass]: SUCCES !"
 
 #: ../vdms_panels/long_processing_task.py:86
-msgid ""
-"\n"
-"Interrupted Process !"
-msgstr ""
-"\n"
-"Proces Interrupt !"
+msgid "[Videomass]: FAILED !"
+msgstr "[Videomass]: GEFAALD !"
 
 #: ../vdms_panels/long_processing_task.py:87
-msgid ""
-"\n"
-"Successfully completed !"
-msgstr ""
-"\n"
-"Succesvol afgerond !"
+msgid "Sorry, all task failed !"
+msgstr "Sorry, opdracht gefaald !"
 
 #: ../vdms_panels/long_processing_task.py:88
-#, fuzzy
-msgid ""
-"\n"
-"Not everything was successful."
+msgid "The process was stopped due to a fatal error."
 msgstr ""
-"\n"
-"afgerond, maar niet alles was succesvol."
 
-#: ../vdms_panels/long_processing_task.py:114
+#: ../vdms_panels/long_processing_task.py:89
+msgid "Interrupted Process !"
+msgstr "Proces Interrupt !"
+
+#: ../vdms_panels/long_processing_task.py:90
+msgid "Successfully completed !"
+msgstr "Succesvol afgerond !"
+
+#: ../vdms_panels/long_processing_task.py:91
+msgid "Not everything was successful."
+msgstr "Niet alles was succesvol."
+
+#: ../vdms_panels/long_processing_task.py:117
 msgid "Process log:"
 msgstr "Proces log:"
 
-#: ../vdms_panels/long_processing_task.py:123
+#: ../vdms_panels/long_processing_task.py:126
 msgid "Suppress excess output"
 msgstr "Onderdruk overvloedige output"
 
-#: ../vdms_panels/long_processing_task.py:127
+#: ../vdms_panels/long_processing_task.py:130
 msgid "Abort"
 msgstr "Afbreken"
 
-#: ../vdms_panels/long_processing_task.py:143
+#: ../vdms_panels/long_processing_task.py:146
 msgid "If activated, hides some output messages."
 msgstr "Verbergt bepaalde output berichten."
 
-#: ../vdms_panels/long_processing_task.py:145
+#: ../vdms_panels/long_processing_task.py:148
 msgid "Stops current process"
 msgstr "Stopt huidige proces"
 
-#: ../vdms_panels/long_processing_task.py:371
-msgid ""
-"\n"
-"Fatal Error !"
+#: ../vdms_panels/long_processing_task.py:375
+msgid "Fatal Error !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:383
+#: ../vdms_panels/long_processing_task.py:386
 msgid "Get your files at the destination you specified"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:392
-#: ../vdms_panels/long_processing_task.py:399
-msgid "Please view the current log or read the log file."
+#: ../vdms_panels/long_processing_task.py:394
+#: ../vdms_panels/long_processing_task.py:401
+msgid ""
+"Check the current output or read the related log file for more information."
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:403
+#: ../vdms_panels/long_processing_task.py:406
 msgid "...Finished"
 msgstr "...Afgerond"
 
-#: ../vdms_panels/long_processing_task.py:418
+#: ../vdms_panels/long_processing_task.py:421
 msgid "wait... I'm aborting"
 msgstr "wacht... bezig met afbreken"
 
-#: ../vdms_panels/long_processing_task.py:421
+#: ../vdms_panels/long_processing_task.py:424
 msgid "...Interrupted"
 msgstr "...Interrupt"
 
-#: ../vdms_panels/long_processing_task.py:439
+#: ../vdms_panels/long_processing_task.py:442
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
