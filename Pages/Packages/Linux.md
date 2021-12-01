@@ -101,7 +101,7 @@ Minimum requirements:
 - [x86_64](https://en.wikipedia.org/wiki/X86-64) architecture.
 - [FFmpeg](https://www.ffmpeg.org/) version 3.1.5 
 
-[Videomass 3.5.2 AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.5.2-x86_64.AppImage){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }  
+[Videomass 3.5.3 AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.5.3-x86_64.AppImage){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }  
 
 Successfully tested on the following Linux distributions:   
 * [Xubuntu](https://xubuntu.org/) 18.04 LTS x86_64 
