@@ -116,7 +116,7 @@ class AV_Conv(wx.Panel):
                   ('ac3'): (None, None, None, None, None, 'ac3', None, None,
                             None, 'copy', None),
                   ('ogg'): (None, None, None, None, None, None, 'ogg', None,
-                            None, 'copy', None),
+                            'opus', 'copy', None),
                   ('flac'): (None, None, 'flac', None, None, None, None, None,
                              None, 'copy', None),
                   ('m4a'): (None, None, None, None, 'alac', None, None, None,

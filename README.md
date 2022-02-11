@@ -37,9 +37,9 @@ each operating system.
 - **[wxPython-Phoenix >= 4.0.3](https://wxpython.org/)**
 - **[PyPubSub >= 4.0.3](https://pypi.org/project/PyPubSub/)**
 - **[requests >= 2.21.0](https://pypi.org/project/requests/)**
-- **[ffmpeg >=3.2](https://ffmpeg.org/)**
-- **[ffprobe](https://ffmpeg.org/ffprobe.html)** (usually bundled with ffmpeg)
-- **[ffplay](http://ffmpeg.org/ffplay.html)** (usually bundled with ffmpeg)
+- **[ffmpeg >=4.3](https://ffmpeg.org/)**
+- **[ffprobe >=4.3](https://ffmpeg.org/ffprobe.html)** (usually bundled with ffmpeg)
+- **[ffplay >=4.3](http://ffmpeg.org/ffplay.html)** (usually bundled with ffmpeg)
 
 ### Optionals
 - **[youtube-dl](https://pypi.org/project/youtube_dl/)**

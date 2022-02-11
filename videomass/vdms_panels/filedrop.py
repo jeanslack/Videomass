@@ -279,8 +279,8 @@ class FileDnD(wx.Panel):
         """
         # only do this part the first time so the events are only bound once
         if not hasattr(self, "popupID1"):
-            self.popupID1 = wx.NewIdRef()
-            self.popupID2 = wx.NewIdRef()
+            self.popupID1 = wx.ID_ANY
+            self.popupID2 = wx.ID_ANY
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID1)
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID2)
         # build the menu

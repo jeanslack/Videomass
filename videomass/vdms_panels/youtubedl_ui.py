@@ -82,12 +82,17 @@ if not hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
                        listmix.ListCtrlAutoWidthMixin
                        ):
         """
-        This is listctrl with a checkbox for each row in list.
-        It work on both wxPython==4.1.? and wxPython<=4.1.? (e.g. 4.0.7).
-        Since wxPython <= 4.0.7 has no attributes for fcode.EnableCheckBoxes
-        and the 'wx' module does not have attributes 'EVT_LIST_ITEM_CHECKED',
-        'EVT_LIST_ITEM_UNCHECKED' for binding, this class maintains backward
-        compatibility.
+        This class is responsible for maintaining backward
+        compatibility of wxPython which do not have a `ListCtrl`
+        module with checkboxes feature:
+
+        Examples of errors raised using a ListCtrl with checkboxes
+        not yet implemented:
+
+        AttributeError:
+            - 'ListCtrl' object has no attribute 'EnableCheckBoxes'
+            - module 'wx' has no attribute `EVT_LIST_ITEM_CHECKED`
+            - module 'wx' has no attribute `EVT_LIST_ITEM_UNCHECKED`
         """
         def __init__(self,
                      parent,
@@ -336,7 +341,7 @@ class Downloader(wx.Panel):
                                      )
         else:
             self.oldwx = True
-            t_id = wx.NewIdRef()
+            t_id = wx.ID_ANY
             self.fcode = TestListCtrl(self, t_id, style=wx.LC_REPORT
                                       | wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
                                       )
@@ -460,7 +465,7 @@ class Downloader(wx.Panel):
         """
         # only do this part the first time so the events are only bound once
         if not hasattr(self, "popupID2"):
-            self.popupID2 = wx.NewIdRef()
+            self.popupID2 = wx.ID_ANY
             self.Bind(wx.EVT_MENU, self.on_popup, id=self.popupID2)
 
         # build the menu

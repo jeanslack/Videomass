@@ -109,13 +109,12 @@ def my_hook(data):
     download progress. See  `help(youtube_dl.YoutubeDL)`
     """
     if data['status'] == 'downloading':
-        percent = float(data['_percent_str'].strip().split('%')[0])
         duration = ('Downloading... {} of {} '
                     'at {} ETA {}'.format(data.get('_percent_str'),
                                           data.get('_total_bytes_str', 'N/A'),
                                           data.get('_speed_str'),
                                           data.get('_eta_str'),),
-                    percent
+                    float(data['_percent_str'].strip().split('%')[0])
                     )
         wx.CallAfter(pub.sendMessage,
                      "UPDATE_YDL_EVT",
