@@ -214,6 +214,7 @@ class LogOut(wx.Panel):
         Receiving output messages from youtube_dl library via
         pubsub "UPDATE_YDL_EVT" .
         """
+        #print(duration)
         if status == 'ERROR':
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
             self.txtout.AppendText(f'{output}\n')
@@ -243,7 +244,7 @@ class LogOut(wx.Panel):
                     logerr.write(f"[YOUTUBE_DL]: {status} > {output}\n")
         elif status == 'DOWNLOAD':
             self.labperc.SetLabel(f"{duration[0]}")
-            self.barprog.SetValue(duration[1])
+            self.barprog.SetValue(round(duration[1]))
 
         elif status == 'FINISHED':
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
@@ -299,7 +300,7 @@ class LogOut(wx.Panel):
             ffprog = []
             for x, y in pairwise(out):
                 ffprog.append(f"{x}: {y} | ")
-            self.labperc.SetLabel(f"Processing... {str(int(percentage))}%% | "
+            self.labperc.SetLabel(f"Processing... {str(int(percentage))}% | "
                                   f"{''.join(ffprog)}")
             del output, duration
 

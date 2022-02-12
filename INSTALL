@@ -5,10 +5,10 @@ BASE DEPENDENCIES
 
     Required:
         - Python >=3.6.9
-        - wxPython4 (Phoenix)
+        - wxPython-Phoenix >=4.0.3
         - PyPubSub
         - requests
-        - FFmpeg (with ffplay and ffprobe) >=4.1.4
+        - FFmpeg (with ffplay and ffprobe) >=4.3
         - youtube_dl
         - yt-dlp
 
