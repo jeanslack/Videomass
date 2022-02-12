@@ -77,10 +77,6 @@ class LogOut(wx.Panel):
     process and close the panel at the end.
 
     """
-    # get videomass wx.App attribute
-    get = wx.GetApp()
-    appdata = get.appset
-
     # used msg on text
     MSG_done = _('[Videomass]: SUCCESS !')
     MSG_failed = _('[Videomass]: FAILED !')
@@ -102,6 +98,8 @@ class LogOut(wx.Panel):
         log messages will be written
 
         """
+        get = wx.GetApp()
+        self.appdata = get.appset
         self.parent = parent  # main frame
         self.thread_type = None  # the instantiated thread
         self.abort = False  # if True set to abort current process
@@ -110,13 +108,13 @@ class LogOut(wx.Panel):
         self.logname = None  # example: AV_conversions.log
         self.result = []  # result of the final process
         self.count = 0  # keeps track of the counts (see `update_count`)
-        self.clr = LogOut.appdata['icontheme'][1]
+        self.clr = self.appdata['icontheme'][1]
 
         wx.Panel.__init__(self, parent=parent)
 
         infolbl = _("Process log:")
         lbl = wx.StaticText(self, label=infolbl)
-        if LogOut.appdata['ostype'] != 'Darwin':
+        if self.appdata['ostype'] != 'Darwin':
             lbl.SetLabelMarkup(f"<b>{infolbl}</b>")
         self.txtout = wx.TextCtrl(self, wx.ID_ANY, "",
                                   style=wx.TE_MULTILINE |
@@ -178,7 +176,7 @@ class LogOut(wx.Panel):
         self.labperc.SetLabel('')
         self.logname = varargs[8]  # example: Videomass_VideoConversion.log
 
-        write_log(self.logname, LogOut.appdata['logdir'])  # initial file LOG
+        write_log(self.logname, self.appdata['logdir'])  # initial file LOG
 
         if varargs[0] == 'onepass':  # from Audio/Video Conv.
             self.thread_type = OnePass(varargs, duration,
@@ -239,7 +237,7 @@ class LogOut(wx.Panel):
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
                 self.txtout.AppendText(f'{output}\n')
 
-                with open(os.path.join(LogOut.appdata['logdir'], self.logname),
+                with open(os.path.join(self.appdata['logdir'], self.logname),
                           "a", encoding='utf8') as logerr:
                     logerr.write(f"[YOUTUBE_DL]: {status} > {output}\n")
         elif status == 'DOWNLOAD':
@@ -251,7 +249,7 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f'{duration}\n')
 
         if status in ['ERROR', 'WARNING']:
-            with open(os.path.join(LogOut.appdata['logdir'], self.logname),
+            with open(os.path.join(self.appdata['logdir'], self.logname),
                       "a", encoding='utf8') as logerr:
                 logerr.write(f"[YOUTUBE_DL]: {output}\n")
     # ---------------------------------------------------------------------#
@@ -323,7 +321,7 @@ class LogOut(wx.Panel):
                     self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
                     self.txtout.AppendText(f'{output}')
 
-            with open(os.path.join(LogOut.appdata['logdir'], self.logname),
+            with open(os.path.join(self.appdata['logdir'], self.logname),
                       "a", encoding='utf8') as logerr:
                 logerr.write(f"[FFMPEG]: {output}")
                 # write a row error into file log

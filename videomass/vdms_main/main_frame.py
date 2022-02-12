@@ -4,10 +4,10 @@ Name: main_frame.py
 Porpose: top window main frame
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.13.2021
-Code checker: pycodestyle, flake8 --ignore=F821,W503
+Rev: Feb.11.2022
+Code checker: pylint, flake8 --ignore=F821,W503
 ########################################################
 
 This file is part of Videomass.
@@ -31,7 +31,7 @@ from urllib.parse import urlparse
 import webbrowser
 import wx
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_dialogs import settings
+from videomass.vdms_dialogs import preferences
 from videomass.vdms_dialogs import set_timestamp
 from videomass.vdms_dialogs import infoprg
 from videomass.vdms_dialogs import videomass_check_version
@@ -50,6 +50,7 @@ from videomass.vdms_panels.long_processing_task import LogOut
 from videomass.vdms_panels import presets_manager
 from videomass.vdms_io import io_tools
 from videomass.vdms_sys.msg_info import current_release
+from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import copydir_recursively
 if 'youtube_dl' in sys.modules:
@@ -258,13 +259,14 @@ class MainFrame(wx.Frame):
             self.startpan.Enable(False), self.viewtimeline.Enable(False),
             self.logpan.Enable(False)
 
-        if self.appdata['PYLIBYDL'] is not None:  # no module
-            self.ydlused.Enable(False)
-            self.ydlupdate.Enable(False)
-            self.ydllatest.Enable(False)
-        else:
-            if self.appdata['app'] != 'appimage':
-                self.ydlupdate.Enable(False)  # can update ydl
+        if self.appdata['downloader'] != 'disabled':
+            if self.appdata['PYLIBYDL'] is not None:  # no module
+                self.ydlused.Enable(False)
+                self.ydlupdate.Enable(False)
+                self.ydllatest.Enable(False)
+            else:
+                if self.appdata['app'] != 'appimage':
+                    self.ydlupdate.Enable(False)  # can update ydl
     # ------------------------------------------------------------------#
 
     def reset_Timeline(self):
@@ -309,17 +311,28 @@ class MainFrame(wx.Frame):
         switch to panels or destroy the videomass app.
 
         """
+        def _setsize():
+            """
+            Write last panel size for next start if changed
+            """
+            if tuple(self.appdata['panel_size']) != self.GetSize():
+                confmanager = ConfigManager(self.appdata['fileconfpath'])
+                sett = confmanager.read_options()
+                sett['panel_size'] = list(self.GetSize())
+                confmanager.write_options(**sett)
+
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.on_close(self)
-
         # elif self.topicname:
         else:
-            if self.appdata['warnexiting'] == 'enable':
+            if self.appdata['warnexiting'] is True:
                 if wx.MessageBox(_('Are you sure you want to exit?'),
                                  _('Exit'),  wx.ICON_QUESTION | wx.YES_NO,
                                  self) == wx.YES:
+                    _setsize()
                     self.Destroy()
             else:
+                _setsize()
                 self.Destroy()
     # ------------------------------------------------------------------#
 
@@ -380,10 +393,13 @@ class MainFrame(wx.Frame):
                    "options"))
         searchtopic = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
-        dscrp = (_("Update {}").format(self.appdata['downloader'][1]),
-                 _("Update the downloader to the latest version"))
-        self.ydlupdate = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        toolsButton.AppendSeparator()
+
+        if self.appdata['downloader'] != 'disabled':
+            dscrp = (_("Update {}").format(self.appdata['downloader']),
+                     _("Update the downloader to the latest version"))
+            self.ydlupdate = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+            toolsButton.AppendSeparator()
+            self.Bind(wx.EVT_MENU, self.youtubedl_uptodater, self.ydlupdate)
         dscrp = (_("Check for new presets"),
                  _("Check new versions of Videomass presets from homepage"))
         self.prstcheck = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
@@ -420,16 +436,19 @@ class MainFrame(wx.Frame):
                  _("Displays timestamp when playing movies with FFplay"))
         self.viewtimestamp = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                                  kind=wx.ITEM_CHECK)
+        if self.appdata['downloader'] != 'disabled':
         # show youtube-dl
-        viewButton.AppendSeparator()
-        ydlButton = wx.Menu()  # ydl sub menu
-        dscrp = (_("Version in Use"),
-                 _("Shows the version in use"))
-        self.ydlused = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Show the latest version..."),
-                 _("Shows the latest version available on github.com"))
-        self.ydllatest = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        viewButton.AppendSubMenu(ydlButton, self.appdata['downloader'][1])
+            viewButton.AppendSeparator()
+            ydlButton = wx.Menu()  # ydl sub menu
+            dscrp = (_("Version in Use"),
+                     _("Shows the version in use"))
+            self.ydlused = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+            dscrp = (_("Show the latest version..."),
+                     _("Shows the latest version available on github.com"))
+            self.ydllatest = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+            viewButton.AppendSubMenu(ydlButton, self.appdata['downloader'])
+            self.Bind(wx.EVT_MENU, self.ydl_used, self.ydlused)
+            self.Bind(wx.EVT_MENU, self.ydl_latest, self.ydllatest)
         # timeline
         viewButton.AppendSeparator()
         dscrp = (_("Show Logs\tCtrl+L"),
@@ -552,7 +571,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         # ----TOOLS----
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
-        self.Bind(wx.EVT_MENU, self.youtubedl_uptodater, self.ydlupdate)
+        # self.Bind(wx.EVT_MENU, self.youtubedl_uptodater, self.ydlupdate)
         self.Bind(wx.EVT_MENU, self.prst_downloader, self.prstdownload)
         self.Bind(wx.EVT_MENU, self.prst_checkversion, self.prstcheck)
         # ---- VIEW ----
@@ -562,8 +581,8 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Check_dec, ckdecoders)
         self.Bind(wx.EVT_MENU, self.durinPlayng, playing)
         self.Bind(wx.EVT_MENU, self.showTimestamp, self.viewtimestamp)
-        self.Bind(wx.EVT_MENU, self.ydl_used, self.ydlused)
-        self.Bind(wx.EVT_MENU, self.ydl_latest, self.ydllatest)
+        # self.Bind(wx.EVT_MENU, self.ydl_used, self.ydlused)
+        # self.Bind(wx.EVT_MENU, self.ydl_latest, self.ydllatest)
         self.Bind(wx.EVT_MENU, self.View_logs, viewlogs)
         self.Bind(wx.EVT_MENU, self.view_Timeline, self.viewtimeline)
         # ---- GO -----
@@ -650,11 +669,11 @@ class MainFrame(wx.Frame):
         check latest and installed versions of youtube-dl
         and return latest or None if error
         """
-        if self.appdata['downloader'][0] == 'youtube_dl':
+        if self.appdata['downloader'] == 'youtube_dl':
             url = ("https://api.github.com/repos/ytdl-org/youtube-dl"
                    "/releases/latest")
 
-        elif self.appdata['downloader'][0] == 'yt_dlp':
+        elif self.appdata['downloader'] == 'yt_dlp':
             url = ("https://api.github.com/repos/yt-dlp/yt-dlp/"
                    "releases/latest")
 
@@ -671,14 +690,14 @@ class MainFrame(wx.Frame):
 
         if latest[0].strip() == this:
             wx.MessageBox(_("{0} is already up-to-date {1}"
-                            ).format(self.appdata['downloader'][1], this),
+                            ).format(self.appdata['downloader'], this),
                           "Videomass", wx.ICON_INFORMATION, self)
             return None
 
         elif wx.MessageBox(_("{0} version {1} is available and will "
                              "replace the old version {2}\n\n"
                              "Do you want to update now?"
-                             ).format(self.appdata['downloader'][1],
+                             ).format(self.appdata['downloader'],
                                       latest[0].strip(), this),
                            "Videomass", wx.ICON_QUESTION
                            | wx.YES_NO, self) == wx.NO:
@@ -703,7 +722,7 @@ class MainFrame(wx.Frame):
                                "only require you to select the location "
                                "of the AppImage.\n\nDo you want to "
                                "continue?"
-                               ).format(self.appdata['downloader'][1]),
+                               ).format(self.appdata['downloader']),
                              "Videomass", wx.ICON_QUESTION
                              | wx.YES_NO, self) == wx.NO:
                 return
@@ -728,7 +747,7 @@ class MainFrame(wx.Frame):
             if upgrade == 'success':
                 wx.MessageBox(_("Successful! {0} is up-to-date ({1})"
                                 "\n\nRe-start is required."
-                                ).format(self.appdata['downloader'][1],
+                                ).format(self.appdata['downloader'],
                                          check[0]),
                               "Videomass", wx.ICON_INFORMATION, self)
                 self.on_Kill()
@@ -892,13 +911,13 @@ class MainFrame(wx.Frame):
         check version of youtube-dl used from 'Version in Use' bar menu
         """
         if self.appdata['PYLIBYDL'] is None:  # youtube-dl library
-            if self.appdata['downloader'][0] == 'youtube_dl':
+            if self.appdata['downloader'] == 'youtube_dl':
                 this = youtube_dl.version.__version__
-            elif self.appdata['downloader'][0] == 'yt_dlp':
+            elif self.appdata['downloader'] == 'yt_dlp':
                 this = yt_dlp.version.__version__
             if msgbox:
                 wx.MessageBox(_("You are using '{0}' version {1}"
-                                ).format(self.appdata['downloader'][1], this),
+                                ).format(self.appdata['downloader'], this),
                               'Videomass', wx.ICON_INFORMATION, self)
             return this
     # -----------------------------------------------------------------#
@@ -908,10 +927,10 @@ class MainFrame(wx.Frame):
         check for new version from github.com
 
         """
-        if self.appdata['downloader'][0] == 'youtube_dl':
+        if self.appdata['downloader'] == 'youtube_dl':
             url = ("https://api.github.com/repos/ytdl-org/youtube-dl"
                    "/releases/latest")
-        elif self.appdata['downloader'][0] == 'yt_dlp':
+        elif self.appdata['downloader'] == 'yt_dlp':
             url = ("https://api.github.com/repos/yt-dlp/yt-dlp/"
                    "releases/latest")
 
@@ -924,7 +943,7 @@ class MainFrame(wx.Frame):
 
         else:
             wx.MessageBox(_("{0}: Latest version available: {1}"
-                            ).format(self.appdata['downloader'][1], latest[0]),
+                            ).format(self.appdata['downloader'], latest[0]),
                           "Videomass", wx.ICON_INFORMATION, self)
     # -----------------------------------------------------------------#
 
@@ -1154,17 +1173,15 @@ class MainFrame(wx.Frame):
 
     def Setup(self, event):
         """
-        Call the module setup for setting user preferences.
-        Note, this dialog window is managed like filters dialogs
-        on 'av_conversions.AV_Conv' panel, being need to get the
-        return code here.
+        Calls user settings dialog. Note, this dialog is
+        handle like filters dialogs on Videomass, being need
+        to get the return code from getvalue interface.
         """
-        with settings.Setup(self) as setup:
-            if setup.ShowModal() == wx.ID_OK:
-                if setup.getvalue() is True:
-                    self.on_Kill()  # (function) equal to self.Destroy()
-                # else:
-                    # handle other things here
+        with preferences.SetUp(self) as set_up:
+            if set_up.ShowModal() == wx.ID_OK:
+                if set_up.getvalue() is True:
+                    self.on_Kill()
+
     # ------------------------------------------------------------------#
     # --------- Menu Help  ###
 
@@ -1267,26 +1284,26 @@ class MainFrame(wx.Frame):
             self.toolbar.SetWindowStyleFlag(wx.TB_NODIVIDER | wx.TB_FLAT)
 
         """
-        if self.appdata['toolbarpos'] == '0':  # on top
-            if self.appdata['toolbartext'] == 'show':  # show text
+        if self.appdata['toolbarpos'] == 0:  # on top
+            if self.appdata['toolbartext'] is True:  # show text
                 style = (wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_HORIZONTAL)
             else:
                 style = (wx.TB_DEFAULT_STYLE)
 
-        elif self.appdata['toolbarpos'] == '1':  # on bottom
-            if self.appdata['toolbartext'] == 'show':  # show text
+        elif self.appdata['toolbarpos'] == 1:  # on bottom
+            if self.appdata['toolbartext'] is True:  # show text
                 style = (wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_BOTTOM)
             else:
                 style = (wx.TB_DEFAULT_STYLE | wx.TB_BOTTOM)
 
-        elif self.appdata['toolbarpos'] == '2':  # on right
-            if self.appdata['toolbartext'] == 'show':  # show text
+        elif self.appdata['toolbarpos'] == 2:  # on right
+            if self.appdata['toolbartext'] is True:  # show text
                 style = (wx.TB_TEXT | wx.TB_RIGHT)
             else:
                 style = (wx.TB_DEFAULT_STYLE | wx.TB_RIGHT)
 
-        elif self.appdata['toolbarpos'] == '3':
-            if self.appdata['toolbartext'] == 'show':  # show text
+        elif self.appdata['toolbarpos'] == 3:
+            if self.appdata['toolbartext'] is True:  # show text
                 style = (wx.TB_TEXT | wx.TB_LEFT)
             else:
                 style = (wx.TB_DEFAULT_STYLE | wx.TB_LEFT)

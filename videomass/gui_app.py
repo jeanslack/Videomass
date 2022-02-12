@@ -127,13 +127,13 @@ class Videomass(wx.App):
         no longer used as an executable, but only as a python module.
 
         """
-        if self.appset['downloader'][0] == 'Disable all':
+        if self.appset['downloader'] == 'disabled':
             self.appset['PYLIBYDL'] = 'no module loaded'
         else:
             win, nix = '\\__init__.py', '/__init__.py'
             pkg = win if self.appset['ostype'] == 'Windows' else nix
 
-            if self.appset['downloader'][0] == 'youtube_dl':
+            if self.appset['downloader'] == 'youtube_dl':
                 try:
                     import youtube_dl
                     this = youtube_dl.__file__.split(pkg, maxsplit=1)[0]
@@ -142,7 +142,7 @@ class Videomass(wx.App):
                 except (ModuleNotFoundError, ImportError) as nomodule:
                     self.appset['PYLIBYDL'] = nomodule
 
-            elif self.appset['downloader'][0] == 'yt_dlp':
+            elif self.appset['downloader'] == 'yt_dlp':
                 try:
                     import yt_dlp
                     this = yt_dlp.__file__.split(pkg, maxsplit=1)[0]
@@ -151,7 +151,7 @@ class Videomass(wx.App):
                 except (ModuleNotFoundError, ImportError) as nomodule:
                     self.appset['PYLIBYDL'] = nomodule
 
-        return True if self.appset['downloader'][0] == 'false' else None
+        return True if self.appset['downloader'] is False else None
     # -------------------------------------------------------------------
 
     def check_ffmpeg(self):
@@ -159,9 +159,9 @@ class Videomass(wx.App):
         Get the FFmpeg's executables. On Unix/Unix-like systems
         perform a check for permissions.
         """
-        for link in [self.appset['ffmpeg_bin'],
-                     self.appset['ffprobe_bin'],
-                     self.appset['ffplay_bin']
+        for link in [self.appset['ffmpeg_cmd'],
+                     self.appset['ffprobe_cmd'],
+                     self.appset['ffplay_cmd']
                      ]:
             if self.appset['ostype'] == 'Windows':  # check for exe
                 # HACK use even for unix, if not permission is equal
@@ -174,9 +174,9 @@ class Videomass(wx.App):
 
         if not self.appset['ostype'] == 'Windows':
             # check for permissions when linked locally
-            for link in [self.appset['ffmpeg_bin'],
-                         self.appset['ffprobe_bin'],
-                         self.appset['ffplay_bin']
+            for link in [self.appset['ffmpeg_cmd'],
+                         self.appset['ffprobe_cmd'],
+                         self.appset['ffplay_cmd']
                          ]:
                 if which(link, mode=os.F_OK | os.X_OK, path=None):
                     permissions = True
@@ -240,7 +240,7 @@ class Videomass(wx.App):
         The ideal place to run the last few things before completely
         exiting the application, eg. delete temporary files etc.
         """
-        if self.appset['clearcache'] == 'true':
+        if self.appset['clearcache'] is True:
             tmp = os.path.join(self.appset['cachedir'], 'tmp')
             if os.path.exists(tmp):
                 for cache in os.listdir(tmp):
@@ -250,7 +250,7 @@ class Videomass(wx.App):
                     elif os.path.isdir:
                         rmtree(fcache)
 
-        if self.appset['clearlogfiles'] == 'true':
+        if self.appset['clearlogfiles'] is True:
             logdir = self.appset['logdir']
             if os.path.exists(logdir):
                 flist = os.listdir(logdir)

@@ -66,6 +66,7 @@ class FilePlay(Thread):
                  logdir,
                  ffplay_url,
                  ffplay_loglev,
+                 ffplay_params,
                  autoexit
                  ):
         """
@@ -79,6 +80,7 @@ class FilePlay(Thread):
         self.param = param  # additional parameters if present
         self.ffplay = ffplay_url
         self.ffplay_loglev = ffplay_loglev
+        self.ffplay_params = ffplay_params
         self.autoexit = '-autoexit' if autoexit is True else ''
         self.logf = os.path.join(logdir, 'ffplay.log')
         write_log('ffplay.log', logdir)
@@ -98,7 +100,8 @@ class FilePlay(Thread):
         # time.sleep(.5)
 
         cmd = (f'"{self.ffplay}" {self.time_seq} {self.ffplay_loglev} '
-               f'{self.autoexit} -i "{self.filename}" {self.param}')
+               f'{self.ffplay_params} {self.autoexit} -i "{self.filename}" '
+               f'{self.param}')
 
         self.logwrite(cmd)
 

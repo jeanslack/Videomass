@@ -73,7 +73,7 @@ class OnePass(Thread):
     """
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
-    SUFFIX = '' if appdata['filesuffix'] == 'none' else appdata['filesuffix']
+    SUFFIX = appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ---------------------------------------------------------------
 
@@ -122,8 +122,9 @@ class OnePass(Thread):
             outputfile = os.path.join(folders, f'{filename}{OnePass.SUFFIX}'
                                                f'.{outext}')
 
-            cmd = (f'"{OnePass.appdata["ffmpeg_bin"]}" {self.time_seq} '
-                   f'{OnePass.appdata["ffmpegloglev"]} -i "{files}" '
+            cmd = (f'"{OnePass.appdata["ffmpeg_cmd"]}" {self.time_seq} '
+                   f'{OnePass.appdata["ffmpegloglev"]} '
+                   f'{OnePass.appdata["ffmpeg+params"]} -i "{files}" '
                    f'{self.command} {volume} {OnePass.appdata["ffthreads"]} '
                    f'-y "{outputfile}"')
 

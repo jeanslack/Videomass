@@ -37,11 +37,8 @@ class TextDnD(wx.Panel):
     def __init__(self, parent):
         """
         """
-        get = wx.GetApp()
-        self.appdata = get.appset
-
         self.parent = parent  # parent is the MainFrame
-        self.file_dest = self.appdata['outputdownload']
+        self.file_dest = self.parent.appdata['outputdownload']
 
         wx.Panel.__init__(self, parent=parent)
 
@@ -74,7 +71,7 @@ class TextDnD(wx.Panel):
                        )
         self.SetSizer(sizer)
 
-        if self.appdata['ostype'] == 'Darwin':
+        if self.parent.appdata['ostype'] == 'Darwin':
             lbl_info.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
         else:
             lbl_info.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))

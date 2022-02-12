@@ -111,11 +111,11 @@ class YdlExtractInfo(Thread):
                     'logger': mylogger,
                     }
 
-        if self.appdata['downloader'][0] == 'youtube_dl':
+        if self.appdata['downloader'] == 'youtube_dl':
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 meta = ydl.extract_info(self.url, download=False)
 
-        elif self.appdata['downloader'][0] == 'yt_dlp':
+        elif self.appdata['downloader'] == 'yt_dlp':
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 meta = ydl.extract_info(self.url, download=False)
 

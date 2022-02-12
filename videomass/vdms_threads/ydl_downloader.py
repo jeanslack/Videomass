@@ -154,10 +154,10 @@ class YdlDownloader(Thread):
     """
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
-    FFMPEG_URL = appdata['ffmpeg_bin']
+    FFMPEG_URL = appdata['ffmpeg_cmd']
     DOWNLOADER = appdata['downloader']
 
-    if appdata['playlistsubfolder'] == 'true':
+    if appdata['playlistsubfolder'] is True:
         SUBDIR = '%(uploader)s/%(playlist_title)s/%(playlist_index)s - '
     else:
         SUBDIR = ''
