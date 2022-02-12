@@ -101,10 +101,11 @@ class PicturesFromVideo(Thread):
         """
         Subprocess initialize thread.
         """
-        cmd = ('"%s" %s %s -i '
-               '"%s" %s ' % (PicturesFromVideo.appdata['ffmpeg_bin'],
+        cmd = ('"%s" %s %s %s -i '
+               '"%s" %s ' % (PicturesFromVideo.appdata['ffmpeg_cmd'],
                              self.time_seq,
                              PicturesFromVideo.appdata['ffmpegloglev'],
+                             PicturesFromVideo.appdata['ffmpeg+params'],
                              self.fname,
                              self.cmd,
                              ))

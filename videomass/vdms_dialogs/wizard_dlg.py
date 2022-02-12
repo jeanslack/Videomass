@@ -4,9 +4,10 @@ Name: wizard_dlg.py
 Porpose: wizard setup dialog
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.13.2021 *-pycodestyle- compatible*
+Rev: Feb.11.2022
+Code checker: flake8, pylint
 ########################################################
 
 This file is part of Videomass.
@@ -27,6 +28,7 @@ This file is part of Videomass.
 import os
 import wx
 from videomass.vdms_utils.utils import detect_binaries
+from videomass.vdms_sys.settings_manager import ConfigManager
 
 
 def write_changes(fileconf, ffmpeg, ffplay, ffprobe, youtubedl, binfound):
@@ -34,37 +36,18 @@ def write_changes(fileconf, ffmpeg, ffplay, ffprobe, youtubedl, binfound):
     Writes changes to the configuration file
 
     """
-    rowsNum = []  # rows number list
-
-    with open(fileconf, 'r', encoding='utf8') as f:
-        full_list = f.readlines()
-    for a, b in enumerate(full_list):
-        if not b.startswith('#'):
-            if not b == '\n':
-                rowsNum.append(a)
-
-    if binfound == 'system':
-        full_list[rowsNum[5]] = 'false\n'
-        full_list[rowsNum[6]] = '%s\n' % ffmpeg
-        full_list[rowsNum[7]] = 'false\n'
-        full_list[rowsNum[8]] = '%s\n' % ffprobe
-        full_list[rowsNum[9]] = 'false\n'
-        full_list[rowsNum[10]] = '%s\n' % ffplay
-        full_list[rowsNum[16]] = '%s\n' % youtubedl
-    else:
-        full_list[rowsNum[5]] = 'true\n'
-        full_list[rowsNum[6]] = '%s\n' % ffmpeg
-        full_list[rowsNum[7]] = 'true\n'
-        full_list[rowsNum[8]] = '%s\n' % ffprobe
-        full_list[rowsNum[9]] = 'true\n'
-        full_list[rowsNum[10]] = '%s\n' % ffplay
-        full_list[rowsNum[16]] = '%s\n' % youtubedl
-
-    with open(fileconf, 'w', encoding='utf8') as fileconf:
-        for i in full_list:
-            fileconf.write('%s' % i)
-
-    return None
+    conf = ConfigManager(fileconf)
+    dataread = conf.read_options()
+    dataread['ffmpeg_cmd'] = ffmpeg
+    dataread['ffprobe_cmd'] = ffprobe
+    dataread['ffplay_cmd'] = ffplay
+    # local = False if binfound == 'system' else True
+    local = not binfound == 'system'
+    dataread['ffmpeg_islocal'] = local
+    dataread['ffprobe_islocal'] = local
+    dataread['ffplay_islocal'] = local
+    dataread['downloader'] = youtubedl
+    conf.write_options(**dataread)
 
 
 class PageOne(wx.Panel):
@@ -79,9 +62,9 @@ class PageOne(wx.Panel):
 
     def __init__(self, parent, icon):
         """
+        constructor
         """
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
-        """constructor"""
 
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         bitmap = wx.Bitmap(icon, wx.BITMAP_TYPE_ANY)
@@ -146,9 +129,9 @@ class PageTwo(wx.Panel):
 
     def __init__(self, parent):
         """
+        constructor
         """
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
-        """constructor"""
 
         self.parent = parent
 
@@ -213,7 +196,8 @@ class PageTwo(wx.Panel):
 
         """
         self.parent.btnNext.Enable()
-        self.locateBtn.Disable(), self.detectBtn.Enable()
+        self.locateBtn.Disable()
+        self.detectBtn.Enable()
         self.labFFpath.SetLabel(_('Click the "Next" button'))
         self.Layout()
     # -------------------------------------------------------------------#
@@ -229,7 +213,7 @@ class PageTwo(wx.Panel):
         else:
             executable = ['ffmpeg', 'ffprobe', 'ffplay']
 
-        exit = None
+        exiting = None
         path = []
         for x in executable:
             status = detect_binaries(PageTwo.OS, x, PageTwo.FFMPEG_LOCALDIR)
@@ -241,14 +225,14 @@ class PageTwo(wx.Panel):
                               'Videomass: Warning', wx.ICON_EXCLAMATION, self)
                 return
 
-            elif status[0] == 'provided':
-                exit = status[0]
+            if status[0] == 'provided':
+                exiting = status[0]
                 path.append(status[1])
 
             elif not status[0]:
                 path.append(status[1])
 
-        if exit == 'provided':
+        if exiting == 'provided':
             if wx.MessageBox(_("Videomass already seems to include "
                                "FFmpeg.\n\nDo you want to use that?"),
                              _('Videomass: Please Confirm'),
@@ -259,8 +243,9 @@ class PageTwo(wx.Panel):
         self.parent.ffprobe = PageTwo.GETPATH(path[1])
         self.parent.ffplay = PageTwo.GETPATH(path[2])
         self.parent.btnNext.Enable()
-        self.detectBtn.Disable(), self.locateBtn.Enable()
-        self.labFFpath.SetLabel('...Found: "%s"' % PageTwo.GETPATH(path[0]))
+        self.detectBtn.Disable()
+        self.locateBtn.Enable()
+        self.labFFpath.SetLabel(f'...Found: "{PageTwo.GETPATH(path[0])}"')
         self.Layout()
 
 
@@ -281,9 +266,9 @@ class PageThree(wx.Panel):
 
     def __init__(self, parent):
         """
+        constructor
         """
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
-        """constructor"""
 
         self.parent = parent
 
@@ -360,8 +345,8 @@ class PageThree(wx.Panel):
         """
         with wx.FileDialog(self, _("Choose the {} "
                                    "executable").format(self.ffmpeg), "", "",
-                           "ffmpeg binarys (*%s)|*%s| All files "
-                           "(*.*)|*.*" % (self.ffmpeg, self.ffmpeg),
+                           f"ffmpeg binary (*{self.ffmpeg})|*{self.ffmpeg}| "
+                           f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
 
             if dlgfile.ShowModal() == wx.ID_OK:
@@ -375,10 +360,11 @@ class PageThree(wx.Panel):
         """
         Open filedialog to locate ffprobe executable
         """
-        with wx.FileDialog(self, _("Choose the {} "
-                                   "executable").format(self.ffprobe), "", "",
-                           "ffprobe binarys (*%s)|*%s| All files "
-                           "(*.*)|*.*" % (self.ffprobe, self.ffprobe),
+        with wx.FileDialog(self, _("Choose the {} executable"
+                                   ).format(self.ffprobe), "", "",
+                           f"ffprobe binary "
+                           f"(*{self.ffprobe})|*{self.ffprobe}| "
+                           f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
 
             if dlgfile.ShowModal() == wx.ID_OK:
@@ -392,10 +378,10 @@ class PageThree(wx.Panel):
         """
         Open filedialog to locate ffplay executable
         """
-        with wx.FileDialog(self, _("Choose the {} "
-                                   "executable").format(self.ffplay), "", "",
-                           "ffplay binarys (*%s)|*%s| All files "
-                           "(*.*)|*.*" % (self.ffplay, self.ffplay),
+        with wx.FileDialog(self, _("Choose the {} executable"
+                                   ).format(self.ffplay), "", "",
+                           f"ffplay binary (*{self.ffplay})|*{self.ffplay}| "
+                           f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
 
             if dlgfile.ShowModal() == wx.ID_OK:
@@ -427,7 +413,6 @@ class PageFour(wx.Panel):
         the values of this panel are get by Wizard.wizard_Finish method
         """
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
-        """constructor"""
 
         self.parent = parent
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -483,12 +468,11 @@ class PageFour(wx.Panel):
             self.rdbDownloader.Disable()
         else:
             self.rdbDownloader.Enable()
-        '''
-        if self.ckbx_yn.IsChecked() is False:
-            self.parent.youtubedl = 'disabled'
-        else:
-            self.parent.youtubedl = 'enable'
-        '''
+
+        # if self.ckbx_yn.IsChecked() is False:
+            # self.parent.youtubedl = 'disabled'
+        # else:
+            # self.parent.youtubedl = 'enable'
 
 
 class PageFinish(wx.Panel):
@@ -506,9 +490,10 @@ class PageFinish(wx.Panel):
 
     def __init__(self, parent):
         """
+        constructor
         """
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
-        """constructor"""
+
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         lab0 = wx.StaticText(self, wx.ID_ANY, PageFinish.MSG0,
                              style=wx.ALIGN_CENTRE_HORIZONTAL
@@ -576,8 +561,10 @@ class Wizard(wx.Dialog):
         self.pageFour = PageFour(self)  # enable or disable youtube-dl
         self.pageFinish = PageFinish(self)  # ...end
         #  hide panels
-        self.pageTwo.Hide(), self.pageThree.Hide()
-        self.pageFour.Hide(), self.pageFinish.Hide()
+        self.pageTwo.Hide()
+        self.pageThree.Hide()
+        self.pageFour.Hide()
+        self.pageFinish.Hide()
         #  adds panels to sizer
         mainSizer.Add(self.pageOne, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageTwo, 1, wx.ALL | wx.EXPAND, 5)
@@ -630,7 +617,9 @@ class Wizard(wx.Dialog):
             self.wizard_Finish()
 
         if self.pageOne.IsShown():
-            self.pageOne.Hide(), self.pageTwo.Show(), self.btnBack.Enable()
+            self.pageOne.Hide()
+            self.pageTwo.Show()
+            self.btnBack.Enable()
 
             if (self.pageTwo.locateBtn.IsEnabled() and
                     self.pageTwo.detectBtn.IsEnabled()):
@@ -639,22 +628,27 @@ class Wizard(wx.Dialog):
         elif self.pageTwo.IsShown():
 
             if not self.pageTwo.locateBtn.IsEnabled():
-                self.pageTwo.Hide(), self.pageThree.Show()
+                self.pageTwo.Hide()
+                self.pageThree.Show()
             else:
-                self.pageTwo.Hide(), self.pageFour.Show()
+                self.pageTwo.Hide()
+                self.pageFour.Show()
 
         elif self.pageThree.IsShown():
             if (self.pageThree.ffmpegTxt.GetValue() and
                     self.pageThree.ffprobeTxt.GetValue() and
                     self.pageThree.ffplayTxt.GetValue()):
-                self.pageThree.Hide(), self.pageFour.Show()
+                self.pageThree.Hide()
+                self.pageFour.Show()
             else:
                 wx.MessageBox(_("Some text boxes are still incomplete"),
                               ("Videomass"), wx.ICON_INFORMATION, self)
 
         elif self.pageFour.IsShown():
-            self.pageOne.Hide(), self.pageTwo.Hide()
-            self.pageFour.Hide(), self.pageFinish.Show()
+            self.pageOne.Hide()
+            self.pageTwo.Hide()
+            self.pageFour.Hide()
+            self.pageFinish.Show()
             self.btnNext.SetLabel(_('Finish'))
 
         self.Layout()
@@ -678,9 +672,11 @@ class Wizard(wx.Dialog):
 
         elif self.pageFour.IsShown():
             if self.pageTwo.locateBtn.IsEnabled():
-                self.pageFour.Hide(), self.pageTwo.Show()
+                self.pageFour.Hide()
+                self.pageTwo.Show()
             else:
-                self.pageFour.Hide(), self.pageThree.Show()
+                self.pageFour.Hide()
+                self.pageThree.Show()
 
         elif self.pageFinish.IsShown():
             self.btnNext.SetLabel(_('Next >'))
@@ -700,24 +696,21 @@ class Wizard(wx.Dialog):
             index = self.pageFour.rdbDownloader.GetSelection()
             youtubedl = f'{self.pageFour.rdbDownloader.GetString(index)}'
         else:
-            youtubedl = 'Disable all'
+            youtubedl = 'disabled'
 
         if not self.pageTwo.locateBtn.IsEnabled():
             binfound = 'local'
         elif not self.pageTwo.detectBtn.IsEnabled():
             binfound = 'system'
 
-        wchange = write_changes(Wizard.getfileconf,
-                                self.ffmpeg,
-                                self.ffplay,
-                                self.ffprobe,
-                                youtubedl,
-                                binfound
-                                )
-        if not wchange:
-            self.Hide()
-            wx.MessageBox(_("Re-start is required"),
-                          _("Done!"), wx.ICON_INFORMATION, self)
-            self.Destroy()
-        else:
-            wx.MessageBox('%s' % wchange, 'ERROR', wx.ICON_ERROR, self)
+        write_changes(Wizard.getfileconf,
+                      self.ffmpeg,
+                      self.ffplay,
+                      self.ffprobe,
+                      youtubedl,
+                      binfound
+                      )
+        self.Hide()
+        wx.MessageBox(_("Re-start is required"),
+                      _("Done!"), wx.ICON_INFORMATION, self)
+        self.Destroy()

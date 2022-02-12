@@ -30,64 +30,53 @@ import site
 import shutil
 import platform
 from videomass.vdms_utils.utils import copydir_recursively
-from videomass.vdms_utils.utils import copy_restore
+from videomass.vdms_sys.settings_manager import ConfigManager
 
 
-def readconf(fileconf):
+def get_options(dirconf, fileconf, srcpath):
     """
-    Reads the videomass.conf configuration file, parses it,
-    and returns a list of current user settings objects.
-    Returns None if no data is found.
+    Check the application options. Reads the `settings.json`
+    file; if it does not exist or is unreadable try to restore
+    it. If `dirconf` does not exist try to restore both `dirconf`
+    and `settings.json`. If VERSION is not the same as the version
+    read, it adds new missing items while preserving the old ones
+    with the same values.
+
+    Return dict key == 'R', else return a dict key == ERROR
     """
-    with open(fileconf, 'r', encoding='utf8') as fget:
-        fconf = fget.readlines()
-    lst = [line.strip() for line in fconf if not line.startswith('#')]
-    dataconf = [x for x in lst if x]  # list without empties values
-
-    return None if not dataconf else dataconf
-
-
-def checkconf(dirconf, fileconf, srcpath):
-    """
-    Check applicatin configuration.
-    This method performs the following main steps:
-
-        1) Checks user videomass configuration dir; if not exists try to
-           restore from srcpath
-        2) Read the videomass.conf file; if not exists (or version is
-           different) try to restore from srcpath.
-        3) Checks presets folder; if not exists try to restore from
-           srcpath
-
-    if not errors, return dict key == 'R' else return a dict key == ERROR
-    """
-    existfileconf = True  # True > found, False > not found or outdated
+    conf = ConfigManager(fileconf)
+    version = ConfigManager.VERSION
 
     if os.path.exists(dirconf):  # if ~/.conf/videomass dir
         if os.path.isfile(fileconf):
-            data = {'R': readconf(fileconf)}
+            data = {'R': conf.read_options()}
             if not data['R']:
-                existfileconf = False
-            if float(data['R'][0]) != 3.5:  # version
-                existfileconf = False
+                conf.write_options()
+                data = {'R': conf.read_options()}
+            if float(data['R']['confversion']) != version:  # conf version
+                data['R']['confversion'] = version
+                new = ConfigManager.DEFAULT_OPTIONS  # model
+                data = {'R': {**new, **data['R']}}
+                conf.write_options(**data['R'])
         else:
-            existfileconf = False
-
-        if existfileconf is False:  # try to restore only videomass.conf
-            fcopy = copy_restore(f'{srcpath}/videomass.conf', fileconf)
-            data = {'ERROR': fcopy} if fcopy else {'R': readconf(fileconf)}
-
-        if not os.path.exists(os.path.join(dirconf, "presets")):
-            # try to restoring presets directory on videomass dir
-            drest = copydir_recursively(os.path.join(srcpath, "presets"),
-                                        dirconf)
-            if drest:
-                return {'ERROR': drest}
+            conf.write_options()
+            data = {'R': conf.read_options()}
 
     else:  # try to restore entire configuration directory
-        dconf = copydir_recursively(srcpath, os.path.dirname(dirconf),
-                                    "videomass")
-        data = {'ERROR': dconf} if dconf else {'R': readconf(fileconf)}
+        try:  # make conf folder
+            os.mkdir(dirconf, mode=0o777)
+        except (OSError, TypeError) as err:
+            data = {'ERROR': err}
+        else:
+            conf.write_options()
+            data = {'R': conf.read_options()}
+
+    if not os.path.exists(os.path.join(dirconf, "presets")):
+        # try to restoring presets directory on videomass dir
+        drest = copydir_recursively(os.path.join(srcpath, "presets"),
+                                    dirconf)
+        if drest:
+            return {'ERROR': drest}
 
     return data
 
@@ -124,22 +113,22 @@ def conventional_paths():
     user_name = os.path.expanduser('~')
 
     if platform.system() == 'Windows':
-        dirpath = "\\AppData\\Roaming\\videomass\\videomass.conf"
-        file_conf = os.path.join(user_name + dirpath)
+        fpath = "\\AppData\\Roaming\\videomass\\settings.json"
+        file_conf = os.path.join(user_name + fpath)
         dir_conf = os.path.join(user_name + "\\AppData\\Roaming\\videomass")
         log_dir = os.path.join(dir_conf, 'log')  # logs
         cache_dir = os.path.join(dir_conf, 'cache')  # updates executable
 
     elif platform.system() == "Darwin":
-        dirpath = "Library/Application Support/videomass/videomass.conf"
-        file_conf = os.path.join(user_name, dirpath)
-        dir_conf = os.path.join(user_name, os.path.dirname(dirpath))
+        fpath = "Library/Application Support/videomass/settings.json"
+        file_conf = os.path.join(user_name, fpath)
+        dir_conf = os.path.join(user_name, os.path.dirname(fpath))
         log_dir = os.path.join(user_name, "Library/Logs/videomass")
         cache_dir = os.path.join(user_name, "Library/Caches/videomass")
 
     else:  # Linux, FreeBsd, etc.
-        dirpath = ".config/videomass/videomass.conf"
-        file_conf = os.path.join(user_name, dirpath)
+        fpath = ".config/videomass/settings.json"
+        file_conf = os.path.join(user_name, fpath)
         dir_conf = os.path.join(user_name, ".config/videomass")
         log_dir = os.path.join(user_name, ".local/share/videomass/log")
         cache_dir = os.path.join(user_name, ".cache/videomass")
@@ -153,12 +142,12 @@ def portable_paths(portdir):
 
     """
     if platform.system() == 'Windows':
-        file_conf = portdir + "\\portable_data\\videomass.conf"
+        file_conf = portdir + "\\portable_data\\settings.json"
         dir_conf = portdir + "\\portable_data"
         log_dir = os.path.join(dir_conf, 'log')  # logs
         cache_dir = os.path.join(dir_conf, 'cache')  # updates executable
     else:
-        file_conf = portdir + "/portable_data/videomass.conf"
+        file_conf = portdir + "/portable_data/settings.json"
         dir_conf = portdir + "/portable_data"
         log_dir = os.path.join(dir_conf, 'log')  # logs
         cache_dir = os.path.join(dir_conf, 'cache')  # updates executable
@@ -166,15 +155,14 @@ def portable_paths(portdir):
     return file_conf, dir_conf, log_dir, cache_dir
 
 
-def get_outdir(outdir, relpath, apptype):
+def get_outdir(outdir, relpath):
     """
-    Set default or user-custom output folders
+    On the application portable case, if relpath is True,
+    you need to make a folder named `My_Files` inside the
+    portable appdata.
     """
-    if not outdir == 'none':
-        outputdir = outdir
-    elif relpath is True:
-        appdir = (os.path.dirname(sys.prefix) if
-                  apptype == 'embed' else os.getcwd())
+    if relpath is True:
+        appdir = os.getcwd()
         outputdir = os.path.relpath(os.path.join(appdir, 'My_Files'))
 
         if not os.path.exists(outputdir):
@@ -185,7 +173,7 @@ def get_outdir(outdir, relpath, apptype):
             except TypeError as err:
                 return None, err
     else:
-        outputdir = os.path.expanduser('~')
+        outputdir = outdir
 
     return outputdir, None
 
@@ -293,7 +281,7 @@ class DataSource():
     elif os.path.isdir(os.path.join(DATA_LOCAT, 'portable_data')):
         # Remember to add portable_data/ folder within videomass/
         FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = portable_paths(DATA_LOCAT)
-        RELPATH = '-embed-' in os.path.basename(sys.prefix)
+        RELPATH = False  # to debug relative paths, set to True
 
     else:
         FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = conventional_paths()
@@ -326,7 +314,7 @@ class DataSource():
                 f'launcher={launcher}')
 
             self.apptype = 'pyinstaller' if not launcher else None
-            self.videomass_icon = f"{self.icodir}/videomass.png"
+            self.prg_icon = f"{self.icodir}/videomass.png"
 
         elif ('/tmp/.mount_' in sys.executable or os.path.exists(
               os.path.dirname(os.path.dirname(os.path.dirname(
@@ -336,7 +324,7 @@ class DataSource():
             self.apptype = 'appimage'
             userbase = os.path.dirname(os.path.dirname(sys.argv[0]))
             pixmaps = '/share/pixmaps/videomass.png'
-            self.videomass_icon = os.path.join(userbase + pixmaps)
+            self.prg_icon = os.path.join(userbase + pixmaps)
 
         else:
             binarypath = shutil.which('videomass')
@@ -347,21 +335,19 @@ class DataSource():
                 # dirname = os.path.dirname(sys.executable)
                 # pythonpath = os.path.join(dirname, 'Script', 'videomass')
                 # self.icodir = dirname + '\\share\\videomass\\icons'
-                self.videomass_icon = self.icodir + "\\videomass.png"
-                if '-embed-' in os.path.basename(sys.prefix):
-                    self.apptype = 'embed'
+                self.prg_icon = self.icodir + "\\videomass.png"
 
             elif binarypath == '/usr/local/bin/videomass':
                 msg(f'executable={binarypath}')
                 # pip as super user, usually Linux, MacOs, Unix
                 share = '/usr/local/share/pixmaps'
-                self.videomass_icon = share + '/videomass.png'
+                self.prg_icon = share + '/videomass.png'
 
             elif binarypath == '/usr/bin/videomass':
                 msg(f'executable={binarypath}')
                 # installed via apt, rpm, etc, usually Linux
                 share = '/usr/share/pixmaps'
-                self.videomass_icon = share + "/videomass.png"
+                self.prg_icon = share + "/videomass.png"
 
             else:
                 msg(f'executable={binarypath}')
@@ -372,33 +358,36 @@ class DataSource():
                 else:
                     userbase = os.path.dirname(os.path.dirname(binarypath))
                 pixmaps = '/share/pixmaps/videomass.png'
-                self.videomass_icon = os.path.join(userbase + pixmaps)
+                self.prg_icon = os.path.join(userbase + pixmaps)
     # ---------------------------------------------------------------------
 
     def get_fileconf(self):
         """
-        Get videomass configuration data and returns a dict object
+        Get settings.json configuration data and returns a dict object
         with current data-set for bootstrap.
 
         Note: If returns a dict key == ERROR it will raise a windowed
         fatal error in the gui_app bootstrap.
         """
-        userconf = checkconf(DataSource.DIR_CONF,
-                             DataSource.FILE_CONF,
-                             self.srcpath
-                             )
+        userconf = get_options(DataSource.DIR_CONF,
+                               DataSource.FILE_CONF,
+                               self.srcpath
+                               )
         if userconf.get('ERROR'):
             return userconf
         userconf = userconf['R']
 
         # set color scheme
-        theme = get_color_scheme(userconf[11])
+        theme = get_color_scheme(userconf['icontheme'])
+        userconf['icontheme'] = (userconf['icontheme'], theme)
         if theme.get('ERROR'):
             return theme
 
         # set output directories
-        outfile = get_outdir(userconf[1], DataSource.RELPATH, self.apptype)
-        outdownl = get_outdir(userconf[19], DataSource.RELPATH, self.apptype)
+        outfile = get_outdir(userconf['outputfile'], DataSource.RELPATH)
+        userconf['outputfile'] = outfile[0]
+        outdownl = get_outdir(userconf['outputdownload'], DataSource.RELPATH)
+        userconf['outputdownload'] = outfile[0]
         if outfile[1]:
             return {'ERROR': f'{outfile[1]}'}
         if outdownl[1]:
@@ -417,16 +406,6 @@ class DataSource():
                 # return {'ERROR': f'{error}'}  # use `as error` here
                 return path
 
-        # set downloader
-        execlist = (('youtube_dl', 'youtube-dl'),
-                    ('yt_dlp', 'yt-dlp'),
-                    ('Disable all', 'Downloader'),
-                    ('false', '')
-                    )
-        downloader = [exe for exe in execlist if exe[0] == userconf[16]]
-        if not downloader:
-            return {'ERROR': f'Unknow downloader "{userconf[16]}"'}
-
         return ({'ostype': platform.system(),
                  'srcpath': _relativize(self.srcpath),
                  'localepath': _relativize(self.localepath),
@@ -439,37 +418,20 @@ class DataSource():
                  'app': self.apptype,
                  'relpath': DataSource.RELPATH,
                  'getpath': _relativize,
-                 'confversion': userconf[0],
-                 'outputfile': outfile[0],
-                 'ffthreads': userconf[2],
-                 'ffplayloglev': userconf[3],
-                 'ffmpegloglev': userconf[4],
-                 'ffmpeg_local': userconf[5],
-                 'ffmpeg_bin': _relativize(userconf[6]),
-                 'ffprobe_local': userconf[7],
-                 'ffprobe_bin': _relativize(userconf[8]),
-                 'ffplay_local': userconf[9],
-                 'ffplay_bin': _relativize(userconf[10]),
-                 'icontheme': (userconf[11], theme),
-                 'toolbarsize': userconf[12],
-                 'toolbarpos': userconf[13],
-                 'toolbartext': userconf[14],
-                 'clearcache': userconf[15],
-                 'downloader': downloader[0],
-                 'outputfile_samedir': userconf[17],
-                 'filesuffix': userconf[18],
-                 'outputdownload': outdownl[0],
-                 'playlistsubfolder': userconf[20],
-                 'warnexiting': userconf[21],
-                 'clearlogfiles': userconf[22]}
-                )
+                 'ffmpeg_cmd': _relativize(userconf['ffmpeg_cmd']),
+                 'ffprobe_cmd': _relativize(userconf['ffprobe_cmd']),
+                 'ffplay_cmd': _relativize(userconf['ffplay_cmd']),
+                 "ffplay+params": "-hide_banner",
+                 "ffmpeg+params": "-stats -hide_banner -nostdin",
+                 **userconf
+                 })
     # --------------------------------------------------------------------
 
     def icons_set(self, icontheme):
         """
         Determines icons set assignment defined on the configuration
         file (see `Set icon themes map:`, on paragraph `6- GUI setup`
-        in the videomass.conf file).
+        in the settings.json file).
         Returns a icontheme dict object.
 
         """
@@ -511,7 +473,7 @@ class DataSource():
 
         choose = iconames.get(icontheme)  # set appropriate icontheme
 
-        iconset = (self.videomass_icon,
+        iconset = (self.prg_icon,
                    f"{choose.get('x48')}/icon_videoconversions.{ext}",
                    f"{choose.get('x22')}/convert.{ext}",
                    f"{choose.get('x22')}/properties.{ext}",

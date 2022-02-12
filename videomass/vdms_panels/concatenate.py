@@ -97,7 +97,7 @@ class Conc_Demuxer(wx.Panel):
         .
         """
         get = wx.GetApp()
-        self.appdata = get.appset
+        appdata = get.appset
         self.parent = parent  # parent is the MainFrame
         self.command = ''
 
@@ -120,8 +120,8 @@ class Conc_Demuxer(wx.Panel):
                                       label=_("For more details, see the "
                                               "Videomass User Guide:")
                                       )
-        if self.appdata['GETLANG'] in self.appdata['SUPP_LANGs']:
-            lang = self.appdata['GETLANG'].split('_')[0]
+        if appdata['GETLANG'] in appdata['SUPP_LANGs']:
+            lang = appdata['GETLANG'].split('_')[0]
             page = (f"https://jeanslack.github.io/Videomass/"
                     f"Pages/User-guide-languages/{lang}/1-User_"
                     f"Interface_Overview_{lang}.pdf")
@@ -157,7 +157,7 @@ class Conc_Demuxer(wx.Panel):
 
         self.SetSizer(sizer)
 
-        if self.appdata['ostype'] == 'Darwin':
+        if appdata['ostype'] == 'Darwin':
             self.lbl_msg1.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
             self.lbl_msg2.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             self.lbl_msg3.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))

@@ -62,7 +62,7 @@ def stream_info(title, filepath):
         with open(filepath, encoding='utf8'):
             miniframe = Mediainfo(title,
                                   filepath,
-                                  get.appset['ffprobe_bin'],
+                                  get.appset['ffprobe_cmd'],
                                   get.appset['ostype'],
                                   )
             miniframe.Show()
@@ -85,8 +85,9 @@ def stream_play(filepath, tseq, param, autoexit):
                      tseq,
                      param,
                      get.appset['logdir'],
-                     get.appset['ffplay_bin'],
+                     get.appset['ffplay_cmd'],
                      get.appset['ffplayloglev'],
+                     get.appset['ffplay+params'],
                      autoexit
                      )
             # thread.join() > attende fine thread, se no ritorna subito
@@ -125,7 +126,7 @@ def probe_getinfo(filename):
     Return tuple object with two items: (data, None) or (None, error).
     """
     get = wx.GetApp()
-    metadata = FFProbe(get.appset['ffprobe_bin'], filename,
+    metadata = FFProbe(get.appset['ffprobe_cmd'], filename,
                        parse=False, writer='json')
 
     if metadata.error_check():  # first checks for errors:
@@ -148,7 +149,7 @@ def volume_detect_process(filelist, time_seq, audiomap):
                                 filelist,
                                 audiomap,
                                 get.appset['logdir'],
-                                get.appset['ffmpeg_bin']
+                                get.appset['ffmpeg_cmd']
                                 )
     dlgload = PopupDialog(None,
                           _("Videomass - Loading..."),
@@ -170,15 +171,15 @@ def test_conf():
 
     """
     get = wx.GetApp()
-    out = ff_conf(get.appset['ffmpeg_bin'], get.appset['ostype'])
+    out = ff_conf(get.appset['ffmpeg_cmd'], get.appset['ostype'])
     if 'Not found' in out[0]:
         wx.MessageBox(f"\n{out[1]}", "Videomass", wx.ICON_ERROR, None)
         return
 
     miniframe = ffmpeg_conf.Checkconf(out,
-                                      get.appset['ffmpeg_bin'],
-                                      get.appset['ffprobe_bin'],
-                                      get.appset['ffplay_bin'],
+                                      get.appset['ffmpeg_cmd'],
+                                      get.appset['ffprobe_cmd'],
+                                      get.appset['ffplay_cmd'],
                                       get.appset['ostype'],
                                       )
     miniframe.Show()
@@ -192,7 +193,7 @@ def test_formats():
 
     """
     get = wx.GetApp()
-    diction = ff_formats(get.appset['ffmpeg_bin'], get.appset['ostype'])
+    diction = ff_formats(get.appset['ffmpeg_cmd'], get.appset['ostype'])
     if 'Not found' in diction:
         wx.MessageBox(f"\n{diction['Not found']}", "Videomass",
                       wx.ICON_ERROR,
@@ -212,7 +213,7 @@ def test_codecs(type_opt):
 
     """
     get = wx.GetApp()
-    diction = ff_codecs(get.appset['ffmpeg_bin'],
+    diction = ff_codecs(get.appset['ffmpeg_cmd'],
                         type_opt,
                         get.appset['ostype']
                         )
@@ -237,7 +238,7 @@ def findtopic(topic):
 
     """
     get = wx.GetApp()
-    retcod = ff_topics(get.appset['ffmpeg_bin'], topic, get.appset['ostype'])
+    retcod = ff_topics(get.appset['ffmpeg_cmd'], topic, get.appset['ostype'])
 
     if 'Not found' in retcod[0]:
         notf = (f"\n{retcod[1]}")

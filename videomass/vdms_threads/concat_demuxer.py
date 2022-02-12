@@ -77,7 +77,7 @@ class ConcatDemuxer(Thread):
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
     CACHEDIR = appdata['cachedir']
-    SUFFIX = '' if appdata['filesuffix'] == 'none' else appdata['filesuffix']
+    SUFFIX = appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ---------------------------------------------------------------
 
@@ -118,10 +118,11 @@ class ConcatDemuxer(Thread):
                                                ConcatDemuxer.SUFFIX,
                                                outext)
                                   )
-        cmd = ('"%s" %s -f concat -safe 0 -i "%s" -map 0:v? -map_chapters 0 '
-               '-map 0:s? -map 0:a? -map_metadata 0 %s -c copy %s -y '
-               '"%s"' % (ConcatDemuxer.appdata['ffmpeg_bin'],
+        cmd = ('"%s" %s %s -f concat -safe 0 -i "%s" -map 0:v? -map_chapters '
+               '0 -map 0:s? -map 0:a? -map_metadata 0 %s -c copy %s -y '
+               '"%s"' % (ConcatDemuxer.appdata['ffmpeg_cmd'],
                          ConcatDemuxer.appdata['ffmpegloglev'],
+                         ConcatDemuxer.appdata['ffmpeg+params'],
                          self.ftext,
                          self.command,
                          ConcatDemuxer.appdata['ffthreads'],

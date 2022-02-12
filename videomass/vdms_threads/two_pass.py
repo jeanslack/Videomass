@@ -78,7 +78,7 @@ class TwoPass(Thread):
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
     OS = appdata['ostype']
-    SUFFIX = '' if appdata['filesuffix'] == 'none' else appdata['filesuffix']
+    SUFFIX = appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
     def __init__(self, varargs, duration, logname, timeseq):
@@ -124,9 +124,10 @@ class TwoPass(Thread):
                                                             outext))
 
             # --------------- first pass
-            pass1 = ('"%s" %s %s -i "%s" %s %s '
-                     '-y %s' % (TwoPass.appdata['ffmpeg_bin'],
+            pass1 = ('"%s" %s %s %s -i "%s" %s %s '
+                     '-y %s' % (TwoPass.appdata['ffmpeg_cmd'],
                                 TwoPass.appdata['ffmpegloglev'],
+                                TwoPass.appdata['ffmpeg+params'],
                                 self.time_seq,
                                 files,
                                 self.passlist[0],
@@ -214,9 +215,10 @@ class TwoPass(Thread):
                              end='ok'
                              )
             # --------------- second pass ----------------#
-            pass2 = ('"%s" %s %s -i "%s" %s %s %s '
-                     '-y "%s"' % (TwoPass.appdata['ffmpeg_bin'],
+            pass2 = ('"%s" %s %s %s -i "%s" %s %s %s '
+                     '-y "%s"' % (TwoPass.appdata['ffmpeg_cmd'],
                                   TwoPass.appdata['ffmpegloglev'],
+                                  TwoPass.appdata['ffmpeg+params'],
                                   self.time_seq,
                                   files,
                                   self.passlist[1],

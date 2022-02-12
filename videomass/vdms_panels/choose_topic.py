@@ -40,9 +40,9 @@ class Choose_Topic(wx.Panel):
         This is a home panel shown when start Videomass to choose the
         appropriate contextual panel.
         """
-        get = wx.GetApp()  # get videomass wx.App attribute
+        get = wx.GetApp()
         self.appdata = get.appset
-        self.icons = get.iconset
+        self.icons = parent.icons
         # ----------------------
         self.parent = parent
         self.oS = OS
@@ -146,6 +146,8 @@ class Choose_Topic(wx.Panel):
                 welcome.SetForegroundColour('#171b12')  # black
                 version.SetForegroundColour('#171b12')  # black
 
+        self.SetMinSize(tuple(self.parent.appdata['panel_size']))
+
         self.Bind(wx.EVT_BUTTON, self.on_Conv, self.avconv)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)
         self.Bind(wx.EVT_BUTTON, self.on_Conc, self.conc)
@@ -180,7 +182,7 @@ class Choose_Topic(wx.Panel):
         requires installation.
 
         """
-        if self.appdata['downloader'][0] == 'Disable all':
+        if self.appdata['downloader'] == 'disabled':
             wx.MessageBox(_("The downloader is disabled. "
                             "Check your preferences."),
                           "Videomass", wx.ICON_INFORMATION, self)
@@ -194,6 +196,6 @@ class Choose_Topic(wx.Panel):
             wx.MessageBox(_("ERROR: {0}\n\n{1} is not installed, "
                             "use your package manager to install it."
                             ).format(self.appdata['PYLIBYDL'],
-                                     self.appdata['downloader'][0]),
+                                     self.appdata['downloader']),
                           "Videomass", wx.ICON_ERROR, self)
             return

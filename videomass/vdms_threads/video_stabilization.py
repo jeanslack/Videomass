@@ -77,7 +77,7 @@ class VidStab(Thread):
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
     OS = appdata['ostype']
-    SUFFIX = '' if appdata['filesuffix'] == 'none' else appdata['filesuffix']
+    SUFFIX = appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
     def __init__(self, varargs, duration, logname, timeseq):
@@ -130,9 +130,10 @@ class VidStab(Thread):
                                                             outext))
 
             # --------------- first pass
-            pass1 = ('"%s" %s %s -i "%s" %s %s '
-                     '-y %s' % (VidStab.appdata['ffmpeg_bin'],
+            pass1 = ('"%s" %s %s %s -i "%s" %s %s '
+                     '-y %s' % (VidStab.appdata['ffmpeg_cmd'],
                                 VidStab.appdata['ffmpegloglev'],
+                                VidStab.appdata['ffmpeg+params'],
                                 self.time_seq,
                                 files,
                                 self.passlist[0],
@@ -224,9 +225,10 @@ class VidStab(Thread):
                              end='ok'
                              )
             # --------------- second pass ----------------#
-            pass2 = ('"%s" %s %s -i "%s" %s %s %s '
-                     '-y "%s/%s%s.%s"' % (VidStab.appdata['ffmpeg_bin'],
+            pass2 = ('"%s" %s %s %s -i "%s" %s %s %s '
+                     '-y "%s/%s%s.%s"' % (VidStab.appdata['ffmpeg_cmd'],
                                           VidStab.appdata['ffmpegloglev'],
+                                          VidStab.appdata['ffmpeg+params'],
                                           self.time_seq,
                                           files,
                                           self.passlist[1],
@@ -308,11 +310,12 @@ class VidStab(Thread):
                 outduo = os.path.join(folders, '%s%s_DUO.%s' % (filename,
                                                                 VidStab.SUFFIX,
                                                                 outext))
-                pass3 = ('"%s" %s %s -i "%s" %s -vf "[in] %spad=2*iw:ih '
+                pass3 = ('"%s" %s %s %s -i "%s" %s -vf "[in] %spad=2*iw:ih '
                          '[left]; movie=%s [right]; '
                          '[left][right] overlay=main_w/2:0 [out]" -y '
-                         '"%s"' % (VidStab.appdata['ffmpeg_bin'],
+                         '"%s"' % (VidStab.appdata['ffmpeg_cmd'],
                                    VidStab.appdata['ffmpegloglev'],
+                                   VidStab.appdata['ffmpeg+params'],
                                    self.time_seq,
                                    files,
                                    VidStab.appdata['ffthreads'],

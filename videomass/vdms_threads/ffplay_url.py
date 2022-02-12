@@ -104,10 +104,10 @@ class DownloadStream(Thread):
     """
     get = wx.GetApp()  # get videomass wx.App attribute
     OS = get.appset['ostype']
-    FFMPEG_URL = get.appset['ffmpeg_bin']
+    FFMPEG_URL = get.appset['ffmpeg_cmd']
     TMP = os.path.join(get.appset['cachedir'], 'tmp')
     APP = get.appset['app']
-    DOWNLOADER = get.appset['downloader'][0]
+    DOWNLOADER = get.appset['downloader']
 
     def __init__(self, url, quality):
         """

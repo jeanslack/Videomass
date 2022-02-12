@@ -165,14 +165,15 @@ class FileDnD(wx.Panel):
     def __init__(self, parent, iconplay):
         """Constructor. This will initiate with an id and a title"""
         get = wx.GetApp()
-        self.appdata = get.appset
+        appdata = get.appset
         self.parent = parent  # parent is the MainFrame
+
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpplay = get_bmp(iconplay, ((16, 16)))
         else:
             bmpplay = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
         self.data = self.parent.data_files  # set items list data on parent
-        self.file_dest = self.appdata['outputfile']
+        self.file_dest = appdata['outputfile']
         self.selected = None  # tells if an imported file is selected or not
 
         wx.Panel.__init__(self, parent=parent)
@@ -221,19 +222,19 @@ class FileDnD(wx.Panel):
         self.flCtrl.InsertColumn(2, _('Media type'), width=200)
         self.flCtrl.InsertColumn(3, _('Size'), width=150)
 
-        if self.appdata['ostype'] == 'Darwin':
+        if appdata['ostype'] == 'Darwin':
             lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
             lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
         self.text_path_save.SetValue(self.file_dest)
 
-        if self.appdata['outputfile_samedir'] == 'true':
+        if appdata['outputfile_samedir'] == True:
             self.btn_save.Disable(), self.text_path_save.Disable()
             self.parent.same_destin = True
-            if not self.appdata['filesuffix'] == 'none':
+            if not appdata['filesuffix'] == '':
                 # otherwise must be '' on parent
-                self.parent.suffix = self.appdata['filesuffix']
+                self.parent.suffix = appdata['filesuffix']
 
         # Tooltip
         self.btn_remove.SetToolTip(_('Remove the selected file from the list'))

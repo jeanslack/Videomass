@@ -144,7 +144,7 @@ class Downloader(wx.Panel):
              ('p144'): ('worstvideo[height>=?144]+worstaudio/worst'),
              ('Worst video resolution'): ('worstvideo+worstaudio/worst'),
              }
-    if appdata['downloader'][0] == 'yt_dlp':
+    if appdata['downloader'] == 'yt_dlp':
         VPCOMP = {('Best precompiled video'): ('best'),
                   ('Medium precompiled video'): ('18'),
                   ('Worst precompiled video'): ('worst'),

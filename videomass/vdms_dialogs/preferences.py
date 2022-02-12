@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
 """
-Name: settings.py
+Name: preferences.py
 Porpose: videomass setup dialog
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.11.2021
-Code checker: pycodestyle
+Rev: Feb.11.2022
+Code checker: pylint, flake8
 ########################################################
 
 This file is part of Videomass.
@@ -31,12 +31,13 @@ import webbrowser
 import wx
 import wx.lib.agw.hyperlink as hpl
 from videomass.vdms_utils.utils import detect_binaries
+from videomass.vdms_sys.settings_manager import ConfigManager
 
 
-class Setup(wx.Dialog):
+class SetUp(wx.Dialog):
     """
-    Main settings of the videomass program and configuration storing.
-
+    Represents settings and configuration
+    storing of the program.
     """
     FFPLAY_LOGLEV = [("quiet (Show nothing at all)"),
                      ("fatal (Only show fatal errors)"),
@@ -54,37 +55,16 @@ class Setup(wx.Dialog):
 
     def __init__(self, parent):
         """
-        NOTE 0): self.rowsNum attribute is a sorted list with a exatly number
-                 index corresponding to each read line of the videomass.conf.
-        NOTE 1): The code block (USEFUL FOR DEBUGGING) prints in console a
-                 convenient representation of the parsing, which can also be
-                 efforting consulted for future implementations.
-                 Just uncomment it.
-                 - POSITION, the number index of self.rowsNum items (how many
-                   objects it contains).
-                 - ROW, is the current numeric rows on the file configuration
-                 - VALUE, is the value as writing in the file configuration
+        self.appdata: (dict) settings already loaded from main_frame .
+        self.confmanager: instance to ConfigManager class
+        self.settings: (dict) current user settings from file conf.
+
         """
         get = wx.GetApp()
         self.appdata = get.appset
+        self.confmanager = ConfigManager(self.appdata['fileconfpath'])
+        self.settings = self.confmanager.read_options()
 
-        # Make a items list of
-        self.rowsNum = []  # rows number list
-        # dic = {}  # used for debug
-        with open(self.appdata['fileconfpath'], 'r', encoding='utf8') as f:
-            self.full_list = f.readlines()
-        for a, b in enumerate(self.full_list):
-            if not b.startswith('#'):
-                if not b == '\n':
-                    self.rowsNum.append(a)
-                    """
-                    dic [a] = b.strip()# used for easy reading print debug
-        #USEFUL FOR DEBUGGING (see Setup.__init__.__doc__)
-        #uncomment the following code for a convenient reading
-        print("\nPOSITION:    ROW:     VALUE:")
-        for n, k in enumerate(sorted(dic)):
-            print(n, ' -------> ', k, ' --> ', dic[k])
-        """
         if self.appdata['ostype'] == 'Windows':
             self.ffmpeg = 'ffmpeg.exe'
             self.ffprobe = 'ffprobe.exe'
@@ -279,7 +259,7 @@ class Setup(wx.Dialog):
 
         self.rdbDownloader = wx.RadioBox(self.tabFour, wx.ID_ANY,
                                          (_("Downloader preferences")),
-                                         choices=[('Disable all'),
+                                         choices=[('disabled'),
                                                   ('youtube_dl'),
                                                   ('yt_dlp')],
                                          majorDimension=1,
@@ -299,18 +279,18 @@ class Setup(wx.Dialog):
         # ---- BEGIN set youtube-dl radiobox
         ydlmsg = _("Make sure you are using the latest available "
                    "version of\n'{}'. This allows you to avoid download "
-                   "problems.\n").format(self.appdata['downloader'][1])
+                   "problems.\n").format(self.appdata['downloader'])
 
         if self.appdata['app'] == 'pyinstaller':
 
-            if self.appdata['downloader'][0] == 'Disable all':
+            if self.appdata['downloader'] == 'disabled':
                 self.rdbDownloader.SetSelection(0)
                 self.ydlPath.WriteText(_('Disabled'))
             else:
-                if self.appdata['downloader'][0] == 'youtube_dl':
+                if self.appdata['downloader'] == 'youtube_dl':
                     self.rdbDownloader.SetSelection(1)
 
-                elif self.appdata['downloader'][0] == 'yt_dlp':
+                elif self.appdata['downloader'] == 'yt_dlp':
                     self.rdbDownloader.SetSelection(2)
 
                 if self.appdata['PYLIBYDL'] is None:
@@ -321,16 +301,16 @@ class Setup(wx.Dialog):
         elif self.appdata['app'] == 'appimage':
 
             tip1 = _('Menu bar > Tools > Update {}'
-                     ).format(self.appdata['downloader'][0])
+                     ).format(self.appdata['downloader'])
 
-            if self.appdata['downloader'][0] == 'Disable all':
+            if self.appdata['downloader'] == 'disabled':
                 self.rdbDownloader.SetSelection(0)
                 self.ydlPath.WriteText(_('Disabled'))
             else:
-                if self.appdata['downloader'][0] == 'youtube_dl':
+                if self.appdata['downloader'] == 'youtube_dl':
                     self.rdbDownloader.SetSelection(1)
 
-                elif self.appdata['downloader'][0] == 'yt_dlp':
+                elif self.appdata['downloader'] == 'yt_dlp':
                     self.rdbDownloader.SetSelection(2)
 
                 if self.appdata['PYLIBYDL'] is None:
@@ -339,14 +319,14 @@ class Setup(wx.Dialog):
                 else:
                     self.ydlPath.WriteText(_('Not Installed'))
         else:
-            if self.appdata['downloader'][0] == 'Disable all':
+            if self.appdata['downloader'] == 'disabled':
                 self.rdbDownloader.SetSelection(0)
                 self.ydlPath.WriteText(_('Disabled'))
             else:
-                if self.appdata['downloader'][0] == 'youtube_dl':
+                if self.appdata['downloader'] == 'youtube_dl':
                     self.rdbDownloader.SetSelection(1)
 
-                elif self.appdata['downloader'][0] == 'yt_dlp':
+                elif self.appdata['downloader'] == 'yt_dlp':
                     self.rdbDownloader.SetSelection(2)
 
                 if self.appdata['PYLIBYDL'] is None:
@@ -439,14 +419,14 @@ class Setup(wx.Dialog):
         self.rdbFFmpeg = wx.RadioBox(
                                 tabSix, wx.ID_ANY,
                                 ("Set logging level flags used by FFmpeg"),
-                                choices=Setup.FFMPEG_LOGLEV, majorDimension=1,
+                                choices=SetUp.FFMPEG_LOGLEV, majorDimension=1,
                                 style=wx.RA_SPECIFY_COLS
                                      )
         sizerLog.Add(self.rdbFFmpeg, 0, wx.ALL | wx.EXPAND, 5)
         self.rdbFFplay = wx.RadioBox(
                                 tabSix, wx.ID_ANY,
                                 ("Set logging level flags used by FFplay"),
-                                choices=Setup.FFPLAY_LOGLEV, majorDimension=1,
+                                choices=SetUp.FFPLAY_LOGLEV, majorDimension=1,
                                 style=wx.RA_SPECIFY_COLS
                                      )
         sizerLog.Add(self.rdbFFplay, 0, wx.ALL | wx.EXPAND, 5)
@@ -472,7 +452,7 @@ class Setup(wx.Dialog):
         self.Layout()
 
         # ----------------------Properties----------------------#
-        self.SetTitle(_("Videomass Setup"))
+        self.SetTitle(_("Settings"))
         # set font
         if self.appdata['ostype'] == 'Darwin':
             labfile.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -527,7 +507,7 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.clear_logs, self.checkbox_logclr)
         self.Bind(wx.EVT_RADIOBOX, self.on_Ydl_preferences, self.rdbDownloader)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
-        self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
+        self.Bind(wx.EVT_BUTTON, self.on_cancel, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         # --------------------------------------------#
         self.current_settings()  # call function for initialize setting layout
@@ -537,68 +517,54 @@ class Setup(wx.Dialog):
         Setting enable/disable in according to the configuration file
 
         """
-        self.cmbx_icons.SetValue(str(self.appdata['icontheme'][0]))
+        self.cmbx_icons.SetValue(self.appdata['icontheme'][0])
         self.cmbx_iconsSize.SetValue(str(self.appdata['toolbarsize']))
-        self.rdbTBpref.SetSelection(int(self.appdata['toolbarpos']))
+        self.rdbTBpref.SetSelection(self.appdata['toolbarpos'])
 
-        if self.appdata['clearcache'] == 'false':
-            self.checkbox_cacheclr.SetValue(False)
-        else:
-            self.checkbox_cacheclr.SetValue(True)
+        self.checkbox_cacheclr.SetValue(self.appdata['clearcache'])
+        self.checkbox_tbtext.SetValue(self.appdata['toolbartext'])
+        self.checkbox_exit.SetValue(self.appdata['warnexiting'])
+        self.checkbox_logclr.SetValue(self.appdata['clearlogfiles'])
+        self.ckbx_playlist.SetValue(self.appdata['playlistsubfolder'])
 
-        for s in range(self.rdbFFplay.GetCount()):
+        for strs in range(self.rdbFFplay.GetCount()):
             if (self.appdata['ffplayloglev'].split()[1] in
-               self.rdbFFplay.GetString(s).split()[0]):
-                self.rdbFFplay.SetSelection(s)
+               self.rdbFFplay.GetString(strs).split()[0]):
+                self.rdbFFplay.SetSelection(strs)
 
-        for s in range(self.rdbFFmpeg.GetCount()):
+        for strs in range(self.rdbFFmpeg.GetCount()):
             if (self.appdata['ffmpegloglev'].split()[1] in
-               self.rdbFFmpeg.GetString(s).split()[0]):
-                self.rdbFFmpeg.SetSelection(s)
+               self.rdbFFmpeg.GetString(strs).split()[0]):
+                self.rdbFFmpeg.SetSelection(strs)
 
-        if self.appdata['ffmpeg_local'] == 'false':
+        if self.appdata['ffmpeg_islocal'] is False:
             self.btn_pathFFmpeg.Disable()
             self.txtctrl_ffmpeg.Disable()
-            self.txtctrl_ffmpeg.AppendText(self.appdata['ffmpeg_bin'])
+            self.txtctrl_ffmpeg.AppendText(self.appdata['ffmpeg_cmd'])
             self.checkbox_exeFFmpeg.SetValue(False)
         else:
-            self.txtctrl_ffmpeg.AppendText(self.appdata['ffmpeg_bin'])
+            self.txtctrl_ffmpeg.AppendText(self.appdata['ffmpeg_cmd'])
             self.checkbox_exeFFmpeg.SetValue(True)
 
-        if self.appdata['ffprobe_local'] == 'false':
+        if self.appdata['ffprobe_islocal'] is False:
             self.btn_pathFFprobe.Disable()
             self.txtctrl_ffprobe.Disable()
-            self.txtctrl_ffprobe.AppendText(self.appdata['ffprobe_bin'])
+            self.txtctrl_ffprobe.AppendText(self.appdata['ffprobe_cmd'])
             self.checkbox_exeFFprobe.SetValue(False)
         else:
-            self.txtctrl_ffprobe.AppendText(self.appdata['ffprobe_bin'])
+            self.txtctrl_ffprobe.AppendText(self.appdata['ffprobe_cmd'])
             self.checkbox_exeFFprobe.SetValue(True)
 
-        if self.appdata['ffplay_local'] == 'false':
+        if self.appdata['ffplay_islocal'] is False:
             self.btn_pathFFplay.Disable()
             self.txtctrl_ffplay.Disable()
-            self.txtctrl_ffplay.AppendText(self.appdata['ffplay_bin'])
+            self.txtctrl_ffplay.AppendText(self.appdata['ffplay_cmd'])
             self.checkbox_exeFFplay.SetValue(False)
         else:
-            self.txtctrl_ffplay.AppendText(self.appdata['ffplay_bin'])
+            self.txtctrl_ffplay.AppendText(self.appdata['ffplay_cmd'])
             self.checkbox_exeFFplay.SetValue(True)
 
-        if self.appdata['toolbartext'] == 'show':
-            self.checkbox_tbtext.SetValue(True)
-        else:
-            self.checkbox_tbtext.SetValue(False)
-
-        if self.appdata['warnexiting'] == 'enable':
-            self.checkbox_exit.SetValue(True)
-        else:
-            self.checkbox_exit.SetValue(False)
-
-        if self.appdata['clearlogfiles'] == 'true':
-            self.checkbox_logclr.SetValue(True)
-        else:
-            self.checkbox_logclr.SetValue(False)
-
-        if self.appdata['outputfile_samedir'] == 'false':
+        if self.appdata['outputfile_samedir'] is False:
             self.lab_suffix.Disable()
             self.text_suffix.Disable()
             self.ckbx_dir.SetValue(False)
@@ -606,20 +572,16 @@ class Setup(wx.Dialog):
             self.lab_suffix.Enable()
             self.text_suffix.Enable()
             self.ckbx_dir.SetValue(True)
-            self.btn_FFpath.Disable(), self.txtctrl_FFpath.Disable()
-            if not self.appdata['filesuffix'] == 'none':
+            self.btn_FFpath.Disable()
+            self.txtctrl_FFpath.Disable()
+            if not self.appdata['filesuffix'] == "":
                 self.text_suffix.AppendText(self.appdata['filesuffix'])
-
-        if self.appdata['playlistsubfolder'] == 'false':
-            self.ckbx_playlist.SetValue(False)
-        else:
-            self.ckbx_playlist.SetValue(True)
     # --------------------------------------------------------------------#
 
     def on_threads(self, event):
         """set cpu number threads used as option on ffmpeg"""
         sett = self.spinctrl_threads.GetValue()
-        self.full_list[self.rowsNum[2]] = '-threads %s\n' % sett
+        self.settings['ffthreads'] = f'-threads {sett}'
     # ---------------------------------------------------------------------#
 
     def on_downloadPath(self, event):
@@ -633,16 +595,16 @@ class Setup(wx.Dialog):
             self.txtctrl_YDLpath.Clear()
             getpath = self.appdata['getpath'](dlg.GetPath())
             self.txtctrl_YDLpath.AppendText(getpath)
-            self.full_list[self.rowsNum[19]] = '%s\n' % (getpath)
+            self.settings['outputdownload'] = getpath
             dlg.Destroy()
     # ---------------------------------------------------------------------#
 
     def on_playlistFolder(self, event):
         """auto-create subfolders when downloading playlists"""
         if self.ckbx_playlist.IsChecked():
-            self.full_list[self.rowsNum[20]] = 'true\n'
+            self.settings['playlistsubfolder'] = True
         else:
-            self.full_list[self.rowsNum[20]] = 'false\n'
+            self.settings['playlistsubfolder'] = False
     # ---------------------------------------------------------------------#
 
     def on_ffmpegPath(self, event):
@@ -656,22 +618,26 @@ class Setup(wx.Dialog):
             self.txtctrl_FFpath.Clear()
             getpath = self.appdata['getpath'](dlg.GetPath())
             self.txtctrl_FFpath.AppendText(getpath)
-            self.full_list[self.rowsNum[1]] = '%s\n' % (getpath)
+            self.settings['outputfile'] = getpath
             dlg.Destroy()
     # --------------------------------------------------------------------#
 
     def set_Samedest(self, event):
         """Save the FFmpeg output files in the same source folder"""
         if self.ckbx_dir.IsChecked():
-            self.lab_suffix.Enable(), self.text_suffix.Enable()
-            self.btn_FFpath.Disable(), self.txtctrl_FFpath.Disable()
-            self.full_list[self.rowsNum[17]] = 'true\n'
+            self.lab_suffix.Enable()
+            self.text_suffix.Enable()
+            self.btn_FFpath.Disable()
+            self.txtctrl_FFpath.Disable()
+            self.settings['outputfile_samedir'] = True
         else:
             self.text_suffix.Clear()
-            self.lab_suffix.Disable(), self.text_suffix.Disable()
-            self.btn_FFpath.Enable(), self.txtctrl_FFpath.Enable()
-            self.full_list[self.rowsNum[17]] = 'false\n'
-            self.full_list[self.rowsNum[18]] = 'none\n'
+            self.lab_suffix.Disable()
+            self.text_suffix.Disable()
+            self.btn_FFpath.Enable()
+            self.txtctrl_FFpath.Enable()
+            self.settings['outputfile_samedir'] = False
+            self.settings['filesuffix'] = ""
     # --------------------------------------------------------------------#
 
     def set_Suffix(self, event):
@@ -692,25 +658,24 @@ class Setup(wx.Dialog):
                     if not c.isalnum():  # is not alphanumeric
                         self.text_suffix.SetBackgroundColour('#988313')
                         wx.MessageBox(msg, 'WARNING', wx.ICON_WARNING)
-                        self.full_list[self.rowsNum[18]] = 'none\n'
+                        self.settings['filesuffix'] = ""
                         return
 
-            self.full_list[self.rowsNum[18]] = '%s\n' % (suffix)
+            self.settings['filesuffix'] = suffix
         else:
-            self.full_list[self.rowsNum[18]] = 'none\n'
+            self.settings['filesuffix'] = ""
     # --------------------------------------------------------------------#
 
     def logging_ffplay(self, event):
         """specifies loglevel type for ffplay."""
-        s = self.rdbFFplay.GetStringSelection().split()[0]
-        self.full_list[self.rowsNum[3]] = '-loglevel %s -hide_banner \n' % s
+        strn = self.rdbFFplay.GetStringSelection().split()[0]
+        self.settings['ffplayloglev'] = f'-loglevel {strn}'
     # --------------------------------------------------------------------#
 
     def logging_ffmpeg(self, event):
         """specifies loglevel type for ffmpeg"""
-        s = self.rdbFFmpeg.GetStringSelection().split()[0]
-        self.full_list[self.rowsNum[4]] = ('-loglevel %s -stats -hide_banner '
-                                           '-nostdin\n' % s)
+        strn = self.rdbFFmpeg.GetStringSelection().split()[0]
+        self.settings['ffmpegloglev'] = f'-loglevel {strn}'
     # --------------------------------------------------------------------#
 
     def exeFFmpeg(self, event):
@@ -718,11 +683,11 @@ class Setup(wx.Dialog):
         if self.checkbox_exeFFmpeg.IsChecked():
             self.btn_pathFFmpeg.Enable()
             self.txtctrl_ffmpeg.Enable()
-            self.full_list[self.rowsNum[5]] = 'true\n'
+            self.settings['ffmpeg_islocal'] = True
         else:
             self.btn_pathFFmpeg.Disable()
             self.txtctrl_ffmpeg.Disable()
-            self.full_list[self.rowsNum[5]] = 'false\n'
+            self.settings['ffmpeg_islocal'] = False
 
             status = detect_binaries(self.appdata['ostype'],
                                      self.ffmpeg,
@@ -731,28 +696,28 @@ class Setup(wx.Dialog):
             if status[0] == 'not installed':
                 self.txtctrl_ffmpeg.Clear()
                 self.txtctrl_ffmpeg.write(status[0])
-                self.full_list[self.rowsNum[6]] = '%s\n' % 'none'
+                self.settings['ffmpeg_cmd'] = ''
             else:
                 self.txtctrl_ffmpeg.Clear()
                 getpath = self.appdata['getpath'](status[1])
                 self.txtctrl_ffmpeg.write(getpath)
-                self.full_list[self.rowsNum[6]] = '%s\n' % getpath
+                self.settings['ffmpeg_cmd'] = getpath
     # --------------------------------------------------------------------#
 
     def open_path_ffmpeg(self, event):
         """Indicates a new ffmpeg path-name"""
         with wx.FileDialog(self, _("Choose the {} "
                                    "executable").format(self.ffmpeg), "", "",
-                           "ffmpeg binarys (*%s)|*%s| All files "
-                           "(*.*)|*.*" % (self.ffmpeg, self.ffmpeg),
-                           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fd:
+                           f"ffmpeg binary (*{self.ffmpeg})|*{self.ffmpeg}| "
+                           f"All files (*.*)|*.*",
+                           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
 
-            if fd.ShowModal() == wx.ID_OK:
-                if os.path.basename(fd.GetPath()) == self.ffmpeg:
+            if fdlg.ShowModal() == wx.ID_OK:
+                if os.path.basename(fdlg.GetPath()) == self.ffmpeg:
                     self.txtctrl_ffmpeg.Clear()
-                    getpath = self.appdata['getpath'](fd.GetPath())
+                    getpath = self.appdata['getpath'](fdlg.GetPath())
                     self.txtctrl_ffmpeg.write(getpath)
-                    self.full_list[self.rowsNum[6]] = '%s\n' % (getpath)
+                    self.settings['ffmpeg_cmd'] = getpath
     # --------------------------------------------------------------------#
 
     def exeFFprobe(self, event):
@@ -760,12 +725,12 @@ class Setup(wx.Dialog):
         if self.checkbox_exeFFprobe.IsChecked():
             self.btn_pathFFprobe.Enable()
             self.txtctrl_ffprobe.Enable()
-            self.full_list[self.rowsNum[7]] = 'true\n'
+            self.settings['ffprobe_islocal'] = True
 
         else:
             self.btn_pathFFprobe.Disable()
             self.txtctrl_ffprobe.Disable()
-            self.full_list[self.rowsNum[7]] = 'false\n'
+            self.settings['ffprobe_islocal'] = False
 
             status = detect_binaries(self.appdata['ostype'],
                                      self.ffprobe,
@@ -774,28 +739,29 @@ class Setup(wx.Dialog):
             if status[0] == 'not installed':
                 self.txtctrl_ffprobe.Clear()
                 self.txtctrl_ffprobe.write(status[0])
-                self.full_list[self.rowsNum[8]] = '%s\n' % 'none'
+                self.settings['ffprobe_cmd'] = ''
             else:
                 self.txtctrl_ffprobe.Clear()
                 getpath = self.appdata['getpath'](status[1])
                 self.txtctrl_ffprobe.write(getpath)
-                self.full_list[self.rowsNum[8]] = '%s\n' % getpath
+                self.settings['ffprobe_cmd'] = getpath
     # --------------------------------------------------------------------#
 
     def open_path_ffprobe(self, event):
         """Indicates a new ffprobe path-name"""
         with wx.FileDialog(self, _("Choose the {} "
                                    "executable").format(self.ffprobe), "", "",
-                           "ffprobe binarys (*%s)|*%s| All files "
-                           "(*.*)|*.*" % (self.ffprobe, self.ffprobe),
-                           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fd:
+                           f"ffprobe binary "
+                           f"(*{self.ffprobe})|*{self.ffprobe}| "
+                           f"All files (*.*)|*.*",
+                           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
 
-            if fd.ShowModal() == wx.ID_OK:
-                if os.path.basename(fd.GetPath()) == self.ffprobe:
+            if fdlg.ShowModal() == wx.ID_OK:
+                if os.path.basename(fdlg.GetPath()) == self.ffprobe:
                     self.txtctrl_ffprobe.Clear()
-                    getpath = self.appdata['getpath'](fd.GetPath())
+                    getpath = self.appdata['getpath'](fdlg.GetPath())
                     self.txtctrl_ffprobe.write(getpath)
-                    self.full_list[self.rowsNum[8]] = '%s\n' % (getpath)
+                    self.settings['ffprobe_cmd'] = getpath
     # --------------------------------------------------------------------#
 
     def exeFFplay(self, event):
@@ -803,12 +769,12 @@ class Setup(wx.Dialog):
         if self.checkbox_exeFFplay.IsChecked():
             self.btn_pathFFplay.Enable()
             self.txtctrl_ffplay.Enable()
-            self.full_list[self.rowsNum[9]] = 'true\n'
+            self.settings['ffplay_islocal'] = True
 
         else:
             self.btn_pathFFplay.Disable()
             self.txtctrl_ffplay.Disable()
-            self.full_list[self.rowsNum[9]] = 'false\n'
+            self.settings['ffplay_islocal'] = False
 
             status = detect_binaries(self.appdata['ostype'],
                                      self.ffplay,
@@ -817,52 +783,51 @@ class Setup(wx.Dialog):
             if status[0] == 'not installed':
                 self.txtctrl_ffplay.Clear()
                 self.txtctrl_ffplay.write(status[0])
-                self.full_list[self.rowsNum[10]] = '%s\n' % 'none'
+                self.settings['ffplay_cmd'] = ''
             else:
                 self.txtctrl_ffplay.Clear()
                 getpath = self.appdata['getpath'](status[1])
                 self.txtctrl_ffplay.write(getpath)
-                self.full_list[self.rowsNum[10]] = '%s\n' % getpath
+                self.settings['ffprobe_cmd'] = getpath
     # --------------------------------------------------------------------#
 
     def open_path_ffplay(self, event):
         """Indicates a new ffplay path-name"""
         with wx.FileDialog(self, _("Choose the {} "
-                                   "executable").format(self.ffmpeg), "", "",
-                           "ffplay binarys (*%s)|*%s| All files "
-                           "(*.*)|*.*" % (self.ffplay, self.ffplay),
-                           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fd:
+                                   "executable").format(self.ffplay), "", "",
+                           f"ffplay binary "
+                           f"(*{self.ffplay})|*{self.ffplay}| "
+                           f"All files (*.*)|*.*",
+                           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
 
-            if fd.ShowModal() == wx.ID_OK:
-                if os.path.basename(fd.GetPath()) == self.ffplay:
+            if fdlg.ShowModal() == wx.ID_OK:
+                if os.path.basename(fdlg.GetPath()) == self.ffplay:
                     self.txtctrl_ffplay.Clear()
-                    getpath = self.appdata['getpath'](fd.GetPath())
+                    getpath = self.appdata['getpath'](fdlg.GetPath())
                     self.txtctrl_ffplay.write(getpath)
-                    self.full_list[self.rowsNum[10]] = '%s\n' % (getpath)
+                    self.settings['ffplay_cmd'] = getpath
     # ---------------------------------------------------------------------#
 
     def on_Iconthemes(self, event):
         """
         Set themes of icons
         """
-        choice = "%s\n" % self.cmbx_icons.GetStringSelection()
-        self.full_list[self.rowsNum[11]] = choice
+        self.settings['icontheme'] = self.cmbx_icons.GetStringSelection()
     # --------------------------------------------------------------------#
 
     def on_toolbarSize(self, event):
         """
         Set the size of the toolbar buttons and the size of its icons
         """
-        choice = "%s\n" % self.cmbx_iconsSize.GetStringSelection()
-        self.full_list[self.rowsNum[12]] = choice
+        size = self.cmbx_iconsSize.GetStringSelection()
+        self.settings['toolbarsize'] = size
     # --------------------------------------------------------------------#
 
     def on_toolbarPos(self, event):
         """
         Set toolbar position on main frame
         """
-        pos = '%s\n' % self.rdbTBpref.GetSelection()
-        self.full_list[self.rowsNum[13]] = pos
+        self.settings['toolbarpos'] = self.rdbTBpref.GetSelection()
     # --------------------------------------------------------------------#
 
     def on_toolbarText(self, event):
@@ -870,9 +835,9 @@ class Setup(wx.Dialog):
         Show or hide text along toolbar buttons
         """
         if self.checkbox_tbtext.IsChecked():
-            self.full_list[self.rowsNum[14]] = 'show\n'
+            self.settings['toolbartext'] = True
         else:
-            self.full_list[self.rowsNum[14]] = 'hide\n'
+            self.settings['toolbartext'] = False
     # --------------------------------------------------------------------#
 
     def exit_warn(self, event):
@@ -881,9 +846,9 @@ class Setup(wx.Dialog):
         exiting the program
         """
         if self.checkbox_exit.IsChecked():
-            self.full_list[self.rowsNum[21]] = 'enable\n'
+            self.settings['warnexiting'] = True
         else:
-            self.full_list[self.rowsNum[21]] = 'disable\n'
+            self.settings['warnexiting'] = False
     # --------------------------------------------------------------------#
 
     def clear_Cache(self, event):
@@ -891,9 +856,9 @@ class Setup(wx.Dialog):
         if checked, set to clear cached data on exit
         """
         if self.checkbox_cacheclr.IsChecked():
-            self.full_list[self.rowsNum[15]] = 'true\n'
+            self.settings['clearcache'] = True
         else:
-            self.full_list[self.rowsNum[15]] = 'false\n'
+            self.settings['clearcache'] = False
     # --------------------------------------------------------------------#
 
     def clear_logs(self, event):
@@ -901,9 +866,9 @@ class Setup(wx.Dialog):
         if checked, set to clear all log files on exit
         """
         if self.checkbox_logclr.IsChecked():
-            self.full_list[self.rowsNum[22]] = 'true\n'
+            self.settings['clearlogfiles'] = True
         else:
-            self.full_list[self.rowsNum[22]] = 'false\n'
+            self.settings['clearlogfiles'] = False
     # --------------------------------------------------------------------#
 
     def on_Ydl_preferences(self, event):
@@ -911,8 +876,7 @@ class Setup(wx.Dialog):
         set youtube-dl preferences
         """
         index = self.rdbDownloader.GetSelection()
-        youtubedl = f'{self.rdbDownloader.GetString(index)}'
-        self.full_list[self.rowsNum[16]] = f'{youtubedl}\n'
+        self.settings['downloader'] = self.rdbDownloader.GetString(index)
     # --------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -933,9 +897,9 @@ class Setup(wx.Dialog):
 
     def getvalue(self):
         """
-        Get user preferences on exiting the app
+        Retrives data from here before destroyng this dialog.
+        See main_frame --> on_setup method
         """
-
         if wx.MessageBox(_("Changes will take effect once the program "
                            "has been restarted.\n\n"
                            "Do you want to exit the application now?"),
@@ -947,16 +911,18 @@ class Setup(wx.Dialog):
         return None
     # --------------------------------------------------------------------#
 
-    def on_close(self, event):
+    def on_cancel(self, event):
+        """
+        Close event
+        """
         event.Skip()
     # --------------------------------------------------------------------#
 
     def on_ok(self, event):
         """
-        Applies all changes writing the new entries
+        Applies all changes writing the new entries on
+        `settings.json` file aka file configuration.
         """
-        with open(self.appdata['fileconfpath'], 'w', encoding='utf8') as f:
-            for i in self.full_list:
-                f.write('%s' % i)
-        # self.Destroy() # WARNING on mac not close corretly, on linux ok
+        self.confmanager.write_options(**self.settings)
+
         event.Skip()

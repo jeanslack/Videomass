@@ -76,7 +76,7 @@ class Loudnorm(Thread):
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
     OS = appdata['ostype']
-    SUFFIX = '' if appdata['filesuffix'] == 'none' else appdata['filesuffix']
+    SUFFIX = appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
     def __init__(self, var, duration, logname, timeseq):
@@ -127,7 +127,7 @@ class Loudnorm(Thread):
             # --------------- first pass
             pass1 = ('"{0}" -nostdin -loglevel info -stats '
                      '-hide_banner {1} -i "{2}" {3} {4} -y '
-                     '{5}'.format(Loudnorm.appdata['ffmpeg_bin'],
+                     '{5}'.format(Loudnorm.appdata['ffmpeg_cmd'],
                                   self.time_seq,
                                   files,
                                   self.passlist[0],
@@ -237,7 +237,7 @@ class Loudnorm(Thread):
 
             pass2 = ('"{0}" -nostdin -loglevel info -stats -hide_banner {1} '
                      '-i "{2}" {3} -filter:a:{9} {4} {5} -y "{6}/{7}{10}.{8}" '
-                     ''.format(Loudnorm.appdata['ffmpeg_bin'],
+                     ''.format(Loudnorm.appdata['ffmpeg_cmd'],
                                self.time_seq,
                                files,
                                self.passlist[1],
