@@ -24,11 +24,34 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-
+import subprocess
+import platform
 import shutil
 import os
 import glob
 import math
+
+
+class Popen(subprocess.Popen):
+    """
+    Inherit subprocess.Popen class to set _startupinfo.
+    This avoids displaying a console window on MS-Windows
+    using GUI's .
+    """
+    if platform.system() == 'Windows':
+        _startupinfo = subprocess.STARTUPINFO()
+        _startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    else:
+        _startupinfo = None
+
+    def __init__(self, *args, **kwargs):
+        """Constructor
+        """
+        super().__init__(*args, **kwargs, startupinfo=self._startupinfo)
+
+    # def communicate_or_kill(self, *args, **kwargs):
+        # return process_communicate_or_kill(self, *args, **kwargs)
+# ------------------------------------------------------------------------
 
 
 def format_bytes(num):

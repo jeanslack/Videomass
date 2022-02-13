@@ -309,18 +309,18 @@ class PrstPan(wx.Panel):
         """
         # only do this part the first time so the events are only bound once
         if not hasattr(self, "popupID6"):
-            self.popupID6 = wx.ID_ANY
-            self.popupID7 = wx.ID_ANY
-            self.popupID8 = wx.ID_ANY
-            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID6)
-            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID7)
-            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID8)
+            popupID6 = wx.ID_ANY
+            popupID7 = wx.ID_ANY
+            popupID8 = wx.ID_ANY
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID6)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID7)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID8)
         # build the menu
         menu = wx.Menu()
-        itemOne = menu.Append(self.popupID6,  _("Add"))
-        itemThree = menu.Append(self.popupID7, _("Edit"))
+        menu.Append(popupID6,  _("Add"))
+        menu.Append(popupID7, _("Edit"))
         menu.AppendSeparator()
-        itemTwo = menu.Append(self.popupID8, _("Delete"))
+        menu.Append(popupID8, _("Delete"))
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()
