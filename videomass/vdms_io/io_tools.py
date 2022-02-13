@@ -4,9 +4,9 @@ Name: io_tools.py
 Porpose: input/output redirection to processes (aka threads)
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.01.2021
+Rev: Feb.13.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -34,7 +34,7 @@ from videomass.vdms_threads import (ffplay_url,
                                     generic_downloads,
                                     youtubedlupdater,
                                     )
-from videomass.vdms_threads.ffprobe_parser import FFProbe
+from videomass.vdms_threads.ffprobe import ffprobe
 from videomass.vdms_threads.volumedetect import VolumeDetectThread
 from videomass.vdms_threads.check_bin import (ff_conf,
                                               ff_formats,
@@ -126,16 +126,10 @@ def probe_getinfo(filename):
     Return tuple object with two items: (data, None) or (None, error).
     """
     get = wx.GetApp()
-    metadata = FFProbe(get.appset['ffprobe_cmd'], filename,
-                       parse=False, writer='json')
+    probe = ffprobe(filename, get.appset['ffprobe_cmd'],
+                    hide_banner=None, pretty=None)
 
-    if metadata.error_check():  # first checks for errors:
-        err = metadata.error
-        return (None, err)
-
-    data = metadata.custom_output()
-
-    return (data, None)
+    return probe
 # -------------------------------------------------------------------------#
 
 

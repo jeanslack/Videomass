@@ -109,17 +109,12 @@ def my_hook(data):
     download progress. See  `help(youtube_dl.YoutubeDL)`
     """
     if data['status'] == 'downloading':
-        duration = ('Downloading... {} of {} '
-                    'at {} ETA {}'.format(data.get('_percent_str'),
-                                          data.get('_total_bytes_str', 'N/A'),
-                                          data.get('_speed_str'),
-                                          data.get('_eta_str'),),
-                    float(data['_percent_str'].strip().split('%')[0])
-                    )
+        keys = ('_percent_str', '_total_bytes_str', '_speed_str', '_eta_str')
+
         wx.CallAfter(pub.sendMessage,
                      "UPDATE_YDL_EVT",
                      output='',
-                     duration=duration,
+                     duration={x:data.get(x, 'N/A') for x in keys},
                      status='DOWNLOAD',)
 
     if data['status'] == 'finished':
@@ -252,11 +247,11 @@ class YdlDownloader(Thread):
                      YdlDownloader.appdata['logdir'],
                      )  # write n/n + command only
 
-            if YdlDownloader.DOWNLOADER[0] == 'youtube_dl':
+            if YdlDownloader.DOWNLOADER == 'youtube_dl':
                 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                     ydl.download([f"{url}"])
 
-            elif YdlDownloader.DOWNLOADER[0] == 'yt_dlp':
+            elif YdlDownloader.DOWNLOADER == 'yt_dlp':
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                     ydl.download([f"{url}"])
 

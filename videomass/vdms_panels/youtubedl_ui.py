@@ -465,12 +465,12 @@ class Downloader(wx.Panel):
         """
         # only do this part the first time so the events are only bound once
         if not hasattr(self, "popupID2"):
-            self.popupID2 = wx.ID_ANY
-            self.Bind(wx.EVT_MENU, self.on_popup, id=self.popupID2)
+            popupID2 = wx.ID_ANY
+            self.Bind(wx.EVT_MENU, self.on_popup, id=popupID2)
 
         # build the menu
         menu = wx.Menu()
-        menu.Append(self.popupID2, _("Play selected url"))
+        menu.Append(popupID2, _("Play selected url"))
         # show the popup menu
         self.PopupMenu(menu)
 

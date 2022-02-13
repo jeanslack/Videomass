@@ -15,7 +15,7 @@ PATH = os.path.realpath(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(os.path.dirname(PATH)))
 
 try:
-    from videomass.vdms_threads.ffprobe_parser import FFProbe
+    from videomass.vdms_threads.ffprobe import ffprobe
 except ImportError as error:
     sys.exit(error)
 
@@ -29,15 +29,10 @@ class FFprobeTestCase(unittest.TestCase):
         filename_url = 'url'
         ffprobe_url = ''
 
-        self.data = FFProbe(ffprobe_url,
-                            filename_url,
-                            parse=True,
-                            pretty=True,
-                            select=None,
-                            entries=None,
-                            show_format=True,
-                            show_streams=True,
-                            writer='default'
+        self.data = ffprobe(filename_url,
+                            ffprobe_url,
+                            hide_banner=None,
+                            pretty=None
                             )
 
     def test_invalid_urls(self):
@@ -46,9 +41,9 @@ class FFprobeTestCase(unittest.TestCase):
         invalid executable.
 
         """
-        if self.data.error_check():
+        if self.data[1]:
             self.assertRaises(AssertionError)
-            self.assertEqual(self.data.data_format(), [])
+            self.assertEqual(self.data[0], None)
 
     def test_available_urls(self):
         """
@@ -58,9 +53,10 @@ class FFprobeTestCase(unittest.TestCase):
         or ffprobe.exe for MS
 
         """
-        if not self.data.error_check():
-            self.assertEqual(self.data.error, False)
-            self.assertTrue(self.data.data_format())
+        if not self.data[1]:
+            print('si')
+            self.assertEqual(self.data[1], None)
+            self.assertTrue(self.data[0])
 
 
 def main():

@@ -4,9 +4,12 @@ Name: filedrop.py
 Porpose: files drag n drop interface
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.19.2021 *-pycodestyle- compatible*
+Rev: Feb.13.2022
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 ########################################################
 
 This file is part of Videomass.
@@ -92,7 +95,7 @@ class MyListCtrl(wx.ListCtrl):
                                           MyListCtrl.WHITE)
                 return
 
-            data = eval(data[0])
+            data = data[0]
             self.InsertItem(self.index, path)
 
             if 'duration' not in data['format'].keys():
@@ -102,17 +105,17 @@ class MyListCtrl(wx.ListCtrl):
                 data['format']['duration'] = 0
 
             else:
-                t = data['format']['duration'].split(':')
-                s, ms = t[2].split('.')[0], t[2].split('.')[1]
-                t = '%sh : %sm : %ss : %sms' % (t[0], t[1], s, ms)
-                self.SetItem(self.index, 1, t)
+                tdur = data['format']['duration'].split(':')
+                sec, msec = tdur[2].split('.')[0], tdur[2].split('.')[1]
+                tdur = f'{tdur[0]}h : {tdur[1]}m : {sec} : {msec}'
+                self.SetItem(self.index, 1, tdur)
                 data.get('format')['time'] = data.get('format').pop('duration')
                 time = get_milliseconds(data.get('format')['time'])
                 data['format']['duration'] = time
 
             media = data['streams'][0]['codec_type']
             formatname = data['format']['format_long_name']
-            self.SetItem(self.index, 2, '%s: %s' % (media, formatname))
+            self.SetItem(self.index, 2, f'{media}: {formatname}')
             self.SetItem(self.index, 3, data['format']['size'])
             self.index += 1
             self.data.append(data)
@@ -120,7 +123,7 @@ class MyListCtrl(wx.ListCtrl):
             self.parent.reset_tl()
 
         else:
-            mess = _("Duplicate files are rejected: > '%s'") % path
+            mess = _("Duplicate files are rejected: > {}").format(path)
             self.parent.statusbar_msg(mess, MyListCtrl.YELLOW,
                                       MyListCtrl.BLACK)
     # ----------------------------------------------------------------------#
@@ -229,8 +232,9 @@ class FileDnD(wx.Panel):
 
         self.text_path_save.SetValue(self.file_dest)
 
-        if appdata['outputfile_samedir'] == True:
-            self.btn_save.Disable(), self.text_path_save.Disable()
+        if appdata['outputfile_samedir'] is True:
+            self.btn_save.Disable()
+            self.text_path_save.Disable()
             self.parent.same_destin = True
             if not appdata['filesuffix'] == '':
                 # otherwise must be '' on parent
@@ -280,14 +284,14 @@ class FileDnD(wx.Panel):
         """
         # only do this part the first time so the events are only bound once
         if not hasattr(self, "popupID1"):
-            self.popupID1 = wx.ID_ANY
-            self.popupID2 = wx.ID_ANY
-            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID1)
-            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID2)
+            popupID1 = wx.ID_ANY
+            popupID2 = wx.ID_ANY
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID1)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID2)
         # build the menu
         menu = wx.Menu()
-        itemOne = menu.Append(self.popupID2, _("Play"))
-        itemTwo = menu.Append(self.popupID1, _("Remove"))
+        menu.Append(popupID2, _("Play"))
+        menu.Append(popupID1, _("Remove"))
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()
@@ -323,7 +327,7 @@ class FileDnD(wx.Panel):
             index = self.flCtrl.GetFocusedItem()
             item = self.flCtrl.GetItemText(index)
             if self.parent.checktimestamp:
-                tstamp = '-vf "%s"' % (self.parent.cmdtimestamp)
+                tstamp = f'-vf "{self.parent.cmdtimestamp}"'
             else:
                 tstamp = ""
             io_tools.stream_play(item, self.parent.time_seq,
@@ -364,7 +368,8 @@ class FileDnD(wx.Panel):
         self.parent.filedropselected = None
         self.reset_tl()
         self.selected = None
-        self.btn_play.Disable(), self.btn_remove.Disable()
+        self.btn_play.Disable()
+        self.btn_remove.Disable()
         self.btn_clear.Disable()
     # ----------------------------------------------------------------------
 
@@ -376,7 +381,8 @@ class FileDnD(wx.Panel):
         item = self.flCtrl.GetItemText(index)
         self.parent.filedropselected = item
         self.selected = item
-        self.btn_play.Enable(), self.btn_remove.Enable()
+        self.btn_play.Enable()
+        self.btn_remove.Enable()
     # ----------------------------------------------------------------------
 
     def on_doubleClick(self, row):
@@ -394,7 +400,8 @@ class FileDnD(wx.Panel):
         """
         self.parent.filedropselected = None
         self.selected = None
-        self.btn_play.Disable(), self.btn_remove.Disable()
+        self.btn_play.Disable()
+        self.btn_remove.Disable()
     # ----------------------------------------------------------------------
 
     def on_file_save(self, path):
@@ -404,7 +411,7 @@ class FileDnD(wx.Panel):
         """
         self.text_path_save.SetValue("")
         self.text_path_save.AppendText(path)
-        self.file_dest = '%s' % (path)
+        self.file_dest = path
     # -----------------------------------------------------------------------
 
     def statusbar_msg(self, mess, bcolor, fcolor=None):
@@ -412,4 +419,4 @@ class FileDnD(wx.Panel):
         Set a status bar message of the parent method.
         bcolor: background, fcolor: foreground
         """
-        self.parent.statusbar_msg('%s' % mess, bcolor, fcolor)
+        self.parent.statusbar_msg(f'{mess}', bcolor, fcolor)
