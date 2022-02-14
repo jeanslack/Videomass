@@ -6,7 +6,7 @@ Porpose: script to setup Videomass.
 Compatibility: Python3
 Platform: all
 Writer: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2014-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2014-2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Oct.22.2021
 Code checker: flake8, pylint
@@ -45,7 +45,7 @@ def source_build():
 
     if 'sdist' in sys.argv or 'bdist_wheel' in sys.argv:
 
-        inst_req = ["wxpython>=4.0.3; platform_system=='Windows' or "
+        inst_req = ["wxpython>=4.0.7; platform_system=='Windows' or "
                     "platform_system=='Darwin'",
                     "PyPubSub>=4.0.3",
                     "youtube_dl>=2020.1.1",
@@ -62,7 +62,7 @@ def source_build():
         long_description_ct = 'text/markdown'
 
     else:  # e.g. to make a Debian source package, include wxpython.
-        inst_req = ["wxpython>=4.0.3",
+        inst_req = ["wxpython>=4.0.7",
                     "PyPubSub>=4.0.3",
                     "requests>=2.21.0",
                     ]
@@ -117,7 +117,7 @@ def source_build():
                                 },
           include_package_data=True,
           zip_safe=False,
-          python_requires=">=3.6.9, <4",
+          python_requires=">=3.7.0, <4",
           install_requires=inst_req,
           setup_requires=setup_req,
           entry_points={'gui_scripts':

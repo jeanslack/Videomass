@@ -28,6 +28,7 @@ This file is part of Videomass.
 """
 
 import subprocess
+from videomass.vdms_utils.utils import Popen
 
 
 def subp(args, ostype):
@@ -46,17 +47,12 @@ def subp(args, ostype):
 
     if ostype == 'Windows':
         cmd = ' '.join(cmd)
-        info = subprocess.STARTUPINFO()
-        info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    else:
-        info = None
     try:
-        with subprocess.Popen(cmd,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.STDOUT,
-                              universal_newlines=True,  # mod text
-                              startupinfo=info,
-                              ) as proc:
+        with Popen(cmd,
+                   stdout=subprocess.PIPE,
+                   stderr=subprocess.STDOUT,
+                   universal_newlines=True,  # mod text
+                   ) as proc:
             out = proc.communicate()
 
             if proc.returncode:  # if returncode == 1

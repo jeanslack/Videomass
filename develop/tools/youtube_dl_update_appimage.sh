@@ -19,7 +19,7 @@
 # for colors code.
 #
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2020-2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Update: Oct.01.2021
 
 set -e  # stop if error

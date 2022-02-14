@@ -13,9 +13,9 @@
 # so that dependencies get bundled from that very container
 #
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2020-2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Create: Oct.02.2020
-# Update: Nov.17.2021
+# Update: Feb.13.2022
 ###################################################################
 
 set -x  # Print commands and their arguments as they are executed.

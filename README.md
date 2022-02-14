@@ -33,8 +33,8 @@ web page, which provides the information required to install Videomass on
 each operating system.
 
 ### Requirements
-- **[Python >= 3.6.9](https://www.python.org/)**
-- **[wxPython-Phoenix >= 4.0.3](https://wxpython.org/)**
+- **[Python >= 3.7.0](https://www.python.org/)**
+- **[wxPython-Phoenix >= 4.0.7](https://wxpython.org/)**
 - **[PyPubSub >= 4.0.3](https://pypi.org/project/PyPubSub/)**
 - **[requests >= 2.21.0](https://pypi.org/project/requests/)**
 - **[ffmpeg >=4.3](https://ffmpeg.org/)**

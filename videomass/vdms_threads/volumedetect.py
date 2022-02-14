@@ -32,7 +32,8 @@ import subprocess
 import platform
 import wx
 from pubsub import pub
-from videomass.vdms_io.make_filelog import write_log  # write initial log
+from videomass.vdms_utils.utils import Popen
+from videomass.vdms_io.make_filelog import write_log
 if not platform.system() == 'Windows':
     import shlex
 
@@ -98,17 +99,12 @@ class VolumeDetectThread(Thread):
 
             if not platform.system() == 'Windows':
                 cmd = shlex.split(cmd)
-                info = None
-            else:  # Hide subprocess window on MS Windows
-                info = subprocess.STARTUPINFO()
-                info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             try:
-                with subprocess.Popen(cmd,
-                                      stdout=subprocess.PIPE,
-                                      stderr=subprocess.STDOUT,
-                                      universal_newlines=True,
-                                      startupinfo=info,
-                                      ) as proc:
+                with Popen(cmd,
+                           stdout=subprocess.PIPE,
+                           stderr=subprocess.STDOUT,
+                           universal_newlines=True,
+                           ) as proc:
 
                     output = proc.communicate()
 

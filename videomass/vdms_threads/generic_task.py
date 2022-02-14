@@ -4,9 +4,9 @@ Name: generic_task.py
 Porpose: Execute a generic task with FFmpeg
 Compatibility: Python3 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.31.2021
+Rev: Feb.14.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -30,6 +30,7 @@ from threading import Thread
 import platform
 import subprocess
 import wx
+from videomass.vdms_utils.utils import Popen
 if not platform.system() == 'Windows':
     import shlex
 
@@ -77,26 +78,19 @@ class FFmpegGenericTask(Thread):
         OSError exception. Otherwise the getted output is None
 
         """
-        cmd = ('"%s" %s %s %s' % (FFmpegGenericTask.appdata['ffmpeg_cmd'],
-                                  FFmpegGenericTask.appdata['ffmpegloglev'],
-                                  FFmpegGenericTask.appdata['ffmpeg+params'],
-                                  self.param,
-                                  ))
+        cmd = (f'"{FFmpegGenericTask.appdata["ffmpeg_cmd"]}" '
+               f'{FFmpegGenericTask.appdata["ffmpegloglev"]} '
+               f'{FFmpegGenericTask.appdata["ffmpeg+params"]} '
+               f'{self.param}')
 
         if not platform.system() == 'Windows':
-            command = shlex.split(cmd)
-            info = None
-        else:  # Hide subprocess dos window on MS Windows
-            command = cmd
-            info = subprocess.STARTUPINFO()
-            info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            cmd = shlex.split(cmd)
 
         try:
-            with subprocess.Popen(command,
-                                  stderr=subprocess.PIPE,
-                                  universal_newlines=True,
-                                  startupinfo=info,
-                                  ) as proc:
+            with Popen(cmd,
+                       stderr=subprocess.PIPE,
+                       universal_newlines=True,
+                       ) as proc:
 
                 error = proc.communicate()
 

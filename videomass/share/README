@@ -10,9 +10,6 @@ conventions of each operating system which are:
         MacOs:       '~/Library/Application Support/videomass'
         Windows:     'C:\Users\username\AppData\Roaming\videomass'
 
-`videomass.conf` is the main configuration file and is used to store
-user preferences and to import application data.
-
 Furthermore, the Videomass configuration directory is also used to load
 files located in the 'presets/' folder. Files format into 'preset' folder is `.prst`.
 These files are Videomass presets and contain JSON data type.
