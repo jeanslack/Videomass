@@ -32,24 +32,11 @@ from threading import Thread
 import itertools
 import wx
 from pubsub import pub
+from videomass.vdms_io.make_filelog import logwrite
 if 'youtube_dl' in sys.modules:
     import youtube_dl
 elif 'yt_dlp' in sys.modules:
     import yt_dlp
-
-
-def logwrite(cmd, sterr, logname, logdir):
-    """
-    writes youtube-dl commands and status error during
-    threads below
-    """
-    if sterr:
-        apnd = "...%s\n\n" % (sterr)
-    else:
-        apnd = "%s\n\n" % (cmd)
-
-    with open(os.path.join(logdir, logname), "a", encoding='utf8') as log:
-        log.write(apnd)
 
 
 class MyLogger(object):

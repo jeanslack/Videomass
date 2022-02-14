@@ -29,6 +29,19 @@ import time
 import os
 
 
+def logwrite(cmd, stderr, logname, logdir):
+    """
+    writes ffmpeg commands and status error during threads
+    """
+    if stderr:
+        apnd = f"...{stderr}\n\n"
+    else:
+        apnd = f"{cmd}\n\n"
+
+    with open(os.path.join(logdir, logname), "a", encoding='utf8') as log:
+        log.write(apnd)
+
+
 def write_log(logfile, logdir):
     """
     Before starting a process, a log file is created from this

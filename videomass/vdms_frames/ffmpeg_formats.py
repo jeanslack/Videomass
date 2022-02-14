@@ -4,7 +4,7 @@
 # Porpose: Show the available formats on the FFmpeg
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.06.2020 *-pycodestyle- compatible*
 #########################################################

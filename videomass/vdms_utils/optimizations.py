@@ -4,7 +4,7 @@
 # Porpose: contains the optimization presets for av_conversions.py
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: May.16.2021
 # Code checker: pycodestyle, flake8, pylint .

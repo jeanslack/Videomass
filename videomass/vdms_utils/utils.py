@@ -37,6 +37,13 @@ class Popen(subprocess.Popen):
     Inherit subprocess.Popen class to set _startupinfo.
     This avoids displaying a console window on MS-Windows
     using GUI's .
+
+    NOTE MS Windows:
+
+    subprocess.STARTUPINFO()
+
+    https://stackoverflow.com/questions/1813872/running-
+    a-process-in-pythonw-with-popen-without-a-console?lq=1>
     """
     if platform.system() == 'Windows':
         _startupinfo = subprocess.STARTUPINFO()

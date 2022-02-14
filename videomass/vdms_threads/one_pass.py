@@ -4,9 +4,9 @@ Name: one_pass.py
 Porpose: FFmpeg long processing task on one pass conversion
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.18.2021
+Rev: Feb.14.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -34,36 +34,16 @@ import subprocess
 import platform
 import wx
 from pubsub import pub
+from videomass.vdms_utils.utils import Popen
+from videomass.vdms_io.make_filelog import logwrite
 if not platform.system() == 'Windows':
     import shlex
-
-
-def logwrite(cmd, stderr, logname, logdir):
-    """
-    writes ffmpeg commands and status error during threads below
-    """
-    if stderr:
-        apnd = f"...{stderr}\n\n"
-    else:
-        apnd = f"{cmd}\n\n"
-
-    with open(os.path.join(logdir, logname), "a", encoding='utf8') as log:
-        log.write(apnd)
-
-# ------------------------------ THREADS -------------------------------#
 
 
 class OnePass(Thread):
     """
     This class represents a separate thread for running processes,
     which need to read the stdout/stderr in real time.
-
-    NOTE MS Windows:
-
-    subprocess.STARTUPINFO()
-
-    https://stackoverflow.com/questions/1813872/running-
-    a-process-in-pythonw-with-popen-without-a-console?lq=1>
 
     NOTE capturing output in real-time (Windows, Unix):
 
@@ -103,10 +83,10 @@ class OnePass(Thread):
 
     def run(self):
         """
-        Subprocess initialize thread.
+        Thread started.
         """
         for (files,
-             folders,
+             fold,
              volume,
              duration) in itertools.zip_longest(self.filelist,
                                                 self.outputdir,
@@ -116,29 +96,27 @@ class OnePass(Thread):
                                                 ):
 
             basename = os.path.basename(files)  # nome file senza path
-            filename = os.path.splitext(basename)[0]  # nome senza estensione
+            fname = os.path.splitext(basename)[0]  # nome senza estensione
             source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
             outext = source_ext if not self.extoutput else self.extoutput
-            outputfile = os.path.join(folders, f'{filename}{OnePass.SUFFIX}'
-                                               f'.{outext}')
+            outfile = os.path.join(fold, f'{fname}{OnePass.SUFFIX}.{outext}')
 
             cmd = (f'"{OnePass.appdata["ffmpeg_cmd"]}" {self.time_seq} '
                    f'{OnePass.appdata["ffmpegloglev"]} '
                    f'{OnePass.appdata["ffmpeg+params"]} -i "{files}" '
                    f'{self.command} {volume} {OnePass.appdata["ffthreads"]} '
-                   f'-y "{outputfile}"')
+                   f'-y "{outfile}"')
 
             self.count += 1
-
             count = f'File {self.count}/{self.countmax}'
-            com = (f'{count}\nSource: "{files}"\nDestination: "{outputfile}"'
+            com = (f'{count}\nSource: "{files}"\nDestination: "{outfile}"'
                    f'\n\n[COMMAND]:\n{cmd}')
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
                          fsource=f'Source:  "{files}"',
-                         destination=f'Destination:  "{outputfile}"',
+                         destination=f'Destination:  "{outfile}"',
                          duration=duration,
                          end='',
                          )
@@ -150,16 +128,13 @@ class OnePass(Thread):
 
             if not platform.system() == 'Windows':
                 cmd = shlex.split(cmd)
-                info = None
-            else:  # Hide subprocess window on MS Windows
-                info = subprocess.STARTUPINFO()
-                info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+
             try:
-                with subprocess.Popen(cmd,
-                                      stderr=subprocess.PIPE,
-                                      bufsize=1,
-                                      universal_newlines=True,
-                                      startupinfo=info,) as proc:
+                with Popen(cmd,
+                           stderr=subprocess.PIPE,
+                           bufsize=1,
+                           universal_newlines=True,
+                           ) as proc:
                     for line in proc.stderr:
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",

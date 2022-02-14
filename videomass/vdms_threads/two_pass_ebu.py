@@ -1,15 +1,14 @@
 # -*- coding: UTF-8 -*-
 """
 Name: two_pass_EBU.py
-Porpose: FFmpeg long processing task on 2 pass with EBU normalization
+Porpose: FFmpeg long processing task with EBU normalization
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021
-Code checker:
-    flake8: --ignore F821, W504
-    pylint: --ignore E0602, E1101
+Rev: Feb.14.2022
+Code checker: flake8: --ignore F821, W504
+
 
 This file is part of Videomass.
 
@@ -34,43 +33,21 @@ import subprocess
 import platform
 import wx
 from pubsub import pub
+from videomass.vdms_utils.utils import Popen
+from videomass.vdms_io.make_filelog import logwrite
 if not platform.system() == 'Windows':
     import shlex
-
-
-def logwrite(cmd, sterr, logname, logdir):
-    """
-    writes ffmpeg commands and status error during threads below
-    """
-    if sterr:
-        apnd = "...%s\n\n" % (sterr)
-    else:
-        apnd = "%s\n\n" % (cmd)
-
-    with open(os.path.join(logdir, logname), "a", encoding='utf8') as log:
-        log.write(apnd)
-
-
-# ------------------------------ THREADS -------------------------------#
-"""
-NOTE MS Windows:
-
-subprocess.STARTUPINFO()
-
-https://stackoverflow.com/questions/1813872/running-
-a-process-in-pythonw-with-popen-without-a-console?lq=1>
-
-NOTE capturing output in real-time (Windows, Unix):
-
-https://stackoverflow.com/questions/1388753/how-to-get-output-
-from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
-"""
 
 
 class Loudnorm(Thread):
     """
     Like `TwoPass_Thread` but execute -loudnorm parsing from first
     pass and has definitions to apply on second pass.
+
+    NOTE capturing output in real-time (Windows, Unix):
+
+    https://stackoverflow.com/questions/1388753/how-to-get-output-
+    from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute
@@ -157,16 +134,12 @@ class Loudnorm(Thread):
 
             if not Loudnorm.OS == 'Windows':
                 pass1 = shlex.split(pass1)
-                info = None
-            else:   # Hide subprocess window on MS Windows
-                info = subprocess.STARTUPINFO()
-                info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             try:
-                with subprocess.Popen(pass1,
-                                      stderr=subprocess.PIPE,
-                                      bufsize=1,
-                                      universal_newlines=True,
-                                      startupinfo=info,) as proc1:
+                with Popen(pass1,
+                           stderr=subprocess.PIPE,
+                           bufsize=1,
+                           universal_newlines=True,
+                           ) as proc1:
 
                     for line in proc1.stderr:
                         wx.CallAfter(pub.sendMessage,
@@ -267,15 +240,11 @@ class Loudnorm(Thread):
 
             if not Loudnorm.OS == 'Windows':
                 pass2 = shlex.split(pass2)
-                info = None
-            else:  # Hide subprocess window on MS Windows
-                info = subprocess.STARTUPINFO()
-                info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            with subprocess.Popen(pass2,
-                                  stderr=subprocess.PIPE,
-                                  bufsize=1,
-                                  universal_newlines=True,
-                                  startupinfo=info,) as proc2:
+            with Popen(pass2,
+                       stderr=subprocess.PIPE,
+                       bufsize=1,
+                       universal_newlines=True,
+                       ) as proc2:
 
                 for line2 in proc2.stderr:
                     wx.CallAfter(pub.sendMessage,

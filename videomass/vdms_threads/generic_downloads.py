@@ -4,9 +4,9 @@ Name: generic_downloads.py
 Porpose: generic network download operation
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.1.2021
+Rev: Feb.14.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101

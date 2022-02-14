@@ -4,7 +4,7 @@
 # Porpose: set viewing attribute timestamp for FFplay
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Gen.01.2020 *-pycodestyle- compatible*
 #########################################################

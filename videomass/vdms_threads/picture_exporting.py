@@ -4,9 +4,9 @@ Name: pictures_exporting.py
 Porpose: FFmpeg long processing task on save as pictures
 Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021
+Rev: Feb.14.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -33,38 +33,10 @@ import subprocess
 import platform
 import wx
 from pubsub import pub
+from videomass.vdms_utils.utils import Popen
+from videomass.vdms_io.make_filelog import logwrite
 if not platform.system() == 'Windows':
     import shlex
-
-
-def logwrite(cmd, sterr, logname, logdir):
-    """
-    writes ffmpeg commands and status error during threads below
-    """
-    if sterr:
-        apnd = "...%s\n\n" % (sterr)
-    else:
-        apnd = "%s\n\n" % (cmd)
-
-    with open(os.path.join(logdir, logname), "a", encoding='utf8') as log:
-        log.write(apnd)
-
-# ------------------------------ THREADS -------------------------------#
-
-
-"""
-NOTE MS Windows:
-
-subprocess.STARTUPINFO()
-
-https://stackoverflow.com/questions/1813872/running-
-a-process-in-pythonw-with-popen-without-a-console?lq=1>
-
-NOTE capturing output in real-time (Windows, Unix):
-
-https://stackoverflow.com/questions/1388753/how-to-get-output-
-from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
-"""
 
 
 class PicturesFromVideo(Thread):
@@ -72,6 +44,10 @@ class PicturesFromVideo(Thread):
     This class represents a separate thread for running simple
     single processes to save video sequences as pictures.
 
+    NOTE capturing output in real-time (Windows, Unix):
+
+    https://stackoverflow.com/questions/1388753/how-to-get-output-
+    from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
     """
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
@@ -101,23 +77,20 @@ class PicturesFromVideo(Thread):
         """
         Subprocess initialize thread.
         """
-        cmd = ('"%s" %s %s %s -i '
-               '"%s" %s ' % (PicturesFromVideo.appdata['ffmpeg_cmd'],
-                             self.time_seq,
-                             PicturesFromVideo.appdata['ffmpegloglev'],
-                             PicturesFromVideo.appdata['ffmpeg+params'],
-                             self.fname,
-                             self.cmd,
-                             ))
+        cmd = (f'"{PicturesFromVideo.appdata["ffmpeg_cmd"]}" '
+               f'{self.time_seq} {PicturesFromVideo.appdata["ffmpegloglev"]} '
+               f'{PicturesFromVideo.appdata["ffmpeg+params"]} -i '
+               f'"{self.fname}" {self.cmd}'
+               )
         count = 'File 1/1'
-        com = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
-               '[COMMAND]:\n%s' % (count, self.fname, self.outputdir, cmd))
+        com = (f'{count}\nSource: "{self.fname}"\n'
+               f'Destination: "{self.outputdir}"\n\n[COMMAND]:\n{cmd}')
 
         wx.CallAfter(pub.sendMessage,
                      "COUNT_EVT",
                      count=count,
-                     fsource='Source:  "%s"' % self.fname,
-                     destination='Destination:  "%s"' % self.outputdir,
+                     fsource=f'Source:  "{self.fname}"',
+                     destination=f'Destination:  "{self.outputdir}"',
                      duration=self.duration,
                      end='',
                      )
@@ -129,16 +102,12 @@ class PicturesFromVideo(Thread):
 
         if not PicturesFromVideo.appdata['ostype'] == 'Windows':
             cmd = shlex.split(cmd)
-            info = None
-        else:  # Hide subprocess window on MS Windows
-            info = subprocess.STARTUPINFO()
-            info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         try:
-            with subprocess.Popen(cmd,
-                                  stderr=subprocess.PIPE,
-                                  bufsize=1,
-                                  universal_newlines=True,
-                                  startupinfo=info,) as proc:
+            with Popen(cmd,
+                       stderr=subprocess.PIPE,
+                       bufsize=1,
+                       universal_newlines=True,
+                       ) as proc:
                 for line in proc.stderr:
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
@@ -158,7 +127,7 @@ class PicturesFromVideo(Thread):
                                  status=proc.wait(),
                                  )
                     logwrite('',
-                             "Exit status: %s" % proc.wait(),
+                             f"Exit status: {proc.wait()}",
                              self.logname,
                              PicturesFromVideo.appdata['logdir'],
                              )  # append exit error number
@@ -173,7 +142,7 @@ class PicturesFromVideo(Thread):
                                  end='ok'
                                  )
         except (OSError, FileNotFoundError) as err:
-            excepterr = "%s\n  %s" % (err, PicturesFromVideo.NOT_EXIST_MSG)
+            excepterr = f"{err}\n  {PicturesFromVideo.NOT_EXIST_MSG}"
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=excepterr,

@@ -4,12 +4,10 @@ Name: two_pass.py
 Porpose: FFmpeg long processing task on 2 pass conversion
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021
-Code checker:
-    flake8: --ignore F821, W504
-    pylint: --ignore E0602, E1101
+Rev: Feb.14.2022
+Code checker: flake8, pylint
 
 This file is part of Videomass.
 
@@ -34,37 +32,10 @@ import subprocess
 import platform
 import wx
 from pubsub import pub
+from videomass.vdms_utils.utils import Popen
+from videomass.vdms_io.make_filelog import logwrite
 if not platform.system() == 'Windows':
     import shlex
-
-
-def logwrite(cmd, sterr, logname, logdir):
-    """
-    writes ffmpeg commands and status error during threads below
-    """
-    if sterr:
-        apnd = "...%s\n\n" % (sterr)
-    else:
-        apnd = "%s\n\n" % (cmd)
-
-    with open(os.path.join(logdir, logname), "a", encoding='utf8') as log:
-        log.write(apnd)
-
-
-# ------------------------------ THREADS -------------------------------#
-"""
-NOTE MS Windows:
-
-subprocess.STARTUPINFO()
-
-https://stackoverflow.com/questions/1813872/running-
-a-process-in-pythonw-with-popen-without-a-console?lq=1>
-
-NOTE capturing output in real-time (Windows, Unix):
-
-https://stackoverflow.com/questions/1388753/how-to-get-output-
-from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
-"""
 
 
 class TwoPass(Thread):
@@ -73,6 +44,11 @@ class TwoPass(Thread):
     stdout/stderr in real time mode. The subprocess module is instantiated
     twice for two different tasks: the process on the first video pass and
     the process on the second video pass for video only.
+
+    NOTE capturing output in real-time (Windows, Unix):
+
+    https://stackoverflow.com/questions/1388753/how-to-get-output-
+    from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute
@@ -83,8 +59,7 @@ class TwoPass(Thread):
 
     def __init__(self, varargs, duration, logname, timeseq):
         """
-        The 'volume' attribute may have an empty value, but it will
-        have no influence on the type of conversion.
+        The 'volume' attribute may have an empty value
         """
         self.stop_work_thread = False  # process terminate
         self.filelist = varargs[1]  # list of files (elements)
@@ -104,10 +79,10 @@ class TwoPass(Thread):
 
     def run(self):
         """
-        Subprocess initialize thread.
+        Thread started.
         """
         for (files,
-             folders,
+             fold,
              volume,
              duration) in itertools.zip_longest(self.filelist,
                                                 self.outputdir,
@@ -116,33 +91,27 @@ class TwoPass(Thread):
                                                 fillvalue='',
                                                 ):
             basename = os.path.basename(files)  # nome file senza path
-            filename = os.path.splitext(basename)[0]  # nome senza ext
+            fname = os.path.splitext(basename)[0]  # nome senza ext
             source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
             outext = source_ext if not self.extoutput else self.extoutput
-            outputfile = os.path.join(folders, '%s%s.%s' % (filename,
-                                                            TwoPass.SUFFIX,
-                                                            outext))
-
+            outfile = os.path.join(fold, f'{fname}{TwoPass.SUFFIX}.{outext}')
             # --------------- first pass
-            pass1 = ('"%s" %s %s %s -i "%s" %s %s '
-                     '-y %s' % (TwoPass.appdata['ffmpeg_cmd'],
-                                TwoPass.appdata['ffmpegloglev'],
-                                TwoPass.appdata['ffmpeg+params'],
-                                self.time_seq,
-                                files,
-                                self.passlist[0],
-                                TwoPass.appdata['ffthreads'],
-                                self.nul,
-                                ))
+            pass1 = (f'"{TwoPass.appdata["ffmpeg_cmd"]}" '
+                     f'{TwoPass.appdata["ffmpegloglev"]} '
+                     f'{TwoPass.appdata["ffmpeg+params"]} {self.time_seq} '
+                     f'-i "{files}" {self.passlist[0]} '
+                     f'{TwoPass.appdata["ffthreads"]} -y {self.nul}'
+                     )
             self.count += 1
-            count = 'File %s/%s - Pass One' % (self.count, self.countmax)
-            cmd = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
-                   '[COMMAND]:\n%s' % (count, files, self.nul, pass1))
+            count = f'File {self.count}/{self.countmax} - Pass One'
+            cmd = (f'{count}\nSource: "{files}"\nDestination: "{self.nul}"'
+                   f'\n\n[COMMAND]:\n{pass1}'
+                   )
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource='Source:  "%s"' % files,
-                         destination='Destination:  "%s"' % self.nul,
+                         fsource=f'Source:  "{files}"',
+                         destination=f'Destination:  "{self.nul}"',
                          duration=duration,
                          end='',
                          )
@@ -154,16 +123,12 @@ class TwoPass(Thread):
 
             if not TwoPass.OS == 'Windows':
                 pass1 = shlex.split(pass1)
-                info = None
-            else:  # Hide subprocess window on MS Windows
-                info = subprocess.STARTUPINFO()
-                info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             try:
-                with subprocess.Popen(pass1,
-                                      stderr=subprocess.PIPE,
-                                      bufsize=1,
-                                      universal_newlines=True,
-                                      startupinfo=info,) as proc1:
+                with Popen(pass1,
+                           stderr=subprocess.PIPE,
+                           bufsize=1,
+                           universal_newlines=True,
+                           ) as proc1:
 
                     for line in proc1.stderr:
                         wx.CallAfter(pub.sendMessage,
@@ -184,13 +149,13 @@ class TwoPass(Thread):
                                      status=proc1.wait(),
                                      )
                         logwrite('',
-                                 "Exit status: %s" % proc1.wait(),
+                                 f"Exit status: {proc1.wait()}",
                                  self.logname,
                                  TwoPass.appdata['logdir']
                                  )  # append exit error number
 
             except (OSError, FileNotFoundError) as err:
-                excepterr = "%s\n  %s" % (err, TwoPass.NOT_EXIST_MSG)
+                excepterr = f"{err}\n  {TwoPass.NOT_EXIST_MSG}"
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=excepterr,
@@ -215,26 +180,22 @@ class TwoPass(Thread):
                              end='ok'
                              )
             # --------------- second pass ----------------#
-            pass2 = ('"%s" %s %s %s -i "%s" %s %s %s '
-                     '-y "%s"' % (TwoPass.appdata['ffmpeg_cmd'],
-                                  TwoPass.appdata['ffmpegloglev'],
-                                  TwoPass.appdata['ffmpeg+params'],
-                                  self.time_seq,
-                                  files,
-                                  self.passlist[1],
-                                  volume,
-                                  TwoPass.appdata['ffthreads'],
-                                  outputfile,
-                                  ))
-            count = 'File %s/%s - Pass Two' % (self.count, self.countmax)
-            cmd = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
-                   '[COMMAND]:\n%s' % (count, files, outputfile, pass2))
+            pass2 = (f'"{TwoPass.appdata["ffmpeg_cmd"]}" '
+                     f'{TwoPass.appdata["ffmpegloglev"]} '
+                     f'{TwoPass.appdata["ffmpeg+params"]} {self.time_seq} '
+                     f'-i "{files}" {self.passlist[1]} {volume} '
+                     f'{TwoPass.appdata["ffthreads"]} -y {outfile}'
+                     )
+            count = f'File {self.count}/{self.countmax} - Pass Two'
+            cmd = (f'{count}\nSource: "{files}"\nDestination: "{outfile}"'
+                   f'\n\n[COMMAND]:\n{pass2}'
+                   )
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource='Source:  "%s"' % files,
-                         destination='Destination:  "%s"' % outputfile,
+                         fsource=f'Source:  "{files}"',
+                         destination=f'Destination:  "{outfile}"',
                          duration=duration,
                          end='',
                          )
@@ -242,15 +203,12 @@ class TwoPass(Thread):
 
             if not TwoPass.OS == 'Windows':
                 pass2 = shlex.split(pass2)
-                info = None
-            else:  # Hide subprocess window on MS Windows
-                info = subprocess.STARTUPINFO()
-                info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            with subprocess.Popen(pass2,
-                                  stderr=subprocess.PIPE,
-                                  bufsize=1,
-                                  universal_newlines=True,
-                                  startupinfo=info,) as proc2:
+
+            with Popen(pass2,
+                       stderr=subprocess.PIPE,
+                       bufsize=1,
+                       universal_newlines=True,
+                       ) as proc2:
 
                 for line2 in proc2.stderr:
                     wx.CallAfter(pub.sendMessage,
@@ -271,7 +229,7 @@ class TwoPass(Thread):
                                  status=proc2.wait(),
                                  )
                     logwrite('',
-                             "Exit status: %s" % proc2.wait(),
+                             f"Exit status: {proc2.wait()}",
                              self.logname,
                              TwoPass.appdata['logdir'],
                              )  # append exit error number

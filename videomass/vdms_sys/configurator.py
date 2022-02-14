@@ -33,13 +33,28 @@ from videomass.vdms_utils.utils import copydir_recursively
 from videomass.vdms_sys.settings_manager import ConfigManager
 
 
-def get_options(dirconf, fileconf, srcpath):
+def restore_presets_dir(dirconf, srcpath):
+    """
+    Restore preset directory from source if it doesn't exist
+    Return dict key == 'R', else return a dict key == ERROR
+    """
+    if not os.path.exists(os.path.join(dirconf, "presets")):
+        # try to restoring presets directory on videomass dir
+        drest = copydir_recursively(os.path.join(srcpath, "presets"),
+                                    dirconf)
+        if drest:
+            return {'ERROR': drest}
+
+    return {'R': None}
+
+
+def get_options(dirconf, fileconf):
     """
     Check the application options. Reads the `settings.json`
     file; if it does not exist or is unreadable try to restore
     it. If `dirconf` does not exist try to restore both `dirconf`
     and `settings.json`. If VERSION is not the same as the version
-    read, it adds new missing items while preserving the old ones
+    readed, it adds new missing items while preserving the old ones
     with the same values.
 
     Return dict key == 'R', else return a dict key == ERROR
@@ -70,13 +85,6 @@ def get_options(dirconf, fileconf, srcpath):
         else:
             conf.write_options()
             data = {'R': conf.read_options()}
-
-    if not os.path.exists(os.path.join(dirconf, "presets")):
-        # try to restoring presets directory on videomass dir
-        drest = copydir_recursively(os.path.join(srcpath, "presets"),
-                                    dirconf)
-        if drest:
-            return {'ERROR': drest}
 
     return data
 
@@ -369,13 +377,14 @@ class DataSource():
         Note: If returns a dict key == ERROR it will raise a windowed
         fatal error in the gui_app bootstrap.
         """
-        userconf = get_options(DataSource.DIR_CONF,
-                               DataSource.FILE_CONF,
-                               self.srcpath
-                               )
+        userconf = get_options(DataSource.DIR_CONF, DataSource.FILE_CONF)
         if userconf.get('ERROR'):
             return userconf
         userconf = userconf['R']
+
+        presets_rest = restore_presets_dir(DataSource.DIR_CONF, self.srcpath)
+        if presets_rest.get('ERROR'):
+            return presets_rest
 
         # set color scheme
         theme = get_color_scheme(userconf['icontheme'])

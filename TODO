@@ -17,6 +17,8 @@ URGENCY: high
   [ffplay_url_exe.py, Videomass version, youtube-dl update]
 
 - [CODE IMPROVING] Need code refactoring
+    - Consider using f-string on `two_pass_Ebu.py`, `video_stabilization.py`,
+      `volumedetect.py`, `ydl_downloader.py`
 
 ---------------
 URGENCY: medium

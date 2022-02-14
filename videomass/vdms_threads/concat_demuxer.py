@@ -33,39 +33,10 @@ import subprocess
 import platform
 import wx
 from pubsub import pub
+from videomass.vdms_utils.utils import Popen
+from videomass.vdms_io.make_filelog import logwrite
 if not platform.system() == 'Windows':
     import shlex
-
-
-def logwrite(cmd, sterr, logname, logdir):
-    """
-    writes ffmpeg commands and status error during threads below
-    """
-    if sterr:
-        apnd = "...%s\n\n" % (sterr)
-    else:
-        apnd = "%s\n\n" % (cmd)
-
-    with open(os.path.join(logdir, logname), "a", encoding='utf8') as log:
-        log.write(apnd)
-
-# ------------------------------ THREADS -------------------------------#
-
-
-"""
-NOTE MS Windows:
-
-subprocess.STARTUPINFO()
-
-https://stackoverflow.com/questions/1813872/running-
-a-process-in-pythonw-with-popen-without-a-console?lq=1>
-
-NOTE capturing output in real-time (Windows, Unix):
-
-https://stackoverflow.com/questions/1388753/how-to-get-output-
-from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
-
-"""
 
 
 class ConcatDemuxer(Thread):
@@ -73,6 +44,10 @@ class ConcatDemuxer(Thread):
     This class represents a separate thread for running processes,
     which need to read the stdout/stderr in real time.
 
+    NOTE capturing output in real-time (Windows, Unix):
+
+    https://stackoverflow.com/questions/1388753/how-to-get-output-
+    from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
     """
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
@@ -99,6 +74,7 @@ class ConcatDemuxer(Thread):
         escaped = [e.replace(r"'", r"'\'") for e in self.filelist]
         with open(self.ftext, 'w', encoding='utf8') as txt:
             txt.write('\n'.join(["file '%s'" % x for x in escaped]))
+            # txt.write('\n'.join([f"file '{x for x in escaped}'"]))
 
         Thread.__init__(self)
 
@@ -114,29 +90,24 @@ class ConcatDemuxer(Thread):
         source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
         outext = source_ext if not self.extoutput else self.extoutput
         outputfile = os.path.join(self.outputdir,
-                                  '%s%s.%s' % (filename,
-                                               ConcatDemuxer.SUFFIX,
-                                               outext)
+                                  f'{filename}{ConcatDemuxer.SUFFIX}.{outext}'
                                   )
-        cmd = ('"%s" %s %s -f concat -safe 0 -i "%s" -map 0:v? -map_chapters '
-               '0 -map 0:s? -map 0:a? -map_metadata 0 %s -c copy %s -y '
-               '"%s"' % (ConcatDemuxer.appdata['ffmpeg_cmd'],
-                         ConcatDemuxer.appdata['ffmpegloglev'],
-                         ConcatDemuxer.appdata['ffmpeg+params'],
-                         self.ftext,
-                         self.command,
-                         ConcatDemuxer.appdata['ffthreads'],
-                         outputfile,
-                         ))
-        count = '%s Files to concat' % (self.countmax,)
-        com = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
-               '[COMMAND]:\n%s' % (count, self.filelist, outputfile, cmd))
+        cmd = (f'"{ConcatDemuxer.appdata["ffmpeg_cmd"]}" '
+               f'{ConcatDemuxer.appdata["ffmpegloglev"]} '
+               f'{ConcatDemuxer.appdata["ffmpeg+params"]} -f concat -safe 0 '
+               f'-i "{self.ftext}" -map 0:v? -map_chapters 0 -map 0:s? '
+               f'-map 0:a? -map_metadata 0 {self.command} -c copy '
+               f'{ConcatDemuxer.appdata["ffthreads"]} -y "{outputfile}"')
+
+        count = f'{self.countmax} Files to concat'
+        com = (f'{count}\nSource: "{self.filelist}"\nDestination: '
+               f'"{outputfile}"\n\n[COMMAND]:\n{cmd}')
 
         wx.CallAfter(pub.sendMessage,
                      "COUNT_EVT",
                      count=count,
-                     fsource='Source:  %s' % self.filelist,
-                     destination='Destination:  "%s"' % outputfile,
+                     fsource=f'Source:  {self.filelist}',
+                     destination=f'Destination:  "{outputfile}"',
                      duration=self.duration,
                      # fname=", ".join(self.filelist),
                      end='',
@@ -149,16 +120,12 @@ class ConcatDemuxer(Thread):
 
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
-            info = None
-        else:  # Hide subprocess window on MS Windows
-            info = subprocess.STARTUPINFO()
-            info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         try:
-            with subprocess.Popen(cmd,
-                                  stderr=subprocess.PIPE,
-                                  bufsize=1,
-                                  universal_newlines=True,
-                                  startupinfo=info,) as proc:
+            with Popen(cmd,
+                       stderr=subprocess.PIPE,
+                       bufsize=1,
+                       universal_newlines=True,
+                       ) as proc:
                 for line in proc.stderr:
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
@@ -178,7 +145,7 @@ class ConcatDemuxer(Thread):
                                  status=proc.wait(),
                                  )
                     logwrite('',
-                             "Exit status: %s" % proc.wait(),
+                             f"Exit status: {proc.wait}",
                              self.logname,
                              ConcatDemuxer.appdata['logdir'],
                              )  # append exit error number
@@ -192,7 +159,7 @@ class ConcatDemuxer(Thread):
                                  end='ok'
                                  )
         except (OSError, FileNotFoundError) as err:
-            excepterr = "%s\n  %s" % (err, ConcatDemuxer.NOT_EXIST_MSG)
+            excepterr = f"{err}\n  {ConcatDemuxer.NOT_EXIST_MSG}"
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=excepterr,
