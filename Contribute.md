@@ -14,13 +14,11 @@ There are several ways to help the development of Videomass:
 
 ---
 
-## Donations
+## Issue Reporting
 {: .bg-green-300}
 
-If you like Videomass, maybe you can make some donations to promote the 
-development of the application:    
-
-[Donate](https://flattr.com/@gianlu){: .btn .btn-purple .fs-5 .mb-4 .mb-md-0 .mr-2 }
+You can report **Bugs**, **New Features** and **Improvements** by writing in as much detail as possible 
+at [Videomass Issues page](https://github.com/jeanslack/Videomass/issues) or email me at <jeanlucperni@gmail.com>   
 
 ---
 

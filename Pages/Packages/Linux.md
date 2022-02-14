@@ -111,6 +111,7 @@ Successfully tested on the following Linux distributions:
 * [Fedora](https://getfedora.org/en/) 32 x86_64 (Workstation Edition) 
 * [Manjaro](https://manjaro.org/) 20.0.3 (Lysia) x86_64 
 * [Devuan](https://www.devuan.org/) 4.0 Chimaera amd64
+* [Slackware](http://www.slackware.com/) 15.0 x86_64 (full installation from DVD)
 
 For any application-related issues, please read 
 [Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.
