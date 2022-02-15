@@ -26,7 +26,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
 import sys
 from threading import Thread
 import itertools
@@ -39,7 +38,7 @@ elif 'yt_dlp' in sys.modules:
     import yt_dlp
 
 
-class MyLogger(object):
+class MyLogger():
     """
     Intercepts youtube-dl's output by setting a logger object;
     * Log messages to a logging.Logger instance.
@@ -69,7 +68,7 @@ class MyLogger(object):
         """
         Get warning messages
         """
-        msg = 'WARNING: %s' % msg
+        msg = f'WARNING: {msg}'
         wx.CallAfter(pub.sendMessage,
                      "UPDATE_YDL_EVT",
                      output=msg,
@@ -192,12 +191,12 @@ class YdlDownloader(Thread):
 
             format_code = code if code else self.opt['format']
             self.count += 1
-            count = 'URL %s/%s' % (self.count, self.args['countmax'])
+            count = f"URL {self.count}/{self.args['countmax']}"
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource='Source: %s' % url,
+                         fsource=f'Source: {url}',
                          destination='',
                          duration=100,
                          end='',
@@ -210,7 +209,7 @@ class YdlDownloader(Thread):
                 'compat_opts': 'all',
                 'format': format_code,
                 'extractaudio': self.opt['format'],
-                'outtmpl': '{}/{}'.format(self.args['outdir'], outtmpl),
+                'outtmpl': f"{self.args['outdir']}/{outtmpl}",
                 'writesubtitles': self.opt['writesubtitles'],
                 'addmetadata': self.opt['addmetadata'],
                 'restrictfilenames': self.opt['restrictfilenames'],
@@ -222,7 +221,7 @@ class YdlDownloader(Thread):
                 'nooverwrites': self.opt['nooverwrites'],
                 'no_color': True,
                 'nocheckcertificate': self.nocheckcertificate,
-                'ffmpeg_location': '{}'.format(YdlDownloader.FFMPEG_URL),
+                'ffmpeg_location': f'{YdlDownloader.FFMPEG_URL}',
                 'postprocessors': self.opt['postprocessors'],
                 'logger': MyLogger(),
                 'progress_hooks': [my_hook],

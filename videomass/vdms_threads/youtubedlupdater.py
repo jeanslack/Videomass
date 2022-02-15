@@ -4,9 +4,9 @@ Name: youtubedlupdater.py
 Porpose: update tasks
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.02.2021
+Rev: Feb.15.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -55,6 +55,7 @@ class UpdateYoutubedlAppimage(Thread):
         +hold  ......... not retains window after exit
         -u8 ............ use UTF8 mode coding
         -bg ............ background console color
+        -fg ............ foreground console color
         -fa ............ the font used (FreeType font-selection pattern)
         -fs ............ the font size
         -geometry ...... window width and height respectively
@@ -64,13 +65,17 @@ class UpdateYoutubedlAppimage(Thread):
         type `xterm -h` for major info
 
         """
+        get = wx.GetApp()  # get data from bootstrap
+        colorscheme = get.appset['icontheme'][1]
+        backgrd = colorscheme['BACKGRD']
+        foregrd = colorscheme['TXT0']
         name = os.path.basename(appimage)
         binpath = os.path.dirname(sys.executable)
         exe = os.path.join(binpath + '/youtube_dl_update_appimage.sh')
         self.status = None
         self.cmd = shlex.split(
-            f"xterm +hold -u8 -bg 'grey15' -fa 'Monospace' "
-            f"-fs 9 -geometry 120x35 -title '..Updating "
+            f"xterm +hold -u8 -bg '{backgrd}' -fg '{foregrd}' -fa "
+            f"'Monospace' -fs 9 -geometry 120x35 -title '..Updating "
             f"youtube_dl package on {name}' -e '{exe} {appimage} "
             f"2>&1 | tee {log}'"
             )
@@ -85,7 +90,7 @@ class UpdateYoutubedlAppimage(Thread):
 
         """
         try:
-            proc = subprocess.run(self.cmd, shell=False)
+            proc = subprocess.run(self.cmd, check=True, shell=False)
 
         except FileNotFoundError as err:
             self.status = err

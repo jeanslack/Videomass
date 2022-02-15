@@ -36,7 +36,7 @@ elif 'yt_dlp' in sys.modules:
     import yt_dlp
 
 
-class MyLogger(object):
+class MyLogger():
     """
     Intercepts youtube-dl's output by setting a logger object .
     Log messages to a logging.Logger instance.

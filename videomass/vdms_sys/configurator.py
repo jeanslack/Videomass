@@ -198,7 +198,7 @@ def get_color_scheme(theme):
                      )
     """
     if theme in ('Breeze-Blues', 'Videomass-Colours'):
-        c_scheme = {'BACKGRD': '#1c2027ff',  # DARK_SLATE background color
+        c_scheme = {'BACKGRD': '#1c2027',  # DARK_SLATE background color
                     'TXT0': '#FFFFFF',  # WHITE for title or URL in progress
                     'TXT1': '#959595',  # GREY for all other text messages
                     'ERR0': '#FF4A1B',  # ORANGE for error text messages
@@ -233,7 +233,7 @@ def get_color_scheme(theme):
                     }
     elif theme in ('Breeze', 'Videomass-Light'):
         c_scheme = {'BACKGRD': '#ced0d1',  # WHITE background color
-                    'TXT0': '#1f1f1fff',  # BLACK for title or URL in progress
+                    'TXT0': '#1f1f1f',  # BLACK for title or URL in progress
                     'TXT1': '#778899ff',  # LIGHT_SLATE for all other text msg
                     'ERR0': '#d25c07',  # ORANGE for error text messages
                     'WARN': '#988313',  # YELLOW for warning text messages

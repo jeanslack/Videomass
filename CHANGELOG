@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Feb 13, 2022 V.3.5.5
+Feb 15, 2022 V.3.5.5
 
   * AV/Conversions: Added 'opus' enc to ogg audio format.
   * Fixed `AttributeError: module 'wx' line has no attribute 'NewIdRef'` issue #51.
@@ -17,6 +17,8 @@ Feb 13, 2022 V.3.5.5
   * Improved ffprobe subprocessing.
   * Moved subprocess.STARTUPINFO to separate Popen class.
   * [Downloader]: fixed ValueError: could not convert string to float: 'Unknown '
+  * Fixed background and foreground colours using xterm console on Linux
+    during updating downloaders.
 
 +------------------------------------+
 Nov 29, 2021 V.3.5.3

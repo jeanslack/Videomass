@@ -257,14 +257,16 @@ def openpath(where):
 
 def youtubedl_getstatistics(url):
     """
-    Call the thread to get extract info data object with
-    youtube_dl downloading and show a wait pop-up dialog .
-    youtube_dl module.
-    example without pop-up dialog:
-    thread = YdlExtractInfo(url)
-    thread.join()
-    data = thread.data
-    yield data
+    Call `YdlExtractInfo` thread to extract data info.
+    During this process a wait pop-up dialog is shown.
+
+    Returns a generator.
+
+    Usage example without pop-up dialog:
+        thread = YdlExtractInfo(url)
+        thread.join()
+        data = thread.data
+        yield data
     """
     thread = YdlExtractInfo(url)
     dlgload = PopupDialog(None,
