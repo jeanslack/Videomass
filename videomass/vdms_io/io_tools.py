@@ -326,17 +326,17 @@ def get_presets(url, dest, msg):
 # --------------------------------------------------------------------------#
 
 
-def appimage_update_youtube_dl(appimage):
+def appimage_update(appimage, script):
     """
-    Call appropriate thread to update or installing youtube_dl
-    package inside Videomass AppImage.
+    Call appropriate thread to update Python package
+    inside Videomass AppImage.
     """
     get = wx.GetApp()  # get data from bootstrap
-    logname = 'youtube_dl-update-on-AppImage.log'
+    logname = 'AppImage_Updates.log'
     logfile = os.path.join(get.appset['logdir'], logname)
     write_log(logname, get.appset['logdir'])  # write log file first
 
-    thread = appimage_updater.AppImageUpdate(logfile, appimage)
+    thread = appimage_updater.AppImageUpdate(appimage, script, logfile)
 
     waitmsg = _('Be patient...\nthis can take a few minutes.')
 

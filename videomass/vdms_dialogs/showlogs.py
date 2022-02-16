@@ -42,7 +42,7 @@ class ShowLogs(wx.Dialog):
                 'AV_conversions.log',
                 'presets_manager.log',
                 'ffplay.log',
-                'youtube_dl-update-on-AppImage.log',
+                'AppImage_Updates.log',
                 'concatenate_demuxer.log',
                 )
 

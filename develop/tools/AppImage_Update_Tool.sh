@@ -2,7 +2,7 @@
 #
 # Description:
 # ------------
-#   Update pip and youtube-dl on Videomass*.AppImage
+#   Updates some Python packages on Videomass*.AppImage.
 #   Place this script on 'AppDir/usr/bin' with execute permissions.
 #   Remember, you need 'appimagetool-x86_64.AppImage' inside the same
 #   directory.

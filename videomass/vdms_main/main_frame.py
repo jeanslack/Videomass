@@ -742,8 +742,9 @@ class MainFrame(wx.Frame):
                     return
                 appimage = fileDialog.GetPath()
 
-            upgrade = io_tools.appimage_update_youtube_dl(appimage)
-
+            upgrade = io_tools.appimage_update(appimage,
+                                               'AppImage_Update_Tool.sh'
+                                               )
             if upgrade == 'success':
                 wx.MessageBox(_("Successful! {0} is up-to-date ({1})"
                                 "\n\nRe-start is required."
@@ -754,8 +755,7 @@ class MainFrame(wx.Frame):
 
             elif upgrade == 'error':
                 msg = _("Failed! For details consult:\n{}"
-                        "/youtube_dl-update-on-AppImage.log"
-                        ).format(MainFrame.LOGDIR)
+                        "/AppImage_Updates.log").format(MainFrame.LOGDIR)
                 wx.MessageBox(msg, 'ERROR', wx.ICON_ERROR, self)
 
             else:
