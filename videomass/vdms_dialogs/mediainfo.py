@@ -38,7 +38,7 @@ class Mediainfo(wx.Dialog):
     def __init__(self, data, OS):
         """
         self.data: list object containing ffprobe data. See FFprobe
-        class on vdms_threads/ffprobe_parser.py and probe_getinfo on
+        class on vdms_threads/ffprobe.py and probe_getinfo on
         vdms_io/io_tools.py
         """
         self.data = data

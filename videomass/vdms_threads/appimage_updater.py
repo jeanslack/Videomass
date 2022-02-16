@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
-Name: youtubedlupdater.py
+Name: appimage_updater.py
 Porpose: update tasks
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.02.2021
+Rev: Feb.16.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -35,15 +35,15 @@ import wx
 from pubsub import pub
 
 
-class UpdateYoutubedlAppimage(Thread):
+class AppImageUpdate(Thread):
     """
-    Install or Update `youtube_dl` python package (library) using
-    xterm terminal emulator with subprocess for displaying and
-    redirecting the output to log file.
+    This class is responsible for updating the Python packages
+    on Videomass.Appimage using the xterm terminal emulator for
+    displaying the output command in real time. Furthermore all
+    output will be saved to a log file.
 
     """
-
-    def __init__(self, log, appimage):
+    def __init__(self, logname, appimage_loc):
         """
         Attributes defined here:
         executable       current python executable
@@ -55,24 +55,36 @@ class UpdateYoutubedlAppimage(Thread):
         +hold  ......... not retains window after exit
         -u8 ............ use UTF8 mode coding
         -bg ............ background console color
+        -fg ............ foreground console color
         -fa ............ the font used (FreeType font-selection pattern)
         -fs ............ the font size
         -geometry ...... window width and height respectively
         -title ......... title on the window
+        -xrm 'xterm*iconHint: /path/to/icon.xpm' .... to embed icon
         -e ............. start your command after e.g. 'ls -l'
 
         type `xterm -h` for major info
 
         """
-        name = os.path.basename(appimage)
+        get = wx.GetApp()  # get data from bootstrap
+        # background/foreground colours:
+        colorscheme = get.appset['icontheme'][1]
+        backgrd = colorscheme['BACKGRD']
+        foregrd = colorscheme['TXT0']
+        # icon:
+        spath = get.appset['srcpath']
+        xpm = 'art/icons/hicolor/48x48/apps/videomass.xpm'
+        icon = os.path.join(os.path.dirname(spath), xpm)
+        # set command:
+        name = os.path.basename(appimage_loc)
         binpath = os.path.dirname(sys.executable)
         exe = os.path.join(binpath + '/youtube_dl_update_appimage.sh')
         self.status = None
         self.cmd = shlex.split(
-            f"xterm +hold -u8 -bg 'grey15' -fa 'Monospace' "
-            f"-fs 9 -geometry 120x35 -title '..Updating "
-            f"youtube_dl package on {name}' -e '{exe} {appimage} "
-            f"2>&1 | tee {log}'"
+            f"xterm +hold -u8 -bg '{backgrd}' -fg '{foregrd}' -fa "
+            f"'Monospace' -fs 9 -geometry 120x35 -title 'Update of "
+            f"downloaders on {name}' -xrm 'xterm*iconHint: "
+            f"{icon}' -e '{exe} {appimage_loc} 2>&1 | tee {logname}'"
             )
 
         Thread.__init__(self)
@@ -85,7 +97,7 @@ class UpdateYoutubedlAppimage(Thread):
 
         """
         try:
-            proc = subprocess.run(self.cmd, shell=False)
+            proc = subprocess.run(self.cmd, check=True, shell=False)
 
         except FileNotFoundError as err:
             self.status = err

@@ -1,15 +1,19 @@
-videomass (3.5.5-1) UNRELEASED; urgency=medium  
+videomass (3.5.5-1) UNRELEASED; urgency=medium
 
   * AV/Conversions: Added 'opus' enc to ogg audio format.
-  * Fixed `AttributeError: module 'wx' line has no attribute 'NewIdRef'` issue #51.
+  * Fixed `AttributeError: module 'wx' line has no attribute 'NewIdRef'` issue
+    #51.
   * Improved handle `progress hooks` data on `dl_downloader.py`
   * Changed videomass.conf to settings.json.
   * Improved management and start-up of all settings.
   * Improved ffprobe subprocessing.
   * Moved subprocess.STARTUPINFO to separate Popen class.
   * [Downloader]: fixed ValueError: could not convert string to float: 'Unknown '
+  * Fixed background/foreground colors using xterm console on Linux
+    when updating downloaders.
+  * Added icon to xterm window.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 29 Nov 2021 16:43:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 16 Feb 2022 13:57:00 +0200
 
 videomass (3.5.3-1) UNRELEASED; urgency=medium
 
