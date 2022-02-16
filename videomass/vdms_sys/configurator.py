@@ -35,8 +35,10 @@ from videomass.vdms_sys.settings_manager import ConfigManager
 
 def restore_presets_dir(dirconf, srcpath):
     """
-    Restore preset directory from source if it doesn't exist
-    Return dict key == 'R', else return a dict key == ERROR
+    Restore preset directory from source if it doesn't exist.
+    Returns dict:
+        key == 'R'
+        key == ERROR (if any errors)
     """
     if not os.path.exists(os.path.join(dirconf, "presets")):
         # try to restoring presets directory on videomass dir
@@ -57,7 +59,9 @@ def get_options(dirconf, fileconf):
     readed, it adds new missing items while preserving the old ones
     with the same values.
 
-    Return dict key == 'R', else return a dict key == ERROR
+    Returns dict:
+        key == 'R'
+        key == ERROR (if any errors)
     """
     conf = ConfigManager(fileconf)
     version = ConfigManager.VERSION

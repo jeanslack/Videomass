@@ -54,7 +54,6 @@ class FFprobeTestCase(unittest.TestCase):
 
         """
         if not self.data[1]:
-            print('si')
             self.assertEqual(self.data[1], None)
             self.assertTrue(self.data[0])
 

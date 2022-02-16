@@ -65,13 +65,10 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_panels/textdrop.py" \
 "../vdms_panels/timeline.py" \
 "../vdms_threads/ffplay_file.py" \
-"../vdms_threads/ffprobe_parser.py" \
 "../vdms_threads/one_pass.py" \
 "../vdms_threads/picture_exporting.py" \
 "../vdms_threads/two_pass_ebu.py" \
 "../vdms_threads/two_pass.py" \
-"../vdms_threads/volumedetect.py" \
-"../vdms_threads/youtubedlupdater.py"
 
 if [ $? != 0 ]; then
     echo 'Failed!'

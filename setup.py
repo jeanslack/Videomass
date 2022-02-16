@@ -86,7 +86,8 @@ def source_build():
                    ['io.github.jeanslack.videomass.appdata.xml']),
                   ('share/pixmaps', ['videomass/art/icons/videomass.png']),
                   ('share/icons/hicolor/48x48/apps',
-                   ['videomass/art/icons/hicolor/48x48/apps/videomass.png']),
+                   ['videomass/art/icons/hicolor/48x48/apps/videomass.png',
+                    'videomass/art/icons/hicolor/48x48/apps/videomass.xpm']),
                   ('share/icons/hicolor/256x256/apps',
                    ['videomass/art/icons/hicolor/256x256/apps/videomass.png']
                    ),
