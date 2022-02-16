@@ -43,7 +43,7 @@ class AppImageUpdate(Thread):
     output will be saved to a log file.
 
     """
-    def __init__(self, logname, appimage_loc):
+    def __init__(self, appimage, script, logfile):
         """
         Attributes defined here:
         executable       current python executable
@@ -70,21 +70,21 @@ class AppImageUpdate(Thread):
         # background/foreground colours:
         colorscheme = get.appset['icontheme'][1]
         backgrd = colorscheme['BACKGRD']
-        foregrd = colorscheme['TXT0']
+        foregrd = colorscheme['TXT3']
         # icon:
         spath = get.appset['srcpath']
         xpm = 'art/icons/hicolor/48x48/apps/videomass.xpm'
         icon = os.path.join(os.path.dirname(spath), xpm)
         # set command:
-        name = os.path.basename(appimage_loc)
+        name = os.path.basename(appimage)
         binpath = os.path.dirname(sys.executable)
-        exe = os.path.join(binpath + '/youtube_dl_update_appimage.sh')
+        exe = os.path.join(binpath, script)
         self.status = None
         self.cmd = shlex.split(
             f"xterm +hold -u8 -bg '{backgrd}' -fg '{foregrd}' -fa "
-            f"'Monospace' -fs 9 -geometry 120x35 -title 'Update of "
-            f"downloaders on {name}' -xrm 'xterm*iconHint: "
-            f"{icon}' -e '{exe} {appimage_loc} 2>&1 | tee {logname}'"
+            f"'Monospace' -fs 9 -geometry 120x35 -title 'Updating ... "
+            f"{name}' -xrm 'xterm*iconHint: {icon}' -e '{exe} "
+            f"{appimage} 2>&1 | tee {logfile}'"
             )
 
         Thread.__init__(self)

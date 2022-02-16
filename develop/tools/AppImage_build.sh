@@ -136,13 +136,13 @@ wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/app
 
 chmod +x appimagetool-x86_64.AppImage linuxdeploy-x86_64.AppImage
 
-# for any updates, copy 'appimagetool*' and 'youtube_dl_update_appimage.sh' script
+# for any updates, copy 'appimagetool*' and 'AppImage_Update_Tool.sh' script
 cp appimagetool-x86_64.AppImage \
-    "$REPO_ROOT/develop/tools/youtube_dl_update_appimage.sh" \
+    "$REPO_ROOT/develop/tools/AppImage_Update_Tool.sh" \
         $APP_DIR/usr/bin
 
-if [ ! -x $APP_DIR/usr/bin/youtube_dl_update_appimage.sh ]; then
-chmod +x $APP_DIR/usr/bin/youtube_dl_update_appimage.sh
+if [ ! -x $APP_DIR/usr/bin/AppImage_Update_Tool.sh ]; then
+chmod +x $APP_DIR/usr/bin/AppImage_Update_Tool.sh
 fi
 
 # set architecture
