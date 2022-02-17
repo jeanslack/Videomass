@@ -7,7 +7,7 @@ Platform: all platforms
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2022/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.14.2022
+Rev: Feb.17.2022
 Code checker: flake8, pylint
 ########################################################
 
@@ -27,6 +27,7 @@ This file is part of FFcuesplitter.
    along with FFcuesplitter.  If not, see <http://www.gnu.org/licenses/>.
 """
 import subprocess
+import shlex
 import platform
 import json
 from videomass.vdms_utils.utils import Popen
@@ -65,10 +66,11 @@ def ffprobe(filename, cmd='ffprobe', **kwargs):
                 etc,
                 )
     """
-    args = [cmd, '-show_format', '-show_streams', '-of', 'json']
-    args += from_kwargs_to_args(kwargs)
-    args += [filename]
-    args = ' '.join(args) if platform.system() == 'Windows' else args
+    args = (f'"{cmd}" -show_format -show_streams -of json '
+            f'{" ".join(from_kwargs_to_args(kwargs))} '
+            f'"{filename}"'
+            )
+    args = shlex.split(args) if platform.system() != 'Windows' else args
 
     try:
         with Popen(args,
