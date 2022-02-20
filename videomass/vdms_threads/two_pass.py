@@ -115,11 +115,7 @@ class TwoPass(Thread):
                          duration=duration,
                          end='',
                          )
-            logwrite(cmd,
-                     '',
-                     self.logname,
-                     TwoPass.appdata['logdir'],
-                     )  # write n/n + command only
+            logwrite(cmd, '', self.logname)  # write n/n + command only
 
             if not TwoPass.OS == 'Windows':
                 pass1 = shlex.split(pass1)
@@ -151,7 +147,6 @@ class TwoPass(Thread):
                         logwrite('',
                                  f"Exit status: {proc1.wait()}",
                                  self.logname,
-                                 TwoPass.appdata['logdir']
                                  )  # append exit error number
 
             except (OSError, FileNotFoundError) as err:
@@ -199,7 +194,7 @@ class TwoPass(Thread):
                          duration=duration,
                          end='',
                          )
-            logwrite(cmd, '', self.logname, TwoPass.appdata['logdir'])
+            logwrite(cmd, '', self.logname)
 
             if not TwoPass.OS == 'Windows':
                 pass2 = shlex.split(pass2)
@@ -231,7 +226,6 @@ class TwoPass(Thread):
                     logwrite('',
                              f"Exit status: {proc2.wait()}",
                              self.logname,
-                             TwoPass.appdata['logdir'],
                              )  # append exit error number
 
             if self.stop_work_thread:  # break first 'for' loop

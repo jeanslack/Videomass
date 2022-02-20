@@ -120,11 +120,7 @@ class OnePass(Thread):
                          duration=duration,
                          end='',
                          )
-            logwrite(com,
-                     '',
-                     self.logname,
-                     OnePass.appdata['logdir'],
-                     )  # write n/n + command only
+            logwrite(com, '', self.logname)  # write n/n + command only
 
             if not platform.system() == 'Windows':
                 cmd = shlex.split(cmd)
@@ -156,7 +152,6 @@ class OnePass(Thread):
                         logwrite('',
                                  f"Exit status: {proc.wait()}",
                                  self.logname,
-                                 OnePass.appdata['logdir'],
                                  )  # append exit error number
                     else:  # ok
                         wx.CallAfter(pub.sendMessage,

@@ -4,9 +4,9 @@ Name: long_processing_task.py
 Porpose: Console to show logging messages during processing
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.28.2021
+Rev: Feb.19.2022
 Code checker:
     - flake8: --ignore F821, W504, F401
     - pylint: --ignore E0602, E1101, C0415, E0401, C0103
@@ -105,7 +105,7 @@ class LogOut(wx.Panel):
         self.abort = False  # if True set to abort current process
         self.error = False  # if True, all the tasks was failed
         self.previus = None  # panel name from which it starts
-        self.logname = None  # example: AV_conversions.log
+        self.logname = None  # log pathname, None otherwise
         self.result = []  # result of the final process
         self.count = 0  # keeps track of the counts (see `update_count`)
         self.clr = self.appdata['icontheme'][1]
@@ -153,7 +153,7 @@ class LogOut(wx.Panel):
         self.button_stop.Enable(True)
         self.button_close.Enable(False)
 
-        pub.subscribe(self.youtubedl_from_import, "UPDATE_YDL_EVT")
+        pub.subscribe(self.downloader_activity, "UPDATE_YDL_EVT")
         pub.subscribe(self.update_display, "UPDATE_EVT")
         pub.subscribe(self.update_count, "COUNT_EVT")
         pub.subscribe(self.end_proc, "END_EVT")
@@ -174,9 +174,8 @@ class LogOut(wx.Panel):
 
         self.txtout.Clear()
         self.labperc.SetLabel('')
-        self.logname = varargs[8]  # example: Videomass_VideoConversion.log
 
-        write_log(self.logname, self.appdata['logdir'])  # initial file LOG
+        self.logname = write_log(varargs[8], self.appdata['logdir'])
 
         if varargs[0] == 'onepass':  # from Audio/Video Conv.
             self.thread_type = OnePass(varargs, duration,
@@ -207,7 +206,7 @@ class LogOut(wx.Panel):
             self.thread_type = YdlDownloader(varargs, self.logname)
     # ----------------------------------------------------------------------
 
-    def youtubedl_from_import(self, output, duration, status):
+    def downloader_activity(self, output, duration, status):
         """
         Receiving output messages from youtube_dl library via
         pubsub "UPDATE_YDL_EVT" .
@@ -235,12 +234,11 @@ class LogOut(wx.Panel):
             elif '[download]' not in output:
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
                 self.txtout.AppendText(f'{output}\n')
+                with open(self.logname, "a", encoding='utf8') as logerr:
+                    logerr.write(f"[{self.appdata['downloader'].upper()}]: "
+                                 f"{status} > {output}\n")
 
-                with open(os.path.join(self.appdata['logdir'], self.logname),
-                          "a", encoding='utf8') as logerr:
-                    logerr.write(f"[YOUTUBE_DL]: {status} > {output}\n")
         elif status == 'DOWNLOAD':
-
             perc = duration['_percent_str']
             tbytes = duration['_total_bytes_str']
             speed = duration['_speed_str']
@@ -257,9 +255,9 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f'{duration}\n')
 
         if status in ['ERROR', 'WARNING']:
-            with open(os.path.join(self.appdata['logdir'], self.logname),
-                      "a", encoding='utf8') as logerr:
-                logerr.write(f"[YOUTUBE_DL]: {output}\n")
+            with open(self.logname, "a", encoding='utf8') as logerr:
+                logerr.write(f"[{self.appdata['downloader'].upper()}]: "
+                             f"{output}\n")
     # ---------------------------------------------------------------------#
 
     def update_display(self, output, duration, status):
@@ -329,10 +327,8 @@ class LogOut(wx.Panel):
                     self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
                     self.txtout.AppendText(f'{output}')
 
-            with open(os.path.join(self.appdata['logdir'], self.logname),
-                      "a", encoding='utf8') as logerr:
+            with open(self.logname, "a", encoding='utf8') as logerr:
                 logerr.write(f"[FFMPEG]: {output}")
-                # write a row error into file log
     # ----------------------------------------------------------------------
 
     def update_count(self, count, fsource, destination, duration, end):
@@ -439,7 +435,7 @@ class LogOut(wx.Panel):
         close dialog and retrieve at previusly panel
 
         """
-        if not self.logname:  # there is not process
+        if not self.logname:  # only read mod is shown
             self.ckbx_text.Show()
             self.button_stop.Enable(True)
             self.button_close.Enable(False)
@@ -452,16 +448,16 @@ class LogOut(wx.Panel):
                              _('Please confirm'),
                              wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
                 return
-
             self.parent.on_Kill()
+
         # reset all before close
+        self.logname = None
         self.ckbx_text.Show()
         self.button_stop.Enable(True)
         self.button_close.Enable(False)
         self.thread_type = None
         self.abort = False
         self.error = False
-        self.logname = None
         self.result.clear()
         self.count = 0
         # self.txtout.Clear()

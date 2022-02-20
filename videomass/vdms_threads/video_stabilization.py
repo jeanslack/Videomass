@@ -134,11 +134,7 @@ class VidStab(Thread):
                          duration=duration,
                          end='',
                          )
-            logwrite(cmd,
-                     '',
-                     self.logname,
-                     VidStab.appdata['logdir'],
-                     )  # write n/n + command only
+            logwrite(cmd, '', self.logname)  # write n/n + command only
 
             if not VidStab.OS == 'Windows':
                 pass1 = shlex.split(pass1)
@@ -170,7 +166,6 @@ class VidStab(Thread):
                         logwrite('',
                                  "Exit status: %s" % proc1.wait(),
                                  self.logname,
-                                 VidStab.appdata['logdir']
                                  )  # append exit error number
 
             except (OSError, FileNotFoundError) as err:
@@ -227,7 +222,7 @@ class VidStab(Thread):
                          duration=duration,
                          end='',
                          )
-            logwrite(cmd, '', self.logname, VidStab.appdata['logdir'])
+            logwrite(cmd, '', self.logname)
 
             if not VidStab.OS == 'Windows':
                 pass2 = shlex.split(pass2)
@@ -259,7 +254,6 @@ class VidStab(Thread):
                     logwrite('',
                              "Exit status: %s" % proc2.wait(),
                              self.logname,
-                             VidStab.appdata['logdir'],
                              )  # append exit status error
 
             if self.stop_work_thread:  # break first 'for' loop
@@ -306,7 +300,7 @@ class VidStab(Thread):
                              duration=duration,
                              end='',
                              )
-                logwrite(cmd, '', self.logname, VidStab.appdata['logdir'])
+                logwrite(cmd, '', self.logname)
 
                 if not VidStab.OS == 'Windows':
                     pass3 = shlex.split(pass3)
@@ -338,7 +332,6 @@ class VidStab(Thread):
                         logwrite('',
                                  "Exit status: %s" % proc3.wait(),
                                  self.logname,
-                                 VidStab.appdata['logdir'],
                                  )  # append exit error number
 
                 if self.stop_work_thread:  # break first 'for' loop

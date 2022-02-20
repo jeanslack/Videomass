@@ -4,10 +4,10 @@ File Name: make_filelog.py
 Porpose: log file generator
 Compatibility: Python3, Python2
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.16.2021
-Code checker: pycodestyle, flake8, pylint .
+Rev: Feb.20.2022
+Code checker: flake8, pylint .
 
 This file is part of Videomass.
 
@@ -29,7 +29,7 @@ import time
 import os
 
 
-def logwrite(cmd, stderr, logname, logdir):
+def logwrite(cmd, stderr, logfile):
     """
     writes ffmpeg commands and status error during threads
     """
@@ -38,7 +38,7 @@ def logwrite(cmd, stderr, logname, logdir):
     else:
         apnd = f"{cmd}\n\n"
 
-    with open(os.path.join(logdir, logname), "a", encoding='utf8') as log:
+    with open(logfile, "a", encoding='utf8') as log:
         log.write(apnd)
 
 
@@ -60,15 +60,16 @@ def write_log(logfile, logdir):
     current_date = time.strftime("%c")  # date/time
     path = os.path.join(logdir, logfile)
 
-    with open(path, "a", encoding='utf8') as log:
-        log.write("""
+    with open(path, "a", encoding='utf8') as logfile:
+        logfile.write(f"""
+==============================================================================
 [DATE]:
-%s
+{current_date}
 
 [LOCATION]:
-%s
+{path}
 
 [VIDEOMASS]:
-""" % (current_date, path))
+""")
 
-    return None
+    return path

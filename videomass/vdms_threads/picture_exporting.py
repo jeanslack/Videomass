@@ -94,11 +94,7 @@ class PicturesFromVideo(Thread):
                      duration=self.duration,
                      end='',
                      )
-        logwrite(com,
-                 '',
-                 self.logname,
-                 PicturesFromVideo.appdata['logdir'],
-                 )  # write n/n + command only
+        logwrite(com, '', self.logname)  # write n/n + command only
 
         if not PicturesFromVideo.appdata['ostype'] == 'Windows':
             cmd = shlex.split(cmd)
@@ -129,7 +125,6 @@ class PicturesFromVideo(Thread):
                     logwrite('',
                              f"Exit status: {proc.wait()}",
                              self.logname,
-                             PicturesFromVideo.appdata['logdir'],
                              )  # append exit error number
 
                 else:  # status ok
