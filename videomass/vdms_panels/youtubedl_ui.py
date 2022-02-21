@@ -1011,7 +1011,7 @@ class Downloader(wx.Panel):
         else:
             _id = '%(title).100s'
 
-        logname = 'youtubedl_lib.log'
+        logname = f"{Downloader.appdata['downloader']}.log"
         nooverwrites = self.ckbx_w.IsChecked() is True
         restrictfn = self.ckbx_restrict_fn.IsChecked() is True
         postprocessors = []

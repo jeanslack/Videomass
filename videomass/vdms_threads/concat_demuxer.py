@@ -112,11 +112,7 @@ class ConcatDemuxer(Thread):
                      # fname=", ".join(self.filelist),
                      end='',
                      )
-        logwrite(com,
-                 '',
-                 self.logname,
-                 ConcatDemuxer.appdata['logdir'],
-                 )  # write n/n + command only
+        logwrite(com, '', self.logname)  # write n/n + command only
 
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
@@ -146,9 +142,7 @@ class ConcatDemuxer(Thread):
                                  )
                     logwrite('',
                              f"Exit status: {proc.wait}",
-                             self.logname,
-                             ConcatDemuxer.appdata['logdir'],
-                             )  # append exit error number
+                             self.logname)  # append exit error number
                 else:  # ok
                     wx.CallAfter(pub.sendMessage,
                                  "COUNT_EVT",

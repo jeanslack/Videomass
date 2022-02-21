@@ -49,7 +49,7 @@ from videomass.vdms_frames import (ffmpeg_conf,
                                    ffmpeg_codecs,
                                    )
 from videomass.vdms_dialogs.widget_utils import PopupDialog
-from videomass.vdms_io.make_filelog import write_log  # write initial log
+from videomass.vdms_io.make_filelog import make_log_template
 
 
 def stream_info(title, filepath):
@@ -334,7 +334,7 @@ def appimage_update(appimage, script):
     get = wx.GetApp()  # get data from bootstrap
     logname = 'AppImage_Updates.log'
     logfile = os.path.join(get.appset['logdir'], logname)
-    write_log(logname, get.appset['logdir'])  # write log file first
+    make_log_template(logname, get.appset['logdir'])  # write log file first
 
     thread = appimage_updater.AppImageUpdate(appimage, script, logfile)
 

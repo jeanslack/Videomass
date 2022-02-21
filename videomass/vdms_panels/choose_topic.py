@@ -27,7 +27,6 @@ This file is part of Videomass.
 """
 import sys
 import wx
-import wx.lib.agw.hyperlink as hpl
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_sys.msg_info import current_release
 
@@ -110,13 +109,6 @@ class Choose_Topic(wx.Panel):
         sizer_base.Add(grid_buttons, 1, wx.ALIGN_CENTER_VERTICAL |
                        wx.ALIGN_CENTER_HORIZONTAL, 5
                        )
-
-        url = ('https://youtu.be/cE-T8VnymJA')
-        static0 = _("Video complaint for what is happening in Italy")
-        instpkg = hpl.HyperLinkCtrl(self, -1, static0, URL=url)
-        sizer_base.Add(instpkg, 0, wx.ALL | wx.CENTRE, 2)
-        sizer_base.Add(20, 20)
-
         self.SetSizerAndFit(sizer_base)
 
         # ---------------------- Tooltips

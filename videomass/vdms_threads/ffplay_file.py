@@ -33,7 +33,7 @@ import subprocess
 import platform
 import wx
 from pubsub import pub
-from videomass.vdms_io.make_filelog import write_log  # write initial log
+from videomass.vdms_io.make_filelog import make_log_template
 if not platform.system() == 'Windows':
     import shlex
 
@@ -83,7 +83,7 @@ class FilePlay(Thread):
         self.ffplay_params = ffplay_params
         self.autoexit = '-autoexit' if autoexit is True else ''
         self.logf = os.path.join(logdir, 'ffplay.log')
-        write_log('ffplay.log', logdir)
+        make_log_template('ffplay.log', logdir)
         # set initial file LOG
 
         Thread.__init__(self)

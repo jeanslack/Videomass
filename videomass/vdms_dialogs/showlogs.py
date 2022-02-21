@@ -38,7 +38,8 @@ class ShowLogs(wx.Dialog):
     """
     # list of logs files to include
     LOGNAMES = ('volumedected.log',
-                'youtubedl_lib.log',
+                'youtube_dl.log',
+                'yt_dlp.log',
                 'AV_conversions.log',
                 'presets_manager.log',
                 'ffplay.log',

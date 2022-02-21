@@ -126,11 +126,7 @@ class Loudnorm(Thread):
                          duration=duration,
                          end='',
                          )
-            logwrite(cmd,
-                     '',
-                     self.logname,
-                     Loudnorm.appdata['logdir']
-                     )  # write n/n + command only
+            logwrite(cmd, '', self.logname)  # write n/n + command only
 
             if not Loudnorm.OS == 'Windows':
                 pass1 = shlex.split(pass1)
@@ -166,7 +162,6 @@ class Loudnorm(Thread):
                         logwrite('',
                                  "Exit status: %s" % proc1.wait(),
                                  self.logname,
-                                 Loudnorm.appdata['logdir'],
                                  )  # append exit error number
                         break
 
@@ -236,7 +231,7 @@ class Loudnorm(Thread):
                          duration=duration,
                          end='',
                          )
-            logwrite(cmd, '', self.logname, Loudnorm.appdata['logdir'])
+            logwrite(cmd, '', self.logname)
 
             if not Loudnorm.OS == 'Windows':
                 pass2 = shlex.split(pass2)
@@ -267,7 +262,6 @@ class Loudnorm(Thread):
                     logwrite('',
                              "Exit status: %s" % proc2.wait(),
                              self.logname,
-                             Loudnorm.appdata['logdir'],
                              )  # append exit error number
 
             if self.stop_work_thread:  # break first 'for' loop

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.14.2022
+Rev: Feb.21.2022
 Code checker:
     - flake8: --ignore F821, W504, F401
     - pylint: --ignore E0602, E1101, C0415, E0401, C0103
@@ -104,14 +104,6 @@ class Videomass(wx.App):
         if ckydl is True or ckffmpeg is True:
             self.wizard(self.iconset['videomass'])
             return True
-
-        if not os.path.exists(os.path.join(self.appset['cachedir'], 'tmp')):
-            try:  # make temporary folder on cache dir
-                tmp = os.path.join(self.appset['cachedir'], 'tmp')
-                os.makedirs(tmp, mode=0o777)
-            except OSError as err:
-                wx.MessageBox(f'{err}', 'Videomass', wx.ICON_STOP)
-                return False
 
         from videomass.vdms_main.main_frame import MainFrame
         main_frame = MainFrame()

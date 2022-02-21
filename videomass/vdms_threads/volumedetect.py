@@ -33,7 +33,7 @@ import platform
 import wx
 from pubsub import pub
 from videomass.vdms_utils.utils import Popen
-from videomass.vdms_io.make_filelog import write_log
+from videomass.vdms_io.make_filelog import make_log_template
 if not platform.system() == 'Windows':
     import shlex
 
@@ -70,7 +70,7 @@ class VolumeDetectThread(Thread):
         self.data = None
         self.nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
         self.logf = os.path.join(logdir, 'volumedected.log')
-        write_log('volumedected.log', logdir)
+        make_log_template('volumedected.log', logdir)
         # set initial file LOG
 
         Thread.__init__(self)

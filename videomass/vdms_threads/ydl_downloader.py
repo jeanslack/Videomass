@@ -227,11 +227,7 @@ class YdlDownloader(Thread):
                 'progress_hooks': [my_hook],
             }
 
-            logwrite(ydl_opts,
-                     '',
-                     self.args['logname'],
-                     YdlDownloader.appdata['logdir'],
-                     )  # write n/n + command only
+            logwrite(ydl_opts, '', self.args['logname'])  # write log cmd
 
             if YdlDownloader.DOWNLOADER == 'youtube_dl':
                 with youtube_dl.YoutubeDL(ydl_opts) as ydl:

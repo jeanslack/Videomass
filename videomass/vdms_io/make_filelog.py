@@ -4,10 +4,10 @@ File Name: make_filelog.py
 Porpose: log file generator
 Compatibility: Python3, Python2
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.16.2021
-Code checker: pycodestyle, flake8, pylint .
+Rev: Feb.20.2022
+Code checker: flake8, pylint .
 
 This file is part of Videomass.
 
@@ -29,46 +29,44 @@ import time
 import os
 
 
-def logwrite(cmd, stderr, logname, logdir):
+def logwrite(cmd, stderr, logfile):
     """
-    writes ffmpeg commands and status error during threads
+    This function writes status messages
+    to a given `logfile` during a process.
     """
     if stderr:
         apnd = f"...{stderr}\n\n"
     else:
         apnd = f"{cmd}\n\n"
 
-    with open(os.path.join(logdir, logname), "a", encoding='utf8') as log:
+    with open(logfile, "a", encoding='utf8') as log:
         log.write(apnd)
 
 
-def write_log(logfile, logdir):
+def make_log_template(logname, logdir):
     """
-    Before starting a process, a log file is created from this
-    template and then written later by the process.
-    see also `vdms_sys/ctrl_run.py` .
+    Most log files are initialized from a template
+    before starting a process and writing status
+    messages to a given log file.
 
-    - logfile,  log name from which the command was generated
+    - logname,  example: `mylog.log`
     - logdir, log files location
+
+    Returns the absolute/relative pathname of the log
     """
-    if not os.path.isdir(logdir):
-        try:
-            os.makedirs(logdir, mode=0o777)
-        except OSError as error:
-            return error
-
     current_date = time.strftime("%c")  # date/time
-    path = os.path.join(logdir, logfile)
+    logfile = os.path.join(logdir, logname)
 
-    with open(path, "a", encoding='utf8') as log:
-        log.write("""
+    with open(logfile, "a", encoding='utf8') as log:
+        log.write(f"""
+==============================================================================
 [DATE]:
-%s
+{current_date}
 
 [LOCATION]:
-%s
+{logfile}
 
 [VIDEOMASS]:
-""" % (current_date, path))
+""")
 
-    return None
+    return logfile

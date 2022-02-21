@@ -4,9 +4,9 @@ Name: configurator.py
 Porpose: Set Videomass configuration on startup
 Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.11.2021
+Rev: Feb.21.2022
 Code checker: pycodestyle, flake8, pylint .
 
  This file is part of Videomass.
@@ -31,6 +31,39 @@ import shutil
 import platform
 from videomass.vdms_utils.utils import copydir_recursively
 from videomass.vdms_sys.settings_manager import ConfigManager
+
+
+def create_cache_dir(tmpdir):
+    """
+    This function is responsible for creating
+    the cache directory tree if not exists.
+    Returns dict:
+        key == 'R'
+        key == ERROR (if any errors)
+    """
+    tmp = os.path.join(tmpdir, 'tmp')
+    if not os.path.exists(tmp):
+        try:  #
+            os.makedirs(tmp, mode=0o777)
+        except OSError as err:
+            return {'ERROR': err}
+    return {'R': None}
+
+
+def create_log_dir(logdir):
+    """
+    This function is responsible for creating
+    the log directory if not exists.
+    Returns dict:
+        key == 'R'
+        key == ERROR (if any errors)
+    """
+    if not os.path.exists(logdir):
+        try:
+            os.makedirs(logdir, mode=0o777)
+        except OSError as err:
+            return {'ERROR': err}
+    return {'R': None}
 
 
 def restore_presets_dir(dirconf, srcpath):
@@ -381,15 +414,23 @@ class DataSource():
         Note: If returns a dict key == ERROR it will raise a windowed
         fatal error in the gui_app bootstrap.
         """
+        # handle configuration file
         userconf = get_options(DataSource.DIR_CONF, DataSource.FILE_CONF)
         if userconf.get('ERROR'):
             return userconf
         userconf = userconf['R']
-
+        # restore presets folder
         presets_rest = restore_presets_dir(DataSource.DIR_CONF, self.srcpath)
         if presets_rest.get('ERROR'):
             return presets_rest
-
+        # create cache dir
+        cachedir = create_cache_dir(DataSource.CACHE_DIR)
+        if cachedir.get('ERROR'):
+            return cachedir
+        # create log dir
+        logdir = create_log_dir(DataSource.LOG_DIR)
+        if logdir.get('ERROR'):
+            return logdir
         # set color scheme
         theme = get_color_scheme(userconf['icontheme'])
         userconf['icontheme'] = (userconf['icontheme'], theme)
