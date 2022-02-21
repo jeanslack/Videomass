@@ -1745,7 +1745,7 @@ class AV_Conv(wx.Panel):
             self.opt["AudioOutMap"] = ['-map 0:a?', '']
         else:
             sel = int(sel) - 1
-            self.opt["AudioOutMap"] = ['-map 0:a%s?' % str(sel),
+            self.opt["AudioOutMap"] = ['-map 0:a:%s?' % str(sel),
                                        '%s' % str(sel)]
         if self.opt["AudioCodec"][0]:
             self.opt["AudioCodec"][0] = "-c:a:%s" % self.opt["AudioOutMap"][1]

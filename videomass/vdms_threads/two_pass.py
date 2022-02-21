@@ -179,7 +179,7 @@ class TwoPass(Thread):
                      f'{TwoPass.appdata["ffmpegloglev"]} '
                      f'{TwoPass.appdata["ffmpeg+params"]} {self.time_seq} '
                      f'-i "{files}" {self.passlist[1]} {volume} '
-                     f'{TwoPass.appdata["ffthreads"]} -y {outfile}'
+                     f'{TwoPass.appdata["ffthreads"]} -y "{outfile}"'
                      )
             count = f'File {self.count}/{self.countmax} - Pass Two'
             cmd = (f'{count}\nSource: "{files}"\nDestination: "{outfile}"'

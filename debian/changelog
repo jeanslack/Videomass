@@ -3,6 +3,10 @@ videomass (3.5.6-1) UNRELEASED; urgency=medium
   * Fixed downloader log names.
   * Improved log management (the log folder is created at program startup 
     instead of ondemand).
+  * Fixed ffmpeg `invalid argument` when converting with double pass.
+  * Fixed the ffmpeg audio output mapping string error on 
+    `AV-Conversion.on_audioOUTstream` method, which raises 
+    `Invalid stream specifier: a1` type error.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 21 Feb 2022 13:38:00 +0200
 
