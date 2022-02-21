@@ -31,7 +31,8 @@ import os
 
 def logwrite(cmd, stderr, logfile):
     """
-    writes ffmpeg commands and status error during threads
+    This function writes status messages
+    to a given `logfile` during a process.
     """
     if stderr:
         apnd = f"...{stderr}\n\n"
@@ -42,34 +43,30 @@ def logwrite(cmd, stderr, logfile):
         log.write(apnd)
 
 
-def write_log(logfile, logdir):
+def make_log_template(logname, logdir):
     """
-    Before starting a process, a log file is created from this
-    template and then written later by the process.
-    see also `vdms_sys/ctrl_run.py` .
+    Most log files are initialized from a template
+    before starting a process and writing status
+    messages to a given log file.
 
-    - logfile,  log name from which the command was generated
+    - logname,  example: `mylog.log`
     - logdir, log files location
+
+    Returns the absolute/relative pathname of the log
     """
-    if not os.path.isdir(logdir):
-        try:
-            os.makedirs(logdir, mode=0o777)
-        except OSError as error:
-            return error
-
     current_date = time.strftime("%c")  # date/time
-    path = os.path.join(logdir, logfile)
+    logfile = os.path.join(logdir, logname)
 
-    with open(path, "a", encoding='utf8') as logfile:
-        logfile.write(f"""
+    with open(logfile, "a", encoding='utf8') as log:
+        log.write(f"""
 ==============================================================================
 [DATE]:
 {current_date}
 
 [LOCATION]:
-{path}
+{logfile}
 
 [VIDEOMASS]:
 """)
 
-    return path
+    return logfile

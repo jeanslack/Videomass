@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.11.2022
+Rev: Feb.21.2022
 Code checker: pylint, flake8 --ignore=F821,W503
 ########################################################
 
@@ -962,17 +962,11 @@ class MainFrame(wx.Frame):
         """
         Show miniframe to view log files
         """
-        if not os.path.exists(self.appdata['logdir']):
-            wx.MessageBox(_("There are no logs to show."),
-                          "Videomass", wx.ICON_INFORMATION, self)
-            return
-
-        else:
-            mf = ShowLogs(self,
-                          self.appdata['logdir'],
-                          self.appdata['ostype']
-                          )
-            mf.Show()
+        mf = ShowLogs(self,
+                      self.appdata['logdir'],
+                      self.appdata['ostype']
+                      )
+        mf.Show()
     # ------------------------------------------------------------------#
 
     def view_Timeline(self, event):
@@ -1051,10 +1045,6 @@ class MainFrame(wx.Frame):
         Open the log directory with file manager
 
         """
-        if not os.path.exists(self.appdata['logdir']):
-            wx.MessageBox(_("There are no logs to show."),
-                          "Videomass", wx.ICON_INFORMATION, self)
-            return
         io_tools.openpath(self.appdata['logdir'])
     # ------------------------------------------------------------------#
 

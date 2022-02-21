@@ -31,7 +31,7 @@ import os
 from pubsub import pub
 import wx
 from videomass.vdms_dialogs.widget_utils import notification_area
-from videomass.vdms_io.make_filelog import write_log
+from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_threads.ydl_downloader import YdlDownloader
 from videomass.vdms_threads.one_pass import OnePass
 from videomass.vdms_threads.two_pass import TwoPass
@@ -175,7 +175,7 @@ class LogOut(wx.Panel):
         self.txtout.Clear()
         self.labperc.SetLabel('')
 
-        self.logname = write_log(varargs[8], self.appdata['logdir'])
+        self.logname = make_log_template(varargs[8], self.appdata['logdir'])
 
         if varargs[0] == 'onepass':  # from Audio/Video Conv.
             self.thread_type = OnePass(varargs, duration,
