@@ -4,9 +4,9 @@ Name: opendir.py
 Porpose: open file browser on given pathname
 Compatibility: Python3 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.11.2021
+Rev: Feb.22.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -30,63 +30,35 @@ import subprocess
 import os
 
 
-def browse(opsyst, pathname):
+def browse(ostype, pathname):
     """
-    open file browser in a specific location (OS independent)
+    open file in a specific location (OS independent)
 
     """
-    status = 'Unrecognized error'
-
-    if opsyst == 'Windows':
+    if ostype == 'Windows':
         try:
             os.startfile(os.path.realpath(pathname))
 
         except FileNotFoundError as pathnotfound:
-            return '%s' % pathnotfound
+            return f'{pathnotfound}'
 
         except Exception as anyerr:
-            return '%s' % anyerr
+            return f'{anyerr}'
 
         return None
 
-    if opsyst == 'Darwin':
+    if ostype == 'Darwin':
         cmd = ['open', pathname]
 
     else:  # xdg-open *should* be supported by recent Gnome, KDE, Xfce
         cmd = ['xdg-open', pathname]
 
     try:
-        with subprocess.Popen(cmd,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.STDOUT,
-                              universal_newlines=True,  # mod text
-                              ) as proc:
-
-            out = proc.communicate()
-
-            if proc.returncode:  # if returncode == 1
-                status = out[0]
-            else:
-                status = None
-
-    except (OSError, FileNotFoundError) as oserr:  # exec. do not exist
-        status = '%s' % oserr
-
-    return status
-
-    """
-    NOTE The following code work, but on MS-Windows it show a short of
-         Dos-window
-    -----------------
-
-    try:
-        p = subprocess.run(cmd)
-        if p.stderr:
-            return(p.stderr.decode())
-            '''
-            if not *capture_output=True* on subprocess instance
-            use .decode() here.
-            '''
+        proc = subprocess.run(cmd, check=True, shell=False)
     except FileNotFoundError as err:
-        return('%s' % (err))
-    """
+        return err
+
+    if proc.returncode:
+        return "EXIT: {proc.returncode}\nERROR: {proc.stderr}"
+
+    return None

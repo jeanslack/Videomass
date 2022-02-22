@@ -844,9 +844,7 @@ class MainFrame(wx.Frame):
     def reminder(self, event):
         """
         Call `io_tools.openpath` to open a 'user_memos.txt' file
-        with default GUI text editor. If 'user_memos.txt' file does
-        not exist a new empty file with the same name will be created.
-
+        with default GUI text editor.
         """
         fname = os.path.join(self.appdata['confdir'], 'user_memos.txt')
 

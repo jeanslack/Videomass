@@ -10,12 +10,14 @@ Change Log:
 Feb 21, 2022 V.3.5.6
 
   * Fixed downloader log names.
-  * Improved log management (the log folder is created at program startup 
+  * Improved log management (the log folder is created at program startup
     instead of ondemand).
-  * Fixed ffmpeg `invalid argument` when converting with double pass.
-  * Fixed the ffmpeg audio output mapping string error on 
-    `AV-Conversion.on_audioOUTstream` method, which raises 
+  * Fixed ffmpeg `invalid argument` when converting using double pass.
+  * Fixed the ffmpeg audio output mapping string error on
+    `AV-Conversion.on_audioOUTstream` method, which raises
     `Invalid stream specifier: a1` type error.
+  * Fixed the 'xdg-open' command execution which blocks the Videomass GUI
+    on Linux.
 
 
 +------------------------------------+
