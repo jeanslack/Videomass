@@ -38,32 +38,32 @@ def info(parent, videomass_icon):
     """
     # ------------------
     cr = current_release()
-    Name = cr[0]
-    name = cr[1]
-    Version = cr[2]
+    name_upper = cr[0]
+    name_lower = cr[1]
+    version = cr[2]
     Release = cr[3]
-    Copyright = cr[4]
-    Website = cr[5]
-    Author = cr[6]
-    Mail = cr[7]
-    Comment = cr[8]
+    copyright = cr[4]
+    website = cr[5]
+    author = cr[6]
+    mail = cr[7]
+    comment = cr[8]
     # -----------------
     dr = descriptions_release()
     Short_Dscrp = dr[0]
     Long_Dscrp = dr[1]
     Short_Lic = dr[2]
-    Long_Lic = dr[3]
+    long_lic = dr[3]
     # ------------------
     info = wx.adv.AboutDialogInfo()
     info.SetIcon(wx.Icon(videomass_icon, type=wx.BITMAP_TYPE_PNG))
-    info.SetName("%s" % Name)
-    info.SetVersion("v%s" % Version)
+    info.SetName(f"{name_upper}")
+    info.SetVersion(f"v{version}")
     info.SetDescription(_("Cross-platform graphical interface "
                           "for FFmpeg and youtube-dl.\n"))
-    info.SetCopyright("Copyright %s %s %s" % (Copyright, Author[0], Author[1]))
-    info.SetWebSite(Website)
-    info.SetLicence(Long_Lic)
-    info.AddDeveloper("%s <%s>" % (Author[0], Mail))
+    info.SetCopyright(f"Copyright {copyright} {author[0]} {author[1]}")
+    info.SetWebSite(website)
+    info.SetLicence(long_lic)
+    info.AddDeveloper(f"{author[0]} <{mail}>")
     info.AddDocWriter("Gianluca Pernigotto <jeanlucperni@gmail.com>")
     info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> (it_IT)")
     info.AddTranslator("ChourS <ChourS2008@yandex.ru> (ru_RU)")

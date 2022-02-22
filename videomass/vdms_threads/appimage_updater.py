@@ -38,17 +38,17 @@ from pubsub import pub
 class AppImageUpdate(Thread):
     """
     This class is responsible for updating the Python packages
-    on Videomass.Appimage using the xterm terminal emulator for
-    displaying the output command in real time. Furthermore all
-    output will be saved to a log file.
+    on `Videomass*.Appimage` using the xterm terminal emulator
+    for displaying the output command in real time. Furthermore
+    all output will be saved to a log file.
 
     """
     def __init__(self, appimage, script, logfile):
         """
         Attributes defined here:
-        executable       current python executable
+
         self.status      exit status value
-        self.cmd         command for execution
+        self.cmd         command to execute
 
         matches of xterm options used here:
 
@@ -61,7 +61,7 @@ class AppImageUpdate(Thread):
         -geometry ...... window width and height respectively
         -title ......... title on the window
         -xrm 'xterm*iconHint: /path/to/icon.xpm' .... to embed icon
-        -e ............. start your command after e.g. 'ls -l'
+        -e ............. execute your command e.g. 'ls -l'
 
         type `xterm -h` for major info
 
@@ -77,8 +77,8 @@ class AppImageUpdate(Thread):
         icon = os.path.join(os.path.dirname(spath), xpm)
         # set command:
         name = os.path.basename(appimage)
-        binpath = os.path.dirname(sys.executable)
-        exe = os.path.join(binpath, script)
+        pysys = os.path.dirname(sys.executable)
+        exe = os.path.join(pysys, script)
         self.status = None
         self.cmd = shlex.split(
             f"xterm +hold -u8 -bg '{backgrd}' -fg '{foregrd}' -fa "
