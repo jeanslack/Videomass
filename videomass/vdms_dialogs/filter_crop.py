@@ -52,7 +52,7 @@ def make_bitmap(width, height, image):
 
 class Actor(wx.lib.statbmp.GenStaticBitmap):
     """
-    By an explanation by Robin Dunn, where he discusses
+    From an explanation by Robin Dunn, where he discusses
     how to rotate images with DC:
     <https://discuss.wxpython.org/t/questions-about-rotation/34064>
 

@@ -3,10 +3,6 @@
 URGENCY: to do soon
 --------------------
 
-- Make a log during ffplay_url
-
-- Fix the log names (because now there are no more executables)
-
 - make context managers more consistency with files - see example on OnExit
   method of gui_app
 
