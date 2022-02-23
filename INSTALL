@@ -9,10 +9,9 @@ BASE DEPENDENCIES
         - PyPubSub
         - requests
         - FFmpeg (with ffplay and ffprobe) >=4.3
+    Optionals:
         - youtube_dl
         - yt-dlp
-
-    Optionals:
         - atomicparsley (to embed thumbnail in audio file)
 
 Videomass can be run without installing by unpack the source package archive
