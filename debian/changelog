@@ -1,3 +1,9 @@
+videomass (3.5.7-1) UNRELEASED; urgency=medium
+
+  * Improved audio map indexing
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 01 Mar 2022 09:07:00 +0200
+
 videomass (3.5.6-1) UNRELEASED; urgency=medium
 
   * Fixed downloader log names.
