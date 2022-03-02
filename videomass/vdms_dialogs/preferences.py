@@ -137,7 +137,18 @@ class SetUp(wx.Dialog):
                   "trash after successful encoding")
         self.ckbx_trash = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_trash, 0, wx.ALL, 5)
-
+        sizetrash = wx.BoxSizer(wx.HORIZONTAL)
+        sizerFiles.Add(sizetrash, 0, wx.EXPAND)
+        self.txtctrl_trash = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
+                                         style=wx.TE_READONLY
+                                         )
+        sizetrash.Add(self.txtctrl_trash, 1, wx.ALL, 5)
+        self.txtctrl_trash.AppendText(self.appdata['trashfolder'])
+        self.btn_trash = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
+        sizetrash.Add(self.btn_trash, 0, wx.RIGHT |
+                      wx.ALIGN_CENTER_VERTICAL |
+                      wx.ALIGN_CENTER_HORIZONTAL, 5
+                      )
         sizerFiles.Add((0, 15))
         msg = _("Where do you prefer to save your downloads?")
         labdown = wx.StaticText(tabTwo, wx.ID_ANY, msg)
@@ -494,6 +505,7 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.set_Samedest, self.ckbx_dir)
         self.Bind(wx.EVT_TEXT, self.set_Suffix, self.text_suffix)
         self.Bind(wx.EVT_CHECKBOX, self.on_file_to_trash, self.ckbx_trash)
+        self.Bind(wx.EVT_BUTTON, self.on_browse_trash, self.btn_trash)
         self.Bind(wx.EVT_BUTTON, self.on_downloadPath, self.btn_YDLpath)
         self.Bind(wx.EVT_CHECKBOX, self.on_playlistFolder, self.ckbx_playlist)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFmpeg, self.checkbox_exeFFmpeg)
@@ -521,7 +533,6 @@ class SetUp(wx.Dialog):
     def current_settings(self):
         """
         Setting enable/disable in according to the configuration file
-
         """
         self.cmbx_icons.SetValue(self.appdata['icontheme'][0])
         self.cmbx_iconsSize.SetValue(str(self.appdata['toolbarsize']))
@@ -533,6 +544,13 @@ class SetUp(wx.Dialog):
         self.checkbox_logclr.SetValue(self.appdata['clearlogfiles'])
         self.ckbx_playlist.SetValue(self.appdata['playlistsubfolder'])
         self.ckbx_trash.SetValue(self.settings['move_file_to_trash'])
+
+        if self.ckbx_trash.IsChecked() is True:
+            self.txtctrl_trash.Enable()
+            self.btn_trash.Enable()
+        else:
+            self.txtctrl_trash.Disable()
+            self.btn_trash.Disable()
 
         for strs in range(self.rdbFFplay.GetCount()):
             if (self.appdata['ffplayloglev'].split()[1] in
@@ -680,11 +698,31 @@ class SetUp(wx.Dialog):
         trashdir = os.path.join(self.appdata['confdir'], 'Trash')
         if self.ckbx_trash.IsChecked():
             self.settings['move_file_to_trash'] = True
-            if not os.path.exists(trashdir):
-                if not os.path.isdir(trashdir):
-                    os.mkdir(trashdir, mode=0o777)
+            self.settings['trashfolder'] = trashdir
+            self.txtctrl_trash.AppendText(trashdir)
+            self.txtctrl_trash.Enable()
+            self.btn_trash.Enable()
         else:
+            self.txtctrl_trash.Clear()
+            self.txtctrl_trash.Disable()
+            self.btn_trash.Disable()
             self.settings['move_file_to_trash'] = False
+            self.settings['trashfolder'] = ""
+    # --------------------------------------------------------------------#
+
+    def on_browse_trash(self, event):
+        """
+        Browse to set a trash folder
+        """
+        dlg = wx.DirDialog(self, _("Choose a folder for the deleted files"),
+                           "", wx.DD_DEFAULT_STYLE)
+
+        if dlg.ShowModal() == wx.ID_OK:
+            self.txtctrl_trash.Clear()
+            getpath = self.appdata['getpath'](dlg.GetPath())
+            self.txtctrl_trash.AppendText(getpath)
+            self.settings['trashfolder'] = getpath
+            dlg.Destroy()
     # --------------------------------------------------------------------#
 
     def logging_ffplay(self, event):

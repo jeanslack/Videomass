@@ -29,6 +29,7 @@ This file is part of Videomass.
 from __future__ import unicode_literals
 import time
 import os
+from shutil import move
 from pubsub import pub
 import wx
 from videomass.vdms_dialogs.widget_utils import notification_area
@@ -49,8 +50,8 @@ def delete_file_source(flist, path):
     """
     date = time.strftime('%H%M%S-%a_%d_%B_%Y')
     for name in flist:
-        dest = os.path.join(path, 'Trash', f'{date}_{os.path.basename(name)}')
-        os.replace(name, dest)
+        dest = os.path.join(path, f'{date}_{os.path.basename(name)}')
+        move(name, dest)
 
 
 def pairwise(iterable):
@@ -421,9 +422,12 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f"\n{endmsg}\n")
             self.barprog.SetValue(0)
 
-            if msg:
+            if msg:  # move processed files to Videomass trash folder
                 if self.appdata["move_file_to_trash"] is True:
-                    delete_file_source(msg, self.appdata["confdir"])
+                    if not os.path.exists(self.appdata["trashfolder"]):
+                        if not os.path.isdir(self.appdata["trashfolder"]):
+                            os.mkdir(self.appdata["trashfolder"], mode=0o777)
+                    delete_file_source(msg, self.appdata["trashfolder"])
 
         self.txtout.AppendText('\n')
         self.button_stop.Enable(False)

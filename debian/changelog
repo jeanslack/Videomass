@@ -3,9 +3,9 @@ videomass (3.5.7-1) UNRELEASED; urgency=medium
   * Improved audio map indexing
   * Added feature to move files to the Videomass trash folder after successful
     encoding which can be enabled from the preferences dialog.
-  * Added new item to the menu bar -> File: `Trash folder`, to open file
+  * Added new item to the menu bar -> File -> Trash folder, to open file
     browser to Trash folder
-  * Added new item to the menu bar -> File: `Empty Trash`, to permanently
+  * Added new item to the menu bar -> File -> Empty Trash, to permanently
     delete all files.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 02 Mar 2022 09:07:00 +0200

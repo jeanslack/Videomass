@@ -379,9 +379,11 @@ class MainFrame(wx.Frame):
         dscrp = (_("Trash folder"),
                  _("Open the Videomass Trash folder if it exists"))
         fold_trash = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        fold_trash.Enable(self.appdata['move_file_to_trash'])
         dscrp = (_("Empty Trash"),
                  _("Delete all files in the Videomass Trash folder"))
         empty_trash = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        empty_trash.Enable(self.appdata['move_file_to_trash'])
 
         fileButton.AppendSeparator()
         dscrp = (_("Work Notes\tCtrl+N"),
@@ -444,7 +446,7 @@ class MainFrame(wx.Frame):
         self.viewtimestamp = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                                  kind=wx.ITEM_CHECK)
         if self.appdata['downloader'] != 'disabled':
-        # show youtube-dl
+            # show youtube-dl
             viewButton.AppendSeparator()
             ydlButton = wx.Menu()  # ydl sub menu
             dscrp = (_("Version in Use"),
@@ -660,7 +662,7 @@ class MainFrame(wx.Frame):
         """
         Open Videomass trash folder if it exists
         """
-        path = os.path.join(self.appdata['confdir'], 'Trash')
+        path = self.appdata['trashfolder']
         if os.path.exists(path):
             io_tools.openpath(path)
         else:
@@ -672,7 +674,7 @@ class MainFrame(wx.Frame):
         """
         Delete permanently all files inside trash folder
         """
-        path = os.path.join(self.appdata['confdir'], 'Trash')
+        path = self.appdata['trashfolder']
         if os.path.exists(path):
             files = os.listdir(path)
             if len(files) > 0:
@@ -891,9 +893,9 @@ class MainFrame(wx.Frame):
                 with open(fname, "w", encoding='utf8') as text:
                     text.write("")
             except Exception as err:
-                 wx.MessageBox(_("Unexpected error while creating file:\n\n"
-                                 "{0}").format(err),
-                               'Videomass', wx.ICON_ERROR, self)
+                wx.MessageBox(_("Unexpected error while creating file:\n\n"
+                                "{0}").format(err),
+                              'Videomass', wx.ICON_ERROR, self)
             else:
                 io_tools.openpath(fname)
     # ------------------------------------------------------------------#
