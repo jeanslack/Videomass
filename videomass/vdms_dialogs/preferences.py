@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.11.2022
+Rev: March.01.2022
 Code checker: pylint, flake8
 ########################################################
 
@@ -132,6 +132,11 @@ class SetUp(wx.Dialog):
                          wx.ALIGN_CENTER_VERTICAL, 5)
         self.text_suffix = wx.TextCtrl(tabTwo, wx.ID_ANY, "", size=(90, -1))
         sizeSamedest.Add(self.text_suffix, 1, wx.ALL | wx.CENTER, 5)
+
+        descr = _("Move source file to Videomass "
+                  "trash after successful encoding")
+        self.ckbx_trash = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
+        sizerFiles.Add(self.ckbx_trash, 0, wx.ALL, 5)
 
         sizerFiles.Add((0, 15))
         msg = _("Where do you prefer to save your downloads?")
@@ -488,6 +493,7 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_ffmpegPath, self.btn_FFpath)
         self.Bind(wx.EVT_CHECKBOX, self.set_Samedest, self.ckbx_dir)
         self.Bind(wx.EVT_TEXT, self.set_Suffix, self.text_suffix)
+        self.Bind(wx.EVT_CHECKBOX, self.on_file_to_trash, self.ckbx_trash)
         self.Bind(wx.EVT_BUTTON, self.on_downloadPath, self.btn_YDLpath)
         self.Bind(wx.EVT_CHECKBOX, self.on_playlistFolder, self.ckbx_playlist)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFmpeg, self.checkbox_exeFFmpeg)
@@ -526,6 +532,7 @@ class SetUp(wx.Dialog):
         self.checkbox_exit.SetValue(self.appdata['warnexiting'])
         self.checkbox_logclr.SetValue(self.appdata['clearlogfiles'])
         self.ckbx_playlist.SetValue(self.appdata['playlistsubfolder'])
+        self.ckbx_trash.SetValue(self.settings['move_file_to_trash'])
 
         for strs in range(self.rdbFFplay.GetCount()):
             if (self.appdata['ffplayloglev'].split()[1] in
@@ -664,6 +671,20 @@ class SetUp(wx.Dialog):
             self.settings['filesuffix'] = suffix
         else:
             self.settings['filesuffix'] = ""
+    # --------------------------------------------------------------------#
+
+    def on_file_to_trash(self, event):
+        """
+        enable/disable "Move file to trash" after successful encoding
+        """
+        trashdir = os.path.join(self.appdata['confdir'], 'Trash')
+        if self.ckbx_trash.IsChecked():
+            self.settings['move_file_to_trash'] = True
+            if not os.path.exists(trashdir):
+                if not os.path.isdir(trashdir):
+                    os.mkdir(trashdir, mode=0o777)
+        else:
+            self.settings['move_file_to_trash'] = False
     # --------------------------------------------------------------------#
 
     def logging_ffplay(self, event):

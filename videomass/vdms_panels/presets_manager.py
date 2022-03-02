@@ -941,7 +941,7 @@ class PrstPan(wx.Panel):
                                              None,
                                              self.logname,
                                              1,
-                                             False,  # do not use is reserved
+                                             False,  # reserved
                                              )
     # ------------------------------------------------------------------#
 

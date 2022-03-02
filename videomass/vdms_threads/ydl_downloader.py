@@ -237,7 +237,7 @@ class YdlDownloader(Thread):
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                     ydl.download([f"{url}"])
 
-        wx.CallAfter(pub.sendMessage, "END_EVT")
+        wx.CallAfter(pub.sendMessage, "END_EVT", msg=None)
 
     def stop(self):
         """

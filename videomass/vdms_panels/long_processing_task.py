@@ -27,6 +27,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 from __future__ import unicode_literals
+import time
 import os
 from pubsub import pub
 import wx
@@ -40,6 +41,16 @@ from videomass.vdms_threads.picture_exporting import PicturesFromVideo
 from videomass.vdms_threads.video_stabilization import VidStab
 from videomass.vdms_threads.concat_demuxer import ConcatDemuxer
 from videomass.vdms_utils.utils import get_milliseconds
+
+
+def delete_file_source(flist, path):
+    """
+    Move whole files list to Videomass Trash folder
+    """
+    date = time.strftime('%H%M%S-%a_%d_%B_%Y')
+    for name in flist:
+        dest = os.path.join(path, 'Trash', f'{date}_{os.path.basename(name)}')
+        os.replace(name, dest)
 
 
 def pairwise(iterable):
@@ -368,7 +379,7 @@ class LogOut(wx.Panel):
         self.count += 1
     # ----------------------------------------------------------------------
 
-    def end_proc(self):
+    def end_proc(self, msg):
         """
         At the end of the process
         """
@@ -409,6 +420,10 @@ class LogOut(wx.Panel):
             self.parent.statusbar_msg(_('...Finished'), None)
             self.txtout.AppendText(f"\n{endmsg}\n")
             self.barprog.SetValue(0)
+
+            if msg:
+                if self.appdata["move_file_to_trash"] is True:
+                    delete_file_source(msg, self.appdata["confdir"])
 
         self.txtout.AppendText('\n')
         self.button_stop.Enable(False)

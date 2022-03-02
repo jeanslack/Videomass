@@ -375,6 +375,13 @@ class MainFrame(wx.Frame):
         self.fold_downloads_tmp = fileButton.Append(wx.ID_ANY, dscrp[0],
                                                     dscrp[1])
         self.fold_downloads_tmp.Enable(False)
+        fileButton.AppendSeparator()
+        dscrp = (_("Trash folder"),
+                 _("Open the Videomass Trash folder if it exists"))
+        fold_trash = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = (_("Empty Trash"),
+                 _("Delete all files in the Videomass Trash folder"))
+        empty_trash = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
 
         fileButton.AppendSeparator()
         dscrp = (_("Work Notes\tCtrl+N"),
@@ -568,6 +575,8 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.openMydownloads_tmp,
                   self.fold_downloads_tmp)
         self.Bind(wx.EVT_MENU, self.reminder, notepad)
+        self.Bind(wx.EVT_MENU, self.open_trash_folder, fold_trash)
+        self.Bind(wx.EVT_MENU, self.empty_trash_folder, empty_trash)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         # ----TOOLS----
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
@@ -645,6 +654,33 @@ class MainFrame(wx.Frame):
 
         """
         io_tools.openpath(self.outpath_ffmpeg)
+    # -------------------------------------------------------------------#
+
+    def open_trash_folder(self, event):
+        """
+        Open Videomass trash folder if it exists
+        """
+        path = os.path.join(self.appdata['confdir'], 'Trash')
+        if os.path.exists(path):
+            io_tools.openpath(path)
+        else:
+            wx.MessageBox(_("No such folder '{}'").format(path),
+                          "Videomass", wx.ICON_INFORMATION, self)
+    # -------------------------------------------------------------------#
+
+    def empty_trash_folder(self, event):
+        """
+        Delete permanently all files inside trash folder
+        """
+        path = os.path.join(self.appdata['confdir'], 'Trash')
+        if os.path.exists(path):
+            files = os.listdir(path)
+            if len(files) > 0:
+                for fname in files:
+                    os.remove(os.path.join(path, fname))
+        else:
+            wx.MessageBox(_("No such folder '{}'").format(path),
+                          "Videomass", wx.ICON_INFORMATION, self)
     # -------------------------------------------------------------------#
 
     def Quiet(self, event):

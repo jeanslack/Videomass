@@ -81,6 +81,7 @@ class TwoPass(Thread):
         """
         Thread started.
         """
+        filedone = []
         for (files,
              fold,
              volume,
@@ -233,6 +234,7 @@ class TwoPass(Thread):
                 break  # fermo il ciclo for, altrimenti passa avanti
 
             if proc2.wait() == 0:  # will add '..terminated' to txtctrl
+                filedone.append(files)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count='',
@@ -242,7 +244,7 @@ class TwoPass(Thread):
                              end='ok'
                              )
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT")
+        wx.CallAfter(pub.sendMessage, "END_EVT", msg=filedone)
     # --------------------------------------------------------------------#
 
     def stop(self):
