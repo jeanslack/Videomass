@@ -81,7 +81,7 @@ class YdlExtractInfo(Thread):
 
     """
 
-    def __init__(self, url):
+    def __init__(self, url, ssl):
         """
         Attributes defined here:
         self.url  str('url')
@@ -91,10 +91,7 @@ class YdlExtractInfo(Thread):
         self.appdata = get.appset
         self.url = url
         self.data = None
-        if self.appdata['ostype'] == 'Windows':
-            self.nocheckcertificate = True
-        else:
-            self.nocheckcertificate = False
+        self.nocheckcertificate = ssl
 
         Thread.__init__(self)
         self.start()  # start the thread (va in self.run())

@@ -123,7 +123,7 @@ class ConfigManager:
         default value is True.
 
     """
-    VERSION = 4.0
+    VERSION = 4.2
     DEFAULT_OPTIONS = {
         "confversion": VERSION,
         "outputfile": f"{os.path.expanduser('~')}",
@@ -148,7 +148,9 @@ class ConfigManager:
         "clearcache": False,
         "clearlogfiles": False,
         "downloader": False,
-        "playlistsubfolder": True
+        "playlistsubfolder": True,
+        "move_file_to_trash": False,
+        "trashfolder": ""
         }
 
     def __init__(self, file_path):

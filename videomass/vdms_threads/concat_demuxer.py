@@ -85,6 +85,7 @@ class ConcatDemuxer(Thread):
         Subprocess initialize thread.
 
         """
+        filedone = None
         basename = os.path.basename(self.filelist[0])  # nome file senza path
         filename = os.path.splitext(basename)[0]  # nome senza estensione
         source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
@@ -144,6 +145,7 @@ class ConcatDemuxer(Thread):
                              f"Exit status: {proc.wait}",
                              self.logname)  # append exit error number
                 else:  # ok
+                    filedone = self.filelist
                     wx.CallAfter(pub.sendMessage,
                                  "COUNT_EVT",
                                  count='',
@@ -167,7 +169,7 @@ class ConcatDemuxer(Thread):
             proc.terminate()
 
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT")
+        wx.CallAfter(pub.sendMessage, "END_EVT", msg=filedone)
     # --------------------------------------------------------------------#
 
     def stop(self):

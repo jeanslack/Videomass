@@ -4,9 +4,10 @@ FileName: av_conversions.py
 Porpose: audio/video conversions interface
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: Mar.01.2022
+Code checker: flake8
 ########################################################
 
 This file is part of Videomass.
@@ -217,7 +218,7 @@ class AV_Conv(wx.Panel):
             "Profile": "", "Level": "", "Tune": "", "VideoBitrate": "",
             "CRF": "", "WebOptim": "",
             "MinRate": "", "MaxRate": "", "Bufsize": "", "AudioCodStr": "",
-            "AudioInMap": ["", ""], "AudioOutMap": ["-map 0:a?", ""],
+            "AudioIndex": "", "AudioMap": ["-map 0:a:?", ""],
             "SubtitleMap": "-map 0:s?", "AudioCodec": ["", ""],
             "AudioChannel": ["", ""], "AudioRate": ["", ""],
             "AudioBitrate": ["", ""], "AudioDepth": ["", ""], "PEAK": "",
@@ -617,7 +618,7 @@ class AV_Conv(wx.Panel):
         # BOX stream mapping
         self.box_audioMap = wx.StaticBoxSizer(wx.StaticBox(self.nb_Audio,
                                                            wx.ID_ANY,
-                                                           _("Audio Streams "
+                                                           _("Audio Stream "
                                                              "Mapping")),
                                               wx.VERTICAL
                                               )
@@ -625,7 +626,7 @@ class AV_Conv(wx.Panel):
         sizer_Amap = wx.BoxSizer(wx.HORIZONTAL)
         self.box_audioMap.Add(sizer_Amap, 0, wx.ALL | wx.EXPAND, 5)
         txtAinmap = wx.StaticText(self.nb_Audio, wx.ID_ANY,
-                                  _('Input index:')
+                                  _('Index Selection:')
                                   )
         sizer_Amap.Add(txtAinmap, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_A_inMap = wx.ComboBox(self.nb_Audio, wx.ID_ANY,
@@ -636,12 +637,11 @@ class AV_Conv(wx.Panel):
                                        )
         sizer_Amap.Add(self.cmb_A_inMap, 1, wx.ALL | wx.EXPAND, 5)
         txtAoutmap = wx.StaticText(self.nb_Audio, wx.ID_ANY,
-                                   _('Output index:')
+                                   _('Map:')
                                    )
         sizer_Amap.Add(txtAoutmap, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_A_outMap = wx.ComboBox(self.nb_Audio, wx.ID_ANY,
-                                        choices=['Auto', 'All', '1', '2', '3',
-                                                 '4', '5', '6', '7', '8'],
+                                        choices=['Auto', 'All', 'Index only'],
                                         size=(160, -1), style=wx.CB_DROPDOWN |
                                         wx.CB_READONLY
                                         )
@@ -801,12 +801,16 @@ class AV_Conv(wx.Panel):
                  '(when switch to RMS) in dBFS. From -99.0 to +0.0; default '
                  'for PEAK level is -1.0; default for RMS is -20.0'))
         self.spin_target.SetToolTip(tip)
-        tip = (_('Choose a specific audio stream to map from input file. If '
-                 'not more that one audio stream, leave to "Auto".'))
+        tip = (_('Choose an index from the available audio streams. If the '
+                 'source file is a video, it is recommended to select which '
+                 'audio index to process. If it is an audio file, leave this '
+                 'control to "Auto". '))
         self.cmb_A_inMap.SetToolTip(tip)
-        tip = (_('Map on the output index. Keep same input map to preserve '
-                 'indexes; to save as audio file always select "all" '
-                 'or "Auto"'))
+        tip = (_('"Auto" keeps all audio stream but processes '
+                 'only the one of the selected index; "All" keeps all audio '
+                 'streams and processes them all with the properties of the '
+                 'selected index; "Index only" processes and keeps only the '
+                 'selected index audio stream.'))
         self.cmb_A_outMap.SetToolTip(tip)
         tip = (_('Integrated Loudness Target in LUFS. '
                  'From -70.0 to -5.0, default is -24.0'))
@@ -844,8 +848,8 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmb_Fps)
         self.Bind(wx.EVT_RADIOBOX, self.on_AudioCodecs, self.rdb_a)
         self.Bind(wx.EVT_BUTTON, self.on_AudioParam, self.btn_aparam)
-        self.Bind(wx.EVT_COMBOBOX, self.on_audioINstream, self.cmb_A_inMap)
-        self.Bind(wx.EVT_COMBOBOX, self.on_audioOUTstream, self.cmb_A_outMap)
+        self.Bind(wx.EVT_COMBOBOX, self.on_audio_index, self.cmb_A_inMap)
+        self.Bind(wx.EVT_COMBOBOX, self.on_audio_mapping, self.cmb_A_outMap)
         self.Bind(wx.EVT_RADIOBOX, self.onNormalize, self.rdbx_normalize)
         self.Bind(wx.EVT_SPINCTRL, self.on_enter_Ampl, self.spin_target)
         self.Bind(wx.EVT_BUTTON, self.on_Audio_analyzes, self.btn_voldect)
@@ -862,8 +866,9 @@ class AV_Conv(wx.Panel):
         self.cmb_Media.SetSelection(0), self.cmb_Vcont.SetSelection(0)
         self.cmb_Fps.SetSelection(0), self.cmb_Vaspect.SetSelection(0)
         self.cmb_Pixfrm.SetSelection(1), self.cmb_Submap.SetSelection(1)
-        self.cmb_A_outMap.SetSelection(1), self.cmb_A_inMap.SetSelection(0)
+        self.cmb_A_outMap.SetSelection(0), self.cmb_A_inMap.SetSelection(0)
         self.cmb_x26opti.SetSelection(0), self.cmb_vp9opti.SetSelection(0)
+        self.cmb_A_outMap.Disable()
         self.UI_set()
         self.audio_default()
         self.normalize_default()
@@ -926,8 +931,8 @@ class AV_Conv(wx.Panel):
 
     def audio_default(self):
         """
-        Set default audio parameters. This method is called on first run and
-        when change the video container selection
+        Set default audio parameters. This method is called at
+        start-up and whenever the video container selection changes.
         """
         self.rdb_a.SetStringSelection("Auto")
         self.opt["AudioCodStr"] = "Auto"
@@ -1610,7 +1615,7 @@ class AV_Conv(wx.Panel):
                     self.normalize_default()
                     _param(False, False)
                     self.opt["AudioCodec"] = ["-c:a:%s" %
-                                              self.opt["AudioOutMap"][1], v]
+                                              self.opt["AudioMap"][1], v]
 
                 elif audiocodec == _("No Audio"):
                     self.normalize_default()
@@ -1621,15 +1626,18 @@ class AV_Conv(wx.Panel):
                 else:
                     _param(True, True)
                     self.opt["AudioCodec"] = ["-c:a:%s" %
-                                              self.opt["AudioOutMap"][1], v]
+                                              self.opt["AudioMap"][1], v]
 
                 self.opt["AudioCodStr"] = audiocodec
 
         if audiocodec == 'No Audio':  # audio Mapping disable
-            self.cmb_A_inMap.SetSelection(0), self.cmb_A_inMap.Disable()
-            self.cmb_A_outMap.Disable(), self.on_audioINstream(self)
+            self.cmb_A_inMap.Disable()
+            self.cmb_A_outMap.Disable()
+            self.opt["AudioMap"] = ["", ""]
+            self.opt["AudioIndex"] = ""
         else:
-            self.cmb_A_inMap.Enable(), self.cmb_A_outMap.Enable()
+            self.cmb_A_inMap.Enable()
+            self.on_audio_index(self)
     # -------------------------------------------------------------------#
 
     def on_AudioParam(self, event):
@@ -1675,12 +1683,12 @@ class AV_Conv(wx.Panel):
                 if audio_type in ('wav', 'aiff', 'PCM'):
                     if 'Auto' in data[3][0]:  # [3] is the bit depth tupla
                         self.opt["AudioCodec"] = ["-c:a:%s" %
-                                                  self.opt["AudioOutMap"][1],
+                                                  self.opt["AudioMap"][1],
                                                   "pcm_s16le"
                                                   ]
                     else:
                         self.opt["AudioCodec"] = ["-c:a:%s" %
-                                                  self.opt["AudioOutMap"][1],
+                                                  self.opt["AudioMap"][1],
                                                   data[3][1]
                                                   ]
                     self.opt["AudioDepth"] = ("%s" % (data[3][0]), '')  # null
@@ -1708,47 +1716,49 @@ class AV_Conv(wx.Panel):
             # audiodialog.Destroy()
     # ------------------------------------------------------------------#
 
-    def on_audioINstream(self, event):
+    def on_audio_index(self, event):
         """
-        sets the specified audio input stream as index to process,
-        e.g. for filters volumedetect and loudnorm will map 0:N
-        where N is digit from 0 to available audio index up to 8.
-        See: http://ffmpeg.org/ffmpeg.html#Advanced-options
-        When changes this feature affect audio filter peak and rms analyzers
-        and then re-enable volume dected button .
+        Set a specific index from audio streams.
+        See: <http://ffmpeg.org/ffmpeg.html#Advanced-options>
         """
-        sel = self.cmb_A_inMap.GetValue()
-        if sel == 'Auto':
-            self.opt["AudioInMap"] = ['', '']
-            self.cmb_A_outMap.SetSelection(1)
-            self.on_audioOUTstream(self)
+        if self.cmb_A_inMap.GetValue() == 'Auto':
+            self.cmb_A_outMap.Disable()
+            self.opt["AudioIndex"] = ''
         else:
-            self.opt["AudioInMap"] = ['-map 0:%s' % sel, sel]
-            self.cmb_A_outMap.SetStringSelection(self.cmb_A_inMap.GetValue())
-            self.on_audioOUTstream(self)
+            self.cmb_A_outMap.Enable()
+            idx = str(int(self.cmb_A_inMap.GetValue()) - 1)
+            self.opt["AudioIndex"] = f'-map 0:a:{idx}'
+
+        self.on_audio_mapping(self)
+    # ------------------------------------------------------------------#
+
+    def on_audio_mapping(self, event):
+        """
+        Set the mapping of the audio streams.
+        """
+        index = self.cmb_A_inMap.GetValue()
+        sel = self.cmb_A_outMap.GetValue()
+        idx = '' if index == 'Auto' else str(int(index) - 1)
+
+        if sel == 'Auto':
+            if self.cmb_Media.GetValue() == 'Video':
+                self.opt["AudioMap"] = ['-map 0:a:?', idx]
+
+            elif self.cmb_Media.GetValue() == 'Audio':
+                self.opt["AudioMap"] = [f'-map 0:a:{idx}?', '']
+
+        elif sel == 'All':
+            self.opt["AudioMap"] = ['-map 0:a:?', '']
+
+        elif sel == 'Index only':
+            self.opt["AudioMap"] = [f'-map 0:a:{idx}?', '']
+
+        if self.opt["AudioCodec"][0]:
+            self.opt["AudioCodec"][0] = f"-c:a:{self.opt['AudioMap'][1]}"
 
         if self.rdbx_normalize.GetSelection() in [1, 2]:
             if not self.btn_voldect.IsEnabled():
                 self.btn_voldect.Enable()
-    # ------------------------------------------------------------------#
-
-    def on_audioOUTstream(self, event):
-        """
-        Sets the audio stream index for the output file and sets
-        audio codec to specified map.
-
-        """
-        sel = self.cmb_A_outMap.GetValue()
-        if sel == 'Auto':
-            self.opt["AudioOutMap"] = ['', '']
-        elif sel == 'All':
-            self.opt["AudioOutMap"] = ['-map 0:a?', '']
-        else:
-            sel = int(sel) - 1
-            self.opt["AudioOutMap"] = ['-map 0:a:%s?' % str(sel),
-                                       '%s' % str(sel)]
-        if self.opt["AudioCodec"][0]:
-            self.opt["AudioCodec"][0] = "-c:a:%s" % self.opt["AudioOutMap"][1]
     # ------------------------------------------------------------------#
 
     def onNormalize(self, event):
@@ -1835,7 +1845,7 @@ class AV_Conv(wx.Panel):
 
         data = volume_detect_process(self.parent.file_src,
                                      self.time_seq,
-                                     self.opt["AudioInMap"][0]
+                                     self.opt["AudioIndex"]
                                      )
         if data[1]:
             wx.MessageBox("%s" % data[1], "Videomass", wx.ICON_ERROR)
@@ -1852,7 +1862,7 @@ class AV_Conv(wx.Panel):
                         volume.append('  ')
                     else:
                         volume.append("-filter:a:%s volume=%fdB" %
-                                      (self.opt["AudioOutMap"][1],
+                                      (self.opt["AudioMap"][1],
                                        -offset)
                                       )
                     self.normdetails.append((f,
@@ -1871,7 +1881,7 @@ class AV_Conv(wx.Panel):
                         volume.append('  ')
                     else:
                         volume.append("-filter:a:%s volume=%fdB" % (
-                            self.opt["AudioOutMap"][1],
+                            self.opt["AudioMap"][1],
                             -offset))
                     self.normdetails.append((f,
                                              maxvol,
@@ -1998,15 +2008,11 @@ class AV_Conv(wx.Panel):
             self.opt["SubtitleMap"] = '-sn'
         elif smap == 'All':
             self.opt["SubtitleMap"] = '-map 0:s?'
-
-        if self.rdb_a.GetStringSelection() == "No Audio":
-            self.cmb_A_inMap.SetSelection(0), self.on_audioINstream(self)
-            self.cmb_A_outMap.SetSelection(1), self.on_audioOUTstream(self)
     # ------------------------------------------------------------------#
 
     def on_start(self):
         """
-        Check the settings and files before redirecting
+        Check all settings before redirecting
         to the build command.
 
         """
@@ -2074,7 +2080,7 @@ class AV_Conv(wx.Panel):
             f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
             f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
             f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
-            f'{self.opt["AudioDepth"][1]} {self.opt["AudioOutMap"][0]} '
+            f'{self.opt["AudioDepth"][1]} {self.opt["AudioMap"][0]} '
             f'-map_metadata 0')
 
         pass1 = " ".join(cmd1.split())
@@ -2114,7 +2120,7 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
                 f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
                 f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
-                f'{self.opt["AudioDepth"][1]} {self.opt["AudioOutMap"][0]} '
+                f'{self.opt["AudioDepth"][1]} {self.opt["AudioMap"][0]} '
                 f'-map_metadata 0'
             )
             command = " ".join(command.split())  # mi formatta la stringa
@@ -2167,7 +2173,7 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
                 f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
                 f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
-                f'{self.opt["AudioDepth"][1]} {self.opt["AudioOutMap"][0]} '
+                f'{self.opt["AudioDepth"][1]} {self.opt["AudioMap"][0]} '
                 f'-map_metadata 0'
             )
             pass1 = " ".join(cmd1.split())
@@ -2205,7 +2211,7 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
                 f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
                 f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
-                f'{self.opt["AudioDepth"][1]} {self.opt["AudioOutMap"][0]} '
+                f'{self.opt["AudioDepth"][1]} {self.opt["AudioMap"][0]} '
                 f'-map_metadata 0'
             )
             command = " ".join(command.split())  # mi formatta la stringa
@@ -2250,7 +2256,7 @@ class AV_Conv(wx.Panel):
             opt1, opt2 = '-pass 1', '-pass 2'
 
         if self.cmb_Vcod.GetValue() == "Copy":
-            cmd_1 = (f'-map 0:v? {self.opt["AudioInMap"][0]} '
+            cmd_1 = (f'-map 0:v? {self.opt["AudioIndex"]} '
                      f'-filter:a: {loudfilter} '
                      f'-vn -sn {opt1} {self.opt["AspectRatio"]} '
                      f'{self.opt["FPS"]} -f null'
@@ -2262,7 +2268,7 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
                 f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
                 f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
-                f'{self.opt["AudioDepth"][1]} {self.opt["AudioOutMap"][0]} '
+                f'{self.opt["AudioDepth"][1]} {self.opt["AudioMap"][0]} '
                 f'-map_metadata 0'
             )
             pass1 = " ".join(cmd_1.split())
@@ -2279,7 +2285,7 @@ class AV_Conv(wx.Panel):
                                                  destin,
                                                  None,
                                                  [pass1, pass2, loudfilter],
-                                                 self.opt["AudioOutMap"],
+                                                 self.opt["AudioMap"],
                                                  None,
                                                  logname,
                                                  countmax,
@@ -2294,7 +2300,7 @@ class AV_Conv(wx.Panel):
                      f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
                      f'{self.opt["FPS"]} {self.opt["VFilters"]} '
                      f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
-                     f'-map 0:v? {self.opt["AudioInMap"][0]}  '
+                     f'-map 0:v? {self.opt["AudioIndex"]}  '
                      f'{opt1} -sn -filter:a: {loudfilter} '
                      f'-f {AV_Conv.MUXERS[self.opt["OutputFormat"]]}'
                      )
@@ -2312,7 +2318,7 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
                 f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
                 f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
-                f'{self.opt["AudioDepth"][1]} {self.opt["AudioOutMap"][0]} '
+                f'{self.opt["AudioDepth"][1]} {self.opt["AudioMap"][0]} '
                 f'-map_metadata 0'
             )
             pass1 = " ".join(cmd_1.split())
@@ -2329,7 +2335,7 @@ class AV_Conv(wx.Panel):
                                                  destin,
                                                  None,
                                                  [pass1, pass2, loudfilter],
-                                                 self.opt["AudioOutMap"],
+                                                 self.opt["AudioMap"],
                                                  None,
                                                  logname,
                                                  countmax,
@@ -2345,7 +2351,7 @@ class AV_Conv(wx.Panel):
         audnorm = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
         title = _('Audio conversions')
         command = (
-            f'-vn -sn {self.opt["WebOptim"]} {self.opt["AudioInMap"][0]} '
+            f'-vn -sn {self.opt["WebOptim"]} {self.opt["AudioMap"][0]} '
             f'{self.opt["AudioCodec"][0]} {self.opt["AudioCodec"][1]} '
             f'{self.opt["AudioBitrate"][1]} {self.opt["AudioDepth"][1]} '
             f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
@@ -2375,7 +2381,7 @@ class AV_Conv(wx.Panel):
         """
         Perform EBU R128 normalization on audio conversion
         WARNING do not map output audio file index on filter:a: , -c:a:
-        and not send self.opt["AudioOutMap"] to process because the files
+        and not send self.opt["AudioMap"] to process because the files
         audio has not indexes
         """
         self.opt["EBU"] = True
@@ -2386,10 +2392,10 @@ class AV_Conv(wx.Panel):
                        ))
         title = _('Audio EBU normalization')
 
-        cmd_1 = (f'{self.opt["WebOptim"]} {self.opt["AudioInMap"][0]} '
+        cmd_1 = (f'{self.opt["WebOptim"]} {self.opt["AudioMap"][0]} '
                  f'-filter:a: {loudfilter} -vn -sn -pass 1 -f null'
                  )
-        cmd_2 = (f'-vn -sn {self.opt["WebOptim"]} {self.opt["AudioInMap"][0]} '
+        cmd_2 = (f'-vn -sn {self.opt["WebOptim"]} {self.opt["AudioMap"][0]} '
                  f'-pass 2 {self.opt["AudioCodec"][0]} '
                  f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
                  f'{self.opt["AudioDepth"][1]} {self.opt["AudioRate"][1]} '

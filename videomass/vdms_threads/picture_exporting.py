@@ -147,7 +147,7 @@ class PicturesFromVideo(Thread):
                          end='error',
                          )
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT")
+        wx.CallAfter(pub.sendMessage, "END_EVT", msg=None)
     # --------------------------------------------------------------------#
 
     def stop(self):

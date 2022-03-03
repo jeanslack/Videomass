@@ -85,6 +85,7 @@ class OnePass(Thread):
         """
         Thread started.
         """
+        filedone = []
         for (files,
              fold,
              volume,
@@ -154,6 +155,7 @@ class OnePass(Thread):
                                  self.logname,
                                  )  # append exit error number
                     else:  # ok
+                        filedone.append(files)
                         wx.CallAfter(pub.sendMessage,
                                      "COUNT_EVT",
                                      count='',
@@ -179,7 +181,7 @@ class OnePass(Thread):
                 break  # break second 'for' loop
 
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT")
+        wx.CallAfter(pub.sendMessage, "END_EVT", msg=filedone)
     # --------------------------------------------------------------------#
 
     def stop(self):

@@ -3,6 +3,7 @@
 *.eggs
 *.log
 *.mbtree
+transforms.trf
 dist
 build
 videomass.egg-info
