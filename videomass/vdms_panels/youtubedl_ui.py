@@ -297,7 +297,10 @@ class Downloader(wx.Panel):
         self.btn_plidx.SetBitmap(bmplistindx, wx.LEFT)
         fgs1.Add(self.btn_plidx, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_plidx.Disable()
-
+        self.ckbx_ssl = wx.CheckBox(panelscroll, wx.ID_ANY,
+                                    (_('Don’t check SSL certificate'))
+                                    )
+        fgs1.Add(self.ckbx_ssl, 0, wx.ALL, 5)
         self.ckbx_thumb = wx.CheckBox(panelscroll, wx.ID_ANY,
                                       (_('Embed thumbnail in audio file'))
                                       )
@@ -531,7 +534,12 @@ class Downloader(wx.Panel):
         elif self.choice.GetSelection() == 4:
             quality = self.fcode.GetItemText(item, 0)
 
-        io_tools.url_play(url, quality, tstamp, self.parent.autoexit)
+        io_tools.url_play(url,
+                          quality,
+                          tstamp,
+                          self.parent.autoexit,
+                          self.ckbx_ssl.GetValue()
+                          )
     # ----------------------------------------------------------------------
 
     def get_formatcode(self):
@@ -555,7 +563,9 @@ class Downloader(wx.Panel):
         self.fcode.InsertColumn(8, (_('Size')), width=100)
         index = 0
         for link in self.parent.data_url:
-            data = io_tools.youtubedl_getstatistics(link)
+            data = io_tools.youtubedl_getstatistics(link,
+                                                    self.ckbx_ssl.GetValue()
+                                                    )
             for meta in data:
                 if meta[1]:
                     return meta[1]
@@ -606,7 +616,7 @@ class Downloader(wx.Panel):
         is 'ERROR' or None
         """
 
-        data = io_tools.youtubedl_getstatistics(link)
+        data = io_tools.youtubedl_getstatistics(link, self.ckbx_ssl.GetValue())
         for meta in data:
             if meta[1]:
                 return ('ERROR', meta[1])
@@ -1012,8 +1022,6 @@ class Downloader(wx.Panel):
             _id = '%(title).100s'
 
         logname = f"{Downloader.appdata['downloader']}.log"
-        nooverwrites = self.ckbx_w.IsChecked() is True
-        restrictfn = self.ckbx_restrict_fn.IsChecked() is True
         postprocessors = []
 
         if self.choice.GetSelection() == 3:
@@ -1035,7 +1043,7 @@ class Downloader(wx.Panel):
             data = {'format': self.fcode.GetItemText(0, 3),
                     'noplaylist': self.opt["NO_PLAYLIST"],
                     'playlist_items': self.plidx,
-                    'nooverwrites': nooverwrites,
+                    'nooverwrites': self.ckbx_w.GetValue(),
                     'writethumbnail': self.opt["THUMB"],
                     'outtmpl': f'{_id}.%(ext)s',
                     'extractaudio': False,
@@ -1044,14 +1052,15 @@ class Downloader(wx.Panel):
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
-                    'restrictfilenames': restrictfn,
+                    'restrictfilenames': self.ckbx_restrict_fn.GetValue(),
+                    'nocheckcertificate': self.ckbx_ssl.GetValue(),
                     }
         elif self.choice.GetSelection() == 2:  # audio and video splitted
             code = []
             data = {'format': self.fcode.GetItemText(0, 3),
                     'noplaylist': self.opt["NO_PLAYLIST"],
                     'playlist_items': self.plidx,
-                    'nooverwrites': nooverwrites,
+                    'nooverwrites': self.ckbx_w.GetValue(),
                     'writethumbnail': self.opt["THUMB"],
                     'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
                     'extractaudio': False,
@@ -1060,14 +1069,15 @@ class Downloader(wx.Panel):
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
-                    'restrictfilenames': restrictfn,
+                    'restrictfilenames': self.ckbx_restrict_fn.GetValue(),
+                    'nocheckcertificate': self.ckbx_ssl.GetValue(),
                     }
         elif self.choice.GetSelection() == 3:  # audio only
             code = []
             data = {'format': 'bestaudio',
                     'noplaylist': self.opt["NO_PLAYLIST"],
                     'playlist_items': self.plidx,
-                    'nooverwrites': nooverwrites,
+                    'nooverwrites': self.ckbx_w.GetValue(),
                     'writethumbnail': self.opt["THUMB"],
                     'outtmpl': f'{_id}.%(ext)s',
                     'extractaudio': True,
@@ -1076,7 +1086,8 @@ class Downloader(wx.Panel):
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
-                    'restrictfilenames': restrictfn,
+                    'restrictfilenames': self.ckbx_restrict_fn.GetValue(),
+                    'nocheckcertificate': self.ckbx_ssl.GetValue(),
                     }
         elif self.choice.GetSelection() == 4:  # format code
             code = self.getformatcode(urls)
@@ -1089,7 +1100,7 @@ class Downloader(wx.Panel):
             data = {'format': '',
                     'noplaylist': self.opt["NO_PLAYLIST"],
                     'playlist_items': self.plidx,
-                    'nooverwrites': nooverwrites,
+                    'nooverwrites': self.ckbx_w.GetValue(),
                     'writethumbnail': self.opt["THUMB"],
                     'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
                     'extractaudio': False,
@@ -1098,7 +1109,8 @@ class Downloader(wx.Panel):
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
-                    'restrictfilenames': restrictfn,
+                    'restrictfilenames': self.ckbx_restrict_fn.GetValue(),
+                    'nocheckcertificate': self.ckbx_ssl.GetValue(),
                     }
         self.parent.switch_to_processing('youtube_dl downloading',
                                          urls,

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.01.2022
+Rev: March.02.2022
 Code checker: pylint, flake8
 ########################################################
 
@@ -545,10 +545,7 @@ class SetUp(wx.Dialog):
         self.ckbx_playlist.SetValue(self.appdata['playlistsubfolder'])
         self.ckbx_trash.SetValue(self.settings['move_file_to_trash'])
 
-        if self.ckbx_trash.IsChecked() is True:
-            self.txtctrl_trash.Enable()
-            self.btn_trash.Enable()
-        else:
+        if self.ckbx_trash.IsChecked() is False:
             self.txtctrl_trash.Disable()
             self.btn_trash.Disable()
 
@@ -714,7 +711,7 @@ class SetUp(wx.Dialog):
         """
         Browse to set a trash folder
         """
-        dlg = wx.DirDialog(self, _("Choose a folder for the deleted files"),
+        dlg = wx.DirDialog(self, _("Choose a folder for the files to delete"),
                            "", wx.DD_DEFAULT_STYLE)
 
         if dlg.ShowModal() == wx.ID_OK:

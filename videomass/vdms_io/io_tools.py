@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2022
+Rev: Mar.02.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -99,7 +99,7 @@ def stream_play(filepath, tseq, param, autoexit):
 # -----------------------------------------------------------------------#
 
 
-def url_play(url, quality, timestamp, autoexit):
+def url_play(url, quality, timestamp, autoexit, ssl):
     """
     directs to the corresponding thread for playing
     online media streams.
@@ -114,7 +114,7 @@ def url_play(url, quality, timestamp, autoexit):
     See https://github.com/ytdl-org/youtube-dl/issues/16175
 
     """
-    ffplay_url.Streaming(timestamp, autoexit, url, quality)
+    ffplay_url.Streaming(timestamp, autoexit, ssl, url, quality)
 
 # -----------------------------------------------------------------------#
 
@@ -255,7 +255,7 @@ def openpath(where):
 # -------------------------------------------------------------------------#
 
 
-def youtubedl_getstatistics(url):
+def youtubedl_getstatistics(url, ssl):
     """
     Call `YdlExtractInfo` thread to extract data info.
     During this process a wait pop-up dialog is shown.
@@ -268,7 +268,7 @@ def youtubedl_getstatistics(url):
         data = thread.data
         yield data
     """
-    thread = YdlExtractInfo(url)
+    thread = YdlExtractInfo(url, ssl)
     dlgload = PopupDialog(None,
                           _("Videomass - Loading..."),
                           _("Wait....\nRetrieving required data."))

@@ -2,13 +2,14 @@ videomass (3.5.7-1) UNRELEASED; urgency=medium
 
   * Improved audio map indexing
   * Added feature to move files to the Videomass trash folder after successful
-    encoding which can be enabled from the preferences dialog.
+    encoding which can be enabled from the preferences dialog #66.
   * Added new item to the menu bar -> File -> Trash folder, to open file
     browser to Trash folder
   * Added new item to the menu bar -> File -> Empty Trash, to permanently
     delete all files.
+  * Added enable/disable SSL certificate #73
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 02 Mar 2022 09:07:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 03 Mar 2022 07:27:00 +0200
 
 videomass (3.5.6-1) UNRELEASED; urgency=medium
 

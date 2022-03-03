@@ -678,8 +678,16 @@ class MainFrame(wx.Frame):
         if os.path.exists(path):
             files = os.listdir(path)
             if len(files) > 0:
+                if wx.MessageBox(_("Are you sure to empty trash folder?"),
+                                 "Videomass", wx.ICON_QUESTION
+                                 | wx.YES_NO, self) == wx.NO:
+                    return
+
                 for fname in files:
                     os.remove(os.path.join(path, fname))
+            else:
+                wx.MessageBox(_("No files to delete"),
+                              "Videomass", wx.ICON_INFORMATION, self)
         else:
             wx.MessageBox(_("No such folder '{}'").format(path),
                           "Videomass", wx.ICON_INFORMATION, self)

@@ -4,9 +4,9 @@ Name: ydl_downloader.py
 Porpose: long processing task with youtube_dl python library
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.12.2021
+Rev: Mar.02.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -100,7 +100,7 @@ def my_hook(data):
         wx.CallAfter(pub.sendMessage,
                      "UPDATE_YDL_EVT",
                      output='',
-                     duration={x:data.get(x, 'N/A') for x in keys},
+                     duration={x: data.get(x, 'N/A') for x in keys},
                      status='DOWNLOAD',)
 
     if data['status'] == 'finished':
@@ -165,12 +165,6 @@ class YdlDownloader(Thread):
                      'countmax': len(varargs[1]),
                      }
 
-        if (YdlDownloader.appdata['ostype'] == 'Windows' or
-                YdlDownloader.appdata['app'] == 'appimage'):
-            self.nocheckcertificate = True
-        else:
-            self.nocheckcertificate = False
-
         Thread.__init__(self)
         self.start()  # run()
 
@@ -220,7 +214,7 @@ class YdlDownloader(Thread):
                 'playlist_items': self.opt['playlist_items'].get(url, None),
                 'nooverwrites': self.opt['nooverwrites'],
                 'no_color': True,
-                'nocheckcertificate': self.nocheckcertificate,
+                'nocheckcertificate': self.opt['nocheckcertificate'],
                 'ffmpeg_location': f'{YdlDownloader.FFMPEG_URL}',
                 'postprocessors': self.opt['postprocessors'],
                 'logger': MyLogger(),

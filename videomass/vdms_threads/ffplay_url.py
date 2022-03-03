@@ -5,9 +5,9 @@ Porpose: playback online media streams with ffplay player using
          youtube_dl embedding on code.
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.11.2021
+Rev: Mar.02.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -55,7 +55,7 @@ def msg_warning(msg):
 # ------------------------------------------------------------------------#
 
 
-class MyLogger(object):
+class MyLogger():
     """
     Intercepts youtube-dl's output by setting a logger object;
     * Log messages to a logging.Logger instance.
@@ -63,7 +63,12 @@ class MyLogger(object):
     57df2457df7274d0c842421945#embedding-youtube-dl>
     """
 
+    def __init__(self):
+        """Initialize"""
+        self.msg = None
+
     def debug(self, msg):
+        """intercept msg"""
         # print('DEBUG: ', msg)
         if '[download]' in msg:  # ...in processing
             # print(msg)
@@ -109,7 +114,7 @@ class DownloadStream(Thread):
     APP = get.appset['app']
     DOWNLOADER = get.appset['downloader']
 
-    def __init__(self, url, quality):
+    def __init__(self, url, quality, ssl):
         """
         Accept a single url as a string.
         The quality parameter sets the quality of the stream
@@ -121,16 +126,11 @@ class DownloadStream(Thread):
         self.stop_work_thread = False  # process terminate value
         self.url = url  # single url
         self.quality = quality  # output quality e.g. worst, best, Format code
+        self.nocheckcertificate = ssl
         self.outputdir = DownloadStream.TMP  # pathname destination
         self.outtmpl = '%(title)s_{}.%(ext)s'.format(self.quality)  # filename
 
-        if DownloadStream.OS == 'Windows' or DownloadStream.APP == 'appimage':
-            self.nocheckcertificate = True
-        else:
-            self.nocheckcertificate = False
-
         Thread.__init__(self)
-        """initialize"""
     # --------------------------------------------------------------#
 
     def run(self):
@@ -155,7 +155,6 @@ class DownloadStream(Thread):
             'ffmpeg_location': '{}'.format(DownloadStream.FFMPEG_URL),
             'logger': MyLogger(),
         }
-
         if DownloadStream.DOWNLOADER == 'yt_dlp':
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([f"{self.url}"])
@@ -173,7 +172,7 @@ class DownloadStream(Thread):
 # ------------------------------------------------------------------------#
 
 
-class Streaming(object):
+class Streaming():
     """
     Handling Threads to download and playback media streams via
     youtube-dl library and ffmpeg executables.
@@ -189,7 +188,7 @@ class Streaming(object):
     AUTOEXIT = None
     # ---------------------------------------------------------------#
 
-    def __init__(self, timestamp, autoexit, url=None, quality=None):
+    def __init__(self, timestamp, autoexit, ssl, url=None, quality=None):
         """
         - Topic "START_FFPLAY_EVT" subscribes the start playing
           running ffplay at a certain time.
@@ -201,7 +200,7 @@ class Streaming(object):
         pub.subscribe(stop_download_listener, "STOP_DOWNLOAD_EVT")
         pub.subscribe(start_palying_listener, "START_FFPLAY_EVT")
 
-        Streaming.DOWNLOAD = DownloadStream(url, quality)
+        Streaming.DOWNLOAD = DownloadStream(url, quality, ssl)
         Streaming.TIMESTAMP = timestamp
         Streaming.AUTOEXIT = autoexit
 
@@ -213,7 +212,6 @@ class Streaming(object):
         call DownloadStream(Thread) to run() method
         """
         Streaming.DOWNLOAD.start()
-        return
 
 # --------- RECEIVER LISTENERS
 
@@ -237,4 +235,3 @@ def start_palying_listener(output):
                          Streaming.TIMESTAMP,
                          Streaming.AUTOEXIT
                          )
-    return
