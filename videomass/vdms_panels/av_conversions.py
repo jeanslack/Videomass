@@ -804,7 +804,7 @@ class AV_Conv(wx.Panel):
         tip = (_('Choose an index from the available audio streams. If the '
                  'source file is a video, it is recommended to select which '
                  'audio index to process. If it is an audio file, leave this '
-                 'control to "Auto". '))
+                 'control to "Auto".'))
         self.cmb_A_inMap.SetToolTip(tip)
         tip = (_('"Auto" keeps all audio stream but processes '
                  'only the one of the selected index; "All" keeps all audio '
