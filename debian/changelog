@@ -8,6 +8,7 @@ videomass (3.5.7-1) UNRELEASED; urgency=medium
   * Added new item to the menu bar -> File -> Empty Trash, to permanently
     delete all files.
   * Added enable/disable SSL certificate #73
+  * Added new item to the menu bar -> File -> Open..., to open file dialog #68
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 03 Mar 2022 07:27:00 +0200
 

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.21.2022
+Rev: Mar.03.2022
 Code checker: pylint, flake8 --ignore=F821,W503
 ########################################################
 
@@ -240,6 +240,7 @@ class MainFrame(wx.Frame):
             self.ConcatDemuxer.Hide()
 
         self.ChooseTopic.Show()
+        self.openmedia.Enable(False)
         self.toolbar.Hide(), self.avpan.Enable(False)
         self.prstpan.Enable(False), self.concpan.Enable(False)
         self.ydlpan.Enable(False), self.startpan.Enable(False)
@@ -358,12 +359,16 @@ class MainFrame(wx.Frame):
 
         # ----------------------- file menu
         fileButton = wx.Menu()
+        dscrp = (_("Open...\tCtrl+O"),
+                 _("Open one or more files"))
+        self.openmedia = fileButton.Append(wx.ID_OPEN, dscrp[0], dscrp[1])
+        self.openmedia.Enable(False)
         dscrp = (_("Conversions folder\tCtrl+C"),
                  _("Open the default file conversions folder"))
-        fold_convers = fileButton.Append(wx.ID_OPEN, dscrp[0], dscrp[1])
+        fold_convers = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         dscrp = (_("Downloads folder\tCtrl+D"),
                  _("Open the default downloads folder"))
-        fold_downloads = fileButton.Append(wx.ID_BOTTOM, dscrp[0], dscrp[1])
+        fold_downloads = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
         dscrp = (_("Open temporary conversions"),
                  _("Open the temporary file conversions folder"))
@@ -382,7 +387,7 @@ class MainFrame(wx.Frame):
         fold_trash.Enable(self.appdata['move_file_to_trash'])
         dscrp = (_("Empty Trash"),
                  _("Delete all files in the Videomass Trash folder"))
-        empty_trash = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        empty_trash = fileButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
         empty_trash.Enable(self.appdata['move_file_to_trash'])
 
         fileButton.AppendSeparator()
@@ -570,6 +575,7 @@ class MainFrame(wx.Frame):
 
         # -----------------------Binding menu bar-------------------------#
         # ----FILE----
+        self.Bind(wx.EVT_MENU, self.open_media_files, self.openmedia)
         self.Bind(wx.EVT_MENU, self.openMyconversions, fold_convers)
         self.Bind(wx.EVT_MENU, self.openMydownload, fold_downloads)
         self.Bind(wx.EVT_MENU, self.openMyconversions_tmp,
@@ -626,6 +632,31 @@ class MainFrame(wx.Frame):
 
     # --------Menu Bar Event handler (callback)
     # --------- Menu  Files
+    def open_media_files(self, event):
+        """
+        Open the file dialog to choose media files
+        The order of selected files only supported by GTK
+        """
+        if self.topicname in ('Audio/Video Conversions',
+                              'Presets Manager',
+                              'Concatenate Demuxer'):
+            self.switch_file_import(self, self.topicname)
+
+        wildcard = ("All files |*.*|*.mkv|*.mkv|*.avi|*.avi|*.mp4|*.mp4|"
+                    "*.flv|*.flv|*.m4v|*.m4v|*.wav|*.wav|*.mp3|*.mp3|"
+                    "*.ogg|*.ogg|*.flac|*.flac|*.m4a|*.m4a")
+
+        with wx.FileDialog(self, _("Select one or more files to open"),
+                           "", "", wildcard, wx.FD_OPEN | wx.FD_MULTIPLE |
+                           wx.FD_FILE_MUST_EXIST | wx.FD_PREVIEW) as filedlg:
+
+            if filedlg.ShowModal() == wx.ID_CANCEL:
+                return
+            paths = filedlg.GetPaths()
+            for path in paths:
+                self.fileDnDTarget.flCtrl.dropUpdate(path)
+    # -------------------------------------------------------------------#
+
     def openMydownload(self, event):
         """
         Open the download folder with file manager
@@ -809,9 +840,8 @@ class MainFrame(wx.Frame):
                               'ERROR', wx.ICON_ERROR, self)
             return
 
-        else:
-            wx.MessageBox('Unable to update', 'ERROR', wx.ICON_ERROR, self)
-            return
+        wx.MessageBox('Unable to update', 'ERROR', wx.ICON_ERROR, self)
+        return
     # ------------------------------------------------------------------#
 
     def prst_checkversion(self, event):
@@ -847,7 +877,6 @@ class MainFrame(wx.Frame):
         else:
             wx.MessageBox(_("No new version available"), "Videomass",
                           wx.ICON_INFORMATION, self)
-        return
     # ------------------------------------------------------------------#
 
     def prst_downloader(self, event):
@@ -880,11 +909,10 @@ class MainFrame(wx.Frame):
         if download[1]:
             wx.MessageBox("%s" % download[1], 'ERROR', wx.ICON_ERROR, self)
             return
-        else:
-            wx.MessageBox(_('Successfully downloaded to '
-                            '"{0}"').format(pathname), 'Videomass',
-                          wx.ICON_INFORMATION, self)
-            return
+
+        wx.MessageBox(_('Successfully downloaded to "{0}"').format(pathname),
+                      'Videomass', wx.ICON_INFORMATION, self)
+        return
     # -------------------------------------------------------------------#
 
     def reminder(self, event):
@@ -964,6 +992,7 @@ class MainFrame(wx.Frame):
                                 ).format(self.appdata['downloader'], this),
                               'Videomass', wx.ICON_INFORMATION, self)
             return this
+        return None
     # -----------------------------------------------------------------#
 
     def ydl_latest(self, event):
@@ -984,11 +1013,9 @@ class MainFrame(wx.Frame):
             wx.MessageBox("%s %s" % (latest[0], latest[1]),
                           "%s" % latest[0], wx.ICON_ERROR, self)
             return
-
-        else:
-            wx.MessageBox(_("{0}: Latest version available: {1}"
-                            ).format(self.appdata['downloader'], latest[0]),
-                          "Videomass", wx.ICON_INFORMATION, self)
+        wx.MessageBox(_("{0}: Latest version available: {1}").format(
+                      self.appdata['downloader'], latest[0]),
+                      "Videomass", wx.ICON_INFORMATION, self)
     # -----------------------------------------------------------------#
 
     def showTimestamp(self, event):
@@ -1189,8 +1216,7 @@ class MainFrame(wx.Frame):
             data = dialog.GetValue()
             if not data:
                 return
-            else:
-                self.cmdtimestamp = data
+            self.cmdtimestamp = data
         else:
             dialog.Destroy()
             return
@@ -1202,7 +1228,7 @@ class MainFrame(wx.Frame):
         autoexit at the end of playback
 
         """
-        self.autoexit = True if self.exitplayback.IsChecked() else False
+        self.autoexit = self.exitplayback.IsChecked() is True
     # ------------------------------------------------------------------#
 
     def Setup(self, event):
@@ -1276,29 +1302,28 @@ class MainFrame(wx.Frame):
                           "%s" % version[0], wx.ICON_ERROR, self)
             return
 
+        version = version[0].split('v.')[1]
+        newmajor, newminor, newmicro = version.split('.')
+        new_version = int('%s%s%s' % (newmajor, newminor, newmicro))
+        major, minor, micro = this[2].split('.')
+        this_version = int('%s%s%s' % (major, minor, micro))
+
+        if new_version > this_version:
+            msg = _('A new release is available - '
+                    'v.{0}\n').format(version)
+        elif this_version > new_version:
+            msg = _('You are using a development version '
+                    'that has not yet been released!\n')
         else:
-            version = version[0].split('v.')[1]
-            newmajor, newminor, newmicro = version.split('.')
-            new_version = int('%s%s%s' % (newmajor, newminor, newmicro))
-            major, minor, micro = this[2].split('.')
-            this_version = int('%s%s%s' % (major, minor, micro))
+            msg = _('Congratulation! You are already '
+                    'using the latest version.\n')
 
-            if new_version > this_version:
-                msg = _('A new release is available - '
-                        'v.{0}\n').format(version)
-            elif this_version > new_version:
-                msg = _('You are using a development version '
-                        'that has not yet been released!\n')
-            else:
-                msg = _('Congratulation! You are already '
-                        'using the latest version.\n')
-
-            dlg = videomass_check_version.CheckNewVersion(self,
-                                                          msg,
-                                                          version,
-                                                          this[2]
-                                                          )
-            dlg.ShowModal()
+        dlg = videomass_check_version.CheckNewVersion(self,
+                                                      msg,
+                                                      version,
+                                                      this[2]
+                                                      )
+        dlg.ShowModal()
     # -------------------------------------------------------------------#
 
     def Info(self, event):
@@ -1440,10 +1465,12 @@ class MainFrame(wx.Frame):
         """
         if self.textDnDTarget.IsShown() or self.fileDnDTarget.IsShown():
             self.choosetopicRetrieve()
+
         elif self.topicname in ('Audio/Video Conversions',
                                 'Presets Manager',
                                 'Concatenate Demuxer'):
             self.switch_file_import(self, self.topicname)
+
         elif self.topicname == 'Youtube Downloader':
             self.switch_text_import(self, self.topicname)
     # ------------------------------------------------------------------#
@@ -1505,6 +1532,7 @@ class MainFrame(wx.Frame):
             self.fileDnDTarget.text_path_save.SetValue("")
             self.fileDnDTarget.text_path_save.AppendText(self.outpath_ffmpeg)
         self.menu_items()  # disable some menu items
+        self.openmedia.Enable(True)
         self.avpan.Enable(False), self.prstpan.Enable(False),
         self.ydlpan.Enable(False), self.startpan.Enable(True)
         self.viewtimeline.Enable(False), self.concpan.Enable(False)
@@ -1537,6 +1565,7 @@ class MainFrame(wx.Frame):
             self.textDnDTarget.text_path_save.SetValue("")
             self.textDnDTarget.text_path_save.AppendText(self.outpath_ydl)
         self.menu_items()  # disable some menu items
+        self.openmedia.Enable(False)
         self.avpan.Enable(False), self.prstpan.Enable(False),
         self.ydlpan.Enable(False), self.startpan.Enable(True)
         self.viewtimeline.Enable(False), self.concpan.Enable(False)
@@ -1585,6 +1614,7 @@ class MainFrame(wx.Frame):
         self.ytDownloader.Show()
         self.toolbar.Show()
         self.menu_items()  # disable some menu items
+        self.openmedia.Enable(False)
         self.avpan.Enable(True), self.prstpan.Enable(True)
         self.ydlpan.Enable(False), self.startpan.Enable(True)
         self.viewtimeline.Enable(False), self.logpan.Enable(True)
@@ -1636,6 +1666,7 @@ class MainFrame(wx.Frame):
         self.view_Timeline(self)  # set timeline status
         self.toolbar.Show()
         self.menu_items()  # disable some menu items
+        self.openmedia.Enable(True)
         self.avpan.Enable(False), self.prstpan.Enable(True)
         self.ydlpan.Enable(True), self.startpan.Enable(True)
         self.viewtimeline.Enable(True), self.logpan.Enable(True)
@@ -1686,6 +1717,7 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - Presets Manager'))
         self.view_Timeline(self)  # set timeline status
         self.toolbar.Show()
+        self.openmedia.Enable(True)
         self.avpan.Enable(True), self.prstpan.Enable(False),
         self.ydlpan.Enable(True), self.startpan.Enable(True)
         self.viewtimeline.Enable(True), self.logpan.Enable(True)
@@ -1737,6 +1769,7 @@ class MainFrame(wx.Frame):
 
         self.SetTitle(_('Videomass - Concatenate Demuxer'))
         self.toolbar.Show()
+        self.openmedia.Enable(True)
         self.avpan.Enable(True), self.prstpan.Enable(True),
         self.ydlpan.Enable(True), self.startpan.Enable(True)
         self.viewtimeline.Enable(False), self.logpan.Enable(True)
@@ -1800,6 +1833,7 @@ class MainFrame(wx.Frame):
         if self.appdata['app'] == 'appimage':
             self.ydlupdate.Enable(False)  # do not update during a process
         self.viewtimeline.Enable(False)
+        self.openmedia.Enable(False)
         # Hide the tool bar
         self.toolbar.Hide()
         self.ProcessPanel.topic_thread(self.topicname, varargs,
