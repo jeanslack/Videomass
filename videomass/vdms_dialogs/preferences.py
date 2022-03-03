@@ -116,8 +116,8 @@ class SetUp(wx.Dialog):
         sizeFFdirdest.Add(self.txtctrl_FFpath, 1, wx.ALL, 5)
         self.txtctrl_FFpath.AppendText(self.appdata['outputfile'])
 
-        self.btn_FFpath = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
-        sizeFFdirdest.Add(self.btn_FFpath, 0, wx.RIGHT |
+        self.btn_fsave = wx.Button(tabTwo, wx.ID_ANY, "...", size=(35, -1))
+        sizeFFdirdest.Add(self.btn_fsave, 0, wx.RIGHT |
                           wx.ALIGN_CENTER_VERTICAL |
                           wx.ALIGN_CENTER_HORIZONTAL, 5
                           )
@@ -144,7 +144,7 @@ class SetUp(wx.Dialog):
                                          )
         sizetrash.Add(self.txtctrl_trash, 1, wx.ALL, 5)
         self.txtctrl_trash.AppendText(self.appdata['trashfolder'])
-        self.btn_trash = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
+        self.btn_trash = wx.Button(tabTwo, wx.ID_ANY, "...", size=(35, -1))
         sizetrash.Add(self.btn_trash, 0, wx.RIGHT |
                       wx.ALIGN_CENTER_VERTICAL |
                       wx.ALIGN_CENTER_HORIZONTAL, 5
@@ -160,7 +160,7 @@ class SetUp(wx.Dialog):
                                            )
         sizeYDLdirdest.Add(self.txtctrl_YDLpath, 1, wx.ALL | wx.CENTER, 5)
         self.txtctrl_YDLpath.AppendText(self.appdata['outputdownload'])
-        self.btn_YDLpath = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
+        self.btn_YDLpath = wx.Button(tabTwo, wx.ID_ANY, "...", size=(35, -1))
         sizeYDLdirdest.Add(self.btn_YDLpath, 0, wx.RIGHT |
                            wx.ALIGN_CENTER_VERTICAL |
                            wx.ALIGN_CENTER_HORIZONTAL, 5
@@ -182,7 +182,7 @@ class SetUp(wx.Dialog):
         # ----
         self.checkbox_exeFFmpeg = wx.CheckBox(tabThree, wx.ID_ANY, (
                                 _("Enable another location to run FFmpeg")))
-        self.btn_pathFFmpeg = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
+        self.btn_ffmpeg = wx.Button(tabThree, wx.ID_ANY, "...", size=(35, -1))
         self.txtctrl_ffmpeg = wx.TextCtrl(tabThree, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
                                           )
@@ -190,11 +190,11 @@ class SetUp(wx.Dialog):
         gridFFmpeg = wx.BoxSizer(wx.HORIZONTAL)
         sizerFFmpeg.Add(gridFFmpeg, 0, wx.EXPAND)
         gridFFmpeg.Add(self.txtctrl_ffmpeg, 1, wx.ALL, 5)
-        gridFFmpeg.Add(self.btn_pathFFmpeg, 0, wx.RIGHT | wx.CENTER, 5)
+        gridFFmpeg.Add(self.btn_ffmpeg, 0, wx.RIGHT | wx.CENTER, 5)
         # ----
         self.checkbox_exeFFprobe = wx.CheckBox(tabThree, wx.ID_ANY, (
                                 _("Enable another location to run FFprobe")))
-        self.btn_pathFFprobe = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
+        self.btn_ffprobe = wx.Button(tabThree, wx.ID_ANY, "...", size=(35, -1))
         self.txtctrl_ffprobe = wx.TextCtrl(tabThree, wx.ID_ANY, "",
                                            style=wx.TE_READONLY
                                            )
@@ -202,11 +202,11 @@ class SetUp(wx.Dialog):
         gridFFprobe = wx.BoxSizer(wx.HORIZONTAL)
         sizerFFmpeg.Add(gridFFprobe, 0, wx.EXPAND)
         gridFFprobe.Add(self.txtctrl_ffprobe, 1, wx.ALL, 5)
-        gridFFprobe.Add(self.btn_pathFFprobe, 0, wx.RIGHT | wx.CENTER, 5)
+        gridFFprobe.Add(self.btn_ffprobe, 0, wx.RIGHT | wx.CENTER, 5)
         # ----
         self.checkbox_exeFFplay = wx.CheckBox(tabThree, wx.ID_ANY, (
                                   _("Enable another location to run FFplay")))
-        self.btn_pathFFplay = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
+        self.btn_ffplay = wx.Button(tabThree, wx.ID_ANY, "...", size=(35, -1))
         self.txtctrl_ffplay = wx.TextCtrl(tabThree, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
                                           )
@@ -214,7 +214,7 @@ class SetUp(wx.Dialog):
         gridFFplay = wx.BoxSizer(wx.HORIZONTAL)
         sizerFFmpeg.Add(gridFFplay, 0, wx.EXPAND)
         gridFFplay.Add(self.txtctrl_ffplay, 1, wx.ALL, 5)
-        gridFFplay.Add(self.btn_pathFFplay, 0, wx.RIGHT | wx.CENTER, 5)
+        gridFFplay.Add(self.btn_ffplay, 0, wx.RIGHT | wx.CENTER, 5)
         sizerFFmpeg.Add((0, 15))
         labFFopt = wx.StaticText(tabThree, wx.ID_ANY, _('Other options'))
         sizerFFmpeg.Add(labFFopt, 0, wx.ALL | wx.EXPAND, 5)
@@ -501,7 +501,7 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffplay, self.rdbFFplay)
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffmpeg, self.rdbFFmpeg)
         self.Bind(wx.EVT_SPINCTRL, self.on_threads, self.spinctrl_threads)
-        self.Bind(wx.EVT_BUTTON, self.on_ffmpegPath, self.btn_FFpath)
+        self.Bind(wx.EVT_BUTTON, self.on_ffmpegPath, self.btn_fsave)
         self.Bind(wx.EVT_CHECKBOX, self.set_Samedest, self.ckbx_dir)
         self.Bind(wx.EVT_TEXT, self.set_Suffix, self.text_suffix)
         self.Bind(wx.EVT_CHECKBOX, self.on_file_to_trash, self.ckbx_trash)
@@ -509,11 +509,11 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_downloadPath, self.btn_YDLpath)
         self.Bind(wx.EVT_CHECKBOX, self.on_playlistFolder, self.ckbx_playlist)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFmpeg, self.checkbox_exeFFmpeg)
-        self.Bind(wx.EVT_BUTTON, self.open_path_ffmpeg, self.btn_pathFFmpeg)
+        self.Bind(wx.EVT_BUTTON, self.open_path_ffmpeg, self.btn_ffmpeg)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFprobe, self.checkbox_exeFFprobe)
-        self.Bind(wx.EVT_BUTTON, self.open_path_ffprobe, self.btn_pathFFprobe)
+        self.Bind(wx.EVT_BUTTON, self.open_path_ffprobe, self.btn_ffprobe)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFplay, self.checkbox_exeFFplay)
-        self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_pathFFplay)
+        self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_ffplay)
         self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
 
         self.Bind(wx.EVT_RADIOBOX, self.on_toolbarPos, self.rdbTBpref)
@@ -560,7 +560,7 @@ class SetUp(wx.Dialog):
                 self.rdbFFmpeg.SetSelection(strs)
 
         if self.appdata['ffmpeg_islocal'] is False:
-            self.btn_pathFFmpeg.Disable()
+            self.btn_ffmpeg.Disable()
             self.txtctrl_ffmpeg.Disable()
             self.txtctrl_ffmpeg.AppendText(self.appdata['ffmpeg_cmd'])
             self.checkbox_exeFFmpeg.SetValue(False)
@@ -569,7 +569,7 @@ class SetUp(wx.Dialog):
             self.checkbox_exeFFmpeg.SetValue(True)
 
         if self.appdata['ffprobe_islocal'] is False:
-            self.btn_pathFFprobe.Disable()
+            self.btn_ffprobe.Disable()
             self.txtctrl_ffprobe.Disable()
             self.txtctrl_ffprobe.AppendText(self.appdata['ffprobe_cmd'])
             self.checkbox_exeFFprobe.SetValue(False)
@@ -578,7 +578,7 @@ class SetUp(wx.Dialog):
             self.checkbox_exeFFprobe.SetValue(True)
 
         if self.appdata['ffplay_islocal'] is False:
-            self.btn_pathFFplay.Disable()
+            self.btn_ffplay.Disable()
             self.txtctrl_ffplay.Disable()
             self.txtctrl_ffplay.AppendText(self.appdata['ffplay_cmd'])
             self.checkbox_exeFFplay.SetValue(False)
@@ -594,7 +594,7 @@ class SetUp(wx.Dialog):
             self.lab_suffix.Enable()
             self.text_suffix.Enable()
             self.ckbx_dir.SetValue(True)
-            self.btn_FFpath.Disable()
+            self.btn_fsave.Disable()
             self.txtctrl_FFpath.Disable()
             if not self.appdata['filesuffix'] == "":
                 self.text_suffix.AppendText(self.appdata['filesuffix'])
@@ -649,14 +649,14 @@ class SetUp(wx.Dialog):
         if self.ckbx_dir.IsChecked():
             self.lab_suffix.Enable()
             self.text_suffix.Enable()
-            self.btn_FFpath.Disable()
+            self.btn_fsave.Disable()
             self.txtctrl_FFpath.Disable()
             self.settings['outputfile_samedir'] = True
         else:
             self.text_suffix.Clear()
             self.lab_suffix.Disable()
             self.text_suffix.Disable()
-            self.btn_FFpath.Enable()
+            self.btn_fsave.Enable()
             self.txtctrl_FFpath.Enable()
             self.settings['outputfile_samedir'] = False
             self.settings['filesuffix'] = ""
@@ -711,7 +711,8 @@ class SetUp(wx.Dialog):
         """
         Browse to set a trash folder
         """
-        dlg = wx.DirDialog(self, _("Choose a folder for the files to delete"),
+        dlg = wx.DirDialog(self, _("Choose another folder to move "
+                                   "files to delete"),
                            "", wx.DD_DEFAULT_STYLE)
 
         if dlg.ShowModal() == wx.ID_OK:
@@ -737,11 +738,11 @@ class SetUp(wx.Dialog):
     def exeFFmpeg(self, event):
         """Enable or disable ffmpeg local binary"""
         if self.checkbox_exeFFmpeg.IsChecked():
-            self.btn_pathFFmpeg.Enable()
+            self.btn_ffmpeg.Enable()
             self.txtctrl_ffmpeg.Enable()
             self.settings['ffmpeg_islocal'] = True
         else:
-            self.btn_pathFFmpeg.Disable()
+            self.btn_ffmpeg.Disable()
             self.txtctrl_ffmpeg.Disable()
             self.settings['ffmpeg_islocal'] = False
 
@@ -779,12 +780,12 @@ class SetUp(wx.Dialog):
     def exeFFprobe(self, event):
         """Enable or disable ffprobe local binary"""
         if self.checkbox_exeFFprobe.IsChecked():
-            self.btn_pathFFprobe.Enable()
+            self.btn_ffprobe.Enable()
             self.txtctrl_ffprobe.Enable()
             self.settings['ffprobe_islocal'] = True
 
         else:
-            self.btn_pathFFprobe.Disable()
+            self.btn_ffprobe.Disable()
             self.txtctrl_ffprobe.Disable()
             self.settings['ffprobe_islocal'] = False
 
@@ -823,12 +824,12 @@ class SetUp(wx.Dialog):
     def exeFFplay(self, event):
         """Enable or disable ffplay local binary"""
         if self.checkbox_exeFFplay.IsChecked():
-            self.btn_pathFFplay.Enable()
+            self.btn_ffplay.Enable()
             self.txtctrl_ffplay.Enable()
             self.settings['ffplay_islocal'] = True
 
         else:
-            self.btn_pathFFplay.Disable()
+            self.btn_ffplay.Disable()
             self.txtctrl_ffplay.Disable()
             self.settings['ffplay_islocal'] = False
 
