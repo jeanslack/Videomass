@@ -1,31 +1,33 @@
 
-Update: Aug 31 2021
+Update: March 05 2022
 -----------------------
 
-When you run this app. for the first time, the contents of this folder will
-be copied to the user's Videomass configuration directory, according to the
-conventions of each operating system which are:
+When you run this App for the first time, the contents of this folder will be 
+copied to the user's Videomass configuration directory, according to the 
+conventions of each operating system which are: 
 
         Linux:       '~/.config/videomass'
         MacOs:       '~/Library/Application Support/videomass'
         Windows:     'C:\Users\username\AppData\Roaming\videomass'
 
-Furthermore, the Videomass configuration directory is also used to load
-files located in the 'presets/' folder. Files format into 'preset' folder is `.prst`.
-These files are Videomass presets and contain JSON data type.
+Furthermore, the Videomass configuration directory is also used to load the 
+files located in the 'presets' folder. The extension of these files is `.prst` 
+but they are actually structured with JSON (JavaScript Object Notation) data. 
 
 UPDATE: >=v3.4.6
 
-To keep all application data inside the program folder, create a folder named
-"portable_data" . On MS-Windows, if this folder is in the "appdata" of the
-standalone executable, only relative paths will be provided. In all other cases
-they will be absolute paths.
+To keep all application data inside the program folder, you can create a folder 
+called "portable_data". On MS-Windows, when this folder exists and is in "appdata", 
+only relative paths will be provided. In all other cases they will be absolute paths. 
 
-AppImage users: If you would like the Videomass*.AppImage to
-store its data alongside the Videomass*.AppImage rather than in your home
-directory, the AppImage natively has this capability, just enable the
-appropriate option, type:
+For AppImage users: 
+If you would like the Videomass*.AppImage to store its data alongside the 
+Videomass*.AppImage rather than in your home directory, the AppImage natively has 
+this capability, just enable one of the following options:
+    
+`$ Videomass*.AppImage --appimage-portable-home`
+`$ Videomass*.AppImage --appimage-portable-config`
 
-    `$ Videomass*.AppImage --appimage-help`
+to more info type:
 
-to view appimage options.
+`$ Videomass*.AppImage --appimage-help`

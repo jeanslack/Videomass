@@ -121,7 +121,7 @@ class SetUp(wx.Dialog):
                           wx.ALIGN_CENTER_VERTICAL |
                           wx.ALIGN_CENTER_HORIZONTAL, 5
                           )
-        descr = _("Save each file in the same\nfolder as input file")
+        descr = _("Save each file in the same folder as input file")
         self.ckbx_dir = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_dir, 0, wx.ALL, 5)
         sizeSamedest = wx.BoxSizer(wx.HORIZONTAL)
@@ -133,8 +133,8 @@ class SetUp(wx.Dialog):
         self.text_suffix = wx.TextCtrl(tabTwo, wx.ID_ANY, "", size=(90, -1))
         sizeSamedest.Add(self.text_suffix, 1, wx.ALL | wx.CENTER, 5)
 
-        descr = _("Move source file to Videomass "
-                  "trash after successful encoding")
+        descr = _("Move source file to the Videomass trash "
+                  "folder after successful encoding")
         self.ckbx_trash = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_trash, 0, wx.ALL, 5)
         sizetrash = wx.BoxSizer(wx.HORIZONTAL)

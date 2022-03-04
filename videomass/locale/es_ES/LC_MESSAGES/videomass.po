@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.5.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-03 18:40+0100\n"
-"PO-Revision-Date: 2022-03-03 18:44+0100\n"
+"POT-Creation-Date: 2022-03-05 00:20+0100\n"
+"PO-Revision-Date: 2022-03-05 00:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: j.alberto.vc@gmail.com\n"
 "Language: es\n"
@@ -984,9 +984,11 @@ msgid "Where do you prefer to save your transcodes?"
 msgstr "¿Donde prefiere guardar sus resultados?"
 
 #: ../vdms_dialogs/preferences.py:124
-msgid ""
-"Save each file in the same\n"
-"folder as input file"
+#, fuzzy
+#| msgid ""
+#| "Save each file in the same\n"
+#| "folder as input file"
+msgid "Save each file in the same folder as input file"
 msgstr ""
 "Guardar en la carpeta del\n"
 "archivo de entrada"
@@ -996,7 +998,8 @@ msgid "Assign optional suffix to output file names:"
 msgstr "Asignar un sufijo opcional a los archivos de salida:"
 
 #: ../vdms_dialogs/preferences.py:136
-msgid "Move source file to Videomass trash after successful encoding"
+msgid ""
+"Move source file to the Videomass trash folder after successful encoding"
 msgstr ""
 
 #: ../vdms_dialogs/preferences.py:153
@@ -2762,8 +2765,8 @@ msgstr ""
 #: ../vdms_panels/av_conversions.py:804
 msgid ""
 "Choose an index from the available audio streams. If the source file is a "
-"video, it is recommended to select which audio index to process. If it is an "
-"audio file, leave this control to \"Auto\"."
+"video, it is recommended to select a numeric audio index. If the source file "
+"is an audio file, leave this control to \"Auto\"."
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:809

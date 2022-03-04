@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.5.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-03 18:40+0100\n"
-"PO-Revision-Date: 2022-03-03 18:43+0100\n"
+"POT-Creation-Date: 2022-03-05 00:20+0100\n"
+"PO-Revision-Date: 2022-03-05 00:24+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -1007,19 +1007,16 @@ msgid "Where do you prefer to save your transcodes?"
 msgstr "Dove preferisci salvare le tue transcodifiche?"
 
 #: ../vdms_dialogs/preferences.py:124
-msgid ""
-"Save each file in the same\n"
-"folder as input file"
-msgstr ""
-"Salva ogni file nella stessa\n"
-"cartella del file di input"
+msgid "Save each file in the same folder as input file"
+msgstr "Salva ogni file nella stessa cartella del file di input"
 
 #: ../vdms_dialogs/preferences.py:129
 msgid "Assign optional suffix to output file names:"
 msgstr "Assegna un suffisso aggiuntivo ai nomi dei file in uscita:"
 
 #: ../vdms_dialogs/preferences.py:136
-msgid "Move source file to Videomass trash after successful encoding"
+msgid ""
+"Move source file to the Videomass trash folder after successful encoding"
 msgstr ""
 "Sposta i file di origine sul cestino di Videomass dopo una corretta codifica"
 
@@ -2783,12 +2780,12 @@ msgstr ""
 #: ../vdms_panels/av_conversions.py:804
 msgid ""
 "Choose an index from the available audio streams. If the source file is a "
-"video, it is recommended to select which audio index to process. If it is an "
-"audio file, leave this control to \"Auto\"."
+"video, it is recommended to select a numeric audio index. If the source file "
+"is an audio file, leave this control to \"Auto\"."
 msgstr ""
 "Scegli un indice tra i flussi audio disponibili. Se il file sorgente è un "
-"video, si consiglia di selezionare quale indice audio processare. Se si "
-"tratta di un file audio, lasciare questo controllo su \"Auto\"."
+"file video, si consiglia di selezionare un indice audio numerico. Se il file "
+"sorgente è un file audio, lasciare questo controllo su \"Auto\"."
 
 #: ../vdms_panels/av_conversions.py:809
 msgid ""
