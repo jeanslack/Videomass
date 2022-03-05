@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.21.2022
+Rev: March.05.2022
 Code checker: pycodestyle, flake8, pylint .
 
  This file is part of Videomass.
@@ -75,15 +75,14 @@ def restore_presets_dir(dirconf, srcpath):
     """
     if not os.path.exists(os.path.join(dirconf, "presets")):
         # try to restoring presets directory on videomass dir
-        drest = copydir_recursively(os.path.join(srcpath, "presets"),
-                                    dirconf)
+        drest = copydir_recursively(os.path.join(srcpath, "presets"), dirconf)
         if drest:
             return {'ERROR': drest}
 
     return {'R': None}
 
 
-def get_options(dirconf, fileconf):
+def get_options(dirconf, fileconf, srcpath):
     """
     Check the application options. Reads the `settings.json`
     file; if it does not exist or is unreadable try to restore
@@ -115,10 +114,12 @@ def get_options(dirconf, fileconf):
             data = {'R': conf.read_options()}
 
     else:  # try to restore entire configuration directory
-        try:  # make conf folder
-            os.mkdir(dirconf, mode=0o777)
-        except (OSError, TypeError) as err:
-            data = {'ERROR': err}
+        dconf = copydir_recursively(srcpath,
+                                    os.path.dirname(dirconf),
+                                    "videomass"
+                                    )
+        if dconf:
+            data = {'ERROR': dconf}
         else:
             conf.write_options()
             data = {'R': conf.read_options()}
@@ -415,7 +416,9 @@ class DataSource():
         fatal error in the gui_app bootstrap.
         """
         # handle configuration file
-        userconf = get_options(DataSource.DIR_CONF, DataSource.FILE_CONF)
+        userconf = get_options(DataSource.DIR_CONF,
+                               DataSource.FILE_CONF,
+                               self.srcpath)
         if userconf.get('ERROR'):
             return userconf
         userconf = userconf['R']

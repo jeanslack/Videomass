@@ -1831,7 +1831,8 @@ class MainFrame(wx.Frame):
         # self.SetTitle('Videomass')
         [self.menuBar.EnableTop(x, False) for x in range(3, 5)]
         if self.appdata['app'] == 'appimage':
-            self.ydlupdate.Enable(False)  # do not update during a process
+            if self.appdata['PYLIBYDL'] is None:
+                self.ydlupdate.Enable(False)  # do not update during a process
         self.viewtimeline.Enable(False)
         self.openmedia.Enable(False)
         # Hide the tool bar
@@ -1894,6 +1895,7 @@ class MainFrame(wx.Frame):
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(3, 5)]
         if self.appdata['app'] == 'appimage':
-            self.ydlupdate.Enable(True)
+            if self.appdata['PYLIBYDL'] is None:
+                self.ydlupdate.Enable(True)  # re-enable it after processing
         # show buttons bar if the user has shown it:
         self.Layout()

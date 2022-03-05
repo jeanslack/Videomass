@@ -20,14 +20,19 @@ To keep all application data inside the program folder, you can create a folder
 called "portable_data". On MS-Windows, when this folder exists and is in "appdata", 
 only relative paths will be provided. In all other cases they will be absolute paths. 
 
+-------------------
 For AppImage users: 
+-------------------
+WARNING: DO NOT PLACE THE "portable_data" FOLDER INSIDE APPIMAGE !
+
 If you would like the Videomass*.AppImage to store its data alongside the 
 Videomass*.AppImage rather than in your home directory, the AppImage natively has 
-this capability, just enable one of the following options:
+this capability, just enable this option, like this:
     
-`$ Videomass*.AppImage --appimage-portable-home`
-`$ Videomass*.AppImage --appimage-portable-config`
+`$ Videomass-3.5.7-x86_64.AppImage --appimage-portable-home`
 
-to more info type:
+Fo more information type:
 
-`$ Videomass*.AppImage --appimage-help`
+`$ Videomass-3.5.7-x86_64.AppImage --appimage-help`
+
+
