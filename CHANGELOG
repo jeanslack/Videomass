@@ -7,17 +7,19 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 03, 2022 V.3.5.7
+Mar 04, 2022 V.3.5.7
 
-  * Improved audio map indexing
+  * Improved controls and automations for indexing and audio mapping.
   * Added feature to move files to the Videomass trash folder after successful
     encoding which can be enabled from the preferences dialog #66.
   * Added new item to the menu bar -> File -> Trash folder, to open file
-    browser to Trash folder
-  * Added new item to the menu bar -> File -> Empty Trash, to permanently
-    delete all files.
-  * Added enable/disable SSL certificate #73
-  * Added new item to the menu bar -> File -> Open..., to open file dialog #68
+    browser to Trash folder.
+  * Added new option to the menu bar -> File -> Empty Trash, to permanently
+    delete all files in the trash folder, when this feature is enabled in the
+    preferences.
+  * Added new option to disable SSL certificate #73 .
+  * Added new option to the menu bar -> File -> Open..., to choose the files
+    to open without using Drag N Drop #68 .
 
 +------------------------------------+
 Feb 21, 2022 V.3.5.6
