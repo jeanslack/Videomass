@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 04, 2022 V.3.5.7
+Mar 05, 2022 V.3.5.7
 
   * Improved controls and automations for indexing and audio mapping.
   * Added feature to move files to the Videomass trash folder after successful
@@ -20,6 +20,10 @@ Mar 04, 2022 V.3.5.7
   * Added new option to disable SSL certificate #73 .
   * Added new option to the menu bar -> File -> Open..., to choose the files
     to open without using Drag N Drop #68 .
+  * [AppImage] Fixed AttributeError: `object has no attribute 'ydlupdate'`
+    when downloader is disabled.
+  * [AppImage] Fixed FATAL error popup using --appimage-portable-home argument
+    due missing source directory.
 
 +------------------------------------+
 Feb 21, 2022 V.3.5.6

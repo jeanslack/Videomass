@@ -11,8 +11,12 @@ videomass (3.5.7-1) UNRELEASED; urgency=medium
   * Added new option to disable SSL certificate #73 .
   * Added new option to the menu bar -> File -> Open..., to choose the files
     to open without using Drag N Drop #68 .
+  * [AppImage] Fixed AttributeError: `object has no attribute 'ydlupdate'`
+    when downloader is disabled.
+  * [AppImage] Fixed FATAL error popup using --appimage-portable-home argument
+    due missing source directory.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 04 Mar 2022 23:51:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 05 Mar 2022 18:30:00 +0200
 
 videomass (3.5.6-1) UNRELEASED; urgency=medium
 
