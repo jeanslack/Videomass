@@ -718,8 +718,8 @@ class SetUp(wx.Dialog):
         Browse to set a trash folder.
         """
         oldtrash = self.txtctrl_trash.GetValue()
-        dlg = wx.DirDialog(self, _("Choose a destination folder "
-                                   "for the trashed files"),
+        dlg = wx.DirDialog(self, _("Choose a new destination for the "
+                                   "files to be trashed"),
                            "", wx.DD_DEFAULT_STYLE)
 
         if dlg.ShowModal() == wx.ID_OK:

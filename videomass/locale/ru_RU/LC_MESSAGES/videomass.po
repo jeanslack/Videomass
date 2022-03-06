@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.5.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-05 00:20+0100\n"
-"PO-Revision-Date: 2022-03-05 00:25+0100\n"
+"POT-Creation-Date: 2022-03-06 21:34+0100\n"
+"PO-Revision-Date: 2022-03-06 21:37+0100\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: ChourS\n"
 "Language: ru_RU\n"
@@ -728,8 +728,8 @@ msgstr ""
 "текстовые поля ниже, нажав соответствующие кнопки."
 
 #: ../vdms_dialogs/wizard_dlg.py:346 ../vdms_dialogs/wizard_dlg.py:363
-#: ../vdms_dialogs/wizard_dlg.py:381 ../vdms_dialogs/preferences.py:766
-#: ../vdms_dialogs/preferences.py:809 ../vdms_dialogs/preferences.py:853
+#: ../vdms_dialogs/wizard_dlg.py:381 ../vdms_dialogs/preferences.py:780
+#: ../vdms_dialogs/preferences.py:823 ../vdms_dialogs/preferences.py:867
 msgid "Choose the {} executable"
 msgstr "Выберите исполняемый файл {}"
 
@@ -753,7 +753,7 @@ msgstr ""
 msgid " Do you want to enable this feature?"
 msgstr " Вы хотите включить эту функцию?"
 
-#: ../vdms_dialogs/wizard_dlg.py:429 ../vdms_dialogs/preferences.py:277
+#: ../vdms_dialogs/wizard_dlg.py:429 ../vdms_dialogs/preferences.py:278
 msgid "Downloader preferences"
 msgstr "Настройки загрузчика"
 
@@ -983,99 +983,87 @@ msgstr ""
 msgid "Timestamp settings"
 msgstr "Настройки отметки времени"
 
-#: ../vdms_dialogs/preferences.py:89
+#: ../vdms_dialogs/preferences.py:90
 msgid "Clear the cache when exiting the application"
 msgstr "Очистить кеш при выходе из приложения"
 
-#: ../vdms_dialogs/preferences.py:93
-msgid ""
-"Delete the contents of the log files\n"
-"when exiting the application"
-msgstr ""
-"Удалить содержимое log-файлов\n"
-"при выходе из приложения"
+#: ../vdms_dialogs/preferences.py:94
+msgid "Delete the contents of the log files when exiting the application"
+msgstr "Удалите содержимое log-журналов при выходе из приложения"
 
-#: ../vdms_dialogs/preferences.py:98
+#: ../vdms_dialogs/preferences.py:99
 msgid "Warn on exit"
 msgstr "Предупредить при выходе"
 
-#: ../vdms_dialogs/preferences.py:102
+#: ../vdms_dialogs/preferences.py:103
 msgid "Miscellanea"
 msgstr "Разное"
 
-#: ../vdms_dialogs/preferences.py:108
+#: ../vdms_dialogs/preferences.py:109
 msgid "Where do you prefer to save your transcodes?"
 msgstr "Где вы предпочитаете сохранять перекодировки?"
 
-#: ../vdms_dialogs/preferences.py:124
-#, fuzzy
-#| msgid ""
-#| "Save each file in the same\n"
-#| "folder as input file"
+#: ../vdms_dialogs/preferences.py:125
 msgid "Save each file in the same folder as input file"
-msgstr ""
-"Сохраняйте каждый файл в той же\n"
-"папке, что и входной файл"
+msgstr "Сохраняет каждый файл в той же папке, что и входной файл"
 
-#: ../vdms_dialogs/preferences.py:129
+#: ../vdms_dialogs/preferences.py:130
 msgid "Assign optional suffix to output file names:"
 msgstr "Добавить необязательный суффикс к именам выходных файлов:"
 
-#: ../vdms_dialogs/preferences.py:136
+#: ../vdms_dialogs/preferences.py:137
 msgid ""
 "Move source file to the Videomass trash folder after successful encoding"
 msgstr ""
+"Переместите исходный файл в папку корзины Videomass после успешного "
+"кодирования"
 
-#: ../vdms_dialogs/preferences.py:153
+#: ../vdms_dialogs/preferences.py:154
 msgid "Where do you prefer to save your downloads?"
 msgstr "Где вы предпочитаете сохранять загрузки?"
 
-#: ../vdms_dialogs/preferences.py:168
-msgid ""
-"Auto-create subfolders\n"
-"when downloading playlists"
-msgstr ""
-"Автоматически создавать подпапки\n"
-"при загрузке плейлистов"
+#: ../vdms_dialogs/preferences.py:169
+msgid "Auto-create subfolders when downloading playlists"
+msgstr "Автоматически создавать подпапки при загрузке плейлистов"
 
 # Изменил 14-5-2021
-#: ../vdms_dialogs/preferences.py:173
+#: ../vdms_dialogs/preferences.py:174
 msgid "File Preferences"
 msgstr "Файл"
 
-#: ../vdms_dialogs/preferences.py:180
+#: ../vdms_dialogs/preferences.py:181
 msgid "Path to the executables"
 msgstr "Путь к исполняемым файлам"
 
-#: ../vdms_dialogs/preferences.py:184
+#: ../vdms_dialogs/preferences.py:185
 msgid "Enable another location to run FFmpeg"
 msgstr "Включить другое место для запуска FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:196
+#: ../vdms_dialogs/preferences.py:197
 msgid "Enable another location to run FFprobe"
 msgstr "Включить другое место для запуска FFprobe"
 
-#: ../vdms_dialogs/preferences.py:208
+#: ../vdms_dialogs/preferences.py:209
 msgid "Enable another location to run FFplay"
 msgstr "Включить другое место для запуска FFplay"
 
-#: ../vdms_dialogs/preferences.py:219
+#: ../vdms_dialogs/preferences.py:220
 msgid "Other options"
 msgstr "Другие опции"
 
-#: ../vdms_dialogs/preferences.py:225
+#: ../vdms_dialogs/preferences.py:226
 msgid "Threads used for transcoding (from 0 to 32):"
 msgstr "Потоки, используемые для перекодирования (от 0 до 32):"
 
-#: ../vdms_dialogs/preferences.py:243
+#: ../vdms_dialogs/preferences.py:244
 msgid "FFmpeg"
 msgstr "FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:255
+#: ../vdms_dialogs/preferences.py:256
 msgid "How to upgrade a Python package"
 msgstr "Как обновить пакет Python"
 
-#: ../vdms_dialogs/preferences.py:262
+#: ../vdms_dialogs/preferences.py:263
 msgid ""
 "Required: Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package "
 "(x86)"
@@ -1083,15 +1071,15 @@ msgstr ""
 "Необходимо: Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package "
 "(x86)"
 
-#: ../vdms_dialogs/preferences.py:271
+#: ../vdms_dialogs/preferences.py:272
 msgid "How to install pip on your Linux distribution"
 msgstr "Как установить pip в ваш дистрибутив Linux"
 
-#: ../vdms_dialogs/preferences.py:288
+#: ../vdms_dialogs/preferences.py:289
 msgid "Current path:"
 msgstr "Текущий путь:"
 
-#: ../vdms_dialogs/preferences.py:296
+#: ../vdms_dialogs/preferences.py:297
 msgid ""
 "Make sure you are using the latest available version of\n"
 "'{}'. This allows you to avoid download problems.\n"
@@ -1099,33 +1087,33 @@ msgstr ""
 "Убедитесь, что вы используете последнюю доступную версию '{}'.\n"
 "Это позволяет избежать проблем с загрузкой.\n"
 
-#: ../vdms_dialogs/preferences.py:304 ../vdms_dialogs/preferences.py:324
-#: ../vdms_dialogs/preferences.py:340 ../vdms_frames/ffmpeg_conf.py:217
+#: ../vdms_dialogs/preferences.py:305 ../vdms_dialogs/preferences.py:325
+#: ../vdms_dialogs/preferences.py:341 ../vdms_frames/ffmpeg_conf.py:217
 #: ../vdms_panels/av_conversions.py:2448
 msgid "Disabled"
 msgstr "Отключено"
 
-#: ../vdms_dialogs/preferences.py:315
+#: ../vdms_dialogs/preferences.py:316
 msgid "Not found"
 msgstr "Не найдено"
 
-#: ../vdms_dialogs/preferences.py:319
+#: ../vdms_dialogs/preferences.py:320
 msgid "Menu bar > Tools > Update {}"
 msgstr "Меню>Инструменты>Обновить '{}'"
 
-#: ../vdms_dialogs/preferences.py:336 ../vdms_dialogs/preferences.py:352
+#: ../vdms_dialogs/preferences.py:337 ../vdms_dialogs/preferences.py:353
 msgid "Not Installed"
 msgstr "Не установлено"
 
-#: ../vdms_dialogs/preferences.py:357
+#: ../vdms_dialogs/preferences.py:358
 msgid "Downloader"
 msgstr "Загрузчик"
 
-#: ../vdms_dialogs/preferences.py:363
+#: ../vdms_dialogs/preferences.py:364
 msgid "Icon themes"
 msgstr "Темы значков"
 
-#: ../vdms_dialogs/preferences.py:365
+#: ../vdms_dialogs/preferences.py:366
 msgid ""
 "setting the icons will also change the background\n"
 "and foreground of some text fields."
@@ -1133,44 +1121,44 @@ msgstr ""
 "установка значков также изменит фон и передний план\n"
 "некоторых текстовых полей."
 
-#: ../vdms_dialogs/preferences.py:387
+#: ../vdms_dialogs/preferences.py:388
 msgid "Toolbar customization"
 msgstr "Настройка панели инструментов"
 
-#: ../vdms_dialogs/preferences.py:389
+#: ../vdms_dialogs/preferences.py:390
 msgid "At the top of window (default)"
 msgstr "Вверху (по умолчанию)"
 
-#: ../vdms_dialogs/preferences.py:390
+#: ../vdms_dialogs/preferences.py:391
 msgid "At the bottom of window"
 msgstr "Внизу"
 
-#: ../vdms_dialogs/preferences.py:391
+#: ../vdms_dialogs/preferences.py:392
 msgid "At the right of window"
 msgstr "Справа"
 
 # слева от окна или в левой части окна?
-#: ../vdms_dialogs/preferences.py:392
+#: ../vdms_dialogs/preferences.py:393
 msgid "At the left of window"
 msgstr "Слева"
 
-#: ../vdms_dialogs/preferences.py:394
+#: ../vdms_dialogs/preferences.py:395
 msgid "Place the toolbar"
 msgstr "Разместите панель инструментов"
 
-#: ../vdms_dialogs/preferences.py:404
+#: ../vdms_dialogs/preferences.py:405
 msgid "Icon size:"
 msgstr "Размер значка:"
 
-#: ../vdms_dialogs/preferences.py:419
+#: ../vdms_dialogs/preferences.py:420
 msgid "Shows the text in the toolbar buttons"
 msgstr "Показывает текст на кнопках панели инструментов"
 
-#: ../vdms_dialogs/preferences.py:423
+#: ../vdms_dialogs/preferences.py:424
 msgid "Appearance"
 msgstr "Вид"
 
-#: ../vdms_dialogs/preferences.py:430
+#: ../vdms_dialogs/preferences.py:431
 msgid ""
 "The following settings affect output messages and\n"
 "the log messages during transcoding processes.\n"
@@ -1180,28 +1168,28 @@ msgstr ""
 "сообщения журнала во время процессов перекодирования.\n"
 "Изменяйте, только если знаете, что делаете.\n"
 
-#: ../vdms_dialogs/preferences.py:451
+#: ../vdms_dialogs/preferences.py:452
 msgid "FFmpeg logging levels"
 msgstr "Комплект log-журналов FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:471 ../vdms_main/main_frame.py:550
+#: ../vdms_dialogs/preferences.py:472 ../vdms_main/main_frame.py:550
 #: ../vdms_panels/av_conversions.py:607
 msgid "Settings"
 msgstr "Настройки"
 
-#: ../vdms_dialogs/preferences.py:496
+#: ../vdms_dialogs/preferences.py:497
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr "Назначив дополнительный суффикс, вы можете избежать перезаписи файлов"
 
-#: ../vdms_dialogs/preferences.py:612
+#: ../vdms_dialogs/preferences.py:613
 msgid "Set a persistent location to save the file downloads"
 msgstr "Установите постоянное место для сохранения скачанных файлов"
 
-#: ../vdms_dialogs/preferences.py:635
+#: ../vdms_dialogs/preferences.py:636
 msgid "Set a persistent location to save exported files"
 msgstr "Установите постоянное место для сохранения экспортированных файлов"
 
-#: ../vdms_dialogs/preferences.py:667
+#: ../vdms_dialogs/preferences.py:668
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Spaces are not allowed."
@@ -1209,13 +1197,11 @@ msgstr ""
 "Вводите только буквенно-цифровые символы. Вы также можете использовать дефис "
 "(\"-\") и подчеркивание (\"_\"). Пробелы не допускаются."
 
-#: ../vdms_dialogs/preferences.py:714
-#, fuzzy
-#| msgid "Choose a folder to save the selected preset"
-msgid "Choose another folder to move files to delete"
-msgstr "Выберите папку для сохранения выбранного пресета"
+#: ../vdms_dialogs/preferences.py:721
+msgid "Choose a new destination for the files to be trashed"
+msgstr "Выберите новое место для файлов, которые нужно удалить"
 
-#: ../vdms_dialogs/preferences.py:960
+#: ../vdms_dialogs/preferences.py:974
 msgid ""
 "Changes will take effect once the program has been restarted.\n"
 "\n"
@@ -1225,7 +1211,7 @@ msgstr ""
 "\n"
 "Вы хотите выйти из приложения сейчас?"
 
-#: ../vdms_dialogs/preferences.py:963 ../vdms_main/main_frame.py:331
+#: ../vdms_dialogs/preferences.py:977 ../vdms_main/main_frame.py:331
 msgid "Exit"
 msgstr "Выход"
 
@@ -1829,13 +1815,11 @@ msgstr "Вы уверены, что хотите выйти из приложе�
 
 #: ../vdms_main/main_frame.py:362
 msgid "Open...\tCtrl+O"
-msgstr ""
+msgstr "Открыть...\tCtrl+O"
 
 #: ../vdms_main/main_frame.py:363
-#, fuzzy
-#| msgid "Drag one or more files below"
 msgid "Open one or more files"
-msgstr "Перетащите один или несколько файлов ниже"
+msgstr "Откройте один или несколько файлов"
 
 #: ../vdms_main/main_frame.py:366
 msgid "Conversions folder\tCtrl+C"
@@ -1870,10 +1854,8 @@ msgid "Open the temporary downloads folder"
 msgstr "Открыть папку временных загрузок"
 
 #: ../vdms_main/main_frame.py:384
-#, fuzzy
-#| msgid "Cache folder"
 msgid "Trash folder"
-msgstr "Папка кеша"
+msgstr "Корзина"
 
 # вероятно, ошибка в тексте
 # Opens the Videomass cache foder, if exists
@@ -1881,20 +1863,16 @@ msgstr "Папка кеша"
 # Thanks for remark, I solved.
 # Gianluca
 #: ../vdms_main/main_frame.py:385
-#, fuzzy
-#| msgid "Opens the Videomass cache folder, if exists"
 msgid "Open the Videomass Trash folder if it exists"
-msgstr "Открывает папку кэша Videomass, если она существует"
+msgstr "Открыть папку корзины Videomass, если она существует"
 
 #: ../vdms_main/main_frame.py:388
 msgid "Empty Trash"
-msgstr ""
+msgstr "Корзина пуста"
 
 #: ../vdms_main/main_frame.py:389
-#, fuzzy
-#| msgid "Delete all files from the list"
 msgid "Delete all files in the Videomass Trash folder"
-msgstr "Удалить все файлы из списка"
+msgstr "Удалите все файлы в папке корзины Videomass"
 
 #: ../vdms_main/main_frame.py:394
 msgid "Work Notes\tCtrl+N"
@@ -2219,28 +2197,20 @@ msgid "Help"
 msgstr "Помощь"
 
 #: ../vdms_main/main_frame.py:649
-#, fuzzy
-#| msgid "Drag one or more files below"
 msgid "Select one or more files to open"
-msgstr "Перетащите один или несколько файлов ниже"
+msgstr "Выберите один или несколько файлов для открытия"
 
 #: ../vdms_main/main_frame.py:700 ../vdms_main/main_frame.py:723
-#, fuzzy
-#| msgid "Logs folder"
 msgid "No such folder '{}'"
-msgstr "Папка log-журналов"
+msgstr "Нет такой папки '{}'"
 
 #: ../vdms_main/main_frame.py:712
-#, fuzzy
-#| msgid "Are you sure you want to exit?"
 msgid "Are you sure to empty trash folder?"
-msgstr "Вы уверены, что хотите выйти из приложения?"
+msgstr "Вы уверены, что очистили папку \"Корзина\"?"
 
 #: ../vdms_main/main_frame.py:720
-#, fuzzy
-#| msgid "No file selected"
 msgid "No files to delete"
-msgstr "Файл не выбран"
+msgstr "Нет файлов для удаления"
 
 #: ../vdms_main/main_frame.py:769
 #, python-brace-format
@@ -2288,16 +2258,12 @@ msgstr ""
 "Требуется перезапуск."
 
 #: ../vdms_main/main_frame.py:834
-#, fuzzy
-#| msgid ""
-#| "Failed! For details consult:\n"
-#| "{}/youtube_dl-update-on-AppImage.log"
 msgid ""
 "Failed! For details consult:\n"
 "{}/AppImage_Updates.log"
 msgstr ""
 "Не удалось! За подробностями обращайтесь:\n"
-"{}/youtube_dl-update-on-AppImage.log"
+"{}/AppImage_Updates.log"
 
 #: ../vdms_main/main_frame.py:839
 msgid "Failed! {}"
@@ -2638,18 +2604,16 @@ msgid "Audio Properties"
 msgstr "Свойства аудио"
 
 #: ../vdms_panels/av_conversions.py:621
-#, fuzzy
-#| msgid "Audio Streams Mapping"
 msgid "Audio Stream Mapping"
 msgstr "Отображение аудиопотока"
 
 #: ../vdms_panels/av_conversions.py:629
 msgid "Index Selection:"
-msgstr ""
+msgstr "Выбор индекса:"
 
 #: ../vdms_panels/av_conversions.py:640
 msgid "Map:"
-msgstr ""
+msgstr "Map:"
 
 #: ../vdms_panels/av_conversions.py:653
 msgid "Audio Filters"
@@ -2814,6 +2778,9 @@ msgid ""
 "video, it is recommended to select a numeric audio index. If the source file "
 "is an audio file, leave this control to \"Auto\"."
 msgstr ""
+"Выберите индекс из доступных аудиопотоков. Если исходным файлом является "
+"видео, рекомендуется выбрать цифровой аудиоиндекс. Если исходным файлом "
+"является аудиофайл, оставьте этот элемент управления в положении \"Авто\"."
 
 #: ../vdms_panels/av_conversions.py:809
 msgid ""
@@ -2822,6 +2789,10 @@ msgid ""
 "properties of the selected index; \"Index only\" processes and keeps only "
 "the selected index audio stream."
 msgstr ""
+"\"Авто\" сохраняет весь аудиопоток, но обрабатывает только один из выбранных "
+"индексов; \"Все\" сохраняет все аудиопотоки и обрабатывает их все с помощью "
+"свойства выбранного индекса; \"Только индекс\" обрабатывает и сохраняет "
+"только аудиопоток выбранного индекса."
 
 #: ../vdms_panels/av_conversions.py:815
 msgid ""
@@ -3288,7 +3259,7 @@ msgstr "Редактор плейлистов(playlist)"
 
 #: ../vdms_panels/youtubedl_ui.py:301
 msgid "Don’t check SSL certificate"
-msgstr ""
+msgstr "Не проверять SSL-сертификат"
 
 #: ../vdms_panels/youtubedl_ui.py:305
 msgid "Embed thumbnail in audio file"
@@ -3977,6 +3948,13 @@ msgstr "Максимальное время относится к файлу с 
 #: ../vdms_threads/two_pass_ebu.py:57 ../vdms_threads/two_pass.py:58
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' установлен в вашей системе?"
+
+# Возможен ли следующий вариант для этой фразы?
+# Выберите другую папку назначения для удаляемых файлов
+# Select a different destination folder for the files to be deleted
+#~| msgid "Choose a folder to save the selected preset"
+#~ msgid "Choose another folder to move files to delete"
+#~ msgstr "Выберите другую папку назначения для удаляемых файлов"
 
 #~ msgid "Browse.."
 #~ msgstr "Обзор.."
