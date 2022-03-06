@@ -26,6 +26,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+import shutil
 import sys
 import webbrowser
 import wx
@@ -90,7 +91,7 @@ class SetUp(wx.Dialog):
         sizerGen.Add(self.checkbox_cacheclr, 0, wx.ALL, 5)
         sizerGen.Add((0, 15))
         self.checkbox_logclr = wx.CheckBox(tabOne, wx.ID_ANY, (
-                        _("Delete the contents of the log files\n"
+                        _("Delete the contents of the log files "
                           "when exiting the application")))
         sizerGen.Add(self.checkbox_logclr, 0, wx.ALL, 5)
         sizerGen.Add((0, 15))
@@ -165,7 +166,7 @@ class SetUp(wx.Dialog):
                            wx.ALIGN_CENTER_VERTICAL |
                            wx.ALIGN_CENTER_HORIZONTAL, 5
                            )
-        descr = _("Auto-create subfolders\nwhen downloading playlists")
+        descr = _("Auto-create subfolders when downloading playlists")
         self.ckbx_playlist = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_playlist, 0, wx.ALL, 5)
 
@@ -699,27 +700,40 @@ class SetUp(wx.Dialog):
             self.txtctrl_trash.AppendText(trashdir)
             self.txtctrl_trash.Enable()
             self.btn_trash.Enable()
+            if not os.path.exists(trashdir):
+                os.mkdir(trashdir, mode=0o777)
         else:
+            if not os.listdir(self.settings['trashfolder']):
+                os.rmdir(self.settings['trashfolder'])  # deleting if empty
             self.txtctrl_trash.Clear()
             self.txtctrl_trash.Disable()
             self.btn_trash.Disable()
             self.settings['move_file_to_trash'] = False
             self.settings['trashfolder'] = ""
+
     # --------------------------------------------------------------------#
 
     def on_browse_trash(self, event):
         """
-        Browse to set a trash folder
+        Browse to set a trash folder.
         """
-        dlg = wx.DirDialog(self, _("Choose another folder to move "
-                                   "files to delete"),
+        oldtrash = self.txtctrl_trash.GetValue()
+        dlg = wx.DirDialog(self, _("Choose a destination folder "
+                                   "for the trashed files"),
                            "", wx.DD_DEFAULT_STYLE)
 
         if dlg.ShowModal() == wx.ID_OK:
             self.txtctrl_trash.Clear()
-            getpath = self.appdata['getpath'](dlg.GetPath())
-            self.txtctrl_trash.AppendText(getpath)
-            self.settings['trashfolder'] = getpath
+            newtrash = self.appdata['getpath'](dlg.GetPath())
+            self.txtctrl_trash.AppendText(newtrash)
+            self.settings['trashfolder'] = newtrash
+            if not os.path.exists(newtrash):
+                os.makedirs(newtrash, mode=0o777)
+            if os.path.exists(oldtrash):
+                if not oldtrash == newtrash:
+                    if not os.listdir(oldtrash):  # recheck if is empty
+                        os.rmdir(oldtrash)  # deleting old trash folder
+
             dlg.Destroy()
     # --------------------------------------------------------------------#
 

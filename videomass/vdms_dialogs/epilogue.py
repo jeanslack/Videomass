@@ -32,11 +32,10 @@ import wx
 
 class Formula(wx.Dialog):
     """
-    Show a dialog box before run process. It accept a couple
-    of tuples: settingss and parameters.
+    Show a dialog box before run process.
 
     Example:
-            settings = ("\nEXAMPLES:\n\\nExample 1:\nExample 2:\n etc."
+            settings = ("\nEXAMPLES:\n\nExample 1:\nExample 2:\n etc."
             param = ("type 1\ntype 2\ntype 3\n etc."
     """
     def __init__(self, parent, settings, param, title):
@@ -45,32 +44,29 @@ class Formula(wx.Dialog):
         colorscheme = get.appset['icontheme'][1]
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-
+        sizbase = wx.BoxSizer(wx.VERTICAL)
         panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        sizbase.Add(panel, 1, wx.ALL | wx.EXPAND, 5)
         label1 = wx.StaticText(panel, wx.ID_ANY, settings)
         label2 = wx.StaticText(panel, wx.ID_ANY, param)
-        self.button_1 = wx.Button(self, wx.ID_CANCEL, "")
-        self.button_2 = wx.Button(self, wx.ID_OK, "")
-
-        # ----------------------Properties----------------------#
-        self.SetTitle(title)
-
         panel.SetBackgroundColour(colorscheme['BACKGRD'])
         label2.SetForegroundColour(colorscheme['TXT1'])
         label1.SetForegroundColour(colorscheme['TXT3'])
-        # ---------------------- Layout ----------------------#
-        bs1 = wx.BoxSizer(wx.VERTICAL)
-        gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)
-        gr_s1.Add(label1, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
-        gr_s1.Add(label2, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
+        grid_pan = wx.FlexGridSizer(1, 2, 0, 0)
+        grid_pan.Add(label1, 1, wx.ALL | wx.ALIGN_CENTRE, 5)
+        grid_pan.Add(label2, 1, wx.ALL | wx.ALIGN_CENTRE, 5)
+        panel.SetSizer(grid_pan)
+
+        self.button_1 = wx.Button(self, wx.ID_CANCEL, "")
+        self.button_2 = wx.Button(self, wx.ID_OK, "")
         btngrid = wx.FlexGridSizer(1, 2, 0, 0)
         btngrid.Add(self.button_1, 0, wx.ALL, 5)
         btngrid.Add(self.button_2, 0, wx.ALL, 5)
-        panel.SetSizer(gr_s1)
-        bs1.Add(panel, 1, wx.ALL | wx.EXPAND, 5)
-        bs1.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
-        self.SetSizer(bs1)
-        bs1.Fit(self)
+        sizbase.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+
+        self.SetTitle(title)
+        self.SetSizer(sizbase)
+        sizbase.Fit(self)
         self.Layout()
         # ----------------------Binders (EVT)--------------------#
         self.Bind(wx.EVT_BUTTON, self.on_cancel, self.button_1)
