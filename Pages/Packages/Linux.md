@@ -14,7 +14,6 @@ nav_order: 3
 This PPA currently publishes packages for [Ubuntu](https://ubuntu.com/), including official and 
 derivative distributions.   
 
-- [Ubuntu 18.04 Bionic](https://releases.ubuntu.com/18.04/)
 - [Ubuntu 20.04 Focal](https://releases.ubuntu.com/20.04/) 
 - [Ubuntu 20.10 Groovy](https://releases.ubuntu.com/20.10/)
 - [Ubuntu 21.04 Hirsute](https://releases.ubuntu.com/21.04/)
@@ -101,7 +100,7 @@ Minimum requirements:
 - [x86_64](https://en.wikipedia.org/wiki/X86-64) architecture.
 - [FFmpeg](https://www.ffmpeg.org/) version 3.1.5 
 
-[Videomass 3.5.6 AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.5.6-x86_64.AppImage){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }  
+[Videomass 3.5.7 AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-3.5.7-x86_64.AppImage){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }  
 
 Successfully tested on the following Linux distributions:   
 * [Xubuntu](https://xubuntu.org/) 18.04 LTS x86_64 

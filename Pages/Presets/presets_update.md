@@ -9,9 +9,7 @@ nav_order: 2
 
 ---
 
-From version 3.3.5, Videomass can manage the import and export of presets more 
-efficiently. Furthermore, the possibility of checking the presence of new 
-versions of the presets and also of downloading them has been implemented. 
+Since version 3.3.5, Videomass can manage the import and export of presets more efficiently. Furthermore, the possibility of checking new versions and downloading them has been implemented.
 
 To use new presets, follow the steps below.
 
