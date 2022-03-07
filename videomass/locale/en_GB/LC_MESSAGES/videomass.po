@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.5.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-05 00:20+0100\n"
-"PO-Revision-Date: 2022-03-05 00:21+0100\n"
+"POT-Creation-Date: 2022-03-06 21:34+0100\n"
+"PO-Revision-Date: 2022-03-06 21:34+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -596,8 +596,8 @@ msgid ""
 msgstr ""
 
 #: ../vdms_dialogs/wizard_dlg.py:346 ../vdms_dialogs/wizard_dlg.py:363
-#: ../vdms_dialogs/wizard_dlg.py:381 ../vdms_dialogs/preferences.py:766
-#: ../vdms_dialogs/preferences.py:809 ../vdms_dialogs/preferences.py:853
+#: ../vdms_dialogs/wizard_dlg.py:381 ../vdms_dialogs/preferences.py:780
+#: ../vdms_dialogs/preferences.py:823 ../vdms_dialogs/preferences.py:867
 msgid "Choose the {} executable"
 msgstr ""
 
@@ -617,7 +617,7 @@ msgstr ""
 msgid " Do you want to enable this feature?"
 msgstr ""
 
-#: ../vdms_dialogs/wizard_dlg.py:429 ../vdms_dialogs/preferences.py:277
+#: ../vdms_dialogs/wizard_dlg.py:429 ../vdms_dialogs/preferences.py:278
 msgid "Downloader preferences"
 msgstr ""
 
@@ -821,221 +821,217 @@ msgstr ""
 msgid "Timestamp settings"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:89
+#: ../vdms_dialogs/preferences.py:90
 msgid "Clear the cache when exiting the application"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:93
-msgid ""
-"Delete the contents of the log files\n"
-"when exiting the application"
+#: ../vdms_dialogs/preferences.py:94
+msgid "Delete the contents of the log files when exiting the application"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:98
+#: ../vdms_dialogs/preferences.py:99
 msgid "Warn on exit"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:102
+#: ../vdms_dialogs/preferences.py:103
 msgid "Miscellanea"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:108
+#: ../vdms_dialogs/preferences.py:109
 msgid "Where do you prefer to save your transcodes?"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:124
+#: ../vdms_dialogs/preferences.py:125
 msgid "Save each file in the same folder as input file"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:129
+#: ../vdms_dialogs/preferences.py:130
 msgid "Assign optional suffix to output file names:"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:136
+#: ../vdms_dialogs/preferences.py:137
 msgid ""
 "Move source file to the Videomass trash folder after successful encoding"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:153
+#: ../vdms_dialogs/preferences.py:154
 msgid "Where do you prefer to save your downloads?"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:168
-msgid ""
-"Auto-create subfolders\n"
-"when downloading playlists"
+#: ../vdms_dialogs/preferences.py:169
+msgid "Auto-create subfolders when downloading playlists"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:173
+#: ../vdms_dialogs/preferences.py:174
 msgid "File Preferences"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:180
+#: ../vdms_dialogs/preferences.py:181
 msgid "Path to the executables"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:184
+#: ../vdms_dialogs/preferences.py:185
 msgid "Enable another location to run FFmpeg"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:196
+#: ../vdms_dialogs/preferences.py:197
 msgid "Enable another location to run FFprobe"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:208
+#: ../vdms_dialogs/preferences.py:209
 msgid "Enable another location to run FFplay"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:219
+#: ../vdms_dialogs/preferences.py:220
 msgid "Other options"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:225
+#: ../vdms_dialogs/preferences.py:226
 msgid "Threads used for transcoding (from 0 to 32):"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:243
+#: ../vdms_dialogs/preferences.py:244
 msgid "FFmpeg"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:255
+#: ../vdms_dialogs/preferences.py:256
 msgid "How to upgrade a Python package"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:262
+#: ../vdms_dialogs/preferences.py:263
 msgid ""
 "Required: Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package "
 "(x86)"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:271
+#: ../vdms_dialogs/preferences.py:272
 msgid "How to install pip on your Linux distribution"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:288
+#: ../vdms_dialogs/preferences.py:289
 msgid "Current path:"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:296
+#: ../vdms_dialogs/preferences.py:297
 msgid ""
 "Make sure you are using the latest available version of\n"
 "'{}'. This allows you to avoid download problems.\n"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:304 ../vdms_dialogs/preferences.py:324
-#: ../vdms_dialogs/preferences.py:340 ../vdms_frames/ffmpeg_conf.py:217
+#: ../vdms_dialogs/preferences.py:305 ../vdms_dialogs/preferences.py:325
+#: ../vdms_dialogs/preferences.py:341 ../vdms_frames/ffmpeg_conf.py:217
 #: ../vdms_panels/av_conversions.py:2448
 msgid "Disabled"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:315
+#: ../vdms_dialogs/preferences.py:316
 msgid "Not found"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:319
+#: ../vdms_dialogs/preferences.py:320
 msgid "Menu bar > Tools > Update {}"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:336 ../vdms_dialogs/preferences.py:352
+#: ../vdms_dialogs/preferences.py:337 ../vdms_dialogs/preferences.py:353
 msgid "Not Installed"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:357
+#: ../vdms_dialogs/preferences.py:358
 msgid "Downloader"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:363
+#: ../vdms_dialogs/preferences.py:364
 msgid "Icon themes"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:365
+#: ../vdms_dialogs/preferences.py:366
 msgid ""
 "setting the icons will also change the background\n"
 "and foreground of some text fields."
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:387
+#: ../vdms_dialogs/preferences.py:388
 msgid "Toolbar customization"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:389
+#: ../vdms_dialogs/preferences.py:390
 msgid "At the top of window (default)"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:390
+#: ../vdms_dialogs/preferences.py:391
 msgid "At the bottom of window"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:391
+#: ../vdms_dialogs/preferences.py:392
 msgid "At the right of window"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:392
+#: ../vdms_dialogs/preferences.py:393
 msgid "At the left of window"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:394
+#: ../vdms_dialogs/preferences.py:395
 msgid "Place the toolbar"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:404
+#: ../vdms_dialogs/preferences.py:405
 msgid "Icon size:"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:419
+#: ../vdms_dialogs/preferences.py:420
 msgid "Shows the text in the toolbar buttons"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:423
+#: ../vdms_dialogs/preferences.py:424
 msgid "Appearance"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:430
+#: ../vdms_dialogs/preferences.py:431
 msgid ""
 "The following settings affect output messages and\n"
 "the log messages during transcoding processes.\n"
 "Change only if you know what you are doing.\n"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:451
+#: ../vdms_dialogs/preferences.py:452
 msgid "FFmpeg logging levels"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:471 ../vdms_main/main_frame.py:550
+#: ../vdms_dialogs/preferences.py:472 ../vdms_main/main_frame.py:550
 #: ../vdms_panels/av_conversions.py:607
 msgid "Settings"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:496
+#: ../vdms_dialogs/preferences.py:497
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:612
+#: ../vdms_dialogs/preferences.py:613
 msgid "Set a persistent location to save the file downloads"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:635
+#: ../vdms_dialogs/preferences.py:636
 msgid "Set a persistent location to save exported files"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:667
+#: ../vdms_dialogs/preferences.py:668
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Spaces are not allowed."
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:714
-msgid "Choose another folder to move files to delete"
+#: ../vdms_dialogs/preferences.py:721
+msgid "Choose a new destination for the files to be trashed"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:960
+#: ../vdms_dialogs/preferences.py:974
 msgid ""
 "Changes will take effect once the program has been restarted.\n"
 "\n"
 "Do you want to exit the application now?"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:963 ../vdms_main/main_frame.py:331
+#: ../vdms_dialogs/preferences.py:977 ../vdms_main/main_frame.py:331
 msgid "Exit"
 msgstr ""
 

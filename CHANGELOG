@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 05, 2022 V.3.5.7
+Mar 07, 2022 V.3.5.7
 
   * Improved controls and automations for indexing and audio mapping.
   * Added feature to move files to the Videomass trash folder after successful
@@ -24,6 +24,10 @@ Mar 05, 2022 V.3.5.7
     when downloader is disabled.
   * [AppImage] Fixed FATAL error popup using --appimage-portable-home argument
     due missing source directory.
+  * Update Russian and Italian translations
+  * Fixed `NameError: name 'labcache' is not defined` when you open preferences
+    dialog on MacOs.
+
 
 +------------------------------------+
 Feb 21, 2022 V.3.5.6
