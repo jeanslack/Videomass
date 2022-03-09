@@ -6,6 +6,19 @@ nav_order: 2
 # Features
 ---
 
+Videomass is a free, open source and cross-platform GUI for FFmpeg and youtube-dl,
+concatenate (mux or encode videos), presets manager, conversions.
+This video encoder is userfriendly for beginners and more advanced users. Using
+the step by step interface (GUI) you can simply choose a preset or make your own.
+For the people that are familiar with FFmpeg there is the possbility to easily make
+your own presets using the FFmpeg command line or make a preset through the GUI
+and adapt this to your specific needs. It offers out of the box output to all
+possible file formats like MP4, MKV, MOV etc. Video: MPEG-4, H.264/AVC, H.265/HEVC,
+VP9 and audio: AAC, MP3, OPUS, WAV, FLAC or AC-3 and subtitles and much more! Also
+you can copy streams (lossless video and/or audio) and extract audio. Finally it
+has a simple timeline editor, extended multimedia information and optional youtube
+downloader.
+
 ## Main features
 {: .bg-green-300}
 ---
@@ -24,26 +37,29 @@ nav_order: 2
 - Has useful presets to start with.
 - Supports all [formats](https://ffmpeg.org/ffmpeg-formats.html) and [codecs](https://ffmpeg.org/ffmpeg-codecs.html) available with FFmpeg.
 - Displaying information from streams analyzer.
-- Has useful tools to quickly get information about the FFmpeg used.
+- Has useful tools to check the features of the FFmpeg build used.
 - Advanced dialogs for setting video filters.
-- Advanced audio filters for volume normalization in PEAK, RMS and [EBU-R128](http://ffmpeg.org/ffmpeg-filters.html#loudnorm). 
-- Ability to analyze and apply volume normalization to certain audio streams via selectable indexing.
-- Timeline: duration and seek are set with the sliders.
-- The timeline has a display for viewing the time selection.
+- Audio filters for volume normalization:
+    - PEAK, RMS and [EBU-R128](http://ffmpeg.org/ffmpeg-filters.html#loudnorm) normalizers.
+    - PEAK and RMS volume analysis.
+    - Ability to apply volume normalizations only to certain audio streams.
+- Timeline editor:
+    - Convenient display for viewing the time selection.
+    - Duration and seek are set with the slider controls.
 
 ## Using youtube-dl or yt-dlp
 {: .bg-green-300}
 ---
-- Possibility to choose between two downloaders: 
-[youtube-dl](https://github.com/ytdl-org/youtube-dl) or 
-[yt-dlp](https://github.com/yt-dlp/yt-dlp) 
+- Possibility to choose between two downloaders:
+[youtube-dl](https://github.com/ytdl-org/youtube-dl) or
+[yt-dlp](https://github.com/yt-dlp/yt-dlp)
 - Add multiple URLs simultaneously.
-- Download multiple URLs from YouTube and more sites, 
+- Download multiple URLs from YouTube and more sites,
 [over 200](http://ytdl-org.github.io/youtube-dl/supportedsites.html).
 - Four download modes:
     - Default: choose from 1080p, 720p, 480p, 360p, 240p and 144p quality video.
     - Download split audio and video.
-    - Download Audio only: choose from default, wav, mp3, aac, m4a, vorbis, opus, and flac formats). 
+    - Download Audio only: choose from default, wav, mp3, aac, m4a, vorbis, opus, and flac formats).
     - Download and merge audio and video by selecting "format codes".
 - Shows download statistics.
 - Ability to playback individual URLs and different qualities.
@@ -52,7 +68,7 @@ nav_order: 2
 - Embed thumbnail in audio file (via [atomicparsley](http://atomicparsley.sourceforge.net/)).
 - Add metadata to file.
 - Write subtitles to video.
-- Ability to include IDs in filenames. 
+- Ability to include IDs in filenames.
 - Ability to restrict file names.
 - Ability to keep youtube-dl backend updated (only available for *.AppImage).
 

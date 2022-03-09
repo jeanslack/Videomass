@@ -14,10 +14,10 @@ nav_order: 3
 This PPA currently publishes packages for [Ubuntu](https://ubuntu.com/), including official and 
 derivative distributions.   
 
-- [Ubuntu 20.04 Focal](https://releases.ubuntu.com/20.04/) 
-- [Ubuntu 20.10 Groovy](https://releases.ubuntu.com/20.10/)
-- [Ubuntu 21.04 Hirsute](https://releases.ubuntu.com/21.04/)
-- [Ubuntu 21.10 Impish](https://releases.ubuntu.com/21.10/)   
+- [Ubuntu 22.04 Jammy](https://cdimage.ubuntu.com/daily-live/current/)
+- [Ubuntu 21.10 Impish](https://releases.ubuntu.com/21.10/)
+- [Ubuntu 20.04 Focal](https://releases.ubuntu.com/20.04/)   
+
 
 To install Videomass add this 
 [PPA](https://launchpad.net/~jeanslack/+archive/ubuntu/videomass) to your system: 
