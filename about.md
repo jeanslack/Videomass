@@ -79,6 +79,6 @@ to date with the original project. The project development page can be found
 
 ## Special Thanks
 
-To Roelof Berkepeis and ChourS for their suggestions and valuable help.
+To **Roelof Berkepeis** and **ChourS** for their suggestions and valuable help.
 
 

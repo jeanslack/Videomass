@@ -15,9 +15,6 @@ Minimum requirements:
 
 [Videomass 3.5.7 Disk Image](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v3.5.7-x86_64.dmg){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }   
 
-**Please note**   
-Videomass does not work on versions earlier than 10.13.6.   
-
 For any application-related issues, please read 
 [Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.
 {: .fs-3 .text-grey-dk-100} 
