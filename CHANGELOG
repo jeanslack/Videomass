@@ -7,9 +7,14 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 10, 2022 V.3.5.8
+Mar 12, 2022 V.3.5.8
 
-  * Refactoring on Threads: fixed `Using possibly undefined loop variable 'line'`.
+  * Refactoring vdms_threads
+  * Refactoring vdms_main
+  * Refactoring utils.py (W0621)
+  * Refactoring filter_crop.py
+  * Rafactoring deinterlace.py
+  * Small text on toolbar buttons when shown.
 
 +------------------------------------+
 Mar 07, 2022 V.3.5.7

@@ -4,9 +4,10 @@ Name: filter_crop.py
 Porpose: Show dialog to get video crop values based on FFmpeg syntax
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: March.12.2022
+Code checker: pylint, flake8
 ########################################################
 
 This file is part of Videomass.
@@ -27,7 +28,7 @@ This file is part of Videomass.
 import os
 from time import sleep
 import wx
-# import wx.lib.masked as masked  # not work on macOSX
+# import wx.lib.masked as masked  # does not work on macOSX
 import wx.lib.statbmp
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.utils import get_milliseconds
@@ -120,7 +121,8 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
 class Crop(wx.Dialog):
     """
     A dialog tool to get video crop values based on FFmpeg syntax.
-
+    See ``av_conversions.py`` -> ``on_Set_crop`` method for
+    how to use this class.
     """
     get = wx.GetApp()
     OS = get.appset['ostype']
@@ -165,7 +167,7 @@ class Crop(wx.Dialog):
 
         self.video = fname  # selected filename on queued list
         name = os.path.splitext(os.path.basename(self.video))[0]
-        self.frame = os.path.join('%s' % Crop.TMP, '%s.png' % name)  # image
+        self.frame = os.path.join(f'{Crop.TMP}', f'{name}.png')  # image
 
         if os.path.exists(self.frame):
             self.image = self.frame
@@ -295,7 +297,8 @@ class Crop(wx.Dialog):
         # self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
 
         if timeformat == '00:00:00.000':
-            self.slider.Disable(), btn_load.Disable()
+            self.slider.Disable()
+            btn_load.Disable()
             if not os.path.exists(self.frame):
                 self.onLoad(self)
 
@@ -348,15 +351,14 @@ class Crop(wx.Dialog):
         Build FFmpeg argument to get a specific video frame for
         loading in a wx.dc (device context)
         """
-        arg = ('-ss %s -i "%s" -vframes 1 -y "%s"' % (self.txttime.GetLabel(),
-                                                      self.video,
-                                                      self.frame
-                                                      ))
+        arg = (f'-ss {self.txttime.GetLabel()} -i "{self.video}" '
+               f'-vframes 1 -y "{self.frame}"'
+               )
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
         error = thread.status
         if error:
-            wx.MessageBox('%s' % error, 'ERROR', wx.ICON_ERROR)
+            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR)
             return
 
         sleep(1.0)  # need to wait end task for saving
@@ -410,7 +412,8 @@ class Crop(wx.Dialog):
 
         """
         if self.crop_width.GetValue() == self.v_width:
-            self.axis_X.SetMax(0), self.axis_X.SetMin(0)
+            self.axis_X.SetMax(0)
+            self.axis_X.SetMin(0)
         else:
             self.axis_X.SetMax(self.v_width - self.crop_width.GetValue())
             self.axis_X.SetMin(-1)
@@ -485,35 +488,35 @@ class Crop(wx.Dialog):
         """
         Reset all control values
         """
-        self.axis_Y.SetMin(-1), self.axis_Y.SetMax(self.v_height)
-        self.axis_X.SetMin(-1), self.axis_X.SetMax(self.v_width)
-        self.crop_width.SetValue(0), self.axis_X.SetValue(0)
-        self.crop_height.SetValue(0), self.axis_Y.SetValue(0)
+        self.axis_Y.SetMin(-1)
+        self.axis_Y.SetMax(self.v_height)
+        self.axis_X.SetMin(-1)
+        self.axis_X.SetMax(self.v_width)
+        self.crop_width.SetValue(0)
+        self.axis_X.SetValue(0)
+        self.crop_height.SetValue(0)
+        self.axis_Y.SetValue(0)
         self.onDrawing()
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
-
+        """
+        Close this dialog without saving anything
+        """
         event.Skip()
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):
         """
-        if you enable self.Destroy(), it delete from memory all data
-        event and no return correctly. It has the right behavior if not
-        used here, because it is called in the main frame.
-
-        Event.Skip(), work correctly here. Sometimes needs to disable it for
-        needs to maintain the view of the window (for exemple).
+        Don't use self.Destroy() in this dialog
         """
-        self.getvalue()
-        # self.Destroy()
         event.Skip()
     # ------------------------------------------------------------------#
 
     def getvalue(self):
         """
-        This method return values via the interface GetValue().
+        This method return values via the interface getvalue()
+        by the caller. See the caller for more info and usage.
         Note: -1 for X and Y coordinates means center, which are
         empty values for FFmpeg syntax.
         """
@@ -523,9 +526,9 @@ class Crop(wx.Dialog):
         y = self.axis_Y.GetValue()
 
         if w and h:
-            x_axis = 'x=%s:' % x if x > -1 else ''
-            y_axis = 'y=%s:' % y if y > -1 else ''
-            val = 'w=%s:h=%s:%s%s' % (w, h, x_axis, y_axis)
+            x_axis = f"x={x if x > -1 else ''}:"
+            y_axis = f"y={y if y > -1 else ''}:"
+            val = f'w={w}:h={h}:{x_axis}{y_axis}'
             return val[:len(val) - 1]  # remove last ':' string
-        else:
-            return None
+
+        return None

@@ -47,6 +47,7 @@ from videomass.vdms_utils.utils import get_milliseconds
 def delete_file_source(flist, path):
     """
     Move whole files list to Videomass Trash folder
+    after encoding process.
     """
     date = time.strftime('%H%M%S-%a_%d_%B_%Y')
     for name in flist:
@@ -316,8 +317,10 @@ class LogOut(wx.Panel):
             ffprog = []
             for x, y in pairwise(out):
                 ffprog.append(f"{x}: {y} | ")
+
             self.labperc.SetLabel(f"Processing... {str(int(percentage))}% | "
-                                  f"{''.join(ffprog)}")
+                                  f"{''.join(ffprog)} "
+                                  )
             del output, duration
 
         else:  # append all others lines on the textctrl and log file
