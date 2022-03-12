@@ -23,7 +23,7 @@ To install Videomass add this
 [PPA](https://launchpad.net/~jeanslack/+archive/ubuntu/videomass) to your system: 
   
 
-`$ sudo add-apt-repository ppa:jeanslack/videomass`   
+`$ sudo apt-add-repository ppa:jeanslack/videomass`   
 `$ sudo apt-get update`  
 `$ sudo apt install python3-videomass`   
 
