@@ -4,9 +4,10 @@ Name: filter_transpose.py
 Porpose: Show dialog to get video transpose data based on FFmpeg syntax
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: March.13.2022
+Code checker: pylint, flake8
 ########################################################
 
 This file is part of Videomass.
@@ -25,7 +26,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-from math import pi as pi
+from math import pi as pigreco
 from time import sleep
 import wx
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
@@ -60,9 +61,9 @@ class Transpose(wx.Dialog):
         self.duration = duration
         self.video = fname
         name = os.path.splitext(os.path.basename(self.video))[0]
-        self.frame = os.path.join('%s' % Transpose.appdata['cachedir'], 'tmp',
-                                  '%s.png' % name)
-
+        self.frame = os.path.join(f'{Transpose.appdata["cachedir"]}', 'tmp',
+                                  f'{name}.png'
+                                  )
         if os.path.exists(self.frame):
             bitmap = wx.Bitmap(self.frame)
             img = bitmap.ConvertToImage()
@@ -157,9 +158,11 @@ class Transpose(wx.Dialog):
 
     def rotate90(self, degrees):
         """
+        Rotates image to a specified `degrees`
         """
         self.current_angle += degrees
-        val = float(self.current_angle * -pi/180)  # neg. value rot. clockwise
+        # neg. value rot. clockwise:
+        val = float(self.current_angle * -pigreco/180)
         image = self.image.ConvertToImage()
         image = image.Scale(self.w_ratio, self.h_ratio,
                             wx.IMAGE_QUALITY_NORMAL
@@ -179,31 +182,29 @@ class Transpose(wx.Dialog):
         t = self.duration.split(':')
         h, m, s = (int(t[0]) / 2, int(t[1]) / 2, float(t[2]) / 2)
         h, m, s = ("%02d" % h, "%02d" % m, "%02d" % s)
-        arg = ('-ss %s:%s:%s -i "%s" -vframes 1 -y "%s"' % (h, m, s,
-                                                            self.video,
-                                                            self.frame
-                                                            ))
+        arg = f'-ss {h}:{m}:{s} -i "{self.video}" -vframes 1 -y "{self.frame}"'
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
         error = thread.status
         if error:
-            wx.MessageBox('%s' % error, 'ERROR', wx.ICON_ERROR)
+            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR)
             return
-        else:
-            sleep(1.0)  # need to wait end task for saving
-            bitmap = wx.Bitmap(self.frame)
-            img = bitmap.ConvertToImage()
-            img = img.Scale(self.w_ratio, self.h_ratio)
-            bmp = img.ConvertToBitmap()
-            self.image = wx.Bitmap(bmp)  # convert to bitmap
-            self.x.SetBitmap(self.image)  # set StaticBitmap
-            self.panelimg.Layout()
-            self.btn_load.Disable()
-            self.on_reset(self)  # make default position
+
+        sleep(1.0)  # need to wait end task for saving
+        bitmap = wx.Bitmap(self.frame)
+        img = bitmap.ConvertToImage()
+        img = img.Scale(self.w_ratio, self.h_ratio)
+        bmp = img.ConvertToBitmap()
+        self.image = wx.Bitmap(bmp)  # convert to bitmap
+        self.x.SetBitmap(self.image)  # set StaticBitmap
+        self.panelimg.Layout()
+        self.btn_load.Disable()
+        self.on_reset(self)  # make default position
     # ------------------------------------------------------------------#
 
     def on_right(self, event):
         """
+        Rotate 90 degrees right
         """
         if self.transpose['degrees'][1] == 0:
             self.rotate90(90)
@@ -225,6 +226,7 @@ class Transpose(wx.Dialog):
 
     def on_down(self, event):
         """
+        Rotate 180 degrees
         """
         if self.transpose['degrees'][1] == 0:
             self.rotate90(180)
@@ -245,6 +247,7 @@ class Transpose(wx.Dialog):
 
     def on_left(self, event):
         """
+        Rotate 90 degrees left
         """
         if self.transpose['degrees'][1] == 0:
             self.rotate90(270)
@@ -285,26 +288,23 @@ class Transpose(wx.Dialog):
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
+        """
+        Close this dialog without saving anything
+        """
         event.Skip()
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):
         """
-        if you enable self.Destroy(), it delete from memory all
-        data event and no return correctly. It has the right behavior
-        if not used here, because it is called in the main frame.
-
-        Event.Skip(), work correctly here. Sometimes needs to disable
-        it for needs to maintain the view of the window.
+        Don't use self.Destroy() in this dialog
         """
-        self.getvalue()
-        # self.Destroy()
         event.Skip()
     # ------------------------------------------------------------------#
 
     def getvalue(self):
         """
-        This method return values via the interface GetValue()
+        This method return values via the interface getvalue()
+        by the caller. See the caller for more info and usage.
         """
         msg = self.statictxt.GetLabel()
         return (self.transpose['degrees'][0], msg)

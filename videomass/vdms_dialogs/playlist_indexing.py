@@ -4,10 +4,10 @@ Name: playlist_indexing.py
 Porpose: shows a dialog box for setting playlist indexing
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.21.2021
-Code checker: pycodestyle / flake8 --ignore=F821,W503
+Rev: March.13.2022
+Code checker: pylint, flake8
 ########################################################
 
 This file is part of Videomass.
@@ -55,6 +55,8 @@ class ListCtrl(wx.ListCtrl,
 class Indexing(wx.Dialog):
     """
     Shows a dialog box for setting playlist indexing.
+    See ``youtubedl_ui.py`` -> ``on_playlist_idx`` method for
+    how to use this class.
 
     """
     get = wx.GetApp()  # get data from bootstrap
@@ -177,6 +179,7 @@ class Indexing(wx.Dialog):
     def getvalue(self):
         """
         This method return values via the interface getvalue()
+        by the caller. See the caller for more info and usage.
         """
         diz = {}
         for row, url in enumerate(self.urls):
@@ -273,20 +276,13 @@ class Indexing(wx.Dialog):
 
     def on_close(self, event):
         """
-        Close the dialog
+        Close this dialog without saving anything
         """
         event.Skip()
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):
         """
-        if you enable self.Destroy(), it delete from memory all data
-        event and no return correctly. It has the right behavior if
-        not used here, because it is called in the main frame.
-
-        Event.Skip(), work correctly here. Sometimes needs to disable
-        it for needs to maintain the view of the window (for exemple).
+        Don't use self.Destroy() in this dialog
         """
-        self.getvalue()
-        # self.Destroy()
         event.Skip()

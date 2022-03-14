@@ -1218,16 +1218,12 @@ class MainFrame(wx.Frame):
         customize the timestamp filter
 
         """
-        dialog = set_timestamp.Set_Timestamp(self, self.cmdtimestamp)
-        retcode = dialog.ShowModal()
-        if retcode == wx.ID_OK:
-            data = dialog.GetValue()
-            if not data:
-                return
-            self.cmdtimestamp = data
-        else:
-            dialog.Destroy()
-            return
+        with set_timestamp.Set_Timestamp(self, self.cmdtimestamp) as dialog:
+            if dialog.ShowModal() == wx.ID_OK:
+                data = dialog.getvalue()
+                if not data:
+                    return
+                self.cmdtimestamp = data
     # ------------------------------------------------------------------#
 
     def autoexitFFplay(self, event):

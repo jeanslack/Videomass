@@ -1,30 +1,32 @@
 # -*- coding: UTF-8 -*-
 
-# Name: set_timestamp.py
-# Porpose: set viewing attribute timestamp for FFplay
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Gen.01.2020 *-pycodestyle- compatible*
-#########################################################
+"""
+Name: set_timestamp.py
+Porpose: set viewing attribute timestamp for FFplay
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: March.13.2022
+Code checker: pylint, flake8
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 
-#########################################################
 import wx
 
 
@@ -32,7 +34,8 @@ class Set_Timestamp(wx.Dialog):
     """
     Customize drawtext filter to display current play time
     (timestamp) during playback with FFplay.
-
+    See ``main_frame.py`` -> ``timestampCustomize`` method for
+    how to use this class.
     """
 
     def __init__(self, parent, tscurrent):
@@ -171,10 +174,12 @@ class Set_Timestamp(wx.Dialog):
 
         if self.boxenabled == '1':
             self.check_enablebox.SetValue(True)
-            self.cmbx_boxcolor.Enable(), self.stboxcolor.Enable()
+            self.cmbx_boxcolor.Enable()
+            self.stboxcolor.Enable()
         else:
             self.check_enablebox.SetValue(False)
-            self.cmbx_boxcolor.Disable(), self.stboxcolor.Disable()
+            self.cmbx_boxcolor.Disable()
+            self.stboxcolor.Disable()
 
     # ----------------------Event handler (callback)----------------------#
 
@@ -193,10 +198,12 @@ class Set_Timestamp(wx.Dialog):
         disable = '0'
         """
         if self.check_enablebox.IsChecked():
-            self.cmbx_boxcolor.Enable(), self.stboxcolor.Enable()
+            self.cmbx_boxcolor.Enable()
+            self.stboxcolor.Enable()
             self.boxenabled = '1'
         else:
-            self.cmbx_boxcolor.Disable(), self.stboxcolor.Disable()
+            self.cmbx_boxcolor.Disable()
+            self.stboxcolor.Disable()
             self.boxenabled = '0'
     # ------------------------------------------------------------------#
 
@@ -222,28 +229,23 @@ class Set_Timestamp(wx.Dialog):
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
-
+        """
+        Close this dialog without saving anything
+        """
         event.Skip()
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):
         """
-        if you enable self.Destroy(), it delete from memory all data
-        event and no return correctly. It has the right behavior if
-        not used here, because it is called in the main frame.
-
-        Event.Skip(), work correctly here. Sometimes needs to disable
-        it for needs to maintain the view of the window (for exemple).
+        Don't use self.Destroy() in this dialog
         """
-        self.GetValue()
-        # self.Destroy()
         event.Skip()
     # ------------------------------------------------------------------#
 
-    def GetValue(self):
+    def getvalue(self):
         """
-        This method return values via the interface GetValue()
-
+        This method return values via the interface getvalue()
+        by the caller. See the caller for more info and usage.
         """
         ptshms = r"%{pts\:hms}"
 

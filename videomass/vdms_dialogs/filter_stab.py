@@ -4,9 +4,10 @@ Name: filter_stab.py
 Porpose: Show dialog to get vidstab data based on FFmpeg syntax
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: March.13.2022
+Code checker: pylint, flake8
 ########################################################
 
 This file is part of Videomass.
@@ -55,7 +56,7 @@ class Vidstab(wx.Dialog):
         self.makeduo = makeduo
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        """constructor"""
+
         sizerBase = wx.BoxSizer(wx.VERTICAL)
 
         flex_General = wx.BoxSizer(wx.HORIZONTAL)
@@ -373,7 +374,7 @@ class Vidstab(wx.Dialog):
 
         """
         # vidstabdetect
-        self.spin_shake.SetValue('5'),
+        self.spin_shake.SetValue('5')
         self.spin_accuracy.SetValue('15')
         self.spin_stepsize.SetValue('6')
         self.spin_mincontr.SetValue(0.25)
@@ -387,9 +388,11 @@ class Vidstab(wx.Dialog):
         self.ckbx_relative.SetValue(True)
         self.spin_zoom.SetValue('0')
         self.spin_optzoom.SetValue('1')
-        self.spin_zoomspeed.SetValue(0.25), self.spin_zoomspeed.Disable()
+        self.spin_zoomspeed.SetValue(0.25)
+        self.spin_zoomspeed.Disable()
         self.rdb_interpol.SetSelection(2)
-        self.ckbx_tripod2.SetValue(False), self.ckbx_tripod2.Disable()
+        self.ckbx_tripod2.SetValue(False)
+        self.ckbx_tripod2.Disable()
         # unsharp filter
         self.txt_unsharp.Clear()
         self.txt_unsharp.write('unsharp=5:5:0.8:3:3:0.4')
@@ -440,9 +443,11 @@ class Vidstab(wx.Dialog):
         self.spin_zoom.SetValue(k_v_transf['zoom'])
         self.spin_optzoom.SetValue(k_v_transf['optzoom'])
         if k_v_transf['optzoom'] == '2':
-            self.spin_zoomspeed.Enable(), self.lab_zoomspeed.Enable()
+            self.spin_zoomspeed.Enable()
+            self.lab_zoomspeed.Enable()
         else:
-            self.spin_zoomspeed.Disable(), self.lab_zoomspeed.Disable()
+            self.spin_zoomspeed.Disable()
+            self.lab_zoomspeed.Disable()
         self.spin_zoomspeed.SetValue(float(k_v_transf['zoomspeed']))
         if k_v_transf['interpol'] == 'no':
             self.rdb_interpol.SetSelection(0)
@@ -467,10 +472,12 @@ class Vidstab(wx.Dialog):
 
         """
         if self.spin_optzoom.GetValue() == 2:
-            self.spin_zoomspeed.Enable(), self.lab_zoomspeed.Enable()
+            self.spin_zoomspeed.Enable()
+            self.lab_zoomspeed.Enable()
         else:
             self.spin_zoomspeed.SetValue(0.25)
-            self.spin_zoomspeed.Disable(), self.lab_zoomspeed.Disable()
+            self.spin_zoomspeed.Disable()
+            self.lab_zoomspeed.Disable()
     # ------------------------------------------------------------------#
 
     def on_Tripod1(self, event):
@@ -480,9 +487,11 @@ class Vidstab(wx.Dialog):
 
         """
         if self.ckbx_tripod1.IsChecked():
-            self.ckbx_tripod2.Enable(), self.ckbx_tripod2.SetValue(True)
+            self.ckbx_tripod2.Enable()
+            self.ckbx_tripod2.SetValue(True)
         else:
-            self.ckbx_tripod2.Disable(), self.ckbx_tripod2.SetValue(False)
+            self.ckbx_tripod2.Disable()
+            self.ckbx_tripod2.SetValue(False)
     # ------------------------------------------------------------------#
 
     def on_Tripod2(self, event):
@@ -505,8 +514,8 @@ class Vidstab(wx.Dialog):
         """
         if Vidstab.appdata['GETLANG'] in Vidstab.appdata['SUPP_LANGs']:
             lang = Vidstab.appdata['GETLANG'].split('_')[0]
-            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/%s/4-Video_filters_%s.pdf' % (lang, lang))
+            page = (f'https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    f'languages/{lang}/4-Video_filters_{lang}.pdf')
         else:
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
                     'languages/en/4-Video_filters_en.pdf')
@@ -520,17 +529,27 @@ class Vidstab(wx.Dialog):
 
         """
         if self.ckbx_enable.IsChecked():
-            self.spin_shake.Enable(), self.spin_accuracy.Enable()
-            self.spin_stepsize.Enable(), self.spin_mincontr.Enable()
-            self.ckbx_tripod1.Enable(), self.spin_smooth.Enable()
-            self.rdb_optalgo.Enable(), self.spin_maxangle.Enable()
-            self.rdb_crop.Enable(), self.ckbx_invert.Enable()
-            self.ckbx_relative.Enable(), self.spin_zoom.Enable()
+            self.spin_shake.Enable()
+            self.spin_accuracy.Enable()
+            self.spin_stepsize.Enable()
+            self.spin_mincontr.Enable()
+            self.ckbx_tripod1.Enable()
+            self.spin_smooth.Enable()
+            self.rdb_optalgo.Enable()
+            self.spin_maxangle.Enable()
+            self.rdb_crop.Enable()
+            self.ckbx_invert.Enable()
+            self.ckbx_relative.Enable()
+            self.spin_zoom.Enable()
             self.spin_optzoom.Enable()
-            self.lab_shake.Enable(), self.lab_accuracy.Enable()
-            self.lab_stepsize.Enable(), self.lab_mincontr.Enable()
-            self.lab_smooth.Enable(), self.lab_maxangle.Enable()
-            self.lab_zoom.Enable(), self.lab_optzoom.Enable()
+            self.lab_shake.Enable()
+            self.lab_accuracy.Enable()
+            self.lab_stepsize.Enable()
+            self.lab_mincontr.Enable()
+            self.lab_smooth.Enable()
+            self.lab_maxangle.Enable()
+            self.lab_zoom.Enable()
+            self.lab_optzoom.Enable()
             self.lab_unsharp.Enable()
             # self.spin_zoomspeed.Enable(), self.lab_zoomspeed.Enable()
             self.rdb_interpol.Enable()
@@ -539,50 +558,59 @@ class Vidstab(wx.Dialog):
             self.ckbx_duo.Enable()
 
         else:
-            self.spin_shake.Disable(), self.spin_accuracy.Disable()
-            self.spin_stepsize.Disable(), self.spin_mincontr.Disable()
-            self.ckbx_tripod1.Disable(), self.spin_smooth.Disable()
-            self.rdb_optalgo.Disable(), self.spin_maxangle.Disable()
-            self.rdb_crop.Disable(), self.ckbx_invert.Disable()
-            self.ckbx_relative.Disable(), self.spin_zoom.Disable()
-            self.spin_optzoom.Disable(), self.spin_zoomspeed.Disable()
-            self.rdb_interpol.Disable(), self.ckbx_tripod2.Disable()
+            self.spin_shake.Disable()
+            self.spin_accuracy.Disable()
+            self.spin_stepsize.Disable()
+            self.spin_mincontr.Disable()
+            self.ckbx_tripod1.Disable()
+            self.spin_smooth.Disable()
+            self.rdb_optalgo.Disable()
+            self.spin_maxangle.Disable()
+            self.rdb_crop.Disable()
+            self.ckbx_invert.Disable()
+            self.ckbx_relative.Disable()
+            self.spin_zoom.Disable()
+            self.spin_optzoom.Disable()
+            self.spin_zoomspeed.Disable()
+            self.rdb_interpol.Disable()
+            self.ckbx_tripod2.Disable()
             self.txt_unsharp.Disable()
-            self.lab_shake.Disable(), self.lab_accuracy.Disable()
-            self.lab_stepsize.Disable(), self.lab_mincontr.Disable()
-            self.lab_smooth.Disable(), self.lab_maxangle.Disable()
-            self.lab_zoom.Disable(), self.lab_optzoom.Disable()
-            self.lab_zoomspeed.Disable(), self.lab_unsharp.Disable()
+            self.lab_shake.Disable()
+            self.lab_accuracy.Disable()
+            self.lab_stepsize.Disable()
+            self.lab_mincontr.Disable()
+            self.lab_smooth.Disable()
+            self.lab_maxangle.Disable()
+            self.lab_zoom.Disable()
+            self.lab_optzoom.Disable()
+            self.lab_zoomspeed.Disable()
+            self.lab_unsharp.Disable()
             # disable makeduo
-            self.ckbx_duo.SetValue(False), self.ckbx_duo.Disable()
+            self.ckbx_duo.SetValue(False)
+            self.ckbx_duo.Disable()
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
+        """
+        Close this dialog without saving anything
+        """
         event.Skip()
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):
         """
-        if you enable self.Destroy(), it delete from memory all data
-        event and does not return anything. It has the right behavior if
-        not used here, because it is called in the main frame.
-
-        Event.Skip(), work correctly here. Sometimes needs to disable
-        it for needs to maintain the view of the window (for exemple).
-
+        Don't use self.Destroy() in this dialog
         """
-        self.getvalue()
-        # self.Destroy()
         event.Skip()
     # ------------------------------------------------------------------#
 
     def getvalue(self):
         """
-        This method return values via the interface GetValue()
-
+        This method return values via the interface getvalue()
+        by the caller. See the caller for more info and usage.
         """
         if not self.ckbx_enable.IsChecked():
-            return (None)
+            return None
 
         # vidstabdetect
         shakiness = self.spin_shake.GetValue()
@@ -607,31 +635,27 @@ class Vidstab(wx.Dialog):
         zoomspeed = self.spin_zoomspeed.GetValue()
         interp = self.rdb_interpol.GetString(self.rdb_interpol.GetSelection())
 
-        vidstabdetect = ('vidstabdetect=shakiness=%s:'
-                         'accuracy=%s:'
-                         'stepsize=%s:'
-                         'mincontrast=%s:'
-                         'tripod=%s:'
-                         'show=0' % (shakiness, accuracy, stepsize,
-                                     mincontrast, tripod1)
+        vidstabdetect = (f'vidstabdetect=shakiness={shakiness}:'
+                         f'accuracy={accuracy}:'
+                         f'stepsize={stepsize}:'
+                         f'mincontrast={mincontrast}:'
+                         f'tripod={tripod1}:'
+                         f'show=0'
                          )
-        vidstabtransform = ('vidstabtransform=smoothing=%s:'
-                            'optalgo=%s:'
-                            'maxshift=-1:'
-                            'maxangle=%s:'
-                            'crop=%s:'
-                            'invert=%s:'
-                            'relative=%s:'
-                            'zoom=%s:'
-                            'optzoom=%s:'
-                            'zoomspeed=%s:'
-                            'interpol=%s:'
-                            'tripod=%s' % (smoothing, optalgo, maxangle,
-                                           crop, invert, relative, zoom,
-                                           optzoom, zoomspeed, interp,
-                                           tripod2)
+        vidstabtransform = (f'vidstabtransform=smoothing={smoothing}:'
+                            f'optalgo={optalgo}:'
+                            f'maxshift=-1:'
+                            f'maxangle={maxangle}:'
+                            f'crop={crop}:'
+                            f'invert={invert}:'
+                            f'relative={relative}:'
+                            f'zoom={zoom}:'
+                            f'optzoom={optzoom}:'
+                            f'zoomspeed={zoomspeed}:'
+                            f'interpol={interp}:'
+                            f'tripod={tripod2}'
                             )
         unsharp = self.txt_unsharp.GetValue()
-        makeduo = True if self.ckbx_duo.IsChecked() else False
+        makeduo = self.ckbx_duo.IsChecked()
 
-        return (vidstabdetect, vidstabtransform, unsharp, makeduo)
+        return vidstabdetect, vidstabtransform, unsharp, makeduo

@@ -4,9 +4,9 @@ Name: ffmpeg_search.py
 Porpose: Show a box to search FFmpeg topics
 Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.28.2021
+Rev: Sep.28.2022
 Code checker:
     - pycodestyle
     - flake8: --ignore F821, W504, F401
@@ -257,8 +257,8 @@ class FFmpegSearch(wx.MiniFrame):
     # --------------------------------------------------------------#
 
     def on_close(self, event):
-        '''
-        destroy dialog by button or the X
-        '''
+        """
+        destroy dialog by close button or by X
+        """
         self.Destroy()
         # event.Skip()
