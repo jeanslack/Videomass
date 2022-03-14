@@ -7,9 +7,9 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 13, 2022 V.3.5.8
+Mar 14, 2022 V.3.5.8
 
-  * Small text on toolbar buttons when shown.
+  * Small text on toolbar buttons when enabled.
   * Refactoring vdms_threads
   * Refactoring vdms_main
   * Refactoring utils.py (W0621)
@@ -23,6 +23,7 @@ Mar 13, 2022 V.3.5.8
   * Refactoring playlist_indexing.py
   * Refactoring presets_addnew.py
   * Refactoring set_timestamp.py
+  * Added Estimated Time of Arrival (ETA) on some FFmpeg processes #81
 
 +------------------------------------+
 Mar 07, 2022 V.3.5.7

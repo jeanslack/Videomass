@@ -180,7 +180,7 @@ class Loudnorm(Thread):
                              count='',
                              fsource='',
                              destination='',
-                             duration='',
+                             duration=duration,
                              end='ok'
                              )
             # --------------- second pass ----------------#
@@ -261,7 +261,7 @@ class Loudnorm(Thread):
                              count='',
                              fsource='',
                              destination='',
-                             duration='',
+                             duration=duration,
                              end='ok'
                              )
         time.sleep(.5)

@@ -186,7 +186,7 @@ class VidStab(Thread):
                              count='',
                              fsource='',
                              destination='',
-                             duration='',
+                             duration=duration,
                              end='ok'
                              )
             # --------------- second pass ----------------#
@@ -256,7 +256,7 @@ class VidStab(Thread):
                              count='',
                              fsource='',
                              destination='',
-                             duration='',
+                             duration=duration,
                              end='ok'
                              )
             # --------------- make duo ----------------#
@@ -329,7 +329,7 @@ class VidStab(Thread):
                                  count='',
                                  fsource='',
                                  destination='',
-                                 duration='',
+                                 duration=duration,
                                  end='ok'
                                  )
         time.sleep(.5)

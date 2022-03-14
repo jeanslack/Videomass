@@ -172,7 +172,7 @@ class TwoPass(Thread):
                              count='',
                              fsource='',
                              destination='',
-                             duration='',
+                             duration=duration,
                              end='ok'
                              )
             # --------------- second pass ----------------#
@@ -240,7 +240,7 @@ class TwoPass(Thread):
                              count='',
                              fsource='',
                              destination='',
-                             duration='',
+                             duration=duration,
                              end='ok'
                              )
         time.sleep(.5)

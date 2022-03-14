@@ -161,7 +161,7 @@ class OnePass(Thread):
                                      count='',
                                      fsource='',
                                      destination='',
-                                     duration='',
+                                     duration=duration,
                                      end='ok'
                                      )
             except (OSError, FileNotFoundError) as err:

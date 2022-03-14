@@ -1,3 +1,23 @@
+videomass (3.5.8-1) UNRELEASED; urgency=medium
+
+  * Small text on toolbar buttons when enabled.
+  * Refactoring vdms_threads
+  * Refactoring vdms_main
+  * Refactoring utils.py (W0621)
+  * Refactoring filter_crop.py
+  * Rafactoring filter_deinterlace.py
+  * Refactoring filter_denoiser.py
+  * Refactoring filter_crop.py
+  * Refactoring filter_scale.py
+  * Refactoring filter_stab.py
+  * Refactoring filter_transpose.py
+  * Refactoring playlist_indexing.py
+  * Refactoring presets_addnew.py
+  * Refactoring set_timestamp.py
+  * Added Estimated Time of Arrival (ETA) on some FFmpeg processes #81
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 14 Mar 2022 13:46:00 +0200
+
 videomass (3.5.7-1) UNRELEASED; urgency=medium
 
   * Improved controls and automations for indexing and audio mapping.
