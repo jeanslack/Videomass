@@ -895,7 +895,8 @@ class MainFrame(wx.Frame):
         url = ("https://api.github.com/repos/jeanslack/"
                "Videomass-presets/releases/latest")
 
-        dialdir = wx.DirDialog(self, _("Choose a download folder"))
+        dialdir = wx.DirDialog(self, _("Choose a download folder"),
+                               "", wx.DD_DEFAULT_STYLE)
         if dialdir.ShowModal() == wx.ID_OK:
             path = dialdir.GetPath()
             dialdir.Destroy()
@@ -1155,7 +1156,7 @@ class MainFrame(wx.Frame):
 
         """
         dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
-                                       "conversions"))
+                                       "conversions"), "", wx.DD_DEFAULT_STYLE)
         if dialdir.ShowModal() == wx.ID_OK:
             getpath = self.appdata['getpath'](dialdir.GetPath())
             self.outpath_ffmpeg = f'{getpath}'
@@ -1176,7 +1177,7 @@ class MainFrame(wx.Frame):
 
         """
         dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
-                                       "downloads"))
+                                       "downloads"), "", wx.DD_DEFAULT_STYLE)
         if dialdir.ShowModal() == wx.ID_OK:
             getpath = self.appdata['getpath'](dialdir.GetPath())
             self.outpath_ydl = f'{getpath}'

@@ -611,7 +611,7 @@ class SetUp(wx.Dialog):
 
         dlg = wx.DirDialog(self, _("Set a persistent location to save the "
                                    "file downloads"), "",
-                           wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
+                           wx.DD_DEFAULT_STYLE)
 
         if dlg.ShowModal() == wx.ID_OK:
             self.txtctrl_YDLpath.Clear()
@@ -634,7 +634,7 @@ class SetUp(wx.Dialog):
 
         dlg = wx.DirDialog(self, _("Set a persistent location to save "
                                    "exported files"), "",
-                           wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
+                           wx.DD_DEFAULT_STYLE)
 
         if dlg.ShowModal() == wx.ID_OK:
             self.txtctrl_FFpath.Clear()

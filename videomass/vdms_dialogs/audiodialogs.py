@@ -4,9 +4,9 @@ Name: audiodialogs.py
 Porpose: Audio dialog for settings audio parameters
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.11.2020
+Rev: March.14.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -35,6 +35,8 @@ class AudioSettings(wx.Dialog):
     which includes bit-rate, sample-rate, audio-channels
     and bit-per-sample (bit depth).
 
+    See ``av_conversions.py`` -> ``audio_dialog`` method for
+    how to use this class.
     """
 
     def __init__(self, parent, audio_type, arate,
@@ -170,37 +172,26 @@ class AudioSettings(wx.Dialog):
 
     def on_cancel(self, event):
         """
-        if you enable self.Destroy(), it delete from memory all data
-        event and no return correctly. It has the right behavior if
-        not used here, because it is called in the main frame.
-
-        Event.Skip(), work correctly here.
-
+        Cancel this dialog without saving anything
         """
-        # self.Destroy()
         event.Skip()
     # ------------------------------------------------------------------#
 
     def on_apply(self, event):
         """
-        as on_cancel for destroy.
-
-        Event.Skip(), work correctly here. Sometimes needs to disable
-        it for needs to maintain the view of the window (for exemple).
-
+        Don't use self.Destroy() in this dialog
         """
-        self.getvalue()
-        # self.Destroy()
         event.Skip()
     # ------------------------------------------------------------------#
 
     def getvalue(self):
         """
-        Return four tuples of audio parameters via the
-        interface GetValue() in the form:
+        This method return values via the interface getvalue()
+        by the caller. See the caller for more info and usage.
 
-            (str(selected parameter), str(related value)) * 3
-
+        Returns:
+            four tuples of audio parameters object in the form:
+                (str(selected parameter), str(related value)) * 3
         """
         sel_ch = self.rdb_channels.GetStringSelection()
         sel_sr = self.rdb_sample_r.GetStringSelection()

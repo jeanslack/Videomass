@@ -1,22 +1,28 @@
 videomass (3.5.8-1) UNRELEASED; urgency=medium
 
   * Small text on toolbar buttons when enabled.
-  * Refactoring vdms_threads
-  * Refactoring vdms_main
-  * Refactoring utils.py (W0621)
-  * Refactoring filter_crop.py
-  * Rafactoring filter_deinterlace.py
-  * Refactoring filter_denoiser.py
-  * Refactoring filter_crop.py
-  * Refactoring filter_scale.py
-  * Refactoring filter_stab.py
-  * Refactoring filter_transpose.py
-  * Refactoring playlist_indexing.py
-  * Refactoring presets_addnew.py
-  * Refactoring set_timestamp.py
-  * Added Estimated Time of Arrival (ETA) on some FFmpeg processes #81
+  * Refactoring of vdms_threads
+  * Refactoring of vdms_main
+  * Refactoring of utils.py (W0621)
+  * Refactoring of filter_crop.py
+  * Refactoring of filter_deinterlace.py
+  * Refactoring of filter_denoiser.py
+  * Refactoring of filter_crop.py
+  * Refactoring of filter_scale.py
+  * Refactoring of filter_stab.py
+  * Refactoring of filter_transpose.py
+  * Refactoring of playlist_indexing.py
+  * Refactoring of presets_addnew.py
+  * Refactoring of set_timestamp.py
+  * Refactoring of audiodialogs.py
+  * Added Estimated Time of Arrival (ETA) on FFmpeg processes #81 .
+  * Removed the progress bar on the output monitoring panel using YouTube
+    Downloader due to frequent backend changes leading to progress errors.
+  * Added the ability to download all available subtitles.
+  * Added the ability to add new folders in the dialogs for destination
+    directories.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 14 Mar 2022 13:46:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 15 Mar 2022 11:19:00 +0200
 
 videomass (3.5.7-1) UNRELEASED; urgency=medium
 

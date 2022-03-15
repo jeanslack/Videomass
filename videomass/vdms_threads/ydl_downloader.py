@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.02.2022
+Rev: Mar.14.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -205,6 +205,7 @@ class YdlDownloader(Thread):
                 'extractaudio': self.opt['format'],
                 'outtmpl': f"{self.args['outdir']}/{outtmpl}",
                 'writesubtitles': self.opt['writesubtitles'],
+                'subtitleslangs': self.opt['subtitleslangs'],
                 'addmetadata': self.opt['addmetadata'],
                 'restrictfilenames': self.opt['restrictfilenames'],
                 'ignoreerrors': True,
