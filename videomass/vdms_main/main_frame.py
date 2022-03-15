@@ -225,7 +225,8 @@ class MainFrame(wx.Frame):
         Retrieve to choose topic panel
         """
         self.topicname = None
-        self.textDnDTarget.Hide(), self.fileDnDTarget.Hide()
+        self.textDnDTarget.Hide()
+        self.fileDnDTarget.Hide()
         self.TimeLine.Hide()
         if self.ytDownloader.IsShown():
             self.ytDownloader.Hide()
@@ -241,10 +242,14 @@ class MainFrame(wx.Frame):
 
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
-        self.toolbar.Hide(), self.avpan.Enable(False)
-        self.prstpan.Enable(False), self.concpan.Enable(False)
-        self.ydlpan.Enable(False), self.startpan.Enable(False)
-        self.logpan.Enable(False), self.viewtimeline.Enable(False)
+        self.toolbar.Hide()
+        self.avpan.Enable(False)
+        self.prstpan.Enable(False)
+        self.concpan.Enable(False)
+        self.ydlpan.Enable(False)
+        self.startpan.Enable(False)
+        self.logpan.Enable(False)
+        self.viewtimeline.Enable(False)
         self.SetTitle(_('Videomass'))
         self.statusbar_msg(_('Ready'), None)
         self.Layout()
@@ -255,9 +260,12 @@ class MainFrame(wx.Frame):
         enable or disable some menu items in according by showing panels
         """
         if self.ChooseTopic.IsShown() is True:
-            self.avpan.Enable(False), self.prstpan.Enable(False),
-            self.concpan.Enable(False), self.ydlpan.Enable(False),
-            self.startpan.Enable(False), self.viewtimeline.Enable(False),
+            self.avpan.Enable(False)
+            self.prstpan.Enable(False)
+            self.concpan.Enable(False)
+            self.ydlpan.Enable(False),
+            self.startpan.Enable(False)
+            self.viewtimeline.Enable(False)
             self.logpan.Enable(False)
 
         if self.appdata['downloader'] != 'disabled':
@@ -757,8 +765,8 @@ class MainFrame(wx.Frame):
         latest = io_tools.get_github_releases(url, "tag_name")
 
         if latest[0] in ['request error:', 'response error:']:
-            wx.MessageBox("%s %s" % (latest[0], latest[1]),
-                          "%s" % latest[0], wx.ICON_ERROR, self)
+            wx.MessageBox(f"{latest[0]} {latest[1]}",
+                          f"{latest[0]}", wx.ICON_ERROR, self)
             return None
 
         this = self.ydl_used(self, False)
@@ -771,13 +779,13 @@ class MainFrame(wx.Frame):
                           "Videomass", wx.ICON_INFORMATION, self)
             return None
 
-        elif wx.MessageBox(_("{0} version {1} is available and will "
-                             "replace the old version {2}\n\n"
-                             "Do you want to update now?"
-                             ).format(self.appdata['downloader'],
-                                      latest[0].strip(), this),
-                           "Videomass", wx.ICON_QUESTION
-                           | wx.YES_NO, self) == wx.NO:
+        if wx.MessageBox(_("{0} version {1} is available and will "
+                           "replace the old version {2}\n\n"
+                           "Do you want to update now?").format(
+                               self.appdata['downloader'],
+                               latest[0].strip(), this),
+                         "Videomass", wx.ICON_QUESTION
+                         | wx.YES_NO, self) == wx.NO:
             return None
         return latest
     # -------------------------------------------------------------------#
@@ -867,8 +875,8 @@ class MainFrame(wx.Frame):
         newversion = io_tools.get_github_releases(url, "tag_name")
 
         if newversion[0] in ['request error:', 'response error:']:
-            wx.MessageBox("%s %s" % (newversion[0], newversion[1]),
-                          "%s" % newversion[0], wx.ICON_ERROR, self)
+            wx.MessageBox(f"{newversion[0]} {newversion[1]}",
+                          f"{newversion[0]}", wx.ICON_ERROR, self)
 
         elif float(newversion[0].split('v')[1]) > float(fread):
             wx.MessageBox(_("There is a new version available "
@@ -887,7 +895,8 @@ class MainFrame(wx.Frame):
         url = ("https://api.github.com/repos/jeanslack/"
                "Videomass-presets/releases/latest")
 
-        dialdir = wx.DirDialog(self, _("Choose a download folder"))
+        dialdir = wx.DirDialog(self, _("Choose a download folder"),
+                               "", wx.DD_DEFAULT_STYLE)
         if dialdir.ShowModal() == wx.ID_OK:
             path = dialdir.GetPath()
             dialdir.Destroy()
@@ -897,17 +906,17 @@ class MainFrame(wx.Frame):
         tarball = io_tools.get_github_releases(url, "tarball_url")
 
         if tarball[0] in ['request error:', 'response error:']:
-            wx.MessageBox("%s %s" % (tarbal[0], tarbal[1]),
-                          "%s" % tarbal[0], wx.ICON_ERROR, self)
+            wx.MessageBox(f"{tarbal[0]} {tarbal[1]}",
+                          f"{tarbal[0]}", wx.ICON_ERROR, self)
             return
 
-        name = 'Videomass-presets-%s.tar.gz' % tarball[0].split('/v')[-1]
+        name = f"Videomass-presets-{tarball[0].split('/v')[-1]}.tar.gz"
         pathname = os.path.join(path, name)
         msg = _('Wait....\nThe archive is being downloaded')
         download = io_tools.get_presets(tarball[0], pathname, msg)
 
         if download[1]:
-            wx.MessageBox("%s" % download[1], 'ERROR', wx.ICON_ERROR, self)
+            wx.MessageBox(f"{download[1]}", 'ERROR', wx.ICON_ERROR, self)
             return
 
         wx.MessageBox(_('Successfully downloaded to "{0}"').format(pathname),
@@ -1010,8 +1019,8 @@ class MainFrame(wx.Frame):
         latest = io_tools.get_github_releases(url, "tag_name")
 
         if latest[0] in ['request error:', 'response error:']:
-            wx.MessageBox("%s %s" % (latest[0], latest[1]),
-                          "%s" % latest[0], wx.ICON_ERROR, self)
+            wx.MessageBox(f"{latest[0]} {latest[1]}",
+                          f"{latest[0]}", wx.ICON_ERROR, self)
             return
         wx.MessageBox(_("{0}: Latest version available: {1}").format(
                       self.appdata['downloader'], latest[0]),
@@ -1147,10 +1156,10 @@ class MainFrame(wx.Frame):
 
         """
         dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
-                                       "conversions"))
+                                       "conversions"), "", wx.DD_DEFAULT_STYLE)
         if dialdir.ShowModal() == wx.ID_OK:
             getpath = self.appdata['getpath'](dialdir.GetPath())
-            self.outpath_ffmpeg = '%s' % getpath
+            self.outpath_ffmpeg = f'{getpath}'
             self.fileDnDTarget.on_file_save(self.outpath_ffmpeg)
             self.fileDnDTarget.file_dest = self.outpath_ffmpeg
 
@@ -1168,10 +1177,10 @@ class MainFrame(wx.Frame):
 
         """
         dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
-                                       "downloads"))
+                                       "downloads"), "", wx.DD_DEFAULT_STYLE)
         if dialdir.ShowModal() == wx.ID_OK:
             getpath = self.appdata['getpath'](dialdir.GetPath())
-            self.outpath_ydl = '%s' % getpath
+            self.outpath_ydl = f'{getpath}'
             self.textDnDTarget.on_file_save(self.outpath_ydl)
             self.textDnDTarget.file_dest = self.outpath_ydl
 
@@ -1210,16 +1219,12 @@ class MainFrame(wx.Frame):
         customize the timestamp filter
 
         """
-        dialog = set_timestamp.Set_Timestamp(self, self.cmdtimestamp)
-        retcode = dialog.ShowModal()
-        if retcode == wx.ID_OK:
-            data = dialog.GetValue()
-            if not data:
-                return
-            self.cmdtimestamp = data
-        else:
-            dialog.Destroy()
-            return
+        with set_timestamp.Set_Timestamp(self, self.cmdtimestamp) as dialog:
+            if dialog.ShowModal() == wx.ID_OK:
+                data = dialog.getvalue()
+                if not data:
+                    return
+                self.cmdtimestamp = data
     # ------------------------------------------------------------------#
 
     def autoexitFFplay(self, event):
@@ -1298,15 +1303,15 @@ class MainFrame(wx.Frame):
         version = io_tools.get_github_releases(url, "tag_name")
 
         if version[0] in ['request error:', 'response error:']:
-            wx.MessageBox("%s %s" % (version[0], version[1]),
-                          "%s" % version[0], wx.ICON_ERROR, self)
+            wx.MessageBox(f"{version[0]} {version[1]}",
+                          f"{version[0]}", wx.ICON_ERROR, self)
             return
 
         version = version[0].split('v.')[1]
         newmajor, newminor, newmicro = version.split('.')
-        new_version = int('%s%s%s' % (newmajor, newminor, newmicro))
+        new_version = int(f'{newmajor}{newminor}{newmicro}')
         major, minor, micro = this[2].split('.')
-        this_version = int('%s%s%s' % (major, minor, micro))
+        this_version = int(f'{major}{minor}{micro}')
 
         if new_version > this_version:
             msg = _('A new release is available - '
@@ -1400,10 +1405,10 @@ class MainFrame(wx.Frame):
 
             bmpconv = wx.Bitmap(self.icons['startconv'], wx.BITMAP_TYPE_ANY)
             bmpydl = wx.Bitmap(self.icons['startdownload'], wx.BITMAP_TYPE_ANY)
-        '''
+
         self.toolbar.SetFont(wx.Font(8, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
-        '''
+
         tip = _("Go to the previous panel")
         back = self.toolbar.AddTool(3, _('Back'),
                                     bmpback,
@@ -1504,15 +1509,14 @@ class MainFrame(wx.Frame):
                 return
 
             for url in data:  # Check malformed url
-                o = urlparse(url)
-                if not o[1]:  # if empty netloc given from ParseResult
+                res = urlparse(url)
+                if not res[1]:  # if empty netloc given from ParseResult
                     wx.MessageBox(_('Invalid URL: "{}"').format(url),
                                   "Videomass", wx.ICON_ERROR, self)
                     return
             if len(set(data)) != len(data):  # equal URLS
                 wx.MessageBox(_("ERROR: Multiple URL's are the "
-                                "same").format(url),
-                              "Videomass", wx.ICON_ERROR, self)
+                                "same"), "Videomass", wx.ICON_ERROR, self)
                 return
 
             self.switch_youtube_downloader(self, data)
@@ -1524,18 +1528,25 @@ class MainFrame(wx.Frame):
 
         """
         self.topicname = which
-        self.textDnDTarget.Hide(), self.ytDownloader.Hide()
-        self.VconvPanel.Hide(), self.ChooseTopic.Hide()
-        self.PrstsPanel.Hide(), self.TimeLine.Hide()
-        self.ConcatDemuxer.Hide(), self.fileDnDTarget.Show()
+        self.textDnDTarget.Hide()
+        self.ytDownloader.Hide()
+        self.VconvPanel.Hide()
+        self.ChooseTopic.Hide()
+        self.PrstsPanel.Hide()
+        self.TimeLine.Hide()
+        self.ConcatDemuxer.Hide()
+        self.fileDnDTarget.Show()
         if self.outpath_ffmpeg:
             self.fileDnDTarget.text_path_save.SetValue("")
             self.fileDnDTarget.text_path_save.AppendText(self.outpath_ffmpeg)
         self.menu_items()  # disable some menu items
         self.openmedia.Enable(True)
-        self.avpan.Enable(False), self.prstpan.Enable(False),
-        self.ydlpan.Enable(False), self.startpan.Enable(True)
-        self.viewtimeline.Enable(False), self.concpan.Enable(False)
+        self.avpan.Enable(False)
+        self.prstpan.Enable(False)
+        self.ydlpan.Enable(False)
+        self.startpan.Enable(True)
+        self.viewtimeline.Enable(False)
+        self.concpan.Enable(False)
         self.toolbar.Show()
         self.logpan.Enable(False)
         self.toolbar.EnableTool(3, True)
@@ -1557,18 +1568,25 @@ class MainFrame(wx.Frame):
         Show URLs import panel.
         """
         self.topicname = which
-        self.fileDnDTarget.Hide(), self.ytDownloader.Hide()
-        self.VconvPanel.Hide(), self.ChooseTopic.Hide()
-        self.PrstsPanel.Hide(), self.TimeLine.Hide()
-        self.ConcatDemuxer.Hide(), self.textDnDTarget.Show()
+        self.fileDnDTarget.Hide()
+        self.ytDownloader.Hide()
+        self.VconvPanel.Hide()
+        self.ChooseTopic.Hide()
+        self.PrstsPanel.Hide()
+        self.TimeLine.Hide()
+        self.ConcatDemuxer.Hide()
+        self.textDnDTarget.Show()
         if self.outpath_ydl:
             self.textDnDTarget.text_path_save.SetValue("")
             self.textDnDTarget.text_path_save.AppendText(self.outpath_ydl)
         self.menu_items()  # disable some menu items
         self.openmedia.Enable(False)
-        self.avpan.Enable(False), self.prstpan.Enable(False),
-        self.ydlpan.Enable(False), self.startpan.Enable(True)
-        self.viewtimeline.Enable(False), self.concpan.Enable(False)
+        self.avpan.Enable(False)
+        self.prstpan.Enable(False)
+        self.ydlpan.Enable(False)
+        self.startpan.Enable(True)
+        self.viewtimeline.Enable(False)
+        self.concpan.Enable(False)
         self.toolbar.Show()
         self.logpan.Enable(False)
         self.toolbar.EnableTool(3, True)
@@ -1608,16 +1626,22 @@ class MainFrame(wx.Frame):
 
         self.SetTitle(_('Videomass - YouTube Downloader'))
         self.outpath_ydl = self.textDnDTarget.file_dest
-        self.fileDnDTarget.Hide(), self.textDnDTarget.Hide()
-        self.VconvPanel.Hide(), self.PrstsPanel.Hide()
-        self.TimeLine.Hide(), self.ConcatDemuxer.Hide()
+        self.fileDnDTarget.Hide()
+        self.textDnDTarget.Hide()
+        self.VconvPanel.Hide()
+        self.PrstsPanel.Hide()
+        self.TimeLine.Hide()
+        self.ConcatDemuxer.Hide()
         self.ytDownloader.Show()
         self.toolbar.Show()
         self.menu_items()  # disable some menu items
         self.openmedia.Enable(False)
-        self.avpan.Enable(True), self.prstpan.Enable(True)
-        self.ydlpan.Enable(False), self.startpan.Enable(True)
-        self.viewtimeline.Enable(False), self.logpan.Enable(True)
+        self.avpan.Enable(True)
+        self.prstpan.Enable(True)
+        self.ydlpan.Enable(False)
+        self.startpan.Enable(True)
+        self.viewtimeline.Enable(False)
+        self.logpan.Enable(True)
         self.concpan.Enable(True)
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, False)
@@ -1635,9 +1659,12 @@ class MainFrame(wx.Frame):
         Show Video converter panel
         """
         self.outpath_ffmpeg = self.fileDnDTarget.file_dest
-        self.fileDnDTarget.Hide(), self.textDnDTarget.Hide()
-        self.ytDownloader.Hide(), self.PrstsPanel.Hide()
-        self.ConcatDemuxer.Hide(), self.VconvPanel.Show()
+        self.fileDnDTarget.Hide()
+        self.textDnDTarget.Hide()
+        self.ytDownloader.Hide()
+        self.PrstsPanel.Hide()
+        self.ConcatDemuxer.Hide()
+        self.VconvPanel.Show()
         filenames = [f['format']['filename'] for f in
                      self.data_files if f['format']['filename']
                      ]
@@ -1667,9 +1694,12 @@ class MainFrame(wx.Frame):
         self.toolbar.Show()
         self.menu_items()  # disable some menu items
         self.openmedia.Enable(True)
-        self.avpan.Enable(False), self.prstpan.Enable(True)
-        self.ydlpan.Enable(True), self.startpan.Enable(True)
-        self.viewtimeline.Enable(True), self.logpan.Enable(True)
+        self.avpan.Enable(False)
+        self.prstpan.Enable(True)
+        self.ydlpan.Enable(True)
+        self.startpan.Enable(True)
+        self.viewtimeline.Enable(True)
+        self.logpan.Enable(True)
         self.concpan.Enable(True)
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, False)
@@ -1688,9 +1718,12 @@ class MainFrame(wx.Frame):
 
         """
         self.outpath_ffmpeg = self.fileDnDTarget.file_dest
-        self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        self.ytDownloader.Hide(), self.VconvPanel.Hide(),
-        self.ConcatDemuxer.Hide(), self.PrstsPanel.Show()
+        self.fileDnDTarget.Hide()
+        self.textDnDTarget.Hide()
+        self.ytDownloader.Hide()
+        self.VconvPanel.Hide()
+        self.ConcatDemuxer.Hide()
+        self.PrstsPanel.Show()
         filenames = [f['format']['filename'] for f in
                      self.data_files if f['format']['filename']
                      ]
@@ -1718,9 +1751,12 @@ class MainFrame(wx.Frame):
         self.view_Timeline(self)  # set timeline status
         self.toolbar.Show()
         self.openmedia.Enable(True)
-        self.avpan.Enable(True), self.prstpan.Enable(False),
-        self.ydlpan.Enable(True), self.startpan.Enable(True)
-        self.viewtimeline.Enable(True), self.logpan.Enable(True)
+        self.avpan.Enable(True)
+        self.prstpan.Enable(False)
+        self.ydlpan.Enable(True)
+        self.startpan.Enable(True)
+        self.viewtimeline.Enable(True)
+        self.logpan.Enable(True)
         self.concpan.Enable(True)
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, False)
@@ -1739,9 +1775,12 @@ class MainFrame(wx.Frame):
 
         """
         self.outpath_ffmpeg = self.fileDnDTarget.file_dest
-        self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        self.ytDownloader.Hide(), self.VconvPanel.Hide(),
-        self.PrstsPanel.Hide(), self.ConcatDemuxer.Show()
+        self.fileDnDTarget.Hide()
+        self.textDnDTarget.Hide()
+        self.ytDownloader.Hide()
+        self.VconvPanel.Hide()
+        self.PrstsPanel.Hide()
+        self.ConcatDemuxer.Show()
         self.TimeLine.Hide()
 
         filenames = [f['format']['filename'] for f in
@@ -1770,9 +1809,12 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - Concatenate Demuxer'))
         self.toolbar.Show()
         self.openmedia.Enable(True)
-        self.avpan.Enable(True), self.prstpan.Enable(True),
-        self.ydlpan.Enable(True), self.startpan.Enable(True)
-        self.viewtimeline.Enable(False), self.logpan.Enable(True)
+        self.avpan.Enable(True)
+        self.prstpan.Enable(True)
+        self.ydlpan.Enable(True)
+        self.startpan.Enable(True)
+        self.viewtimeline.Enable(False)
+        self.logpan.Enable(True)
         self.concpan.Enable(False)
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, False)
@@ -1822,9 +1864,12 @@ class MainFrame(wx.Frame):
 
         self.SetTitle(_('Videomass - Output Monitor'))
         # Hide all others panels:
-        self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        self.ytDownloader.Hide(), self.VconvPanel.Hide(),
-        self.PrstsPanel.Hide(), self.TimeLine.Hide(),
+        self.fileDnDTarget.Hide()
+        self.textDnDTarget.Hide()
+        self.ytDownloader.Hide()
+        self.VconvPanel.Hide()
+        self.PrstsPanel.Hide()
+        self.TimeLine.Hide()
         self.ConcatDemuxer.Hide()
         # Show the panel:
         self.ProcessPanel.Show()

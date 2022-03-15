@@ -4,9 +4,10 @@ Name: filter_denoiser.py
 Porpose: Show dialog to get denoiser data based on FFmpeg syntax
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: March.13.2022
+Code checker: pylint, flake8
 ########################################################
 
 This file is part of Videomass.
@@ -200,6 +201,7 @@ class Denoisers(wx.Dialog):
 
     def on_nlmeans(self, event):
         """
+        Enable/disable Denoiser using `nlmeans` filter
         """
         if self.ckbx_nlmeans.IsChecked():
             self.rdb_nlmeans.Enable()
@@ -215,6 +217,8 @@ class Denoisers(wx.Dialog):
 
     def on_nlmeans_opt(self, event):
         """
+        When `nlmeans` is enabled, even enables additional
+        options on radiobox control.
         """
         opt = self.rdb_nlmeans.GetStringSelection()
         if opt == "Default":
@@ -229,6 +233,7 @@ class Denoisers(wx.Dialog):
 
     def on_hqdn3d(self, event):
         """
+        Enable/disable Denoiser using `hqdn3d` filter
         """
         if self.ckbx_hqdn3d.IsChecked():
             self.ckbx_nlmeans.Disable()
@@ -243,6 +248,8 @@ class Denoisers(wx.Dialog):
 
     def on_hqdn3d_opt(self, event):
         """
+        When `hqdn3d` is enabled, even enables additional
+        options on radiobox control.
         """
         opt = self.rdb_hqdn3d.GetStringSelection()
         if opt == "Default":
@@ -262,8 +269,8 @@ class Denoisers(wx.Dialog):
         """
         if Denoisers.appdata['GETLANG'] in Denoisers.appdata['SUPP_LANGs']:
             lang = Denoisers.appdata['GETLANG'].split('_')[0]
-            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/%s/4-Video_filters_%s.pdf' % (lang, lang))
+            page = (f'https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    f'languages/{lang}/4-Video_filters_{lang}.pdf')
         else:
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
                     'languages/en/4-Video_filters_en.pdf')
@@ -287,26 +294,22 @@ class Denoisers(wx.Dialog):
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
-
+        """
+        Close this dialog without saving anything
+        """
         event.Skip()
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):
         """
-        if you enable self.Destroy(), it delete from memory all data
-        event and no return correctly. It has the right behavior if
-        not used here, because it is called in the main frame.
-
-        Event.Skip(), work correctly here. Sometimes needs to disable
-        it for needs to maintain the view of the window (for exemple).
+        Don't use self.Destroy() in this dialog
         """
-        self.getvalue()
-        # self.Destroy()
         event.Skip()
     # ------------------------------------------------------------------#
 
     def getvalue(self):
         """
-        This method return values via the interface GetValue()
+        This method return values via the interface getvalue()
+        by the caller. See the caller for more info and usage.
         """
         return self.denoiser

@@ -3,6 +3,7 @@
 *.eggs
 *.log
 *.mbtree
+*.cutree
 transforms.trf
 dist
 build

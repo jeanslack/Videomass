@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.14.2022
+Rev: March.10.2022
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -141,7 +141,7 @@ class TwoPass(Thread):
                     if proc1.wait():  # will add '..failed' to txtctrl
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
-                                     output=line,
+                                     output='',
                                      duration=duration,
                                      status=proc1.wait(),
                                      )
@@ -172,7 +172,7 @@ class TwoPass(Thread):
                              count='',
                              fsource='',
                              destination='',
-                             duration='',
+                             duration=duration,
                              end='ok'
                              )
             # --------------- second pass ----------------#
@@ -220,7 +220,7 @@ class TwoPass(Thread):
                 if proc2.wait():  # will add '..failed' to txtctrl
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
-                                 output=line,
+                                 output='',
                                  duration=duration,
                                  status=proc2.wait(),
                                  )
@@ -240,7 +240,7 @@ class TwoPass(Thread):
                              count='',
                              fsource='',
                              destination='',
-                             duration='',
+                             duration=duration,
                              end='ok'
                              )
         time.sleep(.5)

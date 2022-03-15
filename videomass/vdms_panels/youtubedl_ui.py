@@ -4,9 +4,9 @@ Name: youtubedl_ui.py
 Porpose: youtube-dl user interface
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.05.2021
+Rev: March.14.2022
 Code checker: flake8 --ignore=F821,W503,
               pylint disable=E0602, E1101, C0415, E0401, C0103, W0613
 ########################################################
@@ -230,7 +230,7 @@ class Downloader(wx.Panel):
                               )
         boxoptions.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
         boxoptions.Add((5, 5))
-        panelscroll = scrolled.ScrolledPanel(self, -1, size=(260, 900),
+        panelscroll = scrolled.ScrolledPanel(self, -1, size=(260, 1000),
                                              style=wx.TAB_TRAVERSAL
                                              | wx.BORDER_THEME,
                                              name="panelscr",
@@ -313,7 +313,14 @@ class Downloader(wx.Panel):
                                    (_('Write subtitles to video'))
                                    )
         fgs1.Add(self.ckbx_sb, 0, wx.ALL, 5)
-
+        sizer_subtitles = wx.BoxSizer(wx.HORIZONTAL)
+        self.ckbx_all_sb = wx.CheckBox(panelscroll, wx.ID_ANY,
+                                   (_('Download all available subtitles'))
+                                   )
+        self.ckbx_all_sb.Disable()
+        sizer_subtitles.Add((20, 20), 0,)
+        sizer_subtitles.Add(self.ckbx_all_sb)
+        fgs1.Add(sizer_subtitles, 0, wx.ALL, 5)
         self.ckbx_w = wx.CheckBox(panelscroll, wx.ID_ANY,
                                   (_('Prevent overwriting files'))
                                   )
@@ -936,8 +943,11 @@ class Downloader(wx.Panel):
         """
         if self.ckbx_sb.IsChecked():
             self.opt["SUBTITLES"] = True
+            self.ckbx_all_sb.Enable()
         else:
             self.opt["SUBTITLES"] = False
+            self.ckbx_all_sb.Disable()
+            self.ckbx_all_sb.SetValue(False)
     # -----------------------------------------------------------------#
 
     def getformatcode(self, urls):
@@ -1038,6 +1048,8 @@ class Downloader(wx.Panel):
         if self.opt["SUBTITLES"]:
             postprocessors.append({'key': 'FFmpegEmbedSubtitle'})
 
+        sublang = ['all'] if self.ckbx_all_sb.IsChecked() else ''
+
         if self.choice.GetSelection() in (0, 1):  # precompiled or quality
             code = []
             data = {'format': self.fcode.GetItemText(0, 3),
@@ -1049,6 +1061,7 @@ class Downloader(wx.Panel):
                     'extractaudio': False,
                     'addmetadata': self.opt["METADATA"],
                     'writesubtitles': self.opt["SUBTITLES"],
+                    'subtitleslangs': sublang,
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
@@ -1066,6 +1079,7 @@ class Downloader(wx.Panel):
                     'extractaudio': False,
                     'addmetadata': self.opt["METADATA"],
                     'writesubtitles': self.opt["SUBTITLES"],
+                    'subtitleslangs': sublang,
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
@@ -1083,6 +1097,7 @@ class Downloader(wx.Panel):
                     'extractaudio': True,
                     'addmetadata': self.opt["METADATA"],
                     'writesubtitles': self.opt["SUBTITLES"],
+                    'subtitleslangs': sublang,
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
@@ -1106,6 +1121,7 @@ class Downloader(wx.Panel):
                     'extractaudio': False,
                     'addmetadata': self.opt["METADATA"],
                     'writesubtitles': self.opt["SUBTITLES"],
+                    'subtitleslangs': sublang,
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,

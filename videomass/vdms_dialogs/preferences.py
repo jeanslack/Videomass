@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.02.2022
+Rev: March.12.2022
 Code checker: pylint, flake8
 ########################################################
 
@@ -611,7 +611,7 @@ class SetUp(wx.Dialog):
 
         dlg = wx.DirDialog(self, _("Set a persistent location to save the "
                                    "file downloads"), "",
-                           wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
+                           wx.DD_DEFAULT_STYLE)
 
         if dlg.ShowModal() == wx.ID_OK:
             self.txtctrl_YDLpath.Clear()
@@ -634,7 +634,7 @@ class SetUp(wx.Dialog):
 
         dlg = wx.DirDialog(self, _("Set a persistent location to save "
                                    "exported files"), "",
-                           wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
+                           wx.DD_DEFAULT_STYLE)
 
         if dlg.ShowModal() == wx.ID_OK:
             self.txtctrl_FFpath.Clear()
@@ -759,8 +759,7 @@ class SetUp(wx.Dialog):
             self.txtctrl_ffmpeg.Disable()
             self.settings['ffmpeg_islocal'] = False
 
-            status = detect_binaries(self.appdata['ostype'],
-                                     self.ffmpeg,
+            status = detect_binaries(self.ffmpeg,
                                      self.appdata['FFMPEG_videomass_pkg']
                                      )
             if status[0] == 'not installed':
@@ -802,8 +801,7 @@ class SetUp(wx.Dialog):
             self.txtctrl_ffprobe.Disable()
             self.settings['ffprobe_islocal'] = False
 
-            status = detect_binaries(self.appdata['ostype'],
-                                     self.ffprobe,
+            status = detect_binaries(self.ffprobe,
                                      self.appdata['FFMPEG_videomass_pkg']
                                      )
             if status[0] == 'not installed':
@@ -846,8 +844,7 @@ class SetUp(wx.Dialog):
             self.txtctrl_ffplay.Disable()
             self.settings['ffplay_islocal'] = False
 
-            status = detect_binaries(self.appdata['ostype'],
-                                     self.ffplay,
+            status = detect_binaries(self.ffplay,
                                      self.appdata['FFMPEG_videomass_pkg']
                                      )
             if status[0] == 'not installed':

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.19.2022
+Rev: March.14.2022
 Code checker:
     - flake8: --ignore F821, W504, F401
     - pylint: --ignore E0602, E1101, C0415, E0401, C0103
@@ -41,12 +41,15 @@ from videomass.vdms_threads.two_pass_ebu import Loudnorm
 from videomass.vdms_threads.picture_exporting import PicturesFromVideo
 from videomass.vdms_threads.video_stabilization import VidStab
 from videomass.vdms_threads.concat_demuxer import ConcatDemuxer
-from videomass.vdms_utils.utils import get_milliseconds
+from videomass.vdms_utils.utils import (get_milliseconds,
+                                        milliseconds2timeformat
+                                        )
 
 
 def delete_file_source(flist, path):
     """
     Move whole files list to Videomass Trash folder
+    after encoding process.
     """
     date = time.strftime('%H%M%S-%a_%d_%B_%Y')
     for name in flist:
@@ -114,6 +117,7 @@ class LogOut(wx.Panel):
         self.appdata = get.appset
         self.parent = parent  # main frame
         self.thread_type = None  # the instantiated thread
+        self.time_remaining = True  # create time remaining progress
         self.abort = False  # if True set to abort current process
         self.error = False  # if True, all the tasks was failed
         self.previus = None  # panel name from which it starts
@@ -202,6 +206,7 @@ class LogOut(wx.Panel):
                                         self.logname, time_seq
                                         )
         elif varargs[0] == 'savepictures':
+            self.time_remaining = False
             self.thread_type = PicturesFromVideo(varargs, duration,
                                                  self.logname, time_seq
                                                  )
@@ -210,11 +215,14 @@ class LogOut(wx.Panel):
                                        self.logname, time_seq
                                        )
         elif varargs[0] == 'concat_demuxer':  # from Concatenation Demuxer
+            self.time_remaining = False
             self.thread_type = ConcatDemuxer(varargs, duration,
                                              self.logname,
                                              )
         elif varargs[0] == 'youtube_dl downloading':  # as import youtube_dl
+            self.time_remaining = False
             self.ckbx_text.Hide()
+            self.barprog.Hide()
             self.thread_type = YdlDownloader(varargs, self.logname)
     # ----------------------------------------------------------------------
 
@@ -257,10 +265,6 @@ class LogOut(wx.Panel):
             eta = duration['_eta_str']
             self.labperc.SetLabel(f'Downloading... {perc} of '
                                   f'{tbytes} at {speed} ETA {eta}')
-            if perc not in ('Unknown ', 'N/A'):
-                percentage = float(perc.strip().split('%')[0])
-                if percentage >= self.barprog.GetValue():
-                    self.barprog.SetValue(percentage)
 
         elif status == 'FINISHED':
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
@@ -316,8 +320,15 @@ class LogOut(wx.Panel):
             ffprog = []
             for x, y in pairwise(out):
                 ffprog.append(f"{x}: {y} | ")
+
+            if self.time_remaining is True:
+                remaining = milliseconds2timeformat(duration - ms)
+                eta = f"ETA: {remaining} |"
+            else:
+                eta = ""
             self.labperc.SetLabel(f"Processing... {str(int(percentage))}% | "
-                                  f"{''.join(ffprog)}")
+                                  f"{''.join(ffprog)} {eta}"
+                                  )
             del output, duration
 
         else:  # append all others lines on the textctrl and log file
@@ -352,15 +363,20 @@ class LogOut(wx.Panel):
         if end == 'ok':
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['SUCCESS']))
             self.txtout.AppendText(f"{LogOut.MSG_done}\n")
-            try:
-                if self.labperc.GetLabel()[1] != '100%':
-                    newlab = self.labperc.GetLabel().split()
-                    newlab[1] = '100%'
-                    self.labperc.SetLabel(" ".join(newlab))
-            except IndexError:
-                self.labperc.SetLabel('')
-
+            # set final values for percentage, time and ETA
+            if self.time_remaining is True:
+                newlab = self.labperc.GetLabel().split('|')
+                for idx, ele in enumerate(self.labperc.GetLabel().split('|')):
+                    if 'Processing...' in ele:
+                        newlab[idx] = 'Processing... 100%'
+                    if ' time:' in ele:
+                        timefrm = milliseconds2timeformat(duration)
+                        newlab[idx] = (f' time: {str(timefrm)}')
+                    if ' ETA:' in ele:
+                        newlab[idx] = ' ETA: 00:00:00.000'
+                self.labperc.SetLabel("|".join(newlab))
             return
+
         # if STATUS_ERROR == 1:
         if end == 'error':
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
@@ -479,6 +495,9 @@ class LogOut(wx.Panel):
         self.error = False
         self.result.clear()
         self.count = 0
+        if not self.barprog.IsShown():
+            self.barprog.Show()  # restoring progress bar if hidden
+        self.time_remaining = True  # restoring time remaining display
         # self.txtout.Clear()
         # self.labperc.SetLabel('')
         self.parent.panelShown(self.previus)  # retrieve at previusly panel

@@ -43,7 +43,7 @@ def msg_error(msg):
     """
     Receive error messages via wxCallafter
     """
-    wx.MessageBox("%s" % (msg), "Videomass", wx.ICON_ERROR)
+    wx.MessageBox(f"{msg}", "Videomass", wx.ICON_ERROR)
 # ------------------------------------------------------------------------#
 
 
@@ -51,7 +51,7 @@ def msg_warning(msg):
     """
     Receive info messages via wxCallafter
     """
-    wx.MessageBox("%s" % (msg), "Videomass", wx.ICON_INFORMATION)
+    wx.MessageBox(f"{msg}", "Videomass", wx.ICON_INFORMATION)
 # ------------------------------------------------------------------------#
 
 
@@ -128,7 +128,7 @@ class DownloadStream(Thread):
         self.quality = quality  # output quality e.g. worst, best, Format code
         self.nocheckcertificate = ssl
         self.outputdir = DownloadStream.TMP  # pathname destination
-        self.outtmpl = '%(title)s_{}.%(ext)s'.format(self.quality)  # filename
+        self.outtmpl = f'%(title)s_{self.quality}.%(ext)s'  # filename
 
         Thread.__init__(self)
     # --------------------------------------------------------------#
@@ -143,7 +143,7 @@ class DownloadStream(Thread):
 
         ydl_opts = {
             'format': self.quality,
-            'outtmpl': '{}/{}'.format(self.outputdir, self.outtmpl),
+            'outtmpl': f'{self.outputdir}/{self.outtmpl}',
             'restrictfilenames': True,
             'nopart': True,  # see --no-part by --help
             'ignoreerrors': True,
@@ -152,7 +152,7 @@ class DownloadStream(Thread):
             'noplaylist': True,
             'no_color': True,
             'nocheckcertificate': self.nocheckcertificate,
-            'ffmpeg_location': '{}'.format(DownloadStream.FFMPEG_URL),
+            'ffmpeg_location': f'{DownloadStream.FFMPEG_URL}',
             'logger': MyLogger(),
         }
         if DownloadStream.DOWNLOADER == 'yt_dlp':

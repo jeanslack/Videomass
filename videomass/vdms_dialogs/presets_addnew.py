@@ -4,9 +4,10 @@ Name: presets_addnew.py
 Porpose: profiles storing and profiles editing dialog
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021 *-pycodestyle- compatible*
+Rev: March.13.2022
+Code checker: pylint, flake8
 ########################################################
 
 This file is part of Videomass.
@@ -60,8 +61,7 @@ class MemPresets(wx.Dialog):
         get = wx.GetApp()
         self.appdata = get.appset
         self.path_prst = os.path.join(self.appdata['confdir'], 'presets',
-                                      '%s.prst' % filename
-                                      )
+                                      f'{filename}.prst')
         self.arg = arg  # evaluate if 'edit', 'newprofile', 'addprofile'
         self.array = array  # param list [name,descript,cmd1,cmd2,supp,ext]
 
@@ -221,8 +221,8 @@ class MemPresets(wx.Dialog):
         """
         if self.appdata['GETLANG'] in self.appdata['SUPP_LANGs']:
             lang = self.appdata['GETLANG'].split('_')[0]
-            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/%s/3-Presets_Manager_%s.pdf' % (lang, lang))
+            page = (f'https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    f'languages/{lang}/3-Presets_Manager_{lang}.pdf')
         else:
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
                     'languages/en/3-Presets_Manager_en.pdf')
@@ -231,13 +231,15 @@ class MemPresets(wx.Dialog):
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
-        # self.Destroy()
+        """
+        Close this dialog without saving anything
+        """
         event.Skip()
     # ------------------------------------------------------------------#
 
     def on_apply(self, event):
         """
-
+        Apply changes
         """
         name = self.txt_name.GetValue()
         descript = self.txt_descript.GetValue()
@@ -270,19 +272,20 @@ class MemPresets(wx.Dialog):
         with open(self.path_prst, 'r', encoding='utf8') as infile:
             stored_data = json.load(infile)
 
-        if self.arg == 'newprofile' or self.arg == 'addprofile':  # create new
+        if self.arg in ('newprofile', 'addprofile'):  # create new
             for x in stored_data:
                 if x["Name"] == name:
                     wx.MessageBox(_("Profile already stored with same name"),
                                   "Videomass", wx.ICON_WARNING, self)
                     return
 
-            data = [{"Name": "%s" % name,
-                     "Description": "%s" % descript,
-                     "First_pass": "%s" % pass_1,
-                     "Second_pass": "%s" % pass_2,
-                     "Supported_list": "%s" % file_support,
-                     "Output_extension": "%s" % extens}]
+            data = [{"Name": f"{name}",
+                     "Description": f"{descript}",
+                     "First_pass": f"{pass_1}",
+                     "Second_pass": f"{pass_2}",
+                     "Supported_list": f"{file_support}",
+                     "Output_extension": f"{extens}"
+                     }]
 
             new_data = stored_data + data
             new_data.sort(key=lambda s: s["Name"])  # make sorted by name
@@ -291,12 +294,12 @@ class MemPresets(wx.Dialog):
             new_data = stored_data
             for item in new_data:
                 if item["Name"] == self.array[0]:
-                    item["Name"] = "%s" % name
-                    item["Description"] = "%s" % descript
-                    item["First_pass"] = "%s" % pass_1
-                    item["Second_pass"] = "%s" % pass_2
-                    item["Supported_list"] = "%s" % file_support
-                    item["Output_extension"] = "%s" % extens
+                    item["Name"] = f"{name}"
+                    item["Description"] = f"{descript}"
+                    item["First_pass"] = f"{pass_1}"
+                    item["Second_pass"] = f"{pass_2}"
+                    item["Supported_list"] = f"{file_support}"
+                    item["Output_extension"] = f"{extens}"
 
         new_data.sort(key=lambda s: s["Name"])  # make sorted by name
         with open(self.path_prst, 'w', encoding='utf8') as outfile:
@@ -304,8 +307,10 @@ class MemPresets(wx.Dialog):
 
         if self.arg in ['newprofile', 'addprofile']:
             wx.MessageBox(_("Successful storing!"))
-            self.txt_name.SetValue(''), self.txt_descript.SetValue(''),
-            self.pass_1_cmd.SetValue(''), self.txt_ext.SetValue('')
+            self.txt_name.SetValue('')
+            self.txt_descript.SetValue('')
+            self.pass_1_cmd.SetValue('')
+            self.txt_ext.SetValue('')
             self.txt_supp.SetValue('')
 
         elif self.arg == 'edit':

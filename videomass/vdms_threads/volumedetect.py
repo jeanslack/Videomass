@@ -4,9 +4,9 @@ Name: volumedetect.py
 Porpose: Audio Peak level volume analyzes
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.12.2021
+Rev: March.11.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -86,15 +86,13 @@ class VolumeDetectThread(Thread):
               the end of the process to close of the pop-up
 
         """
-        volume = list()
+        volume = []
 
         for files in self.filelist:
-            cmd = ('"{0}" {1} -i "{2}" -hide_banner {3} -af volumedetect '
-                   '-vn -sn -dn -f null {4}').format(self.ffmpeg_url,
-                                                     self.time_seq,
-                                                     files,
-                                                     self.audiomap,
-                                                     self.nul)
+            cmd = (f'"{self.ffmpeg_url}" {self.time_seq} -i "{files}" '
+                   f'-hide_banner {self.audiomap} -af volumedetect '
+                   f'-vn -sn -dn -f null {self.nul}'
+                   )
             self.logwrite(cmd)
 
             if not platform.system() == 'Windows':
@@ -116,10 +114,10 @@ class VolumeDetectThread(Thread):
                     if 'mean_volume:' in raw_list:
                         mean_volume = raw_list.index("mean_volume:")
                         # mean_volume is indx integear
-                        medvol = "%s dB" % raw_list[mean_volume + 1]
+                        medvol = f"{raw_list[mean_volume + 1]} dB"
                         max_volume = raw_list.index("max_volume:")
                         # max_volume is indx integear
-                        maxvol = "%s dB" % raw_list[max_volume + 1]
+                        maxvol = f"{raw_list[max_volume + 1]} dB"
                         volume.append([maxvol, medvol])
 
             except (OSError, FileNotFoundError) as err:  # ffmpeg do not exist
@@ -142,7 +140,7 @@ class VolumeDetectThread(Thread):
         write ffmpeg command log
         """
         with open(self.logf, "a", encoding='utf8') as log:
-            log.write("%s\n" % (cmd))
+            log.write(f"{cmd}\n")
     # ----------------------------------------------------------------#
 
     def logerror(self):
@@ -150,5 +148,5 @@ class VolumeDetectThread(Thread):
         write ffmpeg volumedected errors
         """
         with open(self.logf, "a", encoding='utf8') as logerr:
-            logerr.write("\n[FFMPEG] volumedetect "
-                         "ERRORS:\n%s\n" % (self.status))
+            logerr.write(f"\n[FFMPEG] volumedetect "
+                         f"ERRORS:\n{self.status}\n")

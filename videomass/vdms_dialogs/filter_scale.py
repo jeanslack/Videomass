@@ -4,9 +4,10 @@ Name: filter_scale.py
 Porpose: Show dialog to get scale data based on FFmpeg syntax
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.09.2021 *-pycodestyle- compatible*
+Rev: March.13.2022
+Code checker: pylint, flake8
 ########################################################
 
 This file is part of Videomass.
@@ -26,7 +27,7 @@ This file is part of Videomass.
 """
 import webbrowser
 import wx
-# import wx.lib.masked as masked # not work on macOSX
+# import wx.lib.masked as masked # does not work on macOSX
 
 
 class Scale(wx.Dialog):
@@ -53,7 +54,6 @@ class Scale(wx.Dialog):
         self.sarDen = "0"
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        """constructor"""
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         # --- Scale section:
         box_scale = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
@@ -211,8 +211,8 @@ class Scale(wx.Dialog):
         else:
             label_sdim.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             label_msg.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            self.lab_dar.SetLabelMarkup("<b>%s</b>" % lab1)
-            self.lab_sar.SetLabelMarkup("<b>%s</b>" % lab2)
+            self.lab_dar.SetLabelMarkup(f"<b>{lab1}</b>")
+            self.lab_sar.SetLabelMarkup(f"<b>{lab2}</b>")
 
         # ----------------------Binding (EVT)--------------------------#
         self.Bind(wx.EVT_CHECKBOX, self.on_Constrain, self.ckbx_keep)
@@ -228,12 +228,16 @@ class Scale(wx.Dialog):
 
             if self.width in ('-1', '-2'):
                 self.ckbx_keep.SetValue(True)
-                self.rdb_scale.Enable(), self.rdb_scale.SetSelection(1)
-                self.keep_aspect_ratio_ON(), self.on_Dimension(self)
+                self.rdb_scale.Enable()
+                self.rdb_scale.SetSelection(1)
+                self.keep_aspect_ratio_ON()
+                self.on_Dimension(self)
             elif self.height in ('-1', '-2'):
                 self.ckbx_keep.SetValue(True)
-                self.rdb_scale.Enable(), self.rdb_scale.SetSelection(0)
-                self.keep_aspect_ratio_ON(), self.on_Dimension(self)
+                self.rdb_scale.Enable()
+                self.rdb_scale.SetSelection(0)
+                self.keep_aspect_ratio_ON()
+                self.on_Dimension(self)
 
             self.spin_scale_width.SetValue(self.width)
             self.spin_scale_height.SetValue(self.height)
@@ -253,25 +257,39 @@ class Scale(wx.Dialog):
         """
         Reset the setdar and setsar filters and disable them
         """
-        self.spin_setdarNum.SetValue(0), self.spin_setdarDen.SetValue(0)
-        self.spin_setdarNum.Disable(), self.spin_setdarDen.Disable()
-        self.lab_dar.Disable(), self.label_num.Disable()
-        self.label_sepdar.Disable(), self.label_den.Disable()
-        self.spin_setsarNum.SetValue(0), self.spin_setsarDen.SetValue(0)
-        self.spin_setsarNum.Disable(), self.spin_setsarDen.Disable()
-        self.lab_sar.Disable(), self.label_num1.Disable()
-        self.label_sepsar.Disable(), self.label_den1.Disable()
+        self.spin_setdarNum.SetValue(0)
+        self.spin_setdarDen.SetValue(0)
+        self.spin_setdarNum.Disable()
+        self.spin_setdarDen.Disable()
+        self.lab_dar.Disable()
+        self.label_num.Disable()
+        self.label_sepdar.Disable()
+        self.label_den.Disable()
+        self.spin_setsarNum.SetValue(0)
+        self.spin_setsarDen.SetValue(0)
+        self.spin_setsarNum.Disable()
+        self.spin_setsarDen.Disable()
+        self.lab_sar.Disable()
+        self.label_num1.Disable()
+        self.label_sepsar.Disable()
+        self.label_den1.Disable()
 
     def keep_aspect_ratio_OFF(self):
         """
         Re-enable the setdar and setsar filters
         """
-        self.spin_setdarNum.Enable(), self.spin_setdarDen.Enable()
-        self.lab_dar.Enable(), self.label_num.Enable()
-        self.label_sepdar.Enable(), self.label_den.Enable()
-        self.spin_setsarNum.Enable(), self.spin_setsarDen.Enable()
-        self.lab_sar.Enable(), self.label_num1.Enable()
-        self.label_sepsar.Enable(), self.label_den1.Enable()
+        self.spin_setdarNum.Enable()
+        self.spin_setdarDen.Enable()
+        self.lab_dar.Enable()
+        self.label_num.Enable()
+        self.label_sepdar.Enable()
+        self.label_den.Enable()
+        self.spin_setsarNum.Enable()
+        self.spin_setsarDen.Enable()
+        self.lab_sar.Enable()
+        self.label_num1.Enable()
+        self.label_sepsar.Enable()
+        self.label_den1.Enable()
 
     # ----------------------Event handler (callback)---------------------#
 
@@ -320,8 +338,8 @@ class Scale(wx.Dialog):
         """
         if Scale.appdata['GETLANG'] in Scale.appdata['SUPP_LANGs']:
             lang = Scale.appdata['GETLANG'].split('_')[0]
-            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/%s/4-Video_filters_%s.pdf' % (lang, lang))
+            page = (f'https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    f'languages/{lang}/4-Video_filters_{lang}.pdf')
         else:
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
                     'languages/en/4-Video_filters_en.pdf')
@@ -336,59 +354,59 @@ class Scale(wx.Dialog):
         self.width, self.height = "0", "0"
         self.darNum, self.darDen = "0", "0"
         self.sarNum, self.sarDen = "0", "0"
-        self.ckbx_keep.SetValue(False), self.on_Constrain(self)
-        self.spin_scale_width.SetValue(0), self.spin_scale_height.SetValue(0)
-        self.spin_setdarNum.SetValue(0), self.spin_setdarDen.SetValue(0)
-        self.spin_setsarNum.SetValue(0), self.spin_setsarDen.SetValue(0)
+        self.ckbx_keep.SetValue(False)
+        self.on_Constrain(self)
+        self.spin_scale_width.SetValue(0)
+        self.spin_scale_height.SetValue(0)
+        self.spin_setdarNum.SetValue(0)
+        self.spin_setdarDen.SetValue(0)
+        self.spin_setsarNum.SetValue(0)
+        self.spin_setsarDen.SetValue(0)
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
+        """
+        Close this dialog without saving anything
+        """
         event.Skip()
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):
         """
-        if you enable self.Destroy(), it delete from memory all data
-        event and no return correctly. It has the right behavior if
-        not used here, because it is called in the main frame.
-
-        Event.Skip(), work correctly here. Sometimes needs to disable
-        it for needs to maintain the view of the window (for exemple).
-
+        Don't use self.Destroy() in this dialog
         """
-        self.getvalue()
-        # self.Destroy()
         event.Skip()
     # ------------------------------------------------------------------#
 
     def getvalue(self):
         """
-        This method return values via the interface GetValue()
+        This method return values via the interface getvalue()
+        by the caller. See the caller for more info and usage.
         """
         diction = {}
-        self.width = '%s' % self.spin_scale_width.GetValue()
-        self.height = '%s' % self.spin_scale_height.GetValue()
-        self.darNum = '%s' % self.spin_setdarNum.GetValue()
-        self.darDen = '%s' % self.spin_setdarDen.GetValue()
-        self.sarNum = '%s' % self.spin_setsarNum.GetValue()
-        self.sarDen = '%s' % self.spin_setsarDen.GetValue()
+        self.width = f'{self.spin_scale_width.GetValue()}'
+        self.height = f'{self.spin_scale_height.GetValue()}'
+        self.darNum = f'{self.spin_setdarNum.GetValue()}'
+        self.darDen = f'{self.spin_setdarDen.GetValue()}'
+        self.sarNum = f'{self.spin_setsarNum.GetValue()}'
+        self.sarDen = f'{self.spin_setsarDen.GetValue()}'
 
         if self.width == '0' or self.height == '0':
             size = ''
         else:
-            size = 'scale=w=%s:h=%s' % (self.width, self.height)
+            size = f'scale=w={self.width}:h={self.height}'
             diction['scale'] = size
 
         if self.darNum == '0' or self.darDen == '0':
             setdar = ''
         else:
-            setdar = 'setdar=%s/%s' % (self.darNum, self.darDen)
+            setdar = f'setdar={self.darNum}/{self.darDen}'
             diction['setdar'] = setdar
 
         if self.sarNum == '0' or self.sarDen == '0':
             setsar = ''
         else:
-            setsar = 'setsar=%s/%s' % (self.sarNum, self.sarDen)
+            setsar = f'setsar={self.sarNum}/{self.sarDen}'
             diction['setsar'] = setsar
 
-        return (diction)
+        return diction

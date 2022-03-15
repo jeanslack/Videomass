@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.14.2022
+Rev: March.10.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -81,7 +81,7 @@ class VidStab(Thread):
         addspl = ','.join([x for x in spl.split(',') if '-vf' not
                            in x and 'vidstabtransform' not in x and
                            'unsharp' not in x])  # if other filters
-        self.addflt = '' if addspl == '' else '%s,' % (addspl)
+        self.addflt = '' if addspl == '' else f'{addspl},'
 
         Thread.__init__(self)
         self.start()  # start the thread (va in self.run())
@@ -104,34 +104,29 @@ class VidStab(Thread):
             filename = os.path.splitext(basename)[0]  # nome senza ext
             source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
             outext = source_ext if not self.extoutput else self.extoutput
-            outputfile = os.path.join(folders, '%s%s.%s' % (filename,
-                                                            VidStab.SUFFIX,
-                                                            outext))
+            outputfile = os.path.join(folders,
+                                      f'{filename}{VidStab.SUFFIX}.{outext}')
 
             # --------------- first pass
-            pass1 = ('"%s" %s %s %s -i "%s" %s %s '
-                     '-y %s' % (VidStab.appdata['ffmpeg_cmd'],
-                                VidStab.appdata['ffmpegloglev'],
-                                VidStab.appdata['ffmpeg+params'],
-                                self.time_seq,
-                                files,
-                                self.passlist[0],
-                                VidStab.appdata['ffthreads'],
-                                self.nul,
-                                ))
-            self.count += 1
-            count = ('File %s/%s - Pass One\n'
-                     'Video stabilization detect...' % (self.count,
-                                                        self.countmax)
+            pass1 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
+                     f'{VidStab.appdata["ffmpegloglev"]} '
+                     f'{VidStab.appdata["ffmpeg+params"]} '
+                     f'{self.time_seq} -i "{files}" {self.passlist[0]} '
+                     f'{VidStab.appdata["ffthreads"]} -y {self.nul}'
                      )
-            cmd = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
-                   '[COMMAND]:\n%s' % (count, files, self.nul, pass1))
+            self.count += 1
+            count = (f'File {self.count}/{self.countmax} - Pass One\n'
+                     f'Video stabilization detect...'
+                     )
+            cmd = (f'{count}\nSource: "{files}"\nDestination: "{self.nul}"'
+                   f'\n\n[COMMAND]:\n{pass1}'
+                   )
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource='Source:  "%s"' % files,
-                         destination='Destination:  "%s"' % self.nul,
+                         fsource=f'Source:  "{files}"',
+                         destination=f'Destination:  "{self.nul}"',
                          duration=duration,
                          end='',
                          )
@@ -160,17 +155,17 @@ class VidStab(Thread):
                     if proc1.wait():  # will add '..failed' to txtctrl
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
-                                     output=line,
+                                     output='',
                                      duration=duration,
                                      status=proc1.wait(),
                                      )
                         logwrite('',
-                                 "Exit status: %s" % proc1.wait(),
+                                 f"Exit status: { proc1.wait()}",
                                  self.logname,
                                  )  # append exit error number
 
             except (OSError, FileNotFoundError) as err:
-                excepterr = "%s\n  %s" % (err, VidStab.NOT_EXIST_MSG)
+                excepterr = f"{err}\n  {VidStab.NOT_EXIST_MSG}"
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=excepterr,
@@ -191,35 +186,28 @@ class VidStab(Thread):
                              count='',
                              fsource='',
                              destination='',
-                             duration='',
+                             duration=duration,
                              end='ok'
                              )
             # --------------- second pass ----------------#
-            pass2 = ('"%s" %s %s %s -i "%s" %s %s %s '
-                     '-y "%s/%s%s.%s"' % (VidStab.appdata['ffmpeg_cmd'],
-                                          VidStab.appdata['ffmpegloglev'],
-                                          VidStab.appdata['ffmpeg+params'],
-                                          self.time_seq,
-                                          files,
-                                          self.passlist[1],
-                                          volume,
-                                          VidStab.appdata['ffthreads'],
-                                          folders,
-                                          filename,
-                                          VidStab.SUFFIX,
-                                          outext,
-                                          ))
-            count = ('File %s/%s - Pass Two\nVideo transform...' % (
-                     self.count, self.countmax,))
-
-            cmd = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
-                   '[COMMAND]:\n%s' % (count, files, outputfile, pass2))
-
+            pass2 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
+                     f'{VidStab.appdata["ffmpegloglev"]} '
+                     f'{VidStab.appdata["ffmpeg+params"]} {self.time_seq} -i '
+                     f'"{files}" {self.passlist[1]} {volume} '
+                     f'{VidStab.appdata["ffthreads"]} -y '
+                     f'"{folders}/{filename}{VidStab.SUFFIX}.{outext}"'
+                     )
+            count = (f'File {self.count}/{self.countmax} - Pass Two\n'
+                     f'Video transform...'
+                     )
+            cmd = (f'{count}\nSource: "{files}"\nDestination: "{outputfile}"'
+                   f'\n\n[COMMAND]:\n{pass2}'
+                   )
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource='Source:  "%s"' % files,
-                         destination='Destination:  "%s"' % outputfile,
+                         fsource=f'Source:  "{files}"',
+                         destination=f'Destination:  "{outputfile}"',
                          duration=duration,
                          end='',
                          )
@@ -248,12 +236,12 @@ class VidStab(Thread):
                 if proc2.wait():  # will add '..failed' to txtctrl
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
-                                 output=line,
+                                 output='',
                                  duration=duration,
                                  status=proc2.wait(),
                                  )
                     logwrite('',
-                             "Exit status: %s" % proc2.wait(),
+                             f"Exit status: {proc2.wait()}",
                              self.logname,
                              )  # append exit status error
 
@@ -268,37 +256,32 @@ class VidStab(Thread):
                              count='',
                              fsource='',
                              destination='',
-                             duration='',
+                             duration=duration,
                              end='ok'
                              )
-
             # --------------- make duo ----------------#
             if self.makeduo:
-                outduo = os.path.join(folders, '%s%s_DUO.%s' % (filename,
-                                                                VidStab.SUFFIX,
-                                                                outext))
-                pass3 = ('"%s" %s %s %s -i "%s" %s -vf "[in] %spad=2*iw:ih '
-                         '[left]; movie=%s [right]; '
-                         '[left][right] overlay=main_w/2:0 [out]" -y '
-                         '"%s"' % (VidStab.appdata['ffmpeg_cmd'],
-                                   VidStab.appdata['ffmpegloglev'],
-                                   VidStab.appdata['ffmpeg+params'],
-                                   self.time_seq,
-                                   files,
-                                   VidStab.appdata['ffthreads'],
-                                   self.addflt,
-                                   outputfile,
-                                   outduo,
-                                   ))
-                count = 'File %s/%s\nMake duo...' % (self.count, self.countmax)
-                cmd = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
-                       '[COMMAND]:\n%s' % (count, files, outputfile, pass3))
-
+                outduo = os.path.join(
+                                   folders,
+                                   f'{filename}{VidStab.SUFFIX}_DUO.{outext}'
+                                   )
+                pass3 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
+                         f'{VidStab.appdata["ffmpegloglev"]} '
+                         f'{VidStab.appdata["ffmpeg+params"]} {self.time_seq} '
+                         f'-i "{files}" {VidStab.appdata["ffthreads"]} '
+                         f'-vf "[in] {self.addflt}pad=2*iw:ih [left]; '
+                         f'movie={outputfile} [right]; [left][right] '
+                         f'overlay=main_w/2:0 [out]" -y "{outduo}"'
+                         )
+                count = f'File {self.count}/{self.countmax}\nMake duo...'
+                cmd = (f'{count}\nSource: "{files}"\n'
+                       f'Destination: "{outputfile}"\n\n[COMMAND]:\n{pass3}'
+                       )
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=count,
-                             fsource='Source:  "%s"' % files,
-                             destination='Destination: "%s"' % outduo,
+                             fsource=f'Source:  "{files}"',
+                             destination=f'Destination: "{outduo}"',
                              duration=duration,
                              end='',
                              )
@@ -327,12 +310,12 @@ class VidStab(Thread):
                     if proc3.wait():  # will add '..failed' to txtctrl
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
-                                     output=line,
+                                     output='',
                                      duration=duration,
                                      status=proc3.wait(),
                                      )
                         logwrite('',
-                                 "Exit status: %s" % proc3.wait(),
+                                 f"Exit status: {proc3.wait()}",
                                  self.logname,
                                  )  # append exit error number
 
@@ -346,7 +329,7 @@ class VidStab(Thread):
                                  count='',
                                  fsource='',
                                  destination='',
-                                 duration='',
+                                 duration=duration,
                                  end='ok'
                                  )
         time.sleep(.5)

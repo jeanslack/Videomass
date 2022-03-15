@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
-Name: one_pass.py
-Porpose: FFmpeg long processing task on one pass conversion
+Name: concat_demuxer.py
+Porpose: FFmpeg long processing task for Concatenation processing
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021
+Rev: March.10.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -137,7 +137,7 @@ class ConcatDemuxer(Thread):
                 if proc.wait():  # error
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
-                                 output=line,
+                                 output='',
                                  duration=self.duration,
                                  status=proc.wait(),
                                  )

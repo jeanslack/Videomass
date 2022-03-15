@@ -4,10 +4,10 @@ Name: utils.py
 Porpose: It groups useful functions that are called several times
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.19.2021
-Code checker: pycodestyle, flake8, pylint .
+Rev: March.12.2022
+Code checker: flake8, pylint .
 
 This file is part of Videomass.
 
@@ -285,7 +285,7 @@ def del_filecontents(filename):
 # ------------------------------------------------------------------#
 
 
-def detect_binaries(platform, executable, additionaldir=None):
+def detect_binaries(executable, additionaldir=None):
     """
     <https://stackoverflow.com/questions/11210104/check-if
     -a-program-exists-from-a-python-script>
@@ -298,7 +298,6 @@ def detect_binaries(platform, executable, additionaldir=None):
         If found on the O.S., return (None, executable)
         If found on the additionaldir, return ('provided', executable).
 
-    platform = platform name get by `platform.system()`
     executable = name of executable without extension
     additionaldir = additional dirname to perform search
 

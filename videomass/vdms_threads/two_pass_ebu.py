@@ -6,9 +6,8 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.14.2022
+Rev: March.10.2022
 Code checker: flake8: --ignore F821, W504
-
 
 This file is part of Videomass.
 
@@ -97,33 +96,26 @@ class Loudnorm(Thread):
             filename = os.path.splitext(basename)[0]  # name
             source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
             outext = source_ext if not self.ext else self.ext
-            outputfile = os.path.join(folders, '%s%s.%s' % (filename,
-                                                            Loudnorm.SUFFIX,
-                                                            outext
-                                                            ))
+            outputfile = os.path.join(folders,
+                                      f'{filename}{Loudnorm.SUFFIX}.{outext}')
 
             # --------------- first pass
-            pass1 = ('"{0}" -nostdin -loglevel info -stats '
-                     '-hide_banner {1} -i "{2}" {3} {4} -y '
-                     '{5}'.format(Loudnorm.appdata['ffmpeg_cmd'],
-                                  self.time_seq,
-                                  files,
-                                  self.passlist[0],
-                                  Loudnorm.appdata['ffthreads'],
-                                  self.nul,
-                                  ))
+            pass1 = (f'"{Loudnorm.appdata["ffmpeg_cmd"]}" -nostdin -loglevel '
+                     f'info -stats -hide_banner {self.time_seq} -i "{files}" '
+                     f'{self.passlist[0]} {Loudnorm.appdata["ffthreads"]} -y '
+                     f'{self.nul}'
+                     )
             self.count += 1
-            count = ('File %s/%s - Pass One\n '
-                     'Loudnorm ebu: Getting statistics for '
-                     'measurements...' % (self.count, self.countmax))
-            cmd = ('%s\nSource: "%s"\nDestination: "%s"\n\n'
-                   '[COMMAND]:\n%s' % (count, files, self.nul, pass1))
+            count = (f'File {self.count}/{self.countmax} - Pass One\n '
+                     f'Loudnorm ebu: Getting statistics for measurements...')
+            cmd = (f'{count}\nSource: "{files}"\nDestination: "{self.nul}"\n\n'
+                   f'[COMMAND]:\n{pass1}')
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource='Source:  "%s"' % files,
-                         destination='Destination: "%s"' % self.nul,
+                         fsource=f'Source:  "{files}"',
+                         destination=f'Destination: "{self.nul}"',
                          duration=duration,
                          end='',
                          )
@@ -156,18 +148,18 @@ class Loudnorm(Thread):
                     if proc1.wait():  # will add '..failed' to txtctrl
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
-                                     output=line,
+                                     output='',
                                      duration=duration,
                                      status=proc1.wait(),
                                      )
                         logwrite('',
-                                 "Exit status: %s" % proc1.wait(),
+                                 f"Exit status: {proc1.wait()}",
                                  self.logname,
                                  )  # append exit error number
                         break
 
             except (OSError, FileNotFoundError) as err:
-                excepterr = "%s\n  %s" % (err, Loudnorm.NOT_EXIST_MSG)
+                excepterr = f"{err}\n  {Loudnorm.NOT_EXIST_MSG}"
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=excepterr,
@@ -188,47 +180,40 @@ class Loudnorm(Thread):
                              count='',
                              fsource='',
                              destination='',
-                             duration='',
+                             duration=duration,
                              end='ok'
                              )
             # --------------- second pass ----------------#
-            filters = ('%s:measured_I=%s:measured_LRA=%s:measured_TP=%s:'
-                       'measured_thresh=%s:offset=%s:linear=true:dual_mono='
-                       'true' % (self.passlist[2],
-                                 summary["Input Integrated:"],
-                                 summary["Input LRA:"],
-                                 summary["Input True Peak:"],
-                                 summary["Input Threshold:"],
-                                 summary["Target Offset:"]
-                                 )
+            filters = (f'{self.passlist[2]}'
+                       f':measured_I={summary["Input Integrated:"]}'
+                       f':measured_LRA={summary["Input LRA:"]}'
+                       f':measured_TP={summary["Input True Peak:"]}'
+                       f':measured_thresh={summary["Input Threshold:"]}'
+                       f':offset={summary["Target Offset:"]}'
+                       f':linear=true:dual_mono=true'
                        )
             time.sleep(.5)
 
-            pass2 = ('"{0}" -nostdin -loglevel info -stats -hide_banner {1} '
-                     '-i "{2}" {3} -filter:a:{9} {4} {5} -y "{6}/{7}{10}.{8}" '
-                     ''.format(Loudnorm.appdata['ffmpeg_cmd'],
-                               self.time_seq,
-                               files,
-                               self.passlist[1],
-                               filters,
-                               Loudnorm.appdata['ffthreads'],
-                               folders,
-                               filename,
-                               outext,
-                               self.audio_outmap[1],
-                               Loudnorm.SUFFIX,
-                               ))
-
-            count = ('File %s/%s - Pass Two\nLoudnorm ebu: '
-                     'apply EBU R128... ' % (self.count, self.countmax))
-            cmd = ('\n%s\nSource: "%s"\nDestination: "%s"\n\n'
-                   '[COMMAND]:\n%s' % (count, files, outputfile, pass2))
+            pass2 = (f'"{Loudnorm.appdata["ffmpeg_cmd"]}" -nostdin -loglevel '
+                     f'info -stats -hide_banner {self.time_seq} -i '
+                     f'"{files}" {self.passlist[1]} '
+                     f'-filter:a:{self.audio_outmap[1]} {filters} '
+                     f'{Loudnorm.appdata["ffthreads"]} -y '
+                     f'"{folders}/{filename}{Loudnorm.SUFFIX}.{outext}"'
+                     )
+            count = (f'File {self.count}/{self.countmax} - Pass Two\n'
+                     f'Loudnorm ebu: apply EBU R128...'
+                     )
+            cmd = (f'\n{count}\nSource: "{files}"\n'
+                   f'Destination: "{outputfile}"\n\n'
+                   f'[COMMAND]:\n{pass2}'
+                   )
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource='Source:  "%s"' % files,
-                         destination='Destination: "%s"' % outputfile,
+                         fsource=f'Source:  "{files}"',
+                         destination=f'Destination: "{outputfile}"',
                          duration=duration,
                          end='',
                          )
@@ -256,12 +241,12 @@ class Loudnorm(Thread):
                 if proc2.wait():  # will add '..failed' to txtctrl
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
-                                 output=line,
+                                 output='',
                                  duration=duration,
                                  status=proc2.wait(),
                                  )
                     logwrite('',
-                             "Exit status: %s" % proc2.wait(),
+                             f"Exit status: {proc2.wait()}",
                              self.logname,
                              )  # append exit error number
 
@@ -276,7 +261,7 @@ class Loudnorm(Thread):
                              count='',
                              fsource='',
                              destination='',
-                             duration='',
+                             duration=duration,
                              end='ok'
                              )
         time.sleep(.5)
