@@ -274,7 +274,7 @@ class AV_Conv(wx.Panel):
                                           )
         sizer_nbVideo.Add(self.box_Vcod, 0, wx.ALL | wx.EXPAND, 5)
         self.codVpanel = scrolled.ScrolledPanel(self.nb_Video, -1,
-                                                size=(300, 700),
+                                                size=(320, 700),
                                                 style=wx.TAB_TRAVERSAL |
                                                 wx.BORDER_NONE,
                                                 name="panelscroll"
@@ -521,7 +521,7 @@ class AV_Conv(wx.Panel):
                                               )
         sizer_nbVideo.Add(self.box_Vfilters, 0, wx.ALL | wx.EXPAND, 5)
         self.filterVpanel = scrolled.ScrolledPanel(self.nb_Video, -1,
-                                                   size=(300, 700),
+                                                   size=(320, 700),
                                                    style=wx.TAB_TRAVERSAL |
                                                    wx.BORDER_NONE,
                                                    name="panelscroll"

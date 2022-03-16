@@ -175,12 +175,7 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.icons['videomass'],
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        if self.appdata['ostype'] == 'Darwin':
-            self.SetMinSize((980, 570))
-        elif self.appdata['ostype'] == 'Windows':
-            self.SetMinSize((920, 640))
-        else:
-            self.SetMinSize((900, 600))
+        self.SetMinSize((980, 640))
         # self.CentreOnScreen()  # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         self.Fit()

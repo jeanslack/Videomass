@@ -51,7 +51,7 @@ def args():
                         )
     parser.add_argument('-c', '--check',
                         help=('List of executables used by Videomass '
-                              'found on the system'),
+                              'found in your operating system'),
                         action="store_true",
                         )
 

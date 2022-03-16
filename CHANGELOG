@@ -30,6 +30,9 @@ Mar 15, 2022 V.3.5.8
   * Added the ability to download all available subtitles.
   * Added the ability to add new folders in the dialogs for destination
     directories.
+  * Added ability to download subtitles only (skipping video/audio download).
+  * Fixed initial window size and scrolling panels on av_conversions.py.
+  
 
 +------------------------------------+
 Mar 07, 2022 V.3.5.7
