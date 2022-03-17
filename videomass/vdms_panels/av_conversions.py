@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.01.2022
+Rev: Mar.15.2022
 Code checker: flake8
 ########################################################
 
@@ -185,6 +185,7 @@ class AV_Conv(wx.Panel):
         # set attributes:
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpplay = get_bmp(icons['preview'], ((16, 16)))
+            bmpapreview = get_bmp(icons['preview_audio'], ((16, 16)))
             bmpreset = get_bmp(icons['clear'], ((16, 16)))
             bmpresize = get_bmp(icons['scale'], ((16, 16)))
             bmpcrop = get_bmp(icons['crop'], ((16, 16)))
@@ -197,6 +198,7 @@ class AV_Conv(wx.Panel):
             bmpstab = get_bmp(icons['stabilizer'], ((16, 16)))
         else:
             bmpplay = wx.Bitmap(icons['preview'], wx.BITMAP_TYPE_ANY)
+            bmpapreview = wx.Bitmap(icons['preview_audio'], wx.BITMAP_TYPE_ANY)
             bmpreset = wx.Bitmap(icons['clear'], wx.BITMAP_TYPE_ANY)
             bmpresize = wx.Bitmap(icons['scale'], wx.BITMAP_TYPE_ANY)
             bmpcrop = wx.Bitmap(icons['crop'], wx.BITMAP_TYPE_ANY)
@@ -654,8 +656,14 @@ class AV_Conv(wx.Panel):
                                               wx.VERTICAL
                                               )
         sizer_nbAudio.Add(self.box_aFilters, 1, wx.ALL | wx.EXPAND, 5)
-        sizer_Anormalization = wx.BoxSizer(wx.VERTICAL)
-        self.box_aFilters.Add(sizer_Anormalization, 0, wx.EXPAND)
+        sizer_a_normaliz = wx.BoxSizer(wx.VERTICAL)
+        self.box_aFilters.Add(sizer_a_normaliz, 0, wx.EXPAND)
+
+        self.btn_audio_preview = wx.Button(self.nb_Audio, wx.ID_ANY,
+                                           _("Listening"), size=(-1, 40))
+        self.btn_audio_preview.SetBitmap(bmpapreview, wx.LEFT)
+        sizer_a_normaliz.Add(self.btn_audio_preview, 0, wx.ALL | wx.SHAPED, 5)
+
         self.rdbx_normalize = wx.RadioBox(self.nb_Audio, wx.ID_ANY,
                                           (_("Normalization")),
                                           choices=[('Off'),
@@ -666,14 +674,12 @@ class AV_Conv(wx.Panel):
                                           majorDimension=1,
                                           style=wx.RA_SPECIFY_ROWS,
                                           )
-        sizer_Anormalization.Add(self.rdbx_normalize, 0, wx.ALL |
-                                 wx.EXPAND, 5
-                                 )
+        sizer_a_normaliz.Add(self.rdbx_normalize, 0, wx.ALL | wx.EXPAND, 5)
         self.peakpanel = wx.Panel(self.nb_Audio, wx.ID_ANY,
                                   style=wx.TAB_TRAVERSAL
                                   )
         grid_peak = wx.FlexGridSizer(1, 4, 15, 4)
-        sizer_Anormalization.Add(self.peakpanel, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_a_normaliz.Add(self.peakpanel, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_voldect = wx.Button(self.peakpanel, wx.ID_ANY,
                                      _("Volume detect"), size=(-1, -1))
         self.btn_voldect.SetBitmap(bmppeaklevel, wx.LEFT)
@@ -703,7 +709,7 @@ class AV_Conv(wx.Panel):
                                                name="panelscroll"
                                                )
         grid_ebu = wx.FlexGridSizer(3, 2, 0, 0)
-        sizer_Anormalization.Add(self.ebupanel, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_a_normaliz.Add(self.ebupanel, 0, wx.ALL | wx.EXPAND, 5)
         self.lab_i = wx.StaticText(self.ebupanel, wx.ID_ANY, (
             _("Set integrated loudness target:")))
         grid_ebu.Add(self.lab_i, 0, wx.ALIGN_CENTER_VERTICAL, 0)
@@ -821,6 +827,8 @@ class AV_Conv(wx.Panel):
         tip = (_('Loudness Range Target in LUFS. '
                  'From +1.0 to +20.0, default is +7.0'))
         self.spin_lra.SetToolTip(tip)
+        tip = (_('Preview audio filters and index selections'))
+        self.btn_audio_preview.SetToolTip(tip)
 
         # ----------------------Binding (EVT)----------------------#
         """
@@ -842,7 +850,8 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Set_deinterlace, self.btn_lacing)
         self.Bind(wx.EVT_BUTTON, self.on_Set_denoiser, self.btn_denois)
         self.Bind(wx.EVT_BUTTON, self.on_Set_stabilizer, self.btn_vidstab)
-        self.Bind(wx.EVT_BUTTON, self.on_FiltersPreview, self.btn_preview)
+        self.Bind(wx.EVT_BUTTON, self.on_video_preview, self.btn_preview)
+        self.Bind(wx.EVT_BUTTON, self.on_audio_preview, self.btn_audio_preview)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersClear, self.btn_reset)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vaspect, self.cmb_Vaspect)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmb_Fps)
@@ -1133,16 +1142,74 @@ class AV_Conv(wx.Panel):
     def on_Deadline(self, event):
         """
         Sets range according to spin_cpu used
-
         """
         if self.rdb_deadline.GetSelection() in [0, 1]:
             self.spin_cpu.SetRange(0, 5), self.spin_cpu.SetValue(0)
         else:
             self.spin_cpu.SetRange(0, 15), self.spin_cpu.SetValue(0)
-
     # ------------------------------------------------------------------#
 
-    def on_FiltersPreview(self, event):
+    def on_audio_preview(self, event):
+        """
+        It allows a direct evaluation of the sound results given
+        by the audio filters with the ability to playback even the
+        selected audio streams through audio index mapping.
+
+        """
+        def _undetect():
+            if self.btn_voldect.IsEnabled():
+                wx.MessageBox(_('Undetected volume values! Click the '
+                                '"Volume detect" button to analyze '
+                                'audio volume data.'),
+                              'Videomass', wx.ICON_INFORMATION
+                              )
+                return True
+            return False
+
+        fget = self.file_selection()
+        if not fget:
+            return
+
+        if self.cmb_A_inMap.GetValue() == 'Auto':
+            idx = ''
+        else:
+            idx = f'-ast a:{str(int(self.cmb_A_inMap.GetValue()) - 1)}'
+
+        if not self.get_audio_stream(fget):
+            return
+
+        if self.rdbx_normalize.GetSelection() == 0:
+            afilter = ''
+
+        elif self.rdbx_normalize.GetSelection() == 1:
+            if _undetect():
+                return
+            afilter = f'-af {self.opt["PEAK"][fget[1]].split()[1]}'
+
+        elif self.rdbx_normalize.GetSelection() == 2:
+            if _undetect():
+                return
+            afilter = f'-af {self.opt["RMS"][fget[1]].split()[1]}'
+
+        elif self.rdbx_normalize.GetSelection() == 3:
+            afilter = (f'-af loudnorm=I={str(self.spin_i.GetValue())}'
+                       f':LRA={str(self.spin_lra.GetValue())}'
+                       f':TP={str(self.spin_tp.GetValue())}')
+
+        if self.parent.checktimestamp:
+            args = (f'-showmode waves -vf "{self.parent.cmdtimestamp}" '
+                    f'{afilter} {idx}')
+        else:
+            args = f'{afilter} {idx}'
+
+        stream_play(self.parent.file_src[fget[1]],
+                    self.parent.time_seq,
+                    args,
+                    self.parent.autoexit
+                    )
+    # ------------------------------------------------------------------#
+
+    def on_video_preview(self, event):
         """
         Showing selected video preview with applied filters.
         Note that libstab filter has not preview, but the other
@@ -1232,7 +1299,37 @@ class AV_Conv(wx.Panel):
             return (clicked, self.parent.file_src.index(clicked))
     # ------------------------------------------------------------------#
 
-    def stream_datafilter(self):
+    def get_audio_stream(self, fileselected):
+        """
+        Given a selected media file (object of type `file_selection()`),
+        it evaluates whether it contains any audio streams and any
+        indexes based on selected index (audio map).
+        If no audio streams or no audio index Returns None,
+        True otherwise.
+        See `on_audio_preview()` method for usage.
+
+        """
+        selected = self.parent.data_files[fileselected[1]].get('streams')
+        a_streams = [a for a in selected if 'audio' in a.get('codec_type')]
+
+        if a_streams:
+            if not self.cmb_A_inMap.GetValue() == 'Auto':
+                idx = int(self.cmb_A_inMap.GetValue())
+                if not [x for x in a_streams if x.get('index') == idx]:
+                    wx.MessageBox(_('Selected index does not exist or '
+                                    'does not contain any audio streams'),
+                                  'Videomass', wx.ICON_INFORMATION)
+                    return
+        else:
+            wx.MessageBox(_('ERROR: Missing audio stream:\n"{}"'
+                            ).format(fileselected[0]),
+                          'Videomass', wx.ICON_ERROR)
+            return
+
+        return True
+    # ------------------------------------------------------------------#
+
+    def get_video_stream(self):
         """
         Given a frame or a video file, it returns a tuple of data
         containing information on the streams required by some video
@@ -1320,7 +1417,7 @@ class AV_Conv(wx.Panel):
         Enable or disable scale, setdar and setsar filters
 
         """
-        sdf = self.stream_datafilter()
+        sdf = self.get_video_stream()
         if not sdf:
             return
 
@@ -1362,7 +1459,7 @@ class AV_Conv(wx.Panel):
         Enable or disable transpose filter for frame rotations
 
         """
-        sdf = self.stream_datafilter()
+        sdf = self.get_video_stream()
         if not sdf:
             return
 
@@ -1392,7 +1489,7 @@ class AV_Conv(wx.Panel):
         Enable or disable crop filter
 
         """
-        sdf = self.stream_datafilter()
+        sdf = self.get_video_stream()
         if not sdf:
             return
 
@@ -1420,7 +1517,7 @@ class AV_Conv(wx.Panel):
         Enable or disable filter for deinterlacing (w3fdif and yadif) and
         interlace filter.
         """
-        sdf = self.stream_datafilter()
+        sdf = self.get_video_stream()
         if not sdf:
             return
 
@@ -1454,7 +1551,7 @@ class AV_Conv(wx.Panel):
         <https://askubuntu.com/questions/866186/how-to-get-good-quality-when-
         converting-digital-video>
         """
-        sdf = self.stream_datafilter()
+        sdf = self.get_video_stream()
         if not sdf:
             return
 
@@ -1481,7 +1578,7 @@ class AV_Conv(wx.Panel):
         options.
 
         """
-        sdf = self.stream_datafilter()
+        sdf = self.get_video_stream()
         if not sdf:
             return
 

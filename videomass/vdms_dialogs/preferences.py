@@ -373,9 +373,6 @@ class SetUp(wx.Dialog):
                                           ("Videomass-Light"),
                                           ("Videomass-Dark"),
                                           ("Videomass-Colours"),
-                                          ("Breeze"),
-                                          ("Breeze-Dark"),
-                                          ("Breeze-Blues"),
                                           ],
                                       size=(200, -1),
                                       style=wx.CB_DROPDOWN | wx.CB_READONLY

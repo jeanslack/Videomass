@@ -74,8 +74,6 @@ def info(parent, videomass_icon):
     info.AddTranslator("katnatek from blogdrake (es_ES)")
     # info.AddTranslator("Nestor Blanco <random@mail.es> (es_ES)")
     info.SetArtists(
-        ['Gianluca Pernigotto <jeanlucperni@gmail.com>',
-         'Breeze icons '
-         'https://github.com/KDE/breeze-icons', ])
+        ['Gianluca Pernigotto <jeanlucperni@gmail.com>',])
     wx.adv.AboutBox(info)
     # event.Skip()

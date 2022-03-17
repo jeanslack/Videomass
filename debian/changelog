@@ -23,8 +23,11 @@ videomass (3.5.8-1) UNRELEASED; urgency=medium
     directories.
   * Added ability to download subtitles only (skipping video/audio download).
   * Fixed initial window size and scrolling panels on av_conversions.py.
+  * Added audio filter preview button (Listening) with the ability to play
+    the selected indexes.
+  * Removed Breeze icons.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 16 Mar 2022 14:34:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 18 Mar 2022 00:42:00 +0200
 
 videomass (3.5.7-1) UNRELEASED; urgency=medium
 
