@@ -26,8 +26,13 @@ videomass (3.5.8-1) UNRELEASED; urgency=medium
   * Added audio filter preview button (Listening) with the ability to play
     the selected indexes.
   * Removed Breeze icons.
+  * Refactoring of av_conversions.py
+  * Refactoring of checkup.py
+  * Refactoring of concatenate.py
+  * Refactoring of presets_manager.py
+  * Update locale to v3.5.8
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 18 Mar 2022 00:42:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 18 Mar 2022 17:32:00 +0200
 
 videomass (3.5.7-1) UNRELEASED; urgency=medium
 

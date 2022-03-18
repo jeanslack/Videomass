@@ -35,6 +35,11 @@ Mar 18, 2022 V.3.5.8
   * Added audio filter preview button (Listening) with the ability to play
     the selected indexes.
   * Removed Breeze icons.
+  * Refactoring of av_conversions.py
+  * Refactoring of checkup.py
+  * Refactoring of concatenate.py
+  * Refactoring of presets_manager.py
+  * Update locale to v3.5.8
 
 +------------------------------------+
 Mar 07, 2022 V.3.5.7
