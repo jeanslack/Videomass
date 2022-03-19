@@ -4,9 +4,9 @@ Name: concatenate.py
 Porpose: A simple concat demuxer UI
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.29.2021
+Rev: Mar.18.2022
 Code checker:
     - pycodestyle
     - flake8: --ignore F821
@@ -172,7 +172,6 @@ class Conc_Demuxer(wx.Panel):
         Parameters definition
 
         """
-        logname = 'concatenate_demuxer.log'
         fsource = self.parent.file_src
         fname = os.path.splitext(os.path.basename(fsource[0]))[0]
 
@@ -200,21 +199,22 @@ class Conc_Demuxer(wx.Panel):
                                self.parent.suffix,
                                ext
                                )
-        if not checking[0]:  # User changing idea or not such files exist
+        if checking is None:  # User changing idea or not such files exist
             return
 
-        f_src, destin, countmax = checking
+        destin = checking[1]
         newfile = f'{fname}{self.parent.suffix}.{ext}'
 
         self.concat_demuxer(self.parent.file_src, newfile,
-                            destin[0], ext, logname)
+                            destin[0], ext)
     # -----------------------------------------------------------
 
-    def concat_demuxer(self, filesrc, newfile, destdir, outext, logname):
+    def concat_demuxer(self, filesrc, newfile, destdir, outext):
         """
         Parameters redirection
 
         """
+        logname = 'concatenate_demuxer.log'
         valupdate = self.update_dict(newfile, destdir, outext)
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
         if ending.ShowModal() == wx.ID_OK:

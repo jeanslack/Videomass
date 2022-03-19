@@ -206,6 +206,7 @@ class YdlDownloader(Thread):
                 'outtmpl': f"{self.args['outdir']}/{outtmpl}",
                 'writesubtitles': self.opt['writesubtitles'],
                 'subtitleslangs': self.opt['subtitleslangs'],
+                'skip_download': self.opt['skip_download'],
                 'addmetadata': self.opt['addmetadata'],
                 'restrictfilenames': self.opt['restrictfilenames'],
                 'ignoreerrors': True,

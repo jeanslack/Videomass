@@ -49,16 +49,13 @@ class Timeline(wx.Panel):
     get = wx.GetApp()
 
     # Theme Colors used in HTML
-    if get.appset['icontheme'] in ('Breeze-Blues',
-                                   'Videomass-Colours'):  # all themes
+    if get.appset['icontheme'] == 'Videomass-Colours':  # all themes
         RULER_BKGRD = '#294083'  # dark blue for panel bkgrd
         SELECTION = '#4368d3'  # medium azure for selection
         DELIMITER_COLOR = '#da4453'  # red for margin selection
         TEXT_PEN_COLOR = '#00cc57'  # green for text and draw lines
 
-    elif get.appset['icontheme'] in ('Breeze-Blues',
-                                     'Breeze-Dark',
-                                     'Videomass-Dark'):
+    elif get.appset['icontheme'] == 'Videomass-Dark':
         RULER_BKGRD = '#294083'  # dark blue for panel bkgrd
         SELECTION = '#4368d3'  # medium azure for selection
         DELIMITER_COLOR = '#00FE00'  # green for margin selection

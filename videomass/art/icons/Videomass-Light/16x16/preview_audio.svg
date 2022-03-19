@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1"
+   viewBox="0 0 16 16"
+   enable-background="new 0 0 48 48"
+   id="svg12"
+   sodipodi:docname="preview_audio.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
+   width="16"
+   height="16">
+  <metadata
+     id="metadata18">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs16">
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect4517"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="2.1085087 : -0.01579032 : 1"
+       inkscape:vp_y="-9.1717358 : 40.677048 : 0"
+       inkscape:vp_z="2.439686 : 0.66241427 : 1"
+       inkscape:persp3d-origin="2.3474712 : -0.0021044275 : 1"
+       id="perspective4515" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1007"
+     id="namedview14"
+     showgrid="true"
+     inkscape:zoom="16.150319"
+     inkscape:cx="6.7373032"
+     inkscape:cy="7.5401166"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg12"
+     inkscape:document-rotation="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4510" />
+  </sodipodi:namedview>
+  <path
+     id="path841"
+     style="opacity:0.999;fill:#444444;stroke-width:2.61042;fill-opacity:1"
+     d="M 7.9453125 0.88476562 A 6.9339374 6.9339374 0 0 0 1.0683594 7.8183594 A 6.9339374 6.9339374 0 0 0 1.2304688 9.3066406 L 1.8066406 9.3066406 A 6.3710004 6.3710004 0 0 1 1.6308594 7.8183594 A 6.3710004 6.3710004 0 0 1 4.046875 2.8242188 L 5.1835938 2.8242188 A 7.1182878 6.3710004 0 0 1 7.9414062 2.3027344 A 7.1182878 6.3710004 0 0 1 8.0019531 2.3027344 A 7.1182878 6.3710004 0 0 1 10.822266 2.8242188 L 11.957031 2.8242188 A 6.3710004 6.3710004 0 0 1 14.373047 7.8183594 A 6.3710004 6.3710004 0 0 1 14.197266 9.3066406 L 14.773438 9.3066406 A 6.9339374 6.9339374 0 0 0 14.935547 7.8183594 A 6.9339374 6.9339374 0 0 0 8.0019531 0.88476562 A 6.9339374 6.9339374 0 0 0 7.9453125 0.88476562 z M 14.519531 10.005859 A 1.2799565 2.0784328 15 0 0 12.953125 11.710938 A 1.2799565 2.0784328 15 0 0 13.650391 14.048828 A 1.2799565 2.0784328 15 0 0 15.425781 12.373047 A 1.2799565 2.0784328 15 0 0 14.726562 10.033203 A 1.2799565 2.0784328 15 0 0 14.519531 10.005859 z M 1.3417969 10.007812 A 2.0784328 1.2799565 75 0 0 1.1796875 10.033203 A 2.0784328 1.2799565 75 0 0 0.48242188 12.373047 A 2.0784328 1.2799565 75 0 0 2.2558594 14.048828 A 2.0784328 1.2799565 75 0 0 2.9550781 11.710938 A 2.0784328 1.2799565 75 0 0 1.3417969 10.007812 z " />
+  <rect
+     style="opacity:0.999;fill:#444444;stroke-width:3.32549;fill-opacity:1"
+     id="rect851"
+     width="3.1176491"
+     height="6.806972"
+     x="-1.3467671"
+     y="8.7152863"
+     ry="1.1648802"
+     rx="1.1648802"
+     transform="rotate(-15)" />
+  <rect
+     style="opacity:0.999;fill:#444444;stroke-width:3.32549;fill-opacity:1"
+     id="rect855"
+     width="3.1176491"
+     height="6.806972"
+     x="13.711421"
+     y="4.5668116"
+     ry="1.1648802"
+     rx="1.1648802"
+     transform="rotate(15)" />
+</svg>

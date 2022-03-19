@@ -230,12 +230,9 @@ def get_color_scheme(theme):
     chosen theme in ("Videomass-Light",
                      "Videomass-Dark",
                      "Videomass-Colours",
-                     "Breeze",
-                     "Breeze-Dark",
-                     "Breeze-Blues"
                      )
     """
-    if theme in ('Breeze-Blues', 'Videomass-Colours'):
+    if theme == 'Videomass-Colours':
         c_scheme = {'BACKGRD': '#1c2027',  # DARK_SLATE background color
                     'TXT0': '#FFFFFF',  # WHITE for title or URL in progress
                     'TXT1': '#959595',  # GREY for all other text messages
@@ -252,7 +249,7 @@ def get_color_scheme(theme):
                     'FAILED': '#D21814',  # RED_DEEP if failed
                     'ABORT': '#A41EA4',  # VIOLET the user stops the processes
                     }
-    elif theme in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
+    elif theme == 'Videomass-Dark':
         c_scheme = {'BACKGRD': '#232424',  # DARK Grey background color
                     'TXT0': '#FFFFFF',  # WHITE for title or URL in progress
                     'TXT1': '#959595',  # GREY for all other text messages
@@ -269,7 +266,7 @@ def get_color_scheme(theme):
                     'FAILED': '#D21814',  # RED_DEEP if failed
                     'ABORT': '#A41EA4',  # VIOLET the user stops the processes
                     }
-    elif theme in ('Breeze', 'Videomass-Light'):
+    elif theme == 'Videomass-Light':
         c_scheme = {'BACKGRD': '#ced0d1',  # WHITE background color
                     'TXT0': '#1f1f1f',  # BLACK for title or URL in progress
                     'TXT1': '#778899ff',  # LIGHT_SLATE for all other text msg
@@ -498,7 +495,9 @@ class DataSource():
                 'denoiser', 'statistics', 'settings', 'audiovolume',
                 'youtube', 'presets_manager', 'profile_add', 'profile_del',
                 'profile_edit', 'previous', 'next', 'startdownload',
-                'download_properties', 'stabilizer', 'listindx')
+                'download_properties', 'stabilizer', 'listindx',
+                'preview_audio'
+                )  # must match with iconset tuple, see following..
 
         ext = 'svg' if 'wx.svg' in sys.modules else 'png'
 
@@ -514,18 +513,6 @@ class DataSource():
                     {'x48': f'{self.icodir}/Sign_Icons/48x48',
                      'x16': f'{self.icodir}/Videomass-Colours/16x16',
                      'x22': f'{self.icodir}/Videomass-Colours/24x24'},
-                    'Breeze':  # Breeze for light themes
-                    {'x48': f'{self.icodir}/Sign_Icons/48x48_light',
-                     'x16': f'{self.icodir}/Breeze/16x16',
-                     'x22': f'{self.icodir}/Breeze/22x22'},
-                    'Breeze-Dark':  # breeze for dark themes
-                    {'x48': f'{self.icodir}/Sign_Icons/48x48_dark',
-                     'x16': f'{self.icodir}/Breeze-Dark/16x16',
-                     'x22': f'{self.icodir}/Breeze-Dark/22x22'},
-                    'Breeze-Blues':  # breeze custom colorized for all themes
-                    {'x48': f'{self.icodir}/Sign_Icons/48x48',
-                     'x16': f'{self.icodir}/Breeze-Blues/16x16',
-                     'x22': f'{self.icodir}/Breeze-Blues/22x22'}
                     }
 
         choose = iconames.get(icontheme)  # set appropriate icontheme
@@ -558,6 +545,7 @@ class DataSource():
                    f"{choose.get('x22')}/statistics.{ext}",
                    f"{choose.get('x16')}/stabilizer.{ext}",
                    f"{choose.get('x16')}/playlist-append.{ext}",
+                   f"{choose.get('x16')}/preview_audio.{ext}",
                    )
         values = [os.path.join(norm) for norm in iconset]  # normalize pathns
 

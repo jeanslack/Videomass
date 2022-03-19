@@ -6,8 +6,8 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.01.2022
-Code checker: flake8
+Rev: Mar.15.2022
+Code checker: flake8, pylint
 ########################################################
 
 This file is part of Videomass.
@@ -185,6 +185,7 @@ class AV_Conv(wx.Panel):
         # set attributes:
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpplay = get_bmp(icons['preview'], ((16, 16)))
+            bmpapreview = get_bmp(icons['preview_audio'], ((16, 16)))
             bmpreset = get_bmp(icons['clear'], ((16, 16)))
             bmpresize = get_bmp(icons['scale'], ((16, 16)))
             bmpcrop = get_bmp(icons['crop'], ((16, 16)))
@@ -197,6 +198,7 @@ class AV_Conv(wx.Panel):
             bmpstab = get_bmp(icons['stabilizer'], ((16, 16)))
         else:
             bmpplay = wx.Bitmap(icons['preview'], wx.BITMAP_TYPE_ANY)
+            bmpapreview = wx.Bitmap(icons['preview_audio'], wx.BITMAP_TYPE_ANY)
             bmpreset = wx.Bitmap(icons['clear'], wx.BITMAP_TYPE_ANY)
             bmpresize = wx.Bitmap(icons['scale'], wx.BITMAP_TYPE_ANY)
             bmpcrop = wx.Bitmap(icons['crop'], wx.BITMAP_TYPE_ANY)
@@ -274,7 +276,7 @@ class AV_Conv(wx.Panel):
                                           )
         sizer_nbVideo.Add(self.box_Vcod, 0, wx.ALL | wx.EXPAND, 5)
         self.codVpanel = scrolled.ScrolledPanel(self.nb_Video, -1,
-                                                size=(300, 700),
+                                                size=(320, 700),
                                                 style=wx.TAB_TRAVERSAL |
                                                 wx.BORDER_NONE,
                                                 name="panelscroll"
@@ -521,7 +523,7 @@ class AV_Conv(wx.Panel):
                                               )
         sizer_nbVideo.Add(self.box_Vfilters, 0, wx.ALL | wx.EXPAND, 5)
         self.filterVpanel = scrolled.ScrolledPanel(self.nb_Video, -1,
-                                                   size=(300, 700),
+                                                   size=(320, 700),
                                                    style=wx.TAB_TRAVERSAL |
                                                    wx.BORDER_NONE,
                                                    name="panelscroll"
@@ -654,8 +656,14 @@ class AV_Conv(wx.Panel):
                                               wx.VERTICAL
                                               )
         sizer_nbAudio.Add(self.box_aFilters, 1, wx.ALL | wx.EXPAND, 5)
-        sizer_Anormalization = wx.BoxSizer(wx.VERTICAL)
-        self.box_aFilters.Add(sizer_Anormalization, 0, wx.EXPAND)
+        sizer_a_normaliz = wx.BoxSizer(wx.VERTICAL)
+        self.box_aFilters.Add(sizer_a_normaliz, 0, wx.EXPAND)
+
+        self.btn_audio_preview = wx.Button(self.nb_Audio, wx.ID_ANY,
+                                           _("Listening"), size=(-1, 40))
+        self.btn_audio_preview.SetBitmap(bmpapreview, wx.LEFT)
+        sizer_a_normaliz.Add(self.btn_audio_preview, 0, wx.ALL | wx.SHAPED, 5)
+
         self.rdbx_normalize = wx.RadioBox(self.nb_Audio, wx.ID_ANY,
                                           (_("Normalization")),
                                           choices=[('Off'),
@@ -666,14 +674,12 @@ class AV_Conv(wx.Panel):
                                           majorDimension=1,
                                           style=wx.RA_SPECIFY_ROWS,
                                           )
-        sizer_Anormalization.Add(self.rdbx_normalize, 0, wx.ALL |
-                                 wx.EXPAND, 5
-                                 )
+        sizer_a_normaliz.Add(self.rdbx_normalize, 0, wx.ALL | wx.EXPAND, 5)
         self.peakpanel = wx.Panel(self.nb_Audio, wx.ID_ANY,
                                   style=wx.TAB_TRAVERSAL
                                   )
         grid_peak = wx.FlexGridSizer(1, 4, 15, 4)
-        sizer_Anormalization.Add(self.peakpanel, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_a_normaliz.Add(self.peakpanel, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_voldect = wx.Button(self.peakpanel, wx.ID_ANY,
                                      _("Volume detect"), size=(-1, -1))
         self.btn_voldect.SetBitmap(bmppeaklevel, wx.LEFT)
@@ -703,7 +709,7 @@ class AV_Conv(wx.Panel):
                                                name="panelscroll"
                                                )
         grid_ebu = wx.FlexGridSizer(3, 2, 0, 0)
-        sizer_Anormalization.Add(self.ebupanel, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_a_normaliz.Add(self.ebupanel, 0, wx.ALL | wx.EXPAND, 5)
         self.lab_i = wx.StaticText(self.ebupanel, wx.ID_ANY, (
             _("Set integrated loudness target:")))
         grid_ebu.Add(self.lab_i, 0, wx.ALIGN_CENTER_VERTICAL, 0)
@@ -821,6 +827,8 @@ class AV_Conv(wx.Panel):
         tip = (_('Loudness Range Target in LUFS. '
                  'From +1.0 to +20.0, default is +7.0'))
         self.spin_lra.SetToolTip(tip)
+        tip = (_('Play and listen to the result of audio filters'))
+        self.btn_audio_preview.SetToolTip(tip)
 
         # ----------------------Binding (EVT)----------------------#
         """
@@ -842,7 +850,8 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Set_deinterlace, self.btn_lacing)
         self.Bind(wx.EVT_BUTTON, self.on_Set_denoiser, self.btn_denois)
         self.Bind(wx.EVT_BUTTON, self.on_Set_stabilizer, self.btn_vidstab)
-        self.Bind(wx.EVT_BUTTON, self.on_FiltersPreview, self.btn_preview)
+        self.Bind(wx.EVT_BUTTON, self.on_video_preview, self.btn_preview)
+        self.Bind(wx.EVT_BUTTON, self.on_audio_preview, self.btn_audio_preview)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersClear, self.btn_reset)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vaspect, self.cmb_Vaspect)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmb_Fps)
@@ -1110,11 +1119,11 @@ class AV_Conv(wx.Panel):
             if self.ckbx_pass.IsChecked():
                 self.opt["CRF"] = ""
 
-        if not self.opt["VideoCodec"] in ["-c:v libvpx", "-c:v libvpx-vp9",
+        if self.opt["VideoCodec"] not in ["-c:v libvpx", "-c:v libvpx-vp9",
                                           "-c:v libaom-av1 -strict -2"]:
             self.opt["CRF"] = ""
 
-        self.opt["VideoBitrate"] = "" if val == -1 else "-b:v %sk" % val
+        self.opt["VideoBitrate"] = "" if val == -1 else f"-b:v {val}k"
     # ------------------------------------------------------------------#
 
     def on_Crf(self, event):
@@ -1122,27 +1131,81 @@ class AV_Conv(wx.Panel):
         Reset bitrate at empty (this depend if is h264 codec)
         """
         val = self.slider_CRF.GetValue()
-        if not self.opt["VideoCodec"] in ["-c:v libvpx", "-c:v libvpx-vp9",
+        if self.opt["VideoCodec"] not in ["-c:v libvpx", "-c:v libvpx-vp9",
                                           "-c:v libaom-av1 -strict -2"]:
             self.opt["VideoBitrate"] = ""
 
-        self.opt["CRF"] = "" if val == -1 else "-crf %s" % val
+        self.opt["CRF"] = "" if val == -1 else f"-crf {val}"
 
     # ------------------------------------------------------------------#
 
     def on_Deadline(self, event):
         """
         Sets range according to spin_cpu used
-
         """
         if self.rdb_deadline.GetSelection() in [0, 1]:
             self.spin_cpu.SetRange(0, 5), self.spin_cpu.SetValue(0)
         else:
             self.spin_cpu.SetRange(0, 15), self.spin_cpu.SetValue(0)
-
     # ------------------------------------------------------------------#
 
-    def on_FiltersPreview(self, event):
+    def on_audio_preview(self, event):
+        """
+        It allows a direct evaluation of the sound results given
+        by the audio filters with the ability to playback even the
+        selected audio streams through audio index mapping.
+
+        """
+        def _undetect():
+           wx.MessageBox(_('Undetected volume values! Click the '
+                            '"Volume detect" button to analyze '
+                            'audio volume data.'),
+                          'Videomass', wx.ICON_INFORMATION
+                          )
+        fget = self.file_selection()
+        if not fget:
+            return
+
+        if not self.get_audio_stream(fget):
+            return
+
+        if self.cmb_A_inMap.GetValue() == 'Auto':
+            idx = ''
+        else:
+            idx = f'-ast a:{str(int(self.cmb_A_inMap.GetValue()) - 1)}'
+
+        if self.rdbx_normalize.GetSelection() == 0:
+            afilter = ''
+
+        elif self.rdbx_normalize.GetSelection() == 1:
+            if self.btn_voldect.IsEnabled():
+                return _undetect()
+            afilter = f'-af {self.opt["PEAK"][fget[1]].split()[1]}'
+
+        elif self.rdbx_normalize.GetSelection() == 2:
+            if self.btn_voldect.IsEnabled():
+                return _undetect()
+            afilter = f'-af {self.opt["RMS"][fget[1]].split()[1]}'
+
+        elif self.rdbx_normalize.GetSelection() == 3:
+            afilter = (f'-af loudnorm=I={str(self.spin_i.GetValue())}'
+                       f':LRA={str(self.spin_lra.GetValue())}'
+                       f':TP={str(self.spin_tp.GetValue())}')
+
+        if self.parent.checktimestamp:
+            args = (f'-showmode waves -vf "{self.parent.cmdtimestamp}" '
+                    f'{afilter} {idx}')
+        else:
+            args = f'{afilter} {idx}'
+
+        stream_play(self.parent.file_src[fget[1]],
+                    self.parent.time_seq,
+                    args,
+                    self.parent.autoexit
+                    )
+    # ------------------------------------------------------------------#
+
+    def on_video_preview(self, event):
         """
         Showing selected video preview with applied filters.
         Note that libstab filter has not preview, but the other
@@ -1169,14 +1232,13 @@ class AV_Conv(wx.Panel):
         if not fget:
             return
 
-        self.time_seq = self.parent.time_seq
         if self.parent.checktimestamp:
-            flt = '%s,"%s"' % (flt, self.parent.cmdtimestamp)
-        else:
-            flt = flt
+            flt = f'{flt},"{self.parent.cmdtimestamp}"'
 
-        stream_play(self.parent.file_src[fget[1]], self.time_seq,
-                    flt, self.parent.autoexit
+        stream_play(self.parent.file_src[fget[1]],
+                    self.parent.time_seq,
+                    flt,
+                    self.parent.autoexit
                     )
     # ------------------------------------------------------------------#
 
@@ -1221,18 +1283,50 @@ class AV_Conv(wx.Panel):
         if len(self.parent.file_src) == 1:
             return (self.parent.file_src[0], 0)
 
-        elif not self.parent.filedropselected:
+        if not self.parent.filedropselected:
             wx.MessageBox(_("A target file must be selected in the "
                             "queued files"),
                           'Videomass', wx.ICON_INFORMATION, self)
-            return
+            return None
 
-        else:
-            clicked = self.parent.filedropselected
-            return (clicked, self.parent.file_src.index(clicked))
+        clicked = self.parent.filedropselected
+        return (clicked, self.parent.file_src.index(clicked))
     # ------------------------------------------------------------------#
 
-    def stream_datafilter(self):
+    def get_audio_stream(self, fileselected):
+        """
+        Given a selected media file (object of type `file_selection()`),
+        it evaluates whether it contains any audio streams and any
+        indexes based on selected index (audio map).
+        If no audio streams or no audio index Returns None,
+        True otherwise.
+        See `on_audio_preview()` method for usage.
+
+        """
+        selected = self.parent.data_files[fileselected[1]].get('streams')
+        isaudio = [a for a in selected if 'audio' in a.get('codec_type')]
+
+        if isaudio:
+            if not self.cmb_A_inMap.GetValue() == 'Auto':  # 1 to 8
+                if [v for v in selected if 'video' in v.get('codec_type')]:
+                    idx = int(self.cmb_A_inMap.GetValue())
+                else:
+                    idx = int(self.cmb_A_inMap.GetValue()) - 1
+                if not [x for x in isaudio if x.get('index') == idx]:
+                    wx.MessageBox(_('Selected index does not exist or '
+                                    'does not contain any audio streams'),
+                                  'Videomass', wx.ICON_INFORMATION)
+                    return None
+        else:
+            wx.MessageBox(_('ERROR: Missing audio stream:\n"{}"'
+                            ).format(fileselected[0]),
+                          'Videomass', wx.ICON_ERROR)
+            return None
+
+        return True
+    # ------------------------------------------------------------------#
+
+    def get_video_stream(self):
         """
         Given a frame or a video file, it returns a tuple of data
         containing information on the streams required by some video
@@ -1241,7 +1335,7 @@ class AV_Conv(wx.Panel):
         """
         fget = self.file_selection()
         if not fget:
-            return
+            return None
 
         index = self.parent.data_files[fget[1]]
 
@@ -1251,11 +1345,11 @@ class AV_Conv(wx.Panel):
             filename = index['format']['filename']
             time = index['format'].get('time', '00:00:00.000')
             return (width, height, filename, time)
-        else:
-            wx.MessageBox(_('The file is not a frame or a video file'),
-                          'Videomass', wx.ICON_INFORMATION)
-            self.on_FiltersClear(self)
-            return
+
+        wx.MessageBox(_('The file is not a frame or a video file'),
+                      'Videomass', wx.ICON_INFORMATION)
+        self.on_FiltersClear(self)
+        return None
     # ------------------------------------------------------------------#
 
     def video_filter_checker(self):
@@ -1265,41 +1359,41 @@ class AV_Conv(wx.Panel):
         strings, the -vf option will be removed
         """
         if self.opt['Crop']:
-            crop = '%s,' % self.opt['Crop']
+            crop = f"{self.opt['Crop']},"
         else:
             crop = ''
         if self.opt['Scale']:
-            size = '%s,' % self.opt['Scale']
+            size = f"{self.opt['Scale']},"
         else:
             size = ''
         if self.opt["Setdar"]:
-            dar = '%s,' % self.opt['Setdar']
+            dar = f"{self.opt['Setdar']},"
         else:
             dar = ''
         if self.opt["Setsar"]:
-            sar = '%s,' % self.opt['Setsar']
+            sar = f"{self.opt['Setsar']},"
         else:
             sar = ''
         if self.opt['Orientation'][0]:
-            rotate = '%s,' % self.opt['Orientation'][0]
+            rotate = f"{self.opt['Orientation'][0]},"
         else:
             rotate = ''
         if self.opt['Deinterlace']:
-            lacing = '%s,' % self.opt['Deinterlace']
+            lacing = f"{self.opt['Deinterlace']},"
         elif self.opt['Interlace']:
-            lacing = '%s,' % self.opt['Interlace']
+            lacing = f"{self.opt['Interlace']},"
         else:
             lacing = ''
         if self.opt["Denoiser"]:
-            denoiser = '%s,' % self.opt['Denoiser']
+            denoiser = f"{self.opt['Denoiser']},"
         else:
             denoiser = ''
         if self.opt["Vidstabtransform"]:
-            stab = '%s,' % self.opt['Vidstabtransform']
+            stab = f"{self.opt['Vidstabtransform']},"
         else:
             stab = ''
         if self.opt["Unsharp"]:
-            unsharp = '%s,' % self.opt['Unsharp']
+            unsharp = f"{self.opt['Unsharp']},"
         else:
             unsharp = ''
 
@@ -1307,8 +1401,8 @@ class AV_Conv(wx.Panel):
              sar + rotate)
         if f:
             lengh = len(f)
-            filters = '%s' % f[:lengh - 1]
-            self.opt["VFilters"] = "-vf %s" % filters
+            filters = f'{f[:lengh - 1]}'
+            self.opt["VFilters"] = f"-vf {filters}"
             self.btn_preview.Enable(), self.btn_reset.Enable()
         else:
             self.opt["VFilters"] = ""
@@ -1320,7 +1414,7 @@ class AV_Conv(wx.Panel):
         Enable or disable scale, setdar and setsar filters
 
         """
-        sdf = self.stream_datafilter()
+        sdf = self.get_video_stream()
         if not sdf:
             return
 
@@ -1362,7 +1456,7 @@ class AV_Conv(wx.Panel):
         Enable or disable transpose filter for frame rotations
 
         """
-        sdf = self.stream_datafilter()
+        sdf = self.get_video_stream()
         if not sdf:
             return
 
@@ -1392,7 +1486,7 @@ class AV_Conv(wx.Panel):
         Enable or disable crop filter
 
         """
-        sdf = self.stream_datafilter()
+        sdf = self.get_video_stream()
         if not sdf:
             return
 
@@ -1411,7 +1505,7 @@ class AV_Conv(wx.Panel):
                 else:
                     self.btn_crop.SetBackgroundColour(
                         wx.Colour(AV_Conv.VIOLET))
-                    self.opt["Crop"] = 'crop=%s' % data
+                    self.opt["Crop"] = f'crop={data}'
                 self.video_filter_checker()
     # ------------------------------------------------------------------#
 
@@ -1420,7 +1514,7 @@ class AV_Conv(wx.Panel):
         Enable or disable filter for deinterlacing (w3fdif and yadif) and
         interlace filter.
         """
-        sdf = self.stream_datafilter()
+        sdf = self.get_video_stream()
         if not sdf:
             return
 
@@ -1454,7 +1548,7 @@ class AV_Conv(wx.Panel):
         <https://askubuntu.com/questions/866186/how-to-get-good-quality-when-
         converting-digital-video>
         """
-        sdf = self.stream_datafilter()
+        sdf = self.get_video_stream()
         if not sdf:
             return
 
@@ -1481,7 +1575,7 @@ class AV_Conv(wx.Panel):
         options.
 
         """
-        sdf = self.stream_datafilter()
+        sdf = self.get_video_stream()
         if not sdf:
             return
 
@@ -1526,8 +1620,8 @@ class AV_Conv(wx.Panel):
             self.opt["AspectRatio"] = ""
 
         else:
-            self.opt["AspectRatio"] = '-aspect %s' % \
-                self.cmb_Vaspect.GetValue()
+            self.opt["AspectRatio"] = f'-aspect {self.cmb_Vaspect.GetValue()}'
+
     # ------------------------------------------------------------------#
 
     def on_Vrate(self, event):
@@ -1538,7 +1632,7 @@ class AV_Conv(wx.Panel):
         if fps == "Auto":
             self.opt["FPS"] = ""
         else:
-            self.opt["FPS"] = "-r %s" % fps
+            self.opt["FPS"] = f"-r {fps}"
     # ------------------------------------------------------------------#
 
     def setAudioRadiobox(self, event):
@@ -1614,8 +1708,8 @@ class AV_Conv(wx.Panel):
                 elif audiocodec == "Copy":
                     self.normalize_default()
                     _param(False, False)
-                    self.opt["AudioCodec"] = ["-c:a:%s" %
-                                              self.opt["AudioMap"][1], v]
+                    amap = f'-c:a:{self.opt["AudioMap"][1]}'
+                    self.opt["AudioCodec"] = [amap, v]
 
                 elif audiocodec == _("No Audio"):
                     self.normalize_default()
@@ -1625,8 +1719,8 @@ class AV_Conv(wx.Panel):
                     # break
                 else:
                     _param(True, True)
-                    self.opt["AudioCodec"] = ["-c:a:%s" %
-                                              self.opt["AudioMap"][1], v]
+                    amap = f'-c:a:{self.opt["AudioMap"][1]}'
+                    self.opt["AudioCodec"] = [amap, v]
 
                 self.opt["AudioCodStr"] = audiocodec
 
@@ -1649,10 +1743,10 @@ class AV_Conv(wx.Panel):
 
         if self.opt["AudioCodec"][1] in pcm:
             self.audio_dialog(self.opt["AudioCodStr"],
-                              "%s Audio Settings" % self.opt["AudioCodStr"])
+                              f'{self.opt["AudioCodStr"]} Audio Settings')
         else:
             self.audio_dialog(self.opt["AudioCodStr"],
-                              "%s Audio Settings" % self.opt["AudioCodStr"])
+                              f'{self.opt["AudioCodStr"]} Audio Settings')
     # -------------------------------------------------------------------#
 
     def audio_dialog(self, audio_type, title):
@@ -1681,17 +1775,12 @@ class AV_Conv(wx.Panel):
                 self.opt["AudioRate"] = data[1]
                 self.opt["AudioBitrate"] = data[2]
                 if audio_type in ('wav', 'aiff', 'PCM'):
+                    amap = f'-c:a:{self.opt["AudioMap"][1]}'
                     if 'Auto' in data[3][0]:  # [3] is the bit depth tupla
-                        self.opt["AudioCodec"] = ["-c:a:%s" %
-                                                  self.opt["AudioMap"][1],
-                                                  "pcm_s16le"
-                                                  ]
+                        self.opt["AudioCodec"] = [amap, "pcm_s16le"]
                     else:
-                        self.opt["AudioCodec"] = ["-c:a:%s" %
-                                                  self.opt["AudioMap"][1],
-                                                  data[3][1]
-                                                  ]
-                    self.opt["AudioDepth"] = ("%s" % (data[3][0]), '')  # null
+                        self.opt["AudioCodec"] = [amap, data[3][1]]
+                    self.opt["AudioDepth"] = (f"{data[3][0]}", '')  # null
                 else:  # entra su tutti tranne wav aiff
                     self.opt["AudioDepth"] = data[3]
             else:
@@ -1706,7 +1795,7 @@ class AV_Conv(wx.Panel):
                       ]:
                 if d[1]:
                     count += 1
-                    self.txt_audio_options.AppendText(" %s | " % d[0])
+                    self.txt_audio_options.AppendText(f" {d[0]} | ")
 
             if count == 0:
                 self.btn_aparam.SetBackgroundColour(wx.NullColour)
@@ -1840,55 +1929,53 @@ class AV_Conv(wx.Panel):
             del self.normdetails[:]
 
         self.parent.statusbar_msg("", None)
-        self.time_seq = self.parent.time_seq  # from -ss to -t will be analyzed
         target = self.spin_target.GetValue()
 
         data = volume_detect_process(self.parent.file_src,
-                                     self.time_seq,
+                                     self.parent.time_seq,  # from -ss to -t
                                      self.opt["AudioIndex"]
                                      )
         if data[1]:
-            wx.MessageBox("%s" % data[1], "Videomass", wx.ICON_ERROR)
+            wx.MessageBox(f"{data[1]}", "Videomass", wx.ICON_ERROR)
             return
-        else:
-            volume = list()
-            if self.rdbx_normalize.GetSelection() == 1:  # RMS
-                for f, v in zip(self.parent.file_src, data[0]):
-                    maxvol = v[0].split(' ')[0]
-                    meanvol = v[1].split(' ')[0]
-                    offset = float(maxvol) - float(target)
-                    result = float(maxvol) - offset
-                    if float(maxvol) == float(target):
-                        volume.append('  ')
-                    else:
-                        volume.append("-filter:a:%s volume=%fdB" %
-                                      (self.opt["AudioMap"][1],
-                                       -offset)
-                                      )
-                    self.normdetails.append((f,
-                                             maxvol,
-                                             meanvol,
-                                             str(offset),
-                                             str(result),
-                                             ))
-            elif self.rdbx_normalize.GetSelection() == 2:  # ebu
-                for f, v in zip(self.parent.file_src, data[0]):
-                    maxvol = v[0].split(' ')[0]
-                    meanvol = v[1].split(' ')[0]
-                    offset = float(meanvol) - float(target)
-                    result = float(maxvol) - offset
-                    if offset == 0.0:
-                        volume.append('  ')
-                    else:
-                        volume.append("-filter:a:%s volume=%fdB" % (
-                            self.opt["AudioMap"][1],
-                            -offset))
-                    self.normdetails.append((f,
-                                             maxvol,
-                                             meanvol,
-                                             str(offset),
-                                             str(result),
-                                             ))
+
+        volume = []
+        if self.rdbx_normalize.GetSelection() == 1:  # RMS
+            for f, v in zip(self.parent.file_src, data[0]):
+                maxvol = v[0].split(' ')[0]
+                meanvol = v[1].split(' ')[0]
+                offset = float(maxvol) - float(target)
+                result = float(maxvol) - offset
+                if float(maxvol) == float(target):
+                    volume.append('  ')
+                else:
+                    volume.append("-filter:a:%s volume=%fdB" %
+                                  (self.opt["AudioMap"][1], -offset)
+                                  )
+                self.normdetails.append((f,
+                                         maxvol,
+                                         meanvol,
+                                         str(offset),
+                                         str(result),
+                                         ))
+        elif self.rdbx_normalize.GetSelection() == 2:  # ebu
+            for f, v in zip(self.parent.file_src, data[0]):
+                maxvol = v[0].split(' ')[0]
+                meanvol = v[1].split(' ')[0]
+                offset = float(meanvol) - float(target)
+                result = float(maxvol) - offset
+                if offset == 0.0:
+                    volume.append('  ')
+                else:
+                    volume.append("-filter:a:%s volume=%fdB" %
+                                  (self.opt["AudioMap"][1], -offset)
+                                  )
+                self.normdetails.append((f,
+                                         maxvol,
+                                         meanvol,
+                                         str(offset),
+                                         str(result),
+                                         ))
         if [a for a in volume if '  ' not in a] == []:
             self.parent.statusbar_msg(msg3, AV_Conv.ORANGE, AV_Conv.WHITE)
         else:
@@ -1928,7 +2015,7 @@ class AV_Conv(wx.Panel):
         Set h264/h265 only
         """
         sel = self.cmb_preset.GetStringSelection()
-        self.opt["Preset"] = '' if sel == 'None' else '-preset:v %s' % sel
+        self.opt["Preset"] = '' if sel == 'None' else f'-preset:v {sel}'
     # ------------------------------------------------------------------#
 
     def on_xProfile(self, event):
@@ -1936,7 +2023,7 @@ class AV_Conv(wx.Panel):
         Set h264/h265 only
         """
         sel = self.cmb_profile.GetStringSelection()
-        self.opt["Profile"] = '' if sel == 'None' else '-profile:v %s' % sel
+        self.opt["Profile"] = '' if sel == 'None' else f'-profile:v {sel}'
     # ------------------------------------------------------------------#
 
     def on_Level(self, event):
@@ -1945,7 +2032,7 @@ class AV_Conv(wx.Panel):
         after -profile:v parameter.
         """
         sel = self.cmb_level.GetStringSelection()
-        self.opt["Level"] = '' if sel == 'None' else '-level %s' % sel
+        self.opt["Level"] = '' if sel == 'None' else f'-level {sel}'
     # ------------------------------------------------------------------#
 
     def on_xTune(self, event):
@@ -1953,7 +2040,7 @@ class AV_Conv(wx.Panel):
         Set h264/h265 only
         """
         sel = self.cmb_tune.GetStringSelection()
-        self.opt["Tune"] = '' if sel == 'None' else '-tune:v %s' % sel
+        self.opt["Tune"] = '' if sel == 'None' else f'-tune:v {sel}'
     # -------------------------------------------------------------------#
 
     def update_allentries(self):
@@ -1974,8 +2061,8 @@ class AV_Conv(wx.Panel):
 
         if self.vp9panel.IsShown():
             deadline = self.rdb_deadline.GetStringSelection()
-            self.opt["CpuUsed"] = '-cpu-used %s' % self.spin_cpu.GetValue()
-            self.opt["Deadline"] = '-deadline %s' % deadline
+            self.opt["CpuUsed"] = f'-cpu-used {self.spin_cpu.GetValue()}'
+            self.opt["Deadline"] = f'-deadline {deadline}'
             if self.ckbx_rowMt1.IsChecked():
                 self.opt["RowMthreading"] = '-row-mt 1'
             else:
@@ -1986,22 +2073,22 @@ class AV_Conv(wx.Panel):
             self.opt["RowMthreading"] = ''
 
         if self.spinMinr.GetValue() > 0:
-            self.opt["MinRate"] = '-minrate %sk' % self.spinMinr.GetValue()
+            self.opt["MinRate"] = f'-minrate {self.spinMinr.GetValue()}k'
         else:
             self.opt["MinRate"] = ''
         if self.spinMaxr.GetValue() > 0:
-            self.opt["MaxRate"] = '-maxrate %sk' % self.spinMaxr.GetValue()
+            self.opt["MaxRate"] = f'-maxrate {self.spinMaxr.GetValue()}k'
         else:
             self.opt["MaxRate"] = ''
         if self.spinBufsize.GetValue() > 0:
-            self.opt["Bufsize"] = '-bufsize %sk' % self.spinBufsize.GetValue()
+            self.opt["Bufsize"] = f'-bufsize {self.spinBufsize.GetValue()}k'
         else:
             self.opt["Bufsize"] = ''
 
         if self.cmb_Pixfrm.GetValue() == 'None':
             self.opt["PixFmt"] = ''
         else:
-            self.opt["PixFmt"] = '-pix_fmt %s' % self.cmb_Pixfrm.GetValue()
+            self.opt["PixFmt"] = f'-pix_fmt {self.cmb_Pixfrm.GetValue()}'
 
         smap = self.cmb_Submap.GetValue()
         if smap == 'None':
@@ -2035,7 +2122,7 @@ class AV_Conv(wx.Panel):
                                self.parent.suffix,
                                self.opt["OutputFormat"]
                                )
-        if not checking[0]:  # User changing idea or not such files exist
+        if checking is None:  # User changing idea or not such files exist
             return
 
         f_src, destin, countmax = checking
@@ -2104,6 +2191,7 @@ class AV_Conv(wx.Panel):
                                              logname,
                                              countmax,
                                              )
+        return None
         # ------------------------------------------------------------------#
 
     def video_stdProc(self, f_src, destin, countmax, logname):
@@ -2233,6 +2321,7 @@ class AV_Conv(wx.Panel):
                                                  logname,
                                                  countmax,
                                                  )
+        return None
     # ------------------------------------------------------------------#
 
     def video_ebu_2pass(self, f_src, destin, countmax, logname):
@@ -2245,11 +2334,11 @@ class AV_Conv(wx.Panel):
         """
         title = _('Audio/Video EBU normalization')
         self.opt["EBU"] = 'EBU R128'
-        loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' %
-                      (str(self.spin_i.GetValue()),
-                       str(self.spin_tp.GetValue()),
-                       str(self.spin_lra.GetValue()),
-                       ))
+        loudfilter = (f'loudnorm=I={str(self.spin_i.GetValue())}:'
+                      f'TP={str(self.spin_tp.GetValue())}:'
+                      f'LRA={str(self.spin_lra.GetValue())}:'
+                      f'print_format=summary'
+                      )
         if self.opt["VideoCodec"] == "-c:v libx265":
             opt1, opt2 = '-x265-params pass=1', '-x265-params pass=2'
         else:
@@ -2341,6 +2430,7 @@ class AV_Conv(wx.Panel):
                                                  countmax,
                                                  )
             # ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
+        return None
     # ------------------------------------------------------------------#
 
     def audio_stdProc(self, f_src, destin, countmax, logname):
@@ -2375,6 +2465,7 @@ class AV_Conv(wx.Panel):
                                              logname,
                                              countmax,
                                              )
+        return None
     # ------------------------------------------------------------------#
 
     def audio_ebu_2pass(self, f_src, destin, countmax, logname):
@@ -2385,11 +2476,12 @@ class AV_Conv(wx.Panel):
         audio has not indexes
         """
         self.opt["EBU"] = True
-        loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' %
-                      (str(self.spin_i.GetValue()),
-                       str(self.spin_tp.GetValue()),
-                       str(self.spin_lra.GetValue())
-                       ))
+
+        loudfilter = (f'loudnorm=I={str(self.spin_i.GetValue())}:'
+                      f'TP={str(self.spin_tp.GetValue())}:'
+                      f'LRA={str(self.spin_lra.GetValue())}:'
+                      f'print_format=summary'
+                      )
         title = _('Audio EBU normalization')
 
         cmd_1 = (f'{self.opt["WebOptim"]} {self.opt["AudioMap"][0]} '
@@ -2420,13 +2512,14 @@ class AV_Conv(wx.Panel):
                                              logname,
                                              countmax,
                                              )
+        return None
     # ------------------------------------------------------------------#
 
     def update_dict(self, countmax, prof):
         """
         Update all settings before send to epilogue
         """
-        numfile = _("%s file in queue") % str(countmax)
+        numfile = _("{} file in queue").format(str(countmax))
         if self.opt["PEAK"]:
             normalize = 'PEAK'
         elif self.opt["RMS"]:
@@ -2453,20 +2546,16 @@ class AV_Conv(wx.Panel):
                         \nWeb Optimize\nAudio Codec\nAudio bit-rate\
                         \nAudio Channels\nAudio Rate\nBit per Sample\
                         \nAudio Normalization\nTime Period\
-                        \nInput Audio Map"))
-            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s"
-                        "\n%s\n%s\n%s\n%s\n%s" % (numfile,
-                                                  outputformat,
-                                                  self.opt["WebOptim"],
-                                                  self.opt["AudioCodStr"],
-                                                  self.opt["AudioBitrate"][0],
-                                                  self.opt["AudioChannel"][0],
-                                                  self.opt["AudioRate"][0],
-                                                  self.opt["AudioDepth"][0],
-                                                  normalize,
-                                                  time,
-                                                  self.cmb_A_outMap.GetValue(),
-                                                  )
+                        \nInput Audio Map")
+                       )
+            dictions = (f'\n\n{numfile}\n{outputformat}\n'
+                        f'{self.opt["WebOptim"]}\n'
+                        f'{self.opt["AudioCodStr"]}\n'
+                        f'{self.opt["AudioBitrate"][0]}\n'
+                        f'{self.opt["AudioChannel"][0]}\n'
+                        f'{self.opt["AudioRate"][0]}\n'
+                        f'{self.opt["AudioDepth"][0]}\n{normalize}\n{time}\n'
+                        f'{self.cmb_A_outMap.GetValue()}'
                         )
         elif prof[0] == "Copy":
             formula = (
@@ -2475,26 +2564,20 @@ class AV_Conv(wx.Panel):
                       \nAudio Channels\nAudio Rate\nAudio bit-rate\
                       \nBit per Sample\nAudio Normalization\
                       \nInput Audio Map\nOutput Audio Map\
-                      \nSubtitles Map\nTime Period"
-                  ))
-            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
-                         \n%s\n%s\n%s\n%s" % (numfile,
-                                              self.opt["WebOptim"],
-                                              outputformat,
-                                              self.opt["VidCmbxStr"],
-                                              self.opt["AspectRatio"],
-                                              self.opt["FPS"],
-                                              self.opt["AudioCodStr"],
-                                              self.opt["AudioChannel"][0],
-                                              self.opt["AudioRate"][0],
-                                              self.opt["AudioBitrate"][0],
-                                              self.opt["AudioDepth"][0],
-                                              normalize,
-                                              self.cmb_A_inMap.GetValue(),
-                                              self.cmb_A_outMap.GetValue(),
-                                              self.cmb_Submap.GetValue(),
-                                              time,
-                                              ))
+                      \nSubtitles Map\nTime Period")
+                )
+            dictions = (f'\n\n{numfile}\n{self.opt["WebOptim"]}\n'
+                        f'{outputformat}\n{self.opt["VidCmbxStr"]}\n'
+                        f'{self.opt["AspectRatio"]}\n{self.opt["FPS"]}\n'
+                        f'{self.opt["AudioCodStr"]}\n'
+                        f'{self.opt["AudioChannel"][0]}\n'
+                        f'{self.opt["AudioRate"][0]}\n'
+                        f'{self.opt["AudioBitrate"][0]}\n'
+                        f'{self.opt["AudioDepth"][0]}\n{normalize}\n'
+                        f'{self.cmb_A_inMap.GetValue()}\n'
+                        f'{self.cmb_A_outMap.GetValue()}\n'
+                        f'{self.cmb_Submap.GetValue()}\n{time}'
+                        )
         # --------------------
         else:
             formula = (
@@ -2506,43 +2589,27 @@ class AV_Conv(wx.Panel):
                       \nAudio Channels\nAudio Rate\nAudio bit-rate\
                       \nBit per Sample\nAudio Normalization\
                       \nInput Audio Map\nOutput Audio Map\
-                      \nSubtitles Map\nTime Period"
-                  ))
-            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
-                        \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
-                        \n%s\n%s" % (numfile,
-                                     self.opt["WebOptim"],
-                                     self.opt["Passing"],
-                                     outputformat,
-                                     self.opt["VidCmbxStr"],
-                                     self.opt["VideoBitrate"],
-                                     self.opt["CRF"],
-                                     self.opt["MinRate"],
-                                     self.opt["MaxRate"],
-                                     self.opt["Bufsize"],
-                                     '%s %s %s' % (self.opt["Deadline"],
-                                                   self.opt["CpuUsed"],
-                                                   self.opt["RowMthreading"],
-                                                   ),
-                                     vfilter,
-                                     self.opt["AspectRatio"],
-                                     self.opt["FPS"],
-                                     self.opt["Preset"],
-                                     '%s %s' % (self.opt["Profile"],
-                                                self.opt["Level"],
-                                                ),
-                                     self.opt["Tune"],
-                                     self.opt["AudioCodStr"],
-                                     self.opt["AudioChannel"][0],
-                                     self.opt["AudioRate"][0],
-                                     self.opt["AudioBitrate"][0],
-                                     self.opt["AudioDepth"][0],
-                                     normalize,
-                                     self.cmb_A_inMap.GetValue(),
-                                     self.cmb_A_outMap.GetValue(),
-                                     self.cmb_Submap.GetValue(),
-                                     time,
-                                     ))
+                      \nSubtitles Map\nTime Period")
+                )
+            dictions = (f'\n\n{numfile}\n{self.opt["WebOptim"]}\n'
+                        f'{self.opt["Passing"]}\n{outputformat}\n'
+                        f'{self.opt["VidCmbxStr"]}\n'
+                        f'{self.opt["VideoBitrate"]}\n{self.opt["CRF"]}\n'
+                        f'{self.opt["MinRate"]}\n{self.opt["MaxRate"]}\n'
+                        f'{self.opt["Bufsize"]}\n{self.opt["Deadline"]} '
+                        f'{self.opt["CpuUsed"]} {self.opt["RowMthreading"]}\n'
+                        f'{vfilter}\n{self.opt["AspectRatio"]}\n'
+                        f'{self.opt["FPS"]}\n{self.opt["Preset"]}\n'
+                        f'{self.opt["Profile"]} {self.opt["Level"]}\n'
+                        f'{self.opt["Tune"]}\n{self.opt["AudioCodStr"]}\n'
+                        f'{self.opt["AudioChannel"][0]}\n'
+                        f'{self.opt["AudioRate"][0]}\n'
+                        f'{self.opt["AudioBitrate"][0]}\n'
+                        f'{self.opt["AudioDepth"][0]}\n{normalize}\n'
+                        f'{self.cmb_A_inMap.GetValue()}\n'
+                        f'{self.cmb_A_outMap.GetValue()}\n'
+                        f'{self.cmb_Submap.GetValue()}\n{time}'
+                        )
         return formula, dictions
 # ------------------------------------------------------------------#
 

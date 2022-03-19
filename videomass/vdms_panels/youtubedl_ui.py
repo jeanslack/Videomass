@@ -230,7 +230,7 @@ class Downloader(wx.Panel):
                               )
         boxoptions.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
         boxoptions.Add((5, 5))
-        panelscroll = scrolled.ScrolledPanel(self, -1, size=(260, 1000),
+        panelscroll = scrolled.ScrolledPanel(self, -1, size=(300, 1000),
                                              style=wx.TAB_TRAVERSAL
                                              | wx.BORDER_THEME,
                                              name="panelscr",
@@ -315,17 +315,24 @@ class Downloader(wx.Panel):
         fgs1.Add(self.ckbx_sb, 0, wx.ALL, 5)
         sizer_subtitles = wx.BoxSizer(wx.HORIZONTAL)
         self.ckbx_all_sb = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                   (_('Download all available subtitles'))
-                                   )
+                                       (_('Download all available subtitles'))
+                                       )
         self.ckbx_all_sb.Disable()
         sizer_subtitles.Add((20, 20), 0,)
         sizer_subtitles.Add(self.ckbx_all_sb)
         fgs1.Add(sizer_subtitles, 0, wx.ALL, 5)
+        sizer_skipdl = wx.BoxSizer(wx.HORIZONTAL)
+        self.ckbx_skip_dl = wx.CheckBox(panelscroll, wx.ID_ANY,
+                                        (_('Download subtitles only'))
+                                        )
+        self.ckbx_skip_dl.Disable()
+        sizer_skipdl.Add((20, 20), 0,)
+        sizer_skipdl.Add(self.ckbx_skip_dl)
+        fgs1.Add(sizer_skipdl, 0, wx.ALL, 5)
         self.ckbx_w = wx.CheckBox(panelscroll, wx.ID_ANY,
                                   (_('Prevent overwriting files'))
                                   )
         fgs1.Add(self.ckbx_w, 0, wx.ALL, 5)
-
         self.ckbx_id = wx.CheckBox(panelscroll, wx.ID_ANY,
                                    (_('Include the video ID\n'
                                       'in the file names'))
@@ -944,10 +951,14 @@ class Downloader(wx.Panel):
         if self.ckbx_sb.IsChecked():
             self.opt["SUBTITLES"] = True
             self.ckbx_all_sb.Enable()
+            self.ckbx_skip_dl.Enable()
+
         else:
             self.opt["SUBTITLES"] = False
             self.ckbx_all_sb.Disable()
+            self.ckbx_skip_dl.Disable()
             self.ckbx_all_sb.SetValue(False)
+            self.ckbx_skip_dl.SetValue(False)
     # -----------------------------------------------------------------#
 
     def getformatcode(self, urls):
@@ -1062,6 +1073,7 @@ class Downloader(wx.Panel):
                     'addmetadata': self.opt["METADATA"],
                     'writesubtitles': self.opt["SUBTITLES"],
                     'subtitleslangs': sublang,
+                    'skip_download': self.ckbx_skip_dl.GetValue(),
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
@@ -1080,6 +1092,7 @@ class Downloader(wx.Panel):
                     'addmetadata': self.opt["METADATA"],
                     'writesubtitles': self.opt["SUBTITLES"],
                     'subtitleslangs': sublang,
+                    'skip_download': self.ckbx_skip_dl.GetValue(),
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
@@ -1098,6 +1111,7 @@ class Downloader(wx.Panel):
                     'addmetadata': self.opt["METADATA"],
                     'writesubtitles': self.opt["SUBTITLES"],
                     'subtitleslangs': sublang,
+                    'skip_download': self.ckbx_skip_dl.GetValue(),
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
@@ -1122,6 +1136,7 @@ class Downloader(wx.Panel):
                     'addmetadata': self.opt["METADATA"],
                     'writesubtitles': self.opt["SUBTITLES"],
                     'subtitleslangs': sublang,
+                    'skip_download': self.ckbx_skip_dl.GetValue(),
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,

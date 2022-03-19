@@ -1,35 +1,35 @@
 # -*- coding: UTF-8 -*-
 
-# Name: presets_manager.py
-# Porpose: ffmpeg's presets manager panel
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: December.14.2020 *-pycodestyle- compatible*
-#########################################################
+"""
+Name: presets_manager.py
+Porpose: ffmpeg's presets manager panel
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: December.14.2020 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
-from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-import wx.lib.scrolledpanel as scrolled
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 import sys
+import wx
+import wx.lib.scrolledpanel as scrolled
+from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_io.presets_manager_properties import json_data
 from videomass.vdms_io.presets_manager_properties import supported_formats
 from videomass.vdms_io.presets_manager_properties import delete_profiles
@@ -100,7 +100,7 @@ class PrstPan(wx.Panel):
                        os.path.splitext(x)[1] == '.prst'
                        ])
         wx.Panel.__init__(self, parent, -1)
-        """constructor"""
+
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizer_div = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(sizer_div, 1, wx.EXPAND)
@@ -360,7 +360,7 @@ class PrstPan(wx.Panel):
 
         self.list_ctrl.ClearAll()
         self.txt_1cmd.SetValue(""), self.txt_2cmd.SetValue("")
-        if self.array != []:
+        if self.array:
             del self.array[0:6]
         self.set_listctrl()
     # ----------------------------------------------------------------#
@@ -375,8 +375,8 @@ class PrstPan(wx.Panel):
         self.list_ctrl.InsertColumn(2, _('Output Format'), width=200)
         self.list_ctrl.InsertColumn(3, _('Supported Format List'), width=220)
 
-        path = os.path.join('%s' % self.user_prst,
-                            '%s.prst' % self.cmbx_prst.GetValue()
+        path = os.path.join(f'{self.user_prst}',
+                            f'{self.cmbx_prst.GetValue()}.prst'
                             )
         collections = json_data(path)
         if collections == 'error':
@@ -403,8 +403,7 @@ class PrstPan(wx.Panel):
 
         """
         self.reset_list()
-        self.parent.statusbar_msg('{}'.format(self.cmbx_prst.GetValue()),
-                                  None)
+        self.parent.statusbar_msg(f'{self.cmbx_prst.GetValue()}', None)
     # ------------------------------------------------------------------#
 
     def on_select(self, event):  # list_ctrl
@@ -414,8 +413,8 @@ class PrstPan(wx.Panel):
         to the text boxes.
 
         """
-        path = os.path.join('%s' % self.user_prst,
-                            '%s.prst' % self.cmbx_prst.GetValue()
+        path = os.path.join(f'{self.user_prst}',
+                            f'{self.cmbx_prst.GetValue()}.prst'
                             )
         collections = json_data(path)
         selected = event.GetText()  # event.GetText is a Name Profile
@@ -438,14 +437,14 @@ class PrstPan(wx.Panel):
                           "Videomass", wx.ICON_ERROR, self)
             return
 
-        self.txt_1cmd.AppendText('%s' % (self.array[2]))  # cmd1 text ctrl
+        self.txt_1cmd.AppendText(f'{self.array[2]}')  # cmd1 text ctrl
         if self.array[3]:
             self.txt_2cmd.Enable()
-            self.txt_2cmd.AppendText('%s' % (self.array[3]))  # cmd2 text ctrl
+            self.txt_2cmd.AppendText(f'{self.array[3]}')  # cmd2 text ctrl
         else:
             self.txt_2cmd.Disable()
 
-        sel = '{0} - {1}'.format(self.cmbx_prst.GetValue(), self.array[0])
+        sel = f'{self.cmbx_prst.GetValue()} - {self.array[0]}'
         self.parent.statusbar_msg(sel, None)
     # ------------------------------------------------------------------#
 
@@ -463,7 +462,7 @@ class PrstPan(wx.Panel):
 
             if fileDialog.ShowModal() == wx.ID_CANCEL:
                 return
-            filename = "%s.prst" % fileDialog.GetPath()
+            filename = f"{fileDialog.GetPath()}.prst"
             try:
                 with open(filename, 'w', encoding='utf8') as file:
                     file.write('[]')
@@ -493,9 +492,6 @@ class PrstPan(wx.Panel):
                          wx.YES_NO, self) == wx.NO:
             return
 
-        path = os.path.join('%s' % self.user_prst,
-                            '%s.prst' % self.cmbx_prst.GetValue()
-                            )
         try:
             if not os.path.exists(os.path.join(self.user_prst, 'Removals')):
                 os.mkdir(os.path.join(self.user_prst, 'Removals'))
@@ -506,8 +502,8 @@ class PrstPan(wx.Panel):
                           )
             return
 
-        s = os.path.join(self.user_prst, '%s.prst' % filename)
-        d = os.path.join(self.user_prst, 'Removals', '%s.prst' % filename)
+        s = os.path.join(self.user_prst, f'{filename}.prst')
+        d = os.path.join(self.user_prst, 'Removals', f'{filename}.prst')
         os.replace(s, d)
 
         wx.MessageBox(_('The preset "{0}" was successfully '
@@ -523,13 +519,13 @@ class PrstPan(wx.Panel):
 
         """
         combvalue = self.cmbx_prst.GetValue()
-        filedir = '%s/%s.prst' % (self.user_prst, combvalue)
+        filedir = f'{self.user_prst}/{combvalue}.prst'
 
         dlg = wx.DirDialog(self, _("Choose a folder to save the selected "
                                    "preset"), "", style=wx.DD_DEFAULT_STYLE)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
-            if os.path.exists(os.path.join(path, '%s.prst' % combvalue)):
+            if os.path.exists(os.path.join(path, f'{combvalue}.prst')):
                 if wx.MessageBox(_('A file with this name already exists, '
                                    'do you want to overwrite it?'),
                                  _('Please confirm'),
@@ -537,15 +533,14 @@ class PrstPan(wx.Panel):
                     return
 
             status = copy_restore(filedir,
-                                  os.path.join(path, '%s.prst' % combvalue))
+                                  os.path.join(path, f'{combvalue}.prst'))
             dlg.Destroy()
 
             if status:
-                wx.MessageBox('%s' % status, "Videomass", wx.ICON_ERROR, self)
+                wx.MessageBox(f'{status}', "Videomass", wx.ICON_ERROR, self)
                 return
-            else:
-                wx.MessageBox(_("The preset was exported successfully"),
-                              "Videomass", wx.OK, self)
+            wx.MessageBox(_("The preset was exported successfully"),
+                          "Videomass", wx.OK, self)
     # ------------------------------------------------------------------#
 
     def preset_Export_all(self, event):
@@ -562,8 +557,7 @@ class PrstPan(wx.Panel):
             status = copydir_recursively(src, dest, 'Videomass-Presets-copy')
             dialsave.Destroy()
             if status:
-                wx.MessageBox("%s" % status, "Videomass",
-                              wx.ICON_ERROR, self)
+                wx.MessageBox(f'{status}', "Videomass", wx.ICON_ERROR, self)
             else:
                 wx.MessageBox(_("All presets have been exported successfully"),
                               "Videomass", wx.OK, self)
@@ -604,12 +598,12 @@ class PrstPan(wx.Panel):
                              wx.YES_NO, self) == wx.NO:
                 return
 
-            prfbak = preserve_old_profiles(newincoming,
-                                           os.path.join(self.user_prst, new))
-
+            preserve_old_profiles(newincoming,
+                                  os.path.join(self.user_prst, new)
+                                  )
         status = copy_restore(newincoming, os.path.join(self.user_prst, new))
         if status:
-            wx.MessageBox('%s' % status, "Videomass", wx.ICON_ERROR, self)
+            wx.MessageBox(f'{status}', "Videomass", wx.ICON_ERROR, self)
             return
 
         self.reset_list(True)  # reload presets
@@ -635,9 +629,8 @@ class PrstPan(wx.Panel):
                                 )
         if dialsave.ShowModal() == wx.ID_CANCEL:
             return
-        else:
-            source = dialsave.GetPath()
-            dialsave.Destroy()
+        source = dialsave.GetPath()
+        dialsave.Destroy()
 
         incoming = [n for n in os.listdir(source) if n.endswith('.prst')]
         outcoming = [n for n in os.listdir(self.user_prst)
@@ -645,13 +638,13 @@ class PrstPan(wx.Panel):
 
         #  Return a new set with elements common to the set and all others.
         for f in set(incoming).intersection(outcoming):
-            prfbak = preserve_old_profiles(os.path.join(source, f),
-                                           os.path.join(self.user_prst, f)
-                                           )
+            preserve_old_profiles(os.path.join(source, f),
+                                  os.path.join(self.user_prst, f)
+                                  )
         outerror = copy_on('prst', source, self.user_prst)
 
         if outerror:
-            wx.MessageBox("%s" % outerror, "Videomass", wx.ICON_ERROR, self)
+            wx.MessageBox(f"{outerror}", "Videomass", wx.ICON_ERROR, self)
         else:
             wx.MessageBox(_("The presets database has been successfully "
                             "updated"), "Videomass", wx.OK, self)
@@ -671,8 +664,8 @@ class PrstPan(wx.Panel):
                          self) == wx.YES:
 
             filename = self.cmbx_prst.GetValue()
-            status = copy_restore('%s/%s.prst' % (self.src_prst, filename),
-                                  '%s/%s.prst' % (self.user_prst, filename)
+            status = copy_restore(f'{self.user_prst}/{filename}.prst',
+                                  f'{self.user_prst}/{filename}.prst'
                                   )
             if status:
                 wx.MessageBox(_('Sorry, this preset is not part '
@@ -698,8 +691,7 @@ class PrstPan(wx.Panel):
 
             outerror = copy_on('prst', self.src_prst, self.user_prst)
             if outerror:
-                wx.MessageBox("%s" % outerror, "Videomass",
-                              wx.ICON_ERROR, self)
+                wx.MessageBox(f"{outerror}", "Videomass", wx.ICON_ERROR, self)
             else:
                 wx.MessageBox(_("All default presets have been "
                                 "successfully recovered"),
@@ -720,13 +712,13 @@ class PrstPan(wx.Panel):
 
         """
         filename = self.cmbx_prst.GetValue()
-        t = _('Create a new profile on "%s" preset') % filename
+        title = _('Create a new profile on "{}" preset').format(filename)
 
         prstdialog = presets_addnew.MemPresets(self,
                                                'newprofile',
                                                filename,
                                                None,
-                                               t)
+                                               title)
         ret = prstdialog.ShowModal()
 
         if ret == wx.ID_OK:
@@ -738,22 +730,21 @@ class PrstPan(wx.Panel):
         Edit an existing profile
 
         """
-        if self.array == []:
+        if not self.array:
             self.parent.statusbar_msg(_("First select a profile in the list"),
                                       PrstPan.YELLOW, PrstPan.BLACK)
             return
-        else:
-            filename = self.cmbx_prst.GetValue()
-            t = _('Edit profile of the "%s" preset: ') % (filename)
 
-            prstdialog = presets_addnew.MemPresets(self,
-                                                   'edit',
-                                                   filename,
-                                                   self.array,
-                                                   t)
-            ret = prstdialog.ShowModal()
-            if ret == wx.ID_OK:
-                self.reset_list()  # re-charging list_ctrl with newer
+        filename = self.cmbx_prst.GetValue()
+        title = _('Edit profile of the "{}" preset').format(filename)
+        prstdialog = presets_addnew.MemPresets(self,
+                                               'edit',
+                                               filename,
+                                               self.array,
+                                               title)
+        ret = prstdialog.ShowModal()
+        if ret == wx.ID_OK:
+            self.reset_list()  # re-charging list_ctrl with newer
     # ------------------------------------------------------------------#
 
     def profile_Del(self, event):
@@ -761,22 +752,22 @@ class PrstPan(wx.Panel):
         Delete a selected profile
 
         """
-        if self.array == []:
+        if not self.array:
             self.parent.statusbar_msg(_("First select a profile in the list"),
                                       PrstPan.YELLOW, PrstPan.BLACK)
-        else:
-            filename = self.cmbx_prst.GetValue()
-            if wx.MessageBox(_("Are you sure you want to delete the "
-                               "selected profile? It will no longer be "
-                               "possible to recover it."), _("Please confirm"),
-                             wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
-                             self) == wx.YES:
+            return
 
-                path = os.path.join('%s' % self.user_prst,
-                                    '%s.prst' % self.cmbx_prst.GetValue()
-                                    )
-                delete_profiles(path, self.array[0])
-                self.reset_list()
+        if wx.MessageBox(_("Are you sure you want to delete the "
+                           "selected profile? It will no longer be "
+                           "possible to recover it."), _("Please confirm"),
+                         wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
+                         self) == wx.YES:
+
+            path = os.path.join(f'{self.user_prst}',
+                                f'{self.cmbx_prst.GetValue()}.prst'
+                                )
+            delete_profiles(path, self.array[0])
+            self.reset_list()
     # ------------------------------------------------------------------#
 
     def on_start(self):
@@ -784,13 +775,10 @@ class PrstPan(wx.Panel):
         File data redirecting .
 
         """
-        if self.array == []:
+        if not self.array:
             self.parent.statusbar_msg(_("First select a profile in the list"),
                                       PrstPan.YELLOW, PrstPan.BLACK)
             return
-
-        self.time_seq = self.parent.time_seq  # update time_seq
-        self.logname = 'presets_manager.log'  # used for file name log
 
         if(self.array[2].strip() != self.txt_1cmd.GetValue().strip() or
            self.array[3].strip() != self.txt_2cmd.GetValue().strip()):
@@ -812,13 +800,12 @@ class PrstPan(wx.Panel):
                         # make sure we won't show it again the next time
                         self.txtcmdedited = False
                     return
-                else:
-                    if dlg.IsCheckBoxChecked():
-                        # make sure we won't show it again the next time
-                        self.txtcmdedited = False
+                if dlg.IsCheckBoxChecked():
+                    # make sure we won't show it again the next time
+                    self.txtcmdedited = False
 
         outext = '' if self.array[5] == 'copy' else self.array[5]
-        extlst, outext = self.array[4], outext
+        extlst = self.array[4]
         file_src = supported_formats(extlst, self.parent.file_src)
         checking = check_files(file_src,
                                self.parent.outpath_ffmpeg,
@@ -826,7 +813,7 @@ class PrstPan(wx.Panel):
                                self.parent.suffix,
                                outext,
                                )
-        if not checking[0]:
+        if checking is None:
             # not supported, missing files or user has changed his mind
             return
         fsrc, dirdest, cntmax = checking
@@ -843,7 +830,7 @@ class PrstPan(wx.Panel):
 
     def one_Pass(self, filesrc, destdir, cntmax, outext):
         """
-
+        Build args string for one pass process
         """
         command = (self.txt_1cmd.GetValue())
         valupdate = self.update_dict(cntmax, 'One passes')
@@ -857,14 +844,14 @@ class PrstPan(wx.Panel):
                                              None,
                                              '',
                                              '',
-                                             self.logname,
+                                             'presets_manager.log',
                                              cntmax,
                                              )
     # ------------------------------------------------------------------#
 
     def two_Pass(self, filesrc, destdir, cntmax, outext):
         """
-        defines two-pass parameters
+        Build args string for two pass process
         """
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
         pass2 = " ".join(self.txt_2cmd.GetValue().split())
@@ -881,7 +868,7 @@ class PrstPan(wx.Panel):
                                              [pass1, pass2],
                                              '',
                                              '',
-                                             self.logname,
+                                             'presets_manager.log',
                                              cntmax,
                                              )
     # --------------------------------------------------------------------#
@@ -913,13 +900,13 @@ class PrstPan(wx.Panel):
             dir_destin = dest[file_sources.index(clicked)]  # specified dest
 
             try:
-                outputdir = "%s/%s-IMAGES_1" % (dir_destin, fname)
+                outputdir = f"{dir_destin}/{fname}-IMAGES_1"
                 os.mkdir(outputdir)
 
             except FileExistsError:
                 lista = []
                 for dir_ in os.listdir(dir_destin):
-                    if "%s-IMAGES_" % fname in dir_:
+                    if f"{fname}-IMAGES_" in dir_:
                         lista.append(int(dir_.split('IMAGES_')[1]))
 
                 prog = max(lista) + 1
@@ -927,9 +914,8 @@ class PrstPan(wx.Panel):
                 os.mkdir(outputdir)
 
             fileout = "{0}-%d.{1}".format(fname, self.array[5])
-            cmd = ('%s -y "%s"' % (self.txt_1cmd.GetValue(),
-                                   os.path.join(outputdir, fileout)
-                                   ))
+            cmd = (f'{self.txt_1cmd.GetValue()} -y '
+                   f'"{os.path.join(outputdir, fileout)}"')
             command = " ".join(cmd.split())  # compact string
             self.parent.switch_to_processing('savepictures',
                                              clicked,
@@ -939,7 +925,7 @@ class PrstPan(wx.Panel):
                                              None,
                                              None,
                                              None,
-                                             self.logname,
+                                             'presets_manager.log',
                                              1,
                                              False,  # reserved
                                              )
@@ -956,14 +942,11 @@ class PrstPan(wx.Panel):
             t = self.parent.time_seq.split()
             time = _('start  {} | duration  {}').format(t[1], t[3])
 
-        numfile = "%s file in queue" % str(cntmax)
+        numfile = f"{str(cntmax)} file in queue"
 
         formula = (_("SUMMARY\n\nQueued File\nPass Encoding\
                      \nProfile Used\nOutput Format\nTime Period"))
-        dictions = ("\n\n%s\n%s\n%s\n%s\n%s" % (numfile,
-                                                passes,
-                                                self.array[0],
-                                                self.array[5],
-                                                time,
-                                                ))
+        dictions = (f"\n\n{numfile}\n{passes}\n"
+                    f"{self.array[0]}\n{self.array[5]}\n{time}"
+                    )
         return formula, dictions
