@@ -4,7 +4,7 @@ URGENCY: to do soon
 --------------------
 
 - make context managers more consistency with files - see example on OnExit
-  method of gui_app
+  method in gui_app.py
 
 --------------
 URGENCY: high
@@ -12,9 +12,7 @@ URGENCY: high
 - [TEXT DIALOGS] Improve message dialog within URLs, i.e. using `wx.lib.agw.hyperlink`.
   [ffplay_url_exe.py, Videomass version, youtube-dl update]
 
-- [CODE IMPROVING] Need code refactoring
-    - Consider using f-string on `two_pass_Ebu.py`, `video_stabilization.py`,
-      `volumedetect.py`, `ydl_downloader.py`
+- [CODE IMPROVING] av_conversions.py needs a deeper refactoring.
 
 ---------------
 URGENCY: medium

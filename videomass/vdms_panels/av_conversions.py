@@ -1157,17 +1157,16 @@ class AV_Conv(wx.Panel):
 
         """
         def _undetect():
-            if self.btn_voldect.IsEnabled():
-                wx.MessageBox(_('Undetected volume values! Click the '
-                                '"Volume detect" button to analyze '
-                                'audio volume data.'),
-                              'Videomass', wx.ICON_INFORMATION
-                              )
-                return True
-            return False
-
+           wx.MessageBox(_('Undetected volume values! Click the '
+                            '"Volume detect" button to analyze '
+                            'audio volume data.'),
+                          'Videomass', wx.ICON_INFORMATION
+                          )
         fget = self.file_selection()
         if not fget:
+            return
+
+        if not self.get_audio_stream(fget):
             return
 
         if self.cmb_A_inMap.GetValue() == 'Auto':
@@ -1175,20 +1174,17 @@ class AV_Conv(wx.Panel):
         else:
             idx = f'-ast a:{str(int(self.cmb_A_inMap.GetValue()) - 1)}'
 
-        if not self.get_audio_stream(fget):
-            return
-
         if self.rdbx_normalize.GetSelection() == 0:
             afilter = ''
 
         elif self.rdbx_normalize.GetSelection() == 1:
-            if _undetect():
-                return
+            if self.btn_voldect.IsEnabled():
+                return _undetect()
             afilter = f'-af {self.opt["PEAK"][fget[1]].split()[1]}'
 
         elif self.rdbx_normalize.GetSelection() == 2:
-            if _undetect():
-                return
+            if self.btn_voldect.IsEnabled():
+                return _undetect()
             afilter = f'-af {self.opt["RMS"][fget[1]].split()[1]}'
 
         elif self.rdbx_normalize.GetSelection() == 3:
@@ -1308,12 +1304,15 @@ class AV_Conv(wx.Panel):
 
         """
         selected = self.parent.data_files[fileselected[1]].get('streams')
-        a_streams = [a for a in selected if 'audio' in a.get('codec_type')]
+        isaudio = [a for a in selected if 'audio' in a.get('codec_type')]
 
-        if a_streams:
-            if not self.cmb_A_inMap.GetValue() == 'Auto':
-                idx = int(self.cmb_A_inMap.GetValue())
-                if not [x for x in a_streams if x.get('index') == idx]:
+        if isaudio:
+            if not self.cmb_A_inMap.GetValue() == 'Auto':  # 1 to 8
+                if [v for v in selected if 'video' in v.get('codec_type')]:
+                    idx = int(self.cmb_A_inMap.GetValue())
+                else:
+                    idx = int(self.cmb_A_inMap.GetValue()) - 1
+                if not [x for x in isaudio if x.get('index') == idx]:
                     wx.MessageBox(_('Selected index does not exist or '
                                     'does not contain any audio streams'),
                                   'Videomass', wx.ICON_INFORMATION)

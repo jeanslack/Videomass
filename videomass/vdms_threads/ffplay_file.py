@@ -99,10 +99,11 @@ class FilePlay(Thread):
         """
         # time.sleep(.5)
 
-        cmd = (f'"{self.ffplay}" {self.time_seq} {self.ffplay_loglev} '
-               f'{self.ffplay_params} {self.autoexit} -i "{self.filename}" '
-               f'{self.param}')
-
+        cmd = " ".join(f'"{self.ffplay}" {self.time_seq} '
+                       f'{self.ffplay_loglev} {self.ffplay_params} '
+                       f'{self.autoexit} -i "{self.filename}" '
+                       f'{self.param}'.split()
+                       )
         self.logwrite(cmd)
 
         if not platform.system() == 'Windows':

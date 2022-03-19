@@ -1,20 +1,20 @@
 videomass (3.5.8-1) UNRELEASED; urgency=medium
 
   * Small text on toolbar buttons when enabled.
-  * Refactoring of vdms_threads
-  * Refactoring of vdms_main
-  * Refactoring of utils.py (W0621)
-  * Refactoring of filter_crop.py
-  * Refactoring of filter_deinterlace.py
-  * Refactoring of filter_denoiser.py
-  * Refactoring of filter_crop.py
-  * Refactoring of filter_scale.py
-  * Refactoring of filter_stab.py
-  * Refactoring of filter_transpose.py
-  * Refactoring of playlist_indexing.py
-  * Refactoring of presets_addnew.py
-  * Refactoring of set_timestamp.py
-  * Refactoring of audiodialogs.py
+  * Code refactoring of vdms_threads
+  * Code refactoring of vdms_main
+  * Code refactoring of utils.py (W0621)
+  * Code refactoring of filter_crop.py
+  * Code refactoring of filter_deinterlace.py
+  * Code refactoring of filter_denoiser.py
+  * Code refactoring of filter_crop.py
+  * Code refactoring of filter_scale.py
+  * Code refactoring of filter_stab.py
+  * Code refactoring of filter_transpose.py
+  * Code refactoring of playlist_indexing.py
+  * Code refactoring of presets_addnew.py
+  * Code refactoring of set_timestamp.py
+  * Code refactoring of audiodialogs.py
   * Added Estimated Time of Arrival (ETA) on FFmpeg processes #81 .
   * Removed the progress bar on the output monitoring panel using YouTube
     Downloader due to frequent backend changes leading to progress errors.
@@ -26,13 +26,13 @@ videomass (3.5.8-1) UNRELEASED; urgency=medium
   * Added audio filter preview button (Listening) with the ability to play
     the selected indexes.
   * Removed Breeze icons.
-  * Refactoring of av_conversions.py
-  * Refactoring of checkup.py
-  * Refactoring of concatenate.py
-  * Refactoring of presets_manager.py
+  * Code refactoring (partial) of av_conversions.py
+  * Code refactoring of checkup.py
+  * Code refactoring of concatenate.py
+  * Code refactoring of presets_manager.py
   * Update locale to v3.5.8
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 18 Mar 2022 17:32:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 19 Mar 2022 10:15:00 +0200
 
 videomass (3.5.7-1) UNRELEASED; urgency=medium
 
