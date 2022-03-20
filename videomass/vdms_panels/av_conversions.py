@@ -43,7 +43,7 @@ from videomass.vdms_dialogs.filter_denoisers import Denoisers
 from videomass.vdms_dialogs.filter_deinterlace import Deinterlace
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_dialogs.filter_stab import Vidstab
-from videomass.vdms_frames import shownormlist
+from videomass.vdms_frames.shownormlist import NormalizationList
 from videomass.vdms_utils import optimizations
 
 
@@ -232,7 +232,7 @@ class AV_Conv(wx.Panel):
             "Deadline": "", "CpuUsed": "", "RowMthreading": "",
         }
         self.parent = parent
-        self.normdetails = []
+        self.norm_dataref = []  # see `on_Audio_analyzes` for details
 
         wx.Panel.__init__(self, parent, -1)
         # ------------ base
@@ -831,11 +831,11 @@ class AV_Conv(wx.Panel):
         self.btn_audio_preview.SetToolTip(tip)
 
         # ----------------------Binding (EVT)----------------------#
-        """
-        Note: wx.EVT_TEXT_ENTER é diverso da wx.EVT_TEXT . Il primo é sensibile
-        agli input di tastiera, il secondo é sensibile agli input di tastiera
-        ma anche agli "append"
-        """
+
+        # Note: wx.EVT_TEXT_ENTER é diverso da wx.EVT_TEXT: Il primo
+        # é responsivo agli input di tastiera, il secondo é responsivo
+        # agli input di tastiera ma anche agli "append"
+
         self.Bind(wx.EVT_COMBOBOX, self.videoCodec, self.cmb_Vcod)
         self.Bind(wx.EVT_COMBOBOX, self.on_Container, self.cmb_Vcont)
         self.Bind(wx.EVT_COMBOBOX, self.on_Media, self.cmb_Media)
@@ -970,7 +970,7 @@ class AV_Conv(wx.Panel):
         self.spin_target.SetValue(-1.0)
         self.peakpanel.Hide(), self.ebupanel.Hide(), self.btn_details.Hide()
         self.opt["PEAK"], self.opt["EBU"], self.opt["RMS"] = "", "", ""
-        del self.normdetails[:]
+        del self.norm_dataref[:]
 
     # ----------------------Event handler (callback)----------------------#
 
@@ -1157,17 +1157,14 @@ class AV_Conv(wx.Panel):
 
         """
         def _undetect():
-           wx.MessageBox(_('Undetected volume values! Click the '
+            wx.MessageBox(_('Undetected volume values! Click the '
                             '"Volume detect" button to analyze '
                             'audio volume data.'),
                           'Videomass', wx.ICON_INFORMATION
                           )
         fget = self.file_selection()
-        if not fget:
-            return
-
-        if not self.get_audio_stream(fget):
-            return
+        if not fget or not self.get_audio_stream(fget):
+            return None
 
         if self.cmb_A_inMap.GetValue() == 'Auto':
             idx = ''
@@ -1203,6 +1200,7 @@ class AV_Conv(wx.Panel):
                     args,
                     self.parent.autoexit
                     )
+        return None
     # ------------------------------------------------------------------#
 
     def on_video_preview(self, event):
@@ -1910,13 +1908,18 @@ class AV_Conv(wx.Panel):
             self.btn_voldect.Enable()
     # ------------------------------------------------------------------#
 
-    def on_Audio_analyzes(self, event):  # Volumedetect button
+    def on_Audio_analyzes(self, event):
         """
-        - normalizations based on PEAK Analyzes to get MAXIMUM peak levels
-          data to calculates offset in dBFS need for audio normalization
-          process.
-        - normalizations based on RMS Analyzes to get MEAN peak levels data to
-          calculates RMS offset in dBFS need for audio normalization process.
+        Clicking on the "Detect Volume" button performs the
+        PEAK/RMS-based volume detection and analysis process
+        required to calculate the offset for audio volume
+        normalization in dBFS:
+
+            - PEAK-based Analyzes, get the MAXIMUM peak level data.
+            - RMS-based Analyzes, get the MEAN peak level data.
+
+        `self.norm_dataref` is an object of type list contains
+        tuple items, eg. ('filename', maxvol, meanvol, offset, result)
 
         <https://superuser.com/questions/323119/how-can-i-normalize-audio-
         using-ffmpeg?utm_medium=organic>
@@ -1925,8 +1928,8 @@ class AV_Conv(wx.Panel):
         msg2 = (_('Audio normalization is required only for some files'))
         msg3 = (_("Audio normalization will not be applied because the "
                   "source signal is equal"))
-        if self.normdetails:
-            del self.normdetails[:]
+        if self.norm_dataref:
+            del self.norm_dataref[:]
 
         self.parent.statusbar_msg("", None)
         target = self.spin_target.GetValue()
@@ -1940,7 +1943,7 @@ class AV_Conv(wx.Panel):
             return
 
         volume = []
-        if self.rdbx_normalize.GetSelection() == 1:  # RMS
+        if self.rdbx_normalize.GetSelection() == 1:  # PEAK
             for f, v in zip(self.parent.file_src, data[0]):
                 maxvol = v[0].split(' ')[0]
                 meanvol = v[1].split(' ')[0]
@@ -1949,16 +1952,15 @@ class AV_Conv(wx.Panel):
                 if float(maxvol) == float(target):
                     volume.append('  ')
                 else:
-                    volume.append("-filter:a:%s volume=%fdB" %
-                                  (self.opt["AudioMap"][1], -offset)
-                                  )
-                self.normdetails.append((f,
-                                         maxvol,
-                                         meanvol,
-                                         str(offset),
-                                         str(result),
-                                         ))
-        elif self.rdbx_normalize.GetSelection() == 2:  # ebu
+                    volume.append(f'-filter:a:{self.opt["AudioMap"][1]} '
+                                  f'volume={-offset:f}dB')
+                self.norm_dataref.append((f,
+                                          maxvol,
+                                          meanvol,
+                                          str(offset),
+                                          str(result),
+                                          ))
+        elif self.rdbx_normalize.GetSelection() == 2:  # RMS
             for f, v in zip(self.parent.file_src, data[0]):
                 maxvol = v[0].split(' ')[0]
                 meanvol = v[1].split(' ')[0]
@@ -1967,15 +1969,14 @@ class AV_Conv(wx.Panel):
                 if offset == 0.0:
                     volume.append('  ')
                 else:
-                    volume.append("-filter:a:%s volume=%fdB" %
-                                  (self.opt["AudioMap"][1], -offset)
-                                  )
-                self.normdetails.append((f,
-                                         maxvol,
-                                         meanvol,
-                                         str(offset),
-                                         str(result),
-                                         ))
+                    volume.append(f'-filter:a:{self.opt["AudioMap"][1]} '
+                                  f'volume={-offset:f}dB')
+                self.norm_dataref.append((f,
+                                          maxvol,
+                                          meanvol,
+                                          str(offset),
+                                          str(result),
+                                          ))
         if [a for a in volume if '  ' not in a] == []:
             self.parent.statusbar_msg(msg3, AV_Conv.ORANGE, AV_Conv.WHITE)
         else:
@@ -2004,9 +2005,10 @@ class AV_Conv(wx.Panel):
         if self.btn_voldect.IsEnabled():
             self.on_Audio_analyzes(self)
 
-        audionormlist = shownormlist.NormalizationList(title,
-                                                       self.normdetails,
-                                                       self.appdata['ostype'])
+        audionormlist = NormalizationList(title,
+                                          self.norm_dataref,
+                                          self.appdata['ostype']
+                                          )
         audionormlist.Show()
     # ------------------------------------------------------------------#
 
