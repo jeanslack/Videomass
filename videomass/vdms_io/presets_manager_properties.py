@@ -154,7 +154,7 @@ def preserve_old_profiles(new, old):
 
 def write_new_profile(path_prst, **kwargs):
     """
-    Write a new profile using json
+    Write a new profile using json data
 
     """
     with open(path_prst, 'r', encoding='utf8') as infile:
@@ -174,17 +174,22 @@ def write_new_profile(path_prst, **kwargs):
 # ------------------------------------------------------------------#
 
 
-def edit_existing_profile(path_prst, old_prfname, **kwargs):
+def edit_existing_profile(path_prst, selected_profile, **kwargs):
     """
-    Edit a profile using json
+    Edit a profile using json data
 
     """
     with open(path_prst, 'r', encoding='utf8') as infile:
         stored_data = json.load(infile)
 
-    new_data = stored_data
-    for item in new_data:
-        if item["Name"] == old_prfname:
+    names = [x['Name'] for x in stored_data]
+    names = [x for x in names if selected_profile != x]
+
+    if kwargs['Name'] in names:
+        return 'already exist'
+
+    for item in stored_data:
+        if item["Name"] == selected_profile:
             item["Name"] = kwargs['Name']
             item["Description"] = kwargs['Description']
             item["First_pass"] = kwargs['First_pass']
@@ -192,5 +197,9 @@ def edit_existing_profile(path_prst, old_prfname, **kwargs):
             item["Supported_list"] = kwargs['Supported_list']
             item["Output_extension"] = kwargs['Output_extension']
 
+    stored_data.sort(key=lambda s: s["Name"])  # make sorted by name
+
     with open(path_prst, 'w', encoding='utf8') as outfile:
-        json.dump(new_data, outfile, ensure_ascii=False, indent=4)
+        json.dump(stored_data, outfile, ensure_ascii=False, indent=4)
+
+    return None

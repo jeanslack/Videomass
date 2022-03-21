@@ -332,7 +332,7 @@ class PrstPan(wx.Panel):
         menu = wx.Menu()
         menu.Append(popupID6,  _("Add"))
         menu.Append(popupID7, _("Edit"))
-        menu.Append(popupID9, _("Copy"))
+        menu.Append(popupID9, _("Duplicate"))
         menu.AppendSeparator()
         menu.Append(popupID8, _("Delete"))
         # show the popup menu
@@ -356,7 +356,7 @@ class PrstPan(wx.Panel):
             self.profile_edit(self)
         elif menuItem.GetItemLabel() == _("Delete"):
             self.profile_del(self)
-        elif menuItem.GetItemLabel() == _("Copy"):
+        elif menuItem.GetItemLabel() == _("Duplicate"):
             self.profile_copy(self)
     # ------------------------------------------------------------------#
 

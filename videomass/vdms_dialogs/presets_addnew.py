@@ -292,15 +292,19 @@ class MemPresets(wx.Dialog):
             self.txt_supp.SetValue('')
 
         elif self.arg == 'edit':
-            edit_existing_profile(self.path_prst,
-                                  self.array[0],
-                                  Name=name,
-                                  Description=descript,
-                                  First_pass=pass_1,
-                                  Second_pass=pass_2,
-                                  Supported_list=file_support,
-                                  Output_extension=extens,
-                                  )
+            editprf = edit_existing_profile(self.path_prst,
+                                            self.array[0],
+                                            Name=name,
+                                            Description=descript,
+                                            First_pass=pass_1,
+                                            Second_pass=pass_2,
+                                            Supported_list=file_support,
+                                            Output_extension=extens,
+                                            )
+            if editprf == 'already exist':
+                wx.MessageBox(_("Profile already stored with same name"),
+                              "Videomass", wx.ICON_WARNING, self)
+                return
             wx.MessageBox(_("Successful changes!"))
             # self.Destroy() # con ID_OK e ID_CANCEL non serve
 
