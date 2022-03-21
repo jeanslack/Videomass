@@ -40,6 +40,7 @@ Mar 19, 2022 V.3.5.8
   * Code refactoring of concatenate.py
   * Code refactoring of presets_manager.py
   * Update locale to v3.5.8
+  * Added `Copy` profile feature on Presets_Manager panel #87 .
 
 +------------------------------------+
 Mar 07, 2022 V.3.5.7

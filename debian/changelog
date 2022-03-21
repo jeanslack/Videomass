@@ -31,8 +31,9 @@ videomass (3.5.8-1) UNRELEASED; urgency=medium
   * Code refactoring of concatenate.py
   * Code refactoring of presets_manager.py
   * Update locale to v3.5.8
+  * Added `Copy` profile feature on Presets_Manager panel #87 .
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 19 Mar 2022 10:15:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 21 Mar 2022 14:18:00 +0200
 
 videomass (3.5.7-1) UNRELEASED; urgency=medium
 

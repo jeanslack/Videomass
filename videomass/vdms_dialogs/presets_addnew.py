@@ -27,8 +27,9 @@ This file is part of Videomass.
 """
 import os
 import webbrowser
-import json
 import wx
+from videomass.vdms_io.presets_manager_properties import write_new_profile
+from videomass.vdms_io.presets_manager_properties import edit_existing_profile
 
 
 class MemPresets(wx.Dialog):
@@ -269,43 +270,20 @@ class MemPresets(wx.Dialog):
                               "Videomass ", wx.ICON_WARNING, self)
                 return
 
-        with open(self.path_prst, 'r', encoding='utf8') as infile:
-            stored_data = json.load(infile)
+        if self.arg in ('newprofile', 'addprofile'):
+            writenewprf = write_new_profile(self.path_prst,
+                                            Name=name,
+                                            Description=descript,
+                                            First_pass=pass_1,
+                                            Second_pass=pass_2,
+                                            Supported_list=file_support,
+                                            Output_extension=extens,
+                                            )
+            if writenewprf == 'already exist':
+                wx.MessageBox(_("Profile already stored with same name"),
+                              "Videomass", wx.ICON_WARNING, self)
+                return
 
-        if self.arg in ('newprofile', 'addprofile'):  # create new
-            for x in stored_data:
-                if x["Name"] == name:
-                    wx.MessageBox(_("Profile already stored with same name"),
-                                  "Videomass", wx.ICON_WARNING, self)
-                    return
-
-            data = [{"Name": f"{name}",
-                     "Description": f"{descript}",
-                     "First_pass": f"{pass_1}",
-                     "Second_pass": f"{pass_2}",
-                     "Supported_list": f"{file_support}",
-                     "Output_extension": f"{extens}"
-                     }]
-
-            new_data = stored_data + data
-            new_data.sort(key=lambda s: s["Name"])  # make sorted by name
-
-        elif self.arg == 'edit':  # edit, add
-            new_data = stored_data
-            for item in new_data:
-                if item["Name"] == self.array[0]:
-                    item["Name"] = f"{name}"
-                    item["Description"] = f"{descript}"
-                    item["First_pass"] = f"{pass_1}"
-                    item["Second_pass"] = f"{pass_2}"
-                    item["Supported_list"] = f"{file_support}"
-                    item["Output_extension"] = f"{extens}"
-
-        new_data.sort(key=lambda s: s["Name"])  # make sorted by name
-        with open(self.path_prst, 'w', encoding='utf8') as outfile:
-            json.dump(new_data, outfile, ensure_ascii=False, indent=4)
-
-        if self.arg in ['newprofile', 'addprofile']:
             wx.MessageBox(_("Successful storing!"))
             self.txt_name.SetValue('')
             self.txt_descript.SetValue('')
@@ -314,6 +292,15 @@ class MemPresets(wx.Dialog):
             self.txt_supp.SetValue('')
 
         elif self.arg == 'edit':
+            edit_existing_profile(self.path_prst,
+                                  self.array[0],
+                                  Name=name,
+                                  Description=descript,
+                                  First_pass=pass_1,
+                                  Second_pass=pass_2,
+                                  Supported_list=file_support,
+                                  Output_extension=extens,
+                                  )
             wx.MessageBox(_("Successful changes!"))
             # self.Destroy() # con ID_OK e ID_CANCEL non serve
 
