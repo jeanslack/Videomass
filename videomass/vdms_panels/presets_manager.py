@@ -771,11 +771,11 @@ class PrstPan(wx.Panel):
             self.parent.statusbar_msg(_("First select a profile in the list"),
                                       PrstPan.YELLOW, PrstPan.BLACK)
             return
-        path = os.path.join(f'{self.user_prst}',
-                            f'{self.cmbx_prst.GetValue()}.prst'
+        filename = os.path.join(f'{self.user_prst}',
+                                f'{self.cmbx_prst.GetValue()}.prst'
                             )
-        newprst = write_new_profile(path,
-                                    Name=f'{self.array[0]} [duplicated]',
+        newprst = write_new_profile(filename,
+                                    Name=f'{self.array[0]} (duplicated)',
                                     Description=self.array[1],
                                     First_pass=self.array[2],
                                     Second_pass=self.array[3],
@@ -802,10 +802,10 @@ class PrstPan(wx.Panel):
                          wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                          self) == wx.YES:
 
-            path = os.path.join(f'{self.user_prst}',
+            filename = os.path.join(f'{self.user_prst}',
                                 f'{self.cmbx_prst.GetValue()}.prst'
                                 )
-            delete_profiles(path, self.array[0])
+            delete_profiles(filename, self.array[0])
             self.reset_list()
     # ------------------------------------------------------------------#
 

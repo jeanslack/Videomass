@@ -13,7 +13,7 @@
 #   window and passing it the pathname of the AppImage as argument.
 #   However, it is strongly not recommended to run it via AppRun as the
 #   generated log file will be saved inside the AppDir and will not be
-#   found by Videomass for the exit status.
+#   found by Videomass for the exit status log.
 #
 # please visit <https://misc.flogisoft.com/bash/tip_colors_and_formatting>
 # for colors code.

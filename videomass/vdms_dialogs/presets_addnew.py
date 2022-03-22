@@ -272,7 +272,7 @@ class MemPresets(wx.Dialog):
 
         if self.arg in ('newprofile', 'addprofile'):
             writenewprf = write_new_profile(self.path_prst,
-                                            Name=name,
+                                            Name=name.strip(),
                                             Description=descript,
                                             First_pass=pass_1,
                                             Second_pass=pass_2,
@@ -285,16 +285,11 @@ class MemPresets(wx.Dialog):
                 return
 
             wx.MessageBox(_("Successful storing!"))
-            self.txt_name.SetValue('')
-            self.txt_descript.SetValue('')
-            self.pass_1_cmd.SetValue('')
-            self.txt_ext.SetValue('')
-            self.txt_supp.SetValue('')
 
         elif self.arg == 'edit':
             editprf = edit_existing_profile(self.path_prst,
                                             self.array[0],
-                                            Name=name,
+                                            Name=name.strip(),
                                             Description=descript,
                                             First_pass=pass_1,
                                             Second_pass=pass_2,

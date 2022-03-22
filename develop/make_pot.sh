@@ -3,11 +3,11 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2020/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Nov.18.2021
+# Rev: March.22.2022
 #
 # Make a new `videomass.po` file on '../../videomass/locale'.
-# The previus videomass.po file will be overwrite with new one
-# incoming which will update latest strings for traslation .
+# The previus videomass.po file will be overwrite with the new
+# one incoming which will update latest strings for traslation .
 
 PLATFORM=$(uname)  # command to show platform
 self="$(readlink -f -- $0)"  # this file
@@ -74,6 +74,6 @@ if [ $? != 0 ]; then
     echo 'Failed!'
 else
     mv videomass.po videomass.pot
+    echo "A new 'videomass.pot' was created on: '${target}'"
     echo "Done!"
-    echo "'videomass.pot' was created on: '${target}'"
 fi

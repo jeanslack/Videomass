@@ -240,8 +240,7 @@ def clean_buildingdirs(here=HERE):
     directories, usually "dist" and "build" dirs.
     """
 
-    clean = input('Want you remove "dist" and "build" folders '
-                  'before building (y/n)? ')
+    clean = input('Want you remove "dist" and "build" folders (y/n)? ')
     if clean in ('y', 'Y'):
         if os.path.exists(os.path.join(here, 'dist')):
             try:

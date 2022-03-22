@@ -176,7 +176,7 @@ def write_new_profile(path_prst, **kwargs):
 
 def edit_existing_profile(path_prst, selected_profile, **kwargs):
     """
-    Edit a profile using json data
+    Edit an exixting profile using json data
 
     """
     with open(path_prst, 'r', encoding='utf8') as infile:
