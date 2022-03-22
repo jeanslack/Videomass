@@ -12,7 +12,7 @@ nav_order: 1
 ## Executables
 
 Minimum requirements:
-- [Microsoft Windows 8.1](https://en.wikipedia.org/wiki/Windows_10)
+- [Microsoft Windows 7](https://docs.microsoft.com/en-us/lifecycle/products/windows-7)
 - [x86_64](https://en.wikipedia.org/wiki/X86-64) architecture. 
 - [Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package 
 (x86)](https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe). 
