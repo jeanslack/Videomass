@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2022
+Rev: March.23.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -96,10 +96,11 @@ class MyListCtrl(wx.ListCtrl):
                 return
 
             data = data[0]
-            self.InsertItem(self.index, path)
+            self.InsertItem(self.index, str(self.index + 1))
+            self.SetItem(self.index, 1, path)
 
             if 'duration' not in data['format'].keys():
-                self.SetItem(self.index, 1, 'N/A')
+                self.SetItem(self.index, 2, 'N/A')
                 # NOTE these are my adds in ffprobe data
                 data['format']['time'] = '00:00:00.000'
                 data['format']['duration'] = 0
@@ -108,15 +109,15 @@ class MyListCtrl(wx.ListCtrl):
                 tdur = data['format']['duration'].split(':')
                 sec, msec = tdur[2].split('.')[0], tdur[2].split('.')[1]
                 tdur = f'{tdur[0]}h : {tdur[1]}m : {sec} : {msec}'
-                self.SetItem(self.index, 1, tdur)
+                self.SetItem(self.index, 2, tdur)
                 data.get('format')['time'] = data.get('format').pop('duration')
                 time = get_milliseconds(data.get('format')['time'])
                 data['format']['duration'] = time
 
             media = data['streams'][0]['codec_type']
             formatname = data['format']['format_long_name']
-            self.SetItem(self.index, 2, f'{media}: {formatname}')
-            self.SetItem(self.index, 3, data['format']['size'])
+            self.SetItem(self.index, 3, f'{media}: {formatname}')
+            self.SetItem(self.index, 4, data['format']['size'])
             self.index += 1
             self.data.append(data)
             self.parent.statusbar_msg('', None)
@@ -220,10 +221,11 @@ class FileDnD(wx.Panel):
         sizer.Add(sizer_outdir, 0, wx.EXPAND)
         self.SetSizer(sizer)
         # properties
-        self.flCtrl.InsertColumn(0, _('File Name'), width=350)
-        self.flCtrl.InsertColumn(1, _('Duration'), width=230)
-        self.flCtrl.InsertColumn(2, _('Media type'), width=200)
-        self.flCtrl.InsertColumn(3, _('Size'), width=150)
+        self.flCtrl.InsertColumn(0, _('#'), width=30)
+        self.flCtrl.InsertColumn(1, _('File Name'), width=350)
+        self.flCtrl.InsertColumn(2, _('Duration'), width=230)
+        self.flCtrl.InsertColumn(3, _('Media type'), width=200)
+        self.flCtrl.InsertColumn(4, _('Size'), width=150)
 
         if appdata['ostype'] == 'Darwin':
             lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -255,8 +257,50 @@ class FileDnD(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_doubleClick, self.flCtrl)
+        self.Bind(wx.EVT_LIST_COL_CLICK, self.on_col_click, self.flCtrl)
+        self.Bind(wx.EVT_LIST_COL_RIGHT_CLICK, self.on_col_click, self.flCtrl)
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
 
+    # ----------------------------------------------------------------------
+
+    def on_col_click(self, event):
+        """
+        Sort items by RIGTH/LEFT clicking on column headers.
+        Clicking with LEFT mouse button sort the items in
+        ascending order; Clicking with RIGTH mouse button sort
+        the items in reverse order.
+
+        """
+        count = self.flCtrl.GetItemCount()
+        curritems = []
+
+        if count > 1:
+            if event.GetColumn() in (0, -1):
+                return
+            for x in range(count):
+                curritems.append((self.flCtrl.GetItemText(x, col=1),
+                                  self.flCtrl.GetItemText(x, col=2),
+                                  self.flCtrl.GetItemText(x, col=3),
+                                  self.flCtrl.GetItemText(x, col=4),
+                                  ))
+            if event.GetColumn() == 1:
+                new = sorted(curritems, key=lambda student: student[0])
+
+            elif event.GetColumn() == 2:
+                new = sorted(curritems, key=lambda student: student[1])
+
+            elif event.GetColumn() == 3:
+                new = sorted(curritems, key=lambda student: student[2])
+
+            elif event.GetColumn() == 4:
+                new = sorted(curritems, key=lambda student: float(student[3].split()[0]))
+
+            self.deleteAll(self)
+            # https://discuss.wxpython.org/t/event-geteventtype/22860/4
+            if event.GetEventType() == wx.EVT_LIST_COL_RIGHT_CLICK.typeId:
+                new.reverse()
+            for f in new:
+                self.flCtrl.dropUpdate(f[0])
     # ----------------------------------------------------------------------
 
     def reset_tl(self):
@@ -325,7 +369,7 @@ class FileDnD(wx.Panel):
         else:
             self.parent.statusbar_msg(_('Add Files'), None)
             index = self.flCtrl.GetFocusedItem()
-            item = self.flCtrl.GetItemText(index)
+            item = self.flCtrl.GetItemText(index, 1)
             if self.parent.checktimestamp:
                 tstamp = f'-vf "{self.parent.cmdtimestamp}"'
             else:
@@ -354,6 +398,9 @@ class FileDnD(wx.Panel):
                 self.reset_tl()  # delete parent.timeline
                 self.on_deselect(self)  # deselect removed file
                 self.data.pop(item)  # remove all data item
+
+                for x in range(self.flCtrl.GetItemCount()):
+                    self.flCtrl.SetItem(x, 0, str(x + 1))
     # ----------------------------------------------------------------------
 
     def deleteAll(self, event):
@@ -378,7 +425,7 @@ class FileDnD(wx.Panel):
         Selecting a line with mouse or up/down keyboard buttons
         """
         index = self.flCtrl.GetFocusedItem()
-        item = self.flCtrl.GetItemText(index)
+        item = self.flCtrl.GetItemText(index, 1)
         self.parent.filedropselected = item
         self.selected = item
         self.btn_play.Enable()
