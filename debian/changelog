@@ -34,8 +34,10 @@ videomass (3.5.8-1) UNRELEASED; urgency=medium
   * Added `Copy` profile feature on Presets_Manager panel #87 .
   * [Queued Files] Added sorting of input files by LEFT/RIGHT clicking with
     mouse on column headers #87 .
+  * [Queued Files] Added ability to select a bunch of files for deleting
+    operations.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 23 Mar 2022 11:17:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 23 Mar 2022 18:53:00 +0200
 
 videomass (3.5.7-1) UNRELEASED; urgency=medium
 

@@ -33,6 +33,7 @@ import wx
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_io import io_tools
 from videomass.vdms_utils.utils import get_milliseconds
+from videomass.vdms_utils.utils import to_bytes
 
 
 class MyListCtrl(wx.ListCtrl):
@@ -54,10 +55,7 @@ class MyListCtrl(wx.ListCtrl):
         self.index = None
         self.parent = parent  # parent is DnDPanel class
         self.data = self.parent.data
-
-        wx.ListCtrl.__init__(self, parent, style=wx.LC_REPORT |
-                             wx.LC_SINGLE_SEL
-                             )
+        wx.ListCtrl.__init__(self, parent, style=wx.LC_REPORT)
     # ----------------------------------------------------------------------#
 
     def dropUpdate(self, path):
@@ -121,7 +119,7 @@ class MyListCtrl(wx.ListCtrl):
             self.index += 1
             self.data.append(data)
             self.parent.statusbar_msg('', None)
-            self.parent.reset_tl()
+            self.parent.reset_timeline()
 
         else:
             mess = _("Duplicate files are rejected: > {}").format(path)
@@ -158,10 +156,11 @@ class FileDrop(wx.FileDropTarget):
 
 class FileDnD(wx.Panel):
     """
-    Panel for dragNdrop files queue. Accept one or more files.
+    Panel for dragNdrop files queue.
+    Accept one or more files.
+
     """
     # CONSTANTS:
-
     YELLOW = '#bd9f00'
     WHITE = '#fbf4f4'  # white for background status bar
     BLACK = '#060505'  # black for background status bar
@@ -251,16 +250,16 @@ class FileDnD(wx.Panel):
         self.text_path_save.SetToolTip(_("Destination folder"))
 
         # Binding (EVT)
-        self.Bind(wx.EVT_BUTTON, self.playSelect, self.btn_play)
-        self.Bind(wx.EVT_BUTTON, self.deleteAll, self.btn_clear)
-        self.Bind(wx.EVT_BUTTON, self.delSelect, self.btn_remove)
+        self.Bind(wx.EVT_BUTTON, self.on_play_select, self.btn_play)
+        self.Bind(wx.EVT_BUTTON, self.delete_all, self.btn_clear)
+        self.Bind(wx.EVT_BUTTON, self.on_delete_selected, self.btn_remove)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_doubleClick, self.flCtrl)
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_double_click,
+                  self.flCtrl)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.on_col_click, self.flCtrl)
         self.Bind(wx.EVT_LIST_COL_RIGHT_CLICK, self.on_col_click, self.flCtrl)
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
-
     # ----------------------------------------------------------------------
 
     def on_col_click(self, event):
@@ -269,6 +268,9 @@ class FileDnD(wx.Panel):
         Clicking with LEFT mouse button sort the items in
         ascending order; Clicking with RIGTH mouse button sort
         the items in reverse order.
+        For this feature is required to delete all items from
+        listctrl and data dictionary before re-loading the same
+        items with the new sorting using `dropUpdate` method.
 
         """
         count = self.flCtrl.GetItemCount()
@@ -293,9 +295,10 @@ class FileDnD(wx.Panel):
                 new = sorted(curritems, key=lambda student: student[2])
 
             elif event.GetColumn() == 4:
-                new = sorted(curritems, key=lambda student: float(student[3].split()[0]))
+                new = sorted(curritems, key=lambda student:
+                             to_bytes(''.join(student[3].split()), 'ffmpeg'))
 
-            self.deleteAll(self)
+            self.delete_all(self)
             # https://discuss.wxpython.org/t/event-geteventtype/22860/4
             if event.GetEventType() == wx.EVT_LIST_COL_RIGHT_CLICK.typeId:
                 new.reverse()
@@ -303,7 +306,7 @@ class FileDnD(wx.Panel):
                 self.flCtrl.dropUpdate(f[0])
     # ----------------------------------------------------------------------
 
-    def reset_tl(self):
+    def reset_timeline(self):
         """
         When you drop new files resets the timeline on main_frame.
         it is also needed by the MyListCtrl class.
@@ -351,14 +354,14 @@ class FileDnD(wx.Panel):
         menuItem = menu.FindItemById(itemId)
 
         if menuItem.GetItemLabel() == _("Play"):
-            self.playSelect(self)
+            self.on_play_select(self)
 
         elif menuItem.GetItemLabel() == _("Remove"):
-            self.delSelect(self)
+            self.on_delete_selected(self)
 
     # ----------------------------------------------------------------------
 
-    def playSelect(self, event):
+    def on_play_select(self, event):
         """
         Playback the selected file
 
@@ -379,31 +382,43 @@ class FileDnD(wx.Panel):
                                  )
     # ----------------------------------------------------------------------
 
-    def delSelect(self, event):
+    def on_delete_selected(self, event):
         """
-        Delete the selected file
+        Delete a selected file or a bunch of selected files
 
         """
         if not self.selected:
             self.parent.statusbar_msg(_('No file selected'), FileDnD.YELLOW,
                                       FileDnD.BLACK)
-        else:
-            self.parent.statusbar_msg(_('Add Files'), None)
+            return
 
-            if self.flCtrl.GetItemCount() == 1:
-                self.deleteAll(self)
-            else:
-                item = self.flCtrl.GetFocusedItem()
-                self.flCtrl.DeleteItem(item)  # remove from listctrl
-                self.reset_tl()  # delete parent.timeline
-                self.on_deselect(self)  # deselect removed file
-                self.data.pop(item)  # remove all data item
+        self.parent.statusbar_msg(_('Add Files'), None)
+        item, indexes = -1, []
+        while 1:
+            item = self.flCtrl.GetNextItem(item,
+                                           wx.LIST_NEXT_ALL,
+                                           wx.LIST_STATE_SELECTED)
+            indexes.append(item)
+            if item == -1:
+                indexes.remove(-1)
+                break
 
-                for x in range(self.flCtrl.GetItemCount()):
-                    self.flCtrl.SetItem(x, 0, str(x + 1))
+        if self.flCtrl.GetItemCount() == len(indexes):
+            self.delete_all(self)
+            return
+
+        for num in sorted(indexes, reverse=True):
+            self.flCtrl.DeleteItem(num)  # remove selected items
+            self.data.pop(num)  # remove selected items from data
+        self.reset_timeline()  # delete parent.timeline
+        self.on_deselect(self)  # deselect removed file
+
+        for x in range(self.flCtrl.GetItemCount()):
+            self.flCtrl.SetItem(x, 0, str(x + 1))  # re-load counter
+        return
     # ----------------------------------------------------------------------
 
-    def deleteAll(self, event):
+    def delete_all(self, event):
         """
         Delete and clear all text lines of the TxtCtrl,
         reset the fileList[], disable Toolbar button and menu bar
@@ -413,7 +428,7 @@ class FileDnD(wx.Panel):
         self.flCtrl.DeleteAllItems()
         del self.data[:]
         self.parent.filedropselected = None
-        self.reset_tl()
+        self.reset_timeline()
         self.selected = None
         self.btn_play.Disable()
         self.btn_remove.Disable()
@@ -432,7 +447,7 @@ class FileDnD(wx.Panel):
         self.btn_remove.Enable()
     # ----------------------------------------------------------------------
 
-    def on_doubleClick(self, row):
+    def on_double_click(self, row):
         """
         Double click or keyboard enter button, open media info
         """

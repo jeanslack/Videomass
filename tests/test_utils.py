@@ -73,10 +73,10 @@ class TestTimeHuman(unittest.TestCase):
     """ Test case for the time_human function"""
 
     def test_to_human(self):
-        self.assertEqual(utils.timehuman(0.0), '00:00:00')
-        self.assertEqual(utils.timehuman(55.0), '00:00:55')
-        self.assertEqual(utils.timehuman(3023.0), '00:50:23')
-        self.assertEqual(utils.timehuman(9050.0), '02:30:50')
+        self.assertEqual(utils.timehuman(round(0.0)), '00:00:00')
+        self.assertEqual(utils.timehuman(round(55.0)), '00:00:55')
+        self.assertEqual(utils.timehuman(round(3023.0)), '00:50:23')
+        self.assertEqual(utils.timehuman(round(9050.0)), '02:30:50')
 
 
 def main():

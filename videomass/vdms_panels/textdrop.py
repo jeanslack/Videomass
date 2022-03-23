@@ -85,7 +85,7 @@ class TextDnD(wx.Panel):
         self.text_path_save.SetToolTip(_("Destination folder"))
 
         # Binding
-        self.Bind(wx.EVT_BUTTON, self.deleteAll, self.btn_clear)
+        self.Bind(wx.EVT_BUTTON, self.delete_all, self.btn_clear)
         self.Bind(wx.EVT_TEXT, self.on_emptyText, self.textCtrl)
     # ---------------------------------------------------------
 
@@ -112,7 +112,7 @@ class TextDnD(wx.Panel):
             return data
     # -----------------------------------------------------------
 
-    def deleteAll(self, event):
+    def delete_all(self, event):
         """
         Delete and clear all text lines of the TxtCtrl
 
