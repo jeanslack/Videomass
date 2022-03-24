@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.5.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-21 22:35+0100\n"
-"PO-Revision-Date: 2022-03-21 22:37+0100\n"
+"POT-Creation-Date: 2022-03-24 18:20+0100\n"
+"PO-Revision-Date: 2022-03-24 18:22+0100\n"
 "Last-Translator: Roelof Berkepeis <roelof@imoma.eu>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -935,7 +935,7 @@ msgstr "Onvolledige profiel-toewijzingen"
 msgid "Formats must be comma-separated"
 msgstr "Formaten moeten gescheiden zijn door komma's"
 
-#: ../vdms_dialogs/presets_addnew.py:283 ../vdms_dialogs/presets_addnew.py:305
+#: ../vdms_dialogs/presets_addnew.py:283 ../vdms_dialogs/presets_addnew.py:300
 msgid "Profile already stored with same name"
 msgstr "Profiel reeds opgeslagen onder dezelfde naam"
 
@@ -943,7 +943,7 @@ msgstr "Profiel reeds opgeslagen onder dezelfde naam"
 msgid "Successful storing!"
 msgstr "Opslag was succesvol!"
 
-#: ../vdms_dialogs/presets_addnew.py:308
+#: ../vdms_dialogs/presets_addnew.py:303
 msgid "Successful changes!"
 msgstr "Veranderingen waren succesvol!"
 
@@ -2142,7 +2142,7 @@ msgstr "Systeem"
 msgid "Goto"
 msgstr "Ga naar"
 
-#: ../vdms_main/main_frame.py:524 ../vdms_panels/filedrop.py:246
+#: ../vdms_main/main_frame.py:524 ../vdms_panels/filedrop.py:247
 msgid "Set up a temporary folder for conversions"
 msgstr "Stel een tijdelijke folder in voor conversies"
 
@@ -3247,27 +3247,49 @@ msgstr ""
 "- Audio bestanden moeten exact hetzelfde formaat hebben, evenals hun codecs "
 "en sample rate."
 
-#: ../vdms_panels/concatenate.py:120
+#: ../vdms_panels/concatenate.py:115
 msgid "For more details, see the Videomass User Guide:"
 msgstr "Voor meer details, zie de Videomass Gebruikers Handleiding:"
 
-#: ../vdms_panels/concatenate.py:133
+#: ../vdms_panels/concatenate.py:128
 msgid "1.4 Concatenate media files (demuxer)"
 msgstr "1.4 Media bestanden aaneenschakelen (demuxer)"
 
-#: ../vdms_panels/concatenate.py:140
+#: ../vdms_panels/concatenate.py:135
 msgid "For more information, visit the official FFmpeg documentation:"
 msgstr "Voor meer informatie, bezoek de officiele FFmpeg documentatie:"
 
-#: ../vdms_panels/concatenate.py:179
+#: ../vdms_panels/concatenate.py:156
+msgid "From an image sequence to a video file"
+msgstr ""
+
+#: ../vdms_panels/concatenate.py:161
+#, fuzzy
+#| msgid "Duration"
+msgid "Duration:"
+msgstr "Duur"
+
+#: ../vdms_panels/concatenate.py:172
+#, fuzzy
+#| msgid "Output Format"
+msgid "Output format:"
+msgstr "Output Formaat"
+
+#: ../vdms_panels/concatenate.py:195
+msgid ""
+"Sets the duration between one image and another in seconds (from 1 to 100 "
+"sec.), default is 1 second"
+msgstr ""
+
+#: ../vdms_panels/concatenate.py:228
 msgid "At least two files are required to perform concatenation."
 msgstr "Aaneenschakeling vereist minstens twee bestanden."
 
-#: ../vdms_panels/concatenate.py:180 ../vdms_panels/concatenate.py:192
+#: ../vdms_panels/concatenate.py:229 ../vdms_panels/concatenate.py:240
 msgid "ERROR"
 msgstr "ERROR"
 
-#: ../vdms_panels/concatenate.py:189
+#: ../vdms_panels/concatenate.py:237
 msgid ""
 "The files do not have the same \"codec_types\", same \"sample_rate\" or same "
 "\"width\" or \"height\". Unable to proceed."
@@ -3275,12 +3297,12 @@ msgstr ""
 "De bestanden hebben niet dezelfde \"codec_types\", \"sample_rate\" of "
 "\"breedte\" of \"hoogte\". Voortgang onmogelijk."
 
-#: ../vdms_panels/concatenate.py:219 ../vdms_panels/presets_manager.py:876
+#: ../vdms_panels/concatenate.py:289 ../vdms_panels/presets_manager.py:876
 #: ../vdms_panels/presets_manager.py:899 ../vdms_panels/presets_manager.py:935
 msgid "Starts"
 msgstr "Start"
 
-#: ../vdms_panels/concatenate.py:242
+#: ../vdms_panels/concatenate.py:312
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3447,7 +3469,7 @@ msgstr "fps"
 msgid "Audio Codec"
 msgstr "Audio Codec"
 
-#: ../vdms_panels/youtubedl_ui.py:577 ../vdms_panels/filedrop.py:226
+#: ../vdms_panels/youtubedl_ui.py:577 ../vdms_panels/filedrop.py:227
 msgid "Size"
 msgstr "Grootte"
 
@@ -3493,11 +3515,11 @@ msgstr "Bevestig dit"
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "De URLs bevatten kanalen. Wilt u toch doorgaan?"
 
-#: ../vdms_panels/filedrop.py:69
+#: ../vdms_panels/filedrop.py:67
 msgid "Directories are not allowed, just add files, please."
 msgstr "Folders zijn niet toegestaan, voeg alleen bestanden toe."
 
-#: ../vdms_panels/filedrop.py:70
+#: ../vdms_panels/filedrop.py:68
 msgid ""
 "File without format extension: please give an appropriate extension to the "
 "file name, example '.mkv', '.avi', '.mp3', etc."
@@ -3505,13 +3527,13 @@ msgstr ""
 "Bestand zonder formaat extensie: u dient een treffende extensie te geven aan "
 "de bestandsnaam, bijv. '.mkv', '.avi', '.mp3', etc."
 
-#: ../vdms_panels/filedrop.py:73
+#: ../vdms_panels/filedrop.py:71
 #, fuzzy
 #| msgid "Invalid filename. Contains double quotes"
 msgid "Invalid filename. Contains double or single quotes"
 msgstr "Ongeldige bestandsnaam. Bevat dubbele aanhalingstekens"
 
-#: ../vdms_panels/filedrop.py:126
+#: ../vdms_panels/filedrop.py:125
 #, fuzzy
 #| msgid "Duplicate files are rejected: > '%s'"
 msgid "Duplicate files are rejected: > {}"
@@ -3521,49 +3543,49 @@ msgstr "Gelijke bestanden zijn overgeslagen: > '%s'"
 msgid "Drag one or more files below"
 msgstr "Sleep een of meer bestanden hieronder"
 
-#: ../vdms_panels/filedrop.py:198 ../vdms_panels/filedrop.py:293
-#: ../vdms_panels/filedrop.py:309
+#: ../vdms_panels/filedrop.py:198 ../vdms_panels/filedrop.py:340
+#: ../vdms_panels/filedrop.py:356
 msgid "Play"
 msgstr "Speel"
 
-#: ../vdms_panels/filedrop.py:223
+#: ../vdms_panels/filedrop.py:224
 msgid "File Name"
 msgstr "Bestandsnaam"
 
-#: ../vdms_panels/filedrop.py:224 ../vdms_panels/timeline.py:119
+#: ../vdms_panels/filedrop.py:225 ../vdms_panels/timeline.py:119
 msgid "Duration"
 msgstr "Duur"
 
-#: ../vdms_panels/filedrop.py:225
+#: ../vdms_panels/filedrop.py:226
 msgid "Media type"
 msgstr "Media type"
 
-#: ../vdms_panels/filedrop.py:244
+#: ../vdms_panels/filedrop.py:245
 msgid "Remove the selected file from the list"
 msgstr "Verwijder het geselecteerde bestand uit de lijst"
 
-#: ../vdms_panels/filedrop.py:245
+#: ../vdms_panels/filedrop.py:246
 msgid "Delete all files from the list"
 msgstr "Verwijder alle bestanden uit de lijst"
 
-#: ../vdms_panels/filedrop.py:248
+#: ../vdms_panels/filedrop.py:249
 msgid "Play the selected files in the list"
 msgstr "Speel de geselecteerde bestanden in de lijst af"
 
-#: ../vdms_panels/filedrop.py:249 ../vdms_panels/textdrop.py:85
+#: ../vdms_panels/filedrop.py:250 ../vdms_panels/textdrop.py:85
 msgid "Destination folder"
 msgstr "Bestemming folder"
 
-#: ../vdms_panels/filedrop.py:294 ../vdms_panels/filedrop.py:312
+#: ../vdms_panels/filedrop.py:341 ../vdms_panels/filedrop.py:359
 #: ../vdms_panels/presets_manager.py:139
 msgid "Remove"
 msgstr "Verwijder"
 
-#: ../vdms_panels/filedrop.py:323 ../vdms_panels/filedrop.py:344
+#: ../vdms_panels/filedrop.py:370 ../vdms_panels/filedrop.py:391
 msgid "No file selected"
 msgstr "Geen bestand geselecteerd"
 
-#: ../vdms_panels/filedrop.py:326 ../vdms_panels/filedrop.py:347
+#: ../vdms_panels/filedrop.py:373 ../vdms_panels/filedrop.py:395
 msgid "Add Files"
 msgstr "Voeg bestanden toe"
 

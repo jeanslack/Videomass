@@ -220,7 +220,7 @@ class FileDnD(wx.Panel):
         sizer.Add(sizer_outdir, 0, wx.EXPAND)
         self.SetSizer(sizer)
         # properties
-        self.flCtrl.InsertColumn(0, _('#'), width=30)
+        self.flCtrl.InsertColumn(0, '#', width=30)
         self.flCtrl.InsertColumn(1, _('File Name'), width=350)
         self.flCtrl.InsertColumn(2, _('Duration'), width=230)
         self.flCtrl.InsertColumn(3, _('Media type'), width=200)

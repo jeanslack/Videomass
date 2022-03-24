@@ -1,43 +1,29 @@
 videomass (3.5.8-1) UNRELEASED; urgency=medium
 
   * Small text on toolbar buttons when enabled.
-  * Code refactoring of vdms_threads
-  * Code refactoring of vdms_main
-  * Code refactoring of utils.py (W0621)
-  * Code refactoring of filter_crop.py
-  * Code refactoring of filter_deinterlace.py
-  * Code refactoring of filter_denoiser.py
-  * Code refactoring of filter_crop.py
-  * Code refactoring of filter_scale.py
-  * Code refactoring of filter_stab.py
-  * Code refactoring of filter_transpose.py
-  * Code refactoring of playlist_indexing.py
-  * Code refactoring of presets_addnew.py
-  * Code refactoring of set_timestamp.py
-  * Code refactoring of audiodialogs.py
-  * Added Estimated Time of Arrival (ETA) on FFmpeg processes #81 .
-  * Removed the progress bar on the output monitoring panel using YouTube
-    Downloader due to frequent backend changes leading to progress errors.
+  * Code refactoring
+  * [Output monitoring] Added Estimated Time of Arrival (ETA) on FFmpeg
+    processes #81 .
+  * [Output monitoring] Removed the progress bar Gauge using YouTube Downloader
+    due to frequent backend changes leading to progress errors.
   * Added the ability to download all available subtitles.
-  * Added the ability to add new folders in the dialogs for destination
-    directories.
-  * Added ability to download subtitles only (skipping video/audio download).
+  * Ability to add new folders from the dialog for files destination.
+  * [YouTube Downloader] Added the ability to download subtitles only
+    (skipping video/audio download).
   * Fixed initial window size and scrolling panels on av_conversions.py.
-  * Added audio filter preview button (Listening) with the ability to play
-    the selected indexes.
+  * [A/V Conversions] Added audio filter preview button (Listening) with the
+    ability to play the selected indexes.
   * Removed Breeze icons.
-  * Code refactoring (partial) of av_conversions.py
-  * Code refactoring of checkup.py
-  * Code refactoring of concatenate.py
-  * Code refactoring of presets_manager.py
   * Update locale to v3.5.8
-  * Added `Copy` profile feature on Presets_Manager panel #87 .
+  * [Presets_Manager] Added `Duplicate` profile feature #87 .
   * [Queued Files] Added sorting of input files by LEFT/RIGHT clicking with
     mouse on column headers #87 .
   * [Queued Files] Added ability to select a bunch of files for deleting
     operations.
+  * [Concatenate Demuxer] added the ability to create a simple slideshow
+    from images #95
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 23 Mar 2022 18:53:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 24 Mar 2022 18:00:00 +0200
 
 videomass (3.5.7-1) UNRELEASED; urgency=medium
 
