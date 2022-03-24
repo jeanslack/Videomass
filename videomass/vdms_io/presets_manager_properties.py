@@ -4,9 +4,9 @@ File Name: preset_manager_properties.py
 Porpose: management of properties of the preset manager panel
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.16.2021
+Rev: March.21.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -149,3 +149,57 @@ def preserve_old_profiles(new, old):
         json.dump(data, outfile, ensure_ascii=False, indent=4)
 
     return True
+# ------------------------------------------------------------------#
+
+
+def write_new_profile(path_prst, **kwargs):
+    """
+    Write a new profile using json data
+
+    """
+    with open(path_prst, 'r', encoding='utf8') as infile:
+        stored_data = json.load(infile)
+
+    for x in stored_data:
+        if x["Name"] == kwargs['Name']:
+            return 'already exist'
+
+    new_data = stored_data + [kwargs]
+    new_data.sort(key=lambda s: s["Name"])  # make sorted by name
+
+    with open(path_prst, 'w', encoding='utf8') as outfile:
+        json.dump(new_data, outfile, ensure_ascii=False, indent=4)
+
+    return None
+# ------------------------------------------------------------------#
+
+
+def edit_existing_profile(path_prst, selected_profile, **kwargs):
+    """
+    Edit an exixting profile using json data
+
+    """
+    with open(path_prst, 'r', encoding='utf8') as infile:
+        stored_data = json.load(infile)
+
+    names = [x['Name'] for x in stored_data]
+    names = [x for x in names if selected_profile != x]
+
+    if kwargs['Name'] in names:
+        return 'already exist'
+
+    for item in stored_data:
+        if item["Name"] == selected_profile:
+            item["Name"] = kwargs['Name']
+            item["Description"] = kwargs['Description']
+            item["First_pass"] = kwargs['First_pass']
+            item["Second_pass"] = kwargs['Second_pass']
+            item["Supported_list"] = kwargs['Supported_list']
+            item["Output_extension"] = kwargs['Output_extension']
+
+    stored_data.sort(key=lambda s: s["Name"])  # make sorted by name
+
+    with open(path_prst, 'w', encoding='utf8') as outfile:
+        json.dump(stored_data, outfile, ensure_ascii=False, indent=4)
+
+    return None

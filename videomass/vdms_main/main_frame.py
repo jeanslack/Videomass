@@ -139,7 +139,8 @@ class MainFrame(wx.Frame):
                                                   self.appdata['ostype'],
                                                   self.icons['profile_add'],
                                                   self.icons['profile_del'],
-                                                  self.icons['profile_edit']
+                                                  self.icons['profile_edit'],
+                                                  self.icons['profile_copy'],
                                                   )
         self.ConcatDemuxer = concatenate.Conc_Demuxer(self,)
         # hide panels

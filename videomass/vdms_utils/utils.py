@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.12.2022
+Rev: March.23.2022
 Code checker: flake8, pylint .
 
 This file is part of Videomass.
@@ -85,15 +85,23 @@ def format_bytes(num):
 # ------------------------------------------------------------------------
 
 
-def to_bytes(string):
+def to_bytes(string, key='ydl'):
     """
     Convert given size string to bytes, e.g.
     out = to_bytes('9.45MiB')
     It return a number 'float' object.
+    Updated on March 23 2022:
+        added key default arg.
 
     """
     value = 0.0
-    unit = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
+    if key == 'ydl':
+        unit = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
+
+    elif key == 'ffmpeg':
+        unit = ["byte", "Kibyte", "Mibyte", "Gibyte", "Tibyte",
+                "Pibyte", "Eibyte", "Zibyte", "Yibyte"]
+
     const = 1024.0
 
     for index, metric in enumerate(reversed(unit)):

@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 19, 2022 V.3.5.8
+Mar 23, 2022 V.3.5.8
 
   * Small text on toolbar buttons when enabled.
   * Code refactoring of vdms_threads
@@ -40,6 +40,11 @@ Mar 19, 2022 V.3.5.8
   * Code refactoring of concatenate.py
   * Code refactoring of presets_manager.py
   * Update locale to v3.5.8
+  * Added `Copy` profile feature on Presets_Manager panel #87 .
+  * [Queued Files] Added sorting of input files by LEFT/RIGHT clicking with
+    mouse on column headers #87 .
+  * [Queued Files] Added ability to select a bunch of files for deleting
+    operations.
 
 +------------------------------------+
 Mar 07, 2022 V.3.5.7

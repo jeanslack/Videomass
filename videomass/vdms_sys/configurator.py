@@ -496,7 +496,7 @@ class DataSource():
                 'youtube', 'presets_manager', 'profile_add', 'profile_del',
                 'profile_edit', 'previous', 'next', 'startdownload',
                 'download_properties', 'stabilizer', 'listindx',
-                'preview_audio'
+                'preview_audio', 'profile_copy',
                 )  # must match with iconset tuple, see following..
 
         ext = 'svg' if 'wx.svg' in sys.modules else 'png'
@@ -546,6 +546,7 @@ class DataSource():
                    f"{choose.get('x16')}/stabilizer.{ext}",
                    f"{choose.get('x16')}/playlist-append.{ext}",
                    f"{choose.get('x16')}/preview_audio.{ext}",
+                   f"{choose.get('x16')}/copyprf.{ext}",
                    )
         values = [os.path.join(norm) for norm in iconset]  # normalize pathns
 
