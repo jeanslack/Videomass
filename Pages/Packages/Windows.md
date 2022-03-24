@@ -28,7 +28,7 @@ as malicious. Since these are false positives, to resolve this problem the only 
 to do is to submit the Videomass.exe file to your antivirus vendor for advanced 
 analysis and making a False Positive claim. 
 
-Alternatively, you can use the following installation method: 
+Alternatively, following this installation method: 
 
 * [PyPi package](Python_Package) 
 
