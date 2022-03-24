@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.5.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-21 22:35+0100\n"
-"PO-Revision-Date: 2022-03-21 22:35+0100\n"
+"POT-Creation-Date: 2022-03-24 18:20+0100\n"
+"PO-Revision-Date: 2022-03-24 18:21+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -938,7 +938,7 @@ msgstr "Le assegnazioni del profilo sono incomplete"
 msgid "Formats must be comma-separated"
 msgstr "I formati devono essere separati da una virgola"
 
-#: ../vdms_dialogs/presets_addnew.py:283 ../vdms_dialogs/presets_addnew.py:305
+#: ../vdms_dialogs/presets_addnew.py:283 ../vdms_dialogs/presets_addnew.py:300
 msgid "Profile already stored with same name"
 msgstr "Un profilo e già stato salvato con lo stesso nome"
 
@@ -946,7 +946,7 @@ msgstr "Un profilo e già stato salvato con lo stesso nome"
 msgid "Successful storing!"
 msgstr "Profilo salvato con successo!"
 
-#: ../vdms_dialogs/presets_addnew.py:308
+#: ../vdms_dialogs/presets_addnew.py:303
 msgid "Successful changes!"
 msgstr "Modifiche riuscite!"
 
@@ -2094,7 +2094,7 @@ msgstr "Sistema"
 msgid "Goto"
 msgstr "Vai"
 
-#: ../vdms_main/main_frame.py:524 ../vdms_panels/filedrop.py:246
+#: ../vdms_main/main_frame.py:524 ../vdms_panels/filedrop.py:247
 msgid "Set up a temporary folder for conversions"
 msgstr "Imposta una cartella temporanea per le conversioni"
 
@@ -3175,28 +3175,48 @@ msgstr ""
 "frequenza di\n"
 "  campionamento e gli stessi codec."
 
-#: ../vdms_panels/concatenate.py:120
+#: ../vdms_panels/concatenate.py:115
 msgid "For more details, see the Videomass User Guide:"
 msgstr "Per maggiori dettagli, consultare la Guida Utente Videomass:"
 
-#: ../vdms_panels/concatenate.py:133
+#: ../vdms_panels/concatenate.py:128
 msgid "1.4 Concatenate media files (demuxer)"
 msgstr "1.4 Concatenare file multimediali (demuxer)"
 
-#: ../vdms_panels/concatenate.py:140
+#: ../vdms_panels/concatenate.py:135
 msgid "For more information, visit the official FFmpeg documentation:"
 msgstr ""
 "Per ulteriori informazioni, visita la documentazione ufficiale di FFmpeg:"
 
-#: ../vdms_panels/concatenate.py:179
+#: ../vdms_panels/concatenate.py:156
+msgid "From an image sequence to a video file"
+msgstr "Da una sequenza di immagini a un file video"
+
+#: ../vdms_panels/concatenate.py:161
+msgid "Duration:"
+msgstr "Durata:"
+
+#: ../vdms_panels/concatenate.py:172
+msgid "Output format:"
+msgstr "Formato in uscita:"
+
+#: ../vdms_panels/concatenate.py:195
+msgid ""
+"Sets the duration between one image and another in seconds (from 1 to 100 "
+"sec.), default is 1 second"
+msgstr ""
+"Imposta la durata tra un'immagine e l'altra in secondi (da 1 a 100 sec.), il "
+"valore predefinito è 1 secondo"
+
+#: ../vdms_panels/concatenate.py:228
 msgid "At least two files are required to perform concatenation."
 msgstr "Sono necessari almeno due file per eseguire la concatenazione."
 
-#: ../vdms_panels/concatenate.py:180 ../vdms_panels/concatenate.py:192
+#: ../vdms_panels/concatenate.py:229 ../vdms_panels/concatenate.py:240
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: ../vdms_panels/concatenate.py:189
+#: ../vdms_panels/concatenate.py:237
 msgid ""
 "The files do not have the same \"codec_types\", same \"sample_rate\" or same "
 "\"width\" or \"height\". Unable to proceed."
@@ -3204,12 +3224,12 @@ msgstr ""
 "I file non hanno gli stessi parametri come \"codec_types\", \"sample_rate"
 "\" , \"larghezza\" o \"altezza\". Impossibile procedere."
 
-#: ../vdms_panels/concatenate.py:219 ../vdms_panels/presets_manager.py:876
+#: ../vdms_panels/concatenate.py:289 ../vdms_panels/presets_manager.py:876
 #: ../vdms_panels/presets_manager.py:899 ../vdms_panels/presets_manager.py:935
 msgid "Starts"
 msgstr "Avvio"
 
-#: ../vdms_panels/concatenate.py:242
+#: ../vdms_panels/concatenate.py:312
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3379,7 +3399,7 @@ msgstr "fps"
 msgid "Audio Codec"
 msgstr "Codec Audio"
 
-#: ../vdms_panels/youtubedl_ui.py:577 ../vdms_panels/filedrop.py:226
+#: ../vdms_panels/youtubedl_ui.py:577 ../vdms_panels/filedrop.py:227
 msgid "Size"
 msgstr "Dimensione"
 
@@ -3433,11 +3453,11 @@ msgstr "Prego confermare"
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "Gli URL contengono canali. Sei sicuro di voler continuare?"
 
-#: ../vdms_panels/filedrop.py:69
+#: ../vdms_panels/filedrop.py:67
 msgid "Directories are not allowed, just add files, please."
 msgstr "Le directory non sono ammesse, aggiungi solo file."
 
-#: ../vdms_panels/filedrop.py:70
+#: ../vdms_panels/filedrop.py:68
 msgid ""
 "File without format extension: please give an appropriate extension to the "
 "file name, example '.mkv', '.avi', '.mp3', etc."
@@ -3445,11 +3465,11 @@ msgstr ""
 "File senza estensione di formato: fornire un'estensione appropriata al nome "
 "del file, ad esempio '.mkv', '.avi', '.mp3', ecc."
 
-#: ../vdms_panels/filedrop.py:73
+#: ../vdms_panels/filedrop.py:71
 msgid "Invalid filename. Contains double or single quotes"
 msgstr "Nome del file non valido. Contiene virgolette doppie o singole"
 
-#: ../vdms_panels/filedrop.py:126
+#: ../vdms_panels/filedrop.py:125
 msgid "Duplicate files are rejected: > {}"
 msgstr "I files duplicati sono rifiutati: > {}"
 
@@ -3457,49 +3477,49 @@ msgstr "I files duplicati sono rifiutati: > {}"
 msgid "Drag one or more files below"
 msgstr "Trascina uno o più file qui sotto"
 
-#: ../vdms_panels/filedrop.py:198 ../vdms_panels/filedrop.py:293
-#: ../vdms_panels/filedrop.py:309
+#: ../vdms_panels/filedrop.py:198 ../vdms_panels/filedrop.py:340
+#: ../vdms_panels/filedrop.py:356
 msgid "Play"
 msgstr "Riproduci"
 
-#: ../vdms_panels/filedrop.py:223
+#: ../vdms_panels/filedrop.py:224
 msgid "File Name"
 msgstr "Nome File"
 
-#: ../vdms_panels/filedrop.py:224 ../vdms_panels/timeline.py:119
+#: ../vdms_panels/filedrop.py:225 ../vdms_panels/timeline.py:119
 msgid "Duration"
 msgstr "Durata"
 
-#: ../vdms_panels/filedrop.py:225
+#: ../vdms_panels/filedrop.py:226
 msgid "Media type"
 msgstr "Tipo di media"
 
-#: ../vdms_panels/filedrop.py:244
+#: ../vdms_panels/filedrop.py:245
 msgid "Remove the selected file from the list"
 msgstr "Rimuovi il file selezionato dall'elenco"
 
-#: ../vdms_panels/filedrop.py:245
+#: ../vdms_panels/filedrop.py:246
 msgid "Delete all files from the list"
 msgstr "Elimina tutti i file dall'elenco"
 
-#: ../vdms_panels/filedrop.py:248
+#: ../vdms_panels/filedrop.py:249
 msgid "Play the selected files in the list"
 msgstr "Riproduci i file selezionati nell'elenco"
 
-#: ../vdms_panels/filedrop.py:249 ../vdms_panels/textdrop.py:85
+#: ../vdms_panels/filedrop.py:250 ../vdms_panels/textdrop.py:85
 msgid "Destination folder"
 msgstr "Cartella di destinazione"
 
-#: ../vdms_panels/filedrop.py:294 ../vdms_panels/filedrop.py:312
+#: ../vdms_panels/filedrop.py:341 ../vdms_panels/filedrop.py:359
 #: ../vdms_panels/presets_manager.py:139
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: ../vdms_panels/filedrop.py:323 ../vdms_panels/filedrop.py:344
+#: ../vdms_panels/filedrop.py:370 ../vdms_panels/filedrop.py:391
 msgid "No file selected"
 msgstr "Nessun file selezionato"
 
-#: ../vdms_panels/filedrop.py:326 ../vdms_panels/filedrop.py:347
+#: ../vdms_panels/filedrop.py:373 ../vdms_panels/filedrop.py:395
 msgid "Add Files"
 msgstr "Aggiungi Files"
 
@@ -4454,9 +4474,6 @@ msgstr "'ffmpeg' è installato sul tuo sistema?"
 
 #~ msgid "Which files do you want to concatenate?"
 #~ msgstr "Quali file vuoi concatenare?"
-
-#~ msgid "Output format:"
-#~ msgstr "Formato in uscita:"
 
 #~ msgid "Command line"
 #~ msgstr "Riga di comando"

@@ -70,11 +70,11 @@ class ConcatDemuxer(Thread):
         self.countmax = len(varargs[1])  # length file list
         self.logname = logname  # title name of file log
         # need to escaping some chars
-        self.ftext = os.path.join(ConcatDemuxer.CACHEDIR, 'tmp', 'flist.txt')
-        escaped = [e.replace(r"'", r"'\'") for e in self.filelist]
-        with open(self.ftext, 'w', encoding='utf8') as txt:
-            txt.write('\n'.join(["file '%s'" % x for x in escaped]))
-            # txt.write('\n'.join([f"file '{x for x in escaped}'"]))
+        #self.ftext = os.path.join(ConcatDemuxer.CACHEDIR, 'tmp', 'flist.txt')
+        #escaped = [e.replace(r"'", r"'\'") for e in self.filelist]
+        #with open(self.ftext, 'w', encoding='utf8') as txt:
+            #txt.write('\n'.join(["file '%s'" % x for x in escaped]))
+            ## txt.write('\n'.join([f"file '{x for x in escaped}'"]))
 
         Thread.__init__(self)
 
@@ -95,9 +95,8 @@ class ConcatDemuxer(Thread):
                                   )
         cmd = (f'"{ConcatDemuxer.appdata["ffmpeg_cmd"]}" '
                f'{ConcatDemuxer.appdata["ffmpegloglev"]} '
-               f'{ConcatDemuxer.appdata["ffmpeg+params"]} -f concat -safe 0 '
-               f'-i "{self.ftext}" -map 0:v? -map_chapters 0 -map 0:s? '
-               f'-map 0:a? -map_metadata 0 {self.command} -c copy '
+               f'{ConcatDemuxer.appdata["ffmpeg+params"]} '
+               f'-f concat -safe 0 -i {self.command} '
                f'{ConcatDemuxer.appdata["ffthreads"]} -y "{outputfile}"')
 
         count = f'{self.countmax} Files to concat'
