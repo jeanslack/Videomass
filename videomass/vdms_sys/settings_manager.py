@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.11.2022
+Rev: March.24.2022
 Code checker: flake8, pylint .
 
  This file is part of Videomass.
@@ -121,6 +121,14 @@ class ConfigManager:
     playlistsubfolder (bool):
         Auto-create subfolders when download the playlists,
         default value is True.
+
+    move_file_to_trash (bool):
+        if True, move input files to videomass trash folder or inside
+        some other dir.
+        default value is False
+
+    trashfolder (str):
+        An absolute or relative dirname of some trash folder.
 
     """
     VERSION = 4.2

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 3.5.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-24 18:20+0100\n"
-"PO-Revision-Date: 2022-03-24 18:22+0100\n"
+"PO-Revision-Date: 2022-03-25 17:33+0100\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: ChourS\n"
 "Language: ru_RU\n"
@@ -2618,7 +2618,7 @@ msgstr "Аудио фильтры"
 
 #: ../vdms_panels/av_conversions.py:663
 msgid "Listening"
-msgstr ""
+msgstr "Прослушивание"
 
 #: ../vdms_panels/av_conversions.py:668
 msgid "Normalization"
@@ -2811,7 +2811,7 @@ msgstr "Целевой диапазон громкости в LUFS. От +1,0 д
 
 #: ../vdms_panels/av_conversions.py:830
 msgid "Play and listen to the result of audio filters"
-msgstr ""
+msgstr "Воспроизведение и прослушивание результатов аудиофильтров"
 
 #: ../vdms_panels/av_conversions.py:1160 ../vdms_panels/av_conversions.py:2112
 msgid ""
@@ -2831,13 +2831,15 @@ msgstr "Необходимый log-файл должен быть выбран �
 
 #: ../vdms_panels/av_conversions.py:1314
 msgid "Selected index does not exist or does not contain any audio streams"
-msgstr ""
+msgstr "Выбранный индекс не существует или не содержит никаких аудиопотоков"
 
 #: ../vdms_panels/av_conversions.py:1319
 msgid ""
 "ERROR: Missing audio stream:\n"
 "\"{}\""
 msgstr ""
+"ОШИБКА: Отсутствует аудиопоток:\n"
+"\"{}\""
 
 #: ../vdms_panels/av_conversions.py:1347
 msgid "The file is not a frame or a video file"
@@ -3185,13 +3187,11 @@ msgstr ""
 
 #: ../vdms_panels/concatenate.py:156
 msgid "From an image sequence to a video file"
-msgstr ""
+msgstr "Из последовательности изображений в видеофайл"
 
 #: ../vdms_panels/concatenate.py:161
-#, fuzzy
-#| msgid "Duration"
 msgid "Duration:"
-msgstr "Продолжительность"
+msgstr "Продолжительность:"
 
 #: ../vdms_panels/concatenate.py:172
 msgid "Output format:"
@@ -3202,6 +3202,8 @@ msgid ""
 "Sets the duration between one image and another in seconds (from 1 to 100 "
 "sec.), default is 1 second"
 msgstr ""
+"Задает интервал времени между изображениями в секундах (от 1 до 100 секунд), "
+"по умолчанию - 1 секунда"
 
 #: ../vdms_panels/concatenate.py:228
 msgid "At least two files are required to perform concatenation."
@@ -3665,7 +3667,7 @@ msgstr "Редактировать"
 #: ../vdms_panels/presets_manager.py:224 ../vdms_panels/presets_manager.py:335
 #: ../vdms_panels/presets_manager.py:359
 msgid "Duplicate"
-msgstr ""
+msgstr "Дублировать"
 
 #: ../vdms_panels/presets_manager.py:234
 msgid "One-Pass"
