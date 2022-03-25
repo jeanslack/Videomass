@@ -6,10 +6,10 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.18.2022
+Rev: Mar.24.2022
 Code checker:
-    - pycodestyle
-    - flake8: --ignore F821
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 ########################################################
 
 This file is part of Videomass.
@@ -201,7 +201,8 @@ class Conc_Demuxer(wx.Panel):
 
     def on_pictures(self, event):
         """
-        Enable controls for pictures
+        Enables controls to create a video file from a
+        sequence of images using Concat Demuxer.
         """
         if self.ckbx_pict.IsChecked():
             self.lbl_pict.Enable()
@@ -217,7 +218,7 @@ class Conc_Demuxer(wx.Panel):
 
     def on_start(self):
         """
-        Parameters definition
+        Builds FFmpeg command arguments
 
         """
         fsource = self.parent.file_src

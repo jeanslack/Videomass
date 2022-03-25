@@ -4,9 +4,9 @@ Name: concat_demuxer.py
 Porpose: FFmpeg long processing task for Concatenation processing
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.10.2022
+Rev: March.24.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -51,7 +51,6 @@ class ConcatDemuxer(Thread):
     """
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
-    CACHEDIR = appdata['cachedir']
     SUFFIX = appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ---------------------------------------------------------------
@@ -69,12 +68,6 @@ class ConcatDemuxer(Thread):
         self.duration = sum(duration)  # duration list
         self.countmax = len(varargs[1])  # length file list
         self.logname = logname  # title name of file log
-        # need to escaping some chars
-        #self.ftext = os.path.join(ConcatDemuxer.CACHEDIR, 'tmp', 'flist.txt')
-        #escaped = [e.replace(r"'", r"'\'") for e in self.filelist]
-        #with open(self.ftext, 'w', encoding='utf8') as txt:
-            #txt.write('\n'.join(["file '%s'" % x for x in escaped]))
-            ## txt.write('\n'.join([f"file '{x for x in escaped}'"]))
 
         Thread.__init__(self)
 

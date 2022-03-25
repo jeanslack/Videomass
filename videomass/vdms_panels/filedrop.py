@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.23.2022
+Rev: March.24.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -178,6 +178,7 @@ class FileDnD(wx.Panel):
         self.data = self.parent.data_files  # set items list data on parent
         self.file_dest = appdata['outputfile']
         self.selected = None  # tells if an imported file is selected or not
+        self.sortingstate = None  # ascending or descending order
 
         wx.Panel.__init__(self, parent=parent)
 
@@ -258,27 +259,30 @@ class FileDnD(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_double_click,
                   self.flCtrl)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.on_col_click, self.flCtrl)
-        self.Bind(wx.EVT_LIST_COL_RIGHT_CLICK, self.on_col_click, self.flCtrl)
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
     # ----------------------------------------------------------------------
 
     def on_col_click(self, event):
         """
-        Sort items by RIGTH/LEFT clicking on column headers.
-        Clicking with LEFT mouse button sort the items in
-        ascending order; Clicking with RIGTH mouse button sort
-        the items in reverse order.
+        Sort items by LEFT clicking on column headers
+        (from ascending to descending and back to ascending).
         For this feature is required to delete all items from
-        listctrl and data dictionary before re-loading the same
-        items with the new sorting using `dropUpdate` method.
+        listctrl and data list before re-loading the same
+        items with the new sorted order using `dropUpdate` method.
 
+        if plane to use wx.EVT_LIST_COL_RIGHT_CLICK event:
+            `if event.GetEventType() == wx.EVT_LIST_COL_RIGHT_CLICK.typeId:`
+                `new.reverse()`
+        see: <https://discuss.wxpython.org/t/event-geteventtype/22860/4>
         """
+        print(self.sortingstate)
         count = self.flCtrl.GetItemCount()
         curritems = []
 
         if count > 1:
             if event.GetColumn() in (0, -1):
                 return
+
             for x in range(count):
                 curritems.append((self.flCtrl.GetItemText(x, col=1),
                                   self.flCtrl.GetItemText(x, col=2),
@@ -286,21 +290,30 @@ class FileDnD(wx.Panel):
                                   self.flCtrl.GetItemText(x, col=4),
                                   ))
             if event.GetColumn() == 1:
-                new = sorted(curritems, key=lambda student: student[0])
+                new = sorted(curritems, key=lambda item: item[0])
 
             elif event.GetColumn() == 2:
-                new = sorted(curritems, key=lambda student: student[1])
+                new = sorted(curritems, key=lambda item: item[1])
 
             elif event.GetColumn() == 3:
-                new = sorted(curritems, key=lambda student: student[2])
+                new = sorted(curritems, key=lambda item: item[2])
 
             elif event.GetColumn() == 4:
-                new = sorted(curritems, key=lambda student:
-                             to_bytes(''.join(student[3].split()), 'ffmpeg'))
+                new = sorted(curritems, key=lambda item:
+                             to_bytes(''.join(item[3].split()), 'ffmpeg'))
 
-            self.delete_all(self)
-            # https://discuss.wxpython.org/t/event-geteventtype/22860/4
-            if event.GetEventType() == wx.EVT_LIST_COL_RIGHT_CLICK.typeId:
+            self.delete_all(self, setstate=False)  # does not setstate here
+
+            if self.sortingstate == 'descending':
+                self.sortingstate = 'ascending'
+
+            elif self.sortingstate == 'ascending':
+                self.sortingstate = 'descending'
+
+            elif self.sortingstate is None:
+                self.sortingstate = 'ascending'
+
+            if self.sortingstate == 'descending':
                 new.reverse()
             for f in new:
                 self.flCtrl.dropUpdate(f[0])
@@ -418,11 +431,10 @@ class FileDnD(wx.Panel):
         return
     # ----------------------------------------------------------------------
 
-    def delete_all(self, event):
+    def delete_all(self, event, setstate=True):
         """
-        Delete and clear all text lines of the TxtCtrl,
-        reset the fileList[], disable Toolbar button and menu bar
-        Stream/play select imported file - Stream/display imported...
+        Clear all lines on the listCtrl and delete
+        self.data list.
         """
         # self.flCtrl.ClearAll()
         self.flCtrl.DeleteAllItems()
@@ -433,6 +445,8 @@ class FileDnD(wx.Panel):
         self.btn_play.Disable()
         self.btn_remove.Disable()
         self.btn_clear.Disable()
+        if setstate is True:
+            self.sortingstate = None
     # ----------------------------------------------------------------------
 
     def on_select(self, event):
