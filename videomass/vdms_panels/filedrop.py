@@ -275,7 +275,6 @@ class FileDnD(wx.Panel):
                 `new.reverse()`
         see: <https://discuss.wxpython.org/t/event-geteventtype/22860/4>
         """
-        print(self.sortingstate)
         count = self.flCtrl.GetItemCount()
         curritems = []
 
