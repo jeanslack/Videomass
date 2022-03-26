@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-24 18:20+0100\n"
+"POT-Creation-Date: 2022-03-26 09:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -946,8 +946,8 @@ msgstr ""
 
 #: ../vdms_dialogs/preferences.py:366
 msgid ""
-"setting the icons will also change the background\n"
-"and foreground of some text fields."
+"The chosen icon theme will only change the icons,\n"
+"background and foreground of some text fields."
 msgstr ""
 
 #: ../vdms_dialogs/preferences.py:385
@@ -1833,7 +1833,7 @@ msgstr ""
 msgid "Goto"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:524 ../vdms_panels/filedrop.py:247
+#: ../vdms_main/main_frame.py:524 ../vdms_panels/filedrop.py:250
 msgid "Set up a temporary folder for conversions"
 msgstr ""
 
@@ -2772,26 +2772,26 @@ msgid ""
 "sec.), default is 1 second"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:228
+#: ../vdms_panels/concatenate.py:229
 msgid "At least two files are required to perform concatenation."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:229 ../vdms_panels/concatenate.py:240
+#: ../vdms_panels/concatenate.py:230 ../vdms_panels/concatenate.py:241
 msgid "ERROR"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:237
+#: ../vdms_panels/concatenate.py:238
 msgid ""
 "The files do not have the same \"codec_types\", same \"sample_rate\" or same "
 "\"width\" or \"height\". Unable to proceed."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:289 ../vdms_panels/presets_manager.py:876
+#: ../vdms_panels/concatenate.py:290 ../vdms_panels/presets_manager.py:876
 #: ../vdms_panels/presets_manager.py:899 ../vdms_panels/presets_manager.py:935
 msgid "Starts"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:312
+#: ../vdms_panels/concatenate.py:313
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2937,7 +2937,7 @@ msgstr ""
 msgid "Audio Codec"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:577 ../vdms_panels/filedrop.py:227
+#: ../vdms_panels/youtubedl_ui.py:577 ../vdms_panels/filedrop.py:229
 msgid "Size"
 msgstr ""
 
@@ -3001,53 +3001,53 @@ msgstr ""
 msgid "Duplicate files are rejected: > {}"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:192
+#: ../vdms_panels/filedrop.py:194
 msgid "Drag one or more files below"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:198 ../vdms_panels/filedrop.py:340
-#: ../vdms_panels/filedrop.py:356
+#: ../vdms_panels/filedrop.py:200 ../vdms_panels/filedrop.py:354
+#: ../vdms_panels/filedrop.py:370
 msgid "Play"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:224
+#: ../vdms_panels/filedrop.py:226
 msgid "File Name"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:225 ../vdms_panels/timeline.py:119
+#: ../vdms_panels/filedrop.py:227 ../vdms_panels/timeline.py:119
 msgid "Duration"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:226
+#: ../vdms_panels/filedrop.py:228
 msgid "Media type"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:245
-msgid "Remove the selected file from the list"
-msgstr ""
-
-#: ../vdms_panels/filedrop.py:246
-msgid "Delete all files from the list"
+#: ../vdms_panels/filedrop.py:247
+msgid "Remove the selected files from the list"
 msgstr ""
 
 #: ../vdms_panels/filedrop.py:249
-msgid "Play the selected files in the list"
+msgid "Delete all files from the list"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:250 ../vdms_panels/textdrop.py:85
+#: ../vdms_panels/filedrop.py:252
+msgid "Play the selected file in the list"
+msgstr ""
+
+#: ../vdms_panels/filedrop.py:253 ../vdms_panels/textdrop.py:85
 msgid "Destination folder"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:341 ../vdms_panels/filedrop.py:359
+#: ../vdms_panels/filedrop.py:355 ../vdms_panels/filedrop.py:373
 #: ../vdms_panels/presets_manager.py:139
 msgid "Remove"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:370 ../vdms_panels/filedrop.py:391
+#: ../vdms_panels/filedrop.py:384 ../vdms_panels/filedrop.py:405
 msgid "No file selected"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:373 ../vdms_panels/filedrop.py:395
+#: ../vdms_panels/filedrop.py:387 ../vdms_panels/filedrop.py:409
 msgid "Add Files"
 msgstr ""
 

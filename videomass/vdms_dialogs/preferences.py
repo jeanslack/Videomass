@@ -363,8 +363,8 @@ class SetUp(wx.Dialog):
         sizerAppearance.Add((0, 15))
         labTheme = wx.StaticText(tabFive, wx.ID_ANY, _('Icon themes'))
         sizerAppearance.Add(labTheme, 0, wx.ALL | wx.EXPAND, 5)
-        msg = _("setting the icons will also change the background\n"
-                "and foreground of some text fields.")
+        msg = _("The chosen icon theme will only change the icons,\n"
+                "background and foreground of some text fields.")
         labIcons = wx.StaticText(tabFive, wx.ID_ANY, (msg))
         sizerAppearance.Add(labIcons, 0, wx.ALL |
                             wx.ALIGN_CENTER_HORIZONTAL, 5)

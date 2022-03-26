@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.5.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-24 18:20+0100\n"
-"PO-Revision-Date: 2022-03-24 18:21+0100\n"
+"POT-Creation-Date: 2022-03-26 09:59+0100\n"
+"PO-Revision-Date: 2022-03-26 10:03+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -1114,11 +1114,11 @@ msgstr "Temi icona"
 
 #: ../vdms_dialogs/preferences.py:366
 msgid ""
-"setting the icons will also change the background\n"
-"and foreground of some text fields."
+"The chosen icon theme will only change the icons,\n"
+"background and foreground of some text fields."
 msgstr ""
-"l'impostazione delle icone cambierà anche lo sfondo\n"
-"e il primo piano di alcuni campi di testo."
+"Il tema delle icone scelto cambierà solo le icone,\n"
+"lo sfondo e il primo piano di alcuni campi di testo."
 
 #: ../vdms_dialogs/preferences.py:385
 msgid "Toolbar customization"
@@ -2094,7 +2094,7 @@ msgstr "Sistema"
 msgid "Goto"
 msgstr "Vai"
 
-#: ../vdms_main/main_frame.py:524 ../vdms_panels/filedrop.py:247
+#: ../vdms_main/main_frame.py:524 ../vdms_panels/filedrop.py:250
 msgid "Set up a temporary folder for conversions"
 msgstr "Imposta una cartella temporanea per le conversioni"
 
@@ -3208,15 +3208,15 @@ msgstr ""
 "Imposta la durata tra un'immagine e l'altra in secondi (da 1 a 100 sec.), il "
 "valore predefinito è 1 secondo"
 
-#: ../vdms_panels/concatenate.py:228
+#: ../vdms_panels/concatenate.py:229
 msgid "At least two files are required to perform concatenation."
 msgstr "Sono necessari almeno due file per eseguire la concatenazione."
 
-#: ../vdms_panels/concatenate.py:229 ../vdms_panels/concatenate.py:240
+#: ../vdms_panels/concatenate.py:230 ../vdms_panels/concatenate.py:241
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: ../vdms_panels/concatenate.py:237
+#: ../vdms_panels/concatenate.py:238
 msgid ""
 "The files do not have the same \"codec_types\", same \"sample_rate\" or same "
 "\"width\" or \"height\". Unable to proceed."
@@ -3224,12 +3224,12 @@ msgstr ""
 "I file non hanno gli stessi parametri come \"codec_types\", \"sample_rate"
 "\" , \"larghezza\" o \"altezza\". Impossibile procedere."
 
-#: ../vdms_panels/concatenate.py:289 ../vdms_panels/presets_manager.py:876
+#: ../vdms_panels/concatenate.py:290 ../vdms_panels/presets_manager.py:876
 #: ../vdms_panels/presets_manager.py:899 ../vdms_panels/presets_manager.py:935
 msgid "Starts"
 msgstr "Avvio"
 
-#: ../vdms_panels/concatenate.py:312
+#: ../vdms_panels/concatenate.py:313
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3399,7 +3399,7 @@ msgstr "fps"
 msgid "Audio Codec"
 msgstr "Codec Audio"
 
-#: ../vdms_panels/youtubedl_ui.py:577 ../vdms_panels/filedrop.py:227
+#: ../vdms_panels/youtubedl_ui.py:577 ../vdms_panels/filedrop.py:229
 msgid "Size"
 msgstr "Dimensione"
 
@@ -3473,53 +3473,53 @@ msgstr "Nome del file non valido. Contiene virgolette doppie o singole"
 msgid "Duplicate files are rejected: > {}"
 msgstr "I files duplicati sono rifiutati: > {}"
 
-#: ../vdms_panels/filedrop.py:192
+#: ../vdms_panels/filedrop.py:194
 msgid "Drag one or more files below"
 msgstr "Trascina uno o più file qui sotto"
 
-#: ../vdms_panels/filedrop.py:198 ../vdms_panels/filedrop.py:340
-#: ../vdms_panels/filedrop.py:356
+#: ../vdms_panels/filedrop.py:200 ../vdms_panels/filedrop.py:354
+#: ../vdms_panels/filedrop.py:370
 msgid "Play"
 msgstr "Riproduci"
 
-#: ../vdms_panels/filedrop.py:224
+#: ../vdms_panels/filedrop.py:226
 msgid "File Name"
 msgstr "Nome File"
 
-#: ../vdms_panels/filedrop.py:225 ../vdms_panels/timeline.py:119
+#: ../vdms_panels/filedrop.py:227 ../vdms_panels/timeline.py:119
 msgid "Duration"
 msgstr "Durata"
 
-#: ../vdms_panels/filedrop.py:226
+#: ../vdms_panels/filedrop.py:228
 msgid "Media type"
 msgstr "Tipo di media"
 
-#: ../vdms_panels/filedrop.py:245
-msgid "Remove the selected file from the list"
-msgstr "Rimuovi il file selezionato dall'elenco"
+#: ../vdms_panels/filedrop.py:247
+msgid "Remove the selected files from the list"
+msgstr "Rimuovi i file selezionati dall'elenco"
 
-#: ../vdms_panels/filedrop.py:246
+#: ../vdms_panels/filedrop.py:249
 msgid "Delete all files from the list"
 msgstr "Elimina tutti i file dall'elenco"
 
-#: ../vdms_panels/filedrop.py:249
-msgid "Play the selected files in the list"
-msgstr "Riproduci i file selezionati nell'elenco"
+#: ../vdms_panels/filedrop.py:252
+msgid "Play the selected file in the list"
+msgstr "Riproduci il file selezionato nell'elenco"
 
-#: ../vdms_panels/filedrop.py:250 ../vdms_panels/textdrop.py:85
+#: ../vdms_panels/filedrop.py:253 ../vdms_panels/textdrop.py:85
 msgid "Destination folder"
 msgstr "Cartella di destinazione"
 
-#: ../vdms_panels/filedrop.py:341 ../vdms_panels/filedrop.py:359
+#: ../vdms_panels/filedrop.py:355 ../vdms_panels/filedrop.py:373
 #: ../vdms_panels/presets_manager.py:139
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: ../vdms_panels/filedrop.py:370 ../vdms_panels/filedrop.py:391
+#: ../vdms_panels/filedrop.py:384 ../vdms_panels/filedrop.py:405
 msgid "No file selected"
 msgstr "Nessun file selezionato"
 
-#: ../vdms_panels/filedrop.py:373 ../vdms_panels/filedrop.py:395
+#: ../vdms_panels/filedrop.py:387 ../vdms_panels/filedrop.py:409
 msgid "Add Files"
 msgstr "Aggiungi Files"
 

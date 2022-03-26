@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.5.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-24 18:20+0100\n"
-"PO-Revision-Date: 2022-03-25 17:33+0100\n"
+"POT-Creation-Date: 2022-03-26 09:59+0100\n"
+"PO-Revision-Date: 2022-03-26 10:06+0100\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: ChourS\n"
 "Language: ru_RU\n"
@@ -1114,9 +1114,13 @@ msgid "Icon themes"
 msgstr "Темы значков"
 
 #: ../vdms_dialogs/preferences.py:366
+#, fuzzy
+#| msgid ""
+#| "setting the icons will also change the background\n"
+#| "and foreground of some text fields."
 msgid ""
-"setting the icons will also change the background\n"
-"and foreground of some text fields."
+"The chosen icon theme will only change the icons,\n"
+"background and foreground of some text fields."
 msgstr ""
 "установка значков также изменит фон и передний план\n"
 "некоторых текстовых полей."
@@ -2099,7 +2103,7 @@ msgstr "Система"
 msgid "Goto"
 msgstr "Перейти"
 
-#: ../vdms_main/main_frame.py:524 ../vdms_panels/filedrop.py:247
+#: ../vdms_main/main_frame.py:524 ../vdms_panels/filedrop.py:250
 msgid "Set up a temporary folder for conversions"
 msgstr "Настройте временную папку для конверсий"
 
@@ -3205,15 +3209,15 @@ msgstr ""
 "Задает интервал времени между изображениями в секундах (от 1 до 100 секунд), "
 "по умолчанию - 1 секунда"
 
-#: ../vdms_panels/concatenate.py:228
+#: ../vdms_panels/concatenate.py:229
 msgid "At least two files are required to perform concatenation."
 msgstr "Для объединения требуются как минимум два файла."
 
-#: ../vdms_panels/concatenate.py:229 ../vdms_panels/concatenate.py:240
+#: ../vdms_panels/concatenate.py:230 ../vdms_panels/concatenate.py:241
 msgid "ERROR"
 msgstr "ОШИБКА"
 
-#: ../vdms_panels/concatenate.py:237
+#: ../vdms_panels/concatenate.py:238
 msgid ""
 "The files do not have the same \"codec_types\", same \"sample_rate\" or same "
 "\"width\" or \"height\". Unable to proceed."
@@ -3221,12 +3225,12 @@ msgstr ""
 "Файлы не имеют одинаковых «codec_types», «sample_rate» или одинаковых "
 "«ширины» или «высоты». Невозможно продолжить."
 
-#: ../vdms_panels/concatenate.py:289 ../vdms_panels/presets_manager.py:876
+#: ../vdms_panels/concatenate.py:290 ../vdms_panels/presets_manager.py:876
 #: ../vdms_panels/presets_manager.py:899 ../vdms_panels/presets_manager.py:935
 msgid "Starts"
 msgstr "Начало"
 
-#: ../vdms_panels/concatenate.py:312
+#: ../vdms_panels/concatenate.py:313
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3395,7 +3399,7 @@ msgstr "fps"
 msgid "Audio Codec"
 msgstr "Кодек аудио"
 
-#: ../vdms_panels/youtubedl_ui.py:577 ../vdms_panels/filedrop.py:227
+#: ../vdms_panels/youtubedl_ui.py:577 ../vdms_panels/filedrop.py:229
 msgid "Size"
 msgstr "Размер"
 
@@ -3471,53 +3475,57 @@ msgstr "Недопустимое имя файла. Содержит двойн�
 msgid "Duplicate files are rejected: > {}"
 msgstr "Дубликаты файлов отклоняются: > {}"
 
-#: ../vdms_panels/filedrop.py:192
+#: ../vdms_panels/filedrop.py:194
 msgid "Drag one or more files below"
 msgstr "Перетащите один или несколько файлов ниже"
 
-#: ../vdms_panels/filedrop.py:198 ../vdms_panels/filedrop.py:340
-#: ../vdms_panels/filedrop.py:356
+#: ../vdms_panels/filedrop.py:200 ../vdms_panels/filedrop.py:354
+#: ../vdms_panels/filedrop.py:370
 msgid "Play"
 msgstr "Воспроизведение"
 
-#: ../vdms_panels/filedrop.py:224
+#: ../vdms_panels/filedrop.py:226
 msgid "File Name"
 msgstr "Имя Файла"
 
-#: ../vdms_panels/filedrop.py:225 ../vdms_panels/timeline.py:119
+#: ../vdms_panels/filedrop.py:227 ../vdms_panels/timeline.py:119
 msgid "Duration"
 msgstr "Продолжительность"
 
-#: ../vdms_panels/filedrop.py:226
+#: ../vdms_panels/filedrop.py:228
 msgid "Media type"
 msgstr "Тип медиа"
 
-#: ../vdms_panels/filedrop.py:245
-msgid "Remove the selected file from the list"
+#: ../vdms_panels/filedrop.py:247
+#, fuzzy
+#| msgid "Remove the selected file from the list"
+msgid "Remove the selected files from the list"
 msgstr "Удалить выбранный файл из списка"
 
-#: ../vdms_panels/filedrop.py:246
+#: ../vdms_panels/filedrop.py:249
 msgid "Delete all files from the list"
 msgstr "Удалить все файлы из списка"
 
-#: ../vdms_panels/filedrop.py:249
-msgid "Play the selected files in the list"
+#: ../vdms_panels/filedrop.py:252
+#, fuzzy
+#| msgid "Play the selected files in the list"
+msgid "Play the selected file in the list"
 msgstr "Воспроизвести выбранные из списка файлы"
 
-#: ../vdms_panels/filedrop.py:250 ../vdms_panels/textdrop.py:85
+#: ../vdms_panels/filedrop.py:253 ../vdms_panels/textdrop.py:85
 msgid "Destination folder"
 msgstr "Папка назначения"
 
-#: ../vdms_panels/filedrop.py:341 ../vdms_panels/filedrop.py:359
+#: ../vdms_panels/filedrop.py:355 ../vdms_panels/filedrop.py:373
 #: ../vdms_panels/presets_manager.py:139
 msgid "Remove"
 msgstr "Удалить"
 
-#: ../vdms_panels/filedrop.py:370 ../vdms_panels/filedrop.py:391
+#: ../vdms_panels/filedrop.py:384 ../vdms_panels/filedrop.py:405
 msgid "No file selected"
 msgstr "Файл не выбран"
 
-#: ../vdms_panels/filedrop.py:373 ../vdms_panels/filedrop.py:395
+#: ../vdms_panels/filedrop.py:387 ../vdms_panels/filedrop.py:409
 msgid "Add Files"
 msgstr "Добавить файлы"
 
