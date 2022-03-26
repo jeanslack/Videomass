@@ -156,8 +156,9 @@ class FileDrop(wx.FileDropTarget):
 
 class FileDnD(wx.Panel):
     """
-    Panel for dragNdrop files queue.
-    Accept one or more files.
+    This panel hosts a listctrl for Drag AND Drop actions on which
+    you can add new files, select them, remove them, play them,
+    sort them or remove them from the list.
 
     """
     # CONSTANTS:
@@ -243,11 +244,12 @@ class FileDnD(wx.Panel):
                 self.parent.suffix = appdata['filesuffix']
 
         # Tooltip
-        self.btn_remove.SetToolTip(_('Remove the selected file from the list'))
+        self.btn_remove.SetToolTip(_('Remove the selected '
+                                     'files from the list'))
         self.btn_clear.SetToolTip(_('Delete all files from the list'))
-        tip = (_("Set up a temporary folder for conversions"))
+        tip = (_('Set up a temporary folder for conversions'))
         self.btn_save.SetToolTip(tip)
-        self.btn_play.SetToolTip(_("Play the selected files in the list"))
+        self.btn_play.SetToolTip(_('Play the selected file in the list'))
         self.text_path_save.SetToolTip(_("Destination folder"))
 
         # Binding (EVT)
@@ -450,7 +452,7 @@ class FileDnD(wx.Panel):
 
     def on_select(self, event):
         """
-        Selecting a line with mouse or up/down keyboard buttons
+        Selecting line with mouse or up/down keyboard buttons
         """
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index, 1)
