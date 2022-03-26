@@ -23,8 +23,10 @@ videomass (3.5.8-1) UNRELEASED; urgency=medium
   * [Concatenate Demuxer] added the ability to create a simple slideshow
     from images #95
   * Update Russian and Italian translations
+  * Added compatible with Windows 7
+  * Updated informations for icon themes on preferences dialog #88.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 24 Mar 2022 18:36:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 26 Mar 2022 12:05:00 +0200
 
 videomass (3.5.7-1) UNRELEASED; urgency=medium
 
