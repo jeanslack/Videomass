@@ -31,7 +31,7 @@ You can clone the repository anonymously by the following command:
 
 ---  
 
-## Traslating
+## Translating
 {: .bg-green-300}
 
 If you want to translate offline, please read 
