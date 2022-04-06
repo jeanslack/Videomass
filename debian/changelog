@@ -1,3 +1,10 @@
+videomass (4.0.0-1) UNRELEASED; urgency=medium
+
+  * Update Dutch language, thanks to @johannesdedoper
+  * Improved ETA using ffmpeg speed value #101
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 06 Apr 2022 16:42:00 +0200
+
 videomass (3.5.8-1) UNRELEASED; urgency=medium
 
   * Small text on toolbar buttons when enabled.

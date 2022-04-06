@@ -188,6 +188,21 @@ def milliseconds2timeformat(milliseconds):
 # ------------------------------------------------------------------------
 
 
+def seconds2timeformat(milliseconds):
+    """
+    Converts milliseconds (duration) to time units in sexagesimal
+    format (e.g. HOURS:MM:SS, as in 00:00:00).
+    Accept an int object only, such as 2345.
+    Returns a string object in time format.
+
+    """
+    minutes, sec = divmod(milliseconds, 60000)
+    hours, minutes = divmod(minutes, 60)
+    seconds = int(sec / 1000)
+    return f"{hours:02}:{minutes:02}:{seconds:02}"
+# ------------------------------------------------------------------------
+
+
 def copy_restore(src, dest):
     """
     copy a specific file from src to dest. If dest exists,

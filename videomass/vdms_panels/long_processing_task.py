@@ -42,7 +42,7 @@ from videomass.vdms_threads.picture_exporting import PicturesFromVideo
 from videomass.vdms_threads.video_stabilization import VidStab
 from videomass.vdms_threads.concat_demuxer import ConcatDemuxer
 from videomass.vdms_utils.utils import (get_milliseconds,
-                                        milliseconds2timeformat
+                                        milliseconds2timeformat,
                                         )
 
 
@@ -322,8 +322,17 @@ class LogOut(wx.Panel):
                 ffprog.append(f"{x}: {y} | ")
 
             if self.time_remaining is True:
-                remaining = milliseconds2timeformat(duration - ms)
-                eta = f"ETA: {remaining} |"
+                if 'speed=' in output:
+                    try:
+                        s = output.split()[-1].strip()
+                        speed = s.split('=')[1].split('x')[0]
+                        res = (duration - ms) / float(speed)
+                        remaining = milliseconds2timeformat(round(res))
+                        eta = f"ETA: {remaining} |"
+                    except IndexError:
+                        eta = f"ETA: N/A |"
+                else:
+                    eta = ""
             else:
                 eta = ""
             self.labperc.SetLabel(f"Processing... {str(int(percentage))}% | "
