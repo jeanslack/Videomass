@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
-Name: time_selection.py
+Name: timeline.py
 Porpose: show panel to set duration and time sequences
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2021
+Rev: Apr.05.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -32,18 +32,18 @@ from videomass.vdms_utils.utils import milliseconds2timeformat
 
 class Timeline(wx.Panel):
     """
-    This class show a panel box to set a time range selection and
-    get data in the FFmpeg syntax using this form :
+    A representation of the time selection meter as duration
+    and position values viewed as time range selection ruler
+    for the FFmpeg syntax, in the following form:
 
         `-ss 00:00:00.000 -t 00:00:00.000`
 
-    The -ss flag indicates the start selection; the -t flag
-    indicates the  time amount (duration) starting from -ss.
+    The -ss flag means the start selection (SEEK); the -t flag
+    means the time amount (DURATION) starting from -ss.
     See FFmpeg documentation for details:
 
         <https://ffmpeg.org/documentation.html>
-
-    or wiki page: <https://trac.ffmpeg.org/wiki/Seeking#Timeunitsyntax>
+        <https://trac.ffmpeg.org/wiki/Seeking#Timeunitsyntax>
 
     """
     get = wx.GetApp()
@@ -75,19 +75,22 @@ class Timeline(wx.Panel):
 
     def __init__(self, parent):
         """
+        Note, the time values results are setted on `on_Cut` and `on_Seek`
+        methods using the `time_seq` parent (main_frame) attribute.
         If no file has a duration, the limit to the maximum time
-        selection is set (86399999 ms = 23:59:59.999), to allow for
-        example slideshows with images.
+        selection is set to 4800000ms (01:20:00.000).
 
         self.pix: scale pixels to time seconds for ruler selection
         self.milliseconds: int(milliseconds)
         self.timeformat: time format with ms (00:00:00.000)
+        self.zoom_values: dict, 10 duration value divided by half
         self.bar_w: width value for time bar selection
         self.bar_x: x axis value for time bar selection
 
         """
         self.parent = parent
         self.milliseconds = 1  # max val must be greater than the min val
+        self.zoom_values = None
         self.timeformat = None
         self.pix = 0
         self.bar_w = 0
@@ -96,8 +99,8 @@ class Timeline(wx.Panel):
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
 
         # self.font = wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL,
-        #                    wx.FONTWEIGHT_BOLD, False, 'Courier 10 Pitch'
-        #                    )
+        #                     wx.FONTWEIGHT_BOLD, False, 'Courier 10 Pitch'
+        #                     )
         self.font = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         sizer_base = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -105,15 +108,21 @@ class Timeline(wx.Panel):
                                   size=(Timeline.PW, Timeline.PH),
                                   style=wx.BORDER_SUNKEN)
         sizer_base.Add(self.paneltime, 0, wx.LEFT | wx.RIGHT | wx.CENTRE, 5)
+        self.spin_zoom = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
+                                     max=10, size=(-1, -1),
+                                     style=wx.TE_PROCESS_ENTER
+                                     | wx.ALIGN_CENTRE_HORIZONTAL
+                                     )
+        sizer_base.Add(self.spin_zoom, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
         self.sldseek = wx.Slider(self, wx.ID_ANY, 0, 0, self.milliseconds,
-                                 size=(200, -1), style=wx.SL_HORIZONTAL
+                                 size=(300, -1), style=wx.SL_HORIZONTAL
                                  )
         self.sldseek.Disable()
         self.txtseek = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
         txtstaticseek = wx.StaticText(self, wx.ID_ANY, _('Seek'))
 
         self.sldcut = wx.Slider(self, wx.ID_ANY, 0, 0, self.milliseconds,
-                                size=(200, -1), style=wx.SL_HORIZONTAL
+                                size=(300, -1), style=wx.SL_HORIZONTAL
                                 )
         self.txtcut = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
         txtstaticdur = wx.StaticText(self, wx.ID_ANY, _('Duration'))
@@ -139,13 +148,29 @@ class Timeline(wx.Panel):
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
+        self.spin_zoom.SetToolTip(_('Increase the time selection '
+                                    'accuracy (zoom)'))
 
         # ----------------------Binding (EVT)----------------------#
         self.paneltime.Bind(wx.EVT_PAINT, self.OnPaint)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Cut, self.sldcut)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Seek, self.sldseek)
+        self.Bind(wx.EVT_SPINCTRL, self.on_zoom, self.spin_zoom)
 
     # ----------------------Event handler (callback)----------------------#
+
+    def on_zoom(self, event):
+        """
+        Make the timeline zoomable for a more accuracy selection
+        """
+        duration = self.zoom_values[self.spin_zoom.GetValue()]
+        self.milliseconds = round(duration)
+        self.pix = Timeline.RW / self.milliseconds
+        self.timeformat = milliseconds2timeformat(self.milliseconds)
+        self.sldseek.SetMax(self.milliseconds)
+        self.sldcut.SetMax(self.milliseconds)
+        self.set_coordinates()  # update indicators and controls
+    # ------------------------------------------------------------------#
 
     def on_Cut(self, event):
         """
@@ -161,10 +186,10 @@ class Timeline(wx.Panel):
 
         self.sldseek.SetMax(self.milliseconds - cut)  # seek offset
         time = milliseconds2timeformat(cut)
-        self.parent.time_seq = "-ss %s -t %s" % (self.txtseek.GetLabel(), time)
+        self.parent.time_seq = f"-ss {self.txtseek.GetLabel()} -t {time}"
         self.txtcut.SetLabel(time)
-
         self.set_coordinates()
+    # ------------------------------------------------------------------#
 
     def on_Seek(self, event):
         """
@@ -178,9 +203,10 @@ class Timeline(wx.Panel):
 
         self.sldcut.SetMax(self.milliseconds - seek)  # cut offset
         time = milliseconds2timeformat(seek)  # convert to time format
-        self.parent.time_seq = "-ss %s -t %s" % (time, self.txtcut.GetLabel())
+        self.parent.time_seq = f"-ss {time} -t {self.txtcut.GetLabel()}"
         self.txtseek.SetLabel(time)  # update StaticText
         self.set_coordinates()
+    # ------------------------------------------------------------------#
 
     def set_coordinates(self):
         """
@@ -253,20 +279,26 @@ class Timeline(wx.Panel):
 
     def set_values(self, duration):
         """
-        Set new values with new entries. This method is called out side
-        of this class.
+        Set new values each time new files are loaded.
+        This method is called out side of this class, see parent.
         """
         if not duration:
-            msg0 = _('The maximum time selection is set to 24:00:00, '
-                     'allowing to make a slideshow')
-            self.milliseconds = 86399999
+            self.milliseconds = 4800000
         else:
-            msg0 = _('The maximum time refers to the file with the longest '
-                     'duration')
             self.milliseconds = round(duration)
             # rounds all float number to prevent ruler selection inaccuracy
+
+        self.zoom_values = {}
+        index = self.milliseconds
+        for x in range(11):
+            self.zoom_values[x] = index
+            index /= 2
+
+        msg0 = _('The maximum time refers to the file with the longest '
+                 'duration, it will be set to 01:20:00.000 otherwise.')
         self.paneltime.SetToolTip(msg0)
         self.pix = Timeline.RW / self.milliseconds
         self.timeformat = milliseconds2timeformat(self.milliseconds)
         self.sldseek.SetMax(self.milliseconds)
         self.sldcut.SetMax(self.milliseconds)
+        self.spin_zoom.SetValue(0)

@@ -2,6 +2,9 @@ videomass (4.0.0-1) UNRELEASED; urgency=medium
 
   * Update Dutch language, thanks to @johannesdedoper
   * Improved ETA using ffmpeg speed value #101
+  * [Timeline editor] Added the ability to zoom up to 10 positions in order
+    to make more accurate the time selection using slider controls and ruler
+    view.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 06 Apr 2022 16:42:00 +0200
 
