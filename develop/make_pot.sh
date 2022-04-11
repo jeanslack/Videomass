@@ -64,11 +64,14 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_panels/presets_manager.py" \
 "../vdms_panels/textdrop.py" \
 "../vdms_panels/timeline.py" \
+"../vdms_panels/sequence_to_video.py" \
+"../vdms_panels/video_to_sequence.py" \
 "../vdms_threads/ffplay_file.py" \
 "../vdms_threads/one_pass.py" \
 "../vdms_threads/picture_exporting.py" \
 "../vdms_threads/two_pass_ebu.py" \
 "../vdms_threads/two_pass.py" \
+"../vdms_threads/slideshow.py" \
 
 if [ $? != 0 ]; then
     echo 'Failed!'

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.03.2022
+Rev: Apr.09.2022
 Code checker: pylint, flake8 --ignore=F821,W503
 ########################################################
 
@@ -46,6 +46,8 @@ from videomass.vdms_panels import textdrop
 from videomass.vdms_panels import youtubedl_ui
 from videomass.vdms_panels import av_conversions
 from videomass.vdms_panels import concatenate
+from videomass.vdms_panels import video_to_sequence
+from videomass.vdms_panels import sequence_to_video
 from videomass.vdms_panels.long_processing_task import LogOut
 from videomass.vdms_panels import presets_manager
 from videomass.vdms_io import io_tools
@@ -143,6 +145,8 @@ class MainFrame(wx.Frame):
                                                   self.icons['profile_copy'],
                                                   )
         self.ConcatDemuxer = concatenate.Conc_Demuxer(self,)
+        self.toPictures = video_to_sequence.VideoToSequence(self,)
+        self.toSlideshow = sequence_to_video.SequenceToVideo(self, self.icons)
         # hide panels
         self.TimeLine.Hide()
         self.fileDnDTarget.Hide()
@@ -152,6 +156,8 @@ class MainFrame(wx.Frame):
         self.ProcessPanel.Hide()
         self.PrstsPanel.Hide()
         self.ConcatDemuxer.Hide()
+        self.toPictures.Hide()
+        self.toSlideshow.Hide()
         # Layout toolbar buttons:
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)  # sizer base global
         # grid_pan = wx.BoxSizer(wx.HORIZONTAL)
@@ -169,6 +175,8 @@ class MainFrame(wx.Frame):
         self.mainSizer.Add(self.ProcessPanel, 1, wx.EXPAND)
         self.mainSizer.Add(self.PrstsPanel, 1, wx.EXPAND)
         self.mainSizer.Add(self.ConcatDemuxer, 1, wx.EXPAND)
+        self.mainSizer.Add(self.toPictures, 1, wx.EXPAND)
+        self.mainSizer.Add(self.toSlideshow, 1, wx.EXPAND)
 
         # ----------------------Set Properties----------------------#
         self.SetTitle("Videomass")
@@ -236,6 +244,12 @@ class MainFrame(wx.Frame):
         elif self.ConcatDemuxer.IsShown():
             self.ConcatDemuxer.Hide()
 
+        elif self.toPictures.IsShown():
+            self.toPictures.Hide()
+
+        elif self.toSlideshow.IsShown():
+            self.toSlideshow.Hide()
+
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
         self.toolbar.Hide()
@@ -246,6 +260,8 @@ class MainFrame(wx.Frame):
         self.startpan.Enable(False)
         self.logpan.Enable(False)
         self.viewtimeline.Enable(False)
+        self.toseq.Enable(False)
+        self.slides.Enable(False)
         self.SetTitle(_('Videomass'))
         self.statusbar_msg(_('Ready'), None)
         self.Layout()
@@ -259,6 +275,8 @@ class MainFrame(wx.Frame):
             self.avpan.Enable(False)
             self.prstpan.Enable(False)
             self.concpan.Enable(False)
+            self.toseq.Enable(False)
+            self.slides.Enable(False)
             self.ydlpan.Enable(False),
             self.startpan.Enable(False)
             self.viewtimeline.Enable(False)
@@ -277,7 +295,7 @@ class MainFrame(wx.Frame):
     def reset_Timeline(self):
         """
         By adding or deleting files on file drop panel, cause reset
-        the timeline data (only if `self.time_seq` attribute is true)
+        the timeline data (only if `self.time_seq` attribute is setted)
         """
         if self.time_seq != "-ss 00:00:00.000 -t 00:00:00.000":
             self.TimeLine.resetValues()
@@ -292,7 +310,7 @@ class MainFrame(wx.Frame):
             self.ytDownloader.on_show_statistics()
 
         elif not self.data_files:
-            wx.MessageBox(_('Drag at least one file'),
+            wx.MessageBox(_('No files added yet'),
                           "Videomass", wx.ICON_INFORMATION, self)
             return
 
@@ -496,6 +514,15 @@ class MainFrame(wx.Frame):
                                        _("Concatenate Demuxer\tShift+D"),
                                        _("jump to the Concatenate Demuxer "
                                          "panel"))
+
+        self.slides = goButton.Append(wx.ID_ANY,
+                                      _("Sequence to Video\tShift+I"),
+                                      _("jump to the Sequence to Video "
+                                        "panel"))
+        self.toseq = goButton.Append(wx.ID_ANY,
+                                     _("Video to Sequence\tShift+S"),
+                                     _("jump to the Video to Sequence "
+                                       "panel"))
         goButton.AppendSeparator()
         dscrp = (_("YouTube downloader\tShift+Y"),
                  _("jump to the YouTube Downloader panel"))
@@ -509,7 +536,7 @@ class MainFrame(wx.Frame):
         dscrp = (_("Configuration folder"),
                  _("Opens the Videomass configuration folder"))
         openconfdir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Logs folder"),
+        dscrp = (_("Log folder"),
                  _("Opens the Videomass log folder, if exists"))
         openlogdir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         dscrp = (_("Cache folder"),
@@ -611,6 +638,8 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.prstPan, self.prstpan)
         self.Bind(wx.EVT_MENU, self.avPan, self.avpan)
         self.Bind(wx.EVT_MENU, self.concPan, self.concpan)
+        self.Bind(wx.EVT_MENU, self.on_to_slideshow, self.slides)
+        self.Bind(wx.EVT_MENU, self.on_to_images, self.toseq)
         self.Bind(wx.EVT_MENU, self.ydlPan, self.ydlpan)
         self.Bind(wx.EVT_MENU, self.logPan, self.logpan)
         self.Bind(wx.EVT_MENU, self.openLog, openlogdir)
@@ -638,19 +667,21 @@ class MainFrame(wx.Frame):
     # --------- Menu  Files
     def open_media_files(self, event):
         """
-        Open the file dialog to choose media files
+        Open the file dialog to choose media files.
         The order of selected files only supported by GTK
         """
         if self.topicname in ('Audio/Video Conversions',
                               'Presets Manager',
-                              'Concatenate Demuxer'):
+                              'Concatenate Demuxer',
+                              'Image Sequence to Video',
+                              'Video to Pictures'):
             self.switch_file_import(self, self.topicname)
 
         wildcard = ("All files |*.*|*.mkv|*.mkv|*.avi|*.avi|*.mp4|*.mp4|"
                     "*.flv|*.flv|*.m4v|*.m4v|*.wav|*.wav|*.mp3|*.mp3|"
                     "*.ogg|*.ogg|*.flac|*.flac|*.m4a|*.m4a")
 
-        with wx.FileDialog(self, _("Select one or more files to open"),
+        with wx.FileDialog(self, _("Open the selected files"),
                            "", "", wildcard, wx.FD_OPEN | wx.FD_MULTIPLE |
                            wx.FD_FILE_MUST_EXIST | wx.FD_PREVIEW) as filedlg:
 
@@ -1069,44 +1100,48 @@ class MainFrame(wx.Frame):
         """
         jump on Presets Manager panel
         """
-        if not self.data_files:
-            self.statusbar_msg(_('No files added yet'), MainFrame.YELLOW)
-        else:
-            self.topicname = 'Presets Manager'
-            self.on_Forward(self)
+        self.topicname = 'Presets Manager'
+        self.on_Forward(self)
     # ------------------------------------------------------------------#
 
     def avPan(self, event):
         """
         jump on AVconversions panel
         """
-        if not self.data_files:
-            self.statusbar_msg(_('No files added yet'), MainFrame.YELLOW)
-        else:
-            self.topicname = 'Audio/Video Conversions'
-            self.on_Forward(self)
+        self.topicname = 'Audio/Video Conversions'
+        self.on_Forward(self)
     # ------------------------------------------------------------------#
 
     def ydlPan(self, event):
         """
         jumpe on youtube downloader
         """
-        if not self.data_url:
-            self.statusbar_msg(_('No URLs added yet'), MainFrame.YELLOW)
-        else:
-            self.topicname = 'Youtube Downloader'
-            self.on_Forward(self)
+        self.topicname = 'Youtube Downloader'
+        self.on_Forward(self)
     # ------------------------------------------------------------------#
 
     def concPan(self, event):
         """
         jumpe on Concatenate Demuxer
         """
-        if not self.data_files:
-            self.statusbar_msg(_('No files added yet'), MainFrame.YELLOW)
-        else:
-            self.topicname = 'Concatenate Demuxer'
-            self.on_Forward(self)
+        self.topicname = 'Concatenate Demuxer'
+        self.on_Forward(self)
+    # ------------------------------------------------------------------#
+
+    def on_to_slideshow(self, event):
+        """
+        jumpe on From Image to Video
+        """
+        self.topicname = 'Image Sequence to Video'
+        self.on_Forward(self)
+    # ------------------------------------------------------------------#
+
+    def on_to_images(self, event):
+        """
+        jumpe on Video to Image
+        """
+        self.topicname = 'Video to Pictures'
+        self.on_Forward(self)
     # ------------------------------------------------------------------#
 
     def logPan(self, event):
@@ -1469,7 +1504,9 @@ class MainFrame(wx.Frame):
 
         elif self.topicname in ('Audio/Video Conversions',
                                 'Presets Manager',
-                                'Concatenate Demuxer'):
+                                'Concatenate Demuxer',
+                                'Image Sequence to Video',
+                                'Video to Pictures'):
             self.switch_file_import(self, self.topicname)
 
         elif self.topicname == 'Youtube Downloader':
@@ -1482,11 +1519,9 @@ class MainFrame(wx.Frame):
         """
         if self.topicname in ('Audio/Video Conversions',
                               'Presets Manager',
-                              'Concatenate Demuxer',):
-            if not self.data_files:
-                wx.MessageBox(_('Drag at least one file'), "Videomass",
-                              wx.ICON_INFORMATION, self)
-                return
+                              'Concatenate Demuxer',
+                              'Image Sequence to Video',
+                              'Video to Pictures'):
 
             if self.topicname == 'Audio/Video Conversions':
                 self.switch_av_conversions(self)
@@ -1494,26 +1529,29 @@ class MainFrame(wx.Frame):
             elif self.topicname == 'Concatenate Demuxer':
                 self.switch_concat_demuxer(self)
 
-            else:
+            elif self.topicname == 'Presets Manager':
                 self.switch_presets_manager(self)
+
+            elif self.topicname == 'Image Sequence to Video':
+                self.switch_slideshow_maker(self)
+
+            elif self.topicname == 'Video to Pictures':
+                self.switch_video_to_pictures(self)
 
         elif self.topicname == 'Youtube Downloader':
             data = self.textDnDTarget.topic_Redirect()
-            if not data:
-                wx.MessageBox(_('Append at least one URL'), "Videomass",
-                              wx.ICON_INFORMATION, self)
-                return
 
-            for url in data:  # Check malformed url
-                res = urlparse(url)
-                if not res[1]:  # if empty netloc given from ParseResult
-                    wx.MessageBox(_('Invalid URL: "{}"').format(url),
-                                  "Videomass", wx.ICON_ERROR, self)
+            if data:
+                for url in data:  # Check malformed url
+                    res = urlparse(url)
+                    if not res[1]:  # if empty netloc given from ParseResult
+                        wx.MessageBox(_('Invalid URL: "{}"').format(url),
+                                      "Videomass", wx.ICON_ERROR, self)
+                        return
+                if len(set(data)) != len(data):  # equal URLS
+                    wx.MessageBox(_("ERROR: Multiple URL's are the "
+                                    "same"), "Videomass", wx.ICON_ERROR, self)
                     return
-            if len(set(data)) != len(data):  # equal URLS
-                wx.MessageBox(_("ERROR: Multiple URL's are the "
-                                "same"), "Videomass", wx.ICON_ERROR, self)
-                return
 
             self.switch_youtube_downloader(self, data)
     # ------------------------------------------------------------------#
@@ -1531,6 +1569,8 @@ class MainFrame(wx.Frame):
         self.PrstsPanel.Hide()
         self.TimeLine.Hide()
         self.ConcatDemuxer.Hide()
+        self.toPictures.Hide()
+        self.toSlideshow.Hide()
         self.fileDnDTarget.Show()
         if self.outpath_ffmpeg:
             self.fileDnDTarget.text_path_save.SetValue("")
@@ -1543,6 +1583,8 @@ class MainFrame(wx.Frame):
         self.startpan.Enable(True)
         self.viewtimeline.Enable(False)
         self.concpan.Enable(False)
+        self.toseq.Enable(False)
+        self.slides.Enable(False)
         self.toolbar.Show()
         self.logpan.Enable(False)
         self.toolbar.EnableTool(3, True)
@@ -1571,6 +1613,8 @@ class MainFrame(wx.Frame):
         self.PrstsPanel.Hide()
         self.TimeLine.Hide()
         self.ConcatDemuxer.Hide()
+        self.toPictures.Hide()
+        self.toSlideshow.Hide()
         self.textDnDTarget.Show()
         if self.outpath_ydl:
             self.textDnDTarget.text_path_save.SetValue("")
@@ -1583,6 +1627,8 @@ class MainFrame(wx.Frame):
         self.startpan.Enable(True)
         self.viewtimeline.Enable(False)
         self.concpan.Enable(False)
+        self.toseq.Enable(False)
+        self.slides.Enable(False)
         self.toolbar.Show()
         self.logpan.Enable(False)
         self.toolbar.EnableTool(3, True)
@@ -1604,19 +1650,26 @@ class MainFrame(wx.Frame):
         """
         Show youtube-dl downloader panel
         """
-        if not data == self.data_url:
+        if not data:####
+            self.ytDownloader.choice.Disable()####
+            self.ytDownloader.cmbx_vq.Disable()####
+            self.ytDownloader.rdbvideoformat.Disable()####
+            self.ytDownloader.ckbx_pl.Disable()####
+        elif not data == self.data_url:
             if self.data_url:
                 msg = (_('URL list changed, please check the settings '
                          'again.'), MainFrame.ORANGE, MainFrame.WHITE)
                 self.statusbar_msg(msg[0], msg[1], msg[2])
             self.data_url = data
+            self.ytDownloader.choice.Enable()  ####
+            self.ytDownloader.rdbvideoformat.Enable() ####
+            self.ytDownloader.ckbx_pl.Enable() ####
             self.ytDownloader.choice.SetSelection(0)
             self.ytDownloader.on_choicebox(self, statusmsg=False)
             del self.ytDownloader.info[:]
             self.ytDownloader.format_dict.clear()
             self.ytDownloader.ckbx_pl.SetValue(False)
             self.ytDownloader.on_playlist(self)
-
         else:
             self.statusbar_msg(_('Ready'), None)
 
@@ -1628,6 +1681,8 @@ class MainFrame(wx.Frame):
         self.PrstsPanel.Hide()
         self.TimeLine.Hide()
         self.ConcatDemuxer.Hide()
+        self.toPictures.Hide()
+        self.toSlideshow.Hide()
         self.ytDownloader.Show()
         self.toolbar.Show()
         self.menu_items()  # disable some menu items
@@ -1639,6 +1694,8 @@ class MainFrame(wx.Frame):
         self.viewtimeline.Enable(False)
         self.logpan.Enable(True)
         self.concpan.Enable(True)
+        self.toseq.Enable(True)
+        self.slides.Enable(True)
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, False)
         self.toolbar.EnableTool(5, False)
@@ -1660,6 +1717,8 @@ class MainFrame(wx.Frame):
         self.ytDownloader.Hide()
         self.PrstsPanel.Hide()
         self.ConcatDemuxer.Hide()
+        self.toPictures.Hide()
+        self.toSlideshow.Hide()
         self.VconvPanel.Show()
         filenames = [f['format']['filename'] for f in
                      self.data_files if f['format']['filename']
@@ -1697,6 +1756,8 @@ class MainFrame(wx.Frame):
         self.viewtimeline.Enable(True)
         self.logpan.Enable(True)
         self.concpan.Enable(True)
+        self.toseq.Enable(True)
+        self.slides.Enable(True)
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, False)
         self.toolbar.EnableTool(5, True)
@@ -1719,6 +1780,8 @@ class MainFrame(wx.Frame):
         self.ytDownloader.Hide()
         self.VconvPanel.Hide()
         self.ConcatDemuxer.Hide()
+        self.toPictures.Hide()
+        self.toSlideshow.Hide()
         self.PrstsPanel.Show()
         filenames = [f['format']['filename'] for f in
                      self.data_files if f['format']['filename']
@@ -1754,6 +1817,8 @@ class MainFrame(wx.Frame):
         self.viewtimeline.Enable(True)
         self.logpan.Enable(True)
         self.concpan.Enable(True)
+        self.toseq.Enable(True)
+        self.slides.Enable(True)
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, False)
         self.toolbar.EnableTool(5, True)
@@ -1777,6 +1842,8 @@ class MainFrame(wx.Frame):
         self.VconvPanel.Hide()
         self.PrstsPanel.Hide()
         self.ConcatDemuxer.Show()
+        self.toPictures.Hide()
+        self.toSlideshow.Hide()
         self.TimeLine.Hide()
 
         filenames = [f['format']['filename'] for f in
@@ -1812,6 +1879,8 @@ class MainFrame(wx.Frame):
         self.viewtimeline.Enable(False)
         self.logpan.Enable(True)
         self.concpan.Enable(False)
+        self.toseq.Enable(True)
+        self.slides.Enable(True)
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, False)
         self.toolbar.EnableTool(5, True)
@@ -1823,7 +1892,131 @@ class MainFrame(wx.Frame):
         self.Layout()
     # ------------------------------------------------------------------#
 
-    def switch_to_processing(self, *varargs):
+    def switch_video_to_pictures(self, event):
+        """
+        Show  Video to Pictures panel
+
+        """
+        self.outpath_ffmpeg = self.fileDnDTarget.file_dest
+        self.fileDnDTarget.Hide()
+        self.textDnDTarget.Hide()
+        self.ytDownloader.Hide()
+        self.VconvPanel.Hide()
+        self.PrstsPanel.Hide()
+        self.ConcatDemuxer.Hide()
+        self.toSlideshow.Hide()
+        self.toPictures.Show()
+
+        filenames = [f['format']['filename'] for f in
+                     self.data_files if f['format']['filename']
+                     ]
+        if not filenames == self.file_src:
+            if self.file_src:
+                msg = (_('File list changed, please check the settings '
+                         'again.'), MainFrame.ORANGE, MainFrame.WHITE)
+                self.statusbar_msg(msg[0], msg[1], msg[2])
+            self.file_src = filenames
+            self.duration = [f['format']['duration'] for f in
+                             self.data_files
+                             ]
+            if not self.duration:
+                self.TimeLine.set_values(self.duration)
+            elif max(self.duration) < 100:  # if .jpeg
+                self.TimeLine.set_values([])
+            else:  # max val from list
+                self.TimeLine.set_values(max(self.duration))
+
+            self.VconvPanel.normalize_default()
+        else:
+            self.statusbar_msg(_('Ready'), None)
+
+        self.SetTitle(_('Videomass - From Video to Pictures'))
+        self.view_Timeline(self)  # set timeline status
+        self.toolbar.Show()
+        self.openmedia.Enable(True)
+        self.avpan.Enable(True)
+        self.prstpan.Enable(True)
+        self.ydlpan.Enable(True)
+        self.startpan.Enable(True)
+        self.viewtimeline.Enable(True)
+        self.logpan.Enable(True)
+        self.concpan.Enable(True)
+        self.toseq.Enable(False)
+        self.slides.Enable(True)
+        self.toolbar.EnableTool(3, True)
+        self.toolbar.EnableTool(4, False)
+        self.toolbar.EnableTool(5, True)
+        self.toolbar.EnableTool(14, False)
+        self.toolbar.EnableTool(6, True)
+        self.toolbar.EnableTool(8, False)
+        self.toolbar.EnableTool(12, True)
+        self.toolbar.EnableTool(13, False)
+        self.Layout()
+    # ------------------------------------------------------------------#
+
+    def switch_slideshow_maker(self, event):
+        """
+        Show slideshow maker panel
+
+        """
+        self.outpath_ffmpeg = self.fileDnDTarget.file_dest
+        self.fileDnDTarget.Hide()
+        self.textDnDTarget.Hide()
+        self.ytDownloader.Hide()
+        self.VconvPanel.Hide()
+        self.PrstsPanel.Hide()
+        self.ConcatDemuxer.Hide()
+        self.toPictures.Hide()
+        self.toSlideshow.Show()
+
+        filenames = [f['format']['filename'] for f in
+                     self.data_files if f['format']['filename']
+                     ]
+        if not filenames == self.file_src:
+            if self.file_src:
+                msg = (_('File list changed, please check the settings '
+                         'again.'), MainFrame.ORANGE, MainFrame.WHITE)
+                self.statusbar_msg(msg[0], msg[1], msg[2])
+            self.file_src = filenames
+            self.duration = [f['format']['duration'] for f in
+                             self.data_files
+                             ]
+            if not self.duration:
+                self.TimeLine.set_values(self.duration)
+            elif max(self.duration) < 100:  # if .jpeg
+                self.TimeLine.set_values([])
+            else:  # max val from list
+                self.TimeLine.set_values(max(self.duration))
+
+            self.VconvPanel.normalize_default()
+        else:
+            self.statusbar_msg(_('Ready'), None)
+
+        self.SetTitle(_('Videomass - From Image Sequence to Video'))
+        self.view_Timeline(self)  # set timeline status
+        self.toolbar.Show()
+        self.openmedia.Enable(True)
+        self.avpan.Enable(True)
+        self.prstpan.Enable(True)
+        self.ydlpan.Enable(True)
+        self.startpan.Enable(True)
+        self.viewtimeline.Enable(True)
+        self.logpan.Enable(True)
+        self.concpan.Enable(True)
+        self.toseq.Enable(True)
+        self.slides.Enable(False)
+        self.toolbar.EnableTool(3, True)
+        self.toolbar.EnableTool(4, False)
+        self.toolbar.EnableTool(5, True)
+        self.toolbar.EnableTool(14, False)
+        self.toolbar.EnableTool(6, True)
+        self.toolbar.EnableTool(8, False)
+        self.toolbar.EnableTool(12, True)
+        self.toolbar.EnableTool(13, False)
+        self.Layout()
+    # ------------------------------------------------------------------#
+
+    def switch_to_processing(self, *varargs, skiptimeline=False):
         """
     1) TIME DEFINITION FOR THE PROGRESS BAR
         For a suitable and efficient progress bar, if a specific
@@ -1843,15 +2036,19 @@ class MainFrame(wx.Frame):
             time_seq = self.time_seq
 
         elif self.time_seq != "-ss 00:00:00.000 -t 00:00:00.000":
-            ms = get_milliseconds(self.time_seq.split()[3])  # -t duration
-            time_seq = self.time_seq
-            if [t for t in self.duration if ms > t]:  # if out time range
-                wx.MessageBox(_('Cannot continue: The duration in the '
-                                'timeline exceeds the duration of some queued '
-                                'files.'), 'Videomass', wx.ICON_ERROR, self)
-                return
-            duration = [ms for n in self.duration]
-            self.statusbar_msg(_('Processing...'), None)
+            if skiptimeline is True:
+                duration, time_seq = None, None
+            else:
+                ms = get_milliseconds(self.time_seq.split()[3])  # -t duration
+                time_seq = self.time_seq
+                if [t for t in self.duration if ms > t]:  # if out time range
+                    wx.MessageBox(_('Cannot continue: The duration in the '
+                                    'timeline exceeds the duration of some '
+                                    'queued files.'),
+                                  'Videomass', wx.ICON_ERROR, self)
+                    return
+                duration = [ms for n in self.duration]
+                self.statusbar_msg(_('Processing...'), None)
 
         else:
             duration = self.duration
@@ -1867,6 +2064,8 @@ class MainFrame(wx.Frame):
         self.PrstsPanel.Hide()
         self.TimeLine.Hide()
         self.ConcatDemuxer.Hide()
+        self.toPictures.Hide()
+        self.toSlideshow.Hide()
         # Show the panel:
         self.ProcessPanel.Show()
         # self.SetTitle('Videomass')
@@ -1890,25 +2089,47 @@ class MainFrame(wx.Frame):
         which calls the 'switch_to_processing' method above.
         """
         if self.ytDownloader.IsShown():
+            wx.MessageBox(_('Append at least one URL'), "Videomass",
+                          wx.ICON_INFORMATION, self)
+            return
             self.ytDownloader.on_start()
 
-        elif self.VconvPanel.IsShown():
-            self.file_src = [f['format']['filename'] for f in
-                             self.data_files if f['format']['filename']
-                             ]
-            self.VconvPanel.on_start()
+        else:
+            if not self.data_files:
+                wx.MessageBox(_('No files added yet'), "Videomass",
+                              wx.ICON_INFORMATION, self)
+                return
 
-        elif self.PrstsPanel.IsShown():
-            self.file_src = [f['format']['filename'] for f in
-                             self.data_files if f['format']['filename']
-                             ]
-            self.PrstsPanel.on_start()
+            if self.VconvPanel.IsShown():
+                self.file_src = [f['format']['filename'] for f in
+                                 self.data_files if f['format']['filename']
+                                 ]
+                self.VconvPanel.on_start()
 
-        elif self.ConcatDemuxer.IsShown():
-            self.file_src = [f['format']['filename'] for f in
-                             self.data_files if f['format']['filename']
-                             ]
-            self.ConcatDemuxer.on_start()
+            elif self.PrstsPanel.IsShown():
+                self.file_src = [f['format']['filename'] for f in
+                                 self.data_files if f['format']['filename']
+                                 ]
+                self.PrstsPanel.on_start()
+
+            elif self.ConcatDemuxer.IsShown():
+                self.file_src = [f['format']['filename'] for f in
+                                 self.data_files if f['format']['filename']
+                                 ]
+                self.ConcatDemuxer.on_start()
+
+            elif self.toPictures.IsShown():
+                self.file_src = [f['format']['filename'] for f in
+                                 self.data_files if f['format']['filename']
+                                 ]
+                self.toPictures.on_start()
+
+            elif self.toSlideshow.IsShown():
+                self.file_src = [f['format']['filename'] for f in
+                                 self.data_files if f['format']['filename']
+                                 ]
+                self.toSlideshow.on_start()
+
     # ------------------------------------------------------------------#
 
     def panelShown(self, panelshown):
@@ -1932,6 +2153,14 @@ class MainFrame(wx.Frame):
         elif panelshown == 'Concatenate Demuxer':
             self.ProcessPanel.Hide()
             self.switch_concat_demuxer(self)
+
+        elif panelshown == 'Video to Pictures':
+            self.ProcessPanel.Hide()
+            self.switch_video_to_pictures(self)
+
+        elif panelshown == 'Image Sequence to Video':
+            self.ProcessPanel.Hide()
+            self.switch_slideshow_maker(self)
 
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(3, 5)]

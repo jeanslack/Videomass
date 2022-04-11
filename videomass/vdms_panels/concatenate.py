@@ -70,8 +70,9 @@ def compare_media_param(data):
 
 class Conc_Demuxer(wx.Panel):
     """
-    A simple concat demuxer UI to set media files concatenation using
-    concat demuxer, see <https://ffmpeg.org/ffmpeg-formats.html#concat>
+    A simple concat demuxer UI to set media files
+    concatenation using concat demuxer,
+    see <https://ffmpeg.org/ffmpeg-formats.html#concat>
 
     """
     MSG_1 = _("NOTE:\n\n- The concatenation function is performed only with "
@@ -91,10 +92,7 @@ class Conc_Demuxer(wx.Panel):
 
     def __init__(self, parent):
         """
-        self.Command attribute is an empty string when radiobox is
-        set to 0 - 1 Selections, otherwise a '-vn' parameter is
-        added.
-        .
+        This is a panel impemented on MainFrame
         """
         get = wx.GetApp()
         appdata = get.appset
@@ -162,8 +160,8 @@ class Conc_Demuxer(wx.Panel):
                                       )
         siz_pict.Add(self.lbl_pict, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.lbl_pict.Disable()
-        self.spin_pict = wx.SpinCtrl(self, wx.ID_ANY, "1", min=1,
-                                     max=100, size=(-1, -1),
+        self.spin_pict = wx.SpinCtrl(self, wx.ID_ANY, "0", min=1,
+                                     max=10, size=(-1, -1),
                                      style=wx.TE_PROCESS_ENTER
                                      )
         siz_pict.Add(self.spin_pict, 0, wx.ALL, 5)
@@ -184,16 +182,16 @@ class Conc_Demuxer(wx.Panel):
         self.SetSizer(sizer)
 
         if appdata['ostype'] == 'Darwin':
-            self.lbl_msg1.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
+            self.lbl_msg1.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.BOLD))
             self.lbl_msg2.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             self.lbl_msg3.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
-            self.lbl_msg1.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))
+            self.lbl_msg1.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
             self.lbl_msg2.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             self.lbl_msg3.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
-        tip = (_('Sets the duration between one image and another in '
-                 'seconds (from 1 to 100 sec.), default is 1 second'))
+        tip = (_('Set the time interval between images in seconds '
+                 '(from 1 to 100 sec.), default is 1 second'))
         self.spin_pict.SetToolTip(tip)
 
         self.Bind(wx.EVT_CHECKBOX, self.on_pictures, self.ckbx_pict)
@@ -222,7 +220,7 @@ class Conc_Demuxer(wx.Panel):
 
         """
         fsource = self.parent.file_src
-        fname = os.path.splitext(os.path.basename(fsource[0]))[0]
+        basename = os.path.basename(fsource[0].rsplit('.')[0])
         ftext = os.path.join(self.cachedir, 'tmp', 'flist.txt')
 
         if len(fsource) < 2:
@@ -258,8 +256,8 @@ class Conc_Demuxer(wx.Panel):
                 textstr.append(f"file '{escaped}'\nduration {duration}")
             textstr.append(f"file '{self.parent.file_src[-1]}'")
             self.args = (f'"{ftext}" -vsync vfr -pix_fmt yuv420p '
-                         f'-map 0:v? -map_chapters 0 -map 0:s? '
-                         f'-map 0:a? -map_metadata 0'
+                         f'-profile:v baseline -map 0:v? -map_chapters 0 '
+                         '-map 0:s? -map 0:a? -map_metadata 0'
                          )
         with open(ftext, 'w', encoding='utf8') as txt:
             txt.write('\n'.join(textstr))
@@ -274,7 +272,7 @@ class Conc_Demuxer(wx.Panel):
             return
 
         destin = checking[1]
-        newfile = f'{fname}{self.parent.suffix}.{ext}'
+        newfile = f'{basename}{self.parent.suffix}.{ext}'
 
         self.concat_demuxer(self.parent.file_src, newfile,
                             destin[0], ext)
@@ -282,7 +280,7 @@ class Conc_Demuxer(wx.Panel):
 
     def concat_demuxer(self, filesrc, newfile, destdir, outext):
         """
-        Parameters redirection
+        Redirect to processing
 
         """
         logname = 'concatenate_demuxer.log'

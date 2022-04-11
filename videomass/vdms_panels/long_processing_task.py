@@ -41,9 +41,8 @@ from videomass.vdms_threads.two_pass_ebu import Loudnorm
 from videomass.vdms_threads.picture_exporting import PicturesFromVideo
 from videomass.vdms_threads.video_stabilization import VidStab
 from videomass.vdms_threads.concat_demuxer import ConcatDemuxer
-from videomass.vdms_utils.utils import (get_milliseconds,
-                                        milliseconds2timeformat
-                                        )
+from videomass.vdms_threads.slideshow import SlideshowMaker
+from videomass.vdms_utils.utils import (get_milliseconds, milliseconds2clock)
 
 
 def delete_file_source(flist, path):
@@ -179,7 +178,7 @@ class LogOut(wx.Panel):
         """
         Thread redirection
         varargs: type tuple data object
-        duration: total duration or partial if set time_seq
+        duration: total duration or partial if time_seq is set
         """
         self.previus = panel  # stores the panel from which it starts
 
@@ -205,11 +204,14 @@ class LogOut(wx.Panel):
             self.thread_type = Loudnorm(varargs, duration,
                                         self.logname, time_seq
                                         )
-        elif varargs[0] == 'savepictures':
+        elif varargs[0] == 'video_to_sequence':
             self.time_remaining = False
             self.thread_type = PicturesFromVideo(varargs, duration,
                                                  self.logname, time_seq
                                                  )
+        elif varargs[0] == 'sequence_to_video':
+            self.thread_type = SlideshowMaker(varargs, self.logname)
+
         elif varargs[0] == 'libvidstab':  # from Audio/Video Conv.
             self.thread_type = VidStab(varargs, duration,
                                        self.logname, time_seq
@@ -322,8 +324,18 @@ class LogOut(wx.Panel):
                 ffprog.append(f"{x}: {y} | ")
 
             if self.time_remaining is True:
-                remaining = milliseconds2timeformat(duration - ms)
-                eta = f"ETA: {remaining} |"
+                if 'speed=' in output:
+                    try:
+                        s = output.split()[-1].strip()
+                        speed = s.split('=')[1].split('x')[0]
+                        rem = (duration - ms) / float(speed)
+                        remaining = milliseconds2clock(round(rem))
+                        eta = f"ETA: {remaining} |"
+
+                    except IndexError:
+                        eta = f"ETA: N/A |"
+                else:
+                    eta = ""
             else:
                 eta = ""
             self.labperc.SetLabel(f"Processing... {str(int(percentage))}% | "
@@ -370,7 +382,7 @@ class LogOut(wx.Panel):
                     if 'Processing...' in ele:
                         newlab[idx] = 'Processing... 100%'
                     if ' time:' in ele:
-                        timefrm = milliseconds2timeformat(duration)
+                        timefrm = milliseconds2clock(duration)
                         newlab[idx] = (f' time: {str(timefrm)}')
                     if ' ETA:' in ele:
                         newlab[idx] = ' ETA: 00:00:00.000'

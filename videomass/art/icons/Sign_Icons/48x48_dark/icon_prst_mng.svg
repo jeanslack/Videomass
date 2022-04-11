@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -14,7 +12,7 @@
    viewBox="0 0 12.7 12.7"
    version="1.1"
    id="svg883"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
    sodipodi:docname="icon_prst_mng.svg">
   <defs
      id="defs877" />
@@ -26,17 +24,18 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="15.839192"
-     inkscape:cx="-2.9842326"
+     inkscape:cx="18.270383"
      inkscape:cy="22.639357"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:window-width="1920"
-     inkscape:window-height="1015"
+     inkscape:window-height="1007"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     units="px">
+     units="px"
+     inkscape:document-rotation="0">
     <inkscape:grid
        type="xygrid"
        id="grid1431" />
@@ -49,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -58,6 +57,15 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-284.3)">
+    <rect
+       style="display:inline;opacity:0.989;fill:#c64600;fill-opacity:1;stroke:#eff0f1;stroke-width:0.205;stroke-miterlimit:17.60000038;stroke-opacity:1;enable-background:new;stroke-dasharray:none"
+       id="rect876"
+       width="11.90625"
+       height="11.90625"
+       x="0.39687499"
+       y="284.69687"
+       rx="0.14234133"
+       ry="0.14234133" />
     <path
        style="display:inline;opacity:1;fill:#eff0f1;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.18714233;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
        d="m 11.25905,285.69276 -0.482686,0.7106 1.080354,0.73386 0.482687,-0.7106 z m -0.675765,0.99483 -2.9926564,4.40568 -0.2029832,0.8799 -0.2029857,0.87991 0.7431607,-0.51298 0.7431624,-0.51297 2.9926602,-4.40568 z"

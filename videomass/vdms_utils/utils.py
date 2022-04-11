@@ -147,7 +147,7 @@ def timehuman(seconds):
 
 def get_milliseconds(timeformat):
     """
-    Convert time format to milliseconds (duration).
+    Convert 24-hour clock unit to milliseconds (duration).
     Accepts different forms of time unit string, e.g.
 
         '30.5', '00:00:00', '0:00:00', '0:0:0',
@@ -172,12 +172,14 @@ def get_milliseconds(timeformat):
 # ------------------------------------------------------------------------
 
 
-def milliseconds2timeformat(milliseconds):
+def milliseconds2clock(milliseconds):
     """
-    Converts milliseconds (duration) to time units in sexagesimal
-    format (e.g. HOURS:MM:SS.MILLISECONDS, as in 00:00:00.000).
-    Accept an int object, such as 2000 or float, such as 2000.999.
-    Returns a string object in time format.
+    Converts milliseconds to 24-hour clock format + milliseconds,
+    calculating in sexagesimal format.
+    Accept an `int` object, such as 2998. Float numbers, such
+    as 2000.999, must be rounded using `round()` function.
+    Returns a string object of time units e.g. HOURS:MM:SS.MILLIS,
+    as in 00:00:00.000 .
 
     """
     minutes, sec = divmod(milliseconds, 60000)
@@ -185,6 +187,25 @@ def milliseconds2timeformat(milliseconds):
     seconds = float(sec) / 1000
     # return "%02d:%02d:%06.3f" % (hours, minutes, seconds)
     return f"{hours:02}:{minutes:02}:{seconds:06.3f}"
+# ------------------------------------------------------------------------
+
+
+def milliseconds2clocksec(milliseconds, rounds=False):
+    """
+    Like milliseconds2clock but differs in the returned object
+    which does not have milliseconds. Furthermore you can pass
+    `rounds=True` arg to add the millisec offset to the seconds.
+    Returns a string object in 24-hour clock of time units
+    e.g. HOURS:MM:SS, as in 00:00:00 .
+
+    """
+    minutes, sec = divmod(milliseconds, 60000)
+    hours, minutes = divmod(minutes, 60)
+    if rounds is True:
+        seconds = round(float(sec / 1000))
+    else:
+        seconds = int(sec / 1000)
+    return f"{hours:02}:{minutes:02}:{seconds:02}"
 # ------------------------------------------------------------------------
 
 
@@ -290,6 +311,44 @@ def del_filecontents(filename):
             fname.seek(0)  # it places the file pointer to position 0
             fname.write("")
             fname.truncate()  # truncates the file to the current file point.
+# ------------------------------------------------------------------#
+
+
+def make_newdir_with_id(destdir, name):
+    """
+    Makes a new directory with the same name as `name`
+    but adds a progressive numeric ID to the name, i.e:
+
+        'MyNewDir_1', MyNewDir_33, ecc.
+
+    The `name` can end with '_N' where 'N' must be a digit.
+    If not, it will add '_N'.
+
+    destdir (str): output destination
+    name (str): Any valid name OS sanitized
+
+    Returns (str): the new dirname with ID.
+
+    """
+    # check for digits, if not add digit
+    lastwo = [x for x in name][-2:]  # last two items
+    if not lastwo[1].isdigit():
+        name += '1' if lastwo[0] == '_' else '_1'
+
+    newdir = os.path.join(destdir, name)
+    if os.path.exists(newdir):  # id increment
+        listdir = []
+        for ddir in os.listdir(destdir):
+            if f"{name.rsplit('_', 1)[0]}_" in ddir:
+                listdir.append(int(ddir.rsplit('_', 1)[1]))
+        prog = max(listdir) + 1
+        splitnum = name.rsplit('_', 1)[0]
+        newdir = os.path.join(destdir, f'{splitnum}_{prog}')
+        os.makedirs(newdir, mode=0o777)
+    else:
+        os.makedirs(newdir, mode=0o777)
+
+    return os.path.join(destdir, newdir)
 # ------------------------------------------------------------------#
 
 

@@ -381,7 +381,7 @@ class Downloader(wx.Panel):
         self.Layout()
         # ----------------------- Properties
         # WARNING do not append text on self.cod_text here,
-        # see `on_choicebox meth.`
+        # see `on_choicebox` method.
 
         self.cod_text.SetBackgroundColour(Downloader.BACKGRD)
 
@@ -696,6 +696,8 @@ class Downloader(wx.Panel):
         main frame when the 'Show More' button is pressed.
 
         """
+        if not self.parent.data_url:
+            return
         if not self.info:
             for link in self.parent.data_url:
                 ret = self.get_statistics(link)
@@ -1021,6 +1023,9 @@ class Downloader(wx.Panel):
         Builds command string to use with an embed youtube_dl as
         python library or using standard youtube-dl command line.
         """
+        if not self.parent.data_url:
+            return
+
         urls = self.parent.data_url
 
         if not self.ckbx_pl.IsChecked():
