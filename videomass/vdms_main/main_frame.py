@@ -1650,20 +1650,20 @@ class MainFrame(wx.Frame):
         """
         Show youtube-dl downloader panel
         """
-        if not data:####
-            self.ytDownloader.choice.Disable()####
-            self.ytDownloader.cmbx_vq.Disable()####
-            self.ytDownloader.rdbvideoformat.Disable()####
-            self.ytDownloader.ckbx_pl.Disable()####
+        if not data:
+            self.ytDownloader.choice.Disable()
+            self.ytDownloader.cmbx_vq.Disable()
+            self.ytDownloader.rdbvideoformat.Disable()
+            self.ytDownloader.ckbx_pl.Disable()
         elif not data == self.data_url:
             if self.data_url:
                 msg = (_('URL list changed, please check the settings '
                          'again.'), MainFrame.ORANGE, MainFrame.WHITE)
                 self.statusbar_msg(msg[0], msg[1], msg[2])
             self.data_url = data
-            self.ytDownloader.choice.Enable()  ####
-            self.ytDownloader.rdbvideoformat.Enable() ####
-            self.ytDownloader.ckbx_pl.Enable() ####
+            self.ytDownloader.choice.Enable()
+            self.ytDownloader.rdbvideoformat.Enable()
+            self.ytDownloader.ckbx_pl.Enable()
             self.ytDownloader.choice.SetSelection(0)
             self.ytDownloader.on_choicebox(self, statusmsg=False)
             del self.ytDownloader.info[:]
@@ -2089,46 +2089,48 @@ class MainFrame(wx.Frame):
         which calls the 'switch_to_processing' method above.
         """
         if self.ytDownloader.IsShown():
-            wx.MessageBox(_('Append at least one URL'), "Videomass",
-                          wx.ICON_INFORMATION, self)
-            return
-            self.ytDownloader.on_start()
-
-        else:
-            if not self.data_files:
-                wx.MessageBox(_('No files added yet'), "Videomass",
+            if not self.data_url:
+                wx.MessageBox(_('Append at least one URL'), "Videomass",
                               wx.ICON_INFORMATION, self)
                 return
 
-            if self.VconvPanel.IsShown():
-                self.file_src = [f['format']['filename'] for f in
-                                 self.data_files if f['format']['filename']
-                                 ]
-                self.VconvPanel.on_start()
+            self.ytDownloader.on_start()
+            return
 
-            elif self.PrstsPanel.IsShown():
-                self.file_src = [f['format']['filename'] for f in
-                                 self.data_files if f['format']['filename']
-                                 ]
-                self.PrstsPanel.on_start()
+        if not self.data_files:
+            wx.MessageBox(_('No files added yet'), "Videomass",
+                          wx.ICON_INFORMATION, self)
+            return
 
-            elif self.ConcatDemuxer.IsShown():
-                self.file_src = [f['format']['filename'] for f in
-                                 self.data_files if f['format']['filename']
-                                 ]
-                self.ConcatDemuxer.on_start()
+        if self.VconvPanel.IsShown():
+            self.file_src = [f['format']['filename'] for f in
+                             self.data_files if f['format']['filename']
+                             ]
+            self.VconvPanel.on_start()
 
-            elif self.toPictures.IsShown():
-                self.file_src = [f['format']['filename'] for f in
-                                 self.data_files if f['format']['filename']
-                                 ]
-                self.toPictures.on_start()
+        elif self.PrstsPanel.IsShown():
+            self.file_src = [f['format']['filename'] for f in
+                             self.data_files if f['format']['filename']
+                             ]
+            self.PrstsPanel.on_start()
 
-            elif self.toSlideshow.IsShown():
-                self.file_src = [f['format']['filename'] for f in
-                                 self.data_files if f['format']['filename']
-                                 ]
-                self.toSlideshow.on_start()
+        elif self.ConcatDemuxer.IsShown():
+            self.file_src = [f['format']['filename'] for f in
+                             self.data_files if f['format']['filename']
+                             ]
+            self.ConcatDemuxer.on_start()
+
+        elif self.toPictures.IsShown():
+            self.file_src = [f['format']['filename'] for f in
+                             self.data_files if f['format']['filename']
+                             ]
+            self.toPictures.on_start()
+
+        elif self.toSlideshow.IsShown():
+            self.file_src = [f['format']['filename'] for f in
+                             self.data_files if f['format']['filename']
+                             ]
+            self.toSlideshow.on_start()
 
     # ------------------------------------------------------------------#
 

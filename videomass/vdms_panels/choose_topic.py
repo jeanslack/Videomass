@@ -105,11 +105,13 @@ class Choose_Topic(wx.Panel):
                                  size=(300, -1), style=style)
         self.youtube.SetBitmap(bmpYdl, wx.LEFT)
 
-        self.slideshow = wx.Button(self, wx.ID_ANY, _('Image Sequence to Video'),
+        self.slideshow = wx.Button(self, wx.ID_ANY,
+                                   _('Image Sequence to Video'),
                                    size=(300, -1), style=style)
         self.slideshow.SetBitmap(bmpSlideshow, wx.LEFT)
 
-        self.videotoimages = wx.Button(self, wx.ID_ANY, _('Video to Image Sequence'),
+        self.videotoimages = wx.Button(self, wx.ID_ANY,
+                                       _('Video to Image Sequence'),
                                        size=(300, -1), style=style)
         self.videotoimages.SetBitmap(bmpTopictures, wx.LEFT)
 
@@ -230,10 +232,9 @@ class Choose_Topic(wx.Panel):
         if self.appdata['PYLIBYDL'] is None:
             self.parent.switch_text_import(self, 'Youtube Downloader')
             return
-        else:
-            wx.MessageBox(_("ERROR: {0}\n\n{1} is not installed, "
-                            "use your package manager to install it."
-                            ).format(self.appdata['PYLIBYDL'],
-                                     self.appdata['downloader']),
-                          "Videomass", wx.ICON_ERROR, self)
-            return
+
+        wx.MessageBox(_("ERROR: {0}\n\n{1} is not installed, use your "
+                        "package manager to install it.").format(
+                      self.appdata['PYLIBYDL'], self.appdata['downloader']),
+                      "Videomass", wx.ICON_ERROR, self)
+        return

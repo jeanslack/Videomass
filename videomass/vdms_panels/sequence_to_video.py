@@ -228,7 +228,7 @@ class SequenceToVideo(wx.Panel):
         siz_addparams.Add(self.ckbx_edit, 0, wx.ALL, 5)
         self.txt_addparams = wx.TextCtrl(self, wx.ID_ANY,
                                          value=('-c:v libx264 -crf 23 '
-                                               '-tune:v stillimage'),
+                                                '-tune:v stillimage'),
                                          size=(-1, -1),)
         siz_addparams.Add(self.txt_addparams, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_addparams.Disable()
@@ -437,7 +437,6 @@ class SequenceToVideo(wx.Panel):
         """
         if self.ckbx_audio.IsChecked():
             if self.opt["Shortest"][0]:
-                #timeline = self.parent.time_seq.split()[3]
                 duration = getms(timeline) * len(self.parent.file_src)
                 self.opt["Clock"] = clockms(duration)
                 sec = round(getsec(timeline))
@@ -448,7 +447,6 @@ class SequenceToVideo(wx.Panel):
                 duration = self.opt["ADuration"]
                 framerate = '1/1' if not sec else f'1/{sec}'
         else:
-            #timeline = self.parent.time_seq.split()[3]
             duration = getms(timeline) * len(self.parent.file_src)
             self.opt["Clock"] = clockms(duration)
             sec = round(getsec(timeline))
@@ -477,7 +475,6 @@ class SequenceToVideo(wx.Panel):
         """
         if self.ckbx_audio.IsChecked():
             if self.opt["Shortest"][0]:
-                #timeline = self.parent.time_seq.split()[3]
                 duration = getms(timeline)
                 self.opt["Clock"] = timeline
                 sec = round(getsec(timeline))
@@ -488,7 +485,6 @@ class SequenceToVideo(wx.Panel):
                 sec = round(self.opt["ADuration"] / 1000)
                 framerate = '1'
         else:
-            #timeline = self.parent.time_seq.split()[3]
             duration = getms(timeline)
             self.opt["Clock"] = timeline
             sec = round(duration / 1000)
@@ -646,7 +642,7 @@ class SequenceToVideo(wx.Panel):
         """
         time = self.opt["Clock"]
         resize = _('Enabled') if self.opt["RESIZE"] else _('Disabled')
-        short =  _(self.opt["Shortest"][1])
+        short = _(self.opt["Shortest"][1])
         frate = self.opt["Framerate"].split()[1]
         duration = self.opt["Interval"]
         if self.ckbx_edit.IsChecked():

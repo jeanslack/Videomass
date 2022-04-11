@@ -95,9 +95,9 @@ class Videomass(wx.App):
         self.iconset = self.data.icons_set(self.appset['icontheme'][0])
 
         # locale
-        #wx.Locale.AddCatalogLookupPathPrefix(self.appset['localepath'])
-        #self.update_language()
-        #self.appset['GETLANG'] = self.locale.GetName()
+        wx.Locale.AddCatalogLookupPathPrefix(self.appset['localepath'])
+        self.update_language()
+        self.appset['GETLANG'] = self.locale.GetName()
 
         ckydl = self.check_youtube_dl()
         ckffmpeg = self.check_ffmpeg()

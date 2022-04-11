@@ -333,7 +333,7 @@ class LogOut(wx.Panel):
                         eta = f"ETA: {remaining} |"
 
                     except IndexError:
-                        eta = f"ETA: N/A |"
+                        eta = "ETA: N/A |"
                 else:
                     eta = ""
             else:
