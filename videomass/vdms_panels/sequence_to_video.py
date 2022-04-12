@@ -159,15 +159,18 @@ class SequenceToVideo(wx.Panel):
                               name=wx.StaticLineNameStr
                               )
         sizer.Add(line1, 0, wx.ALL | wx.EXPAND, 5)
-        sizFormat = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizFormat)
         sizer.Add((20, 20))
+        boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
+        sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)
+        sizFormat = wx.BoxSizer(wx.HORIZONTAL)
+        boxctrl.Add(sizFormat)
+
         self.ckbx_static_img = wx.CheckBox(self, wx.ID_ANY,
                                            _('Create a static video '
                                              'from the selected image'))
-        sizer.Add(self.ckbx_static_img, 0, wx.ALL | wx.EXPAND, 5)
+        boxctrl.Add(self.ckbx_static_img, 0, wx.ALL | wx.EXPAND, 5)
         siz_pict = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(siz_pict)
+        boxctrl.Add(siz_pict)
         lbl_fps = wx.StaticText(self, wx.ID_ANY, label="FPS:")
         siz_pict.Add(lbl_fps, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_fps = wx.ComboBox(self, wx.ID_ANY,
@@ -196,7 +199,7 @@ class SequenceToVideo(wx.Panel):
         self.btn_resize.SetBitmap(bmpresize, wx.LEFT)
         siz_pict.Add(self.btn_resize, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         siz_audio = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(siz_audio)
+        boxctrl.Add(siz_audio)
         self.ckbx_audio = wx.CheckBox(self, wx.ID_ANY, _('Include audio file'))
         siz_audio.Add(self.ckbx_audio, 0, wx.ALL | wx.EXPAND, 5)
         self.ckbx_shortest = wx.CheckBox(self, wx.ID_ANY,
@@ -205,7 +208,7 @@ class SequenceToVideo(wx.Panel):
         siz_audio.Add(self.ckbx_shortest, 0, wx.ALL | wx.EXPAND, 5)
         self.ckbx_shortest.Disable()
         siz_afile = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(siz_afile)
+        boxctrl.Add(siz_afile)
         self.btn_openaudio = wx.Button(self, wx.ID_ANY, _("Open audio file"),
                                        size=(-1, -1)
                                        )
@@ -221,7 +224,7 @@ class SequenceToVideo(wx.Panel):
         self.txt_apath.Disable()
 
         siz_addparams = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(siz_addparams, 0, wx.EXPAND, 0)
+        boxctrl.Add(siz_addparams, 0, wx.EXPAND, 0)
 
         self.ckbx_edit = wx.CheckBox(self, wx.ID_ANY,
                                      _('Additional arguments'))
