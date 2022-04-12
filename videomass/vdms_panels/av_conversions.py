@@ -1092,8 +1092,11 @@ class AV_Conv(wx.Panel):
         else:
             self.opt["Passing"] = "1 pass"
             if self.opt["VideoCodec"] in ["-c:v libx264", "-c:v libx265"]:
+                if self.slider_CRF.GetValue() == -1:
+                    self.spin_Vbrate.Enable()
+                else:
+                    self.spin_Vbrate.Disable()
                 self.slider_CRF.Enable()
-                self.spin_Vbrate.Disable()
 
             elif self.opt["VideoCodec"] in ["-c:v libvpx", "-c:v libvpx-vp9"]:
                 self.slider_CRF.Enable()

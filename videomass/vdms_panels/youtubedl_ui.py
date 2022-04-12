@@ -696,8 +696,6 @@ class Downloader(wx.Panel):
         main frame when the 'Show More' button is pressed.
 
         """
-        if not self.parent.data_url:
-            return
         if not self.info:
             for link in self.parent.data_url:
                 ret = self.get_statistics(link)
@@ -1023,9 +1021,6 @@ class Downloader(wx.Panel):
         Builds command string to use with an embed youtube_dl as
         python library or using standard youtube-dl command line.
         """
-        if not self.parent.data_url:
-            return
-
         urls = self.parent.data_url
 
         if not self.ckbx_pl.IsChecked():

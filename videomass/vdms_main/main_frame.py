@@ -307,11 +307,11 @@ class MainFrame(wx.Frame):
         Redirect input files at stream_info for media information
         """
         if self.topicname == 'Youtube Downloader':
+            if not self.data_url:
+                return
             self.ytDownloader.on_show_statistics()
 
         elif not self.data_files:
-            wx.MessageBox(_('No files added yet'),
-                          "Videomass", wx.ICON_INFORMATION, self)
             return
 
         else:
@@ -527,6 +527,7 @@ class MainFrame(wx.Frame):
         dscrp = (_("YouTube downloader\tShift+Y"),
                  _("jump to the YouTube Downloader panel"))
         self.ydlpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+
         goButton.AppendSeparator()
         dscrp = (_("Output Monitor\tShift+O"),
                  _("Keeps track of the output for debugging errors"))
@@ -1114,8 +1115,10 @@ class MainFrame(wx.Frame):
 
     def ydlPan(self, event):
         """
-        jumpe on youtube downloader
+        jump on youtube downloader
         """
+        if self.ChooseTopic.on_YoutubeDL(self) is True:
+            return
         self.topicname = 'Youtube Downloader'
         self.on_Forward(self)
     # ------------------------------------------------------------------#
@@ -1545,12 +1548,12 @@ class MainFrame(wx.Frame):
                 for url in data:  # Check malformed url
                     res = urlparse(url)
                     if not res[1]:  # if empty netloc given from ParseResult
-                        wx.MessageBox(_('Invalid URL: "{}"').format(url),
-                                      "Videomass", wx.ICON_ERROR, self)
+                        wx.MessageBox(_('ERROR: Invalid URL: "{}"').format(
+                                      url), "Videomass", wx.ICON_ERROR, self)
                         return
                 if len(set(data)) != len(data):  # equal URLS
-                    wx.MessageBox(_("ERROR: Multiple URL's are the "
-                                    "same"), "Videomass", wx.ICON_ERROR, self)
+                    wx.MessageBox(_("ERROR: Equal URLs found"),
+                                  "Videomass", wx.ICON_ERROR, self)
                     return
 
             self.switch_youtube_downloader(self, data)
@@ -1651,10 +1654,18 @@ class MainFrame(wx.Frame):
         Show youtube-dl downloader panel
         """
         if not data:
+            self.ytDownloader.choice.SetSelection(0)
             self.ytDownloader.choice.Disable()
-            self.ytDownloader.cmbx_vq.Disable()
-            self.ytDownloader.rdbvideoformat.Disable()
             self.ytDownloader.ckbx_pl.Disable()
+            self.ytDownloader.cmbx_af.Disable()
+            self.ytDownloader.cmbx_aq.Disable()
+            self.ytDownloader.rdbvideoformat.Disable()
+            self.ytDownloader.cod_text.Hide()
+            self.ytDownloader.labtxt.Hide()
+            self.ytDownloader.cmbx_vq.Clear()
+            self.ytDownloader.fcode.ClearAll()
+            self.ytDownloader.btn_play.Disable()
+
         elif not data == self.data_url:
             if self.data_url:
                 msg = (_('URL list changed, please check the settings '
@@ -1662,7 +1673,6 @@ class MainFrame(wx.Frame):
                 self.statusbar_msg(msg[0], msg[1], msg[2])
             self.data_url = data
             self.ytDownloader.choice.Enable()
-            self.ytDownloader.rdbvideoformat.Enable()
             self.ytDownloader.ckbx_pl.Enable()
             self.ytDownloader.choice.SetSelection(0)
             self.ytDownloader.on_choicebox(self, statusmsg=False)
@@ -2090,16 +2100,14 @@ class MainFrame(wx.Frame):
         """
         if self.ytDownloader.IsShown():
             if not self.data_url:
-                wx.MessageBox(_('Append at least one URL'), "Videomass",
-                              wx.ICON_INFORMATION, self)
+                self.switch_text_import(self, self.topicname)
                 return
 
             self.ytDownloader.on_start()
             return
 
         if not self.data_files:
-            wx.MessageBox(_('No files added yet'), "Videomass",
-                          wx.ICON_INFORMATION, self)
+            self.switch_file_import(self, self.topicname)
             return
 
         if self.VconvPanel.IsShown():

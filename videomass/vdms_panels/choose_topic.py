@@ -148,8 +148,8 @@ class Choose_Topic(wx.Panel):
         tip = (_('Create a video from a sequence of images, based on import '
                  'order, with the ability to add an audio file.'))
         self.slideshow.SetToolTip(tip)
-        tip = (_('Extract images (frames) by your movies in jpg, png or '
-                 'bmp formats'))
+        tip = (_('Extract images (frames) in jpg, png or '
+                 'bmp formats from your movies.'))
         self.videotoimages.SetToolTip(tip)
 
         if self.oS == 'Darwin':
@@ -226,15 +226,15 @@ class Choose_Topic(wx.Panel):
             wx.MessageBox(_("The downloader is disabled. "
                             "Check your preferences."),
                           "Videomass", wx.ICON_INFORMATION, self)
-            return
+            return True
 
         # PYLIBYDL: None if used else 'string error'
         if self.appdata['PYLIBYDL'] is None:
             self.parent.switch_text_import(self, 'Youtube Downloader')
-            return
+            return None
 
         wx.MessageBox(_("ERROR: {0}\n\n{1} is not installed, use your "
                         "package manager to install it.").format(
                       self.appdata['PYLIBYDL'], self.appdata['downloader']),
                       "Videomass", wx.ICON_ERROR, self)
-        return
+        return True
