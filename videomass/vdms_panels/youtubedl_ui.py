@@ -381,7 +381,7 @@ class Downloader(wx.Panel):
         self.Layout()
         # ----------------------- Properties
         # WARNING do not append text on self.cod_text here,
-        # see `on_choicebox meth.`
+        # see `on_choicebox` method.
 
         self.cod_text.SetBackgroundColour(Downloader.BACKGRD)
 

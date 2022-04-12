@@ -383,7 +383,7 @@ class Scale(wx.Dialog):
         This method return values via the interface getvalue()
         by the caller. See the caller for more info and usage.
         """
-        diction = {}
+        diction = {'scale': '', 'setdar': '', 'setsar': ''}
         self.width = f'{self.spin_scale_width.GetValue()}'
         self.height = f'{self.spin_scale_height.GetValue()}'
         self.darNum = f'{self.spin_setdarNum.GetValue()}'

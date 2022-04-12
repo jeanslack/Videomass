@@ -32,7 +32,7 @@ import wx
 import wx.lib.statbmp
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.utils import get_milliseconds
-from videomass.vdms_utils.utils import milliseconds2timeformat
+from videomass.vdms_utils.utils import milliseconds2clock
 
 
 def make_bitmap(width, height, image):
@@ -175,7 +175,7 @@ class Crop(wx.Dialog):
             self.image = wx.Bitmap(self.w_ratio, self.h_ratio)  # make empty
 
         duration = get_milliseconds(timeformat)  # convert to ms
-        # hhmmss = milliseconds2timeformat(duration)  # convert to timeformat
+        # hhmmss = milliseconds2clock(duration)  # convert to 24-hour clock
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
@@ -342,7 +342,7 @@ class Crop(wx.Dialog):
         e.g (00:00:00), and sets the label with the converted value.
         """
         seek = self.slider.GetValue()
-        t = milliseconds2timeformat(seek)  # convert to time format
+        t = milliseconds2clock(seek)  # convert to 24-hour clock
         self.txttime.SetLabel(t)  # update StaticText
     # ------------------------------------------------------------------#
 

@@ -4,10 +4,10 @@ Name: choose_topic.py
 Porpose: shows the topics available in the program
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.21.2021
-Code checker: pycodestyle, flake8 --ignore=F821
+Rev: Apr.06.2022
+Code checker: flake8, pylint
 ########################################################
 
 This file is part of Videomass.
@@ -53,6 +53,8 @@ class Choose_Topic(wx.Panel):
             bmpPrstmng = get_bmp(self.icons['presets_manager'], ((48, 48)))
             bmpYdl = get_bmp(self.icons['youtube'], ((48, 48)))
             bmpConcat = get_bmp(self.icons['concatenate'], ((48, 48)))
+            bmpSlideshow = get_bmp(self.icons['slideshow'], ((48, 48)))
+            bmpTopictures = get_bmp(self.icons['videotopictures'], ((48, 48)))
         else:
             bmpAVconv = wx.Bitmap(self.icons['A/V-Conv'], wx.BITMAP_TYPE_ANY)
             bmpPrstmng = wx.Bitmap(self.icons['presets_manager'],
@@ -60,6 +62,10 @@ class Choose_Topic(wx.Panel):
             bmpYdl = wx.Bitmap(self.icons['youtube'], wx.BITMAP_TYPE_ANY)
             bmpConcat = wx.Bitmap(self.icons['concatenate'],
                                   wx.BITMAP_TYPE_ANY)
+            bmpSlideshow = wx.Bitmap(self.icons['slideshow'],
+                                     wx.BITMAP_TYPE_ANY)
+            bmpTopictures = wx.Bitmap(self.icons['videotopictures'],
+                                      wx.BITMAP_TYPE_ANY)
 
         wx.Panel.__init__(self, parent, -1, style=wx.TAB_TRAVERSAL)
 
@@ -99,11 +105,23 @@ class Choose_Topic(wx.Panel):
                                  size=(300, -1), style=style)
         self.youtube.SetBitmap(bmpYdl, wx.LEFT)
 
-        grid_buttons = wx.FlexGridSizer(2, 2, 20, 20)
+        self.slideshow = wx.Button(self, wx.ID_ANY,
+                                   _('Image Sequence to Video'),
+                                   size=(300, -1), style=style)
+        self.slideshow.SetBitmap(bmpSlideshow, wx.LEFT)
+
+        self.videotoimages = wx.Button(self, wx.ID_ANY,
+                                       _('Video to Image Sequence'),
+                                       size=(300, -1), style=style)
+        self.videotoimages.SetBitmap(bmpTopictures, wx.LEFT)
+
+        grid_buttons = wx.FlexGridSizer(3, 2, 20, 20)
         grid_buttons.AddMany([(self.presets_mng, 0, wx.EXPAND, 5),
                               (self.avconv, 0, wx.EXPAND, 5),
                               (self.conc, 0, wx.EXPAND, 5),
                               (self.youtube, 0, wx.EXPAND, 5),
+                              (self.slideshow, 0, wx.EXPAND, 5),
+                              (self.videotoimages, 0, wx.EXPAND, 5),
                               ])
         sizer_base.Add(80, 80)
         sizer_base.Add(grid_buttons, 1, wx.ALIGN_CENTER_VERTICAL |
@@ -127,6 +145,12 @@ class Choose_Topic(wx.Panel):
         tip = (_('Concatenate multiple media files based on import '
                  'order without re-encoding'))
         self.conc.SetToolTip(tip)
+        tip = (_('Create a video from a sequence of images, based on import '
+                 'order, with the ability to add an audio file.'))
+        self.slideshow.SetToolTip(tip)
+        tip = (_('Extract images (frames) in jpg, png or '
+                 'bmp formats from your movies.'))
+        self.videotoimages.SetToolTip(tip)
 
         if self.oS == 'Darwin':
             welcome.SetFont(wx.Font(14, wx.SWISS, wx.NORMAL, wx.BOLD))
@@ -151,6 +175,8 @@ class Choose_Topic(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Conv, self.avconv)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)
         self.Bind(wx.EVT_BUTTON, self.on_Conc, self.conc)
+        self.Bind(wx.EVT_BUTTON, self.on_slideshow, self.slideshow)
+        self.Bind(wx.EVT_BUTTON, self.on_to_pictures, self.videotoimages)
         self.Bind(wx.EVT_BUTTON, self.on_YoutubeDL, self.youtube)
     # ------------------------------------------------------------------#
 
@@ -175,6 +201,20 @@ class Choose_Topic(wx.Panel):
         self.parent.switch_file_import(self, 'Concatenate Demuxer')
     # ------------------------------------------------------------------#
 
+    def on_slideshow(self, event):
+        """
+        Open drag N drop interface to switch on Image Sequence to Video panel
+        """
+        self.parent.switch_file_import(self, 'Image Sequence to Video')
+    # ------------------------------------------------------------------#
+
+    def on_to_pictures(self, event):
+        """
+        Open drag N drop interface to switch on Video to Pictures panel
+        """
+        self.parent.switch_file_import(self, 'Video to Pictures')
+    # ------------------------------------------------------------------#
+
     def on_YoutubeDL(self, event):
         """
         Check the existence of youtube-dl based on the set attributes
@@ -186,16 +226,15 @@ class Choose_Topic(wx.Panel):
             wx.MessageBox(_("The downloader is disabled. "
                             "Check your preferences."),
                           "Videomass", wx.ICON_INFORMATION, self)
-            return
+            return True
 
         # PYLIBYDL: None if used else 'string error'
         if self.appdata['PYLIBYDL'] is None:
             self.parent.switch_text_import(self, 'Youtube Downloader')
-            return
-        else:
-            wx.MessageBox(_("ERROR: {0}\n\n{1} is not installed, "
-                            "use your package manager to install it."
-                            ).format(self.appdata['PYLIBYDL'],
-                                     self.appdata['downloader']),
-                          "Videomass", wx.ICON_ERROR, self)
-            return
+            return None
+
+        wx.MessageBox(_("ERROR: {0}\n\n{1} is not installed, use your "
+                        "package manager to install it.").format(
+                      self.appdata['PYLIBYDL'], self.appdata['downloader']),
+                      "Videomass", wx.ICON_ERROR, self)
+        return True

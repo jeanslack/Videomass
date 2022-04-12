@@ -152,7 +152,7 @@ class ConfigManager:
         "toolbarsize": 24,
         "toolbarpos": 0,
         "toolbartext": False,
-        "panel_size": [890, 670],
+        "panel_size": [980, 640],
         "clearcache": False,
         "clearlogfiles": False,
         "downloader": False,

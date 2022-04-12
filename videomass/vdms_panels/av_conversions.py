@@ -620,7 +620,7 @@ class AV_Conv(wx.Panel):
         # BOX stream mapping
         self.box_audioMap = wx.StaticBoxSizer(wx.StaticBox(self.nb_Audio,
                                                            wx.ID_ANY,
-                                                           _("Audio Stream "
+                                                           _("Audio Streams "
                                                              "Mapping")),
                                               wx.VERTICAL
                                               )
@@ -906,8 +906,7 @@ class AV_Conv(wx.Panel):
             self.cmb_preset.SetSelection(0), self.cmb_profile.SetSelection(0)
             self.cmb_tune.SetSelection(0), self.cmb_level.SetSelection(0)
 
-        elif self.opt["VideoCodec"] in ["-c:v libvpx", "-c:v libvpx-vp9",
-                                        "-c:v libaom-av1 -strict -2"]:
+        elif self.opt["VideoCodec"] in ["-c:v libvpx", "-c:v libvpx-vp9"]:
             self.vp9panel.Show(), self.h264panel.Hide()
             self.ckbx_rowMt1.SetValue(True), self.rdb_deadline.SetSelection(1)
             self.spin_cpu.SetRange(0, 5), self.slider_CRF.SetMax(63)
@@ -1093,11 +1092,13 @@ class AV_Conv(wx.Panel):
         else:
             self.opt["Passing"] = "1 pass"
             if self.opt["VideoCodec"] in ["-c:v libx264", "-c:v libx265"]:
+                if self.slider_CRF.GetValue() == -1:
+                    self.spin_Vbrate.Enable()
+                else:
+                    self.spin_Vbrate.Disable()
                 self.slider_CRF.Enable()
-                self.spin_Vbrate.Disable()
 
-            elif self.opt["VideoCodec"] in ["-c:v libvpx", "-c:v libvpx-vp9",
-                                            "-c:v libaom-av1 -strict -2"]:
+            elif self.opt["VideoCodec"] in ["-c:v libvpx", "-c:v libvpx-vp9"]:
                 self.slider_CRF.Enable()
                 self.spin_Vbrate.Enable()
 
@@ -1115,12 +1116,8 @@ class AV_Conv(wx.Panel):
         or if not codec h264)
         """
         val = self.spin_Vbrate.GetValue()
-        if self.opt["VideoCodec"] == "-c:v libaom-av1 -strict -2":
-            if self.ckbx_pass.IsChecked():
-                self.opt["CRF"] = ""
 
-        if self.opt["VideoCodec"] not in ["-c:v libvpx", "-c:v libvpx-vp9",
-                                          "-c:v libaom-av1 -strict -2"]:
+        if self.opt["VideoCodec"] not in ["-c:v libvpx", "-c:v libvpx-vp9"]:
             self.opt["CRF"] = ""
 
         self.opt["VideoBitrate"] = "" if val == -1 else f"-b:v {val}k"
@@ -1131,9 +1128,13 @@ class AV_Conv(wx.Panel):
         Reset bitrate at empty (this depend if is h264 codec)
         """
         val = self.slider_CRF.GetValue()
-        if self.opt["VideoCodec"] not in ["-c:v libvpx", "-c:v libvpx-vp9",
-                                          "-c:v libaom-av1 -strict -2"]:
+        if self.opt["VideoCodec"] not in ["-c:v libvpx", "-c:v libvpx-vp9"]:
             self.opt["VideoBitrate"] = ""
+
+        if val == -1:
+            self.spin_Vbrate.Enable()
+        else:
+            self.spin_Vbrate.Disable()
 
         self.opt["CRF"] = "" if val == -1 else f"-crf {val}"
 
@@ -1248,7 +1249,7 @@ class AV_Conv(wx.Panel):
         if disablevidstab:
             self.opt["Vidstabtransform"], self.opt["Unsharp"] = "", ""
             self.opt["Vidstabdetect"], self.opt["Makeduo"] = "", False
-            self.video_filter_checker()
+            self.chain_all_video_filters()
             self.btn_vidstab.SetBackgroundColour(wx.NullColour)
 
             return
@@ -1350,56 +1351,22 @@ class AV_Conv(wx.Panel):
         return None
     # ------------------------------------------------------------------#
 
-    def video_filter_checker(self):
+    def chain_all_video_filters(self):
         """
+        Concatenate all video filters enabled
         evaluates whether video filters (-vf) are enabled or not and
         sorts them according to an appropriate syntax. If not filters
         strings, the -vf option will be removed
         """
-        if self.opt['Crop']:
-            crop = f"{self.opt['Crop']},"
-        else:
-            crop = ''
-        if self.opt['Scale']:
-            size = f"{self.opt['Scale']},"
-        else:
-            size = ''
-        if self.opt["Setdar"]:
-            dar = f"{self.opt['Setdar']},"
-        else:
-            dar = ''
-        if self.opt["Setsar"]:
-            sar = f"{self.opt['Setsar']},"
-        else:
-            sar = ''
-        if self.opt['Orientation'][0]:
-            rotate = f"{self.opt['Orientation'][0]},"
-        else:
-            rotate = ''
-        if self.opt['Deinterlace']:
-            lacing = f"{self.opt['Deinterlace']},"
-        elif self.opt['Interlace']:
-            lacing = f"{self.opt['Interlace']},"
-        else:
-            lacing = ''
-        if self.opt["Denoiser"]:
-            denoiser = f"{self.opt['Denoiser']},"
-        else:
-            denoiser = ''
-        if self.opt["Vidstabtransform"]:
-            stab = f"{self.opt['Vidstabtransform']},"
-        else:
-            stab = ''
-        if self.opt["Unsharp"]:
-            unsharp = f"{self.opt['Unsharp']},"
-        else:
-            unsharp = ''
+        orderf = (self.opt['Deinterlace'], self.opt['Interlace'],
+                  self.opt["Denoiser"], self.opt["Vidstabtransform"],
+                  self.opt["Unsharp"], self.opt['Crop'], self.opt['Scale'],
+                  self.opt["Setdar"], self.opt["Setsar"],
+                  self.opt['Orientation'][0],
+                  )  # do not change the order of the filters on this tuple
+        filters = ''.join([f'{x},' for x in orderf if x])[:-1]
 
-        f = (lacing + denoiser + stab + unsharp + crop + size + dar +
-             sar + rotate)
-        if f:
-            lengh = len(f)
-            filters = f'{f[:lengh - 1]}'
+        if filters:
             self.opt["VFilters"] = f"-vf {filters}"
             self.btn_preview.Enable(), self.btn_reset.Enable()
         else:
@@ -1426,7 +1393,7 @@ class AV_Conv(wx.Panel):
 
             if sizing.ShowModal() == wx.ID_OK:
                 data = sizing.getvalue()
-                if not data:
+                if not [x for x in data.values() if x]:
                     self.btn_videosize.SetBackgroundColour(wx.NullColour)
                     self.opt["Setdar"] = ""
                     self.opt["Setsar"] = ""
@@ -1434,19 +1401,11 @@ class AV_Conv(wx.Panel):
                 else:
                     self.btn_videosize.SetBackgroundColour(
                         wx.Colour(AV_Conv.VIOLET))
-                    if 'scale' in data:
-                        self.opt["Scale"] = data['scale']
-                    else:
-                        self.opt["Scale"] = ""
-                    if 'setdar' in data:
-                        self.opt['Setdar'] = data['setdar']
-                    else:
-                        self.opt['Setdar'] = ""
-                    if 'setsar' in data:
-                        self.opt['Setsar'] = data['setsar']
-                    else:
-                        self.opt['Setsar'] = ""
-                self.video_filter_checker()
+                    self.opt["Scale"] = data['scale']
+                    self.opt['Setdar'] = data['setdar']
+                    self.opt['Setsar'] = data['setsar']
+
+                self.chain_all_video_filters()
     # -----------------------------------------------------------------#
 
     def on_Set_transpose(self, event):
@@ -1476,7 +1435,7 @@ class AV_Conv(wx.Panel):
                 else:
                     self.btn_rotate.SetBackgroundColour(
                         wx.Colour(AV_Conv.VIOLET))
-                self.video_filter_checker()
+                self.chain_all_video_filters()
     # ------------------------------------------------------------------#
 
     def on_Set_crop(self, event):
@@ -1504,7 +1463,7 @@ class AV_Conv(wx.Panel):
                     self.btn_crop.SetBackgroundColour(
                         wx.Colour(AV_Conv.VIOLET))
                     self.opt["Crop"] = f'crop={data}'
-                self.video_filter_checker()
+                self.chain_all_video_filters()
     # ------------------------------------------------------------------#
 
     def on_Set_deinterlace(self, event):
@@ -1536,7 +1495,7 @@ class AV_Conv(wx.Panel):
                     elif 'interlace' in data:
                         self.opt["Interlace"] = data["interlace"]
                         self.opt["Deinterlace"] = ''
-                self.video_filter_checker()
+                self.chain_all_video_filters()
     # ------------------------------------------------------------------#
 
     def on_Set_denoiser(self, event):
@@ -1561,12 +1520,12 @@ class AV_Conv(wx.Panel):
                     self.btn_denois.SetBackgroundColour(
                         wx.Colour(AV_Conv.VIOLET))
                     self.opt["Denoiser"] = data
-                self.video_filter_checker()
+                self.chain_all_video_filters()
     # ------------------------------------------------------------------#
 
     def on_Set_stabilizer(self, event):
         """
-        Enable or disable libvidstab filter for video stabilizations.
+        Enable or disable libvidstab filter for video stabilization.
         This filter require a special compiled build of FFmpeg with
         libvidstab option enabled. Note this filter is incompatible
         with 2 pass encoding that including `-pass 1` and` -pass 2`
@@ -1607,7 +1566,7 @@ class AV_Conv(wx.Panel):
                     self.opt['Unsharp'] = data[2]
                     self.opt["Makeduo"] = data[3]
 
-                self.video_filter_checker()
+                self.chain_all_video_filters()
     # ------------------------------------------------------------------#
 
     def on_Vaspect(self, event):
@@ -2055,8 +2014,12 @@ class AV_Conv(wx.Panel):
         elif self.slider_CRF.IsEnabled() and not self.spin_Vbrate.IsEnabled():
             self.on_Crf(self)
 
+        elif self.slider_CRF.GetValue() == -1 and self.spin_Vbrate.IsEnabled():
+            self.on_Vbitrate(self)
+
         elif self.slider_CRF.IsEnabled() and self.spin_Vbrate.IsEnabled():
             self.on_Vbitrate(self), self.on_Crf(self)
+
         else:
             self.opt["CRF"] = ''
             self.opt["VideoBitrate"] = ''
@@ -2226,7 +2189,7 @@ class AV_Conv(wx.Panel):
                                                  self.opt["OutputFormat"],
                                                  destin,
                                                  command,
-                                                 None,
+                                                 '',  # era None
                                                  '',
                                                  audnorm,
                                                  logname,
@@ -2279,7 +2242,7 @@ class AV_Conv(wx.Panel):
                                                  f_src,
                                                  self.opt["OutputFormat"],
                                                  destin,
-                                                 None,
+                                                 ['', ''],  # era None
                                                  [pass1, pass2],
                                                  '',
                                                  audnorm,
@@ -2317,7 +2280,7 @@ class AV_Conv(wx.Panel):
                                                  self.opt["OutputFormat"],
                                                  destin,
                                                  command,
-                                                 None,
+                                                 '',  # era None
                                                  '',
                                                  audnorm,
                                                  logname,
@@ -2461,7 +2424,7 @@ class AV_Conv(wx.Panel):
                                              self.opt["OutputFormat"],
                                              destin,
                                              command,
-                                             None,
+                                             '',  # era None
                                              '',
                                              audnorm,
                                              logname,
