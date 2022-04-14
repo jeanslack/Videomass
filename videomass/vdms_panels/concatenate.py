@@ -145,11 +145,14 @@ class Conc_Demuxer(wx.Panel):
                               name=wx.StaticLineNameStr
                               )
         sizer.Add(line1, 0, wx.ALL | wx.EXPAND, 5)
+        # sizer.Add((20, 20))
+        boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
+        sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)
         sizFormat = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizFormat)
-        sizer.Add((20, 20))
+        boxctrl.Add(sizFormat)
+
         siz_pict = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(siz_pict)
+        boxctrl.Add(siz_pict)
         self.ckbx_pict = wx.CheckBox(self, wx.ID_ANY,
                                      _('From an image sequence '
                                        'to a video file')

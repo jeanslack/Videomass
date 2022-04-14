@@ -100,11 +100,14 @@ class VideoToSequence(wx.Panel):
                               name=wx.StaticLineNameStr
                               )
         sizer.Add(line1, 0, wx.ALL | wx.EXPAND, 5)
+        # sizer.Add((20, 20))
+        boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
+        sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)
         sizFormat = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizFormat)
-        sizer.Add((20, 20))
+        boxctrl.Add(sizFormat)
+
         siz_ctrl = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(siz_ctrl)
+        boxctrl.Add(siz_ctrl)
 
         self.lbl_rate = wx.StaticText(self, wx.ID_ANY, label="FPS:")
         siz_ctrl.Add(self.lbl_rate, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
@@ -127,7 +130,7 @@ class VideoToSequence(wx.Panel):
         self.cmb_frmt.SetSelection(2)
 
         siz_addparams = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(siz_addparams, 0, wx.EXPAND, 0)
+        boxctrl.Add(siz_addparams, 0, wx.EXPAND, 0)
 
         self.ckbx_edit = wx.CheckBox(self, wx.ID_ANY, _('Edit'))
         siz_addparams.Add(self.ckbx_edit, 0, wx.ALL | wx.EXPAND, 5)

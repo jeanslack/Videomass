@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.05.2022
+Rev: Apr.14.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -83,14 +83,12 @@ class Timeline(wx.Panel):
         self.pix: scale pixels to time seconds for ruler selection
         self.milliseconds: int(milliseconds)
         self.timeformat: time format with ms (00:00:00.000)
-        self.zoom_values: dict, 10 duration value divided by half
         self.bar_w: width value for time bar selection
         self.bar_x: x axis value for time bar selection
 
         """
         self.parent = parent
         self.milliseconds = 1  # max val must be greater than the min val
-        self.zoom_values = None
         self.timeformat = None
         self.pix = 0
         self.bar_w = 0
@@ -108,12 +106,19 @@ class Timeline(wx.Panel):
                                   size=(Timeline.PW, Timeline.PH),
                                   style=wx.BORDER_SUNKEN)
         sizer_base.Add(self.paneltime, 0, wx.LEFT | wx.RIGHT | wx.CENTRE, 5)
-        self.spin_zoom = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
-                                     max=10, size=(-1, -1),
-                                     style=wx.TE_PROCESS_ENTER
-                                     | wx.ALIGN_CENTRE_HORIZONTAL
-                                     )
-        sizer_base.Add(self.spin_zoom, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
+        self.cmbx_accuracy = wx.ComboBox(self, wx.ID_ANY,
+                                         choices=('1 ms',
+                                                  '100 ms',
+                                                  '1 sec.',
+                                                  '1 min.'),
+                                         size=(-1, -1),
+                                         style=wx.CB_DROPDOWN |
+                                         wx.CB_READONLY
+                                         )
+        self.cmbx_accuracy.SetSelection(0)
+        sizer_base.Add(self.cmbx_accuracy, 0, wx.ALL
+                       | wx.ALIGN_CENTRE_VERTICAL, 5
+                       )
         self.sldseek = wx.Slider(self, wx.ID_ANY, 0, 0, self.milliseconds,
                                  size=(300, -1), style=wx.SL_HORIZONTAL
                                  )
@@ -131,6 +136,10 @@ class Timeline(wx.Panel):
         self.paneltime.SetBackgroundColour(wx.Colour(Timeline.RULER_BKGRD))
         self.sldseek.SetToolTip(_("Seek to given time position"))
         self.sldcut.SetToolTip(_("Total duration"))
+        self.cmbx_accuracy.SetToolTip(_('Set the amount of steps the slider '
+                                        'moves using up or down arrow and up '
+                                        'or down page to quickly set a more '
+                                        'accurate time selection'))
 
         # ----------------------Layout----------------------#
 
@@ -148,28 +157,44 @@ class Timeline(wx.Panel):
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
-        self.spin_zoom.SetToolTip(_('Increase the time selection '
-                                    'accuracy (zoom)'))
 
         # ----------------------Binding (EVT)----------------------#
         self.paneltime.Bind(wx.EVT_PAINT, self.OnPaint)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Cut, self.sldcut)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Seek, self.sldseek)
-        self.Bind(wx.EVT_SPINCTRL, self.on_zoom, self.spin_zoom)
+        self.Bind(wx.EVT_COMBOBOX, self.on_accuracy, self.cmbx_accuracy)
 
     # ----------------------Event handler (callback)----------------------#
 
-    def on_zoom(self, event):
+    def on_accuracy(self, event):
         """
-        Make the timeline zoomable for a more accuracy selection
+        Set the amount steps in milliseconds the slider moves
+        when the user moves it up or down a line or pages.
+
         """
-        duration = self.zoom_values[self.spin_zoom.GetValue()]
-        self.milliseconds = round(duration)
-        self.pix = Timeline.RW / self.milliseconds
-        self.timeformat = milliseconds2clock(self.milliseconds)
-        self.sldseek.SetMax(self.milliseconds)
-        self.sldcut.SetMax(self.milliseconds)
-        self.set_coordinates()  # update indicators and controls
+        if self.cmbx_accuracy.GetSelection() == 0:
+            self.sldcut.SetLineSize(1)
+            self.sldcut.SetPageSize(1000)
+            self.sldseek.SetLineSize(1)
+            self.sldseek.SetPageSize(1000)
+
+        elif self.cmbx_accuracy.GetSelection() == 1:
+            self.sldcut.SetLineSize(100)
+            self.sldcut.SetPageSize(5000)
+            self.sldseek.SetLineSize(100)
+            self.sldseek.SetPageSize(5000)
+
+        elif self.cmbx_accuracy.GetSelection() == 2:
+            self.sldcut.SetLineSize(1000)
+            self.sldcut.SetPageSize(10000)
+            self.sldseek.SetLineSize(1000)
+            self.sldseek.SetPageSize(10000)
+
+        elif self.cmbx_accuracy.GetSelection() == 3:
+            self.sldcut.SetLineSize(60000)
+            self.sldcut.SetPageSize(300000)
+            self.sldseek.SetLineSize(60000)
+            self.sldseek.SetPageSize(300000)
     # ------------------------------------------------------------------#
 
     def on_Cut(self, event):
@@ -177,6 +202,22 @@ class Timeline(wx.Panel):
         Get total duration event
 
         """
+        if self.cmbx_accuracy.GetSelection() == 0:
+            self.sldcut.SetLineSize(1)
+            self.sldcut.SetPageSize(1000)
+
+        elif self.cmbx_accuracy.GetSelection() == 1:
+            self.sldcut.SetLineSize(100)
+            self.sldcut.SetPageSize(5000)
+
+        elif self.cmbx_accuracy.GetSelection() == 2:
+            self.sldcut.SetLineSize(1000)
+            self.sldcut.SetPageSize(10000)
+
+        elif self.cmbx_accuracy.GetSelection() == 3:
+            self.sldcut.SetLineSize(60000)
+            self.sldcut.SetPageSize(300000)
+
         cut = self.sldcut.GetValue()
         if cut == 0:
             self.sldcut.SetValue(0), self.sldseek.Disable()
@@ -195,6 +236,22 @@ class Timeline(wx.Panel):
         """
         Get seek event
         """
+        if self.cmbx_accuracy.GetSelection() == 0:
+            self.sldseek.SetLineSize(1)
+            self.sldseek.SetPageSize(1000)
+
+        elif self.cmbx_accuracy.GetSelection() == 1:
+            self.sldseek.SetLineSize(100)
+            self.sldseek.SetPageSize(5000)
+
+        elif self.cmbx_accuracy.GetSelection() == 2:
+            self.sldseek.SetLineSize(1000)
+            self.sldseek.SetPageSize(10000)
+
+        elif self.cmbx_accuracy.GetSelection() == 3:
+            self.sldseek.SetLineSize(60000)
+            self.sldseek.SetPageSize(300000)
+
         seek = self.sldseek.GetValue()
         if seek == 0:
             self.sldcut.SetMin(0)
@@ -288,12 +345,6 @@ class Timeline(wx.Panel):
             self.milliseconds = round(duration)
             # rounds all float number to prevent ruler selection inaccuracy
 
-        self.zoom_values = {}
-        index = self.milliseconds
-        for x in range(11):
-            self.zoom_values[x] = index
-            index /= 2
-
         msg0 = _('The maximum time refers to the file with the longest '
                  'duration, it will be set to 01:20:00.000 otherwise.')
         self.paneltime.SetToolTip(msg0)
@@ -301,4 +352,3 @@ class Timeline(wx.Panel):
         self.timeformat = milliseconds2clock(self.milliseconds)
         self.sldseek.SetMax(self.milliseconds)
         self.sldcut.SetMax(self.milliseconds)
-        self.spin_zoom.SetValue(0)
