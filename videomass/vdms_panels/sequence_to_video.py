@@ -159,7 +159,7 @@ class SequenceToVideo(wx.Panel):
                               name=wx.StaticLineNameStr
                               )
         sizer.Add(line1, 0, wx.ALL | wx.EXPAND, 5)
-        sizer.Add((20, 20))
+        # sizer.Add((5, 5))
         boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
         sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)
         sizFormat = wx.BoxSizer(wx.HORIZONTAL)

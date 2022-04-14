@@ -7,15 +7,16 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Apr 04, 2022 V.4.0.0
+Apr 14, 2022 V.4.0.0
 
   * [Presets Manager] added optional pre-input parameters. These params will be
     placed before the first '-i' argument of the ffmpeg. Fix #102
   * [NEW] added "Sequence to Video" feature with the ability to merge one or
     more images and the ability to add an audio file. Fix #102
   * [NEW] added "Video to Sequence" feature.
-  * [Timeline editor] Added the ability to zoom up to 10 positions in order
-    to make more accurate the time selection using slider controls.
+  * [Timeline editor] The timeline editor can be set to tune the steps the
+    slider moves using up or down arrow to make more accurate the time
+    selection.
   * Update Dutch translation, thanks to @johannesdedoper.
   * Improved ETA using ffmpeg speed value. Fix #101
   * New 48x icons.
