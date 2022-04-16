@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-16 11:31+0200\n"
-"PO-Revision-Date: 2022-04-16 11:33+0200\n"
+"POT-Creation-Date: 2022-04-16 12:49+0200\n"
+"PO-Revision-Date: 2022-04-16 12:52+0200\n"
 "Last-Translator: johannesdedoper <https://github.com/johannesdedoper>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -1092,7 +1092,7 @@ msgstr ""
 #: ../vdms_dialogs/preferences.py:305 ../vdms_dialogs/preferences.py:325
 #: ../vdms_dialogs/preferences.py:341 ../vdms_frames/ffmpeg_conf.py:217
 #: ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:642
+#: ../vdms_panels/sequence_to_video.py:641
 msgid "Disabled"
 msgstr "Uitgezet"
 
@@ -1382,7 +1382,7 @@ msgid "ENABLED:"
 msgstr "GEACTIVEERD:"
 
 #: ../vdms_frames/ffmpeg_conf.py:204 ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:642
+#: ../vdms_panels/sequence_to_video.py:641
 msgid "Enabled"
 msgstr "Geactiveerd"
 
@@ -1700,8 +1700,8 @@ msgstr ""
 msgid "Please Confirm"
 msgstr "Bevestig aub"
 
-#: ../vdms_io/checkup.py:63 ../vdms_panels/sequence_to_video.py:530
-#: ../vdms_panels/sequence_to_video.py:554
+#: ../vdms_io/checkup.py:63 ../vdms_panels/sequence_to_video.py:529
+#: ../vdms_panels/sequence_to_video.py:553
 msgid ""
 "File does not exist:\n"
 "\n"
@@ -2593,7 +2593,7 @@ msgstr "Video Filters"
 msgid "Preview"
 msgstr "Voorvertoning"
 
-#: ../vdms_panels/av_conversions.py:550 ../vdms_panels/sequence_to_video.py:196
+#: ../vdms_panels/av_conversions.py:550 ../vdms_panels/sequence_to_video.py:195
 msgid "Resizing"
 msgstr "Herschalen bezig"
 
@@ -2851,7 +2851,7 @@ msgid "Unable to preview Video Stabilizer filter"
 msgstr "Geen preview van Video Stabilisatie filter mogelijk"
 
 #: ../vdms_panels/av_conversions.py:1286
-#: ../vdms_panels/sequence_to_video.py:295
+#: ../vdms_panels/sequence_to_video.py:294
 #: ../vdms_panels/video_to_sequence.py:201
 msgid "A target file must be selected in the queued files"
 msgstr "Een doel-bestand moet geselecteerd zijn in de wachtrij-bestanden"
@@ -2869,7 +2869,7 @@ msgstr ""
 "\"{}\""
 
 #: ../vdms_panels/av_conversions.py:1348
-#: ../vdms_panels/sequence_to_video.py:322
+#: ../vdms_panels/sequence_to_video.py:321
 msgid "The file is not a frame or a video file"
 msgstr "Het bestand is geen frame en geen video bestand"
 
@@ -3265,10 +3265,10 @@ msgid "At least two files are required to perform concatenation."
 msgstr "Samevoegen vereist minstens twee bestanden."
 
 #: ../vdms_panels/concatenate.py:231 ../vdms_panels/concatenate.py:242
-#: ../vdms_panels/sequence_to_video.py:515
-#: ../vdms_panels/sequence_to_video.py:525
-#: ../vdms_panels/sequence_to_video.py:542
-#: ../vdms_panels/sequence_to_video.py:550
+#: ../vdms_panels/sequence_to_video.py:514
+#: ../vdms_panels/sequence_to_video.py:524
+#: ../vdms_panels/sequence_to_video.py:541
+#: ../vdms_panels/sequence_to_video.py:549
 #: ../vdms_panels/video_to_sequence.py:212
 msgid "ERROR"
 msgstr "FOUT"
@@ -3283,7 +3283,7 @@ msgstr ""
 
 #: ../vdms_panels/concatenate.py:291 ../vdms_panels/presets_manager.py:877
 #: ../vdms_panels/presets_manager.py:900
-#: ../vdms_panels/sequence_to_video.py:619
+#: ../vdms_panels/sequence_to_video.py:618
 #: ../vdms_panels/video_to_sequence.py:250
 msgid "Starts"
 msgstr "Start"
@@ -4078,44 +4078,42 @@ msgid ""
 msgstr ""
 
 #: ../vdms_panels/sequence_to_video.py:169
-#, fuzzy
-#| msgid "Choose a folder to save the selected preset"
-msgid "One image only (use the selected one)"
-msgstr "Kies een folder om de geselecteerde preset te bewaren"
+msgid "Enable a single still image"
+msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:203
+#: ../vdms_panels/sequence_to_video.py:202
 msgid "Include audio file"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:206
+#: ../vdms_panels/sequence_to_video.py:205
 msgid "Play the video until audio ends (disable shortest option)"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:212
-#: ../vdms_panels/sequence_to_video.py:402
+#: ../vdms_panels/sequence_to_video.py:211
+#: ../vdms_panels/sequence_to_video.py:401
 msgid "Open audio file"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:230
+#: ../vdms_panels/sequence_to_video.py:229
 msgid "Additional arguments"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:514
-#: ../vdms_panels/sequence_to_video.py:541
+#: ../vdms_panels/sequence_to_video.py:513
+#: ../vdms_panels/sequence_to_video.py:540
 #: ../vdms_panels/video_to_sequence.py:211
 #, fuzzy
 #| msgid "Invalid URL: \"{}\""
 msgid "Invalid file: '{}'"
 msgstr "Ongeldige URL: \"{}\""
 
-#: ../vdms_panels/sequence_to_video.py:524
-#: ../vdms_panels/sequence_to_video.py:549
+#: ../vdms_panels/sequence_to_video.py:523
+#: ../vdms_panels/sequence_to_video.py:548
 #, fuzzy
 #| msgid "Supported Format List"
 msgid "Unsupported format '{}'"
 msgstr "Lijst Ondersteunde Formaten"
 
-#: ../vdms_panels/sequence_to_video.py:651
+#: ../vdms_panels/sequence_to_video.py:650
 #, fuzzy
 #| msgid ""
 #| "SUMMARY\n"
@@ -4203,6 +4201,11 @@ msgstr ""
 #: ../vdms_threads/slideshow.py:50 ../vdms_threads/slideshow.py:141
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "Is 'ffmpeg' geïnstalleerd op uw systeem?"
+
+#, fuzzy
+#~| msgid "Choose a folder to save the selected preset"
+#~ msgid "One image only (use the selected one)"
+#~ msgstr "Kies een folder om de geselecteerde preset te bewaren"
 
 #, fuzzy
 #~| msgid "From an image sequence to a video file"

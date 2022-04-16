@@ -166,8 +166,7 @@ class SequenceToVideo(wx.Panel):
         boxctrl.Add(sizFormat)
 
         self.ckbx_static_img = wx.CheckBox(self, wx.ID_ANY,
-                                           _('One image only (use the '
-                                             'selected one)'))
+                                           _('Enable a single still image'))
         boxctrl.Add(self.ckbx_static_img, 0, wx.ALL | wx.EXPAND, 5)
         siz_pict = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_pict)
