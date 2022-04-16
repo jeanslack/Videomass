@@ -2189,7 +2189,7 @@ class AV_Conv(wx.Panel):
                                                  self.opt["OutputFormat"],
                                                  destin,
                                                  command,
-                                                 '',  # era None
+                                                 None,
                                                  '',
                                                  audnorm,
                                                  logname,
@@ -2242,7 +2242,7 @@ class AV_Conv(wx.Panel):
                                                  f_src,
                                                  self.opt["OutputFormat"],
                                                  destin,
-                                                 ['', ''],  # era None
+                                                 None,
                                                  [pass1, pass2],
                                                  '',
                                                  audnorm,
@@ -2280,7 +2280,7 @@ class AV_Conv(wx.Panel):
                                                  self.opt["OutputFormat"],
                                                  destin,
                                                  command,
-                                                 '',  # era None
+                                                 None,
                                                  '',
                                                  audnorm,
                                                  logname,
@@ -2424,7 +2424,7 @@ class AV_Conv(wx.Panel):
                                              self.opt["OutputFormat"],
                                              destin,
                                              command,
-                                             '',  # era None
+                                             None,
                                              '',
                                              audnorm,
                                              logname,

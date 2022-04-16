@@ -1,10 +1,8 @@
 videomass (4.0.0-1) UNRELEASED; urgency=medium
 
-  * [Presets Manager] added optional pre-input parameters. These params will be
-    placed before the first '-i' argument of the ffmpeg. Fix #102
-  * [NEW] added "Sequence to Video" feature with the ability to merge one or
+  * [NEW] added "Still Image Maker" feature with the ability to merge one or
     more images and the ability to add an audio file. Fix #102
-  * [NEW] added "Video to Sequence" feature.
+  * [NEW] added "From Video to Pictures" feature.
   * [Timeline editor] The timeline editor can be set to tune the steps the
     slider moves using up or down arrow to make more accurate the time
     selection.
@@ -15,8 +13,12 @@ videomass (4.0.0-1) UNRELEASED; urgency=medium
   * Ability to open all panels without the need to put files or url. Fix #105
   * [A/V Conversions] enable bitrate setting even with a single pass conversion
     by move CRF slider to -1. Fix #106
+  * Improved `Show logs` dialog during Refreshing and Clear actions.
+  * [Youtube Downloader] Fixed, interrupting a download the software freezes
+    and must be forced to stop it.
+  * Update locale and Italian language translation.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  , 14 Apr 2022 08:54:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 16 Apr 2022 09:41:00 +0200
 
 videomass (3.5.8-1) UNRELEASED; urgency=medium
 

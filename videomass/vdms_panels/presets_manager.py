@@ -240,10 +240,7 @@ class PrstPan(wx.Panel):
                                     wx.TE_PROCESS_ENTER
                                     )
         box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 5)
-        self.txt_1prein = wx.TextCtrl(self, wx.ID_ANY, "", size=(-1, -1),
-                                      style=wx.TE_PROCESS_ENTER
-                                      )
-        box_cmd1.Add(self.txt_1prein, 0, wx.ALL | wx.EXPAND, 5)
+
         box_cmd2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                   _("Two-Pass")), wx.VERTICAL
                                      )
@@ -253,12 +250,6 @@ class PrstPan(wx.Panel):
                                     wx.TE_PROCESS_ENTER
                                     )
         box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND, 5)
-
-        self.txt_2prein = wx.TextCtrl(self, wx.ID_ANY, "", size=(-1, -1),
-                                      style=wx.TE_PROCESS_ENTER
-                                      )
-        box_cmd2.Add(self.txt_2prein, 0, wx.ALL | wx.EXPAND, 5)
-
         self.SetSizer(sizer_base)
         self.Layout()
 
@@ -266,13 +257,9 @@ class PrstPan(wx.Panel):
         if OS == 'Darwin':
             self.txt_1cmd.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD))
             self.txt_2cmd.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD))
-            self.txt_1prein.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD))
-            self.txt_2prein.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD))
         else:
             self.txt_1cmd.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
             self.txt_2cmd.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
-            self.txt_1prein.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
-            self.txt_2prein.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
 
         # ------- tipips
         self.cmbx_prst.SetToolTip(_("Choose a preset and view its profiles"))
@@ -300,10 +287,6 @@ class PrstPan(wx.Panel):
         self.btn_refresh.SetToolTip(_("Update the presets list"))
         tip = (_('First pass of the selected profile'))
         self.txt_1cmd.SetToolTip(tip)
-        tip = (_("Additional pre-input arguments that will be "
-                 "placed before the first '-i' argument (optional)"))
-        self.txt_1prein.SetToolTip(tip)
-        self.txt_2prein.SetToolTip(tip)
         tip = (_('Second pass of the selected profile'))
         self.txt_2cmd.SetToolTip(tip)
 
@@ -394,8 +377,7 @@ class PrstPan(wx.Panel):
         self.list_ctrl.ClearAll()
         self.txt_1cmd.SetValue("")
         self.txt_2cmd.SetValue("")
-        self.txt_1prein.SetValue("")
-        self.txt_2prein.SetValue("")
+
         if self.array:
             del self.array[0:6]
         self.set_listctrl()
@@ -456,8 +438,7 @@ class PrstPan(wx.Panel):
         selected = event.GetText()  # event.GetText is a Name Profile
         self.txt_1cmd.SetValue("")
         self.txt_2cmd.SetValue("")
-        self.txt_1prein.SetValue("")
-        self.txt_2prein.SetValue("")
+
         del self.array[0:6]  # delete all: [0],[1],[2],[3],[4],[5]
 
         try:
@@ -480,10 +461,8 @@ class PrstPan(wx.Panel):
         if self.array[3]:
             self.txt_2cmd.Enable()
             self.txt_2cmd.AppendText(f'{self.array[3]}')  # cmd2 text ctrl
-            self.txt_2prein.Enable()
         else:
             self.txt_2cmd.Disable()
-            self.txt_2prein.Disable()
 
         sel = f'{self.cmbx_prst.GetValue()} - {self.array[0]}'
         self.parent.statusbar_msg(sel, None)
@@ -894,7 +873,6 @@ class PrstPan(wx.Panel):
         Build args string for one pass process
         """
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
-        prein1 = " ".join(self.txt_1prein.GetValue().split())
         valupdate = self.update_dict(cntmax, 'One passes')
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
         if ending.ShowModal() == wx.ID_OK:
@@ -903,7 +881,7 @@ class PrstPan(wx.Panel):
                                              outext,
                                              destdir,
                                              pass1,
-                                             prein1,  # era None
+                                             None,
                                              '',
                                              '',
                                              'presets_manager.log',
@@ -917,8 +895,6 @@ class PrstPan(wx.Panel):
         """
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
         pass2 = " ".join(self.txt_2cmd.GetValue().split())
-        prein1 = " ".join(self.txt_1prein.GetValue().split())
-        prein2 = " ".join(self.txt_2prein.GetValue().split())
         typeproc = 'twopass'
         valupdate = self.update_dict(cntmax, typeproc)
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
@@ -928,7 +904,7 @@ class PrstPan(wx.Panel):
                                              filesrc,
                                              outext,
                                              destdir,
-                                             [prein1, prein2],  # era None
+                                             None,
                                              [pass1, pass2],
                                              '',
                                              '',

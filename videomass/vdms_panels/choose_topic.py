@@ -106,12 +106,12 @@ class Choose_Topic(wx.Panel):
         self.youtube.SetBitmap(bmpYdl, wx.LEFT)
 
         self.slideshow = wx.Button(self, wx.ID_ANY,
-                                   _('Image Sequence to Video'),
+                                   _('Still Image Maker'),
                                    size=(300, -1), style=style)
         self.slideshow.SetBitmap(bmpSlideshow, wx.LEFT)
 
         self.videotoimages = wx.Button(self, wx.ID_ANY,
-                                       _('Video to Image Sequence'),
+                                       _('From Video to Pictures'),
                                        size=(300, -1), style=style)
         self.videotoimages.SetBitmap(bmpTopictures, wx.LEFT)
 

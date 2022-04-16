@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-12 10:57+0200\n"
-"PO-Revision-Date: 2022-04-12 10:59+0200\n"
+"POT-Creation-Date: 2022-04-16 12:49+0200\n"
+"PO-Revision-Date: 2022-04-16 12:51+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -897,7 +897,7 @@ msgstr ""
 msgid "Profile Name"
 msgstr "Nome Profilo"
 
-#: ../vdms_dialogs/presets_addnew.py:82 ../vdms_panels/presets_manager.py:410
+#: ../vdms_dialogs/presets_addnew.py:82 ../vdms_panels/presets_manager.py:392
 msgid "Description"
 msgstr "Descrizione"
 
@@ -1089,7 +1089,7 @@ msgstr ""
 #: ../vdms_dialogs/preferences.py:305 ../vdms_dialogs/preferences.py:325
 #: ../vdms_dialogs/preferences.py:341 ../vdms_frames/ffmpeg_conf.py:217
 #: ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:644
+#: ../vdms_panels/sequence_to_video.py:641
 msgid "Disabled"
 msgstr "Disabilitato"
 
@@ -1374,7 +1374,7 @@ msgid "ENABLED:"
 msgstr "ABILITATO:"
 
 #: ../vdms_frames/ffmpeg_conf.py:204 ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:644
+#: ../vdms_panels/sequence_to_video.py:641
 msgid "Enabled"
 msgstr "Abilitato"
 
@@ -1696,8 +1696,8 @@ msgstr ""
 msgid "Please Confirm"
 msgstr "Prego confermare"
 
-#: ../vdms_io/checkup.py:63 ../vdms_panels/sequence_to_video.py:532
-#: ../vdms_panels/sequence_to_video.py:556
+#: ../vdms_io/checkup.py:63 ../vdms_panels/sequence_to_video.py:529
+#: ../vdms_panels/sequence_to_video.py:553
 msgid ""
 "File does not exist:\n"
 "\n"
@@ -2047,28 +2047,20 @@ msgid "jump to the Concatenate Demuxer panel"
 msgstr "salta al pannello Concatenate Demuxer"
 
 #: ../vdms_main/main_frame.py:519
-#, fuzzy
-#| msgid "From an image sequence to a video file"
-msgid "Sequence to Video\tShift+I"
-msgstr "Da una sequenza di immagini a un file video"
+msgid "Still Image Maker\tShift+I"
+msgstr "Creatore di Presentazioni\tShift+I"
 
 #: ../vdms_main/main_frame.py:520
-#, fuzzy
-#| msgid "From an image sequence to a video file"
-msgid "jump to the Sequence to Video panel"
-msgstr "Da una sequenza di immagini a un file video"
+msgid "jump to the Still Image Maker panel"
+msgstr "salta al pannello Creatore di Presentazioni"
 
 #: ../vdms_main/main_frame.py:523
-#, fuzzy
-#| msgid "From an image sequence to a video file"
-msgid "Video to Sequence\tShift+S"
-msgstr "Da una sequenza di immagini a un file video"
+msgid "From Video to Pictures\tShift+S"
+msgstr "Dal Video alle Immagini\tShift+S"
 
 #: ../vdms_main/main_frame.py:524
-#, fuzzy
-#| msgid "jump to the Audio/Video Conversion panel"
-msgid "jump to the Video to Sequence panel"
-msgstr "salta al pannello conversioni Audio/Video"
+msgid "jump to the Video to Pictures panel"
+msgstr "salta al pannello dal Video alle Immagini"
 
 #: ../vdms_main/main_frame.py:527
 msgid "YouTube downloader\tShift+Y"
@@ -2095,8 +2087,6 @@ msgid "Opens the Videomass configuration folder"
 msgstr "Apre la cartella di configurazione di Videomass"
 
 #: ../vdms_main/main_frame.py:540
-#, fuzzy
-#| msgid "Logs folder"
 msgid "Log folder"
 msgstr "Cartella dei registri"
 
@@ -2217,10 +2207,8 @@ msgid "Help"
 msgstr "Aiuto"
 
 #: ../vdms_main/main_frame.py:685
-#, fuzzy
-#| msgid "Delete the selected profile"
 msgid "Open the selected files"
-msgstr "Cancella il profilo selezionato"
+msgstr "Apri i file selezionati"
 
 #: ../vdms_main/main_frame.py:736 ../vdms_main/main_frame.py:759
 msgid "No such folder '{}'"
@@ -2427,14 +2415,12 @@ msgid "Download"
 msgstr "Scarica"
 
 #: ../vdms_main/main_frame.py:1551
-#, fuzzy
-#| msgid "Invalid URL: \"{}\""
 msgid "ERROR: Invalid URL: \"{}\""
-msgstr "URL non valido: \"{}\""
+msgstr "ERRORE: URL non valido: \"{}\""
 
 #: ../vdms_main/main_frame.py:1555
-msgid "ERROR: Equal URLs found"
-msgstr ""
+msgid "ERROR: Some equal URLs found"
+msgstr "ERRORE: sono stati trovati alcuni URL uguali"
 
 #: ../vdms_main/main_frame.py:1604
 msgid "Videomass - Queued Files"
@@ -2473,13 +2459,11 @@ msgstr "Videomass - Concatenate Demuxer"
 
 #: ../vdms_main/main_frame.py:1943
 msgid "Videomass - From Video to Pictures"
-msgstr ""
+msgstr "Videomass - Dal Video alle Immagini"
 
 #: ../vdms_main/main_frame.py:2005
-#, fuzzy
-#| msgid "From an image sequence to a video file"
-msgid "Videomass - From Image Sequence to Video"
-msgstr "Da una sequenza di immagini a un file video"
+msgid "Videomass - Still Image Maker"
+msgstr "Videomass - Creatore di Presentazioni"
 
 #: ../vdms_main/main_frame.py:2044
 msgid "Viewing last log"
@@ -2597,7 +2581,7 @@ msgstr "Filtri Video"
 msgid "Preview"
 msgstr "Anteprima"
 
-#: ../vdms_panels/av_conversions.py:550 ../vdms_panels/sequence_to_video.py:193
+#: ../vdms_panels/av_conversions.py:550 ../vdms_panels/sequence_to_video.py:195
 msgid "Resizing"
 msgstr "Ridimensionamento"
 
@@ -2630,8 +2614,6 @@ msgid "Audio Properties"
 msgstr "Proprietà Audio"
 
 #: ../vdms_panels/av_conversions.py:623
-#, fuzzy
-#| msgid "Audio Stream Mapping"
 msgid "Audio Streams Mapping"
 msgstr "Mappatura Flussi Audio"
 
@@ -2854,8 +2836,8 @@ msgid "Unable to preview Video Stabilizer filter"
 msgstr "Impossibile visualizzare in anteprima il filtro stabilizzatore video"
 
 #: ../vdms_panels/av_conversions.py:1286
-#: ../vdms_panels/sequence_to_video.py:292
-#: ../vdms_panels/video_to_sequence.py:198
+#: ../vdms_panels/sequence_to_video.py:294
+#: ../vdms_panels/video_to_sequence.py:201
 msgid "A target file must be selected in the queued files"
 msgstr "È necessario selezionare un file di destinazione nei file in coda"
 
@@ -2872,7 +2854,7 @@ msgstr ""
 "\"{}\""
 
 #: ../vdms_panels/av_conversions.py:1348
-#: ../vdms_panels/sequence_to_video.py:319
+#: ../vdms_panels/sequence_to_video.py:321
 msgid "The file is not a frame or a video file"
 msgstr "Il file non è un frame o un file video"
 
@@ -2942,13 +2924,13 @@ msgstr "{} file in coda"
 msgid "Off"
 msgstr "Spento"
 
-#: ../vdms_panels/av_conversions.py:2501 ../vdms_panels/presets_manager.py:946
-#: ../vdms_panels/video_to_sequence.py:270
+#: ../vdms_panels/av_conversions.py:2501 ../vdms_panels/presets_manager.py:922
+#: ../vdms_panels/video_to_sequence.py:273
 msgid "Unset"
 msgstr "Non settato"
 
-#: ../vdms_panels/av_conversions.py:2504 ../vdms_panels/presets_manager.py:949
-#: ../vdms_panels/video_to_sequence.py:273
+#: ../vdms_panels/av_conversions.py:2504 ../vdms_panels/presets_manager.py:925
+#: ../vdms_panels/video_to_sequence.py:276
 msgid "start  {} | duration  {}"
 msgstr "inizio  {} | durata  {}"
 
@@ -3123,14 +3105,12 @@ msgid "YouTube Downloader"
 msgstr "YouTube Downloader"
 
 #: ../vdms_panels/choose_topic.py:109
-#, fuzzy
-#| msgid "From an image sequence to a video file"
-msgid "Image Sequence to Video"
-msgstr "Da una sequenza di immagini a un file video"
+msgid "Still Image Maker"
+msgstr "Creatore di Presentazioni"
 
 #: ../vdms_panels/choose_topic.py:114
-msgid "Video to Image Sequence"
-msgstr ""
+msgid "From Video to Pictures"
+msgstr "Dal Video alle Immagini"
 
 #: ../vdms_panels/choose_topic.py:133
 msgid ""
@@ -3168,10 +3148,13 @@ msgid ""
 "Create a video from a sequence of images, based on import order, with the "
 "ability to add an audio file."
 msgstr ""
+"Crea un video da una sequenza di immagini, in base all'ordine di "
+"importazione, con la possibilità di aggiungere un file audio."
 
 #: ../vdms_panels/choose_topic.py:151
 msgid "Extract images (frames) in jpg, png or bmp formats from your movies."
 msgstr ""
+"Estrai le immagini (frame) nei formati jpg, png o bmp dai tuoi filmati."
 
 #: ../vdms_panels/choose_topic.py:226
 msgid "The downloader is disabled. Check your preferences."
@@ -3244,44 +3227,40 @@ msgid "For more information, visit the official FFmpeg documentation:"
 msgstr ""
 "Per ulteriori informazioni, visita la documentazione ufficiale di FFmpeg:"
 
-#: ../vdms_panels/concatenate.py:154
+#: ../vdms_panels/concatenate.py:157
 msgid "From an image sequence to a video file"
 msgstr "Da una sequenza di immagini a un file video"
 
-#: ../vdms_panels/concatenate.py:159
+#: ../vdms_panels/concatenate.py:162
 msgid "Duration:"
 msgstr "Durata:"
 
-#: ../vdms_panels/concatenate.py:170 ../vdms_panels/video_to_sequence.py:119
+#: ../vdms_panels/concatenate.py:173 ../vdms_panels/video_to_sequence.py:122
 msgid "Output format:"
 msgstr "Formato in uscita:"
 
-#: ../vdms_panels/concatenate.py:193
-#, fuzzy
-#| msgid ""
-#| "Sets the duration between one image and another in seconds (from 1 to 100 "
-#| "sec.), default is 1 second"
+#: ../vdms_panels/concatenate.py:196
 msgid ""
 "Set the time interval between images in seconds (from 1 to 100 sec.), "
 "default is 1 second"
 msgstr ""
-"Imposta la durata tra un'immagine e l'altra in secondi (da 1 a 100 sec.), il "
-"valore predefinito è 1 secondo"
+"Imposta l'intervallo di tempo tra le immagini in secondi (da 1 a 100 sec.), "
+"il valore predefinito è 1 secondo"
 
-#: ../vdms_panels/concatenate.py:227
+#: ../vdms_panels/concatenate.py:230
 msgid "At least two files are required to perform concatenation."
 msgstr "Sono necessari almeno due file per eseguire la concatenazione."
 
-#: ../vdms_panels/concatenate.py:228 ../vdms_panels/concatenate.py:239
-#: ../vdms_panels/sequence_to_video.py:517
-#: ../vdms_panels/sequence_to_video.py:527
-#: ../vdms_panels/sequence_to_video.py:544
-#: ../vdms_panels/sequence_to_video.py:552
-#: ../vdms_panels/video_to_sequence.py:209
+#: ../vdms_panels/concatenate.py:231 ../vdms_panels/concatenate.py:242
+#: ../vdms_panels/sequence_to_video.py:514
+#: ../vdms_panels/sequence_to_video.py:524
+#: ../vdms_panels/sequence_to_video.py:541
+#: ../vdms_panels/sequence_to_video.py:549
+#: ../vdms_panels/video_to_sequence.py:212
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: ../vdms_panels/concatenate.py:236
+#: ../vdms_panels/concatenate.py:239
 msgid ""
 "The files do not have the same \"codec_types\", same \"sample_rate\" or same "
 "\"width\" or \"height\". Unable to proceed."
@@ -3289,14 +3268,14 @@ msgstr ""
 "I file non hanno gli stessi parametri come \"codec_types\", \"sample_rate"
 "\" , \"larghezza\" o \"altezza\". Impossibile procedere."
 
-#: ../vdms_panels/concatenate.py:288 ../vdms_panels/presets_manager.py:899
-#: ../vdms_panels/presets_manager.py:924
-#: ../vdms_panels/sequence_to_video.py:621
-#: ../vdms_panels/video_to_sequence.py:247
+#: ../vdms_panels/concatenate.py:291 ../vdms_panels/presets_manager.py:877
+#: ../vdms_panels/presets_manager.py:900
+#: ../vdms_panels/sequence_to_video.py:618
+#: ../vdms_panels/video_to_sequence.py:250
 msgid "Starts"
 msgstr "Avvio"
 
-#: ../vdms_panels/concatenate.py:311
+#: ../vdms_panels/concatenate.py:314
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3509,10 +3488,10 @@ msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr "Gli URL contengono playlist. Sei sicuro di voler continuare?"
 
 #: ../vdms_panels/youtubedl_ui.py:1030 ../vdms_panels/youtubedl_ui.py:1036
-#: ../vdms_panels/long_processing_task.py:495
-#: ../vdms_panels/presets_manager.py:532 ../vdms_panels/presets_manager.py:572
-#: ../vdms_panels/presets_manager.py:638 ../vdms_panels/presets_manager.py:664
-#: ../vdms_panels/presets_manager.py:826 ../vdms_panels/presets_manager.py:856
+#: ../vdms_panels/long_processing_task.py:503
+#: ../vdms_panels/presets_manager.py:511 ../vdms_panels/presets_manager.py:551
+#: ../vdms_panels/presets_manager.py:617 ../vdms_panels/presets_manager.py:643
+#: ../vdms_panels/presets_manager.py:805 ../vdms_panels/presets_manager.py:835
 msgid "Please confirm"
 msgstr "Prego confermare"
 
@@ -3553,7 +3532,7 @@ msgstr "Riproduci"
 msgid "File Name"
 msgstr "Nome File"
 
-#: ../vdms_panels/filedrop.py:227 ../vdms_panels/timeline.py:128
+#: ../vdms_panels/filedrop.py:227 ../vdms_panels/timeline.py:133
 msgid "Duration"
 msgstr "Durata"
 
@@ -3658,15 +3637,22 @@ msgstr ""
 msgid "...Finished"
 msgstr "...Terminato"
 
-#: ../vdms_panels/long_processing_task.py:471
+#: ../vdms_panels/long_processing_task.py:474
+msgid ""
+"Be patient, before interrupting the download in progress must be completed."
+msgstr ""
+"Sii paziente, prima di interrompere, il download in corso deve essere "
+"completato."
+
+#: ../vdms_panels/long_processing_task.py:479
 msgid "wait... I'm aborting"
 msgstr "attendi... Sto interrompendo"
 
-#: ../vdms_panels/long_processing_task.py:474
+#: ../vdms_panels/long_processing_task.py:482
 msgid "...Interrupted"
 msgstr "...Interrotto"
 
-#: ../vdms_panels/long_processing_task.py:492
+#: ../vdms_panels/long_processing_task.py:500
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
@@ -3718,24 +3704,24 @@ msgstr "Ricarica"
 msgid "Profiles"
 msgstr "Profili"
 
-#: ../vdms_panels/presets_manager.py:212 ../vdms_panels/presets_manager.py:350
-#: ../vdms_panels/presets_manager.py:370
+#: ../vdms_panels/presets_manager.py:212 ../vdms_panels/presets_manager.py:333
+#: ../vdms_panels/presets_manager.py:353
 msgid "Add"
 msgstr "Aggiungi"
 
-#: ../vdms_panels/presets_manager.py:216 ../vdms_panels/presets_manager.py:354
-#: ../vdms_panels/presets_manager.py:374
+#: ../vdms_panels/presets_manager.py:216 ../vdms_panels/presets_manager.py:337
+#: ../vdms_panels/presets_manager.py:357
 msgid "Delete"
 msgstr "Cancella"
 
-#: ../vdms_panels/presets_manager.py:220 ../vdms_panels/presets_manager.py:351
-#: ../vdms_panels/presets_manager.py:372
-#: ../vdms_panels/video_to_sequence.py:132
+#: ../vdms_panels/presets_manager.py:220 ../vdms_panels/presets_manager.py:334
+#: ../vdms_panels/presets_manager.py:355
+#: ../vdms_panels/video_to_sequence.py:135
 msgid "Edit"
 msgstr "Modifica"
 
-#: ../vdms_panels/presets_manager.py:224 ../vdms_panels/presets_manager.py:352
-#: ../vdms_panels/presets_manager.py:376
+#: ../vdms_panels/presets_manager.py:224 ../vdms_panels/presets_manager.py:335
+#: ../vdms_panels/presets_manager.py:359
 msgid "Duplicate"
 msgstr "Duplica"
 
@@ -3743,90 +3729,84 @@ msgstr "Duplica"
 msgid "One-Pass"
 msgstr "Passata Uno"
 
-#: ../vdms_panels/presets_manager.py:248
+#: ../vdms_panels/presets_manager.py:245
 msgid "Two-Pass"
 msgstr "Passata Due"
 
-#: ../vdms_panels/presets_manager.py:278
+#: ../vdms_panels/presets_manager.py:265
 msgid "Choose a preset and view its profiles"
 msgstr "Scegli un preset e visualizza i suoi profili"
 
-#: ../vdms_panels/presets_manager.py:279
+#: ../vdms_panels/presets_manager.py:266
 msgid "Create a new profile and save it in the selected preset"
 msgstr "Crea un nuovo profilo e salvalo nel preset selezionato"
 
-#: ../vdms_panels/presets_manager.py:281
+#: ../vdms_panels/presets_manager.py:268
 msgid "Delete the selected profile"
 msgstr "Cancella il profilo selezionato"
 
-#: ../vdms_panels/presets_manager.py:282
+#: ../vdms_panels/presets_manager.py:269
 msgid "Edit the selected profile"
 msgstr "Modifica il profilo selezionato"
 
-#: ../vdms_panels/presets_manager.py:283
+#: ../vdms_panels/presets_manager.py:270
 msgid "Create a new preset"
 msgstr "Crea un nuovo preset"
 
-#: ../vdms_panels/presets_manager.py:285
+#: ../vdms_panels/presets_manager.py:272
 msgid "Remove the selected preset from the Presets Manager"
 msgstr "Rimuovi il preset selezionato dal Gestionale Predefiniti"
 
-#: ../vdms_panels/presets_manager.py:287
+#: ../vdms_panels/presets_manager.py:274
 msgid "Export selected preset as copy"
 msgstr "Esporta il preset selezionato come copia"
 
-#: ../vdms_panels/presets_manager.py:289
+#: ../vdms_panels/presets_manager.py:276
 msgid "Export entire presets folder as copy"
 msgstr "Esporta l'intera directory dei preset come copia"
 
-#: ../vdms_panels/presets_manager.py:291
+#: ../vdms_panels/presets_manager.py:278
 msgid "Import a new preset or update an existing one"
 msgstr "Importa un nuovo preset o aggiornane uno di esistente"
 
-#: ../vdms_panels/presets_manager.py:293
+#: ../vdms_panels/presets_manager.py:280
 msgid "Import a group of presets from a folder and update existing ones"
 msgstr ""
 "Importa un gruppo di preset da una cartella e aggiorna quelli esistenti"
 
-#: ../vdms_panels/presets_manager.py:296
+#: ../vdms_panels/presets_manager.py:283
 msgid "Replace the selected preset with the Videomass default one"
 msgstr "Sostituisci il preset selezionato con quello predefinito di Videomass"
 
-#: ../vdms_panels/presets_manager.py:298
+#: ../vdms_panels/presets_manager.py:285
 msgid "Retrieve all Videomass default presets"
 msgstr "Recupera tutti i preset predefiniti di Videomass"
 
-#: ../vdms_panels/presets_manager.py:300
+#: ../vdms_panels/presets_manager.py:287
 msgid "Update the presets list"
 msgstr "Aggiorna la lista dei presets"
 
-#: ../vdms_panels/presets_manager.py:301
+#: ../vdms_panels/presets_manager.py:288
 msgid "First pass of the selected profile"
 msgstr "Primo passaggio del profilo selezionato"
 
-#: ../vdms_panels/presets_manager.py:303
-msgid ""
-"Additional pre-input arguments that will be placed before the first '-i' "
-"argument (optional)"
-msgstr ""
-
-#: ../vdms_panels/presets_manager.py:307
+#: ../vdms_panels/presets_manager.py:290
 msgid "Second pass of the selected profile"
 msgstr "Secondo passaggio del profilo selezionato"
 
-#: ../vdms_panels/presets_manager.py:409
+#: ../vdms_panels/presets_manager.py:391
 msgid "Name"
 msgstr "Nome"
 
-#: ../vdms_panels/presets_manager.py:411
+#: ../vdms_panels/presets_manager.py:393
 msgid "Output Format"
 msgstr "Formato in Uscita"
 
-#: ../vdms_panels/presets_manager.py:412
+#: ../vdms_panels/presets_manager.py:394
 msgid "Supported Format List"
 msgstr "Elenco formati supportati"
 
-#: ../vdms_panels/presets_manager.py:430 ../vdms_panels/presets_manager.py:474
+#: ../vdms_panels/presets_manager.py:412 ../vdms_panels/presets_manager.py:455
 msgid ""
 "ERROR: Typing error on JSON keys: {}\n"
 "\n"
@@ -3838,15 +3818,15 @@ msgstr ""
 "File: \"{}\"\n"
 "Chiave malformata ?"
 
-#: ../vdms_panels/presets_manager.py:498
+#: ../vdms_panels/presets_manager.py:477
 msgid "Enter name for new preset"
 msgstr "Inserisci il nome per il nuovo preset"
 
-#: ../vdms_panels/presets_manager.py:511
+#: ../vdms_panels/presets_manager.py:490
 msgid "Cannot save current data in file '{}'."
 msgstr "Impossibile salvare i dati correnti nel file '{}'."
 
-#: ../vdms_panels/presets_manager.py:515
+#: ../vdms_panels/presets_manager.py:494
 msgid ""
 "'Successful!\n"
 "\n"
@@ -3856,7 +3836,7 @@ msgstr ""
 "\n"
 "È stato creato un nuovo preset vuoto."
 
-#: ../vdms_panels/presets_manager.py:529
+#: ../vdms_panels/presets_manager.py:508
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
 "\n"
@@ -3866,7 +3846,7 @@ msgstr ""
 "\n"
 "Sarà spostato nella sotto-cartella \"Removals\" sulla cartella dei presets."
 
-#: ../vdms_panels/presets_manager.py:540
+#: ../vdms_panels/presets_manager.py:519
 msgid ""
 "{}\n"
 "\n"
@@ -3876,40 +3856,40 @@ msgstr ""
 "\n"
 "Spiacente, rimozione non riuscita, impossibile continuare.."
 
-#: ../vdms_panels/presets_manager.py:550
+#: ../vdms_panels/presets_manager.py:529
 #, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
 msgstr "Il preset \"{0}\" è stato rimosso con successo"
 
-#: ../vdms_panels/presets_manager.py:565
+#: ../vdms_panels/presets_manager.py:544
 msgid "Choose a folder to save the selected preset"
 msgstr "Scegli una cartella per salvare il preset selezionato"
 
-#: ../vdms_panels/presets_manager.py:570
+#: ../vdms_panels/presets_manager.py:549
 msgid "A file with this name already exists, do you want to overwrite it?"
 msgstr "Esiste già un file con lo stesso nome, vuoi sovrascriverlo?"
 
-#: ../vdms_panels/presets_manager.py:583
+#: ../vdms_panels/presets_manager.py:562
 msgid "The preset was exported successfully"
 msgstr "Il preset è stato esportato con successo"
 
-#: ../vdms_panels/presets_manager.py:594
+#: ../vdms_panels/presets_manager.py:573
 msgid "Choose a folder to export all presets"
 msgstr "Scegli una cartella per esportare tutti i preset"
 
-#: ../vdms_panels/presets_manager.py:603
+#: ../vdms_panels/presets_manager.py:582
 msgid "All presets have been exported successfully"
 msgstr "Tutti i preset sono stati esportati correttamente"
 
-#: ../vdms_panels/presets_manager.py:615
+#: ../vdms_panels/presets_manager.py:594
 msgid "Import a new preset"
 msgstr "Importa un nuovo preset"
 
-#: ../vdms_panels/presets_manager.py:626
+#: ../vdms_panels/presets_manager.py:605
 msgid "Error, invalid preset: \"{}\""
 msgstr "Errore, preset non valido: \"{}\""
 
-#: ../vdms_panels/presets_manager.py:634
+#: ../vdms_panels/presets_manager.py:613
 msgid ""
 "This preset already exists and is about to be updated. Don't worry, it will "
 "keep all your saved profiles.\n"
@@ -3921,11 +3901,11 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:651
+#: ../vdms_panels/presets_manager.py:630
 msgid "A new preset was successfully imported"
 msgstr "Un nuovo preset è stato importato con successo"
 
-#: ../vdms_panels/presets_manager.py:661
+#: ../vdms_panels/presets_manager.py:640
 msgid ""
 "This will update the presets database. Don't worry, it will keep all your "
 "saved profiles.\n"
@@ -3937,15 +3917,15 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:668
+#: ../vdms_panels/presets_manager.py:647
 msgid "Import a new presets folder"
 msgstr "Importa una nuova cartella dei preset"
 
-#: ../vdms_panels/presets_manager.py:690
+#: ../vdms_panels/presets_manager.py:669
 msgid "The presets database has been successfully updated"
 msgstr "Il database dei preset è stato aggiornato con successo"
 
-#: ../vdms_panels/presets_manager.py:700
+#: ../vdms_panels/presets_manager.py:679
 msgid ""
 "Be careful! The selected preset will be overwritten with the default one. "
 "Your profiles may be deleted!\n"
@@ -3957,20 +3937,20 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:703 ../vdms_panels/presets_manager.py:729
+#: ../vdms_panels/presets_manager.py:682 ../vdms_panels/presets_manager.py:708
 msgid "Warning"
 msgstr "Avvertimento"
 
-#: ../vdms_panels/presets_manager.py:712
+#: ../vdms_panels/presets_manager.py:691
 msgid "Sorry, this preset is not part of default Videomass presets."
 msgstr ""
 "Spiacente, questo preset non fa parte dei presets predefiniti di Videomass."
 
-#: ../vdms_panels/presets_manager.py:718
+#: ../vdms_panels/presets_manager.py:697
 msgid "Successful recovery"
 msgstr "Ripristino riuscito"
 
-#: ../vdms_panels/presets_manager.py:727
+#: ../vdms_panels/presets_manager.py:706
 msgid ""
 "Be careful! This action will restore all presets to default ones. Your "
 "profiles may be deleted!\n"
@@ -3982,24 +3962,24 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:737
+#: ../vdms_panels/presets_manager.py:716
 msgid "All default presets have been successfully recovered"
 msgstr "Tutti i preset predefiniti sono stati ripristinati con successo"
 
-#: ../vdms_panels/presets_manager.py:756
+#: ../vdms_panels/presets_manager.py:735
 msgid "Create a new profile on \"{}\" preset"
 msgstr "Crea un nuovo profilo sul preset \"{}\""
 
-#: ../vdms_panels/presets_manager.py:775 ../vdms_panels/presets_manager.py:796
-#: ../vdms_panels/presets_manager.py:820 ../vdms_panels/presets_manager.py:843
+#: ../vdms_panels/presets_manager.py:754 ../vdms_panels/presets_manager.py:775
+#: ../vdms_panels/presets_manager.py:799 ../vdms_panels/presets_manager.py:822
 msgid "First select a profile in the list"
 msgstr "Dovresti selezionare un profilo nella lista"
 
-#: ../vdms_panels/presets_manager.py:780
+#: ../vdms_panels/presets_manager.py:759
 msgid "Edit profile of the \"{}\" preset"
 msgstr "Modifica il profilo sul preset \"{}\""
 
-#: ../vdms_panels/presets_manager.py:824
+#: ../vdms_panels/presets_manager.py:803
 msgid ""
 "Are you sure you want to delete the selected profile? It will no longer be "
 "possible to recover it."
@@ -4007,7 +3987,7 @@ msgstr ""
 "Sei sicuro di voler eliminare il profilo selezionato? non sarà più possibile "
 "recuperarlo."
 
-#: ../vdms_panels/presets_manager.py:851
+#: ../vdms_panels/presets_manager.py:830
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
@@ -4015,11 +3995,11 @@ msgstr ""
 "Il comando del profilo selezionato è stato cambiato manualmente.\n"
 "Vuoi applicarlo durante il processo di conversione?"
 
-#: ../vdms_panels/presets_manager.py:860
+#: ../vdms_panels/presets_manager.py:839
 msgid "Don't show this dialog again"
 msgstr "Non mostrare ancora questo dialogo"
 
-#: ../vdms_panels/presets_manager.py:953
+#: ../vdms_panels/presets_manager.py:929
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -4045,23 +4025,28 @@ msgstr "Aggiungi gli URL qui sotto"
 msgid "Delete all text from the list"
 msgstr "Elimina tutto il testo dall'elenco"
 
-#: ../vdms_panels/timeline.py:122
+#: ../vdms_panels/timeline.py:127
 msgid "Seek"
 msgstr "Cerca"
 
-#: ../vdms_panels/timeline.py:132
+#: ../vdms_panels/timeline.py:137
 msgid "Seek to given time position"
 msgstr "Cerca una data posizione temporale"
 
-#: ../vdms_panels/timeline.py:133
+#: ../vdms_panels/timeline.py:138
 msgid "Total duration"
 msgstr "Durata totale"
 
-#: ../vdms_panels/timeline.py:151
-msgid "Increase the time selection accuracy (zoom)"
+#: ../vdms_panels/timeline.py:139
+msgid ""
+"Set the amount of steps the slider moves using 'UP' or 'DOWN' arrow and 'UP' "
+"or 'DOWN' page, to quickly set a more accurate time selection"
 msgstr ""
+"Imposta quanto deve muoversi il dispositivo di scorrimento utilizzando la "
+"freccia e la pagina 'SU' o 'GIÙ', per impostare rapidamente una selezione "
+"del tempo più accurata"
 
-#: ../vdms_panels/timeline.py:297
+#: ../vdms_panels/timeline.py:348
 msgid ""
 "The maximum time refers to the file with the longest duration, it will be "
 "set to 01:20:00.000 otherwise."
@@ -4072,15 +4057,17 @@ msgstr ""
 #: ../vdms_panels/sequence_to_video.py:58
 msgid "Images need to be resized, please use Resizing function."
 msgstr ""
+"Le immagini devono essere ridimensionate, utilizzare la funzione di "
+"ridimensionamento."
 
 #: ../vdms_panels/sequence_to_video.py:75
 msgid ""
 "\n"
-"1. Import one or more files such as JPG, PNG and BMP formats, then select "
-"one.\n"
+"1. Import one or more image files such as JPG, PNG and BMP formats, then "
+"select one.\n"
 "\n"
 "2. Use the Resizing function to resize images which have different sizes "
-"such as width and height. In other cases it is optional.\n"
+"such as width and height. It is optional in other cases.\n"
 "\n"
 "3. Use the Timeline editor (CTRL+T) to set the time interval between images "
 "by scrolling the DURATION slider.\n"
@@ -4089,76 +4076,61 @@ msgid ""
 "\n"
 "\n"
 "The produced video will have the name of the selected file in the 'Queued "
-"File' list, which will be saved in a folder named 'Sequence_to_Video'\n"
-"followed by a progressive numerical ID, in the path you specify."
+"File' list, which will be saved in a folder named 'Still-Images'\n"
+"with a progressive digit, in the path you specify."
 msgstr ""
+"\n"
+"1. Importa uno o più file immagine nei formati JPG, PNG e BMP, quindi "
+"selezionane uno.\n"
+"\n"
+"2. Utilizzare la funzione Ridimensionamento per ridimensionare le immagini "
+"che hanno dimensioni diverse come larghezza e altezza. È opzionale negli "
+"altri casi.\n"
+"\n"
+"3. Utilizzare l'editor Timeline (CTRL+T) per impostare l'intervallo di tempo "
+"tra le immagini scorrendo il cursore DURATA.\n"
+"\n"
+"4. Avvia la conversione.\n"
+"\n"
+"\n"
+"Il video prodotto avrà il nome del file selezionato nell'elenco 'File in "
+"coda', il quale verrà salvato in una cartella denominata 'Still-Images'\n"
+"con una cifra progressiva, nel percorso specificato."
 
-#: ../vdms_panels/sequence_to_video.py:166
-#, fuzzy
-#| msgid "First pass of the selected profile"
-msgid "Create a static video from the selected image"
-msgstr "Primo passaggio del profilo selezionato"
+#: ../vdms_panels/sequence_to_video.py:169
+msgid "Enable a single still image"
+msgstr "Abilita un fermo immagine singolo"
 
-#: ../vdms_panels/sequence_to_video.py:200
+#: ../vdms_panels/sequence_to_video.py:202
 msgid "Include audio file"
-msgstr ""
+msgstr "Includi file audio"
 
-#: ../vdms_panels/sequence_to_video.py:203
-msgid "Play the video until audio ends (disable shortest)"
+#: ../vdms_panels/sequence_to_video.py:205
+msgid "Play the video until audio ends (disable shortest option)"
 msgstr ""
+"Riproduci il video fino al termine dell'audio (disabilita opzione shortest)"
 
-#: ../vdms_panels/sequence_to_video.py:209
-#: ../vdms_panels/sequence_to_video.py:399
+#: ../vdms_panels/sequence_to_video.py:211
+#: ../vdms_panels/sequence_to_video.py:401
 msgid "Open audio file"
-msgstr ""
+msgstr "Apri file audio"
 
-#: ../vdms_panels/sequence_to_video.py:227
-#, fuzzy
-#| msgid "Additional Presets"
+#: ../vdms_panels/sequence_to_video.py:229
 msgid "Additional arguments"
-msgstr "Presets Aggiuntivi"
+msgstr "Argomenti aggiuntivi"
 
-#: ../vdms_panels/sequence_to_video.py:516
-#: ../vdms_panels/sequence_to_video.py:543
-#: ../vdms_panels/video_to_sequence.py:208
-#, fuzzy
-#| msgid "Invalid URL: \"{}\""
+#: ../vdms_panels/sequence_to_video.py:513
+#: ../vdms_panels/sequence_to_video.py:540
+#: ../vdms_panels/video_to_sequence.py:211
 msgid "Invalid file: '{}'"
-msgstr "URL non valido: \"{}\""
+msgstr "File non valido: '{}'"
 
-#: ../vdms_panels/sequence_to_video.py:526
-#: ../vdms_panels/sequence_to_video.py:551
-#, fuzzy
-#| msgid "Supported Format List"
+#: ../vdms_panels/sequence_to_video.py:523
+#: ../vdms_panels/sequence_to_video.py:548
 msgid "Unsupported format '{}'"
-msgstr "Elenco formati supportati"
+msgstr "Formato non supportato '{}'"
 
-#: ../vdms_panels/sequence_to_video.py:654
-#, fuzzy
-#| msgid "Total duration"
-msgid "Static video duration"
-msgstr "Durata totale"
-
-#: ../vdms_panels/sequence_to_video.py:656
-msgid "Time interval between images"
-msgstr ""
-
-#: ../vdms_panels/sequence_to_video.py:658
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "SUMMARY\n"
-#| "\n"
-#| "Queued File\n"
-#| "Output Format                        \n"
-#| "Web Optimize\n"
-#| "Audio Codec\n"
-#| "Audio bit-rate                        \n"
-#| "Audio Channels\n"
-#| "Audio Rate\n"
-#| "Bit per Sample                        \n"
-#| "Audio Normalization\n"
-#| "Time Period                        \n"
-#| "Input Audio Map"
+#: ../vdms_panels/sequence_to_video.py:650
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -4168,26 +4140,27 @@ msgid ""
 "Output Format\n"
 "Attional arguments                      \n"
 "Audio file\n"
-"Shortest                      \n"
+"Shortest\n"
 "Resize\n"
-"Framerate\n"
+"Pre-input                      \n"
 "Frame per Second (FPS)\n"
-"{msg}                      \n"
-"Total Video duration"
+"Still image duration                      \n"
+"Overall video duration"
 msgstr ""
 "SOMMARIO\n"
 "\n"
-"File in Coda\n"
-"Formato in Uscita                        \n"
-"Ottimizza per il Web\n"
-"Codec Audio\n"
-"Audio bit-rate                   \n"
-"Canali Audio\n"
-"Frequenza Audio\n"
-"Bit per Campione                   \n"
-"Normalizzazione Audio\n"
-"Segmento Tempo                        \n"
-"Mappa Audio in Ingresso"
+"File da Processare\n"
+"Nome in Uscita\n"
+"Destinazione\n"
+"Formato in Uscita\n"
+"Argomenti Aggiuntivi\n"
+"File Audio\n"
+"Shortest\n"
+"Ridimensiona\n"
+"Pre-input\n"
+"Frame per Secondo (FPS)\n"
+"Durata dell'immagine fissa\n"
+"Durata totale del video"
 
 #: ../vdms_panels/video_to_sequence.py:45
 msgid ""
@@ -4205,16 +4178,35 @@ msgid ""
 "5. Start the conversion.\n"
 "\n"
 "\n"
-"The images produced will be saved in a folder named 'Video_to_Sequence' "
-"followed by a progressive numerical ID,\n"
+"The images produced will be saved in a folder named 'Video-to-Frames' with a "
+"progressive digit, \n"
 "in the path you specify."
 msgstr ""
+"\n"
+"1. Importa uno o più file video, quindi selezionane uno.\n"
+"\n"
+"2. Per selezionare un intervallo di tempo utilizzare l'editor Timeline (CTRL"
+"+T) scorrendo i cursori DURATION e SEEK.\n"
+"\n"
+"3. Impostare il controllo FPS (fotogrammi al secondo); più alto è questo "
+"valore, più immagini verranno estratte.\n"
+"\n"
+"4. Selezionare un formato di output (jpg, png, bmp).\n"
+"\n"
+"5. Avvia la conversione.\n"
+"\n"
+"\n"
+"Le immagini prodotte verranno salvate in una cartella denominata 'Video-to-"
+"Frames' con una cifra progressiva,\n"
+"nel percorso da te specificato."
 
-#: ../vdms_panels/video_to_sequence.py:147
+#: ../vdms_panels/video_to_sequence.py:150
 msgid "Set FPS control from 0.1 to 30.0 fps, default is 0.2 fps"
 msgstr ""
+"Imposta il controllo FPS da 0,1 a 30,0 fps, l'impostazione predefinita è 0,2 "
+"fps"
 
-#: ../vdms_panels/video_to_sequence.py:282
+#: ../vdms_panels/video_to_sequence.py:285
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -4225,12 +4217,62 @@ msgid ""
 "Time Period\n"
 "Destination Folder"
 msgstr ""
+"SOMMARIO\n"
+"\n"
+"File Selezionato\n"
+"Formato in Uscita\n"
+"Rate (fps)\n"
+"Argomenti Personalizzati\n"
+"Segmento Tempo\n"
+"Cartella di Destinazione"
 
 #: ../vdms_threads/one_pass.py:57 ../vdms_threads/picture_exporting.py:53
 #: ../vdms_threads/two_pass_ebu.py:56 ../vdms_threads/two_pass.py:58
 #: ../vdms_threads/slideshow.py:50 ../vdms_threads/slideshow.py:141
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' è installato sul tuo sistema?"
+
+#~ msgid "Only one image selected (or the only one available)"
+#~ msgstr "Una sola immagine selezionata (o l'unica disponibile)"
+
+#~ msgid "One image only (use the selected one)"
+#~ msgstr "Una sola immagine (usa quella selezionata)"
+
+#~ msgid "One Image duration"
+#~ msgstr "Still image duration"
+
+#~ msgid "Time interval between images"
+#~ msgstr "Intervallo di tempo tra le immagini"
+
+#, fuzzy
+#~| msgid "From an image sequence to a video file"
+#~ msgid "Sequence to Video\tShift+I"
+#~ msgstr "Da una sequenza di immagini a un file video"
+
+#, fuzzy
+#~| msgid "From an image sequence to a video file"
+#~ msgid "jump to the Sequence to Video panel"
+#~ msgstr "Da una sequenza di immagini a un file video"
+
+#, fuzzy
+#~| msgid "From an image sequence to a video file"
+#~ msgid "Videomass - From Image Sequence to Video"
+#~ msgstr "Da una sequenza di immagini a un file video"
+
+#, fuzzy
+#~| msgid "From an image sequence to a video file"
+#~ msgid "Image Sequence to Video"
+#~ msgstr "Da una sequenza di immagini a un file video"
+
+#, fuzzy
+#~| msgid "First pass of the selected profile"
+#~ msgid "Create a static video from the selected image"
+#~ msgstr "Primo passaggio del profilo selezionato"
+
+#, fuzzy
+#~| msgid "Total duration"
+#~ msgid "Static video duration"
+#~ msgstr "Durata totale"
 
 #~ msgid "No files added yet"
 #~ msgstr "Ancora nessun file aggiunto"
@@ -4373,9 +4415,6 @@ msgstr "'ffmpeg' è installato sul tuo sistema?"
 #~ "\n"
 #~ "Le modifiche non sono ancora state applicate.\n"
 #~ "Vuoi salvare le tue modifiche adesso?"
-
-#~ msgid "Videomass - Save Changes"
-#~ msgstr "Videomass - Salva modifiche"
 
 #~ msgid "Cache Settings"
 #~ msgstr "Impostazioni della Cache"

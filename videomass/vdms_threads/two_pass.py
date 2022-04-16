@@ -64,7 +64,6 @@ class TwoPass(Thread):
         self.stop_work_thread = False  # process terminate
         self.filelist = varargs[1]  # list of files (elements)
         self.passlist = varargs[5]  # comand list set for double-pass
-        self.preinput = varargs[4]  # additional args before -i arg (list)
         self.outputdir = varargs[3]  # output path
         self.extoutput = varargs[2]  # format (extension)
         self.duration = duration  # duration list
@@ -101,7 +100,7 @@ class TwoPass(Thread):
             pass1 = (f'"{TwoPass.appdata["ffmpeg_cmd"]}" '
                      f'{TwoPass.appdata["ffmpegloglev"]} '
                      f'{TwoPass.appdata["ffmpeg+params"]} {self.time_seq} '
-                     f'{self.preinput[0]} -i "{files}" {self.passlist[0]} '
+                     f'-i "{files}" {self.passlist[0]} '
                      f'{TwoPass.appdata["ffthreads"]} -y {self.nul}'
                      )
             self.count += 1
@@ -180,7 +179,7 @@ class TwoPass(Thread):
             pass2 = (f'"{TwoPass.appdata["ffmpeg_cmd"]}" '
                      f'{TwoPass.appdata["ffmpegloglev"]} '
                      f'{TwoPass.appdata["ffmpeg+params"]} {self.time_seq} '
-                     f'{self.preinput[1]} -i "{files}" {self.passlist[1]} '
+                     f'-i "{files}" {self.passlist[1]} '
                      f'{volume} {TwoPass.appdata["ffthreads"]} -y "{outfile}"'
                      )
             count = f'File {self.count}/{self.countmax} - Pass Two'
