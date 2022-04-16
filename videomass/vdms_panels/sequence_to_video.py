@@ -437,6 +437,7 @@ class SequenceToVideo(wx.Panel):
         """
         Set ffmpeg arguments for a slideshow.
         """
+        loop = ''
         if self.ckbx_audio.IsChecked():
             if self.opt["Shortest"][0]:
                 duration = getms(timeline) * len(self.parent.file_src)
@@ -444,15 +445,18 @@ class SequenceToVideo(wx.Panel):
                 sec = round(getsec(timeline))
             else:
                 self.opt["Clock"] = clockms(self.opt["ADuration"])
-                sec = round(getsec(self.parent.time_seq.split()[3]))
+                #sec = round(getsec(self.parent.time_seq.split()[3]))
+                sec = round(getsec(timeline))
                 duration = self.opt["ADuration"]
+                loop = f'-loop 1 -t {self.opt["Clock"]}'
+
         else:
             duration = getms(timeline) * len(self.parent.file_src)
             self.opt["Clock"] = clockms(duration)
             sec = round(getsec(timeline))
 
-        framerate = '1/1' if not sec else f'1/{sec}'
-        self.opt["Preinput"] = f'-framerate {framerate}'
+        framerate = '-framerate 1/1' if not sec else f'-framerate 1/{sec}'
+        self.opt["Preinput"] = f'{loop} {framerate}'
         self.opt["Interval"] = sec
 
         if self.txt_addparams.IsEnabled():

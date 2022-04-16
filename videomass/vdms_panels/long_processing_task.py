@@ -317,7 +317,8 @@ class LogOut(wx.Panel):
             else:
                 self.barprog.SetValue(ms)
 
-            percentage = round((ms / duration) * 100 if duration != 0 else 100)
+            percentage = round((ms / duration) * 100 if
+                               duration != 0 else 100)
             out = [a for a in "=".join(output.split()).split('=') if a]
             ffprog = []
             for x, y in pairwise(out):
