@@ -1,10 +1,8 @@
 videomass (4.0.0-1) UNRELEASED; urgency=medium
 
-  * [Presets Manager] added optional pre-input parameters. These params will be
-    placed before the first '-i' argument of the ffmpeg. Fix #102
-  * [NEW] added "Sequence to Video" feature with the ability to merge one or
+  * [NEW] added "Still Image Maker" feature with the ability to merge one or
     more images and the ability to add an audio file. Fix #102
-  * [NEW] added "Video to Sequence" feature.
+  * [NEW] added "From Video to Pictures" feature.
   * [Timeline editor] The timeline editor can be set to tune the steps the
     slider moves using up or down arrow to make more accurate the time
     selection.
