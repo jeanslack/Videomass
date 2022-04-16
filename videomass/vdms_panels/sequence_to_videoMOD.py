@@ -72,18 +72,18 @@ class SequenceToVideo(wx.Panel):
 
     """
     VIOLET = '#D64E93'
-    MSG_1 = _("\n1. Import one or more image files such as JPG, PNG and BMP "
+    MSG_1 = _("\n1. Import one or more files such as JPG, PNG and BMP "
               "formats, then select one."
               "\n\n2. Use the Resizing function to resize images which "
               "have different sizes such as width and height. "
-              "It is optional in other cases."
+              "In other cases it is optional."
               "\n\n3. Use the Timeline editor (CTRL+T) to set the time "
               "interval between images by scrolling the DURATION slider."
               "\n\n4. Start the conversion."
               "\n\n\nThe produced video will have the name of the selected "
               "file in the 'Queued File' list, which will be saved in a "
-              "folder named 'Still-Images'\nwith a progressive digit, "
-              "in the path you specify.")
+              "folder named 'Sequence_to_Video'\nfollowed by a progressive "
+              "numerical ID, in the path you specify.")
     # ----------------------------------------------------------------#
 
     def __init__(self, parent, icons):
@@ -100,7 +100,7 @@ class SequenceToVideo(wx.Panel):
                     "RESIZE": "", "ADuration": 0, "AudioMerging": "",
                     "Map": "-map 0:v?", "Shortest": ["", "Disabled"],
                     "Interval": "", "Clock": "00:00:00:000",
-                    "Preinput": "1/0", "Fps": ["fps=10,", "10"],
+                    "Framerate": "1/0", "Fps": ["fps=10,", "10"],
                     }
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpresize = get_bmp(icons['scale'], ((16, 16)))
@@ -166,8 +166,8 @@ class SequenceToVideo(wx.Panel):
         boxctrl.Add(sizFormat)
 
         self.ckbx_static_img = wx.CheckBox(self, wx.ID_ANY,
-                                           _('One image only (use the '
-                                             'selected one)'))
+                                           _('Create a video with a still '
+                                             'image'))
         boxctrl.Add(self.ckbx_static_img, 0, wx.ALL | wx.EXPAND, 5)
         siz_pict = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_pict)
@@ -204,7 +204,7 @@ class SequenceToVideo(wx.Panel):
         siz_audio.Add(self.ckbx_audio, 0, wx.ALL | wx.EXPAND, 5)
         self.ckbx_shortest = wx.CheckBox(self, wx.ID_ANY,
                                          _('Play the video until audio '
-                                           'ends (disable shortest option)'))
+                                           'ends (disable shortest)'))
         siz_audio.Add(self.ckbx_shortest, 0, wx.ALL | wx.EXPAND, 5)
         self.ckbx_shortest.Disable()
         siz_afile = wx.BoxSizer(wx.HORIZONTAL)
@@ -260,7 +260,7 @@ class SequenceToVideo(wx.Panel):
         """
         self.opt["Scale"], self.opt["Setdar"] = "", ""
         self.opt["Setsar"], self.opt["RESIZE"] = "", ""
-        self.opt["Preinput"] = "1/0"
+        self.opt["Framerate"] = "1/0"
         self.opt["Shortest"] = ["", "Disabled"]
         self.opt["Interval"] = ""
         self.opt["Clock"] = "00:00:00.000"
@@ -443,17 +443,22 @@ class SequenceToVideo(wx.Panel):
                 duration = getms(timeline) * len(self.parent.file_src)
                 self.opt["Clock"] = clockms(duration)
                 sec = round(getsec(timeline))
+                framerate = '1/1' if not sec else f'1/{sec}'
             else:
                 self.opt["Clock"] = clockms(self.opt["ADuration"])
                 sec = round(getsec(self.parent.time_seq.split()[3]))
                 duration = self.opt["ADuration"]
+                if len(self.parent.file_src) == 1:
+                    framerate = '1'
+                else:
+                    framerate = '1/1' if not sec else f'1/{sec}'
         else:
             duration = getms(timeline) * len(self.parent.file_src)
             self.opt["Clock"] = clockms(duration)
             sec = round(getsec(timeline))
+            framerate = '1/1' if not sec else f'1/{sec}'
 
-        framerate = '1/1' if not sec else f'1/{sec}'
-        self.opt["Preinput"] = f'-framerate {framerate}'
+        self.opt["Framerate"] = f'-framerate {framerate}'
         self.opt["Interval"] = sec
 
         if self.txt_addparams.IsEnabled():
@@ -468,39 +473,42 @@ class SequenceToVideo(wx.Panel):
         return cmd_2, duration
     # ---------------------------------------------------------
 
-    def build_command_loop_image(self, timeline):
-        """
-        Set ffmpeg arguments for a static video,
-        the checkbox `create a static video from image` is checked.
+    #def build_command_loop_image(self, timeline):
+        #"""
+        #Set ffmpeg arguments for a static video,
+        #the checkbox `create a static video from image` is checked.
 
-        """
-        if self.ckbx_audio.IsChecked():
-            if self.opt["Shortest"][0]:
-                duration = getms(timeline)
-                self.opt["Clock"] = timeline
-                sec = round(getsec(timeline))
-            else:
-                self.opt["Clock"] = clockms(self.opt["ADuration"])
-                duration = self.opt["ADuration"]
-                sec = round(self.opt["ADuration"] / 1000)
-        else:
-            duration = getms(timeline)
-            self.opt["Clock"] = timeline
-            sec = round(duration / 1000)
+        #"""
+        #if self.ckbx_audio.IsChecked():
+            #if self.opt["Shortest"][0]:
+                #duration = getms(timeline)
+                #self.opt["Clock"] = timeline
+                #sec = round(getsec(timeline))
+                #framerate = '1/1' if not sec else f'1/{sec}'
+            #else:
+                #self.opt["Clock"] = clockms(self.opt["ADuration"])
+                #duration = self.opt["ADuration"]
+                #sec = round(self.opt["ADuration"] / 1000)
+                #framerate = '1'
+        #else:
+            #duration = getms(timeline)
+            #self.opt["Clock"] = timeline
+            #sec = round(duration / 1000)
+            #framerate = '1/1' if not sec else f'1/{sec}'
 
-        self.opt["Preinput"] = f'-loop 1 -t {self.opt["Clock"]}'
-        self.opt["Interval"] = sec
+        #self.opt["Framerate"] = f'-framerate {framerate}'
+        #self.opt["Interval"] = sec
 
-        if self.txt_addparams.IsEnabled():
-            addparam = self.txt_addparams.GetValue()
-        else:
-            addparam = ''
+        #if self.txt_addparams.IsEnabled():
+            #addparam = self.txt_addparams.GetValue()
+        #else:
+            #addparam = ''
 
-        cmd_2 = (f'{self.opt["AudioMerging"]} {addparam} -vf '
-                 f'"{self.opt["Fps"][0]}format=yuv420p" {self.opt["Map"]} '
-                 f'{self.opt["Shortest"][0]}')
+        #cmd_2 = (f'{self.opt["AudioMerging"]} {addparam} -vf '
+                 #f'"{self.opt["Fps"][0]}format=yuv420p" {self.opt["Map"]} '
+                 #f'{self.opt["Shortest"][0]}')
 
-        return cmd_2, duration
+        #return cmd_2, duration
     # ---------------------------------------------------------
 
     def check_to_slide(self, fsource):
@@ -533,29 +541,29 @@ class SequenceToVideo(wx.Panel):
         return None
     # ---------------------------------------------------------
 
-    def check_to_loop(self, typemedia, clicked):
-        """
-        Check the compatibility of the selected image and file exist.
-        """
-        if 'video' not in typemedia or 'sequence' not in typemedia:
-            wx.MessageBox(_("Invalid file: '{}'").format(clicked),
-                          _('ERROR'), wx.ICON_ERROR, self)
-            return True
+    #def check_to_loop(self, typemedia, clicked):
+        #"""
+        #Check the compatibility of the selected image and file exist.
+        #"""
+        #if 'video' not in typemedia or 'sequence' not in typemedia:
+            #wx.MessageBox(_("Invalid file: '{}'").format(clicked),
+                          #_('ERROR'), wx.ICON_ERROR, self)
+            #return True
 
-        supp = ('.jpeg', '.jpg', '.png', '.bmp',
-                '.JPEG', '.JPG', '.PNG', '.BMP')
-        ext = os.path.splitext(clicked)[1]
-        if ext not in supp:
-            wx.MessageBox(_("Unsupported format '{}'").format(ext),
-                          _('ERROR'), wx.ICON_ERROR, self)
-            return True
+        #supp = ('.jpeg', '.jpg', '.png', '.bmp',
+                #'.JPEG', '.JPG', '.PNG', '.BMP')
+        #ext = os.path.splitext(clicked)[1]
+        #if ext not in supp:
+            #wx.MessageBox(_("Unsupported format '{}'").format(ext),
+                          #_('ERROR'), wx.ICON_ERROR, self)
+            #return True
 
-        if not os.path.isfile(os.path.abspath(clicked)):
-            wx.MessageBox(_('File does not exist:'
-                            '\n\n"{}"\n').format(clicked),
-                          "Videomass", wx.ICON_ERROR, self)
-            return True
-        return None
+        #if not os.path.isfile(os.path.abspath(clicked)):
+            #wx.MessageBox(_('File does not exist:'
+                            #'\n\n"{}"\n').format(clicked),
+                          #"Videomass", wx.ICON_ERROR, self)
+            #return True
+        #return None
     # ---------------------------------------------------------
 
     def get_args_line(self):
@@ -591,23 +599,23 @@ class SequenceToVideo(wx.Panel):
             destdir = self.parent.outpath_ffmpeg
 
         basename = os.path.basename(fget[0].rsplit('.')[0])
-        outputdir = make_newdir_with_id(destdir, 'Still-Images_1')
+        outputdir = make_newdir_with_id(destdir, 'Sequence_to_Video_1')
         destdir = os.path.join(outputdir, f"{basename}.mkv")
 
-        if self.ckbx_static_img.IsChecked():
-            countmax = 1
-            files = (fget[0],)
-            prop = self.parent.fileDnDTarget.flCtrl.GetItemText(fget[1], 3)
-            if self.check_to_loop(prop, fget[0]) is True:
+        #if self.ckbx_static_img.IsChecked():
+            #countmax = 1
+            #files = (fget[0],)
+            #prop = self.parent.fileDnDTarget.flCtrl.GetItemText(fget[1], 3)
+            #if self.check_to_loop(prop, fget[0]) is True:
+                #return
+        #else:
+        files = fsource
+        countmax = len(files)
+        if self.check_to_slide(files) is True:
+            return
+        if not self.opt["RESIZE"] and countmax != 1:
+            if check_images_size(self.parent.data_files):
                 return
-        else:
-            files = fsource
-            countmax = len(files)
-            if self.check_to_slide(files) is True:
-                return
-            if not self.opt["RESIZE"] and countmax != 1:
-                if check_images_size(self.parent.data_files):
-                    return
 
         args = self.get_args_line()  # get args for command line
 
@@ -624,7 +632,7 @@ class SequenceToVideo(wx.Panel):
                                              outputdir,
                                              destdir,
                                              (self.opt["RESIZE"], args[0]),
-                                             self.opt["Preinput"],
+                                             self.opt["Framerate"],
                                              args[1],  # duration
                                              None,
                                              'sequence_to_video.log',
@@ -641,22 +649,26 @@ class SequenceToVideo(wx.Panel):
         time = self.opt["Clock"]
         resize = _('Enabled') if self.opt["RESIZE"] else _('Disabled')
         short = _(self.opt["Shortest"][1])
-        preinput = self.opt["Preinput"]
+        frate = self.opt["Framerate"].split()[1]
         duration = self.opt["Interval"]
         if self.ckbx_edit.IsChecked():
             addargs = self.txt_addparams.GetValue()
         else:
             addargs = ''
 
+        if self.ckbx_static_img.IsChecked():
+            msg = _('Static video duration')
+        else:
+            msg = _('Time interval between images')
+
         formula = (_(f"SUMMARY\n\nFile to process\nOutput filename\
                       \nDestination\nOutput Format\nAttional arguments\
-                      \nAudio file\nShortest\nResize\nPre-input\
-                      \nFrame per Second (FPS)\nStill image duration\
-                      \nOverall video duration")
-                   )
+                      \nAudio file\nShortest\
+                      \nResize\nFramerate\nFrame per Second (FPS)\n{msg}\
+                      \nTotal Video duration"))
         dictions = (f'\n\n{count}\n{newfile}\n{destdir}\n{ext}\n{addargs}'
                     f'\n{self.txt_apath.GetValue()}\n{short}'
-                    f'\n{resize}\n{preinput}\n{self.opt["Fps"][1]}'
+                    f'\n{resize}\n{frate}\n{self.opt["Fps"][1]}'
                     f'\n{duration} Seconds\n{time}'
                     )
         return formula, dictions

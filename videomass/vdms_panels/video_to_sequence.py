@@ -50,8 +50,8 @@ class VideoToSequence(wx.Panel):
               "\n\n4. Select an output format (jpg, png, bmp)."
               "\n\n5. Start the conversion."
               "\n\n\nThe images produced will be saved in a folder "
-              "named 'Video_to_Sequence' followed by a progressive "
-              "numerical ID,\nin the path you specify.")
+              "named 'Video-to-Frames' with a progressive digit, "
+              "\nin the path you specify.")
     # ----------------------------------------------------------------#
 
     def __init__(self, parent):
@@ -234,7 +234,7 @@ class VideoToSequence(wx.Panel):
         """
         basename = os.path.basename(filename.rsplit('.')[0])
         destdir = destdir[0]  # specified dest
-        outputdir = make_newdir_with_id(destdir, 'Video_to_Sequence_1')
+        outputdir = make_newdir_with_id(destdir, 'Video-to-Frames_1')
         fileout = "{0}-%d.{1}".format(basename, self.cmb_frmt.GetValue())
         outfilename = os.path.join(outputdir, fileout)
 

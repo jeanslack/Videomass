@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Apr 14, 2022 V.4.0.0
+Apr 16, 2022 V.4.0.0
 
   * [Presets Manager] added optional pre-input parameters. These params will be
     placed before the first '-i' argument of the ffmpeg. Fix #102
@@ -24,6 +24,10 @@ Apr 14, 2022 V.4.0.0
   * Ability to open all panels without the need to put files or url. Fix #105
   * [A/V Conversions] enable bitrate setting even with a single pass conversion
     by move CRF slider to -1. Fix #106
+  * Improved `Show logs` dialog during Refreshing and Clear actions.
+  * [Youtube Downloader] Fixed, interrupting a download the software freezes
+    and must be forced to stop it.
+  * Update locale and Italian language translation.
 
 +------------------------------------+
 Mar 24, 2022 V.3.5.8

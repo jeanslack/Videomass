@@ -468,10 +468,18 @@ class LogOut(wx.Panel):
         The user change idea and was stop process
         """
         self.thread_type.stop()
-        self.parent.statusbar_msg(_("wait... I'm aborting"), 'GOLDENROD',
-                                  LogOut.WHITE)
-        self.thread_type.join()
-        self.parent.statusbar_msg(_("...Interrupted"), None)
+
+        if self.thread_type.__class__.__name__ == 'YdlDownloader':
+
+            self.parent.statusbar_msg(_("Be patient, before interrupting the "
+                                        "download in progress must be "
+                                        "completed."), 'GOLDENROD',
+                                      LogOut.WHITE)
+        else:
+            self.parent.statusbar_msg(_("wait... I'm aborting"), 'GOLDENROD',
+                                    LogOut.WHITE)
+            self.thread_type.join()
+            self.parent.statusbar_msg(_("...Interrupted"), None)
         self.abort = True
 
         event.Skip()

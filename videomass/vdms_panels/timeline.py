@@ -136,10 +136,10 @@ class Timeline(wx.Panel):
         self.paneltime.SetBackgroundColour(wx.Colour(Timeline.RULER_BKGRD))
         self.sldseek.SetToolTip(_("Seek to given time position"))
         self.sldcut.SetToolTip(_("Total duration"))
-        self.cmbx_accuracy.SetToolTip(_('Set the amount of steps the slider '
-                                        'moves using up or down arrow and up '
-                                        'or down page to quickly set a more '
-                                        'accurate time selection'))
+        self.cmbx_accuracy.SetToolTip(_("Set the amount of steps the slider "
+                                        "moves using 'UP' or 'DOWN' arrow and "
+                                        "'UP' or 'DOWN' page, to quickly set a "
+                                        "more accurate time selection"))
 
         # ----------------------Layout----------------------#
 

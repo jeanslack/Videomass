@@ -516,12 +516,12 @@ class MainFrame(wx.Frame):
                                          "panel"))
 
         self.slides = goButton.Append(wx.ID_ANY,
-                                      _("Sequence to Video\tShift+I"),
-                                      _("jump to the Sequence to Video "
+                                      _("Still Image Maker\tShift+I"),
+                                      _("jump to the Still Image Maker "
                                         "panel"))
         self.toseq = goButton.Append(wx.ID_ANY,
-                                     _("Video to Sequence\tShift+S"),
-                                     _("jump to the Video to Sequence "
+                                     _("From Video to Pictures\tShift+S"),
+                                     _("jump to the Video to Pictures "
                                        "panel"))
         goButton.AppendSeparator()
         dscrp = (_("YouTube downloader\tShift+Y"),
@@ -1552,7 +1552,7 @@ class MainFrame(wx.Frame):
                                       url), "Videomass", wx.ICON_ERROR, self)
                         return
                 if len(set(data)) != len(data):  # equal URLS
-                    wx.MessageBox(_("ERROR: Equal URLs found"),
+                    wx.MessageBox(_("ERROR: Some equal URLs found"),
                                   "Videomass", wx.ICON_ERROR, self)
                     return
 
@@ -2002,7 +2002,7 @@ class MainFrame(wx.Frame):
         else:
             self.statusbar_msg(_('Ready'), None)
 
-        self.SetTitle(_('Videomass - From Image Sequence to Video'))
+        self.SetTitle(_('Videomass - Still Image Maker'))
         self.view_Timeline(self)  # set timeline status
         self.toolbar.Show()
         self.openmedia.Enable(True)

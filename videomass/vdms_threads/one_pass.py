@@ -68,7 +68,6 @@ class OnePass(Thread):
         self.stop_work_thread = False  # process terminate
         self.filelist = varargs[1]  # list of files (items)
         self.command = varargs[4]  # comand set on single pass
-        self.preinput = varargs[5]  # additional args before -i arg
         self.outputdir = varargs[3]  # output path
         self.extoutput = varargs[2]  # format (extension)
         self.duration = duration  # duration list
@@ -104,7 +103,7 @@ class OnePass(Thread):
 
             cmd = (f'"{OnePass.appdata["ffmpeg_cmd"]}" {self.time_seq} '
                    f'{OnePass.appdata["ffmpegloglev"]} '
-                   f'{OnePass.appdata["ffmpeg+params"]} {self.preinput} -i '
+                   f'{OnePass.appdata["ffmpeg+params"]} -i '
                    f'"{files}" {self.command} {volume} '
                    f'{OnePass.appdata["ffthreads"]} -y "{outfile}"')
 

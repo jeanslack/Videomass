@@ -4,9 +4,9 @@ Name: showlogs.py
 Porpose: show logs data
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.25.2021
+Rev: Apr.15.2022
 Code checker:
     - flake8: --ignore F821, W504, F401
     - pylint: --ignore E0602, E1101, C0415, E0401, C0103
@@ -167,6 +167,9 @@ class ShowLogs(wx.Dialog):
         update data with new incoming
 
         """
+        sel = self.log_select.GetFocusedItem()
+        selitem = sel if sel != -1 else 0
+
         self.logdata.clear()
         self.log_select.DeleteAllItems()
         index = 0
@@ -179,8 +182,8 @@ class ShowLogs(wx.Dialog):
                 index += 1
 
         if index:
-            self.log_select.Focus(0)  # make the line the current line
-            self.log_select.Select(0, on=1)  # default event selection
+            self.log_select.Focus(selitem)  # make the line the current line
+            self.log_select.Select(selitem, on=1)  # default event selection
             self.on_select(self)
     # --------------------------------------------------------------------#
 
