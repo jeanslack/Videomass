@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.12.2022
+Rev: April.18.2022
 Code checker: flake8, pylint
 ########################################################
 
@@ -220,8 +220,8 @@ class PageTwo(wx.Panel):
 
             if status[0] == 'not installed':
                 wx.MessageBox(_("'{}' is not installed on your computer. "
-                                "Install it or indicate another location "
-                                "by clicking the 'Locate' button.").format(x),
+                                "Install it or indicate another location by "
+                                "clicking the 'Locate' button.").format(exe),
                               'Videomass: Warning', wx.ICON_EXCLAMATION, self)
                 return
 

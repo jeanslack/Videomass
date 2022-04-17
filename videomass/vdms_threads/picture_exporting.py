@@ -76,6 +76,7 @@ class PicturesFromVideo(Thread):
         """
         Subprocess initialize thread.
         """
+        filedone = []
         cmd = (f'"{PicturesFromVideo.appdata["ffmpeg_cmd"]}" '
                f'{self.time_seq} {PicturesFromVideo.appdata["ffmpegloglev"]} '
                f'{PicturesFromVideo.appdata["ffmpeg+params"]} -i '
@@ -127,6 +128,7 @@ class PicturesFromVideo(Thread):
                              )  # append exit error number
 
                 else:  # status ok
+                    filedone.append(self.fname)
                     wx.CallAfter(pub.sendMessage,
                                  "COUNT_EVT",
                                  count='',
@@ -146,7 +148,7 @@ class PicturesFromVideo(Thread):
                          end='error',
                          )
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT", msg=None)
+        wx.CallAfter(pub.sendMessage, "END_EVT", msg=filedone)
     # --------------------------------------------------------------------#
 
     def stop(self):

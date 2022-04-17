@@ -163,6 +163,7 @@ class SlideshowMaker(Thread):
         """
         Subprocess initialize thread.
         """
+        filedone = []
         with tempfile.TemporaryDirectory() as tempdir:  # make tmp dir
             tp = temporary_processing(self.filelist,
                                       tempdir,
@@ -170,11 +171,11 @@ class SlideshowMaker(Thread):
                                       self.logname,
                                       )
             if tp is not None:
-                self.end_process(None)
+                self.end_process(filedone)
                 return
 
             if self.stop_work_thread:  # break second 'for' loop
-                self.end_process(None)
+                self.end_process(filedone)
                 return
 
             # ------------------------------- make video
@@ -235,6 +236,7 @@ class SlideshowMaker(Thread):
                         time.sleep(1)
 
                     else:  # status ok
+                        filedone = self.filelist
                         wx.CallAfter(pub.sendMessage,
                                      "COUNT_EVT",
                                      count='',
@@ -253,14 +255,14 @@ class SlideshowMaker(Thread):
                              duration=0,
                              end='error',
                              )
-        self.end_process(None)
+        self.end_process(filedone)
 
-    def end_process(self, msg):
+    def end_process(self, filedone):
         """
         The process is finished
         """
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT", msg=msg)
+        wx.CallAfter(pub.sendMessage, "END_EVT", msg=filedone)
 
     def stop(self):
         """

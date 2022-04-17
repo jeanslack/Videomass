@@ -348,7 +348,7 @@ def make_newdir_with_id(destdir, name):
     else:
         os.makedirs(newdir, mode=0o777)
 
-    return os.path.join(destdir, newdir)
+    return newdir
 # ------------------------------------------------------------------#
 
 
