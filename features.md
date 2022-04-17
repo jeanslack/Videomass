@@ -25,8 +25,11 @@ downloader.
 - No ads
 - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
 - Batch processing.
-- Advanced log management.
-- Multi language support (English, Italian, Russian, Dutch, Portuguese-BR, Spanish )
+- Log file automatically saved.
+- Multi-panels, switch between panels using keyboard shortcuts.
+- Audio video encoding.
+- Download videos from hundreds of sites.
+- Multi language support (English, Italian, Russian, Dutch, Portuguese-BR, Spanish)
 
 ## Using FFmpeg
 {: .bg-green-300}
@@ -36,9 +39,13 @@ downloader.
 - Possibility to create your new presets and profiles from scratch.
 - Has useful presets to start with.
 - Supports all [formats](https://ffmpeg.org/ffmpeg-formats.html) and [codecs](https://ffmpeg.org/ffmpeg-codecs.html) available with FFmpeg.
-- Displaying information from streams analyzer.
+- Madia file info and stream analyzer.
+- Shows the estimated time of arrival during encodings.
+- Concatenate.
+- Create video from still image and audio file.
+- Extract images from video
 - has useful tools for evaluating the supported features of a specific FFmpeg build.
-- Audio map indexing.
+- Audio stream mapping using indexes.
 - Advanced dialogs for setting video filters such as:
     - Resizing 
     - Cropping
@@ -48,11 +55,12 @@ downloader.
     - Stabilization
 - Audio filters for volume normalization:
     - PEAK, RMS and [EBU-R128](http://ffmpeg.org/ffmpeg-filters.html#loudnorm) normalizers.
-    - PEAK and RMS volume analysis.
+    - PEAK and RMS volume analysis reporting.
     - Ability to apply volume normalization only for certain audio streams in videos.
 - Timeline editor:
     - Convenient display for viewing the time selection.
     - Duration and seek are set with the slider controls.
+- ...and much more
 
 ## Using youtube-dl or yt-dlp
 {: .bg-green-300}

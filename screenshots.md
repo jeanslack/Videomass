@@ -8,9 +8,11 @@ nav_order: 3
 
 ---
 
-Screenshots made on Debian 10 buster with KDE Plasma desktop and wxPython version 4.1.1    
+These screenshots were made on Devuan Chimaera 4.0 (KDE Plasma desktop) using wxPython version 4.1.1    
 
 ![Image](/images/screenshots/HomePanel.png)   
+
+![Image](/images/screenshots/PresetsManager.png)   
 
 ![Image](/images/screenshots/crop-filter.png)   
 

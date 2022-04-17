@@ -69,16 +69,20 @@ to date with the original project. The project development page can be found
 
 ## Translators
 
-- Italian translation by jeanslack
+- Italian translation by [Gianluca Pernigotto](https://github.com/jeanslack)
 - Russian translation by ChourS
-- Dutch translation by Roelof Berkepeis
+- Dutch translation by [Roelof Berkepeis](https://github.com/tissatussa) and [johannesdedoper](https://github.com/johannesdedoper)
 - Spanish translation by katnatek from [https://blogdrake.net/](https://blogdrake.net/) 
 - Portuguese (Brazialian) translation by Samuel
 
 ---
 
-## Special Thanks
+## Special Thanks to:
 
-To **Roelof Berkepeis** and **ChourS** for their suggestions and valuable help.
+- **[Roelof Berkepeis](https://github.com/tissatussa)**
+- **ChourS** from Russia
+- **[johannesdedoper](https://github.com/johannesdedoper)**
+
+For their suggestions and invaluable help.
 
 
