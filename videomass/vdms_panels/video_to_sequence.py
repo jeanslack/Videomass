@@ -258,7 +258,7 @@ class VideoToSequence(wx.Panel):
                                              None,
                                              None,
                                              None,
-                                             'video_to_sequence.log',
+                                             'from_video_to_pictures.log',
                                              1,
                                              False,  # reserved
                                              )

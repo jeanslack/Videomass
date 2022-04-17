@@ -630,7 +630,7 @@ class SequenceToVideo(wx.Panel):
                                              self.opt["Preinput"],
                                              args[1],  # duration
                                              None,
-                                             'sequence_to_video.log',
+                                             'still_image_maker.log',
                                              countmax,
                                              skiptimeline=True
                                              )
