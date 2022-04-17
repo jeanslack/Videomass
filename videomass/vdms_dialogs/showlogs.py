@@ -45,8 +45,8 @@ class ShowLogs(wx.Dialog):
                 'ffplay.log',
                 'AppImage_Updates.log',
                 'concatenate_demuxer.log',
-                'video_to_sequence.log',
-                'sequence_to_video.log'
+                'from_video_to_pictures.log',
+                'still_image_maker.log'
                 )
 
     def __init__(self, parent, dirlog, OS):

@@ -145,7 +145,7 @@ class Choose_Topic(wx.Panel):
         tip = (_('Concatenate multiple media files based on import '
                  'order without re-encoding'))
         self.conc.SetToolTip(tip)
-        tip = (_('Create a video from a sequence of images, based on import '
+        tip = (_('Create video from a sequence of images, based on import '
                  'order, with the ability to add an audio file.'))
         self.slideshow.SetToolTip(tip)
         tip = (_('Extract images (frames) in jpg, png or '

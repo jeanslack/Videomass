@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-16 12:49+0200\n"
+"POT-Creation-Date: 2022-04-17 12:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -921,7 +921,7 @@ msgstr ""
 #: ../vdms_dialogs/preferences.py:305 ../vdms_dialogs/preferences.py:325
 #: ../vdms_dialogs/preferences.py:341 ../vdms_frames/ffmpeg_conf.py:217
 #: ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:641
+#: ../vdms_panels/sequence_to_video.py:645
 msgid "Disabled"
 msgstr ""
 
@@ -1188,7 +1188,7 @@ msgid "ENABLED:"
 msgstr ""
 
 #: ../vdms_frames/ffmpeg_conf.py:204 ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:641
+#: ../vdms_panels/sequence_to_video.py:645
 msgid "Enabled"
 msgstr ""
 
@@ -1463,8 +1463,8 @@ msgstr ""
 msgid "Please Confirm"
 msgstr ""
 
-#: ../vdms_io/checkup.py:63 ../vdms_panels/sequence_to_video.py:529
-#: ../vdms_panels/sequence_to_video.py:553
+#: ../vdms_io/checkup.py:63 ../vdms_panels/sequence_to_video.py:533
+#: ../vdms_panels/sequence_to_video.py:557
 msgid ""
 "File does not exist:\n"
 "\n"
@@ -2736,7 +2736,7 @@ msgstr ""
 
 #: ../vdms_panels/choose_topic.py:148
 msgid ""
-"Create a video from a sequence of images, based on import order, with the "
+"Create video from a sequence of images, based on import order, with the "
 "ability to add an audio file."
 msgstr ""
 
@@ -2813,10 +2813,10 @@ msgid "At least two files are required to perform concatenation."
 msgstr ""
 
 #: ../vdms_panels/concatenate.py:231 ../vdms_panels/concatenate.py:242
-#: ../vdms_panels/sequence_to_video.py:514
-#: ../vdms_panels/sequence_to_video.py:524
-#: ../vdms_panels/sequence_to_video.py:541
-#: ../vdms_panels/sequence_to_video.py:549
+#: ../vdms_panels/sequence_to_video.py:518
+#: ../vdms_panels/sequence_to_video.py:528
+#: ../vdms_panels/sequence_to_video.py:545
+#: ../vdms_panels/sequence_to_video.py:553
 #: ../vdms_panels/video_to_sequence.py:212
 msgid "ERROR"
 msgstr ""
@@ -2829,7 +2829,7 @@ msgstr ""
 
 #: ../vdms_panels/concatenate.py:291 ../vdms_panels/presets_manager.py:877
 #: ../vdms_panels/presets_manager.py:900
-#: ../vdms_panels/sequence_to_video.py:618
+#: ../vdms_panels/sequence_to_video.py:622
 #: ../vdms_panels/video_to_sequence.py:250
 msgid "Starts"
 msgstr ""
@@ -3015,7 +3015,7 @@ msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr ""
 
 #: ../vdms_panels/youtubedl_ui.py:1030 ../vdms_panels/youtubedl_ui.py:1036
-#: ../vdms_panels/long_processing_task.py:503
+#: ../vdms_panels/long_processing_task.py:504
 #: ../vdms_panels/presets_manager.py:511 ../vdms_panels/presets_manager.py:551
 #: ../vdms_panels/presets_manager.py:617 ../vdms_panels/presets_manager.py:643
 #: ../vdms_panels/presets_manager.py:805 ../vdms_panels/presets_manager.py:835
@@ -3142,38 +3142,38 @@ msgstr ""
 msgid "Stops current process"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:418
+#: ../vdms_panels/long_processing_task.py:419
 msgid "Fatal Error !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:429
+#: ../vdms_panels/long_processing_task.py:430
 msgid "Get your files at the destination you specified"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:437
-#: ../vdms_panels/long_processing_task.py:444
+#: ../vdms_panels/long_processing_task.py:438
+#: ../vdms_panels/long_processing_task.py:445
 msgid ""
 "Check the current output or read the related log file for more information."
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:449
+#: ../vdms_panels/long_processing_task.py:450
 msgid "...Finished"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:474
+#: ../vdms_panels/long_processing_task.py:475
 msgid ""
 "Be patient, before interrupting the download in progress must be completed."
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:479
+#: ../vdms_panels/long_processing_task.py:480
 msgid "wait... I'm aborting"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:482
+#: ../vdms_panels/long_processing_task.py:483
 msgid "...Interrupted"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:500
+#: ../vdms_panels/long_processing_task.py:501
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
@@ -3569,18 +3569,18 @@ msgstr ""
 msgid "Additional arguments"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:513
-#: ../vdms_panels/sequence_to_video.py:540
+#: ../vdms_panels/sequence_to_video.py:517
+#: ../vdms_panels/sequence_to_video.py:544
 #: ../vdms_panels/video_to_sequence.py:211
 msgid "Invalid file: '{}'"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:523
-#: ../vdms_panels/sequence_to_video.py:548
+#: ../vdms_panels/sequence_to_video.py:527
+#: ../vdms_panels/sequence_to_video.py:552
 msgid "Unsupported format '{}'"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:650
+#: ../vdms_panels/sequence_to_video.py:654
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3637,6 +3637,6 @@ msgstr ""
 
 #: ../vdms_threads/one_pass.py:57 ../vdms_threads/picture_exporting.py:53
 #: ../vdms_threads/two_pass_ebu.py:56 ../vdms_threads/two_pass.py:58
-#: ../vdms_threads/slideshow.py:50 ../vdms_threads/slideshow.py:141
+#: ../vdms_threads/slideshow.py:50 ../vdms_threads/slideshow.py:140
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr ""

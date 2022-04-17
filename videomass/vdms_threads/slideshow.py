@@ -66,13 +66,14 @@ def temporary_processing(*varargs):
         prognum += 1
 
         tmpf = os.path.join(tmpdir, f'IMAGE_{prognum}.png')
-        cmd = (f'"{appdata["ffmpeg_cmd"]}" '
-               f'{appdata["ffmpegloglev"]} '
-               f'{appdata["ffmpeg+params"]} '
-               f'-i "{files}" {cmdargs} "{tmpf}"'
-               )
+        cmd_1 = (f'"{appdata["ffmpeg_cmd"]}" '
+                 f'{appdata["ffmpegloglev"]} '
+                 f'{appdata["ffmpeg+params"]} '
+                 f'-i "{files}" {cmdargs} "{tmpf}"'
+                 )
+        logwrite(cmd_1, '', logname)
         if not OS == 'Windows':
-            cmd_1 = shlex.split(cmd)
+            cmd_1 = shlex.split(cmd_1)
         try:
             with Popen(cmd_1,
                        stderr=subprocess.PIPE,
@@ -102,8 +103,6 @@ def temporary_processing(*varargs):
                              duration=0,
                              status=0,
                              )
-                logwrite(cmd, '', logname)
-
         except (OSError, FileNotFoundError) as err:  # cmd not found
             excepterr = f"{err}\n  {NOT_EXIST_MSG}"
             wx.CallAfter(pub.sendMessage,
