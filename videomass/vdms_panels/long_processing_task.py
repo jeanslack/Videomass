@@ -472,12 +472,12 @@ class LogOut(wx.Panel):
 
         if self.thread_type.__class__.__name__ == 'YdlDownloader':
 
-            self.parent.statusbar_msg(_("Be patient, before interrupting the "
-                                        "download in progress must be "
-                                        "completed."), 'GOLDENROD',
+            self.parent.statusbar_msg(_("wait... all operations will be "
+                                        "stopped at the end of the download "
+                                        "in progress."), 'GOLDENROD',
                                       LogOut.WHITE)
         else:
-            self.parent.statusbar_msg(_("wait... I'm aborting"), 'GOLDENROD',
+            self.parent.statusbar_msg(_("wait... I'm interrupting"), 'GOLDENROD',
                                     LogOut.WHITE)
             self.thread_type.join()
             self.parent.statusbar_msg(_("...Interrupted"), None)

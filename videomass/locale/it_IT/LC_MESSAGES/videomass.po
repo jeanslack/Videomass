@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 4.0.0\n"
+"Project-Id-Version: Videomass 4.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-17 12:02+0200\n"
-"PO-Revision-Date: 2022-04-17 12:03+0200\n"
+"POT-Creation-Date: 2022-04-18 21:30+0200\n"
+"PO-Revision-Date: 2022-04-18 21:34+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Poedit 2.4.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: ../gui_app.py:176
+#: ../gui_app.py:178
 msgid ""
 "Permission denied: {}\n"
 "\n"
@@ -30,7 +30,7 @@ msgstr ""
 "\n"
 "Controlla i permessi di esecuzione."
 
-#: ../gui_app.py:255
+#: ../gui_app.py:257
 #, python-brace-format
 msgid ""
 "Unexpected error while deleting file contents:\n"
@@ -3639,13 +3639,14 @@ msgstr "...Terminato"
 
 #: ../vdms_panels/long_processing_task.py:475
 msgid ""
-"Be patient, before interrupting the download in progress must be completed."
+"wait... all operations will be stopped at the end of the download in "
+"progress."
 msgstr ""
-"Sii paziente, prima di interrompere, il download in corso deve essere "
-"completato."
+"attendi... tutte le operazioni verranno interrotte al termine del download "
+"in corso."
 
 #: ../vdms_panels/long_processing_task.py:480
-msgid "wait... I'm aborting"
+msgid "wait... I'm interrupting"
 msgstr "attendi... Sto interrompendo"
 
 #: ../vdms_panels/long_processing_task.py:483
@@ -4231,6 +4232,13 @@ msgstr ""
 #: ../vdms_threads/slideshow.py:50 ../vdms_threads/slideshow.py:140
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' è installato sul tuo sistema?"
+
+#~ msgid ""
+#~ "Be patient, before interrupting the download in progress must be "
+#~ "completed."
+#~ msgstr ""
+#~ "Sii paziente, prima di interrompere, il download in corso deve essere "
+#~ "completato."
 
 #~ msgid "Only one image selected (or the only one available)"
 #~ msgstr "Una sola immagine selezionata (o l'unica disponibile)"

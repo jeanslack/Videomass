@@ -3,16 +3,10 @@
 URGENCY: to do soon
 --------------------
 
-- make context managers more consistency with files - see example on OnExit
-  method in gui_app.py
+- Timeline sliders does not respond to arrow UP / arrow DOWN on MacOs.
 
 --------------
 URGENCY: high
-
-- [TEXT DIALOGS] Improve message dialog within URLs, i.e. using `wx.lib.agw.hyperlink`.
-  [ffplay_url_exe.py, Videomass version, youtube-dl update]
-
-- [CODE IMPROVING] av_conversions.py needs a deeper refactoring.
 
 ---------------
 URGENCY: medium
@@ -21,9 +15,6 @@ URGENCY: medium
 -------------
 URGENCY: low
 -------------
-
-- Crop filter: Make combobox to choose other colors for the crop
-  rectangle selection.
 
 
 
