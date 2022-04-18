@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 4.0.0\n"
+"Project-Id-Version: Videomass 4.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-17 12:02+0200\n"
-"PO-Revision-Date: 2022-04-17 12:04+0200\n"
+"POT-Creation-Date: 2022-04-18 21:30+0200\n"
+"PO-Revision-Date: 2022-04-18 21:34+0200\n"
 "Last-Translator: johannesdedoper <https://github.com/johannesdedoper>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: ../gui_app.py:176
+#: ../gui_app.py:178
 msgid ""
 "Permission denied: {}\n"
 "\n"
@@ -28,7 +28,7 @@ msgstr ""
 "\n"
 "Controleer de uitvoeringsrechten."
 
-#: ../gui_app.py:255
+#: ../gui_app.py:257
 #, python-brace-format
 msgid ""
 "Unexpected error while deleting file contents:\n"
@@ -3647,11 +3647,14 @@ msgstr "...Afgerond"
 
 #: ../vdms_panels/long_processing_task.py:475
 msgid ""
-"Be patient, before interrupting the download in progress must be completed."
+"wait... all operations will be stopped at the end of the download in "
+"progress."
 msgstr ""
 
 #: ../vdms_panels/long_processing_task.py:480
-msgid "wait... I'm aborting"
+#, fuzzy
+#| msgid "wait... I'm aborting"
+msgid "wait... I'm interrupting"
 msgstr "wacht... bezig met afbreken"
 
 #: ../vdms_panels/long_processing_task.py:483

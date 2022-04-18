@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.05.2022
+Rev: April.18.2022
 Code checker: pycodestyle, flake8, pylint .
 
  This file is part of Videomass.
@@ -437,11 +437,13 @@ class DataSource():
         if theme.get('ERROR'):
             return theme
 
-        # set output directories
+        # set FFmpeg output directory
         outfile = get_outdir(userconf['outputfile'], DataSource.RELPATH)
         userconf['outputfile'] = outfile[0]
+        # set youtube-dl output directory
         outdownl = get_outdir(userconf['outputdownload'], DataSource.RELPATH)
-        userconf['outputdownload'] = outfile[0]
+        userconf['outputdownload'] = outdownl[0]
+
         if outfile[1]:
             return {'ERROR': f'{outfile[1]}'}
         if outdownl[1]:
