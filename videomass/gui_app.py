@@ -105,8 +105,6 @@ class Videomass(wx.App):
             self.wizard(self.iconset['videomass'])
             return True
 
-        print(self.appset['outputdownload'])
-
         from videomass.vdms_main.main_frame import MainFrame
         main_frame = MainFrame()
         main_frame.Show()

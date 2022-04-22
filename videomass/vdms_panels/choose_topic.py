@@ -111,7 +111,7 @@ class Choose_Topic(wx.Panel):
         self.slideshow.SetBitmap(bmpSlideshow, wx.LEFT)
 
         self.videotoimages = wx.Button(self, wx.ID_ANY,
-                                       _('From Video to Pictures'),
+                                       _('From Movie to Pictures'),
                                        size=(300, -1), style=style)
         self.videotoimages.SetBitmap(bmpTopictures, wx.LEFT)
 
@@ -148,8 +148,8 @@ class Choose_Topic(wx.Panel):
         tip = (_('Create video from a sequence of images, based on import '
                  'order, with the ability to add an audio file.'))
         self.slideshow.SetToolTip(tip)
-        tip = (_('Extract images (frames) in jpg, png or '
-                 'bmp formats from your movies.'))
+        tip = (_('Extract images (frames) from your movies '
+                 'in JPG, PNG, BMP, GIF formats.'))
         self.videotoimages.SetToolTip(tip)
 
         if self.oS == 'Darwin':

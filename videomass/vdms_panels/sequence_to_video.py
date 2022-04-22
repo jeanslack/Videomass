@@ -135,25 +135,11 @@ class SequenceToVideo(wx.Panel):
                                          "visit the official FFmpeg "
                                          "documentation:")
                                  )
-        link1 = hpl.HyperLinkCtrl(self, -1, "4.19 image2",
-                                  URL="https://ffmpeg.org/ffmpeg-"
-                                      "formats.html#image2-2"
-                                  )
-        link2 = hpl.HyperLinkCtrl(self, -1, ("3.3 FFmpeg FAQ"),
-                                  URL="https://ffmpeg.org/faq.html#How-do-I-"
-                                      "encode-movie-to-single-pictures_003f"
-                                  )
-        link3 = hpl.HyperLinkCtrl(self, -1, ("FFmpeg Wiki"),
-                                  URL="https://trac.ffmpeg.org/wiki/Create%"
-                                      "20a%20thumbnail%20image%20every"
-                                      "%20X%20seconds%20of%20the%20video"
+        link1 = hpl.HyperLinkCtrl(self, -1, ("FFmpeg Slideshow wiki"),
+                                  URL="https://trac.ffmpeg.org/wiki/Slideshow"
                                   )
         sizer_link1.Add(lbl_link, 0, wx.ALL | wx.EXPAND, 5)
         sizer_link1.Add(link1)
-        sizer_link1.Add((20, 20))
-        sizer_link1.Add(link2)
-        sizer_link1.Add((20, 20))
-        sizer_link1.Add(link3)
         line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
                               size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
                               name=wx.StaticLineNameStr
@@ -202,8 +188,9 @@ class SequenceToVideo(wx.Panel):
         self.ckbx_audio = wx.CheckBox(self, wx.ID_ANY, _('Include audio file'))
         siz_audio.Add(self.ckbx_audio, 0, wx.ALL | wx.EXPAND, 5)
         self.ckbx_shortest = wx.CheckBox(self, wx.ID_ANY,
-                                         _('Play the video until audio '
-                                           'ends (disable shortest option)'))
+                                         _('Play the video until '
+                                           'audio file ends'
+                                           ))
         siz_audio.Add(self.ckbx_shortest, 0, wx.ALL | wx.EXPAND, 5)
         self.ckbx_shortest.Disable()
         siz_afile = wx.BoxSizer(wx.HORIZONTAL)
@@ -411,7 +398,7 @@ class SequenceToVideo(wx.Panel):
         """
         fmt = '*.wav;*.aiff;*.flac;*.oga;*.ogg;*.m4a;*.aac;*.ac3;*.mp3;'
 
-        with wx.FileDialog(self, "Open an audio file",
+        with wx.FileDialog(self, _("Open an audio file"),
                            wildcard=f"Audio source ({fmt})|{fmt}",
                            style=wx.FD_OPEN |
                            wx.FD_FILE_MUST_EXIST) as fileDialog:

@@ -68,6 +68,7 @@ class PicturesFromVideo(Thread):
         self.count = 0  # count first for loop
         self.logname = logname  # title name of file log
         self.fname = varargs[1]  # file name
+        self.preargs = varargs[2]
 
         Thread.__init__(self)
         self.start()  # start the thread (va in self.run())
@@ -79,8 +80,8 @@ class PicturesFromVideo(Thread):
         filedone = []
         cmd = (f'"{PicturesFromVideo.appdata["ffmpeg_cmd"]}" '
                f'{self.time_seq} {PicturesFromVideo.appdata["ffmpegloglev"]} '
-               f'{PicturesFromVideo.appdata["ffmpeg+params"]} -i '
-               f'"{self.fname}" {self.cmd}'
+               f'{PicturesFromVideo.appdata["ffmpeg+params"]} {self.preargs} '
+               f'-i "{self.fname}" {self.cmd}'
                )
         count = 'File 1/1'
         com = (f'{count}\nSource: "{self.fname}"\n'

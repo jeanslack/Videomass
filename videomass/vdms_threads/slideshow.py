@@ -56,7 +56,7 @@ def temporary_processing(*varargs):
     wx.CallAfter(pub.sendMessage,
                  "COUNT_EVT",
                  count='Task One: Preparing temporary files...',
-                 fsource='',
+                 fsource=f'Source: list',
                  destination=f'Destination: "{tmpdir}"',
                  duration=len(flist),
                  end='',

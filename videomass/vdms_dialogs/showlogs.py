@@ -45,7 +45,7 @@ class ShowLogs(wx.Dialog):
                 'ffplay.log',
                 'AppImage_Updates.log',
                 'concatenate_demuxer.log',
-                'from_video_to_pictures.log',
+                'from_movie_to_pictures.log',
                 'still_image_maker.log'
                 )
 

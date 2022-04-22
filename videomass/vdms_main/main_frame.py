@@ -472,6 +472,23 @@ class MainFrame(wx.Frame):
                  _("Displays timestamp when playing movies with FFplay"))
         self.viewtimestamp = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                                  kind=wx.ITEM_CHECK)
+
+
+        dscrp = (_("Auto-exit after playback"),
+                 _("If checked, the FFplay window will auto-close at the "
+                   "end of playback"))
+        self.exitplayback = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
+                                                kind=wx.ITEM_CHECK)
+
+
+        dscrp = (_("Setting timestamp"),
+                 _("Change the size and color of the timestamp "
+                   "during playback"))
+        tscustomize = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+
+
+
+
         if self.appdata['downloader'] != 'disabled':
             # show youtube-dl
             viewButton.AppendSeparator()
@@ -502,30 +519,27 @@ class MainFrame(wx.Frame):
         # ------------------ Go menu
         goButton = wx.Menu()
         self.startpan = goButton.Append(wx.ID_ANY, _("Home panel\tShift+H"),
-                                        _("jump to the start panel"))
+                                        _("Go to the 'Home' panel"))
         goButton.AppendSeparator()
         self.prstpan = goButton.Append(wx.ID_ANY,
-                                       _("Presets manager\tShift+P"),
-                                       _("jump to the Presets Manager panel"))
-        self.avpan = goButton.Append(wx.ID_ANY, _("A/V conversions\tShift+V"),
-                                     _("jump to the Audio/Video Conversion "
-                                       "panel"))
+                                       _("Presets Manager\tShift+P"),
+                                       _("Go to the 'Presets Manager' panel"))
+        self.avpan = goButton.Append(wx.ID_ANY, _("A/V Conversions\tShift+V"),
+                                     _("Go to the 'A/V Conversions' panel"))
         self.concpan = goButton.Append(wx.ID_ANY,
                                        _("Concatenate Demuxer\tShift+D"),
-                                       _("jump to the Concatenate Demuxer "
+                                       _("Go to the 'Concatenate Demuxer' "
                                          "panel"))
-
         self.slides = goButton.Append(wx.ID_ANY,
                                       _("Still Image Maker\tShift+I"),
-                                      _("jump to the Still Image Maker "
-                                        "panel"))
+                                      _("Go to the 'Still Image Maker' panel"))
         self.toseq = goButton.Append(wx.ID_ANY,
-                                     _("From Video to Pictures\tShift+S"),
-                                     _("jump to the Video to Pictures "
+                                     _("From Movie to Pictures\tShift+S"),
+                                     _("Go to the 'From Movie to Pictures' "
                                        "panel"))
         goButton.AppendSeparator()
         dscrp = (_("YouTube downloader\tShift+Y"),
-                 _("jump to the YouTube Downloader panel"))
+                 _("Go to the 'YouTube Downloader' panel"))
         self.ydlpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
 
         goButton.AppendSeparator()
@@ -564,17 +578,6 @@ class MainFrame(wx.Frame):
         self.resetfolders_tmp = setupButton.Append(wx.ID_ANY, dscrp[0],
                                                    dscrp[1])
         self.resetfolders_tmp.Enable(False)
-        setupButton.AppendSeparator()
-        dscrp = (_("Setting timestamp"),
-                 _("Change the size and color of the timestamp "
-                   "during playback"))
-        tscustomize = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Auto-exit after playback"),
-                 _("If checked, the FFplay window will auto-close at the "
-                   "end of playback"))
-        self.exitplayback = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
-                                               kind=wx.ITEM_CHECK)
-
         setupButton.AppendSeparator()
         setupItem = setupButton.Append(wx.ID_PREFERENCES,
                                        _("Preferences\tCtrl+P"),
@@ -630,6 +633,8 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Check_dec, ckdecoders)
         self.Bind(wx.EVT_MENU, self.durinPlayng, playing)
         self.Bind(wx.EVT_MENU, self.showTimestamp, self.viewtimestamp)
+        self.Bind(wx.EVT_MENU, self.timestampCustomize, tscustomize)
+        self.Bind(wx.EVT_MENU, self.autoexitFFplay, self.exitplayback)
         # self.Bind(wx.EVT_MENU, self.ydl_used, self.ydlused)
         # self.Bind(wx.EVT_MENU, self.ydl_latest, self.ydllatest)
         self.Bind(wx.EVT_MENU, self.View_logs, viewlogs)
@@ -650,9 +655,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.on_FFmpegfsave, setconvers_tmp)
         self.Bind(wx.EVT_MENU, self.on_Ytdlfsave, setdownload_tmp)
         self.Bind(wx.EVT_MENU, self.on_Resetfolders_tmp, self.resetfolders_tmp)
-        self.Bind(wx.EVT_MENU, self.timestampCustomize, tscustomize)
-        self.Bind(wx.EVT_MENU, self.autoexitFFplay, self.exitplayback)
-
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         # ----HELP----
         self.Bind(wx.EVT_MENU, self.Helpme, helpItem)
@@ -1015,6 +1017,40 @@ class MainFrame(wx.Frame):
         dlg.Show()
     # ------------------------------------------------------------------#
 
+    def showTimestamp(self, event):
+        """
+        FFplay submenu: enable filter for view timestamp with ffplay
+
+        """
+        if self.viewtimestamp.IsChecked():
+            self.checktimestamp = True
+        else:
+            self.checktimestamp = False
+    # ------------------------------------------------------------------#
+
+    def timestampCustomize(self, event):
+        """
+        FFplay submenu: customize the timestamp filter
+
+        """
+        with set_timestamp.Set_Timestamp(self, self.cmdtimestamp) as dialog:
+            if dialog.ShowModal() == wx.ID_OK:
+                data = dialog.getvalue()
+                if not data:
+                    return
+                self.cmdtimestamp = data
+    # ------------------------------------------------------------------#
+
+    def autoexitFFplay(self, event):
+        """
+        FFplay submenu:
+        set boolean value to self.autoexit attribute to allow
+        autoexit at the end of playback
+
+        """
+        self.autoexit = self.exitplayback.IsChecked() is True
+    # ------------------------------------------------------------------#
+
     def ydl_used(self, event, msgbox=True):
         """
         check version of youtube-dl used from 'Version in Use' bar menu
@@ -1054,17 +1090,6 @@ class MainFrame(wx.Frame):
                       self.appdata['downloader'], latest[0]),
                       "Videomass", wx.ICON_INFORMATION, self)
     # -----------------------------------------------------------------#
-
-    def showTimestamp(self, event):
-        """
-        FFplay submenu: enable filter for view timestamp with ffplay
-
-        """
-        if self.viewtimestamp.IsChecked():
-            self.checktimestamp = True
-        else:
-            self.checktimestamp = False
-    # ------------------------------------------------------------------#
 
     def View_logs(self, event):
         """
@@ -1246,28 +1271,6 @@ class MainFrame(wx.Frame):
 
         wx.MessageBox(_("Default destination folders successfully restored"),
                       "Videomass", wx.ICON_INFORMATION, self)
-    # ------------------------------------------------------------------#
-
-    def timestampCustomize(self, event):
-        """
-        customize the timestamp filter
-
-        """
-        with set_timestamp.Set_Timestamp(self, self.cmdtimestamp) as dialog:
-            if dialog.ShowModal() == wx.ID_OK:
-                data = dialog.getvalue()
-                if not data:
-                    return
-                self.cmdtimestamp = data
-    # ------------------------------------------------------------------#
-
-    def autoexitFFplay(self, event):
-        """
-        set boolean value to self.autoexit attribute to allow
-        autoexit at the end of playback
-
-        """
-        self.autoexit = self.exitplayback.IsChecked() is True
     # ------------------------------------------------------------------#
 
     def Setup(self, event):
@@ -1940,7 +1943,7 @@ class MainFrame(wx.Frame):
         else:
             self.statusbar_msg(_('Ready'), None)
 
-        self.SetTitle(_('Videomass - From Video to Pictures'))
+        self.SetTitle(_('Videomass - From Movie to Pictures'))
         self.view_Timeline(self)  # set timeline status
         self.toolbar.Show()
         self.openmedia.Enable(True)
@@ -2059,7 +2062,6 @@ class MainFrame(wx.Frame):
                     return
                 duration = [ms for n in self.duration]
                 self.statusbar_msg(_('Processing...'), None)
-
         else:
             duration = self.duration
             time_seq = ''

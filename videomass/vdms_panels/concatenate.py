@@ -123,7 +123,7 @@ class Conc_Demuxer(wx.Panel):
                     "Pages/User-guide-languages/en/1-User_"
                     "Interface_Overview_en.pdf"
                     )
-        link2 = hpl.HyperLinkCtrl(self, -1, _("1.4 Concatenate media files "
+        link2 = hpl.HyperLinkCtrl(self, -1, ("1.4 Concatenate media files "
                                               "(demuxer)"), URL=page)
         sizer_link2.Add(self.lbl_msg3, 0, wx.ALL | wx.EXPAND, 5)
         sizer_link2.Add(link2)
