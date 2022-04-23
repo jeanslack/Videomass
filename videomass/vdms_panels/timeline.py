@@ -137,9 +137,9 @@ class Timeline(wx.Panel):
         self.sldseek.SetToolTip(_("Seek to given time position"))
         self.sldcut.SetToolTip(_("Total duration"))
         self.cmbx_accuracy.SetToolTip(_("Set the amount of steps the slider "
-                                        "moves using 'UP' or 'DOWN' arrow and "
-                                        "'UP' or 'DOWN' page, to quickly set a "
-                                        "more accurate time selection"))
+                                        "moves using 'UP' or 'DOWN' arrow "
+                                        "and 'UP' or 'DOWN' page, to quickly "
+                                        "set a more accurate time selection"))
 
         # ----------------------Layout----------------------#
 
@@ -340,13 +340,14 @@ class Timeline(wx.Panel):
         This method is called out side of this class, see parent.
         """
         if not duration:
-            self.milliseconds = 4800000
+            self.milliseconds = 86399999
         else:
             self.milliseconds = round(duration)
             # rounds all float number to prevent ruler selection inaccuracy
 
-        msg0 = _('The maximum time refers to the file with the longest '
-                 'duration, it will be set to 01:20:00.000 otherwise.')
+        msg0 = _('The maximum time refers to the file '
+                 'with the longest duration, it will be '
+                 'set to {0} otherwise.').format('23:59:59.999')
         self.paneltime.SetToolTip(msg0)
         self.pix = Timeline.RW / self.milliseconds
         self.timeformat = milliseconds2clock(self.milliseconds)

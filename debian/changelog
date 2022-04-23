@@ -1,30 +1,33 @@
 videomass (4.0.1-1) UNRELEASED; urgency=medium
 
-  * [NEW] added "Still Image Maker" feature with the ability to merge one or
-    more images and the ability to add an audio file. Fix #102
-  * [NEW] added "From Video to Pictures" feature.
-  * [Timeline editor] The timeline editor can be set to tune the steps the
-    slider moves using up or down arrow to make more accurate the time
-    selection.
+  * [NEW] added "Still Image Maker" feature.
+  * [NEW] added "From Movie to Pictures" feature.
+  * [TIMELINE EDITOR] You can choose various levels of accuracy to adjust the
+    sliders movements of the Timeline using the UP or DOWN arrows and page
+    UP or DOWN or mouse wheel.
   * Update Dutch translation, thanks to @johannesdedoper.
   * Improved ETA using ffmpeg speed value. Fix #101
   * New 48x icons.
   * Update menu bar `GoTo` with new items.
-  * Ability to open all panels without the need to put files or url. Fix #105
-  * [A/V Conversions] enable bitrate setting even with a single pass conversion
+  * Ability to open all panels without the need to put files or URLs. Fix #105
+  * [A/V CONVERSIONS] enable bitrate setting even with a single pass conversion
     by move CRF slider to -1. Fix #106
   * Improved `Show logs` dialog during Refreshing and Clear actions.
-  * [Youtube Downloader] Fixed, interrupting a download the software freezes
-    and must be forced to stop it.
+  * [YOUTUBE DOWNLOADER] fixed the software freeze after click the Abort button,
+    during which the user is forced to stop Videomass.
   * Update locale and Italian language translation.
   * Fixed Wizard dialog error clicking on "Auto Detect" button.
-  * Fixed: return value on `vdms_utils/make_newdir_with_id`.
-  * Fixed: some files not being moved to the trash after a successful encoding
-    (if enable on  preferences).
-  * [YouTube Downloader] Fixed wrong path when setting download destination
-    folder
+  * Fixed incorrect return value on `vdms_utils/make_newdir_with_id`.
+  * Fixed some files not being moved to the trash folder after a successful
+    encoding (if enabled on preferences). This is relative for the new features
+    only as "Still Image Maker" and "From Movie to Pictures" .
+  * [YOUTUBE DOWNLOADER] Fixed incorrect pathname after setting downloads
+    destination folder.
+  * [PRESETS MANAGER] Added new preset to make animated GIFs from videos.
+  * All presets supplied with Videomass have been updated to v0.8.
+  * Rearranged menu bar: View -> FFplay.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 18 Apr 2022 21:14:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 22 Apr 2022 17:21:00 +0200
 
 videomass (3.5.8-1) UNRELEASED; urgency=medium
 
