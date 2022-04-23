@@ -36,6 +36,6 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=79 --ignore=F821,W503 --statistics
     - name: Test with pytest
       run: |
-        pytest tests/test_check_bin.py
-        pytest tests/test_ffprobe.py
-        pytest tests/test_utils.py
+        python3 tests/test_check_bin.py
+        python3 tests/test_ffprobe.py
+        python3 tests/test_utils.py
