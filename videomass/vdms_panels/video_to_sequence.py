@@ -75,26 +75,22 @@ class VideoToSequence(wx.Panel):
                                  label=VideoToSequence.MSG_1
                                  )
         fgs1.Add(lbl_help, 0, wx.ALL | wx.EXPAND, 5)
-        sizer.Add(panelscroll, 0, wx.ALL | wx.EXPAND, 0)
-        panelscroll.SetSizer(fgs1)
-        panelscroll.SetAutoLayout(1)
-        panelscroll.SetupScrolling()
         sizer_link1 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizer_link1)
-        lbl_msg1 = wx.StaticText(self, wx.ID_ANY,
+        fgs1.Add(sizer_link1)
+        lbl_msg1 = wx.StaticText(panelscroll, wx.ID_ANY,
                                  label=_("For more information, "
                                          "visit the official FFmpeg "
                                          "documentation:")
                                  )
-        link1 = hpl.HyperLinkCtrl(self, -1, "4.19 image2",
+        link1 = hpl.HyperLinkCtrl(panelscroll, -1, "4.19 image2",
                                   URL="https://ffmpeg.org/ffmpeg-"
                                       "formats.html#image2-2"
                                   )
-        link2 = hpl.HyperLinkCtrl(self, -1, ("3.3 FFmpeg FAQ"),
+        link2 = hpl.HyperLinkCtrl(panelscroll, -1, ("3.3 FFmpeg FAQ"),
                                   URL="https://ffmpeg.org/faq.html#How-do-I-"
                                       "encode-movie-to-single-pictures_003f"
                                   )
-        link3 = hpl.HyperLinkCtrl(self, -1, ("FFmpeg Wiki"),
+        link3 = hpl.HyperLinkCtrl(panelscroll, -1, ("FFmpeg Wiki"),
                                   URL="https://trac.ffmpeg.org/wiki/Create%"
                                       "20a%20thumbnail%20image%20every"
                                       "%20X%20seconds%20of%20the%20video"
@@ -106,15 +102,15 @@ class VideoToSequence(wx.Panel):
         sizer_link1.Add((20, 20))
         sizer_link1.Add(link3)
         sizer_link2 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizer_link2)
-        lbl_msg2 = wx.StaticText(self, wx.ID_ANY,
+        fgs1.Add(sizer_link2)
+        lbl_msg2 = wx.StaticText(panelscroll, wx.ID_ANY,
                                  label=_("Other unofficial resources:")
                                  )
-        link4 = hpl.HyperLinkCtrl(self, -1, ("Help Tile filter"),
+        link4 = hpl.HyperLinkCtrl(panelscroll, -1, ("Help Tile filter"),
                                   URL="http://underpop.online.fr/f/ffmpeg"
                                       "/help/tile.htm.gz"
                                   )
-        link5 = hpl.HyperLinkCtrl(self, -1, ("High quality gif"),
+        link5 = hpl.HyperLinkCtrl(panelscroll, -1, ("High quality gif"),
                                   URL="http://blog.pkh.me/p/21-high-quality-"
                                       "gif-with-ffmpeg.html"
                                   )
@@ -122,6 +118,10 @@ class VideoToSequence(wx.Panel):
         sizer_link2.Add(link4)
         sizer_link2.Add((20, 20))
         sizer_link2.Add(link5)
+        sizer.Add(panelscroll, 0, wx.ALL | wx.EXPAND, 0)
+        panelscroll.SetSizer(fgs1)
+        panelscroll.SetAutoLayout(1)
+        panelscroll.SetupScrolling()
         line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
                               size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
                               name=wx.StaticLineNameStr
