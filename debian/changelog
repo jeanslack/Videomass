@@ -26,6 +26,7 @@ videomass (4.0.1-1) UNRELEASED; urgency=medium
   * [PRESETS MANAGER] Added new preset to make animated GIFs from videos.
   * All presets supplied with Videomass have been updated to v0.8.
   * Rearranged menu bar: View -> FFplay.
+  * Update Russian language thank to ChourS.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 22 Apr 2022 17:21:00 +0200
 

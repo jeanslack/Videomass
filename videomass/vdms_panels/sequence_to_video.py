@@ -122,24 +122,25 @@ class SequenceToVideo(wx.Panel):
                                  label=SequenceToVideo.MSG_1)
         fgs1.Add(lbl_help, 0, wx.ALL | wx.EXPAND, 5)
 
+        sizer_link1 = wx.BoxSizer(wx.HORIZONTAL)
+        fgs1.Add(sizer_link1)
+        lbl_link = wx.StaticText(panelscroll, wx.ID_ANY,
+                                 label=_("For more information, "
+                                         "visit the official FFmpeg "
+                                         "documentation:")
+                                 )
+        link1 = hpl.HyperLinkCtrl(panelscroll, -1, ("FFmpeg Slideshow wiki"),
+                                  URL="https://trac.ffmpeg.org/wiki/Slideshow"
+                                  )
+        sizer_link1.Add(lbl_link, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_link1.Add(link1)
+
         sizer.Add(panelscroll, 0, wx.ALL | wx.EXPAND, 0)
 
         panelscroll.SetSizer(fgs1)
         panelscroll.SetAutoLayout(1)
         panelscroll.SetupScrolling()
 
-        sizer_link1 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizer_link1)
-        lbl_link = wx.StaticText(self, wx.ID_ANY,
-                                 label=_("For more information, "
-                                         "visit the official FFmpeg "
-                                         "documentation:")
-                                 )
-        link1 = hpl.HyperLinkCtrl(self, -1, ("FFmpeg Slideshow wiki"),
-                                  URL="https://trac.ffmpeg.org/wiki/Slideshow"
-                                  )
-        sizer_link1.Add(lbl_link, 0, wx.ALL | wx.EXPAND, 5)
-        sizer_link1.Add(link1)
         line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
                               size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
                               name=wx.StaticLineNameStr
