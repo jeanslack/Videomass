@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-22 17:05+0200\n"
-"PO-Revision-Date: 2022-04-22 17:07+0200\n"
+"POT-Creation-Date: 2022-04-24 15:43+0200\n"
+"PO-Revision-Date: 2022-04-24 15:45+0200\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: ChourS\n"
 "Language: ru_RU\n"
@@ -1090,7 +1090,7 @@ msgstr ""
 #: ../vdms_dialogs/preferences.py:305 ../vdms_dialogs/preferences.py:325
 #: ../vdms_dialogs/preferences.py:341 ../vdms_frames/ffmpeg_conf.py:217
 #: ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:632
+#: ../vdms_panels/sequence_to_video.py:633
 #: ../vdms_panels/video_to_sequence.py:367
 msgid "Disabled"
 msgstr "Отключено"
@@ -1376,7 +1376,7 @@ msgid "ENABLED:"
 msgstr "ВКЛЮЧЕНО:"
 
 #: ../vdms_frames/ffmpeg_conf.py:204 ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:632
+#: ../vdms_panels/sequence_to_video.py:633
 #: ../vdms_panels/video_to_sequence.py:363
 msgid "Enabled"
 msgstr "Включено"
@@ -1692,8 +1692,8 @@ msgstr ""
 msgid "Please Confirm"
 msgstr "Пожалуйста подтвердите"
 
-#: ../vdms_io/checkup.py:63 ../vdms_panels/sequence_to_video.py:520
-#: ../vdms_panels/sequence_to_video.py:544
+#: ../vdms_io/checkup.py:63 ../vdms_panels/sequence_to_video.py:521
+#: ../vdms_panels/sequence_to_video.py:545
 msgid ""
 "File does not exist:\n"
 "\n"
@@ -2039,76 +2039,56 @@ msgid "Home panel\tShift+H"
 msgstr "Начальная панель\tShift+H"
 
 #: ../vdms_main/main_frame.py:522
-#, fuzzy
-#| msgid "Go to the next panel"
 msgid "Go to the 'Home' panel"
-msgstr "Перейти к следующей панели"
+msgstr "Перейдите к 'Начальной панели'"
 
 #: ../vdms_main/main_frame.py:525
-#, fuzzy
-#| msgid "Presets manager\tShift+P"
 msgid "Presets Manager\tShift+P"
 msgstr "Менеджер Пресетов\tShift+P"
 
 #: ../vdms_main/main_frame.py:526
-#, fuzzy
-#| msgid "jump to the Presets Manager panel"
 msgid "Go to the 'Presets Manager' panel"
-msgstr "перейти на панель управления Пресетами"
+msgstr "Перейдите на панель 'Менеджер пресетов'"
 
 #: ../vdms_main/main_frame.py:527
-#, fuzzy
-#| msgid "A/V conversions\tShift+V"
 msgid "A/V Conversions\tShift+V"
-msgstr "Конвертация A/V\tShift+V"
+msgstr "A/V Конвертация\tShift+V"
 
 #: ../vdms_main/main_frame.py:528
-#, fuzzy
-#| msgid "jump to the Audio/Video Conversion panel"
 msgid "Go to the 'A/V Conversions' panel"
-msgstr "перейти на панель Аудио / Видео Конверсий"
+msgstr "Перейдите на панель 'A/V Конвертация'"
 
 #: ../vdms_main/main_frame.py:530
 msgid "Concatenate Demuxer\tShift+D"
 msgstr "Concatenate Demuxer\tShift+D"
 
 #: ../vdms_main/main_frame.py:531
-#, fuzzy
-#| msgid "jump to the Concatenate Demuxer panel"
 msgid "Go to the 'Concatenate Demuxer' panel"
-msgstr "перейти на панель Concatenate Demuxer"
+msgstr "Перейдите на панель 'Concatenate Demuxer'"
 
 #: ../vdms_main/main_frame.py:534
 msgid "Still Image Maker\tShift+I"
 msgstr "Still Image Maker\tShift+I"
 
 #: ../vdms_main/main_frame.py:535
-#, fuzzy
-#| msgid "jump to the Still Image Maker panel"
 msgid "Go to the 'Still Image Maker' panel"
-msgstr "перейти к панели \"Still Image Maker\""
+msgstr "Перейдите на панель 'Still Image Maker'"
 
 #: ../vdms_main/main_frame.py:537
-#, fuzzy
-#| msgid "From Video to Pictures\tShift+S"
 msgid "From Movie to Pictures\tShift+S"
-msgstr "Из видео в картинки\tShift+S"
+msgstr "Картинки из фильма\tShift+S"
 
 #: ../vdms_main/main_frame.py:538
-#, fuzzy
-#| msgid "jump to the Video to Pictures panel"
 msgid "Go to the 'From Movie to Pictures' panel"
-msgstr "перейти к панели \"Видео в картинки\""
+msgstr "Перейдите на панель 'Картинки из фильма'"
 
 #: ../vdms_main/main_frame.py:541
 msgid "YouTube downloader\tShift+Y"
 msgstr "YouTube downloader\tShift+Y"
 
 #: ../vdms_main/main_frame.py:542
-#, fuzzy
-#| msgid "jump to the YouTube Downloader panel"
 msgid "Go to the 'YouTube Downloader' panel"
-msgstr "перейти к панели YouTube Downloader"
+msgstr "Перейдите на панель 'YouTube Downloader'"
 
 #: ../vdms_main/main_frame.py:546
 msgid "Output Monitor\tShift+O"
@@ -2479,10 +2459,8 @@ msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Concatenate Demuxer"
 
 #: ../vdms_main/main_frame.py:1946
-#, fuzzy
-#| msgid "Videomass - From Video to Pictures"
 msgid "Videomass - From Movie to Pictures"
-msgstr "Videomass - Из видео в картинки"
+msgstr "Videomass - Картинки из фильма"
 
 #: ../vdms_main/main_frame.py:2008
 msgid "Videomass - Still Image Maker"
@@ -2604,7 +2582,7 @@ msgstr "Фильтры Видео"
 msgid "Preview"
 msgstr "Предпросмотр"
 
-#: ../vdms_panels/av_conversions.py:550 ../vdms_panels/sequence_to_video.py:181
+#: ../vdms_panels/av_conversions.py:550 ../vdms_panels/sequence_to_video.py:182
 msgid "Resizing"
 msgstr "Изменение размера"
 
@@ -2862,7 +2840,7 @@ msgid "Unable to preview Video Stabilizer filter"
 msgstr "Невозможно просмотреть Stabilizer видеофильтр"
 
 #: ../vdms_panels/av_conversions.py:1286
-#: ../vdms_panels/sequence_to_video.py:281
+#: ../vdms_panels/sequence_to_video.py:282
 #: ../vdms_panels/video_to_sequence.py:279
 msgid "A target file must be selected in the queued files"
 msgstr "В файлах, поставленных в очередь, должен быть выбран один файл"
@@ -2880,7 +2858,7 @@ msgstr ""
 "\"{}\""
 
 #: ../vdms_panels/av_conversions.py:1348
-#: ../vdms_panels/sequence_to_video.py:308
+#: ../vdms_panels/sequence_to_video.py:309
 msgid "The file is not a frame or a video file"
 msgstr "Файл не является кадром или видеофайлом"
 
@@ -3135,10 +3113,8 @@ msgid "Still Image Maker"
 msgstr "Still Image Maker"
 
 #: ../vdms_panels/choose_topic.py:114
-#, fuzzy
-#| msgid "From Video to Pictures"
 msgid "From Movie to Pictures"
-msgstr "Из видео в картинки"
+msgstr "Картинки из фильма"
 
 #: ../vdms_panels/choose_topic.py:133
 msgid ""
@@ -3182,6 +3158,7 @@ msgstr ""
 #: ../vdms_panels/choose_topic.py:151
 msgid "Extract images (frames) from your movies in JPG, PNG, BMP, GIF formats."
 msgstr ""
+"Извлекайте изображения (кадры) из ваших фильмов в форматы JPG, PNG, BMP, GIF."
 
 #: ../vdms_panels/choose_topic.py:226
 msgid "The downloader is disabled. Check your preferences."
@@ -3238,8 +3215,8 @@ msgstr ""
 msgid "For more details, see the Videomass User Guide:"
 msgstr "Подробнее см. Руководство пользователя Videomass:"
 
-#: ../vdms_panels/concatenate.py:133 ../vdms_panels/sequence_to_video.py:134
-#: ../vdms_panels/video_to_sequence.py:85
+#: ../vdms_panels/concatenate.py:133 ../vdms_panels/sequence_to_video.py:128
+#: ../vdms_panels/video_to_sequence.py:81
 msgid "For more information, visit the official FFmpeg documentation:"
 msgstr ""
 "Для получения дополнительной информации посетите официальную документацию "
@@ -3270,10 +3247,10 @@ msgid "At least two files are required to perform concatenation."
 msgstr "Для объединения требуются как минимум два файла."
 
 #: ../vdms_panels/concatenate.py:231 ../vdms_panels/concatenate.py:242
-#: ../vdms_panels/sequence_to_video.py:505
-#: ../vdms_panels/sequence_to_video.py:515
-#: ../vdms_panels/sequence_to_video.py:532
-#: ../vdms_panels/sequence_to_video.py:540
+#: ../vdms_panels/sequence_to_video.py:506
+#: ../vdms_panels/sequence_to_video.py:516
+#: ../vdms_panels/sequence_to_video.py:533
+#: ../vdms_panels/sequence_to_video.py:541
 #: ../vdms_panels/video_to_sequence.py:290
 msgid "ERROR"
 msgstr "ОШИБКА"
@@ -3288,7 +3265,7 @@ msgstr ""
 
 #: ../vdms_panels/concatenate.py:291 ../vdms_panels/presets_manager.py:877
 #: ../vdms_panels/presets_manager.py:900
-#: ../vdms_panels/sequence_to_video.py:609
+#: ../vdms_panels/sequence_to_video.py:610
 #: ../vdms_panels/video_to_sequence.py:334
 msgid "Starts"
 msgstr "Начало"
@@ -4117,49 +4094,43 @@ msgstr ""
 "который будет сохранен в папке с именем \"Still-Images\"\n"
 "с прогрессивной цифрой папок в указанном вами пути."
 
-#: ../vdms_panels/sequence_to_video.py:155
+#: ../vdms_panels/sequence_to_video.py:156
 msgid "Enable a single still image"
 msgstr "Включить одно неподвижное изображение"
 
-#: ../vdms_panels/sequence_to_video.py:188
+#: ../vdms_panels/sequence_to_video.py:189
 msgid "Include audio file"
 msgstr "Включить аудиофайл"
 
-#: ../vdms_panels/sequence_to_video.py:191
-#, fuzzy
-#| msgid "Play the video until audio ends (disable shortest option)"
+#: ../vdms_panels/sequence_to_video.py:192
 msgid "Play the video until audio file ends"
-msgstr ""
-"Воспроизведение видео до тех пор, пока не закончится аудиофайл (будет "
-"отключена опция shortest)"
+msgstr "Воспроизводить видео до тех пор, пока аудиофайл не закончится"
 
-#: ../vdms_panels/sequence_to_video.py:198
-#: ../vdms_panels/sequence_to_video.py:388
+#: ../vdms_panels/sequence_to_video.py:199
+#: ../vdms_panels/sequence_to_video.py:389
 msgid "Open audio file"
 msgstr "Открыть аудиофайл"
 
-#: ../vdms_panels/sequence_to_video.py:216
+#: ../vdms_panels/sequence_to_video.py:217
 msgid "Additional arguments"
 msgstr "Дополнительные аргументы"
 
-#: ../vdms_panels/sequence_to_video.py:401
-#, fuzzy
-#| msgid "Open audio file"
+#: ../vdms_panels/sequence_to_video.py:402
 msgid "Open an audio file"
 msgstr "Открыть аудиофайл"
 
-#: ../vdms_panels/sequence_to_video.py:504
-#: ../vdms_panels/sequence_to_video.py:531
+#: ../vdms_panels/sequence_to_video.py:505
+#: ../vdms_panels/sequence_to_video.py:532
 #: ../vdms_panels/video_to_sequence.py:289
 msgid "Invalid file: '{}'"
 msgstr "Недопустимый файл: '{}'"
 
-#: ../vdms_panels/sequence_to_video.py:514
-#: ../vdms_panels/sequence_to_video.py:539
+#: ../vdms_panels/sequence_to_video.py:515
+#: ../vdms_panels/sequence_to_video.py:540
 msgid "Unsupported format '{}'"
 msgstr "Неподдерживаемый формат '{}'"
 
-#: ../vdms_panels/sequence_to_video.py:641
+#: ../vdms_panels/sequence_to_video.py:642
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -4228,25 +4199,21 @@ msgstr ""
 "Созданные изображения будут сохранены в папке с именем \"Video-to-Frames\" \n"
 "с прогрессивной цифрой папок по указанному вами пути."
 
-#: ../vdms_panels/video_to_sequence.py:111
+#: ../vdms_panels/video_to_sequence.py:107
 msgid "Other unofficial resources:"
-msgstr ""
+msgstr "Другие неофициальные ресурсы:"
 
 #: ../vdms_panels/video_to_sequence.py:131
-#, fuzzy
-#| msgid "From Video to Pictures"
 msgid "From movie to pictures"
-msgstr "Из видео в картинки"
+msgstr "Картинки из фильма"
 
 #: ../vdms_panels/video_to_sequence.py:132
-#, fuzzy
-#| msgid "From Video to Pictures"
 msgid "From movie to picture sheet (tiles)"
-msgstr "Из видео в картинки"
+msgstr "От фильма к листу с изображением (плиткам)"
 
 #: ../vdms_panels/video_to_sequence.py:133
 msgid "From movie to animated GIF"
-msgstr ""
+msgstr "Из фильма в анимированный GIF"
 
 #: ../vdms_panels/video_to_sequence.py:188
 msgid "Set FPS control from 0.1 to 30.0 fps, default is 0.2 fps"

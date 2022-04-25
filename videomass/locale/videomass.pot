@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-22 17:05+0200\n"
+"POT-Creation-Date: 2022-04-24 15:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -921,7 +921,7 @@ msgstr ""
 #: ../vdms_dialogs/preferences.py:305 ../vdms_dialogs/preferences.py:325
 #: ../vdms_dialogs/preferences.py:341 ../vdms_frames/ffmpeg_conf.py:217
 #: ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:632
+#: ../vdms_panels/sequence_to_video.py:633
 #: ../vdms_panels/video_to_sequence.py:367
 msgid "Disabled"
 msgstr ""
@@ -1189,7 +1189,7 @@ msgid "ENABLED:"
 msgstr ""
 
 #: ../vdms_frames/ffmpeg_conf.py:204 ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:632
+#: ../vdms_panels/sequence_to_video.py:633
 #: ../vdms_panels/video_to_sequence.py:363
 msgid "Enabled"
 msgstr ""
@@ -1465,8 +1465,8 @@ msgstr ""
 msgid "Please Confirm"
 msgstr ""
 
-#: ../vdms_io/checkup.py:63 ../vdms_panels/sequence_to_video.py:520
-#: ../vdms_panels/sequence_to_video.py:544
+#: ../vdms_io/checkup.py:63 ../vdms_panels/sequence_to_video.py:521
+#: ../vdms_panels/sequence_to_video.py:545
 msgid ""
 "File does not exist:\n"
 "\n"
@@ -2290,7 +2290,7 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:550 ../vdms_panels/sequence_to_video.py:181
+#: ../vdms_panels/av_conversions.py:550 ../vdms_panels/sequence_to_video.py:182
 msgid "Resizing"
 msgstr ""
 
@@ -2508,7 +2508,7 @@ msgid "Unable to preview Video Stabilizer filter"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:1286
-#: ../vdms_panels/sequence_to_video.py:281
+#: ../vdms_panels/sequence_to_video.py:282
 #: ../vdms_panels/video_to_sequence.py:279
 msgid "A target file must be selected in the queued files"
 msgstr ""
@@ -2524,7 +2524,7 @@ msgid ""
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:1348
-#: ../vdms_panels/sequence_to_video.py:308
+#: ../vdms_panels/sequence_to_video.py:309
 msgid "The file is not a frame or a video file"
 msgstr ""
 
@@ -2783,8 +2783,8 @@ msgstr ""
 msgid "For more details, see the Videomass User Guide:"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:133 ../vdms_panels/sequence_to_video.py:134
-#: ../vdms_panels/video_to_sequence.py:85
+#: ../vdms_panels/concatenate.py:133 ../vdms_panels/sequence_to_video.py:128
+#: ../vdms_panels/video_to_sequence.py:81
 msgid "For more information, visit the official FFmpeg documentation:"
 msgstr ""
 
@@ -2811,10 +2811,10 @@ msgid "At least two files are required to perform concatenation."
 msgstr ""
 
 #: ../vdms_panels/concatenate.py:231 ../vdms_panels/concatenate.py:242
-#: ../vdms_panels/sequence_to_video.py:505
-#: ../vdms_panels/sequence_to_video.py:515
-#: ../vdms_panels/sequence_to_video.py:532
-#: ../vdms_panels/sequence_to_video.py:540
+#: ../vdms_panels/sequence_to_video.py:506
+#: ../vdms_panels/sequence_to_video.py:516
+#: ../vdms_panels/sequence_to_video.py:533
+#: ../vdms_panels/sequence_to_video.py:541
 #: ../vdms_panels/video_to_sequence.py:290
 msgid "ERROR"
 msgstr ""
@@ -2827,7 +2827,7 @@ msgstr ""
 
 #: ../vdms_panels/concatenate.py:291 ../vdms_panels/presets_manager.py:877
 #: ../vdms_panels/presets_manager.py:900
-#: ../vdms_panels/sequence_to_video.py:609
+#: ../vdms_panels/sequence_to_video.py:610
 #: ../vdms_panels/video_to_sequence.py:334
 msgid "Starts"
 msgstr ""
@@ -3548,43 +3548,43 @@ msgid ""
 "with a progressive digit, in the path you specify."
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:155
+#: ../vdms_panels/sequence_to_video.py:156
 msgid "Enable a single still image"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:188
+#: ../vdms_panels/sequence_to_video.py:189
 msgid "Include audio file"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:191
+#: ../vdms_panels/sequence_to_video.py:192
 msgid "Play the video until audio file ends"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:198
-#: ../vdms_panels/sequence_to_video.py:388
+#: ../vdms_panels/sequence_to_video.py:199
+#: ../vdms_panels/sequence_to_video.py:389
 msgid "Open audio file"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:216
+#: ../vdms_panels/sequence_to_video.py:217
 msgid "Additional arguments"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:401
+#: ../vdms_panels/sequence_to_video.py:402
 msgid "Open an audio file"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:504
-#: ../vdms_panels/sequence_to_video.py:531
+#: ../vdms_panels/sequence_to_video.py:505
+#: ../vdms_panels/sequence_to_video.py:532
 #: ../vdms_panels/video_to_sequence.py:289
 msgid "Invalid file: '{}'"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:514
-#: ../vdms_panels/sequence_to_video.py:539
+#: ../vdms_panels/sequence_to_video.py:515
+#: ../vdms_panels/sequence_to_video.py:540
 msgid "Unsupported format '{}'"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:641
+#: ../vdms_panels/sequence_to_video.py:642
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3623,7 +3623,7 @@ msgid ""
 "in the path you specify."
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:111
+#: ../vdms_panels/video_to_sequence.py:107
 msgid "Other unofficial resources:"
 msgstr ""
 

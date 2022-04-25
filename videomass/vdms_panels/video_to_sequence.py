@@ -314,9 +314,9 @@ class VideoToSequence(wx.Panel):
         destdir = destdir[0]  # specified dest
         outputdir = make_newdir_with_id(destdir, 'Video-to-Frames_1')
         if self.cmb_frmt.GetValue() == 'gif':
-            fileout = "{0}.{1}".format(basename, self.cmb_frmt.GetValue())
+            fileout = f"{basename}.{self.cmb_frmt.GetValue()}"
         else:
-            fileout = "{0}-%d.{1}".format(basename, self.cmb_frmt.GetValue())
+            fileout = f"{basename}-%d.{self.cmb_frmt.GetValue()}"
         outfilename = os.path.join(outputdir, fileout)
 
         if self.txt_args.IsEnabled():
