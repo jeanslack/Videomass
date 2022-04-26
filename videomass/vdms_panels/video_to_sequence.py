@@ -118,15 +118,10 @@ class VideoToSequence(wx.Panel):
         sizer_link2.Add(link4)
         sizer_link2.Add((20, 20))
         sizer_link2.Add(link5)
-        sizer.Add(panelscroll, 0, wx.ALL | wx.EXPAND, 0)
+        sizer.Add(panelscroll, 0, wx.ALL | wx.EXPAND, 5)
         panelscroll.SetSizer(fgs1)
         panelscroll.SetAutoLayout(1)
         panelscroll.SetupScrolling()
-        line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        sizer.Add(line1, 0, wx.ALL | wx.EXPAND, 5)
         # sizer.Add((20, 20))
         choices = [(_('From movie to pictures')),
                    (_('From movie to picture sheet (tiles)')),

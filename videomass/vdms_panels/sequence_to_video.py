@@ -135,17 +135,11 @@ class SequenceToVideo(wx.Panel):
         sizer_link1.Add(lbl_link, 0, wx.ALL | wx.EXPAND, 5)
         sizer_link1.Add(link1)
 
-        sizer.Add(panelscroll, 0, wx.ALL | wx.EXPAND, 0)
+        sizer.Add(panelscroll, 0, wx.ALL | wx.EXPAND, 5)
 
         panelscroll.SetSizer(fgs1)
         panelscroll.SetAutoLayout(1)
         panelscroll.SetupScrolling()
-
-        line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        sizer.Add(line1, 0, wx.ALL | wx.EXPAND, 5)
         # sizer.Add((5, 5))
         boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
         sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)

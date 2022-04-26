@@ -1214,8 +1214,11 @@ class MainFrame(wx.Frame):
         path for conversions
 
         """
+        dpath = '' if self.outpath_ffmpeg is None else self.outpath_ffmpeg
         dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
-                                       "conversions"), "", wx.DD_DEFAULT_STYLE)
+                                       "conversions"), dpath,
+                               wx.DD_DEFAULT_STYLE
+                               )
         if dialdir.ShowModal() == wx.ID_OK:
             getpath = self.appdata['getpath'](dialdir.GetPath())
             self.outpath_ffmpeg = f'{getpath}'
@@ -1235,8 +1238,11 @@ class MainFrame(wx.Frame):
         path for downloading
 
         """
+        dpath = '' if self.outpath_ydl is None else self.outpath_ydl
         dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
-                                       "downloads"), "", wx.DD_DEFAULT_STYLE)
+                                       "downloads"), dpath,
+                               wx.DD_DEFAULT_STYLE
+                               )
         if dialdir.ShowModal() == wx.ID_OK:
             getpath = self.appdata['getpath'](dialdir.GetPath())
             self.outpath_ydl = f'{getpath}'
