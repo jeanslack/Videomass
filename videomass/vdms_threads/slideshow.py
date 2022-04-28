@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.07.2022
+Rev: Apr.28.2022
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -38,41 +38,41 @@ if not platform.system() == 'Windows':
     import shlex
 
 
-def temporary_processing(*varargs):
+def convert_images(*varargs):
     """
-    File processing on temporary directory before starting
-    to produce final video. The images are converted into
-    PNG format and eventually resized using the scale filter.
+    Convert images to PNG format and assign
+    progressive digits to them.
     """
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
-    OS = appdata['ostype']
-    NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
+    opsystem = appdata['ostype']
+    not_exist_msg = _("Is 'ffmpeg' installed on your system?")
     flist = varargs[0]
     tmpdir = varargs[1]
-    cmdargs = varargs[2]
-    logname = varargs[3]
+    logname = varargs[2]
+    imagenames = varargs[3]
 
     wx.CallAfter(pub.sendMessage,
                  "COUNT_EVT",
-                 count='Task One: Preparing temporary files...',
-                 fsource=f'Source: list',
+                 count='Preparing temporary files...',
+                 fsource='Source: Imported file list',
                  destination=f'Destination: "{tmpdir}"',
                  duration=len(flist),
                  end='',
                  )
     prognum = 0
+    args = (f'"{appdata["ffmpeg_cmd"]}" '
+           f'{appdata["ffmpegloglev"]} '
+           f'{appdata["ffmpeg+params"]} ')
+    logwrite(f'Preparing temporary files...\n'
+             f'\n[COMMAND:]\n{args}', '', logname)
+
     for files in flist:
         prognum += 1
-
-        tmpf = os.path.join(tmpdir, f'IMAGE_{prognum}.png')
-        cmd_1 = (f'"{appdata["ffmpeg_cmd"]}" '
-                 f'{appdata["ffmpegloglev"]} '
-                 f'{appdata["ffmpeg+params"]} '
-                 f'-i "{files}" {cmdargs} "{tmpf}"'
-                 )
-        logwrite(cmd_1, '', logname)
-        if not OS == 'Windows':
+        tmpf = os.path.join(tmpdir, f'{imagenames}{prognum}.png')
+        cmd_1 = (f'{args} -i "{files}" "{tmpf}"')
+        #logwrite(cmd_1, '', logname)
+        if not opsystem == 'Windows':
             cmd_1 = shlex.split(cmd_1)
         try:
             with Popen(cmd_1,
@@ -104,7 +104,7 @@ def temporary_processing(*varargs):
                              status=0,
                              )
         except (OSError, FileNotFoundError) as err:  # cmd not found
-            excepterr = f"{err}\n  {NOT_EXIST_MSG}"
+            excepterr = f"{err}\n  {not_exist_msg}"
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=excepterr,
@@ -127,11 +127,99 @@ def temporary_processing(*varargs):
     return None
 
 
+def resizing_process(*varargs):
+    """
+    After the images have been converted to the required format,
+    this process performs the resizing using ffmpeg filters.
+    This is a necessary workaround for proper video playback.
+    """
+    get = wx.GetApp()  # get videomass wx.App attribute
+    appdata = get.appset
+    opsystem = appdata['ostype']
+    not_exist_msg = _("Is 'ffmpeg' installed on your system?")
+    flist = varargs[0]
+    tmpdir = varargs[1]
+    cmdargs = varargs[2]
+    logname = varargs[3]
+
+    wx.CallAfter(pub.sendMessage,
+                 "COUNT_EVT",
+                 count='File resizing...',
+                 fsource='Source: Temporary directory',
+                 destination=f'Destination: "{tmpdir}"',
+                 duration=len(flist),
+                 end='',
+                 )
+
+    tmpf = os.path.join(tmpdir, 'TMP_%d.png')
+    tmpfout = os.path.join(tmpdir, 'IMAGE_%d.png')
+    cmd_1 = (f'"{appdata["ffmpeg_cmd"]}" '
+             f'{appdata["ffmpegloglev"]} '
+             f'{appdata["ffmpeg+params"]} '
+             f'-i "{tmpf}" {cmdargs} "{tmpfout}"'
+                )
+    logwrite(f'\nFile resizing...\n\n[COMMAND]:\n{cmd_1}', '', logname)
+    #logwrite(cmd_1, '', logname)
+    if not opsystem == 'Windows':
+        cmd_1 = shlex.split(cmd_1)
+    try:
+        with Popen(cmd_1,
+                   stderr=subprocess.PIPE,
+                   bufsize=1,
+                   universal_newlines=True
+                   ) as proc1:
+            error = proc1.communicate()
+
+        if proc1.returncode:  # ffmpeg error
+            if error[1]:
+                wx.CallAfter(pub.sendMessage,
+                             "UPDATE_EVT",
+                             output='',
+                             duration=0,
+                             status=proc1.wait(),
+                             )
+                logwrite('',
+                         f"Exit status: {proc1.wait()}\n{error[1]}",
+                         logname,
+                         )  # append exit error number
+                return error[1]
+
+        else:  # ok
+            wx.CallAfter(pub.sendMessage,
+                         "UPDATE_EVT",
+                         output='',
+                         duration=0,
+                         status=0,
+                         )
+    except (OSError, FileNotFoundError) as err:  # cmd not found
+        excepterr = f"{err}\n  {not_exist_msg}"
+        wx.CallAfter(pub.sendMessage,
+                     "COUNT_EVT",
+                     count=excepterr,
+                     fsource='',
+                     destination='',
+                     duration=0,
+                     end='error',
+                     )
+        return err
+
+    time.sleep(.5)
+    wx.CallAfter(pub.sendMessage,
+                 "COUNT_EVT",
+                 count='',
+                 fsource='',
+                 destination='',
+                 duration=0,
+                 end='ok'
+                 )
+    return None
+
+
 class SlideshowMaker(Thread):
     """
-    Represents a secondary thread using the ffmpeg subprocess
-    for making a simple video in mkv format from a sequence
-    of images converted and resized in a temporary context.
+    Represents the ffmpeg subprocess to produce a video in
+    mkv format from a sequence of images already converted
+    and resized in a temporary context.
     """
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
@@ -163,20 +251,35 @@ class SlideshowMaker(Thread):
         """
         Subprocess initialize thread.
         """
+        imgtmpnames = 'TMP_' if self.args_0 else 'IMAGE_'
         filedone = []
         with tempfile.TemporaryDirectory() as tempdir:  # make tmp dir
-            tp = temporary_processing(self.filelist,
+            tmpproc1 = convert_images(self.filelist,
                                       tempdir,
-                                      self.args_0,
                                       self.logname,
+                                      imgtmpnames,
                                       )
-            if tp is not None:
+            if tmpproc1 is not None:
                 self.end_process(filedone)
                 return
 
             if self.stop_work_thread:  # break second 'for' loop
                 self.end_process(filedone)
                 return
+
+            if imgtmpnames == 'TMP_':
+                tmpproc2 = resizing_process(self.filelist,
+                                            tempdir,
+                                            self.args_0,
+                                            self.logname,
+                                            )
+                if tmpproc2 is not None:
+                    self.end_process(filedone)
+                    return
+
+                if self.stop_work_thread:  # break second 'for' loop
+                    self.end_process(filedone)
+                    return
 
             # ------------------------------- make video
             tmpgroup = os.path.join(tempdir, 'IMAGE_%d.png')
@@ -186,7 +289,7 @@ class SlideshowMaker(Thread):
                      f'{self.preinput_1} -i "{tmpgroup}" {self.args_1} '
                      f'"{self.filedest}"'
                      )
-            count = '\nTask Two: Make Video...'
+            count = '\nVideo production...'
             log = (f'{count}\nSource: "{tempdir}"\n'
                    f'Destination: "{self.filedest}"\n\n[COMMAND]:\n{cmd_2}')
 

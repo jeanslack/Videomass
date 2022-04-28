@@ -44,7 +44,7 @@ def create_dirs(dirname):
     if not os.path.exists(dirname):
         try:
             os.makedirs(dirname, mode=0o777)
-        except OSError as err:
+        except (OSError, FileExistsError) as err:
             return {'ERROR': err}
 
     return {'R': None}

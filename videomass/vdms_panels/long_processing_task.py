@@ -339,7 +339,7 @@ class LogOut(wx.Panel):
                     eta = ""
             else:
                 eta = ""
-            self.labperc.SetLabel(f"Processing... {str(int(percentage))}% | "
+            self.labperc.SetLabel(f"Processing: {str(int(percentage))}% | "
                                   f"{''.join(ffprog)} {eta}"
                                   )
             del output, duration
@@ -380,14 +380,14 @@ class LogOut(wx.Panel):
             if self.time_remaining is True:
                 newlab = self.labperc.GetLabel().split('|')
                 for idx, ele in enumerate(self.labperc.GetLabel().split('|')):
-                    if 'Processing...' in ele:
-                        newlab[idx] = 'Processing... 100%'
+                    if 'Processing:' in ele:
+                        newlab[idx] = 'Processing: 100%'
                     if ' time:' in ele:
                         timefrm = milliseconds2clock(duration)
                         newlab[idx] = (f' time: {str(timefrm)}')
                     if ' ETA:' in ele:
                         newlab[idx] = ' ETA: 00:00:00.000'
-                self.labperc.SetLabel("|".join(newlab))
+                self.labperc.SetLabel(" | ".join(newlab))
             return
 
         # if STATUS_ERROR == 1:

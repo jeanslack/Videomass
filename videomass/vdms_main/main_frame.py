@@ -166,7 +166,7 @@ class MainFrame(wx.Frame):
         ####
 
         # Layout externals panels:
-        self.mainSizer.Add(self.TimeLine, 0, wx.EXPAND)
+        self.mainSizer.Add(self.TimeLine, 0, wx.EXPAND | wx.ALL, 5)
         self.mainSizer.Add(self.ChooseTopic, 1, wx.EXPAND)
         self.mainSizer.Add(self.fileDnDTarget, 1, wx.EXPAND)
         self.mainSizer.Add(self.textDnDTarget, 1, wx.EXPAND)

@@ -34,7 +34,7 @@ import wx.lib.agw.floatspin as FS
 import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_dialogs.epilogue import Formula
-from videomass.vdms_utils.utils import make_newdir_with_id
+from videomass.vdms_utils.utils import make_newdir_with_id_num
 
 
 class VideoToSequence(wx.Panel):
@@ -63,7 +63,7 @@ class VideoToSequence(wx.Panel):
         appdata = get.appset
         self.parent = parent  # parent is the MainFrame
 
-        wx.Panel.__init__(self, parent=parent, style=wx.BORDER_THEME)
+        wx.Panel.__init__(self, parent=parent)
         sizer = wx.BoxSizer(wx.VERTICAL)
         panelscroll = scrolled.ScrolledPanel(self, -1, size=(-1, 200),
                                              style=wx.TAB_TRAVERSAL
@@ -307,12 +307,16 @@ class VideoToSequence(wx.Panel):
         """
         basename = os.path.basename(filename.rsplit('.')[0])
         destdir = destdir[0]  # specified dest
-        outputdir = make_newdir_with_id(destdir, 'Video-to-Frames_1')
+        outputdir = make_newdir_with_id_num(destdir, 'Video-to-Frames')
+        if outputdir[0] == 'ERROR':
+            wx.MessageBox(f"{outputdir[1]}", "Videomass",
+                          wx.ICON_ERROR, self)
+            return
         if self.cmb_frmt.GetValue() == 'gif':
             fileout = f"{basename}.{self.cmb_frmt.GetValue()}"
         else:
             fileout = f"{basename}-%d.{self.cmb_frmt.GetValue()}"
-        outfilename = os.path.join(outputdir, fileout)
+        outfilename = os.path.join(outputdir[1], fileout)
 
         if self.txt_args.IsEnabled():
             arg = self.update_arguments(self.cmb_frmt.GetValue())
@@ -325,14 +329,14 @@ class VideoToSequence(wx.Panel):
             command = " ".join(f'{arg[1]} {self.txt_args.GetValue()} -y '
                                f'"{outfilename}"'.split())
 
-        valupdate = self.update_dict(filename, outputdir)
+        valupdate = self.update_dict(filename, outputdir[1])
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
 
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_to_processing('video_to_sequence',
                                              filename,
                                              preargs,
-                                             outputdir,
+                                             outputdir[1],
                                              command,
                                              None,
                                              None,
@@ -341,6 +345,7 @@ class VideoToSequence(wx.Panel):
                                              1,
                                              False,  # reserved
                                              )
+        return
     # -----------------------------------------------------------
 
     def update_dict(self, filename, outputdir):

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.07.2022
+Rev: Apr.28.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -36,7 +36,7 @@ from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_dialogs.epilogue import Formula
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_threads.ffprobe import ffprobe
-from videomass.vdms_utils.utils import make_newdir_with_id
+from videomass.vdms_utils.utils import make_newdir_with_id_num
 from videomass.vdms_utils.utils import get_seconds as getsec
 from videomass.vdms_utils.utils import get_milliseconds as getms
 from videomass.vdms_utils.utils import milliseconds2clock as clockms
@@ -109,7 +109,7 @@ class SequenceToVideo(wx.Panel):
             bmpresize = wx.Bitmap(icons['scale'], wx.BITMAP_TYPE_ANY)
             bmpatrack = wx.Bitmap(icons['atrack'], wx.BITMAP_TYPE_ANY)
 
-        wx.Panel.__init__(self, parent=parent, style=wx.BORDER_THEME)
+        wx.Panel.__init__(self, parent=parent)
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         panelscroll = scrolled.ScrolledPanel(self, -1, size=(-1, 200),
@@ -178,6 +178,10 @@ class SequenceToVideo(wx.Panel):
                                     )
         self.btn_resize.SetBitmap(bmpresize, wx.LEFT)
         siz_pict.Add(self.btn_resize, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.ckbx_far = wx.CheckBox(self, wx.ID_ANY,
+                                   _('Force original aspect ratio'))
+        siz_pict.Add(self.ckbx_far, 0, wx.ALL | wx.EXPAND, 5)
+        self.ckbx_far.Disable()
         siz_audio = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_audio)
         self.ckbx_audio = wx.CheckBox(self, wx.ID_ANY, _('Include audio file'))
@@ -230,6 +234,7 @@ class SequenceToVideo(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_addaudio_track, self.btn_openaudio)
         self.Bind(wx.EVT_CHECKBOX, self.on_shortest, self.ckbx_shortest)
         self.Bind(wx.EVT_CHECKBOX, self.on_addparams, self.ckbx_edit)
+        self.Bind(wx.EVT_CHECKBOX, self.on_force_aspect_ratio, self.ckbx_far)
         self.Bind(wx.EVT_COMBOBOX, self.on_fps, self.cmb_fps)
         self.Bind(wx.EVT_BUTTON, self.on_resizing, self.btn_resize)
     # ---------------------------------------------------------
@@ -261,6 +266,32 @@ class SequenceToVideo(wx.Panel):
         else:
             self.txt_addparams.Disable()
     # ---------------------------------------------------------
+
+    def on_force_aspect_ratio(self, event):
+        """
+        Adds extra params to scale filter to preserving
+        images aspect ratio.
+
+        """
+        if self.ckbx_far.IsChecked():
+            width = self.opt["Scale"].split(':', maxsplit=1)[0][8:]
+            height = self.opt["Scale"].split(':', maxsplit=1)[1][2:]
+            params = (f':force_original_aspect_ratio=decrease:eval=frame,'
+                      f'pad={width}:{height}:-1:-1:eval=frame')
+            scale = ''.join(self.opt["Scale"] + params)
+            if self.opt["Setdar"]:
+                scale = f'{scale},{self.opt["Setdar"]}'
+            if self.opt["Setsar"]:
+                scale = f'{scale},{self.opt["Setsar"]}'
+            self.opt["RESIZE"] = f'-vf "{scale}"'
+        else:
+            scale = self.opt["Scale"]
+            if self.opt["Setdar"]:
+                scale = f'{scale},{self.opt["Setdar"]}'
+            if self.opt["Setsar"]:
+                scale = f'{scale},{self.opt["Setsar"]}'
+            self.opt["RESIZE"] = f'-vf "{scale}"'
+    # ------------------------------------------------------------------#
 
     def file_selection(self):
         """
@@ -329,6 +360,8 @@ class SequenceToVideo(wx.Panel):
                     self.opt["Setsar"] = ""
                     self.opt["Scale"] = ""
                     self.opt["RESIZE"] = ''
+                    self.ckbx_far.SetValue(False)
+                    self.ckbx_far.Disable()
                 else:
                     self.btn_resize.SetBackgroundColour(
                         wx.Colour(SequenceToVideo.VIOLET))
@@ -338,7 +371,15 @@ class SequenceToVideo(wx.Panel):
 
                     flt = ''.join([f'{x},' for x in data.values() if x])[:-1]
                     if flt:
-                        self.opt["RESIZE"] = f'-vf {flt}'
+                        self.opt["RESIZE"] = f'-vf "{flt}"'
+                        print(self.opt["Scale"])
+                        if '=-1' in data['scale'] or '=-2' in data['scale']:
+                            self.ckbx_far.SetValue(False)
+                            self.ckbx_far.Disable()
+                        else:
+                            self.ckbx_far.Enable()
+                        if self.ckbx_far.IsChecked():
+                            self.on_force_aspect_ratio(self)
     # ---------------------------------------------------------
 
     def on_fps(self, event):
@@ -576,8 +617,13 @@ class SequenceToVideo(wx.Panel):
             destdir = self.parent.outpath_ffmpeg
 
         basename = os.path.basename(fget[0].rsplit('.')[0])
-        outputdir = make_newdir_with_id(destdir, 'Still-Images_1')
-        destdir = os.path.join(outputdir, f"{basename}.mkv")
+        outputdir = make_newdir_with_id_num(destdir, 'Still-Images')
+        if outputdir[0] == 'ERROR':
+            wx.MessageBox(f"{outputdir[1]}", "Videomass",
+                          wx.ICON_ERROR, self)
+            return
+
+        destdir = os.path.join(outputdir[1], f"{basename}.mkv")
 
         if self.ckbx_static_img.IsChecked():
             countmax = 1
@@ -597,7 +643,7 @@ class SequenceToVideo(wx.Panel):
         args = self.get_args_line()  # get args for command line
 
         valupdate = self.update_dict(f"{basename}.mkv",
-                                     outputdir,
+                                     outputdir[1],
                                      countmax,
                                      'mkv',
                                      )
@@ -606,7 +652,7 @@ class SequenceToVideo(wx.Panel):
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_to_processing('sequence_to_video',  # topic
                                              files,  # file list
-                                             outputdir,
+                                             outputdir[1],
                                              destdir,
                                              (self.opt["RESIZE"], args[0]),
                                              self.opt["Preinput"],
@@ -616,6 +662,7 @@ class SequenceToVideo(wx.Panel):
                                              countmax,
                                              skiptimeline=True
                                              )
+        return
     # -----------------------------------------------------------
 
     def update_dict(self, newfile, destdir, count, ext):
@@ -633,7 +680,7 @@ class SequenceToVideo(wx.Panel):
         else:
             addargs = ''
 
-        formula = (_(f"SUMMARY\n\nFile to process\nOutput filename\
+        formula = (_("SUMMARY\n\nFile to process\nOutput filename\
                       \nDestination\nOutput Format\nAttional arguments\
                       \nAudio file\nShortest\nResize\nPre-input\
                       \nFrame per Second (FPS)\nStill image duration\
