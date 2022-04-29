@@ -578,8 +578,8 @@ class VideoToSequence(wx.Panel):
                 rate, rows, cols, pad, marg = '', '', '', '', ''
 
         formula = (_("SUMMARY\n\nSelected File\nOutput Format\nRate (fps)\n"
-                     "Resize\nMosaic rows\nMosaic columns\nMosaic paddings\n"
-                     "Mosaic margins\nCustom Arguments\nTime Period\n"
+                     "Resizing\nMosaic rows\nMosaic columns\nMosaic padding\n"
+                     "Mosaic margin\nCustom Arguments\nTime Period\n"
                      "Destination Folder"))
         dictions = (f"\n\n{filename}\n{self.cmb_frmt.GetValue()}"
                     f"\n{rate}\n{resize}\n{rows}\n{cols}\n{pad}\n{marg}"
