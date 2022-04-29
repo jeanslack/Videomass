@@ -143,8 +143,8 @@ class SequenceToVideo(wx.Panel):
         # sizer.Add((5, 5))
         boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
         sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)
-        sizFormat = wx.BoxSizer(wx.HORIZONTAL)
-        boxctrl.Add(sizFormat)
+        siz_format = wx.BoxSizer(wx.HORIZONTAL)
+        boxctrl.Add(siz_format)
 
         self.ckbx_static_img = wx.CheckBox(self, wx.ID_ANY,
                                            _('Enable a single still image'))
@@ -179,7 +179,8 @@ class SequenceToVideo(wx.Panel):
         self.btn_resize.SetBitmap(bmpresize, wx.LEFT)
         siz_pict.Add(self.btn_resize, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.ckbx_far = wx.CheckBox(self, wx.ID_ANY,
-                                   _('Force original aspect ratio'))
+                                    _('Force original aspect ratio using '
+                                      'padding rather than stretching'))
         siz_pict.Add(self.ckbx_far, 0, wx.ALL | wx.EXPAND, 5)
         self.ckbx_far.Disable()
         siz_audio = wx.BoxSizer(wx.HORIZONTAL)
@@ -188,7 +189,7 @@ class SequenceToVideo(wx.Panel):
         siz_audio.Add(self.ckbx_audio, 0, wx.ALL | wx.EXPAND, 5)
         self.ckbx_shortest = wx.CheckBox(self, wx.ID_ANY,
                                          _('Play the video until '
-                                           'audio file ends'
+                                           'audio track finishes'
                                            ))
         siz_audio.Add(self.ckbx_shortest, 0, wx.ALL | wx.EXPAND, 5)
         self.ckbx_shortest.Disable()
@@ -333,7 +334,6 @@ class SequenceToVideo(wx.Panel):
 
         wx.MessageBox(_('The file is not a frame or a video file'),
                       'Videomass', wx.ICON_INFORMATION)
-        self.on_FiltersClear(self)
         return None
     # ------------------------------------------------------------------#
 
@@ -372,7 +372,6 @@ class SequenceToVideo(wx.Panel):
                     flt = ''.join([f'{x},' for x in data.values() if x])[:-1]
                     if flt:
                         self.opt["RESIZE"] = f'-vf "{flt}"'
-                        print(self.opt["Scale"])
                         if '=-1' in data['scale'] or '=-2' in data['scale']:
                             self.ckbx_far.SetValue(False)
                             self.ckbx_far.Disable()
@@ -437,14 +436,14 @@ class SequenceToVideo(wx.Panel):
         with wx.FileDialog(self, _("Open an audio file"),
                            wildcard=f"Audio source ({fmt})|{fmt}",
                            style=wx.FD_OPEN |
-                           wx.FD_FILE_MUST_EXIST) as fileDialog:
+                           wx.FD_FILE_MUST_EXIST) as fdlg:
 
-            if fileDialog.ShowModal() == wx.ID_CANCEL:
+            if fdlg.ShowModal() == wx.ID_CANCEL:
                 return
-            pathname = fileDialog.GetPath()
+            pathname = fdlg.GetPath()
 
         self.btn_openaudio.SetBackgroundColour(
-                        wx.Colour(SequenceToVideo.VIOLET))
+            wx.Colour(SequenceToVideo.VIOLET))
         ext = os.path.splitext(pathname)[1].replace('.', '').upper()
         self.btn_openaudio.SetLabel(ext)
         self.txt_apath.write(pathname)
@@ -452,8 +451,8 @@ class SequenceToVideo(wx.Panel):
         self.opt["AudioMerging"] = f'-i "{pathname}"'
         self.opt["Map"] = '-map 0:v:0 -map 1:a:0'
         probe = ffprobe(pathname, self.ffprobe_cmd, hide_banner=None)
-        ms = float(probe[0]['format']['duration']) * 1000
-        self.opt["ADuration"] = round(ms)
+        mills = float(probe[0]['format']['duration']) * 1000
+        self.opt["ADuration"] = round(mills)
     # ---------------------------------------------------------
 
     def build_command_slideshow(self, timeline):
@@ -468,7 +467,6 @@ class SequenceToVideo(wx.Panel):
                 sec = round(getsec(timeline))
             else:
                 self.opt["Clock"] = clockms(self.opt["ADuration"])
-                #sec = round(getsec(self.parent.time_seq.split()[3]))
                 sec = round(getsec(timeline))
                 duration = self.opt["ADuration"]
                 loop = f'-loop 1 -t {self.opt["Clock"]}'
@@ -534,10 +532,10 @@ class SequenceToVideo(wx.Panel):
         Check compatibility between loaded images and files exist.
         """
         itemcount = self.parent.fileDnDTarget.flCtrl.GetItemCount()
-        for x in range(itemcount):
-            typemedia = self.parent.fileDnDTarget.flCtrl.GetItemText(x, 3)
+        for itc in range(itemcount):
+            typemedia = self.parent.fileDnDTarget.flCtrl.GetItemText(itc, 3)
             if 'video' not in typemedia or 'sequence' not in typemedia:
-                wx.MessageBox(_("Invalid file: '{}'").format(fsource[x]),
+                wx.MessageBox(_("Invalid file: '{}'").format(fsource[itc]),
                               _('ERROR'), wx.ICON_ERROR, self)
                 return True
 
@@ -551,9 +549,9 @@ class SequenceToVideo(wx.Panel):
                           _('ERROR'), wx.ICON_ERROR, self)
             return True
 
-        for fn in fsource:
-            if not os.path.isfile(os.path.abspath(fn)):
-                wx.MessageBox(_('File does not exist:\n\n"{}"\n').format(fn),
+        for fsrc in fsource:
+            if not os.path.isfile(os.path.abspath(fsrc)):
+                wx.MessageBox(_('File does not exist:\n\n"{}"\n').format(fsrc),
                               "Videomass", wx.ICON_ERROR, self)
                 return True
         return None

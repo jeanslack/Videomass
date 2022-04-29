@@ -101,7 +101,7 @@ class Timeline(wx.Panel):
         #                     )
         self.font = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         sizer_base = wx.BoxSizer(wx.HORIZONTAL)
-        self.ckbx_graph = wx.CheckBox(self, wx.ID_ANY, (_("Graph")))
+        self.ckbx_graph = wx.CheckBox(self, wx.ID_ANY, (_("View")))
         sizer_base.Add(self.ckbx_graph, 0, wx.ALL
                        | wx.ALIGN_CENTRE_VERTICAL, 5
                        )

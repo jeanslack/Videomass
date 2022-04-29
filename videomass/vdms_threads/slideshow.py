@@ -62,16 +62,16 @@ def convert_images(*varargs):
                  )
     prognum = 0
     args = (f'"{appdata["ffmpeg_cmd"]}" '
-           f'{appdata["ffmpegloglev"]} '
-           f'{appdata["ffmpeg+params"]} ')
+            f'{appdata["ffmpegloglev"]} '
+            f'{appdata["ffmpeg+params"]} ')
     logwrite(f'Preparing temporary files...\n'
              f'\n[COMMAND:]\n{args}', '', logname)
 
     for files in flist:
         prognum += 1
-        tmpf = os.path.join(tmpdir, f'{imagenames}{prognum}.png')
+        tmpf = os.path.join(tmpdir, f'{imagenames}{prognum}.bmp')
         cmd_1 = (f'{args} -i "{files}" "{tmpf}"')
-        #logwrite(cmd_1, '', logname)
+
         if not opsystem == 'Windows':
             cmd_1 = shlex.split(cmd_1)
         try:
@@ -151,15 +151,15 @@ def resizing_process(*varargs):
                  end='',
                  )
 
-    tmpf = os.path.join(tmpdir, 'TMP_%d.png')
-    tmpfout = os.path.join(tmpdir, 'IMAGE_%d.png')
+    tmpf = os.path.join(tmpdir, 'TMP_%d.bmp')
+    tmpfout = os.path.join(tmpdir, 'IMAGE_%d.bmp')
     cmd_1 = (f'"{appdata["ffmpeg_cmd"]}" '
              f'{appdata["ffmpegloglev"]} '
              f'{appdata["ffmpeg+params"]} '
              f'-i "{tmpf}" {cmdargs} "{tmpfout}"'
-                )
+             )
     logwrite(f'\nFile resizing...\n\n[COMMAND]:\n{cmd_1}', '', logname)
-    #logwrite(cmd_1, '', logname)
+
     if not opsystem == 'Windows':
         cmd_1 = shlex.split(cmd_1)
     try:
@@ -282,7 +282,7 @@ class SlideshowMaker(Thread):
                     return
 
             # ------------------------------- make video
-            tmpgroup = os.path.join(tempdir, 'IMAGE_%d.png')
+            tmpgroup = os.path.join(tempdir, 'IMAGE_%d.bmp')
             cmd_2 = (f'"{SlideshowMaker.appdata["ffmpeg_cmd"]}" '
                      f'{SlideshowMaker.appdata["ffmpegloglev"]} '
                      f'{SlideshowMaker.appdata["ffmpeg+params"]} '

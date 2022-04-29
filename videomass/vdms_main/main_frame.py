@@ -145,7 +145,7 @@ class MainFrame(wx.Frame):
                                                   self.icons['profile_copy'],
                                                   )
         self.ConcatDemuxer = concatenate.Conc_Demuxer(self,)
-        self.toPictures = video_to_sequence.VideoToSequence(self,)
+        self.toPictures = video_to_sequence.VideoToSequence(self, self.icons)
         self.toSlideshow = sequence_to_video.SequenceToVideo(self, self.icons)
         # hide panels
         self.TimeLine.Hide()
