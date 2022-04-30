@@ -50,12 +50,10 @@ class VideoToSequence(wx.Panel):
     MSG_1 = _("\n1. Import one or more video files, then select one."
               "\n\n2. To select a slice of time use the Timeline editor "
               "(CTRL+T) by scrolling the DURATION and the SEEK sliders."
-              "\n\n3. Set the FPS (frames per second) control; the "
-              "higher this value, the more images will be extracted."
-              "\n\n4. Select an output format (jpg, png, bmp)."
-              "\n\n5. Start the conversion."
+              "\n\n3. Select an output format (jpg, png, bmp)."
+              "\n\n4. Start the conversion."
               "\n\n\nThe images produced will be saved in a folder "
-              "named 'Video-to-Frames' with a progressive digit, "
+              "named 'Movie_to_Pictures' with a progressive digit, "
               "\nin the path you specify.")
     # ----------------------------------------------------------------#
 
@@ -75,7 +73,7 @@ class VideoToSequence(wx.Panel):
 
         wx.Panel.__init__(self, parent=parent)
         sizer = wx.BoxSizer(wx.VERTICAL)
-        panelscroll = scrolled.ScrolledPanel(self, -1, size=(-1, 200),
+        panelscroll = scrolled.ScrolledPanel(self, -1, size=(-1, 160),
                                              style=wx.TAB_TRAVERSAL
                                              | wx.BORDER_THEME,
                                              name="panelscr",
@@ -176,9 +174,9 @@ class VideoToSequence(wx.Panel):
         siz_ctrl.Add(self.cmb_frmt, 0, wx.ALL, 5)
         self.cmb_frmt.SetSelection(2)
         siz_tile = wx.FlexGridSizer(4, 4, 0, 0)
-        boxctrl.Add(siz_tile)
+        boxctrl.Add(siz_tile, 0, wx.TOP | wx.BOTTOM, 10)
         self.lbl_rows = wx.StaticText(self, wx.ID_ANY, label=_("Rows:"))
-        siz_tile.Add(self.lbl_rows, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        siz_tile.Add(self.lbl_rows, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.lbl_rows.Disable()
         self.spin_rows = wx.SpinCtrl(self, wx.ID_ANY, "4", min=2,
                                      max=32, size=(-1, -1),
@@ -188,7 +186,7 @@ class VideoToSequence(wx.Panel):
         self.spin_rows.Disable()
         self.lbl_cols = wx.StaticText(self, wx.ID_ANY,
                                       label=_("Columns:"))
-        siz_tile.Add(self.lbl_cols, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        siz_tile.Add(self.lbl_cols, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.lbl_cols.Disable()
         self.spin_cols = wx.SpinCtrl(self, wx.ID_ANY, "4", min=2,
                                      max=32, size=(-1, -1),
@@ -197,7 +195,7 @@ class VideoToSequence(wx.Panel):
         siz_tile.Add(self.spin_cols, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_cols.Disable()
         self.lbl_pad = wx.StaticText(self, wx.ID_ANY, label=_("Padding:"))
-        siz_tile.Add(self.lbl_pad, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        siz_tile.Add(self.lbl_pad, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.lbl_pad.Disable()
         self.spin_pad = wx.SpinCtrl(self, wx.ID_ANY, "2", min=0,
                                     max=32, size=(-1, -1),
@@ -207,7 +205,7 @@ class VideoToSequence(wx.Panel):
         self.spin_pad.Disable()
 
         self.lbl_marg = wx.StaticText(self, wx.ID_ANY, label=_("Margin:"))
-        siz_tile.Add(self.lbl_marg, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        siz_tile.Add(self.lbl_marg, 0, wx.LEFT| wx.ALIGN_CENTER_VERTICAL, 5)
         self.lbl_marg.Disable()
         self.spin_marg = wx.SpinCtrl(self, wx.ID_ANY, "2", min=0,
                                      max=32, size=(-1, -1),
@@ -233,7 +231,8 @@ class VideoToSequence(wx.Panel):
             lbl_msg1.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             lbl_msg2.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
-        tip = (_('Set FPS control from 0.1 to 30.0 fps, default is 0.2 fps'))
+        tip = (_('Set FPS control from 0.1 to 30.0 fps. The higher this '
+                 'value, the more images will be extracted.'))
         self.spin_rate.SetToolTip(tip)
 
         self.Bind(wx.EVT_CHECKBOX, self.on_edit, self.ckbx_edit)
@@ -504,7 +503,7 @@ class VideoToSequence(wx.Panel):
         """
         basename = os.path.basename(filename.rsplit('.')[0])
         destdir = destdir[0]  # specified dest
-        outputdir = make_newdir_with_id_num(destdir, 'Video-to-Frames')
+        outputdir = make_newdir_with_id_num(destdir, 'Movie_to_Pictures')
         if outputdir[0] == 'ERROR':
             wx.MessageBox(f"{outputdir[1]}", "Videomass",
                           wx.ICON_ERROR, self)
@@ -577,12 +576,12 @@ class VideoToSequence(wx.Panel):
             elif self.rdbx_opt.GetSelection() == 2:
                 rate, rows, cols, pad, marg = '', '', '', '', ''
 
-        formula = (_("SUMMARY\n\nSelected File\nOutput Format\nRate (fps)\n"
-                     "Resizing\nMosaic rows\nMosaic columns\nMosaic padding\n"
-                     "Mosaic margin\nCustom Arguments\nTime Period\n"
-                     "Destination Folder"))
-        dictions = (f"\n\n{filename}\n{self.cmb_frmt.GetValue()}"
+        formula = (_("SUMMARY\n\nSelected File\nOutput Format\n"
+                     "Destination Folder\nRate (fps)\nResizing\n"
+                     "Mosaic rows\nMosaic columns\nMosaic padding\n"
+                     "Mosaic margin\nCustom Arguments\nTime Period"))
+        dictions = (f"\n\n{filename}\n{self.cmb_frmt.GetValue()}\n{outputdir}"
                     f"\n{rate}\n{resize}\n{rows}\n{cols}\n{pad}\n{marg}"
-                    f"\n{args}\n{time}\n{outputdir}"
+                    f"\n{args}\n{time}"
                     )
         return formula, dictions

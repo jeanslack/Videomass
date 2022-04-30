@@ -82,7 +82,7 @@ class SequenceToVideo(wx.Panel):
               "\n\n4. Start the conversion."
               "\n\n\nThe produced video will have the name of the selected "
               "file in the 'Queued File' list, which will be saved in a "
-              "folder named 'Still-Images'\nwith a progressive digit, "
+              "folder named 'Still_Images'\nwith a progressive digit, "
               "in the path you specify.")
     # ----------------------------------------------------------------#
 
@@ -112,7 +112,7 @@ class SequenceToVideo(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
         sizer = wx.BoxSizer(wx.VERTICAL)
 
-        panelscroll = scrolled.ScrolledPanel(self, -1, size=(-1, 200),
+        panelscroll = scrolled.ScrolledPanel(self, -1, size=(-1, 160),
                                              style=wx.TAB_TRAVERSAL
                                              | wx.BORDER_THEME,
                                              name="panelscr",
@@ -615,7 +615,7 @@ class SequenceToVideo(wx.Panel):
             destdir = self.parent.outpath_ffmpeg
 
         basename = os.path.basename(fget[0].rsplit('.')[0])
-        outputdir = make_newdir_with_id_num(destdir, 'Still-Images')
+        outputdir = make_newdir_with_id_num(destdir, 'Still_Images')
         if outputdir[0] == 'ERROR':
             wx.MessageBox(f"{outputdir[1]}", "Videomass",
                           wx.ICON_ERROR, self)
@@ -678,12 +678,12 @@ class SequenceToVideo(wx.Panel):
         else:
             addargs = ''
 
-        formula = (_("SUMMARY\n\nFile to process\nOutput filename\
-                      \nDestination\nOutput Format\nAttional arguments\
-                      \nAudio file\nShortest\nResize\nPre-input\
-                      \nFrame per Second (FPS)\nStill image duration\
-                      \nOverall video duration")
-                   )
+        formula = (_("SUMMARY\n\nFile to process\nOutput filename"
+                      "\nDestination Folder\nOutput Format"
+                      "\nAdditional arguments"
+                      "\nAudio file\nShortest\nResizing\nPre-input"
+                      "\nFrame per Second (FPS)\nStill image duration"
+                      "\nOverall video duration"))
         dictions = (f'\n\n{count}\n{newfile}\n{destdir}\n{ext}\n{addargs}'
                     f'\n{self.txt_apath.GetValue()}\n{short}'
                     f'\n{resize}\n{preinput}\n{self.opt["Fps"][1]}'

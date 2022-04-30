@@ -101,15 +101,10 @@ class Timeline(wx.Panel):
         #                     )
         self.font = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         sizer_base = wx.BoxSizer(wx.HORIZONTAL)
-        self.ckbx_graph = wx.CheckBox(self, wx.ID_ANY, (_("View")))
-        sizer_base.Add(self.ckbx_graph, 0, wx.ALL
-                       | wx.ALIGN_CENTRE_VERTICAL, 5
-                       )
         self.paneltime = wx.Panel(self, wx.ID_ANY,
                                   size=(Timeline.PW, Timeline.PH),
                                   style=wx.BORDER_SUNKEN)
         sizer_base.Add(self.paneltime, 0, wx.LEFT | wx.RIGHT | wx.CENTRE, 5)
-        self.paneltime.Hide()
         self.cmbx_accuracy = wx.ComboBox(self, wx.ID_ANY,
                                          choices=('1 ms',
                                                   '100 ms',
@@ -124,14 +119,14 @@ class Timeline(wx.Panel):
                        | wx.ALIGN_CENTRE_VERTICAL, 5
                        )
         self.sldseek = wx.Slider(self, wx.ID_ANY, 0, 0, self.milliseconds,
-                                 size=(300, -1), style=wx.SL_HORIZONTAL
+                                 size=(150, -1), style=wx.SL_HORIZONTAL
                                  )
         self.sldseek.Disable()
         self.txtseek = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
         txtstaticseek = wx.StaticText(self, wx.ID_ANY, _('Seek'))
 
         self.sldcut = wx.Slider(self, wx.ID_ANY, 0, 0, self.milliseconds,
-                                size=(300, -1), style=wx.SL_HORIZONTAL
+                                size=(150, -1), style=wx.SL_HORIZONTAL
                                 )
         self.txtcut = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
         txtstaticdur = wx.StaticText(self, wx.ID_ANY, _('Duration'))
@@ -167,19 +162,8 @@ class Timeline(wx.Panel):
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Cut, self.sldcut)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Seek, self.sldseek)
         self.Bind(wx.EVT_COMBOBOX, self.on_accuracy, self.cmbx_accuracy)
-        self.Bind(wx.EVT_CHECKBOX, self.on_view_graph, self.ckbx_graph)
 
     # ----------------------Event handler (callback)----------------------#
-
-    def on_view_graph(self, event):
-        """
-        """
-        if self.ckbx_graph.IsChecked():
-            self.paneltime.Show()
-        else:
-            self.paneltime.Hide()
-        self.Layout()
-    # ------------------------------------------------------------------#
 
     def on_accuracy(self, event):
         """

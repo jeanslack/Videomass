@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-29 20:14+0200\n"
-"PO-Revision-Date: 2022-04-29 20:21+0200\n"
+"POT-Creation-Date: 2022-04-30 11:16+0200\n"
+"PO-Revision-Date: 2022-04-30 11:19+0200\n"
 "Last-Translator: Samuel / http://littlesvr.ca/ostd/\n"
 "Language-Team: Samuel / http://littlesvr.ca/ostd/\n"
 "Language: pt_BR\n"
@@ -1103,7 +1103,7 @@ msgstr ""
 #: ../vdms_dialogs/preferences.py:341 ../vdms_frames/ffmpeg_conf.py:217
 #: ../vdms_panels/av_conversions.py:2506
 #: ../vdms_panels/sequence_to_video.py:672
-#: ../vdms_panels/video_to_sequence.py:564
+#: ../vdms_panels/video_to_sequence.py:563
 msgid "Disabled"
 msgstr "Desabilitado"
 
@@ -1399,7 +1399,7 @@ msgstr "ATIVADO:"
 
 #: ../vdms_frames/ffmpeg_conf.py:204 ../vdms_panels/av_conversions.py:2506
 #: ../vdms_panels/sequence_to_video.py:672
-#: ../vdms_panels/video_to_sequence.py:560
+#: ../vdms_panels/video_to_sequence.py:559
 msgid "Enabled"
 msgstr "Ativado"
 
@@ -2098,7 +2098,7 @@ msgstr "Mostrar linha do tempo\tCtrl+T"
 msgid "Show panel for editing timeline (seek/duration)"
 msgstr "Mostrar painel para edição da linha do tempo (busca / duração)"
 
-#: ../vdms_main/main_frame.py:516 ../vdms_panels/timeline.py:104
+#: ../vdms_main/main_frame.py:516
 msgid "View"
 msgstr "Ver"
 
@@ -2710,7 +2710,7 @@ msgid "Preview"
 msgstr "Pré-visualizar"
 
 #: ../vdms_panels/av_conversions.py:550 ../vdms_panels/sequence_to_video.py:176
-#: ../vdms_panels/video_to_sequence.py:163
+#: ../vdms_panels/video_to_sequence.py:161
 msgid "Resizing"
 msgstr "Redimensionamento"
 
@@ -2962,8 +2962,8 @@ msgstr "Não é possível visualizar o filtro de estabilizador de vídeo"
 
 #: ../vdms_panels/av_conversions.py:1286
 #: ../vdms_panels/sequence_to_video.py:308
-#: ../vdms_panels/video_to_sequence.py:350
-#: ../vdms_panels/video_to_sequence.py:471
+#: ../vdms_panels/video_to_sequence.py:349
+#: ../vdms_panels/video_to_sequence.py:470
 msgid "A target file must be selected in the queued files"
 msgstr "Um arquivo de destino deve ser selecionado nos arquivos em fila"
 
@@ -2979,7 +2979,7 @@ msgstr ""
 
 #: ../vdms_panels/av_conversions.py:1348
 #: ../vdms_panels/sequence_to_video.py:335
-#: ../vdms_panels/video_to_sequence.py:377
+#: ../vdms_panels/video_to_sequence.py:376
 msgid "The file is not a frame or a video file"
 msgstr "O arquivo não é um frame ou um arquivo de vídeo"
 
@@ -3051,12 +3051,12 @@ msgid "Off"
 msgstr "Desligado"
 
 #: ../vdms_panels/av_conversions.py:2501 ../vdms_panels/presets_manager.py:922
-#: ../vdms_panels/video_to_sequence.py:554
+#: ../vdms_panels/video_to_sequence.py:553
 msgid "Unset"
 msgstr "Não definido"
 
 #: ../vdms_panels/av_conversions.py:2504 ../vdms_panels/presets_manager.py:925
-#: ../vdms_panels/video_to_sequence.py:557
+#: ../vdms_panels/video_to_sequence.py:556
 msgid "start  {} | duration  {}"
 msgstr "iniciar {} | duração {}"
 
@@ -3343,7 +3343,7 @@ msgid "For more details, see the Videomass User Guide:"
 msgstr "Para obter mais detalhes, consulte o Guia de usuário Videomass:"
 
 #: ../vdms_panels/concatenate.py:133 ../vdms_panels/sequence_to_video.py:128
-#: ../vdms_panels/video_to_sequence.py:91
+#: ../vdms_panels/video_to_sequence.py:89
 msgid "For more information, visit the official FFmpeg documentation:"
 msgstr "Para obter mais informações, visite a documentação oficial do FFmpeg:"
 
@@ -3357,7 +3357,7 @@ msgstr ""
 msgid "Duration:"
 msgstr "Duração"
 
-#: ../vdms_panels/concatenate.py:173 ../vdms_panels/video_to_sequence.py:169
+#: ../vdms_panels/concatenate.py:173 ../vdms_panels/video_to_sequence.py:167
 msgid "Output format:"
 msgstr "Formato de saída:"
 
@@ -3376,7 +3376,7 @@ msgstr "São necessários pelo menos dois arquivos para realizar a concatenaçã
 #: ../vdms_panels/sequence_to_video.py:549
 #: ../vdms_panels/sequence_to_video.py:566
 #: ../vdms_panels/sequence_to_video.py:574
-#: ../vdms_panels/video_to_sequence.py:482
+#: ../vdms_panels/video_to_sequence.py:481
 msgid "ERROR"
 msgstr "ERRO"
 
@@ -3391,7 +3391,7 @@ msgstr ""
 #: ../vdms_panels/concatenate.py:291 ../vdms_panels/presets_manager.py:877
 #: ../vdms_panels/presets_manager.py:900
 #: ../vdms_panels/sequence_to_video.py:648
-#: ../vdms_panels/video_to_sequence.py:530
+#: ../vdms_panels/video_to_sequence.py:529
 msgid "Starts"
 msgstr "Inicia"
 
@@ -3444,7 +3444,7 @@ msgstr "Baixar apenas áudio"
 msgid "Download by format code"
 msgstr "Baixar por código de formato"
 
-#: ../vdms_panels/youtubedl_ui.py:213 ../vdms_panels/video_to_sequence.py:140
+#: ../vdms_panels/youtubedl_ui.py:213 ../vdms_panels/video_to_sequence.py:138
 msgid "Options"
 msgstr "Opções"
 
@@ -3646,7 +3646,7 @@ msgstr "Reproduzir"
 msgid "File Name"
 msgstr "Nome do arquivo"
 
-#: ../vdms_panels/filedrop.py:227 ../vdms_panels/timeline.py:137
+#: ../vdms_panels/filedrop.py:227 ../vdms_panels/timeline.py:132
 msgid "Duration"
 msgstr "Duração"
 
@@ -3833,7 +3833,7 @@ msgstr "Excluir"
 
 #: ../vdms_panels/presets_manager.py:220 ../vdms_panels/presets_manager.py:334
 #: ../vdms_panels/presets_manager.py:355
-#: ../vdms_panels/video_to_sequence.py:220
+#: ../vdms_panels/video_to_sequence.py:218
 msgid "Edit"
 msgstr "Editar"
 
@@ -4147,25 +4147,25 @@ msgstr "Insira os URLs abaixo"
 msgid "Delete all text from the list"
 msgstr "Exclua todo o texto da lista"
 
-#: ../vdms_panels/timeline.py:131
+#: ../vdms_panels/timeline.py:126
 msgid "Seek"
 msgstr "Buscar"
 
-#: ../vdms_panels/timeline.py:141
+#: ../vdms_panels/timeline.py:136
 msgid "Seek to given time position"
 msgstr "Buscar a posição de tempo dada"
 
-#: ../vdms_panels/timeline.py:142
+#: ../vdms_panels/timeline.py:137
 msgid "Total duration"
 msgstr "Duração total"
 
-#: ../vdms_panels/timeline.py:143
+#: ../vdms_panels/timeline.py:138
 msgid ""
 "Set the amount of steps the slider moves using 'UP' or 'DOWN' arrow and 'UP' "
 "or 'DOWN' page, to quickly set a more accurate time selection"
 msgstr ""
 
-#: ../vdms_panels/timeline.py:363
+#: ../vdms_panels/timeline.py:347
 #, fuzzy, python-brace-format
 #| msgid "The maximum time refers to the file with the longest duration"
 msgid ""
@@ -4193,7 +4193,7 @@ msgid ""
 "\n"
 "\n"
 "The produced video will have the name of the selected file in the 'Queued "
-"File' list, which will be saved in a folder named 'Still-Images'\n"
+"File' list, which will be saved in a folder named 'Still_Images'\n"
 "with a progressive digit, in the path you specify."
 msgstr ""
 
@@ -4230,7 +4230,7 @@ msgstr "Arraste um ou mais arquivos abaixo"
 
 #: ../vdms_panels/sequence_to_video.py:538
 #: ../vdms_panels/sequence_to_video.py:565
-#: ../vdms_panels/video_to_sequence.py:481
+#: ../vdms_panels/video_to_sequence.py:480
 #, fuzzy
 #| msgid "Invalid URL: \"{}\""
 msgid "Invalid file: '{}'"
@@ -4263,16 +4263,16 @@ msgid ""
 "SUMMARY\n"
 "\n"
 "File to process\n"
-"Output filename                      \n"
-"Destination\n"
+"Output filename\n"
+"Destination Folder\n"
 "Output Format\n"
-"Attional arguments                      \n"
+"Additional arguments\n"
 "Audio file\n"
 "Shortest\n"
-"Resize\n"
-"Pre-input                      \n"
+"Resizing\n"
+"Pre-input\n"
 "Frame per Second (FPS)\n"
-"Still image duration                      \n"
+"Still image duration\n"
 "Overall video duration"
 msgstr ""
 "RESUMO\n"
@@ -4297,61 +4297,61 @@ msgid ""
 "2. To select a slice of time use the Timeline editor (CTRL+T) by scrolling "
 "the DURATION and the SEEK sliders.\n"
 "\n"
-"3. Set the FPS (frames per second) control; the higher this value, the more "
-"images will be extracted.\n"
+"3. Select an output format (jpg, png, bmp).\n"
 "\n"
-"4. Select an output format (jpg, png, bmp).\n"
-"\n"
-"5. Start the conversion.\n"
+"4. Start the conversion.\n"
 "\n"
 "\n"
-"The images produced will be saved in a folder named 'Video-to-Frames' with a "
-"progressive digit, \n"
+"The images produced will be saved in a folder named 'Movie_to_Pictures' with "
+"a progressive digit, \n"
 "in the path you specify."
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:117
+#: ../vdms_panels/video_to_sequence.py:115
 msgid "Other unofficial resources:"
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:136
+#: ../vdms_panels/video_to_sequence.py:134
 msgid "Create thumbnails"
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:137
+#: ../vdms_panels/video_to_sequence.py:135
 msgid "Create tiled mosaics"
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:138
+#: ../vdms_panels/video_to_sequence.py:136
 msgid "Create animated GIF"
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:180
+#: ../vdms_panels/video_to_sequence.py:178
 msgid "Rows:"
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:190
+#: ../vdms_panels/video_to_sequence.py:188
 msgid "Columns:"
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:199
+#: ../vdms_panels/video_to_sequence.py:197
 msgid "Padding:"
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:209
+#: ../vdms_panels/video_to_sequence.py:207
 msgid "Margin:"
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:236
-msgid "Set FPS control from 0.1 to 30.0 fps, default is 0.2 fps"
+#: ../vdms_panels/video_to_sequence.py:234
+msgid ""
+"Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images "
+"will be extracted."
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:580
+#: ../vdms_panels/video_to_sequence.py:579
 msgid ""
 "SUMMARY\n"
 "\n"
 "Selected File\n"
 "Output Format\n"
+"Destination Folder\n"
 "Rate (fps)\n"
 "Resizing\n"
 "Mosaic rows\n"
@@ -4359,8 +4359,7 @@ msgid ""
 "Mosaic padding\n"
 "Mosaic margin\n"
 "Custom Arguments\n"
-"Time Period\n"
-"Destination Folder"
+"Time Period"
 msgstr ""
 
 #: ../vdms_threads/one_pass.py:57 ../vdms_threads/picture_exporting.py:53
