@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Apr 22, 2022 V.4.0.1
+Apr 28, 2022 V.4.0.1
 
   * [NEW] added "Still Image Maker" feature.
   * [NEW] added "From Movie to Pictures" feature.
@@ -26,7 +26,6 @@ Apr 22, 2022 V.4.0.1
     during which the user is forced to stop Videomass.
   * Update locale and Italian language translation.
   * Fixed Wizard dialog error clicking on "Auto Detect" button.
-  * Fixed incorrect return value on `vdms_utils/make_newdir_with_id`.
   * Fixed some files not being moved to the trash folder after a successful
     encoding (if enabled on preferences). This is relative for the new features
     only as "Still Image Maker" and "From Movie to Pictures" .
@@ -36,6 +35,8 @@ Apr 22, 2022 V.4.0.1
   * All presets supplied with Videomass have been updated to v0.8.
   * Rearranged menu bar: View -> FFplay.
   * Update Russian language thank to ChourS.
+  * Improved some wx.DirDialog openings on default pathnames.
+  * Fixed output files pathnames using portable edition on Windows.
 
 +------------------------------------+
 Mar 24, 2022 V.3.5.8

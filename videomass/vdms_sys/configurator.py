@@ -33,36 +33,20 @@ from videomass.vdms_utils.utils import copydir_recursively
 from videomass.vdms_sys.settings_manager import ConfigManager
 
 
-def create_cache_dir(tmpdir):
+def create_dirs(dirname):
     """
-    This function is responsible for creating
-    the cache directory tree if not exists.
+    This function is responsible for the recursive creation
+    of directories required for Videomass if they do not exist.
     Returns dict:
         key == 'R'
         key == ERROR (if any errors)
     """
-    tmp = os.path.join(tmpdir, 'tmp')
-    if not os.path.exists(tmp):
-        try:  #
-            os.makedirs(tmp, mode=0o777)
-        except OSError as err:
-            return {'ERROR': err}
-    return {'R': None}
-
-
-def create_log_dir(logdir):
-    """
-    This function is responsible for creating
-    the log directory if not exists.
-    Returns dict:
-        key == 'R'
-        key == ERROR (if any errors)
-    """
-    if not os.path.exists(logdir):
+    if not os.path.exists(dirname):
         try:
-            os.makedirs(logdir, mode=0o777)
-        except OSError as err:
+            os.makedirs(dirname, mode=0o777)
+        except (OSError, FileExistsError) as err:
             return {'ERROR': err}
+
     return {'R': None}
 
 
@@ -82,7 +66,7 @@ def restore_presets_dir(dirconf, srcpath):
     return {'R': None}
 
 
-def get_options(dirconf, fileconf, srcpath):
+def get_options(dirconf, fileconf, relativepath, srcpath):
     """
     Check the application options. Reads the `settings.json`
     file; if it does not exist or is unreadable try to restore
@@ -95,7 +79,7 @@ def get_options(dirconf, fileconf, srcpath):
         key == 'R'
         key == ERROR (if any errors)
     """
-    conf = ConfigManager(fileconf)
+    conf = ConfigManager(fileconf, relativepath)
     version = ConfigManager.VERSION
 
     if os.path.exists(dirconf):  # if ~/.conf/videomass dir
@@ -199,29 +183,6 @@ def portable_paths(portdir):
         cache_dir = os.path.join(dir_conf, 'cache')  # updates executable
 
     return file_conf, dir_conf, log_dir, cache_dir
-
-
-def get_outdir(outdir, relpath):
-    """
-    On the application portable case, if relpath is True,
-    you need to make a folder named `My_Files` inside the
-    portable appdata.
-    """
-    if relpath is True:
-        appdir = os.getcwd()
-        outputdir = os.path.relpath(os.path.join(appdir, 'My_Files'))
-
-        if not os.path.exists(outputdir):
-            try:  # make a files folder
-                os.mkdir(outputdir, mode=0o777)
-            except OSError as err:
-                return None, err
-            except TypeError as err:
-                return None, err
-    else:
-        outputdir = outdir
-
-    return outputdir, None
 
 
 def get_color_scheme(theme):
@@ -415,39 +376,33 @@ class DataSource():
         # handle configuration file
         userconf = get_options(DataSource.DIR_CONF,
                                DataSource.FILE_CONF,
+                               DataSource.RELPATH,
                                self.srcpath)
         if userconf.get('ERROR'):
             return userconf
         userconf = userconf['R']
+
         # restore presets folder
         presets_rest = restore_presets_dir(DataSource.DIR_CONF, self.srcpath)
         if presets_rest.get('ERROR'):
             return presets_rest
-        # create cache dir
-        cachedir = create_cache_dir(DataSource.CACHE_DIR)
-        if cachedir.get('ERROR'):
-            return cachedir
-        # create log dir
-        logdir = create_log_dir(DataSource.LOG_DIR)
-        if logdir.get('ERROR'):
-            return logdir
+
+        # create required directories if them not exist
+        requiredirs = (os.path.join(DataSource.CACHE_DIR, 'tmp'),
+                       DataSource.LOG_DIR,
+                       userconf['outputfile'],
+                       userconf['outputdownload']
+                       )
+        for dirs in requiredirs:
+            create = create_dirs(dirs)
+            if create.get('ERROR'):
+                return create
+
         # set color scheme
         theme = get_color_scheme(userconf['icontheme'])
         userconf['icontheme'] = (userconf['icontheme'], theme)
         if theme.get('ERROR'):
             return theme
-
-        # set FFmpeg output directory
-        outfile = get_outdir(userconf['outputfile'], DataSource.RELPATH)
-        userconf['outputfile'] = outfile[0]
-        # set youtube-dl output directory
-        outdownl = get_outdir(userconf['outputdownload'], DataSource.RELPATH)
-        userconf['outputdownload'] = outdownl[0]
-
-        if outfile[1]:
-            return {'ERROR': f'{outfile[1]}'}
-        if outdownl[1]:
-            return {'ERROR': f'{outdownl[1]}'}
 
         def _relativize(path, relative=DataSource.RELPATH):
             """

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-22 17:05+0200\n"
-"PO-Revision-Date: 2022-04-22 17:06+0200\n"
+"POT-Creation-Date: 2022-04-30 11:16+0200\n"
+"PO-Revision-Date: 2022-04-30 11:18+0200\n"
 "Last-Translator: johannesdedoper <https://github.com/johannesdedoper>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -1092,8 +1092,8 @@ msgstr ""
 #: ../vdms_dialogs/preferences.py:305 ../vdms_dialogs/preferences.py:325
 #: ../vdms_dialogs/preferences.py:341 ../vdms_frames/ffmpeg_conf.py:217
 #: ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:632
-#: ../vdms_panels/video_to_sequence.py:367
+#: ../vdms_panels/sequence_to_video.py:672
+#: ../vdms_panels/video_to_sequence.py:563
 msgid "Disabled"
 msgstr "Uitgezet"
 
@@ -1383,8 +1383,8 @@ msgid "ENABLED:"
 msgstr "GEACTIVEERD:"
 
 #: ../vdms_frames/ffmpeg_conf.py:204 ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:632
-#: ../vdms_panels/video_to_sequence.py:363
+#: ../vdms_panels/sequence_to_video.py:672
+#: ../vdms_panels/video_to_sequence.py:559
 msgid "Enabled"
 msgstr "Geactiveerd"
 
@@ -1702,8 +1702,8 @@ msgstr ""
 msgid "Please Confirm"
 msgstr "Bevestig aub"
 
-#: ../vdms_io/checkup.py:63 ../vdms_panels/sequence_to_video.py:520
-#: ../vdms_panels/sequence_to_video.py:544
+#: ../vdms_io/checkup.py:63 ../vdms_panels/sequence_to_video.py:554
+#: ../vdms_panels/sequence_to_video.py:578
 msgid ""
 "File does not exist:\n"
 "\n"
@@ -1807,10 +1807,10 @@ msgstr ""
 "kolom en probeer de \"Herstel allen...\" knop te drukken"
 
 #: ../vdms_main/main_frame.py:198 ../vdms_main/main_frame.py:266
-#: ../vdms_main/main_frame.py:1606 ../vdms_main/main_frame.py:1650
-#: ../vdms_main/main_frame.py:1687 ../vdms_main/main_frame.py:1758
-#: ../vdms_main/main_frame.py:1820 ../vdms_main/main_frame.py:1883
-#: ../vdms_main/main_frame.py:1944 ../vdms_main/main_frame.py:2006
+#: ../vdms_main/main_frame.py:1612 ../vdms_main/main_frame.py:1656
+#: ../vdms_main/main_frame.py:1693 ../vdms_main/main_frame.py:1764
+#: ../vdms_main/main_frame.py:1826 ../vdms_main/main_frame.py:1889
+#: ../vdms_main/main_frame.py:1950 ../vdms_main/main_frame.py:2012
 #: ../vdms_panels/youtubedl_ui.py:523 ../vdms_panels/youtubedl_ui.py:758
 msgid "Ready"
 msgstr "Gereed"
@@ -2358,148 +2358,148 @@ msgstr "{0}:Laatst beschikbare versie: {1}"
 msgid "cache folder has not been created yet."
 msgstr "cache folder is nog niet gemaakt."
 
-#: ../vdms_main/main_frame.py:1217
+#: ../vdms_main/main_frame.py:1218
 msgid "Choose a temporary destination for conversions"
 msgstr "Kies een tijdelijke bestemming voor de conversies"
 
-#: ../vdms_main/main_frame.py:1238
+#: ../vdms_main/main_frame.py:1242
 msgid "Choose a temporary destination for downloads"
 msgstr "Kies een tijdelijke bestemming voor de downloads"
 
-#: ../vdms_main/main_frame.py:1272
+#: ../vdms_main/main_frame.py:1278
 msgid "Default destination folders successfully restored"
 msgstr "Standaard bestemming-folders succesvol hersteld"
 
-#: ../vdms_main/main_frame.py:1354
+#: ../vdms_main/main_frame.py:1360
 #, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr "Er is een nieuwe versie beschikbaar - v.{0}\n"
 
-#: ../vdms_main/main_frame.py:1357
+#: ../vdms_main/main_frame.py:1363
 msgid "You are using a development version that has not yet been released!\n"
 msgstr "U gebruikt een ontwikkelaars versie die nog niet is vrijgegeven!\n"
 
-#: ../vdms_main/main_frame.py:1360
+#: ../vdms_main/main_frame.py:1366
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr "Gefeliciteerd! U gebruikt al de laatste versie.\n"
 
-#: ../vdms_main/main_frame.py:1449
+#: ../vdms_main/main_frame.py:1455
 msgid "Go to the previous panel"
 msgstr "Ga naar vorig panel"
 
-#: ../vdms_main/main_frame.py:1450
+#: ../vdms_main/main_frame.py:1456
 msgid "Back"
 msgstr "Terug"
 
-#: ../vdms_main/main_frame.py:1454
+#: ../vdms_main/main_frame.py:1460
 msgid "Go to the next panel"
 msgstr "Ga naar volgende panel"
 
-#: ../vdms_main/main_frame.py:1455
+#: ../vdms_main/main_frame.py:1461
 msgid "Next"
 msgstr "Volgende"
 
-#: ../vdms_main/main_frame.py:1461
+#: ../vdms_main/main_frame.py:1467
 msgid "Gathers information of multimedia streams"
 msgstr "Wint informatie in over multimedia streams"
 
-#: ../vdms_main/main_frame.py:1462
+#: ../vdms_main/main_frame.py:1468
 msgid "Media Streams"
 msgstr "Media Streams"
 
-#: ../vdms_main/main_frame.py:1466
+#: ../vdms_main/main_frame.py:1472
 msgid "Shows download statistics and information"
 msgstr "Toont download-statistieken en -informatie"
 
-#: ../vdms_main/main_frame.py:1467
+#: ../vdms_main/main_frame.py:1473
 msgid "Statistics"
 msgstr "Statistieken"
 
-#: ../vdms_main/main_frame.py:1472
+#: ../vdms_main/main_frame.py:1478
 msgid "Add a new profile from this panel with the current settings"
 msgstr "Voeg een nieuw profiel toe van dit panel met de huidige instellingen"
 
-#: ../vdms_main/main_frame.py:1473
+#: ../vdms_main/main_frame.py:1479
 msgid "Add Profile"
 msgstr "Voeg profiel toe"
 
-#: ../vdms_main/main_frame.py:1479
+#: ../vdms_main/main_frame.py:1485
 msgid "Convert using FFmpeg"
 msgstr "Converteer met FFmpeg"
 
-#: ../vdms_main/main_frame.py:1480
+#: ../vdms_main/main_frame.py:1486
 msgid "Convert"
 msgstr "Converteer"
 
-#: ../vdms_main/main_frame.py:1484
+#: ../vdms_main/main_frame.py:1490
 msgid "Download files using youtube-dl"
 msgstr "Download bestanden met youtube-dl"
 
-#: ../vdms_main/main_frame.py:1485
+#: ../vdms_main/main_frame.py:1491
 msgid "Download"
 msgstr "Download"
 
-#: ../vdms_main/main_frame.py:1554
+#: ../vdms_main/main_frame.py:1560
 #, fuzzy
 #| msgid "Invalid URL: \"{}\""
 msgid "ERROR: Invalid URL: \"{}\""
 msgstr "Ongeldige URL: \"{}\""
 
-#: ../vdms_main/main_frame.py:1558
+#: ../vdms_main/main_frame.py:1564
 msgid "ERROR: Some equal URLs found"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1607
+#: ../vdms_main/main_frame.py:1613
 msgid "Videomass - Queued Files"
 msgstr "Videomass - Wachtrij Bestanden"
 
-#: ../vdms_main/main_frame.py:1651
+#: ../vdms_main/main_frame.py:1657
 msgid "Videomass - Queued URLs"
 msgstr "Videomass - Wachtrij URLs"
 
-#: ../vdms_main/main_frame.py:1674
+#: ../vdms_main/main_frame.py:1680
 msgid "URL list changed, please check the settings again."
 msgstr "URL lijst gewijzigd, ga a.u.b. de instellingen na."
 
-#: ../vdms_main/main_frame.py:1689
+#: ../vdms_main/main_frame.py:1695
 msgid "Videomass - YouTube Downloader"
 msgstr "Videomass - YouTube Downloader"
 
-#: ../vdms_main/main_frame.py:1741 ../vdms_main/main_frame.py:1804
-#: ../vdms_main/main_frame.py:1867 ../vdms_main/main_frame.py:1928
-#: ../vdms_main/main_frame.py:1990
+#: ../vdms_main/main_frame.py:1747 ../vdms_main/main_frame.py:1810
+#: ../vdms_main/main_frame.py:1873 ../vdms_main/main_frame.py:1934
+#: ../vdms_main/main_frame.py:1996
 msgid "File list changed, please check the settings again."
 msgstr "Bestanden-lijst gewijzigd, ga a.u.b. de instellingen na."
 
-#: ../vdms_main/main_frame.py:1760
+#: ../vdms_main/main_frame.py:1766
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - AV Conversies"
 
-#: ../vdms_main/main_frame.py:1822
+#: ../vdms_main/main_frame.py:1828
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - Presets Manager"
 
-#: ../vdms_main/main_frame.py:1885
+#: ../vdms_main/main_frame.py:1891
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Samenvoeg Demuxer"
 
-#: ../vdms_main/main_frame.py:1946
+#: ../vdms_main/main_frame.py:1952
 #, fuzzy
 #| msgid "From an image sequence to a video file"
 msgid "Videomass - From Movie to Pictures"
 msgstr "Van afbeelingen serie naar een video file"
 
-#: ../vdms_main/main_frame.py:2008
+#: ../vdms_main/main_frame.py:2014
 #, fuzzy
 #| msgid "Videomass - Presets Manager"
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Presets Manager"
 
-#: ../vdms_main/main_frame.py:2047
+#: ../vdms_main/main_frame.py:2053
 msgid "Viewing last log"
 msgstr "Laatste log-berichten bekijken"
 
-#: ../vdms_main/main_frame.py:2058
+#: ../vdms_main/main_frame.py:2064
 msgid ""
 "Cannot continue: The duration in the timeline exceeds the duration of some "
 "queued files."
@@ -2507,11 +2507,11 @@ msgstr ""
 "Doorgaan is onmogelijk: de duur op de tijdslijn overschrijdt de duur van "
 "enkele wachtrij bestanden."
 
-#: ../vdms_main/main_frame.py:2064 ../vdms_main/main_frame.py:2068
+#: ../vdms_main/main_frame.py:2070 ../vdms_main/main_frame.py:2074
 msgid "Processing..."
 msgstr "Bezig..."
 
-#: ../vdms_main/main_frame.py:2070
+#: ../vdms_main/main_frame.py:2076
 msgid "Videomass - Output Monitor"
 msgstr "Videomass - Output Monitor"
 
@@ -2611,7 +2611,8 @@ msgstr "Video Filters"
 msgid "Preview"
 msgstr "Voorvertoning"
 
-#: ../vdms_panels/av_conversions.py:550 ../vdms_panels/sequence_to_video.py:181
+#: ../vdms_panels/av_conversions.py:550 ../vdms_panels/sequence_to_video.py:176
+#: ../vdms_panels/video_to_sequence.py:161
 msgid "Resizing"
 msgstr "Herschalen bezig"
 
@@ -2869,8 +2870,9 @@ msgid "Unable to preview Video Stabilizer filter"
 msgstr "Geen preview van Video Stabilisatie filter mogelijk"
 
 #: ../vdms_panels/av_conversions.py:1286
-#: ../vdms_panels/sequence_to_video.py:281
-#: ../vdms_panels/video_to_sequence.py:279
+#: ../vdms_panels/sequence_to_video.py:308
+#: ../vdms_panels/video_to_sequence.py:349
+#: ../vdms_panels/video_to_sequence.py:470
 msgid "A target file must be selected in the queued files"
 msgstr "Een doel-bestand moet geselecteerd zijn in de wachtrij-bestanden"
 
@@ -2887,7 +2889,8 @@ msgstr ""
 "\"{}\""
 
 #: ../vdms_panels/av_conversions.py:1348
-#: ../vdms_panels/sequence_to_video.py:308
+#: ../vdms_panels/sequence_to_video.py:335
+#: ../vdms_panels/video_to_sequence.py:376
 msgid "The file is not a frame or a video file"
 msgstr "Het bestand is geen frame en geen video bestand"
 
@@ -2959,12 +2962,12 @@ msgid "Off"
 msgstr "Uit"
 
 #: ../vdms_panels/av_conversions.py:2501 ../vdms_panels/presets_manager.py:922
-#: ../vdms_panels/video_to_sequence.py:357
+#: ../vdms_panels/video_to_sequence.py:553
 msgid "Unset"
 msgstr "Uitgezet"
 
 #: ../vdms_panels/av_conversions.py:2504 ../vdms_panels/presets_manager.py:925
-#: ../vdms_panels/video_to_sequence.py:360
+#: ../vdms_panels/video_to_sequence.py:556
 msgid "start  {} | duration  {}"
 msgstr "start  {} | duur  {}"
 
@@ -3247,8 +3250,8 @@ msgstr ""
 msgid "For more details, see the Videomass User Guide:"
 msgstr "Voor meer details, zie de Videomass Gebruikers Handleiding:"
 
-#: ../vdms_panels/concatenate.py:133 ../vdms_panels/sequence_to_video.py:134
-#: ../vdms_panels/video_to_sequence.py:85
+#: ../vdms_panels/concatenate.py:133 ../vdms_panels/sequence_to_video.py:128
+#: ../vdms_panels/video_to_sequence.py:89
 msgid "For more information, visit the official FFmpeg documentation:"
 msgstr "Voor meer informatie, bezoek de officiele FFmpeg documentatie:"
 
@@ -3260,7 +3263,7 @@ msgstr "Van afbeelingen serie naar een video file"
 msgid "Duration:"
 msgstr "Duur:"
 
-#: ../vdms_panels/concatenate.py:173 ../vdms_panels/video_to_sequence.py:158
+#: ../vdms_panels/concatenate.py:173 ../vdms_panels/video_to_sequence.py:167
 msgid "Output format:"
 msgstr "Output Formaat:"
 
@@ -3281,11 +3284,11 @@ msgid "At least two files are required to perform concatenation."
 msgstr "Samevoegen vereist minstens twee bestanden."
 
 #: ../vdms_panels/concatenate.py:231 ../vdms_panels/concatenate.py:242
-#: ../vdms_panels/sequence_to_video.py:505
-#: ../vdms_panels/sequence_to_video.py:515
-#: ../vdms_panels/sequence_to_video.py:532
-#: ../vdms_panels/sequence_to_video.py:540
-#: ../vdms_panels/video_to_sequence.py:290
+#: ../vdms_panels/sequence_to_video.py:539
+#: ../vdms_panels/sequence_to_video.py:549
+#: ../vdms_panels/sequence_to_video.py:566
+#: ../vdms_panels/sequence_to_video.py:574
+#: ../vdms_panels/video_to_sequence.py:481
 msgid "ERROR"
 msgstr "FOUT"
 
@@ -3299,8 +3302,8 @@ msgstr ""
 
 #: ../vdms_panels/concatenate.py:291 ../vdms_panels/presets_manager.py:877
 #: ../vdms_panels/presets_manager.py:900
-#: ../vdms_panels/sequence_to_video.py:609
-#: ../vdms_panels/video_to_sequence.py:334
+#: ../vdms_panels/sequence_to_video.py:648
+#: ../vdms_panels/video_to_sequence.py:529
 msgid "Starts"
 msgstr "Start"
 
@@ -3349,7 +3352,7 @@ msgstr "Download alleen Audio"
 msgid "Download by format code"
 msgstr "Download op formaat code"
 
-#: ../vdms_panels/youtubedl_ui.py:213 ../vdms_panels/video_to_sequence.py:135
+#: ../vdms_panels/youtubedl_ui.py:213 ../vdms_panels/video_to_sequence.py:138
 msgid "Options"
 msgstr "Opties"
 
@@ -3554,7 +3557,7 @@ msgstr "Speel"
 msgid "File Name"
 msgstr "Bestandsnaam"
 
-#: ../vdms_panels/filedrop.py:227 ../vdms_panels/timeline.py:133
+#: ../vdms_panels/filedrop.py:227 ../vdms_panels/timeline.py:132
 msgid "Duration"
 msgstr "Duur"
 
@@ -3740,7 +3743,7 @@ msgstr "Verwijder"
 
 #: ../vdms_panels/presets_manager.py:220 ../vdms_panels/presets_manager.py:334
 #: ../vdms_panels/presets_manager.py:355
-#: ../vdms_panels/video_to_sequence.py:171
+#: ../vdms_panels/video_to_sequence.py:218
 msgid "Edit"
 msgstr "Edit"
 
@@ -4046,25 +4049,25 @@ msgstr "Voeg URLs hieronder toe"
 msgid "Delete all text from the list"
 msgstr "Verwijder alle tekst uit de lijst"
 
-#: ../vdms_panels/timeline.py:127
+#: ../vdms_panels/timeline.py:126
 msgid "Seek"
 msgstr "Zoek"
 
-#: ../vdms_panels/timeline.py:137
+#: ../vdms_panels/timeline.py:136
 msgid "Seek to given time position"
 msgstr "Zoek tot opgegeven tijdpositie"
 
-#: ../vdms_panels/timeline.py:138
+#: ../vdms_panels/timeline.py:137
 msgid "Total duration"
 msgstr "Totale duur"
 
-#: ../vdms_panels/timeline.py:139
+#: ../vdms_panels/timeline.py:138
 msgid ""
 "Set the amount of steps the slider moves using 'UP' or 'DOWN' arrow and 'UP' "
 "or 'DOWN' page, to quickly set a more accurate time selection"
 msgstr ""
 
-#: ../vdms_panels/timeline.py:348
+#: ../vdms_panels/timeline.py:347
 #, fuzzy, python-brace-format
 #| msgid "The maximum time refers to the file with the longest duration"
 msgid ""
@@ -4092,12 +4095,16 @@ msgid ""
 "\n"
 "\n"
 "The produced video will have the name of the selected file in the 'Queued "
-"File' list, which will be saved in a folder named 'Still-Images'\n"
+"File' list, which will be saved in a folder named 'Still_Images'\n"
 "with a progressive digit, in the path you specify."
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:155
+#: ../vdms_panels/sequence_to_video.py:150
 msgid "Enable a single still image"
+msgstr ""
+
+#: ../vdms_panels/sequence_to_video.py:182
+msgid "Force original aspect ratio using padding rather than stretching"
 msgstr ""
 
 #: ../vdms_panels/sequence_to_video.py:188
@@ -4105,11 +4112,11 @@ msgid "Include audio file"
 msgstr ""
 
 #: ../vdms_panels/sequence_to_video.py:191
-msgid "Play the video until audio file ends"
+msgid "Play the video until audio track finishes"
 msgstr ""
 
 #: ../vdms_panels/sequence_to_video.py:198
-#: ../vdms_panels/sequence_to_video.py:388
+#: ../vdms_panels/sequence_to_video.py:423
 msgid "Open audio file"
 msgstr ""
 
@@ -4117,28 +4124,28 @@ msgstr ""
 msgid "Additional arguments"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:401
+#: ../vdms_panels/sequence_to_video.py:436
 #, fuzzy
 #| msgid "Open one or more files"
 msgid "Open an audio file"
 msgstr "Open een of meer bestanden"
 
-#: ../vdms_panels/sequence_to_video.py:504
-#: ../vdms_panels/sequence_to_video.py:531
-#: ../vdms_panels/video_to_sequence.py:289
+#: ../vdms_panels/sequence_to_video.py:538
+#: ../vdms_panels/sequence_to_video.py:565
+#: ../vdms_panels/video_to_sequence.py:480
 #, fuzzy
 #| msgid "Invalid URL: \"{}\""
 msgid "Invalid file: '{}'"
 msgstr "Ongeldige URL: \"{}\""
 
-#: ../vdms_panels/sequence_to_video.py:514
-#: ../vdms_panels/sequence_to_video.py:539
+#: ../vdms_panels/sequence_to_video.py:548
+#: ../vdms_panels/sequence_to_video.py:573
 #, fuzzy
 #| msgid "Supported Format List"
 msgid "Unsupported format '{}'"
 msgstr "Lijst Ondersteunde Formaten"
 
-#: ../vdms_panels/sequence_to_video.py:641
+#: ../vdms_panels/sequence_to_video.py:681
 #, fuzzy
 #| msgid ""
 #| "SUMMARY\n"
@@ -4158,16 +4165,16 @@ msgid ""
 "SUMMARY\n"
 "\n"
 "File to process\n"
-"Output filename                      \n"
-"Destination\n"
+"Output filename\n"
+"Destination Folder\n"
 "Output Format\n"
-"Attional arguments                      \n"
+"Additional arguments\n"
 "Audio file\n"
 "Shortest\n"
-"Resize\n"
-"Pre-input                      \n"
+"Resizing\n"
+"Pre-input\n"
 "Frame per Second (FPS)\n"
-"Still image duration                      \n"
+"Still image duration\n"
 "Overall video duration"
 msgstr ""
 "OVERZICHT\n"
@@ -4184,7 +4191,7 @@ msgstr ""
 "Tijdsperiode                        \n"
 "Input Audio Map"
 
-#: ../vdms_panels/video_to_sequence.py:46
+#: ../vdms_panels/video_to_sequence.py:50
 msgid ""
 "\n"
 "1. Import one or more video files, then select one.\n"
@@ -4192,60 +4199,87 @@ msgid ""
 "2. To select a slice of time use the Timeline editor (CTRL+T) by scrolling "
 "the DURATION and the SEEK sliders.\n"
 "\n"
-"3. Set the FPS (frames per second) control; the higher this value, the more "
-"images will be extracted.\n"
+"3. Select an output format (jpg, png, bmp).\n"
 "\n"
-"4. Select an output format (jpg, png, bmp).\n"
-"\n"
-"5. Start the conversion.\n"
+"4. Start the conversion.\n"
 "\n"
 "\n"
-"The images produced will be saved in a folder named 'Video-to-Frames' with a "
-"progressive digit, \n"
+"The images produced will be saved in a folder named 'Movie_to_Pictures' with "
+"a progressive digit, \n"
 "in the path you specify."
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:111
+#: ../vdms_panels/video_to_sequence.py:115
 msgid "Other unofficial resources:"
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:131
-#, fuzzy
-#| msgid "From an image sequence to a video file"
-msgid "From movie to pictures"
-msgstr "Van afbeelingen serie naar een video file"
+#: ../vdms_panels/video_to_sequence.py:134
+msgid "Create thumbnails"
+msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:132
-#, fuzzy
-#| msgid "From an image sequence to a video file"
-msgid "From movie to picture sheet (tiles)"
-msgstr "Van afbeelingen serie naar een video file"
+#: ../vdms_panels/video_to_sequence.py:135
+msgid "Create tiled mosaics"
+msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:133
-msgid "From movie to animated GIF"
+#: ../vdms_panels/video_to_sequence.py:136
+msgid "Create animated GIF"
+msgstr ""
+
+#: ../vdms_panels/video_to_sequence.py:178
+msgid "Rows:"
 msgstr ""
 
 #: ../vdms_panels/video_to_sequence.py:188
-msgid "Set FPS control from 0.1 to 30.0 fps, default is 0.2 fps"
+msgid "Columns:"
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:369
+#: ../vdms_panels/video_to_sequence.py:197
+msgid "Padding:"
+msgstr ""
+
+#: ../vdms_panels/video_to_sequence.py:207
+msgid "Margin:"
+msgstr ""
+
+#: ../vdms_panels/video_to_sequence.py:234
+msgid ""
+"Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images "
+"will be extracted."
+msgstr ""
+
+#: ../vdms_panels/video_to_sequence.py:579
 msgid ""
 "SUMMARY\n"
 "\n"
 "Selected File\n"
 "Output Format\n"
+"Destination Folder\n"
 "Rate (fps)\n"
+"Resizing\n"
+"Mosaic rows\n"
+"Mosaic columns\n"
+"Mosaic padding\n"
+"Mosaic margin\n"
 "Custom Arguments\n"
-"Time Period\n"
-"Destination Folder"
+"Time Period"
 msgstr ""
 
 #: ../vdms_threads/one_pass.py:57 ../vdms_threads/picture_exporting.py:53
 #: ../vdms_threads/two_pass_ebu.py:56 ../vdms_threads/two_pass.py:58
-#: ../vdms_threads/slideshow.py:50 ../vdms_threads/slideshow.py:140
+#: ../vdms_threads/slideshow.py:49 ../vdms_threads/slideshow.py:139
+#: ../vdms_threads/slideshow.py:228
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "Is 'ffmpeg' geïnstalleerd op uw systeem?"
+
+#, fuzzy
+#~| msgid "From an image sequence to a video file"
+#~ msgid "From movie to pictures"
+#~ msgstr "Van afbeelingen serie naar een video file"
+
+#, fuzzy
+#~| msgid "From an image sequence to a video file"
+#~ msgid "From movie to picture sheet (tiles)"
+#~ msgstr "Van afbeelingen serie naar een video file"
 
 #~ msgid "jump to the start panel"
 #~ msgstr "spring naar het start panel"

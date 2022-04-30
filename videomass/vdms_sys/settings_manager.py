@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.24.2022
+Rev: April.26.2022
 Code checker: flake8, pylint .
 
  This file is part of Videomass.
@@ -161,18 +161,24 @@ class ConfigManager:
         "trashfolder": ""
         }
 
-    def __init__(self, file_path):
+    def __init__(self, filename, relativepath=False):
         """
-        Set the configuration path name of the file. The path name
-        must be a location on the file system path, the name is any
-        name suffixed with `.json`
+        Accepts an existing `filename` on the file system paths
+        suffixed by `.json`. If `relativepath` is `True`, some
+        paths on the `DEFAULT_OPTIONS` class attribute will be
+        set as relative paths.
         """
-        self.file_path = file_path
+        self.filename = filename
+        if relativepath is True:
+            appdir = os.getcwd()
+            outputdir = os.path.relpath(os.path.join(appdir, 'My_Files'))
+            ConfigManager.DEFAULT_OPTIONS['outputfile'] = outputdir
+            ConfigManager.DEFAULT_OPTIONS['outputdownload'] = outputdir
 
     def write_options(self, **options):
         """
         Writes options to configuration file. If **options is
-        given, writes the new changes to file_path, writes the
+        given, writes the new changes to filename, writes the
         DEFAULT_OPTIONS otherwise.
         """
         if options:
@@ -180,7 +186,7 @@ class ConfigManager:
         else:
             set_options = ConfigManager.DEFAULT_OPTIONS
 
-        with open(self.file_path, "w", encoding='utf-8') as settings_file:
+        with open(self.filename, "w", encoding='utf-8') as settings_file:
 
             json.dump(set_options,
                       settings_file,
@@ -194,7 +200,7 @@ class ConfigManager:
         Returns: current options, `None` otherwise.
         Raise: json.JSONDecodeError
         """
-        with open(self.file_path, 'r', encoding='utf-8') as settings_file:
+        with open(self.filename, 'r', encoding='utf-8') as settings_file:
             try:
                 options = json.load(settings_file)
             except json.JSONDecodeError:

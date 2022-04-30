@@ -607,9 +607,9 @@ class SetUp(wx.Dialog):
         """set up a custom user path for file downloads"""
 
         dlg = wx.DirDialog(self, _("Set a persistent location to save the "
-                                   "file downloads"), "",
-                           wx.DD_DEFAULT_STYLE)
-
+                                   "file downloads"),
+                           self.appdata['outputdownload'], wx.DD_DEFAULT_STYLE
+                           )
         if dlg.ShowModal() == wx.ID_OK:
             self.txtctrl_YDLpath.Clear()
             getpath = self.appdata['getpath'](dlg.GetPath())
@@ -630,9 +630,9 @@ class SetUp(wx.Dialog):
         """set up a custom user path for file export"""
 
         dlg = wx.DirDialog(self, _("Set a persistent location to save "
-                                   "exported files"), "",
-                           wx.DD_DEFAULT_STYLE)
-
+                                   "exported files"),
+                           self.appdata['outputfile'], wx.DD_DEFAULT_STYLE
+                           )
         if dlg.ShowModal() == wx.ID_OK:
             self.txtctrl_FFpath.Clear()
             getpath = self.appdata['getpath'](dlg.GetPath())
@@ -716,7 +716,7 @@ class SetUp(wx.Dialog):
         oldtrash = self.txtctrl_trash.GetValue()
         dlg = wx.DirDialog(self, _("Choose a new destination for the "
                                    "files to be trashed"),
-                           "", wx.DD_DEFAULT_STYLE)
+                           self.appdata['trashfolder'], wx.DD_DEFAULT_STYLE)
 
         if dlg.ShowModal() == wx.ID_OK:
             self.txtctrl_trash.Clear()

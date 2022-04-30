@@ -314,41 +314,41 @@ def del_filecontents(filename):
 # ------------------------------------------------------------------#
 
 
-def make_newdir_with_id(destdir, name):
+def make_newdir_with_id_num(destdir, name):
     """
     Makes a new directory with the same name as `name`
-    but adds a progressive numeric ID to the name, i.e:
+    but adds a progressive number to the trailing, starting
+    from `_1` i.e:
 
-        'MyNewDir_1', MyNewDir_33, ecc.
-
-    The `name` can end with '_N' where 'N' must be a digit.
-    If not, it will add '_N'.
+        'MyNewDir_1', MyNewDir_33, ect.
 
     destdir (str): output destination
     name (str): Any valid name OS sanitized
 
-    Returns (str): the new dirname with ID.
-
+    Returns two items tuple:
+        ('ERROR', errormessage) if error.
+        (None, newdir): the new dirname otherwise.
     """
-    # check for digits, if not add digit
-    lastwo = [x for x in name][-2:]  # last two items
-    if not lastwo[1].isdigit():
-        name += '1' if lastwo[0] == '_' else '_1'
-
-    newdir = os.path.join(destdir, name)
-    if os.path.exists(newdir):  # id increment
-        listdir = []
-        for ddir in os.listdir(destdir):
-            if f"{name.rsplit('_', 1)[0]}_" in ddir:
-                listdir.append(int(ddir.rsplit('_', 1)[1]))
-        prog = max(listdir) + 1
-        splitnum = name.rsplit('_', 1)[0]
-        newdir = os.path.join(destdir, f'{splitnum}_{prog}')
-        os.makedirs(newdir, mode=0o777)
+    extract = []
+    for ddir in os.listdir(destdir):
+        if ddir.startswith(name):
+            try:
+                dig = ddir.rsplit('_', 1)[1]
+                if dig.isdigit():
+                    extract.append(int(dig))
+            except IndexError:
+                continue
+    if extract:
+        prog = max(extract) + 1
+        newdir = os.path.join(destdir, f'{name}_{str(prog)}')
     else:
+        newdir = os.path.join(destdir, f'{name}_1')
+    try:
         os.makedirs(newdir, mode=0o777)
+    except (OSError, FileExistsError) as err:
+        return 'ERROR', err
 
-    return newdir
+    return None, newdir
 # ------------------------------------------------------------------#
 
 

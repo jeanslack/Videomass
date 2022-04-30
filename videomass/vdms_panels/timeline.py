@@ -101,7 +101,6 @@ class Timeline(wx.Panel):
         #                     )
         self.font = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         sizer_base = wx.BoxSizer(wx.HORIZONTAL)
-
         self.paneltime = wx.Panel(self, wx.ID_ANY,
                                   size=(Timeline.PW, Timeline.PH),
                                   style=wx.BORDER_SUNKEN)
@@ -120,14 +119,14 @@ class Timeline(wx.Panel):
                        | wx.ALIGN_CENTRE_VERTICAL, 5
                        )
         self.sldseek = wx.Slider(self, wx.ID_ANY, 0, 0, self.milliseconds,
-                                 size=(300, -1), style=wx.SL_HORIZONTAL
+                                 size=(150, -1), style=wx.SL_HORIZONTAL
                                  )
         self.sldseek.Disable()
         self.txtseek = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
         txtstaticseek = wx.StaticText(self, wx.ID_ANY, _('Seek'))
 
         self.sldcut = wx.Slider(self, wx.ID_ANY, 0, 0, self.milliseconds,
-                                size=(300, -1), style=wx.SL_HORIZONTAL
+                                size=(150, -1), style=wx.SL_HORIZONTAL
                                 )
         self.txtcut = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
         txtstaticdur = wx.StaticText(self, wx.ID_ANY, _('Duration'))

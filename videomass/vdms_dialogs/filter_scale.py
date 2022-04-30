@@ -223,8 +223,8 @@ class Scale(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         # Set previous changes
         if scale:
-            self.width = scale.split(':')[0][8:]
-            self.height = scale.split(':')[1][2:]
+            self.width = scale.split(':', maxsplit=1)[0][8:]
+            self.height = scale.split(':', maxsplit=1)[1][2:]
 
             if self.width in ('-1', '-2'):
                 self.ckbx_keep.SetValue(True)
