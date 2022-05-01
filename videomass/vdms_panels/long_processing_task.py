@@ -139,7 +139,8 @@ class LogOut(wx.Panel):
         self.ckbx_text = wx.CheckBox(self, wx.ID_ANY, (_("Suppress excess "
                                                          "output")))
         self.barprog = wx.Gauge(self, wx.ID_ANY, range=0)
-        self.labperc = wx.StaticText(self, label="")
+        self.labprog = wx.StaticText(self, label="")
+        self.labffmpeg = wx.StaticText(self, label="")
         self.button_stop = wx.Button(self, wx.ID_STOP, _("Abort"))
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -148,12 +149,12 @@ class LogOut(wx.Panel):
         sizer.Add(self.txtout, 1, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.ckbx_text, 0, wx.ALL, 5)
         sizer.Add(self.barprog, 0, wx.EXPAND | wx.ALL, 5)
-        sizer.Add(self.labperc, 0, wx.ALL, 5)
-        # grid = wx.GridSizer(1, 2, 0, 0)
-        grid = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(grid, 0, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
-        grid.Add(self.button_stop, 0, wx.EXPAND | wx.ALL, 5)
-        grid.Add(self.button_close, 0, wx.EXPAND | wx.ALL, 5)
+        sizer.Add(self.labprog, 0, wx.ALL, 5)
+        sizer.Add(self.labffmpeg, 0, wx.ALL, 5)
+        sizer_btns = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(sizer_btns, 0, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        sizer_btns.Add(self.button_stop, 0, wx.EXPAND | wx.ALL, 5)
+        sizer_btns.Add(self.button_close, 0, wx.EXPAND | wx.ALL, 5)
         # set_properties:
         self.txtout.SetBackgroundColour(self.clr['BACKGRD'])
         self.ckbx_text.SetToolTip(_('If activated, hides some '
@@ -163,7 +164,6 @@ class LogOut(wx.Panel):
         # bind
         self.Bind(wx.EVT_BUTTON, self.on_stop, self.button_stop)
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
-
         # ------------------------------------------
         self.button_stop.Enable(True)
         self.button_close.Enable(False)
@@ -188,7 +188,8 @@ class LogOut(wx.Panel):
             return
 
         self.txtout.Clear()
-        self.labperc.SetLabel('')
+        self.labprog.SetLabel('')
+        self.labffmpeg.SetLabel('')
 
         self.logname = make_log_template(varargs[8], self.appdata['logdir'])
 
@@ -266,8 +267,8 @@ class LogOut(wx.Panel):
             tbytes = duration['_total_bytes_str']
             speed = duration['_speed_str']
             eta = duration['_eta_str']
-            self.labperc.SetLabel(f'Downloading: {perc} of '
-                                  f'{tbytes} at {speed} ETA {eta}')
+            self.labprog.SetLabel(f'Downloading: {perc}  of  '
+                                  f'{tbytes}  at  {speed}  ETA: {eta}')
 
         elif status == 'FINISHED':
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
@@ -289,10 +290,11 @@ class LogOut(wx.Panel):
 
         NOTE: During conversion the ffmpeg errors do not stop all
               others tasks, if an error occurred it will be marked
-              with 'failed' but continue; if it has finished without
-              errors it will be marked with 'done' on update_count
-              method. Since not all ffmpeg messages are errors, sometimes
-              it happens to see more output marked with yellow color.
+              with 'failed' but the other tasks will continue;
+              if it has finished without errors it will be marked with
+              'done' on `update_count` method. Since not all ffmpeg
+              messages are errors, sometimes it happens to see more
+              output marked with yellow color.
 
         This strategy consists first of capturing all the output and
         marking it in yellow, then in capturing the error if present,
@@ -323,7 +325,7 @@ class LogOut(wx.Panel):
             out = [a for a in "=".join(output.split()).split('=') if a]
             ffprog = []
             for x, y in pairwise(out):
-                ffprog.append(f"{x}: {y} | ")
+                ffprog.append(f"{x}: {y}")
 
             if self.time_remaining is True:
                 if 'speed=' in output:
@@ -332,17 +334,17 @@ class LogOut(wx.Panel):
                         speed = s.split('=')[1].split('x')[0]
                         rem = (duration - ms) / float(speed)
                         remaining = milliseconds2clock(round(rem))
-                        eta = f"ETA: {remaining} |"
+                        eta = f"   ETA: {remaining}"
 
                     except IndexError:
-                        eta = "ETA: N/A |"
+                        eta = "   ETA: N/A"
                 else:
                     eta = ""
             else:
                 eta = ""
-            self.labperc.SetLabel(f"Processing: {str(int(percentage))}% | "
-                                  f"{''.join(ffprog)} {eta}"
-                                  )
+            self.labprog.SetLabel(f'Processing: {str(int(percentage))}% {eta}')
+            self.labffmpeg.SetLabel(' | '.join(ffprog))
+
             del output, duration
 
         else:  # append all others lines on the textctrl and log file
@@ -379,16 +381,18 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f"{LogOut.MSG_done}\n")
             # set final values for percentage, time and ETA
             if self.time_remaining is True:
-                newlab = self.labperc.GetLabel().split('|')
-                for idx, ele in enumerate(self.labperc.GetLabel().split('|')):
-                    if 'Processing:' in ele:
-                        newlab[idx] = 'Processing: 100%'
-                    if ' time:' in ele:
-                        timefrm = milliseconds2clock(duration)
-                        newlab[idx] = (f' time: {str(timefrm)}')
-                    if ' ETA:' in ele:
-                        newlab[idx] = ' ETA: 00:00:00.000'
-                self.labperc.SetLabel(" | ".join(newlab))
+                newlab = self.labprog.GetLabel().split()
+                if 'Processing:' in newlab:
+                    newlab[1] = '100%   '
+                if 'ETA:' in newlab:
+                    newlab[3] = '00:00:00.000'
+                self.labprog.SetLabel(" ".join(newlab))
+
+            elif self.thread_type.__class__.__name__ != 'YdlDownloader':
+                newlab = self.labprog.GetLabel().split()
+                if 'Processing:' in newlab:
+                    newlab[1] = '100%'
+                    self.labprog.SetLabel(" ".join(newlab))
             return
 
         # if STATUS_ERROR == 1:
@@ -419,11 +423,9 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f"\n{LogOut.MSG_fatalerror}\n")
             notification_area(_("Fatal Error !"), LogOut.MSG_fatalerror,
                               wx.ICON_ERROR)
-
         elif self.abort is True:
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ABORT']))
             self.txtout.AppendText(f"\n{LogOut.MSG_interrupted}\n")
-
         else:
             if not self.result:
                 endmsg = LogOut.MSG_completed
@@ -520,7 +522,5 @@ class LogOut(wx.Panel):
         if not self.barprog.IsShown():
             self.barprog.Show()  # restoring progress bar if hidden
         self.time_remaining = True  # restoring time remaining display
-        # self.txtout.Clear()
-        # self.labperc.SetLabel('')
         self.parent.panelShown(self.previus)  # retrieve at previusly panel
         # event.Skip()

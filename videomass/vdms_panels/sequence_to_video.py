@@ -171,7 +171,7 @@ class SequenceToVideo(wx.Panel):
                                    size=(160, -1),
                                    style=wx.CB_DROPDOWN | wx.CB_READONLY
                                    )
-        siz_pict.Add(self.cmb_fps, 0, wx.ALL, 5)
+        siz_pict.Add(self.cmb_fps, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_fps.SetSelection(10)
         self.btn_resize = wx.Button(self, wx.ID_ANY, _("Resizing"),
                                     size=(-1, -1)
@@ -179,9 +179,9 @@ class SequenceToVideo(wx.Panel):
         self.btn_resize.SetBitmap(bmpresize, wx.LEFT)
         siz_pict.Add(self.btn_resize, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.ckbx_far = wx.CheckBox(self, wx.ID_ANY,
-                                    _('Force original aspect ratio using '
+                                    _('Force original aspect ratio using\n'
                                       'padding rather than stretching'))
-        siz_pict.Add(self.ckbx_far, 0, wx.ALL | wx.EXPAND, 5)
+        siz_pict.Add(self.ckbx_far, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.ckbx_far.Disable()
         siz_audio = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_audio)
