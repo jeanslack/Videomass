@@ -658,7 +658,6 @@ class SequenceToVideo(wx.Panel):
                                              None,
                                              'still_image_maker.log',
                                              countmax,
-                                             skiptimeline=True
                                              )
         return
     # -----------------------------------------------------------

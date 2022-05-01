@@ -1153,5 +1153,4 @@ class Downloader(wx.Panel):
                                          '',
                                          logname,
                                          len(urls),
-                                         skiptimeline=False
                                          )

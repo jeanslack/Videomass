@@ -210,8 +210,9 @@ class LogOut(wx.Panel):
                                                  self.logname, time_seq
                                                  )
         elif varargs[0] == 'sequence_to_video':
-            self.thread_type = SlideshowMaker(varargs, self.logname)
-
+            self.thread_type = SlideshowMaker(varargs, duration,
+                                              self.logname
+                                              )
         elif varargs[0] == 'libvidstab':  # from Audio/Video Conv.
             self.thread_type = VidStab(varargs, duration,
                                        self.logname, time_seq
@@ -265,7 +266,7 @@ class LogOut(wx.Panel):
             tbytes = duration['_total_bytes_str']
             speed = duration['_speed_str']
             eta = duration['_eta_str']
-            self.labperc.SetLabel(f'Downloading... {perc} of '
+            self.labperc.SetLabel(f'Downloading: {perc} of '
                                   f'{tbytes} at {speed} ETA {eta}')
 
         elif status == 'FINISHED':

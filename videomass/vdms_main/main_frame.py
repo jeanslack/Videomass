@@ -2035,7 +2035,7 @@ class MainFrame(wx.Frame):
         self.Layout()
     # ------------------------------------------------------------------#
 
-    def switch_to_processing(self, *varargs, skiptimeline=False):
+    def switch_to_processing(self, *varargs):
         """
     1) TIME DEFINITION FOR THE PROGRESS BAR
         For a suitable and efficient progress bar, if a specific
@@ -2051,27 +2051,28 @@ class MainFrame(wx.Frame):
         """
         if varargs[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
-            duration = self.duration
-            time_seq = self.time_seq
+            duration, time_seq = self.duration, self.time_seq
+
+        elif varargs[0] == 'youtube_dl downloading':
+            duration, time_seq = None, None
+
+        elif varargs[0] in ('concat_demuxer', 'sequence_to_video'):
+            duration, time_seq = varargs[6], ''
 
         elif self.time_seq != "-ss 00:00:00.000 -t 00:00:00.000":
-            if skiptimeline is True:
-                duration, time_seq = None, None
-            else:
-                ms = get_milliseconds(self.time_seq.split()[3])  # -t duration
-                time_seq = self.time_seq
-                if [t for t in self.duration if ms > t]:  # if out time range
-                    wx.MessageBox(_('Cannot continue: The duration in the '
-                                    'timeline exceeds the duration of some '
-                                    'queued files.'),
-                                  'Videomass', wx.ICON_ERROR, self)
-                    return
-                duration = [ms for n in self.duration]
-                self.statusbar_msg(_('Processing...'), None)
-        else:
-            duration = self.duration
-            time_seq = ''
+            ms = get_milliseconds(self.time_seq.split()[3])  # -t duration
+            time_seq = self.time_seq
+            if [t for t in self.duration if ms > t]:  # if out time range
+                wx.MessageBox(_('Cannot continue: The duration in the '
+                                'timeline exceeds the duration of some '
+                                'queued files.'),
+                                'Videomass', wx.ICON_ERROR, self)
+                return
+            duration = [ms for n in self.duration]
             self.statusbar_msg(_('Processing...'), None)
+
+        else:
+            duration, time_seq = self.duration, ''
 
         self.SetTitle(_('Videomass - Output Monitor'))
         # Hide all others panels:
