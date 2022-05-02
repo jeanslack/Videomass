@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-30 11:16+0200\n"
-"PO-Revision-Date: 2022-04-30 11:19+0200\n"
+"POT-Creation-Date: 2022-05-02 10:47+0200\n"
+"PO-Revision-Date: 2022-05-02 10:50+0200\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: ChourS\n"
 "Language: ru_RU\n"
@@ -1090,8 +1090,8 @@ msgstr ""
 #: ../vdms_dialogs/preferences.py:305 ../vdms_dialogs/preferences.py:325
 #: ../vdms_dialogs/preferences.py:341 ../vdms_frames/ffmpeg_conf.py:217
 #: ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:672
-#: ../vdms_panels/video_to_sequence.py:563
+#: ../vdms_panels/sequence_to_video.py:671
+#: ../vdms_panels/video_to_sequence.py:567
 msgid "Disabled"
 msgstr "Отключено"
 
@@ -1376,8 +1376,8 @@ msgid "ENABLED:"
 msgstr "ВКЛЮЧЕНО:"
 
 #: ../vdms_frames/ffmpeg_conf.py:204 ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:672
-#: ../vdms_panels/video_to_sequence.py:559
+#: ../vdms_panels/sequence_to_video.py:671
+#: ../vdms_panels/video_to_sequence.py:563
 msgid "Enabled"
 msgstr "Включено"
 
@@ -2470,7 +2470,7 @@ msgstr "Videomass - Still Image Maker"
 msgid "Viewing last log"
 msgstr "Просмотр последнего log-журнала"
 
-#: ../vdms_main/main_frame.py:2064
+#: ../vdms_main/main_frame.py:2066
 msgid ""
 "Cannot continue: The duration in the timeline exceeds the duration of some "
 "queued files."
@@ -2478,11 +2478,11 @@ msgstr ""
 "Невозможно продолжить: продолжительность на шкале времени превышает "
 "продолжительность некоторых файлов в очереди."
 
-#: ../vdms_main/main_frame.py:2070 ../vdms_main/main_frame.py:2074
+#: ../vdms_main/main_frame.py:2072
 msgid "Processing..."
 msgstr "Обработка ..."
 
-#: ../vdms_main/main_frame.py:2076
+#: ../vdms_main/main_frame.py:2077
 msgid "Videomass - Output Monitor"
 msgstr "Videomass - Выходной монитор"
 
@@ -2842,8 +2842,8 @@ msgstr "Невозможно просмотреть Stabilizer видеофил�
 
 #: ../vdms_panels/av_conversions.py:1286
 #: ../vdms_panels/sequence_to_video.py:308
-#: ../vdms_panels/video_to_sequence.py:349
-#: ../vdms_panels/video_to_sequence.py:470
+#: ../vdms_panels/video_to_sequence.py:353
+#: ../vdms_panels/video_to_sequence.py:474
 msgid "A target file must be selected in the queued files"
 msgstr "В файлах, поставленных в очередь, должен быть выбран один файл"
 
@@ -2861,7 +2861,7 @@ msgstr ""
 
 #: ../vdms_panels/av_conversions.py:1348
 #: ../vdms_panels/sequence_to_video.py:335
-#: ../vdms_panels/video_to_sequence.py:376
+#: ../vdms_panels/video_to_sequence.py:380
 msgid "The file is not a frame or a video file"
 msgstr "Файл не является кадром или видеофайлом"
 
@@ -2933,12 +2933,12 @@ msgid "Off"
 msgstr "Выключено"
 
 #: ../vdms_panels/av_conversions.py:2501 ../vdms_panels/presets_manager.py:922
-#: ../vdms_panels/video_to_sequence.py:553
+#: ../vdms_panels/video_to_sequence.py:557
 msgid "Unset"
 msgstr "Не установлено"
 
 #: ../vdms_panels/av_conversions.py:2504 ../vdms_panels/presets_manager.py:925
-#: ../vdms_panels/video_to_sequence.py:556
+#: ../vdms_panels/video_to_sequence.py:560
 msgid "start  {} | duration  {}"
 msgstr "начало  {} | продолжительность  {}"
 
@@ -3254,7 +3254,7 @@ msgstr "Для объединения требуются как минимум �
 #: ../vdms_panels/sequence_to_video.py:549
 #: ../vdms_panels/sequence_to_video.py:566
 #: ../vdms_panels/sequence_to_video.py:574
-#: ../vdms_panels/video_to_sequence.py:481
+#: ../vdms_panels/video_to_sequence.py:485
 msgid "ERROR"
 msgstr "ОШИБКА"
 
@@ -3266,14 +3266,14 @@ msgstr ""
 "Файлы не имеют одинаковых «codec_types», «sample_rate» или одинаковых "
 "«ширины» или «высоты». Невозможно продолжить."
 
-#: ../vdms_panels/concatenate.py:291 ../vdms_panels/presets_manager.py:877
+#: ../vdms_panels/concatenate.py:295 ../vdms_panels/presets_manager.py:877
 #: ../vdms_panels/presets_manager.py:900
 #: ../vdms_panels/sequence_to_video.py:648
-#: ../vdms_panels/video_to_sequence.py:529
+#: ../vdms_panels/video_to_sequence.py:533
 msgid "Starts"
 msgstr "Начало"
 
-#: ../vdms_panels/concatenate.py:314
+#: ../vdms_panels/concatenate.py:318
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3487,7 +3487,7 @@ msgstr ""
 "продолжить?"
 
 #: ../vdms_panels/youtubedl_ui.py:1030 ../vdms_panels/youtubedl_ui.py:1036
-#: ../vdms_panels/long_processing_task.py:504
+#: ../vdms_panels/long_processing_task.py:514
 #: ../vdms_panels/presets_manager.py:511 ../vdms_panels/presets_manager.py:551
 #: ../vdms_panels/presets_manager.py:617 ../vdms_panels/presets_manager.py:643
 #: ../vdms_panels/presets_manager.py:805 ../vdms_panels/presets_manager.py:835
@@ -3568,89 +3568,89 @@ msgstr "Файл не выбран"
 msgid "Add Files"
 msgstr "Добавить файлы"
 
-#: ../vdms_panels/long_processing_task.py:95
+#: ../vdms_panels/long_processing_task.py:106
 msgid "[Videomass]: SUCCESS !"
 msgstr "[Videomass]: УСПЕШНО !"
 
-#: ../vdms_panels/long_processing_task.py:96
+#: ../vdms_panels/long_processing_task.py:107
 msgid "[Videomass]: FAILED !"
 msgstr "[Videomass]: НЕ УДАЛОСЬ !"
 
-#: ../vdms_panels/long_processing_task.py:97
+#: ../vdms_panels/long_processing_task.py:108
 msgid "Sorry, all task failed !"
 msgstr "Извините, задача не выполнена !"
 
-#: ../vdms_panels/long_processing_task.py:98
+#: ../vdms_panels/long_processing_task.py:109
 msgid "The process was stopped due to a fatal error."
 msgstr "Процесс был остановлен из-за фатальной ошибки."
 
-#: ../vdms_panels/long_processing_task.py:99
+#: ../vdms_panels/long_processing_task.py:110
 msgid "Interrupted Process !"
 msgstr "Процесс прерван !"
 
-#: ../vdms_panels/long_processing_task.py:100
+#: ../vdms_panels/long_processing_task.py:111
 msgid "Successfully completed !"
 msgstr "Успешно завершено !"
 
-#: ../vdms_panels/long_processing_task.py:101
+#: ../vdms_panels/long_processing_task.py:112
 msgid "Not everything was successful."
 msgstr "Завершено, но не все прошло хорошо."
 
-#: ../vdms_panels/long_processing_task.py:130
+#: ../vdms_panels/long_processing_task.py:141
 msgid "Process log:"
 msgstr "Журнал процесса:"
 
-#: ../vdms_panels/long_processing_task.py:139
+#: ../vdms_panels/long_processing_task.py:150
 msgid "Suppress excess output"
 msgstr "Подавить избыточный вывод"
 
-#: ../vdms_panels/long_processing_task.py:143
+#: ../vdms_panels/long_processing_task.py:155
 msgid "Abort"
 msgstr "Прервать"
 
-#: ../vdms_panels/long_processing_task.py:159
+#: ../vdms_panels/long_processing_task.py:171
 msgid "If activated, hides some output messages."
 msgstr "Если включен, скрывает некоторые выходные сообщения."
 
-#: ../vdms_panels/long_processing_task.py:161
+#: ../vdms_panels/long_processing_task.py:173
 msgid "Stops current process"
 msgstr "Останавливает текущий процесс"
 
-#: ../vdms_panels/long_processing_task.py:419
+#: ../vdms_panels/long_processing_task.py:433
 msgid "Fatal Error !"
 msgstr "Фатальная ошибка !"
 
-#: ../vdms_panels/long_processing_task.py:430
+#: ../vdms_panels/long_processing_task.py:442
 msgid "Get your files at the destination you specified"
 msgstr "Получите ваши файлы по указанному вами адресу"
 
-#: ../vdms_panels/long_processing_task.py:438
-#: ../vdms_panels/long_processing_task.py:445
+#: ../vdms_panels/long_processing_task.py:450
+#: ../vdms_panels/long_processing_task.py:457
 msgid ""
 "Check the current output or read the related log file for more information."
 msgstr ""
 "Проверьте текущий вывод или прочтите соответствующий файл журнала для "
 "получения дополнительной информации."
 
-#: ../vdms_panels/long_processing_task.py:450
+#: ../vdms_panels/long_processing_task.py:462
 msgid "...Finished"
 msgstr "...Завершено"
 
-#: ../vdms_panels/long_processing_task.py:475
+#: ../vdms_panels/long_processing_task.py:485
 msgid ""
 "wait... all operations will be stopped at the end of the download in "
 "progress."
 msgstr "подождите... все операции будут остановлены в конце текущей загрузки."
 
-#: ../vdms_panels/long_processing_task.py:480
+#: ../vdms_panels/long_processing_task.py:490
 msgid "wait... I'm interrupting"
 msgstr "подождите ... я прерываю"
 
-#: ../vdms_panels/long_processing_task.py:483
+#: ../vdms_panels/long_processing_task.py:493
 msgid "...Interrupted"
 msgstr "...Прервано"
 
-#: ../vdms_panels/long_processing_task.py:501
+#: ../vdms_panels/long_processing_task.py:511
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
@@ -4120,7 +4120,9 @@ msgid "Enable a single still image"
 msgstr "Включить одно неподвижное изображение"
 
 #: ../vdms_panels/sequence_to_video.py:182
-msgid "Force original aspect ratio using padding rather than stretching"
+msgid ""
+"Force original aspect ratio using\n"
+"padding rather than stretching"
 msgstr ""
 
 #: ../vdms_panels/sequence_to_video.py:188
@@ -4148,7 +4150,7 @@ msgstr "Открыть аудиофайл"
 
 #: ../vdms_panels/sequence_to_video.py:538
 #: ../vdms_panels/sequence_to_video.py:565
-#: ../vdms_panels/video_to_sequence.py:480
+#: ../vdms_panels/video_to_sequence.py:484
 msgid "Invalid file: '{}'"
 msgstr "Недопустимый файл: '{}'"
 
@@ -4157,7 +4159,7 @@ msgstr "Недопустимый файл: '{}'"
 msgid "Unsupported format '{}'"
 msgstr "Неподдерживаемый формат '{}'"
 
-#: ../vdms_panels/sequence_to_video.py:681
+#: ../vdms_panels/sequence_to_video.py:680
 #, fuzzy
 #| msgid ""
 #| "SUMMARY\n"
@@ -4284,14 +4286,6 @@ msgstr ""
 msgid "Columns:"
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:197
-msgid "Padding:"
-msgstr ""
-
-#: ../vdms_panels/video_to_sequence.py:207
-msgid "Margin:"
-msgstr ""
-
 #: ../vdms_panels/video_to_sequence.py:234
 #, fuzzy
 #| msgid "Set FPS control from 0.1 to 30.0 fps, default is 0.2 fps"
@@ -4302,7 +4296,15 @@ msgstr ""
 "Установите управление частотой кадров в секунду от 0,1 до 30,0 кадров в "
 "секунду, по умолчанию - 0,2 кадра в секунду"
 
-#: ../vdms_panels/video_to_sequence.py:579
+#: ../vdms_panels/video_to_sequence.py:237
+msgid "Spaces around the mosaic tiles. From 0 to 32 pixels"
+msgstr ""
+
+#: ../vdms_panels/video_to_sequence.py:239
+msgid "Spaces around the mosaic borders. From 0 to 32 pixels"
+msgstr ""
+
+#: ../vdms_panels/video_to_sequence.py:583
 #, fuzzy
 #| msgid ""
 #| "SUMMARY\n"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-30 11:16+0200\n"
-"PO-Revision-Date: 2022-04-30 11:18+0200\n"
+"POT-Creation-Date: 2022-05-02 10:47+0200\n"
+"PO-Revision-Date: 2022-05-02 10:49+0200\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -921,8 +921,8 @@ msgstr ""
 #: ../vdms_dialogs/preferences.py:305 ../vdms_dialogs/preferences.py:325
 #: ../vdms_dialogs/preferences.py:341 ../vdms_frames/ffmpeg_conf.py:217
 #: ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:672
-#: ../vdms_panels/video_to_sequence.py:563
+#: ../vdms_panels/sequence_to_video.py:671
+#: ../vdms_panels/video_to_sequence.py:567
 msgid "Disabled"
 msgstr ""
 
@@ -1189,8 +1189,8 @@ msgid "ENABLED:"
 msgstr ""
 
 #: ../vdms_frames/ffmpeg_conf.py:204 ../vdms_panels/av_conversions.py:2506
-#: ../vdms_panels/sequence_to_video.py:672
-#: ../vdms_panels/video_to_sequence.py:559
+#: ../vdms_panels/sequence_to_video.py:671
+#: ../vdms_panels/video_to_sequence.py:563
 msgid "Enabled"
 msgstr ""
 
@@ -2182,17 +2182,17 @@ msgstr ""
 msgid "Viewing last log"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:2064
+#: ../vdms_main/main_frame.py:2066
 msgid ""
 "Cannot continue: The duration in the timeline exceeds the duration of some "
 "queued files."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:2070 ../vdms_main/main_frame.py:2074
+#: ../vdms_main/main_frame.py:2072
 msgid "Processing..."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:2076
+#: ../vdms_main/main_frame.py:2077
 msgid "Videomass - Output Monitor"
 msgstr ""
 
@@ -2510,8 +2510,8 @@ msgstr ""
 
 #: ../vdms_panels/av_conversions.py:1286
 #: ../vdms_panels/sequence_to_video.py:308
-#: ../vdms_panels/video_to_sequence.py:349
-#: ../vdms_panels/video_to_sequence.py:470
+#: ../vdms_panels/video_to_sequence.py:353
+#: ../vdms_panels/video_to_sequence.py:474
 msgid "A target file must be selected in the queued files"
 msgstr ""
 
@@ -2527,7 +2527,7 @@ msgstr ""
 
 #: ../vdms_panels/av_conversions.py:1348
 #: ../vdms_panels/sequence_to_video.py:335
-#: ../vdms_panels/video_to_sequence.py:376
+#: ../vdms_panels/video_to_sequence.py:380
 msgid "The file is not a frame or a video file"
 msgstr ""
 
@@ -2591,12 +2591,12 @@ msgid "Off"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:2501 ../vdms_panels/presets_manager.py:922
-#: ../vdms_panels/video_to_sequence.py:553
+#: ../vdms_panels/video_to_sequence.py:557
 msgid "Unset"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:2504 ../vdms_panels/presets_manager.py:925
-#: ../vdms_panels/video_to_sequence.py:556
+#: ../vdms_panels/video_to_sequence.py:560
 msgid "start  {} | duration  {}"
 msgstr ""
 
@@ -2818,7 +2818,7 @@ msgstr ""
 #: ../vdms_panels/sequence_to_video.py:549
 #: ../vdms_panels/sequence_to_video.py:566
 #: ../vdms_panels/sequence_to_video.py:574
-#: ../vdms_panels/video_to_sequence.py:481
+#: ../vdms_panels/video_to_sequence.py:485
 msgid "ERROR"
 msgstr ""
 
@@ -2828,14 +2828,14 @@ msgid ""
 "\"width\" or \"height\". Unable to proceed."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:291 ../vdms_panels/presets_manager.py:877
+#: ../vdms_panels/concatenate.py:295 ../vdms_panels/presets_manager.py:877
 #: ../vdms_panels/presets_manager.py:900
 #: ../vdms_panels/sequence_to_video.py:648
-#: ../vdms_panels/video_to_sequence.py:529
+#: ../vdms_panels/video_to_sequence.py:533
 msgid "Starts"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:314
+#: ../vdms_panels/concatenate.py:318
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3016,7 +3016,7 @@ msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr ""
 
 #: ../vdms_panels/youtubedl_ui.py:1030 ../vdms_panels/youtubedl_ui.py:1036
-#: ../vdms_panels/long_processing_task.py:504
+#: ../vdms_panels/long_processing_task.py:514
 #: ../vdms_panels/presets_manager.py:511 ../vdms_panels/presets_manager.py:551
 #: ../vdms_panels/presets_manager.py:617 ../vdms_panels/presets_manager.py:643
 #: ../vdms_panels/presets_manager.py:805 ../vdms_panels/presets_manager.py:835
@@ -3095,87 +3095,87 @@ msgstr ""
 msgid "Add Files"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:95
+#: ../vdms_panels/long_processing_task.py:106
 msgid "[Videomass]: SUCCESS !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:96
+#: ../vdms_panels/long_processing_task.py:107
 msgid "[Videomass]: FAILED !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:97
+#: ../vdms_panels/long_processing_task.py:108
 msgid "Sorry, all task failed !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:98
+#: ../vdms_panels/long_processing_task.py:109
 msgid "The process was stopped due to a fatal error."
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:99
+#: ../vdms_panels/long_processing_task.py:110
 msgid "Interrupted Process !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:100
+#: ../vdms_panels/long_processing_task.py:111
 msgid "Successfully completed !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:101
+#: ../vdms_panels/long_processing_task.py:112
 msgid "Not everything was successful."
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:130
+#: ../vdms_panels/long_processing_task.py:141
 msgid "Process log:"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:139
+#: ../vdms_panels/long_processing_task.py:150
 msgid "Suppress excess output"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:143
+#: ../vdms_panels/long_processing_task.py:155
 msgid "Abort"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:159
+#: ../vdms_panels/long_processing_task.py:171
 msgid "If activated, hides some output messages."
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:161
+#: ../vdms_panels/long_processing_task.py:173
 msgid "Stops current process"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:419
+#: ../vdms_panels/long_processing_task.py:433
 msgid "Fatal Error !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:430
+#: ../vdms_panels/long_processing_task.py:442
 msgid "Get your files at the destination you specified"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:438
-#: ../vdms_panels/long_processing_task.py:445
+#: ../vdms_panels/long_processing_task.py:450
+#: ../vdms_panels/long_processing_task.py:457
 msgid ""
 "Check the current output or read the related log file for more information."
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:450
+#: ../vdms_panels/long_processing_task.py:462
 msgid "...Finished"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:475
+#: ../vdms_panels/long_processing_task.py:485
 msgid ""
 "wait... all operations will be stopped at the end of the download in "
 "progress."
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:480
+#: ../vdms_panels/long_processing_task.py:490
 msgid "wait... I'm interrupting"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:483
+#: ../vdms_panels/long_processing_task.py:493
 msgid "...Interrupted"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:501
+#: ../vdms_panels/long_processing_task.py:511
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
@@ -3556,7 +3556,9 @@ msgid "Enable a single still image"
 msgstr ""
 
 #: ../vdms_panels/sequence_to_video.py:182
-msgid "Force original aspect ratio using padding rather than stretching"
+msgid ""
+"Force original aspect ratio using\n"
+"padding rather than stretching"
 msgstr ""
 
 #: ../vdms_panels/sequence_to_video.py:188
@@ -3582,7 +3584,7 @@ msgstr ""
 
 #: ../vdms_panels/sequence_to_video.py:538
 #: ../vdms_panels/sequence_to_video.py:565
-#: ../vdms_panels/video_to_sequence.py:480
+#: ../vdms_panels/video_to_sequence.py:484
 msgid "Invalid file: '{}'"
 msgstr ""
 
@@ -3591,7 +3593,7 @@ msgstr ""
 msgid "Unsupported format '{}'"
 msgstr ""
 
-#: ../vdms_panels/sequence_to_video.py:681
+#: ../vdms_panels/sequence_to_video.py:680
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3651,21 +3653,21 @@ msgstr ""
 msgid "Columns:"
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:197
-msgid "Padding:"
-msgstr ""
-
-#: ../vdms_panels/video_to_sequence.py:207
-msgid "Margin:"
-msgstr ""
-
 #: ../vdms_panels/video_to_sequence.py:234
 msgid ""
 "Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images "
 "will be extracted."
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:579
+#: ../vdms_panels/video_to_sequence.py:237
+msgid "Spaces around the mosaic tiles. From 0 to 32 pixels"
+msgstr ""
+
+#: ../vdms_panels/video_to_sequence.py:239
+msgid "Spaces around the mosaic borders. From 0 to 32 pixels"
+msgstr ""
+
+#: ../vdms_panels/video_to_sequence.py:583
 msgid ""
 "SUMMARY\n"
 "\n"
