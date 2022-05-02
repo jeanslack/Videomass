@@ -45,15 +45,26 @@ from videomass.vdms_threads.slideshow import SlideshowMaker
 from videomass.vdms_utils.utils import (get_milliseconds, milliseconds2clock)
 
 
-def delete_file_source(flist, path):
+def delete_file_source(flist, trashdir):
     """
     Move whole files list to Videomass Trash folder
     after encoding process.
     """
-    date = time.strftime('%H%M%S-%a_%d_%B_%Y')
-    for name in flist:
-        dest = os.path.join(path, f'{date}_{os.path.basename(name)}')
-        move(name, dest)
+    filenotfounderror = None
+    if not os.path.exists(trashdir):
+        if not os.path.isdir(trashdir):
+            try:
+                os.mkdir(trashdir, mode=0o777)
+            except FileNotFoundError as err:
+                filenotfounderror = err
+
+    if filenotfounderror is not None:
+        wx.MessageBox(f"{filenotfounderror}", 'Videomass', wx.ICON_ERROR)
+    else:
+        date = time.strftime('%H%M%S-%a_%d_%B_%Y')
+        for name in flist:
+            dest = os.path.join(trashdir, f'{date}_{os.path.basename(name)}')
+            move(name, dest)
 
 
 def pairwise(iterable):
@@ -313,26 +324,26 @@ class LogOut(wx.Panel):
         if 'time=' in output:  # ...in processing
             i = output.index('time=') + 5
             pos = output[i:].split()[0]
-            ms = get_milliseconds(pos)
+            msec = get_milliseconds(pos)
 
-            if ms > duration:
+            if msec > duration:
                 self.barprog.SetValue(duration)
             else:
-                self.barprog.SetValue(ms)
+                self.barprog.SetValue(msec)
 
-            percentage = round((ms / duration) * 100 if
+            percentage = round((msec / duration) * 100 if
                                duration != 0 else 100)
             out = [a for a in "=".join(output.split()).split('=') if a]
             ffprog = []
-            for x, y in pairwise(out):
-                ffprog.append(f"{x}: {y}")
+            for key, val in pairwise(out):
+                ffprog.append(f"{key}: {val}")
 
             if self.time_remaining is True:
                 if 'speed=' in output:
                     try:
-                        s = output.split()[-1].strip()
-                        speed = s.split('=')[1].split('x')[0]
-                        rem = (duration - ms) / float(speed)
+                        sline = output.split()[-1].strip()
+                        speed = sline.split('=')[1].split('x')[0]
+                        rem = (duration - msec) / float(speed)
                         remaining = milliseconds2clock(round(rem))
                         eta = f"   ETA: {remaining}"
 
@@ -372,14 +383,12 @@ class LogOut(wx.Panel):
 
     def update_count(self, count, fsource, destination, duration, end):
         """
-        Receive message from first 'for' loop in the thread process.
-        This method can be used even for non-loop threads.
-
+        Receive messages from file count, loop or non-loop thread.
         """
         if end == 'ok':
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['SUCCESS']))
             self.txtout.AppendText(f"{LogOut.MSG_done}\n")
-            # set final values for percentage, time and ETA
+            # set end values for percentage and ETA
             if self.time_remaining is True:
                 newlab = self.labprog.GetLabel().split()
                 if 'Processing:' in newlab:
@@ -456,10 +465,8 @@ class LogOut(wx.Panel):
 
             if msg:  # move processed files to Videomass trash folder
                 if self.appdata["move_file_to_trash"] is True:
-                    if not os.path.exists(self.appdata["trashfolder"]):
-                        if not os.path.isdir(self.appdata["trashfolder"]):
-                            os.mkdir(self.appdata["trashfolder"], mode=0o777)
-                    delete_file_source(msg, self.appdata["trashfolder"])
+                    trashdir = self.appdata["trashfolder"]
+                    delete_file_source(msg, trashdir)  # filelist, dir
 
         self.txtout.AppendText('\n')
         self.button_stop.Enable(False)
@@ -480,8 +487,8 @@ class LogOut(wx.Panel):
                                         "in progress."), 'GOLDENROD',
                                       LogOut.WHITE)
         else:
-            self.parent.statusbar_msg(_("wait... I'm interrupting"), 'GOLDENROD',
-                                    LogOut.WHITE)
+            self.parent.statusbar_msg(_("wait... I'm interrupting"),
+                                      'GOLDENROD', LogOut.WHITE)
             self.thread_type.join()
             self.parent.statusbar_msg(_("...Interrupted"), None)
         self.abort = True
