@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: April.18.2022
+Rev: April.23.2022
 Code checker: pycodestyle, flake8, pylint .
 
  This file is part of Videomass.
@@ -33,7 +33,7 @@ from videomass.vdms_utils.utils import copydir_recursively
 from videomass.vdms_sys.settings_manager import ConfigManager
 
 
-def create_dirs(dirname):
+def create_dirs(dirname, fconf):
     """
     This function is responsible for the recursive creation
     of directories required for Videomass if they do not exist.
@@ -44,8 +44,13 @@ def create_dirs(dirname):
     if not os.path.exists(dirname):
         try:
             os.makedirs(dirname, mode=0o777)
-        except (OSError, FileExistsError) as err:
+        except FileExistsError as err:
             return {'ERROR': err}
+        except OSError as err:
+            os.remove(fconf)  # force to restart on deleting
+            thismsg = ('Please try restarting Videomass to '
+                       'restore default settings now.')
+            return {'ERROR': f'{err}\n{thismsg}'}
 
     return {'R': None}
 
@@ -394,7 +399,7 @@ class DataSource():
                        userconf['outputdownload']
                        )
         for dirs in requiredirs:
-            create = create_dirs(dirs)
+            create = create_dirs(dirs, DataSource.FILE_CONF)
             if create.get('ERROR'):
                 return create
 

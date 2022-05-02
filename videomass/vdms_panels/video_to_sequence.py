@@ -194,7 +194,7 @@ class VideoToSequence(wx.Panel):
                                      )
         siz_tile.Add(self.spin_cols, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_cols.Disable()
-        self.lbl_pad = wx.StaticText(self, wx.ID_ANY, label=_("Padding:"))
+        self.lbl_pad = wx.StaticText(self, wx.ID_ANY, label="Padding:")
         siz_tile.Add(self.lbl_pad, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.lbl_pad.Disable()
         self.spin_pad = wx.SpinCtrl(self, wx.ID_ANY, "2", min=0,
@@ -204,8 +204,8 @@ class VideoToSequence(wx.Panel):
         siz_tile.Add(self.spin_pad, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_pad.Disable()
 
-        self.lbl_marg = wx.StaticText(self, wx.ID_ANY, label=_("Margin:"))
-        siz_tile.Add(self.lbl_marg, 0, wx.LEFT| wx.ALIGN_CENTER_VERTICAL, 5)
+        self.lbl_marg = wx.StaticText(self, wx.ID_ANY, label="Margin:")
+        siz_tile.Add(self.lbl_marg, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.lbl_marg.Disable()
         self.spin_marg = wx.SpinCtrl(self, wx.ID_ANY, "2", min=0,
                                      max=32, size=(-1, -1),
@@ -234,6 +234,10 @@ class VideoToSequence(wx.Panel):
         tip = (_('Set FPS control from 0.1 to 30.0 fps. The higher this '
                  'value, the more images will be extracted.'))
         self.spin_rate.SetToolTip(tip)
+        tip = (_('Spaces around the mosaic tiles. From 0 to 32 pixels'))
+        self.spin_pad.SetToolTip(tip)
+        tip = (_('Spaces around the mosaic borders. From 0 to 32 pixels'))
+        self.spin_marg.SetToolTip(tip)
 
         self.Bind(wx.EVT_CHECKBOX, self.on_edit, self.ckbx_edit)
         self.Bind(wx.EVT_RADIOBOX, self.on_options, self.rdbx_opt)

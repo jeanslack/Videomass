@@ -227,7 +227,7 @@ class SlideshowMaker(Thread):
     SUFFIX = appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
-    def __init__(self, varargs, logname):
+    def __init__(self, varargs, duration, logname):
         """
         Initialize the attributes given by varargs
         """
@@ -239,7 +239,7 @@ class SlideshowMaker(Thread):
         self.args_0 = varargs[4][0]  # args for temporary process
         self.preinput_1 = varargs[5]  # pre-input args for processing
         self.args_1 = varargs[4][1]  # args for processing
-        self.duration = varargs[6]  # duration
+        self.duration = duration  # duration
         self.countmax = varargs[9]  # length file list
         self.count = 0  # count first for loop
         self.logname = logname  # log name

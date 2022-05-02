@@ -65,7 +65,7 @@ class ConcatDemuxer(Thread):
         self.command = varargs[4]  # additional comand
         self.outputdir = varargs[3]  # output path
         self.extoutput = varargs[2]  # format (extension)
-        self.duration = sum(duration)  # duration list
+        self.duration = duration  # overall duration
         self.countmax = len(varargs[1])  # length file list
         self.logname = logname  # title name of file log
 

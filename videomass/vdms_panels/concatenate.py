@@ -164,7 +164,7 @@ class Conc_Demuxer(wx.Panel):
         siz_pict.Add(self.lbl_pict, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.lbl_pict.Disable()
         self.spin_pict = wx.SpinCtrl(self, wx.ID_ANY, "0", min=1,
-                                     max=10, size=(-1, -1),
+                                     max=100, size=(-1, -1),
                                      style=wx.TE_PROCESS_ENTER
                                      )
         siz_pict.Add(self.spin_pict, 0, wx.ALL, 5)
@@ -246,6 +246,7 @@ class Conc_Demuxer(wx.Panel):
         textstr = []
         if not self.ckbx_pict.IsChecked():
             ext = os.path.splitext(self.parent.file_src[0])[1].split('.')[1]
+            self.duration = sum(self.parent.duration)
             for f in self.parent.file_src:
                 escaped = f.replace(r"'", r"'\'")  # need escaping some chars
                 textstr.append(f"file '{escaped}'")
@@ -253,10 +254,13 @@ class Conc_Demuxer(wx.Panel):
                          f'-map 0:s? -map 0:a? -map_metadata 0 -c copy')
         else:
             ext = self.cmb_pict.GetValue()
-            duration = self.spin_pict.GetValue()
+            duration = self.spin_pict.GetValue() * len(self.parent.file_src)
+            self.duration = duration * 1000
             for f in self.parent.file_src:
                 escaped = f.replace(r"'", r"'\'")  # need escaping some chars
-                textstr.append(f"file '{escaped}'\nduration {duration}")
+                textstr.append(f"file '{escaped}'\nduration "
+                               f"{self.spin_pict.GetValue()}"
+                               )
             textstr.append(f"file '{self.parent.file_src[-1]}'")
             self.args = (f'"{ftext}" -vsync vfr -pix_fmt yuv420p '
                          f'-profile:v baseline -map 0:v? -map_chapters 0 '
@@ -297,7 +301,7 @@ class Conc_Demuxer(wx.Panel):
                                              destdir,
                                              self.args,
                                              None,
-                                             '',
+                                             self.duration,  # modify
                                              None,
                                              logname,
                                              1,

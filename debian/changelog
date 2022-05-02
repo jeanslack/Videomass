@@ -28,8 +28,10 @@ videomass (4.0.1-1) UNRELEASED; urgency=medium
   * Update Russian language thank to ChourS.
   * Improved some wx.DirDialog openings on default pathnames.
   * Fixed output files pathnames using portable edition on Windows.
+  * Fixed `PermissionError: [Errno 13] Permission denied:` by setting the output
+    paths no longer available, eg. using an unmounted flash drive.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 28 Apr 2022 19:44:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 02 May 2022 09:12:00 +0200
 
 videomass (3.5.8-1) UNRELEASED; urgency=medium
 
