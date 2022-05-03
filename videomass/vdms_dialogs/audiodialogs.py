@@ -219,27 +219,28 @@ class TypeAudioParameters():
     """
     channel_tooltip = (_('Videomass supports mono and stereo audio channels. '
                          'If you are not sure set to "Auto" and source values '
-                         'will be copied.'))
-    sample_rate_tooltip = (_("""\
-The audio Rate (or sample-rate) is the sound sampling
-frequency and is measured in Hertz. The higher the frequency,
-the more true it will be to the sound source and the more
-the file will increase in size. For audio CD playback, set a
-sampling frequency of 44100 kHz. If you are not sure, set to
-"Auto" and source values will be copied.\
-"""))
-    bitrate_tooltip = (_("""\
-The audio bitrate affects the file compression
-and thus the quality of listening. The higher
-the value, the higher the quality.\
-"""))
-    bitdepth_tooltip = (_("""\
-bit depth is the number of bits of information in each
-sample, and it directly corresponds to the resolution
-of each sample. Bit depth is only meaningful in reference
-to a PCM digital signal. Non-PCM formats, such as lossy
-compression formats, do not have associated bit depths.\
-"""))
+                         'will be copied.'
+                         ))
+    sample_rate_tooltip = (_('The audio Rate (or sample-rate) is the sound '
+                             'sampling frequency and is measured in Hertz. '
+                             'The higher the frequency, the more true it '
+                             'will be to the sound source and the more the '
+                             'file will increase in size. For audio CD '
+                             'playback, set a sampling frequency of 44100 '
+                             'kHz. If you are not sure, set to "Auto" and '
+                             'source values will be copied.'
+                             ))
+    bitrate_tooltip = (_('The audio bitrate affects the file compression and '
+                         'thus the quality of listening. The higher the '
+                         'value, the higher the quality.'
+                         ))
+    bitdepth_tooltip = (_('Bit depth is the number of bits of information in '
+                          'each sample, and it directly corresponds to the '
+                          'resolution of each sample. Bit depth is only '
+                          'meaningful in reference to a PCM digital signal. '
+                          'Non-PCM formats, such as lossy compression '
+                          'formats, do not have associated bit depths.'
+                          ))
     sample_rate = {0: ("Auto", ""),
                    1: ("44100 Hz ", "-ar 44100 "),
                    2: ("48000 Hz ", "-ar 48000"),

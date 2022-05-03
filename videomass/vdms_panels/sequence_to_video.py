@@ -432,9 +432,10 @@ class SequenceToVideo(wx.Panel):
         Add audio track to video.
         """
         fmt = '*.wav;*.aiff;*.flac;*.oga;*.ogg;*.m4a;*.aac;*.ac3;*.mp3;'
+        wild = f"Audio source ({fmt})|{fmt}| All files (*.*)|*.*"
 
         with wx.FileDialog(self, _("Open an audio file"),
-                           wildcard=f"Audio source ({fmt})|{fmt}",
+                           wildcard=wild,
                            style=wx.FD_OPEN |
                            wx.FD_FILE_MUST_EXIST) as fdlg:
 

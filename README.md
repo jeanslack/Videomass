@@ -1,8 +1,6 @@
 # **Videomass** is a cross-platform GUI for FFmpeg and youtube-dl / yt-dlp.
 [![Image](https://img.shields.io/static/v1?label=python&logo=python&message=3.7%20|%203.8|%203.9&color=blue)](https://www.python.org/downloads/)
-[![image](https://img.shields.io/badge/wxpython-phoenix-green)](https://www.wxpython.org/)
 [![Image](https://img.shields.io/badge/license-GPLv3-orange)](https://github.com/jeanslack/Videomass/blob/master/LICENSE)
-![image](https://img.shields.io/badge/platform-linux%20|%20freebsd%20|%20macos%20|%20windows-brigthgreen)  
 [![Python application](https://github.com/jeanslack/Videomass/actions/workflows/tests.yml/badge.svg)](https://github.com/jeanslack/Videomass/actions/workflows/tests.yml)
                  
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-02 10:47+0200\n"
+"POT-Creation-Date: 2022-05-03 10:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,30 +38,27 @@ msgid ""
 "to \"Auto\" and source values will be copied."
 msgstr ""
 
-#: ../vdms_dialogs/audiodialogs.py:223
+#: ../vdms_dialogs/audiodialogs.py:224
 msgid ""
-"The audio Rate (or sample-rate) is the sound sampling\n"
-"frequency and is measured in Hertz. The higher the frequency,\n"
-"the more true it will be to the sound source and the more\n"
-"the file will increase in size. For audio CD playback, set a\n"
-"sampling frequency of 44100 kHz. If you are not sure, set to\n"
+"The audio Rate (or sample-rate) is the sound sampling frequency and is "
+"measured in Hertz. The higher the frequency, the more true it will be to the "
+"sound source and the more the file will increase in size. For audio CD "
+"playback, set a sampling frequency of 44100 kHz. If you are not sure, set to "
 "\"Auto\" and source values will be copied."
 msgstr ""
 
-#: ../vdms_dialogs/audiodialogs.py:231
+#: ../vdms_dialogs/audiodialogs.py:233
 msgid ""
-"The audio bitrate affects the file compression\n"
-"and thus the quality of listening. The higher\n"
-"the value, the higher the quality."
+"The audio bitrate affects the file compression and thus the quality of "
+"listening. The higher the value, the higher the quality."
 msgstr ""
 
-#: ../vdms_dialogs/audiodialogs.py:236
+#: ../vdms_dialogs/audiodialogs.py:237
 msgid ""
-"bit depth is the number of bits of information in each\n"
-"sample, and it directly corresponds to the resolution\n"
-"of each sample. Bit depth is only meaningful in reference\n"
-"to a PCM digital signal. Non-PCM formats, such as lossy\n"
-"compression formats, do not have associated bit depths."
+"Bit depth is the number of bits of information in each sample, and it "
+"directly corresponds to the resolution of each sample. Bit depth is only "
+"meaningful in reference to a PCM digital signal. Non-PCM formats, such as "
+"lossy compression formats, do not have associated bit depths."
 msgstr ""
 
 #: ../vdms_dialogs/filter_crop.py:190 ../vdms_dialogs/filter_scale.py:85
