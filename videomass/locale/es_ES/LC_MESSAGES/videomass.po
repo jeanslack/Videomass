@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-02 10:47+0200\n"
-"PO-Revision-Date: 2022-05-02 10:49+0200\n"
+"POT-Creation-Date: 2022-05-03 10:16+0200\n"
+"PO-Revision-Date: 2022-05-03 10:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: j.alberto.vc@gmail.com\n"
 "Language: es\n"
@@ -47,46 +47,40 @@ msgstr ""
 "Videomass soporta canales de audio mono y estéreo. Si no esta seguro elija "
 "\"Auto\" y se copiaran los valores de la fuente."
 
-#: ../vdms_dialogs/audiodialogs.py:223
+#: ../vdms_dialogs/audiodialogs.py:224
 msgid ""
-"The audio Rate (or sample-rate) is the sound sampling\n"
-"frequency and is measured in Hertz. The higher the frequency,\n"
-"the more true it will be to the sound source and the more\n"
-"the file will increase in size. For audio CD playback, set a\n"
-"sampling frequency of 44100 kHz. If you are not sure, set to\n"
+"The audio Rate (or sample-rate) is the sound sampling frequency and is "
+"measured in Hertz. The higher the frequency, the more true it will be to the "
+"sound source and the more the file will increase in size. For audio CD "
+"playback, set a sampling frequency of 44100 kHz. If you are not sure, set to "
 "\"Auto\" and source values will be copied."
 msgstr ""
 "La Frecuencia de audio (o frecuencia de muestreo) es la frecuencia de toma "
-"de  muestras\n"
-"del audio y se mide en Hertz. A mayor frecuencia,\n"
-"la fuente de sonido tendrá mayor fidelidad y  se incrementara\n"
-"el tamaño del archivo. Para calidad  CD , elija una\n"
-"frecuencia de muestreo de 44100 kHz. Si no esta seguro \n"
-"elija \"Auto\" y se copiaran los valores de la fuente."
+"de muestras del audio y se mide en Hertz. A mayor frecuencia, la fuente de "
+"sonido tendrá mayor fidelidad y se incrementara el tamaño del archivo. Para "
+"calidad CD , elija una frecuencia de muestreo de 44100 kHz. Si no esta "
+"seguro elija \"Auto\" y se copiaran los valores de la fuente."
 
-#: ../vdms_dialogs/audiodialogs.py:231
+#: ../vdms_dialogs/audiodialogs.py:233
 msgid ""
-"The audio bitrate affects the file compression\n"
-"and thus the quality of listening. The higher\n"
-"the value, the higher the quality."
+"The audio bitrate affects the file compression and thus the quality of "
+"listening. The higher the value, the higher the quality."
 msgstr ""
-"La frecuencia de bits (bitrate) del audio afecta la\n"
-"compresión y la calidad de audio. Los valores mas altos\n"
-"implican mejor calidad."
+"La frecuencia de bits (bitrate) del audio afecta la compresión y la calidad "
+"de audio. Los valores mas altos implican mejor calidad."
 
-#: ../vdms_dialogs/audiodialogs.py:236
+#: ../vdms_dialogs/audiodialogs.py:237
 msgid ""
-"bit depth is the number of bits of information in each\n"
-"sample, and it directly corresponds to the resolution\n"
-"of each sample. Bit depth is only meaningful in reference\n"
-"to a PCM digital signal. Non-PCM formats, such as lossy\n"
-"compression formats, do not have associated bit depths."
+"Bit depth is the number of bits of information in each sample, and it "
+"directly corresponds to the resolution of each sample. Bit depth is only "
+"meaningful in reference to a PCM digital signal. Non-PCM formats, such as "
+"lossy compression formats, do not have associated bit depths."
 msgstr ""
-"la profundidad de bites el numero de bits de información en\n"
-"cada muestra, y se corresponde directamente a al resolución\n"
-"de cada muestra. La profundidad de bit solo es relevante para\n"
-"señales digitales PCM. Los formatos No-PCM, como los formatos\n"
-"compresos/con perdidas, no tienen asociados una profundidad de bits."
+"La profundidad de bites el numero de bits de información en cada muestra, y "
+"se corresponde directamente a al resolución de cada muestra. La profundidad "
+"de bit solo es relevante para señales digitales PCM. Los formatos No-PCM, "
+"como los formatos compresos/con perdidas, no tienen asociados una "
+"profundidad de bits."
 
 #: ../vdms_dialogs/filter_crop.py:190 ../vdms_dialogs/filter_scale.py:85
 #, python-brace-format
@@ -964,14 +958,8 @@ msgid "Clear the cache when exiting the application"
 msgstr "Limpiar cache al salir de la aplicación"
 
 #: ../vdms_dialogs/preferences.py:94
-#, fuzzy
-#| msgid ""
-#| "Delete the contents of the log files\n"
-#| "when exiting the application"
 msgid "Delete the contents of the log files when exiting the application"
-msgstr ""
-"Borrar archivos de registo\n"
-"al salir de la aplicación"
+msgstr "Borrar archivos de registo al salir de la aplicación"
 
 #: ../vdms_dialogs/preferences.py:99
 msgid "Warn on exit"
@@ -986,14 +974,8 @@ msgid "Where do you prefer to save your transcodes?"
 msgstr "¿Donde prefiere guardar sus resultados?"
 
 #: ../vdms_dialogs/preferences.py:125
-#, fuzzy
-#| msgid ""
-#| "Save each file in the same\n"
-#| "folder as input file"
 msgid "Save each file in the same folder as input file"
-msgstr ""
-"Guardar en la carpeta del\n"
-"archivo de entrada"
+msgstr "Guardar en la carpeta del archivo de entrada"
 
 #: ../vdms_dialogs/preferences.py:130
 msgid "Assign optional suffix to output file names:"
@@ -1009,14 +991,8 @@ msgid "Where do you prefer to save your downloads?"
 msgstr "¿Donde prefiere guardar sus descargas?"
 
 #: ../vdms_dialogs/preferences.py:169
-#, fuzzy
-#| msgid ""
-#| "Auto-create subfolders\n"
-#| "when downloading playlists"
 msgid "Auto-create subfolders when downloading playlists"
-msgstr ""
-"Crear sub carpetas\n"
-"al descargar listas de reproducción"
+msgstr "Crear sub carpetas al descargar listas de reproducción"
 
 #: ../vdms_dialogs/preferences.py:174
 msgid "File Preferences"
