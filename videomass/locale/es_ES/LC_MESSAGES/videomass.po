@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 4.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-03 10:16+0200\n"
-"PO-Revision-Date: 2022-05-03 10:21+0200\n"
+"PO-Revision-Date: 2022-05-06 08:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: j.alberto.vc@gmail.com\n"
 "Language: es\n"
@@ -963,7 +963,7 @@ msgstr "Borrar archivos de registo al salir de la aplicación"
 
 #: ../vdms_dialogs/preferences.py:99
 msgid "Warn on exit"
-msgstr "Esta por salir"
+msgstr "Advertir al salir"
 
 #: ../vdms_dialogs/preferences.py:103
 msgid "Miscellanea"
@@ -985,6 +985,7 @@ msgstr "Asignar un sufijo opcional a los archivos de salida:"
 msgid ""
 "Move source file to the Videomass trash folder after successful encoding"
 msgstr ""
+"Después de conversión exitosa mover archivo fuente a la papelera de Videomass"
 
 #: ../vdms_dialogs/preferences.py:154
 msgid "Where do you prefer to save your downloads?"
@@ -1081,7 +1082,6 @@ msgid "Icon themes"
 msgstr "Temas de iconos"
 
 #: ../vdms_dialogs/preferences.py:366
-#, fuzzy
 #| msgid ""
 #| "setting the icons will also change the background\n"
 #| "and foreground of some text fields."
@@ -1089,8 +1089,8 @@ msgid ""
 "The chosen icon theme will only change the icons,\n"
 "background and foreground of some text fields."
 msgstr ""
-"cambiar los iconos también cambia el fondo y el primer plano\n"
-"de algunos campos de texto."
+"El tema de iconos solo cambia los iconos,\n"
+"fondo y primer plano de algunos campos de texto."
 
 #: ../vdms_dialogs/preferences.py:385
 msgid "Toolbar customization"
@@ -1168,10 +1168,8 @@ msgstr ""
 "guion bajo (\"_\"). No se permiten espacios."
 
 #: ../vdms_dialogs/preferences.py:717
-#, fuzzy
-#| msgid "Choose a temporary destination for conversions"
 msgid "Choose a new destination for the files to be trashed"
-msgstr "Elija un destino temporal para las conversiones"
+msgstr "Elija un destino para la papelera"
 
 #: ../vdms_dialogs/preferences.py:967
 msgid ""
@@ -1783,13 +1781,11 @@ msgstr "¿Seguro que desea salir?"
 
 #: ../vdms_main/main_frame.py:384
 msgid "Open...\tCtrl+O"
-msgstr ""
+msgstr "Abrir...\tCtrl+O"
 
 #: ../vdms_main/main_frame.py:385
-#, fuzzy
-#| msgid "Drag one or more files below"
 msgid "Open one or more files"
-msgstr "Arrastre uno o más archivos abajo"
+msgstr "Abra uno o más archivos"
 
 #: ../vdms_main/main_frame.py:388
 msgid "Conversions folder\tCtrl+C"
@@ -1824,26 +1820,20 @@ msgid "Open the temporary downloads folder"
 msgstr "Abrir carpeta de Descargas temporales"
 
 #: ../vdms_main/main_frame.py:406
-#, fuzzy
-#| msgid "Cache folder"
 msgid "Trash folder"
-msgstr "Carpeta Cache"
+msgstr "Carpeta de la Papelera"
 
 #: ../vdms_main/main_frame.py:407
-#, fuzzy
-#| msgid "Opens the Videomass cache folder, if exists"
 msgid "Open the Videomass Trash folder if it exists"
-msgstr "Si existe, abre la carpeta cache de Videomass"
+msgstr "Si existe, abre la Papelera de Videomass"
 
 #: ../vdms_main/main_frame.py:410
 msgid "Empty Trash"
-msgstr ""
+msgstr "Vaciar Papelera"
 
 #: ../vdms_main/main_frame.py:411
-#, fuzzy
-#| msgid "Delete all files from the list"
 msgid "Delete all files in the Videomass Trash folder"
-msgstr "Borrar todo de la lista"
+msgstr "Borrar todo de la Papelera de Videomass"
 
 #: ../vdms_main/main_frame.py:416
 msgid "Work Notes\tCtrl+N"
@@ -2007,74 +1997,56 @@ msgid "Home panel\tShift+H"
 msgstr "Panel principal\tShift+H"
 
 #: ../vdms_main/main_frame.py:522
-#, fuzzy
-#| msgid "Go to the next panel"
 msgid "Go to the 'Home' panel"
-msgstr "Ir al proximo panel"
+msgstr "Ir al panel Principal"
 
 #: ../vdms_main/main_frame.py:525
-#, fuzzy
-#| msgid "Presets manager\tShift+P"
 msgid "Presets Manager\tShift+P"
 msgstr "Administrador de presets\tShift+P"
 
 #: ../vdms_main/main_frame.py:526
-#, fuzzy
-#| msgid "jump to the Presets Manager panel"
 msgid "Go to the 'Presets Manager' panel"
-msgstr "ir al panel del Administrador de presets"
+msgstr "Ir al panel del Administrador de presets"
 
 #: ../vdms_main/main_frame.py:527
-#, fuzzy
-#| msgid "A/V conversions\tShift+V"
 msgid "A/V Conversions\tShift+V"
 msgstr "Conversiones A/V \tShift+V"
 
 #: ../vdms_main/main_frame.py:528
-#, fuzzy
-#| msgid "jump to the Audio/Video Conversion panel"
 msgid "Go to the 'A/V Conversions' panel"
-msgstr "ir al panel de Conversiones de Audio/Video"
+msgstr "Ir al panel de Conversiones de Audio/Video"
 
 #: ../vdms_main/main_frame.py:530
 msgid "Concatenate Demuxer\tShift+D"
 msgstr "Encadenar Dezmezclador\tShift+D"
 
 #: ../vdms_main/main_frame.py:531
-#, fuzzy
-#| msgid "jump to the Concatenate Demuxer panel"
 msgid "Go to the 'Concatenate Demuxer' panel"
-msgstr "ir al panel de encadenar Dezmezcladores\tShift+D"
+msgstr "Ir al panel 'Encadenar Desmezcladores'"
 
 #: ../vdms_main/main_frame.py:534
 msgid "Still Image Maker\tShift+I"
-msgstr ""
+msgstr "Productor de Imágenes Fijas\tShift+I"
 
 #: ../vdms_main/main_frame.py:535
-#, fuzzy
-#| msgid "jump to the start panel"
 msgid "Go to the 'Still Image Maker' panel"
-msgstr "ir al panel de inicio"
+msgstr "Ir al panel 'Productor de Imágenes Fijas'"
 
 #: ../vdms_main/main_frame.py:537
 msgid "From Movie to Pictures\tShift+S"
-msgstr ""
+msgstr "De Película a Imágenes\tShift+S"
 
 #: ../vdms_main/main_frame.py:538
-#, fuzzy
-#| msgid "jump to the Audio/Video Conversion panel"
 msgid "Go to the 'From Movie to Pictures' panel"
-msgstr "ir al panel de Conversiones de Audio/Video"
+msgstr "Ir al panel 'De Película a Imágenes'"
 
 #: ../vdms_main/main_frame.py:541
 msgid "YouTube downloader\tShift+Y"
 msgstr "YouTube downloader\tShift+Y"
 
 #: ../vdms_main/main_frame.py:542
-#, fuzzy
-#| msgid "jump to the YouTube Downloader panel"
 msgid "Go to the 'YouTube Downloader' panel"
-msgstr "ir añ panel de YouTube Downloader"
+msgstr "Ir al panel 'YouTube Downloader'"
 
 #: ../vdms_main/main_frame.py:546
 msgid "Output Monitor\tShift+O"
@@ -2093,8 +2065,6 @@ msgid "Opens the Videomass configuration folder"
 msgstr "Abrir la carpeta de configuración de Videomass"
 
 #: ../vdms_main/main_frame.py:554
-#, fuzzy
-#| msgid "Logs folder"
 msgid "Log folder"
 msgstr "Carpeta de registros"
 
@@ -2195,28 +2165,21 @@ msgid "Help"
 msgstr "Ayuda"
 
 #: ../vdms_main/main_frame.py:687
-#, fuzzy
-#| msgid "Delete the selected profile"
 msgid "Open the selected files"
-msgstr "Borrar perfil seleccionado"
+msgstr "Abrir archivo seleccionado"
 
 #: ../vdms_main/main_frame.py:738 ../vdms_main/main_frame.py:761
-#, fuzzy
 #| msgid "Logs folder"
 msgid "No such folder '{}'"
-msgstr "Carpeta de registros"
+msgstr "No existe carpeta '{}'"
 
 #: ../vdms_main/main_frame.py:750
-#, fuzzy
-#| msgid "Are you sure you want to exit?"
 msgid "Are you sure to empty trash folder?"
-msgstr "¿Seguro que desea salir?"
+msgstr "¿Seguro que desea vaciar la papelera?"
 
 #: ../vdms_main/main_frame.py:758
-#, fuzzy
-#| msgid "No file selected"
 msgid "No files to delete"
-msgstr "No se ha seleccionado archivo"
+msgstr "No hay archivos a borrar"
 
 #: ../vdms_main/main_frame.py:807
 #, python-brace-format
@@ -2264,16 +2227,12 @@ msgstr ""
 "Se requiere reiniciar la aplicación."
 
 #: ../vdms_main/main_frame.py:872
-#, fuzzy
-#| msgid ""
-#| "Failed! For details consult:\n"
-#| "{}/youtube_dl-update-on-AppImage.log"
 msgid ""
 "Failed! For details consult:\n"
 "{}/AppImage_Updates.log"
 msgstr ""
 "¡Fallo! Para detalles consulte:\n"
-"{}/youtube_dl-update-on-AppImage.log"
+"{}/AppImage_Update.log"
 
 #: ../vdms_main/main_frame.py:877
 msgid "Failed! {}"
@@ -2412,14 +2371,12 @@ msgid "Download"
 msgstr "Descargar"
 
 #: ../vdms_main/main_frame.py:1560
-#, fuzzy
-#| msgid "Invalid URL: \"{}\""
 msgid "ERROR: Invalid URL: \"{}\""
-msgstr "URL invalida: \"{}\""
+msgstr "ERROR: URL invalida: \"{}\""
 
 #: ../vdms_main/main_frame.py:1564
 msgid "ERROR: Some equal URLs found"
-msgstr ""
+msgstr "ERROR: Se encontraron URLs repetidas"
 
 #: ../vdms_main/main_frame.py:1613
 msgid "Videomass - Queued Files"
@@ -2456,16 +2413,12 @@ msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Encadenar Dezmezcladores"
 
 #: ../vdms_main/main_frame.py:1952
-#, fuzzy
-#| msgid "Videomass - Output Monitor"
 msgid "Videomass - From Movie to Pictures"
-msgstr "Videomass - Monitor de Salida"
+msgstr "Videomass -De Película a Imágenes"
 
 #: ../vdms_main/main_frame.py:2014
-#, fuzzy
-#| msgid "Videomass - Presets Manager"
 msgid "Videomass - Still Image Maker"
-msgstr "Videomass - Administrador de Presets"
+msgstr "Videomass -Productor de Imágenes Fijas"
 
 #: ../vdms_main/main_frame.py:2053
 msgid "Viewing last log"
@@ -2617,18 +2570,16 @@ msgid "Audio Properties"
 msgstr "Propiedades de Audio"
 
 #: ../vdms_panels/av_conversions.py:623
-#, fuzzy
-#| msgid "Audio Streams Mapping"
 msgid "Audio Streams Mapping"
 msgstr "Mapeo de Flujos de Audio"
 
 #: ../vdms_panels/av_conversions.py:631
 msgid "Index Selection:"
-msgstr ""
+msgstr "Selecciòn de Indice:"
 
 #: ../vdms_panels/av_conversions.py:642
 msgid "Map:"
-msgstr ""
+msgstr "Mapear:"
 
 #: ../vdms_panels/av_conversions.py:655
 msgid "Audio Filters"
@@ -2636,7 +2587,7 @@ msgstr "Filtros de Audio"
 
 #: ../vdms_panels/av_conversions.py:663
 msgid "Listening"
-msgstr ""
+msgstr "Escuchar"
 
 #: ../vdms_panels/av_conversions.py:668
 msgid "Normalization"
@@ -2794,6 +2745,9 @@ msgid ""
 "video, it is recommended to select a numeric audio index. If the source file "
 "is an audio file, leave this control to \"Auto\"."
 msgstr ""
+"Seleccione un indice de los flujos de  audio disponibles. Si el archivo "
+"fuente es un video, se recomienda seleccionar un indice numérico. Si el "
+"archivo fuente es un audio, deje este  control en \"Auto\"."
 
 #: ../vdms_panels/av_conversions.py:815
 msgid ""
@@ -2802,6 +2756,10 @@ msgid ""
 "properties of the selected index; \"Index only\" processes and keeps only "
 "the selected index audio stream."
 msgstr ""
+"\"Auto\" mantiene yodos los flujos de audio pero solo procesa el indice "
+"seleccionado; \"Todos\" mantiene y procesa todos los flujos de audio con las "
+"propiedades del indice seleccionado; \"Solo el Indice\" procesa y matiene "
+"solo el flujo de audio correspondiente al indice seleccionado."
 
 #: ../vdms_panels/av_conversions.py:821
 msgid ""
@@ -2820,7 +2778,7 @@ msgstr ""
 
 #: ../vdms_panels/av_conversions.py:830
 msgid "Play and listen to the result of audio filters"
-msgstr ""
+msgstr "Reproducir y escuchar el resultado de los filtros de audio"
 
 #: ../vdms_panels/av_conversions.py:1161 ../vdms_panels/av_conversions.py:2075
 msgid ""
@@ -2843,13 +2801,15 @@ msgstr "Se debe seleccionar un archivo destino en la lista de archivos"
 
 #: ../vdms_panels/av_conversions.py:1315
 msgid "Selected index does not exist or does not contain any audio streams"
-msgstr ""
+msgstr "El indice seleccionado no existe o no contiene flujos de audio"
 
 #: ../vdms_panels/av_conversions.py:1320
 msgid ""
 "ERROR: Missing audio stream:\n"
 "\"{}\""
 msgstr ""
+"ERROR: Falta flujo de audio:\n"
+"\"{}\""
 
 #: ../vdms_panels/av_conversions.py:1348
 #: ../vdms_panels/sequence_to_video.py:335
@@ -3105,11 +3065,11 @@ msgstr "YouTube Downloader"
 
 #: ../vdms_panels/choose_topic.py:109
 msgid "Still Image Maker"
-msgstr ""
+msgstr "Productor de Imágenes Fijas"
 
 #: ../vdms_panels/choose_topic.py:114
 msgid "From Movie to Pictures"
-msgstr ""
+msgstr "De Película a Imágenes"
 
 #: ../vdms_panels/choose_topic.py:133
 msgid ""
@@ -3147,10 +3107,13 @@ msgid ""
 "Create video from a sequence of images, based on import order, with the "
 "ability to add an audio file."
 msgstr ""
+"Crear video a partir de una secuencia de imágenes, ordenadas según se "
+"importan, con la posibilidad de añadir un archivo de audio file."
 
 #: ../vdms_panels/choose_topic.py:151
 msgid "Extract images (frames) from your movies in JPG, PNG, BMP, GIF formats."
 msgstr ""
+"Extraer cuadros desde películas  a imágenes  en formatos JPG, PNG, BMP, GIF ."
 
 #: ../vdms_panels/choose_topic.py:226
 msgid "The downloader is disabled. Check your preferences."
@@ -3216,25 +3179,23 @@ msgstr "Para más información, visite la documentación oficial de FFmpeg:"
 
 #: ../vdms_panels/concatenate.py:157
 msgid "From an image sequence to a video file"
-msgstr ""
+msgstr "De una secuencia de imágenes a un archivo de video"
 
 #: ../vdms_panels/concatenate.py:162
-#, fuzzy
-#| msgid "Duration"
 msgid "Duration:"
-msgstr "Duración"
+msgstr "Duración:"
 
 #: ../vdms_panels/concatenate.py:173 ../vdms_panels/video_to_sequence.py:167
-#, fuzzy
-#| msgid "Output Format"
 msgid "Output format:"
-msgstr "Formato de Salida"
+msgstr "Formato de Salida:"
 
 #: ../vdms_panels/concatenate.py:196
 msgid ""
 "Set the time interval between images in seconds (from 1 to 100 sec.), "
 "default is 1 second"
 msgstr ""
+"Fijar intervalo en segundos entre imágenes (from 1 to 100 sec.),  1 es lo "
+"predeterminado"
 
 #: ../vdms_panels/concatenate.py:230
 msgid "At least two files are required to perform concatenation."
@@ -3334,7 +3295,7 @@ msgstr "Editor de Lista de Reproducción"
 
 #: ../vdms_panels/youtubedl_ui.py:301
 msgid "Don’t check SSL certificate"
-msgstr ""
+msgstr "No comprobar certificado SSL"
 
 #: ../vdms_panels/youtubedl_ui.py:305
 msgid "Embed thumbnail in audio file"
@@ -3349,16 +3310,12 @@ msgid "Write subtitles to video"
 msgstr "Escribir subtítulos al video"
 
 #: ../vdms_panels/youtubedl_ui.py:318
-#, fuzzy
-#| msgid "Download all videos in playlist"
 msgid "Download all available subtitles"
-msgstr "Descargar todos los videos en la lista de reproducción"
+msgstr "Descargar todos los subtitulos disponibles"
 
 #: ../vdms_panels/youtubedl_ui.py:326
-#, fuzzy
-#| msgid "Download Audio only"
 msgid "Download subtitles only"
-msgstr "Descargar solo Audio"
+msgstr "Descargar solo subtitulos"
 
 #: ../vdms_panels/youtubedl_ui.py:333
 msgid "Prevent overwriting files"
@@ -3527,20 +3484,16 @@ msgid "Media type"
 msgstr "Tipo de Medio"
 
 #: ../vdms_panels/filedrop.py:247
-#, fuzzy
-#| msgid "Remove the selected file from the list"
 msgid "Remove the selected files from the list"
-msgstr "Eliminar seleccionados de la lista"
+msgstr "Eliminar archivos seleccionados de la lista"
 
 #: ../vdms_panels/filedrop.py:249
 msgid "Delete all files from the list"
 msgstr "Borrar todo de la lista"
 
 #: ../vdms_panels/filedrop.py:252
-#, fuzzy
-#| msgid "Play the selected files in the list"
 msgid "Play the selected file in the list"
-msgstr "Reproduccir seleccionados en la lista"
+msgstr "Reproducir archivo seleccionado en la lista"
 
 #: ../vdms_panels/filedrop.py:253 ../vdms_panels/textdrop.py:85
 msgid "Destination folder"
@@ -3573,7 +3526,7 @@ msgstr "¡Ha fallado la tarea !"
 
 #: ../vdms_panels/long_processing_task.py:109
 msgid "The process was stopped due to a fatal error."
-msgstr ""
+msgstr "Proceso detenido debido a error fatal."
 
 #: ../vdms_panels/long_processing_task.py:110
 msgid "Interrupted Process !"
@@ -3609,17 +3562,17 @@ msgstr "Detener proceso actual"
 
 #: ../vdms_panels/long_processing_task.py:433
 msgid "Fatal Error !"
-msgstr ""
+msgstr "¡Error Fatal !"
 
 #: ../vdms_panels/long_processing_task.py:442
 msgid "Get your files at the destination you specified"
-msgstr ""
+msgstr "Guarde sus archivos en el destino especificado"
 
 #: ../vdms_panels/long_processing_task.py:450
 #: ../vdms_panels/long_processing_task.py:457
 msgid ""
 "Check the current output or read the related log file for more information."
-msgstr ""
+msgstr "Revise la salida actual o el archivo de registro para más información."
 
 #: ../vdms_panels/long_processing_task.py:462
 msgid "...Finished"
@@ -3630,10 +3583,10 @@ msgid ""
 "wait... all operations will be stopped at the end of the download in "
 "progress."
 msgstr ""
+"espere.. se detendrán todas las operaciones al finalizar la descarga en "
+"progreso."
 
 #: ../vdms_panels/long_processing_task.py:490
-#, fuzzy
-#| msgid "wait... I'm aborting"
 msgid "wait... I'm interrupting"
 msgstr "espere.. Abortando"
 
@@ -3712,7 +3665,7 @@ msgstr "Editar"
 #: ../vdms_panels/presets_manager.py:224 ../vdms_panels/presets_manager.py:335
 #: ../vdms_panels/presets_manager.py:359
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplicado"
 
 #: ../vdms_panels/presets_manager.py:234
 msgid "One-Pass"
@@ -4029,18 +3982,22 @@ msgid ""
 "Set the amount of steps the slider moves using 'UP' or 'DOWN' arrow and 'UP' "
 "or 'DOWN' page, to quickly set a more accurate time selection"
 msgstr ""
+"Fijar la cantidad de pazos que usa el deslizante usando las flechas 'Arriba' "
+"o 'Abajo' y 'Re Pag' o 'Av Pag' , para fijar rapidamente el tiempo adecuado"
 
 #: ../vdms_panels/timeline.py:347
-#, fuzzy, python-brace-format
-#| msgid "The maximum time refers to the file with the longest duration"
+#, python-brace-format
 msgid ""
 "The maximum time refers to the file with the longest duration, it will be "
 "set to {0} otherwise."
-msgstr "El tiempo máximo se refiere al del archivo con mayor duración"
+msgstr ""
+"El tiempo máximo se refiere al del archivo con mayor duración, en otro caso "
+"se fijara en {0}."
 
 #: ../vdms_panels/sequence_to_video.py:58
 msgid "Images need to be resized, please use Resizing function."
 msgstr ""
+"Las Imágenes deben redimencionarse, por favor use la función Redimensionar."
 
 #: ../vdms_panels/sequence_to_video.py:75
 msgid ""
@@ -4061,73 +4018,69 @@ msgid ""
 "File' list, which will be saved in a folder named 'Still_Images'\n"
 "with a progressive digit, in the path you specify."
 msgstr ""
+"\n"
+"1. Importar uno o más archivos de imágenes en formato JPG, PNG y BMP , y "
+"seleccione uno.\n"
+"\n"
+"2. Usé la función Redimensionar en las imágenes que tengan altura y anchura "
+"diferentes. En otros casos es opcional.\n"
+"\n"
+"3. Usé el editor de linea de Tiempo  (CTRL+T) para fijar el intervalo de "
+"tiempo entre las imágenes moviendo el deslizante DURATION.\n"
+"\n"
+"4. Inicie la conversión.\n"
+"\n"
+"\n"
+"El video producido tendrá el nombre del archivo seleccionado en la 'Lista de "
+"Archivos' , y sera guardado en una carpeta llamada 'Still_Images'\n"
+"con un digito progresivo, en la trayectoria especificada."
 
 #: ../vdms_panels/sequence_to_video.py:150
-#, fuzzy
-#| msgid "First pass of the selected profile"
 msgid "Enable a single still image"
-msgstr "Primer paso del perfil seleccionado"
+msgstr "Habilitar solo una imagen fija"
 
 #: ../vdms_panels/sequence_to_video.py:182
 msgid ""
 "Force original aspect ratio using\n"
 "padding rather than stretching"
 msgstr ""
+"Forzar la relación de aspecto original usando\n"
+"rellenar en lugar de estirar"
 
 #: ../vdms_panels/sequence_to_video.py:188
 msgid "Include audio file"
-msgstr ""
+msgstr "Incluir archivo de audio"
 
 #: ../vdms_panels/sequence_to_video.py:191
 msgid "Play the video until audio track finishes"
-msgstr ""
+msgstr "Reproducir video hasta que la pista de audio finalice"
 
 #: ../vdms_panels/sequence_to_video.py:198
 #: ../vdms_panels/sequence_to_video.py:423
 msgid "Open audio file"
-msgstr ""
+msgstr "Abrir archivo de audio"
 
 #: ../vdms_panels/sequence_to_video.py:216
 msgid "Additional arguments"
-msgstr ""
+msgstr "Argumentos Adicionales"
 
 #: ../vdms_panels/sequence_to_video.py:436
-#, fuzzy
-#| msgid "Drag one or more files below"
 msgid "Open an audio file"
-msgstr "Arrastre uno o más archivos abajo"
+msgstr "Abrir un archivo de audio"
 
 #: ../vdms_panels/sequence_to_video.py:538
 #: ../vdms_panels/sequence_to_video.py:565
 #: ../vdms_panels/video_to_sequence.py:484
-#, fuzzy
-#| msgid "Invalid URL: \"{}\""
 msgid "Invalid file: '{}'"
-msgstr "URL invalida: \"{}\""
+msgstr "Archivo invalido: \"{}\""
 
 #: ../vdms_panels/sequence_to_video.py:548
 #: ../vdms_panels/sequence_to_video.py:573
-#, fuzzy
 #| msgid "Supported Format List"
 msgid "Unsupported format '{}'"
-msgstr "Lista de formatos soportados"
+msgstr "Formato no soportado '{}'"
 
 #: ../vdms_panels/sequence_to_video.py:680
-#, fuzzy
-#| msgid ""
-#| "SUMMARY\n"
-#| "\n"
-#| "Queued File\n"
-#| "Output Format                        \n"
-#| "Web Optimize\n"
-#| "Audio Codec\n"
-#| "Audio bit-rate                        \n"
-#| "Audio Channels\n"
-#| "Audio Rate\n"
-#| "Bit per Sample                        \n"
-#| "Audio Normalization\n"
-#| "Time Period                        \n"
-#| "Input Audio Map"
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -4146,17 +4099,18 @@ msgid ""
 msgstr ""
 "RESUMEN\n"
 "\n"
-"Archivo Añadido\n"
-"Formato de Salida                       \n"
-"Optimizar para Web\n"
-"Codec de Audio\n"
-"Frec. bits de Audio                         \n"
-"Canales de Audio\n"
-"Taza de Audio\n"
-"Bit por Muestra                         \n"
-"Normalización de Audio\n"
-"Periodo de Tiempo                     \n"
-"Mapa del Audio de Entrada"
+"Archivo a procesar\n"
+"Nombre de archivo de salida\n"
+"Carpeta Destino\n"
+"Formato de Salida\n"
+"Argumentos Adicionales\n"
+"Archivo de Audio\n"
+"Más corto\n"
+"Redimensionar\n"
+"Pre-input\n"
+"Cuadros Por Segundo (FPS)\n"
+"Duración de la imagen fija\n"
+"Duración general del video"
 
 #: ../vdms_panels/video_to_sequence.py:50
 msgid ""
@@ -4175,44 +4129,60 @@ msgid ""
 "a progressive digit, \n"
 "in the path you specify."
 msgstr ""
+"\n"
+"1. Importar uno o más archivos de video , y seleccione uno.\n"
+"\n"
+"2. Usé el editor de linea de Tiempo  (CTRL+T) para fijar el intervalo de "
+"tiempo moviendo los deslizantes DURATION y SEEK.\n"
+"\n"
+"3. Seleccione un formato de salida (jpg, png, bmp).\n"
+"\n"
+"4. Inicie la conversión.\n"
+"\n"
+"\n"
+"Las imágenes producidas serán guardadas en una carpeta llamada "
+"'Movie_to_Pictures'\n"
+"con un digito progresivo, en la trayectoria especificada."
 
 #: ../vdms_panels/video_to_sequence.py:115
 msgid "Other unofficial resources:"
-msgstr ""
+msgstr "Otros recursos no oficiales:"
 
 #: ../vdms_panels/video_to_sequence.py:134
 msgid "Create thumbnails"
-msgstr ""
+msgstr "Crear miniaturas"
 
 #: ../vdms_panels/video_to_sequence.py:135
 msgid "Create tiled mosaics"
-msgstr ""
+msgstr "Crear mosaicos"
 
 #: ../vdms_panels/video_to_sequence.py:136
 msgid "Create animated GIF"
-msgstr ""
+msgstr "Crear GIF animado"
 
 #: ../vdms_panels/video_to_sequence.py:178
 msgid "Rows:"
-msgstr ""
+msgstr "Renglones:"
 
 #: ../vdms_panels/video_to_sequence.py:188
 msgid "Columns:"
-msgstr ""
+msgstr "Columnas:"
 
 #: ../vdms_panels/video_to_sequence.py:234
 msgid ""
 "Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images "
 "will be extracted."
 msgstr ""
+"Fijar el control de FPS, desde 0.1 hasta 30.0 fps. Entre más alto el valor "
+"se extraen más imágenes."
 
 #: ../vdms_panels/video_to_sequence.py:237
 msgid "Spaces around the mosaic tiles. From 0 to 32 pixels"
-msgstr ""
+msgstr "Espacio entre mosaicos. Desde 0 hasta 32 pixels"
 
 #: ../vdms_panels/video_to_sequence.py:239
 msgid "Spaces around the mosaic borders. From 0 to 32 pixels"
-msgstr ""
+msgstr "Espacio entre bordes de mosaicos. Desde 0 hasta 32 pixels"
 
 #: ../vdms_panels/video_to_sequence.py:583
 msgid ""
@@ -4230,6 +4200,19 @@ msgid ""
 "Custom Arguments\n"
 "Time Period"
 msgstr ""
+"RESUMEN\n"
+"\n"
+"Archivo Seleccionado\n"
+"Formato de Salida\n"
+"Carpeta Destino\n"
+"Velocidad (fps)\n"
+"Redimensionar\n"
+"Renglones de Mosaicos\n"
+"Columnas de Mosaicos\n"
+"Rellenado de Mosaicos\n"
+"Margen de Mosaicos\n"
+"Argumentos Personales\n"
+"Periodo de Tiempo"
 
 #: ../vdms_threads/one_pass.py:57 ../vdms_threads/picture_exporting.py:53
 #: ../vdms_threads/two_pass_ebu.py:56 ../vdms_threads/two_pass.py:58
