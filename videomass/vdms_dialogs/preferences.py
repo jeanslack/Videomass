@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.12.2022
+Rev: May.09.2022
 Code checker: pylint, flake8
 ########################################################
 
@@ -26,7 +26,6 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import shutil
 import sys
 import webbrowser
 import wx
@@ -84,7 +83,7 @@ class SetUp(wx.Dialog):
             self.ffplay = 'ffplay'
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        """constructor"""
+
         # ----------------------------set notebook
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         notebook = wx.Notebook(self, wx.ID_ANY, style=0)
@@ -104,6 +103,7 @@ class SetUp(wx.Dialog):
                                       style=wx.CB_DROPDOWN | wx.CB_READONLY
                                       )
         boxlang.Add(self.cmbx_lang, 0, wx.ALL | wx.EXPAND, 5)
+        sizerGen.Add((0, 15))
         self.checkbox_cacheclr = wx.CheckBox(tabOne, wx.ID_ANY, (
                         _("Clear the cache when exiting the application")))
         sizerGen.Add(self.checkbox_cacheclr, 0, wx.ALL, 5)
@@ -248,8 +248,8 @@ class SetUp(wx.Dialog):
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALIGN_CENTER_HORIZONTAL, 5
                        )
-        self.spinctrl_threads = wx.SpinCtrl(tabThree, wx.ID_ANY, "%s" %
-                                            self.appdata['ffthreads'][9:],
+        self.spinctrl_threads = wx.SpinCtrl(tabThree, wx.ID_ANY,
+                                            f"{self.appdata['ffthreads'][9:]}",
                                             size=(-1, -1), min=0, max=32,
                                             style=wx.TE_PROCESS_ENTER
                                             )
@@ -349,7 +349,7 @@ class SetUp(wx.Dialog):
                     self.rdbDownloader.SetSelection(2)
 
                 if self.appdata['PYLIBYDL'] is None:
-                    labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
+                    labydl0.SetLabel(f'{ydlmsg}{tip1}')
                     self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
                 else:
                     self.ydlPath.WriteText(_('Not Installed'))
@@ -365,7 +365,7 @@ class SetUp(wx.Dialog):
                     self.rdbDownloader.SetSelection(2)
 
                 if self.appdata['PYLIBYDL'] is None:
-                    labydl0.SetLabel('%s' % (ydlmsg))
+                    labydl0.SetLabel(f'{ydlmsg}')
                     self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
                 else:
                     self.ydlPath.WriteText(_('Not Installed'))
@@ -983,8 +983,8 @@ class SetUp(wx.Dialog):
         """
         if self.appdata['GETLANG'] in self.appdata['SUPP_LANGs']:
             lang = self.appdata['GETLANG'].split('_')[0]
-            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/%s/2-Startup_and_Setup_%s.pdf' % (lang, lang))
+            page = (f'https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    f'languages/{lang}/2-Startup_and_Setup_{lang}.pdf')
         else:
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
                     'languages/en/2-Startup_and_Setup_en.pdf')
