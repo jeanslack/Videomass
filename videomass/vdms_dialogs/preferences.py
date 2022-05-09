@@ -52,6 +52,14 @@ class SetUp(wx.Dialog):
                      ("verbose (Same as `info`, except more verbose.)"),
                      ("debug (Show everything, including debugging info.)")
                      ]
+    LOCALE_NAMES = {"nl_NL": ("Dutch"),
+                    "en_US": ("English (United States)"),
+                    "it_IT": ("Italian"),
+                    "pt_BR": ("Portuguese (Brazilian)"),
+                    "ru_RU": ("Russian"),
+                    "es_CU": ("Spanish (Cuba)"),
+                    "es_ES": ("Spanish (ES)"),
+                    }
     # -----------------------------------------------------------------
 
     def __init__(self, parent):
@@ -86,6 +94,16 @@ class SetUp(wx.Dialog):
         tabOne = wx.Panel(notebook, wx.ID_ANY)
         sizerGen = wx.BoxSizer(wx.VERTICAL)
         sizerGen.Add((0, 15))
+        boxlang = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
+                                                 _("Application Language"))),
+                                                 wx.VERTICAL)
+        sizerGen.Add(boxlang, 0, wx.ALL | wx.EXPAND, 5)
+        self.cmbx_lang = wx.ComboBox(tabOne, wx.ID_ANY,
+                                      choices=list(SetUp.LOCALE_NAMES.values()),
+                                      size=(-1, -1),
+                                      style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                      )
+        boxlang.Add(self.cmbx_lang, 0, wx.ALL | wx.EXPAND, 5)
         self.checkbox_cacheclr = wx.CheckBox(tabOne, wx.ID_ANY, (
                         _("Clear the cache when exiting the application")))
         sizerGen.Add(self.checkbox_cacheclr, 0, wx.ALL, 5)
@@ -495,6 +513,7 @@ class SetUp(wx.Dialog):
         self.text_suffix.SetToolTip(tip)
 
         # ----------------------Binding (EVT)----------------------#
+        self.Bind(wx.EVT_COMBOBOX, self.on_set_lang, self.cmbx_lang)
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffplay, self.rdbFFplay)
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffmpeg, self.rdbFFmpeg)
         self.Bind(wx.EVT_SPINCTRL, self.on_threads, self.spinctrl_threads)
@@ -531,6 +550,11 @@ class SetUp(wx.Dialog):
         """
         Setting enable/disable in according to the configuration file
         """
+        if self.appdata['locale_name'] is None:
+            lang = SetUp.LOCALE_NAMES[self.appdata['GETLANG']]
+        else:
+            lang = SetUp.LOCALE_NAMES[self.appdata['locale_name']]
+        self.cmbx_lang.SetValue(lang)
         self.cmbx_icons.SetValue(self.appdata['icontheme'][0])
         self.cmbx_iconsSize.SetValue(str(self.appdata['toolbarsize']))
         self.rdbTBpref.SetSelection(self.appdata['toolbarpos'])
@@ -595,6 +619,15 @@ class SetUp(wx.Dialog):
             self.txtctrl_FFpath.Disable()
             if not self.appdata['filesuffix'] == "":
                 self.text_suffix.AppendText(self.appdata['filesuffix'])
+    # --------------------------------------------------------------------#
+
+    def on_set_lang(self, event):
+        """set application language"""
+
+        for key, val in SetUp.LOCALE_NAMES.items():
+            if val == self.cmbx_lang.GetValue():
+                lang = key
+        self.settings['locale_name'] = lang
     # --------------------------------------------------------------------#
 
     def on_threads(self, event):

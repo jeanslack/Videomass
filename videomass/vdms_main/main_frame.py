@@ -338,11 +338,12 @@ class MainFrame(wx.Frame):
             """
             Write last panel size for next start if changed
             """
-            if tuple(self.appdata['panel_size']) != self.GetSize():
-                confmanager = ConfigManager(self.appdata['fileconfpath'])
-                sett = confmanager.read_options()
-                sett['panel_size'] = list(self.GetSize())
-                confmanager.write_options(**sett)
+            confmanager = ConfigManager(self.appdata['fileconfpath'])
+            sett = confmanager.read_options()
+            sett['panel_size'] = list(self.GetSize())
+            if sett['locale_name'] is None:
+                sett['locale_name'] = self.appdata['GETLANG']
+            confmanager.write_options(**sett)
 
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.on_close(self)

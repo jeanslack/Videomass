@@ -131,7 +131,7 @@ class ConfigManager:
         An absolute or relative dirname of some trash folder.
 
     """
-    VERSION = 4.2
+    VERSION = 4.3
     DEFAULT_OPTIONS = {
         "confversion": VERSION,
         "outputfile": f"{os.path.expanduser('~')}",
@@ -158,7 +158,8 @@ class ConfigManager:
         "downloader": False,
         "playlistsubfolder": True,
         "move_file_to_trash": False,
-        "trashfolder": ""
+        "trashfolder": "",
+        "locale_name": None
         }
 
     def __init__(self, filename, relativepath=False):

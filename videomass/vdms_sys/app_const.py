@@ -11,10 +11,11 @@ import wx
 # language domain
 langDomain = "videomass"
 # languages you want to support
-supLang = {"en": wx.LANGUAGE_ENGLISH,
-           "it": wx.LANGUAGE_ITALIAN,
-           "ru": wx.LANGUAGE_RUSSIAN,
-           "nl": wx.LANGUAGE_DUTCH,
-           "pt": wx.LANGUAGE_PORTUGUESE_BRAZILIAN,
-           "es": wx.LANGUAGE_SPANISH,
+supLang = {"en_US": wx.LANGUAGE_ENGLISH_US,
+           "it_IT": wx.LANGUAGE_ITALIAN,
+           "ru_RU": wx.LANGUAGE_RUSSIAN,
+           "nl_NL": wx.LANGUAGE_DUTCH,
+           "pt_BR": wx.LANGUAGE_PORTUGUESE_BRAZILIAN,
+           "es_ES": wx.LANGUAGE_SPANISH,
+           "es_CU": wx.LANGUAGE_SPANISH,
            }
