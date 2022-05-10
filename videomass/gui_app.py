@@ -98,6 +98,7 @@ class Videomass(wx.App):
         wx.Locale.AddCatalogLookupPathPrefix(self.appset['localepath'])
         self.update_language(self.appset['locale_name'])
 
+
         ckydl = self.check_youtube_dl()
         ckffmpeg = self.check_ffmpeg()
         if ckydl is True or ckffmpeg is True:
@@ -208,10 +209,7 @@ class Videomass(wx.App):
 
         """
         # if an unsupported language is requested default to English
-        if lang in appC.supLang:
-            selectlang = appC.supLang[lang]
-        else:
-            selectlang = wx.LANGUAGE_DEFAULT
+        selectlang = appC.supLang.get(lang, wx.LANGUAGE_ENGLISH_US)
 
         if self.locale:
             assert sys.getrefcount(self.locale) <= 2
@@ -219,6 +217,7 @@ class Videomass(wx.App):
 
         # create a locale object for this language
         self.locale = wx.Locale(selectlang)
+
         if self.locale.IsOk():
             self.locale.AddCatalog(appC.langDomain)
             self.appset['GETLANG'] = self.locale.GetName()

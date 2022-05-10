@@ -56,8 +56,7 @@ class SetUp(wx.Dialog):
                     "it_IT": ("Italian"),
                     "pt_BR": ("Portuguese (Brazilian)"),
                     "ru_RU": ("Russian"),
-                    "es_CU": ("Spanish (Cuba)"),
-                    "es_ES": ("Spanish (ES)"),
+                    "es_ES": ("Spanish"),
                     }
     # -----------------------------------------------------------------
 
@@ -550,10 +549,14 @@ class SetUp(wx.Dialog):
         """
         Setting enable/disable in according to the configuration file
         """
+
         if self.appdata['locale_name'] is None:
-            lang = SetUp.LOCALE_NAMES[self.appdata['GETLANG']]
+            lang = SetUp.LOCALE_NAMES["en_US"]
         else:
-            lang = SetUp.LOCALE_NAMES[self.appdata['locale_name']]
+            if self.appdata['locale_name'] in SetUp.LOCALE_NAMES:
+                lang = SetUp.LOCALE_NAMES[self.appdata['locale_name']]
+            else:
+                lang = SetUp.LOCALE_NAMES["en_US"]
         self.cmbx_lang.SetValue(lang)
         self.cmbx_icons.SetValue(self.appdata['icontheme'][0])
         self.cmbx_iconsSize.SetValue(str(self.appdata['toolbarsize']))
