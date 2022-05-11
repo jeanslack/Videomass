@@ -209,7 +209,7 @@ class Videomass(wx.App):
 
         """
         # if an unsupported language is requested default to English
-        selectlang = appC.supLang.get(lang, wx.LANGUAGE_ENGLISH_US)
+        selectlang = appC.supLang.get(lang, wx.LANGUAGE_ENGLISH)
 
         if self.locale:
             assert sys.getrefcount(self.locale) <= 2

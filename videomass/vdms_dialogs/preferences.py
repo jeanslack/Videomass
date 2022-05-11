@@ -32,6 +32,7 @@ import wx
 import wx.lib.agw.hyperlink as hpl
 from videomass.vdms_utils.utils import detect_binaries
 from videomass.vdms_sys.settings_manager import ConfigManager
+from videomass.vdms_sys.app_const import langnames
 
 
 class SetUp(wx.Dialog):
@@ -51,14 +52,6 @@ class SetUp(wx.Dialog):
                      ("verbose (Same as `info`, except more verbose.)"),
                      ("debug (Show everything, including debugging info.)")
                      ]
-    LOCALE_NAMES = {"nl_NL": ("Dutch"),
-                    "en_US": ("English (United States)"),
-                    "it_IT": ("Italian"),
-                    "pt_BR": ("Portuguese (Brazilian)"),
-                    "ru_RU": ("Russian"),
-                    "es_ES": ("Spanish (Spain)"),
-                    "es_MX": ("Spanish (Mexico)"),
-                    }
     # -----------------------------------------------------------------
 
     def __init__(self, parent):
@@ -98,10 +91,10 @@ class SetUp(wx.Dialog):
                                                  wx.VERTICAL)
         sizerGen.Add(boxlang, 0, wx.ALL | wx.EXPAND, 5)
         self.cmbx_lang = wx.ComboBox(tabOne, wx.ID_ANY,
-                                      choices=list(SetUp.LOCALE_NAMES.values()),
-                                      size=(-1, -1),
-                                      style=wx.CB_DROPDOWN | wx.CB_READONLY
-                                      )
+                                     choices=list(langnames.values()),
+                                     size=(-1, -1),
+                                     style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                     )
         boxlang.Add(self.cmbx_lang, 0, wx.ALL | wx.EXPAND, 5)
         sizerGen.Add((0, 15))
         self.checkbox_cacheclr = wx.CheckBox(tabOne, wx.ID_ANY, (
@@ -552,12 +545,12 @@ class SetUp(wx.Dialog):
         """
 
         if self.appdata['locale_name'] is None:
-            lang = SetUp.LOCALE_NAMES["en_US"]
+            lang = langnames["en_US"]
         else:
-            if self.appdata['locale_name'] in SetUp.LOCALE_NAMES:
-                lang = SetUp.LOCALE_NAMES[self.appdata['locale_name']]
+            if self.appdata['locale_name'] in langnames:
+                lang = langnames[self.appdata['locale_name']]
             else:
-                lang = SetUp.LOCALE_NAMES["en_US"]
+                lang = langnames["en_US"]
         self.cmbx_lang.SetValue(lang)
         self.cmbx_icons.SetValue(self.appdata['icontheme'][0])
         self.cmbx_iconsSize.SetValue(str(self.appdata['toolbarsize']))
@@ -628,7 +621,7 @@ class SetUp(wx.Dialog):
     def on_set_lang(self, event):
         """set application language"""
 
-        for key, val in SetUp.LOCALE_NAMES.items():
+        for key, val in langnames.items():
             if val == self.cmbx_lang.GetValue():
                 lang = key
         self.settings['locale_name'] = lang
