@@ -56,7 +56,8 @@ class SetUp(wx.Dialog):
                     "it_IT": ("Italian"),
                     "pt_BR": ("Portuguese (Brazilian)"),
                     "ru_RU": ("Russian"),
-                    "es_ES": ("Spanish"),
+                    "es_ES": ("Spanish (Spain)"),
+                    "es_MX": ("Spanish (Mexico)"),
                     }
     # -----------------------------------------------------------------
 
