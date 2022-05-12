@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.12.2022
+Rev: May.09.2022
 Code checker: pylint, flake8
 ########################################################
 
@@ -26,13 +26,13 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import shutil
 import sys
 import webbrowser
 import wx
 import wx.lib.agw.hyperlink as hpl
 from videomass.vdms_utils.utils import detect_binaries
 from videomass.vdms_sys.settings_manager import ConfigManager
+from videomass.vdms_sys.app_const import langnames
 
 
 class SetUp(wx.Dialog):
@@ -76,7 +76,7 @@ class SetUp(wx.Dialog):
             self.ffplay = 'ffplay'
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        """constructor"""
+
         # ----------------------------set notebook
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         notebook = wx.Notebook(self, wx.ID_ANY, style=0)
@@ -85,6 +85,17 @@ class SetUp(wx.Dialog):
         # -----tab 1
         tabOne = wx.Panel(notebook, wx.ID_ANY)
         sizerGen = wx.BoxSizer(wx.VERTICAL)
+        sizerGen.Add((0, 15))
+        boxlang = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
+                                                 _("Application Language"))),
+                                                 wx.VERTICAL)
+        sizerGen.Add(boxlang, 0, wx.ALL | wx.EXPAND, 5)
+        self.cmbx_lang = wx.ComboBox(tabOne, wx.ID_ANY,
+                                     choices=list(langnames.values()),
+                                     size=(-1, -1),
+                                     style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                     )
+        boxlang.Add(self.cmbx_lang, 0, wx.ALL | wx.EXPAND, 5)
         sizerGen.Add((0, 15))
         self.checkbox_cacheclr = wx.CheckBox(tabOne, wx.ID_ANY, (
                         _("Clear the cache when exiting the application")))
@@ -230,8 +241,8 @@ class SetUp(wx.Dialog):
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALIGN_CENTER_HORIZONTAL, 5
                        )
-        self.spinctrl_threads = wx.SpinCtrl(tabThree, wx.ID_ANY, "%s" %
-                                            self.appdata['ffthreads'][9:],
+        self.spinctrl_threads = wx.SpinCtrl(tabThree, wx.ID_ANY,
+                                            f"{self.appdata['ffthreads'][9:]}",
                                             size=(-1, -1), min=0, max=32,
                                             style=wx.TE_PROCESS_ENTER
                                             )
@@ -331,7 +342,7 @@ class SetUp(wx.Dialog):
                     self.rdbDownloader.SetSelection(2)
 
                 if self.appdata['PYLIBYDL'] is None:
-                    labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
+                    labydl0.SetLabel(f'{ydlmsg}{tip1}')
                     self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
                 else:
                     self.ydlPath.WriteText(_('Not Installed'))
@@ -347,7 +358,7 @@ class SetUp(wx.Dialog):
                     self.rdbDownloader.SetSelection(2)
 
                 if self.appdata['PYLIBYDL'] is None:
-                    labydl0.SetLabel('%s' % (ydlmsg))
+                    labydl0.SetLabel(f'{ydlmsg}')
                     self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
                 else:
                     self.ydlPath.WriteText(_('Not Installed'))
@@ -495,6 +506,7 @@ class SetUp(wx.Dialog):
         self.text_suffix.SetToolTip(tip)
 
         # ----------------------Binding (EVT)----------------------#
+        self.Bind(wx.EVT_COMBOBOX, self.on_set_lang, self.cmbx_lang)
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffplay, self.rdbFFplay)
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffmpeg, self.rdbFFmpeg)
         self.Bind(wx.EVT_SPINCTRL, self.on_threads, self.spinctrl_threads)
@@ -531,6 +543,11 @@ class SetUp(wx.Dialog):
         """
         Setting enable/disable in according to the configuration file
         """
+        if self.appdata['locale_name'] in langnames:
+            lang = langnames[self.appdata['locale_name']]
+        else:
+            lang = langnames["en_US"]
+        self.cmbx_lang.SetValue(lang)
         self.cmbx_icons.SetValue(self.appdata['icontheme'][0])
         self.cmbx_iconsSize.SetValue(str(self.appdata['toolbarsize']))
         self.rdbTBpref.SetSelection(self.appdata['toolbarpos'])
@@ -595,6 +612,15 @@ class SetUp(wx.Dialog):
             self.txtctrl_FFpath.Disable()
             if not self.appdata['filesuffix'] == "":
                 self.text_suffix.AppendText(self.appdata['filesuffix'])
+    # --------------------------------------------------------------------#
+
+    def on_set_lang(self, event):
+        """set application language"""
+
+        for key, val in langnames.items():
+            if val == self.cmbx_lang.GetValue():
+                lang = key
+        self.settings['locale_name'] = lang
     # --------------------------------------------------------------------#
 
     def on_threads(self, event):
@@ -950,8 +976,8 @@ class SetUp(wx.Dialog):
         """
         if self.appdata['GETLANG'] in self.appdata['SUPP_LANGs']:
             lang = self.appdata['GETLANG'].split('_')[0]
-            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/%s/2-Startup_and_Setup_%s.pdf' % (lang, lang))
+            page = (f'https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    f'languages/{lang}/2-Startup_and_Setup_{lang}.pdf')
         else:
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
                     'languages/en/2-Startup_and_Setup_en.pdf')

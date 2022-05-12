@@ -72,8 +72,8 @@ class Videomass(wx.App):
                        # youtube-dl sitepackage/distpackage
                        'GETLANG': None,
                        # short name for the locale
-                       'SUPP_LANGs': ['it_IT', 'en_EN', 'ru_RU'],
-                       # supported help langs
+                       'SUPP_LANGs': ['it_IT', 'en_US', 'ru_RU'],
+                       # supported langs for online help (user guide)
                        }
         self.data = DataSource()  # instance data
         self.appset.update(self.data.get_fileconf())  # data system
@@ -96,8 +96,8 @@ class Videomass(wx.App):
 
         # locale
         wx.Locale.AddCatalogLookupPathPrefix(self.appset['localepath'])
-        self.update_language()
-        self.appset['GETLANG'] = self.locale.GetName()
+        self.update_language(self.appset['locale_name'])
+
 
         ckydl = self.check_youtube_dl()
         ckffmpeg = self.check_ffmpeg()
@@ -209,10 +209,7 @@ class Videomass(wx.App):
 
         """
         # if an unsupported language is requested default to English
-        if lang in appC.supLang:
-            selectlang = appC.supLang[lang]
-        else:
-            selectlang = wx.LANGUAGE_DEFAULT
+        selectlang = appC.supLang.get(lang, wx.LANGUAGE_ENGLISH)
 
         if self.locale:
             assert sys.getrefcount(self.locale) <= 2
@@ -220,10 +217,13 @@ class Videomass(wx.App):
 
         # create a locale object for this language
         self.locale = wx.Locale(selectlang)
+
         if self.locale.IsOk():
             self.locale.AddCatalog(appC.langDomain)
+            self.appset['GETLANG'] = self.locale.GetName()
         else:
             self.locale = None
+            self.appset['GETLANG'] = "en_US"
     # -------------------------------------------------------------------
 
     def OnExit(self):

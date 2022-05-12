@@ -130,8 +130,16 @@ class ConfigManager:
     trashfolder (str):
         An absolute or relative dirname of some trash folder.
 
+    locale_name (str):
+        "Default", set system language to videomass message catalog
+        if available, set to English otherwise.
+        It supports canonical form of locale names as used on UNIX systems,
+        eg. xx or xx_YY format, where xx is ISO 639 code of language and
+        YY is ISO 3166 code of the country. Examples are "en", "en_GB",
+        "en_US" or "fr_FR".
+
     """
-    VERSION = 4.2
+    VERSION = 4.4
     DEFAULT_OPTIONS = {
         "confversion": VERSION,
         "outputfile": f"{os.path.expanduser('~')}",
@@ -158,7 +166,8 @@ class ConfigManager:
         "downloader": False,
         "playlistsubfolder": True,
         "move_file_to_trash": False,
-        "trashfolder": ""
+        "trashfolder": "",
+        "locale_name": "Default"
         }
 
     def __init__(self, filename, relativepath=False):
