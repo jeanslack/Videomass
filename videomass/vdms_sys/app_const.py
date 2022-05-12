@@ -17,7 +17,8 @@ import wx
 # language domain
 langDomain = "videomass"
 # languages you want to support
-supLang = {"nl_NL": wx.LANGUAGE_DUTCH,
+supLang = {"Default": wx.LANGUAGE_DEFAULT,
+           "nl_NL": wx.LANGUAGE_DUTCH,
            "en_US": wx.LANGUAGE_ENGLISH_US,
            "it_IT": wx.LANGUAGE_ITALIAN,
            "pt_BR": wx.LANGUAGE_PORTUGUESE_BRAZILIAN,
@@ -26,11 +27,12 @@ supLang = {"nl_NL": wx.LANGUAGE_DUTCH,
            "es_MX": wx.LANGUAGE_SPANISH_MEXICAN,
            }
 # Make languages available to the preferences dialog
-langnames = {"nl_NL": ("Dutch"),
+langnames = {"Default": ("System default language"),
+             "nl_NL": ("Dutch"),
              "en_US": ("English (United States)"),
              "it_IT": ("Italian"),
              "pt_BR": ("Portuguese (Brazilian)"),
              "ru_RU": ("Russian"),
-             "es_ES": ("Spanish (Spain)"),
+             "es_ES": ("Spanish"),
              "es_MX": ("Spanish (Mexico)"),
              }
