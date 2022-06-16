@@ -84,4 +84,4 @@ Build as AppImage (only Linux)
 Use the 'develop/tools/AppImage_build.sh' script
 
 It will make a Videomass AppImage on current directory by installing the latest
-version on PYPI
+version on PyPi.
