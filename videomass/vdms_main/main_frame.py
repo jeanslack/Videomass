@@ -1350,7 +1350,7 @@ class MainFrame(wx.Frame):
                           f"{version[0]}", wx.ICON_ERROR, self)
             return
 
-        version = version[0].split('v.')[1]
+        version = version[0].split('v')[1]
         newmajor, newminor, newmicro = version.split('.')
         new_version = int(f'{newmajor}{newminor}{newmicro}')
         major, minor, micro = this[2].split('.')
