@@ -7,6 +7,10 @@ URGENCY: to do soon
 
 --------------
 URGENCY: high
+--------------
+On videomass.AppImage youtube-dl/yt-dlp update function does not work on some
+Linux flavors like Manjaro. You will need to use the tools available from
+AppImage to make Videomass updateable
 
 ---------------
 URGENCY: medium
