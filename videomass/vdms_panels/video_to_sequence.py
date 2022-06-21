@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.31.2022
+Rev: June.19.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -32,7 +32,7 @@ import sys
 import wx
 import wx.lib.agw.hyperlink as hpl
 import wx.lib.agw.floatspin as FS
-import wx.lib.scrolledpanel as scrolled
+from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_io.checkup import check_files
@@ -47,6 +47,8 @@ class VideoToSequence(wx.Panel):
     abilities of customization.
     """
     VIOLET = '#D64E93'
+    LGREEN = '#52ee7d'
+    BLACK = '#1f1f1f'
     MSG_1 = _("\n1. Import one or more video files, then select one."
               "\n\n2. To select a slice of time use the Timeline editor "
               "(CTRL+T) by scrolling the DURATION and the SEEK sliders."
@@ -73,64 +75,12 @@ class VideoToSequence(wx.Panel):
 
         wx.Panel.__init__(self, parent=parent)
         sizer = wx.BoxSizer(wx.VERTICAL)
-        panelscroll = scrolled.ScrolledPanel(self, -1, size=(-1, 160),
-                                             style=wx.TAB_TRAVERSAL
-                                             | wx.BORDER_THEME,
-                                             name="panelscr",
-                                             )
-        fgs1 = wx.BoxSizer(wx.VERTICAL)
-        lbl_help = wx.StaticText(panelscroll, wx.ID_ANY,
-                                 label=VideoToSequence.MSG_1
-                                 )
-        fgs1.Add(lbl_help, 0, wx.ALL | wx.EXPAND, 5)
-        sizer_link1 = wx.BoxSizer(wx.HORIZONTAL)
-        fgs1.Add(sizer_link1)
-        lbl_msg1 = wx.StaticText(panelscroll, wx.ID_ANY,
-                                 label=_("For more information, "
-                                         "visit the official FFmpeg "
-                                         "documentation:")
-                                 )
-        link1 = hpl.HyperLinkCtrl(panelscroll, -1, "4.19 image2",
-                                  URL="https://ffmpeg.org/ffmpeg-"
-                                      "formats.html#image2-2"
-                                  )
-        link2 = hpl.HyperLinkCtrl(panelscroll, -1, ("3.3 FFmpeg FAQ"),
-                                  URL="https://ffmpeg.org/faq.html#How-do-I-"
-                                      "encode-movie-to-single-pictures_003f"
-                                  )
-        link3 = hpl.HyperLinkCtrl(panelscroll, -1, ("FFmpeg Wiki"),
-                                  URL="https://trac.ffmpeg.org/wiki/Create%"
-                                      "20a%20thumbnail%20image%20every"
-                                      "%20X%20seconds%20of%20the%20video"
-                                  )
-        sizer_link1.Add(lbl_msg1, 0, wx.ALL | wx.EXPAND, 5)
-        sizer_link1.Add(link1)
-        sizer_link1.Add((20, 20))
-        sizer_link1.Add(link2)
-        sizer_link1.Add((20, 20))
-        sizer_link1.Add(link3)
-        sizer_link2 = wx.BoxSizer(wx.HORIZONTAL)
-        fgs1.Add(sizer_link2)
-        lbl_msg2 = wx.StaticText(panelscroll, wx.ID_ANY,
-                                 label=_("Other unofficial resources:")
-                                 )
-        link4 = hpl.HyperLinkCtrl(panelscroll, -1, ("Help Tile filter"),
-                                  URL="http://underpop.online.fr/f/ffmpeg"
-                                      "/help/tile.htm.gz"
-                                  )
-        link5 = hpl.HyperLinkCtrl(panelscroll, -1, ("High quality gif"),
-                                  URL="http://blog.pkh.me/p/21-high-quality-"
-                                      "gif-with-ffmpeg.html"
-                                  )
-        sizer_link2.Add(lbl_msg2, 0, wx.ALL | wx.EXPAND, 5)
-        sizer_link2.Add(link4)
-        sizer_link2.Add((20, 20))
-        sizer_link2.Add(link5)
-        sizer.Add(panelscroll, 0, wx.ALL | wx.EXPAND, 5)
-        panelscroll.SetSizer(fgs1)
-        panelscroll.SetAutoLayout(1)
-        panelscroll.SetupScrolling()
-        # sizer.Add((20, 20))
+        sizer.Add((20, 20))
+        self.btn_help = wx.Button(self, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btn_help.SetBackgroundColour(wx.Colour(VideoToSequence.LGREEN))
+        self.btn_help.SetForegroundColour(wx.Colour(VideoToSequence.BLACK))
+        sizer.Add(self.btn_help, 0, wx.ALL, 5)
+
         choices = [(_('Create thumbnails')),
                    (_('Create tiled mosaics')),
                    (_('Create animated GIF')),
@@ -220,14 +170,58 @@ class VideoToSequence(wx.Panel):
         self.txt_args = wx.TextCtrl(self, wx.ID_ANY, size=(700, -1),)
         siz_addparams.Add(self.txt_args, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_args.Disable()
+        sizer.Add((20, 20))
+        fgs1 = wx.BoxSizer(wx.VERTICAL)
+        sizer_link1 = wx.BoxSizer(wx.HORIZONTAL)
+        fgs1.Add(sizer_link1)
+        lbl_msg1 = wx.StaticText(self, wx.ID_ANY,
+                                 label=_("For more information, "
+                                         "visit the official FFmpeg "
+                                         "documentation:")
+                                 )
+        link1 = hpl.HyperLinkCtrl(self, -1, "4.19 image2",
+                                  URL="https://ffmpeg.org/ffmpeg-"
+                                      "formats.html#image2-2"
+                                  )
+        link2 = hpl.HyperLinkCtrl(self, -1, ("3.3 FFmpeg FAQ"),
+                                  URL="https://ffmpeg.org/faq.html#How-do-I-"
+                                      "encode-movie-to-single-pictures_003f"
+                                  )
+        link3 = hpl.HyperLinkCtrl(self, -1, ("FFmpeg Wiki"),
+                                  URL="https://trac.ffmpeg.org/wiki/Create%"
+                                      "20a%20thumbnail%20image%20every"
+                                      "%20X%20seconds%20of%20the%20video"
+                                  )
+        sizer_link1.Add(lbl_msg1, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_link1.Add(link1)
+        sizer_link1.Add((20, 20))
+        sizer_link1.Add(link2)
+        sizer_link1.Add((20, 20))
+        sizer_link1.Add(link3)
+        sizer_link2 = wx.BoxSizer(wx.HORIZONTAL)
+        fgs1.Add(sizer_link2)
+        lbl_msg2 = wx.StaticText(self, wx.ID_ANY,
+                                 label=_("Other unofficial resources:")
+                                 )
+        link4 = hpl.HyperLinkCtrl(self, -1, ("Help Tile filter"),
+                                  URL="http://underpop.online.fr/f/ffmpeg"
+                                      "/help/tile.htm.gz"
+                                  )
+        link5 = hpl.HyperLinkCtrl(self, -1, ("High quality gif"),
+                                  URL="http://blog.pkh.me/p/21-high-quality-"
+                                      "gif-with-ffmpeg.html"
+                                  )
+        sizer_link2.Add(lbl_msg2, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_link2.Add(link4)
+        sizer_link2.Add((20, 20))
+        sizer_link2.Add(link5)
+        sizer.Add(fgs1, 0, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer)
 
         if appdata['ostype'] == 'Darwin':
-            lbl_help.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.BOLD))
             lbl_msg1.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             lbl_msg2.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
-            lbl_help.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
             lbl_msg1.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             lbl_msg2.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
@@ -239,9 +233,30 @@ class VideoToSequence(wx.Panel):
         tip = (_('Spaces around the mosaic borders. From 0 to 32 pixels'))
         self.spin_marg.SetToolTip(tip)
 
+        self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_help)
         self.Bind(wx.EVT_CHECKBOX, self.on_edit, self.ckbx_edit)
         self.Bind(wx.EVT_RADIOBOX, self.on_options, self.rdbx_opt)
         self.Bind(wx.EVT_BUTTON, self.on_resizing, self.btn_resize)
+    # --------------------------------------------------------------#
+
+    def on_help(self, event):
+        """
+        event on button help
+        """
+        win = NormalTransientPopup(self,
+                                   wx.SIMPLE_BORDER,
+                                   VideoToSequence.MSG_1,
+                                   VideoToSequence.LGREEN,
+                                   VideoToSequence.BLACK)
+
+        # Show the popup right below or above the button
+        # depending on available screen space...
+        btn = event.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        win.Position(pos, (0, sz[1]))
+
+        win.Popup()
     # ------------------------------------------------------------------#
 
     def on_edit(self, event):
