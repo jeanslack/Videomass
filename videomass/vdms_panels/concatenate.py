@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.24.2022
+Rev: June.23.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
