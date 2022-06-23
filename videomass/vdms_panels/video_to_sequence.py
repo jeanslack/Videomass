@@ -73,14 +73,14 @@ class VideoToSequence(wx.Panel):
         else:
             bmpresize = wx.Bitmap(icons['scale'], wx.BITMAP_TYPE_ANY)
 
-        wx.Panel.__init__(self, parent=parent)
+        wx.Panel.__init__(self, parent=parent, style=wx.BORDER_THEME)
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((20, 20))
         self.btn_help = wx.Button(self, wx.ID_ANY, ("?"), size=(30, -1))
         self.btn_help.SetBackgroundColour(wx.Colour(VideoToSequence.LGREEN))
         self.btn_help.SetForegroundColour(wx.Colour(VideoToSequence.BLACK))
         sizer.Add(self.btn_help, 0, wx.ALL, 5)
-
+        sizer.Add((20, 20))
         choices = [(_('Create thumbnails')),
                    (_('Create tiled mosaics')),
                    (_('Create animated GIF')),
@@ -257,7 +257,7 @@ class VideoToSequence(wx.Panel):
         win.Position(pos, (0, sz[1]))
 
         win.Popup()
-    # ------------------------------------------------------------------#
+    # --------------------------------------------------------------#
 
     def on_edit(self, event):
         """
