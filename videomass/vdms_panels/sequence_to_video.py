@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.28.2022
+Rev: June.23.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -31,7 +31,7 @@ import os
 import sys
 import wx
 import wx.lib.agw.hyperlink as hpl
-import wx.lib.scrolledpanel as scrolled
+from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_dialogs.epilogue import Formula
 from videomass.vdms_dialogs.filter_scale import Scale
@@ -72,6 +72,8 @@ class SequenceToVideo(wx.Panel):
 
     """
     VIOLET = '#D64E93'
+    LGREEN = '#52ee7d'
+    BLACK = '#1f1f1f'
     MSG_1 = _("\n1. Import one or more image files such as JPG, PNG and BMP "
               "formats, then select one."
               "\n\n2. Use the Resizing function to resize images which "
@@ -84,7 +86,7 @@ class SequenceToVideo(wx.Panel):
               "file in the 'Queued File' list, which will be saved in a "
               "folder named 'Still_Images'\nwith a progressive digit, "
               "in the path you specify.")
-    # ----------------------------------------------------------------#
+    # ---------------------------------------------------------------------
 
     def __init__(self, parent, icons):
         """
@@ -109,37 +111,14 @@ class SequenceToVideo(wx.Panel):
             bmpresize = wx.Bitmap(icons['scale'], wx.BITMAP_TYPE_ANY)
             bmpatrack = wx.Bitmap(icons['atrack'], wx.BITMAP_TYPE_ANY)
 
-        wx.Panel.__init__(self, parent=parent)
+        wx.Panel.__init__(self, parent=parent, style=wx.BORDER_THEME)
         sizer = wx.BoxSizer(wx.VERTICAL)
-
-        panelscroll = scrolled.ScrolledPanel(self, -1, size=(-1, 160),
-                                             style=wx.TAB_TRAVERSAL
-                                             | wx.BORDER_THEME,
-                                             name="panelscr",
-                                             )
-        fgs1 = wx.BoxSizer(wx.VERTICAL)
-        lbl_help = wx.StaticText(panelscroll, wx.ID_ANY,
-                                 label=SequenceToVideo.MSG_1)
-        fgs1.Add(lbl_help, 0, wx.ALL | wx.EXPAND, 5)
-
-        sizer_link1 = wx.BoxSizer(wx.HORIZONTAL)
-        fgs1.Add(sizer_link1)
-        lbl_link = wx.StaticText(panelscroll, wx.ID_ANY,
-                                 label=_("For more information, "
-                                         "visit the official FFmpeg "
-                                         "documentation:")
-                                 )
-        link1 = hpl.HyperLinkCtrl(panelscroll, -1, ("FFmpeg Slideshow wiki"),
-                                  URL="https://trac.ffmpeg.org/wiki/Slideshow"
-                                  )
-        sizer_link1.Add(lbl_link, 0, wx.ALL | wx.EXPAND, 5)
-        sizer_link1.Add(link1)
-
-        sizer.Add(panelscroll, 0, wx.ALL | wx.EXPAND, 5)
-
-        panelscroll.SetSizer(fgs1)
-        panelscroll.SetAutoLayout(1)
-        panelscroll.SetupScrolling()
+        sizer.Add((20, 20))
+        self.btn_help = wx.Button(self, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btn_help.SetBackgroundColour(wx.Colour(SequenceToVideo.LGREEN))
+        self.btn_help.SetForegroundColour(wx.Colour(SequenceToVideo.BLACK))
+        sizer.Add(self.btn_help, 0, wx.ALL, 5)
+        sizer.Add((20, 20))
         # sizer.Add((5, 5))
         boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
         sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)
@@ -221,16 +200,29 @@ class SequenceToVideo(wx.Panel):
                                          size=(-1, -1),)
         siz_addparams.Add(self.txt_addparams, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_addparams.Disable()
-
+        sizer.Add((20, 20))
+        fgs1 = wx.BoxSizer(wx.VERTICAL)
+        sizer_link1 = wx.BoxSizer(wx.HORIZONTAL)
+        fgs1.Add(sizer_link1)
+        lbl_link = wx.StaticText(self, wx.ID_ANY,
+                                 label=_("For more information, "
+                                         "visit the official FFmpeg "
+                                         "documentation:")
+                                 )
+        link1 = hpl.HyperLinkCtrl(self, -1, ("FFmpeg Slideshow wiki"),
+                                  URL="https://trac.ffmpeg.org/wiki/Slideshow"
+                                  )
+        sizer_link1.Add(lbl_link, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_link1.Add(link1)
+        sizer.Add(fgs1, 0, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer)
 
         if appdata['ostype'] == 'Darwin':
-            lbl_help.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.BOLD))
             lbl_link.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
-            lbl_help.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
             lbl_link.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
+        self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_help)
         self.Bind(wx.EVT_CHECKBOX, self.on_enable_audio, self.ckbx_audio)
         self.Bind(wx.EVT_BUTTON, self.on_addaudio_track, self.btn_openaudio)
         self.Bind(wx.EVT_CHECKBOX, self.on_shortest, self.ckbx_shortest)
@@ -239,6 +231,26 @@ class SequenceToVideo(wx.Panel):
         self.Bind(wx.EVT_COMBOBOX, self.on_fps, self.cmb_fps)
         self.Bind(wx.EVT_BUTTON, self.on_resizing, self.btn_resize)
     # ---------------------------------------------------------
+
+    def on_help(self, event):
+        """
+        event on button help
+        """
+        win = NormalTransientPopup(self,
+                                   wx.SIMPLE_BORDER,
+                                   SequenceToVideo.MSG_1,
+                                   SequenceToVideo.LGREEN,
+                                   SequenceToVideo.BLACK)
+
+        # Show the popup right below or above the button
+        # depending on available screen space...
+        btn = event.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        win.Position(pos, (0, sz[1]))
+
+        win.Popup()
+    # ------------------------------------------------------------------#
 
     def reset_all_values(self):
         """

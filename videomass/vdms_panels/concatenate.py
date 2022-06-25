@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.24.2022
+Rev: June.23.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -30,6 +30,7 @@ This file is part of Videomass.
 import os
 import wx
 import wx.lib.agw.hyperlink as hpl
+from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_dialogs.epilogue import Formula
 
@@ -75,6 +76,8 @@ class Conc_Demuxer(wx.Panel):
     see <https://ffmpeg.org/ffmpeg-formats.html#concat>
 
     """
+    LGREEN = '#52ee7d'
+    BLACK = '#1f1f1f'
     MSG_1 = _("NOTE:\n\n- The concatenation function is performed only with "
               "Audio files or only with Video files."
               "\n\n- The order of concatenation depends on the order in "
@@ -103,10 +106,53 @@ class Conc_Demuxer(wx.Panel):
         wx.Panel.__init__(self, parent=parent, style=wx.BORDER_THEME)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
-        self.lbl_msg1 = wx.StaticText(self, wx.ID_ANY,
-                                      label=Conc_Demuxer.MSG_1
+        sizer.Add((20, 20))
+        self.btn_help = wx.Button(self, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btn_help.SetBackgroundColour(wx.Colour(Conc_Demuxer.LGREEN))
+        self.btn_help.SetForegroundColour(wx.Colour(Conc_Demuxer.BLACK))
+        sizer.Add(self.btn_help, 0, wx.ALL, 5)
+
+        #line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                              #size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                              #name=wx.StaticLineNameStr
+                              #)
+        #sizer.Add(line1, 0, wx.ALL | wx.EXPAND, 5)
+        sizer.Add((20, 20))
+        boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
+        sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)
+        sizFormat = wx.BoxSizer(wx.HORIZONTAL)
+        boxctrl.Add(sizFormat)
+        siz_pict = wx.BoxSizer(wx.HORIZONTAL)
+        boxctrl.Add(siz_pict)
+        self.ckbx_pict = wx.CheckBox(self, wx.ID_ANY,
+                                     _('From an image sequence '
+                                       'to a video file')
+                                     )
+        siz_pict.Add(self.ckbx_pict, 0, wx.ALL | wx.EXPAND, 5)
+        self.lbl_pict = wx.StaticText(self, wx.ID_ANY,
+                                      label=_("Duration:")
                                       )
-        sizer.Add(self.lbl_msg1, 0, wx.ALL | wx.EXPAND, 5)
+        siz_pict.Add(self.lbl_pict, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.lbl_pict.Disable()
+        self.spin_pict = wx.SpinCtrl(self, wx.ID_ANY, "0", min=1,
+                                     max=100, size=(-1, -1),
+                                     style=wx.TE_PROCESS_ENTER
+                                     )
+        siz_pict.Add(self.spin_pict, 0, wx.ALL, 5)
+        self.spin_pict.Disable()
+        self.lbl_frmt = wx.StaticText(self, wx.ID_ANY,
+                                      label=_("Output format:")
+                                      )
+        siz_pict.Add(self.lbl_frmt, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.lbl_frmt.Disable()
+
+        self.cmb_pict = wx.ComboBox(self, wx.ID_ANY, choices=['mkv', 'mp4'],
+                                    size=(160, -1), style=wx.CB_DROPDOWN |
+                                    wx.CB_READONLY)
+        siz_pict.Add(self.cmb_pict, 0, wx.ALL, 5)
+        self.cmb_pict.SetSelection(0)
+        self.cmb_pict.Disable()
+        sizer.Add((20, 20))
         sizer_link2 = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_link2)
         self.lbl_msg3 = wx.StaticText(self, wx.ID_ANY,
@@ -140,56 +186,12 @@ class Conc_Demuxer(wx.Panel):
                                   )
         sizer_link1.Add(self.lbl_msg2, 0, wx.ALL | wx.EXPAND, 5)
         sizer_link1.Add(link1)
-        line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        sizer.Add(line1, 0, wx.ALL | wx.EXPAND, 5)
-        # sizer.Add((20, 20))
-        boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
-        sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)
-        sizFormat = wx.BoxSizer(wx.HORIZONTAL)
-        boxctrl.Add(sizFormat)
-
-        siz_pict = wx.BoxSizer(wx.HORIZONTAL)
-        boxctrl.Add(siz_pict)
-        self.ckbx_pict = wx.CheckBox(self, wx.ID_ANY,
-                                     _('From an image sequence '
-                                       'to a video file')
-                                     )
-        siz_pict.Add(self.ckbx_pict, 0, wx.ALL | wx.EXPAND, 5)
-        self.lbl_pict = wx.StaticText(self, wx.ID_ANY,
-                                      label=_("Duration:")
-                                      )
-        siz_pict.Add(self.lbl_pict, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.lbl_pict.Disable()
-        self.spin_pict = wx.SpinCtrl(self, wx.ID_ANY, "0", min=1,
-                                     max=100, size=(-1, -1),
-                                     style=wx.TE_PROCESS_ENTER
-                                     )
-        siz_pict.Add(self.spin_pict, 0, wx.ALL, 5)
-        self.spin_pict.Disable()
-        self.lbl_frmt = wx.StaticText(self, wx.ID_ANY,
-                                      label=_("Output format:")
-                                      )
-        siz_pict.Add(self.lbl_frmt, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.lbl_frmt.Disable()
-
-        self.cmb_pict = wx.ComboBox(self, wx.ID_ANY, choices=['mkv', 'mp4'],
-                                    size=(160, -1), style=wx.CB_DROPDOWN |
-                                    wx.CB_READONLY)
-        siz_pict.Add(self.cmb_pict, 0, wx.ALL, 5)
-        self.cmb_pict.SetSelection(0)
-        self.cmb_pict.Disable()
-
         self.SetSizer(sizer)
 
         if appdata['ostype'] == 'Darwin':
-            self.lbl_msg1.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.BOLD))
             self.lbl_msg2.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             self.lbl_msg3.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
-            self.lbl_msg1.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
             self.lbl_msg2.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             self.lbl_msg3.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
@@ -197,7 +199,28 @@ class Conc_Demuxer(wx.Panel):
                  '(from 1 to 100 sec.), default is 1 second'))
         self.spin_pict.SetToolTip(tip)
 
+        self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_help)
         self.Bind(wx.EVT_CHECKBOX, self.on_pictures, self.ckbx_pict)
+    # ---------------------------------------------------------
+
+    def on_help(self, event):
+        """
+        event on button help
+        """
+        win = NormalTransientPopup(self,
+                                   wx.SIMPLE_BORDER,
+                                   Conc_Demuxer.MSG_1,
+                                   Conc_Demuxer.LGREEN,
+                                   Conc_Demuxer.BLACK)
+
+        # Show the popup right below or above the button
+        # depending on available screen space...
+        btn = event.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        win.Position(pos, (0, sz[1]))
+
+        win.Popup()
     # ---------------------------------------------------------
 
     def on_pictures(self, event):
