@@ -1,3 +1,14 @@
+videomass (4.0.2-1) UNRELEASED; urgency=medium
+
+  * Added language selection on preferences dialog.
+  * Fixed check for new Videomass releases according to git API (on previous
+    versions this function may no longer work).
+  * changed permission to 0644 to io.github.jeanslack.videomass.desktop
+  * improved help layout for panels
+  * A/V Conversion: Added vp9/opus for mp4 container #133
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 25 Jun 2022 10:13:00 +0200
+
 videomass (4.0.1-1) UNRELEASED; urgency=medium
 
   * [NEW] added "Still Image Maker" feature.

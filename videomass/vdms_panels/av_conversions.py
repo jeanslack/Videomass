@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.15.2022
+Rev: June.24.2022
 Code checker: flake8, pylint
 ########################################################
 
@@ -76,7 +76,7 @@ class AV_Conv(wx.Panel):
                 "Theora": {"-c:v libtheora": ["ogv"]},
                 # "AV1": {"-c:v libaom-av1 -strict -2",["mkv"]},
                 "Vp8": {"-c:v libvpx": ["webm"]},
-                "Vp9": {"-c:v libvpx-vp9": ["webm"]},
+                "Vp9": {"-c:v libvpx-vp9": ["webm", "mp4"]},
                 "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "flv",
                                        "m4v", "ogv", "webm", "Copy"]}
                 })
@@ -101,7 +101,7 @@ class AV_Conv(wx.Panel):
                   ('flv'): ('default', None, None, 'aac', None, 'ac3', None,
                             'mp3', None, 'copy', 'mute'),
                   ('mp4'): ('default', None, None, 'aac', None, 'ac3', None,
-                            'mp3', None, 'copy', 'mute'),
+                            'mp3', 'opus', 'copy', 'mute'),
                   ('m4v'): ('default', None, None, 'aac', 'alac', None, None,
                             None, None, 'copy', 'mute'),
                   ('mkv'): ('default', 'wav', 'flac', 'aac', None, 'ac3',
