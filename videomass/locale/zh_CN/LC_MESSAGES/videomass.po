@@ -1,0 +1,4388 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-03 10:16+0200\n"
+"PO-Revision-Date: 2022-06-29 16:09+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.1\n"
+
+#: ../gui_app.py:176
+msgid ""
+"Permission denied: {}\n"
+"\n"
+"Check execution permissions."
+msgstr ""
+"没有权限：{}\n"
+"\n"
+"检查执行权限。"
+
+#: ../gui_app.py:255
+#, fuzzy, python-brace-format
+msgid ""
+"Unexpected error while deleting file contents:\n"
+"\n"
+"{0}"
+msgstr ""
+"Unexpected error while deleting file contents:\n"
+"\n"
+"{0}"
+
+#: ../vdms_dialogs/audiodialogs.py:220
+msgid ""
+"Videomass supports mono and stereo audio channels. If you are not sure set "
+"to \"Auto\" and source values will be copied."
+msgstr ""
+"Videomass 支持单声道和立体声音频通道。如果你不确定设置为 \"自动\"，源值将被复"
+"制。"
+
+#: ../vdms_dialogs/audiodialogs.py:224
+#, fuzzy
+msgid ""
+"The audio Rate (or sample-rate) is the sound sampling frequency and is "
+"measured in Hertz. The higher the frequency, the more true it will be to the "
+"sound source and the more the file will increase in size. For audio CD "
+"playback, set a sampling frequency of 44100 kHz. If you are not sure, set to "
+"\"Auto\" and source values will be copied."
+msgstr ""
+"音频速率（或采样率）是声音的采样频率，以赫兹为单位。频率越高，就越能真实反映"
+"声源，文件的大小也会增加。对于音频CD的播放，设置采样频率为44100kHz。如果你不"
+"确定，设置为 \"自动\"，声源值将被复制。"
+
+#: ../vdms_dialogs/audiodialogs.py:233
+#, fuzzy
+msgid ""
+"The audio bitrate affects the file compression and thus the quality of "
+"listening. The higher the value, the higher the quality."
+msgstr "音频比特率影响文件的压缩，从而影响收听质量。该值越高，质量就越高。"
+
+#: ../vdms_dialogs/audiodialogs.py:237
+#, fuzzy
+msgid ""
+"Bit depth is the number of bits of information in each sample, and it "
+"directly corresponds to the resolution of each sample. Bit depth is only "
+"meaningful in reference to a PCM digital signal. Non-PCM formats, such as "
+"lossy compression formats, do not have associated bit depths."
+msgstr ""
+"位深是指每个样本的信息位数，它直接对应于每个样本的分辨率。比特深度只有在参考"
+"PCM数字信号时才有意义。非PCM格式，如有损压缩格式，没有相关的比特深度。"
+
+#: ../vdms_dialogs/filter_crop.py:190 ../vdms_dialogs/filter_scale.py:85
+#, fuzzy, python-brace-format
+msgid "Source size: {0} x {1} pixels"
+msgstr "源尺寸：{0}×{1}像素"
+
+#: ../vdms_dialogs/filter_crop.py:194
+#, fuzzy
+msgid "Search for a specific frame"
+msgstr "搜索一个特定的框架"
+
+#: ../vdms_dialogs/filter_crop.py:205
+msgid "Load"
+msgstr "加载"
+
+#: ../vdms_dialogs/filter_crop.py:208
+msgid "Cropping area selection "
+msgstr "裁剪区的选择 "
+
+#: ../vdms_dialogs/filter_crop.py:213 ../vdms_dialogs/filter_scale.py:105
+msgid "Height"
+msgstr "高度"
+
+#: ../vdms_dialogs/filter_crop.py:233
+msgid "Center"
+msgstr "中心"
+
+#: ../vdms_dialogs/filter_crop.py:244 ../vdms_dialogs/filter_scale.py:105
+msgid "Width"
+msgstr "宽度"
+
+#: ../vdms_dialogs/filter_crop.py:258 ../vdms_dialogs/filter_deinterlace.py:122
+#: ../vdms_dialogs/filter_denoisers.py:86 ../vdms_dialogs/filter_scale.py:186
+#: ../vdms_dialogs/filter_stab.py:260 ../vdms_dialogs/filter_transpose.py:110
+#: ../vdms_dialogs/playlist_indexing.py:122
+#: ../vdms_panels/av_conversions.py:539
+msgid "Reset"
+msgstr "复位"
+
+#: ../vdms_dialogs/filter_crop.py:262 ../vdms_dialogs/filter_deinterlace.py:121
+#: ../vdms_dialogs/filter_denoisers.py:85 ../vdms_dialogs/filter_scale.py:184
+#: ../vdms_dialogs/filter_stab.py:258 ../vdms_dialogs/filter_transpose.py:114
+#: ../vdms_dialogs/playlist_indexing.py:126
+#: ../vdms_dialogs/set_timestamp.py:149
+msgid "Apply"
+msgstr "应用"
+
+#: ../vdms_dialogs/filter_crop.py:277
+msgid "Crop Filter"
+msgstr "裁剪过滤器"
+
+#: ../vdms_dialogs/filter_crop.py:278
+msgid "Crop to width"
+msgstr "裁剪的宽度"
+
+#: ../vdms_dialogs/filter_crop.py:279
+#, fuzzy
+msgid "Move vertically - set to -1 to center the vertical axis"
+msgstr "纵向移动--设置为-1以使纵轴居中"
+
+#: ../vdms_dialogs/filter_crop.py:281
+#, fuzzy
+msgid "Move horizontally - set to -1 to center the horizontal axis"
+msgstr "水平移动--设置为-1，使水平轴居中。"
+
+#: ../vdms_dialogs/filter_crop.py:283
+msgid "Crop to height"
+msgstr "裁剪的高度"
+
+#: ../vdms_dialogs/filter_deinterlace.py:57
+msgid "Advanced Options"
+msgstr "高级选项"
+
+#: ../vdms_dialogs/filter_deinterlace.py:59
+msgid "Deinterlace"
+msgstr "去交错"
+
+#: ../vdms_dialogs/filter_deinterlace.py:61
+#, fuzzy
+msgid "Interlace"
+msgstr "隔行如隔山"
+
+#: ../vdms_dialogs/filter_deinterlace.py:64
+#, fuzzy
+msgid "Deinterlaces with w3fdif filter"
+msgstr "用w3fdif过滤器去隔行扫描"
+
+#: ../vdms_dialogs/filter_deinterlace.py:78
+#, fuzzy
+msgid "Deinterlaces with yadif filter"
+msgstr "用Yadif滤波器去隔行扫描"
+
+#: ../vdms_dialogs/filter_deinterlace.py:102
+#, fuzzy
+msgid "Interlaces with interlace filter"
+msgstr "带隔行扫描的隔行扫描过滤器"
+
+#: ../vdms_dialogs/filter_deinterlace.py:125
+#, fuzzy
+msgid "Deinterlacing and Interlacing"
+msgstr "去隔行扫描和隔行扫描"
+
+#: ../vdms_dialogs/filter_deinterlace.py:199
+#, fuzzy
+msgid "Deinterlace the input video with `w3fdif` filter"
+msgstr "用`w3fdif`过滤器对输入视频进行去交错处理。"
+
+#: ../vdms_dialogs/filter_deinterlace.py:201
+#, fuzzy
+msgid "Set the interlacing filter coefficients."
+msgstr "设置隔行扫描的系数。"
+
+#: ../vdms_dialogs/filter_deinterlace.py:203
+#: ../vdms_dialogs/filter_deinterlace.py:213
+#, fuzzy
+msgid "Specify which frames to deinterlace."
+msgstr "指定哪些帧要去交错。"
+
+#: ../vdms_dialogs/filter_deinterlace.py:205
+#, fuzzy
+msgid ""
+"Deinterlace the input video with `yadif` filter. Using FFmpeg, this is the "
+"best and fastest choice"
+msgstr ""
+"用 \"yadif \"过滤器对输入视频进行去交错处理。使用FFmpeg，这是最好和最快的选"
+"择。"
+
+#: ../vdms_dialogs/filter_deinterlace.py:208
+#, fuzzy
+msgid ""
+"mode\n"
+"The interlacing mode to adopt."
+msgstr ""
+"mode/n\n"
+"要采用的隔行扫描模式。"
+
+#: ../vdms_dialogs/filter_deinterlace.py:210
+#, fuzzy
+msgid ""
+"parity\n"
+"The picture field parity assumed for the input interlaced video."
+msgstr ""
+"奇偶校验\n"
+"为输入隔行扫描视频假定的画场奇偶校验。"
+
+#: ../vdms_dialogs/filter_deinterlace.py:215
+#, fuzzy
+msgid "Simple interlacing filter from progressive contents."
+msgstr "来自逐行内容的简单隔行扫描。"
+
+#: ../vdms_dialogs/filter_deinterlace.py:217
+#, fuzzy
+msgid ""
+"scan:\n"
+"determines whether the interlaced frame is taken from the even (tff - "
+"default) or odd (bff) lines of the progressive frame."
+msgstr ""
+"scan:/n\n"
+"决定隔行扫描帧是取自逐行帧的偶数行（tff - 默认）还是奇数行（bff）。"
+
+#: ../vdms_dialogs/filter_deinterlace.py:221
+msgid ""
+"lowpass:\n"
+"Enable (default) or disable the vertical lowpass filter to avoid twitter "
+"interlacing and reduce moire patterns.\n"
+"Default is no setting."
+msgstr ""
+"lowpass:\n"
+"启用（默认）或禁用垂直低通滤波器，以避免twitter交错，减少摩尔纹。\n"
+"默认为无设置。"
+
+#: ../vdms_dialogs/filter_denoisers.py:58
+#, fuzzy
+msgid "Apply Denoisers Filters"
+msgstr "应用变性剂过滤器"
+
+#: ../vdms_dialogs/filter_denoisers.py:61
+#, fuzzy
+msgid "Enable nlmeans denoiser"
+msgstr "启用nlmeans去噪器"
+
+#: ../vdms_dialogs/filter_denoisers.py:68
+#, fuzzy
+msgid "nlmeans options"
+msgstr "nlmeans选项"
+
+#: ../vdms_dialogs/filter_denoisers.py:73
+#, fuzzy
+msgid "Enable hqdn3d denoiser"
+msgstr "启用hqdn3d去噪器"
+
+#: ../vdms_dialogs/filter_denoisers.py:78
+msgid "hqdn3d options"
+msgstr "hqdn3d选项"
+
+#: ../vdms_dialogs/filter_denoisers.py:128
+msgid "Denoiser filters"
+msgstr "去噪器过滤器"
+
+#: ../vdms_dialogs/filter_denoisers.py:129
+#, fuzzy
+msgid ""
+"nlmeans:\n"
+"Denoise frames using Non-Local Means algorithm is capable of restoring video "
+"sequences, even with strong noise. It is ideal for enhancing the quality of "
+"old VHS tapes."
+msgstr ""
+"nlmeans:n\n"
+"使用非本地平均数算法的去噪帧能够恢复视频序列，即使有强烈的噪声。它是提高旧VHS"
+"录像带质量的理想选择。"
+
+#: ../vdms_dialogs/filter_denoisers.py:134
+#, fuzzy
+msgid ""
+"hqdn3d:\n"
+"This is a high precision/quality 3d denoise filter. It aims to reduce image "
+"noise, producing smooth images and making still images really still. It "
+"should enhance compressibility."
+msgstr ""
+"hqdn3d:n\n"
+"这是一个高精度/高质量的三维去噪滤波器。它的目的是减少图像噪音，产生平滑的图"
+"像，使静止的图像真正静止。它应该增强可压缩性。"
+
+#: ../vdms_dialogs/filter_scale.py:60
+#, fuzzy
+msgid "New size in pixels"
+msgstr "新的尺寸，以像素为单位"
+
+#: ../vdms_dialogs/filter_scale.py:65
+msgid "Width:"
+msgstr "宽度："
+
+#: ../vdms_dialogs/filter_scale.py:75
+msgid "Height:"
+msgstr "高度："
+
+#: ../vdms_dialogs/filter_scale.py:90
+#, fuzzy
+msgid ""
+"If you want to keep the aspect ratio, select \"Constrain proportions\" below "
+"and\n"
+"specify only one dimension, either width or height, and set the other "
+"dimension\n"
+"to -1 or -2 (some codecs require -2, so you should do some testing first)."
+msgstr ""
+"如果你想保持长宽比，请选择下面的 \"限制比例\"，并且\n"
+"只指定一个维度，无论是宽度还是高度，并将另一个维度\n"
+"为-1或-2（有些编解码器需要-2，所以你应该先做一些测试）。"
+
+#: ../vdms_dialogs/filter_scale.py:99
+msgid "Constrain proportions (keep aspect ratio)"
+msgstr "限制比例（保持长宽比）"
+
+#: ../vdms_dialogs/filter_scale.py:104
+msgid "Which dimension to adjust?"
+msgstr "要调整哪个尺寸？"
+
+#: ../vdms_dialogs/filter_scale.py:114 ../vdms_panels/av_conversions.py:342
+msgid "Aspect Ratio"
+msgstr "屏幕高宽比"
+
+#: ../vdms_dialogs/filter_scale.py:116
+#, fuzzy
+msgid "Setdar filter (display aspect ratio) example 16/9, 4/3 "
+msgstr "Setdar过滤器（显示长宽比）示例16/9，4/3 "
+
+#: ../vdms_dialogs/filter_scale.py:121 ../vdms_dialogs/filter_scale.py:151
+#, fuzzy
+msgid "Numerator"
+msgstr "分子"
+
+#: ../vdms_dialogs/filter_scale.py:142 ../vdms_dialogs/filter_scale.py:172
+#, fuzzy
+msgid "Denominator"
+msgstr "分母"
+
+#: ../vdms_dialogs/filter_scale.py:146
+#, fuzzy
+msgid "Setsar filter (sample aspect ratio) example 1/1"
+msgstr "Setar滤波器（样本长宽比）示例1/1"
+
+#: ../vdms_dialogs/filter_scale.py:196
+#, fuzzy
+msgid "Resizing filters"
+msgstr "调整过滤器的大小"
+
+#: ../vdms_dialogs/filter_scale.py:197
+#, fuzzy
+msgid "Scale filter, set to 0 to disable"
+msgstr "刻度过滤器，设置为0表示禁用"
+
+#: ../vdms_dialogs/filter_scale.py:200
+msgid "Display Aspect Ratio. Set to 0 to disable"
+msgstr "显示长宽比。设置为0以禁用"
+
+#: ../vdms_dialogs/filter_scale.py:203
+#, fuzzy
+msgid ""
+"Sample (aka Pixel) Aspect Ratio.\n"
+"Set to 0 to disable"
+msgstr ""
+"Sample (aka Pixel) Aspect Ratio./n\n"
+"设置为0以禁用"
+
+#: ../vdms_dialogs/filter_stab.py:65
+#, fuzzy
+msgid "Enable stabilizer"
+msgstr "启用稳定器"
+
+#: ../vdms_dialogs/filter_stab.py:68
+#, fuzzy
+msgid "Generates duo video for comparison"
+msgstr "生成二重奏视频进行比较"
+
+#: ../vdms_dialogs/filter_stab.py:72
+msgid "Video Detect"
+msgstr "视频检测"
+
+#: ../vdms_dialogs/filter_stab.py:128
+#, fuzzy
+msgid "[TRIPOD] Enable tripod mode if checked"
+msgstr "[TRIPOD] 启用三脚架模式（如果选中）。"
+
+#: ../vdms_dialogs/filter_stab.py:136
+msgid "Video transform"
+msgstr "视频转换"
+
+#: ../vdms_dialogs/filter_stab.py:152
+#, fuzzy
+msgid "[OPTALGO] optimization algorithm"
+msgstr "[OPTALGO]优化算法"
+
+#: ../vdms_dialogs/filter_stab.py:172
+#, fuzzy
+msgid "[CROP] Specify how to deal with borders at movement compensation"
+msgstr "[CROP] 指定如何处理运动补偿时的边界问题"
+
+#: ../vdms_dialogs/filter_stab.py:179
+#, fuzzy
+msgid "[INVERT] Invert transforms if checked"
+msgstr "[INVERT] 如果勾选，则反转变换。"
+
+#: ../vdms_dialogs/filter_stab.py:182
+#, fuzzy
+msgid ""
+"[RELATIVE] Consider transforms as relative to previous frame if checked, "
+"absolute if unchecked"
+msgstr ""
+"[RELATIVE] 如果勾选，则认为变换是相对于前一帧的，如果不勾选，则认为是绝对的。"
+
+#: ../vdms_dialogs/filter_stab.py:223
+#, fuzzy
+msgid "Specify type of interpolation"
+msgstr "指定插值的类型"
+
+#: ../vdms_dialogs/filter_stab.py:231
+#, fuzzy
+msgid ""
+"[TRIPOD2] virtual tripod mode, equivalent to relative=unchecked:smoothing=0"
+msgstr "[TRIPOD2]虚拟三脚架模式，相当于相对=未选中：平滑=0"
+
+#: ../vdms_dialogs/filter_stab.py:238
+#, fuzzy
+msgid "Unsharp filter:"
+msgstr "非正弦波滤波器。"
+
+#: ../vdms_dialogs/filter_stab.py:273
+#, fuzzy
+msgid ""
+"Set how shaky the video is and how quick the camera is. A value of 1 means "
+"little shakiness, a value of 10 means strong shakiness. Default value is 5."
+msgstr ""
+"设置视频的抖动程度和摄像机的速度。1的值意味着小的晃动，10的值意味着强的晃动。"
+"默认值为5。"
+
+#: ../vdms_dialogs/filter_stab.py:277
+#, fuzzy
+msgid ""
+"Set the accuracy of the detection process. A value of 1 means low accuracy, "
+"a value of 15 means high accuracy. Default value is 15."
+msgstr ""
+"设置检测过程的准确性。值为1意味着低精确度，值为15意味着高精确度。默认值为15。"
+
+#: ../vdms_dialogs/filter_stab.py:281
+#, fuzzy
+msgid ""
+"Set stepsize of the search process. The region around minimum is scanned "
+"with 1 pixel resolution. Default value is 6."
+msgstr ""
+"设置搜索过程的步长。最小值周围的区域以1像素的分辨率进行扫描。默认值是6。"
+
+#: ../vdms_dialogs/filter_stab.py:285
+#, fuzzy
+msgid ""
+"Set minimum contrast. Below this value a local measurement field is "
+"discarded. The range is 0-1. Default value is 0.25."
+msgstr ""
+"设置最小对比度。低于此值的局部测量场会被丢弃。范围是0-1。默认值是0.25。"
+
+#: ../vdms_dialogs/filter_stab.py:288
+#, fuzzy
+msgid ""
+"Set reference frame number for tripod mode. If enabled, the motion of the "
+"frames is compared to a reference frame in the filtered stream, identified "
+"by the specified number. The idea is to compensate all movements in a more-"
+"or-less static scene and keep the camera view absolutely still. The frames "
+"are counted starting from 1."
+msgstr ""
+"为三脚架模式设置参考帧号。如果启用，帧的运动将与过滤后的数据流中的参考帧进行"
+"比较，由指定的编号识别。这样做的目的是补偿或多或少静态场景中的所有运动，并保"
+"持摄像机视角绝对静止。帧数从1开始计算。"
+
+#: ../vdms_dialogs/filter_stab.py:297
+#, fuzzy
+msgid ""
+"Set the number of frames (value*2 + 1) used for lowpass filtering the camera "
+"movements. Default value is 15. For example a number of 10 means that 21 "
+"frames are used (10 in the past and 10 in the future) to smoothen the motion "
+"in the video. A larger value leads to a smoother video, but limits the "
+"acceleration of the camera (pan/tilt movements). 0 is a special case where a "
+"static camera is simulated."
+msgstr ""
+"设置用于对摄像机运动进行低通滤波的帧数（值*2+1）。默认值是15。例如，一个10的"
+"数字意味着使用21个帧（过去10个，未来10个）来平滑视频中的运动。更大的数值会导"
+"致更平滑的视频，但会限制摄像机的加速度（摇摄/倾斜运动）。0是一个模拟静态摄像"
+"机的特殊情况。"
+
+#: ../vdms_dialogs/filter_stab.py:305
+#, fuzzy
+msgid ""
+"Set the camera path optimization algorithm. Values are: `gauss`: gaussian "
+"kernel low-pass filter on camera motion (default), and `avg`: averaging on "
+"transformations"
+msgstr ""
+"设置摄像机路径优化算法。其值为。`gauss`：摄像机运动的高斯核低通滤波器（默"
+"认），和`avg`：变换的平均数。"
+
+#: ../vdms_dialogs/filter_stab.py:309
+#, fuzzy
+msgid ""
+"Set maximal angle in radians (degree*PI/180) to rotate frames. Default value "
+"is -1, meaning no limit."
+msgstr ""
+"设置旋转帧的最大角度，单位是弧度（度数*PI/180）。默认值是-1，意味着没有限制。"
+
+#: ../vdms_dialogs/filter_stab.py:312
+#, fuzzy
+msgid ""
+"Specify how to deal with borders that may be visible due to movement "
+"compensation. Values are: `keep` keep image information from previous frame "
+"(default), `black` fill the border black"
+msgstr ""
+"指定如何处理由于移动补偿而可能出现的边界。数值是。`keep`保留前一帧的图像信息"
+"（默认），`black`将边界填充为黑色"
+
+#: ../vdms_dialogs/filter_stab.py:317
+#, fuzzy
+msgid "Invert transforms if checked. Default is unchecked."
+msgstr "如果勾选，则反转变换。默认情况是不勾选。"
+
+#: ../vdms_dialogs/filter_stab.py:319
+#, fuzzy
+msgid ""
+"Consider transforms as relative to previous frame if checked, absolute if "
+"unchecked. Default is checked."
+msgstr ""
+"如果勾选，则认为变换是相对于前一帧的，如果不勾选，则认为是绝对的。默认为选"
+"中。"
+
+#: ../vdms_dialogs/filter_stab.py:322
+#, fuzzy
+msgid ""
+"Set percentage to zoom. A positive value will result in a zoom-in effect, a "
+"negative value in a zoom-out effect. Default value is 0 (no zoom)."
+msgstr ""
+"设置缩放的百分比。正值将导致放大的效果，负值将导致缩小的效果。默认值是0（无缩"
+"放）。"
+
+#: ../vdms_dialogs/filter_stab.py:326
+#, fuzzy
+msgid ""
+"Set optimal zooming to avoid borders. Accepted values are: `0` disabled, `1` "
+"optimal static zoom value is determined (only very strong movements will "
+"lead to visible borders) (default), `2` optimal adaptive zoom value is "
+"determined (no borders will be visible), see zoomspeed. Note that the value "
+"given at zoom is added to the one calculated here."
+msgstr ""
+"设置最佳缩放以避免边界。可接受的值是。`0`禁用，`1`确定最佳的静态缩放值（只有"
+"非常强烈的移动才会导致可见的边界）（默认），`2`确定最佳的自适应缩放值（没有边"
+"界可见），见缩放速度。注意，在缩放时给出的值会加到这里的计算值上。"
+
+#: ../vdms_dialogs/filter_stab.py:333
+#, fuzzy
+msgid ""
+"Set percent to zoom maximally each frame (enabled when optzoom is set to 2). "
+"Range is from 0 to 5, default value is 0.25."
+msgstr ""
+"设置每一帧最大缩放的百分比（当optzoom被设置为2时启用）。范围从0到5，默认值是"
+"0.25。"
+
+#: ../vdms_dialogs/filter_stab.py:337
+#, fuzzy
+msgid ""
+"Specify type of interpolation. Available values are: `no` no interpolation, "
+"`linear` linear only horizontal, `bilinear` linear in both directions "
+"(default), `bicubic` cubic in both directions (slow)"
+msgstr ""
+"指定插值的类型。可用的值是。`no`不插值，`linear`只有水平方向的线性，"
+"`bilinear`两个方向的线性（默认），`bicubic`两个方向的立方（缓慢）。"
+
+#: ../vdms_dialogs/filter_stab.py:342
+#, fuzzy
+msgid ""
+"Enable virtual tripod mode if checked, which is equivalent to relative=0:"
+"smoothing=0. Default is unchecked. Use also tripod option of vidstabdetect."
+msgstr ""
+"如果勾选，则启用虚拟三脚架模式，这相当于相对=0:平滑=0。 默认为未勾选。也可以"
+"使用vidstabdetect的三脚架选项。"
+
+#: ../vdms_dialogs/filter_stab.py:347
+#, fuzzy
+msgid ""
+"Sharpen or blur the input video. Note the use of the unsharp filter which is "
+"always recommended."
+msgstr "对输入视频进行锐化或模糊处理。注意使用非锐化滤镜，这一点一直被推荐。"
+
+#: ../vdms_dialogs/filter_stab.py:352
+#, fuzzy
+msgid "Video stabilizer filter"
+msgstr "视频稳定器过滤器"
+
+#: ../vdms_dialogs/filter_transpose.py:84
+#: ../vdms_dialogs/filter_transpose.py:286
+msgid "Default position"
+msgstr "默认位置"
+
+#: ../vdms_dialogs/filter_transpose.py:89
+msgid "Load Frame"
+msgstr "Load Frame"
+
+#: ../vdms_dialogs/filter_transpose.py:91
+msgid "Rotation setting"
+msgstr "旋转设置"
+
+#: ../vdms_dialogs/filter_transpose.py:99
+msgid "90° (left)"
+msgstr "90° (左)"
+
+#: ../vdms_dialogs/filter_transpose.py:101
+msgid "90° (right)"
+msgstr "90°（右）"
+
+#: ../vdms_dialogs/filter_transpose.py:105
+msgid "180°"
+msgstr "180°"
+
+#: ../vdms_dialogs/filter_transpose.py:119
+#, fuzzy
+msgid "Transpose Filter"
+msgstr "移调滤波器"
+
+#: ../vdms_dialogs/filter_transpose.py:222
+msgid "Rotate 90 degrees right"
+msgstr "向右旋转90度"
+
+#: ../vdms_dialogs/filter_transpose.py:244
+msgid "Rotate 180 degrees"
+msgstr "旋转180度"
+
+#: ../vdms_dialogs/filter_transpose.py:265
+msgid "Rotate 90 degrees left"
+msgstr "向左旋转90度"
+
+#: ../vdms_dialogs/wizard_dlg.py:60
+msgid "Please take a moment to set up the application"
+msgstr "请花一点时间来设置应用程序"
+
+#: ../vdms_dialogs/wizard_dlg.py:61
+msgid "Click the \"Next\" button to get started"
+msgstr "点击 \"下一步 \"按钮，开始工作。"
+
+#: ../vdms_dialogs/wizard_dlg.py:76
+msgid "Welcome to the Videomass Wizard!"
+msgstr "欢迎来到 Videomass 向导!"
+
+#: ../vdms_dialogs/wizard_dlg.py:118
+msgid "Videomass is an application based on FFmpeg\n"
+msgstr "Videomass 是一个基于 FFmpeg 的应用程序。\n"
+
+#: ../vdms_dialogs/wizard_dlg.py:120
+msgid "If FFmpeg is not on your computer, this application will be unusable"
+msgstr "如果你的电脑上没有FFmpeg，这个应用程序将无法使用"
+
+#: ../vdms_dialogs/wizard_dlg.py:123
+msgid ""
+"If you have already installed FFmpeg on your operating\n"
+"system, click the \"Auto-detection\" button."
+msgstr ""
+"如果在你的操作系统中\n"
+"已经安装了FFmpeg，请点击 \"自动检测 \"按钮。"
+
+#: ../vdms_dialogs/wizard_dlg.py:126
+msgid ""
+"If you want to use a version of FFmpeg located on your\n"
+"filesystem but not installed on your operating system,\n"
+"click the \"Locate\" button."
+msgstr ""
+"如果你想使用一个位于你的文件系统上的FFmpeg版本，但没有安装在你的操作系统"
+"上。\n"
+"文件系统上，但没有安装在您的操作系统上，请\n"
+"点击 \"定位 \"按钮。"
+
+#: ../vdms_dialogs/wizard_dlg.py:148
+msgid "Auto-detection"
+msgstr "自动侦测"
+
+#: ../vdms_dialogs/wizard_dlg.py:150
+msgid "Locate"
+msgstr "定位"
+
+#: ../vdms_dialogs/wizard_dlg.py:201
+msgid "Click the \"Next\" button"
+msgstr "点击 \"下一步 \"按钮"
+
+#: ../vdms_dialogs/wizard_dlg.py:222
+msgid ""
+"'{}' is not installed on your computer. Install it or indicate another "
+"location by clicking the 'Locate' button."
+msgstr "你的电脑上没有安装'{}'。安装它或通过点击'定位'按钮指出其他位置。"
+
+#: ../vdms_dialogs/wizard_dlg.py:236
+#, fuzzy
+msgid ""
+"Videomass already seems to include FFmpeg.\n"
+"\n"
+"Do you want to use that?"
+msgstr ""
+"Videomass似乎已经包括了FFmpeg。\n"
+"\n"
+"你想用这个吗？"
+
+#: ../vdms_dialogs/wizard_dlg.py:238
+msgid "Videomass: Please Confirm"
+msgstr "Videomass：请确认"
+
+#: ../vdms_dialogs/wizard_dlg.py:262
+msgid "Locating FFmpeg executables\n"
+msgstr "定位FFmpeg可执行文件\n"
+
+#: ../vdms_dialogs/wizard_dlg.py:264
+msgid ""
+"\"ffmpeg\", \"ffprobe\" and \"ffplay\" are required. Complete all\n"
+"the text boxes below by clicking on the respective buttons."
+msgstr ""
+"\"ffmpeg\"、\"ffprobe \"和 \"ffplay \"是必需的。完成所有\n"
+"下面的文本框，点击相应的按钮。"
+
+#: ../vdms_dialogs/wizard_dlg.py:346 ../vdms_dialogs/wizard_dlg.py:363
+#: ../vdms_dialogs/wizard_dlg.py:381 ../vdms_dialogs/preferences.py:775
+#: ../vdms_dialogs/preferences.py:817 ../vdms_dialogs/preferences.py:860
+msgid "Choose the {} executable"
+msgstr "选择{}可执行文件"
+
+#: ../vdms_dialogs/wizard_dlg.py:404
+msgid ""
+"Videomass has a simple graphical\n"
+"interface for youtube-dl and yt-dlp\n"
+msgstr ""
+"Videomass有一个简单的graphical界面，用于YouTube-DL和YT-Dlp\n"
+"\n"
+
+#: ../vdms_dialogs/wizard_dlg.py:407
+#, fuzzy
+msgid ""
+"This feature allows you to download video and audio from\n"
+"many sites, including YouTube.com and even Facebook."
+msgstr ""
+"这项功能允许你从许多网站下载视频和音频。\n"
+"许多网站，包括YouTube.com和甚至Facebook。"
+
+#: ../vdms_dialogs/wizard_dlg.py:426
+msgid " Do you want to enable this feature?"
+msgstr " 你想启用这个功能吗？"
+
+#: ../vdms_dialogs/wizard_dlg.py:429 ../vdms_dialogs/preferences.py:278
+msgid "Downloader preferences"
+msgstr "下载器偏好"
+
+#: ../vdms_dialogs/wizard_dlg.py:485
+msgid "Wizard completed successfully!\n"
+msgstr ""
+"向导已成功完成!\n"
+"\n"
+
+#: ../vdms_dialogs/wizard_dlg.py:486
+#, fuzzy
+msgid ""
+"Remember that you can always change these settings later, through the Setup "
+"dialog."
+msgstr "记住，你可以在以后通过设置对话框随时改变这些设置。"
+
+#: ../vdms_dialogs/wizard_dlg.py:488
+msgid "Thank You!"
+msgstr "谢谢你!"
+
+#: ../vdms_dialogs/wizard_dlg.py:489
+#, fuzzy
+msgid "To exit click the \"Finish\" button"
+msgstr "要退出，请点击 \"完成 \"按钮"
+
+#: ../vdms_dialogs/wizard_dlg.py:579
+#, fuzzy
+msgid "< Previous"
+msgstr "< 上一页"
+
+#: ../vdms_dialogs/wizard_dlg.py:582 ../vdms_dialogs/wizard_dlg.py:682
+#, fuzzy
+msgid "Next >"
+msgstr "下一篇>>"
+
+#: ../vdms_dialogs/wizard_dlg.py:587
+msgid "Videomass Wizard"
+msgstr "Videomass 向导"
+
+#: ../vdms_dialogs/wizard_dlg.py:616 ../vdms_dialogs/wizard_dlg.py:652
+msgid "Finish"
+msgstr "完成"
+
+#: ../vdms_dialogs/wizard_dlg.py:644
+#, fuzzy
+msgid "Some text boxes are still incomplete"
+msgstr "一些文本框仍然不完整"
+
+#: ../vdms_dialogs/wizard_dlg.py:714
+msgid "Re-start is required"
+msgstr "需要重新启动"
+
+#: ../vdms_dialogs/wizard_dlg.py:715
+msgid "Done!"
+msgstr "完成了!"
+
+#: ../vdms_dialogs/infoprg.py:63
+#, fuzzy
+msgid "Cross-platform graphical interface for FFmpeg and youtube-dl.\n"
+msgstr ""
+"用于FFmpeg和youtube-dl.n的跨平台图形界面。\n"
+"\n"
+
+#: ../vdms_dialogs/playlist_indexing.py:51 ../vdms_dialogs/ydl_mediainfo.py:70
+msgid "URL"
+msgstr "URL"
+
+#: ../vdms_dialogs/playlist_indexing.py:52
+#, fuzzy
+msgid "Playlist Items"
+msgstr "播放列表项目"
+
+#: ../vdms_dialogs/playlist_indexing.py:66
+#, fuzzy
+msgid ""
+"Click on \"Playlist Items\" column to specify indices of the videos in the "
+"playlist separated by commas like: \"1,2,5,8\" if you want to download "
+"videos indexed 1, 2, 5, 8 in the playlist.\n"
+"\n"
+"You can specify range: \"1-3,7,10-13\" it will download the videos at index "
+"1, 2, 3, 7, 10, 11, 12 and 13.\n"
+msgstr ""
+"点击 \"播放列表项目 \"一栏，指定播放列表中的视频索引，用逗号隔开，比"
+"如。\"1,2,5,8\"，如果你想下载播放列表中1、2、5、8的视频索引。\n"
+"\n"
+"您可以指定范围。\"1-3,7,10-13\" 它将下载索引为1、2、3、7、10、11、12和13的视"
+"频。\n"
+"\n"
+
+#: ../vdms_dialogs/playlist_indexing.py:102
+msgid "Playlist video items to download"
+msgstr "下载播放列表中的视频项目"
+
+#: ../vdms_dialogs/playlist_indexing.py:111 ../vdms_panels/youtubedl_ui.py:367
+msgid "Help viewer"
+msgstr "帮助查看器"
+
+#: ../vdms_dialogs/playlist_indexing.py:216
+msgid "ERROR: Invalid option"
+msgstr "ERROR: 无效选项"
+
+#: ../vdms_dialogs/playlist_indexing.py:217
+msgid "please try again."
+msgstr "请再试一次。"
+
+#: ../vdms_dialogs/playlist_indexing.py:218
+#, fuzzy
+msgid "OK: Indexes to download"
+msgstr "确定：要下载的索引"
+
+#: ../vdms_dialogs/playlist_indexing.py:247
+#, fuzzy
+msgid ""
+"WARNING: The selected URL does not refer to a playlist. Only lines marked "
+"green can be indexed."
+msgstr "警告：所选的URL并不是指一个播放列表。只有标记为绿色的行可以被索引。"
+
+#: ../vdms_dialogs/presets_addnew.py:40
+#, fuzzy
+msgid ""
+"One-Pass, Do not start with `ffmpeg -i filename`; do not end with `output-"
+"filename`"
+msgstr ""
+"一次性通过，不要以`ffmpeg -i filename`开始；不要以`output-filename`结束。"
+
+#: ../vdms_dialogs/presets_addnew.py:44
+#, fuzzy
+msgid ""
+"Two-Pass (optional), Do not start with `ffmpeg -i filename`; do not end with "
+"`output-filename`"
+msgstr ""
+"两次通过（可选），不要以`ffmpeg -i filename`开始；不要以`output-filename`结"
+"束。"
+
+#: ../vdms_dialogs/presets_addnew.py:48
+msgid "Supported Formats list (optional). Do not include the `.`"
+msgstr "支持的格式列表（可选）。不要包括\".\""
+
+#: ../vdms_dialogs/presets_addnew.py:49
+msgid "Output Format. Empty to copy format and codec. Do not include the `.`"
+msgstr "输出格式。清空以复制格式和编解码器。不要包括\".\""
+
+#: ../vdms_dialogs/presets_addnew.py:76
+msgid "Profile Name"
+msgstr "配置文件名称"
+
+#: ../vdms_dialogs/presets_addnew.py:82 ../vdms_panels/presets_manager.py:392
+msgid "Description"
+msgstr "描述"
+
+#: ../vdms_dialogs/presets_addnew.py:134
+msgid "Save.."
+msgstr "保存.."
+
+#: ../vdms_dialogs/presets_addnew.py:157
+#, fuzzy
+msgid "A short profile name"
+msgstr "一个简短的个人资料名称"
+
+#: ../vdms_dialogs/presets_addnew.py:158
+#, fuzzy
+msgid "A long description of the profile"
+msgstr "对简介的长篇描述"
+
+#: ../vdms_dialogs/presets_addnew.py:159
+#, fuzzy
+msgid "Reserved arguments for the first pass"
+msgstr "为第一遍保留的参数"
+
+#: ../vdms_dialogs/presets_addnew.py:160
+#, fuzzy
+msgid "Reserved arguments for the second pass"
+msgstr "为第二通道保留参数"
+
+#: ../vdms_dialogs/presets_addnew.py:161
+#, fuzzy
+msgid "One or more comma-separated format names to include in the profile"
+msgstr "一个或多个逗号分隔的格式名称，以包括在简介中。"
+
+#: ../vdms_dialogs/presets_addnew.py:163
+msgid "Output format extension. Leave empty to copy codec and format"
+msgstr "输出格式的扩展名。留空以复制编解码器和格式"
+
+#: ../vdms_dialogs/presets_addnew.py:262
+#, fuzzy
+msgid "Incomplete profile assignments"
+msgstr "不完整的个人资料分配"
+
+#: ../vdms_dialogs/presets_addnew.py:269
+msgid "Formats must be comma-separated"
+msgstr "格式必须是以逗号分隔的"
+
+#: ../vdms_dialogs/presets_addnew.py:283 ../vdms_dialogs/presets_addnew.py:300
+msgid "Profile already stored with same name"
+msgstr "已有相同名称的配置文件"
+
+#: ../vdms_dialogs/presets_addnew.py:287
+msgid "Successful storing!"
+msgstr "储存成功!"
+
+#: ../vdms_dialogs/presets_addnew.py:303
+msgid "Successful changes!"
+msgstr "成功更改!"
+
+#: ../vdms_dialogs/set_timestamp.py:88
+msgid "Font Size"
+msgstr "字体大小"
+
+#: ../vdms_dialogs/set_timestamp.py:112
+msgid "Font Color"
+msgstr "字体颜色"
+
+#: ../vdms_dialogs/set_timestamp.py:122
+msgid "Shadow Color"
+msgstr "阴影颜色"
+
+#: ../vdms_dialogs/set_timestamp.py:133
+msgid "Show text box"
+msgstr "显示文本框"
+
+#: ../vdms_dialogs/set_timestamp.py:137
+#, fuzzy
+msgid "Box Color"
+msgstr "箱体颜色"
+
+#: ../vdms_dialogs/set_timestamp.py:157
+#, fuzzy
+msgid ""
+"The timestamp size does not auto-adjust to the video size, you have to set "
+"the size here"
+msgstr "时间戳的大小不会根据视频的大小自动调整，你必须在这里设置大小。"
+
+#: ../vdms_dialogs/set_timestamp.py:161
+#, fuzzy
+msgid "Timestamp settings"
+msgstr "时间戳设置"
+
+#: ../vdms_dialogs/preferences.py:90
+msgid "Clear the cache when exiting the application"
+msgstr "退出应用程序时清除缓存"
+
+#: ../vdms_dialogs/preferences.py:94
+msgid "Delete the contents of the log files when exiting the application"
+msgstr "退出应用程序时删除日志文件的内容"
+
+#: ../vdms_dialogs/preferences.py:99
+msgid "Warn on exit"
+msgstr "退出时发出警告"
+
+#: ../vdms_dialogs/preferences.py:103
+msgid "Miscellanea"
+msgstr "杂项"
+
+#: ../vdms_dialogs/preferences.py:109
+msgid "Where do you prefer to save your transcodes?"
+msgstr "你喜欢在哪里保存你的转码？"
+
+#: ../vdms_dialogs/preferences.py:125
+msgid "Save each file in the same folder as input file"
+msgstr "将每个文件保存在与输入文件相同的文件夹中"
+
+#: ../vdms_dialogs/preferences.py:130
+msgid "Assign optional suffix to output file names:"
+msgstr "为输出文件名指定可选的后缀："
+
+#: ../vdms_dialogs/preferences.py:137
+msgid ""
+"Move source file to the Videomass trash folder after successful encoding"
+msgstr "编码成功后将源文件移至Videomass垃圾文件夹"
+
+#: ../vdms_dialogs/preferences.py:154
+msgid "Where do you prefer to save your downloads?"
+msgstr "你喜欢在哪里保存你的下载？"
+
+#: ../vdms_dialogs/preferences.py:169
+msgid "Auto-create subfolders when downloading playlists"
+msgstr "下载播放列表时自动创建子文件夹"
+
+#: ../vdms_dialogs/preferences.py:174
+msgid "File Preferences"
+msgstr "文件首选项"
+
+#: ../vdms_dialogs/preferences.py:181
+msgid "Path to the executables"
+msgstr "可执行文件的路径"
+
+#: ../vdms_dialogs/preferences.py:185
+msgid "Enable another location to run FFmpeg"
+msgstr "启用另一个位置来运行FFmpeg"
+
+#: ../vdms_dialogs/preferences.py:197
+msgid "Enable another location to run FFprobe"
+msgstr "启用另一个位置来运行FFprobe"
+
+#: ../vdms_dialogs/preferences.py:209
+msgid "Enable another location to run FFplay"
+msgstr "启用另一个位置来运行FFplay"
+
+#: ../vdms_dialogs/preferences.py:220
+msgid "Other options"
+msgstr "其他选择"
+
+#: ../vdms_dialogs/preferences.py:226
+msgid "Threads used for transcoding (from 0 to 32):"
+msgstr "用于转码的线程（从0到32）："
+
+#: ../vdms_dialogs/preferences.py:244
+msgid "FFmpeg"
+msgstr "FFmpeg"
+
+#: ../vdms_dialogs/preferences.py:256
+msgid "How to upgrade a Python package"
+msgstr "如何升级一个Python软件包"
+
+#: ../vdms_dialogs/preferences.py:263
+#, fuzzy
+msgid ""
+"Required: Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package "
+"(x86)"
+msgstr ""
+"需要。Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package (x86)"
+
+#: ../vdms_dialogs/preferences.py:272
+msgid "How to install pip on your Linux distribution"
+msgstr "如何在你的Linux发行版上安装pip"
+
+#: ../vdms_dialogs/preferences.py:289
+msgid "Current path:"
+msgstr "当前路径："
+
+#: ../vdms_dialogs/preferences.py:297
+#, fuzzy
+msgid ""
+"Make sure you are using the latest available version of\n"
+"'{}'. This allows you to avoid download problems.\n"
+msgstr ""
+"请确保你使用的是最新的可用版本的\n"
+"'{}'. 这可以让你避免下载问题。\n"
+"\n"
+
+#: ../vdms_dialogs/preferences.py:305 ../vdms_dialogs/preferences.py:325
+#: ../vdms_dialogs/preferences.py:341 ../vdms_frames/ffmpeg_conf.py:217
+#: ../vdms_panels/av_conversions.py:2506
+#: ../vdms_panels/sequence_to_video.py:671
+#: ../vdms_panels/video_to_sequence.py:567
+msgid "Disabled"
+msgstr "禁用"
+
+#: ../vdms_dialogs/preferences.py:316
+msgid "Not found"
+msgstr "未找到"
+
+#: ../vdms_dialogs/preferences.py:320
+msgid "Menu bar > Tools > Update {}"
+msgstr "菜单栏 > 工具 > 更新 {}。"
+
+#: ../vdms_dialogs/preferences.py:337 ../vdms_dialogs/preferences.py:353
+msgid "Not Installed"
+msgstr "未安装"
+
+#: ../vdms_dialogs/preferences.py:358
+msgid "Downloader"
+msgstr "下载器"
+
+#: ../vdms_dialogs/preferences.py:364
+msgid "Icon themes"
+msgstr "图标主题"
+
+#: ../vdms_dialogs/preferences.py:366
+#, fuzzy
+msgid ""
+"The chosen icon theme will only change the icons,\n"
+"background and foreground of some text fields."
+msgstr ""
+"所选择的图标主题将只改变图标，以及一些文本字段的背景和前景。\n"
+"一些文本字段的背景和前景。"
+
+#: ../vdms_dialogs/preferences.py:385
+msgid "Toolbar customization"
+msgstr "工具栏定制"
+
+#: ../vdms_dialogs/preferences.py:387
+msgid "At the top of window (default)"
+msgstr "在窗口的顶部（默认）"
+
+#: ../vdms_dialogs/preferences.py:388
+msgid "At the bottom of window"
+msgstr "在窗口的底部"
+
+#: ../vdms_dialogs/preferences.py:389
+msgid "At the right of window"
+msgstr "在窗口的右边"
+
+#: ../vdms_dialogs/preferences.py:390
+msgid "At the left of window"
+msgstr "在窗口的左边"
+
+#: ../vdms_dialogs/preferences.py:392
+#, fuzzy
+msgid "Place the toolbar"
+msgstr "放置工具栏"
+
+#: ../vdms_dialogs/preferences.py:402
+msgid "Icon size:"
+msgstr "图标大小："
+
+#: ../vdms_dialogs/preferences.py:417
+#, fuzzy
+msgid "Shows the text in the toolbar buttons"
+msgstr "显示工具条按钮中的文字"
+
+#: ../vdms_dialogs/preferences.py:421
+#, fuzzy
+msgid "Appearance"
+msgstr "外观"
+
+#: ../vdms_dialogs/preferences.py:428
+#, fuzzy
+msgid ""
+"The following settings affect output messages and\n"
+"the log messages during transcoding processes.\n"
+"Change only if you know what you are doing.\n"
+msgstr ""
+"以下设置会影响输出信息和\n"
+"转码过程中的日志信息。\n"
+"Only change if you know what you are doing.（只有在你知道你在做什么的情况下才"
+"可以更改。\n"
+"\n"
+
+#: ../vdms_dialogs/preferences.py:449
+msgid "FFmpeg logging levels"
+msgstr "FFmpeg日志级别"
+
+#: ../vdms_dialogs/preferences.py:469 ../vdms_main/main_frame.py:585
+#: ../vdms_panels/av_conversions.py:609
+msgid "Settings"
+msgstr "设置"
+
+#: ../vdms_dialogs/preferences.py:493
+#, fuzzy
+msgid "By assigning an additional suffix you could avoid overwriting files"
+msgstr "通过指定一个额外的后缀，你可以避免重写文件"
+
+#: ../vdms_dialogs/preferences.py:609
+#, fuzzy
+msgid "Set a persistent location to save the file downloads"
+msgstr "设置一个持久的位置来保存文件下载"
+
+#: ../vdms_dialogs/preferences.py:632
+#, fuzzy
+msgid "Set a persistent location to save exported files"
+msgstr "设置一个持久的位置来保存导出的文件"
+
+#: ../vdms_dialogs/preferences.py:664
+#, fuzzy
+msgid ""
+"Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
+"the underscore (\"_\"). Spaces are not allowed."
+msgstr ""
+"只输入字母数字字符。你也可以使用连字符（\"-\"）和下划线（\"_\"）。不允许有空"
+"格。"
+
+#: ../vdms_dialogs/preferences.py:717
+#, fuzzy
+msgid "Choose a new destination for the files to be trashed"
+msgstr "为要销毁的文件选择一个新的目的地"
+
+#: ../vdms_dialogs/preferences.py:967
+msgid ""
+"Changes will take effect once the program has been restarted.\n"
+"\n"
+"Do you want to exit the application now?"
+msgstr ""
+"一旦程序被重新启动，更改就会生效。\n"
+"\n"
+"你想现在退出程序吗？"
+
+#: ../vdms_dialogs/preferences.py:970 ../vdms_main/main_frame.py:353
+msgid "Exit"
+msgstr "退出"
+
+#: ../vdms_dialogs/videomass_check_version.py:64
+msgid "Get Latest Version"
+msgstr "获取最新版本"
+
+#: ../vdms_dialogs/videomass_check_version.py:68
+msgid "Checking for newer version"
+msgstr "检查更新的版本"
+
+#: ../vdms_dialogs/videomass_check_version.py:96
+msgid ""
+"\n"
+"\n"
+"New releases fix bugs and offer new features."
+msgstr ""
+"\n"
+"\n"
+"新版本修复了错误并提供了新的功能。"
+
+#: ../vdms_dialogs/videomass_check_version.py:97
+#, python-brace-format
+msgid ""
+"\n"
+"\n"
+"This is Videomass v.{0}\n"
+"\n"
+msgstr ""
+"\n"
+"\n"
+"This is Videomass v.{0}\n"
+"\n"
+
+#: ../vdms_dialogs/ydl_mediainfo.py:66
+#, fuzzy
+msgid "Statistics viewer"
+msgstr "统计数据查看器"
+
+#: ../vdms_dialogs/ydl_mediainfo.py:69
+#, fuzzy
+msgid "TITLE SELECTION"
+msgstr "标题选择"
+
+#: ../vdms_dialogs/mediainfo.py:45
+#, fuzzy
+msgid "Display of selected items in text format"
+msgstr "以文本格式显示所选项目"
+
+#: ../vdms_dialogs/mediainfo.py:46
+#, fuzzy
+msgid "Select items to view them in text format"
+msgstr "选择项目，以文本格式查看它们"
+
+#: ../vdms_dialogs/mediainfo.py:84
+msgid "Data Format"
+msgstr "数据格式"
+
+#: ../vdms_dialogs/mediainfo.py:106
+msgid "Video Stream"
+msgstr "视频流"
+
+#: ../vdms_dialogs/mediainfo.py:127
+msgid "Audio Streams"
+msgstr "音频流"
+
+#: ../vdms_dialogs/mediainfo.py:148
+msgid "Subtitle Streams"
+msgstr "字幕 Streams"
+
+#: ../vdms_dialogs/mediainfo.py:152
+msgid "Enable text format"
+msgstr "启用文本格式"
+
+#: ../vdms_dialogs/mediainfo.py:168
+msgid "FILE SELECTION"
+msgstr "文件选择"
+
+#: ../vdms_dialogs/mediainfo.py:170 ../vdms_dialogs/mediainfo.py:173
+#: ../vdms_dialogs/mediainfo.py:176 ../vdms_dialogs/mediainfo.py:179
+msgid "References"
+msgstr "参考文献"
+
+#: ../vdms_dialogs/mediainfo.py:171 ../vdms_dialogs/mediainfo.py:174
+#: ../vdms_dialogs/mediainfo.py:177 ../vdms_dialogs/mediainfo.py:180
+msgid "Parameters"
+msgstr "参数"
+
+#: ../vdms_dialogs/mediainfo.py:197
+#, fuzzy
+msgid "Multimedia streams analyzer"
+msgstr "多媒体流分析器"
+
+#: ../vdms_dialogs/showlogs.py:78
+msgid "Log file list"
+msgstr "日志文件列表"
+
+#: ../vdms_dialogs/showlogs.py:80
+msgid "Log messages"
+msgstr "日志信息"
+
+#: ../vdms_dialogs/showlogs.py:104
+msgid "Refresh all log files"
+msgstr "刷新所有日志文件"
+
+#: ../vdms_dialogs/showlogs.py:109
+msgid "Clear selected log"
+msgstr "清除选定的日志"
+
+#: ../vdms_dialogs/showlogs.py:119
+msgid "Showing log messages"
+msgstr "显示日志信息"
+
+#: ../vdms_dialogs/showlogs.py:146
+msgid "Select a log file"
+msgstr "选择一个日志文件"
+
+#: ../vdms_dialogs/showlogs.py:153
+msgid "Are you sure you want to clear the selected log file?"
+msgstr "你确定要清除选定的日志文件吗？"
+
+#: ../vdms_frames/ffmpeg_conf.py:66
+msgid "Informations"
+msgstr "信息"
+
+#: ../vdms_frames/ffmpeg_conf.py:77
+msgid "Flags settings"
+msgstr "标记设置"
+
+#: ../vdms_frames/ffmpeg_conf.py:87
+msgid "Flags enabled"
+msgstr "标记已启用"
+
+#: ../vdms_frames/ffmpeg_conf.py:97
+msgid "Flags disabled"
+msgstr "标记已禁用"
+
+#: ../vdms_frames/ffmpeg_conf.py:107
+msgid "FFmpeg configuration"
+msgstr "FFmpeg配置"
+
+#: ../vdms_frames/ffmpeg_conf.py:115
+msgid "flags"
+msgstr "标记"
+
+#: ../vdms_frames/ffmpeg_conf.py:116 ../vdms_frames/ffmpeg_conf.py:120
+#: ../vdms_frames/ffmpeg_conf.py:124
+msgid "options"
+msgstr "选项"
+
+#: ../vdms_frames/ffmpeg_conf.py:119 ../vdms_frames/ffmpeg_conf.py:123
+msgid "status"
+msgstr "状态"
+
+#: ../vdms_frames/ffmpeg_conf.py:158
+msgid "FFprobe   ...not found !"
+msgstr "FFprobe ...未找到!"
+
+#: ../vdms_frames/ffmpeg_conf.py:166
+msgid "FFplay   ...not found !"
+msgstr "FFplay ...未找到!"
+
+#: ../vdms_frames/ffmpeg_conf.py:200
+msgid "ENABLED:"
+msgstr "已启用："
+
+#: ../vdms_frames/ffmpeg_conf.py:204 ../vdms_panels/av_conversions.py:2506
+#: ../vdms_panels/sequence_to_video.py:671
+#: ../vdms_panels/video_to_sequence.py:563
+msgid "Enabled"
+msgstr "已启用"
+
+#: ../vdms_frames/ffmpeg_conf.py:213
+msgid "DISABLED:"
+msgstr "禁用："
+
+#: ../vdms_frames/ffmpeg_codecs.py:46
+msgid "CODING CAPABILITY"
+msgstr "编码能力"
+
+#: ../vdms_frames/ffmpeg_codecs.py:48
+msgid "FFmpeg encoders"
+msgstr "FFmpeg编码器"
+
+#: ../vdms_frames/ffmpeg_codecs.py:50
+#, fuzzy
+msgid "DECODING CAPABILITY"
+msgstr "解码能力"
+
+#: ../vdms_frames/ffmpeg_codecs.py:52
+msgid "FFmpeg decoders"
+msgstr "FFmpeg解码器"
+
+#: ../vdms_frames/ffmpeg_codecs.py:72 ../vdms_panels/av_conversions.py:581
+msgid "Video"
+msgstr "视频"
+
+#: ../vdms_frames/ffmpeg_codecs.py:82 ../vdms_panels/av_conversions.py:751
+msgid "Audio"
+msgstr "音频"
+
+#: ../vdms_frames/ffmpeg_codecs.py:92
+msgid "Subtitle"
+msgstr "字幕"
+
+#: ../vdms_frames/ffmpeg_codecs.py:109 ../vdms_frames/ffmpeg_codecs.py:118
+#: ../vdms_frames/ffmpeg_codecs.py:127 ../vdms_frames/ffmpeg_formats.py:104
+#: ../vdms_frames/ffmpeg_formats.py:108 ../vdms_frames/ffmpeg_formats.py:112
+msgid "description"
+msgstr "描述"
+
+#: ../vdms_frames/ffmpeg_formats.py:66
+#, fuzzy
+msgid "Demuxing only"
+msgstr "仅仅是解复用"
+
+#: ../vdms_frames/ffmpeg_formats.py:77
+#, fuzzy
+msgid "Muxing only"
+msgstr "仅限多路复用"
+
+#: ../vdms_frames/ffmpeg_formats.py:88
+#, fuzzy
+msgid "Demuxing/Muxing support"
+msgstr "支持解复用/复用"
+
+#: ../vdms_frames/ffmpeg_formats.py:96
+msgid "FFmpeg file formats"
+msgstr "FFmpeg文件格式"
+
+#: ../vdms_frames/ffmpeg_formats.py:103 ../vdms_frames/ffmpeg_formats.py:107
+#: ../vdms_frames/ffmpeg_formats.py:111
+msgid "format"
+msgstr "格式"
+
+#: ../vdms_frames/shownormlist.py:63
+msgid "File name"
+msgstr "文件名称"
+
+#: ../vdms_frames/shownormlist.py:64
+msgid "Max volume dBFS"
+msgstr "最大音量 dBFS"
+
+#: ../vdms_frames/shownormlist.py:65
+msgid "Mean volume dBFS"
+msgstr "平均音量 dBFS"
+
+#: ../vdms_frames/shownormlist.py:66
+#, fuzzy
+msgid "Offset dBFS"
+msgstr "偏移量dBFS"
+
+#: ../vdms_frames/shownormlist.py:67
+#, fuzzy
+msgid "Result dBFS"
+msgstr "结果dBFS"
+
+#: ../vdms_frames/shownormlist.py:71
+msgid "Post-normalization references:"
+msgstr "归化后的参考资料："
+
+#: ../vdms_frames/shownormlist.py:76
+#, fuzzy
+msgid "=  Clipped peaks"
+msgstr "= 削减的峰值"
+
+#: ../vdms_frames/shownormlist.py:81
+#, fuzzy
+msgid "=  No changes"
+msgstr "= 没有变化"
+
+#: ../vdms_frames/shownormlist.py:87
+#, fuzzy
+msgid "=  Below max peak"
+msgstr "=低于最大峰值"
+
+#: ../vdms_frames/shownormlist.py:143 ../vdms_panels/av_conversions.py:1962
+#, fuzzy
+msgid "RMS-based volume statistics"
+msgstr "基于RMS的体积统计"
+
+#: ../vdms_frames/shownormlist.py:165 ../vdms_panels/av_conversions.py:1960
+#, fuzzy
+msgid "PEAK-based volume statistics"
+msgstr "基于PEAK的体积统计"
+
+#: ../vdms_frames/shownormlist.py:187
+msgid ""
+"When it's red...\n"
+"\n"
+"...It means the resulting audio will be clipped,\n"
+"because its volume is higher than the maximum 0 db\n"
+"level. This results in data loss and the audio may\n"
+"sound distorted."
+msgstr ""
+"When it's red...（当它是红色的）。\n"
+"\n"
+"意味着产生的音频会被削掉，因为它的音量高于最大的0db。\n"
+"因为它的音量高于最大的0 db\n"
+"水平。这将导致数据丢失，音频可能会\n"
+"声音失真。"
+
+#: ../vdms_frames/shownormlist.py:213
+msgid ""
+"When it's grey...\n"
+"\n"
+"...It means the resulting audio will not change,\n"
+"because it's equal to the source."
+msgstr ""
+"When it's grey...（当它是灰色的）。\n"
+"\n"
+"...这意味着所产生的音频不会改变，因为它与源文件相同。\n"
+"因为它和源头是一样的。"
+
+#: ../vdms_frames/shownormlist.py:237
+msgid ""
+"When it's yellow...\n"
+"\n"
+"...It means an audio signal will be produced with\n"
+"a lower volume than the original."
+msgstr ""
+"When it's yellow...（当它是黄色的）。\n"
+"\n"
+"...这意味着将产生一个音频信号，\n"
+"其音量比原来的低。"
+
+#: ../vdms_frames/while_playing.py:37
+#, fuzzy
+msgid ""
+"q, ESC\n"
+"f\n"
+"p, SPC\n"
+"m\n"
+"9, 0\n"
+"/, *\n"
+"a\n"
+"v\n"
+"t\n"
+"c\n"
+"w\n"
+"s\n"
+"\n"
+"left/right\n"
+"down/up\n"
+"page down/page up\n"
+"\n"
+"right mouse click\n"
+"left mouse double-click"
+msgstr ""
+"q, ESC\n"
+"f\n"
+"p, SPC\n"
+"m\n"
+"9, 0\n"
+"/, *\n"
+"a\n"
+"v\n"
+"t\n"
+"c\n"
+"w\n"
+"s\n"
+"\n"
+"left/right\n"
+"down/up\n"
+"page down/page up\n"
+"\n"
+"right mouse click （鼠标右键）。\n"
+"鼠标左键双击"
+
+#: ../vdms_frames/while_playing.py:89
+msgid "Shortcut keys while playing with FFplay"
+msgstr "使用FFplay时的快捷键"
+
+#: ../vdms_frames/ffmpeg_search.py:69 ../vdms_frames/ffmpeg_search.py:163
+msgid "Topic List..."
+msgstr "主题列表..."
+
+#: ../vdms_frames/ffmpeg_search.py:70 ../vdms_frames/ffmpeg_search.py:164
+msgid "print basic options"
+msgstr "打印基本选项"
+
+#: ../vdms_frames/ffmpeg_search.py:71 ../vdms_frames/ffmpeg_search.py:165
+msgid "print more options"
+msgstr "打印更多选项"
+
+#: ../vdms_frames/ffmpeg_search.py:72 ../vdms_frames/ffmpeg_search.py:166
+msgid "print all options (very long)"
+msgstr "打印所有选项（非常长）"
+
+#: ../vdms_frames/ffmpeg_search.py:73 ../vdms_frames/ffmpeg_search.py:167
+msgid "show available devices"
+msgstr "显示可用的设备"
+
+#: ../vdms_frames/ffmpeg_search.py:74 ../vdms_frames/ffmpeg_search.py:168
+#, fuzzy
+msgid "show available bit stream filters"
+msgstr "显示可用的比特流过滤器"
+
+#: ../vdms_frames/ffmpeg_search.py:75 ../vdms_frames/ffmpeg_search.py:169
+msgid "show available protocols"
+msgstr "显示可用的协议"
+
+#: ../vdms_frames/ffmpeg_search.py:76 ../vdms_frames/ffmpeg_search.py:170
+msgid "show available filters"
+msgstr "显示可用的过滤器"
+
+#: ../vdms_frames/ffmpeg_search.py:77 ../vdms_frames/ffmpeg_search.py:171
+msgid "show available pixel formats"
+msgstr "显示可用的像素格式"
+
+#: ../vdms_frames/ffmpeg_search.py:78 ../vdms_frames/ffmpeg_search.py:172
+msgid "show available audio sample formats"
+msgstr "显示可用的音频样本格式"
+
+#: ../vdms_frames/ffmpeg_search.py:79 ../vdms_frames/ffmpeg_search.py:173
+msgid "show available color names"
+msgstr "显示可用的颜色名称"
+
+#: ../vdms_frames/ffmpeg_search.py:80 ../vdms_frames/ffmpeg_search.py:174
+#, fuzzy
+msgid "list sources of the input device"
+msgstr "列表中输入设备的来源"
+
+#: ../vdms_frames/ffmpeg_search.py:81 ../vdms_frames/ffmpeg_search.py:175
+#, fuzzy
+msgid "list sinks of the output device"
+msgstr "列出输出设备的汇"
+
+#: ../vdms_frames/ffmpeg_search.py:82 ../vdms_frames/ffmpeg_search.py:176
+msgid "show available HW acceleration methods"
+msgstr "显示可用的HW加速方法"
+
+#: ../vdms_frames/ffmpeg_search.py:87
+msgid "help topic list"
+msgstr "帮助主题列表"
+
+#: ../vdms_frames/ffmpeg_search.py:103
+msgid "Choose a topic in the list"
+msgstr "在列表中选择一个主题"
+
+#: ../vdms_frames/ffmpeg_search.py:109
+#, fuzzy
+msgid "The search function allows you to find entries in the current topic"
+msgstr "搜索功能允许你在当前主题中查找条目"
+
+#: ../vdms_frames/ffmpeg_search.py:111
+#, fuzzy
+msgid "Ignore case"
+msgstr "忽略案例"
+
+#: ../vdms_frames/ffmpeg_search.py:112
+msgid "Ignore case distinctions: characters with different case will match."
+msgstr "忽略大小写的区别：不同大小写的字符将被匹配。"
+
+#: ../vdms_frames/ffmpeg_search.py:128 ../vdms_main/main_frame.py:427
+msgid "FFmpeg help topics"
+msgstr "FFmpeg帮助主题"
+
+#: ../vdms_frames/ffmpeg_search.py:181
+msgid "First, choose a topic in the drop down list"
+msgstr "首先，在下拉列表中选择一个主题"
+
+#: ../vdms_frames/ffmpeg_search.py:194
+msgid ""
+"\n"
+"  ..Nothing available"
+msgstr ""
+"\n"
+"  ...没有可用的"
+
+#: ../vdms_frames/ffmpeg_search.py:234
+msgid ""
+"\n"
+"  ...Not found"
+msgstr ""
+"\n"
+"  ...未找到"
+
+#: ../vdms_frames/ffmpeg_search.py:241
+msgid ""
+"\n"
+"First, choose a topic in the drop down list"
+msgstr ""
+"\n"
+"首先，在下拉列表中选择一个主题"
+
+#: ../vdms_io/checkup.py:53
+#, fuzzy
+msgid ""
+"Already exist: \n"
+"\n"
+"{}\n"
+"\n"
+"Do you want to overwrite? "
+msgstr ""
+"Already exist: \n"
+"\n"
+"\n"
+"\n"
+"你想覆盖吗？"
+
+#: ../vdms_io/checkup.py:56
+msgid "Please Confirm"
+msgstr "请确认"
+
+#: ../vdms_io/checkup.py:63 ../vdms_panels/sequence_to_video.py:554
+#: ../vdms_panels/sequence_to_video.py:578
+msgid ""
+"File does not exist:\n"
+"\n"
+"\"{}\"\n"
+msgstr ""
+"文件不存在：\n"
+"\n"
+"\"{}\"\n"
+
+#: ../vdms_io/checkup.py:70
+msgid ""
+"Output folder does not exist:\n"
+"\n"
+"\"{}\"\n"
+msgstr ""
+"输出文件夹不存在：\n"
+"\n"
+"\"{}\"\n"
+
+#: ../vdms_io/io_tools.py:71 ../vdms_io/io_tools.py:96
+#, python-format
+msgid "File does not exist or is invalid:  %s"
+msgstr "文件不存在或无效：%s"
+
+#: ../vdms_io/io_tools.py:149 ../vdms_io/io_tools.py:273
+msgid "Videomass - Loading..."
+msgstr "Videomass - 加载中..."
+
+#: ../vdms_io/io_tools.py:150
+#, fuzzy
+msgid ""
+"Wait....\n"
+"Audio peak analysis."
+msgstr ""
+"Wait....\n"
+"音频峰值分析。"
+
+#: ../vdms_io/io_tools.py:274
+#, fuzzy
+msgid ""
+"Wait....\n"
+"Retrieving required data."
+msgstr ""
+"Wait....\n"
+"检索所需数据。"
+
+#: ../vdms_io/io_tools.py:319
+msgid "Videomass - Downloading..."
+msgstr "Videomass - 下载中..."
+
+#: ../vdms_io/io_tools.py:341
+#, fuzzy
+msgid ""
+"Be patient...\n"
+"this can take a few minutes."
+msgstr ""
+"要有耐心...。\n"
+"这可能需要几分钟的时间。"
+
+#: ../vdms_io/io_tools.py:343
+msgid "Videomass - Updating..."
+msgstr "Videomass - 更新中..."
+
+#: ../vdms_io/presets_manager_properties.py:51
+#, fuzzy, python-format
+msgid ""
+"The selected profile is not suitable to convert the following file formats:\n"
+"\n"
+"%s\n"
+"\n"
+msgstr ""
+"选择的配置文件不适合转换以下文件格式： （n\n"
+"\n"
+"%s\n"
+"\n"
+"\n"
+
+#: ../vdms_io/presets_manager_properties.py:84
+#, fuzzy
+msgid ""
+"Invalid preset loaded.\n"
+"It is recommended to remove it or rewrite it into a JSON format compatible "
+"with Videomass.\n"
+"\n"
+"Possible solution: open the Presets Manager panel, go to the presets column "
+"and try to click the \"Restore\" button"
+msgstr ""
+"Invalid preset loaded.\n"
+"建议删除它或将其改写成与Videomass.com兼容的JSON格式。\n"
+"\n"
+"可能的解决方案：打开预设管理器面板，进入预设栏并尝试点击 \"恢复 \"按钮"
+
+#: ../vdms_io/presets_manager_properties.py:95
+#, fuzzy
+msgid ""
+"No presets found.\n"
+"\n"
+"Possible solution: open the Presets Manager panel, go to the presets column "
+"and try to click the \"Restore all...\" button"
+msgstr ""
+"No presets found.\n"
+"\n"
+"可能的解决方案：打开预设管理器面板，进入预设栏，尝试点击 \"恢复所有... \"按钮"
+
+#: ../vdms_main/main_frame.py:198 ../vdms_main/main_frame.py:266
+#: ../vdms_main/main_frame.py:1612 ../vdms_main/main_frame.py:1656
+#: ../vdms_main/main_frame.py:1693 ../vdms_main/main_frame.py:1764
+#: ../vdms_main/main_frame.py:1826 ../vdms_main/main_frame.py:1889
+#: ../vdms_main/main_frame.py:1950 ../vdms_main/main_frame.py:2012
+#: ../vdms_panels/youtubedl_ui.py:523 ../vdms_panels/youtubedl_ui.py:758
+msgid "Ready"
+msgstr "准备就绪"
+
+#: ../vdms_main/main_frame.py:265
+msgid "Videomass"
+msgstr "Videomass"
+
+#: ../vdms_main/main_frame.py:352
+msgid "Are you sure you want to exit?"
+msgstr "你确定你要退出吗？"
+
+#: ../vdms_main/main_frame.py:384
+msgid "Open...\tCtrl+O"
+msgstr "打开...\tCtrl+O"
+
+#: ../vdms_main/main_frame.py:385
+msgid "Open one or more files"
+msgstr "打开一个或多个文件"
+
+#: ../vdms_main/main_frame.py:388
+msgid "Conversions folder\tCtrl+C"
+msgstr "转换文件夹\tCtrl+C"
+
+#: ../vdms_main/main_frame.py:389
+msgid "Open the default file conversions folder"
+msgstr "打开默认的文件转换文件夹"
+
+#: ../vdms_main/main_frame.py:391
+msgid "Downloads folder\tCtrl+D"
+msgstr "下载文件夹\tCtrl+D"
+
+#: ../vdms_main/main_frame.py:392
+msgid "Open the default downloads folder"
+msgstr "打开默认的下载文件夹"
+
+#: ../vdms_main/main_frame.py:395
+msgid "Open temporary conversions"
+msgstr "打开临时转换"
+
+#: ../vdms_main/main_frame.py:396
+msgid "Open the temporary file conversions folder"
+msgstr "打开临时文件转换文件夹"
+
+#: ../vdms_main/main_frame.py:400
+msgid "Open temporary downloads"
+msgstr "打开临时下载"
+
+#: ../vdms_main/main_frame.py:401
+msgid "Open the temporary downloads folder"
+msgstr "打开临时下载文件夹"
+
+#: ../vdms_main/main_frame.py:406
+msgid "Trash folder"
+msgstr "垃圾文件夹"
+
+#: ../vdms_main/main_frame.py:407
+msgid "Open the Videomass Trash folder if it exists"
+msgstr "打开Videomass Trash文件夹，如果它存在的话。"
+
+#: ../vdms_main/main_frame.py:410
+msgid "Empty Trash"
+msgstr "清空垃圾箱"
+
+#: ../vdms_main/main_frame.py:411
+msgid "Delete all files in the Videomass Trash folder"
+msgstr "删除Videomass垃圾文件夹中的所有文件"
+
+#: ../vdms_main/main_frame.py:416
+msgid "Work Notes\tCtrl+N"
+msgstr "工作笔记\tCtrl+N"
+
+#: ../vdms_main/main_frame.py:417
+#, fuzzy
+msgid "Read and write useful notes and reminders."
+msgstr "阅读和撰写有用的笔记和提醒。"
+
+#: ../vdms_main/main_frame.py:421
+msgid "Exit\tCtrl+Q"
+msgstr "退出\tCtrl+Q"
+
+#: ../vdms_main/main_frame.py:422
+msgid "Close Videomass"
+msgstr "关闭 Videomass"
+
+#: ../vdms_main/main_frame.py:423
+msgid "File"
+msgstr "文件"
+
+#: ../vdms_main/main_frame.py:428
+msgid "A useful tool to search for FFmpeg help topics and options"
+msgstr "一个搜索FFmpeg帮助主题和选项的有用工具"
+
+#: ../vdms_main/main_frame.py:434
+msgid "Update {}"
+msgstr "更新 {}"
+
+#: ../vdms_main/main_frame.py:435
+msgid "Update the downloader to the latest version"
+msgstr "将下载器更新到最新版本"
+
+#: ../vdms_main/main_frame.py:439
+msgid "Check for new presets"
+msgstr "检查新的预设"
+
+#: ../vdms_main/main_frame.py:440
+msgid "Check new versions of Videomass presets from homepage"
+msgstr "从主页上查看新版本的Videomass预设"
+
+#: ../vdms_main/main_frame.py:442
+msgid "Download the latest presets"
+msgstr "下载最新的预设文件"
+
+#: ../vdms_main/main_frame.py:443
+msgid "Download all Videomass presets locally from the homepage"
+msgstr "从主页上下载所有 Videomass 预设到本地文件夹"
+
+#: ../vdms_main/main_frame.py:445
+msgid "Tools"
+msgstr "工具"
+
+#: ../vdms_main/main_frame.py:451
+msgid "Show configuration"
+msgstr "显示配置"
+
+#: ../vdms_main/main_frame.py:452
+msgid "Show FFmpeg's built-in configuration capabilities"
+msgstr "显示FFmpeg的内置配置功能"
+
+#: ../vdms_main/main_frame.py:455
+#, fuzzy
+msgid "Muxers and Demuxers"
+msgstr "多路复用器和解扰器"
+
+#: ../vdms_main/main_frame.py:456
+#, fuzzy
+msgid "Muxers and demuxers available for used FFmpeg."
+msgstr "可用于二手FFmpeg的Muxers和demuxers。"
+
+#: ../vdms_main/main_frame.py:459
+msgid "Encoders"
+msgstr "编码器"
+
+#: ../vdms_main/main_frame.py:460
+msgid "Shows available encoders for FFmpeg"
+msgstr "显示FFmpeg的可用编码器"
+
+#: ../vdms_main/main_frame.py:462
+msgid "Decoders"
+msgstr "解码器"
+
+#: ../vdms_main/main_frame.py:462
+msgid "Shows available decoders for FFmpeg"
+msgstr "显示FFmpeg的可用解码器"
+
+#: ../vdms_main/main_frame.py:465
+msgid "FFplay"
+msgstr "FFplay"
+
+#: ../vdms_main/main_frame.py:466
+msgid "While playing"
+msgstr "在播放时"
+
+#: ../vdms_main/main_frame.py:467
+#, fuzzy
+msgid "Show useful shortcut keys when playing or previewing with FFplay"
+msgstr "在用FFplay播放或预览时显示有用的快捷键"
+
+#: ../vdms_main/main_frame.py:471
+msgid "Displays timestamp"
+msgstr "显示时间戳"
+
+#: ../vdms_main/main_frame.py:472
+#, fuzzy
+msgid "Displays timestamp when playing movies with FFplay"
+msgstr "用FFplay播放电影时显示时间戳"
+
+#: ../vdms_main/main_frame.py:477
+msgid "Auto-exit after playback"
+msgstr "播放后自动退出"
+
+#: ../vdms_main/main_frame.py:478
+msgid "If checked, the FFplay window will auto-close at the end of playback"
+msgstr "如果选中，FFplay窗口将在播放结束后自动关闭"
+
+#: ../vdms_main/main_frame.py:484
+msgid "Setting timestamp"
+msgstr "设置时间戳"
+
+#: ../vdms_main/main_frame.py:485
+#, fuzzy
+msgid "Change the size and color of the timestamp during playback"
+msgstr "在播放过程中改变时间戳的大小和颜色"
+
+#: ../vdms_main/main_frame.py:496
+msgid "Version in Use"
+msgstr "使用中的版本"
+
+#: ../vdms_main/main_frame.py:497
+msgid "Shows the version in use"
+msgstr "显示正在使用的版本"
+
+#: ../vdms_main/main_frame.py:499
+msgid "Show the latest version..."
+msgstr "显示最新版本..."
+
+#: ../vdms_main/main_frame.py:500
+msgid "Shows the latest version available on github.com"
+msgstr "显示github.com上的最新版本"
+
+#: ../vdms_main/main_frame.py:507
+msgid "Show Logs\tCtrl+L"
+msgstr "显示日志\tCtrl+L"
+
+#: ../vdms_main/main_frame.py:508
+msgid "Viewing log messages"
+msgstr "查看日志信息"
+
+#: ../vdms_main/main_frame.py:512
+msgid "Show timeline\tCtrl+T"
+msgstr "显示时间线\tCtrl+T"
+
+#: ../vdms_main/main_frame.py:513
+#, fuzzy
+msgid "Show panel for editing timeline (seek/duration)"
+msgstr "显示编辑时间线的面板（寻路/时间）。"
+
+#: ../vdms_main/main_frame.py:516
+msgid "View"
+msgstr "视图"
+
+#: ../vdms_main/main_frame.py:521
+msgid "Home panel\tShift+H"
+msgstr "主界面\tShift+H"
+
+#: ../vdms_main/main_frame.py:522
+msgid "Go to the 'Home' panel"
+msgstr "转到 \"主页 \"面板"
+
+#: ../vdms_main/main_frame.py:525
+msgid "Presets Manager\tShift+P"
+msgstr "预设管理器\tShift+P"
+
+#: ../vdms_main/main_frame.py:526
+msgid "Go to the 'Presets Manager' panel"
+msgstr "转到 \"预设管理器 \"面板"
+
+#: ../vdms_main/main_frame.py:527
+msgid "A/V Conversions\tShift+V"
+msgstr "音频、视频转换\tShift+V"
+
+#: ../vdms_main/main_frame.py:528
+msgid "Go to the 'A/V Conversions' panel"
+msgstr "转到 \"音频、视频转换 \"面板"
+
+#: ../vdms_main/main_frame.py:530
+msgid "Concatenate Demuxer\tShift+D"
+msgstr "Concatenate Demuxer\tShift+D"
+
+#: ../vdms_main/main_frame.py:531
+#, fuzzy
+msgid "Go to the 'Concatenate Demuxer' panel"
+msgstr "转到 \"串联分解器 \"面板"
+
+#: ../vdms_main/main_frame.py:534
+msgid "Still Image Maker\tShift+I"
+msgstr "静态图像制作\tShift+I"
+
+#: ../vdms_main/main_frame.py:535
+msgid "Go to the 'Still Image Maker' panel"
+msgstr "转到 \"静止图像制作 \"面板"
+
+#: ../vdms_main/main_frame.py:537
+msgid "From Movie to Pictures\tShift+S"
+msgstr "从电影到图片\tShift+S"
+
+#: ../vdms_main/main_frame.py:538
+msgid "Go to the 'From Movie to Pictures' panel"
+msgstr "转到 \"从电影到图片 \"面板"
+
+#: ../vdms_main/main_frame.py:541
+msgid "YouTube downloader\tShift+Y"
+msgstr "YouTube下载器\tShift+Y"
+
+#: ../vdms_main/main_frame.py:542
+msgid "Go to the 'YouTube Downloader' panel"
+msgstr "转到 \"YouTube下载器 \"面板"
+
+#: ../vdms_main/main_frame.py:546
+msgid "Output Monitor\tShift+O"
+msgstr "输出监控器\tShift+O"
+
+#: ../vdms_main/main_frame.py:547
+#, fuzzy
+msgid "Keeps track of the output for debugging errors"
+msgstr "为调试错误保持输出跟踪"
+
+#: ../vdms_main/main_frame.py:551
+msgid "Configuration folder"
+msgstr "配置文件夹"
+
+#: ../vdms_main/main_frame.py:552
+msgid "Opens the Videomass configuration folder"
+msgstr "打开Videomass配置文件夹"
+
+#: ../vdms_main/main_frame.py:554
+msgid "Log folder"
+msgstr "日志文件夹"
+
+#: ../vdms_main/main_frame.py:555
+msgid "Opens the Videomass log folder, if exists"
+msgstr "打开Videomass日志文件夹，如果存在的话。"
+
+#: ../vdms_main/main_frame.py:557
+msgid "Cache folder"
+msgstr "缓存文件夹"
+
+#: ../vdms_main/main_frame.py:558
+msgid "Opens the Videomass cache folder, if exists"
+msgstr "打开Videomass缓存文件夹，如果存在的话。"
+
+#: ../vdms_main/main_frame.py:560
+msgid "System"
+msgstr "系统"
+
+#: ../vdms_main/main_frame.py:562
+msgid "Goto"
+msgstr "转到"
+
+#: ../vdms_main/main_frame.py:566 ../vdms_panels/filedrop.py:250
+msgid "Set up a temporary folder for conversions"
+msgstr "设置一个临时文件夹用于转换"
+
+#: ../vdms_main/main_frame.py:567
+msgid "Use a temporary location to save conversions"
+msgstr "使用一个临时位置来保存转换结果"
+
+#: ../vdms_main/main_frame.py:571 ../vdms_panels/textdrop.py:83
+msgid "Set up a temporary folder for downloads"
+msgstr "设置一个临时文件夹用于下载"
+
+#: ../vdms_main/main_frame.py:572
+msgid "Save all downloads to this temporary location"
+msgstr "将所有的下载保存到这个临时位置"
+
+#: ../vdms_main/main_frame.py:575
+msgid "Restore the default destination folders"
+msgstr "恢复默认的目标文件夹"
+
+#: ../vdms_main/main_frame.py:576
+msgid "Restore the default folders for file conversions and downloads"
+msgstr "恢复文件转换和下载的默认文件夹"
+
+#: ../vdms_main/main_frame.py:583
+msgid "Preferences\tCtrl+P"
+msgstr "首选项\tCtrl+P"
+
+#: ../vdms_main/main_frame.py:584
+msgid "Application preferences"
+msgstr "应用偏好"
+
+#: ../vdms_main/main_frame.py:590
+msgid "User Guide"
+msgstr "用户指南"
+
+#: ../vdms_main/main_frame.py:591
+msgid "Wiki"
+msgstr "维基"
+
+#: ../vdms_main/main_frame.py:593
+msgid "Issue tracker"
+msgstr "问题跟踪器"
+
+#: ../vdms_main/main_frame.py:595
+msgid "Translation..."
+msgstr "翻译..."
+
+#: ../vdms_main/main_frame.py:597
+msgid "Donation"
+msgstr "捐献"
+
+#: ../vdms_main/main_frame.py:599
+msgid "FFmpeg documentation"
+msgstr "FFmpeg文档"
+
+#: ../vdms_main/main_frame.py:601
+msgid "Check for newer version"
+msgstr "检查新的版本"
+
+#: ../vdms_main/main_frame.py:602
+msgid ""
+"Check for the latest Videomass version at <https://pypi.org/project/"
+"videomass/>"
+msgstr "请在<https://pypi.org/project/videomass/>查看最新的Videomass版本"
+
+#: ../vdms_main/main_frame.py:606
+msgid "About Videomass"
+msgstr "关于Videomass"
+
+#: ../vdms_main/main_frame.py:607
+msgid "Help"
+msgstr "帮助"
+
+#: ../vdms_main/main_frame.py:687
+msgid "Open the selected files"
+msgstr "打开选定的文件"
+
+#: ../vdms_main/main_frame.py:738 ../vdms_main/main_frame.py:761
+#, fuzzy
+msgid "No such folder '{}'"
+msgstr "没有这样的文件夹'{}'"
+
+#: ../vdms_main/main_frame.py:750
+msgid "Are you sure to empty trash folder?"
+msgstr "你确定清空垃圾文件夹吗?"
+
+#: ../vdms_main/main_frame.py:758
+#, fuzzy
+msgid "No files to delete"
+msgstr "没有要删除的文件"
+
+#: ../vdms_main/main_frame.py:807
+#, python-brace-format
+msgid "{0} is already up-to-date {1}"
+msgstr "{0}已经是最新的了{1}。"
+
+#: ../vdms_main/main_frame.py:812
+#, python-brace-format
+msgid ""
+"{0} version {1} is available and will replace the old version {2}\n"
+"\n"
+"Do you want to update now?"
+msgstr ""
+"{0}版本{1}可用，并将取代旧版本{2}n\n"
+"\n"
+"你想现在更新吗？"
+
+#: ../vdms_main/main_frame.py:834
+#, fuzzy
+msgid ""
+"To update {} it is necessary to rebuild the Videomass AppImage. This "
+"procedure will be completely automatic and will only require you to select "
+"the location of the AppImage.\n"
+"\n"
+"Do you want to continue?"
+msgstr ""
+"为了更新{}，有必要重建Videomass AppImage。这个过程将是完全自动的，只需要你选"
+"择AppImage的位置。\n"
+"\n"
+"你想继续吗？"
+
+#: ../vdms_main/main_frame.py:846
+#, fuzzy
+msgid "Select the 'Videomass-{}-x86_64.AppImage' file to update"
+msgstr "选择 \"Videomass-{}-x86_64.AppImage \"文件来更新。"
+
+#: ../vdms_main/main_frame.py:864
+#, fuzzy, python-brace-format
+msgid ""
+"Successful! {0} is up-to-date ({1})\n"
+"\n"
+"Re-start is required."
+msgstr ""
+"成功了! {0}是最新的({1})n\n"
+"\n"
+"需要重新启动。"
+
+#: ../vdms_main/main_frame.py:872
+#, fuzzy
+msgid ""
+"Failed! For details consult:\n"
+"{}/AppImage_Updates.log"
+msgstr ""
+"失败了! 详情请咨询：//AppImage_Updates.log\n"
+"{}/AppImage_Updates.log"
+
+#: ../vdms_main/main_frame.py:877
+msgid "Failed! {}"
+msgstr "失败了! {}"
+
+#: ../vdms_main/main_frame.py:912
+#, python-brace-format
+msgid "There is a new version available {0}"
+msgstr "有一个新的版本可用{0}。"
+
+#: ../vdms_main/main_frame.py:916
+msgid "No new version available"
+msgstr "没有新版本"
+
+#: ../vdms_main/main_frame.py:928
+msgid "Choose a download folder"
+msgstr "选择一个下载文件夹"
+
+#: ../vdms_main/main_frame.py:945
+#, fuzzy
+msgid ""
+"Wait....\n"
+"The archive is being downloaded"
+msgstr ""
+"Wait....\n"
+"档案正在下载中"
+
+#: ../vdms_main/main_frame.py:952
+#, python-brace-format
+msgid "Successfully downloaded to \"{0}\""
+msgstr "成功下载到\"{0}\"。"
+
+#: ../vdms_main/main_frame.py:971
+#, fuzzy, python-brace-format
+msgid ""
+"Unexpected error while creating file:\n"
+"\n"
+"{0}"
+msgstr ""
+"Unexpected error while creating file:\n"
+"\n"
+"{0}"
+
+#: ../vdms_main/main_frame.py:1064
+#, python-brace-format
+msgid "You are using '{0}' version {1}"
+msgstr "你正在使用'{0}'版本{1}。"
+
+#: ../vdms_main/main_frame.py:1089
+#, python-brace-format
+msgid "{0}: Latest version available: {1}"
+msgstr "{0}: 可用的最新版本。{1}"
+
+#: ../vdms_main/main_frame.py:1203
+msgid "cache folder has not been created yet."
+msgstr "cache文件夹还没有被创建。"
+
+#: ../vdms_main/main_frame.py:1218
+msgid "Choose a temporary destination for conversions"
+msgstr "为转换选择一个临时目的地"
+
+#: ../vdms_main/main_frame.py:1242
+msgid "Choose a temporary destination for downloads"
+msgstr "选择一个临时的下载目的地"
+
+#: ../vdms_main/main_frame.py:1278
+#, fuzzy
+msgid "Default destination folders successfully restored"
+msgstr "成功恢复了默认的目标文件夹"
+
+#: ../vdms_main/main_frame.py:1360
+#, python-brace-format
+msgid "A new release is available - v.{0}\n"
+msgstr ""
+"一个新的版本已经推出--v.{0}/n\n"
+"\n"
+
+#: ../vdms_main/main_frame.py:1363
+msgid "You are using a development version that has not yet been released!\n"
+msgstr ""
+"您正在使用一个开发版本尚未发布！\n"
+"\n"
+
+#: ../vdms_main/main_frame.py:1366
+#, fuzzy
+msgid "Congratulation! You are already using the latest version.\n"
+msgstr ""
+"祝贺你! You are already using the latest version./n\n"
+"\n"
+
+#: ../vdms_main/main_frame.py:1455
+msgid "Go to the previous panel"
+msgstr "转到上一个面板"
+
+#: ../vdms_main/main_frame.py:1456
+msgid "Back"
+msgstr "Back"
+
+#: ../vdms_main/main_frame.py:1460
+msgid "Go to the next panel"
+msgstr "转到下一个面板"
+
+#: ../vdms_main/main_frame.py:1461
+#, fuzzy
+msgid "Next"
+msgstr "下一页"
+
+#: ../vdms_main/main_frame.py:1467
+msgid "Gathers information of multimedia streams"
+msgstr "收集多媒体流的信息"
+
+#: ../vdms_main/main_frame.py:1468
+msgid "Media Streams"
+msgstr "媒体流"
+
+#: ../vdms_main/main_frame.py:1472
+msgid "Shows download statistics and information"
+msgstr "显示下载统计数据和信息"
+
+#: ../vdms_main/main_frame.py:1473
+#, fuzzy
+msgid "Statistics"
+msgstr "统计数据"
+
+#: ../vdms_main/main_frame.py:1478
+msgid "Add a new profile from this panel with the current settings"
+msgstr "在这个面板上用当前设置添加一个新的配置文件"
+
+#: ../vdms_main/main_frame.py:1479
+msgid "Add Profile"
+msgstr "添加配置文件"
+
+#: ../vdms_main/main_frame.py:1485
+msgid "Convert using FFmpeg"
+msgstr "使用FFmpeg进行转换"
+
+#: ../vdms_main/main_frame.py:1486
+msgid "Convert"
+msgstr "转换"
+
+#: ../vdms_main/main_frame.py:1490
+msgid "Download files using youtube-dl"
+msgstr "使用YouTube-dl下载文件"
+
+#: ../vdms_main/main_frame.py:1491
+msgid "Download"
+msgstr "下载"
+
+#: ../vdms_main/main_frame.py:1560
+msgid "ERROR: Invalid URL: \"{}\""
+msgstr "ERROR: 无效的URL。\"{}\""
+
+#: ../vdms_main/main_frame.py:1564
+#, fuzzy
+msgid "ERROR: Some equal URLs found"
+msgstr "错误：发现一些相同的URLs"
+
+#: ../vdms_main/main_frame.py:1613
+#, fuzzy
+msgid "Videomass - Queued Files"
+msgstr "Videomass - 排队的文件"
+
+#: ../vdms_main/main_frame.py:1657
+#, fuzzy
+msgid "Videomass - Queued URLs"
+msgstr "Videomass - 排队的URLs"
+
+#: ../vdms_main/main_frame.py:1680
+#, fuzzy
+msgid "URL list changed, please check the settings again."
+msgstr "URL列表改变了，请再次检查设置。"
+
+#: ../vdms_main/main_frame.py:1695
+#, fuzzy
+msgid "Videomass - YouTube Downloader"
+msgstr "Videomass - YouTube下载器"
+
+#: ../vdms_main/main_frame.py:1747 ../vdms_main/main_frame.py:1810
+#: ../vdms_main/main_frame.py:1873 ../vdms_main/main_frame.py:1934
+#: ../vdms_main/main_frame.py:1996
+msgid "File list changed, please check the settings again."
+msgstr "文件列表改变了，请再次检查设置。"
+
+#: ../vdms_main/main_frame.py:1766
+msgid "Videomass - AV Conversions"
+msgstr "Videomass - AV转换"
+
+#: ../vdms_main/main_frame.py:1828
+msgid "Videomass - Presets Manager"
+msgstr "Videomass - 预设管理器"
+
+#: ../vdms_main/main_frame.py:1891
+#, fuzzy
+msgid "Videomass - Concatenate Demuxer"
+msgstr "Videomass - Concatenate Demuxer"
+
+#: ../vdms_main/main_frame.py:1952
+#, fuzzy
+msgid "Videomass - From Movie to Pictures"
+msgstr "Videomass - 从电影到图片"
+
+#: ../vdms_main/main_frame.py:2014
+#, fuzzy
+msgid "Videomass - Still Image Maker"
+msgstr "Videomass - 静态图像制作"
+
+#: ../vdms_main/main_frame.py:2053
+msgid "Viewing last log"
+msgstr "查看最后的日志"
+
+#: ../vdms_main/main_frame.py:2066
+msgid ""
+"Cannot continue: The duration in the timeline exceeds the duration of some "
+"queued files."
+msgstr "不能继续。时间线中的持续时间超过了某些排队文件的持续时间。"
+
+#: ../vdms_main/main_frame.py:2072
+msgid "Processing..."
+msgstr "处理..."
+
+#: ../vdms_main/main_frame.py:2077
+#, fuzzy
+msgid "Videomass - Output Monitor"
+msgstr "Videomass - 输出监控"
+
+#: ../vdms_panels/av_conversions.py:243
+msgid "Media:"
+msgstr "媒体："
+
+#: ../vdms_panels/av_conversions.py:252
+msgid "Container:"
+msgstr "容器："
+
+#: ../vdms_panels/av_conversions.py:274
+msgid "Video Encoder"
+msgstr "视频编码器"
+
+#: ../vdms_panels/av_conversions.py:287
+msgid "Codec"
+msgstr "编解码器"
+
+#: ../vdms_panels/av_conversions.py:295
+#, fuzzy
+msgid "Two passes"
+msgstr "两次通过"
+
+#: ../vdms_panels/av_conversions.py:299
+msgid "CRF"
+msgstr "CRF"
+
+#: ../vdms_panels/av_conversions.py:307
+msgid "Bit Rate (kb)"
+msgstr "比特率(kb)"
+
+#: ../vdms_panels/av_conversions.py:316
+msgid "Min Rate (kb)"
+msgstr "最小速率(kb)"
+
+#: ../vdms_panels/av_conversions.py:324
+msgid "Max Rate (kb)"
+msgstr "最大速率（kb）"
+
+#: ../vdms_panels/av_conversions.py:332
+msgid "Buffer Size (kb)"
+msgstr "缓冲区大小（kb）"
+
+#: ../vdms_panels/av_conversions.py:376
+msgid "Pixel Format"
+msgstr "像素格式"
+
+#: ../vdms_panels/av_conversions.py:385
+msgid "Subtitle Map"
+msgstr "字幕 Map"
+
+#: ../vdms_panels/av_conversions.py:402
+msgid "Optimizations"
+msgstr "优化"
+
+#: ../vdms_panels/av_conversions.py:408
+#, fuzzy
+msgid "Use for Web"
+msgstr "用于网络"
+
+#: ../vdms_panels/av_conversions.py:428
+#, fuzzy
+msgid "Deadline/Quality"
+msgstr "最后期限/质量"
+
+#: ../vdms_panels/av_conversions.py:436
+msgid ""
+"Quality/Speed\n"
+"ratio modifier:"
+msgstr ""
+"Quality/Speed\n"
+"ratio修改器："
+
+#: ../vdms_panels/av_conversions.py:445
+#, fuzzy
+msgid "Activates row-mt 1"
+msgstr "激活行-mt 1"
+
+#: ../vdms_panels/av_conversions.py:472
+msgid "Preset"
+msgstr "预设"
+
+#: ../vdms_panels/av_conversions.py:485
+msgid "Profile"
+msgstr "配置文件"
+
+#: ../vdms_panels/av_conversions.py:495
+#, fuzzy
+msgid "Level"
+msgstr "级别"
+
+#: ../vdms_panels/av_conversions.py:504
+#, fuzzy
+msgid "Tune"
+msgstr "调子"
+
+#: ../vdms_panels/av_conversions.py:521
+msgid "Video Filters"
+msgstr "视频过滤器"
+
+#: ../vdms_panels/av_conversions.py:533 ../vdms_panels/youtubedl_ui.py:284
+msgid "Preview"
+msgstr "预览"
+
+#: ../vdms_panels/av_conversions.py:550 ../vdms_panels/sequence_to_video.py:176
+#: ../vdms_panels/video_to_sequence.py:161
+#, fuzzy
+msgid "Resizing"
+msgstr "调整大小"
+
+#: ../vdms_panels/av_conversions.py:554
+msgid "Cropping"
+msgstr "裁剪"
+
+#: ../vdms_panels/av_conversions.py:558
+msgid "Rotation"
+msgstr "旋转"
+
+#: ../vdms_panels/av_conversions.py:563
+#, fuzzy
+msgid "Deinterlacing"
+msgstr "去隔行扫描"
+
+#: ../vdms_panels/av_conversions.py:567
+msgid "Denoiser"
+msgstr "去噪器"
+
+#: ../vdms_panels/av_conversions.py:571
+#, fuzzy
+msgid "Stabilizer"
+msgstr "稳定器"
+
+#: ../vdms_panels/av_conversions.py:590
+msgid "Audio Encoder"
+msgstr "音频编码器"
+
+#: ../vdms_panels/av_conversions.py:602
+msgid "Audio Properties"
+msgstr "音频属性"
+
+#: ../vdms_panels/av_conversions.py:623
+msgid "Audio Streams Mapping"
+msgstr "音频流映射"
+
+#: ../vdms_panels/av_conversions.py:631
+msgid "Index Selection:"
+msgstr "索引选择："
+
+#: ../vdms_panels/av_conversions.py:642
+#, fuzzy
+msgid "Map:"
+msgstr "地图："
+
+#: ../vdms_panels/av_conversions.py:655
+msgid "Audio Filters"
+msgstr "音频滤波器"
+
+#: ../vdms_panels/av_conversions.py:663
+msgid "Listening"
+msgstr "监听"
+
+#: ../vdms_panels/av_conversions.py:668
+#, fuzzy
+msgid "Normalization"
+msgstr "正常化"
+
+#: ../vdms_panels/av_conversions.py:684
+msgid "Volume detect"
+msgstr "音量检测"
+
+#: ../vdms_panels/av_conversions.py:688
+msgid "Volume Statistics"
+msgstr "音量统计"
+
+#: ../vdms_panels/av_conversions.py:693
+msgid "Target level:"
+msgstr "目标等级："
+
+#: ../vdms_panels/av_conversions.py:714
+#, fuzzy
+msgid "Set integrated loudness target:"
+msgstr "设置综合响度目标。"
+
+#: ../vdms_panels/av_conversions.py:725
+#, fuzzy
+msgid "Set maximum true peak:"
+msgstr "设置最大真实峰值。"
+
+#: ../vdms_panels/av_conversions.py:736
+#, fuzzy
+msgid "Set loudness range target:"
+msgstr "设置响度范围目标。"
+
+#: ../vdms_panels/av_conversions.py:758
+#, fuzzy
+msgid ""
+"Available video codecs. \"Copy\" is not a codec but indicate that the video "
+"stream is not to be re-encoded and allows changing the format or other "
+"parameters"
+msgstr ""
+"可用的视频编解码器。\"复制 \"不是一个编解码器，但表明视频流不会被重新编码，并"
+"允许改变格式或其他参数。"
+
+#: ../vdms_panels/av_conversions.py:762
+msgid ""
+"Output format and file extension. The content may change based on the codec "
+"and media"
+msgstr "输出格式和文件扩展名。内容可能会根据编解码器和媒体的不同而改变"
+
+#: ../vdms_panels/av_conversions.py:765
+msgid ""
+"\"Video\" to save the output file as a video; \"Audio\" to save as an audio "
+"file only"
+msgstr "\"视频 \"将输出文件保存为视频；\"音频 \"仅保存为音频文件。"
+
+#: ../vdms_panels/av_conversions.py:768
+#, fuzzy
+msgid "It can reduce the file size, but takes longer."
+msgstr "它可以减少文件大小，但需要更长的时间。"
+
+#: ../vdms_panels/av_conversions.py:770
+#, fuzzy
+msgid "Specifies a minimum tolerance to be used"
+msgstr "指定要使用的最小公差"
+
+#: ../vdms_panels/av_conversions.py:772
+#, fuzzy
+msgid ""
+"Specifies a maximum tolerance. This is only used in conjunction with buffer "
+"size"
+msgstr "指定一个最大公差。这仅与缓冲区大小一起使用。"
+
+#: ../vdms_panels/av_conversions.py:775
+#, fuzzy
+msgid ""
+"Specifies the decoder buffer size, which determines the variability of the "
+"output bitrate "
+msgstr "指定解码器的缓冲区大小，它决定了输出比特率的可变性。"
+
+#: ../vdms_panels/av_conversions.py:778
+msgid ""
+"\"good\" is the default and recommended for most applications; \"best\" is "
+"recommended if you have lots of time and want the best compression "
+"efficiency; \"realtime\" is recommended for live/fast encoding"
+msgstr ""
+"\"good \"是默认的，推荐用于大多数应用；\"best \"是推荐的，如果你有很多时间并"
+"希望获得最好的压缩效率；\"realtime \"是推荐用于实时/快速编码"
+
+#: ../vdms_panels/av_conversions.py:783
+#, fuzzy
+msgid ""
+"\"cpu-used\" sets how efficient the compression will be. The meaning depends "
+"on the mode above."
+msgstr "\"cpu-used \"设置压缩的效率。其含义取决于上面的模式。"
+
+#: ../vdms_panels/av_conversions.py:786
+#, fuzzy
+msgid ""
+"specifies the target (average) bit rate for the encoder to use. Higher value "
+"= higher quality. Set -1 to disable this control."
+msgstr ""
+"指定编码器要使用的目标（平均）比特率。更高的值=更高的质量。设置-1来禁用这个控"
+"制。"
+
+#: ../vdms_panels/av_conversions.py:790
+#, fuzzy
+msgid ""
+"Constant rate factor. Lower values = higher quality and a larger file size. "
+"Set -1 to disable this control."
+msgstr ""
+"恒定速率因子。较低的值=较高的质量和较大的文件尺寸。设置-1来禁用这个控制。"
+
+#: ../vdms_panels/av_conversions.py:793
+msgid "Preview video filters"
+msgstr "预览视频过滤器"
+
+#: ../vdms_panels/av_conversions.py:795
+msgid "Clear all enabled filters "
+msgstr "清除所有启用的过滤器 "
+
+#: ../vdms_panels/av_conversions.py:797
+msgid "Video width and video height ratio."
+msgstr "视频宽度和视频高度的比例。"
+
+#: ../vdms_panels/av_conversions.py:799
+#, fuzzy
+msgid ""
+"Frames repeat a given number of times per second. In some countries this is "
+"30 for NTSC, other countries (like Italy) use 25 for PAL"
+msgstr ""
+"每秒钟重复一定数量的帧。在一些国家，NTSC是30，其他国家（如意大利）PAL是25。"
+
+#: ../vdms_panels/av_conversions.py:803
+#, fuzzy
+msgid ""
+"Gets maximum volume and average volume data in dBFS, then calculates the "
+"offset amount for audio normalization."
+msgstr "获取最大音量和平均音量数据，单位为dBFS，然后计算音频正常化的偏移量。"
+
+#: ../vdms_panels/av_conversions.py:806
+#, fuzzy
+msgid ""
+"Limiter for the maximum peak level or the mean level (when switch to RMS) in "
+"dBFS. From -99.0 to +0.0; default for PEAK level is -1.0; default for RMS is "
+"-20.0"
+msgstr ""
+"最大峰值电平或平均电平（当切换到RMS时）的限制器，单位为dBFS。从-99.0到+0.0；"
+"PEAK电平的默认值是-1.0；RMS的默认值是-20.0"
+
+#: ../vdms_panels/av_conversions.py:810
+#, fuzzy
+msgid ""
+"Choose an index from the available audio streams. If the source file is a "
+"video, it is recommended to select a numeric audio index. If the source file "
+"is an audio file, leave this control to \"Auto\"."
+msgstr ""
+"从可用的音频流中选择一个索引。如果源文件是一个视频，建议选择一个数字音频索"
+"引。如果源文件是一个音频文件，把这个控制留到 \"自动\"。"
+
+#: ../vdms_panels/av_conversions.py:815
+#, fuzzy
+msgid ""
+"\"Auto\" keeps all audio stream but processes only the one of the selected "
+"index; \"All\" keeps all audio streams and processes them all with the "
+"properties of the selected index; \"Index only\" processes and keeps only "
+"the selected index audio stream."
+msgstr ""
+"\"自动 \"保留所有的音频流，但只处理所选索引中的一个；\"全部 \"保留所有的音频"
+"流，并以所选索引的属性处理它们；\"仅索引 \"只处理和保留所选索引的音频流。"
+
+#: ../vdms_panels/av_conversions.py:821
+#, fuzzy
+msgid ""
+"Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -24.0"
+msgstr "LUFS中的综合响度目标。从-70.0到-5.0，默认为-24.0"
+
+#: ../vdms_panels/av_conversions.py:824
+#, fuzzy
+msgid "Maximum True Peak in dBTP. From -9.0 to +0.0, default is -2.0"
+msgstr "最大真实峰值，单位为dBTP。从-9.0到+0.0，默认为-2.0"
+
+#: ../vdms_panels/av_conversions.py:827
+#, fuzzy
+msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +7.0"
+msgstr "响度范围目标（LUFS）。从+1.0到+20.0，默认为+7.0"
+
+#: ../vdms_panels/av_conversions.py:830
+#, fuzzy
+msgid "Play and listen to the result of audio filters"
+msgstr "播放和聆听音频过滤器的结果"
+
+#: ../vdms_panels/av_conversions.py:1161 ../vdms_panels/av_conversions.py:2075
+#, fuzzy
+msgid ""
+"Undetected volume values! Click the \"Volume detect\" button to analyze "
+"audio volume data."
+msgstr "未检测到的音量值! 点击 \"音量检测 \"按钮来分析音频音量数据。"
+
+#: ../vdms_panels/av_conversions.py:1218
+#, fuzzy
+msgid "Unable to preview Video Stabilizer filter"
+msgstr "无法预览视频稳定器过滤器"
+
+#: ../vdms_panels/av_conversions.py:1286
+#: ../vdms_panels/sequence_to_video.py:308
+#: ../vdms_panels/video_to_sequence.py:353
+#: ../vdms_panels/video_to_sequence.py:474
+#, fuzzy
+msgid "A target file must be selected in the queued files"
+msgstr "必须在排队的文件中选择一个目标文件"
+
+#: ../vdms_panels/av_conversions.py:1315
+#, fuzzy
+msgid "Selected index does not exist or does not contain any audio streams"
+msgstr "所选索引不存在或不包含任何音频流"
+
+#: ../vdms_panels/av_conversions.py:1320
+msgid ""
+"ERROR: Missing audio stream:\n"
+"\"{}\""
+msgstr ""
+"ERROR：缺少音频流:\n"
+"\"{}\""
+
+#: ../vdms_panels/av_conversions.py:1348
+#: ../vdms_panels/sequence_to_video.py:335
+#: ../vdms_panels/video_to_sequence.py:380
+#, fuzzy
+msgid "The file is not a frame or a video file"
+msgstr "该文件不是一个框架或视频文件"
+
+#: ../vdms_panels/av_conversions.py:1540
+#, fuzzy
+msgid "This filter is incompatible with 2-pass enabled"
+msgstr "该过滤器与启用的2-pass不兼容。"
+
+#: ../vdms_panels/av_conversions.py:1671
+msgid "No Audio"
+msgstr "没有音频"
+
+#: ../vdms_panels/av_conversions.py:1816
+#, fuzzy
+msgid ""
+"Activate peak level normalization, which will produce a maximum peak level "
+"equal to the set target level."
+msgstr "激活峰值电平正常化，这将产生一个等于设定的目标电平的最大峰值电平。"
+
+#: ../vdms_panels/av_conversions.py:1819
+#, fuzzy
+msgid ""
+"Activate RMS-based normalization, which according to mean volume calculates "
+"the amount of gain to reach same average power signal."
+msgstr ""
+"激活基于有效值的归一化，根据平均音量计算出达到相同平均功率信号的增益量。"
+
+#: ../vdms_panels/av_conversions.py:1823
+#, fuzzy
+msgid ""
+"Activate two passes normalization. It Normalizes the perceived loudness "
+"using the \"​loudnorm\" filter, which implements the EBU R128 algorithm."
+msgstr ""
+"激活两个通道的正常化。它使用 \"loudnorm \"滤波器对感知的响度进行归一化，该滤"
+"波器实现了EBU R128算法。"
+
+#: ../vdms_panels/av_conversions.py:1846
+#, fuzzy
+msgid "Audio normalization off"
+msgstr "关闭音频正常化"
+
+#: ../vdms_panels/av_conversions.py:1887
+#, fuzzy
+msgid "Audio normalization is required only for some files"
+msgstr "仅对某些文件需要进行音频规范化处理"
+
+#: ../vdms_panels/av_conversions.py:1888
+#, fuzzy
+msgid ""
+"Audio normalization will not be applied because the source signal is equal"
+msgstr "音频归一化将不被应用，因为源信号是相等的。"
+
+#: ../vdms_panels/av_conversions.py:2300
+msgid "Audio/Video EBU normalization"
+msgstr "音频/视频 EBU规范化"
+
+#: ../vdms_panels/av_conversions.py:2407
+msgid "Audio conversions"
+msgstr "音频转换"
+
+#: ../vdms_panels/av_conversions.py:2450
+#, fuzzy
+msgid "Audio EBU normalization"
+msgstr "音频EBU归一化"
+
+#: ../vdms_panels/av_conversions.py:2487
+msgid "{} file in queue"
+msgstr "{}队列中的文件"
+
+#: ../vdms_panels/av_conversions.py:2495
+msgid "Off"
+msgstr "关闭"
+
+#: ../vdms_panels/av_conversions.py:2501 ../vdms_panels/presets_manager.py:922
+#: ../vdms_panels/video_to_sequence.py:557
+msgid "Unset"
+msgstr "未设置"
+
+#: ../vdms_panels/av_conversions.py:2504 ../vdms_panels/presets_manager.py:925
+#: ../vdms_panels/video_to_sequence.py:560
+msgid "start  {} | duration  {}"
+msgstr "start  {} | duration  {}"
+
+#: ../vdms_panels/av_conversions.py:2510
+#, fuzzy
+msgid ""
+"SUMMARY\n"
+"\n"
+"Queued File\n"
+"Output Format                        \n"
+"Web Optimize\n"
+"Audio Codec\n"
+"Audio bit-rate                        \n"
+"Audio Channels\n"
+"Audio Rate\n"
+"Bit per Sample                        \n"
+"Audio Normalization\n"
+"Time Period                        \n"
+"Input Audio Map"
+msgstr ""
+"SUMMARY\\N\n"
+"\n"
+"Queued File （排队文件）。\n"
+"Output Format （输出格式） （输出格式\n"
+"Web Optimize\n"
+"Audio Codec\n"
+"Audio bit-rate （音频比特率\n"
+"Audio Channels\n"
+"Audio Rate （音频速率\n"
+"Bit per Sample （每个样本的比特数）。\n"
+"Audio Normalization （音频归一化） （音频归一化\n"
+"Time Period （时间周期\n"
+"Input Audio Map"
+
+#: ../vdms_panels/av_conversions.py:2527
+#, fuzzy
+msgid ""
+"SUMMARY\n"
+"\n"
+"Queued File\n"
+"Web Optimize\n"
+"Output Format                      \n"
+"Video Codec\n"
+"Aspect Ratio\n"
+"FPS\n"
+"Audio Codec                      \n"
+"Audio Channels\n"
+"Audio Rate\n"
+"Audio bit-rate                      \n"
+"Bit per Sample\n"
+"Audio Normalization                      \n"
+"Input Audio Map\n"
+"Output Audio Map                      \n"
+"Subtitles Map\n"
+"Time Period"
+msgstr ""
+"SUMMARY\\N\n"
+"\n"
+"Queued File （排队文件） （排队文件\n"
+"Web Optimize （网络优化\n"
+"Output Format\n"
+"Video Codec\n"
+"Aspect Ratio\n"
+"FPS\n"
+"Audio Codec\n"
+"Audio Channels\n"
+"Audio Rate （音频速率\n"
+"Audio bit-rate （音频比特率）。\n"
+"Bit per Sample （每个样本的比特数）。\n"
+"Audio Normalization （音频归一化）。\n"
+"Input Audio Map\n"
+"Output Audio Map （输出音频地图）。\n"
+"Subtitles Map\n"
+"Time Period"
+
+#: ../vdms_panels/av_conversions.py:2549
+#, fuzzy
+msgid ""
+"SUMMARY\n"
+"\n"
+"Queued File\n"
+"Web Optimize\n"
+"Pass Encoding                      \n"
+"Output Format\n"
+"Video Codec\n"
+"Video bit-rate                      \n"
+"CRF\n"
+"Min Rate\n"
+"Max Rate\n"
+"Buffer size                      \n"
+"VP8/VP9 Options\n"
+"Video Filters\n"
+"Aspect Ratio\n"
+"FPS                      \n"
+"Preset\n"
+"Profile\n"
+"Tune\n"
+"Audio Codec                      \n"
+"Audio Channels\n"
+"Audio Rate\n"
+"Audio bit-rate                      \n"
+"Bit per Sample\n"
+"Audio Normalization                      \n"
+"Input Audio Map\n"
+"Output Audio Map                      \n"
+"Subtitles Map\n"
+"Time Period"
+msgstr ""
+"SUMMARY\\N\n"
+"\n"
+"Queued File （排队文件） （排队文件\n"
+"Web Optimize （网络优化\n"
+"Pass Encoding （通过编码\n"
+"Output Format\n"
+"Video Codec\n"
+"Video bit-rate （视频比特率\n"
+"CRF\n"
+"Min Rate （最小速率） （最大速率\n"
+"Max Rate （最大速率\n"
+"Buffer size （缓冲区大小\n"
+"VP8/VP9 Options\n"
+"Video Filters\n"
+"Aspect Ratio\n"
+"FPS （FPS）。\n"
+"Preset\n"
+"Profile （资料） （资料） （资料） （资料\n"
+"Tune （调谐）。\n"
+"Audio Codec （音频编解码器\n"
+"Audio Channels （音频通道\n"
+"Audio Rate （音频速率\n"
+"Audio bit-rate （音频比特率）。\n"
+"Bit per Sample （每个样本的比特数）。\n"
+"Audio Normalization （音频归一化）。\n"
+"Input Audio Map\n"
+"Output Audio Map （输出音频地图）。\n"
+"Subtitles Map\n"
+"Time Period"
+
+#: ../vdms_panels/av_conversions.py:2587
+#, fuzzy
+msgid "Audio normalization processes cannot be saved on the Presets Manager."
+msgstr "音频正常化过程不能保存在预设管理器中。"
+
+#: ../vdms_panels/av_conversions.py:2605
+msgid "Save the new profile to..."
+msgstr "将新的配置文件保存到..."
+
+#: ../vdms_panels/av_conversions.py:2614
+msgid "Create a new profile"
+msgstr "创建一个新的配置文件"
+
+#: ../vdms_panels/choose_topic.py:72
+msgid "Welcome to Videomass"
+msgstr "欢迎来到 Videomass"
+
+#: ../vdms_panels/choose_topic.py:73
+msgid "Version {}"
+msgstr "版本 {}"
+
+#: ../vdms_panels/choose_topic.py:92
+msgid "Presets Manager"
+msgstr "预设管理器"
+
+#: ../vdms_panels/choose_topic.py:96
+msgid "AV-Conversions"
+msgstr "音频、视频转换"
+
+#: ../vdms_panels/choose_topic.py:100
+#, fuzzy
+msgid "Concatenate media files"
+msgstr "串联媒体文件"
+
+#: ../vdms_panels/choose_topic.py:104
+msgid "YouTube Downloader"
+msgstr "YouTube下载器"
+
+#: ../vdms_panels/choose_topic.py:109
+msgid "Still Image Maker"
+msgstr "静态图像制作"
+
+#: ../vdms_panels/choose_topic.py:114
+msgid "From Movie to Pictures"
+msgstr "从电影到图片"
+
+#: ../vdms_panels/choose_topic.py:133
+#, fuzzy
+msgid ""
+"Create, edit and use quickly your favorite FFmpeg presets and profiles with "
+"full formats support and codecs."
+msgstr ""
+"创建、编辑和快速使用您最喜爱的FFmpeg预设和配置文件，支持全部格式和编解码器。"
+
+#: ../vdms_panels/choose_topic.py:137
+#, fuzzy
+msgid ""
+"A set of useful tools for audio and video conversions. Save your profiles "
+"and reuse them with Presets Manager."
+msgstr ""
+"一套用于音频和视频转换的有用工具。保存你的配置文件，并通过预设管理器重新使用"
+"它们。"
+
+#: ../vdms_panels/choose_topic.py:141
+#, fuzzy
+msgid ""
+"Easily download videos and audio in different formats and quality from "
+"YouTube, Facebook and more sites."
+msgstr "轻松地从YouTube、Facebook和更多网站下载不同格式和质量的视频和音频。"
+
+#: ../vdms_panels/choose_topic.py:145
+#, fuzzy
+msgid ""
+"Concatenate multiple media files based on import order without re-encoding"
+msgstr "根据进口顺序串联多个媒体文件，无需重新编码"
+
+#: ../vdms_panels/choose_topic.py:148
+#, fuzzy
+msgid ""
+"Create video from a sequence of images, based on import order, with the "
+"ability to add an audio file."
+msgstr "根据导入顺序，从一连串的图像中创建视频，并能添加一个音频文件。"
+
+#: ../vdms_panels/choose_topic.py:151
+msgid "Extract images (frames) from your movies in JPG, PNG, BMP, GIF formats."
+msgstr "从你的电影中提取JPG、PNG、BMP、GIF格式的图像（帧）。"
+
+#: ../vdms_panels/choose_topic.py:226
+#, fuzzy
+msgid "The downloader is disabled. Check your preferences."
+msgstr "下载器被禁用。检查你的偏好。"
+
+#: ../vdms_panels/choose_topic.py:236
+#, python-brace-format
+msgid ""
+"ERROR: {0}\n"
+"\n"
+"{1} is not installed, use your package manager to install it."
+msgstr ""
+"ERROR: {0}\n"
+"\n"
+"{1}没有安装，请使用你的软件包管理器来安装它。"
+
+#: ../vdms_panels/concatenate.py:78
+#, fuzzy
+msgid ""
+"NOTE:\n"
+"\n"
+"- The concatenation function is performed only with Audio files or only with "
+"Video files.\n"
+"\n"
+"- The order of concatenation depends on the order in which the files were "
+"added.\n"
+"\n"
+"- The output file name will have the same name as the first file added (also "
+"depends\n"
+"  on the settings made in the preferences dialog).\n"
+"\n"
+"- Video files must have exactly same streams, same codecs and same\n"
+"  width/height, but can be wrapped in different container formats.\n"
+"\n"
+"- Audio files must have exactly the same formats, same codecs and same "
+"sample rate."
+msgstr ""
+"NOTE:n\n"
+"\n"
+"- The concatenation function is performed only with Audio files or only with "
+"Video files.\n"
+"\n"
+"- The order of concatenation depends on the order in which the files were "
+"added.（连接的顺序取决于添加文件的顺序）。\n"
+"\n"
+"- 输出文件的名称将与添加的第一个文件的名称相同（也取决于在偏好设置中的设"
+"置）。\n"
+"  在偏好对话框中的设置）。\n"
+"\n"
+"- 视频文件必须有完全相同的流，相同的编解码器和相同的宽度/高度。\n"
+"  width/height, but can be wrapped in different container formats.and\n"
+"\n"
+"- 音频文件必须具有完全相同的格式、相同的编解码器和相同的采样率。"
+
+#: ../vdms_panels/concatenate.py:113
+msgid "For more details, see the Videomass User Guide:"
+msgstr "更多细节，请参阅《Videomass用户指南》："
+
+#: ../vdms_panels/concatenate.py:133 ../vdms_panels/sequence_to_video.py:128
+#: ../vdms_panels/video_to_sequence.py:89
+msgid "For more information, visit the official FFmpeg documentation:"
+msgstr "更多信息，请访问官方FFmpeg文档："
+
+#: ../vdms_panels/concatenate.py:157
+msgid "From an image sequence to a video file"
+msgstr "从一个图像序列到一个视频文件"
+
+#: ../vdms_panels/concatenate.py:162
+msgid "Duration:"
+msgstr "持续时间："
+
+#: ../vdms_panels/concatenate.py:173 ../vdms_panels/video_to_sequence.py:167
+msgid "Output format:"
+msgstr "输出格式："
+
+#: ../vdms_panels/concatenate.py:196
+#, fuzzy
+msgid ""
+"Set the time interval between images in seconds (from 1 to 100 sec.), "
+"default is 1 second"
+msgstr "设置图像之间的时间间隔，单位是秒（从1到100秒），默认是1秒。"
+
+#: ../vdms_panels/concatenate.py:230
+#, fuzzy
+msgid "At least two files are required to perform concatenation."
+msgstr "至少需要两个文件才能进行串联。"
+
+#: ../vdms_panels/concatenate.py:231 ../vdms_panels/concatenate.py:242
+#: ../vdms_panels/sequence_to_video.py:539
+#: ../vdms_panels/sequence_to_video.py:549
+#: ../vdms_panels/sequence_to_video.py:566
+#: ../vdms_panels/sequence_to_video.py:574
+#: ../vdms_panels/video_to_sequence.py:485
+msgid "ERROR"
+msgstr "错误"
+
+#: ../vdms_panels/concatenate.py:239
+#, fuzzy
+msgid ""
+"The files do not have the same \"codec_types\", same \"sample_rate\" or same "
+"\"width\" or \"height\". Unable to proceed."
+msgstr ""
+"这些文件没有相同的 \"codec_types\"、相同的 \"sample_rate \"或相同的 \"width "
+"\"或 \"height\"。无法继续。"
+
+#: ../vdms_panels/concatenate.py:295 ../vdms_panels/presets_manager.py:877
+#: ../vdms_panels/presets_manager.py:900
+#: ../vdms_panels/sequence_to_video.py:648
+#: ../vdms_panels/video_to_sequence.py:533
+msgid "Starts"
+msgstr "开始"
+
+#: ../vdms_panels/concatenate.py:318
+#, fuzzy
+msgid ""
+"SUMMARY\n"
+"\n"
+"File to concatenate\n"
+"Output filename                      \n"
+"Destination\n"
+"Output Format\n"
+"Time Period"
+msgstr ""
+"SUMMARY\\N\n"
+"\n"
+"File to concatenate\n"
+"Output filename （输出文件名）。\n"
+"Destination （目的地）。\n"
+"Output Format\n"
+"Time Period"
+
+#: ../vdms_panels/youtubedl_ui.py:135
+#, fuzzy
+msgid ""
+"At least one \"Format Code\" must be checked for each URL selected in green."
+msgstr "对于每个以绿色选择的URL，必须至少勾选一个 \"格式代码\"。"
+
+#: ../vdms_panels/youtubedl_ui.py:169
+msgid "Precompiled Videos"
+msgstr "预编译的视频"
+
+#: ../vdms_panels/youtubedl_ui.py:170
+msgid "Download videos by resolution"
+msgstr "按分辨率下载视频"
+
+#: ../vdms_panels/youtubedl_ui.py:171
+#, fuzzy
+msgid "Download split audio and video"
+msgstr "下载分割的音频和视频"
+
+#: ../vdms_panels/youtubedl_ui.py:172
+msgid "Download Audio only"
+msgstr "仅下载音频"
+
+#: ../vdms_panels/youtubedl_ui.py:173
+#, fuzzy
+msgid "Download by format code"
+msgstr "按格式代码下载"
+
+#: ../vdms_panels/youtubedl_ui.py:213 ../vdms_panels/video_to_sequence.py:138
+msgid "Options"
+msgstr "选项"
+
+#: ../vdms_panels/youtubedl_ui.py:247
+msgid ""
+"When not available, the chosen video resolution will be replaced with the "
+"closest one"
+msgstr "当无法使用时，所选择的视频分辨率将被替换成最接近的一个。"
+
+#: ../vdms_panels/youtubedl_ui.py:251
+msgid "Preferred video format"
+msgstr "首选的视频格式"
+
+#: ../vdms_panels/youtubedl_ui.py:290
+msgid "Download all videos in playlist"
+msgstr "下载播放列表中的所有视频"
+
+#: ../vdms_panels/youtubedl_ui.py:295
+msgid "Playlist Editor"
+msgstr "播放列表编辑器"
+
+#: ../vdms_panels/youtubedl_ui.py:301
+#, fuzzy
+msgid "Don’t check SSL certificate"
+msgstr "不要检查SSL证书"
+
+#: ../vdms_panels/youtubedl_ui.py:305
+#, fuzzy
+msgid "Embed thumbnail in audio file"
+msgstr "在音频文件中嵌入缩略图"
+
+#: ../vdms_panels/youtubedl_ui.py:309
+msgid "Add metadata to file"
+msgstr "为文件添加元数据"
+
+#: ../vdms_panels/youtubedl_ui.py:313
+msgid "Write subtitles to video"
+msgstr "为视频编写字幕"
+
+#: ../vdms_panels/youtubedl_ui.py:318
+msgid "Download all available subtitles"
+msgstr "下载所有可用的字幕"
+
+#: ../vdms_panels/youtubedl_ui.py:326
+msgid "Download subtitles only"
+msgstr "仅下载字幕"
+
+#: ../vdms_panels/youtubedl_ui.py:333
+#, fuzzy
+msgid "Prevent overwriting files"
+msgstr "防止覆写文件"
+
+#: ../vdms_panels/youtubedl_ui.py:337
+#, fuzzy
+msgid ""
+"Include the video ID\n"
+"in the file names"
+msgstr ""
+"在文件名中包括视频ID/n\n"
+"在文件名中"
+
+#: ../vdms_panels/youtubedl_ui.py:343
+msgid "Restrict file names"
+msgstr "限制文件名"
+
+#: ../vdms_panels/youtubedl_ui.py:391 ../vdms_panels/youtubedl_ui.py:490
+#: ../vdms_panels/youtubedl_ui.py:506
+msgid "Play selected url"
+msgstr "播放选定的网址"
+
+#: ../vdms_panels/youtubedl_ui.py:518
+#, fuzzy
+msgid "An item must be selected in the URLs checklist"
+msgstr "必须在URLs检查表中选择一个项目"
+
+#: ../vdms_panels/youtubedl_ui.py:534
+#, python-brace-format
+msgid ""
+"Only one video can be played at a time.\n"
+"\n"
+"Unsupported '{0}':\n"
+"'{1}'"
+msgstr ""
+"一次只能播放一个视频。\n"
+"\n"
+"Unsupported '{0}':n\n"
+"'{1}'"
+
+#: ../vdms_panels/youtubedl_ui.py:569
+msgid "Format Code"
+msgstr "格式代码"
+
+#: ../vdms_panels/youtubedl_ui.py:570 ../vdms_panels/youtubedl_ui.py:679
+msgid "Url"
+msgstr "网址"
+
+#: ../vdms_panels/youtubedl_ui.py:571 ../vdms_panels/youtubedl_ui.py:680
+msgid "Title"
+msgstr "标题"
+
+#: ../vdms_panels/youtubedl_ui.py:572
+msgid "Extension"
+msgstr "扩展"
+
+#: ../vdms_panels/youtubedl_ui.py:573
+msgid "Resolution"
+msgstr "分辨率"
+
+#: ../vdms_panels/youtubedl_ui.py:574
+msgid "Video Codec"
+msgstr "视频编解码器"
+
+#: ../vdms_panels/youtubedl_ui.py:575
+msgid "fps"
+msgstr "fps"
+
+#: ../vdms_panels/youtubedl_ui.py:576
+msgid "Audio Codec"
+msgstr "音频编解码器"
+
+#: ../vdms_panels/youtubedl_ui.py:577 ../vdms_panels/filedrop.py:229
+msgid "Size"
+msgstr "大小"
+
+#: ../vdms_panels/youtubedl_ui.py:615
+#, fuzzy, python-brace-format
+msgid ""
+"ERROR: Unable to get format codes.\n"
+"\n"
+"Unsupported URL:\n"
+"'{0}'"
+msgstr ""
+"ERROR: Unable to get format codes.\n"
+"\n"
+"不支持的URL:/n\n"
+"'{0}'"
+
+#: ../vdms_panels/youtubedl_ui.py:681
+msgid "Quality"
+msgstr "质量"
+
+#: ../vdms_panels/youtubedl_ui.py:738
+#, fuzzy, python-brace-format
+msgid ""
+"Unable to get format codes on '{0}'\n"
+"\n"
+"Unsupported '{0}':\n"
+"'{1}'"
+msgstr ""
+"Unable to get format codes on '{0}'\n"
+"\n"
+"Unsupported '{0}':n\n"
+"'{1}'"
+
+#: ../vdms_panels/youtubedl_ui.py:895
+#, fuzzy
+msgid "URLs have no playlist references"
+msgstr "URLs没有播放列表参考"
+
+#: ../vdms_panels/youtubedl_ui.py:1028
+#, fuzzy
+msgid "The URLs contain playlists. Are you sure you want to continue?"
+msgstr "这些URL包含播放列表。你确定要继续吗？"
+
+#: ../vdms_panels/youtubedl_ui.py:1030 ../vdms_panels/youtubedl_ui.py:1036
+#: ../vdms_panels/long_processing_task.py:514
+#: ../vdms_panels/presets_manager.py:511 ../vdms_panels/presets_manager.py:551
+#: ../vdms_panels/presets_manager.py:617 ../vdms_panels/presets_manager.py:643
+#: ../vdms_panels/presets_manager.py:805 ../vdms_panels/presets_manager.py:835
+msgid "Please confirm"
+msgstr "请确认"
+
+#: ../vdms_panels/youtubedl_ui.py:1034
+#, fuzzy
+msgid "The URLs contain channels. Are you sure you want to continue?"
+msgstr "URL包含通道。你确定要继续吗？"
+
+#: ../vdms_panels/filedrop.py:67
+#, fuzzy
+msgid "Directories are not allowed, just add files, please."
+msgstr "不允许有目录，只允许添加文件，谢谢。"
+
+#: ../vdms_panels/filedrop.py:68
+msgid ""
+"File without format extension: please give an appropriate extension to the "
+"file name, example '.mkv', '.avi', '.mp3', etc."
+msgstr ""
+"没有格式扩展名的文件：请给文件名加上适当的扩展名，例如\".mkv\"、\".avi\"、\"."
+"mp3 \"等。"
+
+#: ../vdms_panels/filedrop.py:71
+msgid "Invalid filename. Contains double or single quotes"
+msgstr "无效的文件名。含有双引号或单引号"
+
+#: ../vdms_panels/filedrop.py:125
+#, fuzzy
+msgid "Duplicate files are rejected: > {}"
+msgstr "重复的文件被拒绝。> {}"
+
+#: ../vdms_panels/filedrop.py:194
+msgid "Drag one or more files below"
+msgstr "拖动下面的一个或多个文件"
+
+#: ../vdms_panels/filedrop.py:200 ../vdms_panels/filedrop.py:354
+#: ../vdms_panels/filedrop.py:370
+msgid "Play"
+msgstr "播放"
+
+#: ../vdms_panels/filedrop.py:226
+msgid "File Name"
+msgstr "文件名称"
+
+#: ../vdms_panels/filedrop.py:227 ../vdms_panels/timeline.py:132
+msgid "Duration"
+msgstr "持续时间"
+
+#: ../vdms_panels/filedrop.py:228
+msgid "Media type"
+msgstr "媒体类型"
+
+#: ../vdms_panels/filedrop.py:247
+msgid "Remove the selected files from the list"
+msgstr "从列表中删除选定的文件"
+
+#: ../vdms_panels/filedrop.py:249
+msgid "Delete all files from the list"
+msgstr "删除列表中的所有文件"
+
+#: ../vdms_panels/filedrop.py:252
+msgid "Play the selected file in the list"
+msgstr "播放列表中选定的文件"
+
+#: ../vdms_panels/filedrop.py:253 ../vdms_panels/textdrop.py:85
+#, fuzzy
+msgid "Destination folder"
+msgstr "目的地文件夹"
+
+#: ../vdms_panels/filedrop.py:355 ../vdms_panels/filedrop.py:373
+#: ../vdms_panels/presets_manager.py:139
+msgid "Remove"
+msgstr "移除"
+
+#: ../vdms_panels/filedrop.py:384 ../vdms_panels/filedrop.py:405
+#, fuzzy
+msgid "No file selected"
+msgstr "没有选择文件"
+
+#: ../vdms_panels/filedrop.py:387 ../vdms_panels/filedrop.py:409
+msgid "Add Files"
+msgstr "添加文件"
+
+#: ../vdms_panels/long_processing_task.py:106
+msgid "[Videomass]: SUCCESS !"
+msgstr "[Videomass]: 成功!"
+
+#: ../vdms_panels/long_processing_task.py:107
+msgid "[Videomass]: FAILED !"
+msgstr "[Videomass]: 失败了!"
+
+#: ../vdms_panels/long_processing_task.py:108
+#, fuzzy
+msgid "Sorry, all task failed !"
+msgstr "对不起，所有的任务都失败了 !"
+
+#: ../vdms_panels/long_processing_task.py:109
+#, fuzzy
+msgid "The process was stopped due to a fatal error."
+msgstr "该进程由于一个致命的错误而被停止。"
+
+#: ../vdms_panels/long_processing_task.py:110
+msgid "Interrupted Process !"
+msgstr "过程已中断 !"
+
+#: ../vdms_panels/long_processing_task.py:111
+msgid "Successfully completed !"
+msgstr "成功完成 !"
+
+#: ../vdms_panels/long_processing_task.py:112
+#, fuzzy
+msgid "Not everything was successful."
+msgstr "并非一切都很成功。"
+
+#: ../vdms_panels/long_processing_task.py:141
+msgid "Process log:"
+msgstr "过程记录："
+
+#: ../vdms_panels/long_processing_task.py:150
+#, fuzzy
+msgid "Suppress excess output"
+msgstr "抑制多余的输出"
+
+#: ../vdms_panels/long_processing_task.py:155
+msgid "Abort"
+msgstr "中止"
+
+#: ../vdms_panels/long_processing_task.py:171
+msgid "If activated, hides some output messages."
+msgstr "如果激活，将隐藏一些输出信息"
+
+#: ../vdms_panels/long_processing_task.py:173
+msgid "Stops current process"
+msgstr "停止当前过程"
+
+#: ../vdms_panels/long_processing_task.py:433
+msgid "Fatal Error !"
+msgstr "致命的错误!"
+
+#: ../vdms_panels/long_processing_task.py:442
+#, fuzzy
+msgid "Get your files at the destination you specified"
+msgstr "在你指定的目的地获取你的文件"
+
+#: ../vdms_panels/long_processing_task.py:450
+#: ../vdms_panels/long_processing_task.py:457
+#, fuzzy
+msgid ""
+"Check the current output or read the related log file for more information."
+msgstr "检查当前的输出或阅读相关的日志文件以了解更多信息。"
+
+#: ../vdms_panels/long_processing_task.py:462
+msgid "...Finished"
+msgstr "...完成"
+
+#: ../vdms_panels/long_processing_task.py:485
+#, fuzzy
+msgid ""
+"wait... all operations will be stopped at the end of the download in "
+"progress."
+msgstr "等待......所有操作将在正在进行的下载结束后停止。"
+
+#: ../vdms_panels/long_processing_task.py:490
+#, fuzzy
+msgid "wait... I'm interrupting"
+msgstr "等等... 我打断了"
+
+#: ../vdms_panels/long_processing_task.py:493
+msgid "...Interrupted"
+msgstr "......被打断"
+
+#: ../vdms_panels/long_processing_task.py:511
+#, fuzzy
+msgid ""
+"There are still processes running.. if you want to stop them, use the \"Abort"
+"\" button.\n"
+"\n"
+"Do you want to kill application?"
+msgstr ""
+"仍有一些进程在运行。如果你想停止它们，请使用 \"中止 \"按钮。\n"
+"\n"
+"你想杀死应用程序吗？"
+
+#: ../vdms_panels/presets_manager.py:115
+msgid "Presets"
+msgstr "预设"
+
+#: ../vdms_panels/presets_manager.py:136
+msgid "New"
+msgstr "创建"
+
+#: ../vdms_panels/presets_manager.py:149
+msgid "Export selected"
+msgstr "导出选定对象"
+
+#: ../vdms_panels/presets_manager.py:152
+msgid "Export all..."
+msgstr "导出所有..."
+
+#: ../vdms_panels/presets_manager.py:163
+msgid "Import preset"
+msgstr "导入预设"
+
+#: ../vdms_panels/presets_manager.py:166
+msgid "Import group"
+msgstr "导入预设组"
+
+#: ../vdms_panels/presets_manager.py:177
+msgid "Restore"
+msgstr "恢复"
+
+#: ../vdms_panels/presets_manager.py:181
+msgid "Restore all..."
+msgstr "恢复所有..."
+
+#: ../vdms_panels/presets_manager.py:193
+msgid "Reload"
+msgstr "重新加载"
+
+#: ../vdms_panels/presets_manager.py:207
+msgid "Profiles"
+msgstr "配置文件"
+
+#: ../vdms_panels/presets_manager.py:212 ../vdms_panels/presets_manager.py:333
+#: ../vdms_panels/presets_manager.py:353
+msgid "Add"
+msgstr "添加"
+
+#: ../vdms_panels/presets_manager.py:216 ../vdms_panels/presets_manager.py:337
+#: ../vdms_panels/presets_manager.py:357
+msgid "Delete"
+msgstr "删除"
+
+#: ../vdms_panels/presets_manager.py:220 ../vdms_panels/presets_manager.py:334
+#: ../vdms_panels/presets_manager.py:355
+#: ../vdms_panels/video_to_sequence.py:218
+msgid "Edit"
+msgstr "编辑"
+
+#: ../vdms_panels/presets_manager.py:224 ../vdms_panels/presets_manager.py:335
+#: ../vdms_panels/presets_manager.py:359
+msgid "Duplicate"
+msgstr "复制"
+
+#: ../vdms_panels/presets_manager.py:234
+#, fuzzy
+msgid "One-Pass"
+msgstr "单程票"
+
+#: ../vdms_panels/presets_manager.py:245
+#, fuzzy
+msgid "Two-Pass"
+msgstr "两种方式"
+
+#: ../vdms_panels/presets_manager.py:265
+msgid "Choose a preset and view its profiles"
+msgstr "选择一个预设并查看其配置文件"
+
+#: ../vdms_panels/presets_manager.py:266
+#, fuzzy
+msgid "Create a new profile and save it in the selected preset"
+msgstr "创建一个新的配置文件，并将其保存在选定的预置中"
+
+#: ../vdms_panels/presets_manager.py:268
+msgid "Delete the selected profile"
+msgstr "删除所选配置文件"
+
+#: ../vdms_panels/presets_manager.py:269
+msgid "Edit the selected profile"
+msgstr "编辑所选配置文件"
+
+#: ../vdms_panels/presets_manager.py:270
+msgid "Create a new preset"
+msgstr "创建一个新的预设"
+
+#: ../vdms_panels/presets_manager.py:272
+msgid "Remove the selected preset from the Presets Manager"
+msgstr "从预设管理器中删除选定的预设"
+
+#: ../vdms_panels/presets_manager.py:274
+msgid "Export selected preset as copy"
+msgstr "将选定的预设导出为副本"
+
+#: ../vdms_panels/presets_manager.py:276
+msgid "Export entire presets folder as copy"
+msgstr "将整个预设文件夹导出为副本"
+
+#: ../vdms_panels/presets_manager.py:278
+msgid "Import a new preset or update an existing one"
+msgstr "导入一个新的预设或更新一个现有的预设"
+
+#: ../vdms_panels/presets_manager.py:280
+msgid "Import a group of presets from a folder and update existing ones"
+msgstr "从一个文件夹中导入一组预设并更新现有预设"
+
+#: ../vdms_panels/presets_manager.py:283
+msgid "Replace the selected preset with the Videomass default one"
+msgstr "用Videomass默认的预设替换所选的预设"
+
+#: ../vdms_panels/presets_manager.py:285
+#, fuzzy
+msgid "Retrieve all Videomass default presets"
+msgstr "检索所有Videomass的默认预置"
+
+#: ../vdms_panels/presets_manager.py:287
+msgid "Update the presets list"
+msgstr "更新预设列表"
+
+#: ../vdms_panels/presets_manager.py:288
+#, fuzzy
+msgid "First pass of the selected profile"
+msgstr "选定配置文件的第一遍"
+
+#: ../vdms_panels/presets_manager.py:290
+#, fuzzy
+msgid "Second pass of the selected profile"
+msgstr "选定轮廓的第二道工序"
+
+#: ../vdms_panels/presets_manager.py:391
+msgid "Name"
+msgstr "名称"
+
+#: ../vdms_panels/presets_manager.py:393
+msgid "Output Format"
+msgstr "输出格式"
+
+#: ../vdms_panels/presets_manager.py:394
+msgid "Supported Format List"
+msgstr "支持的格式列表"
+
+#: ../vdms_panels/presets_manager.py:412 ../vdms_panels/presets_manager.py:455
+#, fuzzy
+msgid ""
+"ERROR: Typing error on JSON keys: {}\n"
+"\n"
+"File: \"{}\"\n"
+"key malformed ?"
+msgstr ""
+"错误：JSON键的输入错误。{}\n"
+"\n"
+"文件： \"{}\"/n\n"
+"key 畸形 ?"
+
+#: ../vdms_panels/presets_manager.py:477
+msgid "Enter name for new preset"
+msgstr "为新的预设输入名称"
+
+#: ../vdms_panels/presets_manager.py:490
+msgid "Cannot save current data in file '{}'."
+msgstr "无法在文件'{}'中保存当前数据。"
+
+#: ../vdms_panels/presets_manager.py:494
+msgid ""
+"'Successful!\n"
+"\n"
+"A new empty preset has been created."
+msgstr ""
+"成功！\n"
+"\n"
+"一个新的空预设已经被创建。"
+
+#: ../vdms_panels/presets_manager.py:508
+msgid ""
+"Are you sure you want to remove \"{}\" preset?\n"
+"\n"
+" It will be moved to the \"Removals\" subfolder of the presets folder."
+msgstr ""
+"你确定你想要删除 \"{}\" 预设？\n"
+"\n"
+" 它将被移到预设文件夹的 \"移除 \"子文件夹中。"
+
+#: ../vdms_panels/presets_manager.py:519
+msgid ""
+"{}\n"
+"\n"
+"Sorry, removal failed, cannot continue.."
+msgstr ""
+"{}\n"
+"\n"
+"对不起，删除失败，无法继续。"
+
+#: ../vdms_panels/presets_manager.py:529
+#, fuzzy, python-brace-format
+msgid "The preset \"{0}\" was successfully removed"
+msgstr "预设\"{0}\"已成功删除"
+
+#: ../vdms_panels/presets_manager.py:544
+msgid "Choose a folder to save the selected preset"
+msgstr "选择一个文件夹来保存选定的预设"
+
+#: ../vdms_panels/presets_manager.py:549
+msgid "A file with this name already exists, do you want to overwrite it?"
+msgstr "已经有一个以此为名的文件，你想覆盖它吗？"
+
+#: ../vdms_panels/presets_manager.py:562
+#, fuzzy
+msgid "The preset was exported successfully"
+msgstr "预设已成功导出"
+
+#: ../vdms_panels/presets_manager.py:573
+msgid "Choose a folder to export all presets"
+msgstr "选择一个文件夹来导出所有预设"
+
+#: ../vdms_panels/presets_manager.py:582
+msgid "All presets have been exported successfully"
+msgstr "所有预设都已成功导出"
+
+#: ../vdms_panels/presets_manager.py:594
+msgid "Import a new preset"
+msgstr "导入一个新的预设"
+
+#: ../vdms_panels/presets_manager.py:605
+msgid "Error, invalid preset: \"{}\""
+msgstr "错误，无效的预设。\"{}\""
+
+#: ../vdms_panels/presets_manager.py:613
+msgid ""
+"This preset already exists and is about to be updated. Don't worry, it will "
+"keep all your saved profiles.\n"
+"\n"
+"Do you want to continue?"
+msgstr ""
+"这个预设已经存在，并且即将被更新。不要担心，它将保留你所有保存的配置文件。\n"
+"\n"
+"你想要继续吗?"
+
+#: ../vdms_panels/presets_manager.py:630
+msgid "A new preset was successfully imported"
+msgstr "一个新的预设被成功导入"
+
+#: ../vdms_panels/presets_manager.py:640
+msgid ""
+"This will update the presets database. Don't worry, it will keep all your "
+"saved profiles.\n"
+"\n"
+"Do you want to continue?"
+msgstr ""
+"这将更新预设数据库。不要担心，它将保留你所有保存的配置文件。\n"
+"\n"
+"你想要继续吗?"
+
+#: ../vdms_panels/presets_manager.py:647
+msgid "Import a new presets folder"
+msgstr "导入一个新的预置文件夹"
+
+#: ../vdms_panels/presets_manager.py:669
+#, fuzzy
+msgid "The presets database has been successfully updated"
+msgstr "预置数据库已成功更新"
+
+#: ../vdms_panels/presets_manager.py:679
+msgid ""
+"Be careful! The selected preset will be overwritten with the default one. "
+"Your profiles may be deleted!\n"
+"\n"
+"Do you want to continue?"
+msgstr ""
+"请注意! 所选的预设将被默认的预设所覆盖。你的配置文件可能会被删除！ （n\n"
+"\n"
+"你想要继续吗?"
+
+#: ../vdms_panels/presets_manager.py:682 ../vdms_panels/presets_manager.py:708
+msgid "Warning"
+msgstr "警告"
+
+#: ../vdms_panels/presets_manager.py:691
+#, fuzzy
+msgid "Sorry, this preset is not part of default Videomass presets."
+msgstr "对不起，这个预设不是默认的Videomass预设的一部分。"
+
+#: ../vdms_panels/presets_manager.py:697
+msgid "Successful recovery"
+msgstr "成功恢复"
+
+#: ../vdms_panels/presets_manager.py:706
+msgid ""
+"Be careful! This action will restore all presets to default ones. Your "
+"profiles may be deleted!\n"
+"\n"
+"Do you want to continue?"
+msgstr ""
+"小心！这个操作会将所有的预设恢复为默认的。这个动作会把所有的预设恢复为默认"
+"的。你的配置文件可能会被删除！ \n"
+"\n"
+"你想要继续吗?"
+
+#: ../vdms_panels/presets_manager.py:716
+#, fuzzy
+msgid "All default presets have been successfully recovered"
+msgstr "所有的默认预设都已成功恢复"
+
+#: ../vdms_panels/presets_manager.py:735
+#, fuzzy
+msgid "Create a new profile on \"{}\" preset"
+msgstr "在\"{}\"预设上创建一个新的配置文件"
+
+#: ../vdms_panels/presets_manager.py:754 ../vdms_panels/presets_manager.py:775
+#: ../vdms_panels/presets_manager.py:799 ../vdms_panels/presets_manager.py:822
+msgid "First select a profile in the list"
+msgstr "首先在列表中选择一个配置文件"
+
+#: ../vdms_panels/presets_manager.py:759
+msgid "Edit profile of the \"{}\" preset"
+msgstr "编辑\"{}\"预设的配置文件"
+
+#: ../vdms_panels/presets_manager.py:803
+msgid ""
+"Are you sure you want to delete the selected profile? It will no longer be "
+"possible to recover it."
+msgstr "你确定要删除选定的配置文件吗？这将不再可能恢复它。"
+
+#: ../vdms_panels/presets_manager.py:830
+#, fuzzy
+msgid ""
+"The selected profile command has been changed manually.\n"
+"Do you want to apply it during the conversion process?"
+msgstr ""
+"所选的配置文件命令已被手动更改。\n"
+"你想在转换过程中应用它吗？"
+
+#: ../vdms_panels/presets_manager.py:839
+#, fuzzy
+msgid "Don't show this dialog again"
+msgstr "不要再显示这个对话框"
+
+#: ../vdms_panels/presets_manager.py:929
+#, fuzzy
+msgid ""
+"SUMMARY\n"
+"\n"
+"Queued File\n"
+"Pass Encoding                     \n"
+"Profile Used\n"
+"Output Format\n"
+"Time Period"
+msgstr ""
+"SUMMARY\\N\n"
+"\n"
+"Queued File （排队文件）。\n"
+"Pass Encoding （通过编码\n"
+"Profile Used\n"
+"Output Format （输出格式\n"
+"Time Period"
+
+#: ../vdms_panels/textdrop.py:47
+msgid "Enter URLs below"
+msgstr "在下面输入网址"
+
+#: ../vdms_panels/textdrop.py:82
+msgid "Delete all text from the list"
+msgstr "删除列表中的所有文本"
+
+#: ../vdms_panels/timeline.py:126
+#, fuzzy
+msgid "Seek"
+msgstr "寻找"
+
+#: ../vdms_panels/timeline.py:136
+#, fuzzy
+msgid "Seek to given time position"
+msgstr "寻觅给定的时间位置"
+
+#: ../vdms_panels/timeline.py:137
+msgid "Total duration"
+msgstr "总时间"
+
+#: ../vdms_panels/timeline.py:138
+#, fuzzy
+msgid ""
+"Set the amount of steps the slider moves using 'UP' or 'DOWN' arrow and 'UP' "
+"or 'DOWN' page, to quickly set a more accurate time selection"
+msgstr ""
+"使用'上'或'下'箭头和'上'或'下'页面设置滑块移动的步数，以快速设置更准确的时间"
+"选择。"
+
+#: ../vdms_panels/timeline.py:347
+#, fuzzy, python-brace-format
+msgid ""
+"The maximum time refers to the file with the longest duration, it will be "
+"set to {0} otherwise."
+msgstr "最大时间指的是持续时间最长的文件，否则它将被设置为{0}。"
+
+#: ../vdms_panels/sequence_to_video.py:58
+msgid "Images need to be resized, please use Resizing function."
+msgstr "图片需要调整大小，请使用调整大小功能。"
+
+#: ../vdms_panels/sequence_to_video.py:75
+msgid ""
+"\n"
+"1. Import one or more image files such as JPG, PNG and BMP formats, then "
+"select one.\n"
+"\n"
+"2. Use the Resizing function to resize images which have different sizes "
+"such as width and height. It is optional in other cases.\n"
+"\n"
+"3. Use the Timeline editor (CTRL+T) to set the time interval between images "
+"by scrolling the DURATION slider.\n"
+"\n"
+"4. Start the conversion.\n"
+"\n"
+"\n"
+"The produced video will have the name of the selected file in the 'Queued "
+"File' list, which will be saved in a folder named 'Still_Images'\n"
+"with a progressive digit, in the path you specify."
+msgstr ""
+"\n"
+"1. 导入一个或多个图像文件，如JPG、PNG和BMP格式，然后选择一个。\n"
+"\n"
+"2. 使用调整大小功能来调整具有不同尺寸的图像，如宽度和高度。在其他情况下，它是"
+"可选的。\n"
+"\n"
+"3.  使用时间轴编辑器（CTRL+T），通过滚动DURATION滑块设置图像之间的时间间"
+"隔。\n"
+"\n"
+"4. 4. 开始转换。\n"
+"\n"
+"\n"
+"产生的视频将在 \"队列文件 \"列表中具有所选文件的名称，它将被保存在一个名为 "
+"\"Still_Images \"\n"
+"的文件夹中，并在您指定的路径上有一个渐进的数字。"
+
+#: ../vdms_panels/sequence_to_video.py:150
+msgid "Enable a single still image"
+msgstr "启用单一静止图像"
+
+#: ../vdms_panels/sequence_to_video.py:182
+#, fuzzy
+msgid ""
+"Force original aspect ratio using\n"
+"padding rather than stretching"
+msgstr ""
+"Force original aspect ratio using\n"
+"填充，而不是拉伸"
+
+#: ../vdms_panels/sequence_to_video.py:188
+msgid "Include audio file"
+msgstr "包括音频文件"
+
+#: ../vdms_panels/sequence_to_video.py:191
+#, fuzzy
+msgid "Play the video until audio track finishes"
+msgstr "播放视频，直到音轨结束"
+
+#: ../vdms_panels/sequence_to_video.py:198
+#: ../vdms_panels/sequence_to_video.py:423
+msgid "Open audio file"
+msgstr "打开音频文件"
+
+#: ../vdms_panels/sequence_to_video.py:216
+#, fuzzy
+msgid "Additional arguments"
+msgstr "补充论据"
+
+#: ../vdms_panels/sequence_to_video.py:436
+msgid "Open an audio file"
+msgstr "打开一个音频文件"
+
+#: ../vdms_panels/sequence_to_video.py:538
+#: ../vdms_panels/sequence_to_video.py:565
+#: ../vdms_panels/video_to_sequence.py:484
+msgid "Invalid file: '{}'"
+msgstr "无效文件：'{}'"
+
+#: ../vdms_panels/sequence_to_video.py:548
+#: ../vdms_panels/sequence_to_video.py:573
+msgid "Unsupported format '{}'"
+msgstr "不支持的格式'{}'"
+
+#: ../vdms_panels/sequence_to_video.py:680
+#, fuzzy
+msgid ""
+"SUMMARY\n"
+"\n"
+"File to process\n"
+"Output filename\n"
+"Destination Folder\n"
+"Output Format\n"
+"Additional arguments\n"
+"Audio file\n"
+"Shortest\n"
+"Resizing\n"
+"Pre-input\n"
+"Frame per Second (FPS)\n"
+"Still image duration\n"
+"Overall video duration"
+msgstr ""
+"SUMMARY\\N\n"
+"\n"
+"File to process\n"
+"Output filename\n"
+"Destination Folder\n"
+"Output Format\n"
+"Additional arguments\n"
+"Audio file/n\n"
+"Shortest\n"
+"Resizing （调整大小\n"
+"Pre-input\n"
+"Frame per Second (FPS)（每秒帧数）n\n"
+"Still image duration （静态图像时间）。\n"
+"Overall video duration （整体视频时间"
+
+#: ../vdms_panels/video_to_sequence.py:50
+msgid ""
+"\n"
+"1. Import one or more video files, then select one.\n"
+"\n"
+"2. To select a slice of time use the Timeline editor (CTRL+T) by scrolling "
+"the DURATION and the SEEK sliders.\n"
+"\n"
+"3. Select an output format (jpg, png, bmp).\n"
+"\n"
+"4. Start the conversion.\n"
+"\n"
+"\n"
+"The images produced will be saved in a folder named 'Movie_to_Pictures' with "
+"a progressive digit, \n"
+"in the path you specify."
+msgstr ""
+"\n"
+"1. 导入一个或多个视频文件，然后选择一个。\n"
+"\n"
+"2. 使用时间线编辑器（CTRL+T）滚动DURATION和SEEK滑块来选择一个时间片段。\n"
+"\n"
+"3. 选择一个输出格式（jpg、png、bmp）。\n"
+"\n"
+"4. Start the conversion.（开始转换）。\n"
+"\n"
+"\n"
+"产生的图像将被保存在一个名为'Movie_to_Pictures'的文件夹中，并有一个渐进的数"
+"字，\n"
+"在您指定的路径中。"
+
+#: ../vdms_panels/video_to_sequence.py:115
+msgid "Other unofficial resources:"
+msgstr "其他非官方的资源："
+
+#: ../vdms_panels/video_to_sequence.py:134
+msgid "Create thumbnails"
+msgstr "创建缩略图"
+
+#: ../vdms_panels/video_to_sequence.py:135
+#, fuzzy
+msgid "Create tiled mosaics"
+msgstr "创建瓷砖马赛克"
+
+#: ../vdms_panels/video_to_sequence.py:136
+msgid "Create animated GIF"
+msgstr "创建GIF动画"
+
+#: ../vdms_panels/video_to_sequence.py:178
+msgid "Rows:"
+msgstr "行数："
+
+#: ../vdms_panels/video_to_sequence.py:188
+msgid "Columns:"
+msgstr "列："
+
+#: ../vdms_panels/video_to_sequence.py:234
+#, fuzzy
+msgid ""
+"Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images "
+"will be extracted."
+msgstr "设置FPS控制，从0.1到30.0 fps。这个值越高，提取的图像就越多。"
+
+#: ../vdms_panels/video_to_sequence.py:237
+#, fuzzy
+msgid "Spaces around the mosaic tiles. From 0 to 32 pixels"
+msgstr "马赛克瓷砖周围的空间。从0到32像素"
+
+#: ../vdms_panels/video_to_sequence.py:239
+#, fuzzy
+msgid "Spaces around the mosaic borders. From 0 to 32 pixels"
+msgstr "马赛克边框周围的空间。从0到32像素"
+
+#: ../vdms_panels/video_to_sequence.py:583
+#, fuzzy
+msgid ""
+"SUMMARY\n"
+"\n"
+"Selected File\n"
+"Output Format\n"
+"Destination Folder\n"
+"Rate (fps)\n"
+"Resizing\n"
+"Mosaic rows\n"
+"Mosaic columns\n"
+"Mosaic padding\n"
+"Mosaic margin\n"
+"Custom Arguments\n"
+"Time Period"
+msgstr ""
+"SUMMARY\\N\n"
+"\n"
+"Selected File （选择的文件）。\n"
+"Output Format （输出格式\n"
+"Destination Folder\n"
+"Rate (fps)\n"
+"Resizing （调整大小\n"
+"Mosaic rows\n"
+"Mosaic columns\n"
+"Mosaic padding\n"
+"Mosaic margin\n"
+"Custom Arguments\n"
+"Time Period"
+
+#: ../vdms_threads/one_pass.py:57 ../vdms_threads/picture_exporting.py:53
+#: ../vdms_threads/two_pass_ebu.py:56 ../vdms_threads/two_pass.py:58
+#: ../vdms_threads/slideshow.py:49 ../vdms_threads/slideshow.py:139
+#: ../vdms_threads/slideshow.py:228
+msgid "Is 'ffmpeg' installed on your system?"
+msgstr "你的系统上是否安装了'ffmpeg'？"
