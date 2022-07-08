@@ -5,18 +5,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: Videomass 4.0.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-03 10:16+0200\n"
-"PO-Revision-Date: 2022-06-29 16:09+0800\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2022-07-08 11:06+0200\n"
+"Last-Translator: MaiJZ https://github.com/maijz128\n"
+"Language-Team: simplified Chinese (CN)\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: ../gui_app.py:176
 msgid ""
@@ -48,7 +48,6 @@ msgstr ""
 "制。"
 
 #: ../vdms_dialogs/audiodialogs.py:224
-#, fuzzy
 msgid ""
 "The audio Rate (or sample-rate) is the sound sampling frequency and is "
 "measured in Hertz. The higher the frequency, the more true it will be to the "
@@ -61,14 +60,12 @@ msgstr ""
 "确定，设置为 \"自动\"，声源值将被复制。"
 
 #: ../vdms_dialogs/audiodialogs.py:233
-#, fuzzy
 msgid ""
 "The audio bitrate affects the file compression and thus the quality of "
 "listening. The higher the value, the higher the quality."
 msgstr "音频比特率影响文件的压缩，从而影响收听质量。该值越高，质量就越高。"
 
 #: ../vdms_dialogs/audiodialogs.py:237
-#, fuzzy
 msgid ""
 "Bit depth is the number of bits of information in each sample, and it "
 "directly corresponds to the resolution of each sample. Bit depth is only "
@@ -79,7 +76,7 @@ msgstr ""
 "PCM数字信号时才有意义。非PCM格式，如有损压缩格式，没有相关的比特深度。"
 
 #: ../vdms_dialogs/filter_crop.py:190 ../vdms_dialogs/filter_scale.py:85
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "源尺寸：{0}×{1}像素"
 
