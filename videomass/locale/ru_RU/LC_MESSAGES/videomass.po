@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 4.0.1\n"
+"Project-Id-Version: Videomass 4.0.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-09 09:41+0200\n"
-"PO-Revision-Date: 2022-05-09 09:47+0200\n"
+"PO-Revision-Date: 2022-07-08 11:09+0200\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"

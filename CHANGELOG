@@ -15,6 +15,8 @@ June 25, 2022 V.4.0.2
   * changed permission to 0644 to io.github.jeanslack.videomass.desktop
   * improved help layout for panels
   * A/V Conversion: Added vp9/opus for mp4 container #133
+  * Added support for simplified Chinese zh_CN #138
+  * Updated setup dialog for simpified Chinese lang support.
 
 +------------------------------------+
 May 02, 2022 V.4.0.1

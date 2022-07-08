@@ -6,8 +6,10 @@ videomass (4.0.2-1) UNRELEASED; urgency=medium
   * changed permission to 0644 to io.github.jeanslack.videomass.desktop
   * improved help layout for panels
   * A/V Conversion: Added vp9/opus for mp4 container #133
+  * Added support for simplified Chinese zh_CN #138
+  * Updated setup dialog for simpified Chinese lang support.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 25 Jun 2022 10:13:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 29 Jun 2022 15:53:00 +0200
 
 videomass (4.0.1-1) UNRELEASED; urgency=medium
 

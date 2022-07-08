@@ -4,7 +4,7 @@
 # Created: 06/04/2012
 #
 # Edited by Gianluca (jeanslack) Pernigotto
-# Update: May 11 2022
+# Update: June 29 2022
 
 # NOTE for translators: when you add new languages you
 # also add them to "langnames"
@@ -18,6 +18,7 @@ import wx
 langDomain = "videomass"
 # languages you want to support
 supLang = {"Default": wx.LANGUAGE_DEFAULT,
+           "zh_CN": wx.LANGUAGE_CHINESE_SIMPLIFIED,
            "nl_NL": wx.LANGUAGE_DUTCH,
            "en_US": wx.LANGUAGE_ENGLISH_US,
            "it_IT": wx.LANGUAGE_ITALIAN,
@@ -28,6 +29,7 @@ supLang = {"Default": wx.LANGUAGE_DEFAULT,
            }
 # Make languages available to the preferences dialog
 langnames = {"Default": ("System default language"),
+             "zh_CN": ("Chinese (simplified)"),
              "nl_NL": ("Dutch"),
              "en_US": ("English (United States)"),
              "it_IT": ("Italian"),
