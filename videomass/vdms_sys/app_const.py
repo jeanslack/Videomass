@@ -4,7 +4,7 @@
 # Created: 06/04/2012
 #
 # Edited by Gianluca (jeanslack) Pernigotto
-# Update: June 29 2022
+# Update: August 13 2022
 
 # NOTE for translators: when you add new languages you
 # also add them to "langnames"
@@ -21,6 +21,7 @@ supLang = {"Default": wx.LANGUAGE_DEFAULT,
            "zh_CN": wx.LANGUAGE_CHINESE_SIMPLIFIED,
            "nl_NL": wx.LANGUAGE_DUTCH,
            "en_US": wx.LANGUAGE_ENGLISH_US,
+           "fr_FR": wx.LANGUAGE_FRENCH,
            "it_IT": wx.LANGUAGE_ITALIAN,
            "pt_BR": wx.LANGUAGE_PORTUGUESE_BRAZILIAN,
            "ru_RU": wx.LANGUAGE_RUSSIAN,
@@ -32,6 +33,7 @@ langnames = {"Default": ("System default language"),
              "zh_CN": ("Chinese (simplified)"),
              "nl_NL": ("Dutch"),
              "en_US": ("English (United States)"),
+             "fr_FR": ("French"),
              "it_IT": ("Italian"),
              "pt_BR": ("Portuguese (Brazilian)"),
              "ru_RU": ("Russian"),
