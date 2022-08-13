@@ -17,6 +17,8 @@ June 25, 2022 V.4.0.2
   * A/V Conversion: Added vp9/opus for mp4 container #133
   * Added support for simplified Chinese zh_CN #138
   * Updated setup dialog for simpified Chinese lang support.
+  * Added support for French language fr_FR
+  * Updated setup dialog for French lang support.
 
 +------------------------------------+
 May 02, 2022 V.4.0.1
