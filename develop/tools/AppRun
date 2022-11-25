@@ -4,16 +4,33 @@
 # During the creation of the appimage, it will be copied to AppDir, replacing
 # the existing one.
 # Always make sure that there are no major changes in the original AppRun first.
+# Updated to python-appimage AppRun on November 25 2022.
+#
+# if you plan to install extra packages, extract the AppImage, e.g. as:
+#
+#   ./Videomass*.AppImage --appimage-extract
+#   export PATH="$(pwd)/squashfs-root/usr/bin:$PATH"
 
-# Export APPRUN if running from an extracted image
-self="$(readlink -f -- $0)"
-here="${self%/*}"
-APPDIR="${APPDIR:-${here}}"
+# If running from an extracted image, then export ARGV0 and APPDIR
+if [ -z "${APPIMAGE}" ]; then
+    export ARGV0="$0"
+
+    self=$(readlink -f -- "$0") # Protect spaces (issue 55)
+    here="${self%/*}"
+    tmp="${here%/*}"
+    export APPDIR="${tmp%/*}"
+fi
+
+# Resolve the calling command (preserving symbolic links).
+export APPIMAGE_COMMAND=$(command -v -- "$ARGV0")
 
 # Export TCl/Tk
 export TCL_LIBRARY="${APPDIR}/usr/share/tcltk/tcl8.4"
 export TK_LIBRARY="${APPDIR}/usr/share/tcltk/tk8.4"
 export TKPATH="${TK_LIBRARY}"
+
+# Export SSL certificate
+export SSL_CERT_FILE="${APPDIR}/opt/_internal/certs.pem"
 
 # required shared libraries to run Videomass
 LIBSDL=$(/sbin/ldconfig -p | grep libSDL2.2.0 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
@@ -27,32 +44,5 @@ if [ -d "${APPDIR}/lib/x86_64-linux-gnu" ]; then
     export LD_LIBRARY_PATH="${APPDIR}/lib/x86_64-linux-gnu/":$LD_LIBRARY_PATH
 fi
 
-# Export SSL certificate
-export SSL_CERT_FILE="${APPDIR}/opt/_internal/certs.pem"
-
-# Call the entry point
-for opt in "$@"
-do
-    [ "${opt:0:1}" != "-" ] && break
-    if [[ "${opt}" =~ "I" ]] || [[ "${opt}" =~ "E" ]]; then
-        # Environment variables are disabled ($PYTHONHOME). Let's run in a safe
-        # mode from the raw Python binary inside the AppImage
-        "$APPDIR/usr/bin/videomass" "$@"
-        exit "$?"
-    fi
-done
-
-# Get the executable name, i.e. the AppImage or the python binary if running from an
-# extracted image
-executable="${APPDIR}/usr/bin/videomass"
-if [[ "${ARGV0}" =~ "/" ]]; then
-    executable="$(cd $(dirname ${ARGV0}) && pwd)/$(basename ${ARGV0})"
-elif [[ "${ARGV0}" != "" ]]; then
-    executable=$(which "${ARGV0}")
-fi
-
-# Wrap the call to Python in order to mimic a call from the source
-# executable ($ARGV0), but potentially located outside of the Python
-# install ($PYTHONHOME)
-(PYTHONHOME="${APPDIR}/opt/python3.9" exec -a "${executable}" "$APPDIR/usr/bin/videomass" "$@")
-exit "$?"
+# Call Python
+"$APPDIR/opt/python3.9/bin/python3.9" "$APPDIR/usr/bin/videomass" "$@"

@@ -15,7 +15,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2020-2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Create: Oct.02.2020
-# Update: Feb.13.2022
+# Update: Nov.25.2022
 ###################################################################
 
 set -x  # Print commands and their arguments as they are executed.
@@ -33,7 +33,7 @@ else
     TEMP_BASE=/tmp
 fi
 
-PYTHON_APPIMAGE=python3.9.12-cp39-cp39-manylinux1_x86_64.AppImage
+PYTHON_APPIMAGE=python3.9.15-cp39-cp39-manylinux1_x86_64.AppImage
 PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.9/${PYTHON_APPIMAGE}
 
 WX_PYTHON_WHEEL=wxPython-4.1.1-cp39-cp39-linux_x86_64.whl
