@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-June 25, 2022 V.4.0.2
+Nov 27, 2022 V.4.0.2
 
   * Added language selection on preferences dialog.
   * Fixed check for new Videomass releases according to git API (on previous
@@ -19,6 +19,8 @@ June 25, 2022 V.4.0.2
   * Updated setup dialog for simpified Chinese lang support.
   * Added support for French language fr_FR
   * Updated setup dialog for French lang support.
+  * Removed the tool to update the downloader inside the Videomass.AppImage, 
+    because it turns out to be inefficient and problematic (see #142).
 
 +------------------------------------+
 May 02, 2022 V.4.0.1

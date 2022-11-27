@@ -32,7 +32,6 @@ import wx
 from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_threads import (ffplay_url,
                                     generic_downloads,
-                                    appimage_updater,
                                     )
 from videomass.vdms_threads.ffprobe import ffprobe
 from videomass.vdms_threads.volumedetect import VolumeDetectThread
@@ -323,36 +322,4 @@ def get_presets(url, dest, msg):
     dlgload.Destroy()
 
     return status
-# --------------------------------------------------------------------------#
-
-
-def appimage_update(appimage, script):
-    """
-    Call appropriate thread to update Python package
-    inside Videomass AppImage.
-    """
-    get = wx.GetApp()  # get data from bootstrap
-    logname = 'AppImage_Updates.log'
-    logfile = os.path.join(get.appset['logdir'], logname)
-    make_log_template(logname, get.appset['logdir'])  # write log file first
-
-    thread = appimage_updater.AppImageUpdate(appimage, script, logfile)
-
-    waitmsg = _('Be patient...\nthis can take a few minutes.')
-
-    dlgload = PopupDialog(None, _("Videomass - Updating..."), waitmsg)
-    dlgload.ShowModal()
-    # thread.join()
-    update = thread.status
-    dlgload.Destroy()
-
-    if update:
-        return update
-
-    ret = None
-    with open(logfile, 'r', encoding='utf8') as fln:
-        for line in fln:
-            if '**Successfully updated**\n' in line:
-                ret = 'success'
-    return 'success' if ret == 'success' else 'error'
 # --------------------------------------------------------------------------#
