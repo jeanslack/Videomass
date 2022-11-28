@@ -33,12 +33,17 @@ else
     TEMP_BASE=/tmp
 fi
 
+# Set the latest release of python-appimage,
+# make sure the version matches correctly, if not fix it.
 PYTHON_APPIMAGE=python3.9.15-cp39-cp39-manylinux1_x86_64.AppImage
 PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.9/${PYTHON_APPIMAGE}
 
+# Set the wxPython release, make sure the version matches correctly, 
+# if not fix it.
 WX_PYTHON_WHEEL=wxPython-4.1.1-cp39-cp39-linux_x86_64.whl
 WX_PYTHON_URL=https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04
 
+# Set a temporary dir
 BUILD_DIR=$(mktemp -d -p "$TEMP_BASE" videomass-AppImage-build-XXXXXX)
 APP_DIR="$BUILD_DIR/AppDir"
 
@@ -130,20 +135,10 @@ cp -f $REPO_ROOT/videomass/art/io.github.jeanslack.videomass.desktop \
 # add pixmaps icon
 cp -r $APP_DIR/opt/python*/share/pixmaps/ $APP_DIR/usr/share/
 
-# download appimagetool (for update) and linuxdeploy (for building now)
-wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage \
-    https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+# download linuxdeploy for building now
+wget -c https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
 
-chmod +x appimagetool-x86_64.AppImage linuxdeploy-x86_64.AppImage
-
-# for any updates, copy 'appimagetool*' and 'AppImage_Update_Tool.sh' script
-cp appimagetool-x86_64.AppImage \
-    "$REPO_ROOT/develop/tools/AppImage_Update_Tool.sh" \
-        $APP_DIR/usr/bin
-
-if [ ! -x $APP_DIR/usr/bin/AppImage_Update_Tool.sh ]; then
-chmod +x $APP_DIR/usr/bin/AppImage_Update_Tool.sh
-fi
+chmod +x linuxdeploy-x86_64.AppImage
 
 # set architecture
 export ARCH=x86_64

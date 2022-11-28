@@ -285,11 +285,7 @@ class MainFrame(wx.Frame):
         if self.appdata['downloader'] != 'disabled':
             if self.appdata['PYLIBYDL'] is not None:  # no module
                 self.ydlused.Enable(False)
-                self.ydlupdate.Enable(False)
                 self.ydllatest.Enable(False)
-            else:
-                if self.appdata['app'] != 'appimage':
-                    self.ydlupdate.Enable(False)  # can update ydl
     # ------------------------------------------------------------------#
 
     def reset_Timeline(self):
@@ -429,13 +425,6 @@ class MainFrame(wx.Frame):
                    "options"))
         searchtopic = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
-
-        if self.appdata['downloader'] != 'disabled':
-            dscrp = (_("Update {}").format(self.appdata['downloader']),
-                     _("Update the downloader to the latest version"))
-            self.ydlupdate = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-            toolsButton.AppendSeparator()
-            self.Bind(wx.EVT_MENU, self.youtubedl_uptodater, self.ydlupdate)
         dscrp = (_("Check for new presets"),
                  _("Check new versions of Videomass presets from homepage"))
         self.prstcheck = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
@@ -623,7 +612,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         # ----TOOLS----
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
-        # self.Bind(wx.EVT_MENU, self.youtubedl_uptodater, self.ydlupdate)
         self.Bind(wx.EVT_MENU, self.prst_downloader, self.prstdownload)
         self.Bind(wx.EVT_MENU, self.prst_checkversion, self.prstcheck)
         # ---- VIEW ----
@@ -778,109 +766,6 @@ class MainFrame(wx.Frame):
         dlg = ffmpeg_search.FFmpegSearch(self.appdata['ostype'])
         dlg.Show()
     # -------------------------------------------------------------------#
-
-    def ydl_check_update(self):
-        """
-        check latest and installed versions of youtube-dl
-        and return latest or None if error
-        """
-        if self.appdata['downloader'] == 'youtube_dl':
-            url = ("https://api.github.com/repos/ytdl-org/youtube-dl"
-                   "/releases/latest")
-
-        elif self.appdata['downloader'] == 'yt_dlp':
-            url = ("https://api.github.com/repos/yt-dlp/yt-dlp/"
-                   "releases/latest")
-
-        latest = io_tools.get_github_releases(url, "tag_name")
-
-        if latest[0] in ['request error:', 'response error:']:
-            wx.MessageBox(f"{latest[0]} {latest[1]}",
-                          f"{latest[0]}", wx.ICON_ERROR, self)
-            return None
-
-        this = self.ydl_used(self, False)
-        if not this:
-            return None
-
-        if latest[0].strip() == this:
-            wx.MessageBox(_("{0} is already up-to-date {1}"
-                            ).format(self.appdata['downloader'], this),
-                          "Videomass", wx.ICON_INFORMATION, self)
-            return None
-
-        if wx.MessageBox(_("{0} version {1} is available and will "
-                           "replace the old version {2}\n\n"
-                           "Do you want to update now?").format(
-                               self.appdata['downloader'],
-                               latest[0].strip(), this),
-                         "Videomass", wx.ICON_QUESTION
-                         | wx.YES_NO, self) == wx.NO:
-            return None
-        return latest
-    # -------------------------------------------------------------------#
-
-    def youtubedl_uptodater(self, event):
-        """
-        Update to latest version from 'Update youtube-dl' bar menu
-
-        """
-        check = self.ydl_check_update()
-        if not check:
-            return
-
-        if self.appdata['app'] == 'appimage':
-
-            if wx.MessageBox(_("To update {} it is necessary to rebuild "
-                               "the Videomass AppImage. This procedure "
-                               "will be completely automatic and will "
-                               "only require you to select the location "
-                               "of the AppImage.\n\nDo you want to "
-                               "continue?"
-                               ).format(self.appdata['downloader']),
-                             "Videomass", wx.ICON_QUESTION
-                             | wx.YES_NO, self) == wx.NO:
-                return
-
-            cur = current_release()[2]
-            fname = _("Select the 'Videomass-{}-x86_64.AppImage' "
-                      "file to update").format(cur)
-            with wx.FileDialog(
-                    None, _(fname), defaultDir=os.path.expanduser('~'),
-                    wildcard=(f"*Videomass-{cur}-x86_64.AppImage "
-                              f"(*Videomass-{cur}-x86_64.AppImage;)"
-                              f"|*Videomass-{cur}-x86_64.AppImage;"),
-                    style=wx.FD_OPEN
-                    | wx.FD_FILE_MUST_EXIST) as fileDialog:
-
-                if fileDialog.ShowModal() == wx.ID_CANCEL:
-                    return
-                appimage = fileDialog.GetPath()
-
-            upgrade = io_tools.appimage_update(appimage,
-                                               'AppImage_Update_Tool.sh'
-                                               )
-            if upgrade == 'success':
-                wx.MessageBox(_("Successful! {0} is up-to-date ({1})"
-                                "\n\nRe-start is required."
-                                ).format(self.appdata['downloader'],
-                                         check[0]),
-                              "Videomass", wx.ICON_INFORMATION, self)
-                self.on_Kill()
-
-            elif upgrade == 'error':
-                msg = _("Failed! For details consult:\n{}"
-                        "/AppImage_Updates.log").format(MainFrame.LOGDIR)
-                wx.MessageBox(msg, 'ERROR', wx.ICON_ERROR, self)
-
-            else:
-                wx.MessageBox(_('Failed! {}').format(upgrade),
-                              'ERROR', wx.ICON_ERROR, self)
-            return
-
-        wx.MessageBox('Unable to update', 'ERROR', wx.ICON_ERROR, self)
-        return
-    # ------------------------------------------------------------------#
 
     def prst_checkversion(self, event):
         """
@@ -2089,9 +1974,6 @@ class MainFrame(wx.Frame):
         self.ProcessPanel.Show()
         # self.SetTitle('Videomass')
         [self.menuBar.EnableTop(x, False) for x in range(3, 5)]
-        if self.appdata['app'] == 'appimage':
-            if self.appdata['PYLIBYDL'] is None:
-                self.ydlupdate.Enable(False)  # do not update during a process
         self.viewtimeline.Enable(False)
         self.openmedia.Enable(False)
         # Hide the tool bar
@@ -2183,8 +2065,5 @@ class MainFrame(wx.Frame):
 
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(3, 5)]
-        if self.appdata['app'] == 'appimage':
-            if self.appdata['PYLIBYDL'] is None:
-                self.ydlupdate.Enable(True)  # re-enable it after processing
         # show buttons bar if the user has shown it:
         self.Layout()

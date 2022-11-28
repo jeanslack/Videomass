@@ -10,8 +10,10 @@ videomass (4.0.2-1) UNRELEASED; urgency=medium
   * Updated setup dialog for simpified Chinese lang support.
   * Added support for French language fr_FR
   * Updated setup dialog for French lang support.
+  * Removed the tool to update the downloader inside the Videomass.AppImage, 
+    because it turns out to be inefficient and problematic (see #142).
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 13 Aug 2022 12:50:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 27 Nov 2022 17:00:00 +0200
 
 videomass (4.0.1-1) UNRELEASED; urgency=medium
 
