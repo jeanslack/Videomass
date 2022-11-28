@@ -10,6 +10,7 @@
 #
 #   ./Videomass*.AppImage --appimage-extract
 #   export PATH="$(pwd)/squashfs-root/usr/bin:$PATH"
+#---------------------------------------------------------------------------
 
 # If running from an extracted image, then export ARGV0 and APPDIR
 if [ -z "${APPIMAGE}" ]; then

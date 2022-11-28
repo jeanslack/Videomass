@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2022
+Rev: Nov.28.2022
 Code checker: pylint, flake8
 ########################################################
 
@@ -327,10 +327,6 @@ class SetUp(wx.Dialog):
                     self.ydlPath.WriteText(_('Not found'))
 
         elif self.appdata['app'] == 'appimage':
-
-            tip1 = _('Menu bar > Tools > Update {}'
-                     ).format(self.appdata['downloader'])
-
             if self.appdata['downloader'] == 'disabled':
                 self.rdbDownloader.SetSelection(0)
                 self.ydlPath.WriteText(_('Disabled'))
@@ -342,7 +338,7 @@ class SetUp(wx.Dialog):
                     self.rdbDownloader.SetSelection(2)
 
                 if self.appdata['PYLIBYDL'] is None:
-                    labydl0.SetLabel(f'{ydlmsg}{tip1}')
+                    labydl0.SetLabel(f'{ydlmsg}')
                     self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
                 else:
                     self.ydlPath.WriteText(_('Not Installed'))
