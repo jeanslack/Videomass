@@ -122,7 +122,9 @@ class MainFrame(wx.Frame):
         # self.btnpanel.SetBackgroundColour(MainFrame.LIMEGREEN)
 
         # ---------- others panel instances:
-        self.TimeLine = timeline.Timeline(self)
+        self.TimeLine = timeline.Timeline(self,
+                                          self.icons['profile_edit']
+                                          )
         self.ChooseTopic = choose_topic.Choose_Topic(self,
                                                      self.appdata['ostype'],
                                                      )

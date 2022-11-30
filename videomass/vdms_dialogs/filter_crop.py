@@ -84,7 +84,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         self.Bind(wx.EVT_PAINT, self.OnPaint)
     # ------------------------------------------------------------------#
 
-    def OnPaint(self, evt=None):
+    def OnPaint(self, event=None):
         """
         When instantiating the Actor class, this event is
         executed last.
