@@ -45,6 +45,7 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_dialogs/mediainfo.py" \
 "../vdms_dialogs/widget_utils.py" \
 "../vdms_dialogs/showlogs.py" \
+"../vdms_dialogs/time_selector.py" \
 "../vdms_frames/ffmpeg_conf.py" \
 "../vdms_frames/ffmpeg_codecs.py" \
 "../vdms_frames/ffmpeg_formats.py" \

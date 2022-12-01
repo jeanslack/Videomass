@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.14.2022
+Rev: Nov.29.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -26,8 +26,11 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+import sys
 import wx
 from videomass.vdms_utils.utils import milliseconds2clock
+from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_dialogs.time_selector import Time_Selector
 
 
 class Timeline(wx.Panel):
@@ -73,7 +76,7 @@ class Timeline(wx.Panel):
     PW = 452  # panel width
     PH = 35  # panel height
 
-    def __init__(self, parent):
+    def __init__(self, parent, iconedit):
         """
         Note, the time values results are setted on `on_Cut` and `on_Seek`
         methods using the `time_seq` parent (main_frame) attribute.
@@ -87,6 +90,11 @@ class Timeline(wx.Panel):
         self.bar_x: x axis value for time bar selection
 
         """
+        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
+            bmpedit = get_bmp(iconedit, ((16, 16)))
+        else:
+            bmpedit = wx.Bitmap(iconedit, wx.BITMAP_TYPE_ANY)
+
         self.parent = parent
         self.milliseconds = 1  # max val must be greater than the min val
         self.timeformat = None
@@ -131,6 +139,10 @@ class Timeline(wx.Panel):
         self.txtcut = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
         txtstaticdur = wx.StaticText(self, wx.ID_ANY, _('Duration'))
 
+        self.btn_edit = wx.Button(self, wx.ID_ANY, label="", size=(50, -1))
+        self.btn_edit.SetBitmap(bmpedit, wx.BU_LEFT)
+        sizer_base.Add(self.btn_edit, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
+
         # ----------------------Properties ----------------------#
         self.paneltime.SetBackgroundColour(wx.Colour(Timeline.RULER_BKGRD))
         self.sldseek.SetToolTip(_("Seek to given time position"))
@@ -162,6 +174,7 @@ class Timeline(wx.Panel):
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Cut, self.sldcut)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Seek, self.sldseek)
         self.Bind(wx.EVT_COMBOBOX, self.on_accuracy, self.cmbx_accuracy)
+        self.Bind(wx.EVT_BUTTON, self.on_time_selection, self.btn_edit)
 
     # ----------------------Event handler (callback)----------------------#
 
@@ -252,6 +265,7 @@ class Timeline(wx.Panel):
             self.sldseek.SetPageSize(300000)
 
         seek = self.sldseek.GetValue()
+
         if seek == 0:
             self.sldcut.SetMin(0)
         else:
@@ -329,8 +343,10 @@ class Timeline(wx.Panel):
         for success
 
         """
-        self.sldseek.SetValue(0), self.on_Seek(self)
-        self.sldcut.SetValue(0), self.on_Cut(self)
+        self.sldseek.SetValue(0)
+        self.on_Seek(self)
+        self.sldcut.SetValue(0)
+        self.on_Cut(self)
     # ------------------------------------------------------------------#
 
     def set_values(self, duration):
@@ -352,3 +368,22 @@ class Timeline(wx.Panel):
         self.timeformat = milliseconds2clock(self.milliseconds)
         self.sldseek.SetMax(self.milliseconds)
         self.sldcut.SetMax(self.milliseconds)
+    # ------------------------------------------------------------------#
+
+    def on_time_selection(self, event):
+        """
+        Show a dialog as alternative tool to adjust the time selection.
+        """
+        with Time_Selector(self,
+                           self.txtseek.GetLabel(),
+                           self.txtcut.GetLabel()
+                           ) as tms:
+            if tms.ShowModal() == wx.ID_OK:
+                data = tms.getvalue()
+                if not data[0] and not data[1]:
+                    self.resetValues()
+                elif data[1]:
+                    self.sldseek.SetValue(data[0])
+                    self.on_Seek(self)
+                    self.sldcut.SetValue(data[1])
+                    self.on_Cut(self)
