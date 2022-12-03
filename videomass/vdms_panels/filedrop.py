@@ -78,7 +78,7 @@ class MyListCtrl(wx.ListCtrl,
         self.InsertColumn(2, _('Duration'), width=200)
         self.InsertColumn(3, _('Media type'), width=200)
         self.InsertColumn(4, _('Size'), width=150)
-        self.InsertColumn(5, _('Output File Name (editable)'), width=200)
+        self.InsertColumn(5, _('Output File name (editable)'), width=200)
 
     def dropUpdate(self, path, newname=None):
         """
