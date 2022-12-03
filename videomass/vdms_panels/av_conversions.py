@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.24.2022
+Rev: Dec.02.2022
 Code checker: flake8, pylint
 ########################################################
 
@@ -2085,30 +2085,31 @@ class AV_Conv(wx.Panel):
                                self.parent.outpath_ffmpeg,
                                self.parent.same_destin,
                                self.parent.suffix,
-                               self.opt["OutputFormat"]
+                               self.opt["OutputFormat"],
+                               self.parent.outputnames
                                )
         if checking is None:  # User changing idea or not such files exist
             return
 
-        f_src, destin, countmax = checking
+        f_src, f_dest, countmax = checking
 
         if self.cmb_Media.GetValue() == 'Video':  # CHECKING
             if self.rdbx_normalize.GetSelection() == 3:  # EBU
-                self.video_ebu_2pass(f_src, destin, countmax, logname)
+                self.video_ebu_2pass(f_src, f_dest, countmax, logname)
             elif self.opt["Vidstabdetect"]:
-                self.video_stabilizer(f_src, destin, countmax, logname)
+                self.video_stabilizer(f_src, f_dest, countmax, logname)
             else:
-                self.video_stdProc(f_src, destin, countmax, logname)
+                self.video_stdProc(f_src, f_dest, countmax, logname)
 
         elif self.cmb_Media.GetValue() == 'Audio':  # CHECKING
             if self.rdbx_normalize.GetSelection() == 3:
-                self.audio_ebu_2pass(f_src, destin, countmax, logname)
+                self.audio_ebu_2pass(f_src, f_dest, countmax, logname)
             else:
-                self.audio_stdProc(f_src, destin, countmax, logname)
+                self.audio_stdProc(f_src, f_dest, countmax, logname)
         return
     # ------------------------------------------------------------------#
 
-    def video_stabilizer(self, f_src, destin, countmax, logname):
+    def video_stabilizer(self, f_src, f_dest, countmax, logname):
         """
         Build ffmpeg command strings for two pass
         video stabilizations process.
@@ -2147,8 +2148,8 @@ class AV_Conv(wx.Panel):
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_to_processing('libvidstab',
                                              f_src,
-                                             self.opt["OutputFormat"],
-                                             destin,
+                                             None,
+                                             f_dest,
                                              self.opt["Makeduo"],
                                              [pass1, pass2],
                                              self.opt["VFilters"],
@@ -2159,7 +2160,7 @@ class AV_Conv(wx.Panel):
         return None
         # ------------------------------------------------------------------#
 
-    def video_stdProc(self, f_src, destin, countmax, logname):
+    def video_stdProc(self, f_src, f_dest, countmax, logname):
         """
         Build the ffmpeg command strings for video conversions.
         """
@@ -2186,8 +2187,8 @@ class AV_Conv(wx.Panel):
                 # ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
                 self.parent.switch_to_processing('onepass',
                                                  f_src,
-                                                 self.opt["OutputFormat"],
-                                                 destin,
+                                                 None,
+                                                 f_dest,
                                                  command,
                                                  None,
                                                  '',
@@ -2240,8 +2241,8 @@ class AV_Conv(wx.Panel):
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_to_processing('twopass',
                                                  f_src,
-                                                 self.opt["OutputFormat"],
-                                                 destin,
+                                                 None,
+                                                 f_dest,
                                                  None,
                                                  [pass1, pass2],
                                                  '',
@@ -2278,7 +2279,7 @@ class AV_Conv(wx.Panel):
                 self.parent.switch_to_processing('onepass',
                                                  f_src,
                                                  self.opt["OutputFormat"],
-                                                 destin,
+                                                 f_dest,
                                                  command,
                                                  None,
                                                  '',
@@ -2289,7 +2290,7 @@ class AV_Conv(wx.Panel):
         return None
     # ------------------------------------------------------------------#
 
-    def video_ebu_2pass(self, f_src, destin, countmax, logname):
+    def video_ebu_2pass(self, f_src, f_dest, countmax, logname):
         """
         Define the ffmpeg command strings for batch process with
         EBU two-passes conversion.
@@ -2335,8 +2336,8 @@ class AV_Conv(wx.Panel):
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_to_processing('two pass EBU',
                                                  f_src,
-                                                 self.opt["OutputFormat"],
-                                                 destin,
+                                                 None,
+                                                 f_dest,
                                                  None,
                                                  [pass1, pass2, loudfilter],
                                                  self.opt["AudioMap"],
@@ -2386,7 +2387,7 @@ class AV_Conv(wx.Panel):
                 self.parent.switch_to_processing('two pass EBU',
                                                  f_src,
                                                  self.opt["OutputFormat"],
-                                                 destin,
+                                                 f_dest,
                                                  None,
                                                  [pass1, pass2, loudfilter],
                                                  self.opt["AudioMap"],
@@ -2398,7 +2399,7 @@ class AV_Conv(wx.Panel):
         return None
     # ------------------------------------------------------------------#
 
-    def audio_stdProc(self, f_src, destin, countmax, logname):
+    def audio_stdProc(self, f_src, f_dest, countmax, logname):
         """
         Build the ffmpeg command strings for audio conversion.
 
@@ -2422,7 +2423,7 @@ class AV_Conv(wx.Panel):
             self.parent.switch_to_processing('onepass',
                                              f_src,
                                              self.opt["OutputFormat"],
-                                             destin,
+                                             f_dest,
                                              command,
                                              None,
                                              '',
@@ -2433,7 +2434,7 @@ class AV_Conv(wx.Panel):
         return None
     # ------------------------------------------------------------------#
 
-    def audio_ebu_2pass(self, f_src, destin, countmax, logname):
+    def audio_ebu_2pass(self, f_src, f_dest, countmax, logname):
         """
         Perform EBU R128 normalization on audio conversion
         WARNING do not map output audio file index on filter:a: , -c:a:
@@ -2469,7 +2470,7 @@ class AV_Conv(wx.Panel):
             self.parent.switch_to_processing('two pass EBU',
                                              f_src,
                                              self.opt["OutputFormat"],
-                                             destin,
+                                             f_dest,
                                              None,
                                              [pass1, pass2, loudfilter],
                                              ['', ''],  # do not map audio file

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.10.2022
+Rev: Dec.02.2022
 Code checker: flake8: --ignore F821, W504
 
 This file is part of Videomass.
@@ -24,7 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
 from threading import Thread
 import time
 import itertools
@@ -52,18 +51,16 @@ class Loudnorm(Thread):
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
     OS = appdata['ostype']
-    SUFFIX = appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
     def __init__(self, var, duration, logname, timeseq):
         """
         """
         self.stop_work_thread = False  # process terminate
-        self.filelist = var[1]  # list of files (elements)
-        self.ext = var[2]
+        self.input_flist = var[1]  # list of infile (elements)
         self.passlist = var[5]  # comand list
         self.audio_outmap = var[6]  # map output list
-        self.outputdir = var[3]  # output path
+        self.output_flist = var[3]  # output path
         self.duration = duration  # duration list
         self.time_seq = timeseq  # a time segment
         self.count = 0  # count first for loop
@@ -85,36 +82,29 @@ class Loudnorm(Thread):
                    'Output LRA:': None, 'Output Threshold:': None,
                    'Normalization Type:': None, 'Target Offset:': None
                    }
-        for (files,
-             folders,
-             duration) in itertools.zip_longest(self.filelist,
-                                                self.outputdir,
+        for (infile,
+             outfile,
+             duration) in itertools.zip_longest(self.input_flist,
+                                                self.output_flist,
                                                 self.duration,
                                                 fillvalue='',
                                                 ):
-            basename = os.path.basename(files)  # name.ext
-            filename = os.path.splitext(basename)[0]  # name
-            source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
-            outext = source_ext if not self.ext else self.ext
-            outputfile = os.path.join(folders,
-                                      f'{filename}{Loudnorm.SUFFIX}.{outext}')
-
             # --------------- first pass
             pass1 = (f'"{Loudnorm.appdata["ffmpeg_cmd"]}" -nostdin -loglevel '
-                     f'info -stats -hide_banner {self.time_seq} -i "{files}" '
+                     f'info -stats -hide_banner {self.time_seq} -i "{infile}" '
                      f'{self.passlist[0]} {Loudnorm.appdata["ffthreads"]} -y '
                      f'{self.nul}'
                      )
             self.count += 1
             count = (f'File {self.count}/{self.countmax} - Pass One\n '
                      f'Loudnorm ebu: Getting statistics for measurements...')
-            cmd = (f'{count}\nSource: "{files}"\nDestination: "{self.nul}"\n\n'
+            cmd = (f'{count}\nSource: "{infile}"\nDestination: "{self.nul}"\n\n'
                    f'[COMMAND]:\n{pass1}')
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource=f'Source:  "{files}"',
+                         fsource=f'Source:  "{infile}"',
                          destination=f'Destination: "{self.nul}"',
                          duration=duration,
                          end='',
@@ -196,24 +186,23 @@ class Loudnorm(Thread):
 
             pass2 = (f'"{Loudnorm.appdata["ffmpeg_cmd"]}" -nostdin -loglevel '
                      f'info -stats -hide_banner {self.time_seq} -i '
-                     f'"{files}" {self.passlist[1]} '
+                     f'"{infile}" {self.passlist[1]} '
                      f'-filter:a:{self.audio_outmap[1]} {filters} '
-                     f'{Loudnorm.appdata["ffthreads"]} -y '
-                     f'"{folders}/{filename}{Loudnorm.SUFFIX}.{outext}"'
+                     f'{Loudnorm.appdata["ffthreads"]} -y "{outfile}"'
                      )
             count = (f'File {self.count}/{self.countmax} - Pass Two\n'
                      f'Loudnorm ebu: apply EBU R128...'
                      )
-            cmd = (f'\n{count}\nSource: "{files}"\n'
-                   f'Destination: "{outputfile}"\n\n'
+            cmd = (f'\n{count}\nSource: "{infile}"\n'
+                   f'Destination: "{outfile}"\n\n'
                    f'[COMMAND]:\n{pass2}'
                    )
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource=f'Source:  "{files}"',
-                         destination=f'Destination: "{outputfile}"',
+                         fsource=f'Source:  "{infile}"',
+                         destination=f'Destination: "{outfile}"',
                          duration=duration,
                          end='',
                          )
@@ -255,7 +244,7 @@ class Loudnorm(Thread):
                 break  # fermo il ciclo for, altrimenti passa avanti
 
             if proc2.wait() == 0:  # will add '..terminated' to txtctrl
-                filedone.append(files)
+                filedone.append(infile)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count='',

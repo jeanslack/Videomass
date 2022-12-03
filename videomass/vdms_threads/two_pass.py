@@ -6,8 +6,10 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.10.2022
-Code checker: flake8, pylint
+Rev: Dec.02.2022
+Code checker:
+    flake8: --ignore F821, W504
+    pylint: --ignore E0602, E1101
 
 This file is part of Videomass.
 
@@ -24,7 +26,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
 from threading import Thread
 import time
 import itertools
@@ -54,7 +55,6 @@ class TwoPass(Thread):
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
     OS = appdata['ostype']
-    SUFFIX = appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
     def __init__(self, varargs, duration, logname, timeseq):
@@ -62,10 +62,9 @@ class TwoPass(Thread):
         The 'volume' attribute may have an empty value
         """
         self.stop_work_thread = False  # process terminate
-        self.filelist = varargs[1]  # list of files (elements)
+        self.input_flist = varargs[1]  # list of infile (elements)
         self.passlist = varargs[5]  # comand list set for double-pass
-        self.outputdir = varargs[3]  # output path
-        self.extoutput = varargs[2]  # format (extension)
+        self.output_flist = varargs[3]  # output path
         self.duration = duration  # duration list
         self.time_seq = timeseq  # a time segment
         self.volume = varargs[7]  # volume compensation data
@@ -82,36 +81,31 @@ class TwoPass(Thread):
         Thread started.
         """
         filedone = []
-        for (files,
-             fold,
+        for (infile,
+             outfile,
              volume,
-             duration) in itertools.zip_longest(self.filelist,
-                                                self.outputdir,
+             duration) in itertools.zip_longest(self.input_flist,
+                                                self.output_flist,
                                                 self.volume,
                                                 self.duration,
                                                 fillvalue='',
                                                 ):
-            basename = os.path.basename(files)  # nome file senza path
-            fname = os.path.splitext(basename)[0]  # nome senza ext
-            source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
-            outext = source_ext if not self.extoutput else self.extoutput
-            outfile = os.path.join(fold, f'{fname}{TwoPass.SUFFIX}.{outext}')
             # --------------- first pass
             pass1 = (f'"{TwoPass.appdata["ffmpeg_cmd"]}" '
                      f'{TwoPass.appdata["ffmpegloglev"]} '
                      f'{TwoPass.appdata["ffmpeg+params"]} {self.time_seq} '
-                     f'-i "{files}" {self.passlist[0]} '
+                     f'-i "{infile}" {self.passlist[0]} '
                      f'{TwoPass.appdata["ffthreads"]} -y {self.nul}'
                      )
             self.count += 1
             count = f'File {self.count}/{self.countmax} - Pass One'
-            cmd = (f'{count}\nSource: "{files}"\nDestination: "{self.nul}"'
+            cmd = (f'{count}\nSource: "{infile}"\nDestination: "{self.nul}"'
                    f'\n\n[COMMAND]:\n{pass1}'
                    )
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource=f'Source:  "{files}"',
+                         fsource=f'Source:  "{infile}"',
                          destination=f'Destination:  "{self.nul}"',
                          duration=duration,
                          end='',
@@ -179,18 +173,18 @@ class TwoPass(Thread):
             pass2 = (f'"{TwoPass.appdata["ffmpeg_cmd"]}" '
                      f'{TwoPass.appdata["ffmpegloglev"]} '
                      f'{TwoPass.appdata["ffmpeg+params"]} {self.time_seq} '
-                     f'-i "{files}" {self.passlist[1]} '
+                     f'-i "{infile}" {self.passlist[1]} '
                      f'{volume} {TwoPass.appdata["ffthreads"]} -y "{outfile}"'
                      )
             count = f'File {self.count}/{self.countmax} - Pass Two'
-            cmd = (f'{count}\nSource: "{files}"\nDestination: "{outfile}"'
+            cmd = (f'{count}\nSource: "{infile}"\nDestination: "{outfile}"'
                    f'\n\n[COMMAND]:\n{pass2}'
                    )
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource=f'Source:  "{files}"',
+                         fsource=f'Source:  "{infile}"',
                          destination=f'Destination:  "{outfile}"',
                          duration=duration,
                          end='',
@@ -234,7 +228,7 @@ class TwoPass(Thread):
                 break  # fermo il ciclo for, altrimenti passa avanti
 
             if proc2.wait() == 0:  # will add '..terminated' to txtctrl
-                filedone.append(files)
+                filedone.append(infile)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count='',

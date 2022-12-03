@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.23.2022
+Rev: Dec.02.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -102,6 +102,7 @@ class Conc_Demuxer(wx.Panel):
         self.cachedir = appdata['cachedir']
         self.parent = parent  # parent is the MainFrame
         self.args = ''
+        self.duration = None
 
         wx.Panel.__init__(self, parent=parent, style=wx.BORDER_THEME)
 
@@ -246,7 +247,6 @@ class Conc_Demuxer(wx.Panel):
 
         """
         fsource = self.parent.file_src
-        basename = os.path.basename(fsource[0].rsplit('.')[0])
         ftext = os.path.join(self.cachedir, 'tmp', 'flist.txt')
 
         if len(fsource) < 2:
@@ -296,32 +296,30 @@ class Conc_Demuxer(wx.Panel):
                                self.parent.outpath_ffmpeg,
                                self.parent.same_destin,
                                self.parent.suffix,
-                               ext
+                               ext,
+                               self.parent.outputnames
                                )
         if checking is None:  # User changing idea or not such files exist
             return
+        newfile = checking[1]
 
-        destin = checking[1]
-        newfile = f'{basename}{self.parent.suffix}.{ext}'
-
-        self.concat_demuxer(self.parent.file_src, newfile,
-                            destin[0], ext)
+        self.concat_demuxer(self.parent.file_src, newfile[0], ext)
     # -----------------------------------------------------------
 
-    def concat_demuxer(self, filesrc, newfile, destdir, outext):
+    def concat_demuxer(self, filesrc, newfile, outext):
         """
         Redirect to processing
 
         """
         logname = 'concatenate_demuxer.log'
-        valupdate = self.update_dict(newfile, destdir, outext)
+        valupdate = self.update_dict(newfile, os.path.dirname(newfile), outext)
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
         if ending.ShowModal() == wx.ID_OK:
 
             self.parent.switch_to_processing('concat_demuxer',
                                              filesrc,
-                                             outext,
-                                             destdir,
+                                             None,
+                                             newfile,
                                              self.args,
                                              None,
                                              self.duration,  # modify

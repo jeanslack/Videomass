@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.19.2022
+Rev: Dec.03.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -495,6 +495,7 @@ class VideoToSequence(wx.Panel):
 
         typemedia = self.parent.fileDnDTarget.flCtrl.GetItemText(
                                                      fsource.index(clicked), 3)
+
         if 'video' not in typemedia or 'sequence' in typemedia:
             wx.MessageBox(_("Invalid file: '{}'").format(clicked),
                           _('ERROR'), wx.ICON_ERROR, self)
@@ -504,7 +505,8 @@ class VideoToSequence(wx.Panel):
                                self.parent.outpath_ffmpeg,
                                self.parent.same_destin,
                                self.parent.suffix,
-                               self.cmb_frmt.GetValue()
+                               self.cmb_frmt.GetValue(),
+                               self.parent.outputnames
                                )
         if checking is None:  # User changing idea or not such files exist
             return
@@ -512,7 +514,7 @@ class VideoToSequence(wx.Panel):
         self.build_command(clicked, checking[1])
     # ------------------------------------------------------------------#
 
-    def build_command(self, filename, destdir):
+    def build_command(self, filename, outfile):
         """
         Save as files image the selected video input. The saved
         images are named as file name + a progressive number + .jpg
@@ -520,18 +522,20 @@ class VideoToSequence(wx.Panel):
         number in the chosen output path.
 
         """
-        basename = os.path.basename(filename.rsplit('.')[0])
-        destdir = destdir[0]  # specified dest
+        destdir = os.path.dirname(outfile[0])  # specified dest
         outputdir = make_newdir_with_id_num(destdir, 'Movie_to_Pictures')
         if outputdir[0] == 'ERROR':
             wx.MessageBox(f"{outputdir[1]}", "Videomass",
                           wx.ICON_ERROR, self)
             return
-        if self.cmb_frmt.GetValue() == 'gif':
-            fileout = f"{basename}.{self.cmb_frmt.GetValue()}"
+
+        if self.cmb_frmt.GetValue() != 'gif':
+            namesplit = os.path.splitext(outfile[0])
+            fileout = f"{namesplit[0]}_%d{namesplit[1]}"
         else:
-            fileout = f"{basename}-%d.{self.cmb_frmt.GetValue()}"
-        outfilename = os.path.join(outputdir[1], fileout)
+            fileout = f"{outfile[0]}"
+
+        outfilename = os.path.join(outputdir[1], os.path.basename(fileout))
 
         if self.txt_args.IsEnabled():
             arg = self.update_arguments(self.cmb_frmt.GetValue())

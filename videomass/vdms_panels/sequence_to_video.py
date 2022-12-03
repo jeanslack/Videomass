@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.23.2022
+Rev: Dec.03.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -627,14 +627,15 @@ class SequenceToVideo(wx.Panel):
         else:
             destdir = self.parent.outpath_ffmpeg
 
-        basename = os.path.basename(fget[0].rsplit('.')[0])
+        name = self.parent.fileDnDTarget.flCtrl.GetItemText(fget[1], 5)
         outputdir = make_newdir_with_id_num(destdir, 'Still_Images')
+
         if outputdir[0] == 'ERROR':
             wx.MessageBox(f"{outputdir[1]}", "Videomass",
                           wx.ICON_ERROR, self)
             return
 
-        destdir = os.path.join(outputdir[1], f"{basename}.mkv")
+        destdir = os.path.join(outputdir[1], f"{name}.mkv")
 
         if self.ckbx_static_img.IsChecked():
             countmax = 1
@@ -653,7 +654,7 @@ class SequenceToVideo(wx.Panel):
 
         args = self.get_args_line()  # get args for command line
 
-        valupdate = self.update_dict(f"{basename}.mkv",
+        valupdate = self.update_dict(f"{name}.mkv",
                                      outputdir[1],
                                      countmax,
                                      'mkv',

@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.21.2022
+Rev: Dec.02.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -855,20 +855,21 @@ class PrstPan(wx.Panel):
                                self.parent.same_destin,
                                self.parent.suffix,
                                outext,
+                               self.parent.outputnames
                                )
         if checking is None:
             # not supported, missing files or user has changed his mind
             return
-        fsrc, dirdest, cntmax = checking
+        fsrc, fdest, cntmax = checking
 
         if self.array[3]:  # has double pass
-            self.two_Pass(fsrc, dirdest, cntmax, outext)
+            self.two_Pass(fsrc, fdest, cntmax, outext)
 
         else:
-            self.one_Pass(fsrc, dirdest, cntmax, outext)
+            self.one_Pass(fsrc, fdest, cntmax, outext)
     # ----------------------------------------------------------------#
 
-    def one_Pass(self, filesrc, destdir, cntmax, outext):
+    def one_Pass(self, filesrc, filedest, cntmax, outext):
         """
         Build args string for one pass process
         """
@@ -879,7 +880,7 @@ class PrstPan(wx.Panel):
             self.parent.switch_to_processing('onepass',
                                              filesrc,
                                              outext,
-                                             destdir,
+                                             filedest,
                                              pass1,
                                              None,
                                              '',
@@ -889,7 +890,7 @@ class PrstPan(wx.Panel):
                                              )
     # ------------------------------------------------------------------#
 
-    def two_Pass(self, filesrc, destdir, cntmax, outext):
+    def two_Pass(self, filesrc, filedest, cntmax, outext):
         """
         Build args string for two pass process
         """
@@ -903,7 +904,7 @@ class PrstPan(wx.Panel):
             self.parent.switch_to_processing(typeproc,
                                              filesrc,
                                              outext,
-                                             destdir,
+                                             filedest,
                                              None,
                                              [pass1, pass2],
                                              '',

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.24.2022
+Rev: Dec.01.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -29,14 +29,18 @@ This file is part of Videomass.
 """
 import os
 import sys
+import re
 import wx
+import wx.lib.mixins.listctrl as listmix
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_io import io_tools
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import to_bytes
 
 
-class MyListCtrl(wx.ListCtrl):
+class MyListCtrl(wx.ListCtrl,
+                 listmix.ListCtrlAutoWidthMixin,
+                 listmix.TextEditMixin):
     """
     This is the listControl widget. Note that this wideget has DnDPanel
     parent.
@@ -50,17 +54,38 @@ class MyListCtrl(wx.ListCtrl):
     BLACK = '#060505'  # black for background status bar
     # ----------------------------------------------------------------------
 
-    def __init__(self, parent):
-        """Constructor"""
+    def __init__(self, parent, ID, pos=wx.DefaultPosition,
+                 size=wx.DefaultSize, style=wx.LC_REPORT):
+        """
+        Constructor
+        """
         self.index = None
         self.parent = parent  # parent is DnDPanel class
         self.data = self.parent.data
-        wx.ListCtrl.__init__(self, parent, style=wx.LC_REPORT)
+        self.outputnames = self.parent.outputnames
+        wx.ListCtrl.__init__(self, parent, ID, pos, size, style)
+        listmix.ListCtrlAutoWidthMixin.__init__(self)
+        self.populate()
+        listmix.TextEditMixin.__init__(self)
     # ----------------------------------------------------------------------#
 
-    def dropUpdate(self, path):
+    def populate(self):
         """
-        Update list-control during drag and drop
+        populate with default colums
+        """
+        self.InsertColumn(0, '#', width=30)
+        self.InsertColumn(1, _('File Name'), width=200)
+        self.InsertColumn(2, _('Duration'), width=200)
+        self.InsertColumn(3, _('Media type'), width=200)
+        self.InsertColumn(4, _('Size'), width=150)
+        self.InsertColumn(5, _('Output File Name (editable)'), width=200)
+
+    def dropUpdate(self, path, newname=None):
+        """
+        Update list-control during drag and drop.
+        Note that the optional 'newname' argument is given by
+        the 'on_col_click' method in the 'FileDnD' class to preserve
+        the related renames in column 5 of wx.ListCtrl.
 
         """
         self.index = self.GetItemCount()
@@ -116,6 +141,13 @@ class MyListCtrl(wx.ListCtrl):
             formatname = data['format']['format_long_name']
             self.SetItem(self.index, 3, f'{media}: {formatname}')
             self.SetItem(self.index, 4, data['format']['size'])
+            if newname:
+                self.SetItem(self.index, 5, newname)
+                self.outputnames.append(newname)
+            else:
+                fname = os.path.splitext(os.path.basename(path))[0]
+                self.SetItem(self.index, 5, fname)
+                self.outputnames.append(fname)
             self.index += 1
             self.data.append(data)
             self.parent.statusbar_msg('', None)
@@ -170,6 +202,7 @@ class FileDnD(wx.Panel):
         """Constructor. This will initiate with an id and a title"""
         get = wx.GetApp()
         appdata = get.appset
+        self.themecolor = appdata['icontheme'][1]
         self.parent = parent  # parent is the MainFrame
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
@@ -177,6 +210,7 @@ class FileDnD(wx.Panel):
         else:
             bmpplay = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
         self.data = self.parent.data_files  # set items list data on parent
+        self.outputnames = self.parent.outputnames
         self.file_dest = appdata['outputfile']
         self.selected = None  # tells if an imported file is selected or not
         self.sortingstate = None  # ascending or descending order
@@ -184,7 +218,7 @@ class FileDnD(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
 
         # This builds the list control box:
-        self.flCtrl = MyListCtrl(self)  # class MyListCtr
+        self.flCtrl = MyListCtrl(self, wx.ID_ANY)  # class MyListCtr
         # Establish the listctrl as a drop target:
         file_drop_target = FileDrop(self.flCtrl)
         self.flCtrl.SetDropTarget(file_drop_target)  # Make drop target.
@@ -221,12 +255,6 @@ class FileDnD(wx.Panel):
                          )
         sizer.Add(sizer_outdir, 0, wx.EXPAND)
         self.SetSizer(sizer)
-        # properties
-        self.flCtrl.InsertColumn(0, '#', width=30)
-        self.flCtrl.InsertColumn(1, _('File Name'), width=350)
-        self.flCtrl.InsertColumn(2, _('Duration'), width=230)
-        self.flCtrl.InsertColumn(3, _('Media type'), width=200)
-        self.flCtrl.InsertColumn(4, _('Size'), width=150)
 
         if appdata['ostype'] == 'Darwin':
             lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -262,6 +290,8 @@ class FileDnD(wx.Panel):
                   self.flCtrl)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.on_col_click, self.flCtrl)
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
+        self.flCtrl.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self.on_edit_begin)
+        self.flCtrl.Bind(wx.EVT_LIST_END_LABEL_EDIT, self.on_edit_end)
     # ----------------------------------------------------------------------
 
     def on_col_click(self, event):
@@ -289,6 +319,7 @@ class FileDnD(wx.Panel):
                                   self.flCtrl.GetItemText(x, col=2),
                                   self.flCtrl.GetItemText(x, col=3),
                                   self.flCtrl.GetItemText(x, col=4),
+                                  self.flCtrl.GetItemText(x, col=5),
                                   ))
             if event.GetColumn() == 1:
                 new = sorted(curritems, key=lambda item: item[0])
@@ -303,6 +334,9 @@ class FileDnD(wx.Panel):
                 new = sorted(curritems, key=lambda item:
                              to_bytes(''.join(item[3].split()), 'ffmpeg'))
 
+            elif event.GetColumn() == 5:
+                new = sorted(curritems, key=lambda item: item[4])
+
             self.delete_all(self, setstate=False)  # does not setstate here
 
             if self.sortingstate == 'descending':
@@ -316,8 +350,9 @@ class FileDnD(wx.Panel):
 
             if self.sortingstate == 'descending':
                 new.reverse()
-            for f in new:
-                self.flCtrl.dropUpdate(f[0])
+
+            for data in new:
+                self.flCtrl.dropUpdate(data[0], data[4])
     # ----------------------------------------------------------------------
 
     def reset_timeline(self):
@@ -423,7 +458,8 @@ class FileDnD(wx.Panel):
 
         for num in sorted(indexes, reverse=True):
             self.flCtrl.DeleteItem(num)  # remove selected items
-            self.data.pop(num)  # remove selected items from data
+            self.data.pop(num)  # remove selected items
+            self.outputnames.pop(num)  # remove selected items
         self.reset_timeline()  # delete parent.timeline
         self.on_deselect(self)  # deselect removed file
 
@@ -440,6 +476,7 @@ class FileDnD(wx.Panel):
         # self.flCtrl.ClearAll()
         self.flCtrl.DeleteAllItems()
         del self.data[:]
+        del self.outputnames[:]
         self.parent.filedropselected = None
         self.reset_timeline()
         self.selected = None
@@ -497,3 +534,64 @@ class FileDnD(wx.Panel):
         bcolor: background, fcolor: foreground
         """
         self.parent.statusbar_msg(f'{mess}', bcolor, fcolor)
+    # -----------------------------------------------------------------------
+
+    def on_edit_begin(self, event):
+        """
+        This method ensures that columns 0 to 4
+        are not editable during mouse clicks.
+        """
+        if event.GetColumn() in (0, 1, 2, 3, 4):
+            event.Veto()
+        elif event.GetColumn() == 5:
+            event.Skip()  # or event.Allow()
+    # -----------------------------------------------------------------------
+
+    def on_edit_end(self, event):
+        """
+        This method is responsible for verifying the renaming
+        of the output files. Performs a check to ensure that
+        output files do not have the same name and/or empty strings.
+        Checking event-entered strings using REGEX: Allows all
+        alphanumeric character as `a-zA-Z0-9_`, `whitespaces`
+        and `hyphens`. It does not allow you to enter all other
+        non-alphanumeric characters such as dots, commas, slashes, etc.
+        The maximum filename lengh is fixed to 255 characters.
+        Names consisting of only whitespaces or tabs are rejected silently.
+
+        Some useful event examples for this method:
+
+        row_id = event.GetIndex()  # Get the current row
+        col_id = event.GetColumn()  # Get the current column
+        string = event.GetLabel()  # Get the changed data
+        cols = self.flCtrl.GetColumnCount()  # Get the total number of col
+        rows = self.flCtrl.GetItemCount()  # Get the total number of rows
+
+        """
+        string = event.GetLabel()  # Get the changed data
+        row_id = event.GetIndex()  # Get the current row
+        msg_invalid = _('Invalid characters:')
+        msg_inuse = _('Name already in use:')
+
+
+        if (string == '' or string == self.flCtrl.GetItemText(row_id, 5)
+             or string.isspace()):
+            self.parent.statusbar_msg(_('Add Files'), None)
+            event.Veto()
+            return
+
+        check = bool(re.search(r"^(?:[\w\- ]{1,255}$)*$", string))
+        if check is not True:
+            self.parent.statusbar_msg(f'{msg_invalid} {string}',
+                                      FileDnD.YELLOW, FileDnD.BLACK)
+            event.Veto()
+            return
+
+        if string in self.outputnames:
+            self.parent.statusbar_msg(f'{msg_inuse} {string}',
+                                      FileDnD.YELLOW, FileDnD.BLACK)
+            event.Veto()
+            return
+
+        self.outputnames[row_id] = string
+        self.parent.statusbar_msg(_('Add Files'), None)
