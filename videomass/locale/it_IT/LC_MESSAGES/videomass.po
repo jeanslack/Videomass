@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-03 16:17+0100\n"
-"PO-Revision-Date: 2022-12-03 16:17+0100\n"
+"POT-Creation-Date: 2022-12-04 14:07+0100\n"
+"PO-Revision-Date: 2022-12-04 14:08+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -1324,12 +1324,12 @@ msgstr "Seleziona un file di registro"
 msgid "Are you sure you want to clear the selected log file?"
 msgstr "Sei sicuro di voler cancellare il file di registro selezionato?"
 
-#: ../vdms_dialogs/time_selector.py:48 ../vdms_panels/timeline.py:134
+#: ../vdms_dialogs/time_selector.py:48 ../vdms_panels/timeline.py:124
 msgid "Seek"
 msgstr "Cerca"
 
 #: ../vdms_dialogs/time_selector.py:81 ../vdms_panels/filedrop.py:78
-#: ../vdms_panels/timeline.py:140
+#: ../vdms_panels/timeline.py:130
 msgid "Duration"
 msgstr "Durata"
 
@@ -3967,15 +3967,15 @@ msgstr "Aggiungi gli URL qui sotto"
 msgid "Delete all text from the list"
 msgstr "Elimina tutto il testo dall'elenco"
 
-#: ../vdms_panels/timeline.py:148
-msgid "Seek to given time position"
-msgstr "Cerca una data posizione temporale"
+#: ../vdms_panels/timeline.py:134
+msgid "Start from a given time position"
+msgstr "Inizia da una data posizione temporale"
 
-#: ../vdms_panels/timeline.py:149
+#: ../vdms_panels/timeline.py:135
 msgid "Total duration"
 msgstr "Durata totale"
 
-#: ../vdms_panels/timeline.py:150
+#: ../vdms_panels/timeline.py:136
 msgid ""
 "Set the amount of steps the slider moves using 'UP' or 'DOWN' arrow and 'UP' "
 "or 'DOWN' page, to quickly set a more accurate time selection"
@@ -3984,7 +3984,7 @@ msgstr ""
 "freccia e la pagina 'SU' o 'GIÙ', per impostare rapidamente una selezione "
 "del tempo più accurata"
 
-#: ../vdms_panels/timeline.py:363
+#: ../vdms_panels/timeline.py:358
 #, python-brace-format
 msgid ""
 "The maximum time refers to the file with the longest duration, it will be "

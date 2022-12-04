@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.29.2022
+Rev: Dec.04.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -49,26 +49,12 @@ class Timeline(wx.Panel):
         <https://trac.ffmpeg.org/wiki/Seeking#Timeunitsyntax>
 
     """
-    get = wx.GetApp()
-
-    # Theme Colors used in HTML
-    if get.appset['icontheme'] == 'Videomass-Colours':  # all themes
-        RULER_BKGRD = '#294083'  # dark blue for panel bkgrd
-        SELECTION = '#4368d3'  # medium azure for selection
-        DELIMITER_COLOR = '#da4453'  # red for margin selection
-        TEXT_PEN_COLOR = '#00cc57'  # green for text and draw lines
-
-    elif get.appset['icontheme'] == 'Videomass-Dark':
-        RULER_BKGRD = '#294083'  # dark blue for panel bkgrd
-        SELECTION = '#4368d3'  # medium azure for selection
-        DELIMITER_COLOR = '#00FE00'  # green for margin selection
-        TEXT_PEN_COLOR = '#ffffff'  # white for text and draw lines
-
-    else:  # white theme
-        RULER_BKGRD = '#84D2C9'  # light blue for panelruler background
-        SELECTION = '#31BAA7'  # CYAN
-        DELIMITER_COLOR = '#00FE00'  # green for margin selection
-        TEXT_PEN_COLOR = '#020D0F'  # black for text and draw lines
+    # Colours used here
+    RULER_BKGRD = '#84D2C9'  # CYAN for ruler background
+    SELECTION = '#aaddd4'  # LIGHT CYAN for ruller background selection
+    DELIMITER_COLOR = '#00FE00'  # green for margin selection
+    TEXT_PEN_COLOR = '#020D0F'  # black for static text and draw lines
+    CROP_TEXT = '#f56b38'  # Orange for cropping time text indicator
 
     # ruler and panel specifications
     RW = 450  # ruler width
@@ -107,8 +93,12 @@ class Timeline(wx.Panel):
         # self.font = wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL,
         #                     wx.FONTWEIGHT_BOLD, False, 'Courier 10 Pitch'
         #                     )
-        self.font = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        self.font_small = wx.Font(6, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        self.font_med = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         sizer_base = wx.BoxSizer(wx.HORIZONTAL)
+        self.btn_edit = wx.Button(self, wx.ID_ANY, label="", size=(50, -1))
+        self.btn_edit.SetBitmap(bmpedit, wx.BU_LEFT)
+        sizer_base.Add(self.btn_edit, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
         self.paneltime = wx.Panel(self, wx.ID_ANY,
                                   size=(Timeline.PW, Timeline.PH),
                                   style=wx.BORDER_SUNKEN)
@@ -139,13 +129,9 @@ class Timeline(wx.Panel):
         self.txtcut = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
         txtstaticdur = wx.StaticText(self, wx.ID_ANY, _('Duration'))
 
-        self.btn_edit = wx.Button(self, wx.ID_ANY, label="", size=(50, -1))
-        self.btn_edit.SetBitmap(bmpedit, wx.BU_LEFT)
-        sizer_base.Add(self.btn_edit, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
-
         # ----------------------Properties ----------------------#
         self.paneltime.SetBackgroundColour(wx.Colour(Timeline.RULER_BKGRD))
-        self.sldseek.SetToolTip(_("Seek to given time position"))
+        self.sldseek.SetToolTip(_("Start from a given time position"))
         self.sldcut.SetToolTip(_("Total duration"))
         self.cmbx_accuracy.SetToolTip(_("Set the amount of steps the slider "
                                         "moves using 'UP' or 'DOWN' arrow "
@@ -231,6 +217,7 @@ class Timeline(wx.Panel):
             self.sldcut.SetPageSize(300000)
 
         cut = self.sldcut.GetValue()
+
         if cut == 0:
             self.sldcut.SetValue(0), self.sldseek.Disable()
             self.sldcut.SetMax(self.milliseconds)
@@ -310,7 +297,7 @@ class Timeline(wx.Panel):
         # dc.SetBrush(wx.Brush(wx.Colour(30, 30, 30, 200)))
         dc.SetBrush(wx.Brush(Timeline.SELECTION, wx.BRUSHSTYLE_SOLID))
         dc.DrawRectangle(self.bar_x + 1, -8, self.bar_w, 66)
-        dc.SetFont(self.font)
+        dc.SetFont(self.font_small)
         dc.SetPen(wx.Pen(Timeline.TEXT_PEN_COLOR))
         dc.SetTextForeground(Timeline.TEXT_PEN_COLOR)
 
@@ -319,7 +306,7 @@ class Timeline(wx.Panel):
             if not i % 600:
                 dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 12)
                 w, h = dc.GetTextExtent(str(i))
-                dc.DrawText('%02d:00:00.000' % i, i+Timeline.RM+5-w/2, 14)
+                dc.DrawText('00:00:00.000', i+Timeline.RM+7-w/2, 23)
 
             elif not i % 300:
                 dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 12)  # metà
@@ -332,7 +319,15 @@ class Timeline(wx.Panel):
 
         dc.DrawLine(i, 0, i, 12)
         w, h = dc.GetTextExtent(self.timeformat)
-        dc.DrawText(self.timeformat, i-Timeline.RM-3-w, 14)
+
+        dc.DrawText(self.timeformat, i-Timeline.RM-3-w, 23)
+        crop = self.sldseek.GetValue() + self.sldcut.GetValue()
+        croptime = milliseconds2clock(crop)
+        remain = milliseconds2clock(self.milliseconds - crop)
+        dc.SetFont(self.font_med)
+        dc.SetTextForeground(Timeline.CROP_TEXT)
+        dc.DrawText(f'{croptime}', i-Timeline.RM-382-w, h-3)
+        dc.DrawText(f'{remain}', i-Timeline.RM-35-w, h-3)
     # ------------------------------------------------------------------#
 
     def resetValues(self):
