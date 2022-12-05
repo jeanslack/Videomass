@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Dec 03, 2022 V.4.0.2
+Dec 04, 2022 V.4.0.2
 
   * Added language selection on preferences dialog.
   * Fixed check for new Videomass releases according to git API (on previous
@@ -25,6 +25,7 @@ Dec 03, 2022 V.4.0.2
     to adjust the time selection (see #150)
   * Added a new feature: ability to rename output files by clicking on the new
     "Output File Name" column of the Queue File Panel (see #144).
+  * Added crop time and remain time indicators to the Timeline display (see #150)
 +------------------------------------+
 May 02, 2022 V.4.0.1
 

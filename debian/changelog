@@ -16,8 +16,10 @@ videomass (4.0.2-1) UNRELEASED; urgency=medium
     to adjust the time selection (see #150)
   * Added a new feature: ability to rename output files by clicking on the new
     "Output File Name" column of the Queue File Panel (see #144).
+  *  Added crop time and remain time indicators to the Timeline display
+     (see #150)
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 03 Dec 2022 02:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 04 Dec 2022 12:31:00 +0200
 
 videomass (4.0.1-1) UNRELEASED; urgency=medium
 
