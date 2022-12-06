@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-05 20:28+0100\n"
+"POT-Creation-Date: 2022-12-06 19:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,7 +94,7 @@ msgstr ""
 #: ../vdms_dialogs/filter_denoisers.py:86 ../vdms_dialogs/filter_scale.py:186
 #: ../vdms_dialogs/filter_stab.py:260 ../vdms_dialogs/filter_transpose.py:110
 #: ../vdms_dialogs/playlist_indexing.py:122 ../vdms_dialogs/time_selector.py:53
-#: ../vdms_panels/av_conversions.py:539
+#: ../vdms_panels/av_conversions.py:539 ../vdms_panels/timeline.py:107
 msgid "Reset"
 msgstr ""
 
@@ -1141,11 +1141,11 @@ msgid "Are you sure you want to clear the selected log file?"
 msgstr ""
 
 #: ../vdms_dialogs/time_selector.py:52
-msgid "Start   (HH:MM:SS.MIL)"
+msgid "Segment Start   (HH:MM:SS.MIL)"
 msgstr ""
 
 #: ../vdms_dialogs/time_selector.py:94
-msgid "Duration   (HH:MM:SS.MIL)"
+msgid "Segment Duration   (HH:MM:SS.MIL)"
 msgstr ""
 
 #: ../vdms_dialogs/time_selector.py:134
@@ -3014,8 +3014,7 @@ msgstr ""
 msgid "File Name"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:78 ../vdms_panels/timeline.py:133
-#: ../vdms_panels/timeline.py:339
+#: ../vdms_panels/filedrop.py:78 ../vdms_panels/timeline.py:184
 msgid "Duration"
 msgstr ""
 
@@ -3499,25 +3498,15 @@ msgstr ""
 msgid "Delete all text from the list"
 msgstr ""
 
-#: ../vdms_panels/timeline.py:127 ../vdms_panels/timeline.py:338
+#: ../vdms_panels/timeline.py:104
+msgid "Set"
+msgstr ""
+
+#: ../vdms_panels/timeline.py:183
 msgid "Start"
 msgstr ""
 
-#: ../vdms_panels/timeline.py:137
-msgid "Start from a given time position"
-msgstr ""
-
-#: ../vdms_panels/timeline.py:138
-msgid "Duration of the selection"
-msgstr ""
-
-#: ../vdms_panels/timeline.py:139
-msgid ""
-"Set the amount of steps the slider moves using 'UP' or 'DOWN' arrow and 'UP' "
-"or 'DOWN' page, to quickly set a more accurate time selection"
-msgstr ""
-
-#: ../vdms_panels/timeline.py:375
+#: ../vdms_panels/timeline.py:232
 #, python-brace-format
 msgid ""
 "The maximum time refers to the file with the longest duration, it will be "

@@ -49,7 +49,7 @@ class Time_Selector(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         staticbox1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                        _("Start   (HH:MM:SS.MIL)"))), wx.VERTICAL)
+                        _("Segment Start   (HH:MM:SS.MIL)"))), wx.VERTICAL)
         self.btn_reset_start = wx.Button(self, wx.ID_ANY, _("Reset"))
         staticbox1.Add(self.btn_reset_start, 0, wx.ALL, 5)
         boxsiz1 = wx.BoxSizer(wx.HORIZONTAL)
@@ -91,7 +91,7 @@ class Time_Selector(wx.Dialog):
         boxsiz1.Add(self.start_mills, 0, wx.ALL | wx.ALIGN_CENTER, 5)
 
         staticbox2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                        _("Duration   (HH:MM:SS.MIL)"))), wx.VERTICAL)
+                        _("Segment Duration   (HH:MM:SS.MIL)"))), wx.VERTICAL)
         sizer_base.Add(staticbox2, 0, wx.ALL | wx.EXPAND, 5)
         boxsiz2 = wx.BoxSizer(wx.HORIZONTAL)
         staticbox2.Add(boxsiz2, 0, wx.ALL | wx.ALIGN_CENTER, 0)
