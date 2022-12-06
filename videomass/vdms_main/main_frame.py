@@ -297,7 +297,7 @@ class MainFrame(wx.Frame):
         the timeline data (only if `self.time_seq` attribute is setted)
         """
         if self.time_seq != "-ss 00:00:00.000 -t 00:00:00.000":
-            self.TimeLine.resetValues()
+            self.TimeLine.on_reset_values(self)
 
     # ---------------------- Event handler (callback) ------------------#
 

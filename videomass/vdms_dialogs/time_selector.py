@@ -45,13 +45,13 @@ class Time_Selector(wx.Dialog):
         """
         self.seek_mills = get_milliseconds(seektxt)
         self.cut_mills = get_milliseconds(cuttxt)
-        self.milliseconds = milliseconds
+        self.milliseconds = milliseconds  # media total duration in ms
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         staticbox1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                         _("Start   (HH:MM:SS.MIL)"))), wx.VERTICAL)
-        btn_reset_start = wx.Button(self, wx.ID_ANY, _("Reset"))
-        staticbox1.Add(btn_reset_start, 0, wx.ALL, 5)
+        self.btn_reset_start = wx.Button(self, wx.ID_ANY, _("Reset"))
+        staticbox1.Add(self.btn_reset_start, 0, wx.ALL, 5)
         boxsiz1 = wx.BoxSizer(wx.HORIZONTAL)
         staticbox1.Add(boxsiz1, 0, wx.ALL | wx.ALIGN_CENTER, 0)
         sizer_base.Add(staticbox1, 0, wx.ALL | wx.EXPAND, 5)
@@ -156,7 +156,7 @@ class Time_Selector(wx.Dialog):
         self.start_mills.SetToolTip(_("Start milliseconds"))
 
         # ----------------------Binding (EVT)----------------------#
-        self.Bind(wx.EVT_BUTTON, self.on_reset_start, btn_reset_start)
+        self.Bind(wx.EVT_BUTTON, self.on_reset_start, self.btn_reset_start)
         self.Bind(wx.EVT_SPINCTRL, self.on_start, self.start_hour)
         self.Bind(wx.EVT_SPINCTRL, self.on_start, self.start_min)
         self.Bind(wx.EVT_SPINCTRL, self.on_start, self.start_sec)
@@ -165,7 +165,6 @@ class Time_Selector(wx.Dialog):
         self.Bind(wx.EVT_SPINCTRL, self.on_duration, self.duration_min)
         self.Bind(wx.EVT_SPINCTRL, self.on_duration, self.duration_sec)
         self.Bind(wx.EVT_SPINCTRL, self.on_duration, self.duration_mills)
-        #self.Bind(wx.EVT_BUTTON, self.reset_start_values, btn_start_reset)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.reset_all_values, btn_reset_all)
@@ -204,7 +203,8 @@ class Time_Selector(wx.Dialog):
 
     def get_duration_values(self):
         """
-        Returns the duration in timeformat and milliseconds
+        Returns a list object with `duration` values
+        `[str(timeformat), int(milliseconds)]`
         """
         duration = (f'{self.duration_hour.GetValue()}:'
                     f'{self.duration_min.GetValue()}:'
@@ -216,7 +216,8 @@ class Time_Selector(wx.Dialog):
 
     def get_start_values(self):
         """
-        Returns the start point in timeformat and milliseconds
+        Returns a list object with `start` values
+        `[str(timeformat), int(milliseconds)]`
         """
         start = (f'{self.start_hour.GetValue()}:'
                  f'{self.start_min.GetValue()}:'
@@ -235,11 +236,13 @@ class Time_Selector(wx.Dialog):
             self.start_min.Enable()
             self.start_sec.Enable()
             self.start_mills.Enable()
+            self.btn_reset_start.Enable()
         else:
             self.start_hour.Disable()
             self.start_min.Disable()
             self.start_sec.Disable()
             self.start_mills.Disable()
+            self.btn_reset_start.Disable()
     # ------------------------------------------------------------------#
 
     def on_reset_start(self, event):

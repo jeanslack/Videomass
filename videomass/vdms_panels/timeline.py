@@ -36,7 +36,7 @@ from videomass.vdms_dialogs.time_selector import Time_Selector
 class Timeline(wx.Panel):
     """
     A representation of the time selection meter as duration
-    and position values viewed as time range selection ruler
+    and position values viewed as time range selection
     for the FFmpeg syntax, in the following form:
 
         `-ss 00:00:00.000 -t 00:00:00.000`
@@ -51,11 +51,11 @@ class Timeline(wx.Panel):
     """
     # Colours used here
     RULER_BKGRD = '#84D2C9'  # CYAN for ruler background
-    SELECTION = '#a3e6dd'  # LIGHT CYAN for ruller background selection
-    DELIMITER_COLOR = '#00FE00'  # green for margin selection
+    SELECTION = '#b0e6dd' #'#a3e6dd'  # LIGHT CYAN for ruller background selection
+    DELIMITER_COLOR = '#ffdf00' #'#fe004c' # red for margin selection
     TEXT_PEN_COLOR = '#020D0F'  # black for static text and draw lines
-    CROP_REMAIN = '#f56b38'  # Orange for cropping time text indicator
-    DURATION_START = '#1f70da'  # Light blue for duration/start indicators
+    # ORANGE = '#f56b38'  # Orange color
+    DURATION_START = '#1f5dda'  # Light blue for duration/start indicators
 
     # ruler and panel specifications
     RW = 600  # ruler width
@@ -65,8 +65,8 @@ class Timeline(wx.Panel):
 
     def __init__(self, parent, iconedit):
         """
-        Note, the time values results are setted on `on_Cut` and `on_Seek`
-        methods using the `time_seq` parent (main_frame) attribute.
+        Note, the time values results are setted on `on_time_selection`
+        method using the `time_seq` parent (main_frame) attribute.
         If no file has a duration, the limit to the maximum time
         selection is set to 4800000ms (01:20:00.000).
 
@@ -83,10 +83,12 @@ class Timeline(wx.Panel):
             bmpedit = wx.Bitmap(iconedit, wx.BITMAP_TYPE_ANY)
 
         self.parent = parent
-        self.milliseconds = 1  # max val must be greater than the min val
+        self.milliseconds = 1  # total duration in ms
+        self.timeformat = None  # total duration of media  (HH:MM:SS.MLS)
+        self.ms_start = 0  # seek position in milliseconds
+        self.ms_dur = 0  # duration of the selection in milliseconds
         self.time_start = '00:00:00.000'  # seek position
         self.time_dur = '00:00:00.000'  # duration of the selection
-        self.timeformat = None
         self.pix = 0
         self.bar_w = 0
         self.bar_x = 0
@@ -97,62 +99,20 @@ class Timeline(wx.Panel):
         #                     wx.FONTWEIGHT_BOLD, False, 'Courier 10 Pitch'
         #                     )
         self.font_small = wx.Font(7, wx.DEFAULT, wx.NORMAL, wx.BOLD)
-        self.font_med = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        self.font_med = wx.Font(8, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         sizer_base = wx.BoxSizer(wx.HORIZONTAL)
-        self.btn_edit = wx.Button(self, wx.ID_ANY, label="", size=(50, -1))
-        self.btn_edit.SetBitmap(bmpedit, wx.BU_LEFT)
-        sizer_base.Add(self.btn_edit, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
+        btn_edit = wx.Button(self, wx.ID_ANY, label=_("Set"), size=(-1, -1))
+        btn_edit.SetBitmap(bmpedit, wx.BU_LEFT)
+        sizer_base.Add(btn_edit, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
+        btn_reset = wx.Button(self, wx.ID_RESET, label=_("Reset"), size=(-1, -1))
+        sizer_base.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
         self.paneltime = wx.Panel(self, wx.ID_ANY,
                                   size=(Timeline.PW, Timeline.PH),
                                   style=wx.BORDER_SUNKEN)
         sizer_base.Add(self.paneltime, 0, wx.LEFT | wx.RIGHT | wx.CENTRE, 5)
-        self.cmbx_accuracy = wx.ComboBox(self, wx.ID_ANY,
-                                         choices=('1 ms',
-                                                  '100 ms',
-                                                  '1 sec.',
-                                                  '1 min.'),
-                                         size=(-1, -1),
-                                         style=wx.CB_DROPDOWN |
-                                         wx.CB_READONLY
-                                         )
-        self.cmbx_accuracy.SetSelection(0)
-        sizer_base.Add(self.cmbx_accuracy, 0, wx.ALL
-                       | wx.ALIGN_CENTRE_VERTICAL, 5
-                       )
-        self.sldseek = wx.Slider(self, wx.ID_ANY, 0, 0, self.milliseconds,
-                                 size=(130, -1), style=wx.SL_HORIZONTAL
-                                 )
-        self.sldseek.Disable()
-        #self.txtseek = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
-        txtstaticseek = wx.StaticText(self, wx.ID_ANY, _('Start'))
-
-        self.sldcut = wx.Slider(self, wx.ID_ANY, 0, 0, self.milliseconds,
-                                size=(130, -1), style=wx.SL_HORIZONTAL
-                                )
-        #self.txtcut = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
-        txtstaticdur = wx.StaticText(self, wx.ID_ANY, _('Duration'))
 
         # ----------------------Properties ----------------------#
         self.paneltime.SetBackgroundColour(wx.Colour(Timeline.RULER_BKGRD))
-        self.sldseek.SetToolTip(_("Start from a given time position"))
-        self.sldcut.SetToolTip(_("Duration of the selection"))
-        self.cmbx_accuracy.SetToolTip(_("Set the amount of steps the slider "
-                                        "moves using 'UP' or 'DOWN' arrow "
-                                        "and 'UP' or 'DOWN' page, to quickly "
-                                        "set a more accurate time selection"))
-
-        # ----------------------Layout----------------------#
-
-        gridtime = wx.FlexGridSizer(2, 2, 0, 5)
-        gridtime.Add(txtstaticseek, 0, wx.LEFT | wx.RIGHT |
-                     wx.ALIGN_CENTRE_VERTICAL, 5)
-        gridtime.Add(self.sldseek, 0, wx.ALL | wx.CENTRE, 0)
-        #gridtime.Add(self.txtseek, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 0)
-        gridtime.Add(txtstaticdur, 0, wx.LEFT | wx.RIGHT |
-                     wx.ALIGN_CENTRE_VERTICAL, 5)
-        gridtime.Add(self.sldcut, 0, wx.ALL | wx.CENTRE, 0)
-        #gridtime.Add(self.txtcut, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 0)
-        sizer_base.Add(gridtime, 0, wx.ALL | wx.CENTRE, 0)
 
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
@@ -160,121 +120,18 @@ class Timeline(wx.Panel):
 
         # ----------------------Binding (EVT)----------------------#
         self.paneltime.Bind(wx.EVT_PAINT, self.OnPaint)
-        self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Cut, self.sldcut)
-        self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Seek, self.sldseek)
-        self.Bind(wx.EVT_COMBOBOX, self.on_accuracy, self.cmbx_accuracy)
-        self.Bind(wx.EVT_BUTTON, self.on_time_selection, self.btn_edit)
+        self.Bind(wx.EVT_BUTTON, self.on_time_selection, btn_edit)
+        self.Bind(wx.EVT_BUTTON, self.on_reset_values, btn_reset)
 
     # ----------------------Event handler (callback)----------------------#
-
-    def on_accuracy(self, event):
-        """
-        Set the amount steps in milliseconds the slider moves
-        when the user moves it up or down a line or pages.
-
-        """
-        if self.cmbx_accuracy.GetSelection() == 0:
-            self.sldcut.SetLineSize(1)
-            self.sldcut.SetPageSize(1000)
-            self.sldseek.SetLineSize(1)
-            self.sldseek.SetPageSize(1000)
-
-        elif self.cmbx_accuracy.GetSelection() == 1:
-            self.sldcut.SetLineSize(100)
-            self.sldcut.SetPageSize(5000)
-            self.sldseek.SetLineSize(100)
-            self.sldseek.SetPageSize(5000)
-
-        elif self.cmbx_accuracy.GetSelection() == 2:
-            self.sldcut.SetLineSize(1000)
-            self.sldcut.SetPageSize(10000)
-            self.sldseek.SetLineSize(1000)
-            self.sldseek.SetPageSize(10000)
-
-        elif self.cmbx_accuracy.GetSelection() == 3:
-            self.sldcut.SetLineSize(60000)
-            self.sldcut.SetPageSize(300000)
-            self.sldseek.SetLineSize(60000)
-            self.sldseek.SetPageSize(300000)
-    # ------------------------------------------------------------------#
-
-    def on_Cut(self, event):
-        """
-        Get total duration event
-
-        """
-        if self.cmbx_accuracy.GetSelection() == 0:
-            self.sldcut.SetLineSize(1)
-            self.sldcut.SetPageSize(1000)
-
-        elif self.cmbx_accuracy.GetSelection() == 1:
-            self.sldcut.SetLineSize(100)
-            self.sldcut.SetPageSize(5000)
-
-        elif self.cmbx_accuracy.GetSelection() == 2:
-            self.sldcut.SetLineSize(1000)
-            self.sldcut.SetPageSize(10000)
-
-        elif self.cmbx_accuracy.GetSelection() == 3:
-            self.sldcut.SetLineSize(60000)
-            self.sldcut.SetPageSize(300000)
-
-        cut = self.sldcut.GetValue()
-
-        if cut == 0:
-            self.sldcut.SetValue(0), self.sldseek.Disable()
-            self.sldcut.SetMax(self.milliseconds)
-        else:
-            self.sldseek.Enable()
-
-        self.sldseek.SetMax(self.milliseconds - cut)  # seek offset
-        time = milliseconds2clock(cut)
-        self.parent.time_seq = f"-ss {self.time_start} -t {time}"
-        self.time_dur = time
-        self.set_coordinates()
-    # ------------------------------------------------------------------#
-
-    def on_Seek(self, event):
-        """
-        Get seek event
-        """
-        if self.cmbx_accuracy.GetSelection() == 0:
-            self.sldseek.SetLineSize(1)
-            self.sldseek.SetPageSize(1000)
-
-        elif self.cmbx_accuracy.GetSelection() == 1:
-            self.sldseek.SetLineSize(100)
-            self.sldseek.SetPageSize(5000)
-
-        elif self.cmbx_accuracy.GetSelection() == 2:
-            self.sldseek.SetLineSize(1000)
-            self.sldseek.SetPageSize(10000)
-
-        elif self.cmbx_accuracy.GetSelection() == 3:
-            self.sldseek.SetLineSize(60000)
-            self.sldseek.SetPageSize(300000)
-
-        seek = self.sldseek.GetValue()
-
-        if seek == 0:
-            self.sldcut.SetMin(0)
-        else:
-            self.sldcut.SetMin(1)  # constrains to 1
-
-        self.sldcut.SetMax(self.milliseconds - seek)  # cut offset
-        time = milliseconds2clock(seek)  # convert to 24-hour clock
-        self.parent.time_seq = f"-ss {time} -t {self.time_dur}"
-        self.time_start = time
-        self.set_coordinates()
-    # ------------------------------------------------------------------#
 
     def set_coordinates(self):
         """
         Define width and x axis for selection rectangle before
-        call onRedraw
+        call `onRedraw` method
         """
-        self.bar_w = self.sldcut.GetValue() * self.pix
-        self.bar_x = self.sldseek.GetValue() * self.pix
+        self.bar_w = self.ms_dur * self.pix
+        self.bar_x = self.ms_start * self.pix
 
         self.onRedraw(self)
     # ------------------------------------------------------------------#
@@ -307,58 +164,58 @@ class Timeline(wx.Panel):
         for i in range(Timeline.RW):
 
             if not i % 600:
-                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 12)
+                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 10)
 
             elif not i % 300:
-                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 12)  # metà
+                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 10)  # metà
 
             elif not i % 150:
-                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 12)  # ogni 5
+                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 10)  # ogni 5
 
             elif not i % 25:
                 dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 5)
 
-        dc.DrawLine(i, 0, i, 12)
+        dc.DrawLine(i, 0, i, 10)
         w, h = dc.GetTextExtent(self.timeformat)
-        dc.DrawText('00:00:00.000', 3, 33)
-        dc.DrawText(self.timeformat, i-Timeline.RM-3-w, 33)
-
-        dc.SetTextForeground(Timeline.CROP_REMAIN)
-        crop = self.sldseek.GetValue() + self.sldcut.GetValue()
-        croptime = f'{milliseconds2clock(crop)} (Total duration)'
-        w, h = dc.GetTextExtent(croptime)
-        dc.DrawText(croptime, 3, h+2)
-
-        offset = milliseconds2clock(self.milliseconds - crop)
-        remain = f'(Remaining) {offset}'
-        w, h = dc.GetTextExtent(remain)
-        dc.DrawText(remain, Timeline.RW - 3 - w, h+2)
+        dc.DrawText(self.timeformat, i-Timeline.RM-3-w, 21)
 
         dc.SetFont(self.font_med)
         txt_s = _('Start')
         txt_d = _('Duration')
-        txt1 = f'{txt_s}      {self.time_start}'
-        txt2 = f'{txt_d}   {self.time_dur}'
+        # Make start txt
+        txt1 = f'{txt_s}  {self.time_start}'
         dc.SetTextForeground(Timeline.DURATION_START)
-        w, h = dc.GetTextExtent(txt1)
-        dc.DrawText(txt1, Timeline.RW / 2 - (w / 2), h-2)
-        dc.DrawText(txt2, Timeline.RW / 2 - (w / 2), 28)
+        w = dc.GetTextExtent(txt1)[0]
+        if w > self.bar_x:
+            dc.DrawText(txt1, self.bar_x, 9)
+        elif w > self.bar_x - Timeline.RW:
+            dc.DrawText(txt1, self.bar_x - w, 9)
+        else:
+            dc.DrawText(txt1, self.bar_x, 9)
+        # Make duration txt
+        txt2 = f'{txt_d}  {self.time_dur}'
+        w = dc.GetTextExtent(txt2)[0]
+        if w > Timeline.RW - (self.bar_x + self.bar_w):
+            dc.DrawText(txt2, (self.bar_x + self.bar_w) - w, 32)
+        elif w > self.bar_w:
+            dc.DrawText(txt2, self.bar_x + self.bar_w, 32)
+        else:
+            dc.DrawText(txt2, (self.bar_x + self.bar_w) - w, 32)
     # ------------------------------------------------------------------#
 
-    def resetValues(self):
+    def on_reset_values(self, event):
         """
-        Reset all values to default. This method is called out side
-        of this class.
+        Reset all values to default. This method is also called on
+        MainFrame.
         WARNING: It is recommended that you follow the order below
         for success
 
         """
         self.time_start = '00:00:00.000'  # seek position
         self.time_dur = '00:00:00.000'  # duration of the selection
-        self.sldseek.SetValue(0)
-        self.on_Seek(self)
-        self.sldcut.SetValue(0)
-        self.on_Cut(self)
+        self.ms_dur = 0
+        self.ms_start = 0
+        self.set_coordinates()
     # ------------------------------------------------------------------#
 
     def set_values(self, duration):
@@ -378,8 +235,6 @@ class Timeline(wx.Panel):
         self.paneltime.SetToolTip(msg0)
         self.pix = Timeline.RW / self.milliseconds
         self.timeformat = milliseconds2clock(self.milliseconds)
-        self.sldseek.SetMax(self.milliseconds)
-        self.sldcut.SetMax(self.milliseconds)
     # ------------------------------------------------------------------#
 
     def on_time_selection(self, event):
@@ -394,9 +249,11 @@ class Timeline(wx.Panel):
             if tms.ShowModal() == wx.ID_OK:
                 data = tms.getvalue()
                 if not data[0] and not data[1]:
-                    self.resetValues()
+                    self.on_reset_values(self)
                 elif data[1]:
-                    self.sldseek.SetValue(data[0])
-                    self.on_Seek(self)
-                    self.sldcut.SetValue(data[1])
-                    self.on_Cut(self)
+                    self.time_start = milliseconds2clock(data[0])
+                    self.time_dur = milliseconds2clock(data[1])
+                    self.parent.time_seq = f"-ss {data[0]} -t {data[1]}"
+                    self.ms_dur = data[1]
+                    self.ms_start = data[0]
+                    self.set_coordinates()
