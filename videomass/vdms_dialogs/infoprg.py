@@ -73,6 +73,8 @@ def info(parent, videomass_icon):
     info.AddTranslator("johannesdedoper https://github.com/johannesdedoper (nl_NL)")
     info.AddTranslator("Samuel (pt_BR)")
     info.AddTranslator("katnatek from blogdrake https://www.blogdrake.net/ (es_ES)")
+    info.AddTranslator("Phil Aug <philiaug@live.fr> (fr_FR)")
+    info.AddTranslator("MaiJZ https://github.com/maijz128 (zh_CN)")
     # info.AddTranslator("Nestor Blanco <random@mail.es> (es_ES)")
     info.SetArtists(
         ['Gianluca Pernigotto <jeanlucperni@gmail.com>',])

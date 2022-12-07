@@ -124,7 +124,8 @@ class MainFrame(wx.Frame):
 
         # ---------- others panel instances:
         self.TimeLine = timeline.Timeline(self,
-                                          self.icons['profile_edit']
+                                          self.icons['profile_edit'],
+                                          self.icons['clear'],
                                           )
         self.ChooseTopic = choose_topic.Choose_Topic(self,
                                                      self.appdata['ostype'],
@@ -187,7 +188,7 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.icons['videomass'],
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        self.SetMinSize((980, 640))
+        self.SetMinSize((1036, 640))
         # self.CentreOnScreen()  # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         self.Fit()
@@ -297,7 +298,7 @@ class MainFrame(wx.Frame):
         the timeline data (only if `self.time_seq` attribute is setted)
         """
         if self.time_seq != "-ss 00:00:00.000 -t 00:00:00.000":
-            self.TimeLine.resetValues()
+            self.TimeLine.on_reset_values(self)
 
     # ---------------------- Event handler (callback) ------------------#
 

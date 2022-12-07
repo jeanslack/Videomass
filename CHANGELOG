@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Dec 03, 2022 V.4.0.2
+Dec 07, 2022 V.4.0.2
 
   * Added language selection on preferences dialog.
   * Fixed check for new Videomass releases according to git API (on previous
@@ -15,9 +15,9 @@ Dec 03, 2022 V.4.0.2
   * changed permission to 0644 to io.github.jeanslack.videomass.desktop
   * improved help layout for panels
   * A/V Conversion: Added vp9/opus for mp4 container #133
-  * Added support for simplified Chinese zh_CN #138
+  * Added support for simplified Chinese zh_CN #138 (thanks to @MaiJZ)
   * Updated setup dialog for simpified Chinese lang support.
-  * Added support for French language fr_FR
+  * Added support for French language fr_FR (thanks to Phil Aug)
   * Updated setup dialog for French lang support.
   * Removed the tool to update the downloader inside the Videomass.AppImage,
     because it turns out to be inefficient and problematic (see #142).
@@ -25,6 +25,7 @@ Dec 03, 2022 V.4.0.2
     to adjust the time selection (see #150)
   * Added a new feature: ability to rename output files by clicking on the new
     "Output File Name" column of the Queue File Panel (see #144).
+  * Added crop time and remain time indicators to the Timeline display (see #150)
 +------------------------------------+
 May 02, 2022 V.4.0.1
 

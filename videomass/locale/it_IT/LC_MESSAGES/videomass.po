@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-03 16:17+0100\n"
-"PO-Revision-Date: 2022-12-03 16:17+0100\n"
+"POT-Creation-Date: 2022-12-06 19:31+0100\n"
+"PO-Revision-Date: 2022-12-06 19:37+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -116,8 +116,8 @@ msgstr "Larghezza"
 #: ../vdms_dialogs/filter_crop.py:258 ../vdms_dialogs/filter_deinterlace.py:122
 #: ../vdms_dialogs/filter_denoisers.py:86 ../vdms_dialogs/filter_scale.py:186
 #: ../vdms_dialogs/filter_stab.py:260 ../vdms_dialogs/filter_transpose.py:110
-#: ../vdms_dialogs/playlist_indexing.py:122
-#: ../vdms_dialogs/time_selector.py:119 ../vdms_panels/av_conversions.py:539
+#: ../vdms_dialogs/playlist_indexing.py:122 ../vdms_dialogs/time_selector.py:53
+#: ../vdms_panels/av_conversions.py:539 ../vdms_panels/timeline.py:107
 msgid "Reset"
 msgstr "Azzera"
 
@@ -125,7 +125,7 @@ msgstr "Azzera"
 #: ../vdms_dialogs/filter_denoisers.py:85 ../vdms_dialogs/filter_scale.py:184
 #: ../vdms_dialogs/filter_stab.py:258 ../vdms_dialogs/filter_transpose.py:114
 #: ../vdms_dialogs/playlist_indexing.py:126
-#: ../vdms_dialogs/set_timestamp.py:149 ../vdms_dialogs/time_selector.py:123
+#: ../vdms_dialogs/set_timestamp.py:149 ../vdms_dialogs/time_selector.py:138
 msgid "Apply"
 msgstr "Applica"
 
@@ -1324,18 +1324,53 @@ msgstr "Seleziona un file di registro"
 msgid "Are you sure you want to clear the selected log file?"
 msgstr "Sei sicuro di voler cancellare il file di registro selezionato?"
 
-#: ../vdms_dialogs/time_selector.py:48 ../vdms_panels/timeline.py:134
-msgid "Seek"
-msgstr "Cerca"
+#: ../vdms_dialogs/time_selector.py:52
+msgid "Segment Start   (HH:MM:SS.MIL)"
+msgstr "Inizio Segmento   (HH:MM:SS.MIL)"
 
-#: ../vdms_dialogs/time_selector.py:81 ../vdms_panels/filedrop.py:78
-#: ../vdms_panels/timeline.py:140
-msgid "Duration"
-msgstr "Durata"
+#: ../vdms_dialogs/time_selector.py:94
+msgid "Segment Duration   (HH:MM:SS.MIL)"
+msgstr "Durata Segmento   (HH:MM:SS.MIL)"
 
-#: ../vdms_dialogs/time_selector.py:133
+#: ../vdms_dialogs/time_selector.py:134
+msgid "Reset All"
+msgstr "Azzera Tutto"
+
+#: ../vdms_dialogs/time_selector.py:148
 msgid "Time Selection Adjustment"
 msgstr "Regolazione Selezione del Tempo"
+
+#: ../vdms_dialogs/time_selector.py:149
+msgid "Duration hours"
+msgstr "Durata in ore"
+
+#: ../vdms_dialogs/time_selector.py:150
+msgid "Duration minutes"
+msgstr "Durata in minuti"
+
+#: ../vdms_dialogs/time_selector.py:151
+msgid "Duration seconds"
+msgstr "Durata in secondi"
+
+#: ../vdms_dialogs/time_selector.py:152
+msgid "Duration milliseconds"
+msgstr "Durata in millisecondi"
+
+#: ../vdms_dialogs/time_selector.py:153
+msgid "Start hours"
+msgstr "Inizio in ore"
+
+#: ../vdms_dialogs/time_selector.py:154
+msgid "Start minutes"
+msgstr "Inizio in minuti"
+
+#: ../vdms_dialogs/time_selector.py:155
+msgid "Start seconds"
+msgstr "Inizio in secondi"
+
+#: ../vdms_dialogs/time_selector.py:156
+msgid "Start milliseconds"
+msgstr "Inizio in millisecondi"
 
 #: ../vdms_frames/ffmpeg_conf.py:66
 msgid "Informations"
@@ -3435,6 +3470,10 @@ msgstr "Gli URL contengono canali. Sei sicuro di voler continuare?"
 msgid "File Name"
 msgstr "Nome File"
 
+#: ../vdms_panels/filedrop.py:78 ../vdms_panels/timeline.py:184
+msgid "Duration"
+msgstr "Durata"
+
 #: ../vdms_panels/filedrop.py:79
 msgid "Media type"
 msgstr "Tipo di media"
@@ -3967,31 +4006,22 @@ msgstr "Aggiungi gli URL qui sotto"
 msgid "Delete all text from the list"
 msgstr "Elimina tutto il testo dall'elenco"
 
-#: ../vdms_panels/timeline.py:148
-msgid "Seek to given time position"
-msgstr "Cerca una data posizione temporale"
+#: ../vdms_panels/timeline.py:104
+msgid "Set"
+msgstr "Imposta"
 
-#: ../vdms_panels/timeline.py:149
-msgid "Total duration"
-msgstr "Durata totale"
+#: ../vdms_panels/timeline.py:183
+msgid "Start"
+msgstr "Inizio"
 
-#: ../vdms_panels/timeline.py:150
-msgid ""
-"Set the amount of steps the slider moves using 'UP' or 'DOWN' arrow and 'UP' "
-"or 'DOWN' page, to quickly set a more accurate time selection"
-msgstr ""
-"Imposta quanto deve muoversi il dispositivo di scorrimento utilizzando la "
-"freccia e la pagina 'SU' o 'GIÙ', per impostare rapidamente una selezione "
-"del tempo più accurata"
-
-#: ../vdms_panels/timeline.py:363
+#: ../vdms_panels/timeline.py:232
 #, python-brace-format
 msgid ""
 "The maximum time refers to the file with the longest duration, it will be "
 "set to {0} otherwise."
 msgstr ""
-"Il tempo massimo si riferisce al file con la durata maggiore, altrimenti "
-"sarà impostato a {0}."
+"Il tempo massimo fa riferimento al file con la durata maggiore, altrimenti "
+"verrà impostato a {0}."
 
 #: ../vdms_panels/sequence_to_video.py:58
 msgid "Images need to be resized, please use Resizing function."
@@ -4220,6 +4250,23 @@ msgstr ""
 #: ../vdms_threads/slideshow.py:228
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' è installato sul tuo sistema?"
+
+#~ msgid "Seek"
+#~ msgstr "Cerca"
+
+#~ msgid "Start from a given time position"
+#~ msgstr "Inizia da una data posizione temporale"
+
+#~ msgid "Total duration"
+#~ msgstr "Durata totale"
+
+#~ msgid ""
+#~ "Set the amount of steps the slider moves using 'UP' or 'DOWN' arrow and "
+#~ "'UP' or 'DOWN' page, to quickly set a more accurate time selection"
+#~ msgstr ""
+#~ "Imposta quanto deve muoversi il dispositivo di scorrimento utilizzando la "
+#~ "freccia e la pagina 'SU' o 'GIÙ', per impostare rapidamente una selezione "
+#~ "del tempo più accurata"
 
 #~ msgid "Menu bar > Tools > Update {}"
 #~ msgstr "Barra dei menu > Strumenti > Aggiorna {}"

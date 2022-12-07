@@ -6,9 +6,9 @@ videomass (4.0.2-1) UNRELEASED; urgency=medium
   * changed permission to 0644 to io.github.jeanslack.videomass.desktop
   * improved help layout for panels
   * A/V Conversion: Added vp9/opus for mp4 container #133
-  * Added support for simplified Chinese zh_CN #138
+  * Added support for simplified Chinese zh_CN #138 (thanks to @MaiJZ)
   * Updated setup dialog for simpified Chinese lang support.
-  * Added support for French language fr_FR
+  * Added support for French language fr_FR (thanks to Phil Aug)
   * Updated setup dialog for French lang support.
   * Removed the tool to update the downloader inside the Videomass.AppImage,
     because it turns out to be inefficient and problematic (see #142).
@@ -16,8 +16,9 @@ videomass (4.0.2-1) UNRELEASED; urgency=medium
     to adjust the time selection (see #150)
   * Added a new feature: ability to rename output files by clicking on the new
     "Output File Name" column of the Queue File Panel (see #144).
+  * Added crop time and remain time indicators to the Timeline display (see #150)
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 03 Dec 2022 02:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 07 Dec 2022 10:50:00 +0200
 
 videomass (4.0.1-1) UNRELEASED; urgency=medium
 
