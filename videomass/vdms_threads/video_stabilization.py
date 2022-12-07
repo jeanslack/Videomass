@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.10.2022
+Rev: Dec.02.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -55,7 +55,6 @@ class VidStab(Thread):
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
     OS = appdata['ostype']
-    SUFFIX = appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
     def __init__(self, varargs, duration, logname, timeseq):
@@ -64,11 +63,10 @@ class VidStab(Thread):
         have no influence on the type of conversion.
         """
         self.stop_work_thread = False  # process terminate
-        self.filelist = varargs[1]  # list of files (elements)
+        self.input_flist = varargs[1]  # list of infile (elements)
         self.passlist = varargs[5]  # comand list set for double-pass
         self.makeduo = varargs[4]  # one more process for the duo file
-        self.outputdir = varargs[3]  # output path
-        self.extoutput = varargs[2]  # format (extension)
+        self.output_flist = varargs[3]  # output path
         self.duration = duration  # duration list
         self.time_seq = timeseq  # a time segment
         self.volume = varargs[7]  # volume compensation data
@@ -91,41 +89,34 @@ class VidStab(Thread):
         Subprocess initialize thread.
         """
         filedone = []
-        for (files,
-             folders,
+        for (infile,
+             outfile,
              volume,
-             duration) in itertools.zip_longest(self.filelist,
-                                                self.outputdir,
+             duration) in itertools.zip_longest(self.input_flist,
+                                                self.output_flist,
                                                 self.volume,
                                                 self.duration,
                                                 fillvalue='',
                                                 ):
-            basename = os.path.basename(files)  # nome file senza path
-            filename = os.path.splitext(basename)[0]  # nome senza ext
-            source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
-            outext = source_ext if not self.extoutput else self.extoutput
-            outputfile = os.path.join(folders,
-                                      f'{filename}{VidStab.SUFFIX}.{outext}')
-
             # --------------- first pass
             pass1 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
                      f'{VidStab.appdata["ffmpegloglev"]} '
                      f'{VidStab.appdata["ffmpeg+params"]} '
-                     f'{self.time_seq} -i "{files}" {self.passlist[0]} '
+                     f'{self.time_seq} -i "{infile}" {self.passlist[0]} '
                      f'{VidStab.appdata["ffthreads"]} -y {self.nul}'
                      )
             self.count += 1
             count = (f'File {self.count}/{self.countmax} - Pass One\n'
                      f'Video stabilization detect...'
                      )
-            cmd = (f'{count}\nSource: "{files}"\nDestination: "{self.nul}"'
+            cmd = (f'{count}\nSource: "{infile}"\nDestination: "{self.nul}"'
                    f'\n\n[COMMAND]:\n{pass1}'
                    )
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource=f'Source:  "{files}"',
+                         fsource=f'Source:  "{infile}"',
                          destination=f'Destination:  "{self.nul}"',
                          duration=duration,
                          end='',
@@ -193,21 +184,20 @@ class VidStab(Thread):
             pass2 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
                      f'{VidStab.appdata["ffmpegloglev"]} '
                      f'{VidStab.appdata["ffmpeg+params"]} {self.time_seq} -i '
-                     f'"{files}" {self.passlist[1]} {volume} '
-                     f'{VidStab.appdata["ffthreads"]} -y '
-                     f'"{folders}/{filename}{VidStab.SUFFIX}.{outext}"'
+                     f'"{infile}" {self.passlist[1]} {volume} '
+                     f'{VidStab.appdata["ffthreads"]} -y "{outfile}"'
                      )
             count = (f'File {self.count}/{self.countmax} - Pass Two\n'
                      f'Video transform...'
                      )
-            cmd = (f'{count}\nSource: "{files}"\nDestination: "{outputfile}"'
+            cmd = (f'{count}\nSource: "{infile}"\nDestination: "{outfile}"'
                    f'\n\n[COMMAND]:\n{pass2}'
                    )
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource=f'Source:  "{files}"',
-                         destination=f'Destination:  "{outputfile}"',
+                         fsource=f'Source:  "{infile}"',
+                         destination=f'Destination:  "{outfile}"',
                          duration=duration,
                          end='',
                          )
@@ -250,7 +240,7 @@ class VidStab(Thread):
                 break  # fermo il ciclo for, altrimenti passa avanti
 
             if proc2.wait() == 0:  # will add '..terminated' to txtctrl
-                filedone.append(files)
+                filedone.append(infile)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count='',
@@ -261,26 +251,25 @@ class VidStab(Thread):
                              )
             # --------------- make duo ----------------#
             if self.makeduo:
-                outduo = os.path.join(
-                                   folders,
-                                   f'{filename}{VidStab.SUFFIX}_DUO.{outext}'
-                                   )
+                duoname = os.path.splitext(outfile)
+                outduo = f'{duoname[0]}_DUO{duoname[1]}'
+
                 pass3 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
                          f'{VidStab.appdata["ffmpegloglev"]} '
                          f'{VidStab.appdata["ffmpeg+params"]} {self.time_seq} '
-                         f'-i "{files}" {VidStab.appdata["ffthreads"]} '
+                         f'-i "{infile}" {VidStab.appdata["ffthreads"]} '
                          f'-vf "[in] {self.addflt}pad=2*iw:ih [left]; '
-                         f'movie={outputfile} [right]; [left][right] '
+                         f'movie={outfile} [right]; [left][right] '
                          f'overlay=main_w/2:0 [out]" -y "{outduo}"'
                          )
                 count = f'File {self.count}/{self.countmax}\nMake duo...'
-                cmd = (f'{count}\nSource: "{files}"\n'
-                       f'Destination: "{outputfile}"\n\n[COMMAND]:\n{pass3}'
+                cmd = (f'{count}\nSource: "{infile}"\n'
+                       f'Destination: "{outduo}"\n\n[COMMAND]:\n{pass3}'
                        )
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=count,
-                             fsource=f'Source:  "{files}"',
+                             fsource=f'Source:  "{infile}"',
                              destination=f'Destination: "{outduo}"',
                              duration=duration,
                              end='',

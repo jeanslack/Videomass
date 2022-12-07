@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.09.2022
+Rev: Dec.02.2022
 Code checker: pylint, flake8 --ignore=F821,W503
 ########################################################
 
@@ -92,6 +92,7 @@ class MainFrame(wx.Frame):
         self.data_files = []  # list of items in list control
         self.data_url = None  # list of urls in text box
         self.outpath_ffmpeg = None  # path name for FFmpeg file destination
+        self.outputnames = []  # output file names
         self.same_destin = False  # same source FFmpeg output destination
         self.outpath_ydl = None  # path name for download file destination
         self.suffix = ''  # append a suffix to FFmpeg output file names

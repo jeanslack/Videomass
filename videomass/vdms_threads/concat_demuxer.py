@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.24.2022
+Rev: Dec.02.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -26,7 +26,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
 from threading import Thread
 import time
 import subprocess
@@ -61,10 +60,9 @@ class ConcatDemuxer(Thread):
 
         """
         self.stop_work_thread = False  # process terminate
-        self.filelist = varargs[1]  # list of files (items)
+        self.input_flist = varargs[1]  # list of files (items)
         self.command = varargs[4]  # additional comand
-        self.outputdir = varargs[3]  # output path
-        self.extoutput = varargs[2]  # format (extension)
+        self.output_file = varargs[3]  # output path
         self.duration = duration  # overall duration
         self.countmax = len(varargs[1])  # length file list
         self.logname = logname  # title name of file log
@@ -79,30 +77,23 @@ class ConcatDemuxer(Thread):
 
         """
         filedone = None
-        basename = os.path.basename(self.filelist[0])  # nome file senza path
-        filename = os.path.splitext(basename)[0]  # nome senza estensione
-        source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
-        outext = source_ext if not self.extoutput else self.extoutput
-        outputfile = os.path.join(self.outputdir,
-                                  f'{filename}{ConcatDemuxer.SUFFIX}.{outext}'
-                                  )
         cmd = (f'"{ConcatDemuxer.appdata["ffmpeg_cmd"]}" '
                f'{ConcatDemuxer.appdata["ffmpegloglev"]} '
                f'{ConcatDemuxer.appdata["ffmpeg+params"]} '
                f'-f concat -safe 0 -i {self.command} '
-               f'{ConcatDemuxer.appdata["ffthreads"]} -y "{outputfile}"')
+               f'{ConcatDemuxer.appdata["ffthreads"]} -y "{self.output_file}"')
 
         count = f'{self.countmax} Files to concat'
-        com = (f'{count}\nSource: "{self.filelist}"\nDestination: '
-               f'"{outputfile}"\n\n[COMMAND]:\n{cmd}')
+        com = (f'{count}\nSource: "{self.input_flist}"\nDestination: '
+               f'"{self.output_file}"\n\n[COMMAND]:\n{cmd}')
 
         wx.CallAfter(pub.sendMessage,
                      "COUNT_EVT",
                      count=count,
-                     fsource=f'Source:  {self.filelist}',
-                     destination=f'Destination:  "{outputfile}"',
+                     fsource=f'Source:  {self.input_flist}',
+                     destination=f'Destination:  "{self.output_file}"',
                      duration=self.duration,
-                     # fname=", ".join(self.filelist),
+                     # fname=", ".join(self.input_flist),
                      end='',
                      )
         logwrite(com, '', self.logname)  # write n/n + command only
@@ -137,7 +128,7 @@ class ConcatDemuxer(Thread):
                              f"Exit status: {proc.wait}",
                              self.logname)  # append exit error number
                 else:  # ok
-                    filedone = self.filelist
+                    filedone = self.input_flist
                     wx.CallAfter(pub.sendMessage,
                                  "COUNT_EVT",
                                  count='',

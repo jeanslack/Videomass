@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.24.2022
+Rev: Dec.01.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -29,6 +29,7 @@ This file is part of Videomass.
 """
 import os
 import sys
+import re
 import wx
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_io import io_tools
@@ -51,16 +52,34 @@ class MyListCtrl(wx.ListCtrl):
     # ----------------------------------------------------------------------
 
     def __init__(self, parent):
-        """Constructor"""
+        """
+        Constructor
+        """
         self.index = None
         self.parent = parent  # parent is DnDPanel class
         self.data = self.parent.data
+        self.outputnames = self.parent.outputnames
         wx.ListCtrl.__init__(self, parent, style=wx.LC_REPORT)
+        self.populate()
     # ----------------------------------------------------------------------#
 
-    def dropUpdate(self, path):
+    def populate(self):
         """
-        Update list-control during drag and drop
+        populate with default colums
+        """
+        self.InsertColumn(0, '#', width=30)
+        self.InsertColumn(1, _('File Name'), width=200)
+        self.InsertColumn(2, _('Duration'), width=200)
+        self.InsertColumn(3, _('Media type'), width=200)
+        self.InsertColumn(4, _('Size'), width=150)
+        self.InsertColumn(5, _('Output File name'), width=200)
+
+    def dropUpdate(self, path, newname=None):
+        """
+        Update list-control during drag and drop.
+        Note that the optional 'newname' argument is given by
+        the 'on_col_click' method in the 'FileDnD' class to preserve
+        the related renames in column 5 of wx.ListCtrl.
 
         """
         self.index = self.GetItemCount()
@@ -116,6 +135,13 @@ class MyListCtrl(wx.ListCtrl):
             formatname = data['format']['format_long_name']
             self.SetItem(self.index, 3, f'{media}: {formatname}')
             self.SetItem(self.index, 4, data['format']['size'])
+            if newname:
+                self.SetItem(self.index, 5, newname)
+                self.outputnames.append(newname)
+            else:
+                fname = os.path.splitext(os.path.basename(path))[0]
+                self.SetItem(self.index, 5, fname)
+                self.outputnames.append(fname)
             self.index += 1
             self.data.append(data)
             self.parent.statusbar_msg('', None)
@@ -170,6 +196,7 @@ class FileDnD(wx.Panel):
         """Constructor. This will initiate with an id and a title"""
         get = wx.GetApp()
         appdata = get.appset
+        self.themecolor = appdata['icontheme'][1]
         self.parent = parent  # parent is the MainFrame
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
@@ -177,6 +204,7 @@ class FileDnD(wx.Panel):
         else:
             bmpplay = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
         self.data = self.parent.data_files  # set items list data on parent
+        self.outputnames = self.parent.outputnames
         self.file_dest = appdata['outputfile']
         self.selected = None  # tells if an imported file is selected or not
         self.sortingstate = None  # ascending or descending order
@@ -221,12 +249,6 @@ class FileDnD(wx.Panel):
                          )
         sizer.Add(sizer_outdir, 0, wx.EXPAND)
         self.SetSizer(sizer)
-        # properties
-        self.flCtrl.InsertColumn(0, '#', width=30)
-        self.flCtrl.InsertColumn(1, _('File Name'), width=350)
-        self.flCtrl.InsertColumn(2, _('Duration'), width=230)
-        self.flCtrl.InsertColumn(3, _('Media type'), width=200)
-        self.flCtrl.InsertColumn(4, _('Size'), width=150)
 
         if appdata['ostype'] == 'Darwin':
             lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -289,6 +311,7 @@ class FileDnD(wx.Panel):
                                   self.flCtrl.GetItemText(x, col=2),
                                   self.flCtrl.GetItemText(x, col=3),
                                   self.flCtrl.GetItemText(x, col=4),
+                                  self.flCtrl.GetItemText(x, col=5),
                                   ))
             if event.GetColumn() == 1:
                 new = sorted(curritems, key=lambda item: item[0])
@@ -303,6 +326,9 @@ class FileDnD(wx.Panel):
                 new = sorted(curritems, key=lambda item:
                              to_bytes(''.join(item[3].split()), 'ffmpeg'))
 
+            elif event.GetColumn() == 5:
+                new = sorted(curritems, key=lambda item: item[4])
+
             self.delete_all(self, setstate=False)  # does not setstate here
 
             if self.sortingstate == 'descending':
@@ -316,8 +342,9 @@ class FileDnD(wx.Panel):
 
             if self.sortingstate == 'descending':
                 new.reverse()
-            for f in new:
-                self.flCtrl.dropUpdate(f[0])
+
+            for data in new:
+                self.flCtrl.dropUpdate(data[0], data[4])
     # ----------------------------------------------------------------------
 
     def reset_timeline(self):
@@ -347,12 +374,15 @@ class FileDnD(wx.Panel):
         if not hasattr(self, "popupID1"):
             popupID1 = wx.ID_ANY
             popupID2 = wx.ID_ANY
+            popupID3 = wx.ID_ANY
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID1)
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID2)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID3)
         # build the menu
         menu = wx.Menu()
         menu.Append(popupID2, _("Play"))
         menu.Append(popupID1, _("Remove"))
+        menu.Append(popupID1, _("Rename output file"))
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()
@@ -372,6 +402,9 @@ class FileDnD(wx.Panel):
 
         elif menuItem.GetItemLabel() == _("Remove"):
             self.on_delete_selected(self)
+
+        elif menuItem.GetItemLabel() == _("Rename output file"):
+            self.edit_output_name()
 
     # ----------------------------------------------------------------------
 
@@ -423,7 +456,8 @@ class FileDnD(wx.Panel):
 
         for num in sorted(indexes, reverse=True):
             self.flCtrl.DeleteItem(num)  # remove selected items
-            self.data.pop(num)  # remove selected items from data
+            self.data.pop(num)  # remove selected items
+            self.outputnames.pop(num)  # remove selected items
         self.reset_timeline()  # delete parent.timeline
         self.on_deselect(self)  # deselect removed file
 
@@ -440,6 +474,7 @@ class FileDnD(wx.Panel):
         # self.flCtrl.ClearAll()
         self.flCtrl.DeleteAllItems()
         del self.data[:]
+        del self.outputnames[:]
         self.parent.filedropselected = None
         self.reset_timeline()
         self.selected = None
@@ -497,3 +532,55 @@ class FileDnD(wx.Panel):
         bcolor: background, fcolor: foreground
         """
         self.parent.statusbar_msg(f'{mess}', bcolor, fcolor)
+    # -----------------------------------------------------------------------
+
+    def edit_output_name(self):
+        """
+        This method is responsible for renaming the output
+        files. It performs a check to ensure that output files
+        do NOT have the same name, empty strings, non-alphanumeric
+        characters such as dots, commas, slashes, etc.
+        It allows all alphanumeric character as `a-zA-Z0-9_`,
+        `whitespaces` and `hyphens`. The maximum filename lengh
+        is fixed to 255 characters. Names consisting of only
+        whitespaces or tabs are rejected silently.
+
+        """
+        if not self.selected:
+            self.parent.statusbar_msg(_('No file selected'), FileDnD.YELLOW,
+                                      FileDnD.BLACK)
+            return
+
+        row_id = self.flCtrl.GetFocusedItem()  # Get the current row
+        oldname = self.flCtrl.GetItemText(row_id, 5)  # Get current name
+        newname = ''
+        msg_invalid = _('Invalid characters:')
+        msg_inuse = _('Name already in use:')
+
+        dlg = wx.TextEntryDialog(self, _('Enter the new name here'),
+                                 _('Rename File'), '')
+        dlg.SetValue(oldname)
+
+        if dlg.ShowModal() == wx.ID_OK:
+            newname = dlg.GetValue()
+
+        dlg.Destroy()
+
+        if (newname == '' or newname == oldname or newname.isspace()):
+            self.parent.statusbar_msg(_('Add Files'), None)
+            return
+
+        check = bool(re.search(r"^(?:[\w\- ]{1,255}$)*$", newname))
+        if check is not True:
+            self.parent.statusbar_msg(f'{msg_invalid} {newname}',
+                                      FileDnD.YELLOW, FileDnD.BLACK)
+            return
+
+        if newname in self.outputnames:
+            self.parent.statusbar_msg(f'{msg_inuse} {newname}',
+                                      FileDnD.YELLOW, FileDnD.BLACK)
+            return
+
+        self.flCtrl.SetItem(row_id, 5, newname)
+        self.outputnames[row_id] = newname
+        self.parent.statusbar_msg(_('Add Files'), None)
