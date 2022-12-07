@@ -124,7 +124,8 @@ class MainFrame(wx.Frame):
 
         # ---------- others panel instances:
         self.TimeLine = timeline.Timeline(self,
-                                          self.icons['profile_edit']
+                                          self.icons['profile_edit'],
+                                          self.icons['clear'],
                                           )
         self.ChooseTopic = choose_topic.Choose_Topic(self,
                                                      self.appdata['ostype'],

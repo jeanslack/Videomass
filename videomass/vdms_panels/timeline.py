@@ -63,7 +63,7 @@ class Timeline(wx.Panel):
     PW = 602  # panel width
     PH = 45  # panel height
 
-    def __init__(self, parent, iconedit):
+    def __init__(self, parent, iconedit, iconreset):
         """
         Note, the time values results are setted on `on_time_selection`
         method using the `time_seq` parent (main_frame) attribute.
@@ -79,8 +79,10 @@ class Timeline(wx.Panel):
         """
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpedit = get_bmp(iconedit, ((16, 16)))
+            bmpreset = get_bmp(iconreset, ((16, 16)))
         else:
             bmpedit = wx.Bitmap(iconedit, wx.BITMAP_TYPE_ANY)
+            bmpreset = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
 
         self.parent = parent
         self.milliseconds = 1  # total duration in ms
@@ -99,13 +101,14 @@ class Timeline(wx.Panel):
         #                     wx.FONTWEIGHT_BOLD, False, 'Courier 10 Pitch'
         #                     )
         self.font_small = wx.Font(7, wx.DEFAULT, wx.NORMAL, wx.BOLD)
-        self.font_med = wx.Font(8, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        self.font_med = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         sizer_base = wx.BoxSizer(wx.HORIZONTAL)
-        btn_edit = wx.Button(self, wx.ID_ANY, label=_("Set"), size=(-1, -1))
+        btn_edit = wx.Button(self, wx.ID_ANY, _("Set"), size=(-1, -1))
         btn_edit.SetBitmap(bmpedit, wx.BU_LEFT)
         sizer_base.Add(btn_edit, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
-        btn_reset = wx.Button(self, wx.ID_RESET, label=_("Reset"), size=(-1, -1))
-        sizer_base.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
+        self.btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"), size=(-1, -1))
+        self.btn_reset.SetBitmap(bmpreset, wx.BU_LEFT)
+        sizer_base.Add(self.btn_reset, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
         self.paneltime = wx.Panel(self, wx.ID_ANY,
                                   size=(Timeline.PW, Timeline.PH),
                                   style=wx.BORDER_SUNKEN)
@@ -121,7 +124,7 @@ class Timeline(wx.Panel):
         # ----------------------Binding (EVT)----------------------#
         self.paneltime.Bind(wx.EVT_PAINT, self.OnPaint)
         self.Bind(wx.EVT_BUTTON, self.on_time_selection, btn_edit)
-        self.Bind(wx.EVT_BUTTON, self.on_reset_values, btn_reset)
+        self.Bind(wx.EVT_BUTTON, self.on_reset_values, self.btn_reset)
 
     # ----------------------Event handler (callback)----------------------#
 
@@ -196,11 +199,11 @@ class Timeline(wx.Panel):
         txt2 = f'{txt_d}  {self.time_dur}'
         w = dc.GetTextExtent(txt2)[0]
         if w > Timeline.RW - (self.bar_x + self.bar_w):
-            dc.DrawText(txt2, (self.bar_x + self.bar_w) - w, 32)
+            dc.DrawText(txt2, (self.bar_x + self.bar_w) - w, 29)
         elif w > self.bar_w:
-            dc.DrawText(txt2, self.bar_x + self.bar_w, 32)
+            dc.DrawText(txt2, self.bar_x + self.bar_w, 29)
         else:
-            dc.DrawText(txt2, (self.bar_x + self.bar_w) - w, 32)
+            dc.DrawText(txt2, (self.bar_x + self.bar_w) - w, 29)
     # ------------------------------------------------------------------#
 
     def on_reset_values(self, event):
@@ -215,6 +218,7 @@ class Timeline(wx.Panel):
         self.time_dur = '00:00:00.000'  # duration of the selection
         self.ms_dur = 0
         self.ms_start = 0
+        self.btn_reset.Disable()
         self.set_coordinates()
     # ------------------------------------------------------------------#
 
@@ -235,6 +239,7 @@ class Timeline(wx.Panel):
         self.paneltime.SetToolTip(msg0)
         self.pix = Timeline.RW / self.milliseconds
         self.timeformat = milliseconds2clock(self.milliseconds)
+        self.btn_reset.Disable()
     # ------------------------------------------------------------------#
 
     def on_time_selection(self, event):
@@ -257,4 +262,5 @@ class Timeline(wx.Panel):
                     self.time_dur = milliseconds2clock(self.ms_dur)
                     self.parent.time_seq = (f"-ss {self.time_start} "
                                             f"-t {self.time_dur}")
+                    self.btn_reset.Enable()
                     self.set_coordinates()
