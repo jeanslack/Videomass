@@ -31,16 +31,13 @@ import os
 import sys
 import re
 import wx
-import wx.lib.mixins.listctrl as listmix
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_io import io_tools
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import to_bytes
 
 
-class MyListCtrl(wx.ListCtrl,
-                 listmix.ListCtrlAutoWidthMixin,
-                 listmix.TextEditMixin):
+class MyListCtrl(wx.ListCtrl):
     """
     This is the listControl widget. Note that this wideget has DnDPanel
     parent.
@@ -54,8 +51,7 @@ class MyListCtrl(wx.ListCtrl,
     BLACK = '#060505'  # black for background status bar
     # ----------------------------------------------------------------------
 
-    def __init__(self, parent, ID, pos=wx.DefaultPosition,
-                 size=wx.DefaultSize, style=wx.LC_REPORT):
+    def __init__(self, parent):
         """
         Constructor
         """
@@ -63,10 +59,8 @@ class MyListCtrl(wx.ListCtrl,
         self.parent = parent  # parent is DnDPanel class
         self.data = self.parent.data
         self.outputnames = self.parent.outputnames
-        wx.ListCtrl.__init__(self, parent, ID, pos, size, style)
-        listmix.ListCtrlAutoWidthMixin.__init__(self)
+        wx.ListCtrl.__init__(self, parent, style=wx.LC_REPORT)
         self.populate()
-        listmix.TextEditMixin.__init__(self)
     # ----------------------------------------------------------------------#
 
     def populate(self):
@@ -78,7 +72,7 @@ class MyListCtrl(wx.ListCtrl,
         self.InsertColumn(2, _('Duration'), width=200)
         self.InsertColumn(3, _('Media type'), width=200)
         self.InsertColumn(4, _('Size'), width=150)
-        self.InsertColumn(5, _('Output File name (editable)'), width=200)
+        self.InsertColumn(5, _('Output File name'), width=200)
 
     def dropUpdate(self, path, newname=None):
         """
@@ -218,7 +212,7 @@ class FileDnD(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
 
         # This builds the list control box:
-        self.flCtrl = MyListCtrl(self, wx.ID_ANY)  # class MyListCtr
+        self.flCtrl = MyListCtrl(self)  # class MyListCtr
         # Establish the listctrl as a drop target:
         file_drop_target = FileDrop(self.flCtrl)
         self.flCtrl.SetDropTarget(file_drop_target)  # Make drop target.
@@ -290,8 +284,6 @@ class FileDnD(wx.Panel):
                   self.flCtrl)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.on_col_click, self.flCtrl)
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
-        self.flCtrl.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self.on_edit_begin)
-        self.flCtrl.Bind(wx.EVT_LIST_END_LABEL_EDIT, self.on_edit_end)
     # ----------------------------------------------------------------------
 
     def on_col_click(self, event):
@@ -382,12 +374,15 @@ class FileDnD(wx.Panel):
         if not hasattr(self, "popupID1"):
             popupID1 = wx.ID_ANY
             popupID2 = wx.ID_ANY
+            popupID3 = wx.ID_ANY
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID1)
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID2)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID3)
         # build the menu
         menu = wx.Menu()
         menu.Append(popupID2, _("Play"))
         menu.Append(popupID1, _("Remove"))
+        menu.Append(popupID1, _("Rename output file"))
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()
@@ -407,6 +402,9 @@ class FileDnD(wx.Panel):
 
         elif menuItem.GetItemLabel() == _("Remove"):
             self.on_delete_selected(self)
+
+        elif menuItem.GetItemLabel() == _("Rename output file"):
+            self.edit_output_name()
 
     # ----------------------------------------------------------------------
 
@@ -536,62 +534,53 @@ class FileDnD(wx.Panel):
         self.parent.statusbar_msg(f'{mess}', bcolor, fcolor)
     # -----------------------------------------------------------------------
 
-    def on_edit_begin(self, event):
+    def edit_output_name(self):
         """
-        This method ensures that columns 0 to 4
-        are not editable during mouse clicks.
-        """
-        if event.GetColumn() in (0, 1, 2, 3, 4):
-            event.Veto()
-        elif event.GetColumn() == 5:
-            event.Skip()  # or event.Allow()
-    # -----------------------------------------------------------------------
-
-    def on_edit_end(self, event):
-        """
-        This method is responsible for verifying the renaming
-        of the output files. Performs a check to ensure that
-        output files do not have the same name and/or empty strings.
-        Checking event-entered strings using REGEX: Allows all
-        alphanumeric character as `a-zA-Z0-9_`, `whitespaces`
-        and `hyphens`. It does not allow you to enter all other
-        non-alphanumeric characters such as dots, commas, slashes, etc.
-        The maximum filename lengh is fixed to 255 characters.
-        Names consisting of only whitespaces or tabs are rejected silently.
-
-        Some useful event examples for this method:
-
-        row_id = event.GetIndex()  # Get the current row
-        col_id = event.GetColumn()  # Get the current column
-        string = event.GetLabel()  # Get the changed data
-        cols = self.flCtrl.GetColumnCount()  # Get the total number of col
-        rows = self.flCtrl.GetItemCount()  # Get the total number of rows
+        This method is responsible for renaming the output
+        files. It performs a check to ensure that output files
+        do NOT have the same name, empty strings, non-alphanumeric
+        characters such as dots, commas, slashes, etc.
+        It allows all alphanumeric character as `a-zA-Z0-9_`,
+        `whitespaces` and `hyphens`. The maximum filename lengh
+        is fixed to 255 characters. Names consisting of only
+        whitespaces or tabs are rejected silently.
 
         """
-        string = event.GetLabel()  # Get the changed data
-        row_id = event.GetIndex()  # Get the current row
+        if not self.selected:
+            self.parent.statusbar_msg(_('No file selected'), FileDnD.YELLOW,
+                                      FileDnD.BLACK)
+            return
+
+        row_id = self.flCtrl.GetFocusedItem()  # Get the current row
+        oldname = self.flCtrl.GetItemText(row_id, 5)  # Get current name
+        newname = ''
         msg_invalid = _('Invalid characters:')
         msg_inuse = _('Name already in use:')
 
+        dlg = wx.TextEntryDialog(self, _('Enter the new name here'),
+                                 _('Rename File'), '')
+        dlg.SetValue(oldname)
 
-        if (string == '' or string == self.flCtrl.GetItemText(row_id, 5)
-             or string.isspace()):
+        if dlg.ShowModal() == wx.ID_OK:
+            newname = dlg.GetValue()
+
+        dlg.Destroy()
+
+        if (newname == '' or newname == oldname or newname.isspace()):
             self.parent.statusbar_msg(_('Add Files'), None)
-            event.Veto()
             return
 
-        check = bool(re.search(r"^(?:[\w\- ]{1,255}$)*$", string))
+        check = bool(re.search(r"^(?:[\w\- ]{1,255}$)*$", newname))
         if check is not True:
-            self.parent.statusbar_msg(f'{msg_invalid} {string}',
+            self.parent.statusbar_msg(f'{msg_invalid} {newname}',
                                       FileDnD.YELLOW, FileDnD.BLACK)
-            event.Veto()
             return
 
-        if string in self.outputnames:
-            self.parent.statusbar_msg(f'{msg_inuse} {string}',
+        if newname in self.outputnames:
+            self.parent.statusbar_msg(f'{msg_inuse} {newname}',
                                       FileDnD.YELLOW, FileDnD.BLACK)
-            event.Veto()
             return
 
-        self.outputnames[row_id] = string
+        self.flCtrl.SetItem(row_id, 5, newname)
+        self.outputnames[row_id] = newname
         self.parent.statusbar_msg(_('Add Files'), None)
