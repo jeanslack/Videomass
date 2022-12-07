@@ -176,7 +176,7 @@ class Timeline(wx.Panel):
                 dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 5)
 
         dc.DrawLine(i, 0, i, 10)
-        w, h = dc.GetTextExtent(self.timeformat)
+        w = dc.GetTextExtent(self.timeformat)[0]
         dc.DrawText(self.timeformat, i-Timeline.RM-3-w, 21)
 
         dc.SetFont(self.font_med)
@@ -251,9 +251,10 @@ class Timeline(wx.Panel):
                 if not data[0] and not data[1]:
                     self.on_reset_values(self)
                 elif data[1]:
-                    self.time_start = milliseconds2clock(data[0])
-                    self.time_dur = milliseconds2clock(data[1])
-                    self.parent.time_seq = f"-ss {data[0]} -t {data[1]}"
                     self.ms_dur = data[1]
                     self.ms_start = data[0]
+                    self.time_start = milliseconds2clock(self.ms_start)
+                    self.time_dur = milliseconds2clock(self.ms_dur)
+                    self.parent.time_seq = (f"-ss {self.time_start} "
+                                            f"-t {self.time_dur}")
                     self.set_coordinates()
