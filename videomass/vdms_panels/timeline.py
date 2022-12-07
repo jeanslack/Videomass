@@ -51,7 +51,7 @@ class Timeline(wx.Panel):
     """
     # Colours used here
     RULER_BKGRD = '#84D2C9'  # CYAN for ruler background
-    SELECTION = '#b0e6dd' #'#a3e6dd'  # LIGHT CYAN for ruller background selection
+    SELECTION = '#a3e6dd' # LIGHT CYAN for ruller background selection
     DELIMITER_COLOR = '#ffdf00' #'#fe004c' # red for margin selection
     TEXT_PEN_COLOR = '#020D0F'  # black for static text and draw lines
     # ORANGE = '#f56b38'  # Orange color
@@ -100,7 +100,6 @@ class Timeline(wx.Panel):
         # self.font = wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL,
         #                     wx.FONTWEIGHT_BOLD, False, 'Courier 10 Pitch'
         #                     )
-        self.font_small = wx.Font(7, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         self.font_med = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         sizer_base = wx.BoxSizer(wx.HORIZONTAL)
         btn_edit = wx.Button(self, wx.ID_ANY, _("Set"), size=(-1, -1))
@@ -113,6 +112,9 @@ class Timeline(wx.Panel):
                                   size=(Timeline.PW, Timeline.PH),
                                   style=wx.BORDER_SUNKEN)
         sizer_base.Add(self.paneltime, 0, wx.LEFT | wx.RIGHT | wx.CENTRE, 5)
+        self.maxdur = wx.StaticText(self, wx.ID_ANY, '')
+        sizer_base.Add(self.maxdur, 0, wx.LEFT | wx.RIGHT |
+                       wx.ALIGN_CENTRE_VERTICAL, 5)
 
         # ----------------------Properties ----------------------#
         self.paneltime.SetBackgroundColour(wx.Colour(Timeline.RULER_BKGRD))
@@ -160,7 +162,6 @@ class Timeline(wx.Panel):
         # dc.SetBrush(wx.Brush(wx.Colour(30, 30, 30, 200)))
         dc.SetBrush(wx.Brush(Timeline.SELECTION, wx.BRUSHSTYLE_SOLID))
         dc.DrawRectangle(self.bar_x + 1, -8, self.bar_w, 66)
-        dc.SetFont(self.font_small)
         dc.SetPen(wx.Pen(Timeline.TEXT_PEN_COLOR))
         dc.SetTextForeground(Timeline.TEXT_PEN_COLOR)
 
@@ -179,8 +180,6 @@ class Timeline(wx.Panel):
                 dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 5)
 
         dc.DrawLine(i, 0, i, 10)
-        w = dc.GetTextExtent(self.timeformat)[0]
-        dc.DrawText(self.timeformat, i-Timeline.RM-3-w, 21)
 
         dc.SetFont(self.font_med)
         txt_s = _('Start')
@@ -233,12 +232,13 @@ class Timeline(wx.Panel):
             self.milliseconds = round(duration)
             # rounds all float number to prevent ruler selection inaccuracy
 
-        msg0 = _('The maximum time refers to the file '
+        msg0 = _('"Total Duration" refers to the file '
                  'with the longest duration, it will be '
                  'set to {0} otherwise.').format('23:59:59.999')
         self.paneltime.SetToolTip(msg0)
         self.pix = Timeline.RW / self.milliseconds
         self.timeformat = milliseconds2clock(self.milliseconds)
+        self.maxdur.SetLabel(_('Total Duration:\n{}').format(self.timeformat))
         self.btn_reset.Disable()
     # ------------------------------------------------------------------#
 

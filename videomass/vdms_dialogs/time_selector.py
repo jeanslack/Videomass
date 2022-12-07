@@ -269,11 +269,11 @@ class Time_Selector(wx.Dialog):
         if entersum > self.milliseconds:
             setmax = milliseconds2clock(self.milliseconds - start[1])
             h, m, s = setmax.split(':')
-            ms = str(s.split('.')[1]).zfill(3)
-            self.duration_hour.SetValue(h)
-            self.duration_min.SetValue(m)
-            self.duration_sec.SetValue(s)
-            self.duration_mills.SetValue(ms)
+            sec, ms = s.split('.')
+            self.duration_hour.SetValue(int(h))
+            self.duration_min.SetValue(int(m))
+            self.duration_sec.SetValue(int(sec))
+            self.duration_mills.SetValue(int(ms))
     # ------------------------------------------------------------------#
 
     def on_start(self, event):
@@ -287,11 +287,11 @@ class Time_Selector(wx.Dialog):
         if entersum > self.milliseconds:
             setmax = milliseconds2clock(self.milliseconds - duration[1])
             h, m, s = setmax.split(':')
-            ms = str(s.split('.')[1]).zfill(3)
-            self.start_hour.SetValue(h)
-            self.start_min.SetValue(m)
-            self.start_sec.SetValue(s)
-            self.start_mills.SetValue(ms)
+            sec, ms = s.split('.')
+            self.start_hour.SetValue(int(h))
+            self.start_min.SetValue(int(m))
+            self.start_sec.SetValue(int(sec))
+            self.start_mills.SetValue(int(ms))
     # ------------------------------------------------------------------#
 
     def reset_all_values(self, event):
