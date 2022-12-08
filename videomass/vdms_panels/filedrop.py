@@ -102,7 +102,7 @@ class MyListCtrl(wx.ListCtrl):
         self.InsertColumn(2, _('Duration'), width=200)
         self.InsertColumn(3, _('Media type'), width=200)
         self.InsertColumn(4, _('Size'), width=150)
-        self.InsertColumn(5, _('Output File name'), width=200)
+        self.InsertColumn(5, _('Output file name'), width=200)
 
     def dropUpdate(self, path, newname=None):
         """
@@ -578,7 +578,7 @@ class FileDnD(wx.Panel):
         dlg = wx.TextEntryDialog(self, _('Enter the new name here\nAvoid '
                                          'illegal characters like: {0}'
                                          ).format(illegal),
-                                 _('Rename File'), '')
+                                 _('File renaming...'), '')
         dlg.SetValue(oldname)
 
         if dlg.ShowModal() == wx.ID_OK:
