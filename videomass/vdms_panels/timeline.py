@@ -215,6 +215,7 @@ class Timeline(wx.Panel):
         """
         self.time_start = '00:00:00.000'  # seek position
         self.time_dur = '00:00:00.000'  # duration of the selection
+        self.parent.time_seq = f"-ss {self.time_start} -t {self.time_dur}"
         self.ms_dur = 0
         self.ms_start = 0
         self.btn_reset.Disable()

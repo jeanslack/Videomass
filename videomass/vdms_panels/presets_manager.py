@@ -860,21 +860,21 @@ class PrstPan(wx.Panel):
         if checking is None:
             # not supported, missing files or user has changed his mind
             return
-        fsrc, fdest, cntmax = checking
+        fsrc, fdest = checking
 
         if self.array[3]:  # has double pass
-            self.two_Pass(fsrc, fdest, cntmax, outext)
+            self.two_Pass(fsrc, fdest, outext)
 
         else:
-            self.one_Pass(fsrc, fdest, cntmax, outext)
+            self.one_Pass(fsrc, fdest, outext)
     # ----------------------------------------------------------------#
 
-    def one_Pass(self, filesrc, filedest, cntmax, outext):
+    def one_Pass(self, filesrc, filedest, outext):
         """
         Build args string for one pass process
         """
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
-        valupdate = self.update_dict(cntmax, 'One passes')
+        valupdate = self.update_dict(len(filesrc), 'One passes')
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_to_processing('onepass',
@@ -886,18 +886,18 @@ class PrstPan(wx.Panel):
                                              '',
                                              '',
                                              'presets_manager.log',
-                                             cntmax,
+                                             len(filesrc),
                                              )
     # ------------------------------------------------------------------#
 
-    def two_Pass(self, filesrc, filedest, cntmax, outext):
+    def two_Pass(self, filesrc, filedest, outext):
         """
         Build args string for two pass process
         """
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
         pass2 = " ".join(self.txt_2cmd.GetValue().split())
         typeproc = 'twopass'
-        valupdate = self.update_dict(cntmax, typeproc)
+        valupdate = self.update_dict(len(filesrc), typeproc)
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
 
         if ending.ShowModal() == wx.ID_OK:
@@ -910,7 +910,7 @@ class PrstPan(wx.Panel):
                                              '',
                                              '',
                                              'presets_manager.log',
-                                             cntmax,
+                                             len(filesrc),
                                              )
     # --------------------------------------------------------------------#
 
