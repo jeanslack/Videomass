@@ -37,6 +37,36 @@ from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import to_bytes
 
 
+def fname_sanitize(fullpathfilename):
+    """
+    Check for fullname sanitize.
+    return message `string` if warning, `None` otherwise
+    """
+    illegal = '^` ~ " # \' % & * : < > ? / \\ { | }'
+    illegalchars = _("File has illegal characters:")
+    invalidpath = _("Invalid path name. Contains double or single quotes")
+    justfile = _("Directories are not allowed, just add files, please.")
+    noext = _("File without format extension: please give an "
+              "appropriate extension to the file name, example "
+              "'.mkv', '.avi', '.mp3', etc.")
+
+    check = bool(re.search(r"^(?:[\w\-\,\!\[\]\;\(\)\@\#\. ]{1,255}$)*$",
+                           os.path.basename(fullpathfilename)))
+    if check is not True:
+        return f'{illegalchars} {illegal}'
+
+    if '"' in fullpathfilename or "'" in fullpathfilename:
+        return invalidpath
+
+    if os.path.isdir(fullpathfilename):
+        return justfile
+
+    if os.path.splitext(os.path.basename(fullpathfilename))[1] == '':
+        return noext
+
+    return None
+
+
 class MyListCtrl(wx.ListCtrl):
     """
     This is the listControl widget. Note that this wideget has DnDPanel
@@ -83,25 +113,12 @@ class MyListCtrl(wx.ListCtrl):
 
         """
         self.index = self.GetItemCount()
-        msg_dir = _("Directories are not allowed, just add files, please.")
-        msg_noext = _("File without format extension: please give an "
-                      "appropriate extension to the file name, example "
-                      "'.mkv', '.avi', '.mp3', etc.")
-        msg_badfn = _("Invalid filename. Contains double or single quotes")
-
-        if '"' in path or "'" in path:
-            self.parent.statusbar_msg(msg_badfn, MyListCtrl.ORANGE,
-                                      MyListCtrl.WHITE)
-            return
-
-        if os.path.isdir(path):
-            self.parent.statusbar_msg(msg_dir, MyListCtrl.ORANGE,
-                                      MyListCtrl.WHITE)
-            return
-
-        if os.path.splitext(os.path.basename(path))[1] == '':
-            self.parent.statusbar_msg(msg_noext, MyListCtrl.ORANGE,
-                                      MyListCtrl.WHITE)
+        warn = fname_sanitize(path)  # check for fullname sanitize
+        if warn:
+            self.parent.statusbar_msg(warn,
+                                      MyListCtrl.ORANGE,
+                                      MyListCtrl.WHITE
+                                      )
             return
 
         if not [x for x in self.data if x['format']['filename'] == path]:
@@ -554,10 +571,13 @@ class FileDnD(wx.Panel):
         row_id = self.flCtrl.GetFocusedItem()  # Get the current row
         oldname = self.flCtrl.GetItemText(row_id, 5)  # Get current name
         newname = ''
-        msg_invalid = _('Invalid characters:')
+        msg_invalid = _('Illegal characters:')
         msg_inuse = _('Name already in use:')
 
-        dlg = wx.TextEntryDialog(self, _('Enter the new name here'),
+        illegal = '^` ~ " # \' % & * : < > ? / \\ { | }'
+        dlg = wx.TextEntryDialog(self, _('Enter the new name here\nAvoid '
+                                         'illegal characters like: {0}'
+                                         ).format(illegal),
                                  _('Rename File'), '')
         dlg.SetValue(oldname)
 
@@ -570,7 +590,8 @@ class FileDnD(wx.Panel):
             self.parent.statusbar_msg(_('Add Files'), None)
             return
 
-        check = bool(re.search(r"^(?:[\w\- ]{1,255}$)*$", newname))
+        check = bool(re.search(r"^(?:[\w\-\,\!\[\]\;\(\)\@\#\.\ ]{1,255}$)*$",
+                               newname))
         if check is not True:
             self.parent.statusbar_msg(f'{msg_invalid} {newname}',
                                       FileDnD.YELLOW, FileDnD.BLACK)
