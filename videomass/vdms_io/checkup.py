@@ -31,41 +31,35 @@ import os
 import wx
 
 
-def check_inout(already_existing,
-                file_sources,
-                output_list
-                ):
+def check_inout(file_sources, file_dest):
     """
     check for overwriting and file/dir existence.
-
-    return following values:
-
-    file_sources: a file list filtered by checking.
-    output_list: contains output paths as many as the file sources
-    lenghmax: lengh list useful for count the loop index on the batch process.
-
-    if already exists or file does not exist or output folder
-    does not exist, return
-        (False, None, None, None, None) .
+    return tuple([file_sources], [file_dest]).
+    return None otherwise.
 
     """
-    if already_existing:
+    # --------------- CHECK FOR OVERWRITING:
+    files_exist = []  # already exist file LIST
+    for files in file_dest:
+        if os.path.exists(files):
+            files_exist.append(files)
+
+    if files_exist:
         if wx.MessageBox(_('Already exist: \n\n{}\n\n'
                            'Do you want to overwrite? ').format(
-                         '\n'.join(already_existing)),
+                         '\n'.join(files_exist)),
                          _('Please Confirm'),
                          wx.ICON_QUESTION | wx.YES_NO, None) == wx.NO:
             return None
-
-    # --------------- CHECK EXISTING FILES AND DIRECTORIES:
+    # --------------- CHECK FOR EXISTING FILES:
     for fln in file_sources:
         if not os.path.isfile(os.path.abspath(fln)):
             wx.MessageBox(_('File does not exist:\n\n"{}"\n').format(fln),
                           "Videomass", wx.ICON_ERROR
                           )
             return None
-
-    for drn in output_list:
+    # --------------- CHECK FOR EXISTING DIRECTORIES:
+    for drn in file_dest:
         drn = os.path.abspath(os.path.dirname(drn))
         if not os.path.isdir(drn):
             wx.MessageBox(_('Output folder does not exist:\n\n"{}"\n').format(
@@ -73,7 +67,8 @@ def check_inout(already_existing,
                           )
             return None
 
-    return (file_sources, output_list, len(file_sources))
+    return (file_sources, file_dest)
+# ------------------------------------------------------------------------#
 
 
 def check_files(file_sources,
@@ -84,23 +79,16 @@ def check_files(file_sources,
                 outputnames
                 ):
     """
-    Create data structures related to processable files.
-
-    if no file or one of the conditions returned by the
-    check_inout function, return
-        (False, None, None, None, None)
-
-    return (file_sources, output_list, len(file_sources)) otherwise
+    Build the full path filename for output files.
+    return ([file_sources], [file_dest])
+    None otherwise.
 
     """
     if not file_sources:
         return None
 
-    already_existing = []  # already exist file names list
-    output_list = []  # output path names list
-    # base_name = []  # represents the complete final basenames
+    file_dest = []  # output path names (not files)
 
-    # --------------- CHECK OVERWRITING:
     for path, fname in zip(file_sources, outputnames):
         dirname = os.path.dirname(path)
 
@@ -109,25 +97,17 @@ def check_files(file_sources,
             copyext = os.path.splitext(basename)[1]  # ext
             if same_destin:
                 pathname = os.path.join(dirname, f'{fname}{suffix}{copyext}')
-                output_list.append(pathname)
-                # base_name.append(os.path.basename(pathname))
+                file_dest.append(pathname)
             else:
                 pathname = os.path.join(dir_destin, f'{fname}.{copyext}')
-                output_list.append(pathname)
-                # base_name.append(basename)
-
-            if os.path.exists(pathname):
-                already_existing.append(pathname)
+                file_dest.append(pathname)
 
         else:  # uses one extension for all output
             if same_destin:
                 pathname = os.path.join(dirname, f'{fname}{suffix}.{extout}')
-                output_list.append(pathname)
+                file_dest.append(pathname)
             else:
                 pathname = os.path.join(dir_destin, f'{fname}.{extout}')
-                output_list.append(pathname)
+                file_dest.append(pathname)
 
-            if os.path.exists(pathname):
-                already_existing.append(pathname)
-
-    return check_inout(already_existing, file_sources, output_list)
+    return check_inout(file_sources, file_dest)

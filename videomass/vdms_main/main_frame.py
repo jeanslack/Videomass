@@ -124,7 +124,7 @@ class MainFrame(wx.Frame):
 
         # ---------- others panel instances:
         self.TimeLine = timeline.Timeline(self,
-                                          self.icons['profile_edit'],
+                                          self.icons['timerset'],
                                           self.icons['clear'],
                                           )
         self.ChooseTopic = choose_topic.Choose_Topic(self,
@@ -188,7 +188,7 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.icons['videomass'],
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        self.SetMinSize((1036, 640))
+        self.SetMinSize((980, 640))
         # self.CentreOnScreen()  # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         self.Fit()

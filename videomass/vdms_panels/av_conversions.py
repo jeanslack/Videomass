@@ -2091,25 +2091,25 @@ class AV_Conv(wx.Panel):
         if checking is None:  # User changing idea or not such files exist
             return
 
-        f_src, f_dest, countmax = checking
+        f_src, f_dest = checking
 
         if self.cmb_Media.GetValue() == 'Video':  # CHECKING
             if self.rdbx_normalize.GetSelection() == 3:  # EBU
-                self.video_ebu_2pass(f_src, f_dest, countmax, logname)
+                self.video_ebu_2pass(f_src, f_dest, logname)
             elif self.opt["Vidstabdetect"]:
-                self.video_stabilizer(f_src, f_dest, countmax, logname)
+                self.video_stabilizer(f_src, f_dest, logname)
             else:
-                self.video_stdProc(f_src, f_dest, countmax, logname)
+                self.video_stdProc(f_src, f_dest, logname)
 
         elif self.cmb_Media.GetValue() == 'Audio':  # CHECKING
             if self.rdbx_normalize.GetSelection() == 3:
-                self.audio_ebu_2pass(f_src, f_dest, countmax, logname)
+                self.audio_ebu_2pass(f_src, f_dest, logname)
             else:
-                self.audio_stdProc(f_src, f_dest, countmax, logname)
+                self.audio_stdProc(f_src, f_dest, logname)
         return
     # ------------------------------------------------------------------#
 
-    def video_stabilizer(self, f_src, f_dest, countmax, logname):
+    def video_stabilizer(self, f_src, f_dest, logname):
         """
         Build ffmpeg command strings for two pass
         video stabilizations process.
@@ -2141,7 +2141,7 @@ class AV_Conv(wx.Panel):
 
         if logname == 'save as profile':
             return pass1, pass2, self.opt["OutputFormat"]
-        valupdate = self.update_dict(countmax, [''])
+        valupdate = self.update_dict(len(f_src), [''])
         title = 'Two pass Video Stabilization'
         ending = Formula(self, valupdate[0], valupdate[1], title)
 
@@ -2155,12 +2155,12 @@ class AV_Conv(wx.Panel):
                                              self.opt["VFilters"],
                                              audnorm,
                                              logname,
-                                             countmax,
+                                             len(f_src),
                                              )
         return None
         # ------------------------------------------------------------------#
 
-    def video_stdProc(self, f_src, f_dest, countmax, logname):
+    def video_stdProc(self, f_src, f_dest, logname):
         """
         Build the ffmpeg command strings for video conversions.
         """
@@ -2180,7 +2180,7 @@ class AV_Conv(wx.Panel):
             command = " ".join(command.split())  # mi formatta la stringa
             if logname == 'save as profile':
                 return command, '', self.opt["OutputFormat"]
-            valupdate = self.update_dict(countmax, ["Copy"])
+            valupdate = self.update_dict(len(f_src), ["Copy"])
             ending = Formula(self, valupdate[0], valupdate[1], 'Copy')
 
             if ending.ShowModal() == wx.ID_OK:
@@ -2194,7 +2194,7 @@ class AV_Conv(wx.Panel):
                                                  '',
                                                  audnorm,
                                                  logname,
-                                                 countmax,
+                                                 len(f_src),
                                                  )
         elif self.opt["Passing"] == "2 pass":
             if self.opt["VideoCodec"] == "-c:v libx265":
@@ -2234,7 +2234,7 @@ class AV_Conv(wx.Panel):
             pass2 = " ".join(cmd2.split())
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
-            valupdate = self.update_dict(countmax, [''])
+            valupdate = self.update_dict(len(f_src), [''])
             title = 'Two pass Video Encoding'
             ending = Formula(self, valupdate[0], valupdate[1], title)
 
@@ -2248,7 +2248,7 @@ class AV_Conv(wx.Panel):
                                                  '',
                                                  audnorm,
                                                  logname,
-                                                 countmax,
+                                                 len(f_src),
                                                  )
         elif self.opt["Passing"] == "1 pass":  # Batch-Mode / h264 Codec
             command = (
@@ -2271,7 +2271,7 @@ class AV_Conv(wx.Panel):
             command = " ".join(command.split())  # mi formatta la stringa
             if logname == 'save as profile':
                 return command, '', self.opt["OutputFormat"]
-            valupdate = self.update_dict(countmax, [''])
+            valupdate = self.update_dict(len(f_src), [''])
             title = 'One pass Video Encoding'
             ending = Formula(self, valupdate[0], valupdate[1], title)
 
@@ -2285,12 +2285,12 @@ class AV_Conv(wx.Panel):
                                                  '',
                                                  audnorm,
                                                  logname,
-                                                 countmax,
+                                                 len(f_src),
                                                  )
         return None
     # ------------------------------------------------------------------#
 
-    def video_ebu_2pass(self, f_src, f_dest, countmax, logname):
+    def video_ebu_2pass(self, f_src, f_dest, logname):
         """
         Define the ffmpeg command strings for batch process with
         EBU two-passes conversion.
@@ -2330,7 +2330,7 @@ class AV_Conv(wx.Panel):
             pass2 = " ".join(cmd_2.split())
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
-            valupdate = self.update_dict(countmax, ["Copy"])
+            valupdate = self.update_dict(len(f_src), ["Copy"])
             ending = Formula(self, valupdate[0], valupdate[1], title)
 
             if ending.ShowModal() == wx.ID_OK:
@@ -2343,7 +2343,7 @@ class AV_Conv(wx.Panel):
                                                  self.opt["AudioMap"],
                                                  None,
                                                  logname,
-                                                 countmax,
+                                                 len(f_src),
                                                  )
         else:
             cmd_1 = (f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
@@ -2380,7 +2380,7 @@ class AV_Conv(wx.Panel):
             pass2 = " ".join(cmd_2.split())  # mi formatta la stringa
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
-            valupdate = self.update_dict(countmax, [''])
+            valupdate = self.update_dict(len(f_src), [''])
             ending = Formula(self, valupdate[0], valupdate[1], title)
 
             if ending.ShowModal() == wx.ID_OK:
@@ -2393,13 +2393,13 @@ class AV_Conv(wx.Panel):
                                                  self.opt["AudioMap"],
                                                  None,
                                                  logname,
-                                                 countmax,
+                                                 len(f_src),
                                                  )
             # ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
         return None
     # ------------------------------------------------------------------#
 
-    def audio_stdProc(self, f_src, f_dest, countmax, logname):
+    def audio_stdProc(self, f_src, f_dest, logname):
         """
         Build the ffmpeg command strings for audio conversion.
 
@@ -2416,7 +2416,7 @@ class AV_Conv(wx.Panel):
         command = " ".join(command.split())  # mi formatta la stringa
         if logname == 'save as profile':
             return command, '', self.opt["OutputFormat"]
-        valupdate = self.update_dict(countmax, [''])
+        valupdate = self.update_dict(len(f_src), [''])
         ending = Formula(self, valupdate[0], valupdate[1], title)
 
         if ending.ShowModal() == wx.ID_OK:
@@ -2429,12 +2429,12 @@ class AV_Conv(wx.Panel):
                                              '',
                                              audnorm,
                                              logname,
-                                             countmax,
+                                             len(f_src),
                                              )
         return None
     # ------------------------------------------------------------------#
 
-    def audio_ebu_2pass(self, f_src, f_dest, countmax, logname):
+    def audio_ebu_2pass(self, f_src, f_dest, logname):
         """
         Perform EBU R128 normalization on audio conversion
         WARNING do not map output audio file index on filter:a: , -c:a:
@@ -2463,7 +2463,7 @@ class AV_Conv(wx.Panel):
         pass2 = " ".join(cmd_2.split())
         if logname == 'save as profile':
             return pass1, pass2, self.opt["OutputFormat"]
-        valupdate = self.update_dict(countmax, [''])
+        valupdate = self.update_dict(len(f_src), [''])
         ending = Formula(self, valupdate[0], valupdate[1], title)
 
         if ending.ShowModal() == wx.ID_OK:
@@ -2476,7 +2476,7 @@ class AV_Conv(wx.Panel):
                                              ['', ''],  # do not map audio file
                                              None,
                                              logname,
-                                             countmax,
+                                             len(f_src),
                                              )
         return None
     # ------------------------------------------------------------------#
