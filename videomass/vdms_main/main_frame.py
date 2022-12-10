@@ -403,6 +403,15 @@ class MainFrame(wx.Frame):
                                                     dscrp[1])
         self.fold_downloads_tmp.Enable(False)
         fileButton.AppendSeparator()
+        dscrp = (_("Rename the selected file\tCtrl+I"),
+                 _("Rename the file selected in the Queued Files panel"))
+        self.rename = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        self.rename.Enable(False)
+        dscrp = (_("Batch renaming\tCtrl+B"),
+                 _("Rename all files listed in the Queued Files panel"))
+        self.rename_batch = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        self.rename_batch.Enable(False)
+        fileButton.AppendSeparator()
         dscrp = (_("Trash folder"),
                  _("Open the Videomass Trash folder if it exists"))
         fold_trash = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
@@ -411,12 +420,10 @@ class MainFrame(wx.Frame):
                  _("Delete all files in the Videomass Trash folder"))
         empty_trash = fileButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
         empty_trash.Enable(self.appdata['move_file_to_trash'])
-
         fileButton.AppendSeparator()
         dscrp = (_("Work Notes\tCtrl+N"),
                  _("Read and write useful notes and reminders."))
         notepad = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-
         fileButton.AppendSeparator()
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit\tCtrl+Q"),
                                      _("Close Videomass"))
@@ -465,22 +472,15 @@ class MainFrame(wx.Frame):
                  _("Displays timestamp when playing movies with FFplay"))
         self.viewtimestamp = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                                  kind=wx.ITEM_CHECK)
-
-
         dscrp = (_("Auto-exit after playback"),
                  _("If checked, the FFplay window will auto-close at the "
                    "end of playback"))
         self.exitplayback = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                                 kind=wx.ITEM_CHECK)
-
-
         dscrp = (_("Setting timestamp"),
                  _("Change the size and color of the timestamp "
                    "during playback"))
         tscustomize = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-
-
-
 
         if self.appdata['downloader'] != 'disabled':
             # show youtube-dl
@@ -610,6 +610,8 @@ class MainFrame(wx.Frame):
                   self.fold_convers_tmp)
         self.Bind(wx.EVT_MENU, self.openMydownloads_tmp,
                   self.fold_downloads_tmp)
+        self.Bind(wx.EVT_MENU, self.on_file_renaming, self.rename)
+        self.Bind(wx.EVT_MENU, self.on_batch_renaming, self.rename_batch)
         self.Bind(wx.EVT_MENU, self.reminder, notepad)
         self.Bind(wx.EVT_MENU, self.open_trash_folder, fold_trash)
         self.Bind(wx.EVT_MENU, self.empty_trash_folder, empty_trash)
@@ -717,6 +719,20 @@ class MainFrame(wx.Frame):
 
         """
         io_tools.openpath(self.outpath_ffmpeg)
+    # -------------------------------------------------------------------#
+
+    def on_file_renaming(self, event):
+        """
+        One file renaming
+        """
+        self.fileDnDTarget.file_renaming()
+    # -------------------------------------------------------------------#
+
+    def on_batch_renaming(self, event):
+        """
+        Batch file renaming
+        """
+        self.fileDnDTarget.batch_files_renaming()
     # -------------------------------------------------------------------#
 
     def open_trash_folder(self, event):

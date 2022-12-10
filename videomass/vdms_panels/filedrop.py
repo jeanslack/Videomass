@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.01.2022
+Rev: Dec.09.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -35,23 +35,25 @@ from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_io import io_tools
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import to_bytes
+from videomass.vdms_dialogs.renamer import Renamer
 
 
-def fname_sanitize(fullpathfilename):
+def fullpathname_sanitize(fullpathfilename):
     """
-    Check for fullname sanitize.
+    Check for 'full path file name' sanitize.
     return message `string` if warning, `None` otherwise
     """
     illegal = '^` ~ " # \' % & * : < > ? / \\ { | }'
-    illegalchars = _("File has illegal characters:")
+    illegalchars = _("File has illegal characters like:")
     invalidpath = _("Invalid path name. Contains double or single quotes")
     justfile = _("Directories are not allowed, just add files, please.")
     noext = _("File without format extension: please give an "
               "appropriate extension to the file name, example "
               "'.mkv', '.avi', '.mp3', etc.")
+    invalid = r"\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}"
 
-    check = bool(re.search(r"^(?:[\w\-\,\!\[\]\;\(\)\@\#\. ]{1,255}$)*$",
-                           os.path.basename(fullpathfilename)))
+    check = bool(re.search(r"^(?:[^%s]{1,255}$)*$" % (invalid),
+                 os.path.basename(fullpathfilename)))
     if check is not True:
         return f'{illegalchars} {illegal}'
 
@@ -65,6 +67,36 @@ def fname_sanitize(fullpathfilename):
         return noext
 
     return None
+# ----------------------------------------------------------------------#
+
+
+def filename_sanitize(newname, outputnames):
+    """
+    Check for 'filename' sanitize. It performs a check to
+    ensure that output files do NOT have the same name,
+    or illegal chars like:
+
+            ^` ~ " # ' % & * : < > ? / \\ { | }
+
+    The maximum filename lengh is fixed to 255 characters.
+
+    return a str(string) if warning,
+    return None otherwise
+    """
+    illegal = '^` ~ " # \' % & * : < > ? / \\ { | }'
+    msg_invalid = _('Name has illegal characters like: {0}').format(illegal)
+    msg_inuse = _('Name already in use:')
+    invalid = r"\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}"
+
+    check = bool(re.search(r"^(?:[^%s]{1,255}$)*$" % (invalid), newname))
+    if check is not True:
+        return f'{msg_invalid}'
+
+    if newname in outputnames:
+        return f'{msg_inuse} {newname}'
+
+    return None
+# ----------------------------------------------------------------------
 
 
 class MyListCtrl(wx.ListCtrl):
@@ -113,7 +145,7 @@ class MyListCtrl(wx.ListCtrl):
 
         """
         self.index = self.GetItemCount()
-        warn = fname_sanitize(path)  # check for fullname sanitize
+        warn = fullpathname_sanitize(path)  # check for fullname sanitize
         if warn:
             self.parent.statusbar_msg(warn,
                                       MyListCtrl.ORANGE,
@@ -366,13 +398,13 @@ class FileDnD(wx.Panel):
 
     def reset_timeline(self):
         """
-        When you drop new files resets the timeline on main_frame.
-        it is also needed by the MyListCtrl class.
-
+        Reset activates and restores functions by drop new files.
         """
         self.parent.reset_Timeline()
         if not self.btn_clear.IsEnabled():
             self.btn_clear.Enable()
+        self.parent.rename.Enable(True)
+        self.parent.rename_batch.Enable(True)
     # ----------------------------------------------------------------------
 
     def which(self):
@@ -392,14 +424,17 @@ class FileDnD(wx.Panel):
             popupID1 = wx.ID_ANY
             popupID2 = wx.ID_ANY
             popupID3 = wx.ID_ANY
+            popupID4 = wx.ID_ANY
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID1)
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID2)
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID3)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID4)
         # build the menu
         menu = wx.Menu()
-        menu.Append(popupID2, _("Play"))
-        menu.Append(popupID1, _("Remove"))
-        menu.Append(popupID1, _("Rename output file"))
+        menu.Append(popupID1, _("Play"))
+        menu.Append(popupID2, _("Remove"))
+        menu.Append(popupID3, _("Rename selected file"))
+        menu.Append(popupID4, _("Batch renaming"))
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()
@@ -420,8 +455,11 @@ class FileDnD(wx.Panel):
         elif menuItem.GetItemLabel() == _("Remove"):
             self.on_delete_selected(self)
 
-        elif menuItem.GetItemLabel() == _("Rename output file"):
-            self.edit_output_name()
+        elif menuItem.GetItemLabel() == _("Rename selected file"):
+            self.file_renaming()
+
+        elif menuItem.GetItemLabel() == _("Batch renaming"):
+            self.batch_files_renaming()
 
     # ----------------------------------------------------------------------
 
@@ -498,6 +536,8 @@ class FileDnD(wx.Panel):
         self.btn_play.Disable()
         self.btn_remove.Disable()
         self.btn_clear.Disable()
+        self.parent.rename.Enable(False)
+        self.parent.rename_batch.Enable(False)
         if setstate is True:
             self.sortingstate = None
     # ----------------------------------------------------------------------
@@ -551,17 +591,12 @@ class FileDnD(wx.Panel):
         self.parent.statusbar_msg(f'{mess}', bcolor, fcolor)
     # -----------------------------------------------------------------------
 
-    def edit_output_name(self):
+    def file_renaming(self):
         """
-        This method is responsible for renaming the output
-        files. It performs a check to ensure that output files
-        do NOT have the same name, empty strings, non-alphanumeric
-        characters such as dots, commas, slashes, etc.
-        It allows all alphanumeric character as `a-zA-Z0-9_`,
-        `whitespaces` and `hyphens`. The maximum filename lengh
-        is fixed to 255 characters. Names consisting of only
-        whitespaces or tabs are rejected silently.
-
+        This method is responsible for renaming the selected
+        output file.
+        Names consisting of only whitespaces or tabs or matching
+        same name as outputnames are rejected silently.
         """
         if not self.selected:
             self.parent.statusbar_msg(_('No file selected'), FileDnD.YELLOW,
@@ -571,37 +606,65 @@ class FileDnD(wx.Panel):
         row_id = self.flCtrl.GetFocusedItem()  # Get the current row
         oldname = self.flCtrl.GetItemText(row_id, 5)  # Get current name
         newname = ''
-        msg_invalid = _('Illegal characters:')
-        msg_inuse = _('Name already in use:')
+        title = _('File renaming...')
+        msg = _('Rename the selected file to:')
 
-        illegal = '^` ~ " # \' % & * : < > ? / \\ { | }'
-        dlg = wx.TextEntryDialog(self, _('Enter the new name here\nAvoid '
-                                         'illegal characters like: {0}'
-                                         ).format(illegal),
-                                 _('File renaming...'), '')
-        dlg.SetValue(oldname)
+        with Renamer(self,
+                     nameprop=oldname,
+                     caption=title,
+                     message=msg,
+                     mode=0,
+                     ) as dlg:
+            if dlg.ShowModal() == wx.ID_OK:
+                newname = dlg.getvalue()
+            else:
+                return
 
-        if dlg.ShowModal() == wx.ID_OK:
-            newname = dlg.GetValue()
-
-        dlg.Destroy()
-
-        if (newname == '' or newname == oldname or newname.isspace()):
+        if newname == '' or newname == oldname or newname.isspace():
             self.parent.statusbar_msg(_('Add Files'), None)
             return
 
-        check = bool(re.search(r"^(?:[\w\-\,\!\[\]\;\(\)\@\#\.\ ]{1,255}$)*$",
-                               newname))
-        if check is not True:
-            self.parent.statusbar_msg(f'{msg_invalid} {newname}',
-                                      FileDnD.YELLOW, FileDnD.BLACK)
-            return
-
-        if newname in self.outputnames:
-            self.parent.statusbar_msg(f'{msg_inuse} {newname}',
-                                      FileDnD.YELLOW, FileDnD.BLACK)
+        sanitize = filename_sanitize(newname, self.outputnames)
+        if sanitize:
+            self.parent.statusbar_msg(sanitize, FileDnD.YELLOW, FileDnD.BLACK)
             return
 
         self.flCtrl.SetItem(row_id, 5, newname)
         self.outputnames[row_id] = newname
+        self.parent.statusbar_msg(_('Add Files'), None)
+# -----------------------------------------------------------------------
+
+    def batch_files_renaming(self):
+        """
+        This method is responsible for batch file renaming.
+        """
+        if not self.outputnames:
+            self.parent.statusbar_msg(_('No files to rename in list'),
+                                      FileDnD.YELLOW, FileDnD.BLACK)
+            return
+
+        title = _('Rename items')
+        msg = _('Rename the {0} items to:').format(len(self.outputnames))
+        with Renamer(self,
+                     nameprop=_('New Name #'),
+                     caption=title,
+                     message=msg,
+                     mode=len(self.outputnames)
+                     ) as dlg:
+            if dlg.ShowModal() == wx.ID_OK:
+                newname = dlg.getvalue()
+            else:
+                return
+
+        for name in newname:
+            sanitize = filename_sanitize(name, self.outputnames)
+            if sanitize:
+                self.parent.statusbar_msg(sanitize, FileDnD.YELLOW,
+                                          FileDnD.BLACK)
+                return
+
+        for num, name in enumerate(newname):
+            self.flCtrl.SetItem(num, 5, name)
+            self.outputnames[num] = name
+
         self.parent.statusbar_msg(_('Add Files'), None)
