@@ -14,14 +14,14 @@ videomass (4.0.2-1) UNRELEASED; urgency=medium
     as it was found to be inefficient and unreliable (see #142).
   * Added a new button in the timeline panel that shows an alternative dialog
     to adjust the time selection (see #150).
-  * New feature: ability to rename each output files on the 'Queued
-    Files Panel'. Just right-click the mouse and select 'Rename output file'
+  * New feature: ability to rename each selected output file.
+  * New feature: ability to batch rename all output files.
     from the context menu (see #144).
   * Added New controls for setting/adjusting start and duration points on the
     Timeline display. The sliders have been replaced with a dialog for entering
     values via the Spin controls.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 08 Dec 2022 22:21:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 09 Dec 2022 23:21:00 +0200
 
 videomass (4.0.1-1) UNRELEASED; urgency=medium
 
