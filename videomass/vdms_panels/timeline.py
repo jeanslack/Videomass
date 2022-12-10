@@ -111,7 +111,7 @@ class Timeline(wx.Panel):
         self.paneltime = wx.Panel(self, wx.ID_ANY,
                                   size=(Timeline.PW, Timeline.PH),
                                   style=wx.BORDER_SUNKEN)
-        sizer_base.Add(self.paneltime, 0, wx.LEFT | wx.RIGHT | wx.CENTRE, 5)
+        sizer_base.Add(self.paneltime, 0, wx.ALL | wx.CENTRE, 5)
         self.maxdur = wx.StaticText(self, wx.ID_ANY, '')
         sizer_base.Add(self.maxdur, 0, wx.LEFT | wx.RIGHT |
                        wx.ALIGN_CENTRE_VERTICAL, 5)

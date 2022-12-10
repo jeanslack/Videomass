@@ -33,9 +33,9 @@ import wx
 class Renamer(wx.Dialog):
     """
     Simple file renaming dialog.
-    It can be used for renaming individual items or for
-    groups of items (batch mode). It has dynamic interface
-    adaptive for batch mode and single file mode.
+    It can be used both for renaming individual
+    items and groups of items (batch mode). It has
+    a dynamic interface for both modes.
 
     Usage example:
             with Renamer(self,
@@ -75,6 +75,7 @@ class Renamer(wx.Dialog):
 
         """
         self.mode = mode
+        msg = _("# It will be replaced by increasing numbers starting with:")
         if self.mode >= 1:
             self.newname = []
         else:
@@ -92,8 +93,6 @@ class Renamer(wx.Dialog):
         boxsiz = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(boxsiz, 0, wx.EXPAND)
         if self.mode >= 1:
-            msg = _("# It will be replaced by increasing "
-                    "numbers starting with:")
             labnum = wx.StaticText(self, wx.ID_ANY, msg)
             boxsiz.Add(labnum, 0, wx.ALL | wx.ALIGN_CENTER, 5)
             self.prognum = wx.SpinCtrl(self, wx.ID_ANY,
