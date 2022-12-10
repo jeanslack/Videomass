@@ -62,9 +62,9 @@ class Renamer(wx.Dialog):
         Parameters:
 
         parent (wx.Window) – Parent window. Must not be None.
-        nameprop (string) – Default value (as text).
+        nameprop (string) – Proposed name, default value as text.
         caption (string) – title header on top of window.
-        message (string) – the message you want to see
+        message (string) – the message you want to see.
         mode (int) – the "mode" parameter determines the type of renaming
                      See below for specification.
 
@@ -120,39 +120,58 @@ class Renamer(wx.Dialog):
         # ----------------------Binding (EVT)--------------------------#
 
         self.Bind(wx.EVT_TEXT, self.on_entry_text, self.entry)
-        if self.mode >= 1:
-            self.Bind(wx.EVT_SPINCTRL, self.on_get_startnumber, self.prognum)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
     # ------------------------------------------------------------------#
 
+    def get_newname(self):
+        """
+        Set newname attribute.
+        Return `list(newname)` if mode >= 1,
+        Return `str(newname)` if mode == 0,
+        Return `None` otherwise
+        """
+        string =  self.entry.GetValue()
+        if self.mode >= 1:
+            startfrom = self.prognum.GetValue()
+            try:
+                lasthashchar = string.rindex('#')
+            except ValueError:
+                del self.newname[:]
+                return None
+
+            self.newname = [string for x in range(self.mode)]
+            for num, name in enumerate(self.newname):
+                temp = list(name)
+                temp[lasthashchar] = str(startfrom+num)
+                self.newname[num] = re.sub('#','0', ''.join(temp))
+        else:
+            self.newname = string
+
+        return self.newname
+    # ------------------------------------------------------------------#
+
     def rename_file(self):
         """
-        Set the newname attribute.
-        Return str(newname)
+        Checks the consistency of the entered string
+        for one file renaming.
         """
-        #self.newname = self.entry.GetValue()
-        #return self.newname
-
-
         if self.entry.GetValue() == '' or self.entry.GetValue().isspace():
             self.btn_ok.Disable()
             self.newname = None
             return None
+
         self.btn_ok.Enable()
-        self.newname = self.entry.GetValue()
-        return self.newname
     # ------------------------------------------------------------------#
 
     def rename_batch(self):
         """
-        Set newname attribute.
-        Return tuple(str(newname), int(startnum))
+        Checks the consistency of the entered string
+        for batch renaming.
         """
         string =  self.entry.GetValue()
-        startnum = self.prognum.GetValue()
-        group = re.findall(r'((\#)\#*)', string)
-        if len(group) > 1:
+        occur = re.findall(r'((\#)\#*)', string)
+        if len(occur) > 1:  # if more '#' occurrences between sentence.
             self.btn_ok.Disable()
             del self.newname[:]
             return None
@@ -162,33 +181,12 @@ class Renamer(wx.Dialog):
             return None
 
         self.btn_ok.Enable()
-        try:
-            lastidx = string.rindex('#')
-        except ValueError:
-            del self.newname[:]
-            return None
-
-        self.newname = [string for x in range(self.mode)]
-        for num, name in enumerate(self.newname):
-            temp = list(name)
-            temp[lastidx] = str(startnum+num)
-            self.newname[num] = re.sub('#','0', ''.join(temp))
-
-        return self.newname
     # ----------------------Event handler (callback)----------------------#
-
-    def on_get_startnumber(self, event):
-        """
-        Updates the rename_batch datas, during SpinCtrl event
-        """
-        self.rename_batch()
-    # ------------------------------------------------------------------#
 
     def on_entry_text(self, event):
         """
         Updates datas given from rename_batch/rename_file,
         during TextCtrl event.
-
         """
         if self.mode >= 1:
             self.rename_batch()
@@ -217,10 +215,4 @@ class Renamer(wx.Dialog):
         by the caller. See Renamer class docstring or the caller
         for more info and usage.
         """
-        if not self.newname:
-            if self.mode >= 1:
-                return self.rename_batch()
-
-            return self.rename_file()
-
-        return self.newname
+        return self.get_newname()

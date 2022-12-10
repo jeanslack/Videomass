@@ -44,15 +44,16 @@ def fullpathname_sanitize(fullpathfilename):
     return message `string` if warning, `None` otherwise
     """
     illegal = '^` ~ " # \' % & * : < > ? / \\ { | }'
-    illegalchars = _("File has illegal characters:")
+    illegalchars = _("File has illegal characters like:")
     invalidpath = _("Invalid path name. Contains double or single quotes")
     justfile = _("Directories are not allowed, just add files, please.")
     noext = _("File without format extension: please give an "
               "appropriate extension to the file name, example "
               "'.mkv', '.avi', '.mp3', etc.")
+    invalid = r"\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}"
 
-    check = bool(re.search(r"^(?:[\w\-\,\!\[\]\;\(\)\@\#\. ]{1,255}$)*$",
-                           os.path.basename(fullpathfilename)))
+    check = bool(re.search(r"^(?:[^%s]{1,255}$)*$" % (invalid),
+                 os.path.basename(fullpathfilename)))
     if check is not True:
         return f'{illegalchars} {illegal}'
 
@@ -82,13 +83,14 @@ def filename_sanitize(newname, outputnames):
     return a str(string) if warning,
     return None otherwise
     """
-    msg_invalid = _('Illegal characters:')
+    illegal = '^` ~ " # \' % & * : < > ? / \\ { | }'
+    msg_invalid = _('Name has illegal characters like: {0}').format(illegal)
     msg_inuse = _('Name already in use:')
+    invalid = r"\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}"
 
-    check = bool(re.search(r"^(?:[\w\-\,\!\[\]\;\(\)\@\#\.\ ]{1,255}$)*$",
-                           newname))
+    check = bool(re.search(r"^(?:[^%s]{1,255}$)*$" % (invalid), newname))
     if check is not True:
-        return f'{msg_invalid} {newname}'
+        return f'{msg_invalid}'
 
     if newname in outputnames:
         return f'{msg_inuse} {newname}'
