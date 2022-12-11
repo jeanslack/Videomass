@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-10 16:09+0100\n"
+"POT-Creation-Date: 2022-12-11 16:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3081,8 +3081,7 @@ msgstr ""
 msgid "Drag one or more files below"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:277 ../vdms_panels/filedrop.py:434
-#: ../vdms_panels/filedrop.py:452
+#: ../vdms_panels/filedrop.py:277
 msgid "Play"
 msgstr ""
 
@@ -3102,52 +3101,39 @@ msgstr ""
 msgid "Destination folder"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:435 ../vdms_panels/filedrop.py:455
-#: ../vdms_panels/presets_manager.py:139
-msgid "Remove"
-msgstr ""
-
-#: ../vdms_panels/filedrop.py:436 ../vdms_panels/filedrop.py:458
-msgid "Rename selected file"
-msgstr ""
-
-#: ../vdms_panels/filedrop.py:437 ../vdms_panels/filedrop.py:461
-msgid "Batch renaming"
-msgstr ""
-
-#: ../vdms_panels/filedrop.py:472 ../vdms_panels/filedrop.py:493
-#: ../vdms_panels/filedrop.py:602
+#: ../vdms_panels/filedrop.py:423 ../vdms_panels/filedrop.py:444
+#: ../vdms_panels/filedrop.py:547
 msgid "No file selected"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:475 ../vdms_panels/filedrop.py:497
-#: ../vdms_panels/filedrop.py:624 ../vdms_panels/filedrop.py:634
-#: ../vdms_panels/filedrop.py:670
+#: ../vdms_panels/filedrop.py:426 ../vdms_panels/filedrop.py:448
+#: ../vdms_panels/filedrop.py:569 ../vdms_panels/filedrop.py:579
+#: ../vdms_panels/filedrop.py:615
 msgid "Add Files"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:609
+#: ../vdms_panels/filedrop.py:554
 msgid "File renaming..."
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:610
+#: ../vdms_panels/filedrop.py:555
 msgid "Rename the selected file to:"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:642
+#: ../vdms_panels/filedrop.py:587
 msgid "No files to rename in list"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:646
+#: ../vdms_panels/filedrop.py:591
 msgid "Rename items"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:647
+#: ../vdms_panels/filedrop.py:592
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:649
+#: ../vdms_panels/filedrop.py:594
 msgid "New Name #"
 msgstr ""
 
@@ -3245,6 +3231,10 @@ msgstr ""
 
 #: ../vdms_panels/presets_manager.py:136
 msgid "New"
+msgstr ""
+
+#: ../vdms_panels/presets_manager.py:139
+msgid "Remove"
 msgstr ""
 
 #: ../vdms_panels/presets_manager.py:149

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-10 16:09+0100\n"
-"PO-Revision-Date: 2022-12-10 16:10+0100\n"
+"POT-Creation-Date: 2022-12-11 16:53+0100\n"
+"PO-Revision-Date: 2022-12-11 16:53+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -3539,8 +3539,7 @@ msgstr "I files duplicati sono rifiutati: > {}"
 msgid "Drag one or more files below"
 msgstr "Trascina uno o più file qui sotto"
 
-#: ../vdms_panels/filedrop.py:277 ../vdms_panels/filedrop.py:434
-#: ../vdms_panels/filedrop.py:452
+#: ../vdms_panels/filedrop.py:277
 msgid "Play"
 msgstr "Riproduci"
 
@@ -3560,52 +3559,39 @@ msgstr "Riproduci il file selezionato nell'elenco"
 msgid "Destination folder"
 msgstr "Cartella di destinazione"
 
-#: ../vdms_panels/filedrop.py:435 ../vdms_panels/filedrop.py:455
-#: ../vdms_panels/presets_manager.py:139
-msgid "Remove"
-msgstr "Rimuovi"
-
-#: ../vdms_panels/filedrop.py:436 ../vdms_panels/filedrop.py:458
-msgid "Rename selected file"
-msgstr "Rinomina il file selezionato"
-
-#: ../vdms_panels/filedrop.py:437 ../vdms_panels/filedrop.py:461
-msgid "Batch renaming"
-msgstr "Ridenominazione in batch"
-
-#: ../vdms_panels/filedrop.py:472 ../vdms_panels/filedrop.py:493
-#: ../vdms_panels/filedrop.py:602
+#: ../vdms_panels/filedrop.py:423 ../vdms_panels/filedrop.py:444
+#: ../vdms_panels/filedrop.py:547
 msgid "No file selected"
 msgstr "Nessun file selezionato"
 
-#: ../vdms_panels/filedrop.py:475 ../vdms_panels/filedrop.py:497
-#: ../vdms_panels/filedrop.py:624 ../vdms_panels/filedrop.py:634
-#: ../vdms_panels/filedrop.py:670
+#: ../vdms_panels/filedrop.py:426 ../vdms_panels/filedrop.py:448
+#: ../vdms_panels/filedrop.py:569 ../vdms_panels/filedrop.py:579
+#: ../vdms_panels/filedrop.py:615
 msgid "Add Files"
 msgstr "Aggiungi Files"
 
-#: ../vdms_panels/filedrop.py:609
+#: ../vdms_panels/filedrop.py:554
 msgid "File renaming..."
 msgstr "Ridenominazione file..."
 
-#: ../vdms_panels/filedrop.py:610
+#: ../vdms_panels/filedrop.py:555
 msgid "Rename the selected file to:"
 msgstr "Rinomina il file selezionato in:"
 
-#: ../vdms_panels/filedrop.py:642
+#: ../vdms_panels/filedrop.py:587
 msgid "No files to rename in list"
 msgstr "Nessun file in lista da rinominare"
 
-#: ../vdms_panels/filedrop.py:646
+#: ../vdms_panels/filedrop.py:591
 msgid "Rename items"
 msgstr "Rinomina elementi"
 
-#: ../vdms_panels/filedrop.py:647
+#: ../vdms_panels/filedrop.py:592
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr "Rinominare i {0} elementi in:"
 
-#: ../vdms_panels/filedrop.py:649
+#: ../vdms_panels/filedrop.py:594
 msgid "New Name #"
 msgstr "Nuovo Nome #"
 
@@ -3712,6 +3698,10 @@ msgstr "Presets"
 #: ../vdms_panels/presets_manager.py:136
 msgid "New"
 msgstr "Nuovo"
+
+#: ../vdms_panels/presets_manager.py:139
+msgid "Remove"
+msgstr "Rimuovi"
 
 #: ../vdms_panels/presets_manager.py:149
 msgid "Export selected"
@@ -4318,6 +4308,12 @@ msgstr ""
 #: ../vdms_threads/slideshow.py:228
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' è installato sul tuo sistema?"
+
+#~ msgid "Rename selected file"
+#~ msgstr "Rinomina il file selezionato"
+
+#~ msgid "Batch renaming"
+#~ msgstr "Ridenominazione in batch"
 
 #~ msgid "Illegal characters:"
 #~ msgstr "Caratteri invalidi:"
