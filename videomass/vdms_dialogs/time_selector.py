@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.29.2022
+Rev: Dec.11.2022
 Code checker: flake8, pylint
 ########################################################
 
@@ -92,6 +92,8 @@ class Time_Selector(wx.Dialog):
 
         staticbox2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                         _("Segment Duration   (HH:MM:SS.ms)"))), wx.VERTICAL)
+        self.btn_reset_dur = wx.Button(self, wx.ID_ANY, _("Reset"))
+        staticbox2.Add(self.btn_reset_dur, 0, wx.ALL, 5)
         sizer_base.Add(staticbox2, 0, wx.ALL | wx.EXPAND, 5)
         boxsiz2 = wx.BoxSizer(wx.HORIZONTAL)
         staticbox2.Add(boxsiz2, 0, wx.ALL | wx.ALIGN_CENTER, 0)
@@ -128,17 +130,13 @@ class Time_Selector(wx.Dialog):
                                           style=wx.SP_ARROW_KEYS)
         boxsiz2.Add(self.duration_mills, 0, wx.ALL | wx.ALIGN_CENTER, 5)
 
-        # confirm btn section:
-        gridbtn = wx.GridSizer(1, 2, 0, 0)
+        # confirm buttons:
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
-        btn_reset_all = wx.Button(self, wx.ID_CLEAR, _("Reset All"))
-        gridbtn.Add(btn_reset_all, 0, wx.ALL, 5)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         gridexit.Add(btn_close, 0, wx.ALL, 5)
-        btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
+        btn_ok = wx.Button(self, wx.ID_OK, "")
         gridexit.Add(btn_ok, 0, wx.ALL, 5)
-        gridbtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
-        sizer_base.Add(gridbtn, 0, wx.EXPAND)
+        sizer_base.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
 
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
@@ -165,9 +163,9 @@ class Time_Selector(wx.Dialog):
         self.Bind(wx.EVT_SPINCTRL, self.on_duration, self.duration_min)
         self.Bind(wx.EVT_SPINCTRL, self.on_duration, self.duration_sec)
         self.Bind(wx.EVT_SPINCTRL, self.on_duration, self.duration_mills)
+        self.Bind(wx.EVT_BUTTON, self.reset_all_values, self.btn_reset_dur)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
-        self.Bind(wx.EVT_BUTTON, self.reset_all_values, btn_reset_all)
 
         if self.cut_mills > 0:
             self.enable_start_ctrls(True)

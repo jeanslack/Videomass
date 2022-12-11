@@ -84,9 +84,9 @@ Videomass is written in Python3 with the wxPython-Phoenix toolkit.
 
     short_l = ("GPL3 (Gnu Public License)")
 
-    lic = ("copyr - %s %s\n"
-           "author and Developer: %s %s\n"
-           "mail: %s\n\n"
+    lic = ("Copyleft - all rights reversed - %s %s\n"
+           "Author and developer: %s %s\n"
+           "Mail: %s\n\n"
            "Videomass is free software: you can redistribute\n"
            "it and/or modify it under the terms of the GNU General\n"
            "Public License as published by the Free Software\n"

@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Dec 09, 2022 V.4.0.2
+Dec 11, 2022 V.4.0.2
 
   * Added language selection on preferences dialog.
   * Fixed check for new Videomass releases according to git API (on previous
@@ -23,12 +23,15 @@ Dec 09, 2022 V.4.0.2
     as it was found to be inefficient and unreliable (see #142).
   * Added a new button in the timeline panel that shows an alternative dialog
     to adjust the time selection (see #150).
-  * New feature: ability to rename each selected output file.
-  * New feature: ability to batch rename all output files.
-    from the context menu (see #144).
+  * New feature: ability to rename the selected output file name (see #144).
+  * New file menu item to rename the selected output file name.
+  * New feature: ability to batch rename two or more output files names
+    (see #144).
+  * New file menu item to batch rename the output file names.
   * Added New controls for setting/adjusting start and duration points on the
     Timeline display. The sliders have been replaced with a dialog for entering
     values via the Spin controls.
+  * Removed context menu on Queued Files panel, due to redundancy.
 
 May 02, 2022 V.4.0.1
 
