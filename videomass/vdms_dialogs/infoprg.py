@@ -75,8 +75,9 @@ def info(parent, videomass_icon):
     info.AddTranslator("katnatek from blogdrake https://www.blogdrake.net/ (es_ES)")
     info.AddTranslator("Phil Aug <philiaug@live.fr> (fr_FR)")
     info.AddTranslator("MaiJZ https://github.com/maijz128 (zh_CN)")
-    # info.AddTranslator("Nestor Blanco <random@mail.es> (es_ES)")
+
     info.SetArtists(
-        ['Gianluca Pernigotto <jeanlucperni@gmail.com>',])
+        ['WxPython Phoenix <wxpython-users@googlegroups.com>',
+         'Gianluca Pernigotto <jeanlucperni@gmail.com>',])
     wx.adv.AboutBox(info)
     # event.Skip()

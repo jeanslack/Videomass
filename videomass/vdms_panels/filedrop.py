@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.09.2022
+Rev: Dec.11.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -329,10 +329,7 @@ class FileDnD(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_delete_selected, self.btn_remove)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_double_click,
-                  self.flCtrl)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.on_col_click, self.flCtrl)
-        self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
     # ----------------------------------------------------------------------
 
     def on_col_click(self, event):
@@ -403,8 +400,10 @@ class FileDnD(wx.Panel):
         self.parent.reset_Timeline()
         if not self.btn_clear.IsEnabled():
             self.btn_clear.Enable()
-        self.parent.rename.Enable(True)
-        self.parent.rename_batch.Enable(True)
+        if len(self.outputnames) > 1:
+            self.parent.rename_batch.Enable(True)
+        else:
+            self.parent.rename_batch.Enable(False)
     # ----------------------------------------------------------------------
 
     def which(self):
@@ -413,54 +412,6 @@ class FileDnD(wx.Panel):
 
         """
         return self.parent.topicname
-    # ----------------------------------------------------------------------
-
-    def onContext(self, event):
-        """
-        Create and show a Context Menu
-        """
-        # only do this part the first time so the events are only bound once
-        if not hasattr(self, "popupID1"):
-            popupID1 = wx.ID_ANY
-            popupID2 = wx.ID_ANY
-            popupID3 = wx.ID_ANY
-            popupID4 = wx.ID_ANY
-            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID1)
-            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID2)
-            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID3)
-            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID4)
-        # build the menu
-        menu = wx.Menu()
-        menu.Append(popupID1, _("Play"))
-        menu.Append(popupID2, _("Remove"))
-        menu.Append(popupID3, _("Rename selected file"))
-        menu.Append(popupID4, _("Batch renaming"))
-        # show the popup menu
-        self.PopupMenu(menu)
-        menu.Destroy()
-    # ----------------------------------------------------------------------
-
-    def onPopup(self, event):
-        """
-        Evaluate the label string of the menu item selected and starts
-        the related process
-        """
-        itemId = event.GetId()
-        menu = event.GetEventObject()
-        menuItem = menu.FindItemById(itemId)
-
-        if menuItem.GetItemLabel() == _("Play"):
-            self.on_play_select(self)
-
-        elif menuItem.GetItemLabel() == _("Remove"):
-            self.on_delete_selected(self)
-
-        elif menuItem.GetItemLabel() == _("Rename selected file"):
-            self.file_renaming()
-
-        elif menuItem.GetItemLabel() == _("Batch renaming"):
-            self.batch_files_renaming()
-
     # ----------------------------------------------------------------------
 
     def on_play_select(self, event):
@@ -552,14 +503,7 @@ class FileDnD(wx.Panel):
         self.selected = item
         self.btn_play.Enable()
         self.btn_remove.Enable()
-    # ----------------------------------------------------------------------
-
-    def on_double_click(self, row):
-        """
-        Double click or keyboard enter button, open media info
-        """
-        self.onContext(self)
-        # self.parent.ImportInfo(self)
+        self.parent.rename.Enable(True)
     # ----------------------------------------------------------------------
 
     def on_deselect(self, event):
@@ -571,6 +515,7 @@ class FileDnD(wx.Panel):
         self.selected = None
         self.btn_play.Disable()
         self.btn_remove.Disable()
+        self.parent.rename.Enable(False)
     # ----------------------------------------------------------------------
 
     def on_file_save(self, path):
