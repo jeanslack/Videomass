@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Dec 11, 2022 V.4.0.2
+Dec 12, 2022 V.4.0.2
 
   * Added language selection on preferences dialog.
   * Fixed check for new Videomass releases according to git API (on previous
@@ -32,6 +32,7 @@ Dec 11, 2022 V.4.0.2
     Timeline display. The sliders have been replaced with a dialog for entering
     values via the Spin controls.
   * Removed context menu on Queued Files panel, due to redundancy.
+  * Fixed filename encoding on subprocesses (see #148 and #153).
 
 May 02, 2022 V.4.0.1
 

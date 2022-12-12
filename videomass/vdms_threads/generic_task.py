@@ -90,6 +90,7 @@ class FFmpegGenericTask(Thread):
             with Popen(cmd,
                        stderr=subprocess.PIPE,
                        universal_newlines=True,
+                       encoding='utf8',
                        ) as proc:
 
                 error = proc.communicate()

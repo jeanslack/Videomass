@@ -54,7 +54,7 @@ def browse(ostype, pathname):
         cmd = ['xdg-open', pathname]
 
     try:
-        proc = subprocess.run(cmd, check=True, shell=False)
+        proc = subprocess.run(cmd, check=True, shell=False, encoding='utf8')
     except FileNotFoundError as err:
         return err
 

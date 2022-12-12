@@ -102,6 +102,7 @@ class VolumeDetectThread(Thread):
                            stdout=subprocess.PIPE,
                            stderr=subprocess.STDOUT,
                            universal_newlines=True,
+                           encoding='utf8',
                            ) as proc:
 
                     output = proc.communicate()
