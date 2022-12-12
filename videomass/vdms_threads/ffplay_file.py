@@ -122,6 +122,7 @@ class FilePlay(Thread):
                                   shell=shell,
                                   stderr=subprocess.PIPE,
                                   universal_newlines=True,
+                                  encoding='utf8',
                                   startupinfo=info,
                                   ) as proc:
                 error = proc.communicate()

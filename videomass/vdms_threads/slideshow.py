@@ -78,7 +78,8 @@ def convert_images(*varargs):
             with Popen(cmd_1,
                        stderr=subprocess.PIPE,
                        bufsize=1,
-                       universal_newlines=True
+                       universal_newlines=True,
+                       encoding='utf8',
                        ) as proc1:
                 error = proc1.communicate()
 
@@ -166,7 +167,8 @@ def resizing_process(*varargs):
         with Popen(cmd_1,
                    stderr=subprocess.PIPE,
                    bufsize=1,
-                   universal_newlines=True
+                   universal_newlines=True,
+                   encoding='utf8',
                    ) as proc1:
             error = proc1.communicate()
 
@@ -313,6 +315,7 @@ class SlideshowMaker(Thread):
                            stderr=subprocess.PIPE,
                            bufsize=1,
                            universal_newlines=True,
+                           encoding='utf8',
                            ) as proc2:
                     for line in proc2.stderr:
                         wx.CallAfter(pub.sendMessage,

@@ -105,6 +105,7 @@ class ConcatDemuxer(Thread):
                        stderr=subprocess.PIPE,
                        bufsize=1,
                        universal_newlines=True,
+                       encoding='utf8',
                        ) as proc:
                 for line in proc.stderr:
                     wx.CallAfter(pub.sendMessage,

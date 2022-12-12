@@ -119,6 +119,7 @@ class TwoPass(Thread):
                            stderr=subprocess.PIPE,
                            bufsize=1,
                            universal_newlines=True,
+                           encoding='utf8',
                            ) as proc1:
 
                     for line in proc1.stderr:
@@ -198,6 +199,7 @@ class TwoPass(Thread):
                        stderr=subprocess.PIPE,
                        bufsize=1,
                        universal_newlines=True,
+                       encoding='utf8',
                        ) as proc2:
 
                 for line2 in proc2.stderr:

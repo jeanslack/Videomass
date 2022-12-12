@@ -77,6 +77,7 @@ def ffprobe(filename, cmd='ffprobe', **kwargs):
                    stdout=subprocess.PIPE,
                    stderr=subprocess.PIPE,
                    universal_newlines=True,
+                   encoding='utf8',
                    ) as proc:
             output, error = proc.communicate()
 
