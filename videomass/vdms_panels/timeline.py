@@ -102,7 +102,7 @@ class Timeline(wx.Panel):
         #                     )
         self.font_med = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         sizer_base = wx.BoxSizer(wx.HORIZONTAL)
-        btn_edit = wx.Button(self, wx.ID_ANY, _("Set"), size=(-1, -1))
+        btn_edit = wx.Button(self, wx.ID_ANY, _("Adjust"), size=(-1, -1))
         btn_edit.SetBitmap(bmpedit, wx.LEFT)
         sizer_base.Add(btn_edit, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
         self.btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"), size=(-1, -1))
@@ -110,7 +110,7 @@ class Timeline(wx.Panel):
         sizer_base.Add(self.btn_reset, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
         self.paneltime = wx.Panel(self, wx.ID_ANY,
                                   size=(Timeline.PW, Timeline.PH),
-                                  style=wx.BORDER_SUNKEN)
+                                  style=wx.BORDER_STATIC)
         sizer_base.Add(self.paneltime, 0, wx.ALL | wx.CENTRE, 5)
         self.maxdur = wx.StaticText(self, wx.ID_ANY, '')
         sizer_base.Add(self.maxdur, 0, wx.LEFT | wx.RIGHT |
