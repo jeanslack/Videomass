@@ -51,7 +51,7 @@ class VideoToSequence(wx.Panel):
     BLACK = '#1f1f1f'
     MSG_1 = _("\n1. Import one or more video files, then select one."
               "\n\n2. To select a slice of time use the Timeline editor "
-              "(CTRL+T) by scrolling the DURATION and the SEEK sliders."
+              "(CTRL+T)."
               "\n\n3. Select an output format (jpg, png, bmp)."
               "\n\n4. Start the conversion."
               "\n\n\nThe images produced will be saved in a folder "

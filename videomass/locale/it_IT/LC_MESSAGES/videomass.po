@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-11 16:53+0100\n"
-"PO-Revision-Date: 2022-12-11 16:53+0100\n"
+"POT-Creation-Date: 2022-12-12 02:10+0100\n"
+"PO-Revision-Date: 2022-12-12 02:10+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -117,7 +117,8 @@ msgstr "Larghezza"
 #: ../vdms_dialogs/filter_denoisers.py:86 ../vdms_dialogs/filter_scale.py:186
 #: ../vdms_dialogs/filter_stab.py:260 ../vdms_dialogs/filter_transpose.py:110
 #: ../vdms_dialogs/playlist_indexing.py:122 ../vdms_dialogs/time_selector.py:53
-#: ../vdms_panels/av_conversions.py:539 ../vdms_panels/timeline.py:108
+#: ../vdms_dialogs/time_selector.py:95 ../vdms_panels/av_conversions.py:539
+#: ../vdms_panels/timeline.py:108
 msgid "Reset"
 msgstr "Azzera"
 
@@ -125,7 +126,7 @@ msgstr "Azzera"
 #: ../vdms_dialogs/filter_denoisers.py:85 ../vdms_dialogs/filter_scale.py:184
 #: ../vdms_dialogs/filter_stab.py:258 ../vdms_dialogs/filter_transpose.py:114
 #: ../vdms_dialogs/playlist_indexing.py:126
-#: ../vdms_dialogs/set_timestamp.py:149 ../vdms_dialogs/time_selector.py:138
+#: ../vdms_dialogs/set_timestamp.py:149
 msgid "Apply"
 msgstr "Applica"
 
@@ -1332,43 +1333,39 @@ msgstr "Inizio Segmento   (HH:MM:SS.ms)"
 msgid "Segment Duration   (HH:MM:SS.ms)"
 msgstr "Durata Segmento   (HH:MM:SS.ms)"
 
-#: ../vdms_dialogs/time_selector.py:134
-msgid "Reset All"
-msgstr "Azzera Tutto"
-
-#: ../vdms_dialogs/time_selector.py:148
+#: ../vdms_dialogs/time_selector.py:146
 msgid "Time Selection Adjustment"
 msgstr "Regolazione Selezione del Tempo"
 
-#: ../vdms_dialogs/time_selector.py:149
+#: ../vdms_dialogs/time_selector.py:147
 msgid "Duration hours"
 msgstr "Durata in ore"
 
-#: ../vdms_dialogs/time_selector.py:150
+#: ../vdms_dialogs/time_selector.py:148
 msgid "Duration minutes"
 msgstr "Durata in minuti"
 
-#: ../vdms_dialogs/time_selector.py:151
+#: ../vdms_dialogs/time_selector.py:149
 msgid "Duration seconds"
 msgstr "Durata in secondi"
 
-#: ../vdms_dialogs/time_selector.py:152
+#: ../vdms_dialogs/time_selector.py:150
 msgid "Duration milliseconds"
 msgstr "Durata in millisecondi"
 
-#: ../vdms_dialogs/time_selector.py:153
+#: ../vdms_dialogs/time_selector.py:151
 msgid "Start hours"
 msgstr "Inizio in ore"
 
-#: ../vdms_dialogs/time_selector.py:154
+#: ../vdms_dialogs/time_selector.py:152
 msgid "Start minutes"
 msgstr "Inizio in minuti"
 
-#: ../vdms_dialogs/time_selector.py:155
+#: ../vdms_dialogs/time_selector.py:153
 msgid "Start seconds"
 msgstr "Inizio in secondi"
 
-#: ../vdms_dialogs/time_selector.py:156
+#: ../vdms_dialogs/time_selector.py:154
 msgid "Start milliseconds"
 msgstr "Inizio in millisecondi"
 
@@ -4057,8 +4054,8 @@ msgid "Delete all text from the list"
 msgstr "Elimina tutto il testo dall'elenco"
 
 #: ../vdms_panels/timeline.py:105
-msgid "Set"
-msgstr "Imposta"
+msgid "Adjust"
+msgstr "Regola"
 
 #: ../vdms_panels/timeline.py:185
 msgid "Start"
@@ -4096,8 +4093,7 @@ msgid ""
 "2. Use the Resizing function to resize images which have different sizes "
 "such as width and height. It is optional in other cases.\n"
 "\n"
-"3. Use the Timeline editor (CTRL+T) to set the time interval between images "
-"by scrolling the DURATION slider.\n"
+"3. To set the DURATION between images use the Timeline editor (CTRL+T).\n"
 "\n"
 "4. Start the conversion.\n"
 "\n"
@@ -4114,8 +4110,8 @@ msgstr ""
 "che hanno dimensioni diverse come larghezza e\n"
 "altezza. Negli altri casi è opzionale.\n"
 "\n"
-"3. Utilizzare l'editor Timeline (CTRL+T) per impostare l'intervallo di tempo "
-"tra le immagini scorrendo il cursore DURATA.\n"
+"3. Per impostare la DURATA tra le immagini utilizzare l'editor Timeline (CTRL"
+"+T).\n"
 "\n"
 "4. Avvia la conversione.\n"
 "\n"
@@ -4205,8 +4201,7 @@ msgid ""
 "\n"
 "1. Import one or more video files, then select one.\n"
 "\n"
-"2. To select a slice of time use the Timeline editor (CTRL+T) by scrolling "
-"the DURATION and the SEEK sliders.\n"
+"2. To select a slice of time use the Timeline editor (CTRL+T).\n"
 "\n"
 "3. Select an output format (jpg, png, bmp).\n"
 "\n"
@@ -4221,7 +4216,7 @@ msgstr ""
 "1. Importa uno o più file video, quindi selezionane uno.\n"
 "\n"
 "2. Per selezionare un intervallo di tempo utilizzare l'editor Timeline (CTRL"
-"+T) scorrendo i cursori DURATA e CERCA.\n"
+"+T).\n"
 "\n"
 "3. Selezionare un formato di output (jpg, png, bmp o gif).\n"
 "\n"
@@ -4308,6 +4303,12 @@ msgstr ""
 #: ../vdms_threads/slideshow.py:228
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' è installato sul tuo sistema?"
+
+#~ msgid "Reset All"
+#~ msgstr "Azzera Tutto"
+
+#~ msgid "Set"
+#~ msgstr "Imposta"
 
 #~ msgid "Rename selected file"
 #~ msgstr "Rinomina il file selezionato"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-11 16:53+0100\n"
+"POT-Creation-Date: 2022-12-12 02:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,7 +94,8 @@ msgstr ""
 #: ../vdms_dialogs/filter_denoisers.py:86 ../vdms_dialogs/filter_scale.py:186
 #: ../vdms_dialogs/filter_stab.py:260 ../vdms_dialogs/filter_transpose.py:110
 #: ../vdms_dialogs/playlist_indexing.py:122 ../vdms_dialogs/time_selector.py:53
-#: ../vdms_panels/av_conversions.py:539 ../vdms_panels/timeline.py:108
+#: ../vdms_dialogs/time_selector.py:95 ../vdms_panels/av_conversions.py:539
+#: ../vdms_panels/timeline.py:108
 msgid "Reset"
 msgstr ""
 
@@ -102,7 +103,7 @@ msgstr ""
 #: ../vdms_dialogs/filter_denoisers.py:85 ../vdms_dialogs/filter_scale.py:184
 #: ../vdms_dialogs/filter_stab.py:258 ../vdms_dialogs/filter_transpose.py:114
 #: ../vdms_dialogs/playlist_indexing.py:126
-#: ../vdms_dialogs/set_timestamp.py:149 ../vdms_dialogs/time_selector.py:138
+#: ../vdms_dialogs/set_timestamp.py:149
 msgid "Apply"
 msgstr ""
 
@@ -1148,43 +1149,39 @@ msgstr ""
 msgid "Segment Duration   (HH:MM:SS.ms)"
 msgstr ""
 
-#: ../vdms_dialogs/time_selector.py:134
-msgid "Reset All"
-msgstr ""
-
-#: ../vdms_dialogs/time_selector.py:148
+#: ../vdms_dialogs/time_selector.py:146
 msgid "Time Selection Adjustment"
 msgstr ""
 
-#: ../vdms_dialogs/time_selector.py:149
+#: ../vdms_dialogs/time_selector.py:147
 msgid "Duration hours"
 msgstr ""
 
-#: ../vdms_dialogs/time_selector.py:150
+#: ../vdms_dialogs/time_selector.py:148
 msgid "Duration minutes"
 msgstr ""
 
-#: ../vdms_dialogs/time_selector.py:151
+#: ../vdms_dialogs/time_selector.py:149
 msgid "Duration seconds"
 msgstr ""
 
-#: ../vdms_dialogs/time_selector.py:152
+#: ../vdms_dialogs/time_selector.py:150
 msgid "Duration milliseconds"
 msgstr ""
 
-#: ../vdms_dialogs/time_selector.py:153
+#: ../vdms_dialogs/time_selector.py:151
 msgid "Start hours"
 msgstr ""
 
-#: ../vdms_dialogs/time_selector.py:154
+#: ../vdms_dialogs/time_selector.py:152
 msgid "Start minutes"
 msgstr ""
 
-#: ../vdms_dialogs/time_selector.py:155
+#: ../vdms_dialogs/time_selector.py:153
 msgid "Start seconds"
 msgstr ""
 
-#: ../vdms_dialogs/time_selector.py:156
+#: ../vdms_dialogs/time_selector.py:154
 msgid "Start milliseconds"
 msgstr ""
 
@@ -3549,7 +3546,7 @@ msgid "Delete all text from the list"
 msgstr ""
 
 #: ../vdms_panels/timeline.py:105
-msgid "Set"
+msgid "Adjust"
 msgstr ""
 
 #: ../vdms_panels/timeline.py:185
@@ -3582,8 +3579,7 @@ msgid ""
 "2. Use the Resizing function to resize images which have different sizes "
 "such as width and height. It is optional in other cases.\n"
 "\n"
-"3. Use the Timeline editor (CTRL+T) to set the time interval between images "
-"by scrolling the DURATION slider.\n"
+"3. To set the DURATION between images use the Timeline editor (CTRL+T).\n"
 "\n"
 "4. Start the conversion.\n"
 "\n"
@@ -3658,8 +3654,7 @@ msgid ""
 "\n"
 "1. Import one or more video files, then select one.\n"
 "\n"
-"2. To select a slice of time use the Timeline editor (CTRL+T) by scrolling "
-"the DURATION and the SEEK sliders.\n"
+"2. To select a slice of time use the Timeline editor (CTRL+T).\n"
 "\n"
 "3. Select an output format (jpg, png, bmp).\n"
 "\n"
