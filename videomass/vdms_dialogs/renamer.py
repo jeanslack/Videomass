@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.09.2022
+Rev: Dec.13.2022
 Code checker: pylint, flake8
 ########################################################
 
@@ -39,7 +39,7 @@ class Renamer(wx.Dialog):
 
     Usage example:
             with Renamer(self,
-                         nameprop=_('New Name'),
+                         nameprop='New Name',
                          caption='My awesome title',
                          message='My message here',
                          mode=0,
@@ -76,10 +76,7 @@ class Renamer(wx.Dialog):
         """
         self.mode = mode
         msg = _("# It will be replaced by increasing numbers starting with:")
-        if self.mode >= 1:
-            self.newname = []
-        else:
-            self.newname = None
+        width = 472
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizer_base.Add((10, 10))
@@ -87,7 +84,7 @@ class Renamer(wx.Dialog):
         sizer_base.Add(labhead, 0, wx.EXPAND | wx.ALL, 5)
         self.entry = wx.TextCtrl(self, wx.ID_ANY,
                                  nameprop,
-                                 size=(-1, -1)
+                                 size=(width, -1)
                                  )
         sizer_base.Add(self.entry, 0, wx.EXPAND | wx.ALL, 5)
         boxsiz = wx.BoxSizer(wx.HORIZONTAL)
@@ -96,12 +93,14 @@ class Renamer(wx.Dialog):
             labnum = wx.StaticText(self, wx.ID_ANY, msg)
             boxsiz.Add(labnum, 0, wx.ALL | wx.ALIGN_CENTER, 5)
             self.prognum = wx.SpinCtrl(self, wx.ID_ANY,
-                                       value="1",
-                                       min=0, max=999999999,
-                                       # size=(102, -1),
-                                       style=wx.SP_ARROW_KEYS
-                                       )
+                                        value="1",
+                                        min=0, max=999999999,
+                                        # size=(102, -1),
+                                        style=wx.SP_ARROW_KEYS
+                                        )
             boxsiz.Add(self.prognum, 0, wx.ALL | wx.ALIGN_CENTER, 5)
+            width = labnum.GetSize()[0] + self.prognum.GetSize()[0]
+            self.entry.SetSize(width, -1)
 
         # confirm buttons:
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
@@ -112,7 +111,7 @@ class Renamer(wx.Dialog):
         sizer_base.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
 
         self.SetTitle(caption)
-        self.SetMinSize((512, -1))
+        # self.SetMinSize((width, -1))
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
@@ -128,7 +127,7 @@ class Renamer(wx.Dialog):
         Set newname attribute.
         Return `list(newname)` if mode >= 1,
         Return `str(newname)` if mode == 0,
-        Return `None` otherwise
+        Return `None` if raise ValueError.
         """
         string =  self.entry.GetValue()
         if self.mode >= 1:
@@ -136,48 +135,42 @@ class Renamer(wx.Dialog):
             try:
                 lasthashchar = string.rindex('#')
             except ValueError:
-                del self.newname[:]
                 return None
 
-            self.newname = [string for x in range(self.mode)]
-            for num, name in enumerate(self.newname):
+            newname = [string for x in range(self.mode)]
+            for num, name in enumerate(newname):
                 temp = list(name)
                 temp[lasthashchar] = str(startfrom+num)
-                self.newname[num] = re.sub('#','0', ''.join(temp))
+                newname[num] = re.sub('#','0', ''.join(temp))
         else:
-            self.newname = string
+            newname = string
 
-        return self.newname
+        return newname
     # ------------------------------------------------------------------#
 
     def rename_file(self):
         """
-        Checks the consistency of the entered string
-        for one file renaming.
+        Checks for consistency of the entered string
+        in one file renaming.
         """
         if self.entry.GetValue() == '' or self.entry.GetValue().isspace():
             self.btn_ok.Disable()
-            self.newname = None
-            return None
+            return
 
         self.btn_ok.Enable()
     # ------------------------------------------------------------------#
 
     def rename_batch(self):
         """
-        Checks the consistency of the entered string
-        for batch renaming.
+        Checks for consistency of the entered string
+        in batch renaming.
         """
         string =  self.entry.GetValue()
         occur = re.findall(r'((\#)\#*)', string)
-        if len(occur) > 1:  # if more '#' occurrences between sentence.
+
+        if '#' not in string or len(occur) > 1:
             self.btn_ok.Disable()
-            del self.newname[:]
-            return None
-        if '#' not in string:
-            self.btn_ok.Disable()
-            del self.newname[:]
-            return None
+            return
 
         self.btn_ok.Enable()
     # ----------------------Event handler (callback)----------------------#
