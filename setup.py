@@ -131,7 +131,7 @@ def source_build():
         'Operating System :: POSIX :: Linux',
         'Intended Audience :: End Users/Desktop',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-        'Natural Language :: Chinese (simplified)',
+        'Natural Language :: Chinese (Simplified)',
         'Natural Language :: Dutch',
         'Natural Language :: English',
         'Natural Language :: French',
