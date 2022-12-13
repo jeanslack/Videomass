@@ -50,9 +50,8 @@ def fullpathname_sanitize(fullpathfilename):
     noext = _("File without format extension: please give an "
               "appropriate extension to the file name, example "
               "'.mkv', '.avi', '.mp3', etc.")
-    invalid = r"\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}"
 
-    check = bool(re.search(r"^(?:[^%s]{1,255}$)*$" % (invalid),
+    check = bool(re.search(r"^(?:[^\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}])*$",
                  os.path.basename(fullpathfilename)))
     if check is not True:
         return f'{illegalchars} {illegal}'
@@ -86,9 +85,9 @@ def filename_sanitize(newname, outputnames):
     illegal = '^` ~ " # \' % & * : < > ? / \\ { | }'
     msg_invalid = _('Name has illegal characters like: {0}').format(illegal)
     msg_inuse = _('Name already in use:')
-    invalid = r"\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}"
 
-    check = bool(re.search(r"^(?:[^%s]{1,255}$)*$" % (invalid), newname))
+    check = bool(re.search(r"^(?:[^\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}]"
+                           r"{1,255}$)*$", newname))
     if check is not True:
         return f'{msg_invalid}'
 
@@ -255,7 +254,6 @@ class FileDnD(wx.Panel):
         self.data = self.parent.data_files  # set items list data on parent
         self.outputnames = self.parent.outputnames
         self.file_dest = appdata['outputfile']
-        self.selected = None  # tells if an imported file is selected or not
         self.sortingstate = None  # ascending or descending order
 
         wx.Panel.__init__(self, parent=parent)
@@ -419,20 +417,14 @@ class FileDnD(wx.Panel):
         Playback the selected file
 
         """
-        if not self.selected:
-            self.parent.statusbar_msg(_('No file selected'), FileDnD.YELLOW,
-                                      FileDnD.BLACK)
+        index = self.flCtrl.GetFocusedItem()
+        item = self.flCtrl.GetItemText(index, 1)
+        if self.parent.checktimestamp:
+            tstamp = f'-vf "{self.parent.cmdtimestamp}"'
         else:
-            self.parent.statusbar_msg(_('Add Files'), None)
-            index = self.flCtrl.GetFocusedItem()
-            item = self.flCtrl.GetItemText(index, 1)
-            if self.parent.checktimestamp:
-                tstamp = f'-vf "{self.parent.cmdtimestamp}"'
-            else:
-                tstamp = ""
-            io_tools.stream_play(item, self.parent.time_seq,
-                                 tstamp, self.parent.autoexit
-                                 )
+            tstamp = ""
+        io_tools.stream_play(item, self.parent.time_seq,
+                             tstamp, self.parent.autoexit)
     # ----------------------------------------------------------------------
 
     def on_delete_selected(self, event):
@@ -440,12 +432,6 @@ class FileDnD(wx.Panel):
         Delete a selected file or a bunch of selected files
 
         """
-        if not self.selected:
-            self.parent.statusbar_msg(_('No file selected'), FileDnD.YELLOW,
-                                      FileDnD.BLACK)
-            return
-
-        self.parent.statusbar_msg(_('Add Files'), None)
         item, indexes = -1, []
         while 1:
             item = self.flCtrl.GetNextItem(item,
@@ -483,7 +469,6 @@ class FileDnD(wx.Panel):
         del self.outputnames[:]
         self.parent.filedropselected = None
         self.reset_timeline()
-        self.selected = None
         self.btn_play.Disable()
         self.btn_remove.Disable()
         self.btn_clear.Disable()
@@ -500,7 +485,6 @@ class FileDnD(wx.Panel):
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index, 1)
         self.parent.filedropselected = item
-        self.selected = item
         self.btn_play.Enable()
         self.btn_remove.Enable()
         self.parent.rename.Enable(True)
@@ -512,7 +496,6 @@ class FileDnD(wx.Panel):
         the control list
         """
         self.parent.filedropselected = None
-        self.selected = None
         self.btn_play.Disable()
         self.btn_remove.Disable()
         self.parent.rename.Enable(False)
@@ -543,11 +526,6 @@ class FileDnD(wx.Panel):
         Names consisting of only whitespaces or tabs or matching
         same name as outputnames are rejected silently.
         """
-        if not self.selected:
-            self.parent.statusbar_msg(_('No file selected'), FileDnD.YELLOW,
-                                      FileDnD.BLACK)
-            return
-
         row_id = self.flCtrl.GetFocusedItem()  # Get the current row
         oldname = self.flCtrl.GetItemText(row_id, 5)  # Get current name
         newname = ''
@@ -583,11 +561,6 @@ class FileDnD(wx.Panel):
         """
         This method is responsible for batch file renaming.
         """
-        if not self.outputnames:
-            self.parent.statusbar_msg(_('No files to rename in list'),
-                                      FileDnD.YELLOW, FileDnD.BLACK)
-            return
-
         title = _('Rename items')
         msg = _('Rename the {0} items to:').format(len(self.outputnames))
         with Renamer(self,
