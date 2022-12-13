@@ -74,6 +74,8 @@ to date with the original project. The project development page can be found
 - Dutch translation by [Roelof Berkepeis](https://github.com/tissatussa) and [johannesdedoper](https://github.com/johannesdedoper)
 - Spanish translation by katnatek from [https://blogdrake.net/](https://blogdrake.net/) 
 - Portuguese (Brazialian) translation by Samuel
+- French translation by Phil Aug
+- Simplified Chinese by [MaiJZ](https://github.com/maijz128)
 
 ---
 

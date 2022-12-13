@@ -9,6 +9,11 @@ nav_order: 2
 
 # MacOS
 
+### Warning
+{: .bg-red-300}
+
+[I can no longer distribute Videomass.app package for macOS](https://github.com/jeanslack/Videomass/issues/165)
+
 Minimum requirements:
 - [macOS High Sierra](https://en.wikipedia.org/wiki/MacOS_High_Sierra) 10.13.6 x64.   
 - [x86_64](https://en.wikipedia.org/wiki/X86-64) architecture. 

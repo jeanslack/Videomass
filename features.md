@@ -29,7 +29,7 @@ downloader.
 - Multi-panels, switch between panels using keyboard shortcuts.
 - Audio video encoding.
 - Download videos from hundreds of sites.
-- Multi language support (English, Italian, Russian, Dutch, Portuguese-BR, Spanish)
+- Multi language support (English, French, Italian, Russian, Dutch, Portuguese-BR, simplified Chinese, Spanish)
 
 ## Using FFmpeg
 {: .bg-green-300}
@@ -59,7 +59,6 @@ downloader.
     - Ability to apply volume normalization only for certain audio streams in videos.
 - Timeline editor:
     - Convenient display for viewing the time selection.
-    - Duration and seek are set with the slider controls.
 - ...and much more
 
 ## Using youtube-dl or yt-dlp
