@@ -30,6 +30,25 @@ To install Videomass add this
 For any other application-related issues, please read 
 [Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.
 {: .fs-3 .text-grey-dk-100}   
+
+---
+
+## MX-Linux
+
+Videomass is available on [test repo](https://mxlinux.org/community-repos/) 
+of [MX-Linux](https://mxlinux.org/) which is accessible from 
+[MX package installer](https://mxlinux.org/wiki/help-files/help-mx-package-installer/).
+So, to install Videomass you will need to enable this repo and proceed with the 
+installation .
+
+---
+
+## ArchLinux
+
+Videomass is available on the Arch User Repository as [AUR package](https://aur.archlinux.org/packages/videomass) .
+
+Can be installed by using `pacaur/yay/etc.` after activating AUR on Arch Linux, or in AUR part of Manjaro (Arch Linux derivative) Linux.
+
 ---
 
 ## Mageia 8
@@ -60,16 +79,6 @@ urpmi.addmedia --wget --distrib https://ftp.blogdrake.net/mageia/mageia8/x86_64
 urpmi videomass
 exit
 ```
----
-
-## MX-Linux
-
-Videomass is available on [test repo](https://mxlinux.org/community-repos/) 
-of [MX-Linux](https://mxlinux.org/) which is accessible from 
-[MX package installer](https://mxlinux.org/wiki/help-files/help-mx-package-installer/).
-So, to install Videomass you will need to enable this repo and proceed with the 
-installation .
-
 ---
 
 ## SparkyLinux
