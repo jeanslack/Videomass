@@ -1,6 +1,6 @@
 ---
 name: Ask a Question
-about: 'Ask a Tartube related question.'
+about: 'Ask a Videomass related question.'
 title: ''
 labels: ''
 assignees: ''
