@@ -1,12 +1,13 @@
 ---
 name: Bug report
-about: 'Thanks for taking the time to submit a bug report! Please include the following
-  information:'
+about: ''
 title: ''
 labels: ''
 assignees: ''
 
 ---
+
+## Thanks for taking the time to submit a bug report! Please include the following information:
 
 **What operating system are you using?**
 Name and version of the operating system you were using when you encountered the bug
