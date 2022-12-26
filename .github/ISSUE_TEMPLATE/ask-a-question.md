@@ -6,5 +6,6 @@ labels: ''
 assignees: ''
 
 ---
-**Thanks for taking the time to ask a question!**
+
+## Thanks for taking the time to ask a question!
 
