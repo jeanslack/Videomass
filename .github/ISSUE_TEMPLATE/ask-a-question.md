@@ -1,10 +1,10 @@
 ---
 name: Ask a Question
-about: 'Thanks for taking the time to ask a question! '
+about: 'Ask a Tartube related question.'
 title: ''
 labels: ''
 assignees: ''
 
 ---
-
+**Thanks for taking the time to ask a question!**
 
