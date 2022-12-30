@@ -252,12 +252,12 @@ class Set_Timestamp(wx.Dialog):
         if self.appdata['ostype'] == 'Darwin':
             tsfont = '/Library/Fonts/Arial.ttf'
         elif self.appdata['ostype'] == 'Windows':
-            tsfont = 'C:\\Windows\\Fonts\\Arial.ttf'
+            tsfont = 'C\\:/Windows/Fonts/Arial.ttf'
         else:
             tsfont = 'Arial'
 
         timestamp = (
-            f"drawtext=fontfile={tsfont}:text='{ptshms}':"
+            f"drawtext=fontfile='{tsfont}':text='{ptshms}':"
             f"fontcolor={self.fontcolor}:shadowcolor={self.shadowcolor}:"
             f"shadowx=1:shadowy=1:fontsize={self.fontsize}:"
             f"box={self.boxenabled}:boxcolor={self.boxcolor}:"
