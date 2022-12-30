@@ -2594,13 +2594,12 @@ class AV_Conv(wx.Panel):
 
         if self.cmb_Media.GetValue() == 'Video':
             if self.opt["Vidstabdetect"]:
-                parameters = self.video_stabilizer([], [], 0,
-                                                   'save as profile')
+                parameters = self.video_stabilizer([], [], 'save as profile')
             else:
-                parameters = self.video_stdProc([], [], 0, 'save as profile')
+                parameters = self.video_stdProc([], [], 'save as profile')
 
         elif self.cmb_Media.GetValue() == 'Audio':
-            parameters = self.audio_stdProc([], [], 0, 'save as profile')
+            parameters = self.audio_stdProc([], [], 'save as profile')
 
         with wx.FileDialog(
                 None, _("Save the new profile to..."),

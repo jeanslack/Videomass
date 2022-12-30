@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.11.2022
+Rev: Dec.28.2022
 Code checker: pylint, flake8 --ignore=F821,W503
 ########################################################
 
@@ -107,13 +107,13 @@ class MainFrame(wx.Frame):
         if self.appdata['ostype'] == 'Darwin':
             tsfont = '/Library/Fonts/Arial.ttf'
         elif self.appdata['ostype'] == 'Windows':
-            tsfont = 'C:\\Windows\\Fonts\\Arial.ttf'
+            tsfont = 'C\\:/Windows/Fonts/Arial.ttf'
         else:
             tsfont = 'Arial'
         # set command line for timestamp
         ptshms = r"%{pts\:hms}"
         self.cmdtimestamp = (
-            f"drawtext=fontfile={tsfont}:text='{ptshms}':fontcolor=White:"
+            f"drawtext=fontfile='{tsfont}':text='{ptshms}':fontcolor=White:"
             f"shadowcolor=Black:shadowx=1:shadowy=1:fontsize=32:"
             f"box=1:boxcolor=DeepPink:x=(w-tw)/2:y=h-(2*lh)")
 
@@ -215,15 +215,24 @@ class MainFrame(wx.Frame):
 
     def statusbar_msg(self, msg, bcolor, fcolor=None):
         """
-        set the status-bar with messages and color types
-        bcolor: background, fcolor: foreground
+        Set the status-bar message and color.
+        Note that These methods don't always work on every platform.
+        Usage:
+            - self.statusbar_msg(_('...Finished'))  # no color
+            - self.statusbar_msg(_('...Finished'),
+                                 bcolor=color,
+                                 fcolor=color)  # with colors
+
+        bcolor: background color, fcolor: foreground color
         """
-        if bcolor is None:
-            self.sb.SetBackgroundColour(wx.NullColour)
-            self.sb.SetForegroundColour(wx.NullColour)
-        else:
-            self.sb.SetBackgroundColour(bcolor)
-            self.sb.SetForegroundColour(fcolor)
+        if self.appdata['ostype'] == 'Linux':
+            if bcolor is None:
+                self.sb.SetBackgroundColour(wx.NullColour)
+                self.sb.SetForegroundColour(wx.NullColour)
+            else:
+                self.sb.SetBackgroundColour(bcolor)
+                self.sb.SetForegroundColour(fcolor)
+
         self.sb.SetStatusText(msg)
         self.sb.Refresh()
     # ------------------------------------------------------------------#

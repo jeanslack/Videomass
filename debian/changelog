@@ -1,3 +1,12 @@
+videomass (4.0.3-1) UNRELEASED; urgency=medium
+
+  * Fixed the status-bar messages and colors for all platforms.
+  * ffplay failing on Windows with Fontconfig error #172 (thanks to @CComparon).
+  * Fixed 'Unable to add new profiles to the Presets manager from the
+    A/V-Conversions panel, see #173.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 30 Dec 2022 18:43:00 +0200
+
 videomass (4.0.2-1) UNRELEASED; urgency=medium
 
   * Added language selection on preferences dialog.
