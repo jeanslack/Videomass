@@ -691,13 +691,14 @@ class SequenceToVideo(wx.Panel):
         else:
             addargs = ''
 
-        formula = (_("SUMMARY\n\nFile to process\nOutput filename"
-                      "\nDestination Folder\nOutput Format"
-                      "\nAdditional arguments"
-                      "\nAudio file\nShortest\nResizing\nPre-input"
-                      "\nFrame per Second (FPS)\nStill image duration"
-                      "\nOverall video duration"))
-        dictions = (f'\n\n{count}\n{newfile}\n{destdir}\n{ext}\n{addargs}'
+        formula = (_("File to process\nOutput filename"
+                     "\nDestination Folder\nOutput Format"
+                     "\nAdditional arguments"
+                     "\nAudio file\nShortest\nResizing\nPre-input"
+                     "\nFrame per Second (FPS)\nStill image duration"
+                     "\nOverall video duration"
+                     ))
+        dictions = (f'{count}\n{newfile}\n{destdir}\n{ext}\n{addargs}'
                     f'\n{self.txt_apath.GetValue()}\n{short}'
                     f'\n{resize}\n{preinput}\n{self.opt["Fps"][1]}'
                     f'\n{duration} Seconds\n{time}'

@@ -2501,13 +2501,13 @@ class AV_Conv(wx.Panel):
 
         # ------------------
         if self.cmb_Media.GetValue() == 'Audio':
-            formula = (_("SUMMARY\n\nQueued File\nOutput Format\
-                        \nWeb Optimize\nAudio Codec\nAudio bit-rate\
-                        \nAudio Channels\nAudio Rate\nBit per Sample\
-                        \nAudio Normalization\nTime Period\
-                        \nInput Audio Map")
-                       )
-            dictions = (f'\n\n{numfile}\n{outputformat}\n'
+            formula = (_("Queued File\nOutput Format"
+                         "\nWeb Optimize\nAudio Codec\nAudio bit-rate"
+                         "\nAudio Channels\nAudio Rate\nBit per Sample"
+                         "\nAudio Normalization\nTime Period"
+                         "\nInput Audio Map"
+                         ))
+            dictions = (f'{numfile}\n{outputformat}\n'
                         f'{self.opt["WebOptim"]}\n'
                         f'{self.opt["AudioCodStr"]}\n'
                         f'{self.opt["AudioBitrate"][0]}\n'
@@ -2517,15 +2517,14 @@ class AV_Conv(wx.Panel):
                         f'{self.cmb_A_outMap.GetValue()}'
                         )
         elif prof[0] == "Copy":
-            formula = (
-                _("SUMMARY\n\nQueued File\nWeb Optimize\nOutput Format\
-                      \nVideo Codec\nAspect Ratio\nFPS\nAudio Codec\
-                      \nAudio Channels\nAudio Rate\nAudio bit-rate\
-                      \nBit per Sample\nAudio Normalization\
-                      \nInput Audio Map\nOutput Audio Map\
-                      \nSubtitles Map\nTime Period")
-                )
-            dictions = (f'\n\n{numfile}\n{self.opt["WebOptim"]}\n'
+            formula = (_("Queued File\nWeb Optimize\nOutput Format"
+                         "\nVideo Codec\nAspect Ratio\nFPS\nAudio Codec"
+                         "\nAudio Channels\nAudio Rate\nAudio bit-rate"
+                         "\nBit per Sample\nAudio Normalization"
+                         "\nInput Audio Map\nOutput Audio Map"
+                         "\nSubtitles Map\nTime Period"
+                         ))
+            dictions = (f'{numfile}\n{self.opt["WebOptim"]}\n'
                         f'{outputformat}\n{self.opt["VidCmbxStr"]}\n'
                         f'{self.opt["AspectRatio"]}\n{self.opt["FPS"]}\n'
                         f'{self.opt["AudioCodStr"]}\n'
@@ -2539,18 +2538,17 @@ class AV_Conv(wx.Panel):
                         )
         # --------------------
         else:
-            formula = (
-                _("SUMMARY\n\nQueued File\nWeb Optimize\nPass Encoding\
-                      \nOutput Format\nVideo Codec\nVideo bit-rate\
-                      \nCRF\nMin Rate\nMax Rate\nBuffer size\
-                      \nVP8/VP9 Options\nVideo Filters\nAspect Ratio\nFPS\
-                      \nPreset\nProfile\nTune\nAudio Codec\
-                      \nAudio Channels\nAudio Rate\nAudio bit-rate\
-                      \nBit per Sample\nAudio Normalization\
-                      \nInput Audio Map\nOutput Audio Map\
-                      \nSubtitles Map\nTime Period")
-                )
-            dictions = (f'\n\n{numfile}\n{self.opt["WebOptim"]}\n'
+            formula = (_("Queued File\nWeb Optimize\nPass Encoding"
+                         "\nOutput Format\nVideo Codec\nVideo bit-rate"
+                         "\nCRF\nMin Rate\nMax Rate\nBuffer size"
+                         "\nVP8/VP9 Options\nVideo Filters\nAspect Ratio\nFPS"
+                         "\nPreset\nProfile\nTune\nAudio Codec"
+                         "\nAudio Channels\nAudio Rate\nAudio bit-rate"
+                         "\nBit per Sample\nAudio Normalization"
+                         "\nInput Audio Map\nOutput Audio Map"
+                         "\nSubtitles Map\nTime Period"
+                         ))
+            dictions = (f'{numfile}\n{self.opt["WebOptim"]}\n'
                         f'{self.opt["Passing"]}\n{outputformat}\n'
                         f'{self.opt["VidCmbxStr"]}\n'
                         f'{self.opt["VideoBitrate"]}\n{self.opt["CRF"]}\n'
