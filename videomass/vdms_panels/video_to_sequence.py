@@ -549,7 +549,7 @@ class VideoToSequence(wx.Panel):
                                f'"{outfilename}"'.split())
 
         valupdate = self.update_dict(filename, outputdir[1])
-        ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 280))
 
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_to_processing('video_to_sequence',

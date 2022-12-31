@@ -659,7 +659,7 @@ class SequenceToVideo(wx.Panel):
                                      countmax,
                                      'mkv',
                                      )
-        ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 320))
 
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_to_processing('sequence_to_video',  # topic
