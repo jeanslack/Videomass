@@ -313,7 +313,7 @@ class Conc_Demuxer(wx.Panel):
         """
         logname = 'concatenate_demuxer.log'
         valupdate = self.update_dict(newfile, os.path.dirname(newfile), outext)
-        ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 170))
         if ending.ShowModal() == wx.ID_OK:
 
             self.parent.switch_to_processing('concat_demuxer',
@@ -336,8 +336,9 @@ class Conc_Demuxer(wx.Panel):
         """
         lenfile = len(self.parent.file_src)
 
-        formula = (_("SUMMARY\n\nFile to concatenate\nOutput filename\
-                      \nDestination\nOutput Format\nTime Period"))
-        dictions = (f"\n\n{lenfile}\n{newfile}\n{destdir}\n{ext}\n"
+        formula = (_("File to concatenate\nOutput filename"
+                     "\nDestination\nOutput Format\nTime Period"
+                     ))
+        dictions = (f"{lenfile}\n{newfile}\n{destdir}\n{ext}\n"
                     f"Not applicable")
         return formula, dictions

@@ -549,7 +549,7 @@ class VideoToSequence(wx.Panel):
                                f'"{outfilename}"'.split())
 
         valupdate = self.update_dict(filename, outputdir[1])
-        ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 280))
 
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_to_processing('video_to_sequence',
@@ -599,11 +599,12 @@ class VideoToSequence(wx.Panel):
             elif self.rdbx_opt.GetSelection() == 2:
                 rate, rows, cols, pad, marg = '', '', '', '', ''
 
-        formula = (_("SUMMARY\n\nSelected File\nOutput Format\n"
+        formula = (_("Selected File\nOutput Format\n"
                      "Destination Folder\nRate (fps)\nResizing\n"
                      "Mosaic rows\nMosaic columns\nMosaic padding\n"
-                     "Mosaic margin\nCustom Arguments\nTime Period"))
-        dictions = (f"\n\n{filename}\n{self.cmb_frmt.GetValue()}\n{outputdir}"
+                     "Mosaic margin\nCustom Arguments\nTime Period"
+                     ))
+        dictions = (f"{filename}\n{self.cmb_frmt.GetValue()}\n{outputdir}"
                     f"\n{rate}\n{resize}\n{rows}\n{cols}\n{pad}\n{marg}"
                     f"\n{args}\n{time}"
                     )

@@ -28,6 +28,7 @@ fi
 
 $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_dialogs/audiodialogs.py" \
+"../vdms_dialogs/epilogue.py" \
 "../vdms_dialogs/filter_crop.py" \
 "../vdms_dialogs/filter_deinterlace.py" \
 "../vdms_dialogs/filter_denoisers.py" \

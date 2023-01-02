@@ -4,6 +4,7 @@ videomass (4.0.3-1) UNRELEASED; urgency=medium
   * ffplay failing on Windows with Fontconfig error #172 (thanks to @CComparon).
   * Fixed 'Unable to add new profiles to the Presets manager from the
     A/V-Conversions panel, see #173.
+  * Fixed layout on Confirm Settings dialog before start processes.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 30 Dec 2022 18:43:00 +0200
 

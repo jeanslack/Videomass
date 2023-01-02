@@ -1,15 +1,15 @@
 # -*- coding: UTF-8 -*-
 """
 Name: epilogue.py
-Porpose: show dialog box before start process
+Porpose: shows dialog box before start process
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.15.2020
+Rev: Dec.31.2022
 Code checker:
     - pylint: --ignore E0602, E1101, C0415, E0611, R0901,
-    - pycodestyle
+    - flake8
 
 This file is part of Videomass.
 
@@ -25,9 +25,10 @@ This file is part of Videomass.
 
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-"""
 
+"""
 import wx
+import wx.lib.scrolledpanel as scrolled
 
 
 class Formula(wx.Dialog):
@@ -38,39 +39,54 @@ class Formula(wx.Dialog):
             settings = ("\nEXAMPLES:\n\nExample 1:\nExample 2:\n etc."
             param = ("type 1\ntype 2\ntype 3\n etc."
     """
-    def __init__(self, parent, settings, param, title):
+    def __init__(self, parent, settings, param, panelsize):
 
         get = wx.GetApp()  # get data from bootstrap
         colorscheme = get.appset['icontheme'][1]
 
-        wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
+        wx.Dialog.__init__(self, parent, -1,
+                           style=wx.DEFAULT_DIALOG_STYLE
+                           | wx.RESIZE_BORDER
+                           )
         sizbase = wx.BoxSizer(wx.VERTICAL)
-        panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
-        sizbase.Add(panel, 1, wx.ALL | wx.EXPAND, 5)
-        label1 = wx.StaticText(panel, wx.ID_ANY, settings)
-        label2 = wx.StaticText(panel, wx.ID_ANY, param)
-        panel.SetBackgroundColour(colorscheme['BACKGRD'])
+        panelscroll = scrolled.ScrolledPanel(self, wx.ID_ANY,
+                                             size=panelsize,
+                                             style=wx.TAB_TRAVERSAL
+                                             | wx.BORDER_THEME,
+                                             name="panelscr",
+                                             )
+        sizbase.Add(panelscroll, 1, wx.ALL | wx.EXPAND, 5)
+        label1 = wx.StaticText(panelscroll, wx.ID_ANY, settings)
+        label2 = wx.StaticText(panelscroll, wx.ID_ANY, param)
+        panelscroll.SetBackgroundColour(colorscheme['BACKGRD'])
         label2.SetForegroundColour(colorscheme['TXT1'])
         label1.SetForegroundColour(colorscheme['TXT3'])
         grid_pan = wx.FlexGridSizer(1, 2, 0, 0)
-        grid_pan.Add(label1, 1, wx.ALL | wx.ALIGN_CENTRE, 5)
-        grid_pan.Add(label2, 1, wx.ALL | wx.ALIGN_CENTRE, 5)
-        panel.SetSizer(grid_pan)
+        grid_pan.Add(label1, 1, wx.ALL
+                     | wx.ALIGN_CENTRE_VERTICAL
+                     | wx.ALIGN_CENTRE_HORIZONTAL, 5)
+        grid_pan.Add(label2, 1, wx.ALL
+                     | wx.ALIGN_CENTRE_VERTICAL
+                     | wx.ALIGN_CENTRE_HORIZONTAL, 5)
 
-        self.button_1 = wx.Button(self, wx.ID_CANCEL, "")
-        self.button_2 = wx.Button(self, wx.ID_OK, "")
+        panelscroll.SetSizer(grid_pan)
+        panelscroll.SetAutoLayout(1)
+        panelscroll.SetupScrolling()
+
+        btncancel = wx.Button(self, wx.ID_CANCEL, "")
+        btnok = wx.Button(self, wx.ID_OK, "")
         btngrid = wx.FlexGridSizer(1, 2, 0, 0)
-        btngrid.Add(self.button_1, 0, wx.ALL, 5)
-        btngrid.Add(self.button_2, 0, wx.ALL, 5)
+        btngrid.Add(btncancel, 0, wx.ALL, 5)
+        btngrid.Add(btnok, 0, wx.ALL, 5)
         sizbase.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
 
-        self.SetTitle(title)
+        self.SetTitle(_('Confirm Settings'))
         self.SetSizer(sizbase)
         sizbase.Fit(self)
         self.Layout()
         # ----------------------Binders (EVT)--------------------#
-        self.Bind(wx.EVT_BUTTON, self.on_cancel, self.button_1)
-        self.Bind(wx.EVT_BUTTON, self.on_ok, self.button_2)
+        self.Bind(wx.EVT_BUTTON, self.on_cancel, btncancel)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, btnok)
 
         # --------------  Event handler (callback)  --------------#
 

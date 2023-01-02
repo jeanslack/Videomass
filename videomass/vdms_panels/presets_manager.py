@@ -875,7 +875,7 @@ class PrstPan(wx.Panel):
         """
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
         valupdate = self.update_dict(len(filesrc), 'One passes')
-        ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 170))
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_to_processing('onepass',
                                              filesrc,
@@ -898,7 +898,7 @@ class PrstPan(wx.Panel):
         pass2 = " ".join(self.txt_2cmd.GetValue().split())
         typeproc = 'twopass'
         valupdate = self.update_dict(len(filesrc), typeproc)
-        ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 170))
 
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_to_processing(typeproc,
@@ -927,9 +927,9 @@ class PrstPan(wx.Panel):
 
         numfile = f"{str(cntmax)} file in queue"
 
-        formula = (_("SUMMARY\n\nQueued File\nPass Encoding\
-                     \nProfile Used\nOutput Format\nTime Period"))
-        dictions = (f"\n\n{numfile}\n{passes}\n"
+        formula = (_("Queued File\nPass Encoding"
+                     "\nProfile Used\nOutput Format\nTime Period"))
+        dictions = (f"{numfile}\n{passes}\n"
                     f"{self.array[0]}\n{self.array[5]}\n{time}"
                     )
         return formula, dictions

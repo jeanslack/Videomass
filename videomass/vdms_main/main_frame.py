@@ -1009,11 +1009,11 @@ class MainFrame(wx.Frame):
         """
         Show miniframe to view log files
         """
-        mf = ShowLogs(self,
-                      self.appdata['logdir'],
-                      self.appdata['ostype']
-                      )
-        mf.Show()
+        logs = ShowLogs(self,
+                        self.appdata['logdir'],
+                        self.appdata['ostype']
+                        )
+        logs.Show()
     # ------------------------------------------------------------------#
 
     def view_Timeline(self, event):

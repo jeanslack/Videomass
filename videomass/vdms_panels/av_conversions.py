@@ -2142,8 +2142,7 @@ class AV_Conv(wx.Panel):
         if logname == 'save as profile':
             return pass1, pass2, self.opt["OutputFormat"]
         valupdate = self.update_dict(len(f_src), [''])
-        title = 'Two pass Video Stabilization'
-        ending = Formula(self, valupdate[0], valupdate[1], title)
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 400))
 
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_to_processing('libvidstab',
@@ -2181,7 +2180,7 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return command, '', self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), ["Copy"])
-            ending = Formula(self, valupdate[0], valupdate[1], 'Copy')
+            ending = Formula(self, valupdate[0], valupdate[1], (500, 400))
 
             if ending.ShowModal() == wx.ID_OK:
                 # ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
@@ -2235,8 +2234,7 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), [''])
-            title = 'Two pass Video Encoding'
-            ending = Formula(self, valupdate[0], valupdate[1], title)
+            ending = Formula(self, valupdate[0], valupdate[1], (500, 400))
 
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_to_processing('twopass',
@@ -2272,8 +2270,7 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return command, '', self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), [''])
-            title = 'One pass Video Encoding'
-            ending = Formula(self, valupdate[0], valupdate[1], title)
+            ending = Formula(self, valupdate[0], valupdate[1], (500, 400))
 
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_to_processing('onepass',
@@ -2298,7 +2295,6 @@ class AV_Conv(wx.Panel):
              Index use same Output Audio Index on Audio Streams Mapping box
 
         """
-        title = _('Audio/Video EBU normalization')
         self.opt["EBU"] = 'EBU R128'
         loudfilter = (f'loudnorm=I={str(self.spin_i.GetValue())}:'
                       f'TP={str(self.spin_tp.GetValue())}:'
@@ -2331,7 +2327,7 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), ["Copy"])
-            ending = Formula(self, valupdate[0], valupdate[1], title)
+            ending = Formula(self, valupdate[0], valupdate[1], (500, 400))
 
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_to_processing('two pass EBU',
@@ -2381,7 +2377,7 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], title)
+            ending = Formula(self, valupdate[0], valupdate[1], (500, 400))
 
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_to_processing('two pass EBU',
@@ -2405,7 +2401,6 @@ class AV_Conv(wx.Panel):
 
         """
         audnorm = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
-        title = _('Audio conversions')
         command = (
             f'-vn -sn {self.opt["WebOptim"]} {self.opt["AudioMap"][0]} '
             f'{self.opt["AudioCodec"][0]} {self.opt["AudioCodec"][1]} '
@@ -2417,7 +2412,7 @@ class AV_Conv(wx.Panel):
         if logname == 'save as profile':
             return command, '', self.opt["OutputFormat"]
         valupdate = self.update_dict(len(f_src), [''])
-        ending = Formula(self, valupdate[0], valupdate[1], title)
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 280))
 
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_to_processing('onepass',
@@ -2448,8 +2443,6 @@ class AV_Conv(wx.Panel):
                       f'LRA={str(self.spin_lra.GetValue())}:'
                       f'print_format=summary'
                       )
-        title = _('Audio EBU normalization')
-
         cmd_1 = (f'{self.opt["WebOptim"]} {self.opt["AudioMap"][0]} '
                  f'-filter:a: {loudfilter} -vn -sn -pass 1 -f null'
                  )
@@ -2464,7 +2457,7 @@ class AV_Conv(wx.Panel):
         if logname == 'save as profile':
             return pass1, pass2, self.opt["OutputFormat"]
         valupdate = self.update_dict(len(f_src), [''])
-        ending = Formula(self, valupdate[0], valupdate[1], title)
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 280))
 
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_to_processing('two pass EBU',
@@ -2508,13 +2501,13 @@ class AV_Conv(wx.Panel):
 
         # ------------------
         if self.cmb_Media.GetValue() == 'Audio':
-            formula = (_("SUMMARY\n\nQueued File\nOutput Format\
-                        \nWeb Optimize\nAudio Codec\nAudio bit-rate\
-                        \nAudio Channels\nAudio Rate\nBit per Sample\
-                        \nAudio Normalization\nTime Period\
-                        \nInput Audio Map")
-                       )
-            dictions = (f'\n\n{numfile}\n{outputformat}\n'
+            formula = (_("Queued File\nOutput Format"
+                         "\nWeb Optimize\nAudio Codec\nAudio bit-rate"
+                         "\nAudio Channels\nAudio Rate\nBit per Sample"
+                         "\nAudio Normalization\nTime Period"
+                         "\nInput Audio Map"
+                         ))
+            dictions = (f'{numfile}\n{outputformat}\n'
                         f'{self.opt["WebOptim"]}\n'
                         f'{self.opt["AudioCodStr"]}\n'
                         f'{self.opt["AudioBitrate"][0]}\n'
@@ -2524,15 +2517,14 @@ class AV_Conv(wx.Panel):
                         f'{self.cmb_A_outMap.GetValue()}'
                         )
         elif prof[0] == "Copy":
-            formula = (
-                _("SUMMARY\n\nQueued File\nWeb Optimize\nOutput Format\
-                      \nVideo Codec\nAspect Ratio\nFPS\nAudio Codec\
-                      \nAudio Channels\nAudio Rate\nAudio bit-rate\
-                      \nBit per Sample\nAudio Normalization\
-                      \nInput Audio Map\nOutput Audio Map\
-                      \nSubtitles Map\nTime Period")
-                )
-            dictions = (f'\n\n{numfile}\n{self.opt["WebOptim"]}\n'
+            formula = (_("Queued File\nWeb Optimize\nOutput Format"
+                         "\nVideo Codec\nAspect Ratio\nFPS\nAudio Codec"
+                         "\nAudio Channels\nAudio Rate\nAudio bit-rate"
+                         "\nBit per Sample\nAudio Normalization"
+                         "\nInput Audio Map\nOutput Audio Map"
+                         "\nSubtitles Map\nTime Period"
+                         ))
+            dictions = (f'{numfile}\n{self.opt["WebOptim"]}\n'
                         f'{outputformat}\n{self.opt["VidCmbxStr"]}\n'
                         f'{self.opt["AspectRatio"]}\n{self.opt["FPS"]}\n'
                         f'{self.opt["AudioCodStr"]}\n'
@@ -2546,18 +2538,17 @@ class AV_Conv(wx.Panel):
                         )
         # --------------------
         else:
-            formula = (
-                _("SUMMARY\n\nQueued File\nWeb Optimize\nPass Encoding\
-                      \nOutput Format\nVideo Codec\nVideo bit-rate\
-                      \nCRF\nMin Rate\nMax Rate\nBuffer size\
-                      \nVP8/VP9 Options\nVideo Filters\nAspect Ratio\nFPS\
-                      \nPreset\nProfile\nTune\nAudio Codec\
-                      \nAudio Channels\nAudio Rate\nAudio bit-rate\
-                      \nBit per Sample\nAudio Normalization\
-                      \nInput Audio Map\nOutput Audio Map\
-                      \nSubtitles Map\nTime Period")
-                )
-            dictions = (f'\n\n{numfile}\n{self.opt["WebOptim"]}\n'
+            formula = (_("Queued File\nWeb Optimize\nPass Encoding"
+                         "\nOutput Format\nVideo Codec\nVideo bit-rate"
+                         "\nCRF\nMin Rate\nMax Rate\nBuffer size"
+                         "\nVP8/VP9 Options\nVideo Filters\nAspect Ratio\nFPS"
+                         "\nPreset\nProfile\nTune\nAudio Codec"
+                         "\nAudio Channels\nAudio Rate\nAudio bit-rate"
+                         "\nBit per Sample\nAudio Normalization"
+                         "\nInput Audio Map\nOutput Audio Map"
+                         "\nSubtitles Map\nTime Period"
+                         ))
+            dictions = (f'{numfile}\n{self.opt["WebOptim"]}\n'
                         f'{self.opt["Passing"]}\n{outputformat}\n'
                         f'{self.opt["VidCmbxStr"]}\n'
                         f'{self.opt["VideoBitrate"]}\n{self.opt["CRF"]}\n'
