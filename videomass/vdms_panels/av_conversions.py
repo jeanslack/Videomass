@@ -238,26 +238,34 @@ class AV_Conv(wx.Panel):
         # ------------ base
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         # ------------------ BEGIN BOX top
-        sizer_AVformat = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_base.Add(sizer_AVformat, 0, wx.EXPAND)
-        txtMedia = wx.StaticText(self, wx.ID_ANY, _('Media:'))
-        sizer_AVformat.Add(txtMedia, 0, wx.LEFT | wx.CENTRE, 5)
+        sizer_convin = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_base.Add(10, 10)
+        txtmedia = wx.StaticText(self, wx.ID_ANY, _('Media:'))
+        sizer_convin.Add(txtmedia, 0, wx.LEFT | wx.CENTRE, 5)
         self.cmb_Media = wx.ComboBox(self, wx.ID_ANY,
                                      choices=['Video', 'Audio'],
-                                     size=(-1, -1), style=wx.CB_DROPDOWN |
+                                     size=(100, -1), style=wx.CB_DROPDOWN |
                                      wx.CB_READONLY
                                      )
-        sizer_AVformat.Add(self.cmb_Media, 1, wx.ALL | wx.EXPAND, 5)
-        sizer_AVformat.Add((40, 5))
+        sizer_convin.Add(self.cmb_Media, 1, wx.ALL, 5)
         txtFormat = wx.StaticText(self, wx.ID_ANY, _('Container:'))
-        sizer_AVformat.Add(txtFormat, 0, wx.LEFT | wx.CENTRE, 5)
+        sizer_convin.Add(txtFormat, 0, wx.LEFT | wx.CENTRE, 5)
         self.cmb_Vcont = wx.ComboBox(
             self, wx.ID_ANY,
             choices=list(AV_Conv.VCODECS['x264'].values())[0],
-            size=(-1, -1), style=wx.CB_DROPDOWN |
+            size=(100, -1), style=wx.CB_DROPDOWN |
             wx.CB_READONLY
-        )
-        sizer_AVformat.Add(self.cmb_Vcont, 1, wx.ALL | wx.EXPAND, 5)
+            )
+        sizer_convin.Add(self.cmb_Vcont, 1, wx.ALL, 5)
+
+        self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_('Use for Web')))
+        sizer_convin.Add(self.ckbx_web, 0, wx.ALL | wx.CENTRE, 5)
+        msg = _("Type of media you want to produce")
+        box_convin = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, msg),
+                                       wx.HORIZONTAL)
+        sizer_base.Add(box_convin, 0, wx.ALL | wx.CENTRE, 5)
+        box_convin.Add(sizer_convin, 0)
+        sizer_base.Add(10, 10)
         # END BOX top Media and Format
 
         # ------------------ BEGIN NOTEBOOK CONSTRUCTOR
@@ -276,7 +284,7 @@ class AV_Conv(wx.Panel):
                                           )
         sizer_nbVideo.Add(self.box_Vcod, 0, wx.ALL | wx.EXPAND, 5)
         self.codVpanel = scrolled.ScrolledPanel(self.nb_Video, -1,
-                                                size=(320, 700),
+                                                size=(380, 700),
                                                 style=wx.TAB_TRAVERSAL |
                                                 wx.BORDER_NONE,
                                                 name="panelscroll"
@@ -404,10 +412,10 @@ class AV_Conv(wx.Panel):
                                          )
         sizer_nbVideo.Add(self.box_opt, 1, wx.ALL | wx.EXPAND, 5)
         # panel vp8 vp9
-        self.ckbx_web = wx.CheckBox(self.nb_Video,
-                                    wx.ID_ANY, (_('Use for Web'))
-                                    )
-        self.box_opt.Add(self.ckbx_web, 0, wx.ALL | wx.CENTRE, 5)
+        #self.ckbx_web = wx.CheckBox(self.nb_Video,
+                                    #wx.ID_ANY, (_('Use for Web'))
+                                    #)
+        #self.box_opt.Add(self.ckbx_web, 0, wx.ALL | wx.CENTRE, 5)
         self.vp9panel = scrolled.ScrolledPanel(self.nb_Video, -1,
                                                size=(300, 700),
                                                style=wx.TAB_TRAVERSAL |
@@ -523,7 +531,7 @@ class AV_Conv(wx.Panel):
                                               )
         sizer_nbVideo.Add(self.box_Vfilters, 0, wx.ALL | wx.EXPAND, 5)
         self.filterVpanel = scrolled.ScrolledPanel(self.nb_Video, -1,
-                                                   size=(320, 700),
+                                                   size=(220, 700),
                                                    style=wx.TAB_TRAVERSAL |
                                                    wx.BORDER_NONE,
                                                    name="panelscroll"

@@ -123,10 +123,7 @@ class MainFrame(wx.Frame):
         # self.btnpanel.SetBackgroundColour(MainFrame.LIMEGREEN)
 
         # ---------- others panel instances:
-        self.TimeLine = timeline.Timeline(self,
-                                          self.icons['timerset'],
-                                          self.icons['clear'],
-                                          )
+        self.TimeLine = timeline.Timeline(self, self.icons['clear'])
         self.ChooseTopic = choose_topic.Choose_Topic(self,
                                                      self.appdata['ostype'],
                                                      )
@@ -188,7 +185,7 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.icons['videomass'],
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        self.SetMinSize((980, 640))
+        self.SetMinSize((850, 500))
         # self.CentreOnScreen()  # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         self.Fit()
@@ -272,7 +269,6 @@ class MainFrame(wx.Frame):
         self.ydlpan.Enable(False)
         self.startpan.Enable(False)
         self.logpan.Enable(False)
-        self.viewtimeline.Enable(False)
         self.toseq.Enable(False)
         self.slides.Enable(False)
         self.SetTitle(_('Videomass'))
@@ -292,7 +288,6 @@ class MainFrame(wx.Frame):
             self.slides.Enable(False)
             self.ydlpan.Enable(False),
             self.startpan.Enable(False)
-            self.viewtimeline.Enable(False)
             self.logpan.Enable(False)
 
         if self.appdata['downloader'] != 'disabled':
@@ -509,12 +504,6 @@ class MainFrame(wx.Frame):
         dscrp = (_("Show Logs\tCtrl+L"),
                  _("Viewing log messages"))
         viewlogs = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-
-        viewButton.AppendSeparator()
-        dscrp = (_("Show timeline\tCtrl+T"),
-                 _("Show panel for editing timeline (seek/duration)"))
-        self.viewtimeline = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
-                                              kind=wx.ITEM_CHECK)
         self.menuBar.Append(viewButton, _("View"))
         self.menuBar.Check(self.viewtimestamp.GetId(), True)
 
@@ -641,7 +630,6 @@ class MainFrame(wx.Frame):
         # self.Bind(wx.EVT_MENU, self.ydl_used, self.ydlused)
         # self.Bind(wx.EVT_MENU, self.ydl_latest, self.ydllatest)
         self.Bind(wx.EVT_MENU, self.View_logs, viewlogs)
-        self.Bind(wx.EVT_MENU, self.view_Timeline, self.viewtimeline)
         # ---- GO -----
         self.Bind(wx.EVT_MENU, self.startPan, self.startpan)
         self.Bind(wx.EVT_MENU, self.prstPan, self.prstpan)
@@ -1014,18 +1002,6 @@ class MainFrame(wx.Frame):
                         self.appdata['ostype']
                         )
         logs.Show()
-    # ------------------------------------------------------------------#
-
-    def view_Timeline(self, event):
-        """
-        View menu: show timeline via menu bar
-
-        """
-        if self.viewtimeline.IsChecked():
-            self.TimeLine.Show()
-        else:
-            self.TimeLine.Hide()
-        self.Layout()
     # ------------------------------------------------------------------#
     # --------- Menu  Go  ###
 
@@ -1507,7 +1483,6 @@ class MainFrame(wx.Frame):
         self.prstpan.Enable(False)
         self.ydlpan.Enable(False)
         self.startpan.Enable(True)
-        self.viewtimeline.Enable(False)
         self.concpan.Enable(False)
         self.toseq.Enable(False)
         self.slides.Enable(False)
@@ -1551,7 +1526,6 @@ class MainFrame(wx.Frame):
         self.prstpan.Enable(False)
         self.ydlpan.Enable(False)
         self.startpan.Enable(True)
-        self.viewtimeline.Enable(False)
         self.concpan.Enable(False)
         self.toseq.Enable(False)
         self.slides.Enable(False)
@@ -1624,7 +1598,6 @@ class MainFrame(wx.Frame):
         self.prstpan.Enable(True)
         self.ydlpan.Enable(False)
         self.startpan.Enable(True)
-        self.viewtimeline.Enable(False)
         self.logpan.Enable(True)
         self.concpan.Enable(True)
         self.toseq.Enable(True)
@@ -1678,7 +1651,7 @@ class MainFrame(wx.Frame):
             self.statusbar_msg(_('Ready'), None)
 
         self.SetTitle(_('Videomass - AV Conversions'))
-        self.view_Timeline(self)  # set timeline status
+        self.TimeLine.Show()
         self.toolbar.Show()
         self.menu_items()  # disable some menu items
         self.openmedia.Enable(True)
@@ -1686,7 +1659,6 @@ class MainFrame(wx.Frame):
         self.prstpan.Enable(True)
         self.ydlpan.Enable(True)
         self.startpan.Enable(True)
-        self.viewtimeline.Enable(True)
         self.logpan.Enable(True)
         self.concpan.Enable(True)
         self.toseq.Enable(True)
@@ -1740,14 +1712,13 @@ class MainFrame(wx.Frame):
             self.statusbar_msg(_('Ready'), None)
 
         self.SetTitle(_('Videomass - Presets Manager'))
-        self.view_Timeline(self)  # set timeline status
+        self.TimeLine.Show()
         self.toolbar.Show()
         self.openmedia.Enable(True)
         self.avpan.Enable(True)
         self.prstpan.Enable(False)
         self.ydlpan.Enable(True)
         self.startpan.Enable(True)
-        self.viewtimeline.Enable(True)
         self.logpan.Enable(True)
         self.concpan.Enable(True)
         self.toseq.Enable(True)
@@ -1809,7 +1780,6 @@ class MainFrame(wx.Frame):
         self.prstpan.Enable(True)
         self.ydlpan.Enable(True)
         self.startpan.Enable(True)
-        self.viewtimeline.Enable(False)
         self.logpan.Enable(True)
         self.concpan.Enable(False)
         self.toseq.Enable(True)
@@ -1864,14 +1834,13 @@ class MainFrame(wx.Frame):
             self.statusbar_msg(_('Ready'), None)
 
         self.SetTitle(_('Videomass - From Movie to Pictures'))
-        self.view_Timeline(self)  # set timeline status
+        self.TimeLine.Show()
         self.toolbar.Show()
         self.openmedia.Enable(True)
         self.avpan.Enable(True)
         self.prstpan.Enable(True)
         self.ydlpan.Enable(True)
         self.startpan.Enable(True)
-        self.viewtimeline.Enable(True)
         self.logpan.Enable(True)
         self.concpan.Enable(True)
         self.toseq.Enable(False)
@@ -1926,14 +1895,13 @@ class MainFrame(wx.Frame):
             self.statusbar_msg(_('Ready'), None)
 
         self.SetTitle(_('Videomass - Still Image Maker'))
-        self.view_Timeline(self)  # set timeline status
+        self.TimeLine.Show()
         self.toolbar.Show()
         self.openmedia.Enable(True)
         self.avpan.Enable(True)
         self.prstpan.Enable(True)
         self.ydlpan.Enable(True)
         self.startpan.Enable(True)
-        self.viewtimeline.Enable(True)
         self.logpan.Enable(True)
         self.concpan.Enable(True)
         self.toseq.Enable(True)
@@ -2003,7 +1971,6 @@ class MainFrame(wx.Frame):
         self.ProcessPanel.Show()
         # self.SetTitle('Videomass')
         [self.menuBar.EnableTop(x, False) for x in range(3, 5)]
-        self.viewtimeline.Enable(False)
         self.openmedia.Enable(False)
         # Hide the tool bar
         self.toolbar.Hide()
