@@ -5,7 +5,7 @@ Name: rsvg2png
 Porpose: Wrapper interface to perform batch conversion using the rsvg library
 Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Oct.23.2020 *PEP8 compatible*
 
@@ -19,8 +19,6 @@ DESCRIPTION:
        - Mac OS : brew install librsvg
        - Ubuntu : apt install librsvg2-bin
        - available even for Windows
-
-#########################################################
 
 This file is part of Videomass.
 
@@ -36,7 +34,6 @@ This file is part of Videomass.
 
     You should have received a copy of the GNU General Public License
     along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
 """
 import platform
 import subprocess
@@ -76,7 +73,7 @@ def svg2png(delete, paths, parameters,
                                 ):
             out = outputdir if outputdir else os.path.dirname(files)
             basename = os.path.splitext(os.path.basename(files))
-            saveto = os.path.join('%s' % out, '%s.%s' % (basename[0], outext))
+            saveto = os.path.join(f'{out}{basename[0]}.{outext}')
             if platform.system() == 'Windows':
                 command = ' '.join(cmd + [files, '-o', saveto])
             else:
@@ -91,13 +88,13 @@ def svg2png(delete, paths, parameters,
                 return "ERROR: 'rsvg-convert': Command not found"
 
             if proc.returncode:
-                return "ARGS: %s\nERROR: %s" % (proc.args, proc.stderr)
+                return f"ARGS: {proc.args}\nERROR: {proc.stderr}"
 
             if delete:
                 try:
                     os.remove(files)
                 except OSError as err:
-                    return "ERROR: %s" % err
+                    return f"ERROR: {err}"
     return None
     # -------------------------------------------------------------------#
 
@@ -165,13 +162,13 @@ def main():
 
     for pth in args.paths:
         if not os.path.isdir(pth):
-            raise NotADirectoryError("Invalid or inexistent pathname for "
-                                     "inputdir '%s'" % p)
+            raise NotADirectoryError(f"Invalid or inexistent pathname for "
+                                     f"inputdir '{pth}'")
 
     if args.output:
         if not os.path.isdir(args.output):
-            raise NotADirectoryError("Invalid or inexistent pathname for "
-                                     "outputdir '%s'" % args.output)
+            raise NotADirectoryError(f"Invalid or inexistent pathname for "
+                                     f"outputdir '{args.output}'")
 
     if args.format == 'svg' and not args.output:
         raise FileExistsError('Could not overwrite the SVG files themselves. '

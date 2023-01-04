@@ -1,45 +1,45 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-#
-# Name: inkscape2png
-# Porpose: Wrapper interface to perform batch conversion using the
-#          Inkscape library
-# Compatibility: Python3
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+"""
+Name: inkscape2png
+Porpose: Wrapper interface to perform batch conversion using the
+         Inkscape library
+Compatibility: Python3
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Oct.23.2020 *PEP8 compatible*
+license: GPL3
+Rev: Oct.23.2020 *PEP8 compatible*
 
-# DESCRIPTION:
-#   Given a list of pathnames, recursively converts images found in SVG
-#   vector format to PNG raster format or to the formats specified in
-#   the --format argument.
-#
-#   Assume that the `inkscape` application is installed on the system:
-#
-#   Note, from version > 1.0 the inkscape syntax may be differ, e.g.:
-#       use: inkscape -w 1024 -h 1024 input.svg --export-filename output.png
-#   instead:
-#       inkscape -z -w 1024 -h 1024 input.svg -e output.png
-#
-#########################################################
+DESCRIPTION:
+  Given a list of pathnames, recursively converts images found in SVG
+  vector format to PNG raster format or to the formats specified in
+  the --format argument.
 
-# This file is part of Videomass.
+  Assume that the `inkscape` application is installed on the system:
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+  Note, from version > 1.0 the inkscape syntax may be differ, e.g.:
+      use: inkscape -w 1024 -h 1024 input.svg --export-filename output.png
+  instead:
+      inkscape -z -w 1024 -h 1024 input.svg -e output.png
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-#
-#########################################################################
+This file is part of Videomass.
+
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+
 import platform
 import subprocess
 import os
@@ -88,29 +88,29 @@ def svg2png(delete, paths, parameters, outputdir,
                                 ):
             out = outputdir if outputdir else os.path.dirname(files)
             basename = os.path.splitext(os.path.basename(files))
-            saveto = os.path.join('%s' % out, '%s.%s' % (basename[0],
-                                                         outext[1]))
+            saveto = os.path.join(f'{out}{basename[0]}.{outext[1]}')
             if platform.system() == 'Windows':
                 command = ' '.join(cmd + [files, outext[0], saveto])
             else:
                 command = cmd + [files, outext[0], saveto]
             try:
-                p = subprocess.run(command,
-                                   capture_output=True,
-                                   universal_newlines=True
-                                   )
+                proc = subprocess.run(command,
+                                      capture_output=True,
+                                      universal_newlines=True,
+                                      check=True,
+                                      )
             except FileNotFoundError:
-                return ("ERROR: 'inkscape': Command not found")
+                return "ERROR: 'inkscape': Command not found"
 
-            if p.returncode:
-                return "ARGS: %s\nERROR: %s" % (p.args, p.stderr)
+            if proc.returncode:
+                return f"ARGS: {proc.args}\nERROR: {proc.stderr}"
 
-            elif delete:
+            if delete:
                 try:
                     os.remove(files)
                 except OSError as err:
-                    return "ERROR: %s" % err
-    return
+                    return f"ERROR: {err}"
+    return None
     # -------------------------------------------------------------------#
 
 
@@ -185,17 +185,14 @@ def main():
                     )
     args = parser.parse_args()
 
-    for p in args.paths:
-        if not os.path.isdir(p):
-            raise NotADirectoryError("Invalid or inexistent pathname for "
-                                     "inputdir '%s'" % p)
-            break
-
+    for pth in args.paths:
+        if not os.path.isdir(pth):
+            raise NotADirectoryError(f"Invalid or inexistent pathname for "
+                                     f"inputdir '{pth}'")
     if args.output:
         if not os.path.isdir(args.output):
-            raise NotADirectoryError("Invalid or inexistent pathname for "
-                                     "outputdir '%s'" % args.output)
-
+            raise NotADirectoryError(f"Invalid or inexistent pathname for "
+                                     f"outputdir '{args.output}'")
     if args.format == 'svg' and not args.output:
         raise FileExistsError('Could not overwrite the SVG files themselves. '
                               'You must provide an output pathname using the '

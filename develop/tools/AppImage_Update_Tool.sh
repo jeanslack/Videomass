@@ -16,7 +16,7 @@
 #         ~$ ./VideomassAppImage_updater.sh /some/other/dir/Videomass*.AppImage
 #
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Update: Nov.27.2022
 #
 # please visit <https://misc.flogisoft.com/bash/tip_colors_and_formatting>

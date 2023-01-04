@@ -5,7 +5,7 @@ Name: pyinstaller_setup.py
 Porpose: Setup the videomass.spec and build bundle via Pyinstaller
 Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Sept.04.2021
 ########################################################
