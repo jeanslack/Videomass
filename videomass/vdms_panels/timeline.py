@@ -87,42 +87,44 @@ class Timeline(wx.Panel):
         self.time_end = '00:00:00.000'
 
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
-        sizer_base = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_v = wx.BoxSizer(wx.VERTICAL)
+        sizer_h = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_v.Add(sizer_h, 0, wx.ALL, 5)
         lbl_trim = wx.StaticText(self, wx.ID_ANY, label='Trim')
-        sizer_base.Add(lbl_trim, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
-        sizer_base.Add(20, 20)
+        sizer_h.Add(lbl_trim, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
+        sizer_h.Add(20, 20)
         self.btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"), size=(-1, -1))
         self.btn_reset.SetBitmap(bmpreset, wx.LEFT)
-        sizer_base.Add(self.btn_reset, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
+        sizer_h.Add(self.btn_reset, 0, wx.ALIGN_CENTRE_VERTICAL, 0)
         lbl_start = wx.StaticText(self, wx.ID_ANY, label=_('Start:'))
-        sizer_base.Add(lbl_start, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 20)
+        sizer_h.Add(lbl_start, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 20)
         self.ctrl_start = wx.adv.TimePickerCtrl(self,
-                                               size=(150, -1),
+                                               size=(140, -1),
                                                style=wx.adv.TP_DEFAULT
                                                )
         self.ctrl_start.SetTime(00, 00, 00)
-        sizer_base.Add(self.ctrl_start, 0, wx.ALL | wx.CENTRE, 5)
+        sizer_h.Add(self.ctrl_start, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
 
         lbl_duration = wx.StaticText(self, wx.ID_ANY, label=_('End:'))
-        sizer_base.Add(lbl_duration, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 20)
+        sizer_h.Add(lbl_duration, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 20)
         self.ctrl_end = wx.adv.TimePickerCtrl(self,
-                                             size=(-1, -1),
+                                             size=(140, -1),
                                              style=wx.adv.TP_DEFAULT
                                              )
         self.ctrl_end.SetTime(00, 00, 00)
-        sizer_base.Add(self.ctrl_end, 0, wx.ALL | wx.CENTRE, 5)
+        sizer_h.Add(self.ctrl_end, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
         self.btn_maxdur = wx.Button(self, wx.ID_ANY,
                                     "00:00:00.000",
                                     size=(150, -1)
                                     )
         self.btn_maxdur.SetBackgroundColour(wx.Colour(Timeline.LGREEN))
         self.btn_maxdur.SetForegroundColour(wx.Colour(Timeline.BLACK))
-        sizer_base.Add(self.btn_maxdur, 0,
+        sizer_h.Add(self.btn_maxdur, 0,
                        wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 20)
 
         # ----------------------Properties ----------------------#
-        self.SetSizer(sizer_base)
-        sizer_base.Fit(self)
+        self.SetSizer(sizer_v)
+        sizer_v.Fit(self)
         self.Layout()
 
         self.btn_maxdur.SetToolTip(_("Click Me"))
