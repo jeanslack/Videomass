@@ -234,7 +234,9 @@ class AV_Conv(wx.Panel):
         self.parent = parent
         self.norm_dataref = []  # see `on_Audio_analyzes` for details
 
-        if self.appdata['ostype'] in ('Windows', 'Darwin'):
+        if self.appdata['ostype'] == 'Windows':
+            sizepancodevideo = (270, 700)
+        elif self.appdata['ostype'] == 'Darwin':
             sizepancodevideo = (300, 700)
         else:
             if int(''.join(wx.version().split()[0].split('.'))) >= 410:
@@ -526,13 +528,13 @@ class AV_Conv(wx.Panel):
                                                    )
         sizer_Vfilter = wx.BoxSizer(wx.VERTICAL)
         self.btn_preview = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     _("Preview"), size=(-1, 40))
+                                     _("Preview"), size=(-1, -1))
         self.btn_preview.SetBitmap(bmpplay, wx.LEFT)
 
         sizer_Vfilter.Add(self.btn_preview, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_preview.Disable()
         self.btn_reset = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                   _("Reset"), size=(-1, 40))
+                                   _("Reset"), size=(-1, -1))
         self.btn_reset.SetBitmap(bmpreset, wx.LEFT)
         sizer_Vfilter.Add(self.btn_reset, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_reset.Disable()
