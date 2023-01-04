@@ -88,7 +88,7 @@ class Timeline(wx.Panel):
 
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
         sizer_base = wx.BoxSizer(wx.HORIZONTAL)
-        lbl_trim = wx.StaticText(self, wx.ID_ANY, label=_('Trim bar'))
+        lbl_trim = wx.StaticText(self, wx.ID_ANY, label='Trim')
         sizer_base.Add(lbl_trim, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
         sizer_base.Add(20, 20)
         self.btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"), size=(-1, -1))
@@ -126,8 +126,9 @@ class Timeline(wx.Panel):
         self.Layout()
 
         self.btn_maxdur.SetToolTip(_("Click Me"))
-        self.ctrl_end.SetToolTip(_("Time amount (DURATION) from start "
-                                   "selection, in 24-hour format (HH:MM:SS)"))
+        self.ctrl_end.SetToolTip(_("Time amount (DURATION) later the start "
+                                   "of the selection, in 24-hour format "
+                                   "(HH:MM:SS"))
         self.ctrl_start.SetToolTip(_("Start selection (SEEK) in "
                                      "24-hour format (HH:MM:SS)"))
 

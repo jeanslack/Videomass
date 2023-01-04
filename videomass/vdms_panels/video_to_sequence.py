@@ -50,12 +50,12 @@ class VideoToSequence(wx.Panel):
     LGREEN = '#52ee7d'
     BLACK = '#1f1f1f'
     MSG_1 = _("\n1. Import one or more video files, then select one."
-              "\n\n2. To select a slice of time use the Timeline editor "
-              "(CTRL+T)."
+              "\n\n2. To select a slice of time use the \"Start\" "
+              "\"End\" controls on the Trim bar."
               "\n\n3. Select an output format (jpg, png, bmp)."
               "\n\n4. Start the conversion."
               "\n\n\nThe images produced will be saved in a folder "
-              "named 'Movie_to_Pictures' with a progressive digit, "
+              "named \"Movie_to_Pictures\" with a progressive digit, "
               "\nin the path you specify.")
     # ----------------------------------------------------------------#
 
@@ -76,7 +76,7 @@ class VideoToSequence(wx.Panel):
         wx.Panel.__init__(self, parent=parent, style=wx.BORDER_THEME)
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((20, 20))
-        self.btn_help = wx.Button(self, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btn_help = wx.Button(self, wx.ID_ANY, _("Help Me"), size=(-1, -1))
         self.btn_help.SetBackgroundColour(wx.Colour(VideoToSequence.LGREEN))
         self.btn_help.SetForegroundColour(wx.Colour(VideoToSequence.BLACK))
         sizer.Add(self.btn_help, 0, wx.ALL, 5)
