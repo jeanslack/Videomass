@@ -5,7 +5,7 @@ Porpose: playback online media streams with ffplay player using
          youtube_dl embedding on code.
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Mar.02.2022
 Code checker:

@@ -4,7 +4,7 @@ Name: sequence_to_video.py
 Porpose: A slideshow maker based on FFmpeg
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Dec.03.2022
 Code checker:
@@ -114,7 +114,7 @@ class SequenceToVideo(wx.Panel):
         wx.Panel.__init__(self, parent=parent, style=wx.BORDER_THEME)
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((20, 20))
-        self.btn_help = wx.Button(self, wx.ID_ANY, _("Help Me"), size=(-1, -1))
+        self.btn_help = wx.Button(self, wx.ID_ANY, _("Help"), size=(-1, -1))
         self.btn_help.SetBackgroundColour(wx.Colour(SequenceToVideo.LGREEN))
         self.btn_help.SetForegroundColour(wx.Colour(SequenceToVideo.BLACK))
         sizer.Add(self.btn_help, 0, wx.ALL, 5)

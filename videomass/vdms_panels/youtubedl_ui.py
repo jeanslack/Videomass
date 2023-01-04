@@ -4,7 +4,7 @@ Name: youtubedl_ui.py
 Porpose: youtube-dl user interface
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: March.14.2022
 Code checker: flake8 --ignore=F821,W503,

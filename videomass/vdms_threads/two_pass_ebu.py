@@ -4,7 +4,7 @@ Name: two_pass_EBU.py
 Porpose: FFmpeg long processing task with EBU normalization
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Dec.02.2022
 Code checker: flake8: --ignore F821, W504

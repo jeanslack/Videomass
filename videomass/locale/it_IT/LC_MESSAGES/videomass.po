@@ -1,5 +1,5 @@
 # Italian translation for Videomass.
-# Copyright (c) 2021 Gianluca Pernigotto
+# Copyleft -  2023 Gianluca Pernigotto
 # This file is distributed under the same license as the Videomass package
 # FIRST AUTHOR Gianluca Pernigotto <jeanlucperni@gmail.com>, 2020
 #
@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-04 02:22+0100\n"
-"PO-Revision-Date: 2023-01-04 02:26+0100\n"
+"POT-Creation-Date: 2023-01-04 11:53+0100\n"
+"PO-Revision-Date: 2023-01-04 11:54+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -1467,11 +1467,11 @@ msgid "Post-normalization references:"
 msgstr "Riferimenti post-normalizzazione:"
 
 #: ../vdms_frames/shownormlist.py:73 ../vdms_frames/shownormlist.py:78
-#: ../vdms_frames/shownormlist.py:83 ../vdms_panels/concatenate.py:111
-#: ../vdms_panels/sequence_to_video.py:117
+#: ../vdms_frames/shownormlist.py:83 ../vdms_main/main_frame.py:598
+#: ../vdms_panels/concatenate.py:111 ../vdms_panels/sequence_to_video.py:117
 #: ../vdms_panels/video_to_sequence.py:79
-msgid "Help Me"
-msgstr "Aiutami"
+msgid "Help"
+msgstr "Aiuto"
 
 #: ../vdms_frames/shownormlist.py:76
 msgid "=  Clipped peaks"
@@ -2201,10 +2201,6 @@ msgstr ""
 #: ../vdms_main/main_frame.py:597
 msgid "About Videomass"
 msgstr "Informazioni"
-
-#: ../vdms_main/main_frame.py:598
-msgid "Help"
-msgstr "Aiuto"
 
 #: ../vdms_main/main_frame.py:678
 msgid "Open the selected files"
@@ -4218,6 +4214,9 @@ msgstr ""
 #: ../vdms_threads/slideshow.py:230
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' è installato sul tuo sistema?"
+
+#~ msgid "Help Me"
+#~ msgstr "Aiutami"
 
 #~ msgid "Segment Start   (HH:MM:SS.ms)"
 #~ msgstr "Inizio Segmento   (HH:MM:SS.ms)"

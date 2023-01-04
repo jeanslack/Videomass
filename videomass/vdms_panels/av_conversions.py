@@ -4,7 +4,7 @@ FileName: av_conversions.py
 Porpose: audio/video conversions interface
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Dec.02.2022
 Code checker: flake8, pylint
@@ -645,7 +645,7 @@ class AV_Conv(wx.Panel):
                                        size=(160, -1), style=wx.CB_DROPDOWN |
                                        wx.CB_READONLY
                                        )
-        sizer_Amap.Add(self.cmb_A_inMap, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_Amap.Add(self.cmb_A_inMap, 0, wx.ALL, 5)
         txtAoutmap = wx.StaticText(self.nb_Audio, wx.ID_ANY,
                                    _('Map:')
                                    )
@@ -655,7 +655,7 @@ class AV_Conv(wx.Panel):
                                         size=(160, -1), style=wx.CB_DROPDOWN |
                                         wx.CB_READONLY
                                         )
-        sizer_Amap.Add(self.cmb_A_outMap, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_Amap.Add(self.cmb_A_outMap, 0, wx.ALL, 5)
 
         # BOX Audio Filters
         self.box_aFilters = wx.StaticBoxSizer(wx.StaticBox(self.nb_Audio,

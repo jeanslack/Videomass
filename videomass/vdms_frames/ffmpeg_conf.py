@@ -4,7 +4,7 @@
 # Porpose: Shows the features of the FFmpeg build configuration
 # Compatibility: Python3, wxPython4
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.06.2020 *-pycodestyle- compatible*
 #########################################################

@@ -4,7 +4,7 @@ Name: check_bin.py
 Porpose: Gets the output to display the features of FFmpeg
 Compatibility: Python3 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: May.15.2021
 Code checker:

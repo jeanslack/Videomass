@@ -1,5 +1,5 @@
 # English translation for Videomass.
-# Copyright (c) 2021 Gianluca Pernigotto
+# Copyleft -  2023 Gianluca Pernigotto
 # This file is distributed under the same license as the Videomass package
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #

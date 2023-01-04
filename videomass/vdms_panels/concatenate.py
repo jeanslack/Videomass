@@ -4,7 +4,7 @@ Name: concatenate.py
 Porpose: A simple concat demuxer UI
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Dec.02.2022
 Code checker:
@@ -108,7 +108,7 @@ class Conc_Demuxer(wx.Panel):
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((20, 20))
-        self.btn_help = wx.Button(self, wx.ID_ANY, _("Help Me"), size=(-1, -1))
+        self.btn_help = wx.Button(self, wx.ID_ANY, _("Help"), size=(-1, -1))
         self.btn_help.SetBackgroundColour(wx.Colour(Conc_Demuxer.LGREEN))
         self.btn_help.SetForegroundColour(wx.Colour(Conc_Demuxer.BLACK))
         sizer.Add(self.btn_help, 0, wx.ALL, 5)

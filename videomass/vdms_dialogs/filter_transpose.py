@@ -4,7 +4,7 @@ Name: filter_transpose.py
 Porpose: Show dialog to get video transpose data based on FFmpeg syntax
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: March.13.2022
 Code checker: pylint, flake8

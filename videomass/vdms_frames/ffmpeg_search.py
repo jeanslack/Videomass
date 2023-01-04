@@ -4,7 +4,7 @@ Name: ffmpeg_search.py
 Porpose: Show a box to search FFmpeg topics
 Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Sep.28.2022
 Code checker:

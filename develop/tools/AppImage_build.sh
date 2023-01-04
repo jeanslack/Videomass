@@ -13,7 +13,7 @@
 # so that dependencies get bundled from that very container
 #
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2020-2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Create: Oct.02.2020
 # Update: Nov.25.2022
 ###################################################################
@@ -38,7 +38,7 @@ fi
 PYTHON_APPIMAGE=python3.9.15-cp39-cp39-manylinux1_x86_64.AppImage
 PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.9/${PYTHON_APPIMAGE}
 
-# Set the wxPython release, make sure the version matches correctly, 
+# Set the wxPython release, make sure the version matches correctly,
 # if not fix it.
 WX_PYTHON_WHEEL=wxPython-4.1.1-cp39-cp39-linux_x86_64.whl
 WX_PYTHON_URL=https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04

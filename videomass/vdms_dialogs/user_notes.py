@@ -4,7 +4,7 @@ Name: user_notes.py
 Porpose: Show a simple and useful notepad with search function
 Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Nov.18.2021
 Code checker:

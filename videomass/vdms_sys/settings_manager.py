@@ -4,7 +4,7 @@ Name: settings_manager.py
 Porpose: Read and write the configuration file
 Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: April.26.2022
 Code checker: flake8, pylint .
