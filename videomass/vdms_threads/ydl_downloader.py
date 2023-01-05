@@ -4,7 +4,7 @@ Name: ydl_downloader.py
 Porpose: long processing task with youtube_dl python library
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Mar.14.2022
 Code checker:

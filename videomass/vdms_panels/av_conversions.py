@@ -4,7 +4,7 @@ FileName: av_conversions.py
 Porpose: audio/video conversions interface
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Dec.02.2022
 Code checker: flake8, pylint
@@ -248,8 +248,8 @@ class AV_Conv(wx.Panel):
         # ------------ base
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         # ------------------ BEGIN BOX top
+        sizer_base.Add(20, 20)
         sizer_convin = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_base.Add(10, 10)
         txtmedia = wx.StaticText(self, wx.ID_ANY, _('Media:'))
         sizer_convin.Add(txtmedia, 0, wx.LEFT | wx.CENTRE, 5)
         self.cmb_Media = wx.ComboBox(self, wx.ID_ANY,
@@ -257,7 +257,7 @@ class AV_Conv(wx.Panel):
                                      size=(100, -1), style=wx.CB_DROPDOWN |
                                      wx.CB_READONLY
                                      )
-        sizer_convin.Add(self.cmb_Media, 1, wx.ALL, 5)
+        sizer_convin.Add(self.cmb_Media, 0, wx.LEFT | wx.CENTRE, 5)
         txtFormat = wx.StaticText(self, wx.ID_ANY, _('Container:'))
         sizer_convin.Add(txtFormat, 0, wx.LEFT | wx.CENTRE, 5)
         self.cmb_Vcont = wx.ComboBox(
@@ -266,16 +266,14 @@ class AV_Conv(wx.Panel):
             size=(100, -1), style=wx.CB_DROPDOWN |
             wx.CB_READONLY
             )
-        sizer_convin.Add(self.cmb_Vcont, 1, wx.ALL, 5)
-
+        sizer_convin.Add(self.cmb_Vcont, 0, wx.LEFT | wx.CENTRE, 5)
         self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_('Use for Web')))
-        sizer_convin.Add(self.ckbx_web, 0, wx.ALL | wx.CENTRE, 5)
+        sizer_convin.Add(self.ckbx_web, 0, wx.LEFT | wx.CENTRE, 5)
         msg = _("Type of media you want to produce")
         box1 = wx.StaticBox(self, wx.ID_ANY, msg)
         box_convin = wx.StaticBoxSizer(box1, wx.HORIZONTAL)
-        sizer_base.Add(box_convin, 0, wx.ALL | wx.CENTRE, 5)
-        box_convin.Add(sizer_convin, 0)
-        sizer_base.Add(10, 10)
+        box_convin.Add(sizer_convin, 0, wx.ALL | wx.CENTRE, 5)
+        sizer_base.Add(box_convin, 0, wx.BOTTOM | wx.CENTRE, 5)
         # END BOX top Media and Format
 
         # ------------------ BEGIN NOTEBOOK CONSTRUCTOR
@@ -297,7 +295,6 @@ class AV_Conv(wx.Panel):
                                                 name="panelscroll"
                                                 )
         self.box_Vcod.Add(self.codVpanel, 0, wx.CENTER)
-
         grid_sx_Vcod = wx.FlexGridSizer(11, 2, 0, 0)
         txtVcod = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Codec'))
         grid_sx_Vcod.Add(txtVcod, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
@@ -320,7 +317,6 @@ class AV_Conv(wx.Panel):
         grid_sx_Vcod.Add(self.slider_CRF, 0, wx.ALL, 5)
         txtVbrate = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Bit Rate (kb)')
         grid_sx_Vcod.Add(txtVbrate, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-
         self.spin_Vbrate = wx.SpinCtrl(self.codVpanel, wx.ID_ANY,
                                        "-1", min=-1, max=204800,
                                        style=wx.TE_PROCESS_ENTER

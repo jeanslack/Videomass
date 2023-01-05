@@ -4,7 +4,7 @@ Name: mediainfo.py
 Porpose: show media streams information through ffprobe
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Nov.25.2021
 Code checker: pylint, flake8

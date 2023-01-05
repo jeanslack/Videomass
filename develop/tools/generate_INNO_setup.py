@@ -5,7 +5,7 @@ Name: generate_INNO_setup.py
 Porpose: make videomass.iss file for Inno Setup (Windows only)
 Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: June.20.2020
 ########################################################

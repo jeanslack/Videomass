@@ -13,7 +13,7 @@
 # so that dependencies get bundled from that very container
 #
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Create: Oct.02.2020
 # Update: Nov.25.2022
 ###################################################################

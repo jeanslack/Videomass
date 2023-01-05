@@ -6,7 +6,7 @@ Porpose: script to setup Videomass.
 Compatibility: Python3
 Platform: all
 Writer: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2018-2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Oct.22.2021
 Code checker: flake8, pylint

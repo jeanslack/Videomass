@@ -4,7 +4,7 @@ Name: timeline.py
 Porpose: show panel to set duration and time sequences
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Gen.03.2022
 Code checker:
@@ -104,7 +104,7 @@ class Timeline(wx.Panel):
                                                )
         self.ctrl_start.SetTime(00, 00, 00)
         sizer_h.Add(self.ctrl_start, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
-
+        self.ctrl_start.Disable()
         lbl_duration = wx.StaticText(self, wx.ID_ANY, label=_('End:'))
         sizer_h.Add(lbl_duration, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 20)
         self.ctrl_end = wx.adv.TimePickerCtrl(self,
@@ -174,6 +174,12 @@ class Timeline(wx.Panel):
         """
         timef = self.time_join(self.ctrl_end.GetTime())
         timems = get_milliseconds(timef)
+        if timems == 0:
+            self.ctrl_start.Disable()
+        else:
+            if self.ctrl_start.IsEnabled() is False:
+                self.ctrl_start.Enable()
+
         if timems <= self.ms_start:  # It cannot be less than the start value
             h, m , s = self.ctrl_start.GetTime()
             self.ctrl_end.SetTime(h,m,s)
@@ -222,6 +228,7 @@ class Timeline(wx.Panel):
         self.ms_start = 0
         self.ctrl_start.SetTime(00, 00, 00)
         self.ctrl_end.SetTime(00, 00, 00)
+        self.ctrl_start.Disable()
     # ------------------------------------------------------------------#
 
     def set_values(self, duration):

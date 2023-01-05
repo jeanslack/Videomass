@@ -4,7 +4,7 @@ File Name: preset_manager_properties.py
 Porpose: management of properties of the preset manager panel
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: March.21.2022
 Code checker:

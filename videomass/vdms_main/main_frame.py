@@ -4,7 +4,7 @@ Name: main_frame.py
 Porpose: top window main frame
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft -  2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Dec.28.2022
 Code checker: pylint, flake8 --ignore=F821,W503

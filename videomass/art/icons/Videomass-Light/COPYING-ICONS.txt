@@ -1,6 +1,6 @@
 The Videomass-Dark Icon Theme in 24x24 and 16x16/
 
-    Copyright (C) 2021 <jeanlucperni@gmail.com>
+    Copyleft - 2023 <jeanlucperni@gmail.com>
 
 All icons included in this folder are part of Videomass.
 
@@ -15,7 +15,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with Videomass.  If not, please read the license terms below 
+along with Videomass.  If not, please read the license terms below
 or see <http://www.gnu.org/licenses/>.
 
 -----
