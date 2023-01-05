@@ -29,7 +29,6 @@ This file is part of Videomass.
 import sys
 import wx
 import wx.adv
-# import wx.lib.masked as masked
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_utils.utils import milliseconds2clock
 from videomass.vdms_utils.utils import get_milliseconds
@@ -105,7 +104,7 @@ class Timeline(wx.Panel):
         self.ctrl_start.SetTime(00, 00, 00)
         sizer_h.Add(self.ctrl_start, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
         self.ctrl_start.Disable()
-        lbl_duration = wx.StaticText(self, wx.ID_ANY, label=_('End:'))
+        lbl_duration = wx.StaticText(self, wx.ID_ANY, label=_('Duration:'))
         sizer_h.Add(lbl_duration, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 20)
         self.ctrl_end = wx.adv.TimePickerCtrl(self,
                                              size=(140, -1),
@@ -127,10 +126,9 @@ class Timeline(wx.Panel):
         sizer_v.Fit(self)
         self.Layout()
 
-        self.btn_maxdur.SetToolTip(_("Click Me"))
-        self.ctrl_end.SetToolTip(_("Time amount (DURATION) later the start "
-                                   "of the selection, in 24-hour format "
-                                   "(HH:MM:SS"))
+        self.btn_maxdur.SetToolTip(_("File duration. Click me for details."))
+        self.ctrl_end.SetToolTip(_("Duration segment from the start of the "
+                                   "selection, in 24-hour format (HH:MM:SS"))
         self.ctrl_start.SetToolTip(_("Start selection (SEEK) in "
                                      "24-hour format (HH:MM:SS)"))
 
@@ -147,9 +145,9 @@ class Timeline(wx.Panel):
         Get a 24-hour format string (00:00:00)
         """
         h, m, s = seq
-        return ':'.join((str(h).rjust(2, '0'),
-                         str(m).rjust(2, '0'),
-                         str(s).rjust(2, '0') + '.000',
+        return ':'.join((str(h).zfill(2),
+                         str(m).zfill(2),
+                         str(s).zfill(2) + '.000',
                          ))
     # ------------------------------------------------------------------#
 
@@ -193,7 +191,7 @@ class Timeline(wx.Panel):
         """
         event on maxdur button
         """
-        msg = _('Overall duration of media. Always refers to the file with '
+        msg = _('File duration: Always refers to the file with '
                 'the longest duration.\nIf the "Duration" data is missing, '
                 'it will be set to {0}.').format('23:59:59.999')
 

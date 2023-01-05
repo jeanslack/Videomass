@@ -248,7 +248,7 @@ class AV_Conv(wx.Panel):
         # ------------ base
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         # ------------------ BEGIN BOX top
-        sizer_base.Add(20, 20)
+        sizer_base.Add(10, 10)
         sizer_convin = wx.BoxSizer(wx.HORIZONTAL)
         txtmedia = wx.StaticText(self, wx.ID_ANY, _('Media:'))
         sizer_convin.Add(txtmedia, 0, wx.LEFT | wx.CENTRE, 5)
@@ -259,7 +259,7 @@ class AV_Conv(wx.Panel):
                                      )
         sizer_convin.Add(self.cmb_Media, 0, wx.LEFT | wx.CENTRE, 5)
         txtFormat = wx.StaticText(self, wx.ID_ANY, _('Container:'))
-        sizer_convin.Add(txtFormat, 0, wx.LEFT | wx.CENTRE, 5)
+        sizer_convin.Add(txtFormat, 0, wx.LEFT | wx.CENTRE, 20)
         self.cmb_Vcont = wx.ComboBox(
             self, wx.ID_ANY,
             choices=list(AV_Conv.VCODECS['x264'].values())[0],
@@ -268,7 +268,7 @@ class AV_Conv(wx.Panel):
             )
         sizer_convin.Add(self.cmb_Vcont, 0, wx.LEFT | wx.CENTRE, 5)
         self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_('Use for Web')))
-        sizer_convin.Add(self.ckbx_web, 0, wx.LEFT | wx.CENTRE, 5)
+        sizer_convin.Add(self.ckbx_web, 0, wx.LEFT | wx.CENTRE, 20)
         msg = _("Type of media you want to produce")
         box1 = wx.StaticBox(self, wx.ID_ANY, msg)
         box_convin = wx.StaticBoxSizer(box1, wx.HORIZONTAL)
@@ -296,7 +296,7 @@ class AV_Conv(wx.Panel):
                                                 )
         self.box_Vcod.Add(self.codVpanel, 0, wx.CENTER)
         grid_sx_Vcod = wx.FlexGridSizer(11, 2, 0, 0)
-        txtVcod = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Codec'))
+        txtVcod = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Codec')
         grid_sx_Vcod.Add(txtVcod, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Vcod = wx.ComboBox(self.codVpanel, wx.ID_ANY,
                                     choices=list(AV_Conv.VCODECS.keys()),
@@ -304,7 +304,7 @@ class AV_Conv(wx.Panel):
                                     style=wx.CB_DROPDOWN | wx.CB_READONLY
                                     )
         grid_sx_Vcod.Add(self.cmb_Vcod, 0, wx.ALL, 5)
-        txtpass = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Passes'))
+        txtpass = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Passes')
         grid_sx_Vcod.Add(txtpass, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.ckbx_pass = wx.CheckBox(self.codVpanel, wx.ID_ANY, "Two-pass")
         grid_sx_Vcod.Add(self.ckbx_pass, 0, wx.ALL, 5)
@@ -645,7 +645,7 @@ class AV_Conv(wx.Panel):
         self.box_aFilters.Add(sizer_a_normaliz, 0, wx.EXPAND)
 
         self.btn_audio_preview = wx.Button(self.nb_Audio, wx.ID_ANY,
-                                           _("Listening"), size=(-1, 40))
+                                           _("Listening"), size=(-1, -1))
         self.btn_audio_preview.SetBitmap(bmpapreview, wx.LEFT)
         sizer_a_normaliz.Add(self.btn_audio_preview, 0, wx.ALL | wx.SHAPED, 5)
 
@@ -744,8 +744,8 @@ class AV_Conv(wx.Panel):
                  'that the video stream is not to be re-encoded and allows '
                  'changing the format or other parameters'))
         self.cmb_Vcod.SetToolTip(tip)
-        tip = (_('Output format and file extension. The '
-                 'content may change based on the codec and media'))
+        tip = (_('Output format. It also represents the extension of '
+                 'the output file.'))
         self.cmb_Vcont.SetToolTip(tip)
         tip = (_('"Video" to save the output file as a '
                  'video; "Audio" to save as an audio file only'))

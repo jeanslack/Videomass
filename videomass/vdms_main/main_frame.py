@@ -166,8 +166,10 @@ class MainFrame(wx.Frame):
         # self.mainSizer.Add(self.btnpanel, 0, wx.EXPAND, 5)
         ####
 
-        # Layout externals panels:
+        # Layout external panels:
+        self.mainSizer.Add(10, 10)
         self.mainSizer.Add(self.TimeLine, 0, wx.EXPAND)
+        self.mainSizer.Add(10, 10)
         self.mainSizer.Add(self.ChooseTopic, 1, wx.EXPAND)
         self.mainSizer.Add(self.fileDnDTarget, 1, wx.EXPAND)
         self.mainSizer.Add(self.textDnDTarget, 1, wx.EXPAND)
@@ -185,7 +187,7 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.icons['videomass'],
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        self.SetMinSize((850, 500))
+        self.SetMinSize((850, 560))
         # self.CentreOnScreen()  # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         self.Fit()
