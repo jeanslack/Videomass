@@ -4,7 +4,7 @@ FileName: av_conversions.py
 Porpose: audio/video conversions interface
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Dec.02.2022
 Code checker: flake8, pylint
@@ -234,30 +234,46 @@ class AV_Conv(wx.Panel):
         self.parent = parent
         self.norm_dataref = []  # see `on_Audio_analyzes` for details
 
+        if self.appdata['ostype'] == 'Windows':
+            sizepancodevideo = (270, 700)
+        elif self.appdata['ostype'] == 'Darwin':
+            sizepancodevideo = (300, 700)
+        else:
+            if int(''.join(wx.version().split()[0].split('.'))) >= 410:
+                sizepancodevideo = (300, 700)
+            else:
+                sizepancodevideo = (350, 700)
+
         wx.Panel.__init__(self, parent, -1)
         # ------------ base
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         # ------------------ BEGIN BOX top
-        sizer_AVformat = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_base.Add(sizer_AVformat, 0, wx.EXPAND)
-        txtMedia = wx.StaticText(self, wx.ID_ANY, _('Media:'))
-        sizer_AVformat.Add(txtMedia, 0, wx.LEFT | wx.CENTRE, 5)
+        sizer_base.Add(10, 10)
+        sizer_convin = wx.BoxSizer(wx.HORIZONTAL)
+        txtmedia = wx.StaticText(self, wx.ID_ANY, _('Media:'))
+        sizer_convin.Add(txtmedia, 0, wx.LEFT | wx.CENTRE, 5)
         self.cmb_Media = wx.ComboBox(self, wx.ID_ANY,
                                      choices=['Video', 'Audio'],
-                                     size=(-1, -1), style=wx.CB_DROPDOWN |
+                                     size=(100, -1), style=wx.CB_DROPDOWN |
                                      wx.CB_READONLY
                                      )
-        sizer_AVformat.Add(self.cmb_Media, 1, wx.ALL | wx.EXPAND, 5)
-        sizer_AVformat.Add((40, 5))
+        sizer_convin.Add(self.cmb_Media, 0, wx.LEFT | wx.CENTRE, 5)
         txtFormat = wx.StaticText(self, wx.ID_ANY, _('Container:'))
-        sizer_AVformat.Add(txtFormat, 0, wx.LEFT | wx.CENTRE, 5)
+        sizer_convin.Add(txtFormat, 0, wx.LEFT | wx.CENTRE, 20)
         self.cmb_Vcont = wx.ComboBox(
             self, wx.ID_ANY,
             choices=list(AV_Conv.VCODECS['x264'].values())[0],
-            size=(-1, -1), style=wx.CB_DROPDOWN |
+            size=(100, -1), style=wx.CB_DROPDOWN |
             wx.CB_READONLY
-        )
-        sizer_AVformat.Add(self.cmb_Vcont, 1, wx.ALL | wx.EXPAND, 5)
+            )
+        sizer_convin.Add(self.cmb_Vcont, 0, wx.LEFT | wx.CENTRE, 5)
+        self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_('Use for Web')))
+        sizer_convin.Add(self.ckbx_web, 0, wx.LEFT | wx.CENTRE, 20)
+        msg = _("Type of media you want to produce")
+        box1 = wx.StaticBox(self, wx.ID_ANY, msg)
+        box_convin = wx.StaticBoxSizer(box1, wx.HORIZONTAL)
+        box_convin.Add(sizer_convin, 0, wx.ALL | wx.CENTRE, 5)
+        sizer_base.Add(box_convin, 0, wx.BOTTOM | wx.CENTRE, 5)
         # END BOX top Media and Format
 
         # ------------------ BEGIN NOTEBOOK CONSTRUCTOR
@@ -269,51 +285,44 @@ class AV_Conv(wx.Panel):
         # -------------- BEGIN NOTEBOOK PANEL 1
         self.nb_Video = wx.Panel(self.notebook, wx.ID_ANY)
         sizer_nbVideo = wx.BoxSizer(wx.HORIZONTAL)
-        self.box_Vcod = wx.StaticBoxSizer(wx.StaticBox(self.nb_Video,
-                                                       wx.ID_ANY,
-                                                       _("Video Encoder")),
-                                          wx.VERTICAL
-                                          )
+        box2 = wx.StaticBox(self.nb_Video, wx.ID_ANY, _("Video Encoder"))
+        self.box_Vcod = wx.StaticBoxSizer(box2, wx.VERTICAL)
         sizer_nbVideo.Add(self.box_Vcod, 0, wx.ALL | wx.EXPAND, 5)
         self.codVpanel = scrolled.ScrolledPanel(self.nb_Video, -1,
-                                                size=(320, 700),
+                                                size=sizepancodevideo,
                                                 style=wx.TAB_TRAVERSAL |
                                                 wx.BORDER_NONE,
                                                 name="panelscroll"
                                                 )
         self.box_Vcod.Add(self.codVpanel, 0, wx.CENTER)
-
         grid_sx_Vcod = wx.FlexGridSizer(11, 2, 0, 0)
-        txtVcod = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Codec'))
+        txtVcod = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Codec')
         grid_sx_Vcod.Add(txtVcod, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Vcod = wx.ComboBox(self.codVpanel, wx.ID_ANY,
                                     choices=list(AV_Conv.VCODECS.keys()),
-                                    size=(160, -1),
+                                    size=(120, -1),
                                     style=wx.CB_DROPDOWN | wx.CB_READONLY
                                     )
         grid_sx_Vcod.Add(self.cmb_Vcod, 0, wx.ALL, 5)
-        txtpass = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Two passes'))
+        txtpass = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Passes')
         grid_sx_Vcod.Add(txtpass, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.ckbx_pass = wx.CheckBox(self.codVpanel, wx.ID_ANY, ("2-pass"))
+        self.ckbx_pass = wx.CheckBox(self.codVpanel, wx.ID_ANY, "Two-pass")
         grid_sx_Vcod.Add(self.ckbx_pass, 0, wx.ALL, 5)
-        txtCRF = wx.StaticText(self.codVpanel, wx.ID_ANY, _('CRF'))
+        txtCRF = wx.StaticText(self.codVpanel, wx.ID_ANY, 'CRF')
         grid_sx_Vcod.Add(txtCRF, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.slider_CRF = wx.Slider(self.codVpanel, wx.ID_ANY, 1, -1, 51,
                                     size=(150, -1), style=wx.SL_HORIZONTAL |
                                     wx.SL_AUTOTICKS | wx.SL_LABELS
                                     )
         grid_sx_Vcod.Add(self.slider_CRF, 0, wx.ALL, 5)
-        txtVbrate = wx.StaticText(self.codVpanel, wx.ID_ANY,
-                                  _('Bit Rate (kb)')
-                                  )
+        txtVbrate = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Bit Rate (kb)')
         grid_sx_Vcod.Add(txtVbrate, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-
         self.spin_Vbrate = wx.SpinCtrl(self.codVpanel, wx.ID_ANY,
                                        "-1", min=-1, max=204800,
                                        style=wx.TE_PROCESS_ENTER
                                        )
         grid_sx_Vcod.Add(self.spin_Vbrate, 0, wx.ALL, 5)
-        txtMinr = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Min Rate (kb)'))
+        txtMinr = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Min Rate (kb)')
         grid_sx_Vcod.Add(txtMinr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.spinMinr = wx.SpinCtrl(self.codVpanel, wx.ID_ANY,
@@ -321,7 +330,7 @@ class AV_Conv(wx.Panel):
                                     style=wx.TE_PROCESS_ENTER
                                     )
         grid_sx_Vcod.Add(self.spinMinr, 0, wx.ALL, 5)
-        txtMaxr = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Max Rate (kb)'))
+        txtMaxr = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Max Rate (kb)')
         grid_sx_Vcod.Add(txtMaxr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spinMaxr = wx.SpinCtrl(self.codVpanel, wx.ID_ANY,
                                     "0", min=0, max=900000,
@@ -329,7 +338,7 @@ class AV_Conv(wx.Panel):
                                     )
         grid_sx_Vcod.Add(self.spinMaxr, 0, wx.ALL, 5)
         txtBuffer = wx.StaticText(self.codVpanel, wx.ID_ANY,
-                                  _('Buffer Size (kb)')
+                                  'Buffer Size (kb)'
                                   )
         grid_sx_Vcod.Add(txtBuffer, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
@@ -338,9 +347,7 @@ class AV_Conv(wx.Panel):
                                        style=wx.TE_PROCESS_ENTER
                                        )
         grid_sx_Vcod.Add(self.spinBufsize, 0, wx.ALL, 5)
-        txtVaspect = wx.StaticText(self.codVpanel, wx.ID_ANY,
-                                   _('Aspect Ratio')
-                                   )
+        txtVaspect = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Aspect Ratio')
         grid_sx_Vcod.Add(txtVaspect, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Vaspect = wx.ComboBox(self.codVpanel, wx.ID_ANY,
                                        choices=[("Auto"),
@@ -348,11 +355,11 @@ class AV_Conv(wx.Panel):
                                                 ("16:9"),
                                                 ("1.3333"),
                                                 ("1.7777")],
-                                       size=(160, -1), style=wx.CB_DROPDOWN |
+                                       size=(120, -1), style=wx.CB_DROPDOWN |
                                        wx.CB_READONLY
                                        )
         grid_sx_Vcod.Add(self.cmb_Vaspect, 0, wx.ALL, 5)
-        txtFps = wx.StaticText(self.codVpanel, wx.ID_ANY, ('FPS'))
+        txtFps = wx.StaticText(self.codVpanel, wx.ID_ANY, 'FPS')
         grid_sx_Vcod.Add(txtFps, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Fps = wx.ComboBox(self.codVpanel, wx.ID_ANY,
                                    choices=[("Auto"),
@@ -369,25 +376,23 @@ class AV_Conv(wx.Panel):
                                             ("59.94"),
                                             ("60")
                                             ],
-                                   size=(160, -1),
+                                   size=(120, -1),
                                    style=wx.CB_DROPDOWN | wx.CB_READONLY
                                    )
         grid_sx_Vcod.Add(self.cmb_Fps, 0, wx.ALL, 5)
-        txtPixfrm = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Pixel Format'))
+        txtPixfrm = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Pixel Format')
         grid_sx_Vcod.Add(txtPixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Pixfrm = wx.ComboBox(self.codVpanel, wx.ID_ANY,
                                       choices=['None', 'yuv420p', 'yuv444p'],
-                                      size=(160, -1), style=wx.CB_DROPDOWN |
+                                      size=(120, -1), style=wx.CB_DROPDOWN |
                                       wx.CB_READONLY
                                       )
         grid_sx_Vcod.Add(self.cmb_Pixfrm, 0, wx.ALL, 5)
-        txtSubmap = wx.StaticText(self.codVpanel, wx.ID_ANY,
-                                  _('Subtitle Map')
-                                  )
+        txtSubmap = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Subtitle Map')
         grid_sx_Vcod.Add(txtSubmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Submap = wx.ComboBox(self.codVpanel, wx.ID_ANY,
                                       choices=['None', 'All'],
-                                      size=(160, -1), style=wx.CB_DROPDOWN |
+                                      size=(120, -1), style=wx.CB_DROPDOWN |
                                       wx.CB_READONLY
                                       )
         grid_sx_Vcod.Add(self.cmb_Submap, 0, wx.ALL, 5)
@@ -395,19 +400,11 @@ class AV_Conv(wx.Panel):
         self.codVpanel.SetSizer(grid_sx_Vcod)  # set panel
         self.codVpanel.SetAutoLayout(1)
         self.codVpanel.SetupScrolling()
-
         # BOX central box
-        self.box_opt = wx.StaticBoxSizer(wx.StaticBox(self.nb_Video,
-                                                      wx.ID_ANY,
-                                                      _("Optimizations")),
-                                         wx.VERTICAL
-                                         )
+        box3 = wx.StaticBox(self.nb_Video, wx.ID_ANY, _("Optimizations"))
+        self.box_opt = wx.StaticBoxSizer(box3, wx.VERTICAL)
         sizer_nbVideo.Add(self.box_opt, 1, wx.ALL | wx.EXPAND, 5)
         # panel vp8 vp9
-        self.ckbx_web = wx.CheckBox(self.nb_Video,
-                                    wx.ID_ANY, (_('Use for Web'))
-                                    )
-        self.box_opt.Add(self.ckbx_web, 0, wx.ALL | wx.CENTRE, 5)
         self.vp9panel = scrolled.ScrolledPanel(self.nb_Video, -1,
                                                size=(300, 700),
                                                style=wx.TAB_TRAVERSAL |
@@ -418,7 +415,7 @@ class AV_Conv(wx.Panel):
         sizer_vp9panel = wx.BoxSizer(wx.VERTICAL)
         self.cmb_vp9opti = wx.ComboBox(self.vp9panel, wx.ID_ANY,
                                        choices=AV_Conv.OPTIMIZ_VP9,
-                                       size=(180, -1), style=wx.CB_DROPDOWN |
+                                       size=(170, -1), style=wx.CB_DROPDOWN |
                                        wx.CB_READONLY
                                        )
         sizer_vp9panel.Add(self.cmb_vp9opti, 0, wx.ALL |
@@ -461,7 +458,7 @@ class AV_Conv(wx.Panel):
         sizer_h264panel = wx.BoxSizer(wx.VERTICAL)
         self.cmb_x26opti = wx.ComboBox(self.h264panel, wx.ID_ANY,
                                        choices=AV_Conv.OPTIMIZ_HEVC_AVC,
-                                       size=(180, -1), style=wx.CB_DROPDOWN |
+                                       size=(170, -1), style=wx.CB_DROPDOWN |
                                        wx.CB_READONLY
                                        )
         sizer_h264panel.Add(self.cmb_x26opti, 0, wx.ALL | wx.CENTRE, 5)
@@ -476,7 +473,7 @@ class AV_Conv(wx.Panel):
                            )
         self.cmb_preset = wx.ComboBox(self.h264panel, wx.ID_ANY,
                                       choices=AV_Conv.X264_OPT["Presets"],
-                                      size=(120, -1), style=wx.CB_DROPDOWN |
+                                      size=(100, -1), style=wx.CB_DROPDOWN |
                                       wx.CB_READONLY
                                       )
         grid_h264panel.Add(self.cmb_preset, 0, wx.ALL |
@@ -486,7 +483,7 @@ class AV_Conv(wx.Panel):
         grid_h264panel.Add(txtprofile, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_profile = wx.ComboBox(self.h264panel, wx.ID_ANY,
                                        choices=AV_Conv.X264_OPT["Profiles"],
-                                       size=(120, -1), style=wx.CB_DROPDOWN |
+                                       size=(100, -1), style=wx.CB_DROPDOWN |
                                        wx.CB_READONLY
                                        )
         grid_h264panel.Add(self.cmb_profile, 0, wx.ALL |
@@ -495,7 +492,7 @@ class AV_Conv(wx.Panel):
         txtlevel = wx.StaticText(self.h264panel, wx.ID_ANY, _('Level'))
         grid_h264panel.Add(txtlevel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_level = wx.ComboBox(self.h264panel, wx.ID_ANY,
-                                     choices=AV_Conv.LEVELS, size=(80, -1),
+                                     choices=AV_Conv.LEVELS, size=(100, -1),
                                      style=wx.CB_DROPDOWN | wx.CB_READONLY
                                      )
         grid_h264panel.Add(self.cmb_level, 0, wx.ALL |
@@ -505,7 +502,7 @@ class AV_Conv(wx.Panel):
         grid_h264panel.Add(txttune, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_tune = wx.ComboBox(self.h264panel, wx.ID_ANY,
                                     choices=AV_Conv.X264_OPT["Tunes"],
-                                    size=(120, -1), style=wx.CB_DROPDOWN |
+                                    size=(100, -1), style=wx.CB_DROPDOWN |
                                     wx.CB_READONLY
                                     )
         grid_h264panel.Add(self.cmb_tune, 0, wx.ALL |
@@ -516,27 +513,24 @@ class AV_Conv(wx.Panel):
         self.h264panel.SetupScrolling()
 
         # BOX Video filters
-        self.box_Vfilters = wx.StaticBoxSizer(wx.StaticBox(self.nb_Video,
-                                                           wx.ID_ANY,
-                                                           _("Video Filters")),
-                                              wx.VERTICAL
-                                              )
+        box4 = wx.StaticBox(self.nb_Video, wx.ID_ANY, _("Video Filters"))
+        self.box_Vfilters = wx.StaticBoxSizer(box4, wx.VERTICAL)
         sizer_nbVideo.Add(self.box_Vfilters, 0, wx.ALL | wx.EXPAND, 5)
         self.filterVpanel = scrolled.ScrolledPanel(self.nb_Video, -1,
-                                                   size=(320, 700),
+                                                   size=(220, 700),
                                                    style=wx.TAB_TRAVERSAL |
                                                    wx.BORDER_NONE,
                                                    name="panelscroll"
                                                    )
         sizer_Vfilter = wx.BoxSizer(wx.VERTICAL)
         self.btn_preview = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     _("Preview"), size=(-1, 40))
+                                     _("Preview"), size=(-1, -1))
         self.btn_preview.SetBitmap(bmpplay, wx.LEFT)
 
         sizer_Vfilter.Add(self.btn_preview, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_preview.Disable()
         self.btn_reset = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                   _("Reset"), size=(-1, 40))
+                                   _("Reset"), size=(-1, -1))
         self.btn_reset.SetBitmap(bmpreset, wx.LEFT)
         sizer_Vfilter.Add(self.btn_reset, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_reset.Disable()
@@ -597,11 +591,8 @@ class AV_Conv(wx.Panel):
         sizer_codecAudio.Add(self.rdb_a, 1, wx.ALL | wx.EXPAND, 5)
 
         # BOX audio properties
-        self.box_audioProper = wx.StaticBoxSizer(wx.StaticBox(
-                                                 self.nb_Audio, wx.ID_ANY,
-                                                 _("Audio Properties")),
-                                                 wx.VERTICAL
-                                                 )
+        box5 = wx.StaticBox(self.nb_Audio, wx.ID_ANY, _("Audio Properties"))
+        self.box_audioProper = wx.StaticBoxSizer(box5, wx.VERTICAL)
         sizer_codecAudio.Add(self.box_audioProper, 1, wx.ALL | wx.EXPAND, 5)
         sizer_a_ctrl = wx.BoxSizer(wx.HORIZONTAL)
         self.box_audioProper.Add(sizer_a_ctrl, 0, wx.ALL | wx.EXPAND, 5)
@@ -618,12 +609,9 @@ class AV_Conv(wx.Panel):
         sizer_a_ctrl.Add(self.txt_audio_options, 1, wx.ALL | wx.EXPAND, 2)
 
         # BOX stream mapping
-        self.box_audioMap = wx.StaticBoxSizer(wx.StaticBox(self.nb_Audio,
-                                                           wx.ID_ANY,
-                                                           _("Audio Streams "
-                                                             "Mapping")),
-                                              wx.VERTICAL
-                                              )
+        msg = _("Audio Streams Mapping")
+        box6 = wx.StaticBox(self.nb_Audio, wx.ID_ANY, msg)
+        self.box_audioMap = wx.StaticBoxSizer(box6, wx.VERTICAL)
         sizer_nbAudio.Add(self.box_audioMap, 0, wx.ALL | wx.EXPAND, 5)
         sizer_Amap = wx.BoxSizer(wx.HORIZONTAL)
         self.box_audioMap.Add(sizer_Amap, 0, wx.ALL | wx.EXPAND, 5)
@@ -637,7 +625,7 @@ class AV_Conv(wx.Panel):
                                        size=(160, -1), style=wx.CB_DROPDOWN |
                                        wx.CB_READONLY
                                        )
-        sizer_Amap.Add(self.cmb_A_inMap, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_Amap.Add(self.cmb_A_inMap, 0, wx.ALL, 5)
         txtAoutmap = wx.StaticText(self.nb_Audio, wx.ID_ANY,
                                    _('Map:')
                                    )
@@ -647,20 +635,17 @@ class AV_Conv(wx.Panel):
                                         size=(160, -1), style=wx.CB_DROPDOWN |
                                         wx.CB_READONLY
                                         )
-        sizer_Amap.Add(self.cmb_A_outMap, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_Amap.Add(self.cmb_A_outMap, 0, wx.ALL, 5)
 
         # BOX Audio Filters
-        self.box_aFilters = wx.StaticBoxSizer(wx.StaticBox(self.nb_Audio,
-                                                           wx.ID_ANY,
-                                                           _("Audio Filters")),
-                                              wx.VERTICAL
-                                              )
+        box7 = wx.StaticBox(self.nb_Audio, wx.ID_ANY, _("Audio Filters"))
+        self.box_aFilters = wx.StaticBoxSizer(box7, wx.VERTICAL)
         sizer_nbAudio.Add(self.box_aFilters, 1, wx.ALL | wx.EXPAND, 5)
         sizer_a_normaliz = wx.BoxSizer(wx.VERTICAL)
         self.box_aFilters.Add(sizer_a_normaliz, 0, wx.EXPAND)
 
         self.btn_audio_preview = wx.Button(self.nb_Audio, wx.ID_ANY,
-                                           _("Listening"), size=(-1, 40))
+                                           _("Listening"), size=(-1, -1))
         self.btn_audio_preview.SetBitmap(bmpapreview, wx.LEFT)
         sizer_a_normaliz.Add(self.btn_audio_preview, 0, wx.ALL | wx.SHAPED, 5)
 
@@ -759,8 +744,8 @@ class AV_Conv(wx.Panel):
                  'that the video stream is not to be re-encoded and allows '
                  'changing the format or other parameters'))
         self.cmb_Vcod.SetToolTip(tip)
-        tip = (_('Output format and file extension. The '
-                 'content may change based on the codec and media'))
+        tip = (_('Output format. It also represents the extension of '
+                 'the output file.'))
         self.cmb_Vcont.SetToolTip(tip)
         tip = (_('"Video" to save the output file as a '
                  'video; "Audio" to save as an audio file only'))

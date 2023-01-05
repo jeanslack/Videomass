@@ -4,7 +4,7 @@ Name: get_bmpfromSvg.py
 Porpose: return bmp image from a scalable vector graphic format (svg)
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: May.10.2021 *-pycodestyle- compatible*
 ########################################################

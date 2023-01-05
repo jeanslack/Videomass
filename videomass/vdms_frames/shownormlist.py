@@ -4,7 +4,7 @@ Name: shownormlist.py
 Porpose: Show audio volume data list (PEAK/RMS only)
 Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Nov.26.2021
 Code checker:
@@ -70,17 +70,17 @@ class NormalizationList(wx.MiniFrame):
                                  wx.ID_ANY,
                                  (_('Post-normalization references:')
                                   ))
-        self.btn_red = wx.Button(self.panel, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btn_red = wx.Button(self.panel, wx.ID_ANY, _("Help"), size=(-1, -1))
         self.btn_red.SetBackgroundColour(wx.Colour(233, 80, 77))  # #e9504d
         self.btn_red.SetForegroundColour(wx.Colour(0, 0, 0))
         txtred = wx.StaticText(self.panel, wx.ID_ANY, (_("=  Clipped peaks")))
 
-        self.btn_grey = wx.Button(self.panel, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btn_grey = wx.Button(self.panel, wx.ID_ANY, _("Help"), size=(-1, -1))
         self.btn_grey.SetBackgroundColour(wx.Colour(100, 100, 100))  # #646464
         self.btn_grey.SetForegroundColour(wx.Colour(0, 0, 0))
         txtgrey = wx.StaticText(self.panel, wx.ID_ANY, (_("=  No changes")))
 
-        self.btn_yell = wx.Button(self.panel, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btn_yell = wx.Button(self.panel, wx.ID_ANY, _("Help"), size=(-1, -1))
         self.btn_yell.SetBackgroundColour(wx.Colour(198, 180, 38))  # #C6B426
         self.btn_yell.SetForegroundColour(wx.Colour(0, 0, 0))
         txtyell = wx.StaticText(self.panel,

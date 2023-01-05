@@ -4,7 +4,7 @@ Name: msg_info.py
 Porpose: Gets version, copyr and program Description
 Compatibility: Python3, Python2
 author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-copyr: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 lic: GPL3
 Rev: Aug.12.2021
 Code checker:

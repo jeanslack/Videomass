@@ -4,7 +4,7 @@ Name: concatenate.py
 Porpose: A simple concat demuxer UI
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Dec.02.2022
 Code checker:
@@ -78,7 +78,7 @@ class Conc_Demuxer(wx.Panel):
     """
     LGREEN = '#52ee7d'
     BLACK = '#1f1f1f'
-    MSG_1 = _("NOTE:\n\n- The concatenation function is performed only with "
+    MSG_1 = _("\n- The concatenation function is performed only with "
               "Audio files or only with Video files."
               "\n\n- The order of concatenation depends on the order in "
               "which the files were added."
@@ -89,7 +89,7 @@ class Conc_Demuxer(wx.Panel):
               "codecs and same\n  width/height, but can be wrapped in "
               "different container formats."
               "\n\n- Audio files must have exactly the same formats, "
-              "same codecs and same sample rate.")
+              "same codecs with equal sample rate.")
 
     # ----------------------------------------------------------------#
 
@@ -108,7 +108,7 @@ class Conc_Demuxer(wx.Panel):
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((20, 20))
-        self.btn_help = wx.Button(self, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btn_help = wx.Button(self, wx.ID_ANY, _("Help"), size=(-1, -1))
         self.btn_help.SetBackgroundColour(wx.Colour(Conc_Demuxer.LGREEN))
         self.btn_help.SetForegroundColour(wx.Colour(Conc_Demuxer.BLACK))
         sizer.Add(self.btn_help, 0, wx.ALL, 5)

@@ -2,13 +2,13 @@
 #
 # Description:
 # ------------
-#   Updates pip, certifi, yt-dlp and youtube-dl packages inside 
+#   Updates pip, certifi, yt-dlp and youtube-dl packages inside
 #   Videomass*.AppImage.
 #
 # Usage:
 # ------
 #   - Place this script in your preferred location with execute permissions.
-#   - Call this script from a terminal window (not root!) 
+#   - Call this script from a terminal window (not root!)
 #   - Make sure you give it the Videomass AppImage location as argument.
 #   - Then run it and wait for the task to finish.
 #
@@ -16,7 +16,7 @@
 #         ~$ ./VideomassAppImage_updater.sh /some/other/dir/Videomass*.AppImage
 #
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2020-2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Update: Nov.27.2022
 #
 # please visit <https://misc.flogisoft.com/bash/tip_colors_and_formatting>

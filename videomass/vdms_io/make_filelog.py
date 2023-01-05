@@ -4,7 +4,7 @@ File Name: make_filelog.py
 Porpose: log file generator
 Compatibility: Python3, Python2
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Feb.20.2022
 Code checker: flake8, pylint .

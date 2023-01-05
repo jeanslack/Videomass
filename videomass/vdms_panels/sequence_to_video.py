@@ -4,7 +4,7 @@ Name: sequence_to_video.py
 Porpose: A slideshow maker based on FFmpeg
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Dec.03.2022
 Code checker:
@@ -76,11 +76,11 @@ class SequenceToVideo(wx.Panel):
     BLACK = '#1f1f1f'
     MSG_1 = _("\n1. Import one or more image files such as JPG, PNG and BMP "
               "formats, then select one."
-              "\n\n2. Use the Resizing function to resize images which "
+              "\n\n2. Use the \"Resizing\" filter to resize images which "
               "have different sizes such as width and height. "
               "It is optional in other cases."
-              "\n\n3. To set the DURATION between images use the Timeline "
-              "editor (CTRL+T)."
+              "\n\n3. To set the DURATION between images use the "
+              "\"Duration\" control on the Trim bar."
               "\n\n4. Start the conversion."
               "\n\n\nThe produced video will have the name of the selected "
               "file in the 'Queued File' list, which will be saved in a "
@@ -114,7 +114,7 @@ class SequenceToVideo(wx.Panel):
         wx.Panel.__init__(self, parent=parent, style=wx.BORDER_THEME)
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((20, 20))
-        self.btn_help = wx.Button(self, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btn_help = wx.Button(self, wx.ID_ANY, _("Help"), size=(-1, -1))
         self.btn_help.SetBackgroundColour(wx.Colour(SequenceToVideo.LGREEN))
         self.btn_help.SetForegroundColour(wx.Colour(SequenceToVideo.BLACK))
         sizer.Add(self.btn_help, 0, wx.ALL, 5)

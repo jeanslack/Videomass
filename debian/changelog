@@ -5,8 +5,13 @@ videomass (4.0.3-1) UNRELEASED; urgency=medium
   * Fixed 'Unable to add new profiles to the Presets manager from the
     A/V-Conversions panel, see #173.
   * Fixed layout on Confirm Settings dialog before start processes.
+  * Improved Timeline with new widgets.
+  * Timeline (trim bar) is now always visible by default on some panels.
+  * Removed the "Show Timeline CTRL+T" item from the menu bar.
+  * Improved AV-Conversions layout.
+  * Improved window resizing to widht=850px height=500px.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 30 Dec 2022 18:43:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 03 Gen 2022 19:00:00 +0200
 
 videomass (4.0.2-1) UNRELEASED; urgency=medium
 

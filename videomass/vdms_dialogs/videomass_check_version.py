@@ -4,7 +4,7 @@ Name: videomass_check_version.py
 Porpose: shows informative messages on version in use and new releases
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Sept.28.2021
 Code checker: pycodestyle / flake8 --ignore=F821,W503

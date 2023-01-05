@@ -4,7 +4,7 @@ Name: choose_topic.py
 Porpose: shows the topics available in the program
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Apr.06.2022
 Code checker: flake8, pylint
@@ -74,7 +74,7 @@ class Choose_Topic(wx.Panel):
                                                     ).format(version[2])))
         sizer_base = wx.BoxSizer(wx.VERTICAL)
 
-        sizer_base.Add(120, 120)
+        sizer_base.Add(50, 50)
         sizer_base.Add(welcome, 0, wx.ALIGN_CENTER_VERTICAL |
                        wx.ALIGN_CENTER_HORIZONTAL, 0
                        )
@@ -123,7 +123,7 @@ class Choose_Topic(wx.Panel):
                               (self.slideshow, 0, wx.EXPAND, 5),
                               (self.videotoimages, 0, wx.EXPAND, 5),
                               ])
-        sizer_base.Add(80, 80)
+        sizer_base.Add(50, 50)
         sizer_base.Add(grid_buttons, 1, wx.ALIGN_CENTER_VERTICAL |
                        wx.ALIGN_CENTER_HORIZONTAL, 5
                        )

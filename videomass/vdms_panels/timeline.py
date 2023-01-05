@@ -4,9 +4,9 @@ Name: timeline.py
 Porpose: show panel to set duration and time sequences
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.04.2022
+Rev: Gen.03.2022
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -28,9 +28,11 @@ This file is part of Videomass.
 """
 import sys
 import wx
+import wx.adv
+from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_utils.utils import milliseconds2clock
+from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_dialogs.time_selector import Time_Selector
 
 
 class Timeline(wx.Panel):
@@ -50,159 +52,163 @@ class Timeline(wx.Panel):
 
     """
     # Colours used here
-    RULER_BKGRD = '#84D2C9'  # CYAN for ruler background
-    SELECTION = '#a3e6dd' # LIGHT CYAN for ruller background selection
-    DELIMITER_COLOR = '#ffdf00' #'#fe004c' # red for margin selection
-    TEXT_PEN_COLOR = '#020D0F'  # black for static text and draw lines
-    # ORANGE = '#f56b38'  # Orange color
-    DURATION_START = '#1f5dda'  # Light blue for duration/start indicators
+    VIOLET = '#D64E93'
+    LGREEN = '#52ee7d'
+    BLACK = '#1f1f1f'
 
-    # ruler and panel specifications
-    RW = 600  # ruler width
-    RM = 0  # ruler margin
-    PW = 602  # panel width
-    PH = 45  # panel height
-
-    def __init__(self, parent, iconedit, iconreset):
+    def __init__(self, parent, iconreset):
         """
         Note, the time values results are setted on `on_time_selection`
         method using the `time_seq` parent (main_frame) attribute.
         If no file has a duration, the limit to the maximum time
-        selection is set to 4800000ms (01:20:00.000).
+        selection is set to 86399999ms (23:59:59.999).
 
-        self.pix: scale pixels to time seconds for ruler selection
-        self.milliseconds: int(milliseconds)
-        self.timeformat: time format with ms (00:00:00.000)
-        self.bar_w: width value for time bar selection
-        self.bar_x: x axis value for time bar selection
+        Used attributes:
+        self.milliseconds: total duration of media in ms
+        self.hour24format: total duration of media in 24h (HH:MM:SS.ms)
+        self.ms_start: seek position in milliseconds
+        self.ms_end: duration of the selection in milliseconds
+        self.time_start: seek position in 24-hour format
+        self.time_end: duration of the selection in 24-hour format
 
         """
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-            bmpedit = get_bmp(iconedit, ((16, 16)))
             bmpreset = get_bmp(iconreset, ((16, 16)))
         else:
-            bmpedit = wx.Bitmap(iconedit, wx.BITMAP_TYPE_ANY)
             bmpreset = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
 
         self.parent = parent
-        self.milliseconds = 1  # total duration in ms
-        self.timeformat = None  # total duration of media  (HH:MM:SS.MLS)
-        self.ms_start = 0  # seek position in milliseconds
-        self.ms_dur = 0  # duration of the selection in milliseconds
-        self.time_start = '00:00:00.000'  # seek position
-        self.time_dur = '00:00:00.000'  # duration of the selection
-        self.pix = 0
-        self.bar_w = 0
-        self.bar_x = 0
+        self.milliseconds = 1
+        self.hour24format = None
+        self.ms_start = 0
+        self.ms_end = 0
+        self.time_start = '00:00:00.000'
+        self.time_end = '00:00:00.000'
 
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
-
-        # self.font = wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL,
-        #                     wx.FONTWEIGHT_BOLD, False, 'Courier 10 Pitch'
-        #                     )
-        self.font_med = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
-        sizer_base = wx.BoxSizer(wx.HORIZONTAL)
-        btn_edit = wx.Button(self, wx.ID_ANY, _("Adjust"), size=(-1, -1))
-        btn_edit.SetBitmap(bmpedit, wx.LEFT)
-        sizer_base.Add(btn_edit, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
+        sizer_v = wx.BoxSizer(wx.VERTICAL)
+        sizer_h = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_v.Add(sizer_h, 0, wx.ALL, 5)
+        lbl_trim = wx.StaticText(self, wx.ID_ANY, label='Trim')
+        sizer_h.Add(lbl_trim, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
+        sizer_h.Add(20, 20)
         self.btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"), size=(-1, -1))
         self.btn_reset.SetBitmap(bmpreset, wx.LEFT)
-        sizer_base.Add(self.btn_reset, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
-        self.paneltime = wx.Panel(self, wx.ID_ANY,
-                                  size=(Timeline.PW, Timeline.PH),
-                                  style=wx.BORDER_STATIC)
-        sizer_base.Add(self.paneltime, 0, wx.ALL | wx.CENTRE, 5)
-        self.maxdur = wx.StaticText(self, wx.ID_ANY, '')
-        sizer_base.Add(self.maxdur, 0, wx.LEFT | wx.RIGHT |
-                       wx.ALIGN_CENTRE_VERTICAL, 5)
+        sizer_h.Add(self.btn_reset, 0, wx.ALIGN_CENTRE_VERTICAL, 0)
+        lbl_start = wx.StaticText(self, wx.ID_ANY, label=_('Start:'))
+        sizer_h.Add(lbl_start, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 20)
+        self.ctrl_start = wx.adv.TimePickerCtrl(self,
+                                               size=(140, -1),
+                                               style=wx.adv.TP_DEFAULT
+                                               )
+        self.ctrl_start.SetTime(00, 00, 00)
+        sizer_h.Add(self.ctrl_start, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
+        self.ctrl_start.Disable()
+        lbl_duration = wx.StaticText(self, wx.ID_ANY, label=_('Duration:'))
+        sizer_h.Add(lbl_duration, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 20)
+        self.ctrl_end = wx.adv.TimePickerCtrl(self,
+                                             size=(140, -1),
+                                             style=wx.adv.TP_DEFAULT
+                                             )
+        self.ctrl_end.SetTime(00, 00, 00)
+        sizer_h.Add(self.ctrl_end, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
+        self.btn_maxdur = wx.Button(self, wx.ID_ANY,
+                                    "00:00:00.000",
+                                    size=(150, -1)
+                                    )
+        self.btn_maxdur.SetBackgroundColour(wx.Colour(Timeline.LGREEN))
+        self.btn_maxdur.SetForegroundColour(wx.Colour(Timeline.BLACK))
+        sizer_h.Add(self.btn_maxdur, 0,
+                       wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 20)
 
         # ----------------------Properties ----------------------#
-        self.paneltime.SetBackgroundColour(wx.Colour(Timeline.RULER_BKGRD))
-
-        self.SetSizer(sizer_base)
-        sizer_base.Fit(self)
+        self.SetSizer(sizer_v)
+        sizer_v.Fit(self)
         self.Layout()
 
+        self.btn_maxdur.SetToolTip(_("File duration. Click me for details."))
+        self.ctrl_end.SetToolTip(_("Duration segment from the start of the "
+                                   "selection, in 24-hour format (HH:MM:SS"))
+        self.ctrl_start.SetToolTip(_("Start selection (SEEK) in "
+                                     "24-hour format (HH:MM:SS)"))
+
         # ----------------------Binding (EVT)----------------------#
-        self.paneltime.Bind(wx.EVT_PAINT, self.OnPaint)
-        self.Bind(wx.EVT_BUTTON, self.on_time_selection, btn_edit)
+        self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_maxdur)
+        self.Bind(wx.adv.EVT_TIME_CHANGED, self.on_start, self.ctrl_start)
+        self.Bind(wx.adv.EVT_TIME_CHANGED, self.on_end, self.ctrl_end)
         self.Bind(wx.EVT_BUTTON, self.on_reset_values, self.btn_reset)
 
     # ----------------------Event handler (callback)----------------------#
 
-    def set_coordinates(self):
+    def time_join(self, seq):
         """
-        Define width and x axis for selection rectangle before
-        call `onRedraw` method
+        Get a 24-hour format string (00:00:00)
         """
-        self.bar_w = self.ms_dur * self.pix
-        self.bar_x = self.ms_start * self.pix
-
-        self.onRedraw(self)
+        h, m, s = seq
+        return ':'.join((str(h).zfill(2),
+                         str(m).zfill(2),
+                         str(s).zfill(2) + '.000',
+                         ))
     # ------------------------------------------------------------------#
 
-    def OnPaint(self, event):
+    def on_start(self, event):
         """
-        wx.PaintDC event
+        Set trim for start time
         """
-        dc = wx.PaintDC(self.paneltime)  # draw window boundary
-        dc.Clear()
-        self.onRedraw(self)
+        timef = self.time_join(self.ctrl_start.GetTime())
+        timems = get_milliseconds(timef)
+        if timems >= self.ms_end:  # It cannot exceed the end value
+            h, m , s = self.ctrl_end.GetTime()
+            self.ctrl_start.SetTime(h,m,s)
+            return
+        self.time_start = timef
+        self.parent.time_seq = f"-ss {self.time_start} -t {self.time_end}"
+        self.ms_start = timems
     # ------------------------------------------------------------------#
 
-    def onRedraw(self, event):
+    def on_end(self, event):
         """
-        Draw a ruler and update the selection rectangle
-        (a semi-transparent background rectangle upon a ruler)
-
+        Set trim for end time
         """
-        dc = wx.ClientDC(self.paneltime)
-        dc.Clear()
-        dc.SetPen(wx.Pen(Timeline.DELIMITER_COLOR, 2, wx.PENSTYLE_SOLID))
-        # dc.SetBrush(wx.Brush(wx.Colour(30, 30, 30, 200)))
-        dc.SetBrush(wx.Brush(Timeline.SELECTION, wx.BRUSHSTYLE_SOLID))
-        dc.DrawRectangle(self.bar_x + 1, -8, self.bar_w, 66)
-        dc.SetPen(wx.Pen(Timeline.TEXT_PEN_COLOR))
-        dc.SetTextForeground(Timeline.TEXT_PEN_COLOR)
-
-        for i in range(Timeline.RW):
-
-            if not i % 600:
-                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 10)
-
-            elif not i % 300:
-                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 10)  # metà
-
-            elif not i % 150:
-                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 10)  # ogni 5
-
-            elif not i % 25:
-                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 5)
-
-        dc.DrawLine(i, 0, i, 10)
-
-        dc.SetFont(self.font_med)
-        txt_s = _('Start')
-        txt_d = _('Duration')
-        # Make start txt
-        txt1 = f'{txt_s}  {self.time_start}'
-        dc.SetTextForeground(Timeline.DURATION_START)
-        w = dc.GetTextExtent(txt1)[0]
-        if w > self.bar_x:
-            dc.DrawText(txt1, self.bar_x, 9)
-        elif w > self.bar_x - Timeline.RW:
-            dc.DrawText(txt1, self.bar_x - w, 9)
+        timef = self.time_join(self.ctrl_end.GetTime())
+        timems = get_milliseconds(timef)
+        if timems == 0:
+            self.ctrl_start.Disable()
         else:
-            dc.DrawText(txt1, self.bar_x, 9)
-        # Make duration txt
-        txt2 = f'{txt_d}  {self.time_dur}'
-        w = dc.GetTextExtent(txt2)[0]
-        if w > Timeline.RW - (self.bar_x + self.bar_w):
-            dc.DrawText(txt2, (self.bar_x + self.bar_w) - w, 29)
-        elif w > self.bar_w:
-            dc.DrawText(txt2, self.bar_x + self.bar_w, 29)
-        else:
-            dc.DrawText(txt2, (self.bar_x + self.bar_w) - w, 29)
+            if self.ctrl_start.IsEnabled() is False:
+                self.ctrl_start.Enable()
+
+        if timems <= self.ms_start:  # It cannot be less than the start value
+            h, m , s = self.ctrl_start.GetTime()
+            self.ctrl_end.SetTime(h,m,s)
+            return
+        self.time_end = timef
+        self.parent.time_seq = f"-ss {self.time_start} -t {self.time_end}"
+        self.ms_end = timems
+    # ------------------------------------------------------------------#
+
+    def on_help(self, event):
+        """
+        event on maxdur button
+        """
+        msg = _('File duration: Always refers to the file with '
+                'the longest duration.\nIf the "Duration" data is missing, '
+                'it will be set to {0}.').format('23:59:59.999')
+
+        win = NormalTransientPopup(self,
+                                   wx.SIMPLE_BORDER,
+                                   msg,
+                                   Timeline.LGREEN,
+                                   Timeline.BLACK)
+
+        # Show the popup right below or above the button
+        # depending on available screen space...
+        btn = event.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        win.Position(pos, (0, sz[1]))
+
+        win.Popup()
     # ------------------------------------------------------------------#
 
     def on_reset_values(self, event):
@@ -214,12 +220,13 @@ class Timeline(wx.Panel):
 
         """
         self.time_start = '00:00:00.000'  # seek position
-        self.time_dur = '00:00:00.000'  # duration of the selection
-        self.parent.time_seq = f"-ss {self.time_start} -t {self.time_dur}"
-        self.ms_dur = 0
+        self.time_end = '00:00:00.000'  # duration of the selection
+        self.parent.time_seq = f"-ss {self.time_start} -t {self.time_end}"
+        self.ms_end = 0
         self.ms_start = 0
-        self.btn_reset.Disable()
-        self.set_coordinates()
+        self.ctrl_start.SetTime(00, 00, 00)
+        self.ctrl_end.SetTime(00, 00, 00)
+        self.ctrl_start.Disable()
     # ------------------------------------------------------------------#
 
     def set_values(self, duration):
@@ -233,35 +240,5 @@ class Timeline(wx.Panel):
             self.milliseconds = round(duration)
             # rounds all float number to prevent ruler selection inaccuracy
 
-        msg0 = _('"Total Duration" refers to the file '
-                 'with the longest duration, it will be '
-                 'set to {0} otherwise.').format('23:59:59.999')
-        self.paneltime.SetToolTip(msg0)
-        self.pix = Timeline.RW / self.milliseconds
-        self.timeformat = milliseconds2clock(self.milliseconds)
-        self.maxdur.SetLabel(_('Total Duration:\n{}').format(self.timeformat))
-        self.btn_reset.Disable()
-    # ------------------------------------------------------------------#
-
-    def on_time_selection(self, event):
-        """
-        Show a dialog as alternative tool to adjust the time selection.
-        """
-        with Time_Selector(self,
-                           self.time_start,
-                           self.time_dur,
-                           self.milliseconds,
-                           ) as tms:
-            if tms.ShowModal() == wx.ID_OK:
-                data = tms.getvalue()
-                if not data[0] and not data[1]:
-                    self.on_reset_values(self)
-                elif data[1]:
-                    self.ms_dur = data[1]
-                    self.ms_start = data[0]
-                    self.time_start = milliseconds2clock(self.ms_start)
-                    self.time_dur = milliseconds2clock(self.ms_dur)
-                    self.parent.time_seq = (f"-ss {self.time_start} "
-                                            f"-t {self.time_dur}")
-                    self.btn_reset.Enable()
-                    self.set_coordinates()
+        self.hour24format = milliseconds2clock(self.milliseconds)
+        self.btn_maxdur.SetLabel(self.hour24format)

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2020/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyleft - 2018/2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: March.22.2022
 #
@@ -46,7 +46,6 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_dialogs/mediainfo.py" \
 "../vdms_dialogs/widget_utils.py" \
 "../vdms_dialogs/showlogs.py" \
-"../vdms_dialogs/time_selector.py" \
 "../vdms_dialogs/renamer.py" \
 "../vdms_frames/ffmpeg_conf.py" \
 "../vdms_frames/ffmpeg_codecs.py" \

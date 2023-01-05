@@ -4,7 +4,7 @@
 # Porpose: Show box with shortcuts keyboard when playback with FFplay
 # Compatibility: Python3, wxPython4
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.06.2020 *-pycodestyle- compatible*
 #########################################################
