@@ -15,8 +15,13 @@ videomass (4.0.5-1) UNRELEASED; urgency=medium
     controls. The new controls should make trimming operations more
     intuitive even if the graphics are a little less rich.
   * Removed the "Show Timeline CTRL+T" item from the menu bar.
+  * [DOWNLOADER] Fixed `compat_option all` to `compat_option youtube-dl`.
+  * Fix segmentation error removing items by listctrl (occurs on
+    wxPython version 4.1.1 not 4.0.7).
+  * Removed ability to select multiple items from file drop panel
+    due to previous issue.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 07 Gen 2022 13:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 07 Gen 2023 13:00:00 +0200
 
 videomass (4.0.2-1) UNRELEASED; urgency=medium
 

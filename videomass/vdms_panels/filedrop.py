@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.11.2022
+Rev: Gen.07.2023
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -114,13 +114,19 @@ class MyListCtrl(wx.ListCtrl):
 
     def __init__(self, parent):
         """
-        Constructor
+        Constructor.
+        WARNING to avoid segmentation error on removing items by
+        listctrl, style must be wx.LC_SINGLE_SEL .
         """
         self.index = None
         self.parent = parent  # parent is DnDPanel class
         self.data = self.parent.data
         self.outputnames = self.parent.outputnames
-        wx.ListCtrl.__init__(self, parent, style=wx.LC_REPORT)
+        wx.ListCtrl.__init__(self,
+                             parent,
+                             style=wx.LC_REPORT
+                             | wx.LC_SINGLE_SEL,
+                             )
         self.populate()
     # ----------------------------------------------------------------------#
 
@@ -446,12 +452,14 @@ class FileDnD(wx.Panel):
             self.delete_all(self)
             return
 
+        #num = 0
         for num in sorted(indexes, reverse=True):
             self.flCtrl.DeleteItem(num)  # remove selected items
             self.data.pop(num)  # remove selected items
             self.outputnames.pop(num)  # remove selected items
+            self.flCtrl.Select(num - 1)  # select the previous one
         self.reset_timeline()  # delete parent.timeline
-        self.on_deselect(self)  # deselect removed file
+        # self.on_deselect(self)  # deselect removed file
 
         for x in range(self.flCtrl.GetItemCount()):
             self.flCtrl.SetItem(x, 0, str(x + 1))  # re-load counter

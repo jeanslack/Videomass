@@ -200,7 +200,7 @@ class YdlDownloader(Thread):
                 break
 
             ydl_opts = {
-                'compat_opts': 'all',
+                'compat_opts': 'youtube-dl',
                 'format': format_code,
                 'extractaudio': self.opt['format'],
                 'outtmpl': f"{self.args['outdir']}/{outtmpl}",
