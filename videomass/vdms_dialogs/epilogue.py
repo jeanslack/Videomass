@@ -61,11 +61,11 @@ class Formula(wx.Dialog):
         panelscroll.SetBackgroundColour(colorscheme['BACKGRD'])
         label2.SetForegroundColour(colorscheme['TXT1'])
         label1.SetForegroundColour(colorscheme['TXT3'])
-        grid_pan = wx.FlexGridSizer(1, 2, 0, 0)
-        grid_pan.Add(label1, 1, wx.ALL
+        grid_pan = wx.BoxSizer(wx.HORIZONTAL)
+        grid_pan.Add(label1, 0, wx.ALL
                      | wx.ALIGN_CENTRE_VERTICAL
                      | wx.ALIGN_CENTRE_HORIZONTAL, 5)
-        grid_pan.Add(label2, 1, wx.ALL
+        grid_pan.Add(label2, 0, wx.ALL
                      | wx.ALIGN_CENTRE_VERTICAL
                      | wx.ALIGN_CENTRE_HORIZONTAL, 5)
 

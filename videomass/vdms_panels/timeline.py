@@ -58,8 +58,8 @@ class Timeline(wx.Panel):
 
     def __init__(self, parent, iconreset):
         """
-        Note, the time values results are setted on `on_time_selection`
-        method using the `time_seq` parent (main_frame) attribute.
+        The time values results are setted on the `time_seq`
+        parent (main_frame) attribute.
         If no file has a duration, the limit to the maximum time
         selection is set to 86399999ms (23:59:59.999).
 
@@ -84,12 +84,18 @@ class Timeline(wx.Panel):
         self.ms_end = 0
         self.time_start = '00:00:00.000'
         self.time_end = '00:00:00.000'
+        get = wx.GetApp()
+        appdata = get.appset
 
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
         sizer_v = wx.BoxSizer(wx.VERTICAL)
         sizer_h = wx.BoxSizer(wx.HORIZONTAL)
         sizer_v.Add(sizer_h, 0, wx.ALL, 5)
         lbl_trim = wx.StaticText(self, wx.ID_ANY, label='Trim')
+        if appdata['ostype'] == 'Darwin':
+            lbl_trim.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+        else:
+            lbl_trim.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         sizer_h.Add(lbl_trim, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
         sizer_h.Add(20, 20)
         self.btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"), size=(-1, -1))
@@ -104,7 +110,7 @@ class Timeline(wx.Panel):
         self.ctrl_start.SetTime(00, 00, 00)
         sizer_h.Add(self.ctrl_start, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
         self.ctrl_start.Disable()
-        lbl_duration = wx.StaticText(self, wx.ID_ANY, label=_('Duration:'))
+        lbl_duration = wx.StaticText(self, wx.ID_ANY, label=_('End:'))
         sizer_h.Add(lbl_duration, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 20)
         self.ctrl_end = wx.adv.TimePickerCtrl(self,
                                              size=(140, -1),
@@ -113,23 +119,21 @@ class Timeline(wx.Panel):
         self.ctrl_end.SetTime(00, 00, 00)
         sizer_h.Add(self.ctrl_end, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
         self.btn_maxdur = wx.Button(self, wx.ID_ANY,
-                                    "00:00:00.000",
-                                    size=(150, -1)
+                                    "00:00:00",
+                                    size=(-1, -1)
                                     )
         self.btn_maxdur.SetBackgroundColour(wx.Colour(Timeline.LGREEN))
         self.btn_maxdur.SetForegroundColour(wx.Colour(Timeline.BLACK))
         sizer_h.Add(self.btn_maxdur, 0,
                        wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 20)
-
         # ----------------------Properties ----------------------#
         self.SetSizer(sizer_v)
         sizer_v.Fit(self)
         self.Layout()
 
-        self.btn_maxdur.SetToolTip(_("File duration. Click me for details."))
-        self.ctrl_end.SetToolTip(_("Duration segment from the start of the "
-                                   "selection, in 24-hour format (HH:MM:SS"))
-        self.ctrl_start.SetToolTip(_("Start selection (SEEK) in "
+        self.btn_maxdur.SetToolTip(_("Stream duration. Click me for details."))
+        self.ctrl_end.SetToolTip(_("End segment in 24-hour format (HH:MM:SS"))
+        self.ctrl_start.SetToolTip(_("Start segment in "
                                      "24-hour format (HH:MM:SS)"))
 
         # ----------------------Binding (EVT)----------------------#
@@ -157,13 +161,30 @@ class Timeline(wx.Panel):
         """
         timef = self.time_join(self.ctrl_start.GetTime())
         timems = get_milliseconds(timef)
-        if timems >= self.ms_end:  # It cannot exceed the end value
-            h, m , s = self.ctrl_end.GetTime()
-            self.ctrl_start.SetTime(h,m,s)
-            return
+
+        if timems >= self.ms_end:
+            h, m, s = self.ctrl_end.GetTime()
+            self.ctrl_start.SetTime(h, m, s-1)
+            timef = self.time_join(self.ctrl_start.GetTime())
+            timems = get_milliseconds(timef)
+
         self.time_start = timef
-        self.parent.time_seq = f"-ss {self.time_start} -t {self.time_end}"
         self.ms_start = timems
+        duration = milliseconds2clock(self.ms_end - self.ms_start)
+        self.parent.time_seq = f"-ss {self.time_start} -t {duration}"
+
+
+        #timef = self.time_join(self.ctrl_start.GetTime())
+        #timems = get_milliseconds(timef)
+        #if timems >= self.ms_end:  # It cannot exceed the end value
+            #h, m , s = self.ctrl_end.GetTime()
+            #self.ctrl_start.SetTime(h,m,s)
+            ##return
+        #self.time_start = timef
+        #self.ms_start = timems
+        #duration = milliseconds2clock(self.ms_end - self.ms_start)
+        #self.parent.time_seq = f"-ss {self.time_start} -t {duration}"
+
     # ------------------------------------------------------------------#
 
     def on_end(self, event):
@@ -178,22 +199,56 @@ class Timeline(wx.Panel):
             if self.ctrl_start.IsEnabled() is False:
                 self.ctrl_start.Enable()
 
-        if timems <= self.ms_start:  # It cannot be less than the start value
-            h, m , s = self.ctrl_start.GetTime()
-            self.ctrl_end.SetTime(h,m,s)
-            return
+        if timems <= self.ms_start:
+            h, m, s = self.ctrl_start.GetTime()
+            if self.ms_start == 0:
+                self.ctrl_end.SetTime(h, m, s)
+                self.ctrl_start.Disable()
+            else:
+                self.ctrl_end.SetTime(h, m, s+1)
+            timef = self.time_join(self.ctrl_end.GetTime())
+            timems = get_milliseconds(timef)
+
+        elif timems >= self.milliseconds:
+            h, m, s = self.hour24format.split(':')
+            self.ctrl_end.SetTime(int(h), int(m), int(s.split('.')[0]))
+            timef = self.time_join(self.ctrl_end.GetTime())
+            timems = get_milliseconds(timef)
+
         self.time_end = timef
-        self.parent.time_seq = f"-ss {self.time_start} -t {self.time_end}"
         self.ms_end = timems
+        duration = milliseconds2clock(self.ms_end - self.ms_start)
+        self.parent.time_seq = f"-ss {self.time_start} -t {duration}"
+
+
+        #timef = self.time_join(self.ctrl_end.GetTime())
+        #timems = get_milliseconds(timef)
+        #if timems == 0:
+            #self.ctrl_start.Disable()
+        #else:
+            #if self.ctrl_start.IsEnabled() is False:
+                #self.ctrl_start.Enable()
+
+        #if timems <= self.ms_start or timems >= self.milliseconds:
+            #h, m , s = self.ctrl_start.GetTime()
+            #self.ctrl_end.SetTime(h,m,s)
+            #if self.ms_start == 0:
+                #self.ctrl_start.Disable()
+
+        #self.time_end = timef
+        #self.ms_end = timems
+        #duration = milliseconds2clock(self.ms_end - self.ms_start)
+        #self.parent.time_seq = f"-ss {self.time_start} -t {duration}"
+
     # ------------------------------------------------------------------#
 
     def on_help(self, event):
         """
         event on maxdur button
         """
-        msg = _('File duration: Always refers to the file with '
+        msg = _('Stream duration always refers to the file with '
                 'the longest duration.\nIf the "Duration" data is missing, '
-                'it will be set to {0}.').format('23:59:59.999')
+                'it will be set to {0}.').format('23:59:59')
 
         win = NormalTransientPopup(self,
                                    wx.SIMPLE_BORDER,
@@ -241,4 +296,4 @@ class Timeline(wx.Panel):
             # rounds all float number to prevent ruler selection inaccuracy
 
         self.hour24format = milliseconds2clock(self.milliseconds)
-        self.btn_maxdur.SetLabel(self.hour24format)
+        self.btn_maxdur.SetLabel(self.hour24format.split('.')[0])

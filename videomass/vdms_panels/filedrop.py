@@ -316,8 +316,8 @@ class FileDnD(wx.Panel):
         self.btn_remove.SetToolTip(_('Remove the selected '
                                      'files from the list'))
         self.btn_clear.SetToolTip(_('Delete all files from the list'))
-        tip = (_('Set up a temporary folder for conversions'))
-        self.btn_save.SetToolTip(tip)
+        self.btn_save.SetToolTip(_('Set up a temporary folder '
+                                   'for conversions'))
         self.btn_play.SetToolTip(_('Play the selected file in the list'))
         self.text_path_save.SetToolTip(_("Destination folder"))
 
@@ -519,7 +519,7 @@ class FileDnD(wx.Panel):
         self.parent.statusbar_msg(f'{mess}', bcolor, fcolor)
     # -----------------------------------------------------------------------
 
-    def file_renaming(self):
+    def renaming_file(self):
         """
         This method is responsible for renaming the selected
         output file.
@@ -557,7 +557,7 @@ class FileDnD(wx.Panel):
         self.parent.statusbar_msg(_('Add Files'), None)
 # -----------------------------------------------------------------------
 
-    def batch_files_renaming(self):
+    def renaming_batch_files(self):
         """
         This method is responsible for batch file renaming.
         """

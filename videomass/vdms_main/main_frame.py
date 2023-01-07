@@ -118,11 +118,8 @@ class MainFrame(wx.Frame):
             f"box=1:boxcolor=DeepPink:x=(w-tw)/2:y=h-(2*lh)")
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
-        # ----------- panel toolbar buttons
-        # self.btnpanel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
-        # self.btnpanel.SetBackgroundColour(MainFrame.LIMEGREEN)
 
-        # ---------- others panel instances:
+        # ---------- panel instances:
         self.TimeLine = timeline.Timeline(self, self.icons['clear'])
         self.ChooseTopic = choose_topic.Choose_Topic(self,
                                                      self.appdata['ostype'],
@@ -161,10 +158,6 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         # Layout toolbar buttons:
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)  # sizer base global
-        # grid_pan = wx.BoxSizer(wx.HORIZONTAL)
-        # self.btnpanel.SetSizer(grid_pan)  # set panel
-        # self.mainSizer.Add(self.btnpanel, 0, wx.EXPAND, 5)
-        ####
 
         # Layout external panels:
         self.mainSizer.Add(10, 10)
@@ -188,10 +181,10 @@ class MainFrame(wx.Frame):
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
         self.SetMinSize((850, 560))
-        # self.CentreOnScreen()  # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         self.Fit()
-
+        self.SetSize(tuple(self.appdata['window_size']))
+        self.Move(tuple(self.appdata['window_position']))
         # menu bar
         self.videomass_menu_bar()
         # tool bar main
@@ -199,16 +192,14 @@ class MainFrame(wx.Frame):
         # status bar
         self.sb = self.CreateStatusBar(1)
         self.statusbar_msg(_('Ready'), None)
-        # hide toolbar, buttons bar and disable some file menu items
+        # hide toolbar & disable some file menu items
         self.toolbar.Hide()
-        # self.btnpanel.Hide()
         self.menu_items()
-
         self.Layout()
         # ---------------------- Binding (EVT) ----------------------#
         self.fileDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.on_FFmpegfsave)
         self.textDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.on_Ytdlfsave)
-        self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
+        self.Bind(wx.EVT_CLOSE, self.on_close)
 
     # -------------------Status bar settings--------------------#
 
@@ -342,17 +333,17 @@ class MainFrame(wx.Frame):
         """
         def _setsize():
             """
-            Write last panel size for next start if changed
+            Write last window size and position
+            for next start if changed
             """
-            if tuple(self.appdata['panel_size']) != self.GetSize():
-                confmanager = ConfigManager(self.appdata['fileconfpath'])
-                sett = confmanager.read_options()
-                sett['panel_size'] = list(self.GetSize())
-                confmanager.write_options(**sett)
+            confmanager = ConfigManager(self.appdata['fileconfpath'])
+            sett = confmanager.read_options()
+            sett['window_size'] = list(self.GetSize())
+            sett['window_position'] = list(self.GetPosition())
+            confmanager.write_options(**sett)
 
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.on_close(self)
-        # elif self.topicname:
         else:
             if self.appdata['warnexiting'] is True:
                 if wx.MessageBox(_('Are you sure you want to exit?'),
@@ -724,14 +715,14 @@ class MainFrame(wx.Frame):
         """
         One file renaming
         """
-        self.fileDnDTarget.file_renaming()
+        self.fileDnDTarget.renaming_file()
     # -------------------------------------------------------------------#
 
     def on_batch_renaming(self, event):
         """
         Batch file renaming
         """
-        self.fileDnDTarget.batch_files_renaming()
+        self.fileDnDTarget.renaming_batch_files()
     # -------------------------------------------------------------------#
 
     def open_trash_folder(self, event):

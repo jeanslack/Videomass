@@ -99,8 +99,11 @@ class ConfigManager:
     toolbartext (bool):
         True, enables text alongside toolbar buttons. Default is False.
 
-    panel_size (list):
+    window_size (list):
         [Height, Width] current window dimension.
+
+    window_position (list):
+        [x, y] current window position on monitor screen.
 
     clearcache (bool):
         with True deleting file cache on exit the app,
@@ -139,7 +142,7 @@ class ConfigManager:
         "en_US" or "fr_FR".
 
     """
-    VERSION = 4.4
+    VERSION = 4.5
     DEFAULT_OPTIONS = {
         "confversion": VERSION,
         "outputfile": f"{os.path.expanduser('~')}",
@@ -160,7 +163,8 @@ class ConfigManager:
         "toolbarsize": 24,
         "toolbarpos": 0,
         "toolbartext": False,
-        "panel_size": [850, 560],
+        "window_size": [850, 560],
+        "window_position": [0, 0],
         "clearcache": False,
         "clearlogfiles": False,
         "downloader": False,
