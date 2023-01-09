@@ -2073,7 +2073,7 @@ class AV_Conv(wx.Panel):
                                self.opt["OutputFormat"],
                                self.parent.outputnames
                                )
-        if checking is None:  # User changing idea or not such files exist
+        if not checking:  # User changing idea or not such files exist
             return
 
         f_src, f_dest = checking

@@ -216,7 +216,7 @@ class MainFrame(wx.Frame):
         bcolor: background color, fcolor: foreground color
         """
         if self.appdata['ostype'] == 'Linux':
-            if bcolor is None:
+            if not bcolor:
                 self.sb.SetBackgroundColour(wx.NullColour)
                 self.sb.SetForegroundColour(wx.NullColour)
             else:
@@ -273,7 +273,7 @@ class MainFrame(wx.Frame):
         """
         enable or disable some menu items in according by showing panels
         """
-        if self.ChooseTopic.IsShown() is True:
+        if self.ChooseTopic.IsShown():
             self.avpan.Enable(False)
             self.prstpan.Enable(False)
             self.concpan.Enable(False)
@@ -345,7 +345,7 @@ class MainFrame(wx.Frame):
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.on_close(self)
         else:
-            if self.appdata['warnexiting'] is True:
+            if self.appdata['warnexiting']:
                 if wx.MessageBox(_('Are you sure you want to exit?'),
                                  _('Exit'),  wx.ICON_QUESTION | wx.YES_NO,
                                  self) == wx.YES:
@@ -943,7 +943,7 @@ class MainFrame(wx.Frame):
         autoexit at the end of playback
 
         """
-        self.autoexit = self.exitplayback.IsChecked() is True
+        self.autoexit = self.exitplayback.IsChecked()
     # ------------------------------------------------------------------#
 
     def ydl_used(self, event, msgbox=True):
@@ -1025,7 +1025,7 @@ class MainFrame(wx.Frame):
         """
         jump on youtube downloader
         """
-        if self.ChooseTopic.on_YoutubeDL(self) is True:
+        if self.ChooseTopic.on_YoutubeDL(self):
             return
         self.topicname = 'Youtube Downloader'
         self.on_Forward(self)
@@ -1097,7 +1097,7 @@ class MainFrame(wx.Frame):
         path for conversions
 
         """
-        dpath = '' if self.outpath_ffmpeg is None else self.outpath_ffmpeg
+        dpath = '' if not self.outpath_ffmpeg else self.outpath_ffmpeg
         dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
                                        "conversions"), dpath,
                                wx.DD_DEFAULT_STYLE
@@ -1121,7 +1121,7 @@ class MainFrame(wx.Frame):
         path for downloading
 
         """
-        dpath = '' if self.outpath_ydl is None else self.outpath_ydl
+        dpath = '' if not self.outpath_ydl else self.outpath_ydl
         dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
                                        "downloads"), dpath,
                                wx.DD_DEFAULT_STYLE
@@ -1170,7 +1170,7 @@ class MainFrame(wx.Frame):
         """
         with preferences.SetUp(self) as set_up:
             if set_up.ShowModal() == wx.ID_OK:
-                if set_up.getvalue() is True:
+                if set_up.getvalue():
                     self.on_Kill()
 
     # ------------------------------------------------------------------#
@@ -1275,25 +1275,25 @@ class MainFrame(wx.Frame):
 
         """
         if self.appdata['toolbarpos'] == 0:  # on top
-            if self.appdata['toolbartext'] is True:  # show text
+            if self.appdata['toolbartext']:  # show text
                 style = (wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_HORIZONTAL)
             else:
                 style = (wx.TB_DEFAULT_STYLE)
 
         elif self.appdata['toolbarpos'] == 1:  # on bottom
-            if self.appdata['toolbartext'] is True:  # show text
+            if self.appdata['toolbartext']:  # show text
                 style = (wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_BOTTOM)
             else:
                 style = (wx.TB_DEFAULT_STYLE | wx.TB_BOTTOM)
 
         elif self.appdata['toolbarpos'] == 2:  # on right
-            if self.appdata['toolbartext'] is True:  # show text
+            if self.appdata['toolbartext']:  # show text
                 style = (wx.TB_TEXT | wx.TB_RIGHT)
             else:
                 style = (wx.TB_DEFAULT_STYLE | wx.TB_RIGHT)
 
         elif self.appdata['toolbarpos'] == 3:
-            if self.appdata['toolbartext'] is True:  # show text
+            if self.appdata['toolbartext']:  # show text
                 style = (wx.TB_TEXT | wx.TB_LEFT)
             else:
                 style = (wx.TB_DEFAULT_STYLE | wx.TB_LEFT)

@@ -405,7 +405,7 @@ class Downloader(wx.Panel):
         self.fcode.Bind(wx.EVT_CONTEXT_MENU, self.on_context)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.fcode)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.fcode)
-        if self.oldwx is False:
+        if not self.oldwx:
             self.fcode.Bind(wx.EVT_LIST_ITEM_CHECKED, self.on_checkbox)
             self.fcode.Bind(wx.EVT_LIST_ITEM_UNCHECKED, self.on_checkbox)
     # -----------------------------------------------------------------#
@@ -439,7 +439,7 @@ class Downloader(wx.Panel):
 
         viddisp, auddisp = 'video', 'audio only'
 
-        if self.oldwx is False:
+        if not self.oldwx:
             check = self.fcode.IsItemChecked
         else:
             check = self.fcode.IsChecked
@@ -564,7 +564,7 @@ class Downloader(wx.Panel):
         otherwise return None as exit staus.
         """
         self.fcode.ClearAll()
-        if self.oldwx is False:
+        if not self.oldwx:
             self.fcode.EnableCheckBoxes(enable=True)
         self.fcode.InsertColumn(0, (_('Format Code')), width=120)
         self.fcode.InsertColumn(1, (_('Url')), width=60)
@@ -673,7 +673,7 @@ class Downloader(wx.Panel):
 
         """
         self.fcode.ClearAll()
-        if self.oldwx is False:
+        if not self.oldwx:
             self.fcode.EnableCheckBoxes(enable=False)
         self.fcode.InsertColumn(0, ('#'), width=30)
         self.fcode.InsertColumn(1, (_('Url')), width=400)
@@ -753,7 +753,7 @@ class Downloader(wx.Panel):
         Set widgets on switching choice box
 
         """
-        if statusmsg is True:
+        if statusmsg:
             if not self.parent.sb.GetStatusText() == 'Ready':
                 self.parent.statusbar_msg(_('Ready'), None)
 

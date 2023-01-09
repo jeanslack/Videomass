@@ -464,12 +464,12 @@ class PageFour(wx.Panel):
         """
         the values are get on Wizard.wizard_Finish method
         """
-        if self.ckbx_yn.IsChecked() is False:
+        if not self.ckbx_yn.IsChecked():
             self.rdbDownloader.Disable()
         else:
             self.rdbDownloader.Enable()
 
-        # if self.ckbx_yn.IsChecked() is False:
+        # if not self.ckbx_yn.IsChecked():
             # self.parent.youtubedl = 'disabled'
         # else:
             # self.parent.youtubedl = 'enable'

@@ -99,9 +99,9 @@ class Videomass(wx.App):
         self.update_language(self.appset['locale_name'])
 
 
-        ckydl = self.check_youtube_dl()
-        ckffmpeg = self.check_ffmpeg()
-        if ckydl is True or ckffmpeg is True:
+        noydl = self.check_youtube_dl()
+        noffmpeg = self.check_ffmpeg()
+        if noydl or noffmpeg:
             self.wizard(self.iconset['videomass'])
             return True
 
@@ -143,7 +143,7 @@ class Videomass(wx.App):
                 except (ModuleNotFoundError, ImportError) as nomodule:
                     self.appset['PYLIBYDL'] = nomodule
 
-        return True if self.appset['downloader'] is False else None
+        return True if not self.appset['downloader'] else None
     # -------------------------------------------------------------------
 
     def check_ffmpeg(self):
@@ -232,7 +232,7 @@ class Videomass(wx.App):
         The ideal place to run the last few things before completely
         exiting the application, eg. delete temporary files etc.
         """
-        if self.appset['clearcache'] is True:
+        if self.appset['clearcache']:
             tmp = os.path.join(self.appset['cachedir'], 'tmp')
             if os.path.exists(tmp):
                 for cache in os.listdir(tmp):
@@ -242,7 +242,7 @@ class Videomass(wx.App):
                     elif os.path.isdir:
                         rmtree(fcache)
 
-        if self.appset['clearlogfiles'] is True:
+        if self.appset['clearlogfiles']:
             logdir = self.appset['logdir']
             if os.path.exists(logdir):
                 flist = os.listdir(logdir)

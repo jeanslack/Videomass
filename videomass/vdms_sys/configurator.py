@@ -284,7 +284,7 @@ class DataSource():
     elif os.path.isdir(os.path.join(DATA_LOCAT, 'portable_data')):
         # Remember to add portable_data/ folder within videomass/
         FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = portable_paths(DATA_LOCAT)
-        RELPATH = True  # to debug relative paths, set to True
+        RELPATH = False  # to debug relative paths, set to True
 
     else:
         FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = conventional_paths()
@@ -355,7 +355,7 @@ class DataSource():
             else:
                 msg(f'executable={binarypath}')
                 # pip as normal user, usually Linux, MacOs, Unix
-                if binarypath is None:
+                if not binarypath:
                     # need if user $PATH is not set yet
                     userbase = site.getuserbase()
                 else:

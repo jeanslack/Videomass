@@ -508,7 +508,7 @@ class VideoToSequence(wx.Panel):
                                self.cmb_frmt.GetValue(),
                                self.parent.outputnames
                                )
-        if checking is None:  # User changing idea or not such files exist
+        if not checking:  # User changing idea or not such files exist
             return
 
         self.build_command(clicked, checking[1])

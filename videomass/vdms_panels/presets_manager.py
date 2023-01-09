@@ -786,7 +786,7 @@ class PrstPan(wx.Panel):
                                     Supported_list=self.array[4],
                                     Output_extension=self.array[5],
                                     )
-        if newprst is None:
+        if not newprst:
             self.reset_list()
     # ------------------------------------------------------------------#
 
@@ -857,7 +857,7 @@ class PrstPan(wx.Panel):
                                outext,
                                self.parent.outputnames
                                )
-        if checking is None:
+        if not checking:
             # not supported, missing files or user has changed his mind
             return
         fsrc, fdest = checking

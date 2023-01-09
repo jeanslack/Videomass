@@ -138,7 +138,7 @@ class YdlDownloader(Thread):
     FFMPEG_URL = appdata['ffmpeg_cmd']
     DOWNLOADER = appdata['downloader']
 
-    if appdata['playlistsubfolder'] is True:
+    if appdata['playlistsubfolder']:
         SUBDIR = '%(uploader)s/%(playlist_title)s/%(playlist_index)s - '
     else:
         SUBDIR = ''

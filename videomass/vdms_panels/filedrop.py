@@ -310,7 +310,7 @@ class FileDnD(wx.Panel):
 
         self.text_path_save.SetValue(self.file_dest)
 
-        if appdata['outputfile_samedir'] is True:
+        if appdata['outputfile_samedir']:
             self.btn_save.Disable()
             self.text_path_save.Disable()
             self.parent.same_destin = True
@@ -387,7 +387,7 @@ class FileDnD(wx.Panel):
             elif self.sortingstate == 'ascending':
                 self.sortingstate = 'descending'
 
-            elif self.sortingstate is None:
+            elif not self.sortingstate:
                 self.sortingstate = 'ascending'
 
             if self.sortingstate == 'descending':
@@ -482,7 +482,7 @@ class FileDnD(wx.Panel):
         self.btn_clear.Disable()
         self.parent.rename.Enable(False)
         self.parent.rename_batch.Enable(False)
-        if setstate is True:
+        if setstate:
             self.sortingstate = None
     # ----------------------------------------------------------------------
 

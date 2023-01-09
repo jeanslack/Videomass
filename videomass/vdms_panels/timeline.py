@@ -172,19 +172,6 @@ class Timeline(wx.Panel):
         self.ms_start = timems
         duration = milliseconds2clock(self.ms_end - self.ms_start)
         self.parent.time_seq = f"-ss {self.time_start} -t {duration}"
-
-
-        #timef = self.time_join(self.ctrl_start.GetTime())
-        #timems = get_milliseconds(timef)
-        #if timems >= self.ms_end:  # It cannot exceed the end value
-            #h, m , s = self.ctrl_end.GetTime()
-            #self.ctrl_start.SetTime(h,m,s)
-            ##return
-        #self.time_start = timef
-        #self.ms_start = timems
-        #duration = milliseconds2clock(self.ms_end - self.ms_start)
-        #self.parent.time_seq = f"-ss {self.time_start} -t {duration}"
-
     # ------------------------------------------------------------------#
 
     def on_end(self, event):
@@ -196,7 +183,7 @@ class Timeline(wx.Panel):
         if timems == 0:
             self.ctrl_start.Disable()
         else:
-            if self.ctrl_start.IsEnabled() is False:
+            if not self.ctrl_start.IsEnabled():
                 self.ctrl_start.Enable()
 
         if timems <= self.ms_start:
@@ -219,27 +206,6 @@ class Timeline(wx.Panel):
         self.ms_end = timems
         duration = milliseconds2clock(self.ms_end - self.ms_start)
         self.parent.time_seq = f"-ss {self.time_start} -t {duration}"
-
-
-        #timef = self.time_join(self.ctrl_end.GetTime())
-        #timems = get_milliseconds(timef)
-        #if timems == 0:
-            #self.ctrl_start.Disable()
-        #else:
-            #if self.ctrl_start.IsEnabled() is False:
-                #self.ctrl_start.Enable()
-
-        #if timems <= self.ms_start or timems >= self.milliseconds:
-            #h, m , s = self.ctrl_start.GetTime()
-            #self.ctrl_end.SetTime(h,m,s)
-            #if self.ms_start == 0:
-                #self.ctrl_start.Disable()
-
-        #self.time_end = timef
-        #self.ms_end = timems
-        #duration = milliseconds2clock(self.ms_end - self.ms_start)
-        #self.parent.time_seq = f"-ss {self.time_start} -t {duration}"
-
     # ------------------------------------------------------------------#
 
     def on_help(self, event):

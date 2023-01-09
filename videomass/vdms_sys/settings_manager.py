@@ -115,10 +115,10 @@ class ConfigManager:
 
     downloader (bool, str):
         sets the downloader to use when application startup.
-        one of `disabled`,` youtube_dl`, `yt_dlp` or False
+        one of `disabled`,` youtube_dl`, `yt_dlp` or `False`
         Where `disabled` means not load anything, `youtube_dl`
         means load/use youtube-dl on sturtup, `yt_dlp` means load/use
-        yt_dl on sturtup, `false` means *not set at all* and the
+        yt_dl on sturtup, `False` means *not set at all* and the
         wizard dialog will be displayed.
 
     playlistsubfolder (bool):
@@ -182,7 +182,7 @@ class ConfigManager:
         set as relative paths.
         """
         self.filename = filename
-        if relativepath is True:
+        if relativepath:
             appdir = os.getcwd()
             outputdir = os.path.relpath(os.path.join(appdir, 'My_Files'))
             ConfigManager.DEFAULT_OPTIONS['outputfile'] = outputdir

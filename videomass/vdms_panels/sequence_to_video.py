@@ -622,7 +622,7 @@ class SequenceToVideo(wx.Panel):
 
         fsource = self.parent.file_src
 
-        if self.parent.same_destin is True:
+        if self.parent.same_destin:
             destdir = os.path.dirname(fget[0])
         else:
             destdir = self.parent.outpath_ffmpeg
@@ -641,12 +641,12 @@ class SequenceToVideo(wx.Panel):
             countmax = 1
             files = (fget[0],)
             prop = self.parent.fileDnDTarget.flCtrl.GetItemText(fget[1], 3)
-            if self.check_to_loop(prop, fget[0]) is True:
+            if self.check_to_loop(prop, fget[0]):
                 return
         else:
             files = fsource
             countmax = len(files)
-            if self.check_to_slide(files) is True:
+            if self.check_to_slide(files):
                 return
             if not self.opt["RESIZE"] and countmax != 1:
                 if check_images_size(self.parent.data_files):
