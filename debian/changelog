@@ -21,7 +21,7 @@ videomass (4.0.5-1) UNRELEASED; urgency=medium
   * Removed ability to select multiple items from file drop panel
     due to previous issue.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 07 Gen 2023 13:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 07 Jan 2023 13:00:00 +0200
 
 videomass (4.0.2-1) UNRELEASED; urgency=medium
 

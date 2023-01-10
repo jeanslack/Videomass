@@ -269,7 +269,7 @@ class AV_Conv(wx.Panel):
         sizer_convin.Add(self.cmb_Vcont, 0, wx.LEFT | wx.CENTRE, 5)
         self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_('Use for Web')))
         sizer_convin.Add(self.ckbx_web, 0, wx.LEFT | wx.CENTRE, 20)
-        msg = _("Type of media you want to produce")
+        msg = _("Target")
         box1 = wx.StaticBox(self, wx.ID_ANY, msg)
         box_convin = wx.StaticBoxSizer(box1, wx.HORIZONTAL)
         box_convin.Add(sizer_convin, 0, wx.ALL | wx.CENTRE, 5)

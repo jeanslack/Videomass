@@ -104,7 +104,7 @@ class Timeline(wx.Panel):
         lbl_start = wx.StaticText(self, wx.ID_ANY, label=_('Start:'))
         sizer_h.Add(lbl_start, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 20)
         self.ctrl_start = wx.adv.TimePickerCtrl(self,
-                                               size=(140, -1),
+                                               size=(170, -1),
                                                style=wx.adv.TP_DEFAULT
                                                )
         self.ctrl_start.SetTime(00, 00, 00)
@@ -113,7 +113,7 @@ class Timeline(wx.Panel):
         lbl_duration = wx.StaticText(self, wx.ID_ANY, label=_('End:'))
         sizer_h.Add(lbl_duration, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 20)
         self.ctrl_end = wx.adv.TimePickerCtrl(self,
-                                             size=(140, -1),
+                                             size=(170, -1),
                                              style=wx.adv.TP_DEFAULT
                                              )
         self.ctrl_end.SetTime(00, 00, 00)
@@ -132,7 +132,7 @@ class Timeline(wx.Panel):
         self.Layout()
 
         self.btn_maxdur.SetToolTip(_("Stream duration. Click me for details."))
-        self.ctrl_end.SetToolTip(_("End segment in 24-hour format (HH:MM:SS"))
+        self.ctrl_end.SetToolTip(_("End segment in 24-hour format (HH:MM:SS)"))
         self.ctrl_start.SetToolTip(_("Start segment in "
                                      "24-hour format (HH:MM:SS)"))
 
