@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-07 22:13+0100\n"
+"POT-Creation-Date: 2023-01-10 17:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2163,7 +2163,7 @@ msgid "Use for Web"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:272
-msgid "Type of media you want to produce"
+msgid "Target"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:288
@@ -3438,14 +3438,14 @@ msgid "Stream duration. Click me for details."
 msgstr ""
 
 #: ../vdms_panels/timeline.py:135
-msgid "End segment in 24-hour format (HH:MM:SS"
+msgid "End segment in 24-hour format (HH:MM:SS)"
 msgstr ""
 
 #: ../vdms_panels/timeline.py:136
 msgid "Start segment in 24-hour format (HH:MM:SS)"
 msgstr ""
 
-#: ../vdms_panels/timeline.py:249
+#: ../vdms_panels/timeline.py:215
 #, python-brace-format
 msgid ""
 "Stream duration always refers to the file with the longest duration.\n"

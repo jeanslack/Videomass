@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 4.0.3\n"
+"Project-Id-Version: Videomass 4.0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-07 22:13+0100\n"
-"PO-Revision-Date: 2023-01-07 22:18+0100\n"
+"POT-Creation-Date: 2023-01-10 17:29+0100\n"
+"PO-Revision-Date: 2023-01-10 17:30+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -2437,8 +2437,8 @@ msgid "Use for Web"
 msgstr "Usa per il Web"
 
 #: ../vdms_panels/av_conversions.py:272
-msgid "Type of media you want to produce"
-msgstr "Tipo di media da produrre"
+msgid "Target"
+msgstr "Obiettivo"
 
 #: ../vdms_panels/av_conversions.py:288
 msgid "Video Encoder"
@@ -3933,14 +3933,14 @@ msgid "Stream duration. Click me for details."
 msgstr "Durata sorgente. Cliccami per i dettagli."
 
 #: ../vdms_panels/timeline.py:135
-msgid "End segment in 24-hour format (HH:MM:SS"
+msgid "End segment in 24-hour format (HH:MM:SS)"
 msgstr "Segmento finale in formato 24 ore (HH:MM:SS)"
 
 #: ../vdms_panels/timeline.py:136
 msgid "Start segment in 24-hour format (HH:MM:SS)"
 msgstr "Segmento iniziale in formato 24 ore (HH:MM:SS)"
 
-#: ../vdms_panels/timeline.py:249
+#: ../vdms_panels/timeline.py:215
 #, python-brace-format
 msgid ""
 "Stream duration always refers to the file with the longest duration.\n"
@@ -4168,6 +4168,9 @@ msgstr ""
 #: ../vdms_threads/slideshow.py:230
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' è installato sul tuo sistema?"
+
+#~ msgid "Type of media you want to produce"
+#~ msgstr "Tipo di media da produrre"
 
 #~ msgid ""
 #~ "Duration segment from the start of the selection, in 24-hour format (HH:"
