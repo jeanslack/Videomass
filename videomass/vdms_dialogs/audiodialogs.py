@@ -55,13 +55,13 @@ class AudioSettings(wx.Dialog):
         self.bitrate = data.bitrate
         self.bitdepth = data.bitdepth
 
-        if self.bitrate is None:
+        if not self.bitrate:
             self.bitrate = {0: ('not applicable ', "")}
 
-        if self.bitdepth is None:
+        if not self.bitdepth:
             self.bitdepth = {0: ('not applicable ', "")}
 
-        if self.sample_rate is None:
+        if not self.sample_rate:
             self.sample_rate = {0: ('not applicable ', "")}
 
         samplerate_list = [a[0] for a in self.sample_rate.values()]

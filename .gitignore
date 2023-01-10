@@ -22,4 +22,6 @@ Pipfile.lock
 *.DS_Store
 *.directory
 *.kate-swp
+portable_data
+My_Files
 *~

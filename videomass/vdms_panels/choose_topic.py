@@ -170,8 +170,6 @@ class Choose_Topic(wx.Panel):
                 welcome.SetForegroundColour('#171b12')  # black
                 version.SetForegroundColour('#171b12')  # black
 
-        self.SetMinSize(tuple(self.parent.appdata['panel_size']))
-
         self.Bind(wx.EVT_BUTTON, self.on_Conv, self.avconv)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)
         self.Bind(wx.EVT_BUTTON, self.on_Conc, self.conc)

@@ -87,7 +87,7 @@ class Set_Timestamp(wx.Dialog):
         sbox.Add(grid1, 0)
         stfont = wx.StaticText(self, label=_('Font Size'))
         grid1.Add(stfont, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        size = ['16', '20', '28', '32', '40', '48', '56', '64']
+        size = ('16', '20', '28', '32', '40', '48', '56', '64')
         self.cmbx_fontsize = wx.ComboBox(self, wx.ID_ANY,
                                          choices=size,
                                          size=(90, -1),
@@ -244,8 +244,8 @@ class Set_Timestamp(wx.Dialog):
 
     def getvalue(self):
         """
-        This method return values via the interface getvalue()
-        by the caller. See the caller for more info and usage.
+        This method return values via a getvalue() interface by
+        the caller. See the caller for more infos and usage.
         """
         ptshms = r"%{pts\:hms}"
 

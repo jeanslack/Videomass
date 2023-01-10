@@ -219,7 +219,7 @@ class FFmpegSearch(wx.MiniFrame):
         if self.row and is_string:  # specified search (like grep does)
             find = []
 
-            if self.case.GetValue() is True:  # case insensitive: Hello/hello
+            if self.case.GetValue():  # case insensitive: Hello/hello
 
                 for lines in self.row.split('\n'):
                     if re.search(is_string, lines, re.IGNORECASE):

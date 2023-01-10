@@ -81,7 +81,7 @@ class FilePlay(Thread):
         self.ffplay = ffplay_url
         self.ffplay_loglev = ffplay_loglev
         self.ffplay_params = ffplay_params
-        self.autoexit = '-autoexit' if autoexit is True else ''
+        self.autoexit = '-autoexit' if autoexit else ''
         self.logf = os.path.join(logdir, 'ffplay.log')
         make_log_template('ffplay.log', logdir)
         # set initial file LOG

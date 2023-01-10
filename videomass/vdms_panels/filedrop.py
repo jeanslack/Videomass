@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.11.2022
+Rev: Gen.07.2023
 Code checker:
     flake8: --ignore F821, W504
     pylint: --ignore E0602, E1101
@@ -114,13 +114,19 @@ class MyListCtrl(wx.ListCtrl):
 
     def __init__(self, parent):
         """
-        Constructor
+        Constructor.
+        WARNING to avoid segmentation error on removing items by
+        listctrl, style must be wx.LC_SINGLE_SEL .
         """
         self.index = None
         self.parent = parent  # parent is DnDPanel class
         self.data = self.parent.data
         self.outputnames = self.parent.outputnames
-        wx.ListCtrl.__init__(self, parent, style=wx.LC_REPORT)
+        wx.ListCtrl.__init__(self,
+                             parent,
+                             style=wx.LC_REPORT
+                             | wx.LC_SINGLE_SEL,
+                             )
         self.populate()
     # ----------------------------------------------------------------------#
 
@@ -304,7 +310,7 @@ class FileDnD(wx.Panel):
 
         self.text_path_save.SetValue(self.file_dest)
 
-        if appdata['outputfile_samedir'] is True:
+        if appdata['outputfile_samedir']:
             self.btn_save.Disable()
             self.text_path_save.Disable()
             self.parent.same_destin = True
@@ -316,8 +322,8 @@ class FileDnD(wx.Panel):
         self.btn_remove.SetToolTip(_('Remove the selected '
                                      'files from the list'))
         self.btn_clear.SetToolTip(_('Delete all files from the list'))
-        tip = (_('Set up a temporary folder for conversions'))
-        self.btn_save.SetToolTip(tip)
+        self.btn_save.SetToolTip(_('Set up a temporary folder '
+                                   'for conversions'))
         self.btn_play.SetToolTip(_('Play the selected file in the list'))
         self.text_path_save.SetToolTip(_("Destination folder"))
 
@@ -381,7 +387,7 @@ class FileDnD(wx.Panel):
             elif self.sortingstate == 'ascending':
                 self.sortingstate = 'descending'
 
-            elif self.sortingstate is None:
+            elif not self.sortingstate:
                 self.sortingstate = 'ascending'
 
             if self.sortingstate == 'descending':
@@ -446,12 +452,14 @@ class FileDnD(wx.Panel):
             self.delete_all(self)
             return
 
+        #num = 0
         for num in sorted(indexes, reverse=True):
             self.flCtrl.DeleteItem(num)  # remove selected items
             self.data.pop(num)  # remove selected items
             self.outputnames.pop(num)  # remove selected items
+            self.flCtrl.Select(num - 1)  # select the previous one
         self.reset_timeline()  # delete parent.timeline
-        self.on_deselect(self)  # deselect removed file
+        # self.on_deselect(self)  # deselect removed file
 
         for x in range(self.flCtrl.GetItemCount()):
             self.flCtrl.SetItem(x, 0, str(x + 1))  # re-load counter
@@ -474,7 +482,7 @@ class FileDnD(wx.Panel):
         self.btn_clear.Disable()
         self.parent.rename.Enable(False)
         self.parent.rename_batch.Enable(False)
-        if setstate is True:
+        if setstate:
             self.sortingstate = None
     # ----------------------------------------------------------------------
 
@@ -519,7 +527,7 @@ class FileDnD(wx.Panel):
         self.parent.statusbar_msg(f'{mess}', bcolor, fcolor)
     # -----------------------------------------------------------------------
 
-    def file_renaming(self):
+    def renaming_file(self):
         """
         This method is responsible for renaming the selected
         output file.
@@ -557,7 +565,7 @@ class FileDnD(wx.Panel):
         self.parent.statusbar_msg(_('Add Files'), None)
 # -----------------------------------------------------------------------
 
-    def batch_files_renaming(self):
+    def renaming_batch_files(self):
         """
         This method is responsible for batch file renaming.
         """

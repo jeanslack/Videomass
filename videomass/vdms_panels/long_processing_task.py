@@ -338,7 +338,7 @@ class LogOut(wx.Panel):
             for key, val in pairwise(out):
                 ffprog.append(f"{key}: {val}")
 
-            if self.time_remaining is True:
+            if self.time_remaining:
                 if 'speed=' in output:
                     try:
                         sline = output.split()[-1].strip()
@@ -389,7 +389,7 @@ class LogOut(wx.Panel):
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['SUCCESS']))
             self.txtout.AppendText(f"{LogOut.MSG_done}\n")
             # set end values for percentage and ETA
-            if self.time_remaining is True:
+            if self.time_remaining:
                 newlab = self.labprog.GetLabel().split()
                 if 'Processing:' in newlab:
                     newlab[1] = '100%   '
@@ -427,12 +427,12 @@ class LogOut(wx.Panel):
         """
         At the end of the process
         """
-        if self.error is True:
+        if self.error:
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
             self.txtout.AppendText(f"\n{LogOut.MSG_fatalerror}\n")
             notification_area(_("Fatal Error !"), LogOut.MSG_fatalerror,
                               wx.ICON_ERROR)
-        elif self.abort is True:
+        elif self.abort:
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ABORT']))
             self.txtout.AppendText(f"\n{LogOut.MSG_interrupted}\n")
         else:
@@ -464,7 +464,7 @@ class LogOut(wx.Panel):
             self.barprog.SetValue(0)
 
             if msg:  # move processed files to Videomass trash folder
-                if self.appdata["move_file_to_trash"] is True:
+                if self.appdata["move_file_to_trash"]:
                     trashdir = self.appdata["trashfolder"]
                     delete_file_source(msg, trashdir)  # filelist, dir
 

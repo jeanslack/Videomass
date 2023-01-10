@@ -201,7 +201,7 @@ def milliseconds2clocksec(milliseconds, rounds=False):
     """
     minutes, sec = divmod(milliseconds, 60000)
     hours, minutes = divmod(minutes, 60)
-    if rounds is True:
+    if rounds:
         seconds = round(float(sec / 1000))
     else:
         seconds = int(sec / 1000)
@@ -285,7 +285,7 @@ def del_filecontents(filename):
 
     HOW to USE:
 
-        if fileExists is True:
+        if fileExists:
             try:
                 del_filecontents(logfile)
             except Exception as err:

@@ -555,7 +555,7 @@ class SetUp(wx.Dialog):
         self.ckbx_playlist.SetValue(self.appdata['playlistsubfolder'])
         self.ckbx_trash.SetValue(self.settings['move_file_to_trash'])
 
-        if self.ckbx_trash.IsChecked() is False:
+        if not self.ckbx_trash.IsChecked():
             self.txtctrl_trash.Disable()
             self.btn_trash.Disable()
 
@@ -569,7 +569,7 @@ class SetUp(wx.Dialog):
                self.rdbFFmpeg.GetString(strs).split()[0]):
                 self.rdbFFmpeg.SetSelection(strs)
 
-        if self.appdata['ffmpeg_islocal'] is False:
+        if not self.appdata['ffmpeg_islocal']:
             self.btn_ffmpeg.Disable()
             self.txtctrl_ffmpeg.Disable()
             self.txtctrl_ffmpeg.AppendText(self.appdata['ffmpeg_cmd'])
@@ -578,7 +578,7 @@ class SetUp(wx.Dialog):
             self.txtctrl_ffmpeg.AppendText(self.appdata['ffmpeg_cmd'])
             self.checkbox_exeFFmpeg.SetValue(True)
 
-        if self.appdata['ffprobe_islocal'] is False:
+        if not self.appdata['ffprobe_islocal']:
             self.btn_ffprobe.Disable()
             self.txtctrl_ffprobe.Disable()
             self.txtctrl_ffprobe.AppendText(self.appdata['ffprobe_cmd'])
@@ -587,7 +587,7 @@ class SetUp(wx.Dialog):
             self.txtctrl_ffprobe.AppendText(self.appdata['ffprobe_cmd'])
             self.checkbox_exeFFprobe.SetValue(True)
 
-        if self.appdata['ffplay_islocal'] is False:
+        if not self.appdata['ffplay_islocal']:
             self.btn_ffplay.Disable()
             self.txtctrl_ffplay.Disable()
             self.txtctrl_ffplay.AppendText(self.appdata['ffplay_cmd'])
@@ -596,7 +596,7 @@ class SetUp(wx.Dialog):
             self.txtctrl_ffplay.AppendText(self.appdata['ffplay_cmd'])
             self.checkbox_exeFFplay.SetValue(True)
 
-        if self.appdata['outputfile_samedir'] is False:
+        if not self.appdata['outputfile_samedir']:
             self.lab_suffix.Disable()
             self.text_suffix.Disable()
             self.ckbx_dir.SetValue(False)

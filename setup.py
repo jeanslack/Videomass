@@ -118,7 +118,7 @@ def source_build():
                                 },
           include_package_data=True,
           zip_safe=False,
-          python_requires=">=3.7.0, <4.0",
+          python_requires=">=3.7.0, <3.10.0",
           install_requires=inst_req,
           setup_requires=setup_req,
           entry_points={'gui_scripts':

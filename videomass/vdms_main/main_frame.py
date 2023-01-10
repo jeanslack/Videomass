@@ -118,11 +118,8 @@ class MainFrame(wx.Frame):
             f"box=1:boxcolor=DeepPink:x=(w-tw)/2:y=h-(2*lh)")
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
-        # ----------- panel toolbar buttons
-        # self.btnpanel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
-        # self.btnpanel.SetBackgroundColour(MainFrame.LIMEGREEN)
 
-        # ---------- others panel instances:
+        # ---------- panel instances:
         self.TimeLine = timeline.Timeline(self, self.icons['clear'])
         self.ChooseTopic = choose_topic.Choose_Topic(self,
                                                      self.appdata['ostype'],
@@ -161,10 +158,6 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         # Layout toolbar buttons:
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)  # sizer base global
-        # grid_pan = wx.BoxSizer(wx.HORIZONTAL)
-        # self.btnpanel.SetSizer(grid_pan)  # set panel
-        # self.mainSizer.Add(self.btnpanel, 0, wx.EXPAND, 5)
-        ####
 
         # Layout external panels:
         self.mainSizer.Add(10, 10)
@@ -188,10 +181,10 @@ class MainFrame(wx.Frame):
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
         self.SetMinSize((850, 560))
-        # self.CentreOnScreen()  # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         self.Fit()
-
+        self.SetSize(tuple(self.appdata['window_size']))
+        self.Move(tuple(self.appdata['window_position']))
         # menu bar
         self.videomass_menu_bar()
         # tool bar main
@@ -199,16 +192,14 @@ class MainFrame(wx.Frame):
         # status bar
         self.sb = self.CreateStatusBar(1)
         self.statusbar_msg(_('Ready'), None)
-        # hide toolbar, buttons bar and disable some file menu items
+        # hide toolbar & disable some file menu items
         self.toolbar.Hide()
-        # self.btnpanel.Hide()
         self.menu_items()
-
         self.Layout()
         # ---------------------- Binding (EVT) ----------------------#
         self.fileDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.on_FFmpegfsave)
         self.textDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.on_Ytdlfsave)
-        self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
+        self.Bind(wx.EVT_CLOSE, self.on_close)
 
     # -------------------Status bar settings--------------------#
 
@@ -225,7 +216,7 @@ class MainFrame(wx.Frame):
         bcolor: background color, fcolor: foreground color
         """
         if self.appdata['ostype'] == 'Linux':
-            if bcolor is None:
+            if not bcolor:
                 self.sb.SetBackgroundColour(wx.NullColour)
                 self.sb.SetForegroundColour(wx.NullColour)
             else:
@@ -282,7 +273,7 @@ class MainFrame(wx.Frame):
         """
         enable or disable some menu items in according by showing panels
         """
-        if self.ChooseTopic.IsShown() is True:
+        if self.ChooseTopic.IsShown():
             self.avpan.Enable(False)
             self.prstpan.Enable(False)
             self.concpan.Enable(False)
@@ -342,19 +333,19 @@ class MainFrame(wx.Frame):
         """
         def _setsize():
             """
-            Write last panel size for next start if changed
+            Write last window size and position
+            for next start if changed
             """
-            if tuple(self.appdata['panel_size']) != self.GetSize():
-                confmanager = ConfigManager(self.appdata['fileconfpath'])
-                sett = confmanager.read_options()
-                sett['panel_size'] = list(self.GetSize())
-                confmanager.write_options(**sett)
+            confmanager = ConfigManager(self.appdata['fileconfpath'])
+            sett = confmanager.read_options()
+            sett['window_size'] = list(self.GetSize())
+            sett['window_position'] = list(self.GetPosition())
+            confmanager.write_options(**sett)
 
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.on_close(self)
-        # elif self.topicname:
         else:
-            if self.appdata['warnexiting'] is True:
+            if self.appdata['warnexiting']:
                 if wx.MessageBox(_('Are you sure you want to exit?'),
                                  _('Exit'),  wx.ICON_QUESTION | wx.YES_NO,
                                  self) == wx.YES:
@@ -724,14 +715,14 @@ class MainFrame(wx.Frame):
         """
         One file renaming
         """
-        self.fileDnDTarget.file_renaming()
+        self.fileDnDTarget.renaming_file()
     # -------------------------------------------------------------------#
 
     def on_batch_renaming(self, event):
         """
         Batch file renaming
         """
-        self.fileDnDTarget.batch_files_renaming()
+        self.fileDnDTarget.renaming_batch_files()
     # -------------------------------------------------------------------#
 
     def open_trash_folder(self, event):
@@ -952,7 +943,7 @@ class MainFrame(wx.Frame):
         autoexit at the end of playback
 
         """
-        self.autoexit = self.exitplayback.IsChecked() is True
+        self.autoexit = self.exitplayback.IsChecked()
     # ------------------------------------------------------------------#
 
     def ydl_used(self, event, msgbox=True):
@@ -1034,7 +1025,7 @@ class MainFrame(wx.Frame):
         """
         jump on youtube downloader
         """
-        if self.ChooseTopic.on_YoutubeDL(self) is True:
+        if self.ChooseTopic.on_YoutubeDL(self):
             return
         self.topicname = 'Youtube Downloader'
         self.on_Forward(self)
@@ -1106,7 +1097,7 @@ class MainFrame(wx.Frame):
         path for conversions
 
         """
-        dpath = '' if self.outpath_ffmpeg is None else self.outpath_ffmpeg
+        dpath = '' if not self.outpath_ffmpeg else self.outpath_ffmpeg
         dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
                                        "conversions"), dpath,
                                wx.DD_DEFAULT_STYLE
@@ -1130,7 +1121,7 @@ class MainFrame(wx.Frame):
         path for downloading
 
         """
-        dpath = '' if self.outpath_ydl is None else self.outpath_ydl
+        dpath = '' if not self.outpath_ydl else self.outpath_ydl
         dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
                                        "downloads"), dpath,
                                wx.DD_DEFAULT_STYLE
@@ -1179,7 +1170,7 @@ class MainFrame(wx.Frame):
         """
         with preferences.SetUp(self) as set_up:
             if set_up.ShowModal() == wx.ID_OK:
-                if set_up.getvalue() is True:
+                if set_up.getvalue():
                     self.on_Kill()
 
     # ------------------------------------------------------------------#
@@ -1284,25 +1275,25 @@ class MainFrame(wx.Frame):
 
         """
         if self.appdata['toolbarpos'] == 0:  # on top
-            if self.appdata['toolbartext'] is True:  # show text
+            if self.appdata['toolbartext']:  # show text
                 style = (wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_HORIZONTAL)
             else:
                 style = (wx.TB_DEFAULT_STYLE)
 
         elif self.appdata['toolbarpos'] == 1:  # on bottom
-            if self.appdata['toolbartext'] is True:  # show text
+            if self.appdata['toolbartext']:  # show text
                 style = (wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_BOTTOM)
             else:
                 style = (wx.TB_DEFAULT_STYLE | wx.TB_BOTTOM)
 
         elif self.appdata['toolbarpos'] == 2:  # on right
-            if self.appdata['toolbartext'] is True:  # show text
+            if self.appdata['toolbartext']:  # show text
                 style = (wx.TB_TEXT | wx.TB_RIGHT)
             else:
                 style = (wx.TB_DEFAULT_STYLE | wx.TB_RIGHT)
 
         elif self.appdata['toolbarpos'] == 3:
-            if self.appdata['toolbartext'] is True:  # show text
+            if self.appdata['toolbartext']:  # show text
                 style = (wx.TB_TEXT | wx.TB_LEFT)
             else:
                 style = (wx.TB_DEFAULT_STYLE | wx.TB_LEFT)

@@ -62,7 +62,7 @@ def compare_media_param(data):
         if len(compare) == 1:
             return True
 
-        if all(items == compare[0] for items in compare) is False:
+        if not all(items == compare[0] for items in compare):
             return True
 
     return False
@@ -258,7 +258,7 @@ class Conc_Demuxer(wx.Panel):
 
         diff = compare_media_param(self.parent.data_files)
 
-        if diff is True:
+        if diff:
             wx.MessageBox(_('The files do not have the same "codec_types", '
                             'same "sample_rate" or same "width" or "height". '
                             'Unable to proceed.'),
@@ -299,7 +299,7 @@ class Conc_Demuxer(wx.Panel):
                                ext,
                                self.parent.outputnames
                                )
-        if checking is None:  # User changing idea or not such files exist
+        if not checking:  # User changing idea or not such files exist
             return
         newfile = checking[1]
 

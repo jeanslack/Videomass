@@ -87,7 +87,7 @@ def get_options(dirconf, fileconf, relativepath, srcpath):
     conf = ConfigManager(fileconf, relativepath)
     version = ConfigManager.VERSION
 
-    if os.path.exists(dirconf):  # if ~/.conf/videomass dir
+    if os.path.exists(dirconf):  # i.e ~/.conf/videomass dir
         if os.path.isfile(fileconf):
             data = {'R': conf.read_options()}
             if not data['R']:
@@ -105,7 +105,7 @@ def get_options(dirconf, fileconf, relativepath, srcpath):
     else:  # try to restore entire configuration directory
         dconf = copydir_recursively(srcpath,
                                     os.path.dirname(dirconf),
-                                    "videomass"
+                                    "videomass",
                                     )
         if dconf:
             data = {'ERROR': dconf}
@@ -176,16 +176,10 @@ def portable_paths(portdir):
     Make portable-data paths based on OS
 
     """
-    if platform.system() == 'Windows':
-        file_conf = portdir + "\\portable_data\\settings.json"
-        dir_conf = portdir + "\\portable_data"
-        log_dir = os.path.join(dir_conf, 'log')  # logs
-        cache_dir = os.path.join(dir_conf, 'cache')  # updates executable
-    else:
-        file_conf = portdir + "/portable_data/settings.json"
-        dir_conf = portdir + "/portable_data"
-        log_dir = os.path.join(dir_conf, 'log')  # logs
-        cache_dir = os.path.join(dir_conf, 'cache')  # updates executable
+    file_conf = os.path.join(portdir, "portable_data/settings.json")
+    dir_conf = os.path.join(portdir, "portable_data")
+    log_dir = os.path.join(dir_conf, 'log')  # logs
+    cache_dir = os.path.join(dir_conf, 'cache')  # updates executable
 
     return file_conf, dir_conf, log_dir, cache_dir
 
@@ -274,7 +268,7 @@ class DataSource():
         - Bundled app by pyinstaller (windowed for MacOs and Windows)
         - AppImage for Linux (user)
 
-        * multiuser: root installation
+        * multiuser: system installation
         * user: local installation
 
     """
@@ -361,7 +355,7 @@ class DataSource():
             else:
                 msg(f'executable={binarypath}')
                 # pip as normal user, usually Linux, MacOs, Unix
-                if binarypath is None:
+                if not binarypath:
                     # need if user $PATH is not set yet
                     userbase = site.getuserbase()
                 else:

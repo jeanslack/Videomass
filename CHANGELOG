@@ -7,18 +7,28 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Gen 03, 2022 V.4.0.3
+Jan 07, 2023 V.4.0.5
 
   * Fixed the status-bar messages and colors for all platforms.
   * ffplay failing on Windows with Fontconfig error #172 (thanks to @CComparon).
   * Fixed 'Unable to add new profiles to the Presets manager from the
     A/V-Conversions panel, see #173.
   * Fixed layout on Confirm Settings dialog before start processes.
-  * Improved Timeline with new widgets.
-  * Timeline (trim bar) is now always visible by default on some panels.
-  * Removed the "Show Timeline CTRL+T" item from the menu bar.
   * Improved AV-Conversions layout.
-  * Improved window resizing to widht=850px height=500px.
+  * Improved window resizing to widht=850px height=560px.
+  * Fixed bug in window resizing on startup (window increases in size for
+    no apparent reason)
+  * Added same window positioning on startup as on last exit.
+  * Timeline (trim bar) is now always visible by default on some panels.
+  * A new "trim" bar has been added, which replaces the old timeline
+    controls. The new controls should make trimming operations more
+    intuitive even if the graphics are a little less rich.
+  * Removed the "Show Timeline CTRL+T" item from the menu bar.
+  * [DOWNLOADER] Fixed `compat_option all` to `compat_option youtube-dl`.
+  * Fix segmentation error removing items by listctrl (occurs on
+    wxPython version 4.1.1 not 4.0.7).
+  * Removed ability to select multiple items from file drop panel
+    due to previous issue.
 
 +------------------------------------+
 Dec 12, 2022 V.4.0.2

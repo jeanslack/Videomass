@@ -141,7 +141,7 @@ class Memos(wx.Dialog):
             self.textbox.SetStyle(0, len(self.textbox.GetValue()),
                                   wx.TextAttr(self.colorscheme['TXT3'],
                                               self.colorscheme['BACKGRD']))
-        if self.button_save.IsEnabled() is False:
+        if not self.button_save.IsEnabled():
             self.button_save.Enable()
     # ---------------------------------------------------------#
 
@@ -252,7 +252,7 @@ class Memos(wx.Dialog):
                                      self)
                 if resp == wx.YES:
                     ret = self.on_save(self)
-                    if ret is False:
+                    if not ret:
                         return
 
                 elif resp == wx.CANCEL:
