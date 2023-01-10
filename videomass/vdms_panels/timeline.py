@@ -163,10 +163,11 @@ class Timeline(wx.Panel):
         timems = get_milliseconds(timef)
 
         if timems >= self.ms_end:
-            h, m, s = self.ctrl_end.GetTime()
-            self.ctrl_start.SetTime(h, m, s-1)
+            start = milliseconds2clock(self.ms_end - 1000)
+            h, m, s = start.split(':')
+            self.ctrl_start.SetTime(int(h), int(m), int(s.split('.')[0]))
             timef = self.time_join(self.ctrl_start.GetTime())
-            timems = get_milliseconds(timef)
+            timems = self.ms_end - 1000
 
         self.time_start = timef
         self.ms_start = timems
@@ -187,12 +188,13 @@ class Timeline(wx.Panel):
                 self.ctrl_start.Enable()
 
         if timems <= self.ms_start:
-            h, m, s = self.ctrl_start.GetTime()
             if self.ms_start == 0:
-                self.ctrl_end.SetTime(h, m, s)
+                self.ctrl_end.SetTime(00, 00, 00)
                 self.ctrl_start.Disable()
             else:
-                self.ctrl_end.SetTime(h, m, s+1)
+                end = milliseconds2clock(self.ms_start + 1000)
+                h, m, s = end.split(':')
+                self.ctrl_end.SetTime(int(h), int(m), int(s.split('.')[0]))
             timef = self.time_join(self.ctrl_end.GetTime())
             timems = get_milliseconds(timef)
 

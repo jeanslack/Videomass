@@ -20,8 +20,10 @@ videomass (4.0.5-1) UNRELEASED; urgency=medium
     wxPython version 4.1.1 not 4.0.7).
   * Removed ability to select multiple items from file drop panel
     due to previous issue.
+  * Fixed `TypeError` and various stacktraces using Python3.10
+    with wxPython4.2.0 #178
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 07 Jan 2023 13:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 11 Jan 2023 11:30:00 +0200
 
 videomass (4.0.2-1) UNRELEASED; urgency=medium
 

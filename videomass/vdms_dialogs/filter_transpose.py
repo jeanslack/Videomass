@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.13.2022
+Rev: Jan.11.2023
 Code checker: pylint, flake8
 ########################################################
 
@@ -52,10 +52,12 @@ class Transpose(wx.Dialog):
         self.v_height = v_height
         # resizing values preserving aspect ratio for pseudo-monitor
         self.thr = 150 if self.v_height > self.v_width else 270
-        self.h_ratio = (self.v_height / self.v_width) * self.thr
-        self.w_ratio = (self.v_width / self.v_height) * self.h_ratio
+        self.h_ratio = int((self.v_height / self.v_width) * self.thr)
+        self.w_ratio = int((self.v_width / self.v_height) * self.h_ratio)
         self.current_angle = 0
-        self.center = ((self.w_ratio/2), (self.h_ratio/2))  # orignal center
+        self.center = (int((self.w_ratio/2)),
+                       int((self.h_ratio/2)),
+                       )  # original center
         self.transpose = {'degrees': ['', 0]}
 
         self.duration = duration
@@ -175,14 +177,14 @@ class Transpose(wx.Dialog):
 
     def onLoad(self, event):
         """
-        Build FFmpeg argument to get a specific video frame for
-        loading as StaticBitmap
+        Build FFmpeg argument to get a specific video frame
+        to loading as StaticBitmap
 
         """
-        t = self.duration.split(':')
-        h, m, s = (int(t[0]) / 2, int(t[1]) / 2, float(t[2]) / 2)
-        h, m, s = ("%02d" % h, "%02d" % m, "%02d" % s)
-        arg = f'-ss {h}:{m}:{s} -i "{self.video}" -vframes 1 -y "{self.frame}"'
+        h, m, s = self.duration.split(':')
+        intseq = (int(h) // 2, int(m) // 2, round(float(s) / 2))
+        stime = ':'.join([str(x).zfill(2) for x in intseq])
+        arg = f'-ss {stime} -i "{self.video}" -vframes 1 -y "{self.frame}"'
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
         error = thread.status
@@ -190,7 +192,7 @@ class Transpose(wx.Dialog):
             wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR)
             return
 
-        sleep(1.0)  # need to wait end task for saving
+        sleep(1.0)  # need to wait end task to save file on drive
         bitmap = wx.Bitmap(self.frame)
         img = bitmap.ConvertToImage()
         img = img.Scale(self.w_ratio, self.h_ratio)
