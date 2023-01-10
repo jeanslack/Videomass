@@ -52,10 +52,12 @@ class Transpose(wx.Dialog):
         self.v_height = v_height
         # resizing values preserving aspect ratio for pseudo-monitor
         self.thr = 150 if self.v_height > self.v_width else 270
-        self.h_ratio = (self.v_height / self.v_width) * self.thr
-        self.w_ratio = (self.v_width / self.v_height) * self.h_ratio
+        self.h_ratio = int((self.v_height / self.v_width) * self.thr)
+        self.w_ratio = int((self.v_width / self.v_height) * self.h_ratio)
         self.current_angle = 0
-        self.center = ((self.w_ratio/2), (self.h_ratio/2))  # orignal center
+        self.center = (int((self.w_ratio/2)),
+                       int((self.h_ratio/2)),
+                       )  # original center
         self.transpose = {'degrees': ['', 0]}
 
         self.duration = duration

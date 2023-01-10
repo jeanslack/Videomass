@@ -45,7 +45,7 @@ def make_bitmap(width, height, image):
     """
     bitmap = wx.Bitmap(image)
     img = bitmap.ConvertToImage()
-    img = img.Scale(width, height, wx.IMAGE_QUALITY_NORMAL)
+    img = img.Scale(int(width), int(height), wx.IMAGE_QUALITY_NORMAL)
     bmp = img.ConvertToBitmap()
 
     return wx.Bitmap(bmp)
@@ -94,7 +94,11 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         dc.DrawBitmap(self.current_bmp, 0, 0, True)
         dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
         dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
-        dc.DrawRectangle(self.x + 1, self.y + 1, self.w + 2, self.h + 2)
+        dc.DrawRectangle(int(self.x + 1),
+                         int(self.y + 1),
+                         int(self.w + 2),
+                         int(self.h + 2),
+                         )
     # ------------------------------------------------------------------#
 
     def onRedraw(self, x, y, w, h):
@@ -115,7 +119,11 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         dc.DrawBitmap(self.current_bmp, 0, 0, True)
         dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
         dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
-        dc.DrawRectangle(self.x + 1, self.y + 1, self.w + 2, self.h + 2)
+        dc.DrawRectangle(int(self.x + 1),
+                         int(self.y + 1),
+                         int(self.w + 2),
+                         int(self.h + 2),
+                         )
 
 
 class Crop(wx.Dialog):
@@ -162,17 +170,18 @@ class Crop(wx.Dialog):
         self.v_height = v_height
         # resizing values preserving aspect ratio for monitor
         self.thr = 180 if self.v_height >= self.v_width else 270
-        self.h_ratio = (self.v_height / self.v_width) * self.thr  # height
-        self.w_ratio = (self.v_width / self.v_height) * self.h_ratio  # width
-
+        self.h_ratio = int((self.v_height
+                            / self.v_width) * self.thr)  # height
+        self.w_ratio = int((self.v_width
+                            / self.v_height) * self.h_ratio)  # width
         self.video = fname  # selected filename on queued list
         name = os.path.splitext(os.path.basename(self.video))[0]
         self.frame = os.path.join(f'{Crop.TMP}', f'{name}.png')  # image
 
         if os.path.exists(self.frame):
             self.image = self.frame
-        else:
-            self.image = wx.Bitmap(self.w_ratio, self.h_ratio)  # make empty
+        else:  # make empty
+            self.image = wx.Bitmap(self.w_ratio, self.h_ratio)
 
         duration = get_milliseconds(timeformat)  # convert to ms
         # hhmmss = milliseconds2clock(duration)  # convert to 24-hour clock
@@ -182,7 +191,7 @@ class Crop(wx.Dialog):
         self.panelrect = wx.Panel(self, wx.ID_ANY,
                                   size=(self.w_ratio, self.h_ratio)
                                   )
-        bmp = make_bitmap(self.w_ratio, self.h_ratio, self.image)
+        bmp = make_bitmap(self.w_ratio, self.h_ratio, self.image)####
         self.bob = Actor(self.panelrect, bmp, 1, "")
         sizerBase.Add(self.panelrect, 0, wx.ALL | wx.CENTER, 5)
         sizersize = wx.BoxSizer(wx.VERTICAL)
