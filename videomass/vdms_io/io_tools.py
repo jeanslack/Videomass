@@ -100,7 +100,7 @@ def stream_play(filepath, tseq, param, autoexit):
 
 def url_play(url, quality, timestamp, autoexit, ssl):
     """
-    directs to the corresponding thread for playing
+    Redirects to the corresponding thread for playing
     online media streams.
 
     NOTE I'm looking for a way to tell the youtube_dl thread to terminate
