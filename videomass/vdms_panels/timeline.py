@@ -236,11 +236,8 @@ class Timeline(wx.Panel):
 
     def on_reset_values(self, event):
         """
-        Reset all values to default. This method is also called on
-        MainFrame.
-        WARNING: It is recommended that you follow the order below
-        for success
-
+        Reset all values to default. This method is
+        also called on MainFrame.
         """
         self.time_start = '00:00:00.000'  # seek position
         self.time_end = '00:00:00.000'  # duration of the selection
@@ -261,7 +258,6 @@ class Timeline(wx.Panel):
             self.milliseconds = 86399999
         else:
             self.milliseconds = round(duration)
-            # rounds all float number to prevent ruler selection inaccuracy
 
         self.hour24format = milliseconds2clock(self.milliseconds)
         self.btn_maxdur.SetLabel(self.hour24format.split('.')[0])
