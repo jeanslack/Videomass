@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Jan 10, 2023 V.4.0.5
+Jan 11, 2023 V.4.0.5
 
   * Fixed the status-bar messages and colors for all platforms.
   * ffplay failing on Windows with Fontconfig error #172 (thanks to @CComparon).
@@ -29,7 +29,8 @@ Jan 10, 2023 V.4.0.5
     wxPython version 4.1.1 not 4.0.7).
   * Removed ability to select multiple items from file drop panel
     due to previous issue.
-  * Fixed `TypeError using Python3.10.8 wxPython4.2.0` #178
+  * Fixed `TypeError` and various stacktraces using Python3.10
+    with wxPython4.2.0 #178
 
 +------------------------------------+
 Dec 12, 2022 V.4.0.2

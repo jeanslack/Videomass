@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.13.2022
+Rev: Jan.11.2023
 Code checker: pylint, flake8
 ########################################################
 
@@ -177,14 +177,14 @@ class Transpose(wx.Dialog):
 
     def onLoad(self, event):
         """
-        Build FFmpeg argument to get a specific video frame for
-        loading as StaticBitmap
+        Build FFmpeg argument to get a specific video frame
+        to loading as StaticBitmap
 
         """
-        t = self.duration.split(':')
-        h, m, s = (int(t[0]) / 2, int(t[1]) / 2, float(t[2]) / 2)
-        h, m, s = ("%02d" % h, "%02d" % m, "%02d" % s)
-        arg = f'-ss {h}:{m}:{s} -i "{self.video}" -vframes 1 -y "{self.frame}"'
+        h, m, s = self.duration.split(':')
+        intseq = (int(h) // 2, int(m) // 2, round(float(s) / 2))
+        stime = ':'.join([str(x).zfill(2) for x in intseq])
+        arg = f'-ss {stime} -i "{self.video}" -vframes 1 -y "{self.frame}"'
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
         error = thread.status
@@ -192,7 +192,7 @@ class Transpose(wx.Dialog):
             wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR)
             return
 
-        sleep(1.0)  # need to wait end task for saving
+        sleep(1.0)  # need to wait end task to save file on drive
         bitmap = wx.Bitmap(self.frame)
         img = bitmap.ConvertToImage()
         img = img.Scale(self.w_ratio, self.h_ratio)
