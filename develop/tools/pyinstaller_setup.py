@@ -40,7 +40,7 @@ except ModuleNotFoundError as error:
 SCRIPT = 'launcher'
 NAME = 'videomass'
 BINARY = os.path.join(HERE, SCRIPT)
-SPECFILE = os.path.join(HERE, '%s.spec' % NAME)
+SPECFILE = os.path.join(HERE, f'{NAME}.spec')
 # BINARY = os.path.join(HERE, 'bin', 'videomass')
 # SPECFILE = os.path.join(HERE, 'videomass.spec')
 
@@ -196,7 +196,7 @@ def fetch_exec(binary=BINARY):
     fetch the videomass binary on bin folder
     """
     if not os.path.exists(binary):  # binary
-        sys.exit("ERROR: no file found named '%s'" % binary)
+        sys.exit(f"ERROR: no file found named '{binary}'")
 # --------------------------------------------------------#
 
 
@@ -214,10 +214,10 @@ def genspec(options, specfile=SPECFILE, addplist=None, script=SCRIPT):
     an existing videomass.spec file.
     """
     try:
-        subprocess.run('pyi-makespec %s %s' % (options, script),
+        subprocess.run(f'pyi-makespec {options} {script}',
                        shell=True, check=True)
     except subprocess.CalledProcessError as err:
-        sys.exit('\nERROR: %s\n' % err)
+        sys.exit(f'\nERROR: {err}\n')
 
     if platform.system() == 'Darwin' and addplist is not None:
         with open(specfile, 'r', encoding='utf8') as specf:
@@ -246,13 +246,13 @@ def clean_buildingdirs(here=HERE):
             try:
                 shutil.rmtree(os.path.join(here, 'dist'))
             except OSError as err:
-                sys.exit("ERROR: %s" % (err.strerror))
+                sys.exit(f"ERROR: {err}")
 
         if os.path.exists(os.path.join(here, 'build')):
             try:
                 shutil.rmtree(os.path.join(here, 'build'))
             except OSError as err:
-                sys.exit("ERROR: %s" % (err.strerror))
+                sys.exit(f"ERROR: {err}")
 # --------------------------------------------------------#
 
 
@@ -265,14 +265,14 @@ def run_pyinst(specfile=SPECFILE):
         fetch_exec()  # fetch videomass binary
         time.sleep(1)
         try:
-            subprocess.run('pyinstaller --clean %s' % specfile,
+            subprocess.run('pyinstaller --clean {specfile}',
                            shell=True, check=True)
         except subprocess.CalledProcessError as err:
-            sys.exit('\nERROR: %s\n' % err)
+            sys.exit(f'\nERROR: {err}\n')
 
         print("\nSUCCESS: pyinstaller_setup.py: Build finished.\n")
     else:
-        sys.exit("ERROR: no such file %s" % specfile)
+        sys.exit(f"ERROR: no such file {specfile}")
 # --------------------------------------------------------#
 
 
@@ -303,7 +303,7 @@ def make_portable(here=HERE):
             try:
                 os.mkdir(datashare)
             except OSError as err:
-                sys.exit('ERROR: %s' % err)
+                sys.exit(f'ERROR: {err}')
             else:
                 sys.exit('\nDONE: "portable_data" folder is created\n')
         else:
@@ -384,11 +384,11 @@ def main():
     elif args.genspec_build:
         checkin()
         run_pyinst()
-        make_portable()
+        # make_portable()
 
     elif args.start_build:
         run_pyinst()
-        make_portable()
+        # make_portable()
 
     else:
         print("\nType 'pyinstaller_setup.py -h' for help.\n")

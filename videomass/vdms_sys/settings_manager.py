@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: April.26.2022
+Rev: Jan.11.2023
 Code checker: flake8, pylint .
 
  This file is part of Videomass.
@@ -115,10 +115,10 @@ class ConfigManager:
 
     downloader (bool, str):
         sets the downloader to use when application startup.
-        one of `disabled`,` youtube_dl`, `yt_dlp` or `False`
+        one of `disabled`,` youtube_dl`, `yt_dlp` or False
         Where `disabled` means not load anything, `youtube_dl`
         means load/use youtube-dl on sturtup, `yt_dlp` means load/use
-        yt_dl on sturtup, `False` means *not set at all* and the
+        yt_dl on sturtup, `false` means *not set at all* and the
         wizard dialog will be displayed.
 
     playlistsubfolder (bool):
@@ -174,17 +174,18 @@ class ConfigManager:
         "locale_name": "Default"
         }
 
-    def __init__(self, filename, relativepath=False):
+    def __init__(self, filename, makeportable=None):
         """
         Accepts an existing `filename` on the file system paths
-        suffixed by `.json`. If `relativepath` is `True`, some
+        suffixed by `.json`. If `makeportable` is `True`, some
         paths on the `DEFAULT_OPTIONS` class attribute will be
         set as relative paths.
         """
         self.filename = filename
-        if relativepath:
-            appdir = os.getcwd()
-            outputdir = os.path.relpath(os.path.join(appdir, 'My_Files'))
+
+        if makeportable:
+            path = os.path.join(makeportable, "My_Files")
+            outputdir = os.path.relpath(path)
             ConfigManager.DEFAULT_OPTIONS['outputfile'] = outputdir
             ConfigManager.DEFAULT_OPTIONS['outputdownload'] = outputdir
 

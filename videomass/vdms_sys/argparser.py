@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: October.03.2021
+Rev: Jan.11.2023
 Code checker: pycodestyle, flake8, pylint .
 
 This file is part of Videomass.
@@ -36,13 +36,8 @@ except ModuleNotFoundError as errwx:
     MSGWX = f"not installed! ({errwx})"
 
 
-def args():
-    """
-    Parser of the users inputs (positional/optional arguments)
-
-    USE:
-        videomass -h
-    """
+def arguments():
+    """Parser for command line options"""
     parser = argparse.ArgumentParser(description=('GUI for FFmpeg and '
                                                   'youtube-dl/yt-dlp'),)
     parser.add_argument('-v', '--version',
@@ -53,6 +48,23 @@ def args():
                         help=('List of executables used by Videomass '
                               'found in your operating system'),
                         action="store_true",
+                        )
+    parser.add_argument('--make-portable',
+                        help=('In order to make the application fully '
+                              'portable and stealth, this option can keeps '
+                              'all application data stored separately from '
+                              'conventional platform directories and provide '
+                              'only relative paths. It expects you to specify '
+                              'a preferred location of data used by the '
+                              'application. Note that a new output folder '
+                              '("My_Files") will be created ONLY during the '
+                              'first startup of the application through the '
+                              'Wizard. In all other cases the relative paths '
+                              'may not be fully updated on the configuration '
+                              'file.'
+                              ),
+                        #action="store_true",
+                        metavar='URL',
                         )
 
     argmts = parser.parse_args()
@@ -75,12 +87,16 @@ def args():
                 else:
                     print(f"\t[{key}] '{exe}' ...Not Installed")
                     print(f"\tpath: {path}\n")
+        parser.exit(status=0, message=None)
 
     elif argmts.version:
         crel = current_release()
         print(f'{crel[0]}: {crel[2]} ({crel[3]})')
         print(f'Python: {sys.version}')
         print(f'wxPython: {MSGWX}')
+        parser.exit(status=0, message=None)
 
     else:
-        print("Type 'videomass -h' for help.")
+        print("Type -h for help.")
+
+    return vars(argmts)

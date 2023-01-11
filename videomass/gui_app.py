@@ -35,7 +35,7 @@ try:
     from wx.svg import SVGimage
 except ModuleNotFoundError:
     pass
-from videomass.vdms_sys.argparser import args
+from videomass.vdms_sys.argparser import arguments
 from videomass.vdms_sys.configurator import DataSource
 from videomass.vdms_sys import app_const as appC
 from videomass.vdms_utils.utils import del_filecontents
@@ -51,7 +51,7 @@ class Videomass(wx.App):
 
     """
 
-    def __init__(self, redirect=True, filename=None):
+    def __init__(self, redirect=True, filename=None, **kwargs):
         """
         - redirect=False will send print statements to a console
           window (in use)
@@ -75,7 +75,7 @@ class Videomass(wx.App):
                        'SUPP_LANGs': ['it_IT', 'en_US', 'ru_RU'],
                        # supported langs for online help (user guide)
                        }
-        self.data = DataSource()  # instance data
+        self.data = DataSource(kwargs)  # instance data
         self.appset.update(self.data.get_fileconf())  # data system
         self.iconset = None
 
@@ -263,13 +263,21 @@ class Videomass(wx.App):
 
 def main():
     """
-    Without arguments starts the wx.App mainloop
-    instead to print output to console.
+    Without command line arguments starts the wx.App mainloop
+    with default arguments.
+
+    If you plan to make definively portable a pyinstaller
+    app, replace the kwargs value inside `if` statement, with
+    this piece of code:
+
+    data = os.path.join(os.path.dirname(sys.executable), 'portable_data')
+    kwargs = {'make_portable': data}
+
     """
     if not sys.argv[1:]:
-        app = Videomass(redirect=False)
-        app.MainLoop()
-
+        kwargs = {'make_portable': None, 'pref_relativepaths': False}
     else:
-        args()
-        sys.exit(0)
+        kwargs = arguments()
+
+    app = Videomass(redirect=False, **kwargs)
+    app.MainLoop()
