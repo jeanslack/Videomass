@@ -51,9 +51,9 @@ class Mediainfo(wx.Dialog):
         self.sizerBase = wx.BoxSizer(wx.VERTICAL)
         self.file_select = wx.ListCtrl(self,
                                        wx.ID_ANY,
-                                       style=wx.LC_REPORT |
-                                       wx.SUNKEN_BORDER |
-                                       wx.LC_SINGLE_SEL
+                                       style=wx.LC_REPORT
+                                       | wx.SUNKEN_BORDER
+                                       | wx.LC_SINGLE_SEL,
                                        )
         self.sizerBase.Add(self.file_select, 0, wx.ALL | wx.EXPAND, 5)
 
@@ -65,16 +65,16 @@ class Mediainfo(wx.Dialog):
         nb_panel_1 = wx.Panel(notebook, wx.ID_ANY)
         self.format_ctrl = wx.ListCtrl(nb_panel_1,
                                        wx.ID_ANY,
-                                       style=wx.LC_REPORT |
-                                       wx.SUNKEN_BORDER |
-                                       wx.LC_SINGLE_SEL
+                                       style=wx.LC_REPORT
+                                       | wx.SUNKEN_BORDER
+                                       | wx.LC_SINGLE_SEL,
                                        )
         self.format_stxt = wx.StaticText(nb_panel_1, wx.ID_ANY, msg)
         self.format_tags = wx.TextCtrl(nb_panel_1,
                                        wx.ID_ANY, "",
-                                       style=wx.TE_MULTILINE |
-                                       wx.TE_READONLY |
-                                       wx.TE_RICH2
+                                       style=wx.TE_MULTILINE
+                                       | wx.TE_READONLY
+                                       | wx.TE_RICH2,
                                        )
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab1.Add(self.format_ctrl, 1, wx.ALL | wx.EXPAND, 5)
@@ -87,16 +87,16 @@ class Mediainfo(wx.Dialog):
 
         self.video_ctrl = wx.ListCtrl(nb_panel_2,
                                       wx.ID_ANY,
-                                      style=wx.LC_REPORT |
-                                      wx.SUNKEN_BORDER |
-                                      wx.LC_SINGLE_SEL
+                                      style=wx.LC_REPORT
+                                      | wx.SUNKEN_BORDER
+                                      | wx.LC_SINGLE_SEL,
                                       )
         self.video_stxt = wx.StaticText(nb_panel_2, wx.ID_ANY, msg)
         self.video_tags = wx.TextCtrl(nb_panel_2,
                                       wx.ID_ANY, "",
-                                      style=wx.TE_MULTILINE |
-                                      wx.TE_READONLY |
-                                      wx.TE_RICH2
+                                      style=wx.TE_MULTILINE
+                                      | wx.TE_READONLY
+                                      | wx.TE_RICH2,
                                       )
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2.Add(self.video_ctrl, 1, wx.ALL | wx.EXPAND, 5)
@@ -108,16 +108,16 @@ class Mediainfo(wx.Dialog):
         nb_panel_3 = wx.Panel(notebook, wx.ID_ANY)
         self.audio_ctrl = wx.ListCtrl(nb_panel_3,
                                       wx.ID_ANY,
-                                      style=wx.LC_REPORT |
-                                      wx.SUNKEN_BORDER |
-                                      wx.LC_SINGLE_SEL
+                                      style=wx.LC_REPORT
+                                      | wx.SUNKEN_BORDER
+                                      | wx.LC_SINGLE_SEL,
                                       )
         self.audio_stxt = wx.StaticText(nb_panel_3, wx.ID_ANY, msg)
         self.audio_tags = wx.TextCtrl(nb_panel_3,
                                       wx.ID_ANY, "",
-                                      style=wx.TE_MULTILINE |
-                                      wx.TE_READONLY |
-                                      wx.TE_RICH2
+                                      style=wx.TE_MULTILINE
+                                      | wx.TE_READONLY
+                                      | wx.TE_RICH2,
                                       )
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab3.Add(self.audio_ctrl, 1, wx.ALL | wx.EXPAND, 5)
@@ -129,16 +129,16 @@ class Mediainfo(wx.Dialog):
         nb_panel_4 = wx.Panel(notebook, wx.ID_ANY)
         self.subtitle_ctrl = wx.ListCtrl(nb_panel_4,
                                          wx.ID_ANY,
-                                         style=wx.LC_REPORT |
-                                         wx.SUNKEN_BORDER |
-                                         wx.LC_SINGLE_SEL
+                                         style=wx.LC_REPORT
+                                         | wx.SUNKEN_BORDER
+                                         | wx.LC_SINGLE_SEL,
                                          )
         self.sub_stxt = wx.StaticText(nb_panel_4, wx.ID_ANY, msg)
         self.sub_tags = wx.TextCtrl(nb_panel_4,
                                     wx.ID_ANY, "",
-                                    style=wx.TE_MULTILINE |
-                                    wx.TE_READONLY |
-                                    wx.TE_RICH2
+                                    style=wx.TE_MULTILINE
+                                    | wx.TE_READONLY
+                                    | wx.TE_RICH2,
                                     )
         sizer_tab4 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab4.Add(self.subtitle_ctrl, 1, wx.ALL | wx.EXPAND, 5)

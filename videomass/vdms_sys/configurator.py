@@ -330,7 +330,8 @@ class DataSource():
 
         elif ('/tmp/.mount_' in sys.executable or os.path.exists(
               os.path.dirname(os.path.dirname(os.path.dirname(
-                  sys.argv[0]))) + '/AppRun')):
+                  sys.argv[0])))
+              + '/AppRun')):
             # embedded on python appimage
             msg('Embedded on python appimage')
             self.apptype = 'appimage'
@@ -424,7 +425,7 @@ class DataSource():
             """
             try:
                 return os.path.relpath(path) if relative else path
-            except ValueError:
+            except (ValueError, TypeError):
                 # return {'ERROR': f'{error}'}  # use `as error` here
                 return path
 
@@ -467,7 +468,7 @@ class DataSource():
                 'download_properties', 'stabilizer', 'listindx',
                 'preview_audio', 'profile_copy', 'slideshow',
                 'videotopictures', 'atrack', 'timerset',
-                )  # must match with iconset tuple, see following..
+                )  # must match with items on `iconset` tuple, see following
 
         ext = 'svg' if 'wx.svg' in sys.modules else 'png'
         icodir = self.dataloc['icodir']

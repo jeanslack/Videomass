@@ -66,21 +66,21 @@ class Scale(wx.Dialog):
         Flex_scale.Add(label_width, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_scale_width = wx.SpinCtrl(self, wx.ID_ANY, "0",
                                             min=0, max=9000,
-                                            style=wx.TE_PROCESS_ENTER |
-                                            wx.SP_ARROW_KEYS
+                                            style=wx.TE_PROCESS_ENTER
+                                            | wx.SP_ARROW_KEYS
                                             )
-        Flex_scale.Add(self.spin_scale_width, 0, wx.ALL |
-                       wx.ALIGN_CENTER_VERTICAL, 5
+        Flex_scale.Add(self.spin_scale_width, 0, wx.ALL
+                       | wx.ALIGN_CENTER_VERTICAL, 5
                        )
         label_height = wx.StaticText(self, wx.ID_ANY, (_("Height:")))
         Flex_scale.Add(label_height, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_scale_height = wx.SpinCtrl(self, wx.ID_ANY, "0",
                                              min=0, max=9000,
-                                             style=wx.TE_PROCESS_ENTER |
-                                             wx.SP_ARROW_KEYS
+                                             style=wx.TE_PROCESS_ENTER
+                                             | wx.SP_ARROW_KEYS
                                              )
-        Flex_scale.Add(self.spin_scale_height, 0, wx.ALL |
-                       wx.ALIGN_CENTER_VERTICAL, 5
+        Flex_scale.Add(self.spin_scale_height, 0, wx.ALL
+                       | wx.ALIGN_CENTER_VERTICAL, 5
                        )
         dim = _("Source size: {0} x {1} pixels").format(v_width, v_height)
         label_sdim = wx.StaticText(self, wx.ID_ANY, dim)
@@ -110,8 +110,8 @@ class Scale(wx.Dialog):
         box_scale.Add(self.rdb_scale, 0, wx.ALL | wx.CENTER, 10)
         # --- setdar section:
         sizerBase.Add((15, 0), 0, wx.ALL, 5)
-        box_ar = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                   _("Aspect Ratio"))), wx.VERTICAL)
+        sbox = wx.StaticBox(self, wx.ID_ANY, (_("Aspect Ratio")))
+        box_ar = wx.StaticBoxSizer(sbox, wx.VERTICAL)
         sizerBase.Add(box_ar, 1, wx.ALL | wx.EXPAND, 5)
         lab1 = _("Setdar filter (display aspect ratio) example 16/9, 4/3 ")
         self.lab_dar = wx.StaticText(self, wx.ID_ANY, (lab1))
@@ -120,24 +120,28 @@ class Scale(wx.Dialog):
         box_ar.Add(Flex_dar, 0, wx.ALL | wx.CENTRE, 5)
         self.label_num = wx.StaticText(self, wx.ID_ANY, (_("Numerator")))
         Flex_dar.Add(self.label_num, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_setdarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
-                                          max=99, style=wx.TE_PROCESS_ENTER |
-                                          wx.SP_ARROW_KEYS, size=(-1, -1)
+        self.spin_setdarNum = wx.SpinCtrl(self, wx.ID_ANY,
+                                          "0", min=0, max=99,
+                                          style=wx.TE_PROCESS_ENTER
+                                          | wx.SP_ARROW_KEYS,
+                                          size=(-1, -1)
                                           )
-        Flex_dar.Add(self.spin_setdarNum, 0, wx.ALL |
-                     wx.ALIGN_CENTER_VERTICAL, 5
+        Flex_dar.Add(self.spin_setdarNum, 0, wx.ALL
+                     | wx.ALIGN_CENTER_VERTICAL, 5
                      )
         self.label_sepdar = wx.StaticText(self, wx.ID_ANY, ("/"))
         self.label_sepdar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL,
                                   wx.BOLD, 0, ""))
-        Flex_dar.Add(self.label_sepdar, 0, wx.ALL |
-                     wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_setdarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
-                                          max=99, style=wx.TE_PROCESS_ENTER |
-                                          wx.SP_ARROW_KEYS, size=(-1, -1)
+        Flex_dar.Add(self.label_sepdar, 0, wx.ALL
+                     | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.spin_setdarDen = wx.SpinCtrl(self, wx.ID_ANY, "0",
+                                          min=0, max=99,
+                                          style=wx.TE_PROCESS_ENTER
+                                          | wx.SP_ARROW_KEYS,
+                                          size=(-1, -1)
                                           )
-        Flex_dar.Add(self.spin_setdarDen, 0, wx.ALL |
-                     wx.ALIGN_CENTER_VERTICAL, 5
+        Flex_dar.Add(self.spin_setdarDen, 0, wx.ALL
+                     | wx.ALIGN_CENTER_VERTICAL, 5
                      )
         self.label_den = wx.StaticText(self, wx.ID_ANY, (_("Denominator")))
         Flex_dar.Add(self.label_den, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
@@ -150,24 +154,28 @@ class Scale(wx.Dialog):
         box_ar.Add(Flex_sar, 0, wx.ALL | wx.CENTRE, 5)
         self.label_num1 = wx.StaticText(self, wx.ID_ANY, (_("Numerator")))
         Flex_sar.Add(self.label_num1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_setsarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
-                                          max=99, style=wx.TE_PROCESS_ENTER |
-                                          wx.SP_ARROW_KEYS, size=(-1, -1)
+        self.spin_setsarNum = wx.SpinCtrl(self, wx.ID_ANY, "0",
+                                          min=0, max=99,
+                                          style=wx.TE_PROCESS_ENTER
+                                          | wx.SP_ARROW_KEYS,
+                                          size=(-1, -1)
                                           )
-        Flex_sar.Add(self.spin_setsarNum, 0, wx.ALL |
-                     wx.ALIGN_CENTER_VERTICAL, 5
+        Flex_sar.Add(self.spin_setsarNum, 0, wx.ALL
+                     | wx.ALIGN_CENTER_VERTICAL, 5
                      )
         self.label_sepsar = wx.StaticText(self, wx.ID_ANY, ("/"))
         self.label_sepsar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL,
                                   wx.BOLD, 0, ""))
-        Flex_sar.Add(self.label_sepsar, 0, wx.ALL |
-                     wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_setsarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
-                                          max=99, style=wx.TE_PROCESS_ENTER |
-                                          wx.SP_ARROW_KEYS, size=(-1, -1)
+        Flex_sar.Add(self.label_sepsar, 0, wx.ALL
+                     | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.spin_setsarDen = wx.SpinCtrl(self, wx.ID_ANY, "0",
+                                          min=0, max=99,
+                                          style=wx.TE_PROCESS_ENTER
+                                          | wx.SP_ARROW_KEYS,
+                                          size=(-1, -1)
                                           )
-        Flex_sar.Add(self.spin_setsarDen, 0, wx.ALL |
-                     wx.ALIGN_CENTER_VERTICAL, 5
+        Flex_sar.Add(self.spin_setsarDen, 0, wx.ALL
+                     | wx.ALIGN_CENTER_VERTICAL, 5
                      )
         self.label_den1 = wx.StaticText(self, wx.ID_ANY, (_("Denominator")))
         Flex_sar.Add(self.label_den1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)

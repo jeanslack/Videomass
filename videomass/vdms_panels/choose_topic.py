@@ -75,13 +75,13 @@ class Choose_Topic(wx.Panel):
         sizer_base = wx.BoxSizer(wx.VERTICAL)
 
         sizer_base.Add(50, 50)
-        sizer_base.Add(welcome, 0, wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALIGN_CENTER_HORIZONTAL, 0
+        sizer_base.Add(welcome, 0, wx.ALIGN_CENTER_VERTICAL
+                       | wx.ALIGN_CENTER_HORIZONTAL, 0,
                        )
         sizer_base.Add(20, 20)
-        sizer_base.Add(version, 0, wx.BOTTOM |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALIGN_CENTER_HORIZONTAL, 0
+        sizer_base.Add(version, 0, wx.BOTTOM
+                       | wx.ALIGN_CENTER_VERTICAL
+                       | wx.ALIGN_CENTER_HORIZONTAL, 0,
                        )
 
         if self.oS == 'Windows':
@@ -124,8 +124,8 @@ class Choose_Topic(wx.Panel):
                               (self.videotoimages, 0, wx.EXPAND, 5),
                               ])
         sizer_base.Add(50, 50)
-        sizer_base.Add(grid_buttons, 1, wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALIGN_CENTER_HORIZONTAL, 5
+        sizer_base.Add(grid_buttons, 1, wx.ALIGN_CENTER_VERTICAL
+                       | wx.ALIGN_CENTER_HORIZONTAL, 5,
                        )
         self.SetSizerAndFit(sizer_base)
 

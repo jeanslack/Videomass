@@ -76,9 +76,9 @@ class VidStab(Thread):
         self.nul = 'NUL' if VidStab.OS == 'Windows' else '/dev/null'
 
         spl = varargs[6].split('-vf ')[1]
-        addspl = ','.join([x for x in spl.split(',') if '-vf' not
-                           in x and 'vidstabtransform' not in x and
-                           'unsharp' not in x])  # if other filters
+        addspl = ','.join([x for x in spl.split(',') if '-vf'
+                           not in x and 'vidstabtransform' not in x
+                           and 'unsharp' not in x])  # if other filters
         self.addflt = '' if addspl == '' else f'{addspl},'
 
         Thread.__init__(self)

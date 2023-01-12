@@ -448,8 +448,8 @@ class SequenceToVideo(wx.Panel):
 
         with wx.FileDialog(self, _("Open an audio file"),
                            wildcard=wild,
-                           style=wx.FD_OPEN |
-                           wx.FD_FILE_MUST_EXIST) as fdlg:
+                           style=wx.FD_OPEN
+                           | wx.FD_FILE_MUST_EXIST) as fdlg:
 
             if fdlg.ShowModal() == wx.ID_CANCEL:
                 return

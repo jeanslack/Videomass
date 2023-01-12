@@ -119,8 +119,9 @@ class VideoToSequence(wx.Panel):
         siz_ctrl.Add(self.lbl_frmt, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_frmt = wx.ComboBox(self, wx.ID_ANY,
                                     choices=['jpeg', 'png', 'bmp', 'gif'],
-                                    size=(160, -1), style=wx.CB_DROPDOWN |
-                                    wx.CB_READONLY)
+                                    size=(160, -1), style=wx.CB_DROPDOWN
+                                    | wx.CB_READONLY,
+                                    )
         siz_ctrl.Add(self.cmb_frmt, 0, wx.ALL, 5)
         self.cmb_frmt.SetSelection(2)
         siz_tile = wx.FlexGridSizer(4, 4, 0, 0)
@@ -493,8 +494,8 @@ class VideoToSequence(wx.Panel):
         else:
             clicked = self.parent.filedropselected
 
-        typemedia = self.parent.fileDnDTarget.flCtrl.GetItemText(
-                                                     fsource.index(clicked), 3)
+        getclk = fsource.index(clicked)
+        typemedia = self.parent.fileDnDTarget.flCtrl.GetItemText(getclk, 3)
 
         if 'video' not in typemedia or 'sequence' in typemedia:
             wx.MessageBox(_("Invalid file: '{}'").format(clicked),

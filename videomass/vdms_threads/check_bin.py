@@ -57,10 +57,10 @@ def subp(args, ostype):
             out = proc.communicate()
 
             if proc.returncode:  # if returncode == 1
-                return('Not found', out[0])
+                return ('Not found', out[0])
 
     except (OSError, FileNotFoundError) as oserr:  # if ffmpeg do not exist
-        return('Not found', oserr)
+        return ('Not found', oserr)
 
     return ('None', out[0])
 # -----------------------------------------------------------#
@@ -84,7 +84,7 @@ def ff_conf(ffmpeg_url, ostype):
     version = subp([ffmpeg_url, '-loglevel', 'error', '-version'], ostype)
 
     if 'Not found' in version[0]:
-        return(version[0], version[1])
+        return (version[0], version[1])
 
     enable, disable, others, conf, info = [], [], [], [], []
 
@@ -99,7 +99,7 @@ def ff_conf(ffmpeg_url, ostype):
     build = subp([ffmpeg_url, '-loglevel', 'error', '-buildconf'], ostype)
 
     if 'Not found' in build[0]:
-        return(build[0], build[1])
+        return (build[0], build[1])
 
     for bld in build[1].split('\n'):
         conf.append(bld.strip())
@@ -117,7 +117,7 @@ def ff_conf(ffmpeg_url, ostype):
     if 'configuration:' in others:
         others.remove('configuration:')
 
-    return(info, others, enable, disable)
+    return (info, others, enable, disable)
 # -------------------------------------------------------------------#
 
 
@@ -179,7 +179,7 @@ def ff_codecs(ffmpeg_url, type_opt, ostype):
     ret = subp([ffmpeg_url, '-loglevel', 'error', type_opt], ostype)
 
     if 'Not found' in ret[0]:
-        return({ret[0], ret[1]})
+        return ({ret[0], ret[1]})
 
     codecs = ret[1].split('\n')
 
@@ -213,6 +213,6 @@ def ff_topics(ffmpeg_url, topic, ostype):
     ret = subp(arr, ostype)
 
     if 'Not found' in ret[0]:
-        return(ret[0], ret[1])
+        return (ret[0], ret[1])
 
     return ('None', ret[1])

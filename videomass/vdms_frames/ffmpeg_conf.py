@@ -46,12 +46,16 @@ class Checkconf(wx.MiniFrame):
         if close videomass also close parent window:
 
         """
-        wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
-                              wx.CLOSE_BOX | wx.SYSTEM_MENU
+        wx.MiniFrame.__init__(self, None,
+                              style=wx.RESIZE_BORDER
+                              | wx.CAPTION
+                              | wx.CLOSE_BOX
+                              | wx.SYSTEM_MENU,
                               )
         # add panel
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
-                              wx.BORDER_THEME)
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
+                              | wx.BORDER_THEME,
+                              )
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         notebook = wx.Notebook(self.panel, wx.ID_ANY)
         sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)
@@ -68,8 +72,8 @@ class Checkconf(wx.MiniFrame):
         nb_panel_2 = wx.Panel(notebook, wx.ID_ANY)
         others_opt = wx.ListCtrl(nb_panel_2,
                                  wx.ID_ANY,
-                                 style=wx.LC_REPORT |
-                                 wx.SUNKEN_BORDER
+                                 style=wx.LC_REPORT
+                                 | wx.SUNKEN_BORDER,
                                  )
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2.Add(others_opt, 1, wx.ALL | wx.EXPAND, 5)
@@ -78,8 +82,8 @@ class Checkconf(wx.MiniFrame):
         # -- nb 3
         nb_panel_3 = wx.Panel(notebook, wx.ID_ANY)
         enable_opt = wx.ListCtrl(nb_panel_3, wx.ID_ANY,
-                                 style=wx.LC_REPORT |
-                                 wx.SUNKEN_BORDER
+                                 style=wx.LC_REPORT
+                                 | wx.SUNKEN_BORDER,
                                  )
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab3.Add(enable_opt, 1, wx.ALL | wx.EXPAND, 5)
@@ -88,8 +92,8 @@ class Checkconf(wx.MiniFrame):
         # -- nb 4
         nb_panel_4 = wx.Panel(notebook, wx.ID_ANY)
         disabled_opt = wx.ListCtrl(nb_panel_4, wx.ID_ANY,
-                                   style=wx.LC_REPORT |
-                                   wx.SUNKEN_BORDER
+                                   style=wx.LC_REPORT
+                                   | wx.SUNKEN_BORDER,
                                    )
         sizer_tab4 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab4.Add(disabled_opt, 1, wx.ALL | wx.EXPAND, 5)

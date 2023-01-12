@@ -117,8 +117,8 @@ class PrstPan(wx.Panel):
         self.cmbx_prst = wx.ComboBox(self, wx.ID_ANY,
                                      choices=prst,
                                      size=(200, -1),
-                                     style=wx.CB_DROPDOWN |
-                                     wx.CB_READONLY
+                                     style=wx.CB_DROPDOWN
+                                     | wx.CB_READONLY,
                                      )
         boxpresets.Add(self.cmbx_prst, 0, wx.ALL | wx.EXPAND, 5)
         boxpresets.Add((5, 5))
@@ -129,8 +129,10 @@ class PrstPan(wx.Panel):
         boxpresets.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
         boxpresets.Add((5, 5))
         panelscr = scrolled.ScrolledPanel(self, -1, size=(200, 500),
-                                          style=wx.TAB_TRAVERSAL |
-                                          wx.BORDER_THEME, name="panelscroll")
+                                          style=wx.TAB_TRAVERSAL
+                                          | wx.BORDER_THEME,
+                                          name="panelscroll",
+                                          )
         fgs1 = wx.BoxSizer(wx.VERTICAL)
         self.btn_newpreset = wx.Button(panelscr, wx.ID_ANY,
                                        _("New"), size=(-1, -1))
@@ -200,8 +202,10 @@ class PrstPan(wx.Panel):
 
         # ------ BOX PROFILES
         # --- listctrl
-        self.list_ctrl = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
-                                     wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
+        self.list_ctrl = wx.ListCtrl(self, wx.ID_ANY,
+                                     style=wx.LC_REPORT
+                                     | wx.SUNKEN_BORDER
+                                     | wx.LC_SINGLE_SEL,
                                      )
         boxprofiles = wx.StaticBoxSizer(wx.StaticBox(
             self, wx.ID_ANY, _('Profiles')), wx.VERTICAL)
@@ -230,14 +234,12 @@ class PrstPan(wx.Panel):
         # ------- command line
         grd_cmd = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(grd_cmd, 0, wx.EXPAND)
-        box_cmd1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
-                                                  _("One-Pass")),
-                                     wx.VERTICAL
-                                     )
+        sbox = wx.StaticBox(self, wx.ID_ANY, _("One-Pass"))
+        box_cmd1 = wx.StaticBoxSizer(sbox, wx.VERTICAL)
         grd_cmd.Add(box_cmd1, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_1cmd = wx.TextCtrl(self, wx.ID_ANY, "",
-                                    size=(-1, 120), style=wx.TE_MULTILINE |
-                                    wx.TE_PROCESS_ENTER
+                                    size=(-1, 120), style=wx.TE_MULTILINE
+                                    | wx.TE_PROCESS_ENTER,
                                     )
         box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 5)
 
@@ -246,8 +248,8 @@ class PrstPan(wx.Panel):
                                      )
         grd_cmd.Add(box_cmd2, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_2cmd = wx.TextCtrl(self, wx.ID_ANY, "",
-                                    size=(-1, 120), style=wx.TE_MULTILINE |
-                                    wx.TE_PROCESS_ENTER
+                                    size=(-1, 120), style=wx.TE_MULTILINE
+                                    | wx.TE_PROCESS_ENTER,
                                     )
         box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer_base)
@@ -330,7 +332,7 @@ class PrstPan(wx.Panel):
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID9)
         # build the menu
         menu = wx.Menu()
-        menu.Append(popupID6,  _("Add"))
+        menu.Append(popupID6, _("Add"))
         menu.Append(popupID7, _("Edit"))
         menu.Append(popupID9, _("Duplicate"))
         menu.AppendSeparator()
@@ -477,8 +479,8 @@ class PrstPan(wx.Panel):
         with wx.FileDialog(self, _("Enter name for new preset"),
                            defaultDir=self.user_prst,
                            wildcard="Videomass presets (*.prst;)|*.prst;",
-                           style=wx.FD_SAVE |
-                           wx.FD_OVERWRITE_PROMPT) as fileDialog:
+                           style=wx.FD_SAVE
+                           | wx.FD_OVERWRITE_PROMPT) as fileDialog:
 
             if fileDialog.ShowModal() == wx.ID_CANCEL:
                 return
@@ -508,8 +510,8 @@ class PrstPan(wx.Panel):
         if wx.MessageBox(_('Are you sure you want to remove "{}" preset?\n\n '
                            'It will be moved to the "Removals" subfolder '
                            'of the presets folder.').format(filename),
-                         _('Please confirm'), wx.ICON_QUESTION |
-                         wx.YES_NO, self) == wx.NO:
+                         _('Please confirm'),
+                         wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
             return
 
         try:
@@ -592,8 +594,8 @@ class PrstPan(wx.Panel):
         wildcard = "Source (*.prst)|*.prst| All files (*.*)|*.*"
 
         with wx.FileDialog(self, _("Import a new preset"),
-                           "", "", wildcard, wx.FD_OPEN |
-                           wx.FD_FILE_MUST_EXIST) as filedlg:
+                           "", "", wildcard, wx.FD_OPEN
+                           | wx.FD_FILE_MUST_EXIST) as filedlg:
 
             if filedlg.ShowModal() == wx.ID_CANCEL:
                 return
@@ -603,7 +605,7 @@ class PrstPan(wx.Panel):
 
         if not newincoming.endswith('.prst'):
             wx.MessageBox(_('Error, invalid preset: "{}"').format(
-                                    os.path.basename(newincoming)),
+                          os.path.basename(newincoming)),
                           "Videomass", wx.ICON_ERROR, self
                           )
             return
@@ -614,8 +616,8 @@ class PrstPan(wx.Panel):
                                "updated. Don't worry, it will keep all your "
                                "saved profiles.\n\n"
                                "Do you want to continue?"),
-                             _('Please confirm'), wx.ICON_QUESTION |
-                             wx.YES_NO, self) == wx.NO:
+                             _('Please confirm'),
+                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
                 return
 
             preserve_old_profiles(newincoming,
@@ -640,8 +642,8 @@ class PrstPan(wx.Panel):
         if wx.MessageBox(_("This will update the presets database. "
                            "Don't worry, it will keep all your saved "
                            "profiles.\n\nDo you want to continue?"),
-                         _("Please confirm"), wx.ICON_QUESTION |
-                         wx.YES_NO, self) == wx.NO:
+                         _("Please confirm"),
+                         wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
             return
 
         dialsave = wx.DirDialog(self, _("Import a new presets folder"),
@@ -676,11 +678,14 @@ class PrstPan(wx.Panel):
         Replace the selected preset at default values.
 
         """
-        if wx.MessageBox(_("Be careful! The selected preset will be "
-                           "overwritten with the default one. Your profiles "
-                           "may be deleted!\n\nDo you want to continue?"),
-                         _("Warning"),
-                         wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
+        msg = _("Be careful! The selected preset will be "
+                "overwritten with the default one. Your profiles "
+                "may be deleted!\n\nDo you want to continue?"
+                )
+        if wx.MessageBox(msg, _("Warning"),
+                         wx.ICON_WARNING
+                         | wx.YES_NO
+                         | wx.CANCEL,
                          self) == wx.YES:
 
             filename = self.cmbx_prst.GetValue()
@@ -777,7 +782,7 @@ class PrstPan(wx.Panel):
             return
         filename = os.path.join(f'{self.user_prst}',
                                 f'{self.cmbx_prst.GetValue()}.prst'
-                            )
+                                )
         newprst = write_new_profile(filename,
                                     Name=f'{self.array[0]} (duplicated)',
                                     Description=self.array[1],
@@ -807,8 +812,8 @@ class PrstPan(wx.Panel):
                          self) == wx.YES:
 
             filename = os.path.join(f'{self.user_prst}',
-                                f'{self.cmbx_prst.GetValue()}.prst'
-                                )
+                                    f'{self.cmbx_prst.GetValue()}.prst'
+                                    )
             delete_profiles(filename, self.array[0])
             self.reset_list()
     # ------------------------------------------------------------------#
@@ -823,8 +828,8 @@ class PrstPan(wx.Panel):
                                       PrstPan.YELLOW, PrstPan.BLACK)
             return
 
-        if(self.array[2].strip() != self.txt_1cmd.GetValue().strip() or
-           self.array[3].strip() != self.txt_2cmd.GetValue().strip()):
+        if (self.array[2].strip() != self.txt_1cmd.GetValue().strip()
+                or self.array[3].strip() != self.txt_2cmd.GetValue().strip()):
             if self.txtcmdedited:
 
                 msg = _("The selected profile command has been "
@@ -833,8 +838,8 @@ class PrstPan(wx.Panel):
                         "during the conversion process?")
                 dlg = wx.RichMessageDialog(self, msg,
                                            _("Please confirm"),
-                                           wx.ICON_QUESTION |
-                                           wx.YES_NO
+                                           wx.ICON_QUESTION
+                                           | wx.YES_NO,
                                            )
                 dlg.ShowCheckBox(_("Don't show this dialog again"))
 

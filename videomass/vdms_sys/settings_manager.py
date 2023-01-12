@@ -55,20 +55,20 @@ class ConfigManager:
         current version of this configuration file
 
     outputfile (str):
-        output path used by ffmpeg for file saving
+        file destination path used by ffmpeg
 
     outputfile_samedir (bool):
-        if True save any ffmpeg files to same folder as source
+        if True save each ffmpeg files to same folder as source
 
     filesuffix (str):
         An optional suffix to assign to output files
 
     outputdownload (str):
-        output path used by the downloader for file saving
+        file destination path used by the downloader
 
     ffmpeg_cmd, ffplay_cmd, ffprobe_cmd, (str):
         Absolute or relative path name of the executable.
-        if empty string ("") starts the wizard.
+        If an empty ("") string is found, starts the wizard.
 
     ffmpeg_islocal, ffplay_islocal, ffprobe_islocal, (bool):
         With True the user enables the executable locally
@@ -100,33 +100,35 @@ class ConfigManager:
         True, enables text alongside toolbar buttons. Default is False.
 
     window_size (list):
-        [Height, Width] current window dimension.
+        [int(Height), int(Width)] last current window dimension before
+        exiting the application.
 
     window_position (list):
-        [x, y] current window position on monitor screen.
+        [int(x), in(y)] last current window position on monitor screen
+        before exiting the application.
 
     clearcache (bool):
-        with True deleting file cache on exit the app,
+        with True, clear the cache before exiting the application,
         default is False
 
     clearlogfiles (bool):
-        with True deleting log file content on exit the app,
-        default is False.
+        with True, erases all log files content before exiting the
+        application, default is False.
 
     downloader (bool, str):
         sets the downloader to use when application startup.
         one of `disabled`,` youtube_dl`, `yt_dlp` or False
         Where `disabled` means not load anything, `youtube_dl`
         means load/use youtube-dl on sturtup, `yt_dlp` means load/use
-        yt_dl on sturtup, `false` means *not set at all* and the
-        wizard dialog will be displayed.
+        yt_dl on sturtup, `false` means *not set at all* then
+        a wizard dialog will be displayed.
 
     playlistsubfolder (bool):
         Auto-create subfolders when download the playlists,
         default value is True.
 
     move_file_to_trash (bool):
-        if True, move input files to videomass trash folder or inside
+        if True, move input files to videomass trash folder or in
         some other dir.
         default value is False
 
@@ -143,36 +145,35 @@ class ConfigManager:
 
     """
     VERSION = 4.5
-    DEFAULT_OPTIONS = {
-        "confversion": VERSION,
-        "outputfile": f"{os.path.expanduser('~')}",
-        "outputfile_samedir": False,
-        "filesuffix": "",
-        "outputdownload": f"{os.path.expanduser('~')}",
-        "ffmpeg_cmd": "",
-        "ffmpeg_islocal": False,
-        "ffmpegloglev": "-loglevel warning",
-        "ffthreads": "-threads 4",
-        "ffplay_cmd": "",
-        "ffplay_islocal": False,
-        "ffplayloglev": "-loglevel error",
-        "ffprobe_cmd": "",
-        "ffprobe_islocal": False,
-        "warnexiting": True,
-        "icontheme": "Videomass-Colours",
-        "toolbarsize": 24,
-        "toolbarpos": 0,
-        "toolbartext": False,
-        "window_size": [850, 560],
-        "window_position": [0, 0],
-        "clearcache": False,
-        "clearlogfiles": False,
-        "downloader": False,
-        "playlistsubfolder": True,
-        "move_file_to_trash": False,
-        "trashfolder": "",
-        "locale_name": "Default"
-        }
+    DEFAULT_OPTIONS = {"confversion": VERSION,
+                       "outputfile": f"{os.path.expanduser('~')}",
+                       "outputfile_samedir": False,
+                       "filesuffix": "",
+                       "outputdownload": f"{os.path.expanduser('~')}",
+                       "ffmpeg_cmd": "",
+                       "ffmpeg_islocal": False,
+                       "ffmpegloglev": "-loglevel warning",
+                       "ffthreads": "-threads 4",
+                       "ffplay_cmd": "",
+                       "ffplay_islocal": False,
+                       "ffplayloglev": "-loglevel error",
+                       "ffprobe_cmd": "",
+                       "ffprobe_islocal": False,
+                       "warnexiting": True,
+                       "icontheme": "Videomass-Colours",
+                       "toolbarsize": 24,
+                       "toolbarpos": 0,
+                       "toolbartext": False,
+                       "window_size": [850, 560],
+                       "window_position": [0, 0],
+                       "clearcache": False,
+                       "clearlogfiles": False,
+                       "downloader": False,
+                       "playlistsubfolder": True,
+                       "move_file_to_trash": False,
+                       "trashfolder": "",
+                       "locale_name": "Default"
+                       }
 
     def __init__(self, filename, makeportable=None):
         """

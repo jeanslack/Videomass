@@ -292,13 +292,13 @@ class FileDnD(wx.Panel):
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
         self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(35, -1))
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
-                                          style=wx.TE_PROCESS_ENTER |
-                                          wx.TE_READONLY
+                                          style=wx.TE_PROCESS_ENTER
+                                          | wx.TE_READONLY,
                                           )
         sizer_outdir.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 2)
-        sizer_outdir.Add(self.btn_save, 0, wx.ALL |
-                         wx.ALIGN_CENTER_HORIZONTAL |
-                         wx.ALIGN_CENTER_VERTICAL, 2
+        sizer_outdir.Add(self.btn_save, 0, wx.ALL
+                         | wx.ALIGN_CENTER_HORIZONTAL
+                         | wx.ALIGN_CENTER_VERTICAL, 2,
                          )
         sizer.Add(sizer_outdir, 0, wx.EXPAND)
         self.SetSizer(sizer)
@@ -452,7 +452,6 @@ class FileDnD(wx.Panel):
             self.delete_all(self)
             return
 
-        #num = 0
         for num in sorted(indexes, reverse=True):
             self.flCtrl.DeleteItem(num)  # remove selected items
             self.data.pop(num)  # remove selected items

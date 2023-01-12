@@ -26,7 +26,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
 import requests
 import wx
 from videomass.vdms_threads.ffplay_file import FilePlay
@@ -48,7 +47,6 @@ from videomass.vdms_frames import (ffmpeg_conf,
                                    ffmpeg_codecs,
                                    )
 from videomass.vdms_dialogs.widget_utils import PopupDialog
-from videomass.vdms_io.make_filelog import make_log_template
 
 
 def stream_info(title, filepath):
@@ -289,7 +287,7 @@ def get_github_releases(url, keyname):
 
     """
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=15)
         not_found = None, None
 
     except Exception as err:

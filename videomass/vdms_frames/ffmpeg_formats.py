@@ -44,12 +44,16 @@ class FFmpeg_formats(wx.MiniFrame):
         if close videomass also close parent window:
 
         """
-        wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
-                              wx.CLOSE_BOX | wx.SYSTEM_MENU
+        wx.MiniFrame.__init__(self, None,
+                              style=wx.RESIZE_BORDER
+                              | wx.CAPTION
+                              | wx.CLOSE_BOX
+                              | wx.SYSTEM_MENU,
                               )
         # add panel
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
-                              wx.BORDER_THEME)
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
+                              | wx.BORDER_THEME,
+                              )
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         notebook = wx.Notebook(self.panel, wx.ID_ANY)
         sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)
@@ -57,8 +61,8 @@ class FFmpeg_formats(wx.MiniFrame):
         notebook_pane_1 = wx.Panel(notebook, wx.ID_ANY)
         dmx = wx.ListCtrl(notebook_pane_1,
                           wx.ID_ANY,
-                          style=wx.LC_REPORT |
-                          wx.SUNKEN_BORDER
+                          style=wx.LC_REPORT
+                          | wx.SUNKEN_BORDER,
                           )
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab1.Add(dmx, 1, wx.ALL | wx.EXPAND, 5)
@@ -68,8 +72,8 @@ class FFmpeg_formats(wx.MiniFrame):
         notebook_pane_2 = wx.Panel(notebook, wx.ID_ANY)
         mx = wx.ListCtrl(notebook_pane_2,
                          wx.ID_ANY,
-                         style=wx.LC_REPORT |
-                         wx.SUNKEN_BORDER
+                         style=wx.LC_REPORT
+                         | wx.SUNKEN_BORDER,
                          )
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2.Add(mx, 1, wx.ALL | wx.EXPAND, 5)
@@ -79,8 +83,8 @@ class FFmpeg_formats(wx.MiniFrame):
         notebook_pane_3 = wx.Panel(notebook, wx.ID_ANY)
         dmx_mx = wx.ListCtrl(notebook_pane_3,
                              wx.ID_ANY,
-                             style=wx.LC_REPORT |
-                             wx.SUNKEN_BORDER
+                             style=wx.LC_REPORT
+                             | wx.SUNKEN_BORDER,
                              )
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab3.Add(dmx_mx, 1, wx.ALL | wx.EXPAND, 5)

@@ -63,7 +63,6 @@ def arguments():
                               'may not be fully updated on the configuration '
                               'file.'
                               ),
-                        #action="store_true",
                         metavar='URL',
                         )
 

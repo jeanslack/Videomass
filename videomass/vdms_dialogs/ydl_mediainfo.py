@@ -48,15 +48,15 @@ class YdlMediaInfo(wx.Dialog):
         # Add widget controls
         self.url_select = wx.ListCtrl(self,
                                       wx.ID_ANY,
-                                      style=wx.LC_REPORT |
-                                      wx.SUNKEN_BORDER |
-                                      wx.LC_SINGLE_SEL
+                                      style=wx.LC_REPORT
+                                      | wx.SUNKEN_BORDER
+                                      | wx.LC_SINGLE_SEL,
                                       )
         self.textctrl = wx.TextCtrl(self,
                                     wx.ID_ANY, "",
-                                    style=wx.TE_MULTILINE |
-                                    wx.TE_READONLY |
-                                    wx.TE_RICH2
+                                    style=wx.TE_MULTILINE
+                                    | wx.TE_READONLY
+                                    | wx.TE_RICH2,
                                     )
         self.textctrl.SetBackgroundColour(colorscheme['BACKGRD'])
         self.textctrl.SetDefaultStyle(wx.TextAttr(colorscheme['TXT3']))

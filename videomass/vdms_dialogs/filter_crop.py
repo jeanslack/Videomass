@@ -65,7 +65,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
     by the W (width) and H (height) lines.
 
     """
-    def __init__(self, parent, bitmap, idNum,  imgFile, **kwargs):
+    def __init__(self, parent, bitmap, idNum, imgFile, **kwargs):
         """
         Attributes defines the rectangle dimensions and coordinates,
         a parent and a current_bmp. First make sure you scale the
@@ -191,7 +191,7 @@ class Crop(wx.Dialog):
         self.panelrect = wx.Panel(self, wx.ID_ANY,
                                   size=(self.w_ratio, self.h_ratio)
                                   )
-        bmp = make_bitmap(self.w_ratio, self.h_ratio, self.image)####
+        bmp = make_bitmap(self.w_ratio, self.h_ratio, self.image)
         self.bob = Actor(self.panelrect, bmp, 1, "")
         sizerBase.Add(self.panelrect, 0, wx.ALL | wx.CENTER, 5)
         sizersize = wx.BoxSizer(wx.VERTICAL)
@@ -213,9 +213,8 @@ class Crop(wx.Dialog):
         sizer_load.Add(self.slider, 0, wx.ALL | wx.CENTER, 5)
         btn_load = wx.Button(self, wx.ID_ANY, _("Load"))
         sizer_load.Add(btn_load, 1, wx.ALL | wx.EXPAND, 10)
-        sizerLabel = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                        _("Cropping area selection "))),
-                                       wx.VERTICAL)
+        boxs = wx.StaticBox(self, wx.ID_ANY, (_("Cropping area selection ")))
+        sizerLabel = wx.StaticBoxSizer(boxs, wx.VERTICAL)
         sizerBase.Add(sizerLabel, 0, wx.ALL | wx.EXPAND, 5)
         boxctrl = wx.BoxSizer(wx.VERTICAL)
         sizerLabel.Add(boxctrl, 0, wx.CENTRE)
@@ -223,8 +222,8 @@ class Crop(wx.Dialog):
         boxctrl.Add(label_height, 0, wx.ALL | wx.CENTRE, 0)
         self.crop_height = wx.SpinCtrl(self, wx.ID_ANY, "0",
                                        min=0, max=self.v_height, size=(-1, -1),
-                                       style=wx.TE_PROCESS_ENTER |
-                                       wx.SP_ARROW_KEYS
+                                       style=wx.TE_PROCESS_ENTER
+                                       | wx.SP_ARROW_KEYS
                                        )
         boxctrl.Add(self.crop_height, 0, wx.CENTRE)
         grid_sizerBase = wx.FlexGridSizer(1, 5, 0, 0)
@@ -234,29 +233,29 @@ class Crop(wx.Dialog):
 
         self.axis_X = wx.SpinCtrl(self, wx.ID_ANY, "0",
                                   min=-1, max=self.v_width, size=(-1, -1),
-                                  style=wx.TE_PROCESS_ENTER |
-                                  wx.SP_ARROW_KEYS
+                                  style=wx.TE_PROCESS_ENTER
+                                  | wx.SP_ARROW_KEYS
                                   )
         grid_sizerBase.Add(self.axis_X, 0, wx.ALL | wx.CENTRE, 5)
 
         self.btn_centre = wx.Button(self, wx.ID_ANY, _("Center"))
-        grid_sizerBase.Add(self.btn_centre, 0, wx.ALL |
-                           wx.ALIGN_CENTER_VERTICAL, 5)
-
+        grid_sizerBase.Add(self.btn_centre, 0, wx.ALL
+                           | wx.ALIGN_CENTER_VERTICAL, 5)
         self.crop_width = wx.SpinCtrl(self, wx.ID_ANY, "0",
-                                      min=0,  max=self.v_width, size=(-1, -1),
-                                      style=wx.TE_PROCESS_ENTER |
-                                      wx.SP_ARROW_KEYS
+                                      min=0, max=self.v_width,
+                                      size=(-1, -1),
+                                      style=wx.TE_PROCESS_ENTER
+                                      | wx.SP_ARROW_KEYS
                                       )
         grid_sizerBase.Add(self.crop_width, 0, wx.ALL | wx.CENTRE, 5)
 
         label_width = wx.StaticText(self, wx.ID_ANY, (_("Width")))
-        grid_sizerBase.Add(label_width, 0, wx.RIGHT |
-                           wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_sizerBase.Add(label_width, 0, wx.RIGHT
+                           | wx.ALIGN_CENTER_VERTICAL, 5)
         self.axis_Y = wx.SpinCtrl(self, wx.ID_ANY, "0",
                                   min=-1, max=self.v_height, size=(-1, -1),
-                                  style=wx.TE_PROCESS_ENTER |
-                                  wx.SP_ARROW_KEYS
+                                  style=wx.TE_PROCESS_ENTER
+                                  | wx.SP_ARROW_KEYS
                                   )
         boxctrl.Add(self.axis_Y, 0, wx.CENTRE)
         label_Y = wx.StaticText(self, wx.ID_ANY, ("Y"))

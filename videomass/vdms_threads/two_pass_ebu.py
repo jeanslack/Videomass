@@ -98,7 +98,8 @@ class Loudnorm(Thread):
             self.count += 1
             count = (f'File {self.count}/{self.countmax} - Pass One\n '
                      f'Loudnorm ebu: Getting statistics for measurements...')
-            cmd = (f'{count}\nSource: "{infile}"\nDestination: "{self.nul}"\n\n'
+            cmd = (f'{count}\nSource: "{infile}"\nDestination: '
+                   f'"{self.nul}"\n\n'
                    f'[COMMAND]:\n{pass1}')
 
             wx.CallAfter(pub.sendMessage,

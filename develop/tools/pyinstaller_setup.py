@@ -189,7 +189,7 @@ def onefile_onedir():
         onedf = input(text)
         if onedf.strip() in ('1', '2', ''):
             break
-        print(f"\nInvalid option '{clean}'\n")
+        print(f"\nInvalid option '{onedf}'")
         continue
 
     return '--onefile' if onedf == '2' else '--onedir'
@@ -248,7 +248,7 @@ def clean_buildingdirs(here=HERE):
         clean = input('Want you remove "dist" and "build" folders (y/n)? ')
         if clean.strip() in ('Y', 'y', 'n', 'N'):
             break
-        print(f"\nInvalid option '{clean}'\n")
+        print(f"\nInvalid option '{clean}'")
         continue
 
     if clean in ('y', 'Y'):
@@ -288,25 +288,25 @@ def run_pyinst(specfile=SPECFILE):
 
 def make_portable(here=HERE):
     """
-    Optionally, you can create a portable_data folder for Videomass
-    stand-alone executable to keep all application data inside
-    the program folder.
+    If you plan to make definively fully portable the application
+    bundled, use this function to implements this feature.
+
     Note:
        with `--onedir` option, the 'portable_data' directory should
-       be inside the videomass directory.
+       be inside the videomass standalone directory.
         with `--onefile` option, the 'portable_data' directory should
-        be next to the videomass directory.
+        be next to the videomass standalone executable.
     """
     while True:
         portable = input('Do you want to keep all application data inside '
                          'the program folder? (makes stand-alone executable '
-                         'fully portable and stealth) (y/n) ')
-        if portable.strip() in ('Y', 'y', 'n', 'N'):
+                         'fully portable and stealth) (y/N) ')
+        if portable.strip()  in ('Y', 'y', 'n', 'N'):
             break
-        print(f"\nInvalid option '{portable}'\n")
+        print(f"\nInvalid option '{portable}'")
         continue
 
-    if portable  in ('n', 'N'):
+    if portable in ('n', 'N'):
         return False
 
     error = False
@@ -320,10 +320,11 @@ def make_portable(here=HERE):
 
         for line in data:
             if line.startswith(row):
-                num = data.index(line)
-        if num:
+                idx = data.index(line)
+        if idx:
+            gui_app.flush()
             gui_app.seek(0)
-            data[num] = code
+            data[idx] = code  # replace `row` line with `code`
             gui_app.writelines(data)
             gui_app.truncate()
         else:
@@ -331,6 +332,7 @@ def make_portable(here=HERE):
 
     if error:
         sys.exit("\nERROR on writing file `gui_app.py`")
+
     return True
 # --------------------------------------------------------#
 
@@ -347,7 +349,7 @@ def restore_sources(data, here=HERE):
 
 def backup_sources(here=HERE):
     """
-    Restore source file `gui_app.py`
+    Backup source file `gui_app.py`
     """
     data = None
     filename = os.path.join(here, 'videomass', 'gui_app.py')
@@ -357,36 +359,39 @@ def backup_sources(here=HERE):
 # --------------------------------------------------------#
 
 
+def get_data_platform():
+    """
+    Retrieves data options and generates spec file.
+    """
+    if not platform.system() in ('Windows', 'Darwin', 'Linux'):
+        sys.exit("\nERROR: Unsupported platform. Maybe you "
+                 "could create a 'spec' file using this command:\n"
+                 "pyi-makespec [options] videomass.py\n"
+                 )
+
+    wrap = PyinstallerSpec(onefile_onedir())
+
+    if platform.system() == 'Linux':
+        getopts = wrap.linux_platform()
+        genspec(getopts)
+
+    elif platform.system() == 'Darwin':
+        getopts = wrap.darwin_platform()
+        genspec(getopts[0], addplist=getopts[1])
+
+    elif platform.system() == 'Windows':
+        getopts = wrap.windows_platform()
+        genspec(getopts)
+# ----------------------------------------------#
+
+
 def main():
     """
     Users inputs parser (positional/optional arguments)
     """
-    def checkin():
-        """
-        """
-        if not platform.system() in ('Windows', 'Darwin', 'Linux'):
-            sys.exit("\nERROR: Unsupported platform. Maybe you "
-                     "could create a 'spec' file using this command:\n"
-                     "pyi-makespec [options] videomass.py\n"
-                     )
-
-        wrap = PyinstallerSpec(onefile_onedir())
-
-        if platform.system() == 'Linux':
-            getopts = wrap.linux_platform()
-            genspec(getopts)
-
-        elif platform.system() == 'Darwin':
-            getopts = wrap.darwin_platform()
-            genspec(getopts[0], addplist=getopts[1])
-
-        elif platform.system() == 'Windows':
-            getopts = wrap.windows_platform()
-            genspec(getopts)
-    # ----------------------------------------------#
-
-    parser = argparse.ArgumentParser(
-        description='Wrap the pyinstaller setup for Videomass application',)
+    parser = argparse.ArgumentParser(description=('Wrap the pyinstaller setup '
+                                                  'for Videomass application',)
+                                     )
     parser.add_argument(
         '-g', '--gen_spec',
         help="Generates a ready-to-use videomass.spec file.",
@@ -405,12 +410,12 @@ def main():
     args = parser.parse_args()
 
     if args.gen_spec:
-        checkin()
+        get_data_platform()
 
     elif args.genspec_build:
         backup = backup_sources()
         ret = make_portable()
-        checkin()
+        get_data_platform()
         run_pyinst()
         if ret:
             restore_sources(backup)
@@ -419,10 +424,8 @@ def main():
         backup = backup_sources()
         ret = make_portable()
         run_pyinst()
-        make_portable()
         if ret:
             restore_sources(backup)
-
     else:
         print("\nType 'pyinstaller_setup.py -h' for help.\n")
         return

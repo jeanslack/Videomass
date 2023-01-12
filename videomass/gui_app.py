@@ -87,8 +87,8 @@ class Videomass(wx.App):
         """Bootstrap interface."""
 
         if self.appset.get('ERROR'):
-            wx.MessageBox(f"FATAL: {self.appset['ERROR']}\n\nSorry, cannot "
-                          f"continue..", 'Videomass - ERROR', wx.ICON_STOP)
+            wx.MessageBox(f"FATAL: {self.appset['ERROR']}\n\nSorry, unable "
+                          f"to continue...", 'Videomass - ERROR', wx.ICON_STOP)
             return False
 
         self.appset['DISPLAY_SIZE'] = wx.GetDisplaySize()  # get monitor res
@@ -263,16 +263,8 @@ class Videomass(wx.App):
 
 def main():
     """
-    Without command line arguments starts the wx.App mainloop
-    with default arguments.
-
-    If you plan to make definively portable a pyinstaller
-    app, replace the kwargs value inside `if` statement, with
-    this piece of code:
-
-    data = os.path.join(os.path.dirname(sys.executable), 'portable_data')
-    kwargs = {'make_portable': data}
-
+    Without command line arguments starts the
+    wx.App mainloop with default keyword arguments.
     """
     if not sys.argv[1:]:
         kwargs = {'make_portable': None}
