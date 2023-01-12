@@ -35,9 +35,9 @@ jobs:
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --show-source --statistics
+        flake8 . --count --show-source --statistics --exclude=develop/tools/generate_INNO_setup.py
         # exit-zero treats all errors as warnings. The GitHub editor is 79 chars wide
-        flake8 . --count --exit-zero --max-complexity=15 --max-line-length=79 --ignore=F821,W503,C901 --statistics 
+        flake8 . --count --exit-zero --max-complexity=15 --max-line-length=79 --ignore=F821,W503,C901 --statistics --exclude=develop/tools/generate_INNO_setup.py 
     - name: Test with pytest
       run: |
         python3 tests/test_check_bin.py
