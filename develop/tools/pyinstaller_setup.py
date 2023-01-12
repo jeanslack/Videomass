@@ -7,7 +7,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sept.04.2021
+Rev: Jan.11.2023
 ########################################################
 This file is part of Videomass.
     Videomass is free software: you can redistribute it and/or modify
@@ -34,18 +34,16 @@ HERE = os.path.dirname(os.path.dirname(os.path.dirname(this)))
 sys.path.insert(0, HERE)
 try:
     from videomass.vdms_sys.msg_info import current_release
-except ModuleNotFoundError as error:
-    sys.exit(error)
+except ModuleNotFoundError as modulerror:
+    sys.exit(modulerror)
 
 SCRIPT = 'launcher'
 NAME = 'videomass'
 BINARY = os.path.join(HERE, SCRIPT)
 SPECFILE = os.path.join(HERE, f'{NAME}.spec')
-# BINARY = os.path.join(HERE, 'bin', 'videomass')
-# SPECFILE = os.path.join(HERE, 'videomass.spec')
 
 
-def data(here=HERE, name=NAME):
+def videomass_data_source(here=HERE, name=NAME):
     """
     Returns a dict object of the Videomass data
     and pathnames needed to spec file.
@@ -96,7 +94,7 @@ class PyinstallerSpec():
         Linux, MacOS and MS-Windows
         """
         self.onedf = onedf  # is None if --start_build option is given
-        self.getdata = data()
+        self.getdata = videomass_data_source()
         sep = ';' if platform.system() == 'Windows' else ':'
 
         self.datas = (f"--add-data {self.getdata['ART']}{sep}art "
@@ -181,11 +179,18 @@ def onefile_onedir():
     Pyinstaller offer two options to generate stand-alone executables.
     The `--onedir` option is the default.
     """
-    onedf = input('\nChoose from the following options:\n'
-                  '[1] Create a one-folder bundle containing an '
-                  'executable (default)\n'
-                  '[2] Create a one-file bundled executable\n'
-                  '(1/2) ')
+    text = ('\nChoose from the following options:\n'
+            '[1] Create a one-folder bundle containing an '
+            'executable (default)\n'
+            '[2] Create a one-file bundled executable\n'
+            '(1/2) ')
+
+    while True:
+        onedf = input(text)
+        if onedf.strip() in ('1', '2', ''):
+            break
+        print(f"\nInvalid option '{clean}'\n")
+        continue
 
     return '--onefile' if onedf == '2' else '--onedir'
 # --------------------------------------------------------#
@@ -239,8 +244,13 @@ def clean_buildingdirs(here=HERE):
     Asks the user if they want to clean-up building
     directories, usually "dist" and "build" dirs.
     """
+    while True:
+        clean = input('Want you remove "dist" and "build" folders (y/n)? ')
+        if clean.strip() in ('Y', 'y', 'n', 'N'):
+            break
+        print(f"\nInvalid option '{clean}'\n")
+        continue
 
-    clean = input('Want you remove "dist" and "build" folders (y/n)? ')
     if clean in ('y', 'Y'):
         if os.path.exists(os.path.join(here, 'dist')):
             try:
@@ -265,7 +275,7 @@ def run_pyinst(specfile=SPECFILE):
         fetch_exec()  # fetch videomass binary
         time.sleep(1)
         try:
-            subprocess.run('pyinstaller --clean {specfile}',
+            subprocess.run(f'pyinstaller --clean {specfile}',
                            shell=True, check=True)
         except subprocess.CalledProcessError as err:
             sys.exit(f'\nERROR: {err}\n')
@@ -287,47 +297,63 @@ def make_portable(here=HERE):
         with `--onefile` option, the 'portable_data' directory should
         be next to the videomass directory.
     """
-    portable = input('Do you want to keep all application data inside '
-                     'the program folder? (makes stand-alone executable '
-                     'fully portable and stealth) (y/n) ')
-    if portable in ('y', 'Y'):
-        portabledir = 'portable_data'
-    else:
-        return
+    while True:
+        portable = input('Do you want to keep all application data inside '
+                         'the program folder? (makes stand-alone executable '
+                         'fully portable and stealth) (y/n) ')
+        if portable.strip() in ('Y', 'y', 'n', 'N'):
+            break
+        print(f"\nInvalid option '{portable}'\n")
+        continue
 
-    def makedir(datashare):
-        """
-        make portable_data folder
-        """
-        if not os.path.exists(datashare):
-            try:
-                os.mkdir(datashare)
-            except OSError as err:
-                sys.exit(f'ERROR: {err}')
-            else:
-                sys.exit('\nDONE: "portable_data" folder is created\n')
-        else:
-            sys.exit('INFO: "portable_data" folder already exists')
+    if portable  in ('n', 'N'):
+        return False
 
-    if platform.system() == 'Windows':
-        if os.path.exists(os.path.join(here, 'dist', 'Videomass.exe')):
-            datashare = os.path.join(here, 'dist', portabledir)
-        else:
-            datashare = os.path.join(here, 'dist', 'Videomass', portabledir)
+    error = False
+    row = "        kwargs = {'make_portable': None}"
+    code = ("        data = os.path.join(os.path.dirname(sys.executable), "
+            "'portable_data')\n        kwargs = {'make_portable': data}\n")
+    filename = os.path.join(here, 'videomass', 'gui_app.py')
 
-    elif platform.system() == 'Darwin':
-        if os.path.exists(os.path.join(here, 'dist', 'Videomass.app')):
-            datashare = os.path.join(here, 'dist', 'Videomass.app',
-                                     'Contents', 'MacOS', portabledir)
-        else:
-            datashare = os.path.join(here, 'dist', portabledir)
-    else:
-        if os.path.isfile(os.path.join(here, 'dist', 'videomass')):
-            datashare = os.path.join(here, 'dist', portabledir)
-        else:
-            datashare = os.path.join(here, 'dist', 'videomass', portabledir)
+    with open(filename, 'r+', encoding='utf8') as gui_app:
+        data = gui_app.readlines()
 
-    makedir(datashare)
+        for line in data:
+            if line.startswith(row):
+                num = data.index(line)
+        if num:
+            gui_app.seek(0)
+            data[num] = code
+            gui_app.writelines(data)
+            gui_app.truncate()
+        else:
+            error = True
+
+    if error:
+        sys.exit("\nERROR on writing file `gui_app.py`")
+    return True
+# --------------------------------------------------------#
+
+
+def restore_sources(data, here=HERE):
+    """
+    Restore source file `gui_app.py`
+    """
+    filename = os.path.join(here, 'videomass', 'gui_app.py')
+    with open(filename, 'w', encoding='utf8') as bak:
+        bak.write(''.join(data))
+# --------------------------------------------------------#
+
+
+def backup_sources(here=HERE):
+    """
+    Restore source file `gui_app.py`
+    """
+    data = None
+    filename = os.path.join(here, 'videomass', 'gui_app.py')
+    with open(filename, 'r', encoding='utf8') as gui_app:
+        data = gui_app.readlines()
+    return data
 # --------------------------------------------------------#
 
 
@@ -382,13 +408,20 @@ def main():
         checkin()
 
     elif args.genspec_build:
+        backup = backup_sources()
+        ret = make_portable()
         checkin()
         run_pyinst()
-        # make_portable()
+        if ret:
+            restore_sources(backup)
 
     elif args.start_build:
+        backup = backup_sources()
+        ret = make_portable()
         run_pyinst()
-        # make_portable()
+        make_portable()
+        if ret:
+            restore_sources(backup)
 
     else:
         print("\nType 'pyinstaller_setup.py -h' for help.\n")

@@ -275,7 +275,7 @@ def main():
 
     """
     if not sys.argv[1:]:
-        kwargs = {'make_portable': None, 'pref_relativepaths': False}
+        kwargs = {'make_portable': None}
     else:
         kwargs = arguments()
 
