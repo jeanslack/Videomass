@@ -32,8 +32,8 @@ class GuiTestCase(unittest.TestCase):
 
     def setUp(self):
         """Method called to prepare the test fixture"""
-
-        self.app = gui_app.Videomass(redirect=False)
+        kwargs = {'make_portable': None}
+        self.app = gui_app.Videomass(redirect=False, **kwargs)
 
     def tearDown(self):
         """

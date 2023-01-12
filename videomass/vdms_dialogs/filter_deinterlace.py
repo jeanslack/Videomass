@@ -55,10 +55,10 @@ class Deinterlace(wx.Dialog):
 
         self.enable_opt = wx.ToggleButton(self, wx.ID_ANY,
                                           _("Advanced Options"))
-        zone1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    _("Deinterlace"))), wx.VERTICAL)
-        zone2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    _("Interlace"))), wx.VERTICAL)
+        boxs = wx.StaticBox(self, wx.ID_ANY, (_("Deinterlace")))
+        zone1 = wx.StaticBoxSizer(boxs, wx.VERTICAL)
+        boxs = wx.StaticBox(self, wx.ID_ANY, (_("Interlace")))
+        zone2 = wx.StaticBoxSizer(boxs, wx.VERTICAL)
 
         self.ckbx_deintW3fdif = wx.CheckBox(self, wx.ID_ANY,
                                             (_("Deinterlaces with "
@@ -154,25 +154,25 @@ class Deinterlace(wx.Dialog):
         self.sizer_base.Add(zone1, 0, wx.ALL | wx.EXPAND, 5)
         grid_w3fdif = wx.FlexGridSizer(1, 4, 0, 0)
         zone1.Add(grid_w3fdif)
-        grid_w3fdif.Add(self.ckbx_deintW3fdif, 0, wx.ALL |
-                        wx.ALIGN_CENTER_VERTICAL |
-                        wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_w3fdif.Add(self.ckbx_deintW3fdif, 0, wx.ALL
+                        | wx.ALIGN_CENTER_VERTICAL
+                        | wx.ALIGN_CENTER_HORIZONTAL, 5)
         grid_w3fdif.Add(self.rdbx_w3fdif, 0, wx.ALL, 5)
         grid_w3fdif.Add(self.rdbx_w3fdif_d, 0, wx.ALL, 5)
         grid_yadif = wx.FlexGridSizer(1, 4, 0, 0)
         zone1.Add(grid_yadif)
-        grid_yadif.Add(self.ckbx_deintYadif, 0, wx.ALL |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_yadif.Add(self.ckbx_deintYadif, 0, wx.ALL
+                       | wx.ALIGN_CENTER_VERTICAL
+                       | wx.ALIGN_CENTER_HORIZONTAL, 5)
         grid_yadif.Add(self.rdbx_Yadif_mode, 0, wx.ALL, 5)
         grid_yadif.Add(self.rdbx_Yadif_parity, 0, wx.ALL, 5)
         grid_yadif.Add(self.rdbx_Yadif_deint, 0, wx.ALL, 5)
         self.sizer_base.Add(zone2, 0, wx.ALL | wx.EXPAND, 5)
         inter_grid = wx.FlexGridSizer(1, 3, 0, 0)
         zone2.Add(inter_grid)
-        inter_grid.Add(self.ckbx_interlace, 0, wx.ALL |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALIGN_CENTER_HORIZONTAL, 5)
+        inter_grid.Add(self.ckbx_interlace, 0, wx.ALL
+                       | wx.ALIGN_CENTER_VERTICAL
+                       | wx.ALIGN_CENTER_HORIZONTAL, 5)
         inter_grid.Add(self.rdbx_inter_scan, 0, wx.ALL, 5)
         inter_grid.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 5)
 
@@ -187,8 +187,8 @@ class Deinterlace(wx.Dialog):
         self.gridexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.gridBtn.Add(self.gridexit, 0, wx.ALL |
-                         wx.ALIGN_RIGHT | wx.RIGHT, 0
+        self.gridBtn.Add(self.gridexit, 0, wx.ALL
+                         | wx.ALIGN_RIGHT | wx.RIGHT, 0
                          )
         self.sizer_base.Add(self.gridBtn, 0, wx.EXPAND)
         # final settings:
@@ -393,8 +393,6 @@ class Deinterlace(wx.Dialog):
         radiobox control for setting additional parameters.
         """
         parity = self.rdbx_Yadif_parity.GetStringSelection().split(',')
-
-
         val = (f"yadif={self.rdbx_Yadif_mode.GetStringSelection()[0]}:"
                f"{parity[0]}:{self.rdbx_Yadif_deint.GetStringSelection()[0]}")
         self.cmd_opt["deinterlace"] = val

@@ -113,11 +113,6 @@ class Conc_Demuxer(wx.Panel):
         self.btn_help.SetForegroundColour(wx.Colour(Conc_Demuxer.BLACK))
         sizer.Add(self.btn_help, 0, wx.ALL, 5)
 
-        #line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                              #size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              #name=wx.StaticLineNameStr
-                              #)
-        #sizer.Add(line1, 0, wx.ALL | wx.EXPAND, 5)
         sizer.Add((20, 20))
         boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
         sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)
@@ -148,8 +143,9 @@ class Conc_Demuxer(wx.Panel):
         self.lbl_frmt.Disable()
 
         self.cmb_pict = wx.ComboBox(self, wx.ID_ANY, choices=['mkv', 'mp4'],
-                                    size=(160, -1), style=wx.CB_DROPDOWN |
-                                    wx.CB_READONLY)
+                                    size=(160, -1), style=wx.CB_DROPDOWN
+                                    | wx.CB_READONLY,
+                                    )
         siz_pict.Add(self.cmb_pict, 0, wx.ALL, 5)
         self.cmb_pict.SetSelection(0)
         self.cmb_pict.Disable()
@@ -171,7 +167,7 @@ class Conc_Demuxer(wx.Panel):
                     "Interface_Overview_en.pdf"
                     )
         link2 = hpl.HyperLinkCtrl(self, -1, ("1.4 Concatenate media files "
-                                              "(demuxer)"), URL=page)
+                                             "(demuxer)"), URL=page)
         sizer_link2.Add(self.lbl_msg3, 0, wx.ALL | wx.EXPAND, 5)
         sizer_link2.Add(link2)
         sizer_link1 = wx.BoxSizer(wx.HORIZONTAL)

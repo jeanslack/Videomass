@@ -347,7 +347,7 @@ class MainFrame(wx.Frame):
         else:
             if self.appdata['warnexiting']:
                 if wx.MessageBox(_('Are you sure you want to exit?'),
-                                 _('Exit'),  wx.ICON_QUESTION | wx.YES_NO,
+                                 _('Exit'), wx.ICON_QUESTION | wx.YES_NO,
                                  self) == wx.YES:
                     _setsize()
                     self.Destroy()
@@ -669,8 +669,11 @@ class MainFrame(wx.Frame):
                     "*.ogg|*.ogg|*.flac|*.flac|*.m4a|*.m4a")
 
         with wx.FileDialog(self, _("Open the selected files"),
-                           "", "", wildcard, wx.FD_OPEN | wx.FD_MULTIPLE |
-                           wx.FD_FILE_MUST_EXIST | wx.FD_PREVIEW) as filedlg:
+                           "", "", wildcard,
+                           style=wx.FD_OPEN
+                           | wx.FD_MULTIPLE
+                           | wx.FD_FILE_MUST_EXIST
+                           | wx.FD_PREVIEW) as filedlg:
 
             if filedlg.ShowModal() == wx.ID_CANCEL:
                 return
@@ -1941,7 +1944,7 @@ class MainFrame(wx.Frame):
                 wx.MessageBox(_('Cannot continue: The duration in the '
                                 'timeline exceeds the duration of some '
                                 'queued files.'),
-                                'Videomass', wx.ICON_ERROR, self)
+                              'Videomass', wx.ICON_ERROR, self)
                 return
             duration = [ms for n in self.duration]
             self.statusbar_msg(_('Processing...'), None)

@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: April.23.2022
+Rev: Jan.11.2023
 Code checker: pycodestyle, flake8, pylint .
 
  This file is part of Videomass.
@@ -31,6 +31,13 @@ import shutil
 import platform
 from videomass.vdms_utils.utils import copydir_recursively
 from videomass.vdms_sys.settings_manager import ConfigManager
+
+
+def msg(arg):
+    """
+    print logging messages during startup
+    """
+    print('Info:', arg)
 
 
 def create_dirs(dirname, fconf):
@@ -71,7 +78,7 @@ def restore_presets_dir(dirconf, srcpath):
     return {'R': None}
 
 
-def get_options(dirconf, fileconf, relativepath, srcpath):
+def get_options(dirconf, fileconf, srcpath, makeportable):
     """
     Check the application options. Reads the `settings.json`
     file; if it does not exist or is unreadable try to restore
@@ -84,7 +91,7 @@ def get_options(dirconf, fileconf, relativepath, srcpath):
         key == 'R'
         key == ERROR (if any errors)
     """
-    conf = ConfigManager(fileconf, relativepath)
+    conf = ConfigManager(fileconf, makeportable)
     version = ConfigManager.VERSION
 
     if os.path.exists(dirconf):  # i.e ~/.conf/videomass dir
@@ -129,15 +136,15 @@ def get_pyinstaller():
     """
     if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
         frozen, meipass = True, True
-        mpath = getattr(sys, '_MEIPASS', os.path.abspath(__file__))
-        data_locat = mpath
+        this = getattr(sys, '_MEIPASS', os.path.abspath(__file__))
+        data_locat = this
 
     else:
         frozen, meipass = False, False
-        mpath = os.path.realpath(os.path.abspath(__file__))
-        data_locat = os.path.dirname(os.path.dirname(mpath))
+        this = os.path.realpath(os.path.abspath(__file__))
+        data_locat = os.path.dirname(os.path.dirname(this))
 
-    return frozen, meipass, mpath, data_locat
+    return frozen, meipass, this, data_locat
 
 
 def conventional_paths():
@@ -171,15 +178,18 @@ def conventional_paths():
     return file_conf, dir_conf, log_dir, cache_dir
 
 
-def portable_paths(portdir):
+def portable_paths(portdirname):
     """
     Make portable-data paths based on OS
 
     """
-    file_conf = os.path.join(portdir, "portable_data/settings.json")
-    dir_conf = os.path.join(portdir, "portable_data")
+    dir_conf = portdirname
+    file_conf = os.path.join(dir_conf, "settings.json")
     log_dir = os.path.join(dir_conf, 'log')  # logs
     cache_dir = os.path.join(dir_conf, 'cache')  # updates executable
+
+    if not os.path.exists(dir_conf):
+        os.makedirs(dir_conf, mode=0o777)
 
     return file_conf, dir_conf, log_dir, cache_dir
 
@@ -249,11 +259,35 @@ def get_color_scheme(theme):
     return c_scheme
 
 
-def msg(arg):
+def data_location(args):
     """
-    print logging messages during startup
+    Determines data location and modes to make the app
+    portable, fully portable or using conventional paths.
+    return data location.
     """
-    print('Info:', arg)
+    frozen, meipass, this, locat = get_pyinstaller()
+    workdir = os.path.dirname(os.path.dirname(os.path.dirname(this)))
+
+    if args['make_portable']:
+        portdir = args['make_portable']
+        conffile, confdir, logdir, cachedir = portable_paths(portdir)
+    else:
+        conffile, confdir, logdir, cachedir = conventional_paths()
+
+    return dict(conffile=conffile,
+                confdir=confdir,
+                logdir=logdir,
+                cachedir=cachedir,
+                this=this,
+                frozen=frozen,
+                meipass=meipass,
+                locat=locat,
+                localepath=os.path.join(locat, 'locale'),
+                workdir=workdir,
+                srcpath=os.path.join(locat, 'share'),
+                icodir=os.path.join(locat, 'art', 'icons'),
+                ffmpeg_pkg=os.path.join(locat, 'FFMPEG'),
+                )
 
 
 class DataSource():
@@ -272,56 +306,32 @@ class DataSource():
         * user: local installation
 
     """
-    FROZEN, MEIPASS, MPATH, DATA_LOCAT = get_pyinstaller()
-    portdirname = os.path.dirname(sys.executable)
-    portdir = os.path.join(portdirname, 'portable_data')
-
-    if FROZEN and MEIPASS and os.path.isdir(portdir):
-        # if portdir is true, make application really portable
-        FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = portable_paths(portdirname)
-        RELPATH = platform.system() == 'Windows'
-
-    elif os.path.isdir(os.path.join(DATA_LOCAT, 'portable_data')):
-        # Remember to add portable_data/ folder within videomass/
-        FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = portable_paths(DATA_LOCAT)
-        RELPATH = False  # to debug relative paths, set to True
-
-    else:
-        FILE_CONF, DIR_CONF, LOG_DIR, CACHE_DIR = conventional_paths()
-        RELPATH = False
     # -------------------------------------------------------------------
 
-    def __init__(self):
+    def __init__(self, kwargs):
         """
-        Given the pathnames defined by `DATA_LOCAT` it performs
-        the initialization described in DataSource.
-
-            `self.srcpath` > configuration folder for recovery
-            `self.icodir` > set of icons
-            `self.localepath` > locale folder
+        Having the pathnames returned by `dataloc` it
+        performs the initialization described in DataSource.
 
         """
+        self.dataloc = data_location(kwargs)
+        self.relativepaths = bool(kwargs['make_portable'])
+        self.makeportable = kwargs['make_portable']
         self.apptype = None  # appimage, pyinstaller on None
-        self.workdir = os.path.dirname(os.path.dirname
-                                       (os.path.dirname(DataSource.MPATH))
-                                       )
-        self.localepath = os.path.join(DataSource.DATA_LOCAT, 'locale')
-        self.srcpath = os.path.join(DataSource.DATA_LOCAT, 'share')
-        self.icodir = os.path.join(DataSource.DATA_LOCAT, 'art', 'icons')
-        self.ffmpeg_pkg = os.path.join(DataSource.DATA_LOCAT, 'FFMPEG')
-        launcher = os.path.isfile(f'{self.workdir}/launcher')
+        launcher = os.path.isfile(f"{self.dataloc['workdir']}/launcher")
 
-        if DataSource.FROZEN and DataSource.MEIPASS or launcher:
-            msg(f'frozen={DataSource.FROZEN} '
-                f'meipass={DataSource.MEIPASS} '
-                f'launcher={launcher}')
+        if self.dataloc['frozen'] and self.dataloc['meipass'] or launcher:
+            msg(f"frozen={self.dataloc['frozen']} "
+                f"meipass={self.dataloc['meipass']} "
+                f"launcher={launcher}")
 
             self.apptype = 'pyinstaller' if not launcher else None
-            self.prg_icon = f"{self.icodir}/videomass.png"
+            self.prg_icon = f"{self.dataloc['icodir']}/videomass.png"
 
         elif ('/tmp/.mount_' in sys.executable or os.path.exists(
               os.path.dirname(os.path.dirname(os.path.dirname(
-                  sys.argv[0]))) + '/AppRun')):
+                  sys.argv[0])))
+              + '/AppRun')):
             # embedded on python appimage
             msg('Embedded on python appimage')
             self.apptype = 'appimage'
@@ -338,7 +348,7 @@ class DataSource():
                 # dirname = os.path.dirname(sys.executable)
                 # pythonpath = os.path.join(dirname, 'Script', 'videomass')
                 # self.icodir = dirname + '\\share\\videomass\\icons'
-                self.prg_icon = self.icodir + "\\videomass.png"
+                self.prg_icon = self.dataloc['icodir'] + "\\videomass.png"
 
             elif binarypath == '/usr/local/bin/videomass':
                 msg(f'executable={binarypath}')
@@ -355,7 +365,7 @@ class DataSource():
             else:
                 msg(f'executable={binarypath}')
                 # pip as normal user, usually Linux, MacOs, Unix
-                if not binarypath:
+                if binarypath is None:
                     # need if user $PATH is not set yet
                     userbase = site.getuserbase()
                 else:
@@ -373,27 +383,30 @@ class DataSource():
         fatal error in the gui_app bootstrap.
         """
         # handle configuration file
-        userconf = get_options(DataSource.DIR_CONF,
-                               DataSource.FILE_CONF,
-                               DataSource.RELPATH,
-                               self.srcpath)
+        userconf = get_options(self.dataloc['confdir'],
+                               self.dataloc['conffile'],
+                               self.dataloc['srcpath'],
+                               self.makeportable,
+                               )
         if userconf.get('ERROR'):
             return userconf
         userconf = userconf['R']
 
         # restore presets folder
-        presets_rest = restore_presets_dir(DataSource.DIR_CONF, self.srcpath)
+        presets_rest = restore_presets_dir(self.dataloc['confdir'],
+                                           self.dataloc['srcpath'],
+                                           )
         if presets_rest.get('ERROR'):
             return presets_rest
 
         # create required directories if them not exist
-        requiredirs = (os.path.join(DataSource.CACHE_DIR, 'tmp'),
-                       DataSource.LOG_DIR,
+        requiredirs = (os.path.join(self.dataloc['cachedir'], 'tmp'),
+                       self.dataloc['logdir'],
                        userconf['outputfile'],
                        userconf['outputdownload']
                        )
         for dirs in requiredirs:
-            create = create_dirs(dirs, DataSource.FILE_CONF)
+            create = create_dirs(dirs, self.dataloc['conffile'],)
             if create.get('ERROR'):
                 return create
 
@@ -403,7 +416,7 @@ class DataSource():
         if theme.get('ERROR'):
             return theme
 
-        def _relativize(path, relative=DataSource.RELPATH):
+        def _relativize(path, relative=self.relativepaths):
             """
             Returns a relative pathname if *relative* param is True.
             If not, it returns the given pathname. Also return the given
@@ -412,21 +425,22 @@ class DataSource():
             """
             try:
                 return os.path.relpath(path) if relative else path
-            except ValueError:
+            except (ValueError, TypeError):
                 # return {'ERROR': f'{error}'}  # use `as error` here
                 return path
 
         return ({'ostype': platform.system(),
-                 'srcpath': _relativize(self.srcpath),
-                 'localepath': _relativize(self.localepath),
-                 'fileconfpath': _relativize(DataSource.FILE_CONF),
-                 'workdir': _relativize(self.workdir),
-                 'confdir': _relativize(DataSource.DIR_CONF),
-                 'logdir': _relativize(DataSource.LOG_DIR),
-                 'cachedir': _relativize(DataSource.CACHE_DIR),
-                 'FFMPEG_videomass_pkg': _relativize(self.ffmpeg_pkg),
+                 'srcpath': _relativize(self.dataloc['srcpath']),
+                 'localepath': _relativize(self.dataloc['localepath']),
+                 'fileconfpath': _relativize(self.dataloc['conffile']),
+                 'workdir': _relativize(self.dataloc['workdir']),
+                 'confdir': _relativize(self.dataloc['confdir']),
+                 'logdir': _relativize(self.dataloc['logdir']),
+                 'cachedir': _relativize(self.dataloc['cachedir']),
+                 'FFMPEG_videomass_pkg':
+                     _relativize(self.dataloc['ffmpeg_pkg']),
                  'app': self.apptype,
-                 'relpath': DataSource.RELPATH,
+                 'relpath': self.relativepaths,
                  'getpath': _relativize,
                  'ffmpeg_cmd': _relativize(userconf['ffmpeg_cmd']),
                  'ffprobe_cmd': _relativize(userconf['ffprobe_cmd']),
@@ -454,22 +468,22 @@ class DataSource():
                 'download_properties', 'stabilizer', 'listindx',
                 'preview_audio', 'profile_copy', 'slideshow',
                 'videotopictures', 'atrack', 'timerset',
-                )  # must match with iconset tuple, see following..
+                )  # must match with items on `iconset` tuple, see following
 
         ext = 'svg' if 'wx.svg' in sys.modules else 'png'
-
+        icodir = self.dataloc['icodir']
         iconames = {'Videomass-Light':  # Videomass icons for light themes
-                    {'x48': f'{self.icodir}/Sign_Icons/48x48_light',
-                     'x16': f'{self.icodir}/Videomass-Light/16x16',
-                     'x22': f'{self.icodir}/Videomass-Light/24x24'},
+                    {'x48': f'{icodir}/Sign_Icons/48x48_light',
+                     'x16': f'{icodir}/Videomass-Light/16x16',
+                     'x22': f'{icodir}/Videomass-Light/24x24'},
                     'Videomass-Dark':  # Videomass icons for dark themes
-                    {'x48': f'{self.icodir}/Sign_Icons/48x48_dark',
-                     'x16': f'{self.icodir}/Videomass-Dark/16x16',
-                     'x22': f'{self.icodir}/Videomass-Dark/24x24'},
+                    {'x48': f'{icodir}/Sign_Icons/48x48_dark',
+                     'x16': f'{icodir}/Videomass-Dark/16x16',
+                     'x22': f'{icodir}/Videomass-Dark/24x24'},
                     'Videomass-Colours':  # Videomass icons for all themes
-                    {'x48': f'{self.icodir}/Sign_Icons/48x48',
-                     'x16': f'{self.icodir}/Videomass-Colours/16x16',
-                     'x22': f'{self.icodir}/Videomass-Colours/24x24'},
+                    {'x48': f'{icodir}/Sign_Icons/48x48',
+                     'x16': f'{icodir}/Videomass-Colours/16x16',
+                     'x22': f'{icodir}/Videomass-Colours/24x24'},
                     }
 
         choose = iconames.get(icontheme)  # set appropriate icontheme

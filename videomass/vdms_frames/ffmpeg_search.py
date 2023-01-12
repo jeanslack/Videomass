@@ -35,11 +35,30 @@ from videomass.vdms_io import io_tools
 
 class FFmpegSearch(wx.MiniFrame):
     """
-    Search and view all the FFmpeg help options. It has a real-time string
-    search filter and is case-sensitive by default, but it is possible to
-    ignore upper and lower case by activating the corresponding checkbox.
+    Search and view all the FFmpeg help options.
+    It has a real-time string search filter and is
+    case-sensitive by default, but it is possible to
+    ignore upper and lower case by activating the
+    corresponding checkbox.
 
     """
+    ARGS_OPT = {_("Topic List..."): 'None',
+                _("print basic options"): ['-h'],
+                _("print more options"): ['-h', 'long'],
+                _("print all options (very long)"): ['-h', 'full'],
+                _("show available devices"): ['-devices'],
+                _("show available bit stream filters"): ['-bsfs'],
+                _("show available protocols"): ['-protocols'],
+                _("show available filters"): ['-filters'],
+                _("show available pixel formats"): ['-pix_fmts'],
+                _("show available audio sample formats"): ['-sample_fmts'],
+                _("show available color names"): ['-colors'],
+                _("list sources of the input device"): ['-sources', 'device'],
+                _("list sinks of the output device"): ['-sinks', 'device'],
+                _("show available HW acceleration methods"): ['-hwaccels'],
+                }
+    CHOICES = tuple(ARGS_OPT.keys())
+
     def __init__(self, OS):
         """
         The list of topics in the combo box is part of the
@@ -59,39 +78,30 @@ class FFmpegSearch(wx.MiniFrame):
         get = wx.GetApp()  # get data from bootstrap
         colorscheme = get.appset['icontheme'][1]
 
-        wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
-                              wx.CLOSE_BOX | wx.SYSTEM_MENU
+        wx.MiniFrame.__init__(self, None,
+                              style=wx.RESIZE_BORDER
+                              | wx.CAPTION
+                              | wx.CLOSE_BOX
+                              | wx.SYSTEM_MENU,
                               )
         # add panel
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
-                              wx.BORDER_THEME)
-        self.cmbx_choice = wx.ComboBox(self.panel, wx.ID_ANY, choices=[
-                                (_("Topic List...")),
-                                (_("print basic options")),
-                                (_("print more options")),
-                                (_("print all options (very long)")),
-                                (_("show available devices")),
-                                (_("show available bit stream filters")),
-                                (_("show available protocols")),
-                                (_("show available filters")),
-                                (_("show available pixel formats")),
-                                (_("show available audio sample formats")),
-                                (_("show available color names")),
-                                (_("list sources of the input device")),
-                                (_("list sinks of the output device")),
-                                (_("show available HW acceleration methods")),
-                                ],
-                                style=wx.CB_DROPDOWN | wx.CB_READONLY
-                                )
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
+                              | wx.BORDER_THEME,
+                              )
+        self.cmbx_choice = wx.ComboBox(self.panel, wx.ID_ANY,
+                                       choices=FFmpegSearch.CHOICES,
+                                       style=wx.CB_DROPDOWN
+                                       | wx.CB_READONLY,
+                                       )
         self.cmbx_choice.SetSelection(0)
         self.cmbx_choice.SetToolTip(_("help topic list"))
         self.texthelp = wx.TextCtrl(self.panel, wx.ID_ANY,
                                     "",
                                     # size=(550,400),
-                                    style=wx.TE_READONLY |
-                                    wx.TE_MULTILINE |
-                                    wx.TE_RICH2 |
-                                    wx.HSCROLL
+                                    style=wx.TE_READONLY
+                                    | wx.TE_MULTILINE
+                                    | wx.TE_RICH2
+                                    | wx.HSCROLL,
                                     )
         self.texthelp.SetBackgroundColour(colorscheme['BACKGRD'])
         self.texthelp.SetDefaultStyle(wx.TextAttr(colorscheme['TXT3']))
@@ -120,7 +130,7 @@ class FFmpegSearch(wx.MiniFrame):
         sizer.Add(self.texthelp, 1, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.cmbx_choice, 0, wx.ALL, 5)
         grid_src.Add(self.search, 0, wx.ALL, 0)
-        grid_src.Add(self.case, 0,  wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_src.Add(self.case, 0, wx.ALIGN_CENTER_VERTICAL, 5)
         sizer.Add(grid_src, 0, wx.ALL, 5)
         sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         grid.Add(self.button_close, 1, wx.ALL, 5)
@@ -156,33 +166,17 @@ class FFmpegSearch(wx.MiniFrame):
     def on_selected(self, event):
         """
         Gets output given ffmpeg `-arg` and fills the textctrl.
-        The topic options are values of the arg_opt dictionary.
+        The topic options are values of the ARGS_OPT dictionary.
 
         """
-        arg_opt = {
-                _("Topic List..."): 'None',
-                _("print basic options"): ['-h'],
-                _("print more options"): ['-h', 'long'],
-                _("print all options (very long)"): ['-h', 'full'],
-                _("show available devices"): ['-devices'],
-                _("show available bit stream filters"): ['-bsfs'],
-                _("show available protocols"): ['-protocols'],
-                _("show available filters"): ['-filters'],
-                _("show available pixel formats"): ['-pix_fmts'],
-                _("show available audio sample formats"): ['-sample_fmts'],
-                _("show available color names"): ['-colors'],
-                _("list sources of the input device"): ['-sources', 'device'],
-                _("list sinks of the output device"): ['-sinks', 'device'],
-                _("show available HW acceleration methods"): ['-hwaccels'],
-                }
-        if "None" in arg_opt[self.cmbx_choice.GetValue()]:
+        if "None" in FFmpegSearch.ARGS_OPT[self.cmbx_choice.GetValue()]:
             self.row = None
             self.texthelp.Clear()  # reset textctrl
             self.texthelp.AppendText(_("First, choose a topic in the "
                                        "drop down list"))
         else:
             self.texthelp.Clear()  # reset textctrl
-            topic = arg_opt[self.cmbx_choice.GetValue()]
+            topic = FFmpegSearch.ARGS_OPT[self.cmbx_choice.GetValue()]
             self.row = io_tools.findtopic(topic)
 
             if self.row:
@@ -237,8 +231,8 @@ class FFmpegSearch(wx.MiniFrame):
                 self.texthelp.AppendText(' '.join(find))
         else:
             self.texthelp.Clear()  # reset textctrl
-            self.texthelp.AppendText(_(
-                            "\nFirst, choose a topic in the drop down list"))
+            msg = _("\nFirst, choose a topic in the drop down list")
+            self.texthelp.AppendText(msg)
     # --------------------------------------------------------------#
 
     def on_ckbx(self, event):

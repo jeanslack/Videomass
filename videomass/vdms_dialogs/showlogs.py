@@ -69,9 +69,9 @@ class ShowLogs(wx.Dialog):
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         self.log_select = wx.ListCtrl(self,
                                       wx.ID_ANY,
-                                      style=wx.LC_REPORT |
-                                      wx.SUNKEN_BORDER |
-                                      wx.LC_SINGLE_SEL
+                                      style=wx.LC_REPORT
+                                      | wx.SUNKEN_BORDER
+                                      | wx.LC_SINGLE_SEL,
                                       )
         self.log_select.SetMinSize((700, 200))
         self.log_select.InsertColumn(0, _('Log file list'), width=500)
@@ -80,9 +80,9 @@ class ShowLogs(wx.Dialog):
         sizer_base.Add(labtxt, 0, wx.ALL, 5)
         self.textdata = wx.TextCtrl(self,
                                     wx.ID_ANY, "",
-                                    style=wx.TE_MULTILINE |
-                                    wx.TE_READONLY |
-                                    wx.TE_RICH2
+                                    style=wx.TE_MULTILINE
+                                    | wx.TE_READONLY
+                                    | wx.TE_RICH2,
                                     )
         self.textdata.SetMinSize((700, 300))
 
@@ -101,8 +101,8 @@ class ShowLogs(wx.Dialog):
         grid_funcbtn = wx.BoxSizer(wx.HORIZONTAL)
         button_update = wx.Button(self, wx.ID_REFRESH,
                                   _("Refresh all log files"))
-        grid_funcbtn.Add(button_update, 0, wx.ALL |
-                         wx.ALIGN_CENTER_VERTICAL, 5
+        grid_funcbtn.Add(button_update, 0, wx.ALL
+                         | wx.ALIGN_CENTER_VERTICAL, 5
                          )
         button_clear = wx.Button(self, wx.ID_CLEAR,
                                  _("Clear selected log")
@@ -150,8 +150,8 @@ class ShowLogs(wx.Dialog):
         name = self.log_select.GetItemText(index, 0)
 
         if wx.MessageBox(_('Are you sure you want to clear the selected '
-                           'log file?'), "Videomass", wx.ICON_QUESTION |
-                         wx.YES_NO, self) == wx.NO:
+                           'log file?'), "Videomass",
+                         wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
             return
 
         with open(os.path.join(self.dirlog, name),

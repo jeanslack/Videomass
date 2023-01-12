@@ -55,8 +55,8 @@ class Transpose(wx.Dialog):
         self.h_ratio = int((self.v_height / self.v_width) * self.thr)
         self.w_ratio = int((self.v_width / self.v_height) * self.h_ratio)
         self.current_angle = 0
-        self.center = (int((self.w_ratio/2)),
-                       int((self.h_ratio/2)),
+        self.center = (int((self.w_ratio / 2)),
+                       int((self.h_ratio / 2)),
                        )  # original center
         self.transpose = {'degrees': ['', 0]}
 
@@ -84,8 +84,8 @@ class Transpose(wx.Dialog):
         self.x = wx.StaticBitmap(self.panelimg, wx.ID_ANY, self.image)
         self.statictxt = wx.StaticText(self, wx.ID_ANY,
                                        label=_("Default position"),
-                                       style=wx.ST_NO_AUTORESIZE |
-                                       wx.ALIGN_CENTRE_HORIZONTAL
+                                       style=wx.ST_NO_AUTORESIZE
+                                       | wx.ALIGN_CENTRE_HORIZONTAL,
                                        )
         sizerBase.Add(self.statictxt, 0, wx.CENTER | wx.EXPAND)
         self.btn_load = wx.Button(self, wx.ID_ANY, _("Load Frame"))
@@ -164,7 +164,7 @@ class Transpose(wx.Dialog):
         """
         self.current_angle += degrees
         # neg. value rot. clockwise:
-        val = float(self.current_angle * -pigreco/180)
+        val = float(self.current_angle * -pigreco / 180)
         image = self.image.ConvertToImage()
         image = image.Scale(self.w_ratio, self.h_ratio,
                             wx.IMAGE_QUALITY_NORMAL

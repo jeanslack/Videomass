@@ -91,8 +91,8 @@ class Set_Timestamp(wx.Dialog):
         self.cmbx_fontsize = wx.ComboBox(self, wx.ID_ANY,
                                          choices=size,
                                          size=(90, -1),
-                                         style=wx.CB_DROPDOWN |
-                                         wx.CB_READONLY
+                                         style=wx.CB_DROPDOWN
+                                         | wx.CB_READONLY,
                                          )
         fsize = self.cmbx_fontsize.FindString(self.fontsize,
                                               caseSensitive=False)
@@ -114,8 +114,8 @@ class Set_Timestamp(wx.Dialog):
         self.cmbx_fontcolor = wx.ComboBox(self, wx.ID_ANY,
                                           choices=colours,
                                           size=(-1, -1),
-                                          style=wx.CB_DROPDOWN |
-                                          wx.CB_READONLY
+                                          style=wx.CB_DROPDOWN
+                                          | wx.CB_READONLY,
                                           )
         self.cmbx_fontcolor.SetSelection(colours.index(self.fontcolor))
         grid1.Add(self.cmbx_fontcolor, 0, wx.ALL, 5)
@@ -124,8 +124,8 @@ class Set_Timestamp(wx.Dialog):
         self.cmbx_shadowcolor = wx.ComboBox(self, wx.ID_ANY,
                                             choices=colours,
                                             size=(-1, -1),
-                                            style=wx.CB_DROPDOWN |
-                                            wx.CB_READONLY
+                                            style=wx.CB_DROPDOWN
+                                            | wx.CB_READONLY,
                                             )
         self.cmbx_shadowcolor.SetSelection(colours.index(self.shadowcolor))
         grid1.Add(self.cmbx_shadowcolor, 0, wx.ALL, 5)
@@ -139,8 +139,8 @@ class Set_Timestamp(wx.Dialog):
         self.cmbx_boxcolor = wx.ComboBox(self, wx.ID_ANY,
                                          choices=colours,
                                          size=(-1, -1),
-                                         style=wx.CB_DROPDOWN |
-                                         wx.CB_READONLY
+                                         style=wx.CB_DROPDOWN
+                                         | wx.CB_READONLY,
                                          )
         self.cmbx_boxcolor.SetSelection(colours.index(self.boxcolor))
         grid1.Add(self.cmbx_boxcolor, 0, wx.ALL, 5)

@@ -54,9 +54,8 @@ class Denoisers(wx.Dialog):
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
 
-        zone = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
-                                              (_("Apply Denoisers Filters"))
-                                              ), wx.VERTICAL)
+        sbox = wx.StaticBox(self, wx.ID_ANY, (_("Apply Denoisers Filters")))
+        zone = wx.StaticBoxSizer(sbox, wx.VERTICAL)
         self.ckbx_nlmeans = wx.CheckBox(self, wx.ID_ANY,
                                         (_("Enable nlmeans denoiser"))
                                         )
@@ -89,25 +88,21 @@ class Denoisers(wx.Dialog):
         sizer_base.Add(zone, 1, wx.ALL | wx.EXPAND, 5)
         grid_den = wx.FlexGridSizer(2, 2, 0, 0)
         zone.Add(grid_den)
-        grid_den.Add(self.ckbx_nlmeans, 0,
-                     wx.ALL |
-                     wx.ALIGN_CENTER_VERTICAL |
-                     wx.ALIGN_CENTER_HORIZONTAL,
+        grid_den.Add(self.ckbx_nlmeans, 0, wx.ALL
+                     | wx.ALIGN_CENTER_VERTICAL
+                     | wx.ALIGN_CENTER_HORIZONTAL,
                      5)
-        grid_den.Add(self.rdb_nlmeans, 0,
-                     wx.ALL |
-                     wx.ALIGN_CENTER_VERTICAL |
-                     wx.ALIGN_CENTER_HORIZONTAL,
+        grid_den.Add(self.rdb_nlmeans, 0, wx.ALL
+                     | wx.ALIGN_CENTER_VERTICAL
+                     | wx.ALIGN_CENTER_HORIZONTAL,
                      5)
-        grid_den.Add(self.ckbx_hqdn3d, 0,
-                     wx.ALL |
-                     wx.ALIGN_CENTER_VERTICAL |
-                     wx.ALIGN_CENTER_HORIZONTAL,
+        grid_den.Add(self.ckbx_hqdn3d, 0, wx.ALL
+                     | wx.ALIGN_CENTER_VERTICAL
+                     | wx.ALIGN_CENTER_HORIZONTAL,
                      5)
-        grid_den.Add(self.rdb_hqdn3d, 0,
-                     wx.ALL |
-                     wx.ALIGN_CENTER_VERTICAL |
-                     wx.ALIGN_CENTER_HORIZONTAL,
+        grid_den.Add(self.rdb_hqdn3d, 0, wx.ALL
+                     | wx.ALIGN_CENTER_VERTICAL
+                     | wx.ALIGN_CENTER_HORIZONTAL,
                      5)
         # confirm btn section:
         gridBtn = wx.GridSizer(1, 2, 0, 0)

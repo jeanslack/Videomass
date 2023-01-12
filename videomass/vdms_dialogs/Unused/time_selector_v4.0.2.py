@@ -48,35 +48,39 @@ class Time_Selector(wx.Dialog):
         self.milliseconds = milliseconds  # media total duration in ms
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        staticbox1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                        _("Segment Start   (HH:MM:SS.ms)"))), wx.VERTICAL)
+        boxs = wx.StaticBox(self, wx.ID_ANY, (_("Segment Start   "
+                                                "(HH:MM:SS.ms)")))
+        staticbox1 = wx.StaticBoxSizer(boxs, wx.VERTICAL)
         self.btn_reset_start = wx.Button(self, wx.ID_ANY, _("Reset"))
         staticbox1.Add(self.btn_reset_start, 0, wx.ALL, 5)
         boxsiz1 = wx.BoxSizer(wx.HORIZONTAL)
         staticbox1.Add(boxsiz1, 0, wx.ALL | wx.ALIGN_CENTER, 0)
         sizer_base.Add(staticbox1, 0, wx.ALL | wx.EXPAND, 5)
 
-        self.start_hour = wx.SpinCtrl(self, wx.ID_ANY, value=f"{seektxt[0:2]}",
-                                     min=0, max=23, # size=(102, -1),
-                                     style=wx.SP_ARROW_KEYS)
+        self.start_hour = wx.SpinCtrl(self, wx.ID_ANY,
+                                      value=f"{seektxt[0:2]}",
+                                      min=0, max=23,
+                                      style=wx.SP_ARROW_KEYS)
 
         boxsiz1.Add(self.start_hour, 0, wx.ALL | wx.ALIGN_CENTER, 5)
         lab1 = wx.StaticText(self, wx.ID_ANY, (":"))
         lab1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         boxsiz1.Add(lab1, 0, wx.ALIGN_CENTER, 5)
 
-        self.start_min = wx.SpinCtrl(self, wx.ID_ANY, value=f"{seektxt[3:5]}",
-                                    min=0, max=59, # size=(102, -1),
-                                    style=wx.SP_ARROW_KEYS)
+        self.start_min = wx.SpinCtrl(self, wx.ID_ANY,
+                                     value=f"{seektxt[3:5]}",
+                                     min=0, max=59,
+                                     style=wx.SP_ARROW_KEYS)
 
         boxsiz1.Add(self.start_min, 0, wx.ALL | wx.ALIGN_CENTER, 5)
         lab2 = wx.StaticText(self, wx.ID_ANY, (":"))
         lab2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         boxsiz1.Add(lab2, 0, wx.ALIGN_CENTER, 5)
 
-        self.start_sec = wx.SpinCtrl(self, wx.ID_ANY, value=f"{seektxt[6:8]}",
-                                    min=0, max=59, # size=(102, -1),
-                                    style=wx.SP_ARROW_KEYS)
+        self.start_sec = wx.SpinCtrl(self, wx.ID_ANY,
+                                     value=f"{seektxt[6:8]}",
+                                     min=0, max=59,
+                                     style=wx.SP_ARROW_KEYS)
 
         boxsiz1.Add(self.start_sec, 0, wx.ALL | wx.ALIGN_CENTER, 5)
         lab3 = wx.StaticText(self, wx.ID_ANY, ("."))
@@ -84,14 +88,14 @@ class Time_Selector(wx.Dialog):
         boxsiz1.Add(lab3, 0, wx.ALIGN_CENTER, 5)
 
         self.start_mills = wx.SpinCtrl(self, wx.ID_ANY,
-                                      value=f"{seektxt[9:12]}",
-                                      min=000, max=999, # size=(102, -1),
-                                      style=wx.SP_ARROW_KEYS)
+                                       value=f"{seektxt[9:12]}",
+                                       min=000, max=999,
+                                       style=wx.SP_ARROW_KEYS)
 
         boxsiz1.Add(self.start_mills, 0, wx.ALL | wx.ALIGN_CENTER, 5)
-
-        staticbox2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                        _("Segment Duration   (HH:MM:SS.ms)"))), wx.VERTICAL)
+        boxs = wx.StaticBox(self, wx.ID_ANY, (_("Segment Duration   "
+                                                "(HH:MM:SS.ms)")))
+        staticbox2 = wx.StaticBoxSizer(boxs, wx.VERTICAL)
         self.btn_reset_dur = wx.Button(self, wx.ID_ANY, _("Reset"))
         staticbox2.Add(self.btn_reset_dur, 0, wx.ALL, 5)
         sizer_base.Add(staticbox2, 0, wx.ALL | wx.EXPAND, 5)
@@ -99,7 +103,8 @@ class Time_Selector(wx.Dialog):
         staticbox2.Add(boxsiz2, 0, wx.ALL | wx.ALIGN_CENTER, 0)
 
         self.duration_hour = wx.SpinCtrl(self, wx.ID_ANY,
-                                         value=f"{cuttxt[0:2]}", min=0, max=23,
+                                         value=f"{cuttxt[0:2]}",
+                                         min=0, max=23,
                                          style=wx.SP_ARROW_KEYS)
         boxsiz2.Add(self.duration_hour, 0, wx.ALL | wx.ALIGN_CENTER, 5)
         lab4 = wx.StaticText(self, wx.ID_ANY, (":"))
@@ -107,8 +112,8 @@ class Time_Selector(wx.Dialog):
         boxsiz2.Add(lab4, 0, wx.ALIGN_CENTER, 5)
 
         self.duration_min = wx.SpinCtrl(self, wx.ID_ANY,
-                                        value=f"{cuttxt[3:5]}", min=0, max=59,
-                                        # size=(102, -1),
+                                        value=f"{cuttxt[3:5]}",
+                                        min=0, max=59,
                                         style=wx.SP_ARROW_KEYS)
         boxsiz2.Add(self.duration_min, 0, wx.ALL | wx.ALIGN_CENTER, 5)
         lab5 = wx.StaticText(self, wx.ID_ANY, (":"))
@@ -116,8 +121,8 @@ class Time_Selector(wx.Dialog):
         boxsiz2.Add(lab5, 0, wx.ALIGN_CENTER, 5)
 
         self.duration_sec = wx.SpinCtrl(self, wx.ID_ANY,
-                                        value=f"{cuttxt[6:8]}", min=0, max=59,
-                                        # size=(102, -1),
+                                        value=f"{cuttxt[6:8]}",
+                                        min=0, max=59,
                                         style=wx.SP_ARROW_KEYS)
         boxsiz2.Add(self.duration_sec, 0, wx.ALL | wx.ALIGN_CENTER, 5)
         lab6 = wx.StaticText(self, wx.ID_ANY, ("."))
@@ -126,7 +131,7 @@ class Time_Selector(wx.Dialog):
 
         self.duration_mills = wx.SpinCtrl(self, wx.ID_ANY,
                                           value=f"{cuttxt[9:12]}",
-                                          min=000, max=999, # size=(102, -1),
+                                          min=000, max=999,
                                           style=wx.SP_ARROW_KEYS)
         boxsiz2.Add(self.duration_mills, 0, wx.ALL | wx.ALIGN_CENTER, 5)
 

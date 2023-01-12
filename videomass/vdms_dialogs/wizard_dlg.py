@@ -75,8 +75,8 @@ class PageOne(wx.Panel):
         lab1 = wx.StaticText(self, wx.ID_ANY,
                              _("Welcome to the Videomass Wizard!"))
         lab2 = wx.StaticText(self, wx.ID_ANY, PageOne.MSG2,
-                             style=wx.ST_ELLIPSIZE_END |
-                             wx.ALIGN_CENTRE_HORIZONTAL
+                             style=wx.ST_ELLIPSIZE_END
+                             | wx.ALIGN_CENTRE_HORIZONTAL,
                              )
         lab3 = wx.StaticText(self, wx.ID_ANY, PageOne.MSG3,
                              style=wx.ALIGN_CENTRE_HORIZONTAL)
@@ -138,8 +138,8 @@ class PageTwo(wx.Panel):
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizerText = wx.BoxSizer(wx.VERTICAL)
         lab0 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG0,
-                             style=wx.ST_ELLIPSIZE_END |
-                             wx.ALIGN_CENTRE_HORIZONTAL
+                             style=wx.ST_ELLIPSIZE_END
+                             | wx.ALIGN_CENTRE_HORIZONTAL,
                              )
         lab1 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG1,
                              style=wx.ALIGN_CENTRE_HORIZONTAL)
@@ -150,8 +150,8 @@ class PageTwo(wx.Panel):
         self.locateBtn = wx.Button(self, wx.ID_ANY, _("Locate"),
                                    size=(250, -1))
         self.labFFpath = wx.StaticText(self, wx.ID_ANY, "",
-                                       style=wx.ST_ELLIPSIZE_END |
-                                       wx.ALIGN_CENTRE_HORIZONTAL
+                                       style=wx.ST_ELLIPSIZE_END
+                                       | wx.ALIGN_CENTRE_HORIZONTAL,
                                        )
         if PageTwo.OS == 'Darwin':
             lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
@@ -236,7 +236,7 @@ class PageTwo(wx.Panel):
             if wx.MessageBox(_("Videomass already seems to include "
                                "FFmpeg.\n\nDo you want to use that?"),
                              _('Videomass: Please Confirm'),
-                             wx.ICON_QUESTION | wx.YES_NO,  None) == wx.NO:
+                             wx.ICON_QUESTION | wx.YES_NO, None) == wx.NO:
                 return
 
         self.parent.ffmpeg = PageTwo.GETPATH(path[0])
@@ -284,8 +284,8 @@ class PageThree(wx.Panel):
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizerText = wx.BoxSizer(wx.VERTICAL)
         lab0 = wx.StaticText(self, wx.ID_ANY, PageThree.MSG0,
-                             style=wx.ST_ELLIPSIZE_END |
-                             wx.ALIGN_CENTRE_HORIZONTAL
+                             style=wx.ST_ELLIPSIZE_END
+                             | wx.ALIGN_CENTRE_HORIZONTAL,
                              )
         lab1 = wx.StaticText(self, wx.ID_ANY, PageThree.MSG1)
         #  ffmpeg
@@ -419,8 +419,8 @@ class PageFour(wx.Panel):
         sizerText = wx.BoxSizer(wx.VERTICAL)
 
         lab0 = wx.StaticText(self, wx.ID_ANY, PageFour.MSG0,
-                             style=wx.ST_ELLIPSIZE_END |
-                             wx.ALIGN_CENTRE_HORIZONTAL
+                             style=wx.ST_ELLIPSIZE_END
+                             | wx.ALIGN_CENTRE_HORIZONTAL,
                              )
         lab1 = wx.StaticText(self, wx.ID_ANY, PageFour.MSG1)
         descr = _(" Do you want to enable this feature?")
@@ -552,8 +552,10 @@ class Wizard(wx.Dialog):
         self.ffprobe = None
         self.ffplay = None
 
-        wx.Dialog.__init__(self, None, -1, style=wx.DEFAULT_DIALOG_STYLE |
-                           wx.RESIZE_BORDER)
+        wx.Dialog.__init__(self, None, -1,
+                           style=wx.DEFAULT_DIALOG_STYLE
+                           | wx.RESIZE_BORDER,
+                           )
         mainSizer = wx.BoxSizer(wx.VERTICAL)  # sizer base global
         self.pageOne = PageOne(self, icon_videomass)  # start...
         self.pageTwo = PageTwo(self)  # choose ffmpeg modality
@@ -621,8 +623,8 @@ class Wizard(wx.Dialog):
             self.pageTwo.Show()
             self.btnBack.Enable()
 
-            if (self.pageTwo.locateBtn.IsEnabled() and
-                    self.pageTwo.detectBtn.IsEnabled()):
+            if (self.pageTwo.locateBtn.IsEnabled()
+                    and self.pageTwo.detectBtn.IsEnabled()):
                 self.btnNext.Disable()
 
         elif self.pageTwo.IsShown():
@@ -635,9 +637,9 @@ class Wizard(wx.Dialog):
                 self.pageFour.Show()
 
         elif self.pageThree.IsShown():
-            if (self.pageThree.ffmpegTxt.GetValue() and
-                    self.pageThree.ffprobeTxt.GetValue() and
-                    self.pageThree.ffplayTxt.GetValue()):
+            if (self.pageThree.ffmpegTxt.GetValue()
+                    and self.pageThree.ffprobeTxt.GetValue()
+                    and self.pageThree.ffplayTxt.GetValue()):
                 self.pageThree.Hide()
                 self.pageFour.Show()
             else:

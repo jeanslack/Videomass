@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Jan 11, 2023 V.4.0.5
+Jan 12, 2023 V.4.0.5
 
   * Fixed the status-bar messages and colors for all platforms.
   * ffplay failing on Windows with Fontconfig error #172 (thanks to @CComparon).
@@ -31,6 +31,8 @@ Jan 11, 2023 V.4.0.5
     due to previous issue.
   * Fixed `TypeError` and various stacktraces using Python3.10
     with wxPython4.2.0 #178
+  * Added ability to make the application fully portable and stealth
+    using command line argument.
 
 +------------------------------------+
 Dec 12, 2022 V.4.0.2

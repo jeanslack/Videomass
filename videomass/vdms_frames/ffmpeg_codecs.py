@@ -51,20 +51,24 @@ class FFmpeg_Codecs(wx.MiniFrame):
             colctrl = 'SIENNA'
             title = _("FFmpeg decoders")
 
-        wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
-                              wx.CLOSE_BOX | wx.SYSTEM_MENU
+        wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER
+                              | wx.CAPTION
+                              | wx.CLOSE_BOX
+                              | wx.SYSTEM_MENU,
                               )
         # add panel
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
-                              wx.BORDER_THEME)
+        self.panel = wx.Panel(self, wx.ID_ANY,
+                              style=wx.TAB_TRAVERSAL
+                              | wx.BORDER_THEME,
+                              )
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         notebook = wx.Notebook(self.panel, wx.ID_ANY,)
         sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)
         # -- nb 1
         nb_panel_1 = wx.Panel(notebook, wx.ID_ANY)
         vid = wx.ListCtrl(nb_panel_1, wx.ID_ANY,
-                          style=wx.LC_REPORT |
-                          wx.SUNKEN_BORDER
+                          style=wx.LC_REPORT
+                          | wx.SUNKEN_BORDER,
                           )
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab1.Add(vid, 1, wx.ALL | wx.EXPAND, 5)
@@ -73,8 +77,8 @@ class FFmpeg_Codecs(wx.MiniFrame):
         # --- nb2
         nb_panel_2 = wx.Panel(notebook, wx.ID_ANY)
         aud = wx.ListCtrl(nb_panel_2, wx.ID_ANY,
-                          style=wx.LC_REPORT |
-                          wx.SUNKEN_BORDER
+                          style=wx.LC_REPORT
+                          | wx.SUNKEN_BORDER,
                           )
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2.Add(aud, 1, wx.ALL | wx.EXPAND, 5)
@@ -83,8 +87,8 @@ class FFmpeg_Codecs(wx.MiniFrame):
         # -- nb3
         nb_panel_3 = wx.Panel(notebook, wx.ID_ANY)
         sub = wx.ListCtrl(nb_panel_3, wx.ID_ANY,
-                          style=wx.LC_REPORT |
-                          wx.SUNKEN_BORDER
+                          style=wx.LC_REPORT
+                          | wx.SUNKEN_BORDER,
                           )
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab3.Add(sub, 1, wx.ALL | wx.EXPAND, 5)

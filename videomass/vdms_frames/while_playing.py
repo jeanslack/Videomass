@@ -62,8 +62,11 @@ class While_Playing(wx.MiniFrame):
         get = wx.GetApp()  # get data from bootstrap
         colorscheme = get.appset['icontheme'][1]
 
-        wx.MiniFrame.__init__(self, None, style=wx.CAPTION | wx.CLOSE_BOX |
-                              wx.SYSTEM_MENU)
+        wx.MiniFrame.__init__(self, None,
+                              style=wx.CAPTION
+                              | wx.CLOSE_BOX
+                              | wx.SYSTEM_MENU,
+                              )
         """
         with 'None' not depend from parent:
         wx.Frame.__init__(self, None)
@@ -74,8 +77,10 @@ class While_Playing(wx.MiniFrame):
 
         """
         # -------------------- widget --------------------------#
-        panel_base = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
-                              wx.BORDER_THEME)
+        panel_base = wx.Panel(self, wx.ID_ANY,
+                              style=wx.TAB_TRAVERSAL
+                              | wx.BORDER_THEME,
+                              )
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         # panel_base.SetBackgroundColour(wx.Colour('#008000'))
         # panel_base.SetBackgroundColour(wx.Colour('#101212'))
@@ -98,8 +103,11 @@ class While_Playing(wx.MiniFrame):
         btngrid = wx.FlexGridSizer(1, 1, 0, 0)
         btngrid.Add(self.button_close, 0, wx.ALL, 0)
         panel.SetSizer(gr_s1)
-        sizer_base.Add(btngrid, flag=wx.ALL |
-                       wx.ALIGN_RIGHT | wx.RIGHT, border=5)
+        sizer_base.Add(btngrid, flag=wx.ALL
+                       | wx.ALIGN_RIGHT
+                       | wx.RIGHT,
+                       border=5,
+                       )
         panel_base.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()

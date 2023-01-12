@@ -93,11 +93,10 @@ class Renamer(wx.Dialog):
             labnum = wx.StaticText(self, wx.ID_ANY, msg)
             boxsiz.Add(labnum, 0, wx.ALL | wx.ALIGN_CENTER, 5)
             self.prognum = wx.SpinCtrl(self, wx.ID_ANY,
-                                        value="1",
-                                        min=0, max=999999999,
-                                        # size=(102, -1),
-                                        style=wx.SP_ARROW_KEYS
-                                        )
+                                       value="1",
+                                       min=0, max=999999999,
+                                       style=wx.SP_ARROW_KEYS,
+                                       )
             boxsiz.Add(self.prognum, 0, wx.ALL | wx.ALIGN_CENTER, 5)
             width = labnum.GetSize()[0] + self.prognum.GetSize()[0]
             self.entry.SetSize(width, -1)
@@ -129,7 +128,7 @@ class Renamer(wx.Dialog):
         Return `str(newname)` if mode == 0,
         Return `None` if raise ValueError.
         """
-        string =  self.entry.GetValue()
+        string = self.entry.GetValue()
         if self.mode >= 1:
             startfrom = self.prognum.GetValue()
             try:
@@ -140,8 +139,8 @@ class Renamer(wx.Dialog):
             newname = [string for x in range(self.mode)]
             for num, name in enumerate(newname):
                 temp = list(name)
-                temp[lasthashchar] = str(startfrom+num)
-                newname[num] = re.sub('#','0', ''.join(temp))
+                temp[lasthashchar] = str(startfrom + num)
+                newname[num] = re.sub('#', '0', ''.join(temp))
         else:
             newname = string
 
@@ -165,7 +164,7 @@ class Renamer(wx.Dialog):
         Checks for consistency of the entered string
         in batch renaming.
         """
-        string =  self.entry.GetValue()
+        string = self.entry.GetValue()
         occur = re.findall(r'((\#)\#*)', string)
 
         if '#' not in string or len(occur) > 1:

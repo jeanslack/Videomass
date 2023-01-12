@@ -82,10 +82,10 @@ def ffprobe(filename, cmd='ffprobe', **kwargs):
             output, error = proc.communicate()
 
             if proc.returncode != 0:
-                return(None, f'ffprobe: {error}')
+                return (None, f'ffprobe: {error}')
 
     except (OSError, FileNotFoundError) as excepterr:
-        return(None, excepterr)
+        return (None, excepterr)
 
     else:
         return json.loads(output), None
