@@ -8,7 +8,6 @@ Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Dec.02.2022
 Code checker: flake8, pylint
-########################################################
 
 This file is part of Videomass.
 
@@ -49,7 +48,7 @@ from videomass.vdms_utils import optimizations
 
 class AV_Conv(wx.Panel):
     """
-    Interface panel for video conversions
+    Panel GUI for audio and video conversions
     """
     # colour rappresentetion in html
     AZURE = '#15a6a6'
@@ -179,11 +178,11 @@ class AV_Conv(wx.Panel):
     # ------------------------------------------------------------------#
 
     def __init__(self, parent, appdata, icons):
-
-        self.appdata = appdata
-
-        # set attributes:
-        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
+        """
+        collects all the values of the
+        GUI controls used in this panel
+        """
+        if 'wx.svg' in sys.modules:  # only available in wx version 4.1 to up
             bmpplay = get_bmp(icons['preview'], ((16, 16)))
             bmpapreview = get_bmp(icons['preview_audio'], ((16, 16)))
             bmpreset = get_bmp(icons['clear'], ((16, 16)))
@@ -231,6 +230,7 @@ class AV_Conv(wx.Panel):
             "Makeduo": False, "VFilters": "", "PixFmt": "-pix_fmt yuv420p",
             "Deadline": "", "CpuUsed": "", "RowMthreading": "",
         }
+        self.appdata = appdata
         self.parent = parent
         self.norm_dataref = []  # see `on_Audio_analyzes` for details
 

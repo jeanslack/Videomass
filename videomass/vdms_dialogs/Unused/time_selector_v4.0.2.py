@@ -8,7 +8,6 @@ Copyright: (c) 2018/2022 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Dec.11.2022
 Code checker: flake8, pylint
-########################################################
 
 This file is part of Videomass.
 

@@ -9,7 +9,6 @@ Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Feb.17.2022
 Code checker: flake8, pylint
-########################################################
 
 This file is part of FFcuesplitter.
 

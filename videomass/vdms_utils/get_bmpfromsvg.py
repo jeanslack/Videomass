@@ -6,8 +6,8 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.10.2021 *-pycodestyle- compatible*
-########################################################
+Rev: May.10.2021
+Code checker: flake8, pylint
 
 This file is part of Videomass.
 

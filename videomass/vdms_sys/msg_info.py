@@ -7,10 +7,7 @@ author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 lic: GPL3
 Rev: Aug.12.2021
-Code checker:
-    flake8: --ignore F821, W504
-    pylint: --ignore E0602, E1101
-########################################################
+Code checker: flake8, pylint
 
 This file is part of Videomass.
 
