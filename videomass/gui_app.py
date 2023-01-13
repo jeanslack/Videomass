@@ -98,7 +98,6 @@ class Videomass(wx.App):
         wx.Locale.AddCatalogLookupPathPrefix(self.appset['localepath'])
         self.update_language(self.appset['locale_name'])
 
-
         noydl = self.check_youtube_dl()
         noffmpeg = self.check_ffmpeg()
         if noydl or noffmpeg:
