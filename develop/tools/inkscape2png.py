@@ -120,69 +120,61 @@ def main():
     arguments)
 
     """
-    parser = argparse.ArgumentParser(
-                description='Wrapper interface to perform batch conversion '
-                            'using the `Inkscape` library. Given a list of '
-                            'pathnames, recursively converts images found in '
-                            'SVG vector format to PNG raster format or to '
-                            'the formats specified in the --format argument:'
-                            )
-    parser.add_argument(
-                '-W',
-                required=False,
-                metavar='WIDTH',
-                # dest='<int>',
-                type=int,
-                help="width; defaults to the SVG's width",
-                    )
-    parser.add_argument(
-                '-H',
-                required=False,
-                metavar='HEIGHT',
-                type=int,
-                help="height; defaults to the SVG's height",
-                    )
-    parser.add_argument(
-                '-d',
-                required=False,
-                metavar='DPI',
-                type=float,
-                help="pixels per inch; defaults to 90dpi",
-                    )
-    parser.add_argument(
-                '-f', '--format',
-                choices=['png', 'pdf', 'ps', 'eps', 'svg', 'emf', 'wmf'],
-                required=False,
-                type=str,
-                help="save format; defaults to 'png'",
-                    )
-    parser.add_argument(
-                '-p', '--paths',
-                nargs='+',
-                metavar='..DIR ..DIR',
-                required=True,
-                help="Input dirname list separated by spaces",
-                    )
-    parser.add_argument(
-                '-r', '--remove',
-                action='store_true',
-                required=False,
-                help="If successful, remove all SVG source files when "
-                     "finished",
-                     )
-    parser.add_argument(
-                '-R', '--recursive',
-                action='store_true',
-                required=False,
-                help="Recursive use (please be careful when used with "
-                     "the `-r` argument)",
-                     )
-    parser.add_argument(
-                '-o', '--output',
-                metavar='..DIR',
-                required=False,
-                help="Provide an output directory to save all files",
-                    )
+    descr = ('Wrapper interface to perform batch conversion '
+             'using the `Inkscape` library. Given a list of '
+             'pathnames, recursively converts images found in '
+             'SVG vector format to PNG raster format or to '
+             'the formats specified in the --format argument:')
+    parser = argparse.ArgumentParser(description=descr)
+    parser.add_argument('-W',
+                        required=False,
+                        metavar='WIDTH',
+                        # dest='<int>',
+                        type=int,
+                        help="width; defaults to the SVG's width",
+                        )
+    parser.add_argument('-H',
+                        required=False,
+                        metavar='HEIGHT',
+                        type=int,
+                        help="height; defaults to the SVG's height",
+                        )
+    parser.add_argument('-d',
+                        required=False,
+                        metavar='DPI',
+                        type=float,
+                        help="pixels per inch; defaults to 90dpi",
+                        )
+    parser.add_argument('-f', '--format',
+                        choices=['png', 'pdf', 'ps', 'eps',
+                                 'svg', 'emf', 'wmf'],
+                        required=False,
+                        type=str,
+                        help="save format; defaults to 'png'",
+                        )
+    parser.add_argument('-p', '--paths',
+                        nargs='+',
+                        metavar='..DIR ..DIR',
+                        required=True,
+                        help="Input dirname list separated by spaces",
+                        )
+    parser.add_argument('-r', '--remove',
+                        action='store_true',
+                        required=False,
+                        help=("If successful, remove all SVG source "
+                              "files when finished"),
+                        )
+    parser.add_argument('-R', '--recursive',
+                        action='store_true',
+                        required=False,
+                        help=("Recursive use (please be careful when "
+                              "used with the `-r` argument)"),
+                        )
+    parser.add_argument('-o', '--output',
+                        metavar='..DIR',
+                        required=False,
+                        help="Provide an output directory to save all files",
+                        )
     args = parser.parse_args()
 
     for pth in args.paths:

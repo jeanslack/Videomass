@@ -301,7 +301,7 @@ def make_portable(here=HERE):
         portable = input('Do you want to keep all application data inside '
                          'the program folder? (makes stand-alone executable '
                          'fully portable and stealth) (y/N) ')
-        if portable.strip()  in ('Y', 'y', 'n', 'N'):
+        if portable.strip() in ('Y', 'y', 'n', 'N'):
             break
         print(f"\nInvalid option '{portable}'")
         continue
