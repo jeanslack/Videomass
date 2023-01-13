@@ -238,31 +238,30 @@ def genspec(options, specfile=SPECFILE, addplist=None, script=SCRIPT):
 # --------------------------------------------------------#
 
 
-def clean_buildingdirs(here=HERE):
+def clean_buildingdirs(here=HERE, name=NAME):
     """
-    called by run_pyinst().
     Asks the user if they want to clean-up building
-    directories, usually "dist" and "build" dirs.
+    directories, usually "dist", "build", "*.egg-info" dirs.
     """
-    while True:
-        clean = input('Want you remove "dist" and "build" folders (y/n)? ')
-        if clean.strip() in ('Y', 'y', 'n', 'N'):
-            break
-        print(f"\nInvalid option '{clean}'")
-        continue
+    target = ('dist', 'build', f'{NAME}.egg-info')
+    aredirs = [x for x in os.listdir(HERE) if os.path.isdir(x)]
+    toremove = [t for t in aredirs if t in target]
 
-    if clean in ('y', 'Y'):
-        if os.path.exists(os.path.join(here, 'dist')):
-            try:
-                shutil.rmtree(os.path.join(here, 'dist'))
-            except OSError as err:
-                sys.exit(f"ERROR: {err}")
+    if toremove:
+        while True:
+            clean = input('\nDo you want to clean build folders? (y/n)? ')
+            if clean.strip() in ('Y', 'y', 'n', 'N'):
+                break
+            print(f"\nInvalid option '{clean}'")
+            continue
 
-        if os.path.exists(os.path.join(here, 'build')):
-            try:
-                shutil.rmtree(os.path.join(here, 'build'))
-            except OSError as err:
-                sys.exit(f"ERROR: {err}")
+        if clean in ('y', 'Y'):
+            for names in toremove:
+                dirname = os.path.join(HERE, names)
+                print('Removing: ', dirname)
+                shutil.rmtree(os.path.join(HERE, dirname), ignore_errors=True)
+            print('\n')
+
 # --------------------------------------------------------#
 
 
@@ -271,7 +270,6 @@ def run_pyinst(specfile=SPECFILE):
     wrap `pyinstaller --clean videomass.spec`
     """
     if os.path.exists(specfile) and os.path.isfile(specfile):
-        clean_buildingdirs()  # remove temp folders
         fetch_exec()  # fetch videomass binary
         time.sleep(1)
         try:
@@ -364,11 +362,11 @@ def get_data_platform():
     Retrieves data options and generates spec file.
     """
     if not platform.system() in ('Windows', 'Darwin', 'Linux'):
-        sys.exit("\nERROR: Unsupported platform. Maybe you "
-                 "could create a 'spec' file using this command:\n"
-                 "pyi-makespec [options] videomass.py\n"
+        sys.exit("\nERROR: Unsupported platform.\n"
+                 "Try creating a 'spec' file by typing the "
+                 "following command:\n"
+                 "\"pyi-makespec [options] videomass.py\"\n"
                  )
-
     wrap = PyinstallerSpec(onefile_onedir())
 
     if platform.system() == 'Linux':
@@ -389,8 +387,10 @@ def main():
     """
     Users inputs parser (positional/optional arguments)
     """
-    parser = argparse.ArgumentParser(description=('Wrap the pyinstaller setup '
-                                                  'for Videomass application',)
+    descr = 'Wrap the pyinstaller setup for Videomass application'
+    parser = argparse.ArgumentParser(prog=NAME,
+                                     description=descr,
+                                     add_help=True,
                                      )
     parser.add_argument(
         '-g', '--gen_spec',
@@ -407,20 +407,23 @@ def main():
         help="Start the building bundle by an existing videomass.spec file.",
         action="store_true",
     )
+
     args = parser.parse_args()
 
     if args.gen_spec:
         get_data_platform()
 
     elif args.genspec_build:
+        get_data_platform()
+        clean_buildingdirs()
         backup = backup_sources()
         ret = make_portable()
-        get_data_platform()
         run_pyinst()
         if ret:
             restore_sources(backup)
 
     elif args.start_build:
+        clean_buildingdirs()
         backup = backup_sources()
         ret = make_portable()
         run_pyinst()
