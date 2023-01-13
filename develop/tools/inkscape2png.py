@@ -124,7 +124,8 @@ def main():
              'using the `Inkscape` library. Given a list of '
              'pathnames, recursively converts images found in '
              'SVG vector format to PNG raster format or to '
-             'the formats specified in the --format argument:')
+             'the formats specified in the --format argument:'
+             )
     parser = argparse.ArgumentParser(description=descr)
     parser.add_argument('-W',
                         required=False,
