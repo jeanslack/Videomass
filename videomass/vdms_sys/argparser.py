@@ -28,12 +28,32 @@ import os
 import sys
 from shutil import which
 import argparse
+import platform
 from videomass.vdms_sys.msg_info import current_release
 try:
     import wx
-    MSGWX = f"{wx.version()})"
+    MSGWX = f"{wx.version()}"
 except ModuleNotFoundError as errwx:
     MSGWX = f"not installed! ({errwx})"
+
+
+def info_this_platform():
+    """
+    Get information about operating system, version of
+    Python and wxPython.
+    """
+    osys = platform.system_alias(platform.system(),
+                                 platform.release(),
+                                 platform.version(),
+                                 )
+    thisplat = (f"Platform: {osys[0]}\n"
+                f"Version: {osys[2]}\n"
+                f"Release: {osys[1]}\n"
+                f"Architecture: {platform.architecture()}\n"
+                f"Python: {sys.version}\n"
+                f"wxPython: {MSGWX}"
+                )
+    return thisplat
 
 
 def arguments():
@@ -41,7 +61,7 @@ def arguments():
     parser = argparse.ArgumentParser(description=('GUI for FFmpeg and '
                                                   'youtube-dl/yt-dlp'),)
     parser.add_argument('-v', '--version',
-                        help="show the current version and exit",
+                        help="Show the current version and exit",
                         action="store_true",
                         )
     parser.add_argument('-c', '--check',
@@ -91,8 +111,7 @@ def arguments():
     elif argmts.version:
         crel = current_release()
         print(f'{crel[0]}: {crel[2]} ({crel[3]})')
-        print(f'Python: {sys.version}')
-        print(f'wxPython: {MSGWX}')
+        print(info_this_platform())
         parser.exit(status=0, message=None)
 
     else:
