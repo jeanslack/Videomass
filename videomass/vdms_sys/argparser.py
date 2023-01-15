@@ -28,6 +28,7 @@ import os
 import sys
 from shutil import which
 import argparse
+import platform
 from videomass.vdms_sys.msg_info import current_release
 try:
     import wx
@@ -41,9 +42,14 @@ def arguments():
     parser = argparse.ArgumentParser(description=('GUI for FFmpeg and '
                                                   'youtube-dl/yt-dlp'),)
     parser.add_argument('-v', '--version',
-                        help="show the current version and exit",
+                        help="Show the current version and exit",
                         action="store_true",
                         )
+    #parser.add_argument('-p', '--platform',
+                        #help=('Show platform information useful for'
+                              #'found in your operating system'),
+                        #action="store_true",
+                        #)
     parser.add_argument('-c', '--check',
                         help=('List of executables used by Videomass '
                               'found in your operating system'),
@@ -93,6 +99,14 @@ def arguments():
         print(f'{crel[0]}: {crel[2]} ({crel[3]})')
         print(f'Python: {sys.version}')
         print(f'wxPython: {MSGWX}')
+        osys = platform.system_alias(platform.system(),
+                                     platform.release(),
+                                     platform.version(),
+                                     )
+        print(f'Platform: {osys[0]}')
+        print(f'Architecture: {platform.architecture()}')
+        print(f'Release: {osys[1]}')
+        print(f'Version: {osys[2]}')
         parser.exit(status=0, message=None)
 
     else:
