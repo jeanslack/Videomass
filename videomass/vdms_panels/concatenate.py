@@ -101,7 +101,7 @@ class Conc_Demuxer(wx.Panel):
         self.args = ''
         self.duration = None
 
-        wx.Panel.__init__(self, parent=parent, style=wx.BORDER_THEME)
+        wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((20, 20))

@@ -108,7 +108,7 @@ class SequenceToVideo(wx.Panel):
             bmpresize = wx.Bitmap(icons['scale'], wx.BITMAP_TYPE_ANY)
             bmpatrack = wx.Bitmap(icons['atrack'], wx.BITMAP_TYPE_ANY)
 
-        wx.Panel.__init__(self, parent=parent, style=wx.BORDER_THEME)
+        wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((20, 20))
         self.btn_help = wx.Button(self, wx.ID_ANY, _("Help"), size=(-1, -1))

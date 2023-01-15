@@ -70,19 +70,18 @@ class ShowLogs(wx.Dialog):
                                       | wx.SUNKEN_BORDER
                                       | wx.LC_SINGLE_SEL,
                                       )
-        self.log_select.SetMinSize((700, 200))
-        self.log_select.InsertColumn(0, _('Log file list'), width=500)
+        self.log_select.SetMinSize((600, 200))
+        self.log_select.InsertColumn(0, _('Log file list'), width=300)
         sizer_base.Add(self.log_select, 0, wx.ALL | wx.EXPAND, 5)
-        labtxt = wx.StaticText(self, label=_('Log messages'))
-        sizer_base.Add(labtxt, 0, wx.ALL, 5)
+        lablog = wx.StaticText(self, label=_('Log messages'))
+        sizer_base.Add(lablog, 0, wx.ALL, 5)
         self.textdata = wx.TextCtrl(self,
                                     wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE
                                     | wx.TE_READONLY
                                     | wx.TE_RICH2,
                                     )
-        self.textdata.SetMinSize((700, 300))
-
+        self.textdata.SetMinSize((600, 200))
         self.textdata.SetBackgroundColour(colorscheme['BACKGRD'])
         self.textdata.SetDefaultStyle(wx.TextAttr(colorscheme['TXT3']))
 

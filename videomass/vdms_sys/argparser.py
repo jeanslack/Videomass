@@ -32,9 +32,28 @@ import platform
 from videomass.vdms_sys.msg_info import current_release
 try:
     import wx
-    MSGWX = f"{wx.version()})"
+    MSGWX = f"{wx.version()}"
 except ModuleNotFoundError as errwx:
     MSGWX = f"not installed! ({errwx})"
+
+
+def info_this_platform():
+    """
+    Get information about operating system, version of
+    Python and wxPython.
+    """
+    osys = platform.system_alias(platform.system(),
+                                 platform.release(),
+                                 platform.version(),
+                                 )
+    thisplat = (f"Platform: {osys[0]}\n"
+                f"Version: {osys[2]}\n"
+                f"Release: {osys[1]}\n"
+                f"Architecture: {platform.architecture()}\n"
+                f"Python: {sys.version}\n"
+                f"wxPython: {MSGWX}"
+                )
+    return thisplat
 
 
 def arguments():
@@ -45,11 +64,6 @@ def arguments():
                         help="Show the current version and exit",
                         action="store_true",
                         )
-    #parser.add_argument('-p', '--platform',
-                        #help=('Show platform information useful for'
-                              #'found in your operating system'),
-                        #action="store_true",
-                        #)
     parser.add_argument('-c', '--check',
                         help=('List of executables used by Videomass '
                               'found in your operating system'),
@@ -97,16 +111,7 @@ def arguments():
     elif argmts.version:
         crel = current_release()
         print(f'{crel[0]}: {crel[2]} ({crel[3]})')
-        print(f'Python: {sys.version}')
-        print(f'wxPython: {MSGWX}')
-        osys = platform.system_alias(platform.system(),
-                                     platform.release(),
-                                     platform.version(),
-                                     )
-        print(f'Platform: {osys[0]}')
-        print(f'Architecture: {platform.architecture()}')
-        print(f'Release: {osys[1]}')
-        print(f'Version: {osys[2]}')
+        print(info_this_platform())
         parser.exit(status=0, message=None)
 
     else:

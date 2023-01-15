@@ -52,6 +52,7 @@ from videomass.vdms_panels import presets_manager
 from videomass.vdms_io import io_tools
 from videomass.vdms_sys.msg_info import current_release
 from videomass.vdms_sys.settings_manager import ConfigManager
+from videomass.vdms_sys.argparser import info_this_platform
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import copydir_recursively
 if 'youtube_dl' in sys.modules:
@@ -159,9 +160,7 @@ class MainFrame(wx.Frame):
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)  # sizer base global
 
         # Layout external panels:
-        self.mainSizer.Add(10, 10)
         self.mainSizer.Add(self.TimeLine, 0, wx.EXPAND)
-        self.mainSizer.Add(10, 10)
         self.mainSizer.Add(self.ChooseTopic, 1, wx.EXPAND)
         self.mainSizer.Add(self.fileDnDTarget, 1, wx.EXPAND)
         self.mainSizer.Add(self.textDnDTarget, 1, wx.EXPAND)
@@ -586,6 +585,10 @@ class MainFrame(wx.Frame):
                    "<https://pypi.org/project/videomass/>"))
         checkItem = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         helpButton.AppendSeparator()
+        dscrp = (_("System version"),
+                 _("Get version about your operating system, version of "
+                   "Python and wxPython."))
+        sysinfo = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         infoItem = helpButton.Append(wx.ID_ABOUT, _("About Videomass"), "")
         self.menuBar.Append(helpButton, _("Help"))
 
@@ -647,6 +650,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Donation, DonationItem)
         self.Bind(wx.EVT_MENU, self.DocFFmpeg, docFFmpeg)
         self.Bind(wx.EVT_MENU, self.CheckNewReleases, checkItem)
+        self.Bind(wx.EVT_MENU, self.system_vers, sysinfo)
         self.Bind(wx.EVT_MENU, self.Info, infoItem)
 
     # --------Menu Bar Event handler (callback)
@@ -1257,6 +1261,14 @@ class MainFrame(wx.Frame):
                                                       this[2]
                                                       )
         dlg.ShowModal()
+    # -------------------------------------------------------------------#
+
+    def system_vers(self, event):
+        """
+        Get system version
+        """
+        wx.MessageBox(info_this_platform(), "Videomass",
+                      wx.ICON_INFORMATION, self)
     # -------------------------------------------------------------------#
 
     def Info(self, event):

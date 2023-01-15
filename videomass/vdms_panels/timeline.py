@@ -85,8 +85,9 @@ class Timeline(wx.Panel):
         get = wx.GetApp()
         appdata = get.appset
 
-        wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
+        wx.Panel.__init__(self, parent, -1)
         sizer_v = wx.BoxSizer(wx.VERTICAL)
+        sizer_v.Add(10, 10)
         sizer_h = wx.BoxSizer(wx.HORIZONTAL)
         sizer_v.Add(sizer_h, 0, wx.ALL, 5)
         lbl_trim = wx.StaticText(self, wx.ID_ANY, label=_('Trim'))
