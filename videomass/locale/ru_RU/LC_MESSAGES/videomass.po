@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-15 23:51+0100\n"
-"PO-Revision-Date: 2023-01-15 23:53+0100\n"
+"POT-Creation-Date: 2023-01-16 23:33+0100\n"
+"PO-Revision-Date: 2023-01-16 23:43+0100\n"
 "Last-Translator: ChourS2008\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -30,7 +30,7 @@ msgstr ""
 "\n"
 "Проверить разрешения на выполнение."
 
-#: ../gui_app.py:252
+#: ../gui_app.py:253
 #, python-brace-format
 msgid ""
 "Unexpected error while deleting file contents:\n"
@@ -726,8 +726,8 @@ msgstr ""
 "текстовые поля ниже, нажав соответствующие кнопки."
 
 #: ../vdms_dialogs/wizard_dlg.py:345 ../vdms_dialogs/wizard_dlg.py:362
-#: ../vdms_dialogs/wizard_dlg.py:380 ../vdms_dialogs/preferences.py:792
-#: ../vdms_dialogs/preferences.py:834 ../vdms_dialogs/preferences.py:877
+#: ../vdms_dialogs/wizard_dlg.py:380 ../vdms_dialogs/preferences.py:793
+#: ../vdms_dialogs/preferences.py:835 ../vdms_dialogs/preferences.py:878
 msgid "Choose the {} executable"
 msgstr "Выберите исполняемый файл {}"
 
@@ -751,7 +751,7 @@ msgstr ""
 msgid " Do you want to enable this feature?"
 msgstr " Вы хотите включить эту функцию?"
 
-#: ../vdms_dialogs/wizard_dlg.py:428 ../vdms_dialogs/preferences.py:286
+#: ../vdms_dialogs/wizard_dlg.py:428 ../vdms_dialogs/preferences.py:287
 msgid "Downloader preferences"
 msgstr "Настройки загрузчика"
 
@@ -985,87 +985,87 @@ msgstr "Настройки отметки времени"
 msgid "Application Language"
 msgstr "Язык приложения"
 
-#: ../vdms_dialogs/preferences.py:98
+#: ../vdms_dialogs/preferences.py:99
 msgid "Clear the cache when exiting the application"
 msgstr "Очистить кеш при выходе из приложения"
 
-#: ../vdms_dialogs/preferences.py:102
+#: ../vdms_dialogs/preferences.py:103
 msgid "Delete the contents of the log files when exiting the application"
 msgstr "Удалите содержимое log-журналов при выходе из приложения"
 
-#: ../vdms_dialogs/preferences.py:108
+#: ../vdms_dialogs/preferences.py:109
 msgid "Warn on exit"
 msgstr "Предупредить при выходе"
 
-#: ../vdms_dialogs/preferences.py:113
+#: ../vdms_dialogs/preferences.py:114
 msgid "Miscellanea"
 msgstr "Разное"
 
-#: ../vdms_dialogs/preferences.py:119
+#: ../vdms_dialogs/preferences.py:120
 msgid "Where do you prefer to save your transcodes?"
 msgstr "Где вы предпочитаете сохранять перекодировки?"
 
-#: ../vdms_dialogs/preferences.py:135
+#: ../vdms_dialogs/preferences.py:136
 msgid "Save each file in the same folder as input file"
 msgstr "Сохраняет каждый файл в той же папке, что и входной файл"
 
-#: ../vdms_dialogs/preferences.py:140
+#: ../vdms_dialogs/preferences.py:141
 msgid "Assign optional suffix to output file names:"
 msgstr "Добавить необязательный суффикс к именам выходных файлов:"
 
-#: ../vdms_dialogs/preferences.py:147
+#: ../vdms_dialogs/preferences.py:148
 msgid ""
 "Move source file to the Videomass trash folder after successful encoding"
 msgstr ""
 "Переместите исходный файл в папку корзины Videomass после успешного "
 "кодирования"
 
-#: ../vdms_dialogs/preferences.py:164
+#: ../vdms_dialogs/preferences.py:165
 msgid "Where do you prefer to save your downloads?"
 msgstr "Где вы предпочитаете сохранять загрузки?"
 
-#: ../vdms_dialogs/preferences.py:179
+#: ../vdms_dialogs/preferences.py:180
 msgid "Auto-create subfolders when downloading playlists"
 msgstr "Автоматически создавать подпапки при загрузке плейлистов"
 
 # Изменил 14-5-2021
-#: ../vdms_dialogs/preferences.py:184
+#: ../vdms_dialogs/preferences.py:185
 msgid "File Preferences"
 msgstr "Файл"
 
-#: ../vdms_dialogs/preferences.py:191
+#: ../vdms_dialogs/preferences.py:192
 msgid "Path to the executables"
 msgstr "Путь к исполняемым файлам"
 
-#: ../vdms_dialogs/preferences.py:194
+#: ../vdms_dialogs/preferences.py:195
 msgid "Enable another location to run FFmpeg"
 msgstr "Включить другое место для запуска FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:206
+#: ../vdms_dialogs/preferences.py:207
 msgid "Enable another location to run FFprobe"
 msgstr "Включить другое место для запуска FFprobe"
 
-#: ../vdms_dialogs/preferences.py:218
+#: ../vdms_dialogs/preferences.py:219
 msgid "Enable another location to run FFplay"
 msgstr "Включить другое место для запуска FFplay"
 
-#: ../vdms_dialogs/preferences.py:230
+#: ../vdms_dialogs/preferences.py:231
 msgid "Other options"
 msgstr "Другие опции"
 
-#: ../vdms_dialogs/preferences.py:234
+#: ../vdms_dialogs/preferences.py:235
 msgid "Threads used for transcoding (from 0 to 32):"
 msgstr "Потоки, используемые для перекодирования (от 0 до 32):"
 
-#: ../vdms_dialogs/preferences.py:252
+#: ../vdms_dialogs/preferences.py:253
 msgid "FFmpeg"
 msgstr "FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:264
+#: ../vdms_dialogs/preferences.py:265
 msgid "How to upgrade a Python package"
 msgstr "Как обновить пакет Python"
 
-#: ../vdms_dialogs/preferences.py:271
+#: ../vdms_dialogs/preferences.py:272
 msgid ""
 "Required: Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package "
 "(x86)"
@@ -1073,15 +1073,15 @@ msgstr ""
 "Необходимо: Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package "
 "(x86)"
 
-#: ../vdms_dialogs/preferences.py:280
+#: ../vdms_dialogs/preferences.py:281
 msgid "How to install pip on your Linux distribution"
 msgstr "Как установить pip в ваш дистрибутив Linux"
 
-#: ../vdms_dialogs/preferences.py:297
+#: ../vdms_dialogs/preferences.py:298
 msgid "Current path:"
 msgstr "Текущий путь:"
 
-#: ../vdms_dialogs/preferences.py:305
+#: ../vdms_dialogs/preferences.py:306
 msgid ""
 "Make sure you are using the latest available version of\n"
 "'{}'. This allows you to avoid download problems.\n"
@@ -1089,31 +1089,31 @@ msgstr ""
 "Убедитесь, что вы используете последнюю доступную версию '{}'.\n"
 "Это позволяет избежать проблем с загрузкой.\n"
 
-#: ../vdms_dialogs/preferences.py:313 ../vdms_dialogs/preferences.py:329
-#: ../vdms_dialogs/preferences.py:345 ../vdms_frames/ffmpeg_conf.py:220
+#: ../vdms_dialogs/preferences.py:314 ../vdms_dialogs/preferences.py:330
+#: ../vdms_dialogs/preferences.py:346 ../vdms_frames/ffmpeg_conf.py:220
 #: ../vdms_panels/av_conversions.py:2491
 #: ../vdms_panels/sequence_to_video.py:682
 #: ../vdms_panels/video_to_sequence.py:584
 msgid "Disabled"
 msgstr "Отключено"
 
-#: ../vdms_dialogs/preferences.py:324
+#: ../vdms_dialogs/preferences.py:325
 msgid "Not found"
 msgstr "Не найдено"
 
-#: ../vdms_dialogs/preferences.py:341 ../vdms_dialogs/preferences.py:357
+#: ../vdms_dialogs/preferences.py:342 ../vdms_dialogs/preferences.py:358
 msgid "Not Installed"
 msgstr "Не установлено"
 
-#: ../vdms_dialogs/preferences.py:362
+#: ../vdms_dialogs/preferences.py:363
 msgid "Downloader"
 msgstr "Загрузчик"
 
-#: ../vdms_dialogs/preferences.py:368
+#: ../vdms_dialogs/preferences.py:369
 msgid "Icon themes"
 msgstr "Темы значков"
 
-#: ../vdms_dialogs/preferences.py:370
+#: ../vdms_dialogs/preferences.py:371
 msgid ""
 "The chosen icon theme will only change the icons,\n"
 "background and foreground of some text fields."
@@ -1121,44 +1121,44 @@ msgstr ""
 "Выбранная тема значка изменит только значки, фон\n"
 "и передний план некоторых текстовых полей."
 
-#: ../vdms_dialogs/preferences.py:388
+#: ../vdms_dialogs/preferences.py:389
 msgid "Toolbar customization"
 msgstr "Настройка панели инструментов"
 
-#: ../vdms_dialogs/preferences.py:390
+#: ../vdms_dialogs/preferences.py:391
 msgid "At the top of window (default)"
 msgstr "Вверху (по умолчанию)"
 
-#: ../vdms_dialogs/preferences.py:391
+#: ../vdms_dialogs/preferences.py:392
 msgid "At the bottom of window"
 msgstr "Внизу"
 
-#: ../vdms_dialogs/preferences.py:392
+#: ../vdms_dialogs/preferences.py:393
 msgid "At the right of window"
 msgstr "Справа"
 
 # слева от окна или в левой части окна?
-#: ../vdms_dialogs/preferences.py:393
+#: ../vdms_dialogs/preferences.py:394
 msgid "At the left of window"
 msgstr "Слева"
 
-#: ../vdms_dialogs/preferences.py:395
+#: ../vdms_dialogs/preferences.py:396
 msgid "Place the toolbar"
 msgstr "Разместите панель инструментов"
 
-#: ../vdms_dialogs/preferences.py:405
+#: ../vdms_dialogs/preferences.py:406
 msgid "Icon size:"
 msgstr "Размер значка:"
 
-#: ../vdms_dialogs/preferences.py:418
+#: ../vdms_dialogs/preferences.py:419
 msgid "Shows the text in the toolbar buttons"
 msgstr "Показывает текст на кнопках панели инструментов"
 
-#: ../vdms_dialogs/preferences.py:423
+#: ../vdms_dialogs/preferences.py:424
 msgid "Appearance"
 msgstr "Вид"
 
-#: ../vdms_dialogs/preferences.py:430
+#: ../vdms_dialogs/preferences.py:431
 msgid ""
 "The following settings affect output messages and\n"
 "the log messages during transcoding processes.\n"
@@ -1168,28 +1168,28 @@ msgstr ""
 "сообщения журнала во время процессов перекодирования.\n"
 "Изменяйте, только если знаете, что делаете.\n"
 
-#: ../vdms_dialogs/preferences.py:451
+#: ../vdms_dialogs/preferences.py:452
 msgid "FFmpeg logging levels"
 msgstr "Комплект log-журналов FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:471 ../vdms_main/main_frame.py:567
+#: ../vdms_dialogs/preferences.py:472 ../vdms_main/main_frame.py:567
 #: ../vdms_panels/av_conversions.py:607
 msgid "Settings"
 msgstr "Настройки"
 
-#: ../vdms_dialogs/preferences.py:495
+#: ../vdms_dialogs/preferences.py:496
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr "Назначив дополнительный суффикс, вы можете избежать перезаписи файлов"
 
-#: ../vdms_dialogs/preferences.py:626
+#: ../vdms_dialogs/preferences.py:627
 msgid "Set a persistent location to save the file downloads"
 msgstr "Установите постоянное место для сохранения скачанных файлов"
 
-#: ../vdms_dialogs/preferences.py:649
+#: ../vdms_dialogs/preferences.py:650
 msgid "Set a persistent location to save exported files"
 msgstr "Установите постоянное место для сохранения экспортированных файлов"
 
-#: ../vdms_dialogs/preferences.py:681
+#: ../vdms_dialogs/preferences.py:682
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Spaces are not allowed."
@@ -1197,11 +1197,11 @@ msgstr ""
 "Вводите только буквенно-цифровые символы. Вы также можете использовать дефис "
 "(\"-\") и подчеркивание (\"_\"). Пробелы не допускаются."
 
-#: ../vdms_dialogs/preferences.py:734
+#: ../vdms_dialogs/preferences.py:735
 msgid "Choose a new destination for the files to be trashed"
 msgstr "Выберите новое место для файлов, которые нужно удалить"
 
-#: ../vdms_dialogs/preferences.py:984
+#: ../vdms_dialogs/preferences.py:985
 msgid ""
 "Changes will take effect once the program has been restarted.\n"
 "\n"
@@ -1211,7 +1211,7 @@ msgstr ""
 "\n"
 "Вы хотите выйти из приложения сейчас?"
 
-#: ../vdms_dialogs/preferences.py:987 ../vdms_main/main_frame.py:348
+#: ../vdms_dialogs/preferences.py:988 ../vdms_main/main_frame.py:348
 msgid "Exit"
 msgstr "Выход"
 
@@ -1468,7 +1468,7 @@ msgstr "Ссылки после нормализации:"
 
 #: ../vdms_frames/shownormlist.py:70 ../vdms_frames/shownormlist.py:76
 #: ../vdms_frames/shownormlist.py:82 ../vdms_main/main_frame.py:593
-#: ../vdms_panels/concatenate.py:108 ../vdms_panels/sequence_to_video.py:114
+#: ../vdms_panels/concatenate.py:109 ../vdms_panels/sequence_to_video.py:114
 #: ../vdms_panels/video_to_sequence.py:76
 msgid "Help"
 msgstr "Помощь"
@@ -3096,8 +3096,9 @@ msgid ""
 "added.\n"
 "\n"
 "- The output file name will have the same name as the first file added (also "
-"depends\n"
-"  on the settings made in the preferences dialog).\n"
+"depends on the\n"
+"settings made in the preferences dialog, or if you raname it with the file "
+"rename function).\n"
 "\n"
 "- Video files must have exactly same streams, same codecs and same\n"
 "  width/height, but can be wrapped in different container formats.\n"
@@ -3121,30 +3122,30 @@ msgstr ""
 "- Аудиофайлы должны иметь одинаковые форматы, одинаковые кодеки и одинаковую "
 "частоту дискретизации."
 
-#: ../vdms_panels/concatenate.py:121
+#: ../vdms_panels/concatenate.py:122
 msgid "From an image sequence to a video file"
 msgstr "Из последовательности изображений в видеофайл"
 
-#: ../vdms_panels/concatenate.py:126
+#: ../vdms_panels/concatenate.py:127
 msgid "Duration:"
 msgstr "Продолжительность:"
 
-#: ../vdms_panels/concatenate.py:137 ../vdms_panels/video_to_sequence.py:114
+#: ../vdms_panels/concatenate.py:138 ../vdms_panels/video_to_sequence.py:114
 msgid "Output format:"
 msgstr "Выходной формат:"
 
-#: ../vdms_panels/concatenate.py:153
+#: ../vdms_panels/concatenate.py:154
 msgid "For more details, see the Videomass User Guide:"
 msgstr "Подробнее см. Руководство пользователя Videomass:"
 
-#: ../vdms_panels/concatenate.py:173 ../vdms_panels/sequence_to_video.py:205
+#: ../vdms_panels/concatenate.py:174 ../vdms_panels/sequence_to_video.py:205
 #: ../vdms_panels/video_to_sequence.py:176
 msgid "For more information, visit the official FFmpeg documentation:"
 msgstr ""
 "Для получения дополнительной информации посетите официальную документацию "
 "FFmpeg:"
 
-#: ../vdms_panels/concatenate.py:192
+#: ../vdms_panels/concatenate.py:193
 msgid ""
 "Set the time interval between images in seconds (from 1 to 100 sec.), "
 "default is 1 second"
@@ -3152,11 +3153,11 @@ msgstr ""
 "Установите интервал времени между изображениями в секундах (от 1 до 100 "
 "секунд), по умолчанию - 1 секунда"
 
-#: ../vdms_panels/concatenate.py:246
+#: ../vdms_panels/concatenate.py:247
 msgid "At least two files are required to perform concatenation."
 msgstr "Для объединения требуются как минимум два файла."
 
-#: ../vdms_panels/concatenate.py:247 ../vdms_panels/concatenate.py:258
+#: ../vdms_panels/concatenate.py:248 ../vdms_panels/concatenate.py:259
 #: ../vdms_panels/sequence_to_video.py:549
 #: ../vdms_panels/sequence_to_video.py:559
 #: ../vdms_panels/sequence_to_video.py:576
@@ -3165,7 +3166,7 @@ msgstr "Для объединения требуются как минимум �
 msgid "ERROR"
 msgstr "ОШИБКА"
 
-#: ../vdms_panels/concatenate.py:255
+#: ../vdms_panels/concatenate.py:256
 msgid ""
 "The files do not have the same \"codec_types\", same \"sample_rate\" or same "
 "\"width\" or \"height\". Unable to proceed."
@@ -3173,7 +3174,7 @@ msgstr ""
 "Файлы не имеют одинаковых «codec_types», «sample_rate» или одинаковых "
 "«ширины» или «высоты». Невозможно продолжить."
 
-#: ../vdms_panels/concatenate.py:332
+#: ../vdms_panels/concatenate.py:333
 msgid ""
 "File to concatenate\n"
 "Output filename\n"
