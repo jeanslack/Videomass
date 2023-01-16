@@ -31,7 +31,7 @@ import wx
 import wx.lib.agw.hyperlink as hpl
 from videomass.vdms_utils.utils import detect_binaries
 from videomass.vdms_sys.settings_manager import ConfigManager
-from videomass.vdms_sys.app_const import langnames
+from videomass.vdms_sys.app_const import supLang
 
 
 class SetUp(wx.Dialog):
@@ -88,8 +88,9 @@ class SetUp(wx.Dialog):
         sbox = wx.StaticBox(tabOne, wx.ID_ANY, (_("Application Language")))
         boxlang = wx.StaticBoxSizer(sbox, wx.VERTICAL)
         sizerGen.Add(boxlang, 0, wx.ALL | wx.EXPAND, 5)
+        langs = [lang[1] for lang in supLang.values()]
         self.cmbx_lang = wx.ComboBox(tabOne, wx.ID_ANY,
-                                     choices=list(langnames.values()),
+                                     choices=langs,
                                      size=(-1, -1),
                                      style=wx.CB_DROPDOWN | wx.CB_READONLY
                                      )
@@ -534,10 +535,10 @@ class SetUp(wx.Dialog):
         """
         Setting enable/disable in according to the configuration file
         """
-        if self.appdata['locale_name'] in langnames:
-            lang = langnames[self.appdata['locale_name']]
+        if self.appdata['locale_name'] in supLang:
+            lang = supLang[self.appdata['locale_name']][1]
         else:
-            lang = langnames["en_US"]
+            lang = supLang["en_US"][1]
         self.cmbx_lang.SetValue(lang)
         self.cmbx_icons.SetValue(self.appdata['icontheme'][0])
         self.cmbx_iconsSize.SetValue(str(self.appdata['toolbarsize']))
@@ -608,8 +609,8 @@ class SetUp(wx.Dialog):
     def on_set_lang(self, event):
         """set application language"""
 
-        for key, val in langnames.items():
-            if val == self.cmbx_lang.GetValue():
+        for key, val in supLang.items():
+            if val[1] == self.cmbx_lang.GetValue():
                 lang = key
         self.settings['locale_name'] = lang
     # --------------------------------------------------------------------#

@@ -203,9 +203,10 @@ class Videomass(wx.App):
         not be destroyed soon enough, likely causing a crash.
 
         :param string `lang`: one of the supported language codes
+        https://docs.wxpython.org/wx.Language.enumeration.html#wx-language
 
         """
-        # if an unsupported language is requested default to English
+        # if an unsupported language is requested, default to English
         selectlang = appC.supLang.get(lang, wx.LANGUAGE_ENGLISH)
 
         if self.locale:
@@ -213,7 +214,7 @@ class Videomass(wx.App):
             del self.locale
 
         # create a locale object for this language
-        self.locale = wx.Locale(selectlang)
+        self.locale = wx.Locale(selectlang[0])
 
         if self.locale.IsOk():
             self.locale.AddCatalog(appC.langDomain)
