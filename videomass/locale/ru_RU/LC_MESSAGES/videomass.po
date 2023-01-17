@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-17 00:17+0100\n"
-"PO-Revision-Date: 2023-01-17 15:56+0100\n"
+"POT-Creation-Date: 2023-01-18 00:29+0100\n"
+"PO-Revision-Date: 2023-01-18 00:30+0100\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -41,7 +41,7 @@ msgstr ""
 "\n"
 "{0}"
 
-#: ../vdms_dialogs/audiodialogs.py:218
+#: ../vdms_dialogs/audiodialogs.py:230
 msgid ""
 "Videomass supports mono and stereo audio channels. If you are not sure set "
 "to \"Auto\" and source values will be copied."
@@ -49,7 +49,7 @@ msgstr ""
 "Videomass поддерживает моно и стерео аудиоканалы. Если вы не уверены, "
 "установите «Авто», исходные значения будут скопированы."
 
-#: ../vdms_dialogs/audiodialogs.py:222
+#: ../vdms_dialogs/audiodialogs.py:234
 msgid ""
 "The audio Rate (or sample-rate) is the sound sampling frequency and is "
 "measured in Hertz. The higher the frequency, the more true it will be to the "
@@ -64,7 +64,7 @@ msgstr ""
 "кГц. Если вы не уверены, установите значение «Авто», и исходные значения "
 "будут скопированы."
 
-#: ../vdms_dialogs/audiodialogs.py:231
+#: ../vdms_dialogs/audiodialogs.py:243
 msgid ""
 "The audio bitrate affects the file compression and thus the quality of "
 "listening. The higher the value, the higher the quality."
@@ -72,7 +72,7 @@ msgstr ""
 "Битрейт звука влияет на сжатие файла и, следовательно, на качество "
 "прослушивания. Чем выше значение, тем выше качество."
 
-#: ../vdms_dialogs/audiodialogs.py:235
+#: ../vdms_dialogs/audiodialogs.py:247
 msgid ""
 "Bit depth is the number of bits of information in each sample, and it "
 "directly corresponds to the resolution of each sample. Bit depth is only "
@@ -1089,7 +1089,7 @@ msgstr ""
 
 #: ../vdms_dialogs/preferences.py:314 ../vdms_dialogs/preferences.py:330
 #: ../vdms_dialogs/preferences.py:346 ../vdms_frames/ffmpeg_conf.py:220
-#: ../vdms_panels/av_conversions.py:2491
+#: ../vdms_panels/av_conversions.py:2471
 #: ../vdms_panels/sequence_to_video.py:682
 #: ../vdms_panels/video_to_sequence.py:584
 msgid "Disabled"
@@ -1375,7 +1375,7 @@ msgstr "FFplay   ...не найдено !"
 msgid "ENABLED:"
 msgstr "ВКЛЮЧЕНО:"
 
-#: ../vdms_frames/ffmpeg_conf.py:207 ../vdms_panels/av_conversions.py:2491
+#: ../vdms_frames/ffmpeg_conf.py:207 ../vdms_panels/av_conversions.py:2471
 #: ../vdms_panels/sequence_to_video.py:682
 #: ../vdms_panels/video_to_sequence.py:580
 msgid "Enabled"
@@ -1483,15 +1483,15 @@ msgstr "=  Без изменений"
 msgid "=  Below max peak"
 msgstr "=  Ниже максимального пика"
 
-#: ../vdms_frames/shownormlist.py:140 ../vdms_panels/av_conversions.py:1953
+#: ../vdms_frames/shownormlist.py:140 ../vdms_panels/av_conversions.py:1933
 msgid "RMS-based volume statistics"
 msgstr "Статистика звука на основе RMS"
 
-#: ../vdms_frames/shownormlist.py:162 ../vdms_panels/av_conversions.py:1951
+#: ../vdms_frames/shownormlist.py:164 ../vdms_panels/av_conversions.py:1931
 msgid "PEAK-based volume statistics"
 msgstr "Статистика звука на основе PEAK"
 
-#: ../vdms_frames/shownormlist.py:184
+#: ../vdms_frames/shownormlist.py:188
 msgid ""
 "When it's red...\n"
 "\n"
@@ -1505,7 +1505,7 @@ msgstr ""
 "максимальный уровень 0 дБ. Это приводит к \n"
 "потере данных и искажению звука."
 
-#: ../vdms_frames/shownormlist.py:210
+#: ../vdms_frames/shownormlist.py:215
 msgid ""
 "When it's grey...\n"
 "\n"
@@ -1515,7 +1515,7 @@ msgstr ""
 "...Это означает, что результирующий звук не\n"
 "изменится, потому что он равен источнику."
 
-#: ../vdms_frames/shownormlist.py:234
+#: ../vdms_frames/shownormlist.py:240
 msgid ""
 "When it's yellow...\n"
 "\n"
@@ -2737,7 +2737,7 @@ msgstr "Целевой диапазон громкости в LUFS. От +1,0 д
 msgid "Play and listen to the result of audio filters"
 msgstr "Воспроизведение и прослушивание результатов аудиофильтров"
 
-#: ../vdms_panels/av_conversions.py:1152 ../vdms_panels/av_conversions.py:2066
+#: ../vdms_panels/av_conversions.py:1152 ../vdms_panels/av_conversions.py:2046
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
 "audio volume data."
@@ -2745,22 +2745,22 @@ msgstr ""
 "Не обнаружены значения громкости! Нажмите кнопку «Обнаружение громкости», "
 "чтобы проанализировать данные о громкости звука."
 
-#: ../vdms_panels/av_conversions.py:1209
+#: ../vdms_panels/av_conversions.py:1210
 msgid "Unable to preview Video Stabilizer filter"
 msgstr "Невозможно просмотреть Stabilizer видеофильтр"
 
-#: ../vdms_panels/av_conversions.py:1277
+#: ../vdms_panels/av_conversions.py:1267
 #: ../vdms_panels/sequence_to_video.py:317
 #: ../vdms_panels/video_to_sequence.py:366
 #: ../vdms_panels/video_to_sequence.py:487
 msgid "A target file must be selected in the queued files"
 msgstr "В файлах, поставленных в очередь, должен быть выбран один файл"
 
-#: ../vdms_panels/av_conversions.py:1306
+#: ../vdms_panels/av_conversions.py:1296
 msgid "Selected index does not exist or does not contain any audio streams"
 msgstr "Выбранный индекс не существует или не содержит никаких аудиопотоков"
 
-#: ../vdms_panels/av_conversions.py:1311
+#: ../vdms_panels/av_conversions.py:1301
 msgid ""
 "ERROR: Missing audio stream:\n"
 "\"{}\""
@@ -2768,21 +2768,21 @@ msgstr ""
 "ОШИБКА: Отсутствует аудиопоток:\n"
 "\"{}\""
 
-#: ../vdms_panels/av_conversions.py:1339
+#: ../vdms_panels/av_conversions.py:1329
 #: ../vdms_panels/sequence_to_video.py:344
 #: ../vdms_panels/video_to_sequence.py:393
 msgid "The file is not a frame or a video file"
 msgstr "Файл не является кадром или видеофайлом"
 
-#: ../vdms_panels/av_conversions.py:1531
+#: ../vdms_panels/av_conversions.py:1519
 msgid "This filter is incompatible with 2-pass enabled"
 msgstr "Этот фильтр несовместим с включенным двухпроходным режимом"
 
-#: ../vdms_panels/av_conversions.py:1662
+#: ../vdms_panels/av_conversions.py:1650
 msgid "No Audio"
 msgstr "Нет звука"
 
-#: ../vdms_panels/av_conversions.py:1807
+#: ../vdms_panels/av_conversions.py:1788
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
@@ -2790,7 +2790,7 @@ msgstr ""
 "Активирует нормализацию пикового уровня, в результате чего максимальный "
 "пиковый уровень будет равен заданному целевому уровню."
 
-#: ../vdms_panels/av_conversions.py:1810
+#: ../vdms_panels/av_conversions.py:1791
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
@@ -2799,7 +2799,7 @@ msgstr ""
 "основе средней громкости вычисляет величину усиления для достижения той же "
 "средней мощности сигнала."
 
-#: ../vdms_panels/av_conversions.py:1814
+#: ../vdms_panels/av_conversions.py:1795
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"​loudnorm\" filter, which implements the EBU R128 algorithm."
@@ -2807,39 +2807,39 @@ msgstr ""
 "Выполняет двухпроходную нормализацию. Нормализуйте воспринимаемую громкость "
 "с помощью фильтра \"​loudnorm\", который реализует алгоритм EBU R128."
 
-#: ../vdms_panels/av_conversions.py:1837
+#: ../vdms_panels/av_conversions.py:1817
 msgid "Audio normalization off"
 msgstr "Нормализация звука отключена"
 
-#: ../vdms_panels/av_conversions.py:1878
+#: ../vdms_panels/av_conversions.py:1858
 msgid "Audio normalization is required only for some files"
 msgstr "Нормализация звука требуется только для некоторых файлов"
 
-#: ../vdms_panels/av_conversions.py:1879
+#: ../vdms_panels/av_conversions.py:1859
 msgid ""
 "Audio normalization will not be applied because the source signal is equal"
 msgstr ""
 "Нормализация звука не будет применяться, потому что она равна источнику"
 
-#: ../vdms_panels/av_conversions.py:2472
+#: ../vdms_panels/av_conversions.py:2452
 msgid "{} file in queue"
 msgstr "{} файл в очереди"
 
-#: ../vdms_panels/av_conversions.py:2480
+#: ../vdms_panels/av_conversions.py:2460
 msgid "Off"
 msgstr "Выключено"
 
-#: ../vdms_panels/av_conversions.py:2486 ../vdms_panels/presets_manager.py:925
+#: ../vdms_panels/av_conversions.py:2466 ../vdms_panels/presets_manager.py:925
 #: ../vdms_panels/video_to_sequence.py:574
 msgid "Unset"
 msgstr "Не установлено"
 
-#: ../vdms_panels/av_conversions.py:2489 ../vdms_panels/presets_manager.py:928
+#: ../vdms_panels/av_conversions.py:2469 ../vdms_panels/presets_manager.py:928
 #: ../vdms_panels/video_to_sequence.py:577
 msgid "start  {} | duration  {}"
 msgstr "начало  {} | продолжительность  {}"
 
-#: ../vdms_panels/av_conversions.py:2495
+#: ../vdms_panels/av_conversions.py:2475
 msgid ""
 "Queued File\n"
 "Output Format\n"
@@ -2865,7 +2865,7 @@ msgstr ""
 "Временной отрезок\n"
 "Выбор входного аудио индекса"
 
-#: ../vdms_panels/av_conversions.py:2511
+#: ../vdms_panels/av_conversions.py:2491
 msgid ""
 "Queued File\n"
 "Web Optimize\n"
@@ -2901,7 +2901,7 @@ msgstr ""
 "Индекс потока субтитров\n"
 "Временной отрезок"
 
-#: ../vdms_panels/av_conversions.py:2532
+#: ../vdms_panels/av_conversions.py:2512
 msgid ""
 "Queued File\n"
 "Web Optimize\n"
@@ -2959,16 +2959,16 @@ msgstr ""
 "Индекс потоков субтитров\n"
 "Временной отрезок"
 
-#: ../vdms_panels/av_conversions.py:2570
+#: ../vdms_panels/av_conversions.py:2550
 msgid "Audio normalization processes cannot be saved on the Presets Manager."
 msgstr ""
 "Процессы нормализации звука не могут быть сохранены в Менеджере Пресетов."
 
-#: ../vdms_panels/av_conversions.py:2587
+#: ../vdms_panels/av_conversions.py:2567
 msgid "Save the new profile to..."
 msgstr "Сохраните новый профиль в ..."
 
-#: ../vdms_panels/av_conversions.py:2596
+#: ../vdms_panels/av_conversions.py:2576
 msgid "Create a new profile"
 msgstr "Создать новый профиль"
 

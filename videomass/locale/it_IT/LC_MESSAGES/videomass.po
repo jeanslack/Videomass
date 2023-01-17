@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-17 00:15+0100\n"
-"PO-Revision-Date: 2023-01-17 00:17+0100\n"
+"POT-Creation-Date: 2023-01-18 00:29+0100\n"
+"PO-Revision-Date: 2023-01-18 00:29+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -41,7 +41,7 @@ msgstr ""
 "\n"
 "{0}"
 
-#: ../vdms_dialogs/audiodialogs.py:218
+#: ../vdms_dialogs/audiodialogs.py:230
 msgid ""
 "Videomass supports mono and stereo audio channels. If you are not sure set "
 "to \"Auto\" and source values will be copied."
@@ -49,7 +49,7 @@ msgstr ""
 "Videomass supporta i canali mono e stereo. Se non sicuro imposta su \"Auto\" "
 "e verranno copiati i valori di origine."
 
-#: ../vdms_dialogs/audiodialogs.py:222
+#: ../vdms_dialogs/audiodialogs.py:234
 msgid ""
 "The audio Rate (or sample-rate) is the sound sampling frequency and is "
 "measured in Hertz. The higher the frequency, the more true it will be to the "
@@ -64,7 +64,7 @@ msgstr ""
 "kHz. Se non sicuri, lasciare su \"Auto\", e i valori di origine verranno "
 "copiati."
 
-#: ../vdms_dialogs/audiodialogs.py:231
+#: ../vdms_dialogs/audiodialogs.py:243
 msgid ""
 "The audio bitrate affects the file compression and thus the quality of "
 "listening. The higher the value, the higher the quality."
@@ -72,7 +72,7 @@ msgstr ""
 "L'audio bit-rate influisce sulla compressione dei file e sulla qualità di "
 "ascolto. Più alto è il suo valore maggiore sarà la qualità del suono."
 
-#: ../vdms_dialogs/audiodialogs.py:235
+#: ../vdms_dialogs/audiodialogs.py:247
 msgid ""
 "Bit depth is the number of bits of information in each sample, and it "
 "directly corresponds to the resolution of each sample. Bit depth is only "
@@ -1091,7 +1091,7 @@ msgstr ""
 
 #: ../vdms_dialogs/preferences.py:314 ../vdms_dialogs/preferences.py:330
 #: ../vdms_dialogs/preferences.py:346 ../vdms_frames/ffmpeg_conf.py:220
-#: ../vdms_panels/av_conversions.py:2491
+#: ../vdms_panels/av_conversions.py:2471
 #: ../vdms_panels/sequence_to_video.py:682
 #: ../vdms_panels/video_to_sequence.py:584
 msgid "Disabled"
@@ -1377,7 +1377,7 @@ msgstr "FFplay   ...non trovato !"
 msgid "ENABLED:"
 msgstr "ABILITATO:"
 
-#: ../vdms_frames/ffmpeg_conf.py:207 ../vdms_panels/av_conversions.py:2491
+#: ../vdms_frames/ffmpeg_conf.py:207 ../vdms_panels/av_conversions.py:2471
 #: ../vdms_panels/sequence_to_video.py:682
 #: ../vdms_panels/video_to_sequence.py:580
 msgid "Enabled"
@@ -1485,15 +1485,15 @@ msgstr "=  Non cambia"
 msgid "=  Below max peak"
 msgstr "=  Sotto il picco max"
 
-#: ../vdms_frames/shownormlist.py:140 ../vdms_panels/av_conversions.py:1953
+#: ../vdms_frames/shownormlist.py:140 ../vdms_panels/av_conversions.py:1933
 msgid "RMS-based volume statistics"
 msgstr "Statistiche del volume basate su RMS"
 
-#: ../vdms_frames/shownormlist.py:162 ../vdms_panels/av_conversions.py:1951
+#: ../vdms_frames/shownormlist.py:164 ../vdms_panels/av_conversions.py:1931
 msgid "PEAK-based volume statistics"
 msgstr "Statistiche del volume basate sul PICCO"
 
-#: ../vdms_frames/shownormlist.py:184
+#: ../vdms_frames/shownormlist.py:188
 msgid ""
 "When it's red...\n"
 "\n"
@@ -1509,7 +1509,7 @@ msgstr ""
 "Ciò comporterà la perdita di dati nel segnale audio e\n"
 "il suono potrebbe risultare distorto."
 
-#: ../vdms_frames/shownormlist.py:210
+#: ../vdms_frames/shownormlist.py:215
 msgid ""
 "When it's grey...\n"
 "\n"
@@ -1521,7 +1521,7 @@ msgstr ""
 "...Significa che il segnale audio non cambierà,\n"
 "perché uguale a quello di origine."
 
-#: ../vdms_frames/shownormlist.py:234
+#: ../vdms_frames/shownormlist.py:240
 msgid ""
 "When it's yellow...\n"
 "\n"
@@ -2738,7 +2738,7 @@ msgstr ""
 msgid "Play and listen to the result of audio filters"
 msgstr "Riproduci e ascolta il risultato dei filtri audio"
 
-#: ../vdms_panels/av_conversions.py:1152 ../vdms_panels/av_conversions.py:2066
+#: ../vdms_panels/av_conversions.py:1152 ../vdms_panels/av_conversions.py:2046
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
 "audio volume data."
@@ -2746,22 +2746,22 @@ msgstr ""
 "Valori del volume non rilevati! Clicca sul pulsante \"Volume detect\" per "
 "analizzare i dati sul volume audio."
 
-#: ../vdms_panels/av_conversions.py:1209
+#: ../vdms_panels/av_conversions.py:1210
 msgid "Unable to preview Video Stabilizer filter"
 msgstr "Impossibile visualizzare in anteprima il filtro stabilizzatore video"
 
-#: ../vdms_panels/av_conversions.py:1277
+#: ../vdms_panels/av_conversions.py:1267
 #: ../vdms_panels/sequence_to_video.py:317
 #: ../vdms_panels/video_to_sequence.py:366
 #: ../vdms_panels/video_to_sequence.py:487
 msgid "A target file must be selected in the queued files"
 msgstr "È necessario selezionare un file di destinazione nei file in coda"
 
-#: ../vdms_panels/av_conversions.py:1306
+#: ../vdms_panels/av_conversions.py:1296
 msgid "Selected index does not exist or does not contain any audio streams"
 msgstr "L'indice selezionato non esiste o non contiene alcun flusso audio"
 
-#: ../vdms_panels/av_conversions.py:1311
+#: ../vdms_panels/av_conversions.py:1301
 msgid ""
 "ERROR: Missing audio stream:\n"
 "\"{}\""
@@ -2769,21 +2769,21 @@ msgstr ""
 "ERRORE: flusso audio mancante:\n"
 "\"{}\""
 
-#: ../vdms_panels/av_conversions.py:1339
+#: ../vdms_panels/av_conversions.py:1329
 #: ../vdms_panels/sequence_to_video.py:344
 #: ../vdms_panels/video_to_sequence.py:393
 msgid "The file is not a frame or a video file"
 msgstr "Il file non è un frame o un file video"
 
-#: ../vdms_panels/av_conversions.py:1531
+#: ../vdms_panels/av_conversions.py:1519
 msgid "This filter is incompatible with 2-pass enabled"
 msgstr "Questo filtro non è compatibile con 2-pass abilitato"
 
-#: ../vdms_panels/av_conversions.py:1662
+#: ../vdms_panels/av_conversions.py:1650
 msgid "No Audio"
 msgstr "No Audio"
 
-#: ../vdms_panels/av_conversions.py:1807
+#: ../vdms_panels/av_conversions.py:1788
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
@@ -2791,7 +2791,7 @@ msgstr ""
 "Attiva la normalizzazione del livello di picco, la quale produrrà un livello "
 "di picco massimo pari al livello target impostato."
 
-#: ../vdms_panels/av_conversions.py:1810
+#: ../vdms_panels/av_conversions.py:1791
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
@@ -2799,7 +2799,7 @@ msgstr ""
 "Attiva la normalizzazione basata su RMS, che in base al volume medio calcola "
 "la quantità di guadagno per raggiungere la stessa potenza media di segnale."
 
-#: ../vdms_panels/av_conversions.py:1814
+#: ../vdms_panels/av_conversions.py:1795
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"​loudnorm\" filter, which implements the EBU R128 algorithm."
@@ -2807,39 +2807,39 @@ msgstr ""
 "Esegue la normalizzazione a due passate. Normalizza il volume percepito "
 "usando il filtro \"loudnorm\", che implementa l'algoritmo EBU R128."
 
-#: ../vdms_panels/av_conversions.py:1837
+#: ../vdms_panels/av_conversions.py:1817
 msgid "Audio normalization off"
 msgstr "Normalizzazione Audio disattivata"
 
-#: ../vdms_panels/av_conversions.py:1878
+#: ../vdms_panels/av_conversions.py:1858
 msgid "Audio normalization is required only for some files"
 msgstr "La normalizzazione audio è richiesta solo per alcuni files"
 
-#: ../vdms_panels/av_conversions.py:1879
+#: ../vdms_panels/av_conversions.py:1859
 msgid ""
 "Audio normalization will not be applied because the source signal is equal"
 msgstr ""
 "La normalizzazione audio non sarà applicata perché uguale alla sorgente"
 
-#: ../vdms_panels/av_conversions.py:2472
+#: ../vdms_panels/av_conversions.py:2452
 msgid "{} file in queue"
 msgstr "{} file in coda"
 
-#: ../vdms_panels/av_conversions.py:2480
+#: ../vdms_panels/av_conversions.py:2460
 msgid "Off"
 msgstr "Spento"
 
-#: ../vdms_panels/av_conversions.py:2486 ../vdms_panels/presets_manager.py:925
+#: ../vdms_panels/av_conversions.py:2466 ../vdms_panels/presets_manager.py:925
 #: ../vdms_panels/video_to_sequence.py:574
 msgid "Unset"
 msgstr "Non settato"
 
-#: ../vdms_panels/av_conversions.py:2489 ../vdms_panels/presets_manager.py:928
+#: ../vdms_panels/av_conversions.py:2469 ../vdms_panels/presets_manager.py:928
 #: ../vdms_panels/video_to_sequence.py:577
 msgid "start  {} | duration  {}"
 msgstr "inizio  {} | durata  {}"
 
-#: ../vdms_panels/av_conversions.py:2495
+#: ../vdms_panels/av_conversions.py:2475
 msgid ""
 "Queued File\n"
 "Output Format\n"
@@ -2865,7 +2865,7 @@ msgstr ""
 "Segmento Tempo\n"
 "Mappa Audio in Ingresso"
 
-#: ../vdms_panels/av_conversions.py:2511
+#: ../vdms_panels/av_conversions.py:2491
 msgid ""
 "Queued File\n"
 "Web Optimize\n"
@@ -2901,7 +2901,7 @@ msgstr ""
 "Mappa Sottotitoli\n"
 "Segmento Tempo"
 
-#: ../vdms_panels/av_conversions.py:2532
+#: ../vdms_panels/av_conversions.py:2512
 msgid ""
 "Queued File\n"
 "Web Optimize\n"
@@ -2959,17 +2959,17 @@ msgstr ""
 "Mappa Sottotitoli\n"
 "Segmento Tempo"
 
-#: ../vdms_panels/av_conversions.py:2570
+#: ../vdms_panels/av_conversions.py:2550
 msgid "Audio normalization processes cannot be saved on the Presets Manager."
 msgstr ""
 "I processi di normalizzazione audio non possono essere salvati nel "
 "Gestionale Predefiniti."
 
-#: ../vdms_panels/av_conversions.py:2587
+#: ../vdms_panels/av_conversions.py:2567
 msgid "Save the new profile to..."
 msgstr "Salva il nuovo profilo su..."
 
-#: ../vdms_panels/av_conversions.py:2596
+#: ../vdms_panels/av_conversions.py:2576
 msgid "Create a new profile"
 msgstr "Crea un nuovo profilo"
 
@@ -3934,7 +3934,7 @@ msgstr "Elimina tutto il testo dall'elenco"
 
 #: ../vdms_panels/timeline.py:93
 msgid "Trim"
-msgstr ""
+msgstr "Trim"
 
 #: ../vdms_panels/timeline.py:103
 msgid "Start:"
