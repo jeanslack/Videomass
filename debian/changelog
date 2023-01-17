@@ -24,8 +24,13 @@ videomass (4.0.5-1) UNRELEASED; urgency=medium
     with wxPython4.2.0 #178
   * Added ability to make the application fully portable and stealth
     using command line argument.
+  * Improved row colors on `PEAK-based volume statistics` and
+    `RMS-based volume statistics` dialogs
+  * Preview playback is no longer possible when the stabilizer filter
+    is enabled
+  * Improved audio property settings dialog.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 12 Jan 2023 11:30:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 17 Jan 2023 21:00:00 +0200
 
 videomass (4.0.2-1) UNRELEASED; urgency=medium
 

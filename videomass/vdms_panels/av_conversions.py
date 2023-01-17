@@ -1202,25 +1202,15 @@ class AV_Conv(wx.Panel):
         filters they are still reproduced.
 
         """
-        if not self.opt["VFilters"]:
+        fget = self.file_selection()
+        if not fget or not self.opt["VFilters"]:
             return
 
         if self.opt["Vidstabtransform"]:
             wx.MessageBox(_("Unable to preview Video Stabilizer filter"),
                           "Videomass", wx.ICON_INFORMATION)
-
-            if len(self.opt["VFilters"].split(',')) == 2:
-                return
-
-            flt = ','.join([x for x in self.opt["VFilters"].split(',') if
-                            'vidstabtransform' not in x and 'unsharp'
-                            not in x])
         else:
             flt = self.opt["VFilters"]
-
-        fget = self.file_selection()
-        if not fget:
-            return
 
         if self.parent.checktimestamp:
             flt = f'{flt},"{self.parent.cmdtimestamp}"'
@@ -1288,7 +1278,7 @@ class AV_Conv(wx.Panel):
         Given a selected media file (object of type `file_selection()`),
         it evaluates whether it contains any audio streams and any
         indexes based on selected index (audio map).
-        If no audio streams or no audio index Returns None,
+        If no audio streams or no audio index it Returns None,
         True otherwise.
         See `on_audio_preview()` method for usage.
 
@@ -1344,10 +1334,8 @@ class AV_Conv(wx.Panel):
 
     def chain_all_video_filters(self):
         """
-        Concatenate all video filters enabled
-        evaluates whether video filters (-vf) are enabled or not and
-        sorts them according to an appropriate syntax. If not filters
-        strings, the -vf option will be removed
+        Concatenate all video filters enabled and sorts
+        them according to an appropriate syntax.
         """
         orderf = (self.opt['Deinterlace'], self.opt['Interlace'],
                   self.opt["Denoiser"], self.opt["Vidstabtransform"],
@@ -1585,8 +1573,8 @@ class AV_Conv(wx.Panel):
 
     def setAudioRadiobox(self, event):
         """
-        Container combobox sets compatible audio codecs to selected format.
-        see AV_FORMATS dict
+        Container combobox sets compatible audio codecs
+        to selected format. See AV_FORMATS dict
 
         """
         if self.cmb_Media.GetValue() == 'Video':
@@ -1919,7 +1907,7 @@ class AV_Conv(wx.Panel):
                                           str(offset),
                                           str(result),
                                           ))
-        if [a for a in volume if '  ' not in a] == []:
+        if not [a for a in volume if '  ' not in a]:
             self.parent.statusbar_msg(msg3, AV_Conv.ORANGE, AV_Conv.WHITE)
         else:
             if len(volume) == 1 or '  ' not in volume:

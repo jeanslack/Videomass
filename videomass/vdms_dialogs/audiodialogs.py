@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.14.2022
+Rev: Jan.17.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -185,11 +185,14 @@ class AudioSettings(wx.Dialog):
     def getvalue(self):
         """
         This method return values via the interface getvalue()
-        by the caller. See the caller for more info and usage.
+        from the caller. See the caller for more info and usage.
 
         Returns:
-            four tuples of audio parameters object in the form:
-                (str(selected parameter), str(related value))
+            A four items tuple with audio parameters:
+                channel(str(description), str(ffmpeg flags))
+                sample_rate(str(description), str(ffmpeg flags))
+                bitrate(str(description), str(ffmpeg flags))
+                bitdepth(str(description), str(ffmpeg flags))
         """
         sel_ch = self.rdb_channels.GetStringSelection()
         sel_sr = self.rdb_sample_r.GetStringSelection()
@@ -221,7 +224,7 @@ class AudioParameters():
         >>>    bitdepth = adata.bitdepth
     EXAMPLES:
         >>>    descriptions = [a[0] for a in adata.sample_rate.values()]
-        >>>    ffmpeg_params = [a[1] for a in adata.sample_rate.values()]
+        >>>    ffmpeg_flags = [a[1] for a in adata.sample_rate.values()]
 
     """
     CHANNEL_TOOLTIP = (_('Videomass supports mono and stereo audio channels. '

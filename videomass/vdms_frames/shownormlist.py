@@ -69,7 +69,7 @@ class NormalizationList(wx.MiniFrame):
                                   ))
         self.btn_red = wx.Button(self.panel, wx.ID_ANY, _("Help"),
                                  size=(-1, -1))
-        self.btn_red.SetBackgroundColour(wx.Colour(233, 80, 77))  # #e9504d
+        self.btn_red.SetBackgroundColour(wx.Colour(143, 36, 27))  # #8f241b
         self.btn_red.SetForegroundColour(wx.Colour(0, 0, 0))
         txtred = wx.StaticText(self.panel, wx.ID_ANY, (_("=  Clipped peaks")))
 
@@ -81,7 +81,7 @@ class NormalizationList(wx.MiniFrame):
 
         self.btn_yell = wx.Button(self.panel, wx.ID_ANY, _("Help"),
                                   size=(-1, -1))
-        self.btn_yell.SetBackgroundColour(wx.Colour(198, 180, 38))  # #C6B426
+        self.btn_yell.SetBackgroundColour(wx.Colour(143, 130, 27))  # #8f821b
         self.btn_yell.SetForegroundColour(wx.Colour(0, 0, 0))
         txtyell = wx.StaticText(self.panel,
                                 wx.ID_ANY, (_("=  Below max peak")))
@@ -142,19 +142,21 @@ class NormalizationList(wx.MiniFrame):
                 normlist.InsertItem(index, i[0])
                 normlist.SetItem(index, 1, i[1])
                 normlist.SetItem(index, 2, i[2])
+
                 if float(i[3]) == 0.0:  # not changes
                     normlist.SetItemBackgroundColour(index, '#646464')  # grey
                     normlist.SetItem(index, 3, i[3])
                 else:
                     normlist.SetItem(index, 3, i[3])
+
                 if float(i[4]) > 0.0:  # is clipped red
-                    normlist.SetItemBackgroundColour(index, '#e9504d')  # red
+                    normlist.SetItemBackgroundColour(index, '#8f241b')  # red
                     normlist.SetItem(index, 4, i[4])
                 else:
                     normlist.SetItem(index, 4, i[4])
 
                 if float(i[4]) < float(i[1]):  # target/res inf. to maxvol
-                    normlist.SetItemBackgroundColour(index, '#C6B426')  # yel
+                    normlist.SetItemBackgroundColour(index, '#8f821b')  # yel
                     normlist.SetItem(index, 4, i[4])
                 else:
                     normlist.SetItem(index, 4, i[4])
@@ -165,13 +167,15 @@ class NormalizationList(wx.MiniFrame):
                 normlist.SetItem(index, 1, i[1])
                 normlist.SetItem(index, 2, i[2])
                 normlist.SetItem(index, 3, i[3])
+
                 if float(i[4]) == float(i[1]):  # not changes
                     normlist.SetItemBackgroundColour(index, '#646464')  # grey
                     normlist.SetItem(index, 4, i[4])
                 else:
                     normlist.SetItem(index, 4, i[4])
                 if float(i[4]) < float(i[1]):  # target/res inf. to maxvol
-                    normlist.SetItemBackgroundColour(index, '#C6B426')  # yel
+
+                    normlist.SetItemBackgroundColour(index, '#8f821b')  # yel
                     normlist.SetItem(index, 4, i[4])
                 else:
                     normlist.SetItem(index, 4, i[4])
@@ -190,8 +194,9 @@ class NormalizationList(wx.MiniFrame):
         win = NormalTransientPopup(self,
                                    wx.SIMPLE_BORDER,
                                    msg,
-                                   (233, 80, 77),
-                                   (0, 0, 0))
+                                   (143, 36, 27),
+                                   (0, 0, 0),
+                                   )
 
         # Show the popup right below or above the button
         # depending on available screen space...
@@ -215,7 +220,8 @@ class NormalizationList(wx.MiniFrame):
                                    wx.SIMPLE_BORDER,
                                    msg,
                                    (100, 100, 100),
-                                   (250, 250, 250))
+                                   (250, 250, 250),
+                                   )
 
         # Show the popup right below or above the button
         # depending on available screen space...
@@ -238,8 +244,9 @@ class NormalizationList(wx.MiniFrame):
         win = NormalTransientPopup(self,
                                    wx.SIMPLE_BORDER,
                                    msg,
-                                   (198, 180, 38),
-                                   (0, 0, 0))
+                                   (143, 130, 27),
+                                   (0, 0, 0),
+                                   )
 
         # Show the popup right below or above the button
         # depending on available screen space...
