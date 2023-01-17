@@ -17,5 +17,3 @@ URGENCY: low
 
 See #132 GitHub issue (add Libsvtav1 (?))
 See #132 GitHub issue (Enable opus and vp9 for mp4 container (?))
-
-Fix develop/pyinstaller_setup.py for new code
