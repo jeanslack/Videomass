@@ -1619,10 +1619,10 @@ class AV_Conv(wx.Panel):
 
     def on_AudioCodecs(self, event):
         """
-        When choose an item on audio radiobox list, set the audio format
-        name and audio codec command (see ACODECS dict.). Also  set the
-        view of the audio normalize widgets and reset values some self.opt
-        keys.
+        choosing an item on audio radiobox list, sets the
+        audio format name and the appropriate command arg,
+        (see ACODECS dict), resets the audio normalize and
+        some `self.opt` keys.
         """
         audiocodec = self.rdb_a.GetStringSelection()
 
@@ -1697,60 +1697,55 @@ class AV_Conv(wx.Panel):
                               f'{self.opt["AudioCodStr"]} Audio Settings')
     # -------------------------------------------------------------------#
 
-    def audio_dialog(self, audio_type, title):
+    def audio_dialog(self, codecname, caption):
         """
-        Run audio dialog on specified audio codec to get additionals
-        audio options.
-
-        NOTE: The data[X] tuple contains the command parameters on the
-              index [1] and the descriptive parameters on the index [0].
-              exemple: data[0] contains parameters for channel then
-              data[0][1] is ffmpeg option command for audio channels and
-              data[0][0] is a simple description for view.
+        Given an audio codec specified by `codecname`,
+        show a dialog for setting audio parameters
+        related to the codec.
         """
         with audiodialogs.AudioSettings(self,
-                                        audio_type,
+                                        codecname,
                                         self.opt["AudioRate"],
                                         self.opt["AudioDepth"],
                                         self.opt["AudioBitrate"],
                                         self.opt["AudioChannel"],
-                                        title,
+                                        caption,
                                         ) as audiodialog:
 
             if audiodialog.ShowModal() == wx.ID_OK:
-                data = audiodialog.getvalue()
-                self.opt["AudioChannel"] = data[0]
-                self.opt["AudioRate"] = data[1]
-                self.opt["AudioBitrate"] = data[2]
-                if audio_type in ('wav', 'aiff', 'PCM'):
-                    amap = f'-c:a:{self.opt["AudioMap"][1]}'
-                    if 'Auto' in data[3][0]:  # [3] is the bit depth tupla
-                        self.opt["AudioCodec"] = [amap, "pcm_s16le"]
-                    else:
-                        self.opt["AudioCodec"] = [amap, data[3][1]]
-                    self.opt["AudioDepth"] = (f"{data[3][0]}", '')  # null
-                else:  # entra su tutti tranne wav aiff
-                    self.opt["AudioDepth"] = data[3]
+                aparam = audiodialog.getvalue()
             else:
-                data = None
-                # audiodialog.Destroy()
                 return
 
-            self.txt_audio_options.Clear()
-            count = 0
-            for d in [self.opt["AudioRate"], data[3],
-                      self.opt["AudioBitrate"], self.opt["AudioChannel"]
-                      ]:
-                if d[1]:
-                    count += 1
-                    self.txt_audio_options.AppendText(f" {d[0]} | ")
-
-            if count == 0:
-                self.btn_aparam.SetBackgroundColour(wx.NullColour)
+        self.opt["AudioChannel"] = aparam[0]
+        self.opt["AudioRate"] = aparam[1]
+        self.opt["AudioBitrate"] = aparam[2]
+        if codecname == 'PCM':  # wav, aiff, etc
+            amap = f'-c:a:{self.opt["AudioMap"][1]}'
+            if 'Auto' in aparam[3][0]:  # [3] bit depth tuple
+                self.opt["AudioCodec"] = [amap, "pcm_s16le"]
             else:
-                self.btn_aparam.SetBackgroundColour(wx.Colour(AV_Conv.VIOLET))
+                self.opt["AudioCodec"] = [amap, aparam[3][1]]
+            self.opt["AudioDepth"] = (f"{aparam[3][0]}", '')  # none
+        else:  # all, except PCM
+            self.opt["AudioDepth"] = aparam[3]
 
-            # audiodialog.Destroy()
+        self.txt_audio_options.Clear()
+        count = 0
+        for descr in (self.opt["AudioRate"],
+                      aparam[3],
+                      self.opt["AudioBitrate"],
+                      self.opt["AudioChannel"],
+                      ):
+            if descr[1]:
+                count += 1
+                self.txt_audio_options.AppendText(f" {descr[0]} | ")
+
+        if count == 0:
+            self.btn_aparam.SetBackgroundColour(wx.NullColour)
+        else:
+            self.btn_aparam.SetBackgroundColour(wx.Colour(AV_Conv.VIOLET))
+        return
     # ------------------------------------------------------------------#
 
     def on_audio_index(self, event):
@@ -1800,9 +1795,7 @@ class AV_Conv(wx.Panel):
 
     def onNormalize(self, event):
         """
-        Enable or disable functionality for volume normalization of
-        the video.
-
+        Enable or disable functionality for volume normalization.
         """
         msg_1 = (_('Activate peak level normalization, which will produce '
                    'a maximum peak level equal to the set target level.'
@@ -1813,8 +1806,7 @@ class AV_Conv(wx.Panel):
                    ))
         msg_3 = (_('Activate two passes normalization. It Normalizes the '
                    'perceived loudness using the "​loudnorm" filter, which '
-                   'implements the EBU R128 algorithm.'
-                   ))
+                   'implements the EBU R128 algorithm.'))
         if self.rdbx_normalize.GetSelection() == 1:  # is checked
             self.normalize_default(False)
             self.parent.statusbar_msg(msg_1, AV_Conv.AZURE, AV_Conv.BLACK)

@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Videomass 4.0.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-17 00:17+0100\n"
-"PO-Revision-Date: 2023-01-17 00:18+0100\n"
-"Last-Translator: ChourS2008\n"
+"PO-Revision-Date: 2023-01-17 15:56+0100\n"
+"Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
@@ -85,10 +85,8 @@ msgstr ""
 "как форматы сжатия с потерями, не имеют связанной битовой глубины."
 
 #: ../vdms_dialogs/epilogue.py:81
-#, fuzzy
-#| msgid "Cache Settings"
 msgid "Confirm Settings"
-msgstr "Настройки кеша"
+msgstr "Подтвердить настройки"
 
 #: ../vdms_dialogs/filter_crop.py:198 ../vdms_dialogs/filter_scale.py:84
 #, python-brace-format
@@ -2201,15 +2199,13 @@ msgstr ""
 "Проверьте последнюю версию Videomass на <https://pypi.org/project/videomass/>"
 
 #: ../vdms_main/main_frame.py:588
-#, fuzzy
-#| msgid "Shows the version in use"
 msgid "System version"
-msgstr "Показывает используемую версию"
+msgstr "Версия системы"
 
 #: ../vdms_main/main_frame.py:589
 msgid ""
 "Get version about your operating system, version of Python and wxPython."
-msgstr ""
+msgstr "Получить версию вашей операционной системы, версию Python и wxPython."
 
 #: ../vdms_main/main_frame.py:592
 msgid "About Videomass"
@@ -2329,7 +2325,9 @@ msgstr "Собирает информацию о мультимедийных п
 
 #: ../vdms_main/main_frame.py:1365
 msgid "Media Streams"
-msgstr "Мультимедийные потоки"
+msgstr ""
+"Мультимедийные \n"
+"         потоки"
 
 #: ../vdms_main/main_frame.py:1369
 msgid "Shows download statistics and information"
@@ -2446,10 +2444,8 @@ msgid "Use for Web"
 msgstr "Использовать для Web"
 
 #: ../vdms_panels/av_conversions.py:273
-#, fuzzy
-#| msgid "Target level:"
 msgid "Target"
-msgstr "Целевой уровень:"
+msgstr "Target"
 
 #: ../vdms_panels/av_conversions.py:289
 msgid "Video Encoder"
@@ -2592,7 +2588,7 @@ msgstr ""
 
 #: ../vdms_panels/av_conversions.py:753
 msgid "Output format. It also represents the extension of the output file."
-msgstr ""
+msgstr "Формат вывода. Он также представляет собой расширение выходного файла."
 
 #: ../vdms_panels/av_conversions.py:756
 msgid ""
@@ -3068,25 +3064,6 @@ msgstr ""
 "{1} не установлен, используйте диспетчер пакетов, чтобы установить его."
 
 #: ../vdms_panels/concatenate.py:78
-#, fuzzy
-#| msgid ""
-#| "NOTE:\n"
-#| "\n"
-#| "- The concatenation function is performed only with Audio files or only "
-#| "with Video files.\n"
-#| "\n"
-#| "- The order of concatenation depends on the order in which the files were "
-#| "added.\n"
-#| "\n"
-#| "- The output file name will have the same name as the first file added "
-#| "(also depends\n"
-#| "  on the settings made in the preferences dialog).\n"
-#| "\n"
-#| "- Video files must have exactly same streams, same codecs and same\n"
-#| "  width/height, but can be wrapped in different container formats.\n"
-#| "\n"
-#| "- Audio files must have exactly the same formats, same codecs and same "
-#| "sample rate."
 msgid ""
 "\n"
 "- The concatenation function is performed only with Audio files or only with "
@@ -3105,21 +3082,21 @@ msgid ""
 "- Audio files must have exactly the same formats, same codecs with equal "
 "sample rate."
 msgstr ""
-"ПРИМЕЧАНИЕ:\n"
 "\n"
-"- Функция объединения выполняется только с аудиофайлами или только с "
-"видеофайлами.\n"
+"- Функция конкатенации(последовательного соединения) выполняется только с "
+"аудиофайлами или только с видеофайлами..\n"
 "\n"
 "- Порядок объединения зависит от порядка добавления файлов.\n"
 "\n"
-"Имя выходного файла будет таким же, как имя первого добавленного файла \n"
-" (также зависит от настроек, сделанных в диалоговом окне настроек).\n"
+"- Имя выходного файла будет таким же, как у первого добавленного файла\n"
+" (также зависит от настроек, сделанных в диалоговом окне настроек,\n"
+"  или от используемых функций переименования).\n"
 "\n"
-"Видео файлы должны иметь одинаковые потоки, одинаковые кодеки и одинаковую \n"
-" ширину/высоту, но могут быть заключены в разные форматы контейнеров.\n"
+"- Видеофайлы должны иметь одинаковые потоки, одинаковые кодеки и одинаковые\n"
+"  ширину/высоту, но может быть упакован в разные форматы контейнеров.\n"
 "\n"
-"- Аудиофайлы должны иметь одинаковые форматы, одинаковые кодеки и одинаковую "
-"частоту дискретизации."
+"- Аудиофайлы должны иметь одинаковые форматы, одинаковые кодеки с одинаковой "
+"частотой дискретизации."
 
 #: ../vdms_panels/concatenate.py:122
 msgid "From an image sequence to a video file"
@@ -3950,46 +3927,38 @@ msgstr "Удалить весь текст из списка"
 
 #: ../vdms_panels/timeline.py:93
 msgid "Trim"
-msgstr ""
+msgstr "Trim"
 
 #: ../vdms_panels/timeline.py:103
-#, fuzzy
-#| msgid "Start"
 msgid "Start:"
-msgstr "Начать"
+msgstr "Начало:"
 
 #: ../vdms_panels/timeline.py:112
 msgid "End:"
-msgstr ""
+msgstr "Конец:"
 
 #: ../vdms_panels/timeline.py:132
 msgid "Stream duration. Click me for details."
 msgstr ""
+"Продолжительность трансляции. Нажмите на меня, чтобы узнать подробности."
 
 #: ../vdms_panels/timeline.py:133
-#, fuzzy
-#| msgid "Segment Duration   (HH:MM:SS.ms)"
 msgid "End segment in 24-hour format (HH:MM:SS)"
-msgstr "Продолжительность отрезка   (HH:MM:SS.ms)"
+msgstr "Время окончания отрезка в 24-часовом формате (HH:MM:SS)"
 
 #: ../vdms_panels/timeline.py:134
-#, fuzzy
-#| msgid "Segment Duration   (HH:MM:SS.ms)"
 msgid "Start segment in 24-hour format (HH:MM:SS)"
-msgstr "Продолжительность отрезка   (HH:MM:SS.ms)"
+msgstr "Время начала отрезка в 24-часовом формате (HH:MM:SS)"
 
 #: ../vdms_panels/timeline.py:217
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "\"Total Duration\" refers to the file with the longest duration, it will "
-#| "be set to {0} otherwise."
+#, python-brace-format
 msgid ""
 "Stream duration always refers to the file with the longest duration.\n"
 "If the \"Duration\" data is missing, it will be set to {0}."
 msgstr ""
-"\"Общая продолжительность\" относится к файлу с наибольшей "
-"продолжительностью, в противном случае для него будет установлено значение "
-"{0}"
+"Продолжительность трансляции всегда относится к файлу с наибольшей "
+"продолжительностью.\n"
+" В противном случае для него будет установлено значение {0}"
 
 #: ../vdms_panels/sequence_to_video.py:55
 msgid "Images need to be resized, please use Resizing function."
@@ -3998,23 +3967,6 @@ msgstr ""
 "размера."
 
 #: ../vdms_panels/sequence_to_video.py:74
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "1. Import one or more image files such as JPG, PNG and BMP formats, then "
-#| "select one.\n"
-#| "\n"
-#| "2. Use the Resizing function to resize images which have different sizes "
-#| "such as width and height. It is optional in other cases.\n"
-#| "\n"
-#| "3. To set the DURATION between images use the Timeline editor (CTRL+T).\n"
-#| "\n"
-#| "4. Start the conversion.\n"
-#| "\n"
-#| "\n"
-#| "The produced video will have the name of the selected file in the 'Queued "
-#| "File' list, which will be saved in a folder named 'Still_Images'\n"
-#| "with a progressive digit, in the path you specify."
 msgid ""
 "\n"
 "1. Import one or more image files such as JPG, PNG and BMP formats, then "
@@ -4037,12 +3989,12 @@ msgstr ""
 "1. Импортируйте один или несколько файлов изображений, таких как форматы "
 "JPG, PNG и BMP, затем выберите один из них.\n"
 "\n"
-"2. Используйте функцию изменения размера, чтобы изменить размер изображений, "
-"которые имеют разные размеры, такие как ширина и высота. В других случаях "
-"это необязательно. \n"
+"2. Используйте фильтр «Изменение размера», чтобы изменить размер "
+"изображений, которые имеют разные размеры, такие как ширина и высота. В "
+"других случаях это необязательно. \n"
 "\n"
-"3. Чтобы установить продолжительность между изображениями, используйте "
-"редактор временной шкалы (CTRL+T).\n"
+"3. Чтобы установить ПРОДОЛЖИТЕЛЬНОСТЬ между изображениями, используйте "
+"элемент управления «Конец» на панели Trim.\n"
 "\n"
 "4. Начните преобразование.\n"
 "\n"
@@ -4060,8 +4012,8 @@ msgid ""
 "Force original aspect ratio using\n"
 "padding rather than stretching"
 msgstr ""
-"Принудительно использовать исходное соотношение сторон, \n"
-"используя отступы, а не растяжение"
+"Принудительно использовать исходное соотношение \n"
+" сторон, используя отступы, а не растяжение"
 
 #: ../vdms_panels/sequence_to_video.py:164
 msgid "Include audio file"
@@ -4124,21 +4076,6 @@ msgstr ""
 "Общая продолжительность видео"
 
 #: ../vdms_panels/video_to_sequence.py:49
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "1. Import one or more video files, then select one.\n"
-#| "\n"
-#| "2. To select a slice of time use the Timeline editor (CTRL+T).\n"
-#| "\n"
-#| "3. Select an output format (jpg, png, bmp).\n"
-#| "\n"
-#| "4. Start the conversion.\n"
-#| "\n"
-#| "\n"
-#| "The images produced will be saved in a folder named 'Movie_to_Pictures' "
-#| "with a progressive digit, \n"
-#| "in the path you specify."
 msgid ""
 "\n"
 "1. Import one or more video files, then select one.\n"
@@ -4158,16 +4095,16 @@ msgstr ""
 "\n"
 "1. Импортируйте один или несколько видеофайлов, затем выберите один.\n"
 "\n"
-"2. Чтобы выбрать отрезок времени, используйте редактор временной шкалы (CTRL"
-"+T).\n"
+"2. Чтобы выбрать отрезок времени, используйте элементы управления «Начало», "
+"«Конец» на панели Trim.\n"
 "\n"
 "3. Выберите выходной формат (jpg, png, bmp).\n"
 "\n"
 "4. Начните преобразование.\n"
 "\n"
 "\n"
-"Созданные изображения будут сохранены в папке с именем «Movie_to_Pictures» с "
-"последовательным номером папки по указанному вами пути."
+"Созданные изображения будут сохранены в папке с именем «Movie_to_Pictures» \n"
+" с последовательным номером папки по указанному вами пути."
 
 #: ../vdms_panels/video_to_sequence.py:81
 msgid "Create thumbnails"
