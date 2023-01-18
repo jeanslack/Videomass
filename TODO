@@ -10,10 +10,25 @@ URGENCY: high
 ---------------
 URGENCY: medium
 ----------------
+- If you plan to refactor code and make it compatible only for
+  wx.Python4.1.1/wxPython4.2.0, erase `TestListCtrl` class on
+  youtubedl_ui.py. Also check all code that starts with wx.version().
+  Note this operation leads to make Videomass code incompatible
+  for wxPython4.0.7.
 
 -------------
 URGENCY: low
 -------------
+- Some people who use the Youtube-Downloader feature on Videomass,
+  asked me why the file download can't be stopped using the `Abort` button.
+  Actually downloads are stopped after pressing `Abort` button only after
+  completion of a download in progress.
+  Thus, it is not the download in progress that will be terminated but the
+  processing of a list of queued URLs (if with more than one URL of course).
+  Since this is a problem that can't be solved using the yt-dlp/youtube-dl
+  APIs, I'm planning of removing this feature completely from Videomass.
+  I expect some reaction and I will evaluate what people think of this.
 
-See #132 GitHub issue (add Libsvtav1 (?))
-See #132 GitHub issue (Enable opus and vp9 for mp4 container (?))
+- See #132 GitHub issue (add Libsvtav1 (?))
+- See #132 GitHub issue (Enable opus and vp9 for mp4 container (?))
+

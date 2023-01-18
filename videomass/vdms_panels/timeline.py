@@ -89,7 +89,7 @@ class Timeline(wx.Panel):
         sizer_v = wx.BoxSizer(wx.VERTICAL)
         sizer_v.Add(10, 10)
         sizer_h = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_v.Add(sizer_h, 0, wx.ALL, 5)
+        sizer_v.Add(sizer_h, 0, wx.ALL | wx.CENTRE, 5)
         lbl_trim = wx.StaticText(self, wx.ID_ANY, label=_('Trim'))
         if appdata['ostype'] == 'Darwin':
             lbl_trim.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
