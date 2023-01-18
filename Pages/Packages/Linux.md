@@ -14,9 +14,10 @@ nav_order: 3
 This PPA currently publishes packages for [Ubuntu](https://ubuntu.com/), including official and 
 derivative distributions.   
 
-- [Ubuntu 22.04 Jammy](https://cdimage.ubuntu.com/daily-live/current/)
-- [Ubuntu 21.10 Impish](https://releases.ubuntu.com/21.10/)
-- [Ubuntu 20.04 Focal](https://releases.ubuntu.com/20.04/)   
+- [Ubuntu 23.04 Lunar](https://cdimage.ubuntu.com/daily-live/current/)]
+- [Ubuntu 22.10 Kinetic](https://releases.ubuntu.com/kinetic/)
+- [Ubuntu 22.04 Jammy](https://releases.ubuntu.com/22.04/)
+- [Ubuntu 20.04 Focal](https://releases.ubuntu.com/focal/)   
 
 
 To install Videomass add this 
