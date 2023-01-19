@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 4.0.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-18 00:29+0100\n"
-"PO-Revision-Date: 2023-01-18 00:30+0100\n"
+"PO-Revision-Date: 2023-01-19 18:19+0100\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -3450,7 +3450,7 @@ msgstr "Переименование файла..."
 
 #: ../vdms_panels/filedrop.py:537
 msgid "Rename the selected file to:"
-msgstr "Открыть выбранные файлы:"
+msgstr "Переименуйте выбранный файл в:"
 
 #: ../vdms_panels/filedrop.py:551 ../vdms_panels/filedrop.py:561
 #: ../vdms_panels/filedrop.py:592
