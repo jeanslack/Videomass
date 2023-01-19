@@ -14,7 +14,7 @@ nav_order: 3
 This PPA currently publishes packages for [Ubuntu](https://ubuntu.com/), including official and 
 derivative distributions.   
 
-- [Ubuntu 23.04 Lunar](https://cdimage.ubuntu.com/daily-live/current/)]
+- [Ubuntu 23.04 Lunar](https://cdimage.ubuntu.com/daily-live/current/)
 - [Ubuntu 22.10 Kinetic](https://releases.ubuntu.com/kinetic/)
 - [Ubuntu 22.04 Jammy](https://releases.ubuntu.com/22.04/)
 - [Ubuntu 20.04 Focal](https://releases.ubuntu.com/focal/)   
@@ -110,7 +110,7 @@ Minimum requirements:
 - [x86_64](https://en.wikipedia.org/wiki/X86-64) architecture.
 - [FFmpeg](https://www.ffmpeg.org/) version 3.1.5 
 
-[Videomass 4.0.2 AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-4.0.2-x86_64.AppImage){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }  
+[Videomass 4.0.5 AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-4.0.5-x86_64.AppImage){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }  
 
 Successfully tested on the following Linux distributions:   
 * [Xubuntu](https://xubuntu.org/) 18.04 LTS x86_64 

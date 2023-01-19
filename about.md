@@ -79,6 +79,14 @@ to date with the original project. The project development page can be found
 
 ---
 
+## Contributors
+
+- [SwampRabbit](https://github.com/SwampRabbit)
+- [maijz128](https://github.com/maijz128)
+- [CComparon](https://github.com/CComparon)
+
+---
+
 ## Special Thanks to:
 
 - **[Roelof Berkepeis](https://github.com/tissatussa)**
