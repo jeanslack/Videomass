@@ -6,6 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
+Rev: Feb.13.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,14 +25,15 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import wx
+from pubsub import pub
 
 
-class FFmpeg_Codecs(wx.MiniFrame):
+class FFmpegCodecs(wx.MiniFrame):
     """
     It shows a dialog box with a pretty kind of GUI to view
     the formats available on FFmpeg
     """
-    def __init__(self, dict_decoders, OS, type_opt):
+    def __init__(self, dict_decoders, OS, option):
         """
         with 'None' not depend from parent:
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
@@ -40,7 +42,8 @@ class FFmpeg_Codecs(wx.MiniFrame):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         if close videomass also close parent window:
         """
-        if type_opt == '-encoders':
+        self.option = option
+        if self.option == '-encoders':
             cod = _('CODING CAPABILITY')
             colctrl = 'ORANGE'
             title = _("FFmpeg encoders")
@@ -236,4 +239,11 @@ class FFmpeg_Codecs(wx.MiniFrame):
     # ----------------------Event handler (callback)----------------------#
 
     def on_close(self, event):
-        self.Destroy()
+        """
+        Destroy this window
+        """
+        if self.option == '-encoders':
+            pub.sendMessage("Destroying_window", msg='FFmpegCodecs')
+
+        elif self.option == '-decoders':
+            pub.sendMessage("Destroying_window", msg='FFmpegDecoders')

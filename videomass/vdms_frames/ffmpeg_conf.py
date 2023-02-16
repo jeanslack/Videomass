@@ -6,6 +6,7 @@ Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
+Rev: Feb.13.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -23,13 +24,13 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-
-import wx
 import os
 from shutil import which
+import wx
+from pubsub import pub
 
 
-class Checkconf(wx.MiniFrame):
+class FFmpegConf(wx.MiniFrame):
     """
     Shows a graphical representation of the FFmpeg configuration
     sorted by topic
@@ -147,40 +148,35 @@ class Checkconf(wx.MiniFrame):
             biname = ['ffmpeg', 'ffprobe', 'ffplay']
         # ---------
         if which(biname[0]):
-            ffmpeg = ("FFmpeg: '%s'" % FFMPEG_LINK)
+            ffmpeg = (f"FFmpeg:  {FFMPEG_LINK}")
         else:
             if os.path.exists(FFMPEG_LINK):
-                ffmpeg = ("FFmpeg: '%s'" % FFMPEG_LINK)
+                ffmpeg = (f"FFmpeg:  {FFMPEG_LINK}")
 
         if which(biname[1]):
-            ffprobe = ("FFprobe: '%s'" % FFPROBE_LINK)
+            ffprobe = (f"FFprobe:  {FFPROBE_LINK}")
         else:
             if os.path.exists(FFPROBE_LINK):
-                ffprobe = ("FFprobe: '%s'" % FFPROBE_LINK)
+                ffprobe = (f"FFprobe:  {FFPROBE_LINK}")
             else:
                 ffprobe = _("FFprobe   ...not found !")
 
         if which(biname[2]):
-            ffplay = ("FFplay: '%s'" % FFPLAY_LINK)
+            ffplay = (f"FFplay:  {FFPLAY_LINK}")
         else:
             if os.path.exists(FFPLAY_LINK):
-                ffplay = ("FFplay: '%s'" % FFPLAY_LINK)
+                ffplay = (f"FFplay:  {FFPLAY_LINK}")
             else:
                 ffplay = _("FFplay   ...not found !")
 
         # populate txtinfo TextCtrl output:
-        txtinfo.SetLabel("\n\n\n\n"
-                         "              %s\n"
-                         "              %s\n"
-                         "\n\n\n"
-                         "             - %s\n"
-                         "             - %s\n"
-                         "             - %s\n" % (info[0].strip(),
-                                                  info[1].strip(),
-                                                  ffmpeg,
-                                                  ffprobe,
-                                                  ffplay,
-                                                  ))
+        txtinfo.SetLabel(f"\n\n\n\n"
+                         f"              {info[0].strip()}\n"
+                         f"              {info[1].strip()}\n"
+                         f"\n\n\n"
+                         f"             - {ffmpeg}\n"
+                         f"             - {ffprobe}\n"
+                         f"             - {ffplay}\n")
         # populate others_opt listctrl output:
         index = 0
         if others:
@@ -231,4 +227,7 @@ class Checkconf(wx.MiniFrame):
     # ----------------------Event handler (callback)----------------------#
 
     def on_close(self, event):
-        self.Destroy()
+        """
+        Destroy this window
+        """
+        pub.sendMessage("Destroying_window", msg='FFmpegConf')

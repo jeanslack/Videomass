@@ -42,7 +42,7 @@ from videomass.vdms_dialogs.filter_denoisers import Denoisers
 from videomass.vdms_dialogs.filter_deinterlace import Deinterlace
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_dialogs.filter_stab import Vidstab
-from videomass.vdms_frames.shownormlist import NormalizationList
+from videomass.vdms_frames.shownormlist import AudioVolNormal
 from videomass.vdms_utils import optimizations
 
 
@@ -65,19 +65,19 @@ class AV_Conv(wx.Panel):
     BLACK = '#060505'
 
     # MUXERS dictionary:
-    MUXERS = {'mkv': 'matroska', 'avi': 'avi', 'flv': 'flv', 'mp4': 'mp4',
+    MUXERS = {'mkv': 'matroska', 'avi': 'avi', 'mp4': 'mp4',
               'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',
               }
     # Namings in the video container selection combo box:
     VCODECS = ({"Mpeg4": {"-c:v mpeg4": ["avi"]},
-                "x264": {"-c:v libx264": ["mkv", "mp4", "avi", "flv", "m4v"]},
+                "x264": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
                 "x265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
-                "Theora": {"-c:v libtheora": ["ogv"]},
-                # "AV1": {"-c:v libaom-av1 -strict -2",["mkv"]},
+                # "AV1": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
+                "Theora": {"-c:v libtheora": ["ogv", "mkv"]},
                 "Vp8": {"-c:v libvpx": ["webm"]},
-                "Vp9": {"-c:v libvpx-vp9": ["webm", "mp4"]},
-                "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "flv",
-                                       "m4v", "ogv", "webm", "Copy"]}
+                "Vp9": {"-c:v libvpx-vp9": ["webm", "mkv", "mp4"]},
+                "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "m4v",
+                                       "ogv", "webm", "Copy"]}
                 })
     # Namings in the audio codec selection on audio radio box:
     ACODECS = {('Auto'): (""),
@@ -96,8 +96,6 @@ class AV_Conv(wx.Panel):
     A_FORMATS = ('wav', 'mp3', 'ac3', 'ogg', 'flac', 'm4a', 'aac')
     # compatibility between video formats and related audio codecs:
     AV_FORMATS = {('avi'): ('default', 'wav', None, None, None, 'ac3', None,
-                            'mp3', None, 'copy', 'mute'),
-                  ('flv'): ('default', None, None, 'aac', None, 'ac3', None,
                             'mp3', None, 'copy', 'mute'),
                   ('mp4'): ('default', None, None, 'aac', None, 'ac3', None,
                             'mp3', 'opus', 'copy', 'mute'),
@@ -179,7 +177,7 @@ class AV_Conv(wx.Panel):
 
     def __init__(self, parent, appdata, icons):
         """
-        collects all the values of the
+        Collects all the values of the
         GUI controls used in this panel
         """
         if 'wx.svg' in sys.modules:  # only available in wx version 4.1 to up
@@ -195,6 +193,7 @@ class AV_Conv(wx.Panel):
             bmpasettings = get_bmp(icons['settings'], ((16, 16)))
             bmppeaklevel = get_bmp(icons['audiovolume'], ((16, 16)))
             bmpstab = get_bmp(icons['stabilizer'], ((16, 16)))
+            bmpsaveprf = get_bmp(icons['addtoprst'], ((16, 16)))
         else:
             bmpplay = wx.Bitmap(icons['preview'], wx.BITMAP_TYPE_ANY)
             bmpapreview = wx.Bitmap(icons['preview_audio'], wx.BITMAP_TYPE_ANY)
@@ -209,8 +208,9 @@ class AV_Conv(wx.Panel):
             bmpasettings = wx.Bitmap(icons['settings'], wx.BITMAP_TYPE_ANY)
             bmppeaklevel = wx.Bitmap(icons['audiovolume'], wx.BITMAP_TYPE_ANY)
             bmpstab = wx.Bitmap(icons['stabilizer'], wx.BITMAP_TYPE_ANY)
+            bmpsaveprf = wx.Bitmap(icons['addtoprst'], wx.BITMAP_TYPE_ANY)
 
-        # Dictionary definition for command settings:
+        # Args settings definition
         self.opt = {
             "VidCmbxStr": "x264", "OutputFormat": "mkv",
             "VideoCodec": "-c:v libx264", "ext_input": "",
@@ -245,7 +245,8 @@ class AV_Conv(wx.Panel):
                 sizepancodevideo = (350, 700)
 
         wx.Panel.__init__(self, parent, -1)
-        # ------------ base
+
+        # ------------ widgets
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         # ------------------ BEGIN BOX top
         sizer_base.Add(10, 10)
@@ -270,6 +271,10 @@ class AV_Conv(wx.Panel):
         sizer_convin.Add(self.cmb_Vcont, 0, wx.LEFT | wx.CENTRE, 5)
         self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_('Use for Web')))
         sizer_convin.Add(self.ckbx_web, 0, wx.LEFT | wx.CENTRE, 20)
+        self.btn_saveprst = wx.Button(self, wx.ID_ANY,
+                                      _("Save Preset"), size=(-1, -1))
+        self.btn_saveprst.SetBitmap(bmpsaveprf, wx.LEFT)
+        sizer_convin.Add(self.btn_saveprst, 0, wx.LEFT | wx.CENTRE, 20)
         msg = _("Target")
         box1 = wx.StaticBox(self, wx.ID_ANY, msg)
         box_convin = wx.StaticBoxSizer(box1, wx.HORIZONTAL)
@@ -328,14 +333,14 @@ class AV_Conv(wx.Panel):
         grid_sx_Vcod.Add(txtMinr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.spinMinr = wx.SpinCtrl(self.codVpanel, wx.ID_ANY,
-                                    "0", min=0, max=900000,
+                                    "-1", min=-1, max=900000,
                                     style=wx.TE_PROCESS_ENTER
                                     )
         grid_sx_Vcod.Add(self.spinMinr, 0, wx.ALL, 5)
         txtMaxr = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Max Rate (kb)')
         grid_sx_Vcod.Add(txtMaxr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spinMaxr = wx.SpinCtrl(self.codVpanel, wx.ID_ANY,
-                                    "0", min=0, max=900000,
+                                    "-1", min=-1, max=900000,
                                     style=wx.TE_PROCESS_ENTER
                                     )
         grid_sx_Vcod.Add(self.spinMaxr, 0, wx.ALL, 5)
@@ -345,7 +350,7 @@ class AV_Conv(wx.Panel):
         grid_sx_Vcod.Add(txtBuffer, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.spinBufsize = wx.SpinCtrl(self.codVpanel, wx.ID_ANY,
-                                       "0", min=0, max=900000,
+                                       "-1", min=-1, max=900000,
                                        style=wx.TE_PROCESS_ENTER
                                        )
         grid_sx_Vcod.Add(self.spinBufsize, 0, wx.ALL, 5)
@@ -746,6 +751,9 @@ class AV_Conv(wx.Panel):
         self.Fit()
         self.Layout()
         # ---------------------- Tooltips
+        tip = (_('Add settings to presets. You can use and manage them '
+                 'directly from the Presets Manager.'))
+        self.btn_saveprst.SetToolTip(tip)
         tip = (_('Available video codecs. "Copy" is not a codec but indicate '
                  'that the video stream is not to be re-encoded and allows '
                  'changing the format or other parameters'))
@@ -758,13 +766,16 @@ class AV_Conv(wx.Panel):
         self.cmb_Media.SetToolTip(tip)
         tip = (_('It can reduce the file size, but takes longer.'))
         self.ckbx_pass.SetToolTip(tip)
-        tip = (_('Specifies a minimum tolerance to be used'))
+        tip = (_('Specifies a minimum tolerance to be used. '
+                 'Set -1 to disable this control.'))
         self.spinMinr.SetToolTip(tip)
         tip = (_('Specifies a maximum tolerance. This is '
-                 'only used in conjunction with buffer size'))
+                 'only used in conjunction with buffer size. '
+                 'Set -1 to disable this control.'))
         self.spinMaxr.SetToolTip(tip)
         tip = (_('Specifies the decoder buffer size, which determines the '
-                 'variability of the output bitrate '))
+                 'variability of the output bitrate. '
+                 'Set -1 to disable this control.'))
         self.spinBufsize.SetToolTip(tip)
         tip = (_('"good" is the default and recommended for most '
                  'applications; "best" is recommended if you have lots of '
@@ -835,6 +846,7 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_CHECKBOX, self.on_WebOptimize, self.ckbx_web)
         self.Bind(wx.EVT_SPINCTRL, self.on_Vbitrate, self.spin_Vbrate)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Crf, self.slider_CRF)
+        self.Bind(wx.EVT_BUTTON, self.on_saveprst, self.btn_saveprst)
         self.Bind(wx.EVT_BUTTON, self.on_Set_scale, self.btn_videosize)
         self.Bind(wx.EVT_BUTTON, self.on_Set_crop, self.btn_crop)
         self.Bind(wx.EVT_BUTTON, self.on_Set_transpose, self.btn_rotate)
@@ -876,7 +888,7 @@ class AV_Conv(wx.Panel):
     # -------------------------------------------------------------------#
     def UI_set(self):
         """
-        Update all the GUI widgets based on the choices made by the user.
+        Update all the panel controls.
         """
         if self.opt["VideoCodec"] in ["-c:v libx264", "-c:v libx265"]:
             self.vp9panel.Hide(), self.h264panel.Show()
@@ -897,7 +909,8 @@ class AV_Conv(wx.Panel):
             self.cmb_preset.SetSelection(0), self.cmb_profile.SetSelection(0)
             self.cmb_tune.SetSelection(0), self.cmb_level.SetSelection(0)
 
-        elif self.opt["VideoCodec"] in ["-c:v libvpx", "-c:v libvpx-vp9"]:
+        elif self.opt["VideoCodec"] in ["-c:v libvpx", "-c:v libvpx-vp9",
+                                        "-c:v libaom-av1"]:
             self.vp9panel.Show(), self.h264panel.Hide()
             self.ckbx_rowMt1.SetValue(True), self.rdb_deadline.SetSelection(1)
             self.spin_cpu.SetRange(0, 5), self.slider_CRF.SetMax(63)
@@ -931,7 +944,7 @@ class AV_Conv(wx.Panel):
     def audio_default(self):
         """
         Set default audio parameters. This method is called at
-        start-up and whenever the video container selection changes.
+        start-up and whenever changes the video container selection.
         """
         self.rdb_a.SetStringSelection("Auto")
         self.opt["AudioCodStr"] = "Auto"
@@ -948,10 +961,9 @@ class AV_Conv(wx.Panel):
 
     def normalize_default(self, setoff=True):
         """
-        Set default normalization parameters of the audio panel. This method
-        is called by main_frame module on MainFrame.switch_video_conv()
-        during first run and when there are changing on dragNdrop panel,
-        (like make a clear file list or append new file, etc)
+        Reset normalization parameters on the audio properties.
+        This method even is called by `MainFrame.switch_video_conv()`
+        on start-up and when there are changing on `dragNdrop` panel.
         """
         if setoff:
             self.rdbx_normalize.SetSelection(0)
@@ -966,10 +978,7 @@ class AV_Conv(wx.Panel):
 
     def videoCodec(self, event):
         """
-        The event chosen in the video format combobox triggers the
-        setting to the default values. The selection of a new format
-        determines the default status, enabling or disabling some
-        functions depending on the type of video format chosen.
+        This event triggers the setting to the default values.
         """
         selected = AV_Conv.VCODECS.get(self.cmb_Vcod.GetValue())
         libcodec = list(selected.keys())[0]
@@ -1034,8 +1043,8 @@ class AV_Conv(wx.Panel):
 
     def on_WebOptimize(self, event):
         """
-        Add movflags faststart to output media to maximize speed when
-        playback
+        Adds or removes -movflags faststart flag to maximize
+        speed on video streaming.
         """
         check = self.ckbx_web.IsChecked()
         self.opt["WebOptim"] = '-movflags faststart' if check else ''
@@ -1043,9 +1052,8 @@ class AV_Conv(wx.Panel):
 
     def on_xOptimize(self, event):
         """
-        Sets widgets and parameters to a choosen presets for x264/x265
+        Set controls and parameters based on x264/x265
         encoders
-
         """
         name = self.cmb_x26opti.GetValue()
         data = optimizations.hevc_avc(name)
@@ -1054,9 +1062,8 @@ class AV_Conv(wx.Panel):
 
     def on_vpOptimize(self, event):
         """
-        Sets widgets and parameters to a choosen presets for vp8/vp9
+        Set controls and parameters based on vp8/vp9
         encoders
-
         """
         name = self.cmb_vp9opti.GetValue()
         data = optimizations.vp9(name)
@@ -1089,7 +1096,8 @@ class AV_Conv(wx.Panel):
                     self.spin_Vbrate.Disable()
                 self.slider_CRF.Enable()
 
-            elif self.opt["VideoCodec"] in ["-c:v libvpx", "-c:v libvpx-vp9"]:
+            elif self.opt["VideoCodec"] in ["-c:v libvpx", "-c:v libvpx-vp9",
+                                            "-c:v libaom-av1"]:
                 self.slider_CRF.Enable()
                 self.spin_Vbrate.Enable()
 
@@ -1103,12 +1111,14 @@ class AV_Conv(wx.Panel):
 
     def on_Vbitrate(self, event):
         """
-        Reset a empty CRF (this depend if is h264 two-pass encoding
-        or if not codec h264)
+        Here the bitrate values are set.
+        Some codec do not support setting both bitrate
+        and CRF, especially if two-pass is enabled.
         """
         val = self.spin_Vbrate.GetValue()
 
-        if self.opt["VideoCodec"] not in ["-c:v libvpx", "-c:v libvpx-vp9"]:
+        if self.opt["VideoCodec"] not in ["-c:v libvpx", "-c:v libvpx-vp9",
+                                          "-c:v libaom-av1"]:
             self.opt["CRF"] = ""
 
         self.opt["VideoBitrate"] = "" if val == -1 else f"-b:v {val}k"
@@ -1116,16 +1126,19 @@ class AV_Conv(wx.Panel):
 
     def on_Crf(self, event):
         """
-        Reset bitrate at empty (this depend if is h264 codec)
+        Here the CRF values are set.
+        Some codec do not support setting both bitrate
+        and CRF, especially if two-pass is enabled.
         """
         val = self.slider_CRF.GetValue()
-        if self.opt["VideoCodec"] not in ["-c:v libvpx", "-c:v libvpx-vp9"]:
+        if self.opt["VideoCodec"] not in ["-c:v libvpx", "-c:v libvpx-vp9",
+                                          "-c:v libaom-av1"]:
             self.opt["VideoBitrate"] = ""
 
-        if val == -1:
-            self.spin_Vbrate.Enable()
-        else:
-            self.spin_Vbrate.Disable()
+            if val == -1:
+                self.spin_Vbrate.Enable()
+            else:
+                self.spin_Vbrate.Disable()
 
         self.opt["CRF"] = "" if val == -1 else f"-crf {val}"
 
@@ -1146,7 +1159,6 @@ class AV_Conv(wx.Panel):
         It allows a direct evaluation of the sound results given
         by the audio filters with the ability to playback even the
         selected audio streams through audio index mapping.
-
         """
         def _undetect():
             wx.MessageBox(_('Undetected volume values! Click the '
@@ -1198,9 +1210,7 @@ class AV_Conv(wx.Panel):
     def on_video_preview(self, event):
         """
         Showing selected video preview with applied filters.
-        Note that libstab filter has not preview, but the other
-        filters they are still reproduced.
-
+        Note that libstab filter is not possible to preview.
         """
         fget = self.file_selection()
         if not fget or not self.opt["VFilters"]:
@@ -1222,10 +1232,10 @@ class AV_Conv(wx.Panel):
                     )
     # ------------------------------------------------------------------#
 
-    def on_FiltersClear(self, event, disablevidstab=None):
+    def on_FiltersClear(self, event, disablevidstab=False):
         """
-        Reset all enabled filters. If disablevidstab, disable
-        only parameters of the vidstab filter.
+        Reset all enabled filters. If default disablevidstab
+        arg is True, it disable only vidstab filter values.
         """
         if disablevidstab:
             self.opt["Vidstabtransform"], self.opt["Unsharp"] = "", ""
@@ -1250,7 +1260,8 @@ class AV_Conv(wx.Panel):
             self.btn_lacing.SetBackgroundColour(wx.NullColour)
             self.btn_rotate.SetBackgroundColour(wx.NullColour)
             self.btn_vidstab.SetBackgroundColour(wx.NullColour)
-            self.btn_preview.Disable(), self.btn_reset.Disable(),
+            self.btn_preview.Disable()
+            self.btn_reset.Disable()
     # ------------------------------------------------------------------#
 
     def file_selection(self):
@@ -1335,7 +1346,7 @@ class AV_Conv(wx.Panel):
     def chain_all_video_filters(self):
         """
         Concatenate all video filters enabled and sorts
-        them according to an appropriate syntax.
+        them according to an consistance ffmpeg syntax.
         """
         orderf = (self.opt['Deinterlace'], self.opt['Interlace'],
                   self.opt["Denoiser"], self.opt["Vidstabtransform"],
@@ -1356,7 +1367,6 @@ class AV_Conv(wx.Panel):
     def on_Set_scale(self, event):
         """
         Enable or disable scale, setdar and setsar filters
-
         """
         sdf = self.get_video_stream()
         if not sdf:
@@ -1390,7 +1400,6 @@ class AV_Conv(wx.Panel):
     def on_Set_transpose(self, event):
         """
         Enable or disable transpose filter for frame rotations
-
         """
         sdf = self.get_video_stream()
         if not sdf:
@@ -1420,7 +1429,6 @@ class AV_Conv(wx.Panel):
     def on_Set_crop(self, event):
         """
         Enable or disable crop filter
-
         """
         sdf = self.get_video_stream()
         if not sdf:
@@ -1447,8 +1455,8 @@ class AV_Conv(wx.Panel):
 
     def on_Set_deinterlace(self, event):
         """
-        Enable or disable filter for deinterlacing (w3fdif and yadif) and
-        interlace filter.
+        Enable or disable filter for deinterlacing
+        (w3fdif and yadif) and interlace filter.
         """
         sdf = self.get_video_stream()
         if not sdf:
@@ -1479,8 +1487,8 @@ class AV_Conv(wx.Panel):
 
     def on_Set_denoiser(self, event):
         """
-        Enable or disable denoiser filters (nlmeans and hqdn3d) useful
-        in some case, i.e. when apply a deinterlace filter.
+        Enable or disable denoiser filters (nlmeans and hqdn3d)
+        useful in some case, i.e. when apply a deinterlace filter.
         <https://askubuntu.com/questions/866186/how-to-get-good-quality-when-
         converting-digital-video>
         """
@@ -1505,11 +1513,8 @@ class AV_Conv(wx.Panel):
     def on_Set_stabilizer(self, event):
         """
         Enable or disable libvidstab filter for video stabilization.
-        This filter require a special compiled build of FFmpeg with
-        libvidstab option enabled. Note this filter is incompatible
-        with 2 pass encoding that including `-pass 1` and` -pass 2`
-        options.
-
+        Note, this filter is incompatible with 2 pass encoding that
+        includes `-pass 1` and` -pass 2` ffmpeg args/options.
         """
         sdf = self.get_video_stream()
         if not sdf:
@@ -1574,7 +1579,7 @@ class AV_Conv(wx.Panel):
     def setAudioRadiobox(self, event):
         """
         Container combobox sets compatible audio codecs
-        to selected format. See AV_FORMATS dict
+        for the selected format. See AV_FORMATS dict
 
         """
         if self.cmb_Media.GetValue() == 'Video':
@@ -1927,6 +1932,10 @@ class AV_Conv(wx.Panel):
         """
         Show a wx.ListCtrl dialog with volumedetect data
         """
+        if self.parent.audivolnormalize:
+            self.parent.audivolnormalize.Raise()
+            return
+
         if self.rdbx_normalize.GetSelection() == 1:  # PEAK
             title = _('PEAK-based volume statistics')
         elif self.rdbx_normalize.GetSelection() == 2:  # RMS
@@ -1935,11 +1944,11 @@ class AV_Conv(wx.Panel):
         if self.btn_voldect.IsEnabled():
             self.on_Audio_analyzes(self)
 
-        audionormlist = NormalizationList(title,
-                                          self.norm_dataref,
-                                          self.appdata['ostype']
-                                          )
-        audionormlist.Show()
+        self.parent.audivolnormalize = AudioVolNormal(title,
+                                                      self.norm_dataref,
+                                                      self.appdata['ostype'],
+                                                      )
+        self.parent.audivolnormalize.Show()
     # ------------------------------------------------------------------#
 
     def on_xPreset(self, event):
@@ -2008,15 +2017,15 @@ class AV_Conv(wx.Panel):
             self.opt["Deadline"] = ''
             self.opt["RowMthreading"] = ''
 
-        if self.spinMinr.GetValue() > 0:
+        if self.spinMinr.GetValue() > -1:
             self.opt["MinRate"] = f'-minrate {self.spinMinr.GetValue()}k'
         else:
             self.opt["MinRate"] = ''
-        if self.spinMaxr.GetValue() > 0:
+        if self.spinMaxr.GetValue() > -1:
             self.opt["MaxRate"] = f'-maxrate {self.spinMaxr.GetValue()}k'
         else:
             self.opt["MaxRate"] = ''
-        if self.spinBufsize.GetValue() > 0:
+        if self.spinBufsize.GetValue() > -1:
             self.opt["Bufsize"] = f'-bufsize {self.spinBufsize.GetValue()}k'
         else:
             self.opt["Bufsize"] = ''
@@ -2113,9 +2122,12 @@ class AV_Conv(wx.Panel):
         if logname == 'save as profile':
             return pass1, pass2, self.opt["OutputFormat"]
         valupdate = self.update_dict(len(f_src), [''])
-        ending = Formula(self, valupdate[0], valupdate[1], (500, 400))
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 400),
+                         self.parent.move_file_to_trash,
+                         )
 
         if ending.ShowModal() == wx.ID_OK:
+            self.parent.move_file_to_trash = ending.getvalue()
             self.parent.switch_to_processing('libvidstab',
                                              f_src,
                                              None,
@@ -2151,10 +2163,12 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return command, '', self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), ["Copy"])
-            ending = Formula(self, valupdate[0], valupdate[1], (500, 400))
+            ending = Formula(self, valupdate[0], valupdate[1], (500, 400),
+                             self.parent.move_file_to_trash,
+                             )
 
             if ending.ShowModal() == wx.ID_OK:
-                # ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
+                self.parent.move_file_to_trash = ending.getvalue()
                 self.parent.switch_to_processing('onepass',
                                                  f_src,
                                                  None,
@@ -2205,9 +2219,12 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (500, 400))
+            ending = Formula(self, valupdate[0], valupdate[1], (500, 400),
+                             self.parent.move_file_to_trash,
+                             )
 
             if ending.ShowModal() == wx.ID_OK:
+                self.parent.move_file_to_trash = ending.getvalue()
                 self.parent.switch_to_processing('twopass',
                                                  f_src,
                                                  None,
@@ -2241,9 +2258,11 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return command, '', self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (500, 400))
+            ending = Formula(self, valupdate[0], valupdate[1], (500, 400),
+                             self.parent.move_file_to_trash)
 
             if ending.ShowModal() == wx.ID_OK:
+                self.parent.move_file_to_trash = ending.getvalue()
                 self.parent.switch_to_processing('onepass',
                                                  f_src,
                                                  self.opt["OutputFormat"],
@@ -2298,9 +2317,12 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), ["Copy"])
-            ending = Formula(self, valupdate[0], valupdate[1], (500, 400))
+            ending = Formula(self, valupdate[0], valupdate[1], (500, 400),
+                             self.parent.move_file_to_trash,
+                             )
 
             if ending.ShowModal() == wx.ID_OK:
+                self.parent.move_file_to_trash = ending.getvalue()
                 self.parent.switch_to_processing('two pass EBU',
                                                  f_src,
                                                  None,
@@ -2348,9 +2370,12 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (500, 400))
+            ending = Formula(self, valupdate[0], valupdate[1], (500, 400),
+                             self.parent.move_file_to_trash,
+                             )
 
             if ending.ShowModal() == wx.ID_OK:
+                self.parent.move_file_to_trash = ending.getvalue()
                 self.parent.switch_to_processing('two pass EBU',
                                                  f_src,
                                                  self.opt["OutputFormat"],
@@ -2383,9 +2408,12 @@ class AV_Conv(wx.Panel):
         if logname == 'save as profile':
             return command, '', self.opt["OutputFormat"]
         valupdate = self.update_dict(len(f_src), [''])
-        ending = Formula(self, valupdate[0], valupdate[1], (500, 280))
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 280),
+                         self.parent.move_file_to_trash,
+                         )
 
         if ending.ShowModal() == wx.ID_OK:
+            self.parent.move_file_to_trash = ending.getvalue()
             self.parent.switch_to_processing('onepass',
                                              f_src,
                                              self.opt["OutputFormat"],
@@ -2428,9 +2456,12 @@ class AV_Conv(wx.Panel):
         if logname == 'save as profile':
             return pass1, pass2, self.opt["OutputFormat"]
         valupdate = self.update_dict(len(f_src), [''])
-        ending = Formula(self, valupdate[0], valupdate[1], (500, 280))
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 280),
+                         self.parent.move_file_to_trash,
+                         )
 
         if ending.ShowModal() == wx.ID_OK:
+            self.parent.move_file_to_trash = ending.getvalue()
             self.parent.switch_to_processing('two pass EBU',
                                              f_src,
                                              self.opt["OutputFormat"],
@@ -2541,19 +2572,20 @@ class AV_Conv(wx.Panel):
         return formula, dictions
 # ------------------------------------------------------------------#
 
-    def Addprof(self):
+    def on_saveprst(self, event):
         """
         Save current setting as profile for the Presets Manager panel
 
         """
         if self.rdbx_normalize.GetSelection() in (1, 2, 3):  # EBU
-            wx.MessageBox(_('Audio normalization processes cannot '
-                            'be saved on the Presets Manager.'),
-                          'Videomass', wx.ICON_INFORMATION, self)
-            return
+            if wx.MessageBox(_('Audio normalization data cannot be saved '
+                               'on the Presets Manager.\n\n'
+                               'Do you want to continue?'),
+                             'Videomass',
+                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                return
 
         self.update_allentries()
-
         if self.cmb_Media.GetValue() == 'Video':
             if self.opt["Vidstabdetect"]:
                 parameters = self.video_stabilizer([], [], 'save as profile')
@@ -2564,7 +2596,7 @@ class AV_Conv(wx.Panel):
             parameters = self.audio_stdProc([], [], 'save as profile')
 
         with wx.FileDialog(
-                None, _("Save the new profile to..."),
+                None, _("Choose a Videomass preset..."),
                 defaultDir=os.path.join(self.appdata['confdir'], 'presets'),
                 wildcard="Videomass presets (*.prst;)|*.prst;",
                 style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:

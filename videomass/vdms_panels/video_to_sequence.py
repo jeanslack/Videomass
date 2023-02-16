@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.03.2022
+Rev: Feb.09.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -34,7 +34,7 @@ from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_dialogs.epilogue import Formula
-from videomass.vdms_utils.utils import make_newdir_with_id_num
+from videomass.vdms_utils.utils import trailing_name_with_prog_digit
 
 
 class VideoToSequence(wx.Panel):
@@ -521,11 +521,7 @@ class VideoToSequence(wx.Panel):
 
         """
         destdir = os.path.dirname(outfile[0])  # specified dest
-        outputdir = make_newdir_with_id_num(destdir, 'Movie_to_Pictures')
-        if outputdir[0] == 'ERROR':
-            wx.MessageBox(f"{outputdir[1]}", "Videomass",
-                          wx.ICON_ERROR, self)
-            return
+        outputdir = trailing_name_with_prog_digit(destdir, 'Movie_to_Pictures')
 
         if self.cmb_frmt.GetValue() != 'gif':
             namesplit = os.path.splitext(outfile[0])
@@ -533,7 +529,7 @@ class VideoToSequence(wx.Panel):
         else:
             fileout = f"{outfile[0]}"
 
-        outfilename = os.path.join(outputdir[1], os.path.basename(fileout))
+        outfilename = os.path.join(outputdir, os.path.basename(fileout))
 
         if self.txt_args.IsEnabled():
             arg = self.update_arguments(self.cmb_frmt.GetValue())
@@ -546,22 +542,33 @@ class VideoToSequence(wx.Panel):
             command = " ".join(f'{arg[1]} {self.txt_args.GetValue()} -y '
                                f'"{outfilename}"'.split())
 
-        valupdate = self.update_dict(filename, outputdir[1])
-        ending = Formula(self, valupdate[0], valupdate[1], (500, 280))
-
+        valupdate = self.update_dict(filename, outputdir)
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 280),
+                         self.parent.move_file_to_trash,
+                         )
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.switch_to_processing('video_to_sequence',
-                                             filename,
-                                             preargs,
-                                             outputdir[1],
-                                             command,
-                                             None,
-                                             None,
-                                             None,
-                                             'from_movie_to_pictures.log',
-                                             1,
-                                             False,  # reserved
-                                             )
+            self.parent.move_file_to_trash = ending.getvalue()
+        else:
+            return
+        try:
+            os.makedirs(outputdir, mode=0o777)
+        except (OSError, FileExistsError) as err:
+            wx.MessageBox(f"{err}", "Videomass",
+                          wx.ICON_ERROR, self)
+            return
+
+        self.parent.switch_to_processing('video_to_sequence',
+                                         filename,
+                                         preargs,
+                                         outputdir,
+                                         command,
+                                         None,
+                                         None,
+                                         None,
+                                         'from_movie_to_pictures.log',
+                                         1,
+                                         False,  # reserved
+                                         )
         return
     # ------------------------------------------------------------------#
 

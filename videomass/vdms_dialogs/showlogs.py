@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.28.2022
+Rev: Feb.13.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,6 +26,7 @@ This file is part of Videomass.
 """
 import os
 import wx
+from pubsub import pub
 
 
 class ShowLogs(wx.Dialog):
@@ -35,8 +36,6 @@ class ShowLogs(wx.Dialog):
     """
     # list of logs files to include
     LOGNAMES = ('volumedected.log',
-                'youtube_dl.log',
-                'yt_dlp.log',
                 'AV_conversions.log',
                 'presets_manager.log',
                 'ffplay.log',
@@ -205,6 +204,6 @@ class ShowLogs(wx.Dialog):
 
     def on_close(self, event):
         """
-        Destroy this dialog
+        Destroy this window
         """
-        self.Destroy()
+        pub.sendMessage("Destroying_window", msg='ShowLogs')

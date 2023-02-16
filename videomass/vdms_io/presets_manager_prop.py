@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
-File Name: preset_manager_properties.py
+File Name: presets_manager_prop.py
 Porpose: management of properties of the preset manager panel
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.21.2022
+Rev: Feb.15.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -117,11 +117,10 @@ def delete_profiles(path, name):
 # ------------------------------------------------------------------#
 
 
-def preserve_old_profiles(new, old):
+def update_oudated_profiles(new, old):
     """
-    Keep old profiles in the Presets manager panel when
-    replaced with new presets.
-
+    Updates (replaces with new ones) old profiles with same
+    name as new profiles but Keep all others.
     """
     with open(new, 'r', encoding='utf8') as newf:
         incoming = json.load(newf)
@@ -132,21 +131,12 @@ def preserve_old_profiles(new, old):
     items_new = {value["Name"]: value for value in incoming}
     items_old = {value["Name"]: value for value in outcoming}
 
-    #  Return a new set with elements in either the set or other but not both.
-    diff_keys = set(items_new).symmetric_difference(items_old)
-
-    if not diff_keys:
-        return False
-
-    backup = [items_old[xio] for xio in diff_keys]
-
-    data = incoming + backup
-    data.sort(key=lambda s: s["Name"])  # make sorted by name
+    items_old.update(items_new)
+    items_old = list(items_old.values())
+    items_old.sort(key=lambda s: s["Name"])  # make sorted by name
 
     with open(new, 'w', encoding='utf8') as outfile:
-        json.dump(data, outfile, ensure_ascii=False, indent=4)
-
-    return True
+        json.dump(items_old, outfile, ensure_ascii=False, indent=4)
 # ------------------------------------------------------------------#
 
 

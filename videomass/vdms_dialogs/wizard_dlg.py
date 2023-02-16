@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: April.18.2022
+Rev: Jan.21.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -30,7 +30,7 @@ from videomass.vdms_utils.utils import detect_binaries
 from videomass.vdms_sys.settings_manager import ConfigManager
 
 
-def write_changes(fileconf, ffmpeg, ffplay, ffprobe, youtubedl, binfound):
+def write_changes(fileconf, ffmpeg, ffplay, ffprobe, binfound):
     """
     Writes changes to the configuration file
 
@@ -45,7 +45,6 @@ def write_changes(fileconf, ffmpeg, ffplay, ffprobe, youtubedl, binfound):
     dataread['ffmpeg_islocal'] = local
     dataread['ffprobe_islocal'] = local
     dataread['ffplay_islocal'] = local
-    dataread['downloader'] = youtubedl
     conf.write_options(**dataread)
 
 
@@ -391,89 +390,6 @@ class PageThree(wx.Panel):
                     self.parent.ffplay = ffplaypath
 
 
-class PageFour(wx.Panel):
-    """
-    The PageFour panel asks the user if they want
-    to enable youtube-dl.
-
-    """
-    get = wx.GetApp()
-    OS = get.appset['ostype']
-
-    MSG0 = _('Videomass has a simple graphical\n'
-             'interface for youtube-dl and yt-dlp\n')
-
-    MSG1 = _('This feature allows you to download video and audio from\n'
-             'many sites, including YouTube.com and even Facebook.')
-
-    def __init__(self, parent):
-        """
-        NOTE: note the pass statement on `choose_Youtubedl`
-        the values of this panel are get by Wizard.wizard_Finish method
-        """
-        wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
-
-        self.parent = parent
-        sizer_base = wx.BoxSizer(wx.VERTICAL)
-        sizerText = wx.BoxSizer(wx.VERTICAL)
-
-        lab0 = wx.StaticText(self, wx.ID_ANY, PageFour.MSG0,
-                             style=wx.ST_ELLIPSIZE_END
-                             | wx.ALIGN_CENTRE_HORIZONTAL,
-                             )
-        lab1 = wx.StaticText(self, wx.ID_ANY, PageFour.MSG1)
-        descr = _(" Do you want to enable this feature?")
-        self.ckbx_yn = wx.CheckBox(self, wx.ID_ANY, (descr))
-        self.rdbDownloader = wx.RadioBox(self, wx.ID_ANY,
-                                         (_("Downloader preferences")),
-                                         choices=[('youtube_dl'),
-                                                  ('yt_dlp')],
-                                         majorDimension=1,
-                                         style=wx.RA_SPECIFY_COLS
-                                         )
-        self.rdbDownloader.SetSelection(1)
-        self.rdbDownloader.Disable()
-
-        if PageFour.OS == 'Darwin':
-            lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-
-        else:
-            lab0.SetFont(wx.Font(12, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-
-        # layout
-        sizer_base.Add((0, 50), 0)
-        sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 40), 0)
-
-        sizer_base.Add(sizerText, 0, wx.CENTER)
-        sizerText.Add(lab1, 0, wx.CENTER | wx.EXPAND)
-        sizerText.Add((0, 50), 0)
-        sizerText.Add(self.ckbx_yn, 0, wx.CENTER | wx.ALL, 10)
-        sizerText.Add((0, 20), 0)
-        sizerText.Add(self.rdbDownloader, 0, wx.ALL | wx.EXPAND, 10)
-        sizerText.Add((0, 50), 0)
-
-        self.SetSizer(sizer_base)
-        sizer_base.Fit(self)
-        self.Layout()
-
-        self.Bind(wx.EVT_CHECKBOX, self.choose_Youtubedl, self.ckbx_yn)
-
-    def choose_Youtubedl(self, event):
-        """
-        the values are get on Wizard.wizard_Finish method
-        """
-        if not self.ckbx_yn.IsChecked():
-            self.rdbDownloader.Disable()
-        else:
-            self.rdbDownloader.Enable()
-
-        # if not self.ckbx_yn.IsChecked():
-            # self.parent.youtubedl = 'disabled'
-        # else:
-            # self.parent.youtubedl = 'enable'
-
-
 class PageFinish(wx.Panel):
     """
     This is last panel to show during wizard session
@@ -559,18 +475,15 @@ class Wizard(wx.Dialog):
         self.pageOne = PageOne(self, icon_videomass)  # start...
         self.pageTwo = PageTwo(self)  # choose ffmpeg modality
         self.pageThree = PageThree(self)  # browse for ffmpeg binaries
-        self.pageFour = PageFour(self)  # enable or disable youtube-dl
         self.pageFinish = PageFinish(self)  # ...end
         #  hide panels
         self.pageTwo.Hide()
         self.pageThree.Hide()
-        self.pageFour.Hide()
         self.pageFinish.Hide()
         #  adds panels to sizer
         mainSizer.Add(self.pageOne, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageTwo, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageThree, 1, wx.ALL | wx.EXPAND, 5)
-        mainSizer.Add(self.pageFour, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageFinish, 1, wx.ALL | wx.EXPAND, 5)
         # bottom side layout
         gridBtn = wx.GridSizer(1, 2, 0, 0)
@@ -627,31 +540,24 @@ class Wizard(wx.Dialog):
                 self.btnNext.Disable()
 
         elif self.pageTwo.IsShown():
-
             if not self.pageTwo.locateBtn.IsEnabled():
                 self.pageTwo.Hide()
                 self.pageThree.Show()
             else:
                 self.pageTwo.Hide()
-                self.pageFour.Show()
+                self.pageFinish.Show()
+                self.btnNext.SetLabel(_('Finish'))
 
         elif self.pageThree.IsShown():
             if (self.pageThree.ffmpegTxt.GetValue()
                     and self.pageThree.ffprobeTxt.GetValue()
                     and self.pageThree.ffplayTxt.GetValue()):
                 self.pageThree.Hide()
-                self.pageFour.Show()
+                self.pageFinish.Show()
+                self.btnNext.SetLabel(_('Finish'))
             else:
                 wx.MessageBox(_("Some text boxes are still incomplete"),
                               ("Videomass"), wx.ICON_INFORMATION, self)
-
-        elif self.pageFour.IsShown():
-            self.pageOne.Hide()
-            self.pageTwo.Hide()
-            self.pageFour.Hide()
-            self.pageFinish.Show()
-            self.btnNext.SetLabel(_('Finish'))
-
         self.Layout()
     # -------------------------------------------------------------------#
 
@@ -671,18 +577,13 @@ class Wizard(wx.Dialog):
             self.pageThree.Hide()
             self.pageTwo.Show()
 
-        elif self.pageFour.IsShown():
-            if self.pageTwo.locateBtn.IsEnabled():
-                self.pageFour.Hide()
-                self.pageTwo.Show()
-            else:
-                self.pageFour.Hide()
-                self.pageThree.Show()
-
         elif self.pageFinish.IsShown():
             self.btnNext.SetLabel(_('Next >'))
             self.pageFinish.Hide()
-            self.pageFour.Show()
+            if self.pageTwo.locateBtn.IsEnabled():
+                self.pageTwo.Show()
+            else:
+                self.pageThree.Show()
 
         self.Layout()
     # -------------------------------------------------------------------#
@@ -693,12 +594,6 @@ class Wizard(wx.Dialog):
         to applies changes.
 
         """
-        if self.pageFour.ckbx_yn.IsChecked():
-            index = self.pageFour.rdbDownloader.GetSelection()
-            youtubedl = f'{self.pageFour.rdbDownloader.GetString(index)}'
-        else:
-            youtubedl = 'disabled'
-
         if not self.pageTwo.locateBtn.IsEnabled():
             binfound = 'local'
         elif not self.pageTwo.detectBtn.IsEnabled():
@@ -708,7 +603,6 @@ class Wizard(wx.Dialog):
                       self.ffmpeg,
                       self.ffplay,
                       self.ffprobe,
-                      youtubedl,
                       binfound
                       )
         self.Hide()

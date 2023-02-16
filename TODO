@@ -2,6 +2,7 @@
 --------------------
 URGENCY: to do soon
 --------------------
+- Preview video stabilization
 
 --------------
 URGENCY: high
@@ -19,16 +20,3 @@ URGENCY: medium
 -------------
 URGENCY: low
 -------------
-- Some people who use the Youtube-Downloader feature on Videomass,
-  asked me why the file download can't be stopped using the `Abort` button.
-  Actually downloads are stopped after pressing `Abort` button only after
-  completion of a download in progress.
-  Thus, it is not the download in progress that will be terminated but the
-  processing of a list of queued URLs (if with more than one URL of course).
-  Since this is a problem that can't be solved using the yt-dlp/youtube-dl
-  APIs, I'm planning of removing this feature completely from Videomass.
-  I expect some reaction and I will evaluate what people think of this.
-
-- See #132 GitHub issue (add Libsvtav1 (?))
-- See #132 GitHub issue (Enable opus and vp9 for mp4 container (?))
-

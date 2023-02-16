@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.26.2021
+Rev: Feb.13.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,10 +25,11 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import wx
+from pubsub import pub
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 
 
-class NormalizationList(wx.MiniFrame):
+class AudioVolNormal(wx.MiniFrame):
     """
     Show FFmpeg volumedetect command data and report offset
     and gain results need for normalization process.
@@ -259,7 +260,7 @@ class NormalizationList(wx.MiniFrame):
     # --------------------------------------------------------------#
 
     def on_close(self, event):
-        '''
-        destroy dialog by button and the X
-        '''
-        self.Destroy()
+        """
+        Destroy this window
+        """
+        pub.sendMessage("Destroying_window", msg='AudioVolNormal')

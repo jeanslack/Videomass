@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.28.2022
+Rev: Jan.21.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -28,7 +28,6 @@ import os
 import sys
 import webbrowser
 import wx
-import wx.lib.agw.hyperlink as hpl
 from videomass.vdms_utils.utils import detect_binaries
 from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_sys.app_const import supLang
@@ -133,6 +132,7 @@ class SetUp(wx.Dialog):
                           | wx.ALIGN_CENTER_VERTICAL
                           | wx.ALIGN_CENTER_HORIZONTAL, 5
                           )
+        sizerFiles.Add((0, 15))
         descr = _("Save each file in the same folder as input file")
         self.ckbx_dir = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_dir, 0, wx.ALL, 5)
@@ -145,42 +145,19 @@ class SetUp(wx.Dialog):
         self.text_suffix = wx.TextCtrl(tabTwo, wx.ID_ANY, "", size=(90, -1))
         sizeSamedest.Add(self.text_suffix, 1, wx.ALL | wx.CENTER, 5)
 
-        descr = _("Move source file to the Videomass trash "
-                  "folder after successful encoding")
+        sizerFiles.Add((0, 15))
+        line0 = wx.StaticLine(tabTwo, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        sizerFiles.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
+        msg = _("Source file preferences")
+        labsrcf = wx.StaticText(tabTwo, wx.ID_ANY, msg)
+        sizerFiles.Add(labsrcf, 0, wx.ALL | wx.EXPAND, 5)
+        descr = _("Always move source files to the Videomass\n"
+                  "trash folder after successful encoding")
         self.ckbx_trash = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_trash, 0, wx.ALL, 5)
-        sizetrash = wx.BoxSizer(wx.HORIZONTAL)
-        sizerFiles.Add(sizetrash, 0, wx.EXPAND)
-        self.txtctrl_trash = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
-                                         style=wx.TE_READONLY
-                                         )
-        sizetrash.Add(self.txtctrl_trash, 1, wx.ALL, 5)
-        self.txtctrl_trash.AppendText(self.appdata['trashfolder'])
-        self.btn_trash = wx.Button(tabTwo, wx.ID_ANY, "...", size=(35, -1))
-        sizetrash.Add(self.btn_trash, 0, wx.RIGHT
-                      | wx.ALIGN_CENTER_VERTICAL
-                      | wx.ALIGN_CENTER_HORIZONTAL, 5
-                      )
-        sizerFiles.Add((0, 15))
-        msg = _("Where do you prefer to save your downloads?")
-        labdown = wx.StaticText(tabTwo, wx.ID_ANY, msg)
-        sizerFiles.Add(labdown, 0, wx.ALL | wx.EXPAND, 5)
-        sizeYDLdirdest = wx.BoxSizer(wx.HORIZONTAL)
-        sizerFiles.Add(sizeYDLdirdest, 0, wx.EXPAND)
-        self.txtctrl_YDLpath = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
-                                           style=wx.TE_READONLY
-                                           )
-        sizeYDLdirdest.Add(self.txtctrl_YDLpath, 1, wx.ALL | wx.CENTER, 5)
-        self.txtctrl_YDLpath.AppendText(self.appdata['outputdownload'])
-        self.btn_YDLpath = wx.Button(tabTwo, wx.ID_ANY, "...", size=(35, -1))
-        sizeYDLdirdest.Add(self.btn_YDLpath, 0, wx.RIGHT
-                           | wx.ALIGN_CENTER_VERTICAL
-                           | wx.ALIGN_CENTER_HORIZONTAL, 5
-                           )
-        descr = _("Auto-create subfolders when downloading playlists")
-        self.ckbx_playlist = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
-        sizerFiles.Add(self.ckbx_playlist, 0, wx.ALL, 5)
-
         tabTwo.SetSizer(sizerFiles)
         notebook.AddPage(tabTwo, _("File Preferences"))
 
@@ -252,128 +229,18 @@ class SetUp(wx.Dialog):
         tabThree.SetSizer(sizerFFmpeg)
         notebook.AddPage(tabThree, _("FFmpeg"))
 
-        # -----tab 4
-        self.tabFour = wx.Panel(notebook, wx.ID_ANY)
-        sizerYdl = wx.BoxSizer(wx.VERTICAL)
-        sizerYdl.Add((0, 15))
-        labydl0 = wx.StaticText(self.tabFour, wx.ID_ANY, (''))
-        sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
-
-        if self.appdata['app'] not in ('pyinstaller', 'appimage', 'embed'):
-            url = ('https://packaging.python.org/tutorials/'
-                   'installing-packages/#upgrading-packages')
-            static0 = _("How to upgrade a Python package")
-            instpkg = hpl.HyperLinkCtrl(self.tabFour, -1, static0, URL=url)
-            sizerYdl.Add(instpkg, 0, wx.ALL | wx.CENTRE, 2)
-
-        if self.appdata['ostype'] == 'Windows':
-            url = ('https://download.microsoft.com/download/1/6/5/165255E7-'
-                   '1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe')
-            static1 = _("Required: Microsoft Visual C++ 2010 Service Pack 1 "
-                        "Redistributable Package (x86)")
-            MSVCR = hpl.HyperLinkCtrl(self.tabFour, -1, static1, URL=url)
-            sizerYdl.Add(MSVCR, 0, wx.ALL | wx.CENTRE, 2)
-
-        elif (self.appdata['ostype'] == 'Linux'
-              and self.appdata['app'] not in ('pyinstaller', 'appimage')):
-            url = ('https://packaging.python.org/guides/'
-                   'installing-using-linux-tools/')
-            static2 = _("How to install pip on your Linux distribution")
-            instpip = hpl.HyperLinkCtrl(self.tabFour, -1, static2, URL=url)
-            sizerYdl.Add(instpip, 0, wx.ALL | wx.CENTRE, 2)
-        sizerYdl.Add((0, 15))
-
-        self.rdbDownloader = wx.RadioBox(self.tabFour, wx.ID_ANY,
-                                         (_("Downloader preferences")),
-                                         choices=[('disabled'),
-                                                  ('youtube_dl'),
-                                                  ('yt_dlp')],
-                                         majorDimension=1,
-                                         style=wx.RA_SPECIFY_COLS
-                                         )
-        sizerYdl.Add(self.rdbDownloader, 0, wx.ALL | wx.EXPAND, 5)
-
-        grdydlLoc = wx.BoxSizer(wx.HORIZONTAL)
-        sizerYdl.Add(grdydlLoc, 0, wx.ALL | wx.EXPAND, 5)
-        labydl2 = wx.StaticText(self.tabFour, wx.ID_ANY, _('Current path:'))
-        grdydlLoc.Add(labydl2, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
-
-        self.ydlPath = wx.TextCtrl(self.tabFour, wx.ID_ANY, "",
-                                   style=wx.TE_READONLY)
-        grdydlLoc.Add(self.ydlPath, 1, wx.ALL | wx.EXPAND, 5)
-
-        # ---- BEGIN set youtube-dl radiobox
-        ydlmsg = _("Make sure you are using the latest available "
-                   "version of\n'{}'. This allows you to avoid download "
-                   "problems.\n").format(self.appdata['downloader'])
-
-        if self.appdata['app'] == 'pyinstaller':
-
-            if self.appdata['downloader'] == 'disabled':
-                self.rdbDownloader.SetSelection(0)
-                self.ydlPath.WriteText(_('Disabled'))
-            else:
-                if self.appdata['downloader'] == 'youtube_dl':
-                    self.rdbDownloader.SetSelection(1)
-
-                elif self.appdata['downloader'] == 'yt_dlp':
-                    self.rdbDownloader.SetSelection(2)
-
-                if self.appdata['PYLIBYDL'] is None:
-                    self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
-                else:
-                    self.ydlPath.WriteText(_('Not found'))
-
-        elif self.appdata['app'] == 'appimage':
-            if self.appdata['downloader'] == 'disabled':
-                self.rdbDownloader.SetSelection(0)
-                self.ydlPath.WriteText(_('Disabled'))
-            else:
-                if self.appdata['downloader'] == 'youtube_dl':
-                    self.rdbDownloader.SetSelection(1)
-
-                elif self.appdata['downloader'] == 'yt_dlp':
-                    self.rdbDownloader.SetSelection(2)
-
-                if self.appdata['PYLIBYDL'] is None:
-                    labydl0.SetLabel(f'{ydlmsg}')
-                    self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
-                else:
-                    self.ydlPath.WriteText(_('Not Installed'))
-        else:
-            if self.appdata['downloader'] == 'disabled':
-                self.rdbDownloader.SetSelection(0)
-                self.ydlPath.WriteText(_('Disabled'))
-            else:
-                if self.appdata['downloader'] == 'youtube_dl':
-                    self.rdbDownloader.SetSelection(1)
-
-                elif self.appdata['downloader'] == 'yt_dlp':
-                    self.rdbDownloader.SetSelection(2)
-
-                if self.appdata['PYLIBYDL'] is None:
-                    labydl0.SetLabel(f'{ydlmsg}')
-                    self.ydlPath.WriteText(str(self.appdata['YDLSITE']))
-                else:
-                    self.ydlPath.WriteText(_('Not Installed'))
-        # ---- END
-
-        # ----
-        self.tabFour.SetSizer(sizerYdl)
-        notebook.AddPage(self.tabFour, _("Downloader"))
-
         # -----tab 5
-        tabFive = wx.Panel(notebook, wx.ID_ANY)
+        tabFour = wx.Panel(notebook, wx.ID_ANY)
         sizerAppearance = wx.BoxSizer(wx.VERTICAL)
         sizerAppearance.Add((0, 15))
-        labTheme = wx.StaticText(tabFive, wx.ID_ANY, _('Icon themes'))
+        labTheme = wx.StaticText(tabFour, wx.ID_ANY, _('Icon themes'))
         sizerAppearance.Add(labTheme, 0, wx.ALL | wx.EXPAND, 5)
         msg = _("The chosen icon theme will only change the icons,\n"
                 "background and foreground of some text fields.")
-        labIcons = wx.StaticText(tabFive, wx.ID_ANY, (msg))
+        labIcons = wx.StaticText(tabFour, wx.ID_ANY, (msg))
         sizerAppearance.Add(labIcons, 0, wx.ALL
                             | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        self.cmbx_icons = wx.ComboBox(tabFive, wx.ID_ANY,
+        self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY,
                                       choices=[("Videomass-Light"),
                                                ("Videomass-Dark"),
                                                ("Videomass-Colours"),
@@ -386,13 +253,13 @@ class SetUp(wx.Dialog):
                             | wx.ALIGN_CENTER_HORIZONTAL, 5
                             )
         sizerAppearance.Add((0, 15))
-        labTB = wx.StaticText(tabFive, wx.ID_ANY, _("Toolbar customization"))
+        labTB = wx.StaticText(tabFour, wx.ID_ANY, _("Toolbar customization"))
         sizerAppearance.Add(labTB, 0, wx.ALL | wx.EXPAND, 5)
         tbchoice = [_('At the top of window (default)'),
                     _('At the bottom of window'),
                     _('At the right of window'),
                     _('At the left of window')]
-        self.rdbTBpref = wx.RadioBox(tabFive, wx.ID_ANY,
+        self.rdbTBpref = wx.RadioBox(tabFour, wx.ID_ANY,
                                      (_("Place the toolbar")),
                                      choices=tbchoice,
                                      majorDimension=1,
@@ -402,11 +269,11 @@ class SetUp(wx.Dialog):
 
         gridTBsize = wx.FlexGridSizer(0, 2, 0, 5)
         sizerAppearance.Add(gridTBsize, 0, wx.ALL, 5)
-        lab1_appearance = wx.StaticText(tabFive, wx.ID_ANY,
+        lab1_appearance = wx.StaticText(tabFour, wx.ID_ANY,
                                         _('Icon size:'))
         gridTBsize.Add(lab1_appearance, 0, wx.ALIGN_CENTER_VERTICAL, 0)
 
-        self.cmbx_iconsSize = wx.ComboBox(tabFive, wx.ID_ANY,
+        self.cmbx_iconsSize = wx.ComboBox(tabFour, wx.ID_ANY,
                                           choices=[("16"), ("24"), ("32"),
                                                    ("64")], size=(120, -1),
                                           style=wx.CB_DROPDOWN | wx.CB_READONLY
@@ -417,11 +284,11 @@ class SetUp(wx.Dialog):
             self.cmbx_iconsSize.Disable()
             lab1_appearance.Disable()
         msg = _("Shows the text in the toolbar buttons")
-        self.checkbox_tbtext = wx.CheckBox(tabFive, wx.ID_ANY, (msg))
+        self.checkbox_tbtext = wx.CheckBox(tabFour, wx.ID_ANY, (msg))
         sizerAppearance.Add(self.checkbox_tbtext, 0, wx.ALL, 5)
 
-        tabFive.SetSizer(sizerAppearance)  # aggiungo il sizer su tab 4
-        notebook.AddPage(tabFive, _("Appearance"))
+        tabFour.SetSizer(sizerAppearance)  # aggiungo il sizer su tab 4
+        notebook.AddPage(tabFour, _("Appearance"))
 
         # -----tab 6
         tabSix = wx.Panel(notebook, wx.ID_ANY)
@@ -473,20 +340,18 @@ class SetUp(wx.Dialog):
         # set font
         if self.appdata['ostype'] == 'Darwin':
             labfile.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            labdown.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labsrcf.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFexec.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFopt.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            labydl0.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labTheme.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labIcons.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labTB.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labLog.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
             labfile.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            labdown.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labsrcf.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFexec.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFopt.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            labydl0.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labTheme.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labIcons.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labTB.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -506,9 +371,6 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.set_Samedest, self.ckbx_dir)
         self.Bind(wx.EVT_TEXT, self.set_Suffix, self.text_suffix)
         self.Bind(wx.EVT_CHECKBOX, self.on_file_to_trash, self.ckbx_trash)
-        self.Bind(wx.EVT_BUTTON, self.on_browse_trash, self.btn_trash)
-        self.Bind(wx.EVT_BUTTON, self.on_downloadPath, self.btn_YDLpath)
-        self.Bind(wx.EVT_CHECKBOX, self.on_playlistFolder, self.ckbx_playlist)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFmpeg, self.checkbox_exeFFmpeg)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffmpeg, self.btn_ffmpeg)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFprobe, self.checkbox_exeFFprobe)
@@ -524,7 +386,6 @@ class SetUp(wx.Dialog):
 
         self.Bind(wx.EVT_CHECKBOX, self.clear_Cache, self.checkbox_cacheclr)
         self.Bind(wx.EVT_CHECKBOX, self.clear_logs, self.checkbox_logclr)
-        self.Bind(wx.EVT_RADIOBOX, self.on_Ydl_preferences, self.rdbDownloader)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_cancel, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
@@ -548,12 +409,7 @@ class SetUp(wx.Dialog):
         self.checkbox_tbtext.SetValue(self.appdata['toolbartext'])
         self.checkbox_exit.SetValue(self.appdata['warnexiting'])
         self.checkbox_logclr.SetValue(self.appdata['clearlogfiles'])
-        self.ckbx_playlist.SetValue(self.appdata['playlistsubfolder'])
         self.ckbx_trash.SetValue(self.settings['move_file_to_trash'])
-
-        if not self.ckbx_trash.IsChecked():
-            self.txtctrl_trash.Disable()
-            self.btn_trash.Disable()
 
         for strs in range(self.rdbFFplay.GetCount()):
             if (self.appdata['ffplayloglev'].split()[1] in
@@ -619,29 +475,6 @@ class SetUp(wx.Dialog):
         """set cpu number threads used as option on ffmpeg"""
         sett = self.spinctrl_threads.GetValue()
         self.settings['ffthreads'] = f'-threads {sett}'
-    # ---------------------------------------------------------------------#
-
-    def on_downloadPath(self, event):
-        """set up a custom user path for file downloads"""
-
-        dlg = wx.DirDialog(self, _("Set a persistent location to save the "
-                                   "file downloads"),
-                           self.appdata['outputdownload'], wx.DD_DEFAULT_STYLE
-                           )
-        if dlg.ShowModal() == wx.ID_OK:
-            self.txtctrl_YDLpath.Clear()
-            getpath = self.appdata['getpath'](dlg.GetPath())
-            self.txtctrl_YDLpath.AppendText(getpath)
-            self.settings['outputdownload'] = getpath
-            dlg.Destroy()
-    # ---------------------------------------------------------------------#
-
-    def on_playlistFolder(self, event):
-        """auto-create subfolders when downloading playlists"""
-        if self.ckbx_playlist.IsChecked():
-            self.settings['playlistsubfolder'] = True
-        else:
-            self.settings['playlistsubfolder'] = False
     # ---------------------------------------------------------------------#
 
     def on_ffmpegPath(self, event):
@@ -710,45 +543,10 @@ class SetUp(wx.Dialog):
         trashdir = os.path.join(self.appdata['confdir'], 'Trash')
         if self.ckbx_trash.IsChecked():
             self.settings['move_file_to_trash'] = True
-            self.settings['trashfolder'] = trashdir
-            self.txtctrl_trash.AppendText(trashdir)
-            self.txtctrl_trash.Enable()
-            self.btn_trash.Enable()
             if not os.path.exists(trashdir):
                 os.mkdir(trashdir, mode=0o777)
         else:
-            if not os.listdir(self.settings['trashfolder']):
-                os.rmdir(self.settings['trashfolder'])  # deleting if empty
-            self.txtctrl_trash.Clear()
-            self.txtctrl_trash.Disable()
-            self.btn_trash.Disable()
             self.settings['move_file_to_trash'] = False
-            self.settings['trashfolder'] = ""
-
-    # --------------------------------------------------------------------#
-
-    def on_browse_trash(self, event):
-        """
-        Browse to set a trash folder.
-        """
-        oldtrash = self.txtctrl_trash.GetValue()
-        dlg = wx.DirDialog(self, _("Choose a new destination for the "
-                                   "files to be trashed"),
-                           self.appdata['trashfolder'], wx.DD_DEFAULT_STYLE)
-
-        if dlg.ShowModal() == wx.ID_OK:
-            self.txtctrl_trash.Clear()
-            newtrash = self.appdata['getpath'](dlg.GetPath())
-            self.txtctrl_trash.AppendText(newtrash)
-            self.settings['trashfolder'] = newtrash
-            if not os.path.exists(newtrash):
-                os.makedirs(newtrash, mode=0o777)
-            if os.path.exists(oldtrash):
-                if not oldtrash == newtrash:
-                    if not os.listdir(oldtrash):  # recheck if is empty
-                        os.rmdir(oldtrash)  # deleting old trash folder
-
-            dlg.Destroy()
     # --------------------------------------------------------------------#
 
     def logging_ffplay(self, event):
@@ -951,14 +749,6 @@ class SetUp(wx.Dialog):
             self.settings['clearlogfiles'] = True
         else:
             self.settings['clearlogfiles'] = False
-    # --------------------------------------------------------------------#
-
-    def on_Ydl_preferences(self, event):
-        """
-        set youtube-dl preferences
-        """
-        index = self.rdbDownloader.GetSelection()
-        self.settings['downloader'] = self.rdbDownloader.GetString(index)
     # --------------------------------------------------------------------#
 
     def on_help(self, event):

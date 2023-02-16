@@ -27,8 +27,8 @@ This file is part of Videomass.
 import os
 import webbrowser
 import wx
-from videomass.vdms_io.presets_manager_properties import write_new_profile
-from videomass.vdms_io.presets_manager_properties import edit_existing_profile
+from videomass.vdms_io.presets_manager_prop import write_new_profile
+from videomass.vdms_io.presets_manager_prop import edit_existing_profile
 
 
 class MemPresets(wx.Dialog):
