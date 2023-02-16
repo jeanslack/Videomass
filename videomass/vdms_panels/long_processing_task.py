@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.14.2022
+Rev: Jan.21.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -32,7 +32,6 @@ from pubsub import pub
 import wx
 from videomass.vdms_dialogs.widget_utils import notification_area
 from videomass.vdms_io.make_filelog import make_log_template
-from videomass.vdms_threads.ydl_downloader import YdlDownloader
 from videomass.vdms_threads.one_pass import OnePass
 from videomass.vdms_threads.two_pass import TwoPass
 from videomass.vdms_threads.two_pass_ebu import Loudnorm
@@ -145,8 +144,6 @@ class LogOut(wx.Panel):
                                   | wx.TE_READONLY
                                   | wx.TE_RICH2
                                   )
-        self.ckbx_text = wx.CheckBox(self, wx.ID_ANY, (_("Suppress excess "
-                                                         "output")))
         self.barprog = wx.Gauge(self, wx.ID_ANY, range=0)
         self.labprog = wx.StaticText(self, label="")
         self.labffmpeg = wx.StaticText(self, label="")
@@ -156,7 +153,6 @@ class LogOut(wx.Panel):
         sizer.Add((0, 10))
         sizer.Add(lbl, 0, wx.ALL, 5)
         sizer.Add(self.txtout, 1, wx.EXPAND | wx.ALL, 5)
-        sizer.Add(self.ckbx_text, 0, wx.ALL, 5)
         sizer.Add(self.barprog, 0, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.labprog, 0, wx.ALL, 5)
         sizer.Add(self.labffmpeg, 0, wx.ALL, 5)
@@ -166,8 +162,6 @@ class LogOut(wx.Panel):
         sizer_btns.Add(self.button_close, 0, wx.EXPAND | wx.ALL, 5)
         # set_properties:
         self.txtout.SetBackgroundColour(self.clr['BACKGRD'])
-        self.ckbx_text.SetToolTip(_('If activated, hides some '
-                                    'output messages.'))
         self.button_stop.SetToolTip(_("Stops current process"))
         self.SetSizerAndFit(sizer)
         # bind
@@ -177,7 +171,6 @@ class LogOut(wx.Panel):
         self.button_stop.Enable(True)
         self.button_close.Enable(False)
 
-        pub.subscribe(self.downloader_activity, "UPDATE_YDL_EVT")
         pub.subscribe(self.update_display, "UPDATE_EVT")
         pub.subscribe(self.update_count, "COUNT_EVT")
         pub.subscribe(self.end_proc, "END_EVT")
@@ -187,7 +180,7 @@ class LogOut(wx.Panel):
         """
         Thread redirection
         varargs: type tuple data object
-        duration: total duration or partial if time_seq is set
+        duration: total duration or partial if time_seq is setted
         """
         self.previus = panel  # stores the panel from which it starts
 
@@ -232,62 +225,7 @@ class LogOut(wx.Panel):
             self.thread_type = ConcatDemuxer(varargs, duration,
                                              self.logname,
                                              )
-        elif varargs[0] == 'youtube_dl downloading':  # as import youtube_dl
-            self.time_remaining = False
-            self.ckbx_text.Hide()
-            self.barprog.Hide()
-            self.thread_type = YdlDownloader(varargs, self.logname)
     # ----------------------------------------------------------------------
-
-    def downloader_activity(self, output, duration, status):
-        """
-        Receiving output messages from youtube_dl library via
-        pubsub "UPDATE_YDL_EVT" .
-        """
-        if status == 'ERROR':
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
-            self.txtout.AppendText(f'{output}\n')
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['FAILED']))
-            self.txtout.AppendText(f"{LogOut.MSG_failed}\n")
-            self.result.append('failed')
-
-        elif status == 'WARNING':
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
-            self.txtout.AppendText(f'{output}\n')
-
-        elif status == 'DEBUG':
-            if '[download] Destination' in output:
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['DEBUG']))
-                self.txtout.AppendText(f'{output}\n')
-
-            elif '[info]' in output:
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['INFO']))
-                self.txtout.AppendText(f'{output}\n')
-
-            elif '[download]' not in output:
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
-                self.txtout.AppendText(f'{output}\n')
-                with open(self.logname, "a", encoding='utf8') as logerr:
-                    logerr.write(f"[{self.appdata['downloader'].upper()}]: "
-                                 f"{status} > {output}\n")
-
-        elif status == 'DOWNLOAD':
-            perc = duration['_percent_str']
-            tbytes = duration['_total_bytes_str']
-            speed = duration['_speed_str']
-            eta = duration['_eta_str']
-            self.labprog.SetLabel(f'Downloading: {perc}  of  '
-                                  f'{tbytes}  at  {speed}  ETA: {eta}')
-
-        elif status == 'FINISHED':
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
-            self.txtout.AppendText(f'{duration}\n')
-
-        if status in ['ERROR', 'WARNING']:
-            with open(self.logname, "a", encoding='utf8') as logerr:
-                logerr.write(f"[{self.appdata['downloader'].upper()}]: "
-                             f"{output}\n")
-    # ---------------------------------------------------------------------#
 
     def update_display(self, output, duration, status):
         """
@@ -310,9 +248,6 @@ class LogOut(wx.Panel):
         but exiting immediately after the function.
 
         """
-        # if self.ckbx_text.IsChecked(): #ffmpeg output messages in real time:
-        #    self.txtout.AppendText(output)
-
         if not status == 0:  # error, exit status of the p.wait
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR1']))
             self.txtout.AppendText(f"{LogOut.MSG_failed}\n")
@@ -357,23 +292,22 @@ class LogOut(wx.Panel):
             del output, duration
 
         else:  # append all others lines on the textctrl and log file
-            if not self.ckbx_text.IsChecked():  # not print the output
-                if [x for x in ('info', 'Info') if x in output]:
-                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['INFO']))
-                    self.txtout.AppendText(f'{output}')
+            if [x for x in ('info', 'Info') if x in output]:
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['INFO']))
+                self.txtout.AppendText(f'{output}')
 
-                elif [x for x in ('Failed', 'failed', 'Error', 'error')
-                      if x in output]:
-                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
-                    self.txtout.AppendText(f'{output}')
+            elif [x for x in ('Failed', 'failed', 'Error', 'error')
+                    if x in output]:
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
+                self.txtout.AppendText(f'{output}')
 
-                elif [x for x in ('warning', 'Warning') if x in output]:
-                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
-                    self.txtout.AppendText(f'{output}')
+            elif [x for x in ('warning', 'Warning') if x in output]:
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
+                self.txtout.AppendText(f'{output}')
 
-                else:
-                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
-                    self.txtout.AppendText(f'{output}')
+            else:
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
+                self.txtout.AppendText(f'{output}')
 
             with open(self.logname, "a", encoding='utf8') as logerr:
                 logerr.write(f"[FFMPEG]: {output}")
@@ -394,12 +328,6 @@ class LogOut(wx.Panel):
                 if 'ETA:' in newlab:
                     newlab[3] = '00:00:00.000'
                 self.labprog.SetLabel(" ".join(newlab))
-
-            elif self.thread_type.__class__.__name__ != 'YdlDownloader':
-                newlab = self.labprog.GetLabel().split()
-                if 'Processing:' in newlab:
-                    newlab[1] = '100%'
-                    self.labprog.SetLabel(" ".join(newlab))
             return
 
         # if STATUS_ERROR == 1:
@@ -462,8 +390,8 @@ class LogOut(wx.Panel):
             self.barprog.SetValue(0)
 
             if msg:  # move processed files to Videomass trash folder
-                if self.appdata["move_file_to_trash"]:
-                    trashdir = self.appdata["trashfolder"]
+                if self.parent.move_file_to_trash:
+                    trashdir = self.appdata["trash_dir"]
                     delete_file_source(msg, trashdir)  # filelist, dir
 
         self.txtout.AppendText('\n')
@@ -477,21 +405,12 @@ class LogOut(wx.Panel):
         The user change idea and was stop process
         """
         self.thread_type.stop()
-
-        if self.thread_type.__class__.__name__ == 'YdlDownloader':
-
-            self.parent.statusbar_msg(_("wait... all operations will be "
-                                        "stopped at the end of the download "
-                                        "in progress."), 'GOLDENROD',
-                                      LogOut.WHITE)
-        else:
-            self.parent.statusbar_msg(_("wait... I'm interrupting"),
-                                      'GOLDENROD', LogOut.WHITE)
-            self.thread_type.join()
-            self.parent.statusbar_msg(_("...Interrupted"), None)
+        self.parent.statusbar_msg(_("wait... I'm interrupting"),
+                                  'GOLDENROD', LogOut.WHITE)
+        self.thread_type.join()
+        self.parent.statusbar_msg(_("...Interrupted"), None)
         self.abort = True
-
-        event.Skip()
+        # event.Skip()
     # ----------------------------------------------------------------------
 
     def on_close(self, event):
@@ -500,7 +419,6 @@ class LogOut(wx.Panel):
 
         """
         if not self.logname:  # only read mod is shown
-            self.ckbx_text.Show()
             self.button_stop.Enable(True)
             self.button_close.Enable(False)
             self.parent.panelShown(self.previus)  # retrieve at previusly panel
@@ -516,7 +434,6 @@ class LogOut(wx.Panel):
 
         # reset all before close
         self.logname = None
-        self.ckbx_text.Show()
         self.button_stop.Enable(True)
         self.button_close.Enable(False)
         self.thread_type = None

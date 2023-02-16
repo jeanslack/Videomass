@@ -130,8 +130,9 @@ class Timeline(wx.Panel):
         self.Layout()
 
         self.btn_maxdur.SetToolTip(_("Stream duration. Click me for details."))
-        self.ctrl_end.SetToolTip(_("End segment in 24-hour format (HH:MM:SS)"))
-        self.ctrl_start.SetToolTip(_("Start segment in "
+        self.ctrl_end.SetToolTip(_("End segment, in 24-hour format "
+                                   "(HH:MM:SS)"))
+        self.ctrl_start.SetToolTip(_("Start point trimming, in "
                                      "24-hour format (HH:MM:SS)"))
 
         # ----------------------Binding (EVT)----------------------#

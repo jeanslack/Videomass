@@ -48,29 +48,37 @@ def from_kwargs_to_args(kwargs):
 
 def ffprobe(filename, cmd='ffprobe', **kwargs):
     """
-    Run ffprobe on the specified file and return a
-    JSON representation of the output.
+    Run ffprobe subprocess on the specified file.
+    This function always returns a tuple of two items (data, error),
+    where `data` is the data representation given from the subprocess
+    output, and `error` is the current status error.
 
     Raises:
-        :class:`ffcuesplitter.FFProbeError`: if ffprobe
-        returns a non-zero exit code;
-        `ffcuesplitter.FFProbeError` from `OSError`,
-        `FileNotFoundError` if a generic error.
-
+        `OSError` or `FileNotFoundError` occurs if the ffprobe
+        binary/executable does not exists.
+    Returns:
+        If the above exceptions raises, or if ffprobe returns a
+        non-zero exit code, Returns (None, str(error)).
+        Returns a JSON representation (dict(data), None) of the
+        subprocess output otherwise.
     Usage:
-        ffprobe(filename,
-                cmd='/usr/bin oi/ffprobe',
-                loglevel='error',
-                hide_banner=None,
-                etc,
-                )
+        >>> from videomass.vdms_threads.ffprobe import ffprobe
+        >>> probe = ffprobe(filename,
+                            cmd='/path/to/ffprobe',
+                            loglevel='error',
+                            hide_banner=None,
+                            **kwargs,
+                            )
+        >>> if probe[1]:
+                raise Exception(probe[1])
+        >>> else:
+        >>>     probe[0]
     """
     args = (f'"{cmd}" -show_format -show_streams -of json '
             f'{" ".join(from_kwargs_to_args(kwargs))} '
             f'"{filename}"'
             )
     args = shlex.split(args) if platform.system() != 'Windows' else args
-
     try:
         with Popen(args,
                    stdout=subprocess.PIPE,
@@ -85,6 +93,5 @@ def ffprobe(filename, cmd='ffprobe', **kwargs):
 
     except (OSError, FileNotFoundError) as excepterr:
         return (None, excepterr)
-
     else:
         return json.loads(output), None

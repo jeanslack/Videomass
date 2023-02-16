@@ -64,10 +64,6 @@ class Videomass(wx.App):
         """
         self.locale = None
         self.appset = {'DISPLAY_SIZE': None,
-                       'PYLIBYDL': None,
-                       # None if load as library else string
-                       'YDLSITE': None,
-                       # youtube-dl sitepackage/distpackage
                        'GETLANG': None,
                        # short name for the locale
                        'SUPP_LANGs': ['it_IT', 'en_US', 'ru_RU'],
@@ -96,9 +92,8 @@ class Videomass(wx.App):
         wx.Locale.AddCatalogLookupPathPrefix(self.appset['localepath'])
         self.update_language(self.appset['locale_name'])
 
-        noydl = self.check_youtube_dl()
         noffmpeg = self.check_ffmpeg()
-        if noydl or noffmpeg:
+        if noffmpeg:
             self.wizard(self.iconset['videomass'])
             return True
 
@@ -107,40 +102,6 @@ class Videomass(wx.App):
         main_frame.Show()
         self.SetTopWindow(main_frame)
         return True
-    # -------------------------------------------------------------------
-
-    def check_youtube_dl(self):
-        """
-        Check for `youtube_dl` / `yt_dlp` modules.
-        NOTE that since Videomass v3.4.5, youtube-dl is
-        no longer used as an executable, but only as a python module.
-
-        """
-        if self.appset['downloader'] == 'disabled':
-            self.appset['PYLIBYDL'] = 'no module loaded'
-        else:
-            win, nix = '\\__init__.py', '/__init__.py'
-            pkg = win if self.appset['ostype'] == 'Windows' else nix
-
-            if self.appset['downloader'] == 'youtube_dl':
-                try:
-                    import youtube_dl
-                    this = youtube_dl.__file__.split(pkg, maxsplit=1)[0]
-                    self.appset['YDLSITE'] = self.appset['getpath'](this)
-
-                except (ModuleNotFoundError, ImportError) as nomodule:
-                    self.appset['PYLIBYDL'] = nomodule
-
-            elif self.appset['downloader'] == 'yt_dlp':
-                try:
-                    import yt_dlp
-                    this = yt_dlp.__file__.split(pkg, maxsplit=1)[0]
-                    self.appset['YDLSITE'] = self.appset['getpath'](this)
-
-                except (ModuleNotFoundError, ImportError) as nomodule:
-                    self.appset['PYLIBYDL'] = nomodule
-
-        return True if not self.appset['downloader'] else None
     # -------------------------------------------------------------------
 
     def check_ffmpeg(self):

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.31.2022
+Rev: Feb.13.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 """
+import os
 import wx
 import wx.lib.scrolledpanel as scrolled
 
@@ -37,10 +38,13 @@ class Formula(wx.Dialog):
             settings = ("\nEXAMPLES:\n\nExample 1:\nExample 2:\n etc."
             param = ("type 1\ntype 2\ntype 3\n etc."
     """
-    def __init__(self, parent, settings, param, panelsize):
+    def __init__(self, parent, settings, param, panelsize,
+                 move_file_to_trash):
 
         get = wx.GetApp()  # get data from bootstrap
-        colorscheme = get.appset['icontheme'][1]
+        self.appdata = get.appset
+        colorscheme = self.appdata['icontheme'][1]
+        self.move_file_to_trash = move_file_to_trash
 
         wx.Dialog.__init__(self, parent, -1,
                            style=wx.DEFAULT_DIALOG_STYLE
@@ -71,6 +75,12 @@ class Formula(wx.Dialog):
         panelscroll.SetAutoLayout(1)
         panelscroll.SetupScrolling()
 
+        descr = _("Move source file to the Videomass\ntrash "
+                  "folder after successful encoding")
+        self.ckbx_trash = wx.CheckBox(self, wx.ID_ANY, (descr))
+        self.ckbx_trash.SetValue(self.move_file_to_trash)
+        sizbase.Add(self.ckbx_trash, 0, wx.ALL, 5)
+
         btncancel = wx.Button(self, wx.ID_CANCEL, "")
         btnok = wx.Button(self, wx.ID_OK, "")
         btngrid = wx.FlexGridSizer(1, 2, 0, 0)
@@ -79,14 +89,29 @@ class Formula(wx.Dialog):
         sizbase.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
 
         self.SetTitle(_('Confirm Settings'))
+        self.SetMinSize(panelsize)
         self.SetSizer(sizbase)
         sizbase.Fit(self)
         self.Layout()
         # ----------------------Binders (EVT)--------------------#
+        self.Bind(wx.EVT_CHECKBOX, self.on_file_to_trash, self.ckbx_trash)
         self.Bind(wx.EVT_BUTTON, self.on_cancel, btncancel)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btnok)
 
         # --------------  Event handler (callback)  --------------#
+
+    def on_file_to_trash(self, event):
+        """
+        enable/disable "Move file to trash" after successful encoding
+        """
+        trashdir = os.path.join(self.appdata['confdir'], 'Trash')
+        if self.ckbx_trash.IsChecked():
+            self.move_file_to_trash = True
+            if not os.path.exists(trashdir):
+                os.mkdir(trashdir, mode=0o777)
+        else:
+            self.move_file_to_trash = False
+    # --------------------------------------------------------------------#
 
     def on_cancel(self, event):
         """
@@ -101,3 +126,10 @@ class Formula(wx.Dialog):
         """
         # self.Destroy()
         event.Skip()
+
+    def getvalue(self):
+        """
+        This method return values via the interface getvalue()
+        by the caller. See the caller for more info and usage.
+        """
+        return self.move_file_to_trash

@@ -6,6 +6,7 @@ Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
+Rev: Feb.13.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,9 +25,10 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import wx
+from pubsub import pub
 
 
-class While_Playing(wx.MiniFrame):
+class WhilePlaying(wx.MiniFrame):
     """
     Display a dialog box resizable with shortcuts keyboard
     useful when you use playback function with FFplay
@@ -56,7 +58,14 @@ class While_Playing(wx.MiniFrame):
     # ----------------------------------------------------------------------
 
     def __init__(self, OS):
+        """
+        with 'None' not depend from parent:
+        wx.Frame.__init__(self, None)
 
+        With parent, -1:
+        wx.Frame.__init__(self, parent, -1)
+        if close videomass also close parent window
+        """
         get = wx.GetApp()  # get data from bootstrap
         colorscheme = get.appset['icontheme'][1]
 
@@ -65,15 +74,6 @@ class While_Playing(wx.MiniFrame):
                               | wx.CLOSE_BOX
                               | wx.SYSTEM_MENU,
                               )
-        """
-        with 'None' not depend from parent:
-        wx.Frame.__init__(self, None)
-
-        With parent, -1:
-        wx.Frame.__init__(self, parent, -1)
-        if close videomass also close parent window
-
-        """
         # -------------------- widget --------------------------#
         panel_base = wx.Panel(self, wx.ID_ANY,
                               style=wx.TAB_TRAVERSAL
@@ -85,8 +85,8 @@ class While_Playing(wx.MiniFrame):
         panel = wx.Panel(panel_base, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         sizer_base.Add(panel, 0, wx.ALL | wx.EXPAND, 5)
 
-        label1 = wx.StaticText(panel, wx.ID_ANY, While_Playing.KEYS)
-        label2 = wx.StaticText(panel, wx.ID_ANY, While_Playing.EXPLAN)
+        label1 = wx.StaticText(panel, wx.ID_ANY, WhilePlaying.KEYS)
+        label2 = wx.StaticText(panel, wx.ID_ANY, WhilePlaying.EXPLAN)
         self.button_close = wx.Button(panel_base, wx.ID_CLOSE, "")
         # ----------------------Properties----------------------#
         self.SetTitle(_("Shortcut keys while playing with FFplay"))
@@ -116,7 +116,7 @@ class While_Playing(wx.MiniFrame):
     # --------------------------------------------------------------#
 
     def on_close(self, event):
-        '''
-        destroy dialog by button and the X
-        '''
-        self.Destroy()
+        """
+        Destroy this window
+        """
+        pub.sendMessage("Destroying_window", msg='WhilePlaying')

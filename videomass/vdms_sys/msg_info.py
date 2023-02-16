@@ -6,7 +6,7 @@ Compatibility: Python3, Python2
 author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 lic: GPL3
-Rev: Aug.12.2021
+Rev: Jan.21.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -36,8 +36,8 @@ def current_release():
     """
     release_name = 'Videomass'
     program_name = 'videomass'
-    version = '4.0.5'
-    release = 'released'
+    version = '4.0.10'
+    release = 'unreleased'
     copyr = '2013-2023'
     website = 'http://jeanslack.github.io/Videomass/'
     author = ('Gianluca Pernigotto', '(aka jeanslack)')
@@ -49,8 +49,6 @@ def current_release():
                "- FFmpeg, FFmpeg is a trademark of Fabrice Bellard, \n"
                "originator of the FFmpeg project:\n"
                "<http://ffmpeg.org/>\n"
-               "- youtube-dl: <http://ytdl-org.github.io/youtube-dl\n"
-               "Download videos from YouTube and more sites\n"
                )
     return (release_name, program_name, version, release,
             copyr, website, author, mail, comment)
@@ -64,7 +62,7 @@ def descriptions_release():
     author = current_release()
     mail = current_release()
 
-    short_d = ("Videomass is a cross-platform GUI for FFmpeg and youtube-dl")
+    short_d = ("Videomass is a cross-platform GUI for FFmpeg")
 
     long_d = ("""
 Videomass is a cross-platform GUI designed for FFmpeg enthusiasts who need to
@@ -74,16 +72,16 @@ It is based on an advanced use of presets and profiles in order to use most of
 the FFmpeg commands without limits of formats and codecs.
 
 It features graphical tools for viewing, analyzing and processing multimedia
-streams and downloading videos via youtube-dl.
+streams.
 
 Videomass is written in Python3 with the wxPython-Phoenix toolkit.
 """)
 
     short_l = ("GPL3 (Gnu Public License)")
 
-    lic = ("Copyleft - all rights reversed - %s %s\n"
-           "Author and developer: %s %s\n"
-           "Mail: %s\n\n"
+    lic = (f"Copyleft - all rights reversed - {copyr[4]} {author[6][0]}\n"
+           f"Author and developer: {author[6][0]} {author[6][1]}\n"
+           f"Mail: {mail[7]}\n\n"
            "Videomass is free software: you can redistribute\n"
            "it and/or modify it under the terms of the GNU General\n"
            "Public License as published by the Free Software\n"
@@ -98,9 +96,6 @@ Videomass is written in Python3 with the wxPython-Phoenix toolkit.
 
            "You should have received a copy of the GNU General\n"
            "Public License along with this program. If not, see\n"
-           "http://www.gnu.org/licenses/" % (copyr[4],
-                                             author[6][0],
-                                             author[6][0],
-                                             author[6][1],
-                                             mail[7]))
+           "http://www.gnu.org/licenses/"
+           )
     return (short_d, long_d, short_l, lic)

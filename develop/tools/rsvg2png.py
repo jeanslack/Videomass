@@ -7,7 +7,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.23.2020 *PEP8 compatible*
+Rev: 11 Feb 2023
 
 DESCRIPTION:
    Given a list of pathnames, recursively converts images found in SVG
@@ -73,7 +73,7 @@ def svg2png(delete, paths, parameters,
                                 ):
             out = outputdir if outputdir else os.path.dirname(files)
             basename = os.path.splitext(os.path.basename(files))
-            saveto = os.path.join(f'{out}{basename[0]}.{outext}')
+            saveto = os.path.join(out, f'{basename[0]}.{outext}')
             if platform.system() == 'Windows':
                 command = ' '.join(cmd + [files, '-o', saveto])
             else:

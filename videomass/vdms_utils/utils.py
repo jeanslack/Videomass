@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.23.2022
+Rev: Feb.09.2023
 Code checker: flake8, pylint .
 
 This file is part of Videomass.
@@ -26,6 +26,7 @@ This file is part of Videomass.
 """
 import subprocess
 import platform
+import re
 import shutil
 import os
 import glob
@@ -314,41 +315,93 @@ def del_filecontents(filename):
 # ------------------------------------------------------------------#
 
 
-def make_newdir_with_id_num(destdir, name):
+def trailing_name_with_prog_digit(destpath, argname) -> str:
     """
-    Makes a new directory with the same name as `name`
-    but adds a progressive number to the trailing, starting
-    from `_1` i.e:
+    Returns a new name with the same name as `argname`
+    but adds a trailing progressive digit to the new name
+    starting from `01`. If the new name already exists, the
+    progressive digit will start from `02`, and so on.
+    This function is useful for renaming both files and
+    directories as it uses a filter to file system sanitize
+    to removing illegal chars for some OS like:
 
-        'MyNewDir_1', MyNewDir_33, ect.
+            ^` ~ " # ' % & * : < > ? / \\ { | }.
+    Args:
+    -----
+    destpath (str): destination path as a string object.
+    argname (str): It expects an item name as a string object.
 
-    destdir (str): output destination
-    name (str): Any valid name OS sanitized
-
-    Returns two items tuple:
-        ('ERROR', errormessage) if error.
-        (None, newdir): the new dirname otherwise.
+    Raise `TypeError` if args not type `str`
+    Returns str(newdirname)
     """
-    extract = []
-    for ddir in os.listdir(destdir):
-        if ddir.startswith(name):
-            try:
-                dig = ddir.rsplit('_', 1)[1]
-                if dig.isdigit():
-                    extract.append(int(dig))
-            except IndexError:
-                continue
-    if extract:
-        prog = max(extract) + 1
-        newdir = os.path.join(destdir, f'{name}_{str(prog)}')
+    if not isinstance(destpath, str) or not isinstance(argname, str):
+        raise TypeError("Expects str object only")
+
+    name, ext = os.path.splitext(argname)
+    name = re.sub(r"[\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}]", '', name)
+    name = name.strip().strip('.')  # removes lead./trail. spaces and dots
+    ext = ext.strip()  # removes lead./trail. spaces
+    alreadynumbered = []
+
+    for items in os.listdir(destpath):
+        match = items.rsplit(sep=' - ', maxsplit=1)
+        if len(match) == 2:
+            if match[0] == name and match[1].strip().isdigit():
+                alreadynumbered.append(int(match[1]))  # append digit as int
+
+    if alreadynumbered:
+        prog = max(alreadynumbered) + 1
+        newdirname = os.path.join(destpath,
+                                  f'{name} - {str(prog).zfill(2)}' + ext)
     else:
-        newdir = os.path.join(destdir, f'{name}_1')
-    try:
-        os.makedirs(newdir, mode=0o777)
-    except (OSError, FileExistsError) as err:
-        return 'ERROR', err
+        newdirname = os.path.join(destpath, f'{name} - 01' + ext)
 
-    return None, newdir
+    return newdirname
+# ------------------------------------------------------------------#
+
+
+def leading_name_with_prog_digit(destpath, argname) -> str:
+    """
+    Returns a new name with the same name as `argname`
+    but adds a leading progressive digit to the new name
+    starting from `01`. If the new name already exists, the
+    progressive digit will start from `02`, and so on.
+    This function is useful for renaming both files and
+    directories as it uses a filter to file system sanitize
+    to removing illegal chars for some OS like:
+
+            ^` ~ " # ' % & * : < > ? / \\ { | }.
+    Args:
+    -----
+    destpath (str): destination path as a string object.
+    argname (str): It expects an item name as a string object.
+
+    Raise `TypeError` if args not type `str`
+    Returns str(newdirname)
+    """
+    if not isinstance(destpath, str) or not isinstance(argname, str):
+        raise TypeError("Expects str object only")
+
+    name, ext = os.path.splitext(argname)
+    name = re.sub(r"[\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}]", '', name)
+    name = name.strip().strip('.')  # removes lead./trail. spaces and dots
+    ext = ext.strip()  # removes lead./trail. spaces
+    alreadynumbered = []
+
+    for items in os.listdir(destpath):
+        match = items.split(sep=' - ', maxsplit=1)
+        if len(match) == 2:
+            if match[1] == name and match[0].strip().isdigit():
+                alreadynumbered.append(int(match[0]))
+
+    if alreadynumbered:
+        prog = max(alreadynumbered) + 1
+        newdirname = os.path.join(destpath,
+                                  f'{str(prog).zfill(2)} - {name}' + ext)
+    else:
+        newdirname = os.path.join(destpath, f'01 - {name}' + ext)
+
+    return newdirname
 # ------------------------------------------------------------------#
 
 
@@ -373,31 +426,25 @@ def detect_binaries(executable, additionaldir=None):
 
     if shutil.which(executable):
         installed = True
-
     else:
         if platform == 'Windows':
             installed = False
 
         elif platform == 'Darwin':
-
             if os.path.isfile(f"/usr/local/bin/{executable}"):
                 local = True
                 installed = True
             else:
                 local = False
                 installed = False
-
         else:  # Linux, FreeBSD, etc.
             installed = False
 
     if not installed:
-
         if additionaldir:  # check onto additionaldir
-
             if not os.path.isfile(os.path.join(f"{additionaldir}", "bin",
                                                f"{executable}")):
                 provided = False
-
             else:
                 provided = True
 

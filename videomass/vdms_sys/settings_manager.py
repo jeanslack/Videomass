@@ -63,9 +63,6 @@ class ConfigManager:
     filesuffix (str):
         An optional suffix to assign to output files
 
-    outputdownload (str):
-        file destination path used by the downloader
-
     ffmpeg_cmd, ffplay_cmd, ffprobe_cmd, (str):
         Absolute or relative path name of the executable.
         If an empty ("") string is found, starts the wizard.
@@ -115,25 +112,10 @@ class ConfigManager:
         with True, erases all log files content before exiting the
         application, default is False.
 
-    downloader (bool, str):
-        sets the downloader to use when application startup.
-        one of `disabled`,` youtube_dl`, `yt_dlp` or False
-        Where `disabled` means not load anything, `youtube_dl`
-        means load/use youtube-dl on sturtup, `yt_dlp` means load/use
-        yt_dl on sturtup, `false` means *not set at all* then
-        a wizard dialog will be displayed.
-
-    playlistsubfolder (bool):
-        Auto-create subfolders when download the playlists,
-        default value is True.
-
     move_file_to_trash (bool):
         if True, move input files to videomass trash folder or in
         some other dir.
         default value is False
-
-    trashfolder (str):
-        An absolute or relative dirname of some trash folder.
 
     locale_name (str):
         "Default", set system language to videomass message catalog
@@ -144,12 +126,11 @@ class ConfigManager:
         "en_US" or "fr_FR".
 
     """
-    VERSION = 4.5
+    VERSION = 4.8
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputfile": f"{os.path.expanduser('~')}",
                        "outputfile_samedir": False,
                        "filesuffix": "",
-                       "outputdownload": f"{os.path.expanduser('~')}",
                        "ffmpeg_cmd": "",
                        "ffmpeg_islocal": False,
                        "ffmpegloglev": "-loglevel warning",
@@ -168,16 +149,13 @@ class ConfigManager:
                        "window_position": [0, 0],
                        "clearcache": False,
                        "clearlogfiles": False,
-                       "downloader": False,
-                       "playlistsubfolder": True,
                        "move_file_to_trash": False,
-                       "trashfolder": "",
-                       "locale_name": "Default"
+                       "locale_name": "Default",
                        }
 
     def __init__(self, filename, makeportable=None):
         """
-        Accepts an existing `filename` on the file system paths
+        Expects an existing `filename` on the file system paths
         suffixed by `.json`. If `makeportable` is `True`, some
         paths on the `DEFAULT_OPTIONS` class attribute will be
         set as relative paths.
@@ -188,7 +166,6 @@ class ConfigManager:
             path = os.path.join(makeportable, "My_Files")
             outputdir = os.path.relpath(path)
             ConfigManager.DEFAULT_OPTIONS['outputfile'] = outputdir
-            ConfigManager.DEFAULT_OPTIONS['outputdownload'] = outputdir
 
     def write_options(self, **options):
         """

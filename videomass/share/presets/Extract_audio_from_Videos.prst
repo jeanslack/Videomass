@@ -24,14 +24,6 @@
         "Output_extension": "mp3"
     },
     {
-        "Name": "Converts to m4a",
-        "Description": "Extract and convert first audio stream in MPEG4 audio - 112kbps",
-        "First_pass": "-vn -sn -map 0:1 -c:a:0 aac -b:a 112k -map_metadata 0",
-        "Second_pass": "",
-        "Supported_list": "",
-        "Output_extension": "m4a"
-    },
-    {
         "Name": "Converts to OGG",
         "Description": "Extract and convert first audio stream in OGG - 128kbps, stereo, low quality from -aq 1 to -aq 10",
         "First_pass": "-vn -sn -map 0:1 -c:a:0 libvorbis -aq 3 -map_metadata 0",
@@ -70,5 +62,13 @@
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "wma"
+    },
+    {
+        "Name": "Converts to m4a",
+        "Description": "Extract and convert first audio stream in MPEG4 audio - 112kbps",
+        "First_pass": "-vn -sn -map 0:1 -c:a:0 aac -b:a 112k -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "m4a"
     }
 ]

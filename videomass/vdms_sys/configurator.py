@@ -160,6 +160,7 @@ def conventional_paths():
         dir_conf = os.path.join(user_name + "\\AppData\\Roaming\\videomass")
         log_dir = os.path.join(dir_conf, 'log')  # logs
         cache_dir = os.path.join(dir_conf, 'cache')  # updates executable
+        trash_dir = os.path.join(dir_conf, "Trash")
 
     elif platform.system() == "Darwin":
         fpath = "Library/Application Support/videomass/settings.json"
@@ -167,6 +168,7 @@ def conventional_paths():
         dir_conf = os.path.join(user_name, os.path.dirname(fpath))
         log_dir = os.path.join(user_name, "Library/Logs/videomass")
         cache_dir = os.path.join(user_name, "Library/Caches/videomass")
+        trash_dir = os.path.join(dir_conf, "Trash")
 
     else:  # Linux, FreeBsd, etc.
         fpath = ".config/videomass/settings.json"
@@ -174,8 +176,9 @@ def conventional_paths():
         dir_conf = os.path.join(user_name, ".config/videomass")
         log_dir = os.path.join(user_name, ".local/share/videomass/log")
         cache_dir = os.path.join(user_name, ".cache/videomass")
+        trash_dir = os.path.join(dir_conf, "Trash")
 
-    return file_conf, dir_conf, log_dir, cache_dir
+    return file_conf, dir_conf, log_dir, cache_dir, trash_dir
 
 
 def portable_paths(portdirname):
@@ -187,11 +190,12 @@ def portable_paths(portdirname):
     file_conf = os.path.join(dir_conf, "settings.json")
     log_dir = os.path.join(dir_conf, 'log')  # logs
     cache_dir = os.path.join(dir_conf, 'cache')  # updates executable
+    trash_dir = os.path.join(dir_conf, "Trash")
 
     if not os.path.exists(dir_conf):
         os.makedirs(dir_conf, mode=0o777)
 
-    return file_conf, dir_conf, log_dir, cache_dir
+    return file_conf, dir_conf, log_dir, cache_dir, trash_dir
 
 
 def get_color_scheme(theme):
@@ -270,14 +274,16 @@ def data_location(args):
 
     if args['make_portable']:
         portdir = args['make_portable']
-        conffile, confdir, logdir, cachedir = portable_paths(portdir)
+        (conffile, confdir, logdir,
+         cachedir, trash_dir) = portable_paths(portdir)
     else:
-        conffile, confdir, logdir, cachedir = conventional_paths()
+        conffile, confdir, logdir, cachedir, trash_dir = conventional_paths()
 
     return dict(conffile=conffile,
                 confdir=confdir,
                 logdir=logdir,
                 cachedir=cachedir,
+                trash_dir=trash_dir,
                 this=this,
                 frozen=frozen,
                 meipass=meipass,
@@ -403,7 +409,7 @@ class DataSource():
         requiredirs = (os.path.join(self.dataloc['cachedir'], 'tmp'),
                        self.dataloc['logdir'],
                        userconf['outputfile'],
-                       userconf['outputdownload']
+                       self.dataloc['trash_dir']
                        )
         for dirs in requiredirs:
             create = create_dirs(dirs, self.dataloc['conffile'],)
@@ -437,6 +443,7 @@ class DataSource():
                  'confdir': _relativize(self.dataloc['confdir']),
                  'logdir': _relativize(self.dataloc['logdir']),
                  'cachedir': _relativize(self.dataloc['cachedir']),
+                 'trash_dir': _relativize(self.dataloc['trash_dir']),
                  'FFMPEG_videomass_pkg':
                      _relativize(self.dataloc['ffmpeg_pkg']),
                  'app': self.apptype,
@@ -461,11 +468,10 @@ class DataSource():
         """
         keys = ('videomass', 'A/V-Conv', 'startconv', 'fileproperties',
                 'playback', 'concatenate', 'preview', 'clear',
-                'profile_append', 'scale', 'crop', 'rotate', 'deinterlace',
+                'addtoprst', 'scale', 'crop', 'rotate', 'deinterlace',
                 'denoiser', 'statistics', 'settings', 'audiovolume',
-                'youtube', 'presets_manager', 'profile_add', 'profile_del',
-                'profile_edit', 'previous', 'next', 'startdownload',
-                'download_properties', 'stabilizer', 'listindx',
+                'presets_manager', 'profile_add', 'profile_del',
+                'profile_edit', 'previous', 'next', 'stabilizer',
                 'preview_audio', 'profile_copy', 'slideshow',
                 'videotopictures', 'atrack', 'timerset',
                 )  # must match with items on `iconset` tuple, see following
@@ -496,7 +502,7 @@ class DataSource():
                    f"{choose.get('x48')}/icon_concat.{ext}",
                    f"{choose.get('x16')}/preview.{ext}",
                    f"{choose.get('x16')}/edit-clear.{ext}",
-                   f"{choose.get('x22')}/profile-append.{ext}",
+                   f"{choose.get('x16')}/addtoprst.{ext}",
                    f"{choose.get('x16')}/transform-scale.{ext}",
                    f"{choose.get('x16')}/transform-crop.{ext}",
                    f"{choose.get('x16')}/transform-rotate.{ext}",
@@ -505,17 +511,13 @@ class DataSource():
                    f"{choose.get('x16')}/statistics.{ext}",
                    f"{choose.get('x16')}/configure.{ext}",
                    f"{choose.get('x16')}/player-volume.{ext}",
-                   f"{choose.get('x48')}/icon_youtube.{ext}",
                    f"{choose.get('x48')}/icon_prst_mng.{ext}",
                    f"{choose.get('x16')}/newprf.{ext}",
                    f"{choose.get('x16')}/delprf.{ext}",
                    f"{choose.get('x16')}/editprf.{ext}",
                    f"{choose.get('x22')}/go-previous.{ext}",
                    f"{choose.get('x22')}/go-next.{ext}",
-                   f"{choose.get('x22')}/download.{ext}",
-                   f"{choose.get('x22')}/statistics.{ext}",
                    f"{choose.get('x16')}/stabilizer.{ext}",
-                   f"{choose.get('x16')}/playlist-append.{ext}",
                    f"{choose.get('x16')}/preview_audio.{ext}",
                    f"{choose.get('x16')}/copyprf.{ext}",
                    f"{choose.get('x48')}/icon_slideshow.{ext}",

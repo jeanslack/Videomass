@@ -31,7 +31,7 @@ from videomass.vdms_sys.msg_info import current_release
 from videomass.vdms_sys.msg_info import descriptions_release
 
 
-def info(parent, videomass_icon):
+def aboutdlg(parent, videomass_icon):
     """
     It's a predefined template to create a dialogue on
     the program information
@@ -43,7 +43,7 @@ def info(parent, videomass_icon):
     # name_lower = cr[1]
     version = cr[2]
     # Release = cr[3]
-    copyright = cr[4]
+    copyr = cr[4]
     website = cr[5]
     author = cr[6]
     mail = cr[7]
@@ -59,9 +59,8 @@ def info(parent, videomass_icon):
     info.SetIcon(wx.Icon(videomass_icon, type=wx.BITMAP_TYPE_PNG))
     info.SetName(f"{name_upper}")
     info.SetVersion(f"v{version}")
-    info.SetDescription(_("Cross-platform graphical interface "
-                          "for FFmpeg and youtube-dl.\n"))
-    info.SetCopyright(f"Copyright {copyright} {author[0]} {author[1]}")
+    info.SetDescription(_("Cross-platform graphical interface for FFmpeg\n"))
+    info.SetCopyright(f"Copyright {copyr} {author[0]} {author[1]}")
     info.SetWebSite(website)
     info.SetLicence(long_lic)
     info.AddDeveloper(f"{author[0]} <{mail}>")

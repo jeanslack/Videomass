@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.02.2022
+Rev: Feb.13.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -27,10 +27,7 @@ This file is part of Videomass.
 import requests
 import wx
 from videomass.vdms_threads.ffplay_file import FilePlay
-from videomass.vdms_threads import (ffplay_url,
-                                    generic_downloads,
-                                    )
-from videomass.vdms_threads.ffprobe import ffprobe
+from videomass.vdms_threads import generic_downloads
 from videomass.vdms_threads.volumedetect import VolumeDetectThread
 from videomass.vdms_threads.check_bin import (ff_conf,
                                               ff_formats,
@@ -38,34 +35,7 @@ from videomass.vdms_threads.check_bin import (ff_conf,
                                               ff_topics,
                                               )
 from videomass.vdms_threads.opendir import browse
-from videomass.vdms_threads.ydl_extractinfo import YdlExtractInfo
-
-from videomass.vdms_frames import (ffmpeg_conf,
-                                   ffmpeg_formats,
-                                   ffmpeg_codecs,
-                                   )
 from videomass.vdms_dialogs.widget_utils import PopupDialog
-
-
-def stream_info(title, filepath):
-    """
-    Show media information of the streams content.
-    This function make a bit control of file existance.
-    """
-    get = wx.GetApp()
-    try:
-        with open(filepath, encoding='utf8'):
-            miniframe = Mediainfo(title,
-                                  filepath,
-                                  get.appset['ffprobe_cmd'],
-                                  get.appset['ostype'],
-                                  )
-            miniframe.Show()
-
-    except IOError:
-        wx.MessageBox(_("File does not exist or is invalid:  %s") % (
-            filepath), "Videomass", wx.ICON_EXCLAMATION, None)
-# -----------------------------------------------------------------------#
 
 
 def stream_play(filepath, tseq, param, autoexit):
@@ -94,40 +64,6 @@ def stream_play(filepath, tseq, param, autoexit):
 # -----------------------------------------------------------------------#
 
 
-def url_play(url, quality, timestamp, autoexit, ssl):
-    """
-    Redirects to the corresponding thread for playing
-    online media streams.
-
-    NOTE I'm looking for a way to tell the youtube_dl thread to terminate
-    (gracefully or not, whatever) when the user clicks the "stop" button.
-    The command-line version of youtube_dl just catches KeyboardInterrupt
-    and terminates, but I've found no documentation on how to do this
-    cleanly (if there's a way at all) when using the embedded module.
-    So I'm still forced to use youtube-dl with the command-line and
-    subprocess module.
-    See https://github.com/ytdl-org/youtube-dl/issues/16175
-
-    """
-    ffplay_url.Streaming(timestamp, autoexit, ssl, url, quality)
-
-# -----------------------------------------------------------------------#
-
-
-def probe_getinfo(filename):
-    """
-    Get data stream informations during dragNdrop action.
-    It is called by MyListCtrl(wx.ListCtrl) only.
-    Return tuple object with two items: (data, None) or (None, error).
-    """
-    get = wx.GetApp()
-    probe = ffprobe(filename, get.appset['ffprobe_cmd'],
-                    hide_banner=None, pretty=None)
-
-    return probe
-# -------------------------------------------------------------------------#
-
-
 def volume_detect_process(filelist, time_seq, audiomap):
     """
     Run thread to get audio peak level data and show a
@@ -154,69 +90,37 @@ def volume_detect_process(filelist, time_seq, audiomap):
 
 def test_conf():
     """
-    Call *check_bin.ffmpeg_conf* to get data to test the building
-    configurations of the installed or imported FFmpeg executable
-    and send it to dialog box.
-
+    Call `check_bin.ffmpeg_conf` to get data to test the building
+    configurations of the used FFmpeg executable.
     """
     get = wx.GetApp()
     out = ff_conf(get.appset['ffmpeg_cmd'], get.appset['ostype'])
-    if 'Not found' in out[0]:
-        wx.MessageBox(f"\n{out[1]}", "Videomass", wx.ICON_ERROR, None)
-        return
-
-    miniframe = ffmpeg_conf.Checkconf(out,
-                                      get.appset['ffmpeg_cmd'],
-                                      get.appset['ffprobe_cmd'],
-                                      get.appset['ffplay_cmd'],
-                                      get.appset['ostype'],
-                                      )
-    miniframe.Show()
+    return out
 # -------------------------------------------------------------------------#
 
 
 def test_formats():
     """
-    Call *check_bin.ff_formats* to get available formats by
-    imported FFmpeg executable and send it to dialog box.
-
+    Call `check_bin.ff_formats` to get available formats by
+    FFmpeg executable.
     """
     get = wx.GetApp()
-    diction = ff_formats(get.appset['ffmpeg_cmd'], get.appset['ostype'])
-    if 'Not found' in diction:
-        wx.MessageBox(f"\n{diction['Not found']}", "Videomass",
-                      wx.ICON_ERROR,
-                      None)
-        return
-
-    miniframe = ffmpeg_formats.FFmpeg_formats(diction, get.appset['ostype'])
-    miniframe.Show()
+    out = ff_formats(get.appset['ffmpeg_cmd'], get.appset['ostype'])
+    return out
 # -------------------------------------------------------------------------#
 
 
 def test_codecs(type_opt):
     """
-    Call *check_bin.ff_codecs* to get available encoders
-    and decoders by FFmpeg executable and send it to
-    corresponding dialog box.
-
+    Call `check_bin.ff_codecs` to get available encoders
+    and decoders by FFmpeg executable.
     """
     get = wx.GetApp()
-    diction = ff_codecs(get.appset['ffmpeg_cmd'],
-                        type_opt,
-                        get.appset['ostype']
-                        )
-    if 'Not found' in diction:
-        wx.MessageBox(f"\n{diction['Not found']}", "Videomass",
-                      wx.ICON_ERROR,
-                      None)
-        return
-
-    miniframe = ffmpeg_codecs.FFmpeg_Codecs(diction,
-                                            get.appset['ostype'],
-                                            type_opt
-                                            )
-    miniframe.Show()
+    out = ff_codecs(get.appset['ffmpeg_cmd'],
+                    type_opt,
+                    get.appset['ostype'],
+                    )
+    return out
 # -------------------------------------------------------------------------#
 
 
@@ -224,7 +128,6 @@ def findtopic(topic):
     """
     Call * check_bin.ff_topic * to run the ffmpeg command to search
     a certain topic..
-
     """
     get = wx.GetApp()
     retcod = ff_topics(get.appset['ffmpeg_cmd'], topic, get.appset['ostype'])
@@ -241,38 +144,12 @@ def openpath(where):
     """
     Call vdms_threads.opendir.browse to open file browser into
     configuration directory or log directory.
-
     """
     get = wx.GetApp()
     ret = browse(get.appset['ostype'], where)
     if ret:
         wx.MessageBox(ret, 'Videomass', wx.ICON_ERROR, None)
 # -------------------------------------------------------------------------#
-
-
-def youtubedl_getstatistics(url, ssl):
-    """
-    Call `YdlExtractInfo` thread to extract data info.
-    During this process a wait pop-up dialog is shown.
-
-    Returns a generator.
-
-    Usage example without pop-up dialog:
-        thread = YdlExtractInfo(url)
-        thread.join()
-        data = thread.data
-        yield data
-    """
-    thread = YdlExtractInfo(url, ssl)
-    dlgload = PopupDialog(None,
-                          _("Videomass - Loading..."),
-                          _("Wait....\nRetrieving required data."))
-    dlgload.ShowModal()
-    # thread.join()
-    data = thread.data
-    dlgload.Destroy()
-    yield data
-# --------------------------------------------------------------------------#
 
 
 def get_github_releases(url, keyname):
@@ -282,7 +159,6 @@ def get_github_releases(url, keyname):
 
     see keyname examples here:
     <https://api.github.com/repos/jeanslack/Videomass/releases>
-
     """
     try:
         response = requests.get(url, timeout=15)

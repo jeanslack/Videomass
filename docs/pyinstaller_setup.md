@@ -68,10 +68,6 @@ guides to doing this are as follows:
    - `python -m pip install --user PyPubSub`
    
    - `python -m pip install --user requests`
-   
-   - `python -m pip install --user youtube-dl`
-   
-   - `python -m pip install --user yt-dlp`
 
 - Download the [Videomass](https://github.com/jeanslack/Videomass) TAR or ZIP
 sources and extract the archive.

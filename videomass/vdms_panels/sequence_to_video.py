@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.03.2022
+Rev: Feb.09.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -33,7 +33,7 @@ from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_dialogs.epilogue import Formula
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_threads.ffprobe import ffprobe
-from videomass.vdms_utils.utils import make_newdir_with_id_num
+from videomass.vdms_utils.utils import trailing_name_with_prog_digit
 from videomass.vdms_utils.utils import get_seconds as getsec
 from videomass.vdms_utils.utils import get_milliseconds as getms
 from videomass.vdms_utils.utils import milliseconds2clock as clockms
@@ -452,15 +452,26 @@ class SequenceToVideo(wx.Panel):
                 return
             pathname = fdlg.GetPath()
 
+        probe = ffprobe(pathname, self.ffprobe_cmd, hide_banner=None)
+
+        if probe[1]:  # some error
+            msg = _("Invalid file: '{}'\n\n{}").format(pathname, probe[1])
+            wx.MessageBox(msg, _('ERROR'), wx.ICON_ERROR, self)
+            return
+
+        if probe[0]['streams'][0]['codec_type'] != 'audio':
+            msg = _("Invalid file: '{}'\n\n"
+                    "It doesn't appear to be an audio file.").format(pathname)
+            wx.MessageBox(msg, _('ERROR'), wx.ICON_ERROR, self)
+            return
+
         self.btn_openaudio.SetBackgroundColour(
             wx.Colour(SequenceToVideo.VIOLET))
         ext = os.path.splitext(pathname)[1].replace('.', '').upper()
         self.btn_openaudio.SetLabel(ext)
         self.txt_apath.write(pathname)
-
         self.opt["AudioMerging"] = f'-i "{pathname}"'
         self.opt["Map"] = '-map 0:v:0 -map 1:a:0'
-        probe = ffprobe(pathname, self.ffprobe_cmd, hide_banner=None)
         mills = float(probe[0]['format']['duration']) * 1000
         self.opt["ADuration"] = round(mills)
     # ---------------------------------------------------------
@@ -625,14 +636,14 @@ class SequenceToVideo(wx.Panel):
             destdir = self.parent.outpath_ffmpeg
 
         name = self.parent.fileDnDTarget.flCtrl.GetItemText(fget[1], 5)
-        outputdir = make_newdir_with_id_num(destdir, 'Still_Images')
+        outputdir = trailing_name_with_prog_digit(destdir, 'Still_Images')
 
         if outputdir[0] == 'ERROR':
             wx.MessageBox(f"{outputdir[1]}", "Videomass",
                           wx.ICON_ERROR, self)
             return
 
-        destdir = os.path.join(outputdir[1], f"{name}.mkv")
+        destdir = os.path.join(outputdir, f"{name}.mkv")
 
         if self.ckbx_static_img.IsChecked():
             countmax = 1
@@ -652,24 +663,35 @@ class SequenceToVideo(wx.Panel):
         args = self.get_args_line()  # get args for command line
 
         valupdate = self.update_dict(f"{name}.mkv",
-                                     outputdir[1],
+                                     outputdir,
                                      countmax,
                                      'mkv',
                                      )
-        ending = Formula(self, valupdate[0], valupdate[1], (500, 320))
-
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 320),
+                         self.parent.move_file_to_trash,
+                         )
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.switch_to_processing('sequence_to_video',  # topic
-                                             files,  # file list
-                                             outputdir[1],
-                                             destdir,
-                                             (self.opt["RESIZE"], args[0]),
-                                             self.opt["Preinput"],
-                                             args[1],  # duration
-                                             None,
-                                             'still_image_maker.log',
-                                             countmax,
-                                             )
+            self.parent.move_file_to_trash = ending.getvalue()
+        else:
+            return
+
+        try:
+            os.makedirs(outputdir, mode=0o777)
+        except (OSError, FileExistsError) as err:
+            wx.MessageBox(f"{err}", "Videomass",
+                          wx.ICON_ERROR, self)
+            return
+        self.parent.switch_to_processing('sequence_to_video',  # topic
+                                         files,  # file list
+                                         outputdir,
+                                         destdir,
+                                         (self.opt["RESIZE"], args[0]),
+                                         self.opt["Preinput"],
+                                         args[1],  # duration
+                                         None,
+                                         'still_image_maker.log',
+                                         countmax,
+                                         )
         return
     # -----------------------------------------------------------
 

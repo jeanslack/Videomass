@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
-Name: ffmpeg_search.py
+Name: ffmpeg_help.py
 Porpose: Show a box to search FFmpeg topics
 Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.28.2022
+Rev: Feb.13.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -27,10 +27,11 @@ This file is part of Videomass.
 """
 import re
 import wx
+from pubsub import pub
 from videomass.vdms_io import io_tools
 
 
-class FFmpegSearch(wx.MiniFrame):
+class FFmpegHelp(wx.MiniFrame):
     """
     Search and view all the FFmpeg help options.
     It has a real-time string search filter and is
@@ -82,16 +83,10 @@ class FFmpegSearch(wx.MiniFrame):
                               | wx.SYSTEM_MENU,
                               )
         # add panel
+        sizer = wx.BoxSizer(wx.VERTICAL)
         self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
                               | wx.BORDER_THEME,
                               )
-        self.cmbx_choice = wx.ComboBox(self.panel, wx.ID_ANY,
-                                       choices=FFmpegSearch.CHOICES,
-                                       style=wx.CB_DROPDOWN
-                                       | wx.CB_READONLY,
-                                       )
-        self.cmbx_choice.SetSelection(0)
-        self.cmbx_choice.SetToolTip(_("help topic list"))
         self.texthelp = wx.TextCtrl(self.panel, wx.ID_ANY,
                                     "",
                                     # size=(550,400),
@@ -108,6 +103,16 @@ class FFmpegSearch(wx.MiniFrame):
             self.texthelp.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
 
         self.texthelp.AppendText(_("Choose a topic in the list"))
+        sizer.Add(self.texthelp, 1, wx.EXPAND | wx.ALL, 5)
+        self.cmbx_choice = wx.ComboBox(self.panel, wx.ID_ANY,
+                                       choices=FFmpegHelp.CHOICES,
+                                       style=wx.CB_DROPDOWN
+                                       | wx.CB_READONLY,
+                                       )
+        self.cmbx_choice.SetSelection(0)
+        self.cmbx_choice.SetToolTip(_("help topic list"))
+        sizer.Add(self.cmbx_choice, 0, wx.ALL, 5)
+        boxsearch = wx.BoxSizer(wx.HORIZONTAL)
         self.search = wx.SearchCtrl(self.panel,
                                     wx.ID_ANY,
                                     size=(400, 30),
@@ -115,25 +120,20 @@ class FFmpegSearch(wx.MiniFrame):
                                     )
         self.search.SetToolTip(_("The search function allows you to find "
                                  "entries in the current topic"))
+        boxsearch.Add(self.search, 0, wx.ALL, 0)
         self.case = wx.CheckBox(self.panel, wx.ID_ANY, (_("Ignore case")))
         self.case.SetToolTip(_("Ignore case distinctions: characters with "
                                "different case will match."
                                ))
-        self.button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
-
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        grid_src = wx.GridSizer(1, 2, 5, 5)
+        boxsearch.Add(self.case, 0, wx.ALIGN_CENTER_VERTICAL, 5)
+        sizer.Add(boxsearch, 0, wx.ALL, 5)
+        # bottom layout
         grid = wx.GridSizer(1, 1, 0, 0)
-        sizer.Add(self.texthelp, 1, wx.EXPAND | wx.ALL, 5)
-        sizer.Add(self.cmbx_choice, 0, wx.ALL, 5)
-        grid_src.Add(self.search, 0, wx.ALL, 0)
-        grid_src.Add(self.case, 0, wx.ALIGN_CENTER_VERTICAL, 5)
-        sizer.Add(grid_src, 0, wx.ALL, 5)
-        sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        self.button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
         grid.Add(self.button_close, 1, wx.ALL, 5)
-
+        sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         self.SetTitle(_("FFmpeg help topics"))
-        self.SetMinSize((900, 500))
+        self.SetMinSize((700, 500))
         # set_properties:
         # self.panel.SetSizer(sizer)
         self.panel.SetSizer(sizer)
@@ -166,14 +166,14 @@ class FFmpegSearch(wx.MiniFrame):
         The topic options are values of the ARGS_OPT dictionary.
 
         """
-        if "None" in FFmpegSearch.ARGS_OPT[self.cmbx_choice.GetValue()]:
+        if "None" in FFmpegHelp.ARGS_OPT[self.cmbx_choice.GetValue()]:
             self.row = None
             self.texthelp.Clear()  # reset textctrl
             self.texthelp.AppendText(_("First, choose a topic in the "
                                        "drop down list"))
         else:
             self.texthelp.Clear()  # reset textctrl
-            topic = FFmpegSearch.ARGS_OPT[self.cmbx_choice.GetValue()]
+            topic = FFmpegHelp.ARGS_OPT[self.cmbx_choice.GetValue()]
             self.row = io_tools.findtopic(topic)
 
             if self.row:
@@ -249,7 +249,6 @@ class FFmpegSearch(wx.MiniFrame):
 
     def on_close(self, event):
         """
-        destroy dialog by close button or by X
+        Destroy this window
         """
-        self.Destroy()
-        # event.Skip()
+        pub.sendMessage("Destroying_window", msg='HelpTopic')

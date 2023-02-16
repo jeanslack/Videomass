@@ -16,28 +16,12 @@
         "Output_extension": "flac"
     },
     {
-        "Name": "From WMA 9 to WAV",
-        "Description": "Converts wma9 files to wav format",
-        "First_pass": "-map_metadata 0",
-        "Second_pass": "",
-        "Supported_list": "wma VMA",
-        "Output_extension": "wav"
-    },
-    {
         "Name": "Converts to MP3",
         "Description": "MP3 - 320kbps",
         "First_pass": "-vn -c:a libmp3lame -b:a 320k -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mp3"
-    },
-    {
-        "Name": "Converts to m4a",
-        "Description": "MPEG4 audio - 112kbps",
-        "First_pass": "-vn -c:a aac -b:a 112k -map_metadata 0",
-        "Second_pass": "",
-        "Supported_list": "",
-        "Output_extension": "m4a"
     },
     {
         "Name": "Converts to OGG",
@@ -78,5 +62,21 @@
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "wma"
+    },
+    {
+        "Name": "Converts to m4a",
+        "Description": "MPEG4 audio - 112kbps",
+        "First_pass": "-vn -c:a aac -b:a 112k -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "m4a"
+    },
+    {
+        "Name": "From WMA 9 to WAV",
+        "Description": "Converts wma9 files to wav format",
+        "First_pass": "-map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "wma VMA",
+        "Output_extension": "wav"
     }
 ]

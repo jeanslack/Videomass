@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.02.2022
+Rev: Feb.13.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -30,11 +30,11 @@ import sys
 import wx
 import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_io.presets_manager_properties import json_data
-from videomass.vdms_io.presets_manager_properties import supported_formats
-from videomass.vdms_io.presets_manager_properties import delete_profiles
-from videomass.vdms_io.presets_manager_properties import preserve_old_profiles
-from videomass.vdms_io.presets_manager_properties import write_new_profile
+from videomass.vdms_io.presets_manager_prop import json_data
+from videomass.vdms_io.presets_manager_prop import supported_formats
+from videomass.vdms_io.presets_manager_prop import delete_profiles
+from videomass.vdms_io.presets_manager_prop import update_oudated_profiles
+from videomass.vdms_io.presets_manager_prop import write_new_profile
 from videomass.vdms_utils.utils import copy_restore
 from videomass.vdms_utils.utils import copy_on
 from videomass.vdms_utils.utils import copydir_recursively
@@ -63,8 +63,7 @@ class PrstPan(wx.Panel):
     BLACK = '#060505'  # black for background status bar
     # -----------------------------------------------------------------
 
-    def __init__(self, parent, path_srcShare, path_confdir,
-                 PWD, OS, iconnewprf, icondelprf, iconeditprf, iconcopyprf):
+    def __init__(self, parent, appdata, icons):
         """
         Each presets is a JSON file (Javascript object notation) which is
         a list object with a variable number of items (called profiles)
@@ -80,23 +79,23 @@ class PrstPan(wx.Panel):
         }
         """
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-            bmpnewprf = get_bmp(iconnewprf, ((16, 16)))
-            bmpeditprf = get_bmp(iconeditprf, ((16, 16)))
-            bmpdelprf = get_bmp(icondelprf, ((16, 16)))
-            bmpcopyprf = get_bmp(iconcopyprf, ((16, 16)))
+            bmpnewprf = get_bmp(icons['profile_add'], ((16, 16)))
+            bmpeditprf = get_bmp(icons['profile_edit'], ((16, 16)))
+            bmpdelprf = get_bmp(icons['profile_del'], ((16, 16)))
+            bmpcopyprf = get_bmp(icons['profile_copy'], ((16, 16)))
         else:
-            bmpnewprf = wx.Bitmap(iconnewprf, wx.BITMAP_TYPE_ANY)
-            bmpeditprf = wx.Bitmap(iconeditprf, wx.BITMAP_TYPE_ANY)
-            bmpdelprf = wx.Bitmap(icondelprf, wx.BITMAP_TYPE_ANY)
-            bmpcopyprf = wx.Bitmap(iconcopyprf, wx.BITMAP_TYPE_ANY)
-
+            bmpnewprf = wx.Bitmap(icons['profile_add'], wx.BITMAP_TYPE_ANY)
+            bmpeditprf = wx.Bitmap(icons['profile_edit'], wx.BITMAP_TYPE_ANY)
+            bmpdelprf = wx.Bitmap(icons['profile_del'], wx.BITMAP_TYPE_ANY)
+            bmpcopyprf = wx.Bitmap(icons['profile_copy'], wx.BITMAP_TYPE_ANY)
+        self.appdata = appdata
         self.array = []  # Parameters of the selected profile
-        self.src_prst = os.path.join(path_srcShare, 'presets')  # origin/share
-        self.user_prst = os.path.join(path_confdir, 'presets')  # conf dir
-        self.PWD = PWD  # current work of videomass
-        self.oS = OS
+        self.src_prst = os.path.join(self.appdata['srcpath'], 'presets')
+        self.user_prst = os.path.join(self.appdata['confdir'], 'presets')
+
         self.parent = parent
-        self.txtcmdedited = True  # show dlg if cmdline is edited
+        self.txtcmdedited = True  # show warning if cmdline is edited
+        self.check_presets_version = False  # see `update_preset_state`
 
         prst = sorted([os.path.splitext(x)[0] for x in
                        os.listdir(self.user_prst) if
@@ -192,21 +191,19 @@ class PrstPan(wx.Panel):
                                      _("Reload"), size=(-1, -1))
         fgs1.Add(self.btn_refresh, 0, wx.ALL | wx.EXPAND, 5)
         boxpresets.Add(panelscr, 0, wx.ALL | wx.CENTRE, 5)
-
         panelscr.SetSizer(fgs1)
         panelscr.SetAutoLayout(1)
         panelscr.SetupScrolling()
-
-        # ------ BOX PROFILES
+        # ------ LIST CONTROL & BOX PROFILES
         # --- listctrl
-        self.list_ctrl = wx.ListCtrl(self, wx.ID_ANY,
-                                     style=wx.LC_REPORT
-                                     | wx.SUNKEN_BORDER
-                                     | wx.LC_SINGLE_SEL,
-                                     )
+        self.lctrl = wx.ListCtrl(self, wx.ID_ANY,
+                                 style=wx.LC_REPORT
+                                 | wx.SUNKEN_BORDER
+                                 | wx.LC_SINGLE_SEL,
+                                 )
         boxprofiles = wx.StaticBoxSizer(wx.StaticBox(
             self, wx.ID_ANY, _('Profiles')), wx.VERTICAL)
-        boxprofiles.Add(self.list_ctrl, 1, wx.ALL | wx.EXPAND, 5)
+        boxprofiles.Add(self.lctrl, 1, wx.ALL | wx.EXPAND, 5)
         # --- profile buttons
         grid_profiles = wx.FlexGridSizer(0, 4, 0, 5)
         self.btn_newprofile = wx.Button(self, wx.ID_ANY,
@@ -216,18 +213,20 @@ class PrstPan(wx.Panel):
         self.btn_delprofile = wx.Button(self, wx.ID_ANY,
                                         _("Delete"), size=(-1, -1))
         self.btn_delprofile.SetBitmap(bmpdelprf, wx.LEFT)
+        self.btn_delprofile.Disable()
         grid_profiles.Add(self.btn_delprofile, 0, wx.ALL, 0)
         self.btn_editprofile = wx.Button(self, wx.ID_ANY,
                                          _("Edit"), size=(-1, -1))
         self.btn_editprofile.SetBitmap(bmpeditprf, wx.LEFT)
+        self.btn_editprofile.Disable()
         grid_profiles.Add(self.btn_editprofile, 0, wx.ALL, 0)
         self.btn_copyprofile = wx.Button(self, wx.ID_ANY,
                                          _("Duplicate"), size=(-1, -1))
         self.btn_copyprofile.SetBitmap(bmpcopyprf, wx.LEFT)
+        self.btn_copyprofile.Disable()
         grid_profiles.Add(self.btn_copyprofile, 0, wx.ALL, 0)
         boxprofiles.Add(grid_profiles, 0, wx.ALL, 5)
         sizer_div.Add(boxprofiles, 1, wx.ALL | wx.EXPAND, 5)
-
         # ------- command line
         grd_cmd = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(grd_cmd, 0, wx.EXPAND)
@@ -253,7 +252,7 @@ class PrstPan(wx.Panel):
         self.Layout()
 
         # ----------------------Set Properties----------------------#
-        if OS == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             self.txt_1cmd.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD))
             self.txt_2cmd.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD))
         else:
@@ -290,13 +289,13 @@ class PrstPan(wx.Panel):
         self.txt_2cmd.SetToolTip(tip)
 
         # ----------------------Binder (EVT)----------------------#
-        self.Bind(wx.EVT_COMBOBOX, self.on_choice_profiles, self.cmbx_prst)
+        self.Bind(wx.EVT_COMBOBOX, self.on_preset_selection, self.cmbx_prst)
         self.Bind(wx.EVT_BUTTON, self.profile_add, self.btn_newprofile)
         self.Bind(wx.EVT_BUTTON, self.profile_del, self.btn_delprofile)
         self.Bind(wx.EVT_BUTTON, self.profile_edit, self.btn_editprofile)
         self.Bind(wx.EVT_BUTTON, self.profile_copy, self.btn_copyprofile)
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.list_ctrl)
-        self.list_ctrl.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.lctrl)
+        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.lctrl)
         self.Bind(wx.EVT_BUTTON, self.preset_new, self.btn_newpreset)
         self.Bind(wx.EVT_BUTTON, self.preset_del, self.btn_delpreset)
         self.Bind(wx.EVT_BUTTON, self.preset_export, self.btn_savecopy)
@@ -313,51 +312,54 @@ class PrstPan(wx.Panel):
         self.set_listctrl()
     # ----------------------------------------------------------------------
 
-    def onContext(self, event):
+    def update_preset_state(self):
         """
-        Create and show a Context Menu on list_ctrl
+        Check the version of the installed presets (inside conf dir).
+        If the preset database is updatable, it asks the user for
+        his confirmation.
         """
-        # only do this part the first time so the events are only bound once
-        if not hasattr(self, "popupID6"):
-            popupID6 = wx.ID_ANY
-            popupID7 = wx.ID_ANY
-            popupID8 = wx.ID_ANY
-            popupID9 = wx.ID_ANY
-            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID6)
-            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID7)
-            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID8)
-            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID9)
-        # build the menu
-        menu = wx.Menu()
-        menu.Append(popupID6, _("Add"))
-        menu.Append(popupID7, _("Edit"))
-        menu.Append(popupID9, _("Duplicate"))
-        menu.AppendSeparator()
-        menu.Append(popupID8, _("Delete"))
-        # show the popup menu
-        self.PopupMenu(menu)
-        menu.Destroy()
-    # ----------------------------------------------------------------------
+        if self.check_presets_version:
+            return
+        source = os.path.join(self.appdata['srcpath'], 'presets')
+        srctext = os.path.join(source, 'version', 'version.txt')
+        dest = os.path.join(self.appdata['confdir'], 'presets')
+        conftext = os.path.join(dest, 'version', 'version.txt')
+        if not os.path.isfile(conftext) or not os.path.isfile(srctext):
+            return
 
-    def onPopup(self, event):
-        """
-        Evaluate the label string of the menu item selected and starts
-        the related process
-        """
-        itemId = event.GetId()
-        menu = event.GetEventObject()
-        menuItem = menu.FindItemById(itemId)
-        # item = self.list_ctrl.GetFocusedItem()
+        with open(conftext, "r", encoding='utf8') as vers:
+            confversion = vers.read().strip()
+        with open(srctext, "r", encoding='utf8') as vers:
+            srcversion = vers.read().strip()
 
-        if menuItem.GetItemLabel() == _("Add"):
-            self.profile_add(self)
-        elif menuItem.GetItemLabel() == _("Edit"):
-            self.profile_edit(self)
-        elif menuItem.GetItemLabel() == _("Delete"):
-            self.profile_del(self)
-        elif menuItem.GetItemLabel() == _("Duplicate"):
-            self.profile_copy(self)
-    # ------------------------------------------------------------------#
+        old = sum((int(x) for x in confversion.split('.')))
+        updated = sum((int(x) for x in srcversion.split('.')))
+        self.check_presets_version = True
+
+        if updated > old:
+            msg = _('Outdated preset version found: v{1}.\n'
+                    'A new version is available: v{0}\n\n'
+                    'It seems that the local preset database in your '
+                    'configuration folder is outdated. If you choose to '
+                    'update the preset database, the outdated version '
+                    'will be backed up in the same folder as the new '
+                    'incoming presets:\n"{2}"\n\n'
+                    'Do you want to update the preset '
+                    'database now?').format(srcversion, confversion, dest)
+            if wx.MessageBox(msg, _('Please confirm'),
+                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                return
+
+            backup = copydir_recursively(dest, dest,
+                                         f'Version-{confversion}-BACKUP')
+            if backup:
+                wx.MessageBox(f'{backup}', "Videomass", wx.ICON_ERROR, self)
+
+            self.preset_import_all(self, source=source)
+            copyvers = copy_restore(srctext, conftext)
+            if copyvers:
+                wx.MessageBox(f'{copyvers}', "Videomass", wx.ICON_ERROR, self)
+    # --------------------------------------------------------------------
 
     def reset_list(self, reset_cmbx=False):
         """
@@ -373,7 +375,7 @@ class PrstPan(wx.Panel):
             self.cmbx_prst.AppendItems(prst)
             self.cmbx_prst.SetSelection(0)
 
-        self.list_ctrl.ClearAll()
+        self.lctrl.ClearAll()
         self.txt_1cmd.SetValue("")
         self.txt_2cmd.SetValue("")
 
@@ -385,12 +387,12 @@ class PrstPan(wx.Panel):
     def set_listctrl(self):
         """
         Populates Presets list with JSON data from *.prst files.
-        See presets_manager_properties.py
+        See `presets_manager_prop.py`
         """
-        self.list_ctrl.InsertColumn(0, _('Name'), width=250)
-        self.list_ctrl.InsertColumn(1, _('Description'), width=350)
-        self.list_ctrl.InsertColumn(2, _('Output Format'), width=200)
-        self.list_ctrl.InsertColumn(3, _('Supported Format List'), width=220)
+        self.lctrl.InsertColumn(0, _('Name'), width=250)
+        self.lctrl.InsertColumn(1, _('Description'), width=350)
+        self.lctrl.InsertColumn(2, _('Output Format'), width=200)
+        self.lctrl.InsertColumn(3, _('Supported Format List'), width=220)
 
         path = os.path.join(f'{self.user_prst}',
                             f'{self.cmbx_prst.GetValue()}.prst'
@@ -402,11 +404,11 @@ class PrstPan(wx.Panel):
             index = 0
             for name in collections:
                 index += 1
-                rows = self.list_ctrl.InsertItem(index, name['Name'])
-                self.list_ctrl.SetItem(rows, 0, name['Name'])
-                self.list_ctrl.SetItem(rows, 1, name["Description"])
-                self.list_ctrl.SetItem(rows, 2, name["Output_extension"])
-                self.list_ctrl.SetItem(rows, 3, name["Supported_list"])
+                rows = self.lctrl.InsertItem(index, name['Name'])
+                self.lctrl.SetItem(rows, 0, name['Name'])
+                self.lctrl.SetItem(rows, 1, name["Description"])
+                self.lctrl.SetItem(rows, 2, name["Output_extension"])
+                self.lctrl.SetItem(rows, 3, name["Supported_list"])
         except KeyError as err:
             wx.MessageBox(_('ERROR: Typing error on JSON keys: {}\n\n'
                             'File: "{}"\nkey malformed ?'.format(err, path)),
@@ -414,21 +416,35 @@ class PrstPan(wx.Panel):
             return
     # ----------------------Event handler (callback)----------------------#
 
-    def on_choice_profiles(self, event):
+    def on_preset_selection(self, event):
         """
-        Combobox event.
-
+        Event when user select a preset
+        in the presets combobox list.
         """
         self.reset_list()
+        self.on_deselect(self, cleardata=False)
         self.parent.statusbar_msg(f'{self.cmbx_prst.GetValue()}', None)
     # ------------------------------------------------------------------#
 
-    def on_select(self, event):  # list_ctrl
+    def on_deselect(self, event, cleardata=True):
         """
-        By selecting a profile in the list_ctrl set new request
-        data in to the appropriate objects and sets parameters
-        to the text boxes.
+        Event when deselecting a line by clicking
+        in an empty space in the control list
+        """
+        if cleardata:
+            self.txt_1cmd.SetValue("")
+            self.txt_2cmd.SetValue("")
+            del self.array[0:6]  # delete all: [0],[1],[2],[3],[4],[5]
+        self.btn_copyprofile.Disable()
+        self.btn_delprofile.Disable()
+        self.btn_editprofile.Disable()
+        self.parent.statusbar_msg("", None)
+    # ------------------------------------------------------------------#
 
+    def on_select(self, event):  # lctrl
+        """
+        Event when selecting a profile in the lctrl,
+        this update the request data of the objects.
         """
         path = os.path.join(f'{self.user_prst}',
                             f'{self.cmbx_prst.GetValue()}.prst'
@@ -437,7 +453,9 @@ class PrstPan(wx.Panel):
         selected = event.GetText()  # event.GetText is a Name Profile
         self.txt_1cmd.SetValue("")
         self.txt_2cmd.SetValue("")
-
+        self.btn_copyprofile.Enable()
+        self.btn_delprofile.Enable()
+        self.btn_editprofile.Enable()
         del self.array[0:6]  # delete all: [0],[1],[2],[3],[4],[5]
 
         try:
@@ -470,7 +488,6 @@ class PrstPan(wx.Panel):
     def preset_new(self, event):
         """
         Create new empty preset '*.prst' on /presets path name
-
         """
         filename = None
         with wx.FileDialog(self, _("Enter name for new preset"),
@@ -495,13 +512,13 @@ class PrstPan(wx.Panel):
                           "Videomass ", wx.ICON_INFORMATION, self)
 
             self.reset_list(True)
+            self.on_deselect(self, cleardata=False)
     # ------------------------------------------------------------------#
 
     def preset_del(self, event):
         """
         Remove or delete a preset '*.prst' on /presets path name
         and move on Removals folder
-
         """
         filename = self.cmbx_prst.GetValue()
         if wx.MessageBox(_('Are you sure you want to remove "{}" preset?\n\n '
@@ -530,12 +547,12 @@ class PrstPan(wx.Panel):
                       wx.ICON_ERROR, self
                       )
         self.reset_list(True)
+        self.on_deselect(self, cleardata=False)
     # ------------------------------------------------------------------#
 
     def preset_export(self, event):
         """
         save one preset on media
-
         """
         combvalue = self.cmbx_prst.GetValue()
         filedir = f'{self.user_prst}/{combvalue}.prst'
@@ -565,7 +582,6 @@ class PrstPan(wx.Panel):
     def preset_export_all(self, event):
         """
         Save the presets directory on media
-
         """
         src = self.user_prst
 
@@ -586,7 +602,6 @@ class PrstPan(wx.Panel):
         """
         Import a new preset. If the preset already exists you will
         be asked to overwrite it or not.
-
         """
         wildcard = "Source (*.prst)|*.prst| All files (*.*)|*.*"
 
@@ -617,63 +632,60 @@ class PrstPan(wx.Panel):
                              wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
                 return
 
-            preserve_old_profiles(newincoming,
-                                  os.path.join(self.user_prst, new)
-                                  )
+            update_oudated_profiles(newincoming,
+                                    os.path.join(self.user_prst, new))
         status = copy_restore(newincoming, os.path.join(self.user_prst, new))
         if status:
             wx.MessageBox(f'{status}', "Videomass", wx.ICON_ERROR, self)
             return
 
         self.reset_list(True)  # reload presets
+        self.on_deselect(self, cleardata=False)
         wx.MessageBox(_("A new preset was successfully imported"),
                       "Videomass", wx.OK, self)
     # ------------------------------------------------------------------#
 
-    def preset_import_all(self, event):
+    def preset_import_all(self, event, source=None):
         """
         Import all presets previously saved in a folder and replaces
         the existing ones
-
         """
-        if wx.MessageBox(_("This will update the presets database. "
-                           "Don't worry, it will keep all your saved "
-                           "profiles.\n\nDo you want to continue?"),
-                         _("Please confirm"),
-                         wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
-            return
+        if not source:
+            if wx.MessageBox(_("This will update the presets database. "
+                               "Don't worry, it will keep all your saved "
+                               "profiles.\n\nDo you want to continue?"),
+                             _("Please confirm"),
+                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                return
 
-        dialsave = wx.DirDialog(self, _("Import a new presets folder"),
-                                "", style=wx.DD_DEFAULT_STYLE
-                                )
-        if dialsave.ShowModal() == wx.ID_CANCEL:
-            return
-        source = dialsave.GetPath()
-        dialsave.Destroy()
+            dialsave = wx.DirDialog(self, _("Import a new presets folder"),
+                                    "", style=wx.DD_DEFAULT_STYLE)
+            if dialsave.ShowModal() == wx.ID_CANCEL:
+                return
+            source = dialsave.GetPath()
+            dialsave.Destroy()
 
         incoming = [n for n in os.listdir(source) if n.endswith('.prst')]
         outcoming = [n for n in os.listdir(self.user_prst)
                      if n.endswith('.prst')]
 
-        #  Return a new set with elements common to the set and all others.
+        # Return a new set with elements common to the set and all others.
         for f in set(incoming).intersection(outcoming):
-            preserve_old_profiles(os.path.join(source, f),
-                                  os.path.join(self.user_prst, f)
-                                  )
+            update_oudated_profiles(os.path.join(source, f),
+                                    os.path.join(self.user_prst, f))
         outerror = copy_on('prst', source, self.user_prst)
-
         if outerror:
             wx.MessageBox(f"{outerror}", "Videomass", wx.ICON_ERROR, self)
         else:
             wx.MessageBox(_("The presets database has been successfully "
                             "updated"), "Videomass", wx.OK, self)
             self.reset_list(True)
+            self.on_deselect(self, cleardata=False)
     # ------------------------------------------------------------------#
 
     def preset_default(self, event):
         """
         Replace the selected preset at default values.
-
         """
         msg = _("Be careful! The selected preset will be "
                 "overwritten with the default one. Your profiles "
@@ -698,12 +710,12 @@ class PrstPan(wx.Panel):
 
             wx.MessageBox(_("Successful recovery"), "Videomass", wx.OK, self)
             self.reset_list()  # reload presets
+            self.on_deselect(self, cleardata=False)
     # ------------------------------------------------------------------#
 
     def preset_default_all(self, event):
         """
         restore all preset files directory
-
         """
         if wx.MessageBox(_("Be careful! This action will restore all presets "
                            "to default ones. Your profiles may be deleted!"
@@ -719,6 +731,7 @@ class PrstPan(wx.Panel):
                                 "successfully recovered"),
                               "Videomass", wx.OK, self)
                 self.reset_list(True)
+                self.on_deselect(self, cleardata=False)
     # ------------------------------------------------------------------#
 
     def presets_refresh(self, event):
@@ -726,37 +739,31 @@ class PrstPan(wx.Panel):
         Force to to re-charging
         """
         self.reset_list(True)
-
+        self.on_deselect(self, cleardata=False)
     # ------------------------------------------------------------------#
+
     def profile_add(self, event):
         """
         Store new profiles in the selected preset
-
         """
         filename = self.cmbx_prst.GetValue()
         title = _('Create a new profile on "{}" preset').format(filename)
-
         prstdialog = presets_addnew.MemPresets(self,
                                                'newprofile',
                                                filename,
                                                None,
-                                               title)
+                                               title,
+                                               )
         ret = prstdialog.ShowModal()
-
         if ret == wx.ID_OK:
-            self.reset_list()  # re-charging list_ctrl with newer
+            self.reset_list()  # re-charging lctrl with newer
+            self.on_deselect(self, cleardata=False)
     # ------------------------------------------------------------------#
 
     def profile_edit(self, event):
         """
         Edit an existing profile
-
         """
-        if not self.array:
-            self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      PrstPan.YELLOW, PrstPan.BLACK)
-            return
-
         filename = self.cmbx_prst.GetValue()
         title = _('Edit profile of the "{}" preset').format(filename)
         prstdialog = presets_addnew.MemPresets(self,
@@ -766,17 +773,14 @@ class PrstPan(wx.Panel):
                                                title)
         ret = prstdialog.ShowModal()
         if ret == wx.ID_OK:
-            self.reset_list()  # re-charging list_ctrl with newer
+            self.reset_list()  # re-charging lctrl with newer
+            self.on_deselect(self, cleardata=False)
     # ------------------------------------------------------------------#
 
     def profile_copy(self, event):
         """
         Copy (duplicate) selected profile
         """
-        if not self.array:
-            self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      PrstPan.YELLOW, PrstPan.BLACK)
-            return
         filename = os.path.join(f'{self.user_prst}',
                                 f'{self.cmbx_prst.GetValue()}.prst'
                                 )
@@ -790,6 +794,7 @@ class PrstPan(wx.Panel):
                                     )
         if not newprst:
             self.reset_list()
+            self.on_deselect(self, cleardata=False)
     # ------------------------------------------------------------------#
 
     def profile_del(self, event):
@@ -797,11 +802,6 @@ class PrstPan(wx.Panel):
         Delete a selected profile
 
         """
-        if not self.array:
-            self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      PrstPan.YELLOW, PrstPan.BLACK)
-            return
-
         if wx.MessageBox(_("Are you sure you want to delete the "
                            "selected profile? It will no longer be "
                            "possible to recover it."), _("Please confirm"),
@@ -813,6 +813,7 @@ class PrstPan(wx.Panel):
                                     )
             delete_profiles(filename, self.array[0])
             self.reset_list()
+            self.on_deselect(self, cleardata=False)
     # ------------------------------------------------------------------#
 
     def on_start(self):
@@ -877,8 +878,11 @@ class PrstPan(wx.Panel):
         """
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
         valupdate = self.update_dict(len(filesrc), 'One passes')
-        ending = Formula(self, valupdate[0], valupdate[1], (500, 170))
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 170),
+                         self.parent.move_file_to_trash,
+                         )
         if ending.ShowModal() == wx.ID_OK:
+            self.parent.move_file_to_trash = ending.getvalue()
             self.parent.switch_to_processing('onepass',
                                              filesrc,
                                              outext,
@@ -900,9 +904,12 @@ class PrstPan(wx.Panel):
         pass2 = " ".join(self.txt_2cmd.GetValue().split())
         typeproc = 'twopass'
         valupdate = self.update_dict(len(filesrc), typeproc)
-        ending = Formula(self, valupdate[0], valupdate[1], (500, 170))
+        ending = Formula(self, valupdate[0], valupdate[1], (500, 170),
+                         self.parent.move_file_to_trash,
+                         )
 
         if ending.ShowModal() == wx.ID_OK:
+            self.parent.move_file_to_trash = ending.getvalue()
             self.parent.switch_to_processing(typeproc,
                                              filesrc,
                                              outext,

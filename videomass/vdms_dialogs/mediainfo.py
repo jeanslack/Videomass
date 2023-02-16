@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 Name: mediainfo.py
-Porpose: show media streams information through ffprobe
+Porpose: show media streams information through ffprobe data
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.25.2021
+Rev: Feb.13.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,19 +24,20 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+from ast import literal_eval
 import wx
+from pubsub import pub
 
 
-class Mediainfo(wx.Dialog):
+class MediaStreams(wx.Dialog):
     """
-    Display streams information from ffprobe json data.
+    Display streams information using ffprobe json data.
     """
 
     def __init__(self, data, OS):
         """
-        self.data: list object containing ffprobe data. See FFprobe
-        class on vdms_threads/ffprobe.py and probe_getinfo on
-        vdms_io/io_tools.py
+        list(data):
+            contains ffprobe data from `MainFrame.self.data_files`.
         """
         self.data = data
         get = wx.GetApp()  # get data from bootstrap
@@ -316,11 +317,11 @@ class Mediainfo(wx.Dialog):
         col1 = self.format_ctrl.GetItemText(item, col=1)
         self.format_tags.Clear()
         if col0 == 'tags':
-            tags = eval(col1)
+            tags = literal_eval(col1)
             for key, val in tags.items():
                 self.format_tags.AppendText(f'{key}: {val}\n')
         elif col0 == 'disposition':
-            dispos = eval(col1)
+            dispos = literal_eval(col1)
             for key, val in dispos.items():
                 self.format_tags.AppendText(f'{key}: {val}\n')
 
@@ -340,11 +341,11 @@ class Mediainfo(wx.Dialog):
         col1 = self.video_ctrl.GetItemText(item, col=1)
         self.video_tags.Clear()
         if col0 == 'tags':
-            tags = eval(col1)
+            tags = literal_eval(col1)
             for key, val in tags.items():
                 self.video_tags.AppendText(f'{key}: {val}\n')
         elif col0 == 'disposition':
-            dispos = eval(col1)
+            dispos = literal_eval(col1)
             for key, val in dispos.items():
                 self.video_tags.AppendText(f'{key}: {val}\n')
         else:
@@ -363,11 +364,11 @@ class Mediainfo(wx.Dialog):
         col1 = self.audio_ctrl.GetItemText(item, col=1)
         self.audio_tags.Clear()
         if col0 == 'tags':
-            tags = eval(col1)
+            tags = literal_eval(col1)
             for key, val in tags.items():
                 self.audio_tags.AppendText(f'{key}: {val}\n')
         elif col0 == 'disposition':
-            dispos = eval(col1)
+            dispos = literal_eval(col1)
             for key, val in dispos.items():
                 self.audio_tags.AppendText(f'{key}: {val}\n')
         else:
@@ -387,11 +388,11 @@ class Mediainfo(wx.Dialog):
         col1 = self.subtitle_ctrl.GetItemText(item, col=1)
         self.sub_tags.Clear()
         if col0 == 'tags':
-            tags = eval(col1)
+            tags = literal_eval(col1)
             for key, val in tags.items():
                 self.sub_tags.AppendText(f'{key}: {val}\n')
         elif col0 == 'disposition':
-            dispos = eval(col1)
+            dispos = literal_eval(col1)
             for key, val in dispos.items():
                 self.sub_tags.AppendText(f'{key}: {val}\n')
         else:
@@ -476,4 +477,4 @@ class Mediainfo(wx.Dialog):
         """
         Destroy this dialog
         """
-        self.Destroy()
+        pub.sendMessage("Destroying_window", msg='MediaStreams')

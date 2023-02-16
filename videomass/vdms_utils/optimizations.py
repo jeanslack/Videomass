@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.16.2021
+Rev: Feb.13.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -37,8 +37,8 @@ def vp9(prename):
                    self.ckbx_web.SetValue(False), self.on_WebOptimize(self),
                    self.ckbx_pass.SetValue(False),
                    self.cmb_Vcod.SetStringSelection('Vp9'),
-                   self.spinMinr.SetValue(0), self.spinMaxr.SetValue(0),
-                   self.spinBufsize.SetValue(0),
+                   self.spinMinr.SetValue(-1), self.spinMaxr.SetValue(-1),
+                   self.spinBufsize.SetValue(-1),
                    self.cmb_Pixfrm.SetSelection(1), self.videoCodec(self),)''',
                'Vp9 best for Archive':
                '''(
@@ -47,8 +47,8 @@ def vp9(prename):
                     self.cmb_Vcod.SetStringSelection('Vp9'),
                     self.videoCodec(self),
                     self.spin_Vbrate.SetValue(0), self.on_Vbitrate(self),
-                    self.spinMinr.SetValue(0), self.spinMaxr.SetValue(0),
-                    self.spinBufsize.SetValue(0),
+                    self.spinMinr.SetValue(-1), self.spinMaxr.SetValue(-1),
+                    self.spinBufsize.SetValue(-1),
                     self.slider_CRF.SetValue(30), self.on_Crf(self),
                     self.rdb_deadline.SetStringSelection('best'),
                     self.on_Deadline(self), self.spin_cpu.SetValue(1),
@@ -64,7 +64,7 @@ def vp9(prename):
                     self.videoCodec(self),
                     self.spin_Vbrate.SetValue(1000), self.on_Vbitrate(self),
                     self.spinMinr.SetValue(1000), self.spinMaxr.SetValue(1000),
-                    self.spinBufsize.SetValue(0),
+                    self.spinBufsize.SetValue(-1),
                     self.slider_CRF.SetValue(-1), self.on_Crf(self),
                     self.rdb_deadline.SetStringSelection('good'),
                     self.on_Deadline(self), self.spin_cpu.SetValue(0),
@@ -77,7 +77,7 @@ def vp9(prename):
                     self.ckbx_web.SetValue(True), self.on_WebOptimize(self),
                     self.ckbx_pass.SetValue(True), self.on_Pass(self),
                     self.spin_Vbrate.SetValue(1000), self.on_Vbitrate(self),
-                    self.spinMaxr.SetValue(0),
+                    self.spinMaxr.SetValue(-1),
                     self.spinMinr.SetValue(1000),
                     self.spinBufsize.SetValue(2000),
                     self.slider_CRF.SetValue(-1), self.on_Crf(self),
@@ -101,13 +101,13 @@ def hevc_avc(prename):
                    self.ckbx_web.SetValue(False), self.on_WebOptimize(self),
                    self.ckbx_pass.SetValue(False),
                    self.cmb_Vcod.SetStringSelection('x264'),
-                   self.spinMinr.SetValue(0), self.spinMaxr.SetValue(0),
-                   self.spinBufsize.SetValue(0),
+                   self.spinMinr.SetValue(-1), self.spinMaxr.SetValue(-1),
+                   self.spinBufsize.SetValue(-1),
                    self.cmb_Pixfrm.SetSelection(1), self.videoCodec(self),)''',
                'x264 best for Archive':
                '''(
-                   self.spinMinr.SetValue(0), self.spinMaxr.SetValue(0),
-                   self.spinBufsize.SetValue(0),
+                   self.spinMinr.SetValue(-1), self.spinMaxr.SetValue(-1),
+                   self.spinBufsize.SetValue(-1),
                    self.ckbx_web.SetValue(False), self.on_WebOptimize(self),
                    self.ckbx_pass.SetValue(False), self.on_Pass(self),
                    self.cmb_Vcod.SetStringSelection('x264'),
@@ -116,8 +116,8 @@ def hevc_avc(prename):
                    self.cmb_Pixfrm.SetSelection(0),)''',
                'x265 best for Archive':
                '''(
-                    self.spinMinr.SetValue(0), self.spinMaxr.SetValue(0),
-                    self.spinBufsize.SetValue(0),
+                    self.spinMinr.SetValue(-1), self.spinMaxr.SetValue(-1),
+                    self.spinBufsize.SetValue(-1),
                     self.ckbx_web.SetValue(False), self.on_WebOptimize(self),
                     self.ckbx_pass.SetValue(False), self.on_Pass(self),
                     self.cmb_Vcod.SetStringSelection('x265'),
@@ -126,8 +126,8 @@ def hevc_avc(prename):
                     self.cmb_Pixfrm.SetSelection(0),)''',
                'x264 ABR for devices':
                '''(
-                    self.spinMinr.SetValue(0), self.spinMaxr.SetValue(0),
-                    self.spinBufsize.SetValue(0),
+                    self.spinMinr.SetValue(-1), self.spinMaxr.SetValue(-1),
+                    self.spinBufsize.SetValue(-1),
                     self.ckbx_web.SetValue(True), self.on_WebOptimize(self),
                     self.ckbx_pass.SetValue(True), self.on_Pass(self),
                     self.cmb_Vcod.SetStringSelection('x264'),
@@ -137,8 +137,8 @@ def hevc_avc(prename):
                     self.cmb_Pixfrm.SetSelection(1),)''',
                'x265 ABR for devices':
                '''(
-                    self.spinMinr.SetValue(0), self.spinMaxr.SetValue(0),
-                    self.spinBufsize.SetValue(0),
+                    self.spinMinr.SetValue(-1), self.spinMaxr.SetValue(-1),
+                    self.spinBufsize.SetValue(-1),
                     self.ckbx_web.SetValue(True), self.on_WebOptimize(self),
                     self.ckbx_pass.SetValue(True), self.on_Pass(self),
                     self.cmb_Vcod.SetStringSelection('x265'),
@@ -148,7 +148,7 @@ def hevc_avc(prename):
                     self.cmb_Pixfrm.SetSelection(1),)''',
                'x264 ABR-VBV live streaming':
                '''(
-                    self.spinMinr.SetValue(0), self.spinMaxr.SetValue(1000),
+                    self.spinMinr.SetValue(-1), self.spinMaxr.SetValue(1000),
                     self.spinBufsize.SetValue(2000),
                     self.ckbx_web.SetValue(True), self.on_WebOptimize(self),
                     self.ckbx_pass.SetValue(True), self.on_Pass(self),
@@ -159,7 +159,7 @@ def hevc_avc(prename):
                     self.cmb_Pixfrm.SetSelection(1),)''',
                'x265 ABR-VBV live streaming':
                '''(
-                    self.spinMinr.SetValue(0), self.spinMaxr.SetValue(1000),
+                    self.spinMinr.SetValue(-1), self.spinMaxr.SetValue(1000),
                     self.spinBufsize.SetValue(2000),
                     self.ckbx_web.SetValue(True), self.on_WebOptimize(self),
                     self.ckbx_pass.SetValue(True), self.on_Pass(self),

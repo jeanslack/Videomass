@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Gen.07.2023
+Rev: Feb.13.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -29,7 +29,8 @@ import sys
 import re
 import wx
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_io import io_tools
+from videomass.vdms_io.io_tools import stream_play
+from videomass.vdms_threads.ffprobe import ffprobe
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import to_bytes
 from videomass.vdms_dialogs.renamer import Renamer
@@ -97,8 +98,8 @@ def filename_sanitize(newname, outputnames):
 
 class MyListCtrl(wx.ListCtrl):
     """
-    This is the listControl widget. Note that this wideget has DnDPanel
-    parent.
+    This is the listControl widget.
+    Note that this wideget has DnDPanel parent.
     """
     AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
     RED = '#ea312d'
@@ -115,6 +116,8 @@ class MyListCtrl(wx.ListCtrl):
         WARNING to avoid segmentation error on removing items by
         listctrl, style must be wx.LC_SINGLE_SEL .
         """
+        get = wx.GetApp()
+        self.ffprobe_cmd = get.appset['ffprobe_cmd']
         self.index = None
         self.parent = parent  # parent is DnDPanel class
         self.data = self.parent.data
@@ -156,36 +159,36 @@ class MyListCtrl(wx.ListCtrl):
             return
 
         if not [x for x in self.data if x['format']['filename'] == path]:
-            data = io_tools.probe_getinfo(path)
-
-            if data[1]:
-                self.parent.statusbar_msg(data[1], MyListCtrl.RED,
+            probe = ffprobe(path, self.ffprobe_cmd,
+                            hide_banner=None, pretty=None)
+            if probe[1]:
+                self.parent.statusbar_msg(probe[1], MyListCtrl.RED,
                                           MyListCtrl.WHITE)
                 return
 
-            data = data[0]
+            probe = probe[0]
             self.InsertItem(self.index, str(self.index + 1))
             self.SetItem(self.index, 1, path)
 
-            if 'duration' not in data['format'].keys():
+            if 'duration' not in probe['format'].keys():
                 self.SetItem(self.index, 2, 'N/A')
-                # NOTE these are my adds in ffprobe data
-                data['format']['time'] = '00:00:00.000'
-                data['format']['duration'] = 0
+                # NOTE these are my custom adds to probe data
+                probe['format']['time'] = '00:00:00.000'
+                probe['format']['duration'] = 0
 
             else:
-                tdur = data['format']['duration'].split(':')
+                tdur = probe['format']['duration'].split(':')
                 sec, msec = tdur[2].split('.')[0], tdur[2].split('.')[1]
                 tdur = f'{tdur[0]}h : {tdur[1]}m : {sec} : {msec}'
                 self.SetItem(self.index, 2, tdur)
-                data.get('format')['time'] = data.get('format').pop('duration')
-                time = get_milliseconds(data.get('format')['time'])
-                data['format']['duration'] = time
+                probe['format']['time'] = probe.get('format').pop('duration')
+                time = get_milliseconds(probe.get('format')['time'])
+                probe['format']['duration'] = time
 
-            media = data['streams'][0]['codec_type']
-            formatname = data['format']['format_long_name']
+            media = probe['streams'][0]['codec_type']
+            formatname = probe['format']['format_long_name']
             self.SetItem(self.index, 3, f'{media}: {formatname}')
-            self.SetItem(self.index, 4, data['format']['size'])
+            self.SetItem(self.index, 4, probe['format']['size'])
             if newname:
                 self.SetItem(self.index, 5, newname)
                 self.outputnames.append(newname)
@@ -194,7 +197,7 @@ class MyListCtrl(wx.ListCtrl):
                 self.SetItem(self.index, 5, fname)
                 self.outputnames.append(fname)
             self.index += 1
-            self.data.append(data)
+            self.data.append(probe)
             self.parent.statusbar_msg('', None)
             self.parent.reset_timeline()
 
@@ -240,7 +243,6 @@ class FileDnD(wx.Panel):
     """
     # CONSTANTS:
     YELLOW = '#bd9f00'
-    WHITE = '#fbf4f4'  # white for background status bar
     BLACK = '#060505'  # black for background status bar
 
     def __init__(self, parent, iconplay):
@@ -261,39 +263,40 @@ class FileDnD(wx.Panel):
 
         wx.Panel.__init__(self, parent=parent)
 
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add((0, 10))
+        sizer_media = wx.BoxSizer(wx.HORIZONTAL)
+        self.btn_play = wx.Button(self, wx.ID_ANY, _("Play"))
+        self.btn_play.SetBitmap(bmpplay, wx.LEFT)
+        self.btn_play.Disable()
+        sizer_media.Add(self.btn_play, 1, wx.ALL, 2)
+        self.btn_remove = wx.Button(self, wx.ID_REMOVE, "")
+        self.btn_remove.Disable()
+        sizer_media.Add(self.btn_remove, 1, wx.ALL, 2)
+        self.btn_clear = wx.Button(self, wx.ID_CLEAR, "")
+        self.btn_clear.Disable()
+        sizer_media.Add(self.btn_clear, 1, wx.ALL, 2)
+        sizer.Add(sizer_media, 0, wx.CENTRE)
         # This builds the list control box:
         self.flCtrl = MyListCtrl(self)  # class MyListCtr
         # Establish the listctrl as a drop target:
         file_drop_target = FileDrop(self.flCtrl)
         self.flCtrl.SetDropTarget(file_drop_target)  # Make drop target.
         # create widgets
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add((0, 10))
         infomsg = _("Drag one or more files below")
         lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
         sizer.Add(lbl_info, 0, wx.ALL | wx.EXPAND, 5)
         sizer.Add(self.flCtrl, 1, wx.EXPAND | wx.ALL, 2)
         sizer.Add((0, 10))
-        sizer_media = wx.BoxSizer(wx.HORIZONTAL)
-        self.btn_play = wx.Button(self, wx.ID_ANY, _("Play"))
-        self.btn_play.SetBitmap(bmpplay, wx.LEFT)
-        self.btn_play.Disable()
-        sizer_media.Add(self.btn_play, 1, wx.ALL | wx.EXPAND, 2)
-        self.btn_remove = wx.Button(self, wx.ID_REMOVE, "")
-        self.btn_remove.Disable()
-        sizer_media.Add(self.btn_remove, 1, wx.ALL | wx.EXPAND, 2)
-        self.btn_clear = wx.Button(self, wx.ID_CLEAR, "")
-        self.btn_clear.Disable()
-        sizer_media.Add(self.btn_clear, 1, wx.ALL | wx.EXPAND, 2)
-        sizer.Add(sizer_media, 0, wx.EXPAND)
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
-        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(35, -1))
+        self.btn_destpath = wx.Button(self, wx.ID_OPEN, "...", size=(35, -1),
+                                      name='button destpath filedrop')
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
                                           style=wx.TE_PROCESS_ENTER
                                           | wx.TE_READONLY,
                                           )
         sizer_outdir.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 2)
-        sizer_outdir.Add(self.btn_save, 0, wx.ALL
+        sizer_outdir.Add(self.btn_destpath, 0, wx.ALL
                          | wx.ALIGN_CENTER_HORIZONTAL
                          | wx.ALIGN_CENTER_VERTICAL, 2,
                          )
@@ -308,19 +311,18 @@ class FileDnD(wx.Panel):
         self.text_path_save.SetValue(self.file_dest)
 
         if appdata['outputfile_samedir']:
-            self.btn_save.Disable()
+            self.btn_destpath.Disable()
             self.text_path_save.Disable()
             self.parent.same_destin = True
             if not appdata['filesuffix'] == '':
                 # otherwise must be '' on parent
                 self.parent.suffix = appdata['filesuffix']
-
         # Tooltip
         self.btn_remove.SetToolTip(_('Remove the selected '
                                      'files from the list'))
         self.btn_clear.SetToolTip(_('Delete all files from the list'))
-        self.btn_save.SetToolTip(_('Set up a temporary folder '
-                                   'for conversions'))
+        self.btn_destpath.SetToolTip(_('Set up a temporary folder '
+                                       'for conversions'))
         self.btn_play.SetToolTip(_('Play the selected file in the list'))
         self.text_path_save.SetToolTip(_("Destination folder"))
 
@@ -396,8 +398,11 @@ class FileDnD(wx.Panel):
 
     def reset_timeline(self):
         """
-        Reset activates and restores functions by drop new files.
+        Routine operations when opening, drag&drop,
+        removing files and sorting items by LEFT
+        clicking on column headers in the ListCtrl.
         """
+        self.parent.close_orphaned_window()
         self.parent.reset_Timeline()
         if not self.btn_clear.IsEnabled():
             self.btn_clear.Enable()
@@ -426,8 +431,8 @@ class FileDnD(wx.Panel):
             tstamp = f'-vf "{self.parent.cmdtimestamp}"'
         else:
             tstamp = ""
-        io_tools.stream_play(item, self.parent.time_seq,
-                             tstamp, self.parent.autoexit)
+        stream_play(item, self.parent.time_seq,
+                    tstamp, self.parent.autoexit)
     # ----------------------------------------------------------------------
 
     def on_delete_selected(self, event):
@@ -496,8 +501,8 @@ class FileDnD(wx.Panel):
 
     def on_deselect(self, event):
         """
-        De-selecting a line with mouse by click in empty space of
-        the control list
+        Event to deselect a line when clicking
+        in an empty space of the control list
         """
         self.parent.filedropselected = None
         self.btn_play.Disable()

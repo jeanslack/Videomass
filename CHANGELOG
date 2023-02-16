@@ -7,6 +7,43 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Feb 16, 2023 V.4.0.10
+
+  * Removed interface to youtube_dl/yt_dlp libraries. Videomass will no longer
+    have any functionality for downloading web videos. This mainly
+    concerns reasons of maintainability of the source code.
+  * Made errors handler for `on_addaudio_track` function method on
+    `sequence_to_video.py` module. This will make importing audio files more
+    consistent using `Still Image Maker`.
+  * Improved `filedrop` probe data.
+  * Improved `FFmpeg Help topics` tool (ffmpeg_help.py).
+  * Improved move files to Videomass trash dir.
+  * Fixed bug that occurred when checking for new versions of presets.
+    The bug did not allow to check correctly the new available versions.
+  * [A/V Conversion] fixed bug that disables bitrate control by moving crf
+    control.
+  * [Presets Manager] presets have been updated to the new v0.11 release.
+  * [Presets Manager] fixed various bugs in the presets database update
+    functionalities.
+  * [Presets Manager] Added check for presets updates locally.
+  * Fixed premature creation of directories for `from_movie_to_pictures` and
+    `still_image_maker` features.
+  * Improved trailing progressive digit for `from_movie_to_pictures` and
+    `still_image_maker` features.
+  * [A/V Conversion] removed flv format.
+  * [A/V Conversion] added support to matroska for vp9 and theora encoders.
+  * [A/V Conversion] Added new button to save presets on the Presets Manager
+    with the settings made by the user. This feature replaces the old button
+    on the toolbar.
+  * Fixed instances to all modeless windows (MediaStreams, ShowLogs, HelpTopic,
+    WhilePlaying, FFmpegConf, FFmpegDecoders, FFmpegCodecs, AudioVolNormal,
+    FFmpegFormats)
+  * On exiting the application, open modeless windows will no longer be
+    orphaned but will be closed with the application.
+  * Opening new files will also close modeless windows.
+  * Added ability to move the source files to Videomass trash folder directly
+    on `Confirm Settings` dialog.
++------------------------------------+
 Jan 17, 2023 V.4.0.5
 
   * Fixed the status-bar messages and colors for all platforms.

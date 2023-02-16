@@ -1,38 +1,9 @@
 
-Update: March 05 2022
+Update: Feb 01 2023
 -----------------------
 
-When you run Videomass for the first time, the contents of this folder will be
-copied to the user's Videomass configuration directory, according to the
-conventions of each operating system which are:
+When you run Videomass for the first time, the contents of this directory will be
+copied to the user's Videomass configuration directory.
 
-        Linux:       '~/.config/videomass'
-        MacOs:       '~/Library/Application Support/videomass'
-        Windows:     'C:\Users\username\AppData\Roaming\videomass'
-
-Furthermore, the Videomass configuration directory is also used to load the
-files located in the 'presets' folder. The extension of these files is `.prst`
-but they are actually structured with JSON (JavaScript Object Notation) data.
-
-UPDATE: >=v3.4.6
-
-To keep all application data inside the program folder, you can create a folder
-called "portable_data". On MS-Windows, when this folder exists and is in "appdata",
-only relative paths will be provided. In all other cases they will be absolute paths.
-
--------------------
-For AppImage users:
--------------------
-WARNING: DO NOT PLACE THE "portable_data" FOLDER INSIDE APPIMAGE !
-
-If you would like the Videomass*.AppImage to store its data alongside the
-Videomass*.AppImage rather than in your home directory, the AppImage natively has
-this capability, just enable this option, like this:
-
-`$ Videomass-3.5.7-x86_64.AppImage --appimage-portable-home`
-
-Fo more information type:
-
-`$ Videomass-3.5.7-x86_64.AppImage --appimage-help`
 
 
