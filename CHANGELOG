@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Feb 16, 2023 V.4.0.10
+Feb 17, 2023 V.4.0.10
 
   * Removed interface to youtube_dl/yt_dlp libraries. Videomass will no longer
     have any functionality for downloading web videos. This mainly
@@ -43,6 +43,7 @@ Feb 16, 2023 V.4.0.10
   * Opening new files will also close modeless windows.
   * Added ability to move the source files to Videomass trash folder directly
     on `Confirm Settings` dialog.
+  * [filedrop] refactorized `on_col_click` method
 +------------------------------------+
 Jan 17, 2023 V.4.0.5
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 4.0.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-18 00:29+0100\n"
-"PO-Revision-Date: 2023-01-18 00:29+0100\n"
+"PO-Revision-Date: 2023-02-17 16:00+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -1593,7 +1593,7 @@ msgstr "stampa più opzioni"
 
 #: ../vdms_frames/ffmpeg_search.py:45
 msgid "print all options (very long)"
-msgstr "stampa tutte la opzioni (molto lungo)"
+msgstr "stampa tutte le opzioni (molto lungo)"
 
 #: ../vdms_frames/ffmpeg_search.py:46
 msgid "show available devices"

@@ -34,8 +34,9 @@ videomass (4.0.10-1) UNRELEASED; urgency=medium
   * Opening new files will also close modeless windows.
   * Added ability to move the source files to Videomass trash folder directly
     on `Confirm Settings` dialog.
+  * [filedrop] refactorized `on_col_click` method
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 16 Feb 2023 14:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 17 Feb 2023 18:00:00 +0200
 
 videomass (4.0.5-1) UNRELEASED; urgency=medium
 
