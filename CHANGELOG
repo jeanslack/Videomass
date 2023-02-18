@@ -44,6 +44,9 @@ Feb 17, 2023 V.4.0.10
   * Added ability to move the source files to Videomass trash folder directly
     on `Confirm Settings` dialog.
   * [filedrop] refactorized `on_col_click` method
+  * [A/V Conversion] Added more Pixel Format options.
+  * [A/V Conversion] Added more Aspect Ratio options.
+
 +------------------------------------+
 Jan 17, 2023 V.4.0.5
 

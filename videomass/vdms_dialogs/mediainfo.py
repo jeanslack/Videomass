@@ -42,11 +42,14 @@ class MediaStreams(wx.Dialog):
         self.data = data
         get = wx.GetApp()  # get data from bootstrap
         self.colorscheme = get.appset['icontheme'][1]
+        vidicon = get.iconset['videomass']
         msg = _('Display of selected items in text format')
         msg1 = _('Select items to view them in text format')
 
         wx.Dialog.__init__(self, None,
-                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
+                           style=wx.DEFAULT_DIALOG_STYLE
+                           | wx.RESIZE_BORDER
+                           | wx.DIALOG_NO_PARENT
                            )
         self.sizerBase = wx.BoxSizer(wx.VERTICAL)
         self.file_select = wx.ListCtrl(self,
@@ -207,6 +210,9 @@ class MediaStreams(wx.Dialog):
 
         self.SetSizer(self.sizerBase)
         # self.sizerBase.Fit(self)
+        icon = wx.Icon()
+        icon.CopyFromBitmap(wx.Bitmap(vidicon, wx.BITMAP_TYPE_ANY))
+        self.SetIcon(icon)
         self.Fit()
         self.Layout()
         self.CentreOnScreen()

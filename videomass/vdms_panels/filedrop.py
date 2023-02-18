@@ -395,7 +395,7 @@ class FileDnD(wx.Panel):
         removing files and sorting items by LEFT
         clicking on column headers in the ListCtrl.
         """
-        self.parent.close_orphaned_window()
+        self.parent.destroy_orphaned_window()
         self.parent.reset_Timeline()
         if not self.btn_clear.IsEnabled():
             self.btn_clear.Enable()

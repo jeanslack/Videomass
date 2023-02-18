@@ -31,7 +31,7 @@ from pubsub import pub
 from videomass.vdms_io import io_tools
 
 
-class FFmpegHelp(wx.MiniFrame):
+class FFmpegHelp(wx.Dialog):
     """
     Search and view all the FFmpeg help options.
     It has a real-time string search filter and is
@@ -86,19 +86,19 @@ class FFmpegHelp(wx.MiniFrame):
         self.row = None  # output text from `io_tools.findtopic(topic)'
         get = wx.GetApp()  # get data from bootstrap
         colorscheme = get.appset['icontheme'][1]
+        vidicon = get.iconset['videomass']
 
-        wx.MiniFrame.__init__(self, None,
-                              style=wx.RESIZE_BORDER
-                              | wx.CAPTION
-                              | wx.CLOSE_BOX
-                              | wx.SYSTEM_MENU,
-                              )
+        wx.Dialog.__init__(self, None,
+                           style=wx.DEFAULT_DIALOG_STYLE
+                           | wx.RESIZE_BORDER
+                           | wx.DIALOG_NO_PARENT
+                           )
         # add panel
         sizer = wx.BoxSizer(wx.VERTICAL)
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
-                              | wx.BORDER_THEME,
-                              )
-        self.textlist = wx.TextCtrl(self.panel, wx.ID_ANY,
+        #self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
+                              #| wx.BORDER_THEME,
+                              #)
+        self.textlist = wx.TextCtrl(self, wx.ID_ANY,
                                     "",
                                     # size=(550,400),
                                     style=wx.TE_READONLY
@@ -115,7 +115,7 @@ class FFmpegHelp(wx.MiniFrame):
 
         self.textlist.AppendText(_("Choose a topic in the list"))
         sizer.Add(self.textlist, 1, wx.EXPAND | wx.ALL, 5)
-        self.cmbx_choice = wx.ComboBox(self.panel, wx.ID_ANY,
+        self.cmbx_choice = wx.ComboBox(self, wx.ID_ANY,
                                        choices=FFmpegHelp.CHOICES,
                                        style=wx.CB_DROPDOWN
                                        | wx.CB_READONLY,
@@ -126,17 +126,17 @@ class FFmpegHelp(wx.MiniFrame):
         sizerselect = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizerselect, 0)
         sizerselect.Add(self.cmbx_choice, 0, wx.ALL, 5)
-        self.text_topic = wx.TextCtrl(self.panel, wx.ID_ANY,
+        self.text_topic = wx.TextCtrl(self, wx.ID_ANY,
                                       "", size=(160, -1),
                                       )
         sizerselect.Add(self.text_topic, 0, wx.ALL, 5)
         self.text_topic.Disable()
         self.text_topic.SetToolTip(_("Type the topic here"))
-        self.btn_proc = wx.Button(self.panel, wx.ID_ANY, _("Confirm Topic"))
+        self.btn_proc = wx.Button(self, wx.ID_ANY, _("Confirm Topic"))
         self.btn_proc.Disable()
         sizerselect.Add(self.btn_proc, 0, wx.ALL, 5)
         boxsearch = wx.BoxSizer(wx.HORIZONTAL)
-        self.search = wx.SearchCtrl(self.panel,
+        self.search = wx.SearchCtrl(self,
                                     wx.ID_ANY,
                                     size=(400, 30),
                                     style=wx.TE_PROCESS_ENTER,
@@ -144,7 +144,7 @@ class FFmpegHelp(wx.MiniFrame):
         self.search.SetToolTip(_("The search function allows you to find "
                                  "entries in the current topic"))
         boxsearch.Add(self.search, 0, wx.ALL, 0)
-        self.case = wx.CheckBox(self.panel, wx.ID_ANY, (_("Ignore case")))
+        self.case = wx.CheckBox(self, wx.ID_ANY, (_("Ignore case")))
         self.case.SetToolTip(_("Ignore case distinctions: characters with "
                                "different case will match."
                                ))
@@ -152,14 +152,17 @@ class FFmpegHelp(wx.MiniFrame):
         sizer.Add(boxsearch, 0, wx.ALL, 5)
         # bottom layout
         grid = wx.GridSizer(1, 1, 0, 0)
-        self.btn_close = wx.Button(self.panel, wx.ID_CLOSE, "")
+        self.btn_close = wx.Button(self, wx.ID_CLOSE, "")
         grid.Add(self.btn_close, 1, wx.ALL, 5)
         sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         self.SetTitle(_("FFmpeg help topics"))
         self.SetMinSize((750, 500))
+        icon = wx.Icon()
+        icon.CopyFromBitmap(wx.Bitmap(vidicon, wx.BITMAP_TYPE_ANY))
+        self.SetIcon(icon)
         # set_properties:
         # self.panel.SetSizer(sizer)
-        self.panel.SetSizer(sizer)
+        self.SetSizer(sizer)
         self.Fit()
         self.Layout()
         # --------------- EVT
@@ -202,7 +205,7 @@ class FFmpegHelp(wx.MiniFrame):
         """
         self.search.Clear()
         newarg = self.text_topic.GetValue().split()
-        topic = ['--help',] + newarg
+        topic = ['--help', ] + newarg
         FFmpegHelp.ARGS_OPT[_("Help topic")] = topic
         self.row = io_tools.findtopic(topic)
         if self.row:

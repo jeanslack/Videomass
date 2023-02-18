@@ -358,15 +358,26 @@ class AV_Conv(wx.Panel):
         grid_sx_Vcod.Add(txtVaspect, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Vaspect = wx.ComboBox(self.codVpanel, wx.ID_ANY,
                                        choices=[("Auto"),
-                                                ("4:3"),
-                                                ("16:9"),
+                                                ("1:1"),
                                                 ("1.3333"),
-                                                ("1.7777")],
+                                                ("1.7777"),
+                                                ("2.4:1"),
+                                                ("3:2"),
+                                                ("4:3"),
+                                                ("5:4"),
+                                                ("8:7"),
+                                                ("14:10"),
+                                                ("16:9"),
+                                                ("16:10"),
+                                                ("19:10"),
+                                                ("21:9"),
+                                                ("32:9"),
+                                                ],
                                        size=(120, -1), style=wx.CB_DROPDOWN
                                        | wx.CB_READONLY,
                                        )
         grid_sx_Vcod.Add(self.cmb_Vaspect, 0, wx.ALL, 5)
-        txtFps = wx.StaticText(self.codVpanel, wx.ID_ANY, 'FPS')
+        txtFps = wx.StaticText(self.codVpanel, wx.ID_ANY, 'FPS (frame rate)')
         grid_sx_Vcod.Add(txtFps, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Fps = wx.ComboBox(self.codVpanel, wx.ID_ANY,
                                    choices=[("Auto"),
@@ -381,7 +392,7 @@ class AV_Conv(wx.Panel):
                                             ("48"),
                                             ("50"),
                                             ("59.94"),
-                                            ("60")
+                                            ("60"),
                                             ],
                                    size=(120, -1),
                                    style=wx.CB_DROPDOWN
@@ -391,7 +402,23 @@ class AV_Conv(wx.Panel):
         txtPixfrm = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Pixel Format')
         grid_sx_Vcod.Add(txtPixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Pixfrm = wx.ComboBox(self.codVpanel, wx.ID_ANY,
-                                      choices=['None', 'yuv420p', 'yuv444p'],
+                                      choices=[('None'),
+                                               ('gray'),
+                                               ('gray10le'),
+                                               ('nv12'),
+                                               ('nv16'),
+                                               ('nv20le'),
+                                               ('nv21'),
+                                               ('yuv420p'),
+                                               ('yuv420p10le'),
+                                               ('yuv422p'),
+                                               ('yuv422p10le'),
+                                               ('yuv444p'),
+                                               ('yuv444p10le'),
+                                               ('yuvj420p'),
+                                               ('yuvj422p'),
+                                               ('yuvj444p'),
+                                               ],
                                       size=(120, -1), style=wx.CB_DROPDOWN
                                       | wx.CB_READONLY,
                                       )
@@ -399,7 +426,9 @@ class AV_Conv(wx.Panel):
         txtSubmap = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Subtitle Map')
         grid_sx_Vcod.Add(txtSubmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Submap = wx.ComboBox(self.codVpanel, wx.ID_ANY,
-                                      choices=['None', 'All'],
+                                      choices=[('None'),
+                                               ('All'),
+                                               ],
                                       size=(120, -1), style=wx.CB_DROPDOWN
                                       | wx.CB_READONLY,
                                       )
@@ -431,8 +460,10 @@ class AV_Conv(wx.Panel):
                            )
         self.rdb_deadline = wx.RadioBox(self.vp9panel, wx.ID_ANY,
                                         (_("Deadline/Quality")),
-                                        choices=[("best"), ("good"),
-                                                 ("realtime")],
+                                        choices=[("best"),
+                                                 ("good"),
+                                                 ("realtime"),
+                                                 ],
                                         majorDimension=0,
                                         style=wx.RA_SPECIFY_ROWS,
                                         )
@@ -877,7 +908,7 @@ class AV_Conv(wx.Panel):
         self.rdb_a.SetSelection(0), self.cmb_Vcod.SetSelection(1)
         self.cmb_Media.SetSelection(0), self.cmb_Vcont.SetSelection(0)
         self.cmb_Fps.SetSelection(0), self.cmb_Vaspect.SetSelection(0)
-        self.cmb_Pixfrm.SetSelection(1), self.cmb_Submap.SetSelection(1)
+        self.cmb_Pixfrm.SetSelection(7), self.cmb_Submap.SetSelection(1)
         self.cmb_A_outMap.SetSelection(0), self.cmb_A_inMap.SetSelection(0)
         self.cmb_x26opti.SetSelection(0), self.cmb_vp9opti.SetSelection(0)
         self.cmb_A_outMap.Disable()
