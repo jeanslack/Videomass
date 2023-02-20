@@ -46,6 +46,9 @@ Feb 17, 2023 V.4.0.10
   * [filedrop] refactorized `on_col_click` method
   * [A/V Conversion] Added more Pixel Format options.
   * [A/V Conversion] Added more Aspect Ratio options.
+  * [A/V Conversion] There is a new filter now. A new window has been added
+    which implements video filter for color correction like contrast,
+    brightness, saturation and gamma.
 
 +------------------------------------+
 Jan 17, 2023 V.4.0.5

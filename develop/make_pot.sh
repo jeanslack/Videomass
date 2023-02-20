@@ -45,12 +45,13 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_dialogs/widget_utils.py" \
 "../vdms_dialogs/showlogs.py" \
 "../vdms_dialogs/renamer.py" \
+"../vdms_dialogs/ffmpeg_help.py" \
+"../vdms_dialogs/filter_colorcorrection.py" \
 "../vdms_frames/ffmpeg_conf.py" \
 "../vdms_frames/ffmpeg_codecs.py" \
 "../vdms_frames/ffmpeg_formats.py" \
 "../vdms_frames/shownormlist.py" \
 "../vdms_frames/while_playing.py" \
-"../vdms_frames/ffmpeg_help.py" \
 "../vdms_io/checkup.py" \
 "../vdms_io/io_tools.py" \
 "../vdms_io/presets_manager_prop.py" \

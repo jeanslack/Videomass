@@ -473,7 +473,7 @@ class DataSource():
                 'presets_manager', 'profile_add', 'profile_del',
                 'profile_edit', 'previous', 'next', 'stabilizer',
                 'preview_audio', 'profile_copy', 'slideshow',
-                'videotopictures', 'atrack', 'timerset',
+                'videotopictures', 'atrack', 'timerset', 'coloreq',
                 )  # must match with items on `iconset` tuple, see following
 
         ext = 'svg' if 'wx.svg' in sys.modules else 'png'
@@ -524,6 +524,7 @@ class DataSource():
                    f"{choose.get('x48')}/icon_videopictures.{ext}",
                    f"{choose.get('x16')}/audiotrack.{ext}",
                    f"{choose.get('x16')}/timer.{ext}",
+                   f"{choose.get('x16')}/coloreq.{ext}",
                    )
         values = [os.path.join(norm) for norm in iconset]  # normalize pathns
 

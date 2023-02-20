@@ -35,7 +35,6 @@ from videomass.vdms_dialogs import set_timestamp
 from videomass.vdms_dialogs import about
 from videomass.vdms_dialogs import videomass_check_version
 from videomass.vdms_frames.while_playing import WhilePlaying
-#from videomass.vdms_frames.ffmpeg_help import FFmpegHelp
 from videomass.vdms_frames.ffmpeg_conf import FFmpegConf
 from videomass.vdms_frames.ffmpeg_codecs import FFmpegCodecs
 from videomass.vdms_frames.ffmpeg_formats import FFmpegFormats

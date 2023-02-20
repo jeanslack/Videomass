@@ -95,9 +95,6 @@ class FFmpegHelp(wx.Dialog):
                            )
         # add panel
         sizer = wx.BoxSizer(wx.VERTICAL)
-        #self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
-                              #| wx.BORDER_THEME,
-                              #)
         self.textlist = wx.TextCtrl(self, wx.ID_ANY,
                                     "",
                                     # size=(550,400),

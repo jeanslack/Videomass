@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.02.2022
+Rev: Feb.18.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -42,6 +42,7 @@ from videomass.vdms_dialogs.filter_denoisers import Denoisers
 from videomass.vdms_dialogs.filter_deinterlace import Deinterlace
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_dialogs.filter_stab import Vidstab
+from videomass.vdms_dialogs.filter_colorcorrection import ColorEQ
 from videomass.vdms_frames.shownormlist import AudioVolNormal
 from videomass.vdms_utils import optimizations
 
@@ -194,6 +195,7 @@ class AV_Conv(wx.Panel):
             bmppeaklevel = get_bmp(icons['audiovolume'], ((16, 16)))
             bmpstab = get_bmp(icons['stabilizer'], ((16, 16)))
             bmpsaveprf = get_bmp(icons['addtoprst'], ((16, 16)))
+            bmpcoloreq = get_bmp(icons['coloreq'], ((16, 16)))
         else:
             bmpplay = wx.Bitmap(icons['preview'], wx.BITMAP_TYPE_ANY)
             bmpapreview = wx.Bitmap(icons['preview_audio'], wx.BITMAP_TYPE_ANY)
@@ -209,6 +211,7 @@ class AV_Conv(wx.Panel):
             bmppeaklevel = wx.Bitmap(icons['audiovolume'], wx.BITMAP_TYPE_ANY)
             bmpstab = wx.Bitmap(icons['stabilizer'], wx.BITMAP_TYPE_ANY)
             bmpsaveprf = wx.Bitmap(icons['addtoprst'], wx.BITMAP_TYPE_ANY)
+            bmpcoloreq = wx.Bitmap(icons['coloreq'], wx.BITMAP_TYPE_ANY)
 
         # Args settings definition
         self.opt = {
@@ -228,7 +231,7 @@ class AV_Conv(wx.Panel):
             "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "",
             "Vidstabtransform": "", "Vidstabdetect": "", "Unsharp": "",
             "Makeduo": False, "VFilters": "", "PixFmt": "-pix_fmt yuv420p",
-            "Deadline": "", "CpuUsed": "", "RowMthreading": "",
+            "Deadline": "", "CpuUsed": "", "RowMthreading": "", "ColorEQ": "",
         }
         self.appdata = appdata
         self.parent = parent
@@ -609,6 +612,11 @@ class AV_Conv(wx.Panel):
         self.btn_vidstab.SetBitmap(bmpstab, wx.LEFT)
         sizer_Vfilter.Add(self.btn_vidstab, 0, wx.ALL | wx.EXPAND, 5)
 
+        self.btn_coloreq = wx.Button(self.filterVpanel, wx.ID_ANY,
+                                     _("Color Equalizer"), size=(-1, -1))
+        self.btn_coloreq.SetBitmap(bmpcoloreq, wx.LEFT)
+        sizer_Vfilter.Add(self.btn_coloreq, 0, wx.ALL | wx.EXPAND, 5)
+
         self.box_Vfilters.Add(self.filterVpanel, 1, wx.EXPAND)
         self.filterVpanel.SetSizer(sizer_Vfilter)  # set panel
         self.filterVpanel.SetAutoLayout(1)
@@ -884,6 +892,7 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Set_deinterlace, self.btn_lacing)
         self.Bind(wx.EVT_BUTTON, self.on_Set_denoiser, self.btn_denois)
         self.Bind(wx.EVT_BUTTON, self.on_Set_stabilizer, self.btn_vidstab)
+        self.Bind(wx.EVT_BUTTON, self.on_Set_coloreq, self.btn_coloreq)
         self.Bind(wx.EVT_BUTTON, self.on_video_preview, self.btn_preview)
         self.Bind(wx.EVT_BUTTON, self.on_audio_preview, self.btn_audio_preview)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersClear, self.btn_reset)
@@ -1195,7 +1204,7 @@ class AV_Conv(wx.Panel):
             wx.MessageBox(_('Undetected volume values! Click the '
                             '"Volume detect" button to analyze '
                             'audio volume data.'),
-                          'Videomass', wx.ICON_INFORMATION
+                          'Videomass', wx.ICON_INFORMATION, self
                           )
         fget = self.file_selection()
         if not fget or not self.get_audio_stream(fget):
@@ -1249,7 +1258,7 @@ class AV_Conv(wx.Panel):
 
         if self.opt["Vidstabtransform"]:
             wx.MessageBox(_("Unable to preview Video Stabilizer filter"),
-                          "Videomass", wx.ICON_INFORMATION)
+                          "Videomass", wx.ICON_INFORMATION, self)
         else:
             flt = self.opt["VFilters"]
 
@@ -1283,7 +1292,7 @@ class AV_Conv(wx.Panel):
             self.opt['Interlace'], self.opt['Denoiser'] = "", ""
             self.opt["Vidstabtransform"], self.opt["Unsharp"] = "", ""
             self.opt["Vidstabdetect"], self.opt["Makeduo"] = "", False
-            self.opt["VFilters"] = ""
+            self.opt["VFilters"], self.opt["ColorEQ"] = "", ""
 
             self.btn_videosize.SetBackgroundColour(wx.NullColour)
             self.btn_crop.SetBackgroundColour(wx.NullColour)
@@ -1291,6 +1300,7 @@ class AV_Conv(wx.Panel):
             self.btn_lacing.SetBackgroundColour(wx.NullColour)
             self.btn_rotate.SetBackgroundColour(wx.NullColour)
             self.btn_vidstab.SetBackgroundColour(wx.NullColour)
+            self.btn_coloreq.SetBackgroundColour(wx.NullColour)
             self.btn_preview.Disable()
             self.btn_reset.Disable()
     # ------------------------------------------------------------------#
@@ -1337,12 +1347,12 @@ class AV_Conv(wx.Panel):
                 if not [x for x in isaudio if x.get('index') == idx]:
                     wx.MessageBox(_('Selected index does not exist or '
                                     'does not contain any audio streams'),
-                                  'Videomass', wx.ICON_INFORMATION)
+                                  'Videomass', wx.ICON_INFORMATION, self)
                     return None
         else:
             wx.MessageBox(_('ERROR: Missing audio stream:\n"{}"'
                             ).format(fileselected[0]),
-                          'Videomass', wx.ICON_ERROR)
+                          'Videomass', wx.ICON_ERROR, self)
             return None
 
         return True
@@ -1369,7 +1379,7 @@ class AV_Conv(wx.Panel):
             return (width, height, filename, time)
 
         wx.MessageBox(_('The file is not a frame or a video file'),
-                      'Videomass', wx.ICON_INFORMATION)
+                      'Videomass', wx.ICON_INFORMATION, self)
         self.on_FiltersClear(self)
         return None
     # ------------------------------------------------------------------#
@@ -1383,7 +1393,7 @@ class AV_Conv(wx.Panel):
                   self.opt["Denoiser"], self.opt["Vidstabtransform"],
                   self.opt["Unsharp"], self.opt['Crop'], self.opt['Scale'],
                   self.opt["Setdar"], self.opt["Setsar"],
-                  self.opt['Orientation'][0],
+                  self.opt['Orientation'][0], self.opt["ColorEQ"],
                   )  # do not change the order of the filters on this tuple
         filters = ''.join([f'{x},' for x in orderf if x])[:-1]
 
@@ -1554,8 +1564,7 @@ class AV_Conv(wx.Panel):
         if self.opt["Passing"] == "2 pass":
             wx.MessageBox(_('This filter is incompatible with '
                             '2-pass enabled'),
-                          'Videomass', wx.ICON_INFORMATION
-                          )
+                          'Videomass', wx.ICON_INFORMATION, self)
             return
 
         with Vidstab(self,
@@ -1580,7 +1589,33 @@ class AV_Conv(wx.Panel):
                     self.opt['Vidstabtransform'] = data[1]
                     self.opt['Unsharp'] = data[2]
                     self.opt["Makeduo"] = data[3]
+                self.chain_all_video_filters()
+    # ------------------------------------------------------------------#
 
+    def on_Set_coloreq(self, event):
+        """
+        Enable or disable color correction filter like
+        contrast, brightness, saturation, gamma.
+        """
+        sdf = self.get_video_stream()
+        if not sdf:
+            return
+
+        with ColorEQ(self,
+                     self.opt["ColorEQ"],
+                     sdf[0],
+                     sdf[1],
+                     sdf[2],
+                     sdf[3]) as coloreq:
+            if coloreq.ShowModal() == wx.ID_OK:
+                data = coloreq.getvalue()
+                if not data:
+                    self.btn_coloreq.SetBackgroundColour(wx.NullColour)
+                    self.opt["ColorEQ"] = ''
+                else:
+                    self.btn_coloreq.SetBackgroundColour(
+                        wx.Colour(AV_Conv.VIOLET))
+                    self.opt["ColorEQ"] = data
                 self.chain_all_video_filters()
     # ------------------------------------------------------------------#
 
@@ -1905,7 +1940,7 @@ class AV_Conv(wx.Panel):
                                      self.opt["AudioIndex"]
                                      )
         if data[1]:
-            wx.MessageBox(f"{data[1]}", "Videomass", wx.ICON_ERROR)
+            wx.MessageBox(f"{data[1]}", "Videomass", wx.ICON_ERROR, self)
             return
 
         volume = []
@@ -2086,8 +2121,7 @@ class AV_Conv(wx.Panel):
                 wx.MessageBox(_('Undetected volume values! Click the '
                                 '"Volume detect" button to analyze '
                                 'audio volume data.'),
-                              'Videomass', wx.ICON_INFORMATION
-                              )
+                              'Videomass', wx.ICON_INFORMATION, self)
                 return
 
         self.update_allentries()  # update
