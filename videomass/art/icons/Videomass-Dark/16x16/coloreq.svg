@@ -170,7 +170,7 @@
      d="M 7.99201,1 A 7.0114145,7.0033548 0 0 0 0.9965722,7.5640717 V 7.9885909 H 8.0079867 V 1 a 7.0114145,7.0033548 0 0 0 -0.015974,0 z" />
   <path
      id="path1705"
-     style="opacity:1;mix-blend-mode:normal;fill:#b2b2b2;fill-opacity:1;stroke:none;stroke-width:0.217887;stroke-miterlimit:4;stroke-dasharray:none"
+     style="opacity:1;mix-blend-mode:normal;fill:#77767b;fill-opacity:1;stroke:none;stroke-width:0.217887;stroke-miterlimit:4;stroke-dasharray:none"
      d="M 8.0079867,1 V 7.9885909 H 15.003425 A 7.0114145,7.0033548 0 0 0 8.0079867,1 Z" />
   <path
      id="path1707"
@@ -178,6 +178,6 @@
      d="M 0.9965722,7.9885909 V 8.4519103 A 7.0114145,7.0033548 0 0 0 7.71128,15.000005 H 8.0079867 V 7.9885909 Z" />
   <path
      id="path1709"
-     style="opacity:1;mix-blend-mode:normal;fill:#b2b2b2;fill-opacity:1;stroke:none;stroke-width:0.217887;stroke-miterlimit:4;stroke-dasharray:none"
+     style="opacity:1;mix-blend-mode:normal;fill:#77767b;fill-opacity:1;stroke:none;stroke-width:0.217887;stroke-miterlimit:4;stroke-dasharray:none"
      d="m 8.0079867,7.9885909 v 7.0114141 h 0.2601889 a 7.0114145,7.0033548 0 0 0 6.7352494,-6.9977199 7.0114145,7.0033548 0 0 0 0,-0.013694 z" />
 </svg>

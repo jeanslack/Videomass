@@ -39,7 +39,6 @@ class ColorEQ(wx.Dialog):
     for how to use this class.
     """
     get = wx.GetApp()
-    appdata = get.appset
     OS = get.appset['ostype']
     TMPROOT = os.path.join(get.appset['cachedir'], 'tmp', 'ColorEQ')
     TMPSRC = os.path.join(TMPROOT, 'tmpsrc')
@@ -65,8 +64,8 @@ class ColorEQ(wx.Dialog):
         self.v_width = v_width
         self.v_height = v_height
         # resizing values preserving aspect ratio for pseudo-monitors
-        self.thr = 150 if self.v_height > self.v_width else 270
-        self.h_ratio = int((self.v_height / self.v_width) * self.thr)
+        thr = 150 if self.v_height > self.v_width else 270
+        self.h_ratio = int((self.v_height / self.v_width) * thr)
         self.w_ratio = int((self.v_width / self.v_height) * self.h_ratio)
         self.bitmap_src = None
         self.bitmap_edit = None
@@ -79,7 +78,6 @@ class ColorEQ(wx.Dialog):
                 self.clock = atime.read().strip()
         else:
             self.clock = '00:00:00'
-        self.duration = duration
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
@@ -97,7 +95,6 @@ class ColorEQ(wx.Dialog):
                                    | wx.ALIGN_CENTRE_HORIZONTAL,
                                    )
         sizerpanels.Add(lab_imgsrc, 0, wx.CENTER | wx.EXPAND)
-
         lab_imgfilt = wx.StaticText(self, wx.ID_ANY,
                                     label=_("After"),
                                     style=wx.ST_NO_AUTORESIZE
@@ -108,11 +105,10 @@ class ColorEQ(wx.Dialog):
         stboxtime = wx.StaticBox(self, wx.ID_ANY, msg)
         sizertime = wx.StaticBoxSizer(stboxtime, wx.HORIZONTAL)
         sizerBase.Add(sizertime, 0, wx.ALL | wx.CENTER, 5)
-
         self.sld_time = wx.Slider(self, wx.ID_ANY,
                                   get_milliseconds(self.clock),
                                   0,
-                                  get_milliseconds(self.duration),
+                                  get_milliseconds(duration),
                                   size=(250, -1),
                                   style=wx.SL_HORIZONTAL,
                                   )
@@ -212,7 +208,7 @@ class ColorEQ(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
 
-        if self.duration == '00:00:00.000':
+        if duration == '00:00:00.000':
             self.sld_time.Disable()
 
         if colorset:  # previusly values
@@ -283,6 +279,9 @@ class ColorEQ(wx.Dialog):
         filterlist = colorset.split(':')
         filterlist[0] = filterlist[0].split(sep='=', maxsplit=1)[1]
         values = dict(x.split('=') for x in filterlist)
+
+        print(filterlist)
+        print(values)
 
         for x, y in values.items():
             if x == 'contrast':

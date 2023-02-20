@@ -37,18 +37,20 @@ Feb 17, 2023 V.4.0.10
     on the toolbar.
   * Fixed instances to all modeless windows (MediaStreams, ShowLogs, HelpTopic,
     WhilePlaying, FFmpegConf, FFmpegDecoders, FFmpegCodecs, AudioVolNormal,
-    FFmpegFormats)
+    FFmpegFormats).
   * On exiting the application, open modeless windows will no longer be
     orphaned but will be closed with the application.
   * Opening new files will also close modeless windows.
   * Added ability to move the source files to Videomass trash folder directly
     on `Confirm Settings` dialog.
-  * [filedrop] refactorized `on_col_click` method
+  * [filedrop] refactorized `on_col_click` method.
   * [A/V Conversion] Added more Pixel Format options.
   * [A/V Conversion] Added more Aspect Ratio options.
   * [A/V Conversion] There is a new filter now. A new window has been added
     which implements video filter for color correction like contrast,
     brightness, saturation and gamma.
+  * [A/V Conversion] Fixed storing time position when user search for a specific
+    frame on some filter window.
 
 +------------------------------------+
 Jan 17, 2023 V.4.0.5
