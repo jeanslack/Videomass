@@ -1,8 +1,16 @@
 [
     {
-        "Name": "Retro glow effect",
-        "Description": "Create a retro \"dreamy\" glow effect",
-        "First_pass": "-filter_complex \"[0]rgbashift=rh=15:bv=15:gh=-15,format=rgba[in2];[in2][0]scale2ref[in2][in1];[in1][in2]blend=overlay,gblur=sigma=42:steps=6,format=yuv420p[in2];[in2][0]scale2ref[in2][in1];[in1][in2]blend=screen\" -pix_fmt yuv420p",
+        "Name": "1 Emboss and sepia effect",
+        "Description": "Create cool sepia and embossing effect",
+        "First_pass": "-filter_complex \"curves=vintage,convolution=-2 -1 0 -1 1 1 0 1 2:-2 -1 0 -1 1 1 0 1 2:-2 -1 0 -1 1 1 0 1 2:-2 -1 0 -1 1 1 0 1 2\"",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "2 Emboss and sepia effect",
+        "Description": "Create cool sepia and embossing effect",
+        "First_pass": "-filter_complex \"curves=vintage,convolution=-2 -1 0 -1 1 1 0 1 6:-2 -1 0 -1 1 1 0 1 6:-2 -1 0 -1 1 1 0 1 6:-2 -1 0 -1 1 1 0 1 9\"",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -16,17 +24,9 @@
         "Output_extension": "mkv"
     },
     {
-        "Name": "1 Emboss and sepia effect",
-        "Description": "Create cool sepia and embossing effect",
-        "First_pass": "-filter_complex \"curves=vintage,convolution=-2 -1 0 -1 1 1 0 1 2:-2 -1 0 -1 1 1 0 1 2:-2 -1 0 -1 1 1 0 1 2:-2 -1 0 -1 1 1 0 1 2\"",
-        "Second_pass": "",
-        "Supported_list": "",
-        "Output_extension": "mkv"
-    },
-    {
-        "Name": "2 Emboss and sepia effect",
-        "Description": "Create cool sepia and embossing effect",
-        "First_pass": "-filter_complex \"curves=vintage,convolution=-2 -1 0 -1 1 1 0 1 6:-2 -1 0 -1 1 1 0 1 6:-2 -1 0 -1 1 1 0 1 6:-2 -1 0 -1 1 1 0 1 9\"",
+        "Name": "Retro glow effect",
+        "Description": "Create a retro \"dreamy\" glow effect",
+        "First_pass": "-filter_complex \"[0]rgbashift=rh=15:bv=15:gh=-15,format=rgba[in2];[in2][0]scale2ref[in2][in1];[in1][in2]blend=overlay,gblur=sigma=42:steps=6,format=yuv420p[in2];[in2][0]scale2ref[in2][in1];[in1][in2]blend=screen\" -pix_fmt yuv420p",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"

@@ -207,7 +207,7 @@ def ff_topics(ffmpeg_url, topic, ostype):
     """
 
     # ------ get output:
-    arr = [ffmpeg_url, '-loglevel', 'error'] + topic
+    arr = [ffmpeg_url, '-loglevel', 'error'] + list(topic)
     ret = subp(arr, ostype)
 
     if 'Not found' in ret[0]:

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.11.2023
+Rev: Feb.20.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,7 +26,6 @@ This file is part of Videomass.
 """
 import os
 from math import pi as pigreco
-from time import sleep
 import wx
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 
@@ -38,15 +37,22 @@ class Transpose(wx.Dialog):
     """
     get = wx.GetApp()
     appdata = get.appset
+    TMPROOT = os.path.join(get.appset['cachedir'], 'tmp', 'Transpose')
+    TMPSRC = os.path.join(TMPROOT, 'tmpsrc')
+    os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
     BACKGROUND = '#1b0413'
 
     def __init__(self, parent, transpose, start_label,
                  v_width, v_height, fname, duration):
         """
-        Make sure you use the clear button when you finish the task.
-
+        transpose: previus data already saved.
+        start_label: label rotate indicator
+        v_width: source video width
+        v_height: source video height
+        fname: matches with the only one video file dragged
+               into the list or the selected one if many.
+        duration: Overall time duration of video.
         """
-        # current video size (first video file dragged into the list)
         self.v_width = v_width
         self.v_height = v_height
         # resizing values preserving aspect ratio for pseudo-monitor
@@ -58,37 +64,24 @@ class Transpose(wx.Dialog):
                        int((self.h_ratio / 2)),
                        )  # original center
         self.transpose = {'degrees': ['', 0]}
-
         self.duration = duration
         self.video = fname
         name = os.path.splitext(os.path.basename(self.video))[0]
-        self.frame = os.path.join(f'{Transpose.appdata["cachedir"]}', 'tmp',
-                                  f'{name}.png'
-                                  )
-        if os.path.exists(self.frame):
-            bitmap = wx.Bitmap(self.frame)
-            img = bitmap.ConvertToImage()
-            img = img.Scale(self.w_ratio, self.h_ratio,
-                            wx.IMAGE_QUALITY_NORMAL)
-            bmp = img.ConvertToBitmap()
-            self.image = wx.Bitmap(bmp)
-        else:
-            self.image = wx.Bitmap(self.w_ratio, self.h_ratio)  # make empty
+        self.frame = os.path.join(Transpose.TMPSRC, f'{name}.png')
+        self.stbitmap = None
+        self.image = None
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         self.panelimg = wx.Panel(self, wx.ID_ANY, size=(270, 270),)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         sizerBase.Add(self.panelimg, 0, wx.ALL | wx.CENTER, 5)
-
-        self.x = wx.StaticBitmap(self.panelimg, wx.ID_ANY, self.image)
         self.statictxt = wx.StaticText(self, wx.ID_ANY,
                                        label=_("Default position"),
                                        style=wx.ST_NO_AUTORESIZE
                                        | wx.ALIGN_CENTRE_HORIZONTAL,
                                        )
         sizerBase.Add(self.statictxt, 0, wx.CENTER | wx.EXPAND)
-        self.btn_load = wx.Button(self, wx.ID_ANY, _("Load Frame"))
-        sizerBase.Add(self.btn_load, 0, wx.ALL | wx.CENTRE, 5)
+        sizerBase.Add(10, 10)
         msg = _("Rotation setting")
         sizerLabel = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg)),
                                        wx.VERTICAL)
@@ -129,9 +122,7 @@ class Transpose(wx.Dialog):
         self.Fit()
         self.Layout()
 
-        if os.path.exists(self.frame):
-            self.btn_load.Disable()
-
+        self.image_loader()
         if transpose:
             self.statictxt.SetLabel(start_label)
 
@@ -148,13 +139,49 @@ class Transpose(wx.Dialog):
                 self.rotate90(270)
 
         # ----------------------Binding (EVT)---------------------------------#
-        self.Bind(wx.EVT_BUTTON, self.onLoad, self.btn_load)
         self.Bind(wx.EVT_BUTTON, self.on_left, self.button_left)
         self.Bind(wx.EVT_BUTTON, self.on_right, self.button_right)
         self.Bind(wx.EVT_BUTTON, self.on_down, self.button_down)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+    # ------------------------------------------------------------------#
+
+    def process(self):
+        """
+        Calls thread to Run ffmpeg process. Note that the
+        trim start point on this process is set to the total
+        length of the movie divided by two.
+        """
+        h, m, s = self.duration.split(':')
+        intseq = (int(h) // 2, int(m) // 2, round(float(s) / 2))
+        stime = ':'.join([str(x).zfill(2) for x in intseq])
+        arg = f'-ss {stime} -i "{self.video}" -vframes 1 -y "{self.frame}"'
+        thread = FFmpegGenericTask(arg)
+        thread.join()  # wait end thread
+        error = thread.status
+        if error:
+            return error
+        return None
+    # ------------------------------------------------------------------------#
+
+    def image_loader(self):
+        """
+        Loads initial StaticBitmap on panel
+        """
+        if not os.path.exists(self.frame):
+            error = self.process()
+            if error:
+                wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+                return
+        bitmap = wx.Bitmap(self.frame)
+        img = bitmap.ConvertToImage()
+        img = img.Scale(self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL)
+        bmp = img.ConvertToBitmap()
+        self.image = wx.Bitmap(bmp)  # convert to bitmap
+        self.stbitmap = wx.StaticBitmap(self.panelimg, wx.ID_ANY, self.image)
+        self.panelimg.Layout()
+        self.on_reset(self)  # make default position
     # ------------------------------------------------------------------#
 
     def rotate90(self, degrees):
@@ -169,39 +196,10 @@ class Transpose(wx.Dialog):
                             wx.IMAGE_QUALITY_NORMAL
                             )
         image = image.Rotate(val, self.center)
-        self.x.SetBitmap(wx.Bitmap(image))
+        self.stbitmap.SetBitmap(wx.Bitmap(image))
         self.panelimg.Layout()
 
     # ----------------------Event handler (callback)--------------------------#
-
-    def onLoad(self, event):
-        """
-        Build FFmpeg argument to get a specific video frame
-        to loading as StaticBitmap
-
-        """
-        h, m, s = self.duration.split(':')
-        intseq = (int(h) // 2, int(m) // 2, round(float(s) / 2))
-        stime = ':'.join([str(x).zfill(2) for x in intseq])
-        arg = f'-ss {stime} -i "{self.video}" -vframes 1 -y "{self.frame}"'
-        thread = FFmpegGenericTask(arg)
-        thread.join()  # wait end thread
-        error = thread.status
-        if error:
-            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR)
-            return
-
-        sleep(1.0)  # need to wait end task to save file on drive
-        bitmap = wx.Bitmap(self.frame)
-        img = bitmap.ConvertToImage()
-        img = img.Scale(self.w_ratio, self.h_ratio)
-        bmp = img.ConvertToBitmap()
-        self.image = wx.Bitmap(bmp)  # convert to bitmap
-        self.x.SetBitmap(self.image)  # set StaticBitmap
-        self.panelimg.Layout()
-        self.btn_load.Disable()
-        self.on_reset(self)  # make default position
-    # ------------------------------------------------------------------#
 
     def on_right(self, event):
         """

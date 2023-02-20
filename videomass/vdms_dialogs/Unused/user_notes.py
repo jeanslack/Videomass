@@ -256,7 +256,6 @@ class Memos(wx.Dialog):
                     return
 
             self.Destroy()
-
         else:
             self.Destroy()
         # event.Skip()

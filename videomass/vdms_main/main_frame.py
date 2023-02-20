@@ -35,12 +35,12 @@ from videomass.vdms_dialogs import set_timestamp
 from videomass.vdms_dialogs import about
 from videomass.vdms_dialogs import videomass_check_version
 from videomass.vdms_frames.while_playing import WhilePlaying
-from videomass.vdms_frames.ffmpeg_help import FFmpegHelp
 from videomass.vdms_frames.ffmpeg_conf import FFmpegConf
 from videomass.vdms_frames.ffmpeg_codecs import FFmpegCodecs
 from videomass.vdms_frames.ffmpeg_formats import FFmpegFormats
 from videomass.vdms_dialogs.mediainfo import MediaStreams
 from videomass.vdms_dialogs.showlogs import ShowLogs
+from videomass.vdms_dialogs.ffmpeg_help import FFmpegHelp
 from videomass.vdms_panels import timeline
 from videomass.vdms_panels import choose_topic
 from videomass.vdms_panels import filedrop
@@ -328,7 +328,7 @@ class MainFrame(wx.Frame):
         self.mediastreams.Show()
     # ------------------------------------------------------------------#
 
-    def close_orphaned_window(self):
+    def destroy_orphaned_window(self):
         """
         Destroys all orphaned modeless windows, ie. on
         application exit or on opening or deleting files.
@@ -386,7 +386,7 @@ class MainFrame(wx.Frame):
                                  self) == wx.NO:
                     return
             _setsize()
-            self.close_orphaned_window()
+            self.destroy_orphaned_window()
             self.Destroy()
     # ------------------------------------------------------------------#
 
@@ -396,7 +396,7 @@ class MainFrame(wx.Frame):
         that does not want to terminate with the abort button
 
         """
-        self.close_orphaned_window()
+        self.destroy_orphaned_window()
         self.Destroy()
 
     # -------------   BUILD THE MENU BAR  ----------------###
@@ -458,11 +458,13 @@ class MainFrame(wx.Frame):
                    "options"))
         searchtopic = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
+        prstpage = '<https://github.com/jeanslack/Videomass-presets>'
         dscrp = (_("Check for preset updates"),
-                 _("Check for new presets release from presets homepage"))
+                 _("Check for new presets release from {0}").format(prstpage))
         self.prstcheck = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Get the latest presets release"),
-                 _("Download locally all Videomass presets"))
+        dscrp = (_("Download the entire preset collection"),
+                 _("Download all Videomass presets locally "
+                   "from {0}").format(prstpage))
         self.prstdownload = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(toolsButton, _("Tools"))
 

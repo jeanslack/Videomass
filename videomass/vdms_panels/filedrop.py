@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2023
+Rev: Feb.16.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -210,7 +210,7 @@ class MyListCtrl(wx.ListCtrl):
 
 class FileDrop(wx.FileDropTarget):
     """
-    This is the file drop target
+    This is the file drop target class
     """
     # ----------------------------------------------------------------------#
 
@@ -238,7 +238,7 @@ class FileDnD(wx.Panel):
     """
     This panel hosts a listctrl for Drag AND Drop actions on which
     you can add new files, select them, remove them, play them,
-    sort them or remove them from the list.
+    sort them or remove them from the listctrl.
 
     """
     # CONSTANTS:
@@ -317,7 +317,7 @@ class FileDnD(wx.Panel):
             if not appdata['filesuffix'] == '':
                 # otherwise must be '' on parent
                 self.parent.suffix = appdata['filesuffix']
-        # Tooltip
+        # Tooltips
         self.btn_remove.SetToolTip(_('Remove the selected '
                                      'files from the list'))
         self.btn_clear.SetToolTip(_('Delete all files from the list'))
@@ -345,12 +345,11 @@ class FileDnD(wx.Panel):
 
         if plane to use wx.EVT_LIST_COL_RIGHT_CLICK event:
             `if event.GetEventType() == wx.EVT_LIST_COL_RIGHT_CLICK.typeId:`
-                `new.reverse()`
+                `curritems.reverse()`
         see: <https://discuss.wxpython.org/t/event-geteventtype/22860/4>
         """
         count = self.flCtrl.GetItemCount()
         curritems = []
-
         if count > 1:
             if event.GetColumn() in (0, -1):
                 return
@@ -363,36 +362,30 @@ class FileDnD(wx.Panel):
                                   self.flCtrl.GetItemText(x, col=5),
                                   ))
             if event.GetColumn() == 1:
-                new = sorted(curritems, key=lambda item: item[0])
-
+                curritems.sort(key=lambda item: item[0])
             elif event.GetColumn() == 2:
-                new = sorted(curritems, key=lambda item: item[1])
-
+                curritems.sort(key=lambda item: item[1])
             elif event.GetColumn() == 3:
-                new = sorted(curritems, key=lambda item: item[2])
-
+                curritems.sort(key=lambda item: item[2])
             elif event.GetColumn() == 4:
-                new = sorted(curritems, key=lambda item:
-                             to_bytes(''.join(item[3].split()), 'ffmpeg'))
-
+                curritems.sort(key=lambda item:
+                               to_bytes(''.join(item[3].split()), 'ffmpeg'))
             elif event.GetColumn() == 5:
-                new = sorted(curritems, key=lambda item: item[4])
+                curritems.sort(key=lambda item: item[4])
 
             self.delete_all(self, setstate=False)  # does not setstate here
 
             if self.sortingstate == 'descending':
                 self.sortingstate = 'ascending'
-
             elif self.sortingstate == 'ascending':
                 self.sortingstate = 'descending'
-
             elif not self.sortingstate:
                 self.sortingstate = 'ascending'
 
             if self.sortingstate == 'descending':
-                new.reverse()
+                curritems.reverse()
 
-            for data in new:
+            for data in curritems:
                 self.flCtrl.dropUpdate(data[0], data[4])
     # ----------------------------------------------------------------------
 
@@ -402,7 +395,7 @@ class FileDnD(wx.Panel):
         removing files and sorting items by LEFT
         clicking on column headers in the ListCtrl.
         """
-        self.parent.close_orphaned_window()
+        self.parent.destroy_orphaned_window()
         self.parent.reset_Timeline()
         if not self.btn_clear.IsEnabled():
             self.btn_clear.Enable()

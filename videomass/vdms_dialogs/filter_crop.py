@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.11.2023
+Rev: Feb.20.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,13 +25,12 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-from time import sleep
 import wx
 # import wx.lib.masked as masked  # does not work on macOSX
 import wx.lib.statbmp
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.utils import get_milliseconds
-from videomass.vdms_utils.utils import milliseconds2clock
+from videomass.vdms_utils.utils import milliseconds2clocksec
 
 
 def make_bitmap(width, height, image):
@@ -133,8 +132,9 @@ class Crop(wx.Dialog):
     """
     get = wx.GetApp()
     OS = get.appset['ostype']
-    TMP = os.path.join(get.appset['cachedir'], 'tmp')
-    DISPLAY_SIZE = get.appset['DISPLAY_SIZE']
+    TMPROOT = os.path.join(get.appset['cachedir'], 'tmp', 'Crop')
+    TMPSRC = os.path.join(TMPROOT, 'tmpsrc')
+    os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
     BACKGROUND = '#1b0413'
     # ------------------------------------------------------------------#
 
@@ -175,15 +175,18 @@ class Crop(wx.Dialog):
                             / self.v_height) * self.h_ratio)  # width
         self.video = fname  # selected filename on queued list
         name = os.path.splitext(os.path.basename(self.video))[0]
-        self.frame = os.path.join(f'{Crop.TMP}', f'{name}.png')  # image
+        self.frame = os.path.join(f'{Crop.TMPSRC}', f'{name}.png')  # image
+        self.filetime = os.path.join(Crop.TMPROOT, f'{name}.clock')
+        if os.path.exists(self.filetime):
+            with open(self.filetime, "r", encoding='utf8') as atime:
+                self.clock = atime.read().strip()
+        else:
+            self.clock = '00:00:00'
 
         if os.path.exists(self.frame):
             self.image = self.frame
         else:  # make empty
             self.image = wx.Bitmap(self.w_ratio, self.h_ratio)
-
-        duration = get_milliseconds(timeformat)  # convert to ms
-        # hhmmss = milliseconds2clock(duration)  # convert to 24-hour clock
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
@@ -203,15 +206,19 @@ class Crop(wx.Dialog):
         sizer_load = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg)),
                                        wx.HORIZONTAL)
         sizerBase.Add(sizer_load, 0, wx.ALL | wx.EXPAND, 5)
-
-        self.txttime = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
-        sizer_load.Add(self.txttime, 0, wx.ALL | wx.CENTER, 10)
-        self.slider = wx.Slider(self, wx.ID_ANY, 0, 0, duration,
-                                size=(150, -1), style=wx.SL_HORIZONTAL
+        self.slider = wx.Slider(self, wx.ID_ANY,
+                                get_milliseconds(self.clock),
+                                0,
+                                get_milliseconds(timeformat),
+                                size=(250, -1),
+                                style=wx.SL_HORIZONTAL,
                                 )
         sizer_load.Add(self.slider, 0, wx.ALL | wx.CENTER, 5)
-        btn_load = wx.Button(self, wx.ID_ANY, _("Load"))
-        sizer_load.Add(btn_load, 1, wx.ALL | wx.EXPAND, 10)
+        self.txttime = wx.StaticText(self, wx.ID_ANY, self.clock)
+        sizer_load.Add(self.txttime, 0, wx.ALL | wx.CENTER, 10)
+        self.btn_load = wx.Button(self, wx.ID_ANY, _("Load"))
+        self.btn_load.Disable()
+        sizer_load.Add(self.btn_load, 1, wx.ALL | wx.EXPAND, 10)
         boxs = wx.StaticBox(self, wx.ID_ANY, (_("Cropping area selection ")))
         sizerLabel = wx.StaticBoxSizer(boxs, wx.VERTICAL)
         sizerBase.Add(sizerLabel, 0, wx.ALL | wx.EXPAND, 5)
@@ -296,7 +303,7 @@ class Crop(wx.Dialog):
         self.Bind(wx.EVT_SPINCTRL, self.onY, self.axis_Y)
         self.Bind(wx.EVT_BUTTON, self.onCentre, self.btn_centre)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Seek, self.slider)
-        self.Bind(wx.EVT_BUTTON, self.onLoad, btn_load)
+        self.Bind(wx.EVT_BUTTON, self.image_loader, self.btn_load)
 
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
@@ -305,9 +312,8 @@ class Crop(wx.Dialog):
 
         if timeformat == '00:00:00.000':
             self.slider.Disable()
-            btn_load.Disable()
-            if not os.path.exists(self.frame):
-                self.onLoad(self)
+        if not os.path.exists(self.frame):
+            self.image_loader(self)
 
         if fcrop:  # previusly values
             self.default(fcrop)
@@ -345,20 +351,25 @@ class Crop(wx.Dialog):
 
     def on_Seek(self, event):
         """
-        gets value from slider, converts it to human time format
+        gets value from time slider, converts it to clock format
         e.g (00:00:00), and sets the label with the converted value.
         """
         seek = self.slider.GetValue()
-        t = milliseconds2clock(seek)  # convert to 24-hour clock
-        self.txttime.SetLabel(t)  # update StaticText
+        clock = milliseconds2clocksec(seek, rounds=True)  # to 24-hour
+        self.txttime.SetLabel(clock)  # update StaticText
+        if not self.btn_load.IsEnabled():
+            self.btn_load.Enable()
     # ------------------------------------------------------------------#
 
-    def onLoad(self, event):
+    def image_loader(self, event):
         """
-        Build FFmpeg argument to get a specific video frame for
-        loading in a wx.dc (device context)
+        Load in a wx.dc (device context) image frame
+        at a given time clock point
+
         """
-        arg = (f'-ss {self.txttime.GetLabel()} -i "{self.video}" '
+        seek = self.slider.GetValue()
+        self.clock = milliseconds2clocksec(seek, rounds=True)  # to 24-hour
+        arg = (f'-ss {self.clock} -i "{self.video}" '
                f'-vframes 1 -y "{self.frame}"'
                )
         thread = FFmpegGenericTask(arg)
@@ -367,8 +378,9 @@ class Crop(wx.Dialog):
         if error:
             wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR)
             return
-
-        sleep(1.0)  # need to wait end task for saving
+        with open(self.filetime, "w", encoding='utf8') as atime:
+            atime.write(self.clock)
+        self.btn_load.Disable()
         self.image = self.frame  # update with new frame
         bmp = make_bitmap(self.w_ratio, self.h_ratio, self.image)
         self.bob.current_bmp = bmp
@@ -454,15 +466,15 @@ class Crop(wx.Dialog):
         self.axis_X callback
         """
         self.onDrawing()
-
     # ------------------------------------------------------------------#
+
     def onY(self, event):
         """
         self.axis_Y callback
         """
         self.onDrawing()
-
     # ------------------------------------------------------------------#
+
     def onCentre(self, event):
         """
         Sets coordinates X, Y to center if not `GetMax == 0` .
@@ -478,17 +490,6 @@ class Crop(wx.Dialog):
 
         if self.axis_Y.GetMax() or self.axis_X.GetMax():
             self.onDrawing()
-
-    # ------------------------------------------------------------------#
-    '''
-    def on_help(self, event):
-        """
-        Open default browser to official help page
-        """
-        page = ('https://jeanslack.github.io/Videomass/Pages/Main_Toolbar/'
-                'VideoConv_Panel/Filters/FilterCrop.html')
-        webbrowser.open(page)
-    '''
     # ------------------------------------------------------------------#
 
     def on_reset(self, event):
