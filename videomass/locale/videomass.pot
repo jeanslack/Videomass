@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-21 00:13+0100\n"
+"POT-Creation-Date: 2023-02-21 12:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,12 +77,12 @@ msgid "Source size: {0} x {1} pixels"
 msgstr ""
 
 #: ../vdms_dialogs/filter_crop.py:205
-#: ../vdms_dialogs/filter_colorcorrection.py:104
+#: ../vdms_dialogs/filter_colorcorrection.py:102
 msgid "Search for a specific frame"
 msgstr ""
 
 #: ../vdms_dialogs/filter_crop.py:219
-#: ../vdms_dialogs/filter_colorcorrection.py:118
+#: ../vdms_dialogs/filter_colorcorrection.py:116
 msgid "Load"
 msgstr ""
 
@@ -105,7 +105,7 @@ msgstr ""
 #: ../vdms_dialogs/filter_crop.py:272 ../vdms_dialogs/filter_deinterlace.py:121
 #: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:193
 #: ../vdms_dialogs/filter_stab.py:267 ../vdms_dialogs/filter_transpose.py:104
-#: ../vdms_dialogs/filter_colorcorrection.py:180
+#: ../vdms_dialogs/filter_colorcorrection.py:178
 #: ../vdms_panels/av_conversions.py:576 ../vdms_panels/timeline.py:100
 msgid "Reset"
 msgstr ""
@@ -114,7 +114,7 @@ msgstr ""
 #: ../vdms_dialogs/filter_denoisers.py:83 ../vdms_dialogs/filter_scale.py:191
 #: ../vdms_dialogs/filter_stab.py:265 ../vdms_dialogs/filter_transpose.py:108
 #: ../vdms_dialogs/set_timestamp.py:148
-#: ../vdms_dialogs/filter_colorcorrection.py:184
+#: ../vdms_dialogs/filter_colorcorrection.py:182
 msgid "Apply"
 msgstr ""
 
@@ -796,7 +796,7 @@ msgid "Assign optional suffix to output file names:"
 msgstr ""
 
 #: ../vdms_dialogs/preferences.py:154
-msgid "Source file preferences"
+msgid "Source files preferences"
 msgstr ""
 
 #: ../vdms_dialogs/preferences.py:157
@@ -1142,35 +1142,35 @@ msgid ""
 "  ...Not found"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:93
+#: ../vdms_dialogs/filter_colorcorrection.py:91
 msgid "Before"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:99
+#: ../vdms_dialogs/filter_colorcorrection.py:97
 msgid "After"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:122
+#: ../vdms_dialogs/filter_colorcorrection.py:120
 msgid "Contrast:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:135
+#: ../vdms_dialogs/filter_colorcorrection.py:133
 msgid "Brightness:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:148
+#: ../vdms_dialogs/filter_colorcorrection.py:146
 msgid "Saturation:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:161
+#: ../vdms_dialogs/filter_colorcorrection.py:159
 msgid "Gamma:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:173
+#: ../vdms_dialogs/filter_colorcorrection.py:171
 msgid "Color EQ"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:199
+#: ../vdms_dialogs/filter_colorcorrection.py:197
 msgid "Color Correction Equalizer"
 msgstr ""
 
@@ -2158,19 +2158,19 @@ msgstr ""
 
 #: ../vdms_panels/av_conversions.py:808
 msgid ""
-"Specifies a minimum tolerance to be used. Set -1 to disable this control."
+"Specifies a minimum tolerance to be used. Set to -1 to disable this control."
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:811
 msgid ""
 "Specifies a maximum tolerance. This is only used in conjunction with buffer "
-"size. Set -1 to disable this control."
+"size. Set to -1 to disable this control."
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:815
 msgid ""
 "Specifies the decoder buffer size, which determines the variability of the "
-"output bitrate. Set -1 to disable this control."
+"output bitrate. Set to -1 to disable this control."
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:819
@@ -2195,7 +2195,7 @@ msgstr ""
 #: ../vdms_panels/av_conversions.py:831
 msgid ""
 "Constant rate factor. Lower values = higher quality and a larger file size. "
-"Set -1 to disable this control."
+"Set to -1 to disable this control."
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:834

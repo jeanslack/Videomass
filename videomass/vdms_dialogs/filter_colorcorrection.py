@@ -56,25 +56,23 @@ class ColorEQ(wx.Dialog):
                into the list or the selected one if many.
         duration: Overall time duration of video.
         """
-        self.filesource = fname
-        name = os.path.splitext(os.path.basename(self.filesource))[0]
+        self.filename = fname
+        name = os.path.splitext(os.path.basename(self.filename))[0]
         self.framesrc = os.path.join(ColorEQ.TMPSRC, f'{name}.png')
         self.frameedit = os.path.join(ColorEQ.TMPEDIT, f'{name}.png')
-        self.filetime = os.path.join(ColorEQ.TMPROOT, f'{name}.clock')
-        self.v_width = v_width
-        self.v_height = v_height
+        self.fileclock = os.path.join(ColorEQ.TMPROOT, f'{name}.clock')
         # resizing values preserving aspect ratio for pseudo-monitors
-        thr = 150 if self.v_height > self.v_width else 270
-        self.h_ratio = int((self.v_height / self.v_width) * thr)
-        self.w_ratio = int((self.v_width / self.v_height) * self.h_ratio)
+        thr = 150 if v_height > v_width else 270
+        self.h_ratio = int((v_height / v_width) * thr)
+        self.w_ratio = int((v_width / v_height) * self.h_ratio)
         self.bitmap_src = None
         self.bitmap_edit = None
         self.contrast = ""
         self.brightness = ""
         self.saturation = ""
         self.gamma = ""
-        if os.path.exists(self.filetime):
-            with open(self.filetime, "r", encoding='utf8') as atime:
+        if os.path.exists(self.fileclock):
+            with open(self.fileclock, "r", encoding='utf8') as atime:
                 self.clock = atime.read().strip()
         else:
             self.clock = '00:00:00'
@@ -211,22 +209,21 @@ class ColorEQ(wx.Dialog):
         if duration == '00:00:00.000':
             self.sld_time.Disable()
 
-        if colorset:  # previusly values
+        if colorset:  # previus values
             self.set_default(colorset)
         self.loader_initial_source()
         if not colorset:
             wx.StaticBitmap(self.panel_img2, wx.ID_ANY, self.bitmap_src)
         else:
             self.loader_initial_edit()
-
-    # ----------------------Event handler (callback)--------------------------#
+    # -----------------------------------------------------------------------#
 
     def process(self, pathtosave, equalizer=''):
         """
-        Calls thread to Run ffmpeg process
+        Generate a new frame at the clock position
         """
         eql = '' if not equalizer else f'-vf "{equalizer}"'
-        arg = (f'-ss {self.clock} -i "{self.filesource}" -vframes 1 '
+        arg = (f'-ss {self.clock} -i "{self.filename}" -vframes 1 '
                f'{eql} -y "{pathtosave}"')
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
@@ -234,12 +231,12 @@ class ColorEQ(wx.Dialog):
         if error:
             return error
         return None
-    # ------------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def loader_initial_source(self):
         """
-        Loads initial StaticBitmaps on panels 1 (source)
-        To set previus values (colorset) you have to call
+        Loads initial StaticBitmaps on panels 1 (source).
+        To set previus values on `colorset`, you have to call
         this method before call `loader_initial_edit`.
         """
         if not os.path.exists(self.framesrc):
@@ -253,7 +250,7 @@ class ColorEQ(wx.Dialog):
         bmp = img.ConvertToBitmap()
         self.bitmap_src = wx.Bitmap(bmp)
         wx.StaticBitmap(self.panel_img1, wx.ID_ANY, self.bitmap_src)
-    # ------------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def loader_initial_edit(self):
         """
@@ -270,19 +267,15 @@ class ColorEQ(wx.Dialog):
         else:
             self.bitmap_edit = wx.Bitmap(self.w_ratio, self.h_ratio)
             wx.StaticBitmap(self.panel_img2, wx.ID_ANY, self.bitmap_edit)
-    # ------------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def set_default(self, colorset):
         """
-        Set previusly setting with colorset data.
+        Set previus setting stored on `colorset` data.
         """
         filterlist = colorset.split(':')
         filterlist[0] = filterlist[0].split(sep='=', maxsplit=1)[1]
         values = dict(x.split('=') for x in filterlist)
-
-        print(filterlist)
-        print(values)
-
         for x, y in values.items():
             if x == 'contrast':
                 self.contrast = f'contrast={y}'
@@ -301,7 +294,7 @@ class ColorEQ(wx.Dialog):
         self.sld_bright.SetValue(brightness)
         self.sld_sat.SetValue(int(values.get('saturation', 0)))
         self.sld_gam.SetValue(gamma)
-    # ------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def loader_edit(self, equalizer=''):
         """
@@ -318,7 +311,7 @@ class ColorEQ(wx.Dialog):
         self.bitmap_edit = wx.Bitmap(bmp)  # convert to bitmap
         # SetBitmap(self.bitmap_edit)  # set StaticBitmap
         wx.StaticBitmap(self.panel_img2, wx.ID_ANY, self.bitmap_edit)
-    # ------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def concat_filter(self):
         """
@@ -330,7 +323,7 @@ class ColorEQ(wx.Dialog):
         if not concat:
             return concat
         return f'eq={concat}'
-    # ------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def on_seek_time(self, event):
         """
@@ -342,7 +335,7 @@ class ColorEQ(wx.Dialog):
         self.txttime.SetLabel(clock)  # update StaticText
         if not self.btn_load.IsEnabled():
             self.btn_load.Enable()
-    # ------------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def on_load_at_time(self, event):
         """
@@ -362,10 +355,10 @@ class ColorEQ(wx.Dialog):
             return
         self.loader_initial_edit()
 
-        with open(self.filetime, "w", encoding='utf8') as atime:
+        with open(self.fileclock, "w", encoding='utf8') as atime:
             atime.write(self.clock)
         self.btn_load.Disable()
-    # ------------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def on_contrast(self, event):
         """
@@ -374,7 +367,7 @@ class ColorEQ(wx.Dialog):
         val = 1.0 + self.sld_contrast.GetValue() / 100
         self.contrast = '' if val == 1.0 else f'contrast={val}'
         self.loader_edit(self.concat_filter())
-    # ------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def on_brightness(self, event):
         """
@@ -383,7 +376,7 @@ class ColorEQ(wx.Dialog):
         val = 0.00 + self.sld_bright.GetValue() / 100
         self.brightness = '' if val == 0.00 else f'brightness={val}'
         self.loader_edit(self.concat_filter())
-    # ------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def on_saturation(self, event):
         """
@@ -392,7 +385,7 @@ class ColorEQ(wx.Dialog):
         val = self.sld_sat.GetValue()
         self.saturation = '' if val == 0 else f'saturation={val}'
         self.loader_edit(self.concat_filter())
-    # ------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def on_gamma(self, event):
         """
@@ -401,7 +394,7 @@ class ColorEQ(wx.Dialog):
         val = self.sld_gam.GetValue() / 10
         self.gamma = '' if val == 0 else f'gamma={val}'
         self.loader_edit(self.concat_filter())
-    # ------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def on_reset(self, event):
         """
@@ -412,21 +405,21 @@ class ColorEQ(wx.Dialog):
         self.saturation = ""
         self.gamma = ""
         self.loader_edit(self.concat_filter())
-    # ------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def on_close(self, event):
         """
         Close this dialog without saving anything
         """
         event.Skip()
-    # ------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def on_ok(self, event):
         """
         Don't use self.Destroy() in this dialog
         """
         event.Skip()
-    # ------------------------------------------------------------------#
+    # -----------------------------------------------------------------------#
 
     def getvalue(self):
         """

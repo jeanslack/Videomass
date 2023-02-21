@@ -806,15 +806,15 @@ class AV_Conv(wx.Panel):
         tip = (_('It can reduce the file size, but takes longer.'))
         self.ckbx_pass.SetToolTip(tip)
         tip = (_('Specifies a minimum tolerance to be used. '
-                 'Set -1 to disable this control.'))
+                 'Set to -1 to disable this control.'))
         self.spinMinr.SetToolTip(tip)
         tip = (_('Specifies a maximum tolerance. This is '
                  'only used in conjunction with buffer size. '
-                 'Set -1 to disable this control.'))
+                 'Set to -1 to disable this control.'))
         self.spinMaxr.SetToolTip(tip)
         tip = (_('Specifies the decoder buffer size, which determines the '
                  'variability of the output bitrate. '
-                 'Set -1 to disable this control.'))
+                 'Set to -1 to disable this control.'))
         self.spinBufsize.SetToolTip(tip)
         tip = (_('"good" is the default and recommended for most '
                  'applications; "best" is recommended if you have lots of '
@@ -829,7 +829,7 @@ class AV_Conv(wx.Panel):
                  'this control.'))
         self.spin_Vbrate.SetToolTip(tip)
         tip = (_('Constant rate factor. Lower values = higher quality and '
-                 'a larger file size. Set -1 to disable this control.'))
+                 'a larger file size. Set to -1 to disable this control.'))
         self.slider_CRF.SetToolTip(tip)
         tip = (_('Preview video filters'))
         self.btn_preview.SetToolTip(tip)
