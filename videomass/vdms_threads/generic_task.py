@@ -6,7 +6,7 @@ Compatibility: Python3 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.14.2022
+Rev: Feb.21.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -37,25 +37,27 @@ class FFmpegGenericTask(Thread):
     """
     Run a generic task with FFmpeg as a separate thread.
     This class does not redirect any progress output information
-    for debugging, however you can get the exit status message
+    for debugging, however you can get the exit status message.
 
-    USE:
-        thread = FFmpegGenericTask(args)
-        thread.join()
-        error = thread.status
-        if error:
-            print('%s' % error)
-            return
+    USAGE:
+        >>> thread = FFmpegGenericTask(args)
+        >>> thread.join()
+        >>> error = thread.status
+        >>> if error:
+        >>>     error
+
+    Raise: `OSError` if not FFmpeg
+    Return: None
 
     """
     get = wx.GetApp()
     appdata = get.appset
 
-    def __init__(self, param):
+    def __init__(self, args):
         """
         Attributes defined here:
 
-        self.param, a string containing the command parameters
+        self.args, a string containing the command args
         of FFmpeg, excluding the command itself `ffmpeg`
 
         self.status, If the exit status is true (which can be an
@@ -63,7 +65,7 @@ class FFmpegGenericTask(Thread):
         handled appropriately, in the other case it is None.
 
         """
-        self.param = param
+        self.args = args
         self.status = None
 
         Thread.__init__(self)
@@ -79,20 +81,17 @@ class FFmpegGenericTask(Thread):
         cmd = (f'"{FFmpegGenericTask.appdata["ffmpeg_cmd"]}" '
                f'{FFmpegGenericTask.appdata["ffmpegloglev"]} '
                f'{FFmpegGenericTask.appdata["ffmpeg+params"]} '
-               f'{self.param}')
+               f'{self.args}')
 
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
-
         try:
             with Popen(cmd,
                        stderr=subprocess.PIPE,
                        universal_newlines=True,
                        encoding='utf8',
                        ) as proc:
-
                 error = proc.communicate()
-
                 if proc.returncode:  # ffmpeg error
                     if error[1]:
                         self.status = error[1]

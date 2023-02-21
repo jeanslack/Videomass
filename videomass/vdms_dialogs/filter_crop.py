@@ -322,7 +322,6 @@ class Crop(wx.Dialog):
     def default(self, fcrop):
         """
         Set controls to previous settings
-
         """
         s = fcrop.split(':')
         s[0] = s[0][5:]  # removing `crop=` word on first item

@@ -149,9 +149,9 @@ class Transpose(wx.Dialog):
 
     def process(self):
         """
-        Calls thread to Run ffmpeg process. Note that the
-        trim start point on this process is set to the total
-        length of the movie divided by two.
+        Generate a new frame. Note that the trim start point
+        on this process is set to the total length of the
+        movie divided by two.
         """
         h, m, s = self.duration.split(':')
         intseq = (int(h) // 2, int(m) // 2, round(float(s) / 2))

@@ -151,7 +151,7 @@ class SetUp(wx.Dialog):
                               name=wx.StaticLineNameStr
                               )
         sizerFiles.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
-        msg = _("Source file preferences")
+        msg = _("Source files preferences")
         labsrcf = wx.StaticText(tabTwo, wx.ID_ANY, msg)
         sizerFiles.Add(labsrcf, 0, wx.ALL | wx.EXPAND, 5)
         descr = _("Always move source files to the Videomass\n"
