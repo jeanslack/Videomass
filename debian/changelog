@@ -43,7 +43,7 @@ videomass (4.0.10-1) UNRELEASED; urgency=medium
   * [A/V Conversion] Fixed storing time position when user search for a specific
     frame on some filter window.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 21 Feb 2023 21:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 22 Feb 2023 17:45:00 +0200
 
 videomass (4.0.5-1) UNRELEASED; urgency=medium
 
