@@ -1,0 +1,18 @@
+[
+    {
+        "Name": "Add audio stream to video",
+        "Description": "Assume that the video file does not contain any audio stream yet (provide a valid audio path-name between double quotes, after -i)",
+        "First_pass": "-i \"audio.wav\" -c:v libx264 -c:a libmp3lame -map_metadata 0 -shortest",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Replace audio stream on video",
+        "Description": "Replace current audio stream with a new one (provide a valid audio path-name between double quotes, after -i)",
+        "First_pass": "-i \"track.wav\" -c:v libx264 -c:a libmp3lame -map 0:v:0 -map 1:a:0 -map_metadata 0 -shortest",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    }
+]

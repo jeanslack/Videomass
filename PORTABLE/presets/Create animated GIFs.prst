@@ -1,0 +1,34 @@
+[
+    {
+        "Name": "1. GIF from video",
+        "Description": "create low quality animated GIFs",
+        "First_pass": "-r 4.0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "gif"
+    },
+    {
+        "Name": "2. GIF from video",
+        "Description": "create high quality animated GIFs",
+        "First_pass": "-vf \"[0:v] split=2 [a][b]; [a] palettegen [p]; [b] [p] paletteuse\" -loop 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "gif"
+    },
+    {
+        "Name": "3. GIF from video",
+        "Description": "create high quality animated GIFs",
+        "First_pass": "-vf \"fps=10,scale=200:-1:flags=lanczos,split=2 [a][b]; [a] palettegen [pal]; [b] fifo [b]; [b] [pal] paletteuse\" -loop 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "gif"
+    },
+    {
+        "Name": "4. GIF from video",
+        "Description": "create animated low quality GIFs",
+        "First_pass": "-vf \"scale=200:-1:flags=lanczos,split=2 [a][b]; [a] palettegen [pal]; [b] fifo [b]; [b] [pal] paletteuse\" -loop 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "gif"
+    }
+]

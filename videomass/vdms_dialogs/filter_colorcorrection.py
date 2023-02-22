@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.18.2023
+Rev: Feb.22.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -80,7 +80,7 @@ class ColorEQ(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         sizerpanels = wx.FlexGridSizer(2, 2, 2, 2)
-        sizerBase.Add(sizerpanels, 0)
+        sizerBase.Add(sizerpanels, 0, wx.CENTER, 0)
         self.panel_img1 = wx.Panel(self, wx.ID_ANY,
                                    size=(self.w_ratio, self.h_ratio))
         sizerpanels.Add(self.panel_img1, 0, wx.ALL | wx.CENTER, 5)
@@ -99,6 +99,7 @@ class ColorEQ(wx.Dialog):
                                     | wx.ALIGN_CENTRE_HORIZONTAL,
                                     )
         sizerpanels.Add(lab_imgfilt, 0, wx.CENTER | wx.EXPAND)
+        sizerBase.Add(10, 10)
         msg = _("Search for a specific frame")
         stboxtime = wx.StaticBox(self, wx.ID_ANY, msg)
         sizertime = wx.StaticBoxSizer(stboxtime, wx.HORIZONTAL)
@@ -116,66 +117,70 @@ class ColorEQ(wx.Dialog):
         self.btn_load = wx.Button(self, wx.ID_ANY, _("Load"))
         self.btn_load.Disable()
         sizertime.Add(self.btn_load, 1, wx.ALL | wx.EXPAND, 10)
-        sizergrid = wx.FlexGridSizer(2, 4, 0, 0)
-        lbl_contrast = wx.StaticText(self, wx.ID_ANY, _('Contrast:'))
-        sizergrid.Add(lbl_contrast, 0, wx.LEFT
-                      | wx.ALIGN_CENTRE_VERTICAL
-                      | wx.ALIGN_CENTRE_HORIZONTAL, 5)
-        self.sld_contrast = wx.Slider(self, wx.ID_ANY, 0, -100, 100,
-                                      size=(180, -1), style=wx.SL_HORIZONTAL
-                                      | wx.SL_AUTOTICKS
-                                      | wx.SL_LABELS,
-                                      )
-        sizergrid.Add(self.sld_contrast, 0, wx.LEFT
-                      | wx.ALIGN_CENTRE_VERTICAL
-                      | wx.ALIGN_CENTRE_HORIZONTAL, 5)
-
-        lbl_brigh = wx.StaticText(self, wx.ID_ANY, _('Brightness:'))
-        sizergrid.Add(lbl_brigh, 0, wx.LEFT
-                      | wx.ALIGN_CENTRE_VERTICAL
-                      | wx.ALIGN_CENTRE_HORIZONTAL, 5)
-        self.sld_bright = wx.Slider(self, wx.ID_ANY, 0, -100, 100,
-                                    size=(180, -1), style=wx.SL_HORIZONTAL
-                                    | wx.SL_AUTOTICKS
-                                    | wx.SL_LABELS,
-                                    )
-        sizergrid.Add(self.sld_bright, 0, wx.LEFT
-                      | wx.ALIGN_CENTRE_VERTICAL
-                      | wx.ALIGN_CENTRE_HORIZONTAL, 5)
-
-        lbl_sat = wx.StaticText(self, wx.ID_ANY, _('Saturation:'))
-        sizergrid.Add(lbl_sat, 0, wx.LEFT
-                      | wx.ALIGN_CENTRE_VERTICAL
-                      | wx.ALIGN_CENTRE_HORIZONTAL, 5)
-        self.sld_sat = wx.Slider(self, wx.ID_ANY, 0, 0, 300,
-                                 size=(180, -1), style=wx.SL_HORIZONTAL
-                                 | wx.SL_AUTOTICKS
-                                 | wx.SL_LABELS,
-                                 )
-        sizergrid.Add(self.sld_sat, 0, wx.LEFT
-                      | wx.ALIGN_CENTRE_VERTICAL
-                      | wx.ALIGN_CENTRE_HORIZONTAL, 5)
-
-        lbl_gam = wx.StaticText(self, wx.ID_ANY, _('Gamma:'))
-        sizergrid.Add(lbl_gam, 0, wx.LEFT
-                      | wx.ALIGN_CENTRE_VERTICAL
-                      | wx.ALIGN_CENTRE_HORIZONTAL, 5)
-        self.sld_gam = wx.Slider(self, wx.ID_ANY, 0, 0, 100,
-                                 size=(180, -1), style=wx.SL_HORIZONTAL
-                                 | wx.SL_AUTOTICKS
-                                 | wx.SL_LABELS,
-                                 )
-        sizergrid.Add(self.sld_gam, 0, wx.LEFT
-                      | wx.ALIGN_CENTRE_VERTICAL
-                      | wx.ALIGN_CENTRE_HORIZONTAL, 5)
         boxcolor = wx.StaticBox(self, wx.ID_ANY, (_("Color EQ")))
         sizercolor = wx.StaticBoxSizer(boxcolor, wx.VERTICAL)
         sizerBase.Add(sizercolor, 0, wx.ALL | wx.EXPAND, 5)
-        sizercolor.Add(sizergrid, 0, wx.BOTTOM | wx.CENTRE, 10)
+        sizerflex1 = wx.FlexGridSizer(0, 4, 0, 0)
+        sizercolor.Add(sizerflex1, 0, wx.ALL | wx.CENTRE, 5)
+
+        lbl_contrast = wx.StaticText(self, wx.ID_ANY, _('Contrast:'))
+        sizerflex1.Add(lbl_contrast, 0, wx.ALIGN_CENTRE_VERTICAL
+                       | wx.ALIGN_CENTRE_HORIZONTAL, 0)
+        self.sld_contrast = wx.Slider(self, wx.ID_ANY, 0, -100, 100,
+                                      size=(200, -1), style=wx.SL_HORIZONTAL
+                                      | wx.SL_AUTOTICKS
+                                      | wx.SL_LABELS,
+                                      )
+        sizerflex1.Add(self.sld_contrast, 0, wx.LEFT
+                       | wx.ALIGN_CENTRE_VERTICAL
+                       | wx.ALIGN_CENTRE_HORIZONTAL, 10)
+
+        lbl_brigh = wx.StaticText(self, wx.ID_ANY, _('Brightness:'))
+        sizerflex1.Add(lbl_brigh, 0, wx.LEFT
+                       | wx.ALIGN_CENTRE_VERTICAL
+                       | wx.ALIGN_CENTRE_HORIZONTAL, 20)
+        self.sld_bright = wx.Slider(self, wx.ID_ANY, 0, -100, 100,
+                                    size=(200, -1), style=wx.SL_HORIZONTAL
+                                    | wx.SL_AUTOTICKS
+                                    | wx.SL_LABELS,
+                                    )
+        sizerflex1.Add(self.sld_bright, 0, wx.LEFT
+                       | wx.ALIGN_CENTRE_VERTICAL
+                       | wx.ALIGN_CENTRE_HORIZONTAL, 10)
+        line = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                             size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                             name=wx.StaticLineNameStr,
+                             )
+        sizercolor.Add(line, 0, wx.ALL | wx.EXPAND, 5)
+        sizerflex2 = wx.FlexGridSizer(0, 4, 0, 0)
+        lbl_sat = wx.StaticText(self, wx.ID_ANY, _('Saturation:'))
+        sizerflex2.Add(lbl_sat, 0, wx.ALIGN_CENTRE_VERTICAL
+                       | wx.ALIGN_CENTRE_HORIZONTAL, 0)
+        self.sld_sat = wx.Slider(self, wx.ID_ANY, 100, 0, 300,
+                                 size=(200, -1), style=wx.SL_HORIZONTAL
+                                 | wx.SL_AUTOTICKS
+                                 | wx.SL_LABELS,
+                                 )
+        sizerflex2.Add(self.sld_sat, 0, wx.LEFT
+                       | wx.ALIGN_CENTRE_VERTICAL
+                       | wx.ALIGN_CENTRE_HORIZONTAL, 10)
+        lbl_gam = wx.StaticText(self, wx.ID_ANY, _('Gamma:'))
+        sizerflex2.Add(lbl_gam, 0, wx.LEFT
+                       | wx.ALIGN_CENTRE_VERTICAL
+                       | wx.ALIGN_CENTRE_HORIZONTAL, 20)
+        self.sld_gam = wx.Slider(self, wx.ID_ANY, 10, 0, 100,
+                                 size=(200, -1), style=wx.SL_HORIZONTAL
+                                 | wx.SL_AUTOTICKS
+                                 | wx.SL_LABELS,
+                                 )
+        sizerflex2.Add(self.sld_gam, 0, wx.LEFT
+                       | wx.ALIGN_CENTRE_VERTICAL
+                       | wx.ALIGN_CENTRE_HORIZONTAL, 10)
+        sizercolor.Add(sizerflex2, 0, wx.ALL | wx.CENTRE, 5)
         # bottom btns
         gridBtn = wx.GridSizer(1, 2, 0, 0)
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
-        btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
+        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
         gridBtn.Add(btn_reset, 0, wx.ALL, 5)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         gridexit.Add(btn_close, 0, wx.ALL, 5)
@@ -275,24 +280,27 @@ class ColorEQ(wx.Dialog):
         """
         filterlist = colorset.split(':')
         filterlist[0] = filterlist[0].split(sep='=', maxsplit=1)[1]
-        values = dict(x.split('=') for x in filterlist)
-        for x, y in values.items():
-            if x == 'contrast':
-                self.contrast = f'contrast={y}'
-            if x == 'brightness':
-                self.contrast = f'brightness={y}'
-            if x == 'saturation':
-                self.contrast = f'saturation={y}'
-            if x == 'gamma':
-                self.contrast = f'gamma={y}'
+        eqval = dict(x.split('=') for x in filterlist)
+        # set attributes strings if eqval has keys else as init ("")
+        for key, val in eqval.items():
+            if key == 'contrast':
+                self.contrast = f'contrast={val}'
+            if key == 'brightness':
+                self.brightness = f'brightness={val}'
+            if key == 'saturation':
+                self.saturation = f'saturation={val}'
+            if key == 'gamma':
+                self.gamma = f'gamma={val}'
 
-        contrast = round(float(values.get('contrast', 1.0)) * 100 - 100)
-        brightness = int(float(values.get('brightness', 0.0)) * 100)
-        gamma = int(float(values.get('gamma', 0.0)) * 10)
-
+        # translate to sliders values
+        contrast = round(float(eqval.get('contrast', 1.0)) * 100 - 100)
+        brightness = int(float(eqval.get('brightness', 0.0)) * 100)
+        saturation = int(float(eqval.get('saturation', 1.00)) * 100)
+        gamma = int(float(eqval.get('gamma', 0.0)) * 10)
+        # set sliders
         self.sld_contrast.SetValue(contrast)
         self.sld_bright.SetValue(brightness)
-        self.sld_sat.SetValue(int(values.get('saturation', 0)))
+        self.sld_sat.SetValue(saturation)
         self.sld_gam.SetValue(gamma)
     # -----------------------------------------------------------------------#
 
@@ -315,8 +323,8 @@ class ColorEQ(wx.Dialog):
 
     def concat_filter(self):
         """
-        Concatenates all equalizers.
-        Return an equalizer string in ffmpeg syntax.
+        Concatenates all EQ values.
+        Returns the EQ filter string in ffmpeg syntax.
         """
         orderf = (self.contrast, self.brightness, self.saturation, self.gamma)
         concat = ''.join([f'{x}:' for x in orderf if x])[:-1]
@@ -362,37 +370,37 @@ class ColorEQ(wx.Dialog):
 
     def on_contrast(self, event):
         """
-        Scroll event for contrast eq.
+        Scroll event for contrast EQ.
         """
         val = 1.0 + self.sld_contrast.GetValue() / 100
-        self.contrast = '' if val == 1.0 else f'contrast={val}'
+        self.contrast = "" if val == 1.0 else f'contrast={val}'
         self.loader_edit(self.concat_filter())
     # -----------------------------------------------------------------------#
 
     def on_brightness(self, event):
         """
-        Scroll event for brightness eq.
+        Scroll event for brightness EQ.
         """
-        val = 0.00 + self.sld_bright.GetValue() / 100
-        self.brightness = '' if val == 0.00 else f'brightness={val}'
+        val = 0.0 + self.sld_bright.GetValue() / 100
+        self.brightness = "" if val == 0.0 else f'brightness={val}'
         self.loader_edit(self.concat_filter())
     # -----------------------------------------------------------------------#
 
     def on_saturation(self, event):
         """
-        Scroll event for saturation eq.
+        Scroll event for saturation EQ.
         """
-        val = self.sld_sat.GetValue()
-        self.saturation = '' if val == 0 else f'saturation={val}'
+        val = 0.0 + self.sld_sat.GetValue() / 100
+        self.saturation = "" if val == 1.0 else f'saturation={val}'
         self.loader_edit(self.concat_filter())
     # -----------------------------------------------------------------------#
 
     def on_gamma(self, event):
         """
-        Scroll event for gamma eq.
+        Scroll event for gamma EQ.
         """
         val = self.sld_gam.GetValue() / 10
-        self.gamma = '' if val == 0 else f'gamma={val}'
+        self.gamma = "" if val == 1.0 else f'gamma={val}'
         self.loader_edit(self.concat_filter())
     # -----------------------------------------------------------------------#
 
@@ -404,6 +412,10 @@ class ColorEQ(wx.Dialog):
         self.brightness = ""
         self.saturation = ""
         self.gamma = ""
+        self.sld_contrast.SetValue(0)
+        self.sld_bright.SetValue(0)
+        self.sld_sat.SetValue(100)
+        self.sld_gam.SetValue(10)
         self.loader_edit(self.concat_filter())
     # -----------------------------------------------------------------------#
 

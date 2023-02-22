@@ -1,0 +1,18 @@
+[
+    {
+        "Name": "Add a single subtitle to the video",
+        "Description": "Add a single subtitle in * .vtt format to a video file (without encoding audio and video streams)",
+        "First_pass": "-i \"/home/user/sub-files/english.vtt\" -map 0:v -map 0:a -map 1 -c:v copy -c:a copy -metadata:s:s:0 language=english",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Add multiple subtitles",
+        "Description": "Example to add multiple subtitles langs in *.vtt format to video file  (without encoding audio and video streams)",
+        "First_pass": "-i \"/home/user/arabic.vtt\" -i \"/home/user/sub-files/chinese.vtt\" -i \"/home/user/sub-files/english.vtt\" -i \"/home/user/sub-files/french.vtt\" -i \"/home/user/sub-files/german.vtt\" -i \"/home/user/sub-files/greek.vtt\" -i \"/home/user/sub-files/italian.vtt\" -i \"/home/user/sub-files/portuguese.vtt\" -i \"/home/user/sub-files/romanian.vtt\" -i \"/home/user/sub-files/russian.vtt\" -i \"/home/user/sub-files/spanish.vtt\" -i \"/home/user/sub-files/swedish.vtt\" -i \"/home/user/sub-files/turkish.vtt\" -map 0:v -map 0:a -map 1 -map 2 -map 3 -map 4 -map 5 -map 6 -map 7 -map 8 -map 9 -map 10 -map 11 -map 12 -map 13 -c:v copy -c:a copy -metadata:s:s:0 language=arabic -metadata:s:s:1 language=chinese -metadata:s:s:2 language=english -metadata:s:s:3 language=french -metadata:s:s:4 language=german -metadata:s:s:5 language=greek -metadata:s:s:6 language=italian -metadata:s:s:7 language=portuguese -metadata:s:s:8 language=romanian -metadata:s:s:9 language=russian -metadata:s:s:10 language=spanish -metadata:s:s:11 language=swedish -metadata:s:s:12 language=turkish",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    }
+]

@@ -60,9 +60,7 @@ class Transpose(wx.Dialog):
         self.h_ratio = int((self.v_height / self.v_width) * self.thr)
         self.w_ratio = int((self.v_width / self.v_height) * self.h_ratio)
         self.current_angle = 0
-        self.center = (int((self.w_ratio / 2)),
-                       int((self.h_ratio / 2)),
-                       )  # original center
+        self.center = (int((self.w_ratio / 2)), int((self.h_ratio / 2)))
         self.transpose = {'degrees': ['', 0]}
         self.duration = duration
         self.video = fname

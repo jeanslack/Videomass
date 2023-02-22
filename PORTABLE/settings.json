@@ -1,0 +1,32 @@
+{
+    "confversion": 4.8,
+    "outputfile": "PORTABLE/My_Files",
+    "outputfile_samedir": false,
+    "filesuffix": "",
+    "ffmpeg_cmd": "../../../../../../usr/bin/ffmpeg",
+    "ffmpeg_islocal": false,
+    "ffmpegloglev": "-loglevel warning",
+    "ffthreads": "-threads 4",
+    "ffplay_cmd": "../../../../../../usr/bin/ffplay",
+    "ffplay_islocal": false,
+    "ffplayloglev": "-loglevel error",
+    "ffprobe_cmd": "../../../../../../usr/bin/ffprobe",
+    "ffprobe_islocal": false,
+    "warnexiting": true,
+    "icontheme": "Videomass-Colours",
+    "toolbarsize": 24,
+    "toolbarpos": 0,
+    "toolbartext": false,
+    "window_size": [
+        850,
+        560
+    ],
+    "window_position": [
+        104,
+        220
+    ],
+    "clearcache": false,
+    "clearlogfiles": false,
+    "move_file_to_trash": false,
+    "locale_name": "Default"
+}

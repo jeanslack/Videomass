@@ -200,8 +200,12 @@ class Crop(wx.Dialog):
         sizerBase.Add(sizersize, 0, wx.ALL | wx.CENTER, 5)
         msg = _("Source size: {0} x {1} pixels").format(self.v_width,
                                                         self.v_height)
-        label1 = wx.StaticText(self, wx.ID_ANY, msg)
-        sizersize.Add(label1, 0, wx.CENTER)
+        label1 = wx.StaticText(self, wx.ID_ANY,
+                               label=msg,
+                               style=wx.ST_NO_AUTORESIZE
+                               | wx.ALIGN_CENTRE_HORIZONTAL,
+                               )
+        sizersize.Add(label1, 0, wx.CENTER | wx.EXPAND)
         msg = _("Search for a specific frame")
         sizer_load = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg)),
                                        wx.HORIZONTAL)
