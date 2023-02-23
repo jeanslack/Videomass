@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.13.2022
+Rev: Feb.23.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,9 +24,11 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+import os
 import webbrowser
 import wx
-# import wx.lib.masked as masked # does not work on macOSX
+from videomass.vdms_io import io_tools
+from videomass.vdms_threads.generic_task import FFmpegGenericTask
 
 
 class Scale(wx.Dialog):
@@ -37,8 +39,11 @@ class Scale(wx.Dialog):
     """
     get = wx.GetApp()
     appdata = get.appset
+    TMPROOT = os.path.join(appdata['cachedir'], 'tmp', 'Scale')
+    TMPSRC = os.path.join(TMPROOT, 'tmpsrc')
+    os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
 
-    def __init__(self, parent, scale, dar, sar, v_width, v_height):
+    def __init__(self, parent, *args, **kwa):
         """
         setdar and setsar values only will be returned if `Constrain
         proportions` is not checked. All strings with "0" will disable
@@ -51,9 +56,20 @@ class Scale(wx.Dialog):
         self.darDen = "0"
         self.sarNum = "0"
         self.sarDen = "0"
+        self.filename = kwa['filename']  # selected filename on queued list
+        name = os.path.splitext(os.path.basename(self.filename))[0]
+        self.frame = os.path.join(f'{Scale.TMPSRC}', f'{name}.png')  # image
+        if not kwa['duration'] == '00:00:00.000':
+            h, m, s = kwa['duration'].split(':')
+            intseq = (int(h) // 2, int(m) // 2, round(float(s) / 2))
+            self.clock = ':'.join([str(x).zfill(2) for x in intseq])
+        else:
+            self.clock = kwa['duration']
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
+        btn_view = wx.Button(self, wx.ID_ANY, _("View result"))
+        sizerBase.Add(btn_view, 0, wx.ALL, 5)
         # --- Scale section:
         box_scale = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                       _("New size in pixels"))), wx.VERTICAL)
@@ -81,7 +97,8 @@ class Scale(wx.Dialog):
         Flex_scale.Add(self.spin_scale_height, 0, wx.ALL
                        | wx.ALIGN_CENTER_VERTICAL, 5
                        )
-        dim = _("Source size: {0} x {1} pixels").format(v_width, v_height)
+        dim = _("Source size: {0} x {1} pixels").format(kwa['width'],
+                                                        kwa['height'])
         label_sdim = wx.StaticText(self, wx.ID_ANY, dim)
         box_scale.Add(label_sdim, 0, wx.BOTTOM | wx.CENTER, 10)
         # --- options
@@ -190,7 +207,8 @@ class Scale(wx.Dialog):
         gridexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
         gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))  # Reimposta
+        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))  # Reimposta
+        btn_reset.SetBitmap(args[3], wx.LEFT)
         gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
         sizerBase.Add(gridBtn, 0, wx.EXPAND)
@@ -201,10 +219,10 @@ class Scale(wx.Dialog):
 
         # Properties
         self.SetTitle(_("Resizing filters"))
-        scale_str = (_('Scale filter, set to 0 to disable'))
+        scale_str = _('Scale filter, set to 0 to disable')
         self.spin_scale_width.SetToolTip(scale_str)
         self.spin_scale_height.SetToolTip(scale_str)
-        setdar_str = (_('Display Aspect Ratio. Set to 0 to disable'))
+        setdar_str = _('Display Aspect Ratio. Set to 0 to disable')
         self.spin_setdarNum.SetToolTip(setdar_str)
         self.spin_setdarDen.SetToolTip(setdar_str)
         setsar_str = (_('Sample (aka Pixel) Aspect Ratio.\nSet to 0 '
@@ -222,45 +240,53 @@ class Scale(wx.Dialog):
             self.lab_sar.SetLabelMarkup(f"<b>{lab2}</b>")
 
         # ----------------------Binding (EVT)--------------------------#
-        self.Bind(wx.EVT_CHECKBOX, self.on_Constrain, self.ckbx_keep)
-        self.Bind(wx.EVT_RADIOBOX, self.on_Dimension, self.rdb_scale)
+        self.Bind(wx.EVT_BUTTON, self.on_image_viewer, btn_view)
+        self.Bind(wx.EVT_CHECKBOX, self.on_constrain, self.ckbx_keep)
+        self.Bind(wx.EVT_RADIOBOX, self.on_dimension, self.rdb_scale)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         # Set previous changes
-        if scale:
-            self.width = scale.split(':', maxsplit=1)[0][8:]
-            self.height = scale.split(':', maxsplit=1)[1][2:]
+        if args[0]:  # scale
+            self.width = args[0].split(':', maxsplit=1)[0][8:]
+            self.height = args[0].split(':', maxsplit=1)[1][2:]
 
             if self.width in ('-1', '-2'):
                 self.ckbx_keep.SetValue(True)
                 self.rdb_scale.Enable()
                 self.rdb_scale.SetSelection(1)
-                self.keep_aspect_ratio_ON()
-                self.on_Dimension(self)
+                self.keep_aspect_ratio_on()
+                self.on_dimension(self)
             elif self.height in ('-1', '-2'):
                 self.ckbx_keep.SetValue(True)
                 self.rdb_scale.Enable()
                 self.rdb_scale.SetSelection(0)
-                self.keep_aspect_ratio_ON()
-                self.on_Dimension(self)
+                self.keep_aspect_ratio_on()
+                self.on_dimension(self)
 
             self.spin_scale_width.SetValue(self.width)
             self.spin_scale_height.SetValue(self.height)
 
-        if dar:
-            self.darNum = dar.split('/')[0][7:]
-            self.darDen = dar.split('/')[1]
+        if args[1]:  # dar
+            self.darNum = args[1].split('/')[0][7:]
+            self.darDen = args[1].split('/')[1]
             self.spin_setdarNum.SetValue(int(self.darNum))
             self.spin_setdarDen.SetValue(int(self.darDen))
-        if sar:
-            self.sarNum = sar.split('/')[0][7:]
-            self.sarDen = sar.split('/')[1]
+        if args[2]:  # sar
+            self.sarNum = args[2].split('/')[0][7:]
+            self.sarDen = args[2].split('/')[1]
             self.spin_setsarNum.SetValue(int(self.sarNum))
             self.spin_setsarDen.SetValue(int(self.sarDen))
 
-    def keep_aspect_ratio_ON(self):
+        scaledata = {"scale": args[0], "sedar": args[1], "setsar": args[2]}
+        concat = self.concat_filter(scaledata)
+        error = self.process(concat)
+        if error:
+            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+            return
+
+    def keep_aspect_ratio_on(self):
         """
         Reset the setdar and setsar filters and disable them
         """
@@ -281,7 +307,7 @@ class Scale(wx.Dialog):
         self.label_sepsar.Disable()
         self.label_den1.Disable()
 
-    def keep_aspect_ratio_OFF(self):
+    def keep_aspect_ratio_off(self):
         """
         Re-enable the setdar and setsar filters
         """
@@ -297,24 +323,64 @@ class Scale(wx.Dialog):
         self.label_num1.Enable()
         self.label_sepsar.Enable()
         self.label_den1.Enable()
-
     # ----------------------Event handler (callback)---------------------#
 
-    def on_Constrain(self, event):
+    def concat_filter(self, scaledata):
+        """
+        Concatenates all Scale values.
+        Returns the Scale filter string in ffmpeg syntax.
+        """
+        orderf = list(scaledata.values())
+        concat = ''.join([f'{x},' for x in orderf if x])[:-1]
+        return concat
+    # -----------------------------------------------------------------------#
+
+    def process(self, concat):
+        """
+        Generate a new frame at the clock position using the scale
+        filter. Note that the trim start point on this process is
+        set to the total length of the movie divided by two.
+        """
+        scale = '' if not concat else f'-vf "{concat}"'
+        arg = (f'-ss {self.clock} -i "{self.filename}" -vframes 1 '
+               f'{scale} -y "{self.frame}"')
+        thread = FFmpegGenericTask(arg)
+        thread.join()  # wait end thread
+        error = thread.status
+        if error:
+            return error
+        return None
+    # -----------------------------------------------------------------------#
+
+    def on_image_viewer(self, event):
+        """
+        Open the image (frame) with default OS image viewer.
+        """
+        concat = self.concat_filter(self.getvalue())
+        error = self.process(concat)
+        if error:
+            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+            return
+
+        if os.path.exists(self.frame) and os.path.isfile(self.frame):
+            io_tools.openpath(self.frame)
+    # ------------------------------------------------------------------#
+
+    def on_constrain(self, event):
         """
         Evaluate CheckBox status
         """
         if self.ckbx_keep.IsChecked():
-            self.keep_aspect_ratio_ON()
+            self.keep_aspect_ratio_on()
             self.rdb_scale.Enable()
         else:
-            self.keep_aspect_ratio_OFF()
+            self.keep_aspect_ratio_off()
             self.rdb_scale.Disable()
 
-        self.on_Dimension(self)
+        self.on_dimension(self)
     # ------------------------------------------------------------------#
 
-    def on_Dimension(self, event):
+    def on_dimension(self, event):
         """
         Set the scaling controls according to whether the
         RadioBox is enabled or disabled
@@ -362,7 +428,7 @@ class Scale(wx.Dialog):
         self.darNum, self.darDen = "0", "0"
         self.sarNum, self.sarDen = "0", "0"
         self.ckbx_keep.SetValue(False)
-        self.on_Constrain(self)
+        self.on_constrain(self)
         self.spin_scale_width.SetValue(0)
         self.spin_scale_height.SetValue(0)
         self.spin_setdarNum.SetValue(0)

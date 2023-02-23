@@ -1319,8 +1319,8 @@ class MainFrame(wx.Frame):
                                                )
         # self.toolbar.AddStretchableSpace()
         # self.toolbar.AddSeparator()
-        tip = _("Convert using FFmpeg")
-        self.run_coding = self.toolbar.AddTool(12, _('Convert'),
+        tip = _("Start the process using ffmpeg")
+        self.run_coding = self.toolbar.AddTool(12, _('Render'),
                                                bmpconv,
                                                tip, wx.ITEM_NORMAL
                                                )

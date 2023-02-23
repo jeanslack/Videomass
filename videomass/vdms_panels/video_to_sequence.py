@@ -67,8 +67,10 @@ class VideoToSequence(wx.Panel):
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpresize = get_bmp(icons['scale'], ((16, 16)))
+            self.bmpreset = get_bmp(icons['clear'], ((16, 16)))
         else:
             bmpresize = wx.Bitmap(icons['scale'], wx.BITMAP_TYPE_ANY)
+            self.bmpreset = wx.Bitmap(icons['clear'], wx.BITMAP_TYPE_ANY)
 
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -388,7 +390,10 @@ class VideoToSequence(wx.Panel):
         if 'video' in index.get('streams')[0]['codec_type']:
             width = int(index['streams'][0]['width'])
             height = int(index['streams'][0]['height'])
-            return (width, height)
+            filename = index['format']['filename']
+            duration = index['format'].get('time', '00:00:00.000')
+            return dict(zip(['width', 'height', 'filename', 'duration'],
+                            [width, height, filename, duration]))
 
         wx.MessageBox(_('The file is not a frame or a video file'),
                       'Videomass', wx.ICON_INFORMATION)
@@ -399,15 +404,15 @@ class VideoToSequence(wx.Panel):
         """
         Enable or disable scale, setdar and setsar filters
         """
-        sdf = self.get_video_stream()
-        if not sdf:
+        kwa = self.get_video_stream()
+        if not kwa:
             return
         with Scale(self,
                    self.opt["Scale"],
                    self.opt["Setdar"],
                    self.opt["Setsar"],
-                   sdf[0],  # width
-                   sdf[1],  # height
+                   self.bmpreset,
+                   **kwa,
                    ) as sizing:
 
             if sizing.ShowModal() == wx.ID_OK:

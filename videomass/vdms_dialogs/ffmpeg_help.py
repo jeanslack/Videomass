@@ -145,7 +145,7 @@ class FFmpegHelp(wx.Dialog):
         self.case.SetToolTip(_("Ignore case distinctions: characters with "
                                "different case will match."
                                ))
-        boxsearch.Add(self.case, 0, wx.ALIGN_CENTER_VERTICAL, 5)
+        boxsearch.Add(self.case, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         sizer.Add(boxsearch, 0, wx.ALL, 5)
         # bottom layout
         grid = wx.GridSizer(1, 1, 0, 0)

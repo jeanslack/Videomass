@@ -37,7 +37,7 @@ class Denoisers(wx.Dialog):
     get = wx.GetApp()
     appdata = get.appset
 
-    def __init__(self, parent, denoiser):
+    def __init__(self, parent, denoiser, iconreset):
         """
         Make sure you use the clear button when you finish the task.
         Enable filters denoiser useful in some case, example when apply
@@ -81,7 +81,8 @@ class Denoisers(wx.Dialog):
         btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
-        btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
+        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
+        btn_reset.SetBitmap(iconreset, wx.LEFT)
         # ------ set Layout
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizer_base.Add(zone, 1, wx.ALL | wx.EXPAND, 5)

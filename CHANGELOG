@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Feb 22, 2023 V.4.0.10
+Feb 23, 2023 V.4.0.10
 
   * Removed interface to youtube_dl/yt_dlp libraries. Videomass will no longer
     have any functionality for downloading web videos. This mainly
@@ -50,7 +50,8 @@ Feb 22, 2023 V.4.0.10
     which implements video filter for color correction like contrast,
     brightness, saturation and gamma.
   * [A/V Conversion] Fixed storing time position when user search for a specific
-    frame on some filter window.
+    frame using some filter window.
+  * [A/V Conversion] Scale filter has a frame preview directly on window.
 
 +------------------------------------+
 Jan 17, 2023 V.4.0.5

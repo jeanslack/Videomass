@@ -37,8 +37,8 @@ class AudioSettings(wx.Dialog):
     how to use this class.
     """
 
-    def __init__(self, parent, codecname, arate,
-                 adepth, abitrate, achannel, title):
+    def __init__(self, parent, codecname, title, iconreset, arate,
+                 adepth, abitrate, achannel):
         """
         The given 'codecname' parameter represents the
         audio codec string, which will passed to the
@@ -108,7 +108,8 @@ class AudioSettings(wx.Dialog):
 
         self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
-        btn_reset = wx.Button(self, wx.ID_CLEAR, "")
+        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
+        btn_reset.SetBitmap(iconreset, wx.LEFT)
 
         # ----------------------Properties----------------------
 

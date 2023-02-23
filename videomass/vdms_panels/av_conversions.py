@@ -184,7 +184,7 @@ class AV_Conv(wx.Panel):
         if 'wx.svg' in sys.modules:  # only available in wx version 4.1 to up
             bmpplay = get_bmp(icons['preview'], ((16, 16)))
             bmpapreview = get_bmp(icons['preview_audio'], ((16, 16)))
-            bmpreset = get_bmp(icons['clear'], ((16, 16)))
+            self.bmpreset = get_bmp(icons['clear'], ((16, 16)))
             bmpresize = get_bmp(icons['scale'], ((16, 16)))
             bmpcrop = get_bmp(icons['crop'], ((16, 16)))
             bmprotate = get_bmp(icons['rotate'], ((16, 16)))
@@ -199,7 +199,7 @@ class AV_Conv(wx.Panel):
         else:
             bmpplay = wx.Bitmap(icons['preview'], wx.BITMAP_TYPE_ANY)
             bmpapreview = wx.Bitmap(icons['preview_audio'], wx.BITMAP_TYPE_ANY)
-            bmpreset = wx.Bitmap(icons['clear'], wx.BITMAP_TYPE_ANY)
+            self.bmpreset = wx.Bitmap(icons['clear'], wx.BITMAP_TYPE_ANY)
             bmpresize = wx.Bitmap(icons['scale'], wx.BITMAP_TYPE_ANY)
             bmpcrop = wx.Bitmap(icons['crop'], wx.BITMAP_TYPE_ANY)
             bmprotate = wx.Bitmap(icons['rotate'], wx.BITMAP_TYPE_ANY)
@@ -574,7 +574,7 @@ class AV_Conv(wx.Panel):
         self.btn_preview.Disable()
         self.btn_reset = wx.Button(self.filterVpanel, wx.ID_ANY,
                                    _("Reset"), size=(-1, -1))
-        self.btn_reset.SetBitmap(bmpreset, wx.LEFT)
+        self.btn_reset.SetBitmap(self.bmpreset, wx.LEFT)
         sizer_Vfilter.Add(self.btn_reset, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_reset.Disable()
 
@@ -1360,7 +1360,7 @@ class AV_Conv(wx.Panel):
 
     def get_video_stream(self):
         """
-        Given a frame or a video file, it returns a tuple of data
+        Given a frame or a video file, it returns a dict object
         containing information on the streams required by some video
         filters.
 
@@ -1375,8 +1375,9 @@ class AV_Conv(wx.Panel):
             width = int(index['streams'][0]['width'])
             height = int(index['streams'][0]['height'])
             filename = index['format']['filename']
-            time = index['format'].get('time', '00:00:00.000')
-            return (width, height, filename, time)
+            duration = index['format'].get('time', '00:00:00.000')
+            return dict(zip(['width', 'height', 'filename', 'duration'],
+                            [width, height, filename, duration]))
 
         wx.MessageBox(_('The file is not a frame or a video file'),
                       'Videomass', wx.ICON_INFORMATION, self)
@@ -1409,18 +1410,17 @@ class AV_Conv(wx.Panel):
         """
         Enable or disable scale, setdar and setsar filters
         """
-        sdf = self.get_video_stream()
-        if not sdf:
+        kwa = self.get_video_stream()
+        if not kwa:
             return
 
         with Scale(self,
                    self.opt["Scale"],
                    self.opt["Setdar"],
                    self.opt["Setsar"],
-                   sdf[0],  # width
-                   sdf[1],  # height
+                   self.bmpreset,
+                   **kwa,
                    ) as sizing:
-
             if sizing.ShowModal() == wx.ID_OK:
                 data = sizing.getvalue()
                 if not [x for x in data.values() if x]:
@@ -1442,19 +1442,16 @@ class AV_Conv(wx.Panel):
         """
         Enable or disable transpose filter for frame rotations
         """
-        sdf = self.get_video_stream()
-        if not sdf:
+        kwa = self.get_video_stream()
+        if not kwa:
             return
 
         with Transpose(self,
                        self.opt["Orientation"][0],
                        self.opt["Orientation"][1],
-                       sdf[0],  # width,
-                       sdf[1],  # height
-                       sdf[2],  # filename
-                       sdf[3],  # time
+                       self.bmpreset,
+                       **kwa,
                        ) as rotate:
-
             if rotate.ShowModal() == wx.ID_OK:
                 data = rotate.getvalue()
                 self.opt["Orientation"][0] = data[0]  # cmd option
@@ -1471,17 +1468,11 @@ class AV_Conv(wx.Panel):
         """
         Enable or disable crop filter
         """
-        sdf = self.get_video_stream()
-        if not sdf:
+        kwa = self.get_video_stream()
+        if not kwa:
             return
 
-        with Crop(self,
-                  self.opt["Crop"],
-                  sdf[0],
-                  sdf[1],
-                  sdf[2],
-                  sdf[3]) as crop:
-
+        with Crop(self, self.opt["Crop"], self.bmpreset, **kwa) as crop:
             if crop.ShowModal() == wx.ID_OK:
                 data = crop.getvalue()
                 if not data:
@@ -1506,8 +1497,8 @@ class AV_Conv(wx.Panel):
         with Deinterlace(self,
                          self.opt["Deinterlace"],
                          self.opt["Interlace"],
+                         self.bmpreset,
                          ) as lacing:
-
             if lacing.ShowModal() == wx.ID_OK:
                 data = lacing.getvalue()
                 if not data:
@@ -1536,9 +1527,7 @@ class AV_Conv(wx.Panel):
         sdf = self.get_video_stream()
         if not sdf:
             return
-
-        with Denoisers(self, self.opt["Denoiser"]) as den:
-
+        with Denoisers(self, self.opt["Denoiser"], self.bmpreset) as den:
             if den.ShowModal() == wx.ID_OK:
                 data = den.getvalue()
                 if not data:
@@ -1560,7 +1549,6 @@ class AV_Conv(wx.Panel):
         sdf = self.get_video_stream()
         if not sdf:
             return
-
         if self.opt["Passing"] == "2 pass":
             wx.MessageBox(_('This filter is incompatible with '
                             '2-pass enabled'),
@@ -1572,8 +1560,8 @@ class AV_Conv(wx.Panel):
                      self.opt["Vidstabtransform"],
                      self.opt["Unsharp"],
                      self.opt["Makeduo"],
+                     self.bmpreset,
                      ) as stab:
-
             if stab.ShowModal() == wx.ID_OK:
                 data = stab.getvalue()
                 if not data:
@@ -1597,16 +1585,11 @@ class AV_Conv(wx.Panel):
         Enable or disable color correction filter like
         contrast, brightness, saturation, gamma.
         """
-        sdf = self.get_video_stream()
-        if not sdf:
+        kwa = self.get_video_stream()
+        if not kwa:
             return
-
-        with ColorEQ(self,
-                     self.opt["ColorEQ"],
-                     sdf[0],
-                     sdf[1],
-                     sdf[2],
-                     sdf[3]) as coloreq:
+        with ColorEQ(self, self.opt["ColorEQ"], self.bmpreset, **kwa,
+                     ) as coloreq:
             if coloreq.ShowModal() == wx.ID_OK:
                 data = coloreq.getvalue()
                 if not data:
@@ -1628,7 +1611,6 @@ class AV_Conv(wx.Panel):
 
         else:
             self.opt["AspectRatio"] = f'-aspect {self.cmb_Vaspect.GetValue()}'
-
     # ------------------------------------------------------------------#
 
     def on_Vrate(self, event):
@@ -1764,11 +1746,12 @@ class AV_Conv(wx.Panel):
         """
         with audiodialogs.AudioSettings(self,
                                         codecname,
+                                        caption,
+                                        self.bmpreset,
                                         self.opt["AudioRate"],
                                         self.opt["AudioDepth"],
                                         self.opt["AudioBitrate"],
                                         self.opt["AudioChannel"],
-                                        caption,
                                         ) as audiodialog:
 
             if audiodialog.ShowModal() == wx.ID_OK:

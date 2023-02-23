@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.20.2023
+Rev: Feb.23.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -136,10 +136,8 @@ class Crop(wx.Dialog):
     TMPSRC = os.path.join(TMPROOT, 'tmpsrc')
     os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
     BACKGROUND = '#1b0413'
-    # ------------------------------------------------------------------#
 
-    def __init__(self, parent, fcrop, v_width,
-                 v_height, fname, timeformat):
+    def __init__(self, parent, *args, **kwa):
         """
         Attributes defined here:
 
@@ -165,15 +163,15 @@ class Crop(wx.Dialog):
         self.y_dc = 0
         self.x_dc = 0
         # current video size
-        self.v_width = v_width
-        self.v_height = v_height
+        self.v_width = kwa['width']
+        self.v_height = kwa['height']
         # resizing values preserving aspect ratio for monitor
         self.thr = 180 if self.v_height >= self.v_width else 270
         self.h_ratio = int((self.v_height
                             / self.v_width) * self.thr)  # height
         self.w_ratio = int((self.v_width
                             / self.v_height) * self.h_ratio)  # width
-        self.video = fname  # selected filename on queued list
+        self.video = kwa['filename']  # selected filename on queued list
         name = os.path.splitext(os.path.basename(self.video))[0]
         self.frame = os.path.join(f'{Crop.TMPSRC}', f'{name}.png')  # image
         self.filetime = os.path.join(Crop.TMPROOT, f'{name}.clock')
@@ -213,7 +211,7 @@ class Crop(wx.Dialog):
         self.slider = wx.Slider(self, wx.ID_ANY,
                                 get_milliseconds(self.clock),
                                 0,
-                                get_milliseconds(timeformat),
+                                get_milliseconds(kwa['duration']),
                                 size=(250, -1),
                                 style=wx.SL_HORIZONTAL,
                                 )
@@ -273,7 +271,8 @@ class Crop(wx.Dialog):
         # bottom layout for buttons
         gridBtn = wx.GridSizer(1, 2, 0, 0)
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
-        btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
+        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
+        btn_reset.SetBitmap(args[1], wx.LEFT)
         gridBtn.Add(btn_reset, 0, wx.ALL, 5)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         gridexit.Add(btn_close, 0, wx.ALL, 5)
@@ -314,13 +313,12 @@ class Crop(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
         # self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
 
-        if timeformat == '00:00:00.000':
+        if kwa['duration'] == '00:00:00.000':
             self.slider.Disable()
-        if not os.path.exists(self.frame):
-            self.image_loader(self)
+        self.image_loader(self)
 
-        if fcrop:  # previusly values
-            self.default(fcrop)
+        if args[0]:  # fcrop previusly values
+            self.default(args[0])
     # ------------------------------------------------------------------#
 
     def default(self, fcrop):

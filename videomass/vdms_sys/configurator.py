@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.11.2023
+Rev: Feb.23.2023
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -476,7 +476,6 @@ class DataSource():
                 'videotopictures', 'atrack', 'timerset', 'coloreq',
                 )  # must match with items on `iconset` tuple, see following
 
-        ext = 'svg' if 'wx.svg' in sys.modules else 'png'
         icodir = self.dataloc['icodir']
         iconames = {'Videomass-Light':  # Videomass icons for light themes
                     {'x48': f'{icodir}/Sign_Icons/48x48_light',
@@ -493,7 +492,7 @@ class DataSource():
                     }
 
         choose = iconames.get(icontheme)  # set appropriate icontheme
-
+        ext = 'svg' if 'wx.svg' in sys.modules else 'png'
         iconset = (self.prg_icon,
                    f"{choose.get('x48')}/icon_videoconversions.{ext}",
                    f"{choose.get('x22')}/convert.{ext}",
@@ -526,6 +525,6 @@ class DataSource():
                    f"{choose.get('x16')}/timer.{ext}",
                    f"{choose.get('x16')}/coloreq.{ext}",
                    )
-        values = [os.path.join(norm) for norm in iconset]  # normalize pathns
+        values = (os.path.join(norm) for norm in iconset)  # normalize pathns
 
         return dict(zip(keys, values))

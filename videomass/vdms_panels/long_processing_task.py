@@ -78,8 +78,14 @@ def pairwise(iterable):
     iterable = ['frame', '1178', 'fps', '155', 'q', '29.0', 'size', '2072kB',
                 'time', '00:00:39.02', 'bitrate', '435.0kbits/s', speed',
                 '5.15x']
-    for x, y in pairwise(iterable):
-        print(x,y)
+    1)
+        for x, y in pairwise(iterable):
+            x, y
+    2)
+        dict(pairwise(iterable))
+
+
+    Return: a zip object pairs from list iterable object.
 
     <https://stackoverflow.com/questions/5389507/iterating-over-every-
     two-elements-in-a-list>

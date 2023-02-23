@@ -10,13 +10,23 @@ URGENCY: to do soon
 URGENCY: high
 --------------
 
+- Set erase cache dir by default.
+- Fix incorrect percentage on progress using From Movie to Images.
+
 ---------------
 URGENCY: medium
 ----------------
 - If you plan to refactor code and make it compatible only for
-  wx.Python4.1.1/wxPython4.2.0, erase `TestListCtrl` class on
-  youtubedl_ui.py. Also check all code that starts with wx.version().
-  Note this operation leads to make Videomass code incompatible
+  wx.Python4.1.1/wxPython4.2.0:
+  - erase `TestListCtrl` class on youtubedl_ui.py. Also check all code that
+    starts with wx.version().
+  - erase
+        try:
+            from wx.svg import SVGimage
+        except ModuleNotFoundError:
+            pass
+
+  However, note that these operations leads to make Videomass code incompatible
   for wxPython4.0.7.
 
 -------------

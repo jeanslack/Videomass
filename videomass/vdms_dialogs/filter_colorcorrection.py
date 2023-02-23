@@ -47,24 +47,24 @@ class ColorEQ(wx.Dialog):
     os.makedirs(TMPEDIT, mode=0o777, exist_ok=True)
     # BACKGROUND = '#1b0413'
 
-    def __init__(self, parent, colorset, v_width, v_height, fname, duration):
+    def __init__(self, parent, colorset, iconreset, **kwa):
         """
         colorset: previus data already saved.
-        v_width: source video width
-        v_height: source video height
+        width: source video width
+        height: source video height
         fname: matches with the only one video file dragged
                into the list or the selected one if many.
         duration: Overall time duration of video.
         """
-        self.filename = fname
+        self.filename = kwa['filename']
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.framesrc = os.path.join(ColorEQ.TMPSRC, f'{name}.png')
         self.frameedit = os.path.join(ColorEQ.TMPEDIT, f'{name}.png')
         self.fileclock = os.path.join(ColorEQ.TMPROOT, f'{name}.clock')
         # resizing values preserving aspect ratio for pseudo-monitors
-        thr = 150 if v_height > v_width else 270
-        self.h_ratio = int((v_height / v_width) * thr)
-        self.w_ratio = int((v_width / v_height) * self.h_ratio)
+        thr = 150 if kwa['height'] > kwa['width'] else 270
+        self.h_ratio = int((kwa['height'] / kwa['width']) * thr)
+        self.w_ratio = int((kwa['width'] / kwa['height']) * self.h_ratio)
         self.bitmap_src = None
         self.bitmap_edit = None
         self.contrast = ""
@@ -107,7 +107,7 @@ class ColorEQ(wx.Dialog):
         self.sld_time = wx.Slider(self, wx.ID_ANY,
                                   get_milliseconds(self.clock),
                                   0,
-                                  get_milliseconds(duration),
+                                  get_milliseconds(kwa['duration']),
                                   size=(250, -1),
                                   style=wx.SL_HORIZONTAL,
                                   )
@@ -181,6 +181,7 @@ class ColorEQ(wx.Dialog):
         gridBtn = wx.GridSizer(1, 2, 0, 0)
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
         btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
+        btn_reset.SetBitmap(iconreset, wx.LEFT)
         gridBtn.Add(btn_reset, 0, wx.ALL, 5)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         gridexit.Add(btn_close, 0, wx.ALL, 5)
@@ -211,7 +212,7 @@ class ColorEQ(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
 
-        if duration == '00:00:00.000':
+        if kwa['duration'] == '00:00:00.000':
             self.sld_time.Disable()
 
         if colorset:  # previus values
@@ -225,7 +226,8 @@ class ColorEQ(wx.Dialog):
 
     def process(self, pathtosave, equalizer=''):
         """
-        Generate a new frame at the clock position
+        Generate a new frame at the clock position using
+        ffmpeg `eq` filter.
         """
         eql = '' if not equalizer else f'-vf "{equalizer}"'
         arg = (f'-ss {self.clock} -i "{self.filename}" -vframes 1 '
@@ -244,11 +246,10 @@ class ColorEQ(wx.Dialog):
         To set previus values on `colorset`, you have to call
         this method before call `loader_initial_edit`.
         """
-        if not os.path.exists(self.framesrc):
-            error = self.process(self.framesrc)
-            if error:
-                wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
-                return
+        error = self.process(self.framesrc)
+        if error:
+            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+            return
         bitmap = wx.Bitmap(self.framesrc)
         img = bitmap.ConvertToImage()
         img = img.Scale(self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL)
@@ -261,17 +262,8 @@ class ColorEQ(wx.Dialog):
         """
         Loads initial StaticBitmaps on panels 2 (edit)
         """
-        if os.path.exists(self.frameedit):
-            bitmap = wx.Bitmap(self.frameedit)
-            img = bitmap.ConvertToImage()
-            img = img.Scale(self.w_ratio, self.h_ratio,
-                            wx.IMAGE_QUALITY_NORMAL)
-            bmp = img.ConvertToBitmap()
-            self.bitmap_edit = wx.Bitmap(bmp)
-            wx.StaticBitmap(self.panel_img2, wx.ID_ANY, self.bitmap_edit)
-        else:
-            self.bitmap_edit = wx.Bitmap(self.w_ratio, self.h_ratio)
-            wx.StaticBitmap(self.panel_img2, wx.ID_ANY, self.bitmap_edit)
+        self.bitmap_edit = wx.Bitmap(self.w_ratio, self.h_ratio)
+        wx.StaticBitmap(self.panel_img2, wx.ID_ANY, self.bitmap_edit)
     # -----------------------------------------------------------------------#
 
     def set_default(self, colorset):

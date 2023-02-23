@@ -13,7 +13,7 @@ videomass (4.0.10-1) UNRELEASED; urgency=medium
     The bug did not allow to check correctly the new available versions.
   * [A/V Conversion] fixed bug that disables bitrate control by moving crf
     control.
-  * [Presets Manager] presets have been updated to the new v0.11 release.
+  * [Presets Manager] presets have been updated to the new v0.12 release.
   * [Presets Manager] fixed various bugs in the presets database update
     functionalities.
   * [Presets Manager] Added check for presets updates locally.
@@ -23,7 +23,7 @@ videomass (4.0.10-1) UNRELEASED; urgency=medium
     `still_image_maker` features.
   * [A/V Conversion] removed flv format.
   * [A/V Conversion] added support to matroska for vp9 and theora encoders.
-  * [A/V Conversion] Added new button to save presets on the Presets Manager
+  * [A/V Conversion] Added button to save presets for the Presets Manager
     with the settings made by the user. This feature replaces the old button
     on the toolbar.
   * Fixed instances to all modeless windows (MediaStreams, ShowLogs, HelpTopic,
@@ -41,9 +41,10 @@ videomass (4.0.10-1) UNRELEASED; urgency=medium
     which implements video filter for color correction like contrast,
     brightness, saturation and gamma.
   * [A/V Conversion] Fixed storing time position when user search for a specific
-    frame on some filter window.
+    frame using some filter window.
+  * [A/V Conversion] Scale filter has a frame preview directly on window.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 22 Feb 2023 17:45:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 23 Feb 2023 11:45:00 +0200
 
 videomass (4.0.5-1) UNRELEASED; urgency=medium
 
