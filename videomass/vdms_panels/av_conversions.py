@@ -1753,7 +1753,6 @@ class AV_Conv(wx.Panel):
                                         self.opt["AudioBitrate"],
                                         self.opt["AudioChannel"],
                                         ) as audiodialog:
-
             if audiodialog.ShowModal() == wx.ID_OK:
                 aparam = audiodialog.getvalue()
             else:
@@ -2033,7 +2032,7 @@ class AV_Conv(wx.Panel):
         self.opt["Tune"] = '' if sel == 'None' else f'-tune:v {sel}'
     # -------------------------------------------------------------------#
 
-    def update_allentries(self):
+    def update_options(self):
         """
         Update entries.
         """
@@ -2107,7 +2106,7 @@ class AV_Conv(wx.Panel):
                               'Videomass', wx.ICON_INFORMATION, self)
                 return
 
-        self.update_allentries()  # update
+        self.update_options()  # update
 
         checking = check_files(self.parent.file_src,
                                self.parent.outpath_ffmpeg,
@@ -2622,8 +2621,8 @@ class AV_Conv(wx.Panel):
 
     def on_saveprst(self, event):
         """
-        Save current setting as profile for the Presets Manager panel
-
+        Save current setting as profile for the Presets
+        Manager panel
         """
         if self.rdbx_normalize.GetSelection() in (1, 2, 3):  # EBU
             if wx.MessageBox(_('Audio normalization data cannot be saved '
@@ -2633,7 +2632,7 @@ class AV_Conv(wx.Panel):
                              wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
                 return
 
-        self.update_allentries()
+        self.update_options()
         if self.cmb_Media.GetValue() == 'Video':
             if self.opt["Vidstabdetect"]:
                 parameters = self.video_stabilizer([], [], 'save as profile')

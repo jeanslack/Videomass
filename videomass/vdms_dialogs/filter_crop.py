@@ -171,12 +171,12 @@ class Crop(wx.Dialog):
                             / self.v_width) * self.thr)  # height
         self.w_ratio = int((self.v_width
                             / self.v_height) * self.h_ratio)  # width
-        self.video = kwa['filename']  # selected filename on queued list
-        name = os.path.splitext(os.path.basename(self.video))[0]
+        self.filename = kwa['filename']  # selected filename on queued list
+        name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f'{Crop.TMPSRC}', f'{name}.png')  # image
-        self.filetime = os.path.join(Crop.TMPROOT, f'{name}.clock')
-        if os.path.exists(self.filetime):
-            with open(self.filetime, "r", encoding='utf8') as atime:
+        self.fileclock = os.path.join(Crop.TMPROOT, f'{name}.clock')
+        if os.path.exists(self.fileclock):
+            with open(self.fileclock, "r", encoding='utf8') as atime:
                 self.clock = atime.read().strip()
         else:
             self.clock = '00:00:00'
@@ -370,7 +370,7 @@ class Crop(wx.Dialog):
         """
         seek = self.slider.GetValue()
         self.clock = milliseconds2clocksec(seek, rounds=True)  # to 24-hour
-        arg = (f'-ss {self.clock} -i "{self.video}" '
+        arg = (f'-ss {self.clock} -i "{self.filename}" '
                f'-vframes 1 -y "{self.frame}"'
                )
         thread = FFmpegGenericTask(arg)
@@ -379,7 +379,7 @@ class Crop(wx.Dialog):
         if error:
             wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR)
             return
-        with open(self.filetime, "w", encoding='utf8') as atime:
+        with open(self.fileclock, "w", encoding='utf8') as atime:
             atime.write(self.clock)
         self.btn_load.Disable()
         self.image = self.frame  # update with new frame
@@ -524,8 +524,8 @@ class Crop(wx.Dialog):
 
     def getvalue(self):
         """
-        This method return values via the interface getvalue()
-        by the caller. See the caller for more info and usage.
+        This method return values via the getvalue() interface
+        from the caller. See the caller for more info and usage.
         Note: -1 for X and Y coordinates means center, which are
         empty values for FFmpeg syntax.
         """

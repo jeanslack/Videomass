@@ -247,6 +247,7 @@ class Scale(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+
         # Set previous changes
         if args[0]:  # scale
             self.width = args[0].split(':', maxsplit=1)[0][8:]
@@ -323,17 +324,15 @@ class Scale(wx.Dialog):
         self.label_num1.Enable()
         self.label_sepsar.Enable()
         self.label_den1.Enable()
-    # ----------------------Event handler (callback)---------------------#
 
     def concat_filter(self, scaledata):
         """
-        Concatenates all Scale values.
-        Returns the Scale filter string in ffmpeg syntax.
+        Concatenates `scale` options values.
+        Returns the `scale` filter string in ffmpeg syntax.
         """
         orderf = list(scaledata.values())
         concat = ''.join([f'{x},' for x in orderf if x])[:-1]
         return concat
-    # -----------------------------------------------------------------------#
 
     def process(self, concat):
         """
@@ -350,11 +349,11 @@ class Scale(wx.Dialog):
         if error:
             return error
         return None
-    # -----------------------------------------------------------------------#
+    # ----------------------Event handler (callback)---------------------#
 
     def on_image_viewer(self, event):
         """
-        Open the image (frame) with default OS image viewer.
+        Open the image file (frame) with default OS image viewer.
         """
         concat = self.concat_filter(self.getvalue())
         error = self.process(concat)
@@ -382,8 +381,7 @@ class Scale(wx.Dialog):
 
     def on_dimension(self, event):
         """
-        Set the scaling controls according to whether the
-        RadioBox is enabled or disabled
+        Set the scaling controls according to RadioBox choices
         """
         if self.rdb_scale.IsEnabled():
             if self.rdb_scale.GetSelection() == 0:
@@ -453,8 +451,8 @@ class Scale(wx.Dialog):
 
     def getvalue(self):
         """
-        This method return values via the interface getvalue()
-        by the caller. See the caller for more info and usage.
+        This method return values via the getvalue() interface
+        from the caller. See the caller for more info and usage.
         """
         diction = {'scale': '', 'setdar': '', 'setsar': ''}
         self.width = f'{self.spin_scale_width.GetValue()}'

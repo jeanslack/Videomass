@@ -611,8 +611,8 @@ class Vidstab(wx.Dialog):
 
     def getvalue(self):
         """
-        This method return values via the interface getvalue()
-        by the caller. See the caller for more info and usage.
+        This method return values via the getvalue() interface
+        from the caller. See the caller for more info and usage.
         """
         if not self.ckbx_enable.IsChecked():
             return None
