@@ -207,7 +207,7 @@ class Crop(wx.Dialog):
         msg = _("Search for a specific frame")
         sizer_load = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg)),
                                        wx.HORIZONTAL)
-        sizerBase.Add(sizer_load, 0, wx.ALL | wx.EXPAND, 5)
+        sizerBase.Add(sizer_load, 0, wx.ALL | wx.CENTER, 5)
         self.slider = wx.Slider(self, wx.ID_ANY,
                                 get_milliseconds(self.clock),
                                 0,
@@ -220,7 +220,7 @@ class Crop(wx.Dialog):
         sizer_load.Add(self.txttime, 0, wx.ALL | wx.CENTER, 10)
         self.btn_load = wx.Button(self, wx.ID_ANY, _("Load"))
         self.btn_load.Disable()
-        sizer_load.Add(self.btn_load, 1, wx.ALL | wx.EXPAND, 10)
+        sizer_load.Add(self.btn_load, 0, wx.ALL | wx.CENTER, 5)
         boxs = wx.StaticBox(self, wx.ID_ANY, (_("Cropping area selection ")))
         sizerLabel = wx.StaticBoxSizer(boxs, wx.VERTICAL)
         sizerBase.Add(sizerLabel, 0, wx.ALL | wx.EXPAND, 5)

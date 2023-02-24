@@ -116,7 +116,7 @@ class ColorEQ(wx.Dialog):
         sizertime.Add(self.txttime, 0, wx.ALL | wx.CENTER, 5)
         self.btn_load = wx.Button(self, wx.ID_ANY, _("Load"))
         self.btn_load.Disable()
-        sizertime.Add(self.btn_load, 1, wx.ALL | wx.EXPAND, 10)
+        sizertime.Add(self.btn_load, 0, wx.ALL | wx.CENTER, 5)
         boxcolor = wx.StaticBox(self, wx.ID_ANY, (_("Color EQ")))
         sizercolor = wx.StaticBoxSizer(boxcolor, wx.VERTICAL)
         sizerBase.Add(sizercolor, 0, wx.ALL | wx.EXPAND, 5)
