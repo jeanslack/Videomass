@@ -166,7 +166,7 @@ class TwoPass(Thread):
                              fsource='',
                              destination='',
                              duration=duration,
-                             end='ok'
+                             end='Done'
                              )
             # --------------- second pass ----------------#
             pass2 = (f'"{TwoPass.appdata["ffmpeg_cmd"]}" '
@@ -235,7 +235,7 @@ class TwoPass(Thread):
                              fsource='',
                              destination='',
                              duration=duration,
-                             end='ok'
+                             end='Done'
                              )
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT", msg=filedone)

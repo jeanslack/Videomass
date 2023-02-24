@@ -134,7 +134,7 @@ class ConcatDemuxer(Thread):
                                  fsource='',
                                  destination='',
                                  duration='',
-                                 end='ok'
+                                 end='Done'
                                  )
         except (OSError, FileNotFoundError) as err:
             excepterr = f"{err}\n  {ConcatDemuxer.NOT_EXIST_MSG}"

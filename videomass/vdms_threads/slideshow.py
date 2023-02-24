@@ -123,7 +123,7 @@ def convert_images(*varargs):
                  fsource='',
                  destination='',
                  duration=0,
-                 end='ok'
+                 end='Done'
                  )
     return None
 
@@ -212,7 +212,7 @@ def resizing_process(*varargs):
                  fsource='',
                  destination='',
                  duration=0,
-                 end='ok'
+                 end='Done'
                  )
     return None
 
@@ -349,7 +349,7 @@ class SlideshowMaker(Thread):
                                      fsource='',
                                      destination='',
                                      duration=self.duration,
-                                     end='ok'
+                                     end='Done'
                                      )
             except (OSError, FileNotFoundError) as err:
                 excepterr = f"{err}\n  {SlideshowMaker.NOT_EXIST_MSG}"

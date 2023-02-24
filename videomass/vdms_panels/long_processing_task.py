@@ -84,12 +84,10 @@ def pairwise(iterable):
     2)
         dict(pairwise(iterable))
 
-
     Return: a zip object pairs from list iterable object.
 
     <https://stackoverflow.com/questions/5389507/iterating-over-every-
     two-elements-in-a-list>
-
     """
     itobj = iter(iterable)  # list_iterator object
     return zip(itobj, itobj)  # zip object pairs from list iterable object
@@ -130,7 +128,7 @@ class LogOut(wx.Panel):
         self.appdata = get.appset
         self.parent = parent  # main frame
         self.thread_type = None  # the instantiated thread
-        self.time_remaining = True  # create time remaining progress
+        self.with_eta = True  # create estimated time of arrival (ETA)
         self.abort = False  # if True set to abort current process
         self.error = False  # if True, all the tasks was failed
         self.previus = None  # panel name from which it starts
@@ -214,7 +212,7 @@ class LogOut(wx.Panel):
                                         self.logname, time_seq
                                         )
         elif varargs[0] == 'video_to_sequence':
-            self.time_remaining = False
+            self.with_eta = False
             self.thread_type = PicturesFromVideo(varargs, duration,
                                                  self.logname, time_seq
                                                  )
@@ -227,7 +225,7 @@ class LogOut(wx.Panel):
                                        self.logname, time_seq
                                        )
         elif varargs[0] == 'concat_demuxer':  # from Concatenation Demuxer
-            self.time_remaining = False
+            self.with_eta = False
             self.thread_type = ConcatDemuxer(varargs, duration,
                                              self.logname,
                                              )
@@ -277,7 +275,7 @@ class LogOut(wx.Panel):
             for key, val in pairwise(out):
                 ffprog.append(f"{key}: {val}")
 
-            if self.time_remaining:
+            if self.with_eta:
                 if 'speed=' in output:
                     try:
                         sline = output.split()[-1].strip()
@@ -323,17 +321,19 @@ class LogOut(wx.Panel):
         """
         Receive messages from file count, loop or non-loop thread.
         """
-        if end == 'ok':
+        if end == 'Done':
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['SUCCESS']))
             self.txtout.AppendText(f"{LogOut.MSG_done}\n")
             # set end values for percentage and ETA
-            if self.time_remaining:
+            if self.with_eta:
                 newlab = self.labprog.GetLabel().split()
                 if 'Processing:' in newlab:
                     newlab[1] = '100%   '
                 if 'ETA:' in newlab:
                     newlab[3] = '00:00:00.000'
                 self.labprog.SetLabel(" ".join(newlab))
+            else:
+                self.labprog.SetLabel('Processing: 100%')
             return
 
         # if STATUS_ERROR == 1:
@@ -449,6 +449,6 @@ class LogOut(wx.Panel):
         self.count = 0
         if not self.barprog.IsShown():
             self.barprog.Show()  # restoring progress bar if hidden
-        self.time_remaining = True  # restoring time remaining display
+        self.with_eta = True  # restoring time remaining display
         self.parent.panelShown(self.previus)  # retrieve at previusly panel
         # event.Skip()

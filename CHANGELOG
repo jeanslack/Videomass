@@ -52,6 +52,8 @@ Feb 23, 2023 V.4.0.10
   * [A/V Conversion] Fixed storing time position when user search for a specific
     frame using some filter window.
   * [A/V Conversion] Scale filter has a frame preview directly on window.
+  * Fixed incorrect percentage value for time progress using pictures
+    exporting functionality aka `From Movie to Pictures`.
 
 +------------------------------------+
 Jan 17, 2023 V.4.0.5

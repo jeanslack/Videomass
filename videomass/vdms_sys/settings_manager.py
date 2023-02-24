@@ -86,7 +86,7 @@ class ConfigManager:
         Icon theme Name (see art folder)
 
     toolbarsize (int):
-        Set toolbar icon size, one of 16, 24, 32, 64 default is 32 px.
+        Set toolbar icon size, one of 16, 24, 32, 64 default is 24 px.
 
     toolbarpos (int):
         Set toolbar positioning. 0 placed on top side;
@@ -142,7 +142,7 @@ class ConfigManager:
                        "ffprobe_islocal": False,
                        "warnexiting": True,
                        "icontheme": "Videomass-Colours",
-                       "toolbarsize": 32,
+                       "toolbarsize": 24,
                        "toolbarpos": 0,
                        "toolbartext": True,
                        "window_size": [850, 560],

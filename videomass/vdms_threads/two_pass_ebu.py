@@ -173,7 +173,7 @@ class Loudnorm(Thread):
                              fsource='',
                              destination='',
                              duration=duration,
-                             end='ok'
+                             end='Done'
                              )
             # --------------- second pass ----------------#
             filters = (f'{self.passlist[2]}'
@@ -254,7 +254,7 @@ class Loudnorm(Thread):
                              fsource='',
                              destination='',
                              duration=duration,
-                             end='ok'
+                             end='Done'
                              )
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT", msg=filedone)
