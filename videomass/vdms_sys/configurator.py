@@ -279,21 +279,21 @@ def data_location(args):
     else:
         conffile, confdir, logdir, cachedir, trash_dir = conventional_paths()
 
-    return dict(conffile=conffile,
-                confdir=confdir,
-                logdir=logdir,
-                cachedir=cachedir,
-                trash_dir=trash_dir,
-                this=this,
-                frozen=frozen,
-                meipass=meipass,
-                locat=locat,
-                localepath=os.path.join(locat, 'locale'),
-                workdir=workdir,
-                srcpath=os.path.join(locat, 'share'),
-                icodir=os.path.join(locat, 'art', 'icons'),
-                ffmpeg_pkg=os.path.join(locat, 'FFMPEG'),
-                )
+    return {"conffile": conffile,
+            "confdir": confdir,
+            "logdir": logdir,
+            "cachedir": cachedir,
+            "trash_dir": trash_dir,
+            "this": this,
+            "frozen": frozen,
+            "meipass": meipass,
+            "locat": locat,
+            "localepath": os.path.join(locat, 'locale'),
+            "workdir": workdir,
+            "srcpath": os.path.join(locat, 'share'),
+            "icodir": os.path.join(locat, 'art', 'icons'),
+            "ffmpeg_pkg": os.path.join(locat, 'FFMPEG'),
+            }
 
 
 class DataSource():

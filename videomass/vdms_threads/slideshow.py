@@ -70,7 +70,7 @@ def convert_images(*varargs):
     for files in flist:
         prognum += 1
         tmpf = os.path.join(tmpdir, f'{imagenames}{prognum}.bmp')
-        cmd_1 = (f'{args} -i "{files}" "{tmpf}"')
+        cmd_1 = f'{args} -i "{files}" "{tmpf}"'
 
         if not opsystem == 'Windows':
             cmd_1 = shlex.split(cmd_1)

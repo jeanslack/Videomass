@@ -803,7 +803,7 @@ class AV_Conv(wx.Panel):
         tip = (_('"Video" to save the output file as a '
                  'video; "Audio" to save as an audio file only'))
         self.cmb_Media.SetToolTip(tip)
-        tip = (_('It can reduce the file size, but takes longer.'))
+        tip = _('It can reduce the file size, but takes longer.')
         self.ckbx_pass.SetToolTip(tip)
         tip = (_('Specifies a minimum tolerance to be used. '
                  'Set to -1 to disable this control.'))
@@ -831,11 +831,11 @@ class AV_Conv(wx.Panel):
         tip = (_('Constant rate factor. Lower values = higher quality and '
                  'a larger file size. Set to -1 to disable this control.'))
         self.slider_CRF.SetToolTip(tip)
-        tip = (_('Preview video filters'))
+        tip = _('Preview video filters')
         self.btn_preview.SetToolTip(tip)
-        tip = (_("Clear all enabled filters "))
+        tip = _("Clear all enabled filters ")
         self.btn_reset.SetToolTip(tip)
-        tip = (_('Video width and video height ratio.'))
+        tip = _('Video width and video height ratio.')
         self.cmb_Vaspect.SetToolTip(tip)
         tip = (_('Frames repeat a given number of times per second. In some '
                  'countries this is 30 for NTSC, other countries (like '
@@ -868,7 +868,7 @@ class AV_Conv(wx.Panel):
         tip = (_('Loudness Range Target in LUFS. '
                  'From +1.0 to +20.0, default is +7.0'))
         self.spin_lra.SetToolTip(tip)
-        tip = (_('Play and listen to the result of audio filters'))
+        tip = _('Play and listen to the result of audio filters')
         self.btn_audio_preview.SetToolTip(tip)
 
         # ----------------------Binding (EVT)----------------------#
@@ -1908,7 +1908,7 @@ class AV_Conv(wx.Panel):
         using-ffmpeg?utm_medium=organic>
 
         """
-        msg2 = (_('Audio normalization is required only for some files'))
+        msg2 = _('Audio normalization is required only for some files')
         msg3 = (_("Audio normalization will not be applied because the "
                   "source signal is equal"))
         if self.norm_dataref:

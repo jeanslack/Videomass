@@ -228,9 +228,9 @@ class VideoToSequence(wx.Panel):
         tip = (_('Set FPS control from 0.1 to 30.0 fps. The higher this '
                  'value, the more images will be extracted.'))
         self.spin_rate.SetToolTip(tip)
-        tip = (_('Spaces around the mosaic tiles. From 0 to 32 pixels'))
+        tip = _('Spaces around the mosaic tiles. From 0 to 32 pixels')
         self.spin_pad.SetToolTip(tip)
-        tip = (_('Spaces around the mosaic borders. From 0 to 32 pixels'))
+        tip = _('Spaces around the mosaic borders. From 0 to 32 pixels')
         self.spin_marg.SetToolTip(tip)
 
         self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_help)

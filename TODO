@@ -3,14 +3,13 @@
 URGENCY: to do soon
 --------------------
 - Preview video stabilization
-- Update locale
-- IT translate
+- fix: videomass/vdms_panels/av_conversions.py:1100:8: W0123: Use of eval (eval-used)
+- fix: videomass/vdms_panels/av_conversions.py:1110:8: W0123: Use of eval (eval-used)
+
 
 --------------
 URGENCY: high
 --------------
-
-- Fix incorrect percentage on progress using From Movie to Images.
 
 ---------------
 URGENCY: medium

@@ -148,24 +148,24 @@ class FFmpegConf(wx.MiniFrame):
             biname = ['ffmpeg', 'ffprobe', 'ffplay']
         # ---------
         if which(biname[0]):
-            ffmpeg = (f"FFmpeg:  {FFMPEG_LINK}")
+            ffmpeg = f"FFmpeg:  {FFMPEG_LINK}"
         else:
             if os.path.exists(FFMPEG_LINK):
-                ffmpeg = (f"FFmpeg:  {FFMPEG_LINK}")
+                ffmpeg = f"FFmpeg:  {FFMPEG_LINK}"
 
         if which(biname[1]):
-            ffprobe = (f"FFprobe:  {FFPROBE_LINK}")
+            ffprobe = f"FFprobe:  {FFPROBE_LINK}"
         else:
             if os.path.exists(FFPROBE_LINK):
-                ffprobe = (f"FFprobe:  {FFPROBE_LINK}")
+                ffprobe = f"FFprobe:  {FFPROBE_LINK}"
             else:
                 ffprobe = _("FFprobe   ...not found !")
 
         if which(biname[2]):
-            ffplay = (f"FFplay:  {FFPLAY_LINK}")
+            ffplay = f"FFplay:  {FFPLAY_LINK}"
         else:
             if os.path.exists(FFPLAY_LINK):
-                ffplay = (f"FFplay:  {FFPLAY_LINK}")
+                ffplay = f"FFplay:  {FFPLAY_LINK}"
             else:
                 ffplay = _("FFplay   ...not found !")
 

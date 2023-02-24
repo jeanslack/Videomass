@@ -1255,27 +1255,27 @@ class MainFrame(wx.Frame):
         """
         if self.appdata['toolbarpos'] == 0:  # on top
             if self.appdata['toolbartext']:  # show text
-                style = (wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_HORIZONTAL)
+                style = wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_HORIZONTAL
             else:
-                style = (wx.TB_DEFAULT_STYLE)
+                style = wx.TB_DEFAULT_STYLE
 
         elif self.appdata['toolbarpos'] == 1:  # on bottom
             if self.appdata['toolbartext']:  # show text
-                style = (wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_BOTTOM)
+                style = wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_BOTTOM
             else:
-                style = (wx.TB_DEFAULT_STYLE | wx.TB_BOTTOM)
+                style = wx.TB_DEFAULT_STYLE | wx.TB_BOTTOM
 
         elif self.appdata['toolbarpos'] == 2:  # on right
             if self.appdata['toolbartext']:  # show text
-                style = (wx.TB_TEXT | wx.TB_RIGHT)
+                style = wx.TB_TEXT | wx.TB_RIGHT
             else:
-                style = (wx.TB_DEFAULT_STYLE | wx.TB_RIGHT)
+                style = wx.TB_DEFAULT_STYLE | wx.TB_RIGHT
 
         elif self.appdata['toolbarpos'] == 3:
             if self.appdata['toolbartext']:  # show text
-                style = (wx.TB_TEXT | wx.TB_LEFT)
+                style = wx.TB_TEXT | wx.TB_LEFT
             else:
-                style = (wx.TB_DEFAULT_STYLE | wx.TB_LEFT)
+                style = wx.TB_DEFAULT_STYLE | wx.TB_LEFT
 
         self.toolbar = self.CreateToolBar(style=style)
 
