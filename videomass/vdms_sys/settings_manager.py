@@ -94,7 +94,7 @@ class ConfigManager:
         3 is placed at the left side. default is 0 .
 
     toolbartext (bool):
-        True, enables text alongside toolbar buttons. Default is False.
+        True, enables text alongside toolbar buttons. Default is True.
 
     window_size (list):
         [int(Height), int(Width)] last current window dimension before
@@ -106,7 +106,7 @@ class ConfigManager:
 
     clearcache (bool):
         with True, clear the cache before exiting the application,
-        default is False
+        default is True
 
     clearlogfiles (bool):
         with True, erases all log files content before exiting the
@@ -123,10 +123,10 @@ class ConfigManager:
         It supports canonical form of locale names as used on UNIX systems,
         eg. xx or xx_YY format, where xx is ISO 639 code of language and
         YY is ISO 3166 code of the country. Examples are "en", "en_GB",
-        "en_US" or "fr_FR".
+        "en_US" or "fr_FR", etc.
 
     """
-    VERSION = 4.8
+    VERSION = 5.0
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputfile": f"{os.path.expanduser('~')}",
                        "outputfile_samedir": False,
@@ -144,10 +144,10 @@ class ConfigManager:
                        "icontheme": "Videomass-Colours",
                        "toolbarsize": 24,
                        "toolbarpos": 0,
-                       "toolbartext": False,
+                       "toolbartext": True,
                        "window_size": [850, 560],
                        "window_position": [0, 0],
-                       "clearcache": False,
+                       "clearcache": True,
                        "clearlogfiles": False,
                        "move_file_to_trash": False,
                        "locale_name": "Default",

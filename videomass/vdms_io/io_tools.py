@@ -133,7 +133,7 @@ def findtopic(topic):
     retcod = ff_topics(get.appset['ffmpeg_cmd'], topic, get.appset['ostype'])
 
     if 'Not found' in retcod[0]:
-        notf = (f"\n{retcod[1]}")
+        notf = f"\n{retcod[1]}"
         return notf
 
     return retcod[1]

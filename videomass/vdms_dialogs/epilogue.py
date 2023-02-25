@@ -38,13 +38,12 @@ class Formula(wx.Dialog):
             settings = ("\nEXAMPLES:\n\nExample 1:\nExample 2:\n etc."
             param = ("type 1\ntype 2\ntype 3\n etc."
     """
-    def __init__(self, parent, settings, param, panelsize,
-                 move_file_to_trash):
+    def __init__(self, parent, settings, param, panelsize, movetotrash):
 
         get = wx.GetApp()  # get data from bootstrap
         self.appdata = get.appset
         colorscheme = self.appdata['icontheme'][1]
-        self.move_file_to_trash = move_file_to_trash
+        self.movetotrash = movetotrash
 
         wx.Dialog.__init__(self, parent, -1,
                            style=wx.DEFAULT_DIALOG_STYLE
@@ -78,7 +77,7 @@ class Formula(wx.Dialog):
         descr = _("Move source file to the Videomass\ntrash "
                   "folder after successful encoding")
         self.ckbx_trash = wx.CheckBox(self, wx.ID_ANY, (descr))
-        self.ckbx_trash.SetValue(self.move_file_to_trash)
+        self.ckbx_trash.SetValue(self.movetotrash)
         sizbase.Add(self.ckbx_trash, 0, wx.ALL, 5)
 
         btncancel = wx.Button(self, wx.ID_CANCEL, "")
@@ -106,11 +105,11 @@ class Formula(wx.Dialog):
         """
         trashdir = os.path.join(self.appdata['confdir'], 'Trash')
         if self.ckbx_trash.IsChecked():
-            self.move_file_to_trash = True
+            self.movetotrash = True
             if not os.path.exists(trashdir):
                 os.mkdir(trashdir, mode=0o777)
         else:
-            self.move_file_to_trash = False
+            self.movetotrash = False
     # --------------------------------------------------------------------#
 
     def on_cancel(self, event):
@@ -129,7 +128,7 @@ class Formula(wx.Dialog):
 
     def getvalue(self):
         """
-        This method return values via the interface getvalue()
-        by the caller. See the caller for more info and usage.
+        This method return values via the getvalue() interface
+        from the caller. See the caller for more info and usage.
         """
-        return self.move_file_to_trash
+        return self.movetotrash

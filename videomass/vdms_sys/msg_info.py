@@ -62,9 +62,9 @@ def descriptions_release():
     author = current_release()
     mail = current_release()
 
-    short_d = ("Videomass is a cross-platform GUI for FFmpeg")
+    short_d = "Videomass is a cross-platform GUI for FFmpeg"
 
-    long_d = ("""
+    long_d = """
 Videomass is a cross-platform GUI designed for FFmpeg enthusiasts who need to
 manage custom profiles to automate transcoding processes.
 
@@ -75,9 +75,9 @@ It features graphical tools for viewing, analyzing and processing multimedia
 streams.
 
 Videomass is written in Python3 with the wxPython-Phoenix toolkit.
-""")
+"""
 
-    short_l = ("GPL3 (Gnu Public License)")
+    short_l = "GPL3 (Gnu Public License)"
 
     lic = (f"Copyleft - all rights reversed - {copyr[4]} {author[6][0]}\n"
            f"Author and developer: {author[6][0]} {author[6][1]}\n"

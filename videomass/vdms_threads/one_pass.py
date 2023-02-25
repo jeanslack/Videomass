@@ -152,7 +152,7 @@ class OnePass(Thread):
                                      fsource='',
                                      destination='',
                                      duration=duration,
-                                     end='ok'
+                                     end='Done'
                                      )
             except (OSError, FileNotFoundError) as err:
                 excepterr = f"{err}\n  {OnePass.NOT_EXIST_MSG}"

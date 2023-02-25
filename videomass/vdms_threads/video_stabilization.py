@@ -177,7 +177,7 @@ class VidStab(Thread):
                              fsource='',
                              destination='',
                              duration=duration,
-                             end='ok'
+                             end='Done'
                              )
             # --------------- second pass ----------------#
             pass2 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
@@ -247,7 +247,7 @@ class VidStab(Thread):
                              fsource='',
                              destination='',
                              duration=duration,
-                             end='ok'
+                             end='Done'
                              )
             # --------------- make duo ----------------#
             if self.makeduo:
@@ -320,7 +320,7 @@ class VidStab(Thread):
                                  fsource='',
                                  destination='',
                                  duration=duration,
-                                 end='ok'
+                                 end='Done'
                                  )
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT", msg=filedone)

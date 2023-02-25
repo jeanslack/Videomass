@@ -100,11 +100,11 @@ def download_bigfile(url, filename):
     # Use `get_github_releases(url, keyname)` function on IO module
     url = 'https://api.github.com/repos/jeanslack/Videomass/releases/latest'
     filename = '/home/gianluca/Modelli/porzione.tar.gz'
-    response = requests.get(url)
+    response = requests.get(url, timeout=10)
     tarball = response.json()["tarball_url"]
     # -------------------------------------------
 
-    with requests.get(tarball, stream=True) as dwnl:
+    with requests.get(tarball, stream=True, timeout=10) as dwnl:
         dwnl.raise_for_status()
         with open(filename, 'wb', encoding='utf8') as fname:
             for chunk in dwnl.iter_content(chunk_size=8192):

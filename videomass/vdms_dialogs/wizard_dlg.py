@@ -55,8 +55,8 @@ class PageOne(wx.Panel):
     """
     get = wx.GetApp()
     OS = get.appset['ostype']
-    MSG2 = (_("Please take a moment to set up the application"))
-    MSG3 = (_('Click the "Next" button to get started'))
+    MSG2 = _("Please take a moment to set up the application")
+    MSG3 = _('Click the "Next" button to get started')
 
     def __init__(self, parent, icon):
         """
@@ -113,7 +113,7 @@ class PageTwo(wx.Panel):
     GETPATH = get.appset['getpath']
     FFMPEG_LOCALDIR = get.appset['FFMPEG_videomass_pkg']
 
-    MSG0 = (_('Videomass is an application based on FFmpeg\n'))
+    MSG0 = _('Videomass is an application based on FFmpeg\n')
 
     MSG1 = (_('If FFmpeg is not on your computer, this application '
               'will be unusable'))
@@ -257,7 +257,7 @@ class PageThree(wx.Panel):
     OS = get.appset['ostype']
     GETPATH = get.appset['getpath']
 
-    MSG0 = (_('Locating FFmpeg executables\n'))
+    MSG0 = _('Locating FFmpeg executables\n')
 
     MSG1 = (_('"ffmpeg", "ffprobe" and "ffplay" are required. Complete all\n'
               'the text boxes below by clicking on the respective buttons.'))
@@ -401,7 +401,7 @@ class PageFinish(wx.Panel):
     MSG1 = (_("Remember that you can always change these settings "
               "later, through the Setup dialog."))
     MSG3 = _("Thank You!")
-    MSG2 = (_('To exit click the "Finish" button'))
+    MSG2 = _('To exit click the "Finish" button')
 
     def __init__(self, parent):
         """

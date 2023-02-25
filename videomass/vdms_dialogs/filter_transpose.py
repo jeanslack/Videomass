@@ -42,19 +42,18 @@ class Transpose(wx.Dialog):
     os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
     BACKGROUND = '#1b0413'
 
-    def __init__(self, parent, transpose, start_label,
-                 v_width, v_height, fname, duration):
+    def __init__(self, parent, *args, **kwa):
         """
-        transpose: previus data already saved.
-        start_label: label rotate indicator
+        args[0]: transpose data if any.
+        args[1]: label rotate indicator
         v_width: source video width
         v_height: source video height
-        fname: matches with the only one video file dragged
-               into the list or the selected one if many.
+        filename: matches with the only one video file dragged
+                  into the list or the selected one if many.
         duration: Overall time duration of video.
         """
-        self.v_width = v_width
-        self.v_height = v_height
+        self.v_width = kwa['width']
+        self.v_height = kwa['height']
         # resizing values preserving aspect ratio for pseudo-monitor
         self.thr = 150 if self.v_height > self.v_width else 270
         self.h_ratio = int((self.v_height / self.v_width) * self.thr)
@@ -62,8 +61,8 @@ class Transpose(wx.Dialog):
         self.current_angle = 0
         self.center = (int((self.w_ratio / 2)), int((self.h_ratio / 2)))
         self.transpose = {'degrees': ['', 0]}
-        self.duration = duration
-        self.video = fname
+        self.duration = kwa['duration']
+        self.video = kwa['filename']
         name = os.path.splitext(os.path.basename(self.video))[0]
         self.frame = os.path.join(Transpose.TMPSRC, f'{name}.png')
         self.stbitmap = None
@@ -99,7 +98,8 @@ class Transpose(wx.Dialog):
         # buttons bottom
         gridBtn = wx.GridSizer(1, 2, 0, 0)
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
-        btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
+        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
+        btn_reset.SetBitmap(args[2], wx.LEFT)
         gridBtn.Add(btn_reset, 0, wx.ALL, 5)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         gridexit.Add(btn_close, 0, wx.ALL, 5)
@@ -121,18 +121,18 @@ class Transpose(wx.Dialog):
         self.Layout()
 
         self.image_loader()
-        if transpose:
-            self.statictxt.SetLabel(start_label)
+        if args[0]:  # transpose
+            self.statictxt.SetLabel(args[1])
 
-            if transpose == "transpose=1":
+            if args[0] == "transpose=1":
                 self.transpose['degrees'] = ["transpose=1", 90]
                 self.rotate90(90)
 
-            elif transpose == "transpose=2,transpose=2":
+            elif args[0] == "transpose=2,transpose=2":
                 self.transpose['degrees'] = ["transpose=2,transpose=2", 180]
                 self.rotate90(180)
 
-            elif transpose == "transpose=2":
+            elif args[0] == "transpose=2":
                 self.transpose['degrees'] = ["transpose=2", 270]
                 self.rotate90(270)
 
@@ -167,11 +167,10 @@ class Transpose(wx.Dialog):
         """
         Loads initial StaticBitmap on panel
         """
-        if not os.path.exists(self.frame):
-            error = self.process()
-            if error:
-                wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
-                return
+        error = self.process()
+        if error:
+            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+            return
         bitmap = wx.Bitmap(self.frame)
         img = bitmap.ConvertToImage()
         img = img.Scale(self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL)
@@ -300,8 +299,8 @@ class Transpose(wx.Dialog):
 
     def getvalue(self):
         """
-        This method return values via the interface getvalue()
-        by the caller. See the caller for more info and usage.
+        This method return values via the getvalue() interface
+        from the caller. See the caller for more info and usage.
         """
         msg = self.statictxt.GetLabel()
         return (self.transpose['degrees'][0], msg)

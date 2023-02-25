@@ -427,7 +427,7 @@ class MainFrame(wx.Frame):
                                                   dscrp[1])
         self.fold_convers_tmp.Enable(False)
         fileButton.AppendSeparator()
-        dscrp = (_("Rename the selected file\tCtrl+I"),
+        dscrp = (_("Rename the selected file\tCtrl+R"),
                  _("Rename the file selected in the Queued Files panel"))
         self.rename = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.rename.Enable(False)
@@ -453,7 +453,7 @@ class MainFrame(wx.Frame):
 
         # ------------------ tools menu
         toolsButton = wx.Menu()
-        dscrp = (_("FFmpeg help topics"),
+        dscrp = (_("Find FFmpeg topics and options"),
                  _("A useful tool to search for FFmpeg help topics and "
                    "options"))
         searchtopic = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
@@ -491,27 +491,11 @@ class MainFrame(wx.Frame):
                  _("Show useful shortcut keys when playing or previewing "
                    "with FFplay"))
         playing = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        ffplayButton.AppendSeparator()
-        dscrp = (_("Displays timestamp"),
-                 _("Displays timestamp when playing movies with FFplay"))
-        self.viewtimestamp = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
-                                                 kind=wx.ITEM_CHECK)
-        dscrp = (_("Auto-exit after playback"),
-                 _("If checked, the FFplay window will auto-close at the "
-                   "end of playback"))
-        self.exitplayback = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
-                                                kind=wx.ITEM_CHECK)
-        dscrp = (_("Setting timestamp"),
-                 _("Change the size and color of the timestamp "
-                   "during playback"))
-        tscustomize = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-
         viewButton.AppendSeparator()
         dscrp = (_("Show Logs\tCtrl+L"),
                  _("Viewing log messages"))
         viewlogs = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(viewButton, _("View"))
-        self.menuBar.Check(self.viewtimestamp.GetId(), True)
 
         # ------------------ Go menu
         goButton = wx.Menu()
@@ -567,11 +551,26 @@ class MainFrame(wx.Frame):
                                                    dscrp[1])
         self.resetfolders_tmp.Enable(False)
         setupButton.AppendSeparator()
+        dscrp = (_("Display timestamps during playback"),
+                 _("Displays timestamp when playing media with FFplay"))
+        self.viewtimestamp = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
+                                                kind=wx.ITEM_CHECK)
+        dscrp = (_("Auto-exit after playback"),
+                 _("If checked, the FFplay window will auto-close "
+                   "when playback is complete"))
+        self.exitplayback = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
+                                               kind=wx.ITEM_CHECK)
+        dscrp = (_("FFplay timestamp settings"),
+                 _("Change the size and color of the timestamp "
+                   "during playback"))
+        tscustomize = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        setupButton.AppendSeparator()
         setupItem = setupButton.Append(wx.ID_PREFERENCES,
                                        _("Preferences\tCtrl+P"),
                                        _("Application preferences"))
         self.menuBar.Append(setupButton, _("Settings"))
         self.menuBar.Check(self.exitplayback.GetId(), self.autoexit)
+        self.menuBar.Check(self.viewtimestamp.GetId(), True)
 
         # ------------------ help menu
         helpButton = wx.Menu()
@@ -1249,33 +1248,32 @@ class MainFrame(wx.Frame):
         Makes and attaches the toolsBtn bar.
         To enable or disable styles, use method `SetWindowStyleFlag`
         e.g.
-
             self.toolbar.SetWindowStyleFlag(wx.TB_NODIVIDER | wx.TB_FLAT)
 
         """
         if self.appdata['toolbarpos'] == 0:  # on top
             if self.appdata['toolbartext']:  # show text
-                style = (wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_HORIZONTAL)
+                style = wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_HORIZONTAL
             else:
-                style = (wx.TB_DEFAULT_STYLE)
+                style = wx.TB_DEFAULT_STYLE
 
         elif self.appdata['toolbarpos'] == 1:  # on bottom
             if self.appdata['toolbartext']:  # show text
-                style = (wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_BOTTOM)
+                style = wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_BOTTOM
             else:
-                style = (wx.TB_DEFAULT_STYLE | wx.TB_BOTTOM)
+                style = wx.TB_DEFAULT_STYLE | wx.TB_BOTTOM
 
         elif self.appdata['toolbarpos'] == 2:  # on right
             if self.appdata['toolbartext']:  # show text
-                style = (wx.TB_TEXT | wx.TB_RIGHT)
+                style = wx.TB_TEXT | wx.TB_RIGHT
             else:
-                style = (wx.TB_DEFAULT_STYLE | wx.TB_RIGHT)
+                style = wx.TB_DEFAULT_STYLE | wx.TB_RIGHT
 
         elif self.appdata['toolbarpos'] == 3:
             if self.appdata['toolbartext']:  # show text
-                style = (wx.TB_TEXT | wx.TB_LEFT)
+                style = wx.TB_TEXT | wx.TB_LEFT
             else:
-                style = (wx.TB_DEFAULT_STYLE | wx.TB_LEFT)
+                style = wx.TB_DEFAULT_STYLE | wx.TB_LEFT
 
         self.toolbar = self.CreateToolBar(style=style)
 
@@ -1312,20 +1310,16 @@ class MainFrame(wx.Frame):
                                        )
         # self.toolbar.AddSeparator()
         # self.toolbar.AddStretchableSpace()
-        tip = _("Get informative data about media streams")
-        self.btn_steams = self.toolbar.AddTool(5, _('Media Streams'),
+        tip = _("Get informative data about imported media streams")
+        self.btn_steams = self.toolbar.AddTool(5, _('Media Details'),
                                                bmpinfo,
                                                tip, wx.ITEM_NORMAL
                                                )
-        # self.toolbar.AddStretchableSpace()
-        # self.toolbar.AddSeparator()
-        tip = _("Convert using FFmpeg")
-        self.run_coding = self.toolbar.AddTool(12, _('Convert'),
+        tip = _("Start rendering")
+        self.run_coding = self.toolbar.AddTool(12, _('Start'),
                                                bmpconv,
                                                tip, wx.ITEM_NORMAL
                                                )
-        # self.toolbar.AddStretchableSpace()
-        # finally, create it
         self.toolbar.Realize()
 
         # ----------------- Tool Bar Binding (evt)-----------------------#

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.17.2023
+Rev: Feb.23.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -36,9 +36,7 @@ class AudioSettings(wx.Dialog):
     See ``av_conversions.py`` -> ``audio_dialog`` method for
     how to use this class.
     """
-
-    def __init__(self, parent, codecname, arate,
-                 adepth, abitrate, achannel, title):
+    def __init__(self, parent, *args):
         """
         The given 'codecname' parameter represents the
         audio codec string, which will passed to the
@@ -48,13 +46,13 @@ class AudioSettings(wx.Dialog):
         instance-object.
 
         """
-        audiodata = AudioParameters(codecname)  # get audio params
+        audiodata = AudioParameters(args[0])  # get audio params
         self.sample_rate = audiodata.sample_rate
         self.channels = audiodata.channels
         self.bitrate = audiodata.bitrate
         self.bitdepth = audiodata.bitdepth
 
-        wx.Dialog.__init__(self, parent, -1, title=title,
+        wx.Dialog.__init__(self, parent, -1, title=args[1],
                            style=wx.DEFAULT_DIALOG_STYLE
                            )
         sizerBase = wx.BoxSizer(wx.VERTICAL)
@@ -108,7 +106,8 @@ class AudioSettings(wx.Dialog):
 
         self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
-        btn_reset = wx.Button(self, wx.ID_CLEAR, "")
+        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
+        btn_reset.SetBitmap(args[2], wx.LEFT)
 
         # ----------------------Properties----------------------
 
@@ -118,6 +117,7 @@ class AudioSettings(wx.Dialog):
         self.rdb_bitdepth.SetToolTip(audiodata.BITDEPTH_TOOLTIP)
 
         # Set previusly settings:
+        arate, adepth, abitrate, achannel = args[3], args[4], args[5], args[6]
         if arate[0]:
             self.rdb_sample_r.SetSelection(samplerate_list.index(arate[0]))
         else:
@@ -184,7 +184,7 @@ class AudioSettings(wx.Dialog):
 
     def getvalue(self):
         """
-        This method return values via the interface getvalue()
+        This method return values via the getvalue() interface
         from the caller. See the caller for more info and usage.
 
         Returns:

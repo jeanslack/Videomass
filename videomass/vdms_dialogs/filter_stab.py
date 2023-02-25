@@ -39,8 +39,7 @@ class Vidstab(wx.Dialog):
     get = wx.GetApp()
     appdata = get.appset
 
-    def __init__(self, parent, vidstabdetect,
-                 vidstabtransform, unsharp, makeduo):
+    def __init__(self, parent, *args):
         """
         parameters defined here:
         vidstabdetect parameters for pass one.
@@ -49,10 +48,10 @@ class Vidstab(wx.Dialog):
         makeduo, to produce another video for comparison
 
         """
-        self.vidstabdetect = vidstabdetect
-        self.vidstabtransform = vidstabtransform
-        self.unsharp = unsharp
-        self.makeduo = makeduo
+        self.vidstabdetect = args[0]
+        self.vidstabtransform = args[1]
+        self.unsharp = args[2]
+        self.makeduo = args[3]
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
 
@@ -264,10 +263,9 @@ class Vidstab(wx.Dialog):
         gridexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
         gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
-        gridexit.Add(self.btn_reset, 0, wx.ALL
-                     | wx.ALIGN_CENTER_VERTICAL, 5
-                     )
+        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
+        btn_reset.SetBitmap(args[4], wx.LEFT)
+        gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
         sizerBase.Add(gridBtn, 0, wx.EXPAND)
         # final settings:
@@ -365,10 +363,10 @@ class Vidstab(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.on_Tripod2, self.ckbx_tripod2)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
-        self.Bind(wx.EVT_BUTTON, self.set_default, self.btn_reset)
+        self.Bind(wx.EVT_BUTTON, self.set_default, btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
 
-        if vidstabdetect:
+        if self.vidstabdetect:
             self.set_values()  # Set previous changes
         else:
             self.set_default(self)
@@ -613,8 +611,8 @@ class Vidstab(wx.Dialog):
 
     def getvalue(self):
         """
-        This method return values via the interface getvalue()
-        by the caller. See the caller for more info and usage.
+        This method return values via the getvalue() interface
+        from the caller. See the caller for more info and usage.
         """
         if not self.ckbx_enable.IsChecked():
             return None
