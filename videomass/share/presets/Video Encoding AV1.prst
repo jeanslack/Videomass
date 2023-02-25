@@ -1,0 +1,66 @@
+[
+    {
+        "Name": "SVT-AV1 (CRF constant rate factor)",
+        "Description": "Ensures that every frame gets the number of bits it deserves to achieve a certain (perceptual) quality level.",
+        "First_pass": "-c:v libsvtav1 -crf 35 -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mp4"
+    },
+    {
+        "Name": "libaom DVD",
+        "Description": "For DVD resolution (720x576)",
+        "First_pass": "-pass 1 -c:v libaom-av1 -b:v 650k -an -f null",
+        "Second_pass": "-pass 2 -c:v libaom-av1 -b:v 650k -c:a libopus -ac 2",
+        "Supported_list": "VOB",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "libaom (Constant Q)",
+        "Description": "Basic constant quality, if you do not need to achieve a fixed target file size",
+        "First_pass": "-c:v libaom-av1 -crf 30 -b:v 0 -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "libaom (Constrained Q)",
+        "Description": "Basic constrained quality, The quality is determined by the -crf, and the bitrate limit by the -b:v where the bitrate MUST be non-zero.",
+        "First_pass": "-c:v libaom-av1 -crf 30 -b:v 2000k -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "libaom (Constrained Q, min/max bitrate)",
+        "Description": "Basic constrained quality, The quality is determined by the -crf, and the bitrate limit by the -b:v and specify a minimum and maximum bitrate.",
+        "First_pass": "-c:v libaom-av1 -minrate 500k -b:v 2000k -maxrate 2500k -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "libaom (Constrained Q, min/max bitrate, for streaming)",
+        "Description": "Like libaom encoder (Constrained Q, min/max bitrate) but intended use for the resulting file is streaming",
+        "First_pass": "-c:v libaom-av1 -minrate 500k -b:v 2000k -maxrate 2500k -movflags -faststart -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mp4"
+    },
+    {
+        "Name": "libaom (Two-pass)",
+        "Description": "2-pass, In order to create more efficient encodes when a particular target bitrate should be reached.",
+        "First_pass": "-pass 1 -c:v libaom-av1 -b:v 2M -an -f null",
+        "Second_pass": "-pass 2 -c:v libaom-av1 -b:v 2M -c:a libopus -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "libaom (ABR Average bitrate)",
+        "Description": "Use this preset only if file size and encoding time are more important factors than quality alone.",
+        "First_pass": "-c:v libaom-av1 -b:v 2M -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    }
+]

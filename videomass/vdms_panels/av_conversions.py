@@ -73,7 +73,7 @@ class AV_Conv(wx.Panel):
     VCODECS = ({"Mpeg4": {"-c:v mpeg4": ["avi"]},
                 "x264": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
                 "x265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
-                # "AV1": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
+                "AV1": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
                 "Theora": {"-c:v libtheora": ["ogv", "mkv"]},
                 "Vp8": {"-c:v libvpx": ["webm"]},
                 "Vp9": {"-c:v libvpx-vp9": ["webm", "mkv", "mp4"]},

@@ -45,8 +45,9 @@ videomass (4.0.10-1) UNRELEASED; urgency=medium
   * [A/V Conversion] Scale filter has a frame preview directly on window.
   * Fixed incorrect percentage value for time progress using pictures
     exporting functionality aka `From Movie to Pictures`.
+  * Added support to libaom-av1 (AV1) codec.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 24 Feb 2023 16:30:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 25 Feb 2023 17:30:00 +0200
 
 videomass (4.0.5-1) UNRELEASED; urgency=medium
 

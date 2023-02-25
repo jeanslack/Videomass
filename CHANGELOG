@@ -54,6 +54,7 @@ Feb 23, 2023 V.4.0.10
   * [A/V Conversion] Scale filter has a frame preview directly on window.
   * Fixed incorrect percentage value for time progress using pictures
     exporting functionality aka `From Movie to Pictures`.
+  * Added support to libaom-av1 (AV1) codec.
 
 +------------------------------------+
 Jan 17, 2023 V.4.0.5
