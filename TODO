@@ -7,9 +7,14 @@ URGENCY: to do soon
 - fix: videomass/vdms_panels/av_conversions.py:1110:8: W0123: Use of eval (eval-used)
 
 
+
 --------------
 URGENCY: high
 --------------
+
+- FFmpeg: -vsync arg is deprecated, use fps_mode (video_to_sequences.py,
+  concatenete.py). For backwards compatibility reasons I will keep
+  the -vsync argument for a while longer
 
 ---------------
 URGENCY: medium

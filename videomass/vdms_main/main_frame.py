@@ -92,7 +92,7 @@ class MainFrame(wx.Frame):
         self.same_destin = False  # same source FFmpeg output destination
         self.suffix = ''  # append a suffix to FFmpeg output file names
         self.file_src = None  # input files list
-        self.filedropselected = None  # selected name on file drop
+        self.filedropselected = None  # int(index) or None filedrop selected
         self.time_seq = "-ss 00:00:00.000 -t 00:00:00.000"  # FFmpeg time seq.
         self.duration = []  # empty if not file imported
         self.topicname = None  # panel name shown
@@ -765,7 +765,7 @@ class MainFrame(wx.Frame):
         if self.helptopic:
             self.helptopic.Raise()
             return
-        self.helptopic = FFmpegHelp(self.appdata['ostype'])
+        self.helptopic = FFmpegHelp(self, self.appdata['ostype'])
         self.helptopic.Show()
     # -------------------------------------------------------------------#
 

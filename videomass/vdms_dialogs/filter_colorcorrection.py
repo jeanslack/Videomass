@@ -131,6 +131,7 @@ class ColorEQ(wx.Dialog):
                                       | wx.SL_AUTOTICKS
                                       | wx.SL_LABELS,
                                       )
+        self.sld_contrast.SetToolTip(_("-100 to +100, default value 0"))
         sizerflex1.Add(self.sld_contrast, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 10)
@@ -144,6 +145,7 @@ class ColorEQ(wx.Dialog):
                                     | wx.SL_AUTOTICKS
                                     | wx.SL_LABELS,
                                     )
+        self.sld_bright.SetToolTip(_("-100 to +100, default value 0"))
         sizerflex1.Add(self.sld_bright, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 10)
@@ -161,6 +163,7 @@ class ColorEQ(wx.Dialog):
                                  | wx.SL_AUTOTICKS
                                  | wx.SL_LABELS,
                                  )
+        self.sld_sat.SetToolTip(_("0 to 300, default value 100"))
         sizerflex2.Add(self.sld_sat, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 10)
@@ -173,6 +176,7 @@ class ColorEQ(wx.Dialog):
                                  | wx.SL_AUTOTICKS
                                  | wx.SL_LABELS,
                                  )
+        self.sld_gam.SetToolTip(_("0 to 100, Default value 10"))
         sizerflex2.Add(self.sld_gam, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 10)

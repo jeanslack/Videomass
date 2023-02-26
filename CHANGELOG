@@ -55,6 +55,7 @@ Feb 23, 2023 V.4.0.10
   * Fixed incorrect percentage value for time progress using pictures
     exporting functionality aka `From Movie to Pictures`.
   * Added support to libaom-av1 (AV1) codec.
+  * [Filedrop] on event, keep focused item selection.
 
 +------------------------------------+
 Jan 17, 2023 V.4.0.5

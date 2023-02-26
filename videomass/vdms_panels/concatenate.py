@@ -261,15 +261,7 @@ class Conc_Demuxer(wx.Panel):
             return
 
         textstr = []
-        if not self.ckbx_pict.IsChecked():
-            ext = os.path.splitext(self.parent.file_src[0])[1].split('.')[1]
-            self.duration = sum(self.parent.duration)
-            for f in self.parent.file_src:
-                escaped = f.replace(r"'", r"'\'")  # need escaping some chars
-                textstr.append(f"file '{escaped}'")
-            self.args = (f'"{ftext}" -map 0:v? -map_chapters 0 '
-                         f'-map 0:s? -map 0:a? -map_metadata 0 -c copy')
-        else:
+        if self.ckbx_pict.IsChecked():
             ext = self.cmb_pict.GetValue()
             duration = self.spin_pict.GetValue() * len(self.parent.file_src)
             self.duration = duration * 1000
@@ -281,8 +273,17 @@ class Conc_Demuxer(wx.Panel):
             textstr.append(f"file '{self.parent.file_src[-1]}'")
             self.args = (f'"{ftext}" -vsync vfr -pix_fmt yuv420p '
                          f'-profile:v baseline -map 0:v? -map_chapters 0 '
-                         '-map 0:s? -map 0:a? -map_metadata 0'
+                         f'-map 0:s? -map 0:a? -map_metadata 0'
                          )
+        else:
+            ext = os.path.splitext(self.parent.file_src[0])[1].split('.')[1]
+            self.duration = sum(self.parent.duration)
+            for f in self.parent.file_src:
+                escaped = f.replace(r"'", r"'\'")  # need escaping some chars
+                textstr.append(f"file '{escaped}'")
+            self.args = (f'"{ftext}" -map 0:v? -map_chapters 0 '
+                         f'-map 0:s? -map 0:a? -map_metadata 0 -c copy')
+
         with open(ftext, 'w', encoding='utf8') as txt:
             txt.write('\n'.join(textstr))
 

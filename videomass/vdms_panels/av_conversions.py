@@ -613,7 +613,7 @@ class AV_Conv(wx.Panel):
         sizer_Vfilter.Add(self.btn_vidstab, 0, wx.ALL | wx.EXPAND, 5)
 
         self.btn_coloreq = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     _("Color Equalizer"), size=(-1, -1))
+                                     "Color Equalizer", size=(-1, -1))
         self.btn_coloreq.SetBitmap(bmpcoloreq, wx.LEFT)
         sizer_Vfilter.Add(self.btn_coloreq, 0, wx.ALL | wx.EXPAND, 5)
 
