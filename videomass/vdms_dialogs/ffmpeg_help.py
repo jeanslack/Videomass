@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.26.2023
+Rev: Feb.27.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -28,6 +28,7 @@ This file is part of Videomass.
 import re
 import wx
 from pubsub import pub
+from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io import io_tools
 
 
@@ -40,22 +41,28 @@ class FFmpegHelp(wx.Dialog):
     corresponding checkbox.
 
     """
-    HELPTOPIC = (_('Contextual help based on the argument entered in the\n'
-                   'additional text field. Possible arguments are:'
+    LGREEN = '#52ee7d'
+    BLACK = '#1f1f1f'
+    HELPTOPIC = (_('Contextual help based on the argument entered in the '
+                   'additional text field.\nEach argument consists of the '
+                   'type, an equal sign (=), and a type-specific name.\n\n'
+                   'For the list of encoders click the "Encoders" button.\n'
+                   'For that of decoders click on the "Decoders" button.\n'
+                   'For the muxers and demuxers click on the "Muxers and '
+                   'Demuxers" button.\nFor the filters select "show '
+                   'available filters" in the drop down menu.\n'
+                   'For the bsf select "show available bitstream '
+                   'filters" in the drop down menu.\nFor the protocols select '
+                   '"show available protocols" in the drop down menu.\n\n'
+                   'Example:'
                    ))
-    TOPICEXAMPLES = ('\n\n\t- encoder=name of the encoder to find'
-                     '\n\t- decoder=name of the decoder to find'
-                     '\n\t- muxer=name of the muxer to find'
-                     '\n\t- demuxer=name of the demuxer to find'
-                     '\n\t- filter=name of the filter to find'
-                     '\n\t- bsf=name of the bit stream filter to find'
-                     '\n\t- protocol=name of the protocol to find'
-                     '\n\n\tExamples:'
-                     '\n\n\tencoder=libvpx-vp9\n\tencoder=libvorbis'
-                     '\n\tencoder=libopus\n\tencoder=mpeg2video'
-                     '\n\tencoder=libx264\n\tdecoder=dirac'
-                     '\n\tdecoder=gif\n\tdecoder=libvpx-vp9'
-                     '\n\tmuxer=matroska\n\tdemuxer=matroska'
+    TOPICEXAMPLES = ('\n\n\tencoder = libvpx-vp9'
+                     '\n\tdecoder = libaom-av1'
+                     '\n\tmuxer = matroska'
+                     '\n\tdemuxer = matroska'
+                     '\n\tfilter = scale'
+                     '\n\tbsf = av1_frame_merge'
+                     '\n\tprotocol = async'
                      )
     ARGS_OPT = {_("Help topic"): ['--help', ''],
                 _("print basic options"): ['-h', ''],
@@ -103,6 +110,12 @@ class FFmpegHelp(wx.Dialog):
         sizer = wx.BoxSizer(wx.VERTICAL)
         boxshow = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(boxshow, 0, wx.TOP, 5)
+
+        btn_help = wx.Button(self, wx.ID_ANY, _("Read Me"), size=(-1, -1))
+        btn_help.SetBackgroundColour(wx.Colour(FFmpegHelp.LGREEN))
+        btn_help.SetForegroundColour(wx.Colour(FFmpegHelp.BLACK))
+        boxshow.Add(btn_help, 0, wx.ALL, 5)
+
         btn_conf = wx.Button(self, wx.ID_ANY,
                              label=_("Show configuration"),
                              name='configuration',
@@ -189,6 +202,7 @@ class FFmpegHelp(wx.Dialog):
         self.Fit()
         self.Layout()
         # --------------- EVT
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         if not hasattr(wx, 'EVT_SEARCH'):
             self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN,
                       self.on_search_strings, self.search_str)
@@ -209,6 +223,35 @@ class FFmpegHelp(wx.Dialog):
         self.Bind(wx.EVT_CLOSE, self.on_close)  # caption X
     # ---------------------------------------------------------#
 
+    def on_help(self, event):
+        """
+        event on button help
+        """
+        msg = (_("This is a multifunctional search tool useful for local "
+                 "help searches\n"
+                 "on multiple FFmpeg topics and options. The search control, "
+                 "to\nfind occurences on text obtained from the chosen "
+                 "argument,\nis very similar to what grep does on the "
+                 "Unix shell, but here\nit's done in real time.\n\n"
+                 "If you don't find support for a certain codec or other "
+                 "feature,\nit's likely that your version of FFmpeg is "
+                 "too old or not configured\nwith those features."))
+        win = NormalTransientPopup(self,
+                                   wx.SIMPLE_BORDER,
+                                   msg,
+                                   FFmpegHelp.LGREEN,
+                                   FFmpegHelp.BLACK)
+
+        # Show the popup right below or above the button
+        # depending on available screen space...
+        btn = event.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        win.Position(pos, (0, sz[1]))
+
+        win.Popup()
+    # --------------------------------------------------------------#
+
     def on_show_extra(self, event):
         """
         It can display formats (muxers and demuxers) codecs
@@ -228,10 +271,9 @@ class FFmpegHelp(wx.Dialog):
 
     def on_type_topic(self, event):
         """
-        Event on typing some text
+        Event on typing any text on text box
         """
-        text = self.text_topic.GetValue().strip()
-        if not text:
+        if not self.text_topic.GetValue().strip():
             FFmpegHelp.ARGS_OPT[_("Help topic")] = ['--help', '']
             self.textlist.SetValue(FFmpegHelp.HELPTOPIC)
             self.textlist.AppendText(FFmpegHelp.TOPICEXAMPLES)
@@ -243,10 +285,10 @@ class FFmpegHelp(wx.Dialog):
         Event when user press `btn_proc`.
         """
         self.search_str.Clear()
-        newarg = self.text_topic.GetValue().split()
+        newarg = self.text_topic.GetValue().strip().replace(" ", "")
         if not newarg:
             return
-        topic = ['--help', ] + newarg
+        topic = ['--help', ] + newarg.split()
         FFmpegHelp.ARGS_OPT[_("Help topic")] = topic
         self.row = io_tools.findtopic(topic)
         if self.row:

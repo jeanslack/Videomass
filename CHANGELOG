@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Feb 23, 2023 V.4.0.10
+Feb 27, 2023 V.4.0.10
 
   * Removed interface to youtube_dl/yt_dlp libraries. Videomass will no longer
     have any functionality for downloading web videos. This mainly
@@ -16,13 +16,13 @@ Feb 23, 2023 V.4.0.10
     `sequence_to_video.py` module. This will make importing audio files more
     consistent using `Still Image Maker`.
   * Improved `filedrop` probe data.
-  * Improved `FFmpeg Help topics` tool (ffmpeg_help.py).
+  * Improved `FFmpeg topics and options` tool (ffmpeg_help.py).
   * Improved move files to Videomass trash dir.
   * Fixed bug that occurred when checking for new versions of presets.
     The bug did not allow to check correctly the new available versions.
   * [A/V Conversion] fixed bug that disables bitrate control by moving crf
     control.
-  * [Presets Manager] presets have been updated to the new v0.12 release.
+  * [Presets Manager] presets have been updated to the new v0.13 release.
   * [Presets Manager] fixed various bugs in the presets database update
     functionalities.
   * [Presets Manager] Added check for presets updates locally.
@@ -55,7 +55,7 @@ Feb 23, 2023 V.4.0.10
   * Fixed incorrect percentage value for time progress using pictures
     exporting functionality aka `From Movie to Pictures`.
   * Added support to libaom-av1 (AV1) codec.
-  * [Filedrop] on event, keep focused item selection.
+  * [Filedrop] on events, keep focused item selection by default.
 
 +------------------------------------+
 Jan 17, 2023 V.4.0.5
