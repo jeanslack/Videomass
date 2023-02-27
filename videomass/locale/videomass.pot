@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-25 00:29+0100\n"
+"POT-Creation-Date: 2023-02-27 15:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,8 +35,8 @@ msgstr ""
 #: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:274
 #: ../vdms_dialogs/filter_deinterlace.py:121
 #: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:210
-#: ../vdms_dialogs/filter_stab.py:266 ../vdms_dialogs/filter_transpose.py:101
-#: ../vdms_dialogs/filter_colorcorrection.py:183
+#: ../vdms_dialogs/filter_stab.py:264 ../vdms_dialogs/filter_transpose.py:101
+#: ../vdms_dialogs/filter_colorcorrection.py:187
 #: ../vdms_panels/av_conversions.py:576 ../vdms_panels/timeline.py:100
 msgid "Reset"
 msgstr ""
@@ -113,9 +113,9 @@ msgstr ""
 
 #: ../vdms_dialogs/filter_crop.py:279 ../vdms_dialogs/filter_deinterlace.py:120
 #: ../vdms_dialogs/filter_denoisers.py:83 ../vdms_dialogs/filter_scale.py:208
-#: ../vdms_dialogs/filter_stab.py:264 ../vdms_dialogs/filter_transpose.py:106
+#: ../vdms_dialogs/filter_stab.py:262 ../vdms_dialogs/filter_transpose.py:106
 #: ../vdms_dialogs/set_timestamp.py:148
-#: ../vdms_dialogs/filter_colorcorrection.py:188
+#: ../vdms_dialogs/filter_colorcorrection.py:192
 msgid "Apply"
 msgstr ""
 
@@ -328,82 +328,82 @@ msgid ""
 "Set to 0 to disable"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:63
+#: ../vdms_dialogs/filter_stab.py:61
 msgid "Enable stabilizer"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:66
+#: ../vdms_dialogs/filter_stab.py:64
 msgid "Generates duo video for comparison"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:69
+#: ../vdms_dialogs/filter_stab.py:67
 msgid "Video Detect"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:126
+#: ../vdms_dialogs/filter_stab.py:124
 msgid "[TRIPOD] Enable tripod mode if checked"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:133
+#: ../vdms_dialogs/filter_stab.py:131
 msgid "Video transform"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:152
+#: ../vdms_dialogs/filter_stab.py:150
 msgid "[OPTALGO] optimization algorithm"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:174
+#: ../vdms_dialogs/filter_stab.py:172
 msgid "[CROP] Specify how to deal with borders at movement compensation"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:181
+#: ../vdms_dialogs/filter_stab.py:179
 msgid "[INVERT] Invert transforms if checked"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:184
+#: ../vdms_dialogs/filter_stab.py:182
 msgid ""
 "[RELATIVE] Consider transforms as relative to previous frame if checked, "
 "absolute if unchecked"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:229
+#: ../vdms_dialogs/filter_stab.py:227
 msgid "Specify type of interpolation"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:237
+#: ../vdms_dialogs/filter_stab.py:235
 msgid ""
 "[TRIPOD2] virtual tripod mode, equivalent to relative=unchecked:smoothing=0"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:244
+#: ../vdms_dialogs/filter_stab.py:242
 msgid "Unsharp filter:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:278
+#: ../vdms_dialogs/filter_stab.py:276
 msgid ""
 "Set how shaky the video is and how quick the camera is. A value of 1 means "
 "little shakiness, a value of 10 means strong shakiness. Default value is 5."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:282
+#: ../vdms_dialogs/filter_stab.py:280
 msgid ""
 "Set the accuracy of the detection process. A value of 1 means low accuracy, "
 "a value of 15 means high accuracy. Default value is 15."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:286
+#: ../vdms_dialogs/filter_stab.py:284
 msgid ""
 "Set stepsize of the search process. The region around minimum is scanned "
 "with 1 pixel resolution. Default value is 6."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:290
+#: ../vdms_dialogs/filter_stab.py:288
 msgid ""
 "Set minimum contrast. Below this value a local measurement field is "
 "discarded. The range is 0-1. Default value is 0.25."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:293
+#: ../vdms_dialogs/filter_stab.py:291
 msgid ""
 "Set reference frame number for tripod mode. If enabled, the motion of the "
 "frames is compared to a reference frame in the filtered stream, identified "
@@ -412,7 +412,7 @@ msgid ""
 "are counted starting from 1."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:302
+#: ../vdms_dialogs/filter_stab.py:300
 msgid ""
 "Set the number of frames (value*2 + 1) used for lowpass filtering the camera "
 "movements. Default value is 15. For example a number of 10 means that 21 "
@@ -422,43 +422,43 @@ msgid ""
 "static camera is simulated."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:310
+#: ../vdms_dialogs/filter_stab.py:308
 msgid ""
 "Set the camera path optimization algorithm. Values are: `gauss`: gaussian "
 "kernel low-pass filter on camera motion (default), and `avg`: averaging on "
 "transformations"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:314
+#: ../vdms_dialogs/filter_stab.py:312
 msgid ""
 "Set maximal angle in radians (degree*PI/180) to rotate frames. Default value "
 "is -1, meaning no limit."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:317
+#: ../vdms_dialogs/filter_stab.py:315
 msgid ""
 "Specify how to deal with borders that may be visible due to movement "
 "compensation. Values are: `keep` keep image information from previous frame "
 "(default), `black` fill the border black"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:322
+#: ../vdms_dialogs/filter_stab.py:320
 msgid "Invert transforms if checked. Default is unchecked."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:324
+#: ../vdms_dialogs/filter_stab.py:322
 msgid ""
 "Consider transforms as relative to previous frame if checked, absolute if "
 "unchecked. Default is checked."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:327
+#: ../vdms_dialogs/filter_stab.py:325
 msgid ""
 "Set percentage to zoom. A positive value will result in a zoom-in effect, a "
 "negative value in a zoom-out effect. Default value is 0 (no zoom)."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:331
+#: ../vdms_dialogs/filter_stab.py:329
 msgid ""
 "Set optimal zooming to avoid borders. Accepted values are: `0` disabled, `1` "
 "optimal static zoom value is determined (only very strong movements will "
@@ -467,32 +467,32 @@ msgid ""
 "given at zoom is added to the one calculated here."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:338
+#: ../vdms_dialogs/filter_stab.py:336
 msgid ""
 "Set percent to zoom maximally each frame (enabled when optzoom is set to 2). "
 "Range is from 0 to 5, default value is 0.25."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:342
+#: ../vdms_dialogs/filter_stab.py:340
 msgid ""
 "Specify type of interpolation. Available values are: `no` no interpolation, "
 "`linear` linear only horizontal, `bilinear` linear in both directions "
 "(default), `bicubic` cubic in both directions (slow)"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:347
+#: ../vdms_dialogs/filter_stab.py:345
 msgid ""
 "Enable virtual tripod mode if checked, which is equivalent to relative=0:"
 "smoothing=0. Default is unchecked. Use also tripod option of vidstabdetect."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:352
+#: ../vdms_dialogs/filter_stab.py:350
 msgid ""
 "Sharpen or blur the input video. Note the use of the unsharp filter which is "
 "always recommended."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:357
+#: ../vdms_dialogs/filter_stab.py:355
 msgid "Video stabilizer filter"
 msgstr ""
 
@@ -1031,117 +1031,150 @@ msgstr ""
 msgid "# It will be replaced by increasing numbers starting with:"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:43
+#: ../vdms_dialogs/ffmpeg_help.py:46
 msgid ""
-"Contextual help based on the topic entered in the\n"
-"additional text field. Below is a list of valid\n"
-"topics as examples:"
+"Contextual help based on the argument entered in the additional text field.\n"
+"Each argument consists of the type, an equal sign (=), and a type-specific "
+"name.\n"
+"\n"
+"For the list of encoders click the \"Encoders\" button.\n"
+"For that of decoders click on the \"Decoders\" button.\n"
+"For the muxers and demuxers click on the \"Muxers and Demuxers\" button.\n"
+"For the filters select \"show available filters\" in the drop down menu.\n"
+"For the bsf select \"show available bitstream filters\" in the drop down "
+"menu.\n"
+"For the protocols select \"show available protocols\" in the drop down "
+"menu.\n"
+"\n"
+"Some examples:"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:54 ../vdms_dialogs/ffmpeg_help.py:194
-#: ../vdms_dialogs/ffmpeg_help.py:206
+#: ../vdms_dialogs/ffmpeg_help.py:67 ../vdms_dialogs/ffmpeg_help.py:277
+#: ../vdms_dialogs/ffmpeg_help.py:292
 msgid "Help topic"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:55
+#: ../vdms_dialogs/ffmpeg_help.py:68
 msgid "print basic options"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:56
+#: ../vdms_dialogs/ffmpeg_help.py:69
 msgid "print more options"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:57
+#: ../vdms_dialogs/ffmpeg_help.py:70
 msgid "print all options (very long)"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:58
+#: ../vdms_dialogs/ffmpeg_help.py:71
 msgid "show available devices"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:59
+#: ../vdms_dialogs/ffmpeg_help.py:72
 msgid "show available bit stream filters"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:60
+#: ../vdms_dialogs/ffmpeg_help.py:73
 msgid "show available protocols"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:61
+#: ../vdms_dialogs/ffmpeg_help.py:74
 msgid "show available filters"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:62
+#: ../vdms_dialogs/ffmpeg_help.py:75
 msgid "show available pixel formats"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:63
+#: ../vdms_dialogs/ffmpeg_help.py:76
 msgid "show available audio sample formats"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:64
+#: ../vdms_dialogs/ffmpeg_help.py:77
 msgid "show available color names"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:65
+#: ../vdms_dialogs/ffmpeg_help.py:78
 msgid "list sources of the input device"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:66
+#: ../vdms_dialogs/ffmpeg_help.py:79
 msgid "list sinks of the output device"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:67
+#: ../vdms_dialogs/ffmpeg_help.py:80
 msgid "show available HW acceleration methods"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:68
+#: ../vdms_dialogs/ffmpeg_help.py:81
 msgid "show license"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:113
-msgid "Choose a topic in the list"
+#: ../vdms_dialogs/ffmpeg_help.py:114
+msgid "Read Me"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:121
+#: ../vdms_dialogs/ffmpeg_help.py:120 ../vdms_main/main_frame.py:475
+msgid "Show configuration"
+msgstr ""
+
+#: ../vdms_dialogs/ffmpeg_help.py:124 ../vdms_main/main_frame.py:483
+msgid "Encoders"
+msgstr ""
+
+#: ../vdms_dialogs/ffmpeg_help.py:128 ../vdms_main/main_frame.py:486
+msgid "Decoders"
+msgstr ""
+
+#: ../vdms_dialogs/ffmpeg_help.py:132 ../vdms_main/main_frame.py:479
+msgid "Muxers and Demuxers"
+msgstr ""
+
+#: ../vdms_dialogs/ffmpeg_help.py:162
 msgid "help topic list"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:131
-msgid "Type the topic here"
+#: ../vdms_dialogs/ffmpeg_help.py:173
+msgid "Type the argument here and confirm with the enter key on your keyboard"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:132
-msgid "Confirm Topic"
-msgstr ""
-
-#: ../vdms_dialogs/ffmpeg_help.py:141
+#: ../vdms_dialogs/ffmpeg_help.py:181
 msgid "The search function allows you to find entries in the current topic"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:144
+#: ../vdms_dialogs/ffmpeg_help.py:184
 msgid "Ignore case"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:145
+#: ../vdms_dialogs/ffmpeg_help.py:185
 msgid "Ignore case distinctions: characters with different case will match."
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:155
+#: ../vdms_dialogs/ffmpeg_help.py:195
 msgid "FFmpeg help topics"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:211 ../vdms_dialogs/ffmpeg_help.py:242
+#: ../vdms_dialogs/ffmpeg_help.py:230
+msgid ""
+"This is a multifunctional search tool useful for local help searches\n"
+"on multiple FFmpeg topics and options. The search control, to\n"
+"find occurences on text obtained from the chosen argument,\n"
+"is very similar to what grep does on the Unix shell, but here\n"
+"it's done in real time.\n"
+"\n"
+"If you don't find support for a certain codec or other feature,\n"
+"it's likely that your version of FFmpeg is too old or not configured\n"
+"with those features."
+msgstr ""
+
+#: ../vdms_dialogs/ffmpeg_help.py:298 ../vdms_dialogs/ffmpeg_help.py:324
+#: ../vdms_dialogs/ffmpeg_help.py:350
 msgid ""
 "\n"
 "  ..Nothing available"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:235
-msgid "First, choose a topic in the drop down list"
-msgstr ""
-
-#: ../vdms_dialogs/ffmpeg_help.py:278
+#: ../vdms_dialogs/ffmpeg_help.py:370
 msgid ""
 "\n"
 "  ...Not found"
@@ -1163,19 +1196,32 @@ msgstr ""
 msgid "Contrast:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:138
+#: ../vdms_dialogs/filter_colorcorrection.py:134
+#: ../vdms_dialogs/filter_colorcorrection.py:148
+msgid "-100 to +100, default value 0"
+msgstr ""
+
+#: ../vdms_dialogs/filter_colorcorrection.py:139
 msgid "Brightness:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:156
+#: ../vdms_dialogs/filter_colorcorrection.py:158
 msgid "Saturation:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:167
+#: ../vdms_dialogs/filter_colorcorrection.py:166
+msgid "0 to 300, default value 100"
+msgstr ""
+
+#: ../vdms_dialogs/filter_colorcorrection.py:170
 msgid "Gamma:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:203
+#: ../vdms_dialogs/filter_colorcorrection.py:179
+msgid "0 to 100, Default value 10"
+msgstr ""
+
+#: ../vdms_dialogs/filter_colorcorrection.py:207
 msgid "Color Correction Equalizer"
 msgstr ""
 
@@ -1594,32 +1640,16 @@ msgstr ""
 msgid "Tools"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:475
-msgid "Show configuration"
-msgstr ""
-
 #: ../vdms_main/main_frame.py:476
 msgid "Show FFmpeg's built-in configuration capabilities"
-msgstr ""
-
-#: ../vdms_main/main_frame.py:479
-msgid "Muxers and Demuxers"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:480
 msgid "Muxers and demuxers available for used FFmpeg."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:483
-msgid "Encoders"
-msgstr ""
-
 #: ../vdms_main/main_frame.py:484
 msgid "Shows available encoders for FFmpeg"
-msgstr ""
-
-#: ../vdms_main/main_frame.py:486
-msgid "Decoders"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:486
@@ -2076,10 +2106,6 @@ msgstr ""
 
 #: ../vdms_panels/av_conversions.py:611
 msgid "Stabilizer"
-msgstr ""
-
-#: ../vdms_panels/av_conversions.py:616
-msgid "Color Equalizer"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:635
@@ -2564,7 +2590,7 @@ msgid ""
 "\"width\" or \"height\". Unable to proceed."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:335
+#: ../vdms_panels/concatenate.py:336
 msgid ""
 "File to concatenate\n"
 "Output filename\n"
@@ -2648,29 +2674,29 @@ msgstr ""
 msgid "Destination folder"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:534
+#: ../vdms_panels/filedrop.py:536
 msgid "File renaming..."
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:535
+#: ../vdms_panels/filedrop.py:537
 msgid "Rename the selected file to:"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:549 ../vdms_panels/filedrop.py:559
-#: ../vdms_panels/filedrop.py:590
+#: ../vdms_panels/filedrop.py:551 ../vdms_panels/filedrop.py:561
+#: ../vdms_panels/filedrop.py:592
 msgid "Add Files"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:566
+#: ../vdms_panels/filedrop.py:568
 msgid "Rename items"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:567
+#: ../vdms_panels/filedrop.py:569
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:569
+#: ../vdms_panels/filedrop.py:571
 msgid "New Name #"
 msgstr ""
 

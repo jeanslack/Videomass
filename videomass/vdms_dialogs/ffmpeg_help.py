@@ -54,7 +54,7 @@ class FFmpegHelp(wx.Dialog):
                    'For the bsf select "show available bitstream '
                    'filters" in the drop down menu.\nFor the protocols select '
                    '"show available protocols" in the drop down menu.\n\n'
-                   'Example:'
+                   'Some examples:'
                    ))
     TOPICEXAMPLES = ('\n\n\tencoder = libvpx-vp9'
                      '\n\tdecoder = libaom-av1'
@@ -62,7 +62,7 @@ class FFmpegHelp(wx.Dialog):
                      '\n\tdemuxer = matroska'
                      '\n\tfilter = scale'
                      '\n\tbsf = av1_frame_merge'
-                     '\n\tprotocol = async'
+                     '\n\tprotocol = bluray'
                      )
     ARGS_OPT = {_("Help topic"): ['--help', ''],
                 _("print basic options"): ['-h', ''],
