@@ -54,17 +54,15 @@ class Vidstab(wx.Dialog):
         self.makeduo = args[3]
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-
         sizerBase = wx.BoxSizer(wx.VERTICAL)
-
-        flex_General = wx.BoxSizer(wx.HORIZONTAL)
-        sizerBase.Add(flex_General, 0, wx.CENTER, 5)
+        boxenable = wx.BoxSizer(wx.HORIZONTAL)
+        sizerBase.Add(boxenable, 0, wx.CENTER, 5)
         self.ckbx_enable = wx.CheckBox(self, wx.ID_ANY,
                                        _('Enable stabilizer'))
-        flex_General.Add(self.ckbx_enable, 0, wx.ALL | wx.CENTER, 2)
+        boxenable.Add(self.ckbx_enable, 0, wx.ALL | wx.CENTER, 2)
         self.ckbx_duo = wx.CheckBox(self, wx.ID_ANY,
                                     _('Generates duo video for comparison'))
-        flex_General.Add(self.ckbx_duo, 0, wx.ALL | wx.CENTER, 2)
+        boxenable.Add(self.ckbx_duo, 0, wx.ALL | wx.CENTER, 2)
         # Box detect
         sbox = wx.StaticBox(self, wx.ID_ANY, (_("Video Detect")))
         box_detect = wx.StaticBoxSizer(sbox, wx.VERTICAL)

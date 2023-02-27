@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.22.2023
+Rev: Feb.27.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -65,8 +65,6 @@ class ColorEQ(wx.Dialog):
         thr = 150 if kwa['height'] > kwa['width'] else 270
         self.h_ratio = int((kwa['height'] / kwa['width']) * thr)
         self.w_ratio = int((kwa['width'] / kwa['height']) * self.h_ratio)
-        self.bitmap_src = None
-        self.bitmap_edit = None
         self.contrast = ""
         self.brightness = ""
         self.saturation = ""
@@ -131,6 +129,7 @@ class ColorEQ(wx.Dialog):
                                       | wx.SL_AUTOTICKS
                                       | wx.SL_LABELS,
                                       )
+        self.sld_contrast.SetToolTip(_("-100 to +100, default value 0"))
         sizerflex1.Add(self.sld_contrast, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 10)
@@ -139,12 +138,13 @@ class ColorEQ(wx.Dialog):
         sizerflex1.Add(lbl_brigh, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 20)
-        self.sld_bright = wx.Slider(self, wx.ID_ANY, 0, -100, 100,
-                                    size=(200, -1), style=wx.SL_HORIZONTAL
-                                    | wx.SL_AUTOTICKS
-                                    | wx.SL_LABELS,
-                                    )
-        sizerflex1.Add(self.sld_bright, 0, wx.LEFT
+        self.sld_brightness = wx.Slider(self, wx.ID_ANY, 0, -100, 100,
+                                        size=(200, -1), style=wx.SL_HORIZONTAL
+                                        | wx.SL_AUTOTICKS
+                                        | wx.SL_LABELS,
+                                        )
+        self.sld_brightness.SetToolTip(_("-100 to +100, default value 0"))
+        sizerflex1.Add(self.sld_brightness, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 10)
         line = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
@@ -156,24 +156,26 @@ class ColorEQ(wx.Dialog):
         lbl_sat = wx.StaticText(self, wx.ID_ANY, _('Saturation:'))
         sizerflex2.Add(lbl_sat, 0, wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 0)
-        self.sld_sat = wx.Slider(self, wx.ID_ANY, 100, 0, 300,
-                                 size=(200, -1), style=wx.SL_HORIZONTAL
-                                 | wx.SL_AUTOTICKS
-                                 | wx.SL_LABELS,
-                                 )
-        sizerflex2.Add(self.sld_sat, 0, wx.LEFT
+        self.sld_saturation = wx.Slider(self, wx.ID_ANY, 100, 0, 300,
+                                        size=(200, -1), style=wx.SL_HORIZONTAL
+                                        | wx.SL_AUTOTICKS
+                                        | wx.SL_LABELS,
+                                        )
+        self.sld_saturation.SetToolTip(_("0 to 300, default value 100"))
+        sizerflex2.Add(self.sld_saturation, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 10)
         lbl_gam = wx.StaticText(self, wx.ID_ANY, _('Gamma:'))
         sizerflex2.Add(lbl_gam, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 20)
-        self.sld_gam = wx.Slider(self, wx.ID_ANY, 10, 0, 100,
-                                 size=(200, -1), style=wx.SL_HORIZONTAL
-                                 | wx.SL_AUTOTICKS
-                                 | wx.SL_LABELS,
-                                 )
-        sizerflex2.Add(self.sld_gam, 0, wx.LEFT
+        self.sld_gamma = wx.Slider(self, wx.ID_ANY, 10, 0, 100,
+                                   size=(200, -1), style=wx.SL_HORIZONTAL
+                                   | wx.SL_AUTOTICKS
+                                   | wx.SL_LABELS,
+                                   )
+        self.sld_gamma.SetToolTip(_("0 to 100, Default value 10"))
+        sizerflex2.Add(self.sld_gamma, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 10)
         sizercolor.Add(sizerflex2, 0, wx.ALL | wx.CENTRE, 5)
@@ -204,10 +206,13 @@ class ColorEQ(wx.Dialog):
         # ----------------------Binding (EVT)-------------------------#
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_seek_time, self.sld_time)
         self.Bind(wx.EVT_BUTTON, self.on_load_at_time, self.btn_load)
-        self.Bind(wx.EVT_SCROLL_CHANGED, self.on_contrast, self.sld_contrast)
-        self.Bind(wx.EVT_SCROLL_CHANGED, self.on_brightness, self.sld_bright)
-        self.Bind(wx.EVT_SCROLL_CHANGED, self.on_saturation, self.sld_sat)
-        self.Bind(wx.EVT_SCROLL_CHANGED, self.on_gamma, self.sld_gam)
+        self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_contrast,
+                  self.sld_contrast)
+        self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_brightness,
+                  self.sld_brightness)
+        self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_saturation,
+                  self.sld_saturation)
+        self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_gamma, self.sld_gamma)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
@@ -217,11 +222,9 @@ class ColorEQ(wx.Dialog):
 
         if colorset:  # previus values
             self.set_default(colorset)
+        self.process(self.framesrc)
         self.loader_initial_source()
-        if not colorset:
-            wx.StaticBitmap(self.panel_img2, wx.ID_ANY, self.bitmap_src)
-        else:
-            self.loader_initial_edit()
+        self.equalize_image(self.concat_filter())
     # -----------------------------------------------------------------------#
 
     def process(self, pathtosave, equalizer=''):
@@ -243,27 +246,25 @@ class ColorEQ(wx.Dialog):
     def loader_initial_source(self):
         """
         Loads initial StaticBitmaps on panels 1 (source).
-        To set previus values on `colorset`, you have to call
-        this method before call `loader_initial_edit`.
         """
-        error = self.process(self.framesrc)
-        if error:
-            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
-            return
         bitmap = wx.Bitmap(self.framesrc)
         img = bitmap.ConvertToImage()
         img = img.Scale(self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL)
         bmp = img.ConvertToBitmap()
-        self.bitmap_src = wx.Bitmap(bmp)
-        wx.StaticBitmap(self.panel_img1, wx.ID_ANY, self.bitmap_src)
+        bitmap = wx.Bitmap(bmp)
+        wx.StaticBitmap(self.panel_img1, wx.ID_ANY, bitmap)
     # -----------------------------------------------------------------------#
 
     def loader_initial_edit(self):
         """
         Loads initial StaticBitmaps on panels 2 (edit)
         """
-        self.bitmap_edit = wx.Bitmap(self.w_ratio, self.h_ratio)
-        wx.StaticBitmap(self.panel_img2, wx.ID_ANY, self.bitmap_edit)
+        bitmap = wx.Bitmap(self.frameedit)
+        img = bitmap.ConvertToImage()
+        img = img.Scale(self.w_ratio, self.h_ratio)
+        bmp = img.ConvertToBitmap()
+        bitmap = wx.Bitmap(bmp)  # convert to bitmap
+        wx.StaticBitmap(self.panel_img2, wx.ID_ANY, bitmap)
     # -----------------------------------------------------------------------#
 
     def set_default(self, colorset):
@@ -291,26 +292,20 @@ class ColorEQ(wx.Dialog):
         gamma = int(float(eqval.get('gamma', 0.0)) * 10)
         # set sliders
         self.sld_contrast.SetValue(contrast)
-        self.sld_bright.SetValue(brightness)
-        self.sld_sat.SetValue(saturation)
-        self.sld_gam.SetValue(gamma)
+        self.sld_brightness.SetValue(brightness)
+        self.sld_saturation.SetValue(saturation)
+        self.sld_gamma.SetValue(gamma)
     # -----------------------------------------------------------------------#
 
-    def loader_edit(self, equalizer=''):
+    def equalize_image(self, equalizer=''):
         """
-        Loads edited StaticBitmap on panel 2
+        Sends the equalization values to the process
         """
         error = self.process(self.frameedit, equalizer=equalizer)
         if error:
             wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
             return
-        bitmap = wx.Bitmap(self.frameedit)
-        img = bitmap.ConvertToImage()
-        img = img.Scale(self.w_ratio, self.h_ratio)
-        bmp = img.ConvertToBitmap()
-        self.bitmap_edit = wx.Bitmap(bmp)  # convert to bitmap
-        # SetBitmap(self.bitmap_edit)  # set StaticBitmap
-        wx.StaticBitmap(self.panel_img2, wx.ID_ANY, self.bitmap_edit)
+        self.loader_initial_edit()
     # -----------------------------------------------------------------------#
 
     def concat_filter(self):
@@ -327,8 +322,10 @@ class ColorEQ(wx.Dialog):
 
     def on_seek_time(self, event):
         """
-        gets value from time slider, converts it to clock format
-        e.g (00:00:00), and sets the label with the converted value.
+        Event to set slider position.
+        Getting the value in ms from the time slider,
+        converts it to clock format e.g (00:00:00),
+        and sets the label with the converted value.
         """
         seek = self.sld_time.GetValue()
         clock = milliseconds2clocksec(seek, rounds=True)  # to 24-hour
@@ -366,34 +363,34 @@ class ColorEQ(wx.Dialog):
         """
         val = 1.0 + self.sld_contrast.GetValue() / 100
         self.contrast = "" if val == 1.0 else f'contrast={val}'
-        self.loader_edit(self.concat_filter())
+        self.equalize_image(self.concat_filter())
     # -----------------------------------------------------------------------#
 
     def on_brightness(self, event):
         """
         Scroll event for brightness EQ.
         """
-        val = 0.0 + self.sld_bright.GetValue() / 100
+        val = 0.0 + self.sld_brightness.GetValue() / 100
         self.brightness = "" if val == 0.0 else f'brightness={val}'
-        self.loader_edit(self.concat_filter())
+        self.equalize_image(self.concat_filter())
     # -----------------------------------------------------------------------#
 
     def on_saturation(self, event):
         """
         Scroll event for saturation EQ.
         """
-        val = 0.0 + self.sld_sat.GetValue() / 100
+        val = 0.0 + self.sld_saturation.GetValue() / 100
         self.saturation = "" if val == 1.0 else f'saturation={val}'
-        self.loader_edit(self.concat_filter())
+        self.equalize_image(self.concat_filter())
     # -----------------------------------------------------------------------#
 
     def on_gamma(self, event):
         """
         Scroll event for gamma EQ.
         """
-        val = self.sld_gam.GetValue() / 10
+        val = self.sld_gamma.GetValue() / 10
         self.gamma = "" if val == 1.0 else f'gamma={val}'
-        self.loader_edit(self.concat_filter())
+        self.equalize_image(self.concat_filter())
     # -----------------------------------------------------------------------#
 
     def on_reset(self, event):
@@ -405,10 +402,10 @@ class ColorEQ(wx.Dialog):
         self.saturation = ""
         self.gamma = ""
         self.sld_contrast.SetValue(0)
-        self.sld_bright.SetValue(0)
-        self.sld_sat.SetValue(100)
-        self.sld_gam.SetValue(10)
-        self.loader_edit(self.concat_filter())
+        self.sld_brightness.SetValue(0)
+        self.sld_saturation.SetValue(100)
+        self.sld_gamma.SetValue(10)
+        self.equalize_image(self.concat_filter())
     # -----------------------------------------------------------------------#
 
     def on_close(self, event):

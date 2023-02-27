@@ -75,10 +75,10 @@ class VideoToSequence(wx.Panel):
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((20, 20))
-        self.btn_help = wx.Button(self, wx.ID_ANY, _("Help"), size=(-1, -1))
-        self.btn_help.SetBackgroundColour(wx.Colour(VideoToSequence.LGREEN))
-        self.btn_help.SetForegroundColour(wx.Colour(VideoToSequence.BLACK))
-        sizer.Add(self.btn_help, 0, wx.ALL, 5)
+        btn_help = wx.Button(self, wx.ID_ANY, _("Help"), size=(-1, -1))
+        btn_help.SetBackgroundColour(wx.Colour(VideoToSequence.LGREEN))
+        btn_help.SetForegroundColour(wx.Colour(VideoToSequence.BLACK))
+        sizer.Add(btn_help, 0, wx.ALL, 5)
         sizer.Add((20, 20))
         choices = [(_('Create thumbnails')),
                    (_('Create tiled mosaics')),
@@ -233,7 +233,7 @@ class VideoToSequence(wx.Panel):
         tip = _('Spaces around the mosaic borders. From 0 to 32 pixels')
         self.spin_marg.SetToolTip(tip)
 
-        self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_help)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_CHECKBOX, self.on_edit, self.ckbx_edit)
         self.Bind(wx.EVT_RADIOBOX, self.on_options, self.rdbx_opt)
         self.Bind(wx.EVT_BUTTON, self.on_resizing, self.btn_resize)

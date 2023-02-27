@@ -269,13 +269,13 @@ class FileDnD(wx.Panel):
         self.btn_play = wx.Button(self, wx.ID_ANY, _("Play"))
         self.btn_play.SetBitmap(bmpplay, wx.LEFT)
         self.btn_play.Disable()
-        sizer_media.Add(self.btn_play, 1, wx.ALL, 2)
+        sizer_media.Add(self.btn_play, 0, wx.ALL, 2)
         self.btn_remove = wx.Button(self, wx.ID_REMOVE, "")
         self.btn_remove.Disable()
-        sizer_media.Add(self.btn_remove, 1, wx.ALL, 2)
+        sizer_media.Add(self.btn_remove, 0, wx.ALL, 2)
         self.btn_clear = wx.Button(self, wx.ID_CLEAR, "")
         self.btn_clear.Disable()
-        sizer_media.Add(self.btn_clear, 1, wx.ALL, 2)
+        sizer_media.Add(self.btn_clear, 0, wx.ALL, 2)
         sizer.Add(sizer_media, 0, wx.CENTRE)
         # This builds the list control box:
         self.flCtrl = MyListCtrl(self)  # class MyListCtr
@@ -389,10 +389,10 @@ class FileDnD(wx.Panel):
                 self.flCtrl.dropUpdate(data[0], data[4])
     # ----------------------------------------------------------------------
 
-    def reset_timeline(self):
+    def reset_timeline(self, setfocus=True):
         """
         Routine operations when opening, drag&drop,
-        removing files and sorting items by LEFT
+        removing files or sorting items by LEFT
         clicking on column headers in the ListCtrl.
         """
         self.parent.destroy_orphaned_window()
@@ -403,12 +403,17 @@ class FileDnD(wx.Panel):
             self.parent.rename_batch.Enable(True)
         else:
             self.parent.rename_batch.Enable(False)
+
+        if setfocus:
+            sel = self.flCtrl.GetFocusedItem()  # Get the current row
+            selitem = sel if sel != -1 else 0
+            self.flCtrl.Focus(selitem)  # make the line the current line
+            self.flCtrl.Select(selitem, on=1)  # default event selection
     # ----------------------------------------------------------------------
 
     def which(self):
         """
         return topic name by choose_topic.py selection
-
         """
         return self.parent.topicname
     # ----------------------------------------------------------------------
@@ -416,7 +421,6 @@ class FileDnD(wx.Panel):
     def on_play_select(self, event):
         """
         Playback the selected file
-
         """
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index, 1)
@@ -431,7 +435,6 @@ class FileDnD(wx.Panel):
     def on_delete_selected(self, event):
         """
         Delete a selected file or a bunch of selected files
-
         """
         item, indexes = -1, []
         while 1:
@@ -452,7 +455,7 @@ class FileDnD(wx.Panel):
             self.data.pop(num)  # remove selected items
             self.outputnames.pop(num)  # remove selected items
             self.flCtrl.Select(num - 1)  # select the previous one
-        self.reset_timeline()  # delete parent.timeline
+        self.reset_timeline(setfocus=False)  # delete parent.timeline
         # self.on_deselect(self)  # deselect removed file
 
         for x in range(self.flCtrl.GetItemCount()):
@@ -470,7 +473,7 @@ class FileDnD(wx.Panel):
         del self.data[:]
         del self.outputnames[:]
         self.parent.filedropselected = None
-        self.reset_timeline()
+        self.reset_timeline(setfocus=False)
         self.btn_play.Disable()
         self.btn_remove.Disable()
         self.btn_clear.Disable()
@@ -506,7 +509,6 @@ class FileDnD(wx.Panel):
     def on_file_save(self, path):
         """
         Set a specific directory for files saving
-
         """
         self.text_path_save.SetValue("")
         self.text_path_save.AppendText(path)

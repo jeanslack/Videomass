@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.16.2023
+Rev: Feb.27.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -28,6 +28,7 @@ This file is part of Videomass.
 import re
 import wx
 from pubsub import pub
+from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io import io_tools
 
 
@@ -40,18 +41,30 @@ class FFmpegHelp(wx.Dialog):
     corresponding checkbox.
 
     """
-    HELPTOPIC = (_('Contextual help based on the topic entered in the\n'
-                   'additional text field. Below is a list of valid\n'
-                   'topics as examples:'
+    LGREEN = '#52ee7d'
+    BLACK = '#1f1f1f'
+    HELPTOPIC = (_('Contextual help based on the argument entered in the '
+                   'additional text field.\nEach argument consists of the '
+                   'type, an equal sign (=), and a type-specific name.\n\n'
+                   'For the list of encoders click the "Encoders" button.\n'
+                   'For that of decoders click on the "Decoders" button.\n'
+                   'For the muxers and demuxers click on the "Muxers and '
+                   'Demuxers" button.\nFor the filters select "show '
+                   'available filters" in the drop down menu.\n'
+                   'For the bsf select "show available bitstream '
+                   'filters" in the drop down menu.\nFor the protocols select '
+                   '"show available protocols" in the drop down menu.\n\n'
+                   'Some examples:'
                    ))
-    TOPICEXAMPLES = ('\n\n\tencoder=libvpx-vp9\n\tencoder=libvorbis'
-                     '\n\tencoder=libopus\n\tencoder=mpeg2video'
-                     '\n\tencoder=libx264\n\tdecoder=dirac'
-                     '\n\tdecoder=gif\n\tdecoder=libvpx-vp9'
-                     '\n\tmuxer=matroska\n\tdemuxer=matroska\n\t...etc'
-                     )
-    ARGS_OPT = {"...": 'None',
-                _("Help topic"): ['--help', ''],
+    EXAMPLES = ('\n\n\tencoder = libvpx-vp9'
+                '\n\tdecoder = libaom-av1'
+                '\n\tmuxer = matroska'
+                '\n\tdemuxer = matroska'
+                '\n\tfilter = scale'
+                '\n\tbsf = av1_frame_merge'
+                '\n\tprotocol = bluray'
+                )
+    ARGS_OPT = {_("Help topic"): ['--help', ''],
                 _("print basic options"): ['-h', ''],
                 _("print more options"): ['-h', 'long'],
                 _("print all options (very long)"): ['-h', 'full'],
@@ -69,7 +82,7 @@ class FFmpegHelp(wx.Dialog):
                 }
     CHOICES = tuple(ARGS_OPT.keys())
 
-    def __init__(self, OS):
+    def __init__(self, parent, OS):
         """
         The list of topics in the combo box is part of the
         section given by the -h option on the FFmpeg command line.
@@ -83,6 +96,7 @@ class FFmpegHelp(wx.Dialog):
             if close videomass also close parent window
 
         """
+        self.parent = parent
         self.row = None  # output text from `io_tools.findtopic(topic)'
         get = wx.GetApp()  # get data from bootstrap
         colorscheme = get.appset['icontheme'][1]
@@ -93,8 +107,34 @@ class FFmpegHelp(wx.Dialog):
                            | wx.RESIZE_BORDER
                            | wx.DIALOG_NO_PARENT
                            )
-        # add panel
         sizer = wx.BoxSizer(wx.VERTICAL)
+        boxshow = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(boxshow, 0, wx.TOP, 5)
+
+        btn_help = wx.Button(self, wx.ID_ANY, _("Read Me"), size=(-1, -1))
+        btn_help.SetBackgroundColour(wx.Colour(FFmpegHelp.LGREEN))
+        btn_help.SetForegroundColour(wx.Colour(FFmpegHelp.BLACK))
+        boxshow.Add(btn_help, 0, wx.ALL, 5)
+
+        btn_conf = wx.Button(self, wx.ID_ANY,
+                             label=_("Show configuration"),
+                             name='configuration',
+                             )
+        btn_encoders = wx.Button(self, wx.ID_ANY,
+                                 label=_("Encoders"),
+                                 name='encoders',
+                                 )
+        btn_decoders = wx.Button(self, wx.ID_ANY,
+                                 label=_("Decoders"),
+                                 name='decoders',
+                                 )
+        btn_formats = wx.Button(self, wx.ID_ANY,
+                                label=_("Muxers and Demuxers"),
+                                name='formats',
+                                )
+        for button in (btn_conf, btn_encoders, btn_decoders, btn_formats):
+            button.Bind(wx.EVT_BUTTON, self.on_show_extra)
+            boxshow.Add(button, 0, wx.ALL, 5)
         self.textlist = wx.TextCtrl(self, wx.ID_ANY,
                                     "",
                                     # size=(550,400),
@@ -109,8 +149,9 @@ class FFmpegHelp(wx.Dialog):
             self.textlist.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
             self.textlist.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-
-        self.textlist.AppendText(_("Choose a topic in the list"))
+        self.textlist.AppendText(FFmpegHelp.HELPTOPIC)
+        self.textlist.AppendText(FFmpegHelp.EXAMPLES)
+        self.textlist.SetInsertionPoint(0)
         sizer.Add(self.textlist, 1, wx.EXPAND | wx.ALL, 5)
         self.cmbx_choice = wx.ComboBox(self, wx.ID_ANY,
                                        choices=FFmpegHelp.CHOICES,
@@ -124,23 +165,22 @@ class FFmpegHelp(wx.Dialog):
         sizer.Add(sizerselect, 0)
         sizerselect.Add(self.cmbx_choice, 0, wx.ALL, 5)
         self.text_topic = wx.TextCtrl(self, wx.ID_ANY,
-                                      "", size=(160, -1),
+                                      "", size=(180, -1),
+                                      style=wx.TE_PROCESS_ENTER
                                       )
         sizerselect.Add(self.text_topic, 0, wx.ALL, 5)
-        self.text_topic.Disable()
-        self.text_topic.SetToolTip(_("Type the topic here"))
-        self.btn_proc = wx.Button(self, wx.ID_ANY, _("Confirm Topic"))
-        self.btn_proc.Disable()
-        sizerselect.Add(self.btn_proc, 0, wx.ALL, 5)
+        self.text_topic.Enable()
+        self.text_topic.SetToolTip(_("Type the argument here and confirm "
+                                     "with the enter key on your keyboard"))
         boxsearch = wx.BoxSizer(wx.HORIZONTAL)
-        self.search = wx.SearchCtrl(self,
-                                    wx.ID_ANY,
-                                    size=(400, 30),
-                                    style=wx.TE_PROCESS_ENTER,
-                                    )
-        self.search.SetToolTip(_("The search function allows you to find "
-                                 "entries in the current topic"))
-        boxsearch.Add(self.search, 0, wx.ALL, 0)
+        self.search_str = wx.SearchCtrl(self,
+                                        wx.ID_ANY,
+                                        size=(400, 30),
+                                        style=wx.TE_PROCESS_ENTER,
+                                        )
+        self.search_str.SetToolTip(_("The search function allows you to find "
+                                     "entries in the current topic"))
+        boxsearch.Add(self.search_str, 0, wx.ALL, 0)
         self.case = wx.CheckBox(self, wx.ID_ANY, (_("Ignore case")))
         self.case.SetToolTip(_("Ignore case distinctions: characters with "
                                "different case will match."
@@ -153,62 +193,119 @@ class FFmpegHelp(wx.Dialog):
         grid.Add(self.btn_close, 1, wx.ALL, 5)
         sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         self.SetTitle(_("FFmpeg help topics"))
-        self.SetMinSize((750, 500))
+        self.SetMinSize((750, 550))
         icon = wx.Icon()
         icon.CopyFromBitmap(wx.Bitmap(vidicon, wx.BITMAP_TYPE_ANY))
+
         self.SetIcon(icon)
-        # set_properties:
-        # self.panel.SetSizer(sizer)
         self.SetSizer(sizer)
         self.Fit()
         self.Layout()
         # --------------- EVT
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         if not hasattr(wx, 'EVT_SEARCH'):
             self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN,
-                      self.on_type_text, self.search)
+                      self.on_search_strings, self.search_str)
         else:  # is wxPython >= 4.1
-            self.Bind(wx.EVT_SEARCH, self.on_type_text, self.search)
+            self.Bind(wx.EVT_SEARCH, self.on_search_strings, self.search_str)
 
         if not hasattr(wx, 'EVT_SEARCH_CANCEL'):
             self.Bind(wx.EVT_SEARCHCTRL_CANCEL_BTN, self.on_delete,
-                      self.search)
+                      self.search_str)
         else:  # is wxPython >= 4.1
-            self.Bind(wx.EVT_SEARCH_CANCEL, self.on_delete, self.search)
-
+            self.Bind(wx.EVT_SEARCH_CANCEL, self.on_delete, self.search_str)
         self.Bind(wx.EVT_COMBOBOX, self.on_selected, self.cmbx_choice)
-        self.Bind(wx.EVT_BUTTON, self.on_btn_proc, self.btn_proc)
-        self.Bind(wx.EVT_TEXT, self.on_type_text, self.search)
+        self.Bind(wx.EVT_TEXT, self.on_search_strings, self.search_str)
         self.Bind(wx.EVT_TEXT, self.on_type_topic, self.text_topic)
+        self.Bind(wx.EVT_TEXT_ENTER, self.on_type_enter_key, self.text_topic)
         self.Bind(wx.EVT_CHECKBOX, self.on_ckbx, self.case)
         self.Bind(wx.EVT_BUTTON, self.on_close, self.btn_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # caption X
     # ---------------------------------------------------------#
 
-    def on_type_topic(self, event):
+    def append_text(self, text):
         """
-        Event on typing some text
+        Set the value to the text control. Note that on
+        MS-Windows I've had some problems with rendering
+        text color using the SetValue() method, so it seems
+        the only chance is to use the Clear() method first
+        and then the AppendText() method here.
         """
-        text = self.text_topic.GetValue().strip()
-        if not text:
-            self.btn_proc.Disable()
-            FFmpegHelp.ARGS_OPT[_("Help topic")] = ['--help', '']
-        else:
-            self.btn_proc.Enable()
+        self.textlist.Clear()  # delete previous append:
+        self.textlist.AppendText(text)
+        self.textlist.SetInsertionPoint(0)  # scroll to top
     # --------------------------------------------------------------#
 
-    def on_btn_proc(self, event):
+    def on_help(self, event):
+        """
+        event on button help
+        """
+        msg = (_("This is a multifunctional search tool useful for local "
+                 "help searches\n"
+                 "on multiple FFmpeg topics and options. The search control, "
+                 "to\nfind occurences on text obtained from the chosen "
+                 "argument,\nis very similar to what grep does on the "
+                 "Unix shell, but here\nit's done in real time.\n\n"
+                 "If you don't find support for a certain codec or other "
+                 "feature,\nit's likely that your version of FFmpeg is "
+                 "too old or not configured\nwith those features."))
+        win = NormalTransientPopup(self,
+                                   wx.SIMPLE_BORDER,
+                                   msg,
+                                   FFmpegHelp.LGREEN,
+                                   FFmpegHelp.BLACK)
+
+        # Show the popup right below or above the button
+        # depending on available screen space...
+        btn = event.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        win.Position(pos, (0, sz[1]))
+
+        win.Popup()
+    # --------------------------------------------------------------#
+
+    def on_show_extra(self, event):
+        """
+        It can display formats (muxers and demuxers) codecs
+        and decoders windows by calling them from the parent
+        (main_frame) instead of calling them from the menu bar
+        """
+        name = event.GetEventObject().GetName()
+        if name == 'formats':
+            self.parent.get_ffmpeg_formats(self)
+        elif name == 'decoders':
+            self.parent.get_ffmpeg_decoders(self)
+        elif name == 'encoders':
+            self.parent.get_ffmpeg_codecs(self)
+        elif name == 'configuration':
+            self.parent.get_ffmpeg_conf(self)
+    # --------------------------------------------------------------#
+
+    def on_type_topic(self, event):
+        """
+        Event on typing any text on text box
+        """
+        if not self.text_topic.GetValue().strip():
+            FFmpegHelp.ARGS_OPT[_("Help topic")] = ['--help', '']
+            self.append_text(FFmpegHelp.HELPTOPIC + FFmpegHelp.EXAMPLES)
+    # --------------------------------------------------------------#
+
+    def on_type_enter_key(self, event):
         """
         Event when user press `btn_proc`.
         """
-        self.search.Clear()
-        newarg = self.text_topic.GetValue().split()
-        topic = ['--help', ] + newarg
+        self.search_str.Clear()
+        newarg = self.text_topic.GetValue().strip().replace(" ", "")
+        if not newarg:
+            return
+        topic = ['--help', ] + newarg.split()
         FFmpegHelp.ARGS_OPT[_("Help topic")] = topic
         self.row = io_tools.findtopic(topic)
         if self.row:
-            self.textlist.SetValue(self.row)
+            self.append_text(self.row)
         else:
-            self.textlist.SetValue(_("\n  ..Nothing available"))
+            self.append_text(_("\n  ..Nothing available"))
     # --------------------------------------------------------------#
 
     def on_selected(self, event):
@@ -216,33 +313,25 @@ class FFmpegHelp(wx.Dialog):
         Event selecting topic in the `cmbx_choice`
         """
         topic = FFmpegHelp.ARGS_OPT[self.cmbx_choice.GetValue()]
-        self.search.Clear()
+        self.search_str.Clear()
 
         if topic[0] == "--help":  # from _(Help topic) only
             self.text_topic.Enable()
             if not self.text_topic.GetValue().strip():
-                self.textlist.SetValue(FFmpegHelp.HELPTOPIC)
-                self.textlist.AppendText(FFmpegHelp.TOPICEXAMPLES)
+                self.append_text(FFmpegHelp.HELPTOPIC + FFmpegHelp.EXAMPLES)
             else:
-                self.on_btn_proc(self)
+                self.on_type_enter_key(self)
             return
 
         self.text_topic.Disable()
-        self.btn_proc.Disable()
-
-        if "None" in topic:
-            self.row = None
-            self.textlist.SetValue(_("First, choose a topic in the "
-                                     "drop down list"))
+        self.row = io_tools.findtopic(topic)
+        if self.row:
+            self.append_text(self.row)
         else:
-            self.row = io_tools.findtopic(topic)
-            if self.row:
-                self.textlist.SetValue(self.row)
-            else:
-                self.textlist.SetValue(_("\n  ..Nothing available"))
+            self.append_text(_("\n  ..Nothing available"))
     # --------------------------------------------------------------#
 
-    def on_type_text(self, event, by_event=False):
+    def on_search_strings(self, event, by_event=False):
         """
         Whenever text is entered it search the string typed
         on the search control and find on the current `self.row`
@@ -255,12 +344,22 @@ class FFmpegHelp(wx.Dialog):
             `ffmpeg -*some option* | grep -i somestring`
         """
         if by_event:  # see `on_ckbx`
-            is_string = self.search.GetValue()
+            is_string = self.search_str.GetValue()
         else:  # in all other cases
             is_string = event.GetString()
 
+        # ---> only cmbx_choice selection 0
+        if (self.cmbx_choice.GetSelection()
+                == 0 and not self.text_topic.GetValue().split()):
+            if not is_string:
+                self.on_type_topic(self)
+                return
+            self.append_text(_("\n  ..Nothing available"))
+            return
+        # --- end
+
         if self.row and not is_string:
-            self.textlist.SetValue(f'{self.row}')
+            self.append_text(self.row)  # load all lines
             return
 
         if self.row and is_string:  # specified search (like grep does)
@@ -275,9 +374,9 @@ class FFmpegHelp(wx.Dialog):
                     if is_string in lines:
                         find.append(f"{lines}\n")
             if not find:
-                self.textlist.SetValue(_('\n  ...Not found'))
+                self.append_text(_("\n  ..Not found"))
             else:
-                self.textlist.SetValue(' '.join(find))
+                self.append_text(' '.join(find))
         return
     # --------------------------------------------------------------#
 
@@ -286,13 +385,15 @@ class FFmpegHelp(wx.Dialog):
         This event updates the quick search with
         or without case sensitivity
         """
-        self.on_type_text(self, True)
+        self.on_search_strings(self, True)
     # --------------------------------------------------------------#
 
     def on_delete(self, event):
         """
-        It does nothing, but it seems needed.
-        During deletion, the "on_type_text" call
+        This event occurs when user click the small icon along
+        the search text field to clear previus text entered.
+        It seems does nothing, but it needed.
+        During deletion, the "on_search_strings" call
         is generated automatically.
         """
         return
