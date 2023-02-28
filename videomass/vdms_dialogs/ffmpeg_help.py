@@ -56,14 +56,14 @@ class FFmpegHelp(wx.Dialog):
                    '"show available protocols" in the drop down menu.\n\n'
                    'Some examples:'
                    ))
-    TOPICEXAMPLES = ('\n\n\tencoder = libvpx-vp9'
-                     '\n\tdecoder = libaom-av1'
-                     '\n\tmuxer = matroska'
-                     '\n\tdemuxer = matroska'
-                     '\n\tfilter = scale'
-                     '\n\tbsf = av1_frame_merge'
-                     '\n\tprotocol = bluray'
-                     )
+    EXAMPLES = ('\n\n\tencoder = libvpx-vp9'
+                '\n\tdecoder = libaom-av1'
+                '\n\tmuxer = matroska'
+                '\n\tdemuxer = matroska'
+                '\n\tfilter = scale'
+                '\n\tbsf = av1_frame_merge'
+                '\n\tprotocol = bluray'
+                )
     ARGS_OPT = {_("Help topic"): ['--help', ''],
                 _("print basic options"): ['-h', ''],
                 _("print more options"): ['-h', 'long'],
@@ -149,8 +149,8 @@ class FFmpegHelp(wx.Dialog):
             self.textlist.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
             self.textlist.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        self.textlist.SetValue(FFmpegHelp.HELPTOPIC)
-        self.textlist.AppendText(FFmpegHelp.TOPICEXAMPLES)
+        self.textlist.AppendText(FFmpegHelp.HELPTOPIC)
+        self.textlist.AppendText(FFmpegHelp.EXAMPLES)
         self.textlist.SetInsertionPoint(0)
         sizer.Add(self.textlist, 1, wx.EXPAND | wx.ALL, 5)
         self.cmbx_choice = wx.ComboBox(self, wx.ID_ANY,
@@ -223,6 +223,19 @@ class FFmpegHelp(wx.Dialog):
         self.Bind(wx.EVT_CLOSE, self.on_close)  # caption X
     # ---------------------------------------------------------#
 
+    def append_text(self, text):
+        """
+        Set the value to the text control. Note that on
+        MS-Windows I've had some problems with rendering
+        text color using the SetValue() method, so it seems
+        the only chance is to use the Clear() method first
+        and then the AppendText() method here.
+        """
+        self.textlist.Clear()  # delete previous append:
+        self.textlist.AppendText(text)
+        self.textlist.SetInsertionPoint(0)  # scroll to top
+    # --------------------------------------------------------------#
+
     def on_help(self, event):
         """
         event on button help
@@ -275,9 +288,7 @@ class FFmpegHelp(wx.Dialog):
         """
         if not self.text_topic.GetValue().strip():
             FFmpegHelp.ARGS_OPT[_("Help topic")] = ['--help', '']
-            self.textlist.SetValue(FFmpegHelp.HELPTOPIC)
-            self.textlist.AppendText(FFmpegHelp.TOPICEXAMPLES)
-            self.textlist.SetInsertionPoint(0)
+            self.append_text(FFmpegHelp.HELPTOPIC + FFmpegHelp.EXAMPLES)
     # --------------------------------------------------------------#
 
     def on_type_enter_key(self, event):
@@ -292,10 +303,9 @@ class FFmpegHelp(wx.Dialog):
         FFmpegHelp.ARGS_OPT[_("Help topic")] = topic
         self.row = io_tools.findtopic(topic)
         if self.row:
-            self.textlist.SetValue(self.row)
-            self.textlist.SetInsertionPoint(0)
+            self.append_text(self.row)
         else:
-            self.textlist.SetValue(_("\n  ..Nothing available"))
+            self.append_text(_("\n  ..Nothing available"))
     # --------------------------------------------------------------#
 
     def on_selected(self, event):
@@ -308,9 +318,7 @@ class FFmpegHelp(wx.Dialog):
         if topic[0] == "--help":  # from _(Help topic) only
             self.text_topic.Enable()
             if not self.text_topic.GetValue().strip():
-                self.textlist.SetValue(FFmpegHelp.HELPTOPIC)
-                self.textlist.AppendText(FFmpegHelp.TOPICEXAMPLES)
-                self.textlist.SetInsertionPoint(0)
+                self.append_text(FFmpegHelp.HELPTOPIC + FFmpegHelp.EXAMPLES)
             else:
                 self.on_type_enter_key(self)
             return
@@ -318,10 +326,9 @@ class FFmpegHelp(wx.Dialog):
         self.text_topic.Disable()
         self.row = io_tools.findtopic(topic)
         if self.row:
-            self.textlist.SetValue(self.row)
-            self.textlist.SetInsertionPoint(0)  # scroll to top
+            self.append_text(self.row)
         else:
-            self.textlist.SetValue(_("\n  ..Nothing available"))
+            self.append_text(_("\n  ..Nothing available"))
     # --------------------------------------------------------------#
 
     def on_search_strings(self, event, by_event=False):
@@ -347,12 +354,12 @@ class FFmpegHelp(wx.Dialog):
             if not is_string:
                 self.on_type_topic(self)
                 return
-            self.textlist.SetValue(_("\n  ..Nothing available"))
+            self.append_text(_("\n  ..Nothing available"))
             return
         # --- end
 
         if self.row and not is_string:
-            self.textlist.SetValue(f'{self.row}')  # load all lines
+            self.append_text(self.row)  # load all lines
             return
 
         if self.row and is_string:  # specified search (like grep does)
@@ -367,9 +374,9 @@ class FFmpegHelp(wx.Dialog):
                     if is_string in lines:
                         find.append(f"{lines}\n")
             if not find:
-                self.textlist.SetValue(_('\n  ...Not found'))
+                self.append_text(_("\n  ..Not found"))
             else:
-                self.textlist.SetValue(' '.join(find))
+                self.append_text(' '.join(find))
         return
     # --------------------------------------------------------------#
 
