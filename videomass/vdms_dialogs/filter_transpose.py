@@ -178,8 +178,6 @@ class Transpose(wx.Dialog):
 
         bitmap = wx.Bitmap(self.frame)
         img = bitmap.ConvertToImage()
-
-        #img = wx.Image(self.frame, wx.BITMAP_TYPE_ANY)
         img = img.Scale(self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL)
         self.bmp = img.ConvertToBitmap()
         self.stbitmap = wx.StaticBitmap(self.panelimg, wx.ID_ANY, self.bmp)

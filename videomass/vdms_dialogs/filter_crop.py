@@ -31,6 +31,7 @@ import wx.lib.statbmp
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import milliseconds2clocksec
+from videomass.vdms_utils.utils import clockset
 
 
 def make_bitmap(width, height, image):
@@ -175,22 +176,13 @@ class Crop(wx.Dialog):
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f'{Crop.TMPSRC}', f'{name}.png')  # image
         self.fileclock = os.path.join(Crop.TMPROOT, f'{name}.clock')
-
-        self.mills = get_milliseconds(kwa['duration'].split('.')[0])
-        if not self.mills:
-            self.clock = '00:00:00'
-        else:
-            if os.path.exists(self.fileclock):
-                with open(self.fileclock, "r", encoding='utf8') as atime:
-                    self.clock = atime.read().strip()
-            else:
-                self.clock = '00:00:00'
-
+        tcheck = clockset(kwa['duration'], self.fileclock)
+        self.clock = tcheck['duration']
+        self.mills = tcheck['millis']
         if os.path.exists(self.frame):
             self.image = self.frame
         else:  # make empty
             self.image = wx.Bitmap(self.w_ratio, self.h_ratio)
-
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         self.panelrect = wx.Panel(self, wx.ID_ANY,
@@ -381,7 +373,7 @@ class Crop(wx.Dialog):
             self.clock = milliseconds2clocksec(seek, rounds=True)  # to 24-HH
             sseg = f'-ss {self.clock}'
 
-        arg = (f'{sseg} -i "{self.filename}" -vframes 1 -y "{self.frame}"')
+        arg = f'{sseg} -i "{self.filename}" -vframes 1 -y "{self.frame}"'
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
         error = thread.status

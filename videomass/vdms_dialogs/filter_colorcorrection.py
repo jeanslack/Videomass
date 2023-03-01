@@ -28,6 +28,8 @@ import os
 import wx
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import milliseconds2clocksec
+from videomass.vdms_utils.utils import clockset
+
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 
 
@@ -69,15 +71,9 @@ class ColorEQ(wx.Dialog):
         self.brightness = ""
         self.saturation = ""
         self.gamma = ""
-        self.mills = get_milliseconds(kwa['duration'].split('.')[0])
-        if not self.mills:
-            self.clock = '00:00:00'
-        else:
-            if os.path.exists(self.fileclock):
-                with open(self.fileclock, "r", encoding='utf8') as atime:
-                    self.clock = atime.read().strip()
-            else:
-                self.clock = '00:00:00'
+        tcheck = clockset(kwa['duration'], self.fileclock)
+        self.clock = tcheck['duration']
+        self.mills = tcheck['millis']
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)

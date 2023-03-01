@@ -62,6 +62,7 @@ class Scale(wx.Dialog):
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f'{Scale.TMPSRC}', f'{name}.png')  # image
         self.mills = get_milliseconds(kwa['duration'].split('.')[0])
+
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         btn_view = wx.Button(self, wx.ID_ANY, _("View result"))
@@ -70,7 +71,6 @@ class Scale(wx.Dialog):
         box_scale = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                       _("New size in pixels"))), wx.VERTICAL)
         sizerBase.Add(box_scale, 0, wx.ALL | wx.EXPAND, 5)
-
         Flex_scale = wx.FlexGridSizer(1, 4, 0, 0)
         box_scale.Add(Flex_scale, 0, wx.ALL | wx.CENTER, 5)
         label_width = wx.StaticText(self, wx.ID_ANY, (_("Width:")))
@@ -103,7 +103,6 @@ class Scale(wx.Dialog):
             'proportions" below and\nspecify only one dimension, either '
             'width or height, and set the other dimension\nto -1 or -2 '
             '(some codecs require -2, so you should do some testing first).')
-
         label_msg = wx.StaticText(self, wx.ID_ANY, (msg))
         box_scale.Add(label_msg, 0, wx.ALL | wx.CENTER, 10)
         # grid_opt = wx.FlexGridSizer(1, 3, 0, 0)
