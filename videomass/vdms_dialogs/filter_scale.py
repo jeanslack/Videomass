@@ -28,6 +28,7 @@ import os
 import webbrowser
 import wx
 from videomass.vdms_io import io_tools
+from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import milliseconds2clocksec
@@ -39,6 +40,8 @@ class Scale(wx.Dialog):
     data based on FFmpeg syntax.
 
     """
+    LGREEN = '#52ee7d'
+    BLACK = '#1f1f1f'
     get = wx.GetApp()
     appdata = get.appset
     TMPROOT = os.path.join(appdata['cachedir'], 'tmp', 'Scale')
@@ -98,18 +101,16 @@ class Scale(wx.Dialog):
         label_sdim = wx.StaticText(self, wx.ID_ANY, dim)
         box_scale.Add(label_sdim, 0, wx.BOTTOM | wx.CENTER, 10)
         # --- options
-        msg = _(
-            'If you want to keep the aspect ratio, select "Constrain '
-            'proportions" below and\nspecify only one dimension, either '
-            'width or height, and set the other dimension\nto -1 or -2 '
-            '(some codecs require -2, so you should do some testing first).')
-        label_msg = wx.StaticText(self, wx.ID_ANY, (msg))
-        box_scale.Add(label_msg, 0, wx.ALL | wx.CENTER, 10)
-        # grid_opt = wx.FlexGridSizer(1, 3, 0, 0)
-        # box_scale.Add(grid_opt, 0, wx.ALL, 5)
+        box_scale.Add((5, 5))
+        grid_opt = wx.BoxSizer(wx.HORIZONTAL)
+        box_scale.Add(grid_opt, 0, wx.CENTER, 0)
         lab = _("Constrain proportions (keep aspect ratio)")
         self.ckbx_keep = wx.CheckBox(self, wx.ID_ANY, lab)
-        box_scale.Add(self.ckbx_keep, 0, wx.CENTER, 5)
+        grid_opt.Add(self.ckbx_keep, 0, wx.CENTER, 0)
+        btn_readme = wx.Button(self, wx.ID_ANY, _("Help me"), size=(-1, -1))
+        btn_readme.SetBackgroundColour(wx.Colour(Scale.LGREEN))
+        btn_readme.SetForegroundColour(wx.Colour(Scale.BLACK))
+        grid_opt.Add(btn_readme, 0, wx.CENTER | wx.LEFT, 20)
         # grid_opt.Add((30, 0), 0, wx.ALL, 5)
         self.rdb_scale = wx.RadioBox(self, wx.ID_ANY,
                                      (_("Which dimension to adjust?")),
@@ -227,10 +228,8 @@ class Scale(wx.Dialog):
 
         if Scale.appdata['ostype'] == 'Darwin':
             label_sdim.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            label_msg.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
             label_sdim.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            label_msg.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             self.lab_dar.SetLabelMarkup(f"<b>{lab1}</b>")
             self.lab_sar.SetLabelMarkup(f"<b>{lab2}</b>")
 
@@ -238,6 +237,7 @@ class Scale(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_image_viewer, btn_view)
         self.Bind(wx.EVT_CHECKBOX, self.on_constrain, self.ckbx_keep)
         self.Bind(wx.EVT_RADIOBOX, self.on_dimension, self.rdb_scale)
+        self.Bind(wx.EVT_BUTTON, self.on_readme, btn_readme)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
@@ -350,6 +350,31 @@ class Scale(wx.Dialog):
             return error
         return None
     # ----------------------Event handler (callback)---------------------#
+
+    def on_readme(self, event):
+        """
+        event on button help
+        """
+        msg = (_('If you want to keep the aspect ratio, select "Constrain '
+                 'proportions" below and\nspecify only one dimension, either '
+                 'width or height, and set the other dimension\nto -1 or -2 '
+                 '(some codecs require -2, so you should do some testing '
+                 'first).'))
+        win = NormalTransientPopup(self,
+                                   wx.SIMPLE_BORDER,
+                                   msg,
+                                   Scale.LGREEN,
+                                   Scale.BLACK)
+
+        # Show the popup right below or above the button
+        # depending on available screen space...
+        btn = event.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        win.Position(pos, (0, sz[1]))
+
+        win.Popup()
+    # --------------------------------------------------------------#
 
     def on_image_viewer(self, event):
         """
