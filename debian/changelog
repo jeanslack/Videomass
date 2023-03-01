@@ -47,6 +47,9 @@ videomass (4.0.10-1) UNRELEASED; urgency=medium
     exporting functionality aka `From Movie to Pictures`.
   * Added support to libaom-av1 (AV1) codec.
   * [Filedrop] on events, keep focused item selection by default.
+  * [A/V Conversions] Fixed bug on Crop filter, `Center` automation data
+    returned by getvalue() function was not correct.
+  * Fixed AssertionError `invalid bitmap` working with jpeg format.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 27 Feb 2023 13:30:00 +0200
 

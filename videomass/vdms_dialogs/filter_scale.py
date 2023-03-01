@@ -29,6 +29,8 @@ import webbrowser
 import wx
 from videomass.vdms_io import io_tools
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_utils.utils import get_milliseconds
+from videomass.vdms_utils.utils import milliseconds2clocksec
 
 
 class Scale(wx.Dialog):
@@ -59,13 +61,7 @@ class Scale(wx.Dialog):
         self.filename = kwa['filename']  # selected filename on queued list
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f'{Scale.TMPSRC}', f'{name}.png')  # image
-        if not kwa['duration'] == '00:00:00.000':
-            h, m, s = kwa['duration'].split(':')
-            intseq = (int(h) // 2, int(m) // 2, round(float(s) / 2))
-            self.clock = ':'.join([str(x).zfill(2) for x in intseq])
-        else:
-            self.clock = kwa['duration']
-
+        self.mills = get_milliseconds(kwa['duration'].split('.')[0])
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         btn_view = wx.Button(self, wx.ID_ANY, _("View result"))
@@ -340,8 +336,13 @@ class Scale(wx.Dialog):
         filter. Note that the trim start point on this process is
         set to the total length of the movie divided by two.
         """
+        if not self.mills:
+            sseg = ''
+        else:
+            stime = milliseconds2clocksec(int(self.mills / 2), rounds=True)
+            sseg = f'-ss {stime}'
         scale = '' if not concat else f'-vf "{concat}"'
-        arg = (f'-ss {self.clock} -i "{self.filename}" -vframes 1 '
+        arg = (f'{sseg} -i "{self.filename}" -vframes 1 '
                f'{scale} -y "{self.frame}"')
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-27 15:11+0100\n"
-"PO-Revision-Date: 2023-02-27 15:14+0100\n"
+"PO-Revision-Date: 2023-02-28 09:49+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -1363,7 +1363,7 @@ msgstr ""
 "\n"
 "Se non trovi supporto per un determinato codec o altra funzione,\n"
 "è probabile che la tua versione di FFmpeg sia troppo vecchia o non\n"
-"sia configurata con queste funzionalità."
+"sia configurata con quelle funzionalità."
 
 #: ../vdms_dialogs/ffmpeg_help.py:298 ../vdms_dialogs/ffmpeg_help.py:324
 #: ../vdms_dialogs/ffmpeg_help.py:350
