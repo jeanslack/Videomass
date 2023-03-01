@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Feb 27, 2023 V.4.0.10
+Feb 28, 2023 V.4.0.10
 
   * Removed interface to youtube_dl/yt_dlp libraries. Videomass will no longer
     have any functionality for downloading web videos. This mainly
@@ -20,7 +20,7 @@ Feb 27, 2023 V.4.0.10
   * Improved move files to Videomass trash dir.
   * Fixed bug that occurred when checking for new versions of presets.
     The bug did not allow to check correctly the new available versions.
-  * [A/V Conversion] fixed bug that disables bitrate control by moving crf
+  * [A/V Conversions] fixed bug that disables bitrate control by moving crf
     control.
   * [Presets Manager] presets have been updated to the new v0.13 release.
   * [Presets Manager] fixed various bugs in the presets database update
@@ -30,9 +30,9 @@ Feb 27, 2023 V.4.0.10
     `still_image_maker` features.
   * Improved trailing progressive digit for `from_movie_to_pictures` and
     `still_image_maker` features.
-  * [A/V Conversion] removed flv format.
-  * [A/V Conversion] added support to matroska for vp9 and theora encoders.
-  * [A/V Conversion] Added button to save presets for the Presets Manager
+  * [A/V Conversionss] removed flv format.
+  * [A/V Conversions] added support to matroska for vp9 and theora encoders.
+  * [A/V Conversions] Added button to save presets for the Presets Manager
     with the settings made by the user. This feature replaces the old button
     on the toolbar.
   * Fixed instances to all modeless windows (MediaStreams, ShowLogs, HelpTopic,
@@ -44,18 +44,21 @@ Feb 27, 2023 V.4.0.10
   * Added ability to move the source files to Videomass trash folder directly
     on `Confirm Settings` dialog.
   * [filedrop] refactorized `on_col_click` method.
-  * [A/V Conversion] Added more Pixel Format options.
-  * [A/V Conversion] Added more Aspect Ratio options.
-  * [A/V Conversion] There is a new filter now. A new window has been added
+  * [A/V Conversions] Added more Pixel Format options.
+  * [A/V Conversions] Added more Aspect Ratio options.
+  * [A/V Conversions] There is a new filter now. A new window has been added
     which implements video filter for color correction like contrast,
     brightness, saturation and gamma.
-  * [A/V Conversion] Fixed storing time position when user search for a specific
-    frame using some filter window.
-  * [A/V Conversion] Scale filter has a frame preview directly on window.
+  * [A/V Conversions] Fixed storing time position when user search for a
+    specific frame using some filter window.
+  * [A/V Conversions] Scale filter has a frame preview directly on window.
   * Fixed incorrect percentage value for time progress using pictures
     exporting functionality aka `From Movie to Pictures`.
   * Added support to libaom-av1 (AV1) codec.
   * [Filedrop] on events, keep focused item selection by default.
+  * [A/V Conversions] Fixed bug on Crop filter, `Center` automation data
+    returned by getvalue() function was not correct.
+  * Fixed AssertionError `invalid bitmap` working with jpeg format.
 
 +------------------------------------+
 Jan 17, 2023 V.4.0.5

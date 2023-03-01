@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.23.2023
+Rev: Feb.28.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -31,6 +31,7 @@ import wx.lib.statbmp
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import milliseconds2clocksec
+from videomass.vdms_utils.utils import clockset
 
 
 def make_bitmap(width, height, image):
@@ -46,7 +47,7 @@ def make_bitmap(width, height, image):
     img = img.Scale(int(width), int(height), wx.IMAGE_QUALITY_NORMAL)
     bmp = img.ConvertToBitmap()
 
-    return wx.Bitmap(bmp)
+    return bmp
 
 
 class Actor(wx.lib.statbmp.GenStaticBitmap):
@@ -175,17 +176,13 @@ class Crop(wx.Dialog):
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f'{Crop.TMPSRC}', f'{name}.png')  # image
         self.fileclock = os.path.join(Crop.TMPROOT, f'{name}.clock')
-        if os.path.exists(self.fileclock):
-            with open(self.fileclock, "r", encoding='utf8') as atime:
-                self.clock = atime.read().strip()
-        else:
-            self.clock = '00:00:00'
-
+        tcheck = clockset(kwa['duration'], self.fileclock)
+        self.clock = tcheck['duration']
+        self.mills = tcheck['millis']
         if os.path.exists(self.frame):
             self.image = self.frame
         else:  # make empty
             self.image = wx.Bitmap(self.w_ratio, self.h_ratio)
-
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         self.panelrect = wx.Panel(self, wx.ID_ANY,
@@ -211,7 +208,7 @@ class Crop(wx.Dialog):
         self.slider = wx.Slider(self, wx.ID_ANY,
                                 get_milliseconds(self.clock),
                                 0,
-                                get_milliseconds(kwa['duration']),
+                                self.mills,
                                 size=(250, -1),
                                 style=wx.SL_HORIZONTAL,
                                 )
@@ -313,7 +310,7 @@ class Crop(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
         # self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
 
-        if kwa['duration'] == '00:00:00.000':
+        if not self.mills:
             self.slider.Disable()
         self.image_loader(self)
 
@@ -339,12 +336,12 @@ class Crop(wx.Dialog):
         if x:
             self.axis_X.SetValue(int(x))
         else:
-            self.axis_X.SetValue(-1)
+            self.axis_X.SetValue(0)
 
         if y:
             self.axis_Y.SetValue(int(y))
         else:
-            self.axis_Y.SetValue(-1)
+            self.axis_Y.SetValue(0)
 
         self.onWidth(self)  # set min/max horizontal axis
         self.onHeight(self)  # set min/max vertical axis
@@ -365,22 +362,27 @@ class Crop(wx.Dialog):
     def image_loader(self, event):
         """
         Load in a wx.dc (device context) image frame
-        at a given time clock point
-
+        at a given time clock point. Note, milliseconds
+        must not be greater than the max time nor less
+        than the min time (see seek).
         """
-        seek = self.slider.GetValue()
-        self.clock = milliseconds2clocksec(seek, rounds=True)  # to 24-hour
-        arg = (f'-ss {self.clock} -i "{self.filename}" '
-               f'-vframes 1 -y "{self.frame}"'
-               )
+        if not self.mills:
+            sseg = ''
+        else:
+            seek = self.slider.GetValue()
+            self.clock = milliseconds2clocksec(seek, rounds=True)  # to 24-HH
+            sseg = f'-ss {self.clock}'
+
+        arg = f'{sseg} -i "{self.filename}" -vframes 1 -y "{self.frame}"'
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
         error = thread.status
         if error:
             wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR)
             return
-        with open(self.fileclock, "w", encoding='utf8') as atime:
-            atime.write(self.clock)
+        if sseg:
+            with open(self.fileclock, "w", encoding='utf8') as atime:
+                atime.write(self.clock)
         self.btn_load.Disable()
         self.image = self.frame  # update with new frame
         bmp = make_bitmap(self.w_ratio, self.h_ratio, self.image)
@@ -527,17 +529,31 @@ class Crop(wx.Dialog):
         This method return values via the getvalue() interface
         from the caller. See the caller for more info and usage.
         Note: -1 for X and Y coordinates means center, which are
-        empty values for FFmpeg syntax.
+        no longer supported by the FFmpeg syntax.
         """
-        w = self.crop_width.GetValue()
-        h = self.crop_height.GetValue()
-        x = self.axis_X.GetValue()
-        y = self.axis_Y.GetValue()
+        width = self.crop_width.GetValue()
+        height = self.crop_height.GetValue()
+        x_axis = self.axis_X.GetValue()
+        y_axis = self.axis_Y.GetValue()
 
-        if w and h:
-            x_axis = f"x={x if x > -1 else ''}:"
-            y_axis = f"y={y if y > -1 else ''}:"
-            val = f'w={w}:h={h}:{x_axis}{y_axis}'
+        if width and height:
+            if x_axis == -1:
+                pos = int((self.v_width / 2) - (width / 2))
+                horiz_pos = f'x={pos}:'
+            elif x_axis == 0:
+                horiz_pos = ''
+            else:
+                horiz_pos = f'x={x_axis}:'
+
+            if y_axis == -1:
+                pos = int((self.v_height / 2) - (height / 2))
+                vert_pos = f'y={pos}:'
+            elif y_axis == 0:
+                vert_pos = ''
+            else:
+                vert_pos = f'y={y_axis}:'
+
+            val = f'w={width}:h={height}:{horiz_pos}{vert_pos}'
             return val[:len(val) - 1]  # remove last ':' string
 
         return None

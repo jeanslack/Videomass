@@ -462,9 +462,9 @@ class MainFrame(wx.Frame):
         dscrp = (_("Check for preset updates"),
                  _("Check for new presets release from {0}").format(prstpage))
         self.prstcheck = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Download the entire preset collection"),
-                 _("Download all Videomass presets locally "
-                   "from {0}").format(prstpage))
+        dscrp = (_("Download preset archive"),
+                 _("Download the entire collection of the latest "
+                   "presets available from the home page"))
         self.prstdownload = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(toolsButton, _("Tools"))
 

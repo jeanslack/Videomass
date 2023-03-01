@@ -28,6 +28,8 @@ import os
 import wx
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import milliseconds2clocksec
+from videomass.vdms_utils.utils import clockset
+
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 
 
@@ -61,7 +63,7 @@ class ColorEQ(wx.Dialog):
         self.framesrc = os.path.join(ColorEQ.TMPSRC, f'{name}.png')
         self.frameedit = os.path.join(ColorEQ.TMPEDIT, f'{name}.png')
         self.fileclock = os.path.join(ColorEQ.TMPROOT, f'{name}.clock')
-        # resizing values preserving aspect ratio for pseudo-monitors
+        # resizing values preserving aspect ratio for monitors
         thr = 150 if kwa['height'] > kwa['width'] else 270
         self.h_ratio = int((kwa['height'] / kwa['width']) * thr)
         self.w_ratio = int((kwa['width'] / kwa['height']) * self.h_ratio)
@@ -69,11 +71,9 @@ class ColorEQ(wx.Dialog):
         self.brightness = ""
         self.saturation = ""
         self.gamma = ""
-        if os.path.exists(self.fileclock):
-            with open(self.fileclock, "r", encoding='utf8') as atime:
-                self.clock = atime.read().strip()
-        else:
-            self.clock = '00:00:00'
+        tcheck = clockset(kwa['duration'], self.fileclock)
+        self.clock = tcheck['duration']
+        self.mills = tcheck['millis']
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
@@ -91,12 +91,12 @@ class ColorEQ(wx.Dialog):
                                    | wx.ALIGN_CENTRE_HORIZONTAL,
                                    )
         sizerpanels.Add(lab_imgsrc, 0, wx.CENTER | wx.EXPAND)
-        lab_imgfilt = wx.StaticText(self, wx.ID_ANY,
+        lab_imgedit = wx.StaticText(self, wx.ID_ANY,
                                     label=_("After"),
                                     style=wx.ST_NO_AUTORESIZE
                                     | wx.ALIGN_CENTRE_HORIZONTAL,
                                     )
-        sizerpanels.Add(lab_imgfilt, 0, wx.CENTER | wx.EXPAND)
+        sizerpanels.Add(lab_imgedit, 0, wx.CENTER | wx.EXPAND)
         sizerBase.Add(10, 10)
         msg = _("Search for a specific frame")
         stboxtime = wx.StaticBox(self, wx.ID_ANY, msg)
@@ -105,7 +105,7 @@ class ColorEQ(wx.Dialog):
         self.sld_time = wx.Slider(self, wx.ID_ANY,
                                   get_milliseconds(self.clock),
                                   0,
-                                  get_milliseconds(kwa['duration']),
+                                  self.mills,
                                   size=(250, -1),
                                   style=wx.SL_HORIZONTAL,
                                   )
@@ -197,10 +197,10 @@ class ColorEQ(wx.Dialog):
         # ----------------------Properties-----------------------#
         if ColorEQ.OS == 'Darwin':
             lab_imgsrc.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            lab_imgfilt.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            lab_imgedit.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
             lab_imgsrc.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            lab_imgfilt.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            lab_imgedit.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
         self.SetTitle(_("Color Correction Equalizer"))
         # ----------------------Binding (EVT)-------------------------#
@@ -217,7 +217,7 @@ class ColorEQ(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
 
-        if kwa['duration'] == '00:00:00.000':
+        if not self.mills:
             self.sld_time.Disable()
 
         if colorset:  # previus values
@@ -232,8 +232,12 @@ class ColorEQ(wx.Dialog):
         Generate a new frame at the clock position using
         ffmpeg `eq` filter.
         """
+        if not self.mills:
+            sseg = ''
+        else:
+            sseg = f'-ss {self.clock}'
         eql = '' if not equalizer else f'-vf "{equalizer}"'
-        arg = (f'-ss {self.clock} -i "{self.filename}" -vframes 1 '
+        arg = (f'{sseg} -i "{self.filename}" -vframes 1 '
                f'{eql} -y "{pathtosave}"')
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
@@ -247,11 +251,9 @@ class ColorEQ(wx.Dialog):
         """
         Loads initial StaticBitmaps on panels 1 (source).
         """
-        bitmap = wx.Bitmap(self.framesrc)
-        img = bitmap.ConvertToImage()
+        img = wx.Image(self.framesrc, wx.BITMAP_TYPE_ANY)
         img = img.Scale(self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL)
-        bmp = img.ConvertToBitmap()
-        bitmap = wx.Bitmap(bmp)
+        bitmap = img.ConvertToBitmap()
         wx.StaticBitmap(self.panel_img1, wx.ID_ANY, bitmap)
     # -----------------------------------------------------------------------#
 
@@ -259,11 +261,9 @@ class ColorEQ(wx.Dialog):
         """
         Loads initial StaticBitmaps on panels 2 (edit)
         """
-        bitmap = wx.Bitmap(self.frameedit)
-        img = bitmap.ConvertToImage()
-        img = img.Scale(self.w_ratio, self.h_ratio)
-        bmp = img.ConvertToBitmap()
-        bitmap = wx.Bitmap(bmp)  # convert to bitmap
+        img = wx.Image(self.frameedit, wx.BITMAP_TYPE_ANY)
+        img = img.Scale(self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL)
+        bitmap = img.ConvertToBitmap()
         wx.StaticBitmap(self.panel_img2, wx.ID_ANY, bitmap)
     # -----------------------------------------------------------------------#
 
@@ -285,10 +285,10 @@ class ColorEQ(wx.Dialog):
             if key == 'gamma':
                 self.gamma = f'gamma={val}'
 
-        # translate to sliders values
-        contrast = round(float(eqval.get('contrast', 1.0)) * 100 - 100)
+        # compute to sliders values (int)
+        contrast = round((float(eqval.get('contrast', 1.0)) * 100 - 100) / 2)
         brightness = int(float(eqval.get('brightness', 0.0)) * 100)
-        saturation = int(float(eqval.get('saturation', 1.00)) * 100)
+        saturation = int(float(eqval.get('saturation', 1.0)) * 100)
         gamma = int(float(eqval.get('gamma', 0.0)) * 10)
         # set sliders
         self.sld_contrast.SetValue(contrast)
@@ -322,7 +322,7 @@ class ColorEQ(wx.Dialog):
 
     def on_seek_time(self, event):
         """
-        Event to set slider position.
+        Event to get slider position.
         Getting the value in ms from the time slider,
         converts it to clock format e.g (00:00:00),
         and sets the label with the converted value.
@@ -361,7 +361,7 @@ class ColorEQ(wx.Dialog):
         """
         Scroll event for contrast EQ.
         """
-        val = 1.0 + self.sld_contrast.GetValue() / 100
+        val = 1.0 + self.sld_contrast.GetValue() / 50
         self.contrast = "" if val == 1.0 else f'contrast={val}'
         self.equalize_image(self.concat_filter())
     # -----------------------------------------------------------------------#
@@ -410,14 +410,16 @@ class ColorEQ(wx.Dialog):
 
     def on_close(self, event):
         """
-        Close this dialog without saving anything
+        Close this dialog without saving anything.
+        Don't use self.Destroy() here, it is used by the caller
         """
         event.Skip()
     # -----------------------------------------------------------------------#
 
     def on_ok(self, event):
         """
-        Don't use self.Destroy() in this dialog
+        Before destroying the dialog getvalue() will be called.
+        Don't use self.Destroy() here, it is used by the caller
         """
         event.Skip()
     # -----------------------------------------------------------------------#

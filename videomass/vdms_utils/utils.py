@@ -405,6 +405,33 @@ def leading_name_with_prog_digit(destpath, argname) -> str:
 # ------------------------------------------------------------------#
 
 
+def clockset(duration, fileclock):
+    """
+    Evaluate the consistency between overall tempo values on
+    different media that have the same name but different
+    contents and a possible time position previously saved to
+    file. Returns a clock object of type dict conforming to the
+    referenced media file.
+    """
+    duration = duration.split('.')[0]
+    millis = get_milliseconds(duration)
+    if not millis:
+        clock = {'duration': '00:00:00', 'millis': 0}
+    else:
+        if os.path.exists(fileclock):
+            with open(fileclock, "r", encoding='utf8') as atime:
+                clockread = atime.read().strip()
+                if get_milliseconds(clockread) <= millis:
+                    clock = {'duration': clockread, 'millis': millis}
+                else:
+                    clock = {'duration': duration, 'millis': millis}
+        else:
+            clock = {'duration': '00:00:00', 'millis': millis}
+
+    return clock
+# ------------------------------------------------------------------#
+
+
 def detect_binaries(executable, additionaldir=None):
     """
     <https://stackoverflow.com/questions/11210104/check-if

@@ -96,7 +96,7 @@ class FFmpegGenericTask(Thread):
                     if error[1]:
                         self.status = error[1]
                     else:
-                        self.status = "Unrecognized error"
+                        self.status = "FFmpeg Unrecognized error"
                     return
 
         except OSError as err:  # command not found

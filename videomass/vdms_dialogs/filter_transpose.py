@@ -28,6 +28,8 @@ import os
 from math import pi as pigreco
 import wx
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_utils.utils import get_milliseconds
+from videomass.vdms_utils.utils import milliseconds2clocksec
 
 
 class Transpose(wx.Dialog):
@@ -61,12 +63,12 @@ class Transpose(wx.Dialog):
         self.current_angle = 0
         self.center = (int((self.w_ratio / 2)), int((self.h_ratio / 2)))
         self.transpose = {'degrees': ['', 0]}
-        self.duration = kwa['duration']
         self.video = kwa['filename']
         name = os.path.splitext(os.path.basename(self.video))[0]
         self.frame = os.path.join(Transpose.TMPSRC, f'{name}.png')
         self.stbitmap = None
-        self.image = None
+        self.bmp = None
+        self.mills = get_milliseconds(kwa['duration'].split('.')[0])
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         self.panelimg = wx.Panel(self, wx.ID_ANY, size=(270, 270),)
@@ -151,10 +153,12 @@ class Transpose(wx.Dialog):
         on this process is set to the total length of the
         movie divided by two.
         """
-        h, m, s = self.duration.split(':')
-        intseq = (int(h) // 2, int(m) // 2, round(float(s) / 2))
-        stime = ':'.join([str(x).zfill(2) for x in intseq])
-        arg = f'-ss {stime} -i "{self.video}" -vframes 1 -y "{self.frame}"'
+        if not self.mills:
+            sseg = ''
+        else:
+            stime = milliseconds2clocksec(int(self.mills / 2), rounds=True)
+            sseg = f'-ss {stime}'
+        arg = f'{sseg} -i "{self.video}" -vframes 1 -y "{self.frame}"'
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
         error = thread.status
@@ -171,12 +175,12 @@ class Transpose(wx.Dialog):
         if error:
             wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
             return
+
         bitmap = wx.Bitmap(self.frame)
         img = bitmap.ConvertToImage()
         img = img.Scale(self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL)
-        bmp = img.ConvertToBitmap()
-        self.image = wx.Bitmap(bmp)  # convert to bitmap
-        self.stbitmap = wx.StaticBitmap(self.panelimg, wx.ID_ANY, self.image)
+        self.bmp = img.ConvertToBitmap()
+        self.stbitmap = wx.StaticBitmap(self.panelimg, wx.ID_ANY, self.bmp)
         self.panelimg.Layout()
         self.on_reset(self)  # make default position
     # ------------------------------------------------------------------#
@@ -188,7 +192,7 @@ class Transpose(wx.Dialog):
         self.current_angle += degrees
         # neg. value rot. clockwise:
         val = float(self.current_angle * -pigreco / 180)
-        image = self.image.ConvertToImage()
+        image = self.bmp.ConvertToImage()
         image = image.Scale(self.w_ratio, self.h_ratio,
                             wx.IMAGE_QUALITY_NORMAL
                             )
