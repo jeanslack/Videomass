@@ -153,7 +153,7 @@ class Crop(wx.Dialog):
             self.w_ratio    width ratio
 
         The images (also the panel and the DC) are resized keeping
-        the aspect ratio according to a threshold established at 360
+        the aspect ratio according to a threshold established at 270
         pixels or at 180 pixels. 180 pixels are needed to avoid oversizing
         when video height is greater than width.
 
@@ -225,8 +225,8 @@ class Crop(wx.Dialog):
         sizerLabel.Add(boxctrl, 0, wx.CENTRE)
         label_height = wx.StaticText(self, wx.ID_ANY, (_("Height")))
         boxctrl.Add(label_height, 0, wx.ALL | wx.CENTRE, 0)
-        self.crop_height = wx.SpinCtrl(self, wx.ID_ANY, "0",
-                                       min=0, max=self.v_height, size=(-1, -1),
+        self.crop_height = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
+                                       max=self.v_height, size=(-1, -1),
                                        style=wx.TE_PROCESS_ENTER
                                        | wx.SP_ARROW_KEYS
                                        )
@@ -236,8 +236,8 @@ class Crop(wx.Dialog):
         label_X = wx.StaticText(self, wx.ID_ANY, ("X"))
         grid_sizerBase.Add(label_X, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        self.axis_X = wx.SpinCtrl(self, wx.ID_ANY, "0",
-                                  min=-1, max=self.v_width, size=(-1, -1),
+        self.axis_X = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-1,
+                                  max=self.v_width, size=(-1, -1),
                                   style=wx.TE_PROCESS_ENTER
                                   | wx.SP_ARROW_KEYS
                                   )
@@ -246,8 +246,8 @@ class Crop(wx.Dialog):
         self.btn_centre = wx.Button(self, wx.ID_ANY, _("Center"))
         grid_sizerBase.Add(self.btn_centre, 0, wx.ALL
                            | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.crop_width = wx.SpinCtrl(self, wx.ID_ANY, "0",
-                                      min=0, max=self.v_width,
+        self.crop_width = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
+                                      max=self.v_width,
                                       size=(-1, -1),
                                       style=wx.TE_PROCESS_ENTER
                                       | wx.SP_ARROW_KEYS
@@ -257,8 +257,8 @@ class Crop(wx.Dialog):
         label_width = wx.StaticText(self, wx.ID_ANY, (_("Width")))
         grid_sizerBase.Add(label_width, 0, wx.RIGHT
                            | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.axis_Y = wx.SpinCtrl(self, wx.ID_ANY, "0",
-                                  min=-1, max=self.v_height, size=(-1, -1),
+        self.axis_Y = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-1,
+                                  max=self.v_height, size=(-1, -1),
                                   style=wx.TE_PROCESS_ENTER
                                   | wx.SP_ARROW_KEYS
                                   )
