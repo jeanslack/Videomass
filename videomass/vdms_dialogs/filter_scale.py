@@ -341,8 +341,8 @@ class Scale(wx.Dialog):
             stime = milliseconds2clocksec(int(self.mills / 2), rounds=True)
             sseg = f'-ss {stime}'
         scale = '' if not concat else f'-vf "{concat}"'
-        arg = (f'{sseg} -i "{self.filename}" -vframes 1 '
-               f'{scale} -y "{self.frame}"')
+        arg = (f'{sseg} -i "{self.filename}" -f image2 '
+               f'-frames:v 1 {scale} -y "{self.frame}"')
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
         error = thread.status

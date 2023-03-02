@@ -113,10 +113,10 @@ class SequenceToVideo(wx.Panel):
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((20, 20))
-        self.btn_help = wx.Button(self, wx.ID_ANY, _("Help"), size=(-1, -1))
-        self.btn_help.SetBackgroundColour(wx.Colour(SequenceToVideo.LGREEN))
-        self.btn_help.SetForegroundColour(wx.Colour(SequenceToVideo.BLACK))
-        sizer.Add(self.btn_help, 0, wx.ALL, 5)
+        btn_help = wx.Button(self, wx.ID_ANY, _("Help"), size=(-1, -1))
+        btn_help.SetBackgroundColour(wx.Colour(SequenceToVideo.LGREEN))
+        btn_help.SetForegroundColour(wx.Colour(SequenceToVideo.BLACK))
+        sizer.Add(btn_help, 0, wx.ALL, 5)
         sizer.Add((20, 20))
         # sizer.Add((5, 5))
         boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
@@ -221,7 +221,7 @@ class SequenceToVideo(wx.Panel):
         else:
             lbl_link.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
-        self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_help)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_CHECKBOX, self.on_enable_audio, self.ckbx_audio)
         self.Bind(wx.EVT_BUTTON, self.on_addaudio_track, self.btn_openaudio)
         self.Bind(wx.EVT_CHECKBOX, self.on_shortest, self.ckbx_shortest)

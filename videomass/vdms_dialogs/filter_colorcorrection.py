@@ -238,8 +238,8 @@ class ColorEQ(wx.Dialog):
         else:
             sseg = f'-ss {self.clock}'
         eql = '' if not equalizer else f'-vf "{equalizer}"'
-        arg = (f'{sseg} -i "{self.filename}" -vframes 1 '
-               f'{eql} -y "{pathtosave}"')
+        arg = (f'{sseg} -i "{self.filename}" -f image2 '
+               f'-frames:v 1  {eql} -y "{pathtosave}"')
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
         error = thread.status

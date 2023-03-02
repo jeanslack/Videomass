@@ -373,7 +373,8 @@ class Crop(wx.Dialog):
             self.clock = milliseconds2clocksec(seek, rounds=True)  # to 24-HH
             sseg = f'-ss {self.clock}'
 
-        arg = f'{sseg} -i "{self.filename}" -vframes 1 -y "{self.frame}"'
+        arg = (f'{sseg} -i "{self.filename}" -f image2 '
+               f'-frames:v 1 -y "{self.frame}"')
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
         error = thread.status
