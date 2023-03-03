@@ -75,7 +75,7 @@ class AV_Conv(wx.Panel):
            ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
            ]
     PIXELFRMT = [('None'), ('gray'), ('gray10le'), ('nv12'), ('nv16'),
-                 ('nv20le'), ('nv21'), ('yuv420p'),  ('yuv420p10le'),
+                 ('nv20le'), ('nv21'), ('yuv420p'), ('yuv420p10le'),
                  ('yuv422p'), ('yuv422p10le'), ('yuv444p'), ('yuv444p10le'),
                  ('yuvj420p'), ('yuvj422p'), ('yuvj444p'),
                  ]
@@ -85,9 +85,9 @@ class AV_Conv(wx.Panel):
               }
     # Namings in the video container selection combo box:
     VCODECS = ({"Mpeg4": {"-c:v mpeg4": ["avi"]},
-                "x264": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
-                "x265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
-                "AV1": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
+                "H.264": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
+                "H.265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
+                "AV1 (libaom)": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
                 "Theora": {"-c:v libtheora": ["ogv", "mkv"]},
                 "Vp8": {"-c:v libvpx": ["webm"]},
                 "Vp9": {"-c:v libvpx-vp9": ["webm", "mkv", "mp4"]},
@@ -227,7 +227,7 @@ class AV_Conv(wx.Panel):
         sizer_convin.Add(self.cmb_Media, 0, wx.LEFT | wx.CENTRE, 5)
         txtFormat = wx.StaticText(self, wx.ID_ANY, _('Container:'))
         sizer_convin.Add(txtFormat, 0, wx.LEFT | wx.CENTRE, 20)
-        choices = list(AV_Conv.VCODECS['x264'].values())[0]
+        choices = list(AV_Conv.VCODECS['H.264'].values())[0]
         self.cmb_Vcont = wx.ComboBox(self, wx.ID_ANY,
                                      choices=choices,
                                      size=(100, -1),
@@ -268,7 +268,7 @@ class AV_Conv(wx.Panel):
                                                 )
         self.box_Vcod.Add(self.codVpanel, 0, wx.CENTER)
         grid_sx_Vcod = wx.FlexGridSizer(11, 2, 0, 0)
-        txtVcod = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Codec')
+        txtVcod = wx.StaticText(self.codVpanel, wx.ID_ANY, 'Encoder')
         grid_sx_Vcod.Add(txtVcod, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Vcod = wx.ComboBox(self.codVpanel, wx.ID_ANY,
                                     choices=list(AV_Conv.VCODECS.keys()),
@@ -367,7 +367,7 @@ class AV_Conv(wx.Panel):
         self.av1panel = AV1Pan(self.nb_Video, self.opt,
                                self.appdata['ostype'])
         self.box_opt.Add(self.av1panel, 0, wx.CENTRE)
-        ## panel vp8 vp9
+        # panel vp8 vp9
         self.vp9panel = WebMPan(self.nb_Video, self.opt,
                                 self.appdata['ostype'])
         self.box_opt.Add(self.vp9panel, 0, wx.CENTRE)
@@ -745,7 +745,6 @@ class AV_Conv(wx.Panel):
                 self.slider_CRF.SetValue(28), self.spin_Vbrate.SetValue(1500)
 
             self.filterVpanel.Enable(), self.slider_CRF.SetMax(51)
-
 
         elif self.opt["VideoCodec"] in ["-c:v libvpx", "-c:v libvpx-vp9"]:
             self.vp9panel.Show(), self.h264panel.Hide(), self.av1panel.Hide()
@@ -1791,7 +1790,7 @@ class AV_Conv(wx.Panel):
             self.opt["CRF"] = ''
             self.opt["VideoBitrate"] = ''
 
-        if not self.opt["VideoCodec"] in ["-c:v libx264", "-c:v libx265",
+        if self.opt["VideoCodec"] not in ["-c:v libx264", "-c:v libx265",
                                           "-c:v libvpx", "-c:v libvpx-vp9",
                                           "-c:v libaom-av1"
                                           ]:
@@ -1886,8 +1885,9 @@ class AV_Conv(wx.Panel):
             f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
             f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
             f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
-            f'{self.opt["Deadline"]} {self.opt["CpuUsed"]} '
-            f'{self.opt["RowMthreading"]} {self.opt["Preset"]} '
+            f'{self.opt["Deadline"]} {self.opt["Usage"]}  '
+            f'{self.opt["CpuUsed"]} {self.opt["RowMthreading"]}'
+            f'{self.opt["GOP"]} {self.opt["Preset"]} '
             f'{self.opt["Profile"]} {self.opt["Level"]} '
             f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
             f'{self.opt["FPS"]} {self.opt["VFilters"]} '
@@ -1973,7 +1973,8 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["VideoBitrate"]} {self.opt["MinRate"]} '
                     f'{self.opt["MaxRate"]} {self.opt["Bufsize"]} '
                     f'{self.opt["CRF"]} {self.opt["Deadline"]} '
-                    f'{self.opt["CpuUsed"]} {self.opt["RowMthreading"]} '
+                    f'{self.opt["Usage"]} {self.opt["CpuUsed"]} '
+                    f'{self.opt["RowMthreading"]} {self.opt["GOP"]} '
                     f'{self.opt["Preset"]} {self.opt["Profile"]} '
                     f'{self.opt["Level"]} {self.opt["Tune"]} '
                     f'{self.opt["AspectRatio"]} {self.opt["FPS"]} '
@@ -1984,9 +1985,9 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
                 f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
                 f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
-                f'{self.opt["Deadline"]} {self.opt["CpuUsed"]} '
-                f'{self.opt["RowMthreading"]} {self.opt["Preset"]} '
-                f'{self.opt["Profile"]} {self.opt["Level"]} '
+                f'{self.opt["Deadline"]} {self.opt["Usage"]} '
+                f'{self.opt["CpuUsed"]} {self.opt["RowMthreading"]} '
+                f'{self.opt["GOP"]} {self.opt["Profile"]} {self.opt["Level"]} '
                 f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
                 f'{self.opt["FPS"]} {self.opt["VFilters"]} '
                 f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
@@ -2024,8 +2025,9 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
                 f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
                 f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
-                f'{self.opt["Deadline"]} {self.opt["CpuUsed"]} '
-                f'{self.opt["RowMthreading"]} {self.opt["Preset"]} '
+                f'{self.opt["Deadline"]} {self.opt["Usage"]} '
+                f'{self.opt["CpuUsed"]} {self.opt["RowMthreading"]} '
+                f'{self.opt["GOP"]} {self.opt["Preset"]} '
                 f'{self.opt["Profile"]} {self.opt["Level"]} '
                 f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
                 f'{self.opt["FPS"]} {self.opt["VFilters"]} '
@@ -2121,8 +2123,9 @@ class AV_Conv(wx.Panel):
             cmd_1 = (f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
                      f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
                      f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
-                     f'{self.opt["Deadline"]} {self.opt["CpuUsed"]} '
-                     f'{self.opt["RowMthreading"]} {self.opt["Preset"]} '
+                     f'{self.opt["Deadline"]} {self.opt["Usage"]} '
+                     f'{self.opt["CpuUsed"]} {self.opt["RowMthreading"]} '
+                     f'{self.opt["GOP"]} {self.opt["Preset"]} '
                      f'{self.opt["Profile"]} {self.opt["Level"]} '
                      f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
                      f'{self.opt["FPS"]} {self.opt["VFilters"]} '
@@ -2135,8 +2138,9 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
                 f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
                 f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
-                f'{self.opt["Deadline"]} {self.opt["CpuUsed"]} '
-                f'{self.opt["RowMthreading"]} {self.opt["Preset"]} '
+                f'{self.opt["Deadline"]} {self.opt["Usage"]} '
+                f'{self.opt["CpuUsed"]} {self.opt["RowMthreading"]} '
+                f'{self.opt["GOP"]} {self.opt["Preset"]} '
                 f'{self.opt["Profile"]} {self.opt["Level"]} '
                 f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
                 f'{self.opt["FPS"]} {self.opt["VFilters"]} '
@@ -2326,7 +2330,7 @@ class AV_Conv(wx.Panel):
             formula = (_("Queued File\nWeb Optimize\nPass Encoding"
                          "\nOutput Format\nVideo Codec\nVideo bit-rate"
                          "\nCRF\nMin Rate\nMax Rate\nBuffer size"
-                         "\nVP8/VP9 Options\nVideo Filters\nAspect Ratio\nFPS"
+                         "\nEnabled Options\nVideo Filters\nAspect Ratio\nFPS"
                          "\nPreset\nProfile\nTune\nAudio Codec"
                          "\nAudio Channels\nAudio Rate\nAudio bit-rate"
                          "\nBit per Sample\nAudio Normalization"
@@ -2339,7 +2343,8 @@ class AV_Conv(wx.Panel):
                         f'{self.opt["VideoBitrate"]}\n{self.opt["CRF"]}\n'
                         f'{self.opt["MinRate"]}\n{self.opt["MaxRate"]}\n'
                         f'{self.opt["Bufsize"]}\n{self.opt["Deadline"]} '
-                        f'{self.opt["CpuUsed"]} {self.opt["RowMthreading"]}\n'
+                        f'{self.opt["Usage"]} {self.opt["CpuUsed"]} '
+                        f'{self.opt["RowMthreading"]} {self.opt["GOP"]}\n'
                         f'{vfilter}\n{self.opt["AspectRatio"]}\n'
                         f'{self.opt["FPS"]}\n{self.opt["Preset"]}\n'
                         f'{self.opt["Profile"]} {self.opt["Level"]}\n'

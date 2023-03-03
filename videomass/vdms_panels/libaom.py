@@ -47,15 +47,15 @@ class AV1Pan(scrolled.ScrolledPanel):
                                         name="AV1 scrollpanel",
                                         )
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add((10,10), 0)
-        infomsg = "AV1 - libaom"
+        sizer.Add((10, 10), 0)
+        infomsg = "AV1 - libaom-av1"
         lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
         sizer.Add(lbl_info, 0, wx.ALL | wx.CENTER, 5)
         if osplat == 'Darwin':
             lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
             lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-        sizer.Add((10,10), 0)
+        sizer.Add((10, 10), 0)
         self.rdb_usage = wx.RadioBox(self, wx.ID_ANY,
                                      (_("Quality and Compression")),
                                      choices=[("good"), ("realtime"),],
@@ -72,9 +72,7 @@ class AV1Pan(scrolled.ScrolledPanel):
                                     )
         sizer.Add(self.spin_cpu, 0, wx.TOP | wx.CENTRE, 5)
 
-        lab_gop = wx.StaticText(self, wx.ID_ANY,
-                                (_("Group of picture (GOP):"))
-                                )
+        lab_gop = wx.StaticText(self, wx.ID_ANY, ("Group of picture (GOP):"))
         sizer.Add(lab_gop, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL, 5)
         self.spin_gop = wx.SpinCtrl(self, wx.ID_ANY,
                                     "10", min=0,

@@ -48,15 +48,15 @@ class WebMPan(scrolled.ScrolledPanel):
                                         name="WEBM scrolledpanel",
                                         )
         sizerbase = wx.BoxSizer(wx.VERTICAL)
-        sizerbase.Add((10,10), 0)
-        infomsg = "WebM - vp9/vp8"
+        sizerbase.Add((10, 10), 0)
+        infomsg = "WebM - libvpx/libvpx-vp9"
         lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
         sizerbase.Add(lbl_info, 0, wx.ALL | wx.CENTER, 5)
         if osplat == 'Darwin':
             lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
             lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-        sizerbase.Add((10,10), 0)
+        sizerbase.Add((10, 10), 0)
         self.rdb_deadline = wx.RadioBox(self, wx.ID_ANY,
                                         (_("Quality and Compression")),
                                         choices=[("best"),

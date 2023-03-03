@@ -84,15 +84,15 @@ class Hevc_Avc(scrolled.ScrolledPanel):
                                         name="HEVC scrolledpanel",
                                         )
         sizerbase = wx.BoxSizer(wx.VERTICAL)
-        sizerbase.Add((10,10), 0)
-        infomsg = "HEVC/AVC - h.264/h.265"
+        sizerbase.Add((10, 10), 0)
+        infomsg = "H.264/H.265 - libx264/libx265"
         lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
         sizerbase.Add(lbl_info, 0, wx.ALL | wx.CENTER, 5)
         if osplat == 'Darwin':
             lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
             lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-        sizerbase.Add((10,10), 0)
+        sizerbase.Add((10, 10), 0)
         gridctrl = wx.FlexGridSizer(4, 2, 0, 0)
         sizerbase.Add(gridctrl, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 0)
         txtpresets = wx.StaticText(self, wx.ID_ANY, 'Preset')
@@ -135,9 +135,7 @@ class Hevc_Avc(scrolled.ScrolledPanel):
                                     )
         gridctrl.Add(self.cmb_tune, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        lab_gop = wx.StaticText(self, wx.ID_ANY,
-                                (_("Group of picture (GOP):"))
-                                )
+        lab_gop = wx.StaticText(self, wx.ID_ANY, ("Group of picture (GOP):"))
         sizerbase.Add(lab_gop, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL, 5)
         self.spin_gop = wx.SpinCtrl(self, wx.ID_ANY,
                                     "10", min=0,
@@ -154,10 +152,10 @@ class Hevc_Avc(scrolled.ScrolledPanel):
         self.cmb_preset.SetToolTip(tip)
         tip = _('Set profile restrictions')
         self.cmb_profile.SetToolTip(tip)
+        tip = _('Specify level for a selected profile')
+        self.cmb_level.SetToolTip(tip)
         tip = _('Tune the encoding params')
         self.cmb_tune.SetToolTip(tip)
-        tip = _('Specify level')
-        self.cmb_level.SetToolTip(tip)
         tip = (_('Set the group of picture (GOP) size (from 0 to 1000) '
                  '(default 12 for h264, 1 for h265)'))
         self.spin_gop.SetToolTip(tip)

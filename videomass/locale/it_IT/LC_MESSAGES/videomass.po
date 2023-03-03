@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-01 16:02+0100\n"
-"PO-Revision-Date: 2023-03-02 01:14+0100\n"
+"POT-Creation-Date: 2023-03-03 18:11+0100\n"
+"PO-Revision-Date: 2023-03-03 18:11+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -43,10 +43,10 @@ msgstr ""
 
 #: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:271
 #: ../vdms_dialogs/filter_deinterlace.py:121
-#: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:206
+#: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:207
 #: ../vdms_dialogs/filter_stab.py:264 ../vdms_dialogs/filter_transpose.py:103
-#: ../vdms_dialogs/filter_colorcorrection.py:185
-#: ../vdms_panels/av_conversions.py:630 ../vdms_panels/timeline.py:100
+#: ../vdms_dialogs/filter_colorcorrection.py:186
+#: ../vdms_panels/av_conversions.py:396 ../vdms_panels/timeline.py:100
 msgid "Reset"
 msgstr "Azzera"
 
@@ -105,18 +105,18 @@ msgstr ""
 msgid "Confirm Settings"
 msgstr "Conferma Impostazioni"
 
-#: ../vdms_dialogs/filter_crop.py:196 ../vdms_dialogs/filter_scale.py:99
+#: ../vdms_dialogs/filter_crop.py:196 ../vdms_dialogs/filter_scale.py:106
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "Dimensione origine: {0} x {1} pixel"
 
 #: ../vdms_dialogs/filter_crop.py:204
-#: ../vdms_dialogs/filter_colorcorrection.py:101
+#: ../vdms_dialogs/filter_colorcorrection.py:102
 msgid "Search for a specific frame"
 msgstr "Cerca un fotogramma specifico"
 
 #: ../vdms_dialogs/filter_crop.py:218
-#: ../vdms_dialogs/filter_colorcorrection.py:115
+#: ../vdms_dialogs/filter_colorcorrection.py:116
 msgid "Load"
 msgstr "Carica"
 
@@ -124,7 +124,7 @@ msgstr "Carica"
 msgid "Cropping area selection "
 msgstr "Selezione area di ritaglio "
 
-#: ../vdms_dialogs/filter_crop.py:226 ../vdms_dialogs/filter_scale.py:117
+#: ../vdms_dialogs/filter_crop.py:226 ../vdms_dialogs/filter_scale.py:118
 msgid "Height"
 msgstr "Altezza"
 
@@ -132,15 +132,15 @@ msgstr "Altezza"
 msgid "Center"
 msgstr "Centro"
 
-#: ../vdms_dialogs/filter_crop.py:257 ../vdms_dialogs/filter_scale.py:117
+#: ../vdms_dialogs/filter_crop.py:257 ../vdms_dialogs/filter_scale.py:118
 msgid "Width"
 msgstr "Larghezza"
 
 #: ../vdms_dialogs/filter_crop.py:276 ../vdms_dialogs/filter_deinterlace.py:120
-#: ../vdms_dialogs/filter_denoisers.py:83 ../vdms_dialogs/filter_scale.py:204
+#: ../vdms_dialogs/filter_denoisers.py:83 ../vdms_dialogs/filter_scale.py:205
 #: ../vdms_dialogs/filter_stab.py:262 ../vdms_dialogs/filter_transpose.py:108
 #: ../vdms_dialogs/set_timestamp.py:148
-#: ../vdms_dialogs/filter_colorcorrection.py:190
+#: ../vdms_dialogs/filter_colorcorrection.py:191
 msgid "Apply"
 msgstr "Applica"
 
@@ -306,69 +306,73 @@ msgstr ""
 "ferme le immagini statiche. Dovrebbe migliorare comprensibilmente la qualità "
 "visiva."
 
-#: ../vdms_dialogs/filter_scale.py:71
+#: ../vdms_dialogs/filter_scale.py:73 ../vdms_frames/shownormlist.py:71
+#: ../vdms_frames/shownormlist.py:77 ../vdms_frames/shownormlist.py:83
+#: ../vdms_main/main_frame.py:598 ../vdms_panels/concatenate.py:109
+#: ../vdms_panels/sequence_to_video.py:116
+#: ../vdms_panels/video_to_sequence.py:78
+msgid "Help"
+msgstr "Aiuto"
+
+#: ../vdms_dialogs/filter_scale.py:78
 msgid "View result"
 msgstr "Visualizza risultato"
 
-#: ../vdms_dialogs/filter_scale.py:75
+#: ../vdms_dialogs/filter_scale.py:82
 msgid "New size in pixels"
 msgstr "Nuova dimensione in pixel"
 
-#: ../vdms_dialogs/filter_scale.py:79
+#: ../vdms_dialogs/filter_scale.py:86
 msgid "Width:"
 msgstr "Larghezza:"
 
-#: ../vdms_dialogs/filter_scale.py:89
+#: ../vdms_dialogs/filter_scale.py:96
 msgid "Height:"
 msgstr "Altezza:"
 
-#: ../vdms_dialogs/filter_scale.py:107
+#: ../vdms_dialogs/filter_scale.py:112
 msgid "Constrain proportions (keep aspect ratio)"
 msgstr "Vincola le proporzioni (mantieni l'aspetto di origine)"
 
-#: ../vdms_dialogs/filter_scale.py:110
-msgid "Help me"
-msgstr "Aiutami"
-
-#: ../vdms_dialogs/filter_scale.py:116
+#: ../vdms_dialogs/filter_scale.py:117
 msgid "Which dimension to adjust?"
 msgstr "Quale dimensione regolare?"
 
-#: ../vdms_dialogs/filter_scale.py:125
+#: ../vdms_dialogs/filter_scale.py:126
 msgid "Aspect Ratio"
 msgstr "Proporzioni"
 
-#: ../vdms_dialogs/filter_scale.py:128
+#: ../vdms_dialogs/filter_scale.py:129
 msgid "Setdar filter (display aspect ratio) example 16/9, 4/3 "
 msgstr "Filtro Setdar (rapporto di aspetto del display) esempio 16/9, 4/3 "
 
-#: ../vdms_dialogs/filter_scale.py:133 ../vdms_dialogs/filter_scale.py:167
+#: ../vdms_dialogs/filter_scale.py:134 ../vdms_dialogs/filter_scale.py:168
 msgid "Numerator"
 msgstr "Numeratore"
 
-#: ../vdms_dialogs/filter_scale.py:158 ../vdms_dialogs/filter_scale.py:192
+#: ../vdms_dialogs/filter_scale.py:159 ../vdms_dialogs/filter_scale.py:193
 msgid "Denominator"
 msgstr "Denominatore"
 
-#: ../vdms_dialogs/filter_scale.py:162
+#: ../vdms_dialogs/filter_scale.py:163
 msgid "Setsar filter (sample aspect ratio) example 1/1"
 msgstr "Filtro Setsar (rapporto di aspetto del campione) esempio 1/1"
 
-#: ../vdms_dialogs/filter_scale.py:217
+#: ../vdms_dialogs/filter_scale.py:218
 msgid "Resizing filters"
 msgstr "Filtri Ridimensionamento"
 
-#: ../vdms_dialogs/filter_scale.py:218
+#: ../vdms_dialogs/filter_scale.py:219
 msgid "Scale filter, set to 0 to disable"
 msgstr "Filtro scala, per la disabilitazione impostare a 0"
 
-#: ../vdms_dialogs/filter_scale.py:221
+#: ../vdms_dialogs/filter_scale.py:222
 msgid "Display Aspect Ratio. Set to 0 to disable"
 msgstr ""
 "Visualizzazione del rapporto di aspetto (proporzioni). Impostare a 0 per "
 "disabilitare"
 
-#: ../vdms_dialogs/filter_scale.py:224
+#: ../vdms_dialogs/filter_scale.py:225
 msgid ""
 "Sample (aka Pixel) Aspect Ratio.\n"
 "Set to 0 to disable"
@@ -376,7 +380,7 @@ msgstr ""
 "Rapporto di aspetto campione (noto anche come pixel).\n"
 "Impostare a 0 per disabilitare"
 
-#: ../vdms_dialogs/filter_scale.py:358
+#: ../vdms_dialogs/filter_scale.py:359
 msgid ""
 "If you want to keep the aspect ratio, select \"Constrain proportions\" below "
 "and\n"
@@ -625,7 +629,7 @@ msgid "Video stabilizer filter"
 msgstr "Filtro stabilizzatore video"
 
 #: ../vdms_dialogs/filter_transpose.py:78
-#: ../vdms_dialogs/filter_transpose.py:286
+#: ../vdms_dialogs/filter_transpose.py:287
 msgid "Default position"
 msgstr "Posizione di default"
 
@@ -649,15 +653,15 @@ msgstr "180°"
 msgid "Transpose Filter"
 msgstr "Filtro Trasponi"
 
-#: ../vdms_dialogs/filter_transpose.py:222
+#: ../vdms_dialogs/filter_transpose.py:223
 msgid "Rotate 90 degrees right"
 msgstr "Ruota di 90 gradi a destra"
 
-#: ../vdms_dialogs/filter_transpose.py:244
+#: ../vdms_dialogs/filter_transpose.py:245
 msgid "Rotate 180 degrees"
 msgstr "Ruota di 180 gradi"
 
-#: ../vdms_dialogs/filter_transpose.py:265
+#: ../vdms_dialogs/filter_transpose.py:266
 msgid "Rotate 90 degrees left"
 msgstr "Ruota di 90 gradi a sinistra"
 
@@ -1061,7 +1065,7 @@ msgid "FFmpeg logging levels"
 msgstr "Livelli logs FFmpeg"
 
 #: ../vdms_dialogs/preferences.py:339 ../vdms_main/main_frame.py:571
-#: ../vdms_panels/av_conversions.py:705
+#: ../vdms_panels/av_conversions.py:471
 msgid "Settings"
 msgstr "Impostazioni"
 
@@ -1386,48 +1390,48 @@ msgstr ""
 "\n"
 "  ..Non trovato"
 
-#: ../vdms_dialogs/filter_colorcorrection.py:89
+#: ../vdms_dialogs/filter_colorcorrection.py:90
 msgid "Before"
 msgstr "Prima"
 
-#: ../vdms_dialogs/filter_colorcorrection.py:95
+#: ../vdms_dialogs/filter_colorcorrection.py:96
 msgid "After"
 msgstr "Dopo"
 
-#: ../vdms_dialogs/filter_colorcorrection.py:118
+#: ../vdms_dialogs/filter_colorcorrection.py:119
 msgid "Color EQ"
 msgstr "Equalizzazione Colore"
 
-#: ../vdms_dialogs/filter_colorcorrection.py:124
+#: ../vdms_dialogs/filter_colorcorrection.py:125
 msgid "Contrast:"
 msgstr "Contrasto:"
 
-#: ../vdms_dialogs/filter_colorcorrection.py:132
-#: ../vdms_dialogs/filter_colorcorrection.py:146
+#: ../vdms_dialogs/filter_colorcorrection.py:133
+#: ../vdms_dialogs/filter_colorcorrection.py:147
 msgid "-100 to +100, default value 0"
 msgstr "da -100 a +100, valore predefinito 0"
 
-#: ../vdms_dialogs/filter_colorcorrection.py:137
+#: ../vdms_dialogs/filter_colorcorrection.py:138
 msgid "Brightness:"
 msgstr "Luminosità:"
 
-#: ../vdms_dialogs/filter_colorcorrection.py:156
+#: ../vdms_dialogs/filter_colorcorrection.py:157
 msgid "Saturation:"
 msgstr "Saturazione:"
 
-#: ../vdms_dialogs/filter_colorcorrection.py:164
+#: ../vdms_dialogs/filter_colorcorrection.py:165
 msgid "0 to 300, default value 100"
 msgstr "da 0 a 300, valore predefinito 100"
 
-#: ../vdms_dialogs/filter_colorcorrection.py:168
+#: ../vdms_dialogs/filter_colorcorrection.py:169
 msgid "Gamma:"
 msgstr "Gamma:"
 
-#: ../vdms_dialogs/filter_colorcorrection.py:177
+#: ../vdms_dialogs/filter_colorcorrection.py:178
 msgid "0 to 100, Default value 10"
 msgstr "da 0 a 100, valore predefinito 10"
 
-#: ../vdms_dialogs/filter_colorcorrection.py:205
+#: ../vdms_dialogs/filter_colorcorrection.py:206
 msgid "Color Correction Equalizer"
 msgstr "Equalizzatore di correzione del colore"
 
@@ -1476,7 +1480,7 @@ msgstr "FFplay   ...non trovato !"
 msgid "ENABLED:"
 msgstr "ABILITATO:"
 
-#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2621
+#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2289
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:592
 msgid "Enabled"
@@ -1486,7 +1490,7 @@ msgstr "Abilitato"
 msgid "DISABLED:"
 msgstr "DISABILITATO:"
 
-#: ../vdms_frames/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2621
+#: ../vdms_frames/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2289
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:596
 msgid "Disabled"
@@ -1508,11 +1512,11 @@ msgstr "CAPACITÀ DI DECODIFICAZIONE"
 msgid "FFmpeg decoders"
 msgstr "Decodificatori di FFmpeg"
 
-#: ../vdms_frames/ffmpeg_codecs.py:77 ../vdms_panels/av_conversions.py:680
+#: ../vdms_frames/ffmpeg_codecs.py:77 ../vdms_panels/av_conversions.py:446
 msgid "Video"
 msgstr "Video"
 
-#: ../vdms_frames/ffmpeg_codecs.py:87 ../vdms_panels/av_conversions.py:840
+#: ../vdms_frames/ffmpeg_codecs.py:87 ../vdms_panels/av_conversions.py:606
 msgid "Audio"
 msgstr "Audio"
 
@@ -1571,13 +1575,6 @@ msgstr "Risultato dBFS"
 msgid "Post-normalization references:"
 msgstr "Riferimenti post-normalizzazione:"
 
-#: ../vdms_frames/shownormlist.py:71 ../vdms_frames/shownormlist.py:77
-#: ../vdms_frames/shownormlist.py:83 ../vdms_main/main_frame.py:598
-#: ../vdms_panels/concatenate.py:109 ../vdms_panels/sequence_to_video.py:116
-#: ../vdms_panels/video_to_sequence.py:78
-msgid "Help"
-msgstr "Aiuto"
-
 #: ../vdms_frames/shownormlist.py:75
 msgid "=  Clipped peaks"
 msgstr "=  Picchi in clip"
@@ -1590,11 +1587,11 @@ msgstr "=  Non cambia"
 msgid "=  Below max peak"
 msgstr "=  Sotto il picco max"
 
-#: ../vdms_frames/shownormlist.py:141 ../vdms_panels/av_conversions.py:2062
+#: ../vdms_frames/shownormlist.py:141 ../vdms_panels/av_conversions.py:1761
 msgid "RMS-based volume statistics"
 msgstr "Statistiche del volume basate su RMS"
 
-#: ../vdms_frames/shownormlist.py:165 ../vdms_panels/av_conversions.py:2060
+#: ../vdms_frames/shownormlist.py:165 ../vdms_panels/av_conversions.py:1759
 msgid "PEAK-based volume statistics"
 msgstr "Statistiche del volume basate sul PICCO"
 
@@ -2038,7 +2035,7 @@ msgstr "Sistema"
 msgid "Goto"
 msgstr "Vai"
 
-#: ../vdms_main/main_frame.py:542 ../vdms_panels/filedrop.py:324
+#: ../vdms_main/main_frame.py:542 ../vdms_panels/filedrop.py:325
 msgid "Set up a temporary folder for conversions"
 msgstr "Imposta una cartella temporanea per le conversioni"
 
@@ -2306,156 +2303,124 @@ msgstr "In lavorazione..."
 msgid "Videomass - Output Monitor"
 msgstr "Videomass: Monitoraggio Output"
 
-#: ../vdms_panels/av_conversions.py:266
+#: ../vdms_panels/av_conversions.py:220
 msgid "Media:"
 msgstr "Media:"
 
-#: ../vdms_panels/av_conversions.py:274
+#: ../vdms_panels/av_conversions.py:228
 msgid "Container:"
 msgstr "Contenitore:"
 
-#: ../vdms_panels/av_conversions.py:284
+#: ../vdms_panels/av_conversions.py:238
 msgid "Use for Web"
 msgstr "Usa per il Web"
 
-#: ../vdms_panels/av_conversions.py:287
+#: ../vdms_panels/av_conversions.py:241
 msgid "Save Preset"
 msgstr "Salva Preset"
 
-#: ../vdms_panels/av_conversions.py:290
+#: ../vdms_panels/av_conversions.py:244
 msgid "Target"
 msgstr "Obiettivo"
 
-#: ../vdms_panels/av_conversions.py:306
+#: ../vdms_panels/av_conversions.py:260
 msgid "Video Encoder"
 msgstr "Codificatore Video"
 
-#: ../vdms_panels/av_conversions.py:453
+#: ../vdms_panels/av_conversions.py:363
 msgid "Optimizations"
 msgstr "Ottimizzazioni"
 
-#: ../vdms_panels/av_conversions.py:474 ../vdms_panels/av_conversions.py:519
-msgid "Deadline/Quality"
-msgstr "Tempistiche/Qualità"
-
-#: ../vdms_panels/av_conversions.py:484 ../vdms_panels/av_conversions.py:529
-msgid ""
-"Quality/Speed\n"
-"ratio modifier:"
-msgstr ""
-"Modificatore di rapporto\n"
-"Qualità/Velocità:"
-
-#: ../vdms_panels/av_conversions.py:494 ../vdms_panels/av_conversions.py:538
-msgid "Activates row-mt 1"
-msgstr "Attiva row-mt 1"
-
-#: ../vdms_panels/av_conversions.py:565
-msgid "Preset"
-msgstr "Preset"
-
-#: ../vdms_panels/av_conversions.py:579
-msgid "Profile"
-msgstr "Profile"
-
-#: ../vdms_panels/av_conversions.py:589
-msgid "Level"
-msgstr "Livello"
-
-#: ../vdms_panels/av_conversions.py:598
-msgid "Tune"
-msgstr "Tune"
-
-#: ../vdms_panels/av_conversions.py:613
+#: ../vdms_panels/av_conversions.py:379
 msgid "Video Filters"
 msgstr "Filtri Video"
 
-#: ../vdms_panels/av_conversions.py:624
+#: ../vdms_panels/av_conversions.py:390
 msgid "Preview"
 msgstr "Anteprima"
 
-#: ../vdms_panels/av_conversions.py:644 ../vdms_panels/sequence_to_video.py:154
+#: ../vdms_panels/av_conversions.py:410 ../vdms_panels/sequence_to_video.py:154
 #: ../vdms_panels/video_to_sequence.py:110
 msgid "Resizing"
 msgstr "Ridimensionamento"
 
-#: ../vdms_panels/av_conversions.py:648
+#: ../vdms_panels/av_conversions.py:414
 msgid "Cropping"
 msgstr "Ritaglio"
 
-#: ../vdms_panels/av_conversions.py:652
+#: ../vdms_panels/av_conversions.py:418
 msgid "Rotation"
 msgstr "Rotazione"
 
-#: ../vdms_panels/av_conversions.py:657
+#: ../vdms_panels/av_conversions.py:423
 msgid "Deinterlacing"
 msgstr "Deinterlacciamento"
 
-#: ../vdms_panels/av_conversions.py:661
+#: ../vdms_panels/av_conversions.py:427
 msgid "Denoiser"
 msgstr "Denoiser"
 
-#: ../vdms_panels/av_conversions.py:665
+#: ../vdms_panels/av_conversions.py:431
 msgid "Stabilizer"
 msgstr "Stabilizzatore"
 
-#: ../vdms_panels/av_conversions.py:689
+#: ../vdms_panels/av_conversions.py:455
 msgid "Audio Encoder"
 msgstr "Codificatore Audio"
 
-#: ../vdms_panels/av_conversions.py:699
+#: ../vdms_panels/av_conversions.py:465
 msgid "Audio Properties"
 msgstr "Proprietà Audio"
 
-#: ../vdms_panels/av_conversions.py:717
+#: ../vdms_panels/av_conversions.py:483
 msgid "Audio Streams Mapping"
 msgstr "Mappatura Flussi Audio"
 
-#: ../vdms_panels/av_conversions.py:724
+#: ../vdms_panels/av_conversions.py:490
 msgid "Index Selection:"
 msgstr "Selezione Indice:"
 
-#: ../vdms_panels/av_conversions.py:734
+#: ../vdms_panels/av_conversions.py:500
 msgid "Map:"
 msgstr "Mappa:"
 
-#: ../vdms_panels/av_conversions.py:745
+#: ../vdms_panels/av_conversions.py:511
 msgid "Audio Filters"
 msgstr "Filtri Audio"
 
-#: ../vdms_panels/av_conversions.py:752
+#: ../vdms_panels/av_conversions.py:518
 msgid "Listening"
 msgstr "Ascolto"
 
-#: ../vdms_panels/av_conversions.py:757
+#: ../vdms_panels/av_conversions.py:523
 msgid "Normalization"
 msgstr "Normalizzazione"
 
-#: ../vdms_panels/av_conversions.py:773
+#: ../vdms_panels/av_conversions.py:539
 msgid "Volume detect"
 msgstr "Volume detect"
 
-#: ../vdms_panels/av_conversions.py:777
+#: ../vdms_panels/av_conversions.py:543
 msgid "Volume Statistics"
 msgstr "Statistiche Volume"
 
-#: ../vdms_panels/av_conversions.py:782
+#: ../vdms_panels/av_conversions.py:548
 msgid "Target level:"
 msgstr "Livello target:"
 
-#: ../vdms_panels/av_conversions.py:803
+#: ../vdms_panels/av_conversions.py:569
 msgid "Set integrated loudness target:"
 msgstr "Imposta target di loudness integrato:"
 
-#: ../vdms_panels/av_conversions.py:814
+#: ../vdms_panels/av_conversions.py:580
 msgid "Set maximum true peak:"
 msgstr "Imposta il picco reale massimo:"
 
-#: ../vdms_panels/av_conversions.py:825
+#: ../vdms_panels/av_conversions.py:591
 msgid "Set loudness range target:"
 msgstr "Imposta un target range di loudness:"
 
-#: ../vdms_panels/av_conversions.py:847
+#: ../vdms_panels/av_conversions.py:613
 msgid ""
 "Add settings to presets. You can use and manage them directly from the "
 "Presets Manager."
@@ -2463,7 +2428,7 @@ msgstr ""
 "Aggiungi impostazioni ai preset. Puoi usarli e gestirli direttamente dal "
 "Gestore dei preset."
 
-#: ../vdms_panels/av_conversions.py:850
+#: ../vdms_panels/av_conversions.py:616
 msgid ""
 "Available video codecs. \"Copy\" is not a codec but indicate that the video "
 "stream is not to be re-encoded and allows changing the format or other "
@@ -2473,11 +2438,11 @@ msgstr ""
 "video non deve essere ricodificato e consente di modificare il formato o "
 "altri parametri"
 
-#: ../vdms_panels/av_conversions.py:854
+#: ../vdms_panels/av_conversions.py:620
 msgid "Output format. It also represents the extension of the output file."
 msgstr "Formato di output. Rappresenta anche l'estensione del file di output."
 
-#: ../vdms_panels/av_conversions.py:857
+#: ../vdms_panels/av_conversions.py:623
 msgid ""
 "\"Video\" to save the output file as a video; \"Audio\" to save as an audio "
 "file only"
@@ -2485,18 +2450,18 @@ msgstr ""
 "\"Video\" per salvare il file in uscita come video; \"Audio\" per salvare "
 "come file audio"
 
-#: ../vdms_panels/av_conversions.py:860
+#: ../vdms_panels/av_conversions.py:626
 msgid "It can reduce the file size, but takes longer."
 msgstr "Può ridurre le dimensioni del file , ma richiede più tempo."
 
-#: ../vdms_panels/av_conversions.py:862
+#: ../vdms_panels/av_conversions.py:628
 msgid ""
 "Specifies a minimum tolerance to be used. Set to -1 to disable this control."
 msgstr ""
 "Specifica una tolleranza minima da utilizzare. Impostare a -1 per "
 "disabilitare il controllo."
 
-#: ../vdms_panels/av_conversions.py:865
+#: ../vdms_panels/av_conversions.py:631
 msgid ""
 "Specifies a maximum tolerance. This is only used in conjunction with buffer "
 "size. Set to -1 to disable this control."
@@ -2504,7 +2469,7 @@ msgstr ""
 "Specifica una tolleranza massima. E' utilizzato in congiunzione a buffer "
 "size. Impostare a -1 per disabilitare il controllo."
 
-#: ../vdms_panels/av_conversions.py:869
+#: ../vdms_panels/av_conversions.py:635
 msgid ""
 "Specifies the decoder buffer size, which determines the variability of the "
 "output bitrate. Set to -1 to disable this control."
@@ -2513,26 +2478,7 @@ msgstr ""
 "variabilità del bitrate di uscita. Impostare a -1 per disabilitare il "
 "controllo."
 
-#: ../vdms_panels/av_conversions.py:873
-msgid ""
-"\"good\" is the default and recommended for most applications; \"best\" is "
-"recommended if you have lots of time and want the best compression "
-"efficiency; \"realtime\" is recommended for live/fast encoding"
-msgstr ""
-"\"good\" è il valore predefinito e consigliato per la maggior parte delle "
-"applicazioni; \"best\" è consigliato se hai molto tempo e desideri la "
-"migliore efficienza di compressione; \"realtime\" è raccomandato per la "
-"codifica live/veloce"
-
-#: ../vdms_panels/av_conversions.py:878
-msgid ""
-"\"cpu-used\" sets how efficient the compression will be. The meaning depends "
-"on the mode above."
-msgstr ""
-"\"cpu-used\" imposta l'efficienza della compressione. Esso dipende dalle "
-"modalità sopra: \"Tempistiche/Qualità\"."
-
-#: ../vdms_panels/av_conversions.py:881
+#: ../vdms_panels/av_conversions.py:639
 msgid ""
 "specifies the target (average) bit rate for the encoder to use. Higher value "
 "= higher quality. Set -1 to disable this control."
@@ -2540,7 +2486,7 @@ msgstr ""
 "specifica l'obiettivo (in media) del bit rate per il codificatore da usare. "
 "Valore alto = alta qualità. Impostare a -1 per disabilitare il controllo."
 
-#: ../vdms_panels/av_conversions.py:885
+#: ../vdms_panels/av_conversions.py:643
 msgid ""
 "Constant rate factor. Lower values = higher quality and a larger file size. "
 "Set to -1 to disable this control."
@@ -2548,19 +2494,19 @@ msgstr ""
 "Fattore di tasso costante. Valori più bassi = qualità più elevata e "
 "dimensioni del file maggiori. Impostare a -1 per disabilitare il controllo."
 
-#: ../vdms_panels/av_conversions.py:888
+#: ../vdms_panels/av_conversions.py:646
 msgid "Preview video filters"
 msgstr "Anteprima dei filtri video"
 
-#: ../vdms_panels/av_conversions.py:890
+#: ../vdms_panels/av_conversions.py:648
 msgid "Clear all enabled filters "
 msgstr "Cancella tutti i filtri abilitati "
 
-#: ../vdms_panels/av_conversions.py:892
+#: ../vdms_panels/av_conversions.py:650
 msgid "Video width and video height ratio."
 msgstr "Rapporto larghezza e altezza video."
 
-#: ../vdms_panels/av_conversions.py:894
+#: ../vdms_panels/av_conversions.py:652
 msgid ""
 "Frames repeat a given number of times per second. In some countries this is "
 "30 for NTSC, other countries (like Italy) use 25 for PAL"
@@ -2568,7 +2514,7 @@ msgstr ""
 "I frame si ripetono un determinato numero di volte al secondo. In alcuni "
 "paesi sono 30 NTSC, in paesi PAL come l'Italia sono 25"
 
-#: ../vdms_panels/av_conversions.py:898
+#: ../vdms_panels/av_conversions.py:656
 msgid ""
 "Gets maximum volume and average volume data in dBFS, then calculates the "
 "offset amount for audio normalization."
@@ -2576,7 +2522,7 @@ msgstr ""
 "Ottiene i dati di volume massimo e volume medio in dBFS, quindi calcola la "
 "quantità di offset per la normalizzazione audio."
 
-#: ../vdms_panels/av_conversions.py:901
+#: ../vdms_panels/av_conversions.py:659
 msgid ""
 "Limiter for the maximum peak level or the mean level (when switch to RMS) in "
 "dBFS. From -99.0 to +0.0; default for PEAK level is -1.0; default for RMS is "
@@ -2586,7 +2532,7 @@ msgstr ""
 "passa a RMS) in dBFS. Da -99,0 a +0,0; il valore predefinito per il livello "
 "PEAK è -1,0; il valore predefinito per RMS è -20,0"
 
-#: ../vdms_panels/av_conversions.py:905
+#: ../vdms_panels/av_conversions.py:663
 msgid ""
 "Choose an index from the available audio streams. If the source file is a "
 "video, it is recommended to select a numeric audio index. If the source file "
@@ -2596,7 +2542,7 @@ msgstr ""
 "file video, si consiglia di selezionare un indice audio numerico. Se il file "
 "sorgente è un file audio, lasciare questo controllo su \"Auto\"."
 
-#: ../vdms_panels/av_conversions.py:910
+#: ../vdms_panels/av_conversions.py:668
 msgid ""
 "\"Auto\" keeps all audio stream but processes only the one of the selected "
 "index; \"All\" keeps all audio streams and processes them all with the "
@@ -2608,24 +2554,24 @@ msgstr ""
 "proprietà dell'indice selezionato; \"Index Only\" applicando il processo "
 "tieni solo il flusso audio selezionato."
 
-#: ../vdms_panels/av_conversions.py:916
+#: ../vdms_panels/av_conversions.py:674
 msgid ""
 "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -24.0"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:919
+#: ../vdms_panels/av_conversions.py:677
 msgid "Maximum True Peak in dBTP. From -9.0 to +0.0, default is -2.0"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:922
+#: ../vdms_panels/av_conversions.py:680
 msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +7.0"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:925
+#: ../vdms_panels/av_conversions.py:683
 msgid "Play and listen to the result of audio filters"
 msgstr "Riproduci e ascolta il risultato dei filtri audio"
 
-#: ../vdms_panels/av_conversions.py:1276 ../vdms_panels/av_conversions.py:2175
+#: ../vdms_panels/av_conversions.py:975 ../vdms_panels/av_conversions.py:1838
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
 "audio volume data."
@@ -2633,22 +2579,22 @@ msgstr ""
 "Valori del volume non rilevati! Clicca sul pulsante \"Volume detect\" per "
 "analizzare i dati sul volume audio."
 
-#: ../vdms_panels/av_conversions.py:1332
+#: ../vdms_panels/av_conversions.py:1031
 msgid "Unable to preview Video Stabilizer filter"
 msgstr "Impossibile visualizzare in anteprima il filtro stabilizzatore video"
 
-#: ../vdms_panels/av_conversions.py:1391
+#: ../vdms_panels/av_conversions.py:1090
 #: ../vdms_panels/sequence_to_video.py:319
 #: ../vdms_panels/video_to_sequence.py:368
 #: ../vdms_panels/video_to_sequence.py:492
 msgid "A target file must be selected in the queued files"
 msgstr "È necessario selezionare un file di destinazione nei file in coda"
 
-#: ../vdms_panels/av_conversions.py:1420
+#: ../vdms_panels/av_conversions.py:1119
 msgid "Selected index does not exist or does not contain any audio streams"
 msgstr "L'indice selezionato non esiste o non contiene alcun flusso audio"
 
-#: ../vdms_panels/av_conversions.py:1425
+#: ../vdms_panels/av_conversions.py:1124
 msgid ""
 "ERROR: Missing audio stream:\n"
 "\"{}\""
@@ -2656,21 +2602,21 @@ msgstr ""
 "ERRORE: flusso audio mancante:\n"
 "\"{}\""
 
-#: ../vdms_panels/av_conversions.py:1454
+#: ../vdms_panels/av_conversions.py:1153
 #: ../vdms_panels/sequence_to_video.py:349
 #: ../vdms_panels/video_to_sequence.py:398
 msgid "The file is not a frame or a video file"
 msgstr "Il file non è un frame o un file video"
 
-#: ../vdms_panels/av_conversions.py:1625
+#: ../vdms_panels/av_conversions.py:1324
 msgid "This filter is incompatible with 2-pass enabled"
 msgstr "Questo filtro non è compatibile con 2-pass abilitato"
 
-#: ../vdms_panels/av_conversions.py:1775
+#: ../vdms_panels/av_conversions.py:1474
 msgid "No Audio"
 msgstr "No Audio"
 
-#: ../vdms_panels/av_conversions.py:1913
+#: ../vdms_panels/av_conversions.py:1612
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
@@ -2678,7 +2624,7 @@ msgstr ""
 "Attiva la normalizzazione del livello di picco, la quale produrrà un livello "
 "di picco massimo pari al livello target impostato."
 
-#: ../vdms_panels/av_conversions.py:1916
+#: ../vdms_panels/av_conversions.py:1615
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
@@ -2686,47 +2632,47 @@ msgstr ""
 "Attiva la normalizzazione basata su RMS, che in base al volume medio calcola "
 "la quantità di guadagno per raggiungere la stessa potenza media di segnale."
 
-#: ../vdms_panels/av_conversions.py:1920
+#: ../vdms_panels/av_conversions.py:1619
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
-"using the \"​loudnorm\" filter, which implements the EBU R128 algorithm."
+"using the \"loudnorm\" filter, which implements the EBU R128 algorithm."
 msgstr ""
-"Esegue la normalizzazione a due passate. Normalizza il volume percepito "
+"Attiva la normalizzazione a due passate. Normalizza il volume percepito "
 "usando il filtro \"loudnorm\", che implementa l'algoritmo EBU R128."
 
-#: ../vdms_panels/av_conversions.py:1942
+#: ../vdms_panels/av_conversions.py:1641
 msgid "Audio normalization off"
 msgstr "Normalizzazione Audio disattivata"
 
-#: ../vdms_panels/av_conversions.py:1983
+#: ../vdms_panels/av_conversions.py:1682
 msgid "Audio normalization is required only for some files"
 msgstr "La normalizzazione audio è richiesta solo per alcuni files"
 
-#: ../vdms_panels/av_conversions.py:1984
+#: ../vdms_panels/av_conversions.py:1683
 msgid ""
 "Audio normalization will not be applied because the source signal is equal"
 msgstr ""
 "La normalizzazione audio non sarà applicata perché uguale alla sorgente"
 
-#: ../vdms_panels/av_conversions.py:2602
+#: ../vdms_panels/av_conversions.py:2270
 msgid "{} file in queue"
 msgstr "{} file in coda"
 
-#: ../vdms_panels/av_conversions.py:2610
+#: ../vdms_panels/av_conversions.py:2278
 msgid "Off"
 msgstr "Spento"
 
-#: ../vdms_panels/av_conversions.py:2616 ../vdms_panels/presets_manager.py:932
+#: ../vdms_panels/av_conversions.py:2284 ../vdms_panels/presets_manager.py:932
 #: ../vdms_panels/video_to_sequence.py:586
 msgid "Unset"
 msgstr "Non settato"
 
-#: ../vdms_panels/av_conversions.py:2619 ../vdms_panels/presets_manager.py:935
+#: ../vdms_panels/av_conversions.py:2287 ../vdms_panels/presets_manager.py:935
 #: ../vdms_panels/video_to_sequence.py:589
 msgid "start  {} | duration  {}"
 msgstr "inizio  {} | durata  {}"
 
-#: ../vdms_panels/av_conversions.py:2625
+#: ../vdms_panels/av_conversions.py:2293
 msgid ""
 "Queued File\n"
 "Output Format\n"
@@ -2752,7 +2698,7 @@ msgstr ""
 "Segmento Tempo\n"
 "Mappa Audio in Ingresso"
 
-#: ../vdms_panels/av_conversions.py:2641
+#: ../vdms_panels/av_conversions.py:2309
 msgid ""
 "Queued File\n"
 "Web Optimize\n"
@@ -2788,7 +2734,7 @@ msgstr ""
 "Mappa Sottotitoli\n"
 "Segmento Tempo"
 
-#: ../vdms_panels/av_conversions.py:2662
+#: ../vdms_panels/av_conversions.py:2330
 msgid ""
 "Queued File\n"
 "Web Optimize\n"
@@ -2800,7 +2746,7 @@ msgid ""
 "Min Rate\n"
 "Max Rate\n"
 "Buffer size\n"
-"VP8/VP9 Options\n"
+"Enabled Options\n"
 "Video Filters\n"
 "Aspect Ratio\n"
 "FPS\n"
@@ -2828,7 +2774,7 @@ msgstr ""
 "Min Rate\n"
 "Max Rate\n"
 "Dimensione Buffer\n"
-"Opzioni VP8/VP9\n"
+"Opzioni Abilitate\n"
 "Filtri Video\n"
 "Aspetto Video\n"
 "Frequenza Video FPS\n"
@@ -2846,7 +2792,7 @@ msgstr ""
 "Mappa Sottotitoli\n"
 "Segmento Tempo"
 
-#: ../vdms_panels/av_conversions.py:2700
+#: ../vdms_panels/av_conversions.py:2369
 msgid ""
 "Audio normalization data cannot be saved on the Presets Manager.\n"
 "\n"
@@ -2857,11 +2803,11 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/av_conversions.py:2718
+#: ../vdms_panels/av_conversions.py:2387
 msgid "Choose a Videomass preset..."
 msgstr "Scegli un preset Videomass..."
 
-#: ../vdms_panels/av_conversions.py:2727
+#: ../vdms_panels/av_conversions.py:2396
 msgid "Create a new profile"
 msgstr "Crea un nuovo profilo"
 
@@ -3090,53 +3036,53 @@ msgstr "Nome del file in uscita"
 msgid "Duplicate files are rejected: > {}"
 msgstr "I files duplicati sono rifiutati: > {}"
 
-#: ../vdms_panels/filedrop.py:269
+#: ../vdms_panels/filedrop.py:270
 msgid "Play"
 msgstr "Riproduci"
 
-#: ../vdms_panels/filedrop.py:286
+#: ../vdms_panels/filedrop.py:287
 msgid "Drag one or more files below"
 msgstr "Trascina uno o più file qui sotto"
 
-#: ../vdms_panels/filedrop.py:321
+#: ../vdms_panels/filedrop.py:322
 msgid "Remove the selected files from the list"
 msgstr "Rimuovi i file selezionati dall'elenco"
 
-#: ../vdms_panels/filedrop.py:323
+#: ../vdms_panels/filedrop.py:324
 msgid "Delete all files from the list"
 msgstr "Elimina tutti i file dall'elenco"
 
-#: ../vdms_panels/filedrop.py:326
+#: ../vdms_panels/filedrop.py:327
 msgid "Play the selected file in the list"
 msgstr "Riproduci il file selezionato nell'elenco"
 
-#: ../vdms_panels/filedrop.py:327
+#: ../vdms_panels/filedrop.py:328
 msgid "Destination folder"
 msgstr "Cartella di destinazione"
 
-#: ../vdms_panels/filedrop.py:536
+#: ../vdms_panels/filedrop.py:537
 msgid "File renaming..."
 msgstr "Ridenominazione file..."
 
-#: ../vdms_panels/filedrop.py:537
+#: ../vdms_panels/filedrop.py:538
 msgid "Rename the selected file to:"
 msgstr "Rinomina il file selezionato in:"
 
-#: ../vdms_panels/filedrop.py:551 ../vdms_panels/filedrop.py:561
-#: ../vdms_panels/filedrop.py:592
+#: ../vdms_panels/filedrop.py:552 ../vdms_panels/filedrop.py:562
+#: ../vdms_panels/filedrop.py:593
 msgid "Add Files"
 msgstr "Aggiungi Files"
 
-#: ../vdms_panels/filedrop.py:568
+#: ../vdms_panels/filedrop.py:569
 msgid "Rename items"
 msgstr "Rinomina elementi"
 
-#: ../vdms_panels/filedrop.py:569
+#: ../vdms_panels/filedrop.py:570
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr "Rinominare i {0} elementi in:"
 
-#: ../vdms_panels/filedrop.py:571
+#: ../vdms_panels/filedrop.py:572
 msgid "New Name #"
 msgstr "Nuovo Nome #"
 
@@ -3767,6 +3713,89 @@ msgstr ""
 "Durata dell'immagine fissa\n"
 "Durata totale del video"
 
+#: ../vdms_panels/hevc_avc.py:151
+msgid "Set the encoding preset (default \"medium\")"
+msgstr "Imposta il preset di codifica (in default è \"medio\")"
+
+#: ../vdms_panels/hevc_avc.py:153
+msgid "Set profile restrictions"
+msgstr "Imposta le restrizioni del profilo"
+
+#: ../vdms_panels/hevc_avc.py:155
+msgid "Specify level for a selected profile"
+msgstr "Specificare il livello per un profilo selezionato"
+
+#: ../vdms_panels/hevc_avc.py:157
+msgid "Tune the encoding params"
+msgstr "Metti a punto i parametri di codifica"
+
+#: ../vdms_panels/hevc_avc.py:159
+msgid ""
+"Set the group of picture (GOP) size (from 0 to 1000) (default 12 for h264, 1 "
+"for h265)"
+msgstr ""
+"Imposta la dimensione del gruppo di immagini (GOP) (da 0 a 1000) "
+"(predefinito 12 per h264, 1 per h265)"
+
+#: ../vdms_panels/libaom.py:60 ../vdms_panels/webm.py:61
+msgid "Quality and Compression"
+msgstr "Qualità e Compressione"
+
+#: ../vdms_panels/libaom.py:66 ../vdms_panels/webm.py:70
+msgid "Quality and Speed:"
+msgstr "Qualità e Velocità:"
+
+#: ../vdms_panels/libaom.py:88
+msgid ""
+"\"good\" is the default and recommended for most applications; \"realtime\" "
+"is recommended for live/fast encoding (livestreaming, videoconferencing, etc)"
+msgstr ""
+"\"good\" è il valore predefinito e consigliato per la maggior parte delle "
+"applicazioni; \"realtime\" è consigliato per la codifica live/veloce (live "
+"streaming, video conferenza, ecc.)"
+
+#: ../vdms_panels/libaom.py:92
+msgid ""
+"\"cpu-used\" sets how efficient the compression will be. Default is 1. Lower "
+"values mean slower encoding with better quality, and vice-versa. Valid "
+"values are from 0 to 8 inclusive."
+msgstr ""
+"\"cpu-used\" imposta l'efficienza della compressione. L'impostazione "
+"predefinita è 1. Valori più bassi indicano una codifica più lenta con una "
+"qualità migliore e viceversa. Valori possibili sono compresi tra 0 e 8."
+
+#: ../vdms_panels/libaom.py:98
+msgid ""
+"The \"GOP\" option can be used to set the maximum keyframe interval. "
+"Anything up to 10 seconds is considered reasonable for most content, so for "
+"30 frames per second content one would set to 300, for 60 fps content set to "
+"600. For intra-only output, set to 0"
+msgstr ""
+"L'opzione \"GOP\" può essere utilizzata per impostare l'intervallo massimo "
+"di keyframe. Qualunque cosa fino a 10 secondi è considerata ragionevole per "
+"la maggior parte dei contenuti, quindi per i contenuti a 30 fotogrammi al "
+"secondo si imposta su 300, per i contenuti a 60 fps si imposta su 600, ecc. "
+"Per output intra-only, impostare su 0"
+
+#: ../vdms_panels/webm.py:87
+msgid ""
+"\"good\" is the default and recommended for most applications; \"best\" is "
+"recommended if you have lots of time and want the best compression "
+"efficiency; \"realtime\" is recommended for live/fast encoding"
+msgstr ""
+"\"good\" è il valore predefinito e consigliato per la maggior parte delle "
+"applicazioni; \"best\" è consigliato se hai molto tempo e desideri la "
+"migliore efficienza di compressione; \"realtime\" è raccomandato per la "
+"codifica live/veloce"
+
+#: ../vdms_panels/webm.py:92
+msgid ""
+"\"cpu-used\" sets how efficient the compression will be. The meaning depends "
+"on the Quality and Compression mode above."
+msgstr ""
+"\"cpu-used\" imposta l'efficienza della compressione. I valori dipendono "
+"dalla modalità \"Qualità e Compressione\" impostata sopra."
+
 #: ../vdms_panels/video_to_sequence.py:49
 msgid ""
 "\n"
@@ -3875,6 +3904,34 @@ msgstr ""
 #: ../vdms_threads/slideshow.py:230
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' è installato sul tuo sistema?"
+
+#~ msgid "Help me"
+#~ msgstr "Aiutami"
+
+#~ msgid "Deadline/Quality"
+#~ msgstr "Tempistiche/Qualità"
+
+#~ msgid ""
+#~ "Quality/Speed\n"
+#~ "ratio modifier:"
+#~ msgstr ""
+#~ "Modificatore di rapporto\n"
+#~ "Qualità/Velocità:"
+
+#~ msgid "Activates row-mt 1"
+#~ msgstr "Attiva row-mt 1"
+
+#~ msgid "Preset"
+#~ msgstr "Preset"
+
+#~ msgid "Profile"
+#~ msgstr "Profile"
+
+#~ msgid "Level"
+#~ msgstr "Livello"
+
+#~ msgid "Tune"
+#~ msgstr "Tune"
 
 #~ msgid "Download the entire preset collection"
 #~ msgstr "Scarica tutta la collezione dei preset"
