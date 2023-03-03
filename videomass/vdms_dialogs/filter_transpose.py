@@ -158,7 +158,8 @@ class Transpose(wx.Dialog):
         else:
             stime = milliseconds2clocksec(int(self.mills / 2), rounds=True)
             sseg = f'-ss {stime}'
-        arg = f'{sseg} -i "{self.video}" -vframes 1 -y "{self.frame}"'
+        arg = (f'{sseg} -i "{self.video}" -f image2 '
+               f'-frames:v 1 -y "{self.frame}"')
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
         error = thread.status

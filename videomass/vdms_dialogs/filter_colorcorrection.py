@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.27.2023
+Rev: Mar.01.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -37,6 +37,7 @@ class ColorEQ(wx.Dialog):
     """
     A dialog tool to set video contrast, brightness,
     saturation, gamma values based on FFmpeg syntax.
+    see docs at <https://ffmpeg.org/ffmpeg-filters.html#toc-eq>.
     See ``av_conversions.py`` -> ``on_Set_colorcorrect`` method
     for how to use this class.
     """
@@ -237,8 +238,8 @@ class ColorEQ(wx.Dialog):
         else:
             sseg = f'-ss {self.clock}'
         eql = '' if not equalizer else f'-vf "{equalizer}"'
-        arg = (f'{sseg} -i "{self.filename}" -vframes 1 '
-               f'{eql} -y "{pathtosave}"')
+        arg = (f'{sseg} -i "{self.filename}" -f image2 '
+               f'-frames:v 1  {eql} -y "{pathtosave}"')
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
         error = thread.status
@@ -289,7 +290,7 @@ class ColorEQ(wx.Dialog):
         contrast = round((float(eqval.get('contrast', 1.0)) * 100 - 100) / 2)
         brightness = int(float(eqval.get('brightness', 0.0)) * 100)
         saturation = int(float(eqval.get('saturation', 1.0)) * 100)
-        gamma = int(float(eqval.get('gamma', 0.0)) * 10)
+        gamma = int(float(eqval.get('gamma', 1.0)) * 10)
         # set sliders
         self.sld_contrast.SetValue(contrast)
         self.sld_brightness.SetValue(brightness)
@@ -360,6 +361,8 @@ class ColorEQ(wx.Dialog):
     def on_contrast(self, event):
         """
         Scroll event for contrast EQ.
+        Set the contrast expression. The value must be a float
+        value in range -1000.0 to 1000.0. The default value is "1".
         """
         val = 1.0 + self.sld_contrast.GetValue() / 50
         self.contrast = "" if val == 1.0 else f'contrast={val}'
@@ -369,6 +372,8 @@ class ColorEQ(wx.Dialog):
     def on_brightness(self, event):
         """
         Scroll event for brightness EQ.
+        Set the brightness expression. The value must be a float
+        value in range -1.0 to 1.0. The default value is "0".
         """
         val = 0.0 + self.sld_brightness.GetValue() / 100
         self.brightness = "" if val == 0.0 else f'brightness={val}'
@@ -378,6 +383,8 @@ class ColorEQ(wx.Dialog):
     def on_saturation(self, event):
         """
         Scroll event for saturation EQ.
+        Set the saturation expression. The value must be a float
+        in range 0.0 to 3.0. The default value is "1".
         """
         val = 0.0 + self.sld_saturation.GetValue() / 100
         self.saturation = "" if val == 1.0 else f'saturation={val}'
@@ -387,6 +394,8 @@ class ColorEQ(wx.Dialog):
     def on_gamma(self, event):
         """
         Scroll event for gamma EQ.
+        Set the gamma expression. The value must be a float
+        in range 0.1 to 10.0. The default value is "1".
         """
         val = self.sld_gamma.GetValue() / 10
         self.gamma = "" if val == 1.0 else f'gamma={val}'

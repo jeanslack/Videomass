@@ -266,17 +266,18 @@ class FileDnD(wx.Panel):
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((0, 10))
         sizer_media = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(sizer_media, 0, wx.CENTRE)
         self.btn_play = wx.Button(self, wx.ID_ANY, _("Play"))
         self.btn_play.SetBitmap(bmpplay, wx.LEFT)
         self.btn_play.Disable()
-        sizer_media.Add(self.btn_play, 0, wx.ALL, 2)
+        sizer_media.Add(self.btn_play, 0, wx.ALL | wx.CENTRE, 2)
         self.btn_remove = wx.Button(self, wx.ID_REMOVE, "")
         self.btn_remove.Disable()
-        sizer_media.Add(self.btn_remove, 0, wx.ALL, 2)
+        sizer_media.Add(self.btn_remove, 0, wx.ALL | wx.CENTRE, 2)
         self.btn_clear = wx.Button(self, wx.ID_CLEAR, "")
         self.btn_clear.Disable()
-        sizer_media.Add(self.btn_clear, 0, wx.ALL, 2)
-        sizer.Add(sizer_media, 0, wx.CENTRE)
+        sizer_media.Add(self.btn_clear, 0, wx.ALL | wx.CENTRE, 2)
+
         # This builds the list control box:
         self.flCtrl = MyListCtrl(self)  # class MyListCtr
         # Establish the listctrl as a drop target:

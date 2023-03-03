@@ -68,8 +68,15 @@ class Scale(wx.Dialog):
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
+        grid_opt = wx.BoxSizer(wx.HORIZONTAL)
+        sizerBase.Add(grid_opt, 0)
+        btn_readme = wx.Button(self, wx.ID_ANY, _("Help"), size=(-1, -1))
+        btn_readme.SetBackgroundColour(wx.Colour(Scale.LGREEN))
+        btn_readme.SetForegroundColour(wx.Colour(Scale.BLACK))
+        grid_opt.Add(btn_readme, 0, wx.CENTER | wx.ALL, 5)
+
         btn_view = wx.Button(self, wx.ID_ANY, _("View result"))
-        sizerBase.Add(btn_view, 0, wx.ALL, 5)
+        grid_opt.Add(btn_view, 0, wx.ALL, 5)
         # --- Scale section:
         box_scale = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                       _("New size in pixels"))), wx.VERTICAL)
@@ -102,15 +109,9 @@ class Scale(wx.Dialog):
         box_scale.Add(label_sdim, 0, wx.BOTTOM | wx.CENTER, 10)
         # --- options
         box_scale.Add((5, 5))
-        grid_opt = wx.BoxSizer(wx.HORIZONTAL)
-        box_scale.Add(grid_opt, 0, wx.CENTER, 0)
         lab = _("Constrain proportions (keep aspect ratio)")
         self.ckbx_keep = wx.CheckBox(self, wx.ID_ANY, lab)
-        grid_opt.Add(self.ckbx_keep, 0, wx.CENTER, 0)
-        btn_readme = wx.Button(self, wx.ID_ANY, _("Help me"), size=(-1, -1))
-        btn_readme.SetBackgroundColour(wx.Colour(Scale.LGREEN))
-        btn_readme.SetForegroundColour(wx.Colour(Scale.BLACK))
-        grid_opt.Add(btn_readme, 0, wx.CENTER | wx.LEFT, 20)
+        box_scale.Add(self.ckbx_keep, 0, wx.CENTER, 0)
         # grid_opt.Add((30, 0), 0, wx.ALL, 5)
         self.rdb_scale = wx.RadioBox(self, wx.ID_ANY,
                                      (_("Which dimension to adjust?")),
@@ -341,8 +342,8 @@ class Scale(wx.Dialog):
             stime = milliseconds2clocksec(int(self.mills / 2), rounds=True)
             sseg = f'-ss {stime}'
         scale = '' if not concat else f'-vf "{concat}"'
-        arg = (f'{sseg} -i "{self.filename}" -vframes 1 '
-               f'{scale} -y "{self.frame}"')
+        arg = (f'{sseg} -i "{self.filename}" -f image2 '
+               f'-frames:v 1 {scale} -y "{self.frame}"')
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
         error = thread.status
