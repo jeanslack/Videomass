@@ -58,7 +58,8 @@ class AV1Pan(scrolled.ScrolledPanel):
         sizer.Add((10, 10), 0)
         self.rdb_usage = wx.RadioBox(self, wx.ID_ANY,
                                      (_("Quality and Compression")),
-                                     choices=[("good"), ("realtime"),],
+                                     choices=[("good"), ("realtime"),
+                                              ],
                                      majorDimension=0,
                                      style=wx.RA_SPECIFY_ROWS,
                                      )
