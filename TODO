@@ -3,10 +3,6 @@
 URGENCY: to do soon
 --------------------
 - Preview video stabilization
-- fix: videomass/vdms_panels/av_conversions.py:1100:8: W0123: Use of eval (eval-used)
-- fix: videomass/vdms_panels/av_conversions.py:1110:8: W0123: Use of eval (eval-used)
-
-
 
 --------------
 URGENCY: high

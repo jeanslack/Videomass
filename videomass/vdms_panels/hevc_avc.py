@@ -85,13 +85,13 @@ class Hevc_Avc(scrolled.ScrolledPanel):
                                         )
         sizerbase = wx.BoxSizer(wx.VERTICAL)
         sizerbase.Add((10, 10), 0)
-        infomsg = "H.264/H.265 - libx264/libx265"
-        lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
-        sizerbase.Add(lbl_info, 0, wx.ALL | wx.CENTER, 5)
+        infomsg = "H.264/H.265"
+        self.lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
+        sizerbase.Add(self.lbl_info, 0, wx.ALL | wx.CENTER, 5)
         if osplat == 'Darwin':
-            lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            self.lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
-            lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            self.lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         sizerbase.Add((10, 10), 0)
         gridctrl = wx.FlexGridSizer(4, 2, 0, 0)
         sizerbase.Add(gridctrl, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 0)
@@ -178,6 +178,7 @@ class Hevc_Avc(scrolled.ScrolledPanel):
                 self.cmb_profile.Append((prof),)
             self.spin_gop.SetValue(12)
             self.opt["GOP"] = '-g 12'
+            self.lbl_info.SetLabel("H.264 / AVC - libx264")
 
         elif self.opt["VideoCodec"] == "-c:v libx265":
             for tune in Hevc_Avc.H265_OPT["Tunes"]:
@@ -186,6 +187,7 @@ class Hevc_Avc(scrolled.ScrolledPanel):
                 self.cmb_profile.Append((prof),)
             self.spin_gop.SetValue(1)
             self.opt["GOP"] = '-g 1'
+            self.lbl_info.SetLabel("H.265 / HEVC - libx265")
 
         self.opt["Preset"] = '-preset:v medium'
         self.opt["Profile"] = ''
