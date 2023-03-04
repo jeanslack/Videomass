@@ -70,7 +70,7 @@ class Scale(wx.Dialog):
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         grid_opt = wx.BoxSizer(wx.HORIZONTAL)
         sizerBase.Add(grid_opt, 0)
-        btn_readme = wx.Button(self, wx.ID_ANY, _("Help"), size=(-1, -1))
+        btn_readme = wx.Button(self, wx.ID_ANY, _("Read me"), size=(-1, -1))
         btn_readme.SetBackgroundColour(wx.Colour(Scale.LGREEN))
         btn_readme.SetForegroundColour(wx.Colour(Scale.BLACK))
         grid_opt.Add(btn_readme, 0, wx.CENTER | wx.ALL, 5)

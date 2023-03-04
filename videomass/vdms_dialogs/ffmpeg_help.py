@@ -111,7 +111,7 @@ class FFmpegHelp(wx.Dialog):
         boxshow = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(boxshow, 0, wx.TOP, 5)
 
-        btn_help = wx.Button(self, wx.ID_ANY, _("Read Me"), size=(-1, -1))
+        btn_help = wx.Button(self, wx.ID_ANY, _("Read me"), size=(-1, -1))
         btn_help.SetBackgroundColour(wx.Colour(FFmpegHelp.LGREEN))
         btn_help.SetForegroundColour(wx.Colour(FFmpegHelp.BLACK))
         boxshow.Add(btn_help, 0, wx.ALL, 5)

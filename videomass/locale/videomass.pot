@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 18:11+0100\n"
+"POT-Creation-Date: 2023-03-04 01:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -257,12 +257,12 @@ msgid ""
 "should enhance compressibility."
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:73 ../vdms_frames/shownormlist.py:71
-#: ../vdms_frames/shownormlist.py:77 ../vdms_frames/shownormlist.py:83
-#: ../vdms_main/main_frame.py:598 ../vdms_panels/concatenate.py:109
+#: ../vdms_dialogs/filter_scale.py:73 ../vdms_dialogs/ffmpeg_help.py:114
+#: ../vdms_frames/shownormlist.py:71 ../vdms_frames/shownormlist.py:77
+#: ../vdms_frames/shownormlist.py:83 ../vdms_panels/concatenate.py:109
 #: ../vdms_panels/sequence_to_video.py:116
 #: ../vdms_panels/video_to_sequence.py:78
-msgid "Help"
+msgid "Read me"
 msgstr ""
 
 #: ../vdms_dialogs/filter_scale.py:78
@@ -1118,10 +1118,6 @@ msgstr ""
 msgid "show license"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:114
-msgid "Read Me"
-msgstr ""
-
 #: ../vdms_dialogs/ffmpeg_help.py:120 ../vdms_main/main_frame.py:475
 msgid "Show configuration"
 msgstr ""
@@ -1863,6 +1859,10 @@ msgstr ""
 
 #: ../vdms_main/main_frame.py:597
 msgid "About Videomass"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:598
+msgid "Help"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:674
@@ -3216,24 +3216,24 @@ msgstr ""
 msgid "Quality and Compression"
 msgstr ""
 
-#: ../vdms_panels/libaom.py:66 ../vdms_panels/webm.py:70
+#: ../vdms_panels/libaom.py:67 ../vdms_panels/webm.py:70
 msgid "Quality and Speed:"
 msgstr ""
 
-#: ../vdms_panels/libaom.py:88
+#: ../vdms_panels/libaom.py:89
 msgid ""
 "\"good\" is the default and recommended for most applications; \"realtime\" "
 "is recommended for live/fast encoding (livestreaming, videoconferencing, etc)"
 msgstr ""
 
-#: ../vdms_panels/libaom.py:92
+#: ../vdms_panels/libaom.py:93
 msgid ""
 "\"cpu-used\" sets how efficient the compression will be. Default is 1. Lower "
 "values mean slower encoding with better quality, and vice-versa. Valid "
 "values are from 0 to 8 inclusive."
 msgstr ""
 
-#: ../vdms_panels/libaom.py:98
+#: ../vdms_panels/libaom.py:99
 msgid ""
 "The \"GOP\" option can be used to set the maximum keyframe interval. "
 "Anything up to 10 seconds is considered reasonable for most content, so for "

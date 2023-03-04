@@ -113,7 +113,7 @@ class SequenceToVideo(wx.Panel):
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((20, 20))
-        btn_help = wx.Button(self, wx.ID_ANY, _("Help"), size=(-1, -1))
+        btn_help = wx.Button(self, wx.ID_ANY, _("Read me"), size=(-1, -1))
         btn_help.SetBackgroundColour(wx.Colour(SequenceToVideo.LGREEN))
         btn_help.SetForegroundColour(wx.Colour(SequenceToVideo.BLACK))
         sizer.Add(btn_help, 0, wx.ALL, 5)

@@ -68,19 +68,19 @@ class AudioVolNormal(wx.MiniFrame):
                                  wx.ID_ANY,
                                  (_('Post-normalization references:')
                                   ))
-        self.btn_red = wx.Button(self.panel, wx.ID_ANY, _("Help"),
+        self.btn_red = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
                                  size=(-1, -1))
         self.btn_red.SetBackgroundColour(wx.Colour(143, 36, 27))  # #8f241b
         self.btn_red.SetForegroundColour(wx.Colour(0, 0, 0))
         txtred = wx.StaticText(self.panel, wx.ID_ANY, (_("=  Clipped peaks")))
 
-        self.btn_grey = wx.Button(self.panel, wx.ID_ANY, _("Help"),
+        self.btn_grey = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
                                   size=(-1, -1))
         self.btn_grey.SetBackgroundColour(wx.Colour(100, 100, 100))  # #646464
         self.btn_grey.SetForegroundColour(wx.Colour(0, 0, 0))
         txtgrey = wx.StaticText(self.panel, wx.ID_ANY, (_("=  No changes")))
 
-        self.btn_yell = wx.Button(self.panel, wx.ID_ANY, _("Help"),
+        self.btn_yell = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
                                   size=(-1, -1))
         self.btn_yell.SetBackgroundColour(wx.Colour(143, 130, 27))  # #8f821b
         self.btn_yell.SetForegroundColour(wx.Colour(0, 0, 0))
