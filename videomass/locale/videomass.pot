@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-04 01:14+0100\n"
+"POT-Creation-Date: 2023-03-04 01:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3207,9 +3207,7 @@ msgid "Tune the encoding params"
 msgstr ""
 
 #: ../vdms_panels/hevc_avc.py:159
-msgid ""
-"Set the group of picture (GOP) size (from 0 to 1000) (default 12 for h264, 1 "
-"for h265)"
+msgid "Set the group of picture (GOP) size (default 12 for H.264, 1 for H.265)"
 msgstr ""
 
 #: ../vdms_panels/libaom.py:60 ../vdms_panels/webm.py:61
@@ -3223,7 +3221,8 @@ msgstr ""
 #: ../vdms_panels/libaom.py:89
 msgid ""
 "\"good\" is the default and recommended for most applications; \"realtime\" "
-"is recommended for live/fast encoding (livestreaming, videoconferencing, etc)"
+"is recommended for live/fast encoding (live streaming, video conferencing, "
+"etc)"
 msgstr ""
 
 #: ../vdms_panels/libaom.py:93
@@ -3238,7 +3237,7 @@ msgid ""
 "The \"GOP\" option can be used to set the maximum keyframe interval. "
 "Anything up to 10 seconds is considered reasonable for most content, so for "
 "30 frames per second content one would set to 300, for 60 fps content set to "
-"600. For intra-only output, set to 0"
+"600. For \"intra-only\" output, set to 0"
 msgstr ""
 
 #: ../vdms_panels/webm.py:87

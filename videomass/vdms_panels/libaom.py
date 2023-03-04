@@ -88,7 +88,7 @@ class AV1Pan(scrolled.ScrolledPanel):
 
         tip = (_('"good" is the default and recommended for most '
                  'applications; "realtime" is recommended for live/fast '
-                 'encoding (livestreaming, videoconferencing, etc)'))
+                 'encoding (live streaming, video conferencing, etc)'))
         self.rdb_usage.SetToolTip(tip)
         tip = (_('"cpu-used" sets how efficient the compression will be. '
                  'Default is 1. Lower values mean slower encoding with '
@@ -100,7 +100,7 @@ class AV1Pan(scrolled.ScrolledPanel):
                  'interval. Anything up to 10 seconds is considered '
                  'reasonable for most content, so for 30 frames per second '
                  'content one would set to 300, for 60 fps content set '
-                 'to 600. For intra-only output, set to 0'))
+                 'to 600. For "intra-only" output, set to 0'))
         self.spin_gop.SetToolTip(tip)
 
         self.Bind(wx.EVT_RADIOBOX, self.on_usage, self.rdb_usage)

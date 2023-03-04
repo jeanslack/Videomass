@@ -156,8 +156,8 @@ class Hevc_Avc(scrolled.ScrolledPanel):
         self.cmb_level.SetToolTip(tip)
         tip = _('Tune the encoding params')
         self.cmb_tune.SetToolTip(tip)
-        tip = (_('Set the group of picture (GOP) size (from 0 to 1000) '
-                 '(default 12 for h264, 1 for h265)'))
+        tip = (_('Set the group of picture (GOP) size '
+                 '(default 12 for H.264, 1 for H.265)'))
         self.spin_gop.SetToolTip(tip)
 
         self.Bind(wx.EVT_COMBOBOX, self.on_preset, self.cmb_preset)
