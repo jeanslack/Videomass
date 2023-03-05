@@ -43,7 +43,7 @@ def logwrite(cmd, stderr, logfile):
         log.write(apnd)
 
 
-def make_log_template(logname, logdir):
+def make_log_template(logname, logdir, mode="a"):
     """
     Most log files are initialized from a template
     before starting a process and writing status
@@ -57,7 +57,7 @@ def make_log_template(logname, logdir):
     current_date = time.strftime("%c")  # date/time
     logfile = os.path.join(logdir, logname)
 
-    with open(logfile, "a", encoding='utf8') as log:
+    with open(logfile, mode, encoding='utf8') as log:
         log.write(f"""
 ==============================================================================
 [DATE]:

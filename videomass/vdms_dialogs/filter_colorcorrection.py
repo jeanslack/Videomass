@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.01.2023
+Rev: Mar.04.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -29,6 +29,7 @@ import wx
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import milliseconds2clocksec
 from videomass.vdms_utils.utils import clockset
+from videomass.vdms_io.make_filelog import make_log_template
 
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 
@@ -43,6 +44,7 @@ class ColorEQ(wx.Dialog):
     """
     get = wx.GetApp()
     OS = get.appset['ostype']
+    LOGDIR = get.appset['logdir']
     TMPROOT = os.path.join(get.appset['cachedir'], 'tmp', 'ColorEQ')
     TMPSRC = os.path.join(TMPROOT, 'tmpsrc')
     TMPEDIT = os.path.join(TMPROOT, 'tmpedit')
@@ -233,14 +235,19 @@ class ColorEQ(wx.Dialog):
         Generate a new frame at the clock position using
         ffmpeg `eq` filter.
         """
+
+        logfile = make_log_template('generic_task.log',
+                                    ColorEQ.LOGDIR,
+                                    mode="w",
+                                    )
         if not self.mills:
             sseg = ''
         else:
             sseg = f'-ss {self.clock}'
         eql = '' if not equalizer else f'-vf "{equalizer}"'
         arg = (f'{sseg} -i "{self.filename}" -f image2 '
-               f'-frames:v 1  {eql} -y "{pathtosave}"')
-        thread = FFmpegGenericTask(arg)
+               f'-update 1 -frames:v 1 {eql} -y "{pathtosave}"')
+        thread = FFmpegGenericTask(arg, 'ColorEQ', logfile)
         thread.join()  # wait end thread
         error = thread.status
         if error:

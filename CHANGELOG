@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Feb 28, 2023 V.4.0.10
+Mar 05, 2023 V.4.0.10
 
   * Removed interface to youtube_dl/yt_dlp libraries. Videomass will no longer
     have any functionality for downloading web videos. This mainly
@@ -22,7 +22,7 @@ Feb 28, 2023 V.4.0.10
     The bug did not allow to check correctly the new available versions.
   * [A/V Conversions] fixed bug that disables bitrate control by moving crf
     control.
-  * [Presets Manager] presets have been updated to the new v0.13 release.
+  * [Presets Manager] presets have been updated to the new v0.14 release.
   * [Presets Manager] fixed various bugs in the presets database update
     functionalities.
   * [Presets Manager] Added check for presets updates locally.
@@ -56,9 +56,12 @@ Feb 28, 2023 V.4.0.10
     exporting functionality aka `From Movie to Pictures`.
   * Added support to libaom-av1 (AV1) codec.
   * [Filedrop] on events, keep focused item selection by default.
-  * [A/V Conversions] Fixed bug on Crop filter, `Center` automation data
+  * [A/V Conversions] Fixed bug on Crop filter, `Center` automation data.
     returned by getvalue() function was not correct.
   * Fixed AssertionError `invalid bitmap` working with jpeg format.
+  * [A/V Conversions] improved panels for optimizations.
+  * [A/V Conversions] New panel implementation for libaom-av1 encoder.
+  * [A/V Conversions] Removed optmimizations.py (and eval then ^_^).
 
 +------------------------------------+
 Jan 17, 2023 V.4.0.5

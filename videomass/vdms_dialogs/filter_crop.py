@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.28.2023
+Rev: Mar.04.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -32,6 +32,7 @@ from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import milliseconds2clocksec
 from videomass.vdms_utils.utils import clockset
+from videomass.vdms_io.make_filelog import make_log_template
 
 
 def make_bitmap(width, height, image):
@@ -133,6 +134,7 @@ class Crop(wx.Dialog):
     """
     get = wx.GetApp()
     OS = get.appset['ostype']
+    LOGDIR = get.appset['logdir']
     TMPROOT = os.path.join(get.appset['cachedir'], 'tmp', 'Crop')
     TMPSRC = os.path.join(TMPROOT, 'tmpsrc')
     os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
@@ -326,22 +328,8 @@ class Crop(wx.Dialog):
         s[0] = s[0][5:]  # removing `crop=` word on first item
         self.crop_width.SetValue(int(s[0][2:]))
         self.crop_height.SetValue(int(s[1][2:]))
-
-        x, y = None, None
-        for i in s:
-            if i.startswith('x'):
-                x = i[2:]
-            if i.startswith('y'):
-                y = i[2:]
-        if x:
-            self.axis_X.SetValue(int(x))
-        else:
-            self.axis_X.SetValue(0)
-
-        if y:
-            self.axis_Y.SetValue(int(y))
-        else:
-            self.axis_Y.SetValue(0)
+        self.axis_X.SetValue(int(s[2][2:]))
+        self.axis_Y.SetValue(int(s[3][2:]))
 
         self.onWidth(self)  # set min/max horizontal axis
         self.onHeight(self)  # set min/max vertical axis
@@ -366,6 +354,10 @@ class Crop(wx.Dialog):
         must not be greater than the max time nor less
         than the min time (see seek).
         """
+        logfile = make_log_template('generic_task.log',
+                                    Crop.LOGDIR,
+                                    mode="w",
+                                    )
         if not self.mills:
             sseg = ''
         else:
@@ -374,8 +366,8 @@ class Crop(wx.Dialog):
             sseg = f'-ss {self.clock}'
 
         arg = (f'{sseg} -i "{self.filename}" -f image2 '
-               f'-frames:v 1 -y "{self.frame}"')
-        thread = FFmpegGenericTask(arg)
+               f'-update 1 -frames:v 1 -y "{self.frame}"')
+        thread = FFmpegGenericTask(arg, 'Crop', logfile)
         thread.join()  # wait end thread
         error = thread.status
         if error:
@@ -541,16 +533,12 @@ class Crop(wx.Dialog):
             if x_axis == -1:
                 pos = int((self.v_width / 2) - (width / 2))
                 horiz_pos = f'x={pos}:'
-            elif x_axis == 0:
-                horiz_pos = ''
             else:
                 horiz_pos = f'x={x_axis}:'
 
             if y_axis == -1:
                 pos = int((self.v_height / 2) - (height / 2))
                 vert_pos = f'y={pos}:'
-            elif y_axis == 0:
-                vert_pos = ''
             else:
                 vert_pos = f'y={y_axis}:'
 

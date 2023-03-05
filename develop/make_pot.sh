@@ -64,6 +64,9 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_panels/presets_manager.py" \
 "../vdms_panels/timeline.py" \
 "../vdms_panels/sequence_to_video.py" \
+"../vdms_panels/hevc_avc.py" \
+"../vdms_panels/libaom.py" \
+"../vdms_panels/webm.py" \
 "../vdms_panels/video_to_sequence.py" \
 "../vdms_threads/ffplay_file.py" \
 "../vdms_threads/one_pass.py" \
