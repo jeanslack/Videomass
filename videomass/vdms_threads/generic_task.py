@@ -86,7 +86,7 @@ class FFmpegGenericTask(Thread):
                f'{FFmpegGenericTask.appdata["ffmpeg+params"]} '
                f'{self.args}'
                )
-        self.logwrite(f'From: {self.procname}\n{cmd}')
+        self.logwrite(f'From: {self.procname}\n{cmd}\n')
 
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
@@ -97,6 +97,7 @@ class FFmpegGenericTask(Thread):
                        encoding='utf8',
                        ) as proc:
                 error = proc.communicate()
+                self.logwrite(f'[FFMPEG]:\n{error}')
                 if proc.returncode:  # ffmpeg error
                     if error[1]:
                         self.status = error[1]

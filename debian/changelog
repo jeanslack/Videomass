@@ -52,9 +52,9 @@ videomass (4.0.10-1) UNRELEASED; urgency=medium
   * Fixed AssertionError `invalid bitmap` working with jpeg format.
   * [A/V Conversions] improved panels for optimizations.
   * [A/V Conversions] New panel implementation for libaom-av1 encoder.
-  * [A/V Conversions] Removed optmimizations.py (and eval then).
+  * [A/V Conversions] Removed optmimizations.py (and eval then ^_^).
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 03 Mar 2023 13:30:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 05 Mar 2023 13:30:00 +0200
 
 videomass (4.0.5-1) UNRELEASED; urgency=medium
 

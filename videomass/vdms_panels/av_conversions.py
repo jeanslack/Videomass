@@ -897,7 +897,8 @@ class AV_Conv(wx.Panel):
         """
         if self.ckbx_pass.IsChecked():
             self.opt["Passing"] = "2 pass"
-            if self.opt["VideoCodec"] in ["-c:v libvpx", "-c:v libvpx-vp9"]:
+            if self.opt["VideoCodec"] in ["-c:v libvpx", "-c:v libvpx-vp9",
+                                          "-c:v libaom-av1"]:
                 self.slider_CRF.Enable()
                 self.spin_Vbrate.Enable()
 

@@ -69,8 +69,8 @@ class WebMPan(scrolled.ScrolledPanel):
         sizerbase.Add(self.rdb_deadline, 0, wx.TOP | wx.CENTRE, 5)
         lab_cpu = wx.StaticText(self, wx.ID_ANY, (_("Quality and Speed:")))
         sizerbase.Add(lab_cpu, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        self.spin_cpu = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-16,
-                                    max=16, size=(-1, -1),
+        self.spin_cpu = wx.SpinCtrl(self, wx.ID_ANY, "1", min=-8,
+                                    max=8, size=(-1, -1),
                                     style=wx.TE_PROCESS_ENTER,
                                     )
         sizerbase.Add(self.spin_cpu, 0, wx.TOP | wx.CENTRE, 5)
@@ -117,8 +117,8 @@ class WebMPan(scrolled.ScrolledPanel):
         self.rdb_deadline.SetSelection(1)
         self.opt["Deadline"] = '-deadline good'
         self.spin_cpu.SetRange(0, 5)
-        self.spin_cpu.SetValue(0)
-        self.opt["CpuUsed"] = '-cpu-used 0'
+        self.spin_cpu.SetValue(1)
+        self.opt["CpuUsed"] = '-cpu-used 1'
 
         self.opt["Preset"] = ''
         self.opt["Profile"] = ''

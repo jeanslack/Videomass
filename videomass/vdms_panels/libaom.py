@@ -76,7 +76,7 @@ class AV1Pan(scrolled.ScrolledPanel):
         lab_gop = wx.StaticText(self, wx.ID_ANY, ("Group of picture (GOP):"))
         sizer.Add(lab_gop, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL, 5)
         self.spin_gop = wx.SpinCtrl(self, wx.ID_ANY,
-                                    "10", min=0,
+                                    "250", min=0,
                                     max=1000, size=(-1, -1),
                                     style=wx.TE_PROCESS_ENTER,
                                     )
@@ -112,8 +112,8 @@ class AV1Pan(scrolled.ScrolledPanel):
         """
         Set to default
         """
-        self.spin_gop.SetValue(10)
-        self.opt["GOP"] = '-g 10 -keyint_min 10'
+        self.spin_gop.SetValue(250)
+        self.opt["GOP"] = '-g 250 -keyint_min 250'
         self.opt["RowMthreading"] = '-row-mt 1 -tiles 2x2'
         self.rdb_usage.SetSelection(0)
         self.opt["Usage"] = '-usage good'
