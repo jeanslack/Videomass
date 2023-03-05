@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-05 02:33+0100\n"
-"PO-Revision-Date: 2023-03-05 02:39+0100\n"
+"POT-Creation-Date: 2023-03-05 10:31+0100\n"
+"PO-Revision-Date: 2023-03-05 10:31+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -306,7 +306,7 @@ msgstr ""
 "ferme le immagini statiche. Dovrebbe migliorare comprensibilmente la qualità "
 "visiva."
 
-#: ../vdms_dialogs/filter_scale.py:75 ../vdms_dialogs/ffmpeg_help.py:114
+#: ../vdms_dialogs/filter_scale.py:75 ../vdms_dialogs/ffmpeg_help.py:115
 #: ../vdms_frames/shownormlist.py:71 ../vdms_frames/shownormlist.py:77
 #: ../vdms_frames/shownormlist.py:83 ../vdms_panels/concatenate.py:109
 #: ../vdms_panels/sequence_to_video.py:116
@@ -1252,12 +1252,12 @@ msgid ""
 "name.\n"
 "\n"
 "For the list of encoders click the \"Encoders\" button.\n"
-"For that of decoders click on the \"Decoders\" button.\n"
+"For the list of decoders click on the \"Decoders\" button.\n"
 "For the muxers and demuxers click on the \"Muxers and Demuxers\" button.\n"
-"For the filters select \"show available filters\" in the drop down menu.\n"
-"For the bsf select \"show available bitstream filters\" in the drop down "
+"For the filters, select \"Show available filters\" in the drop down menu.\n"
+"For the bsf, select \"Show available bitstream filters\" in the drop down "
 "menu.\n"
-"For the protocols select \"show available protocols\" in the drop down "
+"For the protocols, select \"Show available protocols\" in the drop down "
 "menu.\n"
 "\n"
 "Some examples:"
@@ -1268,121 +1268,121 @@ msgstr ""
 "specifico del tipo.\n"
 "\n"
 "Per l'elenco degli encoder, fare clic sul pulsante \"Codificatori\".\n"
-"Per quello dei decoder, cliccare sul pulsante \"Decodificatori\".\n"
+"Per l'elenco dei decoder, cliccare sul pulsante \"Decodificatori\".\n"
 "Per i muxer e i demuxer, fare clic sul pulsante \"Muxer e demuxer\".\n"
-"Per i filtri, seleziona \"mostra filtri disponibili\" nel menu a tendina.\n"
-"Per i bsf, selezionare \"mostra filtri bitstream disponibili\" nel menu a "
+"Per i filtri, seleziona \"Mostra filtri disponibili\" nel menu a tendina.\n"
+"Per i bsf, selezionare \"Mostra filtri bitstream disponibili\" nel menu a "
 "tendina.\n"
-"Per i protocolli, selezionare \"mostra protocolli disponibili\" nel menu a "
+"Per i protocolli, selezionare \"Mostra protocolli disponibili\" nel menu a "
 "tendina.\n"
 "\n"
 "Qualche esempio:"
 
-#: ../vdms_dialogs/ffmpeg_help.py:67 ../vdms_dialogs/ffmpeg_help.py:290
-#: ../vdms_dialogs/ffmpeg_help.py:303
+#: ../vdms_dialogs/ffmpeg_help.py:68 ../vdms_dialogs/ffmpeg_help.py:291
+#: ../vdms_dialogs/ffmpeg_help.py:304
 msgid "Help topic"
 msgstr "Argomenti di aiuto"
 
-#: ../vdms_dialogs/ffmpeg_help.py:68
-msgid "print basic options"
-msgstr "stampa le opzioni basilari"
-
 #: ../vdms_dialogs/ffmpeg_help.py:69
-msgid "print more options"
-msgstr "stampa più opzioni"
+msgid "List basic options"
+msgstr "Elenca le opzioni basilari"
 
 #: ../vdms_dialogs/ffmpeg_help.py:70
-msgid "print all options (very long)"
-msgstr "stampa tutte le opzioni (molto lungo)"
+msgid "List more options"
+msgstr "Elenca più opzioni"
 
 #: ../vdms_dialogs/ffmpeg_help.py:71
-msgid "show available devices"
-msgstr "mostra i dispositivi disponibili"
+msgid "List all options (very long)"
+msgstr "Elenca tutte le opzioni (molto lungo)"
 
 #: ../vdms_dialogs/ffmpeg_help.py:72
-msgid "show available bit stream filters"
-msgstr "mostra i filtri bitstream disponibili"
+msgid "Show available devices"
+msgstr "Mostra i dispositivi disponibili"
 
 #: ../vdms_dialogs/ffmpeg_help.py:73
-msgid "show available protocols"
-msgstr "mostra i protocolli disponibili"
+msgid "Show available bit stream filters"
+msgstr "Mostra i filtri bitstream disponibili"
 
 #: ../vdms_dialogs/ffmpeg_help.py:74
-msgid "show available filters"
-msgstr "mostra i filtri disponibili"
+msgid "Show available protocols"
+msgstr "Mostra i protocolli disponibili"
 
 #: ../vdms_dialogs/ffmpeg_help.py:75
-msgid "show available pixel formats"
-msgstr "mostra i pixel formats disponibili"
+msgid "Show available filters"
+msgstr "Mostra i filtri disponibili"
 
 #: ../vdms_dialogs/ffmpeg_help.py:76
-msgid "show available audio sample formats"
-msgstr "mostra i formati di campionamento audio disponibili"
+msgid "Show available pixel formats"
+msgstr "Mostra i pixel formats disponibili"
 
 #: ../vdms_dialogs/ffmpeg_help.py:77
-msgid "show available color names"
-msgstr "mostra i nomi dei colori disponibili"
+msgid "Show available audio sample formats"
+msgstr "Mostra i formati di campionamento audio disponibili"
 
 #: ../vdms_dialogs/ffmpeg_help.py:78
-msgid "list sources of the input device"
-msgstr "elenca le fonti del dispositivo di input"
+msgid "Show available color names"
+msgstr "Mostra i nomi dei colori disponibili"
 
 #: ../vdms_dialogs/ffmpeg_help.py:79
-msgid "list sinks of the output device"
-msgstr "elenca i sink del dispositivo di output"
+msgid "List sources of the input device"
+msgstr "Elenca le fonti del dispositivo di input"
 
 #: ../vdms_dialogs/ffmpeg_help.py:80
-msgid "show available HW acceleration methods"
-msgstr "mostra i metodi di accelerazione HW disponibili"
+msgid "List sinks of the output device"
+msgstr "Elenca i sink del dispositivo di output"
 
 #: ../vdms_dialogs/ffmpeg_help.py:81
-msgid "show license"
-msgstr "mostra la licenza"
+msgid "Lhow available HW acceleration methods"
+msgstr "Mostra i metodi di accelerazione HW disponibili"
 
-#: ../vdms_dialogs/ffmpeg_help.py:120 ../vdms_main/main_frame.py:475
+#: ../vdms_dialogs/ffmpeg_help.py:82
+msgid "Show license"
+msgstr "Mostra la licenza"
+
+#: ../vdms_dialogs/ffmpeg_help.py:121 ../vdms_main/main_frame.py:475
 msgid "Show configuration"
 msgstr "Mostra configurazione"
 
-#: ../vdms_dialogs/ffmpeg_help.py:124 ../vdms_main/main_frame.py:483
+#: ../vdms_dialogs/ffmpeg_help.py:125 ../vdms_main/main_frame.py:483
 msgid "Encoders"
 msgstr "Codificatori"
 
-#: ../vdms_dialogs/ffmpeg_help.py:128 ../vdms_main/main_frame.py:486
+#: ../vdms_dialogs/ffmpeg_help.py:129 ../vdms_main/main_frame.py:486
 msgid "Decoders"
 msgstr "Decodificatori"
 
-#: ../vdms_dialogs/ffmpeg_help.py:132 ../vdms_main/main_frame.py:479
+#: ../vdms_dialogs/ffmpeg_help.py:133 ../vdms_main/main_frame.py:479
 msgid "Muxers and Demuxers"
 msgstr "Muxers e Demuxers"
 
-#: ../vdms_dialogs/ffmpeg_help.py:162
+#: ../vdms_dialogs/ffmpeg_help.py:163
 msgid "help topic list"
 msgstr "elenco argomenti di aiuto"
 
-#: ../vdms_dialogs/ffmpeg_help.py:173
+#: ../vdms_dialogs/ffmpeg_help.py:174
 msgid "Type the argument here and confirm with the enter key on your keyboard"
 msgstr "Digita qui l'argomento e conferma con il tasto Invio sulla tastiera"
 
-#: ../vdms_dialogs/ffmpeg_help.py:181
+#: ../vdms_dialogs/ffmpeg_help.py:182
 msgid "The search function allows you to find entries in the current topic"
 msgstr ""
 "La funzione di ricerca consente di trovare voci nell'argomento corrente"
 
-#: ../vdms_dialogs/ffmpeg_help.py:184
+#: ../vdms_dialogs/ffmpeg_help.py:185
 msgid "Ignore case"
 msgstr "Ignora maiuscole/minuscole"
 
-#: ../vdms_dialogs/ffmpeg_help.py:185
+#: ../vdms_dialogs/ffmpeg_help.py:186
 msgid "Ignore case distinctions: characters with different case will match."
 msgstr ""
 "Ignora le distinzioni tra maiuscole e minuscole, in modo che i caratteri che "
 "differiscono solo nel caso corrispondano tra loro."
 
-#: ../vdms_dialogs/ffmpeg_help.py:195
+#: ../vdms_dialogs/ffmpeg_help.py:196
 msgid "FFmpeg help topics"
 msgstr "Argomenti della guida di FFmpeg"
 
-#: ../vdms_dialogs/ffmpeg_help.py:243
+#: ../vdms_dialogs/ffmpeg_help.py:244
 msgid ""
 "This is a multifunctional search tool useful for local help searches\n"
 "on multiple FFmpeg topics and options. The search control, to\n"
@@ -1405,8 +1405,8 @@ msgstr ""
 "è probabile che la tua versione di FFmpeg sia troppo vecchia o non\n"
 "sia configurata con quelle funzionalità."
 
-#: ../vdms_dialogs/ffmpeg_help.py:308 ../vdms_dialogs/ffmpeg_help.py:331
-#: ../vdms_dialogs/ffmpeg_help.py:357
+#: ../vdms_dialogs/ffmpeg_help.py:309 ../vdms_dialogs/ffmpeg_help.py:332
+#: ../vdms_dialogs/ffmpeg_help.py:358
 msgid ""
 "\n"
 "  ..Nothing available"
@@ -1414,7 +1414,7 @@ msgstr ""
 "\n"
 "  ..Nessun dato disponibile"
 
-#: ../vdms_dialogs/ffmpeg_help.py:377
+#: ../vdms_dialogs/ffmpeg_help.py:378
 msgid ""
 "\n"
 "  ..Not found"

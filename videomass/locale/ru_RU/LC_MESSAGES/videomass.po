@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-05 02:33+0100\n"
-"PO-Revision-Date: 2023-03-05 02:39+0100\n"
+"POT-Creation-Date: 2023-03-05 10:31+0100\n"
+"PO-Revision-Date: 2023-03-05 10:32+0100\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -306,7 +306,7 @@ msgstr ""
 "статическиеизображения неподвижными. Понятно, что это должно улучшить "
 "визуальное качество."
 
-#: ../vdms_dialogs/filter_scale.py:75 ../vdms_dialogs/ffmpeg_help.py:114
+#: ../vdms_dialogs/filter_scale.py:75 ../vdms_dialogs/ffmpeg_help.py:115
 #: ../vdms_frames/shownormlist.py:71 ../vdms_frames/shownormlist.py:77
 #: ../vdms_frames/shownormlist.py:83 ../vdms_panels/concatenate.py:109
 #: ../vdms_panels/sequence_to_video.py:116
@@ -1248,18 +1248,35 @@ msgid "# It will be replaced by increasing numbers starting with:"
 msgstr "# Имя будет заменено возрастающими числами, начинающимися с:"
 
 #: ../vdms_dialogs/ffmpeg_help.py:46
+#, fuzzy
+#| msgid ""
+#| "Contextual help based on the argument entered in the additional text "
+#| "field.\n"
+#| "Each argument consists of the type, an equal sign (=), and a type-"
+#| "specific name.\n"
+#| "\n"
+#| "For the list of encoders click the \"Encoders\" button.\n"
+#| "For that of decoders click on the \"Decoders\" button.\n"
+#| "For the muxers and demuxers click on the \"Muxers and Demuxers\" button.\n"
+#| "For the filters select \"show available filters\" in the drop down menu.\n"
+#| "For the bsf select \"show available bitstream filters\" in the drop down "
+#| "menu.\n"
+#| "For the protocols select \"show available protocols\" in the drop down "
+#| "menu.\n"
+#| "\n"
+#| "Some examples:"
 msgid ""
 "Contextual help based on the argument entered in the additional text field.\n"
 "Each argument consists of the type, an equal sign (=), and a type-specific "
 "name.\n"
 "\n"
 "For the list of encoders click the \"Encoders\" button.\n"
-"For that of decoders click on the \"Decoders\" button.\n"
+"For the list of decoders click on the \"Decoders\" button.\n"
 "For the muxers and demuxers click on the \"Muxers and Demuxers\" button.\n"
-"For the filters select \"show available filters\" in the drop down menu.\n"
-"For the bsf select \"show available bitstream filters\" in the drop down "
+"For the filters, select \"Show available filters\" in the drop down menu.\n"
+"For the bsf, select \"Show available bitstream filters\" in the drop down "
 "menu.\n"
-"For the protocols select \"show available protocols\" in the drop down "
+"For the protocols, select \"Show available protocols\" in the drop down "
 "menu.\n"
 "\n"
 "Some examples:"
@@ -1281,111 +1298,139 @@ msgstr ""
 "\n"
 "Некоторые примеры:"
 
-#: ../vdms_dialogs/ffmpeg_help.py:67 ../vdms_dialogs/ffmpeg_help.py:290
-#: ../vdms_dialogs/ffmpeg_help.py:303
+#: ../vdms_dialogs/ffmpeg_help.py:68 ../vdms_dialogs/ffmpeg_help.py:291
+#: ../vdms_dialogs/ffmpeg_help.py:304
 msgid "Help topic"
 msgstr "Раздел справки"
 
-#: ../vdms_dialogs/ffmpeg_help.py:68
-msgid "print basic options"
+#: ../vdms_dialogs/ffmpeg_help.py:69
+#, fuzzy
+#| msgid "print basic options"
+msgid "List basic options"
 msgstr "основные параметры печати"
 
-#: ../vdms_dialogs/ffmpeg_help.py:69
-msgid "print more options"
+#: ../vdms_dialogs/ffmpeg_help.py:70
+#, fuzzy
+#| msgid "print more options"
+msgid "List more options"
 msgstr "распечатать больше вариантов"
 
-#: ../vdms_dialogs/ffmpeg_help.py:70
-msgid "print all options (very long)"
+#: ../vdms_dialogs/ffmpeg_help.py:71
+#, fuzzy
+#| msgid "print all options (very long)"
+msgid "List all options (very long)"
 msgstr "распечатать все варианты (очень много)"
 
-#: ../vdms_dialogs/ffmpeg_help.py:71
-msgid "show available devices"
+#: ../vdms_dialogs/ffmpeg_help.py:72
+#, fuzzy
+#| msgid "show available devices"
+msgid "Show available devices"
 msgstr "показывать доступные устройства"
 
-#: ../vdms_dialogs/ffmpeg_help.py:72
-msgid "show available bit stream filters"
+#: ../vdms_dialogs/ffmpeg_help.py:73
+#, fuzzy
+#| msgid "show available bit stream filters"
+msgid "Show available bit stream filters"
 msgstr "показывать доступные фильтры битового потока"
 
-#: ../vdms_dialogs/ffmpeg_help.py:73
-msgid "show available protocols"
+#: ../vdms_dialogs/ffmpeg_help.py:74
+#, fuzzy
+#| msgid "show available protocols"
+msgid "Show available protocols"
 msgstr "показывать доступные протоколы"
 
-#: ../vdms_dialogs/ffmpeg_help.py:74
-msgid "show available filters"
+#: ../vdms_dialogs/ffmpeg_help.py:75
+#, fuzzy
+#| msgid "show available filters"
+msgid "Show available filters"
 msgstr "показывать доступные фильтры"
 
-#: ../vdms_dialogs/ffmpeg_help.py:75
-msgid "show available pixel formats"
+#: ../vdms_dialogs/ffmpeg_help.py:76
+#, fuzzy
+#| msgid "show available pixel formats"
+msgid "Show available pixel formats"
 msgstr "показать доступные форматы пикселей"
 
-#: ../vdms_dialogs/ffmpeg_help.py:76
-msgid "show available audio sample formats"
+#: ../vdms_dialogs/ffmpeg_help.py:77
+#, fuzzy
+#| msgid "show available audio sample formats"
+msgid "Show available audio sample formats"
 msgstr "показывать доступные форматы аудиофайлов"
 
-#: ../vdms_dialogs/ffmpeg_help.py:77
-msgid "show available color names"
+#: ../vdms_dialogs/ffmpeg_help.py:78
+#, fuzzy
+#| msgid "show available color names"
+msgid "Show available color names"
 msgstr "показывать доступные названия цвета"
 
-#: ../vdms_dialogs/ffmpeg_help.py:78
-msgid "list sources of the input device"
+#: ../vdms_dialogs/ffmpeg_help.py:79
+#, fuzzy
+#| msgid "list sources of the input device"
+msgid "List sources of the input device"
 msgstr "перечисляет источники устройства ввода"
 
-#: ../vdms_dialogs/ffmpeg_help.py:79
-msgid "list sinks of the output device"
+#: ../vdms_dialogs/ffmpeg_help.py:80
+#, fuzzy
+#| msgid "list sinks of the output device"
+msgid "List sinks of the output device"
 msgstr "список приемников устройства вывода"
 
-#: ../vdms_dialogs/ffmpeg_help.py:80
-msgid "show available HW acceleration methods"
+#: ../vdms_dialogs/ffmpeg_help.py:81
+#, fuzzy
+#| msgid "show available HW acceleration methods"
+msgid "Lhow available HW acceleration methods"
 msgstr "показать доступные методы ускорения HW"
 
-#: ../vdms_dialogs/ffmpeg_help.py:81
-msgid "show license"
+#: ../vdms_dialogs/ffmpeg_help.py:82
+#, fuzzy
+#| msgid "show license"
+msgid "Show license"
 msgstr "показать лицензию"
 
-#: ../vdms_dialogs/ffmpeg_help.py:120 ../vdms_main/main_frame.py:475
+#: ../vdms_dialogs/ffmpeg_help.py:121 ../vdms_main/main_frame.py:475
 msgid "Show configuration"
 msgstr "Показать конфигурацию"
 
-#: ../vdms_dialogs/ffmpeg_help.py:124 ../vdms_main/main_frame.py:483
+#: ../vdms_dialogs/ffmpeg_help.py:125 ../vdms_main/main_frame.py:483
 msgid "Encoders"
 msgstr "Кодеры"
 
-#: ../vdms_dialogs/ffmpeg_help.py:128 ../vdms_main/main_frame.py:486
+#: ../vdms_dialogs/ffmpeg_help.py:129 ../vdms_main/main_frame.py:486
 msgid "Decoders"
 msgstr "Декодеры"
 
-#: ../vdms_dialogs/ffmpeg_help.py:132 ../vdms_main/main_frame.py:479
+#: ../vdms_dialogs/ffmpeg_help.py:133 ../vdms_main/main_frame.py:479
 msgid "Muxers and Demuxers"
 msgstr "Мультиплексоры и Демультиплексоры"
 
-#: ../vdms_dialogs/ffmpeg_help.py:162
+#: ../vdms_dialogs/ffmpeg_help.py:163
 msgid "help topic list"
 msgstr "список тем справки"
 
-#: ../vdms_dialogs/ffmpeg_help.py:173
+#: ../vdms_dialogs/ffmpeg_help.py:174
 msgid "Type the argument here and confirm with the enter key on your keyboard"
 msgstr ""
 "Введите здесь аргумент и подтвердите нажатием клавиши ввода на клавиатуре"
 
-#: ../vdms_dialogs/ffmpeg_help.py:181
+#: ../vdms_dialogs/ffmpeg_help.py:182
 msgid "The search function allows you to find entries in the current topic"
 msgstr "Функция поиска позволяет находить записи в текущей теме"
 
-#: ../vdms_dialogs/ffmpeg_help.py:184
+#: ../vdms_dialogs/ffmpeg_help.py:185
 msgid "Ignore case"
 msgstr "Игнорировать регистр"
 
-#: ../vdms_dialogs/ffmpeg_help.py:185
+#: ../vdms_dialogs/ffmpeg_help.py:186
 msgid "Ignore case distinctions: characters with different case will match."
 msgstr ""
 "Не обращайте внимания на различие в регистре: символы с другим регистром "
 "будут совпадать."
 
-#: ../vdms_dialogs/ffmpeg_help.py:195
+#: ../vdms_dialogs/ffmpeg_help.py:196
 msgid "FFmpeg help topics"
 msgstr "Разделы справки FFmpeg"
 
-#: ../vdms_dialogs/ffmpeg_help.py:243
+#: ../vdms_dialogs/ffmpeg_help.py:244
 msgid ""
 "This is a multifunctional search tool useful for local help searches\n"
 "on multiple FFmpeg topics and options. The search control, to\n"
@@ -1406,8 +1451,8 @@ msgstr ""
 "Если вы не найдете поддержку определенного кодека или другой функции, \n"
 "вероятно, ваша версия FFmpeg устарела или не поддерживает эти функции."
 
-#: ../vdms_dialogs/ffmpeg_help.py:308 ../vdms_dialogs/ffmpeg_help.py:331
-#: ../vdms_dialogs/ffmpeg_help.py:357
+#: ../vdms_dialogs/ffmpeg_help.py:309 ../vdms_dialogs/ffmpeg_help.py:332
+#: ../vdms_dialogs/ffmpeg_help.py:358
 msgid ""
 "\n"
 "  ..Nothing available"
@@ -1415,7 +1460,7 @@ msgstr ""
 "\n"
 "  ..Данные недоступны"
 
-#: ../vdms_dialogs/ffmpeg_help.py:377
+#: ../vdms_dialogs/ffmpeg_help.py:378
 msgid ""
 "\n"
 "  ..Not found"

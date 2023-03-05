@@ -47,13 +47,14 @@ class FFmpegHelp(wx.Dialog):
                    'additional text field.\nEach argument consists of the '
                    'type, an equal sign (=), and a type-specific name.\n\n'
                    'For the list of encoders click the "Encoders" button.\n'
-                   'For that of decoders click on the "Decoders" button.\n'
+                   'For the list of decoders click on the "Decoders" button.\n'
                    'For the muxers and demuxers click on the "Muxers and '
-                   'Demuxers" button.\nFor the filters select "show '
+                   'Demuxers" button.\nFor the filters, select "Show '
                    'available filters" in the drop down menu.\n'
-                   'For the bsf select "show available bitstream '
-                   'filters" in the drop down menu.\nFor the protocols select '
-                   '"show available protocols" in the drop down menu.\n\n'
+                   'For the bsf, select "Show available bitstream '
+                   'filters" in the drop down menu.\nFor the protocols, '
+                   'select "Show available protocols" in the drop down '
+                   'menu.\n\n'
                    'Some examples:'
                    ))
     EXAMPLES = ('\n\n\tencoder = libvpx-vp9'
@@ -65,20 +66,20 @@ class FFmpegHelp(wx.Dialog):
                 '\n\tprotocol = bluray'
                 )
     ARGS_OPT = {_("Help topic"): ['--help', ''],
-                _("print basic options"): ['-h', ''],
-                _("print more options"): ['-h', 'long'],
-                _("print all options (very long)"): ['-h', 'full'],
-                _("show available devices"): ['-devices'],
-                _("show available bit stream filters"): ['-bsfs'],
-                _("show available protocols"): ['-protocols'],
-                _("show available filters"): ['-filters'],
-                _("show available pixel formats"): ['-pix_fmts'],
-                _("show available audio sample formats"): ['-sample_fmts'],
-                _("show available color names"): ['-colors'],
-                _("list sources of the input device"): ['-sources'],
-                _("list sinks of the output device"): ['-sinks'],
-                _("show available HW acceleration methods"): ['-hwaccels'],
-                _("show license"): ['-L'],
+                _("List basic options"): ['-h', ''],
+                _("List more options"): ['-h', 'long'],
+                _("List all options (very long)"): ['-h', 'full'],
+                _("Show available devices"): ['-devices'],
+                _("Show available bit stream filters"): ['-bsfs'],
+                _("Show available protocols"): ['-protocols'],
+                _("Show available filters"): ['-filters'],
+                _("Show available pixel formats"): ['-pix_fmts'],
+                _("Show available audio sample formats"): ['-sample_fmts'],
+                _("Show available color names"): ['-colors'],
+                _("List sources of the input device"): ['-sources'],
+                _("List sinks of the output device"): ['-sinks'],
+                _("Lhow available HW acceleration methods"): ['-hwaccels'],
+                _("Show license"): ['-L'],
                 }
     CHOICES = tuple(ARGS_OPT.keys())
 
