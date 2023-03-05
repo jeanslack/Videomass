@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-05 10:31+0100\n"
-"PO-Revision-Date: 2023-03-05 10:32+0100\n"
+"POT-Creation-Date: 2023-03-06 00:02+0100\n"
+"PO-Revision-Date: 2023-03-06 00:02+0100\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -402,10 +402,8 @@ msgid "Generates duo video for comparison"
 msgstr "Создает парное видео для сравнения"
 
 #: ../vdms_dialogs/filter_stab.py:89
-#, fuzzy
-#| msgid "Create a new preset"
 msgid "Create a snapshot"
-msgstr "Создать новый пресет"
+msgstr "Создать снимок"
 
 #: ../vdms_dialogs/filter_stab.py:107 ../vdms_panels/av_conversions.py:390
 msgid "Preview"
@@ -460,23 +458,19 @@ msgstr "Фильтр Нерезкость:"
 
 #: ../vdms_dialogs/filter_stab.py:328
 msgid "Seek to a position on the video."
-msgstr ""
+msgstr "Найти позицию на видео."
 
 #: ../vdms_dialogs/filter_stab.py:330
 msgid "Make a snapshot of the video with the settings made."
-msgstr ""
+msgstr "Сделайте снимок видео со сделанными настройками."
 
 #: ../vdms_dialogs/filter_stab.py:332
-#, fuzzy
-#| msgid ""
-#| "Set the time interval between images in seconds (from 1 to 100 sec.), "
-#| "default is 1 second"
 msgid ""
 "Set the snapshot duration from 3 to 15 seconds from the seek position, "
 "default is 5 seconds."
 msgstr ""
-"Установите интервал времени между изображениями в секундах (от 1 до 100 "
-"секунд), по умолчанию - 1 секунда"
+"Установите продолжительность снимка от 3 до 15 секунд от позиции поиска, по "
+"умолчанию 5 секунд."
 
 #: ../vdms_dialogs/filter_stab.py:336
 msgid ""
@@ -658,6 +652,8 @@ msgid ""
 "Please wait,\n"
 "The preview process will take a few seconds."
 msgstr ""
+"Пожалуйста, подождите,\n"
+"Процесс предварительного просмотра займет несколько секунд."
 
 #: ../vdms_dialogs/filter_transpose.py:80
 #: ../vdms_dialogs/filter_transpose.py:293
@@ -1248,23 +1244,6 @@ msgid "# It will be replaced by increasing numbers starting with:"
 msgstr "# Имя будет заменено возрастающими числами, начинающимися с:"
 
 #: ../vdms_dialogs/ffmpeg_help.py:46
-#, fuzzy
-#| msgid ""
-#| "Contextual help based on the argument entered in the additional text "
-#| "field.\n"
-#| "Each argument consists of the type, an equal sign (=), and a type-"
-#| "specific name.\n"
-#| "\n"
-#| "For the list of encoders click the \"Encoders\" button.\n"
-#| "For that of decoders click on the \"Decoders\" button.\n"
-#| "For the muxers and demuxers click on the \"Muxers and Demuxers\" button.\n"
-#| "For the filters select \"show available filters\" in the drop down menu.\n"
-#| "For the bsf select \"show available bitstream filters\" in the drop down "
-#| "menu.\n"
-#| "For the protocols select \"show available protocols\" in the drop down "
-#| "menu.\n"
-#| "\n"
-#| "Some examples:"
 msgid ""
 "Contextual help based on the argument entered in the additional text field.\n"
 "Each argument consists of the type, an equal sign (=), and a type-specific "
@@ -1281,19 +1260,19 @@ msgid ""
 "\n"
 "Some examples:"
 msgstr ""
-"Контекстная помощь на основе аргумента, введенного в дополнительное "
+"Контекстная справка на основе аргумента, введенного в дополнительное "
 "текстовое поле.\n"
 "Каждый аргумент состоит из типа, знака равенства (=) и имени, характерного "
-"для типа..\n"
+"для типа.\n"
 "\n"
-"Для просмотра списка кодировщиков нажмите кнопку \"Кодировщики\".\n"
-"Для декодеров нажмите кнопку «Декодеры».\n"
+"Чтобы просмотреть список кодировщиков, нажмите кнопку «Кодировщики».\n"
+"Чтобы просмотреть список декодеров, нажмите кнопку «Декодеры».\n"
 "Для мультиплексоров и демультиплексоров нажмите кнопку «Мультиплексоры и "
 "демультиплексоры».\n"
-"Для фильтров выберите «показать доступные фильтры» в раскрывающемся меню.\n"
-"Для bsf выберите «показать доступные фильтры битового потока» в "
+"Для фильтров выберите «Показать доступные фильтры» в раскрывающемся меню.\n"
+"Для bsf выберите «Показать доступные фильтры битового потока» в "
 "раскрывающемся меню.\n"
-"Для протоколов выберите «показать доступные протоколы» в раскрывающемся "
+"Для протоколов выберите «Показать доступные протоколы» в раскрывающемся "
 "меню.\n"
 "\n"
 "Некоторые примеры:"
@@ -1304,88 +1283,60 @@ msgid "Help topic"
 msgstr "Раздел справки"
 
 #: ../vdms_dialogs/ffmpeg_help.py:69
-#, fuzzy
-#| msgid "print basic options"
 msgid "List basic options"
-msgstr "основные параметры печати"
+msgstr "Список основных опций"
 
 #: ../vdms_dialogs/ffmpeg_help.py:70
-#, fuzzy
-#| msgid "print more options"
 msgid "List more options"
-msgstr "распечатать больше вариантов"
+msgstr "Список дополнительных опций"
 
 #: ../vdms_dialogs/ffmpeg_help.py:71
-#, fuzzy
-#| msgid "print all options (very long)"
 msgid "List all options (very long)"
-msgstr "распечатать все варианты (очень много)"
+msgstr "Список всех вариантов (очень длинный)"
 
 #: ../vdms_dialogs/ffmpeg_help.py:72
-#, fuzzy
-#| msgid "show available devices"
 msgid "Show available devices"
-msgstr "показывать доступные устройства"
+msgstr "Показать доступные устройства"
 
 #: ../vdms_dialogs/ffmpeg_help.py:73
-#, fuzzy
-#| msgid "show available bit stream filters"
 msgid "Show available bit stream filters"
-msgstr "показывать доступные фильтры битового потока"
+msgstr "Показать доступные фильтры битового потока"
 
 #: ../vdms_dialogs/ffmpeg_help.py:74
-#, fuzzy
-#| msgid "show available protocols"
 msgid "Show available protocols"
-msgstr "показывать доступные протоколы"
+msgstr "Показать доступные протоколы"
 
 #: ../vdms_dialogs/ffmpeg_help.py:75
-#, fuzzy
-#| msgid "show available filters"
 msgid "Show available filters"
-msgstr "показывать доступные фильтры"
+msgstr "Показать доступные фильтры"
 
 #: ../vdms_dialogs/ffmpeg_help.py:76
-#, fuzzy
-#| msgid "show available pixel formats"
 msgid "Show available pixel formats"
-msgstr "показать доступные форматы пикселей"
+msgstr "Показать доступные форматы пикселей"
 
 #: ../vdms_dialogs/ffmpeg_help.py:77
-#, fuzzy
-#| msgid "show available audio sample formats"
 msgid "Show available audio sample formats"
-msgstr "показывать доступные форматы аудиофайлов"
+msgstr "Показать доступные форматы аудио образцов"
 
 #: ../vdms_dialogs/ffmpeg_help.py:78
-#, fuzzy
-#| msgid "show available color names"
 msgid "Show available color names"
-msgstr "показывать доступные названия цвета"
+msgstr "Показать доступные названия цветов"
 
 #: ../vdms_dialogs/ffmpeg_help.py:79
-#, fuzzy
-#| msgid "list sources of the input device"
 msgid "List sources of the input device"
-msgstr "перечисляет источники устройства ввода"
+msgstr "Список источников устройства ввода"
 
 #: ../vdms_dialogs/ffmpeg_help.py:80
-#, fuzzy
-#| msgid "list sinks of the output device"
 msgid "List sinks of the output device"
-msgstr "список приемников устройства вывода"
+msgstr "Список sinks выходного устройства"
 
 #: ../vdms_dialogs/ffmpeg_help.py:81
-#, fuzzy
-#| msgid "show available HW acceleration methods"
-msgid "Lhow available HW acceleration methods"
-msgstr "показать доступные методы ускорения HW"
+msgid "Show available HW acceleration methods"
+msgstr "Показать доступные методы аппаратного ускорения"
 
 #: ../vdms_dialogs/ffmpeg_help.py:82
-#, fuzzy
-#| msgid "show license"
 msgid "Show license"
-msgstr "показать лицензию"
+msgstr "Показать лицензию"
 
 #: ../vdms_dialogs/ffmpeg_help.py:121 ../vdms_main/main_frame.py:475
 msgid "Show configuration"
@@ -1558,7 +1509,7 @@ msgstr "FFplay   ...не найдено !"
 msgid "ENABLED:"
 msgstr "ВКЛЮЧЕНО:"
 
-#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2290
+#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2291
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:592
 msgid "Enabled"
@@ -1568,7 +1519,7 @@ msgstr "Включено"
 msgid "DISABLED:"
 msgstr "ОТКЛЮЧЕНО:"
 
-#: ../vdms_frames/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2290
+#: ../vdms_frames/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2291
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:596
 msgid "Disabled"
@@ -1665,11 +1616,11 @@ msgstr "=  Без изменений"
 msgid "=  Below max peak"
 msgstr "=  Ниже максимального пика"
 
-#: ../vdms_frames/shownormlist.py:141 ../vdms_panels/av_conversions.py:1762
+#: ../vdms_frames/shownormlist.py:141 ../vdms_panels/av_conversions.py:1763
 msgid "RMS-based volume statistics"
 msgstr "Статистика звука на основе RMS"
 
-#: ../vdms_frames/shownormlist.py:165 ../vdms_panels/av_conversions.py:1760
+#: ../vdms_frames/shownormlist.py:165 ../vdms_panels/av_conversions.py:1761
 msgid "PEAK-based volume statistics"
 msgstr "Статистика звука на основе PEAK"
 
@@ -2647,7 +2598,7 @@ msgstr "Целевой диапазон громкости в LUFS. От +1,0 д
 msgid "Play and listen to the result of audio filters"
 msgstr "Воспроизведение и прослушивание результатов аудиофильтров"
 
-#: ../vdms_panels/av_conversions.py:975 ../vdms_panels/av_conversions.py:1839
+#: ../vdms_panels/av_conversions.py:976 ../vdms_panels/av_conversions.py:1840
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
 "audio volume data."
@@ -2655,22 +2606,22 @@ msgstr ""
 "Не обнаружены значения громкости! Нажмите кнопку «Обнаружение громкости», "
 "чтобы проанализировать данные о громкости звука."
 
-#: ../vdms_panels/av_conversions.py:1031
+#: ../vdms_panels/av_conversions.py:1032
 msgid "Unable to preview Video Stabilizer filter"
 msgstr "Невозможно просмотреть Stabilizer видеофильтр"
 
-#: ../vdms_panels/av_conversions.py:1090
+#: ../vdms_panels/av_conversions.py:1091
 #: ../vdms_panels/sequence_to_video.py:319
 #: ../vdms_panels/video_to_sequence.py:368
 #: ../vdms_panels/video_to_sequence.py:492
 msgid "A target file must be selected in the queued files"
 msgstr "В файлах, поставленных в очередь, должен быть выбран один файл"
 
-#: ../vdms_panels/av_conversions.py:1119
+#: ../vdms_panels/av_conversions.py:1120
 msgid "Selected index does not exist or does not contain any audio streams"
 msgstr "Выбранный индекс не существует или не содержит никаких аудиопотоков"
 
-#: ../vdms_panels/av_conversions.py:1124
+#: ../vdms_panels/av_conversions.py:1125
 msgid ""
 "ERROR: Missing audio stream:\n"
 "\"{}\""
@@ -2678,21 +2629,21 @@ msgstr ""
 "ОШИБКА: Отсутствует аудиопоток:\n"
 "\"{}\""
 
-#: ../vdms_panels/av_conversions.py:1153
+#: ../vdms_panels/av_conversions.py:1154
 #: ../vdms_panels/sequence_to_video.py:349
 #: ../vdms_panels/video_to_sequence.py:398
 msgid "The file is not a frame or a video file"
 msgstr "Файл не является кадром или видеофайлом"
 
-#: ../vdms_panels/av_conversions.py:1324
+#: ../vdms_panels/av_conversions.py:1325
 msgid "This filter is incompatible with 2-pass enabled"
 msgstr "Этот фильтр несовместим с включенным двухпроходным режимом"
 
-#: ../vdms_panels/av_conversions.py:1475
+#: ../vdms_panels/av_conversions.py:1476
 msgid "No Audio"
 msgstr "Нет звука"
 
-#: ../vdms_panels/av_conversions.py:1613
+#: ../vdms_panels/av_conversions.py:1614
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
@@ -2700,7 +2651,7 @@ msgstr ""
 "Активирует нормализацию пикового уровня, в результате чего максимальный "
 "пиковый уровень будет равен заданному целевому уровню."
 
-#: ../vdms_panels/av_conversions.py:1616
+#: ../vdms_panels/av_conversions.py:1617
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
@@ -2709,7 +2660,7 @@ msgstr ""
 "основе средней громкости вычисляет величину усиления для достижения той же "
 "средней мощности сигнала."
 
-#: ../vdms_panels/av_conversions.py:1620
+#: ../vdms_panels/av_conversions.py:1621
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"loudnorm\" filter, which implements the EBU R128 algorithm."
@@ -2717,39 +2668,39 @@ msgstr ""
 "Активируйте двухпроходную нормализацию. Это нормализует воспринимаемую "
 "громкость с помощью фильтра «loudnorm», реализующего алгоритм EBU R128."
 
-#: ../vdms_panels/av_conversions.py:1642
+#: ../vdms_panels/av_conversions.py:1643
 msgid "Audio normalization off"
 msgstr "Нормализация звука отключена"
 
-#: ../vdms_panels/av_conversions.py:1683
+#: ../vdms_panels/av_conversions.py:1684
 msgid "Audio normalization is required only for some files"
 msgstr "Нормализация звука требуется только для некоторых файлов"
 
-#: ../vdms_panels/av_conversions.py:1684
+#: ../vdms_panels/av_conversions.py:1685
 msgid ""
 "Audio normalization will not be applied because the source signal is equal"
 msgstr ""
 "Нормализация звука не будет применяться, потому что она равна источнику"
 
-#: ../vdms_panels/av_conversions.py:2271
+#: ../vdms_panels/av_conversions.py:2272
 msgid "{} file in queue"
 msgstr "{} файл в очереди"
 
-#: ../vdms_panels/av_conversions.py:2279
+#: ../vdms_panels/av_conversions.py:2280
 msgid "Off"
 msgstr "Выключено"
 
-#: ../vdms_panels/av_conversions.py:2285 ../vdms_panels/presets_manager.py:932
+#: ../vdms_panels/av_conversions.py:2286 ../vdms_panels/presets_manager.py:932
 #: ../vdms_panels/video_to_sequence.py:586
 msgid "Unset"
 msgstr "Не установлено"
 
-#: ../vdms_panels/av_conversions.py:2288 ../vdms_panels/presets_manager.py:935
+#: ../vdms_panels/av_conversions.py:2289 ../vdms_panels/presets_manager.py:935
 #: ../vdms_panels/video_to_sequence.py:589
 msgid "start  {} | duration  {}"
 msgstr "начало  {} | продолжительность  {}"
 
-#: ../vdms_panels/av_conversions.py:2294
+#: ../vdms_panels/av_conversions.py:2295
 msgid ""
 "Queued File\n"
 "Output Format\n"
@@ -2775,7 +2726,7 @@ msgstr ""
 "Временной отрезок\n"
 "Выбор входного аудио индекса"
 
-#: ../vdms_panels/av_conversions.py:2310
+#: ../vdms_panels/av_conversions.py:2311
 msgid ""
 "Queued File\n"
 "Web Optimize\n"
@@ -2811,7 +2762,7 @@ msgstr ""
 "Индекс потока субтитров\n"
 "Временной отрезок"
 
-#: ../vdms_panels/av_conversions.py:2331
+#: ../vdms_panels/av_conversions.py:2332
 msgid ""
 "Queued File\n"
 "Web Optimize\n"
@@ -2869,7 +2820,7 @@ msgstr ""
 "Индекс потоков субтитров\n"
 "Временной отрезок"
 
-#: ../vdms_panels/av_conversions.py:2370
+#: ../vdms_panels/av_conversions.py:2371
 msgid ""
 "Audio normalization data cannot be saved on the Presets Manager.\n"
 "\n"
@@ -2879,11 +2830,11 @@ msgstr ""
 "\n"
 "Вы хотите продолжать?"
 
-#: ../vdms_panels/av_conversions.py:2388
+#: ../vdms_panels/av_conversions.py:2389
 msgid "Choose a Videomass preset..."
 msgstr "Выберите пресет Videomass..."
 
-#: ../vdms_panels/av_conversions.py:2397
+#: ../vdms_panels/av_conversions.py:2398
 msgid "Create a new profile"
 msgstr "Создать новый профиль"
 

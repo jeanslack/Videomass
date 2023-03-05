@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-05 10:31+0100\n"
-"PO-Revision-Date: 2023-03-05 10:31+0100\n"
+"POT-Creation-Date: 2023-03-06 00:02+0100\n"
+"PO-Revision-Date: 2023-03-06 00:03+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -1332,7 +1332,7 @@ msgid "List sinks of the output device"
 msgstr "Elenca i sink del dispositivo di output"
 
 #: ../vdms_dialogs/ffmpeg_help.py:81
-msgid "Lhow available HW acceleration methods"
+msgid "Show available HW acceleration methods"
 msgstr "Mostra i metodi di accelerazione HW disponibili"
 
 #: ../vdms_dialogs/ffmpeg_help.py:82
@@ -1512,7 +1512,7 @@ msgstr "FFplay   ...non trovato !"
 msgid "ENABLED:"
 msgstr "ABILITATO:"
 
-#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2290
+#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2291
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:592
 msgid "Enabled"
@@ -1522,7 +1522,7 @@ msgstr "Abilitato"
 msgid "DISABLED:"
 msgstr "DISABILITATO:"
 
-#: ../vdms_frames/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2290
+#: ../vdms_frames/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2291
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:596
 msgid "Disabled"
@@ -1619,11 +1619,11 @@ msgstr "=  Non cambia"
 msgid "=  Below max peak"
 msgstr "=  Sotto il picco max"
 
-#: ../vdms_frames/shownormlist.py:141 ../vdms_panels/av_conversions.py:1762
+#: ../vdms_frames/shownormlist.py:141 ../vdms_panels/av_conversions.py:1763
 msgid "RMS-based volume statistics"
 msgstr "Statistiche del volume basate su RMS"
 
-#: ../vdms_frames/shownormlist.py:165 ../vdms_panels/av_conversions.py:1760
+#: ../vdms_frames/shownormlist.py:165 ../vdms_panels/av_conversions.py:1761
 msgid "PEAK-based volume statistics"
 msgstr "Statistiche del volume basate sul PICCO"
 
@@ -2599,7 +2599,7 @@ msgstr ""
 msgid "Play and listen to the result of audio filters"
 msgstr "Riproduci e ascolta il risultato dei filtri audio"
 
-#: ../vdms_panels/av_conversions.py:975 ../vdms_panels/av_conversions.py:1839
+#: ../vdms_panels/av_conversions.py:976 ../vdms_panels/av_conversions.py:1840
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
 "audio volume data."
@@ -2607,22 +2607,22 @@ msgstr ""
 "Valori del volume non rilevati! Clicca sul pulsante \"Volume detect\" per "
 "analizzare i dati sul volume audio."
 
-#: ../vdms_panels/av_conversions.py:1031
+#: ../vdms_panels/av_conversions.py:1032
 msgid "Unable to preview Video Stabilizer filter"
 msgstr "Impossibile visualizzare in anteprima il filtro stabilizzatore video"
 
-#: ../vdms_panels/av_conversions.py:1090
+#: ../vdms_panels/av_conversions.py:1091
 #: ../vdms_panels/sequence_to_video.py:319
 #: ../vdms_panels/video_to_sequence.py:368
 #: ../vdms_panels/video_to_sequence.py:492
 msgid "A target file must be selected in the queued files"
 msgstr "È necessario selezionare un file di destinazione nei file in coda"
 
-#: ../vdms_panels/av_conversions.py:1119
+#: ../vdms_panels/av_conversions.py:1120
 msgid "Selected index does not exist or does not contain any audio streams"
 msgstr "L'indice selezionato non esiste o non contiene alcun flusso audio"
 
-#: ../vdms_panels/av_conversions.py:1124
+#: ../vdms_panels/av_conversions.py:1125
 msgid ""
 "ERROR: Missing audio stream:\n"
 "\"{}\""
@@ -2630,21 +2630,21 @@ msgstr ""
 "ERRORE: flusso audio mancante:\n"
 "\"{}\""
 
-#: ../vdms_panels/av_conversions.py:1153
+#: ../vdms_panels/av_conversions.py:1154
 #: ../vdms_panels/sequence_to_video.py:349
 #: ../vdms_panels/video_to_sequence.py:398
 msgid "The file is not a frame or a video file"
 msgstr "Il file non è un frame o un file video"
 
-#: ../vdms_panels/av_conversions.py:1324
+#: ../vdms_panels/av_conversions.py:1325
 msgid "This filter is incompatible with 2-pass enabled"
 msgstr "Questo filtro non è compatibile con 2-pass abilitato"
 
-#: ../vdms_panels/av_conversions.py:1475
+#: ../vdms_panels/av_conversions.py:1476
 msgid "No Audio"
 msgstr "No Audio"
 
-#: ../vdms_panels/av_conversions.py:1613
+#: ../vdms_panels/av_conversions.py:1614
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
@@ -2652,7 +2652,7 @@ msgstr ""
 "Attiva la normalizzazione del livello di picco, la quale produrrà un livello "
 "di picco massimo pari al livello target impostato."
 
-#: ../vdms_panels/av_conversions.py:1616
+#: ../vdms_panels/av_conversions.py:1617
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
@@ -2660,7 +2660,7 @@ msgstr ""
 "Attiva la normalizzazione basata su RMS, che in base al volume medio calcola "
 "la quantità di guadagno per raggiungere la stessa potenza media di segnale."
 
-#: ../vdms_panels/av_conversions.py:1620
+#: ../vdms_panels/av_conversions.py:1621
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"loudnorm\" filter, which implements the EBU R128 algorithm."
@@ -2668,39 +2668,39 @@ msgstr ""
 "Attiva la normalizzazione a due passate. Normalizza il volume percepito "
 "usando il filtro \"loudnorm\", che implementa l'algoritmo EBU R128."
 
-#: ../vdms_panels/av_conversions.py:1642
+#: ../vdms_panels/av_conversions.py:1643
 msgid "Audio normalization off"
 msgstr "Normalizzazione Audio disattivata"
 
-#: ../vdms_panels/av_conversions.py:1683
+#: ../vdms_panels/av_conversions.py:1684
 msgid "Audio normalization is required only for some files"
 msgstr "La normalizzazione audio è richiesta solo per alcuni files"
 
-#: ../vdms_panels/av_conversions.py:1684
+#: ../vdms_panels/av_conversions.py:1685
 msgid ""
 "Audio normalization will not be applied because the source signal is equal"
 msgstr ""
 "La normalizzazione audio non sarà applicata perché uguale alla sorgente"
 
-#: ../vdms_panels/av_conversions.py:2271
+#: ../vdms_panels/av_conversions.py:2272
 msgid "{} file in queue"
 msgstr "{} file in coda"
 
-#: ../vdms_panels/av_conversions.py:2279
+#: ../vdms_panels/av_conversions.py:2280
 msgid "Off"
 msgstr "Spento"
 
-#: ../vdms_panels/av_conversions.py:2285 ../vdms_panels/presets_manager.py:932
+#: ../vdms_panels/av_conversions.py:2286 ../vdms_panels/presets_manager.py:932
 #: ../vdms_panels/video_to_sequence.py:586
 msgid "Unset"
 msgstr "Non settato"
 
-#: ../vdms_panels/av_conversions.py:2288 ../vdms_panels/presets_manager.py:935
+#: ../vdms_panels/av_conversions.py:2289 ../vdms_panels/presets_manager.py:935
 #: ../vdms_panels/video_to_sequence.py:589
 msgid "start  {} | duration  {}"
 msgstr "inizio  {} | durata  {}"
 
-#: ../vdms_panels/av_conversions.py:2294
+#: ../vdms_panels/av_conversions.py:2295
 msgid ""
 "Queued File\n"
 "Output Format\n"
@@ -2726,7 +2726,7 @@ msgstr ""
 "Segmento Tempo\n"
 "Mappa Audio in Ingresso"
 
-#: ../vdms_panels/av_conversions.py:2310
+#: ../vdms_panels/av_conversions.py:2311
 msgid ""
 "Queued File\n"
 "Web Optimize\n"
@@ -2762,7 +2762,7 @@ msgstr ""
 "Mappa Sottotitoli\n"
 "Segmento Tempo"
 
-#: ../vdms_panels/av_conversions.py:2331
+#: ../vdms_panels/av_conversions.py:2332
 msgid ""
 "Queued File\n"
 "Web Optimize\n"
@@ -2820,7 +2820,7 @@ msgstr ""
 "Mappa Sottotitoli\n"
 "Segmento Tempo"
 
-#: ../vdms_panels/av_conversions.py:2370
+#: ../vdms_panels/av_conversions.py:2371
 msgid ""
 "Audio normalization data cannot be saved on the Presets Manager.\n"
 "\n"
@@ -2831,11 +2831,11 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/av_conversions.py:2388
+#: ../vdms_panels/av_conversions.py:2389
 msgid "Choose a Videomass preset..."
 msgstr "Scegli un preset Videomass..."
 
-#: ../vdms_panels/av_conversions.py:2397
+#: ../vdms_panels/av_conversions.py:2398
 msgid "Create a new profile"
 msgstr "Crea un nuovo profilo"
 

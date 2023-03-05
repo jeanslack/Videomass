@@ -78,7 +78,7 @@ class FFmpegHelp(wx.Dialog):
                 _("Show available color names"): ['-colors'],
                 _("List sources of the input device"): ['-sources'],
                 _("List sinks of the output device"): ['-sinks'],
-                _("Lhow available HW acceleration methods"): ['-hwaccels'],
+                _("Show available HW acceleration methods"): ['-hwaccels'],
                 _("Show license"): ['-L'],
                 }
     CHOICES = tuple(ARGS_OPT.keys())
