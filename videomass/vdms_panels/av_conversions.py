@@ -718,7 +718,7 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Audio_analyzes, self.btn_voldect)
         self.Bind(wx.EVT_BUTTON, self.on_Show_normlist, self.btn_details)
 
-        # -------------------------------------- initialize default layout:
+        #  initialize default layout:
         self.rdb_a.SetSelection(0), self.cmb_Vcod.SetSelection(1)
         self.cmb_Media.SetSelection(0), self.cmb_Vcont.SetSelection(0)
         self.cmb_Fps.SetSelection(0), self.cmb_Vaspect.SetSelection(0)
@@ -1332,6 +1332,7 @@ class AV_Conv(wx.Panel):
                      self.opt["Unsharp"],
                      self.opt["Makeduo"],
                      self.bmpreset,
+                     **sdf,
                      ) as stab:
             if stab.ShowModal() == wx.ID_OK:
                 data = stab.getvalue()

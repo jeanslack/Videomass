@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-04 01:33+0100\n"
+"POT-Creation-Date: 2023-03-05 02:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,11 +32,11 @@ msgid ""
 "{0}"
 msgstr ""
 
-#: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:271
+#: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:273
 #: ../vdms_dialogs/filter_deinterlace.py:121
-#: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:207
-#: ../vdms_dialogs/filter_stab.py:264 ../vdms_dialogs/filter_transpose.py:103
-#: ../vdms_dialogs/filter_colorcorrection.py:186
+#: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:209
+#: ../vdms_dialogs/filter_stab.py:317 ../vdms_dialogs/filter_transpose.py:105
+#: ../vdms_dialogs/filter_colorcorrection.py:188
 #: ../vdms_panels/av_conversions.py:396 ../vdms_panels/timeline.py:100
 msgid "Reset"
 msgstr ""
@@ -80,62 +80,62 @@ msgstr ""
 msgid "Confirm Settings"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:196 ../vdms_dialogs/filter_scale.py:106
+#: ../vdms_dialogs/filter_crop.py:198 ../vdms_dialogs/filter_scale.py:108
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:204
-#: ../vdms_dialogs/filter_colorcorrection.py:102
+#: ../vdms_dialogs/filter_crop.py:206
+#: ../vdms_dialogs/filter_colorcorrection.py:104
 msgid "Search for a specific frame"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:218
-#: ../vdms_dialogs/filter_colorcorrection.py:116
+#: ../vdms_dialogs/filter_crop.py:220
+#: ../vdms_dialogs/filter_colorcorrection.py:118
 msgid "Load"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:221
+#: ../vdms_dialogs/filter_crop.py:223
 msgid "Cropping area selection "
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:226 ../vdms_dialogs/filter_scale.py:118
+#: ../vdms_dialogs/filter_crop.py:228 ../vdms_dialogs/filter_scale.py:120
 msgid "Height"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:246
+#: ../vdms_dialogs/filter_crop.py:248
 msgid "Center"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:257 ../vdms_dialogs/filter_scale.py:118
+#: ../vdms_dialogs/filter_crop.py:259 ../vdms_dialogs/filter_scale.py:120
 msgid "Width"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:276 ../vdms_dialogs/filter_deinterlace.py:120
-#: ../vdms_dialogs/filter_denoisers.py:83 ../vdms_dialogs/filter_scale.py:205
-#: ../vdms_dialogs/filter_stab.py:262 ../vdms_dialogs/filter_transpose.py:108
+#: ../vdms_dialogs/filter_crop.py:278 ../vdms_dialogs/filter_deinterlace.py:120
+#: ../vdms_dialogs/filter_denoisers.py:83 ../vdms_dialogs/filter_scale.py:207
+#: ../vdms_dialogs/filter_stab.py:315 ../vdms_dialogs/filter_transpose.py:110
 #: ../vdms_dialogs/set_timestamp.py:148
-#: ../vdms_dialogs/filter_colorcorrection.py:191
+#: ../vdms_dialogs/filter_colorcorrection.py:193
 msgid "Apply"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:291
+#: ../vdms_dialogs/filter_crop.py:293
 msgid "Crop Filter"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:292
+#: ../vdms_dialogs/filter_crop.py:294
 msgid "Crop to width"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:293
+#: ../vdms_dialogs/filter_crop.py:295
 msgid "Move vertically - set to -1 to center the vertical axis"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:295
+#: ../vdms_dialogs/filter_crop.py:297
 msgid "Move horizontally - set to -1 to center the horizontal axis"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:297
+#: ../vdms_dialogs/filter_crop.py:299
 msgid "Crop to height"
 msgstr ""
 
@@ -257,7 +257,7 @@ msgid ""
 "should enhance compressibility."
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:73 ../vdms_dialogs/ffmpeg_help.py:114
+#: ../vdms_dialogs/filter_scale.py:75 ../vdms_dialogs/ffmpeg_help.py:114
 #: ../vdms_frames/shownormlist.py:71 ../vdms_frames/shownormlist.py:77
 #: ../vdms_frames/shownormlist.py:83 ../vdms_panels/concatenate.py:109
 #: ../vdms_panels/sequence_to_video.py:116
@@ -265,69 +265,69 @@ msgstr ""
 msgid "Read me"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:78
+#: ../vdms_dialogs/filter_scale.py:80
 msgid "View result"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:82
+#: ../vdms_dialogs/filter_scale.py:84
 msgid "New size in pixels"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:86
+#: ../vdms_dialogs/filter_scale.py:88
 msgid "Width:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:96
+#: ../vdms_dialogs/filter_scale.py:98
 msgid "Height:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:112
+#: ../vdms_dialogs/filter_scale.py:114
 msgid "Constrain proportions (keep aspect ratio)"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:117
+#: ../vdms_dialogs/filter_scale.py:119
 msgid "Which dimension to adjust?"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:126
+#: ../vdms_dialogs/filter_scale.py:128
 msgid "Aspect Ratio"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:129
+#: ../vdms_dialogs/filter_scale.py:131
 msgid "Setdar filter (display aspect ratio) example 16/9, 4/3 "
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:134 ../vdms_dialogs/filter_scale.py:168
+#: ../vdms_dialogs/filter_scale.py:136 ../vdms_dialogs/filter_scale.py:170
 msgid "Numerator"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:159 ../vdms_dialogs/filter_scale.py:193
+#: ../vdms_dialogs/filter_scale.py:161 ../vdms_dialogs/filter_scale.py:195
 msgid "Denominator"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:163
+#: ../vdms_dialogs/filter_scale.py:165
 msgid "Setsar filter (sample aspect ratio) example 1/1"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:218
+#: ../vdms_dialogs/filter_scale.py:220
 msgid "Resizing filters"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:219
+#: ../vdms_dialogs/filter_scale.py:221
 msgid "Scale filter, set to 0 to disable"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:222
+#: ../vdms_dialogs/filter_scale.py:224
 msgid "Display Aspect Ratio. Set to 0 to disable"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:225
+#: ../vdms_dialogs/filter_scale.py:227
 msgid ""
 "Sample (aka Pixel) Aspect Ratio.\n"
 "Set to 0 to disable"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:359
+#: ../vdms_dialogs/filter_scale.py:364
 msgid ""
 "If you want to keep the aspect ratio, select \"Constrain proportions\" below "
 "and\n"
@@ -336,82 +336,104 @@ msgid ""
 "to -1 or -2 (some codecs require -2, so you should do some testing first)."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:61
+#: ../vdms_dialogs/filter_stab.py:82
 msgid "Enable stabilizer"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:64
+#: ../vdms_dialogs/filter_stab.py:85
 msgid "Generates duo video for comparison"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:67
+#: ../vdms_dialogs/filter_stab.py:89
+msgid "Create a snapshot"
+msgstr ""
+
+#: ../vdms_dialogs/filter_stab.py:107 ../vdms_panels/av_conversions.py:390
+msgid "Preview"
+msgstr ""
+
+#: ../vdms_dialogs/filter_stab.py:119
 msgid "Video Detect"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:124
+#: ../vdms_dialogs/filter_stab.py:177
 msgid "[TRIPOD] Enable tripod mode if checked"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:131
+#: ../vdms_dialogs/filter_stab.py:184
 msgid "Video transform"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:150
+#: ../vdms_dialogs/filter_stab.py:203
 msgid "[OPTALGO] optimization algorithm"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:172
+#: ../vdms_dialogs/filter_stab.py:225
 msgid "[CROP] Specify how to deal with borders at movement compensation"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:179
+#: ../vdms_dialogs/filter_stab.py:232
 msgid "[INVERT] Invert transforms if checked"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:182
+#: ../vdms_dialogs/filter_stab.py:235
 msgid ""
 "[RELATIVE] Consider transforms as relative to previous frame if checked, "
 "absolute if unchecked"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:227
+#: ../vdms_dialogs/filter_stab.py:280
 msgid "Specify type of interpolation"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:235
+#: ../vdms_dialogs/filter_stab.py:288
 msgid ""
 "[TRIPOD2] virtual tripod mode, equivalent to relative=unchecked:smoothing=0"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:242
+#: ../vdms_dialogs/filter_stab.py:295
 msgid "Unsharp filter:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:276
+#: ../vdms_dialogs/filter_stab.py:328
+msgid "Seek to a position on the video."
+msgstr ""
+
+#: ../vdms_dialogs/filter_stab.py:330
+msgid "Make a snapshot of the video with the settings made."
+msgstr ""
+
+#: ../vdms_dialogs/filter_stab.py:332
+msgid ""
+"Set the snapshot duration from 3 to 15 seconds from the seek position, "
+"default is 5 seconds."
+msgstr ""
+
+#: ../vdms_dialogs/filter_stab.py:336
 msgid ""
 "Set how shaky the video is and how quick the camera is. A value of 1 means "
 "little shakiness, a value of 10 means strong shakiness. Default value is 5."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:280
+#: ../vdms_dialogs/filter_stab.py:340
 msgid ""
 "Set the accuracy of the detection process. A value of 1 means low accuracy, "
 "a value of 15 means high accuracy. Default value is 15."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:284
+#: ../vdms_dialogs/filter_stab.py:344
 msgid ""
 "Set stepsize of the search process. The region around minimum is scanned "
 "with 1 pixel resolution. Default value is 6."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:288
+#: ../vdms_dialogs/filter_stab.py:348
 msgid ""
 "Set minimum contrast. Below this value a local measurement field is "
 "discarded. The range is 0-1. Default value is 0.25."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:291
+#: ../vdms_dialogs/filter_stab.py:351
 msgid ""
 "Set reference frame number for tripod mode. If enabled, the motion of the "
 "frames is compared to a reference frame in the filtered stream, identified "
@@ -420,7 +442,7 @@ msgid ""
 "are counted starting from 1."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:300
+#: ../vdms_dialogs/filter_stab.py:360
 msgid ""
 "Set the number of frames (value*2 + 1) used for lowpass filtering the camera "
 "movements. Default value is 15. For example a number of 10 means that 21 "
@@ -430,43 +452,43 @@ msgid ""
 "static camera is simulated."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:308
+#: ../vdms_dialogs/filter_stab.py:368
 msgid ""
 "Set the camera path optimization algorithm. Values are: `gauss`: gaussian "
 "kernel low-pass filter on camera motion (default), and `avg`: averaging on "
 "transformations"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:312
+#: ../vdms_dialogs/filter_stab.py:372
 msgid ""
 "Set maximal angle in radians (degree*PI/180) to rotate frames. Default value "
 "is -1, meaning no limit."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:315
+#: ../vdms_dialogs/filter_stab.py:375
 msgid ""
 "Specify how to deal with borders that may be visible due to movement "
 "compensation. Values are: `keep` keep image information from previous frame "
 "(default), `black` fill the border black"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:320
+#: ../vdms_dialogs/filter_stab.py:380
 msgid "Invert transforms if checked. Default is unchecked."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:322
+#: ../vdms_dialogs/filter_stab.py:382
 msgid ""
 "Consider transforms as relative to previous frame if checked, absolute if "
 "unchecked. Default is checked."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:325
+#: ../vdms_dialogs/filter_stab.py:385
 msgid ""
 "Set percentage to zoom. A positive value will result in a zoom-in effect, a "
 "negative value in a zoom-out effect. Default value is 0 (no zoom)."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:329
+#: ../vdms_dialogs/filter_stab.py:389
 msgid ""
 "Set optimal zooming to avoid borders. Accepted values are: `0` disabled, `1` "
 "optimal static zoom value is determined (only very strong movements will "
@@ -475,69 +497,79 @@ msgid ""
 "given at zoom is added to the one calculated here."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:336
+#: ../vdms_dialogs/filter_stab.py:396
 msgid ""
 "Set percent to zoom maximally each frame (enabled when optzoom is set to 2). "
 "Range is from 0 to 5, default value is 0.25."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:340
+#: ../vdms_dialogs/filter_stab.py:400
 msgid ""
 "Specify type of interpolation. Available values are: `no` no interpolation, "
 "`linear` linear only horizontal, `bilinear` linear in both directions "
 "(default), `bicubic` cubic in both directions (slow)"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:345
+#: ../vdms_dialogs/filter_stab.py:405
 msgid ""
 "Enable virtual tripod mode if checked, which is equivalent to relative=0:"
 "smoothing=0. Default is unchecked. Use also tripod option of vidstabdetect."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:350
+#: ../vdms_dialogs/filter_stab.py:410
 msgid ""
 "Sharpen or blur the input video. Note the use of the unsharp filter which is "
 "always recommended."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:355
+#: ../vdms_dialogs/filter_stab.py:415
 msgid "Video stabilizer filter"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:78
-#: ../vdms_dialogs/filter_transpose.py:287
+#: ../vdms_dialogs/filter_stab.py:534 ../vdms_io/io_tools.py:80
+msgid "Videomass - Loading..."
+msgstr ""
+
+#: ../vdms_dialogs/filter_stab.py:535
+msgid ""
+"Please wait,\n"
+"The preview process will take a few seconds."
+msgstr ""
+
+#: ../vdms_dialogs/filter_transpose.py:80
+#: ../vdms_dialogs/filter_transpose.py:293
 msgid "Default position"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:84
+#: ../vdms_dialogs/filter_transpose.py:86
 msgid "Rotation setting"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:92
+#: ../vdms_dialogs/filter_transpose.py:94
 msgid "90° (left)"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:94
+#: ../vdms_dialogs/filter_transpose.py:96
 msgid "90° (right)"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:98
+#: ../vdms_dialogs/filter_transpose.py:100
 msgid "180°"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:113
+#: ../vdms_dialogs/filter_transpose.py:115
 msgid "Transpose Filter"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:223
+#: ../vdms_dialogs/filter_transpose.py:229
 msgid "Rotate 90 degrees right"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:245
+#: ../vdms_dialogs/filter_transpose.py:251
 msgid "Rotate 180 degrees"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:266
+#: ../vdms_dialogs/filter_transpose.py:272
 msgid "Rotate 90 degrees left"
 msgstr ""
 
@@ -1007,31 +1039,31 @@ msgstr ""
 msgid "Multimedia streams analyzer"
 msgstr ""
 
-#: ../vdms_dialogs/showlogs.py:76
+#: ../vdms_dialogs/showlogs.py:77
 msgid "Log file list"
 msgstr ""
 
-#: ../vdms_dialogs/showlogs.py:78
+#: ../vdms_dialogs/showlogs.py:79
 msgid "Log messages"
 msgstr ""
 
-#: ../vdms_dialogs/showlogs.py:101
+#: ../vdms_dialogs/showlogs.py:102
 msgid "Refresh all log files"
 msgstr ""
 
-#: ../vdms_dialogs/showlogs.py:106
+#: ../vdms_dialogs/showlogs.py:107
 msgid "Clear selected log"
 msgstr ""
 
-#: ../vdms_dialogs/showlogs.py:116
+#: ../vdms_dialogs/showlogs.py:117
 msgid "Showing log messages"
 msgstr ""
 
-#: ../vdms_dialogs/showlogs.py:146
+#: ../vdms_dialogs/showlogs.py:147
 msgid "Select a log file"
 msgstr ""
 
-#: ../vdms_dialogs/showlogs.py:153
+#: ../vdms_dialogs/showlogs.py:154
 msgid "Are you sure you want to clear the selected log file?"
 msgstr ""
 
@@ -1184,48 +1216,48 @@ msgid ""
 "  ..Not found"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:90
+#: ../vdms_dialogs/filter_colorcorrection.py:92
 msgid "Before"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:96
+#: ../vdms_dialogs/filter_colorcorrection.py:98
 msgid "After"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:119
+#: ../vdms_dialogs/filter_colorcorrection.py:121
 msgid "Color EQ"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:125
+#: ../vdms_dialogs/filter_colorcorrection.py:127
 msgid "Contrast:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:133
-#: ../vdms_dialogs/filter_colorcorrection.py:147
+#: ../vdms_dialogs/filter_colorcorrection.py:135
+#: ../vdms_dialogs/filter_colorcorrection.py:149
 msgid "-100 to +100, default value 0"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:138
+#: ../vdms_dialogs/filter_colorcorrection.py:140
 msgid "Brightness:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:157
+#: ../vdms_dialogs/filter_colorcorrection.py:159
 msgid "Saturation:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:165
+#: ../vdms_dialogs/filter_colorcorrection.py:167
 msgid "0 to 300, default value 100"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:169
+#: ../vdms_dialogs/filter_colorcorrection.py:171
 msgid "Gamma:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:178
+#: ../vdms_dialogs/filter_colorcorrection.py:180
 msgid "0 to 100, Default value 10"
 msgstr ""
 
-#: ../vdms_dialogs/filter_colorcorrection.py:206
+#: ../vdms_dialogs/filter_colorcorrection.py:208
 msgid "Color Correction Equalizer"
 msgstr ""
 
@@ -1274,7 +1306,7 @@ msgstr ""
 msgid "ENABLED:"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2289
+#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2290
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:592
 msgid "Enabled"
@@ -1284,7 +1316,7 @@ msgstr ""
 msgid "DISABLED:"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2289
+#: ../vdms_frames/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2290
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:596
 msgid "Disabled"
@@ -1381,11 +1413,11 @@ msgstr ""
 msgid "=  Below max peak"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:141 ../vdms_panels/av_conversions.py:1761
+#: ../vdms_frames/shownormlist.py:141 ../vdms_panels/av_conversions.py:1762
 msgid "RMS-based volume statistics"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:165 ../vdms_panels/av_conversions.py:1759
+#: ../vdms_frames/shownormlist.py:165 ../vdms_panels/av_conversions.py:1760
 msgid "PEAK-based volume statistics"
 msgstr ""
 
@@ -1473,10 +1505,6 @@ msgstr ""
 #: ../vdms_io/io_tools.py:61
 #, python-format
 msgid "File does not exist or is invalid:  %s"
-msgstr ""
-
-#: ../vdms_io/io_tools.py:80
-msgid "Videomass - Loading..."
 msgstr ""
 
 #: ../vdms_io/io_tools.py:81
@@ -2051,10 +2079,6 @@ msgstr ""
 msgid "Video Filters"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:390
-msgid "Preview"
-msgstr ""
-
 #: ../vdms_panels/av_conversions.py:410 ../vdms_panels/sequence_to_video.py:154
 #: ../vdms_panels/video_to_sequence.py:110
 msgid "Resizing"
@@ -2255,7 +2279,7 @@ msgstr ""
 msgid "Play and listen to the result of audio filters"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:975 ../vdms_panels/av_conversions.py:1838
+#: ../vdms_panels/av_conversions.py:975 ../vdms_panels/av_conversions.py:1839
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
 "audio volume data."
@@ -2292,60 +2316,60 @@ msgstr ""
 msgid "This filter is incompatible with 2-pass enabled"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1474
+#: ../vdms_panels/av_conversions.py:1475
 msgid "No Audio"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1612
+#: ../vdms_panels/av_conversions.py:1613
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1615
+#: ../vdms_panels/av_conversions.py:1616
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1619
+#: ../vdms_panels/av_conversions.py:1620
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"loudnorm\" filter, which implements the EBU R128 algorithm."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1641
+#: ../vdms_panels/av_conversions.py:1642
 msgid "Audio normalization off"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1682
+#: ../vdms_panels/av_conversions.py:1683
 msgid "Audio normalization is required only for some files"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1683
+#: ../vdms_panels/av_conversions.py:1684
 msgid ""
 "Audio normalization will not be applied because the source signal is equal"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2270
+#: ../vdms_panels/av_conversions.py:2271
 msgid "{} file in queue"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2278
+#: ../vdms_panels/av_conversions.py:2279
 msgid "Off"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2284 ../vdms_panels/presets_manager.py:932
+#: ../vdms_panels/av_conversions.py:2285 ../vdms_panels/presets_manager.py:932
 #: ../vdms_panels/video_to_sequence.py:586
 msgid "Unset"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2287 ../vdms_panels/presets_manager.py:935
+#: ../vdms_panels/av_conversions.py:2288 ../vdms_panels/presets_manager.py:935
 #: ../vdms_panels/video_to_sequence.py:589
 msgid "start  {} | duration  {}"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2293
+#: ../vdms_panels/av_conversions.py:2294
 msgid ""
 "Queued File\n"
 "Output Format\n"
@@ -2360,7 +2384,7 @@ msgid ""
 "Input Audio Map"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2309
+#: ../vdms_panels/av_conversions.py:2310
 msgid ""
 "Queued File\n"
 "Web Optimize\n"
@@ -2380,7 +2404,7 @@ msgid ""
 "Time Period"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2330
+#: ../vdms_panels/av_conversions.py:2331
 msgid ""
 "Queued File\n"
 "Web Optimize\n"
@@ -2411,18 +2435,18 @@ msgid ""
 "Time Period"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2369
+#: ../vdms_panels/av_conversions.py:2370
 msgid ""
 "Audio normalization data cannot be saved on the Presets Manager.\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2387
+#: ../vdms_panels/av_conversions.py:2388
 msgid "Choose a Videomass preset..."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2396
+#: ../vdms_panels/av_conversions.py:2397
 msgid "Create a new profile"
 msgstr ""
 

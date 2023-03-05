@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2023
+Rev: Mar.04.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -41,7 +41,8 @@ class ShowLogs(wx.Dialog):
                 'ffplay.log',
                 'concatenate_demuxer.log',
                 'from_movie_to_pictures.log',
-                'still_image_maker.log'
+                'still_image_maker.log',
+                'generic_task.log',
                 )
 
     def __init__(self, parent, dirlog, OS):

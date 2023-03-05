@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.23.2023
+Rev: Mar.04.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -32,6 +32,7 @@ from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import milliseconds2clocksec
+from videomass.vdms_io.make_filelog import make_log_template
 
 
 class Scale(wx.Dialog):
@@ -44,6 +45,7 @@ class Scale(wx.Dialog):
     BLACK = '#1f1f1f'
     get = wx.GetApp()
     appdata = get.appset
+    LOGDIR = appdata['logdir']
     TMPROOT = os.path.join(appdata['cachedir'], 'tmp', 'Scale')
     TMPSRC = os.path.join(TMPROOT, 'tmpsrc')
     os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
@@ -336,16 +338,19 @@ class Scale(wx.Dialog):
         filter. Note that the trim start point on this process is
         set to the total length of the movie divided by two.
         """
+        logfile = make_log_template('generic_task.log',
+                                    Scale.LOGDIR,
+                                    mode="w",
+                                    )
         if not self.mills:
             sseg = ''
         else:
             stime = milliseconds2clocksec(int(self.mills / 2), rounds=True)
             sseg = f'-ss {stime}'
         scale = '' if not concat else f'-vf "{concat}"'
-        arg = (f'{sseg} -i "{self.filename}" -f image2 '
+        arg = (f'{sseg} -i "{self.filename}" -f image2 -update 1 '
                f'-frames:v 1 {scale} -y "{self.frame}"')
-        thread = FFmpegGenericTask(arg)
-        thread.join()  # wait end thread
+        thread = FFmpegGenericTask(arg, 'Scale', logfile)
         error = thread.status
         if error:
             return error

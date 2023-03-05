@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.13.2022
+Rev: Mar.04.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,10 +24,17 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+import os
 import webbrowser
 import wx
 import wx.lib.agw.floatspin as FS
-# import wx.lib.masked as masked # not work on macOSX
+from videomass.vdms_utils.utils import get_milliseconds
+from videomass.vdms_utils.utils import milliseconds2clocksec
+from videomass.vdms_utils.utils import clockset
+from videomass.vdms_io import io_tools
+from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_dialogs.widget_utils import PopupDialog
+from videomass.vdms_io.make_filelog import make_log_template
 
 
 class Vidstab(wx.Dialog):
@@ -38,8 +45,12 @@ class Vidstab(wx.Dialog):
     """
     get = wx.GetApp()
     appdata = get.appset
+    LOGDIR = appdata['logdir']
+    TMPROOT = os.path.join(appdata['cachedir'], 'tmp', 'VidStab')
+    TMPSRC = os.path.join(TMPROOT, 'tmpedit')
+    os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
 
-    def __init__(self, parent, *args):
+    def __init__(self, parent, *args, **kwa):
         """
         parameters defined here:
         vidstabdetect parameters for pass one.
@@ -53,6 +64,16 @@ class Vidstab(wx.Dialog):
         self.unsharp = args[2]
         self.makeduo = args[3]
 
+        self.filename = kwa['filename']
+        name = os.path.splitext(os.path.basename(self.filename))[0]
+        self.framesrc = os.path.join(Vidstab.TMPSRC, f'{name}.mkv')
+        self.frameduo = os.path.join(Vidstab.TMPSRC, f'{name}_DUO.mkv')
+        self.fileclock = os.path.join(Vidstab.TMPROOT, f'{name}.clock')
+        tcheck = clockset(kwa['duration'], self.fileclock)
+        self.clock = tcheck['duration']
+        self.mills = tcheck['millis']
+        self.logfile = None
+
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         boxenable = wx.BoxSizer(wx.HORIZONTAL)
@@ -63,6 +84,37 @@ class Vidstab(wx.Dialog):
         self.ckbx_duo = wx.CheckBox(self, wx.ID_ANY,
                                     _('Generates duo video for comparison'))
         boxenable.Add(self.ckbx_duo, 0, wx.ALL | wx.CENTER, 2)
+        # preview
+        sizerBase.Add((5, 5), 0)
+        msg = _("Create a snapshot")
+        stboxtime = wx.StaticBox(self, wx.ID_ANY, msg)
+        sizertime = wx.StaticBoxSizer(stboxtime, wx.HORIZONTAL)
+        sizerBase.Add(sizertime, 0, wx.CENTER)
+
+        boxtime = wx.BoxSizer(wx.HORIZONTAL)
+        sizertime.Add(boxtime, 0, wx.ALL | wx.CENTER, 5)
+
+        self.sld_time = wx.Slider(self, wx.ID_ANY,
+                                  get_milliseconds(self.clock),
+                                  0,
+                                  self.mills,
+                                  size=(250, -1),
+                                  style=wx.SL_HORIZONTAL,
+                                  )
+        boxtime.Add(self.sld_time, 0, wx.CENTER, 0)
+        self.lab_time = wx.StaticText(self, wx.ID_ANY, self.clock)
+        boxtime.Add(self.lab_time, 0, wx.LEFT | wx.CENTER, 20)
+        self.btn_snap = wx.Button(self, wx.ID_ANY, _("Preview"))
+        self.btn_snap.Disable()
+        boxtime.Add(self.btn_snap, 0, wx.LEFT | wx.CENTER, 20)
+        self.lab_dur = wx.StaticText(self, wx.ID_ANY, ("Duration seconds:"))
+        boxtime.Add(self.lab_dur, 0, wx.LEFT | wx.CENTER, 20)
+        self.spin_dur = wx.SpinCtrl(self, wx.ID_ANY, "5",
+                                    min=3, max=15,
+                                    style=wx.TE_PROCESS_ENTER
+                                    | wx.SP_ARROW_KEYS,
+                                    )
+        boxtime.Add(self.spin_dur, 0, wx.LEFT | wx.CENTER, 2)
         # Box detect
         sbox = wx.StaticBox(self, wx.ID_ANY, (_("Video Detect")))
         box_detect = wx.StaticBoxSizer(sbox, wx.VERTICAL)
@@ -113,7 +165,8 @@ class Vidstab(wx.Dialog):
         self.spin_mincontr = FS.FloatSpin(self, wx.ID_ANY,
                                           min_val=0, max_val=1,
                                           increment=0.01, value=0.25,
-                                          agwStyle=FS.FS_LEFT, size=(120, -1)
+                                          agwStyle=FS.FS_LEFT,
+                                          size=(120, -1),
                                           )
         self.spin_mincontr.SetFormat("%f")
         self.spin_mincontr.SetDigits(2)
@@ -272,6 +325,13 @@ class Vidstab(wx.Dialog):
         self.Layout()
 
         # ---------------------- Tooltips
+        tip = _('Seek to a position on the video.')
+        self.sld_time.SetToolTip(tip)
+        tip = _('Make a snapshot of the video with the settings made.')
+        self.btn_snap.SetToolTip(tip)
+        tip = _('Set the snapshot duration from 3 to 15 seconds from '
+                'the seek position, default is 5 seconds.')
+        self.spin_dur.SetToolTip(tip)
         # vidstabdetect
         tip = _('Set how shaky the video is and how quick the camera is. A '
                 'value of 1 means little shakiness, a value of 10 means '
@@ -356,6 +416,8 @@ class Vidstab(wx.Dialog):
 
         # ----------------------Binding (EVT)--------------------------#
         self.Bind(wx.EVT_CHECKBOX, self.on_activate, self.ckbx_enable)
+        self.Bind(wx.EVT_COMMAND_SCROLL, self.on_seek_time, self.sld_time)
+        self.Bind(wx.EVT_BUTTON, self.on_load_at_time, self.btn_snap)
         self.Bind(wx.EVT_SPINCTRL, self.on_optzoom, self.spin_optzoom)
         self.Bind(wx.EVT_CHECKBOX, self.on_Tripod1, self.ckbx_tripod1)
         self.Bind(wx.EVT_CHECKBOX, self.on_Tripod2, self.ckbx_tripod2)
@@ -369,8 +431,119 @@ class Vidstab(wx.Dialog):
         else:
             self.set_default(self)
             self.on_activate(self)
-
     # ------------------------------------------------------------------#
+
+    def concat_filter(self, orderf):
+        """
+        Concatenates all Vidstab values.
+        Returns the Vidstab filter string in ffmpeg syntax.
+        """
+        concat = ''.join([f'{x},' for x in orderf if x])[:-1]
+        if not concat:
+            return concat
+        return f'-vf {concat}'
+    # -----------------------------------------------------------------------#
+
+    def on_seek_time(self, event):
+        """
+        Event to get slider position.
+        Getting the value in ms from the time slider,
+        converts it to clock format e.g (00:00:00),
+        and sets the label with the converted value.
+        """
+        seek = self.sld_time.GetValue()
+        clock = milliseconds2clocksec(seek, rounds=True)  # to 24-hour
+        self.lab_time.SetLabel(clock)  # update StaticText
+        if not self.btn_snap.IsEnabled():
+            self.btn_snap.Enable()
+    # ------------------------------------------------------------------#
+
+    def on_load_at_time(self, event):
+        """
+        Reloads all images frame at a given time clock point
+        """
+        data = self.getvalue()
+        detect = f'-vf {data[0]}'
+        trasform = self.concat_filter((data[1], data[2]))
+        self.logfile = make_log_template('generic_task.log',
+                                         Vidstab.LOGDIR,
+                                         mode="w",
+                                         )
+        error = self.process(self.filename, args=detect, mode='detect')
+        if error:
+            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+            return
+
+        error = self.process(self.filename,
+                             self.framesrc,
+                             args=trasform,
+                             mode='trasform',
+                             )
+        if error:
+            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+            return
+
+        if self.ckbx_duo.IsChecked():
+            makeduo = (f'-vf "[in] pad=2*iw:ih [left]; '
+                       f'movie={self.framesrc} [right]; [left][right] '
+                       f'overlay=main_w/2:0 [out]"')
+
+            error = self.process(self.filename,
+                                 self.frameduo,
+                                 args=makeduo,
+                                 mode='trasform',
+                                 )
+            if error:
+                wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+                return
+            io_tools.openpath(self.frameduo)
+            return
+
+        io_tools.openpath(self.framesrc)
+        return
+    # ------------------------------------------------------------------#
+
+    def process(self, infile, outfile=None, args='', mode=None):
+        """
+        Generate a new frame at the clock position using
+        ffmpeg `eq` filter.
+        """
+        if not self.mills:
+            sseg = ''
+        else:
+            seek = self.sld_time.GetValue()
+            stime = self.spin_dur.GetValue() * 1000
+            self.clock = milliseconds2clocksec(seek, rounds=True)  # to 24-hour
+            duration = milliseconds2clocksec(stime, rounds=True)  # to 24-hour
+            sseg = f'-ss {self.clock} -t {duration}'
+
+        if mode == 'detect':
+            argstr = (f'{sseg} -i "{infile}" {args} -f null -threads 4 '
+                      f'-y /dev/null')
+        elif mode == 'trasform':
+            argstr = f'{sseg} -i "{infile}" {args} -y "{outfile}"'
+        elif mode == 'makeduo':
+            argstr = f'{sseg} -i "{infile}" {args} -y "{outfile}"'
+        else:
+            return None
+
+        thread = FFmpegGenericTask(argstr,
+                                   procname=f'VidStab - {mode}',
+                                   logfile=self.logfile,
+                                   )
+        dlgload = PopupDialog(self, _("Videomass - Loading..."),
+                              _("Please wait,\nThe preview process will "
+                                "take a few seconds."))
+        dlgload.ShowModal()
+        thread.join()  # wait end thread
+        error = thread.status
+        if error:
+            dlgload.Destroy()
+            return error
+        dlgload.Destroy()
+        return None
+    # ------------------------------------------------------------------#
+
     def set_default(self, event):
         """
         Revert all control values to default
@@ -559,6 +732,12 @@ class Vidstab(wx.Dialog):
             # self.ckbx_tripod2.Enable()
             self.txt_unsharp.Enable()
             self.ckbx_duo.Enable()
+            # enable preview
+            self.btn_snap.Enable()
+            self.sld_time.Enable()
+            self.lab_time.Enable()
+            self.lab_dur.Enable()
+            self.spin_dur.Enable()
 
         else:
             self.spin_shake.Disable()
@@ -591,6 +770,12 @@ class Vidstab(wx.Dialog):
             # disable makeduo
             self.ckbx_duo.SetValue(False)
             self.ckbx_duo.Disable()
+            # disable preview
+            self.btn_snap.Disable()
+            self.sld_time.Disable()
+            self.lab_time.Disable()
+            self.lab_dur.Disable()
+            self.spin_dur.Disable()
     # ------------------------------------------------------------------#
 
     def on_close(self, event):

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.20.2023
+Rev: Mar.04.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -30,6 +30,7 @@ import wx
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import milliseconds2clocksec
+from videomass.vdms_io.make_filelog import make_log_template
 
 
 class Transpose(wx.Dialog):
@@ -39,6 +40,7 @@ class Transpose(wx.Dialog):
     """
     get = wx.GetApp()
     appdata = get.appset
+    LOGDIR = appdata['logdir']
     TMPROOT = os.path.join(get.appset['cachedir'], 'tmp', 'Transpose')
     TMPSRC = os.path.join(TMPROOT, 'tmpsrc')
     os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
@@ -153,14 +155,18 @@ class Transpose(wx.Dialog):
         on this process is set to the total length of the
         movie divided by two.
         """
+        logfile = make_log_template('generic_task.log',
+                                    Transpose.LOGDIR,
+                                    mode="w",
+                                    )
         if not self.mills:
             sseg = ''
         else:
             stime = milliseconds2clocksec(int(self.mills / 2), rounds=True)
             sseg = f'-ss {stime}'
         arg = (f'{sseg} -i "{self.video}" -f image2 '
-               f'-frames:v 1 -y "{self.frame}"')
-        thread = FFmpegGenericTask(arg)
+               f'-update 1 -frames:v 1 -y "{self.frame}"')
+        thread = FFmpegGenericTask(arg, 'Transpose', logfile)
         thread.join()  # wait end thread
         error = thread.status
         if error:

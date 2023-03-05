@@ -6,7 +6,7 @@ Compatibility: Python3 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.21.2023
+Rev: Mar.04.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -28,6 +28,7 @@ from threading import Thread
 import platform
 import subprocess
 import wx
+from pubsub import pub
 from videomass.vdms_utils.utils import Popen
 if not platform.system() == 'Windows':
     import shlex
@@ -53,7 +54,7 @@ class FFmpegGenericTask(Thread):
     get = wx.GetApp()
     appdata = get.appset
 
-    def __init__(self, args):
+    def __init__(self, args, procname='Unknown', logfile='logfile.log'):
         """
         Attributes defined here:
 
@@ -65,6 +66,8 @@ class FFmpegGenericTask(Thread):
         handled appropriately, in the other case it is None.
 
         """
+        self.logfile = logfile
+        self.procname = procname
         self.args = args
         self.status = None
 
@@ -81,7 +84,9 @@ class FFmpegGenericTask(Thread):
         cmd = (f'"{FFmpegGenericTask.appdata["ffmpeg_cmd"]}" '
                f'{FFmpegGenericTask.appdata["ffmpegloglev"]} '
                f'{FFmpegGenericTask.appdata["ffmpeg+params"]} '
-               f'{self.args}')
+               f'{self.args}'
+               )
+        self.logwrite(f'From: {self.procname}\n{cmd}')
 
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
@@ -97,8 +102,30 @@ class FFmpegGenericTask(Thread):
                         self.status = error[1]
                     else:
                         self.status = "FFmpeg Unrecognized error"
-                    return
 
         except OSError as err:  # command not found
             self.status = err
-            return
+
+        if self.status:
+            self.logerror()
+        wx.CallAfter(pub.sendMessage,
+                     "RESULT_EVT",
+                     status=''
+                     )
+    # ----------------------------------------------------------------#
+
+    def logwrite(self, cmd):
+        """
+        write ffmpeg command log
+        """
+        with open(self.logfile, "a", encoding='utf8') as log:
+            log.write(f"{cmd}\n")
+    # ----------------------------------------------------------------#
+
+    def logerror(self):
+        """
+        write ffmpeg volumedected errors
+        """
+        with open(self.logfile, "a", encoding='utf8') as logerr:
+            logerr.write(f"\n[FFMPEG] generic_task "
+                         f"ERRORS:\n{self.status}\n")
