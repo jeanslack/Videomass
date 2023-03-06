@@ -82,12 +82,12 @@ def open_default_application(pathname):
 
         return None
 
-    elif platform.system() == "Darwin":
+    if platform.system() == "Darwin":
         cmd = ['open', pathname]
     else:  # Linux, FreeBSD or any supported
         cmd = ['xdg-open', pathname]
     try:
-        proc = subprocess.run(cmd, check=True, shell=False, encoding='utf8')
+        subprocess.run(cmd, check=True, shell=False, encoding='utf8')
     except subprocess.CalledProcessError as error:
         return str(error)
 
