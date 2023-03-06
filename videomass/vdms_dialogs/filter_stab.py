@@ -81,8 +81,8 @@ class VidstabSet(wx.Dialog):
         self.ckbx_enable = wx.CheckBox(self, wx.ID_ANY,
                                        _('Enable stabilizer'))
         boxenable.Add(self.ckbx_enable, 0, wx.ALL | wx.CENTER, 2)
-        self.ckbx_duo = wx.CheckBox(self, wx.ID_ANY,
-                                    _('Generates duo video for comparison'))
+        self.ckbx_duo = wx.CheckBox(self, wx.ID_ANY, _('Create a side-by-side '
+                                                       'comparison video'))
         boxenable.Add(self.ckbx_duo, 0, wx.ALL | wx.CENTER, 2)
         # preview
         sizerBase.Add((5, 5), 0)

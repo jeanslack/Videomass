@@ -1031,6 +1031,7 @@ class AV_Conv(wx.Panel):
         if self.opt["Vidstabtransform"]:
             wx.MessageBox(_("Unable to preview Video Stabilizer filter"),
                           "Videomass", wx.ICON_INFORMATION, self)
+            return
         else:
             flt = self.opt["VFilters"]
 
