@@ -77,10 +77,8 @@ def open_default_application(pathname):
     if platform.system() == 'Windows':
         try:
             os.startfile(os.path.realpath(pathname))
-        except FileNotFoundError as pathnotfound:
-            return f'{pathnotfound}'
-        except Exception as anyerr:
-            return f'{anyerr}'
+        except FileNotFoundError as error:
+            return str(error)
 
         return None
 
