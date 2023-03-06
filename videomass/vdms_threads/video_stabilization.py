@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.02.2022
+Rev: March.06.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -73,10 +73,11 @@ class VidStab(Thread):
         self.logname = logname  # title name of file log
         self.nul = 'NUL' if VidStab.OS == 'Windows' else '/dev/null'
 
+        # this block is needed when other filters are enabled
         spl = varargs[6].split('-vf ')[1]
         addspl = ','.join([x for x in spl.split(',') if '-vf'
                            not in x and 'vidstabtransform' not in x
-                           and 'unsharp' not in x])  # if other filters
+                           and 'unsharp' not in x])
         self.addflt = '' if addspl == '' else f'{addspl},'
 
         Thread.__init__(self)
@@ -253,14 +254,13 @@ class VidStab(Thread):
             if self.makeduo:
                 duoname = os.path.splitext(outfile)
                 outduo = f'{duoname[0]}_DUO{duoname[1]}'
-
                 pass3 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
                          f'{VidStab.appdata["ffmpegloglev"]} '
                          f'{VidStab.appdata["ffmpeg+params"]} {self.time_seq} '
-                         f'-i "{infile}" {VidStab.appdata["ffthreads"]} '
-                         f'-vf "[in] {self.addflt}pad=2*iw:ih [left]; '
-                         f'movie={outfile} [right]; [left][right] '
-                         f'overlay=main_w/2:0 [out]" -y "{outduo}"'
+                         f'-i "{infile}" -i {outfile} '
+                         f'{VidStab.appdata["ffthreads"]} -filter_complex '
+                         f'"[0:v:0] {self.addflt}pad=2*iw:ih[bg];'
+                         f'[bg][1:v:0]overlay=main_w/2:0" -y "{outduo}"'
                          )
                 count = f'File {self.count}/{self.countmax}\nMake duo...'
                 cmd = (f'{count}\nSource: "{infile}"\n'

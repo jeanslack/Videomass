@@ -44,7 +44,7 @@ from videomass.vdms_dialogs.filter_transpose import Transpose
 from videomass.vdms_dialogs.filter_denoisers import Denoisers
 from videomass.vdms_dialogs.filter_deinterlace import Deinterlace
 from videomass.vdms_dialogs.filter_scale import Scale
-from videomass.vdms_dialogs.filter_stab import Vidstab
+from videomass.vdms_dialogs.filter_stab import VidstabSet
 from videomass.vdms_dialogs.filter_colorcorrection import ColorEQ
 from videomass.vdms_frames.shownormlist import AudioVolNormal
 
@@ -1327,14 +1327,14 @@ class AV_Conv(wx.Panel):
                           'Videomass', wx.ICON_INFORMATION, self)
             return
 
-        with Vidstab(self,
-                     self.opt["Vidstabdetect"],
-                     self.opt["Vidstabtransform"],
-                     self.opt["Unsharp"],
-                     self.opt["Makeduo"],
-                     self.bmpreset,
-                     **sdf,
-                     ) as stab:
+        with VidstabSet(self,
+                        self.opt["Vidstabdetect"],
+                        self.opt["Vidstabtransform"],
+                        self.opt["Unsharp"],
+                        self.opt["Makeduo"],
+                        self.bmpreset,
+                        **sdf,
+                        ) as stab:
             if stab.ShowModal() == wx.ID_OK:
                 data = stab.getvalue()
                 if not data:

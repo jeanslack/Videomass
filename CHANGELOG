@@ -22,7 +22,7 @@ Mar 05, 2023 V.4.0.10
     The bug did not allow to check correctly the new available versions.
   * [A/V Conversions] fixed bug that disables bitrate control by moving crf
     control.
-  * [Presets Manager] presets have been updated to the new v0.14 release.
+  * [Presets Manager] presets have been updated to the new v0.15 release.
   * [Presets Manager] fixed various bugs in the presets database update
     functionalities.
   * [Presets Manager] Added check for presets updates locally.
