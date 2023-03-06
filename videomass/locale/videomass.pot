@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-06 00:02+0100\n"
+"POT-Creation-Date: 2023-03-06 13:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -526,14 +526,14 @@ msgstr ""
 msgid "Video stabilizer filter"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:534 ../vdms_io/io_tools.py:80
+#: ../vdms_dialogs/filter_stab.py:533 ../vdms_io/io_tools.py:80
 msgid "Videomass - Loading..."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:535
+#: ../vdms_dialogs/filter_stab.py:534
 msgid ""
 "Please wait,\n"
-"The preview process will take a few seconds."
+"This process will take a few seconds."
 msgstr ""
 
 #: ../vdms_dialogs/filter_transpose.py:80
@@ -1513,7 +1513,7 @@ msgid ""
 "Audio peak analysis."
 msgstr ""
 
-#: ../vdms_io/io_tools.py:190
+#: ../vdms_io/io_tools.py:188
 msgid "Videomass - Downloading..."
 msgstr ""
 

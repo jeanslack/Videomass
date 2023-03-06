@@ -89,7 +89,7 @@ class Vidstab(wx.Dialog):
         msg = _("Create a snapshot")
         stboxtime = wx.StaticBox(self, wx.ID_ANY, msg)
         sizertime = wx.StaticBoxSizer(stboxtime, wx.HORIZONTAL)
-        sizerBase.Add(sizertime, 0, wx.CENTER)
+        sizerBase.Add(sizertime, 0, wx.EXPAND | wx.ALL, 5)
 
         boxtime = wx.BoxSizer(wx.HORIZONTAL)
         sizertime.Add(boxtime, 0, wx.ALL | wx.CENTER, 5)
@@ -460,7 +460,7 @@ class Vidstab(wx.Dialog):
 
     def on_load_at_time(self, event):
         """
-        Reloads all images frame at a given time clock point
+        Reloads processes at a given time clock point
         """
         data = self.getvalue()
         detect = f'-vf {data[0]}'
@@ -513,13 +513,12 @@ class Vidstab(wx.Dialog):
         else:
             seek = self.sld_time.GetValue()
             stime = self.spin_dur.GetValue() * 1000
-            self.clock = milliseconds2clocksec(seek, rounds=True)  # to 24-hour
             duration = milliseconds2clocksec(stime, rounds=True)  # to 24-hour
+            self.clock = milliseconds2clocksec(seek, rounds=True)  # to 24-hour
             sseg = f'-ss {self.clock} -t {duration}'
 
         if mode == 'detect':
-            argstr = (f'{sseg} -i "{infile}" {args} -f null -threads 4 '
-                      f'-y /dev/null')
+            argstr = f'{sseg} -i "{infile}" {args} -f null  -y /dev/null'
         elif mode == 'trasform':
             argstr = f'{sseg} -i "{infile}" {args} -y "{outfile}"'
         elif mode == 'makeduo':
@@ -532,7 +531,7 @@ class Vidstab(wx.Dialog):
                                    logfile=self.logfile,
                                    )
         dlgload = PopupDialog(self, _("Videomass - Loading..."),
-                              _("Please wait,\nThe preview process will "
+                              _("Please wait,\nThis process will "
                                 "take a few seconds."))
         dlgload.ShowModal()
         thread.join()  # wait end thread

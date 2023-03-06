@@ -34,7 +34,7 @@ from videomass.vdms_threads.check_bin import (ff_conf,
                                               ff_codecs,
                                               ff_topics,
                                               )
-from videomass.vdms_threads.opendir import browse
+from videomass.vdms_utils.utils import open_default_application
 from videomass.vdms_dialogs.widget_utils import PopupDialog
 
 
@@ -142,11 +142,9 @@ def findtopic(topic):
 
 def openpath(where):
     """
-    Call vdms_threads.opendir.browse to open file browser into
-    configuration directory or log directory.
+    Call `vdms_threads.opendir.open_default_application`.
     """
-    get = wx.GetApp()
-    ret = browse(get.appset['ostype'], where)
+    ret = open_default_application(where)
     if ret:
         wx.MessageBox(ret, 'Videomass', wx.ICON_ERROR, None)
 # -------------------------------------------------------------------------#
