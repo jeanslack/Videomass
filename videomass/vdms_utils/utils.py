@@ -45,6 +45,7 @@ class Popen(subprocess.Popen):
 
     https://stackoverflow.com/questions/1813872/running-
     a-process-in-pythonw-with-popen-without-a-console?lq=1>
+
     """
     if platform.system() == 'Windows':
         _startupinfo = subprocess.STARTUPINFO()
@@ -59,6 +60,40 @@ class Popen(subprocess.Popen):
 
     # def communicate_or_kill(self, *args, **kwargs):
         # return process_communicate_or_kill(self, *args, **kwargs)
+# ------------------------------------------------------------------------
+
+
+def open_default_application(pathname):
+    """
+    Given a path to a specific file or directory, opens the
+    operating system's default application according to the
+    user-set file type association. Currently supported platforms
+    are Windows, Darwin and Linux. Note that Linux uses xdg-open
+    which should also be used by other OSes that may support
+    it, eg freebsd.
+
+    Return error if any error, None otherwise.
+    """
+    if platform.system() == 'Windows':
+        try:
+            os.startfile(os.path.realpath(pathname))
+        except FileNotFoundError as pathnotfound:
+            return f'{pathnotfound}'
+        except Exception as anyerr:
+            return f'{anyerr}'
+
+        return None
+
+    elif platform.system() == "Darwin":
+        cmd = ['open', pathname]
+    else:  # Linux, FreeBSD or any supported
+        cmd = ['xdg-open', pathname]
+    try:
+        proc = subprocess.run(cmd, check=True, shell=False, encoding='utf8')
+    except subprocess.CalledProcessError as error:
+        return str(error)
+
+    return None
 # ------------------------------------------------------------------------
 
 
