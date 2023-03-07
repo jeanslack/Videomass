@@ -207,15 +207,45 @@ class ColorEQ(wx.Dialog):
 
         self.SetTitle(_("Color Correction Equalizer"))
         # ----------------------Binding (EVT)-------------------------#
+
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_seek_time, self.sld_time)
         self.Bind(wx.EVT_BUTTON, self.on_load_at_time, self.btn_load)
-        self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_contrast,
-                  self.sld_contrast)
-        self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_brightness,
-                  self.sld_brightness)
-        self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_saturation,
-                  self.sld_saturation)
-        self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_gamma, self.sld_gamma)
+
+        if ColorEQ.OS == 'Windows':
+            self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_contrast,
+                    self.sld_contrast)
+            self.Bind(wx.EVT_SCROLL_CHANGED, self.on_contrast,
+                    self.sld_contrast)
+            self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_brightness,
+                    self.sld_brightness)
+            self.Bind(wx.EVT_SCROLL_CHANGED, self.on_brightness,
+                    self.sld_brightness)
+            self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_saturation,
+                    self.sld_saturation)
+            self.Bind(wx.EVT_SCROLL_CHANGED, self.on_saturation,
+                    self.sld_saturation)
+            self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_gamma, self.sld_gamma)
+            self.Bind(wx.EVT_SCROLL_CHANGED, self.on_gamma, self.sld_gamma)
+
+        if ColorEQ.OS == 'Darwin':
+            self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_contrast,
+                    self.sld_contrast)
+            self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_brightness,
+                    self.sld_brightness)
+            self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_saturation,
+                    self.sld_saturation)
+            self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_gamma, self.sld_gamma)
+
+        else:
+            self.Bind(wx.EVT_SCROLL_CHANGED, self.on_contrast,
+                      self.sld_contrast)
+            self.Bind(wx.EVT_SCROLL_CHANGED, self.on_brightness,
+                      self.sld_brightness)
+            self.Bind(wx.EVT_SCROLL_CHANGED, self.on_saturation,
+                      self.sld_saturation)
+            self.Bind(wx.EVT_SCROLL_CHANGED, self.on_gamma, self.sld_gamma)
+
+
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
@@ -235,7 +265,6 @@ class ColorEQ(wx.Dialog):
         Generate a new frame at the clock position using
         ffmpeg `eq` filter.
         """
-
         logfile = make_log_template('generic_task.log',
                                     ColorEQ.LOGDIR,
                                     mode="w",
