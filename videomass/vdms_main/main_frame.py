@@ -494,13 +494,15 @@ class MainFrame(wx.Frame):
 
         # ------------------ Go menu
         goButton = wx.Menu()
-        self.startpan = goButton.Append(wx.ID_ANY, _("Home panel\tCtrl+Shift+H"),
+        self.startpan = goButton.Append(wx.ID_ANY,
+                                        _("Home panel\tCtrl+Shift+H"),
                                         _("Go to the 'Home' panel"))
         goButton.AppendSeparator()
         self.prstpan = goButton.Append(wx.ID_ANY,
                                        _("Presets Manager\tCtrl+Shift+P"),
                                        _("Go to the 'Presets Manager' panel"))
-        self.avpan = goButton.Append(wx.ID_ANY, _("A/V Conversions\tCtrl+Shift+V"),
+        self.avpan = goButton.Append(wx.ID_ANY,
+                                     _("A/V Conversions\tCtrl+Shift+V"),
                                      _("Go to the 'A/V Conversions' panel"))
         self.concpan = goButton.Append(wx.ID_ANY,
                                        _("Concatenate Demuxer\tCtrl+Shift+D"),
