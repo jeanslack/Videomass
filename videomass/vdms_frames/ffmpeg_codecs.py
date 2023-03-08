@@ -243,7 +243,7 @@ class FFmpegCodecs(wx.MiniFrame):
         Destroy this window
         """
         if self.option == '-encoders':
-            pub.sendMessage("Destroying_window", msg='FFmpegCodecs')
+            pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg='FFmpegCodecs')
 
         elif self.option == '-decoders':
-            pub.sendMessage("Destroying_window", msg='FFmpegDecoders')
+            pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg='FFmpegDecoders')

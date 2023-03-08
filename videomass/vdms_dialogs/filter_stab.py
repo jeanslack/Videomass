@@ -37,7 +37,7 @@ from videomass.vdms_dialogs.widget_utils import PopupDialog
 from videomass.vdms_io.make_filelog import make_log_template
 
 
-class Vidstab(wx.Dialog):
+class VidstabSet(wx.Dialog):
     """
     A dialog tool to get vidstabdetect and vidstabtransform
     data based on FFmpeg syntax.
@@ -66,9 +66,9 @@ class Vidstab(wx.Dialog):
 
         self.filename = kwa['filename']
         name = os.path.splitext(os.path.basename(self.filename))[0]
-        self.framesrc = os.path.join(Vidstab.TMPSRC, f'{name}.mkv')
-        self.frameduo = os.path.join(Vidstab.TMPSRC, f'{name}_DUO.mkv')
-        self.fileclock = os.path.join(Vidstab.TMPROOT, f'{name}.clock')
+        self.framesrc = os.path.join(VidstabSet.TMPSRC, f'{name}.mkv')
+        self.frameduo = os.path.join(VidstabSet.TMPSRC, f'{name}_DUO.mkv')
+        self.fileclock = os.path.join(VidstabSet.TMPROOT, f'{name}.clock')
         tcheck = clockset(kwa['duration'], self.fileclock)
         self.clock = tcheck['duration']
         self.mills = tcheck['millis']
@@ -81,8 +81,8 @@ class Vidstab(wx.Dialog):
         self.ckbx_enable = wx.CheckBox(self, wx.ID_ANY,
                                        _('Enable stabilizer'))
         boxenable.Add(self.ckbx_enable, 0, wx.ALL | wx.CENTER, 2)
-        self.ckbx_duo = wx.CheckBox(self, wx.ID_ANY,
-                                    _('Generates duo video for comparison'))
+        self.ckbx_duo = wx.CheckBox(self, wx.ID_ANY, _('Create a side-by-side '
+                                                       'comparison video'))
         boxenable.Add(self.ckbx_duo, 0, wx.ALL | wx.CENTER, 2)
         # preview
         sizerBase.Add((5, 5), 0)
@@ -435,8 +435,8 @@ class Vidstab(wx.Dialog):
 
     def concat_filter(self, orderf):
         """
-        Concatenates all Vidstab values.
-        Returns the Vidstab filter string in ffmpeg syntax.
+        Concatenates all VidstabSet values.
+        Returns the VidstabSet filter string in ffmpeg syntax.
         """
         concat = ''.join([f'{x},' for x in orderf if x])[:-1]
         if not concat:
@@ -466,7 +466,7 @@ class Vidstab(wx.Dialog):
         detect = f'-vf {data[0]}'
         trasform = self.concat_filter((data[1], data[2]))
         self.logfile = make_log_template('generic_task.log',
-                                         Vidstab.LOGDIR,
+                                         VidstabSet.LOGDIR,
                                          mode="w",
                                          )
         error = self.process(self.filename, args=detect, mode='detect')
@@ -484,14 +484,11 @@ class Vidstab(wx.Dialog):
             return
 
         if self.ckbx_duo.IsChecked():
-            makeduo = (f'-vf "[in] pad=2*iw:ih [left]; '
-                       f'movie={self.framesrc} [right]; [left][right] '
-                       f'overlay=main_w/2:0 [out]"')
-
+            makeduo = f'-i "{self.framesrc}" -filter_complex hstack'
             error = self.process(self.filename,
                                  self.frameduo,
                                  args=makeduo,
-                                 mode='trasform',
+                                 mode='makeduo',
                                  )
             if error:
                 wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
@@ -518,7 +515,9 @@ class Vidstab(wx.Dialog):
             sseg = f'-ss {self.clock} -t {duration}'
 
         if mode == 'detect':
-            argstr = f'{sseg} -i "{infile}" {args} -f null  -y /dev/null'
+            nul = ('NUL' if VidstabSet.appdata['ostype']
+                   == 'Windows' else '/dev/null')
+            argstr = f'{sseg} -i "{infile}" {args} -f null  -y {nul}'
         elif mode == 'trasform':
             argstr = f'{sseg} -i "{infile}" {args} -y "{outfile}"'
         elif mode == 'makeduo':
@@ -687,8 +686,8 @@ class Vidstab(wx.Dialog):
         see <https://docs.python.org/3.8/library/webbrowser.html>
 
         """
-        if Vidstab.appdata['GETLANG'] in Vidstab.appdata['SUPP_LANGs']:
-            lang = Vidstab.appdata['GETLANG'].split('_')[0]
+        if VidstabSet.appdata['GETLANG'] in VidstabSet.appdata['SUPP_LANGs']:
+            lang = VidstabSet.appdata['GETLANG'].split('_')[0]
             page = (f'https://jeanslack.github.io/Videomass/Pages/User-guide-'
                     f'languages/{lang}/4-Video_filters_{lang}.pdf')
         else:

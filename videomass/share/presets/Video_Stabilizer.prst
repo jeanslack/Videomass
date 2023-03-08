@@ -1,8 +1,24 @@
 [
     {
-        "Name": "Make video duo",
+        "Name": "Make video duo (using hstack)",
         "Description": "Merges the original video with the stabilized video, which is useful for comparing the result",
-        "First_pass": "-vf \"[in] pad=2*iw:ih [left]; movie=stabilized video file name.mkv [right]; [left][right] overlay=main_w/2:0 [out]\"",
+        "First_pass": "-i \"Your video already stabilizzed.suffix\" -filter_complex \"hstack\"",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Make video duo (using pad + overlay)",
+        "Description": "Merges the original video with the stabilized video, which is useful for comparing the result",
+        "First_pass": "-i \"Your video already stabilizzed.suffix\" -filter_complex \"[0:v:0]pad=2*iw:ih[bg]; [bg][1:v:0]overlay=main_w/2:0\"",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Make video duo (using vstack)",
+        "Description": "Merges the original video with the stabilized video, which is useful for comparing the result",
+        "First_pass": "-i \"Your video already stabilizzed.suffix\" -filter_complex \"vstack\"",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"

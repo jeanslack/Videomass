@@ -87,15 +87,16 @@ class MainFrame(wx.Frame):
         self.icons = get.iconset
         # -------------------------------#
         self.data_files = []  # list of items in list control
-        self.outpath_ffmpeg = None  # path name for FFmpeg file destination
-        self.outputnames = []  # output file names
-        self.same_destin = False  # same source FFmpeg output destination
-        self.suffix = ''  # append a suffix to FFmpeg output file names
-        self.file_src = None  # input files list
+        self.outputpath = self.appdata['outputfile']  # path destination
+        self.outputnames = []  # output file basenames (even renames)
+        self.file_src = []  # input full file names list
+        self.changed = []  # previous list is different from new one
+        self.same_destin = self.appdata['outputfile_samedir']  # True/False
+        self.suffix = self.appdata['filesuffix']  # suffix to output names
         self.filedropselected = None  # int(index) or None filedrop selected
         self.time_seq = "-ss 00:00:00.000 -t 00:00:00.000"  # FFmpeg time seq.
         self.duration = []  # empty if not file imported
-        self.topicname = None  # panel name shown
+        self.topicname = None  # shown panel name
         self.checktimestamp = True  # show timestamp during playback
         self.autoexit = False  # set autoexit during ffplay playback
         self.move_file_to_trash = self.appdata['move_file_to_trash']
@@ -133,7 +134,14 @@ class MainFrame(wx.Frame):
                                                  self.appdata,
                                                  self.icons,
                                                  )
-        self.fileDnDTarget = filedrop.FileDnD(self, self.icons['playback'])
+        self.fileDnDTarget = filedrop.FileDnD(self,
+                                              self.icons['playback'],
+                                              self.outputpath,
+                                              self.outputnames,
+                                              self.data_files,
+                                              self.file_src,
+                                              self.duration,
+                                              )
         self.ProcessPanel = LogOut(self)
         self.PrstsPanel = presets_manager.PrstPan(self,
                                                   self.appdata,
@@ -191,7 +199,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.on_destpath_setup)
         self.Bind(wx.EVT_CLOSE, self.on_close)
 
-        pub.subscribe(self.check_modeless_window, "Destroying_window")
+        pub.subscribe(self.check_modeless_window, "DESTROY_ORPHANED_WINDOWS")
 
     # -------------------Status bar settings--------------------#
 
@@ -229,16 +237,12 @@ class MainFrame(wx.Frame):
 
         if self.VconvPanel.IsShown():
             self.VconvPanel.Hide()
-
         elif self.PrstsPanel.IsShown():
             self.PrstsPanel.Hide()
-
         elif self.ConcatDemuxer.IsShown():
             self.ConcatDemuxer.Hide()
-
         elif self.toPictures.IsShown():
             self.toPictures.Hide()
-
         elif self.toSlideshow.IsShown():
             self.toSlideshow.Hide()
 
@@ -269,15 +273,6 @@ class MainFrame(wx.Frame):
             self.slides.Enable(False)
             self.startpan.Enable(False)
             self.logpan.Enable(False)
-    # ------------------------------------------------------------------#
-
-    def reset_Timeline(self):
-        """
-        By adding or deleting files on file drop panel, cause reset
-        the timeline data (only if `self.time_seq` attribute is setted)
-        """
-        if self.time_seq != "-ss 00:00:00.000 -t 00:00:00.000":
-            self.TimeLine.on_reset_values(self)
     # ------------------------------------------------------------------#
 
     def check_modeless_window(self, msg=None):
@@ -499,27 +494,29 @@ class MainFrame(wx.Frame):
 
         # ------------------ Go menu
         goButton = wx.Menu()
-        self.startpan = goButton.Append(wx.ID_ANY, _("Home panel\tShift+H"),
+        self.startpan = goButton.Append(wx.ID_ANY,
+                                        _("Home panel\tCtrl+Shift+H"),
                                         _("Go to the 'Home' panel"))
         goButton.AppendSeparator()
         self.prstpan = goButton.Append(wx.ID_ANY,
-                                       _("Presets Manager\tShift+P"),
+                                       _("Presets Manager\tCtrl+Shift+P"),
                                        _("Go to the 'Presets Manager' panel"))
-        self.avpan = goButton.Append(wx.ID_ANY, _("A/V Conversions\tShift+V"),
+        self.avpan = goButton.Append(wx.ID_ANY,
+                                     _("A/V Conversions\tCtrl+Shift+V"),
                                      _("Go to the 'A/V Conversions' panel"))
         self.concpan = goButton.Append(wx.ID_ANY,
-                                       _("Concatenate Demuxer\tShift+D"),
+                                       _("Concatenate Demuxer\tCtrl+Shift+D"),
                                        _("Go to the 'Concatenate Demuxer' "
                                          "panel"))
         self.slides = goButton.Append(wx.ID_ANY,
-                                      _("Still Image Maker\tShift+I"),
+                                      _("Still Image Maker\tCtrl+Shift+I"),
                                       _("Go to the 'Still Image Maker' panel"))
         self.toseq = goButton.Append(wx.ID_ANY,
-                                     _("From Movie to Pictures\tShift+S"),
+                                     _("From Movie to Pictures\tCtrl+Shift+S"),
                                      _("Go to the 'From Movie to Pictures' "
                                        "panel"))
         goButton.AppendSeparator()
-        dscrp = (_("Output Monitor\tShift+O"),
+        dscrp = (_("Output Monitor\tCtrl+Shift+O"),
                  _("Keeps track of the output for debugging errors"))
         self.logpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         goButton.AppendSeparator()
@@ -650,7 +647,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.CheckNewReleases, checkItem)
         self.Bind(wx.EVT_MENU, self.system_vers, sysinfo)
         self.Bind(wx.EVT_MENU, self.Info, infoItem)
-
     # --------Menu Bar Event handler (callback)
 
     # --------- Menu  Files
@@ -688,7 +684,6 @@ class MainFrame(wx.Frame):
     def openMyconversions(self, event):
         """
         Open the conversions folder with file manager
-
         """
         io_tools.openpath(self.appdata['outputfile'])
     # -------------------------------------------------------------------#
@@ -696,9 +691,8 @@ class MainFrame(wx.Frame):
     def openMyconversions_tmp(self, event):
         """
         Open the temporary conversions folder with file manager
-
         """
-        io_tools.openpath(self.outpath_ffmpeg)
+        io_tools.openpath(self.outputpath)
     # -------------------------------------------------------------------#
 
     def on_file_renaming(self, event):
@@ -1093,19 +1087,15 @@ class MainFrame(wx.Frame):
         This is a menu event but also intercept the button 'save'
         event in the filedrop panel and sets a new file destination
         path for conversions
-
         """
-        dpath = '' if not self.outpath_ffmpeg else self.outpath_ffmpeg
         dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
-                                       "conversions"), dpath,
+                                       "conversions"), self.outputpath,
                                wx.DD_DEFAULT_STYLE
                                )
         if dialdir.ShowModal() == wx.ID_OK:
             getpath = self.appdata['getpath'](dialdir.GetPath())
-            self.outpath_ffmpeg = f'{getpath}'
-            self.fileDnDTarget.on_file_save(self.outpath_ffmpeg)
-            self.fileDnDTarget.file_dest = self.outpath_ffmpeg
-
+            self.outputpath = getpath
+            self.fileDnDTarget.on_file_save(self.outputpath)
             dialdir.Destroy()
 
             self.resetfolders_tmp.Enable(True)
@@ -1117,16 +1107,12 @@ class MainFrame(wx.Frame):
         Restore the default file destination if saving temporary
         files has been set. For file conversions it has no effect
         if `self.same_destin` is True.
-
         """
         if not self.same_destin:
-            self.outpath_ffmpeg = self.appdata['outputfile']
+            self.outputpath = self.appdata['outputfile']
             self.fileDnDTarget.on_file_save(self.appdata['outputfile'])
-            self.fileDnDTarget.file_dest = self.appdata['outputfile']
             self.fold_convers_tmp.Enable(False)
-
             self.resetfolders_tmp.Enable(False)
-
             wx.MessageBox(_("Default destination folders "
                             "successfully restored"), "Videomass",
                           wx.ICON_INFORMATION, self)
@@ -1351,24 +1337,38 @@ class MainFrame(wx.Frame):
         """
         if self.topicname == 'Audio/Video Conversions':
             self.switch_av_conversions(self)
-
         elif self.topicname == 'Concatenate Demuxer':
             self.switch_concat_demuxer(self)
-
         elif self.topicname == 'Presets Manager':
             self.switch_presets_manager(self)
-
         elif self.topicname == 'Image Sequence to Video':
             self.switch_slideshow_maker(self)
-
         elif self.topicname == 'Video to Pictures':
             self.switch_video_to_pictures(self)
+    # ------------------------------------------------------------------#
+
+    def on_changes_file_list(self):
+        """
+        Check changes made to files in the drag-and-drop panel.
+        """
+        if not self.changed:
+            pub.sendMessage("MAX_FILE_DURATION", msg='Changes')
+            self.changed = self.file_src.copy()
+            self.statusbar_msg(_('Ready'), None)
+        elif self.changed == self.file_src:
+            self.statusbar_msg(_('Ready'), None)
+        else:
+            pub.sendMessage("RESET_ON_CHANGED_LIST", msg='Changes')
+            pub.sendMessage("MAX_FILE_DURATION", msg='Changes')
+            self.changed = self.file_src.copy()
+            msg = (_('File list changed, please check the settings again.'),
+                   MainFrame.ORANGE, MainFrame.WHITE)
+            self.statusbar_msg(msg[0], msg[1], msg[2])
     # ------------------------------------------------------------------#
 
     def switch_file_import(self, event, which):
         """
         Show files import panel.
-
         """
         self.topicname = which
         self.VconvPanel.Hide()
@@ -1379,9 +1379,6 @@ class MainFrame(wx.Frame):
         self.toPictures.Hide()
         self.toSlideshow.Hide()
         self.fileDnDTarget.Show()
-        if self.outpath_ffmpeg:
-            self.fileDnDTarget.text_path_save.SetValue("")
-            self.fileDnDTarget.text_path_save.AppendText(self.outpath_ffmpeg)
         self.menu_items()  # disable some menu items
         self.openmedia.Enable(True)
         self.avpan.Enable(False)
@@ -1406,37 +1403,13 @@ class MainFrame(wx.Frame):
         """
         Show Video converter panel
         """
-        self.outpath_ffmpeg = self.fileDnDTarget.file_dest
         self.fileDnDTarget.Hide()
         self.PrstsPanel.Hide()
         self.ConcatDemuxer.Hide()
         self.toPictures.Hide()
         self.toSlideshow.Hide()
         self.VconvPanel.Show()
-        filenames = [f['format']['filename'] for f in
-                     self.data_files if f['format']['filename']
-                     ]
-        if not filenames == self.file_src:  # only if file list changes
-            if self.file_src:
-                msg = (_('File list changed, please check the settings '
-                         'again.'), MainFrame.ORANGE, MainFrame.WHITE)
-                self.statusbar_msg(msg[0], msg[1], msg[2])
-            self.file_src = filenames
-            self.duration = [f['format']['duration'] for f in
-                             self.data_files
-                             ]
-            if not self.duration:
-                self.TimeLine.set_values(self.duration)
-            elif max(self.duration) < 100:  # if .jpeg
-                self.TimeLine.set_values([])
-            else:  # max val from list
-                self.TimeLine.set_values(max(self.duration))
-
-            self.VconvPanel.normalize_default()
-            self.VconvPanel.on_FiltersClear(self)
-        else:
-            self.statusbar_msg(_('Ready'), None)
-
+        self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - AV Conversions'))
         self.TimeLine.Show()
         self.toolbar.Show()
@@ -1459,38 +1432,14 @@ class MainFrame(wx.Frame):
     def switch_presets_manager(self, event):
         """
         Show presets manager panel
-
         """
-        self.outpath_ffmpeg = self.fileDnDTarget.file_dest
         self.fileDnDTarget.Hide()
         self.VconvPanel.Hide()
         self.ConcatDemuxer.Hide()
         self.toPictures.Hide()
         self.toSlideshow.Hide()
         self.PrstsPanel.Show()
-        filenames = [f['format']['filename'] for f in
-                     self.data_files if f['format']['filename']
-                     ]
-        if not filenames == self.file_src:
-            if self.file_src:
-                msg = (_('File list changed, please check the settings '
-                         'again.'), MainFrame.ORANGE, MainFrame.WHITE)
-                self.statusbar_msg(msg[0], msg[1], msg[2])
-            self.file_src = filenames
-            self.duration = [f['format']['duration'] for f in
-                             self.data_files
-                             ]
-            if not self.duration:
-                self.TimeLine.set_values(self.duration)
-            elif max(self.duration) < 100:  # if .jpeg
-                self.TimeLine.set_values([])
-            else:  # max val from list
-                self.TimeLine.set_values(max(self.duration))
-
-            self.VconvPanel.normalize_default()
-        else:
-            self.statusbar_msg(_('Ready'), None)
-
+        self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - Presets Manager'))
         self.TimeLine.Show()
         self.toolbar.Show()
@@ -1514,9 +1463,7 @@ class MainFrame(wx.Frame):
     def switch_concat_demuxer(self, event):
         """
         Show concat demuxer panel
-
         """
-        self.outpath_ffmpeg = self.fileDnDTarget.file_dest
         self.fileDnDTarget.Hide()
         self.VconvPanel.Hide()
         self.PrstsPanel.Hide()
@@ -1524,30 +1471,7 @@ class MainFrame(wx.Frame):
         self.toPictures.Hide()
         self.toSlideshow.Hide()
         self.TimeLine.Hide()
-
-        filenames = [f['format']['filename'] for f in
-                     self.data_files if f['format']['filename']
-                     ]
-        if not filenames == self.file_src:
-            if self.file_src:
-                msg = (_('File list changed, please check the settings '
-                         'again.'), MainFrame.ORANGE, MainFrame.WHITE)
-                self.statusbar_msg(msg[0], msg[1], msg[2])
-            self.file_src = filenames
-            self.duration = [f['format']['duration'] for f in
-                             self.data_files
-                             ]
-            if not self.duration:
-                self.TimeLine.set_values(self.duration)
-            elif max(self.duration) < 100:  # if .jpeg
-                self.TimeLine.set_values([])
-            else:  # max val from list
-                self.TimeLine.set_values(max(self.duration))
-
-            self.VconvPanel.normalize_default()
-        else:
-            self.statusbar_msg(_('Ready'), None)
-
+        self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - Concatenate Demuxer'))
         self.toolbar.Show()
         self.openmedia.Enable(True)
@@ -1568,39 +1492,14 @@ class MainFrame(wx.Frame):
     def switch_video_to_pictures(self, event):
         """
         Show  Video to Pictures panel
-
         """
-        self.outpath_ffmpeg = self.fileDnDTarget.file_dest
         self.fileDnDTarget.Hide()
         self.VconvPanel.Hide()
         self.PrstsPanel.Hide()
         self.ConcatDemuxer.Hide()
         self.toSlideshow.Hide()
         self.toPictures.Show()
-
-        filenames = [f['format']['filename'] for f in
-                     self.data_files if f['format']['filename']
-                     ]
-        if not filenames == self.file_src:
-            if self.file_src:
-                msg = (_('File list changed, please check the settings '
-                         'again.'), MainFrame.ORANGE, MainFrame.WHITE)
-                self.statusbar_msg(msg[0], msg[1], msg[2])
-            self.file_src = filenames
-            self.duration = [f['format']['duration'] for f in
-                             self.data_files
-                             ]
-            if not self.duration:
-                self.TimeLine.set_values(self.duration)
-            elif max(self.duration) < 100:  # if .jpeg
-                self.TimeLine.set_values([])
-            else:  # max val from list
-                self.TimeLine.set_values(max(self.duration))
-
-            self.VconvPanel.normalize_default()
-        else:
-            self.statusbar_msg(_('Ready'), None)
-
+        self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - From Movie to Pictures'))
         self.TimeLine.Show()
         self.toolbar.Show()
@@ -1622,39 +1521,14 @@ class MainFrame(wx.Frame):
     def switch_slideshow_maker(self, event):
         """
         Show slideshow maker panel
-
         """
-        self.outpath_ffmpeg = self.fileDnDTarget.file_dest
         self.fileDnDTarget.Hide()
         self.VconvPanel.Hide()
         self.PrstsPanel.Hide()
         self.ConcatDemuxer.Hide()
         self.toPictures.Hide()
         self.toSlideshow.Show()
-
-        filenames = [f['format']['filename'] for f in
-                     self.data_files if f['format']['filename']
-                     ]
-        if not filenames == self.file_src:
-            if self.file_src:
-                msg = (_('File list changed, please check the settings '
-                         'again.'), MainFrame.ORANGE, MainFrame.WHITE)
-                self.statusbar_msg(msg[0], msg[1], msg[2])
-            self.file_src = filenames
-            self.duration = [f['format']['duration'] for f in
-                             self.data_files
-                             ]
-            if not self.duration:
-                self.TimeLine.set_values(self.duration)
-            elif max(self.duration) < 100:  # if .jpeg
-                self.TimeLine.set_values([])
-            else:  # max val from list
-                self.TimeLine.set_values(max(self.duration))
-
-            self.VconvPanel.normalize_default()
-        else:
-            self.statusbar_msg(_('Ready'), None)
-
+        self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - Still Image Maker'))
         self.TimeLine.Show()
         self.toolbar.Show()
@@ -1689,25 +1563,22 @@ class MainFrame(wx.Frame):
         """
         if varargs[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
-            duration, time_seq = self.duration, self.time_seq
-
+            dur, seq = self.duration, self.time_seq
         elif varargs[0] in ('concat_demuxer', 'sequence_to_video'):
-            duration, time_seq = varargs[6], ''
-
+            dur, seq = varargs[6], ''
         elif self.time_seq != "-ss 00:00:00.000 -t 00:00:00.000":
             ms = get_milliseconds(self.time_seq.split()[3])  # -t duration
-            time_seq = self.time_seq
+            seq = self.time_seq
             if [t for t in self.duration if ms > t]:  # if out time range
                 wx.MessageBox(_('Cannot continue: The duration in the '
                                 'timeline exceeds the duration of some '
                                 'queued files.'),
                               'Videomass', wx.ICON_ERROR, self)
                 return
-            duration = [ms for n in self.duration]
+            dur = [ms for n in self.duration]
             self.statusbar_msg(_('Processing...'), None)
-
         else:
-            duration, time_seq = self.duration, ''
+            dur, seq = self.duration, ''
 
         self.SetTitle(_('Videomass - Output Monitor'))
         # Hide all others panels:
@@ -1725,80 +1596,53 @@ class MainFrame(wx.Frame):
         self.openmedia.Enable(False)
         # Hide the tool bar
         self.toolbar.Hide()
-        self.ProcessPanel.topic_thread(self.topicname, varargs,
-                                       duration, time_seq)
+        self.ProcessPanel.topic_thread(self.topicname, varargs, dur, seq)
         self.Layout()
     # ------------------------------------------------------------------#
 
     def click_start(self, event):
         """
-        By clicking on Convert buttons in the main frame,
-        calls the `on_start method` of the corresponding panel shown,
-        which calls the 'switch_to_processing' method above.
+        Clicking on Convert buttons, calls the `on_start method`
+        of the corresponding panel shown, which calls the
+        'switch_to_processing' method above.
         """
         if not self.data_files:
             self.switch_file_import(self, self.topicname)
             return
 
         if self.VconvPanel.IsShown():
-            self.file_src = [f['format']['filename'] for f in
-                             self.data_files if f['format']['filename']
-                             ]
             self.VconvPanel.on_start()
-
         elif self.PrstsPanel.IsShown():
-            self.file_src = [f['format']['filename'] for f in
-                             self.data_files if f['format']['filename']
-                             ]
             self.PrstsPanel.on_start()
-
         elif self.ConcatDemuxer.IsShown():
-            self.file_src = [f['format']['filename'] for f in
-                             self.data_files if f['format']['filename']
-                             ]
             self.ConcatDemuxer.on_start()
-
         elif self.toPictures.IsShown():
-            self.file_src = [f['format']['filename'] for f in
-                             self.data_files if f['format']['filename']
-                             ]
             self.toPictures.on_start()
-
         elif self.toSlideshow.IsShown():
-            self.file_src = [f['format']['filename'] for f in
-                             self.data_files if f['format']['filename']
-                             ]
             self.toSlideshow.on_start()
-
     # ------------------------------------------------------------------#
 
     def panelShown(self, panelshown):
         """
-        When clicking 'close button' of the long_processing_task panel,
-        retrieval at previous panel showing and re-enables the functions
-        provided by the menu bar (see `switch_to_processing` method above).
+        Clicking 'close button' of the `long_processing_task` panel,
+        retrieval at previous panel shown and re-enables other functions
+        (see `switch_to_processing` method above).
         """
         if panelshown == 'Audio/Video Conversions':
             self.ProcessPanel.Hide()
             self.switch_av_conversions(self)
-
         elif panelshown == 'Presets Manager':
             self.ProcessPanel.Hide()
             self.switch_presets_manager(self)
-
         elif panelshown == 'Concatenate Demuxer':
             self.ProcessPanel.Hide()
             self.switch_concat_demuxer(self)
-
         elif panelshown == 'Video to Pictures':
             self.ProcessPanel.Hide()
             self.switch_video_to_pictures(self)
-
         elif panelshown == 'Image Sequence to Video':
             self.ProcessPanel.Hide()
             self.switch_slideshow_maker(self)
-
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(3, 5)]
-        # show buttons bar if the user has shown it:
         self.Layout()

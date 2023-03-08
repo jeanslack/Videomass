@@ -29,6 +29,7 @@ import sys
 import wx
 import wx.lib.scrolledpanel as scrolled
 import wx.lib.agw.floatspin as FS
+from pubsub import pub
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_panels.libaom import AV1Pan
 from videomass.vdms_panels.webm import WebMPan
@@ -44,7 +45,7 @@ from videomass.vdms_dialogs.filter_transpose import Transpose
 from videomass.vdms_dialogs.filter_denoisers import Denoisers
 from videomass.vdms_dialogs.filter_deinterlace import Deinterlace
 from videomass.vdms_dialogs.filter_scale import Scale
-from videomass.vdms_dialogs.filter_stab import Vidstab
+from videomass.vdms_dialogs.filter_stab import VidstabSet
 from videomass.vdms_dialogs.filter_colorcorrection import ColorEQ
 from videomass.vdms_frames.shownormlist import AudioVolNormal
 
@@ -728,8 +729,19 @@ class AV_Conv(wx.Panel):
         self.UI_set()
         self.audio_default()
         self.normalize_default()
-
+        pub.subscribe(self.reset_on_changed_data, "RESET_ON_CHANGED_LIST")
     # -------------------------------------------------------------------#
+
+    def reset_on_changed_data(self, msg):
+        """
+        This method is called using pub/sub protocol
+        """
+        if not self.rdbx_normalize.GetSelection() == 0:
+            self.normalize_default(self)
+        if self.opt["VFilters"]:
+            self.on_FiltersClear(self)
+    # -------------------------------------------------------------------#
+
     def UI_set(self):
         """
         Update all the panel controls.
@@ -1027,13 +1039,12 @@ class AV_Conv(wx.Panel):
         fget = self.file_selection()
         if not fget or not self.opt["VFilters"]:
             return
-
         if self.opt["Vidstabtransform"]:
             wx.MessageBox(_("Unable to preview Video Stabilizer filter"),
                           "Videomass", wx.ICON_INFORMATION, self)
-        else:
-            flt = self.opt["VFilters"]
+            return
 
+        flt = self.opt["VFilters"]
         if self.parent.checktimestamp:
             flt = f'{flt},"{self.parent.cmdtimestamp}"'
 
@@ -1054,7 +1065,6 @@ class AV_Conv(wx.Panel):
             self.opt["Vidstabdetect"], self.opt["Makeduo"] = "", False
             self.chain_all_video_filters()
             self.btn_vidstab.SetBackgroundColour(wx.NullColour)
-
             return
 
         if self.opt["VFilters"]:
@@ -1327,14 +1337,14 @@ class AV_Conv(wx.Panel):
                           'Videomass', wx.ICON_INFORMATION, self)
             return
 
-        with Vidstab(self,
-                     self.opt["Vidstabdetect"],
-                     self.opt["Vidstabtransform"],
-                     self.opt["Unsharp"],
-                     self.opt["Makeduo"],
-                     self.bmpreset,
-                     **sdf,
-                     ) as stab:
+        with VidstabSet(self,
+                        self.opt["Vidstabdetect"],
+                        self.opt["Vidstabtransform"],
+                        self.opt["Unsharp"],
+                        self.opt["Makeduo"],
+                        self.bmpreset,
+                        **sdf,
+                        ) as stab:
             if stab.ShowModal() == wx.ID_OK:
                 data = stab.getvalue()
                 if not data:
@@ -1844,9 +1854,8 @@ class AV_Conv(wx.Panel):
                 return
 
         self.update_options()  # update
-
         checking = check_files(self.parent.file_src,
-                               self.parent.outpath_ffmpeg,
+                               self.parent.outputpath,
                                self.parent.same_destin,
                                self.parent.suffix,
                                self.opt["OutputFormat"],

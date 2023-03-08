@@ -288,7 +288,7 @@ class Conc_Demuxer(wx.Panel):
             txt.write('\n'.join(textstr))
 
         checking = check_files((fsource[0],),
-                               self.parent.outpath_ffmpeg,
+                               self.parent.outputpath,
                                self.parent.same_destin,
                                self.parent.suffix,
                                ext,
