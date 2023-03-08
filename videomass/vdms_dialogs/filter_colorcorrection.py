@@ -30,7 +30,6 @@ from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import milliseconds2clocksec
 from videomass.vdms_utils.utils import clockset
 from videomass.vdms_io.make_filelog import make_log_template
-
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 
 
@@ -213,28 +212,30 @@ class ColorEQ(wx.Dialog):
 
         if ColorEQ.OS == 'Windows':
             self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_contrast,
-                    self.sld_contrast)
+                      self.sld_contrast)
             self.Bind(wx.EVT_SCROLL_CHANGED, self.on_contrast,
-                    self.sld_contrast)
+                      self.sld_contrast)
             self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_brightness,
-                    self.sld_brightness)
+                      self.sld_brightness)
             self.Bind(wx.EVT_SCROLL_CHANGED, self.on_brightness,
-                    self.sld_brightness)
+                      self.sld_brightness)
             self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_saturation,
-                    self.sld_saturation)
+                      self.sld_saturation)
             self.Bind(wx.EVT_SCROLL_CHANGED, self.on_saturation,
-                    self.sld_saturation)
-            self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_gamma, self.sld_gamma)
+                      self.sld_saturation)
+            self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_gamma,
+                      self.sld_gamma)
             self.Bind(wx.EVT_SCROLL_CHANGED, self.on_gamma, self.sld_gamma)
 
         if ColorEQ.OS == 'Darwin':
             self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_contrast,
-                    self.sld_contrast)
+                      self.sld_contrast)
             self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_brightness,
-                    self.sld_brightness)
+                      self.sld_brightness)
             self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_saturation,
-                    self.sld_saturation)
-            self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_gamma, self.sld_gamma)
+                      self.sld_saturation)
+            self.Bind(wx.EVT_SCROLL_THUMBRELEASE, self.on_gamma,
+                      self.sld_gamma)
 
         else:
             self.Bind(wx.EVT_SCROLL_CHANGED, self.on_contrast,
@@ -244,7 +245,6 @@ class ColorEQ(wx.Dialog):
             self.Bind(wx.EVT_SCROLL_CHANGED, self.on_saturation,
                       self.sld_saturation)
             self.Bind(wx.EVT_SCROLL_CHANGED, self.on_gamma, self.sld_gamma)
-
 
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)

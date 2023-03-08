@@ -483,4 +483,4 @@ class MediaStreams(wx.Dialog):
         """
         Destroy this dialog
         """
-        pub.sendMessage("Destroying_window", msg='MediaStreams')
+        pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg='MediaStreams')

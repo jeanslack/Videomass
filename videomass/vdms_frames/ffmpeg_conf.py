@@ -230,4 +230,4 @@ class FFmpegConf(wx.MiniFrame):
         """
         Destroy this window
         """
-        pub.sendMessage("Destroying_window", msg='FFmpegConf')
+        pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg='FFmpegConf')

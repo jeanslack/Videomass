@@ -29,6 +29,7 @@ import sys
 import wx
 import wx.lib.scrolledpanel as scrolled
 import wx.lib.agw.floatspin as FS
+from pubsub import pub
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_panels.libaom import AV1Pan
 from videomass.vdms_panels.webm import WebMPan
@@ -728,8 +729,19 @@ class AV_Conv(wx.Panel):
         self.UI_set()
         self.audio_default()
         self.normalize_default()
-
+        pub.subscribe(self.reset_on_changed_data, "RESET_ON_CHANGED_LIST")
     # -------------------------------------------------------------------#
+
+    def reset_on_changed_data(self, msg):
+        """
+        This method is called using pub/sub protocol
+        """
+        if not self.rdbx_normalize.GetSelection() == 0:
+            self.normalize_default(self)
+        if self.opt["VFilters"]:
+            self.on_FiltersClear(self)
+    # -------------------------------------------------------------------#
+
     def UI_set(self):
         """
         Update all the panel controls.
@@ -1027,14 +1039,12 @@ class AV_Conv(wx.Panel):
         fget = self.file_selection()
         if not fget or not self.opt["VFilters"]:
             return
-
         if self.opt["Vidstabtransform"]:
             wx.MessageBox(_("Unable to preview Video Stabilizer filter"),
                           "Videomass", wx.ICON_INFORMATION, self)
             return
-        else:
-            flt = self.opt["VFilters"]
 
+        flt = self.opt["VFilters"]
         if self.parent.checktimestamp:
             flt = f'{flt},"{self.parent.cmdtimestamp}"'
 
@@ -1055,7 +1065,6 @@ class AV_Conv(wx.Panel):
             self.opt["Vidstabdetect"], self.opt["Makeduo"] = "", False
             self.chain_all_video_filters()
             self.btn_vidstab.SetBackgroundColour(wx.NullColour)
-
             return
 
         if self.opt["VFilters"]:
@@ -1845,9 +1854,8 @@ class AV_Conv(wx.Panel):
                 return
 
         self.update_options()  # update
-
         checking = check_files(self.parent.file_src,
-                               self.parent.outpath_ffmpeg,
+                               self.parent.outputpath,
                                self.parent.same_destin,
                                self.parent.suffix,
                                self.opt["OutputFormat"],

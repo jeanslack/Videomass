@@ -404,4 +404,4 @@ class FFmpegHelp(wx.Dialog):
         """
         Destroy this window
         """
-        pub.sendMessage("Destroying_window", msg='HelpTopic')
+        pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg='HelpTopic')

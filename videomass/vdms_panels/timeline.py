@@ -27,6 +27,7 @@ This file is part of Videomass.
 import sys
 import wx
 import wx.adv
+from pubsub import pub
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_utils.utils import milliseconds2clock
 from videomass.vdms_utils.utils import get_milliseconds
@@ -54,7 +55,7 @@ class Timeline(wx.Panel):
     LGREEN = '#52ee7d'
     BLACK = '#1f1f1f'
 
-    def __init__(self, parent, iconreset):
+    def __init__(self, parent, iconreset, time_seq):
         """
         The time values results are setted on the `time_seq`
         parent (main_frame) attribute.
@@ -76,6 +77,8 @@ class Timeline(wx.Panel):
             bmpreset = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
 
         self.parent = parent
+        self.time_seq = time_seq
+        self.duration = self.parent.duration
         self.milliseconds = 1
         self.hour24format = None
         self.ms_start = 0
@@ -139,7 +142,20 @@ class Timeline(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_maxdur)
         self.Bind(wx.adv.EVT_TIME_CHANGED, self.on_start, self.ctrl_start)
         self.Bind(wx.adv.EVT_TIME_CHANGED, self.on_end, self.ctrl_end)
-        self.Bind(wx.EVT_BUTTON, self.on_reset_values, self.btn_reset)
+        self.Bind(wx.EVT_BUTTON, self.on_trim_time_reset, self.btn_reset)
+
+        pub.subscribe(self.reset_timeline, "RESET_ON_CHANGED_LIST")
+        pub.subscribe(self.set_values, "MAX_FILE_DURATION")
+
+    def reset_timeline(self, msg):
+        """
+        Any change to the file list in the drag panel
+        resets the timeline data. This method is called
+        using pub/sub protocol switching between panels:
+        (see `parent.on_changes_file_list`)
+        """
+        if msg == 'Changes':
+            self.on_trim_time_reset(self)
 
     # ----------------------Event handler (callback)----------------------#
 
@@ -173,7 +189,7 @@ class Timeline(wx.Panel):
         self.time_start = timef
         self.ms_start = timems
         duration = milliseconds2clock(self.ms_end - self.ms_start)
-        self.parent.time_seq = f"-ss {self.time_start} -t {duration}"
+        self.time_seq = f"-ss {self.time_start} -t {duration}"
     # ------------------------------------------------------------------#
 
     def on_end(self, event):
@@ -208,7 +224,7 @@ class Timeline(wx.Panel):
         self.time_end = timef
         self.ms_end = timems
         duration = milliseconds2clock(self.ms_end - self.ms_start)
-        self.parent.time_seq = f"-ss {self.time_start} -t {duration}"
+        self.time_seq = f"-ss {self.time_start} -t {duration}"
     # ------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -235,14 +251,13 @@ class Timeline(wx.Panel):
         win.Popup()
     # ------------------------------------------------------------------#
 
-    def on_reset_values(self, event):
+    def on_trim_time_reset(self, event):
         """
-        Reset all values to default. This method is
-        also called on MainFrame.
+        Reset all timeline values to default.
         """
         self.time_start = '00:00:00.000'  # seek position
         self.time_end = '00:00:00.000'  # duration of the selection
-        self.parent.time_seq = f"-ss {self.time_start} -t {self.time_end}"
+        self.time_seq = f"-ss {self.time_start} -t {self.time_end}"
         self.ms_end = 0
         self.ms_start = 0
         self.ctrl_start.SetTime(00, 00, 00)
@@ -250,15 +265,17 @@ class Timeline(wx.Panel):
         self.ctrl_start.Disable()
     # ------------------------------------------------------------------#
 
-    def set_values(self, duration):
+    def set_values(self, msg):
         """
-        Set new values each time new files are loaded.
-        This method is called out side of this class, see parent.
+        Set new values if any Changes.
         """
-        if not duration:
-            self.milliseconds = 86399999
-        else:
-            self.milliseconds = round(duration)
+        if msg == 'Changes':
+            if not self.duration:
+                self.milliseconds = 86399999
+            elif max(self.duration) < 100:  # if .jpeg
+                self.milliseconds = 0
+            else:  # max val from list
+                self.milliseconds = round(max(self.duration))
 
-        self.hour24format = milliseconds2clock(self.milliseconds)
-        self.btn_maxdur.SetLabel(self.hour24format.split('.')[0])
+            self.hour24format = milliseconds2clock(self.milliseconds)
+            self.btn_maxdur.SetLabel(self.hour24format.split('.')[0])

@@ -99,7 +99,7 @@ def filename_sanitize(newname, outputnames):
 class MyListCtrl(wx.ListCtrl):
     """
     This is the listControl widget.
-    Note that this wideget has DnDPanel parent.
+    Note that this wideget has DnDPanel parented.
     """
     AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
     RED = '#ea312d'
@@ -121,6 +121,8 @@ class MyListCtrl(wx.ListCtrl):
         self.index = None
         self.parent = parent  # parent is DnDPanel class
         self.data = self.parent.data
+        self.file_src = self.parent.file_src
+        self.duration = self.parent.duration
         self.outputnames = self.parent.outputnames
         wx.ListCtrl.__init__(self,
                              parent,
@@ -198,9 +200,10 @@ class MyListCtrl(wx.ListCtrl):
                 self.outputnames.append(fname)
             self.index += 1
             self.data.append(probe)
+            self.file_src.append(path)
+            self.duration.append(probe['format']['duration'])
             self.parent.statusbar_msg('', None)
-            self.parent.reset_timeline()
-
+            self.parent.changes_in_progress()
         else:
             mess = _("Duplicate files are rejected: > {}").format(path)
             self.parent.statusbar_msg(mess, MyListCtrl.YELLOW,
@@ -245,23 +248,23 @@ class FileDnD(wx.Panel):
     YELLOW = '#bd9f00'
     BLACK = '#060505'  # black for background status bar
 
-    def __init__(self, parent, iconplay):
+    def __init__(self, parent, *args):
         """Constructor. This will initiate with an id and a title"""
         get = wx.GetApp()
         appdata = get.appset
         self.themecolor = appdata['icontheme'][1]
         self.parent = parent  # parent is the MainFrame
-
-        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-            bmpplay = get_bmp(iconplay, ((16, 16)))
-        else:
-            bmpplay = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
-        self.data = self.parent.data_files  # set items list data on parent
-        self.outputnames = self.parent.outputnames
-        self.file_dest = appdata['outputfile']
+        self.outputnames = args[2]
+        self.data = args[3]
+        self.file_src = args[4]
+        self.duration = args[5]
         self.sortingstate = None  # ascending or descending order
+        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
+            bmpplay = get_bmp(args[0], ((16, 16)))
+        else:
+            bmpplay = wx.Bitmap(args[0], wx.BITMAP_TYPE_ANY)
 
-        wx.Panel.__init__(self, parent=parent)
+        wx.Panel.__init__(self, parent, -1)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((0, 10))
@@ -309,7 +312,7 @@ class FileDnD(wx.Panel):
         else:
             lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
-        self.text_path_save.SetValue(self.file_dest)
+        self.text_path_save.SetValue(args[1])
 
         if appdata['outputfile_samedir']:
             self.btn_destpath.Disable()
@@ -390,14 +393,14 @@ class FileDnD(wx.Panel):
                 self.flCtrl.dropUpdate(data[0], data[4])
     # ----------------------------------------------------------------------
 
-    def reset_timeline(self, setfocus=True):
+    def changes_in_progress(self, setfocus=True):
         """
-        Routine operations when opening, drag&drop,
-        removing files or sorting items by LEFT
-        clicking on column headers in the ListCtrl.
+        Routine operations on changes: receiving new files by
+        opening, drag&drop, or removing files or sorting items by
+        LEFT clicking on column headers in the ListCtrl.
         """
         self.parent.destroy_orphaned_window()
-        self.parent.reset_Timeline()
+
         if not self.btn_clear.IsEnabled():
             self.btn_clear.Enable()
         if len(self.outputnames) > 1:
@@ -455,8 +458,10 @@ class FileDnD(wx.Panel):
             self.flCtrl.DeleteItem(num)  # remove selected items
             self.data.pop(num)  # remove selected items
             self.outputnames.pop(num)  # remove selected items
+            self.file_src.pop(num)
+            self.duration.pop(num)
             self.flCtrl.Select(num - 1)  # select the previous one
-        self.reset_timeline(setfocus=False)  # delete parent.timeline
+        self.changes_in_progress(setfocus=False)  # delete parent.timeline
         # self.on_deselect(self)  # deselect removed file
 
         for x in range(self.flCtrl.GetItemCount()):
@@ -473,8 +478,10 @@ class FileDnD(wx.Panel):
         self.flCtrl.DeleteAllItems()
         del self.data[:]
         del self.outputnames[:]
+        del self.file_src[:]
+        del self.duration[:]
         self.parent.filedropselected = None
-        self.reset_timeline(setfocus=False)
+        self.changes_in_progress(setfocus=False)
         self.btn_play.Disable()
         self.btn_remove.Disable()
         self.btn_clear.Disable()
@@ -513,7 +520,6 @@ class FileDnD(wx.Panel):
         """
         self.text_path_save.SetValue("")
         self.text_path_save.AppendText(path)
-        self.file_dest = path
     # -----------------------------------------------------------------------
 
     def statusbar_msg(self, mess, bcolor, fcolor=None):

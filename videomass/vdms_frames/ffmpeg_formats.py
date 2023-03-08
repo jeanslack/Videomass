@@ -192,4 +192,4 @@ class FFmpegFormats(wx.MiniFrame):
         """
         Destroy this window
         """
-        pub.sendMessage("Destroying_window", msg='FFmpegFormats')
+        pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg='FFmpegFormats')

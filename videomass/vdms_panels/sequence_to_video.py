@@ -638,7 +638,7 @@ class SequenceToVideo(wx.Panel):
         if self.parent.same_destin:
             destdir = os.path.dirname(fget[0])
         else:
-            destdir = self.parent.outpath_ffmpeg
+            destdir = self.parent.outputpath
 
         name = self.parent.fileDnDTarget.flCtrl.GetItemText(fget[1], 5)
         outputdir = trailing_name_with_prog_digit(destdir, 'Still_Images')
