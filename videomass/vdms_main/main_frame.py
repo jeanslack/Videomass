@@ -90,9 +90,9 @@ class MainFrame(wx.Frame):
         self.outputpath = self.appdata['outputfile']  # path destination
         self.outputnames = []  # output file basenames (even renames)
         self.file_src = []  # input full file names list
-        self.changed = []
-        self.same_destin = False  # same source as output destination
-        self.suffix = ''  # append a suffix to output file names
+        self.changed = []  # previous list is different from new one
+        self.same_destin = self.appdata['outputfile_samedir']  # True/False
+        self.suffix = self.appdata['filesuffix']  # suffix to output names
         self.filedropselected = None  # int(index) or None filedrop selected
         self.time_seq = "-ss 00:00:00.000 -t 00:00:00.000"  # FFmpeg time seq.
         self.duration = []  # empty if not file imported
@@ -240,16 +240,12 @@ class MainFrame(wx.Frame):
 
         if self.VconvPanel.IsShown():
             self.VconvPanel.Hide()
-
         elif self.PrstsPanel.IsShown():
             self.PrstsPanel.Hide()
-
         elif self.ConcatDemuxer.IsShown():
             self.ConcatDemuxer.Hide()
-
         elif self.toPictures.IsShown():
             self.toPictures.Hide()
-
         elif self.toSlideshow.IsShown():
             self.toSlideshow.Hide()
 
@@ -652,7 +648,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.CheckNewReleases, checkItem)
         self.Bind(wx.EVT_MENU, self.system_vers, sysinfo)
         self.Bind(wx.EVT_MENU, self.Info, infoItem)
-
     # --------Menu Bar Event handler (callback)
 
     # --------- Menu  Files
@@ -690,7 +685,6 @@ class MainFrame(wx.Frame):
     def openMyconversions(self, event):
         """
         Open the conversions folder with file manager
-
         """
         io_tools.openpath(self.appdata['outputfile'])
     # -------------------------------------------------------------------#
@@ -698,7 +692,6 @@ class MainFrame(wx.Frame):
     def openMyconversions_tmp(self, event):
         """
         Open the temporary conversions folder with file manager
-
         """
         io_tools.openpath(self.outputpath)
     # -------------------------------------------------------------------#

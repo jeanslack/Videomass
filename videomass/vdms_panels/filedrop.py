@@ -313,14 +313,10 @@ class FileDnD(wx.Panel):
             lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
         self.text_path_save.SetValue(args[1])
-
         if appdata['outputfile_samedir']:
             self.btn_destpath.Disable()
             self.text_path_save.Disable()
-            self.parent.same_destin = True
-            if not appdata['filesuffix'] == '':
-                # otherwise must be '' on parent
-                self.parent.suffix = appdata['filesuffix']
+
         # Tooltips
         self.btn_remove.SetToolTip(_('Remove the selected '
                                      'files from the list'))
@@ -461,7 +457,7 @@ class FileDnD(wx.Panel):
             self.file_src.pop(num)
             self.duration.pop(num)
             self.flCtrl.Select(num - 1)  # select the previous one
-        self.changes_in_progress(setfocus=False)  # delete parent.timeline
+        self.changes_in_progress(setfocus=False)  # reset timeline
         # self.on_deselect(self)  # deselect removed file
 
         for x in range(self.flCtrl.GetItemCount()):
@@ -480,13 +476,13 @@ class FileDnD(wx.Panel):
         del self.outputnames[:]
         del self.file_src[:]
         del self.duration[:]
-        self.parent.filedropselected = None
         self.changes_in_progress(setfocus=False)
         self.btn_play.Disable()
         self.btn_remove.Disable()
         self.btn_clear.Disable()
         self.parent.rename.Enable(False)
         self.parent.rename_batch.Enable(False)
+        self.parent.filedropselected = None
         if setstate:
             self.sortingstate = None
     # ----------------------------------------------------------------------
@@ -497,9 +493,9 @@ class FileDnD(wx.Panel):
         """
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index, 1)
-        self.parent.filedropselected = item
         self.btn_play.Enable()
         self.btn_remove.Enable()
+        self.parent.filedropselected = item
         self.parent.rename.Enable(True)
     # ----------------------------------------------------------------------
 
@@ -508,9 +504,9 @@ class FileDnD(wx.Panel):
         Event to deselect a line when clicking
         in an empty space of the control list
         """
-        self.parent.filedropselected = None
         self.btn_play.Disable()
         self.btn_remove.Disable()
+        self.parent.filedropselected = None
         self.parent.rename.Enable(False)
     # ----------------------------------------------------------------------
 
