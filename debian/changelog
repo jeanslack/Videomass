@@ -53,8 +53,9 @@ videomass (4.0.10-1) UNRELEASED; urgency=medium
   * [A/V Conversions] improved panels for optimizations.
   * [A/V Conversions] New panel implementation for libaom-av1 encoder.
   * [A/V Conversions] Removed optmimizations.py (and eval then ^_^).
+  * Fixed menu accelerators for "Go" item (Shift+letter wasn't a good idea)
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 05 Mar 2023 13:30:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 08 Mar 2023 14:00:00 +0200
 
 videomass (4.0.5-1) UNRELEASED; urgency=medium
 

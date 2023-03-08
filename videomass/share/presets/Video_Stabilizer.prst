@@ -8,6 +8,30 @@
         "Output_extension": "mkv"
     },
     {
+        "Name": "Make video duo (using hstack)",
+        "Description": "Merges the original video with the stabilized video, which is useful for comparing the result",
+        "First_pass": "-i \"Your video already stabilizzed.suffix\" -filter_complex \"hstack\"",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Make video duo (using pad + overlay)",
+        "Description": "Merges the original video with the stabilized video, which is useful for comparing the result",
+        "First_pass": "-i \"Your video already stabilizzed.suffix\" -filter_complex \"[0:v:0]pad=2*iw:ih[bg]; [bg][1:v:0]overlay=main_w/2:0\"",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Make video duo (using vstack)",
+        "Description": "Merges the original video with the stabilized video, which is useful for comparing the result",
+        "First_pass": "-i \"Your video already stabilizzed.suffix\" -filter_complex \"vstack\"",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
         "Name": "Stabilize shaky videos ",
         "Description": "Useful filter for stabilizing shaky videos (requires libvidstab enabled on FFmpeg)",
         "First_pass": "-an -sn -pix_fmt yuv420p -vf vidstabdetect=shakiness=5:accuracy=15:stepsize=6:mincontrast=0.25:tripod=0:show=0 -f null",

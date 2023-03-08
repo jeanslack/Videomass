@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 05, 2023 V.4.0.10
+Mar 08, 2023 V.4.0.10
 
   * Removed interface to youtube_dl/yt_dlp libraries. Videomass will no longer
     have any functionality for downloading web videos. This mainly
@@ -22,7 +22,7 @@ Mar 05, 2023 V.4.0.10
     The bug did not allow to check correctly the new available versions.
   * [A/V Conversions] fixed bug that disables bitrate control by moving crf
     control.
-  * [Presets Manager] presets have been updated to the new v0.15 release.
+  * [Presets Manager] presets have been updated to the new v0.16 release.
   * [Presets Manager] fixed various bugs in the presets database update
     functionalities.
   * [Presets Manager] Added check for presets updates locally.
@@ -62,6 +62,7 @@ Mar 05, 2023 V.4.0.10
   * [A/V Conversions] improved panels for optimizations.
   * [A/V Conversions] New panel implementation for libaom-av1 encoder.
   * [A/V Conversions] Removed optmimizations.py (and eval then ^_^).
+  * Fixed menu accelerators for "Go" item (Shift+letter wasn't a good idea)
 
 +------------------------------------+
 Jan 17, 2023 V.4.0.5

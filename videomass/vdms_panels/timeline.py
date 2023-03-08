@@ -55,7 +55,7 @@ class Timeline(wx.Panel):
     LGREEN = '#52ee7d'
     BLACK = '#1f1f1f'
 
-    def __init__(self, parent, iconreset, time_seq):
+    def __init__(self, parent, iconreset):
         """
         The time values results are setted on the `time_seq`
         parent (main_frame) attribute.
@@ -77,7 +77,6 @@ class Timeline(wx.Panel):
             bmpreset = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
 
         self.parent = parent
-        self.time_seq = time_seq
         self.duration = self.parent.duration
         self.milliseconds = 1
         self.hour24format = None
@@ -150,7 +149,7 @@ class Timeline(wx.Panel):
     def reset_timeline(self, msg):
         """
         Any change to the file list in the drag panel
-        resets the timeline data. This method is called
+        resets timeline data. This method is called
         using pub/sub protocol switching between panels:
         (see `parent.on_changes_file_list`)
         """
@@ -189,7 +188,7 @@ class Timeline(wx.Panel):
         self.time_start = timef
         self.ms_start = timems
         duration = milliseconds2clock(self.ms_end - self.ms_start)
-        self.time_seq = f"-ss {self.time_start} -t {duration}"
+        self.parent.time_seq = f"-ss {self.time_start} -t {duration}"
     # ------------------------------------------------------------------#
 
     def on_end(self, event):
@@ -224,7 +223,7 @@ class Timeline(wx.Panel):
         self.time_end = timef
         self.ms_end = timems
         duration = milliseconds2clock(self.ms_end - self.ms_start)
-        self.time_seq = f"-ss {self.time_start} -t {duration}"
+        self.parent.time_seq = f"-ss {self.time_start} -t {duration}"
     # ------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -257,7 +256,7 @@ class Timeline(wx.Panel):
         """
         self.time_start = '00:00:00.000'  # seek position
         self.time_end = '00:00:00.000'  # duration of the selection
-        self.time_seq = f"-ss {self.time_start} -t {self.time_end}"
+        self.parent.time_seq = f"-ss {self.time_start} -t {self.time_end}"
         self.ms_end = 0
         self.ms_start = 0
         self.ctrl_start.SetTime(00, 00, 00)

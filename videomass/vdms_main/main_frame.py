@@ -126,10 +126,7 @@ class MainFrame(wx.Frame):
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
 
         # ---------- panel instances:
-        self.TimeLine = timeline.Timeline(self,
-                                          self.icons['clear'],
-                                          self.time_seq,
-                                          )
+        self.TimeLine = timeline.Timeline(self, self.icons['clear'])
         self.ChooseTopic = choose_topic.Choose_Topic(self,
                                                      self.appdata['ostype'],
                                                      )
@@ -497,27 +494,27 @@ class MainFrame(wx.Frame):
 
         # ------------------ Go menu
         goButton = wx.Menu()
-        self.startpan = goButton.Append(wx.ID_ANY, _("Home panel\tShift+H"),
+        self.startpan = goButton.Append(wx.ID_ANY, _("Home panel\tCtrl+Shift+H"),
                                         _("Go to the 'Home' panel"))
         goButton.AppendSeparator()
         self.prstpan = goButton.Append(wx.ID_ANY,
-                                       _("Presets Manager\tShift+P"),
+                                       _("Presets Manager\tCtrl+Shift+P"),
                                        _("Go to the 'Presets Manager' panel"))
-        self.avpan = goButton.Append(wx.ID_ANY, _("A/V Conversions\tShift+V"),
+        self.avpan = goButton.Append(wx.ID_ANY, _("A/V Conversions\tCtrl+Shift+V"),
                                      _("Go to the 'A/V Conversions' panel"))
         self.concpan = goButton.Append(wx.ID_ANY,
-                                       _("Concatenate Demuxer\tShift+D"),
+                                       _("Concatenate Demuxer\tCtrl+Shift+D"),
                                        _("Go to the 'Concatenate Demuxer' "
                                          "panel"))
         self.slides = goButton.Append(wx.ID_ANY,
-                                      _("Still Image Maker\tShift+I"),
+                                      _("Still Image Maker\tCtrl+Shift+I"),
                                       _("Go to the 'Still Image Maker' panel"))
         self.toseq = goButton.Append(wx.ID_ANY,
-                                     _("From Movie to Pictures\tShift+S"),
+                                     _("From Movie to Pictures\tCtrl+Shift+S"),
                                      _("Go to the 'From Movie to Pictures' "
                                        "panel"))
         goButton.AppendSeparator()
-        dscrp = (_("Output Monitor\tShift+O"),
+        dscrp = (_("Output Monitor\tCtrl+Shift+O"),
                  _("Keeps track of the output for debugging errors"))
         self.logpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         goButton.AppendSeparator()
@@ -1564,25 +1561,22 @@ class MainFrame(wx.Frame):
         """
         if varargs[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
-            duration, time_seq = self.duration, self.time_seq
-
+            dur, seq = self.duration, self.time_seq
         elif varargs[0] in ('concat_demuxer', 'sequence_to_video'):
-            duration, time_seq = varargs[6], ''
-
+            dur, seq = varargs[6], ''
         elif self.time_seq != "-ss 00:00:00.000 -t 00:00:00.000":
             ms = get_milliseconds(self.time_seq.split()[3])  # -t duration
-            time_seq = self.time_seq
+            seq = self.time_seq
             if [t for t in self.duration if ms > t]:  # if out time range
                 wx.MessageBox(_('Cannot continue: The duration in the '
                                 'timeline exceeds the duration of some '
                                 'queued files.'),
                               'Videomass', wx.ICON_ERROR, self)
                 return
-            duration = [ms for n in self.duration]
+            dur = [ms for n in self.duration]
             self.statusbar_msg(_('Processing...'), None)
-
         else:
-            duration, time_seq = self.duration, ''
+            dur, seq = self.duration, ''
 
         self.SetTitle(_('Videomass - Output Monitor'))
         # Hide all others panels:
@@ -1600,8 +1594,7 @@ class MainFrame(wx.Frame):
         self.openmedia.Enable(False)
         # Hide the tool bar
         self.toolbar.Hide()
-        self.ProcessPanel.topic_thread(self.topicname, varargs,
-                                       duration, time_seq)
+        self.ProcessPanel.topic_thread(self.topicname, varargs, dur, seq)
         self.Layout()
     # ------------------------------------------------------------------#
 
