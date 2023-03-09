@@ -31,6 +31,7 @@ import wx.lib.scrolledpanel as scrolled
 import wx.lib.agw.floatspin as FS
 from pubsub import pub
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.utils import get_volume_data
 from videomass.vdms_panels.libaom import AV1Pan
 from videomass.vdms_panels.webm import WebMPan
 from videomass.vdms_panels.hevc_avc import Hevc_Avc
@@ -189,8 +190,8 @@ class AV_Conv(wx.Panel):
             "AudioIndex": "", "AudioMap": ["-map 0:a:?", ""],
             "SubtitleMap": "-map 0:s?", "AudioCodec": ["", ""],
             "AudioChannel": ["", ""], "AudioRate": ["", ""],
-            "AudioBitrate": ["", ""], "AudioDepth": ["", ""], "PEAK": "",
-            "EBU": "", "RMS": "", "Deinterlace": "", "Interlace": "",
+            "AudioBitrate": ["", ""], "AudioDepth": ["", ""], "PEAK": [],
+            "EBU": "", "RMS": [], "Deinterlace": "", "Interlace": "",
             "PixelFormat": "", "Orientation": ["", ""], "Crop": "",
             "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "",
             "Vidstabtransform": "", "Vidstabdetect": "", "Unsharp": "",
@@ -200,7 +201,6 @@ class AV_Conv(wx.Panel):
         }
         self.appdata = appdata
         self.parent = parent
-        self.norm_dataref = []  # see `on_Audio_analyzes` for details
 
         if self.appdata['ostype'] == 'Windows':
             sizepancodevideo = (270, 700)
@@ -824,8 +824,7 @@ class AV_Conv(wx.Panel):
             self.btn_voldect.Enable()
         self.spin_target.SetValue(-1.0)
         self.peakpanel.Hide(), self.ebupanel.Hide(), self.btn_details.Hide()
-        self.opt["PEAK"], self.opt["EBU"], self.opt["RMS"] = "", "", ""
-        del self.norm_dataref[:]
+        self.opt["PEAK"], self.opt["EBU"], self.opt["RMS"] = [], "", []
 
     # ----------------------Event handler (callback)----------------------#
 
@@ -1005,12 +1004,12 @@ class AV_Conv(wx.Panel):
         elif self.rdbx_normalize.GetSelection() == 1:
             if self.btn_voldect.IsEnabled():
                 return _undetect()
-            afilter = f'-af {self.opt["PEAK"][fget[1]].split()[1]}'
+            afilter = f'-af {self.opt["PEAK"][fget[1]][5].split()[1]}'
 
         elif self.rdbx_normalize.GetSelection() == 2:
             if self.btn_voldect.IsEnabled():
                 return _undetect()
-            afilter = f'-af {self.opt["RMS"][fget[1]].split()[1]}'
+            afilter = f'-af {self.opt["RMS"][fget[1]][5].split()[1]}'
 
         elif self.rdbx_normalize.GetSelection() == 3:
             afilter = (f'-af loudnorm=I={str(self.spin_i.GetValue())}'
@@ -1680,26 +1679,11 @@ class AV_Conv(wx.Panel):
         PEAK/RMS-based volume detection and analysis process
         required to calculate the offset for audio volume
         normalization in dBFS:
-
             - PEAK-based Analyzes, get the MAXIMUM peak level data.
             - RMS-based Analyzes, get the MEAN peak level data.
-
-        `self.norm_dataref` is an object of type list contains
-        tuple items, eg. ('filename', maxvol, meanvol, offset, result)
-
         <https://superuser.com/questions/323119/how-can-i-normalize-audio-
         using-ffmpeg?utm_medium=organic>
-
         """
-        msg2 = _('Audio normalization is required only for some files')
-        msg3 = (_("Audio normalization will not be applied because the "
-                  "source signal is equal"))
-        if self.norm_dataref:
-            del self.norm_dataref[:]
-
-        self.parent.statusbar_msg("", None)
-        target = self.spin_target.GetValue()
-
         data = volume_detect_process(self.parent.file_src,
                                      self.parent.time_seq,  # from -ss to -t
                                      self.opt["AudioIndex"]
@@ -1708,52 +1692,24 @@ class AV_Conv(wx.Panel):
             wx.MessageBox(f"{data[1]}", "Videomass", wx.ICON_ERROR, self)
             return
 
-        volume = []
         if self.rdbx_normalize.GetSelection() == 1:  # PEAK
-            for f, v in zip(self.parent.file_src, data[0]):
-                maxvol = v[0].split(' ')[0]
-                meanvol = v[1].split(' ')[0]
-                offset = float(maxvol) - float(target)
-                result = float(maxvol) - offset
-                if float(maxvol) == float(target):
-                    volume.append('  ')
-                else:
-                    volume.append(f'-filter:a:{self.opt["AudioMap"][1]} '
-                                  f'volume={-offset:f}dB')
-                self.norm_dataref.append((f,
-                                          maxvol,
-                                          meanvol,
-                                          str(offset),
-                                          str(result),
-                                          ))
+            target = "PEAK"
         elif self.rdbx_normalize.GetSelection() == 2:  # RMS
-            for f, v in zip(self.parent.file_src, data[0]):
-                maxvol = v[0].split(' ')[0]
-                meanvol = v[1].split(' ')[0]
-                offset = float(meanvol) - float(target)
-                result = float(maxvol) - offset
-                if offset == 0.0:
-                    volume.append('  ')
-                else:
-                    volume.append(f'-filter:a:{self.opt["AudioMap"][1]} '
-                                  f'volume={-offset:f}dB')
-                self.norm_dataref.append((f,
-                                          maxvol,
-                                          meanvol,
-                                          str(offset),
-                                          str(result),
-                                          ))
-        if not [a for a in volume if '  ' not in a]:
-            self.parent.statusbar_msg(msg3, AV_Conv.ORANGE, AV_Conv.WHITE)
-        else:
-            if len(volume) == 1 or '  ' not in volume:
-                pass
-            else:
-                self.parent.statusbar_msg(msg2, AV_Conv.YELLOW, AV_Conv.WHITE)
-        if self.rdbx_normalize.GetSelection() == 1:  # PEAK
-            self.opt["PEAK"] = volume
-        elif self.rdbx_normalize.GetSelection() == 2:  # RMS
-            self.opt["RMS"] = volume
+            target = "RMS"
+
+        del self.opt["PEAK"][:]
+        del self.opt["RMS"][:]
+
+        gain = self.spin_target.GetValue()
+        for filename, vol in zip(self.parent.file_src, data[0]):
+            dataref = get_volume_data(filename,
+                                      vol,
+                                      gain=gain,
+                                      target=target,
+                                      audiomap=self.opt["AudioMap"][1],
+                                      )
+            self.opt[target].append(dataref)
+
         self.btn_voldect.Disable()
         self.btn_details.Show()
         self.nb_Audio.Layout()
@@ -1775,8 +1731,9 @@ class AV_Conv(wx.Panel):
         if self.btn_voldect.IsEnabled():
             self.on_Audio_analyzes(self)
 
+        lev = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
         self.parent.audivolnormalize = AudioVolNormal(title,
-                                                      self.norm_dataref,
+                                                      lev,
                                                       self.appdata['ostype'],
                                                       )
         self.parent.audivolnormalize.Show()
@@ -1929,7 +1886,7 @@ class AV_Conv(wx.Panel):
                                              self.opt["Makeduo"],
                                              [pass1, pass2],
                                              self.opt["VFilters"],
-                                             audnorm,
+                                             [vol[5] for vol in audnorm],
                                              logname,
                                              len(f_src),
                                              )
@@ -1970,7 +1927,7 @@ class AV_Conv(wx.Panel):
                                                  command,
                                                  None,
                                                  '',
-                                                 audnorm,
+                                                 [vol[5] for vol in audnorm],
                                                  logname,
                                                  len(f_src),
                                                  )
@@ -2027,7 +1984,7 @@ class AV_Conv(wx.Panel):
                                                  None,
                                                  [pass1, pass2],
                                                  '',
-                                                 audnorm,
+                                                 [vol[5] for vol in audnorm],
                                                  logname,
                                                  len(f_src),
                                                  )
@@ -2066,7 +2023,7 @@ class AV_Conv(wx.Panel):
                                                  command,
                                                  None,
                                                  '',
-                                                 audnorm,
+                                                 [vol[5] for vol in audnorm],
                                                  logname,
                                                  len(f_src),
                                                  )
@@ -2219,7 +2176,7 @@ class AV_Conv(wx.Panel):
                                              command,
                                              None,
                                              '',
-                                             audnorm,
+                                             [vol[5] for vol in audnorm],
                                              logname,
                                              len(f_src),
                                              )

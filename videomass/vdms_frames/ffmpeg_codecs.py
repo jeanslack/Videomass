@@ -45,11 +45,11 @@ class FFmpegCodecs(wx.MiniFrame):
         self.option = option
         if self.option == '-encoders':
             cod = _('CODING CAPABILITY')
-            colctrl = 'ORANGE'
+            colctrl = 'YELLOW GREEN'
             title = _("FFmpeg encoders")
         else:
             cod = _('DECODING CAPABILITY')
-            colctrl = 'SIENNA'
+            colctrl = 'LIGHT STEEL BLUE'
             title = _("FFmpeg decoders")
 
         wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER

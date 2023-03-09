@@ -136,7 +136,7 @@ class FFmpegFormats(wx.MiniFrame):
 
         if ds:
             dmx.InsertItem(index, ('----'))
-            dmx.SetItemBackgroundColour(index, "CORAL")
+            dmx.SetItemBackgroundColour(index, "GREEN YELLOW")
             for a in ds:
                 s = " ".join(a.split()).split(None, 1)
                 if len(s) == 1:
@@ -153,7 +153,7 @@ class FFmpegFormats(wx.MiniFrame):
 
         if ms:
             mx.InsertItem(index, ('----'))
-            mx.SetItemBackgroundColour(index, "CORAL")
+            mx.SetItemBackgroundColour(index, "GREEN YELLOW")
             for a in ms:
                 s = " ".join(a.split()).split(None, 1)
                 if len(s) == 1:
@@ -170,7 +170,7 @@ class FFmpegFormats(wx.MiniFrame):
 
         if mds:
             dmx_mx.InsertItem(index, ('----'))
-            dmx_mx.SetItemBackgroundColour(index, "CORAL")
+            dmx_mx.SetItemBackgroundColour(index, "GREEN YELLOW")
             for a in mds:
                 s = " ".join(a.split()).split(None, 1)
                 if len(s) == 1:

@@ -95,6 +95,52 @@ def open_default_application(pathname):
 # ------------------------------------------------------------------------
 
 
+def get_volume_data(filename, detect: list,
+                    gain='-1.0', target='PEAK', audiomap='') -> tuple:
+    """
+    Given a filename, a detect object from `VolumeDetectThread`
+    and a target level, it returns a volumedata object with
+    the values expressed in dBFS of the maximum volume, average
+    volume, offset, gain and the audio filter argument in FFmpeg
+    syntax. Get 'PEAK' or 'RMS', default is 'PEAK'. It also
+    supports audio map indexing if the audio stream itself is
+    contained within a video.
+    """
+    volumedata = []
+    volumedata.append(filename)
+    if target == 'PEAK':
+        maxvol = detect[0].split('dB')[0].strip()
+        volumedata.append(maxvol)
+        meanvol = detect[1].split('dB')[0].strip()
+        volumedata.append(meanvol)
+        offset = float(maxvol) - float(gain)
+        volumedata.append(str(offset))
+        result = float(maxvol) - float(offset)
+        volumedata.append(str(result))
+        if float(maxvol) == float(gain):
+            volume = '  '
+        else:
+            volume = f'-filter:a:{audiomap} volume={-offset:f}dB'
+        volumedata.append(volume)
+
+    elif target == 'RMS':
+        maxvol = detect[0].split('dB')[0].strip()
+        volumedata.append(maxvol)
+        meanvol = detect[1].split('dB')[0].strip()
+        volumedata.append(meanvol)
+        offset = float(meanvol) - float(gain)
+        volumedata.append(str(offset))
+        result = float(maxvol) - offset
+        volumedata.append(str(result))
+        if offset == 0.0:
+            volume = '  '
+        else:
+            volume = f'-filter:a:{audiomap} volume={-offset:f}dB'
+        volumedata.append(volume)
+
+    return tuple(volumedata)
+
+
 def format_bytes(num):
     """
     Given a float number (bytes) returns size output
