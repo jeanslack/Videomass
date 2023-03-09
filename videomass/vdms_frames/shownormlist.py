@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2023
+Rev: March.09.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -45,74 +45,74 @@ class AudioVolNormal(wx.MiniFrame):
                               style=wx.RESIZE_BORDER
                               | wx.CAPTION
                               | wx.CLOSE_BOX
-                              | wx.SYSTEM_MENU)
+                              | wx.SYSTEM_MENU,
+                              )
         self.panel = wx.Panel(self,
                               wx.ID_ANY,
                               style=wx.TAB_TRAVERSAL
-                              | wx.BORDER_THEME)
+                              | wx.BORDER_THEME,
+                              )
         normlist = wx.ListCtrl(self.panel,
                                wx.ID_ANY,
                                style=wx.LC_REPORT
-                               | wx.SUNKEN_BORDER)
-        # ----------------------Properties----------------------#
-        self.SetTitle(_(title))
-        self.SetMinSize((850, 400))
+                               | wx.SUNKEN_BORDER,
+                               )
         normlist.SetMinSize((850, 250))
         normlist.InsertColumn(0, _('File name'), width=300)
         normlist.InsertColumn(1, _('Max volume dBFS'), width=150)
         normlist.InsertColumn(2, _('Mean volume dBFS'), width=150)
         normlist.InsertColumn(3, _('Offset dBFS'), width=100)
         normlist.InsertColumn(4, _('Result dBFS'), width=120)
-        self.button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(normlist, 1, wx.EXPAND | wx.ALL, 5)
         descript = wx.StaticText(self.panel,
                                  wx.ID_ANY,
                                  (_('Post-normalization references:')
                                   ))
-        self.btn_red = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
-                                 size=(-1, -1))
-        self.btn_red.SetBackgroundColour(wx.Colour(143, 36, 27))  # #8f241b
-        self.btn_red.SetForegroundColour(wx.Colour(0, 0, 0))
-        txtred = wx.StaticText(self.panel, wx.ID_ANY, (_("=  Clipped peaks")))
-
-        self.btn_grey = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
-                                  size=(-1, -1))
-        self.btn_grey.SetBackgroundColour(wx.Colour(100, 100, 100))  # #646464
-        self.btn_grey.SetForegroundColour(wx.Colour(0, 0, 0))
-        txtgrey = wx.StaticText(self.panel, wx.ID_ANY, (_("=  No changes")))
-
-        self.btn_yell = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
-                                  size=(-1, -1))
-        self.btn_yell.SetBackgroundColour(wx.Colour(143, 130, 27))  # #8f821b
-        self.btn_yell.SetForegroundColour(wx.Colour(0, 0, 0))
-        txtyell = wx.StaticText(self.panel,
-                                wx.ID_ANY, (_("=  Below max peak")))
-
-        sizer = wx.BoxSizer(wx.VERTICAL)
-
-        gridbtn = wx.GridSizer(1, 1, 0, 0)
-        sizer.Add(normlist, 1, wx.EXPAND | wx.ALL, 5)
         sizer.Add(descript, 0, wx.ALL, 10)
         grid_list = wx.FlexGridSizer(1, 6, 0, 0)
+        sizer.Add(grid_list, 0, wx.ALL, 5)
+
+        self.btn_red = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
+                                 size=(-1, -1))
+        self.btn_red.SetBackgroundColour(wx.Colour('ORANGE'))  # #8f241b
+        self.btn_red.SetForegroundColour(wx.Colour('WHITE'))
         grid_list.Add(self.btn_red, 1, wx.ALL, 5)
+        txtred = wx.StaticText(self.panel, wx.ID_ANY, (_("=  Clipped peaks")))
         grid_list.Add(txtred, 1, wx.ALL
                       | wx.ALIGN_CENTER_VERTICAL
                       | wx.ALIGN_CENTER_HORIZONTAL, 5,
                       )
+        self.btn_grey = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
+                                  size=(-1, -1))
+        self.btn_grey.SetBackgroundColour(wx.Colour('YELLOW GREEN'))  # #646464
+        self.btn_grey.SetForegroundColour(wx.Colour('WHITE'))
         grid_list.Add(self.btn_grey, 1, wx.ALL, 5)
+        txtgrey = wx.StaticText(self.panel, wx.ID_ANY, (_("=  No changes")))
         grid_list.Add(txtgrey, 1, wx.ALL
                       | wx.ALIGN_CENTER_VERTICAL
                       | wx.ALIGN_CENTER_HORIZONTAL, 5,
                       )
+        self.btn_yell = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
+                                  size=(-1, -1))
+        self.btn_yell.SetBackgroundColour(wx.Colour('LIGHT STEEL BLUE'))
+        self.btn_yell.SetForegroundColour(wx.Colour('WHITE'))
         grid_list.Add(self.btn_yell, 1, wx.ALL, 5)
+        txtyell = wx.StaticText(self.panel,
+                                wx.ID_ANY, (_("=  Below max peak")))
         grid_list.Add(txtyell, 1, wx.ALL
                       | wx.ALIGN_CENTER_VERTICAL
                       | wx.ALIGN_CENTER_HORIZONTAL, 5,
                       )
-        sizer.Add(grid_list, 0, wx.ALL, 5)
-
+        # bottm btns
+        gridbtn = wx.GridSizer(1, 1, 0, 0)
         sizer.Add(gridbtn, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=5)
+        self.button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
         gridbtn.Add(self.button_close, 1, wx.ALL, 5)
 
+        # ----------------------Properties----------------------#
+        self.SetTitle(_(title))
+        self.SetMinSize((850, 400))
         self.panel.SetSizer(sizer)
         sizer.Fit(self)
         self.Layout()
@@ -139,54 +139,56 @@ class AudioVolNormal(wx.MiniFrame):
 
         index = 0
         if title == _('RMS-based volume statistics'):
-            for i in data:  # populate dmx listctrl:
-                normlist.InsertItem(index, i[0])
-                normlist.SetItem(index, 1, i[1])
-                normlist.SetItem(index, 2, i[2])
+            for items in data:  # populate dmx listctrl:
+                normlist.InsertItem(index, items[0])
+                normlist.SetItem(index, 1, items[1])
+                normlist.SetItem(index, 2, items[2])
 
-                if float(i[3]) == 0.0:  # not changes
-                    normlist.SetItemBackgroundColour(index, '#646464')  # grey
-                    normlist.SetItem(index, 3, i[3])
+                if float(items[3]) == 0.0:  # not changes
+                    normlist.SetItemBackgroundColour(index, 'YELLOW GREEN')
+                    normlist.SetItem(index, 3, items[3])
                 else:
-                    normlist.SetItem(index, 3, i[3])
+                    normlist.SetItem(index, 3, items[3])
 
-                if float(i[4]) > 0.0:  # is clipped red
-                    normlist.SetItemBackgroundColour(index, '#8f241b')  # red
-                    normlist.SetItem(index, 4, i[4])
+                if float(items[4]) > 0.0:  # is clipped red
+                    normlist.SetItemBackgroundColour(index, 'ORANGE')
+                    normlist.SetItem(index, 4, items[4])
                 else:
-                    normlist.SetItem(index, 4, i[4])
+                    normlist.SetItem(index, 4, items[4])
 
-                if float(i[4]) < float(i[1]):  # target/res inf. to maxvol
-                    normlist.SetItemBackgroundColour(index, '#8f821b')  # yel
-                    normlist.SetItem(index, 4, i[4])
+                if float(items[4]) < float(items[1]):  # target
+                    normlist.SetItemBackgroundColour(index, 'LIGHT STEEL BLUE')
+                    normlist.SetItem(index, 4, items[4])
                 else:
-                    normlist.SetItem(index, 4, i[4])
+                    normlist.SetItem(index, 4, items[4])
+                index += 1
 
-        elif title == _('PEAK-based volume statistics'):
-            for i in data:  # populate dmx listctrl:
-                normlist.InsertItem(index, i[0])
-                normlist.SetItem(index, 1, i[1])
-                normlist.SetItem(index, 2, i[2])
-                normlist.SetItem(index, 3, i[3])
+        if title == _('PEAK-based volume statistics'):
+            for items in data:  # populate dmx listctrl:
+                normlist.InsertItem(index, items[0])
+                normlist.SetItem(index, 1, items[1])
+                normlist.SetItem(index, 2, items[2])
+                normlist.SetItem(index, 3, items[3])
 
-                if float(i[4]) == float(i[1]):  # not changes
-                    normlist.SetItemBackgroundColour(index, '#646464')  # grey
-                    normlist.SetItem(index, 4, i[4])
+                if float(items[4]) == float(items[1]):  # not changes
+                    normlist.SetItemBackgroundColour(index, 'YELLOW GREEN')
+                    normlist.SetItem(index, 4, items[4])
                 else:
-                    normlist.SetItem(index, 4, i[4])
-                if float(i[4]) < float(i[1]):  # target/res inf. to maxvol
+                    normlist.SetItem(index, 4, items[4])
+                if float(items[4]) < float(items[1]):  # target
+                    normlist.SetItemBackgroundColour(index, 'LIGHT STEEL BLUE')
 
-                    normlist.SetItemBackgroundColour(index, '#8f821b')  # yel
-                    normlist.SetItem(index, 4, i[4])
+                    normlist.SetItem(index, 4, items[4])
                 else:
-                    normlist.SetItem(index, 4, i[4])
+                    normlist.SetItem(index, 4, items[4])
+                index += 1
     # --------------------------------------------------------------#
 
     def on_red(self, event):
         """
         event on button red
         """
-        msg = (_("When it's red...\n\n"
+        msg = (_("Orange ton...\n\n"
                  "...It means the resulting audio will be clipped,\n"
                  "because its volume is higher than the maximum 0 db\n"
                  "level. This results in data loss and the audio may\n"
@@ -195,8 +197,8 @@ class AudioVolNormal(wx.MiniFrame):
         win = NormalTransientPopup(self,
                                    wx.SIMPLE_BORDER,
                                    msg,
-                                   (143, 36, 27),
-                                   (0, 0, 0),
+                                   ('ORANGE'),
+                                   ('WHITE'),
                                    )
 
         # Show the popup right below or above the button
@@ -213,15 +215,15 @@ class AudioVolNormal(wx.MiniFrame):
         """
         event on button grey
         """
-        msg = (_("When it's grey...\n\n"
+        msg = (_("Green ton...\n\n"
                  "...It means the resulting audio will not change,\n"
                  "because it's equal to the source."))
 
         win = NormalTransientPopup(self,
                                    wx.SIMPLE_BORDER,
                                    msg,
-                                   (100, 100, 100),
-                                   (250, 250, 250),
+                                   ('YELLOW GREEN'),
+                                   ('WHITE'),
                                    )
 
         # Show the popup right below or above the button
@@ -238,15 +240,15 @@ class AudioVolNormal(wx.MiniFrame):
         """
         event on button yellow
         """
-        msg = (_("When it's yellow...\n\n"
+        msg = (_("Blue ton...\n\n"
                  "...It means an audio signal will be produced with\n"
-                 "a lower volume than the original."))
+                 "a lower volume than the source."))
 
         win = NormalTransientPopup(self,
                                    wx.SIMPLE_BORDER,
                                    msg,
-                                   (143, 130, 27),
-                                   (0, 0, 0),
+                                   ('LIGHT STEEL BLUE'),
+                                   ('WHITE'),
                                    )
 
         # Show the popup right below or above the button
