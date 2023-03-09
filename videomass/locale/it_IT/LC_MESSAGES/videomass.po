@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-08 15:53+0100\n"
-"PO-Revision-Date: 2023-03-08 15:55+0100\n"
+"PO-Revision-Date: 2023-03-09 16:30+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -1530,7 +1530,7 @@ msgstr "Disabilitato"
 
 #: ../vdms_frames/ffmpeg_codecs.py:47
 msgid "CODING CAPABILITY"
-msgstr "CAPACITÀ DI DECODIFICA"
+msgstr "CAPACITÀ DI CODIFICA"
 
 #: ../vdms_frames/ffmpeg_codecs.py:49
 msgid "FFmpeg encoders"
@@ -1538,7 +1538,7 @@ msgstr "Codificatori di FFmpeg"
 
 #: ../vdms_frames/ffmpeg_codecs.py:51
 msgid "DECODING CAPABILITY"
-msgstr "CAPACITÀ DI DECODIFICAZIONE"
+msgstr "CAPACITÀ DI DECODIFICA"
 
 #: ../vdms_frames/ffmpeg_codecs.py:53
 msgid "FFmpeg decoders"

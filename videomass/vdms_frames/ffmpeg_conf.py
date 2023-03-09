@@ -181,7 +181,7 @@ class FFmpegConf(wx.MiniFrame):
         index = 0
         if others:
             others_opt.InsertItem(index, '')
-            others_opt.SetItemBackgroundColour(index, "CORAL")
+            others_opt.SetItemBackgroundColour(index, "LIGHT STEEL BLUE")
             n = len(others)
             for a in range(n):
                 if '=' in others[a]:
@@ -197,7 +197,7 @@ class FFmpegConf(wx.MiniFrame):
         index = 0
         if enable:
             enable_opt.InsertItem(index, _('ENABLED:'))
-            enable_opt.SetItemBackgroundColour(index, "GREEN")
+            enable_opt.SetItemBackgroundColour(index, "YELLOW GREEN")
             n = len(enable)
             for a in range(n):
                 (key, value) = _('Enabled'), enable[a]
@@ -210,7 +210,7 @@ class FFmpegConf(wx.MiniFrame):
         index = 0
         if disable:
             disabled_opt.InsertItem(index, _('DISABLED:'))
-            disabled_opt.SetItemBackgroundColour(index, "RED")
+            disabled_opt.SetItemBackgroundColour(index, "ORANGE")
             n = len(disable)
             for a in range(n):
                 (key, value) = _('Disabled'), disable[a]
