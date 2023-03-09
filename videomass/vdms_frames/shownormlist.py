@@ -76,7 +76,6 @@ class AudioVolNormal(wx.MiniFrame):
         self.btn_red = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
                                  size=(-1, -1))
         self.btn_red.SetBackgroundColour(wx.Colour('ORANGE'))  # #8f241b
-        self.btn_red.SetForegroundColour(wx.Colour('WHITE'))
         grid_list.Add(self.btn_red, 1, wx.ALL, 5)
         txtred = wx.StaticText(self.panel, wx.ID_ANY, (_("=  Clipped peaks")))
         grid_list.Add(txtred, 1, wx.ALL
@@ -86,7 +85,6 @@ class AudioVolNormal(wx.MiniFrame):
         self.btn_grey = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
                                   size=(-1, -1))
         self.btn_grey.SetBackgroundColour(wx.Colour('YELLOW GREEN'))  # #646464
-        self.btn_grey.SetForegroundColour(wx.Colour('WHITE'))
         grid_list.Add(self.btn_grey, 1, wx.ALL, 5)
         txtgrey = wx.StaticText(self.panel, wx.ID_ANY, (_("=  No changes")))
         grid_list.Add(txtgrey, 1, wx.ALL
@@ -96,7 +94,6 @@ class AudioVolNormal(wx.MiniFrame):
         self.btn_yell = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
                                   size=(-1, -1))
         self.btn_yell.SetBackgroundColour(wx.Colour('LIGHT STEEL BLUE'))
-        self.btn_yell.SetForegroundColour(wx.Colour('WHITE'))
         grid_list.Add(self.btn_yell, 1, wx.ALL, 5)
         txtyell = wx.StaticText(self.panel,
                                 wx.ID_ANY, (_("=  Below max peak")))
