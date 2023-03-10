@@ -151,8 +151,6 @@ class LogOut(wx.Panel):
         self.barprog = wx.Gauge(self, wx.ID_ANY, range=0)
         self.labprog = wx.StaticText(self, label="")
         self.labffmpeg = wx.StaticText(self, label="")
-        self.button_stop = wx.Button(self, wx.ID_STOP, _("Abort"))
-        self.button_close = wx.Button(self, wx.ID_CLOSE, "")
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((0, 10))
         sizer.Add(lbl, 0, wx.ALL, 5)
@@ -160,81 +158,68 @@ class LogOut(wx.Panel):
         sizer.Add(self.barprog, 0, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.labprog, 0, wx.ALL, 5)
         sizer.Add(self.labffmpeg, 0, wx.ALL, 5)
-        sizer_btns = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizer_btns, 0, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
-        sizer_btns.Add(self.button_stop, 0, wx.EXPAND | wx.ALL, 5)
-        sizer_btns.Add(self.button_close, 0, wx.EXPAND | wx.ALL, 5)
+        line = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                             size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                             name=wx.StaticLineNameStr,
+                             )
+        sizer.Add(line, 0, wx.ALL | wx.EXPAND, 5)
         # set_properties:
         self.txtout.SetBackgroundColour(self.clr['BACKGRD'])
-        self.button_stop.SetToolTip(_("Stops current process"))
         self.SetSizerAndFit(sizer)
         # bind
-        self.Bind(wx.EVT_BUTTON, self.on_stop, self.button_stop)
-        self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
+        self.Bind(wx.EVT_BUTTON, self.on_close)
         # ------------------------------------------
-        self.button_stop.Enable(True)
-        self.button_close.Enable(False)
 
         pub.subscribe(self.update_display, "UPDATE_EVT")
         pub.subscribe(self.update_count, "COUNT_EVT")
         pub.subscribe(self.end_proc, "END_EVT")
     # ----------------------------------------------------------------------
 
-    def topic_thread(self, panel, varargs, duration, time_seq):
+    def topic_thread(self, panel, durs, tseq, *args):
         """
         Thread redirection
-        varargs: type tuple data object
-        duration: total duration or partial if time_seq is setted
+        *args: type tuple data object
+        durs: list of file durations or partial if tseq is setted
         """
         self.previus = panel  # stores the panel from which it starts
 
-        if varargs[0] == 'Viewing last log':
-            self.button_stop.Enable(False)
-            self.button_close.Enable(True)
+        if args[0] == 'Viewing last log':
             return
 
         self.txtout.Clear()
         self.labprog.SetLabel('')
         self.labffmpeg.SetLabel('')
 
-        self.logname = make_log_template(varargs[8], self.appdata['logdir'])
+        self.logname = make_log_template(args[8], self.appdata['logdir'])
 
-        if varargs[0] == 'onepass':  # from Audio/Video Conv.
-            self.thread_type = OnePass(varargs, duration,
-                                       self.logname, time_seq,
-                                       )
-        elif varargs[0] == 'twopass':  # from Video Conv.
-            self.thread_type = TwoPass(varargs, duration,
-                                       self.logname, time_seq
-                                       )
-        elif varargs[0] == 'two pass EBU':  # from Audio/Video Conv.
-            self.thread_type = Loudnorm(varargs, duration,
-                                        self.logname, time_seq
-                                        )
-        elif varargs[0] == 'video_to_sequence':
+        if args[0] == 'onepass':
+            self.thread_type = OnePass(self.logname, durs, tseq, *args)
+
+        elif args[0] == 'twopass':
+            self.thread_type = TwoPass(self.logname, durs, tseq, *args)
+
+        elif args[0] == 'two pass EBU':
+            self.thread_type = Loudnorm(self.logname, durs, tseq, *args)
+
+        elif args[0] == 'video_to_sequence':
             self.with_eta = False
-            self.thread_type = PicturesFromVideo(varargs, duration,
-                                                 self.logname, time_seq
+            self.thread_type = PicturesFromVideo(self.logname, durs,
+                                                 tseq, *args
                                                  )
-        elif varargs[0] == 'sequence_to_video':
-            self.thread_type = SlideshowMaker(varargs, duration,
-                                              self.logname
-                                              )
-        elif varargs[0] == 'libvidstab':  # from Audio/Video Conv.
-            self.thread_type = VidStab(varargs, duration,
-                                       self.logname, time_seq
-                                       )
-        elif varargs[0] == 'concat_demuxer':  # from Concatenation Demuxer
+        elif args[0] == 'sequence_to_video':
+            self.thread_type = SlideshowMaker(self.logname, durs, *args)
+
+        elif args[0] == 'libvidstab':
+            self.thread_type = VidStab(self.logname, durs, tseq, *args)
+
+        elif args[0] == 'concat_demuxer':
             self.with_eta = False
-            self.thread_type = ConcatDemuxer(varargs, duration,
-                                             self.logname,
-                                             )
+            self.thread_type = ConcatDemuxer(self.logname, durs, *args)
     # ----------------------------------------------------------------------
 
     def update_display(self, output, duration, status):
         """
-        Receive message from thread of the second loops process
-        by wxCallafter and pubsub UPDATE_EVT.
+        Receive message from thread by pubsub UPDATE_EVT protol.
         The received 'output' is parsed for calculate the bar
         progress value, percentage label and errors management.
         This method can be used even for non-loop threads.
@@ -246,11 +231,6 @@ class LogOut(wx.Panel):
               'done' on `update_count` method. Since not all ffmpeg
               messages are errors, sometimes it happens to see more
               output marked with yellow color.
-
-        This strategy consists first of capturing all the output and
-        marking it in yellow, then in capturing the error if present,
-        but exiting immediately after the function.
-
         """
         if not status == 0:  # error, exit status of the p.wait
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR1']))
@@ -401,12 +381,11 @@ class LogOut(wx.Panel):
                     delete_file_source(msg, trashdir)  # filelist, dir
 
         self.txtout.AppendText('\n')
-        self.button_stop.Enable(False)
-        self.button_close.Enable(True)
-        self.thread_type = None
+        self.reset_all()
+        pub.sendMessage("PROCESS TERMINATED", msg='Terminated')
     # ----------------------------------------------------------------------
 
-    def on_stop(self, event):
+    def on_stop(self):
         """
         The user change idea and was stop process
         """
@@ -419,16 +398,23 @@ class LogOut(wx.Panel):
         # event.Skip()
     # ----------------------------------------------------------------------
 
+    def reset_all(self):
+        """
+        Reset to default at any process terminated
+        """
+        self.logname = None
+        self.thread_type = None
+        self.abort = False
+        self.error = False
+        self.result.clear()
+        self.count = 0
+        self.with_eta = True  # restoring time remaining display
+    # ----------------------------------------------------------------------
+
     def on_close(self, event):
         """
-        close dialog and retrieve at previusly panel
-
+        close this panel and retrieve at the previusly
         """
-        if not self.logname:  # only read mod is shown
-            self.button_stop.Enable(True)
-            self.button_close.Enable(False)
-            self.parent.panelShown(self.previus)  # retrieve at previusly panel
-
         if self.thread_type is not None:
             if wx.MessageBox(_('There are still processes running.. if you '
                                'want to stop them, use the "Abort" button.\n\n'
@@ -438,17 +424,5 @@ class LogOut(wx.Panel):
                 return
             self.parent.on_Kill()
 
-        # reset all before close
-        self.logname = None
-        self.button_stop.Enable(True)
-        self.button_close.Enable(False)
-        self.thread_type = None
-        self.abort = False
-        self.error = False
-        self.result.clear()
-        self.count = 0
-        if not self.barprog.IsShown():
-            self.barprog.Show()  # restoring progress bar if hidden
-        self.with_eta = True  # restoring time remaining display
-        self.parent.panelShown(self.previus)  # retrieve at previusly panel
+        self.parent.panelShown(self.previus)  # retrieve at the previus panel
         # event.Skip()

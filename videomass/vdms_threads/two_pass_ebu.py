@@ -53,18 +53,20 @@ class Loudnorm(Thread):
     OS = appdata['ostype']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
-    def __init__(self, var, duration, logname, timeseq):
+    def __init__(self, logname, duration, timeseq, *args):
         """
+        Called from `long_processing_task.topic_thread`.
+        Also see `main_frame.switch_to_processing`.
         """
         self.stop_work_thread = False  # process terminate
-        self.input_flist = var[1]  # list of infile (elements)
-        self.passlist = var[5]  # comand list
-        self.audio_outmap = var[6]  # map output list
-        self.output_flist = var[3]  # output path
-        self.duration = duration  # duration list
-        self.time_seq = timeseq  # a time segment
+        self.input_flist = args[1]  # list of infile (elements)
+        self.passlist = args[5]  # comand list
+        self.audio_outmap = args[6]  # map output list
+        self.output_flist = args[3]  # output path
+        self.duration = duration  # durations list
+        self.time_seq = timeseq  # time segments list
         self.count = 0  # count first for loop
-        self.countmax = len(var[1])  # length file list
+        self.countmax = len(args[1])  # length file list
         self.logname = logname  # title name of file log
         self.nul = 'NUL' if Loudnorm.OS == 'Windows' else '/dev/null'
 

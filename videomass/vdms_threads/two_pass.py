@@ -55,19 +55,20 @@ class TwoPass(Thread):
     OS = appdata['ostype']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
-    def __init__(self, varargs, duration, logname, timeseq):
+    def __init__(self, logname, duration, timeseq, *args):
         """
-        The 'volume' attribute may have an empty value
+        Called from `long_processing_task.topic_thread`.
+        Also see `main_frame.switch_to_processing`.
         """
         self.stop_work_thread = False  # process terminate
-        self.input_flist = varargs[1]  # list of infile (elements)
-        self.passlist = varargs[5]  # comand list set for double-pass
-        self.output_flist = varargs[3]  # output path
+        self.input_flist = args[1]  # list of infile (elements)
+        self.passlist = args[5]  # comand list set for double-pass
+        self.output_flist = args[3]  # output path
         self.duration = duration  # duration list
-        self.time_seq = timeseq  # a time segment
-        self.volume = varargs[7]  # volume compensation data
+        self.time_seq = timeseq  # a time segment list
+        self.volume = args[7]  # volume compensation data
         self.count = 0  # count first for loop
-        self.countmax = len(varargs[1])  # length file list
+        self.countmax = len(args[1])  # length file list
         self.logname = logname  # title name of file log
         self.nul = 'NUL' if TwoPass.OS == 'Windows' else '/dev/null'
 

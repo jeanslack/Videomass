@@ -229,20 +229,21 @@ class SlideshowMaker(Thread):
     SUFFIX = appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
-    def __init__(self, varargs, duration, logname):
+    def __init__(self, logname, duration, *args):
         """
-        Initialize the attributes given by varargs
+        Called from `long_processing_task.topic_thread`.
+        Also see `main_frame.switch_to_processing`.
         """
         Thread.__init__(self)
 
-        self.filelist = varargs[1]  # input file list (items)
+        self.filelist = args[1]  # input file list (items)
         # self.destdir = varargs[2]  # destination dir
-        self.filedest = varargs[3]  # filename destination
-        self.args_0 = varargs[4][0]  # args for temporary process
-        self.preinput_1 = varargs[5]  # pre-input args for processing
-        self.args_1 = varargs[4][1]  # args for processing
+        self.filedest = args[3]  # filename destination
+        self.args_0 = args[4][0]  # args for temporary process
+        self.preinput_1 = args[5]  # pre-input args for processing
+        self.args_1 = args[4][1]  # args for processing
         self.duration = duration  # duration
-        self.countmax = varargs[9]  # length file list
+        self.countmax = args[9]  # length file list
         self.count = 0  # count first for loop
         self.logname = logname  # log name
         self.stop_work_thread = False  # process terminate

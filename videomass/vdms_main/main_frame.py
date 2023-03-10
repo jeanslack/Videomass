@@ -200,6 +200,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.on_close)
 
         pub.subscribe(self.check_modeless_window, "DESTROY_ORPHANED_WINDOWS")
+        pub.subscribe(self.process_terminated, "PROCESS TERMINATED")
 
     # -------------------Status bar settings--------------------#
 
@@ -231,6 +232,11 @@ class MainFrame(wx.Frame):
         """
         Retrieve to choose topic panel
         """
+        if self.ProcessPanel.IsShown():
+            if self.ProcessPanel.thread_type:
+                return
+            self.ProcessPanel.Hide()
+
         self.topicname = None
         self.fileDnDTarget.Hide()
         self.TimeLine.Hide()
@@ -1128,7 +1134,6 @@ class MainFrame(wx.Frame):
             if set_up.ShowModal() == wx.ID_OK:
                 if set_up.getvalue():
                     self.on_Kill()
-
     # ------------------------------------------------------------------#
     # --------- Menu Help  ###
 
@@ -1273,6 +1278,9 @@ class MainFrame(wx.Frame):
             bmpnext = get_bmp(self.icons['next'], bmp_size)
             bmpinfo = get_bmp(self.icons['fileproperties'], bmp_size)
             bmpconv = get_bmp(self.icons['startconv'], bmp_size)
+            bmpstop = get_bmp(self.icons['stop'], bmp_size)
+            bmphome = get_bmp(self.icons['home'], bmp_size)
+            bmplog = get_bmp(self.icons['logpan'], bmp_size)
 
         else:
             bmpback = wx.Bitmap(self.icons['previous'], wx.BITMAP_TYPE_ANY)
@@ -1280,9 +1288,18 @@ class MainFrame(wx.Frame):
             bmpinfo = wx.Bitmap(self.icons['fileproperties'],
                                 wx.BITMAP_TYPE_ANY)
             bmpconv = wx.Bitmap(self.icons['startconv'], wx.BITMAP_TYPE_ANY)
+            bmpstop = wx.Bitmap(self.icons['stop'], wx.BITMAP_TYPE_ANY)
+            bmphome = wx.Bitmap(self.icons['home'], wx.BITMAP_TYPE_ANY)
+            bmplog = wx.Bitmap(self.icons['logpan'], wx.BITMAP_TYPE_ANY)
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
+
+        tip = _("Go to the 'Home' panel")
+        home = self.toolbar.AddTool(16, _('Home'),
+                                    bmphome,
+                                    tip, wx.ITEM_NORMAL
+                                    )
 
         tip = _("Go to the previous panel")
         back = self.toolbar.AddTool(3, _('Back'),
@@ -1294,6 +1311,11 @@ class MainFrame(wx.Frame):
                                        bmpnext,
                                        tip, wx.ITEM_NORMAL
                                        )
+        tip = _("Keeps track of the output for debugging errors")
+        logpan = self.toolbar.AddTool(18, _('Output Monitor'),
+                                      bmplog,
+                                      tip, wx.ITEM_NORMAL
+                                      )
         # self.toolbar.AddSeparator()
         # self.toolbar.AddStretchableSpace()
         tip = _("Get informative data about imported media streams")
@@ -1306,10 +1328,19 @@ class MainFrame(wx.Frame):
                                                bmpconv,
                                                tip, wx.ITEM_NORMAL
                                                )
+
+        tip = _("Stops current process")
+        stop_coding = self.toolbar.AddTool(14, _('Abort'),
+                                           bmpstop,
+                                           tip, wx.ITEM_NORMAL
+                                           )
         self.toolbar.Realize()
 
         # ----------------- Tool Bar Binding (evt)-----------------------#
+        self.Bind(wx.EVT_TOOL, self.startPan, home)
+        self.Bind(wx.EVT_TOOL, self.logPan, logpan)
         self.Bind(wx.EVT_TOOL, self.click_start, self.run_coding)
+        self.Bind(wx.EVT_TOOL, self.click_stop, stop_coding)
         self.Bind(wx.EVT_TOOL, self.on_Back, back)
         self.Bind(wx.EVT_TOOL, self.on_Forward, forward)
         self.Bind(wx.EVT_TOOL, self.media_streams, self.btn_steams)
@@ -1320,6 +1351,10 @@ class MainFrame(wx.Frame):
         """
         Return to the previous panel.
         """
+        if self.ProcessPanel.IsShown():
+            self.panelShown(self.ProcessPanel.previus)
+            return
+
         if self.fileDnDTarget.IsShown():
             self.choosetopicRetrieve()
 
@@ -1355,6 +1390,7 @@ class MainFrame(wx.Frame):
             pub.sendMessage("MAX_FILE_DURATION", msg='Changes')
             self.changed = self.file_src.copy()
             self.statusbar_msg(_('Ready'), None)
+
         elif self.changed == self.file_src:
             self.statusbar_msg(_('Ready'), None)
         else:
@@ -1393,6 +1429,8 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(4, True)
         self.toolbar.EnableTool(5, True)
         self.toolbar.EnableTool(12, False)
+        self.toolbar.EnableTool(14, False)
+        self.toolbar.EnableTool(18, False)
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)
@@ -1426,6 +1464,8 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(4, False)
         self.toolbar.EnableTool(5, True)
         self.toolbar.EnableTool(12, True)
+        self.toolbar.EnableTool(14, False)
+        self.toolbar.EnableTool(18, True)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1455,9 +1495,10 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(4, False)
         self.toolbar.EnableTool(5, True)
         self.toolbar.EnableTool(12, True)
+        self.toolbar.EnableTool(14, False)
+        self.toolbar.EnableTool(18, True)
         self.Layout()
         self.PrstsPanel.update_preset_state()
-
     # ------------------------------------------------------------------#
 
     def switch_concat_demuxer(self, event):
@@ -1486,6 +1527,8 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(4, False)
         self.toolbar.EnableTool(5, True)
         self.toolbar.EnableTool(12, True)
+        self.toolbar.EnableTool(14, False)
+        self.toolbar.EnableTool(18, True)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1515,6 +1558,8 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(4, False)
         self.toolbar.EnableTool(5, True)
         self.toolbar.EnableTool(12, True)
+        self.toolbar.EnableTool(14, False)
+        self.toolbar.EnableTool(18, True)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1544,28 +1589,21 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(4, False)
         self.toolbar.EnableTool(5, True)
         self.toolbar.EnableTool(12, True)
+        self.toolbar.EnableTool(14, False)
+        self.toolbar.EnableTool(18, True)
         self.Layout()
     # ------------------------------------------------------------------#
 
-    def switch_to_processing(self, *varargs):
+    def switch_to_processing(self, *args):
         """
-    1) TIME DEFINITION FOR THE PROGRESS BAR
-        For a suitable and efficient progress bar, if a specific
-        time sequence has been set with the timeline tool, the total
-        duration of each media file will be replaced with the set time
-        sequence. Otherwise the duration of each media will be the one
-        originated from its source duration.
-
-    2) STARTING THE PROCESS
-        Here the panel with the progress bar is instantiated which will
-        assign a corresponding thread.
-
+        Call the `ProcessPanel.topic_thread` instance method
+        (Monitor Output) assigning the corresponding thread.
         """
-        if varargs[0] == 'Viewing last log':
+        if args[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
             dur, seq = self.duration, self.time_seq
-        elif varargs[0] in ('concat_demuxer', 'sequence_to_video'):
-            dur, seq = varargs[6], ''
+        elif args[0] in ('concat_demuxer', 'sequence_to_video'):
+            dur, seq = args[6], ''
         elif self.time_seq != "-ss 00:00:00.000 -t 00:00:00.000":
             ms = get_milliseconds(self.time_seq.split()[3])  # -t duration
             seq = self.time_seq
@@ -1581,7 +1619,6 @@ class MainFrame(wx.Frame):
             dur, seq = self.duration, ''
 
         self.SetTitle(_('Videomass - Output Monitor'))
-        # Hide all others panels:
         self.fileDnDTarget.Hide()
         self.VconvPanel.Hide()
         self.PrstsPanel.Hide()
@@ -1589,24 +1626,32 @@ class MainFrame(wx.Frame):
         self.ConcatDemuxer.Hide()
         self.toPictures.Hide()
         self.toSlideshow.Hide()
-        # Show the panel:
         self.ProcessPanel.Show()
-        # self.SetTitle('Videomass')
-        [self.menuBar.EnableTop(x, False) for x in range(3, 5)]
-        self.openmedia.Enable(False)
-        # Hide the tool bar
-        self.toolbar.Hide()
-        self.ProcessPanel.topic_thread(self.topicname, varargs, dur, seq)
+        if not args[0] == 'Viewing last log':
+            [self.menuBar.EnableTop(x, False) for x in range(3, 5)]
+            self.openmedia.Enable(False)
+            # self.toolbar Hide/Show items
+            self.toolbar.EnableTool(3, False)
+            self.toolbar.EnableTool(4, False)
+            self.toolbar.EnableTool(5, True)
+            self.toolbar.EnableTool(14, True)  # stop
+            self.toolbar.EnableTool(16, False)  # home
+        self.toolbar.EnableTool(12, False)  # rendering
+        self.toolbar.EnableTool(18, False)
+
+        self.ProcessPanel.topic_thread(self.topicname, dur, seq, *args)
         self.Layout()
     # ------------------------------------------------------------------#
 
     def click_start(self, event):
         """
         Clicking on Convert buttons, calls the `on_start method`
-        of the corresponding panel shown, which calls the
+        of the corresponding class panel shown, which calls the
         'switch_to_processing' method above.
         """
         if not self.data_files:
+            if self.ProcessPanel.IsShown():
+                self.ProcessPanel.Hide()
             self.switch_file_import(self, self.topicname)
             return
 
@@ -1622,27 +1667,44 @@ class MainFrame(wx.Frame):
             self.toSlideshow.on_start()
     # ------------------------------------------------------------------#
 
-    def panelShown(self, panelshown):
+    def click_stop(self, event):
         """
-        Clicking 'close button' of the `long_processing_task` panel,
-        retrieval at previous panel shown and re-enables other functions
-        (see `switch_to_processing` method above).
+        Stop/Abort the current process
         """
-        if panelshown == 'Audio/Video Conversions':
-            self.ProcessPanel.Hide()
-            self.switch_av_conversions(self)
-        elif panelshown == 'Presets Manager':
-            self.ProcessPanel.Hide()
-            self.switch_presets_manager(self)
-        elif panelshown == 'Concatenate Demuxer':
-            self.ProcessPanel.Hide()
-            self.switch_concat_demuxer(self)
-        elif panelshown == 'Video to Pictures':
-            self.ProcessPanel.Hide()
-            self.switch_video_to_pictures(self)
-        elif panelshown == 'Image Sequence to Video':
-            self.ProcessPanel.Hide()
-            self.switch_slideshow_maker(self)
+        if self.ProcessPanel.IsShown():
+            if self.ProcessPanel.thread_type:
+                self.ProcessPanel.on_stop()
+    # ------------------------------------------------------------------#
+
+    def process_terminated(self, msg):
+        """
+        Process report terminated
+        """
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(3, 5)]
+        # enable toolbar items
+        self.toolbar.EnableTool(3, True)
+        self.toolbar.EnableTool(4, False)
+        self.toolbar.EnableTool(5, True)
+        self.toolbar.EnableTool(14, False)
+        self.toolbar.EnableTool(16, True)
+    # ------------------------------------------------------------------#
+
+    def panelShown(self, panelshown=None):
+        """
+        Closing the `long_processing_task` panel,
+        retrieval at previous panel shown.
+        (see `switch_to_processing` method above).
+        """
+        self.ProcessPanel.Hide()
+        if panelshown == 'Audio/Video Conversions':
+            self.switch_av_conversions(self)
+        elif panelshown == 'Presets Manager':
+            self.switch_presets_manager(self)
+        elif panelshown == 'Concatenate Demuxer':
+            self.switch_concat_demuxer(self)
+        elif panelshown == 'Video to Pictures':
+            self.switch_video_to_pictures(self)
+        elif panelshown == 'Image Sequence to Video':
+            self.switch_slideshow_maker(self)
         self.Layout()
