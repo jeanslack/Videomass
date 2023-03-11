@@ -149,13 +149,13 @@ class Choose_Topic(wx.Panel):
         if hasattr(wx.SystemSettings, 'GetAppearance'):
             appear = wx.SystemSettings.GetAppearance()
             if appear.IsDark():
-                self.SetBackgroundColour('#070b0e')  # blue darkness
-                welcome.SetForegroundColour('#777072')  # grey
-                version.SetForegroundColour('#777072')  # grey
+                self.SetBackgroundColour('#232424')  # Dark grey
+                welcome.SetForegroundColour('#E95420')  # Ubuntu orange
+                version.SetForegroundColour('#E95420')  # Ubuntu orange
             else:
-                self.SetBackgroundColour('#f2efe6')  # beige
-                welcome.SetForegroundColour('#171b12')  # black
-                version.SetForegroundColour('#171b12')  # black
+                self.SetBackgroundColour('#B0CCEB')  # Azure
+                welcome.SetForegroundColour('#E95420')  # Ubuntu orange
+                version.SetForegroundColour('#E95420')  # Ubuntu orange
 
         self.Bind(wx.EVT_BUTTON, self.on_Conv, self.avconv)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)

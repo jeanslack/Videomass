@@ -30,7 +30,7 @@
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:window-width="1920"
-     inkscape:window-height="1007"
+     inkscape:window-height="1005"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -57,15 +57,6 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-284.3)">
-    <rect
-       style="display:inline;opacity:0.989;fill:#26a269;fill-opacity:1;stroke:#232629;stroke-width:0.205;stroke-miterlimit:17.60000038;stroke-opacity:1;enable-background:new;stroke-dasharray:none"
-       id="rect876"
-       width="11.90625"
-       height="11.90625"
-       x="0.39687499"
-       y="284.69687"
-       rx="0.14234133"
-       ry="0.14234133" />
     <path
        style="display:inline;opacity:1;fill:#232629;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.18714233;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
        d="m 11.25905,285.69276 -0.482686,0.7106 1.080354,0.73386 0.482687,-0.7106 z m -0.675765,0.99483 -2.9926564,4.40568 -0.2029832,0.8799 -0.2029857,0.87991 0.7431607,-0.51298 0.7431624,-0.51297 2.9926602,-4.40568 z"

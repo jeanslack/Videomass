@@ -244,6 +244,8 @@ class SetUp(wx.Dialog):
                                       choices=[("Videomass-Light"),
                                                ("Videomass-Dark"),
                                                ("Videomass-Colours"),
+                                               ("Ubuntu-Light-Aubergine"),
+                                               ("Ubuntu-Dark-Aubergine"),
                                                ],
                                       size=(200, -1),
                                       style=wx.CB_DROPDOWN | wx.CB_READONLY

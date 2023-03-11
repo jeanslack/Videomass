@@ -204,6 +204,7 @@ def get_color_scheme(theme):
     chosen theme in ("Videomass-Light",
                      "Videomass-Dark",
                      "Videomass-Colours",
+                     "Ubuntu-Dark-Aubergine",
                      )
     """
     if theme == 'Videomass-Colours':
@@ -214,10 +215,7 @@ def get_color_scheme(theme):
                     'WARN': '#dfb72f',  # YELLOW for warning text messages
                     'ERR1': '#EA312D',  # LIGHTRED for errors 2
                     'SUCCESS': '#30ec30',  # Light GREEN when it is successful
-                    'TXT2': '#3f5e6b',  # dark ciano
                     'TXT3': '#11b584',  # medium green
-                    'TXT4': '#87ceebff',  # light azure
-                    'TXT5': '#dd7ad0',  # LILLA
                     'INFO': '#3298FB',  # AZURE
                     'DEBUG': '#0ce3ac',  # light green
                     'FAILED': '#D21814',  # RED_DEEP if failed
@@ -231,10 +229,7 @@ def get_color_scheme(theme):
                     'WARN': '#dfb72f',  # YELLOW for warning text messages
                     'ERR1': '#EA312D',  # LIGHTRED for errors 2
                     'SUCCESS': '#30ec30',  # Light GREEN when it is successful
-                    'TXT2': '#008000',  # dark green
                     'TXT3': '#11b584',  # medium green
-                    'TXT4': '#87ceebff',  # light azure
-                    'TXT5': '#dd7ad0',  # LILLA
                     'INFO': '#118db5',  # AZURE
                     'DEBUG': '#0ce3ac',  # light green
                     'FAILED': '#D21814',  # RED_DEEP if failed
@@ -248,14 +243,25 @@ def get_color_scheme(theme):
                     'WARN': '#988313',  # YELLOW for warning text messages
                     'ERR1': '#c8120b',  # LIGHTRED for errors 2
                     'SUCCESS': '#35a735',  # DARK_GREEN when it is successful
-                    'TXT2': '#008000',  # dark green
                     'TXT3': '#005c00',  # Light Green
-                    'TXT4': '#2651b8',  # blue
-                    'TXT5': '#dd7ad0',  # LILLA
                     'INFO': '#3298FB',  # AZURE
                     'DEBUG': '#005c00',  # Light Green
                     'FAILED': '#D21814',  # RED_DEEP if failed
                     'ABORT': '#A41EA4',  # VIOLET the user stops the processes
+                    }
+    elif theme == 'Ubuntu-Dark-Aubergine':
+        c_scheme = {'BACKGRD': '#2C001E',  # Dark-Aubergine background color
+                    'TXT0': '#FFFFFF',  # WHITE for titles
+                    'TXT1': '#AEA79F',  # Ubuntu warm grey (base foreground)
+                    'ERR0': '#E95420',  # ORANGE for error text messages
+                    'WARN': '#dfb72f',  # YELLOW for warning messages
+                    'ERR1': '#F90808',  # RED_DEEP
+                    'SUCCESS': '#ABD533',  # Light GREEN when it is successful
+                    'TXT3': '#AEA79F',  # Ubuntu warm grey (base foreground)
+                    'INFO': '#F7C3B1',  # Ubuntu orange light 30%
+                    'DEBUG': '#6199d1',  # Blue
+                    'FAILED': '#F90808',  # RED_DEEP
+                    'ABORT': '#F90808',  # RED_DEEP
                     }
     else:
         c_scheme = {'ERROR': f'Unknow theme "{theme}"'}
@@ -490,6 +496,14 @@ class DataSource():
                     {'x48': f'{icodir}/Sign_Icons/48x48',
                      'x16': f'{icodir}/Videomass-Colours/16x16',
                      'x22': f'{icodir}/Videomass-Colours/24x24'},
+                    'Ubuntu-Dark-Aubergine':  # Videomass icons for all themes
+                    {'x48': f'{icodir}/Sign_Icons/48x48_dark',
+                     'x16': f'{icodir}/Videomass-Dark/16x16',
+                     'x22': f'{icodir}/Videomass-Dark/24x24'},
+                    'Ubuntu-Light-Aubergine':  # Videomass icons for all themes
+                    {'x48': f'{icodir}/Sign_Icons/48x48_light',
+                     'x16': f'{icodir}/Videomass-Light/16x16',
+                     'x22': f'{icodir}/Videomass-Light/24x24'},
                     }
 
         choose = iconames.get(icontheme)  # set appropriate icontheme
