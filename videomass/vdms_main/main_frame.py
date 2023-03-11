@@ -1294,13 +1294,6 @@ class MainFrame(wx.Frame):
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
-
-        tip = _("Go to the 'Home' panel")
-        home = self.toolbar.AddTool(16, _('Home'),
-                                    bmphome,
-                                    tip, wx.ITEM_NORMAL
-                                    )
-
         tip = _("Go to the previous panel")
         back = self.toolbar.AddTool(3, _('Back'),
                                     bmpback,
@@ -1311,6 +1304,11 @@ class MainFrame(wx.Frame):
                                        bmpnext,
                                        tip, wx.ITEM_NORMAL
                                        )
+        tip = _("Go to the 'Home' panel")
+        home = self.toolbar.AddTool(16, _('Home'),
+                                    bmphome,
+                                    tip, wx.ITEM_NORMAL
+                                    )
         tip = _("Keeps track of the output for debugging errors")
         logpan = self.toolbar.AddTool(18, _('Output Monitor'),
                                       bmplog,
@@ -1370,6 +1368,8 @@ class MainFrame(wx.Frame):
         """
         redirect on corresponding panel
         """
+        if self.ProcessPanel.IsShown():
+            self.ProcessPanel.Hide()
         if self.topicname == 'Audio/Video Conversions':
             self.switch_av_conversions(self)
         elif self.topicname == 'Concatenate Demuxer':

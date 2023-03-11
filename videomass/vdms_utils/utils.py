@@ -258,14 +258,14 @@ def milliseconds2clock(milliseconds):
     calculating in sexagesimal format.
     Accept an `int` object, such as 2998. Float numbers, such
     as 2000.999, must be rounded using `round()` function.
-    Returns a string object of time units e.g. HOURS:MM:SS.MILLIS,
+    Returns a string object of time format e.g. HOURS:MM:SS.MILLIS,
     as in 00:00:00.000 .
 
     """
     minutes, sec = divmod(milliseconds, 60000)
     hours, minutes = divmod(minutes, 60)
     seconds = float(sec) / 1000
-    # return "%02d:%02d:%06.3f" % (hours, minutes, seconds)
+    #return "%02d:%02d:%06.3f" % (hours, minutes, seconds)
     return f"{hours:02}:{minutes:02}:{seconds:06.3f}"
 # ------------------------------------------------------------------------
 

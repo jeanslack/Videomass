@@ -257,17 +257,12 @@ class LogOut(wx.Panel):
 
             if self.with_eta:
                 if 'speed=' in output:
-                    try:
-                        sline = output.split()[-1].strip()
-                        speed = sline.split('=')[1].split('x')[0]
-                        rem = (duration - msec) / float(speed)
-                        remaining = milliseconds2clock(round(rem))
-                        eta = f"   ETA: {remaining}"
-
-                    except IndexError:
-                        eta = "   ETA: N/A"
+                    speed = output.split('speed=')[-1].strip().split('x')[0]
+                    rem = (duration - msec) / float(speed)
+                    remaining = milliseconds2clock(round(rem))
+                    eta = f"   ETA: {remaining}"
                 else:
-                    eta = ""
+                    eta = "   ETA: N/A"
             else:
                 eta = ""
             self.labprog.SetLabel(f'Processing: {str(int(percentage))}% {eta}')
