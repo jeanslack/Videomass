@@ -1384,7 +1384,7 @@ class MainFrame(wx.Frame):
 
     def on_changes_file_list(self):
         """
-        Check changes made to files in the drag-and-drop panel.
+        Check changes made to files list in the drag-and-drop panel.
         """
         if not self.changed:
             pub.sendMessage("MAX_FILE_DURATION", msg='Changes')
@@ -1678,7 +1678,8 @@ class MainFrame(wx.Frame):
 
     def process_terminated(self, msg):
         """
-        Process report terminated
+        Process report terminated. This method is called using
+        pub/sub protocol. see `long_processing_task.end_proc()`)
         """
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(3, 5)]
