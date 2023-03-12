@@ -258,7 +258,7 @@ class LogOut(wx.Panel):
             if self.with_eta:
                 if 'speed=' in output:
                     speed = output.split('speed=')[-1].strip().split('x')[0]
-                    if speed == 'N/A':
+                    if speed in ('N/A', '0'):
                         eta = "   ETA: N/A"
                     else:  # is float
                         rem = (duration - msec) / float(speed)
