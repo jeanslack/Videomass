@@ -7,9 +7,11 @@ URGENCY: to do soon
 URGENCY: high
 --------------
 
-- FFmpeg: for the new versions `-vsync` arg is deprecated, use `fps_mode`
-  (video_to_sequences.py, concatenete.py). For backwards compatibility reasons
-  I will keep the -vsync argument for a while longer.
+- FFmpeg warns: for the new versions `-vsync` arg is deprecated, use `fps_mode`.
+  This is related to `video_to_sequences.py`, `concatenete.py`, but for
+  backwards compatibility reasons I will keep the  '-vsync' argument for a
+  while longer because fps_mode does not work with old versions of FFmpeg.
+  So, vsync's warning is just a warning and still works with the new versions.
 
 ---------------
 URGENCY: medium
@@ -28,5 +30,10 @@ URGENCY: medium
   for wxPython4.0.7.
 
 -------------
-URGENCY: low
+URGENCY: low (New implementations)
 -------------
+
+- At the end of the process, ask the user to clean up the file list
+  (..and possibly import the file list just exported).
+
+- [PRESETS MANAGER] The profile requires additional input (-i FILE -i FILE ...)
