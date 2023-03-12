@@ -431,7 +431,7 @@ class MediaStreams(wx.Dialog):
                 select = self.data[self.data.index(x)]
                 num_items = self.format_ctrl.GetItemCount()
                 self.format_ctrl.InsertItem(num_items, 'DATA FORMAT:')
-                self.format_ctrl.SetItemBackgroundColour(index, "YELLOW GREEN")
+                self.format_ctrl.SetItemBackgroundColour(index, "#808080")
                 index += 1
                 for k, v in x.get('format').items():
                     self.format_ctrl.InsertItem(index, str(k))
@@ -445,8 +445,7 @@ class MediaStreams(wx.Dialog):
                     num_items = self.video_ctrl.GetItemCount()
                     n = f"VIDEO INDEX {t.get('index')}"
                     self.video_ctrl.InsertItem(num_items, n)
-                    self.video_ctrl.SetItemBackgroundColour(index,
-                                                            "YELLOW GREEN")
+                    self.video_ctrl.SetItemBackgroundColour(index, "#808080")
                     index += 1
                     for k, v in t.items():
                         self.video_ctrl.InsertItem(index, str(k))
@@ -458,8 +457,7 @@ class MediaStreams(wx.Dialog):
                     num_items = self.audio_ctrl.GetItemCount()
                     n = f"AUDIO INDEX {t.get('index')}"
                     self.audio_ctrl.InsertItem(num_items, n)
-                    self.audio_ctrl.SetItemBackgroundColour(index,
-                                                            "YELLOW GREEN")
+                    self.audio_ctrl.SetItemBackgroundColour(index, "#808080")
                     index += 1
                     for k, v in t.items():
                         self.audio_ctrl.InsertItem(index, str(k))
@@ -472,7 +470,7 @@ class MediaStreams(wx.Dialog):
                     n = f"SUBTITLE INDEX {t.get('index')}"
                     self.subtitle_ctrl.InsertItem(num_items, n)
                     self.subtitle_ctrl.SetItemBackgroundColour(index,
-                                                               "YELLOW GREEN")
+                                                               "#808080")
                     index += 1
                     for k, v in t.items():
                         self.subtitle_ctrl.InsertItem(index, str(k))

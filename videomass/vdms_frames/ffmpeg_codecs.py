@@ -44,13 +44,11 @@ class FFmpegCodecs(wx.MiniFrame):
         """
         self.option = option
         if self.option == '-encoders':
-            cod = _('CODING CAPABILITY')
-            colctrl = 'YELLOW GREEN'
             title = _("FFmpeg encoders")
+            header = _("supported encoders")
         else:
-            cod = _('DECODING CAPABILITY')
-            colctrl = 'LIGHT STEEL BLUE'
             title = _("FFmpeg decoders")
+            header = _("supported decoders")
 
         wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER
                               | wx.CAPTION
@@ -105,7 +103,7 @@ class FFmpegCodecs(wx.MiniFrame):
         sizer_base.Add(grid_buttons, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
 
         # ----------------------Properties----------------------#
-        vid.InsertColumn(0, ('codec'), width=150)
+        vid.InsertColumn(0, header, width=180)
         vid.InsertColumn(1, ('F'), width=40)
         vid.InsertColumn(2, ('S'), width=40)
         vid.InsertColumn(3, ('X'), width=40)
@@ -114,7 +112,7 @@ class FFmpegCodecs(wx.MiniFrame):
         vid.InsertColumn(6, _('description'), width=450)
         # vid.SetBackgroundColour(wx.Colour(217, 255, 255))
         # aud.SetMinSize((600, 300))
-        aud.InsertColumn(0, ('codec'), width=150)
+        aud.InsertColumn(0, header, width=180)
         aud.InsertColumn(1, ('F'), width=40)
         aud.InsertColumn(2, ('S'), width=40)
         aud.InsertColumn(3, ('X'), width=40)
@@ -123,7 +121,7 @@ class FFmpegCodecs(wx.MiniFrame):
         aud.InsertColumn(6, _('description'), width=450)
         # aud.SetBackgroundColour(wx.Colour(217, 255, 255))
         # sub.SetMinSize((600, 300))
-        sub.InsertColumn(0, ('codec'), width=150)
+        sub.InsertColumn(0, header, width=180)
         sub.InsertColumn(1, ('F'), width=40)
         sub.InsertColumn(2, ('S'), width=40)
         sub.InsertColumn(3, ('X'), width=40)
@@ -151,8 +149,8 @@ class FFmpegCodecs(wx.MiniFrame):
         stext.SetLabel(leg)
 
         self.SetTitle(title)
-        self.SetMinSize((700, 500))
-        vid.SetMinSize((600, 300))
+        self.SetMinSize((750, 500))
+        vid.SetMinSize((700, 300))
         self.panel.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
@@ -161,10 +159,7 @@ class FFmpegCodecs(wx.MiniFrame):
         index = 0
         vcodlist = dict_decoders['Video']
         if vcodlist:
-            vid.InsertItem(index, cod)
-            vid.SetItemBackgroundColour(index, colctrl)
             for a in vcodlist:
-                index += 1
                 vid.InsertItem(index, a[6:].split(' ')[1])
                 if 'F' in a[1]:
                     vid.SetItem(index, 1, 'YES')
@@ -181,15 +176,13 @@ class FFmpegCodecs(wx.MiniFrame):
                     vid.SetItem(index, 6, d)
                 else:
                     vid.SetItem(index, 6, '')
+                index += 1
 
         # populate aud listctrl output:
         index = 0
         acodlist = dict_decoders['Audio']
         if acodlist:
-            aud.InsertItem(index, cod)
-            aud.SetItemBackgroundColour(index, colctrl)
             for a in acodlist:
-                index += 1
                 aud.InsertItem(index, a[6:].split(' ')[1])
                 if 'F' in a[1]:
                     aud.SetItem(index, 1, 'YES')
@@ -206,15 +199,13 @@ class FFmpegCodecs(wx.MiniFrame):
                     aud.SetItem(index, 6, d)
                 else:
                     aud.SetItem(index, 6, '')
+                index += 1
 
         # populate sub listctrl output:
         index = 0
         scodlist = dict_decoders['Subtitle']
         if scodlist:
-            sub.InsertItem(index, cod)
-            sub.SetItemBackgroundColour(index, colctrl)
             for a in scodlist:
-                index += 1
                 sub.InsertItem(index, a[6:].split(' ')[1])
                 if 'F' in a[1]:
                     sub.SetItem(index, 1, 'YES')
@@ -231,6 +222,7 @@ class FFmpegCodecs(wx.MiniFrame):
                     sub.SetItem(index, 6, d)
                 else:
                     sub.SetItem(index, 6, '')
+                index += 1
 
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)

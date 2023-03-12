@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2023
+Rev: March.12.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -180,8 +180,6 @@ class FFmpegConf(wx.MiniFrame):
         # populate others_opt listctrl output:
         index = 0
         if others:
-            others_opt.InsertItem(index, '')
-            others_opt.SetItemBackgroundColour(index, "LIGHT STEEL BLUE")
             n = len(others)
             for a in range(n):
                 if '=' in others[a]:
@@ -189,40 +187,35 @@ class FFmpegConf(wx.MiniFrame):
                     (key, value) = oth[0], oth[1]
                     # (key, value) = others[a][0].strip().split('=')
                     # num_items = others_opt.GetItemCount()
-                    index += 1
                     others_opt.InsertItem(index, key)
                     others_opt.SetItem(index, 1, value)
+                    index += 1
 
         # populate enable_opt listctrl output:
         index = 0
         if enable:
-            enable_opt.InsertItem(index, _('ENABLED:'))
-            enable_opt.SetItemBackgroundColour(index, "YELLOW GREEN")
             n = len(enable)
             for a in range(n):
                 (key, value) = _('Enabled'), enable[a]
                 # num_items = enable_opt.GetItemCount()
-                index += 1
                 enable_opt.InsertItem(index, key)
                 enable_opt.SetItem(index, 1, value)
+                index += 1
 
         # populate disabled_opt listctrl output:
         index = 0
         if disable:
-            disabled_opt.InsertItem(index, _('DISABLED:'))
-            disabled_opt.SetItemBackgroundColour(index, "ORANGE")
             n = len(disable)
             for a in range(n):
                 (key, value) = _('Disabled'), disable[a]
                 # num_items = disabled_opt.GetItemCount()
-                index += 1
                 disabled_opt.InsertItem(index, key)
                 disabled_opt.SetItem(index, 1, value)
+                index += 1
 
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
-        self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
-        # self.Bind(wx.EVT_BUTTON, self.on_help, button_help)
+        self.Bind(wx.EVT_CLOSE, self.on_close)
 
     # ----------------------Event handler (callback)----------------------#
 

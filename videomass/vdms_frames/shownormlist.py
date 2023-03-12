@@ -121,6 +121,9 @@ class AudioVolNormal(wx.MiniFrame):
             txtgrey.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
             txtyell.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
         else:
+            self.btn_red.SetForegroundColour(wx.Colour('BLACK'))
+            self.btn_grey.SetForegroundColour(wx.Colour('BLACK'))
+            self.btn_yell.SetForegroundColour(wx.Colour('BLACK'))
             normlist.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             descript.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
             txtred.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
@@ -195,7 +198,7 @@ class AudioVolNormal(wx.MiniFrame):
                                    wx.SIMPLE_BORDER,
                                    msg,
                                    ('ORANGE'),
-                                   ('WHITE'),
+                                   ('BLACK'),
                                    )
 
         # Show the popup right below or above the button
@@ -220,7 +223,7 @@ class AudioVolNormal(wx.MiniFrame):
                                    wx.SIMPLE_BORDER,
                                    msg,
                                    ('YELLOW GREEN'),
-                                   ('WHITE'),
+                                   ('BLACK'),
                                    )
 
         # Show the popup right below or above the button
@@ -245,7 +248,7 @@ class AudioVolNormal(wx.MiniFrame):
                                    wx.SIMPLE_BORDER,
                                    msg,
                                    ('LIGHT STEEL BLUE'),
-                                   ('WHITE'),
+                                   ('BLACK'),
                                    )
 
         # Show the popup right below or above the button

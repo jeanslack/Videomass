@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-12 13:03+0100\n"
-"PO-Revision-Date: 2023-03-12 13:04+0100\n"
+"POT-Creation-Date: 2023-03-13 00:29+0100\n"
+"PO-Revision-Date: 2023-03-13 00:30+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -1508,57 +1508,49 @@ msgstr "FFprobe   ...non trovato !"
 msgid "FFplay   ...not found !"
 msgstr "FFplay   ...non trovato !"
 
-#: ../vdms_frames/ffmpeg_conf.py:199
-msgid "ENABLED:"
-msgstr "ABILITATO:"
-
-#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2257
+#: ../vdms_frames/ffmpeg_conf.py:199 ../vdms_panels/av_conversions.py:2257
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:592
 msgid "Enabled"
 msgstr "Abilitato"
 
-#: ../vdms_frames/ffmpeg_conf.py:212
-msgid "DISABLED:"
-msgstr "DISABILITATO:"
-
-#: ../vdms_frames/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2257
+#: ../vdms_frames/ffmpeg_conf.py:210 ../vdms_panels/av_conversions.py:2257
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:596
 msgid "Disabled"
 msgstr "Disabilitato"
 
 #: ../vdms_frames/ffmpeg_codecs.py:47
-msgid "CODING CAPABILITY"
-msgstr "CAPACITÀ DI CODIFICA"
-
-#: ../vdms_frames/ffmpeg_codecs.py:49
 msgid "FFmpeg encoders"
 msgstr "Codificatori di FFmpeg"
 
-#: ../vdms_frames/ffmpeg_codecs.py:51
-msgid "DECODING CAPABILITY"
-msgstr "CAPACITÀ DI DECODIFICA"
+#: ../vdms_frames/ffmpeg_codecs.py:48
+msgid "supported encoders"
+msgstr "codificatori supportati"
 
-#: ../vdms_frames/ffmpeg_codecs.py:53
+#: ../vdms_frames/ffmpeg_codecs.py:50
 msgid "FFmpeg decoders"
 msgstr "Decodificatori di FFmpeg"
 
-#: ../vdms_frames/ffmpeg_codecs.py:77 ../vdms_panels/av_conversions.py:447
+#: ../vdms_frames/ffmpeg_codecs.py:51
+msgid "supported decoders"
+msgstr "decodificatori supportati"
+
+#: ../vdms_frames/ffmpeg_codecs.py:75 ../vdms_panels/av_conversions.py:447
 msgid "Video"
 msgstr "Video"
 
-#: ../vdms_frames/ffmpeg_codecs.py:87 ../vdms_panels/av_conversions.py:607
+#: ../vdms_frames/ffmpeg_codecs.py:85 ../vdms_panels/av_conversions.py:607
 msgid "Audio"
 msgstr "Audio"
 
-#: ../vdms_frames/ffmpeg_codecs.py:97
+#: ../vdms_frames/ffmpeg_codecs.py:95
 msgid "Subtitle"
 msgstr "Sottotitolo"
 
-#: ../vdms_frames/ffmpeg_codecs.py:114 ../vdms_frames/ffmpeg_codecs.py:123
-#: ../vdms_frames/ffmpeg_codecs.py:132 ../vdms_frames/ffmpeg_formats.py:108
-#: ../vdms_frames/ffmpeg_formats.py:112 ../vdms_frames/ffmpeg_formats.py:116
+#: ../vdms_frames/ffmpeg_codecs.py:112 ../vdms_frames/ffmpeg_codecs.py:121
+#: ../vdms_frames/ffmpeg_codecs.py:130 ../vdms_frames/ffmpeg_formats.py:108
+#: ../vdms_frames/ffmpeg_formats.py:111 ../vdms_frames/ffmpeg_formats.py:114
 msgid "description"
 msgstr "descrizione"
 
@@ -1578,8 +1570,8 @@ msgstr "Demuxing e muxing"
 msgid "FFmpeg file formats"
 msgstr "Formati File di FFmpeg"
 
-#: ../vdms_frames/ffmpeg_formats.py:107 ../vdms_frames/ffmpeg_formats.py:111
-#: ../vdms_frames/ffmpeg_formats.py:115
+#: ../vdms_frames/ffmpeg_formats.py:107 ../vdms_frames/ffmpeg_formats.py:110
+#: ../vdms_frames/ffmpeg_formats.py:113
 msgid "format"
 msgstr "formato"
 
@@ -1619,15 +1611,15 @@ msgstr "=  Non cambia"
 msgid "=  Below max peak"
 msgstr "=  Sotto il picco max"
 
-#: ../vdms_frames/shownormlist.py:138 ../vdms_panels/av_conversions.py:1729
+#: ../vdms_frames/shownormlist.py:141 ../vdms_panels/av_conversions.py:1729
 msgid "RMS-based volume statistics"
 msgstr "Statistiche del volume basate su RMS"
 
-#: ../vdms_frames/shownormlist.py:163 ../vdms_panels/av_conversions.py:1727
+#: ../vdms_frames/shownormlist.py:166 ../vdms_panels/av_conversions.py:1727
 msgid "PEAK-based volume statistics"
 msgstr "Statistiche del volume basate sul PICCO"
 
-#: ../vdms_frames/shownormlist.py:188
+#: ../vdms_frames/shownormlist.py:191
 msgid ""
 "Orange ton...\n"
 "\n"
@@ -1641,7 +1633,7 @@ msgstr ""
 "Ciò comporterà la perdita di dati nel segnale audio e\n"
 "il suono potrebbe risultare distorto."
 
-#: ../vdms_frames/shownormlist.py:215
+#: ../vdms_frames/shownormlist.py:218
 msgid ""
 "Green ton...\n"
 "\n"
@@ -1651,7 +1643,7 @@ msgstr ""
 "..Significa che il segnale audio non cambierà,\n"
 "perché uguale a quello di origine."
 
-#: ../vdms_frames/shownormlist.py:240
+#: ../vdms_frames/shownormlist.py:243
 msgid ""
 "Blue ton...\n"
 "\n"
@@ -3923,6 +3915,18 @@ msgstr ""
 #: ../vdms_threads/slideshow.py:230
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' è installato sul tuo sistema?"
+
+#~ msgid "ENABLED:"
+#~ msgstr "ABILITATO:"
+
+#~ msgid "DISABLED:"
+#~ msgstr "DISABILITATO:"
+
+#~ msgid "CODING CAPABILITY"
+#~ msgstr "CAPACITÀ DI CODIFICA"
+
+#~ msgid "DECODING CAPABILITY"
+#~ msgstr "CAPACITÀ DI DECODIFICA"
 
 #~ msgid "Audio normalization is required only for some files"
 #~ msgstr "La normalizzazione audio è richiesta solo per alcuni files"

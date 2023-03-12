@@ -106,15 +106,12 @@ class FFmpegFormats(wx.MiniFrame):
         # ----------------------Properties----------------------#
         dmx.InsertColumn(0, _('format'), width=150)
         dmx.InsertColumn(1, _('description'), width=450)
-        # dmx.SetBackgroundColour(wx.Colour(217, 255, 255))
         # mx.SetMinSize((500, 400))
         mx.InsertColumn(0, _('format'), width=150)
         mx.InsertColumn(1, _('description'), width=450)
-        # mx.SetBackgroundColour(wx.Colour(217, 255, 255))
         # dmx_mx.SetMinSize((500, 400))
         dmx_mx.InsertColumn(0, _('format'), width=150)
         dmx_mx.InsertColumn(1, _('description'), width=450)
-        # dmx_mx.SetBackgroundColour(wx.Colour(217, 255, 255))
 
         if OS == 'Darwin':
             dmx.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
@@ -133,58 +130,48 @@ class FFmpegFormats(wx.MiniFrame):
         # populate dmx listctrl output:
         index = 0
         ds = dict_formats['Demuxing Supported']
-
         if ds:
-            dmx.InsertItem(index, ('----'))
-            dmx.SetItemBackgroundColour(index, "GREEN YELLOW")
             for a in ds:
                 s = " ".join(a.split()).split(None, 1)
                 if len(s) == 1:
                     key, value = s[0], ''
                 else:
                     key, value = s[0], s[1]
-                index += 1
                 dmx.InsertItem(index, key)
                 dmx.SetItem(index, 1, value)
+                index = 0
 
         # populate mx listctrl output:
         index = 0
         ms = dict_formats['Muxing Supported']
-
         if ms:
-            mx.InsertItem(index, ('----'))
-            mx.SetItemBackgroundColour(index, "GREEN YELLOW")
             for a in ms:
                 s = " ".join(a.split()).split(None, 1)
                 if len(s) == 1:
                     key, value = s[0], ''
                 else:
                     key, value = s[0], s[1]
-                index += 1
                 mx.InsertItem(index, key)
                 mx.SetItem(index, 1, value)
+                index = 0
 
         # populate dmx_mx listctrl output:
         index = 0
         mds = dict_formats["Mux/Demux Supported"]
-
         if mds:
-            dmx_mx.InsertItem(index, ('----'))
-            dmx_mx.SetItemBackgroundColour(index, "GREEN YELLOW")
             for a in mds:
                 s = " ".join(a.split()).split(None, 1)
                 if len(s) == 1:
                     key, value = s[0], ''
                 else:
                     key, value = s[0], s[1]
-                index += 1
                 dmx_mx.InsertItem(index, key)
                 dmx_mx.SetItem(index, 1, value)
+                index = 0
 
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
-        # self.Bind(wx.EVT_BUTTON, self.on_help, button_help)
 
     # ----------------------Event handler (callback)----------------------#
 

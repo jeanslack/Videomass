@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-12 13:03+0100\n"
-"PO-Revision-Date: 2023-03-12 13:08+0100\n"
+"POT-Creation-Date: 2023-03-13 00:29+0100\n"
+"PO-Revision-Date: 2023-03-13 00:35+0100\n"
 "Last-Translator: José Alberto Valle Cid j.alberto.vc@gmail.com\n"
 "Language-Team: Spanish <>\n"
 "Language: es_CU\n"
@@ -1508,57 +1508,53 @@ msgstr "¡No se encontró FFprobe !"
 msgid "FFplay   ...not found !"
 msgstr "¡No se encontró FFplay !"
 
-#: ../vdms_frames/ffmpeg_conf.py:199
-msgid "ENABLED:"
-msgstr "HABILITADO:"
-
-#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2257
+#: ../vdms_frames/ffmpeg_conf.py:199 ../vdms_panels/av_conversions.py:2257
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:592
 msgid "Enabled"
 msgstr "Habilitado"
 
-#: ../vdms_frames/ffmpeg_conf.py:212
-msgid "DISABLED:"
-msgstr "DESHABILITADO:"
-
-#: ../vdms_frames/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2257
+#: ../vdms_frames/ffmpeg_conf.py:210 ../vdms_panels/av_conversions.py:2257
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:596
 msgid "Disabled"
 msgstr "Deshabilitado"
 
 #: ../vdms_frames/ffmpeg_codecs.py:47
-msgid "CODING CAPABILITY"
-msgstr "CAPACIDADES DE CODFICACIÓN"
-
-#: ../vdms_frames/ffmpeg_codecs.py:49
 msgid "FFmpeg encoders"
 msgstr "Codificadores FFmpeg"
 
-#: ../vdms_frames/ffmpeg_codecs.py:51
-msgid "DECODING CAPABILITY"
-msgstr "CAPACIDADES DE DECODIFICACIÓN"
+#: ../vdms_frames/ffmpeg_codecs.py:48
+#, fuzzy
+#| msgid "FFmpeg encoders"
+msgid "supported encoders"
+msgstr "Codificadores FFmpeg"
 
-#: ../vdms_frames/ffmpeg_codecs.py:53
+#: ../vdms_frames/ffmpeg_codecs.py:50
 msgid "FFmpeg decoders"
 msgstr "Decodificadores FFmpeg"
 
-#: ../vdms_frames/ffmpeg_codecs.py:77 ../vdms_panels/av_conversions.py:447
+#: ../vdms_frames/ffmpeg_codecs.py:51
+#, fuzzy
+#| msgid "FFmpeg decoders"
+msgid "supported decoders"
+msgstr "Decodificadores FFmpeg"
+
+#: ../vdms_frames/ffmpeg_codecs.py:75 ../vdms_panels/av_conversions.py:447
 msgid "Video"
 msgstr "Video"
 
-#: ../vdms_frames/ffmpeg_codecs.py:87 ../vdms_panels/av_conversions.py:607
+#: ../vdms_frames/ffmpeg_codecs.py:85 ../vdms_panels/av_conversions.py:607
 msgid "Audio"
 msgstr "Audio"
 
-#: ../vdms_frames/ffmpeg_codecs.py:97
+#: ../vdms_frames/ffmpeg_codecs.py:95
 msgid "Subtitle"
 msgstr "Subtitulo"
 
-#: ../vdms_frames/ffmpeg_codecs.py:114 ../vdms_frames/ffmpeg_codecs.py:123
-#: ../vdms_frames/ffmpeg_codecs.py:132 ../vdms_frames/ffmpeg_formats.py:108
-#: ../vdms_frames/ffmpeg_formats.py:112 ../vdms_frames/ffmpeg_formats.py:116
+#: ../vdms_frames/ffmpeg_codecs.py:112 ../vdms_frames/ffmpeg_codecs.py:121
+#: ../vdms_frames/ffmpeg_codecs.py:130 ../vdms_frames/ffmpeg_formats.py:108
+#: ../vdms_frames/ffmpeg_formats.py:111 ../vdms_frames/ffmpeg_formats.py:114
 msgid "description"
 msgstr "descripción"
 
@@ -1578,8 +1574,8 @@ msgstr "Soporte Desmezclar/Mezclar"
 msgid "FFmpeg file formats"
 msgstr "Formatos de archivos FFmpeg"
 
-#: ../vdms_frames/ffmpeg_formats.py:107 ../vdms_frames/ffmpeg_formats.py:111
-#: ../vdms_frames/ffmpeg_formats.py:115
+#: ../vdms_frames/ffmpeg_formats.py:107 ../vdms_frames/ffmpeg_formats.py:110
+#: ../vdms_frames/ffmpeg_formats.py:113
 msgid "format"
 msgstr "formato"
 
@@ -1619,15 +1615,15 @@ msgstr "=  Sin cambios"
 msgid "=  Below max peak"
 msgstr "=  Pico inferior máximo"
 
-#: ../vdms_frames/shownormlist.py:138 ../vdms_panels/av_conversions.py:1729
+#: ../vdms_frames/shownormlist.py:141 ../vdms_panels/av_conversions.py:1729
 msgid "RMS-based volume statistics"
 msgstr "Estadísticas de volumen basadas en RMS"
 
-#: ../vdms_frames/shownormlist.py:163 ../vdms_panels/av_conversions.py:1727
+#: ../vdms_frames/shownormlist.py:166 ../vdms_panels/av_conversions.py:1727
 msgid "PEAK-based volume statistics"
 msgstr "Estadísticas de volumen basadas en Picos"
 
-#: ../vdms_frames/shownormlist.py:188
+#: ../vdms_frames/shownormlist.py:191
 #, fuzzy
 #| msgid ""
 #| "When it's red...\n"
@@ -1649,7 +1645,7 @@ msgstr ""
 "de 0 db. Esto provoca perdida de datos y el audio \n"
 "podría sonar distorsionado."
 
-#: ../vdms_frames/shownormlist.py:215
+#: ../vdms_frames/shownormlist.py:218
 #, fuzzy
 #| msgid ""
 #| "When it's grey...\n"
@@ -1665,7 +1661,7 @@ msgstr ""
 "...Significa que el audio resultante no tendrá\n"
 "cambios y sera igual al de la fuente."
 
-#: ../vdms_frames/shownormlist.py:240
+#: ../vdms_frames/shownormlist.py:243
 #, fuzzy
 #| msgid ""
 #| "When it's yellow...\n"
@@ -4077,6 +4073,18 @@ msgstr ""
 #: ../vdms_threads/slideshow.py:230
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "¿Esta 'ffmpeg' instalado en su sistema?"
+
+#~ msgid "ENABLED:"
+#~ msgstr "HABILITADO:"
+
+#~ msgid "DISABLED:"
+#~ msgstr "DESHABILITADO:"
+
+#~ msgid "CODING CAPABILITY"
+#~ msgstr "CAPACIDADES DE CODFICACIÓN"
+
+#~ msgid "DECODING CAPABILITY"
+#~ msgstr "CAPACIDADES DE DECODIFICACIÓN"
 
 #~ msgid "Generates duo video for comparison"
 #~ msgstr "Generar video dual para comparaciones"

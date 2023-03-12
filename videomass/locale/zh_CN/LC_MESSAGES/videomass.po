@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-12 13:03+0100\n"
-"PO-Revision-Date: 2023-03-12 13:11+0100\n"
+"POT-Creation-Date: 2023-03-13 00:29+0100\n"
+"PO-Revision-Date: 2023-03-13 00:40+0100\n"
 "Last-Translator: MaiJZ https://github.com/maijz128\n"
 "Language-Team: simplified Chinese (CN)\n"
 "Language: zh_CN\n"
@@ -1551,58 +1551,53 @@ msgstr "FFprobe ...未找到!"
 msgid "FFplay   ...not found !"
 msgstr "FFplay ...未找到!"
 
-#: ../vdms_frames/ffmpeg_conf.py:199
-msgid "ENABLED:"
-msgstr "已启用："
-
-#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2257
+#: ../vdms_frames/ffmpeg_conf.py:199 ../vdms_panels/av_conversions.py:2257
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:592
 msgid "Enabled"
 msgstr "已启用"
 
-#: ../vdms_frames/ffmpeg_conf.py:212
-msgid "DISABLED:"
-msgstr "禁用："
-
-#: ../vdms_frames/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2257
+#: ../vdms_frames/ffmpeg_conf.py:210 ../vdms_panels/av_conversions.py:2257
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:596
 msgid "Disabled"
 msgstr "禁用"
 
 #: ../vdms_frames/ffmpeg_codecs.py:47
-msgid "CODING CAPABILITY"
-msgstr "编码能力"
-
-#: ../vdms_frames/ffmpeg_codecs.py:49
 msgid "FFmpeg encoders"
 msgstr "FFmpeg编码器"
 
-#: ../vdms_frames/ffmpeg_codecs.py:51
+#: ../vdms_frames/ffmpeg_codecs.py:48
 #, fuzzy
-msgid "DECODING CAPABILITY"
-msgstr "解码能力"
+#| msgid "FFmpeg encoders"
+msgid "supported encoders"
+msgstr "FFmpeg编码器"
 
-#: ../vdms_frames/ffmpeg_codecs.py:53
+#: ../vdms_frames/ffmpeg_codecs.py:50
 msgid "FFmpeg decoders"
 msgstr "FFmpeg解码器"
 
-#: ../vdms_frames/ffmpeg_codecs.py:77 ../vdms_panels/av_conversions.py:447
+#: ../vdms_frames/ffmpeg_codecs.py:51
+#, fuzzy
+#| msgid "FFmpeg decoders"
+msgid "supported decoders"
+msgstr "FFmpeg解码器"
+
+#: ../vdms_frames/ffmpeg_codecs.py:75 ../vdms_panels/av_conversions.py:447
 msgid "Video"
 msgstr "视频"
 
-#: ../vdms_frames/ffmpeg_codecs.py:87 ../vdms_panels/av_conversions.py:607
+#: ../vdms_frames/ffmpeg_codecs.py:85 ../vdms_panels/av_conversions.py:607
 msgid "Audio"
 msgstr "音频"
 
-#: ../vdms_frames/ffmpeg_codecs.py:97
+#: ../vdms_frames/ffmpeg_codecs.py:95
 msgid "Subtitle"
 msgstr "字幕"
 
-#: ../vdms_frames/ffmpeg_codecs.py:114 ../vdms_frames/ffmpeg_codecs.py:123
-#: ../vdms_frames/ffmpeg_codecs.py:132 ../vdms_frames/ffmpeg_formats.py:108
-#: ../vdms_frames/ffmpeg_formats.py:112 ../vdms_frames/ffmpeg_formats.py:116
+#: ../vdms_frames/ffmpeg_codecs.py:112 ../vdms_frames/ffmpeg_codecs.py:121
+#: ../vdms_frames/ffmpeg_codecs.py:130 ../vdms_frames/ffmpeg_formats.py:108
+#: ../vdms_frames/ffmpeg_formats.py:111 ../vdms_frames/ffmpeg_formats.py:114
 msgid "description"
 msgstr "描述"
 
@@ -1625,8 +1620,8 @@ msgstr "支持解复用/复用"
 msgid "FFmpeg file formats"
 msgstr "FFmpeg文件格式"
 
-#: ../vdms_frames/ffmpeg_formats.py:107 ../vdms_frames/ffmpeg_formats.py:111
-#: ../vdms_frames/ffmpeg_formats.py:115
+#: ../vdms_frames/ffmpeg_formats.py:107 ../vdms_frames/ffmpeg_formats.py:110
+#: ../vdms_frames/ffmpeg_formats.py:113
 msgid "format"
 msgstr "格式"
 
@@ -1671,17 +1666,17 @@ msgstr "= 没有变化"
 msgid "=  Below max peak"
 msgstr "=低于最大峰值"
 
-#: ../vdms_frames/shownormlist.py:138 ../vdms_panels/av_conversions.py:1729
+#: ../vdms_frames/shownormlist.py:141 ../vdms_panels/av_conversions.py:1729
 #, fuzzy
 msgid "RMS-based volume statistics"
 msgstr "基于RMS的体积统计"
 
-#: ../vdms_frames/shownormlist.py:163 ../vdms_panels/av_conversions.py:1727
+#: ../vdms_frames/shownormlist.py:166 ../vdms_panels/av_conversions.py:1727
 #, fuzzy
 msgid "PEAK-based volume statistics"
 msgstr "基于PEAK的体积统计"
 
-#: ../vdms_frames/shownormlist.py:188
+#: ../vdms_frames/shownormlist.py:191
 #, fuzzy
 #| msgid ""
 #| "When it's red...\n"
@@ -1705,7 +1700,7 @@ msgstr ""
 "水平。这将导致数据丢失，音频可能会\n"
 "声音失真。"
 
-#: ../vdms_frames/shownormlist.py:215
+#: ../vdms_frames/shownormlist.py:218
 #, fuzzy
 #| msgid ""
 #| "When it's grey...\n"
@@ -1723,7 +1718,7 @@ msgstr ""
 "...这意味着所产生的音频不会改变，因为它与源文件相同。\n"
 "因为它和源头是一样的。"
 
-#: ../vdms_frames/shownormlist.py:240
+#: ../vdms_frames/shownormlist.py:243
 #, fuzzy
 #| msgid ""
 #| "When it's yellow...\n"
@@ -4125,6 +4120,19 @@ msgstr ""
 #: ../vdms_threads/slideshow.py:230
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "你的系统上是否安装了'ffmpeg'？"
+
+#~ msgid "ENABLED:"
+#~ msgstr "已启用："
+
+#~ msgid "DISABLED:"
+#~ msgstr "禁用："
+
+#~ msgid "CODING CAPABILITY"
+#~ msgstr "编码能力"
+
+#, fuzzy
+#~ msgid "DECODING CAPABILITY"
+#~ msgstr "解码能力"
 
 #, fuzzy
 #~ msgid "Generates duo video for comparison"
