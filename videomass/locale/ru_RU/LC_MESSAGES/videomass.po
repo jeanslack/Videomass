@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-10 21:08+0100\n"
-"PO-Revision-Date: 2023-03-10 21:13+0100\n"
+"POT-Creation-Date: 2023-03-12 13:03+0100\n"
+"PO-Revision-Date: 2023-03-12 13:07+0100\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -783,8 +783,8 @@ msgstr ""
 "текстовые поля ниже, нажав соответствующие кнопки."
 
 #: ../vdms_dialogs/wizard_dlg.py:344 ../vdms_dialogs/wizard_dlg.py:361
-#: ../vdms_dialogs/wizard_dlg.py:379 ../vdms_dialogs/preferences.py:591
-#: ../vdms_dialogs/preferences.py:633 ../vdms_dialogs/preferences.py:676
+#: ../vdms_dialogs/wizard_dlg.py:379 ../vdms_dialogs/preferences.py:593
+#: ../vdms_dialogs/preferences.py:635 ../vdms_dialogs/preferences.py:678
 msgid "Choose the {} executable"
 msgstr "Выберите исполняемый файл {}"
 
@@ -1052,44 +1052,44 @@ msgstr ""
 "Выбранная тема значка изменит только значки, фон\n"
 "и передний план некоторых текстовых полей."
 
-#: ../vdms_dialogs/preferences.py:256
+#: ../vdms_dialogs/preferences.py:258
 msgid "Toolbar customization"
 msgstr "Настройка панели инструментов"
 
-#: ../vdms_dialogs/preferences.py:258
+#: ../vdms_dialogs/preferences.py:260
 msgid "At the top of window (default)"
 msgstr "Вверху (по умолчанию)"
 
-#: ../vdms_dialogs/preferences.py:259
+#: ../vdms_dialogs/preferences.py:261
 msgid "At the bottom of window"
 msgstr "Внизу"
 
-#: ../vdms_dialogs/preferences.py:260
+#: ../vdms_dialogs/preferences.py:262
 msgid "At the right of window"
 msgstr "Справа"
 
 # слева от окна или в левой части окна?
-#: ../vdms_dialogs/preferences.py:261
+#: ../vdms_dialogs/preferences.py:263
 msgid "At the left of window"
 msgstr "Слева"
 
-#: ../vdms_dialogs/preferences.py:263
+#: ../vdms_dialogs/preferences.py:265
 msgid "Place the toolbar"
 msgstr "Разместите панель инструментов"
 
-#: ../vdms_dialogs/preferences.py:273
+#: ../vdms_dialogs/preferences.py:275
 msgid "Icon size:"
 msgstr "Размер значка:"
 
-#: ../vdms_dialogs/preferences.py:286
+#: ../vdms_dialogs/preferences.py:288
 msgid "Shows the text in the toolbar buttons"
 msgstr "Показывает текст на кнопках панели инструментов"
 
-#: ../vdms_dialogs/preferences.py:291
+#: ../vdms_dialogs/preferences.py:293
 msgid "Appearance"
 msgstr "Вид"
 
-#: ../vdms_dialogs/preferences.py:298
+#: ../vdms_dialogs/preferences.py:300
 msgid ""
 "The following settings affect output messages and\n"
 "the log messages during transcoding processes.\n"
@@ -1099,24 +1099,24 @@ msgstr ""
 "сообщения журнала во время процессов перекодирования.\n"
 "Изменяйте, только если знаете, что делаете.\n"
 
-#: ../vdms_dialogs/preferences.py:319
+#: ../vdms_dialogs/preferences.py:321
 msgid "FFmpeg logging levels"
 msgstr "Комплект log-журналов FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:339 ../vdms_main/main_frame.py:574
+#: ../vdms_dialogs/preferences.py:341 ../vdms_main/main_frame.py:574
 #: ../vdms_panels/av_conversions.py:472
 msgid "Settings"
 msgstr "Настройки"
 
-#: ../vdms_dialogs/preferences.py:361
+#: ../vdms_dialogs/preferences.py:363
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr "Назначив дополнительный суффикс, вы можете избежать перезаписи файлов"
 
-#: ../vdms_dialogs/preferences.py:483
+#: ../vdms_dialogs/preferences.py:485
 msgid "Set a persistent location to save exported files"
 msgstr "Установите постоянное место для сохранения экспортированных файлов"
 
-#: ../vdms_dialogs/preferences.py:515
+#: ../vdms_dialogs/preferences.py:517
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Spaces are not allowed."
@@ -1124,7 +1124,7 @@ msgstr ""
 "Вводите только буквенно-цифровые символы. Вы также можете использовать дефис "
 "(\"-\") и подчеркивание (\"_\"). Пробелы не допускаются."
 
-#: ../vdms_dialogs/preferences.py:775
+#: ../vdms_dialogs/preferences.py:777
 msgid ""
 "Changes will take effect once the program has been restarted.\n"
 "\n"
@@ -1134,7 +1134,7 @@ msgstr ""
 "\n"
 "Вы хотите выйти из приложения сейчас?"
 
-#: ../vdms_dialogs/preferences.py:778 ../vdms_main/main_frame.py:386
+#: ../vdms_dialogs/preferences.py:780 ../vdms_main/main_frame.py:386
 msgid "Exit"
 msgstr "Выход"
 
@@ -1978,7 +1978,7 @@ msgstr "Посмотр"
 msgid "Home panel\tCtrl+Shift+H"
 msgstr "Начальная панель\tCtrl+Shift+H"
 
-#: ../vdms_main/main_frame.py:505 ../vdms_main/main_frame.py:1298
+#: ../vdms_main/main_frame.py:505 ../vdms_main/main_frame.py:1307
 msgid "Go to the 'Home' panel"
 msgstr "Перейдите к 'Начальной панели'"
 
@@ -2026,7 +2026,7 @@ msgstr "Перейдите на панель 'Картинки из фильма
 msgid "Output Monitor\tCtrl+Shift+O"
 msgstr "Выходной экран\tCtrl+Shift+O"
 
-#: ../vdms_main/main_frame.py:526 ../vdms_main/main_frame.py:1314
+#: ../vdms_main/main_frame.py:526 ../vdms_main/main_frame.py:1312
 msgid "Keeps track of the output for debugging errors"
 msgstr "Отслеживает вывод для ошибок отладки"
 
@@ -2251,51 +2251,51 @@ msgstr "Вы используете версию для разработки, к
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr "Поздравляю! Вы уже используете последнюю версию.\n"
 
-#: ../vdms_main/main_frame.py:1299
-msgid "Home"
-msgstr ""
-
-#: ../vdms_main/main_frame.py:1304
+#: ../vdms_main/main_frame.py:1297
 msgid "Go to the previous panel"
 msgstr "Перейти к предыдущей панели"
 
-#: ../vdms_main/main_frame.py:1305
+#: ../vdms_main/main_frame.py:1298
 msgid "Back"
 msgstr "Назад"
 
-#: ../vdms_main/main_frame.py:1309
+#: ../vdms_main/main_frame.py:1302
 msgid "Go to the next panel"
 msgstr "Перейти к следующей панели"
 
-#: ../vdms_main/main_frame.py:1310
+#: ../vdms_main/main_frame.py:1303
 msgid "Next"
 msgstr "Вперед"
 
-#: ../vdms_main/main_frame.py:1315
+#: ../vdms_main/main_frame.py:1308
+msgid "Home"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:1313
 msgid "Output Monitor"
 msgstr "Выходной экран"
 
-#: ../vdms_main/main_frame.py:1321
+#: ../vdms_main/main_frame.py:1319
 msgid "Get informative data about imported media streams"
 msgstr "Получайте информативные данные об импортированных медиапотоках"
 
-#: ../vdms_main/main_frame.py:1322
+#: ../vdms_main/main_frame.py:1320
 msgid "Media Details"
 msgstr "Сведения о мультимедиа"
 
-#: ../vdms_main/main_frame.py:1326
+#: ../vdms_main/main_frame.py:1324
 msgid "Start rendering"
 msgstr "Начать преобразование"
 
-#: ../vdms_main/main_frame.py:1327
+#: ../vdms_main/main_frame.py:1325
 msgid "Start"
 msgstr "Начать"
 
-#: ../vdms_main/main_frame.py:1332
+#: ../vdms_main/main_frame.py:1330
 msgid "Stops current process"
 msgstr "Останавливает текущий процесс"
 
-#: ../vdms_main/main_frame.py:1333
+#: ../vdms_main/main_frame.py:1331
 msgid "Abort"
 msgstr "Прервать"
 
@@ -2845,35 +2845,35 @@ msgstr "Выберите пресет Videomass..."
 msgid "Create a new profile"
 msgstr "Создать новый профиль"
 
-#: ../vdms_panels/choose_topic.py:69
+#: ../vdms_panels/choose_topic.py:71
 msgid "Welcome to Videomass"
 msgstr "Добро пожаловать в Videomass"
 
-#: ../vdms_panels/choose_topic.py:70
+#: ../vdms_panels/choose_topic.py:72
 msgid "Version {}"
 msgstr "Версия {}"
 
-#: ../vdms_panels/choose_topic.py:87
+#: ../vdms_panels/choose_topic.py:89
 msgid "Presets Manager"
 msgstr "Менеджер Пресетов"
 
-#: ../vdms_panels/choose_topic.py:97
+#: ../vdms_panels/choose_topic.py:99
 msgid "AV-Conversions"
 msgstr "AV-конвертация"
 
-#: ../vdms_panels/choose_topic.py:100
+#: ../vdms_panels/choose_topic.py:102
 msgid "Concatenate media files"
 msgstr "Объединить медиафайлы"
 
-#: ../vdms_panels/choose_topic.py:104
+#: ../vdms_panels/choose_topic.py:106
 msgid "Still Image Maker"
 msgstr "Still Image Maker"
 
-#: ../vdms_panels/choose_topic.py:108
+#: ../vdms_panels/choose_topic.py:110
 msgid "From Movie to Pictures"
 msgstr "Картинки из фильма"
 
-#: ../vdms_panels/choose_topic.py:124
+#: ../vdms_panels/choose_topic.py:126
 msgid ""
 "Create, edit and use quickly your favorite FFmpeg presets and profiles with "
 "full formats support and codecs."
@@ -2881,7 +2881,7 @@ msgstr ""
 "Cоздавайте, редактируйте или используйте свои любимые пресеты и профили "
 "прямо сейчас с полной поддержкой форматов и кодеков FFmpeg."
 
-#: ../vdms_panels/choose_topic.py:128
+#: ../vdms_panels/choose_topic.py:130
 msgid ""
 "A set of useful tools for audio and video conversions. Save your profiles "
 "and reuse them with Presets Manager."
@@ -2889,14 +2889,14 @@ msgstr ""
 "Набор полезных инструментов для преобразования аудио и видео. Сохраните свои "
 "профили и повторно используйте их с помощью Менеджера Пресетов."
 
-#: ../vdms_panels/choose_topic.py:132
+#: ../vdms_panels/choose_topic.py:134
 msgid ""
 "Concatenate multiple media files based on import order without re-encoding"
 msgstr ""
 "Объединение нескольких медиафайлов в соответствии с порядком импорта без "
 "перекодирования"
 
-#: ../vdms_panels/choose_topic.py:135
+#: ../vdms_panels/choose_topic.py:137
 msgid ""
 "Create video from a sequence of images, based on import order, with the "
 "ability to add an audio file."
@@ -2904,7 +2904,7 @@ msgstr ""
 "Создавайте видео из последовательности изображений, основываясь на порядке "
 "импорта, с возможностью добавления аудиофайла."
 
-#: ../vdms_panels/choose_topic.py:138
+#: ../vdms_panels/choose_topic.py:140
 msgid "Extract images (frames) from your movies in JPG, PNG, BMP, GIF formats."
 msgstr ""
 "Извлекайте изображения (кадры) из ваших фильмов в форматы JPG, PNG, BMP, GIF."
@@ -3148,35 +3148,35 @@ msgstr "Завершено, но не все прошло хорошо."
 msgid "Process log:"
 msgstr "Журнал процесса:"
 
-#: ../vdms_panels/long_processing_task.py:345
+#: ../vdms_panels/long_processing_task.py:343
 msgid "Fatal Error !"
 msgstr "Фатальная ошибка !"
 
-#: ../vdms_panels/long_processing_task.py:354
+#: ../vdms_panels/long_processing_task.py:352
 msgid "Get your files at the destination you specified"
 msgstr "Получите ваши файлы по указанному вами адресу"
 
-#: ../vdms_panels/long_processing_task.py:362
-#: ../vdms_panels/long_processing_task.py:369
+#: ../vdms_panels/long_processing_task.py:360
+#: ../vdms_panels/long_processing_task.py:367
 msgid ""
 "Check the current output or read the related log file for more information."
 msgstr ""
 "Проверьте текущий вывод или прочтите соответствующий файл журнала для "
 "получения дополнительной информации."
 
-#: ../vdms_panels/long_processing_task.py:374
+#: ../vdms_panels/long_processing_task.py:372
 msgid "...Finished"
 msgstr "...Завершено"
 
-#: ../vdms_panels/long_processing_task.py:393
+#: ../vdms_panels/long_processing_task.py:391
 msgid "wait... I'm interrupting"
 msgstr "подождите ... я прерываю"
 
-#: ../vdms_panels/long_processing_task.py:396
+#: ../vdms_panels/long_processing_task.py:394
 msgid "...Interrupted"
 msgstr "...Прервано"
 
-#: ../vdms_panels/long_processing_task.py:419
+#: ../vdms_panels/long_processing_task.py:417
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
@@ -3188,7 +3188,7 @@ msgstr ""
 "\n"
 "Вы хотите закрыть приложение?"
 
-#: ../vdms_panels/long_processing_task.py:422
+#: ../vdms_panels/long_processing_task.py:420
 #: ../vdms_panels/presets_manager.py:349 ../vdms_panels/presets_manager.py:527
 #: ../vdms_panels/presets_manager.py:567 ../vdms_panels/presets_manager.py:631
 #: ../vdms_panels/presets_manager.py:657 ../vdms_panels/presets_manager.py:807

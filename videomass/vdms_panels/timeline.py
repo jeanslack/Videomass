@@ -269,7 +269,6 @@ class Timeline(wx.Panel):
         Set new values if any Changes.
         """
         if msg == 'Changes':
-            print(self.duration)
             if not self.duration or not max(self.duration):
                 self.milliseconds = 86399999
             elif max(self.duration) < 100:  # if .jpeg

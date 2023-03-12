@@ -239,7 +239,7 @@ def get_color_scheme(theme):
     elif theme == 'Videomass-Light':
         c_scheme = {'BACKGRD': '#ced0d1',  # WHITE background color
                     'TXT0': '#1f1f1f',  # BLACK for title or URL in progress
-                    'TXT1': '#778899ff',  # LIGHT_SLATE for all other text msg
+                    'TXT1': '#576470',  # LIGHT_SLATE for all other text msg
                     'ERR0': '#d25c07',  # ORANGE for error text messages
                     'WARN': '#988313',  # YELLOW for warning text messages
                     'ERR1': '#c8120b',  # LIGHTRED for errors 2
