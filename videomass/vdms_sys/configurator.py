@@ -204,34 +204,35 @@ def get_color_scheme(theme):
     chosen theme in ("Videomass-Light",
                      "Videomass-Dark",
                      "Videomass-Colours",
+                     "Ubuntu-Light-Aubergine",
                      "Ubuntu-Dark-Aubergine",
                      )
     """
     if theme == 'Videomass-Colours':
-        c_scheme = {'BACKGRD': '#1c2027',  # DARK_SLATE background color
-                    'TXT0': '#FFFFFF',  # WHITE for title or URL in progress
-                    'TXT1': '#959595',  # GREY for all other text messages
-                    'ERR0': '#FF4A1B',  # ORANGE for error text messages
-                    'WARN': '#dfb72f',  # YELLOW for warning text messages
-                    'ERR1': '#EA312D',  # LIGHTRED for errors 2
-                    'SUCCESS': '#30ec30',  # Light GREEN when it is successful
-                    'TXT3': '#11b584',  # medium green
-                    'INFO': '#3298FB',  # AZURE
-                    'DEBUG': '#0ce3ac',  # light green
+        c_scheme = {'BACKGRD': '#8dc6c2',  # Ciano: background color
+                    'TXT0': '#d01d7a',  # Magenta: titles & end messages)
+                    'TXT1': '#ae11db',  # Purple for debug and others
+                    'ERR0': '#FF4A1B',  # ORANGE: errors 1 and others
+                    'WARN': '#7b6e01',  # YELLOW: warnings
+                    'ERR1': '#EA312D',  # LIGHTRED: errors 2
+                    'SUCCESS': '#017001',  # Light GREEN: successful
+                    'TXT3': '#333333',  # Dark grey: standard text
+                    'INFO': '#194c7e',  # Blue: other info messages
+                    # 'DEBUG': '#333333',  # light green
                     'FAILED': '#D21814',  # RED_DEEP if failed
-                    'ABORT': '#A41EA4',  # VIOLET the user stops the processes
+                    'ABORT': '#D21814',  # RED_DEEP if abort
                     }
     elif theme == 'Videomass-Dark':
-        c_scheme = {'BACKGRD': '#232424',  # DARK Grey background color
-                    'TXT0': '#FFFFFF',  # WHITE for title or URL in progress
-                    'TXT1': '#959595',  # GREY for all other text messages
-                    'ERR0': '#FF4A1B',  # ORANGE for error text messages
-                    'WARN': '#dfb72f',  # YELLOW for warning text messages
-                    'ERR1': '#EA312D',  # LIGHTRED for errors 2
-                    'SUCCESS': '#30ec30',  # Light GREEN when it is successful
-                    'TXT3': '#11b584',  # medium green
-                    'INFO': '#118db5',  # AZURE
-                    'DEBUG': '#0ce3ac',  # light green
+        c_scheme = {'BACKGRD': '#ced0d1',  # WHITE background color
+                    'TXT0': '#1f1f1f',  # BLACK for title or URL in progress
+                    'TXT1': '#778899ff',  # LIGHT_SLATE for all other text msg
+                    'ERR0': '#d25c07',  # ORANGE for error text messages
+                    'WARN': '#988313',  # YELLOW for warning text messages
+                    'ERR1': '#c8120b',  # LIGHTRED for errors 2
+                    'SUCCESS': '#35a735',  # DARK_GREEN when it is successful
+                    'TXT3': '#005c00',  # Light Green
+                    'INFO': '#3298FB',  # AZURE
+                    # 'DEBUG': '#005c00',  # Light Green
                     'FAILED': '#D21814',  # RED_DEEP if failed
                     'ABORT': '#A41EA4',  # VIOLET the user stops the processes
                     }
@@ -245,11 +246,11 @@ def get_color_scheme(theme):
                     'SUCCESS': '#35a735',  # DARK_GREEN when it is successful
                     'TXT3': '#005c00',  # Light Green
                     'INFO': '#3298FB',  # AZURE
-                    'DEBUG': '#005c00',  # Light Green
+                    # 'DEBUG': '#005c00',  # Light Green
                     'FAILED': '#D21814',  # RED_DEEP if failed
                     'ABORT': '#A41EA4',  # VIOLET the user stops the processes
                     }
-    elif theme == 'Ubuntu-Dark-Aubergine':
+    elif theme in ('Ubuntu-Dark-Aubergine', 'Ubuntu-Light-Aubergine'):
         c_scheme = {'BACKGRD': '#2C001E',  # Dark-Aubergine background color
                     'TXT0': '#FFFFFF',  # WHITE for titles
                     'TXT1': '#AEA79F',  # Ubuntu warm grey (base foreground)
@@ -259,7 +260,7 @@ def get_color_scheme(theme):
                     'SUCCESS': '#ABD533',  # Light GREEN when it is successful
                     'TXT3': '#AEA79F',  # Ubuntu warm grey (base foreground)
                     'INFO': '#F7C3B1',  # Ubuntu orange light 30%
-                    'DEBUG': '#6199d1',  # Blue
+                    # 'DEBUG': '#6199d1',  # Blue
                     'FAILED': '#F90808',  # RED_DEEP
                     'ABORT': '#F90808',  # RED_DEEP
                     }

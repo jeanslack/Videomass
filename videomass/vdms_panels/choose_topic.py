@@ -42,6 +42,8 @@ class Choose_Topic(wx.Panel):
         get = wx.GetApp()
         self.appdata = get.appset
         self.icons = parent.icons
+        colorscheme = get.appset['icontheme']
+
         # ----------------------
         self.parent = parent
         self.oS = OS
@@ -149,13 +151,25 @@ class Choose_Topic(wx.Panel):
         if hasattr(wx.SystemSettings, 'GetAppearance'):
             appear = wx.SystemSettings.GetAppearance()
             if appear.IsDark():
-                self.SetBackgroundColour('#232424')  # Dark grey
+                if colorscheme[0] in ('Videomass-Colours',
+                                      'Videomass-Dark',
+                                      'Videomass-Light'):
+                    self.SetBackgroundColour('#232424')  # Dark grey
+                elif colorscheme[0] in ('Ubuntu-Dark-Aubergine',
+                                        'Ubuntu-Light-Aubergine'):
+                    self.SetBackgroundColour('#2C001E')  # Dark Aubergine
                 welcome.SetForegroundColour('#E95420')  # Ubuntu orange
                 version.SetForegroundColour('#E95420')  # Ubuntu orange
             else:
-                self.SetBackgroundColour('#B0CCEB')  # Azure
-                welcome.SetForegroundColour('#E95420')  # Ubuntu orange
-                version.SetForegroundColour('#E95420')  # Ubuntu orange
+                if colorscheme[0] in ('Videomass-Colours',
+                                      'Videomass-Dark',
+                                      'Videomass-Light'):
+                    self.SetBackgroundColour('#4eada5')  # blue
+                elif colorscheme[0] in ('Ubuntu-Dark-Aubergine',
+                                        'Ubuntu-Light-Aubergine'):
+                    self.SetBackgroundColour('#2C001E')  # Dark Aubergine
+                    welcome.SetForegroundColour('#E95420')  # Ubuntu orange
+                    version.SetForegroundColour('#E95420')  # Ubuntu orange
 
         self.Bind(wx.EVT_BUTTON, self.on_Conv, self.avconv)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)

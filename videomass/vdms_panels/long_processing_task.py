@@ -258,9 +258,12 @@ class LogOut(wx.Panel):
             if self.with_eta:
                 if 'speed=' in output:
                     speed = output.split('speed=')[-1].strip().split('x')[0]
-                    rem = (duration - msec) / float(speed)
-                    remaining = milliseconds2clock(round(rem))
-                    eta = f"   ETA: {remaining}"
+                    if speed == 'N/A':
+                        eta = "   ETA: N/A"
+                    else:  # is float
+                        rem = (duration - msec) / float(speed)
+                        remaining = milliseconds2clock(round(rem))
+                        eta = f"   ETA: {remaining}"
                 else:
                     eta = "   ETA: N/A"
             else:
@@ -285,7 +288,7 @@ class LogOut(wx.Panel):
                 self.txtout.AppendText(f'{output}')
 
             else:
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT3']))
                 self.txtout.AppendText(f'{output}')
 
             with open(self.logname, "a", encoding='utf8') as logerr:
@@ -321,10 +324,10 @@ class LogOut(wx.Panel):
             self.barprog.SetValue(0)  # reset bar progress
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
             self.txtout.AppendText(f'\n{count}\n')
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['DEBUG']))
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
             self.txtout.AppendText(f'{fsource}\n')
             if destination:
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['DEBUG']))
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
                 self.txtout.AppendText(f'{destination}\n')
 
         self.count += 1

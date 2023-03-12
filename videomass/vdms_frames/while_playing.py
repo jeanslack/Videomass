@@ -92,8 +92,8 @@ class WhilePlaying(wx.MiniFrame):
         self.SetTitle(_("Shortcut keys while playing with FFplay"))
 
         panel.SetBackgroundColour(wx.Colour(colorscheme['BACKGRD']))
-        label2.SetForegroundColour(wx.Colour(colorscheme['TXT1']))
-        label1.SetForegroundColour(wx.Colour(colorscheme['ERR0']))
+        label2.SetForegroundColour(wx.Colour(colorscheme['INFO']))
+        label1.SetForegroundColour(wx.Colour(colorscheme['TXT0']))
         # ---------------------- Layout ----------------------#
         gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)
         gr_s1.Add(label1, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
