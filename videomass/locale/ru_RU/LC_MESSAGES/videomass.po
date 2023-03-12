@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-12 13:03+0100\n"
-"PO-Revision-Date: 2023-03-12 13:07+0100\n"
+"POT-Creation-Date: 2023-03-13 00:29+0100\n"
+"PO-Revision-Date: 2023-03-13 00:33+0100\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -1509,57 +1509,53 @@ msgstr "FFprobe   ...не найдено !"
 msgid "FFplay   ...not found !"
 msgstr "FFplay   ...не найдено !"
 
-#: ../vdms_frames/ffmpeg_conf.py:199
-msgid "ENABLED:"
-msgstr "ВКЛЮЧЕНО:"
-
-#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2257
+#: ../vdms_frames/ffmpeg_conf.py:199 ../vdms_panels/av_conversions.py:2257
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:592
 msgid "Enabled"
 msgstr "Включено"
 
-#: ../vdms_frames/ffmpeg_conf.py:212
-msgid "DISABLED:"
-msgstr "ОТКЛЮЧЕНО:"
-
-#: ../vdms_frames/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2257
+#: ../vdms_frames/ffmpeg_conf.py:210 ../vdms_panels/av_conversions.py:2257
 #: ../vdms_panels/sequence_to_video.py:709
 #: ../vdms_panels/video_to_sequence.py:596
 msgid "Disabled"
 msgstr "Отключено"
 
 #: ../vdms_frames/ffmpeg_codecs.py:47
-msgid "CODING CAPABILITY"
-msgstr "ВОЗМОЖНОСТЬ ДЕКОДИРОВАНИЯ"
-
-#: ../vdms_frames/ffmpeg_codecs.py:49
 msgid "FFmpeg encoders"
 msgstr "Кодировщики FFmpeg"
 
-#: ../vdms_frames/ffmpeg_codecs.py:51
-msgid "DECODING CAPABILITY"
-msgstr "ВОЗМОЖНОСТЬ ДЕКОДИРОВАНИЯ"
+#: ../vdms_frames/ffmpeg_codecs.py:48
+#, fuzzy
+#| msgid "FFmpeg encoders"
+msgid "supported encoders"
+msgstr "Кодировщики FFmpeg"
 
-#: ../vdms_frames/ffmpeg_codecs.py:53
+#: ../vdms_frames/ffmpeg_codecs.py:50
 msgid "FFmpeg decoders"
 msgstr "Декодеры FFmpeg"
 
-#: ../vdms_frames/ffmpeg_codecs.py:77 ../vdms_panels/av_conversions.py:447
+#: ../vdms_frames/ffmpeg_codecs.py:51
+#, fuzzy
+#| msgid "FFmpeg decoders"
+msgid "supported decoders"
+msgstr "Декодеры FFmpeg"
+
+#: ../vdms_frames/ffmpeg_codecs.py:75 ../vdms_panels/av_conversions.py:447
 msgid "Video"
 msgstr "Видео"
 
-#: ../vdms_frames/ffmpeg_codecs.py:87 ../vdms_panels/av_conversions.py:607
+#: ../vdms_frames/ffmpeg_codecs.py:85 ../vdms_panels/av_conversions.py:607
 msgid "Audio"
 msgstr "Аудио"
 
-#: ../vdms_frames/ffmpeg_codecs.py:97
+#: ../vdms_frames/ffmpeg_codecs.py:95
 msgid "Subtitle"
 msgstr "Субтитры"
 
-#: ../vdms_frames/ffmpeg_codecs.py:114 ../vdms_frames/ffmpeg_codecs.py:123
-#: ../vdms_frames/ffmpeg_codecs.py:132 ../vdms_frames/ffmpeg_formats.py:108
-#: ../vdms_frames/ffmpeg_formats.py:112 ../vdms_frames/ffmpeg_formats.py:116
+#: ../vdms_frames/ffmpeg_codecs.py:112 ../vdms_frames/ffmpeg_codecs.py:121
+#: ../vdms_frames/ffmpeg_codecs.py:130 ../vdms_frames/ffmpeg_formats.py:108
+#: ../vdms_frames/ffmpeg_formats.py:111 ../vdms_frames/ffmpeg_formats.py:114
 msgid "description"
 msgstr "описание"
 
@@ -1579,8 +1575,8 @@ msgstr "Поддержка демультиплексирования/мульт
 msgid "FFmpeg file formats"
 msgstr "Форматы файлов FFmpeg"
 
-#: ../vdms_frames/ffmpeg_formats.py:107 ../vdms_frames/ffmpeg_formats.py:111
-#: ../vdms_frames/ffmpeg_formats.py:115
+#: ../vdms_frames/ffmpeg_formats.py:107 ../vdms_frames/ffmpeg_formats.py:110
+#: ../vdms_frames/ffmpeg_formats.py:113
 msgid "format"
 msgstr "формат"
 
@@ -1620,15 +1616,15 @@ msgstr "=  Без изменений"
 msgid "=  Below max peak"
 msgstr "=  Ниже максимального пика"
 
-#: ../vdms_frames/shownormlist.py:138 ../vdms_panels/av_conversions.py:1729
+#: ../vdms_frames/shownormlist.py:141 ../vdms_panels/av_conversions.py:1729
 msgid "RMS-based volume statistics"
 msgstr "Статистика звука на основе RMS"
 
-#: ../vdms_frames/shownormlist.py:163 ../vdms_panels/av_conversions.py:1727
+#: ../vdms_frames/shownormlist.py:166 ../vdms_panels/av_conversions.py:1727
 msgid "PEAK-based volume statistics"
 msgstr "Статистика звука на основе PEAK"
 
-#: ../vdms_frames/shownormlist.py:188
+#: ../vdms_frames/shownormlist.py:191
 msgid ""
 "Orange ton...\n"
 "\n"
@@ -1642,7 +1638,7 @@ msgstr ""
 "максимальный уровень 0 дБ. Это приводит к \n"
 "потере данных и искажению звука."
 
-#: ../vdms_frames/shownormlist.py:215
+#: ../vdms_frames/shownormlist.py:218
 msgid ""
 "Green ton...\n"
 "\n"
@@ -1652,7 +1648,7 @@ msgstr ""
 "...Это означает, что результирующий звук не\n"
 "изменится, потому что он равен источнику."
 
-#: ../vdms_frames/shownormlist.py:240
+#: ../vdms_frames/shownormlist.py:243
 msgid ""
 "Blue ton...\n"
 "\n"
@@ -3928,6 +3924,18 @@ msgstr ""
 #: ../vdms_threads/slideshow.py:230
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' установлен в вашей системе?"
+
+#~ msgid "ENABLED:"
+#~ msgstr "ВКЛЮЧЕНО:"
+
+#~ msgid "DISABLED:"
+#~ msgstr "ОТКЛЮЧЕНО:"
+
+#~ msgid "CODING CAPABILITY"
+#~ msgstr "ВОЗМОЖНОСТЬ ДЕКОДИРОВАНИЯ"
+
+#~ msgid "DECODING CAPABILITY"
+#~ msgstr "ВОЗМОЖНОСТЬ ДЕКОДИРОВАНИЯ"
 
 #~ msgid "Audio normalization is required only for some files"
 #~ msgstr "Нормализация звука требуется только для некоторых файлов"

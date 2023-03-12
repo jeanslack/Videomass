@@ -223,16 +223,16 @@ def get_color_scheme(theme):
                     'ABORT': '#D21814',  # RED_DEEP if abort
                     }
     elif theme == 'Videomass-Dark':
-        c_scheme = {'BACKGRD': '#ced0d1',  # WHITE background color
-                    'TXT0': '#1f1f1f',  # BLACK for title or URL in progress
-                    'TXT1': '#778899ff',  # LIGHT_SLATE for all other text msg
-                    'ERR0': '#d25c07',  # ORANGE for error text messages
-                    'WARN': '#988313',  # YELLOW for warning text messages
-                    'ERR1': '#c8120b',  # LIGHTRED for errors 2
-                    'SUCCESS': '#35a735',  # DARK_GREEN when it is successful
-                    'TXT3': '#005c00',  # Light Green
-                    'INFO': '#3298FB',  # AZURE
-                    # 'DEBUG': '#005c00',  # Light Green
+        c_scheme = {'BACKGRD': '#232424',  # DARK Grey background color
+                    'TXT0': '#FFFFFF',  # WHITE for title or URL in progress
+                    'TXT1': '#959595',  # GREY for all other text messages
+                    'ERR0': '#FF4A1B',  # ORANGE for error text messages
+                    'WARN': '#dfb72f',  # YELLOW for warning text messages
+                    'ERR1': '#EA312D',  # LIGHTRED for errors 2
+                    'SUCCESS': '#30ec30',  # Light GREEN when it is successful
+                    'TXT3': '#11b584',  # medium green
+                    'INFO': '#118db5',  # AZURE
+                    # 'DEBUG': '#0ce3ac',  # light green
                     'FAILED': '#D21814',  # RED_DEEP if failed
                     'ABORT': '#A41EA4',  # VIOLET the user stops the processes
                     }
