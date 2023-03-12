@@ -31,7 +31,7 @@
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:window-width="1920"
-     inkscape:window-height="1007"
+     inkscape:window-height="1005"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -280,15 +280,6 @@
      inkscape:label="Icons"
      style="display:inline"
      transform="translate(0,-208)">
-    <rect
-       style="display:inline;opacity:0.989;fill:#c64600;fill-opacity:1;stroke:#eff0f1;stroke-width:0.774803;stroke-miterlimit:17.6;stroke-dasharray:none;stroke-opacity:1;enable-background:new"
-       id="rect876"
-       width="45"
-       height="45"
-       x="1.5"
-       y="209.5"
-       rx="0.537983"
-       ry="0.537983" />
     <path
        style="display:inline;opacity:1;fill:url(#linearGradient4562);fill-opacity:1;stroke:none;stroke-width:0.64012319"
        d="M 431.27322,-1.1574823 328.84738,102.85416 365.32172,139.54897 467.51057,35.778941 Z"

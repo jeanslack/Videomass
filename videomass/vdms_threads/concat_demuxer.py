@@ -52,17 +52,17 @@ class ConcatDemuxer(Thread):
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ---------------------------------------------------------------
 
-    def __init__(self, varargs, duration, logname):
+    def __init__(self, logname, duration, *args):
         """
-        Some attribute can be empty, this depend from conversion type.
-
+        Called from `long_processing_task.topic_thread`.
+        Also see `main_frame.switch_to_processing`.
         """
         self.stop_work_thread = False  # process terminate
-        self.input_flist = varargs[1]  # list of files (items)
-        self.command = varargs[4]  # additional comand
-        self.output_file = varargs[3]  # output path
+        self.input_flist = args[1]  # list of files (items)
+        self.command = args[4]  # additional comand
+        self.output_file = args[3]  # output path
         self.duration = duration  # overall duration
-        self.countmax = len(varargs[1])  # length file list
+        self.countmax = len(args[1])  # length file list
         self.logname = logname  # title name of file log
 
         Thread.__init__(self)

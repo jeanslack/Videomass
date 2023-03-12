@@ -762,14 +762,14 @@ class AV_Conv(wx.Panel):
             self.vp9panel.Show(), self.h264panel.Hide(), self.av1panel.Hide()
             self.vp9panel.default()
             self.slider_CRF.SetMax(63)
-            self.slider_CRF.SetValue(31), self.spin_Vbrate.SetValue(1500)
+            self.slider_CRF.SetValue(31), self.spin_Vbrate.SetValue(0)
             self.filterVpanel.Enable(), self.nb_Video.Layout()
 
         elif self.opt["VideoCodec"] == "-c:v libaom-av1":
             self.vp9panel.Hide(), self.h264panel.Hide(), self.av1panel.Show()
             self.av1panel.default()
             self.slider_CRF.SetMax(63)
-            self.slider_CRF.SetValue(31), self.spin_Vbrate.SetValue(1500)
+            self.slider_CRF.SetValue(31), self.spin_Vbrate.SetValue(0)
             self.filterVpanel.Enable(), self.nb_Video.Layout()
 
         elif self.opt["VideoCodec"] == "-c:v copy":

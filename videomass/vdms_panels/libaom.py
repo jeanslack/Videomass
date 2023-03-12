@@ -76,7 +76,7 @@ class AV1Pan(scrolled.ScrolledPanel):
         lab_gop = wx.StaticText(self, wx.ID_ANY, ("Group of picture (GOP):"))
         sizer.Add(lab_gop, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL, 5)
         self.spin_gop = wx.SpinCtrl(self, wx.ID_ANY,
-                                    "250", min=0,
+                                    "250", min=-1,
                                     max=1000, size=(-1, -1),
                                     style=wx.TE_PROCESS_ENTER,
                                     )
@@ -100,7 +100,8 @@ class AV1Pan(scrolled.ScrolledPanel):
                  'interval. Anything up to 10 seconds is considered '
                  'reasonable for most content, so for 30 frames per second '
                  'content one would set to 300, for 60 fps content set '
-                 'to 600. For "intra-only" output, set to 0'))
+                 'to 600. For "intra-only" output, set to 0. Set to -1 to '
+                 'disable this control.'))
         self.spin_gop.SetToolTip(tip)
 
         self.Bind(wx.EVT_RADIOBOX, self.on_usage, self.rdb_usage)
@@ -148,5 +149,10 @@ class AV1Pan(scrolled.ScrolledPanel):
         Set group of pictures (GOP)
         """
         val = self.spin_gop.GetValue()
-        self.opt["GOP"] = f'-g {val} -keyint_min {val}'
+        if val == -1:
+            self.opt["GOP"] = ''
+        elif val == 0:
+            self.opt["GOP"] = f'-g {val}'
+        else:
+            self.opt["GOP"] = f'-g {val} -keyint_min {val}'
     # ------------------------------------------------------------------#

@@ -55,26 +55,26 @@ class VidStab(Thread):
     OS = appdata['ostype']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
-    def __init__(self, varargs, duration, logname, timeseq):
+    def __init__(self, logname, duration, timeseq, *args):
         """
-        The 'volume' attribute may have an empty value, but it will
-        have no influence on the type of conversion.
+        Called from `long_processing_task.topic_thread`.
+        Also see `main_frame.switch_to_processing`.
         """
         self.stop_work_thread = False  # process terminate
-        self.input_flist = varargs[1]  # list of infile (elements)
-        self.passlist = varargs[5]  # comand list set for double-pass
-        self.makeduo = varargs[4]  # one more process for the duo file
-        self.output_flist = varargs[3]  # output path
+        self.input_flist = args[1]  # list of infile (elements)
+        self.passlist = args[5]  # comand list set for double-pass
+        self.makeduo = args[4]  # one more process for the duo file
+        self.output_flist = args[3]  # output path
         self.duration = duration  # duration list
         self.time_seq = timeseq  # a time segment
-        self.volume = varargs[7]  # volume compensation data
+        self.volume = args[7]  # volume compensation data
         self.count = 0  # count first for loop
-        self.countmax = len(varargs[1])  # length file list
+        self.countmax = len(args[1])  # length file list
         self.logname = logname  # title name of file log
         self.nul = 'NUL' if VidStab.OS == 'Windows' else '/dev/null'
 
         # this block is needed when other filters are enabled
-        spl = varargs[6].split('-vf ')[1]
+        spl = args[6].split('-vf ')[1]
         addspl = ','.join([x for x in spl.split(',') if '-vf'
                            not in x and 'vidstabtransform' not in x
                            and 'unsharp' not in x])

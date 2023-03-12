@@ -42,33 +42,28 @@ class OnePass(Thread):
     This class represents a separate thread for running processes,
     which need to read the stdout/stderr in real time.
 
-    NOTE capturing output in real-time (Windows, Unix):
-
+    capturing output in real-time (Windows, Unix):
     https://stackoverflow.com/questions/1388753/how-to-get-output-
     from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
-
     """
-    get = wx.GetApp()  # get videomass wx.App attribute
+    get = wx.GetApp()  # get videomass wx.App attributes
     appdata = get.appset
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ---------------------------------------------------------------
 
-    def __init__(self, varargs, duration, logname, timeseq):
+    def __init__(self, logname, duration, timeseq, *args):
         """
-        Some attribute can be empty, this depend from conversion type.
-        If the format/container is not changed on a conversion, the
-        'extoutput' attribute will have an empty value.
-        The 'volume' attribute may also have an empty value, but it will
-        no affect as well.
+        Called from `long_processing_task.topic_thread`.
+        Also see `main_frame.switch_to_processing`.
         """
         self.stop_work_thread = False  # process terminate
-        self.input_flist = varargs[1]  # list of infile (items)
-        self.command = varargs[4]  # comand set on single pass
-        self.output_flist = varargs[3]  # output path
+        self.input_flist = args[1]  # list of infile (items)
+        self.command = args[4]  # comand set on single pass
+        self.output_flist = args[3]  # output path
         self.duration = duration  # duration list
-        self.volume = varargs[7]  # (lista norm.)se non richiesto rimane None
+        self.volume = args[7]  # (lista norm.)se non richiesto rimane None
         self.count = 0  # count first for loop
-        self.countmax = len(varargs[1])  # length file list
+        self.countmax = len(args[1])  # length file list
         self.logname = logname  # title name of file log
         self.time_seq = timeseq  # a time segment
 

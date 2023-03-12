@@ -138,7 +138,7 @@ class Hevc_Avc(scrolled.ScrolledPanel):
         lab_gop = wx.StaticText(self, wx.ID_ANY, ("Group of picture (GOP):"))
         sizerbase.Add(lab_gop, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL, 5)
         self.spin_gop = wx.SpinCtrl(self, wx.ID_ANY,
-                                    "10", min=0,
+                                    "10", min=-1,
                                     max=1000, size=(-1, -1),
                                     style=wx.TE_PROCESS_ENTER,
                                     )
@@ -157,7 +157,8 @@ class Hevc_Avc(scrolled.ScrolledPanel):
         tip = _('Tune the encoding params')
         self.cmb_tune.SetToolTip(tip)
         tip = (_('Set the group of picture (GOP) size '
-                 '(default 12 for H.264, 1 for H.265)'))
+                 '(default 12 for H.264, 1 for H.265). '
+                 'Set to -1 to disable this control.'))
         self.spin_gop.SetToolTip(tip)
 
         self.Bind(wx.EVT_COMBOBOX, self.on_preset, self.cmb_preset)
@@ -241,5 +242,8 @@ class Hevc_Avc(scrolled.ScrolledPanel):
         Set group of pictures (GOP)
         """
         val = self.spin_gop.GetValue()
-        self.opt["GOP"] = f'-g {val}'
+        if val == -1:
+            self.opt["GOP"] = ''
+        else:
+            self.opt["GOP"] = f'-g {val}'
     # ------------------------------------------------------------------#

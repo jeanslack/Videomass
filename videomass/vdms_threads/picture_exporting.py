@@ -51,25 +51,23 @@ class PicturesFromVideo(Thread):
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ------------------------------------------------------
 
-    def __init__(self, varargs, duration, logname, timeseq):
+    def __init__(self, logname, duration, timeseq, *args):
         """
-        self.cmd contains a unique string that comprend filename input
-        and filename output also.
-        The duration adds another 10 seconds due to problems with the
-        progress bar
+        Called from `long_processing_task.topic_thread`.
+        Also see `main_frame.switch_to_processing`.
         """
         self.stop_work_thread = False  # process terminate
-        self.outputdir = varargs[3]  # output directory
-        self.cmd = varargs[4]  # comand set on single pass
+        self.outputdir = args[3]  # output directory
+        self.cmd = args[4]  # comand set on single pass
         self.duration = duration[0]  # duration list
         self.time_seq = timeseq  # a time segment
         self.count = 0  # count first for loop
         self.logname = logname  # title name of file log
-        self.fname = varargs[1]  # file name
-        self.preargs = varargs[2]
+        self.fname = args[1]  # file name
+        self.preargs = args[2]
 
         Thread.__init__(self)
-        self.start()  # start the thread (va in self.run())
+        self.start()  # self.run()
 
     def run(self):
         """

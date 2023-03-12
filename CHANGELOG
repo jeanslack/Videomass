@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 08, 2023 V.4.0.10
+Mar 12, 2023 V.4.0.10
 
   * Removed interface to youtube_dl/yt_dlp libraries. Videomass will no longer
     have any functionality for downloading web videos. This mainly
@@ -63,6 +63,8 @@ Mar 08, 2023 V.4.0.10
   * [A/V Conversions] New panel implementation for libaom-av1 encoder.
   * [A/V Conversions] Removed optmimizations.py (and eval then ^_^).
   * Fixed menu accelerators for "Go" item (Shift+letter wasn't a good idea)
+  * Fixed Layout problems switching between panels.
+  * Added new color schemes.
 
 +------------------------------------+
 Jan 17, 2023 V.4.0.5
