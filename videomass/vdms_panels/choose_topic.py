@@ -150,8 +150,8 @@ class Choose_Topic(wx.Panel):
 
         if self.appdata['IS_DARK_THEME'] is True:
             if colorscheme[0] in ('Videomass-Colours',
-                                    'Videomass-Dark',
-                                    'Videomass-Light'):
+                                  'Videomass-Dark',
+                                  'Videomass-Light'):
                 self.SetBackgroundColour('#232424')  # Dark grey
             elif colorscheme[0] in ('Ubuntu-Dark-Aubergine',
                                     'Ubuntu-Light-Aubergine'):
@@ -160,8 +160,8 @@ class Choose_Topic(wx.Panel):
             version.SetForegroundColour('#E95420')  # Ubuntu orange
         elif self.appdata['IS_DARK_THEME'] is False:
             if colorscheme[0] in ('Videomass-Colours',
-                                    'Videomass-Dark',
-                                    'Videomass-Light'):
+                                  'Videomass-Dark',
+                                  'Videomass-Light'):
                 self.SetBackgroundColour('#4eada5')  # blue
             elif colorscheme[0] in ('Ubuntu-Dark-Aubergine',
                                     'Ubuntu-Light-Aubergine'):

@@ -31,31 +31,36 @@ from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 
 class AudioVolNormal(wx.MiniFrame):
     """
-    Show FFmpeg volumedetect command data and report offset
-    and gain results need for normalization process.
-
+    It shows the target volume offset and the volume
+    result obtained from the audio normalization process,
+    as well as some statistics given by the volumedetect
+    command.
     """
+    get = wx.GetApp()
+    if get.appset['IS_DARK_THEME'] is True:
+        RED = '#600E0D'
+        YELLOW = '#66640A'
+        BLUE = '#174573'
+        FOREGRD = '#FFFFFF'
+    elif get.appset['IS_DARK_THEME'] is False:
+        RED = '#FF3348'
+        YELLOW = '#E6D039'
+        BLUE = '#3BBBE6'
+        FOREGRD = '#050505'
+    else:
+        RED = 'ORANGE'
+        YELLOW = 'YELLOW GREEN'
+        BLUE = 'LIGHT STEEL BLUE'
+        FOREGRD = 'BLACK'
+
     def __init__(self, title, data, OS):
         """
-        detailslist is a list of items list.
-
+        data contains volume list per-track.
         """
-        get = wx.GetApp()
-        if get.appset['IS_DARK_THEME'] is True:
-            self.red = '#600e0d'
-            self.yellow = '#66640a'
-            self.blue = '#174573'
-            self.fgrd = '#FFFFFF'
-        elif get.appset['IS_DARK_THEME'] is False:
-            self.red = '#e63939'
-            self.yellow = '#e6d039'
-            self.blue = '#3bbbe6'
-            self.fgrd = '#050505'
-        else:
-            self.red = 'ORANGE'
-            self.yellow = 'YELLOW GREEN'
-            self.blue = 'LIGHT STEEL BLUE'
-            self.fgrd = 'BLACK'
+        self.red = AudioVolNormal.RED
+        self.yellow = AudioVolNormal.YELLOW
+        self.blue = AudioVolNormal.BLUE
+        self.fgrd = AudioVolNormal.FOREGRD
 
         wx.MiniFrame.__init__(self,
                               None,
