@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-13 00:29+0100\n"
-"PO-Revision-Date: 2023-03-13 00:33+0100\n"
+"POT-Creation-Date: 2023-03-14 11:15+0100\n"
+"PO-Revision-Date: 2023-03-14 11:22+0100\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -306,7 +306,7 @@ msgstr ""
 "статическиеизображения неподвижными. Понятно, что это должно улучшить "
 "визуальное качество."
 
-#: ../vdms_dialogs/filter_scale.py:75 ../vdms_dialogs/ffmpeg_help.py:115
+#: ../vdms_dialogs/filter_scale.py:75 ../vdms_dialogs/ffmpeg_help.py:117
 #: ../vdms_frames/shownormlist.py:76 ../vdms_frames/shownormlist.py:85
 #: ../vdms_frames/shownormlist.py:94 ../vdms_panels/concatenate.py:109
 #: ../vdms_panels/sequence_to_video.py:116
@@ -1103,7 +1103,7 @@ msgstr ""
 msgid "FFmpeg logging levels"
 msgstr "Комплект log-журналов FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:341 ../vdms_main/main_frame.py:574
+#: ../vdms_dialogs/preferences.py:341 ../vdms_main/main_frame.py:572
 #: ../vdms_panels/av_conversions.py:472
 msgid "Settings"
 msgstr "Настройки"
@@ -1134,7 +1134,7 @@ msgstr ""
 "\n"
 "Вы хотите выйти из приложения сейчас?"
 
-#: ../vdms_dialogs/preferences.py:780 ../vdms_main/main_frame.py:386
+#: ../vdms_dialogs/preferences.py:780 ../vdms_main/main_frame.py:384
 msgid "Exit"
 msgstr "Выход"
 
@@ -1169,51 +1169,63 @@ msgstr ""
 "Это Videomass v.{0}\n"
 "\n"
 
-#: ../vdms_dialogs/mediainfo.py:46
-msgid "Display of selected items in text format"
-msgstr "Отображение выбранных элементов в текстовом формате"
+#: ../vdms_dialogs/mediainfo.py:76
+msgid "Format"
+msgstr "Формат"
 
-#: ../vdms_dialogs/mediainfo.py:47
-msgid "Select items to view them in text format"
-msgstr "Выберите элементы, чтобы просмотреть их в текстовом формате"
-
-#: ../vdms_dialogs/mediainfo.py:87
-msgid "Data Format"
-msgstr "Формат данных"
-
-#: ../vdms_dialogs/mediainfo.py:109
+#: ../vdms_dialogs/mediainfo.py:90
 msgid "Video Stream"
 msgstr "Видео поток"
 
-#: ../vdms_dialogs/mediainfo.py:130
+#: ../vdms_dialogs/mediainfo.py:103
 msgid "Audio Streams"
 msgstr "Аудио потоки"
 
-#: ../vdms_dialogs/mediainfo.py:151
+#: ../vdms_dialogs/mediainfo.py:116
 msgid "Subtitle Streams"
 msgstr "Потоки субтитров"
 
-#: ../vdms_dialogs/mediainfo.py:155
-msgid "Enable text format"
-msgstr "Включить текстовый формат"
+#: ../vdms_dialogs/mediainfo.py:119
+#, fuzzy
+#| msgid "Crop to width"
+msgid "Copy to clipboard"
+msgstr "Обрезать по ширине"
 
-#: ../vdms_dialogs/mediainfo.py:171
+#: ../vdms_dialogs/mediainfo.py:127
 msgid "FILE SELECTION"
 msgstr "ВЫБОР ФАЙЛА"
 
-#: ../vdms_dialogs/mediainfo.py:173 ../vdms_dialogs/mediainfo.py:176
-#: ../vdms_dialogs/mediainfo.py:179 ../vdms_dialogs/mediainfo.py:182
-msgid "References"
-msgstr "Наименование"
+#: ../vdms_dialogs/mediainfo.py:129 ../vdms_dialogs/mediainfo.py:132
+#: ../vdms_dialogs/mediainfo.py:135 ../vdms_dialogs/mediainfo.py:138
+#, fuzzy
+#| msgid "Audio Properties"
+msgid "Properties"
+msgstr "Свойства аудио"
 
-#: ../vdms_dialogs/mediainfo.py:174 ../vdms_dialogs/mediainfo.py:177
-#: ../vdms_dialogs/mediainfo.py:180 ../vdms_dialogs/mediainfo.py:183
-msgid "Parameters"
-msgstr "Параметры"
+#: ../vdms_dialogs/mediainfo.py:130 ../vdms_dialogs/mediainfo.py:133
+#: ../vdms_dialogs/mediainfo.py:136 ../vdms_dialogs/mediainfo.py:139
+msgid "Values"
+msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:200
+#: ../vdms_dialogs/mediainfo.py:142
 msgid "Multimedia streams analyzer"
 msgstr "Анализатор мультимедийных потоков"
+
+#: ../vdms_dialogs/mediainfo.py:234
+msgid "Unable to open the clipboard on Format tab"
+msgstr ""
+
+#: ../vdms_dialogs/mediainfo.py:253
+msgid "Unable to open the clipboard on Video Streams tab"
+msgstr ""
+
+#: ../vdms_dialogs/mediainfo.py:273
+msgid "Unable to open the clipboard on Audio Streams tab"
+msgstr ""
+
+#: ../vdms_dialogs/mediainfo.py:293
+msgid "Unable to open the clipboard on Subtitle Streams tab"
+msgstr ""
 
 #: ../vdms_dialogs/showlogs.py:77
 msgid "Log file list"
@@ -1250,8 +1262,7 @@ msgstr "# Имя будет заменено возрастающими числ
 #: ../vdms_dialogs/ffmpeg_help.py:46
 msgid ""
 "Contextual help based on the argument entered in the additional text field.\n"
-"Each argument consists of the type, an equal sign (=), and a type-specific "
-"name.\n"
+"Each argument consists of the type and a type-specific name.\n"
 "\n"
 "For the list of encoders click the \"Encoders\" button.\n"
 "For the list of decoders click on the \"Decoders\" button.\n"
@@ -1266,8 +1277,7 @@ msgid ""
 msgstr ""
 "Контекстная справка на основе аргумента, введенного в дополнительное "
 "текстовое поле.\n"
-"Каждый аргумент состоит из типа, знака равенства (=) и имени, характерного "
-"для типа.\n"
+"Каждый аргумент состоит из типа характерного для типа.\n"
 "\n"
 "Чтобы просмотреть список кодировщиков, нажмите кнопку «Кодировщики».\n"
 "Чтобы просмотреть список декодеров, нажмите кнопку «Декодеры».\n"
@@ -1281,8 +1291,8 @@ msgstr ""
 "\n"
 "Некоторые примеры:"
 
-#: ../vdms_dialogs/ffmpeg_help.py:68 ../vdms_dialogs/ffmpeg_help.py:291
-#: ../vdms_dialogs/ffmpeg_help.py:304
+#: ../vdms_dialogs/ffmpeg_help.py:68 ../vdms_dialogs/ffmpeg_help.py:300
+#: ../vdms_dialogs/ffmpeg_help.py:314
 msgid "Help topic"
 msgstr "Раздел справки"
 
@@ -1342,50 +1352,50 @@ msgstr "Показать доступные методы аппаратного 
 msgid "Show license"
 msgstr "Показать лицензию"
 
-#: ../vdms_dialogs/ffmpeg_help.py:121 ../vdms_main/main_frame.py:476
+#: ../vdms_dialogs/ffmpeg_help.py:123 ../vdms_main/main_frame.py:474
 msgid "Show configuration"
 msgstr "Показать конфигурацию"
 
-#: ../vdms_dialogs/ffmpeg_help.py:125 ../vdms_main/main_frame.py:484
+#: ../vdms_dialogs/ffmpeg_help.py:127 ../vdms_main/main_frame.py:482
 msgid "Encoders"
 msgstr "Кодеры"
 
-#: ../vdms_dialogs/ffmpeg_help.py:129 ../vdms_main/main_frame.py:487
+#: ../vdms_dialogs/ffmpeg_help.py:131 ../vdms_main/main_frame.py:485
 msgid "Decoders"
 msgstr "Декодеры"
 
-#: ../vdms_dialogs/ffmpeg_help.py:133 ../vdms_main/main_frame.py:480
+#: ../vdms_dialogs/ffmpeg_help.py:135 ../vdms_main/main_frame.py:478
 msgid "Muxers and Demuxers"
 msgstr "Мультиплексоры и Демультиплексоры"
 
-#: ../vdms_dialogs/ffmpeg_help.py:163
+#: ../vdms_dialogs/ffmpeg_help.py:165
 msgid "help topic list"
 msgstr "список тем справки"
 
-#: ../vdms_dialogs/ffmpeg_help.py:174
+#: ../vdms_dialogs/ffmpeg_help.py:183
 msgid "Type the argument here and confirm with the enter key on your keyboard"
 msgstr ""
 "Введите здесь аргумент и подтвердите нажатием клавиши ввода на клавиатуре"
 
-#: ../vdms_dialogs/ffmpeg_help.py:182
+#: ../vdms_dialogs/ffmpeg_help.py:191
 msgid "The search function allows you to find entries in the current topic"
 msgstr "Функция поиска позволяет находить записи в текущей теме"
 
-#: ../vdms_dialogs/ffmpeg_help.py:185
+#: ../vdms_dialogs/ffmpeg_help.py:194
 msgid "Ignore case"
 msgstr "Игнорировать регистр"
 
-#: ../vdms_dialogs/ffmpeg_help.py:186
+#: ../vdms_dialogs/ffmpeg_help.py:195
 msgid "Ignore case distinctions: characters with different case will match."
 msgstr ""
 "Не обращайте внимания на различие в регистре: символы с другим регистром "
 "будут совпадать."
 
-#: ../vdms_dialogs/ffmpeg_help.py:196
+#: ../vdms_dialogs/ffmpeg_help.py:205
 msgid "FFmpeg help topics"
 msgstr "Разделы справки FFmpeg"
 
-#: ../vdms_dialogs/ffmpeg_help.py:244
+#: ../vdms_dialogs/ffmpeg_help.py:253
 msgid ""
 "This is a multifunctional search tool useful for local help searches\n"
 "on multiple FFmpeg topics and options. The search control, to\n"
@@ -1406,8 +1416,8 @@ msgstr ""
 "Если вы не найдете поддержку определенного кодека или другой функции, \n"
 "вероятно, ваша версия FFmpeg устарела или не поддерживает эти функции."
 
-#: ../vdms_dialogs/ffmpeg_help.py:309 ../vdms_dialogs/ffmpeg_help.py:332
-#: ../vdms_dialogs/ffmpeg_help.py:358
+#: ../vdms_dialogs/ffmpeg_help.py:319 ../vdms_dialogs/ffmpeg_help.py:344
+#: ../vdms_dialogs/ffmpeg_help.py:370
 msgid ""
 "\n"
 "  ..Nothing available"
@@ -1415,7 +1425,7 @@ msgstr ""
 "\n"
 "  ..Данные недоступны"
 
-#: ../vdms_dialogs/ffmpeg_help.py:378
+#: ../vdms_dialogs/ffmpeg_help.py:390
 msgid ""
 "\n"
 "  ..Not found"
@@ -1577,8 +1587,10 @@ msgstr "Форматы файлов FFmpeg"
 
 #: ../vdms_frames/ffmpeg_formats.py:107 ../vdms_frames/ffmpeg_formats.py:110
 #: ../vdms_frames/ffmpeg_formats.py:113
-msgid "format"
-msgstr "формат"
+#, fuzzy
+#| msgid "Unsupported format '{}'"
+msgid "supported formats"
+msgstr "Неподдерживаемый формат '{}'"
 
 #: ../vdms_frames/shownormlist.py:61
 msgid "File name"
@@ -1802,8 +1814,8 @@ msgstr ""
 "пресеты и попробуйте нажать кнопку «Восстановить все ...»"
 
 #: ../vdms_main/main_frame.py:193 ../vdms_main/main_frame.py:266
-#: ../vdms_main/main_frame.py:1392 ../vdms_main/main_frame.py:1395
-#: ../vdms_main/main_frame.py:1436
+#: ../vdms_main/main_frame.py:1389 ../vdms_main/main_frame.py:1392
+#: ../vdms_main/main_frame.py:1433
 msgid "Ready"
 msgstr "Готово"
 
@@ -1811,51 +1823,51 @@ msgstr "Готово"
 msgid "Videomass"
 msgstr "Videomass"
 
-#: ../vdms_main/main_frame.py:385
+#: ../vdms_main/main_frame.py:383
 msgid "Are you sure you want to exit?"
 msgstr "Вы уверены, что хотите выйти из приложения?"
 
-#: ../vdms_main/main_frame.py:417
+#: ../vdms_main/main_frame.py:415
 msgid "Open...\tCtrl+O"
 msgstr "Открыть...\tCtrl+O"
 
-#: ../vdms_main/main_frame.py:418
+#: ../vdms_main/main_frame.py:416
 msgid "Open one or more files"
 msgstr "Откройте один или несколько файлов"
 
-#: ../vdms_main/main_frame.py:422
+#: ../vdms_main/main_frame.py:420
 msgid "Conversions folder\tCtrl+C"
 msgstr "Папка конверсий\tCtrl+C"
 
-#: ../vdms_main/main_frame.py:423
+#: ../vdms_main/main_frame.py:421
 msgid "Open the default file conversions folder"
 msgstr "Открыть папку по умолчанию для конверсий файлов"
 
-#: ../vdms_main/main_frame.py:425
+#: ../vdms_main/main_frame.py:423
 msgid "Open temporary conversions"
 msgstr "Открыть временную папку конверсий"
 
-#: ../vdms_main/main_frame.py:426
+#: ../vdms_main/main_frame.py:424
 msgid "Open the temporary file conversions folder"
 msgstr "Открыть временную папку конверсионных файлов"
 
-#: ../vdms_main/main_frame.py:431
+#: ../vdms_main/main_frame.py:429
 msgid "Rename the selected file\tCtrl+R"
 msgstr "Переименовать выбранный файл\tCtrl+R"
 
-#: ../vdms_main/main_frame.py:432
+#: ../vdms_main/main_frame.py:430
 msgid "Rename the file selected in the Queued Files panel"
 msgstr "Переименуйте файл, выбранный на панели «Файлы в очереди»"
 
-#: ../vdms_main/main_frame.py:435
+#: ../vdms_main/main_frame.py:433
 msgid "Batch renaming\tCtrl+B"
 msgstr "Пакетное переименование\tCtrl+B"
 
-#: ../vdms_main/main_frame.py:436
+#: ../vdms_main/main_frame.py:434
 msgid "Rename all files listed in the Queued Files panel"
 msgstr "Переименуйте все файлы, перечисленные на панели «Файлы в очереди»"
 
-#: ../vdms_main/main_frame.py:440
+#: ../vdms_main/main_frame.py:438
 msgid "Trash folder"
 msgstr "Корзина"
 
@@ -1864,185 +1876,185 @@ msgstr "Корзина"
 # надо: folder
 # Thanks for remark, I solved.
 # Gianluca
-#: ../vdms_main/main_frame.py:441
+#: ../vdms_main/main_frame.py:439
 msgid "Open the Videomass Trash folder if it exists"
 msgstr "Открыть папку корзины Videomass, если она существует"
 
-#: ../vdms_main/main_frame.py:443
+#: ../vdms_main/main_frame.py:441
 msgid "Empty Trash"
 msgstr "Корзина пуста"
 
-#: ../vdms_main/main_frame.py:444
+#: ../vdms_main/main_frame.py:442
 msgid "Delete all files in the Videomass Trash folder"
 msgstr "Удалите все файлы в папке корзины Videomass"
 
-#: ../vdms_main/main_frame.py:447
+#: ../vdms_main/main_frame.py:445
 msgid "Work Notes\tCtrl+N"
 msgstr "Рабочие заметки\tCtrl+N"
 
-#: ../vdms_main/main_frame.py:448
+#: ../vdms_main/main_frame.py:446
 msgid "Read and write useful notes and reminders."
 msgstr "Читайте и пишите полезные заметки и напоминания."
 
-#: ../vdms_main/main_frame.py:451
+#: ../vdms_main/main_frame.py:449
 msgid "Exit\tCtrl+Q"
 msgstr "Выход\tCtrl+Q"
 
-#: ../vdms_main/main_frame.py:452
+#: ../vdms_main/main_frame.py:450
 msgid "Close Videomass"
 msgstr "Закрыть Videomass"
 
-#: ../vdms_main/main_frame.py:453
+#: ../vdms_main/main_frame.py:451
 msgid "File"
 msgstr "Файл"
 
-#: ../vdms_main/main_frame.py:457
+#: ../vdms_main/main_frame.py:455
 msgid "Find FFmpeg topics and options"
 msgstr "Найдите темы и параметры FFmpeg"
 
-#: ../vdms_main/main_frame.py:458
+#: ../vdms_main/main_frame.py:456
 msgid "A useful tool to search for FFmpeg help topics and options"
 msgstr "Полезный инструмент для поиска тем и параметров справки FFmpeg"
 
-#: ../vdms_main/main_frame.py:463
+#: ../vdms_main/main_frame.py:461
 msgid "Check for preset updates"
 msgstr "Проверить наличие обновлений пресетов"
 
-#: ../vdms_main/main_frame.py:464
+#: ../vdms_main/main_frame.py:462
 #, python-brace-format
 msgid "Check for new presets release from {0}"
 msgstr "Проверьте выпуск новых пресетов от {0}"
 
-#: ../vdms_main/main_frame.py:466
+#: ../vdms_main/main_frame.py:464
 msgid "Download preset archive"
 msgstr "Скачать архив пресетов"
 
-#: ../vdms_main/main_frame.py:467
+#: ../vdms_main/main_frame.py:465
 msgid ""
 "Download the entire collection of the latest presets available from the home "
 "page"
 msgstr ""
 "Загрузите всю коллекцию последних пресетов, доступных на главной странице"
 
-#: ../vdms_main/main_frame.py:470
+#: ../vdms_main/main_frame.py:468
 msgid "Tools"
 msgstr "Инструменты"
 
-#: ../vdms_main/main_frame.py:477
+#: ../vdms_main/main_frame.py:475
 msgid "Show FFmpeg's built-in configuration capabilities"
 msgstr "Показать встроенные возможности настройки FFmpeg"
 
-#: ../vdms_main/main_frame.py:481
+#: ../vdms_main/main_frame.py:479
 msgid "Muxers and demuxers available for used FFmpeg."
 msgstr "Доступны мультиплексоры и демультиплексоры для используемого FFmpeg."
 
-#: ../vdms_main/main_frame.py:485
+#: ../vdms_main/main_frame.py:483
 msgid "Shows available encoders for FFmpeg"
 msgstr "Показывает доступные кодировщики для FFmpeg"
 
-#: ../vdms_main/main_frame.py:487
+#: ../vdms_main/main_frame.py:485
 msgid "Shows available decoders for FFmpeg"
 msgstr "Показывает доступные декодеры для FFmpeg"
 
-#: ../vdms_main/main_frame.py:490
+#: ../vdms_main/main_frame.py:488
 msgid "FFplay"
 msgstr "FFplay"
 
-#: ../vdms_main/main_frame.py:491
+#: ../vdms_main/main_frame.py:489
 msgid "While playing"
 msgstr "Клавиши воспроизведения"
 
-#: ../vdms_main/main_frame.py:492
+#: ../vdms_main/main_frame.py:490
 msgid "Show useful shortcut keys when playing or previewing with FFplay"
 msgstr ""
 "Показывать полезные сочетания клавиш при воспроизведении или предварительном "
 "просмотре с FFplay"
 
-#: ../vdms_main/main_frame.py:496
+#: ../vdms_main/main_frame.py:494
 msgid "Show Logs\tCtrl+L"
 msgstr "Показать log-журналы\tCtrl+L"
 
-#: ../vdms_main/main_frame.py:497
+#: ../vdms_main/main_frame.py:495
 msgid "Viewing log messages"
 msgstr "Просмотр сообщений log-журнала"
 
-#: ../vdms_main/main_frame.py:499
+#: ../vdms_main/main_frame.py:497
 msgid "View"
 msgstr "Посмотр"
 
-#: ../vdms_main/main_frame.py:504
+#: ../vdms_main/main_frame.py:502
 msgid "Home panel\tCtrl+Shift+H"
 msgstr "Начальная панель\tCtrl+Shift+H"
 
-#: ../vdms_main/main_frame.py:505 ../vdms_main/main_frame.py:1307
+#: ../vdms_main/main_frame.py:503 ../vdms_main/main_frame.py:1304
 msgid "Go to the 'Home' panel"
 msgstr "Перейдите к 'Начальной панели'"
 
-#: ../vdms_main/main_frame.py:508
+#: ../vdms_main/main_frame.py:506
 msgid "Presets Manager\tCtrl+Shift+P"
 msgstr "Менеджер Пресетов\tCtrl+Shift+P"
 
-#: ../vdms_main/main_frame.py:509
+#: ../vdms_main/main_frame.py:507
 msgid "Go to the 'Presets Manager' panel"
 msgstr "Перейдите на панель 'Менеджер пресетов'"
 
-#: ../vdms_main/main_frame.py:511
+#: ../vdms_main/main_frame.py:509
 msgid "A/V Conversions\tCtrl+Shift+V"
 msgstr "A/V Конвертация\tCtrl+Shift+V"
 
-#: ../vdms_main/main_frame.py:512
+#: ../vdms_main/main_frame.py:510
 msgid "Go to the 'A/V Conversions' panel"
 msgstr "Перейдите на панель 'A/V Конвертация'"
 
-#: ../vdms_main/main_frame.py:514
+#: ../vdms_main/main_frame.py:512
 msgid "Concatenate Demuxer\tCtrl+Shift+D"
 msgstr "Concatenate Demuxer\tCtrl+Shift+D"
 
-#: ../vdms_main/main_frame.py:515
+#: ../vdms_main/main_frame.py:513
 msgid "Go to the 'Concatenate Demuxer' panel"
 msgstr "Перейдите на панель 'Concatenate Demuxer'"
 
-#: ../vdms_main/main_frame.py:518
+#: ../vdms_main/main_frame.py:516
 msgid "Still Image Maker\tCtrl+Shift+I"
 msgstr "Still Image Maker\tCtrl+Shift+I"
 
-#: ../vdms_main/main_frame.py:519
+#: ../vdms_main/main_frame.py:517
 msgid "Go to the 'Still Image Maker' panel"
 msgstr "Перейдите на панель 'Still Image Maker'"
 
-#: ../vdms_main/main_frame.py:521
+#: ../vdms_main/main_frame.py:519
 msgid "From Movie to Pictures\tCtrl+Shift+S"
 msgstr "Картинки из фильма\tCtrl+Shift+S"
 
-#: ../vdms_main/main_frame.py:522
+#: ../vdms_main/main_frame.py:520
 msgid "Go to the 'From Movie to Pictures' panel"
 msgstr "Перейдите на панель 'Картинки из фильма'"
 
-#: ../vdms_main/main_frame.py:525
+#: ../vdms_main/main_frame.py:523
 msgid "Output Monitor\tCtrl+Shift+O"
 msgstr "Выходной экран\tCtrl+Shift+O"
 
-#: ../vdms_main/main_frame.py:526 ../vdms_main/main_frame.py:1312
+#: ../vdms_main/main_frame.py:524 ../vdms_main/main_frame.py:1309
 msgid "Keeps track of the output for debugging errors"
 msgstr "Отслеживает вывод для ошибок отладки"
 
-#: ../vdms_main/main_frame.py:530
+#: ../vdms_main/main_frame.py:528
 msgid "Configuration folder"
 msgstr "Папка конфигурации"
 
-#: ../vdms_main/main_frame.py:531
+#: ../vdms_main/main_frame.py:529
 msgid "Opens the Videomass configuration folder"
 msgstr "Открывает папку конфигурации Videomass"
 
-#: ../vdms_main/main_frame.py:533
+#: ../vdms_main/main_frame.py:531
 msgid "Log folder"
 msgstr "Папка журнала"
 
-#: ../vdms_main/main_frame.py:534
+#: ../vdms_main/main_frame.py:532
 msgid "Opens the Videomass log folder, if exists"
 msgstr "Открывает папку журнала Videomass, если она существует"
 
-#: ../vdms_main/main_frame.py:536
+#: ../vdms_main/main_frame.py:534
 msgid "Cache folder"
 msgstr "Папка кеша"
 
@@ -2051,154 +2063,154 @@ msgstr "Папка кеша"
 # надо: folder
 # Thanks for remark, I solved.
 # Gianluca
-#: ../vdms_main/main_frame.py:537
+#: ../vdms_main/main_frame.py:535
 msgid "Opens the Videomass cache folder, if exists"
 msgstr "Открывает папку кэша Videomass, если она существует"
 
-#: ../vdms_main/main_frame.py:539
+#: ../vdms_main/main_frame.py:537
 msgid "System"
 msgstr "Система"
 
 # посмотреть в программе
-#: ../vdms_main/main_frame.py:541
+#: ../vdms_main/main_frame.py:539
 msgid "Goto"
 msgstr "Перейти"
 
-#: ../vdms_main/main_frame.py:545 ../vdms_panels/filedrop.py:324
+#: ../vdms_main/main_frame.py:543 ../vdms_panels/filedrop.py:324
 msgid "Set up a temporary folder for conversions"
 msgstr "Настройте временную папку для конверсий"
 
-#: ../vdms_main/main_frame.py:546
+#: ../vdms_main/main_frame.py:544
 msgid "Use a temporary location to save conversions"
 msgstr "Используйте временное местоположение для сохранения конверсий"
 
-#: ../vdms_main/main_frame.py:551
+#: ../vdms_main/main_frame.py:549
 msgid "Restore the default destination folder"
 msgstr "Восстановить папку назначения по умолчанию"
 
-#: ../vdms_main/main_frame.py:552
+#: ../vdms_main/main_frame.py:550
 msgid "Restore the default folder for file conversions"
 msgstr "Восстановить папку по умолчанию для преобразованных файлов"
 
-#: ../vdms_main/main_frame.py:557
+#: ../vdms_main/main_frame.py:555
 msgid "Display timestamps during playback"
 msgstr "Отображение временных меток во время воспроизведения"
 
-#: ../vdms_main/main_frame.py:558
+#: ../vdms_main/main_frame.py:556
 msgid "Displays timestamp when playing media with FFplay"
 msgstr ""
 "Отображает шкалу времени при воспроизведении мультимедиа с помощью FFplay"
 
-#: ../vdms_main/main_frame.py:561
+#: ../vdms_main/main_frame.py:559
 msgid "Auto-exit after playback"
 msgstr "Автоматический выход после воспроизведения"
 
-#: ../vdms_main/main_frame.py:562
+#: ../vdms_main/main_frame.py:560
 msgid "If checked, the FFplay window will auto-close when playback is complete"
 msgstr ""
 "Если флажок установлен, окно FFplay будет автоматически закрываться \n"
 "после завершения воспроизведения"
 
 # непонятная timestamp
-#: ../vdms_main/main_frame.py:566
+#: ../vdms_main/main_frame.py:564
 msgid "FFplay timestamp settings"
 msgstr "Настройки шкалы времени FFplay"
 
-#: ../vdms_main/main_frame.py:567
+#: ../vdms_main/main_frame.py:565
 msgid "Change the size and color of the timestamp during playback"
 msgstr "Изменение размера и цвета шкалы времени во время воспроизведения"
 
-#: ../vdms_main/main_frame.py:572
+#: ../vdms_main/main_frame.py:570
 msgid "Preferences\tCtrl+P"
 msgstr "Основные настройки\tCtrl+P"
 
-#: ../vdms_main/main_frame.py:573
+#: ../vdms_main/main_frame.py:571
 msgid "Application preferences"
 msgstr "Настройки приложения"
 
-#: ../vdms_main/main_frame.py:580
+#: ../vdms_main/main_frame.py:578
 msgid "User Guide"
 msgstr "Онлайн помощь"
 
-#: ../vdms_main/main_frame.py:581
+#: ../vdms_main/main_frame.py:579
 msgid "Wiki"
 msgstr "Wiki"
 
-#: ../vdms_main/main_frame.py:583
+#: ../vdms_main/main_frame.py:581
 msgid "Issue tracker"
 msgstr "Сообщить о проблеме"
 
-#: ../vdms_main/main_frame.py:585
+#: ../vdms_main/main_frame.py:583
 msgid "Translation..."
 msgstr "Перевод..."
 
-#: ../vdms_main/main_frame.py:587
+#: ../vdms_main/main_frame.py:585
 msgid "Donation"
 msgstr "Пожертвование"
 
-#: ../vdms_main/main_frame.py:589
+#: ../vdms_main/main_frame.py:587
 msgid "FFmpeg documentation"
 msgstr "Документация FFmpeg"
 
-#: ../vdms_main/main_frame.py:591
+#: ../vdms_main/main_frame.py:589
 msgid "Check for newer version"
 msgstr "Проверить последнюю версию"
 
-#: ../vdms_main/main_frame.py:592
+#: ../vdms_main/main_frame.py:590
 msgid ""
 "Check for the latest Videomass version at <https://pypi.org/project/"
 "videomass/>"
 msgstr ""
 "Проверьте последнюю версию Videomass на <https://pypi.org/project/videomass/>"
 
-#: ../vdms_main/main_frame.py:596
+#: ../vdms_main/main_frame.py:594
 msgid "System version"
 msgstr "Версия системы"
 
-#: ../vdms_main/main_frame.py:597
+#: ../vdms_main/main_frame.py:595
 msgid ""
 "Get version about your operating system, version of Python and wxPython."
 msgstr "Получить версию вашей операционной системы, версию Python и wxPython."
 
-#: ../vdms_main/main_frame.py:600
+#: ../vdms_main/main_frame.py:598
 msgid "About Videomass"
 msgstr "Информация об Videomass"
 
-#: ../vdms_main/main_frame.py:601
+#: ../vdms_main/main_frame.py:599
 msgid "Help"
 msgstr "Помощь"
 
-#: ../vdms_main/main_frame.py:676
+#: ../vdms_main/main_frame.py:674
 msgid "Open the selected files"
 msgstr "Открыть выбранные файлы"
 
-#: ../vdms_main/main_frame.py:726 ../vdms_main/main_frame.py:749
+#: ../vdms_main/main_frame.py:724 ../vdms_main/main_frame.py:747
 msgid "No such folder '{}'"
 msgstr "Нет такой папки '{}'"
 
-#: ../vdms_main/main_frame.py:738
+#: ../vdms_main/main_frame.py:736
 msgid "Are you sure to empty trash folder?"
 msgstr "Вы уверены, что очистили папку \"Корзина\"?"
 
-#: ../vdms_main/main_frame.py:746
+#: ../vdms_main/main_frame.py:744
 msgid "No files to delete"
 msgstr "Нет файлов для удаления"
 
-#: ../vdms_main/main_frame.py:801
+#: ../vdms_main/main_frame.py:799
 #, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr "Installed release v{0}. A new presets release is available {1}"
 
-#: ../vdms_main/main_frame.py:805
+#: ../vdms_main/main_frame.py:803
 #, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr "Установленная версия {0}. Новых обновлений не обнаружено."
 
-#: ../vdms_main/main_frame.py:818
+#: ../vdms_main/main_frame.py:816
 msgid "Choose a download folder"
 msgstr "Выберите папку для загрузки"
 
-#: ../vdms_main/main_frame.py:835
+#: ../vdms_main/main_frame.py:833
 msgid ""
 "Wait....\n"
 "The archive is being downloaded"
@@ -2206,12 +2218,12 @@ msgstr ""
 "Подождите...\n"
 "Архив скачивается"
 
-#: ../vdms_main/main_frame.py:842
+#: ../vdms_main/main_frame.py:840
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "Успешно загружено в \"{0}\""
 
-#: ../vdms_main/main_frame.py:861
+#: ../vdms_main/main_frame.py:859
 #, python-brace-format
 msgid ""
 "Unexpected error while creating file:\n"
@@ -2222,112 +2234,112 @@ msgstr ""
 "\n"
 "{0}"
 
-#: ../vdms_main/main_frame.py:1084
+#: ../vdms_main/main_frame.py:1082
 msgid "cache folder has not been created yet."
 msgstr "папка кеша еще не создана."
 
-#: ../vdms_main/main_frame.py:1097
+#: ../vdms_main/main_frame.py:1095
 msgid "Choose a temporary destination for conversions"
 msgstr "Выберите временное место назначения для конверсий"
 
-#: ../vdms_main/main_frame.py:1122
+#: ../vdms_main/main_frame.py:1120
 msgid "Default destination folders successfully restored"
 msgstr "Папки назначения по умолчанию успешно восстановлены"
 
-#: ../vdms_main/main_frame.py:1204
+#: ../vdms_main/main_frame.py:1202
 #, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr "Доступна новая версия - v.{0}\n"
 
-#: ../vdms_main/main_frame.py:1207
+#: ../vdms_main/main_frame.py:1205
 msgid "You are using a development version that has not yet been released!\n"
 msgstr "Вы используете версию для разработки, которая еще не выпущена!\n"
 
-#: ../vdms_main/main_frame.py:1210
+#: ../vdms_main/main_frame.py:1208
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr "Поздравляю! Вы уже используете последнюю версию.\n"
 
-#: ../vdms_main/main_frame.py:1297
+#: ../vdms_main/main_frame.py:1294
 msgid "Go to the previous panel"
 msgstr "Перейти к предыдущей панели"
 
-#: ../vdms_main/main_frame.py:1298
+#: ../vdms_main/main_frame.py:1295
 msgid "Back"
 msgstr "Назад"
 
-#: ../vdms_main/main_frame.py:1302
+#: ../vdms_main/main_frame.py:1299
 msgid "Go to the next panel"
 msgstr "Перейти к следующей панели"
 
-#: ../vdms_main/main_frame.py:1303
+#: ../vdms_main/main_frame.py:1300
 msgid "Next"
 msgstr "Вперед"
 
-#: ../vdms_main/main_frame.py:1308
+#: ../vdms_main/main_frame.py:1305
 msgid "Home"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1313
+#: ../vdms_main/main_frame.py:1310
 msgid "Output Monitor"
 msgstr "Выходной экран"
 
-#: ../vdms_main/main_frame.py:1319
+#: ../vdms_main/main_frame.py:1316
 msgid "Get informative data about imported media streams"
 msgstr "Получайте информативные данные об импортированных медиапотоках"
 
-#: ../vdms_main/main_frame.py:1320
+#: ../vdms_main/main_frame.py:1317
 msgid "Media Details"
 msgstr "Сведения о мультимедиа"
 
-#: ../vdms_main/main_frame.py:1324
+#: ../vdms_main/main_frame.py:1321
 msgid "Start rendering"
 msgstr "Начать преобразование"
 
-#: ../vdms_main/main_frame.py:1325
+#: ../vdms_main/main_frame.py:1322
 msgid "Start"
 msgstr "Начать"
 
-#: ../vdms_main/main_frame.py:1330
+#: ../vdms_main/main_frame.py:1327
 msgid "Stops current process"
 msgstr "Останавливает текущий процесс"
 
-#: ../vdms_main/main_frame.py:1331
+#: ../vdms_main/main_frame.py:1328
 msgid "Abort"
 msgstr "Прервать"
 
-#: ../vdms_main/main_frame.py:1400
+#: ../vdms_main/main_frame.py:1397
 msgid "File list changed, please check the settings again."
 msgstr "Список файлов изменен, проверьте настройки еще раз."
 
-#: ../vdms_main/main_frame.py:1437
+#: ../vdms_main/main_frame.py:1434
 msgid "Videomass - Queued Files"
 msgstr "Videomass - Файлы в очереди"
 
-#: ../vdms_main/main_frame.py:1451
+#: ../vdms_main/main_frame.py:1448
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - AV-конвертация"
 
-#: ../vdms_main/main_frame.py:1483
+#: ../vdms_main/main_frame.py:1480
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - Менеджер Пресетов"
 
-#: ../vdms_main/main_frame.py:1516
+#: ../vdms_main/main_frame.py:1513
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Concatenate Demuxer"
 
-#: ../vdms_main/main_frame.py:1546
+#: ../vdms_main/main_frame.py:1543
 msgid "Videomass - From Movie to Pictures"
 msgstr "Videomass - Картинки из фильма"
 
-#: ../vdms_main/main_frame.py:1577
+#: ../vdms_main/main_frame.py:1574
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Still Image Maker"
 
-#: ../vdms_main/main_frame.py:1603
+#: ../vdms_main/main_frame.py:1600
 msgid "Viewing last log"
 msgstr "Просмотр последнего log-журнала"
 
-#: ../vdms_main/main_frame.py:1611
+#: ../vdms_main/main_frame.py:1608
 msgid ""
 "Cannot continue: The duration in the timeline exceeds the duration of some "
 "queued files."
@@ -2335,11 +2347,11 @@ msgstr ""
 "Невозможно продолжить: продолжительность на шкале времени превышает "
 "продолжительность некоторых файлов в очереди."
 
-#: ../vdms_main/main_frame.py:1617
+#: ../vdms_main/main_frame.py:1614
 msgid "Processing..."
 msgstr "Обработка ..."
 
-#: ../vdms_main/main_frame.py:1621
+#: ../vdms_main/main_frame.py:1618
 msgid "Videomass - Output Monitor"
 msgstr "Videomass - Выходной монитор"
 
@@ -3925,6 +3937,27 @@ msgstr ""
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' установлен в вашей системе?"
 
+#~ msgid "Display of selected items in text format"
+#~ msgstr "Отображение выбранных элементов в текстовом формате"
+
+#~ msgid "Select items to view them in text format"
+#~ msgstr "Выберите элементы, чтобы просмотреть их в текстовом формате"
+
+#~ msgid "Data Format"
+#~ msgstr "Формат данных"
+
+#~ msgid "Enable text format"
+#~ msgstr "Включить текстовый формат"
+
+#~ msgid "References"
+#~ msgstr "Наименование"
+
+#~ msgid "Parameters"
+#~ msgstr "Параметры"
+
+#~ msgid "format"
+#~ msgstr "формат"
+
 #~ msgid "ENABLED:"
 #~ msgstr "ВКЛЮЧЕНО:"
 
@@ -5427,9 +5460,6 @@ msgstr "'ffmpeg' установлен в вашей системе?"
 #~ msgid "You just added new files. Please check your settings again."
 #~ msgstr ""
 #~ "Вы только что добавили новые файлы. Проверьте свои настройки еще раз."
-
-#~ msgid "Format"
-#~ msgstr "Формат"
 
 #~ msgid "AV Media"
 #~ msgstr "AV Media"
