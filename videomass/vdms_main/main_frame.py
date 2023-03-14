@@ -319,8 +319,6 @@ class MainFrame(wx.Frame):
         """
         Show the Media Stream Analyzer in modeless way (non-modal)
         """
-        if not self.data_files:
-            return
         if self.mediastreams:
             self.mediastreams.Raise()
             return
@@ -1273,7 +1271,6 @@ class MainFrame(wx.Frame):
         self.toolbar.SetToolBitmapSize(bmp_size)
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-
             bmpback = get_bmp(self.icons['previous'], bmp_size)
             bmpnext = get_bmp(self.icons['next'], bmp_size)
             bmpinfo = get_bmp(self.icons['fileproperties'], bmp_size)

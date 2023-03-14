@@ -104,13 +104,13 @@ class FFmpegFormats(wx.MiniFrame):
         sizer_base.Fit(self)
         self.Layout()
         # ----------------------Properties----------------------#
-        dmx.InsertColumn(0, _('format'), width=150)
+        dmx.InsertColumn(0, _('supported formats'), width=180)
         dmx.InsertColumn(1, _('description'), width=450)
         # mx.SetMinSize((500, 400))
-        mx.InsertColumn(0, _('format'), width=150)
+        mx.InsertColumn(0, _('supported formats'), width=180)
         mx.InsertColumn(1, _('description'), width=450)
         # dmx_mx.SetMinSize((500, 400))
-        dmx_mx.InsertColumn(0, _('format'), width=150)
+        dmx_mx.InsertColumn(0, _('supported formats'), width=180)
         dmx_mx.InsertColumn(1, _('description'), width=450)
 
         if OS == 'Darwin':

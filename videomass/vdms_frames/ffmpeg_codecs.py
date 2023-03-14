@@ -103,7 +103,7 @@ class FFmpegCodecs(wx.MiniFrame):
         sizer_base.Add(grid_buttons, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
 
         # ----------------------Properties----------------------#
-        vid.InsertColumn(0, header, width=180)
+        vid.InsertColumn(0, header, width=200)
         vid.InsertColumn(1, ('F'), width=40)
         vid.InsertColumn(2, ('S'), width=40)
         vid.InsertColumn(3, ('X'), width=40)
@@ -112,7 +112,7 @@ class FFmpegCodecs(wx.MiniFrame):
         vid.InsertColumn(6, _('description'), width=450)
         # vid.SetBackgroundColour(wx.Colour(217, 255, 255))
         # aud.SetMinSize((600, 300))
-        aud.InsertColumn(0, header, width=180)
+        aud.InsertColumn(0, header, width=200)
         aud.InsertColumn(1, ('F'), width=40)
         aud.InsertColumn(2, ('S'), width=40)
         aud.InsertColumn(3, ('X'), width=40)
@@ -121,7 +121,7 @@ class FFmpegCodecs(wx.MiniFrame):
         aud.InsertColumn(6, _('description'), width=450)
         # aud.SetBackgroundColour(wx.Colour(217, 255, 255))
         # sub.SetMinSize((600, 300))
-        sub.InsertColumn(0, header, width=180)
+        sub.InsertColumn(0, header, width=200)
         sub.InsertColumn(1, ('F'), width=40)
         sub.InsertColumn(2, ('S'), width=40)
         sub.InsertColumn(3, ('X'), width=40)

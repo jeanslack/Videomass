@@ -24,7 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-from ast import literal_eval
 import wx
 from pubsub import pub
 
@@ -43,8 +42,6 @@ class MediaStreams(wx.Dialog):
         get = wx.GetApp()  # get data from bootstrap
         self.colorscheme = get.appset['icontheme'][1]
         vidicon = get.iconset['videomass']
-        msg = _('Display of selected items in text format')
-        msg1 = _('Select items to view them in text format')
 
         wx.Dialog.__init__(self, None,
                            style=wx.DEFAULT_DIALOG_STYLE
@@ -71,20 +68,12 @@ class MediaStreams(wx.Dialog):
                                        style=wx.LC_REPORT
                                        | wx.SUNKEN_BORDER
                                        | wx.LC_SINGLE_SEL,
-                                       )
-        self.format_stxt = wx.StaticText(nb_panel_1, wx.ID_ANY, msg)
-        self.format_tags = wx.TextCtrl(nb_panel_1,
-                                       wx.ID_ANY, "",
-                                       style=wx.TE_MULTILINE
-                                       | wx.TE_READONLY
-                                       | wx.TE_RICH2,
+                                       name='format',
                                        )
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab1.Add(self.format_ctrl, 1, wx.ALL | wx.EXPAND, 5)
-        sizer_tab1.Add(self.format_stxt, 0, wx.ALL, 5)
-        sizer_tab1.Add(self.format_tags, 0, wx.ALL | wx.EXPAND, 5)
         nb_panel_1.SetSizer(sizer_tab1)
-        notebook.AddPage(nb_panel_1, (_("Data Format")))
+        notebook.AddPage(nb_panel_1, (_("Format")))
         #  tab video
         nb_panel_2 = wx.Panel(notebook, wx.ID_ANY)
 
@@ -93,18 +82,10 @@ class MediaStreams(wx.Dialog):
                                       style=wx.LC_REPORT
                                       | wx.SUNKEN_BORDER
                                       | wx.LC_SINGLE_SEL,
-                                      )
-        self.video_stxt = wx.StaticText(nb_panel_2, wx.ID_ANY, msg)
-        self.video_tags = wx.TextCtrl(nb_panel_2,
-                                      wx.ID_ANY, "",
-                                      style=wx.TE_MULTILINE
-                                      | wx.TE_READONLY
-                                      | wx.TE_RICH2,
+                                      name='video'
                                       )
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2.Add(self.video_ctrl, 1, wx.ALL | wx.EXPAND, 5)
-        sizer_tab2.Add(self.video_stxt, 0, wx.ALL, 5)
-        sizer_tab2.Add(self.video_tags, 0, wx.ALL | wx.EXPAND, 5)
         nb_panel_2.SetSizer(sizer_tab2)
         notebook.AddPage(nb_panel_2, (_("Video Stream")))
         #  tab audio
@@ -114,100 +95,53 @@ class MediaStreams(wx.Dialog):
                                       style=wx.LC_REPORT
                                       | wx.SUNKEN_BORDER
                                       | wx.LC_SINGLE_SEL,
-                                      )
-        self.audio_stxt = wx.StaticText(nb_panel_3, wx.ID_ANY, msg)
-        self.audio_tags = wx.TextCtrl(nb_panel_3,
-                                      wx.ID_ANY, "",
-                                      style=wx.TE_MULTILINE
-                                      | wx.TE_READONLY
-                                      | wx.TE_RICH2,
+                                      name='audio'
                                       )
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab3.Add(self.audio_ctrl, 1, wx.ALL | wx.EXPAND, 5)
-        sizer_tab3.Add(self.audio_stxt, 0, wx.ALL, 5)
-        sizer_tab3.Add(self.audio_tags, 0, wx.ALL | wx.EXPAND, 5)
         nb_panel_3.SetSizer(sizer_tab3)
         notebook.AddPage(nb_panel_3, (_("Audio Streams")))
         #  tab subtitle
         nb_panel_4 = wx.Panel(notebook, wx.ID_ANY)
-        self.subtitle_ctrl = wx.ListCtrl(nb_panel_4,
-                                         wx.ID_ANY,
-                                         style=wx.LC_REPORT
-                                         | wx.SUNKEN_BORDER
-                                         | wx.LC_SINGLE_SEL,
-                                         )
-        self.sub_stxt = wx.StaticText(nb_panel_4, wx.ID_ANY, msg)
-        self.sub_tags = wx.TextCtrl(nb_panel_4,
-                                    wx.ID_ANY, "",
-                                    style=wx.TE_MULTILINE
-                                    | wx.TE_READONLY
-                                    | wx.TE_RICH2,
-                                    )
+        self.subt_ctrl = wx.ListCtrl(nb_panel_4,
+                                     wx.ID_ANY,
+                                     style=wx.LC_REPORT
+                                     | wx.SUNKEN_BORDER
+                                     | wx.LC_SINGLE_SEL,
+                                     name='subtitle'
+                                     )
         sizer_tab4 = wx.BoxSizer(wx.VERTICAL)
-        sizer_tab4.Add(self.subtitle_ctrl, 1, wx.ALL | wx.EXPAND, 5)
-        sizer_tab4.Add(self.sub_stxt, 0, wx.ALL, 5)
-        sizer_tab4.Add(self.sub_tags, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_tab4.Add(self.subt_ctrl, 1, wx.ALL | wx.EXPAND, 5)
         nb_panel_4.SetSizer(sizer_tab4)
         notebook.AddPage(nb_panel_4, (_("Subtitle Streams")))
         #  bottom
         button_close = wx.Button(self, wx.ID_CLOSE, "")
-        self.button_view = wx.ToggleButton(self, wx.ID_ANY,
-                                           _("Enable text format"))
-        grid_btns = wx.GridSizer(1, 2, 0, 0)
-        grid_btns.Add(self.button_view, 0, wx.ALL | wx.EXPAND, 5)
-        grid_btns.Add(button_close, 0, wx.ALL | wx.EXPAND, 5)
+        self.btn_copyclip = wx.Button(self, wx.ID_ANY, _("Copy to clipboard"))
+        self.btn_copyclip.Disable()
+        grid_btns = wx.BoxSizer(wx.HORIZONTAL)
+        grid_btns.Add(self.btn_copyclip, 0, wx.ALL, 5)
+        grid_btns.Add(button_close, 0, wx.ALL, 5)
         self.sizerBase.Add(grid_btns, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
 
         # ----------------------Properties----------------------#
-        self.format_tags.Hide()
-        self.format_stxt.Hide()
-        self.video_tags.Hide()
-        self.video_stxt.Hide()
-        self.audio_tags.Hide()
-        self.audio_stxt.Hide()
-        self.sub_tags.Hide()
-        self.sub_stxt.Hide()
-
         self.file_select.InsertColumn(0, _('FILE SELECTION'), width=700)
 
-        self.format_ctrl.InsertColumn(0, _('References'), width=200)
-        self.format_ctrl.InsertColumn(1, _('Parameters'), width=500)
+        self.format_ctrl.InsertColumn(0, _('Properties'), width=200)
+        self.format_ctrl.InsertColumn(1, _('Values'), width=500)
 
-        self.video_ctrl.InsertColumn(0, _('References'), width=200)
-        self.video_ctrl.InsertColumn(1, _('Parameters'), width=500)
+        self.video_ctrl.InsertColumn(0, _('Properties'), width=200)
+        self.video_ctrl.InsertColumn(1, _('Values'), width=500)
 
-        self.audio_ctrl.InsertColumn(0, _('References'), width=200)
-        self.audio_ctrl.InsertColumn(1, _('Parameters'), width=500)
+        self.audio_ctrl.InsertColumn(0, _('Properties'), width=200)
+        self.audio_ctrl.InsertColumn(1, _('Values'), width=500)
 
-        self.subtitle_ctrl.InsertColumn(0, _('References'), width=200)
-        self.subtitle_ctrl.InsertColumn(1, _('Parameters'), width=500)
-
-        self.format_tags.SetBackgroundColour(self.colorscheme['BACKGRD'])
-        self.format_tags.SetDefaultStyle(wx.TextAttr(self.colorscheme['TXT3']))
-        self.video_tags.SetBackgroundColour(self.colorscheme['BACKGRD'])
-        self.video_tags.SetDefaultStyle(wx.TextAttr(self.colorscheme['TXT3']))
-        self.audio_tags.SetBackgroundColour(self.colorscheme['BACKGRD'])
-        self.audio_tags.SetDefaultStyle(wx.TextAttr(self.colorscheme['TXT3']))
-        self.sub_tags.SetBackgroundColour(self.colorscheme['BACKGRD'])
-        self.sub_tags.SetDefaultStyle(wx.TextAttr(self.colorscheme['TXT3']))
-
-        self.format_ctrl.SetToolTip(msg1)
-        self.video_ctrl.SetToolTip(msg1)
-        self.audio_ctrl.SetToolTip(msg1)
-        self.subtitle_ctrl.SetToolTip(msg1)
+        self.subt_ctrl.InsertColumn(0, _('Properties'), width=200)
+        self.subt_ctrl.InsertColumn(1, _('Values'), width=500)
 
         # set layout
         self.SetTitle(_('Multimedia streams analyzer'))
-        self.SetMinSize((700, 500))
-        self.file_select.SetMinSize((-1, 150))
-        # self.format_ctrl.SetMinSize((-1, 300))
-        # self.format_tags.SetMinSize((-1, 100))
-
-        self.format_tags.SetMinSize((-1, 100))
-        self.video_tags.SetMinSize((-1, 100))
-        self.audio_tags.SetMinSize((-1, 100))
-        self.sub_tags.SetMinSize((-1, 100))
-
+        self.SetMinSize((700, 700))
+        # self.file_select.SetMinSize((-1, 150))
         self.SetSizer(self.sizerBase)
         # self.sizerBase.Fit(self)
         icon = wx.Icon()
@@ -219,207 +153,158 @@ class MediaStreams(wx.Dialog):
 
         flist = [x['format']['filename'] for x in self.data
                  if x['format']['filename']]
-
         index = 0
-        for f in flist:
-            self.file_select.InsertItem(index, f)
+        for files in flist:
+            self.file_select.InsertItem(index, files)
             index += 1
-
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.file_select)
 
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_format, self.format_ctrl)
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_video, self.video_ctrl)
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_audio, self.audio_ctrl)
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_sub, self.subtitle_ctrl)
+        self.format_ctrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_selected)
+        self.video_ctrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_selected)
+        self.audio_ctrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_selected)
+        self.subt_ctrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_selected)
 
-        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.format_deselect,
-                  self.format_ctrl)
-        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.video_deselect,
-                  self.video_ctrl)
-        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.audio_deselect,
-                  self.audio_ctrl)
-        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.sub_deselect,
-                  self.subtitle_ctrl)
+        self.format_ctrl.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselected)
+        self.video_ctrl.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselected)
+        self.audio_ctrl.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselected)
+        self.subt_ctrl.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselected)
 
-        self.Bind(wx.EVT_TOGGLEBUTTON, self.on_view, self.button_view)
+        self.Bind(wx.EVT_BUTTON, self.on_copy_to_clipboard, self.btn_copyclip)
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
 
-        self.file_select.Focus(0)  # make the line the current line
-        self.file_select.Select(0, on=1)  # default event selection
+        if data:
+            self.file_select.Focus(0)  # make the line the current line
+            self.file_select.Select(0, on=1)  # default event selection
+
+        self.typelist = None
 
     # ----------------------Event handler (callbacks)----------------------#
 
-    def on_view(self, event):
+    def on_deselected(self, event):
         """
-        Show or hide text boxes
+        Event on deselecting an item on the list
         """
-        if self.button_view.GetValue():
-            self.format_tags.Show()
-            self.format_stxt.Show()
-            self.video_tags.Show()
-            self.video_stxt.Show()
-            self.audio_tags.Show()
-            self.audio_stxt.Show()
-            self.sub_tags.Show()
-            self.sub_stxt.Show()
-        else:
-            self.format_tags.Hide()
-            self.format_stxt.Hide()
-            self.video_tags.Hide()
-            self.video_stxt.Hide()
-            self.audio_tags.Hide()
-            self.audio_stxt.Hide()
-            self.sub_tags.Hide()
-            self.sub_stxt.Hide()
+        self.btn_copyclip.Disable()
+        self.typelist = None
+    # ----------------------------------------------------------------------
 
-        self.format_tags.SetMinSize((-1, 100))
-        self.video_tags.SetMinSize((-1, 100))
-        self.audio_tags.SetMinSize((-1, 100))
-        self.sub_tags.SetMinSize((-1, 100))
-        # self.panel.SetSizer(self.sizerBase)
-        self.sizerBase.Fit(self)
-        self.Layout()
-    # ------------------------------------------------------------------#
+    def on_selected(self, event):
+        """
+        Event on selecting an item on the list
+        """
+        if not event.GetText():
+            self.typelist = None
+            return
+        self.typelist = event.GetEventObject().Name
+        self.btn_copyclip.Enable()
+    # ----------------------------------------------------------------------
 
-    def format_deselect(self, event):
+    def on_copy_to_clipboard(self, event):
         """
-        Delete the text previously added on corresponding text boxes
+        Click on copy to clipboard button, evaluate which
+        checklist you are using, then call the appropriate method.
         """
-        self.format_tags.Clear()
-    # ------------------------------------------------------------------#
+        if self.typelist == 'format':
+            self.on_format()
+        elif self.typelist == 'video':
+            self.on_video()
+        elif self.typelist == 'audio':
+            self.on_audio()
+        elif self.typelist == 'subtitle':
+            self.on_sub()
+    # ----------------------------------------------------------------------
 
-    def video_deselect(self, event):
+    def on_format(self):
         """
-        Delete the text previously added on corresponding text boxes
+        Copy selected item to clipboard
         """
-        self.video_tags.Clear()
-    # ------------------------------------------------------------------#
-
-    def audio_deselect(self, event):
-        """
-        Delete the text previously added on corresponding text boxes
-        """
-        self.audio_tags.Clear()
-    # ------------------------------------------------------------------#
-
-    def sub_deselect(self, event):
-        """
-        Delete the text previously added on corresponding text boxes
-        """
-        self.sub_tags.Clear()
-    # ------------------------------------------------------------------#
-
-    def on_format(self, event):
-        """
-        Shows the data of the selected item in the 'format' text box
-        """
-        if not self.button_view.GetValue():
-            self.button_view.SetValue(True)
-            self.on_view(self)
         item = self.format_ctrl.GetFocusedItem()
+        if item == -1:
+            return
         col0 = self.format_ctrl.GetItemText(item, col=0)
         col1 = self.format_ctrl.GetItemText(item, col=1)
-        self.format_tags.Clear()
-        if col0 == 'tags':
-            tags = literal_eval(col1)
-            for key, val in tags.items():
-                self.format_tags.AppendText(f'{key}: {val}\n')
-        elif col0 == 'disposition':
-            dispos = literal_eval(col1)
-            for key, val in dispos.items():
-                self.format_tags.AppendText(f'{key}: {val}\n')
-
+        text = f'{col0}: {col1}'
+        if wx.TheClipboard.Open():
+            data_object = wx.TextDataObject(text)
+            wx.TheClipboard.SetData(data_object)
+            wx.TheClipboard.Close()
         else:
-            self.format_tags.write(f'{col0}: {col1}')
-    # ------------------------------------------------------------------#
+            wx.MessageBox(_('Unable to open the clipboard on Format tab'),
+                          'Videomass', wx.ICON_ERROR, self)
+    # ----------------------------------------------------------------------
 
-    def on_video(self, event):
+    def on_video(self):
         """
-        Shows the data of the selected item in the video text box
+        Copy selected item to clipboard
         """
-        if not self.button_view.GetValue():
-            self.button_view.SetValue(True)
-            self.on_view(self)
         item = self.video_ctrl.GetFocusedItem()
+        if item == -1:
+            return
         col0 = self.video_ctrl.GetItemText(item, col=0)
         col1 = self.video_ctrl.GetItemText(item, col=1)
-        self.video_tags.Clear()
-        if col0 == 'tags':
-            tags = literal_eval(col1)
-            for key, val in tags.items():
-                self.video_tags.AppendText(f'{key}: {val}\n')
-        elif col0 == 'disposition':
-            dispos = literal_eval(col1)
-            for key, val in dispos.items():
-                self.video_tags.AppendText(f'{key}: {val}\n')
+        text = f'{col0}: {col1}'
+        if wx.TheClipboard.Open():
+            data_object = wx.TextDataObject(text)
+            wx.TheClipboard.SetData(data_object)
+            wx.TheClipboard.Close()
         else:
-            self.video_tags.AppendText(f'{col0}: {col1}\n')
-    # ------------------------------------------------------------------#
+            wx.MessageBox(_('Unable to open the clipboard on '
+                            'Video Streams tab'),
+                          'Videomass', wx.ICON_ERROR, self)
+    # ----------------------------------------------------------------------
 
-    def on_audio(self, event):
+    def on_audio(self):
         """
-        Shows the data of the selected item in the audio text box
+        Copy selected item to clipboard
         """
-        if not self.button_view.GetValue():
-            self.button_view.SetValue(True)
-            self.on_view(self)
         item = self.audio_ctrl.GetFocusedItem()
+        if item == -1:
+            return
         col0 = self.audio_ctrl.GetItemText(item, col=0)
         col1 = self.audio_ctrl.GetItemText(item, col=1)
-        self.audio_tags.Clear()
-        if col0 == 'tags':
-            tags = literal_eval(col1)
-            for key, val in tags.items():
-                self.audio_tags.AppendText(f'{key}: {val}\n')
-        elif col0 == 'disposition':
-            dispos = literal_eval(col1)
-            for key, val in dispos.items():
-                self.audio_tags.AppendText(f'{key}: {val}\n')
+        text = f'{col0}: {col1}'
+        if wx.TheClipboard.Open():
+            data_object = wx.TextDataObject(text)
+            wx.TheClipboard.SetData(data_object)
+            wx.TheClipboard.Close()
         else:
-            self.audio_tags.AppendText(f'{col0}: {col1}\n')
-    # ------------------------------------------------------------------#
+            wx.MessageBox(_('Unable to open the clipboard on '
+                            'Audio Streams tab'),
+                          'Videomass', wx.ICON_ERROR, self)
+    # ----------------------------------------------------------------------
 
-    def on_sub(self, event):
+    def on_sub(self):
         """
-        Shows the data of the selected item in the subtitle text box
-
+        Copy selected item to clipboard
         """
-        if not self.button_view.GetValue():
-            self.button_view.SetValue(True)
-            self.on_view(self)
-        item = self.subtitle_ctrl.GetFocusedItem()
-        col0 = self.subtitle_ctrl.GetItemText(item, col=0)
-        col1 = self.subtitle_ctrl.GetItemText(item, col=1)
-        self.sub_tags.Clear()
-        if col0 == 'tags':
-            tags = literal_eval(col1)
-            for key, val in tags.items():
-                self.sub_tags.AppendText(f'{key}: {val}\n')
-        elif col0 == 'disposition':
-            dispos = literal_eval(col1)
-            for key, val in dispos.items():
-                self.sub_tags.AppendText(f'{key}: {val}\n')
+        item = self.subt_ctrl.GetFocusedItem()
+        if item == -1:
+            return
+        col0 = self.subt_ctrl.GetItemText(item, col=0)
+        col1 = self.subt_ctrl.GetItemText(item, col=1)
+        text = f'{col0}: {col1}'
+        if wx.TheClipboard.Open():
+            data_object = wx.TextDataObject(text)
+            wx.TheClipboard.SetData(data_object)
+            wx.TheClipboard.Close()
         else:
-            self.sub_tags.AppendText(f'{col0}: {col1}\n')
-    # ------------------------------------------------------------------#
+            wx.MessageBox(_('Unable to open the clipboard on '
+                            'Subtitle Streams tab'),
+                          'Videomass', wx.ICON_ERROR, self)
+    # ----------------------------------------------------------------------
 
     def on_select(self, event):
         """
-        Update and populate all checklists during items selection
+        Update and populate all listctrls during items selection
         on self.file_select list control
-
         """
         # delete previous append:
         self.format_ctrl.DeleteAllItems()
         self.video_ctrl.DeleteAllItems()
         self.audio_ctrl.DeleteAllItems()
-        self.subtitle_ctrl.DeleteAllItems()
-        self.format_tags.Clear()
-        self.video_tags.Clear()
-        self.audio_tags.Clear()
-        self.sub_tags.Clear()
+        self.subt_ctrl.DeleteAllItems()
 
         index = self.file_select.GetFocusedItem()
         item = self.file_select.GetItemText(index)
@@ -429,10 +314,6 @@ class MediaStreams(wx.Dialog):
         for x in self.data:
             if x.get('format').get('filename') == item:
                 select = self.data[self.data.index(x)]
-                num_items = self.format_ctrl.GetItemCount()
-                self.format_ctrl.InsertItem(num_items, 'DATA FORMAT:')
-                self.format_ctrl.SetItemBackgroundColour(index, "#808080")
-                index += 1
                 for k, v in x.get('format').items():
                     self.format_ctrl.InsertItem(index, str(k))
                     self.format_ctrl.SetItem(index, 1, str(v))
@@ -442,41 +323,37 @@ class MediaStreams(wx.Dialog):
             index = 0
             for t in select.get('streams'):
                 if t.get('codec_type') == 'video':
-                    num_items = self.video_ctrl.GetItemCount()
-                    n = f"VIDEO INDEX {t.get('index')}"
-                    self.video_ctrl.InsertItem(num_items, n)
-                    self.video_ctrl.SetItemBackgroundColour(index, "#808080")
-                    index += 1
                     for k, v in t.items():
                         self.video_ctrl.InsertItem(index, str(k))
                         self.video_ctrl.SetItem(index, 1, str(v))
+                        if k == 'index':
+                            self.video_ctrl.SetItemBackgroundColour(index,
+                                                                    "#808080")
                         index += 1
             index = 0
             for t in select.get('streams'):
                 if t.get('codec_type') == 'audio':
-                    num_items = self.audio_ctrl.GetItemCount()
-                    n = f"AUDIO INDEX {t.get('index')}"
-                    self.audio_ctrl.InsertItem(num_items, n)
-                    self.audio_ctrl.SetItemBackgroundColour(index, "#808080")
-                    index += 1
                     for k, v in t.items():
                         self.audio_ctrl.InsertItem(index, str(k))
                         self.audio_ctrl.SetItem(index, 1, str(v))
+                        if k == 'index':
+                            self.audio_ctrl.SetItemBackgroundColour(index,
+                                                                    "#808080")
                         index += 1
             index = 0
             for t in select.get('streams'):
                 if t.get('codec_type') == 'subtitle':
-                    num_items = self.subtitle_ctrl.GetItemCount()
-                    n = f"SUBTITLE INDEX {t.get('index')}"
-                    self.subtitle_ctrl.InsertItem(num_items, n)
-                    self.subtitle_ctrl.SetItemBackgroundColour(index,
-                                                               "#808080")
-                    index += 1
                     for k, v in t.items():
-                        self.subtitle_ctrl.InsertItem(index, str(k))
-                        self.subtitle_ctrl.SetItem(index, 1, str(v))
+                        self.subt_ctrl.InsertItem(index, str(k))
+                        self.subt_ctrl.SetItem(index, 1, str(v))
+                        if k == 'index':
+                            self.subt_ctrl.SetItemBackgroundColour(index,
+                                                                   "#808080")
                         index += 1
-    # ------------------------------------------------------------------#
+
+        self.btn_copyclip.Disable()
+        self.typelist = None
+    # ----------------------------------------------------------------------
 
     def on_close(self, event):
         """
