@@ -13,7 +13,7 @@ videomass (4.0.10-1) UNRELEASED; urgency=medium
     The bug did not allow to check correctly the new available versions.
   * [A/V Conversions] fixed bug that disables bitrate control by moving crf
     control.
-  * [Presets Manager] presets have been updated to the new v0.13 release.
+  * [Presets Manager] presets have been updated to the new v0.16 release.
   * [Presets Manager] fixed various bugs in the presets database update
     functionalities.
   * [Presets Manager] Added check for presets updates locally.
@@ -56,8 +56,10 @@ videomass (4.0.10-1) UNRELEASED; urgency=medium
   * Fixed menu accelerators for "Go" item (Shift+letter wasn't a good idea)
   * Fixed Layout problems switching between panels.
   * Added new color schemes.
+  * Added ability to clean up the imported file list at the end of
+    the operations.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 12 Mar 2023 08:30:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 14 Mar 2023 16:30:00 +0200
 
 videomass (4.0.5-1) UNRELEASED; urgency=medium
 

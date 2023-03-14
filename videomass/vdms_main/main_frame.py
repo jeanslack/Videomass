@@ -99,7 +99,8 @@ class MainFrame(wx.Frame):
         self.topicname = None  # shown panel name
         self.checktimestamp = True  # show timestamp during playback
         self.autoexit = False  # set autoexit during ffplay playback
-        self.move_file_to_trash = self.appdata['move_file_to_trash']
+        self.movetotrash = self.appdata['move_file_to_trash']
+        self.emptylist = self.appdata['move_file_to_trash']
         self.mediastreams = False
         self.showlogs = False
         self.helptopic = False
@@ -1686,6 +1687,8 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(5, True)
         self.toolbar.EnableTool(14, False)
         self.toolbar.EnableTool(16, True)
+        if self.emptylist:
+            self.fileDnDTarget.delete_all(self)
     # ------------------------------------------------------------------#
 
     def panelShown(self, panelshown=None):

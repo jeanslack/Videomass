@@ -672,11 +672,11 @@ class SequenceToVideo(wx.Panel):
                                      countmax,
                                      'mkv',
                                      )
-        ending = Formula(self, valupdate[0], valupdate[1], (500, 320),
-                         self.parent.move_file_to_trash,
+        ending = Formula(self, valupdate[0], valupdate[1], (600, 320),
+                         self.parent.movetotrash, self.parent.emptylist,
                          )
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.move_file_to_trash = ending.getvalue()
+            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
         else:
             return
 

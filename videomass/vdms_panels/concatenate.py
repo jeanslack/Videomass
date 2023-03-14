@@ -308,11 +308,11 @@ class Conc_Demuxer(wx.Panel):
         """
         logname = 'concatenate_demuxer.log'
         valupdate = self.update_dict(newfile, os.path.dirname(newfile), outext)
-        ending = Formula(self, valupdate[0], valupdate[1], (500, 170),
-                         self.parent.move_file_to_trash,
+        ending = Formula(self, valupdate[0], valupdate[1], (600, 170),
+                         self.parent.movetotrash, self.parent.emptylist,
                          )
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.move_file_to_trash = ending.getvalue()
+            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
             self.parent.switch_to_processing('concat_demuxer',
                                              filesrc,
                                              None,
