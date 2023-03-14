@@ -38,12 +38,13 @@ class Formula(wx.Dialog):
             settings = ("\nEXAMPLES:\n\nExample 1:\nExample 2:\n etc."
             param = ("type 1\ntype 2\ntype 3\n etc."
     """
-    def __init__(self, parent, settings, param, panelsize, movetotrash):
+    def __init__(self, parent, settings, param, *args):
 
         get = wx.GetApp()  # get data from bootstrap
         self.appdata = get.appset
         colorscheme = self.appdata['icontheme'][1]
-        self.movetotrash = movetotrash
+        self.movetotrash = args[1]
+        self.emptylist = args[2]
 
         wx.Dialog.__init__(self, parent, -1,
                            style=wx.DEFAULT_DIALOG_STYLE
@@ -51,7 +52,7 @@ class Formula(wx.Dialog):
                            )
         sizbase = wx.BoxSizer(wx.VERTICAL)
         panelscroll = scrolled.ScrolledPanel(self, wx.ID_ANY,
-                                             size=panelsize,
+                                             size=args[0],
                                              style=wx.TAB_TRAVERSAL
                                              | wx.BORDER_THEME,
                                              name="panelscr",
@@ -74,12 +75,19 @@ class Formula(wx.Dialog):
         panelscroll.SetAutoLayout(1)
         panelscroll.SetupScrolling()
 
-        descr = _("Move source file to the Videomass\ntrash "
-                  "folder after successful encoding")
+        sizeropt = wx.BoxSizer(wx.HORIZONTAL)
+        sizbase.Add(sizeropt, 0)
+
+        descr = _("Move the source files to Videomass trash\n"
+                  "folder after successful operations")
         self.ckbx_trash = wx.CheckBox(self, wx.ID_ANY, (descr))
         self.ckbx_trash.SetValue(self.movetotrash)
-        sizbase.Add(self.ckbx_trash, 0, wx.ALL, 5)
-
+        sizeropt.Add(self.ckbx_trash, 0, wx.ALL, 5)
+        descr = _("When finished, clean up\n"
+                  "the imported file list")
+        self.ckbx_del = wx.CheckBox(self, wx.ID_ANY, (descr))
+        self.ckbx_del.SetValue(self.emptylist)
+        sizeropt.Add(self.ckbx_del, 0, wx.ALL, 5)
         btncancel = wx.Button(self, wx.ID_CANCEL, "")
         btnok = wx.Button(self, wx.ID_OK, "")
         btngrid = wx.FlexGridSizer(1, 2, 0, 0)
@@ -88,16 +96,27 @@ class Formula(wx.Dialog):
         sizbase.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
 
         self.SetTitle(_('Confirm Settings'))
-        self.SetMinSize(panelsize)
+        self.SetMinSize(args[0])
         self.SetSizer(sizbase)
         sizbase.Fit(self)
         self.Layout()
         # ----------------------Binders (EVT)--------------------#
         self.Bind(wx.EVT_CHECKBOX, self.on_file_to_trash, self.ckbx_trash)
+        self.Bind(wx.EVT_CHECKBOX, self.on_empty_list, self.ckbx_del)
         self.Bind(wx.EVT_BUTTON, self.on_cancel, btncancel)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btnok)
 
         # --------------  Event handler (callback)  --------------#
+
+    def on_empty_list(self, event):
+        """
+        enable/disable empty imported file list.
+        """
+        if self.ckbx_del.IsChecked():
+            self.emptylist = True
+        else:
+            self.emptylist = False
+    # --------------------------------------------------------------------#
 
     def on_file_to_trash(self, event):
         """
@@ -106,6 +125,8 @@ class Formula(wx.Dialog):
         trashdir = os.path.join(self.appdata['confdir'], 'Trash')
         if self.ckbx_trash.IsChecked():
             self.movetotrash = True
+            self.ckbx_del.SetValue(True)
+            self.emptylist = True
             if not os.path.exists(trashdir):
                 os.mkdir(trashdir, mode=0o777)
         else:
@@ -131,4 +152,4 @@ class Formula(wx.Dialog):
         This method return values via the getvalue() interface
         from the caller. See the caller for more info and usage.
         """
-        return self.movetotrash
+        return self.movetotrash, self.emptylist

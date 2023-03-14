@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 12, 2023 V.4.0.10
+Mar 14, 2023 V.4.0.10
 
   * Removed interface to youtube_dl/yt_dlp libraries. Videomass will no longer
     have any functionality for downloading web videos. This mainly
@@ -65,6 +65,8 @@ Mar 12, 2023 V.4.0.10
   * Fixed menu accelerators for "Go" item (Shift+letter wasn't a good idea)
   * Fixed Layout problems switching between panels.
   * Added new color schemes.
+  * Added ability to clean up the imported file list at the end of
+    the operations.
 
 +------------------------------------+
 Jan 17, 2023 V.4.0.5

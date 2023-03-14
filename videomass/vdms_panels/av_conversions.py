@@ -1873,12 +1873,11 @@ class AV_Conv(wx.Panel):
         if logname == 'save as profile':
             return pass1, pass2, self.opt["OutputFormat"]
         valupdate = self.update_dict(len(f_src), [''])
-        ending = Formula(self, valupdate[0], valupdate[1], (500, 400),
-                         self.parent.move_file_to_trash,
+        ending = Formula(self, valupdate[0], valupdate[1], (600, 400),
+                         self.parent.movetotrash, self.parent.emptylist,
                          )
-
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.move_file_to_trash = ending.getvalue()
+            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
             self.parent.switch_to_processing('libvidstab',
                                              f_src,
                                              None,
@@ -1914,12 +1913,12 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return command, '', self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), ["Copy"])
-            ending = Formula(self, valupdate[0], valupdate[1], (500, 400),
-                             self.parent.move_file_to_trash,
+            ending = Formula(self, valupdate[0], valupdate[1], (600, 400),
+                             self.parent.movetotrash, self.parent.emptylist,
                              )
-
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.move_file_to_trash = ending.getvalue()
+                end = ending.getvalue()
+                self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
                 self.parent.switch_to_processing('onepass',
                                                  f_src,
                                                  None,
@@ -1971,12 +1970,12 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (500, 400),
-                             self.parent.move_file_to_trash,
+            ending = Formula(self, valupdate[0], valupdate[1], (600, 400),
+                             self.parent.movetotrash, self.parent.emptylist,
                              )
-
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.move_file_to_trash = ending.getvalue()
+                end = ending.getvalue()
+                self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
                 self.parent.switch_to_processing('twopass',
                                                  f_src,
                                                  None,
@@ -2011,11 +2010,12 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return command, '', self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (500, 400),
-                             self.parent.move_file_to_trash)
-
+            ending = Formula(self, valupdate[0], valupdate[1], (600, 400),
+                             self.parent.movetotrash, self.parent.emptylist,
+                             )
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.move_file_to_trash = ending.getvalue()
+                end = ending.getvalue()
+                self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
                 self.parent.switch_to_processing('onepass',
                                                  f_src,
                                                  self.opt["OutputFormat"],
@@ -2070,12 +2070,12 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), ["Copy"])
-            ending = Formula(self, valupdate[0], valupdate[1], (500, 400),
-                             self.parent.move_file_to_trash,
+            ending = Formula(self, valupdate[0], valupdate[1], (600, 400),
+                             self.parent.movetotrash, self.parent.emptylist,
                              )
-
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.move_file_to_trash = ending.getvalue()
+                end = ending.getvalue()
+                self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
                 self.parent.switch_to_processing('two pass EBU',
                                                  f_src,
                                                  None,
@@ -2125,12 +2125,12 @@ class AV_Conv(wx.Panel):
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (500, 400),
-                             self.parent.move_file_to_trash,
+            ending = Formula(self, valupdate[0], valupdate[1], (600, 400),
+                             self.parent.movetotrash, self.parent.emptylist,
                              )
-
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.move_file_to_trash = ending.getvalue()
+                end = ending.getvalue()
+                self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
                 self.parent.switch_to_processing('two pass EBU',
                                                  f_src,
                                                  self.opt["OutputFormat"],
@@ -2163,12 +2163,12 @@ class AV_Conv(wx.Panel):
         if logname == 'save as profile':
             return command, '', self.opt["OutputFormat"]
         valupdate = self.update_dict(len(f_src), [''])
-        ending = Formula(self, valupdate[0], valupdate[1], (500, 280),
-                         self.parent.move_file_to_trash,
+        ending = Formula(self, valupdate[0], valupdate[1], (600, 280),
+                         self.parent.movetotrash, self.parent.emptylist,
                          )
 
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.move_file_to_trash = ending.getvalue()
+            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
             self.parent.switch_to_processing('onepass',
                                              f_src,
                                              self.opt["OutputFormat"],
@@ -2211,12 +2211,12 @@ class AV_Conv(wx.Panel):
         if logname == 'save as profile':
             return pass1, pass2, self.opt["OutputFormat"]
         valupdate = self.update_dict(len(f_src), [''])
-        ending = Formula(self, valupdate[0], valupdate[1], (500, 280),
-                         self.parent.move_file_to_trash,
+        ending = Formula(self, valupdate[0], valupdate[1], (600, 280),
+                         self.parent.movetotrash, self.parent.emptylist,
                          )
 
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.move_file_to_trash = ending.getvalue()
+            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
             self.parent.switch_to_processing('two pass EBU',
                                              f_src,
                                              self.opt["OutputFormat"],

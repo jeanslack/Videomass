@@ -33,7 +33,4 @@ URGENCY: medium
 URGENCY: low (New implementations)
 -------------
 
-- At the end of the process, ask the user to clean up the file list
-  (..and possibly import the file list just exported).
-
 - [PRESETS MANAGER] The profile requires additional input (-i FILE -i FILE ...)

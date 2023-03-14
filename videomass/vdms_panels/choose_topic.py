@@ -148,28 +148,26 @@ class Choose_Topic(wx.Panel):
             welcome.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL))
             version.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.LIGHT))
 
-        if hasattr(wx.SystemSettings, 'GetAppearance'):
-            appear = wx.SystemSettings.GetAppearance()
-            if appear.IsDark():
-                if colorscheme[0] in ('Videomass-Colours',
-                                      'Videomass-Dark',
-                                      'Videomass-Light'):
-                    self.SetBackgroundColour('#232424')  # Dark grey
-                elif colorscheme[0] in ('Ubuntu-Dark-Aubergine',
-                                        'Ubuntu-Light-Aubergine'):
-                    self.SetBackgroundColour('#2C001E')  # Dark Aubergine
+        if self.appdata['IS_DARK_THEME'] is True:
+            if colorscheme[0] in ('Videomass-Colours',
+                                  'Videomass-Dark',
+                                  'Videomass-Light'):
+                self.SetBackgroundColour('#232424')  # Dark grey
+            elif colorscheme[0] in ('Ubuntu-Dark-Aubergine',
+                                    'Ubuntu-Light-Aubergine'):
+                self.SetBackgroundColour('#2C001E')  # Dark Aubergine
+            welcome.SetForegroundColour('#E95420')  # Ubuntu orange
+            version.SetForegroundColour('#E95420')  # Ubuntu orange
+        elif self.appdata['IS_DARK_THEME'] is False:
+            if colorscheme[0] in ('Videomass-Colours',
+                                  'Videomass-Dark',
+                                  'Videomass-Light'):
+                self.SetBackgroundColour('#4eada5')  # blue
+            elif colorscheme[0] in ('Ubuntu-Dark-Aubergine',
+                                    'Ubuntu-Light-Aubergine'):
+                self.SetBackgroundColour('#2C001E')  # Dark Aubergine
                 welcome.SetForegroundColour('#E95420')  # Ubuntu orange
                 version.SetForegroundColour('#E95420')  # Ubuntu orange
-            else:
-                if colorscheme[0] in ('Videomass-Colours',
-                                      'Videomass-Dark',
-                                      'Videomass-Light'):
-                    self.SetBackgroundColour('#4eada5')  # blue
-                elif colorscheme[0] in ('Ubuntu-Dark-Aubergine',
-                                        'Ubuntu-Light-Aubergine'):
-                    self.SetBackgroundColour('#2C001E')  # Dark Aubergine
-                    welcome.SetForegroundColour('#E95420')  # Ubuntu orange
-                    version.SetForegroundColour('#E95420')  # Ubuntu orange
 
         self.Bind(wx.EVT_BUTTON, self.on_Conv, self.avconv)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)

@@ -99,7 +99,8 @@ class MainFrame(wx.Frame):
         self.topicname = None  # shown panel name
         self.checktimestamp = True  # show timestamp during playback
         self.autoexit = False  # set autoexit during ffplay playback
-        self.move_file_to_trash = self.appdata['move_file_to_trash']
+        self.movetotrash = self.appdata['move_file_to_trash']
+        self.emptylist = self.appdata['move_file_to_trash']
         self.mediastreams = False
         self.showlogs = False
         self.helptopic = False
@@ -319,8 +320,6 @@ class MainFrame(wx.Frame):
         """
         Show the Media Stream Analyzer in modeless way (non-modal)
         """
-        if not self.data_files:
-            return
         if self.mediastreams:
             self.mediastreams.Raise()
             return
@@ -1273,7 +1272,6 @@ class MainFrame(wx.Frame):
         self.toolbar.SetToolBitmapSize(bmp_size)
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-
             bmpback = get_bmp(self.icons['previous'], bmp_size)
             bmpnext = get_bmp(self.icons['next'], bmp_size)
             bmpinfo = get_bmp(self.icons['fileproperties'], bmp_size)
@@ -1689,6 +1687,8 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(5, True)
         self.toolbar.EnableTool(14, False)
         self.toolbar.EnableTool(16, True)
+        if self.emptylist:
+            self.fileDnDTarget.delete_all(self)
     # ------------------------------------------------------------------#
 
     def panelShown(self, panelshown=None):

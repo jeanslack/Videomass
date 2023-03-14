@@ -878,11 +878,11 @@ class PrstPan(wx.Panel):
         """
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
         valupdate = self.update_dict(len(filesrc), 'One passes')
-        ending = Formula(self, valupdate[0], valupdate[1], (500, 170),
-                         self.parent.move_file_to_trash,
+        ending = Formula(self, valupdate[0], valupdate[1], (600, 170),
+                         self.parent.movetotrash, self.parent.emptylist,
                          )
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.move_file_to_trash = ending.getvalue()
+            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
             self.parent.switch_to_processing('onepass',
                                              filesrc,
                                              outext,
@@ -904,12 +904,12 @@ class PrstPan(wx.Panel):
         pass2 = " ".join(self.txt_2cmd.GetValue().split())
         typeproc = 'twopass'
         valupdate = self.update_dict(len(filesrc), typeproc)
-        ending = Formula(self, valupdate[0], valupdate[1], (500, 170),
-                         self.parent.move_file_to_trash,
+        ending = Formula(self, valupdate[0], valupdate[1], (600, 170),
+                         self.parent.movetotrash, self.parent.emptylist,
                          )
 
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.move_file_to_trash = ending.getvalue()
+            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
             self.parent.switch_to_processing(typeproc,
                                              filesrc,
                                              outext,

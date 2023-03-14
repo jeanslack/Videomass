@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.27.2023
+Rev: March.14.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -45,7 +45,7 @@ class FFmpegHelp(wx.Dialog):
     BLACK = '#1f1f1f'
     HELPTOPIC = (_('Contextual help based on the argument entered in the '
                    'additional text field.\nEach argument consists of the '
-                   'type, an equal sign (=), and a type-specific name.\n\n'
+                   'type and a type-specific name.\n\n'
                    'For the list of encoders click the "Encoders" button.\n'
                    'For the list of decoders click on the "Decoders" button.\n'
                    'For the muxers and demuxers click on the "Muxers and '
@@ -81,7 +81,9 @@ class FFmpegHelp(wx.Dialog):
                 _("Show available HW acceleration methods"): ['-hwaccels'],
                 _("Show license"): ['-L'],
                 }
-    CHOICES = tuple(ARGS_OPT.keys())
+    MAIN_CHOICES = tuple(ARGS_OPT.keys())
+    ARGS = ('encoder', 'decoder', 'muxer', 'demuxer',
+            'filter', 'bsf', 'protocol')
 
     def __init__(self, parent, OS):
         """
@@ -154,19 +156,26 @@ class FFmpegHelp(wx.Dialog):
         self.textlist.AppendText(FFmpegHelp.EXAMPLES)
         self.textlist.SetInsertionPoint(0)
         sizer.Add(self.textlist, 1, wx.EXPAND | wx.ALL, 5)
-        self.cmbx_choice = wx.ComboBox(self, wx.ID_ANY,
-                                       choices=FFmpegHelp.CHOICES,
-                                       style=wx.CB_DROPDOWN
-                                       | wx.CB_READONLY,
-                                       )
-        self.cmbx_choice.SetSelection(0)
-        self.cmbx_choice.SetToolTip(_("help topic list"))
+        self.cmbx_main = wx.ComboBox(self, wx.ID_ANY,
+                                     choices=FFmpegHelp.MAIN_CHOICES,
+                                     style=wx.CB_DROPDOWN
+                                     | wx.CB_READONLY,
+                                     )
+        self.cmbx_main.SetSelection(0)
+        self.cmbx_main.SetToolTip(_("help topic list"))
 
         sizerselect = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizerselect, 0)
-        sizerselect.Add(self.cmbx_choice, 0, wx.ALL, 5)
+        sizerselect.Add(self.cmbx_main, 0, wx.ALL, 5)
+        self.cmbx_arg = wx.ComboBox(self, wx.ID_ANY,
+                                    choices=FFmpegHelp.ARGS,
+                                    style=wx.CB_DROPDOWN
+                                    | wx.CB_READONLY,
+                                    )
+        self.cmbx_arg.SetSelection(0)
+        sizerselect.Add(self.cmbx_arg, 0, wx.ALL, 5)
         self.text_topic = wx.TextCtrl(self, wx.ID_ANY,
-                                      "", size=(180, -1),
+                                      "", size=(140, -1),
                                       style=wx.TE_PROCESS_ENTER
                                       )
         sizerselect.Add(self.text_topic, 0, wx.ALL, 5)
@@ -215,7 +224,7 @@ class FFmpegHelp(wx.Dialog):
                       self.search_str)
         else:  # is wxPython >= 4.1
             self.Bind(wx.EVT_SEARCH_CANCEL, self.on_delete, self.search_str)
-        self.Bind(wx.EVT_COMBOBOX, self.on_selected, self.cmbx_choice)
+        self.Bind(wx.EVT_COMBOBOX, self.on_selected, self.cmbx_main)
         self.Bind(wx.EVT_TEXT, self.on_search_strings, self.search_str)
         self.Bind(wx.EVT_TEXT, self.on_type_topic, self.text_topic)
         self.Bind(wx.EVT_TEXT_ENTER, self.on_type_enter_key, self.text_topic)
@@ -294,13 +303,14 @@ class FFmpegHelp(wx.Dialog):
 
     def on_type_enter_key(self, event):
         """
-        Event when user press `btn_proc`.
+        Event when user press enter key on self.text_topic box.
         """
         self.search_str.Clear()
-        newarg = self.text_topic.GetValue().strip().replace(" ", "")
-        if not newarg:
+        arg = self.cmbx_arg.GetStringSelection()
+        argstr = self.text_topic.GetValue().strip()
+        if not argstr:
             return
-        topic = ['--help', ] + newarg.split()
+        topic = ['--help', ] + [f'{arg}={argstr}']
         FFmpegHelp.ARGS_OPT[_("Help topic")] = topic
         self.row = io_tools.findtopic(topic)
         if self.row:
@@ -311,13 +321,14 @@ class FFmpegHelp(wx.Dialog):
 
     def on_selected(self, event):
         """
-        Event selecting topic in the `cmbx_choice`
+        Event selecting topic in the `cmbx_main`
         """
-        topic = FFmpegHelp.ARGS_OPT[self.cmbx_choice.GetValue()]
+        topic = FFmpegHelp.ARGS_OPT[self.cmbx_main.GetValue()]
         self.search_str.Clear()
 
         if topic[0] == "--help":  # from _(Help topic) only
             self.text_topic.Enable()
+            self.cmbx_arg.Enable()
             if not self.text_topic.GetValue().strip():
                 self.append_text(FFmpegHelp.HELPTOPIC + FFmpegHelp.EXAMPLES)
             else:
@@ -325,6 +336,7 @@ class FFmpegHelp(wx.Dialog):
             return
 
         self.text_topic.Disable()
+        self.cmbx_arg.Disable()
         self.row = io_tools.findtopic(topic)
         if self.row:
             self.append_text(self.row)
@@ -350,7 +362,7 @@ class FFmpegHelp(wx.Dialog):
             is_string = event.GetString()
 
         # ---> only cmbx_choice selection 0
-        if (self.cmbx_choice.GetSelection()
+        if (self.cmbx_main.GetSelection()
                 == 0 and not self.text_topic.GetValue().split()):
             if not is_string:
                 self.on_type_topic(self)
