@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-14 17:30+0100\n"
-"PO-Revision-Date: 2023-03-14 17:38+0100\n"
+"POT-Creation-Date: 2023-03-14 22:16+0100\n"
+"PO-Revision-Date: 2023-03-14 22:19+0100\n"
 "Last-Translator: Samuel / http://littlesvr.ca/ostd/\n"
 "Language-Team: Portuguese (Brasilian)\n"
 "Language: pt_BR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: ../gui_app.py:134
+#: ../gui_app.py:139
 msgid ""
 "Permission denied: {}\n"
 "\n"
@@ -26,7 +26,7 @@ msgstr ""
 "\n"
 "Verifique as permissões de execução."
 
-#: ../gui_app.py:214
+#: ../gui_app.py:219
 #, python-brace-format
 msgid ""
 "Unexpected error while deleting file contents:\n"
@@ -305,8 +305,8 @@ msgstr ""
 "compressibilidade."
 
 #: ../vdms_dialogs/filter_scale.py:75 ../vdms_dialogs/ffmpeg_help.py:117
-#: ../vdms_frames/shownormlist.py:76 ../vdms_frames/shownormlist.py:85
-#: ../vdms_frames/shownormlist.py:94 ../vdms_panels/concatenate.py:109
+#: ../vdms_frames/shownormlist.py:93 ../vdms_frames/shownormlist.py:102
+#: ../vdms_frames/shownormlist.py:111 ../vdms_panels/concatenate.py:109
 #: ../vdms_panels/sequence_to_video.py:116
 #: ../vdms_panels/video_to_sequence.py:78
 #, fuzzy
@@ -1183,63 +1183,63 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:76
+#: ../vdms_dialogs/mediainfo.py:82
 #, fuzzy
 #| msgid "format"
 msgid "Format"
 msgstr "formato"
 
-#: ../vdms_dialogs/mediainfo.py:90
+#: ../vdms_dialogs/mediainfo.py:96
 msgid "Video Stream"
 msgstr "Reprodução de Video"
 
-#: ../vdms_dialogs/mediainfo.py:103
+#: ../vdms_dialogs/mediainfo.py:109
 msgid "Audio Streams"
 msgstr "Reprodução de áudio"
 
-#: ../vdms_dialogs/mediainfo.py:116
+#: ../vdms_dialogs/mediainfo.py:122
 msgid "Subtitle Streams"
 msgstr "Reprodução de Legenda"
 
-#: ../vdms_dialogs/mediainfo.py:119
+#: ../vdms_dialogs/mediainfo.py:125
 #, fuzzy
 #| msgid "Crop to width"
 msgid "Copy to clipboard"
 msgstr "Cortar na largura"
 
-#: ../vdms_dialogs/mediainfo.py:127
+#: ../vdms_dialogs/mediainfo.py:133
 msgid "FILE SELECTION"
 msgstr "SELEÇÃO DE ARQUIVOS"
 
-#: ../vdms_dialogs/mediainfo.py:129 ../vdms_dialogs/mediainfo.py:132
 #: ../vdms_dialogs/mediainfo.py:135 ../vdms_dialogs/mediainfo.py:138
+#: ../vdms_dialogs/mediainfo.py:141 ../vdms_dialogs/mediainfo.py:144
 #, fuzzy
 #| msgid "Audio Properties"
 msgid "Properties"
 msgstr "Propriedades do Áudio"
 
-#: ../vdms_dialogs/mediainfo.py:130 ../vdms_dialogs/mediainfo.py:133
 #: ../vdms_dialogs/mediainfo.py:136 ../vdms_dialogs/mediainfo.py:139
+#: ../vdms_dialogs/mediainfo.py:142 ../vdms_dialogs/mediainfo.py:145
 msgid "Values"
 msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:142
+#: ../vdms_dialogs/mediainfo.py:148
 msgid "Multimedia streams analyzer"
 msgstr "Analisador de fluxos multimídia"
 
-#: ../vdms_dialogs/mediainfo.py:234
+#: ../vdms_dialogs/mediainfo.py:240
 msgid "Unable to open the clipboard on Format tab"
 msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:253
+#: ../vdms_dialogs/mediainfo.py:259
 msgid "Unable to open the clipboard on Video Streams tab"
 msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:273
+#: ../vdms_dialogs/mediainfo.py:279
 msgid "Unable to open the clipboard on Audio Streams tab"
 msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:293
+#: ../vdms_dialogs/mediainfo.py:299
 msgid "Unable to open the clipboard on Subtitle Streams tab"
 msgstr ""
 
@@ -1627,59 +1627,57 @@ msgstr "Formatos de arquivo FFmpeg"
 msgid "supported formats"
 msgstr "Lista de formatos suportados"
 
-#: ../vdms_frames/shownormlist.py:61
+#: ../vdms_frames/shownormlist.py:78
 msgid "File name"
 msgstr "Nome do Arquivo"
 
-#: ../vdms_frames/shownormlist.py:62
+#: ../vdms_frames/shownormlist.py:79
 msgid "Max volume dBFS"
 msgstr "Volume máximo dBFS"
 
-#: ../vdms_frames/shownormlist.py:63
+#: ../vdms_frames/shownormlist.py:80
 msgid "Mean volume dBFS"
 msgstr "Volume médio dBFS"
 
-#: ../vdms_frames/shownormlist.py:64
+#: ../vdms_frames/shownormlist.py:81
 msgid "Offset dBFS"
 msgstr "Desvio dBFS"
 
-#: ../vdms_frames/shownormlist.py:65
+#: ../vdms_frames/shownormlist.py:82
 msgid "Result dBFS"
 msgstr "Resultado dBFS"
 
-#: ../vdms_frames/shownormlist.py:70
+#: ../vdms_frames/shownormlist.py:87
 msgid "Post-normalization references:"
 msgstr "Referências pós-normalização:"
 
-#: ../vdms_frames/shownormlist.py:80
+#: ../vdms_frames/shownormlist.py:97
 msgid "=  Clipped peaks"
 msgstr "= Picos cortados"
 
-#: ../vdms_frames/shownormlist.py:89
+#: ../vdms_frames/shownormlist.py:106
 msgid "=  No changes"
 msgstr "= Sem alterações"
 
-#: ../vdms_frames/shownormlist.py:99
+#: ../vdms_frames/shownormlist.py:116
 msgid "=  Below max peak"
 msgstr "= Abaixo da altura máxima"
 
-#: ../vdms_frames/shownormlist.py:141 ../vdms_panels/av_conversions.py:1729
+#: ../vdms_frames/shownormlist.py:158 ../vdms_panels/av_conversions.py:1729
 msgid "RMS-based volume statistics"
 msgstr "Estatísticas de volume baseadas em RMS"
 
-#: ../vdms_frames/shownormlist.py:166 ../vdms_panels/av_conversions.py:1727
+#: ../vdms_frames/shownormlist.py:183 ../vdms_panels/av_conversions.py:1727
 msgid "PEAK-based volume statistics"
 msgstr "Estatísticas de volume baseadas em PEAK"
 
-#: ../vdms_frames/shownormlist.py:191
+#: ../vdms_frames/shownormlist.py:208
 #, fuzzy
 #| msgid ""
 #| "...It means the resulting audio will be clipped, because its volume is "
 #| "higher than the maximum 0 db level. This results in data loss and the "
 #| "audio may sound distorted."
 msgid ""
-"Orange ton...\n"
-"\n"
 "...It means the resulting audio will be clipped,\n"
 "because its volume is higher than the maximum 0 db\n"
 "level. This results in data loss and the audio may\n"
@@ -1689,26 +1687,22 @@ msgstr ""
 "superior ao nível máximo de 0 db. Isso resulta em perda de dados e o áudio "
 "pode parecer distorcido."
 
-#: ../vdms_frames/shownormlist.py:218
+#: ../vdms_frames/shownormlist.py:234
 #, fuzzy
 #| msgid ""
 #| "...It means the resulting audio will not change, because it's equal to "
 #| "the source."
 msgid ""
-"Green ton...\n"
-"\n"
 "...It means the resulting audio will not change,\n"
 "because it's equal to the source."
 msgstr "... Significa que o áudio resultante não mudará, pois é igual à fonte."
 
-#: ../vdms_frames/shownormlist.py:243
+#: ../vdms_frames/shownormlist.py:258
 #, fuzzy
 #| msgid ""
 #| "...It means an audio signal will be produced with a lower volume than the "
 #| "original."
 msgid ""
-"Blue ton...\n"
-"\n"
 "...It means an audio signal will be produced with\n"
 "a lower volume than the source."
 msgstr ""

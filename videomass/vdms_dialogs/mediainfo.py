@@ -40,6 +40,12 @@ class MediaStreams(wx.Dialog):
         """
         self.data = data
         get = wx.GetApp()  # get data from bootstrap
+        if get.appset['IS_DARK_THEME'] is True:
+            self.mark = '#174573'
+        elif get.appset['IS_DARK_THEME'] is False:
+            self.mark = '#3bbbe6'
+        else:
+            self.mark = '#808080'
         self.colorscheme = get.appset['icontheme'][1]
         vidicon = get.iconset['videomass']
 
@@ -124,23 +130,23 @@ class MediaStreams(wx.Dialog):
         self.sizerBase.Add(grid_btns, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
 
         # ----------------------Properties----------------------#
-        self.file_select.InsertColumn(0, _('FILE SELECTION'), width=700)
+        self.file_select.InsertColumn(0, _('FILE SELECTION'), width=600)
 
         self.format_ctrl.InsertColumn(0, _('Properties'), width=200)
-        self.format_ctrl.InsertColumn(1, _('Values'), width=500)
+        self.format_ctrl.InsertColumn(1, _('Values'), width=400)
 
         self.video_ctrl.InsertColumn(0, _('Properties'), width=200)
-        self.video_ctrl.InsertColumn(1, _('Values'), width=500)
+        self.video_ctrl.InsertColumn(1, _('Values'), width=400)
 
         self.audio_ctrl.InsertColumn(0, _('Properties'), width=200)
-        self.audio_ctrl.InsertColumn(1, _('Values'), width=500)
+        self.audio_ctrl.InsertColumn(1, _('Values'), width=400)
 
         self.subt_ctrl.InsertColumn(0, _('Properties'), width=200)
-        self.subt_ctrl.InsertColumn(1, _('Values'), width=500)
+        self.subt_ctrl.InsertColumn(1, _('Values'), width=400)
 
         # set layout
         self.SetTitle(_('Multimedia streams analyzer'))
-        self.SetMinSize((700, 700))
+        self.SetMinSize((700, 600))
         # self.file_select.SetMinSize((-1, 150))
         self.SetSizer(self.sizerBase)
         # self.sizerBase.Fit(self)
@@ -328,7 +334,7 @@ class MediaStreams(wx.Dialog):
                         self.video_ctrl.SetItem(index, 1, str(v))
                         if k == 'index':
                             self.video_ctrl.SetItemBackgroundColour(index,
-                                                                    "#808080")
+                                                                    self.mark)
                         index += 1
             index = 0
             for t in select.get('streams'):
@@ -338,7 +344,7 @@ class MediaStreams(wx.Dialog):
                         self.audio_ctrl.SetItem(index, 1, str(v))
                         if k == 'index':
                             self.audio_ctrl.SetItemBackgroundColour(index,
-                                                                    "#808080")
+                                                                    self.mark)
                         index += 1
             index = 0
             for t in select.get('streams'):
@@ -348,7 +354,7 @@ class MediaStreams(wx.Dialog):
                         self.subt_ctrl.SetItem(index, 1, str(v))
                         if k == 'index':
                             self.subt_ctrl.SetItemBackgroundColour(index,
-                                                                   "#808080")
+                                                                   self.mark)
                         index += 1
 
         self.btn_copyclip.Disable()

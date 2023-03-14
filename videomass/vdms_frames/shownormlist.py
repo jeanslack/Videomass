@@ -40,6 +40,23 @@ class AudioVolNormal(wx.MiniFrame):
         detailslist is a list of items list.
 
         """
+        get = wx.GetApp()
+        if get.appset['IS_DARK_THEME'] is True:
+            self.red = '#600e0d'
+            self.yellow = '#66640a'
+            self.blue = '#174573'
+            self.fgrd = '#FFFFFF'
+        elif get.appset['IS_DARK_THEME'] is False:
+            self.red = '#e63939'
+            self.yellow = '#e6d039'
+            self.blue = '#3bbbe6'
+            self.fgrd = '#050505'
+        else:
+            self.red = 'ORANGE'
+            self.yellow = 'YELLOW GREEN'
+            self.blue = 'LIGHT STEEL BLUE'
+            self.fgrd = 'BLACK'
+
         wx.MiniFrame.__init__(self,
                               None,
                               style=wx.RESIZE_BORDER
@@ -75,7 +92,7 @@ class AudioVolNormal(wx.MiniFrame):
 
         self.btn_red = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
                                  size=(-1, -1))
-        self.btn_red.SetBackgroundColour(wx.Colour('ORANGE'))  # #8f241b
+        self.btn_red.SetBackgroundColour(wx.Colour(self.red))
         grid_list.Add(self.btn_red, 1, wx.ALL, 5)
         txtred = wx.StaticText(self.panel, wx.ID_ANY, (_("=  Clipped peaks")))
         grid_list.Add(txtred, 1, wx.ALL
@@ -84,7 +101,7 @@ class AudioVolNormal(wx.MiniFrame):
                       )
         self.btn_grey = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
                                   size=(-1, -1))
-        self.btn_grey.SetBackgroundColour(wx.Colour('YELLOW GREEN'))  # #646464
+        self.btn_grey.SetBackgroundColour(wx.Colour(self.yellow))
         grid_list.Add(self.btn_grey, 1, wx.ALL, 5)
         txtgrey = wx.StaticText(self.panel, wx.ID_ANY, (_("=  No changes")))
         grid_list.Add(txtgrey, 1, wx.ALL
@@ -93,7 +110,7 @@ class AudioVolNormal(wx.MiniFrame):
                       )
         self.btn_yell = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
                                   size=(-1, -1))
-        self.btn_yell.SetBackgroundColour(wx.Colour('LIGHT STEEL BLUE'))
+        self.btn_yell.SetBackgroundColour(wx.Colour(self.blue))
         grid_list.Add(self.btn_yell, 1, wx.ALL, 5)
         txtyell = wx.StaticText(self.panel,
                                 wx.ID_ANY, (_("=  Below max peak")))
@@ -121,9 +138,9 @@ class AudioVolNormal(wx.MiniFrame):
             txtgrey.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
             txtyell.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
         else:
-            self.btn_red.SetForegroundColour(wx.Colour('BLACK'))
-            self.btn_grey.SetForegroundColour(wx.Colour('BLACK'))
-            self.btn_yell.SetForegroundColour(wx.Colour('BLACK'))
+            self.btn_red.SetForegroundColour(wx.Colour(self.fgrd))
+            self.btn_grey.SetForegroundColour(wx.Colour(self.fgrd))
+            self.btn_yell.SetForegroundColour(wx.Colour(self.fgrd))
             normlist.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             descript.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
             txtred.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
@@ -145,19 +162,19 @@ class AudioVolNormal(wx.MiniFrame):
                 normlist.SetItem(index, 2, items[2])
 
                 if float(items[3]) == 0.0:  # not changes
-                    normlist.SetItemBackgroundColour(index, 'YELLOW GREEN')
+                    normlist.SetItemBackgroundColour(index, self.yellow)
                     normlist.SetItem(index, 3, items[3])
                 else:
                     normlist.SetItem(index, 3, items[3])
 
                 if float(items[4]) > 0.0:  # is clipped red
-                    normlist.SetItemBackgroundColour(index, 'ORANGE')
+                    normlist.SetItemBackgroundColour(index, self.red)
                     normlist.SetItem(index, 4, items[4])
                 else:
                     normlist.SetItem(index, 4, items[4])
 
                 if float(items[4]) < float(items[1]):  # target
-                    normlist.SetItemBackgroundColour(index, 'LIGHT STEEL BLUE')
+                    normlist.SetItemBackgroundColour(index, self.blue)
                     normlist.SetItem(index, 4, items[4])
                 else:
                     normlist.SetItem(index, 4, items[4])
@@ -171,12 +188,12 @@ class AudioVolNormal(wx.MiniFrame):
                 normlist.SetItem(index, 3, items[3])
 
                 if float(items[4]) == float(items[1]):  # not changes
-                    normlist.SetItemBackgroundColour(index, 'YELLOW GREEN')
+                    normlist.SetItemBackgroundColour(index, self.yellow)
                     normlist.SetItem(index, 4, items[4])
                 else:
                     normlist.SetItem(index, 4, items[4])
                 if float(items[4]) < float(items[1]):  # target
-                    normlist.SetItemBackgroundColour(index, 'LIGHT STEEL BLUE')
+                    normlist.SetItemBackgroundColour(index, self.blue)
 
                     normlist.SetItem(index, 4, items[4])
                 else:
@@ -188,8 +205,7 @@ class AudioVolNormal(wx.MiniFrame):
         """
         event on button red
         """
-        msg = (_("Orange ton...\n\n"
-                 "...It means the resulting audio will be clipped,\n"
+        msg = (_("...It means the resulting audio will be clipped,\n"
                  "because its volume is higher than the maximum 0 db\n"
                  "level. This results in data loss and the audio may\n"
                  "sound distorted."))
@@ -197,8 +213,8 @@ class AudioVolNormal(wx.MiniFrame):
         win = NormalTransientPopup(self,
                                    wx.SIMPLE_BORDER,
                                    msg,
-                                   ('ORANGE'),
-                                   ('BLACK'),
+                                   (self.red),
+                                   (self.fgrd),
                                    )
 
         # Show the popup right below or above the button
@@ -215,15 +231,14 @@ class AudioVolNormal(wx.MiniFrame):
         """
         event on button grey
         """
-        msg = (_("Green ton...\n\n"
-                 "...It means the resulting audio will not change,\n"
+        msg = (_("...It means the resulting audio will not change,\n"
                  "because it's equal to the source."))
 
         win = NormalTransientPopup(self,
                                    wx.SIMPLE_BORDER,
                                    msg,
-                                   ('YELLOW GREEN'),
-                                   ('BLACK'),
+                                   (self.yellow),
+                                   (self.fgrd),
                                    )
 
         # Show the popup right below or above the button
@@ -240,15 +255,14 @@ class AudioVolNormal(wx.MiniFrame):
         """
         event on button yellow
         """
-        msg = (_("Blue ton...\n\n"
-                 "...It means an audio signal will be produced with\n"
+        msg = (_("...It means an audio signal will be produced with\n"
                  "a lower volume than the source."))
 
         win = NormalTransientPopup(self,
                                    wx.SIMPLE_BORDER,
                                    msg,
-                                   ('LIGHT STEEL BLUE'),
-                                   ('BLACK'),
+                                   (self.blue),
+                                   (self.fgrd),
                                    )
 
         # Show the popup right below or above the button

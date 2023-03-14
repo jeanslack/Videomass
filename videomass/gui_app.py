@@ -64,6 +64,7 @@ class Videomass(wx.App):
         """
         self.locale = None
         self.appset = {'DISPLAY_SIZE': None,
+                       'IS_DARK_THEME': None,
                        'GETLANG': None,
                        # short name for the locale
                        'SUPP_LANGs': ['it_IT', 'en_US', 'ru_RU'],
@@ -86,6 +87,10 @@ class Videomass(wx.App):
             return False
 
         self.appset['DISPLAY_SIZE'] = wx.GetDisplaySize()  # get monitor res
+        if hasattr(wx.SystemSettings, 'GetAppearance'):
+            appear = wx.SystemSettings.GetAppearance()
+            self.appset['IS_DARK_THEME'] = appear.IsDark()
+
         self.iconset = self.data.icons_set(self.appset['icontheme'][0])
 
         # locale
