@@ -218,7 +218,7 @@ def get_color_scheme(theme):
                     'SUCCESS': '#017001',  # Light GREEN: successful
                     'TXT3': '#333333',  # Dark grey: standard text
                     'INFO': '#194c7e',  # Blue: other info messages
-                    # 'DEBUG': '#333333',  # light green
+                    'DEBUG': '#333333',  # light green
                     'FAILED': '#D21814',  # RED_DEEP if failed
                     'ABORT': '#D21814',  # RED_DEEP if abort
                     }
@@ -232,7 +232,7 @@ def get_color_scheme(theme):
                     'SUCCESS': '#30ec30',  # Light GREEN when it is successful
                     'TXT3': '#11b584',  # medium green
                     'INFO': '#118db5',  # AZURE
-                    # 'DEBUG': '#0ce3ac',  # light green
+                    'DEBUG': '#0ce3ac',  # light green
                     'FAILED': '#D21814',  # RED_DEEP if failed
                     'ABORT': '#A41EA4',  # VIOLET the user stops the processes
                     }
@@ -246,21 +246,21 @@ def get_color_scheme(theme):
                     'SUCCESS': '#35a735',  # DARK_GREEN when it is successful
                     'TXT3': '#005c00',  # Light Green
                     'INFO': '#3298FB',  # AZURE
-                    # 'DEBUG': '#005c00',  # Light Green
+                    'DEBUG': '#005c00',  # Light Green
                     'FAILED': '#D21814',  # RED_DEEP if failed
                     'ABORT': '#A41EA4',  # VIOLET the user stops the processes
                     }
     elif theme in ('Ubuntu-Dark-Aubergine', 'Ubuntu-Light-Aubergine'):
         c_scheme = {'BACKGRD': '#2C001E',  # Dark-Aubergine background color
                     'TXT0': '#FFFFFF',  # WHITE for titles
-                    'TXT1': '#AEA79F',  # Ubuntu warm grey (base foreground)
+                    'TXT1': '#8AB8E6',  # light Blue
                     'ERR0': '#E95420',  # ORANGE for error text messages
                     'WARN': '#dfb72f',  # YELLOW for warning messages
                     'ERR1': '#F90808',  # RED_DEEP
                     'SUCCESS': '#ABD533',  # Light GREEN when it is successful
                     'TXT3': '#AEA79F',  # Ubuntu warm grey (base foreground)
                     'INFO': '#F7C3B1',  # Ubuntu orange light 30%
-                    # 'DEBUG': '#6199d1',  # Blue
+                    'DEBUG': '#8AB8E6',  # light Blue
                     'FAILED': '#F90808',  # RED_DEEP
                     'ABORT': '#F90808',  # RED_DEEP
                     }

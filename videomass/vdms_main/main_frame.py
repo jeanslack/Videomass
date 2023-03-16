@@ -192,8 +192,8 @@ class MainFrame(wx.Frame):
         # status bar
         self.sb = self.CreateStatusBar(1)
         self.statusbar_msg(_('Ready'), None)
-        # hide toolbar & disable some file menu items
-        self.toolbar.Hide()
+        # disable toolbar & disable some file menu items
+        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 14, 16, 12, 18)]
         self.menu_items()
         self.Layout()
         # ---------------------- Binding (EVT) ----------------------#
@@ -253,9 +253,9 @@ class MainFrame(wx.Frame):
         elif self.toSlideshow.IsShown():
             self.toSlideshow.Hide()
 
+        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 14, 16, 12, 18)]
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
-        self.toolbar.Hide()
         self.avpan.Enable(False)
         self.prstpan.Enable(False)
         self.concpan.Enable(False)
@@ -1421,14 +1421,9 @@ class MainFrame(wx.Frame):
         self.concpan.Enable(False)
         self.toseq.Enable(False)
         self.slides.Enable(False)
-        self.toolbar.Show()
         self.logpan.Enable(False)
-        self.toolbar.EnableTool(3, True)
-        self.toolbar.EnableTool(4, True)
-        self.toolbar.EnableTool(5, True)
-        self.toolbar.EnableTool(12, False)
-        self.toolbar.EnableTool(14, False)
-        self.toolbar.EnableTool(18, False)
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 16)]
+        [self.toolbar.EnableTool(x, False) for x in (12, 14, 18)]
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)
@@ -1448,7 +1443,6 @@ class MainFrame(wx.Frame):
         self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - AV Conversions'))
         self.TimeLine.Show()
-        self.toolbar.Show()
         self.menu_items()  # disable some menu items
         self.openmedia.Enable(True)
         self.avpan.Enable(False)
@@ -1458,12 +1452,8 @@ class MainFrame(wx.Frame):
         self.concpan.Enable(True)
         self.toseq.Enable(True)
         self.slides.Enable(True)
-        self.toolbar.EnableTool(3, True)
-        self.toolbar.EnableTool(4, False)
-        self.toolbar.EnableTool(5, True)
-        self.toolbar.EnableTool(12, True)
-        self.toolbar.EnableTool(14, False)
-        self.toolbar.EnableTool(18, True)
+        [self.toolbar.EnableTool(x, True) for x in (3, 5, 12, 16, 18)]
+        [self.toolbar.EnableTool(x, False) for x in (4, 14)]
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1480,7 +1470,6 @@ class MainFrame(wx.Frame):
         self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - Presets Manager'))
         self.TimeLine.Show()
-        self.toolbar.Show()
         self.openmedia.Enable(True)
         self.avpan.Enable(True)
         self.prstpan.Enable(False)
@@ -1489,12 +1478,8 @@ class MainFrame(wx.Frame):
         self.concpan.Enable(True)
         self.toseq.Enable(True)
         self.slides.Enable(True)
-        self.toolbar.EnableTool(3, True)
-        self.toolbar.EnableTool(4, False)
-        self.toolbar.EnableTool(5, True)
-        self.toolbar.EnableTool(12, True)
-        self.toolbar.EnableTool(14, False)
-        self.toolbar.EnableTool(18, True)
+        [self.toolbar.EnableTool(x, True) for x in (3, 5, 12, 16, 18)]
+        [self.toolbar.EnableTool(x, False) for x in (4, 14)]
         self.Layout()
         self.PrstsPanel.update_preset_state()
     # ------------------------------------------------------------------#
@@ -1512,7 +1497,6 @@ class MainFrame(wx.Frame):
         self.TimeLine.Hide()
         self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - Concatenate Demuxer'))
-        self.toolbar.Show()
         self.openmedia.Enable(True)
         self.avpan.Enable(True)
         self.prstpan.Enable(True)
@@ -1521,12 +1505,8 @@ class MainFrame(wx.Frame):
         self.concpan.Enable(False)
         self.toseq.Enable(True)
         self.slides.Enable(True)
-        self.toolbar.EnableTool(3, True)
-        self.toolbar.EnableTool(4, False)
-        self.toolbar.EnableTool(5, True)
-        self.toolbar.EnableTool(12, True)
-        self.toolbar.EnableTool(14, False)
-        self.toolbar.EnableTool(18, True)
+        [self.toolbar.EnableTool(x, True) for x in (3, 5, 12, 16, 18)]
+        [self.toolbar.EnableTool(x, False) for x in (4, 14)]
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1543,7 +1523,6 @@ class MainFrame(wx.Frame):
         self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - From Movie to Pictures'))
         self.TimeLine.Show()
-        self.toolbar.Show()
         self.openmedia.Enable(True)
         self.avpan.Enable(True)
         self.prstpan.Enable(True)
@@ -1552,12 +1531,8 @@ class MainFrame(wx.Frame):
         self.concpan.Enable(True)
         self.toseq.Enable(False)
         self.slides.Enable(True)
-        self.toolbar.EnableTool(3, True)
-        self.toolbar.EnableTool(4, False)
-        self.toolbar.EnableTool(5, True)
-        self.toolbar.EnableTool(12, True)
-        self.toolbar.EnableTool(14, False)
-        self.toolbar.EnableTool(18, True)
+        [self.toolbar.EnableTool(x, True) for x in (3, 5, 12, 16, 18)]
+        [self.toolbar.EnableTool(x, False) for x in (4, 14)]
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1574,7 +1549,6 @@ class MainFrame(wx.Frame):
         self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - Still Image Maker'))
         self.TimeLine.Show()
-        self.toolbar.Show()
         self.openmedia.Enable(True)
         self.avpan.Enable(True)
         self.prstpan.Enable(True)
@@ -1583,12 +1557,8 @@ class MainFrame(wx.Frame):
         self.concpan.Enable(True)
         self.toseq.Enable(True)
         self.slides.Enable(False)
-        self.toolbar.EnableTool(3, True)
-        self.toolbar.EnableTool(4, False)
-        self.toolbar.EnableTool(5, True)
-        self.toolbar.EnableTool(12, True)
-        self.toolbar.EnableTool(14, False)
-        self.toolbar.EnableTool(18, True)
+        [self.toolbar.EnableTool(x, True) for x in (3, 5, 12, 16, 18)]
+        [self.toolbar.EnableTool(x, False) for x in (4, 14)]
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1629,13 +1599,9 @@ class MainFrame(wx.Frame):
             [self.menuBar.EnableTop(x, False) for x in range(3, 5)]
             self.openmedia.Enable(False)
             # self.toolbar Hide/Show items
-            self.toolbar.EnableTool(3, False)
-            self.toolbar.EnableTool(4, False)
-            self.toolbar.EnableTool(5, True)
-            self.toolbar.EnableTool(14, True)  # stop
-            self.toolbar.EnableTool(16, False)  # home
-        self.toolbar.EnableTool(12, False)  # rendering
-        self.toolbar.EnableTool(18, False)
+            [self.toolbar.EnableTool(x, True) for x in (5, 14)]
+            [self.toolbar.EnableTool(x, False) for x in (3, 4, 16)]
+        [self.toolbar.EnableTool(x, False) for x in (12, 18)]
 
         self.ProcessPanel.topic_thread(self.topicname, dur, seq, *args)
         self.Layout()
@@ -1682,11 +1648,8 @@ class MainFrame(wx.Frame):
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(3, 5)]
         # enable toolbar items
-        self.toolbar.EnableTool(3, True)
-        self.toolbar.EnableTool(4, False)
-        self.toolbar.EnableTool(5, True)
-        self.toolbar.EnableTool(14, False)
-        self.toolbar.EnableTool(16, True)
+        [self.toolbar.EnableTool(x, True) for x in (3, 5, 16, 18)]
+        [self.toolbar.EnableTool(x, False) for x in (5, 14)]
         if self.emptylist:
             self.fileDnDTarget.delete_all(self)
     # ------------------------------------------------------------------#
