@@ -284,7 +284,10 @@ class MainFrame(wx.Frame):
 
     def check_modeless_window(self, msg=None):
         """
-        Receives a message from a modeless window close event
+        Receives a message from a modeless window close event.
+        This method is called using pub/sub protocol subscribing
+        "DESTROY_ORPHANED_WINDOWS".
+
         """
         if msg == 'MediaStreams':
             self.mediastreams.Destroy()
@@ -1648,8 +1651,8 @@ class MainFrame(wx.Frame):
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(3, 5)]
         # enable toolbar items
-        [self.toolbar.EnableTool(x, True) for x in (3, 5, 16, 18)]
-        [self.toolbar.EnableTool(x, False) for x in (5, 14)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 16)]
+        [self.toolbar.EnableTool(x, False) for x in (14, 18)]
         if self.emptylist:
             self.fileDnDTarget.delete_all(self)
     # ------------------------------------------------------------------#
