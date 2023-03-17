@@ -415,6 +415,7 @@ class FileDnD(wx.Panel):
         """
         return topic name by choose_topic.py selection
         """
+        print(self.parent.topicname)
         return self.parent.topicname
     # ----------------------------------------------------------------------
 

@@ -61,8 +61,8 @@ class Formula(wx.Dialog):
         label1 = wx.StaticText(panelscroll, wx.ID_ANY, settings)
         label2 = wx.StaticText(panelscroll, wx.ID_ANY, param)
         panelscroll.SetBackgroundColour(colorscheme['BACKGRD'])
-        label2.SetForegroundColour(colorscheme['TXT1'])
         label1.SetForegroundColour(colorscheme['TXT3'])
+        label2.SetForegroundColour(colorscheme['TXT1'])
         grid_pan = wx.BoxSizer(wx.HORIZONTAL)
         grid_pan.Add(label1, 0, wx.ALL
                      | wx.ALIGN_CENTRE_VERTICAL
