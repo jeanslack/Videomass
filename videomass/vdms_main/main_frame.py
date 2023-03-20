@@ -856,15 +856,9 @@ class MainFrame(wx.Frame):
         if os.path.exists(fname) and os.path.isfile(fname):
             io_tools.openpath(fname)
         else:
-            try:
-                with open(fname, "w", encoding='utf8') as text:
-                    text.write("")
-            except Exception as err:
-                wx.MessageBox(_("Unexpected error while creating file:\n\n"
-                                "{0}").format(err),
-                              'Videomass', wx.ICON_ERROR, self)
-            else:
-                io_tools.openpath(fname)
+            with open(fname, "w", encoding='utf8') as text:
+                text.write("")
+            io_tools.openpath(fname)
     # ------------------------------------------------------------------#
     # --------- Menu View ###
 
@@ -1236,13 +1230,10 @@ class MainFrame(wx.Frame):
 
     # -----------------  BUILD THE TOOL BAR  --------------------###
 
-    def videomass_tool_bar(self):
+    def get_toolbar_pos(self):
         """
-        Makes and attaches the toolsBtn bar.
-        To enable or disable styles, use method `SetWindowStyleFlag`
-        e.g.
-            self.toolbar.SetWindowStyleFlag(wx.TB_NODIVIDER | wx.TB_FLAT)
-
+        Get toolbar position properties according to
+        the user preferences.
         """
         if self.appdata['toolbarpos'] == 0:  # on top
             if self.appdata['toolbartext']:  # show text
@@ -1268,6 +1259,18 @@ class MainFrame(wx.Frame):
             else:
                 style = wx.TB_DEFAULT_STYLE | wx.TB_LEFT
 
+        return style
+    # ------------------------------------------------------------------#
+
+    def videomass_tool_bar(self):
+        """
+        Makes and attaches the toolsBtn bar.
+        To enable or disable styles, use method `SetWindowStyleFlag`
+        e.g.
+            self.toolbar.SetWindowStyleFlag(wx.TB_NODIVIDER | wx.TB_FLAT)
+
+        """
+        style = self.get_toolbar_pos()
         self.toolbar = self.CreateToolBar(style=style)
 
         bmp_size = (int(self.appdata['toolbarsize']),
