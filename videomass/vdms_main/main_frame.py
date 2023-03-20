@@ -384,15 +384,25 @@ class MainFrame(wx.Frame):
 
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.on_close(self)
-        else:
-            if self.appdata['warnexiting']:
-                if wx.MessageBox(_('Are you sure you want to exit?'),
-                                 _('Exit'), wx.ICON_QUESTION | wx.YES_NO,
-                                 self) == wx.NO:
-                    return
-            _setsize()
-            self.destroy_orphaned_window()
-            self.Destroy()
+            return
+
+        if self.ytdlframe:
+            if self.ytdlframe.ProcessPanel.thread_type:
+                wx.MessageBox(_("There are still active windows with running "
+                                "processes, make sure you finish your work "
+                                "before closing them."),
+                              "Videomass", wx.ICON_WARNING, self)
+                return
+            self.ytdlframe.destroy_orphaned_window()
+
+        if self.appdata['warnexiting']:
+            if wx.MessageBox(_('Are you sure you want to exit?'),
+                             _('Exit'), wx.ICON_QUESTION | wx.YES_NO,
+                             self) == wx.NO:
+                return
+        _setsize()
+        self.destroy_orphaned_window()
+        self.Destroy()
     # ------------------------------------------------------------------#
 
     def on_Kill(self):
@@ -402,6 +412,7 @@ class MainFrame(wx.Frame):
 
         """
         self.destroy_orphaned_window()
+        self.ytdlframe.Destroy()
         self.Destroy()
 
     # -------------   BUILD THE MENU BAR  ----------------###

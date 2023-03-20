@@ -487,7 +487,7 @@ class SetUp(wx.Dialog):
         self.checkbox_logclr.SetValue(self.appdata['clearlogfiles'])
         self.ckbx_trash.SetValue(self.settings['move_file_to_trash'])
         self.ckbx_playlist.SetValue(self.appdata['playlistsubfolder'])
-        self.checkbox_ytdlp.SetValue(self.appdata['use-downloader'])
+        self.checkbox_ytdlp.SetValue(self.settings['use-downloader'])
 
         for strs in range(self.rdbFFplay.GetCount()):
             if (self.appdata['ffplayloglev'].split()[1] in

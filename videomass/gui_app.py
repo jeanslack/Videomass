@@ -99,7 +99,7 @@ class Videomass(wx.App):
 
         ytdlp = self.check_youtube_dl()
         if ytdlp is False:
-            return False
+            self.appset['use-downloader'] = False  # force disable
 
         noffmpeg = self.check_ffmpeg()
         if noffmpeg:
@@ -115,7 +115,9 @@ class Videomass(wx.App):
 
     def check_youtube_dl(self):
         """
-        Check for `yt_dlp` python module.
+        Check for `yt_dlp` python module. If enabled by the user
+        but not yet installed, the session should still start
+        forcing a temporary disable.
         """
         if self.appset['use-downloader']:
             try:
@@ -123,15 +125,15 @@ class Videomass(wx.App):
             except ModuleNotFoundError as err:
                 wx.MessageBox(f"ERROR: {err}\n\nyt-dlp is missing, "
                               f"please install it.", 'Videomass - ERROR',
-                              wx.ICON_STOP)
+                              wx.ICON_ERROR)
                 return False
         return None
     # -------------------------------------------------------------------
 
     def check_ffmpeg(self):
         """
-        Get the FFmpeg's executables. On Unix/Unix-like systems
-        perform a check for permissions.
+        Get the FFmpeg's executables. On Unix/Unix-like
+        systems perform a check for permissions.
         """
         for link in [self.appset['ffmpeg_cmd'],
                      self.appset['ffprobe_cmd'],
