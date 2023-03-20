@@ -416,6 +416,7 @@ class DataSource():
         requiredirs = (os.path.join(self.dataloc['cachedir'], 'tmp'),
                        self.dataloc['logdir'],
                        userconf['outputfile'],
+                       userconf['dirdownload'],
                        self.dataloc['trash_dir']
                        )
         for dirs in requiredirs:
@@ -476,12 +477,13 @@ class DataSource():
         keys = ('videomass', 'A/V-Conv', 'startconv', 'fileproperties',
                 'playback', 'concatenate', 'preview', 'clear',
                 'addtoprst', 'scale', 'crop', 'rotate', 'deinterlace',
-                'denoiser', 'statistics', 'settings', 'audiovolume',
+                'denoiser', 'volanalyze', 'settings', 'audiovolume',
                 'presets_manager', 'profile_add', 'profile_del',
                 'profile_edit', 'previous', 'next', 'stabilizer',
                 'preview_audio', 'profile_copy', 'slideshow',
                 'videotopictures', 'atrack', 'timerset', 'coloreq',
-                'stop', 'home', 'logpan'
+                'stop', 'home', 'logpan', 'youtube', 'playlist',
+                'cleanup', 'download', 'statistics',
                 )  # must match with items on `iconset` tuple, see following
 
         icodir = self.dataloc['icodir']
@@ -523,7 +525,7 @@ class DataSource():
                    f"{choose.get('x16')}/transform-rotate.{ext}",
                    f"{choose.get('x16')}/deinterlace.{ext}",
                    f"{choose.get('x16')}/denoise.{ext}",
-                   f"{choose.get('x16')}/statistics.{ext}",
+                   f"{choose.get('x16')}/volanalyze.{ext}",
                    f"{choose.get('x16')}/configure.{ext}",
                    f"{choose.get('x16')}/player-volume.{ext}",
                    f"{choose.get('x48')}/icon_prst_mng.{ext}",
@@ -543,6 +545,11 @@ class DataSource():
                    f"{choose.get('x22')}/stop.{ext}",
                    f"{choose.get('x22')}/home.{ext}",
                    f"{choose.get('x22')}/logpan.{ext}",
+                   f"{choose.get('x48')}/youtube.{ext}",
+                   f"{choose.get('x16')}/playlist.{ext}",
+                   f"{choose.get('x22')}/cleanup.{ext}",
+                   f"{choose.get('x22')}/download.{ext}",
+                   f"{choose.get('x22')}/statistics.{ext}",
                    )
         values = (os.path.join(norm) for norm in iconset)  # normalize pathns
 

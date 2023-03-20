@@ -52,6 +52,7 @@ class Choose_Topic(wx.Panel):
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpAVconv = get_bmp(self.icons['A/V-Conv'], ((48, 48)))
             bmpPrstmng = get_bmp(self.icons['presets_manager'], ((48, 48)))
+            bmpYdl = get_bmp(self.icons['youtube'], ((48, 48)))
             bmpConcat = get_bmp(self.icons['concatenate'], ((48, 48)))
             bmpSlideshow = get_bmp(self.icons['slideshow'], ((48, 48)))
             bmpTopictures = get_bmp(self.icons['videotopictures'], ((48, 48)))
@@ -59,6 +60,7 @@ class Choose_Topic(wx.Panel):
             bmpAVconv = wx.Bitmap(self.icons['A/V-Conv'], wx.BITMAP_TYPE_ANY)
             bmpPrstmng = wx.Bitmap(self.icons['presets_manager'],
                                    wx.BITMAP_TYPE_ANY)
+            bmpYdl = wx.Bitmap(self.icons['youtube'], wx.BITMAP_TYPE_ANY)
             bmpConcat = wx.Bitmap(self.icons['concatenate'],
                                   wx.BITMAP_TYPE_ANY)
             bmpSlideshow = wx.Bitmap(self.icons['slideshow'],
@@ -85,23 +87,18 @@ class Choose_Topic(wx.Panel):
             style = wx.BU_LEFT | wx.BORDER_NONE
         else:
             style = wx.BU_LEFT
-        sizer_base.Add(50, 50)
         self.presets_mng = wx.Button(self, wx.ID_ANY, _('Presets Manager'),
                                      size=(300, -1), style=style)
         self.presets_mng.SetBitmap(bmpPrstmng, wx.LEFT)
-        grid_prst = wx.FlexGridSizer(1, 1, 0, 0)
-        grid_prst.Add(self.presets_mng, 0, wx.EXPAND, 5)
-
-        sizer_base.Add(grid_prst, 0, wx.ALIGN_CENTER_VERTICAL
-                       | wx.ALIGN_CENTER_HORIZONTAL, 5,
-                       )
-        sizer_base.Add(20, 20)
         self.avconv = wx.Button(self, wx.ID_ANY, _('AV-Conversions'),
                                 size=(300, -1), style=style)
         self.avconv.SetBitmap(bmpAVconv, wx.LEFT)
         self.conc = wx.Button(self, wx.ID_ANY, _('Concatenate media files'),
                               size=(300, -1), style=style)
         self.conc.SetBitmap(bmpConcat, wx.LEFT)
+        self.youtube = wx.Button(self, wx.ID_ANY, _('YouTube Downloader'),
+                                 size=(300, -1), style=style)
+        self.youtube.SetBitmap(bmpYdl, wx.LEFT)
         self.slideshow = wx.Button(self, wx.ID_ANY,
                                    _('Still Image Maker'),
                                    size=(300, -1), style=style)
@@ -110,13 +107,15 @@ class Choose_Topic(wx.Panel):
                                        _('From Movie to Pictures'),
                                        size=(300, -1), style=style)
         self.videotoimages.SetBitmap(bmpTopictures, wx.LEFT)
-        grid_buttons = wx.FlexGridSizer(2, 2, 20, 20)
-        grid_buttons.AddMany([(self.avconv, 0, wx.EXPAND, 5),
+        grid_buttons = wx.FlexGridSizer(3, 2, 20, 20)
+        grid_buttons.AddMany([(self.presets_mng, 0, wx.EXPAND, 5),
+                              (self.avconv, 0, wx.EXPAND, 5),
                               (self.conc, 0, wx.EXPAND, 5),
+                              (self.youtube, 0, wx.EXPAND, 5),
                               (self.slideshow, 0, wx.EXPAND, 5),
                               (self.videotoimages, 0, wx.EXPAND, 5),
                               ])
-        # sizer_base.Add(50, 50)
+        sizer_base.Add(50, 50)
         sizer_base.Add(grid_buttons, 1, wx.ALIGN_CENTER_VERTICAL
                        | wx.ALIGN_CENTER_HORIZONTAL, 5,
                        )
@@ -131,6 +130,10 @@ class Choose_Topic(wx.Panel):
                  'Save your profiles and reuse them with Presets '
                  'Manager.'))
         self.avconv.SetToolTip(tip)
+        tip = (_('Easily download videos and audio in different '
+                 'formats and quality from YouTube, Facebook and '
+                 'more sites.'))
+        self.youtube.SetToolTip(tip)
         tip = (_('Concatenate multiple media files based on import '
                  'order without re-encoding'))
         self.conc.SetToolTip(tip)
@@ -174,6 +177,7 @@ class Choose_Topic(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Conc, self.conc)
         self.Bind(wx.EVT_BUTTON, self.on_slideshow, self.slideshow)
         self.Bind(wx.EVT_BUTTON, self.on_to_pictures, self.videotoimages)
+        self.Bind(wx.EVT_BUTTON, self.on_YoutubeDL, self.youtube)
     # ------------------------------------------------------------------#
 
     def on_Prst_mng(self, event):
@@ -210,3 +214,30 @@ class Choose_Topic(wx.Panel):
         """
         self.parent.switch_file_import(self, 'Video to Pictures')
     # ------------------------------------------------------------------#
+
+    def on_YoutubeDL(self, event):
+        """
+        Check the existence of youtube-dl based on the set attributes
+        of the bootstrap, then open the text interface, otherwise it
+        requires installation.
+        """
+        self.parent.youtubedl()
+        return None
+
+
+        #if self.appdata['downloader'] == 'disabled':
+            #wx.MessageBox(_("The downloader is disabled. "
+                            #"Check your preferences."),
+                          #"Videomass", wx.ICON_INFORMATION, self)
+            #return True
+
+        ## PYLIBYDL: None if used else 'string error'
+        #if self.appdata['PYLIBYDL'] is None:
+            #self.parent.youtubedl(self)
+            #return None
+
+        #wx.MessageBox(_("ERROR: {0}\n\n{1} is not installed, use your "
+                        #"package manager to install it.").format(
+                      #self.appdata['PYLIBYDL'], self.appdata['downloader']),
+                      #"Videomass", wx.ICON_ERROR, self)
+        #return True

@@ -38,6 +38,7 @@ from videomass.vdms_frames.while_playing import WhilePlaying
 from videomass.vdms_frames.ffmpeg_conf import FFmpegConf
 from videomass.vdms_frames.ffmpeg_codecs import FFmpegCodecs
 from videomass.vdms_frames.ffmpeg_formats import FFmpegFormats
+from videomass.vdms_ytdlp.main_ytdl_frame import MainYtdl
 from videomass.vdms_dialogs.mediainfo import MediaStreams
 from videomass.vdms_dialogs.showlogs import ShowLogs
 from videomass.vdms_dialogs.ffmpeg_help import FFmpegHelp
@@ -110,6 +111,7 @@ class MainFrame(wx.Frame):
         self.ffmpegdecoders = False
         self.ffmpegformats = False
         self.audivolnormalize = False
+        self.ytdlframe = False
         # set fontconfig for timestamp
         if self.appdata['ostype'] == 'Darwin':
             tsfont = '/Library/Fonts/Arial.ttf'
@@ -183,8 +185,8 @@ class MainFrame(wx.Frame):
         self.SetMinSize((850, 560))
         self.SetSizer(self.mainSizer)
         self.Fit()
-        self.SetSize(tuple(self.appdata['window_size']))
-        self.Move(tuple(self.appdata['window_position']))
+        self.SetSize(tuple(self.appdata['main_window_size']))
+        self.Move(tuple(self.appdata['main_window_pos']))
         # menu bar
         self.videomass_menu_bar()
         # tool bar main
@@ -376,8 +378,8 @@ class MainFrame(wx.Frame):
             """
             confmanager = ConfigManager(self.appdata['fileconfpath'])
             sett = confmanager.read_options()
-            sett['window_size'] = list(self.GetSize())
-            sett['window_position'] = list(self.GetPosition())
+            sett['main_window_size'] = list(self.GetSize())
+            sett['main_window_pos'] = list(self.GetPosition())
             confmanager.write_options(**sett)
 
         if self.ProcessPanel.IsShown():
@@ -1678,3 +1680,11 @@ class MainFrame(wx.Frame):
         elif panelshown == 'Image Sequence to Video':
             self.switch_slideshow_maker(self)
         self.Layout()
+    # ------------------------------------------------------------------#
+
+    def youtubedl(self):
+        if self.ytdlframe:
+            self.ytdlframe.Raise()
+            return
+        self.ytdlframe = MainYtdl(parent=wx.GetTopLevelParent(self))
+        self.ytdlframe.Show()

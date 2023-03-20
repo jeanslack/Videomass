@@ -1,4 +1,4 @@
-# **Videomass** is a cross-platform GUI for FFmpeg.
+# **Videomass** is a cross-platform GUI for FFmpeg and yt-dlp.
 [![Image](https://img.shields.io/static/v1?label=python&logo=python&message=3.7%20|%203.8%20|%203.9%20|%203.10&color=blue)](https://www.python.org/downloads/)
 [![Image](https://img.shields.io/badge/license-GPLv3-orange)](https://github.com/jeanslack/Videomass/blob/master/LICENSE)
 [![Python application](https://github.com/jeanslack/Videomass/actions/workflows/tests.yml/badge.svg)](https://github.com/jeanslack/Videomass/actions/workflows/tests.yml)
@@ -13,7 +13,7 @@ the [FFmpeg](https://www.ffmpeg.org/) commands without limits of formats and
 codecs.   
 
 It features graphical tools for viewing, analyzing and processing multimedia 
-streams   
+streams and downloading videos via [yt-dlp](https://github.com/yt-dlp/yt-dlp).   
 
 Videomass is written in Python3 with the wxPython-Phoenix toolkit.   
 
@@ -39,6 +39,10 @@ each operating system.
 - **[ffprobe >=4.3](https://ffmpeg.org/ffprobe.html)** (usually bundled with ffmpeg)
 - **[ffplay >=4.3](http://ffmpeg.org/ffplay.html)** (usually bundled with ffmpeg)
 
+### Optionals
+- **[yt-dlp](https://github.com/yt-dlp/yt-dlp)**
+- **[atomicparsley](http://atomicparsley.sourceforge.net/)**
+
 ### Install basic dependencies for your OS
 
 | **OS**           | **Basic Dependencies**                              |
@@ -52,7 +56,7 @@ each operating system.
 `python3 -m pip install videomass`   
 
 > This should also automatically install the remaining required dependencies 
-such as wxPython (only for Mac-Os and Windows), PyPubSub, and requests.   
+such as wxPython (only for Mac-Os and Windows), PyPubSub, yt-dlp and requests.   
 >
 > On Linux and FreeBSD a launcher should be even created in the application 
 launcher of your desktop environment.   

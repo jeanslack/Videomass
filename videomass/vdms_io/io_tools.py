@@ -36,6 +36,32 @@ from videomass.vdms_threads.check_bin import (ff_conf,
                                               )
 from videomass.vdms_utils.utils import open_default_application
 from videomass.vdms_dialogs.widget_utils import PopupDialog
+from videomass.vdms_ytdlp.ydl_extractinfo import YdlExtractInfo
+
+
+def youtubedl_getstatistics(url, ssl):
+    """
+    Call `YdlExtractInfo` thread to extract data info.
+    During this process a wait pop-up dialog is shown.
+
+    Returns a generator.
+
+    Usage example without pop-up dialog:
+        thread = YdlExtractInfo(url)
+        thread.join()
+        data = thread.data
+        yield data
+    """
+    thread = YdlExtractInfo(url, ssl)
+    dlgload = PopupDialog(None,
+                          _("Videomass - Loading..."),
+                          _("Wait....\nRetrieving required data."))
+    dlgload.ShowModal()
+    # thread.join()
+    data = thread.data
+    dlgload.Destroy()
+    yield data
+# --------------------------------------------------------------------------#
 
 
 def stream_play(filepath, tseq, param, autoexit):
