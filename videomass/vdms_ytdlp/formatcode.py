@@ -186,9 +186,7 @@ class FormatCode(wx.Panel):
                         else:
                             dispv = self.fcode.GetItemText(i, 0)
                             self.format_dict[url].append('Video: ' + dispv)
-
         self.cod_text.Clear()
-
         for key, val in self.format_dict.items():
             if not val:
                 self.cod_text.SetDefaultStyle(wx.TextAttr(FormatCode.WARN))

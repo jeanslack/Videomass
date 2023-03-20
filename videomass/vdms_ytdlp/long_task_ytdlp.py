@@ -54,7 +54,7 @@ class LogOut(wx.Panel):
 
     def __init__(self, parent):
         """
-        The 'logname' attribute is the name_of_panel.log
+        The 'logfile' attribute 'full path log file.log',
         file in which log messages will be written
 
         """
@@ -64,7 +64,7 @@ class LogOut(wx.Panel):
         self.thread_type = None  # the instantiated thread
         self.abort = False  # if True set to abort current process
         self.error = False  # if True, all the tasks was failed
-        self.logname = None  # log pathname, None otherwise
+        self.logfile = None  # full path log file
         self.result = []  # result of the final process
         self.count = 0  # keeps track of the counts (see `update_count`)
         self.clr = self.appdata['icontheme'][1]
@@ -115,8 +115,9 @@ class LogOut(wx.Panel):
 
         self.txtout.Clear()
         self.labprog.SetLabel('')
-        self.logname = make_log_template(varargs[8], self.appdata['logdir'])
-        self.thread_type = YdlDownloader(varargs, self.logname)
+        logn = varargs[8]
+        self.logfile = make_log_template(f'{logn}.log', self.appdata['logdir'])
+        self.thread_type = YdlDownloader(varargs, self.logfile)
     # ----------------------------------------------------------------------
 
     def downloader_activity(self, output, duration, status):
@@ -147,9 +148,8 @@ class LogOut(wx.Panel):
             elif '[download]' not in output:
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
                 self.txtout.AppendText(f'{output}\n')
-                with open(self.logname, "a", encoding='utf8') as logerr:
-                    logerr.write(f"[{self.appdata['downloader'].upper()}]: "
-                                 f"{status} > {output}\n")
+                with open(self.logfile, "a", encoding='utf8') as logerr:
+                    logerr.write(f"[YT_DLP]: {status} > {output}\n")
 
         elif status == 'DOWNLOAD':
             perc = duration['_percent_str'].strip()
@@ -164,9 +164,8 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f'{duration}\n')
 
         if status in ['ERROR', 'WARNING']:
-            with open(self.logname, "a", encoding='utf8') as logerr:
-                logerr.write(f"[{self.appdata['downloader'].upper()}]: "
-                             f"{output}\n")
+            with open(self.logfile, "a", encoding='utf8') as logerr:
+                logerr.write(f"[YT_DLP]: {output}\n")
     # ---------------------------------------------------------------------#
 
     def update_count(self, count, fsource, destination, duration, end):
@@ -256,7 +255,7 @@ class LogOut(wx.Panel):
         """
         Reset to default at any process terminated
         """
-        self.logname = None
+        self.logfile = None
         self.thread_type = None
         self.abort = False
         self.error = False

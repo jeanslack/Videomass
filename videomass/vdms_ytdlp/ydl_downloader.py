@@ -29,7 +29,8 @@ import itertools
 import wx
 from pubsub import pub
 from videomass.vdms_io.make_filelog import logwrite
-import yt_dlp
+if wx.GetApp().appset['use-downloader']:
+    import yt_dlp
 
 
 class MyLogger:
@@ -132,7 +133,6 @@ class YdlDownloader(Thread):
     get = wx.GetApp()  # get videomass wx.App attribute
     appdata = get.appset
     FFMPEG_URL = appdata['ffmpeg_cmd']
-    DOWNLOADER = appdata['downloader']
 
     if appdata['playlistsubfolder']:
         SUBDIR = '%(uploader)s/%(playlist_title)s/%(playlist_index)s - '

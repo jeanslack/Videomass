@@ -128,20 +128,17 @@ class ConfigManager:
     dirdownload (str):
         file destination path used by the youtube-dl UI
 
-    downloader (bool, str):
-        sets the downloader to use when application startup.
-        one of `disabled`,` youtube_dl`, `yt_dlp` or False
-        Where `disabled` means not load anything, `youtube_dl`
-        means load/use youtube-dl on sturtup, `yt_dlp` means load/use
-        yt_dl on sturtup, `false` means *not set at all* then
-        a wizard dialog will be displayed.
+    use-downloader (bool):
+        sets the ability to download videos from YouTube.com.
+        One of True or False, where True means load/use yt_dlp
+        on sturtup.
 
     playlistsubfolder (bool):
         Auto-create subfolders when download the playlists,
         default value is True.
 
     """
-    VERSION = 5.2
+    VERSION = 5.3
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputfile": f"{os.path.expanduser('~')}",
                        "outputfile_samedir": False,
@@ -169,7 +166,7 @@ class ConfigManager:
                        "move_file_to_trash": False,
                        "locale_name": "Default",
                        "dirdownload": f"{os.path.expanduser('~')}",
-                       "downloader": False,
+                       "use-downloader": False,
                        "playlistsubfolder": True,
                        }
 

@@ -24,20 +24,19 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
 import sys
 from urllib.parse import urlparse
-import webbrowser
 import wx
 from pubsub import pub
-import yt_dlp
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_ytdlp.ydl_mediainfo import YdlMediaInfo
 from videomass.vdms_ytdlp.textdrop import TextDnD
 from videomass.vdms_ytdlp.youtubedl_ui import Downloader
-from videomass.vdms_ytdlp.long_processing_task import LogOut
+from videomass.vdms_ytdlp.long_task_ytdlp import LogOut
 from videomass.vdms_io import io_tools
 from videomass.vdms_sys.settings_manager import ConfigManager
+if wx.GetApp().appset['use-downloader']:
+    import yt_dlp
 
 
 class MainYtdl(wx.Frame):
@@ -209,11 +208,6 @@ class MainYtdl(wx.Frame):
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.on_close(self)
         else:
-            #if self.appdata['warnexiting']:
-                #if wx.MessageBox(_('Are you sure you want to exit?'),
-                                 #_('Exit'), wx.ICON_QUESTION | wx.YES_NO,
-                                 #self) == wx.NO:
-                    #return
             _setsize()
             self.destroy_orphaned_window()
             self.Destroy()
@@ -330,8 +324,8 @@ class MainYtdl(wx.Frame):
         """
         this = yt_dlp.version.__version__
         if msgbox:
-            wx.MessageBox(_("You are using '{0}' version {1}"
-                            ).format(self.appdata['downloader'], this),
+            wx.MessageBox(_("You are using \"yt-dlp\" "
+                            "version {0}").format(this),
                           'Videomass', wx.ICON_INFORMATION, self)
             return this
         return None
@@ -340,23 +334,15 @@ class MainYtdl(wx.Frame):
     def ydl_latest(self, event):
         """
         check for new version from github.com
-
         """
-        if self.appdata['downloader'] == 'youtube_dl':
-            url = ("https://api.github.com/repos/ytdl-org/youtube-dl"
-                   "/releases/latest")
-        elif self.appdata['downloader'] == 'yt_dlp':
-            url = ("https://api.github.com/repos/yt-dlp/yt-dlp/"
-                   "releases/latest")
-
+        url = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest"
         latest = io_tools.get_github_releases(url, "tag_name")
-
         if latest[0] in ['request error:', 'response error:']:
             wx.MessageBox(f"{latest[0]} {latest[1]}",
                           f"{latest[0]}", wx.ICON_ERROR, self)
             return
-        wx.MessageBox(_("{0}: Latest version available: {1}").format(
-                      self.appdata['downloader'], latest[0]),
+        wx.MessageBox(_("\"yt-dlp\": Latest version "
+                        "available: {0}").format(latest[0]),
                       "Videomass", wx.ICON_INFORMATION, self)
     # -----------------------------------------------------------------#
 

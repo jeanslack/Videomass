@@ -38,7 +38,7 @@ from videomass.vdms_frames.while_playing import WhilePlaying
 from videomass.vdms_frames.ffmpeg_conf import FFmpegConf
 from videomass.vdms_frames.ffmpeg_codecs import FFmpegCodecs
 from videomass.vdms_frames.ffmpeg_formats import FFmpegFormats
-from videomass.vdms_ytdlp.main_ytdl_frame import MainYtdl
+from videomass.vdms_ytdlp.main_ytdlp import MainYtdl
 from videomass.vdms_dialogs.mediainfo import MediaStreams
 from videomass.vdms_dialogs.showlogs import ShowLogs
 from videomass.vdms_dialogs.ffmpeg_help import FFmpegHelp
@@ -529,19 +529,6 @@ class MainFrame(wx.Frame):
         dscrp = (_("Output Monitor\tCtrl+Shift+O"),
                  _("Keeps track of the output for debugging errors"))
         self.logpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        goButton.AppendSeparator()
-        sysButton = wx.Menu()  # system sub menu
-        dscrp = (_("Configuration folder"),
-                 _("Opens the Videomass configuration folder"))
-        openconfdir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Log folder"),
-                 _("Opens the Videomass log folder, if exists"))
-        openlogdir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Cache folder"),
-                 _("Opens the Videomass cache folder, if exists"))
-        opencachedir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        goButton.AppendSubMenu(sysButton, _("System"))
-
         self.menuBar.Append(goButton, _("Goto"))
 
         # ------------------ setup menu
@@ -640,9 +627,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.on_to_slideshow, self.slides)
         self.Bind(wx.EVT_MENU, self.on_to_images, self.toseq)
         self.Bind(wx.EVT_MENU, self.logPan, self.logpan)
-        self.Bind(wx.EVT_MENU, self.openLog, openlogdir)
-        self.Bind(wx.EVT_MENU, self.openConf, openconfdir)
-        self.Bind(wx.EVT_MENU, self.openCache, opencachedir)
         # ----SETUP----
         self.Bind(wx.EVT_MENU, self.on_destpath_setup, path_dest)
         self.Bind(wx.EVT_MENU, self.on_Resetfolders_tmp, self.resetfolders_tmp)
@@ -1056,33 +1040,6 @@ class MainFrame(wx.Frame):
         view last log on console
         """
         self.switch_to_processing('Viewing last log')
-    # ------------------------------------------------------------------#
-
-    def openLog(self, event):
-        """
-        Open the log directory with file manager
-
-        """
-        io_tools.openpath(self.appdata['logdir'])
-    # ------------------------------------------------------------------#
-
-    def openConf(self, event):
-        """
-        Open the configuration folder with file manager
-
-        """
-        io_tools.openpath(self.appdata['confdir'])
-    # -------------------------------------------------------------------#
-
-    def openCache(self, event):
-        """
-        Open the cache dir with file manager if exists
-        """
-        if not os.path.exists(self.appdata['cachedir']):
-            wx.MessageBox(_("cache folder has not been created yet."),
-                          "Videomass", wx.ICON_INFORMATION, self)
-            return
-        io_tools.openpath(self.appdata['cachedir'])
     # ------------------------------------------------------------------#
     # --------- Menu  Preferences  ###
 
@@ -1683,6 +1640,10 @@ class MainFrame(wx.Frame):
     # ------------------------------------------------------------------#
 
     def youtubedl(self):
+        """
+        Start a separate, self-contained frame
+        for yt-dlp functionality.
+        """
         if self.ytdlframe:
             self.ytdlframe.Raise()
             return

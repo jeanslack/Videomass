@@ -74,6 +74,16 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_threads/two_pass_ebu.py" \
 "../vdms_threads/two_pass.py" \
 "../vdms_threads/slideshow.py" \
+"../vdms_ytdlp/formatcode.py" \
+"../vdms_ytdlp/long_task_ytdlp.py" \
+"../vdms_ytdlp/main_ytdlp.py" \
+"../vdms_ytdlp/playlist_indexing.py" \
+"../vdms_ytdlp/textdrop.py" \
+"../vdms_ytdlp/ydl_downloader.py" \
+"../vdms_ytdlp/ydl_extrainfo.py" \
+"../vdms_ytdlp/ydl_mediainfo.py" \
+"../vdms_ytdlp/youtubedl_ui.py" \
+
 
 if [ $? != 0 ]; then
     echo 'Failed!'

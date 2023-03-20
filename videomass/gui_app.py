@@ -97,6 +97,10 @@ class Videomass(wx.App):
         wx.Locale.AddCatalogLookupPathPrefix(self.appset['localepath'])
         self.update_language(self.appset['locale_name'])
 
+        ytdlp = self.check_youtube_dl()
+        if ytdlp is False:
+            return False
+
         noffmpeg = self.check_ffmpeg()
         if noffmpeg:
             self.wizard(self.iconset['videomass'])
@@ -107,6 +111,21 @@ class Videomass(wx.App):
         main_frame.Show()
         self.SetTopWindow(main_frame)
         return True
+    # -------------------------------------------------------------------
+
+    def check_youtube_dl(self):
+        """
+        Check for `yt_dlp` python module.
+        """
+        if self.appset['use-downloader']:
+            try:
+                import yt_dlp
+            except ModuleNotFoundError as err:
+                wx.MessageBox(f"ERROR: {err}\n\nyt-dlp is missing, "
+                              f"please install it.", 'Videomass - ERROR',
+                              wx.ICON_STOP)
+                return False
+        return None
     # -------------------------------------------------------------------
 
     def check_ffmpeg(self):
