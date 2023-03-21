@@ -223,5 +223,5 @@ class Choose_Topic(wx.Panel):
                           "Videomass", wx.ICON_INFORMATION, self)
             return True
 
-        self.parent.youtubedl()
+        self.parent.youtubedl(self)
         return None

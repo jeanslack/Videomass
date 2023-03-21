@@ -369,12 +369,14 @@ class MainFrame(wx.Frame):
 
     def on_close(self, event):
         """
-        switch to panels or destroy the videomass app.
+        Where possible, it destroys the application and
+        its children programmatically, saving the size
+        and position of the window.
         """
         def _setsize():
             """
             Write last window size and position
-            for next start if changed
+            for next start if changed.
             """
             confmanager = ConfigManager(self.appdata['fileconfpath'])
             sett = confmanager.read_options()
@@ -386,6 +388,12 @@ class MainFrame(wx.Frame):
             self.ProcessPanel.on_close(self)
             return
 
+        if self.appdata['warnexiting']:
+            if wx.MessageBox(_('Are you sure you want to exit?'),
+                             _('Exit'), wx.ICON_QUESTION | wx.YES_NO,
+                             self) == wx.NO:
+                return
+
         if self.ytdlframe:
             if self.ytdlframe.ProcessPanel.thread_type:
                 wx.MessageBox(_("There are still active windows with running "
@@ -395,11 +403,6 @@ class MainFrame(wx.Frame):
                 return
             self.ytdlframe.destroy_orphaned_window()
 
-        if self.appdata['warnexiting']:
-            if wx.MessageBox(_('Are you sure you want to exit?'),
-                             _('Exit'), wx.ICON_QUESTION | wx.YES_NO,
-                             self) == wx.NO:
-                return
         _setsize()
         self.destroy_orphaned_window()
         self.Destroy()
@@ -407,12 +410,20 @@ class MainFrame(wx.Frame):
 
     def on_Kill(self):
         """
-        Try to kill application during a process thread
-        that does not want to terminate with the abort button
-
+        This method tries to destroy the application and its
+        children more directly than the `on_close` method above.
+        Note that this method may also be called from the `Setup()`
+        method.
         """
+        if self.ytdlframe:
+            if self.ytdlframe.ProcessPanel.thread_type:
+                wx.MessageBox(_("There are still active windows with running "
+                                "processes, make sure you finish your work "
+                                "before closing them."),
+                              "Videomass", wx.ICON_WARNING, self)
+                return
+            self.ytdlframe.destroy_orphaned_window()
         self.destroy_orphaned_window()
-        self.ytdlframe.Destroy()
         self.Destroy()
 
     # -------------   BUILD THE MENU BAR  ----------------###
@@ -536,6 +547,9 @@ class MainFrame(wx.Frame):
                                      _("From Movie to Pictures\tCtrl+Shift+S"),
                                      _("Go to the 'From Movie to Pictures' "
                                        "panel"))
+        self.winytdlp = goButton.Append(wx.ID_ANY,
+                                        _("YouTube Downloader\tCtrl+Shift+Y"),
+                                        _("Open 'YouTube Downloader' window"))
         goButton.AppendSeparator()
         dscrp = (_("Output Monitor\tCtrl+Shift+O"),
                  _("Keeps track of the output for debugging errors"))
@@ -638,6 +652,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.on_to_slideshow, self.slides)
         self.Bind(wx.EVT_MENU, self.on_to_images, self.toseq)
         self.Bind(wx.EVT_MENU, self.logPan, self.logpan)
+        self.Bind(wx.EVT_MENU, self.youtubedl, self.winytdlp)
         # ----SETUP----
         self.Bind(wx.EVT_MENU, self.on_destpath_setup, path_dest)
         self.Bind(wx.EVT_MENU, self.on_Resetfolders_tmp, self.resetfolders_tmp)
@@ -1650,7 +1665,7 @@ class MainFrame(wx.Frame):
         self.Layout()
     # ------------------------------------------------------------------#
 
-    def youtubedl(self):
+    def youtubedl(self, event):
         """
         Start a separate, self-contained frame
         for yt-dlp functionality.

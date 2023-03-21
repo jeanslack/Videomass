@@ -85,6 +85,11 @@ class SetUp(wx.Dialog):
         tabOne = wx.Panel(notebook, wx.ID_ANY)
         sizerGen = wx.BoxSizer(wx.VERTICAL)
         sizerGen.Add((0, 15))
+        self.checkbox_exit = wx.CheckBox(tabOne, wx.ID_ANY,
+                                         (_("Warn on exit"))
+                                         )
+        sizerGen.Add(self.checkbox_exit, 0, wx.ALL, 5)
+        sizerGen.Add((0, 15))
         lablang = wx.StaticText(tabOne, wx.ID_ANY, _('Application Language'))
         sizerGen.Add(lablang, 0, wx.ALL | wx.EXPAND, 5)
         langs = [lang[1] for lang in supLang.values()]
@@ -140,11 +145,8 @@ class SetUp(wx.Dialog):
                 "when exiting the application")
         self.checkbox_logclr = wx.CheckBox(tabOne, wx.ID_ANY, (msg))
         sizerGen.Add(self.checkbox_logclr, 0, wx.ALL, 5)
-        self.checkbox_exit = wx.CheckBox(tabOne, wx.ID_ANY,
-                                         (_("Warn on exit"))
-                                         )
-        sizerGen.Add(self.checkbox_exit, 0, wx.ALL, 5)
-        sizerGen.Add((0, 15))
+        sizerGen.Add((0, 5))
+
         tabOne.SetSizer(sizerGen)
         notebook.AddPage(tabOne, _("Miscellanea"))
 
@@ -232,6 +234,7 @@ class SetUp(wx.Dialog):
         gridFFmpeg.Add(self.txtctrl_ffmpeg, 1, wx.ALL, 5)
         gridFFmpeg.Add(self.btn_ffmpeg, 0, wx.RIGHT | wx.CENTER, 5)
         # ----
+        sizerFFmpeg.Add((0, 15))
         msg = _("Enable another location to run FFprobe")
         self.checkbox_exeFFprobe = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         self.btn_ffprobe = wx.Button(tabThree, wx.ID_ANY, "...", size=(35, -1))
@@ -244,6 +247,7 @@ class SetUp(wx.Dialog):
         gridFFprobe.Add(self.txtctrl_ffprobe, 1, wx.ALL, 5)
         gridFFprobe.Add(self.btn_ffprobe, 0, wx.RIGHT | wx.CENTER, 5)
         # ----
+        sizerFFmpeg.Add((0, 15))
         msg = _("Enable another location to run FFplay")
         self.checkbox_exeFFplay = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         self.btn_ffplay = wx.Button(tabThree, wx.ID_ANY, "...", size=(35, -1))

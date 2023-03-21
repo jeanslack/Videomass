@@ -119,13 +119,14 @@ class Videomass(wx.App):
         but not yet installed, the session should still start
         forcing a temporary disable.
         """
+        msg = (_("To suppress this message on startup, please install "
+                 "yt-dlp or disable it from the preferences."))
         if self.appset['use-downloader']:
             try:
                 import yt_dlp
             except ModuleNotFoundError as err:
-                wx.MessageBox(f"ERROR: {err}\n\nyt-dlp is missing, "
-                              f"please install it.", 'Videomass - ERROR',
-                              wx.ICON_ERROR)
+                wx.MessageBox(f"ERROR: {err}\n\n{msg}",
+                              'Videomass - ERROR', wx.ICON_ERROR)
                 return False
         return None
     # -------------------------------------------------------------------

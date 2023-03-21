@@ -252,11 +252,11 @@ class MainYtdl(wx.Frame):
 
         # ------------------ View menu
         viewButton = wx.Menu()
-        dscrp = (_("Version in Use"),
+        dscrp = (_("Version of yt-dlp"),
                  _("Shows the version in use"))
         self.ydlused = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Show the latest version..."),
-                 _("Shows the latest version available on github.com"))
+        dscrp = (_("Latest version of yt-dlp"),
+                 _("Check the latest version available on github.com"))
         self.ydllatest = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(viewButton, _("View"))
 
