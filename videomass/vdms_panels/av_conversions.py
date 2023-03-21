@@ -155,7 +155,7 @@ class AV_Conv(wx.Panel):
             bmprotate = get_bmp(icons['rotate'], ((16, 16)))
             bmpdeinterlace = get_bmp(icons['deinterlace'], ((16, 16)))
             bmpdenoiser = get_bmp(icons['denoiser'], ((16, 16)))
-            bmpanalyzes = get_bmp(icons['statistics'], ((16, 16)))
+            bmpanalyzes = get_bmp(icons['volanalyze'], ((16, 16)))
             bmpasettings = get_bmp(icons['settings'], ((16, 16)))
             bmppeaklevel = get_bmp(icons['audiovolume'], ((16, 16)))
             bmpstab = get_bmp(icons['stabilizer'], ((16, 16)))
@@ -171,7 +171,7 @@ class AV_Conv(wx.Panel):
             bmpdeinterlace = wx.Bitmap(icons['deinterlace'],
                                        wx.BITMAP_TYPE_ANY)
             bmpdenoiser = wx.Bitmap(icons['denoiser'], wx.BITMAP_TYPE_ANY)
-            bmpanalyzes = wx.Bitmap(icons['statistics'], wx.BITMAP_TYPE_ANY)
+            bmpanalyzes = wx.Bitmap(icons['volanalyze'], wx.BITMAP_TYPE_ANY)
             bmpasettings = wx.Bitmap(icons['settings'], wx.BITMAP_TYPE_ANY)
             bmppeaklevel = wx.Bitmap(icons['audiovolume'], wx.BITMAP_TYPE_ANY)
             bmpstab = wx.Bitmap(icons['stabilizer'], wx.BITMAP_TYPE_ANY)

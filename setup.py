@@ -47,6 +47,7 @@ def source_build():
         inst_req = ["wxpython>=4.0.7; platform_system=='Windows' or "
                     "platform_system=='Darwin'",
                     "PyPubSub>=4.0.3",
+                    "yt_dlp>=2021.9.2",
                     "requests>=2.21.0",
                     ]
         setup_req = ["setuptools>=47.1.1",

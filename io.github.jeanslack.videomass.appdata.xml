@@ -4,7 +4,7 @@
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-3.0-only</project_license>
   <name>Videomass</name>
-  <summary>GUI for FFmpeg and Youtube-dl</summary>
+  <summary>GUI for FFmpeg and yt-dlp</summary>
   <icon type="remote">https://raw.githubusercontent.com/jeanslack/Videomass/master/videomass/art/icons/hicolor/scalable/apps/videomass.svg</icon>
   <categories>
     <category>AudioVideo</category>
@@ -21,7 +21,7 @@
     </p>
     <p>
       It features graphical tools for viewing, analyzing and processing
-      multimedia streams.
+      multimedia streams and downloading videos via yt-dlp.
     </p>
     <p>
       Videomass is written in Python3 using the wxPython-Phoenix GUI toolkit.
@@ -35,6 +35,9 @@
     </screenshot>
     <screenshot>
       <image>https://jeanslack.github.io/Videomass/images/screenshots/crop-filter.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://jeanslack.github.io/Videomass/images/screenshots/download.png</image>
     </screenshot>
   </screenshots>
 

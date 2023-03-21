@@ -7,11 +7,12 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 14, 2023 V.4.0.10
+Mar 20, 2023 V.4.0.10
 
-  * Removed interface to youtube_dl/yt_dlp libraries. Videomass will no longer
-    have any functionality for downloading web videos. This mainly
-    concerns reasons of maintainability of the source code.
+  * Removed support for youtube-dl, only supports yt-dlp API.
+  * Improved YouTube Downloader GUI, now has a separate/independent window
+    from the main window for FFmpeg, this allows separate tasks for downloads
+    and conversions :-)
   * Made errors handler for `on_addaudio_track` function method on
     `sequence_to_video.py` module. This will make importing audio files more
     consistent using `Still Image Maker`.

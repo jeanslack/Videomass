@@ -43,6 +43,7 @@ class ShowLogs(wx.Dialog):
                 'from_movie_to_pictures.log',
                 'still_image_maker.log',
                 'generic_task.log',
+                'yt_dlp.log',
                 )
 
     def __init__(self, parent, dirlog, OS):

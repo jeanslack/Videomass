@@ -96,11 +96,11 @@ class ConfigManager:
     toolbartext (bool):
         True, enables text alongside toolbar buttons. Default is True.
 
-    window_size (list):
+    main_window_size (list):
         [int(Height), int(Width)] last current window dimension before
         exiting the application.
 
-    window_position (list):
+    main_window_pos (list):
         [int(x), in(y)] last current window position on monitor screen
         before exiting the application.
 
@@ -125,8 +125,20 @@ class ConfigManager:
         YY is ISO 3166 code of the country. Examples are "en", "en_GB",
         "en_US" or "fr_FR", etc.
 
+    dirdownload (str):
+        file destination path used by the youtube-dl UI
+
+    use-downloader (bool):
+        sets the ability to download videos from YouTube.com.
+        One of True or False, where True means load/use yt_dlp
+        on sturtup.
+
+    playlistsubfolder (bool):
+        Auto-create subfolders when download the playlists,
+        default value is True.
+
     """
-    VERSION = 5.0
+    VERSION = 5.3
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputfile": f"{os.path.expanduser('~')}",
                        "outputfile_samedir": False,
@@ -145,12 +157,17 @@ class ConfigManager:
                        "toolbarsize": 24,
                        "toolbarpos": 0,
                        "toolbartext": True,
-                       "window_size": [850, 560],
-                       "window_position": [0, 0],
+                       "main_window_size": [850, 560],
+                       "main_window_pos": [0, 0],
+                       "main_ytdl_size": [850, 560],
+                       "main_ytdl_pos": [0, 0],
                        "clearcache": True,
                        "clearlogfiles": False,
                        "move_file_to_trash": False,
                        "locale_name": "Default",
+                       "dirdownload": f"{os.path.expanduser('~')}",
+                       "use-downloader": False,
+                       "playlistsubfolder": True,
                        }
 
     def __init__(self, filename, makeportable=None):
@@ -166,6 +183,7 @@ class ConfigManager:
             path = os.path.join(makeportable, "My_Files")
             outputdir = os.path.relpath(path)
             ConfigManager.DEFAULT_OPTIONS['outputfile'] = outputdir
+            ConfigManager.DEFAULT_OPTIONS['dirdownload'] = outputdir
 
     def write_options(self, **options):
         """

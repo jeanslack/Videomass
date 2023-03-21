@@ -104,10 +104,10 @@ class AudioVolNormal(wx.MiniFrame):
                       | wx.ALIGN_CENTER_VERTICAL
                       | wx.ALIGN_CENTER_HORIZONTAL, 5,
                       )
-        self.btn_grey = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
+        self.btn_blue = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
                                   size=(-1, -1))
-        self.btn_grey.SetBackgroundColour(wx.Colour(self.yellow))
-        grid_list.Add(self.btn_grey, 1, wx.ALL, 5)
+        self.btn_blue.SetBackgroundColour(wx.Colour(self.blue))
+        grid_list.Add(self.btn_blue, 1, wx.ALL, 5)
         txtgrey = wx.StaticText(self.panel, wx.ID_ANY, (_("=  No changes")))
         grid_list.Add(txtgrey, 1, wx.ALL
                       | wx.ALIGN_CENTER_VERTICAL
@@ -115,7 +115,7 @@ class AudioVolNormal(wx.MiniFrame):
                       )
         self.btn_yell = wx.Button(self.panel, wx.ID_ANY, _("Read me"),
                                   size=(-1, -1))
-        self.btn_yell.SetBackgroundColour(wx.Colour(self.blue))
+        self.btn_yell.SetBackgroundColour(wx.Colour(self.yellow))
         grid_list.Add(self.btn_yell, 1, wx.ALL, 5)
         txtyell = wx.StaticText(self.panel,
                                 wx.ID_ANY, (_("=  Below max peak")))
@@ -144,7 +144,7 @@ class AudioVolNormal(wx.MiniFrame):
             txtyell.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
         else:
             self.btn_red.SetForegroundColour(wx.Colour(self.fgrd))
-            self.btn_grey.SetForegroundColour(wx.Colour(self.fgrd))
+            self.btn_blue.SetForegroundColour(wx.Colour(self.fgrd))
             self.btn_yell.SetForegroundColour(wx.Colour(self.fgrd))
             normlist.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             descript.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
@@ -154,7 +154,7 @@ class AudioVolNormal(wx.MiniFrame):
 
         # ----------------------Binding (EVT)------------------------#
         self.Bind(wx.EVT_BUTTON, self.on_red, self.btn_red)
-        self.Bind(wx.EVT_BUTTON, self.on_grey, self.btn_grey)
+        self.Bind(wx.EVT_BUTTON, self.on_blue, self.btn_blue)
         self.Bind(wx.EVT_BUTTON, self.on_yellow, self.btn_yell)
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
@@ -167,7 +167,7 @@ class AudioVolNormal(wx.MiniFrame):
                 normlist.SetItem(index, 2, items[2])
 
                 if float(items[3]) == 0.0:  # not changes
-                    normlist.SetItemBackgroundColour(index, self.yellow)
+                    normlist.SetItemBackgroundColour(index, self.blue)
                     normlist.SetItem(index, 3, items[3])
                 else:
                     normlist.SetItem(index, 3, items[3])
@@ -179,7 +179,7 @@ class AudioVolNormal(wx.MiniFrame):
                     normlist.SetItem(index, 4, items[4])
 
                 if float(items[4]) < float(items[1]):  # target
-                    normlist.SetItemBackgroundColour(index, self.blue)
+                    normlist.SetItemBackgroundColour(index, self.yellow)
                     normlist.SetItem(index, 4, items[4])
                 else:
                     normlist.SetItem(index, 4, items[4])
@@ -193,12 +193,12 @@ class AudioVolNormal(wx.MiniFrame):
                 normlist.SetItem(index, 3, items[3])
 
                 if float(items[4]) == float(items[1]):  # not changes
-                    normlist.SetItemBackgroundColour(index, self.yellow)
+                    normlist.SetItemBackgroundColour(index, self.blue)
                     normlist.SetItem(index, 4, items[4])
                 else:
                     normlist.SetItem(index, 4, items[4])
                 if float(items[4]) < float(items[1]):  # target
-                    normlist.SetItemBackgroundColour(index, self.blue)
+                    normlist.SetItemBackgroundColour(index, self.yellow)
 
                     normlist.SetItem(index, 4, items[4])
                 else:
@@ -232,9 +232,9 @@ class AudioVolNormal(wx.MiniFrame):
         win.Popup()
     # --------------------------------------------------------------#
 
-    def on_grey(self, event):
+    def on_blue(self, event):
         """
-        event on button grey
+        event on button blue
         """
         msg = (_("...It means the resulting audio will not change,\n"
                  "because it's equal to the source."))
@@ -242,7 +242,7 @@ class AudioVolNormal(wx.MiniFrame):
         win = NormalTransientPopup(self,
                                    wx.SIMPLE_BORDER,
                                    msg,
-                                   (self.yellow),
+                                   (self.blue),
                                    (self.fgrd),
                                    )
 
@@ -266,7 +266,7 @@ class AudioVolNormal(wx.MiniFrame):
         win = NormalTransientPopup(self,
                                    wx.SIMPLE_BORDER,
                                    msg,
-                                   (self.blue),
+                                   (self.yellow),
                                    (self.fgrd),
                                    )
 

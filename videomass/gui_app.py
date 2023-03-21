@@ -97,6 +97,10 @@ class Videomass(wx.App):
         wx.Locale.AddCatalogLookupPathPrefix(self.appset['localepath'])
         self.update_language(self.appset['locale_name'])
 
+        ytdlp = self.check_youtube_dl()
+        if ytdlp is False:
+            self.appset['use-downloader'] = False  # force disable
+
         noffmpeg = self.check_ffmpeg()
         if noffmpeg:
             self.wizard(self.iconset['videomass'])
@@ -109,10 +113,28 @@ class Videomass(wx.App):
         return True
     # -------------------------------------------------------------------
 
+    def check_youtube_dl(self):
+        """
+        Check for `yt_dlp` python module. If enabled by the user
+        but not yet installed, the session should still start
+        forcing a temporary disable.
+        """
+        msg = (_("To suppress this message on startup, please install "
+                 "yt-dlp or disable it from the preferences."))
+        if self.appset['use-downloader']:
+            try:
+                import yt_dlp
+            except ModuleNotFoundError as err:
+                wx.MessageBox(f"ERROR: {err}\n\n{msg}",
+                              'Videomass - ERROR', wx.ICON_ERROR)
+                return False
+        return None
+    # -------------------------------------------------------------------
+
     def check_ffmpeg(self):
         """
-        Get the FFmpeg's executables. On Unix/Unix-like systems
-        perform a check for permissions.
+        Get the FFmpeg's executables. On Unix/Unix-like
+        systems perform a check for permissions.
         """
         for link in [self.appset['ffmpeg_cmd'],
                      self.appset['ffprobe_cmd'],

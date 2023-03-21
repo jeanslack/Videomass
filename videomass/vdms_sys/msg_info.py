@@ -37,7 +37,7 @@ def current_release():
     release_name = 'Videomass'
     program_name = 'videomass'
     version = '4.0.10'
-    release = 'unreleased'
+    release = 'released'
     copyr = '2013-2023'
     website = 'http://jeanslack.github.io/Videomass/'
     author = ('Gianluca Pernigotto', '(aka jeanslack)')
@@ -49,6 +49,8 @@ def current_release():
                "- FFmpeg, FFmpeg is a trademark of Fabrice Bellard, \n"
                "originator of the FFmpeg project:\n"
                "<http://ffmpeg.org/>\n"
+               "- yt-dlp: <https://github.com/yt-dlp/yt-dlp>\n"
+               "Download videos from YouTube and more sites\n"
                )
     return (release_name, program_name, version, release,
             copyr, website, author, mail, comment)
@@ -72,7 +74,7 @@ It is based on an advanced use of presets and profiles in order to use most of
 the FFmpeg commands without limits of formats and codecs.
 
 It features graphical tools for viewing, analyzing and processing multimedia
-streams.
+streams and downloading videos via yt-dlp.
 
 Videomass is written in Python3 with the wxPython-Phoenix toolkit.
 """

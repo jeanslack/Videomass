@@ -277,9 +277,6 @@ class FileDnD(wx.Panel):
         self.btn_remove = wx.Button(self, wx.ID_REMOVE, "")
         self.btn_remove.Disable()
         sizer_media.Add(self.btn_remove, 0, wx.ALL | wx.CENTRE, 2)
-        self.btn_clear = wx.Button(self, wx.ID_CLEAR, "")
-        self.btn_clear.Disable()
-        sizer_media.Add(self.btn_clear, 0, wx.ALL | wx.CENTRE, 2)
 
         # This builds the list control box:
         self.flCtrl = MyListCtrl(self)  # class MyListCtr
@@ -320,7 +317,6 @@ class FileDnD(wx.Panel):
         # Tooltips
         self.btn_remove.SetToolTip(_('Remove the selected '
                                      'files from the list'))
-        self.btn_clear.SetToolTip(_('Delete all files from the list'))
         self.btn_destpath.SetToolTip(_('Set up a temporary folder '
                                        'for conversions'))
         self.btn_play.SetToolTip(_('Play the selected file in the list'))
@@ -328,7 +324,6 @@ class FileDnD(wx.Panel):
 
         # Binding (EVT)
         self.Bind(wx.EVT_BUTTON, self.on_play_select, self.btn_play)
-        self.Bind(wx.EVT_BUTTON, self.delete_all, self.btn_clear)
         self.Bind(wx.EVT_BUTTON, self.on_delete_selected, self.btn_remove)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
@@ -396,9 +391,6 @@ class FileDnD(wx.Panel):
         LEFT clicking on column headers in the ListCtrl.
         """
         self.parent.destroy_orphaned_window()
-
-        if not self.btn_clear.IsEnabled():
-            self.btn_clear.Enable()
         if len(self.outputnames) > 1:
             self.parent.rename_batch.Enable(True)
         else:
@@ -480,7 +472,6 @@ class FileDnD(wx.Panel):
         self.changes_in_progress(setfocus=False)
         self.btn_play.Disable()
         self.btn_remove.Disable()
-        self.btn_clear.Disable()
         self.parent.rename.Enable(False)
         self.parent.rename_batch.Enable(False)
         self.parent.filedropselected = None

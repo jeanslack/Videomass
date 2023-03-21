@@ -52,6 +52,7 @@ class Choose_Topic(wx.Panel):
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpAVconv = get_bmp(self.icons['A/V-Conv'], ((48, 48)))
             bmpPrstmng = get_bmp(self.icons['presets_manager'], ((48, 48)))
+            bmpYdl = get_bmp(self.icons['youtube'], ((48, 48)))
             bmpConcat = get_bmp(self.icons['concatenate'], ((48, 48)))
             bmpSlideshow = get_bmp(self.icons['slideshow'], ((48, 48)))
             bmpTopictures = get_bmp(self.icons['videotopictures'], ((48, 48)))
@@ -59,6 +60,7 @@ class Choose_Topic(wx.Panel):
             bmpAVconv = wx.Bitmap(self.icons['A/V-Conv'], wx.BITMAP_TYPE_ANY)
             bmpPrstmng = wx.Bitmap(self.icons['presets_manager'],
                                    wx.BITMAP_TYPE_ANY)
+            bmpYdl = wx.Bitmap(self.icons['youtube'], wx.BITMAP_TYPE_ANY)
             bmpConcat = wx.Bitmap(self.icons['concatenate'],
                                   wx.BITMAP_TYPE_ANY)
             bmpSlideshow = wx.Bitmap(self.icons['slideshow'],
@@ -85,38 +87,33 @@ class Choose_Topic(wx.Panel):
             style = wx.BU_LEFT | wx.BORDER_NONE
         else:
             style = wx.BU_LEFT
-        sizer_base.Add(50, 50)
-        self.presets_mng = wx.Button(self, wx.ID_ANY, _('Presets Manager'),
-                                     size=(300, -1), style=style)
-        self.presets_mng.SetBitmap(bmpPrstmng, wx.LEFT)
-        grid_prst = wx.FlexGridSizer(1, 1, 0, 0)
-        grid_prst.Add(self.presets_mng, 0, wx.EXPAND, 5)
-
-        sizer_base.Add(grid_prst, 0, wx.ALIGN_CENTER_VERTICAL
-                       | wx.ALIGN_CENTER_HORIZONTAL, 5,
-                       )
-        sizer_base.Add(20, 20)
-        self.avconv = wx.Button(self, wx.ID_ANY, _('AV-Conversions'),
+        presets_mng = wx.Button(self, wx.ID_ANY, _('Presets Manager'),
                                 size=(300, -1), style=style)
-        self.avconv.SetBitmap(bmpAVconv, wx.LEFT)
-        self.conc = wx.Button(self, wx.ID_ANY, _('Concatenate media files'),
+        presets_mng.SetBitmap(bmpPrstmng, wx.LEFT)
+        avconv = wx.Button(self, wx.ID_ANY, _('AV-Conversions'),
+                           size=(300, -1), style=style)
+        avconv.SetBitmap(bmpAVconv, wx.LEFT)
+        conc = wx.Button(self, wx.ID_ANY, _('Concatenate media files'),
+                         size=(300, -1), style=style)
+        conc.SetBitmap(bmpConcat, wx.LEFT)
+        youtube = wx.Button(self, wx.ID_ANY, _('YouTube Downloader'),
+                            size=(300, -1), style=style)
+        youtube.SetBitmap(bmpYdl, wx.LEFT)
+        slideshow = wx.Button(self, wx.ID_ANY, _('Still Image Maker'),
                               size=(300, -1), style=style)
-        self.conc.SetBitmap(bmpConcat, wx.LEFT)
-        self.slideshow = wx.Button(self, wx.ID_ANY,
-                                   _('Still Image Maker'),
-                                   size=(300, -1), style=style)
-        self.slideshow.SetBitmap(bmpSlideshow, wx.LEFT)
-        self.videotoimages = wx.Button(self, wx.ID_ANY,
-                                       _('From Movie to Pictures'),
-                                       size=(300, -1), style=style)
-        self.videotoimages.SetBitmap(bmpTopictures, wx.LEFT)
-        grid_buttons = wx.FlexGridSizer(2, 2, 20, 20)
-        grid_buttons.AddMany([(self.avconv, 0, wx.EXPAND, 5),
-                              (self.conc, 0, wx.EXPAND, 5),
-                              (self.slideshow, 0, wx.EXPAND, 5),
-                              (self.videotoimages, 0, wx.EXPAND, 5),
+        slideshow.SetBitmap(bmpSlideshow, wx.LEFT)
+        videotoimages = wx.Button(self, wx.ID_ANY, _('From Movie to Pictures'),
+                                  size=(300, -1), style=style)
+        videotoimages.SetBitmap(bmpTopictures, wx.LEFT)
+        grid_buttons = wx.FlexGridSizer(3, 2, 20, 20)
+        grid_buttons.AddMany([(presets_mng, 0, wx.EXPAND, 5),
+                              (avconv, 0, wx.EXPAND, 5),
+                              (conc, 0, wx.EXPAND, 5),
+                              (youtube, 0, wx.EXPAND, 5),
+                              (slideshow, 0, wx.EXPAND, 5),
+                              (videotoimages, 0, wx.EXPAND, 5),
                               ])
-        # sizer_base.Add(50, 50)
+        sizer_base.Add(50, 50)
         sizer_base.Add(grid_buttons, 1, wx.ALIGN_CENTER_VERTICAL
                        | wx.ALIGN_CENTER_HORIZONTAL, 5,
                        )
@@ -126,20 +123,24 @@ class Choose_Topic(wx.Panel):
         tip = (_('Create, edit and use quickly your favorite FFmpeg '
                  'presets and profiles with full formats support and '
                  'codecs.'))
-        self.presets_mng.SetToolTip(tip)
+        presets_mng.SetToolTip(tip)
         tip = (_('A set of useful tools for audio and video conversions. '
                  'Save your profiles and reuse them with Presets '
                  'Manager.'))
-        self.avconv.SetToolTip(tip)
+        avconv.SetToolTip(tip)
+        tip = (_('Easily download videos and audio in different '
+                 'formats and quality from YouTube, Facebook and '
+                 'more sites.'))
+        youtube.SetToolTip(tip)
         tip = (_('Concatenate multiple media files based on import '
                  'order without re-encoding'))
-        self.conc.SetToolTip(tip)
+        conc.SetToolTip(tip)
         tip = (_('Create video from a sequence of images, based on import '
                  'order, with the ability to add an audio file.'))
-        self.slideshow.SetToolTip(tip)
+        slideshow.SetToolTip(tip)
         tip = (_('Extract images (frames) from your movies '
                  'in JPG, PNG, BMP, GIF formats.'))
-        self.videotoimages.SetToolTip(tip)
+        videotoimages.SetToolTip(tip)
 
         if self.oS == 'Darwin':
             welcome.SetFont(wx.Font(14, wx.SWISS, wx.NORMAL, wx.BOLD))
@@ -169,44 +170,64 @@ class Choose_Topic(wx.Panel):
                 welcome.SetForegroundColour('#E95420')  # Ubuntu orange
                 version.SetForegroundColour('#E95420')  # Ubuntu orange
 
-        self.Bind(wx.EVT_BUTTON, self.on_Conv, self.avconv)
-        self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)
-        self.Bind(wx.EVT_BUTTON, self.on_Conc, self.conc)
-        self.Bind(wx.EVT_BUTTON, self.on_slideshow, self.slideshow)
-        self.Bind(wx.EVT_BUTTON, self.on_to_pictures, self.videotoimages)
+        self.Bind(wx.EVT_BUTTON, self.on_avconversions, avconv)
+        self.Bind(wx.EVT_BUTTON, self.on_prst_mng, presets_mng)
+        self.Bind(wx.EVT_BUTTON, self.on_concatenate, conc)
+        self.Bind(wx.EVT_BUTTON, self.on_slideshow, slideshow)
+        self.Bind(wx.EVT_BUTTON, self.on_to_pictures, videotoimages)
+        self.Bind(wx.EVT_BUTTON, self.on_youtube_dl, youtube)
     # ------------------------------------------------------------------#
 
-    def on_Prst_mng(self, event):
+    def on_prst_mng(self, event):
         """
         Open drag N drop interface to switch on Presets Manager panel
         """
-        self.parent.switch_file_import(self, 'Presets Manager')
+        self.parent.topicname = 'Presets Manager'
+        self.parent.switch_file_import(self)
+
     # ------------------------------------------------------------------#
 
-    def on_Conv(self, event):
+    def on_avconversions(self, event):
         """
         Open drag N drop interface to switch on AVconversions panel
         """
-        self.parent.switch_file_import(self, 'Audio/Video Conversions')
+        self.parent.topicname = 'Audio/Video Conversions'
+        self.parent.switch_file_import(self)
     # ------------------------------------------------------------------#
 
-    def on_Conc(self, event):
+    def on_concatenate(self, event):
         """
         Open drag N drop interface to switch on Concatenate panel
         """
-        self.parent.switch_file_import(self, 'Concatenate Demuxer')
+        self.parent.topicname = 'Concatenate Demuxer'
+        self.parent.switch_file_import(self)
     # ------------------------------------------------------------------#
 
     def on_slideshow(self, event):
         """
         Open drag N drop interface to switch on Image Sequence to Video panel
         """
-        self.parent.switch_file_import(self, 'Image Sequence to Video')
+        self.parent.topicname = 'Image Sequence to Video'
+        self.parent.switch_file_import(self)
     # ------------------------------------------------------------------#
 
     def on_to_pictures(self, event):
         """
         Open drag N drop interface to switch on Video to Pictures panel
         """
-        self.parent.switch_file_import(self, 'Video to Pictures')
+        self.parent.topicname = 'Video to Pictures'
+        self.parent.switch_file_import(self)
     # ------------------------------------------------------------------#
+
+    def on_youtube_dl(self, event):
+        """
+        Open a separated downloader frame for yt-dlp.
+        """
+        if not self.appdata['use-downloader']:
+            wx.MessageBox(_("The downloader is disabled. "
+                            "Check your preferences."),
+                          "Videomass", wx.ICON_INFORMATION, self)
+            return True
+
+        self.parent.youtubedl(self)
+        return None
