@@ -482,7 +482,7 @@ class DataSource():
                 'profile_edit', 'previous', 'next', 'stabilizer',
                 'preview_audio', 'profile_copy', 'slideshow',
                 'videotopictures', 'atrack', 'timerset', 'coloreq',
-                'stop', 'home', 'logpan', 'youtube', 'playlist',
+                'stop', 'home', 'youtube', 'playlist',
                 'cleanup', 'download', 'statistics',
                 )  # must match with items on `iconset` tuple, see following
 
@@ -544,7 +544,6 @@ class DataSource():
                    f"{choose.get('x16')}/coloreq.{ext}",
                    f"{choose.get('x22')}/stop.{ext}",
                    f"{choose.get('x22')}/home.{ext}",
-                   f"{choose.get('x22')}/logpan.{ext}",
                    f"{choose.get('x48')}/youtube.{ext}",
                    f"{choose.get('x16')}/playlist.{ext}",
                    f"{choose.get('x22')}/cleanup.{ext}",

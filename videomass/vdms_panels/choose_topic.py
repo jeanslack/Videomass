@@ -182,35 +182,41 @@ class Choose_Topic(wx.Panel):
         """
         Open drag N drop interface to switch on Presets Manager panel
         """
-        self.parent.switch_file_import(self, 'Presets Manager')
+        self.parent.topicname = 'Presets Manager'
+        self.parent.switch_file_import(self)
+
     # ------------------------------------------------------------------#
 
     def on_avconversions(self, event):
         """
         Open drag N drop interface to switch on AVconversions panel
         """
-        self.parent.switch_file_import(self, 'Audio/Video Conversions')
+        self.parent.topicname = 'Audio/Video Conversions'
+        self.parent.switch_file_import(self)
     # ------------------------------------------------------------------#
 
     def on_concatenate(self, event):
         """
         Open drag N drop interface to switch on Concatenate panel
         """
-        self.parent.switch_file_import(self, 'Concatenate Demuxer')
+        self.parent.topicname = 'Concatenate Demuxer'
+        self.parent.switch_file_import(self)
     # ------------------------------------------------------------------#
 
     def on_slideshow(self, event):
         """
         Open drag N drop interface to switch on Image Sequence to Video panel
         """
-        self.parent.switch_file_import(self, 'Image Sequence to Video')
+        self.parent.topicname = 'Image Sequence to Video'
+        self.parent.switch_file_import(self)
     # ------------------------------------------------------------------#
 
     def on_to_pictures(self, event):
         """
         Open drag N drop interface to switch on Video to Pictures panel
         """
-        self.parent.switch_file_import(self, 'Video to Pictures')
+        self.parent.topicname = 'Video to Pictures'
+        self.parent.switch_file_import(self)
     # ------------------------------------------------------------------#
 
     def on_youtube_dl(self, event):

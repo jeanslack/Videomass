@@ -80,7 +80,7 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_ytdlp/playlist_indexing.py" \
 "../vdms_ytdlp/textdrop.py" \
 "../vdms_ytdlp/ydl_downloader.py" \
-"../vdms_ytdlp/ydl_extrainfo.py" \
+"../vdms_ytdlp/ydl_extractinfo.py" \
 "../vdms_ytdlp/ydl_mediainfo.py" \
 "../vdms_ytdlp/youtubedl_ui.py" \
 
