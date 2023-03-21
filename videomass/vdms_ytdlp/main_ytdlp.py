@@ -267,9 +267,8 @@ class MainYtdl(wx.Frame):
                  _("Save all downloads to this temporary location"))
         setdownload_tmp = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         setupButton.AppendSeparator()
-        dscrp = (_("Restore the default destination folders"),
-                 _("Restore the default folders for file conversions "
-                   "and downloads"))
+        dscrp = (_("Restore the default destination folder"),
+                 _("Restore the default folder for downloads"))
         self.resetfolders_tmp = setupButton.Append(wx.ID_ANY, dscrp[0],
                                                    dscrp[1])
         self.resetfolders_tmp.Enable(False)
@@ -375,7 +374,7 @@ class MainYtdl(wx.Frame):
         self.textDnDTarget.on_file_save(self.appdata['dirdownload'])
         self.fold_downloads_tmp.Enable(False)
         self.resetfolders_tmp.Enable(False)
-        wx.MessageBox(_("Default destination folders successfully restored"),
+        wx.MessageBox(_("Default destination folder successfully restored"),
                       "Videomass", wx.ICON_INFORMATION, self)
     # ------------------------------------------------------------------#
 
@@ -467,7 +466,7 @@ class MainYtdl(wx.Frame):
                                                  tip, wx.ITEM_NORMAL,
                                                  )
         tip = _("Stops current process")
-        stop = self.toolbar.AddTool(14, _('Stop'), bmpstop,
+        stop = self.toolbar.AddTool(14, _('Abort'), bmpstop,
                                     tip, wx.ITEM_NORMAL,
                                     )
         tip = _("Clear the URL list")

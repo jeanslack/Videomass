@@ -295,7 +295,7 @@ class FormatCode(wx.Panel):
                                 video = i.split('Video: ')[1]
 
                 if video and audio:
-                    format_code.append(f'{video}+{audio}')
+                    format_code.append(f'{video},{audio}')
                 elif video:
                     format_code.append(f'{video}')
                 elif audio:
