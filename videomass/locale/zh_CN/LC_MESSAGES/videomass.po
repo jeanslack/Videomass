@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-21 18:22+0100\n"
-"PO-Revision-Date: 2023-03-21 19:49+0100\n"
+"POT-Creation-Date: 2023-03-22 01:02+0100\n"
+"PO-Revision-Date: 2023-03-22 01:06+0100\n"
 "Last-Translator: MaiJZ https://github.com/maijz128\n"
 "Language-Team: simplified Chinese (CN)\n"
 "Language: zh_CN\n"
@@ -4241,11 +4241,17 @@ msgstr "fps"
 msgid "Audio Codec"
 msgstr "音频编解码器"
 
-#: ../vdms_ytdlp/formatcode.py:136 ../vdms_ytdlp/playlist_indexing.py:117
-msgid "Help viewer"
-msgstr "帮助查看器"
+#: ../vdms_ytdlp/formatcode.py:137
+msgid "Don't merge any files"
+msgstr ""
 
-#: ../vdms_ytdlp/formatcode.py:247
+#: ../vdms_ytdlp/formatcode.py:141
+#, fuzzy
+#| msgid "Download the latest presets"
+msgid "Download only the best"
+msgstr "下载最新的预设文件"
+
+#: ../vdms_ytdlp/formatcode.py:228
 #, fuzzy, python-brace-format
 msgid ""
 "ERROR: Unable to get format codes.\n"
@@ -4414,6 +4420,10 @@ msgstr ""
 #: ../vdms_ytdlp/playlist_indexing.py:108
 msgid "Playlist video items to download"
 msgstr "下载播放列表中的视频项目"
+
+#: ../vdms_ytdlp/playlist_indexing.py:117
+msgid "Help viewer"
+msgstr "帮助查看器"
 
 #: ../vdms_ytdlp/playlist_indexing.py:225
 msgid "ERROR: Invalid option"
@@ -4692,9 +4702,6 @@ msgstr "URL包含通道。你确定要继续吗？"
 
 #~ msgid "Check new versions of Videomass presets from homepage"
 #~ msgstr "从主页上查看新版本的Videomass预设"
-
-#~ msgid "Download the latest presets"
-#~ msgstr "下载最新的预设文件"
 
 #~ msgid "Setting timestamp"
 #~ msgstr "设置时间戳"

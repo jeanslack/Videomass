@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-21 18:22+0100\n"
-"PO-Revision-Date: 2023-03-21 19:48+0100\n"
+"POT-Creation-Date: 2023-03-22 01:02+0100\n"
+"PO-Revision-Date: 2023-03-22 01:04+0100\n"
 "Last-Translator: José Alberto Valle Cid j.alberto.vc@gmail.com\n"
 "Language-Team: Spanish <>\n"
 "Language: es_ES\n"
@@ -4195,11 +4195,17 @@ msgstr "cps"
 msgid "Audio Codec"
 msgstr "Codec de Audio"
 
-#: ../vdms_ytdlp/formatcode.py:136 ../vdms_ytdlp/playlist_indexing.py:117
-msgid "Help viewer"
-msgstr "Visualizador  de ayuda"
+#: ../vdms_ytdlp/formatcode.py:137
+msgid "Don't merge any files"
+msgstr ""
 
-#: ../vdms_ytdlp/formatcode.py:247
+#: ../vdms_ytdlp/formatcode.py:141
+#, fuzzy
+#| msgid "Download the latest presets"
+msgid "Download only the best"
+msgstr "Descargar los presets más recientes"
+
+#: ../vdms_ytdlp/formatcode.py:228
 #, python-brace-format
 msgid ""
 "ERROR: Unable to get format codes.\n"
@@ -4369,6 +4375,10 @@ msgstr ""
 #: ../vdms_ytdlp/playlist_indexing.py:108
 msgid "Playlist video items to download"
 msgstr "Indices de video a descargar de la Lista"
+
+#: ../vdms_ytdlp/playlist_indexing.py:117
+msgid "Help viewer"
+msgstr "Visualizador  de ayuda"
 
 #: ../vdms_ytdlp/playlist_indexing.py:225
 msgid "ERROR: Invalid option"
@@ -4630,9 +4640,6 @@ msgstr "Las URLs contienen canales. ¿Seguro que desea continuar?"
 
 #~ msgid "Check new versions of Videomass presets from homepage"
 #~ msgstr "Comprobar nuevas versiones de presets de Videomass en su pagina"
-
-#~ msgid "Download the latest presets"
-#~ msgstr "Descargar los presets más recientes"
 
 #~ msgid "Setting timestamp"
 #~ msgstr "Configurar estampa de tiempo"

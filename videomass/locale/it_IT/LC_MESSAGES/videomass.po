@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-21 18:22+0100\n"
-"PO-Revision-Date: 2023-03-21 18:23+0100\n"
+"POT-Creation-Date: 2023-03-22 01:02+0100\n"
+"PO-Revision-Date: 2023-03-22 01:03+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -4030,11 +4030,15 @@ msgstr "fps"
 msgid "Audio Codec"
 msgstr "Codec Audio"
 
-#: ../vdms_ytdlp/formatcode.py:136 ../vdms_ytdlp/playlist_indexing.py:117
-msgid "Help viewer"
-msgstr "Visualizzatore di aiuto"
+#: ../vdms_ytdlp/formatcode.py:137
+msgid "Don't merge any files"
+msgstr "Non unire alcun file"
 
-#: ../vdms_ytdlp/formatcode.py:247
+#: ../vdms_ytdlp/formatcode.py:141
+msgid "Download only the best"
+msgstr "Scarica solo i migliori"
+
+#: ../vdms_ytdlp/formatcode.py:228
 #, python-brace-format
 msgid ""
 "ERROR: Unable to get format codes.\n"
@@ -4184,6 +4188,10 @@ msgstr ""
 #: ../vdms_ytdlp/playlist_indexing.py:108
 msgid "Playlist video items to download"
 msgstr "Elementi video della playlist da scaricare"
+
+#: ../vdms_ytdlp/playlist_indexing.py:117
+msgid "Help viewer"
+msgstr "Visualizzatore di aiuto"
 
 #: ../vdms_ytdlp/playlist_indexing.py:225
 msgid "ERROR: Invalid option"

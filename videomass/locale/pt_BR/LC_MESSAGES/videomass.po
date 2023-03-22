@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-21 18:22+0100\n"
-"PO-Revision-Date: 2023-03-21 19:49+0100\n"
+"POT-Creation-Date: 2023-03-22 01:02+0100\n"
+"PO-Revision-Date: 2023-03-22 01:05+0100\n"
 "Last-Translator: Samuel / http://littlesvr.ca/ostd/\n"
 "Language-Team: Portuguese (Brasilian)\n"
 "Language: pt_BR\n"
@@ -4304,11 +4304,17 @@ msgstr "quadros por segundo"
 msgid "Audio Codec"
 msgstr "Codec de áudio"
 
-#: ../vdms_ytdlp/formatcode.py:136 ../vdms_ytdlp/playlist_indexing.py:117
-msgid "Help viewer"
-msgstr "Visualizador de ajuda"
+#: ../vdms_ytdlp/formatcode.py:137
+msgid "Don't merge any files"
+msgstr ""
 
-#: ../vdms_ytdlp/formatcode.py:247
+#: ../vdms_ytdlp/formatcode.py:141
+#, fuzzy
+#| msgid "Download the latest presets"
+msgid "Download only the best"
+msgstr "Baixe as últimas predefinições"
+
+#: ../vdms_ytdlp/formatcode.py:228
 #, python-brace-format
 msgid ""
 "ERROR: Unable to get format codes.\n"
@@ -4464,6 +4470,10 @@ msgstr ""
 #: ../vdms_ytdlp/playlist_indexing.py:108
 msgid "Playlist video items to download"
 msgstr ""
+
+#: ../vdms_ytdlp/playlist_indexing.py:117
+msgid "Help viewer"
+msgstr "Visualizador de ajuda"
 
 #: ../vdms_ytdlp/playlist_indexing.py:225
 #, fuzzy
@@ -4730,9 +4740,6 @@ msgstr "Os URLs contêm canais . Você tem certeza que quer continuar?"
 
 #~ msgid "Check new versions of Videomass presets from homepage"
 #~ msgstr "Verifique as novas versões das predefinições do Videomass"
-
-#~ msgid "Download the latest presets"
-#~ msgstr "Baixe as últimas predefinições"
 
 #~ msgid "Setting timestamp"
 #~ msgstr "Definindo registro de data / hora"

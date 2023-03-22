@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-21 18:22+0100\n"
-"PO-Revision-Date: 2023-03-21 19:48+0100\n"
+"POT-Creation-Date: 2023-03-22 01:02+0100\n"
+"PO-Revision-Date: 2023-03-22 01:05+0100\n"
 "Last-Translator: johannesdedoper <https://github.com/johannesdedoper>\n"
 "Language-Team: Dutch <>\n"
 "Language: nl_NL\n"
@@ -4175,11 +4175,17 @@ msgstr "fps"
 msgid "Audio Codec"
 msgstr "Audio Codec"
 
-#: ../vdms_ytdlp/formatcode.py:136 ../vdms_ytdlp/playlist_indexing.py:117
-msgid "Help viewer"
-msgstr "Hulp viewer"
+#: ../vdms_ytdlp/formatcode.py:137
+msgid "Don't merge any files"
+msgstr ""
 
-#: ../vdms_ytdlp/formatcode.py:247
+#: ../vdms_ytdlp/formatcode.py:141
+#, fuzzy
+#| msgid "Download the latest presets"
+msgid "Download only the best"
+msgstr "Download de nieuwste presets"
+
+#: ../vdms_ytdlp/formatcode.py:228
 #, python-brace-format
 msgid ""
 "ERROR: Unable to get format codes.\n"
@@ -4345,6 +4351,10 @@ msgstr ""
 #: ../vdms_ytdlp/playlist_indexing.py:108
 msgid "Playlist video items to download"
 msgstr "Afspeellijst video's om te downloaden"
+
+#: ../vdms_ytdlp/playlist_indexing.py:117
+msgid "Help viewer"
+msgstr "Hulp viewer"
 
 #: ../vdms_ytdlp/playlist_indexing.py:225
 msgid "ERROR: Invalid option"
@@ -4607,9 +4617,6 @@ msgstr "De URLs bevatten kanalen. Wilt u toch doorgaan?"
 
 #~ msgid "Check new versions of Videomass presets from homepage"
 #~ msgstr "Check voor nieuwe Videomass presets"
-
-#~ msgid "Download the latest presets"
-#~ msgstr "Download de nieuwste presets"
 
 #~ msgid "Setting timestamp"
 #~ msgstr "Tijdcode instellen"

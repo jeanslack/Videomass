@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-21 18:22+0100\n"
+"POT-Creation-Date: 2023-03-22 01:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3450,11 +3450,15 @@ msgstr ""
 msgid "Audio Codec"
 msgstr ""
 
-#: ../vdms_ytdlp/formatcode.py:136 ../vdms_ytdlp/playlist_indexing.py:117
-msgid "Help viewer"
+#: ../vdms_ytdlp/formatcode.py:137
+msgid "Don't merge any files"
 msgstr ""
 
-#: ../vdms_ytdlp/formatcode.py:247
+#: ../vdms_ytdlp/formatcode.py:141
+msgid "Download only the best"
+msgstr ""
+
+#: ../vdms_ytdlp/formatcode.py:228
 #, python-brace-format
 msgid ""
 "ERROR: Unable to get format codes.\n"
@@ -3591,6 +3595,10 @@ msgstr ""
 
 #: ../vdms_ytdlp/playlist_indexing.py:108
 msgid "Playlist video items to download"
+msgstr ""
+
+#: ../vdms_ytdlp/playlist_indexing.py:117
+msgid "Help viewer"
 msgstr ""
 
 #: ../vdms_ytdlp/playlist_indexing.py:225
