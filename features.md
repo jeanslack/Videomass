@@ -6,18 +6,21 @@ nav_order: 2
 # Features
 ---
 
-Videomass is a free, open source and cross-platform GUI for FFmpeg and youtube-dl,
-concatenate (mux or encode videos), presets manager, conversions.
-This audio/video converter is user friendly for beginners and more advanced users. 
-Using the step by step interface (GUI) you can simply choose a preset or make your 
-own. For the people that are familiar with FFmpeg there is the possbility to easily 
-make your own presets using the FFmpeg command line or make a preset through the GUI
-and adapt this to your specific needs. It offers out of the box output to all
-possible file formats like MP4, MKV, MOV etc. Video: MPEG-4, H.264/AVC, H.265/HEVC,
-VP9 and audio: AAC, MP3, OPUS, WAV, FLAC or AC-3 and subtitles and much more! Also
-you can copy streams (lossless video and/or audio) and extract audio. Finally it
-has a simple timeline editor, extended multimedia information and optional YouTube
-downloader.
+Videomass is not just a common converter, it features file concatenation, time 
+trimmer, ability to create thumbnails, tiled mosaics and animated giffs from movies; 
+it has sophisticated GUIs for video filters, previews for video stabilization, 
+resizing, croping, transposing, color equalization. It features PEAK, RMS and EBU 
+audio normalization with streams indexing capabilities, a volume analyzer, audio 
+preview and many more interesting features...
+For the people that are familiar with FFmpeg, it has a highly customizable preset 
+manager with the possbility to easily make your own presets through the GUI and 
+adapt this to your specific needs or create new presets using the FFmpeg command line. 
+For less experienced people there are also ready-to-use presets.
+It offers out of the box all possible file formats like MP4, M4V, M4A, MKV, AVI, 
+OGV, WEBM, MP3, AC-3, WAV, OPUS, FLAC, OGG and encoders like MPEG-4, H.264/AVC, 
+H.265/HEVC, VP8, VP9, LIBAOM-AVI, VORBIS, LAME, ALAC, etc.
+Also you can copy audio or video streams (lossless mode) without re-encoding, or 
+extract audio from videos and much more!
 
 ## Main features
 {: .bg-green-300}
@@ -25,11 +28,13 @@ downloader.
 - No ads
 - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
 - Batch processing.
-- Log file automatically saved.
+- Advanced log file management.
 - Multi-panels, switch between panels using keyboard shortcuts.
-- Audio video encoding.
-- Download videos from hundreds of sites.
-- Multi language support (English, French, Italian, Russian, Dutch, Portuguese-BR, simplified Chinese, Spanish)
+- Audio/video processing using advanced tools and sophisticated filters interfaces.
+- Download audio and videos from hundreds of sites in multiple formats and resolutions.
+- While downloading audio or video you can now do other transcoding tasks.
+- Multi languages support (English, French, Italian, Russian, Dutch, Portuguese-BR, simplified Chinese, Spanish)
+
 
 ## Using FFmpeg
 {: .bg-green-300}
@@ -38,12 +43,12 @@ downloader.
 - Fully customizable presets and profiles.
 - Possibility to create your new presets and profiles from scratch.
 - Has useful presets to start with.
-- Supports all [formats](https://ffmpeg.org/ffmpeg-formats.html) and [codecs](https://ffmpeg.org/ffmpeg-codecs.html) available with FFmpeg.
-- Madia file info and stream analyzer.
+- Using the Presets Manager, it can supports all [formats](https://ffmpeg.org/ffmpeg-formats.html) and [codecs](https://ffmpeg.org/ffmpeg-codecs.html) available with FFmpeg.
+- Madia file info and streams analyzer.
 - Shows the estimated time of arrival during encodings.
 - Concatenate.
-- Create video from still image and audio file.
-- Extract images from video
+- Create video from still image with audio file.
+- Extract images from video.
 - has useful tools for evaluating the supported features of a specific FFmpeg build.
 - Audio stream mapping using indexes.
 - Advanced dialogs for setting video filters such as:
@@ -53,37 +58,30 @@ downloader.
     - Deinterlacing
     - Denoise
     - Stabilization
+    - Color equlizer
 - Audio filters for volume normalization:
     - PEAK, RMS and [EBU-R128](http://ffmpeg.org/ffmpeg-filters.html#loudnorm) normalizers.
     - PEAK and RMS volume analysis reporting.
     - Ability to apply volume normalization only for certain audio streams in videos.
-- Timeline editor:
-    - Convenient display for viewing the time selection.
-- ...and much more
+- Trim editor:
+- ...and much more!
 
-## Using youtube-dl or yt-dlp
+## Using yt-dlp
 {: .bg-green-300}
 ---
-- Possibility to choose between two downloaders:
-[youtube-dl](https://github.com/ytdl-org/youtube-dl) or
-[yt-dlp](https://github.com/yt-dlp/yt-dlp)
-- Download from multiple URLs (YouTube and more sites,
-[over 200](http://ytdl-org.github.io/youtube-dl/supportedsites.html) are currently supported).
-- 5 download modes:
-    - Precompiled Videos (best or worst)
+- Download from multiple URLs (YouTube and more sites, [over 200](http://ytdl-org.github.io/youtube-dl/supportedsites.html) are currently supported).
+- Five download modes:
+    - Precompiled Videos.
     - By set preferred resolution and format.
-    - Download split audio and video.
+    - Download audio and video splitted.
     - Download Audio only.
-    - Download and merge audio and video by selecting "format codes".
+    - Download audio and video by ID selecting "format codes".
 - Shows download statistics.
-- Ability to playback individual URLs and different qualities.
-- Ability to download playlists.
-- Ability to index playlists to download.
+- Ability to download playlists and index playlists to download.
 - You can enable or disable the SSL certificate check.
-- Embed thumbnail in audio file (via [atomicparsley](http://atomicparsley.sourceforge.net/)).
+- Embed thumbnail in audio file.
 - Add metadata to file.
 - Write subtitles to video.
 - Ability to include IDs in filenames.
 - Ability to restrict file names.
-- Ability to keep youtube-dl backend updated (only available for *.AppImage).
 

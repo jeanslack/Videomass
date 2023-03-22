@@ -14,10 +14,8 @@ nav_order: 1
 Minimum requirements:
 - [Microsoft Windows 7](https://docs.microsoft.com/en-us/lifecycle/products/windows-7)
 - [x86_64](https://en.wikipedia.org/wiki/X86-64) architecture. 
-- [Microsoft Visual C++ 2010 Service Pack 1 Redistributable Package 
-(x86)](https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe). 
   
-[Videomass 4.0.5 Portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v4.0.5_x86_64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
+[Videomass 4.0.10 Portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v4.0.10_x86_64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
 [All Versions](https://github.com/jeanslack/Videomass/releases){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2}     
 
 ### Important note

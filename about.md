@@ -18,8 +18,7 @@ the [FFmpeg](https://www.ffmpeg.org/) commands without limits of
 [codecs](https://ffmpeg.org/ffmpeg-codecs.html).   
 
 It features graphical tools for viewing, analyzing and processing multimedia 
-streams and downloading videos via [youtube-dl](http://ytdl-org.github.io/youtube-dl/) 
-and/or [yt-dlp](https://github.com/yt-dlp/yt-dlp).  
+streams and downloading audio/videos via [yt-dlp](https://github.com/yt-dlp/yt-dlp).  
 
 Videomass is [Free (libre) Software](https://en.wikipedia.org/wiki/Free_software), 
 created and maintained by [Gianluca Pernigotto (jeanslack)](https://github.com/jeanslack); 
@@ -27,8 +26,8 @@ it was written in [Python3](https://www.python.org/) using the
 [wxPython4](https://www.wxpython.org/) toolkit; it is cross-platform and works on 
 Linux, MacOs, Windows and FreeBSD.   
 
-Videomass Logo and related artworks are created by Gianluca Pernigotto 
-(jeanslack) and by [KDE/Breeze Icons](https://github.com/KDE/breeze-icons).
+Videomass Logo and related artworks are created by Gianluca (jeanslack) Pernigotto 
+and by [KDE/Breeze Icons](https://github.com/KDE/breeze-icons).
 
 ---
 
@@ -42,18 +41,6 @@ free software and is licensed under the LGPL or GPL. Specifically in the case
 of versions of FFmpeg packaged with Videomass on the installers for Windows and
 MacOS, FFmpeg is licensed under the GPL. Complete FFmpeg documentation and
 sources are available at [FFmpeg.org](https://www.ffmpeg.org/)
-
----
-
-## What is youtube-dl?
-
-[youtube_dl](http://ytdl-org.github.io/youtube-dl/) is a command-line program to
-download videos from YouTube.com and a few more sites 
-(actually, the list is [long](http://ytdl-org.github.io/youtube-dl/supportedsites.html)). 
-It requires the Python interpreter, version 2.6, 2.7, or 3.2+, and it is not 
-platform specific. It should work on your Unix box, on Windows or on macOS. It 
-is released to the public domain, which means you can modify it, redistribute 
-it or use it however you like.
 
 ---
 
