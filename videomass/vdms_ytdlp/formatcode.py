@@ -132,25 +132,19 @@ class FormatCode(wx.Panel):
         self.fcode.InsertColumn(8, (_('Size')), width=100)
 
         sizer_base.Add(self.fcode, 1, wx.ALL | wx.EXPAND, 5)
-        # -------------textctrl
-        labtstr = _('Help viewer')
-        self.labtxt = wx.StaticText(self, label=labtstr)
-        sizer_base.Add(self.labtxt, 0, wx.LEFT, 5)
-        self.cod_text = wx.TextCtrl(self, wx.ID_ANY, "",
-                                    style=wx.TE_MULTILINE
-                                    | wx.TE_READONLY
-                                    | wx.TE_RICH2,
-                                    size=(-1, 100)
-                                    )
-        sizer_base.Add(self.cod_text, 0, wx.ALL | wx.EXPAND, 5)
+        sizeropt = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_base.Add(sizeropt, 0)
+        msg = _("Don't merge any files")
+        self.ckbx_nomerge = wx.CheckBox(self, wx.ID_ANY, msg)
+        sizeropt.Add(self.ckbx_nomerge, 0, wx.ALL | wx.EXPAND, 5)
+
+        msg = _("Download only the best")
+        self.ckbx_best = wx.CheckBox(self, wx.ID_ANY, msg)
+        sizeropt.Add(self.ckbx_best, 0, wx.ALL | wx.EXPAND, 5)
+        self.ckbx_best.SetValue(True)
         # -----------------------
         self.SetSizer(sizer_base)
         self.Layout()
-        # ----------------------- Properties
-
-        self.cod_text.SetBackgroundColour(FormatCode.BACKGRD)
-        if FormatCode.appdata['ostype'] != 'Darwin':
-            self.labtxt.SetLabelMarkup(f"<b>{labtstr}</b>")
 
         # ----------------------Binder (EVT)----------------------#
         if not self.oldwx:
@@ -186,18 +180,6 @@ class FormatCode(wx.Panel):
                         else:
                             dispv = self.fcode.GetItemText(i, 0)
                             self.format_dict[url].append('Video: ' + dispv)
-        self.cod_text.Clear()
-        for key, val in self.format_dict.items():
-            if not val:
-                self.cod_text.SetDefaultStyle(wx.TextAttr(FormatCode.WARN))
-                self.cod_text.AppendText(f'- {key} :\n')
-            elif val[0].split(': ')[1] == 'UNSUPPORTED':
-                self.cod_text.SetDefaultStyle(wx.TextAttr(FormatCode.RED))
-                self.cod_text.AppendText(f'- {key} :  '
-                                         f'Unable to get format code\n')
-            else:
-                self.cod_text.SetDefaultStyle(wx.TextAttr(FormatCode.DONE))
-                self.cod_text.AppendText(f'- {key} :  {val}\n')
     # ----------------------------------------------------------------------
 
     def set_formatcode(self, data_url, ssl):
@@ -206,7 +188,6 @@ class FormatCode(wx.Panel):
         `youtubedl_getstatistics`. Return `True` if `meta[1]`
         (error), otherwise return None as exit status.
         """
-        self.cod_text.Clear()
         self.urls = data_url.copy()
         meta = None, None
         index = 0
@@ -257,6 +238,8 @@ class FormatCode(wx.Panel):
         Called by `on_Start` parent method. Return format code list.
         """
         format_code = []
+        sep = ',' if  self.ckbx_nomerge.GetValue() else '+'
+        sepany = '/' if self.ckbx_best.GetValue() else sep
 
         for url, key, val in zip(self.urls,
                                  self.format_dict.keys(),
@@ -273,29 +256,29 @@ class FormatCode(wx.Panel):
                         video = val[0].split('Video: ')[1]
                 else:
                     index_1, index_2 = 0, 0
-                    for i in val:
-                        if i.startswith('Video: '):
+                    for idx in val:
+                        if idx.startswith('Video: '):
                             index_1 += 1
                             if index_1 > 1:
-                                video += f"/{i.split('Video: ')[1]}"
+                                video += f"{sepany}{idx.split('Video: ')[1]}"
                             else:
-                                video = i.split('Video: ')[1]
+                                video = idx.split('Video: ')[1]
 
-                        elif i.startswith('Audio: '):
+                        elif idx.startswith('Audio: '):
                             index_2 += 1
                             if index_2 > 1:
-                                audio += f"/{i.split('Audio: ')[1]}"
+                                audio += f"{sepany}{idx.split('Audio: ')[1]}"
                             else:
-                                audio = i.split('Audio: ')[1]
+                                audio = idx.split('Audio: ')[1]
                         else:
                             index_1 += 1
                             if index_1 > 1:
-                                video += f"/{i.split('Video: ')[1]}"
+                                video += f"{sepany}{idx.split('Video: ')[1]}"
                             else:
-                                video = i.split('Video: ')[1]
+                                video = idx.split('Video: ')[1]
 
                 if video and audio:
-                    format_code.append(f'{video},{audio}')
+                    format_code.append(f'{video}{sep}{audio}')
                 elif video:
                     format_code.append(f'{video}')
                 elif audio:
