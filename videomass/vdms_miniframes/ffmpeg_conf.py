@@ -61,11 +61,12 @@ class FFmpegConf(wx.MiniFrame):
         sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)
         # -- nb 1
         nb_panel_1 = wx.Panel(notebook, wx.ID_ANY,)
-        txtinfo = wx.StaticText(nb_panel_1, wx.ID_ANY,)
+        txtinfo = wx.StaticText(nb_panel_1, wx.ID_ANY,
+                                )
         sizer_tab1 = wx.BoxSizer(wx.HORIZONTAL)
         grid_tab1 = wx.FlexGridSizer(1, 1, 10, 10)
-        sizer_tab1.Add(grid_tab1, 1, wx.ALL | wx.EXPAND, 5)
-        grid_tab1.Add(txtinfo, 1, wx.ALL, 5)
+        sizer_tab1.Add(grid_tab1, 0, wx.ALL | wx.EXPAND, 5)
+        grid_tab1.Add(txtinfo, 0, wx.ALL | wx.EXPAND, 5)
         nb_panel_1.SetSizer(sizer_tab1)
         notebook.AddPage(nb_panel_1, (_("Informations")))
         # -- nb 2
@@ -171,12 +172,13 @@ class FFmpegConf(wx.MiniFrame):
 
         # populate txtinfo TextCtrl output:
         txtinfo.SetLabel(f"\n\n\n\n"
-                         f"              {info[0].strip()}\n"
-                         f"              {info[1].strip()}\n"
-                         f"\n\n\n"
-                         f"             - {ffmpeg}\n"
-                         f"             - {ffprobe}\n"
-                         f"             - {ffplay}\n")
+                         f"{info[0].strip()}\n\n"
+                         f"{info[1].strip()}\n"
+                         f"\n\nPath to executables:\n"
+                         f"- {ffmpeg}\n"
+                         f"- {ffprobe}\n"
+                         f"- {ffplay}\n")
+        txtinfo.Wrap(600)
         # populate others_opt listctrl output:
         index = 0
         if others:

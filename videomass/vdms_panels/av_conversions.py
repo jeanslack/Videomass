@@ -48,7 +48,7 @@ from videomass.vdms_dialogs.filter_deinterlace import Deinterlace
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_dialogs.filter_stab import VidstabSet
 from videomass.vdms_dialogs.filter_colorcorrection import ColorEQ
-from videomass.vdms_frames.shownormlist import AudioVolNormal
+from videomass.vdms_miniframes.shownormlist import AudioVolNormal
 
 
 class AV_Conv(wx.Panel):

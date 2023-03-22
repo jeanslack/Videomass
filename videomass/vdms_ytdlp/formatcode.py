@@ -137,8 +137,7 @@ class FormatCode(wx.Panel):
         msg = _("Don't merge any files")
         self.ckbx_nomerge = wx.CheckBox(self, wx.ID_ANY, msg)
         sizeropt.Add(self.ckbx_nomerge, 0, wx.ALL | wx.EXPAND, 5)
-
-        msg = _("Download only the best")
+        msg = _("Download only the best selected qualities")
         self.ckbx_best = wx.CheckBox(self, wx.ID_ANY, msg)
         sizeropt.Add(self.ckbx_best, 0, wx.ALL | wx.EXPAND, 5)
         self.ckbx_best.SetValue(True)
@@ -238,7 +237,7 @@ class FormatCode(wx.Panel):
         Called by `on_Start` parent method. Return format code list.
         """
         format_code = []
-        sep = ',' if  self.ckbx_nomerge.GetValue() else '+'
+        sep = ',' if self.ckbx_nomerge.GetValue() else '+'
         sepany = '/' if self.ckbx_best.GetValue() else sep
 
         for url, key, val in zip(self.urls,

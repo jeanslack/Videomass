@@ -58,7 +58,8 @@ def info_this_platform():
 
 def arguments():
     """Parser for command line options"""
-    parser = argparse.ArgumentParser(description=('GUI for FFmpeg'),)
+    parser = argparse.ArgumentParser(description=('GUI for FFmpeg and '
+                                                  'yt-dlp'),)
     parser.add_argument('-v', '--version',
                         help="Show the current version and exit",
                         action="store_true",
@@ -82,7 +83,7 @@ def arguments():
                               'may not be fully updated on the configuration '
                               'file.'
                               ),
-                        metavar='URL',
+                        metavar='DIRPATH',
                         )
 
     argmts = parser.parse_args()
@@ -91,6 +92,8 @@ def arguments():
         deps = {'Required': {'ffmpeg': None,
                              'ffprobe': None,
                              'ffplay': None},
+                'Recommended': {'yt-dlp': None},
+                'Optional': {'atomicparsley': None}
                 }
         for key, val in deps.items():
             if key in ('Required', 'Recommended', 'Optional'):

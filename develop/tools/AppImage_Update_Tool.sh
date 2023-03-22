@@ -2,7 +2,8 @@
 #
 # Description:
 # ------------
-#   Updates pip, certifi packages inside Videomass*.AppImage.
+#   Updates pip, certifi, yt-dlp and youtube-dl packages inside
+#   Videomass*.AppImage.
 #
 # Usage:
 # ------
@@ -67,6 +68,8 @@ export PATH="$(pwd)/squashfs-root/usr/bin:$PATH"
 ./squashfs-root/opt/python3.9/bin/python3.9 -m pip install -U --target=$SITEPKG pip
 # update certifi
 ./squashfs-root/opt/python3.9/bin/python3.9 -m pip install -U --target=$SITEPKG certifi
+# update yt-dlp package
+./squashfs-root/opt/python3.9/bin/python3.9 -m pip install -U --target=$SITEPKG yt_dlp
 
 # retrieve the Videomass version from the package metadata
 export VERSION=$(cat $SITEPKG/videomass-*.dist-info/METADATA | \

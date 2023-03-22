@@ -558,16 +558,16 @@ class MainYtdl(wx.Frame):
         self.Layout()
     # ------------------------------------------------------------------#
 
-    def switch_to_processing(self, *varargs):
+    def switch_to_processing(self, *args):
         """
         Preparing to processing
         """
-        if varargs[0] == 'Viewing last log':
+        if args[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
             [self.toolbar.EnableTool(x, False) for x in (11, 13, 14, 15)]
             [self.toolbar.EnableTool(x, True) for x in (10, 12)]
 
-        elif varargs[0] == 'youtube_dl downloading':
+        elif args[0] == 'youtube_dl downloading':
             self.menuBar.EnableTop(2, False)
             [self.toolbar.EnableTool(x, False) for x in (10, 11, 13, 15)]
             [self.toolbar.EnableTool(x, True) for x in (12, 14)]
@@ -576,7 +576,7 @@ class MainYtdl(wx.Frame):
         self.textDnDTarget.Hide()
         self.ytDownloader.Hide()
         self.ProcessPanel.Show()
-        self.ProcessPanel.topic_thread(varargs)
+        self.ProcessPanel.topic_thread(args)
         self.Layout()
     # ------------------------------------------------------------------#
 

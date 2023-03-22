@@ -3,6 +3,7 @@
 URGENCY: to do soon
 --------------------
 
+
 --------------
 URGENCY: high
 --------------
@@ -34,3 +35,6 @@ URGENCY: low (New implementations)
 -------------
 
 - [PRESETS MANAGER] The profile requires additional input (-i FILE -i FILE ...)
+- ChourS proposes a function to save YouTube Downloader panel settings.
+- @johannesdedoper would also like a function to save some UI settings,
+  see #113 .

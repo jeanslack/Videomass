@@ -118,6 +118,7 @@ class PyinstallerSpec():
         """
         options = (f"--name {self.getdata['RLS_NAME']} {self.onedf} "
                    f"--windowed --noconsole --icon {self.getdata['ICO']} "
+                   # f"--exclude-module 'yt_dlp' "
                    f"{self.datas} ")
 
         return options

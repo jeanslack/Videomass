@@ -177,7 +177,7 @@ class LogOut(wx.Panel):
 
     def topic_thread(self, panel, durs, tseq, *args):
         """
-        Thread redirection
+        This method is resposible to create the Thread instance.
         *args: type tuple data object
         durs: list of file durations or partial if tseq is setted
         """

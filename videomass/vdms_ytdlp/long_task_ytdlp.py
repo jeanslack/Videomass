@@ -104,20 +104,19 @@ class LogOut(wx.Panel):
         pub.subscribe(self.end_proc, "END_YTDL_EVT")
     # ----------------------------------------------------------------------
 
-    def topic_thread(self, varargs):
+    def topic_thread(self, args):
         """
-        Thread redirection
-        varargs: type tuple data object
-        duration: total duration or partial if time_seq is set
+        This method is resposible to create the Thread instance.
+        args: type tuple data object.
         """
-        if varargs[0] == 'Viewing last log':
+        if args[0] == 'Viewing last log':
             return
 
         self.txtout.Clear()
         self.labprog.SetLabel('')
-        logn = varargs[8]
+        logn = args[8]
         self.logfile = make_log_template(f'{logn}.log', self.appdata['logdir'])
-        self.thread_type = YdlDownloader(varargs, self.logfile)
+        self.thread_type = YdlDownloader(args, self.logfile)
     # ----------------------------------------------------------------------
 
     def downloader_activity(self, output, duration, status):
