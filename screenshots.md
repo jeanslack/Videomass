@@ -8,7 +8,7 @@ nav_order: 3
 
 ---
 
-These screenshots were made on Manjaro xfce desktop using wxPython version 4.2.0    
+### These screenshots were made on Manjaro xfce desktop using wxPython version 4.2.0    
 
 Home Panel:   
 
@@ -25,25 +25,33 @@ A/V Conversion video tab:
 Some filters in action:   
 
 ![Image](/images/screenshots/crop-filter.png)   
+
 ![Image](/images/screenshots/ColorEQ.png)   
-![Image](/images/screenshots/Transpose.png)  
+
+![Image](/images/screenshots/Transpose.png)    
+
 ![Image](/images/screenshots/resizing.png)   
-![Image](/images/screenshots/stabilizer.png)   
-![Image](/images/screenshots/volumeStatistics.png)   
+
+![Image](/images/screenshots/stabilizer.png)     
+
 
 A/V Conversion audio tab:   
 
 ![Image](/images/screenshots/AV_audio.png)   
 
-Presets Manager:
+Volume reports for normalization:   
+
+![Image](/images/screenshots/volumeStatistics.png)   
+
+Presets Manager:   
 
 ![Image](/images/screenshots/PresetsManager.png)   
 
 Confirm Settings window:   
 
-![Image](/images/screenshots/epilog.png) 
+![Image](/images/screenshots/epilog.png)   
 
-File Processing:
+File Processing:   
 
 ![Image](/images/screenshots/FileProcessing.png)    
 
@@ -51,7 +59,7 @@ YouTube Downloader (GUI for yt-dlp):
 
 ![Image](/images/screenshots/enterURL.png)   
 
-![Image](/images/screenshots/ytdlpUI.png) 
+![Image](/images/screenshots/ytdlpUI.png)    
 
 ![Image](/images/screenshots/download.png)   
 
