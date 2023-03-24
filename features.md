@@ -18,7 +18,7 @@ adapt this to your specific needs or create new presets using the FFmpeg command
 For less experienced people there are also ready-to-use presets.
 It offers out of the box all possible file formats like MP4, M4V, M4A, MKV, AVI, 
 OGV, WEBM, MP3, AC-3, WAV, OPUS, FLAC, OGG and encoders like MPEG-4, H.264/AVC, 
-H.265/HEVC, VP8, VP9, LIBAOM-AVI, VORBIS, LAME, ALAC, etc.
+H.265/HEVC, VP8, VP9, LIBAOM-AVI, VORBIS, PCM, LAME, ALAC, etc.
 Also you can copy audio or video streams (lossless mode) without re-encoding, or 
 extract audio from videos and much more!
 
@@ -33,7 +33,7 @@ extract audio from videos and much more!
 - Audio/video processing using advanced tools and sophisticated filters interfaces.
 - Download audio and videos from hundreds of sites in multiple formats and resolutions.
 - While downloading audio or video you can now do other transcoding tasks.
-- Multi languages support (English, French, Italian, Russian, Dutch, Portuguese-BR, simplified Chinese, Spanish)
+- Multi languages support (English, French, Italian, Russian, Dutch, Portuguese-BR, simplified Chinese, Spanish-ES, Spanish-CU, Spanish-MX)
 
 
 ## Using FFmpeg
@@ -43,15 +43,15 @@ extract audio from videos and much more!
 - Fully customizable presets and profiles.
 - Possibility to create your new presets and profiles from scratch.
 - Has useful presets to start with.
-- Using the Presets Manager, it can supports all [formats](https://ffmpeg.org/ffmpeg-formats.html) and [codecs](https://ffmpeg.org/ffmpeg-codecs.html) available with FFmpeg.
-- Madia file info and streams analyzer.
+- Using the Presets Manager, it can supports all [formats](https://ffmpeg.org/ffmpeg-formats.html) and [codecs](https://ffmpeg.org/ffmpeg-codecs.html) available on FFmpeg.
+- Media file info (from FFprobe) and streams analyzer (from volumedetect).
 - Shows the estimated time of arrival during encodings.
-- Concatenate.
-- Create video from still image with audio file.
+- Concatenate, merge media files losslessly.
+- Create videos from still images (multiple images are also supported) and optionally include an audio file.
 - Extract images from video.
 - has useful tools for evaluating the supported features of a specific FFmpeg build.
-- Audio stream mapping using indexes.
-- Advanced dialogs for setting video filters such as:
+- Audio stream mapping using selectable indexes.
+- GUI video filters such as:
     - Resizing 
     - Cropping
     - Rotation
@@ -59,7 +59,7 @@ extract audio from videos and much more!
     - Denoise
     - Stabilization
     - Color equlizer
-- Audio filters for volume normalization:
+- Audio filters for volume normalization such us:
     - PEAK, RMS and [EBU-R128](http://ffmpeg.org/ffmpeg-filters.html#loudnorm) normalizers.
     - PEAK and RMS volume analysis reporting.
     - Ability to apply volume normalization only for certain audio streams in videos.

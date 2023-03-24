@@ -21,13 +21,12 @@ It features graphical tools for viewing, analyzing and processing multimedia
 streams and downloading audio/videos via [yt-dlp](https://github.com/yt-dlp/yt-dlp).  
 
 Videomass is [Free (libre) Software](https://en.wikipedia.org/wiki/Free_software), 
-created and maintained by [Gianluca Pernigotto (jeanslack)](https://github.com/jeanslack); 
+created and maintained by [Gianluca (jeanslack) Pernigotto](https://github.com/jeanslack); 
 it was written in [Python3](https://www.python.org/) using the 
 [wxPython4](https://www.wxpython.org/) toolkit; it is cross-platform and works on 
 Linux, MacOs, Windows and FreeBSD.   
 
-Videomass Logo and related artworks are created by Gianluca (jeanslack) Pernigotto 
-and by [KDE/Breeze Icons](https://github.com/KDE/breeze-icons).
+The Videomass logo and artwork were created by [Gianluca (jeanslack) Pernigotto](https://github.com/jeanslack)   
 
 ---
 
