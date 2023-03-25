@@ -6,19 +6,17 @@ nav_order: 8
 
 # What is Videomass?
 
----
+---   
 
-Videomass is a GUI designed for [FFmpeg](https://www.ffmpeg.org/) 
-enthusiasts, who need to manage custom profiles to automate conversion/transcoding 
-processes even with multiple files in series (batch processing).      
+Videomass is a multifunctional, multitasking front-end for [FFmpeg](https://www.ffmpeg.org/) and 
+[yt-dlp](https://github.com/yt-dlp/yt-dlp), it was designed for people who need 
+a GUI to collect custom presets and profiles and to facilitate the application 
+of specific video and audio filters or automate the conversion/transcoding 
+processes even in batch mode. 
 
-It is based on an advanced use of presets and profiles in order to use most of 
-the [FFmpeg](https://www.ffmpeg.org/) commands without limits of 
-[formats](https://ffmpeg.org/ffmpeg-formats.html) and 
-[codecs](https://ffmpeg.org/ffmpeg-codecs.html).   
-
-It features graphical tools for viewing, analyzing and processing multimedia 
-streams and downloading audio/videos via [yt-dlp](https://github.com/yt-dlp/yt-dlp).  
+It features graphical tools for viewing, analyzing, filtering and processing multimedia 
+streams with the additional ability to downloading audio/videos via 
+[yt-dlp](https://github.com/yt-dlp/yt-dlp).  
 
 Videomass is [Free (libre) Software](https://en.wikipedia.org/wiki/Free_software), 
 created and maintained by [Gianluca (jeanslack) Pernigotto](https://github.com/jeanslack); 

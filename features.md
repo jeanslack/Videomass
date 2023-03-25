@@ -69,16 +69,16 @@ extract audio from videos and much more!
 ## Using yt-dlp
 {: .bg-green-300}
 ---
-- Download from multiple URLs (YouTube and more sites, [over 200](http://ytdl-org.github.io/youtube-dl/supportedsites.html) are currently supported).
-- Five download modes:
-    - Precompiled Videos.
-    - By set preferred resolution and format.
-    - Download audio and video splitted.
-    - Download Audio only.
-    - Download audio and video by ID selecting "format codes".
+- Download from multiple URLs (YouTube and more sites, over 200 are currently supported).
+- Precompiled Videos, quality best, medium, worst.
+- Download by resolution and format.
+- Download audio and video splitted.
+- Download Audio only.
+- Download by ID selecting "format codes" and ability to download both separated or merged files.
 - Shows download statistics.
-- Ability to download playlists and index playlists to download.
-- You can enable or disable the SSL certificate check.
+- Ability to download entire playlists.
+- Playlists can be indexed.
+- Enabling/disabling the SSL certificate.
 - Embed thumbnail in audio file.
 - Add metadata to file.
 - Write subtitles to video.
