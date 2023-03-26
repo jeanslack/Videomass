@@ -28,6 +28,7 @@ import os
 import sys
 import re
 import wx
+from pubsub import pub
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_io.io_tools import stream_play
 from videomass.vdms_threads.ffprobe import ffprobe
@@ -285,8 +286,8 @@ class FileDnD(wx.Panel):
         self.flCtrl.SetDropTarget(file_drop_target)  # Make drop target.
         # create widgets
         infomsg = _("Drag one or more files below")
-        lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
-        sizer.Add(lbl_info, 0, wx.ALL | wx.EXPAND, 5)
+        self.lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
+        sizer.Add(self.lbl_info, 0, wx.ALL | wx.EXPAND, 5)
         sizer.Add(self.flCtrl, 1, wx.EXPAND | wx.ALL, 2)
         sizer.Add((0, 10))
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
@@ -305,9 +306,9 @@ class FileDnD(wx.Panel):
         self.SetSizer(sizer)
 
         if appdata['ostype'] == 'Darwin':
-            lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            self.lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
-            lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            self.lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
         self.text_path_save.SetValue(args[1])
         if appdata['outputfile_samedir']:
@@ -328,6 +329,35 @@ class FileDnD(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.on_col_click, self.flCtrl)
+
+        pub.subscribe(self.text_information, "SET_DRAG_AND_DROP_TOPIC")
+    # ----------------------------------------------------------------------
+
+    def text_information(self, topic):
+        """
+        Set informative properties on selected topic.
+        This method is called using pub/sub protocol
+        "SET_DRAG_AND_DROP_TOPIC".
+        """
+        if topic in ('Presets Manager', 'Audio/Video Conversions',
+                     'Concatenate Demuxer'):
+            self.flCtrl.SetToolTip(_('No limit in the imported formats, but '
+                                     'if you have to work with videos, import '
+                                     'only videos, if with audio, import only '
+                                     'audio files, etc. '))
+            self.lbl_info.SetLabel('Drag one or more files below')
+        elif topic == 'Image Sequence to Video':
+            self.lbl_info.SetLabel('Drag the image files below')
+            self.flCtrl.SetToolTip(_('Currently supported formats are jpeg, '
+                                     'png and bmp. The order in which they '
+                                     'are sorted here will affect the making '
+                                     'of the final video.'))
+
+        elif topic == 'Video to Pictures':
+            self.lbl_info.SetLabel('Drag one or more video files below')
+            self.flCtrl.SetToolTip(_('Import only video type files, rendering '
+                                     'expects to process one at a time '
+                                     'starting from the selected one.'))
     # ----------------------------------------------------------------------
 
     def on_col_click(self, event):

@@ -2,20 +2,24 @@
 [![Image](https://img.shields.io/static/v1?label=python&logo=python&message=3.7%20|%203.8%20|%203.9%20|%203.10&color=blue)](https://www.python.org/downloads/)
 [![Image](https://img.shields.io/badge/license-GPLv3-orange)](https://github.com/jeanslack/Videomass/blob/master/LICENSE)
 [![Python application](https://github.com/jeanslack/Videomass/actions/workflows/tests.yml/badge.svg)](https://github.com/jeanslack/Videomass/actions/workflows/tests.yml)
-                 
 
-Videomass is a cross-platform GUI designed for [FFmpeg](https://www.ffmpeg.org/) 
-enthusiasts who need to manage custom profiles to automate conversion/transcoding 
-processes.   
+Videomass is a multifunctional, multitasking front-end for [FFmpeg](https://www.ffmpeg.org/) 
+and [yt-dlp](https://github.com/yt-dlp/yt-dlp), it was designed for people who need 
+a GUI to collect custom presets and profiles and to facilitate the application 
+of specific video and audio filters or automate the conversion/transcoding 
+processes even in batch mode. 
 
-It is based on an advanced use of presets and profiles in order to use most of 
-the [FFmpeg](https://www.ffmpeg.org/) commands without limits of formats and 
-codecs.   
+It features graphical tools for viewing, analyzing, filtering and processing multimedia 
+streams with the additional ability to downloading audio/videos via 
+[yt-dlp](https://github.com/yt-dlp/yt-dlp).   
 
-It features graphical tools for viewing, analyzing and processing multimedia 
-streams and downloading videos via [yt-dlp](https://github.com/yt-dlp/yt-dlp).   
+Videomass is [Free (libre) Software](https://en.wikipedia.org/wiki/Free_software), 
+created and maintained by [Gianluca (jeanslack) Pernigotto](https://github.com/jeanslack); 
+it was written in [Python3](https://www.python.org/) using the 
+[wxPython4](https://www.wxpython.org/) toolkit; it is cross-platform and works on 
+Linux, MacOs, Windows and FreeBSD.    
 
-Videomass is written in Python3 with the wxPython-Phoenix toolkit.   
+The Videomass logo and artwork were created by [Gianluca (jeanslack) Pernigotto](https://github.com/jeanslack)  
 
 **[Changelog](https://github.com/jeanslack/Videomass/blob/master/CHANGELOG)**   
 **[Features](https://jeanslack.github.io/Videomass/features.html)**   

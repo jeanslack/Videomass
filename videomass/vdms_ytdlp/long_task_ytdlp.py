@@ -245,7 +245,7 @@ class LogOut(wx.Panel):
         self.parent.statusbar_msg(_("wait... all operations will be stopped "
                                     "at the end of the download in progress "),
                                   'GOLDENROD', LogOut.WHITE)
-        self.thread_type.join()
+        # self.thread_type.join()  trying not to use thread.join here
         self.parent.statusbar_msg(_("...Interrupted"), None)
         self.abort = True
     # ----------------------------------------------------------------------

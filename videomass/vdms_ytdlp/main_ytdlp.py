@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
-Name: main_frame.py
-Porpose: top window main frame
+Name: main_ytdlp.py
+Porpose: window main frame for yt_dlp library
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.17.2023
+Rev: March.24.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -98,7 +98,7 @@ class MainYtdl(wx.Frame):
         self.sb = self.CreateStatusBar(1)
         self.statusbar_msg(_('Ready'), None)
         # disable some toolbar item
-        [self.toolbar.EnableTool(x, False) for x in (10, 12, 13, 14)]
+        [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24)]
         self.Layout()
         # ---------------------- Binding (EVT) ----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_outputdir)
@@ -446,31 +446,31 @@ class MainYtdl(wx.Frame):
                                      wx.NORMAL, 0, ""))
 
         tip = _("Go to the previous panel")
-        back = self.toolbar.AddTool(10, _('Back'),
+        back = self.toolbar.AddTool(20, _('Back'),
                                     bmpback,
                                     tip, wx.ITEM_NORMAL,
                                     )
         tip = _("Go to the next panel")
-        forward = self.toolbar.AddTool(11, _('Next'),
+        forward = self.toolbar.AddTool(21, _('Next'),
                                        bmpnext,
                                        tip, wx.ITEM_NORMAL,
                                        )
         tip = _("Shows statistics and information")
-        self.btn_ydlstatistics = self.toolbar.AddTool(12, _('Statistics'),
+        self.btn_ydlstatistics = self.toolbar.AddTool(22, _('Statistics'),
                                                       bmpstat,
                                                       tip, wx.ITEM_NORMAL,
                                                       )
         tip = _("Start downloading")
-        self.run_download = self.toolbar.AddTool(13, _('Download'),
+        self.run_download = self.toolbar.AddTool(23, _('Download'),
                                                  bmpydl,
                                                  tip, wx.ITEM_NORMAL,
                                                  )
         tip = _("Stops current process")
-        stop = self.toolbar.AddTool(14, _('Abort'), bmpstop,
+        stop = self.toolbar.AddTool(24, _('Abort'), bmpstop,
                                     tip, wx.ITEM_NORMAL,
                                     )
         tip = _("Clear the URL list")
-        clear = self.toolbar.AddTool(15, _('Clear'), bmpclear,
+        clear = self.toolbar.AddTool(25, _('Clear'), bmpclear,
                                      tip, wx.ITEM_NORMAL,
                                      )
         self.toolbar.Realize()
@@ -536,8 +536,8 @@ class MainYtdl(wx.Frame):
         self.ProcessPanel.Hide()
         self.ytDownloader.Hide()
         self.textDnDTarget.Show()
-        [self.toolbar.EnableTool(x, True) for x in (11, 15)]
-        [self.toolbar.EnableTool(x, False) for x in (10, 12, 13, 14)]
+        [self.toolbar.EnableTool(x, True) for x in (21, 25)]
+        [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24)]
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)
@@ -552,8 +552,8 @@ class MainYtdl(wx.Frame):
         self.SetTitle(_('Videomass - YouTube Downloader'))
         self.textDnDTarget.Hide()
         self.ytDownloader.Show()
-        [self.toolbar.EnableTool(x, True) for x in (10, 11, 12, 13)]
-        [self.toolbar.EnableTool(x, False) for x in (14, 15)]
+        [self.toolbar.EnableTool(x, True) for x in (20, 21, 22, 23)]
+        [self.toolbar.EnableTool(x, False) for x in (24, 25)]
 
         self.Layout()
     # ------------------------------------------------------------------#
@@ -564,13 +564,13 @@ class MainYtdl(wx.Frame):
         """
         if args[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
-            [self.toolbar.EnableTool(x, False) for x in (11, 13, 14, 15)]
-            [self.toolbar.EnableTool(x, True) for x in (10, 12)]
+            [self.toolbar.EnableTool(x, False) for x in (21, 23, 24, 25)]
+            [self.toolbar.EnableTool(x, True) for x in (20, 22)]
 
         elif args[0] == 'youtube_dl downloading':
             self.menuBar.EnableTop(2, False)
-            [self.toolbar.EnableTool(x, False) for x in (10, 11, 13, 15)]
-            [self.toolbar.EnableTool(x, True) for x in (12, 14)]
+            [self.toolbar.EnableTool(x, False) for x in (20, 21, 23, 25)]
+            [self.toolbar.EnableTool(x, True) for x in (22, 24)]
 
         self.SetTitle(_('Videomass - yt_dlp message monitor'))
         self.textDnDTarget.Hide()
@@ -609,8 +609,8 @@ class MainYtdl(wx.Frame):
         pub/sub protocol. see `long_processing_task.end_proc()`)
         """
         self.menuBar.EnableTop(2, True)
-        self.toolbar.EnableTool(10, True)
-        self.toolbar.EnableTool(14, False)
+        self.toolbar.EnableTool(20, True)
+        self.toolbar.EnableTool(24, False)
     # ------------------------------------------------------------------#
 
     def panelShown(self):

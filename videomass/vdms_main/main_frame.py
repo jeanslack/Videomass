@@ -1363,6 +1363,7 @@ class MainFrame(wx.Frame):
         self.toPictures.Hide()
         self.toSlideshow.Hide()
         self.fileDnDTarget.Show()
+        pub.sendMessage("SET_DRAG_AND_DROP_TOPIC", topic=self.topicname)
         self.menu_items(enable=False)  # disable menu items
         self.openmedia.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 9)]

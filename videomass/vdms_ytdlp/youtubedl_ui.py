@@ -326,26 +326,27 @@ class Downloader(wx.Panel):
         delete data  and set to Disable otherwise.
         """
         if not self.parent.data_url:
-            self.choice.SetSelection(0)
-            self.choice.Disable()
-            self.ckbx_pl.Disable()
-            self.cmbx_af.Disable()
-            self.cmbx_aq.Disable()
-            self.rdbvideoformat.Disable()
-            self.cmbx_vq.Clear()
+            #self.choice.SetSelection(0)
+            #self.choice.Disable()
+            #self.ckbx_pl.Disable()
+            #self.cmbx_af.Disable()
+            #self.cmbx_aq.Disable()
+            #self.rdbvideoformat.Disable()
+            #self.cmbx_vq.Clear()
             del self.info[:]
             self.format_dict.clear()
             self.mainlist.DeleteAllItems()
             self.panel2.fcode.DeleteAllItems()
-            self.panel2.Hide()
-            self.panel1.Show()
+            self.on_choicebox(self, statusmsg=False) ####
+            #self.panel2.Hide()
+            #self.panel1.Show()
 
         else:
             if changed:
-                self.choice.Enable()
-                self.ckbx_pl.Enable()
+                #self.choice.Enable()
+                #self.ckbx_pl.Enable()
                 self.ckbx_pl.SetValue(False)
-                self.on_playlist(self)
+                #self.on_playlist(self)
                 self.mainlist.DeleteAllItems()
                 self.panel2.fcode.DeleteAllItems()
                 self.choice.SetSelection(0)
@@ -401,7 +402,7 @@ class Downloader(wx.Panel):
                            })
     # -----------------------------------------------------------------#
 
-    def on_urls_list(self, quality=''):
+    def on_urls_list(self):
         """
         Populate list control with new incoming urls.
         """
@@ -531,7 +532,8 @@ class Downloader(wx.Panel):
             self.panel2.Hide()
             self.panel1.Show()
             self.Layout()
-            self.on_urls_list(f'bestaudio (format={self.cmbx_af.GetValue()})')
+            self.on_urls_list()
+            self.on_aformat(self)
 
         elif self.choice.GetSelection() == 4:
             self.cmbx_vq.Disable()
@@ -590,7 +592,7 @@ class Downloader(wx.Panel):
         """
         self.opt["A_FORMAT"] = Downloader.AFORMATS.get(self.cmbx_af.GetValue())
 
-        quality = f'Quality: bestaudio (format={self.cmbx_af.GetValue()})'
+        quality = f'bestaudio (format={self.cmbx_af.GetValue()})'
         self.parent.statusbar_msg(f'Quality: {quality}', None)
         self.quality = quality
     # -----------------------------------------------------------------#

@@ -87,6 +87,8 @@ class Formula(wx.Dialog):
                   "the imported file list")
         self.ckbx_del = wx.CheckBox(self, wx.ID_ANY, (descr))
         self.ckbx_del.SetValue(self.emptylist)
+        if self.movetotrash:
+            self.ckbx_del.Disable()
         sizeropt.Add(self.ckbx_del, 0, wx.ALL, 5)
         btncancel = wx.Button(self, wx.ID_CANCEL, "")
         btnok = wx.Button(self, wx.ID_OK, "")
@@ -126,11 +128,15 @@ class Formula(wx.Dialog):
         if self.ckbx_trash.IsChecked():
             self.movetotrash = True
             self.ckbx_del.SetValue(True)
+            self.ckbx_del.Disable()
             self.emptylist = True
             if not os.path.exists(trashdir):
                 os.mkdir(trashdir, mode=0o777)
         else:
             self.movetotrash = False
+            self.ckbx_del.Enable()
+            self.ckbx_del.SetValue(False)
+            self.emptylist = False
     # --------------------------------------------------------------------#
 
     def on_cancel(self, event):

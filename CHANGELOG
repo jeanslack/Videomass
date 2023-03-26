@@ -7,6 +7,15 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Sat 25, 2023 V.4.0.11
+
+  * [Confirm Settings] Fix inconsistencies checking "Move file to trash".
+  * [A/V Conversions] Fix filter scrolled panel: preview/reset buttons always
+    visibles.
+  * [Drag and Drop] added more text informations and corresponding tooltips
+    for each topic.
+
++------------------------------------+
 Mar 22, 2023 V.4.0.10
 
   * Removed support for youtube-dl, only supports yt-dlp API.

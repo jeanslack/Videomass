@@ -379,6 +379,29 @@ class AV_Conv(wx.Panel):
         # BOX Video filters
         box4 = wx.StaticBox(self.nb_Video, wx.ID_ANY, _("Video Filters"))
         self.box_Vfilters = wx.StaticBoxSizer(box4, wx.VERTICAL)
+
+
+
+
+        self.btn_preview = wx.Button(self.nb_Video, wx.ID_ANY,
+                                     _("Preview"), size=(-1, -1))
+        self.btn_preview.SetBitmap(bmpplay, wx.LEFT)
+
+        self.box_Vfilters.Add(self.btn_preview, 0, wx.ALL | wx.EXPAND, 5)
+        self.btn_preview.Disable()
+        self.btn_reset = wx.Button(self.nb_Video, wx.ID_ANY,
+                                   _("Reset"), size=(-1, -1))
+        self.btn_reset.SetBitmap(self.bmpreset, wx.LEFT)
+        self.box_Vfilters.Add(self.btn_reset, 0, wx.ALL | wx.EXPAND, 5)
+        self.btn_reset.Disable()
+        lineflt = wx.StaticLine(self.nb_Video,
+                                wx.ID_ANY,
+                                pos=wx.DefaultPosition,
+                                size=wx.DefaultSize,
+                                style=wx.LI_HORIZONTAL,
+                                name=wx.StaticLineNameStr,
+                                )
+        self.box_Vfilters.Add(lineflt, 0, wx.ALL | wx.EXPAND, 10)
         sizer_nbVideo.Add(self.box_Vfilters, 0, wx.ALL | wx.EXPAND, 5)
         self.filterVpanel = scrolled.ScrolledPanel(self.nb_Video, -1,
                                                    size=(220, 700),
@@ -387,26 +410,6 @@ class AV_Conv(wx.Panel):
                                                    name="panelscroll",
                                                    )
         sizer_Vfilter = wx.BoxSizer(wx.VERTICAL)
-        self.btn_preview = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     _("Preview"), size=(-1, -1))
-        self.btn_preview.SetBitmap(bmpplay, wx.LEFT)
-
-        sizer_Vfilter.Add(self.btn_preview, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_preview.Disable()
-        self.btn_reset = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                   _("Reset"), size=(-1, -1))
-        self.btn_reset.SetBitmap(self.bmpreset, wx.LEFT)
-        sizer_Vfilter.Add(self.btn_reset, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_reset.Disable()
-
-        lineflt = wx.StaticLine(self.filterVpanel,
-                                wx.ID_ANY,
-                                pos=wx.DefaultPosition,
-                                size=wx.DefaultSize,
-                                style=wx.LI_HORIZONTAL,
-                                name=wx.StaticLineNameStr,
-                                )
-        sizer_Vfilter.Add(lineflt, 0, wx.ALL | wx.EXPAND, 10)
         self.btn_videosize = wx.Button(self.filterVpanel, wx.ID_ANY,
                                        _("Resizing"), size=(-1, -1))
         self.btn_videosize.SetBitmap(bmpresize, wx.LEFT)
