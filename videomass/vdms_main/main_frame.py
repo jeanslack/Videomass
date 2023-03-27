@@ -34,10 +34,10 @@ from videomass.vdms_dialogs import preferences
 from videomass.vdms_dialogs import set_timestamp
 from videomass.vdms_dialogs import about
 from videomass.vdms_dialogs import videomass_check_version
-from videomass.vdms_miniframes.while_playing import WhilePlaying
-from videomass.vdms_miniframes.ffmpeg_conf import FFmpegConf
-from videomass.vdms_miniframes.ffmpeg_codecs import FFmpegCodecs
-from videomass.vdms_miniframes.ffmpeg_formats import FFmpegFormats
+from videomass.vdms_dialogs.while_playing import WhilePlaying
+from videomass.vdms_dialogs.ffmpeg_conf import FFmpegConf
+from videomass.vdms_dialogs.ffmpeg_codecs import FFmpegCodecs
+from videomass.vdms_dialogs.ffmpeg_formats import FFmpegFormats
 from videomass.vdms_ytdlp.main_ytdlp import MainYtdl
 from videomass.vdms_dialogs.mediainfo import MediaStreams
 from videomass.vdms_dialogs.showlogs import ShowLogs

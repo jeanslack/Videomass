@@ -206,8 +206,8 @@ class FFmpegHelp(wx.Dialog):
         self.SetMinSize((750, 550))
         icon = wx.Icon()
         icon.CopyFromBitmap(wx.Bitmap(vidicon, wx.BITMAP_TYPE_ANY))
-
         self.SetIcon(icon)
+
         self.SetSizer(sizer)
         self.Fit()
         self.Layout()

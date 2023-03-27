@@ -48,7 +48,7 @@ from videomass.vdms_dialogs.filter_deinterlace import Deinterlace
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_dialogs.filter_stab import VidstabSet
 from videomass.vdms_dialogs.filter_colorcorrection import ColorEQ
-from videomass.vdms_miniframes.shownormlist import AudioVolNormal
+from videomass.vdms_dialogs.shownormlist import AudioVolNormal
 
 
 class AV_Conv(wx.Panel):
@@ -379,10 +379,6 @@ class AV_Conv(wx.Panel):
         # BOX Video filters
         box4 = wx.StaticBox(self.nb_Video, wx.ID_ANY, _("Video Filters"))
         self.box_Vfilters = wx.StaticBoxSizer(box4, wx.VERTICAL)
-
-
-
-
         self.btn_preview = wx.Button(self.nb_Video, wx.ID_ANY,
                                      _("Preview"), size=(-1, -1))
         self.btn_preview.SetBitmap(bmpplay, wx.LEFT)

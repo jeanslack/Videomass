@@ -25,12 +25,11 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import sys
-from urllib.parse import urlparse
 import wx
 from pubsub import pub
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_ytdlp.ydl_mediainfo import YdlMediaInfo
-from videomass.vdms_ytdlp.textdrop import TextDnD
+from videomass.vdms_ytdlp.textdrop import Url_DnD_Panel
 from videomass.vdms_ytdlp.youtubedl_ui import Downloader
 from videomass.vdms_ytdlp.long_task_ytdlp import LogOut
 from videomass.vdms_io import io_tools
@@ -66,7 +65,7 @@ class MainYtdl(wx.Frame):
 
         # ---------- panel instances:
         self.ytDownloader = Downloader(self)
-        self.textDnDTarget = TextDnD(self)
+        self.textDnDTarget = Url_DnD_Panel(self)
         self.ProcessPanel = LogOut(self)
         # hide panels
         self.ProcessPanel.Hide()
@@ -505,26 +504,6 @@ class MainYtdl(wx.Frame):
         if self.ytDownloader.IsShown():
             self.switch_to_processing('Viewing last log')
             return
-
-        lines = self.textDnDTarget.textctrl_urls.GetValue().split()
-        if lines:
-            for url in lines:  # Check malformed url
-                res = urlparse(url)
-                if not res[1]:  # if empty netloc given from ParseResult
-                    wx.MessageBox(_('ERROR: Invalid URL: "{}"').format(
-                                  url), "Videomass", wx.ICON_ERROR, self)
-                    return
-            if len(set(lines)) != len(lines):  # equal URLS
-                wx.MessageBox(_("ERROR: Some equal URLs found"),
-                              "Videomass", wx.ICON_ERROR, self)
-                return
-
-            if not lines == self.data_url:
-                self.changed = True
-                self.destroy_orphaned_window()
-                self.data_url = lines.copy()
-        else:
-            del self.data_url[:]
         self.switch_youtube_downloader(self)
         self.changed = False
     # ------------------------------------------------------------------#

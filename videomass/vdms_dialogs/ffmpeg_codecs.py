@@ -28,7 +28,7 @@ import wx
 from pubsub import pub
 
 
-class FFmpegCodecs(wx.MiniFrame):
+class FFmpegCodecs(wx.Dialog):
     """
     It shows a dialog box with a pretty kind of GUI to view
     the formats available on FFmpeg
@@ -49,12 +49,14 @@ class FFmpegCodecs(wx.MiniFrame):
         else:
             title = _("FFmpeg decoders")
             header = _("supported decoders")
+        get = wx.GetApp()  # get data from bootstrap
+        vidicon = get.iconset['videomass']
 
-        wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER
-                              | wx.CAPTION
-                              | wx.CLOSE_BOX
-                              | wx.SYSTEM_MENU,
-                              )
+        wx.Dialog.__init__(self, None,
+                           style=wx.DEFAULT_DIALOG_STYLE
+                           | wx.RESIZE_BORDER
+                           | wx.DIALOG_NO_PARENT
+                           )
         # add panel
         self.panel = wx.Panel(self, wx.ID_ANY,
                               style=wx.TAB_TRAVERSAL
@@ -148,6 +150,9 @@ class FFmpegCodecs(wx.MiniFrame):
                "D = Supports direct rendering method 1")
         stext.SetLabel(leg)
 
+        icon = wx.Icon()
+        icon.CopyFromBitmap(wx.Bitmap(vidicon, wx.BITMAP_TYPE_ANY))
+        self.SetIcon(icon)
         self.SetTitle(title)
         self.SetMinSize((750, 500))
         vid.SetMinSize((700, 300))
