@@ -138,7 +138,6 @@ class MainFrame(wx.Frame):
                                                  self.icons,
                                                  )
         self.fileDnDTarget = filedrop.FileDnD(self,
-                                              self.icons['playback'],
                                               self.outputpath,
                                               self.outputnames,
                                               self.data_files,
@@ -194,7 +193,7 @@ class MainFrame(wx.Frame):
         self.sb = self.CreateStatusBar(1)
         self.statusbar_msg(_('Ready'), None)
         # disabling toolbar/menu items
-        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 9)]
+        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 9, 25)]
         self.menu_items(enable=False)
         self.Layout()
         # ---------------------- Binding (EVT) ----------------------#
@@ -341,20 +340,12 @@ class MainFrame(wx.Frame):
         its children programmatically, saving the size
         and position of the window.
         """
-        def _setsize():
-            """
-            Write last window size and position
-            for next start if changed.
-            """
-            confmanager = ConfigManager(self.appdata['fileconfpath'])
-            sett = confmanager.read_options()
-            sett['main_window_size'] = list(self.GetSize())
-            sett['main_window_pos'] = list(self.GetPosition())
-            confmanager.write_options(**sett)
-
         if self.ProcessPanel.IsShown():
-            self.ProcessPanel.on_close(self)
-            return
+            if self.ProcessPanel.thread_type is not None:
+                wx.MessageBox(_('There are still processes running.. if you '
+                                'want to stop them, use the "Abort" button.'),
+                              _('Videomass'), wx.ICON_WARNING, self)
+                return
 
         if self.appdata['warnexiting']:
             if wx.MessageBox(_('Are you sure you want to exit?'),
@@ -371,7 +362,11 @@ class MainFrame(wx.Frame):
                 return
             self.ytdlframe.destroy_orphaned_window()
 
-        _setsize()
+        confmanager = ConfigManager(self.appdata['fileconfpath'])
+        sett = confmanager.read_options()
+        sett['main_window_size'] = list(self.GetSize())
+        sett['main_window_pos'] = list(self.GetPosition())
+        confmanager.write_options(**sett)
         self.destroy_orphaned_window()
         self.Destroy()
     # ------------------------------------------------------------------#
@@ -458,6 +453,14 @@ class MainFrame(wx.Frame):
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit\tCtrl+Q"),
                                      _("Close Videomass"))
         self.menuBar.Append(fileButton, _("File"))
+
+        # ------------------ Edit menu
+        editButton = wx.Menu()
+        dscrp = (_("Remove selected file\tDEL"),
+                 _("Remove the selected files from the list"))
+        delfile = editButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
+        self.menuBar.Append(editButton, _("Edit"))
+        self.menuBar.EnableTop(1, False)
 
         # ------------------ tools menu
         toolsButton = wx.Menu()
@@ -611,6 +614,8 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.open_trash_folder, fold_trash)
         self.Bind(wx.EVT_MENU, self.empty_trash_folder, empty_trash)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
+        # ----EDIT----
+        self.Bind(wx.EVT_MENU, self.fileDnDTarget.on_delete_selected, delfile)
         # ----TOOLS----
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
         self.Bind(wx.EVT_MENU, self.prst_downloader, self.prstdownload)
@@ -1202,6 +1207,7 @@ class MainFrame(wx.Frame):
             bmpstop = get_bmp(self.icons['stop'], bmp_size)
             bmphome = get_bmp(self.icons['home'], bmp_size)
             bmpclear = get_bmp(self.icons['cleanup'], bmp_size)
+            bmpplay = get_bmp(self.icons['play'], bmp_size)
 
         else:
             bmpback = wx.Bitmap(self.icons['previous'], wx.BITMAP_TYPE_ANY)
@@ -1212,6 +1218,7 @@ class MainFrame(wx.Frame):
             bmpstop = wx.Bitmap(self.icons['stop'], wx.BITMAP_TYPE_ANY)
             bmphome = wx.Bitmap(self.icons['home'], wx.BITMAP_TYPE_ANY)
             bmpclear = wx.Bitmap(self.icons['cleanup'], wx.BITMAP_TYPE_ANY)
+            bmpplay = wx.Bitmap(self.icons['play'], wx.BITMAP_TYPE_ANY)
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
@@ -1230,11 +1237,16 @@ class MainFrame(wx.Frame):
                                     bmphome,
                                     tip, wx.ITEM_NORMAL
                                     )
+        tip = _("Play the selected file in the list")
+        play = self.toolbar.AddTool(25, _('Play'),
+                                    bmpplay,
+                                    tip, wx.ITEM_NORMAL
+                                    )
         tip = _("Get informative data about imported media streams")
-        self.btn_steams = self.toolbar.AddTool(6, _('Media Details'),
-                                               bmpinfo,
-                                               tip, wx.ITEM_NORMAL
-                                               )
+        self.btn_streams = self.toolbar.AddTool(6, _('Media Details'),
+                                                bmpinfo,
+                                                tip, wx.ITEM_NORMAL
+                                                )
         tip = _("Start rendering")
         self.run_coding = self.toolbar.AddTool(7, _('Start'),
                                                bmpconv,
@@ -1259,7 +1271,8 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.click_stop, stop_coding)
         self.Bind(wx.EVT_TOOL, self.on_Back, back)
         self.Bind(wx.EVT_TOOL, self.on_Forward, forward)
-        self.Bind(wx.EVT_TOOL, self.media_streams, self.btn_steams)
+        self.Bind(wx.EVT_TOOL, self.media_streams, self.btn_streams)
+        self.Bind(wx.EVT_TOOL, self.fileDnDTarget.on_play_select, play)
 
     # --------------- Tool Bar Callback (event handler) -----------------#
 
@@ -1343,10 +1356,11 @@ class MainFrame(wx.Frame):
         elif self.toSlideshow.IsShown():
             self.toSlideshow.Hide()
 
-        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 9)]
+        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 9, 25)]
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
         self.menu_items(enable=False)
+        self.menuBar.EnableTop(1, False)
         self.SetTitle(_('Videomass'))
         self.statusbar_msg(_('Ready'), None)
         self.Layout()
@@ -1369,8 +1383,9 @@ class MainFrame(wx.Frame):
         self.fileDnDTarget.Show()
         pub.sendMessage("SET_DRAG_AND_DROP_TOPIC", topic=self.topicname)
         self.menu_items(enable=False)  # disable menu items
+        self.menuBar.EnableTop(1, True)
         self.openmedia.Enable(True)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 9)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 9, 25)]
         [self.toolbar.EnableTool(x, False) for x in (7, 8)]
         self.toolbar.Realize()
         self.Layout()
@@ -1396,9 +1411,10 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - AV Conversions'))
         self.TimeLine.Show()
         self.menu_items(enable=True)  # enable all menu items
+        self.menuBar.EnableTop(1, False)
         self.openmedia.Enable(True)
         self.avpan.Enable(False)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 25)]
         [self.toolbar.EnableTool(x, False) for x in (8, 9)]
         self.Layout()
     # ------------------------------------------------------------------#
@@ -1421,9 +1437,10 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - Presets Manager'))
         self.TimeLine.Show()
         self.menu_items(enable=True)  # enable all menu items
+        self.menuBar.EnableTop(1, False)
         self.openmedia.Enable(True)
         self.prstpan.Enable(False)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 25)]
         [self.toolbar.EnableTool(x, False) for x in (8, 9)]
         self.Layout()
         self.PrstsPanel.update_preset_state()
@@ -1447,9 +1464,10 @@ class MainFrame(wx.Frame):
         self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - Concatenate Demuxer'))
         self.menu_items(enable=True)  # enable all menu items
+        self.menuBar.EnableTop(1, False)
         self.openmedia.Enable(True)
         self.concpan.Enable(False)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 25)]
         [self.toolbar.EnableTool(x, False) for x in (8, 9)]
         self.Layout()
     # ------------------------------------------------------------------#
@@ -1472,9 +1490,10 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - From Movie to Pictures'))
         self.TimeLine.Show()
         self.menu_items(enable=True)  # enable all menu items
+        self.menuBar.EnableTop(1, False)
         self.openmedia.Enable(True)
         self.toseq.Enable(False)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 25)]
         [self.toolbar.EnableTool(x, False) for x in (8, 9)]
         self.Layout()
     # ------------------------------------------------------------------#
@@ -1497,9 +1516,10 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - Still Image Maker'))
         self.TimeLine.Show()
         self.menu_items(enable=True)  # enable all menu items
+        self.menuBar.EnableTop(1, False)
         self.openmedia.Enable(True)
         self.slides.Enable(False)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 25)]
         [self.toolbar.EnableTool(x, False) for x in (8, 9)]
         self.Layout()
     # ------------------------------------------------------------------#
@@ -1539,7 +1559,7 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         self.ProcessPanel.Show()
         if not args[0] == 'Viewing last log':
-            self.menuBar.EnableTop(4, False)
+            self.menuBar.EnableTop(1, False)
             self.menu_items(enable=False)  # disable menu items
             self.openmedia.Enable(False)
             [self.toolbar.EnableTool(x, True) for x in (6, 8)]
@@ -1587,7 +1607,7 @@ class MainFrame(wx.Frame):
         Process report terminated. This method is called using
         pub/sub protocol. see `long_processing_task.end_proc()`)
         """
-        self.menuBar.EnableTop(4, True)
+        self.menuBar.EnableTop(5, True)
         self.menu_items(enable=True)  # enable all menu items
         self.openmedia.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 5)]

@@ -60,7 +60,7 @@ class MyListCtrl(wx.ListCtrl):
         make default colums
         """
         self.InsertColumn(0, ('#'), width=30)
-        self.InsertColumn(1, (_('Url')), width=400)
+        self.InsertColumn(1, (_('Url')), width=600)
 
     def dropUpdate(self, data):
         """
@@ -71,7 +71,8 @@ class MyListCtrl(wx.ListCtrl):
         for url in listurl:
             res = urlparse(url)
             if not res[1]:  # if empty netloc given from ParseResult
-                self.parent.statusbar_msg('Invalid URL: "{}"'.format(url),
+                msg = _('Invalid URL:')
+                self.parent.statusbar_msg(f'{msg} "{url}"',
                                           MyListCtrl.RED,
                                           MyListCtrl.WHITE
                                           )
@@ -133,20 +134,11 @@ class Url_DnD_Panel(wx.Panel):
         wx.Panel.__init__(self, parent, -1)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add((0, 10))
-
-
-        sizer_opt = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizer_opt, 0, wx.CENTRE)
-
-        self.btn_paste = wx.Button(self, wx.ID_PASTE, "")
-        sizer_opt.Add(self.btn_paste, 0, wx.ALL | wx.CENTRE, 2)
-        self.btn_remove = wx.Button(self, wx.ID_REMOVE, "")
-        self.btn_remove.Disable()
-        sizer_opt.Add(self.btn_remove, 0, wx.ALL | wx.CENTRE, 2)
+        sizer.Add((0, 25))
         infomsg = _("Drag or paste URLs here")
         lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
         sizer.Add(lbl_info, 0, wx.ALL | wx.EXPAND, 5)
+        sizer.Add((0, 10))
         self.urlctrl = MyListCtrl(self)
         dragt = UrlDropTarget(self, self.urlctrl)
         self.urlctrl.SetDropTarget(dragt)
@@ -177,11 +169,6 @@ class Url_DnD_Panel(wx.Panel):
         tip = _("Set up a temporary folder for downloads")
         self.btn_save.SetToolTip(tip)
         self.text_path_save.SetToolTip(_("Destination folder"))
-
-        self.Bind(wx.EVT_BUTTON, self.on_del_url_selected, self.btn_remove)
-        self.Bind(wx.EVT_BUTTON, self.on_paste, self.btn_paste)
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.urlctrl)
-        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.urlctrl)
     # ---------------------------------------------------------
 
     def changes_in_progress(self, setfocus=True):
@@ -227,22 +214,6 @@ class Url_DnD_Panel(wx.Panel):
             self.urlctrl.dropUpdate(text_data.GetText())
     # ----------------------------------------------------------------------
 
-    def on_select(self, event):
-        """
-        Selecting line with mouse or up/down keyboard buttons
-        """
-        self.btn_remove.Enable()
-
-    # ----------------------------------------------------------------------
-
-    def on_deselect(self, event):
-        """
-        Event to deselect a line when clicking
-        in an empty space of the control list
-        """
-        self.btn_remove.Disable()
-    # ----------------------------------------------------------------------
-
     def delete_all(self, event):
         """
         clear all text lines of the TxtCtrl
@@ -254,8 +225,11 @@ class Url_DnD_Panel(wx.Panel):
 
     def on_del_url_selected(self, event):
         """
-        Delete a selected url
+        Delete a selected url, if nothing is selected return None
         """
+        if self.urlctrl.GetFirstSelected() == -1:  # None
+            return
+
         item, indexes = -1, []
         while 1:
             item = self.urlctrl.GetNextItem(item,

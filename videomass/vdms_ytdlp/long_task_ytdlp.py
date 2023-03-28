@@ -50,6 +50,7 @@ class LogOut(wx.Panel):
 
     WHITE = '#fbf4f4'  # white for background status bar
     BLACK = '#060505'  # black for background status bar
+    YELLOW = '#bd9f00'
     # ------------------------------------------------------------------#
 
     def __init__(self, parent):
@@ -95,8 +96,6 @@ class LogOut(wx.Panel):
         # set_properties:
         self.txtout.SetBackgroundColour(self.clr['BACKGRD'])
         self.SetSizerAndFit(sizer)
-        # bind
-        self.Bind(wx.EVT_BUTTON, self.on_close)
         # ------------------------------------------
 
         pub.subscribe(self.downloader_activity, "UPDATE_YDL_EVT")
@@ -243,8 +242,8 @@ class LogOut(wx.Panel):
         """
         self.thread_type.stop()
         # self.thread_type.join()  trying not to use thread.join here
-        msg = _("...Please wait, interrupting next downloads")
-        self.parent.statusbar_msg(msg, 'GOLDENROD', LogOut.BLACK)
+        self.parent.statusbar_msg(_("Please wait... interruption in progress"),
+                                  LogOut.YELLOW, LogOut.BLACK)
         self.abort = True
     # ----------------------------------------------------------------------
 
@@ -260,14 +259,3 @@ class LogOut(wx.Panel):
         self.count = 0
         self.parent.statusbar_msg(_('Done'), None)
     # ----------------------------------------------------------------------
-
-    def on_close(self, event):
-        """
-        close dialog and retrieve at previusly panel
-        """
-        if self.thread_type is not None:
-            wx.MessageBox(_('There are still processes running.. if you '
-                            'want to stop them, use the "Abort" button.'),
-                          _('Videomass'), wx.ICON_WARNING, self)
-            return
-        self.parent.panelShown()  # retrieve at previusly panel

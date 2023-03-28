@@ -190,26 +190,22 @@ class MainYtdl(wx.Frame):
 
     def on_close(self, event):
         """
-        switch to panels or destroy the videomass app.
-
+        This event destroy the YouTube Downloader child frame.
         """
-        def _setsize():
-            """
-            Write last window size and position
-            for next start if changed
-            """
-            confmanager = ConfigManager(self.appdata['fileconfpath'])
-            sett = confmanager.read_options()
-            sett['main_ytdl_size'] = list(self.GetSize())
-            sett['main_ytdl_pos'] = list(self.GetPosition())
-            confmanager.write_options(**sett)
-
         if self.ProcessPanel.IsShown():
-            self.ProcessPanel.on_close(self)
-        else:
-            _setsize()
-            self.destroy_orphaned_window()
-            self.Destroy()
+            if self.ProcessPanel.thread_type is not None:
+                wx.MessageBox(_('There are still processes running.. if you '
+                                'want to stop them, use the "Abort" button.'),
+                              _('Videomass'), wx.ICON_WARNING, self)
+                return
+
+        confmanager = ConfigManager(self.appdata['fileconfpath'])
+        sett = confmanager.read_options()
+        sett['main_ytdl_size'] = list(self.GetSize())
+        sett['main_ytdl_pos'] = list(self.GetPosition())
+        confmanager.write_options(**sett)
+        self.destroy_orphaned_window()
+        self.Destroy()
     # ------------------------------------------------------------------#
 
     def on_Kill(self):
@@ -249,6 +245,16 @@ class MainYtdl(wx.Frame):
                                      _("Close Videomass"))
         self.menuBar.Append(fileButton, _("File"))
 
+        # ------------------ Edit menu
+        editButton = wx.Menu()
+        dscrp = (_("Paste\tCtrl+V"),
+                 _("Paste the clipboard URLs into the DragNDrop box"))
+        paste = editButton.Append(wx.ID_PASTE, dscrp[0], dscrp[1])
+        dscrp = (_("Remove selected URL\tDEL"),
+                 _("Remove the selected URL from the list"))
+        delete = editButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
+        self.menuBar.Append(editButton, _("Edit"))
+
         # ------------------ View menu
         viewButton = wx.Menu()
         dscrp = (_("Version of yt-dlp"),
@@ -281,6 +287,10 @@ class MainYtdl(wx.Frame):
         self.Bind(wx.EVT_MENU, self.openMydownloads_tmp,
                   self.fold_downloads_tmp)
         self.Bind(wx.EVT_MENU, self.quiet, exitItem)
+        # ----EDIT----
+        self.Bind(wx.EVT_MENU, self.textDnDTarget.on_paste, paste)
+        self.Bind(wx.EVT_MENU, self.textDnDTarget.on_del_url_selected, delete)
+
         # ---- VIEW ----
         self.Bind(wx.EVT_MENU, self.ydl_used, self.ydlused)
         self.Bind(wx.EVT_MENU, self.ydl_latest, self.ydllatest)
@@ -515,6 +525,7 @@ class MainYtdl(wx.Frame):
         self.ProcessPanel.Hide()
         self.ytDownloader.Hide()
         self.textDnDTarget.Show()
+        self.menuBar.EnableTop(1, True)
         [self.toolbar.EnableTool(x, True) for x in (21, 25)]
         [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24)]
         self.toolbar.Realize()
@@ -531,6 +542,7 @@ class MainYtdl(wx.Frame):
         self.SetTitle(_('Videomass - YouTube Downloader'))
         self.textDnDTarget.Hide()
         self.ytDownloader.Show()
+        self.menuBar.EnableTop(1, False)
         [self.toolbar.EnableTool(x, True) for x in (20, 21, 22, 23)]
         [self.toolbar.EnableTool(x, False) for x in (24, 25)]
 
@@ -547,7 +559,8 @@ class MainYtdl(wx.Frame):
             [self.toolbar.EnableTool(x, True) for x in (20, 22)]
 
         elif args[0] == 'youtube_dl downloading':
-            self.menuBar.EnableTop(2, False)
+            self.menuBar.EnableTop(3, False)
+            self.menuBar.EnableTop(1, False)
             [self.toolbar.EnableTool(x, False) for x in (20, 21, 23, 25)]
             [self.toolbar.EnableTool(x, True) for x in (22, 24)]
 
@@ -555,8 +568,8 @@ class MainYtdl(wx.Frame):
         self.textDnDTarget.Hide()
         self.ytDownloader.Hide()
         self.ProcessPanel.Show()
-        self.ProcessPanel.topic_thread(args)
         self.Layout()
+        self.ProcessPanel.topic_thread(args)
     # ------------------------------------------------------------------#
 
     def click_start(self, event):
@@ -587,7 +600,7 @@ class MainYtdl(wx.Frame):
         Process report terminated. This method is called using
         pub/sub protocol. see `long_processing_task.end_proc()`)
         """
-        self.menuBar.EnableTop(2, True)
+        self.menuBar.EnableTop(3, True)
         self.toolbar.EnableTool(20, True)
         self.toolbar.EnableTool(24, False)
     # ------------------------------------------------------------------#
@@ -602,6 +615,6 @@ class MainYtdl(wx.Frame):
         self.switch_youtube_downloader(self)
 
         # Enable all top menu bar:
-        self.menuBar.EnableTop(2, True)
+        self.menuBar.EnableTop(3, True)
         # show buttons bar if the user has shown it:
         self.Layout()

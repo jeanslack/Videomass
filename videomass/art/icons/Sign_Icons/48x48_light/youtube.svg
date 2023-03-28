@@ -25,7 +25,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="13.123902"
-     inkscape:cx="19.288622"
+     inkscape:cx="0.061961805"
      inkscape:cy="22.723625"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -280,7 +280,7 @@
        x2="125"
        y2="236"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.17885821,0,0,0.17885821,1.0953713,209.35113)" />
+       gradientTransform="matrix(0.17885821,0,0,0.17885821,1.1188085,209.46441)" />
   </defs>
   <metadata
      id="metadata4488">
@@ -312,15 +312,10 @@
      inkscape:label="film strip"
      style="display:inline;opacity:1"
      transform="translate(0,-208)">
-    <rect
-       style="opacity:1;fill:#50585a;fill-opacity:1;stroke:url(#linearGradient956);stroke-width:0.2504015;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+    <path
        id="rect848"
-       width="43.820267"
-       height="31.699762"
-       x="2.0667567"
-       y="216.03741"
-       rx="7.1543312"
-       ry="7.1543283" />
+       style="opacity:1;fill:#232629;fill-opacity:1;stroke:url(#linearGradient956);stroke-width:0.250401;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       d="m 9.2441405,216.15039 c -3.963499,0 -7.154297,3.1908 -7.154297,7.1543 v 17.39062 c 0,3.9635 3.190798,7.1543 7.154297,7.1543 H 38.755859 c 3.963499,0 7.154297,-3.1908 7.154297,-7.1543 v -17.39062 c 0,-3.9635 -3.190798,-7.1543 -7.154297,-7.1543 z m 1.9765635,2.12305 H 36.78125 c 3.432881,0 6.195312,2.76243 6.195312,6.19531 v 15.0625 c 0,3.43288 -2.762431,6.19726 -6.195312,6.19726 H 11.220704 c -3.4328825,0 -6.1972665,-2.76438 -6.1972665,-6.19726 v -15.0625 c 0,-3.43288 2.764384,-6.19531 6.1972665,-6.19531 z" />
     <path
        sodipodi:type="star"
        style="opacity:1;fill:#232629;fill-opacity:1;stroke:none;stroke-width:0.0933185;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
