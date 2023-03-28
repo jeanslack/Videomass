@@ -1243,7 +1243,7 @@ class MainFrame(wx.Frame):
                                     tip, wx.ITEM_NORMAL
                                     )
         tip = _("Get informative data about imported media streams")
-        self.btn_streams = self.toolbar.AddTool(6, _('Media Details'),
+        self.btn_streams = self.toolbar.AddTool(6, _('Properties'),
                                                 bmpinfo,
                                                 tip, wx.ITEM_NORMAL
                                                 )
