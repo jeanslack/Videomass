@@ -7,13 +7,20 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sat 25, 2023 V.4.0.11
+Sat 27, 2023 V.4.0.11
 
-  * [Confirm Settings] Fix inconsistencies checking "Move file to trash".
+  * [Confirm Settings] checking "Move files to trash" the "clean up files list"
+    checkbox must be selected and disabled.
   * [A/V Conversions] Fix filter scrolled panel: preview/reset buttons always
-    visibles.
-  * [Drag and Drop] added more text informations and corresponding tooltips
+    visibles on scrolling.
+  * [Drag files panel] added more text informations and corresponding tooltips
     for each topic.
+  * [PopupDialog] didn't have a parent, now it does (prevents raising other
+    windows).
+  * [Drag URLs panel] improved using ListCtrl with Drag&drop properties.
+  * [YouTube Downloader] simplified UI controls and layout.
+  * Partially fixed Aborting download (work only with multiple URLs), the GUI
+    shouldn't stay stuck now.
 
 +------------------------------------+
 Mar 22, 2023 V.4.0.10

@@ -28,16 +28,76 @@ from urllib.parse import urlparse
 import wx
 
 
-class UrlDropTarget(wx.TextDropTarget):
+class MyListCtrl(wx.ListCtrl):
     """
-    This is a Drop target object for handle dragging text URL data
-    on a ListCtrl object.
+    This is the listControl widget.
+    Note that this wideget has DnDPanel parented.
     """
     RED = '#ea312d'
     YELLOW = '#bd9f00'
     WHITE = '#fbf4f4'  # white for background status bar
     BLACK = '#060505'
+    # ----------------------------------------------------------------------
 
+    def __init__(self, parent):
+        """
+        Constructor.
+        WARNING to avoid segmentation error on removing items by
+        listctrl, style must be wx.LC_SINGLE_SEL .
+        """
+        self.index = None
+        self.parent = parent  # parent is DnDPanel class
+        wx.ListCtrl.__init__(self,
+                             parent,
+                             style=wx.LC_REPORT
+                             | wx.LC_SINGLE_SEL,
+                             )
+        self.populate()
+    # ----------------------------------------------------------------------#
+
+    def populate(self):
+        """
+        make default colums
+        """
+        self.InsertColumn(0, ('#'), width=30)
+        self.InsertColumn(1, (_('Url')), width=400)
+
+    def dropUpdate(self, data):
+        """
+        Update list-control during drag and drop.
+        """
+        self.index = self.GetItemCount()
+        listurl = data.split()
+        for url in listurl:
+            res = urlparse(url)
+            if not res[1]:  # if empty netloc given from ParseResult
+                self.parent.statusbar_msg('Invalid URL: "{}"'.format(url),
+                                          MyListCtrl.RED,
+                                          MyListCtrl.WHITE
+                                          )
+                return False
+
+            for idx in range(self.index):
+                if self.GetItemText(idx, 1) == url:
+                    self.parent.statusbar_msg('Some equal URLs found',
+                                              MyListCtrl.YELLOW,
+                                              MyListCtrl.BLACK
+                                              )
+                    return False
+            self.InsertItem(self.index, str(self.index + 1))
+            self.SetItem(self.index, 1, url)
+            self.index += 1
+
+        self.parent.changes_in_progress()
+        return True
+    # ----------------------------------------------------------------------#
+
+
+class UrlDropTarget(wx.TextDropTarget):
+    """
+    This is a Drop target object for handle dragging text URL data
+    on a ListCtrl object.
+    """
     def __init__(self, parent, listctrl):
         """
         Defining the ListCtrl object attribute
@@ -49,31 +109,9 @@ class UrlDropTarget(wx.TextDropTarget):
 
     def OnDropText(self, x, y, data):
         """
-        Populate ListCtrl object by dragging text inside it.
+        Update ListCtrl object by dragging text inside it.
         """
-        self.index = self.listctrl.GetItemCount()
-        listurl = data.split()
-        for url in listurl:
-            res = urlparse(url)
-            if not res[1]:  # if empty netloc given from ParseResult
-                self.parent.statusbar_msg('Invalid URL: "{}"'.format(url),
-                                          UrlDropTarget.RED,
-                                          UrlDropTarget.WHITE
-                                          )
-                return False
-
-            for idx in range(self.index):
-                if self.listctrl.GetItemText(idx, 1) == url:
-                    self.parent.statusbar_msg('Some equal URLs found',
-                                              UrlDropTarget.YELLOW,
-                                              UrlDropTarget.BLACK
-                                              )
-                    return False
-            self.listctrl.InsertItem(self.index, str(self.index + 1))
-            self.listctrl.SetItem(self.index, 1, url)
-            self.index += 1
-
-        self.parent.changes_in_progress()
+        self.listctrl.dropUpdate(data)
         return True
 
 
@@ -96,18 +134,24 @@ class Url_DnD_Panel(wx.Panel):
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((0, 10))
+
+
+        sizer_opt = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(sizer_opt, 0, wx.CENTRE)
+
+        self.btn_paste = wx.Button(self, wx.ID_PASTE, "")
+        sizer_opt.Add(self.btn_paste, 0, wx.ALL | wx.CENTRE, 2)
         self.btn_remove = wx.Button(self, wx.ID_REMOVE, "")
         self.btn_remove.Disable()
-        sizer.Add(self.btn_remove, 0, wx.ALL | wx.CENTRE, 2)
-        infomsg = _("Drag URLS here")
+        sizer_opt.Add(self.btn_remove, 0, wx.ALL | wx.CENTRE, 2)
+        infomsg = _("Drag or paste URLs here")
         lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
         sizer.Add(lbl_info, 0, wx.ALL | wx.EXPAND, 5)
-        self.urlctrl = wx.ListCtrl(self, style=wx.LC_REPORT | wx.LC_SINGLE_SEL)
-        self.urlctrl.InsertColumn(0, ('#'), width=30)
-        self.urlctrl.InsertColumn(1, (_('Url')), width=400)
+        self.urlctrl = MyListCtrl(self)
         dragt = UrlDropTarget(self, self.urlctrl)
-        sizer.Add(self.urlctrl, 1, wx.EXPAND | wx.ALL, 5)
         self.urlctrl.SetDropTarget(dragt)
+        sizer.Add(self.urlctrl, 1, wx.EXPAND | wx.ALL, 5)
+
         sizer_ctrl = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_ctrl, 0, wx.ALL | wx.EXPAND, 0)
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
@@ -135,6 +179,7 @@ class Url_DnD_Panel(wx.Panel):
         self.text_path_save.SetToolTip(_("Destination folder"))
 
         self.Bind(wx.EVT_BUTTON, self.on_del_url_selected, self.btn_remove)
+        self.Bind(wx.EVT_BUTTON, self.on_paste, self.btn_paste)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.urlctrl)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.urlctrl)
     # ---------------------------------------------------------
@@ -168,6 +213,19 @@ class Url_DnD_Panel(wx.Panel):
         """
         self.parent.statusbar_msg(f'{mess}', bcolor, fcolor)
     # -----------------------------------------------------------------------
+
+    def on_paste(self, event):
+        """
+        Event on clicking paste button to paste
+        text data on the ListCtrl
+        """
+        text_data = wx.TextDataObject()
+        if wx.TheClipboard.Open():
+            success = wx.TheClipboard.GetData(text_data)
+            wx.TheClipboard.Close()
+        if success:
+            self.urlctrl.dropUpdate(text_data.GetText())
+    # ----------------------------------------------------------------------
 
     def on_select(self, event):
         """

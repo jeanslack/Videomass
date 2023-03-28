@@ -823,7 +823,11 @@ class MainFrame(wx.Frame):
         name = f"Videomass-presets-{tarball[0].split('/v')[-1]}.tar.gz"
         pathname = os.path.join(path, name)
         msg = _('Wait....\nThe archive is being downloaded')
-        download = io_tools.get_presets(tarball[0], pathname, msg)
+        download = io_tools.get_presets(tarball[0],
+                                        pathname,
+                                        msg,
+                                        parent=self.GetParent(),
+                                        )
 
         if download[1]:
             wx.MessageBox(f"{download[1]}", 'ERROR', wx.ICON_ERROR, self)

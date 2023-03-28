@@ -1685,7 +1685,8 @@ class AV_Conv(wx.Panel):
         """
         data = volume_detect_process(self.parent.file_src,
                                      self.parent.time_seq,  # from -ss to -t
-                                     self.opt["AudioIndex"]
+                                     self.opt["AudioIndex"],
+                                     parent=self.GetParent(),
                                      )
         if data[1]:
             wx.MessageBox(f"{data[1]}", "Videomass", wx.ICON_ERROR, self)

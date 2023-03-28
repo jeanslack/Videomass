@@ -433,14 +433,6 @@ class FileDnD(wx.Panel):
             self.flCtrl.Select(selitem, on=1)  # default event selection
     # ----------------------------------------------------------------------
 
-    def which(self):
-        """
-        return topic name by choose_topic.py selection
-        """
-        print(self.parent.topicname)
-        return self.parent.topicname
-    # ----------------------------------------------------------------------
-
     def on_play_select(self, event):
         """
         Playback the selected file

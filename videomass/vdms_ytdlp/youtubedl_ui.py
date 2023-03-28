@@ -339,7 +339,10 @@ class Downloader(wx.Panel):
         Check the first item of list to recognize the exit
         status, which is 'ERROR' or None.
         """
-        data = youtubedl_getstatistics(link, self.ckbx_ssl.GetValue())
+        data = youtubedl_getstatistics(link,
+                                       self.ckbx_ssl.GetValue(),
+                                       parent=self.GetParent(),
+                                       )
         for meta in data:
             if meta[1]:
                 return ('ERROR', meta[1])

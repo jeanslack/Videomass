@@ -39,7 +39,7 @@ from videomass.vdms_dialogs.widget_utils import PopupDialog
 from videomass.vdms_ytdlp.ydl_extractinfo import YdlExtractInfo
 
 
-def youtubedl_getstatistics(url, ssl):
+def youtubedl_getstatistics(url, ssl, parent=None):
     """
     Call `YdlExtractInfo` thread to extract data info.
     During this process a wait pop-up dialog is shown.
@@ -53,7 +53,7 @@ def youtubedl_getstatistics(url, ssl):
         yield data
     """
     thread = YdlExtractInfo(url, ssl)
-    dlgload = PopupDialog(None,
+    dlgload = PopupDialog(parent,
                           _("Videomass - Loading..."),
                           _("Wait....\nRetrieving required data."))
     dlgload.ShowModal()
@@ -90,7 +90,7 @@ def stream_play(filepath, tseq, param, autoexit):
 # -----------------------------------------------------------------------#
 
 
-def volume_detect_process(filelist, time_seq, audiomap):
+def volume_detect_process(filelist, time_seq, audiomap, parent=None):
     """
     Run thread to get audio peak level data and show a
     pop-up dialog with message.
@@ -102,7 +102,7 @@ def volume_detect_process(filelist, time_seq, audiomap):
                                 get.appset['logdir'],
                                 get.appset['ffmpeg_cmd']
                                 )
-    dlgload = PopupDialog(None,
+    dlgload = PopupDialog(parent,
                           _("Videomass - Loading..."),
                           _("Wait....\nAudio peak analysis."))
     dlgload.ShowModal()
@@ -206,12 +206,12 @@ def get_github_releases(url, keyname):
 # --------------------------------------------------------------------------#
 
 
-def get_presets(url, dest, msg):
+def get_presets(url, dest, msg, parent=None):
     """
     get latest Videomass presets
     """
     thread = generic_downloads.FileDownloading(url, dest)
-    dlgload = PopupDialog(None, _("Videomass - Downloading..."), msg)
+    dlgload = PopupDialog(parent, _("Videomass - Downloading..."), msg)
     dlgload.ShowModal()
     # thread.join()
     status = thread.data

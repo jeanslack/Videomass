@@ -242,11 +242,9 @@ class LogOut(wx.Panel):
         The user change idea and was stop process
         """
         self.thread_type.stop()
-        self.parent.statusbar_msg(_("wait... all operations will be stopped "
-                                    "at the end of the download in progress "),
-                                  'GOLDENROD', LogOut.WHITE)
         # self.thread_type.join()  trying not to use thread.join here
-        self.parent.statusbar_msg(_("...Interrupted"), None)
+        msg = _("...Please wait, interrupting next downloads")
+        self.parent.statusbar_msg(msg, 'GOLDENROD', LogOut.BLACK)
         self.abort = True
     # ----------------------------------------------------------------------
 
@@ -260,6 +258,7 @@ class LogOut(wx.Panel):
         self.error = False
         self.result.clear()
         self.count = 0
+        self.parent.statusbar_msg(_('Done'), None)
     # ----------------------------------------------------------------------
 
     def on_close(self, event):
@@ -267,11 +266,8 @@ class LogOut(wx.Panel):
         close dialog and retrieve at previusly panel
         """
         if self.thread_type is not None:
-            if wx.MessageBox(_('There are still processes running.. if you '
-                               'want to stop them, use the "Abort" button.\n\n'
-                               'Do you want to kill application?'),
-                             _('Please confirm'),
-                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
-                return
-            self.parent.on_Kill()
+            wx.MessageBox(_('There are still processes running.. if you '
+                            'want to stop them, use the "Abort" button.'),
+                          _('Videomass'), wx.ICON_WARNING, self)
+            return
         self.parent.panelShown()  # retrieve at previusly panel

@@ -205,7 +205,10 @@ class FormatCode(wx.Panel):
         meta = None, None
         index = 0
         for link in data_url:
-            data = youtubedl_getstatistics(link, ssl)
+            data = youtubedl_getstatistics(link,
+                                           ssl,
+                                           parent=self.GetParent(),
+                                           )
             for meta in data:
                 if meta[1]:
                     return meta[1]
