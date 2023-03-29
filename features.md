@@ -49,9 +49,11 @@ extract audio from videos and much more!
 - Concatenate, merge media files losslessly.
 - Create videos from still images (multiple images are also supported) and optionally include an audio file.
 - Extract images from video.
-- has useful tools for evaluating the supported features of a specific FFmpeg build.
+- Ability to switch between different FFmpeg builds.
+- Has useful graphical tools for evaluating the supported features of a specific FFmpeg build.
 - Audio stream mapping using selectable indexes.
-- GUI video filters such as:
+- You can set both audio and video to copy when you just want to convert formats.
+- It has GUI video filters such as:
     - Resizing 
     - Cropping
     - Rotation
