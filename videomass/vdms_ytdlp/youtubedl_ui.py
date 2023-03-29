@@ -288,21 +288,9 @@ class Downloader(wx.Panel):
         box = wx.StaticBox(self, wx.ID_ANY, '')
         boxpanel = wx.StaticBoxSizer(box, wx.VERTICAL)
         sizer_div.Add(boxpanel, 1, wx.ALL | wx.EXPAND, 5)
-        self.panel1 = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
-        boxpanel.Add(self.panel1, 1, wx.EXPAND)
-        sizerpan1 = wx.BoxSizer(wx.VERTICAL)
-        self.mainlist = wx.ListCtrl(self.panel1,
-                                    wx.ID_ANY,
-                                    style=wx.LC_REPORT
-                                    | wx.SUNKEN_BORDER,
-                                    )
-        self.mainlist.InsertColumn(0, ('#'), width=30)
-        self.mainlist.InsertColumn(1, (_('Url')), width=400)
-        sizerpan1.Add(self.mainlist, 1, wx.ALL | wx.EXPAND, 5)
-        self.panel1.SetSizer(sizerpan1)  # set panel
-        self.panel2 = FormatCode(self, self.format_dict)
-        self.panel2.Hide()
-        boxpanel.Add(self.panel2, 1, wx.EXPAND)
+        self.panel_cod = FormatCode(self, self.format_dict)
+        self.panel_cod.enable_widgets(False)
+        boxpanel.Add(self.panel_cod, 1, wx.EXPAND)
 
         self.SetSizer(sizer_base)
         self.Layout()
@@ -318,6 +306,7 @@ class Downloader(wx.Panel):
         self.ckbx_thumb.Bind(wx.EVT_CHECKBOX, self.on_thumbnails)
         self.ckbx_meta.Bind(wx.EVT_CHECKBOX, self.on_metadata)
         self.ckbx_sb.Bind(wx.EVT_CHECKBOX, self.on_subtitles)
+
     # ----------------------------------------------------------------------
 
     def clear_data_list(self, changed):
@@ -326,34 +315,19 @@ class Downloader(wx.Panel):
         delete data  and set to Disable otherwise.
         """
         if not self.parent.data_url:
-            self.choice.SetSelection(0)
-            self.choice.Disable()
-            self.ckbx_pl.Disable()
-            self.cmbx_af.Disable()
-            self.cmbx_aq.Disable()
-            self.rdbvideoformat.Disable()
-            self.cmbx_vq.Clear()
             del self.info[:]
             self.format_dict.clear()
-            self.mainlist.DeleteAllItems()
-            self.panel2.fcode.DeleteAllItems()
-            self.panel2.Hide()
-            self.panel1.Show()
-
+            self.panel_cod.fcode.DeleteAllItems()
+            self.on_choicebox(self, statusmsg=False)
         else:
             if changed:
-                self.choice.Enable()
-                self.ckbx_pl.Enable()
                 self.ckbx_pl.SetValue(False)
                 self.on_playlist(self)
-                self.mainlist.DeleteAllItems()
-                self.panel2.fcode.DeleteAllItems()
+                self.panel_cod.fcode.DeleteAllItems()
                 self.choice.SetSelection(0)
                 self.on_choicebox(self, statusmsg=False)
                 del self.info[:]
                 self.format_dict.clear()
-                self.panel2.Hide()
-                self.panel1.Show()
     # -----------------------------------------------------------------#
 
     def get_statistics(self, link):
@@ -365,7 +339,10 @@ class Downloader(wx.Panel):
         Check the first item of list to recognize the exit
         status, which is 'ERROR' or None.
         """
-        data = youtubedl_getstatistics(link, self.ckbx_ssl.GetValue())
+        data = youtubedl_getstatistics(link,
+                                       self.ckbx_ssl.GetValue(),
+                                       parent=self.GetParent(),
+                                       )
         for meta in data:
             if meta[1]:
                 return ('ERROR', meta[1])
@@ -401,22 +378,6 @@ class Downloader(wx.Panel):
                            })
     # -----------------------------------------------------------------#
 
-    def on_urls_list(self, quality=''):
-        """
-        Populate list control with new incoming urls.
-        """
-        if self.mainlist.GetItemCount():  # not changed
-            return None
-
-        if self.parent.data_url:
-            index = 0
-            for link in self.parent.data_url:
-                self.mainlist.InsertItem(index, str(index + 1))
-                self.mainlist.SetItem(index, 1, link)
-                index += 1
-        return None
-    # -----------------------------------------------------------------#
-
     def on_show_statistics(self):
         """
         show URL data information. This method is called by
@@ -436,10 +397,10 @@ class Downloader(wx.Panel):
 
     def on_format_codes(self):
         """
-        Check data given from `self.panel2.set_formatcode()` method
+        Check data given from `self.panel_cod.set_formatcode()` method
         which allow to enabling download by "Format Code".
         """
-        if self.panel2.fcode.GetItemCount():  # not changed, already set
+        if self.panel_cod.fcode.GetItemCount():  # not changed, already set
             return None
 
         def _error(msg, infoicon):
@@ -465,8 +426,8 @@ class Downloader(wx.Panel):
                             ).format(unsupp.split('/')[1], url)
                     return _error(msg, 'information')
 
-        ret = self.panel2.set_formatcode(self.parent.data_url,
-                                         self.ckbx_ssl.GetValue())
+        ret = self.panel_cod.set_formatcode(self.parent.data_url,
+                                            self.ckbx_ssl.GetValue())
         if ret:
             return _error(ret, 'error')
         return None
@@ -486,13 +447,11 @@ class Downloader(wx.Panel):
             self.cmbx_aq.Disable()
             self.cmbx_vq.Enable()
             self.rdbvideoformat.Disable()
-            self.panel2.Hide()
-            self.panel1.Show()
+            self.panel_cod.enable_widgets(False)
             self.cmbx_vq.Clear()
             self.cmbx_vq.Append(list(Downloader.VPCOMP.keys()))
             self.cmbx_vq.SetSelection(0)
             self.Layout()
-            self.on_urls_list()
             self.on_vquality(self)
 
         elif self.choice.GetSelection() == 1:
@@ -500,13 +459,11 @@ class Downloader(wx.Panel):
             self.cmbx_aq.Disable()
             self.cmbx_vq.Enable()
             self.rdbvideoformat.Enable()
-            self.panel2.Hide()
-            self.panel1.Show()
+            self.panel_cod.enable_widgets(False)
             self.cmbx_vq.Clear()
             self.cmbx_vq.Append(list(Downloader.VQUAL.keys()))
             self.cmbx_vq.SetSelection(0)
             self.Layout()
-            self.on_urls_list()
             self.on_vquality(self)
 
         elif self.choice.GetSelection() == 2:
@@ -514,13 +471,11 @@ class Downloader(wx.Panel):
             self.cmbx_aq.Enable()
             self.cmbx_vq.Enable()
             self.rdbvideoformat.Enable()
-            self.panel2.Hide()
-            self.panel1.Show()
+            self.panel_cod.enable_widgets(False)
             self.cmbx_vq.Clear()
             self.cmbx_vq.Append(list(Downloader.VQUAL.keys()))
             self.cmbx_vq.SetSelection(0)
             self.Layout()
-            self.on_urls_list()
             self.on_vquality(self)
 
         elif self.choice.GetSelection() == 3:
@@ -528,10 +483,9 @@ class Downloader(wx.Panel):
             self.cmbx_aq.Disable()
             self.cmbx_af.Enable()
             self.rdbvideoformat.Disable()
-            self.panel2.Hide()
-            self.panel1.Show()
+            self.panel_cod.enable_widgets(False)
             self.Layout()
-            self.on_urls_list(f'bestaudio (format={self.cmbx_af.GetValue()})')
+            self.on_aformat(self)
 
         elif self.choice.GetSelection() == 4:
             self.cmbx_vq.Disable()
@@ -539,11 +493,10 @@ class Downloader(wx.Panel):
             self.cmbx_af.Disable()
             self.ckbx_thumb.Enable()
             self.rdbvideoformat.Disable()
+            self.panel_cod.enable_widgets()
             ret = self.on_format_codes()
             if ret:
                 return
-            self.panel1.Hide()
-            self.panel2.Show()
             self.Layout()
     # -----------------------------------------------------------------#
 
@@ -590,7 +543,7 @@ class Downloader(wx.Panel):
         """
         self.opt["A_FORMAT"] = Downloader.AFORMATS.get(self.cmbx_af.GetValue())
 
-        quality = f'Quality: bestaudio (format={self.cmbx_af.GetValue()})'
+        quality = f'bestaudio (format={self.cmbx_af.GetValue()})'
         self.parent.statusbar_msg(f'Quality: {quality}', None)
         self.quality = quality
     # -----------------------------------------------------------------#
@@ -784,7 +737,7 @@ class Downloader(wx.Panel):
                     'nocheckcertificate': self.ckbx_ssl.GetValue(),
                     }
         elif self.choice.GetSelection() == 4:  # format code
-            code = self.panel2.getformatcode()
+            code = self.panel_cod.getformatcode()
             if not code:
                 self.parent.statusbar_msg(Downloader.MSG_1,
                                           Downloader.RED,

@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
-Name: main_frame.py
-Porpose: top window main frame
+Name: main_ytdlp.py
+Porpose: window main frame for yt_dlp library
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.17.2023
+Rev: March.24.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,13 +24,13 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+import os
 import sys
-from urllib.parse import urlparse
 import wx
 from pubsub import pub
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_ytdlp.ydl_mediainfo import YdlMediaInfo
-from videomass.vdms_ytdlp.textdrop import TextDnD
+from videomass.vdms_ytdlp.textdrop import Url_DnD_Panel
 from videomass.vdms_ytdlp.youtubedl_ui import Downloader
 from videomass.vdms_ytdlp.long_task_ytdlp import LogOut
 from videomass.vdms_io import io_tools
@@ -66,7 +66,7 @@ class MainYtdl(wx.Frame):
 
         # ---------- panel instances:
         self.ytDownloader = Downloader(self)
-        self.textDnDTarget = TextDnD(self)
+        self.textDnDTarget = Url_DnD_Panel(self)
         self.ProcessPanel = LogOut(self)
         # hide panels
         self.ProcessPanel.Hide()
@@ -98,7 +98,7 @@ class MainYtdl(wx.Frame):
         self.sb = self.CreateStatusBar(1)
         self.statusbar_msg(_('Ready'), None)
         # disable some toolbar item
-        [self.toolbar.EnableTool(x, False) for x in (10, 12, 13, 14)]
+        [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24)]
         self.Layout()
         # ---------------------- Binding (EVT) ----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_outputdir)
@@ -191,26 +191,22 @@ class MainYtdl(wx.Frame):
 
     def on_close(self, event):
         """
-        switch to panels or destroy the videomass app.
-
+        This event destroy the YouTube Downloader child frame.
         """
-        def _setsize():
-            """
-            Write last window size and position
-            for next start if changed
-            """
-            confmanager = ConfigManager(self.appdata['fileconfpath'])
-            sett = confmanager.read_options()
-            sett['main_ytdl_size'] = list(self.GetSize())
-            sett['main_ytdl_pos'] = list(self.GetPosition())
-            confmanager.write_options(**sett)
-
         if self.ProcessPanel.IsShown():
-            self.ProcessPanel.on_close(self)
-        else:
-            _setsize()
-            self.destroy_orphaned_window()
-            self.Destroy()
+            if self.ProcessPanel.thread_type is not None:
+                wx.MessageBox(_('There are still processes running.. if you '
+                                'want to stop them, use the "Abort" button.'),
+                              _('Videomass'), wx.ICON_WARNING, self)
+                return
+
+        confmanager = ConfigManager(self.appdata['fileconfpath'])
+        sett = confmanager.read_options()
+        sett['main_ytdl_size'] = list(self.GetSize())
+        sett['main_ytdl_pos'] = list(self.GetPosition())
+        confmanager.write_options(**sett)
+        self.destroy_orphaned_window()
+        self.Destroy()
     # ------------------------------------------------------------------#
 
     def on_Kill(self):
@@ -246,9 +242,23 @@ class MainYtdl(wx.Frame):
                                                     dscrp[1])
         self.fold_downloads_tmp.Enable(False)
         fileButton.AppendSeparator()
+        dscrp = (_("Work Notes\tCtrl+N"),
+                 _("Read and write useful notes and reminders."))
+        notepad = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        fileButton.AppendSeparator()
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit\tCtrl+Q"),
                                      _("Close Videomass"))
         self.menuBar.Append(fileButton, _("File"))
+
+        # ------------------ Edit menu
+        editButton = wx.Menu()
+        dscrp = (_("Paste\tCtrl+V"),
+                 _("Paste the clipboard URLs into the DragNDrop box"))
+        self.paste = editButton.Append(wx.ID_PASTE, dscrp[0], dscrp[1])
+        dscrp = (_("Remove selected URL\tDEL"),
+                 _("Remove the selected URL from the list"))
+        self.delete = editButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
+        self.menuBar.Append(editButton, _("Edit"))
 
         # ------------------ View menu
         viewButton = wx.Menu()
@@ -281,7 +291,12 @@ class MainYtdl(wx.Frame):
         self.Bind(wx.EVT_MENU, self.openMydownload, fold_downloads)
         self.Bind(wx.EVT_MENU, self.openMydownloads_tmp,
                   self.fold_downloads_tmp)
+        self.Bind(wx.EVT_MENU, self.reminder, notepad)
         self.Bind(wx.EVT_MENU, self.quiet, exitItem)
+        # ----EDIT----
+        self.Bind(wx.EVT_MENU, self.textDnDTarget.on_paste, self.paste)
+        self.Bind(wx.EVT_MENU, self.textDnDTarget.on_del_url_selected,
+                  self.delete)
         # ---- VIEW ----
         self.Bind(wx.EVT_MENU, self.ydl_used, self.ydlused)
         self.Bind(wx.EVT_MENU, self.ydl_latest, self.ydllatest)
@@ -307,6 +322,21 @@ class MainYtdl(wx.Frame):
         """
         io_tools.openpath(self.filedldir)
     # -------------------------------------------------------------------#
+
+    def reminder(self, event):
+        """
+        Call `io_tools.openpath` to open a 'user_memos.txt' file
+        with default GUI text editor.
+        """
+        fname = os.path.join(self.appdata['confdir'], 'user_memos.txt')
+
+        if os.path.exists(fname) and os.path.isfile(fname):
+            io_tools.openpath(fname)
+        else:
+            with open(fname, "w", encoding='utf8') as text:
+                text.write("")
+            io_tools.openpath(fname)
+    # ------------------------------------------------------------------#
 
     def quiet(self, event):
         """
@@ -446,31 +476,31 @@ class MainYtdl(wx.Frame):
                                      wx.NORMAL, 0, ""))
 
         tip = _("Go to the previous panel")
-        back = self.toolbar.AddTool(10, _('Back'),
+        back = self.toolbar.AddTool(20, _('Back'),
                                     bmpback,
                                     tip, wx.ITEM_NORMAL,
                                     )
         tip = _("Go to the next panel")
-        forward = self.toolbar.AddTool(11, _('Next'),
+        forward = self.toolbar.AddTool(21, _('Next'),
                                        bmpnext,
                                        tip, wx.ITEM_NORMAL,
                                        )
         tip = _("Shows statistics and information")
-        self.btn_ydlstatistics = self.toolbar.AddTool(12, _('Statistics'),
+        self.btn_ydlstatistics = self.toolbar.AddTool(22, _('Statistics'),
                                                       bmpstat,
                                                       tip, wx.ITEM_NORMAL,
                                                       )
         tip = _("Start downloading")
-        self.run_download = self.toolbar.AddTool(13, _('Download'),
+        self.run_download = self.toolbar.AddTool(23, _('Download'),
                                                  bmpydl,
                                                  tip, wx.ITEM_NORMAL,
                                                  )
         tip = _("Stops current process")
-        stop = self.toolbar.AddTool(14, _('Abort'), bmpstop,
+        stop = self.toolbar.AddTool(24, _('Abort'), bmpstop,
                                     tip, wx.ITEM_NORMAL,
                                     )
         tip = _("Clear the URL list")
-        clear = self.toolbar.AddTool(15, _('Clear'), bmpclear,
+        clear = self.toolbar.AddTool(25, _('Clear'), bmpclear,
                                      tip, wx.ITEM_NORMAL,
                                      )
         self.toolbar.Realize()
@@ -505,26 +535,6 @@ class MainYtdl(wx.Frame):
         if self.ytDownloader.IsShown():
             self.switch_to_processing('Viewing last log')
             return
-
-        lines = self.textDnDTarget.textctrl_urls.GetValue().split()
-        if lines:
-            for url in lines:  # Check malformed url
-                res = urlparse(url)
-                if not res[1]:  # if empty netloc given from ParseResult
-                    wx.MessageBox(_('ERROR: Invalid URL: "{}"').format(
-                                  url), "Videomass", wx.ICON_ERROR, self)
-                    return
-            if len(set(lines)) != len(lines):  # equal URLS
-                wx.MessageBox(_("ERROR: Some equal URLs found"),
-                              "Videomass", wx.ICON_ERROR, self)
-                return
-
-            if not lines == self.data_url:
-                self.changed = True
-                self.destroy_orphaned_window()
-                self.data_url = lines.copy()
-        else:
-            del self.data_url[:]
         self.switch_youtube_downloader(self)
         self.changed = False
     # ------------------------------------------------------------------#
@@ -536,8 +546,9 @@ class MainYtdl(wx.Frame):
         self.ProcessPanel.Hide()
         self.ytDownloader.Hide()
         self.textDnDTarget.Show()
-        [self.toolbar.EnableTool(x, True) for x in (11, 15)]
-        [self.toolbar.EnableTool(x, False) for x in (10, 12, 13, 14)]
+        (self.delete.Enable(True), self.paste.Enable(True))
+        [self.toolbar.EnableTool(x, True) for x in (21, 25)]
+        [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24)]
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)
@@ -552,9 +563,9 @@ class MainYtdl(wx.Frame):
         self.SetTitle(_('Videomass - YouTube Downloader'))
         self.textDnDTarget.Hide()
         self.ytDownloader.Show()
-        [self.toolbar.EnableTool(x, True) for x in (10, 11, 12, 13)]
-        [self.toolbar.EnableTool(x, False) for x in (14, 15)]
-
+        (self.delete.Enable(False), self.paste.Enable(False))
+        [self.toolbar.EnableTool(x, True) for x in (20, 21, 22, 23)]
+        [self.toolbar.EnableTool(x, False) for x in (24, 25)]
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -564,20 +575,21 @@ class MainYtdl(wx.Frame):
         """
         if args[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
-            [self.toolbar.EnableTool(x, False) for x in (11, 13, 14, 15)]
-            [self.toolbar.EnableTool(x, True) for x in (10, 12)]
+            [self.toolbar.EnableTool(x, False) for x in (21, 23, 24, 25)]
+            [self.toolbar.EnableTool(x, True) for x in (20, 22)]
 
         elif args[0] == 'youtube_dl downloading':
-            self.menuBar.EnableTop(2, False)
-            [self.toolbar.EnableTool(x, False) for x in (10, 11, 13, 15)]
-            [self.toolbar.EnableTool(x, True) for x in (12, 14)]
+            self.menuBar.EnableTop(3, False)
+            (self.delete.Enable(False), self.paste.Enable(False))
+            [self.toolbar.EnableTool(x, False) for x in (20, 21, 23, 25)]
+            [self.toolbar.EnableTool(x, True) for x in (22, 24)]
 
         self.SetTitle(_('Videomass - yt_dlp message monitor'))
         self.textDnDTarget.Hide()
         self.ytDownloader.Hide()
         self.ProcessPanel.Show()
-        self.ProcessPanel.topic_thread(args)
         self.Layout()
+        self.ProcessPanel.topic_thread(args)
     # ------------------------------------------------------------------#
 
     def click_start(self, event):
@@ -608,9 +620,9 @@ class MainYtdl(wx.Frame):
         Process report terminated. This method is called using
         pub/sub protocol. see `long_processing_task.end_proc()`)
         """
-        self.menuBar.EnableTop(2, True)
-        self.toolbar.EnableTool(10, True)
-        self.toolbar.EnableTool(14, False)
+        self.menuBar.EnableTop(3, True)
+        self.toolbar.EnableTool(20, True)
+        self.toolbar.EnableTool(24, False)
     # ------------------------------------------------------------------#
 
     def panelShown(self):
@@ -623,6 +635,6 @@ class MainYtdl(wx.Frame):
         self.switch_youtube_downloader(self)
 
         # Enable all top menu bar:
-        self.menuBar.EnableTop(2, True)
+        self.menuBar.EnableTop(3, True)
         # show buttons bar if the user has shown it:
         self.Layout()

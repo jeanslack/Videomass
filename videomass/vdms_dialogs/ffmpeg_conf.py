@@ -30,7 +30,7 @@ import wx
 from pubsub import pub
 
 
-class FFmpegConf(wx.MiniFrame):
+class FFmpegConf(wx.Dialog):
     """
     Shows a graphical representation of the FFmpeg configuration
     sorted by topic
@@ -46,12 +46,13 @@ class FFmpegConf(wx.MiniFrame):
         if close videomass also close parent window:
 
         """
-        wx.MiniFrame.__init__(self, None,
-                              style=wx.RESIZE_BORDER
-                              | wx.CAPTION
-                              | wx.CLOSE_BOX
-                              | wx.SYSTEM_MENU,
-                              )
+        get = wx.GetApp()  # get data from bootstrap
+        vidicon = get.iconset['videomass']
+        wx.Dialog.__init__(self, None,
+                           style=wx.DEFAULT_DIALOG_STYLE
+                           | wx.RESIZE_BORDER
+                           | wx.DIALOG_NO_PARENT
+                           )
         # add panel
         self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
                               | wx.BORDER_THEME,
@@ -109,6 +110,9 @@ class FFmpegConf(wx.MiniFrame):
         grid_buttons.Add(button_close, 0, wx.ALL, 5)
         sizer_base.Add(grid_buttons, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         # -- set layout
+        icon = wx.Icon()
+        icon.CopyFromBitmap(wx.Bitmap(vidicon, wx.BITMAP_TYPE_ANY))
+        self.SetIcon(icon)
         self.SetTitle(_("FFmpeg configuration"))
         self.SetMinSize((700, 500))
         others_opt.SetMinSize((700, 400))

@@ -29,7 +29,7 @@ from pubsub import pub
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 
 
-class AudioVolNormal(wx.MiniFrame):
+class AudioVolNormal(wx.Dialog):
     """
     It shows the target volume offset and the volume
     result obtained from the audio normalization process,
@@ -57,18 +57,18 @@ class AudioVolNormal(wx.MiniFrame):
         """
         data contains volume list per-track.
         """
+        get = wx.GetApp()  # get data from bootstrap
+        vidicon = get.iconset['videomass']
         self.red = AudioVolNormal.RED
         self.yellow = AudioVolNormal.YELLOW
         self.blue = AudioVolNormal.BLUE
         self.fgrd = AudioVolNormal.FOREGRD
 
-        wx.MiniFrame.__init__(self,
-                              None,
-                              style=wx.RESIZE_BORDER
-                              | wx.CAPTION
-                              | wx.CLOSE_BOX
-                              | wx.SYSTEM_MENU,
-                              )
+        wx.Dialog.__init__(self, None,
+                           style=wx.DEFAULT_DIALOG_STYLE
+                           | wx.RESIZE_BORDER
+                           | wx.DIALOG_NO_PARENT
+                           )
         self.panel = wx.Panel(self,
                               wx.ID_ANY,
                               style=wx.TAB_TRAVERSAL
@@ -130,6 +130,9 @@ class AudioVolNormal(wx.MiniFrame):
         gridbtn.Add(self.button_close, 1, wx.ALL, 5)
 
         # ----------------------Properties----------------------#
+        icon = wx.Icon()
+        icon.CopyFromBitmap(wx.Bitmap(vidicon, wx.BITMAP_TYPE_ANY))
+        self.SetIcon(icon)
         self.SetTitle(_(title))
         self.SetMinSize((850, 400))
         self.panel.SetSizer(sizer)

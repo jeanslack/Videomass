@@ -114,6 +114,7 @@ class LogOut(wx.Panel):
 
     WHITE = '#fbf4f4'  # white for background status bar
     BLACK = '#060505'  # black for background status bar
+    YELLOW = '#bd9f00'
     # ------------------------------------------------------------------#
 
     def __init__(self, parent):
@@ -166,8 +167,6 @@ class LogOut(wx.Panel):
         # set_properties:
         self.txtout.SetBackgroundColour(self.clr['BACKGRD'])
         self.SetSizerAndFit(sizer)
-        # bind
-        self.Bind(wx.EVT_BUTTON, self.on_close)
         # ------------------------------------------
 
         pub.subscribe(self.update_display, "UPDATE_EVT")
@@ -388,8 +387,8 @@ class LogOut(wx.Panel):
         The user change idea and was stop process
         """
         self.thread_type.stop()
-        self.parent.statusbar_msg(_("wait... I'm interrupting"),
-                                  'GOLDENROD', LogOut.WHITE)
+        self.parent.statusbar_msg(_("Please wait... interruption in progress"),
+                                  LogOut.YELLOW, LogOut.BLACK)
         self.thread_type.join()
         self.parent.statusbar_msg(_("...Interrupted"), None)
         self.abort = True
@@ -408,19 +407,3 @@ class LogOut(wx.Panel):
         self.count = 0
         self.with_eta = True  # restoring time remaining display
     # ----------------------------------------------------------------------
-
-    def on_close(self, event):
-        """
-        close this panel and retrieve at the previusly
-        """
-        if self.thread_type is not None:
-            if wx.MessageBox(_('There are still processes running.. if you '
-                               'want to stop them, use the "Abort" button.\n\n'
-                               'Do you want to kill application?'),
-                             _('Please confirm'),
-                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
-                return
-            self.parent.on_Kill()
-
-        self.parent.panelShown(self.previus)  # retrieve at the previus panel
-        # event.Skip()

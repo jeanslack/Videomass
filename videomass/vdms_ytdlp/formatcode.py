@@ -150,6 +150,20 @@ class FormatCode(wx.Panel):
             self.fcode.Bind(wx.EVT_LIST_ITEM_CHECKED, self.on_checkbox)
             self.fcode.Bind(wx.EVT_LIST_ITEM_UNCHECKED, self.on_checkbox)
 
+    def enable_widgets(self, enable=True):
+        """
+        Enable if download by format code is used.
+        """
+        if enable:
+            self.fcode.Enable()
+            self.ckbx_best.Enable()
+            self.ckbx_nomerge.Enable()
+        else:
+            self.fcode.Disable()
+            self.ckbx_best.Disable()
+            self.ckbx_nomerge.Disable()
+    # ----------------------------------------------------------------------
+
     def on_checkbox(self, event):
         """
         get data from the enabled checkbox and set the values
@@ -191,7 +205,10 @@ class FormatCode(wx.Panel):
         meta = None, None
         index = 0
         for link in data_url:
-            data = youtubedl_getstatistics(link, ssl)
+            data = youtubedl_getstatistics(link,
+                                           ssl,
+                                           parent=self.GetParent(),
+                                           )
             for meta in data:
                 if meta[1]:
                     return meta[1]

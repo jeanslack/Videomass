@@ -483,7 +483,7 @@ class DataSource():
                 'preview_audio', 'profile_copy', 'slideshow',
                 'videotopictures', 'atrack', 'timerset', 'coloreq',
                 'stop', 'home', 'youtube', 'playlist',
-                'cleanup', 'download', 'statistics',
+                'cleanup', 'download', 'statistics', 'play',
                 )  # must match with items on `iconset` tuple, see following
 
         icodir = self.dataloc['icodir']
@@ -549,6 +549,7 @@ class DataSource():
                    f"{choose.get('x22')}/cleanup.{ext}",
                    f"{choose.get('x22')}/download.{ext}",
                    f"{choose.get('x22')}/statistics.{ext}",
+                   f"{choose.get('x22')}/play.{ext}",
                    )
         values = (os.path.join(norm) for norm in iconset)  # normalize pathns
 

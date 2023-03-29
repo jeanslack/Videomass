@@ -25,10 +25,9 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import sys
 import re
 import wx
-from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from pubsub import pub
 from videomass.vdms_io.io_tools import stream_play
 from videomass.vdms_threads.ffprobe import ffprobe
 from videomass.vdms_utils.utils import get_milliseconds
@@ -247,6 +246,7 @@ class FileDnD(wx.Panel):
     # CONSTANTS:
     YELLOW = '#bd9f00'
     BLACK = '#060505'  # black for background status bar
+    ORANGE = '#f28924'
 
     def __init__(self, parent, *args):
         """Constructor. This will initiate with an id and a title"""
@@ -254,30 +254,16 @@ class FileDnD(wx.Panel):
         appdata = get.appset
         self.themecolor = appdata['icontheme'][1]
         self.parent = parent  # parent is the MainFrame
-        self.outputnames = args[2]
-        self.data = args[3]
-        self.file_src = args[4]
-        self.duration = args[5]
+        self.outputnames = args[1]
+        self.data = args[2]
+        self.file_src = args[3]
+        self.duration = args[4]
         self.sortingstate = None  # ascending or descending order
-        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-            bmpplay = get_bmp(args[0], ((16, 16)))
-        else:
-            bmpplay = wx.Bitmap(args[0], wx.BITMAP_TYPE_ANY)
 
         wx.Panel.__init__(self, parent, -1)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add((0, 10))
-        sizer_media = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizer_media, 0, wx.CENTRE)
-        self.btn_play = wx.Button(self, wx.ID_ANY, _("Play"))
-        self.btn_play.SetBitmap(bmpplay, wx.LEFT)
-        self.btn_play.Disable()
-        sizer_media.Add(self.btn_play, 0, wx.ALL | wx.CENTRE, 2)
-        self.btn_remove = wx.Button(self, wx.ID_REMOVE, "")
-        self.btn_remove.Disable()
-        sizer_media.Add(self.btn_remove, 0, wx.ALL | wx.CENTRE, 2)
-
+        sizer.Add((0, 25))
         # This builds the list control box:
         self.flCtrl = MyListCtrl(self)  # class MyListCtr
         # Establish the listctrl as a drop target:
@@ -285,8 +271,9 @@ class FileDnD(wx.Panel):
         self.flCtrl.SetDropTarget(file_drop_target)  # Make drop target.
         # create widgets
         infomsg = _("Drag one or more files below")
-        lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
-        sizer.Add(lbl_info, 0, wx.ALL | wx.EXPAND, 5)
+        self.lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
+        sizer.Add(self.lbl_info, 0, wx.ALL | wx.EXPAND, 5)
+        sizer.Add((0, 10))
         sizer.Add(self.flCtrl, 1, wx.EXPAND | wx.ALL, 2)
         sizer.Add((0, 10))
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
@@ -305,29 +292,53 @@ class FileDnD(wx.Panel):
         self.SetSizer(sizer)
 
         if appdata['ostype'] == 'Darwin':
-            lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            self.lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
-            lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            self.lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
-        self.text_path_save.SetValue(args[1])
+        self.text_path_save.SetValue(args[0])
         if appdata['outputfile_samedir']:
             self.btn_destpath.Disable()
             self.text_path_save.Disable()
 
         # Tooltips
-        self.btn_remove.SetToolTip(_('Remove the selected '
-                                     'files from the list'))
         self.btn_destpath.SetToolTip(_('Set up a temporary folder '
                                        'for conversions'))
-        self.btn_play.SetToolTip(_('Play the selected file in the list'))
         self.text_path_save.SetToolTip(_("Destination folder"))
 
         # Binding (EVT)
-        self.Bind(wx.EVT_BUTTON, self.on_play_select, self.btn_play)
-        self.Bind(wx.EVT_BUTTON, self.on_delete_selected, self.btn_remove)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.on_col_click, self.flCtrl)
+
+        pub.subscribe(self.text_information, "SET_DRAG_AND_DROP_TOPIC")
+    # ----------------------------------------------------------------------
+
+    def text_information(self, topic):
+        """
+        Set informative properties on selected topic.
+        This method is called using pub/sub protocol
+        "SET_DRAG_AND_DROP_TOPIC".
+        """
+        if topic in ('Presets Manager', 'Audio/Video Conversions',
+                     'Concatenate Demuxer'):
+            self.flCtrl.SetToolTip(_('No limit in the imported formats, but '
+                                     'if you have to work with videos, import '
+                                     'only videos, if with audio, import only '
+                                     'audio files, etc. '))
+            self.lbl_info.SetLabel('Drag one or more files below')
+        elif topic == 'Image Sequence to Video':
+            self.lbl_info.SetLabel('Drag the image files below')
+            self.flCtrl.SetToolTip(_('Currently supported formats are jpeg, '
+                                     'png and bmp. The order in which they '
+                                     'are sorted here will affect the making '
+                                     'of the final video.'))
+
+        elif topic == 'Video to Pictures':
+            self.lbl_info.SetLabel('Drag one or more video files below')
+            self.flCtrl.SetToolTip(_('Import only video type files, rendering '
+                                     'expects to process one at a time '
+                                     'starting from the selected one.'))
     # ----------------------------------------------------------------------
 
     def on_col_click(self, event):
@@ -403,18 +414,14 @@ class FileDnD(wx.Panel):
             self.flCtrl.Select(selitem, on=1)  # default event selection
     # ----------------------------------------------------------------------
 
-    def which(self):
-        """
-        return topic name by choose_topic.py selection
-        """
-        print(self.parent.topicname)
-        return self.parent.topicname
-    # ----------------------------------------------------------------------
-
     def on_play_select(self, event):
         """
         Playback the selected file
         """
+        if self.flCtrl.GetFirstSelected() == -1:  # None
+            msg = _("No file selected")
+            self.parent.statusbar_msg(msg, FileDnD.YELLOW, FileDnD.BLACK)
+            return
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index, 1)
         if self.parent.checktimestamp:
@@ -429,6 +436,9 @@ class FileDnD(wx.Panel):
         """
         Delete a selected file or a bunch of selected files
         """
+        if self.flCtrl.GetFirstSelected() == -1:  # None
+            return
+
         item, indexes = -1, []
         while 1:
             item = self.flCtrl.GetNextItem(item,
@@ -470,8 +480,6 @@ class FileDnD(wx.Panel):
         del self.file_src[:]
         del self.duration[:]
         self.changes_in_progress(setfocus=False)
-        self.btn_play.Disable()
-        self.btn_remove.Disable()
         self.parent.rename.Enable(False)
         self.parent.rename_batch.Enable(False)
         self.parent.filedropselected = None
@@ -485,8 +493,6 @@ class FileDnD(wx.Panel):
         """
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index, 1)
-        self.btn_play.Enable()
-        self.btn_remove.Enable()
         self.parent.filedropselected = item
         self.parent.rename.Enable(True)
     # ----------------------------------------------------------------------
@@ -496,8 +502,6 @@ class FileDnD(wx.Panel):
         Event to deselect a line when clicking
         in an empty space of the control list
         """
-        self.btn_play.Disable()
-        self.btn_remove.Disable()
         self.parent.filedropselected = None
         self.parent.rename.Enable(False)
     # ----------------------------------------------------------------------

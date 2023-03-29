@@ -28,7 +28,7 @@ import wx
 from pubsub import pub
 
 
-class WhilePlaying(wx.MiniFrame):
+class WhilePlaying(wx.Dialog):
     """
     Display a dialog box resizable with shortcuts keyboard
     useful when you use playback function with FFplay
@@ -68,12 +68,12 @@ class WhilePlaying(wx.MiniFrame):
         """
         get = wx.GetApp()  # get data from bootstrap
         colorscheme = get.appset['icontheme'][1]
+        vidicon = get.iconset['videomass']
 
-        wx.MiniFrame.__init__(self, None,
-                              style=wx.CAPTION
-                              | wx.CLOSE_BOX
-                              | wx.SYSTEM_MENU,
-                              )
+        wx.Dialog.__init__(self, None,
+                           style=wx.DEFAULT_DIALOG_STYLE
+                           | wx.DIALOG_NO_PARENT
+                           )
         # -------------------- widget --------------------------#
         panel_base = wx.Panel(self, wx.ID_ANY,
                               style=wx.TAB_TRAVERSAL
@@ -106,6 +106,9 @@ class WhilePlaying(wx.MiniFrame):
                        | wx.RIGHT,
                        border=5,
                        )
+        icon = wx.Icon()
+        icon.CopyFromBitmap(wx.Bitmap(vidicon, wx.BITMAP_TYPE_ANY))
+        self.SetIcon(icon)
         panel_base.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()

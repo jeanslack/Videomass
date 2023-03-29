@@ -28,7 +28,7 @@ import wx
 from pubsub import pub
 
 
-class FFmpegFormats(wx.MiniFrame):
+class FFmpegFormats(wx.Dialog):
     """
     It shows a dialog box with a pretty kind of GUI to view
     the formats available on FFmpeg
@@ -44,12 +44,13 @@ class FFmpegFormats(wx.MiniFrame):
         if close videomass also close parent window:
 
         """
-        wx.MiniFrame.__init__(self, None,
-                              style=wx.RESIZE_BORDER
-                              | wx.CAPTION
-                              | wx.CLOSE_BOX
-                              | wx.SYSTEM_MENU,
-                              )
+        get = wx.GetApp()  # get data from bootstrap
+        vidicon = get.iconset['videomass']
+        wx.Dialog.__init__(self, None,
+                           style=wx.DEFAULT_DIALOG_STYLE
+                           | wx.RESIZE_BORDER
+                           | wx.DIALOG_NO_PARENT
+                           )
         # add panel
         self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
                               | wx.BORDER_THEME,
@@ -97,6 +98,9 @@ class FFmpegFormats(wx.MiniFrame):
         grid_buttons.Add(button_close, 1, wx.ALL, 5)
         sizer_base.Add(grid_buttons, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
 
+        icon = wx.Icon()
+        icon.CopyFromBitmap(wx.Bitmap(vidicon, wx.BITMAP_TYPE_ANY))
+        self.SetIcon(icon)
         self.SetTitle(_("FFmpeg file formats"))
         self.SetMinSize((500, 400))
         dmx.SetMinSize((500, 400))
