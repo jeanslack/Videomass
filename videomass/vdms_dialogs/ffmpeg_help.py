@@ -169,6 +169,7 @@ class FFmpegHelp(wx.Dialog):
         sizerselect.Add(self.cmbx_main, 0, wx.ALL, 5)
         self.cmbx_arg = wx.ComboBox(self, wx.ID_ANY,
                                     choices=FFmpegHelp.ARGS,
+                                    size=(140, -1),
                                     style=wx.CB_DROPDOWN
                                     | wx.CB_READONLY,
                                     )

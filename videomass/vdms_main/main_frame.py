@@ -193,7 +193,7 @@ class MainFrame(wx.Frame):
         self.sb = self.CreateStatusBar(1)
         self.statusbar_msg(_('Ready'), None)
         # disabling toolbar/menu items
-        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 9, 25)]
+        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 9, 35)]
         self.menu_items(enable=False)
         self.Layout()
         # ---------------------- Binding (EVT) ----------------------#
@@ -458,9 +458,9 @@ class MainFrame(wx.Frame):
         editButton = wx.Menu()
         dscrp = (_("Remove selected file\tDEL"),
                  _("Remove the selected files from the list"))
-        delfile = editButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
+        self.delfile = editButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
         self.menuBar.Append(editButton, _("Edit"))
-        self.menuBar.EnableTop(1, False)
+        self.delfile.Enable(False)
 
         # ------------------ tools menu
         toolsButton = wx.Menu()
@@ -615,7 +615,8 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.empty_trash_folder, empty_trash)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         # ----EDIT----
-        self.Bind(wx.EVT_MENU, self.fileDnDTarget.on_delete_selected, delfile)
+        self.Bind(wx.EVT_MENU, self.fileDnDTarget.on_delete_selected,
+                  self.delfile)
         # ----TOOLS----
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
         self.Bind(wx.EVT_MENU, self.prst_downloader, self.prstdownload)
@@ -1238,7 +1239,7 @@ class MainFrame(wx.Frame):
                                     tip, wx.ITEM_NORMAL
                                     )
         tip = _("Play the selected file in the list")
-        play = self.toolbar.AddTool(25, _('Play'),
+        play = self.toolbar.AddTool(35, _('Play'),
                                     bmpplay,
                                     tip, wx.ITEM_NORMAL
                                     )
@@ -1356,11 +1357,11 @@ class MainFrame(wx.Frame):
         elif self.toSlideshow.IsShown():
             self.toSlideshow.Hide()
 
-        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 9, 25)]
+        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 9, 35)]
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
         self.menu_items(enable=False)
-        self.menuBar.EnableTop(1, False)
+        self.delfile.Enable(False)
         self.SetTitle(_('Videomass'))
         self.statusbar_msg(_('Ready'), None)
         self.Layout()
@@ -1383,9 +1384,9 @@ class MainFrame(wx.Frame):
         self.fileDnDTarget.Show()
         pub.sendMessage("SET_DRAG_AND_DROP_TOPIC", topic=self.topicname)
         self.menu_items(enable=False)  # disable menu items
-        self.menuBar.EnableTop(1, True)
+        self.delfile.Enable(True)
         self.openmedia.Enable(True)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 9, 25)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 9, 35)]
         [self.toolbar.EnableTool(x, False) for x in (7, 8)]
         self.toolbar.Realize()
         self.Layout()
@@ -1411,10 +1412,10 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - AV Conversions'))
         self.TimeLine.Show()
         self.menu_items(enable=True)  # enable all menu items
-        self.menuBar.EnableTop(1, False)
+        self.delfile.Enable(False)
         self.openmedia.Enable(True)
         self.avpan.Enable(False)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 25)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
         [self.toolbar.EnableTool(x, False) for x in (8, 9)]
         self.Layout()
     # ------------------------------------------------------------------#
@@ -1437,10 +1438,10 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - Presets Manager'))
         self.TimeLine.Show()
         self.menu_items(enable=True)  # enable all menu items
-        self.menuBar.EnableTop(1, False)
+        self.delfile.Enable(False)
         self.openmedia.Enable(True)
         self.prstpan.Enable(False)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 25)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
         [self.toolbar.EnableTool(x, False) for x in (8, 9)]
         self.Layout()
         self.PrstsPanel.update_preset_state()
@@ -1464,10 +1465,10 @@ class MainFrame(wx.Frame):
         self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - Concatenate Demuxer'))
         self.menu_items(enable=True)  # enable all menu items
-        self.menuBar.EnableTop(1, False)
+        self.delfile.Enable(False)
         self.openmedia.Enable(True)
         self.concpan.Enable(False)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 25)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
         [self.toolbar.EnableTool(x, False) for x in (8, 9)]
         self.Layout()
     # ------------------------------------------------------------------#
@@ -1490,10 +1491,10 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - From Movie to Pictures'))
         self.TimeLine.Show()
         self.menu_items(enable=True)  # enable all menu items
-        self.menuBar.EnableTop(1, False)
+        self.delfile.Enable(False)
         self.openmedia.Enable(True)
         self.toseq.Enable(False)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 25)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
         [self.toolbar.EnableTool(x, False) for x in (8, 9)]
         self.Layout()
     # ------------------------------------------------------------------#
@@ -1516,10 +1517,10 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - Still Image Maker'))
         self.TimeLine.Show()
         self.menu_items(enable=True)  # enable all menu items
-        self.menuBar.EnableTop(1, False)
+        self.delfile.Enable(False)
         self.openmedia.Enable(True)
         self.slides.Enable(False)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 25)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
         [self.toolbar.EnableTool(x, False) for x in (8, 9)]
         self.Layout()
     # ------------------------------------------------------------------#
@@ -1559,7 +1560,7 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         self.ProcessPanel.Show()
         if not args[0] == 'Viewing last log':
-            self.menuBar.EnableTop(1, False)
+            self.delfile.Enable(False)
             self.menu_items(enable=False)  # disable menu items
             self.openmedia.Enable(False)
             [self.toolbar.EnableTool(x, True) for x in (6, 8)]

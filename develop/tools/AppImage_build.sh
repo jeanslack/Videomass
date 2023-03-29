@@ -35,18 +35,13 @@ fi
 
 # Set the latest release of python-appimage,
 # make sure the version matches correctly, if not fix it.
-PYTHON_APPIMAGE=python3.8.16-cp38-cp38-manylinux_2_28_x86_64.AppImage
-PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.8/${PYTHON_APPIMAGE}
+PYTHON_APPIMAGE=python3.9.16-cp39-cp39-manylinux1_x86_64.AppImage
+PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.9/${PYTHON_APPIMAGE}
 
 # Set the wxPython release, make sure the version matches correctly,
 # if not fix it.
-# WX_PYTHON_WHEEL=wxPython-4.1.1-cp38-cp38-linux_x86_64.whl
-# WX_PYTHON_URL=https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04
-
-# wx manylinux
-WX_PYTHON_WHEEL=wxPython-4.2.0-cp38-cp38-manylinux_2_28_x86_64.whl
-WX_PYTHON_URL=https://extras.wxpython.org/wxPython4/extras/manylinux-test
-
+WX_PYTHON_WHEEL=wxPython-4.1.1-cp39-cp39-linux_x86_64.whl
+WX_PYTHON_URL=https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04
 
 # Set a temporary dir
 BUILD_DIR=$(mktemp -d -p "$TEMP_BASE" videomass-AppImage-build-XXXXXX)
@@ -75,29 +70,29 @@ chmod +x ${PYTHON_APPIMAGE}
 mv squashfs-root AppDir
 
 # Download required shared library
-# if [ ! -d usr ] || [ ! -d lib ]; then
-#     wget -c http://security.ubuntu.com/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb \
-#         http://security.ubuntu.com/ubuntu/pool/main/libj/libjpeg-turbo/libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb \
-#             http://nl.archive.ubuntu.com/ubuntu/pool/universe/s/sndio/libsndio6.1_1.1.0-2_amd64.deb \
-#                 http://security.ubuntu.com/ubuntu/pool/universe/libs/libsdl2/libsdl2-2.0-0_2.0.8+dfsg1-1ubuntu1.18.04.4_amd64.deb
-#
-#     # extract data from .deb files
-#     ar -x libpng12-0_1.2.54-1ubuntu1.1_amd64.deb data.tar.xz && tar -xf data.tar.xz
-#     ar -x libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb data.tar.xz && tar -xf data.tar.xz
-#     ar -x libsndio6.1_1.1.0-2_amd64.deb data.tar.xz && tar -xf data.tar.xz
-#     ar -x libsdl2-2.0-0_2.0.8+dfsg1-1ubuntu1.18.04.4_amd64.deb data.tar.xz && tar -xf data.tar.xz
-# fi
-#
-# # copy shared libraries
-# cp -r lib/ $APP_DIR/
-# cp -r usr/ $APP_DIR/
-#
-# # move some libraries to link when needed by starting appimage
-# mkdir $APP_DIR/x86_64-linux-gnu
-# mv $APP_DIR/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0.8.0 \
-#     $APP_DIR/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 \
-#         $APP_DIR/usr/lib/x86_64-linux-gnu/libsndio.so.6.1 \
-#             $APP_DIR/x86_64-linux-gnu
+if [ ! -d usr ] || [ ! -d lib ]; then
+    wget -c http://security.ubuntu.com/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb \
+        http://security.ubuntu.com/ubuntu/pool/main/libj/libjpeg-turbo/libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb \
+            http://nl.archive.ubuntu.com/ubuntu/pool/universe/s/sndio/libsndio6.1_1.1.0-2_amd64.deb \
+                http://security.ubuntu.com/ubuntu/pool/universe/libs/libsdl2/libsdl2-2.0-0_2.0.8+dfsg1-1ubuntu1.18.04.4_amd64.deb
+
+    # extract data from .deb files
+    ar -x libpng12-0_1.2.54-1ubuntu1.1_amd64.deb data.tar.xz && tar -xf data.tar.xz
+    ar -x libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb data.tar.xz && tar -xf data.tar.xz
+    ar -x libsndio6.1_1.1.0-2_amd64.deb data.tar.xz && tar -xf data.tar.xz
+    ar -x libsdl2-2.0-0_2.0.8+dfsg1-1ubuntu1.18.04.4_amd64.deb data.tar.xz && tar -xf data.tar.xz
+fi
+
+# copy shared libraries
+cp -r lib/ $APP_DIR/
+cp -r usr/ $APP_DIR/
+
+# move some libraries to link when needed by starting appimage
+mkdir $APP_DIR/x86_64-linux-gnu
+mv $APP_DIR/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0.8.0 \
+    $APP_DIR/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 \
+        $APP_DIR/usr/lib/x86_64-linux-gnu/libsndio.so.6.1 \
+            $APP_DIR/x86_64-linux-gnu
 
 # Update pip first
 $APP_DIR/AppRun -m pip install -U pip
@@ -150,7 +145,7 @@ export ARCH=x86_64
 
 # retrieve the Videomass version from the package metadata
 export VERSION=$(cat \
-    $APP_DIR/opt/python*/lib/python3.8/site-packages/videomass-*.dist-info/METADATA \
+    $APP_DIR/opt/python*/lib/python3.9/site-packages/videomass-*.dist-info/METADATA \
         | grep "^Version:.*" | cut -d " " -f 2)
 
 # Now, build AppImage using linuxdeploy

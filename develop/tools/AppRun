@@ -33,17 +33,17 @@ export TKPATH="${TK_LIBRARY}"
 # Export SSL certificate
 export SSL_CERT_FILE="${APPDIR}/opt/_internal/certs.pem"
 
-# # required shared libraries to run Videomass
-# LIBSDL=$(/sbin/ldconfig -p | grep libSDL2.2.0 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
-# if [ -z "$LIBSDL" ]; then  # if empty
-#     echo "export ${APPDIR}/x86_64-linux-gnu/"
-#     export LD_LIBRARY_PATH="${APPDIR}/x86_64-linux-gnu/":$LD_LIBRARY_PATH
-# fi
-#
-# export LD_LIBRARY_PATH="${APPDIR}/usr/lib/x86_64-linux-gnu/":$LD_LIBRARY_PATH
-# if [ -d "${APPDIR}/lib/x86_64-linux-gnu" ]; then
-#     export LD_LIBRARY_PATH="${APPDIR}/lib/x86_64-linux-gnu/":$LD_LIBRARY_PATH
-# fi
+# required shared libraries to run Videomass
+LIBSDL=$(/sbin/ldconfig -p | grep libSDL2.2.0 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+if [ -z "$LIBSDL" ]; then  # if empty
+    echo "export ${APPDIR}/x86_64-linux-gnu/"
+    export LD_LIBRARY_PATH="${APPDIR}/x86_64-linux-gnu/":$LD_LIBRARY_PATH
+fi
+
+export LD_LIBRARY_PATH="${APPDIR}/usr/lib/x86_64-linux-gnu/":$LD_LIBRARY_PATH
+if [ -d "${APPDIR}/lib/x86_64-linux-gnu" ]; then
+    export LD_LIBRARY_PATH="${APPDIR}/lib/x86_64-linux-gnu/":$LD_LIBRARY_PATH
+fi
 
 # Call Python
-"$APPDIR/opt/python3.8/bin/python3.8" "$APPDIR/usr/bin/videomass" "$@"
+"$APPDIR/opt/python3.9/bin/python3.9" "$APPDIR/usr/bin/videomass" "$@"

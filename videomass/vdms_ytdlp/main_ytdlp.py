@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+import os
 import sys
 import wx
 from pubsub import pub
@@ -241,6 +242,10 @@ class MainYtdl(wx.Frame):
                                                     dscrp[1])
         self.fold_downloads_tmp.Enable(False)
         fileButton.AppendSeparator()
+        dscrp = (_("Work Notes\tCtrl+N"),
+                 _("Read and write useful notes and reminders."))
+        notepad = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        fileButton.AppendSeparator()
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit\tCtrl+Q"),
                                      _("Close Videomass"))
         self.menuBar.Append(fileButton, _("File"))
@@ -249,10 +254,10 @@ class MainYtdl(wx.Frame):
         editButton = wx.Menu()
         dscrp = (_("Paste\tCtrl+V"),
                  _("Paste the clipboard URLs into the DragNDrop box"))
-        paste = editButton.Append(wx.ID_PASTE, dscrp[0], dscrp[1])
+        self.paste = editButton.Append(wx.ID_PASTE, dscrp[0], dscrp[1])
         dscrp = (_("Remove selected URL\tDEL"),
                  _("Remove the selected URL from the list"))
-        delete = editButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
+        self.delete = editButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
         self.menuBar.Append(editButton, _("Edit"))
 
         # ------------------ View menu
@@ -286,11 +291,12 @@ class MainYtdl(wx.Frame):
         self.Bind(wx.EVT_MENU, self.openMydownload, fold_downloads)
         self.Bind(wx.EVT_MENU, self.openMydownloads_tmp,
                   self.fold_downloads_tmp)
+        self.Bind(wx.EVT_MENU, self.reminder, notepad)
         self.Bind(wx.EVT_MENU, self.quiet, exitItem)
         # ----EDIT----
-        self.Bind(wx.EVT_MENU, self.textDnDTarget.on_paste, paste)
-        self.Bind(wx.EVT_MENU, self.textDnDTarget.on_del_url_selected, delete)
-
+        self.Bind(wx.EVT_MENU, self.textDnDTarget.on_paste, self.paste)
+        self.Bind(wx.EVT_MENU, self.textDnDTarget.on_del_url_selected,
+                  self.delete)
         # ---- VIEW ----
         self.Bind(wx.EVT_MENU, self.ydl_used, self.ydlused)
         self.Bind(wx.EVT_MENU, self.ydl_latest, self.ydllatest)
@@ -316,6 +322,21 @@ class MainYtdl(wx.Frame):
         """
         io_tools.openpath(self.filedldir)
     # -------------------------------------------------------------------#
+
+    def reminder(self, event):
+        """
+        Call `io_tools.openpath` to open a 'user_memos.txt' file
+        with default GUI text editor.
+        """
+        fname = os.path.join(self.appdata['confdir'], 'user_memos.txt')
+
+        if os.path.exists(fname) and os.path.isfile(fname):
+            io_tools.openpath(fname)
+        else:
+            with open(fname, "w", encoding='utf8') as text:
+                text.write("")
+            io_tools.openpath(fname)
+    # ------------------------------------------------------------------#
 
     def quiet(self, event):
         """
@@ -525,7 +546,7 @@ class MainYtdl(wx.Frame):
         self.ProcessPanel.Hide()
         self.ytDownloader.Hide()
         self.textDnDTarget.Show()
-        self.menuBar.EnableTop(1, True)
+        (self.delete.Enable(True), self.paste.Enable(True))
         [self.toolbar.EnableTool(x, True) for x in (21, 25)]
         [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24)]
         self.toolbar.Realize()
@@ -542,10 +563,9 @@ class MainYtdl(wx.Frame):
         self.SetTitle(_('Videomass - YouTube Downloader'))
         self.textDnDTarget.Hide()
         self.ytDownloader.Show()
-        self.menuBar.EnableTop(1, False)
+        (self.delete.Enable(False), self.paste.Enable(False))
         [self.toolbar.EnableTool(x, True) for x in (20, 21, 22, 23)]
         [self.toolbar.EnableTool(x, False) for x in (24, 25)]
-
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -560,7 +580,7 @@ class MainYtdl(wx.Frame):
 
         elif args[0] == 'youtube_dl downloading':
             self.menuBar.EnableTop(3, False)
-            self.menuBar.EnableTop(1, False)
+            (self.delete.Enable(False), self.paste.Enable(False))
             [self.toolbar.EnableTool(x, False) for x in (20, 21, 23, 25)]
             [self.toolbar.EnableTool(x, True) for x in (22, 24)]
 
