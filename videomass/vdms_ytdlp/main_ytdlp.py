@@ -204,19 +204,16 @@ class MainYtdl(wx.Frame):
         sett = confmanager.read_options()
         sett['main_ytdl_size'] = list(self.GetSize())
         sett['main_ytdl_pos'] = list(self.GetPosition())
+        sett['ssl_certificate'] = self.ytDownloader.ckbx_ssl.GetValue()
+        sett['add_metadata'] = self.ytDownloader.ckbx_meta.GetValue()
+        sett['embed_thumbnails'] = self.ytDownloader.ckbx_thumb.GetValue()
+        sett['overwr_dl_files'] = self.ytDownloader.ckbx_ow.GetValue()
+        sett['include_ID_name'] = self.ytDownloader.ckbx_id.GetValue()
+        sett['restrict_fname'] = self.ytDownloader.ckbx_limitfn.GetValue()
         confmanager.write_options(**sett)
         self.destroy_orphaned_window()
         self.Destroy()
     # ------------------------------------------------------------------#
-
-    def on_Kill(self):
-        """
-        Try to kill application during a process thread
-        that does not want to terminate with the abort button
-
-        """
-        self.destroy_orphaned_window()
-        self.Destroy()
 
     # -------------   BUILD THE MENU BAR  ----------------###
 

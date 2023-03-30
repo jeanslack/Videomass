@@ -32,6 +32,7 @@ from videomass.vdms_utils.utils import timehuman
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_ytdlp.playlist_indexing import Indexing
 from videomass.vdms_ytdlp.formatcode import FormatCode
+from videomass.vdms_sys.settings_manager import ConfigManager
 
 
 def join_opts(optvideo=None, optaudio=None, vformat=None, selection=None):
@@ -75,10 +76,6 @@ class Downloader(wx.Panel):
     """
     This panel represents the main interface to yt-dlp
     """
-    get = wx.GetApp()
-    appdata = get.appset
-    icons = get.iconset
-    RED = get.appset['icontheme'][1]['ERR1']  # code text err + sb error
     WHITE = '#fbf4f4'  # sb foreground
     VIOLET = '#D64E93'  # activated playlist button
 
@@ -125,16 +122,21 @@ class Downloader(wx.Panel):
         module.
         """
         self.parent = parent
+        get = wx.GetApp()
+        appdata = get.appset
+        icons = get.iconset
+        self.red = appdata['icontheme'][1]['ERR1']  # code text err + sb error
+        confmanager = ConfigManager(appdata['fileconfpath'])
+        sett = confmanager.read_options()
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-            bmplistindx = get_bmp(Downloader.icons['playlist'], ((16, 16)))
+            bmplistindx = get_bmp(icons['playlist'], ((16, 16)))
         else:
-            bmplistindx = wx.Bitmap(Downloader.icons['playlist'],
-                                    wx.BITMAP_TYPE_ANY)
+            bmplistindx = wx.Bitmap(icons['playlist'], wx.BITMAP_TYPE_ANY)
 
         self.opt = {("NO_PLAYLIST"): True,
-                    ("THUMB"): False,
-                    ("METADATA"): True,
+                    ("THUMB"): sett['embed_thumbnails'],
+                    ("METADATA"): sett['add_metadata'],
                     ("V_QUALITY"): Downloader.VPCOMP['Best precompiled video'],
                     ("A_FORMAT"): "best",
                     ("A_QUALITY"): "bestaudio",
@@ -233,15 +235,17 @@ class Downloader(wx.Panel):
         self.ckbx_ssl = wx.CheckBox(panelscroll, wx.ID_ANY,
                                     (_('Don’t check SSL certificate'))
                                     )
+        self.ckbx_ssl.SetValue(sett['ssl_certificate'])
         fgs1.Add(self.ckbx_ssl, 0, wx.ALL, 5)
         self.ckbx_thumb = wx.CheckBox(panelscroll, wx.ID_ANY,
                                       (_('Embed thumbnail in audio file'))
                                       )
+        self.ckbx_thumb.SetValue(sett['embed_thumbnails'])
         fgs1.Add(self.ckbx_thumb, 0, wx.ALL, 5)
         self.ckbx_meta = wx.CheckBox(panelscroll, wx.ID_ANY,
                                      (_('Add metadata to file'))
                                      )
-        self.ckbx_meta.SetValue(True)
+        self.ckbx_meta.SetValue(sett['add_metadata'])
         fgs1.Add(self.ckbx_meta, 0, wx.ALL, 5)
         self.ckbx_sb = wx.CheckBox(panelscroll, wx.ID_ANY,
                                    (_('Write subtitles to video'))
@@ -263,21 +267,23 @@ class Downloader(wx.Panel):
         sizer_skipdl.Add((20, 20), 0,)
         sizer_skipdl.Add(self.ckbx_skip_dl)
         fgs1.Add(sizer_skipdl, 0, wx.ALL, 5)
-        self.ckbx_w = wx.CheckBox(panelscroll, wx.ID_ANY,
+        self.ckbx_ow = wx.CheckBox(panelscroll, wx.ID_ANY,
                                   (_('Overwrite all files and metadata'))
                                   )
-        fgs1.Add(self.ckbx_w, 0, wx.ALL, 5)
+        self.ckbx_ow.SetValue(sett['overwr_dl_files'])
+        fgs1.Add(self.ckbx_ow, 0, wx.ALL, 5)
         self.ckbx_id = wx.CheckBox(panelscroll, wx.ID_ANY,
                                    (_('Include the video ID\n'
-                                      'in the file names'))
-                                   )
+                                      'in the file names')))
+        self.ckbx_id.SetValue(sett['include_ID_name'])
+
         fgs1.Add(self.ckbx_id, 0, wx.ALL, 5)
 
-        self.ckbx_restrict_fn = wx.CheckBox(panelscroll, wx.ID_ANY,
+        self.ckbx_limitfn = wx.CheckBox(panelscroll, wx.ID_ANY,
                                             (_('Restrict file names'))
                                             )
-        fgs1.Add(self.ckbx_restrict_fn, 0, wx.ALL, 5)
-        self.ckbx_restrict_fn.SetValue(True)
+        self.ckbx_limitfn.SetValue(sett['restrict_fname'])
+        fgs1.Add(self.ckbx_limitfn, 0, wx.ALL, 5)
         boxoptions.Add(panelscroll, 0, wx.ALL | wx.CENTRE, 0)
 
         panelscroll.SetSizer(fgs1)
@@ -684,7 +690,7 @@ class Downloader(wx.Panel):
             data = {'format': self.quality,
                     'noplaylist': self.opt["NO_PLAYLIST"],
                     'playlist_items': self.plidx,
-                    'overwrites': self.ckbx_w.GetValue(),
+                    'overwrites': self.ckbx_ow.GetValue(),
                     'writethumbnail': self.opt["THUMB"],
                     'outtmpl': f'{_id}.%(ext)s',
                     'extractaudio': False,
@@ -695,7 +701,7 @@ class Downloader(wx.Panel):
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
-                    'restrictfilenames': self.ckbx_restrict_fn.GetValue(),
+                    'restrictfilenames': self.ckbx_limitfn.GetValue(),
                     'nocheckcertificate': self.ckbx_ssl.GetValue(),
                     }
         elif self.choice.GetSelection() == 2:  # audio and video splitted
@@ -703,7 +709,7 @@ class Downloader(wx.Panel):
             data = {'format': self.quality,
                     'noplaylist': self.opt["NO_PLAYLIST"],
                     'playlist_items': self.plidx,
-                    'overwrites': self.ckbx_w.GetValue(),
+                    'overwrites': self.ckbx_ow.GetValue(),
                     'writethumbnail': self.opt["THUMB"],
                     'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
                     'extractaudio': False,
@@ -714,7 +720,7 @@ class Downloader(wx.Panel):
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
-                    'restrictfilenames': self.ckbx_restrict_fn.GetValue(),
+                    'restrictfilenames': self.ckbx_limitfn.GetValue(),
                     'nocheckcertificate': self.ckbx_ssl.GetValue(),
                     }
         elif self.choice.GetSelection() == 3:  # audio only
@@ -722,7 +728,7 @@ class Downloader(wx.Panel):
             data = {'format': 'bestaudio',
                     'noplaylist': self.opt["NO_PLAYLIST"],
                     'playlist_items': self.plidx,
-                    'overwrites': self.ckbx_w.GetValue(),
+                    'overwrites': self.ckbx_ow.GetValue(),
                     'writethumbnail': self.opt["THUMB"],
                     'outtmpl': f'{_id}.%(ext)s',
                     'extractaudio': True,
@@ -733,14 +739,14 @@ class Downloader(wx.Panel):
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
-                    'restrictfilenames': self.ckbx_restrict_fn.GetValue(),
+                    'restrictfilenames': self.ckbx_limitfn.GetValue(),
                     'nocheckcertificate': self.ckbx_ssl.GetValue(),
                     }
         elif self.choice.GetSelection() == 4:  # format code
             code = self.panel_cod.getformatcode()
             if not code:
                 self.parent.statusbar_msg(Downloader.MSG_1,
-                                          Downloader.RED,
+                                          self.red,
                                           Downloader.WHITE
                                           )
                 return
@@ -748,7 +754,7 @@ class Downloader(wx.Panel):
             data = {'format': '',
                     'noplaylist': self.opt["NO_PLAYLIST"],
                     'playlist_items': self.plidx,
-                    'overwrites': self.ckbx_w.GetValue(),
+                    'overwrites': self.ckbx_ow.GetValue(),
                     'writethumbnail': self.opt["THUMB"],
                     'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
                     'extractaudio': False,
@@ -759,7 +765,7 @@ class Downloader(wx.Panel):
                     'writeautomaticsub': self.opt["SUBTITLES"],
                     'allsubtitles': self.opt["SUBTITLES"],
                     'postprocessors': postprocessors,
-                    'restrictfilenames': self.ckbx_restrict_fn.GetValue(),
+                    'restrictfilenames': self.ckbx_limitfn.GetValue(),
                     'nocheckcertificate': self.ckbx_ssl.GetValue(),
                     }
         self.parent.switch_to_processing('youtube_dl downloading',

@@ -138,7 +138,7 @@ class ConfigManager:
         default value is True.
 
     """
-    VERSION = 5.3
+    VERSION = 5.5
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputfile": f"{os.path.expanduser('~')}",
                        "outputfile_samedir": False,
@@ -168,6 +168,13 @@ class ConfigManager:
                        "dirdownload": f"{os.path.expanduser('~')}",
                        "use-downloader": False,
                        "playlistsubfolder": True,
+                       "ssl_certificate": False,
+                       "add_metadata": True,
+                       "embed_thumbnails": False,
+                       "overwr_dl_files": False,
+                       "include_ID_name": False,
+                       "restrict_fname": True,
+
                        }
 
     def __init__(self, filename, makeportable=None):
