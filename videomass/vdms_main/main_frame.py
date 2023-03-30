@@ -452,7 +452,7 @@ class MainFrame(wx.Frame):
         notepad = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit\tCtrl+Q"),
-                                     _("Quit the application completely"))
+                                     _("Completely exit the application"))
         self.menuBar.Append(fileButton, _("File"))
 
         # ------------------ Edit menu
