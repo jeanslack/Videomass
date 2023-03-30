@@ -348,7 +348,8 @@ class MainFrame(wx.Frame):
                 return
 
         if self.appdata['warnexiting']:
-            if wx.MessageBox(_('Are you sure you want to exit?'),
+            if wx.MessageBox(_('Are you sure you want to exit '
+                               'the application?'),
                              _('Exit'), wx.ICON_QUESTION | wx.YES_NO,
                              self) == wx.NO:
                 return
@@ -360,7 +361,7 @@ class MainFrame(wx.Frame):
                                 "before closing them."),
                               "Videomass", wx.ICON_WARNING, self)
                 return
-            self.ytdlframe.destroy_orphaned_window()
+            self.ytdlframe.on_exit(self, warn=False)
 
         confmanager = ConfigManager(self.appdata['fileconfpath'])
         sett = confmanager.read_options()
@@ -451,7 +452,7 @@ class MainFrame(wx.Frame):
         notepad = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit\tCtrl+Q"),
-                                     _("Close Videomass"))
+                                     _("Quit the application completely"))
         self.menuBar.Append(fileButton, _("File"))
 
         # ------------------ Edit menu
@@ -1644,6 +1645,8 @@ class MainFrame(wx.Frame):
         for yt-dlp functionality.
         """
         if self.ytdlframe:
+            if not self.ytdlframe.IsShown():
+                self.ytdlframe.Show()
             self.ytdlframe.Raise()
             return
         self.ytdlframe = MainYtdl(parent=wx.GetTopLevelParent(self))

@@ -140,7 +140,7 @@ class Downloader(wx.Panel):
                     ("V_QUALITY"): Downloader.VPCOMP['Best precompiled video'],
                     ("A_FORMAT"): "best",
                     ("A_QUALITY"): "bestaudio",
-                    ("SUBTITLES"): False,
+                    ("SUBTITLES"): sett['write_subtitle'],
                     }
         self.plidx = {'': ''}
         self.info = []  # has data information for Statistics button
@@ -250,12 +250,12 @@ class Downloader(wx.Panel):
         self.ckbx_sb = wx.CheckBox(panelscroll, wx.ID_ANY,
                                    (_('Write subtitles to video'))
                                    )
+        self.ckbx_sb.SetValue(sett['write_subtitle'])
         fgs1.Add(self.ckbx_sb, 0, wx.ALL, 5)
         sizer_subtitles = wx.BoxSizer(wx.HORIZONTAL)
         self.ckbx_all_sb = wx.CheckBox(panelscroll, wx.ID_ANY,
                                        (_('Download all available subtitles'))
                                        )
-        self.ckbx_all_sb.Disable()
         sizer_subtitles.Add((20, 20), 0,)
         sizer_subtitles.Add(self.ckbx_all_sb)
         fgs1.Add(sizer_subtitles, 0, wx.ALL, 5)
@@ -263,13 +263,15 @@ class Downloader(wx.Panel):
         self.ckbx_skip_dl = wx.CheckBox(panelscroll, wx.ID_ANY,
                                         (_('Download subtitles only'))
                                         )
-        self.ckbx_skip_dl.Disable()
         sizer_skipdl.Add((20, 20), 0,)
         sizer_skipdl.Add(self.ckbx_skip_dl)
         fgs1.Add(sizer_skipdl, 0, wx.ALL, 5)
+        if not sett['write_subtitle']:
+            self.ckbx_all_sb.Disable()
+            self.ckbx_skip_dl.Disable()
         self.ckbx_ow = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                  (_('Overwrite all files and metadata'))
-                                  )
+                                   (_('Overwrite all files and metadata'))
+                                   )
         self.ckbx_ow.SetValue(sett['overwr_dl_files'])
         fgs1.Add(self.ckbx_ow, 0, wx.ALL, 5)
         self.ckbx_id = wx.CheckBox(panelscroll, wx.ID_ANY,
@@ -280,8 +282,8 @@ class Downloader(wx.Panel):
         fgs1.Add(self.ckbx_id, 0, wx.ALL, 5)
 
         self.ckbx_limitfn = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                            (_('Restrict file names'))
-                                            )
+                                        (_('Restrict file names'))
+                                        )
         self.ckbx_limitfn.SetValue(sett['restrict_fname'])
         fgs1.Add(self.ckbx_limitfn, 0, wx.ALL, 5)
         boxoptions.Add(panelscroll, 0, wx.ALL | wx.CENTRE, 0)
@@ -497,7 +499,6 @@ class Downloader(wx.Panel):
             self.cmbx_vq.Disable()
             self.cmbx_aq.Disable()
             self.cmbx_af.Disable()
-            self.ckbx_thumb.Enable()
             self.rdbvideoformat.Disable()
             self.panel_cod.enable_widgets()
             ret = self.on_format_codes()
