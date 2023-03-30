@@ -36,4 +36,4 @@ aux_links_new_tab: true
 # Back to top link
 back_to_top: true
 back_to_top_text: "Back to top"
-footer_content: "Copyright &copy; 2015-2022 Gianluca Pernigotto - aka jeanslack. Distributed by an <a href=\"https://github.com/jeanslack/Videomass/blob/gh-pages/LICENSE.txt\">GPL3 license.</a>"
+footer_content: "Copyright &copy; 2015-2023 Gianluca Pernigotto - aka jeanslack. Distributed by an <a href=\"https://github.com/jeanslack/Videomass/blob/gh-pages/LICENSE.txt\">GPL3 license.</a>"
