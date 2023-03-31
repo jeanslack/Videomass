@@ -191,13 +191,26 @@ class MainYtdl(wx.Frame):
 
     def on_close(self, event):
         """
+        This event only hide the YouTube Downloader child frame.
+        """
+        self.Hide()
+
+    def on_exit(self, event, warn=True):
+        """
         This event destroy the YouTube Downloader child frame.
         """
         if self.ProcessPanel.IsShown():
             if self.ProcessPanel.thread_type is not None:
-                wx.MessageBox(_('There are still processes running.. if you '
+                wx.MessageBox(_('There are still processes running. if you '
                                 'want to stop them, use the "Abort" button.'),
                               _('Videomass'), wx.ICON_WARNING, self)
+                return
+
+        if self.appdata['warnexiting'] and warn:
+            if wx.MessageBox(_('Are you sure you want to exit this window?\n'
+                               'All data will be lost'),
+                             _('Exit'), wx.ICON_QUESTION | wx.YES_NO,
+                             self) == wx.NO:
                 return
 
         confmanager = ConfigManager(self.appdata['fileconfpath'])
@@ -210,6 +223,7 @@ class MainYtdl(wx.Frame):
         sett['overwr_dl_files'] = self.ytDownloader.ckbx_ow.GetValue()
         sett['include_ID_name'] = self.ytDownloader.ckbx_id.GetValue()
         sett['restrict_fname'] = self.ytDownloader.ckbx_limitfn.GetValue()
+        sett['write_subtitle'] = self.ytDownloader.ckbx_sb.GetValue()
         confmanager.write_options(**sett)
         self.destroy_orphaned_window()
         self.Destroy()
@@ -243,8 +257,10 @@ class MainYtdl(wx.Frame):
                  _("Read and write useful notes and reminders."))
         notepad = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
+        closeItem = fileButton.Append(wx.ID_CLOSE, _("Close\tCtrl+W"),
+                                      _("Hide YouTube Downloader"))
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit\tCtrl+Q"),
-                                     _("Close Videomass"))
+                                     _("Quit YouTube Downloader"))
         self.menuBar.Append(fileButton, _("File"))
 
         # ------------------ Edit menu
@@ -289,7 +305,8 @@ class MainYtdl(wx.Frame):
         self.Bind(wx.EVT_MENU, self.openMydownloads_tmp,
                   self.fold_downloads_tmp)
         self.Bind(wx.EVT_MENU, self.reminder, notepad)
-        self.Bind(wx.EVT_MENU, self.quiet, exitItem)
+        self.Bind(wx.EVT_MENU, self.on_close, closeItem)
+        self.Bind(wx.EVT_MENU, self.on_exit, exitItem)
         # ----EDIT----
         self.Bind(wx.EVT_MENU, self.textDnDTarget.on_paste, self.paste)
         self.Bind(wx.EVT_MENU, self.textDnDTarget.on_del_url_selected,
@@ -335,12 +352,6 @@ class MainYtdl(wx.Frame):
             io_tools.openpath(fname)
     # ------------------------------------------------------------------#
 
-    def quiet(self, event):
-        """
-        destroy the videomass.
-        """
-        self.on_close(self)
-    # -------------------------------------------------------------------#
     # --------- Menu View ###
 
     def ydl_used(self, event, msgbox=True):
@@ -576,7 +587,6 @@ class MainYtdl(wx.Frame):
             [self.toolbar.EnableTool(x, True) for x in (20, 22)]
 
         elif args[0] == 'youtube_dl downloading':
-            self.menuBar.EnableTop(3, False)
             (self.delete.Enable(False), self.paste.Enable(False))
             [self.toolbar.EnableTool(x, False) for x in (20, 21, 23, 25)]
             [self.toolbar.EnableTool(x, True) for x in (22, 24)]
@@ -617,21 +627,16 @@ class MainYtdl(wx.Frame):
         Process report terminated. This method is called using
         pub/sub protocol. see `long_processing_task.end_proc()`)
         """
-        self.menuBar.EnableTop(3, True)
         self.toolbar.EnableTool(20, True)
         self.toolbar.EnableTool(24, False)
     # ------------------------------------------------------------------#
 
     def panelShown(self):
         """
-        When clicking 'stop button' of the long_processing_task panel,
-        retrieval at previous panel showing and re-enables the functions
-        provided by the menu bar (see `switch_to_processing` method above).
+        Clicking 'Back button' from the `long_processing_task` panel,
+        retrieval at previous panel (see `switch_to_processing`
+        method above).
         """
         self.ProcessPanel.Hide()
         self.switch_youtube_downloader(self)
-
-        # Enable all top menu bar:
-        self.menuBar.EnableTop(3, True)
-        # show buttons bar if the user has shown it:
         self.Layout()

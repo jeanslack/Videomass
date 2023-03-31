@@ -137,8 +137,14 @@ class ConfigManager:
         Auto-create subfolders when download the playlists,
         default value is True.
 
+    ("ssl_certificate", "add_metadata", "embed_thumbnails",
+    "overwr_dl_files", "include_ID_name", "restrict_fname"
+    "write_subtitle") (bool)
+        Checkboxes option (see YouTube Downloader)
+
+
     """
-    VERSION = 5.5
+    VERSION = 5.6
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputfile": f"{os.path.expanduser('~')}",
                        "outputfile_samedir": False,
@@ -174,7 +180,7 @@ class ConfigManager:
                        "overwr_dl_files": False,
                        "include_ID_name": False,
                        "restrict_fname": True,
-
+                       "write_subtitle": False,
                        }
 
     def __init__(self, filename, makeportable=None):

@@ -73,7 +73,10 @@ if not hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
 
 class FormatCode(wx.Panel):
     """
-    This panel is responsible to execute format codes tasks
+    This panel implements a kind of wx.ListCtrl for
+    the format codes tasks. Format codes are identifier
+    codes (ID) used in choosing multimedia contents according
+    to the yt-dlp standards.
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute

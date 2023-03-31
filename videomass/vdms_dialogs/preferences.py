@@ -895,22 +895,6 @@ class SetUp(wx.Dialog):
         webbrowser.open(page)
     # --------------------------------------------------------------------#
 
-    def getvalue(self):
-        """
-        Retrives data from here before destroyng this dialog.
-        See main_frame --> on_setup method
-        """
-        if wx.MessageBox(_("Changes will take effect once the program "
-                           "has been restarted.\n\n"
-                           "Do you want to exit the application now?"),
-                         _('Exit'),
-                         wx.ICON_QUESTION
-                         | wx.YES_NO, self) == wx.YES:
-            return True
-
-        return None
-    # --------------------------------------------------------------------#
-
     def on_cancel(self, event):
         """
         Close event
@@ -924,5 +908,4 @@ class SetUp(wx.Dialog):
         `settings.json` file aka file configuration.
         """
         self.confmanager.write_options(**self.settings)
-
         event.Skip()
