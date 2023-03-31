@@ -12,16 +12,9 @@
 
   <description>
     <p>
-      Videomass is a cross-platform GUI designed for FFmpeg enthusiasts who need
-      to manage custom profiles to automate conversions/transcoding processes.
-    </p>
-    <p>
-      It is based on an advanced use of presets and profiles in order to use
-      most of the FFmpeg commands without limits of formats and codecs.
-    </p>
-    <p>
-      It features graphical tools for viewing, analyzing and processing
-      multimedia streams and downloading videos via yt-dlp.
+      Videomass is a powerful, multitasking and cross-platform graphical user 
+      interface (GUI) for FFmpeg and yt-dlp. It offers a wide range of features 
+      and functions, making it a comprehensive software solution. 
     </p>
     <p>
       Videomass is written in Python3 using the wxPython-Phoenix GUI toolkit.

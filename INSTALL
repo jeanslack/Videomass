@@ -8,7 +8,7 @@ BASE DEPENDENCIES
         - wxPython-Phoenix >=4.0.7
         - PyPubSub
         - requests
-        - FFmpeg (with ffplay and ffprobe) >=4.3
+        - FFmpeg (with ffplay and ffprobe) >=5.1
     Optionals:
         - yt-dlp
         - atomicparsley (to embed thumbnail in audio file)

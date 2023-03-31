@@ -587,7 +587,6 @@ class MainYtdl(wx.Frame):
             [self.toolbar.EnableTool(x, True) for x in (20, 22)]
 
         elif args[0] == 'youtube_dl downloading':
-            self.menuBar.EnableTop(3, False)
             (self.delete.Enable(False), self.paste.Enable(False))
             [self.toolbar.EnableTool(x, False) for x in (20, 21, 23, 25)]
             [self.toolbar.EnableTool(x, True) for x in (22, 24)]
@@ -628,21 +627,16 @@ class MainYtdl(wx.Frame):
         Process report terminated. This method is called using
         pub/sub protocol. see `long_processing_task.end_proc()`)
         """
-        self.menuBar.EnableTop(3, True)
         self.toolbar.EnableTool(20, True)
         self.toolbar.EnableTool(24, False)
     # ------------------------------------------------------------------#
 
     def panelShown(self):
         """
-        When clicking 'stop button' of the long_processing_task panel,
-        retrieval at previous panel showing and re-enables the functions
-        provided by the menu bar (see `switch_to_processing` method above).
+        Clicking 'Back button' from the `long_processing_task` panel,
+        retrieval at previous panel (see `switch_to_processing`
+        method above).
         """
         self.ProcessPanel.Hide()
         self.switch_youtube_downloader(self)
-
-        # Enable all top menu bar:
-        self.menuBar.EnableTop(3, True)
-        # show buttons bar if the user has shown it:
         self.Layout()

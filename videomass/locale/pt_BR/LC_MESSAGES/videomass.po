@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-30 19:11+0200\n"
-"PO-Revision-Date: 2023-03-30 19:39+0200\n"
+"POT-Creation-Date: 2023-03-31 13:35+0200\n"
+"PO-Revision-Date: 2023-03-31 13:43+0200\n"
 "Last-Translator: Samuel / http://littlesvr.ca/ostd/\n"
 "Language-Team: Portuguese (Brasilian)\n"
 "Language: pt_BR\n"
@@ -882,7 +882,7 @@ msgstr "Concluído!"
 #: ../vdms_dialogs/about.py:62
 #, fuzzy
 #| msgid "Cross-platform graphical interface for FFmpeg and youtube-dl.\n"
-msgid "Cross-platform graphical interface for FFmpeg and yt-dlp.\n"
+msgid "Cross-platform graphical user interface for FFmpeg and yt-dlp.\n"
 msgstr "Interface gráfica multiplataforma para FFmpeg e youtube-dl.\n"
 
 #: ../vdms_dialogs/presets_addnew.py:39
@@ -1204,20 +1204,6 @@ msgstr ""
 msgid "Set a persistent location to save the file downloads"
 msgstr "Defina um local persistente para salvar os downloads de arquivos"
 
-#: ../vdms_dialogs/preferences.py:903
-#, fuzzy
-#| msgid "Changes will take effect once the program has been restarted"
-msgid ""
-"Changes will take effect once the program has been restarted.\n"
-"\n"
-"Do you want to exit the application now?"
-msgstr "As alterações entrarão em vigor assim que o programa for reiniciado"
-
-#: ../vdms_dialogs/preferences.py:906 ../vdms_main/main_frame.py:353
-#: ../vdms_ytdlp/main_ytdlp.py:212
-msgid "Exit"
-msgstr "Sair"
-
 #: ../vdms_dialogs/videomass_check_version.py:63
 #, fuzzy
 #| msgid "Show the latest version..."
@@ -1274,7 +1260,7 @@ msgstr "SELEÇÃO DE ARQUIVOS"
 
 #: ../vdms_dialogs/mediainfo.py:135 ../vdms_dialogs/mediainfo.py:138
 #: ../vdms_dialogs/mediainfo.py:141 ../vdms_dialogs/mediainfo.py:144
-#: ../vdms_main/main_frame.py:1248
+#: ../vdms_main/main_frame.py:1258
 #, fuzzy
 #| msgid "Audio Properties"
 msgid "Properties"
@@ -1953,9 +1939,9 @@ msgstr ""
 "Solução possível: abra o painel Gerenciador de predefinições, vá para a "
 "coluna de predefinições e tente clicar no botão \"Restaurar tudo ...\""
 
-#: ../vdms_main/main_frame.py:194 ../vdms_main/main_frame.py:1321
-#: ../vdms_main/main_frame.py:1324 ../vdms_main/main_frame.py:1367
-#: ../vdms_main/main_frame.py:1394 ../vdms_ytdlp/main_ytdlp.py:99
+#: ../vdms_main/main_frame.py:194 ../vdms_main/main_frame.py:1331
+#: ../vdms_main/main_frame.py:1334 ../vdms_main/main_frame.py:1377
+#: ../vdms_main/main_frame.py:1404 ../vdms_ytdlp/main_ytdlp.py:99
 #: ../vdms_ytdlp/main_ytdlp.py:148 ../vdms_ytdlp/main_ytdlp.py:562
 #: ../vdms_ytdlp/textdrop.py:191 ../vdms_ytdlp/youtubedl_ui.py:451
 msgid "Ready"
@@ -1977,8 +1963,9 @@ msgstr ""
 "\n"
 "Você quer encerrar o aplicativo?"
 
-#: ../vdms_main/main_frame.py:347 ../vdms_main/main_frame.py:1366
-#: ../vdms_ytdlp/main_ytdlp.py:147 ../vdms_ytdlp/main_ytdlp.py:206
+#: ../vdms_main/main_frame.py:347 ../vdms_main/main_frame.py:1059
+#: ../vdms_main/main_frame.py:1376 ../vdms_ytdlp/main_ytdlp.py:147
+#: ../vdms_ytdlp/main_ytdlp.py:206
 msgid "Videomass"
 msgstr "Videomass"
 
@@ -1987,6 +1974,11 @@ msgstr "Videomass"
 #| msgid "Are you sure you want to exit?"
 msgid "Are you sure you want to exit the application?"
 msgstr "Você tem certeza que deseja sair?"
+
+#: ../vdms_main/main_frame.py:353 ../vdms_main/main_frame.py:1064
+#: ../vdms_ytdlp/main_ytdlp.py:212
+msgid "Exit"
+msgstr "Sair"
 
 #: ../vdms_main/main_frame.py:359 ../vdms_main/main_frame.py:384
 msgid ""
@@ -2190,7 +2182,7 @@ msgstr "Ver"
 msgid "Home panel\tCtrl+Shift+H"
 msgstr "Painel inicial\tShift+H"
 
-#: ../vdms_main/main_frame.py:516 ../vdms_main/main_frame.py:1237
+#: ../vdms_main/main_frame.py:516 ../vdms_main/main_frame.py:1247
 #, fuzzy
 #| msgid "Go to the next panel"
 msgid "Go to the 'Home' panel"
@@ -2463,123 +2455,138 @@ msgstr "Escolha um destino temporário para conversões"
 msgid "Default destination folders successfully restored"
 msgstr "Pastas de destino padrão restauradas com sucesso"
 
-#: ../vdms_main/main_frame.py:1124
+#: ../vdms_main/main_frame.py:1057
+#, fuzzy
+#| msgid "Changes will take effect once the program has been restarted"
+msgid "Changes will take effect once the program has been restarted."
+msgstr "As alterações entrarão em vigor assim que o programa for reiniciado"
+
+#: ../vdms_main/main_frame.py:1061
+#, fuzzy
+#| msgid "Changes will take effect once the program has been restarted"
+msgid ""
+"Changes will take effect once the program has been restarted.\n"
+"\n"
+"Do you want to exit the application now?"
+msgstr "As alterações entrarão em vigor assim que o programa for reiniciado"
+
+#: ../vdms_main/main_frame.py:1134
 #, fuzzy, python-brace-format
 #| msgid "There is a new version available {0}"
 msgid "A new release is available - v.{0}\n"
 msgstr "Há uma nova versão disponível {0}"
 
-#: ../vdms_main/main_frame.py:1127
+#: ../vdms_main/main_frame.py:1137
 msgid "You are using a development version that has not yet been released!\n"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1130
+#: ../vdms_main/main_frame.py:1140
 #, fuzzy
 #| msgid "You are using youtube-dl version {}"
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr "Você está usando a versão youtube-dl {}"
 
-#: ../vdms_main/main_frame.py:1227 ../vdms_ytdlp/main_ytdlp.py:486
+#: ../vdms_main/main_frame.py:1237 ../vdms_ytdlp/main_ytdlp.py:486
 msgid "Go to the previous panel"
 msgstr "Vá para o painel anterior"
 
-#: ../vdms_main/main_frame.py:1228 ../vdms_ytdlp/main_ytdlp.py:487
+#: ../vdms_main/main_frame.py:1238 ../vdms_ytdlp/main_ytdlp.py:487
 msgid "Back"
 msgstr "Voltar"
 
-#: ../vdms_main/main_frame.py:1232 ../vdms_ytdlp/main_ytdlp.py:491
+#: ../vdms_main/main_frame.py:1242 ../vdms_ytdlp/main_ytdlp.py:491
 msgid "Go to the next panel"
 msgstr "Vá para o próximo painel"
 
-#: ../vdms_main/main_frame.py:1233 ../vdms_ytdlp/main_ytdlp.py:492
+#: ../vdms_main/main_frame.py:1243 ../vdms_ytdlp/main_ytdlp.py:492
 msgid "Next"
 msgstr "Avançar"
 
-#: ../vdms_main/main_frame.py:1238
+#: ../vdms_main/main_frame.py:1248
 msgid "Home"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1242
+#: ../vdms_main/main_frame.py:1252
 #, fuzzy
 #| msgid "Play the selected files in the list"
 msgid "Play the selected file in the list"
 msgstr "Reproduza os arquivos selecionados na lista"
 
-#: ../vdms_main/main_frame.py:1243
+#: ../vdms_main/main_frame.py:1253
 msgid "Play"
 msgstr "Reproduzir"
 
-#: ../vdms_main/main_frame.py:1247
+#: ../vdms_main/main_frame.py:1257
 #, fuzzy
 #| msgid "Gathers information of multimedia streams"
 msgid "Get informative data about imported media streams"
 msgstr "Reúne informações de fluxos de multimídia"
 
-#: ../vdms_main/main_frame.py:1252
+#: ../vdms_main/main_frame.py:1262
 #, fuzzy
 #| msgid "Starts"
 msgid "Start rendering"
 msgstr "Inicia"
 
-#: ../vdms_main/main_frame.py:1253
+#: ../vdms_main/main_frame.py:1263
 #, fuzzy
 #| msgid "Starts"
 msgid "Start"
 msgstr "Inicia"
 
-#: ../vdms_main/main_frame.py:1257 ../vdms_ytdlp/main_ytdlp.py:506
+#: ../vdms_main/main_frame.py:1267 ../vdms_ytdlp/main_ytdlp.py:506
 msgid "Stops current process"
 msgstr "Para o processo atual"
 
-#: ../vdms_main/main_frame.py:1258 ../vdms_ytdlp/main_ytdlp.py:507
+#: ../vdms_main/main_frame.py:1268 ../vdms_ytdlp/main_ytdlp.py:507
 msgid "Abort"
 msgstr "Cancelar"
 
-#: ../vdms_main/main_frame.py:1262
+#: ../vdms_main/main_frame.py:1272
 msgid "Delete all files from the list"
 msgstr "Exclua todos os arquivos da lista"
 
-#: ../vdms_main/main_frame.py:1263 ../vdms_ytdlp/main_ytdlp.py:511
+#: ../vdms_main/main_frame.py:1273 ../vdms_ytdlp/main_ytdlp.py:511
 msgid "Clear"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1329
+#: ../vdms_main/main_frame.py:1339
 msgid "File list changed, please check the settings again."
 msgstr "Lista de arquivos alterada, verifique as configurações novamente."
 
-#: ../vdms_main/main_frame.py:1395
+#: ../vdms_main/main_frame.py:1405
 msgid "Videomass - Queued Files"
 msgstr "Videomass - arquivos enfileirados"
 
-#: ../vdms_main/main_frame.py:1413
+#: ../vdms_main/main_frame.py:1423
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - Conversões AV"
 
-#: ../vdms_main/main_frame.py:1439
+#: ../vdms_main/main_frame.py:1449
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - Gerenciador de predefinições"
 
-#: ../vdms_main/main_frame.py:1467
+#: ../vdms_main/main_frame.py:1477
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Concatenate Demuxer"
 
-#: ../vdms_main/main_frame.py:1492
+#: ../vdms_main/main_frame.py:1502
 #, fuzzy
 #| msgid "Videomass - Output Monitor"
 msgid "Videomass - From Movie to Pictures"
 msgstr "Videomass - Monitor de Saída"
 
-#: ../vdms_main/main_frame.py:1518
+#: ../vdms_main/main_frame.py:1528
 #, fuzzy
 #| msgid "Videomass - Presets Manager"
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Gerenciador de predefinições"
 
-#: ../vdms_main/main_frame.py:1536 ../vdms_ytdlp/main_ytdlp.py:585
+#: ../vdms_main/main_frame.py:1546 ../vdms_ytdlp/main_ytdlp.py:585
 msgid "Viewing last log"
 msgstr "Visualizando o último log"
 
-#: ../vdms_main/main_frame.py:1544
+#: ../vdms_main/main_frame.py:1554
 msgid ""
 "Cannot continue: The duration in the timeline exceeds the duration of some "
 "queued files."
@@ -2587,11 +2594,11 @@ msgstr ""
 "Não é possível continuar: a duração na linha do tempo excede a duração de "
 "alguns arquivos enfileirados."
 
-#: ../vdms_main/main_frame.py:1550
+#: ../vdms_main/main_frame.py:1560
 msgid "Processing..."
 msgstr "Processando..."
 
-#: ../vdms_main/main_frame.py:1554
+#: ../vdms_main/main_frame.py:1564
 #, fuzzy
 #| msgid "Videomass - Output Monitor"
 msgid "Videomass - FFmpeg message monitor"
@@ -3434,7 +3441,7 @@ msgstr "Duração"
 msgid "Media type"
 msgstr "Tipo de mídia"
 
-#: ../vdms_panels/filedrop.py:142 ../vdms_ytdlp/formatcode.py:132
+#: ../vdms_panels/filedrop.py:142 ../vdms_ytdlp/formatcode.py:135
 msgid "Size"
 msgstr "Tamanho"
 
@@ -4298,56 +4305,56 @@ msgstr ""
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "O 'ffmpeg' está instalado em seu sistema?"
 
-#: ../vdms_ytdlp/formatcode.py:94 ../vdms_ytdlp/youtubedl_ui.py:82
+#: ../vdms_ytdlp/formatcode.py:97 ../vdms_ytdlp/youtubedl_ui.py:82
 msgid ""
 "At least one \"Format Code\" must be checked for each URL selected in green."
 msgstr ""
 "Pelo menos um \"Código de formato\" deve ser verificado para cada URL "
 "selecionado em verde."
 
-#: ../vdms_ytdlp/formatcode.py:124
+#: ../vdms_ytdlp/formatcode.py:127
 msgid "Format Code"
 msgstr "Código de Formato"
 
-#: ../vdms_ytdlp/formatcode.py:125 ../vdms_ytdlp/textdrop.py:63
+#: ../vdms_ytdlp/formatcode.py:128 ../vdms_ytdlp/textdrop.py:63
 msgid "Url"
 msgstr "Url"
 
-#: ../vdms_ytdlp/formatcode.py:126
+#: ../vdms_ytdlp/formatcode.py:129
 msgid "Title"
 msgstr "Título"
 
-#: ../vdms_ytdlp/formatcode.py:127
+#: ../vdms_ytdlp/formatcode.py:130
 msgid "Extension"
 msgstr "Extensão"
 
-#: ../vdms_ytdlp/formatcode.py:128
+#: ../vdms_ytdlp/formatcode.py:131
 msgid "Resolution"
 msgstr "Resolução"
 
-#: ../vdms_ytdlp/formatcode.py:129
+#: ../vdms_ytdlp/formatcode.py:132
 msgid "Video Codec"
 msgstr "Codec de vídeo"
 
-#: ../vdms_ytdlp/formatcode.py:130
+#: ../vdms_ytdlp/formatcode.py:133
 msgid "fps"
 msgstr "quadros por segundo"
 
-#: ../vdms_ytdlp/formatcode.py:131
+#: ../vdms_ytdlp/formatcode.py:134
 msgid "Audio Codec"
 msgstr "Codec de áudio"
 
-#: ../vdms_ytdlp/formatcode.py:137
+#: ../vdms_ytdlp/formatcode.py:140
 msgid "Don't merge any files"
 msgstr ""
 
-#: ../vdms_ytdlp/formatcode.py:140
+#: ../vdms_ytdlp/formatcode.py:143
 #, fuzzy
 #| msgid "Download the latest presets"
 msgid "Download only the best selected qualities"
 msgstr "Baixe as últimas predefinições"
 
-#: ../vdms_ytdlp/formatcode.py:244
+#: ../vdms_ytdlp/formatcode.py:247
 #, python-brace-format
 msgid ""
 "ERROR: Unable to get format codes.\n"
@@ -4524,7 +4531,7 @@ msgstr "Videomass - URLs enfileirados"
 msgid "Videomass - YouTube Downloader"
 msgstr "Videomass - Baixar vídeos"
 
-#: ../vdms_ytdlp/main_ytdlp.py:595
+#: ../vdms_ytdlp/main_ytdlp.py:594
 #, fuzzy
 #| msgid "Videomass - Output Monitor"
 msgid "Videomass - yt_dlp message monitor"

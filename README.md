@@ -3,15 +3,9 @@
 [![Image](https://img.shields.io/badge/license-GPLv3-orange)](https://github.com/jeanslack/Videomass/blob/master/LICENSE)
 [![Python application](https://github.com/jeanslack/Videomass/actions/workflows/tests.yml/badge.svg)](https://github.com/jeanslack/Videomass/actions/workflows/tests.yml)
 
-Videomass is a multifunctional, multitasking front-end for [FFmpeg](https://www.ffmpeg.org/) 
-and [yt-dlp](https://github.com/yt-dlp/yt-dlp), it was designed for people who need 
-a GUI to collect custom presets and profiles and to facilitate the application 
-of specific video and audio filters or automate the conversion/transcoding 
-processes even in batch mode. 
-
-It features graphical tools for viewing, analyzing, filtering and processing multimedia 
-streams with the additional ability to downloading audio/videos via 
-[yt-dlp](https://github.com/yt-dlp/yt-dlp).   
+Videomass is a powerful, multitasking and cross-platform graphical user interface 
+(GUI) for [FFmpeg](https://www.ffmpeg.org/) and [yt-dlp](https://github.com/yt-dlp/yt-dlp). 
+It offers a wide range of features and functions, making it a comprehensive software solution. 
 
 Videomass is [Free (libre) Software](https://en.wikipedia.org/wiki/Free_software), 
 created and maintained by [Gianluca (jeanslack) Pernigotto](https://github.com/jeanslack); 
@@ -39,9 +33,9 @@ each operating system.
 - **[wxPython-Phoenix >= 4.0.7](https://wxpython.org/)**
 - **[PyPubSub >= 4.0.3](https://pypi.org/project/PyPubSub/)**
 - **[requests >= 2.21.0](https://pypi.org/project/requests/)**
-- **[ffmpeg >=4.3](https://ffmpeg.org/)**
-- **[ffprobe >=4.3](https://ffmpeg.org/ffprobe.html)** (usually bundled with ffmpeg)
-- **[ffplay >=4.3](http://ffmpeg.org/ffplay.html)** (usually bundled with ffmpeg)
+- **[ffmpeg >=5.1](https://ffmpeg.org/)**
+- **[ffprobe >=5.1](https://ffmpeg.org/ffprobe.html)** (usually bundled with ffmpeg)
+- **[ffplay >=5.1](http://ffmpeg.org/ffplay.html)** (usually bundled with ffmpeg)
 
 ### Optionals
 - **[yt-dlp](https://github.com/yt-dlp/yt-dlp)**

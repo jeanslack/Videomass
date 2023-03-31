@@ -1052,7 +1052,17 @@ class MainFrame(wx.Frame):
         """
         with preferences.SetUp(self) as set_up:
             if set_up.ShowModal() == wx.ID_OK:
-                if set_up.getvalue():
+                if self.ProcessPanel.IsShown():
+                    if self.ProcessPanel.thread_type is not None:
+                        wx.MessageBox(_("Changes will take effect once the "
+                                        "program has been restarted."),
+                                      _('Videomass'), wx.ICON_WARNING, self)
+                        return
+                if wx.MessageBox(_("Changes will take effect once the program "
+                                   "has been restarted.\n\n"
+                                   "Do you want to exit the application now?"),
+                                 _('Exit'), wx.ICON_QUESTION
+                                 | wx.YES_NO, self) == wx.YES:
                     self.on_Kill()
     # ------------------------------------------------------------------#
     # --------- Menu Help  ###
@@ -1609,7 +1619,6 @@ class MainFrame(wx.Frame):
         Process report terminated. This method is called using
         pub/sub protocol. see `long_processing_task.end_proc()`)
         """
-        self.menuBar.EnableTop(5, True)
         self.menu_items(enable=True)  # enable all menu items
         self.openmedia.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 5)]
@@ -1642,7 +1651,7 @@ class MainFrame(wx.Frame):
     def youtubedl(self, event):
         """
         Start a separate, self-contained frame
-        for yt-dlp functionality.
+        for yt-dlp GUI functionality.
         """
         if self.ytdlframe:
             if not self.ytdlframe.IsShown():

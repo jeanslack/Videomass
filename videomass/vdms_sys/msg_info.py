@@ -37,7 +37,7 @@ def current_release():
     release_name = 'Videomass'
     program_name = 'videomass'
     version = '4.0.11'
-    release = 'unreleased'
+    release = 'released'
     copyr = '2013-2023'
     website = 'http://jeanslack.github.io/Videomass/'
     author = ('Gianluca Pernigotto', '(aka jeanslack)')
@@ -64,19 +64,14 @@ def descriptions_release():
     author = current_release()
     mail = current_release()
 
-    short_d = "Videomass is a cross-platform GUI for FFmpeg"
+    short_d = "Videomass is a cross-platform GUI for FFmpeg and yt-dlp"
 
     long_d = """
-Videomass is a cross-platform GUI designed for FFmpeg enthusiasts who need to
-manage custom profiles to automate transcoding processes.
+Videomass is a powerful, multitasking and cross-platform graphical user
+interface (GUI) for FFmpeg and yt-dlp. It offers a wide range of features and
+functions, making it a comprehensive software solution.
 
-It is based on an advanced use of presets and profiles in order to use most of
-the FFmpeg commands without limits of formats and codecs.
-
-It features graphical tools for viewing, analyzing and processing multimedia
-streams and downloading videos via yt-dlp.
-
-Videomass is written in Python3 with the wxPython-Phoenix toolkit.
+Videomass is written in Python3 using the wxPython4-Phoenix toolkit.
 """
 
     short_l = "GPL3 (Gnu Public License)"
