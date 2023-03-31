@@ -9,11 +9,10 @@ permalink: /
 # Videomass
 {: .fs-9 }
 
-# It is a [FLOSS](https://www.gnu.org/philosophy/floss-and-foss.en.html), cross-platform GUI for [FFmpeg](https://www.ffmpeg.org/) and [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+# It is a [FLOSS](https://www.gnu.org/philosophy/floss-and-foss.en.html), powerful, multitasking and cross-platform graphical user interface (GUI) for [FFmpeg](https://www.ffmpeg.org/) and [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 {: .fs-6 }
 
-Designed for [FFmpeg](https://www.ffmpeg.org/) enthusiasts and users who need a 
-graphical interface for [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+Designed for advanced and beginner users, it offers a wide range of features and functions, making it a comprehensive software solution. 
 {: .fs-3 .fw-300 }
 
 [Get started now](videomass_use.md){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } 
