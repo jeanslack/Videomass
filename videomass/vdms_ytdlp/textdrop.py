@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-Name: urldrop.py
+Name: textdrop.py
 Porpose: Allows you to add text URLs
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -99,7 +99,6 @@ class UrlDropTarget(wx.TextDropTarget):
         wx.TextDropTarget.__init__(self)
         self.parent = parent
         self.listctrl = listctrl
-        self.index = None
 
     def OnDropText(self, x, y, data):
         """

@@ -32,7 +32,7 @@ class ConfigManager:
     """
     It represents the setting of the user parameters
     of the program and the configuration file in its
-    read and write aspects.
+    read and write fondamentals.
 
     Usage:
 
@@ -117,6 +117,10 @@ class ConfigManager:
         some other dir.
         default value is False
 
+    user_trashdir (str):
+        If None, it is set to "conf_trashdir" when the program runs
+        (see configurator), user specified Path Name otherwise.
+
     locale_name (str):
         "Default", set system language to videomass message catalog
         if available, set to English otherwise.
@@ -144,7 +148,7 @@ class ConfigManager:
 
 
     """
-    VERSION = 5.8
+    VERSION = 5.9
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputfile": f"{os.path.expanduser('~')}",
                        "outputfile_samedir": False,
@@ -170,7 +174,7 @@ class ConfigManager:
                        "clearcache": True,
                        "clearlogfiles": False,
                        "move_file_to_trash": False,
-                       "user_trashdir": "",
+                       "user_trashdir": None,
                        "locale_name": "Default",
                        "dirdownload": f"{os.path.expanduser('~')}",
                        "use-downloader": False,

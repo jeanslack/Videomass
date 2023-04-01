@@ -166,10 +166,7 @@ class SetUp(wx.Dialog):
         self.txtctrl_FFpath.AppendText(self.appdata['outputfile'])
 
         self.btn_fsave = wx.Button(tabTwo, wx.ID_ANY, "...", size=(35, -1))
-        sizeFFdirdest.Add(self.btn_fsave, 0, wx.RIGHT
-                          | wx.ALIGN_CENTER_VERTICAL
-                          | wx.ALIGN_CENTER_HORIZONTAL, 5
-                          )
+        sizeFFdirdest.Add(self.btn_fsave, 0, wx.RIGHT | wx.ALIGN_CENTER, 5)
         sizerFiles.Add((0, 15))
         descr = _("Save each file in the same folder as input file")
         self.ckbx_dir = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
@@ -178,8 +175,7 @@ class SetUp(wx.Dialog):
         sizerFiles.Add(sizeSamedest, 0, wx.EXPAND)
         descr = _("Assign optional suffix to output file names:")
         self.lab_suffix = wx.StaticText(tabTwo, wx.ID_ANY, (descr))
-        sizeSamedest.Add(self.lab_suffix, 0, wx.LEFT
-                         | wx.ALIGN_CENTER_VERTICAL, 5)
+        sizeSamedest.Add(self.lab_suffix, 0, wx.LEFT | wx.ALIGN_CENTER, 5)
         self.text_suffix = wx.TextCtrl(tabTwo, wx.ID_ANY, "", size=(90, -1))
         sizeSamedest.Add(self.text_suffix, 1, wx.ALL | wx.CENTER, 5)
         descr = _("Always move source files to the Videomass\n"
@@ -194,10 +190,7 @@ class SetUp(wx.Dialog):
         sizetrash.Add(self.txtctrl_trash, 1, wx.ALL, 5)
         self.txtctrl_trash.AppendText(self.appdata['user_trashdir'])
         self.btn_trash = wx.Button(tabTwo, wx.ID_ANY, "...", size=(35, -1))
-        sizetrash.Add(self.btn_trash, 0, wx.RIGHT |
-                      wx.ALIGN_CENTER_VERTICAL |
-                      wx.ALIGN_CENTER_HORIZONTAL, 5
-                      )
+        sizetrash.Add(self.btn_trash, 0, wx.RIGHT | wx.ALIGN_CENTER, 5)
         sizerFiles.Add((0, 15))
         line0 = wx.StaticLine(tabTwo, wx.ID_ANY, pos=wx.DefaultPosition,
                               size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
@@ -216,10 +209,7 @@ class SetUp(wx.Dialog):
         sizeYDLdirdest.Add(self.txtctrl_YDLpath, 1, wx.ALL | wx.CENTER, 5)
         self.txtctrl_YDLpath.AppendText(self.appdata['dirdownload'])
         self.btn_YDLpath = wx.Button(tabTwo, wx.ID_ANY, "...", size=(35, -1))
-        sizeYDLdirdest.Add(self.btn_YDLpath, 0, wx.RIGHT
-                           | wx.ALIGN_CENTER_VERTICAL
-                           | wx.ALIGN_CENTER_HORIZONTAL, 5
-                           )
+        sizeYDLdirdest.Add(self.btn_YDLpath, 0, wx.RIGHT | wx.ALIGN_CENTER, 5)
         descr = _("Auto-create subfolders when downloading playlists")
         self.ckbx_playlist = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_playlist, 0, wx.ALL, 5)
@@ -278,20 +268,13 @@ class SetUp(wx.Dialog):
         sizerFFmpeg.Add(gridSizopt, 0, wx.EXPAND)
         msg = _("Threads used for transcoding (from 0 to 32):")
         labFFthreads = wx.StaticText(tabThree, wx.ID_ANY, (msg))
-        gridSizopt.Add(labFFthreads, 0,
-                       wx.LEFT
-                       | wx.ALIGN_CENTER_VERTICAL
-                       | wx.ALIGN_CENTER_HORIZONTAL, 5
-                       )
+        gridSizopt.Add(labFFthreads, 0, wx.LEFT | wx.ALIGN_CENTER, 5)
         self.spinctrl_threads = wx.SpinCtrl(tabThree, wx.ID_ANY,
                                             f"{self.appdata['ffthreads'][9:]}",
                                             size=(-1, -1), min=0, max=32,
                                             style=wx.TE_PROCESS_ENTER
                                             )
-        gridSizopt.Add(self.spinctrl_threads, 1, wx.ALL
-                       | wx.ALIGN_CENTER_VERTICAL
-                       | wx.ALIGN_CENTER_HORIZONTAL, 5
-                       )
+        gridSizopt.Add(self.spinctrl_threads, 1, wx.ALL | wx.ALIGN_CENTER, 5)
         # ----
         tabThree.SetSizer(sizerFFmpeg)
         notebook.AddPage(tabThree, _("FFmpeg"))
@@ -665,7 +648,6 @@ class SetUp(wx.Dialog):
             self.settings['user_trashdir'] = self.appdata['conf_trashdir']
             self.txtctrl_trash.Enable()
             self.btn_trash.Enable()
-            #self.txtctrl_trash.AppendText(self.appdata['conf_trashdir'])
             if not os.path.exists(self.appdata['conf_trashdir']):
                 os.mkdir(self.appdata['conf_trashdir'], mode=0o777)
         else:
