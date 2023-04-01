@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-31 13:35+0200\n"
-"PO-Revision-Date: 2023-03-31 13:36+0200\n"
+"POT-Creation-Date: 2023-04-01 11:47+0200\n"
+"PO-Revision-Date: 2023-04-01 11:48+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -1856,7 +1856,7 @@ msgstr ""
 #: ../vdms_main/main_frame.py:1334 ../vdms_main/main_frame.py:1377
 #: ../vdms_main/main_frame.py:1404 ../vdms_ytdlp/main_ytdlp.py:99
 #: ../vdms_ytdlp/main_ytdlp.py:148 ../vdms_ytdlp/main_ytdlp.py:562
-#: ../vdms_ytdlp/textdrop.py:191 ../vdms_ytdlp/youtubedl_ui.py:451
+#: ../vdms_ytdlp/textdrop.py:220 ../vdms_ytdlp/youtubedl_ui.py:451
 msgid "Ready"
 msgstr "Pronto"
 
@@ -3151,21 +3151,25 @@ msgstr "Nome del file in uscita"
 msgid "Duplicate files are rejected: > {}"
 msgstr "I files duplicati sono rifiutati: > {}"
 
-#: ../vdms_panels/filedrop.py:273
+#: ../vdms_panels/filedrop.py:273 ../vdms_panels/filedrop.py:325
 msgid "Drag one or more files below"
 msgstr "Trascina uno o più file qui sotto"
 
-#: ../vdms_panels/filedrop.py:307 ../vdms_ytdlp/textdrop.py:171
+#: ../vdms_panels/filedrop.py:307 ../vdms_ytdlp/textdrop.py:164
 msgid "Destination folder"
 msgstr "Cartella di destinazione"
 
-#: ../vdms_panels/filedrop.py:325
+#: ../vdms_panels/filedrop.py:326
 msgid ""
 "No limit in the imported formats, but if you have to work with videos, "
 "import only videos, if with audio, import only audio files, etc. "
 msgstr ""
 "Nessun limite sui formati importati, ma se devi lavorare con i video, quindi "
 "importa solo video, se audio importa solo audio, ecc. "
+
+#: ../vdms_panels/filedrop.py:331
+msgid "Drag the images below"
+msgstr "Trascina le immagini qui sotto"
 
 #: ../vdms_panels/filedrop.py:332
 msgid ""
@@ -3174,6 +3178,10 @@ msgid ""
 msgstr ""
 "Attualmente i formati supportati sono di tipo jpeg, png e bmp. L'ordine nel "
 "quale sono disposti influenzerà il risultato finale del video."
+
+#: ../vdms_panels/filedrop.py:338
+msgid "Drag one or more video below"
+msgstr "Trascina uno o più video qui sotto"
 
 #: ../vdms_panels/filedrop.py:339
 msgid ""
@@ -4130,7 +4138,8 @@ msgstr "Nascondi YouTube Downloader"
 msgid "Quit YouTube Downloader"
 msgstr "Esci da YouTube Downloader"
 
-#: ../vdms_ytdlp/main_ytdlp.py:268
+#: ../vdms_ytdlp/main_ytdlp.py:268 ../vdms_ytdlp/textdrop.py:180
+#: ../vdms_ytdlp/textdrop.py:196
 msgid "Paste\tCtrl+V"
 msgstr "Incolla\tCtrl+V"
 
@@ -4138,7 +4147,8 @@ msgstr "Incolla\tCtrl+V"
 msgid "Paste the clipboard URLs into the DragNDrop box"
 msgstr "Incolla gli URL degli appunti nella casella DragNDrop"
 
-#: ../vdms_ytdlp/main_ytdlp.py:271
+#: ../vdms_ytdlp/main_ytdlp.py:271 ../vdms_ytdlp/textdrop.py:181
+#: ../vdms_ytdlp/textdrop.py:199
 msgid "Remove selected URL\tDEL"
 msgstr "Rimuovi l'URL selezionato\tDEL"
 
@@ -4162,7 +4172,7 @@ msgstr "Ultima versione di yt-dlp"
 msgid "Check the latest version available on github.com"
 msgstr "Mostra l'ultima versione disponibile su github.com"
 
-#: ../vdms_ytdlp/main_ytdlp.py:289 ../vdms_ytdlp/textdrop.py:169
+#: ../vdms_ytdlp/main_ytdlp.py:289 ../vdms_ytdlp/textdrop.py:162
 msgid "Set up a temporary folder for downloads"
 msgstr "Imposta una cartella temporanea per i download"
 
@@ -4280,7 +4290,7 @@ msgstr ""
 msgid "Invalid URL:"
 msgstr "URL non valido:"
 
-#: ../vdms_ytdlp/textdrop.py:138
+#: ../vdms_ytdlp/textdrop.py:131
 msgid "Drag or paste URLs here"
 msgstr "Trascina o incolla qui gli URL"
 

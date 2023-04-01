@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue 30, 2023 V.4.0.11
+Sat, 01 April 2023 V.4.0.11
 
   * [Confirm Settings] checking "Move files to trash" the "clean up files list"
     checkbox must be selected and disabled.
@@ -26,10 +26,11 @@ Tue 30, 2023 V.4.0.11
   * [YouTube Downloader] Ability to close or exit the window. If you choose to
     close the window, it will be hidden and your work will not be lost.
   * Clicking on the close button caption it now destroy window even on process
-    log panels (only if ProcessPanel.threads_type == None)
+    log panels (only if ProcessPanel.threads_type == None).
   * New "Edit" menu includes "Remove selected..." and "Paste" items.
   * Dialogs now all have a parent, which prevents windows from being to stay on
-    top or bottom each other forced
+    top or bottom each other forced.
+  * User can choose another trash folder, this feature has been restored #215
 
 +------------------------------------+
 Mar 22, 2023 V.4.0.10

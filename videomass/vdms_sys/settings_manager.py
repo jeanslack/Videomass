@@ -144,7 +144,7 @@ class ConfigManager:
 
 
     """
-    VERSION = 5.6
+    VERSION = 5.8
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputfile": f"{os.path.expanduser('~')}",
                        "outputfile_samedir": False,
@@ -170,6 +170,7 @@ class ConfigManager:
                        "clearcache": True,
                        "clearlogfiles": False,
                        "move_file_to_trash": False,
+                       "user_trashdir": "",
                        "locale_name": "Default",
                        "dirdownload": f"{os.path.expanduser('~')}",
                        "use-downloader": False,

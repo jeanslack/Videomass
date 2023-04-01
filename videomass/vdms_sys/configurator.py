@@ -290,7 +290,7 @@ def data_location(args):
             "confdir": confdir,
             "logdir": logdir,
             "cachedir": cachedir,
-            "trash_dir": trash_dir,
+            "conf_trashdir": trash_dir,
             "this": this,
             "frozen": frozen,
             "meipass": meipass,
@@ -417,8 +417,10 @@ class DataSource():
                        self.dataloc['logdir'],
                        userconf['outputfile'],
                        userconf['dirdownload'],
-                       self.dataloc['trash_dir']
+                       self.dataloc['conf_trashdir']
                        )
+        if not userconf['user_trashdir']:
+            userconf['user_trashdir'] = self.dataloc['conf_trashdir']
         for dirs in requiredirs:
             create = create_dirs(dirs, self.dataloc['conffile'],)
             if create.get('ERROR'):
@@ -451,7 +453,7 @@ class DataSource():
                  'confdir': _relativize(self.dataloc['confdir']),
                  'logdir': _relativize(self.dataloc['logdir']),
                  'cachedir': _relativize(self.dataloc['cachedir']),
-                 'trash_dir': _relativize(self.dataloc['trash_dir']),
+                 'conf_trashdir': _relativize(self.dataloc['conf_trashdir']),
                  'FFMPEG_videomass_pkg':
                      _relativize(self.dataloc['ffmpeg_pkg']),
                  'app': self.apptype,

@@ -98,7 +98,7 @@ class MainYtdl(wx.Frame):
         self.sb = self.CreateStatusBar(1)
         self.statusbar_msg(_('Ready'), None)
         # disable some toolbar item
-        [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24)]
+        [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24, 25)]
         self.Layout()
         # ---------------------- Binding (EVT) ----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_outputdir)
@@ -270,7 +270,7 @@ class MainYtdl(wx.Frame):
         self.paste = editButton.Append(wx.ID_PASTE, dscrp[0], dscrp[1])
         dscrp = (_("Remove selected URL\tDEL"),
                  _("Remove the selected URL from the list"))
-        self.delete = editButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
+        self.delete = editButton.Append(wx.ID_REMOVE, dscrp[0], dscrp[1])
         self.menuBar.Append(editButton, _("Edit"))
 
         # ------------------ View menu
@@ -555,8 +555,12 @@ class MainYtdl(wx.Frame):
         self.ytDownloader.Hide()
         self.textDnDTarget.Show()
         (self.delete.Enable(True), self.paste.Enable(True))
-        [self.toolbar.EnableTool(x, True) for x in (21, 25)]
-        [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24)]
+        if self.data_url:
+            [self.toolbar.EnableTool(x, True) for x in (21, 25)]
+            [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24)]
+        else:
+            self.toolbar.EnableTool(21, True)
+            [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24, 25)]
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)
@@ -588,8 +592,13 @@ class MainYtdl(wx.Frame):
 
         elif args[0] == 'youtube_dl downloading':
             (self.delete.Enable(False), self.paste.Enable(False))
-            [self.toolbar.EnableTool(x, False) for x in (20, 21, 23, 25)]
-            [self.toolbar.EnableTool(x, True) for x in (22, 24)]
+            if len(self.data_url) <= 1:
+                [self.toolbar.EnableTool(x, False) for x
+                 in (20, 21, 23, 25, 24)]
+                self.toolbar.EnableTool(22, True)
+            else:
+                [self.toolbar.EnableTool(x, False) for x in (20, 21, 23, 25)]
+                [self.toolbar.EnableTool(x, True) for x in (22, 24)]
 
         self.SetTitle(_('Videomass - yt_dlp message monitor'))
         self.textDnDTarget.Hide()

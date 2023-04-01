@@ -442,7 +442,7 @@ class MainFrame(wx.Frame):
         fileButton.AppendSeparator()
         dscrp = (_("Trash folder"),
                  _("Open the Videomass Trash folder if it exists"))
-        fold_trash = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dir_trash = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         dscrp = (_("Empty Trash"),
                  _("Delete all files in the Videomass Trash folder"))
         empty_trash = fileButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
@@ -459,7 +459,7 @@ class MainFrame(wx.Frame):
         editButton = wx.Menu()
         dscrp = (_("Remove selected file\tDEL"),
                  _("Remove the selected files from the list"))
-        self.delfile = editButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
+        self.delfile = editButton.Append(wx.ID_REMOVE, dscrp[0], dscrp[1])
         self.menuBar.Append(editButton, _("Edit"))
         self.delfile.Enable(False)
 
@@ -612,7 +612,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.on_file_renaming, self.rename)
         self.Bind(wx.EVT_MENU, self.on_batch_renaming, self.rename_batch)
         self.Bind(wx.EVT_MENU, self.reminder, notepad)
-        self.Bind(wx.EVT_MENU, self.open_trash_folder, fold_trash)
+        self.Bind(wx.EVT_MENU, self.open_trash_folder, dir_trash)
         self.Bind(wx.EVT_MENU, self.empty_trash_folder, empty_trash)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         # ----EDIT----
@@ -716,7 +716,7 @@ class MainFrame(wx.Frame):
         """
         Open Videomass trash folder if it exists
         """
-        path = self.appdata['trash_dir']
+        path = self.appdata['user_trashdir']
         if os.path.exists(path):
             io_tools.openpath(path)
         else:
@@ -728,7 +728,8 @@ class MainFrame(wx.Frame):
         """
         Delete permanently all files inside trash folder
         """
-        path = self.appdata['trash_dir']
+        print('si')
+        path = self.appdata['user_trashdir']
         if os.path.exists(path):
             files = os.listdir(path)
             if len(files) > 0:
@@ -1397,8 +1398,12 @@ class MainFrame(wx.Frame):
         self.menu_items(enable=False)  # disable menu items
         self.delfile.Enable(True)
         self.openmedia.Enable(True)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 9, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (7, 8)]
+        if self.file_src:
+            [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 9, 35)]
+            [self.toolbar.EnableTool(x, False) for x in (7, 8)]
+        else:
+            [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 35)]
+            [self.toolbar.EnableTool(x, False) for x in (7, 8, 9)]
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)

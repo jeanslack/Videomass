@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-31 13:35+0200\n"
+"POT-Creation-Date: 2023-04-01 11:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1589,7 +1589,7 @@ msgstr ""
 #: ../vdms_main/main_frame.py:1334 ../vdms_main/main_frame.py:1377
 #: ../vdms_main/main_frame.py:1404 ../vdms_ytdlp/main_ytdlp.py:99
 #: ../vdms_ytdlp/main_ytdlp.py:148 ../vdms_ytdlp/main_ytdlp.py:562
-#: ../vdms_ytdlp/textdrop.py:191 ../vdms_ytdlp/youtubedl_ui.py:451
+#: ../vdms_ytdlp/textdrop.py:220 ../vdms_ytdlp/youtubedl_ui.py:451
 msgid "Ready"
 msgstr ""
 
@@ -2713,24 +2713,32 @@ msgstr ""
 msgid "Duplicate files are rejected: > {}"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:273
+#: ../vdms_panels/filedrop.py:273 ../vdms_panels/filedrop.py:325
 msgid "Drag one or more files below"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:307 ../vdms_ytdlp/textdrop.py:171
+#: ../vdms_panels/filedrop.py:307 ../vdms_ytdlp/textdrop.py:164
 msgid "Destination folder"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:325
+#: ../vdms_panels/filedrop.py:326
 msgid ""
 "No limit in the imported formats, but if you have to work with videos, "
 "import only videos, if with audio, import only audio files, etc. "
+msgstr ""
+
+#: ../vdms_panels/filedrop.py:331
+msgid "Drag the images below"
 msgstr ""
 
 #: ../vdms_panels/filedrop.py:332
 msgid ""
 "Currently supported formats are jpeg, png and bmp. The order in which they "
 "are sorted here will affect the making of the final video."
+msgstr ""
+
+#: ../vdms_panels/filedrop.py:338
+msgid "Drag one or more video below"
 msgstr ""
 
 #: ../vdms_panels/filedrop.py:339
@@ -3537,7 +3545,8 @@ msgstr ""
 msgid "Quit YouTube Downloader"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:268
+#: ../vdms_ytdlp/main_ytdlp.py:268 ../vdms_ytdlp/textdrop.py:180
+#: ../vdms_ytdlp/textdrop.py:196
 msgid "Paste\tCtrl+V"
 msgstr ""
 
@@ -3545,7 +3554,8 @@ msgstr ""
 msgid "Paste the clipboard URLs into the DragNDrop box"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:271
+#: ../vdms_ytdlp/main_ytdlp.py:271 ../vdms_ytdlp/textdrop.py:181
+#: ../vdms_ytdlp/textdrop.py:199
 msgid "Remove selected URL\tDEL"
 msgstr ""
 
@@ -3569,7 +3579,7 @@ msgstr ""
 msgid "Check the latest version available on github.com"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:289 ../vdms_ytdlp/textdrop.py:169
+#: ../vdms_ytdlp/main_ytdlp.py:289 ../vdms_ytdlp/textdrop.py:162
 msgid "Set up a temporary folder for downloads"
 msgstr ""
 
@@ -3679,7 +3689,7 @@ msgstr ""
 msgid "Invalid URL:"
 msgstr ""
 
-#: ../vdms_ytdlp/textdrop.py:138
+#: ../vdms_ytdlp/textdrop.py:131
 msgid "Drag or paste URLs here"
 msgstr ""
 
