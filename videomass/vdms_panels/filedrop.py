@@ -322,23 +322,13 @@ class FileDnD(wx.Panel):
         """
         if topic in ('Presets Manager', 'Audio/Video Conversions',
                      'Concatenate Demuxer'):
-            self.flCtrl.SetToolTip(_('No limit in the imported formats, but '
-                                     'if you have to work with videos, import '
-                                     'only videos, if with audio, import only '
-                                     'audio files, etc. '))
-            self.lbl_info.SetLabel('Drag one or more files below')
+            self.lbl_info.SetLabel(_('Drag one or more files below'))
+
         elif topic == 'Image Sequence to Video':
-            self.lbl_info.SetLabel('Drag the image files below')
-            self.flCtrl.SetToolTip(_('Currently supported formats are jpeg, '
-                                     'png and bmp. The order in which they '
-                                     'are sorted here will affect the making '
-                                     'of the final video.'))
+            self.lbl_info.SetLabel(_('Drag the images below'))
 
         elif topic == 'Video to Pictures':
-            self.lbl_info.SetLabel('Drag one or more video files below')
-            self.flCtrl.SetToolTip(_('Import only video type files, rendering '
-                                     'expects to process one at a time '
-                                     'starting from the selected one.'))
+            self.lbl_info.SetLabel(_('Drag one or more video below'))
     # ----------------------------------------------------------------------
 
     def on_col_click(self, event):
@@ -402,6 +392,7 @@ class FileDnD(wx.Panel):
         LEFT clicking on column headers in the ListCtrl.
         """
         self.parent.destroy_orphaned_window()
+        self.parent.toolbar.EnableTool(9, True)
         if len(self.outputnames) > 1:
             self.parent.rename_batch.Enable(True)
         else:
@@ -485,6 +476,7 @@ class FileDnD(wx.Panel):
         self.parent.filedropselected = None
         if setstate:
             self.sortingstate = None
+            self.parent.toolbar.EnableTool(9, False)
     # ----------------------------------------------------------------------
 
     def on_select(self, event):

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-Name: urldrop.py
+Name: textdrop.py
 Porpose: Allows you to add text URLs
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -78,13 +78,6 @@ class MyListCtrl(wx.ListCtrl):
                                           )
                 return False
 
-            for idx in range(self.index):
-                if self.GetItemText(idx, 1) == url:
-                    self.parent.statusbar_msg('Some equal URLs found',
-                                              MyListCtrl.YELLOW,
-                                              MyListCtrl.BLACK
-                                              )
-                    return False
             self.InsertItem(self.index, str(self.index + 1))
             self.SetItem(self.index, 1, url)
             self.index += 1
@@ -106,7 +99,6 @@ class UrlDropTarget(wx.TextDropTarget):
         wx.TextDropTarget.__init__(self)
         self.parent = parent
         self.listctrl = listctrl
-        self.index = None
 
     def OnDropText(self, x, y, data):
         """
@@ -169,7 +161,43 @@ class Url_DnD_Panel(wx.Panel):
         tip = _("Set up a temporary folder for downloads")
         self.btn_save.SetToolTip(tip)
         self.text_path_save.SetToolTip(_("Destination folder"))
+        self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
     # ---------------------------------------------------------
+
+    def onContext(self, event):
+        """
+        Create and show a Context Menu
+        """
+        # only do this part the first time so the events are only bound once
+        if not hasattr(self, "popupID1"):
+            popupID1 = wx.ID_ANY
+            popupID2 = wx.ID_ANY
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID1)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID2)
+        # build the menu
+        menu = wx.Menu()
+        menu.Append(popupID2, _("Paste\tCtrl+V"))
+        menu.Append(popupID1, _("Remove selected URL\tDEL"))
+        # show the popup menu
+        self.PopupMenu(menu)
+        menu.Destroy()
+    # ----------------------------------------------------------------------
+
+    def onPopup(self, event):
+        """
+        Evaluate the label string of the menu item selected and starts
+        the related process
+        """
+        itemId = event.GetId()
+        menu = event.GetEventObject()
+        menuItem = menu.FindItemById(itemId)
+
+        if menuItem.GetItemLabel() == _("Paste\tCtrl+V"):
+            self.on_paste(self)
+
+        elif menuItem.GetItemLabel() == _("Remove selected URL\tDEL"):
+            self.on_del_url_selected(self)
+    # ----------------------------------------------------------------------
 
     def changes_in_progress(self, setfocus=True):
         """
@@ -191,6 +219,7 @@ class Url_DnD_Panel(wx.Panel):
         self.statusbar_msg(_('Ready'), None)
         self.parent.data_url = data.copy()
         self.parent.destroy_orphaned_window()
+        self.parent.toolbar.EnableTool(25, True)
     # -----------------------------------------------------------------------
 
     def statusbar_msg(self, mess, bcolor, fcolor=None):
@@ -220,6 +249,7 @@ class Url_DnD_Panel(wx.Panel):
         """
         self.urlctrl.DeleteAllItems()
         self.parent.destroy_orphaned_window()
+        self.parent.toolbar.EnableTool(25, False)
         del self.parent.data_url[:]
     # -----------------------------------------------------------
 

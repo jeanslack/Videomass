@@ -70,19 +70,15 @@ class Choose_Topic(wx.Panel):
 
         wx.Panel.__init__(self, parent, -1, style=wx.TAB_TRAVERSAL)
 
-        welcome = wx.StaticText(self, wx.ID_ANY, (_("Welcome to Videomass")))
+        welcome = wx.StaticText(self, wx.ID_ANY, (_("Welcome to Videomass")),
+                                style=wx.ALIGN_CENTER)
         version = wx.StaticText(self, wx.ID_ANY, (_('Version {}'
                                                     ).format(version[2])))
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizer_base.Add(50, 50)
-        sizer_base.Add(welcome, 0, wx.ALIGN_CENTER_VERTICAL
-                       | wx.ALIGN_CENTER_HORIZONTAL, 0,
-                       )
+        sizer_base.Add(welcome, 0, wx.EXPAND, 0)
         sizer_base.Add(20, 20)
-        sizer_base.Add(version, 0, wx.BOTTOM
-                       | wx.ALIGN_CENTER_VERTICAL
-                       | wx.ALIGN_CENTER_HORIZONTAL, 0,
-                       )
+        sizer_base.Add(version, 0, wx.BOTTOM | wx.ALIGN_CENTER, 0)
         if self.oS == 'Windows':
             style = wx.BU_LEFT | wx.BORDER_NONE
         else:
