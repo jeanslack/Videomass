@@ -20,3 +20,8 @@ progress that will be terminated but the batch processing of a list of queued UR
 This is not a Videomass-related issue itself, but the lack of a stop implementation 
 on the yt-dlp [API](https://en.wikipedia.org/wiki/API).  
 
+- [Drag-and-drop of text and URLs not working with Firefox under Linux](https://github.com/wxWidgets/wxWidgets/issues/17694). 
+Using a web browser other than Firefox or dragging and dropping text from a text 
+editor seems to work fine. Please note that this issue is related to Videomass 
+v4.0.11 and not affect other OSes.
+

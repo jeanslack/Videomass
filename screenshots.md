@@ -8,7 +8,7 @@ nav_order: 3
 
 ---
 
-### These screenshots were made on [Manjaro](https://manjaro.org/) XFCE DESKTOP using wxPython version 4.2.0 
+### These screenshots were made using wxPython version 4.2.0 and XFCE Materia Manjaro Dark GTK theme. 
  
 ----  
 
