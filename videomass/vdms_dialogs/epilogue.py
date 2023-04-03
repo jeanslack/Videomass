@@ -83,8 +83,8 @@ class Formula(wx.Dialog):
         self.ckbx_trash = wx.CheckBox(self, wx.ID_ANY, (descr))
         self.ckbx_trash.SetValue(self.movetotrash)
         sizeropt.Add(self.ckbx_trash, 0, wx.ALL, 5)
-        descr = _("When finished, clean up\n"
-                  "the imported file list")
+        descr = _("Clear the list of\n"
+                  "imported files")
         self.ckbx_del = wx.CheckBox(self, wx.ID_ANY, (descr))
         self.ckbx_del.SetValue(self.emptylist)
         if self.movetotrash:

@@ -342,7 +342,7 @@ class MainFrame(wx.Frame):
         """
         if self.ProcessPanel.IsShown():
             if self.ProcessPanel.thread_type is not None:
-                wx.MessageBox(_('There are still processes running.. if you '
+                wx.MessageBox(_('There are still processes running. if you '
                                 'want to stop them, use the "Abort" button.'),
                               _('Videomass'), wx.ICON_WARNING, self)
                 return
@@ -440,10 +440,10 @@ class MainFrame(wx.Frame):
         self.rename_batch = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.rename_batch.Enable(False)
         fileButton.AppendSeparator()
-        dscrp = (_("Trash folder"),
+        dscrp = (_("Open Trash folder"),
                  _("Open the Videomass Trash folder if it exists"))
         dir_trash = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Empty Trash"),
+        dscrp = (_("Empty Trash folder"),
                  _("Delete all files in the Videomass Trash folder"))
         empty_trash = fileButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
@@ -728,7 +728,6 @@ class MainFrame(wx.Frame):
         """
         Delete permanently all files inside trash folder
         """
-        print('si')
         path = self.appdata['user_trashdir']
         if os.path.exists(path):
             files = os.listdir(path)

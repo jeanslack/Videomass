@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 4.0.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-01 23:50+0200\n"
-"PO-Revision-Date: 2023-04-01 23:53+0200\n"
+"POT-Creation-Date: 2023-04-03 12:33+0200\n"
+"PO-Revision-Date: 2023-04-03 12:39+0200\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -25,6 +25,8 @@ msgid ""
 "To suppress this message on startup, please install yt-dlp or disable it "
 "from the preferences."
 msgstr ""
+"Чтобы скрыть это сообщение при запуске, установите yt-dlp или отключите его "
+"в настройках."
 
 #: ../gui_app.py:161
 msgid ""
@@ -106,13 +108,13 @@ msgid ""
 "Move the source files to Videomass trash\n"
 "folder after successful operations"
 msgstr ""
-"Переместите исходный файл в корзину Videomass\n"
-"после успешного кодирования"
+"Переместить исходный файл в корзину Videomass\n"
+"после успешного преобразования"
 
 #: ../vdms_dialogs/epilogue.py:86
 msgid ""
-"When finished, clean up\n"
-"the imported file list"
+"Clear the list of\n"
+"imported files"
 msgstr ""
 
 #: ../vdms_dialogs/epilogue.py:100
@@ -330,9 +332,9 @@ msgstr "Прочти меня"
 
 #: ../vdms_dialogs/filter_scale.py:80
 #, fuzzy
-#| msgid "View result"
-msgid "Quick result"
-msgstr "Посмотреть результат"
+#| msgid "Quick result"
+msgid "View result"
+msgstr "Просмотр результата с учётом фильтра"
 
 #: ../vdms_dialogs/filter_scale.py:84
 msgid "New size in pixels"
@@ -415,7 +417,7 @@ msgstr "Включить stabilizer"
 
 #: ../vdms_dialogs/filter_stab.py:84
 msgid "Create a side-by-side comparison video"
-msgstr ""
+msgstr "Создайте видео для параллельного сравнения"
 
 #: ../vdms_dialogs/filter_stab.py:89
 msgid "Create a snapshot"
@@ -665,16 +667,12 @@ msgid "Videomass - Loading..."
 msgstr "Videomass - Загрузка..."
 
 #: ../vdms_dialogs/filter_stab.py:533
-#, fuzzy
-#| msgid ""
-#| "Please wait,\n"
-#| "The preview process will take a few seconds."
 msgid ""
 "Please wait,\n"
 "This process will take a few seconds."
 msgstr ""
-"Пожалуйста, подождите,\n"
-"Процесс предварительного просмотра займет несколько секунд."
+"Пожалуйста, подождите.\n"
+"Этот процесс займет несколько секунд."
 
 #: ../vdms_dialogs/filter_transpose.py:80
 #: ../vdms_dialogs/filter_transpose.py:293
@@ -806,14 +804,8 @@ msgid "Choose the {} executable"
 msgstr "Выберите исполняемый файл {}"
 
 #: ../vdms_dialogs/wizard_dlg.py:403
-#, fuzzy
-#| msgid ""
-#| "Videomass has a simple graphical\n"
-#| "interface for youtube-dl and yt-dlp\n"
 msgid "Videomass has a simple graphical interface for yt-dlp\n"
-msgstr ""
-"Videomass имеет простой графический\n"
-"интерфейс для youtube-dl и yt-dlp\n"
+msgstr "Videomass имеет простой графический интерфейс для yt-dlp\n"
 
 #: ../vdms_dialogs/wizard_dlg.py:404
 msgid ""
@@ -877,10 +869,10 @@ msgid "Done!"
 msgstr "Выполнено!"
 
 #: ../vdms_dialogs/about.py:62
-#, fuzzy
-#| msgid "Cross-platform graphical interface for FFmpeg\n"
 msgid "Cross-platform graphical user interface for FFmpeg and yt-dlp.\n"
-msgstr "Кроссплатформенный графический интерфейс для FFmpeg\n"
+msgstr ""
+"Кроссплатформенный графический пользовательский интерфейс для FFmpeg и yt-"
+"dlp.\n"
 
 #: ../vdms_dialogs/presets_addnew.py:39
 msgid ""
@@ -918,7 +910,7 @@ msgstr "Описание"
 
 #: ../vdms_dialogs/presets_addnew.py:133
 msgid "Save.."
-msgstr "Сохранить.."
+msgstr "Сохранить..."
 
 #: ../vdms_dialogs/presets_addnew.py:156
 msgid "A short profile name"
@@ -1052,7 +1044,7 @@ msgid ""
 "trash folder after successful encoding"
 msgstr ""
 "Всегда перемещать исходные файлы в корзину Videomass \n"
-"после успешного кодирования"
+"после успешного преобразования"
 
 #: ../vdms_dialogs/preferences.py:201
 msgid "Where do you prefer to save your downloads?"
@@ -1097,7 +1089,7 @@ msgstr "FFmpeg"
 
 #: ../vdms_dialogs/preferences.py:286
 msgid "Download videos from YouTube.com and other video sites "
-msgstr ""
+msgstr "Скачивайте видео с YouTube.com и других видеосайтов "
 
 #: ../vdms_dialogs/preferences.py:297
 msgid "Icon themes"
@@ -1239,10 +1231,8 @@ msgid "Subtitle Streams"
 msgstr "Потоки субтитров"
 
 #: ../vdms_dialogs/mediainfo.py:125
-#, fuzzy
-#| msgid "Crop to width"
 msgid "Copy to clipboard"
-msgstr "Обрезать по ширине"
+msgstr "Скопировать в буфер обмена"
 
 #: ../vdms_dialogs/mediainfo.py:133
 msgid "FILE SELECTION"
@@ -1250,38 +1240,34 @@ msgstr "ВЫБОР ФАЙЛА"
 
 #: ../vdms_dialogs/mediainfo.py:135 ../vdms_dialogs/mediainfo.py:138
 #: ../vdms_dialogs/mediainfo.py:141 ../vdms_dialogs/mediainfo.py:144
-#: ../vdms_main/main_frame.py:1259
-#, fuzzy
-#| msgid "Audio Properties"
+#: ../vdms_main/main_frame.py:1258
 msgid "Properties"
-msgstr "Свойства аудио"
+msgstr "Характеристики"
 
 #: ../vdms_dialogs/mediainfo.py:136 ../vdms_dialogs/mediainfo.py:139
 #: ../vdms_dialogs/mediainfo.py:142 ../vdms_dialogs/mediainfo.py:145
 msgid "Values"
-msgstr ""
+msgstr "Значения"
 
 #: ../vdms_dialogs/mediainfo.py:148
-#, fuzzy
-#| msgid "Audio Properties"
 msgid "Streams Properties"
-msgstr "Свойства аудио"
+msgstr "Свойства потоков"
 
 #: ../vdms_dialogs/mediainfo.py:240
 msgid "Unable to open the clipboard on Format tab"
-msgstr ""
+msgstr "Не удается открыть буфер обмена на вкладке «Формат»"
 
 #: ../vdms_dialogs/mediainfo.py:259
 msgid "Unable to open the clipboard on Video Streams tab"
-msgstr ""
+msgstr "Невозможно открыть буфер обмена на вкладке «Видеопотоки»"
 
 #: ../vdms_dialogs/mediainfo.py:279
 msgid "Unable to open the clipboard on Audio Streams tab"
-msgstr ""
+msgstr "Невозможно открыть буфер обмена на вкладке «Аудиопотоки»"
 
 #: ../vdms_dialogs/mediainfo.py:299
 msgid "Unable to open the clipboard on Subtitle Streams tab"
-msgstr ""
+msgstr "Невозможно открыть буфер обмена на вкладке «Потоки субтитров»"
 
 #: ../vdms_dialogs/showlogs.py:78
 msgid "Log file list"
@@ -1592,20 +1578,16 @@ msgid "FFmpeg encoders"
 msgstr "Кодировщики FFmpeg"
 
 #: ../vdms_dialogs/ffmpeg_codecs.py:48
-#, fuzzy
-#| msgid "FFmpeg encoders"
 msgid "supported encoders"
-msgstr "Кодировщики FFmpeg"
+msgstr "поддерживаемые кодеры"
 
 #: ../vdms_dialogs/ffmpeg_codecs.py:50
 msgid "FFmpeg decoders"
 msgstr "Декодеры FFmpeg"
 
 #: ../vdms_dialogs/ffmpeg_codecs.py:51
-#, fuzzy
-#| msgid "FFmpeg decoders"
 msgid "supported decoders"
-msgstr "Декодеры FFmpeg"
+msgstr "поддерживаемые декодеры"
 
 #: ../vdms_dialogs/ffmpeg_codecs.py:77 ../vdms_panels/av_conversions.py:446
 msgid "Video"
@@ -1643,10 +1625,8 @@ msgstr "Форматы файлов FFmpeg"
 
 #: ../vdms_dialogs/ffmpeg_formats.py:111 ../vdms_dialogs/ffmpeg_formats.py:114
 #: ../vdms_dialogs/ffmpeg_formats.py:117
-#, fuzzy
-#| msgid "Unsupported format '{}'"
 msgid "supported formats"
-msgstr "Неподдерживаемый формат '{}'"
+msgstr "поддерживаемые форматы"
 
 #: ../vdms_dialogs/shownormlist.py:83
 msgid "File name"
@@ -1810,8 +1790,8 @@ msgid ""
 "Wait....\n"
 "Retrieving required data."
 msgstr ""
-"Пожалуйста, подождите....\n"
-"Получить запрошенные данные."
+"Пожалуйста, подождите...\n"
+"Получение необходимых данных."
 
 #: ../vdms_io/io_tools.py:87
 #, python-format
@@ -1869,45 +1849,35 @@ msgstr ""
 "Пресеты не найдены.\n"
 "\n"
 "Возможное решение: откройте панель Менеджер Пресетов, перейдите в столбец "
-"пресеты и попробуйте нажать кнопку «Восстановить все ...»"
+"пресеты и попробуйте нажать кнопку «Восстановить всё ...»"
 
-#: ../vdms_main/main_frame.py:194 ../vdms_main/main_frame.py:1332
-#: ../vdms_main/main_frame.py:1335 ../vdms_main/main_frame.py:1378
-#: ../vdms_main/main_frame.py:1409 ../vdms_ytdlp/main_ytdlp.py:99
+#: ../vdms_main/main_frame.py:194 ../vdms_main/main_frame.py:1331
+#: ../vdms_main/main_frame.py:1334 ../vdms_main/main_frame.py:1377
+#: ../vdms_main/main_frame.py:1408 ../vdms_ytdlp/main_ytdlp.py:99
 #: ../vdms_ytdlp/main_ytdlp.py:148 ../vdms_ytdlp/main_ytdlp.py:566
 #: ../vdms_ytdlp/textdrop.py:219 ../vdms_ytdlp/youtubedl_ui.py:451
 msgid "Ready"
 msgstr "Готово"
 
-#: ../vdms_main/main_frame.py:345
-#, fuzzy
-#| msgid ""
-#| "There are still processes running.. if you want to stop them, use the "
-#| "\"Abort\" button.\n"
-#| "\n"
-#| "Do you want to kill application?"
+#: ../vdms_main/main_frame.py:345 ../vdms_ytdlp/main_ytdlp.py:204
 msgid ""
-"There are still processes running.. if you want to stop them, use the \"Abort"
+"There are still processes running. if you want to stop them, use the \"Abort"
 "\" button."
 msgstr ""
-"Есть еще запущенные процессы ... Если вы хотите остановить их, используйте "
-"кнопку \"Прервать\".\n"
-"\n"
-"Вы хотите закрыть приложение?"
+"Есть еще запущенные процессы... если вы хотите остановить их, используйте "
+"кнопку «Прервать»."
 
-#: ../vdms_main/main_frame.py:347 ../vdms_main/main_frame.py:1060
-#: ../vdms_main/main_frame.py:1377 ../vdms_ytdlp/main_ytdlp.py:147
+#: ../vdms_main/main_frame.py:347 ../vdms_main/main_frame.py:1059
+#: ../vdms_main/main_frame.py:1376 ../vdms_ytdlp/main_ytdlp.py:147
 #: ../vdms_ytdlp/main_ytdlp.py:206
 msgid "Videomass"
 msgstr "Videomass"
 
 #: ../vdms_main/main_frame.py:351
-#, fuzzy
-#| msgid "Are you sure you want to exit?"
 msgid "Are you sure you want to exit the application?"
 msgstr "Вы уверены, что хотите выйти из приложения?"
 
-#: ../vdms_main/main_frame.py:353 ../vdms_main/main_frame.py:1065
+#: ../vdms_main/main_frame.py:353 ../vdms_main/main_frame.py:1064
 #: ../vdms_ytdlp/main_ytdlp.py:212
 msgid "Exit"
 msgstr "Выход"
@@ -1917,6 +1887,8 @@ msgid ""
 "There are still active windows with running processes, make sure you finish "
 "your work before closing them."
 msgstr ""
+"Есть все еще активные окна с запущенными процессами, убедитесь, что вы "
+"закончили свою работу, прежде чем закрывать их."
 
 #: ../vdms_main/main_frame.py:420
 msgid "Open...\tCtrl+O"
@@ -1959,8 +1931,10 @@ msgid "Rename all files listed in the Queued Files panel"
 msgstr "Переименуйте все файлы, перечисленные на панели «Файлы в очереди»"
 
 #: ../vdms_main/main_frame.py:443
-msgid "Trash folder"
-msgstr "Корзина"
+#, fuzzy
+#| msgid "Trash folder"
+msgid "Open Trash folder"
+msgstr "Перейти в папку Корзина"
 
 # вероятно, ошибка в тексте
 # Opens the Videomass cache foder, if exists
@@ -1972,8 +1946,10 @@ msgid "Open the Videomass Trash folder if it exists"
 msgstr "Открыть папку корзины Videomass, если она существует"
 
 #: ../vdms_main/main_frame.py:446
-msgid "Empty Trash"
-msgstr "Корзина пуста"
+#, fuzzy
+#| msgid "Trash folder"
+msgid "Empty Trash folder"
+msgstr "Перейти в папку Корзина"
 
 #: ../vdms_main/main_frame.py:447
 msgid "Delete all files in the Videomass Trash folder"
@@ -1992,20 +1968,16 @@ msgid "Exit\tCtrl+Q"
 msgstr "Выход\tCtrl+Q"
 
 #: ../vdms_main/main_frame.py:455
-#, fuzzy
-#| msgid "Clear the cache when exiting the application"
 msgid "Completely exit the application"
-msgstr "Очистить кеш при выходе из приложения"
+msgstr "Полностью выйти из приложения"
 
 #: ../vdms_main/main_frame.py:456 ../vdms_ytdlp/main_ytdlp.py:264
 msgid "File"
 msgstr "Файл"
 
 #: ../vdms_main/main_frame.py:460
-#, fuzzy
-#| msgid "Rename the selected file to:"
 msgid "Remove selected file\tDEL"
-msgstr "Переименуйте выбранный файл в:"
+msgstr "Удалить выбранный файл\tDEL"
 
 #: ../vdms_main/main_frame.py:461
 msgid "Remove the selected files from the list"
@@ -2094,7 +2066,7 @@ msgstr "Посмотр"
 msgid "Home panel\tCtrl+Shift+H"
 msgstr "Начальная панель\tCtrl+Shift+H"
 
-#: ../vdms_main/main_frame.py:516 ../vdms_main/main_frame.py:1248
+#: ../vdms_main/main_frame.py:516 ../vdms_main/main_frame.py:1247
 msgid "Go to the 'Home' panel"
 msgstr "Перейдите к 'Начальной панели'"
 
@@ -2139,16 +2111,12 @@ msgid "Go to the 'From Movie to Pictures' panel"
 msgstr "Перейдите на панель 'Картинки из фильма'"
 
 #: ../vdms_main/main_frame.py:536
-#, fuzzy
-#| msgid "YouTube downloader\tShift+Y"
 msgid "YouTube Downloader\tCtrl+Shift+Y"
-msgstr "YouTube downloader\tShift+Y"
+msgstr "Загрузчик YouTube\tCtrl+Shift+Y"
 
 #: ../vdms_main/main_frame.py:537
-#, fuzzy
-#| msgid "YouTube Downloader"
 msgid "Open 'YouTube Downloader' window"
-msgstr "YouTube Downloader"
+msgstr "Откройте окно «Загрузчик с YouTube»"
 
 #: ../vdms_main/main_frame.py:539
 msgid "Output Monitor\tCtrl+Shift+O"
@@ -2271,33 +2239,33 @@ msgstr "Помощь"
 msgid "Open the selected files"
 msgstr "Открыть выбранные файлы"
 
-#: ../vdms_main/main_frame.py:723 ../vdms_main/main_frame.py:747
+#: ../vdms_main/main_frame.py:723 ../vdms_main/main_frame.py:746
 msgid "No such folder '{}'"
 msgstr "Нет такой папки '{}'"
 
-#: ../vdms_main/main_frame.py:736
+#: ../vdms_main/main_frame.py:735
 msgid "Are you sure to empty trash folder?"
 msgstr "Вы уверены, что очистили папку \"Корзина\"?"
 
-#: ../vdms_main/main_frame.py:744
+#: ../vdms_main/main_frame.py:743
 msgid "No files to delete"
 msgstr "Нет файлов для удаления"
 
-#: ../vdms_main/main_frame.py:799
+#: ../vdms_main/main_frame.py:798
 #, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr "Installed release v{0}. A new presets release is available {1}"
 
-#: ../vdms_main/main_frame.py:803
+#: ../vdms_main/main_frame.py:802
 #, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr "Установленная версия {0}. Новых обновлений не обнаружено."
 
-#: ../vdms_main/main_frame.py:816
+#: ../vdms_main/main_frame.py:815
 msgid "Choose a download folder"
 msgstr "Выберите папку для загрузки"
 
-#: ../vdms_main/main_frame.py:833
+#: ../vdms_main/main_frame.py:832
 msgid ""
 "Wait....\n"
 "The archive is being downloaded"
@@ -2305,24 +2273,24 @@ msgstr ""
 "Подождите...\n"
 "Архив скачивается"
 
-#: ../vdms_main/main_frame.py:844
+#: ../vdms_main/main_frame.py:843
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "Успешно загружено в \"{0}\""
 
-#: ../vdms_main/main_frame.py:984
+#: ../vdms_main/main_frame.py:983
 msgid "Choose a temporary destination for conversions"
 msgstr "Выберите временное место назначения для конверсий"
 
-#: ../vdms_main/main_frame.py:1009
+#: ../vdms_main/main_frame.py:1008
 msgid "Default destination folders successfully restored"
 msgstr "Папки назначения по умолчанию успешно восстановлены"
 
-#: ../vdms_main/main_frame.py:1058
+#: ../vdms_main/main_frame.py:1057
 msgid "Changes will take effect once the program has been restarted."
 msgstr "Изменения вступят в силу после перезапуска программы."
 
-#: ../vdms_main/main_frame.py:1062
+#: ../vdms_main/main_frame.py:1061
 msgid ""
 "Changes will take effect once the program has been restarted.\n"
 "\n"
@@ -2332,108 +2300,108 @@ msgstr ""
 "\n"
 "Вы хотите выйти из приложения сейчас?"
 
-#: ../vdms_main/main_frame.py:1135
+#: ../vdms_main/main_frame.py:1134
 #, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr "Доступна новая версия - v.{0}\n"
 
-#: ../vdms_main/main_frame.py:1138
+#: ../vdms_main/main_frame.py:1137
 msgid "You are using a development version that has not yet been released!\n"
 msgstr "Вы используете версию для разработки, которая еще не выпущена!\n"
 
-#: ../vdms_main/main_frame.py:1141
+#: ../vdms_main/main_frame.py:1140
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr "Поздравляю! Вы уже используете последнюю версию.\n"
 
-#: ../vdms_main/main_frame.py:1238 ../vdms_ytdlp/main_ytdlp.py:486
+#: ../vdms_main/main_frame.py:1237 ../vdms_ytdlp/main_ytdlp.py:486
 msgid "Go to the previous panel"
 msgstr "Перейти к предыдущей панели"
 
-#: ../vdms_main/main_frame.py:1239 ../vdms_ytdlp/main_ytdlp.py:487
+#: ../vdms_main/main_frame.py:1238 ../vdms_ytdlp/main_ytdlp.py:487
 msgid "Back"
 msgstr "Назад"
 
-#: ../vdms_main/main_frame.py:1243 ../vdms_ytdlp/main_ytdlp.py:491
+#: ../vdms_main/main_frame.py:1242 ../vdms_ytdlp/main_ytdlp.py:491
 msgid "Go to the next panel"
 msgstr "Перейти к следующей панели"
 
-#: ../vdms_main/main_frame.py:1244 ../vdms_ytdlp/main_ytdlp.py:492
+#: ../vdms_main/main_frame.py:1243 ../vdms_ytdlp/main_ytdlp.py:492
 msgid "Next"
 msgstr "Вперед"
 
-#: ../vdms_main/main_frame.py:1249
+#: ../vdms_main/main_frame.py:1248
 msgid "Home"
-msgstr ""
+msgstr "Начальная панель"
 
-#: ../vdms_main/main_frame.py:1253
+#: ../vdms_main/main_frame.py:1252
 msgid "Play the selected file in the list"
 msgstr "Воспроизведение выбранного в списке файла"
 
-#: ../vdms_main/main_frame.py:1254
+#: ../vdms_main/main_frame.py:1253
 msgid "Play"
 msgstr "Воспроизведение"
 
-#: ../vdms_main/main_frame.py:1258
+#: ../vdms_main/main_frame.py:1257
 msgid "Get informative data about imported media streams"
 msgstr "Получайте информативные данные об импортированных медиапотоках"
 
-#: ../vdms_main/main_frame.py:1263
+#: ../vdms_main/main_frame.py:1262
 msgid "Start rendering"
 msgstr "Начать преобразование"
 
-#: ../vdms_main/main_frame.py:1264
+#: ../vdms_main/main_frame.py:1263
 msgid "Start"
 msgstr "Начать"
 
-#: ../vdms_main/main_frame.py:1268 ../vdms_ytdlp/main_ytdlp.py:506
+#: ../vdms_main/main_frame.py:1267 ../vdms_ytdlp/main_ytdlp.py:506
 msgid "Stops current process"
 msgstr "Останавливает текущий процесс"
 
-#: ../vdms_main/main_frame.py:1269 ../vdms_ytdlp/main_ytdlp.py:507
+#: ../vdms_main/main_frame.py:1268 ../vdms_ytdlp/main_ytdlp.py:507
 msgid "Abort"
 msgstr "Прервать"
 
-#: ../vdms_main/main_frame.py:1273
+#: ../vdms_main/main_frame.py:1272
 msgid "Delete all files from the list"
 msgstr "Удалить все файлы из списка"
 
-#: ../vdms_main/main_frame.py:1274 ../vdms_ytdlp/main_ytdlp.py:511
+#: ../vdms_main/main_frame.py:1273 ../vdms_ytdlp/main_ytdlp.py:511
 msgid "Clear"
-msgstr ""
+msgstr "Очистить"
 
-#: ../vdms_main/main_frame.py:1340
+#: ../vdms_main/main_frame.py:1339
 msgid "File list changed, please check the settings again."
 msgstr "Список файлов изменен, проверьте настройки еще раз."
 
-#: ../vdms_main/main_frame.py:1410
+#: ../vdms_main/main_frame.py:1409
 msgid "Videomass - Queued Files"
 msgstr "Videomass - Файлы в очереди"
 
-#: ../vdms_main/main_frame.py:1428
+#: ../vdms_main/main_frame.py:1427
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - AV-конвертация"
 
-#: ../vdms_main/main_frame.py:1454
+#: ../vdms_main/main_frame.py:1453
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - Менеджер Пресетов"
 
-#: ../vdms_main/main_frame.py:1482
+#: ../vdms_main/main_frame.py:1481
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Concatenate Demuxer"
 
-#: ../vdms_main/main_frame.py:1507
+#: ../vdms_main/main_frame.py:1506
 msgid "Videomass - From Movie to Pictures"
 msgstr "Videomass - Картинки из фильма"
 
-#: ../vdms_main/main_frame.py:1533
+#: ../vdms_main/main_frame.py:1532
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Still Image Maker"
 
-#: ../vdms_main/main_frame.py:1551 ../vdms_ytdlp/main_ytdlp.py:589
+#: ../vdms_main/main_frame.py:1550 ../vdms_ytdlp/main_ytdlp.py:589
 msgid "Viewing last log"
 msgstr "Просмотр последнего log-журнала"
 
-#: ../vdms_main/main_frame.py:1559
+#: ../vdms_main/main_frame.py:1558
 msgid ""
 "Cannot continue: The duration in the timeline exceeds the duration of some "
 "queued files."
@@ -2441,15 +2409,13 @@ msgstr ""
 "Невозможно продолжить: продолжительность на шкале времени превышает "
 "продолжительность некоторых файлов в очереди."
 
-#: ../vdms_main/main_frame.py:1565
+#: ../vdms_main/main_frame.py:1564
 msgid "Processing..."
 msgstr "Обработка ..."
 
-#: ../vdms_main/main_frame.py:1569
-#, fuzzy
-#| msgid "Videomass - Output Monitor"
+#: ../vdms_main/main_frame.py:1568
 msgid "Videomass - FFmpeg message monitor"
-msgstr "Videomass - Выходной монитор"
+msgstr "Videomass - монитор сообщений FFmpeg"
 
 #: ../vdms_panels/av_conversions.py:221
 msgid "Media:"
@@ -2953,35 +2919,35 @@ msgstr "Создать новый профиль"
 msgid "Welcome to Videomass"
 msgstr "Добро пожаловать в Videomass"
 
-#: ../vdms_panels/choose_topic.py:74
+#: ../vdms_panels/choose_topic.py:75
 msgid "Version {}"
 msgstr "Версия {}"
 
-#: ../vdms_panels/choose_topic.py:90
+#: ../vdms_panels/choose_topic.py:86
 msgid "Presets Manager"
 msgstr "Менеджер Пресетов"
 
-#: ../vdms_panels/choose_topic.py:93
+#: ../vdms_panels/choose_topic.py:89
 msgid "AV-Conversions"
 msgstr "AV-конвертация"
 
-#: ../vdms_panels/choose_topic.py:96
+#: ../vdms_panels/choose_topic.py:92
 msgid "Concatenate media files"
 msgstr "Объединить медиафайлы"
 
-#: ../vdms_panels/choose_topic.py:99
+#: ../vdms_panels/choose_topic.py:95
 msgid "YouTube Downloader"
 msgstr "YouTube Downloader"
 
-#: ../vdms_panels/choose_topic.py:102
+#: ../vdms_panels/choose_topic.py:98
 msgid "Still Image Maker"
 msgstr "Still Image Maker"
 
-#: ../vdms_panels/choose_topic.py:105
+#: ../vdms_panels/choose_topic.py:101
 msgid "From Movie to Pictures"
 msgstr "Картинки из фильма"
 
-#: ../vdms_panels/choose_topic.py:123
+#: ../vdms_panels/choose_topic.py:119
 msgid ""
 "Create, edit and use quickly your favorite FFmpeg presets and profiles with "
 "full formats support and codecs."
@@ -2989,7 +2955,7 @@ msgstr ""
 "Cоздавайте, редактируйте или используйте свои любимые пресеты и профили "
 "прямо сейчас с полной поддержкой форматов и кодеков FFmpeg."
 
-#: ../vdms_panels/choose_topic.py:127
+#: ../vdms_panels/choose_topic.py:123
 msgid ""
 "A set of useful tools for audio and video conversions. Save your profiles "
 "and reuse them with Presets Manager."
@@ -2997,7 +2963,7 @@ msgstr ""
 "Набор полезных инструментов для преобразования аудио и видео. Сохраните свои "
 "профили и повторно используйте их с помощью Менеджера Пресетов."
 
-#: ../vdms_panels/choose_topic.py:131
+#: ../vdms_panels/choose_topic.py:127
 msgid ""
 "Easily download videos and audio in different formats and quality from "
 "YouTube, Facebook and more sites."
@@ -3005,14 +2971,14 @@ msgstr ""
 "Легко загружайте видео и аудио в различном формате и качестве с YouTube, "
 "Facebook и других сайтов."
 
-#: ../vdms_panels/choose_topic.py:135
+#: ../vdms_panels/choose_topic.py:131
 msgid ""
 "Concatenate multiple media files based on import order without re-encoding"
 msgstr ""
 "Объединение нескольких медиафайлов в соответствии с порядком импорта без "
 "перекодирования"
 
-#: ../vdms_panels/choose_topic.py:138
+#: ../vdms_panels/choose_topic.py:134
 msgid ""
 "Create video from a sequence of images, based on import order, with the "
 "ability to add an audio file."
@@ -3020,12 +2986,12 @@ msgstr ""
 "Создавайте видео из последовательности изображений, основываясь на порядке "
 "импорта, с возможностью добавления аудиофайла."
 
-#: ../vdms_panels/choose_topic.py:141
+#: ../vdms_panels/choose_topic.py:137
 msgid "Extract images (frames) from your movies in JPG, PNG, BMP, GIF formats."
 msgstr ""
 "Извлекайте изображения (кадры) из ваших фильмов в форматы JPG, PNG, BMP, GIF."
 
-#: ../vdms_panels/choose_topic.py:227
+#: ../vdms_panels/choose_topic.py:223
 msgid "The downloader is disabled. Check your preferences."
 msgstr "Загрузчик отключен. Проверьте свои настройки."
 
@@ -3050,7 +3016,7 @@ msgid ""
 msgstr ""
 "\n"
 "- Функция конкатенации(последовательного соединения) выполняется \n"
-"только с аудиофайлами или только с видеофайлами..\n"
+"только с аудиофайлами или только с видеофайлами.\n"
 "\n"
 "- Порядок объединения зависит от порядка добавления файлов.\n"
 "\n"
@@ -3194,16 +3160,12 @@ msgid "Destination folder"
 msgstr "Папка назначения"
 
 #: ../vdms_panels/filedrop.py:328
-#, fuzzy
-#| msgid "Drag one or more files below"
 msgid "Drag the images below"
-msgstr "Перетащите один или несколько файлов ниже"
+msgstr "Перетащите изображения ниже"
 
 #: ../vdms_panels/filedrop.py:331
-#, fuzzy
-#| msgid "Drag one or more files below"
 msgid "Drag one or more video below"
-msgstr "Перетащите один или несколько файлов ниже"
+msgstr "Перетащите одно или несколько видео ниже"
 
 #: ../vdms_panels/filedrop.py:413
 msgid "No file selected"
@@ -3302,10 +3264,8 @@ msgstr "...Завершено"
 
 #: ../vdms_panels/long_processing_task.py:390
 #: ../vdms_ytdlp/long_task_ytdlp.py:245
-#, fuzzy
-#| msgid "wait... I'm interrupting"
 msgid "Please wait... interruption in progress"
-msgstr "подождите ... я прерываю"
+msgstr "Пожалуйста, подождите... происходит прерывание"
 
 #: ../vdms_panels/long_processing_task.py:393
 msgid "...Interrupted"
@@ -3329,7 +3289,7 @@ msgstr "Экспорт выбранного"
 
 #: ../vdms_panels/presets_manager.py:150
 msgid "Export all..."
-msgstr "Экспортировать все..."
+msgstr "Экспортировать всё..."
 
 #: ../vdms_panels/presets_manager.py:161
 msgid "Import preset"
@@ -3345,7 +3305,7 @@ msgstr "Восстановить"
 
 #: ../vdms_panels/presets_manager.py:179
 msgid "Restore all..."
-msgstr "Восстановить все..."
+msgstr "Восстановить всё..."
 
 #: ../vdms_panels/presets_manager.py:191
 msgid "Reload"
@@ -4088,13 +4048,11 @@ msgstr "Кодек аудио"
 
 #: ../vdms_ytdlp/formatcode.py:140
 msgid "Don't merge any files"
-msgstr ""
+msgstr "Не объединяйть никакие файлы"
 
 #: ../vdms_ytdlp/formatcode.py:143
-#, fuzzy
-#| msgid "Download Audio only"
 msgid "Download only the best selected qualities"
-msgstr "Загрузить только аудиофайл"
+msgstr "Скачивайте только лучшие отобранные качества"
 
 #: ../vdms_ytdlp/formatcode.py:247
 #, python-brace-format
@@ -4110,34 +4068,16 @@ msgstr ""
 "'{0}'"
 
 #: ../vdms_ytdlp/long_task_ytdlp.py:260
-#, fuzzy
-#| msgid "Done!"
 msgid "Done"
-msgstr "Выполнено!"
-
-#: ../vdms_ytdlp/main_ytdlp.py:204
-#, fuzzy
-#| msgid ""
-#| "There are still processes running.. if you want to stop them, use the "
-#| "\"Abort\" button.\n"
-#| "\n"
-#| "Do you want to kill application?"
-msgid ""
-"There are still processes running. if you want to stop them, use the \"Abort"
-"\" button."
-msgstr ""
-"Есть еще запущенные процессы ... Если вы хотите остановить их, используйте "
-"кнопку \"Прервать\".\n"
-"\n"
-"Вы хотите закрыть приложение?"
+msgstr "Готово"
 
 #: ../vdms_ytdlp/main_ytdlp.py:210
-#, fuzzy
-#| msgid "Are you sure you want to exit?"
 msgid ""
 "Are you sure you want to exit this window?\n"
 "All data will be lost"
-msgstr "Вы уверены, что хотите выйти из приложения?"
+msgstr ""
+"Вы уверены, что хотите закрыть это окно?\n"
+"Все данные будут потеряны"
 
 #: ../vdms_ytdlp/main_ytdlp.py:246
 msgid "Downloads folder\tCtrl+D"
@@ -4157,61 +4097,51 @@ msgstr "Открыть папку временных загрузок"
 
 #: ../vdms_ytdlp/main_ytdlp.py:260
 msgid "Close\tCtrl+W"
-msgstr ""
+msgstr "Закрыть\tCtrl+W"
 
 #: ../vdms_ytdlp/main_ytdlp.py:261
-#, fuzzy
-#| msgid "YouTube Downloader"
 msgid "Hide YouTube Downloader"
-msgstr "YouTube Downloader"
+msgstr "Скрыть загрузчик YouTube"
 
 #: ../vdms_ytdlp/main_ytdlp.py:263
-#, fuzzy
-#| msgid "YouTube Downloader"
 msgid "Quit YouTube Downloader"
-msgstr "YouTube Downloader"
+msgstr "Выйти из загрузчика YouTube"
 
 #: ../vdms_ytdlp/main_ytdlp.py:268 ../vdms_ytdlp/textdrop.py:179
 #: ../vdms_ytdlp/textdrop.py:195
-#, fuzzy
-#| msgid "Exit\tCtrl+Q"
 msgid "Paste\tCtrl+V"
-msgstr "Выход\tCtrl+Q"
+msgstr "Вставить\tCtrl+V"
 
 #: ../vdms_ytdlp/main_ytdlp.py:269
-msgid "Paste the clipboard URLs into the DragNDrop box"
-msgstr ""
+#, fuzzy
+#| msgid "Paste the clipboard URLs into the DragNDrop box"
+msgid "Paste the copied URLs to clipboard"
+msgstr "Вставьте URL-адреса буфера обмена в поле DragNDrop"
 
 #: ../vdms_ytdlp/main_ytdlp.py:271 ../vdms_ytdlp/textdrop.py:180
 #: ../vdms_ytdlp/textdrop.py:198
 msgid "Remove selected URL\tDEL"
-msgstr ""
+msgstr "Удалить выбранный URL\tDEL"
 
 #: ../vdms_ytdlp/main_ytdlp.py:272
-#, fuzzy
-#| msgid "Remove the selected files from the list"
 msgid "Remove the selected URL from the list"
-msgstr "Удалить выбранные файлы из списка"
+msgstr "Удалить выбранный URL из списка"
 
 #: ../vdms_ytdlp/main_ytdlp.py:278
 msgid "Version of yt-dlp"
-msgstr ""
+msgstr "Версия yt-dlp"
 
 #: ../vdms_ytdlp/main_ytdlp.py:279
 msgid "Shows the version in use"
 msgstr "Показывает используемую версию"
 
 #: ../vdms_ytdlp/main_ytdlp.py:281
-#, fuzzy
-#| msgid "Get Latest Version"
 msgid "Latest version of yt-dlp"
-msgstr "Получить последнюю версию"
+msgstr "Последняя версия yt-dlp"
 
 #: ../vdms_ytdlp/main_ytdlp.py:282
-#, fuzzy
-#| msgid "Shows the latest version available on github.com"
 msgid "Check the latest version available on github.com"
-msgstr "Показывает последнюю версию, доступную на github.com"
+msgstr "Проверьте последнюю версию, доступную на github.com"
 
 #: ../vdms_ytdlp/main_ytdlp.py:289 ../vdms_ytdlp/textdrop.py:161
 msgid "Set up a temporary folder for downloads"
@@ -4222,48 +4152,38 @@ msgid "Save all downloads to this temporary location"
 msgstr "Сохраните все загрузки во временной папке"
 
 #: ../vdms_ytdlp/main_ytdlp.py:294
-#, fuzzy
-#| msgid "Restore the default folder for file conversions"
 msgid "Restore the default folder for downloads"
-msgstr "Восстановить папку по умолчанию для преобразованных файлов"
+msgstr "Восстановить папку для загрузок по умолчанию"
 
 #: ../vdms_ytdlp/main_ytdlp.py:364
-#, fuzzy, python-brace-format
-#| msgid "You are using '{0}' version {1}"
+#, python-brace-format
 msgid "You are using \"yt-dlp\" version {0}"
-msgstr "Вы используете '{0}' версии {1}"
+msgstr "Вы используете версию \"yt-dlp\" {0}"
 
 #: ../vdms_ytdlp/main_ytdlp.py:381
-#, fuzzy, python-brace-format
-#| msgid "{0}: Latest version available: {1}"
+#, python-brace-format
 msgid "\"yt-dlp\": Latest version available: {0}"
-msgstr "{0}: Доступна последняя версия: {1}"
+msgstr "\"yt-dlp\": Доступна последняя версия:{0}"
 
 #: ../vdms_ytdlp/main_ytdlp.py:393
 msgid "Choose a temporary destination for downloads"
 msgstr "Выберите временное место для загрузок"
 
 #: ../vdms_ytdlp/main_ytdlp.py:415
-#, fuzzy
-#| msgid "Default destination folders successfully restored"
 msgid "Default destination folder successfully restored"
-msgstr "Папки назначения по умолчанию успешно восстановлены"
+msgstr "Папка назначения по умолчанию успешно восстановлена"
 
 #: ../vdms_ytdlp/main_ytdlp.py:496
-#, fuzzy
-#| msgid "Shows download statistics and information"
 msgid "Shows statistics and information"
-msgstr "Показывает статистику и информацию о загрузке"
+msgstr "Показать статистику и информацию"
 
 #: ../vdms_ytdlp/main_ytdlp.py:497
 msgid "Statistics"
 msgstr "Статистика"
 
 #: ../vdms_ytdlp/main_ytdlp.py:501
-#, fuzzy
-#| msgid "Start rendering"
 msgid "Start downloading"
-msgstr "Начать преобразование"
+msgstr "Начать загрузку"
 
 #: ../vdms_ytdlp/main_ytdlp.py:502
 msgid "Download"
@@ -4271,7 +4191,7 @@ msgstr "Скачать"
 
 #: ../vdms_ytdlp/main_ytdlp.py:510
 msgid "Clear the URL list"
-msgstr ""
+msgstr "Очистить список URL"
 
 #: ../vdms_ytdlp/main_ytdlp.py:567
 msgid "Videomass - Queued URLs"
@@ -4282,10 +4202,8 @@ msgid "Videomass - YouTube Downloader"
 msgstr "Videomass - YouTube Downloader"
 
 #: ../vdms_ytdlp/main_ytdlp.py:603
-#, fuzzy
-#| msgid "Videomass - Output Monitor"
 msgid "Videomass - yt_dlp message monitor"
-msgstr "Videomass - Выходной монитор"
+msgstr "Videomass - монитор сообщений yt_dlp"
 
 #: ../vdms_ytdlp/playlist_indexing.py:50 ../vdms_ytdlp/ydl_mediainfo.py:71
 msgid "URL"
@@ -4342,11 +4260,11 @@ msgstr ""
 
 #: ../vdms_ytdlp/textdrop.py:74
 msgid "Invalid URL:"
-msgstr "Неверный URL-АДРЕС:"
+msgstr "Неверный URL:"
 
 #: ../vdms_ytdlp/textdrop.py:130
 msgid "Drag or paste URLs here"
-msgstr ""
+msgstr "Перетащите или вставьте URL-адреса сюда"
 
 #: ../vdms_ytdlp/ydl_mediainfo.py:67
 msgid "Statistics viewer"
@@ -4426,7 +4344,7 @@ msgstr "Скачать только субтитры"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:273
 msgid "Overwrite all files and metadata"
-msgstr ""
+msgstr "Перезаписать все файлы и метаданные"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:278
 msgid ""
@@ -4466,6 +4384,45 @@ msgstr ""
 #: ../vdms_ytdlp/youtubedl_ui.py:659
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "URL-адреса содержат видеоканалы. Вы уверены, что хотите продолжить?"
+
+#~ msgid ""
+#~ "When finished, clean up\n"
+#~ "the imported file list"
+#~ msgstr ""
+#~ "Очистить список импортированных файлов \n"
+#~ "после завершения"
+
+#~ msgid ""
+#~ "There are still processes running.. if you want to stop them, use the "
+#~ "\"Abort\" button."
+#~ msgstr ""
+#~ "Есть еще запущенные процессы... если вы хотите их остановить, используйте "
+#~ "кнопку «Прервать»."
+
+#~ msgid "Empty Trash"
+#~ msgstr "Очистить папку Корзина"
+
+#~ msgid ""
+#~ "No limit in the imported formats, but if you have to work with videos, "
+#~ "import only videos, if with audio, import only audio files, etc. "
+#~ msgstr ""
+#~ "Нет ограничений на импортируемые форматы, но если вам нужно работать с "
+#~ "видео, импортируйте только видео, если со звуком, импортируйте только "
+#~ "аудиофайлы и т. д. "
+
+#~ msgid ""
+#~ "Currently supported formats are jpeg, png and bmp. The order in which "
+#~ "they are sorted here will affect the making of the final video."
+#~ msgstr ""
+#~ "В настоящее время поддерживаются форматы jpeg, png и bmp. Порядок, в "
+#~ "котором они здесь отсортированы, повлияет на создание финального видео."
+
+#~ msgid ""
+#~ "Import only video type files, rendering expects to process one at a time "
+#~ "starting from the selected one."
+#~ msgstr ""
+#~ "Импортируйте только файлы типа видео, рендеринг предполагает обработку по "
+#~ "одному, начиная с выбранного."
 
 #~ msgid "Multimedia streams analyzer"
 #~ msgstr "Анализатор мультимедийных потоков"

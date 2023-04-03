@@ -266,7 +266,7 @@ class MainYtdl(wx.Frame):
         # ------------------ Edit menu
         editButton = wx.Menu()
         dscrp = (_("Paste\tCtrl+V"),
-                 _("Paste the clipboard URLs into the DragNDrop box"))
+                 _("Paste the copied URLs to clipboard"))
         self.paste = editButton.Append(wx.ID_PASTE, dscrp[0], dscrp[1])
         dscrp = (_("Remove selected URL\tDEL"),
                  _("Remove the selected URL from the list"))

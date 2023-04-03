@@ -77,7 +77,7 @@ class Scale(wx.Dialog):
         btn_readme.SetForegroundColour(wx.Colour(Scale.BLACK))
         grid_opt.Add(btn_readme, 0, wx.CENTER | wx.ALL, 5)
 
-        btn_view = wx.Button(self, wx.ID_ANY, _("Quick result"))
+        btn_view = wx.Button(self, wx.ID_ANY, _("View result"))
         grid_opt.Add(btn_view, 0, wx.ALL, 5)
         # --- Scale section:
         box_scale = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
