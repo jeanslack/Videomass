@@ -10,7 +10,7 @@ nav_order: 6
 
 ## Using YouTube Downloader
 
-- Stopping a download by clicking the "Stop" button is currently not possible as 
+- Stopping a download by clicking the "Abort" button is currently not possible as 
 this feature is not yet implemented in the yt-dlp [API](https://en.wikipedia.org/wiki/API). 
 Instead, only subsequent downloads in a list of URLs can be stopped.  
 
