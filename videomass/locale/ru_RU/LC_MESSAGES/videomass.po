@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 4.0.11\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-03 12:33+0200\n"
-"PO-Revision-Date: 2023-04-03 12:39+0200\n"
+"PO-Revision-Date: 2023-04-04 09:58+0200\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -116,6 +116,8 @@ msgid ""
 "Clear the list of\n"
 "imported files"
 msgstr ""
+"Очистить список \n"
+"импортированных файлов"
 
 #: ../vdms_dialogs/epilogue.py:100
 msgid "Confirm Settings"
@@ -331,10 +333,8 @@ msgid "Read me"
 msgstr "Прочти меня"
 
 #: ../vdms_dialogs/filter_scale.py:80
-#, fuzzy
-#| msgid "Quick result"
 msgid "View result"
-msgstr "Просмотр результата с учётом фильтра"
+msgstr "Посмотреть результат"
 
 #: ../vdms_dialogs/filter_scale.py:84
 msgid "New size in pixels"
@@ -1931,10 +1931,8 @@ msgid "Rename all files listed in the Queued Files panel"
 msgstr "Переименуйте все файлы, перечисленные на панели «Файлы в очереди»"
 
 #: ../vdms_main/main_frame.py:443
-#, fuzzy
-#| msgid "Trash folder"
 msgid "Open Trash folder"
-msgstr "Перейти в папку Корзина"
+msgstr "Открыть папку \"Корзина\""
 
 # вероятно, ошибка в тексте
 # Opens the Videomass cache foder, if exists
@@ -1946,10 +1944,8 @@ msgid "Open the Videomass Trash folder if it exists"
 msgstr "Открыть папку корзины Videomass, если она существует"
 
 #: ../vdms_main/main_frame.py:446
-#, fuzzy
-#| msgid "Trash folder"
 msgid "Empty Trash folder"
-msgstr "Перейти в папку Корзина"
+msgstr "Очистить папку \"Корзина\""
 
 #: ../vdms_main/main_frame.py:447
 msgid "Delete all files in the Videomass Trash folder"
@@ -4113,10 +4109,8 @@ msgid "Paste\tCtrl+V"
 msgstr "Вставить\tCtrl+V"
 
 #: ../vdms_ytdlp/main_ytdlp.py:269
-#, fuzzy
-#| msgid "Paste the clipboard URLs into the DragNDrop box"
 msgid "Paste the copied URLs to clipboard"
-msgstr "Вставьте URL-адреса буфера обмена в поле DragNDrop"
+msgstr "Вставьте скопированные URL-адреса в буфер обмена"
 
 #: ../vdms_ytdlp/main_ytdlp.py:271 ../vdms_ytdlp/textdrop.py:180
 #: ../vdms_ytdlp/textdrop.py:198
