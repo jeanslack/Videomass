@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sat, 01 April 2023 V.4.0.11
+Sat, 08 April 2023 V.5.0.0
 
   * [Confirm Settings] checking "Move files to trash" the "clean up files list"
     checkbox must be selected and disabled.
@@ -31,6 +31,12 @@ Sat, 01 April 2023 V.4.0.11
   * Dialogs now all have a parent, which prevents windows from being to stay on
     top or bottom each other forced.
   * User can choose another trash folder, this feature has been restored #215
+  * Removed old trim controls upon main frame.
+  * A New Timeline was completely redesigned, it allows mouse dragging
+    functionalities and tune-ups
+    The Timeline tool has been completely redesigned. This is a floating window
+    with various tune-ups features for time trimming that can be activated from
+    the Tools menu or by using the keyboard shortcut CTRL+T .
 
 +------------------------------------+
 Mar 22, 2023 V.4.0.10

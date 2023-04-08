@@ -928,7 +928,7 @@ class PrstPan(wx.Panel):
         Update information before send to epilogue
 
         """
-        if self.parent.time_seq == "-ss 00:00:00.000 -t 00:00:00.000":
+        if not self.parent.time_seq:
             time = _('Unset')
         else:
             t = self.parent.time_seq.split()

@@ -69,7 +69,6 @@ def stream_play(filepath, tseq, param, autoexit):
     Call Thread for playback with ffplay
     """
     get = wx.GetApp()  # get data from bootstrap
-    tseq = tseq if tseq != "-ss 00:00:00.000 -t 00:00:00.000" else ''
     try:
         with open(filepath, encoding='utf8'):
             FilePlay(filepath,
