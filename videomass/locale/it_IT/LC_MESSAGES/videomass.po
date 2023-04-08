@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 5.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-08 13:46+0200\n"
-"PO-Revision-Date: 2023-04-08 13:51+0200\n"
+"PO-Revision-Date: 2023-04-08 18:48+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -1753,11 +1753,11 @@ msgstr "Scorciatoie da tastiera durante la riproduzione con FFplay"
 
 #: ../vdms_miniframes/timeline.py:48
 msgid "Start point adjustment"
-msgstr "Regolazione punto Iniziale"
+msgstr "Regola posizione Iniziale"
 
 #: ../vdms_miniframes/timeline.py:50
 msgid "End point adjustment"
-msgstr "Regolazione punto Finale"
+msgstr "Regola posizione Finale"
 
 #: ../vdms_miniframes/timeline.py:107
 msgid "Hours"

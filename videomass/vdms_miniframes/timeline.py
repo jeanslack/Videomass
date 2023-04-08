@@ -468,8 +468,10 @@ class Float_TL(wx.MiniFrame):
             selcolor, textcolor = wx.RED, wx.YELLOW
         else:
             selcolor, textcolor = Float_TL.SELECTION, Float_TL.DURATION_START
+
+        bar_w, bar_x = round(self.bar_w), round(self.bar_x)
         self.dc.SetBrush(wx.Brush(selcolor, wx.BRUSHSTYLE_SOLID))
-        self.dc.DrawRectangle(self.bar_x, -8, self.bar_w - self.bar_x, 80)
+        self.dc.DrawRectangle(bar_x, -8, bar_w - bar_x, 80)
         self.dc.SetPen(wx.Pen(Float_TL.TEXT_PEN_COLOR))
         self.dc.SetTextForeground(Float_TL.TEXT_PEN_COLOR)
 
@@ -484,22 +486,22 @@ class Float_TL(wx.MiniFrame):
         txt1 = f'{txt_s}  {self.clock_start}'
         self.dc.SetTextForeground(textcolor)
         w = self.dc.GetTextExtent(txt1)[0]
-        if w > self.bar_x:
-            self.dc.DrawText(txt1, self.bar_x + 3, 14)
-            self.dc.DrawRectangle(self.bar_x, 1, 7, 7)
+        if w > bar_x:
+            self.dc.DrawText(txt1, bar_x + 3, 14)
+            self.dc.DrawRectangle(bar_x, 1, 7, 7)
         else:
-            self.dc.DrawText(txt1, self.bar_x - w - 2, 14)
-            self.dc.DrawRectangle(self.bar_x - 5, 1, 7, 7)
+            self.dc.DrawText(txt1, bar_x - w - 2, 14)
+            self.dc.DrawRectangle(bar_x - 5, 1, 7, 7)
 
         # Make duration txt
         txt2 = f'{txt_d}  {self.clock_end}'
         w = self.dc.GetTextExtent(txt2)[0]
-        if w < Float_TL.RW - self.bar_w:
-            self.dc.DrawText(txt2, self.bar_w + 1, 31)
-            self.dc.DrawRectangle(self.bar_w - 1, 51, 7, 7)
+        if w < Float_TL.RW - bar_w:
+            self.dc.DrawText(txt2, bar_w + 1, 31)
+            self.dc.DrawRectangle(bar_w - 1, 51, 7, 7)
         else:
-            self.dc.DrawText(txt2, self.bar_w - w - 5, 31)
-            self.dc.DrawRectangle(self.bar_w - 6, 51, 7, 7)
+            self.dc.DrawText(txt2, bar_w - w - 5, 31)
+            self.dc.DrawRectangle(bar_w - 6, 51, 7, 7)
     # ------------------------------------------------------------------#
 
     def statusbar_msg(self, msg, bcolor, fcolor=None):
