@@ -168,7 +168,7 @@ class Float_TL(wx.MiniFrame):
     # ruler and panel specifications constants
     RW = 900  # ruler width
     RM = 0  # ruler margin
-    PW = 902  # panel width
+    PW = 906  # panel width
     PH = 60  # panel height
 
     def __init__(self, parent):
@@ -190,8 +190,8 @@ class Float_TL(wx.MiniFrame):
         self.mills_end = 0
         self.mills_start = 0
         self.pix = Float_TL.RW / self.milliseconds  # set pixel constant
-        self.bar_w = 0.0
-        self.bar_x = 0.0
+        self.bar_w = 0
+        self.bar_x = 0
         self.dc = None
         self.movepixel = [0, 0]  # see `on_move()` `on_leftdown()`
         self.sourcedur = _('No source duration:')
@@ -208,7 +208,7 @@ class Float_TL(wx.MiniFrame):
                                   size=(Float_TL.PW, Float_TL.PH),
                                   style=wx.BORDER_SUNKEN,
                                   )
-        sizer_base.Add(self.paneltime, 0, wx.LEFT | wx.RIGHT | wx.CENTRE, 5)
+        sizer_base.Add(self.paneltime, 0, wx.ALL | wx.CENTRE, 10)
 
         # ----------------------Properties ----------------------#
         self.paneltime.SetBackgroundColour(wx.Colour(Float_TL.RULER_BKGRD))
@@ -220,7 +220,14 @@ class Float_TL(wx.MiniFrame):
         self.statusbar_msg(msg, None)
 
         # ----------------------Layout----------------------#
-        self.SetMinSize((925, 113))
+        if self.appdata['ostype'] == 'Linux':
+            self.SetMinSize((925, 113))
+        elif self.appdata['ostype'] == 'Windows':
+            self.SetMinSize((925, 113))
+        elif self.appdata['ostype'] == 'Darwin':
+            self.SetMinSize((925, 113))
+        else:
+            self.SetMinSize((925, 113))
         self.CentreOnScreen()
         panel.SetSizer(sizer_base)
         sizer_base.Fit(self)
