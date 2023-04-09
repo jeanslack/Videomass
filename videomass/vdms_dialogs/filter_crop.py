@@ -216,9 +216,9 @@ class Crop(wx.Dialog):
         # resizing values preserving aspect ratio for monitor
         self.toscale = 220 if self.v_height >= self.v_width else 350
         self.h_ratio = round((self.v_height
-                            / self.v_width) * self.toscale)  # height
+                             / self.v_width) * self.toscale)  # height
         self.w_ratio = round((self.v_width
-                            / self.v_height) * self.h_ratio)  # width
+                             / self.v_height) * self.h_ratio)  # width
         self.filename = kwa['filename']  # selected filename on queued list
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f'{Crop.TMPSRC}', f'{name}.png')  # image
