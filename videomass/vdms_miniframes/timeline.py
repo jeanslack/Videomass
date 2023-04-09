@@ -443,6 +443,12 @@ class Float_TL(wx.MiniFrame):
             elif self.movepixel[1] < 30:
                 if self.mills_start == 0:
                     return
+
+
+            dur = milliseconds2clock(self.mills_end - self.mills_start)
+            msg = _('{0} {1}  |  Segment Duration: {2}'
+                    ).format(self.sourcedur, self.overalltime, dur)
+            self.statusbar_msg(f'{msg}', None)
             self.set_coordinates()
     # ------------------------------------------------------------------#
 

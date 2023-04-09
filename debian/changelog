@@ -28,6 +28,8 @@ videomass (5.0.0-1) UNRELEASED; urgency=medium
     The Timeline tool has been completely redesigned. This is a floating window
     with various tune-ups features for time trimming that can be activated from
     the Tools menu or by using the keyboard shortcut CTRL+T .
+  * [A/V Conversions] Improved crop filter dialog, now you can also select the
+    crop area with the mouse.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 08 Apr 2023 14:00:00 +0200
 

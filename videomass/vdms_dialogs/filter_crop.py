@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.04.2023
+Rev: April.09.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,8 +26,8 @@ This file is part of Videomass.
 """
 import os
 import wx
-# import wx.lib.masked as masked  # does not work on macOSX
 import wx.lib.statbmp
+from pubsub import pub
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import milliseconds2clocksec
@@ -71,33 +71,78 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         a parent and a current_bmp. First make sure you scale the
         image to fit on parent, e.g. a panel.
         """
+        self.dc = None
         self.h = 0  # rectangle height
         self.w = 0  # rectangle width
         self.x = 0  # rectangle x axis
         self.y = 0  # rectangle y axis
+        self.horiz = 0
+        self.vert = 0
 
         wx.lib.statbmp.GenStaticBitmap.__init__(self, parent, -1,
                                                 bitmap, **kwargs)
-        self.parent = parent  # if needed
         self.current_bmp = bitmap
 
         self.Bind(wx.EVT_PAINT, self.OnPaint)
+        self.Bind(wx.EVT_MOTION, self.on_move)
+        self.Bind(wx.EVT_LEFT_DOWN, self.on_leftdown)
+        self.Bind(wx.EVT_LEFT_UP, self.on_leftup)
+    # ------------------------------------------------------------------#
+
+    def on_move(self, event):
+        """
+        On mouse Dragging on area, only send
+        coordinates for rectangle drawing.
+        """
+        self.SetCursor(wx.Cursor(wx.CURSOR_CROSS))
+        if event.Dragging():
+            pos = event.GetLogicalPosition(self.dc)
+            x, y = pos[0], pos[1]
+            w, h = self.horiz - x, self.vert - y
+            self.onRedraw(x, y, w, h)
+    # ------------------------------------------------------------------#
+
+    def on_leftdown(self, event):
+        """
+        Event on clicking the left mouse button
+        (start position clicked)
+        """
+        pos = event.GetLogicalPosition(self.dc)
+        self.horiz = pos[0]
+        self.vert = pos[1]
+        x, y = pos[0], pos[1]
+        w = self.horiz - x
+        h = self.vert - y
+        self.onRedraw(x, y, w, h)
+    # ------------------------------------------------------------------#
+
+    def on_leftup(self, event):
+        """
+        Event on releasing the left mouse button.
+        Note: seeking x, y minimum values as dc x
+        even to top left and y to bottom left.
+        (end position click released)
+        """
+        self.SetCursor(wx.Cursor(wx.CURSOR_ARROW))
+        pos = event.GetLogicalPosition(self.dc)
+        x, y = min(self.horiz, pos[0]), min(self.vert, pos[1])
+        w, h = abs(self.w), abs(self.h)
+        pub.sendMessage("UPDATE_SCALE_FACTOR", msg=[x, y, w, h])
     # ------------------------------------------------------------------#
 
     def OnPaint(self, event=None):
         """
         When instantiating the Actor class, this event is
         executed last.
-
         """
         dc = wx.PaintDC(self)  # draw window boundary
         dc.DrawBitmap(self.current_bmp, 0, 0, True)
         dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
         dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
-        dc.DrawRectangle(int(self.x + 1),
-                         int(self.y + 1),
-                         int(self.w + 2),
-                         int(self.h + 2),
+        dc.DrawRectangle(round(self.x),
+                         round(self.y),
+                         round(self.w),
+                         round(self.h),
                          )
     # ------------------------------------------------------------------#
 
@@ -114,16 +159,16 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
 
         """
         self.h, self.w, self.x, self.y = h, w, x, y
-        dc = wx.ClientDC(self)
-        dc.Clear()  # needed if image has trasparences
-        dc.DrawBitmap(self.current_bmp, 0, 0, True)
-        dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
-        dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
-        dc.DrawRectangle(int(self.x + 1),
-                         int(self.y + 1),
-                         int(self.w + 2),
-                         int(self.h + 2),
-                         )
+        self.dc = wx.ClientDC(self)
+        self.dc.Clear()  # needed if image has trasparences
+        self.dc.DrawBitmap(self.current_bmp, 0, 0, True)
+        self.dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
+        self.dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
+        self.dc.DrawRectangle(round(self.x),
+                              round(self.y),
+                              round(self.w),
+                              round(self.h),
+                              )
 
 
 class Crop(wx.Dialog):
@@ -150,7 +195,7 @@ class Crop(wx.Dialog):
             self.y_dc       vertical axis for DC
             self.v_height   height of the source video
             self.v_width    width of the source video
-            self.thr        threshold for set aspect ratio
+            self.toscale        threshold for set aspect ratio
             self.h_ratio    height ratio
             self.w_ratio    width ratio
 
@@ -169,10 +214,10 @@ class Crop(wx.Dialog):
         self.v_width = kwa['width']
         self.v_height = kwa['height']
         # resizing values preserving aspect ratio for monitor
-        self.thr = 180 if self.v_height >= self.v_width else 270
-        self.h_ratio = int((self.v_height
-                            / self.v_width) * self.thr)  # height
-        self.w_ratio = int((self.v_width
+        self.toscale = 220 if self.v_height >= self.v_width else 350
+        self.h_ratio = round((self.v_height
+                            / self.v_width) * self.toscale)  # height
+        self.w_ratio = round((self.v_width
                             / self.v_height) * self.h_ratio)  # width
         self.filename = kwa['filename']  # selected filename on queued list
         name = os.path.splitext(os.path.basename(self.filename))[0]
@@ -311,6 +356,7 @@ class Crop(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
         # self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+        pub.subscribe(self.update_scale_factor, "UPDATE_SCALE_FACTOR")
 
         if not self.mills:
             self.slider.Disable()
@@ -383,6 +429,22 @@ class Crop(wx.Dialog):
         self.onDrawing()
     # ------------------------------------------------------------------#
 
+    def update_scale_factor(self, msg):
+        """
+        Update coordinates to display scale values.
+        This method is called using pub/sub protocol
+        subscribing "UPDATE_DISPLAY_SCALE".
+        """
+        x = round(msg[0] * self.v_width / self.toscale)
+        y = round(msg[1] * self.v_width / self.toscale)
+        w = round(msg[2] * self.v_width / self.toscale)
+        h = round(msg[3] * self.v_width / self.toscale)
+        self.axis_X.SetValue(x)
+        self.axis_Y.SetValue(y)
+        self.crop_width.SetValue(w)
+        self.crop_height.SetValue(h)
+    # ------------------------------------------------------------------#
+
     def onDrawing(self):
         """
         Updating computation and call onRedraw to update
@@ -394,16 +456,16 @@ class Crop(wx.Dialog):
         x_crop = self.axis_X.GetValue()
         y_crop = self.axis_Y.GetValue()
 
-        self.height_dc = (h_crop / self.v_width) * self.thr
+        self.height_dc = (h_crop / self.v_width) * self.toscale
         self.width_dc = (w_crop / self.v_height) * self.h_ratio
 
         if y_crop == -1:
             self.y_dc = (self.h_ratio / 2) - (self.height_dc / 2)
         else:
-            self.y_dc = (y_crop / self.v_width) * self.thr
+            self.y_dc = (y_crop / self.v_width) * self.toscale
 
         if x_crop == -1:
-            self.x_dc = (self.thr / 2) - (self.width_dc / 2)
+            self.x_dc = (self.toscale / 2) - (self.width_dc / 2)
         else:
             self.x_dc = (x_crop / self.v_height) * self.h_ratio
 
@@ -531,13 +593,13 @@ class Crop(wx.Dialog):
 
         if width and height:
             if x_axis == -1:
-                pos = int((self.v_width / 2) - (width / 2))
+                pos = round((self.v_width / 2) - (width / 2))
                 horiz_pos = f'x={pos}:'
             else:
                 horiz_pos = f'x={x_axis}:'
 
             if y_axis == -1:
-                pos = int((self.v_height / 2) - (height / 2))
+                pos = round((self.v_height / 2) - (height / 2))
                 vert_pos = f'y={pos}:'
             else:
                 vert_pos = f'y={y_axis}:'
