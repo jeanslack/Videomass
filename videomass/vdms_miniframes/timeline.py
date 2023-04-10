@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
-Name: floatingtimeline.py
-Porpose: Select and clip a slice of time in the imported media
+Name: timeline.py
+Porpose: Time trimming settings
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -33,7 +33,7 @@ from videomass.vdms_utils.utils import get_milliseconds
 
 class Time_Selector(wx.Dialog):
     """
-    fine-tune the time selection
+    fine-tune segments duration
     """
     def __init__(self, parent, clockstr, mode):
         """
@@ -122,14 +122,15 @@ class Time_Selector(wx.Dialog):
 
     def on_ok(self, event):
         """
-        Confirm OK event
+        Confirm event
         """
         event.Skip()
     # ------------------------------------------------------------------#
 
     def getvalue(self):
         """
-        This method return values via the GetValue() interface
+        This method return values via the getvalue() interface
+        from the caller.
         """
         val = (f'{str(self.box_hour.GetValue()).zfill(2)}:'
                f'{str(self.box_min.GetValue()).zfill(2)}:'
@@ -141,18 +142,9 @@ class Time_Selector(wx.Dialog):
 
 class Float_TL(wx.MiniFrame):
     """
-    A representation of the time selection meter as duration
-    and position values viewed as time range selection ruler
-    for the FFmpeg syntax, in the following form:
-
-        `-ss 00:00:00.000 -t 00:00:00.000`
-
-    The -ss flag means the start selection (SEEK); the -t flag
-    means the time amount (DURATION) starting from -ss.
-    See FFmpeg documentation for details:
-
-        <https://ffmpeg.org/documentation.html>
-        <https://trac.ffmpeg.org/wiki/Seeking#Timeunitsyntax>
+    A graphical representation of the Float_TL object,
+    a floating bar (or ruler) for trimming and slicing time
+    segments from media.
 
     """
     YELLOW = '#bd9f00'  # for warnings
@@ -196,7 +188,7 @@ class Float_TL(wx.MiniFrame):
         self.movepixel = [0, 0]  # see `on_move()` `on_leftdown()`
         self.sourcedur = _('No source duration:')
 
-        wx.MiniFrame.__init__(self, parent, style=wx.RESIZE_BORDER
+        wx.MiniFrame.__init__(self, parent, -1, style=wx.RESIZE_BORDER
                               | wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU
                               | wx.FRAME_FLOAT_ON_PARENT
                               )
@@ -208,11 +200,11 @@ class Float_TL(wx.MiniFrame):
                                   size=(Float_TL.PW, Float_TL.PH),
                                   style=wx.BORDER_SUNKEN,
                                   )
-        sizer_base.Add(self.paneltime, 0, wx.ALL | wx.CENTRE, 10)
+        sizer_base.Add(self.paneltime, 0, wx.ALL | wx.CENTRE, 2)
 
         # ----------------------Properties ----------------------#
         self.paneltime.SetBackgroundColour(wx.Colour(Float_TL.RULER_BKGRD))
-        panel.SetBackgroundColour(wx.Colour(Float_TL.BLACK))
+        # panel.SetBackgroundColour(wx.Colour(Float_TL.BLACK))
         self.SetTitle("Timeline Editor")
         self.sb = self.CreateStatusBar(1)
         msg = _('{0} {1}  |  Segment Duration: {2}'
@@ -221,13 +213,13 @@ class Float_TL(wx.MiniFrame):
 
         # ----------------------Layout----------------------#
         if self.appdata['ostype'] == 'Linux':
-            self.SetMinSize((925, 113))
+            self.SetMinSize((930, 120))
         elif self.appdata['ostype'] == 'Windows':
-            self.SetMinSize((925, 113))
+            self.SetMinSize((935, 130))
         elif self.appdata['ostype'] == 'Darwin':
-            self.SetMinSize((925, 113))
+            self.SetMinSize((925, 115))
         else:
-            self.SetMinSize((925, 113))
+            self.SetMinSize((930, 120))
         self.CentreOnScreen()
         panel.SetSizer(sizer_base)
         sizer_base.Fit(self)
@@ -265,7 +257,7 @@ class Float_TL(wx.MiniFrame):
         menu.Append(popupID1, _("End adjustment"))
         menu.Append(popupID2, _("Start adjustment"))
         menu.Append(popupID3, _("Reset"))
-        menu.Append(popupID4, _("Help"))
+        menu.Append(popupID4, _("Read me"))
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()
@@ -285,7 +277,7 @@ class Float_TL(wx.MiniFrame):
             self.on_set_pos(None, mode='start')
         elif menuItem.GetItemLabel() == _("Reset"):
             self.on_trim_time_reset()
-        elif menuItem.GetItemLabel() == _("Help"):
+        elif menuItem.GetItemLabel() == _("Read me"):
             self.messagehelp()
     # ----------------------------------------------------------------------
 
@@ -469,7 +461,7 @@ class Float_TL(wx.MiniFrame):
         self.dc = wx.ClientDC(self.paneltime)
         self.dc.Clear()
         self.dc.SetPen(wx.Pen(Float_TL.DELIMITER_COLOR, 3, wx.PENSTYLE_SOLID))
-        # self.dc.SetBrush(wx.Brush(wx.Colour(30, 30, 30, 200)))
+
         if self.bar_w == 0 and self.bar_x == 0:
             selcolor, textcolor = Float_TL.SELECTION, Float_TL.SELECTION
             self.dc.SetTextForeground(Float_TL.DURATION_START)
@@ -485,6 +477,17 @@ class Float_TL(wx.MiniFrame):
         self.dc.DrawRectangle(bar_x, -8, bar_w - bar_x, 80)
         self.dc.SetPen(wx.Pen(Float_TL.TEXT_PEN_COLOR))
         self.dc.SetTextForeground(Float_TL.TEXT_PEN_COLOR)
+
+        for i in range(Float_TL.RW):
+            if not i % 600:
+                self.dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 10)
+            elif not i % 300:
+                self.dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 10)
+            elif not i % 150:
+                self.dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 10)
+            elif not i % 25:
+                self.dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 5)
+        self.dc.DrawLine(i, 0, i, 10)
 
         self.dc.SetFont(self.font_med)
         txt_s = _('Start')
@@ -537,20 +540,23 @@ class Float_TL(wx.MiniFrame):
         Show a message help dialog
         """
         msg = _("The timeline editor is a tool that allows you to trim slices "
-                "of time on imported media. It is individually associated "
-                "with each file selected in the Queued Files panel. Importing "
-                "new files, making new selections, deleting items, and "
-                "sorting items (ie by LEFT clicking on the column headers), "
-                "will reset the settings to their default values. In other "
-                "hands, deselecting all source files will also have the same "
-                "effect, but the overall duration values will be set to "
-                "23:59:59.000 (HH:MM:SS.ms).\n\n"
-                "Both duration values given by the moving actions of the "
-                "\"Start\"/\"End\" handles always refer to the zero point "
-                "(00:00:00.000). Both the duration values of the selected "
-                "file and of any segment can be viewed in the status bar, as "
-                "well as any warning messages.")
-        wx.MessageBox(msg, _('Contextual help to the Timeline Editor'),
+                "of time on selected imported media (see Queued Files panel)."
+                "\n\n"
+                "The \"time format\" used to report durations is expressed in "
+                "hours, minutes, seconds and milliseconds (HH:MM:SS.ms).\n\n"
+                "Note that importing new files, making new selection, "
+                "deselection, deleting items, sorting items (ie by LEFT "
+                "clicking on the column headers), will reset any previous "
+                "settings to default values.\n\n"
+                "If the Queued Files panel is empty or no source files are "
+                "selected, the overall duration values will be set to "
+                "23:59:59.999, rather than the duration of a selected source "
+                "file (see status bar messages).\n\n"
+                "The \"Start\"/\"End\" duration values always refer to the "
+                "initial position of the timeline: 00:00:00.000. For other "
+                "informations as the segment duration and warnings, please "
+                "refer to the status bar messages.")
+        wx.MessageBox(msg, _('Timeline Editor Usage'),
                       wx.ICON_INFORMATION, self)
     # ------------------------------------------------------------------#
 

@@ -13,12 +13,12 @@ Sat, 08 April 2023 V.5.0.0
     checkbox must be selected and disabled.
   * [A/V Conversions] Fix filter scrolled panel: preview/reset buttons always
     visibles on scrolling.
-  * [Drag files panel] added more text informations and corresponding tooltips
-    for each topic.
+  * [Drag files panel] added more informations referring to a specific
+    operation.
   * [PopupDialog] didn't have a parent, now it does (prevents raising other
     windows).
   * [YouTube Downloader] Drag URLs panel now uses ListCtrl with the ability to
-    drag and drop text properties.
+    drag and drop text properties (URLs).
   * [YouTube Downloader] simplified use of UI controls + improved layout.
   * [YouTube Downloader] Partially fixed Aborting download (work only with
     multiple URLs), the GUI shouldn't stay stuck now.
@@ -32,13 +32,11 @@ Sat, 08 April 2023 V.5.0.0
     top or bottom each other forced.
   * User can choose another trash folder, this feature has been restored #215
   * Removed old trim controls upon main frame.
-  * A New Timeline was completely redesigned, it allows mouse dragging
-    functionalities and tune-ups
-    The Timeline tool has been completely redesigned. This is a floating window
-    with various tune-ups features for time trimming that can be activated from
-    the Tools menu or by using the keyboard shortcut CTRL+T .
+  * A new Timeline Editor has been completely redesigned. This is a floating
+    window with various tune-ups features for time trimming that can be
+    activated from the Tools menu or by using the keyboard shortcut CTRL+T .
   * [A/V Conversions] Improved crop filter dialog, now you can also select the
-    crop area with the mouse.
+    crop area using the mouse.
 
 +------------------------------------+
 Mar 22, 2023 V.4.0.10
