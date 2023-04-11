@@ -53,6 +53,8 @@ extract audio from videos and much more!
 - Has useful graphical tools for evaluating the supported features of a specific FFmpeg build.
 - Audio stream mapping using selectable indexes.
 - You can set both audio and video to copy when you just want to convert formats.
+- Timeline editor to slice time segments or trim the duration of your media even 
+without re-encoding and therefore without loss of quality.
 - It has GUI video filters such as:
     - Resizing 
     - Cropping
@@ -65,7 +67,6 @@ extract audio from videos and much more!
     - PEAK, RMS and [EBU-R128](http://ffmpeg.org/ffmpeg-filters.html#loudnorm) normalizers.
     - PEAK and RMS volume analysis reporting.
     - Ability to apply volume normalization only for certain audio streams in videos.
-- Trim editor:
 - ...and much more!
 
 ## Using yt-dlp
