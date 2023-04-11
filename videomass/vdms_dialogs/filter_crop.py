@@ -126,7 +126,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         pos = event.GetPosition()
         x, y = min(self.horiz, pos[0]), min(self.vert, pos[1])
         w, h = abs(self.w), abs(self.h)
-        pub.sendMessage("UPDATE_SCALE_FACTOR", msg=[x, y, w, h])
+        pub.sendMessage("TO_REAL_SCALE", msg=[x, y, w, h])
     # ------------------------------------------------------------------#
 
     def OnPaint(self, event=None):
@@ -187,20 +187,17 @@ class Crop(wx.Dialog):
         Attributes defined here:
 
             self.width_dc   width size for DC (aka monitor width)
-            self.height_dc   height size for DC (aka monitor height)
+            self.height_dc  height size for DC (aka monitor height)
             self.x_dc       horizontal axis for DC
             self.y_dc       vertical axis for DC
-            self.v_height   height of the source video
-            self.v_width    width of the source video
-            self.toscale        threshold for set aspect ratio
+            self.v_height   unscaled height of the source video
+            self.v_width    unscaled width of the source video
+            self.toscale    scale factor
             self.h_ratio    height ratio
             self.w_ratio    width ratio
 
-        The images (also the panel and the DC) are resized keeping
-        the aspect ratio according to a threshold established at 270
-        pixels or at 180 pixels. 180 pixels are needed to avoid oversizing
-        when video height is greater than width.
-
+        The images (also the panel and the DC) are resized to keep
+        the scale factor.
         """
         # cropping values for monitor preview
         self.width_dc = 0
@@ -353,7 +350,7 @@ class Crop(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
         # self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
-        pub.subscribe(self.update_scale_factor, "UPDATE_SCALE_FACTOR")
+        pub.subscribe(self.to_real_scale_coords, "TO_REAL_SCALE")
 
         if not self.mills:
             self.slider.Disable()
@@ -426,7 +423,7 @@ class Crop(wx.Dialog):
         self.onDrawing()
     # ------------------------------------------------------------------#
 
-    def update_scale_factor(self, msg):
+    def to_real_scale_coords(self, msg):
         """
         Update controls values to real scale coordinates.
         This method is called using pub/sub protocol
