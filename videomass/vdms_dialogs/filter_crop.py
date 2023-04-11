@@ -71,7 +71,6 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         a parent and a current_bmp. First make sure you scale the
         image to fit on parent, e.g. a panel.
         """
-        self.dc = None
         self.h = 0  # rectangle height
         self.w = 0  # rectangle width
         self.x = 0  # rectangle x axis
@@ -96,7 +95,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         """
         self.SetCursor(wx.Cursor(wx.CURSOR_CROSS))
         if event.Dragging():
-            pos = event.GetLogicalPosition(self.dc)
+            pos = event.GetPosition()
             x, y = pos[0], pos[1]
             w, h = self.horiz - x, self.vert - y
             self.onRedraw(x, y, w, h)
@@ -107,7 +106,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         Event on clicking the left mouse button
         (start position clicked)
         """
-        pos = event.GetLogicalPosition(self.dc)
+        pos = event.GetPosition()
         self.horiz = pos[0]
         self.vert = pos[1]
         x, y = pos[0], pos[1]
@@ -124,7 +123,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         (end position click released)
         """
         self.SetCursor(wx.Cursor(wx.CURSOR_ARROW))
-        pos = event.GetLogicalPosition(self.dc)
+        pos = event.GetPosition()
         x, y = min(self.horiz, pos[0]), min(self.vert, pos[1])
         w, h = abs(self.w), abs(self.h)
         pub.sendMessage("UPDATE_SCALE_FACTOR", msg=[x, y, w, h])
@@ -133,7 +132,9 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
     def OnPaint(self, event=None):
         """
         When instantiating the Actor class, this event is
-        executed last.
+        executed last. This method is needed to set initial
+        image on panel and/or to set crop area previously
+        drawn on reopen this dialog.
         """
         dc = wx.PaintDC(self)  # draw window boundary
         dc.DrawBitmap(self.current_bmp, 0, 0, True)
@@ -149,26 +150,22 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
     def onRedraw(self, x, y, w, h):
         """
         Update Drawing: A transparent background rectangle in a
-        bitmap object. To compensate for the PEN thickness offset,
-        the sizes are increased by 2 and the positions decreased
-        by 1 (even on OnPaint)
-
+        bitmap object.
         NOTE dc.SetBrush(wx.Brush(wx.Colour(30, 30, 30, 128))) would set
         a useful transparent gradation color but it doesn't work on windows
         and gtk2.
-
         """
         self.h, self.w, self.x, self.y = h, w, x, y
-        self.dc = wx.ClientDC(self)
-        self.dc.Clear()  # needed if image has trasparences
-        self.dc.DrawBitmap(self.current_bmp, 0, 0, True)
-        self.dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
-        self.dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
-        self.dc.DrawRectangle(round(self.x),
-                              round(self.y),
-                              round(self.w),
-                              round(self.h),
-                              )
+        dc = wx.ClientDC(self)
+        dc.Clear()  # needed if image has trasparences
+        dc.DrawBitmap(self.current_bmp, 0, 0, True)
+        dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
+        dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
+        dc.DrawRectangle(round(self.x),
+                         round(self.y),
+                         round(self.w),
+                         round(self.h),
+                         )
 
 
 class Crop(wx.Dialog):
@@ -431,7 +428,7 @@ class Crop(wx.Dialog):
 
     def update_scale_factor(self, msg):
         """
-        Update coordinates to display scale values.
+        Update controls values to real scale coordinates.
         This method is called using pub/sub protocol
         subscribing "UPDATE_DISPLAY_SCALE".
         """

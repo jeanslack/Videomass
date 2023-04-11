@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sat, 08 April 2023 V.5.0.0
+Tue, 11 April 2023 V.5.0.0
 
   * [Confirm Settings] checking "Move files to trash" the "clean up files list"
     checkbox must be selected and disabled.
@@ -34,9 +34,9 @@ Sat, 08 April 2023 V.5.0.0
   * Removed old trim controls upon main frame.
   * A new Timeline Editor has been completely redesigned. This is a floating
     window with various tune-ups features for time trimming that can be
-    activated from the Tools menu or by using the keyboard shortcut CTRL+T .
-  * [A/V Conversions] Improved crop filter dialog, now you can also select the
-    crop area using the mouse.
+    activated from the View menu or by using the keyboard shortcut CTRL+T .
+  * [A/V Conversions] Improved crop filter dialog, now you can also set the
+    crop area by right clicking and moving the mouse on the image.
 
 +------------------------------------+
 Mar 22, 2023 V.4.0.10

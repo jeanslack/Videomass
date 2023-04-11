@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 5.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-10 14:19+0200\n"
-"PO-Revision-Date: 2023-04-10 14:35+0200\n"
+"PO-Revision-Date: 2023-04-11 14:33+0200\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -1748,81 +1748,75 @@ msgid "Shortcut keys while playing with FFplay"
 msgstr "Сочетания клавиш во время проигрывания с FFplay"
 
 #: ../vdms_miniframes/timeline.py:46
-#, fuzzy
 #| msgid "Start minutes"
 msgid "Start point adjustment"
-msgstr "Минуты"
+msgstr "Регулировка точки \"Начало\""
 
 #: ../vdms_miniframes/timeline.py:48
 msgid "End point adjustment"
-msgstr ""
+msgstr "Регулировка точки \"Конец\""
 
 #: ../vdms_miniframes/timeline.py:105
 msgid "Hours"
-msgstr ""
+msgstr "Часы"
 
 #: ../vdms_miniframes/timeline.py:106
-#, fuzzy
-#| msgid "Start minutes"
 msgid "Minutes"
 msgstr "Минуты"
 
 #: ../vdms_miniframes/timeline.py:107
 msgid "Seconds"
-msgstr ""
+msgstr "Секунды"
 
 #: ../vdms_miniframes/timeline.py:108
-#, fuzzy
 #| msgid "Start milliseconds"
 msgid "Milliseconds"
 msgstr "Миллисекунды"
 
 #: ../vdms_miniframes/timeline.py:189 ../vdms_miniframes/timeline.py:309
 msgid "No source duration:"
-msgstr ""
+msgstr "Нет длительности источника:"
 
 #: ../vdms_miniframes/timeline.py:210 ../vdms_miniframes/timeline.py:295
 #: ../vdms_miniframes/timeline.py:335 ../vdms_miniframes/timeline.py:340
 #: ../vdms_miniframes/timeline.py:439
 #, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
-msgstr ""
+msgstr "{0} {1}  |  Продолжительность сегмента: {2}"
 
 #: ../vdms_miniframes/timeline.py:257 ../vdms_miniframes/timeline.py:274
 msgid "End adjustment"
-msgstr ""
+msgstr "Регулировка \"Конец\""
 
 #: ../vdms_miniframes/timeline.py:258 ../vdms_miniframes/timeline.py:276
-#, fuzzy
 #| msgid "Start minutes"
 msgid "Start adjustment"
-msgstr "Минуты"
+msgstr "Регулировка \"Начало\""
 
 #: ../vdms_miniframes/timeline.py:320
-#, fuzzy
 #| msgid "Saturation:"
 msgid "Source duration:"
-msgstr "Насыщенность:"
+msgstr "Длительность источника:"
 
 #: ../vdms_miniframes/timeline.py:388
 msgid "WARNING: Invalid selection, out of range."
-msgstr ""
+msgstr "WARNING: Неверный выбор, вне допустимого диапазона."
 
 #: ../vdms_miniframes/timeline.py:459
 msgid ""
 "Start by dragging the bottom left handle,\n"
 "or right-click for options."
 msgstr ""
+"Начните с перетаскивания нижнего левого маркера \n"
+"или щелкните правой кнопкой мыши для выбора параметров."
 
 #: ../vdms_miniframes/timeline.py:493
 msgid "Start"
-msgstr "Начать"
+msgstr "Начало"
 
 #: ../vdms_miniframes/timeline.py:494
-#, fuzzy
-#| msgid "End:"
 msgid "End"
-msgstr "Конец:"
+msgstr "Конец"
 
 #: ../vdms_miniframes/timeline.py:542
 msgid ""
@@ -1844,12 +1838,31 @@ msgid ""
 "of the timeline: 00:00:00.000. For other informations as the segment "
 "duration and warnings, please refer to the status bar messages."
 msgstr ""
+"Редактор Timeline — это инструмент, который позволяет обрезать фрагменты "
+"времени на выбранных импортированных медиафайлах (см. панель «Файлы в "
+"очереди»).\n"
+"\n"
+"«Формат времени», используемый для сообщения продолжительности, выражается в "
+"часах, минутах, секундах и миллисекундах. (HH:MM:SS.ms).\n"
+"\n"
+"Обратите внимание, что импорт новых файлов, новый выбор, отмена выбора, "
+"удаление элементов, сортировка элементов (т. е. щелчок ЛЕВОЙ кнопкой мыши по "
+"заголовкам столбцов) приведет к сбросу всех предыдущих настроек к значениям "
+"по умолчанию.\n"
+"\n"
+"Если панель «Файлы в очереди» пуста или исходные файлы не выбраны, значения "
+"общей продолжительности будут установлены на 23:59:59,999, а не на "
+"длительность выбранного исходного файла (см. сообщения в строке состояния).\n"
+"\n"
+"Значения продолжительности «Начало»/«Конец» всегда относятся к начальной "
+"позиции временной шкалы: 00:00:00.000. Для получения другой информации, "
+"такой как продолжительность сегмента и Warnings, см. сообщения в строке "
+"состояния."
 
 #: ../vdms_miniframes/timeline.py:559
-#, fuzzy
 #| msgid "Show timeline\tCtrl+T"
 msgid "Timeline Editor Usage"
-msgstr "Показать шкалу времени\tCtrl+T"
+msgstr "Использование редактора Timeline"
 
 #: ../vdms_io/checkup.py:45
 msgid ""
@@ -2163,10 +2176,9 @@ msgid "Show timeline\tCtrl+T"
 msgstr "Показать шкалу времени\tCtrl+T"
 
 #: ../vdms_main/main_frame.py:512
-#, fuzzy
 #| msgid "Show timeline\tCtrl+T"
 msgid "Show timeline editor"
-msgstr "Показать шкалу времени\tCtrl+T"
+msgstr "Показать редактор Timeline"
 
 #: ../vdms_main/main_frame.py:515 ../vdms_ytdlp/main_ytdlp.py:284
 msgid "View"
@@ -2461,7 +2473,7 @@ msgstr "Начать преобразование"
 
 #: ../vdms_main/main_frame.py:1279
 msgid "Run"
-msgstr ""
+msgstr "Запуск"
 
 #: ../vdms_main/main_frame.py:1283 ../vdms_ytdlp/main_ytdlp.py:506
 msgid "Stops current process"
@@ -3749,7 +3761,6 @@ msgstr ""
 "размера."
 
 #: ../vdms_panels/sequence_to_video.py:74
-#, fuzzy
 #| msgid ""
 #| "\n"
 #| "1. Import one or more image files such as JPG, PNG and BMP formats, then "
@@ -3790,19 +3801,21 @@ msgstr ""
 "1. Импортируйте один или несколько файлов изображений, таких как форматы "
 "JPG, PNG и BMP, затем выберите один из них.\n"
 "\n"
-"2. Используйте фильтр «Изменение размера», чтобы изменить размер "
-"изображений, которые имеют разные размеры, такие как ширина и высота. В "
-"других случаях это необязательно. \n"
+"2. Используйте функцию изменения размера, чтобы изменить размер изображений, "
+"которые имеют разные размеры, такие как ширина и высота. В других случаях "
+"это необязательно.\n"
 "\n"
-"3. Чтобы установить ПРОДОЛЖИТЕЛЬНОСТЬ между изображениями, используйте "
-"элемент управления «Конец» на панели Trim.\n"
+"3. Используйте редактор Timeline (CTRL+T), чтобы установить временной "
+"интервал между изображениями, отрегулировав значение продолжительности "
+"«Конец» \n"
+"и оставив значение «Начало» равным 00:00:00.000.\n"
 "\n"
-"4. Начните преобразование.\n"
+"4. Запустите преобразование.\n"
 "\n"
 "\n"
 "Созданное видео будет иметь имя выбранного файла в списке «Файл в очереди», "
 "который будет сохранен в папке с именем «Still_Images» \n"
-" и с последовательным номером папки по указанному вами пути."
+"с прогрессивной цифрой по указанному вами пути."
 
 #: ../vdms_panels/sequence_to_video.py:129
 msgid "Enable a single still image"
@@ -3982,7 +3995,6 @@ msgstr ""
 "зависит от режима качества и сжатия, указанного выше."
 
 #: ../vdms_panels/video_to_sequence.py:49
-#, fuzzy
 #| msgid ""
 #| "\n"
 #| "1. Import one or more video files, then select one.\n"
@@ -4017,16 +4029,17 @@ msgstr ""
 "\n"
 "1. Импортируйте один или несколько видеофайлов, затем выберите один.\n"
 "\n"
-"2. Чтобы выбрать отрезок времени, используйте элементы управления «Начало», "
-"«Конец» на панели Trim.\n"
+"2. Чтобы выбрать отрезок времени, используйте редактор временной шкалы (CTRL"
+"+T), настроив значения длительности «Конец» и «Начало».\n"
 "\n"
 "3. Выберите выходной формат (jpg, png, bmp).\n"
 "\n"
-"4. Начните преобразование.\n"
+"4. Запустите преобразование.\n"
 "\n"
 "\n"
-"Созданные изображения будут сохранены в папке с именем «Movie_to_Pictures» \n"
-" с последовательным номером папки по указанному вами пути."
+"The images produced will be saved in a folder named 'Movie_to_Pictures' with "
+"a progressive digit, \n"
+"in the path you specify."
 
 #: ../vdms_panels/video_to_sequence.py:84
 msgid "Create thumbnails"

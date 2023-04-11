@@ -25,11 +25,11 @@ videomass (5.0.0-1) UNRELEASED; urgency=medium
   * Removed old trim controls upon main frame.
   * A new Timeline Editor has been completely redesigned. This is a floating
     window with various tune-ups features for time trimming that can be
-    activated from the Tools menu or by using the keyboard shortcut CTRL+T .
-  * [A/V Conversions] Improved crop filter dialog, now you can also select the
-    crop area using the mouse.
+    activated from the View menu or by using the keyboard shortcut CTRL+T .
+  * [A/V Conversions] Improved crop filter dialog, now you can also set the
+    crop area by right clicking and moving the mouse on the image.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 08 Apr 2023 14:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 11 Apr 2023 13:40:00 +0200
 
 videomass (4.0.10-1) UNRELEASED; urgency=medium
 

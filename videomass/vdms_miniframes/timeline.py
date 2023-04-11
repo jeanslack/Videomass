@@ -151,10 +151,10 @@ class Float_TL(wx.MiniFrame):
     BLACK = '#060505'  # black for background status bar
     ORANGE = '#f28924'  # for errors and warnings
     LGREEN = '#52EE7D'
-    RULER_BKGRD = '#84D2C9'  # light blue for panelruler background
-    SELECTION = '#31BAA7'  # CYAN
+    RULER_BKGRD = '#84D2C9'  # light CYAN for ruler background
+    SELECTION = '#76BBB3'  # Medium dark CYAN
     DELIMITER_COLOR = '#00FE00'  # green for margin selection
-    TEXT_PEN_COLOR = '#020D0F'  # black for text and draw lines
+    TEXT_PEN_COLOR = '#020D0F'  # black for draw lines
     DURATION_START = '#E95420'  # Light orange for duration/start indicators
 
     # ruler and panel specifications constants
@@ -181,11 +181,10 @@ class Float_TL(wx.MiniFrame):
         self.clock_end = '00:00:00.000'
         self.mills_end = 0
         self.mills_start = 0
-        self.pix = Float_TL.RW / self.milliseconds  # set pixel constant
+        self.pix = Float_TL.RW / self.milliseconds  # scale factor
         self.bar_w = 0
         self.bar_x = 0
-        self.dc = None
-        self.movepixel = [0, 0]  # see `on_move()` `on_leftdown()`
+        self.pointpx = [0, 0]  # see `on_move()` `on_leftdown()`
         self.sourcedur = _('No source duration:')
 
         wx.MiniFrame.__init__(self, parent, -1, style=wx.RESIZE_BORDER
@@ -194,7 +193,6 @@ class Float_TL(wx.MiniFrame):
                               )
         panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
                          | wx.BORDER_THEME)
-        self.font_med = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         self.paneltime = wx.Panel(panel, wx.ID_ANY,
                                   size=(Float_TL.PW, Float_TL.PH),
@@ -214,12 +212,16 @@ class Float_TL(wx.MiniFrame):
         # ----------------------Layout----------------------#
         if self.appdata['ostype'] == 'Linux':
             self.SetMinSize((930, 120))
+            self.font_med = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         elif self.appdata['ostype'] == 'Windows':
+            self.font_med = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
             self.SetMinSize((935, 130))
         elif self.appdata['ostype'] == 'Darwin':
             self.SetMinSize((925, 115))
+            self.font_med = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         else:
             self.SetMinSize((930, 120))
+            self.font_med = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         self.CentreOnScreen()
         panel.SetSizer(sizer_base)
         sizer_base.Fit(self)
@@ -347,14 +349,14 @@ class Float_TL(wx.MiniFrame):
         Set data for x axis rectangle selection and
         call onRedraw.
         """
-        if self.movepixel[1] > 30:
-            self.bar_w = self.movepixel[0]
+        if self.pointpx[1] > 30:
+            self.bar_w = self.pointpx[0]
             self.mills_end = int(round(self.bar_w / self.pix))
             self.clock_end = milliseconds2clock(self.mills_end)
             self.onRedraw(self)
 
-        elif self.movepixel[1] < 30:
-            self.bar_x = self.movepixel[0]
+        elif self.pointpx[1] < 30:
+            self.bar_x = self.pointpx[0]
             self.mills_start = int(round(self.bar_x / self.pix))
             self.clock_start = milliseconds2clock(self.mills_start)
             self.onRedraw(self)
@@ -365,10 +367,10 @@ class Float_TL(wx.MiniFrame):
         Event on clicking the left mouse button
         """
         self.paneltime.SetCursor(wx.Cursor(wx.CURSOR_HAND))
-        self.movepixel = event.GetLogicalPosition(self.dc)
-        if self.movepixel[0] >= Float_TL.RW:
+        self.pointpx = event.GetPosition()
+        if self.pointpx[0] >= Float_TL.RW:
             return
-        if self.movepixel[0] <= 0:
+        if self.pointpx[0] <= 0:
             return
         self.set_coordinates()
     # ------------------------------------------------------------------#
@@ -384,7 +386,8 @@ class Float_TL(wx.MiniFrame):
             self.set_time_seq(isset=False)
             return
 
-        if self.bar_w <= self.bar_x:
+        if (self.bar_w <= self.bar_x or self.mills_end > self.milliseconds
+           or self.mills_start < 0):
             msg = _('WARNING: Invalid selection, out of range.')
             self.statusbar_msg(f'{msg}', Float_TL.ORANGE, Float_TL.BLACK)
             return
@@ -400,16 +403,19 @@ class Float_TL(wx.MiniFrame):
             clock, mode = self.clock_end, 'duration'
         elif mode == 'start':
             clock, mode = self.clock_start, 'start'
-        elif self.movepixel[1] > 30:
+        elif self.pointpx[1] > 30:
             clock, mode = self.clock_end, 'duration'
-        elif self.movepixel[1] < 30:
+        elif self.pointpx[1] < 30:
             clock, mode = self.clock_start, 'start'
+        else:
+            return
 
         with Time_Selector(self, clock, mode) as selector:
             if selector.ShowModal() == wx.ID_OK:
                 data = selector.getvalue()
-                # pixpos, get new pixel value from ms var
+                # pixpos: convert to new `x` point pixel
                 pixpos = self.pix / (Float_TL.RW / data[1]) * Float_TL.RW
+                self.pointpx[0] = round(pixpos)  # set x point
                 if mode == 'start':
                     self.bar_x = pixpos
                     self.mills_start = data[1]
@@ -428,11 +434,11 @@ class Float_TL(wx.MiniFrame):
         Mouse event when moving it on the panel bar
         """
         if event.Dragging():
-            self.movepixel = event.GetLogicalPosition(self.dc)
-            if self.movepixel[1] > 30:
+            self.pointpx = event.GetPosition()
+            if self.pointpx[1] > 30:
                 if self.mills_end == self.milliseconds:
                     return
-            elif self.movepixel[1] < 30:
+            elif self.pointpx[1] < 30:
                 if self.mills_start == 0:
                     return
             dur = milliseconds2clock(self.mills_end - self.mills_start)
@@ -446,8 +452,8 @@ class Float_TL(wx.MiniFrame):
         """
         wx.PaintDC event
         """
-        self.dc = wx.PaintDC(self.paneltime)  # draw window boundary
-        self.dc.Clear()
+        dc = wx.PaintDC(self.paneltime)  # draw window boundary
+        dc.Clear()
         self.onRedraw(self)
     # ------------------------------------------------------------------#
 
@@ -458,64 +464,65 @@ class Float_TL(wx.MiniFrame):
         """
         msg = _('Start by dragging the bottom left handle,\n'
                 'or right-click for options.')
-        self.dc = wx.ClientDC(self.paneltime)
-        self.dc.Clear()
-        self.dc.SetPen(wx.Pen(Float_TL.DELIMITER_COLOR, 3, wx.PENSTYLE_SOLID))
+        dc = wx.ClientDC(self.paneltime)
+        dc.Clear()
+        dc.SetPen(wx.Pen(Float_TL.DELIMITER_COLOR, 3, wx.PENSTYLE_SOLID))
 
         if self.bar_w == 0 and self.bar_x == 0:
             selcolor, textcolor = Float_TL.SELECTION, Float_TL.SELECTION
-            self.dc.SetTextForeground(Float_TL.DURATION_START)
-            w = self.dc.GetTextExtent(msg)[0]
-            self.dc.DrawText(msg, 300, 10)
-        elif self.bar_x >= self.bar_w:
+            dc.SetTextForeground(Float_TL.DURATION_START)
+            w = dc.GetTextExtent(msg)[0]
+            dc.DrawText(msg, 300, 10)
+        elif (self.bar_x >= self.bar_w or self.pointpx[0] > Float_TL.RW
+              or self.pointpx[0] < 0):
             selcolor, textcolor = wx.RED, wx.YELLOW
         else:
             selcolor, textcolor = Float_TL.SELECTION, Float_TL.DURATION_START
 
         bar_w, bar_x = round(self.bar_w), round(self.bar_x)
-        self.dc.SetBrush(wx.Brush(selcolor, wx.BRUSHSTYLE_SOLID))
-        self.dc.DrawRectangle(bar_x, -8, bar_w - bar_x, 80)
-        self.dc.SetPen(wx.Pen(Float_TL.TEXT_PEN_COLOR))
-        self.dc.SetTextForeground(Float_TL.TEXT_PEN_COLOR)
+        dc.SetBrush(wx.Brush(selcolor, wx.BRUSHSTYLE_SOLID))
+        dc.DrawRectangle(bar_x, -8, bar_w - bar_x, 80)
+        dc.SetPen(wx.Pen(Float_TL.TEXT_PEN_COLOR))
+        dc.SetTextForeground(Float_TL.TEXT_PEN_COLOR)
 
         for i in range(Float_TL.RW):
             if not i % 600:
-                self.dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 10)
+                dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 10)
             elif not i % 300:
-                self.dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 10)
+                dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 10)
             elif not i % 150:
-                self.dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 10)
+                dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 10)
             elif not i % 25:
-                self.dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 5)
-        self.dc.DrawLine(i, 0, i, 10)
+                dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 5)
+        dc.DrawLine(i, 0, i, 10)
 
-        self.dc.SetFont(self.font_med)
+        dc.SetFont(self.font_med)
         txt_s = _('Start')
         txt_d = _('End')
 
-        self.dc.SetPen(wx.Pen(Float_TL.DELIMITER_COLOR, 2, wx.PENSTYLE_SOLID))
-        self.dc.SetBrush(wx.Brush(Float_TL.DELIMITER_COLOR))
+        dc.SetPen(wx.Pen(Float_TL.DELIMITER_COLOR, 2, wx.PENSTYLE_SOLID))
+        dc.SetBrush(wx.Brush(Float_TL.DELIMITER_COLOR))
 
         # Make start txt
         txt1 = f'{txt_s}  {self.clock_start}'
-        self.dc.SetTextForeground(textcolor)
-        w = self.dc.GetTextExtent(txt1)[0]
+        dc.SetTextForeground(textcolor)
+        w = dc.GetTextExtent(txt1)[0]
         if w > bar_x:
-            self.dc.DrawText(txt1, bar_x + 3, 14)
-            self.dc.DrawRectangle(bar_x, 1, 7, 7)
+            dc.DrawText(txt1, bar_x + 3, 14)
+            dc.DrawRectangle(bar_x, 1, 7, 7)
         else:
-            self.dc.DrawText(txt1, bar_x - w - 2, 14)
-            self.dc.DrawRectangle(bar_x - 5, 1, 7, 7)
+            dc.DrawText(txt1, bar_x - w - 2, 14)
+            dc.DrawRectangle(bar_x - 5, 1, 7, 7)
 
         # Make duration txt
         txt2 = f'{txt_d}  {self.clock_end}'
-        w = self.dc.GetTextExtent(txt2)[0]
+        w = dc.GetTextExtent(txt2)[0]
         if w < Float_TL.RW - bar_w:
-            self.dc.DrawText(txt2, bar_w + 1, 31)
-            self.dc.DrawRectangle(bar_w - 1, 51, 7, 7)
+            dc.DrawText(txt2, bar_w + 1, 31)
+            dc.DrawRectangle(bar_w - 1, 51, 7, 7)
         else:
-            self.dc.DrawText(txt2, bar_w - w - 5, 31)
-            self.dc.DrawRectangle(bar_w - 6, 51, 7, 7)
+            dc.DrawText(txt2, bar_w - w - 5, 31)
+            dc.DrawRectangle(bar_w - 6, 51, 7, 7)
     # ------------------------------------------------------------------#
 
     def statusbar_msg(self, msg, bcolor, fcolor=None):

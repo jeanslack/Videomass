@@ -19,7 +19,7 @@ URGENCY: medium
 ----------------
 - If you plan to refactor code and make it compatible only for
   wx.Python4.1.1/wxPython4.2.0:
-  - erase `TestListCtrl` class on youtubedl_ui.py. Also check all code that
+  - then erase `TestListCtrl` class on youtubedl_ui.py. Also check all code that
     starts with wx.version().
   - erase
         try:
@@ -34,5 +34,4 @@ URGENCY: medium
 URGENCY: low (New implementations)
 -------------
 - [PRESETS MANAGER] The profile requires additional input (-i FILE -i FILE ...)
-- @johannesdedoper would like a function to save some UI settings,
-  see #113 .
+- @johannesdedoper would like a function to save some UI settings, see #113 .
