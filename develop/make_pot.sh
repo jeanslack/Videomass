@@ -52,6 +52,7 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_dialogs/ffmpeg_formats.py" \
 "../vdms_dialogs/shownormlist.py" \
 "../vdms_dialogs/while_playing.py" \
+"../vdms_miniframes/timeline.py" \
 "../vdms_io/checkup.py" \
 "../vdms_io/io_tools.py" \
 "../vdms_io/presets_manager_prop.py" \
@@ -62,7 +63,6 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_panels/filedrop.py" \
 "../vdms_panels/long_processing_task.py" \
 "../vdms_panels/presets_manager.py" \
-"../vdms_panels/timeline.py" \
 "../vdms_panels/sequence_to_video.py" \
 "../vdms_panels/hevc_avc.py" \
 "../vdms_panels/libaom.py" \

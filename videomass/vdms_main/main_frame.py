@@ -42,7 +42,7 @@ from videomass.vdms_ytdlp.main_ytdlp import MainYtdl
 from videomass.vdms_dialogs.mediainfo import MediaStreams
 from videomass.vdms_dialogs.showlogs import ShowLogs
 from videomass.vdms_dialogs.ffmpeg_help import FFmpegHelp
-from videomass.vdms_panels import timeline
+from videomass.vdms_miniframes import timeline
 from videomass.vdms_panels import choose_topic
 from videomass.vdms_panels import filedrop
 from videomass.vdms_panels import av_conversions
@@ -91,11 +91,10 @@ class MainFrame(wx.Frame):
         self.outputpath = self.appdata['outputfile']  # path destination
         self.outputnames = []  # output file basenames (even renames)
         self.file_src = []  # input full file names list
-        self.changed = []  # previous list is different from new one
         self.same_destin = self.appdata['outputfile_samedir']  # True/False
         self.suffix = self.appdata['filesuffix']  # suffix to output names
         self.filedropselected = None  # int(index) or None filedrop selected
-        self.time_seq = "-ss 00:00:00.000 -t 00:00:00.000"  # FFmpeg time seq.
+        self.time_seq = ""  # FFmpeg time seq.
         self.duration = []  # empty if not file imported
         self.topicname = None  # shown panel name
         self.checktimestamp = True  # show timestamp during playback
@@ -129,7 +128,6 @@ class MainFrame(wx.Frame):
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
 
         # panel instances:
-        self.TimeLine = timeline.Timeline(self, self.icons['clear'])
         self.ChooseTopic = choose_topic.Choose_Topic(self,
                                                      self.appdata['ostype'],
                                                      )
@@ -152,8 +150,10 @@ class MainFrame(wx.Frame):
         self.ConcatDemuxer = concatenate.Conc_Demuxer(self,)
         self.toPictures = video_to_sequence.VideoToSequence(self, self.icons)
         self.toSlideshow = sequence_to_video.SequenceToVideo(self, self.icons)
-        # hide all panels
+        # miniframes
+        self.TimeLine = timeline.Float_TL(parent=wx.GetTopLevelParent(self))
         self.TimeLine.Hide()
+        # hide all panels
         self.fileDnDTarget.Hide()
         self.VconvPanel.Hide()
         self.ProcessPanel.Hide()
@@ -164,7 +164,6 @@ class MainFrame(wx.Frame):
         # global sizer base
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)
         # Layout external panels:
-        self.mainSizer.Add(self.TimeLine, 0, wx.EXPAND)
         self.mainSizer.Add(self.ChooseTopic, 1, wx.EXPAND)
         self.mainSizer.Add(self.fileDnDTarget, 1, wx.EXPAND)
         self.mainSizer.Add(self.VconvPanel, 1, wx.EXPAND)
@@ -507,6 +506,12 @@ class MainFrame(wx.Frame):
         dscrp = (_("Show Logs\tCtrl+L"),
                  _("Viewing log messages"))
         viewlogs = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+
+        viewButton.AppendSeparator()
+        dscrp = (_("Show timeline\tCtrl+T"),
+                 _("Show timeline editor"))
+        self.viewtimeline = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
+                                              kind=wx.ITEM_CHECK)
         self.menuBar.Append(viewButton, _("View"))
 
         # ------------------ Go menu
@@ -632,6 +637,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.timestampCustomize, tscustomize)
         self.Bind(wx.EVT_MENU, self.autoexitFFplay, self.exitplayback)
         self.Bind(wx.EVT_MENU, self.View_logs, viewlogs)
+        self.Bind(wx.EVT_MENU, self.view_Timeline, self.viewtimeline)
         # ---- GO -----
         self.Bind(wx.EVT_MENU, self.startPanel, self.startpan)
         self.Bind(wx.EVT_MENU, self.switch_presets_manager, self.prstpan)
@@ -965,6 +971,16 @@ class MainFrame(wx.Frame):
                                  )
         self.showlogs.Show()
     # ------------------------------------------------------------------#
+
+    def view_Timeline(self, event):
+        """
+        View menu: show timeline via menu bar
+        """
+        if self.viewtimeline.IsChecked():
+            self.TimeLine.Show()
+        else:
+            self.TimeLine.Hide()
+    # ------------------------------------------------------------------#
     # --------- Menu  Go  ###
 
     def logPan(self, event):
@@ -1260,7 +1276,7 @@ class MainFrame(wx.Frame):
                                                 tip, wx.ITEM_NORMAL
                                                 )
         tip = _("Start rendering")
-        self.run_coding = self.toolbar.AddTool(7, _('Start'),
+        self.run_coding = self.toolbar.AddTool(7, _('Run'),
                                                bmpconv,
                                                tip, wx.ITEM_NORMAL
                                                )
@@ -1321,26 +1337,6 @@ class MainFrame(wx.Frame):
             self.switch_to_processing('Viewing last log')
     # ------------------------------------------------------------------#
 
-    def on_changes_file_list(self):
-        """
-        Check changes made to files list in the drag-and-drop panel.
-        """
-        if not self.changed:
-            pub.sendMessage("MAX_FILE_DURATION", msg='Changes')
-            self.changed = self.file_src.copy()
-            self.statusbar_msg(_('Ready'), None)
-
-        elif self.changed == self.file_src:
-            self.statusbar_msg(_('Ready'), None)
-        else:
-            pub.sendMessage("RESET_ON_CHANGED_LIST", msg='Changes')
-            pub.sendMessage("MAX_FILE_DURATION", msg='Changes')
-            self.changed = self.file_src.copy()
-            msg = (_('File list changed, please check the settings again.'),
-                   MainFrame.ORANGE, MainFrame.WHITE)
-            self.statusbar_msg(msg[0], msg[1], msg[2])
-    # ------------------------------------------------------------------#
-
     def startPanel(self, event):
         """
         Shared event from the menu bar and the "Home" toolbar
@@ -1355,7 +1351,6 @@ class MainFrame(wx.Frame):
 
         self.topicname = None
         self.fileDnDTarget.Hide()
-        self.TimeLine.Hide()
 
         if self.VconvPanel.IsShown():
             self.VconvPanel.Hide()
@@ -1388,7 +1383,6 @@ class MainFrame(wx.Frame):
         self.VconvPanel.Hide()
         self.ChooseTopic.Hide()
         self.PrstsPanel.Hide()
-        self.TimeLine.Hide()
         self.ConcatDemuxer.Hide()
         self.toPictures.Hide()
         self.toSlideshow.Hide()
@@ -1423,9 +1417,7 @@ class MainFrame(wx.Frame):
         self.toPictures.Hide()
         self.toSlideshow.Hide()
         self.VconvPanel.Show()
-        self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - AV Conversions'))
-        self.TimeLine.Show()
         self.menu_items(enable=True)  # enable all menu items
         self.delfile.Enable(False)
         self.openmedia.Enable(True)
@@ -1449,9 +1441,7 @@ class MainFrame(wx.Frame):
         self.toPictures.Hide()
         self.toSlideshow.Hide()
         self.PrstsPanel.Show()
-        self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - Presets Manager'))
-        self.TimeLine.Show()
         self.menu_items(enable=True)  # enable all menu items
         self.delfile.Enable(False)
         self.openmedia.Enable(True)
@@ -1475,9 +1465,7 @@ class MainFrame(wx.Frame):
         self.PrstsPanel.Hide()
         self.toPictures.Hide()
         self.toSlideshow.Hide()
-        self.TimeLine.Hide()
         self.ConcatDemuxer.Show()
-        self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - Concatenate Demuxer'))
         self.menu_items(enable=True)  # enable all menu items
         self.delfile.Enable(False)
@@ -1502,9 +1490,7 @@ class MainFrame(wx.Frame):
         self.ConcatDemuxer.Hide()
         self.toSlideshow.Hide()
         self.toPictures.Show()
-        self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - From Movie to Pictures'))
-        self.TimeLine.Show()
         self.menu_items(enable=True)  # enable all menu items
         self.delfile.Enable(False)
         self.openmedia.Enable(True)
@@ -1528,9 +1514,7 @@ class MainFrame(wx.Frame):
         self.ConcatDemuxer.Hide()
         self.toPictures.Hide()
         self.toSlideshow.Show()
-        self.on_changes_file_list()  # file list changed
         self.SetTitle(_('Videomass - Still Image Maker'))
-        self.TimeLine.Show()
         self.menu_items(enable=True)  # enable all menu items
         self.delfile.Enable(False)
         self.openmedia.Enable(True)
@@ -1551,15 +1535,9 @@ class MainFrame(wx.Frame):
             dur, seq = self.duration, self.time_seq
         elif args[0] in ('concat_demuxer', 'sequence_to_video'):
             dur, seq = args[6], ''
-        elif self.time_seq != "-ss 00:00:00.000 -t 00:00:00.000":
+        elif self.time_seq:
             ms = get_milliseconds(self.time_seq.split()[3])  # -t duration
             seq = self.time_seq
-            if [t for t in self.duration if ms > t]:  # if out time range
-                wx.MessageBox(_('Cannot continue: The duration in the '
-                                'timeline exceeds the duration of some '
-                                'queued files.'),
-                              'Videomass', wx.ICON_ERROR, self)
-                return
             dur = [ms for n in self.duration]
             self.statusbar_msg(_('Processing...'), None)
         else:
@@ -1569,7 +1547,6 @@ class MainFrame(wx.Frame):
         self.fileDnDTarget.Hide()
         self.VconvPanel.Hide()
         self.PrstsPanel.Hide()
-        self.TimeLine.Hide()
         self.ConcatDemuxer.Hide()
         self.toPictures.Hide()
         self.toSlideshow.Hide()

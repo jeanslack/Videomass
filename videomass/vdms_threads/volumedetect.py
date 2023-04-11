@@ -60,8 +60,7 @@ class VolumeDetectThread(Thread):
                    ([[maxvol, medvol], [etc,etc]], None or "str errors")
         """
         self.filelist = filelist
-        empty = "-ss 00:00:00.000 -t 00:00:00.000"
-        self.time_seq = '' if timeseq == empty else timeseq
+        self.time_seq = timeseq
         self.audiomap = audiomap
         self.ffmpeg_url = ffmpeg_url
         self.status = None

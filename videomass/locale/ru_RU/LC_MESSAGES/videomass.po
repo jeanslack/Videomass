@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 4.0.11\n"
+"Project-Id-Version: Videomass 5.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-03 12:33+0200\n"
-"PO-Revision-Date: 2023-04-04 09:58+0200\n"
+"POT-Creation-Date: 2023-04-10 14:19+0200\n"
+"PO-Revision-Date: 2023-04-11 14:33+0200\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -50,13 +50,13 @@ msgstr ""
 "{0}"
 
 # Перевод всех отмеченных изменений на значение по умолчанию
-#: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:273
+#: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:318
 #: ../vdms_dialogs/filter_deinterlace.py:121
 #: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:209
 #: ../vdms_dialogs/filter_stab.py:317 ../vdms_dialogs/filter_transpose.py:105
 #: ../vdms_dialogs/filter_colorcorrection.py:187
-#: ../vdms_panels/av_conversions.py:389 ../vdms_panels/timeline.py:102
-#: ../vdms_ytdlp/playlist_indexing.py:128
+#: ../vdms_miniframes/timeline.py:259 ../vdms_miniframes/timeline.py:278
+#: ../vdms_panels/av_conversions.py:389 ../vdms_ytdlp/playlist_indexing.py:128
 msgid "Reset"
 msgstr "Сброс"
 
@@ -123,38 +123,38 @@ msgstr ""
 msgid "Confirm Settings"
 msgstr "Подтвердить настройки"
 
-#: ../vdms_dialogs/filter_crop.py:198 ../vdms_dialogs/filter_scale.py:108
+#: ../vdms_dialogs/filter_crop.py:243 ../vdms_dialogs/filter_scale.py:108
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "Размер источника: {0} x {1} пикселей"
 
-#: ../vdms_dialogs/filter_crop.py:206
+#: ../vdms_dialogs/filter_crop.py:251
 #: ../vdms_dialogs/filter_colorcorrection.py:103
 msgid "Search for a specific frame"
 msgstr "Поиск определенного кадра"
 
-#: ../vdms_dialogs/filter_crop.py:220
+#: ../vdms_dialogs/filter_crop.py:265
 #: ../vdms_dialogs/filter_colorcorrection.py:117
 msgid "Load"
 msgstr "Загрузить"
 
-#: ../vdms_dialogs/filter_crop.py:223
+#: ../vdms_dialogs/filter_crop.py:268
 msgid "Cropping area selection "
 msgstr "Выбор области обрезки "
 
-#: ../vdms_dialogs/filter_crop.py:228 ../vdms_dialogs/filter_scale.py:120
+#: ../vdms_dialogs/filter_crop.py:273 ../vdms_dialogs/filter_scale.py:120
 msgid "Height"
 msgstr "Высота"
 
-#: ../vdms_dialogs/filter_crop.py:248
+#: ../vdms_dialogs/filter_crop.py:293
 msgid "Center"
 msgstr "Центр"
 
-#: ../vdms_dialogs/filter_crop.py:259 ../vdms_dialogs/filter_scale.py:120
+#: ../vdms_dialogs/filter_crop.py:304 ../vdms_dialogs/filter_scale.py:120
 msgid "Width"
 msgstr "Ширина"
 
-#: ../vdms_dialogs/filter_crop.py:278 ../vdms_dialogs/filter_deinterlace.py:120
+#: ../vdms_dialogs/filter_crop.py:323 ../vdms_dialogs/filter_deinterlace.py:120
 #: ../vdms_dialogs/filter_denoisers.py:83 ../vdms_dialogs/filter_scale.py:207
 #: ../vdms_dialogs/filter_stab.py:315 ../vdms_dialogs/filter_transpose.py:110
 #: ../vdms_dialogs/set_timestamp.py:148
@@ -163,23 +163,23 @@ msgstr "Ширина"
 msgid "Apply"
 msgstr "Применить"
 
-#: ../vdms_dialogs/filter_crop.py:293
+#: ../vdms_dialogs/filter_crop.py:338
 msgid "Crop Filter"
 msgstr "Фильтр Обрезка"
 
-#: ../vdms_dialogs/filter_crop.py:294
+#: ../vdms_dialogs/filter_crop.py:339
 msgid "Crop to width"
 msgstr "Обрезать по ширине"
 
-#: ../vdms_dialogs/filter_crop.py:295
+#: ../vdms_dialogs/filter_crop.py:340
 msgid "Move vertically - set to -1 to center the vertical axis"
 msgstr "Вертикальное положение верхнего левого угла"
 
-#: ../vdms_dialogs/filter_crop.py:297
+#: ../vdms_dialogs/filter_crop.py:342
 msgid "Move horizontally - set to -1 to center the horizontal axis"
 msgstr "Горизонтальное положение верхнего левого угла"
 
-#: ../vdms_dialogs/filter_crop.py:299
+#: ../vdms_dialogs/filter_crop.py:344
 msgid "Crop to height"
 msgstr "Обрезать по высоте"
 
@@ -326,9 +326,10 @@ msgstr ""
 
 #: ../vdms_dialogs/filter_scale.py:75 ../vdms_dialogs/ffmpeg_help.py:117
 #: ../vdms_dialogs/shownormlist.py:98 ../vdms_dialogs/shownormlist.py:107
-#: ../vdms_dialogs/shownormlist.py:116 ../vdms_panels/concatenate.py:109
-#: ../vdms_panels/sequence_to_video.py:116
-#: ../vdms_panels/video_to_sequence.py:78
+#: ../vdms_dialogs/shownormlist.py:116 ../vdms_miniframes/timeline.py:260
+#: ../vdms_miniframes/timeline.py:280 ../vdms_panels/concatenate.py:109
+#: ../vdms_panels/sequence_to_video.py:117
+#: ../vdms_panels/video_to_sequence.py:79
 msgid "Read me"
 msgstr "Прочти меня"
 
@@ -662,7 +663,7 @@ msgid "Video stabilizer filter"
 msgstr "Фильтр стабилизатора видео(stabilizer)"
 
 #: ../vdms_dialogs/filter_stab.py:532 ../vdms_io/io_tools.py:57
-#: ../vdms_io/io_tools.py:106
+#: ../vdms_io/io_tools.py:105
 msgid "Videomass - Loading..."
 msgstr "Videomass - Загрузка..."
 
@@ -1154,7 +1155,7 @@ msgstr ""
 msgid "FFmpeg logging levels"
 msgstr "Комплект log-журналов FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:402 ../vdms_main/main_frame.py:575
+#: ../vdms_dialogs/preferences.py:402 ../vdms_main/main_frame.py:580
 #: ../vdms_panels/av_conversions.py:471 ../vdms_ytdlp/main_ytdlp.py:298
 msgid "Settings"
 msgstr "Настройки"
@@ -1240,7 +1241,7 @@ msgstr "ВЫБОР ФАЙЛА"
 
 #: ../vdms_dialogs/mediainfo.py:135 ../vdms_dialogs/mediainfo.py:138
 #: ../vdms_dialogs/mediainfo.py:141 ../vdms_dialogs/mediainfo.py:144
-#: ../vdms_main/main_frame.py:1258
+#: ../vdms_main/main_frame.py:1274
 msgid "Properties"
 msgstr "Характеристики"
 
@@ -1394,19 +1395,19 @@ msgstr "Показать доступные методы аппаратного 
 msgid "Show license"
 msgstr "Показать лицензию"
 
-#: ../vdms_dialogs/ffmpeg_help.py:123 ../vdms_main/main_frame.py:487
+#: ../vdms_dialogs/ffmpeg_help.py:123 ../vdms_main/main_frame.py:486
 msgid "Show configuration"
 msgstr "Показать конфигурацию"
 
-#: ../vdms_dialogs/ffmpeg_help.py:127 ../vdms_main/main_frame.py:495
+#: ../vdms_dialogs/ffmpeg_help.py:127 ../vdms_main/main_frame.py:494
 msgid "Encoders"
 msgstr "Кодеры"
 
-#: ../vdms_dialogs/ffmpeg_help.py:131 ../vdms_main/main_frame.py:498
+#: ../vdms_dialogs/ffmpeg_help.py:131 ../vdms_main/main_frame.py:497
 msgid "Decoders"
 msgstr "Декодеры"
 
-#: ../vdms_dialogs/ffmpeg_help.py:135 ../vdms_main/main_frame.py:491
+#: ../vdms_dialogs/ffmpeg_help.py:135 ../vdms_main/main_frame.py:490
 msgid "Muxers and Demuxers"
 msgstr "Мультиплексоры и Демультиплексоры"
 
@@ -1562,14 +1563,14 @@ msgid "FFplay   ...not found !"
 msgstr "FFplay   ...не найдено !"
 
 #: ../vdms_dialogs/ffmpeg_conf.py:205 ../vdms_panels/av_conversions.py:2257
-#: ../vdms_panels/sequence_to_video.py:709
-#: ../vdms_panels/video_to_sequence.py:592
+#: ../vdms_panels/sequence_to_video.py:710
+#: ../vdms_panels/video_to_sequence.py:593
 msgid "Enabled"
 msgstr "Включено"
 
 #: ../vdms_dialogs/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2257
-#: ../vdms_panels/sequence_to_video.py:709
-#: ../vdms_panels/video_to_sequence.py:596
+#: ../vdms_panels/sequence_to_video.py:710
+#: ../vdms_panels/video_to_sequence.py:597
 msgid "Disabled"
 msgstr "Отключено"
 
@@ -1746,6 +1747,123 @@ msgstr ""
 msgid "Shortcut keys while playing with FFplay"
 msgstr "Сочетания клавиш во время проигрывания с FFplay"
 
+#: ../vdms_miniframes/timeline.py:46
+#| msgid "Start minutes"
+msgid "Start point adjustment"
+msgstr "Регулировка точки \"Начало\""
+
+#: ../vdms_miniframes/timeline.py:48
+msgid "End point adjustment"
+msgstr "Регулировка точки \"Конец\""
+
+#: ../vdms_miniframes/timeline.py:105
+msgid "Hours"
+msgstr "Часы"
+
+#: ../vdms_miniframes/timeline.py:106
+msgid "Minutes"
+msgstr "Минуты"
+
+#: ../vdms_miniframes/timeline.py:107
+msgid "Seconds"
+msgstr "Секунды"
+
+#: ../vdms_miniframes/timeline.py:108
+#| msgid "Start milliseconds"
+msgid "Milliseconds"
+msgstr "Миллисекунды"
+
+#: ../vdms_miniframes/timeline.py:189 ../vdms_miniframes/timeline.py:309
+msgid "No source duration:"
+msgstr "Нет длительности источника:"
+
+#: ../vdms_miniframes/timeline.py:210 ../vdms_miniframes/timeline.py:295
+#: ../vdms_miniframes/timeline.py:335 ../vdms_miniframes/timeline.py:340
+#: ../vdms_miniframes/timeline.py:439
+#, python-brace-format
+msgid "{0} {1}  |  Segment Duration: {2}"
+msgstr "{0} {1}  |  Продолжительность сегмента: {2}"
+
+#: ../vdms_miniframes/timeline.py:257 ../vdms_miniframes/timeline.py:274
+msgid "End adjustment"
+msgstr "Регулировка \"Конец\""
+
+#: ../vdms_miniframes/timeline.py:258 ../vdms_miniframes/timeline.py:276
+#| msgid "Start minutes"
+msgid "Start adjustment"
+msgstr "Регулировка \"Начало\""
+
+#: ../vdms_miniframes/timeline.py:320
+#| msgid "Saturation:"
+msgid "Source duration:"
+msgstr "Длительность источника:"
+
+#: ../vdms_miniframes/timeline.py:388
+msgid "WARNING: Invalid selection, out of range."
+msgstr "WARNING: Неверный выбор, вне допустимого диапазона."
+
+#: ../vdms_miniframes/timeline.py:459
+msgid ""
+"Start by dragging the bottom left handle,\n"
+"or right-click for options."
+msgstr ""
+"Начните с перетаскивания нижнего левого маркера \n"
+"или щелкните правой кнопкой мыши для выбора параметров."
+
+#: ../vdms_miniframes/timeline.py:493
+msgid "Start"
+msgstr "Начало"
+
+#: ../vdms_miniframes/timeline.py:494
+msgid "End"
+msgstr "Конец"
+
+#: ../vdms_miniframes/timeline.py:542
+msgid ""
+"The timeline editor is a tool that allows you to trim slices of time on "
+"selected imported media (see Queued Files panel).\n"
+"\n"
+"The \"time format\" used to report durations is expressed in hours, minutes, "
+"seconds and milliseconds (HH:MM:SS.ms).\n"
+"\n"
+"Note that importing new files, making new selection, deselection, deleting "
+"items, sorting items (ie by LEFT clicking on the column headers), will reset "
+"any previous settings to default values.\n"
+"\n"
+"If the Queued Files panel is empty or no source files are selected, the "
+"overall duration values will be set to 23:59:59.999, rather than the "
+"duration of a selected source file (see status bar messages).\n"
+"\n"
+"The \"Start\"/\"End\" duration values always refer to the initial position "
+"of the timeline: 00:00:00.000. For other informations as the segment "
+"duration and warnings, please refer to the status bar messages."
+msgstr ""
+"Редактор Timeline — это инструмент, который позволяет обрезать фрагменты "
+"времени на выбранных импортированных медиафайлах (см. панель «Файлы в "
+"очереди»).\n"
+"\n"
+"«Формат времени», используемый для сообщения продолжительности, выражается в "
+"часах, минутах, секундах и миллисекундах. (HH:MM:SS.ms).\n"
+"\n"
+"Обратите внимание, что импорт новых файлов, новый выбор, отмена выбора, "
+"удаление элементов, сортировка элементов (т. е. щелчок ЛЕВОЙ кнопкой мыши по "
+"заголовкам столбцов) приведет к сбросу всех предыдущих настроек к значениям "
+"по умолчанию.\n"
+"\n"
+"Если панель «Файлы в очереди» пуста или исходные файлы не выбраны, значения "
+"общей продолжительности будут установлены на 23:59:59,999, а не на "
+"длительность выбранного исходного файла (см. сообщения в строке состояния).\n"
+"\n"
+"Значения продолжительности «Начало»/«Конец» всегда относятся к начальной "
+"позиции временной шкалы: 00:00:00.000. Для получения другой информации, "
+"такой как продолжительность сегмента и Warnings, см. сообщения в строке "
+"состояния."
+
+#: ../vdms_miniframes/timeline.py:559
+#| msgid "Show timeline\tCtrl+T"
+msgid "Timeline Editor Usage"
+msgstr "Использование редактора Timeline"
+
 #: ../vdms_io/checkup.py:45
 msgid ""
 "Already exist: \n"
@@ -1764,8 +1882,8 @@ msgstr ""
 msgid "Please Confirm"
 msgstr "Пожалуйста подтвердите"
 
-#: ../vdms_io/checkup.py:54 ../vdms_panels/sequence_to_video.py:580
-#: ../vdms_panels/sequence_to_video.py:604
+#: ../vdms_io/checkup.py:54 ../vdms_panels/sequence_to_video.py:581
+#: ../vdms_panels/sequence_to_video.py:605
 msgid ""
 "File does not exist:\n"
 "\n"
@@ -1793,12 +1911,12 @@ msgstr ""
 "Пожалуйста, подождите...\n"
 "Получение необходимых данных."
 
-#: ../vdms_io/io_tools.py:87
+#: ../vdms_io/io_tools.py:86
 #, python-format
 msgid "File does not exist or is invalid:  %s"
 msgstr "Файл не существует или недействителен:  %s"
 
-#: ../vdms_io/io_tools.py:107
+#: ../vdms_io/io_tools.py:106
 msgid ""
 "Wait....\n"
 "Audio peak analysis."
@@ -1806,7 +1924,7 @@ msgstr ""
 "Пожалуйста, подождите....\n"
 "Анализ звуковых пиков."
 
-#: ../vdms_io/io_tools.py:214
+#: ../vdms_io/io_tools.py:213
 msgid "Videomass - Downloading..."
 msgstr "Videomass - Скачивание..."
 
@@ -1851,15 +1969,14 @@ msgstr ""
 "Возможное решение: откройте панель Менеджер Пресетов, перейдите в столбец "
 "пресеты и попробуйте нажать кнопку «Восстановить всё ...»"
 
-#: ../vdms_main/main_frame.py:194 ../vdms_main/main_frame.py:1331
-#: ../vdms_main/main_frame.py:1334 ../vdms_main/main_frame.py:1377
-#: ../vdms_main/main_frame.py:1408 ../vdms_ytdlp/main_ytdlp.py:99
+#: ../vdms_main/main_frame.py:193 ../vdms_main/main_frame.py:1372
+#: ../vdms_main/main_frame.py:1402 ../vdms_ytdlp/main_ytdlp.py:99
 #: ../vdms_ytdlp/main_ytdlp.py:148 ../vdms_ytdlp/main_ytdlp.py:566
 #: ../vdms_ytdlp/textdrop.py:219 ../vdms_ytdlp/youtubedl_ui.py:451
 msgid "Ready"
 msgstr "Готово"
 
-#: ../vdms_main/main_frame.py:345 ../vdms_ytdlp/main_ytdlp.py:204
+#: ../vdms_main/main_frame.py:344 ../vdms_ytdlp/main_ytdlp.py:204
 msgid ""
 "There are still processes running. if you want to stop them, use the \"Abort"
 "\" button."
@@ -1867,22 +1984,22 @@ msgstr ""
 "Есть еще запущенные процессы... если вы хотите остановить их, используйте "
 "кнопку «Прервать»."
 
-#: ../vdms_main/main_frame.py:347 ../vdms_main/main_frame.py:1059
-#: ../vdms_main/main_frame.py:1376 ../vdms_ytdlp/main_ytdlp.py:147
+#: ../vdms_main/main_frame.py:346 ../vdms_main/main_frame.py:1075
+#: ../vdms_main/main_frame.py:1371 ../vdms_ytdlp/main_ytdlp.py:147
 #: ../vdms_ytdlp/main_ytdlp.py:206
 msgid "Videomass"
 msgstr "Videomass"
 
-#: ../vdms_main/main_frame.py:351
+#: ../vdms_main/main_frame.py:350
 msgid "Are you sure you want to exit the application?"
 msgstr "Вы уверены, что хотите выйти из приложения?"
 
-#: ../vdms_main/main_frame.py:353 ../vdms_main/main_frame.py:1064
+#: ../vdms_main/main_frame.py:352 ../vdms_main/main_frame.py:1080
 #: ../vdms_ytdlp/main_ytdlp.py:212
 msgid "Exit"
 msgstr "Выход"
 
-#: ../vdms_main/main_frame.py:359 ../vdms_main/main_frame.py:384
+#: ../vdms_main/main_frame.py:358 ../vdms_main/main_frame.py:383
 msgid ""
 "There are still active windows with running processes, make sure you finish "
 "your work before closing them."
@@ -1890,47 +2007,47 @@ msgstr ""
 "Есть все еще активные окна с запущенными процессами, убедитесь, что вы "
 "закончили свою работу, прежде чем закрывать их."
 
-#: ../vdms_main/main_frame.py:420
+#: ../vdms_main/main_frame.py:419
 msgid "Open...\tCtrl+O"
 msgstr "Открыть...\tCtrl+O"
 
-#: ../vdms_main/main_frame.py:421
+#: ../vdms_main/main_frame.py:420
 msgid "Open one or more files"
 msgstr "Откройте один или несколько файлов"
 
-#: ../vdms_main/main_frame.py:425
+#: ../vdms_main/main_frame.py:424
 msgid "Conversions folder\tCtrl+C"
 msgstr "Папка конверсий\tCtrl+C"
 
-#: ../vdms_main/main_frame.py:426
+#: ../vdms_main/main_frame.py:425
 msgid "Open the default file conversions folder"
 msgstr "Открыть папку по умолчанию для конверсий файлов"
 
-#: ../vdms_main/main_frame.py:428
+#: ../vdms_main/main_frame.py:427
 msgid "Open temporary conversions"
 msgstr "Открыть временную папку конверсий"
 
-#: ../vdms_main/main_frame.py:429
+#: ../vdms_main/main_frame.py:428
 msgid "Open the temporary file conversions folder"
 msgstr "Открыть временную папку конверсионных файлов"
 
-#: ../vdms_main/main_frame.py:434
+#: ../vdms_main/main_frame.py:433
 msgid "Rename the selected file\tCtrl+R"
 msgstr "Переименовать выбранный файл\tCtrl+R"
 
-#: ../vdms_main/main_frame.py:435
+#: ../vdms_main/main_frame.py:434
 msgid "Rename the file selected in the Queued Files panel"
 msgstr "Переименуйте файл, выбранный на панели «Файлы в очереди»"
 
-#: ../vdms_main/main_frame.py:438
+#: ../vdms_main/main_frame.py:437
 msgid "Batch renaming\tCtrl+B"
 msgstr "Пакетное переименование\tCtrl+B"
 
-#: ../vdms_main/main_frame.py:439
+#: ../vdms_main/main_frame.py:438
 msgid "Rename all files listed in the Queued Files panel"
 msgstr "Переименуйте все файлы, перечисленные на панели «Файлы в очереди»"
 
-#: ../vdms_main/main_frame.py:443
+#: ../vdms_main/main_frame.py:442
 msgid "Open Trash folder"
 msgstr "Открыть папку \"Корзина\""
 
@@ -1939,329 +2056,338 @@ msgstr "Открыть папку \"Корзина\""
 # надо: folder
 # Thanks for remark, I solved.
 # Gianluca
-#: ../vdms_main/main_frame.py:444
+#: ../vdms_main/main_frame.py:443
 msgid "Open the Videomass Trash folder if it exists"
 msgstr "Открыть папку корзины Videomass, если она существует"
 
-#: ../vdms_main/main_frame.py:446
+#: ../vdms_main/main_frame.py:445
 msgid "Empty Trash folder"
 msgstr "Очистить папку \"Корзина\""
 
-#: ../vdms_main/main_frame.py:447
+#: ../vdms_main/main_frame.py:446
 msgid "Delete all files in the Videomass Trash folder"
 msgstr "Удалите все файлы в папке корзины Videomass"
 
-#: ../vdms_main/main_frame.py:450 ../vdms_ytdlp/main_ytdlp.py:256
+#: ../vdms_main/main_frame.py:449 ../vdms_ytdlp/main_ytdlp.py:256
 msgid "Work Notes\tCtrl+N"
 msgstr "Рабочие заметки\tCtrl+N"
 
-#: ../vdms_main/main_frame.py:451 ../vdms_ytdlp/main_ytdlp.py:257
+#: ../vdms_main/main_frame.py:450 ../vdms_ytdlp/main_ytdlp.py:257
 msgid "Read and write useful notes and reminders."
 msgstr "Читайте и пишите полезные заметки и напоминания."
 
-#: ../vdms_main/main_frame.py:454 ../vdms_ytdlp/main_ytdlp.py:262
+#: ../vdms_main/main_frame.py:453 ../vdms_ytdlp/main_ytdlp.py:262
 msgid "Exit\tCtrl+Q"
 msgstr "Выход\tCtrl+Q"
 
-#: ../vdms_main/main_frame.py:455
+#: ../vdms_main/main_frame.py:454
 msgid "Completely exit the application"
 msgstr "Полностью выйти из приложения"
 
-#: ../vdms_main/main_frame.py:456 ../vdms_ytdlp/main_ytdlp.py:264
+#: ../vdms_main/main_frame.py:455 ../vdms_ytdlp/main_ytdlp.py:264
 msgid "File"
 msgstr "Файл"
 
-#: ../vdms_main/main_frame.py:460
+#: ../vdms_main/main_frame.py:459
 msgid "Remove selected file\tDEL"
 msgstr "Удалить выбранный файл\tDEL"
 
-#: ../vdms_main/main_frame.py:461
+#: ../vdms_main/main_frame.py:460
 msgid "Remove the selected files from the list"
 msgstr "Удалить выбранные файлы из списка"
 
-#: ../vdms_main/main_frame.py:463 ../vdms_panels/presets_manager.py:219
-#: ../vdms_panels/video_to_sequence.py:168 ../vdms_ytdlp/main_ytdlp.py:274
+#: ../vdms_main/main_frame.py:462 ../vdms_panels/presets_manager.py:219
+#: ../vdms_panels/video_to_sequence.py:169 ../vdms_ytdlp/main_ytdlp.py:274
 msgid "Edit"
 msgstr "Редактировать"
 
-#: ../vdms_main/main_frame.py:468
+#: ../vdms_main/main_frame.py:467
 msgid "Find FFmpeg topics and options"
 msgstr "Найдите темы и параметры FFmpeg"
 
-#: ../vdms_main/main_frame.py:469
+#: ../vdms_main/main_frame.py:468
 msgid "A useful tool to search for FFmpeg help topics and options"
 msgstr "Полезный инструмент для поиска тем и параметров справки FFmpeg"
 
-#: ../vdms_main/main_frame.py:474
+#: ../vdms_main/main_frame.py:473
 msgid "Check for preset updates"
 msgstr "Проверить наличие обновлений пресетов"
 
-#: ../vdms_main/main_frame.py:475
+#: ../vdms_main/main_frame.py:474
 #, python-brace-format
 msgid "Check for new presets release from {0}"
 msgstr "Проверьте выпуск новых пресетов от {0}"
 
-#: ../vdms_main/main_frame.py:477
+#: ../vdms_main/main_frame.py:476
 msgid "Download preset archive"
 msgstr "Скачать архив пресетов"
 
-#: ../vdms_main/main_frame.py:478
+#: ../vdms_main/main_frame.py:477
 msgid ""
 "Download the entire collection of the latest presets available from the home "
 "page"
 msgstr ""
 "Загрузите всю коллекцию последних пресетов, доступных на главной странице"
 
-#: ../vdms_main/main_frame.py:481
+#: ../vdms_main/main_frame.py:480
 msgid "Tools"
 msgstr "Инструменты"
 
-#: ../vdms_main/main_frame.py:488
+#: ../vdms_main/main_frame.py:487
 msgid "Show FFmpeg's built-in configuration capabilities"
 msgstr "Показать встроенные возможности настройки FFmpeg"
 
-#: ../vdms_main/main_frame.py:492
+#: ../vdms_main/main_frame.py:491
 msgid "Muxers and demuxers available for used FFmpeg."
 msgstr "Доступны мультиплексоры и демультиплексоры для используемого FFmpeg."
 
-#: ../vdms_main/main_frame.py:496
+#: ../vdms_main/main_frame.py:495
 msgid "Shows available encoders for FFmpeg"
 msgstr "Показывает доступные кодировщики для FFmpeg"
 
-#: ../vdms_main/main_frame.py:498
+#: ../vdms_main/main_frame.py:497
 msgid "Shows available decoders for FFmpeg"
 msgstr "Показывает доступные декодеры для FFmpeg"
 
-#: ../vdms_main/main_frame.py:501
+#: ../vdms_main/main_frame.py:500
 msgid "FFplay"
 msgstr "FFplay"
 
-#: ../vdms_main/main_frame.py:502
+#: ../vdms_main/main_frame.py:501
 msgid "While playing"
 msgstr "Клавиши воспроизведения"
 
-#: ../vdms_main/main_frame.py:503
+#: ../vdms_main/main_frame.py:502
 msgid "Show useful shortcut keys when playing or previewing with FFplay"
 msgstr ""
 "Показывать полезные сочетания клавиш при воспроизведении или предварительном "
 "просмотре с FFplay"
 
-#: ../vdms_main/main_frame.py:507
+#: ../vdms_main/main_frame.py:506
 msgid "Show Logs\tCtrl+L"
 msgstr "Показать log-журналы\tCtrl+L"
 
-#: ../vdms_main/main_frame.py:508
+#: ../vdms_main/main_frame.py:507
 msgid "Viewing log messages"
 msgstr "Просмотр сообщений log-журнала"
 
-#: ../vdms_main/main_frame.py:510 ../vdms_ytdlp/main_ytdlp.py:284
+#: ../vdms_main/main_frame.py:511
+msgid "Show timeline\tCtrl+T"
+msgstr "Показать шкалу времени\tCtrl+T"
+
+#: ../vdms_main/main_frame.py:512
+#| msgid "Show timeline\tCtrl+T"
+msgid "Show timeline editor"
+msgstr "Показать редактор Timeline"
+
+#: ../vdms_main/main_frame.py:515 ../vdms_ytdlp/main_ytdlp.py:284
 msgid "View"
 msgstr "Посмотр"
 
-#: ../vdms_main/main_frame.py:515
+#: ../vdms_main/main_frame.py:520
 msgid "Home panel\tCtrl+Shift+H"
 msgstr "Начальная панель\tCtrl+Shift+H"
 
-#: ../vdms_main/main_frame.py:516 ../vdms_main/main_frame.py:1247
+#: ../vdms_main/main_frame.py:521 ../vdms_main/main_frame.py:1263
 msgid "Go to the 'Home' panel"
 msgstr "Перейдите к 'Начальной панели'"
 
-#: ../vdms_main/main_frame.py:519
+#: ../vdms_main/main_frame.py:524
 msgid "Presets Manager\tCtrl+Shift+P"
 msgstr "Менеджер Пресетов\tCtrl+Shift+P"
 
-#: ../vdms_main/main_frame.py:520
+#: ../vdms_main/main_frame.py:525
 msgid "Go to the 'Presets Manager' panel"
 msgstr "Перейдите на панель 'Менеджер пресетов'"
 
-#: ../vdms_main/main_frame.py:522
+#: ../vdms_main/main_frame.py:527
 msgid "A/V Conversions\tCtrl+Shift+V"
 msgstr "A/V Конвертация\tCtrl+Shift+V"
 
-#: ../vdms_main/main_frame.py:523
+#: ../vdms_main/main_frame.py:528
 msgid "Go to the 'A/V Conversions' panel"
 msgstr "Перейдите на панель 'A/V Конвертация'"
 
-#: ../vdms_main/main_frame.py:525
+#: ../vdms_main/main_frame.py:530
 msgid "Concatenate Demuxer\tCtrl+Shift+D"
 msgstr "Concatenate Demuxer\tCtrl+Shift+D"
 
-#: ../vdms_main/main_frame.py:526
+#: ../vdms_main/main_frame.py:531
 msgid "Go to the 'Concatenate Demuxer' panel"
 msgstr "Перейдите на панель 'Concatenate Demuxer'"
 
-#: ../vdms_main/main_frame.py:529
+#: ../vdms_main/main_frame.py:534
 msgid "Still Image Maker\tCtrl+Shift+I"
 msgstr "Still Image Maker\tCtrl+Shift+I"
 
-#: ../vdms_main/main_frame.py:530
+#: ../vdms_main/main_frame.py:535
 msgid "Go to the 'Still Image Maker' panel"
 msgstr "Перейдите на панель 'Still Image Maker'"
 
-#: ../vdms_main/main_frame.py:532
+#: ../vdms_main/main_frame.py:537
 msgid "From Movie to Pictures\tCtrl+Shift+S"
 msgstr "Картинки из фильма\tCtrl+Shift+S"
 
-#: ../vdms_main/main_frame.py:533
+#: ../vdms_main/main_frame.py:538
 msgid "Go to the 'From Movie to Pictures' panel"
 msgstr "Перейдите на панель 'Картинки из фильма'"
 
-#: ../vdms_main/main_frame.py:536
+#: ../vdms_main/main_frame.py:541
 msgid "YouTube Downloader\tCtrl+Shift+Y"
 msgstr "Загрузчик YouTube\tCtrl+Shift+Y"
 
-#: ../vdms_main/main_frame.py:537
+#: ../vdms_main/main_frame.py:542
 msgid "Open 'YouTube Downloader' window"
 msgstr "Откройте окно «Загрузчик с YouTube»"
 
-#: ../vdms_main/main_frame.py:539
+#: ../vdms_main/main_frame.py:544
 msgid "Output Monitor\tCtrl+Shift+O"
 msgstr "Выходной экран\tCtrl+Shift+O"
 
-#: ../vdms_main/main_frame.py:540
+#: ../vdms_main/main_frame.py:545
 msgid "Keeps track of the output for debugging errors"
 msgstr "Отслеживает вывод для ошибок отладки"
 
 # посмотреть в программе
-#: ../vdms_main/main_frame.py:542
+#: ../vdms_main/main_frame.py:547
 msgid "Goto"
 msgstr "Перейти"
 
-#: ../vdms_main/main_frame.py:546 ../vdms_panels/filedrop.py:305
+#: ../vdms_main/main_frame.py:551 ../vdms_panels/filedrop.py:305
 msgid "Set up a temporary folder for conversions"
 msgstr "Настройте временную папку для конверсий"
 
-#: ../vdms_main/main_frame.py:547
+#: ../vdms_main/main_frame.py:552
 msgid "Use a temporary location to save conversions"
 msgstr "Используйте временное местоположение для сохранения конверсий"
 
-#: ../vdms_main/main_frame.py:552 ../vdms_ytdlp/main_ytdlp.py:293
+#: ../vdms_main/main_frame.py:557 ../vdms_ytdlp/main_ytdlp.py:293
 msgid "Restore the default destination folder"
 msgstr "Восстановить папку назначения по умолчанию"
 
-#: ../vdms_main/main_frame.py:553
+#: ../vdms_main/main_frame.py:558
 msgid "Restore the default folder for file conversions"
 msgstr "Восстановить папку по умолчанию для преобразованных файлов"
 
-#: ../vdms_main/main_frame.py:558
+#: ../vdms_main/main_frame.py:563
 msgid "Display timestamps during playback"
 msgstr "Отображение временных меток во время воспроизведения"
 
-#: ../vdms_main/main_frame.py:559
+#: ../vdms_main/main_frame.py:564
 msgid "Displays timestamp when playing media with FFplay"
 msgstr ""
 "Отображает шкалу времени при воспроизведении мультимедиа с помощью FFplay"
 
-#: ../vdms_main/main_frame.py:562
+#: ../vdms_main/main_frame.py:567
 msgid "Auto-exit after playback"
 msgstr "Автоматический выход после воспроизведения"
 
-#: ../vdms_main/main_frame.py:563
+#: ../vdms_main/main_frame.py:568
 msgid "If checked, the FFplay window will auto-close when playback is complete"
 msgstr ""
 "Если флажок установлен, окно FFplay будет автоматически закрываться \n"
 "после завершения воспроизведения"
 
 # непонятная timestamp
-#: ../vdms_main/main_frame.py:567
+#: ../vdms_main/main_frame.py:572
 msgid "FFplay timestamp settings"
 msgstr "Настройки шкалы времени FFplay"
 
-#: ../vdms_main/main_frame.py:568
+#: ../vdms_main/main_frame.py:573
 msgid "Change the size and color of the timestamp during playback"
 msgstr "Изменение размера и цвета шкалы времени во время воспроизведения"
 
-#: ../vdms_main/main_frame.py:573
+#: ../vdms_main/main_frame.py:578
 msgid "Preferences\tCtrl+P"
 msgstr "Основные настройки\tCtrl+P"
 
-#: ../vdms_main/main_frame.py:574
+#: ../vdms_main/main_frame.py:579
 msgid "Application preferences"
 msgstr "Настройки приложения"
 
-#: ../vdms_main/main_frame.py:581
+#: ../vdms_main/main_frame.py:586
 msgid "User Guide"
 msgstr "Онлайн помощь"
 
-#: ../vdms_main/main_frame.py:582
+#: ../vdms_main/main_frame.py:587
 msgid "Wiki"
 msgstr "Wiki"
 
-#: ../vdms_main/main_frame.py:584
+#: ../vdms_main/main_frame.py:589
 msgid "Issue tracker"
 msgstr "Сообщить о проблеме"
 
-#: ../vdms_main/main_frame.py:586
+#: ../vdms_main/main_frame.py:591
 msgid "Translation..."
 msgstr "Перевод..."
 
-#: ../vdms_main/main_frame.py:588
+#: ../vdms_main/main_frame.py:593
 msgid "Donation"
 msgstr "Пожертвование"
 
-#: ../vdms_main/main_frame.py:590
+#: ../vdms_main/main_frame.py:595
 msgid "FFmpeg documentation"
 msgstr "Документация FFmpeg"
 
-#: ../vdms_main/main_frame.py:592
+#: ../vdms_main/main_frame.py:597
 msgid "Check for newer version"
 msgstr "Проверить последнюю версию"
 
-#: ../vdms_main/main_frame.py:593
+#: ../vdms_main/main_frame.py:598
 msgid ""
 "Check for the latest Videomass version at <https://pypi.org/project/"
 "videomass/>"
 msgstr ""
 "Проверьте последнюю версию Videomass на <https://pypi.org/project/videomass/>"
 
-#: ../vdms_main/main_frame.py:597
+#: ../vdms_main/main_frame.py:602
 msgid "System version"
 msgstr "Версия системы"
 
-#: ../vdms_main/main_frame.py:598
+#: ../vdms_main/main_frame.py:603
 msgid ""
 "Get version about your operating system, version of Python and wxPython."
 msgstr "Получить версию вашей операционной системы, версию Python и wxPython."
 
-#: ../vdms_main/main_frame.py:601
+#: ../vdms_main/main_frame.py:606
 msgid "About Videomass"
 msgstr "Информация об Videomass"
 
-#: ../vdms_main/main_frame.py:602
+#: ../vdms_main/main_frame.py:607
 msgid "Help"
 msgstr "Помощь"
 
-#: ../vdms_main/main_frame.py:671
+#: ../vdms_main/main_frame.py:677
 msgid "Open the selected files"
 msgstr "Открыть выбранные файлы"
 
-#: ../vdms_main/main_frame.py:723 ../vdms_main/main_frame.py:746
+#: ../vdms_main/main_frame.py:729 ../vdms_main/main_frame.py:752
 msgid "No such folder '{}'"
 msgstr "Нет такой папки '{}'"
 
-#: ../vdms_main/main_frame.py:735
+#: ../vdms_main/main_frame.py:741
 msgid "Are you sure to empty trash folder?"
 msgstr "Вы уверены, что очистили папку \"Корзина\"?"
 
-#: ../vdms_main/main_frame.py:743
+#: ../vdms_main/main_frame.py:749
 msgid "No files to delete"
 msgstr "Нет файлов для удаления"
 
-#: ../vdms_main/main_frame.py:798
+#: ../vdms_main/main_frame.py:804
 #, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr "Installed release v{0}. A new presets release is available {1}"
 
-#: ../vdms_main/main_frame.py:802
+#: ../vdms_main/main_frame.py:808
 #, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr "Установленная версия {0}. Новых обновлений не обнаружено."
 
-#: ../vdms_main/main_frame.py:815
+#: ../vdms_main/main_frame.py:821
 msgid "Choose a download folder"
 msgstr "Выберите папку для загрузки"
 
-#: ../vdms_main/main_frame.py:832
+#: ../vdms_main/main_frame.py:838
 msgid ""
 "Wait....\n"
 "The archive is being downloaded"
@@ -2269,24 +2395,24 @@ msgstr ""
 "Подождите...\n"
 "Архив скачивается"
 
-#: ../vdms_main/main_frame.py:843
+#: ../vdms_main/main_frame.py:849
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "Успешно загружено в \"{0}\""
 
-#: ../vdms_main/main_frame.py:983
+#: ../vdms_main/main_frame.py:999
 msgid "Choose a temporary destination for conversions"
 msgstr "Выберите временное место назначения для конверсий"
 
-#: ../vdms_main/main_frame.py:1008
+#: ../vdms_main/main_frame.py:1024
 msgid "Default destination folders successfully restored"
 msgstr "Папки назначения по умолчанию успешно восстановлены"
 
-#: ../vdms_main/main_frame.py:1057
+#: ../vdms_main/main_frame.py:1073
 msgid "Changes will take effect once the program has been restarted."
 msgstr "Изменения вступят в силу после перезапуска программы."
 
-#: ../vdms_main/main_frame.py:1061
+#: ../vdms_main/main_frame.py:1077
 msgid ""
 "Changes will take effect once the program has been restarted.\n"
 "\n"
@@ -2296,120 +2422,108 @@ msgstr ""
 "\n"
 "Вы хотите выйти из приложения сейчас?"
 
-#: ../vdms_main/main_frame.py:1134
+#: ../vdms_main/main_frame.py:1150
 #, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr "Доступна новая версия - v.{0}\n"
 
-#: ../vdms_main/main_frame.py:1137
+#: ../vdms_main/main_frame.py:1153
 msgid "You are using a development version that has not yet been released!\n"
 msgstr "Вы используете версию для разработки, которая еще не выпущена!\n"
 
-#: ../vdms_main/main_frame.py:1140
+#: ../vdms_main/main_frame.py:1156
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr "Поздравляю! Вы уже используете последнюю версию.\n"
 
-#: ../vdms_main/main_frame.py:1237 ../vdms_ytdlp/main_ytdlp.py:486
+#: ../vdms_main/main_frame.py:1253 ../vdms_ytdlp/main_ytdlp.py:486
 msgid "Go to the previous panel"
 msgstr "Перейти к предыдущей панели"
 
-#: ../vdms_main/main_frame.py:1238 ../vdms_ytdlp/main_ytdlp.py:487
+#: ../vdms_main/main_frame.py:1254 ../vdms_ytdlp/main_ytdlp.py:487
 msgid "Back"
 msgstr "Назад"
 
-#: ../vdms_main/main_frame.py:1242 ../vdms_ytdlp/main_ytdlp.py:491
+#: ../vdms_main/main_frame.py:1258 ../vdms_ytdlp/main_ytdlp.py:491
 msgid "Go to the next panel"
 msgstr "Перейти к следующей панели"
 
-#: ../vdms_main/main_frame.py:1243 ../vdms_ytdlp/main_ytdlp.py:492
+#: ../vdms_main/main_frame.py:1259 ../vdms_ytdlp/main_ytdlp.py:492
 msgid "Next"
 msgstr "Вперед"
 
-#: ../vdms_main/main_frame.py:1248
+#: ../vdms_main/main_frame.py:1264
 msgid "Home"
 msgstr "Начальная панель"
 
-#: ../vdms_main/main_frame.py:1252
+#: ../vdms_main/main_frame.py:1268
 msgid "Play the selected file in the list"
 msgstr "Воспроизведение выбранного в списке файла"
 
-#: ../vdms_main/main_frame.py:1253
+#: ../vdms_main/main_frame.py:1269
 msgid "Play"
 msgstr "Воспроизведение"
 
-#: ../vdms_main/main_frame.py:1257
+#: ../vdms_main/main_frame.py:1273
 msgid "Get informative data about imported media streams"
 msgstr "Получайте информативные данные об импортированных медиапотоках"
 
-#: ../vdms_main/main_frame.py:1262
+#: ../vdms_main/main_frame.py:1278
 msgid "Start rendering"
 msgstr "Начать преобразование"
 
-#: ../vdms_main/main_frame.py:1263
-msgid "Start"
-msgstr "Начать"
+#: ../vdms_main/main_frame.py:1279
+msgid "Run"
+msgstr "Запуск"
 
-#: ../vdms_main/main_frame.py:1267 ../vdms_ytdlp/main_ytdlp.py:506
+#: ../vdms_main/main_frame.py:1283 ../vdms_ytdlp/main_ytdlp.py:506
 msgid "Stops current process"
 msgstr "Останавливает текущий процесс"
 
-#: ../vdms_main/main_frame.py:1268 ../vdms_ytdlp/main_ytdlp.py:507
+#: ../vdms_main/main_frame.py:1284 ../vdms_ytdlp/main_ytdlp.py:507
 msgid "Abort"
 msgstr "Прервать"
 
-#: ../vdms_main/main_frame.py:1272
+#: ../vdms_main/main_frame.py:1288
 msgid "Delete all files from the list"
 msgstr "Удалить все файлы из списка"
 
-#: ../vdms_main/main_frame.py:1273 ../vdms_ytdlp/main_ytdlp.py:511
+#: ../vdms_main/main_frame.py:1289 ../vdms_ytdlp/main_ytdlp.py:511
 msgid "Clear"
 msgstr "Очистить"
 
-#: ../vdms_main/main_frame.py:1339
-msgid "File list changed, please check the settings again."
-msgstr "Список файлов изменен, проверьте настройки еще раз."
-
-#: ../vdms_main/main_frame.py:1409
+#: ../vdms_main/main_frame.py:1403
 msgid "Videomass - Queued Files"
 msgstr "Videomass - Файлы в очереди"
 
-#: ../vdms_main/main_frame.py:1427
+#: ../vdms_main/main_frame.py:1420
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - AV-конвертация"
 
-#: ../vdms_main/main_frame.py:1453
+#: ../vdms_main/main_frame.py:1444
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - Менеджер Пресетов"
 
-#: ../vdms_main/main_frame.py:1481
+#: ../vdms_main/main_frame.py:1469
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Concatenate Demuxer"
 
-#: ../vdms_main/main_frame.py:1506
+#: ../vdms_main/main_frame.py:1493
 msgid "Videomass - From Movie to Pictures"
 msgstr "Videomass - Картинки из фильма"
 
-#: ../vdms_main/main_frame.py:1532
+#: ../vdms_main/main_frame.py:1517
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Still Image Maker"
 
-#: ../vdms_main/main_frame.py:1550 ../vdms_ytdlp/main_ytdlp.py:589
+#: ../vdms_main/main_frame.py:1534 ../vdms_ytdlp/main_ytdlp.py:589
 msgid "Viewing last log"
 msgstr "Просмотр последнего log-журнала"
 
-#: ../vdms_main/main_frame.py:1558
-msgid ""
-"Cannot continue: The duration in the timeline exceeds the duration of some "
-"queued files."
-msgstr ""
-"Невозможно продолжить: продолжительность на шкале времени превышает "
-"продолжительность некоторых файлов в очереди."
-
-#: ../vdms_main/main_frame.py:1564
+#: ../vdms_main/main_frame.py:1542
 msgid "Processing..."
 msgstr "Обработка ..."
 
-#: ../vdms_main/main_frame.py:1568
+#: ../vdms_main/main_frame.py:1546
 msgid "Videomass - FFmpeg message monitor"
 msgstr "Videomass - монитор сообщений FFmpeg"
 
@@ -2445,8 +2559,8 @@ msgstr "Оптимизация"
 msgid "Video Filters"
 msgstr "Фильтры Видео"
 
-#: ../vdms_panels/av_conversions.py:410 ../vdms_panels/sequence_to_video.py:154
-#: ../vdms_panels/video_to_sequence.py:110
+#: ../vdms_panels/av_conversions.py:410 ../vdms_panels/sequence_to_video.py:155
+#: ../vdms_panels/video_to_sequence.py:111
 msgid "Resizing"
 msgstr "Изменение размера"
 
@@ -2694,9 +2808,9 @@ msgid "Unable to preview Video Stabilizer filter"
 msgstr "Невозможно просмотреть Stabilizer видеофильтр"
 
 #: ../vdms_panels/av_conversions.py:1099
-#: ../vdms_panels/sequence_to_video.py:319
-#: ../vdms_panels/video_to_sequence.py:368
-#: ../vdms_panels/video_to_sequence.py:492
+#: ../vdms_panels/sequence_to_video.py:320
+#: ../vdms_panels/video_to_sequence.py:369
+#: ../vdms_panels/video_to_sequence.py:493
 msgid "A target file must be selected in the queued files"
 msgstr "В файлах, поставленных в очередь, должен быть выбран один файл"
 
@@ -2713,8 +2827,8 @@ msgstr ""
 "\"{}\""
 
 #: ../vdms_panels/av_conversions.py:1162
-#: ../vdms_panels/sequence_to_video.py:349
-#: ../vdms_panels/video_to_sequence.py:398
+#: ../vdms_panels/sequence_to_video.py:350
+#: ../vdms_panels/video_to_sequence.py:399
 msgid "The file is not a frame or a video file"
 msgstr "Файл не является кадром или видеофайлом"
 
@@ -2764,12 +2878,12 @@ msgid "Off"
 msgstr "Выключено"
 
 #: ../vdms_panels/av_conversions.py:2252 ../vdms_panels/presets_manager.py:932
-#: ../vdms_panels/video_to_sequence.py:586
+#: ../vdms_panels/video_to_sequence.py:587
 msgid "Unset"
 msgstr "Не установлено"
 
 #: ../vdms_panels/av_conversions.py:2255 ../vdms_panels/presets_manager.py:935
-#: ../vdms_panels/video_to_sequence.py:589
+#: ../vdms_panels/video_to_sequence.py:590
 msgid "start  {} | duration  {}"
 msgstr "начало  {} | продолжительность  {}"
 
@@ -3034,7 +3148,7 @@ msgstr "Из последовательности изображений в ви
 msgid "Duration:"
 msgstr "Продолжительность:"
 
-#: ../vdms_panels/concatenate.py:138 ../vdms_panels/video_to_sequence.py:116
+#: ../vdms_panels/concatenate.py:138 ../vdms_panels/video_to_sequence.py:117
 msgid "Output format:"
 msgstr "Выходной формат:"
 
@@ -3042,8 +3156,8 @@ msgstr "Выходной формат:"
 msgid "For more details, see the Videomass User Guide:"
 msgstr "Подробнее см. Руководство пользователя Videomass:"
 
-#: ../vdms_panels/concatenate.py:174 ../vdms_panels/sequence_to_video.py:207
-#: ../vdms_panels/video_to_sequence.py:178
+#: ../vdms_panels/concatenate.py:174 ../vdms_panels/sequence_to_video.py:208
+#: ../vdms_panels/video_to_sequence.py:179
 msgid "For more information, visit the official FFmpeg documentation:"
 msgstr ""
 "Для получения дополнительной информации посетите официальную документацию "
@@ -3062,13 +3176,13 @@ msgid "At least two files are required to perform concatenation."
 msgstr "Для объединения требуются как минимум два файла."
 
 #: ../vdms_panels/concatenate.py:248 ../vdms_panels/concatenate.py:259
-#: ../vdms_panels/sequence_to_video.py:464
-#: ../vdms_panels/sequence_to_video.py:470
-#: ../vdms_panels/sequence_to_video.py:565
-#: ../vdms_panels/sequence_to_video.py:575
-#: ../vdms_panels/sequence_to_video.py:592
-#: ../vdms_panels/sequence_to_video.py:600
-#: ../vdms_panels/video_to_sequence.py:504
+#: ../vdms_panels/sequence_to_video.py:465
+#: ../vdms_panels/sequence_to_video.py:471
+#: ../vdms_panels/sequence_to_video.py:566
+#: ../vdms_panels/sequence_to_video.py:576
+#: ../vdms_panels/sequence_to_video.py:593
+#: ../vdms_panels/sequence_to_video.py:601
+#: ../vdms_panels/video_to_sequence.py:505
 msgid "ERROR"
 msgstr "ОШИБКА"
 
@@ -3167,30 +3281,30 @@ msgstr "Перетащите одно или несколько видео ни�
 msgid "No file selected"
 msgstr "Файл не выбран"
 
-#: ../vdms_panels/filedrop.py:527
+#: ../vdms_panels/filedrop.py:531
 msgid "File renaming..."
 msgstr "Переименование файла..."
 
-#: ../vdms_panels/filedrop.py:528
+#: ../vdms_panels/filedrop.py:532
 msgid "Rename the selected file to:"
 msgstr "Переименуйте выбранный файл в:"
 
-#: ../vdms_panels/filedrop.py:542 ../vdms_panels/filedrop.py:552
-#: ../vdms_panels/filedrop.py:583
+#: ../vdms_panels/filedrop.py:546 ../vdms_panels/filedrop.py:556
+#: ../vdms_panels/filedrop.py:587
 msgid "Add Files"
 msgstr "Добавить файлы"
 
-#: ../vdms_panels/filedrop.py:559
+#: ../vdms_panels/filedrop.py:563
 msgid "Rename items"
 msgstr "Переименовать элементы"
 
 # Здесь изменил фразу исходника для правильного использования в русском языке
-#: ../vdms_panels/filedrop.py:560
+#: ../vdms_panels/filedrop.py:564
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr "Файлов для переименования: {0}"
 
-#: ../vdms_panels/filedrop.py:562
+#: ../vdms_panels/filedrop.py:566
 msgid "New Name #"
 msgstr "Новое имя #"
 
@@ -3640,41 +3754,6 @@ msgstr ""
 "Выходной формат\n"
 "Временной отрезок"
 
-#: ../vdms_panels/timeline.py:95
-msgid "Trim"
-msgstr "Trim"
-
-#: ../vdms_panels/timeline.py:105
-msgid "Start:"
-msgstr "Начало:"
-
-#: ../vdms_panels/timeline.py:114
-msgid "End:"
-msgstr "Конец:"
-
-#: ../vdms_panels/timeline.py:134
-msgid "Stream duration. Click me for details."
-msgstr ""
-"Продолжительность трансляции. Нажмите на меня, чтобы узнать подробности."
-
-#: ../vdms_panels/timeline.py:135
-msgid "End segment, in 24-hour format (HH:MM:SS)"
-msgstr "Время окончания отрезка в 24-часовом формате (HH:MM:SS)"
-
-#: ../vdms_panels/timeline.py:137
-msgid "Start point trimming, in 24-hour format (HH:MM:SS)"
-msgstr "Начальная точка отрезка в 24-часовом формате (HH:MM:SS)"
-
-#: ../vdms_panels/timeline.py:233
-#, python-brace-format
-msgid ""
-"Stream duration always refers to the file with the longest duration.\n"
-"If the \"Duration\" data is missing, it will be set to {0}."
-msgstr ""
-"Продолжительность трансляции всегда относится к файлу с наибольшей "
-"продолжительностью.\n"
-" В противном случае для него будет установлено значение {0}"
-
 #: ../vdms_panels/sequence_to_video.py:55
 msgid "Images need to be resized, please use Resizing function."
 msgstr ""
@@ -3682,18 +3761,36 @@ msgstr ""
 "размера."
 
 #: ../vdms_panels/sequence_to_video.py:74
+#| msgid ""
+#| "\n"
+#| "1. Import one or more image files such as JPG, PNG and BMP formats, then "
+#| "select one.\n"
+#| "\n"
+#| "2. Use the \"Resizing\" filter to resize images which have different "
+#| "sizes such as width and height. It is optional in other cases.\n"
+#| "\n"
+#| "3. To set the DURATION between images use the \"End\" control on the Trim "
+#| "bar.\n"
+#| "\n"
+#| "4. Start the conversion.\n"
+#| "\n"
+#| "\n"
+#| "The produced video will have the name of the selected file in the 'Queued "
+#| "File' list, which will be saved in a folder named 'Still_Images'\n"
+#| "with a progressive digit, in the path you specify."
 msgid ""
 "\n"
 "1. Import one or more image files such as JPG, PNG and BMP formats, then "
 "select one.\n"
 "\n"
-"2. Use the \"Resizing\" filter to resize images which have different sizes "
+"2. Use the Resizing function to resize images which have different sizes "
 "such as width and height. It is optional in other cases.\n"
 "\n"
-"3. To set the DURATION between images use the \"End\" control on the Trim "
-"bar.\n"
+"3. Use the Timeline editor (CTRL+T) to set the time interval between images "
+"by adjusting the \"End\" duration value and\n"
+"leaving the \"Start\" value at 00:00:00.000.\n"
 "\n"
-"4. Start the conversion.\n"
+"4. Run the conversion.\n"
 "\n"
 "\n"
 "The produced video will have the name of the selected file in the 'Queued "
@@ -3704,25 +3801,27 @@ msgstr ""
 "1. Импортируйте один или несколько файлов изображений, таких как форматы "
 "JPG, PNG и BMP, затем выберите один из них.\n"
 "\n"
-"2. Используйте фильтр «Изменение размера», чтобы изменить размер "
-"изображений, которые имеют разные размеры, такие как ширина и высота. В "
-"других случаях это необязательно. \n"
+"2. Используйте функцию изменения размера, чтобы изменить размер изображений, "
+"которые имеют разные размеры, такие как ширина и высота. В других случаях "
+"это необязательно.\n"
 "\n"
-"3. Чтобы установить ПРОДОЛЖИТЕЛЬНОСТЬ между изображениями, используйте "
-"элемент управления «Конец» на панели Trim.\n"
+"3. Используйте редактор Timeline (CTRL+T), чтобы установить временной "
+"интервал между изображениями, отрегулировав значение продолжительности "
+"«Конец» \n"
+"и оставив значение «Начало» равным 00:00:00.000.\n"
 "\n"
-"4. Начните преобразование.\n"
+"4. Запустите преобразование.\n"
 "\n"
 "\n"
 "Созданное видео будет иметь имя выбранного файла в списке «Файл в очереди», "
 "который будет сохранен в папке с именем «Still_Images» \n"
-" и с последовательным номером папки по указанному вами пути."
+"с прогрессивной цифрой по указанному вами пути."
 
-#: ../vdms_panels/sequence_to_video.py:128
+#: ../vdms_panels/sequence_to_video.py:129
 msgid "Enable a single still image"
 msgstr "Включить одно неподвижное изображение"
 
-#: ../vdms_panels/sequence_to_video.py:160
+#: ../vdms_panels/sequence_to_video.py:161
 msgid ""
 "Force original aspect ratio using\n"
 "padding rather than stretching"
@@ -3730,28 +3829,28 @@ msgstr ""
 "Принудительно использовать исходное соотношение \n"
 " сторон, используя отступы, а не растяжение"
 
-#: ../vdms_panels/sequence_to_video.py:166
+#: ../vdms_panels/sequence_to_video.py:167
 msgid "Include audio file"
 msgstr "Включить аудиофайл"
 
-#: ../vdms_panels/sequence_to_video.py:169
+#: ../vdms_panels/sequence_to_video.py:170
 msgid "Play the video until audio track finishes"
 msgstr "Воспроизведение видео до окончания звуковой дорожки(трека)"
 
-#: ../vdms_panels/sequence_to_video.py:176
-#: ../vdms_panels/sequence_to_video.py:437
+#: ../vdms_panels/sequence_to_video.py:177
+#: ../vdms_panels/sequence_to_video.py:438
 msgid "Open audio file"
 msgstr "Открыть аудиофайл"
 
-#: ../vdms_panels/sequence_to_video.py:194
+#: ../vdms_panels/sequence_to_video.py:195
 msgid "Additional arguments"
 msgstr "Дополнительные аргументы"
 
-#: ../vdms_panels/sequence_to_video.py:451
+#: ../vdms_panels/sequence_to_video.py:452
 msgid "Open an audio file"
 msgstr "Открыть аудиофайл"
 
-#: ../vdms_panels/sequence_to_video.py:463
+#: ../vdms_panels/sequence_to_video.py:464
 msgid ""
 "Invalid file: '{}'\n"
 "\n"
@@ -3761,7 +3860,7 @@ msgstr ""
 "\n"
 "{}"
 
-#: ../vdms_panels/sequence_to_video.py:468
+#: ../vdms_panels/sequence_to_video.py:469
 msgid ""
 "Invalid file: '{}'\n"
 "\n"
@@ -3771,18 +3870,18 @@ msgstr ""
 "\n"
 "Похоже, это не аудиофайл."
 
-#: ../vdms_panels/sequence_to_video.py:564
-#: ../vdms_panels/sequence_to_video.py:591
-#: ../vdms_panels/video_to_sequence.py:503
+#: ../vdms_panels/sequence_to_video.py:565
+#: ../vdms_panels/sequence_to_video.py:592
+#: ../vdms_panels/video_to_sequence.py:504
 msgid "Invalid file: '{}'"
 msgstr "Недопустимый файл: '{}'"
 
-#: ../vdms_panels/sequence_to_video.py:574
-#: ../vdms_panels/sequence_to_video.py:599
+#: ../vdms_panels/sequence_to_video.py:575
+#: ../vdms_panels/sequence_to_video.py:600
 msgid "Unsupported format '{}'"
 msgstr "Неподдерживаемый формат '{}'"
 
-#: ../vdms_panels/sequence_to_video.py:718
+#: ../vdms_panels/sequence_to_video.py:719
 msgid ""
 "File to process\n"
 "Output filename\n"
@@ -3896,65 +3995,81 @@ msgstr ""
 "зависит от режима качества и сжатия, указанного выше."
 
 #: ../vdms_panels/video_to_sequence.py:49
+#| msgid ""
+#| "\n"
+#| "1. Import one or more video files, then select one.\n"
+#| "\n"
+#| "2. To select a slice of time use the \"Start\" \"End\" controls on the "
+#| "Trim bar.\n"
+#| "\n"
+#| "3. Select an output format (jpg, png, bmp).\n"
+#| "\n"
+#| "4. Start the conversion.\n"
+#| "\n"
+#| "\n"
+#| "The images produced will be saved in a folder named \"Movie_to_Pictures\" "
+#| "with a progressive digit, \n"
+#| "in the path you specify."
 msgid ""
 "\n"
 "1. Import one or more video files, then select one.\n"
 "\n"
-"2. To select a slice of time use the \"Start\" \"End\" controls on the Trim "
-"bar.\n"
+"2. To select a slice of time use the Timeline editor (CTRL+T) by adjusting "
+"the \"End\" and the \"Start\" duration values.\n"
 "\n"
 "3. Select an output format (jpg, png, bmp).\n"
 "\n"
 "4. Start the conversion.\n"
 "\n"
 "\n"
-"The images produced will be saved in a folder named \"Movie_to_Pictures\" "
-"with a progressive digit, \n"
+"The images produced will be saved in a folder named 'Movie_to_Pictures' with "
+"a progressive digit, \n"
 "in the path you specify."
 msgstr ""
 "\n"
 "1. Импортируйте один или несколько видеофайлов, затем выберите один.\n"
 "\n"
-"2. Чтобы выбрать отрезок времени, используйте элементы управления «Начало», "
-"«Конец» на панели Trim.\n"
+"2. Чтобы выбрать отрезок времени, используйте редактор временной шкалы (CTRL"
+"+T), настроив значения длительности «Конец» и «Начало».\n"
 "\n"
 "3. Выберите выходной формат (jpg, png, bmp).\n"
 "\n"
-"4. Начните преобразование.\n"
+"4. Запустите преобразование.\n"
 "\n"
 "\n"
-"Созданные изображения будут сохранены в папке с именем «Movie_to_Pictures» \n"
-" с последовательным номером папки по указанному вами пути."
+"The images produced will be saved in a folder named 'Movie_to_Pictures' with "
+"a progressive digit, \n"
+"in the path you specify."
 
-#: ../vdms_panels/video_to_sequence.py:83
+#: ../vdms_panels/video_to_sequence.py:84
 msgid "Create thumbnails"
 msgstr "Создание эскизов"
 
-#: ../vdms_panels/video_to_sequence.py:84
+#: ../vdms_panels/video_to_sequence.py:85
 msgid "Create tiled mosaics"
 msgstr "Создание мозаики из плиток"
 
-#: ../vdms_panels/video_to_sequence.py:85
+#: ../vdms_panels/video_to_sequence.py:86
 msgid "Create animated GIF"
 msgstr "Создать анимированный GIF"
 
-#: ../vdms_panels/video_to_sequence.py:87 ../vdms_ytdlp/youtubedl_ui.py:156
+#: ../vdms_panels/video_to_sequence.py:88 ../vdms_ytdlp/youtubedl_ui.py:156
 msgid "Options"
 msgstr "Параметры"
 
-#: ../vdms_panels/video_to_sequence.py:128
+#: ../vdms_panels/video_to_sequence.py:129
 msgid "Rows:"
 msgstr "Ряды:"
 
-#: ../vdms_panels/video_to_sequence.py:138
+#: ../vdms_panels/video_to_sequence.py:139
 msgid "Columns:"
 msgstr "Столбцы:"
 
-#: ../vdms_panels/video_to_sequence.py:204
+#: ../vdms_panels/video_to_sequence.py:205
 msgid "Other unofficial resources:"
 msgstr "Другие неофициальные ресурсы:"
 
-#: ../vdms_panels/video_to_sequence.py:228
+#: ../vdms_panels/video_to_sequence.py:229
 msgid ""
 "Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images "
 "will be extracted."
@@ -3962,15 +4077,15 @@ msgstr ""
 "Установите контроль FPS от 0,1 до 30,0 кадров в секунду. Чем выше это "
 "значение, тем больше изображений будет извлечено."
 
-#: ../vdms_panels/video_to_sequence.py:231
+#: ../vdms_panels/video_to_sequence.py:232
 msgid "Spaces around the mosaic tiles. From 0 to 32 pixels"
 msgstr "Пространства вокруг мозаичных плиток. От 0 до 32 пикселей"
 
-#: ../vdms_panels/video_to_sequence.py:233
+#: ../vdms_panels/video_to_sequence.py:234
 msgid "Spaces around the mosaic borders. From 0 to 32 pixels"
 msgstr "Пространства вокруг границ мозаики. От 0 до 32 пикселей"
 
-#: ../vdms_panels/video_to_sequence.py:612
+#: ../vdms_panels/video_to_sequence.py:613
 msgid ""
 "Selected File\n"
 "Output Format\n"
@@ -4379,6 +4494,41 @@ msgstr ""
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "URL-адреса содержат видеоканалы. Вы уверены, что хотите продолжить?"
 
+#~ msgid "File list changed, please check the settings again."
+#~ msgstr "Список файлов изменен, проверьте настройки еще раз."
+
+#~ msgid ""
+#~ "Cannot continue: The duration in the timeline exceeds the duration of "
+#~ "some queued files."
+#~ msgstr ""
+#~ "Невозможно продолжить: продолжительность на шкале времени превышает "
+#~ "продолжительность некоторых файлов в очереди."
+
+#~ msgid "Trim"
+#~ msgstr "Trim"
+
+#~ msgid "Start:"
+#~ msgstr "Начало:"
+
+#~ msgid "Stream duration. Click me for details."
+#~ msgstr ""
+#~ "Продолжительность трансляции. Нажмите на меня, чтобы узнать подробности."
+
+#~ msgid "End segment, in 24-hour format (HH:MM:SS)"
+#~ msgstr "Время окончания отрезка в 24-часовом формате (HH:MM:SS)"
+
+#~ msgid "Start point trimming, in 24-hour format (HH:MM:SS)"
+#~ msgstr "Начальная точка отрезка в 24-часовом формате (HH:MM:SS)"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Stream duration always refers to the file with the longest duration.\n"
+#~ "If the \"Duration\" data is missing, it will be set to {0}."
+#~ msgstr ""
+#~ "Продолжительность трансляции всегда относится к файлу с наибольшей "
+#~ "продолжительностью.\n"
+#~ " В противном случае для него будет установлено значение {0}"
+
 #~ msgid ""
 #~ "When finished, clean up\n"
 #~ "the imported file list"
@@ -4740,15 +4890,6 @@ msgstr "URL-адреса содержат видеоканалы. Вы увер�
 
 #~ msgid "Start hours"
 #~ msgstr "Часы"
-
-#~ msgid "Start minutes"
-#~ msgstr "Минуты"
-
-#~ msgid "Start milliseconds"
-#~ msgstr "Миллисекунды"
-
-#~ msgid "Show timeline\tCtrl+T"
-#~ msgstr "Показать шкалу времени\tCtrl+T"
 
 #~ msgid "Show panel for editing timeline (seek/duration)"
 #~ msgstr "Показать панель редактирования шкалы времени (поиск/длительность)"
