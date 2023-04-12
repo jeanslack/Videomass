@@ -286,6 +286,17 @@ class SetUp(wx.Dialog):
         msg = _("Download videos from YouTube.com and other video sites ")
         self.checkbox_ytdlp = wx.CheckBox(tabFour, wx.ID_ANY, (msg))
         sizerytdlp.Add(self.checkbox_ytdlp, 0, wx.ALL, 5)
+
+        # Adding the text input boxes
+        downloader_label = wx.StaticText(tabFour, wx.ID_ANY, _("External Downloader"))
+        sizerytdlp.Add(downloader_label, 0, wx.LEFT | wx.TOP | wx.BOTTOM, 5)
+        self.downloader_input = wx.TextCtrl(tabFour, wx.ID_ANY, "")
+        sizerytdlp.Add(self.downloader_input, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, 5)
+        downloader_args_label = wx.StaticText(tabFour, wx.ID_ANY, _("External Downloader args"))
+        sizerytdlp.Add(downloader_args_label, 0, wx.LEFT | wx.TOP | wx.BOTTOM, 5)
+        self.downloader_args_input = wx.TextCtrl(tabFour, wx.ID_ANY, "")
+        sizerytdlp.Add(self.downloader_args_input, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, 5)
+
         # ----
         tabFour.SetSizer(sizerytdlp)
         notebook.AddPage(tabFour, "yt-dlp")

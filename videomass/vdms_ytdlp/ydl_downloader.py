@@ -217,6 +217,8 @@ class YdlDownloader(Thread):
                 'postprocessors': self.opt['postprocessors'],
                 'logger': MyLogger(),
                 'progress_hooks': [my_hook],
+                'external_downloader': None, # None for default
+                'external_downloader_args': None, # List should be passed ["-j", "1", "-x", "1", "-s", "1"]
             }
             logwrite(ydl_opts, '', self.args['logname'])  # write log cmd
 
