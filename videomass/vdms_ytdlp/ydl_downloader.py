@@ -160,14 +160,13 @@ class YdlDownloader(Thread):
                      'logname': logname,
                      'countmax': len(varargs[1]),
                      }
-
         Thread.__init__(self)
         self.start()  # run()
 
     def run(self):
         """
         Apply the options passed by the user for the
-        download process with youtube_dl
+        download process with yt_dlp
 
         """
         for url, code in itertools.zip_longest(self.args['urls'],
@@ -194,9 +193,12 @@ class YdlDownloader(Thread):
 
             if self.stop_work_thread:
                 break
-            
+
             ydl_opts = {
                 'compat_opts': 'youtube-dl',
+                'external_downloader': self.appdata["external_downloader"],
+                'external_downloader_args':
+                    self.appdata["external_downloader_args"],
                 'format': format_code,
                 'extractaudio': self.opt['format'],
                 'outtmpl': f"{self.args['outdir']}/{outtmpl}",
@@ -217,8 +219,6 @@ class YdlDownloader(Thread):
                 'postprocessors': self.opt['postprocessors'],
                 'logger': MyLogger(),
                 'progress_hooks': [my_hook],
-                'external_downloader': self.appdata["external_downloader"],
-                'external_downloader_args': self.appdata["external_downloader_args"], 
             }
             logwrite(ydl_opts, '', self.args['logname'])  # write log cmd
 

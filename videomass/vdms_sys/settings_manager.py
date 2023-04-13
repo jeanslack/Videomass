@@ -145,13 +145,13 @@ class ConfigManager:
     "overwr_dl_files", "include_ID_name", "restrict_fname"
     "write_subtitle") (bool)
         Checkboxes option (see YouTube Downloader)
-    
+
     external_downloader (str):
         external downloader used by yt-dlp. Default is None
-    
+
     external_downloader_args (list):
         args used by external downloader in yt-dlp. Default is None
-        
+        List should be passed using aria2c ["-j", "1", "-x", "1", "-s", "1"]
 
     """
     VERSION = 6.0
