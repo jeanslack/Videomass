@@ -75,8 +75,8 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         self.w = 0  # rectangle width
         self.x = 0  # rectangle x axis
         self.y = 0  # rectangle y axis
-        self.horiz = 0
-        self.vert = 0
+        self.start_x = 0  # start x axis clicked
+        self.start_y = 0  # start y axis clicked
 
         wx.lib.statbmp.GenStaticBitmap.__init__(self, parent, -1,
                                                 bitmap, **kwargs)
@@ -90,29 +90,27 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
 
     def on_move(self, event):
         """
-        On mouse Dragging on area, only send
-        coordinates for rectangle drawing.
+        Dragging-mouse over the cropping area, it sends
+        the coordinates for drawing the rectangle.
         """
         self.SetCursor(wx.Cursor(wx.CURSOR_CROSS))
         if event.Dragging():
             pos = event.GetPosition()
             x, y = pos[0], pos[1]
-            w, h = self.horiz - x, self.vert - y
+            w, h = self.start_x - x, self.start_y - y  # opposite to mouse dir.
             self.onRedraw(x, y, w, h)
     # ------------------------------------------------------------------#
 
     def on_leftdown(self, event):
         """
-        Event on clicking the left mouse button
-        (start position clicked)
+        Left-click event. On mouse click stores the initial
+        positions in pixels for the x/y axis points.
         """
         pos = event.GetPosition()
-        self.horiz = pos[0]
-        self.vert = pos[1]
-        x, y = pos[0], pos[1]
-        w = self.horiz - x
-        h = self.vert - y
-        self.onRedraw(x, y, w, h)
+        self.start_x = pos[0]
+        self.start_y = pos[1]
+        w, h = 0, 0
+        self.onRedraw(self.start_x, self.start_y, w, h)
     # ------------------------------------------------------------------#
 
     def on_leftup(self, event):
@@ -124,8 +122,9 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         """
         self.SetCursor(wx.Cursor(wx.CURSOR_ARROW))
         pos = event.GetPosition()
-        x, y = min(self.horiz, pos[0]), min(self.vert, pos[1])
+        x, y = min(self.start_x, pos[0]), min(self.start_y, pos[1])
         w, h = abs(self.w), abs(self.h)
+        self.onRedraw(x, y, w, h)
         pub.sendMessage("TO_REAL_SCALE", msg=[x, y, w, h])
     # ------------------------------------------------------------------#
 
@@ -140,10 +139,10 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         dc.DrawBitmap(self.current_bmp, 0, 0, True)
         dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
         dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
-        dc.DrawRectangle(round(self.x),
-                         round(self.y),
-                         round(self.w),
-                         round(self.h),
+        dc.DrawRectangle(round(self.x + 1),
+                         round(self.y + 1),
+                         round(self.w + 1),
+                         round(self.h + 1),
                          )
     # ------------------------------------------------------------------#
 
@@ -161,10 +160,10 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         dc.DrawBitmap(self.current_bmp, 0, 0, True)
         dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
         dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
-        dc.DrawRectangle(round(self.x),
-                         round(self.y),
-                         round(self.w),
-                         round(self.h),
+        dc.DrawRectangle(round(self.x + 1),
+                         round(self.y + 1),
+                         round(self.w + 1),
+                         round(self.h + 1),
                          )
 
 
@@ -209,10 +208,8 @@ class Crop(wx.Dialog):
         self.v_height = kwa['height']
         # resizing values preserving aspect ratio for monitor
         self.toscale = 220 if self.v_height >= self.v_width else 350
-        self.h_ratio = round((self.v_height
-                             / self.v_width) * self.toscale)  # height
-        self.w_ratio = round((self.v_width
-                             / self.v_height) * self.h_ratio)  # width
+        self.h_ratio = round((self.v_height / self.v_width) * self.toscale)
+        self.w_ratio = round((self.v_width / self.v_height) * self.h_ratio)
         self.filename = kwa['filename']  # selected filename on queued list
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f'{Crop.TMPSRC}', f'{name}.png')  # image
