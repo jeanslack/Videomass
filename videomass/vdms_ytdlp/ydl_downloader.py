@@ -194,7 +194,7 @@ class YdlDownloader(Thread):
 
             if self.stop_work_thread:
                 break
-
+            
             ydl_opts = {
                 'compat_opts': 'youtube-dl',
                 'format': format_code,
@@ -217,8 +217,8 @@ class YdlDownloader(Thread):
                 'postprocessors': self.opt['postprocessors'],
                 'logger': MyLogger(),
                 'progress_hooks': [my_hook],
-                'external_downloader': None, # None for default
-                'external_downloader_args': None, # List should be passed ["-j", "1", "-x", "1", "-s", "1"]
+                'external_downloader': self.appdata["external_downloader"],
+                'external_downloader_args': self.appdata["external_downloader_args"], 
             }
             logwrite(ydl_opts, '', self.args['logname'])  # write log cmd
 

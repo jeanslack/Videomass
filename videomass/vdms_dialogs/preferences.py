@@ -288,13 +288,13 @@ class SetUp(wx.Dialog):
         sizerytdlp.Add(self.checkbox_ytdlp, 0, wx.ALL, 5)
 
         # Adding the text input boxes
-        downloader_label = wx.StaticText(tabFour, wx.ID_ANY, _("External Downloader"))
+        downloader_label = wx.StaticText(tabFour, wx.ID_ANY, ("External Downloader"))
         sizerytdlp.Add(downloader_label, 0, wx.LEFT | wx.TOP | wx.BOTTOM, 5)
-        self.downloader_input = wx.TextCtrl(tabFour, wx.ID_ANY, "")
+        self.downloader_input = wx.TextCtrl(tabFour, wx.ID_ANY, str(self.appdata["external_downloader"]))
         sizerytdlp.Add(self.downloader_input, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, 5)
-        downloader_args_label = wx.StaticText(tabFour, wx.ID_ANY, _("External Downloader args"))
+        downloader_args_label = wx.StaticText(tabFour, wx.ID_ANY, ("External Downloader args"))
         sizerytdlp.Add(downloader_args_label, 0, wx.LEFT | wx.TOP | wx.BOTTOM, 5)
-        self.downloader_args_input = wx.TextCtrl(tabFour, wx.ID_ANY, "")
+        self.downloader_args_input = wx.TextCtrl(tabFour, wx.ID_ANY, self.view_external_args())
         sizerytdlp.Add(self.downloader_args_input, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, 5)
 
         # ----
@@ -476,6 +476,8 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_cancel, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
+        self.Bind(wx.EVT_TEXT, self.set_external_downloader, self.downloader_input)
+        self.Bind(wx.EVT_TEXT, self.set_external_downloader_args, self.downloader_args_input)
         # --------------------------------------------#
         self.current_settings()  # call function for initialize setting layout
 
@@ -566,6 +568,35 @@ class SetUp(wx.Dialog):
             io_tools.openpath(self.appdata['logdir'])
         elif name == 'cache dir':
             io_tools.openpath(self.appdata['cachedir'])
+    # -------------------------------------------------------------------#
+
+    def set_external_downloader(self, event):
+        downloader = self.downloader_input.GetValue()
+        if str(downloader).lower().strip() == "none":
+            self.settings["external_downloader"] = None
+        elif str(downloader).strip() == "":
+            self.settings["external_downloader"] = None
+        else :
+            self.settings["external_downloader"] = downloader
+    # -------------------------------------------------------------------#
+    
+    def view_external_args(self):
+        # return " ".join(self.appdata["external_downloader_args"])
+        if self.appdata["external_downloader_args"] == None:
+            return "None"
+        else:
+            return " ".join(self.appdata["external_downloader_args"])
+    # -------------------------------------------------------------------#
+
+    def set_external_downloader_args(self, event):
+        # print(type(" ".join(self.appdata["external_downloader_args"])))
+        args = self.downloader_args_input.GetValue()
+        if str(args).lower().strip() == "none":
+            self.settings["external_downloader_args"] = None
+        elif str(args).strip() == "":
+            self.settings["external_downloader_args"] = None
+        else: 
+            self.settings["external_downloader_args"] = str(args).split(" ")
     # -------------------------------------------------------------------#
 
     def on_set_lang(self, event):

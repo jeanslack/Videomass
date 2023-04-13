@@ -145,10 +145,16 @@ class ConfigManager:
     "overwr_dl_files", "include_ID_name", "restrict_fname"
     "write_subtitle") (bool)
         Checkboxes option (see YouTube Downloader)
-
+    
+    external_downloader (str):
+        external downloader used by yt-dlp. Default is None
+    
+    external_downloader_args (list):
+        args used by external downloader in yt-dlp. Default is None
+        
 
     """
-    VERSION = 5.9
+    VERSION = 6.0
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputfile": f"{os.path.expanduser('~')}",
                        "outputfile_samedir": False,
@@ -186,6 +192,8 @@ class ConfigManager:
                        "include_ID_name": False,
                        "restrict_fname": True,
                        "write_subtitle": False,
+                       "external_downloader": None,
+                       "external_downloader_args": None,
                        }
 
     def __init__(self, filename, makeportable=None):
