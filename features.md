@@ -16,7 +16,7 @@ For the people that are familiar with FFmpeg, it has a highly customizable prese
 manager with the possbility to easily make your own presets through the GUI and 
 adapt this to your specific needs or create new presets using the FFmpeg command line. 
 For less experienced people there are also ready-to-use presets.
-It offers out of the box all possible file formats like MP4, M4V, M4A, MKV, AVI, 
+It offers out-of-the-box all possible file formats like MP4, M4V, M4A, MKV, AVI, 
 OGV, WEBM, MP3, AC-3, WAV, OPUS, FLAC, OGG and encoders like MPEG-4, H.264/AVC, 
 H.265/HEVC, VP8, VP9, LIBAOM-AVI, VORBIS, PCM, LAME, ALAC, etc.
 Also you can copy audio or video streams (lossless mode) without re-encoding, or 
@@ -47,12 +47,12 @@ extract audio from videos and much more!
 - Media file info (from FFprobe) and streams analyzer (from volumedetect).
 - Shows the estimated time of arrival during encodings.
 - Concatenate, merge media files losslessly.
-- Create videos from still images (multiple images are also supported) and optionally include an audio file.
+- Create Slideshows.
 - Extract images from video.
 - Ability to switch between different FFmpeg builds.
 - Has useful graphical tools for evaluating the supported features of a specific FFmpeg build.
 - Audio stream mapping using selectable indexes.
-- You can set both audio and video to copy when you just want to convert formats.
+- You can set both audio and video to copy when you just want to convert formats (lossless process).
 - Timeline editor to slice time segments or trim the duration of your media even 
 without re-encoding and therefore without loss of quality.
 - It has GUI video filters such as:
@@ -87,4 +87,5 @@ without re-encoding and therefore without loss of quality.
 - Write subtitles to video.
 - Ability to include IDs in filenames.
 - Ability to restrict file names.
+- Alternative downloaders like aria2c, avconv, axel, curl, ffmpeg, httpie, wget are also supported from version 5.0.1
 

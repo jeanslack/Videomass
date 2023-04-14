@@ -68,6 +68,7 @@ to date with the original project. The project development page can be found
 - [SwampRabbit](https://github.com/SwampRabbit)
 - [maijz128](https://github.com/maijz128)
 - [CComparon](https://github.com/CComparon)
+- [samarthshrivas](https://github.com/samarthshrivas)
 
 ---
 

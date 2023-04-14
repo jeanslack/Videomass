@@ -18,7 +18,7 @@ Minimum requirements:
 [Videomass 5.0.0 Portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v5.0.0_x86_64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
 [All Versions](https://github.com/jeanslack/Videomass/releases){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2}     
 
-### Important note
+### Warning
 {: .bg-red-300}
 
 A lot of antivirus vendors detect **Videomass installer** and **Videomass portable edition** 
