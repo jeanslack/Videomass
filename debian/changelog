@@ -1,3 +1,12 @@
+videomass (5.0.1-1) UNRELEASED; urgency=medium
+
+  * Update ru_RU translation
+  * [YouTube Downloader] External Downloader Support #222,
+    thanks to @samarthshrivas
+  * [A/V Conversions] Improved mouse crop area accuracy.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 14 Apr 2023 00:40:00 +0200
+
 videomass (5.0.0-1) UNRELEASED; urgency=medium
 
   * [Confirm Settings] checking "Move files to trash" the "clean up files list"

@@ -290,14 +290,13 @@ class SetUp(wx.Dialog):
                               _('External Downloader Preferences'))
         sizerytdlp.Add(labdw, 0, wx.ALL | wx.EXPAND, 5)
         msg = _("In addition to the default (native) one, yt-dlp currently\n"
-                "supports the following external downloaders:\n\n"
-                "aria2c, avconv, axel, curl, ffmpeg, httpie, wget.\n\n"
+                "supports the following external downloaders:\n"
+                "aria2c, avconv, axel, curl, ffmpeg, httpie, wget.\n"
                 "Please note that if you enable an external downloader, you\n"
                 "will not be able to view the progress bar during download\n"
                 "operations.")
         labdwmsg = wx.StaticText(tabFour, wx.ID_ANY, (msg))
         sizerytdlp.Add(labdwmsg, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-
         labextdw = wx.StaticText(tabFour, wx.ID_ANY,
                                  _("External downloader executable path"))
         sizerytdlp.Add(labextdw, 0, wx.LEFT | wx.TOP | wx.BOTTOM, 5)
@@ -306,9 +305,8 @@ class SetUp(wx.Dialog):
         sizerytdlp.Add(self.txtctrl_extdw, 0, wx.EXPAND | wx.LEFT | wx.RIGHT
                        | wx.BOTTOM, 5)
         labextdwargs = wx.StaticText(tabFour, wx.ID_ANY,
-                                     _("External downloader args"))
+                                     _("External downloader arguments"))
         sizerytdlp.Add(labextdwargs, 0, wx.LEFT | wx.TOP | wx.BOTTOM, 5)
-
         val = self.appdata["external_downloader_args"]
         args = " ".join(val) if isinstance(val, list) else 'None'
         self.txtctrl_extdw_args = wx.TextCtrl(tabFour, wx.ID_ANY, args)

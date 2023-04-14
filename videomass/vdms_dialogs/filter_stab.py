@@ -107,7 +107,7 @@ class VidstabSet(wx.Dialog):
         self.btn_snap = wx.Button(self, wx.ID_ANY, _("Preview"))
         self.btn_snap.Disable()
         boxtime.Add(self.btn_snap, 0, wx.LEFT | wx.CENTER, 20)
-        self.lab_dur = wx.StaticText(self, wx.ID_ANY, ("Duration seconds:"))
+        self.lab_dur = wx.StaticText(self, wx.ID_ANY, _("Duration seconds:"))
         boxtime.Add(self.lab_dur, 0, wx.LEFT | wx.CENTER, 20)
         self.spin_dur = wx.SpinCtrl(self, wx.ID_ANY, "5",
                                     min=3, max=15,

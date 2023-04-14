@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 5.0.0\n"
+"Project-Id-Version: Videomass 5.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-10 14:19+0200\n"
-"PO-Revision-Date: 2023-04-11 22:45+0200\n"
+"POT-Creation-Date: 2023-04-14 18:22+0200\n"
+"PO-Revision-Date: 2023-04-14 18:38+0200\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -50,12 +50,12 @@ msgstr ""
 "{0}"
 
 # Перевод всех отмеченных изменений на значение по умолчанию
-#: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:318
+#: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:310
 #: ../vdms_dialogs/filter_deinterlace.py:121
 #: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:209
 #: ../vdms_dialogs/filter_stab.py:317 ../vdms_dialogs/filter_transpose.py:105
 #: ../vdms_dialogs/filter_colorcorrection.py:187
-#: ../vdms_miniframes/timeline.py:259 ../vdms_miniframes/timeline.py:278
+#: ../vdms_miniframes/timeline.py:261 ../vdms_miniframes/timeline.py:280
 #: ../vdms_panels/av_conversions.py:389 ../vdms_ytdlp/playlist_indexing.py:128
 msgid "Reset"
 msgstr "Сброс"
@@ -123,38 +123,38 @@ msgstr ""
 msgid "Confirm Settings"
 msgstr "Подтвердить настройки"
 
-#: ../vdms_dialogs/filter_crop.py:243 ../vdms_dialogs/filter_scale.py:108
+#: ../vdms_dialogs/filter_crop.py:235 ../vdms_dialogs/filter_scale.py:108
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "Размер источника: {0} x {1} пикселей"
 
-#: ../vdms_dialogs/filter_crop.py:251
+#: ../vdms_dialogs/filter_crop.py:243
 #: ../vdms_dialogs/filter_colorcorrection.py:103
 msgid "Search for a specific frame"
 msgstr "Поиск определенного кадра"
 
-#: ../vdms_dialogs/filter_crop.py:265
+#: ../vdms_dialogs/filter_crop.py:257
 #: ../vdms_dialogs/filter_colorcorrection.py:117
 msgid "Load"
 msgstr "Загрузить"
 
-#: ../vdms_dialogs/filter_crop.py:268
+#: ../vdms_dialogs/filter_crop.py:260
 msgid "Cropping area selection "
 msgstr "Выбор области обрезки "
 
-#: ../vdms_dialogs/filter_crop.py:273 ../vdms_dialogs/filter_scale.py:120
+#: ../vdms_dialogs/filter_crop.py:265 ../vdms_dialogs/filter_scale.py:120
 msgid "Height"
 msgstr "Высота"
 
-#: ../vdms_dialogs/filter_crop.py:293
+#: ../vdms_dialogs/filter_crop.py:285
 msgid "Center"
 msgstr "Центр"
 
-#: ../vdms_dialogs/filter_crop.py:304 ../vdms_dialogs/filter_scale.py:120
+#: ../vdms_dialogs/filter_crop.py:296 ../vdms_dialogs/filter_scale.py:120
 msgid "Width"
 msgstr "Ширина"
 
-#: ../vdms_dialogs/filter_crop.py:323 ../vdms_dialogs/filter_deinterlace.py:120
+#: ../vdms_dialogs/filter_crop.py:315 ../vdms_dialogs/filter_deinterlace.py:120
 #: ../vdms_dialogs/filter_denoisers.py:83 ../vdms_dialogs/filter_scale.py:207
 #: ../vdms_dialogs/filter_stab.py:315 ../vdms_dialogs/filter_transpose.py:110
 #: ../vdms_dialogs/set_timestamp.py:148
@@ -163,23 +163,23 @@ msgstr "Ширина"
 msgid "Apply"
 msgstr "Применить"
 
-#: ../vdms_dialogs/filter_crop.py:338
+#: ../vdms_dialogs/filter_crop.py:330
 msgid "Crop Filter"
 msgstr "Фильтр Обрезка"
 
-#: ../vdms_dialogs/filter_crop.py:339
+#: ../vdms_dialogs/filter_crop.py:331
 msgid "Crop to width"
 msgstr "Обрезать по ширине"
 
-#: ../vdms_dialogs/filter_crop.py:340
+#: ../vdms_dialogs/filter_crop.py:332
 msgid "Move vertically - set to -1 to center the vertical axis"
 msgstr "Вертикальное положение верхнего левого угла"
 
-#: ../vdms_dialogs/filter_crop.py:342
+#: ../vdms_dialogs/filter_crop.py:334
 msgid "Move horizontally - set to -1 to center the horizontal axis"
 msgstr "Горизонтальное положение верхнего левого угла"
 
-#: ../vdms_dialogs/filter_crop.py:344
+#: ../vdms_dialogs/filter_crop.py:336
 msgid "Crop to height"
 msgstr "Обрезать по высоте"
 
@@ -326,8 +326,8 @@ msgstr ""
 
 #: ../vdms_dialogs/filter_scale.py:75 ../vdms_dialogs/ffmpeg_help.py:117
 #: ../vdms_dialogs/shownormlist.py:98 ../vdms_dialogs/shownormlist.py:107
-#: ../vdms_dialogs/shownormlist.py:116 ../vdms_miniframes/timeline.py:260
-#: ../vdms_miniframes/timeline.py:280 ../vdms_panels/concatenate.py:109
+#: ../vdms_dialogs/shownormlist.py:116 ../vdms_miniframes/timeline.py:262
+#: ../vdms_miniframes/timeline.py:282 ../vdms_panels/concatenate.py:109
 #: ../vdms_panels/sequence_to_video.py:117
 #: ../vdms_panels/video_to_sequence.py:79
 msgid "Read me"
@@ -427,6 +427,12 @@ msgstr "Создать снимок"
 #: ../vdms_dialogs/filter_stab.py:107 ../vdms_panels/av_conversions.py:383
 msgid "Preview"
 msgstr "Предпросмотр"
+
+#: ../vdms_dialogs/filter_stab.py:110
+#, fuzzy
+#| msgid "Duration seconds"
+msgid "Duration seconds:"
+msgstr "Секунды"
 
 #: ../vdms_dialogs/filter_stab.py:119
 msgid "Video Detect"
@@ -799,8 +805,8 @@ msgstr ""
 "текстовые поля ниже, нажав соответствующие кнопки."
 
 #: ../vdms_dialogs/wizard_dlg.py:345 ../vdms_dialogs/wizard_dlg.py:362
-#: ../vdms_dialogs/wizard_dlg.py:380 ../vdms_dialogs/preferences.py:734
-#: ../vdms_dialogs/preferences.py:776 ../vdms_dialogs/preferences.py:819
+#: ../vdms_dialogs/wizard_dlg.py:380 ../vdms_dialogs/preferences.py:784
+#: ../vdms_dialogs/preferences.py:826 ../vdms_dialogs/preferences.py:869
 msgid "Choose the {} executable"
 msgstr "Выберите исполняемый файл {}"
 
@@ -1031,15 +1037,15 @@ msgstr "Разное"
 msgid "Where do you prefer to save your transcodes?"
 msgstr "Где вы предпочитаете сохранять перекодировки?"
 
-#: ../vdms_dialogs/preferences.py:171
+#: ../vdms_dialogs/preferences.py:170
 msgid "Save each file in the same folder as input file"
 msgstr "Сохраняет каждый файл в той же папке, что и входной файл"
 
-#: ../vdms_dialogs/preferences.py:176
+#: ../vdms_dialogs/preferences.py:175
 msgid "Assign optional suffix to output file names:"
 msgstr "Добавить необязательный суффикс к именам выходных файлов:"
 
-#: ../vdms_dialogs/preferences.py:181
+#: ../vdms_dialogs/preferences.py:180
 msgid ""
 "Always move source files to the Videomass\n"
 "trash folder after successful encoding"
@@ -1047,56 +1053,80 @@ msgstr ""
 "Всегда перемещать исходные файлы в корзину Videomass \n"
 "после успешного преобразования"
 
-#: ../vdms_dialogs/preferences.py:201
+#: ../vdms_dialogs/preferences.py:200
 msgid "Where do you prefer to save your downloads?"
 msgstr "Где вы предпочитаете сохранять загрузки?"
 
-#: ../vdms_dialogs/preferences.py:213
+#: ../vdms_dialogs/preferences.py:212
 msgid "Auto-create subfolders when downloading playlists"
 msgstr "Автоматически создавать подпапки при загрузке плейлистов"
 
 # Изменил 14-5-2021
-#: ../vdms_dialogs/preferences.py:217
+#: ../vdms_dialogs/preferences.py:216
 msgid "File Preferences"
 msgstr "Файл"
 
-#: ../vdms_dialogs/preferences.py:224
+#: ../vdms_dialogs/preferences.py:223
 msgid "Path to the executables"
 msgstr "Путь к исполняемым файлам"
 
-#: ../vdms_dialogs/preferences.py:227
+#: ../vdms_dialogs/preferences.py:226
 msgid "Enable another location to run FFmpeg"
 msgstr "Включить другое место для запуска FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:240
+#: ../vdms_dialogs/preferences.py:239
 msgid "Enable another location to run FFprobe"
 msgstr "Включить другое место для запуска FFprobe"
 
-#: ../vdms_dialogs/preferences.py:253
+#: ../vdms_dialogs/preferences.py:252
 msgid "Enable another location to run FFplay"
 msgstr "Включить другое место для запуска FFplay"
 
-#: ../vdms_dialogs/preferences.py:265
+#: ../vdms_dialogs/preferences.py:264
 msgid "Other options"
 msgstr "Другие опции"
 
-#: ../vdms_dialogs/preferences.py:269
+#: ../vdms_dialogs/preferences.py:268
 msgid "Threads used for transcoding (from 0 to 32):"
 msgstr "Потоки, используемые для перекодирования (от 0 до 32):"
 
-#: ../vdms_dialogs/preferences.py:280
+#: ../vdms_dialogs/preferences.py:279
 msgid "FFmpeg"
 msgstr "FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:286
-msgid "Download videos from YouTube.com and other video sites "
+#: ../vdms_dialogs/preferences.py:285
+#, fuzzy
+#| msgid "Download videos from YouTube.com and other video sites "
+msgid "Download videos from YouTube.com and other video sites"
 msgstr "Скачивайте видео с YouTube.com и других видеосайтов "
 
-#: ../vdms_dialogs/preferences.py:297
+#: ../vdms_dialogs/preferences.py:290
+msgid "External Downloader Preferences"
+msgstr ""
+
+#: ../vdms_dialogs/preferences.py:292
+msgid ""
+"In addition to the default (native) one, yt-dlp currently\n"
+"supports the following external downloaders:\n"
+"aria2c, avconv, axel, curl, ffmpeg, httpie, wget.\n"
+"Please note that if you enable an external downloader, you\n"
+"will not be able to view the progress bar during download\n"
+"operations."
+msgstr ""
+
+#: ../vdms_dialogs/preferences.py:301
+msgid "External downloader executable path"
+msgstr ""
+
+#: ../vdms_dialogs/preferences.py:308
+msgid "External downloader arguments"
+msgstr ""
+
+#: ../vdms_dialogs/preferences.py:323
 msgid "Icon themes"
 msgstr "Темы значков"
 
-#: ../vdms_dialogs/preferences.py:299
+#: ../vdms_dialogs/preferences.py:325
 msgid ""
 "The chosen icon theme will only change the icons,\n"
 "background and foreground of some text fields."
@@ -1104,44 +1134,44 @@ msgstr ""
 "Выбранная тема значка изменит только значки, фон\n"
 "и передний план некоторых текстовых полей."
 
-#: ../vdms_dialogs/preferences.py:319
+#: ../vdms_dialogs/preferences.py:345
 msgid "Toolbar customization"
 msgstr "Настройка панели инструментов"
 
-#: ../vdms_dialogs/preferences.py:321
+#: ../vdms_dialogs/preferences.py:347
 msgid "At the top of window (default)"
 msgstr "Вверху (по умолчанию)"
 
-#: ../vdms_dialogs/preferences.py:322
+#: ../vdms_dialogs/preferences.py:348
 msgid "At the bottom of window"
 msgstr "Внизу"
 
-#: ../vdms_dialogs/preferences.py:323
+#: ../vdms_dialogs/preferences.py:349
 msgid "At the right of window"
 msgstr "Справа"
 
 # слева от окна или в левой части окна?
-#: ../vdms_dialogs/preferences.py:324
+#: ../vdms_dialogs/preferences.py:350
 msgid "At the left of window"
 msgstr "Слева"
 
-#: ../vdms_dialogs/preferences.py:326
+#: ../vdms_dialogs/preferences.py:352
 msgid "Place the toolbar"
 msgstr "Разместите панель инструментов"
 
-#: ../vdms_dialogs/preferences.py:336
+#: ../vdms_dialogs/preferences.py:362
 msgid "Icon size:"
 msgstr "Размер значка:"
 
-#: ../vdms_dialogs/preferences.py:349
+#: ../vdms_dialogs/preferences.py:375
 msgid "Shows the text in the toolbar buttons"
 msgstr "Показывает текст на кнопках панели инструментов"
 
-#: ../vdms_dialogs/preferences.py:354
+#: ../vdms_dialogs/preferences.py:380
 msgid "Appearance"
 msgstr "Вид"
 
-#: ../vdms_dialogs/preferences.py:361
+#: ../vdms_dialogs/preferences.py:387
 msgid ""
 "The following settings affect output messages and\n"
 "the log messages during transcoding processes.\n"
@@ -1151,24 +1181,24 @@ msgstr ""
 "сообщения журнала во время процессов перекодирования.\n"
 "Изменяйте, только если знаете, что делаете.\n"
 
-#: ../vdms_dialogs/preferences.py:382
+#: ../vdms_dialogs/preferences.py:408
 msgid "FFmpeg logging levels"
 msgstr "Комплект log-журналов FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:402 ../vdms_main/main_frame.py:580
+#: ../vdms_dialogs/preferences.py:428 ../vdms_main/main_frame.py:580
 #: ../vdms_panels/av_conversions.py:471 ../vdms_ytdlp/main_ytdlp.py:298
 msgid "Settings"
 msgstr "Настройки"
 
-#: ../vdms_dialogs/preferences.py:432
+#: ../vdms_dialogs/preferences.py:462
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr "Назначив дополнительный суффикс, вы можете избежать перезаписи файлов"
 
-#: ../vdms_dialogs/preferences.py:586
+#: ../vdms_dialogs/preferences.py:618
 msgid "Set a persistent location to save exported files"
 msgstr "Установите постоянное место для сохранения экспортированных файлов"
 
-#: ../vdms_dialogs/preferences.py:618
+#: ../vdms_dialogs/preferences.py:650
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Spaces are not allowed."
@@ -1176,11 +1206,11 @@ msgstr ""
 "Вводите только буквенно-цифровые символы. Вы также можете использовать дефис "
 "(\"-\") и подчеркивание (\"_\"). Пробелы не допускаются."
 
-#: ../vdms_dialogs/preferences.py:666
+#: ../vdms_dialogs/preferences.py:698
 msgid "Choose a new destination for the files to be trashed"
 msgstr "Выберите новое место для файлов, которые нужно удалить"
 
-#: ../vdms_dialogs/preferences.py:683
+#: ../vdms_dialogs/preferences.py:715
 msgid "Set a persistent location to save the file downloads"
 msgstr "Установите постоянное место для сохранения скачанных файлов"
 
@@ -1771,34 +1801,34 @@ msgstr "Секунды"
 msgid "Milliseconds"
 msgstr "Миллисекунды"
 
-#: ../vdms_miniframes/timeline.py:189 ../vdms_miniframes/timeline.py:309
+#: ../vdms_miniframes/timeline.py:188 ../vdms_miniframes/timeline.py:311
 msgid "No source duration:"
 msgstr "Нет длительности источника:"
 
-#: ../vdms_miniframes/timeline.py:210 ../vdms_miniframes/timeline.py:295
-#: ../vdms_miniframes/timeline.py:335 ../vdms_miniframes/timeline.py:340
-#: ../vdms_miniframes/timeline.py:439
+#: ../vdms_miniframes/timeline.py:208 ../vdms_miniframes/timeline.py:297
+#: ../vdms_miniframes/timeline.py:337 ../vdms_miniframes/timeline.py:342
+#: ../vdms_miniframes/timeline.py:445
 #, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr "{0} {1}  |  Продолжительность сегмента: {2}"
 
-#: ../vdms_miniframes/timeline.py:257 ../vdms_miniframes/timeline.py:274
+#: ../vdms_miniframes/timeline.py:259 ../vdms_miniframes/timeline.py:276
 msgid "End adjustment"
 msgstr "Регулировка \"Конец\""
 
-#: ../vdms_miniframes/timeline.py:258 ../vdms_miniframes/timeline.py:276
+#: ../vdms_miniframes/timeline.py:260 ../vdms_miniframes/timeline.py:278
 msgid "Start adjustment"
 msgstr "Регулировка \"Начало\""
 
-#: ../vdms_miniframes/timeline.py:320
+#: ../vdms_miniframes/timeline.py:322
 msgid "Source duration:"
 msgstr "Длительность источника:"
 
-#: ../vdms_miniframes/timeline.py:388
+#: ../vdms_miniframes/timeline.py:391
 msgid "WARNING: Invalid selection, out of range."
 msgstr "WARNING: Неверный выбор, вне допустимого диапазона."
 
-#: ../vdms_miniframes/timeline.py:459
+#: ../vdms_miniframes/timeline.py:465
 msgid ""
 "Start by dragging the bottom left handle,\n"
 "or right-click for options."
@@ -1806,15 +1836,15 @@ msgstr ""
 "Начните с перетаскивания нижнего левого маркера \n"
 "или щелкните правой кнопкой мыши для выбора параметров."
 
-#: ../vdms_miniframes/timeline.py:493
+#: ../vdms_miniframes/timeline.py:500
 msgid "Start"
 msgstr "Начало"
 
-#: ../vdms_miniframes/timeline.py:494
+#: ../vdms_miniframes/timeline.py:501
 msgid "End"
 msgstr "Конец"
 
-#: ../vdms_miniframes/timeline.py:542
+#: ../vdms_miniframes/timeline.py:549
 msgid ""
 "The timeline editor is a tool that allows you to trim slices of time on "
 "selected imported media (see Queued Files panel).\n"
@@ -1855,7 +1885,7 @@ msgstr ""
 "такой как продолжительность сегмента и Warnings, см. сообщения в строке "
 "состояния."
 
-#: ../vdms_miniframes/timeline.py:559
+#: ../vdms_miniframes/timeline.py:566
 msgid "Timeline Editor Usage"
 msgstr "Использование редактора Timeline"
 
@@ -3755,24 +3785,45 @@ msgstr ""
 "размера."
 
 #: ../vdms_panels/sequence_to_video.py:74
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "1. Import one or more image files such as JPG, PNG and BMP formats, then "
+#| "select one.\n"
+#| "\n"
+#| "2. Use the Resizing function to resize images which have different sizes "
+#| "such as width and height. It is optional in other cases.\n"
+#| "\n"
+#| "3. Use the Timeline editor (CTRL+T) to set the time interval between "
+#| "images by adjusting the \"End\" duration value and\n"
+#| "leaving the \"Start\" value at 00:00:00.000.\n"
+#| "\n"
+#| "4. Run the conversion.\n"
+#| "\n"
+#| "\n"
+#| "The produced video will have the name of the selected file in the 'Queued "
+#| "File' list, which will be saved in a folder named 'Still_Images'\n"
+#| "with a progressive digit, in the path you specify."
 msgid ""
 "\n"
 "1. Import one or more image files such as JPG, PNG and BMP formats, then "
 "select one.\n"
 "\n"
 "2. Use the Resizing function to resize images which have different sizes "
-"such as width and height. It is optional in other cases.\n"
+"such as width and\n"
+"height. It is optional in other cases.\n"
 "\n"
 "3. Use the Timeline editor (CTRL+T) to set the time interval between images "
-"by adjusting the \"End\" duration value and\n"
-"leaving the \"Start\" value at 00:00:00.000.\n"
+"by adjusting\n"
+"the \"End\" duration value and leaving the \"Start\" value at 00:00:00.000.\n"
 "\n"
 "4. Run the conversion.\n"
 "\n"
 "\n"
 "The produced video will have the name of the selected file in the 'Queued "
-"File' list, which will be saved in a folder named 'Still_Images'\n"
-"with a progressive digit, in the path you specify."
+"File' list, which\n"
+"will be saved in a folder named 'Still_Images' with a progressive digit, in "
+"the path you specify."
 msgstr ""
 "\n"
 "1. Импортируйте один или несколько файлов изображений, таких как форматы "
@@ -3972,21 +4023,37 @@ msgstr ""
 "зависит от режима качества и сжатия, указанного выше."
 
 #: ../vdms_panels/video_to_sequence.py:49
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "1. Import one or more video files, then select one.\n"
+#| "\n"
+#| "2. To select a slice of time use the Timeline editor (CTRL+T) by "
+#| "adjusting the \"End\" and the \"Start\" duration values.\n"
+#| "\n"
+#| "3. Select an output format (jpg, png, bmp).\n"
+#| "\n"
+#| "4. Start the conversion.\n"
+#| "\n"
+#| "\n"
+#| "The images produced will be saved in a folder named 'Movie_to_Pictures' "
+#| "with a progressive digit, \n"
+#| "in the path you specify."
 msgid ""
 "\n"
 "1. Import one or more video files, then select one.\n"
 "\n"
 "2. To select a slice of time use the Timeline editor (CTRL+T) by adjusting "
-"the \"End\" and the \"Start\" duration values.\n"
+"the\n"
+"\"End\" and the \"Start\" duration values.\n"
 "\n"
 "3. Select an output format (jpg, png, bmp).\n"
 "\n"
 "4. Start the conversion.\n"
 "\n"
 "\n"
-"The images produced will be saved in a folder named 'Movie_to_Pictures' with "
-"a progressive digit, \n"
-"in the path you specify."
+"The images produced will be saved in a folder named 'Movie_to_Pictures'\n"
+"with a progressive digit, in the path you specify."
 msgstr ""
 "\n"
 "1. Импортируйте один или несколько видеофайлов, затем выберите один.\n"
@@ -4842,9 +4909,6 @@ msgstr "URL-адреса содержат видеоканалы. Вы увер�
 
 #~ msgid "Duration minutes"
 #~ msgstr "Минуты"
-
-#~ msgid "Duration seconds"
-#~ msgstr "Секунды"
 
 #~ msgid "Duration milliseconds"
 #~ msgstr "Миллисекунды"
