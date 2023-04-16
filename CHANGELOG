@@ -7,6 +7,14 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Fri, 14 April 2023 V.5.0.1
+
+  * Update ru_RU translation
+  * [YouTube Downloader] External Downloader Support #222,
+    thanks to @samarthshrivas
+  * [A/V Conversions] Improved mouse crop area accuracy.
+
++------------------------------------+
 Tue, 11 April 2023 V.5.0.0
 
   * [Confirm Settings] checking "Move files to trash" the "clean up files list"

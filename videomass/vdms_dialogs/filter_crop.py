@@ -94,7 +94,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         the coordinates for drawing the rectangle.
         """
         self.SetCursor(wx.Cursor(wx.CURSOR_CROSS))
-        if event.Dragging():
+        if event.Dragging() and event.LeftIsDown():
             pos = event.GetPosition()
             x, y = pos[0], pos[1]
             w, h = self.start_x - x, self.start_y - y  # opposite to mouse dir.
@@ -124,6 +124,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         pos = event.GetPosition()
         x, y = min(self.start_x, pos[0]), min(self.start_y, pos[1])
         w, h = abs(self.w), abs(self.h)
+        self.start_x, self.start_y = 0, 0
         self.onRedraw(x, y, w, h)
         pub.sendMessage("TO_REAL_SCALE", msg=[x, y, w, h])
     # ------------------------------------------------------------------#

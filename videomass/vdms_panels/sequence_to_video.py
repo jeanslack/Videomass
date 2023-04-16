@@ -74,15 +74,15 @@ class SequenceToVideo(wx.Panel):
     MSG_1 = _("\n1. Import one or more image files such as JPG, PNG and BMP "
               "formats, then select one."
               "\n\n2. Use the Resizing function to resize images which "
-              "have different sizes such as width and height. "
+              "have different sizes such as width and\nheight. "
               "It is optional in other cases."
               "\n\n3. Use the Timeline editor (CTRL+T) to set the time "
-              "interval between images by adjusting the \"End\" duration "
-              "value and\nleaving the \"Start\" value at 00:00:00.000."
+              "interval between images by adjusting\nthe \"End\" duration "
+              "value and leaving the \"Start\" value at 00:00:00.000."
               "\n\n4. Run the conversion."
               "\n\n\nThe produced video will have the name of the selected "
-              "file in the 'Queued File' list, which will be saved in a "
-              "folder named 'Still_Images'\nwith a progressive digit, "
+              "file in the 'Queued File' list, which\nwill be saved in a "
+              "folder named 'Still_Images' with a progressive digit, "
               "in the path you specify.")
     # ---------------------------------------------------------------------
 
