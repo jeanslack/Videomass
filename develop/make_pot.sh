@@ -35,6 +35,7 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_dialogs/filter_scale.py" \
 "../vdms_dialogs/filter_stab.py" \
 "../vdms_dialogs/filter_transpose.py" \
+"../vdms_dialogs/list_warning.py" \
 "../vdms_dialogs/wizard_dlg.py" \
 "../vdms_dialogs/about.py" \
 "../vdms_dialogs/presets_addnew.py" \

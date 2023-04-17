@@ -2,10 +2,13 @@ videomass (5.0.1-1) UNRELEASED; urgency=medium
 
   * Update ru_RU translation
   * [YouTube Downloader] External Downloader Support #222,
-    thanks to @samarthshrivas
+    thanks to @samarthshrivas .
   * [A/V Conversions] Improved mouse crop area accuracy.
+  * Added new feature: Rejected file list dialog #224 .
+  * Added new feature: Rejected URL list dialog.
+  * Improved check dialog for already existing files and for missing files.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 14 Apr 2023 00:40:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 17 Apr 2023 00:40:00 +0200
 
 videomass (5.0.0-1) UNRELEASED; urgency=medium
 

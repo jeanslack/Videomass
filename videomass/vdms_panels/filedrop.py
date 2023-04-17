@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.16.2023
+Rev: April.17.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -33,6 +33,7 @@ from videomass.vdms_threads.ffprobe import ffprobe
 from videomass.vdms_utils.utils import get_milliseconds
 from videomass.vdms_utils.utils import to_bytes
 from videomass.vdms_dialogs.renamer import Renamer
+from videomass.vdms_dialogs.list_warning import ListWarning
 
 
 def fullpathname_sanitize(fullpathfilename):
@@ -100,15 +101,6 @@ class MyListCtrl(wx.ListCtrl):
     This is the listControl widget.
     Note that this wideget has DnDPanel parented.
     """
-    AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
-    RED = '#ea312d'
-    YELLOW = '#bd9f00'
-    GREENOLIVE = '#6aaf23'
-    ORANGE = '#f28924'
-    WHITE = '#fbf4f4'  # white for background status bar
-    BLACK = '#060505'  # black for background status bar
-    # ----------------------------------------------------------------------
-
     def __init__(self, parent):
         """
         Constructor.
@@ -123,6 +115,7 @@ class MyListCtrl(wx.ListCtrl):
         self.file_src = self.parent.file_src
         self.duration = self.parent.duration
         self.outputnames = self.parent.outputnames
+        self.errors = {}
         wx.ListCtrl.__init__(self,
                              parent,
                              style=wx.LC_REPORT
@@ -141,6 +134,7 @@ class MyListCtrl(wx.ListCtrl):
         self.InsertColumn(3, _('Media type'), width=200)
         self.InsertColumn(4, _('Size'), width=150)
         self.InsertColumn(5, _('Output file name'), width=200)
+    # ----------------------------------------------------------------------#
 
     def dropUpdate(self, path, newname=None):
         """
@@ -153,18 +147,14 @@ class MyListCtrl(wx.ListCtrl):
         self.index = self.GetItemCount()
         warn = fullpathname_sanitize(path)  # check for fullname sanitize
         if warn:
-            self.parent.statusbar_msg(warn,
-                                      MyListCtrl.ORANGE,
-                                      MyListCtrl.WHITE
-                                      )
+            self.errors[f'"{path}"'] = warn
             return
 
         if not [x for x in self.data if x['format']['filename'] == path]:
             probe = ffprobe(path, self.ffprobe_cmd,
                             hide_banner=None, pretty=None)
             if probe[1]:
-                self.parent.statusbar_msg(probe[1], MyListCtrl.RED,
-                                          MyListCtrl.WHITE)
+                self.errors[f'"{path}"'] = probe[1]
                 return
 
             probe = probe[0]
@@ -201,13 +191,28 @@ class MyListCtrl(wx.ListCtrl):
             self.data.append(probe)
             self.file_src.append(path)
             self.duration.append(probe['format']['duration'])
-            self.parent.statusbar_msg('', None)
+            # self.parent.statusbar_msg('', None)
             self.parent.changes_in_progress()
         else:
-            mess = _("Duplicate files are rejected: > {}").format(path)
-            self.parent.statusbar_msg(mess, MyListCtrl.YELLOW,
-                                      MyListCtrl.BLACK)
+            mess = _("Duplicate file, it has already been added to the list.")
+            self.errors[f'"{path}"'] = mess
     # ----------------------------------------------------------------------#
+
+    def rejected_files(self):
+        """
+        Handles all rejected files if any
+        """
+        if self.errors:
+            msg = _('Files that have been rejected. For details, see\n'
+                    'the specified error message next to each path name:')
+            with ListWarning(self,
+                             self.errors,
+                             caption=_('Rejected Files'),
+                             header=msg,
+                             buttons='OK',
+                             ) as log:
+                log.ShowModal()
+            self.errors.clear()  # clear values here
 
 
 class FileDrop(wx.FileDropTarget):
@@ -231,6 +236,7 @@ class FileDrop(wx.FileDropTarget):
         """
         for filepath in filenames:
             self.window.dropUpdate(filepath)  # update list control
+        self.window.rejected_files()  # call parent.rejected_files at end
 
         return True
     # ----------------------------------------------------------------------#
@@ -508,14 +514,6 @@ class FileDnD(wx.Panel):
         """
         self.text_path_save.SetValue("")
         self.text_path_save.AppendText(path)
-    # -----------------------------------------------------------------------
-
-    def statusbar_msg(self, mess, bcolor, fcolor=None):
-        """
-        Set a status bar message of the parent method.
-        bcolor: background, fcolor: foreground
-        """
-        self.parent.statusbar_msg(f'{mess}', bcolor, fcolor)
     # -----------------------------------------------------------------------
 
     def renaming_file(self):

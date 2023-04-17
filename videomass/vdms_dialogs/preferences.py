@@ -48,8 +48,8 @@ class SetUp(wx.Dialog):
     FFMPEG_LOGLEV = [("error (Show all errors)"),
                      ("warning (Show all warnings and errors)"),
                      ("info (Show informative messages during processing)"),
-                     ("verbose (Same as `info`, except more verbose.)"),
-                     ("debug (Show everything, including debugging info.)")
+                     ("verbose (Same as `info`, except more verbose)"),
+                     ("debug (Show everything, including debugging info)")
                      ]
     # -----------------------------------------------------------------
 
@@ -282,7 +282,10 @@ class SetUp(wx.Dialog):
         tabFour = wx.Panel(notebook, wx.ID_ANY)
         sizerytdlp = wx.BoxSizer(wx.VERTICAL)
         sizerytdlp.Add((0, 30))
-        msg = _("Download videos from YouTube.com and other video sites")
+        msg = _('Download videos from YouTube.com and other video sites')
+        labytdlp = wx.StaticText(tabFour, wx.ID_ANY, msg)
+        sizerytdlp.Add(labytdlp, 0, wx.ALL | wx.EXPAND, 5)
+        msg = _("Enable/Disable yt-dlp")
         self.checkbox_ytdlp = wx.CheckBox(tabFour, wx.ID_ANY, (msg))
         sizerytdlp.Add(self.checkbox_ytdlp, 0, wx.ALL, 5)
         sizerytdlp.Add((0, 15))
@@ -297,8 +300,8 @@ class SetUp(wx.Dialog):
                 "operations.")
         labdwmsg = wx.StaticText(tabFour, wx.ID_ANY, (msg))
         sizerytdlp.Add(labdwmsg, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        labextdw = wx.StaticText(tabFour, wx.ID_ANY,
-                                 _("External downloader executable path"))
+        msg = _("External downloader executable path")
+        labextdw = wx.StaticText(tabFour, wx.ID_ANY, msg)
         sizerytdlp.Add(labextdw, 0, wx.LEFT | wx.TOP | wx.BOTTOM, 5)
         exedw = str(self.appdata["external_downloader"])
         self.txtctrl_extdw = wx.TextCtrl(tabFour, wx.ID_ANY, exedw)
@@ -372,7 +375,7 @@ class SetUp(wx.Dialog):
         if 'wx.svg' not in sys.modules:  # only in wx version 4.1 to up
             self.cmbx_iconsSize.Disable()
             lab1_appearance.Disable()
-        msg = _("Shows the text in the toolbar buttons")
+        msg = _("Shows text in the toolbar buttons")
         self.checkbox_tbtext = wx.CheckBox(tabFive, wx.ID_ANY, (msg))
         sizerAppearance.Add(self.checkbox_tbtext, 0, wx.ALL, 5)
 
@@ -436,6 +439,7 @@ class SetUp(wx.Dialog):
             labdown.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFexec.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFopt.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labytdlp.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdw.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdwmsg.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labTheme.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -451,6 +455,7 @@ class SetUp(wx.Dialog):
             labdown.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFexec.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFopt.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labytdlp.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdw.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdwmsg.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labTheme.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))

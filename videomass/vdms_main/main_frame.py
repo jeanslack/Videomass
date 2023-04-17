@@ -688,6 +688,7 @@ class MainFrame(wx.Frame):
             paths = filedlg.GetPaths()
             for path in paths:
                 self.fileDnDTarget.flCtrl.dropUpdate(path)
+            self.fileDnDTarget.flCtrl.rejected_files()
     # -------------------------------------------------------------------#
 
     def openMyconversions(self, event):
