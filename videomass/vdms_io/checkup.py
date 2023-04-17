@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.02.2022
+Rev: April.17.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,6 +26,7 @@ This file is part of Videomass.
 """
 import os
 import wx
+from videomass.vdms_dialogs.list_warning import ListWarning
 
 
 def check_inout(file_sources, file_dest):
@@ -36,25 +37,36 @@ def check_inout(file_sources, file_dest):
 
     """
     # --------------- CHECK FOR OVERWRITING:
-    files_exist = []  # already exist file LIST
+    files_ow = []  # already exist file LIST
+    files_exist = []
     for files in file_dest:
         if os.path.exists(files):
-            files_exist.append(files)
+            files_ow.append(f'"{files}"')
 
-    if files_exist:
-        if wx.MessageBox(_('Already exist: \n\n{}\n\n'
-                           'Do you want to overwrite? ').format(
-                         '\n'.join(files_exist)),
-                         _('Please Confirm'),
-                         wx.ICON_QUESTION | wx.YES_NO, None) == wx.NO:
-            return None
-    # --------------- CHECK FOR EXISTING FILES:
+    if files_ow:
+        msg = _('Files already exist, do you want to overwrite them?')
+        with ListWarning(None,
+                         dict.fromkeys(files_ow, _('Already exist')),
+                         caption=_('Please Confirm'),
+                         header=msg,
+                         buttons='CONFIRM',
+                         ) as log:
+            if log.ShowModal() != wx.ID_OK:
+                return None
+    # --------------- CHECK FOR MSSING FILES:
     for fln in file_sources:
         if not os.path.isfile(os.path.abspath(fln)):
-            wx.MessageBox(_('File does not exist:\n\n"{}"\n').format(fln),
-                          "Videomass", wx.ICON_ERROR
-                          )
-            return None
+            files_exist.append(f'"{fln}"')
+    if files_exist:
+        msg = _('No source files found in the specified path:')
+        with ListWarning(None,
+                         dict.fromkeys(files_exist, _('Not found')),
+                         caption=_('Non-existent source files'),
+                         header=msg,
+                         buttons='OK',
+                         ) as log:
+            log.ShowModal()
+        return None
     # --------------- CHECK FOR EXISTING DIRECTORIES:
     for drn in file_dest:
         drn = os.path.abspath(os.path.dirname(drn))

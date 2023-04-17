@@ -26,6 +26,7 @@ This file is part of Videomass.
 """
 from urllib.parse import urlparse
 import wx
+from videomass.vdms_dialogs.list_warning import ListWarning
 
 
 class MyListCtrl(wx.ListCtrl):
@@ -33,12 +34,6 @@ class MyListCtrl(wx.ListCtrl):
     This is the listControl widget.
     Note that this wideget has DnDPanel parented.
     """
-    RED = '#ea312d'
-    YELLOW = '#bd9f00'
-    WHITE = '#fbf4f4'  # white for background status bar
-    BLACK = '#060505'
-    # ----------------------------------------------------------------------
-
     def __init__(self, parent):
         """
         Constructor.
@@ -47,6 +42,7 @@ class MyListCtrl(wx.ListCtrl):
         """
         self.index = None
         self.parent = parent  # parent is DnDPanel class
+        self.errors = {}
         wx.ListCtrl.__init__(self,
                              parent,
                              style=wx.LC_REPORT
@@ -62,35 +58,44 @@ class MyListCtrl(wx.ListCtrl):
         self.InsertColumn(0, ('#'), width=30)
         self.InsertColumn(1, (_('Url')), width=600)
 
-    def dropUpdate(self, data):
+    def dropUpdate(self, url):
         """
         Update list-control during drag and drop.
         """
         self.index = self.GetItemCount()
-        listurl = data.split()
-        for url in listurl:
-            res = urlparse(url)
-            if not res[1]:  # if empty netloc given from ParseResult
-                msg = _('Invalid URL:')
-                self.parent.statusbar_msg(f'{msg} "{url}"',
-                                          MyListCtrl.RED,
-                                          MyListCtrl.WHITE
-                                          )
-                return False
+        res = urlparse(url)
+        if not res[1]:  # if empty netloc given from ParseResult
+            self.errors[f'{url}'] = _('Invalid URL')
+            return False
 
-            self.InsertItem(self.index, str(self.index + 1))
-            self.SetItem(self.index, 1, url)
-            self.index += 1
+        self.InsertItem(self.index, str(self.index + 1))
+        self.SetItem(self.index, 1, url)
+        self.index += 1
 
         self.parent.changes_in_progress()
         return True
     # ----------------------------------------------------------------------#
 
+    def rejected_urls(self):
+        """
+        Handles all rejected URLs if any
+        """
+        if self.errors:
+            msg = _('URLs that have been rejected:')
+            with ListWarning(self,
+                             self.errors,
+                             caption=_('Rejected URLs'),
+                             header=msg,
+                             buttons='OK',
+                             ) as log:
+                log.ShowModal()
+            self.errors.clear()  # clear values here
+
 
 class UrlDropTarget(wx.TextDropTarget):
     """
-    This is a Drop target object for handle dragging text URL data
-    on a ListCtrl object.
+    This is a Drop target object for handle dragging
+    text URL data on a ListCtrl object.
     """
     def __init__(self, parent, listctrl):
         """
@@ -104,7 +109,10 @@ class UrlDropTarget(wx.TextDropTarget):
         """
         Update ListCtrl object by dragging text inside it.
         """
-        self.listctrl.dropUpdate(data)
+        for url in data.split():
+            self.listctrl.dropUpdate(url)
+        self.listctrl.rejected_urls()
+
         return True
 
 
@@ -112,9 +120,6 @@ class Url_DnD_Panel(wx.Panel):
     """
     Panel responsible to embed URLs controls
     """
-    ORANGE = '#f28924'
-    WHITE = '#fbf4f4'
-
     def __init__(self, parent):
         """
         parent is the MainFrame
@@ -216,18 +221,10 @@ class Url_DnD_Panel(wx.Panel):
         if not data == self.parent.data_url:
             self.parent.changed = True
 
-        self.statusbar_msg(_('Ready'), None)
+        self.parent.statusbar_msg(_('Ready'), None)
         self.parent.data_url = data.copy()
         self.parent.destroy_orphaned_window()
         self.parent.toolbar.EnableTool(25, True)
-    # -----------------------------------------------------------------------
-
-    def statusbar_msg(self, mess, bcolor, fcolor=None):
-        """
-        Set a status bar message of the parent method.
-        bcolor: background, fcolor: foreground
-        """
-        self.parent.statusbar_msg(f'{mess}', bcolor, fcolor)
     # -----------------------------------------------------------------------
 
     def on_paste(self, event):
@@ -240,7 +237,10 @@ class Url_DnD_Panel(wx.Panel):
             success = wx.TheClipboard.GetData(text_data)
             wx.TheClipboard.Close()
         if success:
-            self.urlctrl.dropUpdate(text_data.GetText())
+            data = text_data.GetText().split()
+            for url in data:
+                self.urlctrl.dropUpdate(url)
+            self.urlctrl.rejected_urls()
     # ----------------------------------------------------------------------
 
     def delete_all(self, event):
