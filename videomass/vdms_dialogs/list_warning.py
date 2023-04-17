@@ -78,6 +78,7 @@ class ListWarning(wx.Dialog):
                                | wx.TE_RICH2
                                | wx.HSCROLL,
                                )
+        textlist.SetMinSize((550, 300))
         sizer.Add(textlist, 1, wx.ALL | wx.EXPAND, 5)
         # confirm buttons
         btn_ok = wx.Button(self, wx.ID_OK, "")
@@ -91,10 +92,6 @@ class ListWarning(wx.Dialog):
         sizer.Add(btngrid, 0, flag=wx.ALL | wx.ALIGN_RIGHT
                   | wx.RIGHT, border=0)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
-
-        self.SetSizer(sizer)
-        sizer.Fit(self)
-        self.Layout()
 
         textlist.SetBackgroundColour(colorscheme['BACKGRD'])
 
@@ -112,9 +109,12 @@ class ListWarning(wx.Dialog):
             textlist.SetDefaultStyle(wx.TextAttr(colorscheme['ERR0']))
             textlist.AppendText(f"{msg}\n")
             index += 1
+
+        self.SetSizer(sizer)
+        sizer.Fit(self)
+        self.Layout()
         self.SetMinSize((550, 300))
-        # textlist.SetMinSize((550, 300))
-        textlist.SetInsertionPoint(0)
+        # textlist.SetInsertionPoint(0)
 
     def on_ok(self, event):
         """
