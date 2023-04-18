@@ -153,8 +153,8 @@ class ShowLogs(wx.Dialog):
         name = self.log_select.GetItemText(index, 0)
 
         if wx.MessageBox(_('Are you sure you want to clear the selected '
-                           'log file?'), "Videomass",
-                         wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                           'log file?'), "Videomass", wx.ICON_QUESTION
+                         | wx.CANCEL | wx.YES_NO, self) != wx.YES:
             return
 
         with open(os.path.join(self.dirlog, name),

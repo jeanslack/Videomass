@@ -346,8 +346,8 @@ class PrstPan(wx.Panel):
                     'incoming presets:\n"{2}"\n\n'
                     'Do you want to update the preset '
                     'database now?').format(srcversion, confversion, dest)
-            if wx.MessageBox(msg, _('Please confirm'),
-                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+            if wx.MessageBox(msg, _('Please confirm'), wx.ICON_QUESTION
+                             | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                 return
 
             backup = copydir_recursively(dest, dest,
@@ -524,8 +524,8 @@ class PrstPan(wx.Panel):
         if wx.MessageBox(_('Are you sure you want to remove "{}" preset?\n\n '
                            'It will be moved to the "Removals" subfolder '
                            'of the presets folder.').format(filename),
-                         _('Please confirm'),
-                         wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                         _('Please confirm'), wx.ICON_QUESTION
+                         | wx.CANCEL | wx.YES_NO, self) != wx.YES:
             return
 
         try:
@@ -564,8 +564,8 @@ class PrstPan(wx.Panel):
             if os.path.exists(os.path.join(path, f'{combvalue}.prst')):
                 if wx.MessageBox(_('A file with this name already exists, '
                                    'do you want to overwrite it?'),
-                                 _('Please confirm'),
-                                 wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                                 _('Please confirm'), wx.ICON_QUESTION
+                                 | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                     return
 
             status = copy_restore(filedir,
@@ -628,8 +628,8 @@ class PrstPan(wx.Panel):
                                "updated. Don't worry, it will keep all your "
                                "saved profiles.\n\n"
                                "Do you want to continue?"),
-                             _('Please confirm'),
-                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                             _('Please confirm'), wx.ICON_QUESTION
+                             | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                 return
 
             update_oudated_profiles(newincoming,
@@ -654,8 +654,8 @@ class PrstPan(wx.Panel):
             if wx.MessageBox(_("This will update the presets database. "
                                "Don't worry, it will keep all your saved "
                                "profiles.\n\nDo you want to continue?"),
-                             _("Please confirm"),
-                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                             _("Please confirm"), wx.ICON_QUESTION
+                             | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                 return
 
             dialsave = wx.DirDialog(self, _("Import a new presets folder"),
@@ -837,11 +837,12 @@ class PrstPan(wx.Panel):
                 dlg = wx.RichMessageDialog(self, msg,
                                            _("Please confirm"),
                                            wx.ICON_QUESTION
+                                           | wx.CANCEL
                                            | wx.YES_NO,
                                            )
                 dlg.ShowCheckBox(_("Don't show this dialog again"))
 
-                if dlg.ShowModal() == wx.ID_NO:
+                if dlg.ShowModal() != wx.ID_YES:
                     if dlg.IsCheckBoxChecked():
                         # make sure we won't show it again the next time
                         self.txtcmdedited = False

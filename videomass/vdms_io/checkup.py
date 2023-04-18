@@ -51,8 +51,9 @@ def check_inout(file_sources, file_dest):
                          header=msg,
                          buttons='CONFIRM',
                          ) as log:
-            if log.ShowModal() != wx.ID_OK:
+            if log.ShowModal() != wx.ID_YES:
                 return None
+
     # --------------- CHECK FOR MSSING FILES:
     for fln in file_sources:
         if not os.path.isfile(os.path.abspath(fln)):

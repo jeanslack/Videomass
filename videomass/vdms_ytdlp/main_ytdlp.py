@@ -209,8 +209,8 @@ class MainYtdl(wx.Frame):
         if self.appdata['warnexiting'] and warn:
             if wx.MessageBox(_('Are you sure you want to exit this window?\n'
                                'All data will be lost'),
-                             _('Exit'), wx.ICON_QUESTION | wx.YES_NO,
-                             self) == wx.NO:
+                             _('Exit'), wx.ICON_QUESTION | wx.CANCEL
+                             | wx.YES_NO, self) != wx.YES:
                 return
 
         confmanager = ConfigManager(self.appdata['fileconfpath'])

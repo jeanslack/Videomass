@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
-Name: filelist_warning.py
-Porpose: A custom dialog for list warning messages
+Name: list_warning.py
+Porpose: A custom multipurpose dialog for listing alert messages
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -31,7 +31,8 @@ class ListWarning(wx.Dialog):
     """
     This class represents a modal dialog that shows a
     text control for list items associated to a warning
-    message, with a choice of wx.OK or wx.Cancel/wx.OK buttons.
+    message, with a choice of wx.OK or wx.Cancel/wx.YES_NO
+    buttons.
 
     Usage examples:
             with ListWarning(None,
@@ -48,28 +49,28 @@ class ListWarning(wx.Dialog):
                              header='Files that will be overwritten ...',
                              buttons='CONFIRM',
                              ) as log:
-                if log.ShowModal() != wx.ID_OK:
-                    return None
-
+                if log.ShowModal() == wx.ID_YES:
+                    print('you are clicked Yes button')
     """
-    def __init__(self, parent, items, caption='', header='', buttons='OK'):
+    def __init__(self, parent, items, **kwargs):
         """
+        parent: None or parent.
         items: (dict) a dict object with `item: message, ...`
         caption: (str) specified title for window.
         header: (str) An explanatory message that should appear
-                before the list.
-        buttons: (str) default is 'OK'(show only 'Ok' button),
-                 'CONFIRM' show 'Ok' button and a 'Cancel' button.
+                      before the list.
+        buttons: (str) 'OK', show only a wx.ID_OK button.
+                 (str) 'CONFIRM' show wx.ID_CANCEL/wx.YES_NO buttons.
         """
         get = wx.GetApp()  # get data from bootstrap
         colorscheme = get.appset['icontheme'][1]
         # Use 'parent, -1' param. to make parent, use 'None' otherwise
-        wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE
-                           | wx.RESIZE_BORDER,
+        wx.Dialog.__init__(self, parent, -1,
+                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
                            )
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(10, 10)
-        labheader = wx.StaticText(self, wx.ID_ANY, header)
+        labheader = wx.StaticText(self, wx.ID_ANY, kwargs['header'])
         sizer.Add(labheader, 0, wx.ALL | wx.EXPAND, 5)
         textlist = wx.TextCtrl(self,
                                wx.ID_ANY, "",
@@ -80,44 +81,69 @@ class ListWarning(wx.Dialog):
                                )
         textlist.SetMinSize((550, 300))
         sizer.Add(textlist, 1, wx.ALL | wx.EXPAND, 5)
+
         # confirm buttons
-        btn_ok = wx.Button(self, wx.ID_OK, "")
-        if buttons == 'CONFIRM':
-            btngrid = wx.FlexGridSizer(1, 2, 0, 0)
+        if kwargs['buttons'] == 'CONFIRM':
+            btngrid = wx.GridSizer(1, 2, 0, 0)
+            gridcanc = wx.GridSizer(1, 1, 0, 0)
             btn_canc = wx.Button(self, wx.ID_CANCEL, "")
-            btngrid.Add(btn_canc, 0, wx.ALL, 5)
+            gridcanc.Add(btn_canc, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+            btngrid.Add(gridcanc)
+            gridconfirm = wx.BoxSizer(wx.HORIZONTAL)
+            btn_no = wx.Button(self, wx.ID_NO, "", name='NO')
+            self.Bind(wx.EVT_BUTTON, self.on_confirm, btn_no)
+            gridconfirm.Add(btn_no, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+            btn_yes = wx.Button(self, wx.ID_YES, "", name='YES')
+            self.Bind(wx.EVT_BUTTON, self.on_confirm, btn_yes)
+            gridconfirm.Add(btn_yes, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+            btngrid.Add(gridconfirm, 0, flag=wx.ALL | wx.ALIGN_RIGHT
+                        | wx.RIGHT, border=0)
+            sizer.Add(btngrid, 0, wx.EXPAND)
         else:
+            btn_ok = wx.Button(self, wx.ID_OK, "")
             btngrid = wx.FlexGridSizer(1, 1, 0, 0)
-        btngrid.Add(btn_ok, 0, wx.ALL, 5)
-        sizer.Add(btngrid, 0, flag=wx.ALL | wx.ALIGN_RIGHT
-                  | wx.RIGHT, border=0)
-        self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
+            btngrid.Add(btn_ok, 0, wx.ALL, 5)
+            sizer.Add(btngrid, 0, flag=wx.ALL | wx.ALIGN_RIGHT
+                      | wx.RIGHT, border=0)
+            self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
 
         textlist.SetBackgroundColour(colorscheme['BACKGRD'])
 
-        if get.appset['ostype'] == 'Darwin':
-            textlist.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        else:
-            textlist.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-
         # ------ Properties
-        self.SetTitle(caption)
+        self.SetTitle(kwargs['caption'])
         index = 1
         for fname, msg in items.items():
             textlist.SetDefaultStyle(wx.TextAttr(colorscheme['TXT3']))
-            textlist.AppendText(f"{index}: {fname}  ")
+            textlist.AppendText(f"{index}   {fname}   ")
             textlist.SetDefaultStyle(wx.TextAttr(colorscheme['ERR0']))
-            textlist.AppendText(f"{msg}\n")
+            textlist.AppendText(f"{msg}\n\n")
             index += 1
+        textlist.SetInsertionPoint(0)  # set cursor to initial point
 
         self.SetSizer(sizer)
         sizer.Fit(self)
         self.Layout()
         self.SetMinSize((550, 300))
-        # textlist.SetInsertionPoint(0)
+    # ----------------------------------------------------------------------#
 
     def on_ok(self, event):
         """
         On OK event, this dialog box is auto-destroyed only
         """
         event.Skip()
+    # ----------------------------------------------------------------------#
+
+    def on_confirm(self, event):
+        """
+        Event on yes/no confirm ID buttons.
+        Note:
+            wx.ID_YES button int(5103)
+            wx.ID_NO button int(5104)
+            wx.ID_CANCEL button int(5101)
+
+        Other Get examples:
+            btn = event.GetEventObject()
+            btn.GetId(), btn.GetName(), btn.GetLabel()
+        """
+        btnid = event.GetEventObject().GetId()
+        self.EndModal(btnid)

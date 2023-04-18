@@ -349,8 +349,8 @@ class MainFrame(wx.Frame):
         if self.appdata['warnexiting']:
             if wx.MessageBox(_('Are you sure you want to exit '
                                'the application?'),
-                             _('Exit'), wx.ICON_QUESTION | wx.YES_NO,
-                             self) == wx.NO:
+                             _('Exit'), wx.ICON_QUESTION | wx.CANCEL
+                             | wx.YES_NO, self) != wx.YES:
                 return
 
         if self.ytdlframe:
@@ -740,8 +740,8 @@ class MainFrame(wx.Frame):
             files = os.listdir(path)
             if len(files) > 0:
                 if wx.MessageBox(_("Are you sure to empty trash folder?"),
-                                 "Videomass", wx.ICON_QUESTION
-                                 | wx.YES_NO, self) == wx.NO:
+                                 "Videomass", wx.ICON_QUESTION | wx.CANCEL
+                                 | wx.YES_NO, self) != wx.YES:
                     return
 
                 for fname in files:
@@ -1078,7 +1078,7 @@ class MainFrame(wx.Frame):
                 if wx.MessageBox(_("Changes will take effect once the program "
                                    "has been restarted.\n\n"
                                    "Do you want to exit the application now?"),
-                                 _('Exit'), wx.ICON_QUESTION
+                                 _('Exit'), wx.ICON_QUESTION | wx.CANCEL
                                  | wx.YES_NO, self) == wx.YES:
                     self.on_Kill()
     # ------------------------------------------------------------------#
