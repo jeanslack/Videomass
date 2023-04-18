@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-18 18:12+0200\n"
-"PO-Revision-Date: 2023-04-18 18:18+0200\n"
+"POT-Creation-Date: 2023-04-18 21:40+0200\n"
+"PO-Revision-Date: 2023-04-18 21:44+0200\n"
 "Last-Translator: MaiJZ https://github.com/maijz128\n"
 "Language-Team: simplified Chinese (CN)\n"
 "Language: zh_CN\n"
@@ -1995,7 +1995,7 @@ msgid "Please Confirm"
 msgstr "请确认"
 
 #: ../vdms_io/checkup.py:62
-msgid "No source files found in the specified path:"
+msgid "No source files found in the specified path"
 msgstr ""
 
 #: ../vdms_io/checkup.py:64
@@ -2404,7 +2404,7 @@ msgstr "为调试错误保持输出跟踪"
 msgid "Goto"
 msgstr "转到"
 
-#: ../vdms_main/main_frame.py:551 ../vdms_panels/filedrop.py:311
+#: ../vdms_main/main_frame.py:551 ../vdms_panels/filedrop.py:310
 msgid "Set up a temporary folder for conversions"
 msgstr "设置一个临时文件夹用于转换"
 
@@ -3468,70 +3468,68 @@ msgid "Duplicate file, it has already been added to the list."
 msgstr ""
 
 #: ../vdms_panels/filedrop.py:206
-msgid ""
-"Reject file list.\n"
-"For details, see the specified error message next to each path name:"
+msgid "See the error message next to each path name"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:210
+#: ../vdms_panels/filedrop.py:209
 #, fuzzy
 #| msgid "Add Files"
 msgid "Rejected Files"
 msgstr "添加文件"
 
-#: ../vdms_panels/filedrop.py:279 ../vdms_panels/filedrop.py:331
+#: ../vdms_panels/filedrop.py:278 ../vdms_panels/filedrop.py:330
 msgid "Drag one or more files below"
 msgstr "拖动下面的一个或多个文件"
 
-#: ../vdms_panels/filedrop.py:313 ../vdms_ytdlp/textdrop.py:168
+#: ../vdms_panels/filedrop.py:312 ../vdms_ytdlp/textdrop.py:168
 #, fuzzy
 msgid "Destination folder"
 msgstr "目的地文件夹"
 
-#: ../vdms_panels/filedrop.py:334
+#: ../vdms_panels/filedrop.py:333
 #, fuzzy
 #| msgid "Drag one or more files below"
 msgid "Drag the images below"
 msgstr "拖动下面的一个或多个文件"
 
-#: ../vdms_panels/filedrop.py:337
+#: ../vdms_panels/filedrop.py:336
 #, fuzzy
 #| msgid "Drag one or more files below"
 msgid "Drag one or more video below"
 msgstr "拖动下面的一个或多个文件"
 
-#: ../vdms_panels/filedrop.py:419
+#: ../vdms_panels/filedrop.py:418
 #, fuzzy
 msgid "No file selected"
 msgstr "没有选择文件"
 
-#: ../vdms_panels/filedrop.py:529
+#: ../vdms_panels/filedrop.py:528
 #, fuzzy
 #| msgid "File name"
 msgid "File renaming..."
 msgstr "文件名称"
 
-#: ../vdms_panels/filedrop.py:530
+#: ../vdms_panels/filedrop.py:529
 #, fuzzy
 #| msgid "Open the selected files"
 msgid "Rename the selected file to:"
 msgstr "打开选定的文件"
 
-#: ../vdms_panels/filedrop.py:544 ../vdms_panels/filedrop.py:554
-#: ../vdms_panels/filedrop.py:585
+#: ../vdms_panels/filedrop.py:543 ../vdms_panels/filedrop.py:553
+#: ../vdms_panels/filedrop.py:584
 msgid "Add Files"
 msgstr "添加文件"
 
-#: ../vdms_panels/filedrop.py:561
+#: ../vdms_panels/filedrop.py:560
 msgid "Rename items"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:562
+#: ../vdms_panels/filedrop.py:561
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:564
+#: ../vdms_panels/filedrop.py:563
 #, fuzzy
 #| msgid "File Name"
 msgid "New Name #"
@@ -4645,7 +4643,7 @@ msgid "Invalid URL"
 msgstr "ERROR: 无效的URL。\"{}\""
 
 #: ../vdms_ytdlp/textdrop.py:84
-msgid "List of rejected URLs:"
+msgid "List of rejected URLs"
 msgstr ""
 
 #: ../vdms_ytdlp/textdrop.py:87

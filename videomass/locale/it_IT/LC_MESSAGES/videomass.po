@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-18 18:12+0200\n"
-"PO-Revision-Date: 2023-04-18 18:15+0200\n"
+"POT-Creation-Date: 2023-04-18 21:40+0200\n"
+"PO-Revision-Date: 2023-04-18 21:42+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -1913,8 +1913,8 @@ msgid "Please Confirm"
 msgstr "Prego confermare"
 
 #: ../vdms_io/checkup.py:62
-msgid "No source files found in the specified path:"
-msgstr "Nessun file sorgente trovato nel percorso specificato:"
+msgid "No source files found in the specified path"
+msgstr "Nessun file sorgente trovato nel percorso specificato"
 
 #: ../vdms_io/checkup.py:64
 msgid "Not found"
@@ -2278,7 +2278,7 @@ msgstr "Tiene traccia dell'output per gli errori di debug"
 msgid "Goto"
 msgstr "Vai"
 
-#: ../vdms_main/main_frame.py:551 ../vdms_panels/filedrop.py:311
+#: ../vdms_main/main_frame.py:551 ../vdms_panels/filedrop.py:310
 msgid "Set up a temporary folder for conversions"
 msgstr "Imposta una cartella temporanea per le conversioni"
 
@@ -3295,61 +3295,56 @@ msgid "Duplicate file, it has already been added to the list."
 msgstr "File duplicato, è già stato aggiunto all'elenco."
 
 #: ../vdms_panels/filedrop.py:206
-msgid ""
-"Reject file list.\n"
-"For details, see the specified error message next to each path name:"
-msgstr ""
-"Lista file rifiutati. \n"
-"Per i dettagli, vedere il messaggio di errore specificato accanto a ciascun\n"
-"nome di percorso:"
+msgid "See the error message next to each path name"
+msgstr "Vedere il messaggio di errore accanto a ciascun nome di percorso"
 
-#: ../vdms_panels/filedrop.py:210
+#: ../vdms_panels/filedrop.py:209
 msgid "Rejected Files"
 msgstr "File Rifiutati"
 
-#: ../vdms_panels/filedrop.py:279 ../vdms_panels/filedrop.py:331
+#: ../vdms_panels/filedrop.py:278 ../vdms_panels/filedrop.py:330
 msgid "Drag one or more files below"
 msgstr "Trascina uno o più file qui sotto"
 
-#: ../vdms_panels/filedrop.py:313 ../vdms_ytdlp/textdrop.py:168
+#: ../vdms_panels/filedrop.py:312 ../vdms_ytdlp/textdrop.py:168
 msgid "Destination folder"
 msgstr "Cartella di destinazione"
 
-#: ../vdms_panels/filedrop.py:334
+#: ../vdms_panels/filedrop.py:333
 msgid "Drag the images below"
 msgstr "Trascina le immagini qui sotto"
 
-#: ../vdms_panels/filedrop.py:337
+#: ../vdms_panels/filedrop.py:336
 msgid "Drag one or more video below"
 msgstr "Trascina uno o più video qui sotto"
 
-#: ../vdms_panels/filedrop.py:419
+#: ../vdms_panels/filedrop.py:418
 msgid "No file selected"
 msgstr "Nessun file selezionato"
 
-#: ../vdms_panels/filedrop.py:529
+#: ../vdms_panels/filedrop.py:528
 msgid "File renaming..."
 msgstr "Ridenominazione file..."
 
-#: ../vdms_panels/filedrop.py:530
+#: ../vdms_panels/filedrop.py:529
 msgid "Rename the selected file to:"
 msgstr "Rinomina il file selezionato in:"
 
-#: ../vdms_panels/filedrop.py:544 ../vdms_panels/filedrop.py:554
-#: ../vdms_panels/filedrop.py:585
+#: ../vdms_panels/filedrop.py:543 ../vdms_panels/filedrop.py:553
+#: ../vdms_panels/filedrop.py:584
 msgid "Add Files"
 msgstr "Aggiungi Files"
 
-#: ../vdms_panels/filedrop.py:561
+#: ../vdms_panels/filedrop.py:560
 msgid "Rename items"
 msgstr "Rinomina elementi"
 
-#: ../vdms_panels/filedrop.py:562
+#: ../vdms_panels/filedrop.py:561
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr "Rinominare i {0} elementi in:"
 
-#: ../vdms_panels/filedrop.py:564
+#: ../vdms_panels/filedrop.py:563
 msgid "New Name #"
 msgstr "Nuovo Nome #"
 
@@ -4400,8 +4395,8 @@ msgid "Invalid URL"
 msgstr "URL non valido"
 
 #: ../vdms_ytdlp/textdrop.py:84
-msgid "List of rejected URLs:"
-msgstr "Lista degli URL rifiutati:"
+msgid "List of rejected URLs"
+msgstr "Lista degli URL rifiutati"
 
 #: ../vdms_ytdlp/textdrop.py:87
 msgid "Rejected URLs"

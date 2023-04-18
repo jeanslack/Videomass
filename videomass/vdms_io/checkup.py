@@ -59,7 +59,7 @@ def check_inout(file_sources, file_dest):
         if not os.path.isfile(os.path.abspath(fln)):
             files_exist.append(f'"{fln}"')
     if files_exist:
-        msg = _('No source files found in the specified path:')
+        msg = _('No source files found in the specified path')
         with ListWarning(None,
                          dict.fromkeys(files_exist, _('Not found')),
                          caption=_('Non-existent source files'),
