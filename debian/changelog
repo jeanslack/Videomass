@@ -1,14 +1,17 @@
 videomass (5.0.1-1) UNRELEASED; urgency=medium
 
   * Update ru_RU translation
-  * [YouTube Downloader] External Downloader Support #222,
+  * [YouTube Downloader] Added external downloader support #222,
     thanks to @samarthshrivas .
   * [A/V Conversions] Improved mouse crop area accuracy.
-  * Added new feature: Rejected file list dialog #224 .
-  * Added new feature: Rejected URL list dialog.
-  * Improved check dialog for already existing files and for missing files.
+  * Improved display of rejected files and URLs with a dialog that pops up when
+    files or URLs aren't imported correctly. This allows you to have a clear
+    overview of rejected files and URLs with their associated error messages,
+    see #224 .
+  * New dialog for file overwrite confirmation and missing file notification.
+  * Improved all confirmation dialogs.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 17 Apr 2023 00:40:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 18 Apr 2023 17:00:00 +0200
 
 videomass (5.0.0-1) UNRELEASED; urgency=medium
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-17 12:15+0200\n"
-"PO-Revision-Date: 2023-04-17 14:05+0200\n"
+"POT-Creation-Date: 2023-04-18 21:40+0200\n"
+"PO-Revision-Date: 2023-04-18 21:42+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -1912,19 +1912,19 @@ msgstr "Già esistente"
 msgid "Please Confirm"
 msgstr "Prego confermare"
 
-#: ../vdms_io/checkup.py:61
-msgid "No source files found in the specified path:"
-msgstr "Nessun file sorgente trovato nel percorso specificato:"
+#: ../vdms_io/checkup.py:62
+msgid "No source files found in the specified path"
+msgstr "Nessun file sorgente trovato nel percorso specificato"
 
-#: ../vdms_io/checkup.py:63
+#: ../vdms_io/checkup.py:64
 msgid "Not found"
 msgstr "Non trovato"
 
-#: ../vdms_io/checkup.py:64
+#: ../vdms_io/checkup.py:65
 msgid "Non-existent source files"
 msgstr "File sorgente inesistenti"
 
-#: ../vdms_io/checkup.py:74
+#: ../vdms_io/checkup.py:75
 msgid ""
 "Output folder does not exist:\n"
 "\n"
@@ -2278,7 +2278,7 @@ msgstr "Tiene traccia dell'output per gli errori di debug"
 msgid "Goto"
 msgstr "Vai"
 
-#: ../vdms_main/main_frame.py:551 ../vdms_panels/filedrop.py:311
+#: ../vdms_main/main_frame.py:551 ../vdms_panels/filedrop.py:310
 msgid "Set up a temporary folder for conversions"
 msgstr "Imposta una cartella temporanea per le conversioni"
 
@@ -2904,12 +2904,12 @@ msgstr "{} file in coda"
 msgid "Off"
 msgstr "Spento"
 
-#: ../vdms_panels/av_conversions.py:2252 ../vdms_panels/presets_manager.py:932
+#: ../vdms_panels/av_conversions.py:2252 ../vdms_panels/presets_manager.py:933
 #: ../vdms_panels/video_to_sequence.py:587
 msgid "Unset"
 msgstr "Non settato"
 
-#: ../vdms_panels/av_conversions.py:2255 ../vdms_panels/presets_manager.py:935
+#: ../vdms_panels/av_conversions.py:2255 ../vdms_panels/presets_manager.py:936
 #: ../vdms_panels/video_to_sequence.py:590
 msgid "start  {} | duration  {}"
 msgstr "inizio  {} | durata  {}"
@@ -3295,61 +3295,56 @@ msgid "Duplicate file, it has already been added to the list."
 msgstr "File duplicato, è già stato aggiunto all'elenco."
 
 #: ../vdms_panels/filedrop.py:206
-msgid ""
-"Files that have been rejected. For details, see\n"
-"the specified error message next to each path name:"
-msgstr ""
-"File che sono stati rifiutati. Per i dettagli, vedere\n"
-"il messaggio di errore specificato accanto a ciascun\n"
-"nome di percorso:"
+msgid "See the error message next to each path name"
+msgstr "Vedere il messaggio di errore accanto a ciascun nome di percorso"
 
-#: ../vdms_panels/filedrop.py:210
+#: ../vdms_panels/filedrop.py:209
 msgid "Rejected Files"
 msgstr "File Rifiutati"
 
-#: ../vdms_panels/filedrop.py:279 ../vdms_panels/filedrop.py:331
+#: ../vdms_panels/filedrop.py:278 ../vdms_panels/filedrop.py:330
 msgid "Drag one or more files below"
 msgstr "Trascina uno o più file qui sotto"
 
-#: ../vdms_panels/filedrop.py:313 ../vdms_ytdlp/textdrop.py:168
+#: ../vdms_panels/filedrop.py:312 ../vdms_ytdlp/textdrop.py:168
 msgid "Destination folder"
 msgstr "Cartella di destinazione"
 
-#: ../vdms_panels/filedrop.py:334
+#: ../vdms_panels/filedrop.py:333
 msgid "Drag the images below"
 msgstr "Trascina le immagini qui sotto"
 
-#: ../vdms_panels/filedrop.py:337
+#: ../vdms_panels/filedrop.py:336
 msgid "Drag one or more video below"
 msgstr "Trascina uno o più video qui sotto"
 
-#: ../vdms_panels/filedrop.py:419
+#: ../vdms_panels/filedrop.py:418
 msgid "No file selected"
 msgstr "Nessun file selezionato"
 
-#: ../vdms_panels/filedrop.py:529
+#: ../vdms_panels/filedrop.py:528
 msgid "File renaming..."
 msgstr "Ridenominazione file..."
 
-#: ../vdms_panels/filedrop.py:530
+#: ../vdms_panels/filedrop.py:529
 msgid "Rename the selected file to:"
 msgstr "Rinomina il file selezionato in:"
 
-#: ../vdms_panels/filedrop.py:544 ../vdms_panels/filedrop.py:554
-#: ../vdms_panels/filedrop.py:585
+#: ../vdms_panels/filedrop.py:543 ../vdms_panels/filedrop.py:553
+#: ../vdms_panels/filedrop.py:584
 msgid "Add Files"
 msgstr "Aggiungi Files"
 
-#: ../vdms_panels/filedrop.py:561
+#: ../vdms_panels/filedrop.py:560
 msgid "Rename items"
 msgstr "Rinomina elementi"
 
-#: ../vdms_panels/filedrop.py:562
+#: ../vdms_panels/filedrop.py:561
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr "Rinominare i {0} elementi in:"
 
-#: ../vdms_panels/filedrop.py:564
+#: ../vdms_panels/filedrop.py:563
 msgid "New Name #"
 msgstr "Nuovo Nome #"
 
@@ -3782,11 +3777,11 @@ msgstr ""
 "Il comando del profilo selezionato è stato cambiato manualmente.\n"
 "Vuoi applicarlo durante il processo di conversione?"
 
-#: ../vdms_panels/presets_manager.py:842
+#: ../vdms_panels/presets_manager.py:843
 msgid "Don't show this dialog again"
 msgstr "Non mostrare ancora questo dialogo"
 
-#: ../vdms_panels/presets_manager.py:939
+#: ../vdms_panels/presets_manager.py:940
 msgid ""
 "Queued File\n"
 "Pass Encoding\n"
@@ -4400,8 +4395,8 @@ msgid "Invalid URL"
 msgstr "URL non valido"
 
 #: ../vdms_ytdlp/textdrop.py:84
-msgid "URLs that have been rejected:"
-msgstr "URL che sono stati rifiutati:"
+msgid "List of rejected URLs"
+msgstr "Lista degli URL rifiutati"
 
 #: ../vdms_ytdlp/textdrop.py:87
 msgid "Rejected URLs"
@@ -4527,6 +4522,9 @@ msgstr "Gli URL contengono playlist. Sei sicuro di voler continuare?"
 #: ../vdms_ytdlp/youtubedl_ui.py:659
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "Gli URL contengono canali. Sei sicuro di voler continuare?"
+
+#~ msgid "URLs that have been rejected:"
+#~ msgstr "URL che sono stati rifiutati:"
 
 #~ msgid ""
 #~ "Already exist: \n"

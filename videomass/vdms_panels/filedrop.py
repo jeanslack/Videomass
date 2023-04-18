@@ -203,8 +203,7 @@ class MyListCtrl(wx.ListCtrl):
         Handles all rejected files if any
         """
         if self.errors:
-            msg = _('Files that have been rejected. For details, see\n'
-                    'the specified error message next to each path name:')
+            msg = _('See the error message next to each path name')
             with ListWarning(self,
                              self.errors,
                              caption=_('Rejected Files'),

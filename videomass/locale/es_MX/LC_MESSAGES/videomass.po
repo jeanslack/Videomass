@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-17 12:15+0200\n"
-"PO-Revision-Date: 2023-04-17 14:06+0200\n"
+"POT-Creation-Date: 2023-04-18 21:40+0200\n"
+"PO-Revision-Date: 2023-04-18 21:43+0200\n"
 "Last-Translator: José Alberto Valle Cid j.alberto.vc@gmail.com\n"
 "Language-Team: Spanish <>\n"
 "Language: es_MX\n"
@@ -1936,19 +1936,19 @@ msgstr ""
 msgid "Please Confirm"
 msgstr "Por favor Confirme"
 
-#: ../vdms_io/checkup.py:61
-msgid "No source files found in the specified path:"
+#: ../vdms_io/checkup.py:62
+msgid "No source files found in the specified path"
 msgstr ""
 
-#: ../vdms_io/checkup.py:63
+#: ../vdms_io/checkup.py:64
 msgid "Not found"
 msgstr "No encontrado"
 
-#: ../vdms_io/checkup.py:64
+#: ../vdms_io/checkup.py:65
 msgid "Non-existent source files"
 msgstr ""
 
-#: ../vdms_io/checkup.py:74
+#: ../vdms_io/checkup.py:75
 msgid ""
 "Output folder does not exist:\n"
 "\n"
@@ -2348,7 +2348,7 @@ msgstr "Mantener rastro de la salida para depuración de errores"
 msgid "Goto"
 msgstr "Ir a"
 
-#: ../vdms_main/main_frame.py:551 ../vdms_panels/filedrop.py:311
+#: ../vdms_main/main_frame.py:551 ../vdms_panels/filedrop.py:310
 msgid "Set up a temporary folder for conversions"
 msgstr "Fijar carpeta temporal para conversiones"
 
@@ -3012,12 +3012,12 @@ msgstr "{} archivo en espera"
 msgid "Off"
 msgstr "Apagado"
 
-#: ../vdms_panels/av_conversions.py:2252 ../vdms_panels/presets_manager.py:932
+#: ../vdms_panels/av_conversions.py:2252 ../vdms_panels/presets_manager.py:933
 #: ../vdms_panels/video_to_sequence.py:587
 msgid "Unset"
 msgstr "No fijado"
 
-#: ../vdms_panels/av_conversions.py:2255 ../vdms_panels/presets_manager.py:935
+#: ../vdms_panels/av_conversions.py:2255 ../vdms_panels/presets_manager.py:936
 #: ../vdms_panels/video_to_sequence.py:590
 msgid "start  {} | duration  {}"
 msgstr "inicio  {} | duración  {}"
@@ -3455,68 +3455,66 @@ msgid "Duplicate file, it has already been added to the list."
 msgstr ""
 
 #: ../vdms_panels/filedrop.py:206
-msgid ""
-"Files that have been rejected. For details, see\n"
-"the specified error message next to each path name:"
+msgid "See the error message next to each path name"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:210
+#: ../vdms_panels/filedrop.py:209
 #, fuzzy
 #| msgid "Add Files"
 msgid "Rejected Files"
 msgstr "Añadir Archivos"
 
-#: ../vdms_panels/filedrop.py:279 ../vdms_panels/filedrop.py:331
+#: ../vdms_panels/filedrop.py:278 ../vdms_panels/filedrop.py:330
 msgid "Drag one or more files below"
 msgstr "Arrastre uno o más archivos abajo"
 
-#: ../vdms_panels/filedrop.py:313 ../vdms_ytdlp/textdrop.py:168
+#: ../vdms_panels/filedrop.py:312 ../vdms_ytdlp/textdrop.py:168
 msgid "Destination folder"
 msgstr "Carpeta destino"
 
-#: ../vdms_panels/filedrop.py:334
+#: ../vdms_panels/filedrop.py:333
 #, fuzzy
 #| msgid "Drag one or more files below"
 msgid "Drag the images below"
 msgstr "Arrastre uno o más archivos abajo"
 
-#: ../vdms_panels/filedrop.py:337
+#: ../vdms_panels/filedrop.py:336
 #, fuzzy
 #| msgid "Drag one or more files below"
 msgid "Drag one or more video below"
 msgstr "Arrastre uno o más archivos abajo"
 
-#: ../vdms_panels/filedrop.py:419
+#: ../vdms_panels/filedrop.py:418
 msgid "No file selected"
 msgstr "No se ha seleccionado archivo"
 
-#: ../vdms_panels/filedrop.py:529
+#: ../vdms_panels/filedrop.py:528
 #, fuzzy
 #| msgid "File name"
 msgid "File renaming..."
 msgstr "Nombre de archivo"
 
-#: ../vdms_panels/filedrop.py:530
+#: ../vdms_panels/filedrop.py:529
 #, fuzzy
 #| msgid "Open the selected files"
 msgid "Rename the selected file to:"
 msgstr "Abrir archivo seleccionado"
 
-#: ../vdms_panels/filedrop.py:544 ../vdms_panels/filedrop.py:554
-#: ../vdms_panels/filedrop.py:585
+#: ../vdms_panels/filedrop.py:543 ../vdms_panels/filedrop.py:553
+#: ../vdms_panels/filedrop.py:584
 msgid "Add Files"
 msgstr "Añadir Archivos"
 
-#: ../vdms_panels/filedrop.py:561
+#: ../vdms_panels/filedrop.py:560
 msgid "Rename items"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:562
+#: ../vdms_panels/filedrop.py:561
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:564
+#: ../vdms_panels/filedrop.py:563
 #, fuzzy
 #| msgid "File Name"
 msgid "New Name #"
@@ -3940,11 +3938,11 @@ msgstr ""
 "El comando del perfil seleccionado se cambio manualmente.\n"
 "¿Desea aplicarlo durante el proceso de conversión?"
 
-#: ../vdms_panels/presets_manager.py:842
+#: ../vdms_panels/presets_manager.py:843
 msgid "Don't show this dialog again"
 msgstr "No mostrar nuevamente este dialogo"
 
-#: ../vdms_panels/presets_manager.py:939
+#: ../vdms_panels/presets_manager.py:940
 msgid ""
 "Queued File\n"
 "Pass Encoding\n"
@@ -4610,7 +4608,7 @@ msgid "Invalid URL"
 msgstr "ERROR: URL invalida: \"{}\""
 
 #: ../vdms_ytdlp/textdrop.py:84
-msgid "URLs that have been rejected:"
+msgid "List of rejected URLs"
 msgstr ""
 
 #: ../vdms_ytdlp/textdrop.py:87

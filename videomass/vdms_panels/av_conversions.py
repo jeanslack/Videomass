@@ -2337,8 +2337,8 @@ class AV_Conv(wx.Panel):
             if wx.MessageBox(_('Audio normalization data cannot be saved '
                                'on the Presets Manager.\n\n'
                                'Do you want to continue?'),
-                             'Videomass',
-                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                             'Videomass', wx.ICON_QUESTION
+                             | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                 return
 
         self.update_options()

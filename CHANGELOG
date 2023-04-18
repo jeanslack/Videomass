@@ -7,15 +7,18 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 17 April 2023 V.5.0.1
+Tue, 18 April 2023 V.5.0.1
 
   * Update ru_RU translation
-  * [YouTube Downloader] External Downloader Support #222,
+  * [YouTube Downloader] Added external downloader support #222,
     thanks to @samarthshrivas .
   * [A/V Conversions] Improved mouse crop area accuracy.
-  * Added new feature: Rejected file list dialog #224 .
-  * Added new feature: Rejected URL list dialog.
-  * Improved check dialog for already existing files and for missing files.
+  * Improved display of rejected files and URLs with a dialog that pops up when
+    files or URLs aren't imported correctly. This allows you to have a clear
+    overview of rejected files and URLs with their associated error messages,
+    see #224 .
+  * New dialog for file overwrite confirmation and missing file notification.
+  * Improved all confirmation dialogs.
 
 +------------------------------------+
 Tue, 11 April 2023 V.5.0.0

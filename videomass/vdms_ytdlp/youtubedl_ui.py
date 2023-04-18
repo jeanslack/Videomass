@@ -652,14 +652,14 @@ class Downloader(wx.Panel):
             if [url for url in urls if 'playlist' in url]:
                 if wx.MessageBox(_('The URLs contain playlists. '
                                    'Are you sure you want to continue?'),
-                                 _('Please confirm'),
-                                 wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                                 _('Please confirm'), wx.ICON_QUESTION
+                                 | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                     return
         if [url for url in urls if 'channel' in url]:
             if wx.MessageBox(_('The URLs contain channels. '
                                'Are you sure you want to continue?'),
-                             _('Please confirm'),
-                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                             _('Please confirm'), wx.ICON_QUESTION
+                             | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                 return
 
         if self.ckbx_id.IsChecked():
