@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-17 12:15+0200\n"
+"POT-Creation-Date: 2023-04-18 18:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1646,19 +1646,19 @@ msgstr ""
 msgid "Please Confirm"
 msgstr ""
 
-#: ../vdms_io/checkup.py:61
+#: ../vdms_io/checkup.py:62
 msgid "No source files found in the specified path:"
 msgstr ""
 
-#: ../vdms_io/checkup.py:63
+#: ../vdms_io/checkup.py:64
 msgid "Not found"
 msgstr ""
 
-#: ../vdms_io/checkup.py:64
+#: ../vdms_io/checkup.py:65
 msgid "Non-existent source files"
 msgstr ""
 
-#: ../vdms_io/checkup.py:74
+#: ../vdms_io/checkup.py:75
 msgid ""
 "Output folder does not exist:\n"
 "\n"
@@ -2550,12 +2550,12 @@ msgstr ""
 msgid "Off"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2252 ../vdms_panels/presets_manager.py:932
+#: ../vdms_panels/av_conversions.py:2252 ../vdms_panels/presets_manager.py:933
 #: ../vdms_panels/video_to_sequence.py:587
 msgid "Unset"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2255 ../vdms_panels/presets_manager.py:935
+#: ../vdms_panels/av_conversions.py:2255 ../vdms_panels/presets_manager.py:936
 #: ../vdms_panels/video_to_sequence.py:590
 msgid "start  {} | duration  {}"
 msgstr ""
@@ -2840,8 +2840,8 @@ msgstr ""
 
 #: ../vdms_panels/filedrop.py:206
 msgid ""
-"Files that have been rejected. For details, see\n"
-"the specified error message next to each path name:"
+"Reject file list.\n"
+"For details, see the specified error message next to each path name:"
 msgstr ""
 
 #: ../vdms_panels/filedrop.py:210
@@ -3277,11 +3277,11 @@ msgid ""
 "Do you want to apply it during the conversion process?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:842
+#: ../vdms_panels/presets_manager.py:843
 msgid "Don't show this dialog again"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:939
+#: ../vdms_panels/presets_manager.py:940
 msgid ""
 "Queued File\n"
 "Pass Encoding\n"
@@ -3781,7 +3781,7 @@ msgid "Invalid URL"
 msgstr ""
 
 #: ../vdms_ytdlp/textdrop.py:84
-msgid "URLs that have been rejected:"
+msgid "List of rejected URLs:"
 msgstr ""
 
 #: ../vdms_ytdlp/textdrop.py:87

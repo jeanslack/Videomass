@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-17 12:15+0200\n"
-"PO-Revision-Date: 2023-04-17 14:08+0200\n"
+"POT-Creation-Date: 2023-04-18 18:12+0200\n"
+"PO-Revision-Date: 2023-04-18 18:18+0200\n"
 "Last-Translator: MaiJZ https://github.com/maijz128\n"
 "Language-Team: simplified Chinese (CN)\n"
 "Language: zh_CN\n"
@@ -1994,19 +1994,19 @@ msgstr ""
 msgid "Please Confirm"
 msgstr "请确认"
 
-#: ../vdms_io/checkup.py:61
+#: ../vdms_io/checkup.py:62
 msgid "No source files found in the specified path:"
 msgstr ""
 
-#: ../vdms_io/checkup.py:63
+#: ../vdms_io/checkup.py:64
 msgid "Not found"
 msgstr "未找到"
 
-#: ../vdms_io/checkup.py:64
+#: ../vdms_io/checkup.py:65
 msgid "Non-existent source files"
 msgstr ""
 
-#: ../vdms_io/checkup.py:74
+#: ../vdms_io/checkup.py:75
 msgid ""
 "Output folder does not exist:\n"
 "\n"
@@ -3066,12 +3066,12 @@ msgstr "{}队列中的文件"
 msgid "Off"
 msgstr "关闭"
 
-#: ../vdms_panels/av_conversions.py:2252 ../vdms_panels/presets_manager.py:932
+#: ../vdms_panels/av_conversions.py:2252 ../vdms_panels/presets_manager.py:933
 #: ../vdms_panels/video_to_sequence.py:587
 msgid "Unset"
 msgstr "未设置"
 
-#: ../vdms_panels/av_conversions.py:2255 ../vdms_panels/presets_manager.py:935
+#: ../vdms_panels/av_conversions.py:2255 ../vdms_panels/presets_manager.py:936
 #: ../vdms_panels/video_to_sequence.py:590
 msgid "start  {} | duration  {}"
 msgstr "start  {} | duration  {}"
@@ -3469,8 +3469,8 @@ msgstr ""
 
 #: ../vdms_panels/filedrop.py:206
 msgid ""
-"Files that have been rejected. For details, see\n"
-"the specified error message next to each path name:"
+"Reject file list.\n"
+"For details, see the specified error message next to each path name:"
 msgstr ""
 
 #: ../vdms_panels/filedrop.py:210
@@ -3967,12 +3967,12 @@ msgstr ""
 "所选的配置文件命令已被手动更改。\n"
 "你想在转换过程中应用它吗？"
 
-#: ../vdms_panels/presets_manager.py:842
+#: ../vdms_panels/presets_manager.py:843
 #, fuzzy
 msgid "Don't show this dialog again"
 msgstr "不要再显示这个对话框"
 
-#: ../vdms_panels/presets_manager.py:939
+#: ../vdms_panels/presets_manager.py:940
 #, fuzzy
 msgid ""
 "Queued File\n"
@@ -4645,7 +4645,7 @@ msgid "Invalid URL"
 msgstr "ERROR: 无效的URL。\"{}\""
 
 #: ../vdms_ytdlp/textdrop.py:84
-msgid "URLs that have been rejected:"
+msgid "List of rejected URLs:"
 msgstr ""
 
 #: ../vdms_ytdlp/textdrop.py:87
