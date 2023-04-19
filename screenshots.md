@@ -30,6 +30,20 @@ A/V Conversion video tab:
 
 ----
 
+Timeline Editor:
+
+![Image](/images/screenshots/Timeline_Editor.png)   
+
+----
+
+![Image](/images/screenshots/Timeline_Editor_1.png)   
+
+----
+
+![Image](/images/screenshots/Timeline_Editor_2.png)  
+
+----
+
 Some filters in action:   
 
 ![Image](/images/screenshots/crop-filter.png)   
