@@ -1,3 +1,11 @@
+videomass (5.0.2-1) UNRELEASED; urgency=medium
+
+  * Code refactoring.
+  * Improved Timeline Editor layout frame.
+  * Improved filter Crop dialog.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 26 Apr 2023 12:00:00 +0200
+
 videomass (5.0.1-1) UNRELEASED; urgency=medium
 
   * Update ru_RU translation

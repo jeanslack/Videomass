@@ -7,6 +7,13 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Mon, 26 April 2023 V.5.0.2
+
+  * Code refactoring.
+  * Improved Timeline Editor layout frame.
+  * Improved filter Crop dialog.
+
++------------------------------------+
 Tue, 18 April 2023 V.5.0.1
 
   * Update ru_RU translation
