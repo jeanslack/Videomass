@@ -213,16 +213,16 @@ class Float_TL(wx.MiniFrame):
         sizer_base.Fit(self)
         self.Layout()
         if self.appdata['ostype'] == 'Linux':
-            self.SetMinSize((920, 115))
+            self.SetSize((920, 115))
             self.font_med = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         elif self.appdata['ostype'] == 'Windows':
             self.font_med = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
-            self.SetMinSize((935, 130))
+            self.SetSize((935, 130))
         elif self.appdata['ostype'] == 'Darwin':
-            self.SetMinSize((925, 115))
+            self.SetSize((915, 110))
             self.font_med = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         else:
-            self.SetMinSize((930, 120))
+            self.SetSize((930, 120))
             self.font_med = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         self.CentreOnScreen()
         # print(self.GetSize())
