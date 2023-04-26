@@ -220,7 +220,7 @@ class Float_TL(wx.MiniFrame):
             self.SetSize((935, 130))
         elif self.appdata['ostype'] == 'Darwin':
             self.SetSize((915, 110))
-            self.font_med = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+            self.font_med = wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         else:
             self.SetSize((930, 120))
             self.font_med = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
