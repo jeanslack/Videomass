@@ -151,9 +151,9 @@ class Float_TL(wx.MiniFrame):
     BLACK = '#060505'  # black for background status bar
     ORANGE = '#f28924'  # for errors and warnings
     LGREEN = '#52EE7D'
-    RULER_BKGRD = '#84D2C9'  # light CYAN for ruler background
-    SELECTION = '#76BBB3'  # Medium dark CYAN
-    DELIMITER_COLOR = '#00FE00'  # green for margin selection
+    RULER_BKGRD = '#84D2C9'  # CYAN for ruler background
+    SELECTION = '#B1F2E8'  # Light CYAN
+    DELIMITER_COLOR = '#009DCB'  # Azure for margin selection
     TEXT_PEN_COLOR = '#020D0F'  # black for draw lines
     DURATION_START = '#E95420'  # Light orange for duration/start indicators
 
@@ -187,9 +187,8 @@ class Float_TL(wx.MiniFrame):
         self.pointpx = [0, 0]  # see `on_move()` `on_leftdown()`
         self.sourcedur = _('No source duration:')
 
-        wx.MiniFrame.__init__(self, parent, -1, style=wx.RESIZE_BORDER
-                              | wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU
-                              | wx.FRAME_FLOAT_ON_PARENT
+        wx.MiniFrame.__init__(self, parent, -1, style=wx.CAPTION | wx.CLOSE_BOX
+                              | wx.SYSTEM_MENU | wx.FRAME_FLOAT_ON_PARENT
                               )
         panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
                          | wx.BORDER_THEME)
@@ -210,8 +209,11 @@ class Float_TL(wx.MiniFrame):
         self.statusbar_msg(msg, None)
 
         # ----------------------Layout----------------------#
+        panel.SetSizer(sizer_base)
+        sizer_base.Fit(self)
+        self.Layout()
         if self.appdata['ostype'] == 'Linux':
-            self.SetMinSize((930, 120))
+            self.SetMinSize((920, 115))
             self.font_med = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         elif self.appdata['ostype'] == 'Windows':
             self.font_med = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
@@ -223,10 +225,8 @@ class Float_TL(wx.MiniFrame):
             self.SetMinSize((930, 120))
             self.font_med = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         self.CentreOnScreen()
-        panel.SetSizer(sizer_base)
-        sizer_base.Fit(self)
-        self.Layout()
         # print(self.GetSize())
+
         # ----------------------Binding (EVT)----------------------#
         self.paneltime.Bind(wx.EVT_PAINT, self.OnPaint)
         self.paneltime.Bind(wx.EVT_LEFT_DOWN, self.on_leftdown)
@@ -234,11 +234,11 @@ class Float_TL(wx.MiniFrame):
         self.paneltime.Bind(wx.EVT_LEFT_DCLICK, self.on_set_pos)
         self.paneltime.Bind(wx.EVT_MOTION, self.on_move)
         self.Bind(wx.EVT_CLOSE, self.on_close)
-        self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
+        self.paneltime.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
 
         pub.subscribe(self.set_values, "RESET_ON_CHANGED_LIST")
 
-    # ----------------------Event handler (callback)----------------------#
+    # ----------------------Event handler (callbacks)----------------------#
 
     def onContext(self, event):
         """
@@ -298,7 +298,7 @@ class Float_TL(wx.MiniFrame):
                 ).format(self.sourcedur, self.overalltime, '00:00:00.000')
         self.statusbar_msg(msg, None)
         self.parent.time_seq = ""
-        self.onRedraw(self)
+        self.onRedraw()
     # ------------------------------------------------------------------#
 
     def set_values(self, msg):
@@ -353,13 +353,13 @@ class Float_TL(wx.MiniFrame):
             self.bar_w = self.pointpx[0]
             self.mills_end = int(round(self.bar_w / self.pix))
             self.clock_end = milliseconds2clock(self.mills_end)
-            self.onRedraw(self)
+            self.onRedraw()
 
         elif self.pointpx[1] < 30:
             self.bar_x = self.pointpx[0]
             self.mills_start = int(round(self.bar_x / self.pix))
             self.clock_start = milliseconds2clock(self.mills_start)
-            self.onRedraw(self)
+            self.onRedraw()
     # ------------------------------------------------------------------#
 
     def on_leftdown(self, event):
@@ -425,7 +425,7 @@ class Float_TL(wx.MiniFrame):
                     self.mills_end = data[1]
                     self.clock_end = data[0]
 
-                self.onRedraw(self)
+                self.onRedraw()
                 self.on_leftup(None)
     # ------------------------------------------------------------------#
 
@@ -454,10 +454,10 @@ class Float_TL(wx.MiniFrame):
         """
         dc = wx.PaintDC(self.paneltime)  # draw window boundary
         dc.Clear()
-        self.onRedraw(self)
+        self.onRedraw()
     # ------------------------------------------------------------------#
 
-    def onRedraw(self, event):
+    def onRedraw(self):
         """
         Draw ruler and update the selection rectangle
         (a semi-transparent background rectangle upon a ruler)

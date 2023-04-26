@@ -75,8 +75,8 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         self.w = 0  # rectangle width
         self.x = 0  # rectangle x axis
         self.y = 0  # rectangle y axis
-        self.start_x = 0  # start x axis clicked
-        self.start_y = 0  # start y axis clicked
+        self.startpos = 0, 0  # start x,y axis clicked
+        self.endpos = 0, 0  # end x,y axis on releasing
 
         wx.lib.statbmp.GenStaticBitmap.__init__(self, parent, -1,
                                                 bitmap, **kwargs)
@@ -97,7 +97,8 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         if event.Dragging() and event.LeftIsDown():
             pos = event.GetPosition()
             x, y = pos[0], pos[1]
-            w, h = self.start_x - x, self.start_y - y  # opposite to mouse dir.
+            # draw rectangle opposite to mouse direction:
+            w, h = self.startpos[0] - x, self.startpos[1] - y
             self.onRedraw(x, y, w, h)
     # ------------------------------------------------------------------#
 
@@ -106,11 +107,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         Left-click event. On mouse click stores the initial
         positions in pixels for the x/y axis points.
         """
-        pos = event.GetPosition()
-        self.start_x = pos[0]
-        self.start_y = pos[1]
-        w, h = 0, 0
-        self.onRedraw(self.start_x, self.start_y, w, h)
+        self.startpos = event.GetPosition()
     # ------------------------------------------------------------------#
 
     def on_leftup(self, event):
@@ -121,10 +118,11 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         (end position click released)
         """
         self.SetCursor(wx.Cursor(wx.CURSOR_ARROW))
-        pos = event.GetPosition()
-        x, y = min(self.start_x, pos[0]), min(self.start_y, pos[1])
+        self.endpos = event.GetPosition()
+        x = min(self.startpos[0], self.endpos[0])
+        y = min(self.startpos[1], self.endpos[1])
         w, h = abs(self.w), abs(self.h)
-        self.start_x, self.start_y = 0, 0
+        self.startpos, self.endpos = (0, 0), (0, 0)
         self.onRedraw(x, y, w, h)
         pub.sendMessage("TO_REAL_SCALE", msg=[x, y, w, h])
     # ------------------------------------------------------------------#
@@ -186,31 +184,31 @@ class Crop(wx.Dialog):
         """
         Attributes defined here:
 
-            self.width_dc   width size for DC (aka monitor width)
-            self.height_dc  height size for DC (aka monitor height)
+            self.w_dc       width size for DC (aka monitor width)
+            self.h_dc       height size for DC (aka monitor height)
             self.x_dc       horizontal axis for DC
             self.y_dc       vertical axis for DC
-            self.v_height   unscaled height of the source video
-            self.v_width    unscaled width of the source video
-            self.toscale    scale factor
-            self.h_ratio    height ratio
-            self.w_ratio    width ratio
+            self.height     unscaled height of the source video
+            self.width      unscaled width of the source video
+            toscale         scale factor
+            self.h_scaled   height ratio
+            self.w_scaled   width ratio
 
         The images (also the panel and the DC) are resized to keep
         the scale factor.
         """
         # cropping values for monitor preview
-        self.width_dc = 0
-        self.height_dc = 0
+        self.w_dc = 0
+        self.h_dc = 0
         self.y_dc = 0
         self.x_dc = 0
         # current video size
-        self.v_width = kwa['width']
-        self.v_height = kwa['height']
+        self.width = kwa['width']
+        self.height = kwa['height']
         # resizing values preserving aspect ratio for monitor
-        self.toscale = 220 if self.v_height >= self.v_width else 350
-        self.h_ratio = round((self.v_height / self.v_width) * self.toscale)
-        self.w_ratio = round((self.v_width / self.v_height) * self.h_ratio)
+        toscale = 220 if self.height >= self.width else 350
+        self.h_scaled = round((self.height / self.width) * toscale)
+        self.w_scaled = round((self.width / self.height) * self.h_scaled)
         self.filename = kwa['filename']  # selected filename on queued list
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f'{Crop.TMPSRC}', f'{name}.png')  # image
@@ -221,19 +219,19 @@ class Crop(wx.Dialog):
         if os.path.exists(self.frame):
             self.image = self.frame
         else:  # make empty
-            self.image = wx.Bitmap(self.w_ratio, self.h_ratio)
+            self.image = wx.Bitmap(self.w_scaled, self.h_scaled)
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         self.panelrect = wx.Panel(self, wx.ID_ANY,
-                                  size=(self.w_ratio, self.h_ratio)
+                                  size=(self.w_scaled, self.h_scaled)
                                   )
-        bmp = make_bitmap(self.w_ratio, self.h_ratio, self.image)
+        bmp = make_bitmap(self.w_scaled, self.h_scaled, self.image)
         self.bob = Actor(self.panelrect, bmp, 1, "")
         sizerBase.Add(self.panelrect, 0, wx.ALL | wx.CENTER, 5)
         sizersize = wx.BoxSizer(wx.VERTICAL)
         sizerBase.Add(sizersize, 0, wx.ALL | wx.CENTER, 5)
-        msg = _("Source size: {0} x {1} pixels").format(self.v_width,
-                                                        self.v_height)
+        msg = _("Source size: {0} x {1} pixels").format(self.width,
+                                                        self.height)
         label1 = wx.StaticText(self, wx.ID_ANY,
                                label=msg,
                                style=wx.ST_NO_AUTORESIZE
@@ -264,44 +262,44 @@ class Crop(wx.Dialog):
         sizerLabel.Add(boxctrl, 0, wx.CENTRE)
         label_height = wx.StaticText(self, wx.ID_ANY, (_("Height")))
         boxctrl.Add(label_height, 0, wx.ALL | wx.CENTRE, 0)
-        self.crop_height = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
-                                       max=self.v_height, size=(-1, -1),
-                                       style=wx.TE_PROCESS_ENTER
-                                       | wx.SP_ARROW_KEYS
-                                       )
-        boxctrl.Add(self.crop_height, 0, wx.CENTRE)
+        self.spin_h = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
+                                  max=self.height, size=(-1, -1),
+                                  style=wx.TE_PROCESS_ENTER
+                                  | wx.SP_ARROW_KEYS,
+                                  )
+        boxctrl.Add(self.spin_h, 0, wx.CENTRE)
         grid_sizerBase = wx.FlexGridSizer(1, 5, 0, 0)
         boxctrl.Add(grid_sizerBase, 0, wx.CENTRE, 0)
         label_X = wx.StaticText(self, wx.ID_ANY, ("X"))
         grid_sizerBase.Add(label_X, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        self.axis_X = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-1,
-                                  max=self.v_width, size=(-1, -1),
+        self.spin_x = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-1,
+                                  max=self.width, size=(-1, -1),
                                   style=wx.TE_PROCESS_ENTER
                                   | wx.SP_ARROW_KEYS
                                   )
-        grid_sizerBase.Add(self.axis_X, 0, wx.ALL | wx.CENTRE, 5)
+        grid_sizerBase.Add(self.spin_x, 0, wx.ALL | wx.CENTRE, 5)
 
         self.btn_centre = wx.Button(self, wx.ID_ANY, _("Center"))
         grid_sizerBase.Add(self.btn_centre, 0, wx.ALL
                            | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.crop_width = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
-                                      max=self.v_width,
-                                      size=(-1, -1),
-                                      style=wx.TE_PROCESS_ENTER
-                                      | wx.SP_ARROW_KEYS
-                                      )
-        grid_sizerBase.Add(self.crop_width, 0, wx.ALL | wx.CENTRE, 5)
+        self.spin_w = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
+                                  max=self.width,
+                                  size=(-1, -1),
+                                  style=wx.TE_PROCESS_ENTER
+                                  | wx.SP_ARROW_KEYS,
+                                  )
+        grid_sizerBase.Add(self.spin_w, 0, wx.ALL | wx.CENTRE, 5)
 
         label_width = wx.StaticText(self, wx.ID_ANY, (_("Width")))
         grid_sizerBase.Add(label_width, 0, wx.RIGHT
                            | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.axis_Y = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-1,
-                                  max=self.v_height, size=(-1, -1),
+        self.spin_y = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-1,
+                                  max=self.height, size=(-1, -1),
                                   style=wx.TE_PROCESS_ENTER
                                   | wx.SP_ARROW_KEYS
                                   )
-        boxctrl.Add(self.axis_Y, 0, wx.CENTRE)
+        boxctrl.Add(self.spin_y, 0, wx.CENTRE)
         label_Y = wx.StaticText(self, wx.ID_ANY, ("Y"))
         boxctrl.Add(label_Y, 0, wx.BOTTOM | wx.CENTRE, 5)
         # bottom layout for buttons
@@ -328,18 +326,18 @@ class Crop(wx.Dialog):
             label1.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
         self.SetTitle(_("Crop Filter"))
-        self.crop_width.SetToolTip(_('Crop to width'))
-        self.axis_Y.SetToolTip(_('Move vertically - set to -1 to center '
+        self.spin_w.SetToolTip(_('Crop to width'))
+        self.spin_y.SetToolTip(_('Move vertically - set to -1 to center '
                                  'the vertical axis'))
-        self.axis_X.SetToolTip(_('Move horizontally - set to -1 to center '
+        self.spin_x.SetToolTip(_('Move horizontally - set to -1 to center '
                                  'the horizontal axis'))
-        self.crop_height.SetToolTip(_('Crop to height'))
+        self.spin_h.SetToolTip(_('Crop to height'))
 
         # ----------------------Binding (EVT)------------------------#
-        self.Bind(wx.EVT_SPINCTRL, self.onWidth, self.crop_width)
-        self.Bind(wx.EVT_SPINCTRL, self.onHeight, self.crop_height)
-        self.Bind(wx.EVT_SPINCTRL, self.onX, self.axis_X)
-        self.Bind(wx.EVT_SPINCTRL, self.onY, self.axis_Y)
+        self.Bind(wx.EVT_SPINCTRL, self.onWidth, self.spin_w)
+        self.Bind(wx.EVT_SPINCTRL, self.onHeight, self.spin_h)
+        self.Bind(wx.EVT_SPINCTRL, self.onX, self.spin_x)
+        self.Bind(wx.EVT_SPINCTRL, self.onY, self.spin_y)
         self.Bind(wx.EVT_BUTTON, self.onCentre, self.btn_centre)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Seek, self.slider)
         self.Bind(wx.EVT_BUTTON, self.image_loader, self.btn_load)
@@ -364,10 +362,10 @@ class Crop(wx.Dialog):
         """
         s = fcrop.split(':')
         s[0] = s[0][5:]  # removing `crop=` word on first item
-        self.crop_width.SetValue(int(s[0][2:]))
-        self.crop_height.SetValue(int(s[1][2:]))
-        self.axis_X.SetValue(int(s[2][2:]))
-        self.axis_Y.SetValue(int(s[3][2:]))
+        self.spin_w.SetValue(int(s[0][2:]))
+        self.spin_h.SetValue(int(s[1][2:]))
+        self.spin_x.SetValue(int(s[2][2:]))
+        self.spin_y.SetValue(int(s[3][2:]))
 
         self.onWidth(self)  # set min/max horizontal axis
         self.onHeight(self)  # set min/max vertical axis
@@ -416,7 +414,7 @@ class Crop(wx.Dialog):
                 atime.write(self.clock)
         self.btn_load.Disable()
         self.image = self.frame  # update with new frame
-        bmp = make_bitmap(self.w_ratio, self.h_ratio, self.image)
+        bmp = make_bitmap(self.w_scaled, self.h_scaled, self.image)
         self.bob.current_bmp = bmp
         self.onDrawing()
     # ------------------------------------------------------------------#
@@ -427,44 +425,39 @@ class Crop(wx.Dialog):
         This method is called using pub/sub protocol
         subscribing "UPDATE_DISPLAY_SCALE".
         """
-        x = round(msg[0] * self.v_width / self.toscale)
-        y = round(msg[1] * self.v_width / self.toscale)
-        w = round(msg[2] * self.v_width / self.toscale)
-        h = round(msg[3] * self.v_width / self.toscale)
-        self.axis_X.SetValue(x)
-        self.axis_Y.SetValue(y)
-        self.crop_width.SetValue(w)
-        self.crop_height.SetValue(h)
+        x_scale = self.width / self.w_scaled
+        y_scale = self.height / self.h_scaled
+        self.spin_x.SetValue(round(msg[0] * x_scale))
+        self.spin_y.SetValue(round(msg[1] * y_scale))
+        self.spin_w.SetValue(round(msg[2] * x_scale))
+        self.spin_h.SetValue(round(msg[3] * y_scale))
     # ------------------------------------------------------------------#
 
     def onDrawing(self):
         """
-        Updating computation and call onRedraw to update
-        rectangle position of the bob actor
-
+        Converting coordinate values to scale factor to update
+        the rectangle's position and size.
         """
-        h_crop = self.crop_height.GetValue()
-        w_crop = self.crop_width.GetValue()
-        x_crop = self.axis_X.GetValue()
-        y_crop = self.axis_Y.GetValue()
+        x_scale = self.w_scaled / self.width
+        y_scale = self.h_scaled / self.height
 
-        self.height_dc = (h_crop / self.v_width) * self.toscale
-        self.width_dc = (w_crop / self.v_height) * self.h_ratio
+        self.w_dc = self.spin_w.GetValue() * x_scale
+        self.h_dc = self.spin_h.GetValue() * y_scale
 
-        if y_crop == -1:
-            self.y_dc = (self.h_ratio / 2) - (self.height_dc / 2)
+        if self.spin_y.GetValue() == -1:
+            self.y_dc = (self.h_scaled / 2) - (self.h_dc / 2)
         else:
-            self.y_dc = (y_crop / self.v_width) * self.toscale
+            self.y_dc = self.spin_y.GetValue() * y_scale
 
-        if x_crop == -1:
-            self.x_dc = (self.toscale / 2) - (self.width_dc / 2)
+        if self.spin_x.GetValue() == -1:
+            self.x_dc = (self.w_scaled / 2) - (self.w_dc / 2)
         else:
-            self.x_dc = (x_crop / self.v_height) * self.h_ratio
+            self.x_dc = self.spin_x.GetValue() * x_scale
 
         self.bob.onRedraw(self.x_dc,
                           self.y_dc,
-                          self.width_dc,
-                          self.height_dc,
+                          self.w_dc,
+                          self.h_dc,
                           )
     # ------------------------------------------------------------------#
 
@@ -477,15 +470,15 @@ class Crop(wx.Dialog):
         the X axis will be set to `min, max = 0, 0` i.e. disabled.
 
         The maximum allowed value for the width of the crop is
-        established in the `self.v_width` attribute
+        established in the `self.width` attribute
 
         """
-        if self.crop_width.GetValue() == self.v_width:
-            self.axis_X.SetMax(0)
-            self.axis_X.SetMin(0)
+        if self.spin_w.GetValue() == self.width:
+            self.spin_x.SetMax(0)
+            self.spin_x.SetMin(0)
         else:
-            self.axis_X.SetMax(self.v_width - self.crop_width.GetValue())
-            self.axis_X.SetMin(-1)
+            self.spin_x.SetMax(self.width - self.spin_w.GetValue())
+            self.spin_x.SetMin(-1)
 
         self.onDrawing()
     # ------------------------------------------------------------------#
@@ -499,28 +492,28 @@ class Crop(wx.Dialog):
         the Y axis will be set to `min, max = 0, 0` i.e. disabled.
 
         The maximum allowed value for the height of the crop is
-        established in the `self.v_height` attribute
+        established in the `self.height` attribute
 
         """
-        if self.crop_height.GetValue() == self.v_height:
-            self.axis_Y.SetMax(0), self.axis_Y.SetMin(0)
+        if self.spin_h.GetValue() == self.height:
+            self.spin_y.SetMax(0), self.spin_y.SetMin(0)
         else:
-            self.axis_Y.SetMax(self.v_height - self.crop_height.GetValue())
-            self.axis_Y.SetMin(-1)
+            self.spin_y.SetMax(self.height - self.spin_h.GetValue())
+            self.spin_y.SetMin(-1)
 
         self.onDrawing()
     # ------------------------------------------------------------------#
 
     def onX(self, event):
         """
-        self.axis_X callback
+        self.spin_x callback
         """
         self.onDrawing()
     # ------------------------------------------------------------------#
 
     def onY(self, event):
         """
-        self.axis_Y callback
+        self.spin_y callback
         """
         self.onDrawing()
     # ------------------------------------------------------------------#
@@ -532,13 +525,13 @@ class Crop(wx.Dialog):
         has been setted and the X or Y axes cannot be setted anymore.
 
         """
-        if self.axis_Y.GetMax() != 0:
-            self.axis_Y.SetValue(-1)
-
-        if self.axis_X.GetMax() != 0:
-            self.axis_X.SetValue(-1)
-
-        if self.axis_Y.GetMax() or self.axis_X.GetMax():
+        if self.spin_y.GetMax():
+            y = (self.height / 2) - (self.spin_h.GetValue() / 2)
+            self.spin_y.SetValue(round(y))
+        if self.spin_x.GetMax():
+            x = (self.width / 2) - (self.spin_w.GetValue() / 2)
+            self.spin_x.SetValue(round(x))
+        if self.spin_y.GetMax() or self.spin_x.GetMax():
             self.onDrawing()
     # ------------------------------------------------------------------#
 
@@ -546,14 +539,14 @@ class Crop(wx.Dialog):
         """
         Reset all control values
         """
-        self.axis_Y.SetMin(-1)
-        self.axis_Y.SetMax(self.v_height)
-        self.axis_X.SetMin(-1)
-        self.axis_X.SetMax(self.v_width)
-        self.crop_width.SetValue(0)
-        self.axis_X.SetValue(0)
-        self.crop_height.SetValue(0)
-        self.axis_Y.SetValue(0)
+        self.spin_y.SetMin(-1)
+        self.spin_y.SetMax(self.height)
+        self.spin_x.SetMin(-1)
+        self.spin_x.SetMax(self.width)
+        self.spin_w.SetValue(0)
+        self.spin_x.SetValue(0)
+        self.spin_h.SetValue(0)
+        self.spin_y.SetValue(0)
         self.onDrawing()
     # ------------------------------------------------------------------#
 
@@ -578,20 +571,20 @@ class Crop(wx.Dialog):
         Note: -1 for X and Y coordinates means center, which are
         no longer supported by the FFmpeg syntax.
         """
-        width = self.crop_width.GetValue()
-        height = self.crop_height.GetValue()
-        x_axis = self.axis_X.GetValue()
-        y_axis = self.axis_Y.GetValue()
+        width = self.spin_w.GetValue()
+        height = self.spin_h.GetValue()
+        x_axis = self.spin_x.GetValue()
+        y_axis = self.spin_y.GetValue()
 
         if width and height:
             if x_axis == -1:
-                pos = round((self.v_width / 2) - (width / 2))
+                pos = round((self.width / 2) - (width / 2))
                 horiz_pos = f'x={pos}:'
             else:
                 horiz_pos = f'x={x_axis}:'
 
             if y_axis == -1:
-                pos = round((self.v_height / 2) - (height / 2))
+                pos = round((self.height / 2) - (height / 2))
                 vert_pos = f'y={pos}:'
             else:
                 vert_pos = f'y={y_axis}:'
