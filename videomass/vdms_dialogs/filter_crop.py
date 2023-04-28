@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 Name: filter_crop.py
-Porpose: Show dialog to get video crop values based on FFmpeg syntax
+Porpose: A dialog to get video crop values based on FFmpeg syntax
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -53,22 +53,23 @@ def make_bitmap(width, height, image):
 
 class Actor(wx.lib.statbmp.GenStaticBitmap):
     """
-    From an explanation by Robin Dunn, where he discusses
+    This class is useful for drawing a rubber band rectangle
+    over a static bitmap using Device Contest (DC) to select
+    specific areas on an image. Implements the ability to draw
+    with mouse movements or by dynamically passing the coordinates
+    to the `onRedraw` method (i.e. using spin controls events).
+
+    Inspired by an explanation by Robin Dunn, where he discusses
     how to rotate images with DC:
     <https://discuss.wxpython.org/t/questions-about-rotation/34064>
 
-    Actor uses the GenStaticBitmap which is a generic implementation
-    of wx.StaticBitmap, for display larger images portably.
-
-    This class is useful for drawing a selection rectangle on the image
-    given a position specified by the X and Y coordinates and the size
-    by the W (width) and H (height) lines.
-
+    This `Actor` uses GenStaticBitmap in his show, which is a generic
+    implementation of wx.StaticBitmap, to display larger images portably.
     """
     def __init__(self, parent, bitmap, idNum, imgFile, **kwargs):
         """
         Attributes defines the rectangle dimensions and coordinates,
-        a parent and a current_bmp. First make sure you scale the
+        a parent and a bitmap. First make sure you scale the
         image to fit on parent, e.g. a panel.
         """
         self.h = 0  # rectangle height
@@ -108,14 +109,17 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         positions in pixels for the x/y axis points.
         """
         self.startpos = event.GetPosition()
+        self.onRedraw(self.startpos[0], self.startpos[1], 0, 0)
     # ------------------------------------------------------------------#
 
     def on_leftup(self, event):
         """
         Event on releasing the left mouse button.
-        Note: seeking x, y minimum values as dc x
-        even to top left and y to bottom left.
-        (end position click released)
+        Note: seeking x, y minimum values as dc x even to top
+        left and y to bottom left (end position click released).
+        Similar results can be achieved by passing the startpos
+        and endpos positions to the wx.Rect() method, but
+        there are slight differences on obtained values.
         """
         self.SetCursor(wx.Cursor(wx.CURSOR_ARROW))
         self.endpos = event.GetPosition()
@@ -131,8 +135,8 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         """
         When instantiating the Actor class, this event is
         executed last. This method is needed to set initial
-        image on panel and/or to set crop area previously
-        drawn on reopen this dialog.
+        image on panel and/or to reset crop area previously
+        drawn on reopen the Crop dialog.
         """
         dc = wx.PaintDC(self)  # draw window boundary
         dc.DrawBitmap(self.current_bmp, 0, 0, True)
@@ -150,8 +154,8 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         Update Drawing: A transparent background rectangle in a
         bitmap object.
         NOTE dc.SetBrush(wx.Brush(wx.Colour(30, 30, 30, 128))) would set
-        a useful transparent gradation color but it doesn't work on windows
-        and gtk2.
+        a useful transparent gradation color but it doesn't work on Windows
+        and GTK2.
         """
         self.h, self.w, self.x, self.y = h, w, x, y
         dc = wx.ClientDC(self)
@@ -168,7 +172,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
 
 class Crop(wx.Dialog):
     """
-    A dialog tool to get video crop values based on FFmpeg syntax.
+    A dialog to get video crop values based on FFmpeg syntax.
     See ``av_conversions.py`` -> ``on_Set_crop`` method for
     how to use this class.
     """

@@ -1,10 +1,14 @@
 videomass (5.0.2-1) UNRELEASED; urgency=medium
 
   * Code refactoring.
-  * Improved Timeline Editor layout frame.
+  * Improved layout on the Timeline Editor miniframe.
   * Improved filter Crop dialog.
+  * Fixed `ZeroDivisionError: division by zero` on Timeline Editor by selecting
+    files with duration == 0 .
+  * Fixed conditional inconsistencies on timeline editor code (see `set_values`
+    method)
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 26 Apr 2023 12:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 28 Apr 2023 11:00:00 +0200
 
 videomass (5.0.1-1) UNRELEASED; urgency=medium
 

@@ -480,7 +480,7 @@ class FileDnD(wx.Panel):
             self.parent.rename.Enable(False)
             self.parent.rename_batch.Enable(False)
             self.parent.filedropselected = None
-            pub.sendMessage("RESET_ON_CHANGED_LIST", msg='Changes')
+            pub.sendMessage("RESET_ON_CHANGED_LIST", msg=None)
         if setstate:
             self.sortingstate = None
             self.parent.toolbar.EnableTool(9, False)
@@ -494,7 +494,7 @@ class FileDnD(wx.Panel):
         item = self.flCtrl.GetItemText(index, 1)
         self.parent.filedropselected = item
         self.parent.rename.Enable(True)
-        pub.sendMessage("RESET_ON_CHANGED_LIST", msg='Changes')
+        pub.sendMessage("RESET_ON_CHANGED_LIST", msg=index)
     # ----------------------------------------------------------------------
 
     def on_deselect(self, event):
@@ -504,7 +504,7 @@ class FileDnD(wx.Panel):
         """
         self.parent.filedropselected = None
         self.parent.rename.Enable(False)
-        pub.sendMessage("RESET_ON_CHANGED_LIST", msg='Changes')
+        pub.sendMessage("RESET_ON_CHANGED_LIST", msg=None)
     # ----------------------------------------------------------------------
 
     def on_file_save(self, path):

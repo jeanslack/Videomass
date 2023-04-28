@@ -309,22 +309,17 @@ class Float_TL(wx.MiniFrame):
         removing imported files (see`filedrop.py`).
         """
         self.sourcedur = _('No source duration:')
-        if msg == 'Changes':
-            if not self.duration or not max(self.duration):
-                self.milliseconds = 86399999
-            elif max(self.duration) < 100:  # if .jpeg
+        if msg is None:
+            self.milliseconds = 86399999
+        else:
+            if self.duration[msg] < 100:
                 self.milliseconds = 86399999
             else:
-                fdropsel = self.parent.filedropselected
-                if fdropsel:
-                    idx = self.parent.file_src.index(fdropsel)
-                    self.milliseconds = self.duration[idx]
-                    self.sourcedur = _('Source duration:')
-                else:
-                    self.milliseconds = 86399999
+                self.milliseconds = self.duration[msg]
+                self.sourcedur = _('Source duration:')
 
-            self.overalltime = milliseconds2clock(self.milliseconds)
-            self.on_trim_time_reset()
+        self.overalltime = milliseconds2clock(self.milliseconds)
+        self.on_trim_time_reset()
     # ------------------------------------------------------------------#
 
     def set_time_seq(self, isset=True):
