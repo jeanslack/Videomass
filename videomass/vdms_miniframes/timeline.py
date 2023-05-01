@@ -298,7 +298,7 @@ class Float_TL(wx.MiniFrame):
                 ).format(self.sourcedur, self.overalltime, '00:00:00.000')
         self.statusbar_msg(msg, None)
         self.parent.time_seq = ""
-        self.onRedraw()
+        self.onRedraw(wx.ClientDC(self.paneltime))
     # ------------------------------------------------------------------#
 
     def set_values(self, msg):
@@ -348,13 +348,13 @@ class Float_TL(wx.MiniFrame):
             self.bar_w = self.pointpx[0]
             self.mills_end = int(round(self.bar_w / self.pix))
             self.clock_end = milliseconds2clock(self.mills_end)
-            self.onRedraw()
+            self.onRedraw(wx.ClientDC(self.paneltime))
 
         elif self.pointpx[1] < 30:
             self.bar_x = self.pointpx[0]
             self.mills_start = int(round(self.bar_x / self.pix))
             self.clock_start = milliseconds2clock(self.mills_start)
-            self.onRedraw()
+            self.onRedraw(wx.ClientDC(self.paneltime))
     # ------------------------------------------------------------------#
 
     def on_leftdown(self, event):
@@ -420,7 +420,7 @@ class Float_TL(wx.MiniFrame):
                     self.mills_end = data[1]
                     self.clock_end = data[0]
 
-                self.onRedraw()
+                self.onRedraw(wx.ClientDC(self.paneltime))
                 self.on_leftup(None)
     # ------------------------------------------------------------------#
 
@@ -428,7 +428,7 @@ class Float_TL(wx.MiniFrame):
         """
         Mouse event when moving it on the panel bar
         """
-        if event.Dragging():
+        if event.Dragging() and event.LeftIsDown():
             self.pointpx = event.GetPosition()
             if self.pointpx[1] > 30:
                 if self.mills_end == self.milliseconds:
@@ -448,18 +448,16 @@ class Float_TL(wx.MiniFrame):
         wx.PaintDC event
         """
         dc = wx.PaintDC(self.paneltime)  # draw window boundary
-        dc.Clear()
-        self.onRedraw()
+        self.onRedraw(dc)
     # ------------------------------------------------------------------#
 
-    def onRedraw(self):
+    def onRedraw(self, dc):
         """
         Draw ruler and update the selection rectangle
         (a semi-transparent background rectangle upon a ruler)
         """
         msg = _('Start by dragging the bottom left handle,\n'
                 'or right-click for options.')
-        dc = wx.ClientDC(self.paneltime)
         dc.Clear()
         dc.SetPen(wx.Pen(Float_TL.DELIMITER_COLOR, 3, wx.PENSTYLE_SOLID))
 

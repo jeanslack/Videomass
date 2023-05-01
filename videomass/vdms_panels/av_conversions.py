@@ -193,11 +193,11 @@ class AV_Conv(wx.Panel):
             "AudioBitrate": ["", ""], "AudioDepth": ["", ""], "PEAK": [],
             "EBU": "", "RMS": [], "Deinterlace": "", "Interlace": "",
             "PixelFormat": "", "Orientation": ["", ""], "Crop": "",
-            "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "",
-            "Vidstabtransform": "", "Vidstabdetect": "", "Unsharp": "",
-            "Makeduo": False, "VFilters": "", "PixFmt": "-pix_fmt yuv420p",
-            "Deadline": "", "CpuUsed": "", "RowMthreading": "", "Usage": "",
-            "GOP": "", "ColorEQ": "",
+            "CropColor": "", "Scale": "", "Setdar": "", "Setsar": "",
+            "Denoiser": "", "Vidstabtransform": "", "Vidstabdetect": "",
+            "Unsharp": "", "Makeduo": False, "VFilters": "",
+            "PixFmt": "-pix_fmt yuv420p", "Deadline": "", "CpuUsed": "",
+            "RowMthreading": "", "Usage": "", "GOP": "", "ColorEQ": "",
         }
         self.appdata = appdata
         self.parent = parent
@@ -1252,16 +1252,19 @@ class AV_Conv(wx.Panel):
         if not kwa:
             return
 
-        with Crop(self, self.opt["Crop"], self.bmpreset, **kwa) as crop:
+        with Crop(self, self.opt["Crop"], self.opt["CropColor"],
+                  self.bmpreset, **kwa) as crop:
             if crop.ShowModal() == wx.ID_OK:
                 data = crop.getvalue()
                 if not data:
                     self.btn_crop.SetBackgroundColour(wx.NullColour)
                     self.opt["Crop"] = ''
+                    self.opt["CropColor"] = ''
                 else:
                     self.btn_crop.SetBackgroundColour(
                         wx.Colour(AV_Conv.VIOLET))
-                    self.opt["Crop"] = f'crop={data}'
+                    self.opt["Crop"] = f'crop={data[0]}'
+                    self.opt["CropColor"] = data[1]
                 self.chain_all_video_filters()
     # ------------------------------------------------------------------#
 

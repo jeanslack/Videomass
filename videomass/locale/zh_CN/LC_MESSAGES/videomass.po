@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 5.0.1\n"
+"Project-Id-Version: Videomass 5.0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-18 21:40+0200\n"
-"PO-Revision-Date: 2023-04-18 21:44+0200\n"
+"POT-Creation-Date: 2023-05-01 02:02+0200\n"
+"PO-Revision-Date: 2023-05-01 02:08+0200\n"
 "Last-Translator: MaiJZ https://github.com/maijz128\n"
 "Language-Team: simplified Chinese (CN)\n"
 "Language: zh_CN\n"
@@ -45,7 +45,7 @@ msgstr ""
 "\n"
 "{0}"
 
-#: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:310
+#: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:314
 #: ../vdms_dialogs/filter_deinterlace.py:121
 #: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:209
 #: ../vdms_dialogs/filter_stab.py:317 ../vdms_dialogs/filter_transpose.py:105
@@ -112,39 +112,45 @@ msgstr ""
 msgid "Confirm Settings"
 msgstr "设置"
 
-#: ../vdms_dialogs/filter_crop.py:235 ../vdms_dialogs/filter_scale.py:108
+#: ../vdms_dialogs/filter_crop.py:236 ../vdms_dialogs/filter_scale.py:108
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "源尺寸：{0}×{1}像素"
 
-#: ../vdms_dialogs/filter_crop.py:243
+#: ../vdms_dialogs/filter_crop.py:244
+#, fuzzy
+#| msgid "Font Color"
+msgid "Pen color"
+msgstr "字体颜色"
+
+#: ../vdms_dialogs/filter_crop.py:247
 #: ../vdms_dialogs/filter_colorcorrection.py:103
 #, fuzzy
 msgid "Search for a specific frame"
 msgstr "搜索一个特定的框架"
 
-#: ../vdms_dialogs/filter_crop.py:257
+#: ../vdms_dialogs/filter_crop.py:261
 #: ../vdms_dialogs/filter_colorcorrection.py:117
 msgid "Load"
 msgstr "加载"
 
-#: ../vdms_dialogs/filter_crop.py:260
+#: ../vdms_dialogs/filter_crop.py:264
 msgid "Cropping area selection "
 msgstr "裁剪区的选择 "
 
-#: ../vdms_dialogs/filter_crop.py:265 ../vdms_dialogs/filter_scale.py:120
+#: ../vdms_dialogs/filter_crop.py:269 ../vdms_dialogs/filter_scale.py:120
 msgid "Height"
 msgstr "高度"
 
-#: ../vdms_dialogs/filter_crop.py:285
+#: ../vdms_dialogs/filter_crop.py:289
 msgid "Center"
 msgstr "中心"
 
-#: ../vdms_dialogs/filter_crop.py:296 ../vdms_dialogs/filter_scale.py:120
+#: ../vdms_dialogs/filter_crop.py:300 ../vdms_dialogs/filter_scale.py:120
 msgid "Width"
 msgstr "宽度"
 
-#: ../vdms_dialogs/filter_crop.py:315 ../vdms_dialogs/filter_deinterlace.py:120
+#: ../vdms_dialogs/filter_crop.py:319 ../vdms_dialogs/filter_deinterlace.py:120
 #: ../vdms_dialogs/filter_denoisers.py:83 ../vdms_dialogs/filter_scale.py:207
 #: ../vdms_dialogs/filter_stab.py:315 ../vdms_dialogs/filter_transpose.py:110
 #: ../vdms_dialogs/set_timestamp.py:148
@@ -153,25 +159,29 @@ msgstr "宽度"
 msgid "Apply"
 msgstr "应用"
 
-#: ../vdms_dialogs/filter_crop.py:330
+#: ../vdms_dialogs/filter_crop.py:334
 msgid "Crop Filter"
 msgstr "裁剪过滤器"
 
-#: ../vdms_dialogs/filter_crop.py:331
+#: ../vdms_dialogs/filter_crop.py:335
+msgid "Choose the color to draw the cropping area"
+msgstr ""
+
+#: ../vdms_dialogs/filter_crop.py:337
 msgid "Crop to width"
 msgstr "裁剪的宽度"
 
-#: ../vdms_dialogs/filter_crop.py:332
+#: ../vdms_dialogs/filter_crop.py:338
 #, fuzzy
-msgid "Move vertically - set to -1 to center the vertical axis"
+msgid "Move vertically (set to -1 to center the vertical axis)"
 msgstr "纵向移动--设置为-1以使纵轴居中"
 
-#: ../vdms_dialogs/filter_crop.py:334
+#: ../vdms_dialogs/filter_crop.py:340
 #, fuzzy
-msgid "Move horizontally - set to -1 to center the horizontal axis"
+msgid "Move horizontally (set to -1 to center the horizontal axis)"
 msgstr "水平移动--设置为-1，使水平轴居中。"
 
-#: ../vdms_dialogs/filter_crop.py:336
+#: ../vdms_dialogs/filter_crop.py:342
 msgid "Crop to height"
 msgstr "裁剪的高度"
 
@@ -1648,13 +1658,13 @@ msgstr "FFprobe ...未找到!"
 msgid "FFplay   ...not found !"
 msgstr "FFplay ...未找到!"
 
-#: ../vdms_dialogs/ffmpeg_conf.py:205 ../vdms_panels/av_conversions.py:2257
+#: ../vdms_dialogs/ffmpeg_conf.py:205 ../vdms_panels/av_conversions.py:2260
 #: ../vdms_panels/sequence_to_video.py:710
 #: ../vdms_panels/video_to_sequence.py:593
 msgid "Enabled"
 msgstr "已启用"
 
-#: ../vdms_dialogs/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2257
+#: ../vdms_dialogs/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2260
 #: ../vdms_panels/sequence_to_video.py:710
 #: ../vdms_panels/video_to_sequence.py:597
 msgid "Disabled"
@@ -1765,12 +1775,12 @@ msgstr "= 没有变化"
 msgid "=  Below max peak"
 msgstr "=低于最大峰值"
 
-#: ../vdms_dialogs/shownormlist.py:166 ../vdms_panels/av_conversions.py:1729
+#: ../vdms_dialogs/shownormlist.py:166 ../vdms_panels/av_conversions.py:1732
 #, fuzzy
 msgid "RMS-based volume statistics"
 msgstr "基于RMS的体积统计"
 
-#: ../vdms_dialogs/shownormlist.py:191 ../vdms_panels/av_conversions.py:1727
+#: ../vdms_dialogs/shownormlist.py:191 ../vdms_panels/av_conversions.py:1730
 #, fuzzy
 msgid "PEAK-based volume statistics"
 msgstr "基于PEAK的体积统计"
@@ -1908,9 +1918,9 @@ msgstr ""
 msgid "No source duration:"
 msgstr ""
 
-#: ../vdms_miniframes/timeline.py:208 ../vdms_miniframes/timeline.py:297
-#: ../vdms_miniframes/timeline.py:337 ../vdms_miniframes/timeline.py:342
-#: ../vdms_miniframes/timeline.py:445
+#: ../vdms_miniframes/timeline.py:207 ../vdms_miniframes/timeline.py:297
+#: ../vdms_miniframes/timeline.py:332 ../vdms_miniframes/timeline.py:337
+#: ../vdms_miniframes/timeline.py:440
 #, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr ""
@@ -1925,35 +1935,35 @@ msgstr ""
 msgid "Start adjustment"
 msgstr "开始"
 
-#: ../vdms_miniframes/timeline.py:322
+#: ../vdms_miniframes/timeline.py:319
 #, fuzzy
 #| msgid "Duration:"
 msgid "Source duration:"
 msgstr "持续时间："
 
-#: ../vdms_miniframes/timeline.py:391
+#: ../vdms_miniframes/timeline.py:386
 msgid "WARNING: Invalid selection, out of range."
 msgstr ""
 
-#: ../vdms_miniframes/timeline.py:465
+#: ../vdms_miniframes/timeline.py:459
 msgid ""
 "Start by dragging the bottom left handle,\n"
 "or right-click for options."
 msgstr ""
 
-#: ../vdms_miniframes/timeline.py:500
+#: ../vdms_miniframes/timeline.py:493
 #, fuzzy
 #| msgid "Starts"
 msgid "Start"
 msgstr "开始"
 
-#: ../vdms_miniframes/timeline.py:501
+#: ../vdms_miniframes/timeline.py:494
 #, fuzzy
 #| msgid "Enabled"
 msgid "End"
 msgstr "已启用"
 
-#: ../vdms_miniframes/timeline.py:549
+#: ../vdms_miniframes/timeline.py:542
 msgid ""
 "The timeline editor is a tool that allows you to trim slices of time on "
 "selected imported media (see Queued Files panel).\n"
@@ -1974,7 +1984,7 @@ msgid ""
 "duration and warnings, please refer to the status bar messages."
 msgstr ""
 
-#: ../vdms_miniframes/timeline.py:566
+#: ../vdms_miniframes/timeline.py:559
 #, fuzzy
 #| msgid "Show timeline\tCtrl+T"
 msgid "Timeline Editor Usage"
@@ -2980,7 +2990,7 @@ msgstr "响度范围目标（LUFS）。从+1.0到+20.0，默认为+7.0"
 msgid "Play and listen to the result of audio filters"
 msgstr "播放和聆听音频过滤器的结果"
 
-#: ../vdms_panels/av_conversions.py:986 ../vdms_panels/av_conversions.py:1807
+#: ../vdms_panels/av_conversions.py:986 ../vdms_panels/av_conversions.py:1810
 #, fuzzy
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
@@ -3020,23 +3030,23 @@ msgstr ""
 msgid "The file is not a frame or a video file"
 msgstr "该文件不是一个框架或视频文件"
 
-#: ../vdms_panels/av_conversions.py:1333
+#: ../vdms_panels/av_conversions.py:1336
 #, fuzzy
 msgid "This filter is incompatible with 2-pass enabled"
 msgstr "该过滤器与启用的2-pass不兼容。"
 
-#: ../vdms_panels/av_conversions.py:1484
+#: ../vdms_panels/av_conversions.py:1487
 msgid "No Audio"
 msgstr "没有音频"
 
-#: ../vdms_panels/av_conversions.py:1622
+#: ../vdms_panels/av_conversions.py:1625
 #, fuzzy
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
 msgstr "激活峰值电平正常化，这将产生一个等于设定的目标电平的最大峰值电平。"
 
-#: ../vdms_panels/av_conversions.py:1625
+#: ../vdms_panels/av_conversions.py:1628
 #, fuzzy
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
@@ -3044,7 +3054,7 @@ msgid ""
 msgstr ""
 "激活基于有效值的归一化，根据平均音量计算出达到相同平均功率信号的增益量。"
 
-#: ../vdms_panels/av_conversions.py:1629
+#: ../vdms_panels/av_conversions.py:1632
 #, fuzzy
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
@@ -3053,30 +3063,30 @@ msgstr ""
 "激活两个通道的正常化。它使用 \"loudnorm \"滤波器对感知的响度进行归一化，该滤"
 "波器实现了EBU R128算法。"
 
-#: ../vdms_panels/av_conversions.py:1651
+#: ../vdms_panels/av_conversions.py:1654
 #, fuzzy
 msgid "Audio normalization off"
 msgstr "关闭音频正常化"
 
-#: ../vdms_panels/av_conversions.py:2238
+#: ../vdms_panels/av_conversions.py:2241
 msgid "{} file in queue"
 msgstr "{}队列中的文件"
 
-#: ../vdms_panels/av_conversions.py:2246
+#: ../vdms_panels/av_conversions.py:2249
 msgid "Off"
 msgstr "关闭"
 
-#: ../vdms_panels/av_conversions.py:2252 ../vdms_panels/presets_manager.py:933
+#: ../vdms_panels/av_conversions.py:2255 ../vdms_panels/presets_manager.py:933
 #: ../vdms_panels/video_to_sequence.py:587
 msgid "Unset"
 msgstr "未设置"
 
-#: ../vdms_panels/av_conversions.py:2255 ../vdms_panels/presets_manager.py:936
+#: ../vdms_panels/av_conversions.py:2258 ../vdms_panels/presets_manager.py:936
 #: ../vdms_panels/video_to_sequence.py:590
 msgid "start  {} | duration  {}"
 msgstr "start  {} | duration  {}"
 
-#: ../vdms_panels/av_conversions.py:2261
+#: ../vdms_panels/av_conversions.py:2264
 #, fuzzy
 msgid ""
 "Queued File\n"
@@ -3105,7 +3115,7 @@ msgstr ""
 "Time Period （时间周期\n"
 "Input Audio Map"
 
-#: ../vdms_panels/av_conversions.py:2277
+#: ../vdms_panels/av_conversions.py:2280
 #, fuzzy
 msgid ""
 "Queued File\n"
@@ -3144,7 +3154,7 @@ msgstr ""
 "Subtitles Map\n"
 "Time Period"
 
-#: ../vdms_panels/av_conversions.py:2298
+#: ../vdms_panels/av_conversions.py:2301
 #, fuzzy
 msgid ""
 "Queued File\n"
@@ -3205,7 +3215,7 @@ msgstr ""
 "Subtitles Map\n"
 "Time Period"
 
-#: ../vdms_panels/av_conversions.py:2337
+#: ../vdms_panels/av_conversions.py:2340
 #, fuzzy
 msgid ""
 "Audio normalization data cannot be saved on the Presets Manager.\n"
@@ -3213,13 +3223,13 @@ msgid ""
 "Do you want to continue?"
 msgstr "音频正常化过程不能保存在预设管理器中。"
 
-#: ../vdms_panels/av_conversions.py:2355
+#: ../vdms_panels/av_conversions.py:2358
 #, fuzzy
 #| msgid "Close Videomass"
 msgid "Choose a Videomass preset..."
 msgstr "关闭 Videomass"
 
-#: ../vdms_panels/av_conversions.py:2364
+#: ../vdms_panels/av_conversions.py:2367
 msgid "Create a new profile"
 msgstr "创建一个新的配置文件"
 
