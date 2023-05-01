@@ -55,7 +55,7 @@ def make_bitmap(width, height, image):
 class Actor(wx.lib.statbmp.GenStaticBitmap):
     """
     This class is useful for drawing a rubberband rectangle
-    over a static bitmap using overlay to select specific areas
+    over a static bitmap using DC to select specific areas
     on an image. Implements the ability to draw with mouse
     movements or by dynamically passing the coordinates to the
     `onRedraw` method (i.e. using spin controls events).
@@ -148,14 +148,15 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
 
     def onRedraw(self, x, y, w, h):
         """
-        Update Drawing: A transparent background rectangle in a
+        Update Drawing: A semi-transparent background rectangle in a
         bitmap object. Create a brush (for the box's interior) with
         the same colour as pen color but 50% transparency.
         """
 
         self.h, self.w, self.x, self.y = h, w, x, y
         dc = wx.ClientDC(self)
-        dc = wx.GCDC(dc)
+        if 'wxMac' not in wx.PlatformInfo:
+            dc = wx.GCDC(dc)
         dc.DrawBitmap(self.current_bmp, 0, 0, True)
         dc.SetPen(wx.Pen(self.bc, 2, wx.PENSTYLE_SOLID))
         dc.SetBrush(wx.Brush(wx.Colour(self.bc[0], self.bc[1],
