@@ -7,6 +7,17 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Mon, 01 May 2023 V.5.0.2
+
+  * Code refactoring.
+  * Improved layout on the Timeline Editor miniframe.
+  * [A/V Conversions] Improved filter Crop dialog.
+  * Fixed `ZeroDivisionError: division by zero` on Timeline Editor by selecting
+    files with duration == 0 .
+  * Fixed conditional inconsistencies on timeline editor code (see `set_values`
+    method)
+
++------------------------------------+
 Tue, 18 April 2023 V.5.0.1
 
   * Update ru_RU translation

@@ -36,7 +36,7 @@ def current_release():
     """
     release_name = 'Videomass'
     program_name = 'videomass'
-    version = '5.0.1'
+    version = '5.0.2'
     release = 'released'
     copyr = '2013-2023'
     website = 'http://jeanslack.github.io/Videomass/'

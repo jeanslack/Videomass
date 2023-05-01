@@ -116,7 +116,7 @@ class ListWarning(wx.Dialog):
             textlist.SetDefaultStyle(wx.TextAttr(colorscheme['TXT3']))
             textlist.AppendText(f"{index}   {fname}   ")
             textlist.SetDefaultStyle(wx.TextAttr(colorscheme['ERR0']))
-            textlist.AppendText(f"{msg}\n\n")
+            textlist.AppendText(f"{msg}\n")
             index += 1
         textlist.SetInsertionPoint(0)  # set cursor to initial point
 
