@@ -244,12 +244,12 @@ class Crop(wx.Dialog):
                                        wx.HORIZONTAL)
         sizerBase.Add(sizer_load, 0, wx.ALL | wx.CENTER, 5)
         self.sld_time = wx.Slider(self, wx.ID_ANY,
-                                get_milliseconds(self.clock),
-                                0,
-                                self.mills,
-                                size=(250, -1),
-                                style=wx.SL_HORIZONTAL,
-                                )
+                                  get_milliseconds(self.clock),
+                                  0,
+                                  self.mills,
+                                  size=(250, -1),
+                                  style=wx.SL_HORIZONTAL,
+                                  )
         sizer_load.Add(self.sld_time, 0, wx.ALL | wx.CENTER, 5)
         self.txttime = wx.StaticText(self, wx.ID_ANY, self.clock)
         sizer_load.Add(self.txttime, 0, wx.ALL | wx.CENTER, 10)

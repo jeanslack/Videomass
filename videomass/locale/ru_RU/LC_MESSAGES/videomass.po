@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-01 02:02+0200\n"
-"PO-Revision-Date: 2023-05-01 02:07+0200\n"
+"POT-Creation-Date: 2023-05-03 19:52+0200\n"
+"PO-Revision-Date: 2023-05-04 18:45+0200\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -50,10 +50,10 @@ msgstr ""
 "{0}"
 
 # Перевод всех отмеченных изменений на значение по умолчанию
-#: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:314
+#: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:287
 #: ../vdms_dialogs/filter_deinterlace.py:121
 #: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:209
-#: ../vdms_dialogs/filter_stab.py:317 ../vdms_dialogs/filter_transpose.py:105
+#: ../vdms_dialogs/filter_stab.py:316 ../vdms_dialogs/filter_transpose.py:105
 #: ../vdms_dialogs/filter_colorcorrection.py:187
 #: ../vdms_miniframes/timeline.py:261 ../vdms_miniframes/timeline.py:280
 #: ../vdms_panels/av_conversions.py:389 ../vdms_ytdlp/playlist_indexing.py:128
@@ -123,77 +123,79 @@ msgstr ""
 msgid "Confirm Settings"
 msgstr "Подтвердить настройки"
 
-#: ../vdms_dialogs/filter_crop.py:236 ../vdms_dialogs/filter_scale.py:108
+#: ../vdms_dialogs/filter_crop.py:209 ../vdms_dialogs/filter_scale.py:108
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "Размер источника: {0} x {1} пикселей"
 
-#: ../vdms_dialogs/filter_crop.py:244
+#: ../vdms_dialogs/filter_crop.py:217
 #, fuzzy
 #| msgid "Font Color"
 msgid "Pen color"
 msgstr "Цвет шрифта"
 
-#: ../vdms_dialogs/filter_crop.py:247
+#: ../vdms_dialogs/filter_crop.py:220
 #: ../vdms_dialogs/filter_colorcorrection.py:103
 msgid "Search for a specific frame"
 msgstr "Поиск определенного кадра"
 
-#: ../vdms_dialogs/filter_crop.py:261
+#: ../vdms_dialogs/filter_crop.py:234
 #: ../vdms_dialogs/filter_colorcorrection.py:117
 msgid "Load"
 msgstr "Загрузить"
 
-#: ../vdms_dialogs/filter_crop.py:264
+#: ../vdms_dialogs/filter_crop.py:237
 msgid "Cropping area selection "
 msgstr "Выбор области обрезки "
 
-#: ../vdms_dialogs/filter_crop.py:269 ../vdms_dialogs/filter_scale.py:120
+#: ../vdms_dialogs/filter_crop.py:242 ../vdms_dialogs/filter_scale.py:120
 msgid "Height"
 msgstr "Высота"
 
-#: ../vdms_dialogs/filter_crop.py:289
+#: ../vdms_dialogs/filter_crop.py:262
 msgid "Center"
 msgstr "Центр"
 
-#: ../vdms_dialogs/filter_crop.py:300 ../vdms_dialogs/filter_scale.py:120
+#: ../vdms_dialogs/filter_crop.py:273 ../vdms_dialogs/filter_scale.py:120
 msgid "Width"
 msgstr "Ширина"
 
-#: ../vdms_dialogs/filter_crop.py:319 ../vdms_dialogs/filter_deinterlace.py:120
+#: ../vdms_dialogs/filter_crop.py:292 ../vdms_dialogs/filter_deinterlace.py:120
 #: ../vdms_dialogs/filter_denoisers.py:83 ../vdms_dialogs/filter_scale.py:207
-#: ../vdms_dialogs/filter_stab.py:315 ../vdms_dialogs/filter_transpose.py:110
+#: ../vdms_dialogs/filter_stab.py:314 ../vdms_dialogs/filter_transpose.py:110
 #: ../vdms_dialogs/set_timestamp.py:148
 #: ../vdms_dialogs/filter_colorcorrection.py:192
 #: ../vdms_ytdlp/playlist_indexing.py:132
 msgid "Apply"
 msgstr "Применить"
 
-#: ../vdms_dialogs/filter_crop.py:334
-msgid "Crop Filter"
+#: ../vdms_dialogs/filter_crop.py:315
+#, fuzzy
+#| msgid "Crop Filter"
+msgid "Crop Tool"
 msgstr "Фильтр Обрезка"
 
-#: ../vdms_dialogs/filter_crop.py:335
+#: ../vdms_dialogs/filter_crop.py:316
 msgid "Choose the color to draw the cropping area"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:337
+#: ../vdms_dialogs/filter_crop.py:318
 msgid "Crop to width"
 msgstr "Обрезать по ширине"
 
-#: ../vdms_dialogs/filter_crop.py:338
+#: ../vdms_dialogs/filter_crop.py:319
 #, fuzzy
 #| msgid "Move vertically - set to -1 to center the vertical axis"
 msgid "Move vertically (set to -1 to center the vertical axis)"
 msgstr "Вертикальное положение верхнего левого угла"
 
-#: ../vdms_dialogs/filter_crop.py:340
+#: ../vdms_dialogs/filter_crop.py:321
 #, fuzzy
 #| msgid "Move horizontally - set to -1 to center the horizontal axis"
 msgid "Move horizontally (set to -1 to center the horizontal axis)"
 msgstr "Горизонтальное положение верхнего левого угла"
 
-#: ../vdms_dialogs/filter_crop.py:342
+#: ../vdms_dialogs/filter_crop.py:323
 msgid "Crop to height"
 msgstr "Обрезать по высоте"
 
@@ -312,8 +314,10 @@ msgid "hqdn3d options"
 msgstr "Параметры фильтра hqdn3d"
 
 #: ../vdms_dialogs/filter_denoisers.py:123
-msgid "Denoiser filters"
-msgstr "Фильтры шумоподавления"
+#, fuzzy
+#| msgid "Denoiser"
+msgid "Denoiser Tool"
+msgstr "Шумоподавитель"
 
 #: ../vdms_dialogs/filter_denoisers.py:124
 msgid ""
@@ -394,8 +398,8 @@ msgid "Setsar filter (sample aspect ratio) example 1/1"
 msgstr "SetSar(примерное соотношение сторон)"
 
 #: ../vdms_dialogs/filter_scale.py:220
-msgid "Resizing filters"
-msgstr "Фильтры изменения размеров"
+msgid "Resize Tool"
+msgstr ""
 
 #: ../vdms_dialogs/filter_scale.py:221
 msgid "Scale filter, set to 0 to disable"
@@ -427,51 +431,51 @@ msgstr ""
 "значение -1 или -2 (для некоторых кодеков требуется -2, \n"
 "так что сначала вы должны провести некоторое тестирование)"
 
-#: ../vdms_dialogs/filter_stab.py:82
+#: ../vdms_dialogs/filter_stab.py:81
 msgid "Enable stabilizer"
 msgstr "Включить stabilizer"
 
-#: ../vdms_dialogs/filter_stab.py:84
+#: ../vdms_dialogs/filter_stab.py:83
 msgid "Create a side-by-side comparison video"
 msgstr "Создайте видео для параллельного сравнения"
 
-#: ../vdms_dialogs/filter_stab.py:89
+#: ../vdms_dialogs/filter_stab.py:88
 msgid "Create a snapshot"
 msgstr "Создать снимок"
 
-#: ../vdms_dialogs/filter_stab.py:107 ../vdms_panels/av_conversions.py:383
+#: ../vdms_dialogs/filter_stab.py:106 ../vdms_panels/av_conversions.py:383
 msgid "Preview"
 msgstr "Предпросмотр"
 
-#: ../vdms_dialogs/filter_stab.py:110
+#: ../vdms_dialogs/filter_stab.py:109
 msgid "Duration seconds:"
 msgstr "Продолжительность секунд:"
 
-#: ../vdms_dialogs/filter_stab.py:119
+#: ../vdms_dialogs/filter_stab.py:118
 msgid "Video Detect"
 msgstr "Обнаружение видео"
 
-#: ../vdms_dialogs/filter_stab.py:177
+#: ../vdms_dialogs/filter_stab.py:176
 msgid "[TRIPOD] Enable tripod mode if checked"
 msgstr "[ШТАТИВ] Включите режим штатива, если установлен флажок"
 
-#: ../vdms_dialogs/filter_stab.py:184
+#: ../vdms_dialogs/filter_stab.py:183
 msgid "Video transform"
 msgstr "Преобразование видео"
 
-#: ../vdms_dialogs/filter_stab.py:203
+#: ../vdms_dialogs/filter_stab.py:202
 msgid "[OPTALGO] optimization algorithm"
 msgstr "[OPTALGO] алгоритм оптимизации"
 
-#: ../vdms_dialogs/filter_stab.py:225
+#: ../vdms_dialogs/filter_stab.py:224
 msgid "[CROP] Specify how to deal with borders at movement compensation"
 msgstr "[ОБРЕЗАТЬ] Укажите, как работать с границами при компенсации движения"
 
-#: ../vdms_dialogs/filter_stab.py:232
+#: ../vdms_dialogs/filter_stab.py:231
 msgid "[INVERT] Invert transforms if checked"
 msgstr "[ИНВЕРТИРОВАТЬ] Инвертировать преобразования, если отмечено"
 
-#: ../vdms_dialogs/filter_stab.py:235
+#: ../vdms_dialogs/filter_stab.py:234
 msgid ""
 "[RELATIVE] Consider transforms as relative to previous frame if checked, "
 "absolute if unchecked"
@@ -479,30 +483,30 @@ msgstr ""
 "[RELATIVE] Считать преобразования относительно предыдущего кадра, если "
 "отмечен; абсолютные, если не отмечен"
 
-#: ../vdms_dialogs/filter_stab.py:280
+#: ../vdms_dialogs/filter_stab.py:279
 msgid "Specify type of interpolation"
 msgstr "Укажите тип интерполяции"
 
-#: ../vdms_dialogs/filter_stab.py:288
+#: ../vdms_dialogs/filter_stab.py:287
 msgid ""
 "[TRIPOD2] virtual tripod mode, equivalent to relative=unchecked:smoothing=0"
 msgstr ""
 "[ШТАТИВ2] виртуальный режим штатива, эквивалентный relative=unchecked:"
 "smoothing=0"
 
-#: ../vdms_dialogs/filter_stab.py:295
+#: ../vdms_dialogs/filter_stab.py:294
 msgid "Unsharp filter:"
 msgstr "Фильтр Нерезкость:"
 
-#: ../vdms_dialogs/filter_stab.py:328
+#: ../vdms_dialogs/filter_stab.py:327
 msgid "Seek to a position on the video."
 msgstr "Найти позицию на видео."
 
-#: ../vdms_dialogs/filter_stab.py:330
+#: ../vdms_dialogs/filter_stab.py:329
 msgid "Make a snapshot of the video with the settings made."
 msgstr "Сделайте снимок видео со сделанными настройками."
 
-#: ../vdms_dialogs/filter_stab.py:332
+#: ../vdms_dialogs/filter_stab.py:331
 msgid ""
 "Set the snapshot duration from 3 to 15 seconds from the seek position, "
 "default is 5 seconds."
@@ -510,7 +514,7 @@ msgstr ""
 "Установите продолжительность снимка от 3 до 15 секунд от позиции поиска, по "
 "умолчанию 5 секунд."
 
-#: ../vdms_dialogs/filter_stab.py:336
+#: ../vdms_dialogs/filter_stab.py:335
 msgid ""
 "Set how shaky the video is and how quick the camera is. A value of 1 means "
 "little shakiness, a value of 10 means strong shakiness. Default value is 5."
@@ -519,7 +523,7 @@ msgstr ""
 "Значение 1 означает небольшую неустойчивость, значение 10 означает сильную "
 "неустойчивость. Значение по умолчанию - 5."
 
-#: ../vdms_dialogs/filter_stab.py:340
+#: ../vdms_dialogs/filter_stab.py:339
 msgid ""
 "Set the accuracy of the detection process. A value of 1 means low accuracy, "
 "a value of 15 means high accuracy. Default value is 15."
@@ -527,7 +531,7 @@ msgstr ""
 "Установите точность процесса обнаружения. Значение 1 означает низкую "
 "точность, значение 15 означает высокую точность. Значение по умолчанию - 15."
 
-#: ../vdms_dialogs/filter_stab.py:344
+#: ../vdms_dialogs/filter_stab.py:343
 msgid ""
 "Set stepsize of the search process. The region around minimum is scanned "
 "with 1 pixel resolution. Default value is 6."
@@ -535,7 +539,7 @@ msgstr ""
 "Установите размер шага процесса поиска. Область около минимума сканируется с "
 "разрешением 1 пиксель. Значение по умолчанию - 6."
 
-#: ../vdms_dialogs/filter_stab.py:348
+#: ../vdms_dialogs/filter_stab.py:347
 msgid ""
 "Set minimum contrast. Below this value a local measurement field is "
 "discarded. The range is 0-1. Default value is 0.25."
@@ -543,7 +547,7 @@ msgstr ""
 "Установите минимальный контраст. Ниже этого значения локальное поле "
 "измерения отбрасывается. Диапазон 0-1. Значение по умолчанию - 0,25."
 
-#: ../vdms_dialogs/filter_stab.py:351
+#: ../vdms_dialogs/filter_stab.py:350
 msgid ""
 "Set reference frame number for tripod mode. If enabled, the motion of the "
 "frames is compared to a reference frame in the filtered stream, identified "
@@ -557,7 +561,7 @@ msgstr ""
 "компенсировать все движения в более или менее статичной сцене и сохранять "
 "неподвижность обзора камеры. Фреймы считаются начиная с 1."
 
-#: ../vdms_dialogs/filter_stab.py:360
+#: ../vdms_dialogs/filter_stab.py:359
 msgid ""
 "Set the number of frames (value*2 + 1) used for lowpass filtering the camera "
 "movements. Default value is 15. For example a number of 10 means that 21 "
@@ -573,7 +577,7 @@ msgstr ""
 "видео, но ограничивает ускорение камеры (движения панорамирования / "
 "наклона). 0 - это особый случай, когда моделируется статическая камера."
 
-#: ../vdms_dialogs/filter_stab.py:368
+#: ../vdms_dialogs/filter_stab.py:367
 msgid ""
 "Set the camera path optimization algorithm. Values are: `gauss`: gaussian "
 "kernel low-pass filter on camera motion (default), and `avg`: averaging on "
@@ -583,7 +587,7 @@ msgstr ""
 "нижних частот ядра Гаусса при движении камеры (по умолчанию) и «avg»: "
 "усреднение при преобразованиях"
 
-#: ../vdms_dialogs/filter_stab.py:372
+#: ../vdms_dialogs/filter_stab.py:371
 msgid ""
 "Set maximal angle in radians (degree*PI/180) to rotate frames. Default value "
 "is -1, meaning no limit."
@@ -591,7 +595,7 @@ msgstr ""
 "Установите максимальный угол в радианах (градусы * PI / 180) для поворота "
 "кадров. Значение по умолчанию -1, что означает отсутствие ограничений."
 
-#: ../vdms_dialogs/filter_stab.py:375
+#: ../vdms_dialogs/filter_stab.py:374
 msgid ""
 "Specify how to deal with borders that may be visible due to movement "
 "compensation. Values are: `keep` keep image information from previous frame "
@@ -602,13 +606,13 @@ msgstr ""
 "изображении из предыдущего кадра (по умолчанию), «black» заполнить границу "
 "чёрным"
 
-#: ../vdms_dialogs/filter_stab.py:380
+#: ../vdms_dialogs/filter_stab.py:379
 msgid "Invert transforms if checked. Default is unchecked."
 msgstr ""
 "Инвертировать преобразования, если отмечено. По умолчанию флажок не "
 "установлен."
 
-#: ../vdms_dialogs/filter_stab.py:382
+#: ../vdms_dialogs/filter_stab.py:381
 msgid ""
 "Consider transforms as relative to previous frame if checked, absolute if "
 "unchecked. Default is checked."
@@ -616,7 +620,7 @@ msgstr ""
 "Считайте преобразования относительно предыдущего кадра, если отмечен, и "
 "абсолютными, если не отмечен. По умолчанию отмечен."
 
-#: ../vdms_dialogs/filter_stab.py:385
+#: ../vdms_dialogs/filter_stab.py:384
 msgid ""
 "Set percentage to zoom. A positive value will result in a zoom-in effect, a "
 "negative value in a zoom-out effect. Default value is 0 (no zoom)."
@@ -625,7 +629,7 @@ msgstr ""
 "увеличения, отрицательное значение - к эффекту уменьшения. Значение по "
 "умолчанию - 0 (без увеличения)."
 
-#: ../vdms_dialogs/filter_stab.py:389
+#: ../vdms_dialogs/filter_stab.py:388
 msgid ""
 "Set optimal zooming to avoid borders. Accepted values are: `0` disabled, `1` "
 "optimal static zoom value is determined (only very strong movements will "
@@ -640,7 +644,7 @@ msgstr ""
 "масштабирования (границы не видны), см. zoomspeed. Обратите внимание, что "
 "значение, указанное при увеличении, добавляется к рассчитанному здесь."
 
-#: ../vdms_dialogs/filter_stab.py:396
+#: ../vdms_dialogs/filter_stab.py:395
 msgid ""
 "Set percent to zoom maximally each frame (enabled when optzoom is set to 2). "
 "Range is from 0 to 5, default value is 0.25."
@@ -649,7 +653,7 @@ msgstr ""
 "когда для optzoom установлено значение 2). Диапазон от 0 до 5, значение по "
 "умолчанию - 0,25."
 
-#: ../vdms_dialogs/filter_stab.py:400
+#: ../vdms_dialogs/filter_stab.py:399
 msgid ""
 "Specify type of interpolation. Available values are: `no` no interpolation, "
 "`linear` linear only horizontal, `bilinear` linear in both directions "
@@ -660,7 +664,7 @@ msgstr ""
 "направлениях (по умолчанию), «bicubic», кубический в обоих направлениях "
 "(медленно)."
 
-#: ../vdms_dialogs/filter_stab.py:405
+#: ../vdms_dialogs/filter_stab.py:404
 msgid ""
 "Enable virtual tripod mode if checked, which is equivalent to relative=0:"
 "smoothing=0. Default is unchecked. Use also tripod option of vidstabdetect."
@@ -669,7 +673,7 @@ msgstr ""
 "эквивалентно relative=0:smoothing=0. По умолчанию флажок не установлен. "
 "Используйте также вариант штатива в vidstabdetect."
 
-#: ../vdms_dialogs/filter_stab.py:410
+#: ../vdms_dialogs/filter_stab.py:409
 msgid ""
 "Sharpen or blur the input video. Note the use of the unsharp filter which is "
 "always recommended."
@@ -677,16 +681,18 @@ msgstr ""
 "Увеличьте резкость или размытие входного видео. Обратите внимание на "
 "использование нерезкого фильтра, который всегда рекомендуется."
 
-#: ../vdms_dialogs/filter_stab.py:415
-msgid "Video stabilizer filter"
+#: ../vdms_dialogs/filter_stab.py:414
+#, fuzzy
+#| msgid "Video stabilizer filter"
+msgid "Video Stabilizer Tool"
 msgstr "Фильтр стабилизатора видео(stabilizer)"
 
-#: ../vdms_dialogs/filter_stab.py:532 ../vdms_io/io_tools.py:57
+#: ../vdms_dialogs/filter_stab.py:533 ../vdms_io/io_tools.py:57
 #: ../vdms_io/io_tools.py:105
 msgid "Videomass - Loading..."
 msgstr "Videomass - Загрузка..."
 
-#: ../vdms_dialogs/filter_stab.py:533
+#: ../vdms_dialogs/filter_stab.py:534
 msgid ""
 "Please wait,\n"
 "This process will take a few seconds."
@@ -716,7 +722,9 @@ msgid "180°"
 msgstr "180°"
 
 #: ../vdms_dialogs/filter_transpose.py:115
-msgid "Transpose Filter"
+#, fuzzy
+#| msgid "Transpose Filter"
+msgid "Transpose Tool"
 msgstr "Фильтр вращения"
 
 #: ../vdms_dialogs/filter_transpose.py:229
@@ -1569,11 +1577,15 @@ msgid "Gamma:"
 msgstr "Гамма:"
 
 #: ../vdms_dialogs/filter_colorcorrection.py:179
-msgid "0 to 100, Default value 10"
+#, fuzzy
+#| msgid "0 to 100, Default value 10"
+msgid "0 to 100, default value 10"
 msgstr "от 0 до 100, значение по умолчанию 10"
 
 #: ../vdms_dialogs/filter_colorcorrection.py:207
-msgid "Color Correction Equalizer"
+#, fuzzy
+#| msgid "Color Correction Equalizer"
+msgid "Color Correction EQ Tool"
 msgstr "Эквалайзер цветокоррекции"
 
 #: ../vdms_dialogs/ffmpeg_conf.py:72
@@ -4548,6 +4560,12 @@ msgstr ""
 #: ../vdms_ytdlp/youtubedl_ui.py:659
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "URL-адреса содержат видеоканалы. Вы уверены, что хотите продолжить?"
+
+#~ msgid "Denoiser filters"
+#~ msgstr "Фильтры шумоподавления"
+
+#~ msgid "Resizing filters"
+#~ msgstr "Фильтры изменения размеров"
 
 #~ msgid ""
 #~ "Already exist: \n"
