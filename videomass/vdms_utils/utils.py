@@ -270,21 +270,17 @@ def milliseconds2clock(milliseconds):
 # ------------------------------------------------------------------------
 
 
-def milliseconds2clocksec(milliseconds, rounds=False):
+def milliseconds2clocksec(milliseconds):
     """
     Like milliseconds2clock but differs in the returned object
-    which does not have milliseconds. Furthermore you can pass
-    `rounds=True` arg to add the millisec offset to the seconds.
+    which does not have milliseconds.
     Returns a string object in 24-hour clock of time units
     e.g. HOURS:MM:SS, as in 00:00:00 .
 
     """
     minutes, sec = divmod(milliseconds, 60000)
     hours, minutes = divmod(minutes, 60)
-    if rounds:
-        seconds = round(float(sec / 1000))
-    else:
-        seconds = int(sec / 1000)
+    seconds = int(sec / 1000)
     return f"{hours:02}:{minutes:02}:{seconds:02}"
 # ------------------------------------------------------------------------
 

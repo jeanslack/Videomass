@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: April.09.2023
+Rev: May.02.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -36,19 +36,15 @@ from videomass.vdms_utils.utils import clockset
 from videomass.vdms_io.make_filelog import make_log_template
 
 
-def make_bitmap(width, height, image):
+def make_bitmap(width, height, fname):
     """
     Resize the image to the given size and convert it to a
     bitmap object.
-
     Returns a wx.Bitmap object
-
     """
-    bitmap = wx.Bitmap(image)
-    img = bitmap.ConvertToImage()
+    img = wx.Image(fname)
     img = img.Scale(int(width), int(height), wx.IMAGE_QUALITY_NORMAL)
     bmp = img.ConvertToBitmap()
-
     return bmp
 
 
@@ -58,14 +54,17 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
     over a static bitmap using DC to select specific areas
     on an image. Implements the ability to draw with mouse
     movements or by dynamically passing the coordinates to the
-    `onRedraw` method (i.e. using spin controls events).
+    `onRedraw` method.
 
     Inspired by an explanation by Robin Dunn, where he discusses
     how to rotate images with DC:
     <https://discuss.wxpython.org/t/questions-about-rotation/34064>
 
     This `Actor` uses GenStaticBitmap in his show, which is a generic
-    implementation of wx.StaticBitmap, to display larger images portably.
+    implementation of wx.StaticBitmap, to display larger images portably
+    with advantages on all mouse events (such as detection of mouse
+    motions, mouse clicks and so on).
+    see <https://docs.wxpython.org/wx.lib.statbmp.html>
     """
     def __init__(self, parent, bitmap, idNum, imgFile, **kwargs):
         """
@@ -73,35 +72,20 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         a parent and a bitmap. First make sure you scale the
         image to fit on parent, e.g. a panel.
         """
-        self.h = 0  # rectangle height
-        self.w = 0  # rectangle width
-        self.x = 0  # rectangle x axis
-        self.y = 0  # rectangle y axis
-        self.startpos = 0, 0  # start x,y axis clicked
+        self.rect = 0, 0, 0, 0  # x,y,w,h coords
+        self.startpos = 0, 0  # start x,y axis on initial clicked
         self.bc = (255, 0, 0, 255)  # background color
 
         wx.lib.statbmp.GenStaticBitmap.__init__(self, parent, -1,
                                                 bitmap, **kwargs)
-        self.current_bmp = bitmap
+        self.bitmap = bitmap
 
         self.Bind(wx.EVT_PAINT, self.OnPaint)
         self.Bind(wx.EVT_MOTION, self.on_move)
         self.Bind(wx.EVT_LEFT_DOWN, self.on_leftdown)
         self.Bind(wx.EVT_LEFT_UP, self.on_leftup)
-    # ------------------------------------------------------------------#
 
-    def on_move(self, event):
-        """
-        Dragging-mouse over the cropping area, it sends
-        the coordinates for drawing the rectangle.
-        """
         self.SetCursor(wx.Cursor(wx.CURSOR_CROSS))
-        if event.Dragging() and event.LeftIsDown():
-            pos = event.GetPosition()
-            x, y = pos[0], pos[1]
-            # draw rectangle opposite to mouse direction:
-            w, h = self.startpos[0] - x, self.startpos[1] - y
-            self.onRedraw(x, y, w, h)
     # ------------------------------------------------------------------#
 
     def on_leftdown(self, event):
@@ -111,68 +95,87 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         """
         self.CaptureMouse()
         self.startpos = event.GetPosition()
-        self.onRedraw(self.startpos[0], self.startpos[1], 0, 0)
+    # ------------------------------------------------------------------#
+
+    def on_move(self, event):
+        """
+        Dragging-mouse over the image, it sends the
+        coordinates points for drawing the rectangle.
+        """
+        if event.Dragging() and event.LeftIsDown():
+            rect = wx.Rect(self.startpos, event.GetPosition())
+            pub.sendMessage("TO_REAL_SCALE", msg=rect)
+            self.onRedraw(rect)
     # ------------------------------------------------------------------#
 
     def on_leftup(self, event):
         """
         Event on releasing the left mouse button.
-        Note: seeking x, y minimum values as dc x even to top
-        left and y to bottom left (end position click released).
-        Similar results can be achieved by passing the startpos
-        and endpos positions to the wx.Rect() method, but
-        there are slight differences on obtained values.
         """
         if self.HasCapture():
             self.ReleaseMouse()
-        self.SetCursor(wx.Cursor(wx.CURSOR_ARROW))
-        endpos = event.GetPosition()
-        x = min(self.startpos[0], endpos[0])
-        y = min(self.startpos[1], endpos[1])
-        w, h = abs(self.w), abs(self.h)
         self.startpos = 0, 0
-        self.onRedraw(x, y, w, h)
-        pub.sendMessage("TO_REAL_SCALE", msg=[x, y, w, h])
     # ------------------------------------------------------------------#
 
     def OnPaint(self, event=None):
         """
-        When instantiating the Actor class, this event is
-        executed last. This method is needed to set initial
-        image on panel and/or to reset crop area previously
-        drawn on reopen the Crop dialog.
+        This event is always needed to repaint the area
+        during window changes, i.e. startup, reopening,
+        resizing, and hiding.
         """
         wx.PaintDC(self)  # draw window boundary
-        self.onRedraw(self.x, self.y, self.w, self.h)
+        self.onRedraw(self.rect)
     # ------------------------------------------------------------------#
 
-    def onRedraw(self, x, y, w, h):
+    def onRedraw(self, rect):
         """
-        Update Drawing: A semi-transparent background rectangle in a
-        bitmap object. Create a brush (for the box's interior) with
-        the same colour as pen color but 50% transparency.
+        Updates the coordinates of the rectangle selection area
+        redrawing the bitmap object. The brush color (for the box's
+        interior) it has the same colour as pen color but 40%
+        transparency.
         """
-
-        self.h, self.w, self.x, self.y = h, w, x, y
+        self.rect = rect
         dc = wx.ClientDC(self)
         if 'wxMac' not in wx.PlatformInfo:
-            dc = wx.GCDC(dc)
-        dc.DrawBitmap(self.current_bmp, 0, 0, True)
+            self.SetDoubleBuffered(True)
+            dc = wx.GCDC(dc)  # needed for brush transparency
+        dc.Clear()
+        dc.DrawBitmap(self.bitmap, 0, 0, True)
         dc.SetPen(wx.Pen(self.bc, 2, wx.PENSTYLE_SOLID))
         dc.SetBrush(wx.Brush(wx.Colour(self.bc[0], self.bc[1],
-                                       self.bc[2], 50)))
-        dc.DrawRectangle(round(self.x + 1),
-                         round(self.y + 1),
-                         round(self.w + 1),
-                         round(self.h + 1),
+                                       self.bc[2], 40)))
+        dc.DrawRectangle(round(self.rect[0] + 1),
+                         round(self.rect[1] + 1),
+                         round(self.rect[2] + 1),
+                         round(self.rect[3] + 1),
                          )
+    # ------------------------------------------------------------------#
+
+    def oncolor(self, event, color=None):
+        """
+        Button event to get color from colourselect dialog
+        """
+        if color:
+            self.bc = color
+        else:
+            color = event.GetValue()
+            self.bc = color
+            self.onRedraw(self.rect)
+    # ------------------------------------------------------------------#
+
+    def setbitmap(self, bitmap):
+        """
+        Set a new bitmap object
+        """
+        self.bitmap = bitmap
+        self.onRedraw(self.rect)
 
 
 class Crop(wx.Dialog):
     """
     A dialog to get video crop values based on FFmpeg syntax.
-    See ``av_conversions.py`` -> ``on_Set_crop`` method for
-    how to use this class.
+    See ``av_conversions.py`` -> ``on_Set_crop`` method/event
+    for how to use this class.
     """
     get = wx.GetApp()
     OS = get.appset['ostype']
@@ -184,7 +187,7 @@ class Crop(wx.Dialog):
 
     def __init__(self, parent, *args, **kwa):
         """
-        Attributes defined here:
+        Some attributes defined here:
 
             self.w_dc       width size for DC (aka monitor width)
             self.h_dc       height size for DC (aka monitor height)
@@ -195,11 +198,8 @@ class Crop(wx.Dialog):
             toscale         scale factor
             self.h_scaled   height ratio
             self.w_scaled   width ratio
-
-        The images (also the panel and the DC) are resized to keep
-        the scale factor.
         """
-        # pen/brush color, default is RED color
+        # pen/brush color, default RED color
         self.pencolor = (255, 0, 0, 255)
         # cropping values for monitor preview
         self.w_dc = 0
@@ -209,7 +209,7 @@ class Crop(wx.Dialog):
         # current video size
         self.width = kwa['width']
         self.height = kwa['height']
-        # resizing values preserving aspect ratio for monitor
+        # scale preserving aspect ratio
         toscale = 220 if self.height >= self.width else 350
         self.h_scaled = round((self.height / self.width) * toscale)
         self.w_scaled = round((self.width / self.height) * self.h_scaled)
@@ -220,17 +220,11 @@ class Crop(wx.Dialog):
         tcheck = clockset(kwa['duration'], self.fileclock)
         self.clock = tcheck['duration']
         self.mills = tcheck['millis']
-        if os.path.exists(self.frame):
-            self.image = self.frame
-        else:  # make empty
-            self.image = wx.Bitmap(self.w_scaled, self.h_scaled)
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         self.panelrect = wx.Panel(self, wx.ID_ANY,
                                   size=(self.w_scaled, self.h_scaled)
                                   )
-        bmp = make_bitmap(self.w_scaled, self.h_scaled, self.image)
-        self.bob = Actor(self.panelrect, bmp, 1, "")
         sizerBase.Add(self.panelrect, 0, wx.ALL | wx.CENTER, 5)
         sizersize = wx.BoxSizer(wx.VERTICAL)
         sizerBase.Add(sizersize, 0, wx.ALL | wx.CENTER, 5)
@@ -249,14 +243,14 @@ class Crop(wx.Dialog):
         sizer_load = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg)),
                                        wx.HORIZONTAL)
         sizerBase.Add(sizer_load, 0, wx.ALL | wx.CENTER, 5)
-        self.slider = wx.Slider(self, wx.ID_ANY,
-                                get_milliseconds(self.clock),
-                                0,
-                                self.mills,
-                                size=(250, -1),
-                                style=wx.SL_HORIZONTAL,
-                                )
-        sizer_load.Add(self.slider, 0, wx.ALL | wx.CENTER, 5)
+        self.sld_time = wx.Slider(self, wx.ID_ANY,
+                                  get_milliseconds(self.clock),
+                                  0,
+                                  self.mills,
+                                  size=(250, -1),
+                                  style=wx.SL_HORIZONTAL,
+                                  )
+        sizer_load.Add(self.sld_time, 0, wx.ALL | wx.CENTER, 5)
         self.txttime = wx.StaticText(self, wx.ID_ANY, self.clock)
         sizer_load.Add(self.txttime, 0, wx.ALL | wx.CENTER, 10)
         self.btn_load = wx.Button(self, wx.ID_ANY, _("Load"))
@@ -321,6 +315,14 @@ class Crop(wx.Dialog):
         gridexit.Add(self.btn_ok, 0, wx.ALL, 5)
         gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
         sizerBase.Add(gridBtn, 0, wx.EXPAND)
+        # instance to Actor widget
+        if os.path.exists(self.frame):
+            bmp = make_bitmap(self.w_scaled, self.h_scaled, self.frame)
+            self.bob = Actor(self.panelrect, bmp, 1, "")
+        else:  # make a temporary empty bitmap
+            bmp = wx.Bitmap(self.w_scaled, self.h_scaled)
+            self.bob = Actor(self.panelrect, bmp, 1, "")
+            self.make_frame_from_file(None)
 
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
@@ -332,7 +334,7 @@ class Crop(wx.Dialog):
         else:
             label1.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
-        self.SetTitle(_("Crop Filter"))
+        self.SetTitle(_("Crop Tool"))
         self.btn_color.SetToolTip(_('Choose the color to draw '
                                     'the cropping area'))
         self.spin_w.SetToolTip(_('Crop to width'))
@@ -348,36 +350,27 @@ class Crop(wx.Dialog):
         self.Bind(wx.EVT_SPINCTRL, self.onX, self.spin_x)
         self.Bind(wx.EVT_SPINCTRL, self.onY, self.spin_y)
         self.Bind(wx.EVT_BUTTON, self.onCentre, self.btn_centre)
-        self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Seek, self.slider)
-        self.Bind(wx.EVT_BUTTON, self.image_loader, self.btn_load)
+        self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Seek, self.sld_time)
+        self.Bind(wx.EVT_BUTTON, self.make_frame_from_file, self.btn_load)
 
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
-        self.btn_color.Bind(csel.EVT_COLOURSELECT, self.on_choose_color)
+        self.btn_color.Bind(csel.EVT_COLOURSELECT, self.bob.oncolor)
         # self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         pub.subscribe(self.to_real_scale_coords, "TO_REAL_SCALE")
 
         if not self.mills:
-            self.slider.Disable()
-        self.image_loader(self)
+            self.sld_time.Disable()
 
         if args[0]:  # fcrop previusly values
             self.default(args[0], args[1])
     # ------------------------------------------------------------------#
 
-    def on_choose_color(self, event):
-        """
-        Event to get the color from colourselect dialog
-        """
-        col = event.GetValue()
-        self.bob.bc = col
-        self.onDrawing()
-    # ------------------------------------------------------------------#
-
     def default(self, fcrop, colorcrop):
         """
-        Set controls to previous settings
+        Set controls to previous settings when reopening
+        the Crop dialog
         """
         s = fcrop.split(':')
         s[0] = s[0][5:]  # removing `crop=` word on first item
@@ -386,38 +379,36 @@ class Crop(wx.Dialog):
         self.spin_x.SetValue(int(s[2][2:]))
         self.spin_y.SetValue(int(s[3][2:]))
         self.btn_color.SetValue(colorcrop)
-        self.bob.bc = colorcrop
+        self.bob.oncolor(None, color=colorcrop)
         self.onDrawing()
     # ------------------------------------------------------------------#
 
     def on_Seek(self, event):
         """
-        gets value from time slider, converts it to clock format
-        e.g (00:00:00), and sets the label with the converted value.
+        Slider event on seek time position.
         """
-        seek = self.slider.GetValue()
-        clock = milliseconds2clocksec(seek, rounds=True)  # to 24-hour
+        seek = self.sld_time.GetValue()
+        clock = milliseconds2clocksec(seek)  # to 24-hour
         self.txttime.SetLabel(clock)  # update StaticText
         if not self.btn_load.IsEnabled():
             self.btn_load.Enable()
     # ------------------------------------------------------------------#
 
-    def image_loader(self, event):
+    def make_frame_from_file(self, event):
         """
-        Load in a wx.dc (device context) image frame
-        at a given time clock point. Note, milliseconds
-        must not be greater than the max time nor less
-        than the min time (see seek).
+        This method is responsible for making available a
+        new frame from a given time position of a video file,
+        converting it into a bitmap object and displaying it
+        by the `bob` actor. Note, milliseconds must not be
+        greater than the max time nor less than the min time
+        (see the `seek` callback above)
         """
-        logfile = make_log_template('generic_task.log',
-                                    Crop.LOGDIR,
-                                    mode="w",
-                                    )
+        logfile = make_log_template('generic_task.log', Crop.LOGDIR, mode="w")
         if not self.mills:
             sseg = ''
         else:
-            seek = self.slider.GetValue()
-            self.clock = milliseconds2clocksec(seek, rounds=True)  # to 24-HH
+            seek = self.sld_time.GetValue()
+            self.clock = milliseconds2clocksec(seek)  # to 24-HH
             sseg = f'-ss {self.clock}'
 
         arg = (f'{sseg} -i "{self.filename}" -f image2 '
@@ -432,10 +423,8 @@ class Crop(wx.Dialog):
             with open(self.fileclock, "w", encoding='utf8') as atime:
                 atime.write(self.clock)
         self.btn_load.Disable()
-        self.image = self.frame  # update with new frame
-        bmp = make_bitmap(self.w_scaled, self.h_scaled, self.image)
-        self.bob.current_bmp = bmp
-        self.onDrawing()
+        bmp = make_bitmap(self.w_scaled, self.h_scaled, self.frame)
+        self.bob.setbitmap(bmp)
     # ------------------------------------------------------------------#
 
     def to_real_scale_coords(self, msg):
@@ -473,11 +462,7 @@ class Crop(wx.Dialog):
         else:
             self.x_dc = self.spin_x.GetValue() * x_scale
 
-        self.bob.onRedraw(self.x_dc,
-                          self.y_dc,
-                          self.w_dc,
-                          self.h_dc,
-                          )
+        self.bob.onRedraw((self.x_dc, self.y_dc, self.w_dc, self.h_dc))
     # ------------------------------------------------------------------#
 
     def onWidth(self, event):

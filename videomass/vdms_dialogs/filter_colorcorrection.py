@@ -176,7 +176,7 @@ class ColorEQ(wx.Dialog):
                                    | wx.SL_AUTOTICKS
                                    | wx.SL_LABELS,
                                    )
-        self.sld_gamma.SetToolTip(_("0 to 100, Default value 10"))
+        self.sld_gamma.SetToolTip(_("0 to 100, default value 10"))
         sizerflex2.Add(self.sld_gamma, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 10)
@@ -204,7 +204,7 @@ class ColorEQ(wx.Dialog):
             lab_imgsrc.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             lab_imgedit.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
-        self.SetTitle(_("Color Correction Equalizer"))
+        self.SetTitle(_("Color Correction EQ Tool"))
         # ----------------------Binding (EVT)-------------------------#
 
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_seek_time, self.sld_time)
@@ -365,7 +365,7 @@ class ColorEQ(wx.Dialog):
         and sets the label with the converted value.
         """
         seek = self.sld_time.GetValue()
-        clock = milliseconds2clocksec(seek, rounds=True)  # to 24-hour
+        clock = milliseconds2clocksec(seek)  # to 24-hour
         self.txttime.SetLabel(clock)  # update StaticText
         if not self.btn_load.IsEnabled():
             self.btn_load.Enable()
@@ -376,7 +376,7 @@ class ColorEQ(wx.Dialog):
         Reloads all images frame at a given time clock point
         """
         seek = self.sld_time.GetValue()
-        self.clock = milliseconds2clocksec(seek, rounds=True)  # to 24-hour
+        self.clock = milliseconds2clocksec(seek)  # to 24-hour
         error = self.process(self.framesrc)
         if error:
             wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)

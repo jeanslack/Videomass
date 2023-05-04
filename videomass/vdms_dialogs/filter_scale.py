@@ -217,7 +217,7 @@ class Scale(wx.Dialog):
         self.Layout()
 
         # Properties
-        self.SetTitle(_("Resizing filters"))
+        self.SetTitle(_("Resize Tool"))
         scale_str = _('Scale filter, set to 0 to disable')
         self.spin_scale_width.SetToolTip(scale_str)
         self.spin_scale_height.SetToolTip(scale_str)
@@ -345,7 +345,7 @@ class Scale(wx.Dialog):
         if not self.mills:
             sseg = ''
         else:
-            stime = milliseconds2clocksec(int(self.mills / 2), rounds=True)
+            stime = milliseconds2clocksec(int(self.mills / 2))
             sseg = f'-ss {stime}'
         scale = '' if not concat else f'-vf "{concat}"'
         arg = (f'{sseg} -i "{self.filename}" -f image2 -update 1 '

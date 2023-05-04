@@ -112,7 +112,7 @@ class Transpose(wx.Dialog):
         gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
         sizerBase.Add(gridBtn, 0, wx.EXPAND)
         # ----------------------Properties--------------------------------#
-        self.SetTitle(_("Transpose Filter"))
+        self.SetTitle(_("Transpose Tool"))
         self.panelimg.SetBackgroundColour(wx.Colour(Transpose.BACKGROUND))
         if Transpose.appdata['ostype'] == 'Darwin':
             self.statictxt.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
@@ -162,7 +162,7 @@ class Transpose(wx.Dialog):
         if not self.mills:
             sseg = ''
         else:
-            stime = milliseconds2clocksec(int(self.mills / 2), rounds=True)
+            stime = milliseconds2clocksec(int(self.mills / 2))
             sseg = f'-ss {stime}'
         arg = (f'{sseg} -i "{self.video}" -f image2 '
                f'-update 1 -frames:v 1 -y "{self.frame}"')
