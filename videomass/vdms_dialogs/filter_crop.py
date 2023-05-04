@@ -137,7 +137,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         self.rect = rect
         dc = wx.ClientDC(self)
         if 'wxMac' not in wx.PlatformInfo:
-            self.SetDoubleBuffered(True)
+            self.SetDoubleBuffered(True)  # prevents flickers
             dc = wx.GCDC(dc)  # needed for brush transparency
         dc.Clear()
         dc.DrawBitmap(self.bitmap, 0, 0, True)

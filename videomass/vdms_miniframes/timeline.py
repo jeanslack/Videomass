@@ -458,8 +458,8 @@ class Float_TL(wx.MiniFrame):
         """
         msg = _('Start by dragging the bottom left handle,\n'
                 'or right-click for options.')
-        if 'wxMac' not in wx.PlatformInfo:
-            self.paneltime.SetDoubleBuffered(True)
+        if 'wxMSW' in wx.PlatformInfo:
+            self.paneltime.SetDoubleBuffered(True)  # prevents flickers
         dc.Clear()
         dc.SetPen(wx.Pen(Float_TL.DELIMITER_COLOR, 3, wx.PENSTYLE_SOLID))
 
@@ -514,10 +514,10 @@ class Float_TL(wx.MiniFrame):
         w = dc.GetTextExtent(txt2)[0]
         if w < Float_TL.RW - bar_w:
             dc.DrawText(txt2, bar_w + 1, 31)
-            dc.DrawRectangle(bar_w - 1, 51, 7, 7)
+            dc.DrawRectangle(bar_w - 1, 49, 7, 10)
         else:
             dc.DrawText(txt2, bar_w - w - 5, 31)
-            dc.DrawRectangle(bar_w - 6, 51, 7, 7)
+            dc.DrawRectangle(bar_w - 6, 49, 7, 10)
     # ------------------------------------------------------------------#
 
     def statusbar_msg(self, msg, bcolor, fcolor=None):
@@ -533,6 +533,8 @@ class Float_TL(wx.MiniFrame):
                 self.sb.SetBackgroundColour(bcolor)
                 self.sb.SetForegroundColour(fcolor)
 
+        if 'wxMSW' in wx.PlatformInfo:
+            self.sb.SetDoubleBuffered(True)  # prevents flickers
         self.sb.SetStatusText(msg)
         self.sb.Refresh()
     # ------------------------------------------------------------------#
