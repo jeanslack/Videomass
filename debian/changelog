@@ -2,13 +2,21 @@ videomass (5.0.2-1) UNRELEASED; urgency=medium
 
   * Code refactoring.
   * Improved layout on the Timeline Editor miniframe.
-  * [A/V Conversions] Improved filter Crop dialog.
+  * [A/V Conversions] Improved Crop tool dialog.
   * Fixed `ZeroDivisionError: division by zero` on Timeline Editor by selecting
     files with duration == 0 .
   * Fixed conditional inconsistencies on timeline editor code (see `set_values`
-    method)
+    method).
+  * Fixed problem with incorrect values using `milliseconds2clocksec` function
+    using parameter `round=True`.
+  * Removed `round=True` parameter in `milliseconds2clocksec` function.
+  * [A/V Conversions] Fixed bug on Stabilizer tool that didn't prevent video
+    files with zero duration from being previewed. Now only video files equal
+    to or greater than 4 seconds will be allowed to preview.
+  * Fixed flickering issue using Timeline Editor and Crop tool. This issue
+    affects some device contests (DC) on Videomass.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 01 May 2023 12:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 04 May 2023 17:00:00 +0200
 
 videomass (5.0.1-1) UNRELEASED; urgency=medium
 

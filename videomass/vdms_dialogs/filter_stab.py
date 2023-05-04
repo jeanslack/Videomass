@@ -73,7 +73,6 @@ class VidstabSet(wx.Dialog):
         self.clock = tcheck['duration']
         self.mills = tcheck['millis']
         self.logfile = None
-
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         boxenable = wx.BoxSizer(wx.HORIZONTAL)
@@ -412,7 +411,7 @@ class VidstabSet(wx.Dialog):
         self.txt_unsharp.SetToolTip(tip)
 
         # Properties
-        self.SetTitle(_("Video stabilizer filter"))
+        self.SetTitle(_("Video Stabilizer Tool"))
 
         # ----------------------Binding (EVT)--------------------------#
         self.Bind(wx.EVT_CHECKBOX, self.on_activate, self.ckbx_enable)
@@ -452,7 +451,7 @@ class VidstabSet(wx.Dialog):
         and sets the label with the converted value.
         """
         seek = self.sld_time.GetValue()
-        clock = milliseconds2clocksec(seek, rounds=True)  # to 24-hour
+        clock = milliseconds2clocksec(seek)  # to 24-hour
         self.lab_time.SetLabel(clock)  # update StaticText
         if not self.btn_snap.IsEnabled():
             self.btn_snap.Enable()
@@ -510,8 +509,12 @@ class VidstabSet(wx.Dialog):
         else:
             seek = self.sld_time.GetValue()
             stime = self.spin_dur.GetValue() * 1000
-            duration = milliseconds2clocksec(stime, rounds=True)  # to 24-hour
-            self.clock = milliseconds2clocksec(seek, rounds=True)  # to 24-hour
+            if seek + stime > self.mills:
+                seek = self.mills - stime
+                if seek < 0:
+                    seek, stime = 0, self.mills
+            duration = milliseconds2clocksec(stime)  # to 24-hour
+            self.clock = milliseconds2clocksec(seek)  # to 24-hour
             sseg = f'-ss {self.clock} -t {duration}'
 
         if mode == 'detect':
@@ -730,13 +733,13 @@ class VidstabSet(wx.Dialog):
             # self.ckbx_tripod2.Enable()
             self.txt_unsharp.Enable()
             self.ckbx_duo.Enable()
-            # enable preview
-            self.btn_snap.Enable()
-            self.sld_time.Enable()
-            self.lab_time.Enable()
-            self.lab_dur.Enable()
-            self.spin_dur.Enable()
-
+            # enable preview only if greater than 3 seconds
+            if self.mills > 3000:
+                self.btn_snap.Enable()
+                self.sld_time.Enable()
+                self.lab_time.Enable()
+                self.lab_dur.Enable()
+                self.spin_dur.Enable()
         else:
             self.spin_shake.Disable()
             self.spin_accuracy.Disable()

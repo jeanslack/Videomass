@@ -120,7 +120,7 @@ class Denoisers(wx.Dialog):
         sizer_base.Fit(self)
         self.Layout()
         # set Properties
-        self.SetTitle(_("Denoiser filters"))
+        self.SetTitle(_("Denoiser Tool"))
         tool = _('nlmeans:\nDenoise frames using Non-Local Means algorithm '
                  'is capable of restoring video sequences, even with strong '
                  'noise. It is ideal for enhancing the quality of old VHS '

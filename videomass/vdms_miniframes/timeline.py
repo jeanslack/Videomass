@@ -458,6 +458,8 @@ class Float_TL(wx.MiniFrame):
         """
         msg = _('Start by dragging the bottom left handle,\n'
                 'or right-click for options.')
+        if 'wxMac' not in wx.PlatformInfo:
+            self.paneltime.SetDoubleBuffered(True)
         dc.Clear()
         dc.SetPen(wx.Pen(Float_TL.DELIMITER_COLOR, 3, wx.PENSTYLE_SOLID))
 
