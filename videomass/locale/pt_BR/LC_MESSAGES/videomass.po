@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-03 19:52+0200\n"
-"PO-Revision-Date: 2023-05-04 18:44+0200\n"
+"POT-Creation-Date: 2023-05-09 00:19+0200\n"
+"PO-Revision-Date: 2023-05-09 00:24+0200\n"
 "Last-Translator: Samuel / http://littlesvr.ca/ostd/\n"
 "Language-Team: Portuguese (Brasilian)\n"
 "Language: pt_BR\n"
@@ -40,7 +40,7 @@ msgid ""
 "{0}"
 msgstr ""
 
-#: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:287
+#: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:305
 #: ../vdms_dialogs/filter_deinterlace.py:121
 #: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:209
 #: ../vdms_dialogs/filter_stab.py:316 ../vdms_dialogs/filter_transpose.py:105
@@ -111,44 +111,44 @@ msgstr ""
 msgid "Confirm Settings"
 msgstr "Configurações de cache"
 
-#: ../vdms_dialogs/filter_crop.py:209 ../vdms_dialogs/filter_scale.py:108
+#: ../vdms_dialogs/filter_crop.py:227 ../vdms_dialogs/filter_scale.py:108
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "Tamanho da fonte: {0} x {1} pixels"
 
-#: ../vdms_dialogs/filter_crop.py:217
+#: ../vdms_dialogs/filter_crop.py:235
 #, fuzzy
 #| msgid "Font Color"
 msgid "Pen color"
 msgstr "Cor da fonte"
 
-#: ../vdms_dialogs/filter_crop.py:220
+#: ../vdms_dialogs/filter_crop.py:238
 #: ../vdms_dialogs/filter_colorcorrection.py:103
 msgid "Search for a specific frame"
 msgstr "Procure por um quadro específico"
 
-#: ../vdms_dialogs/filter_crop.py:234
+#: ../vdms_dialogs/filter_crop.py:252
 #: ../vdms_dialogs/filter_colorcorrection.py:117
 msgid "Load"
 msgstr "Carregar"
 
-#: ../vdms_dialogs/filter_crop.py:237
+#: ../vdms_dialogs/filter_crop.py:255
 msgid "Cropping area selection "
 msgstr "Seleção da área de corte "
 
-#: ../vdms_dialogs/filter_crop.py:242 ../vdms_dialogs/filter_scale.py:120
+#: ../vdms_dialogs/filter_crop.py:260 ../vdms_dialogs/filter_scale.py:120
 msgid "Height"
 msgstr "Altura"
 
-#: ../vdms_dialogs/filter_crop.py:262
+#: ../vdms_dialogs/filter_crop.py:280
 msgid "Center"
 msgstr "Centralizar"
 
-#: ../vdms_dialogs/filter_crop.py:273 ../vdms_dialogs/filter_scale.py:120
+#: ../vdms_dialogs/filter_crop.py:291 ../vdms_dialogs/filter_scale.py:120
 msgid "Width"
 msgstr "Largura"
 
-#: ../vdms_dialogs/filter_crop.py:292 ../vdms_dialogs/filter_deinterlace.py:120
+#: ../vdms_dialogs/filter_crop.py:310 ../vdms_dialogs/filter_deinterlace.py:120
 #: ../vdms_dialogs/filter_denoisers.py:83 ../vdms_dialogs/filter_scale.py:207
 #: ../vdms_dialogs/filter_stab.py:314 ../vdms_dialogs/filter_transpose.py:110
 #: ../vdms_dialogs/set_timestamp.py:148
@@ -157,34 +157,34 @@ msgstr "Largura"
 msgid "Apply"
 msgstr "Aplicar"
 
-#: ../vdms_dialogs/filter_crop.py:315
+#: ../vdms_dialogs/filter_crop.py:333
 #, fuzzy
 #| msgid "Crop Filter"
 msgid "Crop Tool"
 msgstr "Filtro de corte"
 
-#: ../vdms_dialogs/filter_crop.py:316
+#: ../vdms_dialogs/filter_crop.py:334
 msgid "Choose the color to draw the cropping area"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:318
+#: ../vdms_dialogs/filter_crop.py:336
 msgid "Crop to width"
 msgstr "Cortar na largura"
 
-#: ../vdms_dialogs/filter_crop.py:319
+#: ../vdms_dialogs/filter_crop.py:337
 #, fuzzy
 #| msgid "Move vertically - set to -1 to center the vertical axis"
 msgid "Move vertically (set to -1 to center the vertical axis)"
 msgstr "Mover verticalmente - defina como -1 para centralizar o eixo vertical"
 
-#: ../vdms_dialogs/filter_crop.py:321
+#: ../vdms_dialogs/filter_crop.py:339
 #, fuzzy
 #| msgid "Move horizontally - set to -1 to center the horizontal axis"
 msgid "Move horizontally (set to -1 to center the horizontal axis)"
 msgstr ""
 "Mova horizontalmente - defina como -1 para centralizar o eixo horizontal"
 
-#: ../vdms_dialogs/filter_crop.py:323
+#: ../vdms_dialogs/filter_crop.py:341
 msgid "Crop to height"
 msgstr "Cortar na altura"
 
@@ -696,12 +696,12 @@ msgstr ""
 msgid "Video Stabilizer Tool"
 msgstr "Filtro estabilizador de vídeo"
 
-#: ../vdms_dialogs/filter_stab.py:533 ../vdms_io/io_tools.py:57
+#: ../vdms_dialogs/filter_stab.py:535 ../vdms_io/io_tools.py:57
 #: ../vdms_io/io_tools.py:105
 msgid "Videomass - Loading..."
 msgstr "Videomass - Carregando ..."
 
-#: ../vdms_dialogs/filter_stab.py:534
+#: ../vdms_dialogs/filter_stab.py:536
 msgid ""
 "Please wait,\n"
 "This process will take a few seconds."
@@ -1669,13 +1669,13 @@ msgstr "FFprobe ... não encontrado!"
 msgid "FFplay   ...not found !"
 msgstr "FFplay ... não encontrado!"
 
-#: ../vdms_dialogs/ffmpeg_conf.py:205 ../vdms_panels/av_conversions.py:2260
+#: ../vdms_dialogs/ffmpeg_conf.py:205 ../vdms_panels/av_conversions.py:2265
 #: ../vdms_panels/sequence_to_video.py:710
 #: ../vdms_panels/video_to_sequence.py:593
 msgid "Enabled"
 msgstr "Ativado"
 
-#: ../vdms_dialogs/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2260
+#: ../vdms_dialogs/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2265
 #: ../vdms_panels/sequence_to_video.py:710
 #: ../vdms_panels/video_to_sequence.py:597
 msgid "Disabled"
@@ -1778,11 +1778,11 @@ msgstr "= Sem alterações"
 msgid "=  Below max peak"
 msgstr "= Abaixo da altura máxima"
 
-#: ../vdms_dialogs/shownormlist.py:166 ../vdms_panels/av_conversions.py:1732
+#: ../vdms_dialogs/shownormlist.py:166 ../vdms_panels/av_conversions.py:1737
 msgid "RMS-based volume statistics"
 msgstr "Estatísticas de volume baseadas em RMS"
 
-#: ../vdms_dialogs/shownormlist.py:191 ../vdms_panels/av_conversions.py:1730
+#: ../vdms_dialogs/shownormlist.py:191 ../vdms_panels/av_conversions.py:1735
 msgid "PEAK-based volume statistics"
 msgstr "Estatísticas de volume baseadas em PEAK"
 
@@ -1935,19 +1935,19 @@ msgid ""
 "or right-click for options."
 msgstr ""
 
-#: ../vdms_miniframes/timeline.py:493
+#: ../vdms_miniframes/timeline.py:495
 #, fuzzy
 #| msgid "Starts"
 msgid "Start"
 msgstr "Inicia"
 
-#: ../vdms_miniframes/timeline.py:494
+#: ../vdms_miniframes/timeline.py:496
 #, fuzzy
 #| msgid "Enabled"
 msgid "End"
 msgstr "Ativado"
 
-#: ../vdms_miniframes/timeline.py:542
+#: ../vdms_miniframes/timeline.py:546
 msgid ""
 "The timeline editor is a tool that allows you to trim slices of time on "
 "selected imported media (see Queued Files panel).\n"
@@ -1968,7 +1968,7 @@ msgid ""
 "duration and warnings, please refer to the status bar messages."
 msgstr ""
 
-#: ../vdms_miniframes/timeline.py:559
+#: ../vdms_miniframes/timeline.py:563
 #, fuzzy
 #| msgid "Show timeline\tCtrl+T"
 msgid "Timeline Editor Usage"
@@ -3029,7 +3029,7 @@ msgstr ""
 msgid "Play and listen to the result of audio filters"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:986 ../vdms_panels/av_conversions.py:1810
+#: ../vdms_panels/av_conversions.py:986 ../vdms_panels/av_conversions.py:1815
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
 "audio volume data."
@@ -3058,21 +3058,27 @@ msgid ""
 "\"{}\""
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1162
+#: ../vdms_panels/av_conversions.py:1158
+msgid ""
+"Unsupported file:\n"
+"Missing decoder or library? Check FFmpeg configuration."
+msgstr ""
+
+#: ../vdms_panels/av_conversions.py:1167
 #: ../vdms_panels/sequence_to_video.py:350
 #: ../vdms_panels/video_to_sequence.py:399
 msgid "The file is not a frame or a video file"
 msgstr "O arquivo não é um frame ou um arquivo de vídeo"
 
-#: ../vdms_panels/av_conversions.py:1336
+#: ../vdms_panels/av_conversions.py:1341
 msgid "This filter is incompatible with 2-pass enabled"
 msgstr "Este filtro é incompatível com 2 passagens ativadas"
 
-#: ../vdms_panels/av_conversions.py:1487
+#: ../vdms_panels/av_conversions.py:1492
 msgid "No Audio"
 msgstr "Sem áudio"
 
-#: ../vdms_panels/av_conversions.py:1625
+#: ../vdms_panels/av_conversions.py:1630
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
@@ -3080,7 +3086,7 @@ msgstr ""
 "Ative a normalização de nível de altura, que produzirá um nível de altura "
 "máximo igual ao nível de destino definido."
 
-#: ../vdms_panels/av_conversions.py:1628
+#: ../vdms_panels/av_conversions.py:1633
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
@@ -3088,7 +3094,7 @@ msgstr ""
 "Ative a normalização baseada em RMS, que de acordo com o volume médio "
 "calcula a quantidade de ganho para atingir o mesmo sinal de potência média."
 
-#: ../vdms_panels/av_conversions.py:1632
+#: ../vdms_panels/av_conversions.py:1637
 #, fuzzy
 #| msgid ""
 #| "Activate two passes normalization. It Normalizes the perceived loudness "
@@ -3100,31 +3106,31 @@ msgstr ""
 "Ative a normalização de duas passagens. Ele normaliza o volume percebido "
 "usando o filtro \"loudnorm\", que implementa o algoritmo EBU R128."
 
-#: ../vdms_panels/av_conversions.py:1654
+#: ../vdms_panels/av_conversions.py:1659
 msgid "Audio normalization off"
 msgstr "Normalização de áudio desligada"
 
-#: ../vdms_panels/av_conversions.py:2241
+#: ../vdms_panels/av_conversions.py:2246
 #, fuzzy
 #| msgid "%s file in queue"
 msgid "{} file in queue"
 msgstr "% s arquivo na fila"
 
-#: ../vdms_panels/av_conversions.py:2249
+#: ../vdms_panels/av_conversions.py:2254
 msgid "Off"
 msgstr "Desligado"
 
-#: ../vdms_panels/av_conversions.py:2255 ../vdms_panels/presets_manager.py:933
+#: ../vdms_panels/av_conversions.py:2260 ../vdms_panels/presets_manager.py:933
 #: ../vdms_panels/video_to_sequence.py:587
 msgid "Unset"
 msgstr "Não definido"
 
-#: ../vdms_panels/av_conversions.py:2258 ../vdms_panels/presets_manager.py:936
+#: ../vdms_panels/av_conversions.py:2263 ../vdms_panels/presets_manager.py:936
 #: ../vdms_panels/video_to_sequence.py:590
 msgid "start  {} | duration  {}"
 msgstr "iniciar {} | duração {}"
 
-#: ../vdms_panels/av_conversions.py:2264
+#: ../vdms_panels/av_conversions.py:2269
 #, fuzzy
 #| msgid ""
 #| "SUMMARY\n"
@@ -3167,7 +3173,7 @@ msgstr ""
 "Período de tempo\n"
 "Mapa de entrada de áudio"
 
-#: ../vdms_panels/av_conversions.py:2280
+#: ../vdms_panels/av_conversions.py:2285
 #, fuzzy
 #| msgid ""
 #| "SUMMARY\n"
@@ -3225,7 +3231,7 @@ msgstr ""
 "Mapa de Legendas\n"
 "Período de tempo"
 
-#: ../vdms_panels/av_conversions.py:2301
+#: ../vdms_panels/av_conversions.py:2306
 #, fuzzy
 #| msgid ""
 #| "SUMMARY\n"
@@ -3316,7 +3322,7 @@ msgstr ""
 "Mapa de Legendas\n"
 "Período de tempo"
 
-#: ../vdms_panels/av_conversions.py:2340
+#: ../vdms_panels/av_conversions.py:2345
 #, fuzzy
 #| msgid ""
 #| "Audio normalization processes cannot be saved on the Presets Manager."
@@ -3328,13 +3334,13 @@ msgstr ""
 "Os processos de normalização de áudio não podem ser salvos no Gerenciador de "
 "Predefinições."
 
-#: ../vdms_panels/av_conversions.py:2358
+#: ../vdms_panels/av_conversions.py:2363
 #, fuzzy
 #| msgid "Close Videomass"
 msgid "Choose a Videomass preset..."
 msgstr "Sair do Videomass"
 
-#: ../vdms_panels/av_conversions.py:2367
+#: ../vdms_panels/av_conversions.py:2372
 msgid "Create a new profile"
 msgstr "Criar um perfil novo"
 
