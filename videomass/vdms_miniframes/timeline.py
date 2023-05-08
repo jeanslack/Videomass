@@ -175,7 +175,7 @@ class Float_TL(wx.MiniFrame):
         self.appdata = get.appset
         self.parent = parent
         self.duration = self.parent.duration
-        self.overalltime = '23:59:59:999'
+        self.overalltime = '23:59:59.999'
         self.milliseconds = 86399999  # 23:59:59:999
         self.clock_start = '00:00:00.000'  # seek position
         self.clock_end = '00:00:00.000'

@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 04 May 2023 V.5.0.2
+Mon, 08 May 2023 V.5.0.2
 
   * Code refactoring.
   * Improved layout on the Timeline Editor miniframe.
@@ -23,7 +23,11 @@ Thu, 04 May 2023 V.5.0.2
     files with zero duration from being previewed. Now only video files equal
     to or greater than 4 seconds will be allowed to preview.
   * Fixed flickering issue using Timeline Editor and Crop tool. This issue
-    affects some device contests (DC) on Videomass.
+    affects some device contests (DC) on Videomass especially on MSW.
+  * [A/V Conversions] Fixed ZeroDivisionError on unsupported files with missing
+    video size using filter tools.
+  * [A/V Conversions] Fixed wx.Slider error on wxPython 4.2.0: min value cannot
+    equal to max value and viceversa.
 
 +------------------------------------+
 Tue, 18 April 2023 V.5.0.1
