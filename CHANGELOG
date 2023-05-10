@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 08 May 2023 V.5.0.2
+Wed, 11 May 2023 V.5.0.2
 
   * Code refactoring.
   * Improved layout on the Timeline Editor miniframe.
@@ -28,6 +28,9 @@ Mon, 08 May 2023 V.5.0.2
     video size using filter tools.
   * [A/V Conversions] Fixed wx.Slider error on wxPython 4.2.0: min value cannot
     equal to max value and viceversa.
+  * [YouTube Downloader] the `Restrict file name` option has been disabled by
+    default as it can cause problems in filenames of languages such as Arabic,
+    Japanese and Russian.
 
 +------------------------------------+
 Tue, 18 April 2023 V.5.0.1

@@ -3,7 +3,7 @@ Version=1.0
 Type=Application
 
 Name=Videomass
-Comment=Videomass is a free, open source and cross-platform GUI for FFmpeg and Youtube-dl
+Comment=GUI for FFmpeg and yt-dlp
 Categories=AudioVideo;
 
 Icon=videomass

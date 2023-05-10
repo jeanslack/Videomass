@@ -19,8 +19,11 @@ videomass (5.0.2-1) UNRELEASED; urgency=medium
     video size using filter tools.
   * [A/V Conversions] Fixed wx.Slider error on wxPython 4.2.0: min value cannot
     equal to max value and viceversa.
+  * [YouTube Downloader] the `Restrict file name` option has been disabled by
+    default as it can cause problems in filenames of languages such as Arabic,
+    Japanese and Russian.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 08 May 2023 11:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 11 May 2023 23:00:00 +0200
 
 videomass (5.0.1-1) UNRELEASED; urgency=medium
 

@@ -154,7 +154,7 @@ class ConfigManager:
         List should be passed using aria2c ["-j", "1", "-x", "1", "-s", "1"]
 
     """
-    VERSION = 6.0
+    VERSION = 6.1
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputfile": f"{os.path.expanduser('~')}",
                        "outputfile_samedir": False,
@@ -190,7 +190,7 @@ class ConfigManager:
                        "embed_thumbnails": False,
                        "overwr_dl_files": False,
                        "include_ID_name": False,
-                       "restrict_fname": True,
+                       "restrict_fname": False,
                        "write_subtitle": False,
                        "external_downloader": None,
                        "external_downloader_args": None,
