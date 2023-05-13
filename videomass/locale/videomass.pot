@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-09 00:19+0200\n"
+"POT-Creation-Date: 2023-05-13 16:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1027,7 +1027,7 @@ msgid "FFmpeg logging levels"
 msgstr ""
 
 #: ../vdms_dialogs/preferences.py:431 ../vdms_main/main_frame.py:580
-#: ../vdms_panels/av_conversions.py:471 ../vdms_ytdlp/main_ytdlp.py:298
+#: ../vdms_panels/av_conversions.py:471 ../vdms_ytdlp/main_ytdlp.py:324
 msgid "Settings"
 msgstr ""
 
@@ -1723,12 +1723,12 @@ msgstr ""
 
 #: ../vdms_main/main_frame.py:193 ../vdms_main/main_frame.py:1373
 #: ../vdms_main/main_frame.py:1403 ../vdms_ytdlp/main_ytdlp.py:99
-#: ../vdms_ytdlp/main_ytdlp.py:148 ../vdms_ytdlp/main_ytdlp.py:566
+#: ../vdms_ytdlp/main_ytdlp.py:148 ../vdms_ytdlp/main_ytdlp.py:592
 #: ../vdms_ytdlp/textdrop.py:224 ../vdms_ytdlp/youtubedl_ui.py:451
 msgid "Ready"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:344 ../vdms_ytdlp/main_ytdlp.py:204
+#: ../vdms_main/main_frame.py:344 ../vdms_ytdlp/main_ytdlp.py:226
 msgid ""
 "There are still processes running. if you want to stop them, use the \"Abort"
 "\" button."
@@ -1736,7 +1736,7 @@ msgstr ""
 
 #: ../vdms_main/main_frame.py:346 ../vdms_main/main_frame.py:1076
 #: ../vdms_main/main_frame.py:1372 ../vdms_ytdlp/main_ytdlp.py:147
-#: ../vdms_ytdlp/main_ytdlp.py:206
+#: ../vdms_ytdlp/main_ytdlp.py:228
 msgid "Videomass"
 msgstr ""
 
@@ -1745,7 +1745,6 @@ msgid "Are you sure you want to exit the application?"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:352 ../vdms_main/main_frame.py:1081
-#: ../vdms_ytdlp/main_ytdlp.py:212
 msgid "Exit"
 msgstr ""
 
@@ -1811,15 +1810,15 @@ msgstr ""
 msgid "Delete all files in the Videomass Trash folder"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:449 ../vdms_ytdlp/main_ytdlp.py:256
+#: ../vdms_main/main_frame.py:449 ../vdms_ytdlp/main_ytdlp.py:278
 msgid "Work Notes\tCtrl+N"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:450 ../vdms_ytdlp/main_ytdlp.py:257
+#: ../vdms_main/main_frame.py:450 ../vdms_ytdlp/main_ytdlp.py:279
 msgid "Read and write useful notes and reminders."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:453 ../vdms_ytdlp/main_ytdlp.py:262
+#: ../vdms_main/main_frame.py:453
 msgid "Exit\tCtrl+Q"
 msgstr ""
 
@@ -1827,7 +1826,7 @@ msgstr ""
 msgid "Completely exit the application"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:455 ../vdms_ytdlp/main_ytdlp.py:264
+#: ../vdms_main/main_frame.py:455 ../vdms_ytdlp/main_ytdlp.py:290
 msgid "File"
 msgstr ""
 
@@ -1840,7 +1839,7 @@ msgid "Remove the selected files from the list"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:462 ../vdms_panels/presets_manager.py:219
-#: ../vdms_panels/video_to_sequence.py:169 ../vdms_ytdlp/main_ytdlp.py:274
+#: ../vdms_panels/video_to_sequence.py:169 ../vdms_ytdlp/main_ytdlp.py:300
 msgid "Edit"
 msgstr ""
 
@@ -1919,7 +1918,7 @@ msgstr ""
 msgid "Show timeline editor"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:515 ../vdms_ytdlp/main_ytdlp.py:284
+#: ../vdms_main/main_frame.py:515 ../vdms_ytdlp/main_ytdlp.py:310
 msgid "View"
 msgstr ""
 
@@ -1999,7 +1998,7 @@ msgstr ""
 msgid "Use a temporary location to save conversions"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:557 ../vdms_ytdlp/main_ytdlp.py:293
+#: ../vdms_main/main_frame.py:557 ../vdms_ytdlp/main_ytdlp.py:319
 msgid "Restore the default destination folder"
 msgstr ""
 
@@ -2163,19 +2162,19 @@ msgstr ""
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1254 ../vdms_ytdlp/main_ytdlp.py:486
+#: ../vdms_main/main_frame.py:1254 ../vdms_ytdlp/main_ytdlp.py:512
 msgid "Go to the previous panel"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1255 ../vdms_ytdlp/main_ytdlp.py:487
+#: ../vdms_main/main_frame.py:1255 ../vdms_ytdlp/main_ytdlp.py:513
 msgid "Back"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1259 ../vdms_ytdlp/main_ytdlp.py:491
+#: ../vdms_main/main_frame.py:1259 ../vdms_ytdlp/main_ytdlp.py:517
 msgid "Go to the next panel"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1260 ../vdms_ytdlp/main_ytdlp.py:492
+#: ../vdms_main/main_frame.py:1260 ../vdms_ytdlp/main_ytdlp.py:518
 msgid "Next"
 msgstr ""
 
@@ -2203,11 +2202,11 @@ msgstr ""
 msgid "Run"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1284 ../vdms_ytdlp/main_ytdlp.py:506
+#: ../vdms_main/main_frame.py:1284 ../vdms_ytdlp/main_ytdlp.py:532
 msgid "Stops current process"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1285 ../vdms_ytdlp/main_ytdlp.py:507
+#: ../vdms_main/main_frame.py:1285 ../vdms_ytdlp/main_ytdlp.py:533
 msgid "Abort"
 msgstr ""
 
@@ -2215,7 +2214,7 @@ msgstr ""
 msgid "Delete all files from the list"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1290 ../vdms_ytdlp/main_ytdlp.py:511
+#: ../vdms_main/main_frame.py:1290 ../vdms_ytdlp/main_ytdlp.py:537
 msgid "Clear"
 msgstr ""
 
@@ -2243,7 +2242,7 @@ msgstr ""
 msgid "Videomass - Still Image Maker"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1535 ../vdms_ytdlp/main_ytdlp.py:589
+#: ../vdms_main/main_frame.py:1535 ../vdms_ytdlp/main_ytdlp.py:615
 msgid "Viewing last log"
 msgstr ""
 
@@ -3614,133 +3613,152 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:210
+#: ../vdms_ytdlp/main_ytdlp.py:200
+msgid ""
+"Do you want to close the active view keeping the data in memory and any "
+"background processes?"
+msgstr ""
+
+#: ../vdms_ytdlp/main_ytdlp.py:203
+msgid "Closing options"
+msgstr ""
+
+#: ../vdms_ytdlp/main_ytdlp.py:232
 msgid ""
 "Are you sure you want to exit this window?\n"
 "All data will be lost"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:246
-msgid "Downloads folder\tCtrl+D"
-msgstr ""
-
-#: ../vdms_ytdlp/main_ytdlp.py:247
-msgid "Open the default downloads folder"
-msgstr ""
-
-#: ../vdms_ytdlp/main_ytdlp.py:250
-msgid "Open temporary downloads"
-msgstr ""
-
-#: ../vdms_ytdlp/main_ytdlp.py:251
-msgid "Open the temporary downloads folder"
-msgstr ""
-
-#: ../vdms_ytdlp/main_ytdlp.py:260
-msgid "Close\tCtrl+W"
-msgstr ""
-
-#: ../vdms_ytdlp/main_ytdlp.py:261
-msgid "Hide YouTube Downloader"
-msgstr ""
-
-#: ../vdms_ytdlp/main_ytdlp.py:263
+#: ../vdms_ytdlp/main_ytdlp.py:234
 msgid "Quit YouTube Downloader"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:268 ../vdms_ytdlp/textdrop.py:184
+#: ../vdms_ytdlp/main_ytdlp.py:268
+msgid "Downloads folder\tCtrl+D"
+msgstr ""
+
+#: ../vdms_ytdlp/main_ytdlp.py:269
+msgid "Open the default downloads folder"
+msgstr ""
+
+#: ../vdms_ytdlp/main_ytdlp.py:272
+msgid "Open temporary downloads"
+msgstr ""
+
+#: ../vdms_ytdlp/main_ytdlp.py:273
+msgid "Open the temporary downloads folder"
+msgstr ""
+
+#: ../vdms_ytdlp/main_ytdlp.py:282
+msgid "Close view\tCtrl+W"
+msgstr ""
+
+#: ../vdms_ytdlp/main_ytdlp.py:283
+msgid ""
+"Close the active view keeping the data in memory and any background processes"
+msgstr ""
+
+#: ../vdms_ytdlp/main_ytdlp.py:287
+msgid "Quit YouTube Downloader\tCtrl+Q"
+msgstr ""
+
+#: ../vdms_ytdlp/main_ytdlp.py:288
+msgid "Exit the window by deleting all data in memory"
+msgstr ""
+
+#: ../vdms_ytdlp/main_ytdlp.py:294 ../vdms_ytdlp/textdrop.py:184
 #: ../vdms_ytdlp/textdrop.py:200
 msgid "Paste\tCtrl+V"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:269
+#: ../vdms_ytdlp/main_ytdlp.py:295
 msgid "Paste the copied URLs to clipboard"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:271 ../vdms_ytdlp/textdrop.py:185
+#: ../vdms_ytdlp/main_ytdlp.py:297 ../vdms_ytdlp/textdrop.py:185
 #: ../vdms_ytdlp/textdrop.py:203
 msgid "Remove selected URL\tDEL"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:272
+#: ../vdms_ytdlp/main_ytdlp.py:298
 msgid "Remove the selected URL from the list"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:278
+#: ../vdms_ytdlp/main_ytdlp.py:304
 msgid "Version of yt-dlp"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:279
+#: ../vdms_ytdlp/main_ytdlp.py:305
 msgid "Shows the version in use"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:281
+#: ../vdms_ytdlp/main_ytdlp.py:307
 msgid "Latest version of yt-dlp"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:282
+#: ../vdms_ytdlp/main_ytdlp.py:308
 msgid "Check the latest version available on github.com"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:289 ../vdms_ytdlp/textdrop.py:166
+#: ../vdms_ytdlp/main_ytdlp.py:315 ../vdms_ytdlp/textdrop.py:166
 msgid "Set up a temporary folder for downloads"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:290
+#: ../vdms_ytdlp/main_ytdlp.py:316
 msgid "Save all downloads to this temporary location"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:294
+#: ../vdms_ytdlp/main_ytdlp.py:320
 msgid "Restore the default folder for downloads"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:364
+#: ../vdms_ytdlp/main_ytdlp.py:390
 #, python-brace-format
 msgid "You are using \"yt-dlp\" version {0}"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:381
+#: ../vdms_ytdlp/main_ytdlp.py:407
 #, python-brace-format
 msgid "\"yt-dlp\": Latest version available: {0}"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:393
+#: ../vdms_ytdlp/main_ytdlp.py:419
 msgid "Choose a temporary destination for downloads"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:415
+#: ../vdms_ytdlp/main_ytdlp.py:441
 msgid "Default destination folder successfully restored"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:496
+#: ../vdms_ytdlp/main_ytdlp.py:522
 msgid "Shows statistics and information"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:497
+#: ../vdms_ytdlp/main_ytdlp.py:523
 msgid "Statistics"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:501
+#: ../vdms_ytdlp/main_ytdlp.py:527
 msgid "Start downloading"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:502
+#: ../vdms_ytdlp/main_ytdlp.py:528
 msgid "Download"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:510
+#: ../vdms_ytdlp/main_ytdlp.py:536
 msgid "Clear the URL list"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:567
+#: ../vdms_ytdlp/main_ytdlp.py:593
 msgid "Videomass - Queued URLs"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:575
+#: ../vdms_ytdlp/main_ytdlp.py:601
 msgid "Videomass - YouTube Downloader"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:603
+#: ../vdms_ytdlp/main_ytdlp.py:629
 msgid "Videomass - yt_dlp message monitor"
 msgstr ""
 

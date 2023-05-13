@@ -22,8 +22,11 @@ videomass (5.0.2-1) UNRELEASED; urgency=medium
   * [YouTube Downloader] the `Restrict file name` option has been disabled by
     default as it can cause problems in filenames of languages such as Arabic,
     Japanese and Russian.
+  * [YouTube Downloader] Added closing options clicking on close box. A
+    confirmation dialog will appear describing the options for closing the
+    window to the user (by ChourS).
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 11 May 2023 23:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 13 May 2023 16:00:00 +0200
 
 videomass (5.0.1-1) UNRELEASED; urgency=medium
 
