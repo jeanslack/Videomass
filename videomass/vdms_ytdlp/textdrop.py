@@ -81,10 +81,10 @@ class MyListCtrl(wx.ListCtrl):
         Handles all rejected URLs if any
         """
         if self.errors:
-            msg = _('Detailed list of errors')
+            msg = _('List of rejected URLs')
             with ListWarning(self,
                              self.errors,
-                             caption=_('Invalid URLs'),
+                             caption=_('Rejected URLs'),
                              header=msg,
                              buttons='OK',
                              ) as log:

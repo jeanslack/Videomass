@@ -232,7 +232,7 @@ class Crop(wx.Dialog):
                                | wx.ALIGN_CENTRE_HORIZONTAL,
                                )
         sizersize.Add(label1, 0, wx.CENTER | wx.EXPAND)
-        self.btn_color = csel.ColourSelect(self, -1, _("Crop color"),
+        self.btn_color = csel.ColourSelect(self, -1, _("Pen color"),
                                            self.pencolor)
         sizersize.Add(self.btn_color, 0, wx.CENTER | wx.ALL, 5)
         msg = _("Search for a specific frame")
