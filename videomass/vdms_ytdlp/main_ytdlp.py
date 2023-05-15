@@ -195,7 +195,7 @@ class MainYtdl(wx.Frame):
         the possibility to choose how to close this window.
         """
         if not self.data_url:
-            self.on_exit(None)
+            self.on_exit(None, warn=False)
             return
         dlg = wx.MessageDialog(self, _('Do you want to close the active view '
                                        'keeping the data in memory and any '
@@ -206,7 +206,7 @@ class MainYtdl(wx.Frame):
         if res == wx.ID_YES:
             self.on_close(None)
         elif res == wx.ID_NO:
-            self.on_exit(None)
+            self.on_exit(None, warn=False)
         else:
             return
     # ------------------------------------------------------------------#
@@ -216,6 +216,7 @@ class MainYtdl(wx.Frame):
         This event only hide the YouTube Downloader child frame.
         """
         self.Hide()
+    # ------------------------------------------------------------------#
 
     def on_exit(self, event, warn=True):
         """
@@ -228,7 +229,7 @@ class MainYtdl(wx.Frame):
                               _('Videomass'), wx.ICON_WARNING, self)
                 return
 
-        if self.appdata['warnexiting'] and warn:
+        if self.data_url and self.appdata['warnexiting'] and warn:
             if wx.MessageBox(_('Are you sure you want to exit this window?\n'
                                'All data will be lost'),
                              _('Quit YouTube Downloader'), wx.ICON_QUESTION

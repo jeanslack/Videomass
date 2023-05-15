@@ -375,7 +375,7 @@ class SetUp(wx.Dialog):
         if 'wx.svg' not in sys.modules:  # only in wx version 4.1 to up
             self.cmbx_iconsSize.Disable()
             lab1_appearance.Disable()
-        msg = _("Shows text in the toolbar buttons")
+        msg = _("Show text next to toolbar buttons")
         self.checkbox_tbtext = wx.CheckBox(tabFive, wx.ID_ANY, (msg))
         sizerAppearance.Add(self.checkbox_tbtext, 0, wx.ALL, 5)
 
