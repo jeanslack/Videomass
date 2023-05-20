@@ -461,7 +461,7 @@ class Float_TL(wx.MiniFrame):
         if 'wxMSW' in wx.PlatformInfo:
             self.paneltime.SetDoubleBuffered(True)  # prevents flickers
         dc.Clear()
-        dc.SetPen(wx.Pen(Float_TL.DELIMITER_COLOR, 3, wx.PENSTYLE_SOLID))
+        dc.SetPen(wx.Pen(Float_TL.DELIMITER_COLOR, 1, wx.PENSTYLE_SOLID))
 
         if self.bar_w == 0 and self.bar_x == 0:
             selcolor, textcolor = Float_TL.SELECTION, Float_TL.SELECTION

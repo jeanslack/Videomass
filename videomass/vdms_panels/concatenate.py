@@ -34,34 +34,33 @@ from videomass.vdms_dialogs.epilogue import Formula
 
 def compare_media_param(data):
     """
-    Compare video codec types, audio codec types with sample_rate,
-    dimensions (width and height).
+    Check codec types, dimensions (width and height) and
+    audio sample_rate. This function performs the required check
+    to ensure that the parameters of each file are the same.
 
     Returns True if differences are found between them,
     otherwise it returns False.
-
     """
-    vcodec = []  # video codec
-    acodec = []  # audio codec
-    ahz = []  # audio sample rate
-    size = []  # width x height (frame dimensions if video)
+    com = {}
 
     for streams in data:
+        name = streams.get('format').get('filename')
+        com[name] = {}
         for items in streams.get('streams'):
             if items.get('codec_type') == 'video':
-                vcodec.append(items.get('codec_name'))
-                size.append(f"{items.get('width')}x{items.get('height')}")
+                com[name][items.get('index')] = [items.get('codec_name')]
+                size = f"{items.get('width')}x{items.get('height')}"
+                com[name][items.get('index')].append(size)
             if items.get('codec_type') == 'audio':
-                acodec.append(items.get('codec_name'))
-                ahz.append(items.get('sample_rate'))
+                com[name][items.get('index')] = [items.get('codec_name')]
+                com[name][items.get('index')].append(items.get('sample_rate'))
 
-    for compare in (vcodec, acodec, ahz, size):
-        if len(compare) == 1:
-            return True
+    if not com or len(com) == 1:
+        return True
 
-        if not all(items == compare[0] for items in compare):
-            return True
-
+    totest = list(com.values())[0]
+    if not all(val == totest for val in com.values()):
+        return True
     return False
 # -------------------------------------------------------------------------
 

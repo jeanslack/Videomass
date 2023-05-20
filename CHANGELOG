@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sat, 13 May 2023 V.5.0.2
+Sat, 20 May 2023 V.5.0.2
 
   * Code refactoring.
   * Improved layout on the Timeline Editor miniframe.
@@ -34,6 +34,11 @@ Sat, 13 May 2023 V.5.0.2
   * [YouTube Downloader] Added closing options clicking on close box. A
     confirmation dialog will appear describing the options for closing the
     window to the user (by ChourS).
+  * [Concatenate media files] Fixed bug in concatenating files with multiple
+    indexes in streams.
+  * [Preset update v0.17] Fixed `Audio_removing_from_video.prst`.
+  * [A/V Conversions]+[Presets Manager] Fixed file extension preceded by two
+    dots using video format copy function.
 
 +------------------------------------+
 Tue, 18 April 2023 V.5.0.1
