@@ -109,7 +109,7 @@ def check_files(file_sources,
                 pathname = os.path.join(dirname, f'{fname}{suffix}{copyext}')
                 file_dest.append(pathname)
             else:
-                pathname = os.path.join(dir_destin, f'{fname}.{copyext}')
+                pathname = os.path.join(dir_destin, f'{fname}{copyext}')
                 file_dest.append(pathname)
 
         else:  # uses one extension for all output

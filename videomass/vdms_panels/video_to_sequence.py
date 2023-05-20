@@ -397,7 +397,7 @@ class VideoToSequence(wx.Panel):
                             [width, height, filename, duration]))
 
         wx.MessageBox(_('The file is not a frame or a video file'),
-                      'Videomass', wx.ICON_INFORMATION)
+                      'Videomass', wx.ICON_WARNING)
         return None
     # ------------------------------------------------------------------#
 

@@ -1141,9 +1141,7 @@ class AV_Conv(wx.Panel):
     def get_video_stream(self):
         """
         Given a frame or a video file, it returns a dict object
-        containing information on the streams required by some video
-        filters.
-
+        containing required video parameters as width, height, etc.
         """
         fget = self.file_selection()
         if not fget:
@@ -1156,11 +1154,18 @@ class AV_Conv(wx.Panel):
             height = int(index['streams'][0]['height'])
             filename = index['format']['filename']
             duration = index['format'].get('time', '00:00:00.000')
+            if not width or not height:
+                wx.MessageBox(_('Unsupported file:\n'
+                                'Missing decoder or library? '
+                                'Check FFmpeg configuration.'),
+                              'Videomass', wx.ICON_WARNING, self)
+                self.on_FiltersClear(self)
+                return None
             return dict(zip(['width', 'height', 'filename', 'duration'],
                             [width, height, filename, duration]))
 
         wx.MessageBox(_('The file is not a frame or a video file'),
-                      'Videomass', wx.ICON_INFORMATION, self)
+                      'Videomass', wx.ICON_WARNING, self)
         self.on_FiltersClear(self)
         return None
     # ------------------------------------------------------------------#

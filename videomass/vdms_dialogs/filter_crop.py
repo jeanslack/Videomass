@@ -141,14 +141,10 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
             dc = wx.GCDC(dc)  # needed for brush transparency
         dc.Clear()
         dc.DrawBitmap(self.bitmap, 0, 0, True)
-        dc.SetPen(wx.Pen(self.bc, 2, wx.PENSTYLE_SOLID))
-        dc.SetBrush(wx.Brush(wx.Colour(self.bc[0], self.bc[1],
-                                       self.bc[2], 40)))
-        dc.DrawRectangle(round(self.rect[0] + 1),
-                         round(self.rect[1] + 1),
-                         round(self.rect[2] + 1),
-                         round(self.rect[3] + 1),
-                         )
+        dc.SetPen(wx.Pen(self.bc, 1, wx.PENSTYLE_SOLID))
+        bcolor = wx.Colour(self.bc[0], self.bc[1], self.bc[2], 40)
+        dc.SetBrush(wx.Brush(bcolor))
+        dc.DrawRectangle(self.rect)
     # ------------------------------------------------------------------#
 
     def oncolor(self, event, color=None):
@@ -236,7 +232,7 @@ class Crop(wx.Dialog):
                                | wx.ALIGN_CENTRE_HORIZONTAL,
                                )
         sizersize.Add(label1, 0, wx.CENTER | wx.EXPAND)
-        self.btn_color = csel.ColourSelect(self, -1, _("Pen color"),
+        self.btn_color = csel.ColourSelect(self, -1, _("Crop color"),
                                            self.pencolor)
         sizersize.Add(self.btn_color, 0, wx.CENTER | wx.ALL, 5)
         msg = _("Search for a specific frame")
@@ -246,7 +242,7 @@ class Crop(wx.Dialog):
         self.sld_time = wx.Slider(self, wx.ID_ANY,
                                   get_milliseconds(self.clock),
                                   0,
-                                  self.mills,
+                                  1 if not self.mills else self.mills,
                                   size=(250, -1),
                                   style=wx.SL_HORIZONTAL,
                                   )
@@ -462,7 +458,8 @@ class Crop(wx.Dialog):
         else:
             self.x_dc = self.spin_x.GetValue() * x_scale
 
-        self.bob.onRedraw((self.x_dc, self.y_dc, self.w_dc, self.h_dc))
+        rect = (self.x_dc, self.y_dc, self.w_dc, self.h_dc)
+        self.bob.onRedraw([round(r) for r in rect])
     # ------------------------------------------------------------------#
 
     def onWidth(self, event):

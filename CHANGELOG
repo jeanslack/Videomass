@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 04 May 2023 V.5.0.2
+Sat, 20 May 2023 V.5.0.2
 
   * Code refactoring.
   * Improved layout on the Timeline Editor miniframe.
@@ -23,7 +23,22 @@ Thu, 04 May 2023 V.5.0.2
     files with zero duration from being previewed. Now only video files equal
     to or greater than 4 seconds will be allowed to preview.
   * Fixed flickering issue using Timeline Editor and Crop tool. This issue
-    affects some device contests (DC) on Videomass.
+    affects some device contests (DC) on Videomass especially on MSW.
+  * [A/V Conversions] Fixed ZeroDivisionError on unsupported files with missing
+    video size using filter tools.
+  * [A/V Conversions] Fixed wx.Slider error on wxPython 4.2.0: min value cannot
+    equal to max value and viceversa.
+  * [YouTube Downloader] the `Restrict file name` option has been disabled by
+    default as it can cause problems in filenames of languages such as Arabic,
+    Japanese and Russian.
+  * [YouTube Downloader] Added closing options clicking on close box. A
+    confirmation dialog will appear describing the options for closing the
+    window to the user (by ChourS).
+  * [Concatenate media files] Fixed bug in concatenating files with multiple
+    indexes in streams.
+  * [Preset update v0.17] Fixed `Audio_removing_from_video.prst`.
+  * [A/V Conversions]+[Presets Manager] Fixed file extension preceded by two
+    dots using video format copy function.
 
 +------------------------------------+
 Tue, 18 April 2023 V.5.0.1

@@ -107,7 +107,7 @@ class ColorEQ(wx.Dialog):
         self.sld_time = wx.Slider(self, wx.ID_ANY,
                                   get_milliseconds(self.clock),
                                   0,
-                                  self.mills,
+                                  1 if not self.mills else self.mills,
                                   size=(250, -1),
                                   style=wx.SL_HORIZONTAL,
                                   )
