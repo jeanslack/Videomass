@@ -24,7 +24,7 @@ videomass (5.0.2-1) UNRELEASED; urgency=medium
     Japanese and Russian.
   * [YouTube Downloader] Added closing options clicking on close box. A
     confirmation dialog will appear describing the options for closing the
-    window to the user (by ChourS).
+    window to the user.
   * [Concatenate media files] Fixed bug in concatenating files with multiple
     indexes in streams.
   * [Preset update v0.17] Fixed `Audio_removing_from_video.prst`.
