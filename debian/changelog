@@ -24,14 +24,16 @@ videomass (5.0.2-1) UNRELEASED; urgency=medium
     Japanese and Russian.
   * [YouTube Downloader] Added closing options clicking on close box. A
     confirmation dialog will appear describing the options for closing the
-    window to the user (by ChourS).
+    window to the user.
   * [Concatenate media files] Fixed bug in concatenating files with multiple
     indexes in streams.
   * [Preset update v0.17] Fixed `Audio_removing_from_video.prst`.
   * [A/V Conversions]+[Presets Manager] Fixed file extension preceded by two
     dots using video format copy function.
+  * [A/V Conversions] Fixed window layout on Transpose tool: it caused display
+    problems in the confirmation buttons on monitors with low resolutions.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 20 May 2023 20:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 23 May 2023 12:00:00 +0200
 
 videomass (5.0.1-1) UNRELEASED; urgency=medium
 

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.02.2022
+Rev: May.22.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -34,13 +34,15 @@ from videomass.vdms_dialogs.epilogue import Formula
 
 def compare_media_param(data):
     """
-    Check codec types, dimensions (width and height) and
-    audio sample_rate. This function performs the required check
-    to ensure that the parameters of each file are the same.
-
-    Returns True if differences are found between them,
-    otherwise it returns False.
+    This function expects json data from FFprobe to checks
+    that the indexed streams of each item in the list have
+    the same codec, video size and audio sample rate in order
+    to ensure correct file concatenation.
+    Returns an error message if any error found,
+    Returns None otherwise.
     """
+    if len(data) == 1:
+        return _('At least two files are required to perform concatenation.')
     com = {}
 
     for streams in data:
@@ -55,13 +57,15 @@ def compare_media_param(data):
                 com[name][items.get('index')] = [items.get('codec_name')]
                 com[name][items.get('index')].append(items.get('sample_rate'))
 
-    if not com or len(com) == 1:
-        return True
+    if not com:
+        return _('Invalid data found')
 
     totest = list(com.values())[0]
     if not all(val == totest for val in com.values()):
-        return True
-    return False
+        return _('The files do not have the same "codec_types", '
+                 'same "sample_rate" or same "width" or "height". '
+                 'Unable to proceed.')
+    return None
 # -------------------------------------------------------------------------
 
 
@@ -242,21 +246,9 @@ class Conc_Demuxer(wx.Panel):
         fsource = self.parent.file_src
         ftext = os.path.join(self.cachedir, 'tmp', 'flist.txt')
 
-        if len(fsource) < 2:
-            wx.MessageBox(_('At least two files are required to perform '
-                            'concatenation.'), _('ERROR'),
-                          wx.ICON_ERROR, self
-                          )
-            return
-
         diff = compare_media_param(self.parent.data_files)
-
         if diff:
-            wx.MessageBox(_('The files do not have the same "codec_types", '
-                            'same "sample_rate" or same "width" or "height". '
-                            'Unable to proceed.'),
-                          _('ERROR'), wx.ICON_ERROR, self
-                          )
+            wx.MessageBox(diff, _('ERROR'), wx.ICON_ERROR, self)
             return
 
         textstr = []
