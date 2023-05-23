@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-15 16:01+0200\n"
-"PO-Revision-Date: 2023-05-15 16:05+0200\n"
+"POT-Creation-Date: 2023-05-23 13:01+0200\n"
+"PO-Revision-Date: 2023-05-23 13:04+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -335,7 +335,7 @@ msgstr ""
 #: ../vdms_dialogs/filter_scale.py:75 ../vdms_dialogs/ffmpeg_help.py:117
 #: ../vdms_dialogs/shownormlist.py:98 ../vdms_dialogs/shownormlist.py:107
 #: ../vdms_dialogs/shownormlist.py:116 ../vdms_miniframes/timeline.py:262
-#: ../vdms_miniframes/timeline.py:282 ../vdms_panels/concatenate.py:109
+#: ../vdms_miniframes/timeline.py:282 ../vdms_panels/concatenate.py:112
 #: ../vdms_panels/sequence_to_video.py:117
 #: ../vdms_panels/video_to_sequence.py:79
 msgid "Read me"
@@ -697,7 +697,7 @@ msgstr ""
 "Questo processo richiederà alcuni secondi."
 
 #: ../vdms_dialogs/filter_transpose.py:80
-#: ../vdms_dialogs/filter_transpose.py:293
+#: ../vdms_dialogs/filter_transpose.py:292
 msgid "Default position"
 msgstr "Posizione di default"
 
@@ -721,15 +721,15 @@ msgstr "180°"
 msgid "Transpose Tool"
 msgstr "Strumento trasponi"
 
-#: ../vdms_dialogs/filter_transpose.py:229
+#: ../vdms_dialogs/filter_transpose.py:228
 msgid "Rotate 90 degrees right"
 msgstr "Ruota di 90 gradi a destra"
 
-#: ../vdms_dialogs/filter_transpose.py:251
+#: ../vdms_dialogs/filter_transpose.py:250
 msgid "Rotate 180 degrees"
 msgstr "Ruota di 180 gradi"
 
-#: ../vdms_dialogs/filter_transpose.py:272
+#: ../vdms_dialogs/filter_transpose.py:271
 msgid "Rotate 90 degrees left"
 msgstr "Ruota di 90 gradi a sinistra"
 
@@ -3146,7 +3146,23 @@ msgstr ""
 msgid "yt-dlp is disabled. Check your preferences."
 msgstr "yt-dlp è disabilitato. Controlla le tue preferenze."
 
-#: ../vdms_panels/concatenate.py:78
+#: ../vdms_panels/concatenate.py:45
+msgid "At least two files are required to perform concatenation."
+msgstr "Sono necessari almeno due file per eseguire la concatenazione."
+
+#: ../vdms_panels/concatenate.py:61
+msgid "Invalid data found"
+msgstr "Trovati dati non validi"
+
+#: ../vdms_panels/concatenate.py:65
+msgid ""
+"The files do not have the same \"codec_types\", same \"sample_rate\" or same "
+"\"width\" or \"height\". Unable to proceed."
+msgstr ""
+"I file non hanno gli stessi parametri come \"codec_types\", \"sample_rate"
+"\" , \"larghezza\" o \"altezza\". Impossibile procedere."
+
+#: ../vdms_panels/concatenate.py:81
 msgid ""
 "\n"
 "- The concatenation function is performed only with Audio files or only with "
@@ -3187,29 +3203,29 @@ msgstr ""
 "frequenza di\n"
 "  campionamento e gli stessi codec."
 
-#: ../vdms_panels/concatenate.py:122
+#: ../vdms_panels/concatenate.py:125
 msgid "From an image sequence to a video file"
 msgstr "Da una sequenza di immagini a un file video"
 
-#: ../vdms_panels/concatenate.py:127
+#: ../vdms_panels/concatenate.py:130
 msgid "Duration:"
 msgstr "Durata:"
 
-#: ../vdms_panels/concatenate.py:138 ../vdms_panels/video_to_sequence.py:117
+#: ../vdms_panels/concatenate.py:141 ../vdms_panels/video_to_sequence.py:117
 msgid "Output format:"
 msgstr "Formato in uscita:"
 
-#: ../vdms_panels/concatenate.py:154
+#: ../vdms_panels/concatenate.py:157
 msgid "For more details, see the Videomass User Guide:"
 msgstr "Per maggiori dettagli, consultare la Guida Utente Videomass:"
 
-#: ../vdms_panels/concatenate.py:174 ../vdms_panels/sequence_to_video.py:208
+#: ../vdms_panels/concatenate.py:177 ../vdms_panels/sequence_to_video.py:208
 #: ../vdms_panels/video_to_sequence.py:179
 msgid "For more information, visit the official FFmpeg documentation:"
 msgstr ""
 "Per ulteriori informazioni, visita la documentazione ufficiale di FFmpeg:"
 
-#: ../vdms_panels/concatenate.py:193
+#: ../vdms_panels/concatenate.py:196
 msgid ""
 "Set the time interval between images in seconds (from 1 to 100 sec.), "
 "default is 1 second"
@@ -3217,12 +3233,7 @@ msgstr ""
 "Imposta l'intervallo di tempo tra le immagini in secondi (da 1 a 100 sec.), "
 "il valore predefinito è 1 secondo"
 
-#: ../vdms_panels/concatenate.py:247
-msgid "At least two files are required to perform concatenation."
-msgstr "Sono necessari almeno due file per eseguire la concatenazione."
-
-#: ../vdms_panels/concatenate.py:248 ../vdms_panels/concatenate.py:259
-#: ../vdms_panels/sequence_to_video.py:465
+#: ../vdms_panels/concatenate.py:251 ../vdms_panels/sequence_to_video.py:465
 #: ../vdms_panels/sequence_to_video.py:471
 #: ../vdms_panels/sequence_to_video.py:566
 #: ../vdms_panels/sequence_to_video.py:576
@@ -3232,15 +3243,7 @@ msgstr "Sono necessari almeno due file per eseguire la concatenazione."
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: ../vdms_panels/concatenate.py:256
-msgid ""
-"The files do not have the same \"codec_types\", same \"sample_rate\" or same "
-"\"width\" or \"height\". Unable to proceed."
-msgstr ""
-"I file non hanno gli stessi parametri come \"codec_types\", \"sample_rate"
-"\" , \"larghezza\" o \"altezza\". Impossibile procedere."
-
-#: ../vdms_panels/concatenate.py:336
+#: ../vdms_panels/concatenate.py:327
 msgid ""
 "File to concatenate\n"
 "Output filename\n"

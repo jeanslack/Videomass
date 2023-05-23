@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-15 16:01+0200\n"
-"PO-Revision-Date: 2023-05-15 16:07+0200\n"
+"POT-Creation-Date: 2023-05-23 13:01+0200\n"
+"PO-Revision-Date: 2023-05-23 13:02+0200\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -129,10 +129,8 @@ msgid "Source size: {0} x {1} pixels"
 msgstr "Размер источника: {0} x {1} пикселей"
 
 #: ../vdms_dialogs/filter_crop.py:235
-#, fuzzy
-#| msgid "Crop Filter"
 msgid "Crop color"
-msgstr "Фильтр Обрезка"
+msgstr "Цвет обрезки"
 
 #: ../vdms_dialogs/filter_crop.py:238
 #: ../vdms_dialogs/filter_colorcorrection.py:103
@@ -170,30 +168,28 @@ msgid "Apply"
 msgstr "Применить"
 
 #: ../vdms_dialogs/filter_crop.py:333
-#, fuzzy
-#| msgid "Crop Filter"
 msgid "Crop Tool"
-msgstr "Фильтр Обрезка"
+msgstr "Инструмент обрезки"
 
 #: ../vdms_dialogs/filter_crop.py:334
 msgid "Choose the color to draw the cropping area"
-msgstr ""
+msgstr "Выберите цвет, чтобы нарисовать область обрезки"
 
 #: ../vdms_dialogs/filter_crop.py:336
 msgid "Crop to width"
 msgstr "Обрезать по ширине"
 
 #: ../vdms_dialogs/filter_crop.py:337
-#, fuzzy
-#| msgid "Move vertically - set to -1 to center the vertical axis"
 msgid "Move vertically (set to -1 to center the vertical axis)"
-msgstr "Вертикальное положение верхнего левого угла"
+msgstr ""
+"Перемещение по вертикали (установите значение -1 для центрирования "
+"вертикальной оси)"
 
 #: ../vdms_dialogs/filter_crop.py:339
-#, fuzzy
-#| msgid "Move horizontally - set to -1 to center the horizontal axis"
 msgid "Move horizontally (set to -1 to center the horizontal axis)"
-msgstr "Горизонтальное положение верхнего левого угла"
+msgstr ""
+"Перемещение по горизонтали (установите значение -1, чтобы центрировать "
+"горизонтальную ось)"
 
 #: ../vdms_dialogs/filter_crop.py:341
 msgid "Crop to height"
@@ -314,10 +310,8 @@ msgid "hqdn3d options"
 msgstr "Параметры фильтра hqdn3d"
 
 #: ../vdms_dialogs/filter_denoisers.py:123
-#, fuzzy
-#| msgid "Denoiser"
 msgid "Denoiser Tool"
-msgstr "Шумоподавитель"
+msgstr "Инструмент Denoiser(шумоподавитель)"
 
 #: ../vdms_dialogs/filter_denoisers.py:124
 msgid ""
@@ -347,7 +341,7 @@ msgstr ""
 #: ../vdms_dialogs/filter_scale.py:75 ../vdms_dialogs/ffmpeg_help.py:117
 #: ../vdms_dialogs/shownormlist.py:98 ../vdms_dialogs/shownormlist.py:107
 #: ../vdms_dialogs/shownormlist.py:116 ../vdms_miniframes/timeline.py:262
-#: ../vdms_miniframes/timeline.py:282 ../vdms_panels/concatenate.py:109
+#: ../vdms_miniframes/timeline.py:282 ../vdms_panels/concatenate.py:112
 #: ../vdms_panels/sequence_to_video.py:117
 #: ../vdms_panels/video_to_sequence.py:79
 msgid "Read me"
@@ -399,7 +393,7 @@ msgstr "SetSar(примерное соотношение сторон)"
 
 #: ../vdms_dialogs/filter_scale.py:220
 msgid "Resize Tool"
-msgstr ""
+msgstr "Инструмент изменения размера"
 
 #: ../vdms_dialogs/filter_scale.py:221
 msgid "Scale filter, set to 0 to disable"
@@ -682,10 +676,8 @@ msgstr ""
 "использование нерезкого фильтра, который всегда рекомендуется."
 
 #: ../vdms_dialogs/filter_stab.py:414
-#, fuzzy
-#| msgid "Video stabilizer filter"
 msgid "Video Stabilizer Tool"
-msgstr "Фильтр стабилизатора видео(stabilizer)"
+msgstr "Инструмент Video Stabilizer"
 
 #: ../vdms_dialogs/filter_stab.py:535 ../vdms_io/io_tools.py:57
 #: ../vdms_io/io_tools.py:105
@@ -701,7 +693,7 @@ msgstr ""
 "Этот процесс займет несколько секунд."
 
 #: ../vdms_dialogs/filter_transpose.py:80
-#: ../vdms_dialogs/filter_transpose.py:293
+#: ../vdms_dialogs/filter_transpose.py:292
 msgid "Default position"
 msgstr "Положение по умолчанию"
 
@@ -722,20 +714,18 @@ msgid "180°"
 msgstr "180°"
 
 #: ../vdms_dialogs/filter_transpose.py:115
-#, fuzzy
-#| msgid "Transpose Filter"
 msgid "Transpose Tool"
-msgstr "Фильтр вращения"
+msgstr "Инструмент вращения"
 
-#: ../vdms_dialogs/filter_transpose.py:229
+#: ../vdms_dialogs/filter_transpose.py:228
 msgid "Rotate 90 degrees right"
 msgstr "Повернуть на 90 градусов вправо"
 
-#: ../vdms_dialogs/filter_transpose.py:251
+#: ../vdms_dialogs/filter_transpose.py:250
 msgid "Rotate 180 degrees"
 msgstr "Повернуть на 180 градусов"
 
-#: ../vdms_dialogs/filter_transpose.py:272
+#: ../vdms_dialogs/filter_transpose.py:271
 msgid "Rotate 90 degrees left"
 msgstr "Повернуть на 90 градусов влево"
 
@@ -1120,10 +1110,8 @@ msgid "Download videos from YouTube.com and other video sites"
 msgstr "Скачивайте видео с YouTube.com и других видеосайтов"
 
 #: ../vdms_dialogs/preferences.py:288
-#, fuzzy
-#| msgid "Disable youtube-dl"
 msgid "Enable/Disable yt-dlp"
-msgstr "Отключить youtube-dl"
+msgstr "Включить/Выключить yt-dlp"
 
 #: ../vdms_dialogs/preferences.py:293
 msgid "External Downloader Preferences"
@@ -1195,10 +1183,8 @@ msgid "Icon size:"
 msgstr "Размер значка:"
 
 #: ../vdms_dialogs/preferences.py:378
-#, fuzzy
-#| msgid "Shows the text in the toolbar buttons"
 msgid "Show text next to toolbar buttons"
-msgstr "Показывать текст на кнопках панели инструментов"
+msgstr "Показывать текст рядом с кнопками панели инструментов"
 
 #: ../vdms_dialogs/preferences.py:383
 msgid "Appearance"
@@ -1577,16 +1563,12 @@ msgid "Gamma:"
 msgstr "Гамма:"
 
 #: ../vdms_dialogs/filter_colorcorrection.py:179
-#, fuzzy
-#| msgid "0 to 100, Default value 10"
 msgid "0 to 100, default value 10"
 msgstr "от 0 до 100, значение по умолчанию 10"
 
 #: ../vdms_dialogs/filter_colorcorrection.py:207
-#, fuzzy
-#| msgid "Color Correction Equalizer"
 msgid "Color Correction EQ Tool"
-msgstr "Эквалайзер цветокоррекции"
+msgstr "Эквалайзер для цветокоррекции"
 
 #: ../vdms_dialogs/ffmpeg_conf.py:72
 msgid "Informations"
@@ -1905,8 +1887,8 @@ msgstr ""
 "времени на выбранных импортированных медиафайлах (см. панель «Файлы в "
 "очереди»).\n"
 "\n"
-"«Формат времени», используемый для сообщения продолжительности, выражается в "
-"часах, минутах, секундах и миллисекундах. (HH:MM:SS.ms).\n"
+"«Формат времени», используемый для сообщения о продолжительности, выражается "
+"в часах, минутах, секундах и миллисекундах. (HH:MM:SS.ms).\n"
 "\n"
 "Обратите внимание, что импорт новых файлов, новый выбор, отмена выбора, "
 "удаление элементов, сортировка элементов (т. е. щелчок ЛЕВОЙ кнопкой мыши по "
@@ -1927,14 +1909,12 @@ msgid "Timeline Editor Usage"
 msgstr "Использование редактора Timeline"
 
 #: ../vdms_io/checkup.py:47
-#, fuzzy
-#| msgid "This preset already exists, do you want to overwrite it?"
 msgid "Files already exist, do you want to overwrite them?"
-msgstr "Этот пресет уже существует, вы хотите его перезаписать?"
+msgstr "Файлы уже существуют, перезаписать их?"
 
 #: ../vdms_io/checkup.py:49
 msgid "Already exist"
-msgstr ""
+msgstr "Уже существует"
 
 #: ../vdms_io/checkup.py:50
 msgid "Please Confirm"
@@ -1942,7 +1922,7 @@ msgstr "Пожалуйста подтвердите"
 
 #: ../vdms_io/checkup.py:62
 msgid "No source files found in the specified path"
-msgstr ""
+msgstr "Исходные файлы по указанному пути не найдены"
 
 #: ../vdms_io/checkup.py:64
 msgid "Not found"
@@ -1950,7 +1930,7 @@ msgstr "Не найдено"
 
 #: ../vdms_io/checkup.py:65
 msgid "Non-existent source files"
-msgstr ""
+msgstr "Несуществующие исходные файлы"
 
 #: ../vdms_io/checkup.py:75
 msgid ""
@@ -2172,22 +2152,18 @@ msgid "Check for preset updates"
 msgstr "Проверить наличие обновлений пресетов"
 
 #: ../vdms_main/main_frame.py:474
-#, fuzzy, python-brace-format
-#| msgid "Check for new presets release from {0}"
+#, python-brace-format
 msgid "Check for new presets updates from {0}"
-msgstr "Проверьте выпуск новых пресетов от {0}"
+msgstr "Проверьте наличие новых обновлений пресетов на {0}"
 
 #: ../vdms_main/main_frame.py:476
-#, fuzzy
-#| msgid "Create a new preset"
 msgid "Get the latest presets"
-msgstr "Создать новый пресет"
+msgstr "Получить последние пресеты"
 
 #: ../vdms_main/main_frame.py:477
-#, fuzzy, python-brace-format
-#| msgid "Check for new presets release from {0}"
+#, python-brace-format
 msgid "Get the latest presets from {0}"
-msgstr "Проверьте выпуск новых пресетов от {0}"
+msgstr "Получить последние пресеты по адресу {0}"
 
 #: ../vdms_main/main_frame.py:479
 msgid "Tools"
@@ -2890,6 +2866,8 @@ msgid ""
 "Unsupported file:\n"
 "Missing decoder or library? Check FFmpeg configuration."
 msgstr ""
+"Неподдерживаемый файл:\n"
+"Отсутствует декодер или библиотека? Проверьте конфигурацию FFmpeg."
 
 #: ../vdms_panels/av_conversions.py:1167
 #: ../vdms_panels/sequence_to_video.py:350
@@ -3167,12 +3145,26 @@ msgstr ""
 "Извлекайте изображения (кадры) из ваших фильмов в форматы JPG, PNG, BMP, GIF."
 
 #: ../vdms_panels/choose_topic.py:223
-#, fuzzy
-#| msgid "The downloader is disabled. Check your preferences."
 msgid "yt-dlp is disabled. Check your preferences."
-msgstr "Загрузчик отключен. Проверьте свои настройки."
+msgstr "yt-dlp отключен. Проверьте свои настройки."
 
-#: ../vdms_panels/concatenate.py:78
+#: ../vdms_panels/concatenate.py:45
+msgid "At least two files are required to perform concatenation."
+msgstr "Для объединения требуются как минимум два файла."
+
+#: ../vdms_panels/concatenate.py:61
+msgid "Invalid data found"
+msgstr ""
+
+#: ../vdms_panels/concatenate.py:65
+msgid ""
+"The files do not have the same \"codec_types\", same \"sample_rate\" or same "
+"\"width\" or \"height\". Unable to proceed."
+msgstr ""
+"Файлы не имеют одинаковых «codec_types», «sample_rate» или одинаковых "
+"«ширины» или «высоты». Невозможно продолжить."
+
+#: ../vdms_panels/concatenate.py:81
 msgid ""
 "\n"
 "- The concatenation function is performed only with Audio files or only with "
@@ -3207,30 +3199,30 @@ msgstr ""
 "- Аудиофайлы должны иметь одинаковые форматы, одинаковые кодеки \n"
 "  с одинаковой частотой дискретизации."
 
-#: ../vdms_panels/concatenate.py:122
+#: ../vdms_panels/concatenate.py:125
 msgid "From an image sequence to a video file"
 msgstr "Из последовательности изображений в видеофайл"
 
-#: ../vdms_panels/concatenate.py:127
+#: ../vdms_panels/concatenate.py:130
 msgid "Duration:"
 msgstr "Продолжительность:"
 
-#: ../vdms_panels/concatenate.py:138 ../vdms_panels/video_to_sequence.py:117
+#: ../vdms_panels/concatenate.py:141 ../vdms_panels/video_to_sequence.py:117
 msgid "Output format:"
 msgstr "Выходной формат:"
 
-#: ../vdms_panels/concatenate.py:154
+#: ../vdms_panels/concatenate.py:157
 msgid "For more details, see the Videomass User Guide:"
 msgstr "Подробнее см. Руководство пользователя Videomass:"
 
-#: ../vdms_panels/concatenate.py:174 ../vdms_panels/sequence_to_video.py:208
+#: ../vdms_panels/concatenate.py:177 ../vdms_panels/sequence_to_video.py:208
 #: ../vdms_panels/video_to_sequence.py:179
 msgid "For more information, visit the official FFmpeg documentation:"
 msgstr ""
 "Для получения дополнительной информации посетите официальную документацию "
 "FFmpeg:"
 
-#: ../vdms_panels/concatenate.py:193
+#: ../vdms_panels/concatenate.py:196
 msgid ""
 "Set the time interval between images in seconds (from 1 to 100 sec.), "
 "default is 1 second"
@@ -3238,12 +3230,7 @@ msgstr ""
 "Установите интервал времени между изображениями в секундах (от 1 до 100 "
 "секунд), по умолчанию - 1 секунда"
 
-#: ../vdms_panels/concatenate.py:247
-msgid "At least two files are required to perform concatenation."
-msgstr "Для объединения требуются как минимум два файла."
-
-#: ../vdms_panels/concatenate.py:248 ../vdms_panels/concatenate.py:259
-#: ../vdms_panels/sequence_to_video.py:465
+#: ../vdms_panels/concatenate.py:251 ../vdms_panels/sequence_to_video.py:465
 #: ../vdms_panels/sequence_to_video.py:471
 #: ../vdms_panels/sequence_to_video.py:566
 #: ../vdms_panels/sequence_to_video.py:576
@@ -3253,15 +3240,7 @@ msgstr "Для объединения требуются как минимум �
 msgid "ERROR"
 msgstr "ОШИБКА"
 
-#: ../vdms_panels/concatenate.py:256
-msgid ""
-"The files do not have the same \"codec_types\", same \"sample_rate\" or same "
-"\"width\" or \"height\". Unable to proceed."
-msgstr ""
-"Файлы не имеют одинаковых «codec_types», «sample_rate» или одинаковых "
-"«ширины» или «высоты». Невозможно продолжить."
-
-#: ../vdms_panels/concatenate.py:336
+#: ../vdms_panels/concatenate.py:327
 msgid ""
 "File to concatenate\n"
 "Output filename\n"
@@ -3326,17 +3305,15 @@ msgstr "Имя выходного файла"
 
 #: ../vdms_panels/filedrop.py:197
 msgid "Duplicate file, it has already been added to the list."
-msgstr ""
+msgstr "Дублирующий файл, он уже добавлен в список."
 
 #: ../vdms_panels/filedrop.py:206 ../vdms_ytdlp/textdrop.py:84
 msgid "Detailed list of errors"
-msgstr ""
+msgstr "Подробный список ошибок"
 
 #: ../vdms_panels/filedrop.py:209
-#, fuzzy
-#| msgid "Add Files"
 msgid "Rejected Files"
-msgstr "Добавить файлы"
+msgstr "Отклоненные файлы"
 
 #: ../vdms_panels/filedrop.py:278 ../vdms_panels/filedrop.py:330
 msgid "Drag one or more files below"
@@ -4219,11 +4196,13 @@ msgstr "Кодек аудио"
 
 #: ../vdms_ytdlp/formatcode.py:140
 msgid "Don't merge any files"
-msgstr "Не объединяйть никакие файлы"
+msgstr "Не объединять никакие файлы"
 
 #: ../vdms_ytdlp/formatcode.py:143
 msgid "Download only the best selected qualities"
-msgstr "Скачивайте только лучшие отобранные качества"
+msgstr ""
+"Скачивайте только лучшие \n"
+"отобранные качества"
 
 #: ../vdms_ytdlp/formatcode.py:247
 #, python-brace-format
@@ -4247,13 +4226,13 @@ msgid ""
 "Do you want to close the active view keeping the data in memory and any "
 "background processes?"
 msgstr ""
+"Вы хотите закрыть активное окно, сохранив данные в памяти и любые фоновые "
+"процессы?"
 
 # Особенности русской фразы
 #: ../vdms_ytdlp/main_ytdlp.py:203
-#, fuzzy
-#| msgid "nlmeans options"
 msgid "Closing options"
-msgstr "Параметры фильтра nlmeans"
+msgstr "Варианты закрытия"
 
 #: ../vdms_ytdlp/main_ytdlp.py:233
 msgid ""
@@ -4284,25 +4263,22 @@ msgid "Open the temporary downloads folder"
 msgstr "Открыть папку временных загрузок"
 
 #: ../vdms_ytdlp/main_ytdlp.py:283
-#, fuzzy
-#| msgid "Close\tCtrl+W"
 msgid "Close view\tCtrl+W"
-msgstr "Закрыть\tCtrl+W"
+msgstr "Закрыть(скрыть) окно\tCtrl+W"
 
 #: ../vdms_ytdlp/main_ytdlp.py:284
 msgid ""
 "Close the active view keeping the data in memory and any background processes"
 msgstr ""
+"Закройте активное окно, сохранив данные в памяти и все фоновые процессы"
 
 #: ../vdms_ytdlp/main_ytdlp.py:288
-#, fuzzy
-#| msgid "Quit YouTube Downloader"
 msgid "Quit YouTube Downloader\tCtrl+Q"
-msgstr "Выйти из загрузчика YouTube"
+msgstr "Выйти из YouTube Downloader\tCtrl+Q"
 
 #: ../vdms_ytdlp/main_ytdlp.py:289
 msgid "Exit the window by deleting all data in memory"
-msgstr ""
+msgstr "Закрыть окно, удалив все данные в памяти"
 
 #: ../vdms_ytdlp/main_ytdlp.py:295 ../vdms_ytdlp/textdrop.py:184
 #: ../vdms_ytdlp/textdrop.py:200
@@ -4454,16 +4430,12 @@ msgstr ""
 "Индексировать можно только строки, отмеченные зелёным."
 
 #: ../vdms_ytdlp/textdrop.py:68
-#, fuzzy
-#| msgid "Invalid URL:"
 msgid "Invalid URL"
-msgstr "Неверный URL:"
+msgstr "Недопустимый URL"
 
 #: ../vdms_ytdlp/textdrop.py:87
-#, fuzzy
-#| msgid "Invalid URL:"
 msgid "Invalid URLs"
-msgstr "Неверный URL:"
+msgstr "Недопустимые URL-адреса"
 
 #: ../vdms_ytdlp/textdrop.py:135
 msgid "Drag or paste URLs here"

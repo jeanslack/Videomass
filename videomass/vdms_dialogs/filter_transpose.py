@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 Name: filter_transpose.py
-Porpose: Show dialog to get video transpose data based on FFmpeg syntax
+Porpose: Show a dialog to get video transpose data based on FFmpeg syntax
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.04.2023
+Rev: May.23.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -121,7 +121,6 @@ class Transpose(wx.Dialog):
         # ----------------------Set layout------------------------------#
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
-        #self.Fit()
         self.Layout()
 
         self.image_loader()

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-15 16:01+0200\n"
+"POT-Creation-Date: 2023-05-23 13:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -282,7 +282,7 @@ msgstr ""
 #: ../vdms_dialogs/filter_scale.py:75 ../vdms_dialogs/ffmpeg_help.py:117
 #: ../vdms_dialogs/shownormlist.py:98 ../vdms_dialogs/shownormlist.py:107
 #: ../vdms_dialogs/shownormlist.py:116 ../vdms_miniframes/timeline.py:262
-#: ../vdms_miniframes/timeline.py:282 ../vdms_panels/concatenate.py:109
+#: ../vdms_miniframes/timeline.py:282 ../vdms_panels/concatenate.py:112
 #: ../vdms_panels/sequence_to_video.py:117
 #: ../vdms_panels/video_to_sequence.py:79
 msgid "Read me"
@@ -565,7 +565,7 @@ msgid ""
 msgstr ""
 
 #: ../vdms_dialogs/filter_transpose.py:80
-#: ../vdms_dialogs/filter_transpose.py:293
+#: ../vdms_dialogs/filter_transpose.py:292
 msgid "Default position"
 msgstr ""
 
@@ -589,15 +589,15 @@ msgstr ""
 msgid "Transpose Tool"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:229
+#: ../vdms_dialogs/filter_transpose.py:228
 msgid "Rotate 90 degrees right"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:251
+#: ../vdms_dialogs/filter_transpose.py:250
 msgid "Rotate 180 degrees"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:272
+#: ../vdms_dialogs/filter_transpose.py:271
 msgid "Rotate 90 degrees left"
 msgstr ""
 
@@ -2722,7 +2722,21 @@ msgstr ""
 msgid "yt-dlp is disabled. Check your preferences."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:78
+#: ../vdms_panels/concatenate.py:45
+msgid "At least two files are required to perform concatenation."
+msgstr ""
+
+#: ../vdms_panels/concatenate.py:61
+msgid "Invalid data found"
+msgstr ""
+
+#: ../vdms_panels/concatenate.py:65
+msgid ""
+"The files do not have the same \"codec_types\", same \"sample_rate\" or same "
+"\"width\" or \"height\". Unable to proceed."
+msgstr ""
+
+#: ../vdms_panels/concatenate.py:81
 msgid ""
 "\n"
 "- The concatenation function is performed only with Audio files or only with "
@@ -2742,39 +2756,34 @@ msgid ""
 "sample rate."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:122
+#: ../vdms_panels/concatenate.py:125
 msgid "From an image sequence to a video file"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:127
+#: ../vdms_panels/concatenate.py:130
 msgid "Duration:"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:138 ../vdms_panels/video_to_sequence.py:117
+#: ../vdms_panels/concatenate.py:141 ../vdms_panels/video_to_sequence.py:117
 msgid "Output format:"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:154
+#: ../vdms_panels/concatenate.py:157
 msgid "For more details, see the Videomass User Guide:"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:174 ../vdms_panels/sequence_to_video.py:208
+#: ../vdms_panels/concatenate.py:177 ../vdms_panels/sequence_to_video.py:208
 #: ../vdms_panels/video_to_sequence.py:179
 msgid "For more information, visit the official FFmpeg documentation:"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:193
+#: ../vdms_panels/concatenate.py:196
 msgid ""
 "Set the time interval between images in seconds (from 1 to 100 sec.), "
 "default is 1 second"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:247
-msgid "At least two files are required to perform concatenation."
-msgstr ""
-
-#: ../vdms_panels/concatenate.py:248 ../vdms_panels/concatenate.py:259
-#: ../vdms_panels/sequence_to_video.py:465
+#: ../vdms_panels/concatenate.py:251 ../vdms_panels/sequence_to_video.py:465
 #: ../vdms_panels/sequence_to_video.py:471
 #: ../vdms_panels/sequence_to_video.py:566
 #: ../vdms_panels/sequence_to_video.py:576
@@ -2784,13 +2793,7 @@ msgstr ""
 msgid "ERROR"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:256
-msgid ""
-"The files do not have the same \"codec_types\", same \"sample_rate\" or same "
-"\"width\" or \"height\". Unable to proceed."
-msgstr ""
-
-#: ../vdms_panels/concatenate.py:336
+#: ../vdms_panels/concatenate.py:327
 msgid ""
 "File to concatenate\n"
 "Output filename\n"

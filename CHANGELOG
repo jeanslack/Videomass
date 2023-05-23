@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sat, 20 May 2023 V.5.0.2
+Tue, 23 May 2023 V.5.0.2
 
   * Code refactoring.
   * Improved layout on the Timeline Editor miniframe.
@@ -39,6 +39,8 @@ Sat, 20 May 2023 V.5.0.2
   * [Preset update v0.17] Fixed `Audio_removing_from_video.prst`.
   * [A/V Conversions]+[Presets Manager] Fixed file extension preceded by two
     dots using video format copy function.
+  * [A/V Conversions] Fixed window layout on Transpose tool: it caused display
+    problems in the confirmation buttons on monitors with low resolutions.
 
 +------------------------------------+
 Tue, 18 April 2023 V.5.0.1
