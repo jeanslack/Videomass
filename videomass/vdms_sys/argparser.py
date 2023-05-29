@@ -76,10 +76,11 @@ def arguments():
                               'from conventional platform directories and '
                               'provide only relative paths. It expects you to '
                               'specify a preferred location where storing the '
-                              'new application data as user preferences, cache '
-                              'files, log files and default output folder. The '
-                              'first time, all of this involves reconfiguring '
-                              'the application through the wizard dialog.'
+                              'new application data as user preferences, '
+                              'cache files, log files and default output '
+                              'folder. The first time, all of this involves '
+                              'reconfiguring the application through the '
+                              'wizard dialog.'
                               ),
                         metavar='DIRNAME',
                         )
