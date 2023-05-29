@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 23 May 2023 V.5.0.2
+Mon, 29 May 2023 V.5.0.2
 
   * Code refactoring.
   * Improved layout on the Timeline Editor miniframe.
@@ -41,6 +41,7 @@ Tue, 23 May 2023 V.5.0.2
     dots using video format copy function.
   * [A/V Conversions] Fixed window layout on Transpose tool: it caused display
     problems in the confirmation buttons on monitors with low resolutions.
+  * Updated man page and command line help to v5.0.2.
 
 +------------------------------------+
 Tue, 18 April 2023 V.5.0.1
