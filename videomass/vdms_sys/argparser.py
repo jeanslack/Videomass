@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.11.2023
+Rev: May.29.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -70,20 +70,18 @@ def arguments():
                         action="store_true",
                         )
     parser.add_argument('--make-portable',
-                        help=('In order to make the application fully '
-                              'portable and stealth, this option can keeps '
-                              'all application data stored separately from '
-                              'conventional platform directories and provide '
-                              'only relative paths. It expects you to specify '
-                              'a preferred location of data used by the '
-                              'application. Note that a new output folder '
-                              '("My_Files") will be created ONLY during the '
-                              'first startup of the application through the '
-                              'Wizard. In all other cases the relative paths '
-                              'may not be fully updated on the configuration '
-                              'file.'
+                        help=('Make the application fully portable and '
+                              'stealth. Use this option whenever you want to '
+                              'keep all application data stored separately '
+                              'from conventional platform directories and '
+                              'provide only relative paths. It expects you to '
+                              'specify a preferred location where storing the '
+                              'new application data as user preferences, cache '
+                              'files, log files and default output folder. The '
+                              'first time, all of this involves reconfiguring '
+                              'the application through the wizard dialog.'
                               ),
-                        metavar='DIRPATH',
+                        metavar='DIRNAME',
                         )
 
     argmts = parser.parse_args()
