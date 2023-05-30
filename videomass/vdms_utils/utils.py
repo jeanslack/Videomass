@@ -512,16 +512,17 @@ def detect_binaries(executable, additionaldir=None):
     <https://stackoverflow.com/questions/11210104/check-if
     -a-program-exists-from-a-python-script>
 
-    Given an executable name (binary), find it on the O.S.
-    via which function, if not found try to find it on the
-    optional `additionaldir` .
-
-        If both failed, return ('not installed', None)
-        If found on the O.S., return (None, executable)
-        If found on the additionaldir, return ('provided', executable).
-
     executable = name of executable without extension
     additionaldir = additional dirname to perform search
+
+    Given an executable (binary) file name, it looks for it
+    in the operating system using the `which` function, if it
+    doesn't find it, it tries to look for it in the optional
+    `additionaldir` .
+
+        Return (None, executable) if found in the OS $PATH.
+        Return ('provided', executable) if found on the `additionaldir`
+        Return ('not installed', None) if both failed.
 
     """
     local = False

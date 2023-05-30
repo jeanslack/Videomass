@@ -101,8 +101,8 @@ class Videomass(wx.App):
         if ytdlp is False:
             self.appset['use-downloader'] = False  # force disable
 
-        noffmpeg = self.check_ffmpeg()
-        if noffmpeg:
+        ffmpeg = self.check_ffmpeg()
+        if ffmpeg:
             self.wizard(self.iconset['videomass'])
             return True
 
@@ -133,46 +133,23 @@ class Videomass(wx.App):
 
     def check_ffmpeg(self):
         """
-        Get the FFmpeg's executables. On Unix/Unix-like
-        systems perform a check for permissions.
+        Check the FFmpeg's executables (ffmpeg, ffprobe, ffplay).
+        Returns True if one of the executables is missing or if
+        one of the executables doesn't have execute permission.
+        Returns None otherwise.
         """
         for link in [self.appset['ffmpeg_cmd'],
                      self.appset['ffprobe_cmd'],
                      self.appset['ffplay_cmd']
                      ]:
-            if self.appset['ostype'] == 'Windows':  # check for exe
-                # HACK use even for unix, if not permission is equal
-                # to not binaries
-                if not which(link, mode=os.F_OK | os.X_OK, path=None):
-                    return True
-            else:
-                if not os.path.isfile(f"{link}"):
-                    return True
-
-        if not self.appset['ostype'] == 'Windows':
-            # check for permissions when linked locally
-            for link in [self.appset['ffmpeg_cmd'],
-                         self.appset['ffprobe_cmd'],
-                         self.appset['ffplay_cmd']
-                         ]:
-                if which(link, mode=os.F_OK | os.X_OK, path=None):
-                    permissions = True
-                else:
-                    wx.MessageBox(_('Permission denied: {}\n\n'
-                                    'Check execution permissions.').format
-                                  (link), 'Videomass', wx.ICON_STOP)
-                    permissions = False
-                    break
-
-            return False if not permissions else None
+            if not which(link, mode=os.F_OK | os.X_OK, path=None):
+                return True
         return None
     # -------------------------------------------------------------------
 
     def wizard(self, wizardicon):
         """
-        Show an initial dialog to setup the application
-        during the first start-up.
-
+        Shows dialog to setup the application on initial start-up.
         """
         from videomass.vdms_dialogs.wizard_dlg import Wizard
         main_frame = Wizard(wizardicon)
