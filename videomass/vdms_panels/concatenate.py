@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.22.2023
+Rev: June.20.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -257,7 +257,7 @@ class Conc_Demuxer(wx.Panel):
             duration = self.spin_pict.GetValue() * len(self.parent.file_src)
             self.duration = duration * 1000
             for f in self.parent.file_src:
-                escaped = f.replace(r"'", r"'\'")  # need escaping some chars
+                escaped = f.replace(r"'", r"'\''")  # need escaping some chars
                 textstr.append(f"file '{escaped}'\nduration "
                                f"{self.spin_pict.GetValue()}"
                                )
@@ -270,7 +270,7 @@ class Conc_Demuxer(wx.Panel):
             ext = os.path.splitext(self.parent.file_src[0])[1].split('.')[1]
             self.duration = sum(self.parent.duration)
             for f in self.parent.file_src:
-                escaped = f.replace(r"'", r"'\'")  # need escaping some chars
+                escaped = f.replace(r"'", r"'\''")  # need escaping some chars
                 textstr.append(f"file '{escaped}'")
             self.args = (f'"{ftext}" -map 0:v? -map_chapters 0 '
                          f'-map 0:s? -map 0:a? -map_metadata 0 -c copy')

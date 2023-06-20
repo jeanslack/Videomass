@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: April.17.2023
+Rev: June.20.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -41,20 +41,20 @@ def fullpathname_sanitize(fullpathfilename):
     Check for 'full path file name' sanitize.
     return message `string` if warning, `None` otherwise
     """
-    illegal = '^` ~ " # \' % & * : < > ? / \\ { | }'
+    illegal = '^` ~ " # % & * : < > ? / \\ { | }'
     illegalchars = _("File has illegal characters like:")
-    invalidpath = _("Invalid path name. Contains double or single quotes")
+    invalidpath = _("Invalid path name. Contains single quotes")
     justfile = _("Directories are not allowed, just add files, please.")
     noext = _("File without format extension: please give an "
               "appropriate extension to the file name, example "
               "'.mkv', '.avi', '.mp3', etc.")
 
-    check = bool(re.search(r"^(?:[^\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}])*$",
+    check = bool(re.search(r"^(?:[^\^\`\~\"\#\%\&\*\:\<\>\?\/\\\{\|\}])*$",
                  os.path.basename(fullpathfilename)))
     if check is not True:
         return f'{illegalchars} {illegal}'
 
-    if '"' in fullpathfilename or "'" in fullpathfilename:
+    if '"' in fullpathfilename:
         return invalidpath
 
     if os.path.isdir(fullpathfilename):
@@ -73,18 +73,18 @@ def filename_sanitize(newname, outputnames):
     ensure that output files do NOT have the same name,
     or illegal chars like:
 
-            ^` ~ " # ' % & * : < > ? / \\ { | }
+            ^` ~ " # % & * : < > ? / \\ { | }
 
     The maximum filename lengh is fixed to 255 characters.
 
     return a str(string) if warning,
     return None otherwise
     """
-    illegal = '^` ~ " # \' % & * : < > ? / \\ { | }'
+    illegal = '^` ~ " # % & * : < > ? / \\ { | }'
     msg_invalid = _('Name has illegal characters like: {0}').format(illegal)
     msg_inuse = _('Name already in use:')
 
-    check = bool(re.search(r"^(?:[^\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}]"
+    check = bool(re.search(r"^(?:[^\^\`\~\"\#\%\&\*\:\<\>\?\/\\\{\|\}]"
                            r"{1,255}$)*$", newname))
     if check is not True:
         return f'{msg_invalid}'
@@ -126,7 +126,7 @@ class MyListCtrl(wx.ListCtrl):
 
     def populate(self):
         """
-        populate with default colums
+        populate the default columns
         """
         self.InsertColumn(0, '#', width=30)
         self.InsertColumn(1, _('File Name'), width=200)
