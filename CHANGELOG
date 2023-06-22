@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 29 May 2023 V.5.0.2
+Tue, 20 June 2023 V.5.0.2
 
   * Code refactoring.
   * Improved layout on the Timeline Editor miniframe.
@@ -40,8 +40,9 @@ Mon, 29 May 2023 V.5.0.2
   * [A/V Conversions]+[Presets Manager] Fixed file extension preceded by two
     dots using video format copy function.
   * [A/V Conversions] Fixed window layout on Transpose tool: it caused display
-    problems in the confirmation buttons on monitors with low resolutions.
+    problems in the confirmation buttons on monitors with low resolution.
   * Updated man page and command line help to v5.0.2.
+  * Removed single (') quotes errors on filenames (aka illegal characters) #235
 
 +------------------------------------+
 Tue, 18 April 2023 V.5.0.1
