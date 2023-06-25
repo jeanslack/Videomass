@@ -35,7 +35,7 @@ fi
 
 # Set the latest release of python-appimage,
 # make sure the version matches correctly, if not fix it.
-PYTHON_APPIMAGE=python3.9.16-cp39-cp39-manylinux1_x86_64.AppImage
+PYTHON_APPIMAGE=python3.9.17-cp39-cp39-manylinux1_x86_64.AppImage
 PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.9/${PYTHON_APPIMAGE}
 
 # Set the wxPython release, make sure the version matches correctly,
