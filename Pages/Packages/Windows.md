@@ -15,7 +15,7 @@ Minimum requirements:
 - [Microsoft Windows 7](https://docs.microsoft.com/en-us/lifecycle/products/windows-7)
 - [x86_64](https://en.wikipedia.org/wiki/X86-64) architecture. 
   
-[Videomass 5.0.1 Portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v5.0.1_x86_64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
+[Videomass 5.0.2 Portable](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v5.0.2_x86_64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
 [All Versions](https://github.com/jeanslack/Videomass/releases){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2}     
 
 ### Warning
