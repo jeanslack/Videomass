@@ -43,7 +43,7 @@ def fullpathname_sanitize(fullpathfilename):
     """
     illegal = '^` ~ " # % & * : < > ? / \\ { | }'
     illegalchars = _("File has illegal characters like:")
-    invalidpath = _("Invalid path name. Contains single quotes")
+    invalidpath = _("Invalid character found in path name: (\")")
     justfile = _("Directories are not allowed, just add files, please.")
     noext = _("File without format extension: please give an "
               "appropriate extension to the file name, example "

@@ -630,8 +630,7 @@ class Downloader(wx.Panel):
 
     def on_start(self):
         """
-        Builds command string to use with an embed youtube_dl as
-        python library or using standard youtube-dl command line.
+        Builds options and arguments for yt_dlp lib.
         """
         urls = self.parent.data_url
 
@@ -681,10 +680,10 @@ class Downloader(wx.Panel):
                     'outtmpl': f'{_id}.%(ext)s',
                     'extractaudio': False,
                     'addmetadata': self.opt["METADATA"],
-                    'writesubtitles': self.opt["SUBS"]['writesubtitles'],
-                    'subtitleslangs': self.opt["SUBS"]['subtitleslangs'],
-                    'skip_download': self.opt["SUBS"]['skip_download'],
-                    'writeautomaticsub': self.opt["SUBS"]['writeautomaticsub'],
+                    'writesubtitles': self.opt["SUBS"]["writesubtitles"],
+                    'subtitleslangs': self.opt["SUBS"]["subtitleslangs"],
+                    'skip_download': self.opt["SUBS"]["skip_download"],
+                    'writeautomaticsub': self.opt["SUBS"]["writeautomaticsub"],
                     'postprocessors': postprocessors,
                     'restrictfilenames': self.ckbx_limitfn.GetValue(),
                     'nocheckcertificate': self.ckbx_ssl.GetValue(),
@@ -699,10 +698,10 @@ class Downloader(wx.Panel):
                     'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
                     'extractaudio': False,
                     'addmetadata': self.opt["METADATA"],
-                    'writesubtitles': self.opt["SUBS"]['writesubtitles'],
-                    'subtitleslangs': self.opt["SUBS"]['subtitleslangs'],
-                    'skip_download': self.opt["SUBS"]['skip_download'],
-                    'writeautomaticsub': self.opt["SUBS"]['writeautomaticsub'],
+                    'writesubtitles': self.opt["SUBS"]["writesubtitles"],
+                    'subtitleslangs': self.opt["SUBS"]["subtitleslangs"],
+                    'skip_download': self.opt["SUBS"]["skip_download"],
+                    'writeautomaticsub': self.opt["SUBS"]["writeautomaticsub"],
                     'postprocessors': postprocessors,
                     'restrictfilenames': self.ckbx_limitfn.GetValue(),
                     'nocheckcertificate': self.ckbx_ssl.GetValue(),
@@ -717,10 +716,10 @@ class Downloader(wx.Panel):
                     'outtmpl': f'{_id}.%(ext)s',
                     'extractaudio': True,
                     'addmetadata': self.opt["METADATA"],
-                    'writesubtitles': self.opt["SUBS"]['writesubtitles'],
-                    'subtitleslangs': self.opt["SUBS"]['subtitleslangs'],
-                    'skip_download': self.opt["SUBS"]['skip_download'],
-                    'writeautomaticsub': self.opt["SUBS"]['writeautomaticsub'],
+                    'writesubtitles': self.opt["SUBS"]["writesubtitles"],
+                    'subtitleslangs': self.opt["SUBS"]["subtitleslangs"],
+                    'skip_download': self.opt["SUBS"]["skip_download"],
+                    'writeautomaticsub': self.opt["SUBS"]["writeautomaticsub"],
                     'postprocessors': postprocessors,
                     'restrictfilenames': self.ckbx_limitfn.GetValue(),
                     'nocheckcertificate': self.ckbx_ssl.GetValue(),
@@ -742,10 +741,10 @@ class Downloader(wx.Panel):
                     'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
                     'extractaudio': False,
                     'addmetadata': self.opt["METADATA"],
-                    'writesubtitles': self.opt["SUBS"]['writesubtitles'],
-                    'subtitleslangs': self.opt["SUBS"]['subtitleslangs'],
-                    'skip_download': self.opt["SUBS"]['skip_download'],
-                    'writeautomaticsub': self.opt["SUBS"]['writeautomaticsub'],
+                    'writesubtitles': self.opt["SUBS"]["writesubtitles"],
+                    'subtitleslangs': self.opt["SUBS"]["subtitleslangs"],
+                    'skip_download': self.opt["SUBS"]["skip_download"],
+                    'writeautomaticsub': self.opt["SUBS"]["writeautomaticsub"],
                     'postprocessors': postprocessors,
                     'restrictfilenames': self.ckbx_limitfn.GetValue(),
                     'nocheckcertificate': self.ckbx_ssl.GetValue(),

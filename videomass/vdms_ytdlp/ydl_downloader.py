@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 Name: ydl_downloader.py
-Porpose: long processing task with youtube_dl python library
+Porpose: long processing task using yt_dlp python library
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>

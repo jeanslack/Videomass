@@ -44,6 +44,7 @@ class SubtitleEditor(wx.Dialog):
                  "el": _("Greek"),
                  "he": _("Hebrew"),
                  "it": _("Italian"),
+                 "nl": _("Dutch"),
                  "pl": _("Polish"),
                  "pt": _("Portuguese"),
                  "ru": _("Russian"),
@@ -65,14 +66,14 @@ class SubtitleEditor(wx.Dialog):
 
         # ------ Add widget controls
         sizbase = wx.BoxSizer(wx.VERTICAL)
-        labtstr1 = _('Language')
+        labtstr1 = _('Subtitles')
         lab = wx.StaticText(self, label=labtstr1)
         sizbase.Add(lab, 0, wx.LEFT, 5)
         lab.SetLabelMarkup(f"<b>{labtstr1}</b>")
         choicelang = (_("None"),
                       _("All available subtitles"),
-                      _("Default language selection"),
-                      _('By manual entry'),
+                      _("Select by default language"),
+                      _('Custom language subtitles'),
                       )
         self.cmbx_langs = wx.ComboBox(self, wx.ID_ANY,
                                       choices=choicelang,
@@ -89,7 +90,7 @@ class SubtitleEditor(wx.Dialog):
                                     )
         sizbase.Add(self.listblang, 1, wx.ALL | wx.EXPAND, 5)
         sizbase.Add(10, 10)
-        labtstr2 = _('Preferred languages')
+        labtstr2 = _('Custom language')
         self.lab1 = wx.StaticText(self, label=labtstr2)
         sizbase.Add(self.lab1, 0, wx.LEFT, 5)
         self.lab1.SetLabelMarkup(f"<b>{labtstr2}</b>")
@@ -203,7 +204,7 @@ class SubtitleEditor(wx.Dialog):
 
         elif self.cmbx_langs.GetSelection() == 1:
             writesubtitles = True
-            subtitleslangs = ['all',]
+            subtitleslangs = ['all']
             writeautomaticsub = self.ckbx_autogen.GetValue()
             embedsubtitle = self.ckbx_embed.GetValue()
             skip_download = self.ckbx_skip_dl.GetValue()
