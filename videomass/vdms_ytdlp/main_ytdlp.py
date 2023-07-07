@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.24.2023
+Rev: July.07.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -246,7 +246,7 @@ class MainYtdl(wx.Frame):
         sett['overwr_dl_files'] = self.ytDownloader.ckbx_ow.GetValue()
         sett['include_ID_name'] = self.ytDownloader.ckbx_id.GetValue()
         sett['restrict_fname'] = self.ytDownloader.ckbx_limitfn.GetValue()
-        sett['write_subtitle'] = self.ytDownloader.ckbx_sb.GetValue()
+        sett['subtitles_options'] = self.ytDownloader.opt["SUBS"]
         confmanager.write_options(**sett)
         self.destroy_orphaned_window()
         self.Destroy()

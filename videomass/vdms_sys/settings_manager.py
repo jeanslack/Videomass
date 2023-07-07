@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.11.2023
+Rev: July.07.2023
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -142,9 +142,12 @@ class ConfigManager:
         default value is True.
 
     ("ssl_certificate", "add_metadata", "embed_thumbnails",
-    "overwr_dl_files", "include_ID_name", "restrict_fname"
-    "write_subtitle") (bool)
+    "overwr_dl_files", "include_ID_name", "restrict_fname")
+    (bool):
         Checkboxes option (see YouTube Downloader)
+
+    subtitles_options (dict):
+        (see YouTube Downloader)
 
     external_downloader (str):
         external downloader used by yt-dlp. Default is None
@@ -154,7 +157,7 @@ class ConfigManager:
         List should be passed using aria2c ["-j", "1", "-x", "1", "-s", "1"]
 
     """
-    VERSION = 6.1
+    VERSION = 6.2
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputfile": f"{os.path.expanduser('~')}",
                        "outputfile_samedir": False,
@@ -191,7 +194,12 @@ class ConfigManager:
                        "overwr_dl_files": False,
                        "include_ID_name": False,
                        "restrict_fname": False,
-                       "write_subtitle": False,
+                       "subtitles_options": {"writesubtitles": False,
+                                             "subtitleslangs": [],
+                                             "writeautomaticsub": False,
+                                             "embedsubtitle": False,
+                                             "skip_download": False
+                                             },
                        "external_downloader": None,
                        "external_downloader_args": None,
                        }
