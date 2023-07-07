@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 5.0.2\n"
+"Project-Id-Version: Videomass 5.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-23 13:01+0200\n"
-"PO-Revision-Date: 2023-05-23 13:04+0200\n"
+"POT-Creation-Date: 2023-07-07 18:55+0200\n"
+"PO-Revision-Date: 2023-07-07 18:56+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -28,17 +28,7 @@ msgstr ""
 "Per sopprimere questo messaggio all'avvio, installa yt-dlp o disabilitalo "
 "dalle preferenze."
 
-#: ../gui_app.py:161
-msgid ""
-"Permission denied: {}\n"
-"\n"
-"Check execution permissions."
-msgstr ""
-"Permesso negato: {}\n"
-"\n"
-"Controlla i permessi di esecuzione."
-
-#: ../gui_app.py:241
+#: ../gui_app.py:218
 #, python-brace-format
 msgid ""
 "Unexpected error while deleting file contents:\n"
@@ -162,7 +152,7 @@ msgstr "Larghezza"
 #: ../vdms_dialogs/filter_stab.py:314 ../vdms_dialogs/filter_transpose.py:110
 #: ../vdms_dialogs/set_timestamp.py:148
 #: ../vdms_dialogs/filter_colorcorrection.py:192
-#: ../vdms_ytdlp/playlist_indexing.py:132
+#: ../vdms_ytdlp/playlist_indexing.py:132 ../vdms_ytdlp/subtitles_editor.py:125
 msgid "Apply"
 msgstr "Applica"
 
@@ -2011,7 +2001,7 @@ msgstr ""
 #: ../vdms_main/main_frame.py:193 ../vdms_main/main_frame.py:1372
 #: ../vdms_main/main_frame.py:1402 ../vdms_ytdlp/main_ytdlp.py:99
 #: ../vdms_ytdlp/main_ytdlp.py:148 ../vdms_ytdlp/main_ytdlp.py:593
-#: ../vdms_ytdlp/textdrop.py:224 ../vdms_ytdlp/youtubedl_ui.py:451
+#: ../vdms_ytdlp/textdrop.py:224 ../vdms_ytdlp/youtubedl_ui.py:455
 msgid "Ready"
 msgstr "Pronto"
 
@@ -3262,8 +3252,8 @@ msgid "File has illegal characters like:"
 msgstr "Il file ha caratteri non validi come:"
 
 #: ../vdms_panels/filedrop.py:46
-msgid "Invalid path name. Contains double or single quotes"
-msgstr "Nome del file non valido. Contiene virgolette doppie o singole"
+msgid "Invalid character found in path name: (\")"
+msgstr "Trovato carattere non valido nel nome del percorso: (\")"
 
 #: ../vdms_panels/filedrop.py:47
 msgid "Directories are not allowed, just add files, please."
@@ -3588,8 +3578,8 @@ msgstr ""
 #: ../vdms_panels/presets_manager.py:349 ../vdms_panels/presets_manager.py:527
 #: ../vdms_panels/presets_manager.py:567 ../vdms_panels/presets_manager.py:631
 #: ../vdms_panels/presets_manager.py:657 ../vdms_panels/presets_manager.py:807
-#: ../vdms_panels/presets_manager.py:838 ../vdms_ytdlp/youtubedl_ui.py:655
-#: ../vdms_ytdlp/youtubedl_ui.py:661
+#: ../vdms_panels/presets_manager.py:838 ../vdms_ytdlp/youtubedl_ui.py:641
+#: ../vdms_ytdlp/youtubedl_ui.py:647
 msgid "Please confirm"
 msgstr "Prego confermare"
 
@@ -4093,7 +4083,8 @@ msgstr "Crea mosaici piastrellati"
 msgid "Create animated GIF"
 msgstr "Crea GIF animato"
 
-#: ../vdms_panels/video_to_sequence.py:88 ../vdms_ytdlp/youtubedl_ui.py:156
+#: ../vdms_panels/video_to_sequence.py:88 ../vdms_ytdlp/youtubedl_ui.py:159
+#: ../vdms_ytdlp/subtitles_editor.py:107
 msgid "Options"
 msgstr "Opzioni"
 
@@ -4158,7 +4149,7 @@ msgstr ""
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' è installato sul tuo sistema?"
 
-#: ../vdms_ytdlp/formatcode.py:97 ../vdms_ytdlp/youtubedl_ui.py:82
+#: ../vdms_ytdlp/formatcode.py:97 ../vdms_ytdlp/youtubedl_ui.py:83
 msgid ""
 "At least one \"Format Code\" must be checked for each URL selected in green."
 msgstr ""
@@ -4409,19 +4400,19 @@ msgstr "Elementi video della playlist da scaricare"
 msgid "Help viewer"
 msgstr "Visualizzatore di aiuto"
 
-#: ../vdms_ytdlp/playlist_indexing.py:225
+#: ../vdms_ytdlp/playlist_indexing.py:224
 msgid "ERROR: Invalid option"
 msgstr "ERRORE: Opzione non valida"
 
-#: ../vdms_ytdlp/playlist_indexing.py:226
+#: ../vdms_ytdlp/playlist_indexing.py:225
 msgid "please try again."
 msgstr "riprova."
 
-#: ../vdms_ytdlp/playlist_indexing.py:227
+#: ../vdms_ytdlp/playlist_indexing.py:226
 msgid "OK: Indexes to download"
 msgstr "OK: Indici da scaricare"
 
-#: ../vdms_ytdlp/playlist_indexing.py:256
+#: ../vdms_ytdlp/playlist_indexing.py:255
 msgid ""
 "WARNING: The selected URL does not refer to a playlist. Only lines marked "
 "green can be indexed."
@@ -4449,27 +4440,27 @@ msgstr "Visualizzatore di statistiche"
 msgid "TITLE SELECTION"
 msgstr "SELEZIONE TITOLO"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:110
+#: ../vdms_ytdlp/youtubedl_ui.py:111
 msgid "Precompiled Videos"
 msgstr "Video Precompilati"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:111
+#: ../vdms_ytdlp/youtubedl_ui.py:112
 msgid "Download videos by resolution"
 msgstr "Scarica video in base alla risoluzione"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:112
+#: ../vdms_ytdlp/youtubedl_ui.py:113
 msgid "Download split audio and video"
 msgstr "Scarica audio e video divisi"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:113
+#: ../vdms_ytdlp/youtubedl_ui.py:114
 msgid "Download Audio only"
 msgstr "Scarica solo il file audio"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:114
+#: ../vdms_ytdlp/youtubedl_ui.py:115
 msgid "Download by format code"
 msgstr "Scarica per codice formato"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:188
+#: ../vdms_ytdlp/youtubedl_ui.py:191
 msgid ""
 "When not available, the chosen video resolution will be replaced with the "
 "closest one"
@@ -4477,51 +4468,43 @@ msgstr ""
 "Quando non disponibile, la risoluzione video selezionata verrà sostituita "
 "con quella più vicina"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:192
+#: ../vdms_ytdlp/youtubedl_ui.py:195
 msgid "Preferred video format"
 msgstr "Formato video preferito"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:225
+#: ../vdms_ytdlp/youtubedl_ui.py:228
 msgid "Download all videos in playlist"
 msgstr ""
 "Scarica tutti i video\n"
 "della playlist"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:230
+#: ../vdms_ytdlp/youtubedl_ui.py:233
 msgid "Playlist Editor"
 msgstr "Editor di Playlist"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:236
+#: ../vdms_ytdlp/youtubedl_ui.py:240 ../vdms_ytdlp/subtitles_editor.py:134
+msgid "Subtitles Editor"
+msgstr "Editor Sottotitoli"
+
+#: ../vdms_ytdlp/youtubedl_ui.py:249
 msgid "Don’t check SSL certificate"
 msgstr "Non controllare il certificato SSL"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:241
+#: ../vdms_ytdlp/youtubedl_ui.py:254
 msgid "Embed thumbnail in audio file"
 msgstr ""
 "Aggiungi miniatura\n"
 "nel file audio"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:246
+#: ../vdms_ytdlp/youtubedl_ui.py:259
 msgid "Add metadata to file"
 msgstr "Aggiungi i meta dati al file"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:251
-msgid "Write subtitles to video"
-msgstr "Scrivi sottotitoli al video"
-
-#: ../vdms_ytdlp/youtubedl_ui.py:257
-msgid "Download all available subtitles"
-msgstr "Scarica tutti i sottotitoli disponibili"
-
 #: ../vdms_ytdlp/youtubedl_ui.py:264
-msgid "Download subtitles only"
-msgstr "Scarica solo i sottotitoli"
-
-#: ../vdms_ytdlp/youtubedl_ui.py:273
 msgid "Overwrite all files and metadata"
 msgstr "Sovrascrivi tutti i file e i metadati"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:278
+#: ../vdms_ytdlp/youtubedl_ui.py:269
 msgid ""
 "Include the video ID\n"
 "in the file names"
@@ -4529,11 +4512,11 @@ msgstr ""
 "Includi l'ID video nei\n"
 "nomi del file"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:285
+#: ../vdms_ytdlp/youtubedl_ui.py:276
 msgid "Restrict file names"
 msgstr "Limita i nomi dei file"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:432
+#: ../vdms_ytdlp/youtubedl_ui.py:436
 #, python-brace-format
 msgid ""
 "Unable to get format codes on '{0}'\n"
@@ -4546,17 +4529,141 @@ msgstr ""
 "'{0}' Non supportato:\n"
 "'{1}'"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:575
+#: ../vdms_ytdlp/youtubedl_ui.py:579
 msgid "URLs have no playlist references"
 msgstr "Gli URL non hanno riferimenti a playlist"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:653
+#: ../vdms_ytdlp/youtubedl_ui.py:639
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr "Gli URL contengono playlist. Sei sicuro di voler continuare?"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:659
+#: ../vdms_ytdlp/youtubedl_ui.py:645
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "Gli URL contengono canali. Sei sicuro di voler continuare?"
+
+#: ../vdms_ytdlp/subtitles_editor.py:41
+msgid "English"
+msgstr "Inglese"
+
+#: ../vdms_ytdlp/subtitles_editor.py:42
+msgid "French"
+msgstr "Francese"
+
+#: ../vdms_ytdlp/subtitles_editor.py:43
+msgid "German"
+msgstr "Tedesco"
+
+#: ../vdms_ytdlp/subtitles_editor.py:44
+msgid "Greek"
+msgstr "Greco"
+
+#: ../vdms_ytdlp/subtitles_editor.py:45
+msgid "Hebrew"
+msgstr "Ebraico"
+
+#: ../vdms_ytdlp/subtitles_editor.py:46
+msgid "Italian"
+msgstr "Italiano"
+
+#: ../vdms_ytdlp/subtitles_editor.py:47
+msgid "Dutch"
+msgstr "Olandese"
+
+#: ../vdms_ytdlp/subtitles_editor.py:48
+msgid "Polish"
+msgstr "Polacco"
+
+#: ../vdms_ytdlp/subtitles_editor.py:49
+msgid "Portuguese"
+msgstr "Portoghese"
+
+#: ../vdms_ytdlp/subtitles_editor.py:50
+msgid "Russian"
+msgstr "Russo"
+
+#: ../vdms_ytdlp/subtitles_editor.py:51
+msgid "Spanish"
+msgstr "Spagnolo"
+
+#: ../vdms_ytdlp/subtitles_editor.py:52
+msgid "Swedish"
+msgstr "Svedese"
+
+#: ../vdms_ytdlp/subtitles_editor.py:53
+msgid "Turkish"
+msgstr "Turco"
+
+#: ../vdms_ytdlp/subtitles_editor.py:54
+msgid "Albanian"
+msgstr "Albanese"
+
+#: ../vdms_ytdlp/subtitles_editor.py:55
+msgid "Chinese"
+msgstr "Cinese"
+
+#: ../vdms_ytdlp/subtitles_editor.py:69
+msgid "Subtitles"
+msgstr "Sottotitoli"
+
+#: ../vdms_ytdlp/subtitles_editor.py:73
+msgid "None"
+msgstr "Nessuno"
+
+#: ../vdms_ytdlp/subtitles_editor.py:74
+msgid "All available subtitles"
+msgstr "Tutti i sottotitoli disponibili"
+
+#: ../vdms_ytdlp/subtitles_editor.py:75
+msgid "Select by default language"
+msgstr "Selezione per lingua predefinita"
+
+#: ../vdms_ytdlp/subtitles_editor.py:76
+msgid "Custom language subtitles"
+msgstr "Sottotitoli in lingua personalizzata"
+
+#: ../vdms_ytdlp/subtitles_editor.py:93
+msgid "Custom language"
+msgstr "Lingua personalizzata"
+
+#: ../vdms_ytdlp/subtitles_editor.py:111
+msgid "Include automatically generated subtitle (YouTube only)"
+msgstr "Includi sottotitoli generati automaticamente (solo YouTube)"
+
+#: ../vdms_ytdlp/subtitles_editor.py:114
+msgid "Embed subtitles into video file (mp4 only)"
+msgstr "Incorpora i sottotitoli nel file video (solo mp4)"
+
+#: ../vdms_ytdlp/subtitles_editor.py:117
+msgid "Download subtitles only (do not include audio and video)"
+msgstr "Scarica solo i sottotitoli (non includere audio e video)"
+
+#: ../vdms_ytdlp/subtitles_editor.py:136
+msgid ""
+"Languages code of the subtitles to download separated by commas, e.g. \"en, "
+"ja, ar\" for English, Japanese and Arabic respectively. You can use regex e."
+"g. \"en.*, ja, ar.*\". You can prefix the language code with a \"-\" to "
+"exclude it from the requested languages, e.g. \"all, -live_chat\"."
+msgstr ""
+"Codice delle lingue dei sottotitoli da scaricare separati da virgole, ad es. "
+"\"en, ja, ar\" rispettivamente per inglese, giapponese e arabo. Puoi usare "
+"regex ad es. \"en.*, ja, ar.*\". È possibile prefissare il codice della "
+"lingua con un \"-\" per escluderlo dalle lingue richieste, ad es. \"all, -"
+"live_chat\"."
+
+#~ msgid ""
+#~ "Permission denied: {}\n"
+#~ "\n"
+#~ "Check execution permissions."
+#~ msgstr ""
+#~ "Permesso negato: {}\n"
+#~ "\n"
+#~ "Controlla i permessi di esecuzione."
+
+#~ msgid "Invalid path name. Contains double or single quotes"
+#~ msgstr "Nome del file non valido. Contiene virgolette doppie o singole"
+
+#~ msgid "Download subtitles only"
+#~ msgstr "Scarica solo i sottotitoli"
 
 #~ msgid "Pen color"
 #~ msgstr "Colore penna"
@@ -5047,9 +5154,6 @@ msgstr "Gli URL contengono canali. Sei sicuro di voler continuare?"
 
 #~ msgid "Pixel Format"
 #~ msgstr "Formato Pixel"
-
-#~ msgid "Subtitle Map"
-#~ msgstr "Mappa Sottotitolo"
 
 #~ msgid ""
 #~ "Output format and file extension. The content may change based on the "

@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 Name: ydl_downloader.py
-Porpose: long processing task with youtube_dl python library
+Porpose: long processing task using yt_dlp python library
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.17.2023
+Rev: July.07.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -204,6 +204,7 @@ class YdlDownloader(Thread):
                 'outtmpl': f"{self.args['outdir']}/{outtmpl}",
                 'writesubtitles': self.opt['writesubtitles'],
                 'subtitleslangs': self.opt['subtitleslangs'],
+                'writeautomaticsub': self.opt['writeautomaticsub'],
                 'skip_download': self.opt['skip_download'],
                 'addmetadata': self.opt['addmetadata'],
                 'restrictfilenames': self.opt['restrictfilenames'],
@@ -229,6 +230,6 @@ class YdlDownloader(Thread):
 
     def stop(self):
         """
-        Sets the stop work thread to terminate the process
+        Sets the stop work thread to terminate the current process
         """
         self.stop_work_thread = True

@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.23.2023
+Rev: July.06.2023
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -486,6 +486,7 @@ class DataSource():
                 'videotopictures', 'atrack', 'timerset', 'coloreq',
                 'stop', 'home', 'youtube', 'playlist',
                 'cleanup', 'download', 'statistics', 'play',
+                'subtitles'
                 )  # must match with items on `iconset` tuple, see following
 
         icodir = self.dataloc['icodir']
@@ -552,6 +553,7 @@ class DataSource():
                    f"{choose.get('x22')}/download.{ext}",
                    f"{choose.get('x22')}/statistics.{ext}",
                    f"{choose.get('x22')}/play.{ext}",
+                   f"{choose.get('x16')}/subtitles.{ext}",
                    )
         values = (os.path.join(norm) for norm in iconset)  # normalize pathns
 

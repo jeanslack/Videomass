@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.17.2023
+Rev: July.07.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -31,6 +31,7 @@ from videomass.vdms_io.io_tools import youtubedl_getstatistics
 from videomass.vdms_utils.utils import timehuman
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_ytdlp.playlist_indexing import Indexing
+from videomass.vdms_ytdlp.subtitles_editor import SubtitleEditor
 from videomass.vdms_ytdlp.formatcode import FormatCode
 from videomass.vdms_sys.settings_manager import ConfigManager
 
@@ -131,8 +132,10 @@ class Downloader(wx.Panel):
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmplistindx = get_bmp(icons['playlist'], ((16, 16)))
+            bmpsubtitles = get_bmp(icons['subtitles'], ((16, 16)))
         else:
             bmplistindx = wx.Bitmap(icons['playlist'], wx.BITMAP_TYPE_ANY)
+            bmpsubtitles = wx.Bitmap(icons['subtitles'], wx.BITMAP_TYPE_ANY)
 
         self.opt = {("NO_PLAYLIST"): True,
                     ("THUMB"): sett['embed_thumbnails'],
@@ -140,7 +143,7 @@ class Downloader(wx.Panel):
                     ("V_QUALITY"): Downloader.VPCOMP['Best precompiled video'],
                     ("A_FORMAT"): "best",
                     ("A_QUALITY"): "bestaudio",
-                    ("SUBTITLES"): sett['write_subtitle'],
+                    ("SUBS"): sett['subtitles_options'],
                     }
         self.plidx = {'': ''}
         self.info = []  # has data information for Statistics button
@@ -232,6 +235,16 @@ class Downloader(wx.Panel):
         self.btn_plidx.SetBitmap(bmplistindx, wx.LEFT)
         fgs1.Add(self.btn_plidx, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_plidx.Disable()
+
+        self.btn_subeditor = wx.Button(panelscroll, wx.ID_ANY,
+                                       (_('Subtitles Editor'))
+                                       )
+        self.btn_subeditor.SetBitmap(bmpsubtitles, wx.LEFT)
+        fgs1.Add(self.btn_subeditor, 0, wx.ALL | wx.EXPAND, 5)
+        if sett['subtitles_options']['writesubtitles']:
+            self.btn_subeditor.SetBackgroundColour(
+                wx.Colour(Downloader.VIOLET))
+
         self.ckbx_ssl = wx.CheckBox(panelscroll, wx.ID_ANY,
                                     (_('Don’t check SSL certificate'))
                                     )
@@ -247,28 +260,6 @@ class Downloader(wx.Panel):
                                      )
         self.ckbx_meta.SetValue(sett['add_metadata'])
         fgs1.Add(self.ckbx_meta, 0, wx.ALL, 5)
-        self.ckbx_sb = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                   (_('Write subtitles to video'))
-                                   )
-        self.ckbx_sb.SetValue(sett['write_subtitle'])
-        fgs1.Add(self.ckbx_sb, 0, wx.ALL, 5)
-        sizer_subtitles = wx.BoxSizer(wx.HORIZONTAL)
-        self.ckbx_all_sb = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                       (_('Download all available subtitles'))
-                                       )
-        sizer_subtitles.Add((20, 20), 0,)
-        sizer_subtitles.Add(self.ckbx_all_sb)
-        fgs1.Add(sizer_subtitles, 0, wx.ALL, 5)
-        sizer_skipdl = wx.BoxSizer(wx.HORIZONTAL)
-        self.ckbx_skip_dl = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                        (_('Download subtitles only'))
-                                        )
-        sizer_skipdl.Add((20, 20), 0,)
-        sizer_skipdl.Add(self.ckbx_skip_dl)
-        fgs1.Add(sizer_skipdl, 0, wx.ALL, 5)
-        if not sett['write_subtitle']:
-            self.ckbx_all_sb.Disable()
-            self.ckbx_skip_dl.Disable()
         self.ckbx_ow = wx.CheckBox(panelscroll, wx.ID_ANY,
                                    (_('Overwrite all files and metadata'))
                                    )
@@ -299,7 +290,6 @@ class Downloader(wx.Panel):
         self.panel_cod = FormatCode(self, self.format_dict)
         self.panel_cod.enable_widgets(False)
         boxpanel.Add(self.panel_cod, 1, wx.EXPAND)
-
         self.SetSizer(sizer_base)
         self.Layout()
 
@@ -313,8 +303,22 @@ class Downloader(wx.Panel):
         self.btn_plidx.Bind(wx.EVT_BUTTON, self.on_playlist_idx)
         self.ckbx_thumb.Bind(wx.EVT_CHECKBOX, self.on_thumbnails)
         self.ckbx_meta.Bind(wx.EVT_CHECKBOX, self.on_metadata)
-        self.ckbx_sb.Bind(wx.EVT_CHECKBOX, self.on_subtitles)
+        self.btn_subeditor.Bind(wx.EVT_BUTTON, self.on_subtitles_editor)
 
+    # ----------------------------------------------------------------------
+    def on_subtitles_editor(self, event):
+        """
+        Event by clicking on the subtitles button
+        """
+        with SubtitleEditor(self, self.opt["SUBS"]) as subeditor:
+            if subeditor.ShowModal() == wx.ID_OK:
+                data = subeditor.getvalue()
+                self.opt["SUBS"] = data
+        if not self.opt["SUBS"]["writesubtitles"]:
+            self.btn_subeditor.SetBackgroundColour(wx.NullColour)
+        else:
+            self.btn_subeditor.SetBackgroundColour(
+                wx.Colour(Downloader.VIOLET))
     # ----------------------------------------------------------------------
 
     def clear_data_list(self, changed):
@@ -624,27 +628,9 @@ class Downloader(wx.Panel):
             self.opt["METADATA"] = False
     # -----------------------------------------------------------------#
 
-    def on_subtitles(self, event):
-        """
-        enable or disable writing subtitles
-        """
-        if self.ckbx_sb.IsChecked():
-            self.opt["SUBTITLES"] = True
-            self.ckbx_all_sb.Enable()
-            self.ckbx_skip_dl.Enable()
-
-        else:
-            self.opt["SUBTITLES"] = False
-            self.ckbx_all_sb.Disable()
-            self.ckbx_skip_dl.Disable()
-            self.ckbx_all_sb.SetValue(False)
-            self.ckbx_skip_dl.SetValue(False)
-    # -----------------------------------------------------------------#
-
     def on_start(self):
         """
-        Builds command string to use with an embed youtube_dl as
-        python library or using standard youtube-dl command line.
+        Builds options and arguments for yt_dlp lib.
         """
         urls = self.parent.data_url
 
@@ -681,10 +667,8 @@ class Downloader(wx.Panel):
             postprocessors.append({'key': 'EmbedThumbnail',
                                    'already_have_thumbnail': False
                                    })
-        if self.opt["SUBTITLES"]:
+        if self.opt["SUBS"]["embedsubtitle"]:
             postprocessors.append({'key': 'FFmpegEmbedSubtitle'})
-
-        sublang = ['all'] if self.ckbx_all_sb.IsChecked() else ''
 
         if self.choice.GetSelection() in (0, 1):  # precompiled or quality
             code = []
@@ -696,11 +680,10 @@ class Downloader(wx.Panel):
                     'outtmpl': f'{_id}.%(ext)s',
                     'extractaudio': False,
                     'addmetadata': self.opt["METADATA"],
-                    'writesubtitles': self.opt["SUBTITLES"],
-                    'subtitleslangs': sublang,
-                    'skip_download': self.ckbx_skip_dl.GetValue(),
-                    'writeautomaticsub': self.opt["SUBTITLES"],
-                    'allsubtitles': self.opt["SUBTITLES"],
+                    'writesubtitles': self.opt["SUBS"]["writesubtitles"],
+                    'subtitleslangs': self.opt["SUBS"]["subtitleslangs"],
+                    'skip_download': self.opt["SUBS"]["skip_download"],
+                    'writeautomaticsub': self.opt["SUBS"]["writeautomaticsub"],
                     'postprocessors': postprocessors,
                     'restrictfilenames': self.ckbx_limitfn.GetValue(),
                     'nocheckcertificate': self.ckbx_ssl.GetValue(),
@@ -715,11 +698,10 @@ class Downloader(wx.Panel):
                     'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
                     'extractaudio': False,
                     'addmetadata': self.opt["METADATA"],
-                    'writesubtitles': self.opt["SUBTITLES"],
-                    'subtitleslangs': sublang,
-                    'skip_download': self.ckbx_skip_dl.GetValue(),
-                    'writeautomaticsub': self.opt["SUBTITLES"],
-                    'allsubtitles': self.opt["SUBTITLES"],
+                    'writesubtitles': self.opt["SUBS"]["writesubtitles"],
+                    'subtitleslangs': self.opt["SUBS"]["subtitleslangs"],
+                    'skip_download': self.opt["SUBS"]["skip_download"],
+                    'writeautomaticsub': self.opt["SUBS"]["writeautomaticsub"],
                     'postprocessors': postprocessors,
                     'restrictfilenames': self.ckbx_limitfn.GetValue(),
                     'nocheckcertificate': self.ckbx_ssl.GetValue(),
@@ -734,11 +716,10 @@ class Downloader(wx.Panel):
                     'outtmpl': f'{_id}.%(ext)s',
                     'extractaudio': True,
                     'addmetadata': self.opt["METADATA"],
-                    'writesubtitles': self.opt["SUBTITLES"],
-                    'subtitleslangs': sublang,
-                    'skip_download': self.ckbx_skip_dl.GetValue(),
-                    'writeautomaticsub': self.opt["SUBTITLES"],
-                    'allsubtitles': self.opt["SUBTITLES"],
+                    'writesubtitles': self.opt["SUBS"]["writesubtitles"],
+                    'subtitleslangs': self.opt["SUBS"]["subtitleslangs"],
+                    'skip_download': self.opt["SUBS"]["skip_download"],
+                    'writeautomaticsub': self.opt["SUBS"]["writeautomaticsub"],
                     'postprocessors': postprocessors,
                     'restrictfilenames': self.ckbx_limitfn.GetValue(),
                     'nocheckcertificate': self.ckbx_ssl.GetValue(),
@@ -760,11 +741,10 @@ class Downloader(wx.Panel):
                     'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
                     'extractaudio': False,
                     'addmetadata': self.opt["METADATA"],
-                    'writesubtitles': self.opt["SUBTITLES"],
-                    'subtitleslangs': sublang,
-                    'skip_download': self.ckbx_skip_dl.GetValue(),
-                    'writeautomaticsub': self.opt["SUBTITLES"],
-                    'allsubtitles': self.opt["SUBTITLES"],
+                    'writesubtitles': self.opt["SUBS"]["writesubtitles"],
+                    'subtitleslangs': self.opt["SUBS"]["subtitleslangs"],
+                    'skip_download': self.opt["SUBS"]["skip_download"],
+                    'writeautomaticsub': self.opt["SUBS"]["writeautomaticsub"],
                     'postprocessors': postprocessors,
                     'restrictfilenames': self.ckbx_limitfn.GetValue(),
                     'nocheckcertificate': self.ckbx_ssl.GetValue(),

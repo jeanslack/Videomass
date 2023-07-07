@@ -179,7 +179,6 @@ class Indexing(wx.Dialog):
         """
         clear log messages and set text style on textctrl box
         """
-
         self.tctrl.Clear()
         self.tctrl.SetDefaultStyle(wx.TextAttr(self.clrs['TXT1']))
         self.tctrl.AppendText(f'{Indexing.HELPME}')
