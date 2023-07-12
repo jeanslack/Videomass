@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import wx
+from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 
 
 class SubtitleEditor(wx.Dialog):
@@ -34,10 +35,10 @@ class SubtitleEditor(wx.Dialog):
     for how to use this class.
 
     """
+    LGREEN = '#52ee7d'
+    BLACK = '#1f1f1f'
     get = wx.GetApp()  # get data from bootstrap
-    OS = get.appset['ostype']
-    appdata = get.appset
-    appicon = get.iconset['videomass']
+    APPICON = get.iconset['videomass']
     SUBS_LANG = {"en": _("English"),
                  "fr": _("French"),
                  "de": _("German"),
@@ -95,14 +96,24 @@ class SubtitleEditor(wx.Dialog):
         sizbase.Add(self.lab1, 0, wx.LEFT, 5)
         self.lab1.SetLabelMarkup(f"<b>{labtstr2}</b>")
 
+
+
+        sizcustsub = wx.BoxSizer(wx.HORIZONTAL)
+        sizbase.Add(sizcustsub, 0, wx.EXPAND, 0)
+        self.btn_help = wx.Button(self, wx.ID_ANY, _("Read me"), size=(-1, -1))
+        #self.btn_help.SetBackgroundColour(wx.Colour(SubtitleEditor.LGREEN))
+        #self.btn_help.SetForegroundColour(wx.Colour(SubtitleEditor.BLACK))
+        sizcustsub.Add(self.btn_help, 0, wx.ALL, 5)
+
         self.addlangs = wx.TextCtrl(self,
                                     wx.ID_ANY,
-                                    value=("Write here one or more language "
-                                           "codes, example: ru, fr, ar"),
+                                    value=(""),
                                     size=(-1, -1),
                                     name="custom_subs",
                                     )
-        sizbase.Add(self.addlangs, 0, wx.ALL | wx.EXPAND, 5)
+        sizcustsub.Add(self.addlangs, 1, wx.ALL | wx.EXPAND, 5)
+
+
         sizbase.Add(10, 10)
         labtstr3 = _('Options')
         self.lab3 = wx.StaticText(self, label=labtstr3)
@@ -119,32 +130,27 @@ class SubtitleEditor(wx.Dialog):
         sizbase.Add(self.ckbx_skip_dl, 0, wx.ALL, 5)
 
         # ------ bottom layout buttons
-        btnconf = wx.BoxSizer(wx.HORIZONTAL)
+        sizbott = wx.BoxSizer(wx.HORIZONTAL)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        btnconf.Add(btn_close, 0, wx.ALL, 5)
+        sizbott.Add(btn_close, 0, wx.ALL, 5)
         self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
-        btnconf.Add(self.btn_ok, 0, wx.ALL, 5)
-        sizbase.Add(btnconf, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        sizbott.Add(self.btn_ok, 0, wx.ALL, 5)
+        sizbase.Add(sizbott, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
 
         # ------ Properties
         icon = wx.Icon()
-        icon.CopyFromBitmap(wx.Bitmap(SubtitleEditor.appicon,
+        icon.CopyFromBitmap(wx.Bitmap(SubtitleEditor.APPICON,
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
         self.SetTitle(_('Subtitles Editor'))
         self.SetMinSize((600, 400))
-        tip = _('Languages code of the subtitles to download separated by '
-                'commas, e.g. "en, ja, ar" for English, Japanese and Arabic '
-                'respectively. You can use regex e.g. "en.*, ja, ar.*". '
-                'You can prefix the language code with a "-" to exclude it '
-                'from the requested languages, e.g. "all, -live_chat".')
-        self.addlangs.SetToolTip(tip)
         self.SetSizer(sizbase)
         sizbase.Fit(self)
         self.Layout()
 
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_COMBOBOX, self.on_langs, self.cmbx_langs)
+        self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
 
@@ -171,15 +177,20 @@ class SubtitleEditor(wx.Dialog):
             self.on_langs(None)
     # ------------------------------------------------------------------#
 
-    def default_setting(self):
+    def default_setting(self, setcmbox=True):
         """
-        Reset all settings to default (disable)
+        Reset all settings to default (disables all controls)
+        This method is called when subtitles are not required.
         """
-        self.cmbx_langs.SetSelection(0)
+        if setcmbox:
+            self.cmbx_langs.SetSelection(0)
         self.listblang.SetSelection(0)
         self.listblang.Disable()
         self.lab1.Disable()
         self.addlangs.Clear()
+        self.btn_help.Disable()
+        self.btn_help.SetBackgroundColour(wx.NullColour)
+        self.btn_help.SetForegroundColour(wx.NullColour)
         self.listblang.Disable()
         self.lab3.Disable()
         self.ckbx_autogen.SetValue(False)
@@ -236,39 +247,74 @@ class SubtitleEditor(wx.Dialog):
                 }
     # ----------------------Event handler (callback)----------------------#
 
+    def on_help(self, event):
+        """
+        event on button help
+        """
+        msg = (_('Write in the text field on the side, one or more '
+                 'language codes of the\nsubtitles to download separated by '
+                 'commas, e.g. "en, ja, ar" for English,\nJapanese and '
+                 'Arabic respectively.\n\n'
+                 'You can use regex (regular expression), e.g. '
+                 '"en.*, ja, ar.*" where the\nasterisk preceded by the dot '
+                 'will allow you to download everything\n'
+                 'related to the subtitles of a certain language.\n\n'
+                 'You can prefix the language code with a "-" to exclude it '
+                 'from the\nrequested languages, e.g. "all, -it.*, -nl.*", '
+                 '-fr.*" will download all\nsubtitles except those in '
+                 'Italian, Dutch and French.'))
+        win = NormalTransientPopup(self,
+                                   wx.SIMPLE_BORDER,
+                                   msg,
+                                   SubtitleEditor.LGREEN,
+                                   SubtitleEditor.BLACK)
+
+        # Show the popup right below or above the button
+        # depending on available screen space...
+        btn = event.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        win.Position(pos, (0, sz[1]))
+
+        win.Popup()
+    # --------------------------------------------------------------#
+
     def on_langs(self, event):
         """
         ComboBox event
         """
         if self.cmbx_langs.GetSelection() == 0:
-            self.default_setting()
+            self.default_setting(setcmbox=False)
+            return
 
-        elif self.cmbx_langs.GetSelection() == 1:
+        self.lab3.Enable()
+        self.ckbx_autogen.Enable()
+        self.ckbx_embed.Enable()
+        self.ckbx_skip_dl.Enable()
+
+        if self.cmbx_langs.GetSelection() == 1:
             self.listblang.Disable()
             self.lab1.Disable()
             self.addlangs.Disable()
-            self.lab3.Enable()
-            self.ckbx_autogen.Enable()
-            self.ckbx_embed.Enable()
-            self.ckbx_skip_dl.Enable()
+            self.btn_help.Disable()
+            self.btn_help.SetBackgroundColour(wx.NullColour)
+            self.btn_help.SetForegroundColour(wx.NullColour)
 
         elif self.cmbx_langs.GetSelection() == 2:
             self.listblang.Enable()
             self.lab1.Disable()
             self.addlangs.Disable()
-            self.lab3.Enable()
-            self.ckbx_autogen.Enable()
-            self.ckbx_embed.Enable()
-            self.ckbx_skip_dl.Enable()
+            self.btn_help.Disable()
+            self.btn_help.SetBackgroundColour(wx.NullColour)
+            self.btn_help.SetForegroundColour(wx.NullColour)
 
         elif self.cmbx_langs.GetSelection() == 3:
             self.listblang.Disable()
             self.lab1.Enable()
             self.addlangs.Enable()
-            self.lab3.Enable()
-            self.ckbx_autogen.Enable()
-            self.ckbx_embed.Enable()
-            self.ckbx_skip_dl.Enable()
+            self.btn_help.Enable()
+            self.btn_help.SetBackgroundColour(wx.Colour(SubtitleEditor.LGREEN))
+            self.btn_help.SetForegroundColour(wx.Colour(SubtitleEditor.BLACK))
     # ------------------------------------------------------------------#
 
     def on_close(self, event):

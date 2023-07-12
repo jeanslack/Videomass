@@ -105,7 +105,7 @@ class Indexing(wx.Dialog):
                                  )
 
         # ------ Properties
-        self.SetTitle(_('Playlist video items to download'))
+        self.SetTitle(_('Playlist Editor'))
         self.SetMinSize((800, 400))
         self.lctrl.SetMinSize((800, 200))
         self.tctrl.SetMinSize((800, 200))
