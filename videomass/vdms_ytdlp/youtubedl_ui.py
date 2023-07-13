@@ -78,7 +78,7 @@ class Downloader(wx.Panel):
     This panel represents the main interface to yt-dlp
     """
     WHITE = '#fbf4f4'  # sb foreground
-    VIOLET = '#D64E93'  # activated playlist button
+    VIOLET = '#D64E93'  # activated buttons
 
     MSG_1 = _('At least one "Format Code" must be checked for each '
               'URL selected in green.')
@@ -225,7 +225,7 @@ class Downloader(wx.Panel):
                               )
         fgs1.Add(line1, 0, wx.ALL | wx.EXPAND, 10)
         self.ckbx_pl = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                   (_('Download all videos in playlist'))
+                                   (_('Download playlist content'))
                                    )
         fgs1.Add(self.ckbx_pl, 0, wx.ALL, 5)
 
@@ -323,8 +323,8 @@ class Downloader(wx.Panel):
 
     def clear_data_list(self, changed):
         """
-        Reset all required data if changes is True,
-        delete data  and set to Disable otherwise.
+        Reset all required data if `changed` arg is True,
+        delete data and set to Disable otherwise.
         """
         if not self.parent.data_url:
             del self.info[:]

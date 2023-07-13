@@ -95,16 +95,10 @@ class SubtitleEditor(wx.Dialog):
         self.lab1 = wx.StaticText(self, label=labtstr2)
         sizbase.Add(self.lab1, 0, wx.LEFT, 5)
         self.lab1.SetLabelMarkup(f"<b>{labtstr2}</b>")
-
-
-
         sizcustsub = wx.BoxSizer(wx.HORIZONTAL)
         sizbase.Add(sizcustsub, 0, wx.EXPAND, 0)
         self.btn_help = wx.Button(self, wx.ID_ANY, _("Read me"), size=(-1, -1))
-        #self.btn_help.SetBackgroundColour(wx.Colour(SubtitleEditor.LGREEN))
-        #self.btn_help.SetForegroundColour(wx.Colour(SubtitleEditor.BLACK))
         sizcustsub.Add(self.btn_help, 0, wx.ALL, 5)
-
         self.addlangs = wx.TextCtrl(self,
                                     wx.ID_ANY,
                                     value=(""),
@@ -112,8 +106,6 @@ class SubtitleEditor(wx.Dialog):
                                     name="custom_subs",
                                     )
         sizcustsub.Add(self.addlangs, 1, wx.ALL | wx.EXPAND, 5)
-
-
         sizbase.Add(10, 10)
         labtstr3 = _('Options')
         self.lab3 = wx.StaticText(self, label=labtstr3)
