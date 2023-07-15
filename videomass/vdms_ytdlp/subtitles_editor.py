@@ -125,7 +125,7 @@ class SubtitleEditor(wx.Dialog):
         sizbott = wx.BoxSizer(wx.HORIZONTAL)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         sizbott.Add(btn_close, 0, wx.ALL, 5)
-        self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
+        self.btn_ok = wx.Button(self, wx.ID_OK)
         sizbott.Add(self.btn_ok, 0, wx.ALL, 5)
         sizbase.Add(sizbott, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
 

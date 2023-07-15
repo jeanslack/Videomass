@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-13 15:04+0200\n"
-"PO-Revision-Date: 2023-07-13 15:04+0200\n"
+"POT-Creation-Date: 2023-07-15 14:25+0200\n"
+"PO-Revision-Date: 2023-07-15 14:25+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -146,15 +146,6 @@ msgstr "Centro"
 #: ../vdms_dialogs/filter_crop.py:291 ../vdms_dialogs/filter_scale.py:120
 msgid "Width"
 msgstr "Larghezza"
-
-#: ../vdms_dialogs/filter_crop.py:310 ../vdms_dialogs/filter_deinterlace.py:120
-#: ../vdms_dialogs/filter_denoisers.py:83 ../vdms_dialogs/filter_scale.py:207
-#: ../vdms_dialogs/filter_stab.py:314 ../vdms_dialogs/filter_transpose.py:110
-#: ../vdms_dialogs/set_timestamp.py:148
-#: ../vdms_dialogs/filter_colorcorrection.py:192
-#: ../vdms_ytdlp/playlist_indexing.py:132 ../vdms_ytdlp/subtitles_editor.py:128
-msgid "Apply"
-msgstr "Applica"
 
 #: ../vdms_dialogs/filter_crop.py:333
 msgid "Crop Tool"
@@ -918,10 +909,6 @@ msgstr "Nome Profilo"
 #: ../vdms_dialogs/presets_addnew.py:81 ../vdms_panels/presets_manager.py:393
 msgid "Description"
 msgstr "Descrizione"
-
-#: ../vdms_dialogs/presets_addnew.py:133
-msgid "Save.."
-msgstr "Salva.."
 
 #: ../vdms_dialogs/presets_addnew.py:156
 msgid "A short profile name"
@@ -4394,7 +4381,7 @@ msgstr ""
 
 #: ../vdms_ytdlp/playlist_indexing.py:108 ../vdms_ytdlp/youtubedl_ui.py:233
 msgid "Playlist Editor"
-msgstr "Editor di Playlist"
+msgstr "Editor Playlist"
 
 #: ../vdms_ytdlp/playlist_indexing.py:117
 msgid "Help viewer"
@@ -4473,8 +4460,8 @@ msgid "Preferred video format"
 msgstr "Formato video preferito"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:228
-msgid "Download playlist content"
-msgstr "Scarica il contenuto delle playlist"
+msgid "Include playlists"
+msgstr "Includi le playlist"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:240 ../vdms_ytdlp/subtitles_editor.py:137
 msgid "Subtitles Editor"
@@ -4654,6 +4641,15 @@ msgstr ""
 "lingue richieste, ad es. \"all, -it.*, -nl.*\", -fr.*\" ciò scaricherà tutti "
 "i sottotitoli\n"
 "tranne quelli in italiano, olandese e francese."
+
+#~ msgid "Apply"
+#~ msgstr "Applica"
+
+#~ msgid "Save.."
+#~ msgstr "Salva.."
+
+#~ msgid "Download playlist content"
+#~ msgstr "Scarica il contenuto delle playlist"
 
 #~ msgid "Download all videos in playlist"
 #~ msgstr ""

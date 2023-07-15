@@ -225,7 +225,7 @@ class Downloader(wx.Panel):
                               )
         fgs1.Add(line1, 0, wx.ALL | wx.EXPAND, 10)
         self.ckbx_pl = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                   (_('Download playlist content'))
+                                   (_('Include playlists'))
                                    )
         fgs1.Add(self.ckbx_pl, 0, wx.ALL, 5)
 

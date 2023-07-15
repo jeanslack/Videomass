@@ -129,7 +129,7 @@ class Indexing(wx.Dialog):
         grid_btn.Add(btn_reset, 0, wx.ALL, 5)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         gridexit.Add(btn_close, 0, wx.ALL, 5)
-        self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
+        self.btn_ok = wx.Button(self, wx.ID_OK)
         gridexit.Add(self.btn_ok, 0, wx.ALL, 5)
         grid_btn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
 

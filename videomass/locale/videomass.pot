@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-13 15:04+0200\n"
+"POT-Creation-Date: 2023-07-15 14:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,15 +119,6 @@ msgstr ""
 
 #: ../vdms_dialogs/filter_crop.py:291 ../vdms_dialogs/filter_scale.py:120
 msgid "Width"
-msgstr ""
-
-#: ../vdms_dialogs/filter_crop.py:310 ../vdms_dialogs/filter_deinterlace.py:120
-#: ../vdms_dialogs/filter_denoisers.py:83 ../vdms_dialogs/filter_scale.py:207
-#: ../vdms_dialogs/filter_stab.py:314 ../vdms_dialogs/filter_transpose.py:110
-#: ../vdms_dialogs/set_timestamp.py:148
-#: ../vdms_dialogs/filter_colorcorrection.py:192
-#: ../vdms_ytdlp/playlist_indexing.py:132 ../vdms_ytdlp/subtitles_editor.py:128
-msgid "Apply"
 msgstr ""
 
 #: ../vdms_dialogs/filter_crop.py:333
@@ -762,10 +753,6 @@ msgstr ""
 
 #: ../vdms_dialogs/presets_addnew.py:81 ../vdms_panels/presets_manager.py:393
 msgid "Description"
-msgstr ""
-
-#: ../vdms_dialogs/presets_addnew.py:133
-msgid "Save.."
 msgstr ""
 
 #: ../vdms_dialogs/presets_addnew.py:156
@@ -3853,7 +3840,7 @@ msgid "Preferred video format"
 msgstr ""
 
 #: ../vdms_ytdlp/youtubedl_ui.py:228
-msgid "Download playlist content"
+msgid "Include playlists"
 msgstr ""
 
 #: ../vdms_ytdlp/youtubedl_ui.py:240 ../vdms_ytdlp/subtitles_editor.py:137

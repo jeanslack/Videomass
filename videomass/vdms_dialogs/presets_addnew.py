@@ -130,7 +130,7 @@ class MemPresets(wx.Dialog):
         grdexit = wx.BoxSizer(wx.HORIZONTAL)
         btn_canc = wx.Button(self, wx.ID_CANCEL, "")
         grdexit.Add(btn_canc, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        btn_save = wx.Button(self, wx.ID_OK, _("Save.."))
+        btn_save = wx.Button(self, wx.ID_OK)
         grdexit.Add(btn_save, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grdBtn.Add(grdexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
         size_base.Add(grdBtn, 0, wx.EXPAND)
