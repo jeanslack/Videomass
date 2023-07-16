@@ -281,7 +281,7 @@ class SetUp(wx.Dialog):
         # -----tab 4
         tabFour = wx.Panel(notebook, wx.ID_ANY)
         sizerytdlp = wx.BoxSizer(wx.VERTICAL)
-        sizerytdlp.Add((0, 30))
+        sizerytdlp.Add((0, 15))
         msg = _('Download videos from YouTube.com and other video sites')
         labytdlp = wx.StaticText(tabFour, wx.ID_ANY, msg)
         sizerytdlp.Add(labytdlp, 0, wx.ALL | wx.EXPAND, 5)

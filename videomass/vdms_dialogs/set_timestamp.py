@@ -145,7 +145,7 @@ class Set_Timestamp(wx.Dialog):
         grid1.Add(self.cmbx_boxcolor, 0, wx.ALL, 5)
         # confirm buttons:
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
+        self.btn_ok = wx.Button(self, wx.ID_OK)
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
         gridexit.Add(btn_close, 0, wx.ALL | wx.EXPAND, 5)
         gridexit.Add(self.btn_ok, 1, wx.ALL, 5)

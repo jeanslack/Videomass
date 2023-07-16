@@ -78,7 +78,7 @@ class Downloader(wx.Panel):
     This panel represents the main interface to yt-dlp
     """
     WHITE = '#fbf4f4'  # sb foreground
-    VIOLET = '#D64E93'  # activated playlist button
+    VIOLET = '#D64E93'  # activated buttons
 
     MSG_1 = _('At least one "Format Code" must be checked for each '
               'URL selected in green.')
@@ -225,7 +225,7 @@ class Downloader(wx.Panel):
                               )
         fgs1.Add(line1, 0, wx.ALL | wx.EXPAND, 10)
         self.ckbx_pl = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                   (_('Download all videos in playlist'))
+                                   (_('Include playlists'))
                                    )
         fgs1.Add(self.ckbx_pl, 0, wx.ALL, 5)
 
@@ -244,39 +244,39 @@ class Downloader(wx.Panel):
         if sett['subtitles_options']['writesubtitles']:
             self.btn_subeditor.SetBackgroundColour(
                 wx.Colour(Downloader.VIOLET))
-
+        fgs1.Add((5, 5))
         self.ckbx_ssl = wx.CheckBox(panelscroll, wx.ID_ANY,
                                     (_('Don’t check SSL certificate'))
                                     )
         self.ckbx_ssl.SetValue(sett['ssl_certificate'])
-        fgs1.Add(self.ckbx_ssl, 0, wx.ALL, 5)
+        fgs1.Add(self.ckbx_ssl, 0, wx.LEFT, 5)
         self.ckbx_thumb = wx.CheckBox(panelscroll, wx.ID_ANY,
                                       (_('Embed thumbnail in audio file'))
                                       )
         self.ckbx_thumb.SetValue(sett['embed_thumbnails'])
-        fgs1.Add(self.ckbx_thumb, 0, wx.ALL, 5)
+        fgs1.Add(self.ckbx_thumb, 0, wx.LEFT, 5)
         self.ckbx_meta = wx.CheckBox(panelscroll, wx.ID_ANY,
                                      (_('Add metadata to file'))
                                      )
         self.ckbx_meta.SetValue(sett['add_metadata'])
-        fgs1.Add(self.ckbx_meta, 0, wx.ALL, 5)
+        fgs1.Add(self.ckbx_meta, 0, wx.LEFT, 5)
         self.ckbx_ow = wx.CheckBox(panelscroll, wx.ID_ANY,
                                    (_('Overwrite all files and metadata'))
                                    )
         self.ckbx_ow.SetValue(sett['overwr_dl_files'])
-        fgs1.Add(self.ckbx_ow, 0, wx.ALL, 5)
+        fgs1.Add(self.ckbx_ow, 0, wx.LEFT, 5)
         self.ckbx_id = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                   (_('Include the video ID\n'
-                                      'in the file names')))
+                                   (_('Include the ID in file names')))
         self.ckbx_id.SetValue(sett['include_ID_name'])
 
-        fgs1.Add(self.ckbx_id, 0, wx.ALL, 5)
+        fgs1.Add(self.ckbx_id, 0, wx.LEFT, 5)
 
         self.ckbx_limitfn = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                        (_('Restrict file names'))
+                                        (_('Restrict file names to ASCII '
+                                           'characters'))
                                         )
         self.ckbx_limitfn.SetValue(sett['restrict_fname'])
-        fgs1.Add(self.ckbx_limitfn, 0, wx.ALL, 5)
+        fgs1.Add(self.ckbx_limitfn, 0, wx.LEFT, 5)
         boxoptions.Add(panelscroll, 0, wx.ALL | wx.CENTRE, 0)
 
         panelscroll.SetSizer(fgs1)
@@ -323,8 +323,8 @@ class Downloader(wx.Panel):
 
     def clear_data_list(self, changed):
         """
-        Reset all required data if changes is True,
-        delete data  and set to Disable otherwise.
+        Reset all required data if `changed` arg is True,
+        delete data and set to Disable otherwise.
         """
         if not self.parent.data_url:
             del self.info[:]

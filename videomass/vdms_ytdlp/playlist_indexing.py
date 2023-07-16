@@ -69,13 +69,13 @@ class Indexing(wx.Dialog):
         GREEN = '#40804C'
     appicon = get.iconset['videomass']
 
-    HELPME = _('Click on "Playlist Items" column to specify indices of '
-               'the videos in the playlist separated by commas like: '
-               '"1,2,5,8" if you want to download videos indexed 1, 2, '
-               '5, 8 in the playlist.\n\n'
-               'You can specify range: "1-3,7,10-13" it will download the '
-               'videos at index 1, 2, 3, 7, 10, 11, 12 and 13.\n'
-               )
+    HELPME = (_('To index the media of a playlist, click on the "Playlist '
+                'Items" column of each corresponding URL and specify the '
+                'numerical indexes separated by commas, e.g. "1,2,5,8" if '
+                'you want to download the indexed media at 1, 2, 5, 8 of the '
+                'playlist.\nIt is also possible to specify intervals, e.g. '
+                '"1-3,7,10-13" with which the media at index 1, 2, 3, 7, 10, '
+                '11, 12 and 13 will be downloaded.\n'))
 
     def __init__(self, parent, url, data):
         """
@@ -105,7 +105,7 @@ class Indexing(wx.Dialog):
                                  )
 
         # ------ Properties
-        self.SetTitle(_('Playlist video items to download'))
+        self.SetTitle(_('Playlist Editor'))
         self.SetMinSize((800, 400))
         self.lctrl.SetMinSize((800, 200))
         self.tctrl.SetMinSize((800, 200))
@@ -129,7 +129,7 @@ class Indexing(wx.Dialog):
         grid_btn.Add(btn_reset, 0, wx.ALL, 5)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         gridexit.Add(btn_close, 0, wx.ALL, 5)
-        self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
+        self.btn_ok = wx.Button(self, wx.ID_OK)
         gridexit.Add(self.btn_ok, 0, wx.ALL, 5)
         grid_btn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
 

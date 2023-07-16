@@ -80,7 +80,7 @@ class Denoisers(wx.Dialog):
         # ----- confirm buttons section
         btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
+        self.btn_ok = wx.Button(self, wx.ID_OK)
         btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
         btn_reset.SetBitmap(iconreset, wx.LEFT)
         # ------ set Layout

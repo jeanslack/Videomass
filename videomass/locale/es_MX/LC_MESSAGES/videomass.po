@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-07 18:55+0200\n"
-"PO-Revision-Date: 2023-07-07 18:59+0200\n"
+"POT-Creation-Date: 2023-07-16 14:36+0200\n"
+"PO-Revision-Date: 2023-07-16 14:54+0200\n"
 "Last-Translator: José Alberto Valle Cid j.alberto.vc@gmail.com\n"
 "Language-Team: Spanish <>\n"
 "Language: es_MX\n"
@@ -146,15 +146,6 @@ msgstr "Centro"
 #: ../vdms_dialogs/filter_crop.py:291 ../vdms_dialogs/filter_scale.py:120
 msgid "Width"
 msgstr "Ancho"
-
-#: ../vdms_dialogs/filter_crop.py:310 ../vdms_dialogs/filter_deinterlace.py:120
-#: ../vdms_dialogs/filter_denoisers.py:83 ../vdms_dialogs/filter_scale.py:207
-#: ../vdms_dialogs/filter_stab.py:314 ../vdms_dialogs/filter_transpose.py:110
-#: ../vdms_dialogs/set_timestamp.py:148
-#: ../vdms_dialogs/filter_colorcorrection.py:192
-#: ../vdms_ytdlp/playlist_indexing.py:132 ../vdms_ytdlp/subtitles_editor.py:125
-msgid "Apply"
-msgstr "Aplicar"
 
 #: ../vdms_dialogs/filter_crop.py:333
 #, fuzzy
@@ -332,7 +323,7 @@ msgstr ""
 #: ../vdms_dialogs/shownormlist.py:116 ../vdms_miniframes/timeline.py:262
 #: ../vdms_miniframes/timeline.py:282 ../vdms_panels/concatenate.py:112
 #: ../vdms_panels/sequence_to_video.py:117
-#: ../vdms_panels/video_to_sequence.py:79
+#: ../vdms_panels/video_to_sequence.py:79 ../vdms_ytdlp/subtitles_editor.py:100
 #, fuzzy
 #| msgid "Ready"
 msgid "Read me"
@@ -922,10 +913,6 @@ msgstr "Nombre de Perfil"
 #: ../vdms_dialogs/presets_addnew.py:81 ../vdms_panels/presets_manager.py:393
 msgid "Description"
 msgstr "Descripción"
-
-#: ../vdms_dialogs/presets_addnew.py:133
-msgid "Save.."
-msgstr "Guardar..."
 
 #: ../vdms_dialogs/presets_addnew.py:156
 msgid "A short profile name"
@@ -4278,7 +4265,7 @@ msgid "Create animated GIF"
 msgstr "Crear GIF animado"
 
 #: ../vdms_panels/video_to_sequence.py:88 ../vdms_ytdlp/youtubedl_ui.py:159
-#: ../vdms_ytdlp/subtitles_editor.py:107
+#: ../vdms_ytdlp/subtitles_editor.py:110
 msgid "Options"
 msgstr "Opciones"
 
@@ -4596,13 +4583,21 @@ msgid "Playlist Items"
 msgstr "Contenido de la Lista"
 
 #: ../vdms_ytdlp/playlist_indexing.py:72
+#, fuzzy
+#| msgid ""
+#| "Click on \"Playlist Items\" column to specify indices of the videos in "
+#| "the playlist separated by commas like: \"1,2,5,8\" if you want to "
+#| "download videos indexed 1, 2, 5, 8 in the playlist.\n"
+#| "\n"
+#| "You can specify range: \"1-3,7,10-13\" it will download the videos at "
+#| "index 1, 2, 3, 7, 10, 11, 12 and 13.\n"
 msgid ""
-"Click on \"Playlist Items\" column to specify indices of the videos in the "
-"playlist separated by commas like: \"1,2,5,8\" if you want to download "
-"videos indexed 1, 2, 5, 8 in the playlist.\n"
-"\n"
-"You can specify range: \"1-3,7,10-13\" it will download the videos at index "
-"1, 2, 3, 7, 10, 11, 12 and 13.\n"
+"To index the media of a playlist, click on the \"Playlist Items\" column of "
+"each corresponding URL and specify the numerical indexes separated by "
+"commas, e.g. \"1,2,5,8\" if you want to download the indexed media at 1, 2, "
+"5, 8 of the playlist.\n"
+"It is also possible to specify intervals, e.g. \"1-3,7,10-13\" with which "
+"the media at index 1, 2, 3, 7, 10, 11, 12 and 13 will be downloaded.\n"
 msgstr ""
 "Presione en la columna \"Contenido de la Lista\" para especificar indices de "
 "los videos separados por comas en la lista de reproducción ej: \"1,2,5,8\" "
@@ -4611,9 +4606,9 @@ msgstr ""
 "Puede especificar rangos: \"1-3,7,10-13\" descargara los videos con los "
 "indices 1, 2, 3, 7, 10, 11, 12 y 13.\n"
 
-#: ../vdms_ytdlp/playlist_indexing.py:108
-msgid "Playlist video items to download"
-msgstr "Indices de video a descargar de la Lista"
+#: ../vdms_ytdlp/playlist_indexing.py:108 ../vdms_ytdlp/youtubedl_ui.py:233
+msgid "Playlist Editor"
+msgstr "Editor de Lista de Reproducción"
 
 #: ../vdms_ytdlp/playlist_indexing.py:117
 msgid "Help viewer"
@@ -4696,14 +4691,10 @@ msgid "Preferred video format"
 msgstr "Formato de video preferido"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:228
-msgid "Download all videos in playlist"
-msgstr "Descargar todos los videos en la lista de reproducción"
+msgid "Include playlists"
+msgstr ""
 
-#: ../vdms_ytdlp/youtubedl_ui.py:233
-msgid "Playlist Editor"
-msgstr "Editor de Lista de Reproducción"
-
-#: ../vdms_ytdlp/youtubedl_ui.py:240 ../vdms_ytdlp/subtitles_editor.py:134
+#: ../vdms_ytdlp/youtubedl_ui.py:240 ../vdms_ytdlp/subtitles_editor.py:137
 #, fuzzy
 #| msgid "Subtitle Streams"
 msgid "Subtitles Editor"
@@ -4726,15 +4717,19 @@ msgid "Overwrite all files and metadata"
 msgstr ""
 
 #: ../vdms_ytdlp/youtubedl_ui.py:269
-msgid ""
-"Include the video ID\n"
-"in the file names"
+#, fuzzy
+#| msgid ""
+#| "Include the video ID\n"
+#| "in the file names"
+msgid "Include the ID in file names"
 msgstr ""
 "Incluir el ID de video\n"
 "en los nombres de archivo"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:276
-msgid "Restrict file names"
+#: ../vdms_ytdlp/youtubedl_ui.py:275
+#, fuzzy
+#| msgid "Restrict file names"
+msgid "Restrict file names to ASCII characters"
 msgstr "Restringir los nombres de archivo"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:436
@@ -4763,119 +4758,138 @@ msgstr ""
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "Las URLs contienen canales. ¿Seguro que desea continuar?"
 
-#: ../vdms_ytdlp/subtitles_editor.py:41
+#: ../vdms_ytdlp/subtitles_editor.py:42
 msgid "English"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:42
+#: ../vdms_ytdlp/subtitles_editor.py:43
 msgid "French"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:43
+#: ../vdms_ytdlp/subtitles_editor.py:44
 msgid "German"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:44
+#: ../vdms_ytdlp/subtitles_editor.py:45
 msgid "Greek"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:45
+#: ../vdms_ytdlp/subtitles_editor.py:46
 msgid "Hebrew"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:46
+#: ../vdms_ytdlp/subtitles_editor.py:47
 msgid "Italian"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:47
+#: ../vdms_ytdlp/subtitles_editor.py:48
 msgid "Dutch"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:48
+#: ../vdms_ytdlp/subtitles_editor.py:49
 msgid "Polish"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:49
+#: ../vdms_ytdlp/subtitles_editor.py:50
 msgid "Portuguese"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:50
+#: ../vdms_ytdlp/subtitles_editor.py:51
 msgid "Russian"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:51
+#: ../vdms_ytdlp/subtitles_editor.py:52
 #, fuzzy
 #| msgid "Finish"
 msgid "Spanish"
 msgstr "Finalizar"
 
-#: ../vdms_ytdlp/subtitles_editor.py:52
+#: ../vdms_ytdlp/subtitles_editor.py:53
 msgid "Swedish"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:53
+#: ../vdms_ytdlp/subtitles_editor.py:54
 msgid "Turkish"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:54
+#: ../vdms_ytdlp/subtitles_editor.py:55
 msgid "Albanian"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:55
+#: ../vdms_ytdlp/subtitles_editor.py:56
 msgid "Chinese"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:69
+#: ../vdms_ytdlp/subtitles_editor.py:70
 #, fuzzy
 #| msgid "Subtitle"
 msgid "Subtitles"
 msgstr "Subtitulo"
 
-#: ../vdms_ytdlp/subtitles_editor.py:73
+#: ../vdms_ytdlp/subtitles_editor.py:74
 msgid "None"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:74
+#: ../vdms_ytdlp/subtitles_editor.py:75
 #, fuzzy
 #| msgid "Download all available subtitles"
 msgid "All available subtitles"
 msgstr "Descargar todos los subtitulos disponibles"
 
-#: ../vdms_ytdlp/subtitles_editor.py:75
+#: ../vdms_ytdlp/subtitles_editor.py:76
 msgid "Select by default language"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:76
+#: ../vdms_ytdlp/subtitles_editor.py:77
 msgid "Custom language subtitles"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:93
+#: ../vdms_ytdlp/subtitles_editor.py:94
 msgid "Custom language"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:111
+#: ../vdms_ytdlp/subtitles_editor.py:114
 msgid "Include automatically generated subtitle (YouTube only)"
 msgstr ""
 
-#: ../vdms_ytdlp/subtitles_editor.py:114
+#: ../vdms_ytdlp/subtitles_editor.py:117
 #, fuzzy
 #| msgid "Write subtitles to video"
 msgid "Embed subtitles into video file (mp4 only)"
 msgstr "Escribir subtítulos al video"
 
-#: ../vdms_ytdlp/subtitles_editor.py:117
+#: ../vdms_ytdlp/subtitles_editor.py:120
 #, fuzzy
 #| msgid "Download split audio and video"
 msgid "Download subtitles only (do not include audio and video)"
 msgstr "Descargar por separado audio y video"
 
-#: ../vdms_ytdlp/subtitles_editor.py:136
+#: ../vdms_ytdlp/subtitles_editor.py:246
 msgid ""
-"Languages code of the subtitles to download separated by commas, e.g. \"en, "
-"ja, ar\" for English, Japanese and Arabic respectively. You can use regex e."
-"g. \"en.*, ja, ar.*\". You can prefix the language code with a \"-\" to "
-"exclude it from the requested languages, e.g. \"all, -live_chat\"."
+"Write in the text field on the side, one or more language codes of the\n"
+"subtitles to download separated by commas, e.g. \"en, ja, ar\" for English,\n"
+"Japanese and Arabic respectively.\n"
+"\n"
+"You can use regex (regular expression), e.g. \"en.*, ja, ar.*\" where the\n"
+"asterisk preceded by the dot will allow you to download everything\n"
+"related to the subtitles of a certain language.\n"
+"\n"
+"You can prefix the language code with a \"-\" to exclude it from the\n"
+"requested languages, e.g. \"all, -it.*, -nl.*\", -fr.*\" will download all\n"
+"subtitles except those in Italian, Dutch and French."
 msgstr ""
+
+#~ msgid "Apply"
+#~ msgstr "Aplicar"
+
+#~ msgid "Save.."
+#~ msgstr "Guardar..."
+
+#~ msgid "Playlist video items to download"
+#~ msgstr "Indices de video a descargar de la Lista"
+
+#~ msgid "Download all videos in playlist"
+#~ msgstr "Descargar todos los videos en la lista de reproducción"
 
 #~ msgid ""
 #~ "Permission denied: {}\n"

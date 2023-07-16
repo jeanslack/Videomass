@@ -484,9 +484,8 @@ class DataSource():
                 'profile_edit', 'previous', 'next', 'stabilizer',
                 'preview_audio', 'profile_copy', 'slideshow',
                 'videotopictures', 'atrack', 'timerset', 'coloreq',
-                'stop', 'home', 'youtube', 'playlist',
-                'cleanup', 'download', 'statistics', 'play',
-                'subtitles'
+                'stop', 'home', 'youtube', 'playlist', 'cleanup',
+                'download', 'statistics', 'play', 'subtitles'
                 )  # must match with items on `iconset` tuple, see following
 
         icodir = self.dataloc['icodir']
