@@ -69,13 +69,13 @@ class Indexing(wx.Dialog):
         GREEN = '#40804C'
     appicon = get.iconset['videomass']
 
-    HELPME = _('Click on "Playlist Items" column to specify indices of '
-               'the videos in the playlist separated by commas like: '
-               '"1,2,5,8" if you want to download videos indexed 1, 2, '
-               '5, 8 in the playlist.\n\n'
-               'You can specify range: "1-3,7,10-13" it will download the '
-               'videos at index 1, 2, 3, 7, 10, 11, 12 and 13.\n'
-               )
+    HELPME = (_('To index the media of a playlist, click on the "Playlist '
+                'Items" column of each corresponding URL and specify the '
+                'numerical indexes separated by commas, e.g. "1,2,5,8" if '
+                'you want to download the indexed media at 1, 2, 5, 8 of the '
+                'playlist.\nIt is also possible to specify intervals, e.g. '
+                '"1-3,7,10-13" with which the media at index 1, 2, 3, 7, 10, '
+                '11, 12 and 13 will be downloaded.\n'))
 
     def __init__(self, parent, url, data):
         """

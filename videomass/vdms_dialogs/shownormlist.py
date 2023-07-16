@@ -125,7 +125,7 @@ class AudioVolNormal(wx.Dialog):
                       )
         # bottm btns
         gridbtn = wx.GridSizer(1, 1, 0, 0)
-        sizer.Add(gridbtn, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=5)
+        sizer.Add(gridbtn, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         self.button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
         gridbtn.Add(self.button_close, 1, wx.ALL, 5)
 
