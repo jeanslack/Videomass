@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2023
+Rev: July.17.2022
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -93,9 +93,9 @@ class Formula(wx.Dialog):
         btncancel = wx.Button(self, wx.ID_CANCEL, "")
         btnok = wx.Button(self, wx.ID_OK, "")
         btngrid = wx.FlexGridSizer(1, 2, 0, 0)
-        btngrid.Add(btncancel, 0, wx.ALL, 5)
-        btngrid.Add(btnok, 0, wx.ALL, 5)
-        sizbase.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        btngrid.Add(btncancel, 0)
+        btngrid.Add(btnok, 0, wx.LEFT, 5)
+        sizbase.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
 
         self.SetTitle(_('Confirm Settings'))
         self.SetMinSize(args[0])

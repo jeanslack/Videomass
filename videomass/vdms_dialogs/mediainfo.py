@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2023
+Rev: July.17.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -54,19 +54,19 @@ class MediaStreams(wx.Dialog):
                            | wx.RESIZE_BORDER
                            | wx.DIALOG_NO_PARENT
                            )
-        self.sizerBase = wx.BoxSizer(wx.VERTICAL)
+        sizerBase = wx.BoxSizer(wx.VERTICAL)
         self.file_select = wx.ListCtrl(self,
                                        wx.ID_ANY,
                                        style=wx.LC_REPORT
                                        | wx.SUNKEN_BORDER
                                        | wx.LC_SINGLE_SEL,
                                        )
-        self.sizerBase.Add(self.file_select, 0, wx.ALL | wx.EXPAND, 5)
+        sizerBase.Add(self.file_select, 0, wx.ALL | wx.EXPAND, 5)
 
         notebook = wx.Notebook(self, wx.ID_ANY)
         grid_notebook = wx.GridSizer(1, 1, 0, 0)
         grid_notebook.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)
-        self.sizerBase.Add(grid_notebook, 1, wx.EXPAND, 0)
+        sizerBase.Add(grid_notebook, 1, wx.EXPAND, 0)
         #  tab format
         nb_panel_1 = wx.Panel(notebook, wx.ID_ANY)
         self.format_ctrl = wx.ListCtrl(nb_panel_1,
@@ -120,14 +120,19 @@ class MediaStreams(wx.Dialog):
         sizer_tab4.Add(self.subt_ctrl, 1, wx.ALL | wx.EXPAND, 5)
         nb_panel_4.SetSizer(sizer_tab4)
         notebook.AddPage(nb_panel_4, (_("Subtitle Streams")))
-        #  bottom
-        button_close = wx.Button(self, wx.ID_CLOSE, "")
+        # ----- confirm buttons section
+        gridbtns = wx.GridSizer(1, 2, 0, 0)
+        gridclip = wx.GridSizer(1, 1, 0, 0)
+        btn_help = wx.Button(self, wx.ID_HELP, "")
         self.btn_copyclip = wx.Button(self, wx.ID_ANY, _("Copy to clipboard"))
         self.btn_copyclip.Disable()
-        grid_btns = wx.BoxSizer(wx.HORIZONTAL)
-        grid_btns.Add(self.btn_copyclip, 0, wx.ALL, 5)
-        grid_btns.Add(button_close, 0, wx.ALL, 5)
-        self.sizerBase.Add(grid_btns, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        gridclip.Add(self.btn_copyclip, 0, wx.ALL, 5)
+        gridbtns.Add(gridclip)
+        boxaff = wx.BoxSizer(wx.HORIZONTAL)
+        btn_close = wx.Button(self, wx.ID_CLOSE, "")
+        boxaff.Add(btn_close, 0)
+        gridbtns.Add(boxaff, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
+        sizerBase.Add(gridbtns, 0, wx.EXPAND)
 
         # ----------------------Properties----------------------#
         self.file_select.InsertColumn(0, _('FILE SELECTION'), width=600)
@@ -148,8 +153,8 @@ class MediaStreams(wx.Dialog):
         self.SetTitle(_('Streams Properties'))
         self.SetMinSize((700, 600))
         # self.file_select.SetMinSize((-1, 150))
-        self.SetSizer(self.sizerBase)
-        # self.sizerBase.Fit(self)
+        self.SetSizer(sizerBase)
+        # sizerBase.Fit(self)
         icon = wx.Icon()
         icon.CopyFromBitmap(wx.Bitmap(vidicon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
@@ -177,7 +182,7 @@ class MediaStreams(wx.Dialog):
         self.subt_ctrl.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselected)
 
         self.Bind(wx.EVT_BUTTON, self.on_copy_to_clipboard, self.btn_copyclip)
-        self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
+        self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
 
         if data:

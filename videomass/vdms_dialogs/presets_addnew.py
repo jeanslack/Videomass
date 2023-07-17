@@ -120,28 +120,21 @@ class MemPresets(wx.Dialog):
 
         self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "")
         box_format.Add(self.txt_ext, 0, wx.ALL | wx.EXPAND, 5)
-
+        # ----- confirm buttons section
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grdhelp = wx.GridSizer(1, 1, 0, 0)
         btn_help = wx.Button(self, wx.ID_HELP, "")
         grdhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-
         grdBtn.Add(grdhelp)
         grdexit = wx.BoxSizer(wx.HORIZONTAL)
         btn_canc = wx.Button(self, wx.ID_CANCEL, "")
-        grdexit.Add(btn_canc, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grdexit.Add(btn_canc, 0, wx.ALIGN_CENTER_VERTICAL)
         btn_save = wx.Button(self, wx.ID_OK)
-        grdexit.Add(btn_save, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grdBtn.Add(grdexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
+        grdexit.Add(btn_save, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
+        grdBtn.Add(grdexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         size_base.Add(grdBtn, 0, wx.EXPAND)
-        # ------ set sizer
-        self.SetMinSize((950, 450))
-        self.SetSizer(size_base)
-        self.Fit()
-        self.Layout()
 
-        # ----------------------Set Properties----------------------#
-        # set_properties:
+        # ----- set_properties:
         if self.appdata['ostype'] == 'Darwin':
             self.pass_1_cmd.SetFont(wx.Font(12, wx.MODERN,
                                             wx.NORMAL, wx.NORMAL))
@@ -161,6 +154,11 @@ class MemPresets(wx.Dialog):
                                    'to include in the profile'))
         self.txt_ext.SetToolTip(_('Output format extension. Leave empty to '
                                   'copy codec and format'))
+        # ------ Set Layout
+        self.SetMinSize((950, 450))
+        self.SetSizer(size_base)
+        self.Fit()
+        self.Layout()
 
         # ----------------------Binder (EVT)----------------------#
         self.Bind(wx.EVT_TEXT, self.on_Name, self.txt_name)

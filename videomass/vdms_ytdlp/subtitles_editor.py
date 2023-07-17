@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.06.2023
+Rev: July.17.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -114,7 +114,7 @@ class SubtitleEditor(wx.Dialog):
         txt = _('Include automatically generated subtitle (YouTube only)')
         self.ckbx_autogen = wx.CheckBox(self, wx.ID_ANY, txt)
         sizbase.Add(self.ckbx_autogen, 0, wx.ALL, 5)
-        txt = _('Embed subtitles into video file (mp4 only)')
+        txt = _('Embed subtitles into video file')
         self.ckbx_embed = wx.CheckBox(self, wx.ID_ANY, txt)
         sizbase.Add(self.ckbx_embed, 0, wx.ALL, 5)
         txt = _('Download subtitles only (do not include audio and video)')
@@ -123,11 +123,11 @@ class SubtitleEditor(wx.Dialog):
 
         # ------ bottom layout buttons
         sizbott = wx.BoxSizer(wx.HORIZONTAL)
-        btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        sizbott.Add(btn_close, 0, wx.ALL, 5)
-        self.btn_ok = wx.Button(self, wx.ID_OK)
-        sizbott.Add(self.btn_ok, 0, wx.ALL, 5)
-        sizbase.Add(sizbott, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        sizbott.Add(btn_cancel, 0)
+        btn_ok = wx.Button(self, wx.ID_OK)
+        sizbott.Add(btn_ok, 0, wx.LEFT, 5)
+        sizbase.Add(sizbott, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
 
         # ------ Properties
         icon = wx.Icon()
@@ -143,8 +143,8 @@ class SubtitleEditor(wx.Dialog):
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_COMBOBOX, self.on_langs, self.cmbx_langs)
         self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_help)
-        self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
-        self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
 
         if not self.data["writesubtitles"]:
             self.default_setting()

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.23.2023
+Rev: July.17.2022
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -95,6 +95,23 @@ class AudioSettings(wx.Dialog):
                                         )
         grid_sizer_1.Add(self.rdb_bitdepth, 0, wx.ALL, 5)
 
+        # ---------------------- Bottom buttons ----------------------
+        grid_btn = wx.GridSizer(1, 2, 0, 0)
+        gridexit = wx.BoxSizer(wx.HORIZONTAL)
+        btn_reset = wx.Button(self, wx.ID_CLEAR, "")
+        grid_btn.Add(btn_reset, 0, wx.ALL, 5)
+        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        gridexit.Add(btn_cancel, 0)
+        btn_ok = wx.Button(self, wx.ID_OK)
+        gridexit.Add(btn_ok, 0, wx.LEFT, 5)
+        grid_btn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 5)
+        sizerBase.Add(grid_btn, 0, wx.EXPAND)
+        # ---------------------- main layout ----------------------
+        self.SetSizer(sizerBase)
+        sizerBase.Fit(self)
+        self.Layout()
+
+        # ----------------------Properties----------------------
         if self.rdb_bitrate.GetStringSelection() == 'Not applicable ':
             self.rdb_bitrate.Hide()
 
@@ -103,13 +120,6 @@ class AudioSettings(wx.Dialog):
 
         if self.rdb_sample_r.GetStringSelection() == 'Not applicable ':
             self.rdb_sample_r.Hide()
-
-        self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
-        self.btn_ok = wx.Button(self, wx.ID_OK, "")
-        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
-        btn_reset.SetBitmap(args[2], wx.LEFT)
-
-        # ----------------------Properties----------------------
 
         self.rdb_bitrate.SetToolTip(audiodata.BITRATE_TOOLTIP)
         self.rdb_channels.SetToolTip(audiodata.CHANNEL_TOOLTIP)
@@ -135,25 +145,9 @@ class AudioSettings(wx.Dialog):
         else:
             self.rdb_channels.SetSelection(0)
 
-        # ----------------------Bottom buttons----------------------
-        gridBtn = wx.GridSizer(1, 2, 0, 0)
-        gridhelp = wx.GridSizer(1, 1, 0, 0)
-        gridhelp.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridBtn.Add(gridhelp)
-
-        gridexit = wx.BoxSizer(wx.HORIZONTAL)
-        gridexit.Add(self.btn_cancel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
-        sizerBase.Add(gridBtn, 0, wx.EXPAND)
-
-        self.SetSizer(sizerBase)
-        sizerBase.Fit(self)
-        self.Layout()
-
         # --------------------Binders (EVT)----------------------
-        self.Bind(wx.EVT_BUTTON, self.on_cancel, self.btn_cancel)
-        self.Bind(wx.EVT_BUTTON, self.on_apply, self.btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.on_cancel, btn_cancel)
+        self.Bind(wx.EVT_BUTTON, self.on_apply, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
 
     # ------------------------------------------------------------------#

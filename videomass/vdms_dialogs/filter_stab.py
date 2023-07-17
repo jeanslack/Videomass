@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.04.2023
+Rev: July.17.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -302,28 +302,24 @@ class VidstabSet(wx.Dialog):
         flex_trans3.Add(self.txt_unsharp, 0, wx.RIGHT
                         | wx.ALIGN_CENTER_VERTICAL, 5
                         )
-        # Confirm buttons
-        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        # ----- confirm buttons section
+        gridbtns = wx.GridSizer(1, 2, 0, 0)
         gridhelp = wx.GridSizer(1, 1, 0, 0)
         btn_help = wx.Button(self, wx.ID_HELP, "")
         gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridBtn.Add(gridhelp)
-        gridexit = wx.BoxSizer(wx.HORIZONTAL)
-        btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        gridexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.btn_ok = wx.Button(self, wx.ID_OK)
-        gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridbtns.Add(gridhelp)
+        boxaff = wx.BoxSizer(wx.HORIZONTAL)
+        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        boxaff.Add(btn_cancel, 0)
+        btn_ok = wx.Button(self, wx.ID_OK)
+        boxaff.Add(btn_ok, 0, wx.LEFT, 5)
         btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
         btn_reset.SetBitmap(args[4], wx.LEFT)
-        gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
-        sizerBase.Add(gridBtn, 0, wx.EXPAND)
-        # final settings:
-        self.SetSizer(sizerBase)
-        sizerBase.Fit(self)
-        self.Layout()
+        boxaff.Add(btn_reset, 0, wx.LEFT, 5)
+        gridbtns.Add(boxaff, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
+        sizerBase.Add(gridbtns, 0, wx.EXPAND)
 
-        # ---------------------- Tooltips
+        # ----- Set properties
         tip = _('Seek to a position on the video.')
         self.sld_time.SetToolTip(tip)
         tip = _('Make a snapshot of the video with the settings made.')
@@ -410,8 +406,12 @@ class VidstabSet(wx.Dialog):
                 'unsharp filter which is always recommended.')
         self.txt_unsharp.SetToolTip(tip)
 
-        # Properties
         self.SetTitle(_("Video Stabilizer Tool"))
+
+        # ----- Set layout
+        self.SetSizer(sizerBase)
+        sizerBase.Fit(self)
+        self.Layout()
 
         # ----------------------Binding (EVT)--------------------------#
         self.Bind(wx.EVT_CHECKBOX, self.on_activate, self.ckbx_enable)
@@ -420,8 +420,8 @@ class VidstabSet(wx.Dialog):
         self.Bind(wx.EVT_SPINCTRL, self.on_optzoom, self.spin_optzoom)
         self.Bind(wx.EVT_CHECKBOX, self.on_Tripod1, self.ckbx_tripod1)
         self.Bind(wx.EVT_CHECKBOX, self.on_Tripod2, self.ckbx_tripod2)
-        self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
-        self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.set_default, btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
 

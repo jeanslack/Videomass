@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Gen.04.2022
+Rev: July.17.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -147,9 +147,9 @@ class Set_Timestamp(wx.Dialog):
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK)
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
-        gridexit.Add(btn_close, 0, wx.ALL | wx.EXPAND, 5)
-        gridexit.Add(self.btn_ok, 1, wx.ALL, 5)
-        sizer_base.Add(gridexit, 0, wx.EXPAND, 0)
+        gridexit.Add(btn_close, 0)
+        gridexit.Add(self.btn_ok, 1, wx.LEFT, 5)
+        sizer_base.Add(gridexit, 0, wx.ALL | wx.EXPAND, 5)
 
         self.cmbx_fontsize.SetSize(self.cmbx_fontcolor.GetSize())
         # tooltips:
