@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.13.2022
+Rev: July.17.2022
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -125,13 +125,13 @@ class Indexing(wx.Dialog):
         # ------ bottom layout for buttons
         grid_btn = wx.GridSizer(1, 2, 0, 0)
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
-        btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
+        btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         grid_btn.Add(btn_reset, 0, wx.ALL, 5)
-        btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        gridexit.Add(btn_close, 0, wx.ALL, 5)
-        self.btn_ok = wx.Button(self, wx.ID_OK)
-        gridexit.Add(self.btn_ok, 0, wx.ALL, 5)
-        grid_btn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
+        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        gridexit.Add(btn_cancel, 0)
+        btn_ok = wx.Button(self, wx.ID_OK)
+        gridexit.Add(btn_ok, 0, wx.LEFT, 5)
+        grid_btn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 5)
 
         # ------ final settings:
         sizer_1.Add(grid_btn, 0, wx.EXPAND)
@@ -169,8 +169,8 @@ class Indexing(wx.Dialog):
         # ----------------------Binding (EVT)----------------------#
         self.lctrl.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self.on_edit_begin)
         self.lctrl.Bind(wx.EVT_LIST_END_LABEL_EDIT, self.on_edit_end)
-        self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
-        self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
 
         self.textstyle()

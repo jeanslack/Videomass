@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-16 14:36+0200\n"
+"POT-Creation-Date: 2023-07-18 10:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,23 +31,13 @@ msgid ""
 "{0}"
 msgstr ""
 
-#: ../vdms_dialogs/audiodialogs.py:109 ../vdms_dialogs/filter_crop.py:305
-#: ../vdms_dialogs/filter_deinterlace.py:121
-#: ../vdms_dialogs/filter_denoisers.py:84 ../vdms_dialogs/filter_scale.py:209
-#: ../vdms_dialogs/filter_stab.py:316 ../vdms_dialogs/filter_transpose.py:105
-#: ../vdms_dialogs/filter_colorcorrection.py:187
-#: ../vdms_miniframes/timeline.py:261 ../vdms_miniframes/timeline.py:280
-#: ../vdms_panels/av_conversions.py:389 ../vdms_ytdlp/playlist_indexing.py:128
-msgid "Reset"
-msgstr ""
-
-#: ../vdms_dialogs/audiodialogs.py:230
+#: ../vdms_dialogs/audiodialogs.py:224
 msgid ""
 "Videomass supports mono and stereo audio channels. If you are not sure set "
 "to \"Auto\" and source values will be copied."
 msgstr ""
 
-#: ../vdms_dialogs/audiodialogs.py:234
+#: ../vdms_dialogs/audiodialogs.py:228
 msgid ""
 "The audio Rate (or sample-rate) is the sound sampling frequency and is "
 "measured in Hertz. The higher the frequency, the more true it will be to the "
@@ -56,13 +46,13 @@ msgid ""
 "\"Auto\" and source values will be copied."
 msgstr ""
 
-#: ../vdms_dialogs/audiodialogs.py:243
+#: ../vdms_dialogs/audiodialogs.py:237
 msgid ""
 "The audio bitrate affects the file compression and thus the quality of "
 "listening. The higher the value, the higher the quality."
 msgstr ""
 
-#: ../vdms_dialogs/audiodialogs.py:247
+#: ../vdms_dialogs/audiodialogs.py:241
 msgid ""
 "Bit depth is the number of bits of information in each sample, and it "
 "directly corresponds to the resolution of each sample. Bit depth is only "
@@ -121,6 +111,14 @@ msgstr ""
 msgid "Width"
 msgstr ""
 
+#: ../vdms_dialogs/filter_crop.py:305 ../vdms_dialogs/filter_deinterlace.py:209
+#: ../vdms_dialogs/filter_denoisers.py:110 ../vdms_dialogs/filter_scale.py:209
+#: ../vdms_dialogs/filter_stab.py:316 ../vdms_dialogs/filter_transpose.py:105
+#: ../vdms_dialogs/filter_colorcorrection.py:187
+#: ../vdms_miniframes/timeline.py:261 ../vdms_miniframes/timeline.py:280
+msgid "Reset"
+msgstr ""
+
 #: ../vdms_dialogs/filter_crop.py:333
 msgid "Crop Tool"
 msgstr ""
@@ -169,53 +167,53 @@ msgstr ""
 msgid "Interlaces with interlace filter"
 msgstr ""
 
-#: ../vdms_dialogs/filter_deinterlace.py:125
+#: ../vdms_dialogs/filter_deinterlace.py:118
 msgid "Deinterlacing and Interlacing"
 msgstr ""
 
-#: ../vdms_dialogs/filter_deinterlace.py:199
+#: ../vdms_dialogs/filter_deinterlace.py:144
 msgid "Deinterlace the input video with `w3fdif` filter"
 msgstr ""
 
-#: ../vdms_dialogs/filter_deinterlace.py:201
+#: ../vdms_dialogs/filter_deinterlace.py:146
 msgid "Set the interlacing filter coefficients."
 msgstr ""
 
-#: ../vdms_dialogs/filter_deinterlace.py:203
-#: ../vdms_dialogs/filter_deinterlace.py:213
+#: ../vdms_dialogs/filter_deinterlace.py:148
+#: ../vdms_dialogs/filter_deinterlace.py:158
 msgid "Specify which frames to deinterlace."
 msgstr ""
 
-#: ../vdms_dialogs/filter_deinterlace.py:205
+#: ../vdms_dialogs/filter_deinterlace.py:150
 msgid ""
 "Deinterlace the input video with `yadif` filter. Using FFmpeg, this is the "
 "best and fastest choice"
 msgstr ""
 
-#: ../vdms_dialogs/filter_deinterlace.py:208
+#: ../vdms_dialogs/filter_deinterlace.py:153
 msgid ""
 "mode\n"
 "The interlacing mode to adopt."
 msgstr ""
 
-#: ../vdms_dialogs/filter_deinterlace.py:210
+#: ../vdms_dialogs/filter_deinterlace.py:155
 msgid ""
 "parity\n"
 "The picture field parity assumed for the input interlaced video."
 msgstr ""
 
-#: ../vdms_dialogs/filter_deinterlace.py:215
+#: ../vdms_dialogs/filter_deinterlace.py:160
 msgid "Simple interlacing filter from progressive contents."
 msgstr ""
 
-#: ../vdms_dialogs/filter_deinterlace.py:217
+#: ../vdms_dialogs/filter_deinterlace.py:162
 msgid ""
 "scan:\n"
 "determines whether the interlaced frame is taken from the even (tff - "
 "default) or odd (bff) lines of the progressive frame."
 msgstr ""
 
-#: ../vdms_dialogs/filter_deinterlace.py:221
+#: ../vdms_dialogs/filter_deinterlace.py:166
 msgid ""
 "lowpass:\n"
 "Enable (default) or disable the vertical lowpass filter to avoid twitter "
@@ -227,27 +225,27 @@ msgstr ""
 msgid "Apply Denoisers Filters"
 msgstr ""
 
-#: ../vdms_dialogs/filter_denoisers.py:59
+#: ../vdms_dialogs/filter_denoisers.py:60
 msgid "Enable nlmeans denoiser"
 msgstr ""
 
-#: ../vdms_dialogs/filter_denoisers.py:66
+#: ../vdms_dialogs/filter_denoisers.py:73
 msgid "nlmeans options"
 msgstr ""
 
-#: ../vdms_dialogs/filter_denoisers.py:71
+#: ../vdms_dialogs/filter_denoisers.py:82
 msgid "Enable hqdn3d denoiser"
 msgstr ""
 
-#: ../vdms_dialogs/filter_denoisers.py:76
+#: ../vdms_dialogs/filter_denoisers.py:91
 msgid "hqdn3d options"
 msgstr ""
 
-#: ../vdms_dialogs/filter_denoisers.py:123
+#: ../vdms_dialogs/filter_denoisers.py:116
 msgid "Denoiser Tool"
 msgstr ""
 
-#: ../vdms_dialogs/filter_denoisers.py:124
+#: ../vdms_dialogs/filter_denoisers.py:117
 msgid ""
 "nlmeans:\n"
 "Denoise frames using Non-Local Means algorithm is capable of restoring video "
@@ -255,7 +253,7 @@ msgid ""
 "old VHS tapes."
 msgstr ""
 
-#: ../vdms_dialogs/filter_denoisers.py:129
+#: ../vdms_dialogs/filter_denoisers.py:122
 msgid ""
 "hqdn3d:\n"
 "This is a high precision/quality 3d denoise filter. It aims to reduce image "
@@ -316,25 +314,25 @@ msgstr ""
 msgid "Setsar filter (sample aspect ratio) example 1/1"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:220
+#: ../vdms_dialogs/filter_scale.py:216
 msgid "Resize Tool"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:221
+#: ../vdms_dialogs/filter_scale.py:217
 msgid "Scale filter, set to 0 to disable"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:224
+#: ../vdms_dialogs/filter_scale.py:220
 msgid "Display Aspect Ratio. Set to 0 to disable"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:227
+#: ../vdms_dialogs/filter_scale.py:223
 msgid ""
 "Sample (aka Pixel) Aspect Ratio.\n"
 "Set to 0 to disable"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:364
+#: ../vdms_dialogs/filter_scale.py:365
 msgid ""
 "If you want to keep the aspect ratio, select \"Constrain proportions\" below "
 "and\n"
@@ -406,45 +404,45 @@ msgstr ""
 msgid "Unsharp filter:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:327
+#: ../vdms_dialogs/filter_stab.py:323
 msgid "Seek to a position on the video."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:329
+#: ../vdms_dialogs/filter_stab.py:325
 msgid "Make a snapshot of the video with the settings made."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:331
+#: ../vdms_dialogs/filter_stab.py:327
 msgid ""
 "Set the snapshot duration from 3 to 15 seconds from the seek position, "
 "default is 5 seconds."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:335
+#: ../vdms_dialogs/filter_stab.py:331
 msgid ""
 "Set how shaky the video is and how quick the camera is. A value of 1 means "
 "little shakiness, a value of 10 means strong shakiness. Default value is 5."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:339
+#: ../vdms_dialogs/filter_stab.py:335
 msgid ""
 "Set the accuracy of the detection process. A value of 1 means low accuracy, "
 "a value of 15 means high accuracy. Default value is 15."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:343
+#: ../vdms_dialogs/filter_stab.py:339
 msgid ""
 "Set stepsize of the search process. The region around minimum is scanned "
 "with 1 pixel resolution. Default value is 6."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:347
+#: ../vdms_dialogs/filter_stab.py:343
 msgid ""
 "Set minimum contrast. Below this value a local measurement field is "
 "discarded. The range is 0-1. Default value is 0.25."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:350
+#: ../vdms_dialogs/filter_stab.py:346
 msgid ""
 "Set reference frame number for tripod mode. If enabled, the motion of the "
 "frames is compared to a reference frame in the filtered stream, identified "
@@ -453,7 +451,7 @@ msgid ""
 "are counted starting from 1."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:359
+#: ../vdms_dialogs/filter_stab.py:355
 msgid ""
 "Set the number of frames (value*2 + 1) used for lowpass filtering the camera "
 "movements. Default value is 15. For example a number of 10 means that 21 "
@@ -463,43 +461,43 @@ msgid ""
 "static camera is simulated."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:367
+#: ../vdms_dialogs/filter_stab.py:363
 msgid ""
 "Set the camera path optimization algorithm. Values are: `gauss`: gaussian "
 "kernel low-pass filter on camera motion (default), and `avg`: averaging on "
 "transformations"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:371
+#: ../vdms_dialogs/filter_stab.py:367
 msgid ""
 "Set maximal angle in radians (degree*PI/180) to rotate frames. Default value "
 "is -1, meaning no limit."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:374
+#: ../vdms_dialogs/filter_stab.py:370
 msgid ""
 "Specify how to deal with borders that may be visible due to movement "
 "compensation. Values are: `keep` keep image information from previous frame "
 "(default), `black` fill the border black"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:379
+#: ../vdms_dialogs/filter_stab.py:375
 msgid "Invert transforms if checked. Default is unchecked."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:381
+#: ../vdms_dialogs/filter_stab.py:377
 msgid ""
 "Consider transforms as relative to previous frame if checked, absolute if "
 "unchecked. Default is checked."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:384
+#: ../vdms_dialogs/filter_stab.py:380
 msgid ""
 "Set percentage to zoom. A positive value will result in a zoom-in effect, a "
 "negative value in a zoom-out effect. Default value is 0 (no zoom)."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:388
+#: ../vdms_dialogs/filter_stab.py:384
 msgid ""
 "Set optimal zooming to avoid borders. Accepted values are: `0` disabled, `1` "
 "optimal static zoom value is determined (only very strong movements will "
@@ -508,32 +506,32 @@ msgid ""
 "given at zoom is added to the one calculated here."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:395
+#: ../vdms_dialogs/filter_stab.py:391
 msgid ""
 "Set percent to zoom maximally each frame (enabled when optzoom is set to 2). "
 "Range is from 0 to 5, default value is 0.25."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:399
+#: ../vdms_dialogs/filter_stab.py:395
 msgid ""
 "Specify type of interpolation. Available values are: `no` no interpolation, "
 "`linear` linear only horizontal, `bilinear` linear in both directions "
 "(default), `bicubic` cubic in both directions (slow)"
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:404
+#: ../vdms_dialogs/filter_stab.py:400
 msgid ""
 "Enable virtual tripod mode if checked, which is equivalent to relative=0:"
 "smoothing=0. Default is unchecked. Use also tripod option of vidstabdetect."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:409
+#: ../vdms_dialogs/filter_stab.py:405
 msgid ""
 "Sharpen or blur the input video. Note the use of the unsharp filter which is "
 "always recommended."
 msgstr ""
 
-#: ../vdms_dialogs/filter_stab.py:414
+#: ../vdms_dialogs/filter_stab.py:409
 msgid "Video Stabilizer Tool"
 msgstr ""
 
@@ -658,8 +656,8 @@ msgid ""
 msgstr ""
 
 #: ../vdms_dialogs/wizard_dlg.py:345 ../vdms_dialogs/wizard_dlg.py:362
-#: ../vdms_dialogs/wizard_dlg.py:380 ../vdms_dialogs/preferences.py:789
-#: ../vdms_dialogs/preferences.py:831 ../vdms_dialogs/preferences.py:874
+#: ../vdms_dialogs/wizard_dlg.py:380 ../vdms_dialogs/preferences.py:788
+#: ../vdms_dialogs/preferences.py:830 ../vdms_dialogs/preferences.py:873
 msgid "Choose the {} executable"
 msgstr ""
 
@@ -755,47 +753,47 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:156
+#: ../vdms_dialogs/presets_addnew.py:149
 msgid "A short profile name"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:157
+#: ../vdms_dialogs/presets_addnew.py:150
 msgid "A long description of the profile"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:158
+#: ../vdms_dialogs/presets_addnew.py:151
 msgid "Reserved arguments for the first pass"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:159
+#: ../vdms_dialogs/presets_addnew.py:152
 msgid "Reserved arguments for the second pass"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:160
+#: ../vdms_dialogs/presets_addnew.py:153
 msgid "One or more comma-separated format names to include in the profile"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:162
+#: ../vdms_dialogs/presets_addnew.py:155
 msgid "Output format extension. Leave empty to copy codec and format"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:261
+#: ../vdms_dialogs/presets_addnew.py:259
 msgid "Incomplete profile assignments"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:268
+#: ../vdms_dialogs/presets_addnew.py:266
 msgid "Formats must be comma-separated"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:282 ../vdms_dialogs/presets_addnew.py:299
+#: ../vdms_dialogs/presets_addnew.py:280 ../vdms_dialogs/presets_addnew.py:297
 msgid "Profile already stored with same name"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:286
+#: ../vdms_dialogs/presets_addnew.py:284
 msgid "Successful storing!"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:302
+#: ../vdms_dialogs/presets_addnew.py:300
 msgid "Successful changes!"
 msgstr ""
 
@@ -1006,30 +1004,30 @@ msgstr ""
 msgid "FFmpeg logging levels"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:431 ../vdms_main/main_frame.py:579
+#: ../vdms_dialogs/preferences.py:460
+msgid "By assigning an additional suffix you could avoid overwriting files"
+msgstr ""
+
+#: ../vdms_dialogs/preferences.py:463 ../vdms_main/main_frame.py:579
 #: ../vdms_panels/av_conversions.py:471 ../vdms_ytdlp/main_ytdlp.py:325
 msgid "Settings"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:467
-msgid "By assigning an additional suffix you could avoid overwriting files"
-msgstr ""
-
-#: ../vdms_dialogs/preferences.py:623
+#: ../vdms_dialogs/preferences.py:622
 msgid "Set a persistent location to save exported files"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:655
+#: ../vdms_dialogs/preferences.py:654
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Spaces are not allowed."
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:703
+#: ../vdms_dialogs/preferences.py:702
 msgid "Choose a new destination for the files to be trashed"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:720
+#: ../vdms_dialogs/preferences.py:719
 msgid "Set a persistent location to save the file downloads"
 msgstr ""
 
@@ -1073,42 +1071,42 @@ msgstr ""
 msgid "Subtitle Streams"
 msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:125
+#: ../vdms_dialogs/mediainfo.py:126
 msgid "Copy to clipboard"
 msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:133
+#: ../vdms_dialogs/mediainfo.py:137
 msgid "FILE SELECTION"
 msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:135 ../vdms_dialogs/mediainfo.py:138
-#: ../vdms_dialogs/mediainfo.py:141 ../vdms_dialogs/mediainfo.py:144
+#: ../vdms_dialogs/mediainfo.py:139 ../vdms_dialogs/mediainfo.py:142
+#: ../vdms_dialogs/mediainfo.py:145 ../vdms_dialogs/mediainfo.py:148
 #: ../vdms_main/main_frame.py:1274
 msgid "Properties"
 msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:136 ../vdms_dialogs/mediainfo.py:139
-#: ../vdms_dialogs/mediainfo.py:142 ../vdms_dialogs/mediainfo.py:145
+#: ../vdms_dialogs/mediainfo.py:140 ../vdms_dialogs/mediainfo.py:143
+#: ../vdms_dialogs/mediainfo.py:146 ../vdms_dialogs/mediainfo.py:149
 msgid "Values"
 msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:148
+#: ../vdms_dialogs/mediainfo.py:152
 msgid "Streams Properties"
 msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:240
+#: ../vdms_dialogs/mediainfo.py:244
 msgid "Unable to open the clipboard on Format tab"
 msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:259
+#: ../vdms_dialogs/mediainfo.py:263
 msgid "Unable to open the clipboard on Video Streams tab"
 msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:279
+#: ../vdms_dialogs/mediainfo.py:283
 msgid "Unable to open the clipboard on Audio Streams tab"
 msgstr ""
 
-#: ../vdms_dialogs/mediainfo.py:299
+#: ../vdms_dialogs/mediainfo.py:303
 msgid "Unable to open the clipboard on Subtitle Streams tab"
 msgstr ""
 
@@ -1120,27 +1118,19 @@ msgstr ""
 msgid "Log messages"
 msgstr ""
 
-#: ../vdms_dialogs/showlogs.py:103
-msgid "Refresh all log files"
-msgstr ""
-
-#: ../vdms_dialogs/showlogs.py:108
-msgid "Clear selected log"
-msgstr ""
-
-#: ../vdms_dialogs/showlogs.py:118
+#: ../vdms_dialogs/showlogs.py:113
 msgid "Showing log messages"
 msgstr ""
 
-#: ../vdms_dialogs/showlogs.py:148
+#: ../vdms_dialogs/showlogs.py:143
 msgid "Select a log file"
 msgstr ""
 
-#: ../vdms_dialogs/showlogs.py:155
+#: ../vdms_dialogs/showlogs.py:150
 msgid "Are you sure you want to clear the selected log file?"
 msgstr ""
 
-#: ../vdms_dialogs/renamer.py:77
+#: ../vdms_dialogs/renamer.py:76
 msgid "# It will be replaced by increasing numbers starting with:"
 msgstr ""
 
@@ -1374,13 +1364,13 @@ msgstr ""
 msgid "FFplay   ...not found !"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_conf.py:205 ../vdms_panels/av_conversions.py:2265
+#: ../vdms_dialogs/ffmpeg_conf.py:205 ../vdms_panels/av_conversions.py:2264
 #: ../vdms_panels/sequence_to_video.py:710
 #: ../vdms_panels/video_to_sequence.py:593
 msgid "Enabled"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2265
+#: ../vdms_dialogs/ffmpeg_conf.py:216 ../vdms_panels/av_conversions.py:2264
 #: ../vdms_panels/sequence_to_video.py:710
 #: ../vdms_panels/video_to_sequence.py:597
 msgid "Disabled"
@@ -1477,11 +1467,11 @@ msgstr ""
 msgid "=  Below max peak"
 msgstr ""
 
-#: ../vdms_dialogs/shownormlist.py:166 ../vdms_panels/av_conversions.py:1737
+#: ../vdms_dialogs/shownormlist.py:166 ../vdms_panels/av_conversions.py:1736
 msgid "RMS-based volume statistics"
 msgstr ""
 
-#: ../vdms_dialogs/shownormlist.py:191 ../vdms_panels/av_conversions.py:1735
+#: ../vdms_dialogs/shownormlist.py:191 ../vdms_panels/av_conversions.py:1734
 msgid "PEAK-based volume statistics"
 msgstr ""
 
@@ -2265,6 +2255,10 @@ msgstr ""
 msgid "Video Filters"
 msgstr ""
 
+#: ../vdms_panels/av_conversions.py:389
+msgid "Reset all"
+msgstr ""
+
 #: ../vdms_panels/av_conversions.py:410 ../vdms_panels/sequence_to_video.py:155
 #: ../vdms_panels/video_to_sequence.py:111
 msgid "Resizing"
@@ -2465,7 +2459,7 @@ msgstr ""
 msgid "Play and listen to the result of audio filters"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:986 ../vdms_panels/av_conversions.py:1815
+#: ../vdms_panels/av_conversions.py:986 ../vdms_panels/av_conversions.py:1814
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
 "audio volume data."
@@ -2512,47 +2506,47 @@ msgstr ""
 msgid "No Audio"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1630
+#: ../vdms_panels/av_conversions.py:1629
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1633
+#: ../vdms_panels/av_conversions.py:1632
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1637
+#: ../vdms_panels/av_conversions.py:1636
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"loudnorm\" filter, which implements the EBU R128 algorithm."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1659
+#: ../vdms_panels/av_conversions.py:1658
 msgid "Audio normalization off"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2246
+#: ../vdms_panels/av_conversions.py:2245
 msgid "{} file in queue"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2254
+#: ../vdms_panels/av_conversions.py:2253
 msgid "Off"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2260 ../vdms_panels/presets_manager.py:933
+#: ../vdms_panels/av_conversions.py:2259 ../vdms_panels/presets_manager.py:933
 #: ../vdms_panels/video_to_sequence.py:587
 msgid "Unset"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2263 ../vdms_panels/presets_manager.py:936
+#: ../vdms_panels/av_conversions.py:2262 ../vdms_panels/presets_manager.py:936
 #: ../vdms_panels/video_to_sequence.py:590
 msgid "start  {} | duration  {}"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2269
+#: ../vdms_panels/av_conversions.py:2268
 msgid ""
 "Queued File\n"
 "Output Format\n"
@@ -2567,7 +2561,7 @@ msgid ""
 "Input Audio Map"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2285
+#: ../vdms_panels/av_conversions.py:2284
 msgid ""
 "Queued File\n"
 "Web Optimize\n"
@@ -2587,7 +2581,7 @@ msgid ""
 "Time Period"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2306
+#: ../vdms_panels/av_conversions.py:2305
 msgid ""
 "Queued File\n"
 "Web Optimize\n"
@@ -2618,18 +2612,18 @@ msgid ""
 "Time Period"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2345
+#: ../vdms_panels/av_conversions.py:2344
 msgid ""
 "Audio normalization data cannot be saved on the Presets Manager.\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2363
+#: ../vdms_panels/av_conversions.py:2362
 msgid "Choose a Videomass preset..."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2372
+#: ../vdms_panels/av_conversions.py:2371
 msgid "Create a new profile"
 msgstr ""
 
@@ -3981,7 +3975,7 @@ msgid "Include automatically generated subtitle (YouTube only)"
 msgstr ""
 
 #: ../vdms_ytdlp/subtitles_editor.py:117
-msgid "Embed subtitles into video file (mp4 only)"
+msgid "Embed subtitles into video file"
 msgstr ""
 
 #: ../vdms_ytdlp/subtitles_editor.py:120

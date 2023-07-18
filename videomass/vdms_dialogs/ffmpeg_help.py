@@ -112,12 +112,12 @@ class FFmpegHelp(wx.Dialog):
                            )
         sizer = wx.BoxSizer(wx.VERTICAL)
         boxshow = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(boxshow, 0, wx.TOP, 5)
+        sizer.Add(boxshow, 0, wx.ALL, 5)
 
-        btn_help = wx.Button(self, wx.ID_ANY, _("Read me"), size=(-1, -1))
-        btn_help.SetBackgroundColour(wx.Colour(FFmpegHelp.LGREEN))
-        btn_help.SetForegroundColour(wx.Colour(FFmpegHelp.BLACK))
-        boxshow.Add(btn_help, 0, wx.ALL, 5)
+        btn_readme = wx.Button(self, wx.ID_ANY, _("Read me"), size=(-1, -1))
+        btn_readme.SetBackgroundColour(wx.Colour(FFmpegHelp.LGREEN))
+        btn_readme.SetForegroundColour(wx.Colour(FFmpegHelp.BLACK))
+        boxshow.Add(btn_readme, 0,)
 
         btn_conf = wx.Button(self, wx.ID_ANY,
                              label=_("Show configuration"),
@@ -137,7 +137,7 @@ class FFmpegHelp(wx.Dialog):
                                 )
         for button in (btn_conf, btn_encoders, btn_decoders, btn_formats):
             button.Bind(wx.EVT_BUTTON, self.on_show_extra)
-            boxshow.Add(button, 0, wx.ALL, 5)
+            boxshow.Add(button, 0, wx.LEFT, 5)
         self.textlist = wx.TextCtrl(self, wx.ID_ANY,
                                     "",
                                     # size=(550,400),
@@ -200,9 +200,9 @@ class FFmpegHelp(wx.Dialog):
         sizer.Add(boxsearch, 0, wx.ALL, 5)
         # bottom layout
         grid = wx.GridSizer(1, 1, 0, 0)
-        self.btn_close = wx.Button(self, wx.ID_CLOSE, "")
-        grid.Add(self.btn_close, 1, wx.ALL, 5)
-        sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        btn_close = wx.Button(self, wx.ID_CLOSE, "")
+        grid.Add(btn_close, 0)
+        sizer.Add(grid, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         self.SetTitle(_("FFmpeg help topics"))
         self.SetMinSize((750, 550))
         icon = wx.Icon()
@@ -213,7 +213,7 @@ class FFmpegHelp(wx.Dialog):
         self.Fit()
         self.Layout()
         # --------------- EVT
-        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_readme)
         if not hasattr(wx, 'EVT_SEARCH'):
             self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN,
                       self.on_search_strings, self.search_str)
@@ -230,7 +230,7 @@ class FFmpegHelp(wx.Dialog):
         self.Bind(wx.EVT_TEXT, self.on_type_topic, self.text_topic)
         self.Bind(wx.EVT_TEXT_ENTER, self.on_type_enter_key, self.text_topic)
         self.Bind(wx.EVT_CHECKBOX, self.on_ckbx, self.case)
-        self.Bind(wx.EVT_BUTTON, self.on_close, self.btn_close)
+        self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # caption X
     # ---------------------------------------------------------#
 

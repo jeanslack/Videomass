@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.23.2023
+Rev: July.17.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -99,17 +99,17 @@ class Transpose(wx.Dialog):
         self.button_down = wx.Button(self, wx.ID_ANY,
                                      (_("180°")))  # capovolgi sotto
         boxctrl.Add(self.button_down, 0, wx.ALL | wx.CENTRE, 5)
-        # buttons bottom
+        # ----- confirm buttons section
         gridBtn = wx.GridSizer(1, 2, 0, 0)
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
         btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
         btn_reset.SetBitmap(args[2], wx.LEFT)
         gridBtn.Add(btn_reset, 0, wx.ALL, 5)
-        btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        gridexit.Add(btn_close, 0, wx.ALL, 5)
-        self.btn_ok = wx.Button(self, wx.ID_OK)
-        gridexit.Add(self.btn_ok, 0, wx.ALL, 5)
-        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
+        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        gridexit.Add(btn_cancel, 0)
+        btn_ok = wx.Button(self, wx.ID_OK)
+        gridexit.Add(btn_ok, 0, wx.LEFT, 5)
+        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         sizerBase.Add(gridBtn, 0, wx.EXPAND)
         # ----------------------Properties--------------------------------#
         self.SetTitle(_("Transpose Tool"))
@@ -118,7 +118,7 @@ class Transpose(wx.Dialog):
             self.statictxt.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
         else:
             self.statictxt.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
-        # ----------------------Set layout------------------------------#
+        # ----- Set layout
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
         self.Layout()
@@ -143,8 +143,8 @@ class Transpose(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_left, self.button_left)
         self.Bind(wx.EVT_BUTTON, self.on_right, self.button_right)
         self.Bind(wx.EVT_BUTTON, self.on_down, self.button_down)
-        self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
-        self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
     # ------------------------------------------------------------------#
 

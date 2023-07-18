@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.12.2022
+Rev: July.17.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -114,13 +114,6 @@ class Deinterlace(wx.Dialog):
                                               majorDimension=0,
                                               style=wx.RA_SPECIFY_ROWS
                                               )
-        # ----- confirm buttons section
-        btn_help = wx.Button(self, wx.ID_HELP, "")
-        btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        self.btn_ok = wx.Button(self, wx.ID_OK)
-        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
-        btn_reset.SetBitmap(iconreset, wx.LEFT)
-
         # set Properties
         self.SetTitle(_("Deinterlacing and Interlacing"))
         self.rdbx_w3fdif.Hide()
@@ -147,54 +140,6 @@ class Deinterlace(wx.Dialog):
         self.rdbx_Yadif_deint.Disable()
         self.rdbx_inter_scan.Disable()
         self.rdbx_inter_lowpass.Disable()
-
-        # ------ set Layout
-        self.sizer_base = wx.BoxSizer(wx.VERTICAL)
-        self.sizer_base.Add(self.enable_opt, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
-        self.sizer_base.Add(zone1, 0, wx.ALL | wx.EXPAND, 5)
-        grid_w3fdif = wx.FlexGridSizer(1, 4, 0, 0)
-        zone1.Add(grid_w3fdif)
-        grid_w3fdif.Add(self.ckbx_deintW3fdif, 0, wx.ALL
-                        | wx.ALIGN_CENTER_VERTICAL
-                        | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        grid_w3fdif.Add(self.rdbx_w3fdif, 0, wx.ALL, 5)
-        grid_w3fdif.Add(self.rdbx_w3fdif_d, 0, wx.ALL, 5)
-        grid_yadif = wx.FlexGridSizer(1, 4, 0, 0)
-        zone1.Add(grid_yadif)
-        grid_yadif.Add(self.ckbx_deintYadif, 0, wx.ALL
-                       | wx.ALIGN_CENTER_VERTICAL
-                       | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        grid_yadif.Add(self.rdbx_Yadif_mode, 0, wx.ALL, 5)
-        grid_yadif.Add(self.rdbx_Yadif_parity, 0, wx.ALL, 5)
-        grid_yadif.Add(self.rdbx_Yadif_deint, 0, wx.ALL, 5)
-        self.sizer_base.Add(zone2, 0, wx.ALL | wx.EXPAND, 5)
-        inter_grid = wx.FlexGridSizer(1, 3, 0, 0)
-        zone2.Add(inter_grid)
-        inter_grid.Add(self.ckbx_interlace, 0, wx.ALL
-                       | wx.ALIGN_CENTER_VERTICAL
-                       | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        inter_grid.Add(self.rdbx_inter_scan, 0, wx.ALL, 5)
-        inter_grid.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 5)
-
-        # confirm btn section:
-        self.gridBtn = wx.GridSizer(1, 2, 0, 0)
-        gridhelp = wx.GridSizer(1, 1, 0, 0)
-
-        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.gridBtn.Add(gridhelp)
-        self.gridexit = wx.BoxSizer(wx.HORIZONTAL)
-
-        self.gridexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.gridBtn.Add(self.gridexit, 0, wx.ALL
-                         | wx.ALIGN_RIGHT | wx.RIGHT, 0
-                         )
-        self.sizer_base.Add(self.gridBtn, 0, wx.EXPAND)
-        # final settings:
-        self.SetSizer(self.sizer_base)
-        self.sizer_base.Fit(self)
-        self.Layout()
 
         self.ckbx_deintW3fdif.SetToolTip(_('Deinterlace the input video '
                                            'with `w3fdif` filter'))
@@ -223,6 +168,54 @@ class Deinterlace(wx.Dialog):
                   'moire patterns.\nDefault is no setting.')
         self.rdbx_inter_lowpass.SetToolTip(toolt)
 
+        self.sizer_base = wx.BoxSizer(wx.VERTICAL)
+        self.sizer_base.Add(self.enable_opt, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
+        self.sizer_base.Add(zone1, 0, wx.ALL | wx.EXPAND, 5)
+        grid_w3fdif = wx.FlexGridSizer(1, 4, 0, 0)
+        zone1.Add(grid_w3fdif)
+        grid_w3fdif.Add(self.ckbx_deintW3fdif, 0, wx.ALL
+                        | wx.ALIGN_CENTER_VERTICAL
+                        | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_w3fdif.Add(self.rdbx_w3fdif, 0, wx.ALL, 5)
+        grid_w3fdif.Add(self.rdbx_w3fdif_d, 0, wx.ALL, 5)
+        grid_yadif = wx.FlexGridSizer(1, 4, 0, 0)
+        zone1.Add(grid_yadif)
+        grid_yadif.Add(self.ckbx_deintYadif, 0, wx.ALL
+                       | wx.ALIGN_CENTER_VERTICAL
+                       | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_yadif.Add(self.rdbx_Yadif_mode, 0, wx.ALL, 5)
+        grid_yadif.Add(self.rdbx_Yadif_parity, 0, wx.ALL, 5)
+        grid_yadif.Add(self.rdbx_Yadif_deint, 0, wx.ALL, 5)
+        self.sizer_base.Add(zone2, 0, wx.ALL | wx.EXPAND, 5)
+        inter_grid = wx.FlexGridSizer(1, 3, 0, 0)
+        zone2.Add(inter_grid)
+        inter_grid.Add(self.ckbx_interlace, 0, wx.ALL
+                       | wx.ALIGN_CENTER_VERTICAL
+                       | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        inter_grid.Add(self.rdbx_inter_scan, 0, wx.ALL, 5)
+        inter_grid.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 5)
+
+        # ----- confirm buttons section
+        gridbtns = wx.GridSizer(1, 2, 0, 0)
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        btn_help = wx.Button(self, wx.ID_HELP, "")
+        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridbtns.Add(gridhelp)
+        boxaff = wx.BoxSizer(wx.HORIZONTAL)
+        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        boxaff.Add(btn_cancel, 0)
+        btn_ok = wx.Button(self, wx.ID_OK)
+        boxaff.Add(btn_ok, 0, wx.LEFT, 5)
+        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
+        btn_reset.SetBitmap(iconreset, wx.LEFT)
+        boxaff.Add(btn_reset, 0, wx.LEFT, 5)
+        gridbtns.Add(boxaff, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
+        self.sizer_base.Add(gridbtns, 0, wx.EXPAND)
+        # ----- Set layout
+        self.SetSizer(self.sizer_base)
+        self.sizer_base.Fit(self)
+        self.Layout()
+
         # ----------------------Binding (EVT)-------------------------#
         self.Bind(wx.EVT_CHECKBOX, self.on_DeintW3fdif, self.ckbx_deintW3fdif)
         self.Bind(wx.EVT_RADIOBOX, self.on_W3fdif_filter, self.rdbx_w3fdif)
@@ -235,8 +228,8 @@ class Deinterlace(wx.Dialog):
         self.Bind(wx.EVT_RADIOBOX, self.on_intScan, self.rdbx_inter_scan)
         self.Bind(wx.EVT_RADIOBOX, self.on_intLowpass, self.rdbx_inter_lowpass)
         self.Bind(wx.EVT_TOGGLEBUTTON, self.Advanced_Opt, self.enable_opt)
-        self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
-        self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
 

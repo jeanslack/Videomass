@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.02.2023
+Rev: July.17.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -306,10 +306,10 @@ class Crop(wx.Dialog):
         btn_reset.SetBitmap(args[2], wx.LEFT)
         gridBtn.Add(btn_reset, 0, wx.ALL, 5)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        gridexit.Add(btn_close, 0, wx.ALL, 5)
-        self.btn_ok = wx.Button(self, wx.ID_OK)
-        gridexit.Add(self.btn_ok, 0, wx.ALL, 5)
-        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
+        gridexit.Add(btn_close, 0)
+        btn_ok = wx.Button(self, wx.ID_OK)
+        gridexit.Add(btn_ok, 0, wx.LEFT, 5)
+        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         sizerBase.Add(gridBtn, 0, wx.EXPAND)
         # instance to Actor widget
         if os.path.exists(self.frame):
@@ -350,7 +350,7 @@ class Crop(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.make_frame_from_file, self.btn_load)
 
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
-        self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
         self.btn_color.Bind(csel.EVT_COLOURSELECT, self.bob.oncolor)
         # self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)

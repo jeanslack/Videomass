@@ -386,7 +386,7 @@ class AV_Conv(wx.Panel):
         self.box_Vfilters.Add(self.btn_preview, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_preview.Disable()
         self.btn_reset = wx.Button(self.nb_Video, wx.ID_ANY,
-                                   _("Reset"), size=(-1, -1))
+                                   _("Reset all"), size=(-1, -1))
         self.btn_reset.SetBitmap(self.bmpreset, wx.LEFT)
         self.box_Vfilters.Add(self.btn_reset, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_reset.Disable()
@@ -1536,7 +1536,6 @@ class AV_Conv(wx.Panel):
         with audiodialogs.AudioSettings(self,
                                         codecname,
                                         caption,
-                                        self.bmpreset,
                                         self.opt["AudioRate"],
                                         self.opt["AudioDepth"],
                                         self.opt["AudioBitrate"],

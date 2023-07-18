@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.04.2023
+Rev: July.17.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -96,23 +96,18 @@ class ShowLogs(wx.Dialog):
             self.textdata.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
 
         sizer_base.Add(self.textdata, 1, wx.ALL | wx.EXPAND, 5)
-        # ------ btns bottom
+        # ----- confirm buttons section
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grid_funcbtn = wx.BoxSizer(wx.HORIZONTAL)
-        button_update = wx.Button(self, wx.ID_REFRESH,
-                                  _("Refresh all log files"))
-        grid_funcbtn.Add(button_update, 0, wx.ALL
-                         | wx.ALIGN_CENTER_VERTICAL, 5
-                         )
-        button_clear = wx.Button(self, wx.ID_CLEAR,
-                                 _("Clear selected log")
-                                 )
-        grid_funcbtn.Add(button_clear, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grdBtn.Add(grid_funcbtn)
+        button_update = wx.Button(self, wx.ID_REFRESH, "")
+        grid_funcbtn.Add(button_update, 0)
+        button_clear = wx.Button(self, wx.ID_CLEAR, "")
+        grid_funcbtn.Add(button_clear, 0, wx.LEFT, 5)
+        grdBtn.Add(grid_funcbtn, 0, wx.ALL, 5)
         grdexit = wx.BoxSizer(wx.HORIZONTAL)
         button_close = wx.Button(self, wx.ID_CLOSE, "")
-        grdexit.Add(button_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grdBtn.Add(grdexit, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        grdexit.Add(button_close, 0)
+        grdBtn.Add(grdexit, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         sizer_base.Add(grdBtn, 0, wx.ALL | wx.EXPAND, 0)
         # set caption and min size
         self.SetTitle(_('Showing log messages'))

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.13.2022
+Rev: July.17.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -52,12 +52,19 @@ class Denoisers(wx.Dialog):
             self.denoiser = ''
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-
+        sizer_base = wx.BoxSizer(wx.VERTICAL)
         sbox = wx.StaticBox(self, wx.ID_ANY, (_("Apply Denoisers Filters")))
         zone = wx.StaticBoxSizer(sbox, wx.VERTICAL)
+        sizer_base.Add(zone, 1, wx.ALL | wx.EXPAND, 5)
         self.ckbx_nlmeans = wx.CheckBox(self, wx.ID_ANY,
                                         (_("Enable nlmeans denoiser"))
                                         )
+        grid_den = wx.FlexGridSizer(2, 2, 0, 0)
+        zone.Add(grid_den)
+        grid_den.Add(self.ckbx_nlmeans, 0, wx.ALL
+                     | wx.ALIGN_CENTER_VERTICAL
+                     | wx.ALIGN_CENTER_HORIZONTAL,
+                     5)
         nlmeans = [("Default"),
                    ("Old VHS tapes - good starting point restoration"),
                    ("Heavy - really noisy inputs"),
@@ -67,9 +74,17 @@ class Denoisers(wx.Dialog):
                                        choices=nlmeans, majorDimension=0,
                                        style=wx.RA_SPECIFY_ROWS
                                        )
+        grid_den.Add(self.rdb_nlmeans, 0, wx.ALL
+                     | wx.ALIGN_CENTER_VERTICAL
+                     | wx.ALIGN_CENTER_HORIZONTAL,
+                     5)
         self.ckbx_hqdn3d = wx.CheckBox(self, wx.ID_ANY,
                                        (_("Enable hqdn3d denoiser"))
                                        )
+        grid_den.Add(self.ckbx_hqdn3d, 0, wx.ALL
+                     | wx.ALIGN_CENTER_VERTICAL
+                     | wx.ALIGN_CENTER_HORIZONTAL,
+                     5)
         hqdn3d = [("Default"), ("Conservative [4.0:4.0:3.0:3.0]"),
                   ("Old VHS tapes restoration [9.0:5.0:3.0:3.0]")
                   ]
@@ -77,49 +92,27 @@ class Denoisers(wx.Dialog):
                                       choices=hqdn3d, majorDimension=0,
                                       style=wx.RA_SPECIFY_ROWS
                                       )
-        # ----- confirm buttons section
-        btn_help = wx.Button(self, wx.ID_HELP, "")
-        btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        self.btn_ok = wx.Button(self, wx.ID_OK)
-        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
-        btn_reset.SetBitmap(iconreset, wx.LEFT)
-        # ------ set Layout
-        sizer_base = wx.BoxSizer(wx.VERTICAL)
-        sizer_base.Add(zone, 1, wx.ALL | wx.EXPAND, 5)
-        grid_den = wx.FlexGridSizer(2, 2, 0, 0)
-        zone.Add(grid_den)
-        grid_den.Add(self.ckbx_nlmeans, 0, wx.ALL
-                     | wx.ALIGN_CENTER_VERTICAL
-                     | wx.ALIGN_CENTER_HORIZONTAL,
-                     5)
-        grid_den.Add(self.rdb_nlmeans, 0, wx.ALL
-                     | wx.ALIGN_CENTER_VERTICAL
-                     | wx.ALIGN_CENTER_HORIZONTAL,
-                     5)
-        grid_den.Add(self.ckbx_hqdn3d, 0, wx.ALL
-                     | wx.ALIGN_CENTER_VERTICAL
-                     | wx.ALIGN_CENTER_HORIZONTAL,
-                     5)
         grid_den.Add(self.rdb_hqdn3d, 0, wx.ALL
                      | wx.ALIGN_CENTER_VERTICAL
                      | wx.ALIGN_CENTER_HORIZONTAL,
                      5)
-        # confirm btn section:
-        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        # ----- confirm buttons section
+        gridbtns = wx.GridSizer(1, 2, 0, 0)
         gridhelp = wx.GridSizer(1, 1, 0, 0)
+        btn_help = wx.Button(self, wx.ID_HELP, "")
         gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridBtn.Add(gridhelp)
-        gridexit = wx.BoxSizer(wx.HORIZONTAL)
-        gridexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
-        # final settings:
-        sizer_base.Add(gridBtn, 0, wx.EXPAND)
-        self.SetSizer(sizer_base)
-        sizer_base.Fit(self)
-        self.Layout()
-        # set Properties
+        gridbtns.Add(gridhelp)
+        boxaff = wx.BoxSizer(wx.HORIZONTAL)
+        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        boxaff.Add(btn_cancel, 0)
+        btn_ok = wx.Button(self, wx.ID_OK)
+        boxaff.Add(btn_ok, 0, wx.LEFT, 5)
+        btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
+        btn_reset.SetBitmap(iconreset, wx.LEFT)
+        boxaff.Add(btn_reset, 0, wx.LEFT, 5)
+        gridbtns.Add(boxaff, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
+        sizer_base.Add(gridbtns, 0, wx.EXPAND)
+        # ----- Set properties
         self.SetTitle(_("Denoiser Tool"))
         tool = _('nlmeans:\nDenoise frames using Non-Local Means algorithm '
                  'is capable of restoring video sequences, even with strong '
@@ -131,6 +124,10 @@ class Denoisers(wx.Dialog):
                  'images and making still images really still. It should '
                  'enhance compressibility.')
         self.ckbx_hqdn3d.SetToolTip(tool)
+        # ----- Set layout
+        self.SetSizer(sizer_base)
+        sizer_base.Fit(self)
+        self.Layout()
 
         # ----------------------Binding (EVT)--------------------------#
         self.Bind(wx.EVT_CHECKBOX, self.on_nlmeans, self.ckbx_nlmeans)
@@ -138,8 +135,8 @@ class Denoisers(wx.Dialog):
         self.Bind(wx.EVT_RADIOBOX, self.on_nlmeans_opt, self.rdb_nlmeans)
         self.Bind(wx.EVT_RADIOBOX, self.on_hqdn3d_opt, self.rdb_hqdn3d)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
-        self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
-        self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
 
         self.settings()

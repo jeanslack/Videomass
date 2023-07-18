@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.21.2023
+Rev: July.17.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -409,27 +409,21 @@ class SetUp(wx.Dialog):
 
         tabSix.SetSizer(sizerLog)
         notebook.AddPage(tabSix, _("FFmpeg logging levels"))
-        # ------ btns bottom
+        # ----- confirm buttons section
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grdhelp = wx.GridSizer(1, 1, 0, 0)
         btn_help = wx.Button(self, wx.ID_HELP, "")
         grdhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grdBtn.Add(grdhelp)
         grdexit = wx.BoxSizer(wx.HORIZONTAL)
-        btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        grdexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        grdexit.Add(btn_cancel, 0, wx.ALIGN_CENTER_VERTICAL)
         btn_ok = wx.Button(self, wx.ID_OK, "")
-        grdexit.Add(btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grdBtn.Add(grdexit, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        grdexit.Add(btn_ok, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
+        grdBtn.Add(grdexit, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         sizer_base.Add(grdBtn, 0, wx.EXPAND)
-        # ------ set sizer
-        self.SetSizer(sizer_base)
-        sizer_base.Fit(self)
-        self.Layout()
 
-        # ----------------------Properties----------------------#
-        self.SetTitle(_("Settings"))
-        # set font
+        # ----- Properties
         if self.appdata['ostype'] == 'Darwin':
             lablang.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labconf.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -463,10 +457,15 @@ class SetUp(wx.Dialog):
             labTB.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labLog.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
-        #  tooltips
         tip = (_("By assigning an additional suffix you could avoid "
                  "overwriting files"))
         self.text_suffix.SetToolTip(tip)
+        self.SetTitle(_("Settings"))
+
+        # ------ set sizer
+        self.SetSizer(sizer_base)
+        sizer_base.Fit(self)
+        self.Layout()
 
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_COMBOBOX, self.on_set_lang, self.cmbx_lang)
@@ -498,7 +497,7 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.clear_Cache, self.checkbox_cacheclr)
         self.Bind(wx.EVT_CHECKBOX, self.clear_logs, self.checkbox_logclr)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
-        self.Bind(wx.EVT_BUTTON, self.on_cancel, btn_close)
+        self.Bind(wx.EVT_BUTTON, self.on_cancel, btn_cancel)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_TEXT, self.on_ext_downl, self.txtctrl_extdw)
         self.Bind(wx.EVT_TEXT, self.on_ext_downl_args, self.txtctrl_extdw_args)

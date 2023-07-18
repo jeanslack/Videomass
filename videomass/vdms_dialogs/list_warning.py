@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: April.15.2023
+Rev: July.17.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -92,19 +92,19 @@ class ListWarning(wx.Dialog):
             gridconfirm = wx.BoxSizer(wx.HORIZONTAL)
             btn_no = wx.Button(self, wx.ID_NO, "", name='NO')
             self.Bind(wx.EVT_BUTTON, self.on_confirm, btn_no)
-            gridconfirm.Add(btn_no, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+            gridconfirm.Add(btn_no, 0, wx.ALIGN_CENTER_VERTICAL)
             btn_yes = wx.Button(self, wx.ID_YES, "", name='YES')
             self.Bind(wx.EVT_BUTTON, self.on_confirm, btn_yes)
-            gridconfirm.Add(btn_yes, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+            gridconfirm.Add(btn_yes, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
             btngrid.Add(gridconfirm, 0, flag=wx.ALL | wx.ALIGN_RIGHT
-                        | wx.RIGHT, border=0)
+                        | wx.RIGHT, border=5)
             sizer.Add(btngrid, 0, wx.EXPAND)
         else:
             btn_ok = wx.Button(self, wx.ID_OK, "")
             btngrid = wx.FlexGridSizer(1, 1, 0, 0)
-            btngrid.Add(btn_ok, 0, wx.ALL, 5)
+            btngrid.Add(btn_ok, 0)
             sizer.Add(btngrid, 0, flag=wx.ALL | wx.ALIGN_RIGHT
-                      | wx.RIGHT, border=0)
+                      | wx.RIGHT, border=5)
             self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
 
         textlist.SetBackgroundColour(colorscheme['BACKGRD'])

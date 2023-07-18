@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-
 """
 Name: renamer.py
 Porpose: batch and single file renamer
@@ -7,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.13.2022
+Rev: July.17.2022
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -103,10 +102,10 @@ class Renamer(wx.Dialog):
         # confirm buttons:
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        gridexit.Add(btn_close, 0, wx.ALL, 5)
+        gridexit.Add(btn_close, 0)
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
-        gridexit.Add(self.btn_ok, 0, wx.ALL, 5)
-        sizer_base.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
+        gridexit.Add(self.btn_ok, 0, wx.LEFT, 5)
+        sizer_base.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 5)
 
         self.SetTitle(caption)
         # self.SetMinSize((width, -1))
