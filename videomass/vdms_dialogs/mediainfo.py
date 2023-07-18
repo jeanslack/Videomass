@@ -123,7 +123,6 @@ class MediaStreams(wx.Dialog):
         # ----- confirm buttons section
         gridbtns = wx.GridSizer(1, 2, 0, 0)
         gridclip = wx.GridSizer(1, 1, 0, 0)
-        btn_help = wx.Button(self, wx.ID_HELP, "")
         self.btn_copyclip = wx.Button(self, wx.ID_ANY, _("Copy to clipboard"))
         self.btn_copyclip.Disable()
         gridclip.Add(self.btn_copyclip, 0, wx.ALL, 5)

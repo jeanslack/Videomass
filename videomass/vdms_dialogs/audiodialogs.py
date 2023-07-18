@@ -127,7 +127,7 @@ class AudioSettings(wx.Dialog):
         self.rdb_bitdepth.SetToolTip(audiodata.BITDEPTH_TOOLTIP)
 
         # Set previusly settings:
-        arate, adepth, abitrate, achannel = args[3], args[4], args[5], args[6]
+        arate, adepth, abitrate, achannel = args[2], args[3], args[4], args[5]
         if arate[0]:
             self.rdb_sample_r.SetSelection(samplerate_list.index(arate[0]))
         else:

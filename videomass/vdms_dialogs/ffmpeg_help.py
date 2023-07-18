@@ -200,9 +200,9 @@ class FFmpegHelp(wx.Dialog):
         sizer.Add(boxsearch, 0, wx.ALL, 5)
         # bottom layout
         grid = wx.GridSizer(1, 1, 0, 0)
-        self.btn_close = wx.Button(self, wx.ID_CLOSE, "")
-        grid.Add(self.btn_close, 1, wx.ALL, 5)
-        sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        btn_close = wx.Button(self, wx.ID_CLOSE, "")
+        grid.Add(btn_close, 0)
+        sizer.Add(grid, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         self.SetTitle(_("FFmpeg help topics"))
         self.SetMinSize((750, 550))
         icon = wx.Icon()
@@ -230,7 +230,7 @@ class FFmpegHelp(wx.Dialog):
         self.Bind(wx.EVT_TEXT, self.on_type_topic, self.text_topic)
         self.Bind(wx.EVT_TEXT_ENTER, self.on_type_enter_key, self.text_topic)
         self.Bind(wx.EVT_CHECKBOX, self.on_ckbx, self.case)
-        self.Bind(wx.EVT_BUTTON, self.on_close, self.btn_close)
+        self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # caption X
     # ---------------------------------------------------------#
 

@@ -5,8 +5,9 @@ videomass (5.0.3-1) UNRELEASED; urgency=medium
   * "Apply" to "Ok" label for affirmative buttons in dialogs, as a button
     labeled "Ok" means it will apply the settings and also close the dialog
     itself.
+  * Fixed spaces between dialog buttons.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 15 Jul 2023 16:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 17 Jul 2023 18:00:00 +0200
 
 
 videomass (5.0.2-1) UNRELEASED; urgency=medium
