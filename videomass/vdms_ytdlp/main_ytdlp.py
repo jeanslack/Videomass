@@ -507,7 +507,7 @@ class MainYtdl(wx.Frame):
             bmpstop = wx.Bitmap(self.icons['stop'], wx.BITMAP_TYPE_ANY)
             bmpclear = wx.Bitmap(self.icons['cleanup'], wx.BITMAP_TYPE_ANY)
 
-        self.toolbar.SetFont(wx.Font(8, wx.DEFAULT, wx.NORMAL,
+        self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
 
         tip = _("Go to the previous panel")

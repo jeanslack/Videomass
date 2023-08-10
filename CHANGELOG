@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 17 Jul 2023 V.5.0.3
+Thu, 10 Aug 2023 V.5.0.3
 
   * [YouTube Downloader] New feature: subtitles editor, see #240
   * [YouTube Downloader] Improved UI layout.
@@ -15,6 +15,7 @@ Mon, 17 Jul 2023 V.5.0.3
     labeled "Ok" means it will apply the settings and also close the dialog
     itself.
   * Fixed spaces between dialog buttons.
+  * Fixed minor bugs.
 
 +------------------------------------+
 Tue, 20 Jun 2023 V.5.0.2
