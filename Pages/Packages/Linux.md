@@ -35,16 +35,6 @@ For any other application-related issues, please read
 
 ---
 
-## MX-Linux
-
-Videomass is available on [test repo](https://mxlinux.org/community-repos/) 
-of [MX-Linux](https://mxlinux.org/) which is accessible from 
-[MX package installer](https://mxlinux.org/wiki/help-files/help-mx-package-installer/).
-So, to install Videomass you will need to enable this repo and proceed with the 
-installation .
-
----
-
 ## ArchLinux
 
 Videomass is available on the Arch User Repository as [AUR package](https://aur.archlinux.org/packages/videomass) .
@@ -81,18 +71,6 @@ urpmi.addmedia --wget --distrib https://ftp.blogdrake.net/mageia/mageia8/x86_64
 urpmi videomass
 exit
 ```
----
-
-## SparkyLinux
-
-The Videomass tool is available for Debian "Bullseye"/Sparky “Po Tolo” only.
-
-Installation:   
-
-`sudo apt update`   
-`sudo apt install videomass`   
-
-or via Sparky [APTus](https://sparkylinux.org/sparky-aptus-0-4-36/)-> VideoTools tab.
 
 ---
 
