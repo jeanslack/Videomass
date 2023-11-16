@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 Name: msg_info.py
-Porpose: Gets version, copyr and program Description
+Porpose: Gets information about the program
 Compatibility: Python3, Python2
 author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -36,7 +36,7 @@ def current_release():
     """
     release_name = 'Videomass'
     program_name = 'videomass'
-    version = '5.0.3'
+    version = '5.0.3c1'
     release = 'Not released'
     copyr = '2013-2023'
     website = 'http://jeanslack.github.io/Videomass/'

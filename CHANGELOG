@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 10 Aug 2023 V.5.0.3
+Thu, 16 Nov 2023 V.5.0.3c1
 
   * [YouTube Downloader] New feature: subtitles editor, see #240
   * [YouTube Downloader] Improved UI layout.
@@ -16,6 +16,9 @@ Thu, 10 Aug 2023 V.5.0.3
     itself.
   * Fixed spaces between dialog buttons.
   * Fixed minor bugs.
+  * [YouTube Downloader] Fixed the YouTube Downloader window accidentally
+    opening by clicking the menu bar when the yt-dlp module is not loaded.
+  * Update fr_FR translation, thanks to Philaug.
 
 +------------------------------------+
 Tue, 20 Jun 2023 V.5.0.2
