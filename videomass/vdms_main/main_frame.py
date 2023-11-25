@@ -1634,10 +1634,17 @@ class MainFrame(wx.Frame):
         Start a separate, self-contained frame
         for yt-dlp GUI functionality.
         """
+        if not self.appdata['use-downloader']:
+            wx.MessageBox(_("yt-dlp is disabled. "
+                            "Check your preferences."),
+                          "Videomass", wx.ICON_INFORMATION, self)
+            return
+
         if self.ytdlframe:
             if not self.ytdlframe.IsShown():
                 self.ytdlframe.Show()
             self.ytdlframe.Raise()
             return
+
         self.ytdlframe = MainYtdl(parent=wx.GetTopLevelParent(self))
         self.ytdlframe.Show()

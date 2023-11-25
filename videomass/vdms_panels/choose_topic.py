@@ -219,11 +219,4 @@ class Choose_Topic(wx.Panel):
         """
         Open a separated downloader frame for yt-dlp.
         """
-        if not self.appdata['use-downloader']:
-            wx.MessageBox(_("yt-dlp is disabled. "
-                            "Check your preferences."),
-                          "Videomass", wx.ICON_INFORMATION, self)
-            return True
-
         self.parent.youtubedl(self)
-        return None

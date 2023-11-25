@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-18 10:29+0200\n"
+"POT-Creation-Date: 2023-11-16 18:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2223,6 +2223,10 @@ msgstr ""
 msgid "Videomass - FFmpeg message monitor"
 msgstr ""
 
+#: ../vdms_main/main_frame.py:1638
+msgid "yt-dlp is disabled. Check your preferences."
+msgstr ""
+
 #: ../vdms_panels/av_conversions.py:221
 msgid "Media:"
 msgstr ""
@@ -2690,10 +2694,6 @@ msgstr ""
 
 #: ../vdms_panels/choose_topic.py:137
 msgid "Extract images (frames) from your movies in JPG, PNG, BMP, GIF formats."
-msgstr ""
-
-#: ../vdms_panels/choose_topic.py:223
-msgid "yt-dlp is disabled. Check your preferences."
 msgstr ""
 
 #: ../vdms_panels/concatenate.py:45
