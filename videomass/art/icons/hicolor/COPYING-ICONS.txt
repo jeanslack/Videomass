@@ -1,6 +1,6 @@
 The Videomass-Dark Icon Theme in 24x24 and 16x16/
 
-    Copyleft - 2023 <jeanlucperni@gmail.com>
+    Copyleft - 2024 <jeanlucperni@gmail.com>
 
 -----
 GNU GENERAL PUBLIC LICENSE

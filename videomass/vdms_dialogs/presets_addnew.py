@@ -4,7 +4,7 @@ Name: presets_addnew.py
 Porpose: profiles storing and profiles editing dialog
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: March.13.2022
 Code checker: flake8, pylint

@@ -4,7 +4,7 @@ Name: msg_info.py
 Porpose: Gets information about the program
 Compatibility: Python3, Python2
 author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 lic: GPL3
 Rev: Jan.21.2023
 Code checker: flake8, pylint
@@ -36,9 +36,9 @@ def current_release():
     """
     release_name = 'Videomass'
     program_name = 'videomass'
-    version = '5.0.3c4'
+    version = '5.0.3c6'
     release = 'Not released'
-    copyr = '2013-2023'
+    copyr = '2013-2024'
     website = 'http://jeanslack.github.io/Videomass/'
     author = ('Gianluca Pernigotto', '(aka jeanslack)')
     mail = 'jeanlucperni@gmail.com'

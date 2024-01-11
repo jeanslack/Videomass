@@ -20,7 +20,7 @@ langDomain = "videomass"
 # languages you want to support
 supLang = {
     "Default": (wx.LANGUAGE_DEFAULT, ("System default language")),
-    "zh_CH": (wx.LANGUAGE_CHINESE_SIMPLIFIED, ("Chinese (simplified)")),
+    "zh_CN": (wx.LANGUAGE_CHINESE_SIMPLIFIED, ("Chinese (simplified)")),
     "nl_NL": (wx.LANGUAGE_DUTCH, ("Dutch")),
     "en_US": (wx.LANGUAGE_ENGLISH_US, ("English (United States)")),
     "fr_FR": (wx.LANGUAGE_FRENCH, ("French")),

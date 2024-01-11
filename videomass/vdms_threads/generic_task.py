@@ -4,7 +4,7 @@ Name: generic_task.py
 Porpose: Execute a generic task with FFmpeg
 Compatibility: Python3 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Mar.04.2023
 Code checker: flake8, pylint

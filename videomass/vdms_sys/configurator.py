@@ -4,7 +4,7 @@ Name: configurator.py
 Porpose: Set Videomass configuration on startup
 Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: July.06.2023
 Code checker: flake8, pylint

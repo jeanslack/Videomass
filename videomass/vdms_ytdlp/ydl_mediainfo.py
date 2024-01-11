@@ -4,7 +4,7 @@ Name: ydl_mediainfo.py
 Porpose: show media streams information through youtube-dl.extract_info
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: March.17.2023
 Code checker: flake8, pylint

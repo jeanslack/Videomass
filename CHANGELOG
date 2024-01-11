@@ -1,13 +1,13 @@
 # encoding: utf-8
 Videomass
 Author: Gianluca (jeanslack) Pernigotto
-Copyright: (c) Gianluca Pernigotto 2014-2022
+Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 License: GPL3
 
 Change Log:
 
 +------------------------------------+
-Tue, 19 Dec 2023 V.5.0.3c4
+Thu, 11 Jan 2023 V.5.0.3c6
 
   * [YouTube Downloader] New feature: subtitles editor, see #240
   * [YouTube Downloader] Improved UI layout.
@@ -20,7 +20,7 @@ Tue, 19 Dec 2023 V.5.0.3c4
     opening by clicking the menu bar when the yt-dlp module is not loaded.
   * Update fr_FR translation, thanks to Philaug.
   * Update es_ES, es_CU, es_MX translations, thanks to katnatek.
-  * Try to fix zh_CN (Chinese - Simplified) to zh_CH, see #253
+  * Update program year on Copyright.
 
 +------------------------------------+
 Tue, 20 Jun 2023 V.5.0.2
