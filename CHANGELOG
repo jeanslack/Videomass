@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 11 Jan 2023 V.5.0.3c6
+Mon, 15 Jan 2024 V.5.0.3
 
   * [YouTube Downloader] New feature: subtitles editor, see #240
   * [YouTube Downloader] Improved UI layout.
@@ -21,6 +21,7 @@ Thu, 11 Jan 2023 V.5.0.3c6
   * Update fr_FR translation, thanks to Philaug.
   * Update es_ES, es_CU, es_MX translations, thanks to katnatek.
   * Update program year on Copyright.
+  * Update ru_RU translation, thanks to ChourS.
 
 +------------------------------------+
 Tue, 20 Jun 2023 V.5.0.2
