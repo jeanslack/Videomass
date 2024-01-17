@@ -11,8 +11,10 @@ videomass (5.0.3-1) UNRELEASED; urgency=medium
     opening by clicking the menu bar when the yt-dlp module is not loaded.
   * Update fr_FR translation, thanks to Philaug.
   * Update es_ES, es_CU, es_MX translations, thanks to katnatek.
+  * Update program year on Copyright.
+  * Update ru_RU translation, thanks to ChourS.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 17 Dec 2023 17:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 15 Jan 2024 15:00:00 +0200
 
 
 videomass (5.0.2-1) UNRELEASED; urgency=medium

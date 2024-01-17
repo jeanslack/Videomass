@@ -6,7 +6,7 @@ Porpose: Wrapper interface to perform batch conversion using the
          Inkscape library
 Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Oct.23.2020 *PEP8 compatible*
 

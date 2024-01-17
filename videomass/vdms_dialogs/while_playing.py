@@ -4,7 +4,7 @@ Name: while_playing.py
 Porpose: Show box with shortcuts keyboard when playback with FFplay
 Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Feb.13.2023
 Code checker: flake8, pylint

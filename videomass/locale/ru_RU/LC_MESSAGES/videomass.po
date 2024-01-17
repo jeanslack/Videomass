@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 5.0.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-18 10:29+0200\n"
-"PO-Revision-Date: 2023-07-18 10:35+0200\n"
+"PO-Revision-Date: 2024-01-15 15:29+0100\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -2563,10 +2563,9 @@ msgstr "Фильтры Видео"
 
 # Перевод всех отмеченных изменений на значение по умолчанию
 #: ../vdms_panels/av_conversions.py:389
-#, fuzzy
 #| msgid "Reset All"
 msgid "Reset all"
-msgstr "Сброс всего"
+msgstr "Сбросить всё"
 
 #: ../vdms_panels/av_conversions.py:410 ../vdms_panels/sequence_to_video.py:155
 #: ../vdms_panels/video_to_sequence.py:111
@@ -3128,7 +3127,7 @@ msgstr "Для объединения требуются как минимум �
 
 #: ../vdms_panels/concatenate.py:61
 msgid "Invalid data found"
-msgstr ""
+msgstr "Обнаружены неверные данные"
 
 #: ../vdms_panels/concatenate.py:65
 msgid ""
@@ -3234,7 +3233,7 @@ msgstr "Файл содержит недопустимые символы, та�
 
 #: ../vdms_panels/filedrop.py:46
 msgid "Invalid character found in path name: (\")"
-msgstr ""
+msgstr "В имени пути обнаружен недопустимый символ: (\")"
 
 #: ../vdms_panels/filedrop.py:47
 msgid "Directories are not allowed, just add files, please."
@@ -4361,7 +4360,6 @@ msgstr "Элементы плейлиста"
 
 # исправил двойную кавычку
 #: ../vdms_ytdlp/playlist_indexing.py:72
-#, fuzzy
 #| msgid ""
 #| "Click on \"Playlist Items\" column to specify indices of the videos in "
 #| "the playlist separated by commas like: \"1,2,5,8\" if you want to "
@@ -4377,12 +4375,12 @@ msgid ""
 "It is also possible to specify intervals, e.g. \"1-3,7,10-13\" with which "
 "the media at index 1, 2, 3, 7, 10, 11, 12 and 13 will be downloaded.\n"
 msgstr ""
-"Нажмите на столбец \"Элементы плейлиста\", чтобы указать индексы(номера) "
-"видео в плейлисте, разделенные запятыми, например: \"1,2,5,8\", если вы "
-"хотите загрузить видео под индексами 1, 2, 5, 8 в списке воспроизведения.\n"
-"\n"
-"Вы можете указать диапазон: \"1-3,7,10-13\" - будет загружать видео с "
-"индексами 1, 2, 3, 7, 10, 11, 12 и 13.\n"
+"Чтобы проиндексировать медиафайлы плейлиста, щелкните столбец «Элементы "
+"плейлиста» каждого соответствующего URL-адреса и укажите числовые индексы, "
+"разделенные запятыми, например: «1,2,5,8», если вы хотите загрузить "
+"проиндексированные медиафайлы на позициях 1, 2, 5, 8 в плейлисте.\n"
+"Также можно указать интервалы, например. «1-3,7,10-13», с помощью которого "
+"будут загружаться медиафайлы с индексами 1, 2, 3, 7, 10, 11, 12 и 13.\n"
 
 #: ../vdms_ytdlp/playlist_indexing.py:108 ../vdms_ytdlp/youtubedl_ui.py:233
 msgid "Playlist Editor"
@@ -4464,13 +4462,12 @@ msgstr "Предпочтительный формат видео"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:228
 msgid "Include playlists"
-msgstr ""
+msgstr "Включить плейлисты"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:240 ../vdms_ytdlp/subtitles_editor.py:137
-#, fuzzy
 #| msgid "Subtitle Streams"
 msgid "Subtitles Editor"
-msgstr "Потоки субтитров"
+msgstr "Редактор субтитров"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:249
 msgid "Don’t check SSL certificate"
@@ -4478,35 +4475,24 @@ msgstr "Не проверять SSL-сертификат"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:254
 msgid "Embed thumbnail in audio file"
-msgstr ""
-"Добавить миниатюру\n"
-"в аудиофайл"
+msgstr "Добавить миниатюру в аудиофайл"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:259
 msgid "Add metadata to file"
-msgstr ""
-"Добавьте метаданные\n"
-"в файл"
+msgstr "Добавьте метаданные в файл"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:264
 msgid "Overwrite all files and metadata"
 msgstr "Перезаписать все файлы и метаданные"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:269
-#, fuzzy
-#| msgid ""
-#| "Include the video ID\n"
-#| "in the file names"
 msgid "Include the ID in file names"
-msgstr ""
-"Включите идентификатор видео\n"
-"в имена файлов"
+msgstr "Включите идентификатор в имена файлов"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:275
-#, fuzzy
 #| msgid "Restrict file names"
 msgid "Restrict file names to ASCII characters"
-msgstr "Ограничить имена файлов"
+msgstr "Ограничить имена файлов символами ASCII"
 
 #: ../vdms_ytdlp/youtubedl_ui.py:436
 #, python-brace-format
@@ -4537,111 +4523,104 @@ msgstr "URL-адреса содержат видеоканалы. Вы увер�
 
 #: ../vdms_ytdlp/subtitles_editor.py:42
 msgid "English"
-msgstr ""
+msgstr "English"
 
 #: ../vdms_ytdlp/subtitles_editor.py:43
 msgid "French"
-msgstr ""
+msgstr "French"
 
 #: ../vdms_ytdlp/subtitles_editor.py:44
 msgid "German"
-msgstr ""
+msgstr "German"
 
 #: ../vdms_ytdlp/subtitles_editor.py:45
 msgid "Greek"
-msgstr ""
+msgstr "Greek"
 
 #: ../vdms_ytdlp/subtitles_editor.py:46
 msgid "Hebrew"
-msgstr ""
+msgstr "Hebrew"
 
 #: ../vdms_ytdlp/subtitles_editor.py:47
 msgid "Italian"
-msgstr ""
+msgstr "Italian"
 
 #: ../vdms_ytdlp/subtitles_editor.py:48
 msgid "Dutch"
-msgstr ""
+msgstr "Dutch"
 
 #: ../vdms_ytdlp/subtitles_editor.py:49
 msgid "Polish"
-msgstr ""
+msgstr "Polish"
 
 #: ../vdms_ytdlp/subtitles_editor.py:50
 msgid "Portuguese"
-msgstr ""
+msgstr "Portuguese"
 
 #: ../vdms_ytdlp/subtitles_editor.py:51
 msgid "Russian"
-msgstr ""
+msgstr "Русский"
 
 #: ../vdms_ytdlp/subtitles_editor.py:52
-#, fuzzy
 #| msgid "Finish"
 msgid "Spanish"
-msgstr "Завершено"
+msgstr "Spanish"
 
 #: ../vdms_ytdlp/subtitles_editor.py:53
 msgid "Swedish"
-msgstr ""
+msgstr "Swedish"
 
 #: ../vdms_ytdlp/subtitles_editor.py:54
 msgid "Turkish"
-msgstr ""
+msgstr "Turkish"
 
 #: ../vdms_ytdlp/subtitles_editor.py:55
 msgid "Albanian"
-msgstr ""
+msgstr "Albanian"
 
 #: ../vdms_ytdlp/subtitles_editor.py:56
 msgid "Chinese"
-msgstr ""
+msgstr "Chinese"
 
 #: ../vdms_ytdlp/subtitles_editor.py:70
-#, fuzzy
 #| msgid "Subtitle"
 msgid "Subtitles"
 msgstr "Субтитры"
 
 #: ../vdms_ytdlp/subtitles_editor.py:74
 msgid "None"
-msgstr ""
+msgstr "Без субтитров"
 
 #: ../vdms_ytdlp/subtitles_editor.py:75
-#, fuzzy
 #| msgid "Download all available subtitles"
 msgid "All available subtitles"
-msgstr "Скачать все доступные субтитры"
+msgstr "Все доступные субтитры"
 
 #: ../vdms_ytdlp/subtitles_editor.py:76
 msgid "Select by default language"
-msgstr ""
+msgstr "Выбрать язык по умолчанию"
 
 #: ../vdms_ytdlp/subtitles_editor.py:77
 msgid "Custom language subtitles"
-msgstr ""
+msgstr "Субтитры на языке пользователя"
 
 #: ../vdms_ytdlp/subtitles_editor.py:94
 msgid "Custom language"
-msgstr ""
+msgstr "Пользовательский язык"
 
 #: ../vdms_ytdlp/subtitles_editor.py:114
 msgid "Include automatically generated subtitle (YouTube only)"
-msgstr ""
+msgstr "Включить автоматически созданные субтитры (только для YouTube)"
 
 #: ../vdms_ytdlp/subtitles_editor.py:117
-#, fuzzy
 #| msgid "Write subtitles to video"
 msgid "Embed subtitles into video file"
-msgstr ""
-"Напишите субтитры\n"
-"к видео"
+msgstr "Вставить субтитры в видеофайл"
 
 #: ../vdms_ytdlp/subtitles_editor.py:120
-#, fuzzy
 #| msgid "Download split audio and video"
 msgid "Download subtitles only (do not include audio and video)"
-msgstr "Скачать аудио и видео раздельно"
+msgstr "Загружать только субтитры (без аудио и видео)"
 
 #: ../vdms_ytdlp/subtitles_editor.py:246
 msgid ""
@@ -4657,6 +4636,21 @@ msgid ""
 "requested languages, e.g. \"all, -it.*, -nl.*\", -fr.*\" will download all\n"
 "subtitles except those in Italian, Dutch and French."
 msgstr ""
+"Введите в текстовом поле сбоку один или несколько языковых кодов "
+"субтитров, \n"
+"которые нужно загрузить, через запятую, например: «en, ja, ar» для "
+"английского, \n"
+"японского и арабского языков соответственно.\n"
+"\n"
+"Вы можете использовать regex (регулярное выражение), например. «en.*, ja, ar."
+"*», \n"
+"где перед звездочкой стоит точка, позволит вам скачать все, что связано \n"
+"с субтитрами на определенном языке.\n"
+"\n"
+"Вы можете добавить к коду языка префикс «-», чтобы исключить его из \n"
+"запрошенных языков, например «all, -it.*, -nl.*», -fr.*» загрузит все "
+"субтитры, \n"
+"кроме итальянских, голландских и французских."
 
 #~ msgid "Refresh all log files"
 #~ msgstr "Обновить все файлы log-журналов"

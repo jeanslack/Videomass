@@ -4,7 +4,7 @@ Name: ydl_downloader.py
 Porpose: long processing task using yt_dlp python library
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: July.07.2023
 Code checker: flake8, pylint

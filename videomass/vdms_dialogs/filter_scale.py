@@ -4,7 +4,7 @@ Name: filter_scale.py
 Porpose: Show dialog to get scale data based on FFmpeg syntax
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: July.17.2023
 Code checker: flake8, pylint

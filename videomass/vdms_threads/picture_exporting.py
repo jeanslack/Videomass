@@ -4,7 +4,7 @@ Name: pictures_exporting.py
 Porpose: FFmpeg long processing task on save as pictures
 Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: March.10.2022
 Code checker: flake8, pylint

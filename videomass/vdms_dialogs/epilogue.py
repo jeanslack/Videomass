@@ -4,7 +4,7 @@ Name: epilogue.py
 Porpose: shows dialog box before start process
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2023 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: July.17.2022
 Code checker: flake8, pylint

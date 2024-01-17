@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-18 10:29+0200\n"
-"PO-Revision-Date: 2023-07-18 10:35+0200\n"
+"POT-Creation-Date: 2023-11-16 18:06+0100\n"
+"PO-Revision-Date: 2023-12-22 13:31+0100\n"
 "Last-Translator: MaiJZ https://github.com/maijz128\n"
 "Language-Team: simplified Chinese (CN)\n"
 "Language: zh_CN\n"
@@ -2684,6 +2684,11 @@ msgstr "处理..."
 msgid "Videomass - FFmpeg message monitor"
 msgstr "Videomass - 输出监控"
 
+#: ../vdms_main/main_frame.py:1638
+#, fuzzy
+msgid "yt-dlp is disabled. Check your preferences."
+msgstr "下载器被禁用。检查你的偏好。"
+
 #: ../vdms_panels/av_conversions.py:221
 msgid "Media:"
 msgstr "媒体："
@@ -3285,11 +3290,6 @@ msgstr "根据导入顺序，从一连串的图像中创建视频，并能添加
 #: ../vdms_panels/choose_topic.py:137
 msgid "Extract images (frames) from your movies in JPG, PNG, BMP, GIF formats."
 msgstr "从你的电影中提取JPG、PNG、BMP、GIF格式的图像（帧）。"
-
-#: ../vdms_panels/choose_topic.py:223
-#, fuzzy
-msgid "yt-dlp is disabled. Check your preferences."
-msgstr "下载器被禁用。检查你的偏好。"
 
 #: ../vdms_panels/concatenate.py:45
 #, fuzzy
