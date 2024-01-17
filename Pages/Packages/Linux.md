@@ -91,8 +91,12 @@ package (installable on Python-AppImage) compatible with most Linux distribution
 which can be embedded into the AppImage is officially released.   
 
 See the following related issues: 
-- https://github.com/jeanslack/Videomass/issues/186
-- https://github.com/niess/python-appimage/issues/58
+- [https://github.com/jeanslack/Videomass/issues/186](https://github.com/jeanslack/Videomass/issues/186)
+- [https://github.com/niess/python-appimage/issues/58](https://github.com/niess/python-appimage/issues/58)
+- [https://discuss.wxpython.org/t/how-to-bundle-wxpython-with-appimage/35289/3](https://discuss.wxpython.org/t/how-to-bundle-wxpython-with-appimage/35289/3)
+
+About manylinux on wxPython documentations:
+- [https://wxpython.org/pages/downloads/](https://wxpython.org/pages/downloads/)
 
 For any application-related issues, please read 
 [Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.
