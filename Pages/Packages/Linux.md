@@ -14,11 +14,11 @@ nav_order: 3
 This PPA currently publishes packages for [Ubuntu](https://ubuntu.com/), including official and 
 derivative distributions.   
 
+- [Ubuntu 24.04 Noble](https://cloud-images.ubuntu.com/noble/current/)
 - [Ubuntu 23.10 Mantic (Daily-Live))](https://cdimage.ubuntu.com/daily-live/current/)
 - [Ubuntu 23.04 Lunar](https://releases.ubuntu.com/lunar/)
-- [Ubuntu 22.10 Kinetic](https://releases.ubuntu.com/kinetic/)
-- [Ubuntu 22.04 Jammy](https://releases.ubuntu.com/22.04/)
-- [Ubuntu 20.04 Focal](https://releases.ubuntu.com/focal/)   
+- [Ubuntu 22.04 Jammy](https://releases.ubuntu.com/22.04/) 
+- [Ubuntu 20.04 Focal](https://releases.ubuntu.com/focal/)     
 
 
 To install Videomass add this 
@@ -83,23 +83,16 @@ Portable
 About [AppImage](https://appimage.org/) format   
 {: .fs-3 .text-grey-dk-100}
 
-Minimum requirements:   
-- All [Ubuntu flavors](https://ubuntu.com/download/flavours) based on 
-[18.04 LTS x86_64](https://releases.ubuntu.com/18.04.5/) version.
-- [x86_64](https://en.wikipedia.org/wiki/X86-64) architecture.
-- [FFmpeg](https://www.ffmpeg.org/) version 3.1.5 
+### No longer available 
+{: .bg-red-300}
 
-[Videomass 5.0.2 AppImage](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-5.0.2-x86_64.AppImage){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }  
+The Videomass AppImage format will no longer be available until a wxPython-manylinux 
+package (installable on Python-AppImage) compatible with most Linux distributions 
+which can be embedded into the AppImage is officially released.   
 
-Successfully tested on the following Linux distributions:   
-* [Xubuntu](https://xubuntu.org/) 18.04 LTS x86_64 
-* [Ubuntu](https://ubuntu.com/) 20.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
-* [Debian](https://www.debian.org/index.en.html) 10 buster x86_64
-* [Debian](https://www.debian.org/index.en.html) 11 bullseye x86_64
-* [Fedora](https://getfedora.org/en/) 32 x86_64 (Workstation Edition) 
-* [Manjaro](https://manjaro.org/) 20.0.3 (Lysia) x86_64 
-* [Devuan](https://www.devuan.org/) 4.0 Chimaera amd64
-* [Slackware](http://www.slackware.com/) 15.0 x86_64 (full installation from DVD)
+See the following related issues: 
+- https://github.com/jeanslack/Videomass/issues/186
+- https://github.com/niess/python-appimage/issues/58
 
 For any application-related issues, please read 
 [Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.
