@@ -35,11 +35,30 @@ For any other application-related issues, please read
 
 ---
 
+## Slackware
+
+Videomass is available as a SlackBuild archive on the [SlackBuilds.org](https://slackbuilds.org/) 
+("Sbo") repository, a collection of third-party SlackBuild scripts to build Slackware packages.
+
+It can be downloaded, built and installed automatically using the [sbopkg](https://sbopkg.org/) 
+tool, or manually using the traditional method (see howto at [https://slackbuilds.org/howto/](https://slackbuilds.org/howto/))   
+
+---
+
 ## ArchLinux
 
 Videomass is available on the Arch User Repository as [AUR package](https://aur.archlinux.org/packages/videomass) .
 
-Can be installed by using `pacaur/yay/etc.` after activating AUR on Arch Linux, or in AUR part of Manjaro (Arch Linux derivative) Linux.
+Can be installed by using `pacaur/yay/etc.` after activating AUR on Arch Linux, 
+or in AUR part of Manjaro (Arch Linux derivative) Linux.
+
+---
+
+## Debian / Devuan
+
+A [precompiled binary package](https://github.com/jeanslack/Videomass/releases/latest) (`.deb`) 
+(arch-independent) is available and can be installed on both **Debian11 bullseye** and **Debian12 bookworm**. 
+This precompiled package is also compatible with **Devuan Chimaera** and **Devuan Daedalus**.
 
 ---
 

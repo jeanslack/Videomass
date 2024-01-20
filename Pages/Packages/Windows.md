@@ -9,7 +9,22 @@ nav_order: 1
 
 # MS Windows
 
-## Executables
+### Notice for MSWindows owners
+{: .bg-red-300}
+
+At the moment I have not been able to create the installers for MS Windows due to 
+various problems that occurred during the building of the package using pyinstaller, 
+therefore the distribution of new versions of Videomass into stand-alone executables 
+is suspended for now.
+
+If you are interested in installing Videomass on MSWindows, please follow this 
+installation method:
+
+* [PyPi package](Python_Package) 
+
+Also, if you're interested in how to start videomass using the source code, look [here](Source_Code).
+
+## Old executables
 
 Minimum requirements:
 - [Microsoft Windows 7](https://docs.microsoft.com/en-us/lifecycle/products/windows-7)

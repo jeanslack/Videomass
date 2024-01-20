@@ -23,7 +23,7 @@ you can follow this installation method:
 
 * [PyPi package](Python_Package) 
 
-If you are interested in how to start it from source code look [here](Source_Code).
+Also, if you're interested in how to start videomass using the source code, look [here](Source_Code).
 
 ---
 
