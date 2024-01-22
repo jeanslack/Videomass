@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2023
+Rev: Gen.22.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,6 +25,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+import time
 import os
 import sys
 import wx
@@ -320,10 +321,9 @@ class PrstPan(wx.Panel):
         """
         if self.check_presets_version:
             return
-        source = os.path.join(self.appdata['srcpath'], 'presets')
-        srctext = os.path.join(source, 'version', 'version.txt')
-        dest = os.path.join(self.appdata['confdir'], 'presets')
-        conftext = os.path.join(dest, 'version', 'version.txt')
+
+        srctext = os.path.join(self.src_prst, 'version', 'version.txt')
+        conftext = os.path.join(self.user_prst, 'version', 'version.txt')
         if not os.path.isfile(conftext) or not os.path.isfile(srctext):
             return
 
@@ -345,17 +345,22 @@ class PrstPan(wx.Panel):
                     'will be backed up in the same folder as the new '
                     'incoming presets:\n"{2}"\n\n'
                     'Do you want to update the preset '
-                    'database now?').format(srcversion, confversion, dest)
+                    'database now?').format(srcversion,
+                                            confversion,
+                                            self.user_prst
+                                            )
             if wx.MessageBox(msg, _('Please confirm'), wx.ICON_QUESTION
                              | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                 return
-
-            backup = copydir_recursively(dest, dest,
-                                         f'Version-{confversion}-BACKUP')
+            datenow = time.strftime('%H%M%S-%a_%d_%B_%Y')
+            backup = copydir_recursively(self.user_prst, self.user_prst,
+                                         f'v{confversion}-{datenow}-Backup')
             if backup:
                 wx.MessageBox(f'{backup}', "Videomass", wx.ICON_ERROR, self)
 
-            self.preset_import_all(self, source=source)
+            err = self.preset_import_all(event=None)
+            if err:
+                return
             copyvers = copy_restore(srctext, conftext)
             if copyvers:
                 wx.MessageBox(f'{copyvers}', "Videomass", wx.ICON_ERROR, self)
@@ -645,23 +650,24 @@ class PrstPan(wx.Panel):
                       "Videomass", wx.OK, self)
     # ------------------------------------------------------------------#
 
-    def preset_import_all(self, event, source=None):
+    def preset_import_all(self, event):
         """
         Import all presets previously saved in a folder and replaces
         the existing ones
         """
-        if not source:
+        source = self.src_prst
+        if event:
             if wx.MessageBox(_("This will update the presets database. "
                                "Don't worry, it will keep all your saved "
                                "profiles.\n\nDo you want to continue?"),
                              _("Please confirm"), wx.ICON_QUESTION
                              | wx.CANCEL | wx.YES_NO, self) != wx.YES:
-                return
+                return None
 
             dialsave = wx.DirDialog(self, _("Import a new presets folder"),
                                     "", style=wx.DD_DEFAULT_STYLE)
             if dialsave.ShowModal() == wx.ID_CANCEL:
-                return
+                return None
             source = dialsave.GetPath()
             dialsave.Destroy()
 
@@ -670,10 +676,15 @@ class PrstPan(wx.Panel):
                      if n.endswith('.prst')]
 
         # Return a new set with elements common to the set and all others.
+        # In short, copy only files with matching basenames.
         for f in set(incoming).intersection(outcoming):
-            update_oudated_profiles(os.path.join(source, f),
-                                    os.path.join(self.user_prst, f))
-        outerror = copy_on('prst', source, self.user_prst)
+            err = update_oudated_profiles(os.path.join(source, f),
+                                          os.path.join(self.user_prst, f))
+            if err:
+                wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
+                return err
+        # copies non-existent ones to the destination folder
+        outerror = copy_on('prst', source, self.user_prst, overw=False)
         if outerror:
             wx.MessageBox(f"{outerror}", "Videomass", wx.ICON_ERROR, self)
         else:
@@ -698,14 +709,11 @@ class PrstPan(wx.Panel):
                          self) == wx.YES:
 
             filename = self.cmbx_prst.GetValue()
-            status = copy_restore(f'{self.user_prst}/{filename}.prst',
+            status = copy_restore(f'{self.src_prst}/{filename}.prst',
                                   f'{self.user_prst}/{filename}.prst'
                                   )
             if status:
-                wx.MessageBox(_('Sorry, this preset is not part '
-                                'of default Videomass presets.'),
-                              "Videomass", wx.ICON_ERROR, self
-                              )
+                wx.MessageBox(status, "Videomass", wx.ICON_ERROR, self)
                 return
 
             wx.MessageBox(_("Successful recovery"), "Videomass", wx.OK, self)
@@ -930,16 +938,16 @@ class PrstPan(wx.Panel):
 
         """
         if not self.parent.time_seq:
-            time = _('Unset')
+            timeseq = _('Unset')
         else:
             t = self.parent.time_seq.split()
-            time = _('start  {} | duration  {}').format(t[1], t[3])
+            timeseq = _('start  {} | duration  {}').format(t[1], t[3])
 
         numfile = f"{str(cntmax)} file in queue"
 
         formula = (_("Queued File\nPass Encoding"
                      "\nProfile Used\nOutput Format\nTime Period"))
         dictions = (f"{numfile}\n{passes}\n"
-                    f"{self.array[0]}\n{self.array[5]}\n{time}"
+                    f"{self.array[0]}\n{self.array[5]}\n{timeseq}"
                     )
         return formula, dictions

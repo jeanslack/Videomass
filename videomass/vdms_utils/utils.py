@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.09.2023
+Rev: Gen.22.2024
 Code checker: flake8, pylint .
 
 This file is part of Videomass.
@@ -294,13 +294,13 @@ def copy_restore(src, dest):
         shutil.copyfile(str(src), str(dest))
     except FileNotFoundError as err:
         # file src not exists
-        return err
-    except SameFileError as err:
+        return str(err)
+    except shutil.SameFileError as err:
         # src and dest are the same file and same dir.
-        return err
+        return str(err)
     except OSError as err:
         # The dest location must be writable
-        return err
+        return str(err)
 
     return None
 # ------------------------------------------------------------------#
@@ -330,7 +330,7 @@ def copydir_recursively(source, destination, extraname=None):
 # ------------------------------------------------------------------#
 
 
-def copy_on(ext, source, destination):
+def copy_on(ext, source, destination, overw=True):
     """
     Given a source (dirname), use glob for a given file extension (ext)
     and iterate to move files to another directory (destination).
@@ -340,11 +340,16 @@ def copy_on(ext, source, destination):
     ext: files extension without dot
     source: path to the source directory
     destination: path to the destination directory
+    overw: if `True`, overwrite file destination
     """
+    destdir = os.listdir(destination)
     files = glob.glob(f"{source}/*.{ext}")
     if not files:
         return f'Error: No such file with ".{ext}" format found'
     for fln in files:
+        if not overw:
+            if os.path.basename(fln) in destdir:
+                continue
         try:
             shutil.copy(fln, f'{destination}')
         except IOError as error:
