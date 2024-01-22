@@ -342,22 +342,16 @@ class PrstPan(wx.Panel):
                     'It seems that the local preset database in your '
                     'configuration folder is outdated. If you choose to '
                     'update the preset database, the outdated version '
-                    'will be backed up in the same folder as the new '
-                    'incoming presets:\n"{2}"\n\n'
+                    'will be backed up in the configuration folder:\n'
+                    '"{2}"\n\n'
                     'Do you want to update the preset '
                     'database now?').format(srcversion,
                                             confversion,
-                                            self.user_prst
+                                            self.appdata['confdir'],
                                             )
             if wx.MessageBox(msg, _('Please confirm'), wx.ICON_QUESTION
                              | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                 return
-            datenow = time.strftime('%H%M%S-%a_%d_%B_%Y')
-            backup = copydir_recursively(self.user_prst, self.user_prst,
-                                         f'v{confversion}-{datenow}-Backup')
-            if backup:
-                wx.MessageBox(f'{backup}', "Videomass", wx.ICON_ERROR, self)
-
             err = self.preset_import_all(event=None)
             if err:
                 return
@@ -652,8 +646,15 @@ class PrstPan(wx.Panel):
 
     def preset_import_all(self, event):
         """
-        Import all presets previously saved in a folder and replaces
-        the existing ones
+        This method depends on the event given as argument: If it is
+        `None` it will restore the user's preset directory to the
+        directory given by the `source` attribute. Otherwise the
+        event will be triggered by clicking on the `Import Group`
+        button which will have a slightly different behavior. In any
+        case it will not overwrite existing presets but will update
+        them with missing profiles on the destination files.
+        In addition it will copy all other presets that do not yet
+        exist on the destination.
         """
         source = self.src_prst
         if event:
@@ -671,6 +672,13 @@ class PrstPan(wx.Panel):
             source = dialsave.GetPath()
             dialsave.Destroy()
 
+        # create a dir backup
+        datenow = time.strftime('%H%M%S-%a_%d_%B_%Y')
+        err = copydir_recursively(self.user_prst, self.appdata['confdir'],
+                                  f'presets-{datenow}-Backup')
+        if err:
+            wx.MessageBox(f'{err}', "Videomass", wx.ICON_ERROR, self)
+
         incoming = [n for n in os.listdir(source) if n.endswith('.prst')]
         outcoming = [n for n in os.listdir(self.user_prst)
                      if n.endswith('.prst')]
@@ -684,14 +692,16 @@ class PrstPan(wx.Panel):
                 wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
                 return err
         # copies non-existent ones to the destination folder
-        outerror = copy_on('prst', source, self.user_prst, overw=False)
-        if outerror:
-            wx.MessageBox(f"{outerror}", "Videomass", wx.ICON_ERROR, self)
-        else:
-            wx.MessageBox(_("The presets database has been successfully "
-                            "updated"), "Videomass", wx.OK, self)
-            self.reset_list(True)
-            self.on_deselect(self, cleardata=False)
+        err = copy_on('prst', source, self.user_prst, overw=False)
+        if err:
+            wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
+            return err
+
+        wx.MessageBox(_("The presets database has been successfully "
+                        "updated"), "Videomass", wx.OK, self)
+        self.reset_list(True)
+        self.on_deselect(self, cleardata=False)
+        return None
     # ------------------------------------------------------------------#
 
     def preset_default(self, event):
@@ -731,9 +741,18 @@ class PrstPan(wx.Panel):
                          wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                          self) == wx.YES:
 
-            outerror = copy_on('prst', self.src_prst, self.user_prst)
-            if outerror:
-                wx.MessageBox(f"{outerror}", "Videomass", wx.ICON_ERROR, self)
+            if os.path.exists(self.user_prst):
+                # create a dir backup
+                datenow = time.strftime('%H%M%S-%a_%d_%B_%Y')
+                err = os.rename(self.user_prst,
+                                f"{self.user_prst}-{datenow}-Backup")
+                if err:
+                    wx.MessageBox(f'{err}', "Videomass", wx.ICON_ERROR, self)
+                    return
+
+            err = copydir_recursively(self.src_prst, self.appdata['confdir'])
+            if err:
+                wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
             else:
                 wx.MessageBox(_("All default presets have been "
                                 "successfully recovered"),
