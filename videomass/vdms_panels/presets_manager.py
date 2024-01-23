@@ -696,10 +696,11 @@ class PrstPan(wx.Panel):
                 wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
                 return err
         # copies non-existent ones to the destination folder
-        err = copy_on('prst', source, self.user_prst, overw=False)
-        if err:
-            wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
-            return err
+        if event:  # only `Import Group` event
+            err = copy_on('prst', source, self.user_prst, overw=False)
+            if err:
+                wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
+                return err
 
         wx.MessageBox(_("The presets database has been successfully "
                         "updated"), "Videomass", wx.OK, self)
