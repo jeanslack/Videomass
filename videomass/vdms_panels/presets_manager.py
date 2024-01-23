@@ -39,6 +39,7 @@ from videomass.vdms_io.presets_manager_prop import write_new_profile
 from videomass.vdms_utils.utils import copy_restore
 from videomass.vdms_utils.utils import copy_on
 from videomass.vdms_utils.utils import copydir_recursively
+from videomass.vdms_utils.utils import copy_missing_data
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_dialogs import presets_addnew
 from videomass.vdms_dialogs.epilogue import Formula
@@ -337,27 +338,30 @@ class PrstPan(wx.Panel):
         self.check_presets_version = True
 
         if updated > old:
-            msg = _('Outdated preset version found: v{1}.\n'
+            msg = _('Outdated presets version found: v{1}\n'
                     'A new version is available: v{0}\n\n'
-                    'It seems that the local preset database in your '
-                    'configuration folder is outdated. If you choose to '
-                    'update the preset database, the outdated version '
-                    'will be backed up in the configuration folder:\n'
-                    '"{2}"\n\n'
-                    'Do you want to update the preset '
-                    'database now?').format(srcversion,
-                                            confversion,
-                                            self.appdata['confdir'],
-                                            )
+                    'This update provides new presets included on the '
+                    'latest versions of Videomass.\n\n'
+                    'To avoid data loss and allow for possible recovery, '
+                    'the outdated presets folder will be backed up in the '
+                    'program configuration folder: "{2}"\n\n'
+                    'Do you want to perform this '
+                    'update now?').format(srcversion,
+                                          confversion,
+                                          self.appdata["confdir"])
             if wx.MessageBox(msg, _('Please confirm'), wx.ICON_QUESTION
                              | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                 return
             err = self.preset_import_all(event=None)
             if err:
                 return
+
             copyvers = copy_restore(srctext, conftext)
             if copyvers:
                 wx.MessageBox(f'{copyvers}', "Videomass", wx.ICON_ERROR, self)
+                return
+            # copies missing file/dir to the destination folder
+            copy_missing_data(self.src_prst, self.user_prst)
     # --------------------------------------------------------------------
 
     def reset_list(self, reset_cmbx=False):
@@ -522,7 +526,7 @@ class PrstPan(wx.Panel):
         filename = self.cmbx_prst.GetValue()
         if wx.MessageBox(_('Are you sure you want to remove "{}" preset?\n\n '
                            'It will be moved to the "Removals" subfolder '
-                           'of the presets folder.').format(filename),
+                           'inside the presets folder.').format(filename),
                          _('Please confirm'), wx.ICON_QUESTION
                          | wx.CANCEL | wx.YES_NO, self) != wx.YES:
             return
@@ -678,14 +682,14 @@ class PrstPan(wx.Panel):
                                   f'presets-{datenow}-Backup')
         if err:
             wx.MessageBox(f'{err}', "Videomass", wx.ICON_ERROR, self)
+            return err
 
-        incoming = [n for n in os.listdir(source) if n.endswith('.prst')]
-        outcoming = [n for n in os.listdir(self.user_prst)
-                     if n.endswith('.prst')]
+        incom = [n for n in os.listdir(source) if n.endswith('.prst')]
+        outcom = [n for n in os.listdir(self.user_prst) if n.endswith('.prst')]
 
         # Return a new set with elements common to the set and all others.
         # In short, copy only files with matching basenames.
-        for f in set(incoming).intersection(outcoming):
+        for f in set(incom).intersection(outcom):
             err = update_oudated_profiles(os.path.join(source, f),
                                           os.path.join(self.user_prst, f))
             if err:
@@ -736,7 +740,10 @@ class PrstPan(wx.Panel):
         restore all preset files directory
         """
         if wx.MessageBox(_("Be careful! This action will restore all presets "
-                           "to default ones. Your profiles may be deleted!"
+                           "to default ones. Your profiles may be deleted!\n\n"
+                           "In any case, to avoid data loss, the presets "
+                           "folder will be backed up in the program's "
+                           "configuration folder."
                            "\n\nDo you want to continue?"), _("Warning"),
                          wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                          self) == wx.YES:

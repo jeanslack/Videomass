@@ -285,10 +285,27 @@ def milliseconds2clocksec(milliseconds):
 # ------------------------------------------------------------------------
 
 
+def copy_missing_data(src, dest):
+    """
+    Copy missing files and directories to a given destination
+    path using the same names as the source path.
+    """
+    srclist = os.listdir(src)
+    destlist = os.listdir(dest)
+    for f in srclist:
+        if f not in destlist:
+            if os.path.isfile(os.path.join(src, f)):
+                copy_restore(os.path.join(src, f), os.path.join(dest, f))
+            elif os.path.isdir(os.path.join(src, f)):
+                copydir_recursively(os.path.join(src, f), dest)
+# ------------------------------------------------------------------------
+
+
 def copy_restore(src, dest):
     """
-    copy a specific file from src to dest. If dest exists,
-    it will be overwritten with src without confirmation.
+    Copy the contents (no metadata) of the file named
+    src to a file named dst. Please visit doc webpage at
+    <https://docs.python.org/3/library/shutil.html#shutil.copyfile>
     """
     try:
         shutil.copyfile(str(src), str(dest))

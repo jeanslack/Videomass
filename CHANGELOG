@@ -22,8 +22,8 @@ Mon, 22 Jan 2024 V.5.0.4
   * [A/V Conversions) Improved audio dialog settings (Audio Properties).
   * Updated Videomass presets to v0.19 .
   * [Preset Manager] Full preset restore operations (including import by
-    Groups) now include a full backup of the preset source directory located
-    in the user configuration directory.
+    Groups) now include a backup of the preset source directory in the
+    program configuration directory.
 +------------------------------------+
 Mon, 15 Jan 2024 V.5.0.3
 

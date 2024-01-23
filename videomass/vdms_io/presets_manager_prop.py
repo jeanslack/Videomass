@@ -79,12 +79,12 @@ def json_data(arg):
             data = json.load(fln)
 
     except json.decoder.JSONDecodeError as err:
-        msg = _('Invalid preset loaded.\nIt is recommended to remove it or '
-                'rewrite it into a JSON format compatible with Videomass.\n\n'
-                'Possible solution: open the Presets Manager panel, go to '
-                'the presets column and try to click the "Restore" button'
+        msg = _('You are attempting to load a preset written with '
+                'invalid JSON encoding.\n\n'
+                'You can try to restore it or import a correct one, '
+                'otherwise it is recommended to remove it.'
                 )
-        wx.MessageBox(f'\nERROR: {err}\n\nFile: "{arg}"\n{msg}',
+        wx.MessageBox(f'\nERROR: {err}\n\nFILE: "{arg}"\n\n{msg}',
                       ("Videomass"), wx.ICON_ERROR | wx.OK, None)
 
         return 'error'
@@ -122,22 +122,21 @@ def update_oudated_profiles(new, old):
     Updates (replaces with new ones) old profiles with same
     name as new profiles but Keep all others.
     """
-    msg1 = ("This task was broken due to the following "
-            "json decoding error of file")
-    msg2 = ("Please correct any errors in the file's "
-            "code before rerunning this task.")
+    msg = _("Operation aborted due to possible JSON encoding/decoding "
+            "error.\nFix any errors in the JSON code contained on the FILE "
+            "before performing this operation again.")
     if new and old:
         with open(new, 'r', encoding='utf8') as newf:
             try:
                 incoming = json.load(newf)
             except json.decoder.JSONDecodeError as err:
-                return f"{msg1} '{new}'\n\n{str(err)}\n\n{msg2}"
+                return f"ERROR: {str(err)}\n\nFILE: '{new}'\n\n{msg}"
 
         with open(old, 'r', encoding='utf8') as oldf:
             try:
                 outcoming = json.load(oldf)
             except json.decoder.JSONDecodeError as err:
-                return f"{msg1} '{old}'\n\n{str(err)}\n\n{msg2}"
+                return f"ERROR: {str(err)}\n\nFILE: '{old}'\n\n{msg}"
 
         items_new = {value["Name"]: value for value in incoming}
         items_old = {value["Name"]: value for value in outcoming}
