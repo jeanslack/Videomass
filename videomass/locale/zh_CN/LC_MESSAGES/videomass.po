@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 5.0.3\n"
+"Project-Id-Version: Videomass 5.0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-16 18:06+0100\n"
-"PO-Revision-Date: 2023-12-22 13:31+0100\n"
+"POT-Creation-Date: 2024-01-24 16:17+0100\n"
+"PO-Revision-Date: 2024-01-24 16:20+0100\n"
 "Last-Translator: MaiJZ https://github.com/maijz128\n"
 "Language-Team: simplified Chinese (CN)\n"
 "Language: zh_CN\n"
@@ -925,7 +925,7 @@ msgstr "输出格式。清空以复制格式和编解码器。不要包括\".\""
 msgid "Profile Name"
 msgstr "配置文件名称"
 
-#: ../vdms_dialogs/presets_addnew.py:81 ../vdms_panels/presets_manager.py:393
+#: ../vdms_dialogs/presets_addnew.py:81 ../vdms_panels/presets_manager.py:396
 msgid "Description"
 msgstr "描述"
 
@@ -2038,19 +2038,12 @@ msgstr ""
 "\n"
 
 #: ../vdms_io/presets_manager_prop.py:82
-#, fuzzy
 msgid ""
-"Invalid preset loaded.\n"
-"It is recommended to remove it or rewrite it into a JSON format compatible "
-"with Videomass.\n"
+"You are attempting to load a preset written with invalid JSON encoding.\n"
 "\n"
-"Possible solution: open the Presets Manager panel, go to the presets column "
-"and try to click the \"Restore\" button"
+"You can try to restore it or import a correct one, otherwise it is "
+"recommended to remove it."
 msgstr ""
-"Invalid preset loaded.\n"
-"建议删除它或将其改写成与Videomass.com兼容的JSON格式。\n"
-"\n"
-"可能的解决方案：打开预设管理器面板，进入预设栏并尝试点击 \"恢复 \"按钮"
 
 #: ../vdms_io/presets_manager_prop.py:93
 #, fuzzy
@@ -2063,6 +2056,13 @@ msgstr ""
 "No presets found.\n"
 "\n"
 "可能的解决方案：打开预设管理器面板，进入预设栏，尝试点击 \"恢复所有... \"按钮"
+
+#: ../vdms_io/presets_manager_prop.py:125
+msgid ""
+"Operation aborted due to possible JSON encoding/decoding error.\n"
+"Fix any errors in the JSON code contained on the FILE before performing this "
+"operation again."
+msgstr ""
 
 #: ../vdms_main/main_frame.py:193 ../vdms_main/main_frame.py:1372
 #: ../vdms_main/main_frame.py:1402 ../vdms_ytdlp/main_ytdlp.py:99
@@ -2200,7 +2200,7 @@ msgstr "打开选定的文件"
 msgid "Remove the selected files from the list"
 msgstr "从列表中删除选定的文件"
 
-#: ../vdms_main/main_frame.py:462 ../vdms_panels/presets_manager.py:219
+#: ../vdms_main/main_frame.py:462 ../vdms_panels/presets_manager.py:221
 #: ../vdms_panels/video_to_sequence.py:169 ../vdms_ytdlp/main_ytdlp.py:301
 msgid "Edit"
 msgstr "编辑"
@@ -3060,12 +3060,12 @@ msgstr "{}队列中的文件"
 msgid "Off"
 msgstr "关闭"
 
-#: ../vdms_panels/av_conversions.py:2259 ../vdms_panels/presets_manager.py:933
+#: ../vdms_panels/av_conversions.py:2259 ../vdms_panels/presets_manager.py:968
 #: ../vdms_panels/video_to_sequence.py:587
 msgid "Unset"
 msgstr "未设置"
 
-#: ../vdms_panels/av_conversions.py:2262 ../vdms_panels/presets_manager.py:936
+#: ../vdms_panels/av_conversions.py:2262 ../vdms_panels/presets_manager.py:971
 #: ../vdms_panels/video_to_sequence.py:590
 msgid "start  {} | duration  {}"
 msgstr "start  {} | duration  {}"
@@ -3602,171 +3602,172 @@ msgstr "等等... 我打断了"
 msgid "...Interrupted"
 msgstr "......被打断"
 
-#: ../vdms_panels/presets_manager.py:111
+#: ../vdms_panels/presets_manager.py:113
 msgid "Presets"
 msgstr "预设"
 
-#: ../vdms_panels/presets_manager.py:134
+#: ../vdms_panels/presets_manager.py:136
 msgid "New"
 msgstr "创建"
 
-#: ../vdms_panels/presets_manager.py:137
+#: ../vdms_panels/presets_manager.py:139
 msgid "Remove"
 msgstr "移除"
 
-#: ../vdms_panels/presets_manager.py:147
+#: ../vdms_panels/presets_manager.py:149
 msgid "Export selected"
 msgstr "导出选定对象"
 
-#: ../vdms_panels/presets_manager.py:150
+#: ../vdms_panels/presets_manager.py:152
 msgid "Export all..."
 msgstr "导出所有..."
 
-#: ../vdms_panels/presets_manager.py:161
+#: ../vdms_panels/presets_manager.py:163
 msgid "Import preset"
 msgstr "导入预设"
 
-#: ../vdms_panels/presets_manager.py:164
+#: ../vdms_panels/presets_manager.py:166
 msgid "Import group"
 msgstr "导入预设组"
 
-#: ../vdms_panels/presets_manager.py:175
+#: ../vdms_panels/presets_manager.py:177
 msgid "Restore"
 msgstr "恢复"
 
-#: ../vdms_panels/presets_manager.py:179
+#: ../vdms_panels/presets_manager.py:181
 msgid "Restore all..."
 msgstr "恢复所有..."
 
-#: ../vdms_panels/presets_manager.py:191
+#: ../vdms_panels/presets_manager.py:193
 msgid "Reload"
 msgstr "重新加载"
 
-#: ../vdms_panels/presets_manager.py:205
+#: ../vdms_panels/presets_manager.py:207
 msgid "Profiles"
 msgstr "配置文件"
 
-#: ../vdms_panels/presets_manager.py:210
+#: ../vdms_panels/presets_manager.py:212
 msgid "Add"
 msgstr "添加"
 
-#: ../vdms_panels/presets_manager.py:214
+#: ../vdms_panels/presets_manager.py:216
 msgid "Delete"
 msgstr "删除"
 
-#: ../vdms_panels/presets_manager.py:224
+#: ../vdms_panels/presets_manager.py:226
 msgid "Duplicate"
 msgstr "复制"
 
-#: ../vdms_panels/presets_manager.py:233
+#: ../vdms_panels/presets_manager.py:235
 #, fuzzy
 msgid "One-Pass"
 msgstr "单程票"
 
-#: ../vdms_panels/presets_manager.py:243
+#: ../vdms_panels/presets_manager.py:245
 #, fuzzy
 msgid "Two-Pass"
 msgstr "两种方式"
 
-#: ../vdms_panels/presets_manager.py:263
+#: ../vdms_panels/presets_manager.py:265
 msgid "Choose a preset and view its profiles"
 msgstr "选择一个预设并查看其配置文件"
 
-#: ../vdms_panels/presets_manager.py:264
+#: ../vdms_panels/presets_manager.py:266
 #, fuzzy
 msgid "Create a new profile and save it in the selected preset"
 msgstr "创建一个新的配置文件，并将其保存在选定的预置中"
 
-#: ../vdms_panels/presets_manager.py:266
+#: ../vdms_panels/presets_manager.py:268
 msgid "Delete the selected profile"
 msgstr "删除所选配置文件"
 
-#: ../vdms_panels/presets_manager.py:267
+#: ../vdms_panels/presets_manager.py:269
 msgid "Edit the selected profile"
 msgstr "编辑所选配置文件"
 
-#: ../vdms_panels/presets_manager.py:268
+#: ../vdms_panels/presets_manager.py:270
 msgid "Create a new preset"
 msgstr "创建一个新的预设"
 
-#: ../vdms_panels/presets_manager.py:270
+#: ../vdms_panels/presets_manager.py:272
 msgid "Remove the selected preset from the Presets Manager"
 msgstr "从预设管理器中删除选定的预设"
 
-#: ../vdms_panels/presets_manager.py:272
+#: ../vdms_panels/presets_manager.py:274
 msgid "Export selected preset as copy"
 msgstr "将选定的预设导出为副本"
 
-#: ../vdms_panels/presets_manager.py:274
+#: ../vdms_panels/presets_manager.py:276
 msgid "Export entire presets folder as copy"
 msgstr "将整个预设文件夹导出为副本"
 
-#: ../vdms_panels/presets_manager.py:276
+#: ../vdms_panels/presets_manager.py:278
 msgid "Import a new preset or update an existing one"
 msgstr "导入一个新的预设或更新一个现有的预设"
 
-#: ../vdms_panels/presets_manager.py:278
+#: ../vdms_panels/presets_manager.py:280
 msgid "Import a group of presets from a folder and update existing ones"
 msgstr "从一个文件夹中导入一组预设并更新现有预设"
 
-#: ../vdms_panels/presets_manager.py:281
+#: ../vdms_panels/presets_manager.py:283
 msgid "Replace the selected preset with the Videomass default one"
 msgstr "用Videomass默认的预设替换所选的预设"
 
-#: ../vdms_panels/presets_manager.py:283
+#: ../vdms_panels/presets_manager.py:285
 #, fuzzy
 msgid "Retrieve all Videomass default presets"
 msgstr "检索所有Videomass的默认预置"
 
-#: ../vdms_panels/presets_manager.py:285
+#: ../vdms_panels/presets_manager.py:287
 msgid "Update the presets list"
 msgstr "更新预设列表"
 
-#: ../vdms_panels/presets_manager.py:286
+#: ../vdms_panels/presets_manager.py:288
 #, fuzzy
 msgid "First pass of the selected profile"
 msgstr "选定配置文件的第一遍"
 
-#: ../vdms_panels/presets_manager.py:288
+#: ../vdms_panels/presets_manager.py:290
 #, fuzzy
 msgid "Second pass of the selected profile"
 msgstr "选定轮廓的第二道工序"
 
-#: ../vdms_panels/presets_manager.py:340
+#: ../vdms_panels/presets_manager.py:341
 #, python-brace-format
 msgid ""
-"Outdated preset version found: v{1}.\n"
+"Outdated presets version found: v{1}\n"
 "A new version is available: v{0}\n"
 "\n"
-"It seems that the local preset database in your configuration folder is "
-"outdated. If you choose to update the preset database, the outdated version "
-"will be backed up in the same folder as the new incoming presets:\n"
-"\"{2}\"\n"
+"This update provides new presets included on the latest versions of "
+"Videomass.\n"
 "\n"
-"Do you want to update the preset database now?"
+"To avoid data loss and allow for possible recovery, the outdated presets "
+"folder will be backed up in the program configuration folder: \"{2}\"\n"
+"\n"
+"Do you want to perform this update now?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:349 ../vdms_panels/presets_manager.py:527
-#: ../vdms_panels/presets_manager.py:567 ../vdms_panels/presets_manager.py:631
-#: ../vdms_panels/presets_manager.py:657 ../vdms_panels/presets_manager.py:807
-#: ../vdms_panels/presets_manager.py:838 ../vdms_ytdlp/youtubedl_ui.py:641
+#: ../vdms_panels/presets_manager.py:352 ../vdms_panels/presets_manager.py:530
+#: ../vdms_panels/presets_manager.py:570 ../vdms_panels/presets_manager.py:634
+#: ../vdms_panels/presets_manager.py:668 ../vdms_panels/presets_manager.py:842
+#: ../vdms_panels/presets_manager.py:873 ../vdms_ytdlp/youtubedl_ui.py:641
 #: ../vdms_ytdlp/youtubedl_ui.py:647
 msgid "Please confirm"
 msgstr "请确认"
 
-#: ../vdms_panels/presets_manager.py:392
+#: ../vdms_panels/presets_manager.py:395
 msgid "Name"
 msgstr "名称"
 
-#: ../vdms_panels/presets_manager.py:394
+#: ../vdms_panels/presets_manager.py:397
 msgid "Output Format"
 msgstr "输出格式"
 
-#: ../vdms_panels/presets_manager.py:395
+#: ../vdms_panels/presets_manager.py:398
 msgid "Supported Format List"
 msgstr "支持的格式列表"
 
-#: ../vdms_panels/presets_manager.py:413 ../vdms_panels/presets_manager.py:472
+#: ../vdms_panels/presets_manager.py:416 ../vdms_panels/presets_manager.py:475
 #, fuzzy
 msgid ""
 "ERROR: Typing error on JSON keys: {}\n"
@@ -3779,15 +3780,15 @@ msgstr ""
 "文件： \"{}\"/n\n"
 "key 畸形 ?"
 
-#: ../vdms_panels/presets_manager.py:493
+#: ../vdms_panels/presets_manager.py:496
 msgid "Enter name for new preset"
 msgstr "为新的预设输入名称"
 
-#: ../vdms_panels/presets_manager.py:506
+#: ../vdms_panels/presets_manager.py:509
 msgid "Cannot save current data in file '{}'."
 msgstr "无法在文件'{}'中保存当前数据。"
 
-#: ../vdms_panels/presets_manager.py:510
+#: ../vdms_panels/presets_manager.py:513
 msgid ""
 "'Successful!\n"
 "\n"
@@ -3797,17 +3798,22 @@ msgstr ""
 "\n"
 "一个新的空预设已经被创建。"
 
-#: ../vdms_panels/presets_manager.py:524
+#: ../vdms_panels/presets_manager.py:527
+#, fuzzy
+#| msgid ""
+#| "Are you sure you want to remove \"{}\" preset?\n"
+#| "\n"
+#| " It will be moved to the \"Removals\" subfolder of the presets folder."
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
 "\n"
-" It will be moved to the \"Removals\" subfolder of the presets folder."
+" It will be moved to the \"Removals\" subfolder inside the presets folder."
 msgstr ""
 "你确定你想要删除 \"{}\" 预设？\n"
 "\n"
 " 它将被移到预设文件夹的 \"移除 \"子文件夹中。"
 
-#: ../vdms_panels/presets_manager.py:535
+#: ../vdms_panels/presets_manager.py:538
 msgid ""
 "{}\n"
 "\n"
@@ -3817,41 +3823,41 @@ msgstr ""
 "\n"
 "对不起，删除失败，无法继续。"
 
-#: ../vdms_panels/presets_manager.py:545
+#: ../vdms_panels/presets_manager.py:548
 #, fuzzy, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
 msgstr "预设\"{0}\"已成功删除"
 
-#: ../vdms_panels/presets_manager.py:560
+#: ../vdms_panels/presets_manager.py:563
 msgid "Choose a folder to save the selected preset"
 msgstr "选择一个文件夹来保存选定的预设"
 
-#: ../vdms_panels/presets_manager.py:565
+#: ../vdms_panels/presets_manager.py:568
 msgid "A file with this name already exists, do you want to overwrite it?"
 msgstr "已经有一个以此为名的文件，你想覆盖它吗？"
 
-#: ../vdms_panels/presets_manager.py:578
+#: ../vdms_panels/presets_manager.py:581
 #, fuzzy
 msgid "The preset was exported successfully"
 msgstr "预设已成功导出"
 
-#: ../vdms_panels/presets_manager.py:588
+#: ../vdms_panels/presets_manager.py:591
 msgid "Choose a folder to export all presets"
 msgstr "选择一个文件夹来导出所有预设"
 
-#: ../vdms_panels/presets_manager.py:597
+#: ../vdms_panels/presets_manager.py:600
 msgid "All presets have been exported successfully"
 msgstr "所有预设都已成功导出"
 
-#: ../vdms_panels/presets_manager.py:608
+#: ../vdms_panels/presets_manager.py:611
 msgid "Import a new preset"
 msgstr "导入一个新的预设"
 
-#: ../vdms_panels/presets_manager.py:619
+#: ../vdms_panels/presets_manager.py:622
 msgid "Error, invalid preset: \"{}\""
 msgstr "错误，无效的预设。\"{}\""
 
-#: ../vdms_panels/presets_manager.py:627
+#: ../vdms_panels/presets_manager.py:630
 msgid ""
 "This preset already exists and is about to be updated. Don't worry, it will "
 "keep all your saved profiles.\n"
@@ -3862,11 +3868,11 @@ msgstr ""
 "\n"
 "你想要继续吗?"
 
-#: ../vdms_panels/presets_manager.py:644
+#: ../vdms_panels/presets_manager.py:647
 msgid "A new preset was successfully imported"
 msgstr "一个新的预设被成功导入"
 
-#: ../vdms_panels/presets_manager.py:654
+#: ../vdms_panels/presets_manager.py:665
 msgid ""
 "This will update the presets database. Don't worry, it will keep all your "
 "saved profiles.\n"
@@ -3877,16 +3883,16 @@ msgstr ""
 "\n"
 "你想要继续吗?"
 
-#: ../vdms_panels/presets_manager.py:661
+#: ../vdms_panels/presets_manager.py:672
 msgid "Import a new presets folder"
 msgstr "导入一个新的预置文件夹"
 
-#: ../vdms_panels/presets_manager.py:680
+#: ../vdms_panels/presets_manager.py:705
 #, fuzzy
 msgid "The presets database has been successfully updated"
 msgstr "预置数据库已成功更新"
 
-#: ../vdms_panels/presets_manager.py:690
+#: ../vdms_panels/presets_manager.py:716
 msgid ""
 "Be careful! The selected preset will be overwritten with the default one. "
 "Your profiles may be deleted!\n"
@@ -3897,23 +3903,27 @@ msgstr ""
 "\n"
 "你想要继续吗?"
 
-#: ../vdms_panels/presets_manager.py:694 ../vdms_panels/presets_manager.py:722
+#: ../vdms_panels/presets_manager.py:720 ../vdms_panels/presets_manager.py:748
 msgid "Warning"
 msgstr "警告"
 
-#: ../vdms_panels/presets_manager.py:705
-#, fuzzy
-msgid "Sorry, this preset is not part of default Videomass presets."
-msgstr "对不起，这个预设不是默认的Videomass预设的一部分。"
-
-#: ../vdms_panels/presets_manager.py:711
+#: ../vdms_panels/presets_manager.py:734
 msgid "Successful recovery"
 msgstr "成功恢复"
 
-#: ../vdms_panels/presets_manager.py:720
+#: ../vdms_panels/presets_manager.py:743
+#, fuzzy
+#| msgid ""
+#| "Be careful! This action will restore all presets to default ones. Your "
+#| "profiles may be deleted!\n"
+#| "\n"
+#| "Do you want to continue?"
 msgid ""
 "Be careful! This action will restore all presets to default ones. Your "
 "profiles may be deleted!\n"
+"\n"
+"In any case, to avoid data loss, the presets folder will be backed up in the "
+"program's configuration folder.\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
@@ -3922,31 +3932,31 @@ msgstr ""
 "\n"
 "你想要继续吗?"
 
-#: ../vdms_panels/presets_manager.py:730
+#: ../vdms_panels/presets_manager.py:765
 #, fuzzy
 msgid "All default presets have been successfully recovered"
 msgstr "所有的默认预设都已成功恢复"
 
-#: ../vdms_panels/presets_manager.py:750
+#: ../vdms_panels/presets_manager.py:785
 #, fuzzy
 msgid "Create a new profile on \"{}\" preset"
 msgstr "在\"{}\"预设上创建一个新的配置文件"
 
-#: ../vdms_panels/presets_manager.py:768
+#: ../vdms_panels/presets_manager.py:803
 msgid "Edit profile of the \"{}\" preset"
 msgstr "编辑\"{}\"预设的配置文件"
 
-#: ../vdms_panels/presets_manager.py:805
+#: ../vdms_panels/presets_manager.py:840
 msgid ""
 "Are you sure you want to delete the selected profile? It will no longer be "
 "possible to recover it."
 msgstr "你确定要删除选定的配置文件吗？这将不再可能恢复它。"
 
-#: ../vdms_panels/presets_manager.py:825
+#: ../vdms_panels/presets_manager.py:860
 msgid "First select a profile in the list"
 msgstr "首先在列表中选择一个配置文件"
 
-#: ../vdms_panels/presets_manager.py:833
+#: ../vdms_panels/presets_manager.py:868
 #, fuzzy
 msgid ""
 "The selected profile command has been changed manually.\n"
@@ -3955,12 +3965,12 @@ msgstr ""
 "所选的配置文件命令已被手动更改。\n"
 "你想在转换过程中应用它吗？"
 
-#: ../vdms_panels/presets_manager.py:843
+#: ../vdms_panels/presets_manager.py:878
 #, fuzzy
 msgid "Don't show this dialog again"
 msgstr "不要再显示这个对话框"
 
-#: ../vdms_panels/presets_manager.py:940
+#: ../vdms_panels/presets_manager.py:975
 #, fuzzy
 msgid ""
 "Queued File\n"
@@ -4893,6 +4903,24 @@ msgid ""
 "requested languages, e.g. \"all, -it.*, -nl.*\", -fr.*\" will download all\n"
 "subtitles except those in Italian, Dutch and French."
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "Invalid preset loaded.\n"
+#~ "It is recommended to remove it or rewrite it into a JSON format "
+#~ "compatible with Videomass.\n"
+#~ "\n"
+#~ "Possible solution: open the Presets Manager panel, go to the presets "
+#~ "column and try to click the \"Restore\" button"
+#~ msgstr ""
+#~ "Invalid preset loaded.\n"
+#~ "建议删除它或将其改写成与Videomass.com兼容的JSON格式。\n"
+#~ "\n"
+#~ "可能的解决方案：打开预设管理器面板，进入预设栏并尝试点击 \"恢复 \"按钮"
+
+#, fuzzy
+#~ msgid "Sorry, this preset is not part of default Videomass presets."
+#~ msgstr "对不起，这个预设不是默认的Videomass预设的一部分。"
 
 #~ msgid "Refresh all log files"
 #~ msgstr "刷新所有日志文件"

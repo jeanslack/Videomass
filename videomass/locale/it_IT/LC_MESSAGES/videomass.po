@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-23 18:04+0100\n"
-"PO-Revision-Date: 2024-01-23 18:24+0100\n"
+"POT-Creation-Date: 2024-01-24 16:17+0100\n"
+"PO-Revision-Date: 2024-01-24 16:18+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -2899,12 +2899,12 @@ msgstr "{} file in coda"
 msgid "Off"
 msgstr "Spento"
 
-#: ../vdms_panels/av_conversions.py:2259 ../vdms_panels/presets_manager.py:967
+#: ../vdms_panels/av_conversions.py:2259 ../vdms_panels/presets_manager.py:968
 #: ../vdms_panels/video_to_sequence.py:587
 msgid "Unset"
 msgstr "Non settato"
 
-#: ../vdms_panels/av_conversions.py:2262 ../vdms_panels/presets_manager.py:970
+#: ../vdms_panels/av_conversions.py:2262 ../vdms_panels/presets_manager.py:971
 #: ../vdms_panels/video_to_sequence.py:590
 msgid "start  {} | duration  {}"
 msgstr "inizio  {} | durata  {}"
@@ -3568,8 +3568,8 @@ msgstr ""
 
 #: ../vdms_panels/presets_manager.py:352 ../vdms_panels/presets_manager.py:530
 #: ../vdms_panels/presets_manager.py:570 ../vdms_panels/presets_manager.py:634
-#: ../vdms_panels/presets_manager.py:668 ../vdms_panels/presets_manager.py:841
-#: ../vdms_panels/presets_manager.py:872 ../vdms_ytdlp/youtubedl_ui.py:641
+#: ../vdms_panels/presets_manager.py:668 ../vdms_panels/presets_manager.py:842
+#: ../vdms_panels/presets_manager.py:873 ../vdms_ytdlp/youtubedl_ui.py:641
 #: ../vdms_ytdlp/youtubedl_ui.py:647
 msgid "Please confirm"
 msgstr "Prego confermare"
@@ -3702,11 +3702,11 @@ msgstr ""
 msgid "Import a new presets folder"
 msgstr "Importa una nuova cartella dei preset"
 
-#: ../vdms_panels/presets_manager.py:704
+#: ../vdms_panels/presets_manager.py:705
 msgid "The presets database has been successfully updated"
 msgstr "Il database dei preset è stato aggiornato con successo"
 
-#: ../vdms_panels/presets_manager.py:715
+#: ../vdms_panels/presets_manager.py:716
 msgid ""
 "Be careful! The selected preset will be overwritten with the default one. "
 "Your profiles may be deleted!\n"
@@ -3718,15 +3718,15 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:719 ../vdms_panels/presets_manager.py:747
+#: ../vdms_panels/presets_manager.py:720 ../vdms_panels/presets_manager.py:748
 msgid "Warning"
 msgstr "Avvertimento"
 
-#: ../vdms_panels/presets_manager.py:733
+#: ../vdms_panels/presets_manager.py:734
 msgid "Successful recovery"
 msgstr "Ripristino riuscito"
 
-#: ../vdms_panels/presets_manager.py:742
+#: ../vdms_panels/presets_manager.py:743
 msgid ""
 "Be careful! This action will restore all presets to default ones. Your "
 "profiles may be deleted!\n"
@@ -3744,19 +3744,19 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:764
+#: ../vdms_panels/presets_manager.py:765
 msgid "All default presets have been successfully recovered"
 msgstr "Tutti i preset predefiniti sono stati ripristinati con successo"
 
-#: ../vdms_panels/presets_manager.py:784
+#: ../vdms_panels/presets_manager.py:785
 msgid "Create a new profile on \"{}\" preset"
 msgstr "Crea un nuovo profilo sul preset \"{}\""
 
-#: ../vdms_panels/presets_manager.py:802
+#: ../vdms_panels/presets_manager.py:803
 msgid "Edit profile of the \"{}\" preset"
 msgstr "Modifica il profilo sul preset \"{}\""
 
-#: ../vdms_panels/presets_manager.py:839
+#: ../vdms_panels/presets_manager.py:840
 msgid ""
 "Are you sure you want to delete the selected profile? It will no longer be "
 "possible to recover it."
@@ -3764,11 +3764,11 @@ msgstr ""
 "Sei sicuro di voler eliminare il profilo selezionato? non sarà più possibile "
 "recuperarlo."
 
-#: ../vdms_panels/presets_manager.py:859
+#: ../vdms_panels/presets_manager.py:860
 msgid "First select a profile in the list"
 msgstr "Dovresti selezionare un profilo nella lista"
 
-#: ../vdms_panels/presets_manager.py:867
+#: ../vdms_panels/presets_manager.py:868
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
@@ -3776,11 +3776,11 @@ msgstr ""
 "Il comando del profilo selezionato è stato cambiato manualmente.\n"
 "Vuoi applicarlo durante il processo di conversione?"
 
-#: ../vdms_panels/presets_manager.py:877
+#: ../vdms_panels/presets_manager.py:878
 msgid "Don't show this dialog again"
 msgstr "Non mostrare ancora questo dialogo"
 
-#: ../vdms_panels/presets_manager.py:974
+#: ../vdms_panels/presets_manager.py:975
 msgid ""
 "Queued File\n"
 "Pass Encoding\n"
