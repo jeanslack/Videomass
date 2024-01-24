@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 22 Jan 2024 V.5.0.4
+Wed, 24 Jan 2024 V.5.0.4
 
   * [Preset Manager] Fixed a serious issue during the automatic update task to
     the new version of local presets. This behavior could have been harmful
@@ -21,9 +21,9 @@ Mon, 22 Jan 2024 V.5.0.4
     incorrectly encoded json code during the preset update task.
   * [A/V Conversions) Improved audio dialog settings (Audio Properties).
   * Updated Videomass presets to v0.19 .
-  * [Preset Manager] Full preset restore operations (including import by
-    Groups) now include a backup of the preset source directory in the
-    program configuration directory.
+  * [Preset Manager] The automated preset update operation, including "import
+    by Groups" feature, now always includes a backup of the preset directory
+    in the program configuration directory.
 +------------------------------------+
 Mon, 15 Jan 2024 V.5.0.3
 

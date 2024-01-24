@@ -356,10 +356,10 @@ class PrstPan(wx.Panel):
             if err:
                 return
 
-            copyvers = copy_restore(srctext, conftext)
-            if copyvers:
-                wx.MessageBox(f'{copyvers}', "Videomass", wx.ICON_ERROR, self)
-                return
+            # update version.txt file to latest version
+            with open(conftext, "w", encoding='utf8') as updatevers:
+                updatevers.write(f'{srcversion}\n')
+
             # copies missing file/dir to the destination folder
             copy_missing_data(self.src_prst, self.user_prst)
     # --------------------------------------------------------------------
