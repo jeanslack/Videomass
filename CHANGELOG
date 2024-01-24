@@ -7,6 +7,24 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Wed, 24 Jan 2024 V.5.0.4
+
+  * [Preset Manager] Fixed a serious issue during the automatic update task to
+    the new version of local presets. This behavior could have been harmful
+    if a user logged in with administrator privileges ran the program with the
+    task described above, especially when the program is installed on the
+    system.
+  * [Preset Manager] Fixed accidental overwriting of target presets when
+    upgrading with new versions.
+  * [Preset Manager] Added convenient graphical handling to the
+    `json.decoder.JSONDecodeError` exception in the event of malformed or
+    incorrectly encoded json code during the preset update task.
+  * [A/V Conversions) Improved audio dialog settings (Audio Properties).
+  * Updated Videomass presets to v0.19 .
+  * [Preset Manager] The automated preset update operation, including "import
+    by Groups" feature, now always includes a backup of the preset directory
+    in the program configuration directory.
++------------------------------------+
 Mon, 15 Jan 2024 V.5.0.3
 
   * [YouTube Downloader] New feature: subtitles editor, see #240

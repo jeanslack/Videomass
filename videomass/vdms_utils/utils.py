@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.09.2023
+Rev: Gen.22.2024
 Code checker: flake8, pylint .
 
 This file is part of Videomass.
@@ -285,68 +285,95 @@ def milliseconds2clocksec(milliseconds):
 # ------------------------------------------------------------------------
 
 
-def copy_restore(src, dest):
+def copy_missing_data(srcd, destd):
     """
-    copy a specific file from src to dest. If dest exists,
-    it will be overwritten with src without confirmation.
+    Copy missing files and directories to a given destination
+    path using the same names as the source path.
+    """
+    srclist = os.listdir(srcd)
+    destlist = os.listdir(destd)
+    for f in srclist:
+        if f not in destlist:
+            if os.path.isfile(os.path.join(srcd, f)):
+                copy_restore(os.path.join(srcd, f), os.path.join(destd, f))
+            elif os.path.isdir(os.path.join(srcd, f)):
+                copydir_recursively(os.path.join(srcd, f), destd)
+# ------------------------------------------------------------------------
+
+
+def copy_restore(srcfile, destfile):
+    """
+    Copy the contents (no metadata) of the file named
+    srcfile to a file named destfile. Please visit doc webpage at
+    <https://docs.python.org/3/library/shutil.html#shutil.copyfile>
     """
     try:
-        shutil.copyfile(str(src), str(dest))
+        shutil.copyfile(str(srcfile), str(destfile))
     except FileNotFoundError as err:
-        # file src not exists
-        return err
-    except SameFileError as err:
-        # src and dest are the same file and same dir.
-        return err
+        # file srcfile not exists
+        return str(err)
+    except shutil.SameFileError as err:
+        # srcfile and destfile are the same file and same dir.
+        return str(err)
     except OSError as err:
-        # The dest location must be writable
-        return err
+        # The destfile location must be writable
+        return str(err)
 
     return None
 # ------------------------------------------------------------------#
 
 
-def copydir_recursively(source, destination, extraname=None):
+def copydir_recursively(srcdir, destdir, extraname=None):
     """
-    recursively copies an entire directory tree rooted at source.
-    If you do not provide the extraname argument, the destination
-    will have the same name as the source, otherwise extraname is
-    assumed as the final name.
+    recursively copies an entire directory tree rooted
+    at `srcdir`. If you do not provide the `extraname`
+    argument, the destination will have the same name as
+    the file in srcdir, otherwise `extraname` is assumed
+    as the final name.
 
     """
     if extraname:
-        dest = os.path.join(destination, extraname)
+        dest = os.path.join(destdir, extraname)
     else:
-        dest = os.path.join(destination, os.path.basename(source))
+        dest = os.path.join(destdir, os.path.basename(srcdir))
     try:
-        shutil.copytree(str(source), str(dest))
+        shutil.copytree(str(srcdir), str(dest))
 
     except FileExistsError as err:  # dest dir already exists
         return err
-    except FileNotFoundError as err:  # source dir not exists
+    except FileNotFoundError as err:  # srcdir not exists
         return err
 
     return None
 # ------------------------------------------------------------------#
 
 
-def copy_on(ext, source, destination):
+def copy_on(ext, sourcedir, destdir, overw=True):
     """
-    Given a source (dirname), use glob for a given file extension (ext)
-    and iterate to move files to another directory (destination).
-    Returns None on success, otherwise returns the error.
+    This function copy file based on given extension (`ext`).
+    It use `glob` module to finds in the `sourcedir` pathname
+    all the files matching a specified `ext`.
+    If default "overw" argument is `False`, it does not
+    overwrite existing file names in the destination path.
+
+    Returns None on success, returns the error otherwise.
 
     ARGUMENTS:
     ext: files extension without dot
-    source: path to the source directory
-    destination: path to the destination directory
+    sourcedir: path to the source directory
+    destdir: path to the destination directory
+    overw: `True`, overwrite file destination
     """
-    files = glob.glob(f"{source}/*.{ext}")
+    destpath = os.listdir(destdir)
+    files = glob.glob(f"{sourcedir}/*.{ext}")
     if not files:
-        return f'Error: No such file with ".{ext}" format found'
+        return f'ERROR: No files found in this format: ".{ext}"'
     for fln in files:
+        if not overw:
+            if os.path.basename(fln) in destpath:
+                continue
         try:
-            shutil.copy(fln, f'{destination}')
+            shutil.copy(fln, f'{destdir}')
         except IOError as error:
             # problems with permissions
             return error

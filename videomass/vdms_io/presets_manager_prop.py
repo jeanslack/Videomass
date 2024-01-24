@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.15.2023
+Rev: Gen.22.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -79,12 +79,12 @@ def json_data(arg):
             data = json.load(fln)
 
     except json.decoder.JSONDecodeError as err:
-        msg = _('Invalid preset loaded.\nIt is recommended to remove it or '
-                'rewrite it into a JSON format compatible with Videomass.\n\n'
-                'Possible solution: open the Presets Manager panel, go to '
-                'the presets column and try to click the "Restore" button'
+        msg = _('You are attempting to load a preset written with '
+                'invalid JSON encoding.\n\n'
+                'You can try to restore it or import a correct one, '
+                'otherwise it is recommended to remove it.'
                 )
-        wx.MessageBox('\nERROR: {1}\n\nFile: "{0}"\n{2}'.format(arg, err, msg),
+        wx.MessageBox(f'\nERROR: {err}\n\nFILE: "{arg}"\n\n{msg}',
                       ("Videomass"), wx.ICON_ERROR | wx.OK, None)
 
         return 'error'
@@ -94,7 +94,7 @@ def json_data(arg):
                 'Presets Manager panel, go to the presets column and try '
                 'to click the "Restore all..." button'
                 )
-        wx.MessageBox('\nERROR: {0}\n\n{1}'.format(err, msg),
+        wx.MessageBox(f'\nERROR: {err}\n\n{msg}',
                       ("Videomass"), wx.ICON_ERROR | wx.OK, None)
 
         return 'error'
@@ -122,21 +122,32 @@ def update_oudated_profiles(new, old):
     Updates (replaces with new ones) old profiles with same
     name as new profiles but Keep all others.
     """
-    with open(new, 'r', encoding='utf8') as newf:
-        incoming = json.load(newf)
+    msg = _("Operation aborted due to possible JSON encoding/decoding "
+            "error.\nFix any errors in the JSON code contained on the FILE "
+            "before performing this operation again.")
+    if new and old:
+        with open(new, 'r', encoding='utf8') as newf:
+            try:
+                incoming = json.load(newf)
+            except json.decoder.JSONDecodeError as err:
+                return f"ERROR: {str(err)}\n\nFILE: '{new}'\n\n{msg}"
 
-    with open(old, 'r', encoding='utf8') as oldf:
-        outcoming = json.load(oldf)
+        with open(old, 'r', encoding='utf8') as oldf:
+            try:
+                outcoming = json.load(oldf)
+            except json.decoder.JSONDecodeError as err:
+                return f"ERROR: {str(err)}\n\nFILE: '{old}'\n\n{msg}"
 
-    items_new = {value["Name"]: value for value in incoming}
-    items_old = {value["Name"]: value for value in outcoming}
+        items_new = {value["Name"]: value for value in incoming}
+        items_old = {value["Name"]: value for value in outcoming}
 
-    items_old.update(items_new)
-    items_old = list(items_old.values())
-    items_old.sort(key=lambda s: s["Name"])  # make sorted by name
+        items_old.update(items_new)
+        items_old = list(items_old.values())
+        items_old.sort(key=lambda s: s["Name"])  # make sorted by name
 
-    with open(new, 'w', encoding='utf8') as outfile:
-        json.dump(items_old, outfile, ensure_ascii=False, indent=4)
+        with open(old, 'w', encoding='utf8') as outfile:
+            json.dump(items_old, outfile, ensure_ascii=False, indent=4)
+    return None
 # ------------------------------------------------------------------#
 
 

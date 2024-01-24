@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 5.0.3\n"
+"Project-Id-Version: Videomass 5.0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-18 10:29+0200\n"
-"PO-Revision-Date: 2023-07-18 10:35+0200\n"
+"POT-Creation-Date: 2024-01-24 16:17+0100\n"
+"PO-Revision-Date: 2024-01-24 16:19+0100\n"
 "Last-Translator: Samuel / http://littlesvr.ca/ostd/\n"
 "Language-Team: Portuguese (Brasilian)\n"
 "Language: pt_BR\n"
@@ -922,7 +922,7 @@ msgstr ""
 msgid "Profile Name"
 msgstr "Nome do perfil"
 
-#: ../vdms_dialogs/presets_addnew.py:81 ../vdms_panels/presets_manager.py:393
+#: ../vdms_dialogs/presets_addnew.py:81 ../vdms_panels/presets_manager.py:396
 msgid "Description"
 msgstr "Descrição"
 
@@ -2030,19 +2030,11 @@ msgstr ""
 
 #: ../vdms_io/presets_manager_prop.py:82
 msgid ""
-"Invalid preset loaded.\n"
-"It is recommended to remove it or rewrite it into a JSON format compatible "
-"with Videomass.\n"
+"You are attempting to load a preset written with invalid JSON encoding.\n"
 "\n"
-"Possible solution: open the Presets Manager panel, go to the presets column "
-"and try to click the \"Restore\" button"
+"You can try to restore it or import a correct one, otherwise it is "
+"recommended to remove it."
 msgstr ""
-"Predefinição inválida carregada.\n"
-"Recomenda-se removê-lo ou regravá-lo em um formato JSON compatível com "
-"Videomass.\n"
-"\n"
-"Solução possível: abra o painel Gerenciador de Predefinições, vá para a "
-"coluna Predefinições e tente clicar no botão \"Restaurar\""
 
 #: ../vdms_io/presets_manager_prop.py:93
 msgid ""
@@ -2055,6 +2047,13 @@ msgstr ""
 "\n"
 "Solução possível: abra o painel Gerenciador de predefinições, vá para a "
 "coluna de predefinições e tente clicar no botão \"Restaurar tudo ...\""
+
+#: ../vdms_io/presets_manager_prop.py:125
+msgid ""
+"Operation aborted due to possible JSON encoding/decoding error.\n"
+"Fix any errors in the JSON code contained on the FILE before performing this "
+"operation again."
+msgstr ""
 
 #: ../vdms_main/main_frame.py:193 ../vdms_main/main_frame.py:1372
 #: ../vdms_main/main_frame.py:1402 ../vdms_ytdlp/main_ytdlp.py:99
@@ -2209,7 +2208,7 @@ msgstr "Exclua o perfil selecionado"
 msgid "Remove the selected files from the list"
 msgstr "Remova o arquivo selecionado da lista"
 
-#: ../vdms_main/main_frame.py:462 ../vdms_panels/presets_manager.py:219
+#: ../vdms_main/main_frame.py:462 ../vdms_panels/presets_manager.py:221
 #: ../vdms_panels/video_to_sequence.py:169 ../vdms_ytdlp/main_ytdlp.py:301
 msgid "Edit"
 msgstr "Editar"
@@ -2715,6 +2714,12 @@ msgstr "Processando..."
 msgid "Videomass - FFmpeg message monitor"
 msgstr "Videomass - Monitor de Saída"
 
+#: ../vdms_main/main_frame.py:1638
+#, fuzzy
+#| msgid "youtube-dl is disabled. Check your preferences."
+msgid "yt-dlp is disabled. Check your preferences."
+msgstr "youtube-dl está desativado. Verifique suas preferências."
+
 #: ../vdms_panels/av_conversions.py:221
 msgid "Media:"
 msgstr "Mídia:"
@@ -3086,12 +3091,12 @@ msgstr "% s arquivo na fila"
 msgid "Off"
 msgstr "Desligado"
 
-#: ../vdms_panels/av_conversions.py:2259 ../vdms_panels/presets_manager.py:933
+#: ../vdms_panels/av_conversions.py:2259 ../vdms_panels/presets_manager.py:968
 #: ../vdms_panels/video_to_sequence.py:587
 msgid "Unset"
 msgstr "Não definido"
 
-#: ../vdms_panels/av_conversions.py:2262 ../vdms_panels/presets_manager.py:936
+#: ../vdms_panels/av_conversions.py:2262 ../vdms_panels/presets_manager.py:971
 #: ../vdms_panels/video_to_sequence.py:590
 msgid "start  {} | duration  {}"
 msgstr "iniciar {} | duração {}"
@@ -3381,12 +3386,6 @@ msgstr ""
 #: ../vdms_panels/choose_topic.py:137
 msgid "Extract images (frames) from your movies in JPG, PNG, BMP, GIF formats."
 msgstr ""
-
-#: ../vdms_panels/choose_topic.py:223
-#, fuzzy
-#| msgid "youtube-dl is disabled. Check your preferences."
-msgid "yt-dlp is disabled. Check your preferences."
-msgstr "youtube-dl está desativado. Verifique suas preferências."
 
 #: ../vdms_panels/concatenate.py:45
 msgid "At least two files are required to perform concatenation."
@@ -3718,166 +3717,167 @@ msgstr "aguarde ... encerrando"
 msgid "...Interrupted"
 msgstr "Interrompido"
 
-#: ../vdms_panels/presets_manager.py:111
+#: ../vdms_panels/presets_manager.py:113
 msgid "Presets"
 msgstr "Ajustes"
 
-#: ../vdms_panels/presets_manager.py:134
+#: ../vdms_panels/presets_manager.py:136
 msgid "New"
 msgstr "Novo"
 
-#: ../vdms_panels/presets_manager.py:137
+#: ../vdms_panels/presets_manager.py:139
 msgid "Remove"
 msgstr "Remover"
 
-#: ../vdms_panels/presets_manager.py:147
+#: ../vdms_panels/presets_manager.py:149
 msgid "Export selected"
 msgstr "Exportar selecionado"
 
-#: ../vdms_panels/presets_manager.py:150
+#: ../vdms_panels/presets_manager.py:152
 msgid "Export all..."
 msgstr "Exportar tudo ..."
 
-#: ../vdms_panels/presets_manager.py:161
+#: ../vdms_panels/presets_manager.py:163
 msgid "Import preset"
 msgstr "Importar predefinição"
 
-#: ../vdms_panels/presets_manager.py:164
+#: ../vdms_panels/presets_manager.py:166
 msgid "Import group"
 msgstr "Importar grupo"
 
-#: ../vdms_panels/presets_manager.py:175
+#: ../vdms_panels/presets_manager.py:177
 msgid "Restore"
 msgstr "Restaurar"
 
-#: ../vdms_panels/presets_manager.py:179
+#: ../vdms_panels/presets_manager.py:181
 msgid "Restore all..."
 msgstr "Restaurar tudo..."
 
-#: ../vdms_panels/presets_manager.py:191
+#: ../vdms_panels/presets_manager.py:193
 msgid "Reload"
 msgstr "Recarregar"
 
-#: ../vdms_panels/presets_manager.py:205
+#: ../vdms_panels/presets_manager.py:207
 msgid "Profiles"
 msgstr "Perfis"
 
-#: ../vdms_panels/presets_manager.py:210
+#: ../vdms_panels/presets_manager.py:212
 msgid "Add"
 msgstr "Adicionar"
 
-#: ../vdms_panels/presets_manager.py:214
+#: ../vdms_panels/presets_manager.py:216
 msgid "Delete"
 msgstr "Excluir"
 
-#: ../vdms_panels/presets_manager.py:224
+#: ../vdms_panels/presets_manager.py:226
 msgid "Duplicate"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:233
+#: ../vdms_panels/presets_manager.py:235
 msgid "One-Pass"
 msgstr "Primeira passagem"
 
-#: ../vdms_panels/presets_manager.py:243
+#: ../vdms_panels/presets_manager.py:245
 msgid "Two-Pass"
 msgstr "Segunda passagem"
 
-#: ../vdms_panels/presets_manager.py:263
+#: ../vdms_panels/presets_manager.py:265
 msgid "Choose a preset and view its profiles"
 msgstr "Escolha uma predefinição e veja seus perfis"
 
-#: ../vdms_panels/presets_manager.py:264
+#: ../vdms_panels/presets_manager.py:266
 msgid "Create a new profile and save it in the selected preset"
 msgstr "Crie um novo perfil e salve-o na predefinição selecionada"
 
-#: ../vdms_panels/presets_manager.py:266
+#: ../vdms_panels/presets_manager.py:268
 msgid "Delete the selected profile"
 msgstr "Exclua o perfil selecionado"
 
-#: ../vdms_panels/presets_manager.py:267
+#: ../vdms_panels/presets_manager.py:269
 msgid "Edit the selected profile"
 msgstr "Editar o perfil selecionado"
 
-#: ../vdms_panels/presets_manager.py:268
+#: ../vdms_panels/presets_manager.py:270
 msgid "Create a new preset"
 msgstr "Crie uma nova predefinição"
 
-#: ../vdms_panels/presets_manager.py:270
+#: ../vdms_panels/presets_manager.py:272
 msgid "Remove the selected preset from the Presets Manager"
 msgstr "Remova a predefinição selecionada do Gerenciador de Predefinições"
 
-#: ../vdms_panels/presets_manager.py:272
+#: ../vdms_panels/presets_manager.py:274
 msgid "Export selected preset as copy"
 msgstr "Exportar predefinição selecionada como cópia"
 
-#: ../vdms_panels/presets_manager.py:274
+#: ../vdms_panels/presets_manager.py:276
 msgid "Export entire presets folder as copy"
 msgstr "Exportar pasta predefinida inteira como cópia"
 
-#: ../vdms_panels/presets_manager.py:276
+#: ../vdms_panels/presets_manager.py:278
 msgid "Import a new preset or update an existing one"
 msgstr "Importe uma nova predefinição ou atualize uma existente"
 
-#: ../vdms_panels/presets_manager.py:278
+#: ../vdms_panels/presets_manager.py:280
 msgid "Import a group of presets from a folder and update existing ones"
 msgstr ""
 "Importe um grupo de predefinições de uma pasta e atualize as existentes"
 
-#: ../vdms_panels/presets_manager.py:281
+#: ../vdms_panels/presets_manager.py:283
 msgid "Replace the selected preset with the Videomass default one"
 msgstr "Substitua a predefinição selecionada pela padrão do Videomass"
 
-#: ../vdms_panels/presets_manager.py:283
+#: ../vdms_panels/presets_manager.py:285
 msgid "Retrieve all Videomass default presets"
 msgstr "Recupere todas as predefinições padrão do Videomass"
 
-#: ../vdms_panels/presets_manager.py:285
+#: ../vdms_panels/presets_manager.py:287
 msgid "Update the presets list"
 msgstr "Atualize a lista de predefinições"
 
-#: ../vdms_panels/presets_manager.py:286
+#: ../vdms_panels/presets_manager.py:288
 msgid "First pass of the selected profile"
 msgstr "Primeira passagem do perfil selecionado"
 
-#: ../vdms_panels/presets_manager.py:288
+#: ../vdms_panels/presets_manager.py:290
 msgid "Second pass of the selected profile"
 msgstr "Segunda passagem do perfil selecionado"
 
-#: ../vdms_panels/presets_manager.py:340
+#: ../vdms_panels/presets_manager.py:341
 #, python-brace-format
 msgid ""
-"Outdated preset version found: v{1}.\n"
+"Outdated presets version found: v{1}\n"
 "A new version is available: v{0}\n"
 "\n"
-"It seems that the local preset database in your configuration folder is "
-"outdated. If you choose to update the preset database, the outdated version "
-"will be backed up in the same folder as the new incoming presets:\n"
-"\"{2}\"\n"
+"This update provides new presets included on the latest versions of "
+"Videomass.\n"
 "\n"
-"Do you want to update the preset database now?"
+"To avoid data loss and allow for possible recovery, the outdated presets "
+"folder will be backed up in the program configuration folder: \"{2}\"\n"
+"\n"
+"Do you want to perform this update now?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:349 ../vdms_panels/presets_manager.py:527
-#: ../vdms_panels/presets_manager.py:567 ../vdms_panels/presets_manager.py:631
-#: ../vdms_panels/presets_manager.py:657 ../vdms_panels/presets_manager.py:807
-#: ../vdms_panels/presets_manager.py:838 ../vdms_ytdlp/youtubedl_ui.py:641
+#: ../vdms_panels/presets_manager.py:352 ../vdms_panels/presets_manager.py:530
+#: ../vdms_panels/presets_manager.py:570 ../vdms_panels/presets_manager.py:634
+#: ../vdms_panels/presets_manager.py:668 ../vdms_panels/presets_manager.py:842
+#: ../vdms_panels/presets_manager.py:873 ../vdms_ytdlp/youtubedl_ui.py:641
 #: ../vdms_ytdlp/youtubedl_ui.py:647
 msgid "Please confirm"
 msgstr "Por favor confirme"
 
-#: ../vdms_panels/presets_manager.py:392
+#: ../vdms_panels/presets_manager.py:395
 msgid "Name"
 msgstr "Nome"
 
-#: ../vdms_panels/presets_manager.py:394
+#: ../vdms_panels/presets_manager.py:397
 msgid "Output Format"
 msgstr "Formato de saída"
 
-#: ../vdms_panels/presets_manager.py:395
+#: ../vdms_panels/presets_manager.py:398
 msgid "Supported Format List"
 msgstr "Lista de formatos suportados"
 
-#: ../vdms_panels/presets_manager.py:413 ../vdms_panels/presets_manager.py:472
+#: ../vdms_panels/presets_manager.py:416 ../vdms_panels/presets_manager.py:475
 msgid ""
 "ERROR: Typing error on JSON keys: {}\n"
 "\n"
@@ -3889,15 +3889,15 @@ msgstr ""
 "Arquivo: \"{}\"\n"
 "chave mal formada?"
 
-#: ../vdms_panels/presets_manager.py:493
+#: ../vdms_panels/presets_manager.py:496
 msgid "Enter name for new preset"
 msgstr "Insira o nome para a nova predefinição"
 
-#: ../vdms_panels/presets_manager.py:506
+#: ../vdms_panels/presets_manager.py:509
 msgid "Cannot save current data in file '{}'."
 msgstr "Não é possível salvar os dados atuais no arquivo '{}'."
 
-#: ../vdms_panels/presets_manager.py:510
+#: ../vdms_panels/presets_manager.py:513
 msgid ""
 "'Successful!\n"
 "\n"
@@ -3907,17 +3907,22 @@ msgstr ""
 "\n"
 "Uma nova predefinição vazia foi criada."
 
-#: ../vdms_panels/presets_manager.py:524
+#: ../vdms_panels/presets_manager.py:527
+#, fuzzy
+#| msgid ""
+#| "Are you sure you want to remove \"{}\" preset?\n"
+#| "\n"
+#| " It will be moved to the \"Removals\" subfolder of the presets folder."
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
 "\n"
-" It will be moved to the \"Removals\" subfolder of the presets folder."
+" It will be moved to the \"Removals\" subfolder inside the presets folder."
 msgstr ""
 "Tem certeza de que deseja remover a predefinição \"{}\"?\n"
 "\n"
 "Ela será movida para a subpasta \"Removals\" da pasta de predefinições."
 
-#: ../vdms_panels/presets_manager.py:535
+#: ../vdms_panels/presets_manager.py:538
 msgid ""
 "{}\n"
 "\n"
@@ -3927,40 +3932,40 @@ msgstr ""
 "\n"
 "Desculpe, a remoção falhou, não é possível continuar .."
 
-#: ../vdms_panels/presets_manager.py:545
+#: ../vdms_panels/presets_manager.py:548
 #, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
 msgstr "A predefinição \"{0}\" foi removida com sucesso"
 
-#: ../vdms_panels/presets_manager.py:560
+#: ../vdms_panels/presets_manager.py:563
 msgid "Choose a folder to save the selected preset"
 msgstr "Escolha uma pasta para salvar a predefinição selecionada"
 
-#: ../vdms_panels/presets_manager.py:565
+#: ../vdms_panels/presets_manager.py:568
 msgid "A file with this name already exists, do you want to overwrite it?"
 msgstr "Já existe um arquivo com este nome, deseja substituí-lo?"
 
-#: ../vdms_panels/presets_manager.py:578
+#: ../vdms_panels/presets_manager.py:581
 msgid "The preset was exported successfully"
 msgstr "A predefinição foi exportada com sucesso"
 
-#: ../vdms_panels/presets_manager.py:588
+#: ../vdms_panels/presets_manager.py:591
 msgid "Choose a folder to export all presets"
 msgstr "Escolha uma pasta para exportar todas as predefinições"
 
-#: ../vdms_panels/presets_manager.py:597
+#: ../vdms_panels/presets_manager.py:600
 msgid "All presets have been exported successfully"
 msgstr "Todas as predefinições foram exportadas com sucesso"
 
-#: ../vdms_panels/presets_manager.py:608
+#: ../vdms_panels/presets_manager.py:611
 msgid "Import a new preset"
 msgstr "Importar uma nova predefinição"
 
-#: ../vdms_panels/presets_manager.py:619
+#: ../vdms_panels/presets_manager.py:622
 msgid "Error, invalid preset: \"{}\""
 msgstr "Erro, predefinição inválida: \"{}\""
 
-#: ../vdms_panels/presets_manager.py:627
+#: ../vdms_panels/presets_manager.py:630
 msgid ""
 "This preset already exists and is about to be updated. Don't worry, it will "
 "keep all your saved profiles.\n"
@@ -3972,11 +3977,11 @@ msgstr ""
 "\n"
 "Você quer continuar?"
 
-#: ../vdms_panels/presets_manager.py:644
+#: ../vdms_panels/presets_manager.py:647
 msgid "A new preset was successfully imported"
 msgstr "Uma nova predefinição foi importada com sucesso"
 
-#: ../vdms_panels/presets_manager.py:654
+#: ../vdms_panels/presets_manager.py:665
 msgid ""
 "This will update the presets database. Don't worry, it will keep all your "
 "saved profiles.\n"
@@ -3988,15 +3993,15 @@ msgstr ""
 "\n"
 "Você quer continuar?"
 
-#: ../vdms_panels/presets_manager.py:661
+#: ../vdms_panels/presets_manager.py:672
 msgid "Import a new presets folder"
 msgstr "Importar uma nova pasta de predefinições"
 
-#: ../vdms_panels/presets_manager.py:680
+#: ../vdms_panels/presets_manager.py:705
 msgid "The presets database has been successfully updated"
 msgstr "O banco de dados de predefinições foi atualizado com sucesso"
 
-#: ../vdms_panels/presets_manager.py:690
+#: ../vdms_panels/presets_manager.py:716
 msgid ""
 "Be careful! The selected preset will be overwritten with the default one. "
 "Your profiles may be deleted!\n"
@@ -4008,24 +4013,27 @@ msgstr ""
 "\n"
 "Você quer continuar?"
 
-#: ../vdms_panels/presets_manager.py:694 ../vdms_panels/presets_manager.py:722
+#: ../vdms_panels/presets_manager.py:720 ../vdms_panels/presets_manager.py:748
 msgid "Warning"
 msgstr "Aviso"
 
-#: ../vdms_panels/presets_manager.py:705
-msgid "Sorry, this preset is not part of default Videomass presets."
-msgstr ""
-"Desculpe, esta predefinição não faz parte das predefinições padrão do "
-"Videomass."
-
-#: ../vdms_panels/presets_manager.py:711
+#: ../vdms_panels/presets_manager.py:734
 msgid "Successful recovery"
 msgstr "Recuperação bem sucedida"
 
-#: ../vdms_panels/presets_manager.py:720
+#: ../vdms_panels/presets_manager.py:743
+#, fuzzy
+#| msgid ""
+#| "Be careful! This action will restore all presets to default ones. Your "
+#| "profiles may be deleted!\n"
+#| "\n"
+#| "Do you want to continue?"
 msgid ""
 "Be careful! This action will restore all presets to default ones. Your "
 "profiles may be deleted!\n"
+"\n"
+"In any case, to avoid data loss, the presets folder will be backed up in the "
+"program's configuration folder.\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
@@ -4034,23 +4042,23 @@ msgstr ""
 "\n"
 "Você quer continuar?"
 
-#: ../vdms_panels/presets_manager.py:730
+#: ../vdms_panels/presets_manager.py:765
 msgid "All default presets have been successfully recovered"
 msgstr "Todas as predefinições padrão foram recuperadas com sucesso"
 
-#: ../vdms_panels/presets_manager.py:750
+#: ../vdms_panels/presets_manager.py:785
 #, fuzzy
 #| msgid "Create a new profile on \"%s\" preset"
 msgid "Create a new profile on \"{}\" preset"
 msgstr "Crie um novo perfil na predefinição \"% s\""
 
-#: ../vdms_panels/presets_manager.py:768
+#: ../vdms_panels/presets_manager.py:803
 #, fuzzy
 #| msgid "Edit profile of the \"%s\" preset: "
 msgid "Edit profile of the \"{}\" preset"
 msgstr "Edite o perfil da predefinição \"% s\": "
 
-#: ../vdms_panels/presets_manager.py:805
+#: ../vdms_panels/presets_manager.py:840
 msgid ""
 "Are you sure you want to delete the selected profile? It will no longer be "
 "possible to recover it."
@@ -4058,11 +4066,11 @@ msgstr ""
 "Tem certeza de que deseja excluir o perfil selecionado? Não será mais "
 "possível recuperá-lo."
 
-#: ../vdms_panels/presets_manager.py:825
+#: ../vdms_panels/presets_manager.py:860
 msgid "First select a profile in the list"
 msgstr "Primeiro selecione um perfil na lista"
 
-#: ../vdms_panels/presets_manager.py:833
+#: ../vdms_panels/presets_manager.py:868
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
@@ -4070,11 +4078,11 @@ msgstr ""
 "O comando de perfil selecionado foi alterado manualmente.\n"
 "Quer aplicá-lo durante o processo de conversão?"
 
-#: ../vdms_panels/presets_manager.py:843
+#: ../vdms_panels/presets_manager.py:878
 msgid "Don't show this dialog again"
 msgstr "Não mostrar esta caixa de diálogo novamente"
 
-#: ../vdms_panels/presets_manager.py:940
+#: ../vdms_panels/presets_manager.py:975
 #, fuzzy
 #| msgid ""
 #| "SUMMARY\n"
@@ -4946,6 +4954,26 @@ msgid ""
 "requested languages, e.g. \"all, -it.*, -nl.*\", -fr.*\" will download all\n"
 "subtitles except those in Italian, Dutch and French."
 msgstr ""
+
+#~ msgid ""
+#~ "Invalid preset loaded.\n"
+#~ "It is recommended to remove it or rewrite it into a JSON format "
+#~ "compatible with Videomass.\n"
+#~ "\n"
+#~ "Possible solution: open the Presets Manager panel, go to the presets "
+#~ "column and try to click the \"Restore\" button"
+#~ msgstr ""
+#~ "Predefinição inválida carregada.\n"
+#~ "Recomenda-se removê-lo ou regravá-lo em um formato JSON compatível com "
+#~ "Videomass.\n"
+#~ "\n"
+#~ "Solução possível: abra o painel Gerenciador de Predefinições, vá para a "
+#~ "coluna Predefinições e tente clicar no botão \"Restaurar\""
+
+#~ msgid "Sorry, this preset is not part of default Videomass presets."
+#~ msgstr ""
+#~ "Desculpe, esta predefinição não faz parte das predefinições padrão do "
+#~ "Videomass."
 
 #, fuzzy
 #~| msgid "Select a log file"

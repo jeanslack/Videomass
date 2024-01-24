@@ -14,6 +14,10 @@ URGENCY: high
   while longer because fps_mode does not work with old versions of FFmpeg.
   So, vsync's warning is just a warning and still works with the new versions.
 
+- A new implementation is needed for embedding subtitles. The infrastructure
+  could be organized on a new A/V Conversions tab or as an independent tool
+  that can be called up from the main menu (Home).
+
 ---------------
 URGENCY: medium
 ----------------
@@ -35,3 +39,4 @@ URGENCY: low (New implementations)
 -------------
 - [PRESETS MANAGER] The profile requires additional input (-i FILE -i FILE ...)
 - @johannesdedoper would like a function to save some UI settings, see #113 .
+

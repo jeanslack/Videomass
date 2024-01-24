@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2023
+Rev: Gen.22.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,6 +25,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+import time
 import os
 import sys
 import wx
@@ -38,6 +39,7 @@ from videomass.vdms_io.presets_manager_prop import write_new_profile
 from videomass.vdms_utils.utils import copy_restore
 from videomass.vdms_utils.utils import copy_on
 from videomass.vdms_utils.utils import copydir_recursively
+from videomass.vdms_utils.utils import copy_missing_data
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_dialogs import presets_addnew
 from videomass.vdms_dialogs.epilogue import Formula
@@ -320,10 +322,9 @@ class PrstPan(wx.Panel):
         """
         if self.check_presets_version:
             return
-        source = os.path.join(self.appdata['srcpath'], 'presets')
-        srctext = os.path.join(source, 'version', 'version.txt')
-        dest = os.path.join(self.appdata['confdir'], 'presets')
-        conftext = os.path.join(dest, 'version', 'version.txt')
+
+        srctext = os.path.join(self.src_prst, 'version', 'version.txt')
+        conftext = os.path.join(self.user_prst, 'version', 'version.txt')
         if not os.path.isfile(conftext) or not os.path.isfile(srctext):
             return
 
@@ -337,28 +338,30 @@ class PrstPan(wx.Panel):
         self.check_presets_version = True
 
         if updated > old:
-            msg = _('Outdated preset version found: v{1}.\n'
+            msg = _('Outdated presets version found: v{1}\n'
                     'A new version is available: v{0}\n\n'
-                    'It seems that the local preset database in your '
-                    'configuration folder is outdated. If you choose to '
-                    'update the preset database, the outdated version '
-                    'will be backed up in the same folder as the new '
-                    'incoming presets:\n"{2}"\n\n'
-                    'Do you want to update the preset '
-                    'database now?').format(srcversion, confversion, dest)
+                    'This update provides new presets included on the '
+                    'latest versions of Videomass.\n\n'
+                    'To avoid data loss and allow for possible recovery, '
+                    'the outdated presets folder will be backed up in the '
+                    'program configuration folder: "{2}"\n\n'
+                    'Do you want to perform this '
+                    'update now?').format(srcversion,
+                                          confversion,
+                                          self.appdata["confdir"])
             if wx.MessageBox(msg, _('Please confirm'), wx.ICON_QUESTION
                              | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                 return
+            err = self.preset_import_all(event=None)
+            if err:
+                return
 
-            backup = copydir_recursively(dest, dest,
-                                         f'Version-{confversion}-BACKUP')
-            if backup:
-                wx.MessageBox(f'{backup}', "Videomass", wx.ICON_ERROR, self)
+            # update version.txt file to latest version
+            with open(conftext, "w", encoding='utf8') as updatevers:
+                updatevers.write(f'{srcversion}\n')
 
-            self.preset_import_all(self, source=source)
-            copyvers = copy_restore(srctext, conftext)
-            if copyvers:
-                wx.MessageBox(f'{copyvers}', "Videomass", wx.ICON_ERROR, self)
+            # copies missing file/dir to the destination folder
+            copy_missing_data(self.src_prst, self.user_prst)
     # --------------------------------------------------------------------
 
     def reset_list(self, reset_cmbx=False):
@@ -523,7 +526,7 @@ class PrstPan(wx.Panel):
         filename = self.cmbx_prst.GetValue()
         if wx.MessageBox(_('Are you sure you want to remove "{}" preset?\n\n '
                            'It will be moved to the "Removals" subfolder '
-                           'of the presets folder.').format(filename),
+                           'inside the presets folder.').format(filename),
                          _('Please confirm'), wx.ICON_QUESTION
                          | wx.CANCEL | wx.YES_NO, self) != wx.YES:
             return
@@ -645,42 +648,65 @@ class PrstPan(wx.Panel):
                       "Videomass", wx.OK, self)
     # ------------------------------------------------------------------#
 
-    def preset_import_all(self, event, source=None):
+    def preset_import_all(self, event):
         """
-        Import all presets previously saved in a folder and replaces
-        the existing ones
+        This method depends on the event given as argument: If it is
+        `None` it will restore the user's preset directory to the
+        directory given by the `source` attribute. Otherwise the
+        event will be triggered by clicking on the `Import Group`
+        button which will have a slightly different behavior. In any
+        case it will not overwrite existing presets but will update
+        them with missing profiles on the destination files.
+        In addition it will copy all other presets that do not yet
+        exist on the destination.
         """
-        if not source:
+        source = self.src_prst
+        if event:
             if wx.MessageBox(_("This will update the presets database. "
                                "Don't worry, it will keep all your saved "
                                "profiles.\n\nDo you want to continue?"),
                              _("Please confirm"), wx.ICON_QUESTION
                              | wx.CANCEL | wx.YES_NO, self) != wx.YES:
-                return
+                return None
 
             dialsave = wx.DirDialog(self, _("Import a new presets folder"),
                                     "", style=wx.DD_DEFAULT_STYLE)
             if dialsave.ShowModal() == wx.ID_CANCEL:
-                return
+                return None
             source = dialsave.GetPath()
             dialsave.Destroy()
 
-        incoming = [n for n in os.listdir(source) if n.endswith('.prst')]
-        outcoming = [n for n in os.listdir(self.user_prst)
-                     if n.endswith('.prst')]
+        # create a dir backup
+        datenow = time.strftime('%H%M%S-%a_%d_%B_%Y')
+        err = copydir_recursively(self.user_prst, self.appdata['confdir'],
+                                  f'presets-{datenow}-Backup')
+        if err:
+            wx.MessageBox(f'{err}', "Videomass", wx.ICON_ERROR, self)
+            return err
+
+        incom = [n for n in os.listdir(source) if n.endswith('.prst')]
+        outcom = [n for n in os.listdir(self.user_prst) if n.endswith('.prst')]
 
         # Return a new set with elements common to the set and all others.
-        for f in set(incoming).intersection(outcoming):
-            update_oudated_profiles(os.path.join(source, f),
-                                    os.path.join(self.user_prst, f))
-        outerror = copy_on('prst', source, self.user_prst)
-        if outerror:
-            wx.MessageBox(f"{outerror}", "Videomass", wx.ICON_ERROR, self)
-        else:
-            wx.MessageBox(_("The presets database has been successfully "
-                            "updated"), "Videomass", wx.OK, self)
-            self.reset_list(True)
-            self.on_deselect(self, cleardata=False)
+        # In short, copy only files with matching basenames.
+        for f in set(incom).intersection(outcom):
+            err = update_oudated_profiles(os.path.join(source, f),
+                                          os.path.join(self.user_prst, f))
+            if err:
+                wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
+                return err
+        # copies non-existent ones to the destination folder
+        if event:  # only `Import Group` event
+            err = copy_on('prst', source, self.user_prst, overw=False)
+            if err:
+                wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
+                return err
+
+        wx.MessageBox(_("The presets database has been successfully "
+                        "updated"), "Videomass", wx.OK, self)
+        self.reset_list(True)
+        self.on_deselect(self, cleardata=False)
+        return None
     # ------------------------------------------------------------------#
 
     def preset_default(self, event):
@@ -698,14 +724,11 @@ class PrstPan(wx.Panel):
                          self) == wx.YES:
 
             filename = self.cmbx_prst.GetValue()
-            status = copy_restore(f'{self.user_prst}/{filename}.prst',
+            status = copy_restore(f'{self.src_prst}/{filename}.prst',
                                   f'{self.user_prst}/{filename}.prst'
                                   )
             if status:
-                wx.MessageBox(_('Sorry, this preset is not part '
-                                'of default Videomass presets.'),
-                              "Videomass", wx.ICON_ERROR, self
-                              )
+                wx.MessageBox(status, "Videomass", wx.ICON_ERROR, self)
                 return
 
             wx.MessageBox(_("Successful recovery"), "Videomass", wx.OK, self)
@@ -718,14 +741,26 @@ class PrstPan(wx.Panel):
         restore all preset files directory
         """
         if wx.MessageBox(_("Be careful! This action will restore all presets "
-                           "to default ones. Your profiles may be deleted!"
+                           "to default ones. Your profiles may be deleted!\n\n"
+                           "In any case, to avoid data loss, the presets "
+                           "folder will be backed up in the program's "
+                           "configuration folder."
                            "\n\nDo you want to continue?"), _("Warning"),
                          wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                          self) == wx.YES:
 
-            outerror = copy_on('prst', self.src_prst, self.user_prst)
-            if outerror:
-                wx.MessageBox(f"{outerror}", "Videomass", wx.ICON_ERROR, self)
+            if os.path.exists(self.user_prst):
+                # create a dir backup
+                datenow = time.strftime('%H%M%S-%a_%d_%B_%Y')
+                err = os.rename(self.user_prst,
+                                f"{self.user_prst}-{datenow}-Backup")
+                if err:
+                    wx.MessageBox(f'{err}', "Videomass", wx.ICON_ERROR, self)
+                    return
+
+            err = copydir_recursively(self.src_prst, self.appdata['confdir'])
+            if err:
+                wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
             else:
                 wx.MessageBox(_("All default presets have been "
                                 "successfully recovered"),
@@ -930,16 +965,16 @@ class PrstPan(wx.Panel):
 
         """
         if not self.parent.time_seq:
-            time = _('Unset')
+            timeseq = _('Unset')
         else:
             t = self.parent.time_seq.split()
-            time = _('start  {} | duration  {}').format(t[1], t[3])
+            timeseq = _('start  {} | duration  {}').format(t[1], t[3])
 
         numfile = f"{str(cntmax)} file in queue"
 
         formula = (_("Queued File\nPass Encoding"
                      "\nProfile Used\nOutput Format\nTime Period"))
         dictions = (f"{numfile}\n{passes}\n"
-                    f"{self.array[0]}\n{self.array[5]}\n{time}"
+                    f"{self.array[0]}\n{self.array[5]}\n{timeseq}"
                     )
         return formula, dictions

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2022
+Rev: Gen.22.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -61,7 +61,7 @@ class AudioSettings(wx.Dialog):
 
         bitrate_list = [a[0] for a in self.bitrate.values()]
         self.rdb_bitrate = wx.RadioBox(self, wx.ID_ANY,
-                                       ("Audio Bit-Rate"),
+                                       ("Compression level"),
                                        choices=bitrate_list,
                                        majorDimension=0,
                                        style=wx.RA_SPECIFY_ROWS,
@@ -70,7 +70,7 @@ class AudioSettings(wx.Dialog):
 
         channel_list = [a[0] for a in self.channels.values()]
         self.rdb_channels = wx.RadioBox(self, wx.ID_ANY,
-                                        ("Audio Channels"),
+                                        ("Channels"),
                                         choices=channel_list,
                                         majorDimension=0,
                                         style=wx.RA_SPECIFY_ROWS,
@@ -79,7 +79,7 @@ class AudioSettings(wx.Dialog):
 
         samplerate_list = [a[0] for a in self.sample_rate.values()]
         self.rdb_sample_r = wx.RadioBox(self, wx.ID_ANY,
-                                        ("Audio Rate (sample rate)"),
+                                        ("Sample rate"),
                                         choices=samplerate_list,
                                         majorDimension=0,
                                         style=wx.RA_SPECIFY_ROWS,
@@ -322,7 +322,7 @@ class AudioParameters():
                         3: ("quality 2", "-compression_level 2"),
                         4: ("quality 3", "-compression_level 3"),
                         5: ("quality 4", "-compression_level 4"),
-                        6: ("Standard quality", "-compression_level 5"),
+                        6: ("Default quality", "-compression_level 5"),
                         7: ("quality 6", "-compression_level 6"),
                         8: ("quality 7", "-compression_level 7"),
                         9: ("low quality", "-compression_level 8"),
