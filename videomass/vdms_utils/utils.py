@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Gen.22.2024
+Rev: Feb.05.2024
 Code checker: flake8, pylint .
 
 This file is part of Videomass.
@@ -225,28 +225,35 @@ def timehuman(seconds):
 # ------------------------------------------------------------------------
 
 
-def get_milliseconds(timeformat):
+def get_milliseconds(timeformat: str = '0') -> int:
     """
-    Convert 24-hour clock unit to milliseconds (duration).
-    Accepts different forms of time unit string, e.g.
+    Convert 24-hour time unit to milliseconds (duration).
+    Accepts only strings representing the following forms
+    of time units:
 
-        '30.5', '00:00:00', '0:00:00', '0:0:0',
-        '00:00.000', '00:00:00.000.
+        '00' | '00.00' | '00.0' | '00:00:00' | '0:00:00'
+        '0:0:0' | '00:00.000' | '00:00:00.000
 
-    The first line adds leading zeros to fill up possibly
-    non-existing fields.
+    Any other representation passed as a string argument will
+    be returned as an integer object equal to 0 (int).
+    If the argument passed is an object other than the string
+    object (str) the exception `TypeError` will be raised.
 
     Return an int object (milliseconds).
-
-    HACK add 'N/A' (no time) to parser?
-
-            if timeformat == 'N/A':
-                return int('0')
+    Return 0 otherwise
     """
+    if not isinstance(timeformat, str):
+        raise TypeError("Only a string object (str) is expected.")
+
+    # adds leading zeros to fill up possibly non-existing fields.
     hours, minutes, seconds = (["0", "0"] + timeformat.split(":"))[-3:]
-    hours = int(hours)
-    minutes = int(minutes)
-    seconds = float(seconds)
+
+    try:
+        hours = int(hours)
+        minutes = int(minutes)
+        seconds = float(seconds)
+    except ValueError:
+        return 0
 
     return int(hours * 3600000 + minutes * 60000 + seconds * 1000)
 # ------------------------------------------------------------------------
@@ -437,7 +444,7 @@ def trailing_name_with_prog_digit(destpath, argname) -> str:
     Returns str(newdirname)
     """
     if not isinstance(destpath, str) or not isinstance(argname, str):
-        raise TypeError("Expects str object only")
+        raise TypeError("Only a string object (str) is expected.")
 
     name, ext = os.path.splitext(argname)
     name = re.sub(r"[\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}]", '', name)
@@ -482,7 +489,7 @@ def leading_name_with_prog_digit(destpath, argname) -> str:
     Returns str(newdirname)
     """
     if not isinstance(destpath, str) or not isinstance(argname, str):
-        raise TypeError("Expects str object only")
+        raise TypeError("Only a string object (str) is expected.")
 
     name, ext = os.path.splitext(argname)
     name = re.sub(r"[\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}]", '', name)
