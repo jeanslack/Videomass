@@ -247,21 +247,6 @@ def time_to_integer(timef: str = '0', sec=False, rnd=False) -> int:
 # ------------------------------------------------------------------------
 
 
-def timehuman(seconds):
-    """
-    This is an old implementation to converting seconds to
-    time format. Accept integer only e.g timehuman(2300).
-    Useb by youtube-dl downloader, returns a string object
-    in time format i.e '00:38:20' .
-
-    """
-    minutes, seconds = divmod(seconds, 60)
-    hours, minutes = divmod(minutes, 60)
-    # return "%02d:%02d:%02d" % (hours, minutes, seconds)
-    return f"{hours:02}:{minutes:02}:{seconds:02}"
-# ------------------------------------------------------------------------
-
-
 def integer_to_time(integer: int = 0, mills=True, rnd=False) -> str:
     """
     Converts integers to 24-hour clock format calculating in
