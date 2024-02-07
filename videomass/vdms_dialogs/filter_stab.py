@@ -28,8 +28,8 @@ import os
 import webbrowser
 import wx
 import wx.lib.agw.floatspin as FS
-from videomass.vdms_utils.utils import get_milliseconds
-from videomass.vdms_utils.utils import milliseconds2clocksec
+from videomass.vdms_utils.utils import time_to_integer
+from videomass.vdms_utils.utils import integer_to_time
 from videomass.vdms_utils.utils import clockset
 from videomass.vdms_io import io_tools
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
@@ -94,7 +94,7 @@ class VidstabSet(wx.Dialog):
         sizertime.Add(boxtime, 0, wx.ALL | wx.CENTER, 5)
 
         self.sld_time = wx.Slider(self, wx.ID_ANY,
-                                  get_milliseconds(self.clock),
+                                  time_to_integer(self.clock),
                                   0,
                                   1 if not self.mills else self.mills,
                                   size=(250, -1),
@@ -451,7 +451,7 @@ class VidstabSet(wx.Dialog):
         and sets the label with the converted value.
         """
         seek = self.sld_time.GetValue()
-        clock = milliseconds2clocksec(seek)  # to 24-hour
+        clock = integer_to_time(seek, False)  # to 24-hour
         self.lab_time.SetLabel(clock)  # update StaticText
         if not self.btn_snap.IsEnabled():
             self.btn_snap.Enable()
@@ -513,8 +513,8 @@ class VidstabSet(wx.Dialog):
                 seek = self.mills - stime
                 if seek < 0:
                     seek, stime = 0, self.mills
-            duration = milliseconds2clocksec(stime)  # to 24-hour
-            self.clock = milliseconds2clocksec(seek)  # to 24-hour
+            duration = integer_to_time(stime, False)  # to 24-hour
+            self.clock = integer_to_time(seek, False)  # to 24-hour
             sseg = f'-ss {self.clock} -t {duration}'
 
         if mode == 'detect':

@@ -30,7 +30,7 @@ import wx
 from pubsub import pub
 from videomass.vdms_io.io_tools import stream_play
 from videomass.vdms_threads.ffprobe import ffprobe
-from videomass.vdms_utils.utils import get_milliseconds
+from videomass.vdms_utils.utils import time_to_integer
 from videomass.vdms_utils.utils import to_bytes
 from videomass.vdms_dialogs.renamer import Renamer
 from videomass.vdms_dialogs.list_warning import ListWarning
@@ -173,7 +173,7 @@ class MyListCtrl(wx.ListCtrl):
                 tdur = f'{tdur[0]}h : {tdur[1]}m : {sec} : {msec}'
                 self.SetItem(self.index, 2, tdur)
                 probe['format']['time'] = probe.get('format').pop('duration')
-                time = get_milliseconds(probe.get('format')['time'])
+                time = time_to_integer(probe.get('format')['time'])
                 probe['format']['duration'] = time
 
             media = probe['streams'][0]['codec_type']

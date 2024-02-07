@@ -30,8 +30,8 @@ import wx.lib.statbmp
 import wx.lib.colourselect as csel
 from pubsub import pub
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
-from videomass.vdms_utils.utils import get_milliseconds
-from videomass.vdms_utils.utils import milliseconds2clocksec
+from videomass.vdms_utils.utils import time_to_integer
+from videomass.vdms_utils.utils import integer_to_time
 from videomass.vdms_utils.utils import clockset
 from videomass.vdms_io.make_filelog import make_log_template
 
@@ -240,7 +240,7 @@ class Crop(wx.Dialog):
                                        wx.HORIZONTAL)
         sizerBase.Add(sizer_load, 0, wx.ALL | wx.CENTER, 5)
         self.sld_time = wx.Slider(self, wx.ID_ANY,
-                                  get_milliseconds(self.clock),
+                                  time_to_integer(self.clock),
                                   0,
                                   1 if not self.mills else self.mills,
                                   size=(250, -1),
@@ -384,7 +384,7 @@ class Crop(wx.Dialog):
         Slider event on seek time position.
         """
         seek = self.sld_time.GetValue()
-        clock = milliseconds2clocksec(seek)  # to 24-hour
+        clock = integer_to_time(seek, False)  # to 24-hour
         self.txttime.SetLabel(clock)  # update StaticText
         if not self.btn_load.IsEnabled():
             self.btn_load.Enable()
@@ -404,7 +404,7 @@ class Crop(wx.Dialog):
             sseg = ''
         else:
             seek = self.sld_time.GetValue()
-            self.clock = milliseconds2clocksec(seek)  # to 24-HH
+            self.clock = integer_to_time(seek, False)  # to 24-HH
             sseg = f'-ss {self.clock}'
 
         arg = (f'{sseg} -i "{self.filename}" -f image2 '

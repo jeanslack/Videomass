@@ -26,8 +26,8 @@ This file is part of Videomass.
 """
 import os
 import wx
-from videomass.vdms_utils.utils import get_milliseconds
-from videomass.vdms_utils.utils import milliseconds2clocksec
+from videomass.vdms_utils.utils import time_to_integer
+from videomass.vdms_utils.utils import integer_to_time
 from videomass.vdms_utils.utils import clockset
 from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
@@ -105,7 +105,7 @@ class ColorEQ(wx.Dialog):
         sizertime = wx.StaticBoxSizer(stboxtime, wx.HORIZONTAL)
         sizerBase.Add(sizertime, 0, wx.ALL | wx.CENTER, 5)
         self.sld_time = wx.Slider(self, wx.ID_ANY,
-                                  get_milliseconds(self.clock),
+                                  time_to_integer(self.clock),
                                   0,
                                   1 if not self.mills else self.mills,
                                   size=(250, -1),
@@ -365,7 +365,7 @@ class ColorEQ(wx.Dialog):
         and sets the label with the converted value.
         """
         seek = self.sld_time.GetValue()
-        clock = milliseconds2clocksec(seek)  # to 24-hour
+        clock = integer_to_time(seek, False)  # to 24-hour
         self.txttime.SetLabel(clock)  # update StaticText
         if not self.btn_load.IsEnabled():
             self.btn_load.Enable()
@@ -376,7 +376,7 @@ class ColorEQ(wx.Dialog):
         Reloads all images frame at a given time clock point
         """
         seek = self.sld_time.GetValue()
-        self.clock = milliseconds2clocksec(seek)  # to 24-hour
+        self.clock = integer_to_time(seek, False)  # to 24-hour
         error = self.process(self.framesrc)
         if error:
             wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)

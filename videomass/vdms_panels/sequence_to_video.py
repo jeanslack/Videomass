@@ -34,9 +34,8 @@ from videomass.vdms_dialogs.epilogue import Formula
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_threads.ffprobe import ffprobe
 from videomass.vdms_utils.utils import trailing_name_with_prog_digit
-from videomass.vdms_utils.utils import get_seconds as getsec
-from videomass.vdms_utils.utils import get_milliseconds as getms
-from videomass.vdms_utils.utils import milliseconds2clock as clockms
+from videomass.vdms_utils.utils import time_to_integer
+from videomass.vdms_utils.utils import integer_to_time
 
 
 def check_images_size(flist):
@@ -489,19 +488,18 @@ class SequenceToVideo(wx.Panel):
         loop = ''
         if self.ckbx_audio.IsChecked():
             if self.opt["Shortest"][0]:
-                duration = getms(timeline) * len(self.parent.file_src)
-                self.opt["Clock"] = clockms(duration)
-                sec = round(getsec(timeline))
+                sec = time_to_integer(timeline, sec=True, rnd=True)
+                duration = sec * len(self.parent.file_src)
+                self.opt["Clock"] = integer_to_time(duration * 1000)
             else:
-                self.opt["Clock"] = clockms(self.opt["ADuration"])
-                sec = round(getsec(timeline))
+                self.opt["Clock"] = integer_to_time(self.opt["ADuration"])
+                sec = time_to_integer(timeline, sec=True, rnd=True)
                 duration = self.opt["ADuration"]
                 loop = f'-loop 1 -t {self.opt["Clock"]}'
-
         else:
-            duration = getms(timeline) * len(self.parent.file_src)
-            self.opt["Clock"] = clockms(duration)
-            sec = round(getsec(timeline))
+            sec = time_to_integer(timeline, sec=True, rnd=True)
+            duration = sec * len(self.parent.file_src)
+            self.opt["Clock"] = integer_to_time(duration * 1000)
 
         framerate = '-framerate 1/1' if not sec else f'-framerate 1/{sec}'
         self.opt["Preinput"] = f'{loop} {framerate}'
@@ -527,17 +525,17 @@ class SequenceToVideo(wx.Panel):
         """
         if self.ckbx_audio.IsChecked():
             if self.opt["Shortest"][0]:
-                duration = getms(timeline)
-                self.opt["Clock"] = timeline
-                sec = round(getsec(timeline))
+                sec = time_to_integer(timeline, sec=True, rnd=True)
+                duration = sec
+                self.opt["Clock"] = integer_to_time(duration * 1000)
             else:
-                self.opt["Clock"] = clockms(self.opt["ADuration"])
+                self.opt["Clock"] = integer_to_time(self.opt["ADuration"])
                 duration = self.opt["ADuration"]
                 sec = round(self.opt["ADuration"] / 1000)
         else:
-            duration = getms(timeline)
-            self.opt["Clock"] = timeline
-            sec = round(duration / 1000)
+            sec = time_to_integer(timeline, sec=True, rnd=True)
+            duration = sec
+            self.opt["Clock"] = integer_to_time(duration * 1000)
 
         self.opt["Preinput"] = f'-loop 1 -t {self.opt["Clock"]}'
         self.opt["Interval"] = sec

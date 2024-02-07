@@ -25,8 +25,8 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import wx
-from videomass.vdms_utils.utils import get_milliseconds
-from videomass.vdms_utils.utils import milliseconds2clock
+from videomass.vdms_utils.utils import time_to_integer
+from videomass.vdms_utils.utils import integer_to_time
 # import wx.lib.masked as masked (not work on macOSX)
 
 
@@ -42,8 +42,8 @@ class Time_Selector(wx.Dialog):
         in the timeline panel are reproduced exactly here.
 
         """
-        self.seek_mills = get_milliseconds(seektxt)
-        self.cut_mills = get_milliseconds(cuttxt)
+        self.seek_mills = time_to_integer(seektxt)
+        self.cut_mills = time_to_integer(cuttxt)
         self.milliseconds = milliseconds  # media total duration in ms
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -213,7 +213,7 @@ class Time_Selector(wx.Dialog):
                     f'{self.duration_sec.GetValue()}.'
                     f'{str(self.duration_mills.GetValue()).zfill(3)}'
                     )
-        return duration, get_milliseconds(duration)
+        return duration, time_to_integer(duration)
     # ------------------------------------------------------------------#
 
     def get_start_values(self):
@@ -226,7 +226,7 @@ class Time_Selector(wx.Dialog):
                  f'{self.start_sec.GetValue()}.'
                  f'{str(self.start_mills.GetValue()).zfill(3)}'
                  )
-        return start, get_milliseconds(start)
+        return start, time_to_integer(start)
     # ------------------------------------------------------------------#
 
     def enable_start_ctrls(self, enable=True):
@@ -269,7 +269,7 @@ class Time_Selector(wx.Dialog):
 
         entersum = start[1] + duration[1]
         if entersum > self.milliseconds:
-            setmax = milliseconds2clock(self.milliseconds - start[1])
+            setmax = integer_to_time(self.milliseconds - start[1])
             h, m, s = setmax.split(':')
             sec, ms = s.split('.')
             self.duration_hour.SetValue(int(h))
@@ -287,7 +287,7 @@ class Time_Selector(wx.Dialog):
         entersum = start[1] + duration[1]
 
         if entersum > self.milliseconds:
-            setmax = milliseconds2clock(self.milliseconds - duration[1])
+            setmax = integer_to_time(self.milliseconds - duration[1])
             h, m, s = setmax.split(':')
             sec, ms = s.split('.')
             self.start_hour.SetValue(int(h))

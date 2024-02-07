@@ -7,10 +7,17 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 06 Feb 2024 V.5.0.5
+Tue, 07 Feb 2024 V.5.0.5
 
   * Fixed `ValueError: could not convert string to float: 'N/A'` given by the
     `get_milliseconds()` function.
+  * The `get_milliseconds` and `get_seconds` functions have been replaced by
+    the `time_to_integer()` function.
+  * [Still Image Maker] Improved duration setting, millisecond values will be
+    rounded to time second values.
+  * Replace `milliseconds2clock` and `milliseconds2clocksec` to
+    new `integer_to_time` function.
+
 
 +------------------------------------+
 Wed, 24 Jan 2024 V.5.0.4

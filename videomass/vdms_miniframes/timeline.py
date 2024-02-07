@@ -27,8 +27,8 @@ This file is part of Videomass.
 import wx
 import wx.adv
 from pubsub import pub
-from videomass.vdms_utils.utils import milliseconds2clock
-from videomass.vdms_utils.utils import get_milliseconds
+from videomass.vdms_utils.utils import integer_to_time
+from videomass.vdms_utils.utils import time_to_integer
 
 
 class Time_Selector(wx.Dialog):
@@ -137,7 +137,7 @@ class Time_Selector(wx.Dialog):
                f'{str(self.box_sec.GetValue()).zfill(2)}.'
                f'{str(self.box_mills.GetValue()).zfill(3)}'
                )
-        return val, get_milliseconds(val)
+        return val, time_to_integer(val)
 
 
 class Float_TL(wx.MiniFrame):
@@ -318,7 +318,7 @@ class Float_TL(wx.MiniFrame):
                 self.milliseconds = self.duration[msg]
                 self.sourcedur = _('Source duration:')
 
-        self.overalltime = milliseconds2clock(self.milliseconds)
+        self.overalltime = integer_to_time(self.milliseconds)
         self.on_trim_time_reset()
     # ------------------------------------------------------------------#
 
@@ -327,7 +327,7 @@ class Float_TL(wx.MiniFrame):
         Set parent time_seq attr.
         """
         if isset:
-            dur = milliseconds2clock(self.mills_end - self.mills_start)
+            dur = integer_to_time(self.mills_end - self.mills_start)
             self.parent.time_seq = f"-ss {self.clock_start} -t {dur}"
             msg = _('{0} {1}  |  Segment Duration: {2}'
                     ).format(self.sourcedur, self.overalltime, dur)
@@ -347,13 +347,13 @@ class Float_TL(wx.MiniFrame):
         if self.pointpx[1] > 30:
             self.bar_w = self.pointpx[0]
             self.mills_end = int(round(self.bar_w / self.pix))
-            self.clock_end = milliseconds2clock(self.mills_end)
+            self.clock_end = integer_to_time(self.mills_end)
             self.onRedraw(wx.ClientDC(self.paneltime))
 
         elif self.pointpx[1] < 30:
             self.bar_x = self.pointpx[0]
             self.mills_start = int(round(self.bar_x / self.pix))
-            self.clock_start = milliseconds2clock(self.mills_start)
+            self.clock_start = integer_to_time(self.mills_start)
             self.onRedraw(wx.ClientDC(self.paneltime))
     # ------------------------------------------------------------------#
 
@@ -436,7 +436,7 @@ class Float_TL(wx.MiniFrame):
             elif self.pointpx[1] < 30:
                 if self.mills_start == 0:
                     return
-            dur = milliseconds2clock(self.mills_end - self.mills_start)
+            dur = integer_to_time(self.mills_end - self.mills_start)
             msg = _('{0} {1}  |  Segment Duration: {2}'
                     ).format(self.sourcedur, self.overalltime, dur)
             self.statusbar_msg(f'{msg}', None)
