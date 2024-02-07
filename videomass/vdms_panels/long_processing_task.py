@@ -39,7 +39,7 @@ from videomass.vdms_threads.picture_exporting import PicturesFromVideo
 from videomass.vdms_threads.video_stabilization import VidStab
 from videomass.vdms_threads.concat_demuxer import ConcatDemuxer
 from videomass.vdms_threads.slideshow import SlideshowMaker
-from videomass.vdms_utils.utils import (get_milliseconds, milliseconds2clock)
+from videomass.vdms_utils.utils import (time_to_integer, integer_to_time)
 
 
 def delete_file_source(flist, trashdir):
@@ -240,7 +240,7 @@ class LogOut(wx.Panel):
         if 'time=' in output:  # ...in processing
             i = output.index('time=') + 5
             pos = output[i:].split()[0]
-            msec = get_milliseconds(pos)
+            msec = time_to_integer(pos)
 
             if msec > duration:
                 self.barprog.SetValue(duration)
@@ -261,7 +261,7 @@ class LogOut(wx.Panel):
                         eta = "   ETA: N/A"
                     else:  # is float
                         rem = (duration - msec) / float(speed)
-                        remaining = milliseconds2clock(round(rem))
+                        remaining = integer_to_time(round(rem))
                         eta = f"   ETA: {remaining}"
                 else:
                     eta = "   ETA: N/A"

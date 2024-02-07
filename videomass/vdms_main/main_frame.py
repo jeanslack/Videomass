@@ -55,7 +55,7 @@ from videomass.vdms_io import io_tools
 from videomass.vdms_sys.msg_info import current_release
 from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_sys.argparser import info_this_platform
-from videomass.vdms_utils.utils import get_milliseconds
+from videomass.vdms_utils.utils import time_to_integer
 from videomass.vdms_utils.utils import copydir_recursively
 
 
@@ -1536,7 +1536,7 @@ class MainFrame(wx.Frame):
         elif args[0] in ('concat_demuxer', 'sequence_to_video'):
             dur, seq = args[6], ''
         elif self.time_seq:
-            ms = get_milliseconds(self.time_seq.split()[3])  # -t duration
+            ms = time_to_integer(self.time_seq.split()[3])  # -t duration
             seq = self.time_seq
             dur = [ms for n in self.duration]
             self.statusbar_msg(_('Processing...'), None)

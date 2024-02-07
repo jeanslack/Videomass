@@ -28,7 +28,7 @@ import sys
 import wx
 import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_io.io_tools import youtubedl_getstatistics
-from videomass.vdms_utils.utils import timehuman
+from videomass.vdms_utils.utils import integer_to_time as totimesec
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_ytdlp.playlist_indexing import Indexing
 from videomass.vdms_ytdlp.subtitles_editor import SubtitleEditor
@@ -367,7 +367,7 @@ class Downloader(wx.Panel):
 
             if 'duration' in meta[0]:
 
-                ftime = (f"{timehuman(meta[0]['duration'])} "
+                ftime = (f"{totimesec(round(meta[0]['duration'] * 1000))} "
                          f"({meta[0]['duration']} sec.)")
             else:
                 ftime = 'N/A'

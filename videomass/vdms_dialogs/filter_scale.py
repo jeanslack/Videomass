@@ -30,8 +30,8 @@ import wx
 from videomass.vdms_io import io_tools
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
-from videomass.vdms_utils.utils import get_milliseconds
-from videomass.vdms_utils.utils import milliseconds2clocksec
+from videomass.vdms_utils.utils import time_to_integer
+from videomass.vdms_utils.utils import integer_to_time
 from videomass.vdms_io.make_filelog import make_log_template
 
 
@@ -66,7 +66,7 @@ class Scale(wx.Dialog):
         self.filename = kwa['filename']  # selected filename on queued list
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f'{Scale.TMPSRC}', f'{name}.png')  # image
-        self.mills = get_milliseconds(kwa['duration'].split('.')[0])
+        self.mills = time_to_integer(kwa['duration'].split('.')[0])
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
@@ -346,7 +346,7 @@ class Scale(wx.Dialog):
         if not self.mills:
             sseg = ''
         else:
-            stime = milliseconds2clocksec(int(self.mills / 2))
+            stime = integer_to_time(int(self.mills / 2), False)
             sseg = f'-ss {stime}'
         scale = '' if not concat else f'-vf "{concat}"'
         arg = (f'{sseg} -i "{self.filename}" -f image2 -update 1 '

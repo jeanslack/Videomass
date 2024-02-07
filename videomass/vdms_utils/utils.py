@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Gen.22.2024
+Rev: Feb.05.2024
 Code checker: flake8, pylint .
 
 This file is part of Videomass.
@@ -194,93 +194,98 @@ def to_bytes(string, key='ydl'):
 # ------------------------------------------------------------------------
 
 
-def get_seconds(timeformat):
+def time_to_integer(timef: str = '0', sec=False, rnd=False) -> int:
     """
-    This is the old implementation to get time human to seconds,
-    e.g. get_seconds('00:02:00'). Return int(seconds) object.
+    Converts strings representing the 24-hour format to an
+    integer equivalent to the time duration in milliseconds
+    (default).
+
+    ARGUMENTS:
+    ---------
+    timef: Accepts a string representing the 24-hour clock in the
+           following valid string formats:
+
+            '0' | '00' | '00.0' | '00.00' | 00:0 | '00:00:00'
+            '0:00:00' | '0:0:0' | '00:00.000' | '00:00:00.000
+
+           Default is '0' .
+           Any other representation passed as a string argument will
+           be returned as an integer object equal to 0 (int).
+           If the argument passed is an object other than the string
+           object (str) the exception `TypeError` will be raised.
+
+    sec: if `True`, returns the duration in seconds instead
+         of milliseconds.
+
+    rnd: if `True` rounds the result, i.e. "00:00:02.999" > 3000
+         milliseconds instead of 2999 milliseconds or 3 seconds
+         instead of 2 seconds using `sec=True` argument.
+
+    Return an int object.
+    Raise `TypeError` if argument != `str` .
 
     """
-    if timeformat == 'N/A':
-        return int('0')
+    if not isinstance(timef, str):
+        raise TypeError("Only a string (str) object is expected.")
 
-    pos = timeformat.split(':')
-    hours, minutes, seconds = int(pos[0]), int(pos[1]), float(pos[2])
+    # adds leading zeros to fill up possibly non-existing fields.
+    hours, minutes, seconds = (["0", "0"] + timef.split(":"))[-3:]
 
-    return hours * 3600 + minutes * 60 + seconds
-# ------------------------------------------------------------------------
+    try:
+        hours = int(hours)
+        minutes = int(minutes)
+        seconds = float(seconds)
+        if rnd:
+            seconds = round(seconds)
+    except ValueError:
+        return 0
 
-
-def timehuman(seconds):
-    """
-    This is the old implementation to converting seconds to
-    time format. Accept integear only e.g timehuman(2300).
-    Useb by youtube-dl downloader, returns a string object
-    in time format i.e '00:38:20' .
-
-    """
-    minutes, seconds = divmod(seconds, 60)
-    hours, minutes = divmod(minutes, 60)
-    # return "%02d:%02d:%02d" % (hours, minutes, seconds)
-    return f"{hours:02}:{minutes:02}:{seconds:02}"
-# ------------------------------------------------------------------------
-
-
-def get_milliseconds(timeformat):
-    """
-    Convert 24-hour clock unit to milliseconds (duration).
-    Accepts different forms of time unit string, e.g.
-
-        '30.5', '00:00:00', '0:00:00', '0:0:0',
-        '00:00.000', '00:00:00.000.
-
-    The first line adds leading zeros to fill up possibly
-    non-existing fields.
-
-    Return an int object (milliseconds).
-
-    HACK add 'N/A' (no time) to parser?
-
-            if timeformat == 'N/A':
-                return int('0')
-    """
-    hours, minutes, seconds = (["0", "0"] + timeformat.split(":"))[-3:]
-    hours = int(hours)
-    minutes = int(minutes)
-    seconds = float(seconds)
-
+    if sec:
+        return int(hours * 3600 + minutes * 60 + seconds)
     return int(hours * 3600000 + minutes * 60000 + seconds * 1000)
+
 # ------------------------------------------------------------------------
 
 
-def milliseconds2clock(milliseconds):
+def integer_to_time(integer: int = 0, mills=True, rnd=False) -> str:
     """
-    Converts milliseconds to 24-hour clock format + milliseconds,
-    calculating in sexagesimal format.
-    Accept an `int` object, such as 2998. Float numbers, such
-    as 2000.999, must be rounded using `round()` function.
-    Returns a string object of time format e.g. HOURS:MM:SS.MILLIS,
-    as in 00:00:00.000 .
+    Converts integers to 24-hour clock format calculating in
+    sexagesimal format. Accept an `int` object, such as 2998.
+    Float numbers, such as 2000.999, must be rounded using
+    `round()` function first.
+
+    ARGUMENTS:
+    ---------
+    integer: Any int object, default is 0.
+
+    mills: Include milliseconds like "HH:MM:SS.MIL" (default).
+           Milliseconds will be excluded and ignored if set
+           to `False`. You could instead use the `rnd` argument
+           to round them and add the offset to the seconds.
+
+    rnd: If `True` rounds the result. This argument will have
+         no effect with `mills=True` default argument.
+
+    Returns a string object.
+    Raise `TypeError` if argument != `int` .
 
     """
-    minutes, sec = divmod(milliseconds, 60000)
+    if not isinstance(integer, int):
+        raise TypeError("An integer (int) object is expected.")
+
+    minutes, sec = divmod(integer, 60000)
     hours, minutes = divmod(minutes, 60)
-    seconds = float(sec) / 1000
-    # return "%02d:%02d:%06.3f" % (hours, minutes, seconds)
-    return f"{hours:02}:{minutes:02}:{seconds:06.3f}"
-# ------------------------------------------------------------------------
 
+    if mills:
+        seconds = float(sec) / 1000
+        # return "%02d:%02d:%06.3f" % (hours, minutes, seconds)
+        return f"{hours:02}:{minutes:02}:{seconds:06.3f}"
 
-def milliseconds2clocksec(milliseconds):
-    """
-    Like milliseconds2clock but differs in the returned object
-    which does not have milliseconds.
-    Returns a string object in 24-hour clock of time units
-    e.g. HOURS:MM:SS, as in 00:00:00 .
+    if rnd:
+        seconds = round(sec / 1000)
+    else:
+        seconds = int(sec / 1000)
 
-    """
-    minutes, sec = divmod(milliseconds, 60000)
-    hours, minutes = divmod(minutes, 60)
-    seconds = int(sec / 1000)
     return f"{hours:02}:{minutes:02}:{seconds:02}"
 # ------------------------------------------------------------------------
 
@@ -289,6 +294,7 @@ def copy_missing_data(srcd, destd):
     """
     Copy missing files and directories to a given destination
     path using the same names as the source path.
+
     """
     srclist = os.listdir(srcd)
     destlist = os.listdir(destd)
@@ -306,6 +312,7 @@ def copy_restore(srcfile, destfile):
     Copy the contents (no metadata) of the file named
     srcfile to a file named destfile. Please visit doc webpage at
     <https://docs.python.org/3/library/shutil.html#shutil.copyfile>
+
     """
     try:
         shutil.copyfile(str(srcfile), str(destfile))
@@ -363,6 +370,7 @@ def copy_on(ext, sourcedir, destdir, overw=True):
     sourcedir: path to the source directory
     destdir: path to the destination directory
     overw: `True`, overwrite file destination
+
     """
     destpath = os.listdir(destdir)
     files = glob.glob(f"{sourcedir}/*.{ext}")
@@ -437,7 +445,7 @@ def trailing_name_with_prog_digit(destpath, argname) -> str:
     Returns str(newdirname)
     """
     if not isinstance(destpath, str) or not isinstance(argname, str):
-        raise TypeError("Expects str object only")
+        raise TypeError("Only a string (str) object is expected.")
 
     name, ext = os.path.splitext(argname)
     name = re.sub(r"[\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}]", '', name)
@@ -482,7 +490,7 @@ def leading_name_with_prog_digit(destpath, argname) -> str:
     Returns str(newdirname)
     """
     if not isinstance(destpath, str) or not isinstance(argname, str):
-        raise TypeError("Expects str object only")
+        raise TypeError("Only a string (str) object is expected.")
 
     name, ext = os.path.splitext(argname)
     name = re.sub(r"[\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}]", '', name)
@@ -516,14 +524,14 @@ def clockset(duration, fileclock):
     referenced media file.
     """
     duration = duration.split('.')[0]
-    millis = get_milliseconds(duration)
+    millis = time_to_integer(duration)
     if not millis:
         clock = {'duration': '00:00:00', 'millis': 0}
     else:
         if os.path.exists(fileclock):
             with open(fileclock, "r", encoding='utf8') as atime:
                 clockread = atime.read().strip()
-                if get_milliseconds(clockread) <= millis:
+                if time_to_integer(clockread) <= millis:
                     clock = {'duration': clockread, 'millis': millis}
                 else:
                     clock = {'duration': duration, 'millis': millis}
