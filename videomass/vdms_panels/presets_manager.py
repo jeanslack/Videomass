@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Gen.22.2024
+Rev: Feb.07.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -206,6 +206,11 @@ class PrstPan(wx.Panel):
         boxprofiles = wx.StaticBoxSizer(wx.StaticBox(
             self, wx.ID_ANY, _('Profiles')), wx.VERTICAL)
         boxprofiles.Add(self.lctrl, 1, wx.ALL | wx.EXPAND, 5)
+        colw = self.appdata['prstmng_column_width']
+        self.lctrl.InsertColumn(0, _('Name'), width=colw[0])
+        self.lctrl.InsertColumn(1, _('Description'), width=colw[1])
+        self.lctrl.InsertColumn(2, _('Output Format'), width=colw[2])
+        self.lctrl.InsertColumn(3, _('Supported Format List'), width=colw[3])
         # --- profile buttons
         grid_profiles = wx.FlexGridSizer(0, 4, 0, 5)
         self.btn_newprofile = wx.Button(self, wx.ID_ANY,
@@ -392,11 +397,6 @@ class PrstPan(wx.Panel):
         Populates Presets list with JSON data from *.prst files.
         See `presets_manager_prop.py`
         """
-        self.lctrl.InsertColumn(0, _('Name'), width=250)
-        self.lctrl.InsertColumn(1, _('Description'), width=350)
-        self.lctrl.InsertColumn(2, _('Output Format'), width=200)
-        self.lctrl.InsertColumn(3, _('Supported Format List'), width=220)
-
         path = os.path.join(f'{self.user_prst}',
                             f'{self.cmbx_prst.GetValue()}.prst'
                             )

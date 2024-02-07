@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.19.2023
+Rev: Feb.07.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -124,15 +124,16 @@ class FormatCode(wx.Panel):
                                       )
         if not self.oldwx:
             self.fcode.EnableCheckBoxes(enable=True)
-        self.fcode.InsertColumn(0, (_('Format Code')), width=120)
-        self.fcode.InsertColumn(1, (_('Url')), width=60)
-        self.fcode.InsertColumn(2, (_('Title')), width=200)
-        self.fcode.InsertColumn(3, (_('Extension')), width=80)
-        self.fcode.InsertColumn(4, (_('Resolution')), width=160)
-        self.fcode.InsertColumn(5, (_('Video Codec')), width=110)
-        self.fcode.InsertColumn(6, (_('fps')), width=80)
-        self.fcode.InsertColumn(7, (_('Audio Codec')), width=110)
-        self.fcode.InsertColumn(8, (_('Size')), width=100)
+        colw = FormatCode.appdata['fcode_column_width']
+        self.fcode.InsertColumn(0, (_('Format Code')), width=colw[0])
+        self.fcode.InsertColumn(1, (_('Url')), width=colw[1])
+        self.fcode.InsertColumn(2, (_('Title')), width=colw[2])
+        self.fcode.InsertColumn(3, (_('Extension')), width=colw[3])
+        self.fcode.InsertColumn(4, (_('Resolution')), width=colw[4])
+        self.fcode.InsertColumn(5, (_('Video Codec')), width=colw[5])
+        self.fcode.InsertColumn(6, (_('fps')), width=colw[6])
+        self.fcode.InsertColumn(7, (_('Audio Codec')), width=colw[7])
+        self.fcode.InsertColumn(8, (_('Size')), width=colw[8])
 
         sizer_base.Add(self.fcode, 1, wx.ALL | wx.EXPAND, 5)
         sizeropt = wx.BoxSizer(wx.HORIZONTAL)

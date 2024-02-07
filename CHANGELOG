@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 07 Feb 2024 V.5.0.5
+Tue, 08 Feb 2024 V.5.0.5
 
   * Fixed `ValueError: could not convert string to float: 'N/A'` given by the
     `get_milliseconds()` function.
@@ -17,6 +17,12 @@ Tue, 07 Feb 2024 V.5.0.5
     rounded to time second values.
   * Replace `milliseconds2clock` and `milliseconds2clocksec` to
     new `integer_to_time` function.
+  * [Presets Manager] Saves the width of the profile columns when you close
+    the app (see #260 and #113 issues).
+  * [filedrop] Saves the width of the file columns when you close
+    the app (see #260 and #113 issues).
+  * [YouTube Downloader] Saves the width of the format code columns when you
+    close the app (see #260 and #113 issues).
 
 
 +------------------------------------+

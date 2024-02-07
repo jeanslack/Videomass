@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2023
+Rev: Feb.07.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -366,6 +366,20 @@ class MainFrame(wx.Frame):
         sett = confmanager.read_options()
         sett['main_window_size'] = list(self.GetSize())
         sett['main_window_pos'] = list(self.GetPosition())
+        prstcolwidth = [self.PrstsPanel.lctrl.GetColumnWidth(0),
+                        self.PrstsPanel.lctrl.GetColumnWidth(1),
+                        self.PrstsPanel.lctrl.GetColumnWidth(2),
+                        self.PrstsPanel.lctrl.GetColumnWidth(3),
+                        ]
+        sett['prstmng_column_width'] = prstcolwidth
+        filedropcolwidth = [self.fileDnDTarget.flCtrl.GetColumnWidth(0),
+                            self.fileDnDTarget.flCtrl.GetColumnWidth(1),
+                            self.fileDnDTarget.flCtrl.GetColumnWidth(2),
+                            self.fileDnDTarget.flCtrl.GetColumnWidth(3),
+                            self.fileDnDTarget.flCtrl.GetColumnWidth(4),
+                            self.fileDnDTarget.flCtrl.GetColumnWidth(5),
+                            ]
+        sett['filedrop_column_width'] = filedropcolwidth
         confmanager.write_options(**sett)
         self.destroy_orphaned_window()
         self.Destroy()
