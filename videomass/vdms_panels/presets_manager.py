@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Gen.22.2024
+Rev: Feb.07.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -311,7 +311,7 @@ class PrstPan(wx.Panel):
 
         # ---------------------------- defaults
         self.cmbx_prst.SetSelection(0),
-        self.set_listctrl()
+        self.set_listctrl(self.appdata['prstmng_column_width'])
     # ----------------------------------------------------------------------
 
     def update_preset_state(self):
@@ -368,7 +368,9 @@ class PrstPan(wx.Panel):
         """
         Clear all data and re-load new one. Used by selecting
         new preset and add/edit/delete profiles events.
-
+        Note, If you have methods to call related to `self.lctrl`,
+        do so before calling `ClearAll()` method which deletes
+        the pre-set references making the data no longer available.
         """
         if reset_cmbx:
             prst = sorted([os.path.splitext(x)[0] for x in
@@ -378,24 +380,31 @@ class PrstPan(wx.Panel):
             self.cmbx_prst.AppendItems(prst)
             self.cmbx_prst.SetSelection(0)
 
+        # get column widths now before calling ClearAll()
+        colw = [self.lctrl.GetColumnWidth(0),
+                self.lctrl.GetColumnWidth(1),
+                self.lctrl.GetColumnWidth(2),
+                self.lctrl.GetColumnWidth(3),
+                ]
         self.lctrl.ClearAll()
         self.txt_1cmd.SetValue("")
         self.txt_2cmd.SetValue("")
 
         if self.array:
             del self.array[0:6]
-        self.set_listctrl()
+
+        self.set_listctrl(colw)
     # ----------------------------------------------------------------#
 
-    def set_listctrl(self):
+    def set_listctrl(self, colw):
         """
         Populates Presets list with JSON data from *.prst files.
         See `presets_manager_prop.py`
         """
-        self.lctrl.InsertColumn(0, _('Name'), width=250)
-        self.lctrl.InsertColumn(1, _('Description'), width=350)
-        self.lctrl.InsertColumn(2, _('Output Format'), width=200)
-        self.lctrl.InsertColumn(3, _('Supported Format List'), width=220)
+        self.lctrl.InsertColumn(0, _('Name'), width=colw[0])
+        self.lctrl.InsertColumn(1, _('Description'), width=colw[1])
+        self.lctrl.InsertColumn(2, _('Output Format'), width=colw[2])
+        self.lctrl.InsertColumn(3, _('Supported Format List'), width=colw[3])
 
         path = os.path.join(f'{self.user_prst}',
                             f'{self.cmbx_prst.GetValue()}.prst'

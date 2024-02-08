@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.20.2023
+Rev: Feb.07.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -121,19 +121,6 @@ class MyListCtrl(wx.ListCtrl):
                              style=wx.LC_REPORT
                              | wx.LC_SINGLE_SEL,
                              )
-        self.populate()
-    # ----------------------------------------------------------------------#
-
-    def populate(self):
-        """
-        populate the default columns
-        """
-        self.InsertColumn(0, '#', width=30)
-        self.InsertColumn(1, _('File Name'), width=200)
-        self.InsertColumn(2, _('Duration'), width=200)
-        self.InsertColumn(3, _('Media type'), width=200)
-        self.InsertColumn(4, _('Size'), width=150)
-        self.InsertColumn(5, _('Output file name'), width=200)
     # ----------------------------------------------------------------------#
 
     def dropUpdate(self, path, newname=None):
@@ -274,6 +261,14 @@ class FileDnD(wx.Panel):
         # Establish the listctrl as a drop target:
         file_drop_target = FileDrop(self.flCtrl)
         self.flCtrl.SetDropTarget(file_drop_target)  # Make drop target.
+        # populate columns
+        colw = appdata['filedrop_column_width']
+        self.flCtrl.InsertColumn(0, '#', width=colw[0])
+        self.flCtrl.InsertColumn(1, _('File Name'), width=colw[1])
+        self.flCtrl.InsertColumn(2, _('Duration'), width=colw[2])
+        self.flCtrl.InsertColumn(3, _('Media type'), width=colw[3])
+        self.flCtrl.InsertColumn(4, _('Size'), width=colw[4])
+        self.flCtrl.InsertColumn(5, _('Output file name'), width=colw[5])
         # create widgets
         infomsg = _("Drag one or more files below")
         self.lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)

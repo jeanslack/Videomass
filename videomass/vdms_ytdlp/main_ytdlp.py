@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.07.2023
+Rev: Feb.07.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -247,6 +247,17 @@ class MainYtdl(wx.Frame):
         sett['include_ID_name'] = self.ytDownloader.ckbx_id.GetValue()
         sett['restrict_fname'] = self.ytDownloader.ckbx_limitfn.GetValue()
         sett['subtitles_options'] = self.ytDownloader.opt["SUBS"]
+        fcodecolwidth = [self.ytDownloader.panel_cod.fcode.GetColumnWidth(0),
+                         self.ytDownloader.panel_cod.fcode.GetColumnWidth(1),
+                         self.ytDownloader.panel_cod.fcode.GetColumnWidth(2),
+                         self.ytDownloader.panel_cod.fcode.GetColumnWidth(3),
+                         self.ytDownloader.panel_cod.fcode.GetColumnWidth(4),
+                         self.ytDownloader.panel_cod.fcode.GetColumnWidth(5),
+                         self.ytDownloader.panel_cod.fcode.GetColumnWidth(6),
+                         self.ytDownloader.panel_cod.fcode.GetColumnWidth(7),
+                         self.ytDownloader.panel_cod.fcode.GetColumnWidth(8),
+                         ]
+        sett['fcode_column_width'] = fcodecolwidth
         confmanager.write_options(**sett)
         self.destroy_orphaned_window()
         self.Destroy()

@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.07.2023
+Rev: Feb.07.2024
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -156,8 +156,17 @@ class ConfigManager:
         args used by external downloader in yt-dlp. Default is None
         List should be passed using aria2c ["-j", "1", "-x", "1", "-s", "1"]
 
+    prstmng_column_width (list of int)
+        column width in the Preset Manager panel.
+
+    filedrop_column_width (list of int)
+        column width in the File Drop panel.
+
+    fcode_column_width (list of int)
+        column width in the format code panel (ytdownloader).
+
     """
-    VERSION = 6.2
+    VERSION = 6.3
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputfile": f"{os.path.expanduser('~')}",
                        "outputfile_samedir": False,
@@ -202,6 +211,10 @@ class ConfigManager:
                                              },
                        "external_downloader": None,
                        "external_downloader_args": None,
+                       "prstmng_column_width": [250, 350, 200, 220],
+                       "filedrop_column_width": [30, 200, 200, 200, 150, 200],
+                       "fcode_column_width": [120, 60, 200, 80, 160,
+                                              110, 80, 110, 100],
                        }
 
     def __init__(self, filename, makeportable=None):
