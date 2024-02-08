@@ -244,6 +244,8 @@ class LogOut(wx.Panel):
 
             if msec > duration:
                 self.barprog.SetValue(duration)
+            elif msec == 0:
+                self.barprog.SetValue(self.barprog.GetValue())
             else:
                 self.barprog.SetValue(msec)
 
