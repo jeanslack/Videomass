@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2023
+Rev: Feb.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -865,7 +865,7 @@ class SetUp(wx.Dialog):
                 self.txtctrl_ffplay.Clear()
                 getpath = self.appdata['getpath'](status[1])
                 self.txtctrl_ffplay.write(getpath)
-                self.settings['ffprobe_cmd'] = getpath
+                self.settings['ffplay_cmd'] = getpath
     # --------------------------------------------------------------------#
 
     def open_path_ffplay(self, event):

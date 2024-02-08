@@ -23,6 +23,8 @@ Tue, 08 Feb 2024 V.5.0.5
     the app (see #260 and #113 issues).
   * [YouTube Downloader] Saves the width of the format code columns when you
     close the app (see #260 and #113 issues).
+  * Fixed small bug in preferences dialog causing FFmpeg binaries to be set
+    incorrectly (self.settings['ffprobe_cmd'] > self.settings['ffplay_cmd']) .
 
 
 +------------------------------------+
