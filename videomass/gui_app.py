@@ -29,10 +29,7 @@ import sys
 from shutil import which, rmtree
 import builtins
 import wx
-try:
-    from wx.svg import SVGimage
-except ModuleNotFoundError:
-    pass
+from wx.svg import SVGimage
 from videomass.vdms_sys.argparser import arguments
 from videomass.vdms_sys.configurator import DataSource
 from videomass.vdms_sys import app_const as appC

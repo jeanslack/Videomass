@@ -15,8 +15,15 @@ videomass (5.0.5-1) UNRELEASED; urgency=medium
   * [YouTube Downloader] Saves the width of the format code columns when you
     close the app (see #260 and #113 issues).
   * Fixed small bug in preferences dialog causing FFmpeg binaries to be set
-    incorrectly self.settings['ffprobe_cmd'] > self.settings['ffplay_cmd']) .
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 08 Feb 2024 00:15:00 +0200
+    incorrectly (self.settings['ffprobe_cmd'] > self.settings['ffplay_cmd']) .
+  * Removed backwards compatibility with wxPython < 4.1.0 .
+  * Minimun requirements fixed to `wxPython >= 4.1.0`, `Python >= 3.7`,
+    `FFmpeg >= 5.1.4` .
+  * New versions of wxPython support svg images for icons well, so most png
+    icons are removed.
+  * Fixed FFmpeg warns: `-vsync arg is deprecated, use fps_mode`
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 16 Feb 2024 00:29:00 +0200
 
 videomass (5.0.4-1) UNRELEASED; urgency=high
 

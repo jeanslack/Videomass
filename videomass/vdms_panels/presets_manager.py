@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.07.2024
+Rev: Feb.13.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -80,16 +80,11 @@ class PrstPan(wx.Panel):
         "Output_extension": "",
         }
         """
-        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-            bmpnewprf = get_bmp(icons['profile_add'], ((16, 16)))
-            bmpeditprf = get_bmp(icons['profile_edit'], ((16, 16)))
-            bmpdelprf = get_bmp(icons['profile_del'], ((16, 16)))
-            bmpcopyprf = get_bmp(icons['profile_copy'], ((16, 16)))
-        else:
-            bmpnewprf = wx.Bitmap(icons['profile_add'], wx.BITMAP_TYPE_ANY)
-            bmpeditprf = wx.Bitmap(icons['profile_edit'], wx.BITMAP_TYPE_ANY)
-            bmpdelprf = wx.Bitmap(icons['profile_del'], wx.BITMAP_TYPE_ANY)
-            bmpcopyprf = wx.Bitmap(icons['profile_copy'], wx.BITMAP_TYPE_ANY)
+        bmpnewprf = get_bmp(icons['profile_add'], ((16, 16)))
+        bmpeditprf = get_bmp(icons['profile_edit'], ((16, 16)))
+        bmpdelprf = get_bmp(icons['profile_del'], ((16, 16)))
+        bmpcopyprf = get_bmp(icons['profile_copy'], ((16, 16)))
+
         self.appdata = appdata
         self.array = []  # Parameters of the selected profile
         self.src_prst = os.path.join(self.appdata['srcpath'], 'presets')

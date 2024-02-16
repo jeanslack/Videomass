@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.18.2023
+Rev: Feb.13.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -146,37 +146,20 @@ class AV_Conv(wx.Panel):
         Collects all the values of the
         GUI controls used in this panel
         """
-        if 'wx.svg' in sys.modules:  # only available in wx version 4.1 to up
-            bmpplay = get_bmp(icons['preview'], ((16, 16)))
-            bmpapreview = get_bmp(icons['preview_audio'], ((16, 16)))
-            self.bmpreset = get_bmp(icons['clear'], ((16, 16)))
-            bmpresize = get_bmp(icons['scale'], ((16, 16)))
-            bmpcrop = get_bmp(icons['crop'], ((16, 16)))
-            bmprotate = get_bmp(icons['rotate'], ((16, 16)))
-            bmpdeinterlace = get_bmp(icons['deinterlace'], ((16, 16)))
-            bmpdenoiser = get_bmp(icons['denoiser'], ((16, 16)))
-            bmpanalyzes = get_bmp(icons['volanalyze'], ((16, 16)))
-            bmpasettings = get_bmp(icons['settings'], ((16, 16)))
-            bmppeaklevel = get_bmp(icons['audiovolume'], ((16, 16)))
-            bmpstab = get_bmp(icons['stabilizer'], ((16, 16)))
-            bmpsaveprf = get_bmp(icons['addtoprst'], ((16, 16)))
-            bmpcoloreq = get_bmp(icons['coloreq'], ((16, 16)))
-        else:
-            bmpplay = wx.Bitmap(icons['preview'], wx.BITMAP_TYPE_ANY)
-            bmpapreview = wx.Bitmap(icons['preview_audio'], wx.BITMAP_TYPE_ANY)
-            self.bmpreset = wx.Bitmap(icons['clear'], wx.BITMAP_TYPE_ANY)
-            bmpresize = wx.Bitmap(icons['scale'], wx.BITMAP_TYPE_ANY)
-            bmpcrop = wx.Bitmap(icons['crop'], wx.BITMAP_TYPE_ANY)
-            bmprotate = wx.Bitmap(icons['rotate'], wx.BITMAP_TYPE_ANY)
-            bmpdeinterlace = wx.Bitmap(icons['deinterlace'],
-                                       wx.BITMAP_TYPE_ANY)
-            bmpdenoiser = wx.Bitmap(icons['denoiser'], wx.BITMAP_TYPE_ANY)
-            bmpanalyzes = wx.Bitmap(icons['volanalyze'], wx.BITMAP_TYPE_ANY)
-            bmpasettings = wx.Bitmap(icons['settings'], wx.BITMAP_TYPE_ANY)
-            bmppeaklevel = wx.Bitmap(icons['audiovolume'], wx.BITMAP_TYPE_ANY)
-            bmpstab = wx.Bitmap(icons['stabilizer'], wx.BITMAP_TYPE_ANY)
-            bmpsaveprf = wx.Bitmap(icons['addtoprst'], wx.BITMAP_TYPE_ANY)
-            bmpcoloreq = wx.Bitmap(icons['coloreq'], wx.BITMAP_TYPE_ANY)
+        bmpplay = get_bmp(icons['preview'], ((16, 16)))
+        bmpapreview = get_bmp(icons['preview_audio'], ((16, 16)))
+        self.bmpreset = get_bmp(icons['clear'], ((16, 16)))
+        bmpresize = get_bmp(icons['scale'], ((16, 16)))
+        bmpcrop = get_bmp(icons['crop'], ((16, 16)))
+        bmprotate = get_bmp(icons['rotate'], ((16, 16)))
+        bmpdeinterlace = get_bmp(icons['deinterlace'], ((16, 16)))
+        bmpdenoiser = get_bmp(icons['denoiser'], ((16, 16)))
+        bmpanalyzes = get_bmp(icons['volanalyze'], ((16, 16)))
+        bmpasettings = get_bmp(icons['settings'], ((16, 16)))
+        bmppeaklevel = get_bmp(icons['audiovolume'], ((16, 16)))
+        bmpstab = get_bmp(icons['stabilizer'], ((16, 16)))
+        bmpsaveprf = get_bmp(icons['addtoprst'], ((16, 16)))
+        bmpcoloreq = get_bmp(icons['coloreq'], ((16, 16)))
 
         # Args settings definition
         self.opt = {
@@ -207,10 +190,7 @@ class AV_Conv(wx.Panel):
         elif self.appdata['ostype'] == 'Darwin':
             sizepancodevideo = (300, 700)
         else:
-            if int(''.join(wx.version().split()[0].split('.'))) >= 410:
-                sizepancodevideo = (300, 700)
-            else:
-                sizepancodevideo = (350, 700)
+            sizepancodevideo = (300, 700)
 
         wx.Panel.__init__(self, parent, -1)
         # ------------ widgets

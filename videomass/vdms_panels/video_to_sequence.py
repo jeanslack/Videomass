@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.09.2023
+Rev: Feb.13.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,7 +25,6 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import sys
 import wx
 import wx.lib.agw.hyperlink as hpl
 import wx.lib.agw.floatspin as FS
@@ -66,12 +65,8 @@ class VideoToSequence(wx.Panel):
         self.parent = parent  # parent is the MainFrame
         self.opt = {"Scale": "scale=w=320:h=-1", "Setdar": "", "Setsar": ""}
 
-        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-            bmpresize = get_bmp(icons['scale'], ((16, 16)))
-            self.bmpreset = get_bmp(icons['clear'], ((16, 16)))
-        else:
-            bmpresize = wx.Bitmap(icons['scale'], wx.BITMAP_TYPE_ANY)
-            self.bmpreset = wx.Bitmap(icons['clear'], wx.BITMAP_TYPE_ANY)
+        bmpresize = get_bmp(icons['scale'], ((16, 16)))
+        self.bmpreset = get_bmp(icons['clear'], ((16, 16)))
 
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -447,7 +442,7 @@ class VideoToSequence(wx.Panel):
             if self.opt["Setsar"]:
                 scale = f'{scale},{self.opt["Setsar"]}'
             cmd = ('-skip_frame nokey', f'-vf "{scale},tile={rows}x{cols}:'
-                   f'padding={pad}:margin={marg}:color=White" -an -vsync 0')
+                   f'padding={pad}:margin={marg}:color=White" -an -fps_mode 0')
 
         elif self.rdbx_opt.GetSelection() == 2:
             setf = ''
@@ -467,14 +462,22 @@ class VideoToSequence(wx.Panel):
             if self.opt["Setsar"]:
                 scale = f'{scale},{self.opt["Setsar"]}'
 
-            arg = {'jpeg': ('', f'-vsync cfr -r {self.spin_rate.GetValue()} '
-                            f'-vf "{scale}" -pix_fmt yuvj420p'),
-                   'png': ('', f'-vsync cfr -r {self.spin_rate.GetValue()} '
-                           f'-vf "{scale}" -pix_fmt rgb24'),
-                   'bmp': ('', f'-vsync cfr -r {self.spin_rate.GetValue()} '
-                           f'-vf "{scale}" -pix_fmt bgr24'),
-                   'gif': ('', f'-vsync cfr -r {self.spin_rate.GetValue()} '
-                           f'-vf "{scale}"')
+            arg = {'jpeg': ('',
+                            f'-fps_mode cfr -r {self.spin_rate.GetValue()} '
+                            f'-vf "{scale}" -pix_fmt yuvj420p'
+                            ),
+                   'png': ('',
+                           f'-fps_mode cfr -r {self.spin_rate.GetValue()} '
+                           f'-vf "{scale}" -pix_fmt rgb24'
+                           ),
+                   'bmp': ('',
+                           f'-fps_mode cfr -r {self.spin_rate.GetValue()} '
+                           f'-vf "{scale}" -pix_fmt bgr24'
+                           ),
+                   'gif': ('',
+                           f'-fps_mode cfr -r {self.spin_rate.GetValue()} '
+                           f'-vf "{scale}"'
+                           )
                    }
             cmd = arg[fmt]
 
