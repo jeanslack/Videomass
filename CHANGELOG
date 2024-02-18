@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 16 Feb 2024 V.5.0.5
+Tue, 17 Feb 2024 V.5.0.5
 
   * Fixed `ValueError: could not convert string to float: 'N/A'` given by the
     `get_milliseconds()` function.
@@ -31,7 +31,15 @@ Tue, 16 Feb 2024 V.5.0.5
   * New versions of wxPython support svg images for icons well, so most png
     icons are removed.
   * Fixed FFmpeg warns: `-vsync arg is deprecated, use fps_mode`
-
+  * Fixed FFmpeg seeking (-ss) and duration (-t) parameters by repositioning the
+    duration code after file inputs (-i). This fixed many inaccuracies and was
+    also faster.
+  * Added a new item to the File menu with its accelerator to delete all
+    imported files/URLs. This feature was already present on the
+    toolbar buttons but without the possibility of a convenient accelerator.
+  * [A/V Conversions] Overall improved the stabilizer filter for both the
+    preview and the production of the final video. Fixed various bugs that
+    prevented correct video playback.
 
 +------------------------------------+
 Wed, 24 Jan 2024 V.5.0.4

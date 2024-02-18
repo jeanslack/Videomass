@@ -25,7 +25,6 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import sys
 import wx
 from pubsub import pub
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
@@ -277,21 +276,30 @@ class MainYtdl(wx.Frame):
 
         # ----------------------- file menu
         fileButton = wx.Menu()
-        dscrp = (_("Downloads folder\tCtrl+D"),
+        dscrp = (_("Downloads Folder\tCtrl+D"),
                  _("Open the default downloads folder"))
         fold_downloads = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-        dscrp = (_("Open temporary downloads"),
+        dscrp = (_("Temporary Downloads"),
                  _("Open the temporary downloads folder"))
         self.fold_downloads_tmp = fileButton.Append(wx.ID_ANY, dscrp[0],
                                                     dscrp[1])
         self.fold_downloads_tmp.Enable(False)
         fileButton.AppendSeparator()
+        dscrp = (_("Remove Selected URL\tDEL"),
+                 _("Remove the selected URL from the list"))
+        self.delete = fileButton.Append(wx.ID_REMOVE, dscrp[0], dscrp[1])
+
+        dscrp = (_("Clear List\tShift+DEL"),
+                 _("Remove all URLs from the list"))
+        self.clearall = fileButton.Append(wx.ID_CLEAR, dscrp[0], dscrp[1])
+        # self.clearall.Enable(False)
+        fileButton.AppendSeparator()
         dscrp = (_("Work Notes\tCtrl+N"),
                  _("Read and write useful notes and reminders."))
         notepad = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-        closeItem = fileButton.Append(wx.ID_CLOSE, _("Close view\tCtrl+W"),
+        closeItem = fileButton.Append(wx.ID_CLOSE, _("Close View\tCtrl+W"),
                                       _("Close the active view keeping the "
                                         "data in memory and any background "
                                         "processes"))
@@ -306,9 +314,6 @@ class MainYtdl(wx.Frame):
         dscrp = (_("Paste\tCtrl+V"),
                  _("Paste the copied URLs to clipboard"))
         self.paste = editButton.Append(wx.ID_PASTE, dscrp[0], dscrp[1])
-        dscrp = (_("Remove selected URL\tDEL"),
-                 _("Remove the selected URL from the list"))
-        self.delete = editButton.Append(wx.ID_REMOVE, dscrp[0], dscrp[1])
         self.menuBar.Append(editButton, _("Edit"))
 
         # ------------------ View menu
@@ -316,7 +321,7 @@ class MainYtdl(wx.Frame):
         dscrp = (_("Version of yt-dlp"),
                  _("Shows the version in use"))
         self.ydlused = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Latest version of yt-dlp"),
+        dscrp = (_("Latest Version of yt-dlp"),
                  _("Check the latest version available on github.com"))
         self.ydllatest = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(viewButton, _("View"))
@@ -324,11 +329,12 @@ class MainYtdl(wx.Frame):
         # ------------------ setup menu
         setupButton = wx.Menu()
 
-        dscrp = (_("Set up a temporary folder for downloads"),
-                 _("Save all downloads to this temporary location"))
+        dscrp = (_("Set Temporary Folder"),
+                 _("Save all downloads to this temporary location "
+                   "for this session only"))
         setdownload_tmp = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         setupButton.AppendSeparator()
-        dscrp = (_("Restore the default destination folder"),
+        dscrp = (_("Restore Default Folder"),
                  _("Restore the default folder for downloads"))
         self.resetfolders_tmp = setupButton.Append(wx.ID_ANY, dscrp[0],
                                                    dscrp[1])
@@ -342,13 +348,16 @@ class MainYtdl(wx.Frame):
         self.Bind(wx.EVT_MENU, self.openMydownload, fold_downloads)
         self.Bind(wx.EVT_MENU, self.openMydownloads_tmp,
                   self.fold_downloads_tmp)
+
+        self.Bind(wx.EVT_MENU, self.textDnDTarget.on_del_url_selected,
+                  self.delete)
+        self.Bind(wx.EVT_MENU, self.textDnDTarget.delete_all, self.clearall)
+
         self.Bind(wx.EVT_MENU, self.reminder, notepad)
         self.Bind(wx.EVT_MENU, self.on_close, closeItem)
         self.Bind(wx.EVT_MENU, self.on_exit, exitItem)
         # ----EDIT----
         self.Bind(wx.EVT_MENU, self.textDnDTarget.on_paste, self.paste)
-        self.Bind(wx.EVT_MENU, self.textDnDTarget.on_del_url_selected,
-                  self.delete)
         # ---- VIEW ----
         self.Bind(wx.EVT_MENU, self.ydl_used, self.ydlused)
         self.Bind(wx.EVT_MENU, self.ydl_latest, self.ydllatest)
@@ -583,7 +592,10 @@ class MainYtdl(wx.Frame):
         self.ProcessPanel.Hide()
         self.ytDownloader.Hide()
         self.textDnDTarget.Show()
-        (self.delete.Enable(True), self.paste.Enable(True))
+        (self.delete.Enable(True),
+         self.paste.Enable(True),
+         self.clearall.Enable(True)
+         )
         if self.data_url:
             [self.toolbar.EnableTool(x, True) for x in (21, 25)]
             [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24)]
@@ -604,7 +616,10 @@ class MainYtdl(wx.Frame):
         self.SetTitle(_('Videomass - YouTube Downloader'))
         self.textDnDTarget.Hide()
         self.ytDownloader.Show()
-        (self.delete.Enable(False), self.paste.Enable(False))
+        (self.delete.Enable(False),
+         self.paste.Enable(False),
+         self.clearall.Enable(False)
+         )
         [self.toolbar.EnableTool(x, True) for x in (20, 21, 22, 23)]
         [self.toolbar.EnableTool(x, False) for x in (24, 25)]
         self.Layout()
@@ -620,7 +635,10 @@ class MainYtdl(wx.Frame):
             [self.toolbar.EnableTool(x, True) for x in (20, 22)]
 
         elif args[0] == 'youtube_dl downloading':
-            (self.delete.Enable(False), self.paste.Enable(False))
+            (self.delete.Enable(False),
+             self.paste.Enable(False),
+             self.clearall.Enable(False)
+             )
             if len(self.data_url) <= 1:
                 [self.toolbar.EnableTool(x, False) for x
                  in (20, 21, 23, 25, 24)]

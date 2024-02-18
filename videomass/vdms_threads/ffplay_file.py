@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.18.2021
+Rev: Feb.17.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -97,10 +97,10 @@ class FilePlay(Thread):
         """
         # time.sleep(.5)
 
-        cmd = " ".join(f'"{self.ffplay}" {self.time_seq} '
+        cmd = " ".join(f'"{self.ffplay}" {self.time_seq[0]} '
                        f'{self.ffplay_loglev} {self.ffplay_params} '
                        f'{self.autoexit} -i "{self.filename}" '
-                       f'{self.param}'.split()
+                       f'{self.time_seq[1]} {self.param}'.split()
                        )
         self.logwrite(cmd)
 

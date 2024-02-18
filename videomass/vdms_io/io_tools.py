@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2023
+Rev: Feb.17.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -64,11 +64,17 @@ def youtubedl_getstatistics(url, ssl, parent=None):
 # --------------------------------------------------------------------------#
 
 
-def stream_play(filepath, tseq, param, autoexit):
+def stream_play(filepath, timeseq, param, autoexit):
     """
     Call Thread for playback with ffplay
     """
     get = wx.GetApp()  # get data from bootstrap
+
+    if timeseq:
+        splseq = timeseq.split()
+        tseq = f'{splseq[0]} {splseq[1]}', f'{splseq[2]} {splseq[3]}'
+    else:
+        tseq = '', ''
     try:
         with open(filepath, encoding='utf8'):
             FilePlay(filepath,
@@ -89,13 +95,19 @@ def stream_play(filepath, tseq, param, autoexit):
 # -----------------------------------------------------------------------#
 
 
-def volume_detect_process(filelist, time_seq, audiomap, parent=None):
+def volume_detect_process(filelist, timeseq, audiomap, parent=None):
     """
     Run thread to get audio peak level data and show a
     pop-up dialog with message.
     """
     get = wx.GetApp()
-    thread = VolumeDetectThread(time_seq,
+
+    if timeseq:
+        splseq = timeseq.split()
+        tseq = f'{splseq[0]} {splseq[1]}', f'{splseq[2]} {splseq[3]}'
+    else:
+        tseq = '', ''
+    thread = VolumeDetectThread(tseq,
                                 filelist,
                                 audiomap,
                                 get.appset['logdir'],

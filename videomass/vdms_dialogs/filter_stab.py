@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2023
+Rev: Feb.18.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -483,10 +483,9 @@ class VidstabSet(wx.Dialog):
             return
 
         if self.ckbx_duo.IsChecked():
-            makeduo = f'-i "{self.framesrc}" -filter_complex hstack'
             error = self.process(self.filename,
                                  self.frameduo,
-                                 args=makeduo,
+                                 args='',
                                  mode='makeduo',
                                  )
             if error:
@@ -505,7 +504,7 @@ class VidstabSet(wx.Dialog):
         ffmpeg `eq` filter.
         """
         if not self.mills:
-            sseg = ''
+            sseg, tseg = '', ''
         else:
             seek = self.sld_time.GetValue()
             stime = self.spin_dur.GetValue() * 1000
@@ -515,16 +514,20 @@ class VidstabSet(wx.Dialog):
                     seek, stime = 0, self.mills
             duration = integer_to_time(stime, False)  # to 24-hour
             self.clock = integer_to_time(seek, False)  # to 24-hour
-            sseg = f'-ss {self.clock} -t {duration}'
+            sseg = f'-ss {self.clock}.000'
+            tseg = f'-t {duration}.000'
 
         if mode == 'detect':
             nul = ('NUL' if VidstabSet.appdata['ostype']
                    == 'Windows' else '/dev/null')
-            argstr = f'{sseg} -i "{infile}" {args} -f null  -y {nul}'
+            argstr = f'{sseg} -i "{infile}" {tseg} {args} -f null  -y {nul}'
+
         elif mode == 'trasform':
-            argstr = f'{sseg} -i "{infile}" {args} -y "{outfile}"'
+            argstr = f'{sseg} -i "{infile}" {tseg} {args} -y "{outfile}"'
+
         elif mode == 'makeduo':
-            argstr = f'{sseg} -i "{infile}" {args} -y "{outfile}"'
+            argstr = (f'{sseg} -i "{infile}" {tseg} -i "{self.framesrc}" '
+                      f'{tseg} -filter_complex hstack -y "{outfile}"')
         else:
             return None
 

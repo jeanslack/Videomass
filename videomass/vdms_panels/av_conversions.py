@@ -25,7 +25,6 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import sys
 import wx
 import wx.lib.scrolledpanel as scrolled
 import wx.lib.agw.floatspin as FS

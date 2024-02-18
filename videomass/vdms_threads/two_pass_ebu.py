@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.02.2022
+Rev: Feb.17.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -92,10 +92,15 @@ class Loudnorm(Thread):
                                                 fillvalue='',
                                                 ):
             # --------------- first pass
-            pass1 = (f'"{Loudnorm.appdata["ffmpeg_cmd"]}" -nostdin -loglevel '
-                     f'info -stats -hide_banner {self.time_seq} -i "{infile}" '
-                     f'{self.passlist[0]} {Loudnorm.appdata["ffthreads"]} -y '
-                     f'{self.nul}'
+            pass1 = (f'"{Loudnorm.appdata["ffmpeg_cmd"]}" '
+                     f'-nostdin -loglevel '
+                     f'info -stats -hide_banner '
+                     f'{self.time_seq[0]} '
+                     f'-i "{infile}" '
+                     f'{self.time_seq[1]} '
+                     f'{self.passlist[0]} '
+                     f'{Loudnorm.appdata["ffthreads"]} '
+                     f'-y {self.nul}'
                      )
             self.count += 1
             count = (f'File {self.count}/{self.countmax} - Pass One\n '
@@ -188,11 +193,16 @@ class Loudnorm(Thread):
                        )
             time.sleep(.5)
 
-            pass2 = (f'"{Loudnorm.appdata["ffmpeg_cmd"]}" -nostdin -loglevel '
-                     f'info -stats -hide_banner {self.time_seq} -i '
-                     f'"{infile}" {self.passlist[1]} '
-                     f'-filter:a:{self.audio_outmap[1]} {filters} '
-                     f'{Loudnorm.appdata["ffthreads"]} -y "{outfile}"'
+            pass2 = (f'"{Loudnorm.appdata["ffmpeg_cmd"]}" '
+                     f'-nostdin -loglevel info -stats -hide_banner '
+                     f'{self.time_seq[0]} '
+                     f'-i "{infile}" '
+                     f'{self.time_seq[1]} '
+                     f'{self.passlist[1]} '
+                     f'-filter:a:{self.audio_outmap[1]} '
+                     f'{filters} '
+                     f'{Loudnorm.appdata["ffthreads"]} '
+                     f'-y "{outfile}"'
                      )
             count = (f'File {self.count}/{self.countmax} - Pass Two\n'
                      f'Loudnorm ebu: apply EBU R128...'

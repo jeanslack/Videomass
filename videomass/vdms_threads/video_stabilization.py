@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.06.2023
+Rev: Feb.17.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -101,8 +101,12 @@ class VidStab(Thread):
             pass1 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
                      f'{VidStab.appdata["ffmpegloglev"]} '
                      f'{VidStab.appdata["ffmpeg+params"]} '
-                     f'{self.time_seq} -i "{infile}" {self.passlist[0]} '
-                     f'{VidStab.appdata["ffthreads"]} -y {self.nul}'
+                     f'{self.time_seq[0]} '
+                     f'-i "{infile}" '
+                     f'{self.time_seq[1]} '
+                     f'{self.passlist[0]} '
+                     f'{VidStab.appdata["ffthreads"]} '
+                     f'-y {self.nul}'
                      )
             self.count += 1
             count = (f'File {self.count}/{self.countmax} - Pass One\n'
@@ -183,9 +187,14 @@ class VidStab(Thread):
             # --------------- second pass ----------------#
             pass2 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
                      f'{VidStab.appdata["ffmpegloglev"]} '
-                     f'{VidStab.appdata["ffmpeg+params"]} {self.time_seq} -i '
-                     f'"{infile}" {self.passlist[1]} {volume} '
-                     f'{VidStab.appdata["ffthreads"]} -y "{outfile}"'
+                     f'{VidStab.appdata["ffmpeg+params"]} '
+                     f'{self.time_seq[0]} '
+                     f'-i "{infile}" '
+                     f'{self.time_seq[1]} '
+                     f'{self.passlist[1]} '
+                     f'{volume} '
+                     f'{VidStab.appdata["ffthreads"]} '
+                     f'-y "{outfile}"'
                      )
             count = (f'File {self.count}/{self.countmax} - Pass Two\n'
                      f'Video transform...'
@@ -254,13 +263,22 @@ class VidStab(Thread):
             if self.makeduo:
                 duoname = os.path.splitext(outfile)
                 outduo = f'{duoname[0]}_DUO{duoname[1]}'
+
                 pass3 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
                          f'{VidStab.appdata["ffmpegloglev"]} '
-                         f'{VidStab.appdata["ffmpeg+params"]} {self.time_seq} '
-                         f'-i "{infile}" -i {outfile} '
-                         f'{VidStab.appdata["ffthreads"]} -filter_complex '
-                         f'"[0:v:0] {self.addflt}pad=2*iw:ih[bg];'
-                         f'[bg][1:v:0]overlay=main_w/2:0" -y "{outduo}"'
+                         f'{VidStab.appdata["ffmpeg+params"]} '
+                         f'{self.time_seq[0]} '
+                         f'-i "{infile}" '
+                         f'{self.time_seq[1]} '
+                         f'-i "{outfile}" '
+                         f'{self.time_seq[1]} '
+                         f'{volume} '
+                         f'{VidStab.appdata["ffthreads"]} '
+                         f'-filter_complex '
+                         f'"[0:v:0] '
+                         f'{self.addflt}pad=2*iw:ih[bg];'
+                         f'[bg][1:v:0]overlay=main_w/2:0" '
+                         f'-y "{outduo}"'
                          )
                 count = f'File {self.count}/{self.countmax}\nMake duo...'
                 cmd = (f'{count}\nSource: "{infile}"\n'

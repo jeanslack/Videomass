@@ -24,7 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import sys
 import wx
 import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_io.io_tools import youtubedl_getstatistics

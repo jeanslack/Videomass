@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2024
+Rev: Feb.17.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,7 +25,6 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import sys
 import webbrowser
 import wx
 from pubsub import pub
@@ -435,28 +434,37 @@ class MainFrame(wx.Frame):
         self.openmedia = fileButton.Append(wx.ID_OPEN, dscrp[0], dscrp[1])
         self.openmedia.Enable(False)
         fileButton.AppendSeparator()
-        dscrp = (_("Conversions folder\tCtrl+C"),
+        dscrp = (_("Conversions Folder\tCtrl+C"),
                  _("Open the default file conversions folder"))
         fold_convers = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Open temporary conversions"),
+        dscrp = (_("Temporary Conversions"),
                  _("Open the temporary file conversions folder"))
         self.fold_convers_tmp = fileButton.Append(wx.ID_ANY, dscrp[0],
                                                   dscrp[1])
         self.fold_convers_tmp.Enable(False)
         fileButton.AppendSeparator()
-        dscrp = (_("Rename the selected file\tCtrl+R"),
+        dscrp = (_("Rename Selected Entry\tCtrl+R"),
                  _("Rename the file selected in the Queued Files panel"))
         self.rename = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.rename.Enable(False)
-        dscrp = (_("Batch renaming\tCtrl+B"),
+        dscrp = (_("Batch Renaming\tCtrl+B"),
                  _("Rename all files listed in the Queued Files panel"))
         self.rename_batch = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.rename_batch.Enable(False)
         fileButton.AppendSeparator()
-        dscrp = (_("Open Trash folder"),
+        dscrp = (_("Remove Selected Entry\tDEL"),
+                 _("Remove the selected files from the list"))
+        self.delfile = fileButton.Append(wx.ID_REMOVE, dscrp[0], dscrp[1])
+        self.delfile.Enable(False)
+        dscrp = (_("Clear List\tShift+DEL"),
+                 _("Remove all files from the list"))
+        self.clearall = fileButton.Append(wx.ID_CLEAR, dscrp[0], dscrp[1])
+        self.clearall.Enable(False)
+        fileButton.AppendSeparator()
+        dscrp = (_("Open Trash Folder"),
                  _("Open the Videomass Trash folder if it exists"))
         dir_trash = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Empty Trash folder"),
+        dscrp = (_("Empty Trash Folder"),
                  _("Delete all files in the Videomass Trash folder"))
         empty_trash = fileButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
@@ -468,26 +476,18 @@ class MainFrame(wx.Frame):
                                      _("Completely exit the application"))
         self.menuBar.Append(fileButton, _("File"))
 
-        # ------------------ Edit menu
-        editButton = wx.Menu()
-        dscrp = (_("Remove selected file\tDEL"),
-                 _("Remove the selected files from the list"))
-        self.delfile = editButton.Append(wx.ID_REMOVE, dscrp[0], dscrp[1])
-        self.menuBar.Append(editButton, _("Edit"))
-        self.delfile.Enable(False)
-
         # ------------------ tools menu
         toolsButton = wx.Menu()
-        dscrp = (_("Find FFmpeg topics and options"),
+        dscrp = (_("Find FFmpeg Topics"),
                  _("A useful tool to search for FFmpeg help topics and "
                    "options"))
         searchtopic = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
         prstpage = '<https://github.com/jeanslack/Videomass-presets>'
-        dscrp = (_("Check for preset updates"),
+        dscrp = (_("Check Preset Updates"),
                  _("Check for new presets updates from {0}").format(prstpage))
         self.prstcheck = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Get the latest presets"),
+        dscrp = (_("Get Latest Presets"),
                  _("Get the latest presets from {0}").format(prstpage))
         self.prstdownload = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(toolsButton, _("Tools"))
@@ -496,7 +496,7 @@ class MainFrame(wx.Frame):
         viewButton = wx.Menu()
         ffmpegButton = wx.Menu()  # ffmpeg sub menu
         viewButton.AppendSubMenu(ffmpegButton, "FFmpeg")
-        dscrp = (_("Show configuration"),
+        dscrp = (_("Show Configuration"),
                  _("Show FFmpeg's built-in configuration capabilities"))
         checkconf = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSeparator()
@@ -511,7 +511,7 @@ class MainFrame(wx.Frame):
         ckdecoders = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffplayButton = wx.Menu()  # ffplay sub menu
         viewButton.AppendSubMenu(ffplayButton, _("FFplay"))
-        dscrp = (_("While playing"),
+        dscrp = (_("While Playing"),
                  _("Show useful shortcut keys when playing or previewing "
                    "with FFplay"))
         playing = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
@@ -521,7 +521,7 @@ class MainFrame(wx.Frame):
         viewlogs = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
 
         viewButton.AppendSeparator()
-        dscrp = (_("Show timeline\tCtrl+T"),
+        dscrp = (_("Show Timeline\tCtrl+T"),
                  _("Show timeline editor"))
         self.viewtimeline = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                               kind=wx.ITEM_CHECK)
@@ -530,7 +530,7 @@ class MainFrame(wx.Frame):
         # ------------------ Go menu
         goButton = wx.Menu()
         self.startpan = goButton.Append(wx.ID_ANY,
-                                        _("Home panel\tCtrl+Shift+H"),
+                                        _("Home Panel\tCtrl+Shift+H"),
                                         _("Go to the 'Home' panel"))
         goButton.AppendSeparator()
         self.prstpan = goButton.Append(wx.ID_ANY,
@@ -561,30 +561,31 @@ class MainFrame(wx.Frame):
 
         # ------------------ setup menu
         setupButton = wx.Menu()
-        dscrp = (_("Set up a temporary folder for conversions"),
-                 _("Use a temporary location to save conversions"))
+        dscrp = (_("Set Temporary Folder"),
+                 _("Use a temporary location to save conversions for "
+                   "this session"))
         path_dest = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         if self.same_destin:
             path_dest.Enable(False)
         setupButton.AppendSeparator()
-        dscrp = (_("Restore the default destination folder"),
+        dscrp = (_("Restore Default Folder"),
                  _("Restore the default folder for file conversions"))
         self.resetfolders_tmp = setupButton.Append(wx.ID_ANY, dscrp[0],
                                                    dscrp[1])
         self.resetfolders_tmp.Enable(False)
         setupButton.AppendSeparator()
-        dscrp = (_("Display timestamps during playback"),
+        dscrp = (_("Timestamps on Playback"),
                  _("Displays timestamp when playing media with FFplay"))
         self.viewtimestamp = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                                 kind=wx.ITEM_CHECK)
-        dscrp = (_("Auto-exit after playback"),
+        dscrp = (_("Auto-Exit After Playback"),
                  _("If checked, the FFplay window will auto-close "
                    "when playback is complete"))
         self.exitplayback = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                                kind=wx.ITEM_CHECK)
-        dscrp = (_("FFplay timestamp settings"),
-                 _("Change the size and color of the timestamp "
-                   "during playback"))
+        dscrp = (_("Timestamp Settings"),
+                 _("Set the size and color of the timestamp during playback "
+                   "with FFplay"))
         tscustomize = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         setupButton.AppendSeparator()
         setupItem = setupButton.Append(wx.ID_PREFERENCES,
@@ -599,23 +600,23 @@ class MainFrame(wx.Frame):
         helpItem = helpButton.Append(wx.ID_HELP, _("User Guide"), "")
         wikiItem = helpButton.Append(wx.ID_ANY, _("Wiki"), "")
         helpButton.AppendSeparator()
-        issueItem = helpButton.Append(wx.ID_ANY, _("Issue tracker"), "")
+        issueItem = helpButton.Append(wx.ID_ANY, _("Issue Tracker"), "")
         helpButton.AppendSeparator()
         transItem = helpButton.Append(wx.ID_ANY, _('Translation...'), '')
         helpButton.AppendSeparator()
         DonationItem = helpButton.Append(wx.ID_ANY, _("Donation"), "")
         helpButton.AppendSeparator()
-        docFFmpeg = helpButton.Append(wx.ID_ANY, _("FFmpeg documentation"), "")
+        docFFmpeg = helpButton.Append(wx.ID_ANY, _("FFmpeg Documentation"), "")
         helpButton.AppendSeparator()
-        dscrp = (_("Check for newer version"),
-                 _("Check for the latest Videomass version at "
-                   "<https://pypi.org/project/videomass/>"))
-        checkItem = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        helpButton.AppendSeparator()
-        dscrp = (_("System version"),
+        dscrp = (_("System Version"),
                  _("Get version about your operating system, version of "
                    "Python and wxPython."))
         sysinfo = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        helpButton.AppendSeparator()
+        dscrp = (_("Latest Version"),
+                 _("Check for the latest Videomass version"))
+        chklatest = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+
         infoItem = helpButton.Append(wx.ID_ABOUT, _("About Videomass"), "")
         self.menuBar.Append(helpButton, _("Help"))
 
@@ -629,13 +630,13 @@ class MainFrame(wx.Frame):
                   self.fold_convers_tmp)
         self.Bind(wx.EVT_MENU, self.on_file_renaming, self.rename)
         self.Bind(wx.EVT_MENU, self.on_batch_renaming, self.rename_batch)
+        self.Bind(wx.EVT_MENU, self.fileDnDTarget.on_delete_selected,
+                  self.delfile)
+        self.Bind(wx.EVT_MENU, self.fileDnDTarget.delete_all, self.clearall)
         self.Bind(wx.EVT_MENU, self.reminder, notepad)
         self.Bind(wx.EVT_MENU, self.open_trash_folder, dir_trash)
         self.Bind(wx.EVT_MENU, self.empty_trash_folder, empty_trash)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
-        # ----EDIT----
-        self.Bind(wx.EVT_MENU, self.fileDnDTarget.on_delete_selected,
-                  self.delfile)
         # ----TOOLS----
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
         self.Bind(wx.EVT_MENU, self.prst_downloader, self.prstdownload)
@@ -671,7 +672,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Translations, transItem)
         self.Bind(wx.EVT_MENU, self.Donation, DonationItem)
         self.Bind(wx.EVT_MENU, self.DocFFmpeg, docFFmpeg)
-        self.Bind(wx.EVT_MENU, self.CheckNewReleases, checkItem)
+        self.Bind(wx.EVT_MENU, self.CheckNewReleases, chklatest)
         self.Bind(wx.EVT_MENU, self.system_vers, sysinfo)
         self.Bind(wx.EVT_MENU, self.Info, infoItem)
     # --------Menu Bar Event handler (callback)
@@ -1288,8 +1289,8 @@ class MainFrame(wx.Frame):
                                            bmpstop,
                                            tip, wx.ITEM_NORMAL
                                            )
-        tip = _("Delete all files from the list")
-        clear = self.toolbar.AddTool(9, _('Clear'),
+        tip = _("Remove all files from the list")
+        clear = self.toolbar.AddTool(9, _('Clear List'),
                                      bmpclear,
                                      tip, wx.ITEM_NORMAL
                                      )
@@ -1371,6 +1372,7 @@ class MainFrame(wx.Frame):
         self.openmedia.Enable(False)
         self.menu_items(enable=False)
         self.delfile.Enable(False)
+        self.clearall.Enable(False)
         self.SetTitle(_('Videomass'))
         self.statusbar_msg(_('Ready'), None)
         self.Layout()
@@ -1393,6 +1395,7 @@ class MainFrame(wx.Frame):
         pub.sendMessage("SET_DRAG_AND_DROP_TOPIC", topic=self.topicname)
         self.menu_items(enable=False)  # disable menu items
         self.delfile.Enable(True)
+        self.clearall.Enable(True)
         self.openmedia.Enable(True)
         if self.file_src:
             [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 9, 35)]
@@ -1423,6 +1426,7 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - AV Conversions'))
         self.menu_items(enable=True)  # enable all menu items
         self.delfile.Enable(False)
+        self.clearall.Enable(False)
         self.openmedia.Enable(True)
         self.avpan.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
@@ -1447,6 +1451,7 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - Presets Manager'))
         self.menu_items(enable=True)  # enable all menu items
         self.delfile.Enable(False)
+        self.clearall.Enable(False)
         self.openmedia.Enable(True)
         self.prstpan.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
@@ -1472,6 +1477,7 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - Concatenate Demuxer'))
         self.menu_items(enable=True)  # enable all menu items
         self.delfile.Enable(False)
+        self.clearall.Enable(False)
         self.openmedia.Enable(True)
         self.concpan.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
@@ -1496,6 +1502,7 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - From Movie to Pictures'))
         self.menu_items(enable=True)  # enable all menu items
         self.delfile.Enable(False)
+        self.clearall.Enable(False)
         self.openmedia.Enable(True)
         self.toseq.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
@@ -1520,6 +1527,7 @@ class MainFrame(wx.Frame):
         self.SetTitle(_('Videomass - Still Image Maker'))
         self.menu_items(enable=True)  # enable all menu items
         self.delfile.Enable(False)
+        self.clearall.Enable(False)
         self.openmedia.Enable(True)
         self.slides.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
@@ -1535,16 +1543,19 @@ class MainFrame(wx.Frame):
         """
         if args[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
-            dur, seq = self.duration, self.time_seq
+            dur, tseq = None, None
+
         elif args[0] in ('concat_demuxer', 'sequence_to_video'):
-            dur, seq = args[6], ''
+            dur, tseq = args[6], None
+
         elif self.time_seq:
             ms = time_to_integer(self.time_seq.split()[3])  # -t duration
-            seq = self.time_seq
+            splseq = self.time_seq.split()
+            tseq = f'{splseq[0]} {splseq[1]}', f'{splseq[2]} {splseq[3]}'
             dur = [ms for n in self.duration]
             self.statusbar_msg(_('Processing...'), None)
         else:
-            dur, seq = self.duration, ''
+            dur, tseq = self.duration, ('', '')
 
         self.SetTitle(_('Videomass - FFmpeg message monitor'))
         self.fileDnDTarget.Hide()
@@ -1556,6 +1567,7 @@ class MainFrame(wx.Frame):
         self.ProcessPanel.Show()
         if not args[0] == 'Viewing last log':
             self.delfile.Enable(False)
+            self.clearall.Enable(False)
             self.menu_items(enable=False)  # disable menu items
             self.openmedia.Enable(False)
             [self.toolbar.EnableTool(x, True) for x in (6, 8)]
@@ -1563,7 +1575,7 @@ class MainFrame(wx.Frame):
         self.logpan.Enable(False)
         [self.toolbar.EnableTool(x, False) for x in (4, 7, 9)]
 
-        self.ProcessPanel.topic_thread(self.topicname, dur, seq, *args)
+        self.ProcessPanel.topic_thread(self.topicname, dur, tseq, *args)
         self.Layout()
     # ------------------------------------------------------------------#
 

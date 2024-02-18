@@ -24,7 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import sys
 import wx
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_sys.msg_info import current_release
