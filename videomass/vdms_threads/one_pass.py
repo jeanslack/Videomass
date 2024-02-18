@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.02.2022
+Rev: Feb.17.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -65,7 +65,7 @@ class OnePass(Thread):
         self.count = 0  # count first for loop
         self.countmax = len(args[1])  # length file list
         self.logname = logname  # title name of file log
-        self.time_seq = timeseq  # a time segment
+        self.timeseq = timeseq  # ss, t tuple
 
         Thread.__init__(self)
 
@@ -85,13 +85,17 @@ class OnePass(Thread):
                                                 self.duration,
                                                 fillvalue='',
                                                 ):
-
-            cmd = (f'"{OnePass.appdata["ffmpeg_cmd"]}" {self.time_seq} '
+            cmd = (f'"{OnePass.appdata["ffmpeg_cmd"]}" '
+                   f'{self.timeseq[0]} '
                    f'{OnePass.appdata["ffmpegloglev"]} '
-                   f'{OnePass.appdata["ffmpeg+params"]} -i '
-                   f'"{infile}" {self.command} {volume} '
-                   f'{OnePass.appdata["ffthreads"]} -y "{outfile}"')
-
+                   f'{OnePass.appdata["ffmpeg+params"]} '
+                   f'-i "{infile}" '
+                   f'{self.timeseq[1]} '
+                   f'{self.command} '
+                   f'{volume} '
+                   f'{OnePass.appdata["ffthreads"]} '
+                   f'-y "{outfile}"'
+                   )
             self.count += 1
             count = f'File {self.count}/{self.countmax}'
             com = (f'{count}\nSource: "{infile}"\nDestination: "{outfile}"'

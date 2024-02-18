@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.11.2022
+Rev: Feb.17.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -86,9 +86,13 @@ class VolumeDetectThread(Thread):
         volume = []
 
         for files in self.filelist:
-            cmd = (f'"{self.ffmpeg_url}" {self.time_seq} -i "{files}" '
-                   f'-hide_banner {self.audiomap} -af volumedetect '
-                   f'-vn -sn -dn -f null {self.nul}'
+            cmd = (f'"{self.ffmpeg_url}" -hide_banner '
+                   f'{self.time_seq[0]} '
+                   f'-i "{files}" '
+                   f'{self.time_seq[1]} '
+                   f'{self.audiomap} '
+                   f'-af volumedetect -vn -sn -dn -f null '
+                   f'{self.nul}'
                    )
             self.logwrite(cmd)
 

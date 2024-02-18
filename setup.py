@@ -44,7 +44,7 @@ def source_build():
 
     if 'sdist' in sys.argv or 'bdist_wheel' in sys.argv:
 
-        inst_req = ["wxpython>=4.0.7; platform_system=='Windows' or "
+        inst_req = ["wxpython>=4.1.1; platform_system=='Windows' or "
                     "platform_system=='Darwin'",
                     "PyPubSub>=4.0.3",
                     "yt_dlp>=2021.9.2",
@@ -60,7 +60,7 @@ def source_build():
         long_description_ct = 'text/markdown'
 
     else:  # e.g. to make a Debian source package, include wxpython.
-        inst_req = ["wxpython>=4.0.7",
+        inst_req = ["wxpython>=4.1.1",
                     "PyPubSub>=4.0.3",
                     "requests>=2.21.0",
                     ]

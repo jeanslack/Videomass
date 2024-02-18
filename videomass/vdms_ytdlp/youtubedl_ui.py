@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.07.2023
+Rev: Feb.13.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,7 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import sys
 import wx
 import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_io.io_tools import youtubedl_getstatistics
@@ -130,12 +129,8 @@ class Downloader(wx.Panel):
         confmanager = ConfigManager(appdata['fileconfpath'])
         sett = confmanager.read_options()
 
-        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-            bmplistindx = get_bmp(icons['playlist'], ((16, 16)))
-            bmpsubtitles = get_bmp(icons['subtitles'], ((16, 16)))
-        else:
-            bmplistindx = wx.Bitmap(icons['playlist'], wx.BITMAP_TYPE_ANY)
-            bmpsubtitles = wx.Bitmap(icons['subtitles'], wx.BITMAP_TYPE_ANY)
+        bmplistindx = get_bmp(icons['playlist'], ((16, 16)))
+        bmpsubtitles = get_bmp(icons['subtitles'], ((16, 16)))
 
         self.opt = {("NO_PLAYLIST"): True,
                     ("THUMB"): sett['embed_thumbnails'],

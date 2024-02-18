@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.02.2022
+Rev: Feb.17.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -92,9 +92,13 @@ class TwoPass(Thread):
             # --------------- first pass
             pass1 = (f'"{TwoPass.appdata["ffmpeg_cmd"]}" '
                      f'{TwoPass.appdata["ffmpegloglev"]} '
-                     f'{TwoPass.appdata["ffmpeg+params"]} {self.time_seq} '
-                     f'-i "{infile}" {self.passlist[0]} '
-                     f'{TwoPass.appdata["ffthreads"]} -y {self.nul}'
+                     f'{TwoPass.appdata["ffmpeg+params"]} '
+                     f'{self.time_seq[0]} '
+                     f'-i "{infile}" '
+                     f'{self.time_seq[1]} '
+                     f'{self.passlist[0]} '
+                     f'{TwoPass.appdata["ffthreads"]} '
+                     f'-y {self.nul}'
                      )
             self.count += 1
             count = f'File {self.count}/{self.countmax} - Pass One'
@@ -172,9 +176,14 @@ class TwoPass(Thread):
             # --------------- second pass ----------------#
             pass2 = (f'"{TwoPass.appdata["ffmpeg_cmd"]}" '
                      f'{TwoPass.appdata["ffmpegloglev"]} '
-                     f'{TwoPass.appdata["ffmpeg+params"]} {self.time_seq} '
-                     f'-i "{infile}" {self.passlist[1]} '
-                     f'{volume} {TwoPass.appdata["ffthreads"]} -y "{outfile}"'
+                     f'{TwoPass.appdata["ffmpeg+params"]} '
+                     f'{self.time_seq[0]} '
+                     f'-i "{infile}" '
+                     f'{self.time_seq[1]} '
+                     f'{self.passlist[1]} '
+                     f'{volume} '
+                     f'{TwoPass.appdata["ffthreads"]} '
+                     f'-y "{outfile}"'
                      )
             count = f'File {self.count}/{self.countmax} - Pass Two'
             cmd = (f'{count}\nSource: "{infile}"\nDestination: "{outfile}"'

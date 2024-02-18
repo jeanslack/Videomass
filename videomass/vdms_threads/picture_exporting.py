@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.10.2022
+Rev: Feb.17.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -75,9 +75,13 @@ class PicturesFromVideo(Thread):
         """
         filedone = []
         cmd = (f'"{PicturesFromVideo.appdata["ffmpeg_cmd"]}" '
-               f'{self.time_seq} {PicturesFromVideo.appdata["ffmpegloglev"]} '
-               f'{PicturesFromVideo.appdata["ffmpeg+params"]} {self.preargs} '
-               f'-i "{self.fname}" {self.cmd}'
+               f'{self.time_seq[0]} '
+               f'{self.time_seq[1]} '
+               f'{PicturesFromVideo.appdata["ffmpegloglev"]} '
+               f'{PicturesFromVideo.appdata["ffmpeg+params"]} '
+               f'{self.preargs} '
+               f'-i "{self.fname}" '
+               f'{self.cmd}'
                )
         count = 'File 1/1'
         com = (f'{count}\nSource: "{self.fname}"\n'

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.21.2023
+Rev: Feb.13.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,7 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import sys
 import wx
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_sys.msg_info import current_release
@@ -49,24 +48,12 @@ class Choose_Topic(wx.Panel):
         self.oS = OS
         version = current_release()
 
-        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-            bmpAVconv = get_bmp(self.icons['A/V-Conv'], ((48, 48)))
-            bmpPrstmng = get_bmp(self.icons['presets_manager'], ((48, 48)))
-            bmpYdl = get_bmp(self.icons['youtube'], ((48, 48)))
-            bmpConcat = get_bmp(self.icons['concatenate'], ((48, 48)))
-            bmpSlideshow = get_bmp(self.icons['slideshow'], ((48, 48)))
-            bmpTopictures = get_bmp(self.icons['videotopictures'], ((48, 48)))
-        else:
-            bmpAVconv = wx.Bitmap(self.icons['A/V-Conv'], wx.BITMAP_TYPE_ANY)
-            bmpPrstmng = wx.Bitmap(self.icons['presets_manager'],
-                                   wx.BITMAP_TYPE_ANY)
-            bmpYdl = wx.Bitmap(self.icons['youtube'], wx.BITMAP_TYPE_ANY)
-            bmpConcat = wx.Bitmap(self.icons['concatenate'],
-                                  wx.BITMAP_TYPE_ANY)
-            bmpSlideshow = wx.Bitmap(self.icons['slideshow'],
-                                     wx.BITMAP_TYPE_ANY)
-            bmpTopictures = wx.Bitmap(self.icons['videotopictures'],
-                                      wx.BITMAP_TYPE_ANY)
+        bmpAVconv = get_bmp(self.icons['A/V-Conv'], ((48, 48)))
+        bmpPrstmng = get_bmp(self.icons['presets_manager'], ((48, 48)))
+        bmpYdl = get_bmp(self.icons['youtube'], ((48, 48)))
+        bmpConcat = get_bmp(self.icons['concatenate'], ((48, 48)))
+        bmpSlideshow = get_bmp(self.icons['slideshow'], ((48, 48)))
+        bmpTopictures = get_bmp(self.icons['videotopictures'], ((48, 48)))
 
         wx.Panel.__init__(self, parent, -1, style=wx.TAB_TRAVERSAL)
 

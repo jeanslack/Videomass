@@ -29,48 +29,6 @@ from videomass.vdms_io.io_tools import youtubedl_getstatistics
 from videomass.vdms_utils.utils import format_bytes
 
 
-if not hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
-    import wx.lib.mixins.listctrl as listmix
-
-    class TestListCtrl(wx.ListCtrl,
-                       listmix.CheckListCtrlMixin,
-                       listmix.ListCtrlAutoWidthMixin
-                       ):
-        """
-        This class is responsible for maintaining backward
-        compatibility of wxPython which do not have a `ListCtrl`
-        module with checkboxes feature:
-
-        Examples of errors raised using a ListCtrl with checkboxes
-        not yet implemented:
-
-        AttributeError:
-            - 'ListCtrl' object has no attribute 'EnableCheckBoxes'
-            - module 'wx' has no attribute `EVT_LIST_ITEM_CHECKED`
-            - module 'wx' has no attribute `EVT_LIST_ITEM_UNCHECKED`
-        """
-        def __init__(self,
-                     parent,
-                     ID,
-                     pos=wx.DefaultPosition,
-                     size=wx.DefaultSize,
-                     style=0
-                     ):
-            self.parent = parent
-            wx.ListCtrl.__init__(self, parent, ID, pos, size, style)
-            listmix.CheckListCtrlMixin.__init__(self)
-            listmix.ListCtrlAutoWidthMixin.__init__(self)
-            # self.setResizeColumn(3)
-
-        def OnCheckItem(self, index, flag):
-            """
-            Send to parent (class FormatCode) index and flag.
-            index = int(num) of checked item.
-            flag = boolean True or False of the checked or un-checked item
-            """
-            self.parent.on_checkbox(self)
-
-
 class FormatCode(wx.Panel):
     """
     This panel implements a kind of wx.ListCtrl for

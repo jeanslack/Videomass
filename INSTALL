@@ -5,7 +5,7 @@ BASE DEPENDENCIES
 
     Required:
         - Python >=3.7.0
-        - wxPython-Phoenix >=4.0.7
+        - wxPython-Phoenix >=4.1.1
         - PyPubSub
         - requests
         - FFmpeg (with ffplay and ffprobe) >=5.1

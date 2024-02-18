@@ -7,12 +7,6 @@ URGENCY: to do soon
 URGENCY: high
 --------------
 
-- FFmpeg warns: for the new versions `-vsync` arg is deprecated, use `fps_mode`.
-  This is related to `video_to_sequences.py`, `concatenete.py`, but for
-  backwards compatibility reasons I will keep the  '-vsync' argument for a
-  while longer because fps_mode does not work with old versions of FFmpeg.
-  So, vsync's warning is just a warning and still works with the new versions.
-
 - A new implementation is needed for embedding subtitles. The infrastructure
   could be organized on a new A/V Conversions tab or as an independent tool
   that can be called up from the main menu (Home).
@@ -20,18 +14,7 @@ URGENCY: high
 ---------------
 URGENCY: medium
 ----------------
-- If you plan to refactor code and make it compatible only for wx.Python>=4.1.1:
-  - then erase `TestListCtrl` class on `formatcode.py` file.
-  - Also check all code that starts with `wx.version()` keywords.
-  - Erase these block codes along any py-files:
 
-        try:
-            from wx.svg import SVGimage
-        except ModuleNotFoundError:
-            pass
-
-  However, note that these operations leads to make Videomass code incompatible
-  for wxPython4.0.7
 
 -------------
 URGENCY: low (New implementations)

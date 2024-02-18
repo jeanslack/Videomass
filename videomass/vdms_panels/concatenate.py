@@ -262,7 +262,7 @@ class Conc_Demuxer(wx.Panel):
                                f"{self.spin_pict.GetValue()}"
                                )
             textstr.append(f"file '{self.parent.file_src[-1]}'")
-            self.args = (f'"{ftext}" -vsync vfr -pix_fmt yuv420p '
+            self.args = (f'"{ftext}" -fps_mode vfr -pix_fmt yuv420p '
                          f'-profile:v baseline -map 0:v? -map_chapters 0 '
                          f'-map 0:s? -map 0:a? -map_metadata 0'
                          )

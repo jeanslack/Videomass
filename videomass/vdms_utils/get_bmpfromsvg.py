@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.10.2021
+Rev: Feb.13.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,17 +24,14 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-try:
-    from wx.svg import SVGimage
-except ModuleNotFoundError:
-    pass
+from wx.svg import SVGimage
 
 
 def get_bmp(imgfile, size):
     """
     Given a file and a size, converts to bmp
-    """
 
+    """
     img = SVGimage.CreateFromFile(imgfile)
     bmp = img.ConvertToScaledBitmap(size)
 
