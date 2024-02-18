@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.07.2024
+Rev: Feb.18.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -425,7 +425,7 @@ class FileDnD(wx.Panel):
 
     def on_delete_selected(self, event):
         """
-        Delete a selected file or a bunch of selected files
+        Delete a selected file, if nothing is selected return None
         """
         if self.flCtrl.GetFirstSelected() == -1:  # None
             return
@@ -462,8 +462,10 @@ class FileDnD(wx.Panel):
     def delete_all(self, event, setstate=True):
         """
         Clear all lines on the listCtrl and delete
-        self.data list.
+        self.data list. If already empty, return None.
         """
+        if self.flCtrl.GetItemCount() == 0:
+            return
         # self.flCtrl.ClearAll()
         self.flCtrl.DeleteAllItems()
         del self.data[:]

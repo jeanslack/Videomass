@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.28.2022
+Rev: Feb.18.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -242,7 +242,7 @@ class SlideshowMaker(Thread):
         self.args_0 = args[4][0]  # args for temporary process
         self.preinput_1 = args[5]  # pre-input args for processing
         self.args_1 = args[4][1]  # args for processing
-        self.duration = duration  # duration
+        self.duration = duration * 1000  # duration in milliseconds
         self.countmax = args[9]  # length file list
         self.count = 0  # count first for loop
         self.logname = logname  # log name
@@ -289,7 +289,9 @@ class SlideshowMaker(Thread):
             cmd_2 = (f'"{SlideshowMaker.appdata["ffmpeg_cmd"]}" '
                      f'{SlideshowMaker.appdata["ffmpegloglev"]} '
                      f'{SlideshowMaker.appdata["ffmpeg+params"]} '
-                     f'{self.preinput_1} -i "{tmpgroup}" {self.args_1} '
+                     f'{self.preinput_1} '
+                     f'-i "{tmpgroup}" '
+                     f'{self.args_1} '
                      f'"{self.filedest}"'
                      )
             count = '\nVideo production...'

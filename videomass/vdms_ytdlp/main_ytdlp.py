@@ -293,7 +293,6 @@ class MainYtdl(wx.Frame):
         dscrp = (_("Clear List\tShift+DEL"),
                  _("Remove all URLs from the list"))
         self.clearall = fileButton.Append(wx.ID_CLEAR, dscrp[0], dscrp[1])
-        # self.clearall.Enable(False)
         fileButton.AppendSeparator()
         dscrp = (_("Work Notes\tCtrl+N"),
                  _("Read and write useful notes and reminders."))

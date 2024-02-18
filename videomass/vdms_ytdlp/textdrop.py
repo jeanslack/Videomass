@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.17.2023
+Rev: March.18.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -177,12 +177,15 @@ class Url_DnD_Panel(wx.Panel):
         if not hasattr(self, "popupID1"):
             popupID1 = wx.ID_ANY
             popupID2 = wx.ID_ANY
+            popupID3 = wx.ID_ANY
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID1)
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID2)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID3)
         # build the menu
         menu = wx.Menu()
         menu.Append(popupID2, _("Paste\tCtrl+V"))
         menu.Append(popupID1, _("Remove selected URL\tDEL"))
+        menu.Append(popupID3, _("Clear List\tShift+DEL"))
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()
@@ -200,8 +203,11 @@ class Url_DnD_Panel(wx.Panel):
         if menuItem.GetItemLabel() == _("Paste\tCtrl+V"):
             self.on_paste(self)
 
-        elif menuItem.GetItemLabel() == _("Remove selected URL\tDEL"):
+        elif menuItem.GetItemLabel() == _("Remove Selected URL\tDEL"):
             self.on_del_url_selected(self)
+
+        elif menuItem.GetItemLabel() == _("Clear List\tShift+DEL"):
+            self.delete_all(self)
     # ----------------------------------------------------------------------
 
     def changes_in_progress(self, setfocus=True):
@@ -245,8 +251,11 @@ class Url_DnD_Panel(wx.Panel):
 
     def delete_all(self, event):
         """
-        clear all text lines of the TxtCtrl
+        Clear all text lines of the TxtCtrl.
+        If already empty, return None
         """
+        if self.urlctrl.GetItemCount() == 0:
+            return
         self.urlctrl.DeleteAllItems()
         self.parent.destroy_orphaned_window()
         self.parent.toolbar.EnableTool(25, False)
