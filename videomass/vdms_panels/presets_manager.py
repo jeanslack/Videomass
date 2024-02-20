@@ -337,7 +337,7 @@ class PrstPan(wx.Panel):
                     'latest versions of Videomass.\n\n'
                     'To avoid data loss and allow for possible recovery, '
                     'the outdated presets folder will be backed up in the '
-                    'program configuration folder: "{2}"\n\n'
+                    'program configuration directory: "{2}"\n\n'
                     'Do you want to perform this '
                     'update now?').format(srcversion,
                                           confversion,
@@ -746,7 +746,7 @@ class PrstPan(wx.Panel):
                            "to default ones. Your profiles may be deleted!\n\n"
                            "In any case, to avoid data loss, the presets "
                            "folder will be backed up in the program's "
-                           "configuration folder."
+                           "configuration directory."
                            "\n\nDo you want to continue?"), _("Warning"),
                          wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                          self) == wx.YES:

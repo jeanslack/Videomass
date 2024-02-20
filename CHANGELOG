@@ -46,6 +46,7 @@ Tue, 20 Feb 2024 V.5.0.5
   * [Queued URLs] Added new entry `Clear list` to contextual menu.
   * Menu bars reordered to the relevant items.
   * Translation strings have been updated and simplified.
+  * New version (v6.5) of the configuration file is created.
 
 +------------------------------------+
 Wed, 24 Jan 2024 V.5.0.4
