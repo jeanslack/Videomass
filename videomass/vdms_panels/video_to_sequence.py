@@ -103,7 +103,7 @@ class VideoToSequence(wx.Panel):
         self.spin_rate.SetFormat("%f")
         self.spin_rate.SetDigits(1)
         siz_ctrl.Add(self.spin_rate, 0, wx.ALL, 5)
-        self.btn_resize = wx.Button(self, wx.ID_ANY, _("Resizing"),
+        self.btn_resize = wx.Button(self, wx.ID_ANY, _("Resize"),
                                     size=(-1, -1)
                                     )
         self.btn_resize.SetBitmap(bmpresize, wx.LEFT)

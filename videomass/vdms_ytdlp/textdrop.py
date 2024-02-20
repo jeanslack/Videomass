@@ -161,11 +161,10 @@ class Url_DnD_Panel(wx.Panel):
         else:
             lbl_info.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))
 
-        self.text_path_save.SetValue(self.parent.filedldir)
+        self.text_path_save.SetValue(self.parent.outputdir)
         # Tooltip
-        tip = _("Set up a temporary folder for downloads")
-        self.btn_save.SetToolTip(tip)
-        self.text_path_save.SetToolTip(_("Destination folder"))
+        self.btn_save.SetToolTip(_('Set destination'))
+        self.text_path_save.SetToolTip(_("Current destination folder"))
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
     # ---------------------------------------------------------
 
@@ -185,7 +184,7 @@ class Url_DnD_Panel(wx.Panel):
         menu = wx.Menu()
         menu.Append(popupID2, _("Paste\tCtrl+V"))
         menu.Append(popupID1, _("Remove selected URL\tDEL"))
-        menu.Append(popupID3, _("Clear List\tShift+DEL"))
+        menu.Append(popupID3, _("Clear list\tShift+DEL"))
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()
@@ -203,10 +202,10 @@ class Url_DnD_Panel(wx.Panel):
         if menuItem.GetItemLabel() == _("Paste\tCtrl+V"):
             self.on_paste(self)
 
-        elif menuItem.GetItemLabel() == _("Remove Selected URL\tDEL"):
+        elif menuItem.GetItemLabel() == _("Remove selected URL\tDEL"):
             self.on_del_url_selected(self)
 
-        elif menuItem.GetItemLabel() == _("Clear List\tShift+DEL"):
+        elif menuItem.GetItemLabel() == _("Clear list\tShift+DEL"):
             self.delete_all(self)
     # ----------------------------------------------------------------------
 
@@ -299,4 +298,4 @@ class Url_DnD_Panel(wx.Panel):
         """
         self.text_path_save.SetValue("")
         self.text_path_save.AppendText(path)
-        self.parent.filedldir = path
+        self.parent.outputdir = path

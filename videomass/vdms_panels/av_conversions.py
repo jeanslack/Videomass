@@ -386,33 +386,33 @@ class AV_Conv(wx.Panel):
                                                    )
         sizer_Vfilter = wx.BoxSizer(wx.VERTICAL)
         self.btn_videosize = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                       _("Resizing"), size=(-1, -1))
+                                       _("Resize"), size=(-1, -1))
         self.btn_videosize.SetBitmap(bmpresize, wx.LEFT)
         sizer_Vfilter.Add(self.btn_videosize, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_crop = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                  _("Cropping"), size=(-1, -1))
+                                  _("Crop"), size=(-1, -1))
         self.btn_crop.SetBitmap(bmpcrop, wx.LEFT)
         sizer_Vfilter.Add(self.btn_crop, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_rotate = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                    _("Rotation"), size=(-1, -1))
+                                    _("Transpose"), size=(-1, -1))
         self.btn_rotate.SetBitmap(bmprotate, wx.LEFT)
 
         sizer_Vfilter.Add(self.btn_rotate, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_lacing = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                    _("Deinterlacing"), size=(-1, -1))
+                                    _("Deinterlace"), size=(-1, -1))
         self.btn_lacing.SetBitmap(bmpdeinterlace, wx.LEFT)
         sizer_Vfilter.Add(self.btn_lacing, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_denois = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                    _("Denoiser"), size=(-1, -1))
+                                    _("Denoise"), size=(-1, -1))
         self.btn_denois.SetBitmap(bmpdenoiser, wx.LEFT)
         sizer_Vfilter.Add(self.btn_denois, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_vidstab = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     _("Stabilizer"), size=(-1, -1))
+                                     _("Stabilize"), size=(-1, -1))
         self.btn_vidstab.SetBitmap(bmpstab, wx.LEFT)
         sizer_Vfilter.Add(self.btn_vidstab, 0, wx.ALL | wx.EXPAND, 5)
 
         self.btn_coloreq = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     "Color Equalizer", size=(-1, -1))
+                                     "Equalize", size=(-1, -1))
         self.btn_coloreq.SetBitmap(bmpcoloreq, wx.LEFT)
         sizer_Vfilter.Add(self.btn_coloreq, 0, wx.ALL | wx.EXPAND, 5)
 
@@ -494,7 +494,7 @@ class AV_Conv(wx.Panel):
         self.box_aFilters.Add(sizer_a_normaliz, 0, wx.EXPAND)
 
         self.btn_audio_preview = wx.Button(self.nb_Audio, wx.ID_ANY,
-                                           _("Listening"), size=(-1, -1))
+                                           _("Preview"), size=(-1, -1))
         self.btn_audio_preview.SetBitmap(bmpapreview, wx.LEFT)
         sizer_a_normaliz.Add(self.btn_audio_preview, 0, wx.ALL | wx.SHAPED, 5)
 

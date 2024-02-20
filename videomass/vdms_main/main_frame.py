@@ -87,10 +87,10 @@ class MainFrame(wx.Frame):
         self.icons = get.iconset
         # -------------------------------#
         self.data_files = []  # list of items in list control
-        self.outputpath = self.appdata['outputfile']  # path destination
+        self.outputdir = self.appdata['outputdir']  # path destination
         self.outputnames = []  # output file basenames (even renames)
         self.file_src = []  # input full file names list
-        self.same_destin = self.appdata['outputfile_samedir']  # True/False
+        self.same_destin = self.appdata['outputdir_asinput']  # True/False
         self.suffix = self.appdata['filesuffix']  # suffix to output names
         self.filedropselected = None  # int(index) or None filedrop selected
         self.time_seq = ""  # FFmpeg time seq.
@@ -135,7 +135,7 @@ class MainFrame(wx.Frame):
                                                  self.icons,
                                                  )
         self.fileDnDTarget = filedrop.FileDnD(self,
-                                              self.outputpath,
+                                              self.outputdir,
                                               self.outputnames,
                                               self.data_files,
                                               self.file_src,
@@ -429,46 +429,23 @@ class MainFrame(wx.Frame):
 
         # ----------------------- file menu
         fileButton = wx.Menu()
-        dscrp = (_("Open...\tCtrl+O"),
+        dscrp = (_("Open files...\tCtrl+O"),
                  _("Open one or more files"))
         self.openmedia = fileButton.Append(wx.ID_OPEN, dscrp[0], dscrp[1])
         self.openmedia.Enable(False)
         fileButton.AppendSeparator()
-        dscrp = (_("Conversions Folder\tCtrl+C"),
-                 _("Open the default file conversions folder"))
+        dscrp = (_("Open destination\tCtrl+D"),
+                 _("Open the file destination folder"))
         fold_convers = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Temporary Conversions"),
-                 _("Open the temporary file conversions folder"))
-        self.fold_convers_tmp = fileButton.Append(wx.ID_ANY, dscrp[0],
-                                                  dscrp[1])
-        self.fold_convers_tmp.Enable(False)
         fileButton.AppendSeparator()
-        dscrp = (_("Rename Selected Entry\tCtrl+R"),
-                 _("Rename the file selected in the Queued Files panel"))
-        self.rename = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        self.rename.Enable(False)
-        dscrp = (_("Batch Renaming\tCtrl+B"),
-                 _("Rename all files listed in the Queued Files panel"))
-        self.rename_batch = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        self.rename_batch.Enable(False)
-        fileButton.AppendSeparator()
-        dscrp = (_("Remove Selected Entry\tDEL"),
-                 _("Remove the selected files from the list"))
-        self.delfile = fileButton.Append(wx.ID_REMOVE, dscrp[0], dscrp[1])
-        self.delfile.Enable(False)
-        dscrp = (_("Clear List\tShift+DEL"),
-                 _("Remove all files from the list"))
-        self.clearall = fileButton.Append(wx.ID_CLEAR, dscrp[0], dscrp[1])
-        self.clearall.Enable(False)
-        fileButton.AppendSeparator()
-        dscrp = (_("Open Trash Folder"),
-                 _("Open the Videomass Trash folder if it exists"))
+        dscrp = (_("Open trash"),
+                 _("Open the Videomass trash folder if it exists"))
         dir_trash = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Empty Trash Folder"),
-                 _("Delete all files in the Videomass Trash folder"))
+        dscrp = (_("Empty Trash"),
+                 _("Delete all files in the Videomass trash folder"))
         empty_trash = fileButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-        dscrp = (_("Work Notes\tCtrl+N"),
+        dscrp = (_("Work notes\tCtrl+N"),
                  _("Read and write useful notes and reminders."))
         notepad = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
@@ -476,18 +453,39 @@ class MainFrame(wx.Frame):
                                      _("Completely exit the application"))
         self.menuBar.Append(fileButton, _("File"))
 
+        # ------------------ Edit menu
+        editButton = wx.Menu()
+        dscrp = (_("Rename selected entry\tCtrl+R"),
+                 _("Renames the file destination with a new name"))
+        self.rename = editButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        self.rename.Enable(False)
+        dscrp = (_("Batch renaming\tCtrl+B"),
+                 _("Renames the destination of all items in the list"))
+        self.rename_batch = editButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        self.rename_batch.Enable(False)
+        editButton.AppendSeparator()
+        dscrp = (_("Remove selected entry\tDEL"),
+                 _("Remove the selected file from the list"))
+        self.delfile = editButton.Append(wx.ID_REMOVE, dscrp[0], dscrp[1])
+        self.delfile.Enable(False)
+        dscrp = (_("Clear list\tShift+DEL"),
+                 _("Clear the file list"))
+        self.clearall = editButton.Append(wx.ID_CLEAR, dscrp[0], dscrp[1])
+        self.clearall.Enable(False)
+        self.menuBar.Append(editButton, _("Edit"))
+
         # ------------------ tools menu
         toolsButton = wx.Menu()
-        dscrp = (_("Find FFmpeg Topics"),
+        dscrp = (_("Find FFmpeg topics"),
                  _("A useful tool to search for FFmpeg help topics and "
                    "options"))
         searchtopic = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
         prstpage = '<https://github.com/jeanslack/Videomass-presets>'
-        dscrp = (_("Check Preset Updates"),
+        dscrp = (_("Check preset updates"),
                  _("Check for new presets updates from {0}").format(prstpage))
         self.prstcheck = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Get Latest Presets"),
+        dscrp = (_("Get latest presets"),
                  _("Get the latest presets from {0}").format(prstpage))
         self.prstdownload = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(toolsButton, _("Tools"))
@@ -496,33 +494,35 @@ class MainFrame(wx.Frame):
         viewButton = wx.Menu()
         ffmpegButton = wx.Menu()  # ffmpeg sub menu
         viewButton.AppendSubMenu(ffmpegButton, "FFmpeg")
-        dscrp = (_("Show Configuration"),
+        dscrp = (_("Show configuration"),
                  _("Show FFmpeg's built-in configuration capabilities"))
         checkconf = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSeparator()
         dscrp = (_("Muxers and Demuxers"),
-                 _("Muxers and demuxers available for used FFmpeg."))
+                 _("Muxers and demuxers available on your version of FFmpeg"))
         ckformats = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSeparator()
-        ckcoders = ffmpegButton.Append(wx.ID_ANY, _("Encoders"),
-                                       _("Shows available encoders for FFmpeg")
-                                       )
-        dscrp = (_("Decoders"), _("Shows available decoders for FFmpeg"))
+        dscrp = (_("Encoders"),
+                 _("Encoders available on your version of FFmpeg"))
+        ckcoders = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = (_("Decoders"),
+                 _("Decoders available on your version of FFmpeg"))
         ckdecoders = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffplayButton = wx.Menu()  # ffplay sub menu
         viewButton.AppendSubMenu(ffplayButton, _("FFplay"))
-        dscrp = (_("While Playing"),
+        dscrp = (_("While playing..."),
                  _("Show useful shortcut keys when playing or previewing "
-                   "with FFplay"))
+                   "using FFplay"))
         playing = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         viewButton.AppendSeparator()
-        dscrp = (_("Show Logs\tCtrl+L"),
+        dscrp = (_("Show logs\tCtrl+L"),
                  _("Viewing log messages"))
         viewlogs = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
 
         viewButton.AppendSeparator()
-        dscrp = (_("Show Timeline\tCtrl+T"),
-                 _("Show timeline editor"))
+        dscrp = (_("Show timeline editor\tCtrl+T"),
+                 _("Set duration or trim slices of time to remove unwanted "
+                   "parts from your files"))
         self.viewtimeline = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                               kind=wx.ITEM_CHECK)
         self.menuBar.Append(viewButton, _("View"))
@@ -530,7 +530,7 @@ class MainFrame(wx.Frame):
         # ------------------ Go menu
         goButton = wx.Menu()
         self.startpan = goButton.Append(wx.ID_ANY,
-                                        _("Home Panel\tCtrl+Shift+H"),
+                                        _("Home panel\tCtrl+Shift+H"),
                                         _("Go to the 'Home' panel"))
         goButton.AppendSeparator()
         self.prstpan = goButton.Append(wx.ID_ANY,
@@ -554,38 +554,35 @@ class MainFrame(wx.Frame):
                                         _("YouTube Downloader\tCtrl+Shift+Y"),
                                         _("Open 'YouTube Downloader' window"))
         goButton.AppendSeparator()
-        dscrp = (_("Output Monitor\tCtrl+Shift+O"),
+        dscrp = (_("Output monitor\tCtrl+Shift+O"),
                  _("Keeps track of the output for debugging errors"))
         self.logpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        self.menuBar.Append(goButton, _("Goto"))
+        self.menuBar.Append(goButton, _("Go"))
 
         # ------------------ setup menu
         setupButton = wx.Menu()
-        dscrp = (_("Set Temporary Folder"),
-                 _("Use a temporary location to save conversions for "
-                   "this session"))
+        dscrp = (_("Set destination"),
+                 _("Set a new destination"))
         path_dest = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         if self.same_destin:
             path_dest.Enable(False)
         setupButton.AppendSeparator()
-        dscrp = (_("Restore Default Folder"),
-                 _("Restore the default folder for file conversions"))
+        dscrp = (_("Restore default destination"),
+                 _("Restore the default file destination for processed files"))
         self.resetfolders_tmp = setupButton.Append(wx.ID_ANY, dscrp[0],
                                                    dscrp[1])
         self.resetfolders_tmp.Enable(False)
         setupButton.AppendSeparator()
-        dscrp = (_("Timestamps on Playback"),
+        dscrp = (_("Enable timestamps on playback"),
                  _("Displays timestamp when playing media with FFplay"))
         self.viewtimestamp = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                                 kind=wx.ITEM_CHECK)
-        dscrp = (_("Auto-Exit After Playback"),
+        dscrp = (_("Auto-exit after playback"),
                  _("If checked, the FFplay window will auto-close "
                    "when playback is complete"))
         self.exitplayback = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                                kind=wx.ITEM_CHECK)
-        dscrp = (_("Timestamp Settings"),
-                 _("Set the size and color of the timestamp during playback "
-                   "with FFplay"))
+        dscrp = (_("Timestamp settings"), _("Customize the timestamp style"))
         tscustomize = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         setupButton.AppendSeparator()
         setupItem = setupButton.Append(wx.ID_PREFERENCES,
@@ -597,23 +594,23 @@ class MainFrame(wx.Frame):
 
         # ------------------ help menu
         helpButton = wx.Menu()
-        helpItem = helpButton.Append(wx.ID_HELP, _("User Guide"), "")
+        helpItem = helpButton.Append(wx.ID_HELP, _("User guide"), "")
         wikiItem = helpButton.Append(wx.ID_ANY, _("Wiki"), "")
         helpButton.AppendSeparator()
-        issueItem = helpButton.Append(wx.ID_ANY, _("Issue Tracker"), "")
+        issueItem = helpButton.Append(wx.ID_ANY, _("Issue tracker"), "")
         helpButton.AppendSeparator()
         transItem = helpButton.Append(wx.ID_ANY, _('Translation...'), '')
         helpButton.AppendSeparator()
         DonationItem = helpButton.Append(wx.ID_ANY, _("Donation"), "")
         helpButton.AppendSeparator()
-        docFFmpeg = helpButton.Append(wx.ID_ANY, _("FFmpeg Documentation"), "")
+        docFFmpeg = helpButton.Append(wx.ID_ANY, _("FFmpeg documentation"), "")
         helpButton.AppendSeparator()
-        dscrp = (_("System Version"),
+        dscrp = (_("System version"),
                  _("Get version about your operating system, version of "
                    "Python and wxPython."))
         sysinfo = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         helpButton.AppendSeparator()
-        dscrp = (_("Latest Version"),
+        dscrp = (_("Latest version"),
                  _("Check for the latest Videomass version"))
         chklatest = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
 
@@ -626,8 +623,6 @@ class MainFrame(wx.Frame):
         # ----FILE----
         self.Bind(wx.EVT_MENU, self.open_media_files, self.openmedia)
         self.Bind(wx.EVT_MENU, self.openMyconversions, fold_convers)
-        self.Bind(wx.EVT_MENU, self.openMyconversions_tmp,
-                  self.fold_convers_tmp)
         self.Bind(wx.EVT_MENU, self.on_file_renaming, self.rename)
         self.Bind(wx.EVT_MENU, self.on_batch_renaming, self.rename_batch)
         self.Bind(wx.EVT_MENU, self.fileDnDTarget.on_delete_selected,
@@ -707,16 +702,9 @@ class MainFrame(wx.Frame):
 
     def openMyconversions(self, event):
         """
-        Open the conversions folder with file manager
+        Open the conversions dir with file manager
         """
-        io_tools.openpath(self.appdata['outputfile'])
-    # -------------------------------------------------------------------#
-
-    def openMyconversions_tmp(self, event):
-        """
-        Open the temporary conversions folder with file manager
-        """
-        io_tools.openpath(self.outputpath)
+        io_tools.openpath(self.outputdir)
     # -------------------------------------------------------------------#
 
     def on_file_renaming(self, event):
@@ -735,13 +723,13 @@ class MainFrame(wx.Frame):
 
     def open_trash_folder(self, event):
         """
-        Open Videomass trash folder if it exists
+        Open Videomass trash dir if it exists
         """
         path = self.appdata['user_trashdir']
         if os.path.exists(path):
             io_tools.openpath(path)
         else:
-            wx.MessageBox(_("No such folder '{}'").format(path),
+            wx.MessageBox(_("'{}':\nNo such file or directory").format(path),
                           "Videomass", wx.ICON_INFORMATION, self)
     # -------------------------------------------------------------------#
 
@@ -761,10 +749,10 @@ class MainFrame(wx.Frame):
                 for fname in files:
                     os.remove(os.path.join(path, fname))
             else:
-                wx.MessageBox(_("No files to delete"),
+                wx.MessageBox(_("Videomass trash already completely emptied"),
                               "Videomass", wx.ICON_INFORMATION, self)
         else:
-            wx.MessageBox(_("No such folder '{}'").format(path),
+            wx.MessageBox(_("'{}':\nNo such file or directory").format(path),
                           "Videomass", wx.ICON_INFORMATION, self)
     # -------------------------------------------------------------------#
 
@@ -833,7 +821,7 @@ class MainFrame(wx.Frame):
         url = ("https://api.github.com/repos/jeanslack/"
                "Videomass-presets/releases/latest")
 
-        dialdir = wx.DirDialog(self, _("Choose a download folder"),
+        dialdir = wx.DirDialog(self, _("Choose Destination"),
                                "", wx.DD_DEFAULT_STYLE)
         if dialdir.ShowModal() == wx.ID_OK:
             path = dialdir.GetPath()
@@ -1011,18 +999,16 @@ class MainFrame(wx.Frame):
         This is a menu event and a filedrop button event.
         It sets a new file destination path for conversions
         """
-        dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
-                                       "conversions"), self.outputpath,
-                               wx.DD_DEFAULT_STYLE
+        dialdir = wx.DirDialog(self, _("Choose Destination"),
+                               self.outputdir, wx.DD_DEFAULT_STYLE
                                )
         if dialdir.ShowModal() == wx.ID_OK:
             getpath = self.appdata['getpath'](dialdir.GetPath())
-            self.outputpath = getpath
-            self.fileDnDTarget.on_file_save(self.outputpath)
+            self.outputdir = getpath
+            self.fileDnDTarget.on_file_save(self.outputdir)
             dialdir.Destroy()
 
             self.resetfolders_tmp.Enable(True)
-            self.fold_convers_tmp.Enable(True)
     # ------------------------------------------------------------------#
 
     def on_Resetfolders_tmp(self, event):
@@ -1032,13 +1018,11 @@ class MainFrame(wx.Frame):
         if `self.same_destin` is True.
         """
         if not self.same_destin:
-            self.outputpath = self.appdata['outputfile']
-            self.fileDnDTarget.on_file_save(self.appdata['outputfile'])
-            self.fold_convers_tmp.Enable(False)
+            self.outputdir = self.appdata['outputdir']
+            self.fileDnDTarget.on_file_save(self.appdata['outputdir'])
             self.resetfolders_tmp.Enable(False)
-            wx.MessageBox(_("Default destination folders "
-                            "successfully restored"), "Videomass",
-                          wx.ICON_INFORMATION, self)
+            wx.MessageBox(_("Default destination successfully restored"),
+                          "Videomass", wx.ICON_INFORMATION, self)
     # ------------------------------------------------------------------#
 
     def showTimestamp(self, event):
@@ -1289,8 +1273,8 @@ class MainFrame(wx.Frame):
                                            bmpstop,
                                            tip, wx.ITEM_NORMAL
                                            )
-        tip = _("Remove all files from the list")
-        clear = self.toolbar.AddTool(9, _('Clear List'),
+        tip = _("Clear the file list")
+        clear = self.toolbar.AddTool(9, _('Clear'),
                                      bmpclear,
                                      tip, wx.ITEM_NORMAL
                                      )

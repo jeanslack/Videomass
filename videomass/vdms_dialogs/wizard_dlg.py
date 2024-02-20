@@ -342,9 +342,9 @@ class PageThree(wx.Panel):
         """
         Open filedialog to locate ffmpeg executable
         """
-        with wx.FileDialog(self, _("Choose the {} "
-                                   "executable").format(self.ffmpeg), "", "",
-                           f"ffmpeg binary (*{self.ffmpeg})|*{self.ffmpeg}| "
+        with wx.FileDialog(self, _("{} executable").format(self.ffmpeg),
+                           "", "", "ffmpeg binary "
+                           f"(*{self.ffmpeg})|*{self.ffmpeg}| "
                            f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
 
@@ -359,9 +359,8 @@ class PageThree(wx.Panel):
         """
         Open filedialog to locate ffprobe executable
         """
-        with wx.FileDialog(self, _("Choose the {} executable"
-                                   ).format(self.ffprobe), "", "",
-                           f"ffprobe binary "
+        with wx.FileDialog(self, _("{} executable").format(self.ffprobe),
+                           "", "", "ffprobe binary "
                            f"(*{self.ffprobe})|*{self.ffprobe}| "
                            f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
@@ -377,9 +376,9 @@ class PageThree(wx.Panel):
         """
         Open filedialog to locate ffplay executable
         """
-        with wx.FileDialog(self, _("Choose the {} executable"
-                                   ).format(self.ffplay), "", "",
-                           f"ffplay binary (*{self.ffplay})|*{self.ffplay}| "
+        with wx.FileDialog(self, _("{} executable").format(self.ffplay),
+                           "", "", "ffplay binary "
+                           f"(*{self.ffplay})|*{self.ffplay}| "
                            f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
 

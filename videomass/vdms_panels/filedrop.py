@@ -297,14 +297,13 @@ class FileDnD(wx.Panel):
             self.lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
         self.text_path_save.SetValue(args[0])
-        if appdata['outputfile_samedir']:
+        if appdata['outputdir_asinput']:
             self.btn_destpath.Disable()
             self.text_path_save.Disable()
 
         # Tooltips
-        self.btn_destpath.SetToolTip(_('Set up a temporary folder '
-                                       'for conversions'))
-        self.text_path_save.SetToolTip(_("Destination folder"))
+        self.btn_destpath.SetToolTip(_('Set destination'))
+        self.text_path_save.SetToolTip(_("Current destination folder"))
 
         # Binding (EVT)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)

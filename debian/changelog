@@ -34,9 +34,11 @@ videomass (5.0.5-1) UNRELEASED; urgency=medium
   * [Still Image Maker] Fixed progress bar accuracy and progress percentage
     issues in final video production.
   * [Queued Files] [Queued URLs] improved conditional code with empty lists.
-  * [Queued URLs] Added new entry `Clear List` to contextual menu.
+  * [Queued URLs] Added new entry `Clear list` to contextual menu.
+  * Menu bars reordered to the relevant items.
+  * Translation strings have been updated and simplified.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 18 Feb 2024 22:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 20 Feb 2024 17:00:00 +0200
 
 videomass (5.0.4-1) UNRELEASED; urgency=high
 

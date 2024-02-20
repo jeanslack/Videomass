@@ -51,7 +51,7 @@ def check_images_size(flist):
 
     if len(set(sizes)) > 1:
         wx.MessageBox(_('Images need to be resized, '
-                        'please use Resizing function.'),
+                        'please use Resize function.'),
                       'Videomass', wx.ICON_INFORMATION)
         return True
 
@@ -71,7 +71,7 @@ class SequenceToVideo(wx.Panel):
     BLACK = '#1f1f1f'
     MSG_1 = _("\n1. Import one or more image files such as JPG, PNG and BMP "
               "formats, then select one."
-              "\n\n2. Use the Resizing function to resize images which "
+              "\n\n2. Use the Resize tool for images which "
               "have different sizes such as width and\nheight. "
               "It is optional in other cases."
               "\n\n3. Use the Timeline editor (CTRL+T) to set the time "
@@ -145,7 +145,7 @@ class SequenceToVideo(wx.Panel):
                                    )
         siz_pict.Add(self.cmb_fps, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_fps.SetSelection(10)
-        self.btn_resize = wx.Button(self, wx.ID_ANY, _("Resizing"),
+        self.btn_resize = wx.Button(self, wx.ID_ANY, _("Resize"),
                                     size=(-1, -1)
                                     )
         self.btn_resize.SetBitmap(bmpresize, wx.LEFT)
@@ -442,7 +442,7 @@ class SequenceToVideo(wx.Panel):
         fmt = '*.wav;*.aiff;*.flac;*.oga;*.ogg;*.m4a;*.aac;*.ac3;*.mp3;'
         wild = f"Audio source ({fmt})|{fmt}| All files (*.*)|*.*"
 
-        with wx.FileDialog(self, _("Open an audio file"),
+        with wx.FileDialog(self, _("Open Audio File"),
                            wildcard=wild,
                            style=wx.FD_OPEN
                            | wx.FD_FILE_MUST_EXIST) as fdlg:
@@ -711,7 +711,7 @@ class SequenceToVideo(wx.Panel):
         formula = (_("File to process\nOutput filename"
                      "\nDestination Folder\nOutput Format"
                      "\nAdditional arguments"
-                     "\nAudio file\nShortest\nResizing\nPre-input"
+                     "\nAudio file\nShortest\nResize\nPre-input"
                      "\nFrame per Second (FPS)\nStill image duration"
                      "\nOverall video duration"
                      ))

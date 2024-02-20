@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 18 Feb 2024 V.5.0.5
+Tue, 20 Feb 2024 V.5.0.5
 
   * Fixed `ValueError: could not convert string to float: 'N/A'` given by the
     `get_milliseconds()` function.
@@ -43,7 +43,9 @@ Tue, 18 Feb 2024 V.5.0.5
   * [Still Image Maker] Fixed progress bar accuracy and progress percentage
     issues in final video production.
   * [Queued Files] [Queued URLs] improved conditional code with empty lists.
-  * [Queued URLs] Added new entry `Clear List` to contextual menu.
+  * [Queued URLs] Added new entry `Clear list` to contextual menu.
+  * Menu bars reordered to the relevant items.
+  * Translation strings have been updated and simplified.
 
 +------------------------------------+
 Wed, 24 Jan 2024 V.5.0.4

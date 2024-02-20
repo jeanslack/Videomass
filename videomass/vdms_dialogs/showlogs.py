@@ -110,7 +110,7 @@ class ShowLogs(wx.Dialog):
         grdBtn.Add(grdexit, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         sizer_base.Add(grdBtn, 0, wx.ALL | wx.EXPAND, 0)
         # set caption and min size
-        self.SetTitle(_('Showing log messages'))
+        self.SetTitle(_('Log messages'))
         self.SetMinSize((700, 500))
         icon = wx.Icon()
         icon.CopyFromBitmap(wx.Bitmap(vidicon, wx.BITMAP_TYPE_ANY))
