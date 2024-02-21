@@ -415,8 +415,8 @@ class DataSource():
         # create required directories if them not exist
         requiredirs = (os.path.join(self.dataloc['cachedir'], 'tmp'),
                        self.dataloc['logdir'],
-                       userconf['outputfile'],
-                       userconf['dirdownload'],
+                       userconf['outputdir'],
+                       userconf['ydlp-outputdir'],
                        self.dataloc['conf_trashdir']
                        )
         if not userconf['user_trashdir']:

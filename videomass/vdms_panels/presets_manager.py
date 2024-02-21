@@ -157,7 +157,7 @@ class PrstPan(wx.Panel):
                                      _("Import preset"), size=(-1, -1))
         fgs1.Add(self.btn_restore, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_restoreall = wx.Button(panelscr, wx.ID_ANY,
-                                        _("Import group"), size=(-1, -1))
+                                        _("Import folder"), size=(-1, -1))
         fgs1.Add(self.btn_restoreall, 0, wx.ALL | wx.EXPAND, 5)
 
         line3 = wx.StaticLine(panelscr, wx.ID_ANY, pos=wx.DefaultPosition,
@@ -168,7 +168,7 @@ class PrstPan(wx.Panel):
         fgs1.Add(line3, 0, wx.ALL | wx.EXPAND, 5)
         fgs1.Add((5, 5))
         self.btn_restoredef = wx.Button(panelscr, wx.ID_ANY,
-                                        _("Restore"), size=(-1, -1))
+                                        _("Restore selected"), size=(-1, -1))
         fgs1.Add(self.btn_restoredef, 0, wx.ALL | wx.EXPAND, 5)
 
         self.btn_restorealldefault = wx.Button(panelscr, wx.ID_ANY,
@@ -184,7 +184,7 @@ class PrstPan(wx.Panel):
         fgs1.Add(line4, 0, wx.ALL | wx.EXPAND, 5)
         fgs1.Add((5, 5))
         self.btn_refresh = wx.Button(panelscr, wx.ID_ANY,
-                                     _("Reload"), size=(-1, -1))
+                                     _("Reload all"), size=(-1, -1))
         fgs1.Add(self.btn_refresh, 0, wx.ALL | wx.EXPAND, 5)
         boxpresets.Add(panelscr, 0, wx.ALL | wx.CENTRE, 5)
         panelscr.SetSizer(fgs1)
@@ -271,8 +271,7 @@ class PrstPan(wx.Panel):
         self.btn_saveall.SetToolTip(tip)
         tip = _("Import a new preset or update an existing one")
         self.btn_restore.SetToolTip(tip)
-        tip = (_("Import a group of presets from a folder and update "
-                 "existing ones"))
+        tip = (_("Import a presets folder, updating those in use"))
         self.btn_restoreall.SetToolTip(tip)
         tip = _("Replace the selected preset with the Videomass default one")
         self.btn_restoredef.SetToolTip(tip)
@@ -338,7 +337,7 @@ class PrstPan(wx.Panel):
                     'latest versions of Videomass.\n\n'
                     'To avoid data loss and allow for possible recovery, '
                     'the outdated presets folder will be backed up in the '
-                    'program configuration folder: "{2}"\n\n'
+                    'program configuration directory: "{2}"\n\n'
                     'Do you want to perform this '
                     'update now?').format(srcversion,
                                           confversion,
@@ -563,8 +562,8 @@ class PrstPan(wx.Panel):
         combvalue = self.cmbx_prst.GetValue()
         filedir = f'{self.user_prst}/{combvalue}.prst'
 
-        dlg = wx.DirDialog(self, _("Choose a folder to save the selected "
-                                   "preset"), "", style=wx.DD_DEFAULT_STYLE)
+        dlg = wx.DirDialog(self, _("Choose Destination"),
+                           "", style=wx.DD_DEFAULT_STYLE)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
             if os.path.exists(os.path.join(path, f'{combvalue}.prst')):
@@ -591,8 +590,8 @@ class PrstPan(wx.Panel):
         """
         src = self.user_prst
 
-        dialsave = wx.DirDialog(self, _("Choose a folder to export all "
-                                        "presets"), "", wx.DD_DEFAULT_STYLE)
+        dialsave = wx.DirDialog(self, _("Choose Destination"),
+                                "", wx.DD_DEFAULT_STYLE)
         if dialsave.ShowModal() == wx.ID_OK:
             dest = dialsave.GetPath()
             status = copydir_recursively(src, dest, 'Videomass-Presets-copy')
@@ -656,7 +655,7 @@ class PrstPan(wx.Panel):
         This method depends on the event given as argument: If it is
         `None` it will restore the user's preset directory to the
         directory given by the `source` attribute. Otherwise the
-        event will be triggered by clicking on the `Import Group`
+        event will be triggered by clicking on the `Import group`
         button which will have a slightly different behavior. In any
         case it will not overwrite existing presets but will update
         them with missing profiles on the destination files.
@@ -699,7 +698,7 @@ class PrstPan(wx.Panel):
                 wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
                 return err
         # copies non-existent ones to the destination folder
-        if event:  # only `Import Group` event
+        if event:  # only `Import group` event
             err = copy_on('prst', source, self.user_prst, overw=False)
             if err:
                 wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
@@ -747,7 +746,7 @@ class PrstPan(wx.Panel):
                            "to default ones. Your profiles may be deleted!\n\n"
                            "In any case, to avoid data loss, the presets "
                            "folder will be backed up in the program's "
-                           "configuration folder."
+                           "configuration directory."
                            "\n\nDo you want to continue?"), _("Warning"),
                          wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                          self) == wx.YES:
@@ -893,7 +892,7 @@ class PrstPan(wx.Panel):
         extlst = self.array[4]
         file_src = supported_formats(extlst, self.parent.file_src)
         checking = check_files(file_src,
-                               self.parent.outputpath,
+                               self.parent.outputdir,
                                self.parent.same_destin,
                                self.parent.suffix,
                                outext,

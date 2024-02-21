@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.17.2023
+Rev: March.18.2023
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -161,11 +161,10 @@ class Url_DnD_Panel(wx.Panel):
         else:
             lbl_info.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))
 
-        self.text_path_save.SetValue(self.parent.filedldir)
+        self.text_path_save.SetValue(self.parent.outputdir)
         # Tooltip
-        tip = _("Set up a temporary folder for downloads")
-        self.btn_save.SetToolTip(tip)
-        self.text_path_save.SetToolTip(_("Destination folder"))
+        self.btn_save.SetToolTip(_('Set destination'))
+        self.text_path_save.SetToolTip(_("Current destination folder"))
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
     # ---------------------------------------------------------
 
@@ -177,12 +176,15 @@ class Url_DnD_Panel(wx.Panel):
         if not hasattr(self, "popupID1"):
             popupID1 = wx.ID_ANY
             popupID2 = wx.ID_ANY
+            popupID3 = wx.ID_ANY
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID1)
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID2)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID3)
         # build the menu
         menu = wx.Menu()
         menu.Append(popupID2, _("Paste\tCtrl+V"))
         menu.Append(popupID1, _("Remove selected URL\tDEL"))
+        menu.Append(popupID3, _("Clear list\tShift+DEL"))
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()
@@ -202,6 +204,9 @@ class Url_DnD_Panel(wx.Panel):
 
         elif menuItem.GetItemLabel() == _("Remove selected URL\tDEL"):
             self.on_del_url_selected(self)
+
+        elif menuItem.GetItemLabel() == _("Clear list\tShift+DEL"):
+            self.delete_all(self)
     # ----------------------------------------------------------------------
 
     def changes_in_progress(self, setfocus=True):
@@ -245,8 +250,11 @@ class Url_DnD_Panel(wx.Panel):
 
     def delete_all(self, event):
         """
-        clear all text lines of the TxtCtrl
+        Clear all text lines of the TxtCtrl.
+        If already empty, return None
         """
+        if self.urlctrl.GetItemCount() == 0:
+            return
         self.urlctrl.DeleteAllItems()
         self.parent.destroy_orphaned_window()
         self.parent.toolbar.EnableTool(25, False)
@@ -290,4 +298,4 @@ class Url_DnD_Panel(wx.Panel):
         """
         self.text_path_save.SetValue("")
         self.text_path_save.AppendText(path)
-        self.parent.filedldir = path
+        self.parent.outputdir = path

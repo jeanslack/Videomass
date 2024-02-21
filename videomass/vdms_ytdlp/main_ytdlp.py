@@ -58,7 +58,7 @@ class MainYtdl(wx.Frame):
         # -------------------------------#
         self.data_url = []  # list of urls in text box
         self.changed = True  # previous list is different from new one
-        self.filedldir = self.appdata['dirdownload']  # file dest dir
+        self.outputdir = self.appdata['ydlp-outputdir']  # file dest dir
         self.infomediadlg = False  # media info dialog
 
         wx.Frame.__init__(self, parent, -1, style=wx.DEFAULT_FRAME_STYLE)
@@ -276,30 +276,15 @@ class MainYtdl(wx.Frame):
 
         # ----------------------- file menu
         fileButton = wx.Menu()
-        dscrp = (_("Downloads Folder\tCtrl+D"),
-                 _("Open the default downloads folder"))
+        dscrp = (_("Open destination\tCtrl+D"),
+                 _("Open the downloads folder"))
         fold_downloads = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-        dscrp = (_("Temporary Downloads"),
-                 _("Open the temporary downloads folder"))
-        self.fold_downloads_tmp = fileButton.Append(wx.ID_ANY, dscrp[0],
-                                                    dscrp[1])
-        self.fold_downloads_tmp.Enable(False)
-        fileButton.AppendSeparator()
-        dscrp = (_("Remove Selected URL\tDEL"),
-                 _("Remove the selected URL from the list"))
-        self.delete = fileButton.Append(wx.ID_REMOVE, dscrp[0], dscrp[1])
-
-        dscrp = (_("Clear List\tShift+DEL"),
-                 _("Remove all URLs from the list"))
-        self.clearall = fileButton.Append(wx.ID_CLEAR, dscrp[0], dscrp[1])
-        # self.clearall.Enable(False)
-        fileButton.AppendSeparator()
-        dscrp = (_("Work Notes\tCtrl+N"),
+        dscrp = (_("Work notes\tCtrl+N"),
                  _("Read and write useful notes and reminders."))
         notepad = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-        closeItem = fileButton.Append(wx.ID_CLOSE, _("Close View\tCtrl+W"),
+        closeItem = fileButton.Append(wx.ID_CLOSE, _("Close view\tCtrl+W"),
                                       _("Close the active view keeping the "
                                         "data in memory and any background "
                                         "processes"))
@@ -314,6 +299,12 @@ class MainYtdl(wx.Frame):
         dscrp = (_("Paste\tCtrl+V"),
                  _("Paste the copied URLs to clipboard"))
         self.paste = editButton.Append(wx.ID_PASTE, dscrp[0], dscrp[1])
+        dscrp = (_("Remove selected URL\tDEL"),
+                 _("Remove the selected URL from the list"))
+        self.delete = editButton.Append(wx.ID_REMOVE, dscrp[0], dscrp[1])
+        dscrp = (_("Clear list\tShift+DEL"),
+                 _("Clear the URL list"))
+        self.clearall = editButton.Append(wx.ID_CLEAR, dscrp[0], dscrp[1])
         self.menuBar.Append(editButton, _("Edit"))
 
         # ------------------ View menu
@@ -321,7 +312,7 @@ class MainYtdl(wx.Frame):
         dscrp = (_("Version of yt-dlp"),
                  _("Shows the version in use"))
         self.ydlused = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Latest Version of yt-dlp"),
+        dscrp = (_("Latest version of yt-dlp"),
                  _("Check the latest version available on github.com"))
         self.ydllatest = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(viewButton, _("View"))
@@ -329,13 +320,12 @@ class MainYtdl(wx.Frame):
         # ------------------ setup menu
         setupButton = wx.Menu()
 
-        dscrp = (_("Set Temporary Folder"),
-                 _("Save all downloads to this temporary location "
-                   "for this session only"))
+        dscrp = (_("Set destination"),
+                 _("Set a new destination"))
         setdownload_tmp = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         setupButton.AppendSeparator()
-        dscrp = (_("Restore Default Folder"),
-                 _("Restore the default folder for downloads"))
+        dscrp = (_("Restore default destination"),
+                 _("Restore the default file destination for downloads"))
         self.resetfolders_tmp = setupButton.Append(wx.ID_ANY, dscrp[0],
                                                    dscrp[1])
         self.resetfolders_tmp.Enable(False)
@@ -346,9 +336,6 @@ class MainYtdl(wx.Frame):
         # -----------------------Binding menu bar-------------------------#
         # ----FILE----
         self.Bind(wx.EVT_MENU, self.openMydownload, fold_downloads)
-        self.Bind(wx.EVT_MENU, self.openMydownloads_tmp,
-                  self.fold_downloads_tmp)
-
         self.Bind(wx.EVT_MENU, self.textDnDTarget.on_del_url_selected,
                   self.delete)
         self.Bind(wx.EVT_MENU, self.textDnDTarget.delete_all, self.clearall)
@@ -370,18 +357,10 @@ class MainYtdl(wx.Frame):
 
     def openMydownload(self, event):
         """
-        Open the download folder with file manager
+        Open the download dir with file manager
 
         """
-        io_tools.openpath(self.appdata['dirdownload'])
-    # -------------------------------------------------------------------#
-
-    def openMydownloads_tmp(self, event):
-        """
-        Open the temporary download folder with file manager
-
-        """
-        io_tools.openpath(self.filedldir)
+        io_tools.openpath(self.outputdir)
     # -------------------------------------------------------------------#
 
     def reminder(self, event):
@@ -437,9 +416,8 @@ class MainYtdl(wx.Frame):
         Event for button and menu to set a
         temporary destination path of files.
         """
-        dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
-                                       "downloads"), self.filedldir,
-                               wx.DD_DEFAULT_STYLE
+        dialdir = wx.DirDialog(self, _("Choose Destination"),
+                               self.outputdir, wx.DD_DEFAULT_STYLE
                                )
         if dialdir.ShowModal() == wx.ID_OK:
             getpath = self.appdata['getpath'](dialdir.GetPath())
@@ -448,7 +426,6 @@ class MainYtdl(wx.Frame):
             dialdir.Destroy()
 
             self.resetfolders_tmp.Enable(True)
-            self.fold_downloads_tmp.Enable(True)
     # ------------------------------------------------------------------#
 
     def on_resetfolders_tmp(self, event):
@@ -456,10 +433,9 @@ class MainYtdl(wx.Frame):
         Restore the default file destination if
         saving temporary files has been set.
         """
-        self.textDnDTarget.on_file_save(self.appdata['dirdownload'])
-        self.fold_downloads_tmp.Enable(False)
+        self.textDnDTarget.on_file_save(self.appdata['ydlp-outputdir'])
         self.resetfolders_tmp.Enable(False)
-        wx.MessageBox(_("Default destination folder successfully restored"),
+        wx.MessageBox(_("Default destination successfully restored"),
                       "Videomass", wx.ICON_INFORMATION, self)
     # ------------------------------------------------------------------#
 

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.07.2024
+Rev: Feb.18.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -297,14 +297,13 @@ class FileDnD(wx.Panel):
             self.lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
         self.text_path_save.SetValue(args[0])
-        if appdata['outputfile_samedir']:
+        if appdata['outputdir_asinput']:
             self.btn_destpath.Disable()
             self.text_path_save.Disable()
 
         # Tooltips
-        self.btn_destpath.SetToolTip(_('Set up a temporary folder '
-                                       'for conversions'))
-        self.text_path_save.SetToolTip(_("Destination folder"))
+        self.btn_destpath.SetToolTip(_('Set destination'))
+        self.text_path_save.SetToolTip(_("Current destination folder"))
 
         # Binding (EVT)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
@@ -425,7 +424,7 @@ class FileDnD(wx.Panel):
 
     def on_delete_selected(self, event):
         """
-        Delete a selected file or a bunch of selected files
+        Delete a selected file, if nothing is selected return None
         """
         if self.flCtrl.GetFirstSelected() == -1:  # None
             return
@@ -462,8 +461,10 @@ class FileDnD(wx.Panel):
     def delete_all(self, event, setstate=True):
         """
         Clear all lines on the listCtrl and delete
-        self.data list.
+        self.data list. If already empty, return None.
         """
+        if self.flCtrl.GetItemCount() == 0:
+            return
         # self.flCtrl.ClearAll()
         self.flCtrl.DeleteAllItems()
         del self.data[:]

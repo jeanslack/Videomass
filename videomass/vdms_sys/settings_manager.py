@@ -45,7 +45,7 @@ class ConfigManager:
         >>> settings = confmng.read_options()
 
     example of modify data into current file conf.json:
-        >>> settings['outputfile'] = '/home/user/MyVideos'
+        >>> settings['outputdir'] = '/home/user/MyVideos'
         >>> confmng.write_options(**settings)
     ------------------------------------------------------
 
@@ -54,10 +54,10 @@ class ConfigManager:
     confversion (float):
         current version of this configuration file
 
-    outputfile (str):
+    outputdir (str):
         file destination path used by ffmpeg
 
-    outputfile_samedir (bool):
+    outputdir_asinput (bool):
         if True save each ffmpeg files to same folder as source
 
     filesuffix (str):
@@ -129,7 +129,7 @@ class ConfigManager:
         YY is ISO 3166 code of the country. Examples are "en", "en_GB",
         "en_US" or "fr_FR", etc.
 
-    dirdownload (str):
+    ydlp-outputdir (str):
         file destination path used by the youtube-dl UI
 
     use-downloader (bool):
@@ -166,10 +166,10 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 6.3
+    VERSION = 6.5
     DEFAULT_OPTIONS = {"confversion": VERSION,
-                       "outputfile": f"{os.path.expanduser('~')}",
-                       "outputfile_samedir": False,
+                       "outputdir": f"{os.path.expanduser('~')}",
+                       "outputdir_asinput": False,
                        "filesuffix": "",
                        "ffmpeg_cmd": "",
                        "ffmpeg_islocal": False,
@@ -194,7 +194,7 @@ class ConfigManager:
                        "move_file_to_trash": False,
                        "user_trashdir": None,
                        "locale_name": "Default",
-                       "dirdownload": f"{os.path.expanduser('~')}",
+                       "ydlp-outputdir": f"{os.path.expanduser('~')}",
                        "use-downloader": False,
                        "playlistsubfolder": True,
                        "ssl_certificate": False,
@@ -229,8 +229,8 @@ class ConfigManager:
         if makeportable:
             path = os.path.join(makeportable, "My_Files")
             outputdir = os.path.relpath(path)
-            ConfigManager.DEFAULT_OPTIONS['outputfile'] = outputdir
-            ConfigManager.DEFAULT_OPTIONS['dirdownload'] = outputdir
+            ConfigManager.DEFAULT_OPTIONS['outputdir'] = outputdir
+            ConfigManager.DEFAULT_OPTIONS['ydlp-outputdir'] = outputdir
 
     def write_options(self, **options):
         """

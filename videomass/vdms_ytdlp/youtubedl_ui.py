@@ -747,7 +747,7 @@ class Downloader(wx.Panel):
         self.parent.switch_to_processing('youtube_dl downloading',
                                          urls,
                                          '',
-                                         self.parent.filedldir,
+                                         self.parent.outputdir,
                                          data,
                                          None,
                                          code,

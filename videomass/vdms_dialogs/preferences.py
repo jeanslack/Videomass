@@ -100,7 +100,8 @@ class SetUp(wx.Dialog):
                                      )
         sizerGen.Add(self.cmbx_lang, 0, wx.ALL | wx.EXPAND, 5)
         sizerGen.Add((0, 15))
-        labconf = wx.StaticText(tabOne, wx.ID_ANY, _('Configuration folder'))
+        labconf = wx.StaticText(tabOne, wx.ID_ANY,
+                                _('Configuration directory'))
         sizerGen.Add(labconf, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_conf = wx.Button(tabOne, wx.ID_ANY, "...", size=(35, -1),
                                   name='config dir')
@@ -113,7 +114,7 @@ class SetUp(wx.Dialog):
         sizerconf.Add(self.txtctrl_conf, 1, wx.ALL, 5)
         sizerconf.Add(self.btn_conf, 0, wx.RIGHT | wx.CENTER, 5)
         sizerGen.Add((0, 15))
-        labcache = wx.StaticText(tabOne, wx.ID_ANY, _('Cache folder'))
+        labcache = wx.StaticText(tabOne, wx.ID_ANY, _('Cache directory'))
         sizerGen.Add(labcache, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_cache = wx.Button(tabOne, wx.ID_ANY, "...", size=(35, -1),
                                    name='cache dir')
@@ -129,7 +130,7 @@ class SetUp(wx.Dialog):
         self.checkbox_cacheclr = wx.CheckBox(tabOne, wx.ID_ANY, (msg))
         sizerGen.Add(self.checkbox_cacheclr, 0, wx.ALL, 5)
         sizerGen.Add((0, 15))
-        lablog = wx.StaticText(tabOne, wx.ID_ANY, _('Log folder'))
+        lablog = wx.StaticText(tabOne, wx.ID_ANY, _('Log directory'))
         sizerGen.Add(lablog, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_log = wx.Button(tabOne, wx.ID_ANY, "...", size=(35, -1),
                                  name='log dir')
@@ -163,7 +164,7 @@ class SetUp(wx.Dialog):
                                           style=wx.TE_READONLY
                                           )
         sizeFFdirdest.Add(self.txtctrl_FFpath, 1, wx.ALL, 5)
-        self.txtctrl_FFpath.AppendText(self.appdata['outputfile'])
+        self.txtctrl_FFpath.AppendText(self.appdata['outputdir'])
         self.btn_fsave = wx.Button(tabTwo, wx.ID_ANY, "...", size=(35, -1))
         sizeFFdirdest.Add(self.btn_fsave, 0, wx.RIGHT | wx.ALIGN_CENTER, 5)
         sizerFiles.Add((0, 15))
@@ -206,7 +207,7 @@ class SetUp(wx.Dialog):
                                            style=wx.TE_READONLY
                                            )
         sizeYDLdirdest.Add(self.txtctrl_YDLpath, 1, wx.ALL | wx.CENTER, 5)
-        self.txtctrl_YDLpath.AppendText(self.appdata['dirdownload'])
+        self.txtctrl_YDLpath.AppendText(self.appdata['ydlp-outputdir'])
         self.btn_YDLpath = wx.Button(tabTwo, wx.ID_ANY, "...", size=(35, -1))
         sizeYDLdirdest.Add(self.btn_YDLpath, 0, wx.RIGHT | wx.ALIGN_CENTER, 5)
         descr = _("Auto-create subfolders when downloading playlists")
@@ -223,7 +224,7 @@ class SetUp(wx.Dialog):
                                   _('Path to the executables'))
         sizerFFmpeg.Add(labFFexec, 0, wx.ALL | wx.EXPAND, 5)
         # ----
-        msg = _("Enable another location to run FFmpeg")
+        msg = _("Enable custom path to run FFmpeg")
         self.checkbox_exeFFmpeg = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         self.btn_ffmpeg = wx.Button(tabThree, wx.ID_ANY, "...", size=(35, -1))
         self.txtctrl_ffmpeg = wx.TextCtrl(tabThree, wx.ID_ANY, "",
@@ -236,7 +237,7 @@ class SetUp(wx.Dialog):
         gridFFmpeg.Add(self.btn_ffmpeg, 0, wx.RIGHT | wx.CENTER, 5)
         # ----
         sizerFFmpeg.Add((0, 15))
-        msg = _("Enable another location to run FFprobe")
+        msg = _("Enable custom path to run FFprobe")
         self.checkbox_exeFFprobe = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         self.btn_ffprobe = wx.Button(tabThree, wx.ID_ANY, "...", size=(35, -1))
         self.txtctrl_ffprobe = wx.TextCtrl(tabThree, wx.ID_ANY, "",
@@ -249,7 +250,7 @@ class SetUp(wx.Dialog):
         gridFFprobe.Add(self.btn_ffprobe, 0, wx.RIGHT | wx.CENTER, 5)
         # ----
         sizerFFmpeg.Add((0, 15))
-        msg = _("Enable another location to run FFplay")
+        msg = _("Enable custom path to run FFplay")
         self.checkbox_exeFFplay = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         self.btn_ffplay = wx.Button(tabThree, wx.ID_ANY, "...", size=(35, -1))
         self.txtctrl_ffplay = wx.TextCtrl(tabThree, wx.ID_ANY, "",
@@ -475,7 +476,7 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffplay, self.rdbFFplay)
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffmpeg, self.rdbFFmpeg)
         self.Bind(wx.EVT_SPINCTRL, self.on_threads, self.spinctrl_threads)
-        self.Bind(wx.EVT_BUTTON, self.on_outputfile, self.btn_fsave)
+        self.Bind(wx.EVT_BUTTON, self.on_outputdir, self.btn_fsave)
         self.Bind(wx.EVT_CHECKBOX, self.set_Samedest, self.ckbx_dir)
         self.Bind(wx.EVT_TEXT, self.set_Suffix, self.text_suffix)
         self.Bind(wx.EVT_CHECKBOX, self.on_file_to_trash, self.ckbx_trash)
@@ -566,7 +567,7 @@ class SetUp(wx.Dialog):
             self.txtctrl_ffplay.AppendText(self.appdata['ffplay_cmd'])
             self.checkbox_exeFFplay.SetValue(True)
 
-        if not self.appdata['outputfile_samedir']:
+        if not self.appdata['outputdir_asinput']:
             self.lab_suffix.Disable()
             self.text_suffix.Disable()
             self.ckbx_dir.SetValue(False)
@@ -616,18 +617,17 @@ class SetUp(wx.Dialog):
         self.settings['ffthreads'] = f'-threads {sett}'
     # ---------------------------------------------------------------------#
 
-    def on_outputfile(self, event):
+    def on_outputdir(self, event):
         """set up a custom user path for file exporting"""
 
-        dlg = wx.DirDialog(self, _("Set a persistent location to save "
-                                   "exported files"),
-                           self.appdata['outputfile'], wx.DD_DEFAULT_STYLE
+        dlg = wx.DirDialog(self, _("Choose Destination"),
+                           self.appdata['outputdir'], wx.DD_DEFAULT_STYLE
                            )
         if dlg.ShowModal() == wx.ID_OK:
             self.txtctrl_FFpath.Clear()
             getpath = self.appdata['getpath'](dlg.GetPath())
             self.txtctrl_FFpath.AppendText(getpath)
-            self.settings['outputfile'] = getpath
+            self.settings['outputdir'] = getpath
             dlg.Destroy()
     # --------------------------------------------------------------------#
 
@@ -638,14 +638,14 @@ class SetUp(wx.Dialog):
             self.text_suffix.Enable()
             self.btn_fsave.Disable()
             self.txtctrl_FFpath.Disable()
-            self.settings['outputfile_samedir'] = True
+            self.settings['outputdir_asinput'] = True
         else:
             self.text_suffix.Clear()
             self.lab_suffix.Disable()
             self.text_suffix.Disable()
             self.btn_fsave.Enable()
             self.txtctrl_FFpath.Enable()
-            self.settings['outputfile_samedir'] = False
+            self.settings['outputdir_asinput'] = False
             self.settings['filesuffix'] = ""
     # --------------------------------------------------------------------#
 
@@ -699,9 +699,9 @@ class SetUp(wx.Dialog):
         """
         Browse to set a trash folder.
         """
-        dlg = wx.DirDialog(self, _("Choose a new destination for the "
-                                   "files to be trashed"),
-                           self.appdata['user_trashdir'], wx.DD_DEFAULT_STYLE)
+        dlg = wx.DirDialog(self, _("Choose Destination"),
+                           self.appdata['user_trashdir'],
+                           wx.DD_DEFAULT_STYLE)
 
         if dlg.ShowModal() == wx.ID_OK:
             self.txtctrl_trash.Clear()
@@ -716,15 +716,14 @@ class SetUp(wx.Dialog):
     def on_downloadfile(self, event):
         """set up a custom user path for file downloads"""
 
-        dlg = wx.DirDialog(self, _("Set a persistent location to save the "
-                                   "file downloads"),
-                           self.appdata['dirdownload'], wx.DD_DEFAULT_STYLE
+        dlg = wx.DirDialog(self, _("Choose Destination"),
+                           self.appdata['ydlp-outputdir'], wx.DD_DEFAULT_STYLE
                            )
         if dlg.ShowModal() == wx.ID_OK:
             self.txtctrl_YDLpath.Clear()
             getpath = self.appdata['getpath'](dlg.GetPath())
             self.txtctrl_YDLpath.AppendText(getpath)
-            self.settings['dirdownload'] = getpath
+            self.settings['ydlp-outputdir'] = getpath
             dlg.Destroy()
     # ---------------------------------------------------------------------#
 
@@ -785,9 +784,9 @@ class SetUp(wx.Dialog):
 
     def open_path_ffmpeg(self, event):
         """Indicates a new ffmpeg path-name"""
-        with wx.FileDialog(self, _("Choose the {} "
-                                   "executable").format(self.ffmpeg), "", "",
-                           f"ffmpeg binary (*{self.ffmpeg})|*{self.ffmpeg}| "
+        with wx.FileDialog(self, _("{} executable").format(self.ffmpeg),
+                           "", "", "ffmpeg binary "
+                           f"(*{self.ffmpeg})|*{self.ffmpeg}| "
                            f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
 
@@ -827,9 +826,8 @@ class SetUp(wx.Dialog):
 
     def open_path_ffprobe(self, event):
         """Indicates a new ffprobe path-name"""
-        with wx.FileDialog(self, _("Choose the {} "
-                                   "executable").format(self.ffprobe), "", "",
-                           f"ffprobe binary "
+        with wx.FileDialog(self, _("{} executable").format(self.ffprobe),
+                           "", "", "ffprobe binary "
                            f"(*{self.ffprobe})|*{self.ffprobe}| "
                            f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
@@ -870,9 +868,8 @@ class SetUp(wx.Dialog):
 
     def open_path_ffplay(self, event):
         """Indicates a new ffplay path-name"""
-        with wx.FileDialog(self, _("Choose the {} "
-                                   "executable").format(self.ffplay), "", "",
-                           f"ffplay binary "
+        with wx.FileDialog(self, _("{} executable").format(self.ffplay),
+                           "", "", "ffplay binary "
                            f"(*{self.ffplay})|*{self.ffplay}| "
                            f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
