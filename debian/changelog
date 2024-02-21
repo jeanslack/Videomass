@@ -40,8 +40,12 @@ videomass (5.0.5-1) UNRELEASED; urgency=medium
   * New version (v6.5) of the configuration file is created.
   * [Concatenate] Removed `From an image sequence to a video file`
     > use `Still Image Maker` instead.
+  * [A/V Conversions] improved Resize filter preview to ensure correct size
+    in default image viewer (use `time.sleep(0.5)`).
+  * Updated `AV1-libsvtav1` preset with a compatible container (mkv not mp4).
+  * Update presets version to v0.20 .
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 20 Feb 2024 17:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 21 Feb 2024 22:00:00 +0200
 
 videomass (5.0.4-1) UNRELEASED; urgency=high
 

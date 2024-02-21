@@ -1,4 +1,4 @@
-### This preset is already included on [Presets_supplied_with_Videomass](https://github.com/jeanslack/Videomass-presets/tree/master/Presets_supplied_with_Videomass)   
+### This preset is already included on [Videomass Default Presets](https://github.com/jeanslack/Videomass-presets/tree/master/Videomass%20Default%20Presets)
 
 As suggested in this [issue](https://github.com/jeanslack/Videomass-presets/issues/2), I have created a new preset for Videomass that allows you to encode/convert video to MPEG2 in the best possible quality for DVD making. The original source and full discussion can be found in this forum: https://forum.doom9.org/showthread.php?t=174620
 
