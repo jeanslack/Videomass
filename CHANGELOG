@@ -47,6 +47,8 @@ Tue, 20 Feb 2024 V.5.0.5
   * Menu bars reordered to the relevant items.
   * Translation strings have been updated and simplified.
   * New version (v6.5) of the configuration file is created.
+  * [Concatenate] Removed `From an image sequence to a video file`
+    > use `Still Image Maker` instead.
 
 +------------------------------------+
 Wed, 24 Jan 2024 V.5.0.4

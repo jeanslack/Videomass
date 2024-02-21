@@ -1798,7 +1798,7 @@ class AV_Conv(wx.Panel):
 
         self.update_options()  # update
         checking = check_files(self.parent.file_src,
-                               self.parent.outputpath,
+                               self.parent.outputdir,
                                self.parent.same_destin,
                                self.parent.suffix,
                                self.opt["OutputFormat"],

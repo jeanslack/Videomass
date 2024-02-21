@@ -509,7 +509,7 @@ class VideoToSequence(wx.Panel):
             return
 
         checking = check_files((clicked,),
-                               self.parent.outputpath,
+                               self.parent.outputdir,
                                self.parent.same_destin,
                                self.parent.suffix,
                                self.cmb_frmt.GetValue(),

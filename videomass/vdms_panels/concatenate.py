@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.20.2023
+Rev: Feb.21.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -117,39 +117,6 @@ class Conc_Demuxer(wx.Panel):
         sizer.Add((20, 20))
         boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
         sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)
-        sizFormat = wx.BoxSizer(wx.HORIZONTAL)
-        boxctrl.Add(sizFormat)
-        siz_pict = wx.BoxSizer(wx.HORIZONTAL)
-        boxctrl.Add(siz_pict)
-        self.ckbx_pict = wx.CheckBox(self, wx.ID_ANY,
-                                     _('From an image sequence '
-                                       'to a video file')
-                                     )
-        siz_pict.Add(self.ckbx_pict, 0, wx.ALL | wx.EXPAND, 5)
-        self.lbl_pict = wx.StaticText(self, wx.ID_ANY,
-                                      label=_("Duration:")
-                                      )
-        siz_pict.Add(self.lbl_pict, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.lbl_pict.Disable()
-        self.spin_pict = wx.SpinCtrl(self, wx.ID_ANY, "0", min=1,
-                                     max=100, size=(-1, -1),
-                                     style=wx.TE_PROCESS_ENTER
-                                     )
-        siz_pict.Add(self.spin_pict, 0, wx.ALL, 5)
-        self.spin_pict.Disable()
-        self.lbl_frmt = wx.StaticText(self, wx.ID_ANY,
-                                      label=_("Output format:")
-                                      )
-        siz_pict.Add(self.lbl_frmt, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.lbl_frmt.Disable()
-
-        self.cmb_pict = wx.ComboBox(self, wx.ID_ANY, choices=['mkv', 'mp4'],
-                                    size=(160, -1), style=wx.CB_DROPDOWN
-                                    | wx.CB_READONLY,
-                                    )
-        siz_pict.Add(self.cmb_pict, 0, wx.ALL, 5)
-        self.cmb_pict.SetSelection(0)
-        self.cmb_pict.Disable()
         sizer.Add((20, 20))
         sizer_link2 = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_link2)
@@ -193,12 +160,7 @@ class Conc_Demuxer(wx.Panel):
             self.lbl_msg2.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             self.lbl_msg3.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
-        tip = (_('Set the time interval between images in seconds '
-                 '(from 1 to 100 sec.), default is 1 second'))
-        self.spin_pict.SetToolTip(tip)
-
         self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_help)
-        self.Bind(wx.EVT_CHECKBOX, self.on_pictures, self.ckbx_pict)
     # ---------------------------------------------------------
 
     def on_help(self, event):
@@ -221,23 +183,6 @@ class Conc_Demuxer(wx.Panel):
         win.Popup()
     # ---------------------------------------------------------
 
-    def on_pictures(self, event):
-        """
-        Enables controls to create a video file from a
-        sequence of images using Concat Demuxer.
-        """
-        if self.ckbx_pict.IsChecked():
-            self.lbl_pict.Enable()
-            self.spin_pict.Enable()
-            self.lbl_frmt.Enable()
-            self.cmb_pict.Enable()
-        else:
-            self.lbl_pict.Disable()
-            self.spin_pict.Disable()
-            self.lbl_frmt.Disable()
-            self.cmb_pict.Disable()
-    # ---------------------------------------------------------
-
     def on_start(self):
         """
         Builds FFmpeg command arguments
@@ -252,34 +197,19 @@ class Conc_Demuxer(wx.Panel):
             return
 
         textstr = []
-        if self.ckbx_pict.IsChecked():
-            ext = self.cmb_pict.GetValue()
-            duration = self.spin_pict.GetValue() * len(self.parent.file_src)
-            self.duration = duration * 1000
-            for f in self.parent.file_src:
-                escaped = f.replace(r"'", r"'\''")  # need escaping some chars
-                textstr.append(f"file '{escaped}'\nduration "
-                               f"{self.spin_pict.GetValue()}"
-                               )
-            textstr.append(f"file '{self.parent.file_src[-1]}'")
-            self.args = (f'"{ftext}" -fps_mode vfr -pix_fmt yuv420p '
-                         f'-profile:v baseline -map 0:v? -map_chapters 0 '
-                         f'-map 0:s? -map 0:a? -map_metadata 0'
-                         )
-        else:
-            ext = os.path.splitext(self.parent.file_src[0])[1].split('.')[1]
-            self.duration = sum(self.parent.duration)
-            for f in self.parent.file_src:
-                escaped = f.replace(r"'", r"'\''")  # need escaping some chars
-                textstr.append(f"file '{escaped}'")
-            self.args = (f'"{ftext}" -map 0:v? -map_chapters 0 '
-                         f'-map 0:s? -map 0:a? -map_metadata 0 -c copy')
+        ext = os.path.splitext(self.parent.file_src[0])[1].split('.')[1]
+        self.duration = sum(self.parent.duration)
+        for f in self.parent.file_src:
+            escaped = f.replace(r"'", r"'\''")  # need escaping some chars
+            textstr.append(f"file '{escaped}'")
+        self.args = (f'"{ftext}" -map 0:v? -map_chapters 0 '
+                        f'-map 0:s? -map 0:a? -map_metadata 0 -c copy')
 
         with open(ftext, 'w', encoding='utf8') as txt:
             txt.write('\n'.join(textstr))
 
         checking = check_files((fsource[0],),
-                               self.parent.outputpath,
+                               self.parent.outputdir,
                                self.parent.same_destin,
                                self.parent.suffix,
                                ext,

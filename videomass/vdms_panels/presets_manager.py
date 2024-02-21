@@ -892,7 +892,7 @@ class PrstPan(wx.Panel):
         extlst = self.array[4]
         file_src = supported_formats(extlst, self.parent.file_src)
         checking = check_files(file_src,
-                               self.parent.outputpath,
+                               self.parent.outputdir,
                                self.parent.same_destin,
                                self.parent.suffix,
                                outext,
