@@ -1,19 +1,13 @@
-# **Videomass** is a cross-platform GUI for FFmpeg and yt-dlp.
+# **Videomass**
 [![Image](https://img.shields.io/static/v1?label=python&logo=python&message=3.7%20|%203.8%20|%203.9%20|%203.10|%203.11&color=blue)](https://www.python.org/downloads/)
 [![Image](https://img.shields.io/badge/license-GPLv3-orange)](https://github.com/jeanslack/Videomass/blob/master/LICENSE)
 [![Python application](https://github.com/jeanslack/Videomass/actions/workflows/tests.yml/badge.svg)](https://github.com/jeanslack/Videomass/actions/workflows/tests.yml)
 
-Videomass is a powerful, multitasking and cross-platform graphical user interface 
-(GUI) for [FFmpeg](https://www.ffmpeg.org/) and [yt-dlp](https://github.com/yt-dlp/yt-dlp). 
-It offers a wide range of features and functions, making it a comprehensive software solution. 
+It is a FLOSS, powerful, multitasking and cross-platform graphical user interface (GUI) for [FFmpeg](https://www.ffmpeg.org/) and [yt-dlp](https://github.com/yt-dlp/yt-dlp). Designed for advanced and beginner users, it offers a wide range of features and functions, making it a comprehensive software solution.
 
-Videomass is [Free (libre) Software](https://en.wikipedia.org/wiki/Free_software), 
-created and maintained by [Gianluca (jeanslack) Pernigotto](https://github.com/jeanslack); 
-it was written in [Python3](https://www.python.org/) using the 
-[wxPython4](https://www.wxpython.org/) toolkit; it is cross-platform and works on 
-Linux, MacOs, Windows and FreeBSD.    
-
-The Videomass logo and artwork were created by [Gianluca (jeanslack) Pernigotto](https://github.com/jeanslack)  
+Videomass is [Free (libre) Software](https://en.wikipedia.org/wiki/Free_software),
+written in [Python3](https://www.python.org/) using the
+[wxPython Phoenix](https://www.wxpython.org/) toolkit; it works on Linux, MacOs, Windows and FreeBSD.
 
 **[Changelog](https://github.com/jeanslack/Videomass/blob/master/CHANGELOG)**   
 **[Features](https://jeanslack.github.io/Videomass/features.html)**   
@@ -29,10 +23,10 @@ web page, which provides the information required to install Videomass on
 each operating system.
 
 ### Requirements
-- **[Python >= 3.7.0](https://www.python.org/)**
+- **[Python >= 3.7.0 < 3.12.0](https://www.python.org/)**
 - **[wxPython-Phoenix >= 4.1.1](https://wxpython.org/)**
 - **[PyPubSub >= 4.0.3](https://pypi.org/project/PyPubSub/)**
-- **[requests >= 2.21.0](https://pypi.org/project/requests/)**
+- **[requests >= 2.26.0](https://pypi.org/project/requests/)**
 - **[ffmpeg >=5.1](https://ffmpeg.org/)**
 - **[ffprobe >=5.1](https://ffmpeg.org/ffprobe.html)** (usually bundled with ffmpeg)
 - **[ffplay >=5.1](http://ffmpeg.org/ffplay.html)** (usually bundled with ffmpeg)

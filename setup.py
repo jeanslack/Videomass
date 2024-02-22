@@ -47,8 +47,8 @@ def source_build():
         inst_req = ["wxpython>=4.1.1; platform_system=='Windows' or "
                     "platform_system=='Darwin'",
                     "PyPubSub>=4.0.3",
-                    "yt_dlp>=2021.9.2",
-                    "requests>=2.21.0",
+                    "yt_dlp>=2023.03.04",
+                    "requests>=2.26.0",
                     ]
         setup_req = ["setuptools>=47.1.1",
                      "wheel>=0.34.2",
@@ -62,7 +62,7 @@ def source_build():
     else:  # e.g. to make a Debian source package, include wxpython.
         inst_req = ["wxpython>=4.1.1",
                     "PyPubSub>=4.0.3",
-                    "requests>=2.21.0",
+                    "requests>=2.26.0",
                     ]
         setup_req = []
         long_descript = drel[1]
@@ -116,7 +116,7 @@ def source_build():
                                 },
           include_package_data=True,
           zip_safe=False,
-          python_requires=">=3.7.0, <4.0.0",
+          python_requires=">=3.7.0, <3.12.0",
           install_requires=inst_req,
           setup_requires=setup_req,
           entry_points={'gui_scripts':
