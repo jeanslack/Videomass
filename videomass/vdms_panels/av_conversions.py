@@ -412,7 +412,7 @@ class AV_Conv(wx.Panel):
         sizer_Vfilter.Add(self.btn_vidstab, 0, wx.ALL | wx.EXPAND, 5)
 
         self.btn_coloreq = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     "Equalize", size=(-1, -1))
+                                     _("Equalize"), size=(-1, -1))
         self.btn_coloreq.SetBitmap(bmpcoloreq, wx.LEFT)
         sizer_Vfilter.Add(self.btn_coloreq, 0, wx.ALL | wx.EXPAND, 5)
 
@@ -545,33 +545,33 @@ class AV_Conv(wx.Panel):
         grid_ebu = wx.FlexGridSizer(3, 2, 0, 0)
         sizer_a_normaliz.Add(self.ebupanel, 0, wx.ALL | wx.EXPAND, 5)
         self.lab_i = wx.StaticText(self.ebupanel, wx.ID_ANY, (
-            _("Set integrated loudness target:")))
+            _("Set (I) integrated loudness target")))
         grid_ebu.Add(self.lab_i, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.spin_i = FS.FloatSpin(self.ebupanel, wx.ID_ANY,
                                    min_val=-70.0, max_val=-5.0,
-                                   increment=0.5, value=-24.0,
+                                   increment=0.5, value=-16.0,
                                    agwStyle=FS.FS_LEFT, size=(120, -1)
                                    )
         self.spin_i.SetFormat("%f"), self.spin_i.SetDigits(1)
         grid_ebu.Add(self.spin_i, 0, wx.ALL, 5)
 
         self.lab_tp = wx.StaticText(self.ebupanel, wx.ID_ANY, (
-                                    _("Set maximum true peak:")))
+                                    _("Set (TP) maximum true peak")))
         grid_ebu.Add(self.lab_tp, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.spin_tp = FS.FloatSpin(self.ebupanel, wx.ID_ANY,
                                     min_val=-9.0, max_val=0.0,
-                                    increment=0.5, value=-2.0,
+                                    increment=0.5, value=-1.5,
                                     agwStyle=FS.FS_LEFT, size=(120, -1)
                                     )
         self.spin_tp.SetFormat("%f"), self.spin_tp.SetDigits(1)
         grid_ebu.Add(self.spin_tp, 0, wx.ALL, 5)
 
         self.lab_lra = wx.StaticText(self.ebupanel, wx.ID_ANY, (
-                                     _("Set loudness range target:")))
+                                     _("Set (LRA) loudness range target")))
         grid_ebu.Add(self.lab_lra, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.spin_lra = FS.FloatSpin(self.ebupanel, wx.ID_ANY,
                                      min_val=1.0, max_val=20.0,
-                                     increment=0.5, value=7.0,
+                                     increment=0.5, value=11.0,
                                      agwStyle=FS.FS_LEFT, size=(120, -1)
                                      )
         self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
@@ -2340,7 +2340,7 @@ class AV_Conv(wx.Panel):
         with wx.FileDialog(
                 None, _("Choose a Videomass preset..."),
                 defaultDir=os.path.join(self.appdata['confdir'], 'presets'),
-                wildcard="Videomass presets (*.prst;)|*.prst;",
+                wildcard="Videomass presets (*.json;)|*.json;",
                 style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
 
             if fileDialog.ShowModal() == wx.ID_CANCEL:

@@ -82,8 +82,7 @@ class FFmpegGenericTask(Thread):
 
         """
         cmd = (f'"{FFmpegGenericTask.appdata["ffmpeg_cmd"]}" '
-               f'{FFmpegGenericTask.appdata["ffmpegloglev"]} '
-               f'{FFmpegGenericTask.appdata["ffmpeg+params"]} '
+               f'{FFmpegGenericTask.appdata["ffmpeg_default_args"]} '
                f'{self.args}'
                )
         self.logwrite(f'From: {self.procname}\n{cmd}\n')

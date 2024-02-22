@@ -531,12 +531,12 @@ class SetUp(wx.Dialog):
             self.btn_trash.Disable()
 
         for strs in range(self.rdbFFplay.GetCount()):
-            if (self.appdata['ffplayloglev'].split()[1] in
+            if (self.appdata['ffplay_loglev'].split()[1] in
                self.rdbFFplay.GetString(strs).split()[0]):
                 self.rdbFFplay.SetSelection(strs)
 
         for strs in range(self.rdbFFmpeg.GetCount()):
-            if (self.appdata['ffmpegloglev'].split()[1] in
+            if (self.appdata['ffmpeg_loglev'].split()[1] in
                self.rdbFFmpeg.GetString(strs).split()[0]):
                 self.rdbFFmpeg.SetSelection(strs)
 
@@ -748,13 +748,13 @@ class SetUp(wx.Dialog):
     def logging_ffplay(self, event):
         """specifies loglevel type for ffplay."""
         strn = self.rdbFFplay.GetStringSelection().split()[0]
-        self.settings['ffplayloglev'] = f'-loglevel {strn}'
+        self.settings['ffplay_loglev'] = f'-loglevel {strn}'
     # --------------------------------------------------------------------#
 
     def logging_ffmpeg(self, event):
         """specifies loglevel type for ffmpeg"""
         strn = self.rdbFFmpeg.GetStringSelection().split()[0]
-        self.settings['ffmpegloglev'] = f'-loglevel {strn}'
+        self.settings['ffmpeg_loglev'] = f'-loglevel {strn}'
     # --------------------------------------------------------------------#
 
     def exeFFmpeg(self, event):

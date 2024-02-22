@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-20 17:54+0100\n"
-"PO-Revision-Date: 2024-02-20 17:56+0100\n"
+"POT-Creation-Date: 2024-02-22 22:47+0100\n"
+"PO-Revision-Date: 2024-02-22 22:50+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -102,7 +102,7 @@ msgstr ""
 msgid "Confirm Settings"
 msgstr "Conferma Impostazioni"
 
-#: ../vdms_dialogs/filter_crop.py:227 ../vdms_dialogs/filter_scale.py:108
+#: ../vdms_dialogs/filter_crop.py:227 ../vdms_dialogs/filter_scale.py:109
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "Dimensione sorgente: {0} x {1} pixel"
@@ -125,7 +125,7 @@ msgstr "Carica"
 msgid "Cropping area selection "
 msgstr "Selezione area di ritaglio "
 
-#: ../vdms_dialogs/filter_crop.py:260 ../vdms_dialogs/filter_scale.py:120
+#: ../vdms_dialogs/filter_crop.py:260 ../vdms_dialogs/filter_scale.py:121
 msgid "Height"
 msgstr "Altezza"
 
@@ -133,12 +133,12 @@ msgstr "Altezza"
 msgid "Center"
 msgstr "Centro"
 
-#: ../vdms_dialogs/filter_crop.py:291 ../vdms_dialogs/filter_scale.py:120
+#: ../vdms_dialogs/filter_crop.py:291 ../vdms_dialogs/filter_scale.py:121
 msgid "Width"
 msgstr "Larghezza"
 
 #: ../vdms_dialogs/filter_crop.py:305 ../vdms_dialogs/filter_deinterlace.py:209
-#: ../vdms_dialogs/filter_denoisers.py:110 ../vdms_dialogs/filter_scale.py:209
+#: ../vdms_dialogs/filter_denoisers.py:110 ../vdms_dialogs/filter_scale.py:210
 #: ../vdms_dialogs/filter_stab.py:316 ../vdms_dialogs/filter_transpose.py:105
 #: ../vdms_dialogs/filter_colorcorrection.py:187
 #: ../vdms_miniframes/timeline.py:261 ../vdms_miniframes/timeline.py:280
@@ -176,7 +176,7 @@ msgstr "Opzioni Avanzate"
 #: ../vdms_dialogs/filter_deinterlace.py:57
 #: ../vdms_panels/av_conversions.py:402
 msgid "Deinterlace"
-msgstr "Deinterlacciamento"
+msgstr "Deinterlaccia"
 
 #: ../vdms_dialogs/filter_deinterlace.py:59
 msgid "Interlace"
@@ -312,7 +312,7 @@ msgstr ""
 "ferme le immagini statiche. Dovrebbe migliorare comprensibilmente la qualità "
 "visiva."
 
-#: ../vdms_dialogs/filter_scale.py:75 ../vdms_dialogs/ffmpeg_help.py:117
+#: ../vdms_dialogs/filter_scale.py:76 ../vdms_dialogs/ffmpeg_help.py:117
 #: ../vdms_dialogs/shownormlist.py:98 ../vdms_dialogs/shownormlist.py:107
 #: ../vdms_dialogs/shownormlist.py:116 ../vdms_miniframes/timeline.py:262
 #: ../vdms_miniframes/timeline.py:282 ../vdms_panels/concatenate.py:112
@@ -321,65 +321,65 @@ msgstr ""
 msgid "Read me"
 msgstr "Leggimi"
 
-#: ../vdms_dialogs/filter_scale.py:80
+#: ../vdms_dialogs/filter_scale.py:81
 msgid "View result"
 msgstr "Visualizza risultato"
 
-#: ../vdms_dialogs/filter_scale.py:84
+#: ../vdms_dialogs/filter_scale.py:85
 msgid "New size in pixels"
 msgstr "Nuova dimensione in pixel"
 
-#: ../vdms_dialogs/filter_scale.py:88
+#: ../vdms_dialogs/filter_scale.py:89
 msgid "Width:"
 msgstr "Larghezza:"
 
-#: ../vdms_dialogs/filter_scale.py:98
+#: ../vdms_dialogs/filter_scale.py:99
 msgid "Height:"
 msgstr "Altezza:"
 
-#: ../vdms_dialogs/filter_scale.py:114
+#: ../vdms_dialogs/filter_scale.py:115
 msgid "Constrain proportions (keep aspect ratio)"
 msgstr "Vincola le proporzioni (mantieni l'aspetto di origine)"
 
-#: ../vdms_dialogs/filter_scale.py:119
+#: ../vdms_dialogs/filter_scale.py:120
 msgid "Which dimension to adjust?"
 msgstr "Quale dimensione regolare?"
 
-#: ../vdms_dialogs/filter_scale.py:128
+#: ../vdms_dialogs/filter_scale.py:129
 msgid "Aspect Ratio"
 msgstr "Proporzioni"
 
-#: ../vdms_dialogs/filter_scale.py:131
+#: ../vdms_dialogs/filter_scale.py:132
 msgid "Setdar filter (display aspect ratio) example 16/9, 4/3 "
 msgstr "Filtro Setdar (rapporto di aspetto del display) esempio 16/9, 4/3 "
 
-#: ../vdms_dialogs/filter_scale.py:136 ../vdms_dialogs/filter_scale.py:170
+#: ../vdms_dialogs/filter_scale.py:137 ../vdms_dialogs/filter_scale.py:171
 msgid "Numerator"
 msgstr "Numeratore"
 
-#: ../vdms_dialogs/filter_scale.py:161 ../vdms_dialogs/filter_scale.py:195
+#: ../vdms_dialogs/filter_scale.py:162 ../vdms_dialogs/filter_scale.py:196
 msgid "Denominator"
 msgstr "Denominatore"
 
-#: ../vdms_dialogs/filter_scale.py:165
+#: ../vdms_dialogs/filter_scale.py:166
 msgid "Setsar filter (sample aspect ratio) example 1/1"
 msgstr "Filtro Setsar (rapporto di aspetto del campione) esempio 1/1"
 
-#: ../vdms_dialogs/filter_scale.py:216
+#: ../vdms_dialogs/filter_scale.py:217
 msgid "Resize Tool"
 msgstr "Strumento ridimensionamento"
 
-#: ../vdms_dialogs/filter_scale.py:217
+#: ../vdms_dialogs/filter_scale.py:218
 msgid "Scale filter, set to 0 to disable"
 msgstr "Filtro scala, per la disabilitazione impostare a 0"
 
-#: ../vdms_dialogs/filter_scale.py:220
+#: ../vdms_dialogs/filter_scale.py:221
 msgid "Display Aspect Ratio. Set to 0 to disable"
 msgstr ""
 "Visualizzazione del rapporto di aspetto (proporzioni). Impostare a 0 per "
 "disabilitare"
 
-#: ../vdms_dialogs/filter_scale.py:223
+#: ../vdms_dialogs/filter_scale.py:224
 msgid ""
 "Sample (aka Pixel) Aspect Ratio.\n"
 "Set to 0 to disable"
@@ -387,7 +387,7 @@ msgstr ""
 "Rapporto di aspetto campione (noto anche come pixel).\n"
 "Impostare a 0 per disabilitare"
 
-#: ../vdms_dialogs/filter_scale.py:365
+#: ../vdms_dialogs/filter_scale.py:366
 msgid ""
 "If you want to keep the aspect ratio, select \"Constrain proportions\" below "
 "and\n"
@@ -665,7 +665,7 @@ msgid "Video Stabilizer Tool"
 msgstr "Strumento stabilizzatore video"
 
 #: ../vdms_dialogs/filter_stab.py:538 ../vdms_io/io_tools.py:57
-#: ../vdms_io/io_tools.py:117
+#: ../vdms_io/io_tools.py:116
 msgid "Videomass - Loading..."
 msgstr "Caricamento in corso..."
 
@@ -1191,8 +1191,8 @@ msgstr "Impostazioni"
 
 #: ../vdms_dialogs/preferences.py:623 ../vdms_dialogs/preferences.py:702
 #: ../vdms_dialogs/preferences.py:719 ../vdms_main/main_frame.py:824
-#: ../vdms_main/main_frame.py:1002 ../vdms_panels/presets_manager.py:565
-#: ../vdms_panels/presets_manager.py:593 ../vdms_ytdlp/main_ytdlp.py:419
+#: ../vdms_main/main_frame.py:1002 ../vdms_panels/presets_manager.py:564
+#: ../vdms_panels/presets_manager.py:592 ../vdms_ytdlp/main_ytdlp.py:419
 msgid "Choose Destination"
 msgstr "Scegli la Destinazione"
 
@@ -1910,12 +1910,12 @@ msgstr ""
 "Attendi....\n"
 "Recupero i dati richiesti."
 
-#: ../vdms_io/io_tools.py:92
+#: ../vdms_io/io_tools.py:91
 #, python-format
 msgid "File does not exist or is invalid:  %s"
 msgstr "File invalido o non esistente:  %s"
 
-#: ../vdms_io/io_tools.py:118
+#: ../vdms_io/io_tools.py:117
 msgid ""
 "Wait....\n"
 "Audio peak analysis."
@@ -1923,7 +1923,7 @@ msgstr ""
 "Attendi....\n"
 "Analisi livello di picco."
 
-#: ../vdms_io/io_tools.py:225
+#: ../vdms_io/io_tools.py:224
 msgid "Videomass - Downloading..."
 msgstr "Download in corso..."
 
@@ -2583,6 +2583,10 @@ msgstr "Elimina rumore"
 msgid "Stabilize"
 msgstr "Stabilizza"
 
+#: ../vdms_panels/av_conversions.py:415
+msgid "Equalize"
+msgstr "Equalizza"
+
 #: ../vdms_panels/av_conversions.py:434
 msgid "Audio Encoder"
 msgstr "Codificatore Audio"
@@ -2624,16 +2628,16 @@ msgid "Target level:"
 msgstr "Livello target:"
 
 #: ../vdms_panels/av_conversions.py:548
-msgid "Set integrated loudness target:"
-msgstr "Imposta target di loudness integrato:"
+msgid "Set (I) integrated loudness target"
+msgstr "Imposta il target integrato di loudness (I)"
 
 #: ../vdms_panels/av_conversions.py:559
-msgid "Set maximum true peak:"
-msgstr "Imposta il picco reale massimo:"
+msgid "Set (TP) maximum true peak"
+msgstr "Imposta il picco reale massimo (TP)"
 
 #: ../vdms_panels/av_conversions.py:570
-msgid "Set loudness range target:"
-msgstr "Imposta un target range di loudness:"
+msgid "Set (LRA) loudness range target"
+msgstr "Imposta un intervallo come target di loudness (LRA)"
 
 #: ../vdms_panels/av_conversions.py:592
 msgid ""
@@ -2873,12 +2877,12 @@ msgstr "{} file in coda"
 msgid "Off"
 msgstr "Spento"
 
-#: ../vdms_panels/av_conversions.py:2238 ../vdms_panels/presets_manager.py:970
+#: ../vdms_panels/av_conversions.py:2238 ../vdms_panels/presets_manager.py:969
 #: ../vdms_panels/video_to_sequence.py:590
 msgid "Unset"
 msgstr "Non settato"
 
-#: ../vdms_panels/av_conversions.py:2241 ../vdms_panels/presets_manager.py:973
+#: ../vdms_panels/av_conversions.py:2241 ../vdms_panels/presets_manager.py:972
 #: ../vdms_panels/video_to_sequence.py:593
 msgid "start  {} | duration  {}"
 msgstr "inizio  {} | durata  {}"
@@ -3155,37 +3159,17 @@ msgstr ""
 "frequenza di\n"
 "  campionamento e gli stessi codec."
 
-#: ../vdms_panels/concatenate.py:125
-msgid "From an image sequence to a video file"
-msgstr "Da una sequenza di immagini a un file video"
-
-#: ../vdms_panels/concatenate.py:130
-msgid "Duration:"
-msgstr "Durata:"
-
-#: ../vdms_panels/concatenate.py:141 ../vdms_panels/video_to_sequence.py:112
-msgid "Output format:"
-msgstr "Formato in uscita:"
-
-#: ../vdms_panels/concatenate.py:157
+#: ../vdms_panels/concatenate.py:124
 msgid "For more details, see the Videomass User Guide:"
 msgstr "Per maggiori dettagli, consultare la Guida Utente Videomass:"
 
-#: ../vdms_panels/concatenate.py:177 ../vdms_panels/sequence_to_video.py:201
+#: ../vdms_panels/concatenate.py:144 ../vdms_panels/sequence_to_video.py:201
 #: ../vdms_panels/video_to_sequence.py:174
 msgid "For more information, visit the official FFmpeg documentation:"
 msgstr ""
 "Per ulteriori informazioni, visita la documentazione ufficiale di FFmpeg:"
 
-#: ../vdms_panels/concatenate.py:196
-msgid ""
-"Set the time interval between images in seconds (from 1 to 100 sec.), "
-"default is 1 second"
-msgstr ""
-"Imposta l'intervallo di tempo tra le immagini in secondi (da 1 a 100 sec.), "
-"il valore predefinito è 1 secondo"
-
-#: ../vdms_panels/concatenate.py:251 ../vdms_panels/sequence_to_video.py:458
+#: ../vdms_panels/concatenate.py:196 ../vdms_panels/sequence_to_video.py:458
 #: ../vdms_panels/sequence_to_video.py:464
 #: ../vdms_panels/sequence_to_video.py:558
 #: ../vdms_panels/sequence_to_video.py:568
@@ -3195,7 +3179,7 @@ msgstr ""
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: ../vdms_panels/concatenate.py:327
+#: ../vdms_panels/concatenate.py:257
 msgid ""
 "File to concatenate\n"
 "Output filename\n"
@@ -3541,10 +3525,10 @@ msgstr ""
 "\n"
 "Vuoi eseguire questo aggiornamento adesso?"
 
-#: ../vdms_panels/presets_manager.py:345 ../vdms_panels/presets_manager.py:532
-#: ../vdms_panels/presets_manager.py:572 ../vdms_panels/presets_manager.py:636
-#: ../vdms_panels/presets_manager.py:670 ../vdms_panels/presets_manager.py:844
-#: ../vdms_panels/presets_manager.py:875 ../vdms_ytdlp/youtubedl_ui.py:636
+#: ../vdms_panels/presets_manager.py:345 ../vdms_panels/presets_manager.py:531
+#: ../vdms_panels/presets_manager.py:571 ../vdms_panels/presets_manager.py:635
+#: ../vdms_panels/presets_manager.py:669 ../vdms_panels/presets_manager.py:843
+#: ../vdms_panels/presets_manager.py:874 ../vdms_ytdlp/youtubedl_ui.py:636
 #: ../vdms_ytdlp/youtubedl_ui.py:642
 msgid "Please confirm"
 msgstr "Prego confermare"
@@ -3591,7 +3575,7 @@ msgstr ""
 "\n"
 "È stato creato una nuova preimpostazione vuota."
 
-#: ../vdms_panels/presets_manager.py:529
+#: ../vdms_panels/presets_manager.py:528
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
 "\n"
@@ -3602,7 +3586,7 @@ msgstr ""
 "Sarà spostata nella sotto-cartella \"Removals\" dentro la cartella delle "
 "preimpostazioni."
 
-#: ../vdms_panels/presets_manager.py:540
+#: ../vdms_panels/presets_manager.py:539
 msgid ""
 "{}\n"
 "\n"
@@ -3612,32 +3596,32 @@ msgstr ""
 "\n"
 "Spiacente, rimozione non riuscita, impossibile procedere.."
 
-#: ../vdms_panels/presets_manager.py:550
+#: ../vdms_panels/presets_manager.py:549
 #, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
 msgstr "La preimpostazione \"{0}\" è stata rimossa con successo"
 
-#: ../vdms_panels/presets_manager.py:570
+#: ../vdms_panels/presets_manager.py:569
 msgid "A file with this name already exists, do you want to overwrite it?"
 msgstr "Esiste già un file con lo stesso nome, vuoi sovrascriverlo?"
 
-#: ../vdms_panels/presets_manager.py:583
+#: ../vdms_panels/presets_manager.py:582
 msgid "The preset was exported successfully"
 msgstr "La preimpostazione è stata esportata con successo"
 
-#: ../vdms_panels/presets_manager.py:602
+#: ../vdms_panels/presets_manager.py:601
 msgid "All presets have been exported successfully"
 msgstr "Tutte le preimpostazioni sono state esportate correttamente"
 
-#: ../vdms_panels/presets_manager.py:613
+#: ../vdms_panels/presets_manager.py:612
 msgid "Import a new preset"
 msgstr "Importa una nuova preimpostazione"
 
-#: ../vdms_panels/presets_manager.py:624
+#: ../vdms_panels/presets_manager.py:623
 msgid "Error, invalid preset: \"{}\""
 msgstr "Errore, preimpostazione non valida: \"{}\""
 
-#: ../vdms_panels/presets_manager.py:632
+#: ../vdms_panels/presets_manager.py:631
 msgid ""
 "This preset already exists and is about to be updated. Don't worry, it will "
 "keep all your saved profiles.\n"
@@ -3649,11 +3633,11 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:649
+#: ../vdms_panels/presets_manager.py:648
 msgid "A new preset was successfully imported"
 msgstr "Una nuova preimpostazione è stata importata con successo"
 
-#: ../vdms_panels/presets_manager.py:667
+#: ../vdms_panels/presets_manager.py:666
 msgid ""
 "This will update the presets database. Don't worry, it will keep all your "
 "saved profiles.\n"
@@ -3665,15 +3649,15 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:674
+#: ../vdms_panels/presets_manager.py:673
 msgid "Import a new presets folder"
 msgstr "Importa una nuova cartella delle preimpostazioni"
 
-#: ../vdms_panels/presets_manager.py:707
+#: ../vdms_panels/presets_manager.py:706
 msgid "The presets database has been successfully updated"
 msgstr "Il database delle preimpostazioni è stato aggiornato con successo"
 
-#: ../vdms_panels/presets_manager.py:718
+#: ../vdms_panels/presets_manager.py:717
 msgid ""
 "Be careful! The selected preset will be overwritten with the default one. "
 "Your profiles may be deleted!\n"
@@ -3685,15 +3669,15 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:722 ../vdms_panels/presets_manager.py:750
+#: ../vdms_panels/presets_manager.py:721 ../vdms_panels/presets_manager.py:749
 msgid "Warning"
 msgstr "Avvertimento"
 
-#: ../vdms_panels/presets_manager.py:736
+#: ../vdms_panels/presets_manager.py:735
 msgid "Successful recovery"
 msgstr "Ripristino riuscito"
 
-#: ../vdms_panels/presets_manager.py:745
+#: ../vdms_panels/presets_manager.py:744
 msgid ""
 "Be careful! This action will restore all presets to default ones. Your "
 "profiles may be deleted!\n"
@@ -3712,20 +3696,20 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:767
+#: ../vdms_panels/presets_manager.py:766
 msgid "All default presets have been successfully recovered"
 msgstr ""
 "Tutte le preimpostazioni predefinite sono state ripristinate con successo"
 
-#: ../vdms_panels/presets_manager.py:787
+#: ../vdms_panels/presets_manager.py:786
 msgid "Create a new profile on \"{}\" preset"
 msgstr "Crea un nuovo profilo sulla preimpostazione \"{}\""
 
-#: ../vdms_panels/presets_manager.py:805
+#: ../vdms_panels/presets_manager.py:804
 msgid "Edit profile of the \"{}\" preset"
 msgstr "Modifica il profilo sul preset \"{}\""
 
-#: ../vdms_panels/presets_manager.py:842
+#: ../vdms_panels/presets_manager.py:841
 msgid ""
 "Are you sure you want to delete the selected profile? It will no longer be "
 "possible to recover it."
@@ -3733,11 +3717,11 @@ msgstr ""
 "Sei sicuro di voler eliminare il profilo selezionato? non sarà più possibile "
 "recuperarlo."
 
-#: ../vdms_panels/presets_manager.py:862
+#: ../vdms_panels/presets_manager.py:861
 msgid "First select a profile in the list"
 msgstr "Dovresti selezionare un profilo nella lista"
 
-#: ../vdms_panels/presets_manager.py:870
+#: ../vdms_panels/presets_manager.py:869
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
@@ -3745,11 +3729,11 @@ msgstr ""
 "Il comando del profilo selezionato è stato cambiato manualmente.\n"
 "Vuoi applicarlo durante il processo di conversione?"
 
-#: ../vdms_panels/presets_manager.py:880
+#: ../vdms_panels/presets_manager.py:879
 msgid "Don't show this dialog again"
 msgstr "Non mostrare ancora questo dialogo"
 
-#: ../vdms_panels/presets_manager.py:977
+#: ../vdms_panels/presets_manager.py:976
 msgid ""
 "Queued File\n"
 "Pass Encoding\n"
@@ -4050,6 +4034,10 @@ msgstr "Crea GIF animato"
 msgid "Options"
 msgstr "Opzioni"
 
+#: ../vdms_panels/video_to_sequence.py:112
+msgid "Output format:"
+msgstr "Formato in uscita:"
+
 #: ../vdms_panels/video_to_sequence.py:124
 msgid "Rows:"
 msgstr "Righe:"
@@ -4106,8 +4094,8 @@ msgstr ""
 
 #: ../vdms_threads/one_pass.py:51 ../vdms_threads/picture_exporting.py:51
 #: ../vdms_threads/two_pass_ebu.py:54 ../vdms_threads/two_pass.py:56
-#: ../vdms_threads/slideshow.py:49 ../vdms_threads/slideshow.py:140
-#: ../vdms_threads/slideshow.py:230
+#: ../vdms_threads/slideshow.py:49 ../vdms_threads/slideshow.py:139
+#: ../vdms_threads/slideshow.py:228
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' è installato sul tuo sistema?"
 
@@ -4589,6 +4577,19 @@ msgstr ""
 "lingue richieste, ad es. \"all, -it.*, -nl.*\", -fr.*\" ciò scaricherà tutti "
 "i sottotitoli\n"
 "tranne quelli in italiano, olandese e francese."
+
+#~ msgid "From an image sequence to a video file"
+#~ msgstr "Da una sequenza di immagini a un file video"
+
+#~ msgid "Duration:"
+#~ msgstr "Durata:"
+
+#~ msgid ""
+#~ "Set the time interval between images in seconds (from 1 to 100 sec.), "
+#~ "default is 1 second"
+#~ msgstr ""
+#~ "Imposta l'intervallo di tempo tra le immagini in secondi (da 1 a 100 "
+#~ "sec.), il valore predefinito è 1 secondo"
 
 #~ msgid "Restore"
 #~ msgstr "Ripristina"
@@ -5090,9 +5091,6 @@ msgstr ""
 
 #~ msgid "First, choose a topic in the drop down list"
 #~ msgstr "Scegli un argomento nel menu a discesa prima"
-
-#~ msgid "Color Equalizer"
-#~ msgstr "Equalizzatore Colore"
 
 #~ msgid "Setting timestamp"
 #~ msgstr "Impostazione del timestamp"

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2023
+Rev: Feb.21.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+import time
 import webbrowser
 import wx
 from videomass.vdms_io import io_tools
@@ -394,6 +395,7 @@ class Scale(wx.Dialog):
             return
 
         if os.path.exists(self.frame) and os.path.isfile(self.frame):
+            time.sleep(0.5)  # to ensure correct size in default image viewer
             io_tools.openpath(self.frame)
     # ------------------------------------------------------------------#
 

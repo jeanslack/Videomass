@@ -99,8 +99,7 @@ class VidStab(Thread):
                                                 ):
             # --------------- first pass
             pass1 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
-                     f'{VidStab.appdata["ffmpegloglev"]} '
-                     f'{VidStab.appdata["ffmpeg+params"]} '
+                     f'{VidStab.appdata["ffmpeg_default_args"]} '
                      f'{self.time_seq[0]} '
                      f'-i "{infile}" '
                      f'{self.time_seq[1]} '
@@ -186,8 +185,7 @@ class VidStab(Thread):
                              )
             # --------------- second pass ----------------#
             pass2 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
-                     f'{VidStab.appdata["ffmpegloglev"]} '
-                     f'{VidStab.appdata["ffmpeg+params"]} '
+                     f'{VidStab.appdata["ffmpeg_default_args"]} '
                      f'{self.time_seq[0]} '
                      f'-i "{infile}" '
                      f'{self.time_seq[1]} '
@@ -265,8 +263,7 @@ class VidStab(Thread):
                 outduo = f'{duoname[0]}_DUO{duoname[1]}'
 
                 pass3 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
-                         f'{VidStab.appdata["ffmpegloglev"]} '
-                         f'{VidStab.appdata["ffmpeg+params"]} '
+                         f'{VidStab.appdata["ffmpeg_default_args"]} '
                          f'{self.time_seq[0]} '
                          f'-i "{infile}" '
                          f'{self.time_seq[1]} '

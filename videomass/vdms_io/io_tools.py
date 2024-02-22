@@ -82,8 +82,7 @@ def stream_play(filepath, timeseq, param, autoexit):
                      param,
                      get.appset['logdir'],
                      get.appset['ffplay_cmd'],
-                     get.appset['ffplayloglev'],
-                     get.appset['ffplay+params'],
+                     get.appset['ffplay_default_args'],
                      autoexit
                      )
             # thread.join() > attende fine thread, se no ritorna subito

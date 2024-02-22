@@ -95,7 +95,7 @@ class PrstPan(wx.Panel):
 
         prst = sorted([os.path.splitext(x)[0] for x in
                        os.listdir(self.user_prst) if
-                       os.path.splitext(x)[1] == '.prst'
+                       os.path.splitext(x)[1] == '.json'
                        ])
         wx.Panel.__init__(self, parent, -1)
 
@@ -368,7 +368,7 @@ class PrstPan(wx.Panel):
         if reset_cmbx:
             prst = sorted([os.path.splitext(x)[0] for x in
                           os.listdir(self.user_prst) if
-                          os.path.splitext(x)[1] == '.prst'])
+                          os.path.splitext(x)[1] == '.json'])
             self.cmbx_prst.Clear()
             self.cmbx_prst.AppendItems(prst)
             self.cmbx_prst.SetSelection(0)
@@ -391,7 +391,7 @@ class PrstPan(wx.Panel):
 
     def set_listctrl(self, colw):
         """
-        Populates Presets list with JSON data from *.prst files.
+        Populates Presets list with JSON data files.
         See `presets_manager_prop.py`
         """
         self.lctrl.InsertColumn(0, _('Name'), width=colw[0])
@@ -400,7 +400,7 @@ class PrstPan(wx.Panel):
         self.lctrl.InsertColumn(3, _('Supported Format List'), width=colw[3])
 
         path = os.path.join(f'{self.user_prst}',
-                            f'{self.cmbx_prst.GetValue()}.prst'
+                            f'{self.cmbx_prst.GetValue()}.json'
                             )
         collections = json_data(path)
         if collections == 'error':
@@ -452,7 +452,7 @@ class PrstPan(wx.Panel):
         this update the request data of the objects.
         """
         path = os.path.join(f'{self.user_prst}',
-                            f'{self.cmbx_prst.GetValue()}.prst'
+                            f'{self.cmbx_prst.GetValue()}.json'
                             )
         collections = json_data(path)
         selected = event.GetText()  # event.GetText is a Name Profile
@@ -492,18 +492,18 @@ class PrstPan(wx.Panel):
 
     def preset_new(self, event):
         """
-        Create new empty preset '*.prst' on /presets path name
+        Create new `*.json` empty preset
         """
         filename = None
         with wx.FileDialog(self, _("Enter name for new preset"),
                            defaultDir=self.user_prst,
-                           wildcard="Videomass presets (*.prst;)|*.prst;",
+                           wildcard="Videomass presets (*.json;)|*.json;",
                            style=wx.FD_SAVE
                            | wx.FD_OVERWRITE_PROMPT) as fileDialog:
 
             if fileDialog.ShowModal() == wx.ID_CANCEL:
                 return
-            filename = f"{fileDialog.GetPath()}.prst"
+            filename = f"{fileDialog.GetPath()}.json"
             try:
                 with open(filename, 'w', encoding='utf8') as file:
                     file.write('[]')
@@ -522,8 +522,7 @@ class PrstPan(wx.Panel):
 
     def preset_del(self, event):
         """
-        Remove or delete a preset '*.prst' on /presets path name
-        and move on Removals folder
+        Remove selected preset moving to the `Removals` folder
         """
         filename = self.cmbx_prst.GetValue()
         if wx.MessageBox(_('Are you sure you want to remove "{}" preset?\n\n '
@@ -543,8 +542,8 @@ class PrstPan(wx.Panel):
                           )
             return
 
-        s = os.path.join(self.user_prst, f'{filename}.prst')
-        d = os.path.join(self.user_prst, 'Removals', f'{filename}.prst')
+        s = os.path.join(self.user_prst, f'{filename}.json')
+        d = os.path.join(self.user_prst, 'Removals', f'{filename}.json')
         os.replace(s, d)
 
         wx.MessageBox(_('The preset "{0}" was successfully '
@@ -560,13 +559,13 @@ class PrstPan(wx.Panel):
         save one preset on media
         """
         combvalue = self.cmbx_prst.GetValue()
-        filedir = f'{self.user_prst}/{combvalue}.prst'
+        filedir = f'{self.user_prst}/{combvalue}.json'
 
         dlg = wx.DirDialog(self, _("Choose Destination"),
                            "", style=wx.DD_DEFAULT_STYLE)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
-            if os.path.exists(os.path.join(path, f'{combvalue}.prst')):
+            if os.path.exists(os.path.join(path, f'{combvalue}.json')):
                 if wx.MessageBox(_('A file with this name already exists, '
                                    'do you want to overwrite it?'),
                                  _('Please confirm'), wx.ICON_QUESTION
@@ -574,7 +573,7 @@ class PrstPan(wx.Panel):
                     return
 
             status = copy_restore(filedir,
-                                  os.path.join(path, f'{combvalue}.prst'))
+                                  os.path.join(path, f'{combvalue}.json'))
             dlg.Destroy()
 
             if status:
@@ -608,7 +607,7 @@ class PrstPan(wx.Panel):
         Import a new preset. If the preset already exists you will
         be asked to overwrite it or not.
         """
-        wildcard = "Source (*.prst)|*.prst| All files (*.*)|*.*"
+        wildcard = "Source (*.json)|*.json| All files (*.*)|*.*"
 
         with wx.FileDialog(self, _("Import a new preset"),
                            "", "", wildcard, wx.FD_OPEN
@@ -620,7 +619,7 @@ class PrstPan(wx.Panel):
             newincoming = filedlg.GetPath()
             new = os.path.basename(newincoming)
 
-        if not newincoming.endswith('.prst'):
+        if not newincoming.endswith('.json'):
             wx.MessageBox(_('Error, invalid preset: "{}"').format(
                           os.path.basename(newincoming)),
                           "Videomass", wx.ICON_ERROR, self
@@ -686,8 +685,8 @@ class PrstPan(wx.Panel):
             wx.MessageBox(f'{err}', "Videomass", wx.ICON_ERROR, self)
             return err
 
-        incom = [n for n in os.listdir(source) if n.endswith('.prst')]
-        outcom = [n for n in os.listdir(self.user_prst) if n.endswith('.prst')]
+        incom = [n for n in os.listdir(source) if n.endswith('.json')]
+        outcom = [n for n in os.listdir(self.user_prst) if n.endswith('.json')]
 
         # Return a new set with elements common to the set and all others.
         # In short, copy only files with matching basenames.
@@ -726,8 +725,8 @@ class PrstPan(wx.Panel):
                          self) == wx.YES:
 
             filename = self.cmbx_prst.GetValue()
-            status = copy_restore(f'{self.src_prst}/{filename}.prst',
-                                  f'{self.user_prst}/{filename}.prst'
+            status = copy_restore(f'{self.src_prst}/{filename}.json',
+                                  f'{self.user_prst}/{filename}.json'
                                   )
             if status:
                 wx.MessageBox(status, "Videomass", wx.ICON_ERROR, self)
@@ -819,7 +818,7 @@ class PrstPan(wx.Panel):
         Copy (duplicate) selected profile
         """
         filename = os.path.join(f'{self.user_prst}',
-                                f'{self.cmbx_prst.GetValue()}.prst'
+                                f'{self.cmbx_prst.GetValue()}.json'
                                 )
         newprst = write_new_profile(filename,
                                     Name=f'{self.array[0]} (duplicated)',
@@ -846,7 +845,7 @@ class PrstPan(wx.Panel):
                          self) == wx.YES:
 
             filename = os.path.join(f'{self.user_prst}',
-                                    f'{self.cmbx_prst.GetValue()}.prst'
+                                    f'{self.cmbx_prst.GetValue()}.json'
                                     )
             delete_profiles(filename, self.array[0])
             self.reset_list()

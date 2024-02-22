@@ -76,8 +76,7 @@ class ConcatDemuxer(Thread):
         """
         filedone = None
         cmd = (f'"{ConcatDemuxer.appdata["ffmpeg_cmd"]}" '
-               f'{ConcatDemuxer.appdata["ffmpegloglev"]} '
-               f'{ConcatDemuxer.appdata["ffmpeg+params"]} '
+               f'{ConcatDemuxer.appdata["ffmpeg_default_args"]} '
                f'-f concat -safe 0 -i {self.command} '
                f'{ConcatDemuxer.appdata["ffthreads"]} -y "{self.output_file}"')
 

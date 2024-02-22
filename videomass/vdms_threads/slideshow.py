@@ -62,8 +62,7 @@ def convert_images(*varargs):
                  )
     prognum = 0
     args = (f'"{appdata["ffmpeg_cmd"]}" '
-            f'{appdata["ffmpegloglev"]} '
-            f'{appdata["ffmpeg+params"]} ')
+            f'{appdata["ffmpeg_default_args"]} ')
     logwrite(f'Preparing temporary files...\n'
              f'\n[COMMAND:]\n{args}', '', logname)
 
@@ -155,8 +154,7 @@ def resizing_process(*varargs):
     tmpf = os.path.join(tmpdir, 'TMP_%d.bmp')
     tmpfout = os.path.join(tmpdir, 'IMAGE_%d.bmp')
     cmd_1 = (f'"{appdata["ffmpeg_cmd"]}" '
-             f'{appdata["ffmpegloglev"]} '
-             f'{appdata["ffmpeg+params"]} '
+             f'{appdata["ffmpeg_default_args"]} '
              f'-i "{tmpf}" {cmdargs} "{tmpfout}"'
              )
     logwrite(f'\nFile resizing...\n\n[COMMAND]:\n{cmd_1}', '', logname)
@@ -287,8 +285,7 @@ class SlideshowMaker(Thread):
             # ------------------------------- make video
             tmpgroup = os.path.join(tempdir, 'IMAGE_%d.bmp')
             cmd_2 = (f'"{SlideshowMaker.appdata["ffmpeg_cmd"]}" '
-                     f'{SlideshowMaker.appdata["ffmpegloglev"]} '
-                     f'{SlideshowMaker.appdata["ffmpeg+params"]} '
+                     f'{SlideshowMaker.appdata["ffmpeg_default_args"]} '
                      f'{self.preinput_1} '
                      f'-i "{tmpgroup}" '
                      f'{self.args_1} '

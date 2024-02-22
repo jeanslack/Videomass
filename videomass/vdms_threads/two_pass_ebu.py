@@ -93,8 +93,7 @@ class Loudnorm(Thread):
                                                 ):
             # --------------- first pass
             pass1 = (f'"{Loudnorm.appdata["ffmpeg_cmd"]}" '
-                     f'-nostdin -loglevel '
-                     f'info -stats -hide_banner '
+                     f'{Loudnorm.appdata["ffmpeg_default_args"]} '
                      f'{self.time_seq[0]} '
                      f'-i "{infile}" '
                      f'{self.time_seq[1]} '
@@ -194,7 +193,7 @@ class Loudnorm(Thread):
             time.sleep(.5)
 
             pass2 = (f'"{Loudnorm.appdata["ffmpeg_cmd"]}" '
-                     f'-nostdin -loglevel info -stats -hide_banner '
+                     f'{Loudnorm.appdata["ffmpeg_default_args"]} '
                      f'{self.time_seq[0]} '
                      f'-i "{infile}" '
                      f'{self.time_seq[1]} '
