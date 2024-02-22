@@ -87,8 +87,7 @@ class OnePass(Thread):
                                                 ):
             cmd = (f'"{OnePass.appdata["ffmpeg_cmd"]}" '
                    f'{self.timeseq[0]} '
-                   f'{OnePass.appdata["ffmpegloglev"]} '
-                   f'{OnePass.appdata["ffmpeg+params"]} '
+                   f'{OnePass.appdata["ffmpeg_default_args"]} '
                    f'-i "{infile}" '
                    f'{self.timeseq[1]} '
                    f'{self.command} '

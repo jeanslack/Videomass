@@ -70,13 +70,14 @@ class ConfigManager:
     ffmpeg_islocal, ffplay_islocal, ffprobe_islocal, (bool):
         With True the user enables the executable locally
 
-    ffmpegloglev (str):
-        -loglevel one of `error`, `warning`, `info`, `verbose`, `debug`
+    ffmpeg_loglev (str):
+        ffmpeg loglevel, one of `error`, `warning`, `info`,
+        `verbose`, `debug`, default is `info` .
 
     ffthreads (str):
         Set the number of threads (from 0 to 32)
 
-    ffplayloglev (str):
+    ffplay_loglev (str):
         -loglevel one of `quiet`, `fatal`, `error`, `warning`, `info`
 
     warnexiting (bool):
@@ -166,18 +167,18 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 6.5
+    VERSION = 6.6
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputdir": f"{os.path.expanduser('~')}",
                        "outputdir_asinput": False,
                        "filesuffix": "",
                        "ffmpeg_cmd": "",
                        "ffmpeg_islocal": False,
-                       "ffmpegloglev": "-loglevel warning",
+                       "ffmpeg_loglev": "-loglevel info",
                        "ffthreads": "-threads 4",
                        "ffplay_cmd": "",
                        "ffplay_islocal": False,
-                       "ffplayloglev": "-loglevel error",
+                       "ffplay_loglev": "-loglevel error",
                        "ffprobe_cmd": "",
                        "ffprobe_islocal": False,
                        "warnexiting": True,

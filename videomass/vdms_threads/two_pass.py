@@ -91,8 +91,7 @@ class TwoPass(Thread):
                                                 ):
             # --------------- first pass
             pass1 = (f'"{TwoPass.appdata["ffmpeg_cmd"]}" '
-                     f'{TwoPass.appdata["ffmpegloglev"]} '
-                     f'{TwoPass.appdata["ffmpeg+params"]} '
+                     f'{TwoPass.appdata["ffmpeg_default_args"]} '
                      f'{self.time_seq[0]} '
                      f'-i "{infile}" '
                      f'{self.time_seq[1]} '
@@ -175,8 +174,7 @@ class TwoPass(Thread):
                              )
             # --------------- second pass ----------------#
             pass2 = (f'"{TwoPass.appdata["ffmpeg_cmd"]}" '
-                     f'{TwoPass.appdata["ffmpegloglev"]} '
-                     f'{TwoPass.appdata["ffmpeg+params"]} '
+                     f'{TwoPass.appdata["ffmpeg_default_args"]} '
                      f'{self.time_seq[0]} '
                      f'-i "{infile}" '
                      f'{self.time_seq[1]} '

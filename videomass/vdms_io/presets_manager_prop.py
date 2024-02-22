@@ -60,7 +60,7 @@ def supported_formats(supp, file_sources):
 
 def json_data(arg):
     """
-    Used by presets_mng_panel.py to get JSON data from `*.prst` files.
+    Used by presets_mng_panel.py to get JSON data files.
     The `arg` parameter refer to each file name to parse. Return a list
     type object from getting data using `json` module in the following
     form:

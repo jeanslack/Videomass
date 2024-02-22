@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Wed, 21 Feb 2024 V.5.0.5
+Thu, 22 Feb 2024 V.5.0.5
 
   * Fixed `ValueError: could not convert string to float: 'N/A'` given by the
     `get_milliseconds()` function.
@@ -31,28 +31,33 @@ Wed, 21 Feb 2024 V.5.0.5
   * New versions of wxPython support SVG images for icons well, so most PNG
     icons are removed.
   * Fixed FFmpeg warns: `-vsync arg is deprecated, use fps_mode`
-  * Fixed FFmpeg seeking (-ss) and duration (-t) parameters by repositioning the
-    duration code after file inputs (-i). This fixed many inaccuracies and was
-    also more faster.
+  * Fixed FFmpeg seeking (-ss) as global parameter and duration (-t) as input
+    parameter. This fixed various issues and inaccuracies and seems more faster.
   * Added a new item to the File menu with its accelerator to delete all
     imported files/URLs. This feature was already present on the
     toolbar buttons but without the possibility of a convenient accelerator.
-  * [A/V Conversions] Overall improved the stabilizer filter for both the
-    preview and the video production. Fixed various bugs that prevented correct
-    video playback.
+  * [A/V Conversions] Improved the stabilizer filter for both the preview and
+    the video production. Fixed various bugs that prevented correct video
+    playback.
   * [Still Image Maker] Fixed progress bar accuracy and progress percentage
     issues in final video production.
-  * [Queued Files] [Queued URLs] improved conditional code with empty lists.
-  * [Queued URLs] Added new entry `Clear list` to contextual menu.
-  * Menu bars reordered to the relevant items.
+  * [Queued Files] [Queued URLs] improved conditional code with empty lists,
+    see `delete_all`, `on_delete_selected` methods.
+  * [Queued URLs] Added new `Clear list` entry  to contextual menu.
+  * Improved menu bars items.
   * Translation strings have been updated and simplified.
-  * New version (v6.5) of the configuration file is created.
+  * New configuation file version v6.5 .
   * [Concatenate] Removed `From an image sequence to a video file`
     > use `Still Image Maker` instead.
   * [A/V Conversions] improved Resize filter preview to ensure correct size
-    in default image viewer (use `time.sleep(0.5)`).
+    in default image viewer (fix using `time.sleep(0.5)`).
   * Updated AV1-libsvtav1 preset with a compatible container (mkv not mp4).
-  * Update presets version to v0.20 .
+  * Update presets version v0.20 .
+  * Default format preset (extension) is `.json` now. This format can be made
+    compatible with older versions of Videomass by changing the file extensions
+    to `.prst`.
+  * [A/V Conversions] Improved default EBU loudness values.
+  * Some code refactorized.
 
 +------------------------------------+
 Wed, 24 Jan 2024 V.5.0.4

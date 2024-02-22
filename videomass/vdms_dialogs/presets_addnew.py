@@ -61,7 +61,7 @@ class MemPresets(wx.Dialog):
         get = wx.GetApp()
         self.appdata = get.appset
         self.path_prst = os.path.join(self.appdata['confdir'], 'presets',
-                                      f'{filename}.prst')
+                                      f'{filename}.json')
         self.arg = arg  # evaluate if 'edit', 'newprofile', 'addprofile'
         self.array = array  # param list [name,descript,cmd1,cmd2,supp,ext]
 

@@ -97,7 +97,7 @@ class MainFrame(wx.Frame):
         self.duration = []  # empty if not file imported
         self.topicname = None  # shown panel name
         self.checktimestamp = True  # show timestamp during playback
-        self.autoexit = False  # set autoexit during ffplay playback
+        self.autoexit = True  # set autoexit during ffplay playback
         self.movetotrash = self.appdata['move_file_to_trash']
         self.emptylist = self.appdata['move_file_to_trash']
         self.mediastreams = False

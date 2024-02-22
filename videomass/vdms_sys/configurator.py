@@ -462,8 +462,10 @@ class DataSource():
                  'ffmpeg_cmd': _relativize(userconf['ffmpeg_cmd']),
                  'ffprobe_cmd': _relativize(userconf['ffprobe_cmd']),
                  'ffplay_cmd': _relativize(userconf['ffplay_cmd']),
-                 "ffplay+params": "-hide_banner",
-                 "ffmpeg+params": "-stats -hide_banner -nostdin",
+                 "ffplay_default_args": (f"{userconf['ffplay_loglev']} "
+                                         f"-hide_banner"),
+                 "ffmpeg_default_args": (f"{userconf['ffmpeg_loglev']} "
+                                         f"-stats -hide_banner -nostdin"),
                  **userconf
                  })
     # --------------------------------------------------------------------
