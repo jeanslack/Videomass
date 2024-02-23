@@ -24,7 +24,10 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-from wx.svg import SVGimage
+try:
+    from wx.svg import SVGimage
+except ModuleNotFoundError:
+    pass
 
 
 def get_bmp(imgfile, size):

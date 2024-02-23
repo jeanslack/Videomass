@@ -20,3 +20,16 @@ URGENCY: medium
 URGENCY: low (New implementations)
 -------------
 - [PRESETS MANAGER] The profile requires additional input (-i FILE -i FILE ...)
+
+- If you plan to refactor code and make it compatible only for wx.Python>=4.1.1:
+  - then erase `TestListCtrl` class on `formatcode.py` file.
+  - Also check all code that starts with `wx.version()` keywords.
+  - Erase these block codes along any py-files:
+
+        try:
+            from wx.svg import SVGimage
+        except ModuleNotFoundError:
+            pass
+
+  However, note that these operations leads to make Videomass code incompatible
+  for wxPython4.0.7

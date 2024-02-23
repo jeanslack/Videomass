@@ -27,6 +27,7 @@ This file is part of Videomass.
 """
 import time
 import os
+import sys
 import wx
 import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
@@ -79,10 +80,16 @@ class PrstPan(wx.Panel):
         "Output_extension": "",
         }
         """
-        bmpnewprf = get_bmp(icons['profile_add'], ((16, 16)))
-        bmpeditprf = get_bmp(icons['profile_edit'], ((16, 16)))
-        bmpdelprf = get_bmp(icons['profile_del'], ((16, 16)))
-        bmpcopyprf = get_bmp(icons['profile_copy'], ((16, 16)))
+        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
+            bmpnewprf = get_bmp(icons['profile_add'], ((16, 16)))
+            bmpeditprf = get_bmp(icons['profile_edit'], ((16, 16)))
+            bmpdelprf = get_bmp(icons['profile_del'], ((16, 16)))
+            bmpcopyprf = get_bmp(icons['profile_copy'], ((16, 16)))
+        else:
+            bmpnewprf = wx.Bitmap(icons['profile_add'], wx.BITMAP_TYPE_ANY)
+            bmpeditprf = wx.Bitmap(icons['profile_edit'], wx.BITMAP_TYPE_ANY)
+            bmpdelprf = wx.Bitmap(icons['profile_del'], wx.BITMAP_TYPE_ANY)
+            bmpcopyprf = wx.Bitmap(icons['profile_copy'], wx.BITMAP_TYPE_ANY)
 
         self.appdata = appdata
         self.array = []  # Parameters of the selected profile

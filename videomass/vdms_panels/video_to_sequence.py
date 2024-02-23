@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+import sys
 import wx
 import wx.lib.agw.hyperlink as hpl
 import wx.lib.agw.floatspin as FS
@@ -65,8 +66,12 @@ class VideoToSequence(wx.Panel):
         self.parent = parent  # parent is the MainFrame
         self.opt = {"Scale": "scale=w=320:h=-1", "Setdar": "", "Setsar": ""}
 
-        bmpresize = get_bmp(icons['scale'], ((16, 16)))
-        self.bmpreset = get_bmp(icons['clear'], ((16, 16)))
+        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
+            bmpresize = get_bmp(icons['scale'], ((16, 16)))
+            self.bmpreset = get_bmp(icons['clear'], ((16, 16)))
+        else:
+            bmpresize = wx.Bitmap(icons['scale'], wx.BITMAP_TYPE_ANY)
+            self.bmpreset = wx.Bitmap(icons['clear'], wx.BITMAP_TYPE_ANY)
 
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
         sizer = wx.BoxSizer(wx.VERTICAL)
