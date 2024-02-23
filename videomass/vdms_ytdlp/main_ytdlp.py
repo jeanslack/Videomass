@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+import sys
 import wx
 from pubsub import pub
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
@@ -487,12 +488,21 @@ class MainYtdl(wx.Frame):
                     int(self.appdata['toolbarsize']))
         self.toolbar.SetToolBitmapSize(bmp_size)
 
-        bmpback = get_bmp(self.icons['previous'], bmp_size)
-        bmpnext = get_bmp(self.icons['next'], bmp_size)
-        bmpstat = get_bmp(self.icons['statistics'], bmp_size)
-        bmpydl = get_bmp(self.icons['download'], bmp_size)
-        bmpstop = get_bmp(self.icons['stop'], bmp_size)
-        bmpclear = get_bmp(self.icons['cleanup'], bmp_size)
+        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
+            bmpback = get_bmp(self.icons['previous'], bmp_size)
+            bmpnext = get_bmp(self.icons['next'], bmp_size)
+            bmpstat = get_bmp(self.icons['statistics'], bmp_size)
+            bmpydl = get_bmp(self.icons['download'], bmp_size)
+            bmpstop = get_bmp(self.icons['stop'], bmp_size)
+            bmpclear = get_bmp(self.icons['cleanup'], bmp_size)
+
+        else:
+            bmpback = wx.Bitmap(self.icons['previous'], wx.BITMAP_TYPE_ANY)
+            bmpnext = wx.Bitmap(self.icons['next'], wx.BITMAP_TYPE_ANY)
+            bmpstat = wx.Bitmap(self.icons['statistics'], wx.BITMAP_TYPE_ANY)
+            bmpydl = wx.Bitmap(self.icons['download'], wx.BITMAP_TYPE_ANY)
+            bmpstop = wx.Bitmap(self.icons['stop'], wx.BITMAP_TYPE_ANY)
+            bmpclear = wx.Bitmap(self.icons['cleanup'], wx.BITMAP_TYPE_ANY)
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))

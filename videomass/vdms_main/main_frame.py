@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+import sys
 import webbrowser
 import wx
 from pubsub import pub
@@ -1226,15 +1227,25 @@ class MainFrame(wx.Frame):
                     int(self.appdata['toolbarsize']))
         self.toolbar.SetToolBitmapSize(bmp_size)
 
-        # available only in wx version 4.1 to up
-        bmpback = get_bmp(self.icons['previous'], bmp_size)
-        bmpnext = get_bmp(self.icons['next'], bmp_size)
-        bmpinfo = get_bmp(self.icons['fileproperties'], bmp_size)
-        bmpconv = get_bmp(self.icons['startconv'], bmp_size)
-        bmpstop = get_bmp(self.icons['stop'], bmp_size)
-        bmphome = get_bmp(self.icons['home'], bmp_size)
-        bmpclear = get_bmp(self.icons['cleanup'], bmp_size)
-        bmpplay = get_bmp(self.icons['play'], bmp_size)
+        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
+            bmpback = get_bmp(self.icons['previous'], bmp_size)
+            bmpnext = get_bmp(self.icons['next'], bmp_size)
+            bmpinfo = get_bmp(self.icons['fileproperties'], bmp_size)
+            bmpconv = get_bmp(self.icons['startconv'], bmp_size)
+            bmpstop = get_bmp(self.icons['stop'], bmp_size)
+            bmphome = get_bmp(self.icons['home'], bmp_size)
+            bmpclear = get_bmp(self.icons['cleanup'], bmp_size)
+            bmpplay = get_bmp(self.icons['play'], bmp_size)
+        else:
+            bmpback = wx.Bitmap(self.icons['previous'], wx.BITMAP_TYPE_ANY)
+            bmpnext = wx.Bitmap(self.icons['next'], wx.BITMAP_TYPE_ANY)
+            bmpinfo = wx.Bitmap(self.icons['fileproperties'],
+                                wx.BITMAP_TYPE_ANY)
+            bmpconv = wx.Bitmap(self.icons['startconv'], wx.BITMAP_TYPE_ANY)
+            bmpstop = wx.Bitmap(self.icons['stop'], wx.BITMAP_TYPE_ANY)
+            bmphome = wx.Bitmap(self.icons['home'], wx.BITMAP_TYPE_ANY)
+            bmpclear = wx.Bitmap(self.icons['cleanup'], wx.BITMAP_TYPE_ANY)
+            bmpplay = wx.Bitmap(self.icons['play'], wx.BITMAP_TYPE_ANY)
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))

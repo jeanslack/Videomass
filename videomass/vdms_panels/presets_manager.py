@@ -27,6 +27,7 @@ This file is part of Videomass.
 """
 import time
 import os
+import sys
 import wx
 import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
@@ -79,10 +80,16 @@ class PrstPan(wx.Panel):
         "Output_extension": "",
         }
         """
-        bmpnewprf = get_bmp(icons['profile_add'], ((16, 16)))
-        bmpeditprf = get_bmp(icons['profile_edit'], ((16, 16)))
-        bmpdelprf = get_bmp(icons['profile_del'], ((16, 16)))
-        bmpcopyprf = get_bmp(icons['profile_copy'], ((16, 16)))
+        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
+            bmpnewprf = get_bmp(icons['profile_add'], ((16, 16)))
+            bmpeditprf = get_bmp(icons['profile_edit'], ((16, 16)))
+            bmpdelprf = get_bmp(icons['profile_del'], ((16, 16)))
+            bmpcopyprf = get_bmp(icons['profile_copy'], ((16, 16)))
+        else:
+            bmpnewprf = wx.Bitmap(icons['profile_add'], wx.BITMAP_TYPE_ANY)
+            bmpeditprf = wx.Bitmap(icons['profile_edit'], wx.BITMAP_TYPE_ANY)
+            bmpdelprf = wx.Bitmap(icons['profile_del'], wx.BITMAP_TYPE_ANY)
+            bmpcopyprf = wx.Bitmap(icons['profile_copy'], wx.BITMAP_TYPE_ANY)
 
         self.appdata = appdata
         self.array = []  # Parameters of the selected profile
@@ -414,9 +421,10 @@ class PrstPan(wx.Panel):
                 self.lctrl.SetItem(rows, 1, name["Description"])
                 self.lctrl.SetItem(rows, 2, name["Output_extension"])
                 self.lctrl.SetItem(rows, 3, name["Supported_list"])
-        except KeyError as err:
-            wx.MessageBox(_('ERROR: Typing error on JSON keys: {}\n\n'
-                            'File: "{}"\nkey malformed ?'.format(err, path)),
+
+        except (TypeError, KeyError):
+            wx.MessageBox(_('ERROR: Preset not supported!\n\n'
+                            'File: "{}"'.format(path)),
                           "Videomass", wx.ICON_ERROR, self)
             return
     # ----------------------Event handler (callback)----------------------#
@@ -474,8 +482,8 @@ class PrstPan(wx.Panel):
                     self.array.append(name["Output_extension"])
 
         except KeyError as err:
-            wx.MessageBox(_('ERROR: Typing error on JSON keys: {}\n\n'
-                            'File: "{}"\nkey malformed ?'.format(err, path)),
+            wx.MessageBox(_('ERROR: json Key Error: {}\n\n'
+                            'File: "{}"'.format(err, path)),
                           "Videomass", wx.ICON_ERROR, self)
             return
 

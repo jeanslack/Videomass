@@ -24,7 +24,7 @@ each operating system.
 
 ### Requirements
 - **[Python >= 3.7.0 < 3.12.0](https://www.python.org/)**
-- **[wxPython-Phoenix >= 4.1.1](https://wxpython.org/)**
+- **[wxPython-Phoenix >= 4.0.7](https://wxpython.org/)**
 - **[PyPubSub >= 4.0.3](https://pypi.org/project/PyPubSub/)**
 - **[requests >= 2.26.0](https://pypi.org/project/requests/)**
 - **[ffmpeg >=5.1](https://ffmpeg.org/)**
