@@ -421,9 +421,10 @@ class PrstPan(wx.Panel):
                 self.lctrl.SetItem(rows, 1, name["Description"])
                 self.lctrl.SetItem(rows, 2, name["Output_extension"])
                 self.lctrl.SetItem(rows, 3, name["Supported_list"])
-        except KeyError as err:
-            wx.MessageBox(_('ERROR: Typing error on JSON keys: {}\n\n'
-                            'File: "{}"\nkey malformed ?'.format(err, path)),
+
+        except (TypeError, KeyError):
+            wx.MessageBox(_('ERROR: Preset not supported!\n\n'
+                            'File: "{}"'.format(path)),
                           "Videomass", wx.ICON_ERROR, self)
             return
     # ----------------------Event handler (callback)----------------------#
@@ -481,8 +482,8 @@ class PrstPan(wx.Panel):
                     self.array.append(name["Output_extension"])
 
         except KeyError as err:
-            wx.MessageBox(_('ERROR: Typing error on JSON keys: {}\n\n'
-                            'File: "{}"\nkey malformed ?'.format(err, path)),
+            wx.MessageBox(_('ERROR: json Key Error: {}\n\n'
+                            'File: "{}"'.format(err, path)),
                           "Videomass", wx.ICON_ERROR, self)
             return
 
