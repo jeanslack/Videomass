@@ -16,7 +16,6 @@ derivative distributions.
 
 - [Ubuntu 24.04 Noble](https://cloud-images.ubuntu.com/noble/current/)
 - [Ubuntu 23.10 Mantic (Daily-Live))](https://cdimage.ubuntu.com/daily-live/current/)
-- [Ubuntu 23.04 Lunar](https://releases.ubuntu.com/lunar/)
 - [Ubuntu 22.04 Jammy](https://releases.ubuntu.com/22.04/) 
 - [Ubuntu 20.04 Focal](https://releases.ubuntu.com/focal/)     
 
@@ -54,11 +53,11 @@ or in AUR part of Manjaro (Arch Linux derivative) Linux.
 
 ---
 
-## Debian / Devuan
+## Devuan / Debian
 
 A [precompiled binary package](https://github.com/jeanslack/Videomass/releases/latest) (`.deb`) 
-(arch-independent) is available and can be installed on both **Debian11 bullseye** and **Debian12 bookworm**. 
-This precompiled package is also compatible with **Devuan Chimaera** and **Devuan Daedalus**.
+(arch-independent) is available and can be installed on both **Devuan Chimaera** and **Devuan Daedalus**.
+This precompiled package is also compatible with **Debian11 bullseye** and **Debian12 bookworm**.
 
 ---
 
