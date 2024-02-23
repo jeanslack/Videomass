@@ -1,4 +1,4 @@
-videomass (5.0.5-1) UNRELEASED; urgency=medium
+videomass (5.0.6-1) UNRELEASED; urgency=medium
 
   * Fixed `ValueError: could not convert string to float: 'N/A'` given by the
     `get_milliseconds()` function.
