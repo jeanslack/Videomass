@@ -8,7 +8,7 @@ nav_order: 3
 
 ---
 
-### These screenshots were made using wxPython version 4.2.0 and XFCE Materia Manjaro Dark GTK theme. 
+### Using wxPython version 4.2.0 on XFCE.
  
 ----  
 
