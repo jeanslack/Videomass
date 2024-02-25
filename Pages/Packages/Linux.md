@@ -7,7 +7,7 @@ nav_order: 3
 
 ---
 
-# Linux
+# Linux - Third-Party Repositories
 
 ## Ubuntu/Mint PPA
 

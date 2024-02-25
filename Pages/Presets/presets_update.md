@@ -5,39 +5,32 @@ parent: Documentation
 nav_order: 2
 ---
 
-# How to update new presets versions
+# How to update to new versions of presets
 
 ---
 
-Since version 3.3.5, Videomass can manage the import and export of presets more 
-efficiently. Furthermore, the possibility of checking new versions and downloading 
-them has been implemented.
-
 >**WARNING**: Before importing new presets or updating existing ones, it is 
-strongly recommended to backup all presets. Go to the Presets Manager panel and 
+strongly recommended to backup your presets. Go to the Presets Manager panel and 
 click on the "Export all..." button.
 
-To update your presets, follow the steps below.
+To update your presets, choose one of the options below.
 
-## By Videomass Application
+## By Videomass Application (Option 1)
 {: .bg-green-300}
 
-- Launch the Videomass application.
-- Check for new versions on the menu bar -> tools -> Check for new presets .
-- If a new versions is available, go to the menu bar -> tools -> Download the latest presets .
-- Open the folder where you chose to download the presets, then extract the tarball.
-- From the Videomass Home panel click on the big Presets Manager button and drag some audio/video files (one is enough).
-- Click the Next button on the toolbar to switch on Presets Manager panel.
-- On the left side of the Presets box, click on the "Import preset" button or the "Import group" button and follow the instructions that appear.
-- The new presets should appear in the drop-down menu.
+1. Launch the Videomass application.
+2. Check for new versions on the menu bar -> tools -> Check preset updates .
+3. If a new versions is available, go to the menu bar -> tools -> Get latest presets .
+4. Open the folder where you chose to download the presets, then extract the tarball.
+5. From the Videomass Home panel click on the big Presets Manager button.
+6. Click the Next button on the toolbar to switch on Presets Manager panel.
+7. On the left side of the Presets box, click on the "Import preset" button or the "Import folder" button and follow the instructions that appear.
+8. The new presets should appear in the drop-down menu.
 
-## Downloading from the development page
+## Downloading from the development page (Option 2)
 {: .bg-green-300}
 
-- Go to [Videomass-presets page](https://github.com/jeanslack/Videomass-presets)
-- Download the [latest release](https://github.com/jeanslack/Videomass-presets/releases) available
-- Extract tarball or zipball archive.
-- From the Videomass Home panel click on the big Presets Manager button and drag some audio/video files (one is enough).
-- Click the Next button on the toolbar to switch on Presets Manager panel.
-- On the left side of the Presets box, click on the "Import preset" button or the "Import group" button and follow the instructions that appear.
-- The new presets should appear in the drop-down menu.
+1. Go to [Videomass-presets page](https://github.com/jeanslack/Videomass-presets)
+2. Download the [latest release](https://github.com/jeanslack/Videomass-presets/releases) available
+3. Extract tarball or zipball archive.
+4. Launch the Videomass application and follow steps 5 through 8 of option 1 above.
