@@ -6,6 +6,14 @@ source "https://rubygems.org"
 #
 #     bundle exec jekyll serve
 #
+# Pass the --livereload option to serve to automatically refresh the page 
+# with each change you make to the source files: 
+#
+#     bundle exec jekyll serve --livereload
+#
+# Then browse to: 
+#     http://localhost:4000
+#
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
 #gem "jekyll", "~> 3.8.3"

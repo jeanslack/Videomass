@@ -43,7 +43,7 @@ extract audio from videos and much more!
 - Fully customizable presets and profiles.
 - Possibility to create your new presets and profiles from scratch.
 - Has useful presets to start with.
-- Using the Presets Manager, it can supports all [formats](https://ffmpeg.org/ffmpeg-formats.html) and [codecs](https://ffmpeg.org/ffmpeg-codecs.html) available on FFmpeg.
+- Using the Presets Manager, you can set any [format](https://ffmpeg.org/ffmpeg-formats.html) and [codec](https://ffmpeg.org/ffmpeg-codecs.html) supported by your FFmpeg build.
 - Media file info (from FFprobe) and streams analyzer (from volumedetect).
 - Shows the estimated time of arrival during encodings.
 - Concatenate, merge media files losslessly.
@@ -56,17 +56,17 @@ extract audio from videos and much more!
 - Timeline editor to slice time segments or trim the duration of your media even 
 without re-encoding and therefore without loss of quality.
 - It has GUI video filters such as:
-    - Resizing 
-    - Cropping
-    - Rotation
-    - Deinterlacing
+    - Resize
+    - Crop
+    - Transpose
+    - Deinterlace
     - Denoise
-    - Stabilization
-    - Color equlizer
+    - Stabilize
+    - Equalize
 - Audio filters for volume normalization such us:
     - PEAK, RMS and [EBU-R128](http://ffmpeg.org/ffmpeg-filters.html#loudnorm) normalizers.
     - PEAK and RMS volume analysis reporting.
-    - Ability to apply volume normalization only for certain audio streams in videos.
+    - Ability to select specified audio streams in videos to apply volume normalization.
 - ...and much more!
 
 ## Using yt-dlp
@@ -74,18 +74,18 @@ without re-encoding and therefore without loss of quality.
 ---
 - Download from multiple URLs (YouTube and more sites, over 200 are currently supported).
 - Precompiled Videos, quality best, medium, worst.
-- Download by resolution and format.
-- Download audio and video splitted.
+- Download by format and resolution.
+- Download audio and video separately.
 - Download Audio only.
 - Download by ID selecting "format codes" and ability to download both separated or merged files.
 - Shows download statistics.
 - Ability to download entire playlists.
-- Playlists can be indexed.
-- Enabling/disabling the SSL certificate.
-- Embed thumbnail in audio file.
+- Playlists can be indexed to download only the files you are interested in.
+- Ability to enable/disable the SSL certificate.
+- Ability to embed thumbnail in audio file.
 - Add metadata to file.
-- Write subtitles to video.
+- Ability to set preferred subtitles.
 - Ability to include IDs in filenames.
 - Ability to restrict file names.
-- Alternative downloaders like aria2c, avconv, axel, curl, ffmpeg, httpie, wget are also supported from version 5.0.1
+- Ability to set alternative downloaders such as aria2c, avconv, axel, curl, ffmpeg, httpie, wget.
 

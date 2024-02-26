@@ -10,11 +10,10 @@ nav_order: 6
 
 ## Using YouTube Downloader
 
-- Stopping a download by clicking the "Abort" button is currently not possible as 
+- Stopping a current download by clicking the "Abort" button is currently not possible as 
 this feature is not yet implemented in the yt-dlp [API](https://en.wikipedia.org/wiki/API).   
-Instead, only subsequent downloads in a list of URLs can be stopped.  
+Only subsequent downloads in a URL list can be stopped programmatically by clicking the "Abort" button.  
 
 - [Drag-and-drop of text and URLs not working with Firefox under Linux](https://github.com/wxWidgets/wxWidgets/issues/17694). 
 Using a web browser other than Firefox or dragging and dropping text from a text 
-editor seems to work fine. Please note that this issue is related to Videomass 
-v4.0.11 and affect Linux OS only.
+editor seems to work fine. Please note that this issue affect Linux OS's only.
