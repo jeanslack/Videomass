@@ -78,7 +78,7 @@ class ConcatDemuxer(Thread):
         cmd = (f'"{ConcatDemuxer.appdata["ffmpeg_cmd"]}" '
                f'{ConcatDemuxer.appdata["ffmpeg_default_args"]} '
                f'-f concat -safe 0 -i {self.command} '
-               f'{ConcatDemuxer.appdata["ffthreads"]} -y "{self.output_file}"')
+               f'-y "{self.output_file}"')
 
         count = f'{self.countmax} Files to concat'
         com = (f'{count}\nSource: "{self.input_flist}"\nDestination: '

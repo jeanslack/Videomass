@@ -633,7 +633,7 @@ class MainYtdl(wx.Frame):
                 [self.toolbar.EnableTool(x, False) for x in (20, 21, 23, 25)]
                 [self.toolbar.EnableTool(x, True) for x in (22, 24)]
 
-        self.SetTitle(_('Videomass - yt_dlp message monitor'))
+        self.SetTitle(_('Videomass - yt_dlp Message Monitoring'))
         self.textDnDTarget.Hide()
         self.ytDownloader.Hide()
         self.ProcessPanel.Show()

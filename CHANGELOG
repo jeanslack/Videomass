@@ -7,6 +7,18 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Fri, 01 Mar 2024 V.5.0.10
+
+  * [A/V Conversions] Change UI layout.
+  * [A/V Conversions] Added/Impoved video encoder controls.
+  * [A/V Conversions] Added Av1-SVT video encoder.
+  * [A/V Conversions] Added Mpeg-4 xvidcore video encoder.
+  * [A/V Conversions] Removed Vp8 (libvpx) video encoder.
+  * Added FFmpeg `-threads` option to the respective encoder panels instead
+    of in the preferences dialog.
+
+
++------------------------------------+
 Thu, 23 Feb 2024 V.5.0.6
 
   * Fixed `ValueError: could not convert string to float: 'N/A'` given by the

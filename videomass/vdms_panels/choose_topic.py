@@ -34,7 +34,7 @@ class Choose_Topic(wx.Panel):
     """
     Helps to choose a topic.
     """
-    def __init__(self, parent, OS):
+    def __init__(self, parent):
         """
         This is a home panel shown when start Videomass to choose the
         appropriate contextual panel.
@@ -46,7 +46,6 @@ class Choose_Topic(wx.Panel):
 
         # ----------------------
         self.parent = parent
-        self.oS = OS
         version = current_release()
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
@@ -79,7 +78,7 @@ class Choose_Topic(wx.Panel):
         sizer_base.Add(welcome, 0, wx.EXPAND, 0)
         sizer_base.Add(20, 20)
         sizer_base.Add(version, 0, wx.BOTTOM | wx.ALIGN_CENTER, 0)
-        if self.oS == 'Windows':
+        if self.appdata['ostype'] == 'Windows':
             style = wx.BU_LEFT | wx.BORDER_NONE
         else:
             style = wx.BU_LEFT
@@ -138,7 +137,7 @@ class Choose_Topic(wx.Panel):
                  'in JPG, PNG, BMP, GIF formats.'))
         videotoimages.SetToolTip(tip)
 
-        if self.oS == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             welcome.SetFont(wx.Font(14, wx.SWISS, wx.NORMAL, wx.BOLD))
             version.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:

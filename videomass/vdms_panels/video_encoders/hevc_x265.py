@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 FileName: hevc_avc.py
-Porpose: Contains h.264/h.265 functionality for A/V Conversions
+Porpose: Contains h.265 functionality for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -28,24 +28,24 @@ import wx
 import wx.lib.scrolledpanel as scrolled
 
 
-class Hevc_Avc(scrolled.ScrolledPanel):
+class Hevc_X265(scrolled.ScrolledPanel):
     """
     This scroll panel implements controls for extra options
     of the `HEVC/AVC` aka h.264/h.265 encoders.
     """
     # presets used by h264 and h265:
-    H264_OPT = {("Presets"): ("None", "ultrafast", "superfast",
-                              "veryfast", "faster", "fast", "medium",
-                              "slow", "slower", "veryslow", "placebo"
-                              ),
-                ("Profiles"): ("None", "baseline", "main", "high",
-                               "high10", "high444"
-                               ),
-                ("Tunes"): ("None", "film", "animation", "grain",
-                            "stillimage", "psnr", "ssim", "fastdecode",
-                            "zerolatency"
-                            )
-                }
+    ASPECTRATIO = [("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
+                   ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
+                   ("16:10"), ("19:10"), ("21:9"), ("32:9"),
+                   ]
+    FPS = [("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
+           ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
+           ]
+    PIXELFRMT = [('None'), ('gray'), ('gray10le'), ('nv12'), ('nv16'),
+                 ('nv20le'), ('nv21'), ('yuv420p'), ('yuv420p10le'),
+                 ('yuv422p'), ('yuv422p10le'), ('yuv444p'), ('yuv444p10le'),
+                 ('yuvj420p'), ('yuvj422p'), ('yuvj444p'),
+                 ]
     # Used by h265 only
     H265_OPT = {("Presets"): ("None", "ultrafast", "superfast",
                               "veryfast", "faster", "fast", "medium",
@@ -70,11 +70,13 @@ class Hevc_Avc(scrolled.ScrolledPanel):
               '5', '5.1', '5.2', '6', '6.1', '6.2', '8.5'
               )
 
-    def __init__(self, parent, opt, osplat):
+    def __init__(self, parent, opt):
         """
         This is a child of `AV_Conv` class-panel (parent) and the `opt`
         attribute is a dict owned by that class.
         """
+        get = wx.GetApp()
+        self.appdata = get.appset
         self.parent = parent
         self.opt = opt
         scrolled.ScrolledPanel.__init__(self, parent, -1,
@@ -85,10 +87,10 @@ class Hevc_Avc(scrolled.ScrolledPanel):
                                         )
         sizerbase = wx.BoxSizer(wx.VERTICAL)
         sizerbase.Add((10, 10), 0)
-        infomsg = "H.264/H.265"
+        infomsg = "H.265 HEVC (High Efficiency Video Coding)"
         self.lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
         sizerbase.Add(self.lbl_info, 0, wx.ALL | wx.CENTER, 5)
-        if osplat == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             self.lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
             self.lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -101,7 +103,7 @@ class Hevc_Avc(scrolled.ScrolledPanel):
                      | wx.ALIGN_CENTER_VERTICAL, 5,
                      )
         self.cmb_preset = wx.ComboBox(self, wx.ID_ANY,
-                                      choices=Hevc_Avc.H264_OPT["Presets"],
+                                      choices=Hevc_X265.H265_OPT["Presets"],
                                       size=(170, -1), style=wx.CB_DROPDOWN
                                       | wx.CB_READONLY,
                                       )
@@ -112,7 +114,7 @@ class Hevc_Avc(scrolled.ScrolledPanel):
         txtprofile = wx.StaticText(self, wx.ID_ANY, 'Profile')
         gridctrl.Add(txtprofile, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_profile = wx.ComboBox(self, wx.ID_ANY,
-                                       choices=Hevc_Avc.H264_OPT["Profiles"],
+                                       choices=Hevc_X265.H265_OPT["Profiles"],
                                        size=(170, -1), style=wx.CB_DROPDOWN
                                        | wx.CB_READONLY,
                                        )
@@ -122,14 +124,14 @@ class Hevc_Avc(scrolled.ScrolledPanel):
         txtlevel = wx.StaticText(self, wx.ID_ANY, 'Level')
         gridctrl.Add(txtlevel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_level = wx.ComboBox(self, wx.ID_ANY,
-                                     choices=Hevc_Avc.LEVELS, size=(100, -1),
+                                     choices=Hevc_X265.LEVELS, size=(100, -1),
                                      style=wx.CB_DROPDOWN | wx.CB_READONLY
                                      )
         gridctrl.Add(self.cmb_level, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         txttune = wx.StaticText(self, wx.ID_ANY, 'Tune')
         gridctrl.Add(txttune, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_tune = wx.ComboBox(self, wx.ID_ANY,
-                                    choices=Hevc_Avc.H264_OPT["Tunes"],
+                                    choices=Hevc_X265.H265_OPT["Tunes"],
                                     size=(170, -1), style=wx.CB_DROPDOWN
                                     | wx.CB_READONLY,
                                     )
@@ -171,6 +173,7 @@ class Hevc_Avc(scrolled.ScrolledPanel):
         """
         Set to default when video codec changes
         """
+                    #self.slider_CRF.SetValue(28), self.spin_Vbrate.SetValue(1500)
         self.cmb_tune.Clear(), self.cmb_profile.Clear()
         if self.opt["VideoCodec"] == "-c:v libx264":
             for tune in Hevc_Avc.H264_OPT['Tunes']:
@@ -182,9 +185,9 @@ class Hevc_Avc(scrolled.ScrolledPanel):
             self.lbl_info.SetLabel("H.264 / AVC - libx264")
 
         elif self.opt["VideoCodec"] == "-c:v libx265":
-            for tune in Hevc_Avc.H265_OPT["Tunes"]:
+            for tune in Hevc_X265.H265_OPT["Tunes"]:
                 self.cmb_tune.Append((tune),)
-            for prof in Hevc_Avc.H265_OPT["Profiles"]:
+            for prof in Hevc_X265.H265_OPT["Profiles"]:
                 self.cmb_profile.Append((prof),)
             self.spin_gop.SetValue(1)
             self.opt["GOP"] = '-g 1'

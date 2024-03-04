@@ -98,7 +98,6 @@ class Loudnorm(Thread):
                      f'-i "{infile}" '
                      f'{self.time_seq[1]} '
                      f'{self.passlist[0]} '
-                     f'{Loudnorm.appdata["ffthreads"]} '
                      f'-y {self.nul}'
                      )
             self.count += 1
@@ -200,7 +199,6 @@ class Loudnorm(Thread):
                      f'{self.passlist[1]} '
                      f'-filter:a:{self.audio_outmap[1]} '
                      f'{filters} '
-                     f'{Loudnorm.appdata["ffthreads"]} '
                      f'-y "{outfile}"'
                      )
             count = (f'File {self.count}/{self.countmax} - Pass Two\n'

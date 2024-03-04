@@ -128,13 +128,8 @@ class MainFrame(wx.Frame):
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
 
         # panel instances:
-        self.ChooseTopic = choose_topic.Choose_Topic(self,
-                                                     self.appdata['ostype'],
-                                                     )
-        self.VconvPanel = av_conversions.AV_Conv(self,
-                                                 self.appdata,
-                                                 self.icons,
-                                                 )
+        self.ChooseTopic = choose_topic.Choose_Topic(self)
+        self.VconvPanel = av_conversions.AV_Conv(self)
         self.fileDnDTarget = filedrop.FileDnD(self,
                                               self.outputdir,
                                               self.outputnames,
@@ -143,13 +138,10 @@ class MainFrame(wx.Frame):
                                               self.duration,
                                               )
         self.ProcessPanel = LogOut(self)
-        self.PrstsPanel = presets_manager.PrstPan(self,
-                                                  self.appdata,
-                                                  self.icons,
-                                                  )
+        self.PrstsPanel = presets_manager.PrstPan(self)
         self.ConcatDemuxer = concatenate.Conc_Demuxer(self,)
-        self.toPictures = video_to_sequence.VideoToSequence(self, self.icons)
-        self.toSlideshow = sequence_to_video.SequenceToVideo(self, self.icons)
+        self.toPictures = video_to_sequence.VideoToSequence(self)
+        self.toSlideshow = sequence_to_video.SequenceToVideo(self)
         # miniframes
         self.TimeLine = timeline.Float_TL(parent=wx.GetTopLevelParent(self))
         self.TimeLine.Hide()
@@ -179,7 +171,8 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.icons['videomass'],
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        self.SetMinSize((850, 560))
+        #self.SetMinSize((850, 560))
+        self.SetMinSize((1140, 700))
         self.SetSizer(self.mainSizer)
         self.Fit()
         self.SetSize(tuple(self.appdata['main_window_size']))
@@ -1236,6 +1229,7 @@ class MainFrame(wx.Frame):
             bmphome = get_bmp(self.icons['home'], bmp_size)
             bmpclear = get_bmp(self.icons['cleanup'], bmp_size)
             bmpplay = get_bmp(self.icons['play'], bmp_size)
+            bmpqueue = get_bmp(self.icons['queue'], bmp_size)
         else:
             bmpback = wx.Bitmap(self.icons['previous'], wx.BITMAP_TYPE_ANY)
             bmpnext = wx.Bitmap(self.icons['next'], wx.BITMAP_TYPE_ANY)
@@ -1246,6 +1240,7 @@ class MainFrame(wx.Frame):
             bmphome = wx.Bitmap(self.icons['home'], wx.BITMAP_TYPE_ANY)
             bmpclear = wx.Bitmap(self.icons['cleanup'], wx.BITMAP_TYPE_ANY)
             bmpplay = wx.Bitmap(self.icons['play'], wx.BITMAP_TYPE_ANY)
+            bmpqueue = wx.Bitmap(self.icons['queue'], wx.BITMAP_TYPE_ANY)
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
@@ -1287,6 +1282,11 @@ class MainFrame(wx.Frame):
         tip = _("Clear the file list")
         clear = self.toolbar.AddTool(9, _('Clear'),
                                      bmpclear,
+                                     tip, wx.ITEM_NORMAL
+                                     )
+        tip = _("Manage queue file settings before running jobs")
+        queue = self.toolbar.AddTool(10, _('Queue'),
+                                     bmpqueue,
                                      tip, wx.ITEM_NORMAL
                                      )
         self.toolbar.Realize()
@@ -1552,7 +1552,7 @@ class MainFrame(wx.Frame):
         else:
             dur, tseq = self.duration, ('', '')
 
-        self.SetTitle(_('Videomass - FFmpeg message monitor'))
+        self.SetTitle(_('Videomass - FFmpeg Message Monitoring'))
         self.fileDnDTarget.Hide()
         self.VconvPanel.Hide()
         self.PrstsPanel.Hide()

@@ -92,7 +92,6 @@ class OnePass(Thread):
                    f'{self.timeseq[1]} '
                    f'{self.command} '
                    f'{volume} '
-                   f'{OnePass.appdata["ffthreads"]} '
                    f'-y "{outfile}"'
                    )
             self.count += 1

@@ -65,7 +65,7 @@ class PrstPan(wx.Panel):
     BLACK = '#060505'  # black for background status bar
     # -----------------------------------------------------------------
 
-    def __init__(self, parent, appdata, icons):
+    def __init__(self, parent):
         """
         Each presets is a JSON file (Javascript object notation) which is
         a list object with a variable number of items (called profiles)
@@ -80,6 +80,16 @@ class PrstPan(wx.Panel):
         "Output_extension": "",
         }
         """
+        self.parent = parent  # parent is the MainFrame
+        self.appdata = self.parent.appdata
+        icons = self.parent.icons
+        self.src_prst = os.path.join(self.appdata['srcpath'], 'presets')
+        self.user_prst = os.path.join(self.appdata['confdir'], 'presets')
+        self.array = []  # Parameters of the selected profile
+
+        self.txtcmdedited = True  # show warning if cmdline is edited
+        self.check_presets_version = False  # see `update_preset_state`
+
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpnewprf = get_bmp(icons['profile_add'], ((16, 16)))
             bmpeditprf = get_bmp(icons['profile_edit'], ((16, 16)))
@@ -90,15 +100,6 @@ class PrstPan(wx.Panel):
             bmpeditprf = wx.Bitmap(icons['profile_edit'], wx.BITMAP_TYPE_ANY)
             bmpdelprf = wx.Bitmap(icons['profile_del'], wx.BITMAP_TYPE_ANY)
             bmpcopyprf = wx.Bitmap(icons['profile_copy'], wx.BITMAP_TYPE_ANY)
-
-        self.appdata = appdata
-        self.array = []  # Parameters of the selected profile
-        self.src_prst = os.path.join(self.appdata['srcpath'], 'presets')
-        self.user_prst = os.path.join(self.appdata['confdir'], 'presets')
-
-        self.parent = parent
-        self.txtcmdedited = True  # show warning if cmdline is edited
-        self.check_presets_version = False  # see `update_preset_state`
 
         prst = sorted([os.path.splitext(x)[0] for x in
                        os.listdir(self.user_prst) if

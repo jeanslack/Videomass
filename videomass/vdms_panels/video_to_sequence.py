@@ -57,13 +57,13 @@ class VideoToSequence(wx.Panel):
               "in the path you specify.")
     # ----------------------------------------------------------------#
 
-    def __init__(self, parent, icons):
+    def __init__(self, parent):
         """
         This is a panel impemented on MainFrame
         """
-        get = wx.GetApp()
-        appdata = get.appset
         self.parent = parent  # parent is the MainFrame
+        appdata = self.parent.appdata
+        icons = self.parent.icons
         self.opt = {"Scale": "scale=w=320:h=-1", "Setdar": "", "Setsar": ""}
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up

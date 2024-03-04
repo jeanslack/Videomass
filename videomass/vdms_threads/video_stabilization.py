@@ -73,7 +73,7 @@ class VidStab(Thread):
         self.logname = logname  # title name of file log
         self.nul = 'NUL' if VidStab.OS == 'Windows' else '/dev/null'
 
-        # this block is needed when other filters are enabled
+        # this code block is needed when other filters are enabled
         spl = args[6].split('-vf ')[1]
         addspl = ','.join([x for x in spl.split(',') if '-vf'
                            not in x and 'vidstabtransform' not in x
@@ -104,7 +104,6 @@ class VidStab(Thread):
                      f'-i "{infile}" '
                      f'{self.time_seq[1]} '
                      f'{self.passlist[0]} '
-                     f'{VidStab.appdata["ffthreads"]} '
                      f'-y {self.nul}'
                      )
             self.count += 1
@@ -191,7 +190,6 @@ class VidStab(Thread):
                      f'{self.time_seq[1]} '
                      f'{self.passlist[1]} '
                      f'{volume} '
-                     f'{VidStab.appdata["ffthreads"]} '
                      f'-y "{outfile}"'
                      )
             count = (f'File {self.count}/{self.countmax} - Pass Two\n'
@@ -270,7 +268,6 @@ class VidStab(Thread):
                          f'-i "{outfile}" '
                          f'{self.time_seq[1]} '
                          f'{volume} '
-                         f'{VidStab.appdata["ffthreads"]} '
                          f'-filter_complex '
                          f'"[0:v:0] '
                          f'{self.addflt}pad=2*iw:ih[bg];'

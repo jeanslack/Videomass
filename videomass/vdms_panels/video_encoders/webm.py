@@ -34,11 +34,13 @@ class WebMPan(scrolled.ScrolledPanel):
     of the `vp8/vp9` encoders.
     """
 
-    def __init__(self, parent, opt, osplat):
+    def __init__(self, parent, opt):
         """
         This is a child of `AV_Conv` class-panel (parent) and the `opt`
         attribute is a dict owned by that class.
         """
+        get = wx.GetApp()
+        self.appdata = get.appset
         self.parent = parent
         self.opt = opt
         scrolled.ScrolledPanel.__init__(self, parent, -1,
@@ -52,7 +54,7 @@ class WebMPan(scrolled.ScrolledPanel):
         infomsg = "WebM"
         self.lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
         sizerbase.Add(self.lbl_info, 0, wx.ALL | wx.CENTER, 5)
-        if osplat == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             self.lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
             self.lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))

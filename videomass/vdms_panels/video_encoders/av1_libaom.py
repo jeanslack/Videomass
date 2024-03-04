@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
-FileName: libaom.py
-Porpose: Contains AV1 functionality for A/V Conversions
+FileName: av1_libaom.py
+Porpose: Contains AV1 aom functionality for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.04.2023
+Rev: Feb.27.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -28,16 +28,18 @@ import wx
 import wx.lib.scrolledpanel as scrolled
 
 
-class AV1Pan(scrolled.ScrolledPanel):
+class AV1_Aom(scrolled.ScrolledPanel):
     """
     This scroll panel implements controls for extra options
-    of the `av1-libaom` encoder.
+    of the `libaom-av1` encoder.
     """
-    def __init__(self, parent, opt, osplat):
+    def __init__(self, parent, opt):
         """
         This is a child of `AV_Conv` class-panel (parent) and the `opt`
         attribute is a dict owned by that class.
         """
+        get = wx.GetApp()
+        self.appdata = get.appset
         self.parent = parent
         self.opt = opt
         scrolled.ScrolledPanel.__init__(self, parent, -1,
@@ -48,10 +50,11 @@ class AV1Pan(scrolled.ScrolledPanel):
                                         )
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((10, 10), 0)
-        infomsg = "AV1 - libaom-av1"
-        lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
+        infomsg = "AOM-AV1\n(Alliance for Open Media)"
+        lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg,
+                                 style=wx.ALIGN_CENTRE_HORIZONTAL)
         sizer.Add(lbl_info, 0, wx.ALL | wx.CENTER, 5)
-        if osplat == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
             lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))

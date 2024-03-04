@@ -96,7 +96,6 @@ class TwoPass(Thread):
                      f'-i "{infile}" '
                      f'{self.time_seq[1]} '
                      f'{self.passlist[0]} '
-                     f'{TwoPass.appdata["ffthreads"]} '
                      f'-y {self.nul}'
                      )
             self.count += 1
@@ -180,7 +179,6 @@ class TwoPass(Thread):
                      f'{self.time_seq[1]} '
                      f'{self.passlist[1]} '
                      f'{volume} '
-                     f'{TwoPass.appdata["ffthreads"]} '
                      f'-y "{outfile}"'
                      )
             count = f'File {self.count}/{self.countmax} - Pass Two'

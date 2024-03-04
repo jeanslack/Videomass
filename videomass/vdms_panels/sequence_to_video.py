@@ -85,16 +85,15 @@ class SequenceToVideo(wx.Panel):
               "in the path you specify.")
     # ---------------------------------------------------------------------
 
-    def __init__(self, parent, icons):
+    def __init__(self, parent):
         """
         Simple GUI panel with few controls to create slideshows
         based on ffmpeg syntax.
-        .
         """
-        get = wx.GetApp()
-        appdata = get.appset
-        self.ffprobe_cmd = appdata['ffprobe_cmd']
         self.parent = parent  # parent is the MainFrame
+        icons = self.parent.icons
+        appdata = self.parent.appdata
+        self.ffprobe_cmd = appdata['ffprobe_cmd']
         self.opt = {"Scale": "", "Setdar": "", "Setsar": "",
                     "RESIZE": "", "ADuration": 0, "AudioMerging": "",
                     "Map": "-map 0:v?", "Shortest": ["", "Disabled"],

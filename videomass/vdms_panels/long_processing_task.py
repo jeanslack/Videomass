@@ -140,7 +140,7 @@ class LogOut(wx.Panel):
 
         wx.Panel.__init__(self, parent=parent)
 
-        infolbl = _("Process log:")
+        infolbl = _("Encoding Status")
         lbl = wx.StaticText(self, label=infolbl)
         if self.appdata['ostype'] != 'Darwin':
             lbl.SetLabelMarkup(f"<b>{infolbl}</b>")
