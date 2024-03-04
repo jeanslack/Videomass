@@ -74,6 +74,7 @@ class PrstPan(wx.Panel):
 
         {'Name': "",
         "Descritpion": "",
+        "Input_file": "",
         "First_pass": "",
         "Second_pass": "",
         "Supported_list": "",
@@ -476,6 +477,7 @@ class PrstPan(wx.Panel):
                 if selected == name["Name"]:  # profile name
                     self.array.append(name["Name"])
                     self.array.append(name["Description"])
+                    self.array.append(name["Input_file"])
                     self.array.append(name["First_pass"])
                     self.array.append(name["Second_pass"])
                     self.array.append(name["Supported_list"])
@@ -487,10 +489,10 @@ class PrstPan(wx.Panel):
                           "Videomass", wx.ICON_ERROR, self)
             return
 
-        self.txt_1cmd.AppendText(f'{self.array[2]}')  # cmd1 text ctrl
+        self.txt_1cmd.AppendText(f'{self.array[3]}')  # cmd1 text ctrl
         if self.array[3]:
             self.txt_2cmd.Enable()
-            self.txt_2cmd.AppendText(f'{self.array[3]}')  # cmd2 text ctrl
+            self.txt_2cmd.AppendText(f'{self.array[4]}')  # cmd2 text ctrl
         else:
             self.txt_2cmd.Disable()
 
@@ -831,10 +833,11 @@ class PrstPan(wx.Panel):
         newprst = write_new_profile(filename,
                                     Name=f'{self.array[0]} (duplicated)',
                                     Description=self.array[1],
-                                    First_pass=self.array[2],
-                                    Second_pass=self.array[3],
-                                    Supported_list=self.array[4],
-                                    Output_extension=self.array[5],
+                                    Input_file=self.array[2],
+                                    First_pass=self.array[3],
+                                    Second_pass=self.array[4],
+                                    Supported_list=self.array[5],
+                                    Output_extension=self.array[6],
                                     )
         if not newprst:
             self.reset_list()
@@ -870,8 +873,8 @@ class PrstPan(wx.Panel):
                                       PrstPan.YELLOW, PrstPan.BLACK)
             return
 
-        if (self.array[2].strip() != self.txt_1cmd.GetValue().strip()
-                or self.array[3].strip() != self.txt_2cmd.GetValue().strip()):
+        if (self.array[3].strip() != self.txt_1cmd.GetValue().strip()
+                or self.array[4].strip() != self.txt_2cmd.GetValue().strip()):
             if self.txtcmdedited:
 
                 msg = _("The selected profile command has been "
@@ -895,8 +898,9 @@ class PrstPan(wx.Panel):
                     # make sure we won't show it again the next time
                     self.txtcmdedited = False
 
-        outext = '' if self.array[5] == 'copy' else self.array[5]
-        extlst = self.array[4]
+        self.input_file_cmd = self.array[2]
+        outext = '' if self.array[6] == 'copy' else self.array[5]
+        extlst = self.array[5]
         file_src = supported_formats(extlst, self.parent.file_src)
         checking = check_files(file_src,
                                self.parent.outputdir,
@@ -910,7 +914,7 @@ class PrstPan(wx.Panel):
             return
         fsrc, fdest = checking
 
-        if self.array[3]:  # has double pass
+        if self.array[4]:  # has double pass
             self.two_Pass(fsrc, fdest, outext)
 
         else:
@@ -932,6 +936,7 @@ class PrstPan(wx.Panel):
                                              filesrc,
                                              outext,
                                              filedest,
+                                             self.input_file_cmd,
                                              pass1,
                                              None,
                                              '',
@@ -959,6 +964,7 @@ class PrstPan(wx.Panel):
                                              filesrc,
                                              outext,
                                              filedest,
+                                             self.input_file_cmd,
                                              None,
                                              [pass1, pass2],
                                              '',

@@ -62,11 +62,12 @@ class TwoPass(Thread):
         """
         self.stop_work_thread = False  # process terminate
         self.input_flist = args[1]  # list of infile (elements)
-        self.passlist = args[5]  # comand list set for double-pass
+        self.input_options = args[4]
+        self.passlist = args[6]  # comand list set for double-pass
         self.output_flist = args[3]  # output path
         self.duration = duration  # duration list
         self.time_seq = timeseq  # a time segment list
-        self.volume = args[7]  # volume compensation data
+        self.volume = args[8]  # volume compensation data
         self.count = 0  # count first for loop
         self.countmax = len(args[1])  # length file list
         self.logname = logname  # title name of file log
@@ -93,6 +94,7 @@ class TwoPass(Thread):
             pass1 = (f'"{TwoPass.appdata["ffmpeg_cmd"]}" '
                      f'{TwoPass.appdata["ffmpeg_default_args"]} '
                      f'{self.time_seq[0]} '
+                     f'{self.input_options}'
                      f'-i "{infile}" '
                      f'{self.time_seq[1]} '
                      f'{self.passlist[0]} '
@@ -176,6 +178,7 @@ class TwoPass(Thread):
             pass2 = (f'"{TwoPass.appdata["ffmpeg_cmd"]}" '
                      f'{TwoPass.appdata["ffmpeg_default_args"]} '
                      f'{self.time_seq[0]} '
+                     f'{self.input_options}'
                      f'-i "{infile}" '
                      f'{self.time_seq[1]} '
                      f'{self.passlist[1]} '

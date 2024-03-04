@@ -67,6 +67,7 @@ def json_data(arg):
 
     [{"Name": "",
       "Descritpion": "",
+      "Input_file": "",
       "First_pass": "",
       "Second_pass": "",
       "Supported_list": "",
@@ -191,6 +192,7 @@ def edit_existing_profile(path_prst, selected_profile, **kwargs):
         if item["Name"] == selected_profile:
             item["Name"] = kwargs['Name']
             item["Description"] = kwargs['Description']
+            item["Input_file"] = kwargs['Input_file']
             item["First_pass"] = kwargs['First_pass']
             item["Second_pass"] = kwargs['Second_pass']
             item["Supported_list"] = kwargs['Supported_list']

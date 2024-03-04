@@ -2,7 +2,8 @@
     {
         "Name": "01-h265_nvenc 2600k audio aac",
         "Description": "h265_nvenc 2600k audio aac",
-        "First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a aac -c:s copy",
+        "Input_file": "",
+		"First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a aac -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -10,7 +11,8 @@
     {
         "Name": "02-h265_nvenc cq23 audio aac",
         "Description": "h265_nvenc cq23 audio aac",
-        "First_pass": "-map 0 -vcodec hevc_nvenc -cq 23 -preset medium -c:a aac -c:s copy ",
+        "Input_file": "",
+		"First_pass": "-map 0 -vcodec hevc_nvenc -cq 23 -preset medium -c:a aac -c:s copy ",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -18,7 +20,8 @@
     {
         "Name": "03-h265_nvenc 2600k audio aac norm",
         "Description": "h265_nvenc 2600k audio aac normalized",
-        "First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a aac -af loudnorm=I=-16:LRA=11:TP=-1.5 -c:s copy",
+        "Input_file": "",
+		"First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a aac -af loudnorm=I=-16:LRA=11:TP=-1.5 -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -26,7 +29,8 @@
     {
         "Name": "04-h265_nvenc cq23 audio aac norm",
         "Description": "h265_nvenc cq23 audio aac normalized",
-        "First_pass": "-map 0 -vcodec hevc_nvenc -cq 23 -preset medium -c:a aac -af loudnorm=I=-16:LRA=11:TP=-1.5 -c:s copy ",
+        "Input_file": "",
+		"First_pass": "-map 0 -vcodec hevc_nvenc -cq 23 -preset medium -c:a aac -af loudnorm=I=-16:LRA=11:TP=-1.5 -c:s copy ",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -34,7 +38,8 @@
     {
         "Name": "07-h265_nvenc 2600k audio mp3 stereo",
         "Description": "h265_nvenc 2600k audio mp3_128kb 2channel",
-        "First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a libmp3lame -b:a 128k -c:s copy",
+        "Input_file": "",
+		"First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a libmp3lame -b:a 128k -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -42,7 +47,8 @@
     {
         "Name": "08-h265_nvenc cq23 audio mp3 stereo",
         "Description": "h265_nvenc 2600k audio mp3_128kb 2channel",
-        "First_pass": "-map 0 -vcodec hevc_nvenc -cq 23 -preset medium -c:a libmp3lame -b:a 128k -c:s copy",
+        "Input_file": "",
+		"First_pass": "-map 0 -vcodec hevc_nvenc -cq 23 -preset medium -c:a libmp3lame -b:a 128k -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -50,7 +56,8 @@
     {
         "Name": "09-h265_nvenc 2600k audio mp3 stereo norm",
         "Description": "h265_nvenc 2600k audio mp3_128kb 2channel normalized",
-        "First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a libmp3lame -b:a 128k -af loudnorm=I=-16:LRA=11:TP=-1.5 -c:s copy",
+        "Input_file": "",
+		"First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a libmp3lame -b:a 128k -af loudnorm=I=-16:LRA=11:TP=-1.5 -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -58,7 +65,8 @@
     {
         "Name": "10-h265_nvenc cq23 audio mp3 stereo norm",
         "Description": "h265_nvenc cq23  audio mp3_128kb 2channel normalized",
-        "First_pass": "-map 0 -vcodec hevc_nvenc -cq 23 -preset medium -c:a libmp3lame -b:a 128k -af loudnorm=I=-16:LRA=11:TP=-1.5 -c:s copy",
+        "Input_file": "",
+		"First_pass": "-map 0 -vcodec hevc_nvenc -cq 23 -preset medium -c:a libmp3lame -b:a 128k -af loudnorm=I=-16:LRA=11:TP=-1.5 -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -66,7 +74,8 @@
     {
         "Name": "13-h265_nvenc 2600k audio copy",
         "Description": "h265_nvenc 2600k audio copy",
-        "First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a copy -c:s copy",
+        "Input_file": "",
+		"First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a copy -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -74,7 +83,8 @@
     {
         "Name": "14-h265_nvenc cq23 audio copy",
         "Description": "h265_nvenc 2600k audio copy",
-        "First_pass": "-map 0 -vcodec hevc_nvenc -cq 23 -preset medium -c:a copy -c:s copy",
+        "Input_file": "",
+		"First_pass": "-map 0 -vcodec hevc_nvenc -cq 23 -preset medium -c:a copy -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -82,7 +92,8 @@
     {
         "Name": "15-h265_nvenc 2600k audio PCM",
         "Description": "h265_nvenc 2600k audio PCM",
-        "First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a pcm_s16le -c:s copy",
+        "Input_file": "",
+		"First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a pcm_s16le -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -90,7 +101,8 @@
      {
         "Name": "16-h265_nvenc 2600k audio vorbis",
         "Description": "h265_nvenc 2600k audio vorbis",
-        "First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a libvorbis -aq 6 -ar 44100 -c:s copy",
+        "Input_file": "",
+		"First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a libvorbis -aq 6 -ar 44100 -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -98,7 +110,8 @@
     {
         "Name": "17-h265_nvenc 2600k audio PCM norm",
         "Description": "h265_nvenc 2600k audio PCM normalized",
-        "First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a pcm_s16le -af loudnorm=I=-16:LRA=11:TP=-1.5 -c:s copy",
+        "Input_file": "",
+		"First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a pcm_s16le -af loudnorm=I=-16:LRA=11:TP=-1.5 -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -106,7 +119,8 @@
     {
         "Name": "18-h265_nvenc 2600k audio vorbis norm",
         "Description": "h265_nvenc 2600k audio vorbis normalized",
-        "First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a libvorbis -aq 6 -ar 44100 -af loudnorm=I=-16:LRA=11:TP=-1.5 -c:s copy",
+        "Input_file": "",
+		"First_pass": "-map 0 -vcodec hevc_nvenc -b:v 2600k -c:a libvorbis -aq 6 -ar 44100 -af loudnorm=I=-16:LRA=11:TP=-1.5 -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -114,7 +128,8 @@
     {
         "Name": "0-h265_nvenc 300k MED aac",
         "Description": "h265_nvenc 300k MED 720p audio aac - IPAD",
-        "First_pass": "-nostdin -dn -map 0 -vcodec hevc_nvenc -b:v 1000k -preset medium -vf \"scale=min'(720,iw)':-2\":flags=lanczos  -c:a aac -b:a 128k -c:s copy",
+        "Input_file": "",
+		"First_pass": "-nostdin -dn -map 0 -vcodec hevc_nvenc -b:v 1000k -preset medium -vf \"scale=min'(720,iw)':-2\":flags=lanczos  -c:a aac -b:a 128k -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mp4"
@@ -122,7 +137,8 @@
     {
         "Name": "0-h265_nvenc 300k MED mp3 NORM",
         "Description": "h265_nvenc 300k MED 720p audio mp3 NORM - IPAD",
-        "First_pass": "-nostdin -dn -map 0 -vcodec hevc_nvenc -b:v 300k -preset medium -vf \"scale=min'(720,iw)':-2\":flags=lanczos  -c:a libmp3lame -b:a 128k -af loudnorm=I=-16:LRA=11:TP=-1.5 -c:s copy",
+        "Input_file": "",
+		"First_pass": "-nostdin -dn -map 0 -vcodec hevc_nvenc -b:v 300k -preset medium -vf \"scale=min'(720,iw)':-2\":flags=lanczos  -c:a libmp3lame -b:a 128k -af loudnorm=I=-16:LRA=11:TP=-1.5 -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -130,7 +146,8 @@
     {
         "Name": "00-DEINTERLACE h265_2000k",
         "Description": "00-h265_nvenc 2000k DEINTERLACE audio copy",
-        "First_pass": "-nostdin -dn -map 0 -vcodec hevc_nvenc -filter:v bwdif=mode=send_field:parity=auto:deint=all -b:v 2000k -preset fast -c:a copy -c:s copy",
+        "Input_file": "",
+		"First_pass": "-nostdin -dn -map 0 -vcodec hevc_nvenc -filter:v bwdif=mode=send_field:parity=auto:deint=all -b:v 2000k -preset fast -c:a copy -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -138,7 +155,8 @@
     {
         "Name": "00-DEINTERLACE h265_9000k",
         "Description": "00-h265_nvenc 9000k DEINTERLACE audio copy",
-        "First_pass": "-nostdin -dn -map 0 -vcodec hevc_nvenc -filter:v bwdif=mode=send_field:parity=auto:deint=all -b:v 9000k -preset fast -c:a copy -c:s copy",
+        "Input_file": "",
+		"First_pass": "-nostdin -dn -map 0 -vcodec hevc_nvenc -filter:v bwdif=mode=send_field:parity=auto:deint=all -b:v 9000k -preset fast -c:a copy -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mov"
@@ -146,7 +164,8 @@
     {
         "Name": "00-DEINTERLACE h265_cq15",
         "Description": "00-h265_nvenc cq15 DEINTERLACE audio copy",
-        "First_pass": "-vcodec hevc_nvenc -filter:v bwdif=mode=send_field:parity=auto:deint=all -cq 15 -preset medium  -c:a copy -c:s copy",
+        "Input_file": "",
+		"First_pass": "-vcodec hevc_nvenc -filter:v bwdif=mode=send_field:parity=auto:deint=all -cq 15 -preset medium  -c:a copy -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"
@@ -154,7 +173,8 @@
     {
         "Name": "00-h264 2300k FAST Audio aac",
         "Description": "h265_nvenc 2300k FAST preset audio aac",
-        "First_pass": "-nostdin -dn -map 0 -vcodec libx264 -b:v 2300k -preset fast -c:a aac -c:s copy",
+        "Input_file": "",
+		"First_pass": "-nostdin -dn -map 0 -vcodec libx264 -b:v 2300k -preset fast -c:a aac -c:s copy",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"

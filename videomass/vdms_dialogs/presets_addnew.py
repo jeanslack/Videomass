@@ -36,6 +36,8 @@ class MemPresets(wx.Dialog):
     Show dialog to store and edit profiles of a selected preset.
 
     """
+    INPUT_FILE  = _("Input file options. These will be"
+                    "inserted between `ffmpeg` and `-i filename`")
     PASS_1 = _("One-Pass, Do not start with `ffmpeg "
                "-i filename`; do not end with "
                "`output-filename`"
@@ -84,6 +86,15 @@ class MemPresets(wx.Dialog):
         size_namedescr.Add(box_descr, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "")
         box_descr.Add(self.txt_descript, 0, wx.ALL | wx.EXPAND, 5)
+        box_input_file = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
+                                                        MemPresets.INPUT_FILE),
+                                           wx.VERTICAL
+                                           )
+        size_base.Add(box_input_file, 1, wx.ALL | wx.EXPAND, 5)
+        self.input_file_cmd = wx.TextCtrl(self, wx.ID_ANY, "",
+                                          style=wx.TE_MULTILINE
+                                          )
+        box_input_file.Add(self.input_file_cmd, 1, wx.ALL | wx.EXPAND, 5)
         box_pass1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                    MemPresets.PASS_1),
                                       wx.VERTICAL
@@ -136,11 +147,15 @@ class MemPresets(wx.Dialog):
 
         # ----- set_properties:
         if self.appdata['ostype'] == 'Darwin':
+            self.input_file_cmd.SetFont(wx.Font(12, wx.MODERN,
+                                            wx.NORMAL, wx.NORMAL))
             self.pass_1_cmd.SetFont(wx.Font(12, wx.MODERN,
                                             wx.NORMAL, wx.NORMAL))
             self.pass_2_cmd.SetFont(wx.Font(12, wx.MODERN,
                                             wx.NORMAL, wx.NORMAL))
         else:
+            self.input_file_cmd.SetFont(wx.Font(9, wx.MODERN,
+                                            wx.NORMAL, wx.NORMAL))
             self.pass_1_cmd.SetFont(wx.Font(9, wx.MODERN,
                                             wx.NORMAL, wx.NORMAL))
             self.pass_2_cmd.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL,
@@ -148,6 +163,7 @@ class MemPresets(wx.Dialog):
 
         self.txt_name.SetToolTip(_('A short profile name'))
         self.txt_descript.SetToolTip(_('A long description of the profile'))
+        self.input_file_cmd.SetToolTip(_('Reserved arguments for the input file args'))
         self.pass_1_cmd.SetToolTip(_('Reserved arguments for the first pass'))
         self.pass_2_cmd.SetToolTip(_('Reserved arguments for the second pass'))
         self.txt_supp.SetToolTip(_('One or more comma-separated format names '
@@ -184,10 +200,11 @@ class MemPresets(wx.Dialog):
         """
         self.txt_name.AppendText(self.array[0])  # name
         self.txt_descript.AppendText(self.array[1])  # descript
-        self.pass_1_cmd.AppendText(self.array[2])  # command 1
-        self.pass_2_cmd.AppendText(self.array[3])  # command 2
-        self.txt_supp.AppendText(self.array[4])  # file supportted
-        self.txt_ext.AppendText(self.array[5])  # extension
+        self.input_file_cmd.AppendText(self.array[2]) # input file args
+        self.pass_1_cmd.AppendText(self.array[3])  # command 1
+        self.pass_2_cmd.AppendText(self.array[4])  # command 2
+        self.txt_supp.AppendText(self.array[5])  # file supportted
+        self.txt_ext.AppendText(self.array[6])  # extension
 
 # ---------------------Callback (event handler)----------------------#
 
@@ -241,6 +258,7 @@ class MemPresets(wx.Dialog):
         """
         name = self.txt_name.GetValue()
         descript = self.txt_descript.GetValue()
+        input_file = self.input_file_cmd.GetValue()
         pass_1 = self.pass_1_cmd.GetValue()
         pass_2 = self.pass_2_cmd.GetValue()
         file_support = self.txt_supp.GetValue().strip()
@@ -271,6 +289,7 @@ class MemPresets(wx.Dialog):
             writenewprf = write_new_profile(self.path_prst,
                                             Name=name.strip(),
                                             Description=descript,
+                                            Input_file=input_file,
                                             First_pass=pass_1,
                                             Second_pass=pass_2,
                                             Supported_list=file_support,
@@ -288,6 +307,7 @@ class MemPresets(wx.Dialog):
                                             self.array[0],
                                             Name=name.strip(),
                                             Description=descript,
+                                            Input_file=input_file,
                                             First_pass=pass_1,
                                             Second_pass=pass_2,
                                             Supported_list=file_support,
