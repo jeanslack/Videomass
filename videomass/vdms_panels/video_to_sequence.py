@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2024
+Rev: Mar.05.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -447,7 +447,7 @@ class VideoToSequence(wx.Panel):
             if self.opt["Setsar"]:
                 scale = f'{scale},{self.opt["Setsar"]}'
             cmd = ('-skip_frame nokey', f'-vf "{scale},tile={rows}x{cols}:'
-                   f'padding={pad}:margin={marg}:color=White" -an -fps_mode 0')
+                   f'padding={pad}:margin={marg}:color=White" -an -fps_mode vfr')
 
         elif self.rdbx_opt.GetSelection() == 2:
             setf = ''

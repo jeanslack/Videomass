@@ -520,14 +520,14 @@ class VidstabSet(wx.Dialog):
         if mode == 'detect':
             nul = ('NUL' if VidstabSet.appdata['ostype']
                    == 'Windows' else '/dev/null')
-            argstr = f'{sseg} -i "{infile}" {tseg} {args} -f null  -y {nul}'
+            argstr = f'{sseg} -i "{infile}" {tseg} {args} -f null {nul}'
 
         elif mode == 'trasform':
-            argstr = f'{sseg} -i "{infile}" {tseg} {args} -y "{outfile}"'
+            argstr = f'{sseg} -i "{infile}" {tseg} {args} "{outfile}"'
 
         elif mode == 'makeduo':
             argstr = (f'{sseg} -i "{infile}" {tseg} -i "{self.framesrc}" '
-                      f'{tseg} -filter_complex hstack -y "{outfile}"')
+                      f'{tseg} -filter_complex hstack "{outfile}"')
         else:
             return None
 

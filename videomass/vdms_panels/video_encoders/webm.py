@@ -104,6 +104,8 @@ class WebMPan(scrolled.ScrolledPanel):
     def default(self):
         """
         Set to default
+        # self.slider_CRF.SetMax(63)
+            # self.slider_CRF.SetValue(31), self.spin_Vbrate.SetValue(0)
         """
         if self.opt["VideoCodec"] == "-c:v libvpx":
             self.ckbx_rowmt.SetValue(False)

@@ -131,8 +131,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         sizerbase.Add(self.box_audioProper, 0, wx.ALL | wx.CENTRE, 5)
         sizer_a_ctrl = wx.BoxSizer(wx.HORIZONTAL)
         self.box_audioProper.Add(sizer_a_ctrl, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_set = wx.Button(self, wx.ID_ANY,
-                                    _("Settings"), size=(-1, -1))
+        self.btn_set = wx.Button(self, wx.ID_ANY, _("Settings"), size=(-1, -1))
         self.btn_set.SetBitmap(bmpasettings, wx.LEFT)
         sizer_a_ctrl.Add(self.btn_set, 0, wx.ALL
                          | wx.ALIGN_CENTER_VERTICAL, 2,
@@ -170,8 +169,6 @@ class AudioEncoders(scrolled.ScrolledPanel):
                                         | wx.CB_READONLY,
                                         )
         sizer_Amap.Add(self.cmb_A_outMap, 0, wx.LEFT | wx.CENTRE, 5)
-
-        #sizer_Amap.Add((20, 5), 0)
         self.btn_audio_preview = wx.Button(self, wx.ID_ANY,
                                            _("Preview"), size=(-1, -1))
         self.btn_audio_preview.SetBitmap(bmpapreview, wx.LEFT)
@@ -182,14 +179,11 @@ class AudioEncoders(scrolled.ScrolledPanel):
         sizerbase.Add(self.box_aFilters, 1, wx.ALL | wx.EXPAND, 5)
         sizer_a_normaliz = wx.BoxSizer(wx.VERTICAL)
         self.box_aFilters.Add(sizer_a_normaliz, 0, wx.EXPAND)
+        normopt = [('Off'), ('PEAK'), ('RMS'), ('EBU R128 (Worst)'),
+                   ('EBU R128 (High-Quality)')]
         self.rdbx_normalize = wx.RadioBox(self, wx.ID_ANY,
                                           (_("Normalization")), size=(-1, 60),
-                                          choices=[('Off'),
-                                                   ('PEAK'),
-                                                   ('RMS'),
-                                                   ('EBU R128 one pass'),
-                                                   ('EBU R128 double pass'),
-                                                   ],
+                                          choices=normopt,
                                           majorDimension=1,
                                           style=wx.RA_SPECIFY_ROWS,
                                           )
@@ -201,14 +195,12 @@ class AudioEncoders(scrolled.ScrolledPanel):
                                      _("Volume detect"), size=(-1, -1))
         self.btn_voldect.SetBitmap(bmppeaklevel, wx.LEFT)
         grid_peak.Add(self.btn_voldect, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        self.btn_details = wx.Button(self, wx.ID_ANY,
-                                     _("Volume Statistics"), size=(-1, -1))
-        self.btn_details.SetBitmap(bmpanalyzes, wx.LEFT)
-        grid_peak.Add(self.btn_details, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        self.btn_stat = wx.Button(self, wx.ID_ANY,
+                                  _("Volume Statistics"), size=(-1, -1))
+        self.btn_stat.SetBitmap(bmpanalyzes, wx.LEFT)
+        grid_peak.Add(self.btn_stat, 0, wx.ALIGN_CENTER_VERTICAL, 0)
 
-        self.lab_amplitude = wx.StaticText(self, wx.ID_ANY,
-                                           (_("Target level:"))
-                                           )
+        self.lab_amplitude = wx.StaticText(self, wx.ID_ANY, _("Target level:"))
         grid_peak.Add(self.lab_amplitude, 0, wx.LEFT | wx.CENTRE, 20)
         self.spin_target = FS.FloatSpin(self, wx.ID_ANY,
                                         min_val=-99.0, max_val=0.0,
@@ -218,7 +210,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         self.spin_target.SetFormat("%f"), self.spin_target.SetDigits(1)
         grid_peak.Add(self.spin_target, 0, wx.LEFT | wx.CENTRE, 5)
 
-        self.lab_help_norm = wx.StaticText(self, wx.ID_ANY, ("Peak"))
+        self.lab_help_norm = wx.StaticText(self, wx.ID_ANY, (""))
         sizer_a_normaliz.Add(self.lab_help_norm, 0, wx.ALL | wx.EXPAND, 5)
 
         sizer_a_normaliz.Add((0, 15), 0)
@@ -253,21 +245,19 @@ class AudioEncoders(scrolled.ScrolledPanel):
                                      )
         self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
         grid_ebu.Add(self.spin_lra, 0, wx.LEFT | wx.CENTRE, 5)
-        self.lab_help_ebu = wx.StaticText(self, wx.ID_ANY, ("Ciao"))
+        self.lab_help_ebu = wx.StaticText(self, wx.ID_ANY, (""))
         sizer_a_normaliz.Add(self.lab_help_ebu, 0, wx.ALL | wx.EXPAND, 5)
 
         if self.appdata['ostype'] == 'Darwin':
             self.lab_help_norm.SetFont(wx.Font(11, wx.DEFAULT,
                                                wx.NORMAL, wx.NORMAL))
             self.lab_help_ebu.SetFont(wx.Font(11, wx.DEFAULT,
-                                               wx.NORMAL, wx.NORMAL))
+                                              wx.NORMAL, wx.NORMAL))
         else:
             self.lab_help_norm.SetFont(wx.Font(8, wx.DEFAULT,
                                                wx.NORMAL, wx.NORMAL))
             self.lab_help_ebu.SetFont(wx.Font(8, wx.DEFAULT,
-                                               wx.NORMAL, wx.NORMAL))
-
-
+                                              wx.NORMAL, wx.NORMAL))
         self.SetSizer(sizerbase)  # set panel
         self.SetAutoLayout(1)
         self.SetupScrolling()
@@ -304,45 +294,50 @@ class AudioEncoders(scrolled.ScrolledPanel):
                  'audio stream, you can select it using Index Selection.'))
         self.btn_audio_preview.SetToolTip(tip)
 
-        print('Se selezioni "All", tutti i flussi audio verranno processati ')
-
-        # initialize default layout:
-        # self.rdb_a.SetSelection(0)
-        # self.cmb_A_outMap.SetSelection(0)
-        # self.cmb_A_inMap.SetSelection(0)
-        # self.cmb_A_outMap.Disable()
-        # self.audio_default()
-        # self.normalize_default()
-
-        # self.Bind(wx.EVT_BUTTON, self.on_audio_preview, self.btn_audio_preview)
-        self.Bind(wx.EVT_RADIOBOX, self.on_AudioCodecs, self.rdb_a)
-        self.Bind(wx.EVT_BUTTON, self.on_AudioParam, self.btn_set)
+        self.Bind(wx.EVT_RADIOBOX, self.on_getting_acodec, self.rdb_a)
+        self.Bind(wx.EVT_BUTTON, self.on_setting_acodec, self.btn_set)
         self.Bind(wx.EVT_COMBOBOX, self.on_audio_index, self.cmb_A_inMap)
         self.Bind(wx.EVT_COMBOBOX, self.on_audio_mapping, self.cmb_A_outMap)
-        self.Bind(wx.EVT_RADIOBOX, self.onNormalize, self.rdbx_normalize)
-        self.Bind(wx.EVT_SPINCTRL, self.on_enter_Ampl, self.spin_target)
-        self.Bind(wx.EVT_BUTTON, self.on_Audio_analyzes, self.btn_voldect)
-        self.Bind(wx.EVT_BUTTON, self.on_Show_normlist, self.btn_details)
-
-        # self.audio_default()
+        self.Bind(wx.EVT_RADIOBOX, self.on_normalize, self.rdbx_normalize)
+        self.Bind(wx.EVT_SPINCTRL, self.on_enter_gain, self.spin_target)
+        self.Bind(wx.EVT_BUTTON, self.on_analyzes, self.btn_voldect)
+        self.Bind(wx.EVT_BUTTON, self.on_show_vol_statistics, self.btn_stat)
     # ------------------------------------------------------------------#
 
     def audio_options(self):
         """
         Get audio parameters
         """
-        print('EBU: ',self.opt["EBU"], 'PEAK :',self.opt["PEAK"], 'RMS :',self.opt["RMS"])
+        if self.rdbx_normalize.GetSelection() == 0:
+            del self.opt["PEAK"][:]
+            del self.opt["RMS"][:]
+            self.opt["EBU"] = ["", ""]
 
-        # ebu double pass
-        loudfilter = (f'loudnorm=I={str(self.spin_i.GetValue())}:'
-                      f'TP={str(self.spin_tp.GetValue())}:'
-                      f'LRA={str(self.spin_lra.GetValue())}:'
-                      f'print_format=summary'
-                      )
-        # ebu single pass
-        afilter = (f'-af loudnorm=I={str(self.spin_i.GetValue())}'
-                       f':LRA={str(self.spin_lra.GetValue())}'
-                       f':TP={str(self.spin_tp.GetValue())}')
+        if self.rdbx_normalize.GetSelection() == 1:  # is checked
+            del self.opt["RMS"][:]
+            self.opt["EBU"] = ["", ""]
+
+        elif self.rdbx_normalize.GetSelection() == 2:
+            del self.opt["PEAK"][:]
+            self.opt["EBU"] = ["", ""]
+
+        elif self.rdbx_normalize.GetSelection() == 3:
+            del self.opt["PEAK"][:]
+            del self.opt["RMS"][:]
+            loud = (f'-filter:a: loudnorm=I={str(self.spin_i.GetValue())}'
+                    f':LRA={str(self.spin_lra.GetValue())}'
+                    f':TP={str(self.spin_tp.GetValue())}')
+            self.opt["EBU"][1] = loud
+
+        elif self.rdbx_normalize.GetSelection() == 4:
+            del self.opt["PEAK"][:]
+            del self.opt["RMS"][:]
+            loud = (f'loudnorm=I={str(self.spin_i.GetValue())}:'
+                    f'TP={str(self.spin_tp.GetValue())}:'
+                    f'LRA={str(self.spin_lra.GetValue())}:'
+                    f'print_format=summary'
+                    )
+            self.opt["EBU"][1] = loud
 
         return (f'{self.opt["AudioCodec"][0]} '
                 f'{self.opt["AudioCodec"][1]} '
@@ -351,7 +346,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
                 f'{self.opt["AudioChannel"][1]} '
                 f'{self.opt["AudioDepth"][1]} '
                 f'{self.opt["AudioMap"][0]} '
-                ).split()
+                )
     # ------------------------------------------------------------------#
 
     def reset_args(self, event):
@@ -359,7 +354,6 @@ class AudioEncoders(scrolled.ScrolledPanel):
         Set default event
         """
         self.audio_default()
-        #self.btn_reset.Disable()
     # ------------------------------------------------------------------#
 
     def audio_default(self):
@@ -389,30 +383,33 @@ class AudioEncoders(scrolled.ScrolledPanel):
         This method even is called by `MainFrame.switch_video_conv()`
         on start-up and when there are changing on `dragNdrop` panel.
         """
-        self.opt["PEAK"], self.opt["EBU"], self.opt["RMS"] = [], "", []
+        del self.opt["PEAK"][:]
+        del self.opt["RMS"][:]
+        self.opt["EBU"] = ["", ""]
 
         if setoff == 'all':
             self.rdbx_normalize.SetSelection(0)
             self.spin_i.Disable(), self.spin_lra.Disable()
             self.spin_tp.Disable(), self.btn_voldect.Disable()
-            self.spin_target.Disable(), self.btn_details.Disable()
+            self.spin_target.Disable(), self.btn_stat.Disable()
             self.spin_target.SetValue(-1.0)
 
         elif setoff == 'ebu':
             self.btn_voldect.Disable(), self.spin_target.Disable()
-            self.btn_details.Disable(), self.spin_i.Enable()
+            self.btn_stat.Disable(), self.spin_i.Enable()
             self.spin_lra.Enable(), self.spin_tp.Enable()
+            self.opt["EBU"][0] = self.rdbx_normalize.GetStringSelection()
 
         elif setoff == 'rms':
             self.spin_i.Disable(), self.spin_lra.Disable()
             self.spin_tp.Disable(), self.btn_voldect.Enable()
-            self.spin_target.Enable(), self.btn_details.Disable()
+            self.spin_target.Enable(), self.btn_stat.Disable()
             self.spin_target.SetValue(-20.0)
 
         elif setoff == 'peak':
             self.spin_i.Disable(), self.spin_lra.Disable()
             self.spin_tp.Disable(), self.btn_voldect.Enable()
-            self.spin_target.Enable(), self.btn_details.Disable()
+            self.spin_target.Enable(), self.btn_stat.Disable()
             self.spin_target.SetValue(-1.0)
     # ------------------------------------------------------------------#
 
@@ -451,7 +448,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
                 return _undetect()
             afilter = f'-af {self.opt["RMS"][fileget[1]][5].split()[1]}'
 
-        elif self.rdbx_normalize.GetSelection() in  (3, 4):
+        elif self.rdbx_normalize.GetSelection() in (3, 4):
             afilter = (f'-af loudnorm=I={str(self.spin_i.GetValue())}'
                        f':LRA={str(self.spin_lra.GetValue())}'
                        f':TP={str(self.spin_tp.GetValue())}')
@@ -503,7 +500,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         return True
     # ------------------------------------------------------------------#
 
-    def setAudioRadiobox(self, event):
+    def set_audio_radiobox(self, event):
         """
         Container combobox sets compatible audio codecs
         for the selected format. See AV_FORMATS dict
@@ -534,10 +531,10 @@ class AudioEncoders(scrolled.ScrolledPanel):
                 if self.rdb_a.IsItemEnabled(x):
                     self.rdb_a.SetSelection(x)
                     break
-            self.on_AudioCodecs(self)
+            self.on_getting_acodec(self)
     # ------------------------------------------------------------------#
 
-    def on_AudioCodecs(self, event):
+    def on_getting_acodec(self, event):
         """
         choosing an item on audio radiobox list, sets the
         audio format name and the appropriate command arg,
@@ -583,7 +580,6 @@ class AudioEncoders(scrolled.ScrolledPanel):
                     self.normalize_default()
                     self.opt["AudioCodec"] = ["", v]
                     _param(False, False)
-
                     # break
                 else:
                     _param(True, True)
@@ -602,7 +598,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
             self.on_audio_index(self)
     # -------------------------------------------------------------------#
 
-    def on_AudioParam(self, event):
+    def on_setting_acodec(self, event):
         """
         Event by Audio options button. Set audio codec string and audio
         command string and pass it to audio_dialogs method.
@@ -680,7 +676,11 @@ class AudioEncoders(scrolled.ScrolledPanel):
             idx = str(int(self.cmb_A_inMap.GetValue()) - 1)
             self.opt["AudioIndex"] = f'-map 0:a:{idx}'
 
-        self.on_audio_mapping(self)
+        if self.rdbx_normalize.GetSelection() in [1, 2]:
+            if not self.btn_voldect.IsEnabled():
+                self.btn_voldect.Enable()
+
+        self.on_audio_mapping(None)
     # ------------------------------------------------------------------#
 
     def on_audio_mapping(self, event):
@@ -706,13 +706,9 @@ class AudioEncoders(scrolled.ScrolledPanel):
 
         if self.opt["AudioCodec"][0]:
             self.opt["AudioCodec"][0] = f"-c:a:{self.opt['AudioMap'][1]}"
-
-        if self.rdbx_normalize.GetSelection() in [1, 2]:
-            if not self.btn_voldect.IsEnabled():
-                self.btn_voldect.Enable()
     # ------------------------------------------------------------------#
 
-    def onNormalize(self, event):
+    def on_normalize(self, event):
         """
         Enable or disable functionality for volume normalization.
         """
@@ -723,14 +719,19 @@ class AudioEncoders(scrolled.ScrolledPanel):
                    'mean volume calculates the amount of gain to reach same '
                    'average power signal.'
                    ))
-        msg_3 = (_('One-pass Loudnorm normalization. Normalizes '
+        msg_3 = (_('Loudnorm normalization. Normalizes '
                    'the perceived loudness using the \"loudnorm\" filter, '
-                   'which implements the EBU R128 algorithm.'
+                   'which implements the EBU R128 algorithm.\n'
+                   'Ideal for live normalization. It produces worse results '
+                   'than the High-quality two-pass Loudnorm normalization, '
+                   'but is faster.'
                    ))
         msg_4 = (_('High-quality two-pass Loudnorm normalization. '
                    'Normalizes the perceived loudness using the '
                    '\"loudnorm\" filter, which implements the EBU R128 '
-                   'algorithm.'
+                   'algorithm.\nIdeal for postprocessing. Requires '
+                   '\"Two-Pass Encoding\" enabled if '
+                   'the Media target is set to Video.'
                    ))
         if self.rdbx_normalize.GetSelection() == 0:
             self.normalize_default('all')
@@ -753,7 +754,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
             self.normalize_default('ebu')
     # ------------------------------------------------------------------#
 
-    def on_enter_Ampl(self, event):
+    def on_enter_gain(self, event):
         """
         when spin_amplitude is changed enable 'Volumedetect' to
         update new incomming
@@ -763,7 +764,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
             self.btn_voldect.Enable()
     # ------------------------------------------------------------------#
 
-    def on_Audio_analyzes(self, event):
+    def on_analyzes(self, event):
         """
         Clicking on the "Detect Volume" button performs the
         PEAK/RMS-based volume detection and analysis process
@@ -808,11 +809,10 @@ class AudioEncoders(scrolled.ScrolledPanel):
             self.opt[target].append(dataref)
 
         self.btn_voldect.Disable()
-        self.btn_details.Enable()
-        #self.nb_Audio.Layout()
+        self.btn_stat.Enable()
     # ------------------------------------------------------------------#
 
-    def on_Show_normlist(self, event):
+    def on_show_vol_statistics(self, event):
         """
         Show a wx.ListCtrl dialog with volumedetect data
         """
@@ -826,7 +826,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
             title = _('RMS-based volume statistics')
 
         if self.btn_voldect.IsEnabled():
-            self.on_Audio_analyzes(self)
+            self.on_analyzes(self)
 
         lev = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
         self.maindata.audivolnormalize = AudioVolNormal(title,

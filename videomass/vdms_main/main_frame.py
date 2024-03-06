@@ -1229,7 +1229,7 @@ class MainFrame(wx.Frame):
             bmphome = get_bmp(self.icons['home'], bmp_size)
             bmpclear = get_bmp(self.icons['cleanup'], bmp_size)
             bmpplay = get_bmp(self.icons['play'], bmp_size)
-            bmpqueue = get_bmp(self.icons['queue'], bmp_size)
+            # bmpqueue = get_bmp(self.icons['queue'], bmp_size)
         else:
             bmpback = wx.Bitmap(self.icons['previous'], wx.BITMAP_TYPE_ANY)
             bmpnext = wx.Bitmap(self.icons['next'], wx.BITMAP_TYPE_ANY)
@@ -1240,7 +1240,7 @@ class MainFrame(wx.Frame):
             bmphome = wx.Bitmap(self.icons['home'], wx.BITMAP_TYPE_ANY)
             bmpclear = wx.Bitmap(self.icons['cleanup'], wx.BITMAP_TYPE_ANY)
             bmpplay = wx.Bitmap(self.icons['play'], wx.BITMAP_TYPE_ANY)
-            bmpqueue = wx.Bitmap(self.icons['queue'], wx.BITMAP_TYPE_ANY)
+            # bmpqueue = wx.Bitmap(self.icons['queue'], wx.BITMAP_TYPE_ANY)
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
@@ -1282,11 +1282,6 @@ class MainFrame(wx.Frame):
         tip = _("Clear the file list")
         clear = self.toolbar.AddTool(9, _('Clear'),
                                      bmpclear,
-                                     tip, wx.ITEM_NORMAL
-                                     )
-        tip = _("Manage queue file settings before running jobs")
-        queue = self.toolbar.AddTool(10, _('Queue'),
-                                     bmpqueue,
                                      tip, wx.ITEM_NORMAL
                                      )
         self.toolbar.Realize()

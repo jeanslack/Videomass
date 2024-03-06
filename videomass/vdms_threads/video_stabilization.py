@@ -104,11 +104,11 @@ class VidStab(Thread):
                      f'-i "{infile}" '
                      f'{self.time_seq[1]} '
                      f'{self.passlist[0]} '
-                     f'-y {self.nul}'
+                     f'{self.nul}'
                      )
             self.count += 1
             count = (f'File {self.count}/{self.countmax} - Pass One\n'
-                     f'Video stabilization detect...'
+                     f'Detecting statistics for measurements...'
                      )
             cmd = (f'{count}\nSource: "{infile}"\nDestination: "{self.nul}"'
                    f'\n\n[COMMAND]:\n{pass1}'
@@ -190,10 +190,10 @@ class VidStab(Thread):
                      f'{self.time_seq[1]} '
                      f'{self.passlist[1]} '
                      f'{volume} '
-                     f'-y "{outfile}"'
+                     f'"{outfile}"'
                      )
             count = (f'File {self.count}/{self.countmax} - Pass Two\n'
-                     f'Video transform...'
+                     f'Application of Audio/Video filters...'
                      )
             cmd = (f'{count}\nSource: "{infile}"\nDestination: "{outfile}"'
                    f'\n\n[COMMAND]:\n{pass2}'
@@ -272,9 +272,9 @@ class VidStab(Thread):
                          f'"[0:v:0] '
                          f'{self.addflt}pad=2*iw:ih[bg];'
                          f'[bg][1:v:0]overlay=main_w/2:0" '
-                         f'-y "{outduo}"'
+                         f'"{outduo}"'
                          )
-                count = f'File {self.count}/{self.countmax}\nMake duo...'
+                count = f'File {self.count}/{self.countmax}\nMake duo file...'
                 cmd = (f'{count}\nSource: "{infile}"\n'
                        f'Destination: "{outduo}"\n\n[COMMAND]:\n{pass3}'
                        )

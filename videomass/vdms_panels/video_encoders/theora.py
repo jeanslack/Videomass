@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
-FileName: av1_svt.py
-Porpose: Contains STV-AV1 functionality for A/V Conversions
+FileName: av1_libaom.py
+Porpose: Contains AV1 aom functionality for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -28,25 +28,11 @@ import wx
 import wx.lib.scrolledpanel as scrolled
 
 
-class AV1_Svt(scrolled.ScrolledPanel):
+class Theora(scrolled.ScrolledPanel):
     """
     This scroll panel implements controls for extra options
-    of the `libsvtav1` encoder.
+    of the `libaom-av1` encoder.
     """
-    # presets used by svtav1:
-    SVT_OPT = {("Preset"): ("-1", "0", "1",
-                              "2", "3", "4", "5",
-                              "6", "7", "8", "9", "10", "11", "12", "13"
-                              ),
-                ("Profile"): ("None", "main"),
-                ("Tune"): ("None", "psnr")
-                }
-    # profile level for profiles x264/x265
-    LEVELS = ('None', '1', '2', '2.1', '3', '3.1', '4', '4.1',
-              '5', '5.1', '5.2', '6', '6.1', '6.2', '8.5'
-              )
-
-
     def __init__(self, parent, opt):
         """
         This is a child of `AV_Conv` class-panel (parent) and the `opt`
@@ -64,7 +50,7 @@ class AV1_Svt(scrolled.ScrolledPanel):
                                         )
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((10, 10), 0)
-        infomsg = "SVT-AV1\n(Scalable Video Technology)"
+        infomsg = "AOM-AV1\n(Alliance for Open Media)"
         lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg,
                                  style=wx.ALIGN_CENTRE_HORIZONTAL)
         sizer.Add(lbl_info, 0, wx.ALL | wx.CENTER, 5)
@@ -130,7 +116,7 @@ class AV1_Svt(scrolled.ScrolledPanel):
         """
         Set to default
         self.slider_CRF.SetMax(63)
-            self.slider_CRF.SetValue(30), self.spin_Vbrate.SetValue(0)
+            self.slider_CRF.SetValue(31), self.spin_Vbrate.SetValue(0)
         """
         self.spin_gop.SetValue(250)
         self.opt["GOP"] = '-g 250 -keyint_min 250'

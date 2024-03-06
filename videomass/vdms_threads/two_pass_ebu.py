@@ -98,11 +98,11 @@ class Loudnorm(Thread):
                      f'-i "{infile}" '
                      f'{self.time_seq[1]} '
                      f'{self.passlist[0]} '
-                     f'-y {self.nul}'
+                     f'{self.nul}'
                      )
             self.count += 1
             count = (f'File {self.count}/{self.countmax} - Pass One\n '
-                     f'Loudnorm ebu: Getting statistics for measurements...')
+                     f'Detecting statistics for measurements...')
             cmd = (f'{count}\nSource: "{infile}"\nDestination: '
                    f'"{self.nul}"\n\n'
                    f'[COMMAND]:\n{pass1}')
@@ -199,10 +199,10 @@ class Loudnorm(Thread):
                      f'{self.passlist[1]} '
                      f'-filter:a:{self.audio_outmap[1]} '
                      f'{filters} '
-                     f'-y "{outfile}"'
+                     f'"{outfile}"'
                      )
             count = (f'File {self.count}/{self.countmax} - Pass Two\n'
-                     f'Loudnorm ebu: apply EBU R128...'
+                     f'Application of Audio/Video filters...'
                      )
             cmd = (f'\n{count}\nSource: "{infile}"\n'
                    f'Destination: "{outfile}"\n\n'

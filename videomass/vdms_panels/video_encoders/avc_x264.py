@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
-FileName: hevc_avc.py
-Porpose: Contains h.264 functionality for A/V Conversions
+FileName: avc_x264.py
+Porpose: Contains H.264 functionality for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+import os
 import wx
 import wx.lib.scrolledpanel as scrolled
 
@@ -69,25 +70,6 @@ class Avc_X264(scrolled.ScrolledPanel):
         This is a child of `AV_Conv` class-panel (parent) and the `opt`
         attribute is a dict owned by that class.
 
-        msg = _("Threads used for transcoding (from 0 to 32):")
-        labFFthreads = wx.StaticText(tabThree, wx.ID_ANY, (msg))
-        gridSizopt.Add(labFFthreads, 0, wx.LEFT | wx.ALIGN_CENTER, 5)
-        self.spinctrl_threads = wx.SpinCtrl(tabThree, wx.ID_ANY,
-                                            f"{self.appdata['ffthreads'][9:]}",
-                                            size=(-1, -1), min=0, max=32,
-                                            style=wx.TE_PROCESS_ENTER
-                                            )
-        gridSizopt.Add(self.spinctrl_threads, 1, wx.ALL | wx.ALIGN_CENTER, 5)
-
-        self.Bind(wx.EVT_SPINCTRL, self.on_threads, self.spinctrl_threads)
-
-        def on_threads(self, event):
-            "set cpu number threads used as option on ffmpeg"
-            sett = self.spinctrl_threads.GetValue()
-            self.settings['ffthreads'] = f'-threads {sett}'
-
-            "ffthreads": "-threads 4"
-    # ---------------------------------------------------------------------#
         """
         get = wx.GetApp()
         self.appdata = get.appset
@@ -108,12 +90,11 @@ class Avc_X264(scrolled.ScrolledPanel):
             self.labinfo.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
         self.btn_reset = wx.Button(self, wx.ID_ANY, _("Reload"), size=(-1, -1))
-        #self.btn_reset.SetBitmap(bmpsaveprf, wx.LEFT)
-        sizerbase.Add(self.btn_reset, 0, wx.ALL | wx.CENTRE, 2)
+        sizerbase.Add(self.btn_reset, 0, wx.TOP | wx.CENTRE, 10)
         sizerbase.Add((0, 15), 0)
 
         gridcod = wx.FlexGridSizer(5, 8, 0, 0)
-        labpresets = wx.StaticText(self, wx.ID_ANY, 'Preset')
+        labpresets = wx.StaticText(self, wx.ID_ANY, 'Preset:')
         gridcod.Add(labpresets, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.cmb_preset = wx.ComboBox(self, wx.ID_ANY,
                                       choices=Avc_X264.H264_OPT["Presets"],
@@ -122,7 +103,7 @@ class Avc_X264(scrolled.ScrolledPanel):
                                       )
         gridcod.Add(self.cmb_preset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         gridcod.Add((40, 0), 0)
-        labcrf = wx.StaticText(self, wx.ID_ANY, 'CRF')
+        labcrf = wx.StaticText(self, wx.ID_ANY, 'CRF:')
         gridcod.Add(labcrf, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.slider_crf = wx.Slider(self, wx.ID_ANY, 1, -1, 51,
                                     size=(150, -1), style=wx.SL_HORIZONTAL
@@ -133,14 +114,14 @@ class Avc_X264(scrolled.ScrolledPanel):
                                     )
         gridcod.Add(self.slider_crf, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         gridcod.Add((40, 0), 0)
-        labminr = wx.StaticText(self, wx.ID_ANY, 'Minrate (kbps)')
+        labminr = wx.StaticText(self, wx.ID_ANY, 'Minrate (kbps):')
         gridcod.Add(labminr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.spin_minr = wx.SpinCtrl(self, wx.ID_ANY,
                                      "-1", min=-1, max=900000,
                                      style=wx.TE_PROCESS_ENTER
                                      )
         gridcod.Add(self.spin_minr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        labprofile = wx.StaticText(self, wx.ID_ANY, 'Profile')
+        labprofile = wx.StaticText(self, wx.ID_ANY, 'Profile:')
         gridcod.Add(labprofile, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.cmb_profile = wx.ComboBox(self, wx.ID_ANY,
                                        choices=Avc_X264.H264_OPT["Profiles"],
@@ -149,19 +130,19 @@ class Avc_X264(scrolled.ScrolledPanel):
                                        )
         gridcod.Add(self.cmb_profile, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         gridcod.Add((40, 0), 0)
-        labpass = wx.StaticText(self, wx.ID_ANY, 'Passes')
+        labpass = wx.StaticText(self, wx.ID_ANY, 'Passes:')
         gridcod.Add(labpass, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.ckbx_pass = wx.CheckBox(self, wx.ID_ANY, "Two-Pass Encoding")
         gridcod.Add(self.ckbx_pass, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         gridcod.Add((40, 0), 0)
-        labmaxr = wx.StaticText(self, wx.ID_ANY, 'Maxrate (kbps)')
+        labmaxr = wx.StaticText(self, wx.ID_ANY, 'Maxrate (kbps):')
         gridcod.Add(labmaxr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.spin_maxr = wx.SpinCtrl(self, wx.ID_ANY,
                                      "-1", min=-1, max=900000,
                                      style=wx.TE_PROCESS_ENTER
                                      )
         gridcod.Add(self.spin_maxr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        lablevel = wx.StaticText(self, wx.ID_ANY, 'Level')
+        lablevel = wx.StaticText(self, wx.ID_ANY, 'Level:')
         gridcod.Add(lablevel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.cmb_level = wx.ComboBox(self, wx.ID_ANY,
                                      choices=Avc_X264.LEVELS, size=(100, -1),
@@ -169,7 +150,7 @@ class Avc_X264(scrolled.ScrolledPanel):
                                      )
         gridcod.Add(self.cmb_level, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         gridcod.Add((40, 0), 0)
-        stextbitr = wx.StaticText(self, wx.ID_ANY, 'Bitrate (kbps)')
+        stextbitr = wx.StaticText(self, wx.ID_ANY, 'Bitrate (kbps):')
         gridcod.Add(stextbitr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.spin_vbrate = wx.SpinCtrl(self, wx.ID_ANY,
                                        "-1", min=-1, max=204800,
@@ -178,14 +159,14 @@ class Avc_X264(scrolled.ScrolledPanel):
                                        )
         gridcod.Add(self.spin_vbrate, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         gridcod.Add((40, 0), 0)
-        labbuffer = wx.StaticText(self, wx.ID_ANY, 'Bufsize (kbps)')
+        labbuffer = wx.StaticText(self, wx.ID_ANY, 'Bufsize (kbps):')
         gridcod.Add(labbuffer, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.spin_bufsize = wx.SpinCtrl(self, wx.ID_ANY,
                                         "-1", min=-1, max=900000,
                                         style=wx.TE_PROCESS_ENTER
                                         )
         gridcod.Add(self.spin_bufsize, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        labtune = wx.StaticText(self, wx.ID_ANY, 'Tune')
+        labtune = wx.StaticText(self, wx.ID_ANY, 'Tune:')
         gridcod.Add(labtune, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.cmb_tune = wx.ComboBox(self, wx.ID_ANY,
                                     choices=Avc_X264.H264_OPT["Tunes"],
@@ -194,7 +175,7 @@ class Avc_X264(scrolled.ScrolledPanel):
                                     )
         gridcod.Add(self.cmb_tune, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         gridcod.Add((40, 0), 0)
-        labpixfrm = wx.StaticText(self, wx.ID_ANY, 'Bit Depth')
+        labpixfrm = wx.StaticText(self, wx.ID_ANY, 'Bit Depth:')
         gridcod.Add(labpixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.cmb_pixfrm = wx.ComboBox(self, wx.ID_ANY,
                                       choices=Avc_X264.PIXELFRMT,
@@ -221,7 +202,7 @@ class Avc_X264(scrolled.ScrolledPanel):
         # Option -------------------------------------------
         sizerbase.Add((0, 10), 0)
         gridopt = wx.FlexGridSizer(1, 6, 0, 0)
-        labvaspect = wx.StaticText(self, wx.ID_ANY, 'Aspect Ratio')
+        labvaspect = wx.StaticText(self, wx.ID_ANY, 'Aspect Ratio:')
         gridopt.Add(labvaspect, 0, wx.ALIGN_CENTER_VERTICAL)
         self.cmb_vaspect = wx.ComboBox(self, wx.ID_ANY,
                                        choices=Avc_X264.ASPECTRATIO,
@@ -229,7 +210,7 @@ class Avc_X264(scrolled.ScrolledPanel):
                                        | wx.CB_READONLY,
                                        )
         gridopt.Add(self.cmb_vaspect, 0, wx.LEFT | wx.CENTER, 5)
-        labfps = wx.StaticText(self, wx.ID_ANY, 'FPS (frame rate)')
+        labfps = wx.StaticText(self, wx.ID_ANY, 'FPS (frame rate):')
         gridopt.Add(labfps, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
         self.cmb_fps = wx.ComboBox(self, wx.ID_ANY,
                                    choices=Avc_X264.FPS,
@@ -310,17 +291,11 @@ class Avc_X264(scrolled.ScrolledPanel):
         self.Bind(wx.EVT_SPINCTRL, self.on_max_rate, self.spin_maxr)
         self.Bind(wx.EVT_SPINCTRL, self.on_buffer_size, self.spin_bufsize)
         self.Bind(wx.EVT_COMBOBOX, self.on_bit_depth, self.cmb_pixfrm)
-
-        # self.default(None)
     # ------------------------------------------------------------------#
 
     def video_options(self):
         """
         Get all video parameters
-
-        '-pass 1 -passlogfile "/home/jeanslack/.local/share/FastFlix/temp_30181127de126ccbd353cf46/pass_log_file_2ec0e1230b0b9f2707ab"'
-         ' -pass 2 -passlogfile "/home/jeanslack/.local/share/FastFlix/temp_30181127de126ccbd353cf46/pass_log_file_2ec0e1230b0b9f2707ab"'
-
         """
         return (f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
                 f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
@@ -330,16 +305,8 @@ class Avc_X264(scrolled.ScrolledPanel):
                 f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
                 f'{self.opt["FPS"]} {self.opt["VFilters"]} '
                 f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
-                f'-map 0:v? -map_chapters 0 -map_metadata 0').split()
-        # return (self.opt["VideoCodec"], self.opt["VideoBitrate"],
-        #         self.opt["MinRate"], self.opt["MaxRate"] ,
-        #         self.opt["Bufsize"], self.opt["CRF"], self.opt["GOP"],
-        #         self.opt["Preset"], self.opt["Profile"], self.opt["Level"],
-        #         self.opt["Tune"], self.opt["AspectRatio"], self.opt["FPS"],
-        #         self.opt["VFilters"], self.opt["PixFmt"],
-        #         self.opt["WebOptim"], '-map', '0:v?', '-map_chapters', '0'
-        #         )
-
+                )
+    # ------------------------------------------------------------------#
 
     def default(self):
         """
@@ -348,14 +315,14 @@ class Avc_X264(scrolled.ScrolledPanel):
         self.cmb_fps.SetSelection(0), self.on_rate_fps(None, False)
         self.cmb_vaspect.SetSelection(0), self.on_vaspect(None, False)
         if self.opt["VidCmbxStr"] == 'H.264 10-bit':
-            self.slider_crf.SetValue(25)
-            self.slider_crf.SetMax(63), self.on_crf(None, False)
+            self.slider_crf.SetMax(63)
+            self.slider_crf.SetValue(25), self.on_crf(None, False)
             self.cmb_pixfrm.SetSelection(8), self.on_bit_depth(None, False)
             self.cmb_profile.SetSelection(5), self.on_profile(None, False)
             self.labinfo.SetLabel("H.264 AVC (Advanced Video Coding) 10-bit")
         else:
-            self.slider_crf.SetValue(23)
-            self.slider_crf.SetMax(51), self.on_crf(None, False)
+            self.slider_crf.SetMax(51)
+            self.slider_crf.SetValue(23), self.on_crf(None, False)
             self.cmb_pixfrm.SetSelection(7), self.on_bit_depth(None, False)
             self.cmb_profile.SetSelection(2), self.on_profile(None, False)
             self.labinfo.SetLabel("H.264 AVC (Advanced Video Coding)")
@@ -471,13 +438,18 @@ class Avc_X264(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         if self.ckbx_pass.IsChecked():
-            self.opt["Passes"] = "2 pass"
+            self.opt["Passes"] = "2"
+            tmp = os.path.join(self.appdata["cachedir"], 'tmp', 'passlogfile')
+            self.opt["passlogfile1"] = f'-pass 1 -passlogfile "{tmp}"'
+            self.opt["passlogfile2"] = f'-pass 2 -passlogfile "{tmp}"'
             self.slider_crf.SetValue(-1)
             self.slider_crf.Disable()
             self.spin_vbrate.SetValue(6000)
             self.spin_vbrate.Enable()
         else:
-            self.opt["Passes"] = "1 pass"
+            self.opt["Passes"] = "Auto"
+            self.opt["passlogfile1"] = ""
+            self.opt["passlogfile2"] = ""
             if self.opt["VidCmbxStr"] == 'H.264 10-bit':
                 self.slider_crf.SetValue(25)
             else:

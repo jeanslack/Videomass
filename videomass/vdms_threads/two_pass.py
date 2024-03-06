@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 Name: two_pass.py
-Porpose: FFmpeg long processing task on 2 pass conversion
+Porpose: FFmpeg long processing task for two-pass conversion
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -96,7 +96,7 @@ class TwoPass(Thread):
                      f'-i "{infile}" '
                      f'{self.time_seq[1]} '
                      f'{self.passlist[0]} '
-                     f'-y {self.nul}'
+                     f'{self.nul}'
                      )
             self.count += 1
             count = f'File {self.count}/{self.countmax} - Pass One'
@@ -179,7 +179,7 @@ class TwoPass(Thread):
                      f'{self.time_seq[1]} '
                      f'{self.passlist[1]} '
                      f'{volume} '
-                     f'-y "{outfile}"'
+                     f'"{outfile}"'
                      )
             count = f'File {self.count}/{self.countmax} - Pass Two'
             cmd = (f'{count}\nSource: "{infile}"\nDestination: "{outfile}"'

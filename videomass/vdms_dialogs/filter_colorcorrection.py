@@ -275,7 +275,7 @@ class ColorEQ(wx.Dialog):
             sseg = f'-ss {self.clock}'
         eql = '' if not equalizer else f'-vf "{equalizer}"'
         arg = (f'{sseg} -i "{self.filename}" -f image2 '
-               f'-update 1 -frames:v 1 {eql} -y "{pathtosave}"')
+               f'-update 1 -frames:v 1 {eql} "{pathtosave}"')
         thread = FFmpegGenericTask(arg, 'ColorEQ', logfile)
         thread.join()  # wait end thread
         error = thread.status

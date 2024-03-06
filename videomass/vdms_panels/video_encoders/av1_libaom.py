@@ -115,6 +115,8 @@ class AV1_Aom(scrolled.ScrolledPanel):
     def default(self):
         """
         Set to default
+        self.slider_CRF.SetMax(63)
+            self.slider_CRF.SetValue(31), self.spin_Vbrate.SetValue(0)
         """
         self.spin_gop.SetValue(250)
         self.opt["GOP"] = '-g 250 -keyint_min 250'

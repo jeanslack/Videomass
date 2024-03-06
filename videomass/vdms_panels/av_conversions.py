@@ -41,13 +41,16 @@ from videomass.vdms_dialogs.filter_deinterlace import Deinterlace
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_dialogs.filter_stab import VidstabSet
 from videomass.vdms_dialogs.filter_colorcorrection import ColorEQ
+from . video_encoders.video_no_encs import Video_No_Encs
+from . video_encoders.mpeg4 import Mpeg_4
 from . video_encoders.av1_libaom import AV1_Aom
 from . video_encoders.av1_svt import AV1_Svt
 from . video_encoders.webm import WebMPan
 from . video_encoders.avc_x264 import Avc_X264
 from . video_encoders.hevc_x265 import Hevc_X265
+from . video_encoders.theora import Theora
+from . video_encoders.copy_vcodec import Copy_Vcodec
 from . audio_encoders.acodecs import AudioEncoders
-
 
 
 class AV_Conv(wx.Panel):
@@ -73,18 +76,18 @@ class AV_Conv(wx.Panel):
               'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',
               }
     # Namings in the video container selection combo box:
-    VCODECS = ({"Mpeg4": {"-c:v mpeg4": ["avi"]},
-                "Mpeg4 (xvidcore)": {"-c:v libxvid": ["avi"]},
+    VCODECS = ({"MPEG-4": {"-c:v mpeg4": ["avi"]},
+                "XVID MPEG-4": {"-c:v libxvid": ["avi"]},
                 "H.264": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
                 "H.264 10-bit": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
                 "H.265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
+                "H.265 10-bit": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
                 "AV1 (AOM)": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
                 "AV1 (SVT)": {"-c:v libsvtav1": ["mkv", "webm"]},
                 "Theora": {"-c:v libtheora": ["ogv", "mkv"]},
                 "Vp9": {"-c:v libvpx-vp9": ["webm", "mkv", "mp4"]},
-                "Copy": {"-c:v copy": ["mkv", "mp4", "avi",
-                                                      "m4v", "ogv", "webm",
-                                                      "Copy"]}
+                "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "m4v", "ogv",
+                                       "webm", "Copy"]}
                 })
     # Namings in the audio format selection on Container combobox:
     A_FORMATS = ('wav', 'mp3', 'ac3', 'ogg', 'flac', 'm4a', 'aac')
@@ -98,7 +101,7 @@ class AV_Conv(wx.Panel):
         self.parent = parent  # parent is the MainFrame
         self.appdata = self.parent.appdata
         icons = self.parent.icons
-        self.vencpanshown = None
+        self.videopanel = None
 
         if 'wx.svg' in sys.modules:  # only available in wx version 4.1 to up
             bmpplay = get_bmp(icons['preview'], ((16, 16)))
@@ -128,7 +131,7 @@ class AV_Conv(wx.Panel):
         self.opt = {
             "VidCmbxStr": "H.264", "OutputFormat": "mkv",
             "VideoCodec": "-c:v libx264", "ext_input": "",
-            "Passes": "1 pass", "InputDir": "", "OutputDir": "",
+            "Passes": "Auto", "InputDir": "", "OutputDir": "",
             "VideoSize": "", "AspectRatio": "", "FPS": "", "Preset": "",
             "Profile": "", "Level": "", "Tune": "", "VideoBitrate": "",
             "CRF": "", "WebOptim": "",
@@ -137,26 +140,16 @@ class AV_Conv(wx.Panel):
             "SubtitleMap": "-map 0:s?", "AudioCodec": ["", ""],
             "AudioChannel": ["", ""], "AudioRate": ["", ""],
             "AudioBitrate": ["", ""], "AudioDepth": ["", ""], "PEAK": [],
-            "EBU": "", "RMS": [], "Deinterlace": "", "Interlace": "",
+            "EBU": ["", ""], "RMS": [], "Deinterlace": "", "Interlace": "",
             "PixelFormat": "", "Orientation": ["", ""], "Crop": "",
             "CropColor": "", "Scale": "", "Setdar": "", "Setsar": "",
             "Denoiser": "", "Vidstabtransform": "", "Vidstabdetect": "",
             "Unsharp": "", "Makeduo": False, "VFilters": "",
             "PixFmt": "-pix_fmt yuv420p", "Deadline": "", "CpuUsed": "",
             "RowMthreading": "", "Usage": "", "GOP": "", "ColorEQ": "",
-            "Media": "Video"
+            "Media": "Video", "passlogfile1": "", "passlogfile2": "",
+            "CmdVideoParams": "", "CmdAudioParams": "",
         }
-
-        # if self.appdata['ostype'] == 'Windows':
-        #     sizepancodevideo = (270, 700)
-        # elif self.appdata['ostype'] == 'Darwin':
-        #     sizepancodevideo = (300, 700)
-        # else:
-        #     if int(''.join(wx.version().split()[0].split('.'))) >= 410:
-        #         sizepancodevideo = (300, 700)
-        #     else:
-        #         sizepancodevideo = (350, 700)
-
         wx.Panel.__init__(self, parent, -1)
         # ------------ widgets
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -171,9 +164,6 @@ class AV_Conv(wx.Panel):
                                      | wx.CB_READONLY
                                      )
         sizer_convin.Add(self.cmb_Media, 0, wx.LEFT | wx.CENTRE, 5)
-
-
-
         txtVcod = wx.StaticText(self, wx.ID_ANY, 'Video Encoder:')
         sizer_convin.Add(txtVcod, 0, wx.LEFT | wx.CENTRE, 20)
         self.cmb_vencoder = wx.ComboBox(self, wx.ID_ANY,
@@ -182,18 +172,15 @@ class AV_Conv(wx.Panel):
                                         style=wx.CB_DROPDOWN | wx.CB_READONLY
                                         )
         sizer_convin.Add(self.cmb_vencoder, 0, wx.LEFT | wx.CENTRE, 5)
-
-
-
         txtFormat = wx.StaticText(self, wx.ID_ANY, _('Container:'))
         sizer_convin.Add(txtFormat, 0, wx.LEFT | wx.CENTRE, 20)
         choices = list(AV_Conv.VCODECS['H.264'].values())[0]
         self.cmb_cont = wx.ComboBox(self, wx.ID_ANY,
-                                     choices=choices,
-                                     size=(100, -1),
-                                     style=wx.CB_DROPDOWN
-                                     | wx.CB_READONLY,
-                                     )
+                                    choices=choices,
+                                    size=(100, -1),
+                                    style=wx.CB_DROPDOWN
+                                    | wx.CB_READONLY,
+                                    )
         sizer_convin.Add(self.cmb_cont, 0, wx.LEFT | wx.CENTRE, 5)
         self.btn_saveprst = wx.Button(self, wx.ID_ANY,
                                       _("Save Preset"), size=(-1, -1))
@@ -204,8 +191,6 @@ class AV_Conv(wx.Panel):
         box_convin = wx.StaticBoxSizer(box1, wx.HORIZONTAL)
         box_convin.Add(sizer_convin, 0, wx.ALL | wx.CENTRE, 5)
         sizer_base.Add(box_convin, 0, wx.BOTTOM | wx.CENTRE, 5)
-
-
         # END BOX top Media and Format
 
         # ------------------ BEGIN NOTEBOOK CONSTRUCTOR
@@ -220,21 +205,30 @@ class AV_Conv(wx.Panel):
         box3 = wx.StaticBox(self.nb_Video, wx.ID_ANY, "")
         box_opt = wx.StaticBoxSizer(box3, wx.VERTICAL)
         sizer_nbVideo.Add(box_opt, 1, wx.ALL | wx.EXPAND, 5)
-        # panel AV1 Aom
+
+        # Inizializing VIDEO panels
+        self.mpeg4panel = Mpeg_4(self.nb_Video, self.opt)
         self.aompanel = AV1_Aom(self.nb_Video, self.opt)
-        box_opt.Add(self.aompanel, 0, wx.CENTRE)
-        # panel AV1 Svt
         self.svtpanel = AV1_Svt(self.nb_Video, self.opt)
-        box_opt.Add(self.svtpanel, 0, wx.CENTRE)
-        # panel vp8 vp9
         self.vp9panel = WebMPan(self.nb_Video, self.opt)
-        box_opt.Add(self.vp9panel, 0, wx.CENTRE)
-        # panel x264
         self.h264panel = Avc_X264(self.nb_Video, self.opt)
-        box_opt.Add(self.h264panel, 0, wx.ALL | wx.EXPAND, 5)
-        # panel x265
         self.h265panel = Hevc_X265(self.nb_Video, self.opt)
-        box_opt.Add(self.h265panel, 0, wx.ALL | wx.EXPAND, 5)
+        self.vcopypanel = Copy_Vcodec(self.nb_Video, self.opt)
+        self.theorapanel = Theora(self.nb_Video, self.opt)
+        self.disablevidpanels = Video_No_Encs(self.nb_Video)
+
+        for vpan in (self.aompanel, self.svtpanel, self.vp9panel,
+                     self.mpeg4panel, self.theorapanel, self.h264panel,
+                     self.h265panel, self.vcopypanel, self.disablevidpanels,
+                     ):
+            box_opt.Add(vpan, 0, wx.ALL | wx.EXPAND, 5)
+
+        self.vp9panel.Hide(), self.h265panel.Hide()
+        self.aompanel.Hide(), self.svtpanel.Hide()
+        self.vcopypanel.Hide(), self.mpeg4panel.Hide()
+        self.theorapanel.Hide(), self.disablevidpanels.Hide()
+        self.videopanel = self.h264panel
+        self.videopanel.Show()
 
         # BOX Video filters
         box4 = wx.StaticBox(self.nb_Video, wx.ID_ANY, _("Video Filters"))
@@ -315,19 +309,11 @@ class AV_Conv(wx.Panel):
         self.notebook.AddPage(self.nb_Audio, _("Audio"))
 
         # -------------- BEGIN NOTEBOOK PANEL 3 Subtitles:
-        #--------------------------------------------
-        # self.nb_Subt = wx.Panel(self.notebook, wx.ID_ANY)
-        # sizer_nbSubt = wx.BoxSizer(wx.VERTICAL)
-        # sizer_subt = wx.BoxSizer(wx.HORIZONTAL)
-        # sizer_nbSubt.Add(sizer_subt, 0, wx.EXPAND)
-        #--------------------------------------------
         self.nb_Subt = wx.Panel(self.notebook, wx.ID_ANY)
         sizer_nbSubt = wx.BoxSizer(wx.HORIZONTAL)
-        # VIDEO BOX video encoders central box
         box8 = wx.StaticBox(self.nb_Subt, wx.ID_ANY, "")
         self.box_sub = wx.StaticBoxSizer(box8, wx.VERTICAL)
         sizer_nbSubt.Add(self.box_sub, 1, wx.ALL | wx.EXPAND, 5)
-        #------------------------------------------------------
         gridsub = wx.BoxSizer(wx.HORIZONTAL)
         self.box_sub.Add(gridsub, 0, wx.ALL | wx.EXPAND, 5)
 
@@ -343,66 +329,6 @@ class AV_Conv(wx.Panel):
         gridsub.Add(self.cmb_Submap, 0, wx.ALL, 5)
         self.nb_Subt.SetSizer(sizer_nbSubt)
         self.notebook.AddPage(self.nb_Subt, _("Subtitles"))
-
-        # -------------- BEGIN NOTEBOOK PANEL 4 Tags:
-        #--------------------------------------------
-        self.nb_Tag = wx.Panel(self.notebook, wx.ID_ANY)
-        sizer_nbTag = wx.BoxSizer(wx.VERTICAL)
-        sizer_tag = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_nbTag.Add(sizer_tag, 0, wx.EXPAND)
-        #--------------------------------------------
-        # self.nb_Tag = wx.Panel(self.notebook, wx.ID_ANY)
-        # sizer_nbTag = wx.BoxSizer(wx.HORIZONTAL)
-        # # VIDEO BOX video encoders central box
-        # box9 = wx.StaticBox(self.nb_Tag, wx.ID_ANY, "")
-        # self.box_tag = wx.StaticBoxSizer(box9, wx.VERTICAL)
-        # sizer_nbTag.Add(self.box_tag, 1, wx.ALL | wx.EXPAND, 5)
-        #------------------------------------------------------
-        #gridtag = wx.BoxSizer(wx.HORIZONTAL)
-        #self.box_tag.Add(gridtag, 0, wx.ALL | wx.EXPAND, 5)
-
-        # txtSubmap = wx.StaticText(self.nb_Subt, wx.ID_ANY, 'Subtitle Map')
-        # gridsub.Add(txtSubmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        # self.cmb_Submap = wx.ComboBox(self.nb_Subt, wx.ID_ANY,
-        #                               choices=[('None'),
-        #                                        ('All'),
-        #                                        ],
-        #                               size=(120, -1), style=wx.CB_DROPDOWN
-        #                               | wx.CB_READONLY,
-        #                               )
-        # gridsub.Add(self.cmb_Submap, 0, wx.ALL, 5)
-        self.nb_Tag.SetSizer(sizer_nbTag)
-        self.notebook.AddPage(self.nb_Tag, _("Tags"))
-
-        # -------------- BEGIN NOTEBOOK PANEL 5 Commands:
-        #--------------------------------------------
-        self.nb_Cmd = wx.Panel(self.notebook, wx.ID_ANY)
-        sizer_nbCmd = wx.BoxSizer(wx.VERTICAL)
-        sizer_cmd = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_nbCmd.Add(sizer_cmd, 0, wx.EXPAND)
-        #--------------------------------------------
-        # self.nb_Tag = wx.Panel(self.notebook, wx.ID_ANY)
-        # sizer_nbTag = wx.BoxSizer(wx.HORIZONTAL)
-        # # VIDEO BOX video encoders central box
-        # box9 = wx.StaticBox(self.nb_Tag, wx.ID_ANY, "")
-        # self.box_tag = wx.StaticBoxSizer(box9, wx.VERTICAL)
-        # sizer_nbTag.Add(self.box_tag, 1, wx.ALL | wx.EXPAND, 5)
-        #------------------------------------------------------
-        #gridcmd = wx.BoxSizer(wx.HORIZONTAL)
-        #self.box_tag.Add(gridcmd, 0, wx.ALL | wx.EXPAND, 5)
-
-        # txtSubmap = wx.StaticText(self.nb_Subt, wx.ID_ANY, 'Subtitle Map')
-        # gridsub.Add(txtSubmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        # self.cmb_Submap = wx.ComboBox(self.nb_Subt, wx.ID_ANY,
-        #                               choices=[('None'),
-        #                                        ('All'),
-        #                                        ],
-        #                               size=(120, -1), style=wx.CB_DROPDOWN
-        #                               | wx.CB_READONLY,
-        #                               )
-        # gridsub.Add(self.cmb_Submap, 0, wx.ALL, 5)
-        self.nb_Cmd.SetSizer(sizer_nbCmd)
-        self.notebook.AddPage(self.nb_Cmd, _("Raw Commands"))
 
         # ------------------ set layout
         self.SetSizer(sizer_base)
@@ -466,7 +392,7 @@ class AV_Conv(wx.Panel):
         self.cmb_vencoder.SetSelection(2)
         self.cmb_Media.SetSelection(0), self.cmb_cont.SetSelection(0)
         self.cmb_Submap.SetSelection(1)
-        self.vencoder_panel_set()
+        self.vencoder_panel_set(default=True)
         self.audioenc.audio_default(), self.audioenc.normalize_default()
         pub.subscribe(self.reset_on_changed_data, "RESET_ON_CHANGED_LIST")
     # -------------------------------------------------------------------#
@@ -475,77 +401,68 @@ class AV_Conv(wx.Panel):
         """
         This method is called using pub/sub protocol
         """
-        print('A/V Conv: RESET_ON_CHANGED_LIST')
-        # if not self.rdbx_normalize.GetSelection() == 0:
-        #     self.audioenc.normalize_default()
+        if self.opt["PEAK"] or self.opt["RMS"]:
+            self.audioenc.normalize_default()
         if self.opt["VFilters"]:
             self.on_vfilters_clear(self)
     # -------------------------------------------------------------------#
 
-    def vencoder_panel_set(self):
+    def vencoder_panel_set(self, default=False):
         """
-        Show/Hide and Reset the correspondig panel
-        of the specified encoder.
+        Show/Hide and Reset the correspondig panel of the specified
+        encoder. Inizializing this class make sure to pass the
+        `default=True` argument to this method.
         """
         if self.cmb_Media.GetValue() == 'Audio':
-            # Hide all video encoder panels
-            self.vp9panel.Hide(), self.h264panel.Hide(), self.h265panel.Hide()
-            self.aompanel.Hide(), self.svtpanel.Hide()
-            self.filterVpanel.Disable()
-            #self.vencpanshown = self.h264panel
-            # self.on_vfilters_clear(self)
-            return
+            self.videopanel.default(), self.videopanel.Hide()
+            self.filterVpanel.Disable(), self.on_vfilters_clear(self)
+            self.videopanel = self.disablevidpanels
+            self.videopanel.Show(), self.videopanel.default()
 
-        if self.opt["VideoCodec"] == "-c:v libx264":
-            self.filterVpanel.Enable()
-            self.vp9panel.Hide(), self.aompanel.Hide()
-            self.svtpanel.Hide(), self.h265panel.Hide()
-            self.h264panel.Show(), self.h264panel.default()
-            self.vencpanshown = self.h264panel
+        elif self.opt["VideoCodec"] == "-c:v libx264":  # default
+            if not default:
+                self.filterVpanel.Enable(), self.videopanel.Hide()
+                self.videopanel = self.h264panel
+                self.videopanel.Show()
+            self.videopanel.default()
 
         elif self.opt["VideoCodec"] == "-c:v libx265":
-            self.filterVpanel.Enable()
-            self.vp9panel.Hide(), self.aompanel.Hide()
-            self.svtpanel.Hide(), self.h264panel.Hide()
-            self.h265panel.Show()
-            #self.h265panel.default()
-            #self.vencpanshown = self.h265panel
+            self.filterVpanel.Enable(), self.videopanel.Hide()
+            self.videopanel = self.h265panel
+            self.videopanel.Show(), self.videopanel.default()
 
         elif self.opt["VideoCodec"] == "-c:v libvpx-vp9":
-            self.vp9panel.Show(), self.h264panel.Hide(), self.svtpanel.Hide()
-            self.aompanel.Hide(), self.vp9panel.default()
-            self.slider_CRF.SetMax(63)
-            self.slider_CRF.SetValue(31), self.spin_Vbrate.SetValue(0)
-            self.filterVpanel.Enable(), self.nb_Video.Layout()
+            self.filterVpanel.Enable(), self.videopanel.Hide()
+            self.videopanel = self.vp9panel
+            self.videopanel.Show(), self.videopanel.default()
 
         elif self.opt["VideoCodec"] == "-c:v libaom-av1":
-            self.vp9panel.Hide(), self.h264panel.Hide(), self.svtpanel.Hide()
-            self.aompanel.Show(), self.aompanel.default()
-            self.slider_CRF.SetMax(63)
-            self.slider_CRF.SetValue(31), self.spin_Vbrate.SetValue(0)
-            self.filterVpanel.Enable(), self.nb_Video.Layout()
+            self.filterVpanel.Enable(), self.videopanel.Hide()
+            self.videopanel = self.aompanel
+            self.videopanel.Show(), self.videopanel.default()
 
         elif self.opt["VideoCodec"] == "-c:v libsvtav1":
-            self.vp9panel.Hide(), self.h264panel.Hide(), self.aompanel.Hide()
-            self.svtpanel.Show(), self.svtpanel.default()
-            self.slider_CRF.SetMax(63)
-            self.slider_CRF.SetValue(30), self.spin_Vbrate.SetValue(0)
-            self.filterVpanel.Enable(), self.nb_Video.Layout()
+            self.filterVpanel.Enable(), self.videopanel.Hide()
+            self.videopanel = self.svtpanel
+            self.videopanel.Show(), self.videopanel.default()
 
         elif self.opt["VideoCodec"] in ("-c:v mpeg4", "-c:v libxvid"):
-            self.slider_CRF.SetValue(-1), self.spin_Vbrate.SetValue(1500)
-            self.vp9panel.Hide(), self.h264panel.Hide(), self.aompanel.Hide()
-            self.svtpanel.Hide(), self.filterVpanel.Enable()
+            self.filterVpanel.Enable(), self.videopanel.Hide()
+            self.videopanel = self.mpeg4panel
+            self.videopanel.Show(), self.videopanel.default()
 
         elif self.opt["VideoCodec"] == "-c:v libtheora":
-            self.slider_CRF.SetValue(-1), self.spin_Vbrate.SetValue(1500)
-            self.vp9panel.Hide(), self.h264panel.Hide(), self.aompanel.Hide()
-            self.svtpanel.Hide(), self.filterVpanel.Enable()
+            self.filterVpanel.Enable(), self.videopanel.Hide()
+            self.videopanel = self.theorapanel
+            self.videopanel.Show(), self.videopanel.default()
 
         elif self.opt["VideoCodec"] == "-c:v copy":
-            self.vp9panel.Hide(), self.h264panel.Hide(), self.h265panel.Hide()
-            self.aompanel.Hide(), self.svtpanel.Hide()
             self.filterVpanel.Disable(), self.on_vfilters_clear(self)
+            self.videopanel.Hide()
+            self.videopanel = self.vcopypanel
+            self.videopanel.Show(), self.videopanel.default()
+
+        self.nb_Video.Layout()  # force Layout
 
     # ----------------------Event handler (callback)----------------------#
 
@@ -563,8 +480,8 @@ class AV_Conv(wx.Panel):
         self.opt["VidCmbxStr"] = self.cmb_vencoder.GetValue()
         self.opt["OutputFormat"] = self.cmb_cont.GetValue()
         self.vencoder_panel_set()
-        self.audioenc.audio_default() # reset audio radiobox and dict
-        self.audioenc.setAudioRadiobox(None)
+        self.audioenc.audio_default()
+        self.audioenc.set_audio_radiobox(None)
     # ------------------------------------------------------------------#
 
     def on_Media(self, event):
@@ -572,22 +489,24 @@ class AV_Conv(wx.Panel):
         Combobox Media Sets layout to Audio or Video formats
         """
         if self.cmb_Media.GetValue() == 'Audio':
+            self.opt["Media"] = 'Audio'
             self.cmb_vencoder.Disable()
-            self.opt["VideoCodec"] = ""
+            self.opt["VideoCodec"] = ''
+            self.opt["VidCmbxStr"] = ''
             self.audioenc.audio_default()
             self.cmb_cont.Clear()
             for f in AV_Conv.A_FORMATS:
                 self.cmb_cont.Append((f),)
             self.cmb_cont.SetSelection(0)
+            self.opt["OutputFormat"] = self.cmb_cont.GetValue()
             self.vencoder_panel_set()
-            self.audioenc.setAudioRadiobox(None)
+            self.audioenc.set_audio_radiobox(None)
 
         elif self.cmb_Media.GetValue() == 'Video':
+            self.opt["Media"] = 'Video'
             self.cmb_vencoder.Enable()
             self.cmb_vencoder.SetSelection(2)
             self.videoCodec(self)
-
-        self.opt["OutputFormat"] = self.cmb_cont.GetValue()
     # ------------------------------------------------------------------#
 
     def on_Container(self, event):
@@ -598,7 +517,7 @@ class AV_Conv(wx.Panel):
             self.opt["OutputFormat"] = ''
         else:
             self.opt["OutputFormat"] = self.cmb_cont.GetValue()
-        self.audioenc.setAudioRadiobox(None)
+        self.audioenc.set_audio_radiobox(None)
     # ------------------------------------------------------------------#
 
     def on_video_preview(self, event):
@@ -627,7 +546,7 @@ class AV_Conv(wx.Panel):
 
     def on_audio_preview(self, event):
         """
-        This is a button event for button preview on `self.audioenc`.
+        Button event for button preview on `self.audioenc`.
         Only Bind it in this class.
         """
         fget = self.file_selection()
@@ -868,7 +787,7 @@ class AV_Conv(wx.Panel):
     def on_Set_stabilizer(self, event):
         """
         Enable or disable libvidstab filter for video stabilization.
-        Note, this filter is incompatible with 2 pass encoding that
+        Note, this filter is incompatible with two-pass encoding that
         includes `-pass 1` and` -pass 2` ffmpeg args/options.
         """
         sdf = self.get_video_stream()
@@ -933,23 +852,14 @@ class AV_Conv(wx.Panel):
         elif smap == 'All':
             self.opt["SubtitleMap"] = '-map 0:s?'
 
-        if self.opt["EBU"]:
-            if self.opt["Passes"] == "1 pass":
-                wx.MessageBox(_('Two-pass EBU normalization requires '
-                                'Two-Pass Encoding enabled.'),
-                              'Videomass', wx.ICON_INFORMATION, self)
-                return True
+        if self.audioenc.btn_voldect.IsEnabled():
+            wx.MessageBox(_('Undetected volume values! Click the '
+                            '"Volume detect" button to analyze '
+                            'audio volume data.'),
+                          'Videomass', wx.ICON_INFORMATION, self)
+            return True
 
-        if self.opt["PEAK"] or self.opt["RMS"]:
-            # check normalization data offset, if enabled
-            if self.audioenc.btn_voldect.IsEnabled():
-                wx.MessageBox(_('Undetected volume values! Click the '
-                                '"Volume detect" button to analyze '
-                                'audio volume data.'),
-                              'Videomass', wx.ICON_INFORMATION, self)
-                return True
-
-        if self.opt["Vidstabtransform"] and self.opt["Passes"] == "2 pass":
+        if self.opt["Vidstabtransform"] and self.opt["Passes"] == "2":
             wx.MessageBox(_('The Stabilize filter is not compatible '
                             'with Two-Pass Encoding.'),
                           'Videomass', wx.ICON_INFORMATION, self)
@@ -968,7 +878,6 @@ class AV_Conv(wx.Panel):
 
         if self.check_options():
             return
-
         checking = check_files(self.parent.file_src,
                                self.parent.outputdir,
                                self.parent.same_destin,
@@ -978,42 +887,30 @@ class AV_Conv(wx.Panel):
                                )
         if not checking:  # User changing idea or not such files exist
             return
-
         f_src, f_dest = checking
 
-        self.prova()
-        return
-
         if self.opt["Media"] == 'Video':  # CHECKING
-            if self.opt["EBU"]:
-                self.video_ebu_2pass(f_src, f_dest, logname)
-            elif self.opt["Vidstabdetect"]:
+            # get data from panels
+            self.opt["CmdVideoParams"] = self.videopanel.video_options()
+            self.opt["CmdAudioParams"] = self.audioenc.audio_options()
+
+            if self.opt["Vidstabdetect"]:
                 self.video_stabilizer(f_src, f_dest, logname)
+            elif self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
+                self.video_ebu_2pass(f_src, f_dest, logname)
             else:
                 self.video_stdProc(f_src, f_dest, logname)
 
         elif self.opt["Media"] == 'Audio':  # CHECKING
-            if self.opt["EBU"]:
+            # get data from panels
+            self.opt["CmdAudioParams"] = self.audioenc.audio_options()
+
+            if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
                 self.audio_ebu_2pass(f_src, f_dest, logname)
             else:
                 self.audio_stdProc(f_src, f_dest, logname)
         return
     # ------------------------------------------------------------------#
-
-    def prova(self):
-        vparams = self.vencpanshown.video_options()
-        # aparams = (f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
-        #            f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
-        #            f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
-        #            f'{self.opt["AudioDepth"][1]} {self.opt["AudioMap"][0]} '
-        #            ).split()
-        print(self.audioenc.audio_options())
-        print(vparams)
-        #audnorm = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
-        # print(audnorm)
-        # print('EBU: ',self.opt["EBU"], 'PEAK :',self.opt["PEAK"], 'RMS :',self.opt["RMS"])
-
-        return
 
     def video_stabilizer(self, f_src, f_dest, logname):
         """
@@ -1021,50 +918,73 @@ class AV_Conv(wx.Panel):
         video stabilizations process.
 
         """
-        audnorm = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
+        if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
 
-        cmd1 = (f'-an -sn {self.opt["PixFmt"]} -vf '
-                f'{self.opt["Vidstabdetect"]} -f null')
-        cmd2 = (
-            f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
-            f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
-            f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
-            f'{self.opt["Deadline"]} {self.opt["Usage"]}  '
-            f'{self.opt["CpuUsed"]} {self.opt["RowMthreading"]}'
-            f'{self.opt["GOP"]} {self.opt["Preset"]} '
-            f'{self.opt["Profile"]} {self.opt["Level"]} '
-            f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
-            f'{self.opt["FPS"]} {self.opt["VFilters"]} '
-            f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
-            f'-map 0:v? -map_chapters 0 '
-            f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
-            f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
-            f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
-            f'{self.opt["AudioDepth"][1]} {self.opt["AudioMap"][0]} '
-            f'-map_metadata 0')
+            cmd1 = (f'-map 0:v? {self.opt["PixFmt"]} -filter:v '
+                    f'{self.opt["Vidstabdetect"]} {self.opt["AudioIndex"]} '
+                    f'-filter:a: {self.opt["EBU"][1]} -sn -f null'
+                    )
+            cmd2 = (f'{self.opt["CmdVideoParams"]} -map 0:v? -map_chapters 0 '
+                    f'{self.opt["SubtitleMap"]} {self.opt["CmdAudioParams"]} '
+                    f'-map_metadata 0'
+                    )
+            pass1 = " ".join(cmd1.split())
+            pass2 = " ".join(cmd2.split())
 
-        pass1 = " ".join(cmd1.split())
-        pass2 = " ".join(cmd2.split())
+            if logname == 'save as profile':
+                return pass1, pass2, self.opt["OutputFormat"]
+            valupdate = self.update_dict(len(f_src), [''])
+            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
+                             self.parent.movetotrash, self.parent.emptylist,
+                             )
+            if ending.ShowModal() == wx.ID_OK:
+                (self.parent.movetotrash,
+                 self.parent.emptylist) = ending.getvalue()
+                self.parent.switch_to_processing('two pass EBU',
+                                                 f_src,
+                                                 None,
+                                                 f_dest,
+                                                 None,
+                                                 [pass1, pass2,
+                                                  self.opt["EBU"][1]],
+                                                 self.opt["AudioMap"],
+                                                 None,
+                                                 logname,
+                                                 len(f_src),
+                                                 )
+        else:
+            audnorm = (self.opt["RMS"] if not self.opt["PEAK"]
+                       else self.opt["PEAK"])
 
-        if logname == 'save as profile':
-            return pass1, pass2, self.opt["OutputFormat"]
-        valupdate = self.update_dict(len(f_src), [''])
-        ending = Formula(self, valupdate[0], valupdate[1], (600, 400),
-                         self.parent.movetotrash, self.parent.emptylist,
-                         )
-        if ending.ShowModal() == wx.ID_OK:
-            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
-            self.parent.switch_to_processing('libvidstab',
-                                             f_src,
-                                             None,
-                                             f_dest,
-                                             self.opt["Makeduo"],
-                                             [pass1, pass2],
-                                             self.opt["VFilters"],
-                                             [vol[5] for vol in audnorm],
-                                             logname,
-                                             len(f_src),
-                                             )
+            cmd1 = (f'-an -sn {self.opt["PixFmt"]} -vf '
+                    f'{self.opt["Vidstabdetect"]} -f null')
+            cmd2 = (f'{self.opt["CmdVideoParams"]} -map 0:v? -map_chapters 0 '
+                    f'{self.opt["SubtitleMap"]} {self.opt["CmdAudioParams"]} '
+                    f'{self.opt["EBU"][1]} -map_metadata 0'
+                    )
+            pass1 = " ".join(cmd1.split())
+            pass2 = " ".join(cmd2.split())
+
+            if logname == 'save as profile':
+                return pass1, pass2, self.opt["OutputFormat"]
+            valupdate = self.update_dict(len(f_src), [''])
+            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
+                             self.parent.movetotrash, self.parent.emptylist,
+                             )
+            if ending.ShowModal() == wx.ID_OK:
+                (self.parent.movetotrash,
+                 self.parent.emptylist) = ending.getvalue()
+                self.parent.switch_to_processing('libvidstab',
+                                                 f_src,
+                                                 None,
+                                                 f_dest,
+                                                 self.opt["Makeduo"],
+                                                 [pass1, pass2],
+                                                 self.opt["VFilters"],
+                                                 [vol[5] for vol in audnorm],
+                                                 logname,
+                                                 len(f_src),
+                                                 )
         return None
         # ------------------------------------------------------------------#
 
@@ -1075,21 +995,17 @@ class AV_Conv(wx.Panel):
         audnorm = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
 
         if self.cmb_vencoder.GetValue() == "Copy":
-            command = (
-                f'{self.opt["VideoCodec"]} {self.opt["PixFmt"]} '
-                f'{self.opt["WebOptim"]} {self.opt["AspectRatio"]} '
-                f'{self.opt["FPS"]}  -map 0:v? -map_chapters 0 '
-                f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
-                f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
-                f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
-                f'{self.opt["AudioDepth"][1]} {self.opt["AudioMap"][0]} '
-                f'-map_metadata 0'
-            )
-            command = " ".join(command.split())  # mi formatta la stringa
+
+            command = (f'{self.opt["CmdVideoParams"]} -map 0:v? '
+                       f'-map_chapters 0 {self.opt["SubtitleMap"]} '
+                       f'{self.opt["CmdAudioParams"]} {self.opt["EBU"][1]} '
+                       f'-map_metadata 0'
+                       )
+            command = " ".join(command.split())
             if logname == 'save as profile':
                 return command, '', self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), ["Copy"])
-            ending = Formula(self, valupdate[0], valupdate[1], (600, 400),
+            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
                              self.parent.movetotrash, self.parent.emptylist,
                              )
             if ending.ShowModal() == wx.ID_OK:
@@ -1106,47 +1022,22 @@ class AV_Conv(wx.Panel):
                                                  logname,
                                                  len(f_src),
                                                  )
-        elif self.opt["Passes"] == "2 pass":
-            if self.opt["VideoCodec"] == "-c:v libx265":
-                opt1, opt2 = '-x265-params pass=1', '-x265-params pass=2'
-            else:
-                opt1, opt2 = '-pass 1', '-pass 2'
+        elif self.opt["Passes"] == "2":
 
-            cmd1 = (f'-an -sn {self.opt["VideoCodec"]} '
-                    f'{self.opt["VideoBitrate"]} {self.opt["MinRate"]} '
-                    f'{self.opt["MaxRate"]} {self.opt["Bufsize"]} '
-                    f'{self.opt["CRF"]} {self.opt["Deadline"]} '
-                    f'{self.opt["Usage"]} {self.opt["CpuUsed"]} '
-                    f'{self.opt["RowMthreading"]} {self.opt["GOP"]} '
-                    f'{self.opt["Preset"]} {self.opt["Profile"]} '
-                    f'{self.opt["Level"]} {self.opt["Tune"]} '
-                    f'{self.opt["AspectRatio"]} {self.opt["FPS"]} '
-                    f'{self.opt["VFilters"]} {self.opt["PixFmt"]} '
-                    f'{self.opt["WebOptim"]} {opt1} -f rawvideo'
+            cmd1 = (f'-an -sn {self.opt["CmdVideoParams"]} '
+                    f'{self.opt["passlogfile1"]} -f rawvideo'
                     )
-            cmd2 = (
-                f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
-                f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
-                f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
-                f'{self.opt["Deadline"]} {self.opt["Usage"]} '
-                f'{self.opt["CpuUsed"]} {self.opt["RowMthreading"]} '
-                f'{self.opt["GOP"]} {self.opt["Profile"]} {self.opt["Level"]} '
-                f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
-                f'{self.opt["FPS"]} {self.opt["VFilters"]} '
-                f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
-                f'-map 0:v? -map_chapters 0 {opt2} '
-                f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
-                f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
-                f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
-                f'{self.opt["AudioDepth"][1]} {self.opt["AudioMap"][0]} '
-                f'-map_metadata 0'
-            )
+            cmd2 = (f'{self.opt["CmdVideoParams"]} -map 0:v? -map_chapters 0 '
+                    f'{self.opt["passlogfile2"]} {self.opt["SubtitleMap"]} '
+                    f'{self.opt["CmdAudioParams"]} -map_metadata 0 '
+                    f'{self.opt["EBU"][1]}'
+                    )
             pass1 = " ".join(cmd1.split())
             pass2 = " ".join(cmd2.split())
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (600, 400),
+            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
                              self.parent.movetotrash, self.parent.emptylist,
                              )
             if ending.ShowModal() == wx.ID_OK:
@@ -1163,30 +1054,17 @@ class AV_Conv(wx.Panel):
                                                  logname,
                                                  len(f_src),
                                                  )
-        elif self.opt["Passes"] == "1 pass":  # Batch-Mode / h264 Codec
-            command = (
-                f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
-                f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
-                f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
-                f'{self.opt["Deadline"]} {self.opt["Usage"]} '
-                f'{self.opt["CpuUsed"]} {self.opt["RowMthreading"]} '
-                f'{self.opt["GOP"]} {self.opt["Preset"]} '
-                f'{self.opt["Profile"]} {self.opt["Level"]} '
-                f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
-                f'{self.opt["FPS"]} {self.opt["VFilters"]} '
-                f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
-                f'-map 0:v? -map_chapters 0 '
-                f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
-                f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
-                f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
-                f'{self.opt["AudioDepth"][1]} {self.opt["AudioMap"][0]} '
-                f'-map_metadata 0'
-            )
-            command = " ".join(command.split())  # mi formatta la stringa
+        elif self.opt["Passes"] == "Auto":
+            command = (f'{self.opt["CmdVideoParams"]} -map 0:v? '
+                       f'-map_chapters 0 {self.opt["SubtitleMap"]} '
+                       f'{self.opt["CmdAudioParams"]} -map_metadata 0 '
+                       f'{self.opt["EBU"][1]}'
+                       )
+            command = " ".join(command.split())
             if logname == 'save as profile':
                 return command, '', self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (600, 400),
+            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
                              self.parent.movetotrash, self.parent.emptylist,
                              )
             if ending.ShowModal() == wx.ID_OK:
@@ -1214,39 +1092,21 @@ class AV_Conv(wx.Panel):
              Index use same Output Audio Index on Audio Streams Mapping box
 
         """
-        self.opt["EBU"] = 'EBU R128'
-        loudfilter = (f'loudnorm=I={str(self.spin_i.GetValue())}:'
-                      f'TP={str(self.spin_tp.GetValue())}:'
-                      f'LRA={str(self.spin_lra.GetValue())}:'
-                      f'print_format=summary'
-                      )
-        if self.opt["VideoCodec"] == "-c:v libx265":
-            opt1, opt2 = '-x265-params pass=1', '-x265-params pass=2'
-        else:
-            opt1, opt2 = '-pass 1', '-pass 2'
-
         if self.cmb_vencoder.GetValue() == "Copy":
+
             cmd_1 = (f'-map 0:v? {self.opt["AudioIndex"]} '
-                     f'-filter:a: {loudfilter} '
-                     f'-vn -sn {opt1} {self.opt["AspectRatio"]} '
-                     f'{self.opt["FPS"]} -f null'
+                     f'-filter:a: {self.opt["EBU"][1]} -vn -sn -f null'
                      )
-            cmd_2 = (
-                f'{self.opt["VideoCodec"]} {opt2} {self.opt["AspectRatio"]} '
-                f'{self.opt["FPS"]} {self.opt["PixFmt"]} '
-                f'{self.opt["WebOptim"]} -map 0:v? -map_chapters 0 '
-                f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
-                f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
-                f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
-                f'{self.opt["AudioDepth"][1]} {self.opt["AudioMap"][0]} '
-                f'-map_metadata 0'
-            )
+            cmd_2 = (f'{self.opt["CmdVideoParams"]} -map 0:v? '
+                     f'-map_chapters 0 {self.opt["SubtitleMap"]} '
+                     f'{self.opt["CmdAudioParams"]} -map_metadata 0'
+                     )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), ["Copy"])
-            ending = Formula(self, valupdate[0], valupdate[1], (600, 400),
+            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
                              self.parent.movetotrash, self.parent.emptylist,
                              )
             if ending.ShowModal() == wx.ID_OK:
@@ -1257,51 +1117,31 @@ class AV_Conv(wx.Panel):
                                                  None,
                                                  f_dest,
                                                  None,
-                                                 [pass1, pass2, loudfilter],
+                                                 [pass1, pass2,
+                                                  self.opt["EBU"][1]],
                                                  self.opt["AudioMap"],
                                                  None,
                                                  logname,
                                                  len(f_src),
                                                  )
-        else:
-            cmd_1 = (f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
-                     f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
-                     f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
-                     f'{self.opt["Deadline"]} {self.opt["Usage"]} '
-                     f'{self.opt["CpuUsed"]} {self.opt["RowMthreading"]} '
-                     f'{self.opt["GOP"]} {self.opt["Preset"]} '
-                     f'{self.opt["Profile"]} {self.opt["Level"]} '
-                     f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
-                     f'{self.opt["FPS"]} {self.opt["VFilters"]} '
-                     f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
-                     f'-map 0:v? {self.opt["AudioIndex"]}  '
-                     f'{opt1} -sn -filter:a: {loudfilter} '
-                     f'-f {AV_Conv.MUXERS[self.opt["OutputFormat"]]}'
+        elif self.opt["Passes"] == "2":
+
+            cmd_1 = (f'{self.opt["CmdVideoParams"]} -map 0:v? -map_chapters 0 '
+                     f'{self.opt["AudioIndex"]} {self.opt["passlogfile1"]} '
+                     f'-sn -filter:a: {self.opt["EBU"][1]} '
+                     f'-f {AV_Conv.MUXERS[self.opt["OutputFormat"]]} '
                      )
-            cmd_2 = (
-                f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
-                f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
-                f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
-                f'{self.opt["Deadline"]} {self.opt["Usage"]} '
-                f'{self.opt["CpuUsed"]} {self.opt["RowMthreading"]} '
-                f'{self.opt["GOP"]} {self.opt["Preset"]} '
-                f'{self.opt["Profile"]} {self.opt["Level"]} '
-                f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
-                f'{self.opt["FPS"]} {self.opt["VFilters"]} '
-                f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
-                f'-map 0:v? -map_chapters 0 {opt2} '
-                f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
-                f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
-                f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
-                f'{self.opt["AudioDepth"][1]} {self.opt["AudioMap"][0]} '
-                f'-map_metadata 0'
-            )
+            cmd_2 = (f'{self.opt["CmdVideoParams"]} -map 0:v? -map_chapters 0 '
+                     f'{self.opt["passlogfile2"]} {self.opt["SubtitleMap"]} '
+                     f'{self.opt["CmdAudioParams"]} -map_metadata 0'
+                     )
             pass1 = " ".join(cmd_1.split())
-            pass2 = " ".join(cmd_2.split())  # mi formatta la stringa
+            pass2 = " ".join(cmd_2.split())
+
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (600, 400),
+            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
                              self.parent.movetotrash, self.parent.emptylist,
                              )
             if ending.ShowModal() == wx.ID_OK:
@@ -1312,13 +1152,45 @@ class AV_Conv(wx.Panel):
                                                  self.opt["OutputFormat"],
                                                  f_dest,
                                                  None,
-                                                 [pass1, pass2, loudfilter],
+                                                 [pass1, pass2,
+                                                  self.opt["EBU"][1]],
                                                  self.opt["AudioMap"],
                                                  None,
                                                  logname,
                                                  len(f_src),
                                                  )
-            # ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
+        else:
+            cmd_1 = (f'-map 0:v? {self.opt["AudioIndex"]} '
+                     f'-filter:a: {self.opt["EBU"][1]} -vn -sn -f null'
+                     )
+            cmd_2 = (f'{self.opt["CmdVideoParams"]} -map 0:v? -map_chapters 0 '
+                     f'{self.opt["SubtitleMap"]} {self.opt["CmdAudioParams"]} '
+                     f'-map_metadata 0'
+                     )
+            pass1 = " ".join(cmd_1.split())
+            pass2 = " ".join(cmd_2.split())
+
+            if logname == 'save as profile':
+                return pass1, pass2, self.opt["OutputFormat"]
+            valupdate = self.update_dict(len(f_src), [''])
+            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
+                             self.parent.movetotrash, self.parent.emptylist,
+                             )
+            if ending.ShowModal() == wx.ID_OK:
+                end = ending.getvalue()
+                self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
+                self.parent.switch_to_processing('two pass EBU',
+                                                 f_src,
+                                                 self.opt["OutputFormat"],
+                                                 f_dest,
+                                                 None,
+                                                 [pass1, pass2,
+                                                  self.opt["EBU"][1]],
+                                                 self.opt["AudioMap"],
+                                                 None,
+                                                 logname,
+                                                 len(f_src),
+                                                 )
         return None
     # ------------------------------------------------------------------#
 
@@ -1328,21 +1200,17 @@ class AV_Conv(wx.Panel):
 
         """
         audnorm = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
-        command = (
-            f'-vn -sn {self.opt["WebOptim"]} {self.opt["AudioMap"][0]} '
-            f'{self.opt["AudioCodec"][0]} {self.opt["AudioCodec"][1]} '
-            f'{self.opt["AudioBitrate"][1]} {self.opt["AudioDepth"][1]} '
-            f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
-            f'-map_metadata 0'
-        )
-        command = " ".join(command.split())  # mi formatta la stringa
+
+        command = (f'-vn -sn {self.opt["CmdAudioParams"]} '
+                   f'{self.opt["EBU"][1]} -map_metadata 0'
+                   )
+        command = " ".join(command.split())
         if logname == 'save as profile':
             return command, '', self.opt["OutputFormat"]
         valupdate = self.update_dict(len(f_src), [''])
-        ending = Formula(self, valupdate[0], valupdate[1], (600, 280),
+        ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
                          self.parent.movetotrash, self.parent.emptylist,
                          )
-
         if ending.ShowModal() == wx.ID_OK:
             self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
             self.parent.switch_to_processing('onepass',
@@ -1366,31 +1234,19 @@ class AV_Conv(wx.Panel):
         and not send self.opt["AudioMap"] to process because the files
         audio has not indexes
         """
-        self.opt["EBU"] = True
-
-        loudfilter = (f'loudnorm=I={str(self.spin_i.GetValue())}:'
-                      f'TP={str(self.spin_tp.GetValue())}:'
-                      f'LRA={str(self.spin_lra.GetValue())}:'
-                      f'print_format=summary'
-                      )
-        cmd_1 = (f'{self.opt["WebOptim"]} {self.opt["AudioMap"][0]} '
-                 f'-filter:a: {loudfilter} -vn -sn -pass 1 -f null'
+        cmd_1 = (f'{self.opt["AudioMap"][0]} -filter:a: {self.opt["EBU"][1]} '
+                 f'-vn -sn -f null'
                  )
-        cmd_2 = (f'-vn -sn {self.opt["WebOptim"]} {self.opt["AudioMap"][0]} '
-                 f'-pass 2 {self.opt["AudioCodec"][0]} '
-                 f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
-                 f'{self.opt["AudioDepth"][1]} {self.opt["AudioRate"][1]} '
-                 f'{self.opt["AudioChannel"][1]} -map_metadata 0'
+        cmd_2 = (f'-vn -sn {self.opt["CmdAudioParams"]} -map_metadata 0'
                  )
         pass1 = " ".join(cmd_1.split())
         pass2 = " ".join(cmd_2.split())
         if logname == 'save as profile':
             return pass1, pass2, self.opt["OutputFormat"]
         valupdate = self.update_dict(len(f_src), [''])
-        ending = Formula(self, valupdate[0], valupdate[1], (600, 280),
+        ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
                          self.parent.movetotrash, self.parent.emptylist,
                          )
-
         if ending.ShowModal() == wx.ID_OK:
             self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
             self.parent.switch_to_processing('two pass EBU',
@@ -1398,7 +1254,8 @@ class AV_Conv(wx.Panel):
                                              self.opt["OutputFormat"],
                                              f_dest,
                                              None,
-                                             [pass1, pass2, loudfilter],
+                                             [pass1, pass2,
+                                              self.opt["EBU"][1]],
                                              ['', ''],  # do not map audio file
                                              None,
                                              logname,
@@ -1417,7 +1274,7 @@ class AV_Conv(wx.Panel):
         elif self.opt["RMS"]:
             normalize = 'RMS'
         elif self.opt["EBU"]:
-            normalize = 'EBU R128'
+            normalize = self.opt["EBU"][0]
         else:
             normalize = _('Off')
         if self.cmb_cont.GetValue() == "Copy":
@@ -1430,77 +1287,18 @@ class AV_Conv(wx.Panel):
             t = self.parent.time_seq.split()
             time = _('start  {} | duration  {}').format(t[1], t[3])
 
-        vfilter = _('Enabled') if self.opt["VFilters"] else _('Disabled')
-
-        # ------------------
-        if self.cmb_Media.GetValue() == 'Audio':
-            formula = (_("Queued File\nOutput Format"
-                         "\nWeb Optimize\nAudio Codec\nAudio bit-rate"
-                         "\nAudio Channels\nAudio Rate\nBit per Sample"
-                         "\nAudio Normalization\nTime Period"
-                         "\nInput Audio Map"
-                         ))
-            dictions = (f'{numfile}\n{outputformat}\n'
-                        f'{self.opt["WebOptim"]}\n'
-                        f'{self.opt["AudioCodStr"]}\n'
-                        f'{self.opt["AudioBitrate"][0]}\n'
-                        f'{self.opt["AudioChannel"][0]}\n'
-                        f'{self.opt["AudioRate"][0]}\n'
-                        f'{self.opt["AudioDepth"][0]}\n{normalize}\n{time}\n'
-                        f'{self.cmb_A_outMap.GetValue()}'
-                        )
-        elif prof[0] == "Copy":
-            formula = (_("Queued File\nWeb Optimize\nOutput Format"
-                         "\nVideo Codec\nAspect Ratio\nFPS\nAudio Codec"
-                         "\nAudio Channels\nAudio Rate\nAudio bit-rate"
-                         "\nBit per Sample\nAudio Normalization"
-                         "\nInput Audio Map\nOutput Audio Map"
-                         "\nSubtitles Map\nTime Period"
-                         ))
-            dictions = (f'{numfile}\n{self.opt["WebOptim"]}\n'
-                        f'{outputformat}\n{self.opt["VidCmbxStr"]}\n'
-                        f'{self.opt["AspectRatio"]}\n{self.opt["FPS"]}\n'
-                        f'{self.opt["AudioCodStr"]}\n'
-                        f'{self.opt["AudioChannel"][0]}\n'
-                        f'{self.opt["AudioRate"][0]}\n'
-                        f'{self.opt["AudioBitrate"][0]}\n'
-                        f'{self.opt["AudioDepth"][0]}\n{normalize}\n'
-                        f'{self.cmb_A_inMap.GetValue()}\n'
-                        f'{self.cmb_A_outMap.GetValue()}\n'
-                        f'{self.cmb_Submap.GetValue()}\n{time}'
-                        )
-        # --------------------
-        else:
-            formula = (_("Queued File\nWeb Optimize\nPass Encoding"
-                         "\nOutput Format\nVideo Codec\nVideo bit-rate"
-                         "\nCRF\nMin Rate\nMax Rate\nBuffer size"
-                         "\nEnabled Options\nVideo Filters\nAspect Ratio\nFPS"
-                         "\nPreset\nProfile\nTune\nAudio Codec"
-                         "\nAudio Channels\nAudio Rate\nAudio bit-rate"
-                         "\nBit per Sample\nAudio Normalization"
-                         "\nInput Audio Map\nOutput Audio Map"
-                         "\nSubtitles Map\nTime Period"
-                         ))
-            dictions = (f'{numfile}\n{self.opt["WebOptim"]}\n'
-                        f'{self.opt["Passes"]}\n{outputformat}\n'
-                        f'{self.opt["VidCmbxStr"]}\n'
-                        f'{self.opt["VideoBitrate"]}\n{self.opt["CRF"]}\n'
-                        f'{self.opt["MinRate"]}\n{self.opt["MaxRate"]}\n'
-                        f'{self.opt["Bufsize"]}\n{self.opt["Deadline"]} '
-                        f'{self.opt["Usage"]} {self.opt["CpuUsed"]} '
-                        f'{self.opt["RowMthreading"]} {self.opt["GOP"]}\n'
-                        f'{vfilter}\n{self.opt["AspectRatio"]}\n'
-                        f'{self.opt["FPS"]}\n{self.opt["Preset"]}\n'
-                        f'{self.opt["Profile"]} {self.opt["Level"]}\n'
-                        f'{self.opt["Tune"]}\n{self.opt["AudioCodStr"]}\n'
-                        f'{self.opt["AudioChannel"][0]}\n'
-                        f'{self.opt["AudioRate"][0]}\n'
-                        f'{self.opt["AudioBitrate"][0]}\n'
-                        f'{self.opt["AudioDepth"][0]}\n{normalize}\n'
-                        f'{self.cmb_A_inMap.GetValue()}\n'
-                        f'{self.cmb_A_outMap.GetValue()}\n'
-                        f'{self.cmb_Submap.GetValue()}\n{time}'
-                        )
+        formula = (_("Queued File\nEncoding passes\nOutput Format"
+                     "\nVideo Codec\nAudio Codec\nAudio Normalization"
+                     "\nTime Period"
+                     ))
+        dictions = (f'{numfile}\n'
+                    f'{self.opt["Passes"]}\n'
+                    f'{outputformat}\n'
+                    f'{self.opt["VidCmbxStr"]}\n'
+                    f'{self.opt["AudioCodStr"]}\n'
+                    f'{normalize}\n'
+                    f'{time}'
+                    )
         return formula, dictions
     # ------------------------------------------------------------------#
 
@@ -1509,24 +1307,25 @@ class AV_Conv(wx.Panel):
         Save current setting as profile for the Presets
         Manager panel
         """
-        # if self.rdbx_normalize.GetSelection() in (1, 2, 3):  # EBU
-        #     if wx.MessageBox(_('Audio normalization data cannot be saved '
-        #                        'on the Presets Manager.\n\n'
-        #                        'Do you want to continue?'),
-        #                      'Videomass', wx.ICON_QUESTION
-        #                      | wx.CANCEL | wx.YES_NO, self) != wx.YES:
-        #         return
-
         if self.check_options():  # update
             return
         if self.cmb_Media.GetValue() == 'Video':
+            self.opt["CmdVideoParams"] = self.videopanel.video_options()
+            self.opt["CmdAudioParams"] = self.audioenc.audio_options()
+
             if self.opt["Vidstabdetect"]:
                 parameters = self.video_stabilizer([], [], 'save as profile')
+            elif self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
+                parameters = self.video_ebu_2pass([], [], 'save as profile')
             else:
                 parameters = self.video_stdProc([], [], 'save as profile')
 
         elif self.cmb_Media.GetValue() == 'Audio':
-            parameters = self.audio_stdProc([], [], 'save as profile')
+            self.opt["CmdAudioParams"] = self.audioenc.audio_options()
+            if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
+                parameters = self.audio_ebu_2pass([], [], 'save as profile')
+            else:
+                parameters = self.audio_stdProc([], [], 'save as profile')
 
         with wx.FileDialog(
                 None, _("Choose a Videomass preset..."),

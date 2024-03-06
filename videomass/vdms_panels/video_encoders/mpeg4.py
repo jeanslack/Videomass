@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
-FileName: hevc_x265.py
-Porpose: Contains H.265 functionality for A/V Conversions
+FileName: mpeg4.py
+Porpose: Contains Mpeg_4 functionality for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.04.2023
+Rev: Mar.06.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -29,10 +29,10 @@ import wx
 import wx.lib.scrolledpanel as scrolled
 
 
-class Hevc_X265(scrolled.ScrolledPanel):
+class Mpeg_4(scrolled.ScrolledPanel):
     """
-    This scroll panel implements controls for extra options
-    of the `HEVC/AVC` aka h.264/h.265 encoders.
+    This scroll panel implements controls for the
+    `mpeg4 part2` encoder.
     """
     ASPECTRATIO = [("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
                    ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
@@ -41,42 +41,13 @@ class Hevc_X265(scrolled.ScrolledPanel):
     FPS = [("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
            ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
            ]
-    PIXELFRMT = [('None'), ('yuv420p'), ('yuvj420p'), ('yuv422p'),
-                 ('yuvj422p'), ('yuv444p'), ('yuvj444p'), ('gbrp'),
-                 ('yuv420p10le'), ('yuv422p10le'), ('yuv444p10le'),
-                 ('gbrp10le'), ('yuv420p12le'), ('yuv422p12le'),
-                 ('yuv444p12le'), ('gbrp12le'), ('gray'), ('gray10le'),
-                 ('gray12le')
-                 ]
-    # Used by h265 only
-    H265_OPT = {("Presets"): ("None", "ultrafast", "superfast",
-                              "veryfast", "faster", "fast", "medium",
-                              "slow", "slower", "veryslow", "placebo"
-                              ),
-                ("Profiles"): ("None", "main", "main10", "mainstillpicture",
-                               "msp", "main-intra", "main10-intra",
-                               "main444-8", "main444-intra",
-                               "main444-stillpicture", "main422-10",
-                               "main422-10-intra", "main444-10",
-                               "main444-10-intra", "main12", "main12-intra",
-                               "main422-12", "main422-12-intra", "main444-12",
-                               "main444-12-intra", "main444-16-intra",
-                               "main444-16-stillpicture"
-                               ),
-                ("Tunes"): ("None", "grain", "psnr", "ssim", "fastdecode",
-                            "zerolatency"
-                            )
-                }
-    # profile level for h265
-    LEVELS = ('None', '1', '2', '2.1', '3', '3.1', '4', '4.1',
-              '5', '5.1', '5.2', '6', '6.1', '6.2', '8.5'
-              )
+    # supported libx264 Bit Depths (10bit need 0 to 63 cfr quantizer scale)
+    PIXELFRMT = [('None'), ('yuv420p')]
 
     def __init__(self, parent, opt):
         """
         This is a child of `AV_Conv` class-panel (parent) and the `opt`
         attribute is a dict owned by that class.
-
         """
         get = wx.GetApp()
         self.appdata = get.appset
@@ -86,7 +57,7 @@ class Hevc_X265(scrolled.ScrolledPanel):
                                         size=(1024, 1024),
                                         style=wx.TAB_TRAVERSAL
                                         | wx.BORDER_NONE,
-                                        name="HEVC x265 scrolledpanel",
+                                        name="mpeg4-part2 scrolledpanel",
                                         )
         sizerbase = wx.BoxSizer(wx.VERTICAL)
         self.labinfo = wx.StaticText(self, wx.ID_ANY, label="")
@@ -100,20 +71,11 @@ class Hevc_X265(scrolled.ScrolledPanel):
         sizerbase.Add(self.btn_reset, 0, wx.TOP | wx.CENTRE, 10)
         sizerbase.Add((0, 15), 0)
 
-        gridcod = wx.FlexGridSizer(5, 8, 0, 0)
-        labpresets = wx.StaticText(self, wx.ID_ANY, 'Preset:')
-        gridcod.Add(labpresets, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.cmb_preset = wx.ComboBox(self, wx.ID_ANY,
-                                      choices=Hevc_X265.H265_OPT["Presets"],
-                                      size=(-1, -1), style=wx.CB_DROPDOWN
-                                      | wx.CB_READONLY,
-                                      )
-        gridcod.Add(self.cmb_preset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        gridcod.Add((40, 0), 0)
-        labcrf = wx.StaticText(self, wx.ID_ANY, 'CRF:')
+        gridcod = wx.FlexGridSizer(5, 5, 0, 0)
+        labcrf = wx.StaticText(self, wx.ID_ANY, 'QP:')
         gridcod.Add(labcrf, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.slider_crf = wx.Slider(self, wx.ID_ANY, 1, -1, 51,
-                                    size=(150, -1), style=wx.SL_HORIZONTAL
+        self.slider_crf = wx.Slider(self, wx.ID_ANY, 1, -1, 31,
+                                    size=(250, -1), style=wx.SL_HORIZONTAL
                                     | wx.SL_AUTOTICKS
                                     | wx.SL_VALUE_LABEL
                                     | wx.SL_MIN_MAX_LABELS
@@ -128,15 +90,6 @@ class Hevc_X265(scrolled.ScrolledPanel):
                                      style=wx.TE_PROCESS_ENTER
                                      )
         gridcod.Add(self.spin_minr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        labprofile = wx.StaticText(self, wx.ID_ANY, 'Profile:')
-        gridcod.Add(labprofile, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.cmb_profile = wx.ComboBox(self, wx.ID_ANY,
-                                       choices=Hevc_X265.H265_OPT["Profiles"],
-                                       size=(-1, -1), style=wx.CB_DROPDOWN
-                                       | wx.CB_READONLY,
-                                       )
-        gridcod.Add(self.cmb_profile, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        gridcod.Add((40, 0), 0)
         labpass = wx.StaticText(self, wx.ID_ANY, 'Passes:')
         gridcod.Add(labpass, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.ckbx_pass = wx.CheckBox(self, wx.ID_ANY, "Two-Pass Encoding")
@@ -149,14 +102,6 @@ class Hevc_X265(scrolled.ScrolledPanel):
                                      style=wx.TE_PROCESS_ENTER
                                      )
         gridcod.Add(self.spin_maxr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        lablevel = wx.StaticText(self, wx.ID_ANY, 'Level:')
-        gridcod.Add(lablevel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.cmb_level = wx.ComboBox(self, wx.ID_ANY,
-                                     choices=Hevc_X265.LEVELS, size=(100, -1),
-                                     style=wx.CB_DROPDOWN | wx.CB_READONLY
-                                     )
-        gridcod.Add(self.cmb_level, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        gridcod.Add((40, 0), 0)
         stextbitr = wx.StaticText(self, wx.ID_ANY, 'Bitrate (kbps):')
         gridcod.Add(stextbitr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.spin_vbrate = wx.SpinCtrl(self, wx.ID_ANY,
@@ -173,25 +118,27 @@ class Hevc_X265(scrolled.ScrolledPanel):
                                         style=wx.TE_PROCESS_ENTER
                                         )
         gridcod.Add(self.spin_bufsize, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        labtune = wx.StaticText(self, wx.ID_ANY, 'Tune:')
-        gridcod.Add(labtune, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.cmb_tune = wx.ComboBox(self, wx.ID_ANY,
-                                    choices=Hevc_X265.H265_OPT["Tunes"],
-                                    size=(-1, -1), style=wx.CB_DROPDOWN
-                                    | wx.CB_READONLY,
-                                    )
-        gridcod.Add(self.cmb_tune, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        gridcod.Add((40, 0), 0)
         labpixfrm = wx.StaticText(self, wx.ID_ANY, 'Bit Depth:')
         gridcod.Add(labpixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.cmb_pixfrm = wx.ComboBox(self, wx.ID_ANY,
-                                      choices=Hevc_X265.PIXELFRMT,
+                                      choices=Mpeg_4.PIXELFRMT,
                                       size=(150, -1), style=wx.CB_DROPDOWN
                                       | wx.CB_READONLY,
                                       )
         gridcod.Add(self.cmb_pixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         sizerbase.Add(gridcod, 0, wx.ALL | wx.CENTER, 0)
-        sizerbase.Add((0, 20), 0)
+        gridcod.Add((40, 0), 0)
+        labvtag = wx.StaticText(self, wx.ID_ANY, 'FourCC (vtag):')
+        gridcod.Add(labvtag, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        self.cmb_vtag = wx.ComboBox(self, wx.ID_ANY,
+                                    choices=["Auto", "xvid"],
+                                    size=(-1, -1), style=wx.CB_DROPDOWN
+                                    | wx.CB_READONLY,
+                                    )
+        gridcod.Add(self.cmb_vtag, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+
+        # Options -------------------------------------------
+        gridcod.Add((0, 20), 0)
         line0 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
                               size=(400, -1), style=wx.LI_HORIZONTAL,
                               name=wx.StaticLineNameStr
@@ -206,13 +153,13 @@ class Hevc_X265(scrolled.ScrolledPanel):
                               )
         sizerbase.Add(line1, 0, wx.ALL | wx.CENTER, 5)
 
-        # Option -------------------------------------------
+        # other Options -------------------------------------------
         sizerbase.Add((0, 10), 0)
         gridopt = wx.FlexGridSizer(1, 6, 0, 0)
         labvaspect = wx.StaticText(self, wx.ID_ANY, 'Aspect Ratio:')
         gridopt.Add(labvaspect, 0, wx.ALIGN_CENTER_VERTICAL)
         self.cmb_vaspect = wx.ComboBox(self, wx.ID_ANY,
-                                       choices=Hevc_X265.ASPECTRATIO,
+                                       choices=Mpeg_4.ASPECTRATIO,
                                        size=(120, -1), style=wx.CB_DROPDOWN
                                        | wx.CB_READONLY,
                                        )
@@ -220,7 +167,7 @@ class Hevc_X265(scrolled.ScrolledPanel):
         labfps = wx.StaticText(self, wx.ID_ANY, 'FPS (frame rate):')
         gridopt.Add(labfps, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
         self.cmb_fps = wx.ComboBox(self, wx.ID_ANY,
-                                   choices=Hevc_X265.FPS,
+                                   choices=Mpeg_4.FPS,
                                    size=(120, -1),
                                    style=wx.CB_DROPDOWN
                                    | wx.CB_READONLY,
@@ -243,14 +190,6 @@ class Hevc_X265(scrolled.ScrolledPanel):
         tip = (_('Reloads the selected video encoder settings. '
                  'Changes will be discarded.'))
         self.btn_reset.SetToolTip(tip)
-        tip = _('Set the encoding preset (default "medium")')
-        self.cmb_preset.SetToolTip(tip)
-        tip = _('Set profile restrictions')
-        self.cmb_profile.SetToolTip(tip)
-        tip = _('Specify level for a selected profile')
-        self.cmb_level.SetToolTip(tip)
-        tip = _('Tune the encoding params')
-        self.cmb_tune.SetToolTip(tip)
         tip = (_('Set the group of picture (GOP) size '
                  '(default 12 for H.264, 1 for H.265). '
                  'Set to -1 to disable this control.'))
@@ -272,8 +211,10 @@ class Hevc_X265(scrolled.ScrolledPanel):
                  'to use. Higher value = higher quality. Set -1 to disable '
                  'this control.'))
         self.spin_vbrate.SetToolTip(tip)
-        tip = (_('Constant rate factor. Lower values = higher quality and '
-                 'a larger file size. Set to -1 to disable this control.'))
+        tip = (_('Variable Bit Rate. From 0-30, with 1 being highest '
+                 'quality/largest filesize and 30 being the lowest '
+                 'quality/smallest filesize. Set to -1 to disable '
+                 'this control.'))
         self.slider_crf.SetToolTip(tip)
         tip = _('Video width and video height ratio.')
         self.cmb_vaspect.SetToolTip(tip)
@@ -281,13 +222,15 @@ class Hevc_X265(scrolled.ScrolledPanel):
                  'countries this is 30 for NTSC, other countries (like '
                  'Italy) use 25 for PAL'))
         self.cmb_fps.SetToolTip(tip)
+        tip = (_('The default FourCC stored in an MPEG-4-coded file will be '
+                 'FMP4. If you want a different FourCC, set this option '
+                 'to xvid to force the FourCC xvid to be stored '
+                 'as the video FourCC rather than the default.'))
+        self.cmb_vtag.SetToolTip(tip)
 
         self.Bind(wx.EVT_BUTTON, self.reset_args, self.btn_reset)
         self.Bind(wx.EVT_CHECKBOX, self.on_web_optimize, self.ckbx_web)
-        self.Bind(wx.EVT_COMBOBOX, self.on_preset, self.cmb_preset)
-        self.Bind(wx.EVT_COMBOBOX, self.on_profile, self.cmb_profile)
-        self.Bind(wx.EVT_COMBOBOX, self.on_level, self.cmb_level)
-        self.Bind(wx.EVT_COMBOBOX, self.on_tune, self.cmb_tune)
+        self.Bind(wx.EVT_COMBOBOX, self.on_vtag, self.cmb_vtag)
         self.Bind(wx.EVT_SPINCTRL, self.on_gop, self.spin_gop)
         self.Bind(wx.EVT_CHECKBOX, self.on_pass, self.ckbx_pass)
         self.Bind(wx.EVT_SPINCTRL, self.on_vbitrate, self.spin_vbrate)
@@ -298,20 +241,17 @@ class Hevc_X265(scrolled.ScrolledPanel):
         self.Bind(wx.EVT_SPINCTRL, self.on_max_rate, self.spin_maxr)
         self.Bind(wx.EVT_SPINCTRL, self.on_buffer_size, self.spin_bufsize)
         self.Bind(wx.EVT_COMBOBOX, self.on_bit_depth, self.cmb_pixfrm)
-
-        # self.default(None)
     # ------------------------------------------------------------------#
 
     def video_options(self):
         """
         Get all video parameters
         """
-        return (f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
+        return (f'{self.opt["VideoCodec"]} {self.opt["FourCC"]} '
+                f'{self.opt["VideoBitrate"]} '
                 f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
                 f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
-                f'{self.opt["GOP"]} {self.opt["Preset"]} '
-                f'{self.opt["Profile"]} {self.opt["Level"]} '
-                f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
+                f'{self.opt["GOP"]} {self.opt["AspectRatio"]} '
                 f'{self.opt["FPS"]} {self.opt["VFilters"]} '
                 f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
                 )
@@ -323,24 +263,19 @@ class Hevc_X265(scrolled.ScrolledPanel):
         """
         self.cmb_fps.SetSelection(0), self.on_rate_fps(None, False)
         self.cmb_vaspect.SetSelection(0), self.on_vaspect(None, False)
-        self.slider_crf.SetMax(51)
-        if self.opt["VidCmbxStr"] == 'H.265 10-bit':
-            self.cmb_pixfrm.SetSelection(8), self.on_bit_depth(None, False)
-            self.cmb_profile.SetSelection(0), self.on_profile(None, False)
-            self.labinfo.SetLabel("H.265 HEVC (High Efficiency "
-                                  "Video Coding) 10-bit")
-            self.slider_crf.SetValue(22), self.on_crf(None, False)
+        self.slider_crf.SetMax(30)
+        self.slider_crf.SetValue(2), self.on_crf(None, False)
+        self.cmb_pixfrm.SetSelection(1), self.on_bit_depth(None, False)
+        if self.opt["VidCmbxStr"] == 'XVID MPEG-4':
+            self.labinfo.SetLabel("XVID MPEG-4 Part 2 "
+                                  "(Moving Picture Experts Group) ")
+            self.cmb_vtag.SetSelection(1), self.on_vtag(None, False)
         else:
-            self.cmb_pixfrm.SetSelection(1), self.on_bit_depth(None, False)
-            self.cmb_profile.SetSelection(0), self.on_profile(None, False)
-            self.labinfo.SetLabel("H.265 HEVC (High Efficiency Video Coding)")
-            self.slider_crf.SetValue(28), self.on_crf(None, False)
-
-        self.cmb_preset.SetSelection(6), self.on_preset(None, False)
-        self.cmb_tune.SetSelection(0), self.on_tune(None, False)
+            self.labinfo.SetLabel("MPEG-4 Part 2 "
+                                  "(Moving Picture Experts Group) ")
+            self.cmb_vtag.SetSelection(0), self.on_vtag(None, False)
         self.spin_vbrate.SetValue(-1), self.on_vbitrate(None, False)
-        self.spin_gop.SetValue(1), self.on_gop(None, False)
-        self.cmb_level.SetSelection(0), self.on_level(None, False)
+        self.spin_gop.SetValue(-1), self.on_gop(None, False)
         self.ckbx_pass.SetValue(False), self.on_pass(None, False)
         self.ckbx_web.SetValue(False), self.on_web_optimize(None, False)
         self.spin_minr.SetValue(-1), self.on_min_rate(None, False)
@@ -434,9 +369,9 @@ class Hevc_X265(scrolled.ScrolledPanel):
         if not self.btn_reset.IsEnabled() and btnreset:
             self.btn_reset.Enable()
 
-        val = self.slider_crf.GetValue()
-        self.opt["CRF"] = "" if val == -1 else f"-crf {val}"
-
+        num = self.slider_crf.GetValue()
+        val = num + 1 if not num == -1 else ""
+        self.opt["CRF"] = val if val == "" else f"-qscale:v {val}"
     # ------------------------------------------------------------------#
 
     def on_pass(self, event, btnreset=True):
@@ -449,22 +384,17 @@ class Hevc_X265(scrolled.ScrolledPanel):
         if self.ckbx_pass.IsChecked():
             self.opt["Passes"] = "2"
             tmp = os.path.join(self.appdata["cachedir"], 'tmp', 'passlogfile')
-            self.opt["passlogfile1"] = (f'-x265-params "pass=1" '
-                                        f'-passlogfile "{tmp}"')
-            self.opt["passlogfile2"] = (f'-x265-params "pass=2" '
-                                        f'-passlogfile "{tmp}"')
+            self.opt["passlogfile1"] = f'-pass 1 -passlogfile "{tmp}"'
+            self.opt["passlogfile2"] = f'-pass 2 -passlogfile "{tmp}"'
             self.slider_crf.SetValue(-1)
             self.slider_crf.Disable()
-            self.spin_vbrate.SetValue(4000)
+            self.spin_vbrate.SetValue(6000)
             self.spin_vbrate.Enable()
         else:
             self.opt["Passes"] = "Auto"
             self.opt["passlogfile1"] = ""
             self.opt["passlogfile2"] = ""
-            if self.opt["VidCmbxStr"] == 'H.265 10-bit':
-                self.slider_crf.SetValue(22)
-            else:
-                self.slider_crf.SetValue(28)
+            self.slider_crf.SetValue(2)
             self.slider_crf.Enable()
             self.spin_vbrate.SetValue(-1)
             self.spin_vbrate.Enable()
@@ -473,50 +403,16 @@ class Hevc_X265(scrolled.ScrolledPanel):
         self.on_crf(None, False)
     # ------------------------------------------------------------------#
 
-    def on_preset(self, event, btnreset=True):
+    def on_vtag(self, event, btnreset=True):
         """
-        Set h264/h265 only
+        Set FourCC for MPEG-4.
         """
         if not self.btn_reset.IsEnabled() and btnreset:
             self.btn_reset.Enable()
 
-        sel = self.cmb_preset.GetStringSelection()
-        self.opt["Preset"] = '' if sel == 'None' else f'-preset:v {sel}'
+        sel = self.cmb_vtag.GetStringSelection()
+        self.opt["FourCC"] = '' if sel == 'Auto' else f'-vtag {sel}'
     # ------------------------------------------------------------------#
-
-    def on_profile(self, event, btnreset=True):
-        """
-        Set h264/h265 only
-        """
-        if not self.btn_reset.IsEnabled() and btnreset:
-            self.btn_reset.Enable()
-
-        sel = self.cmb_profile.GetStringSelection()
-        self.opt["Profile"] = '' if sel == 'None' else f'-profile:v {sel}'
-    # ------------------------------------------------------------------#
-
-    def on_level(self, event, btnreset=True):
-        """
-        Set profile level for h264/h265. This flag must be insert
-        after -profile:v parameter.
-        """
-        if not self.btn_reset.IsEnabled() and btnreset:
-            self.btn_reset.Enable()
-
-        sel = self.cmb_level.GetStringSelection()
-        self.opt["Level"] = '' if sel == 'None' else f'-level {sel}'
-    # ------------------------------------------------------------------#
-
-    def on_tune(self, event, btnreset=True):
-        """
-        Set h264/h265 only
-        """
-        if not self.btn_reset.IsEnabled() and btnreset:
-            self.btn_reset.Enable()
-
-        sel = self.cmb_tune.GetStringSelection()
-        self.opt["Tune"] = '' if sel == 'None' else f'-tune:v {sel}'
-    # -------------------------------------------------------------------#
 
     def on_gop(self, event, btnreset=True):
         """

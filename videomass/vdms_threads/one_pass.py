@@ -92,7 +92,7 @@ class OnePass(Thread):
                    f'{self.timeseq[1]} '
                    f'{self.command} '
                    f'{volume} '
-                   f'-y "{outfile}"'
+                   f'"{outfile}"'
                    )
             self.count += 1
             count = f'File {self.count}/{self.countmax}'
