@@ -30,8 +30,8 @@ import wx.lib.scrolledpanel as scrolled
 
 class Copy_Vcodec(scrolled.ScrolledPanel):
     """
-    This scroll panel implements controls for extra options
-    for video codec copy.
+    This scroll panel implements video copy controls
+    for A/V Conversions.
     """
     # supported libx264 Bit Depths (10bit need 0 to 63 cfr quantizer scale)
     PIXELFRMT = [('None'), ('gray'), ('gray10le'), ('nv12'), ('nv16'),
@@ -49,9 +49,7 @@ class Copy_Vcodec(scrolled.ScrolledPanel):
 
     def __init__(self, parent, opt):
         """
-        This is a child of `AV_Conv` class-panel (parent) and the `opt`
-        attribute is a dict owned by that class.
-
+        This is a child of `AV_Conv` class-panel (parent).
         """
         get = wx.GetApp()
         self.appdata = get.appset

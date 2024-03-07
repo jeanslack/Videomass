@@ -20,8 +20,13 @@ Thu, 07 Mar 2024 V.5.0.10
   * [A/V Conversions] [NEW] Added One-passes Loudnorm (EBU R128) audio
     normalization available for all tasks.
   * [A/V Conversions] High-quality two-pass Loudnorm normalization (EBU R128)
-    can now be used at the same time as the video stabilization filter.
-    Additionally, Two-pass Encoding is no longer required for this filter.
+    can now be applied at the same time as the "Stabilize" video filter.
+    Additionally, this filter no longer requires enabling Two-pass Encoding
+    as it is optional.
+  * [A/V Conversions] The "Stabilize" video filter can also now be applied to
+    both single-pass and double-pass encoding.
+  * [A/V Conversions] "Make Duo" feature on "Stabilize" video filter is now
+    only available for preview, not for final file.
   * Removed FFmpeg `-threads` option on preferences dialog.
   * [From Movie to Pictures] Fixed `-fps_mode 0` to `-fps_mode vfr` using
     `Create tiled mosaics` option.

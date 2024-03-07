@@ -234,19 +234,24 @@ class PrstPan(wx.Panel):
         # ------- command line
         grd_cmd = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(grd_cmd, 0, wx.EXPAND)
-        sbox = wx.StaticBox(self, wx.ID_ANY, _("One-Pass"))
-        box_cmd1 = wx.StaticBoxSizer(sbox, wx.VERTICAL)
+        sbox1 = wx.StaticBox(self, wx.ID_ANY, _("One-Pass Encoding"))
+        box_cmd1 = wx.StaticBoxSizer(sbox1, wx.VERTICAL)
         grd_cmd.Add(box_cmd1, 1, wx.ALL | wx.EXPAND, 5)
+
+        self.txt_1glb = wx.TextCtrl(self, wx.ID_ANY, "", size=(-1, -1))
+        box_cmd1.Add(self.txt_1glb, 0, wx.ALL | wx.EXPAND, 5)
+
         self.txt_1cmd = wx.TextCtrl(self, wx.ID_ANY, "",
                                     size=(-1, 120), style=wx.TE_MULTILINE
                                     | wx.TE_PROCESS_ENTER,
                                     )
         box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 5)
 
-        box_cmd2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
-                                                  _("Two-Pass")), wx.VERTICAL
-                                     )
+        sbox2 = wx.StaticBox(self, wx.ID_ANY, _("Two-Pass Encoding"))
+        box_cmd2 = wx.StaticBoxSizer(sbox2, wx.VERTICAL)
         grd_cmd.Add(box_cmd2, 1, wx.ALL | wx.EXPAND, 5)
+        self.txt_2glb = wx.TextCtrl(self, wx.ID_ANY, "", size=(-1, -1))
+        box_cmd2.Add(self.txt_2glb, 0, wx.ALL | wx.EXPAND, 5)
         self.txt_2cmd = wx.TextCtrl(self, wx.ID_ANY, "",
                                     size=(-1, 120), style=wx.TE_MULTILINE
                                     | wx.TE_PROCESS_ENTER,
@@ -255,13 +260,24 @@ class PrstPan(wx.Panel):
         self.SetSizer(sizer_base)
         self.Layout()
 
-        # ----------------------Set Properties----------------------#
         if self.appdata['ostype'] == 'Darwin':
-            self.txt_1cmd.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD))
-            self.txt_2cmd.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD))
+            self.txt_1glb.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
+                                          wx.NORMAL, wx.NORMAL))
+            self.txt_2glb.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
+                                          wx.NORMAL, wx.NORMAL))
+            self.txt_1cmd.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
+                                          wx.NORMAL, wx.NORMAL))
+            self.txt_2cmd.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
+                                          wx.NORMAL, wx.NORMAL))
         else:
-            self.txt_1cmd.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
-            self.txt_2cmd.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
+            self.txt_1glb.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
+                                          wx.NORMAL, wx.NORMAL))
+            self.txt_2glb.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
+                                          wx.NORMAL, wx.NORMAL))
+            self.txt_1cmd.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
+                                          wx.NORMAL, wx.NORMAL))
+            self.txt_2cmd.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
+                                          wx.NORMAL, wx.NORMAL))
 
         # ------- tipips
         self.cmbx_prst.SetToolTip(_("Choose a preset and view its profiles"))
@@ -286,10 +302,14 @@ class PrstPan(wx.Panel):
         tip = _("Retrieve all Videomass default presets")
         self.btn_restorealldefault.SetToolTip(tip)
         self.btn_refresh.SetToolTip(_("Update the presets list"))
-        tip = _('First pass of the selected profile')
+        tip = _('Single-pass coding arguments text field')
         self.txt_1cmd.SetToolTip(tip)
-        tip = _('Second pass of the selected profile')
+        tip = _('Second-pass coding arguments text field')
         self.txt_2cmd.SetToolTip(tip)
+        tip = _('Single-pass coding global arguments text field')
+        self.txt_1glb.SetToolTip(tip)
+        tip = _('Second-pass coding global arguments text field')
+        self.txt_2glb.SetToolTip(tip)
 
         # ----------------------Binder (EVT)----------------------#
         self.Bind(wx.EVT_COMBOBOX, self.on_preset_selection, self.cmbx_prst)

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.17.2024
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,7 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
 from threading import Thread
 import time
 import itertools
@@ -55,30 +54,17 @@ class VidStab(Thread):
     OS = appdata['ostype']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
-    def __init__(self, logname, duration, timeseq, *args):
+    def __init__(self, *args, **kwargs):
         """
         Called from `long_processing_task.topic_thread`.
         Also see `main_frame.switch_to_processing`.
+
         """
         self.stop_work_thread = False  # process terminate
-        self.input_flist = args[1]  # list of infile (elements)
-        self.passlist = args[5]  # comand list set for double-pass
-        self.makeduo = args[4]  # one more process for the duo file
-        self.output_flist = args[3]  # output path
-        self.duration = duration  # duration list
-        self.time_seq = timeseq  # a time segment
-        self.volume = args[7]  # volume compensation data
         self.count = 0  # count first for loop
-        self.countmax = len(args[1])  # length file list
-        self.logname = logname  # title name of file log
         self.nul = 'NUL' if VidStab.OS == 'Windows' else '/dev/null'
-
-        # this code block is needed when other filters are enabled
-        spl = args[6].split('-vf ')[1]
-        addspl = ','.join([x for x in spl.split(',') if '-vf'
-                           not in x and 'vidstabtransform' not in x
-                           and 'unsharp' not in x])
-        self.addflt = '' if addspl == '' else f'{addspl},'
+        self.logname = args[0]  # log filename
+        self.kwa = kwargs
 
         Thread.__init__(self)
         self.start()  # start the thread (va in self.run())
@@ -91,23 +77,24 @@ class VidStab(Thread):
         for (infile,
              outfile,
              volume,
-             duration) in itertools.zip_longest(self.input_flist,
-                                                self.output_flist,
-                                                self.volume,
-                                                self.duration,
+             duration) in itertools.zip_longest(self.kwa['fsrc'],
+                                                self.kwa['fdest'],
+                                                self.kwa.get('volume'),
+                                                self.kwa['duration'],
                                                 fillvalue='',
                                                 ):
             # --------------- first pass
             pass1 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
                      f'{VidStab.appdata["ffmpeg_default_args"]} '
-                     f'{self.time_seq[0]} '
+                     f'{self.kwa.get("pre-input-0", "")} '
+                     f'{self.kwa["start-time"]} '
                      f'-i "{infile}" '
-                     f'{self.time_seq[1]} '
-                     f'{self.passlist[0]} '
+                     f'{self.kwa["end-time"]} '
+                     f'{self.kwa["args"][0]} '
                      f'{self.nul}'
                      )
             self.count += 1
-            count = (f'File {self.count}/{self.countmax} - Pass One\n'
+            count = (f'File {self.count}/{self.kwa["nmax"]} - Pass One\n'
                      f'Detecting statistics for measurements...'
                      )
             cmd = (f'{count}\nSource: "{infile}"\nDestination: "{self.nul}"'
@@ -185,14 +172,15 @@ class VidStab(Thread):
             # --------------- second pass ----------------#
             pass2 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
                      f'{VidStab.appdata["ffmpeg_default_args"]} '
-                     f'{self.time_seq[0]} '
+                     f'{self.kwa.get("pre-input-1", "")} '
+                     f'{self.kwa["start-time"]} '
                      f'-i "{infile}" '
-                     f'{self.time_seq[1]} '
-                     f'{self.passlist[1]} '
+                     f'{self.kwa["end-time"]} '
+                     f'{self.kwa["args"][1]} '
                      f'{volume} '
                      f'"{outfile}"'
                      )
-            count = (f'File {self.count}/{self.countmax} - Pass Two\n'
+            count = (f'File {self.count}/{self.kwa["nmax"]} - Pass Two\n'
                      f'Application of Audio/Video filters...'
                      )
             cmd = (f'{count}\nSource: "{infile}"\nDestination: "{outfile}"'
@@ -255,85 +243,6 @@ class VidStab(Thread):
                              duration=duration,
                              end='Done'
                              )
-            # --------------- make duo ----------------#
-            if self.makeduo:
-                duoname = os.path.splitext(outfile)
-                outduo = f'{duoname[0]}_DUO{duoname[1]}'
-
-                pass3 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
-                         f'{VidStab.appdata["ffmpeg_default_args"]} '
-                         f'{self.time_seq[0]} '
-                         f'-i "{infile}" '
-                         f'{self.time_seq[1]} '
-                         f'-i "{outfile}" '
-                         f'{self.time_seq[1]} '
-                         f'{volume} '
-                         f'-filter_complex '
-                         f'"[0:v:0] '
-                         f'{self.addflt}pad=2*iw:ih[bg];'
-                         f'[bg][1:v:0]overlay=main_w/2:0" '
-                         f'"{outduo}"'
-                         )
-                count = f'File {self.count}/{self.countmax}\nMake duo file...'
-                cmd = (f'{count}\nSource: "{infile}"\n'
-                       f'Destination: "{outduo}"\n\n[COMMAND]:\n{pass3}'
-                       )
-                wx.CallAfter(pub.sendMessage,
-                             "COUNT_EVT",
-                             count=count,
-                             fsource=f'Source:  "{infile}"',
-                             destination=f'Destination: "{outduo}"',
-                             duration=duration,
-                             end='',
-                             )
-                logwrite(cmd, '', self.logname)
-
-                if not VidStab.OS == 'Windows':
-                    pass3 = shlex.split(pass3)
-
-                with Popen(pass3,
-                           stderr=subprocess.PIPE,
-                           bufsize=1,
-                           universal_newlines=True,
-                           encoding='utf8',
-                           ) as proc3:
-
-                    for line3 in proc3.stderr:
-                        wx.CallAfter(pub.sendMessage,
-                                     "UPDATE_EVT",
-                                     output=line3,
-                                     duration=duration,
-                                     status=0,
-                                     )
-                        if self.stop_work_thread:
-                            proc3.terminate()
-                            break
-
-                    if proc3.wait():  # will add '..failed' to txtctrl
-                        wx.CallAfter(pub.sendMessage,
-                                     "UPDATE_EVT",
-                                     output='',
-                                     duration=duration,
-                                     status=proc3.wait(),
-                                     )
-                        logwrite('',
-                                 f"Exit status: {proc3.wait()}",
-                                 self.logname,
-                                 )  # append exit error number
-
-                if self.stop_work_thread:  # break first 'for' loop
-                    proc3.terminate()
-                    break  # fermo il ciclo for, altrimenti passa avanti
-
-                if proc3.wait() == 0:  # will add '..terminated' to txtctrl
-                    wx.CallAfter(pub.sendMessage,
-                                 "COUNT_EVT",
-                                 count='',
-                                 fsource='',
-                                 destination='',
-                                 duration=duration,
-                                 end='Done'
-                                 )
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT", msg=filedone)
     # --------------------------------------------------------------------#

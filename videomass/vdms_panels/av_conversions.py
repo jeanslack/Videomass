@@ -644,7 +644,7 @@ class AV_Conv(wx.Panel):
         filters = ''.join([f'{x},' for x in orderf if x])[:-1]
 
         if filters:
-            self.opt["VFilters"] = f"-vf {filters}"
+            self.opt["VFilters"] = f"-filter:v {filters}"
             self.btn_preview.Enable(), self.btn_reset.Enable()
         else:
             self.opt["VFilters"] = ""
@@ -845,7 +845,6 @@ class AV_Conv(wx.Panel):
         """
         Update entries.
         """
-
         smap = self.cmb_Submap.GetValue()
         if smap == 'None':
             self.opt["SubtitleMap"] = '-sn'
@@ -856,12 +855,6 @@ class AV_Conv(wx.Panel):
             wx.MessageBox(_('Undetected volume values! Click the '
                             '"Volume detect" button to analyze '
                             'audio volume data.'),
-                          'Videomass', wx.ICON_INFORMATION, self)
-            return True
-
-        if self.opt["Vidstabtransform"] and self.opt["Passes"] == "2":
-            wx.MessageBox(_('The Stabilize filter is not compatible '
-                            'with Two-Pass Encoding.'),
                           'Videomass', wx.ICON_INFORMATION, self)
             return True
 
@@ -920,14 +913,29 @@ class AV_Conv(wx.Panel):
         """
         if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
 
-            cmd1 = (f'-map 0:v? {self.opt["PixFmt"]} -filter:v '
-                    f'{self.opt["Vidstabdetect"]} {self.opt["AudioIndex"]} '
-                    f'-filter:a: {self.opt["EBU"][1]} -sn -f null'
-                    )
-            cmd2 = (f'{self.opt["CmdVideoParams"]} -map 0:v? -map_chapters 0 '
-                    f'{self.opt["SubtitleMap"]} {self.opt["CmdAudioParams"]} '
-                    f'-map_metadata 0'
-                    )
+            if self.opt["Passes"] == '2':
+                cmd1 = (f'-filter:v {self.opt["Vidstabdetect"]} '
+                        f'{self.opt["CmdVideoParams"]} -map 0:v? '
+                        f'-map_chapters 0 {self.opt["AudioIndex"]} '
+                        f'{self.opt["passlogfile1"]} -sn '
+                        f'-filter:a: {self.opt["EBU"][1]} '
+                        f'-f {AV_Conv.MUXERS[self.opt["OutputFormat"]]} '
+                        )
+                cmd2 = (f'{self.opt["CmdVideoParams"]} -map 0:v? '
+                        f'-map_chapters 0 {self.opt["VFilters"]} '
+                        f'{self.opt["passlogfile2"]} '
+                        f'{self.opt["SubtitleMap"]} '
+                        f'{self.opt["CmdAudioParams"]} -map_metadata 0'
+                        )
+            else:
+                cmd1 = (f'-map 0:v? -filter:v {self.opt["Vidstabdetect"]} '
+                        f'{self.opt["AudioIndex"]} '
+                        f'-filter:a: {self.opt["EBU"][1]} -sn -f null'
+                        )
+                cmd2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
+                        f'-map 0:v? -map_chapters 0 {self.opt["SubtitleMap"]} '
+                        f'{self.opt["CmdAudioParams"]} -map_metadata 0'
+                        )
             pass1 = " ".join(cmd1.split())
             pass2 = " ".join(cmd2.split())
 
@@ -940,26 +948,23 @@ class AV_Conv(wx.Panel):
             if ending.ShowModal() == wx.ID_OK:
                 (self.parent.movetotrash,
                  self.parent.emptylist) = ending.getvalue()
-                self.parent.switch_to_processing('two pass EBU',
-                                                 f_src,
-                                                 None,
-                                                 f_dest,
-                                                 None,
-                                                 [pass1, pass2,
-                                                  self.opt["EBU"][1]],
-                                                 self.opt["AudioMap"],
-                                                 None,
-                                                 logname,
-                                                 len(f_src),
-                                                 )
+
+                kwargs = {'logname': logname, 'type': 'two pass EBU',
+                          'fsrc': f_src, 'fdest': f_dest,
+                          'args': [pass1, pass2], 'EBU': self.opt["EBU"][1],
+                          'audiomap': self.opt["AudioMap"], 'nmax': len(f_src)
+                          }
+                self.parent.switch_to_processing('two pass EBU', **kwargs)
         else:
             audnorm = (self.opt["RMS"] if not self.opt["PEAK"]
                        else self.opt["PEAK"])
 
-            cmd1 = (f'-an -sn {self.opt["PixFmt"]} -vf '
-                    f'{self.opt["Vidstabdetect"]} -f null')
+            cmd1 = (f'-an -sn -filter:v '
+                    f'{self.opt["Vidstabdetect"]} -f null'
+                    )
             cmd2 = (f'{self.opt["CmdVideoParams"]} -map 0:v? -map_chapters 0 '
-                    f'{self.opt["SubtitleMap"]} {self.opt["CmdAudioParams"]} '
+                    f'{self.opt["VFilters"]} {self.opt["SubtitleMap"]} '
+                    f'{self.opt["CmdAudioParams"]} '
                     f'{self.opt["EBU"][1]} -map_metadata 0'
                     )
             pass1 = " ".join(cmd1.split())
@@ -974,17 +979,15 @@ class AV_Conv(wx.Panel):
             if ending.ShowModal() == wx.ID_OK:
                 (self.parent.movetotrash,
                  self.parent.emptylist) = ending.getvalue()
-                self.parent.switch_to_processing('libvidstab',
-                                                 f_src,
-                                                 None,
-                                                 f_dest,
-                                                 self.opt["Makeduo"],
-                                                 [pass1, pass2],
-                                                 self.opt["VFilters"],
-                                                 [vol[5] for vol in audnorm],
-                                                 logname,
-                                                 len(f_src),
-                                                 )
+
+                kwargs = {'logname': logname, 'type': 'libvidstab',
+                          'fsrc': f_src, 'fdest': f_dest,
+                          'args': [pass1, pass2],
+                          'volume': [vol[5] for vol in audnorm],
+                          'nmax': len(f_src)
+                          }
+                self.parent.switch_to_processing('libvidstab', **kwargs)
+
         return None
         # ------------------------------------------------------------------#
 
@@ -1025,9 +1028,11 @@ class AV_Conv(wx.Panel):
         elif self.opt["Passes"] == "2":
 
             cmd1 = (f'-an -sn {self.opt["CmdVideoParams"]} '
+                    f'{self.opt["VFilters"]} '
                     f'{self.opt["passlogfile1"]} -f rawvideo'
                     )
             cmd2 = (f'{self.opt["CmdVideoParams"]} -map 0:v? -map_chapters 0 '
+                    f'{self.opt["VFilters"]} '
                     f'{self.opt["passlogfile2"]} {self.opt["SubtitleMap"]} '
                     f'{self.opt["CmdAudioParams"]} -map_metadata 0 '
                     f'{self.opt["EBU"][1]}'
@@ -1055,8 +1060,9 @@ class AV_Conv(wx.Panel):
                                                  len(f_src),
                                                  )
         elif self.opt["Passes"] == "Auto":
-            command = (f'{self.opt["CmdVideoParams"]} -map 0:v? '
-                       f'-map_chapters 0 {self.opt["SubtitleMap"]} '
+            command = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
+                       f'-map 0:v? -map_chapters 0 '
+                       f'{self.opt["SubtitleMap"]} '
                        f'{self.opt["CmdAudioParams"]} -map_metadata 0 '
                        f'{self.opt["EBU"][1]}'
                        )
@@ -1097,8 +1103,8 @@ class AV_Conv(wx.Panel):
             cmd_1 = (f'-map 0:v? {self.opt["AudioIndex"]} '
                      f'-filter:a: {self.opt["EBU"][1]} -vn -sn -f null'
                      )
-            cmd_2 = (f'{self.opt["CmdVideoParams"]} -map 0:v? '
-                     f'-map_chapters 0 {self.opt["SubtitleMap"]} '
+            cmd_2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
+                     f'-map 0:v? -map_chapters 0 {self.opt["SubtitleMap"]} '
                      f'{self.opt["CmdAudioParams"]} -map_metadata 0'
                      )
             pass1 = " ".join(cmd_1.split())
@@ -1126,12 +1132,14 @@ class AV_Conv(wx.Panel):
                                                  )
         elif self.opt["Passes"] == "2":
 
-            cmd_1 = (f'{self.opt["CmdVideoParams"]} -map 0:v? -map_chapters 0 '
+            cmd_1 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
+                     f'-map 0:v? -map_chapters 0 '
                      f'{self.opt["AudioIndex"]} {self.opt["passlogfile1"]} '
                      f'-sn -filter:a: {self.opt["EBU"][1]} '
                      f'-f {AV_Conv.MUXERS[self.opt["OutputFormat"]]} '
                      )
-            cmd_2 = (f'{self.opt["CmdVideoParams"]} -map 0:v? -map_chapters 0 '
+            cmd_2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
+                     f'-map 0:v? -map_chapters 0 '
                      f'{self.opt["passlogfile2"]} {self.opt["SubtitleMap"]} '
                      f'{self.opt["CmdAudioParams"]} -map_metadata 0'
                      )
@@ -1163,7 +1171,8 @@ class AV_Conv(wx.Panel):
             cmd_1 = (f'-map 0:v? {self.opt["AudioIndex"]} '
                      f'-filter:a: {self.opt["EBU"][1]} -vn -sn -f null'
                      )
-            cmd_2 = (f'{self.opt["CmdVideoParams"]} -map 0:v? -map_chapters 0 '
+            cmd_2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
+                     f'-map 0:v? -map_chapters 0 '
                      f'{self.opt["SubtitleMap"]} {self.opt["CmdAudioParams"]} '
                      f'-map_metadata 0'
                      )

@@ -171,8 +171,7 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.icons['videomass'],
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        #self.SetMinSize((850, 560))
-        self.SetMinSize((1140, 700))
+        self.SetMinSize((1140, 800))
         self.SetSizer(self.mainSizer)
         self.Fit()
         self.SetSize(tuple(self.appdata['main_window_size']))
@@ -1303,7 +1302,7 @@ class MainFrame(wx.Frame):
         Click Back toolbar button event
         """
         if self.ProcessPanel.IsShown():
-            self.panelShown(self.ProcessPanel.previus)
+            self.panelShown(self.ProcessPanel.previous)
             return
 
         if self.fileDnDTarget.IsShown():
@@ -1525,7 +1524,7 @@ class MainFrame(wx.Frame):
         self.Layout()
     # ------------------------------------------------------------------#
 
-    def switch_to_processing(self, *args):
+    def switch_to_processing(self, *args, **kwargs):
         """
         This method is called by start methods of any
         topic. It call `ProcessPanel.topic_thread`
@@ -1533,10 +1532,10 @@ class MainFrame(wx.Frame):
         """
         if args[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
-            dur, tseq = None, None
+            dur, tseq = None, (None, None)
 
         elif args[0] in ('concat_demuxer', 'sequence_to_video'):
-            dur, tseq = args[6], None
+            dur, tseq = args[6], (None, None)
 
         elif self.time_seq:
             ms = time_to_integer(self.time_seq.split()[3])  # -t duration
@@ -1546,6 +1545,11 @@ class MainFrame(wx.Frame):
             self.statusbar_msg(_('Processing...'), None)
         else:
             dur, tseq = self.duration, ('', '')
+
+        args = args + (self.topicname,)
+        kwargs['duration'] = dur
+        kwargs['start-time'] = tseq[0]
+        kwargs['end-time'] = tseq[1]
 
         self.SetTitle(_('Videomass - FFmpeg Message Monitoring'))
         self.fileDnDTarget.Hide()
@@ -1565,7 +1569,7 @@ class MainFrame(wx.Frame):
         self.logpan.Enable(False)
         [self.toolbar.EnableTool(x, False) for x in (4, 7, 9)]
 
-        self.ProcessPanel.topic_thread(self.topicname, dur, tseq, *args)
+        self.ProcessPanel.topic_thread(*args, **kwargs)
         self.Layout()
     # ------------------------------------------------------------------#
 

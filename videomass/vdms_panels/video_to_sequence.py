@@ -447,7 +447,8 @@ class VideoToSequence(wx.Panel):
             if self.opt["Setsar"]:
                 scale = f'{scale},{self.opt["Setsar"]}'
             cmd = ('-skip_frame nokey', f'-vf "{scale},tile={rows}x{cols}:'
-                   f'padding={pad}:margin={marg}:color=White" -an -fps_mode vfr')
+                   f'padding={pad}:margin={marg}:color=White" -an '
+                   f'-fps_mode vfr')
 
         elif self.rdbx_opt.GetSelection() == 2:
             setf = ''

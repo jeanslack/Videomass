@@ -132,7 +132,7 @@ class LogOut(wx.Panel):
         self.with_eta = True  # create estimated time of arrival (ETA)
         self.abort = False  # if True set to abort current process
         self.error = False  # if True, all the tasks was failed
-        self.previus = None  # panel name from which it starts
+        self.previous = None  # panel name from which it starts
         self.logname = None  # log pathname, None otherwise
         self.result = []  # result of the final process
         self.count = 0  # keeps track of the counts (see `update_count`)
@@ -174,13 +174,13 @@ class LogOut(wx.Panel):
         pub.subscribe(self.end_proc, "END_EVT")
     # ----------------------------------------------------------------------
 
-    def topic_thread(self, panel, durs, tseq, *args):
+    def topic_thread(self, *args, **kwargs):
         """
         This method is resposible to create the Thread instance.
         *args: type tuple data object
         durs: list of file durations or partial if tseq is setted
         """
-        self.previus = panel  # stores the panel from which it starts
+        self.previous = args[1]  # stores the panel from which it starts
 
         if args[0] == 'Viewing last log':
             return
@@ -189,8 +189,8 @@ class LogOut(wx.Panel):
         self.labprog.SetLabel('')
         self.labffmpeg.SetLabel('')
 
-        self.logname = make_log_template(args[8], self.appdata['logdir'])
-
+        self.logname = make_log_template(kwargs['logname'],
+                                         self.appdata['logdir'])
         if args[0] == 'onepass':
             self.thread_type = OnePass(self.logname, durs, tseq, *args)
 
@@ -198,7 +198,7 @@ class LogOut(wx.Panel):
             self.thread_type = TwoPass(self.logname, durs, tseq, *args)
 
         elif args[0] == 'two pass EBU':
-            self.thread_type = Loudnorm(self.logname, durs, tseq, *args)
+            self.thread_type = Loudnorm(self.logname, **kwargs)
 
         elif args[0] == 'video_to_sequence':
             self.with_eta = False
@@ -209,7 +209,7 @@ class LogOut(wx.Panel):
             self.thread_type = SlideshowMaker(self.logname, durs, *args)
 
         elif args[0] == 'libvidstab':
-            self.thread_type = VidStab(self.logname, durs, tseq, *args)
+            self.thread_type = VidStab(self.logname, **kwargs)
 
         elif args[0] == 'concat_demuxer':
             self.with_eta = False

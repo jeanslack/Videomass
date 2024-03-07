@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.17.2024
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -53,25 +53,20 @@ class Loudnorm(Thread):
     OS = appdata['ostype']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
-    def __init__(self, logname, duration, timeseq, *args):
+    def __init__(self, *args, **kwargs):
         """
         Called from `long_processing_task.topic_thread`.
         Also see `main_frame.switch_to_processing`.
+
         """
         self.stop_work_thread = False  # process terminate
-        self.input_flist = args[1]  # list of infile (elements)
-        self.passlist = args[5]  # comand list
-        self.audio_outmap = args[6]  # map output list
-        self.output_flist = args[3]  # output path
-        self.duration = duration  # durations list
-        self.time_seq = timeseq  # time segments list
         self.count = 0  # count first for loop
-        self.countmax = len(args[1])  # length file list
-        self.logname = logname  # title name of file log
         self.nul = 'NUL' if Loudnorm.OS == 'Windows' else '/dev/null'
+        self.logname = args[0]  # log filename
+        self.kwa = kwargs
 
         Thread.__init__(self)
-        self.start()  # start the thread (va in self.run())
+        self.start()
 
     def run(self):
         """
@@ -86,22 +81,23 @@ class Loudnorm(Thread):
                    }
         for (infile,
              outfile,
-             duration) in itertools.zip_longest(self.input_flist,
-                                                self.output_flist,
-                                                self.duration,
+             duration) in itertools.zip_longest(self.kwa['fsrc'],
+                                                self.kwa['fdest'],
+                                                self.kwa['duration'],
                                                 fillvalue='',
                                                 ):
             # --------------- first pass
             pass1 = (f'"{Loudnorm.appdata["ffmpeg_cmd"]}" '
                      f'{Loudnorm.appdata["ffmpeg_default_args"]} '
-                     f'{self.time_seq[0]} '
+                     f'{self.kwa.get("pre-input-0", "")} '
+                     f'{self.kwa["start-time"]} '
                      f'-i "{infile}" '
-                     f'{self.time_seq[1]} '
-                     f'{self.passlist[0]} '
+                     f'{self.kwa["end-time"]} '
+                     f'{self.kwa["args"][0]} '
                      f'{self.nul}'
                      )
             self.count += 1
-            count = (f'File {self.count}/{self.countmax} - Pass One\n '
+            count = (f'File {self.count}/{self.kwa["nmax"]} - Pass One\n '
                      f'Detecting statistics for measurements...')
             cmd = (f'{count}\nSource: "{infile}"\nDestination: '
                    f'"{self.nul}"\n\n'
@@ -181,7 +177,7 @@ class Loudnorm(Thread):
                              end='Done'
                              )
             # --------------- second pass ----------------#
-            filters = (f'{self.passlist[2]}'
+            filters = (f'{self.kwa["EBU"]}'
                        f':measured_I={summary["Input Integrated:"]}'
                        f':measured_LRA={summary["Input LRA:"]}'
                        f':measured_TP={summary["Input True Peak:"]}'
@@ -193,15 +189,16 @@ class Loudnorm(Thread):
 
             pass2 = (f'"{Loudnorm.appdata["ffmpeg_cmd"]}" '
                      f'{Loudnorm.appdata["ffmpeg_default_args"]} '
-                     f'{self.time_seq[0]} '
+                     f'{self.kwa.get("pre-input-1", "")} '
+                     f'{self.kwa["start-time"]} '
                      f'-i "{infile}" '
-                     f'{self.time_seq[1]} '
-                     f'{self.passlist[1]} '
-                     f'-filter:a:{self.audio_outmap[1]} '
+                     f'{self.kwa["end-time"]} '
+                     f'{self.kwa["args"][1]} '
+                     f'-filter:a:{self.kwa["audiomap"][1]} '
                      f'{filters} '
                      f'"{outfile}"'
                      )
-            count = (f'File {self.count}/{self.countmax} - Pass Two\n'
+            count = (f'File {self.count}/{self.kwa["nmax"]} - Pass Two\n'
                      f'Application of Audio/Video filters...'
                      )
             cmd = (f'\n{count}\nSource: "{infile}"\n'

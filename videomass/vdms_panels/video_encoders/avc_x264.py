@@ -31,8 +31,8 @@ import wx.lib.scrolledpanel as scrolled
 
 class Avc_X264(scrolled.ScrolledPanel):
     """
-    This scroll panel implements controls for extra options
-    of the `AVC` aka h.264 encoder.
+    This scroll panel implements H.264 video controls
+    for A/V Conversions.
     """
     # presets used by h264 and h265:
     H264_OPT = {("Presets"): ("None", "ultrafast", "superfast",
@@ -67,9 +67,7 @@ class Avc_X264(scrolled.ScrolledPanel):
 
     def __init__(self, parent, opt):
         """
-        This is a child of `AV_Conv` class-panel (parent) and the `opt`
-        attribute is a dict owned by that class.
-
+        This is a child of `AV_Conv` class-panel (parent).
         """
         get = wx.GetApp()
         self.appdata = get.appset
@@ -303,8 +301,8 @@ class Avc_X264(scrolled.ScrolledPanel):
                 f'{self.opt["GOP"]} {self.opt["Preset"]} '
                 f'{self.opt["Profile"]} {self.opt["Level"]} '
                 f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
-                f'{self.opt["FPS"]} {self.opt["VFilters"]} '
-                f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
+                f'{self.opt["FPS"]} {self.opt["PixFmt"]} '
+                f'{self.opt["WebOptim"]} '
                 )
     # ------------------------------------------------------------------#
 

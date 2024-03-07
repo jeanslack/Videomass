@@ -31,8 +31,8 @@ import wx.lib.scrolledpanel as scrolled
 
 class Mpeg_4(scrolled.ScrolledPanel):
     """
-    This scroll panel implements controls for the
-    `mpeg4 part2` encoder.
+    This scroll panel implements `mpeg4 part2` video
+    controls for A/V Conversions.
     """
     ASPECTRATIO = [("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
                    ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
@@ -46,8 +46,7 @@ class Mpeg_4(scrolled.ScrolledPanel):
 
     def __init__(self, parent, opt):
         """
-        This is a child of `AV_Conv` class-panel (parent) and the `opt`
-        attribute is a dict owned by that class.
+        This is a child of `AV_Conv` class-panel (parent).
         """
         get = wx.GetApp()
         self.appdata = get.appset
@@ -252,7 +251,7 @@ class Mpeg_4(scrolled.ScrolledPanel):
                 f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
                 f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
                 f'{self.opt["GOP"]} {self.opt["AspectRatio"]} '
-                f'{self.opt["FPS"]} {self.opt["VFilters"]} '
+                f'{self.opt["FPS"]} '
                 f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
                 )
     # ------------------------------------------------------------------#

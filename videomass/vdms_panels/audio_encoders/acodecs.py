@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
-FileName: hevc_avc.py
-Porpose: Contains h.264 functionality for A/V Conversions
+FileName: acodecs.py
+Porpose: Contains audio functionality for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -38,8 +38,8 @@ from videomass.vdms_io.io_tools import stream_play
 
 class AudioEncoders(scrolled.ScrolledPanel):
     """
-    This scroll panel implements controls for extra options
-    of the `AVC` aka h.264 encoder.
+    This scroll panel implements audio controls
+    for A/V Conversions.
     """
     VIOLET = '#D64E93'
     # Namings in the audio codec selection on audio radio box:
@@ -86,9 +86,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
 
     def __init__(self, parent, opt, maindata):
         """
-        This is a child of `AV_Conv` class-panel (parent) and the `opt`
-        attribute is a dict owned by that class.
-    # ---------------------------------------------------------------------#
+        This is a child of `AV_Conv` class-panel (parent)
         """
         self.parent = parent  # parent is the `nb_Audio` here.
         self.maindata = maindata  # data on MainFrame
@@ -111,7 +109,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
                                         size=(1024, 1024),
                                         style=wx.TAB_TRAVERSAL
                                         | wx.BORDER_NONE,
-                                        name="AVC x264 scrolledpanel",
+                                        name="Audio Codecs scrolledpanel",
                                         )
         sizerbase = wx.BoxSizer(wx.VERTICAL)
         sizerbase.Add((0, 15), 0)
@@ -729,9 +727,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         msg_4 = (_('High-quality two-pass Loudnorm normalization. '
                    'Normalizes the perceived loudness using the '
                    '\"loudnorm\" filter, which implements the EBU R128 '
-                   'algorithm.\nIdeal for postprocessing. Requires '
-                   '\"Two-Pass Encoding\" enabled if '
-                   'the Media target is set to Video.'
+                   'algorithm.\nIdeal for postprocessing.'
                    ))
         if self.rdbx_normalize.GetSelection() == 0:
             self.normalize_default('all')
