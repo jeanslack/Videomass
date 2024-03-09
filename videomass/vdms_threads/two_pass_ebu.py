@@ -89,7 +89,7 @@ class Loudnorm(Thread):
             # --------------- first pass
             pass1 = (f'"{Loudnorm.appdata["ffmpeg_cmd"]}" '
                      f'{Loudnorm.appdata["ffmpeg_default_args"]} '
-                     f'{self.kwa.get("pre-input-0", "")} '
+                     f'{self.kwa.get("pre-input-1", "")} '
                      f'{self.kwa["start-time"]} '
                      f'-i "{infile}" '
                      f'{self.kwa["end-time"]} '
@@ -189,7 +189,7 @@ class Loudnorm(Thread):
 
             pass2 = (f'"{Loudnorm.appdata["ffmpeg_cmd"]}" '
                      f'{Loudnorm.appdata["ffmpeg_default_args"]} '
-                     f'{self.kwa.get("pre-input-1", "")} '
+                     f'{self.kwa.get("pre-input-2", "")} '
                      f'{self.kwa["start-time"]} '
                      f'-i "{infile}" '
                      f'{self.kwa["end-time"]} '

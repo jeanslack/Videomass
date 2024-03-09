@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Dec.02.2022
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -52,18 +52,15 @@ class ConcatDemuxer(Thread):
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ---------------------------------------------------------------
 
-    def __init__(self, logname, duration, *args):
+    def __init__(self, *args, **kwargs):
         """
         Called from `long_processing_task.topic_thread`.
         Also see `main_frame.switch_to_processing`.
+
         """
         self.stop_work_thread = False  # process terminate
-        self.input_flist = args[1]  # list of files (items)
-        self.command = args[4]  # additional comand
-        self.output_file = args[3]  # output path
-        self.duration = duration  # overall duration
-        self.countmax = len(args[1])  # length file list
-        self.logname = logname  # title name of file log
+        self.logname = args[0]  # log filename
+        self.kwa = kwargs
 
         Thread.__init__(self)
 
@@ -76,20 +73,20 @@ class ConcatDemuxer(Thread):
         """
         filedone = None
         cmd = (f'"{ConcatDemuxer.appdata["ffmpeg_cmd"]}" '
-               f'{ConcatDemuxer.appdata["ffmpeg_default_args"]} '
-               f'-f concat -safe 0 -i {self.command} "{self.output_file}"')
+               f'{ConcatDemuxer.appdata["ffmpeg_default_args"]} -f concat '
+               f'-safe 0 -i {self.kwa["args"]} "{self.kwa["fdest"]}"')
 
-        count = f'{self.countmax} Files to concat'
-        com = (f'{count}\nSource: "{self.input_flist}"\nDestination: '
-               f'"{self.output_file}"\n\n[COMMAND]:\n{cmd}')
+        count = f'{self.kwa["nmax"]} Files to concat'
+        com = (f'{count}\nSource: "{self.kwa["fsrc"]}"\nDestination: '
+               f'"{self.kwa["fdest"]}"\n\n[COMMAND]:\n{cmd}')
 
         wx.CallAfter(pub.sendMessage,
                      "COUNT_EVT",
                      count=count,
-                     fsource=f'Source:  {self.input_flist}',
-                     destination=f'Destination:  "{self.output_file}"',
-                     duration=self.duration,
-                     # fname=", ".join(self.input_flist),
+                     fsource=f'Source:  {self.kwa["fsrc"]}',
+                     destination=f'Destination:  "{self.kwa["fdest"]}"',
+                     duration=self.kwa['duration'],
+                     # fname=", ".join(self.kwa['fsrc']),
                      end='',
                      )
         logwrite(com, '', self.logname)  # write n/n + command only
@@ -107,7 +104,7 @@ class ConcatDemuxer(Thread):
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line,
-                                 duration=self.duration,
+                                 duration=self.kwa['duration'],
                                  status=0,
                                  )
                     if self.stop_work_thread:
@@ -118,14 +115,14 @@ class ConcatDemuxer(Thread):
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output='',
-                                 duration=self.duration,
+                                 duration=self.kwa['duration'],
                                  status=proc.wait(),
                                  )
                     logwrite('',
                              f"Exit status: {proc.wait}",
                              self.logname)  # append exit error number
                 else:  # ok
-                    filedone = self.input_flist
+                    filedone = self.kwa["fsrc"]
                     wx.CallAfter(pub.sendMessage,
                                  "COUNT_EVT",
                                  count='',

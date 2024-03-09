@@ -5,7 +5,9 @@
         "First_pass": "-i \"audio.wav\" -c:v copy -c:a copy -map_metadata 0 -shortest",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "mkv"
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Add a new audio stream to video",
@@ -13,7 +15,9 @@
         "First_pass": "-i \"audio.wav\" -c:v copy -c:a copy -map 0 -map 1:a -map_metadata 0 -shortest",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "mkv"
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Replace audio stream on video",
@@ -21,7 +25,9 @@
         "First_pass": "-i \"track.wav\" -c:v copy -c:a copy -map 0:v:0 -map 1:a:0 -map_metadata 0 -shortest",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "mkv"
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Remove a specific audio stream",
@@ -29,7 +35,9 @@
         "First_pass": "-map 0 -map -0:a:0 -map_chapters 0 -map 0:s? -map_metadata 0 -c copy",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "copy"
+        "Output_extension": "copy",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Remove all audio streams",
@@ -37,6 +45,8 @@
         "First_pass": "-map 0 -map -0:a -map_chapters 0 -map 0:s? -map_metadata 0 -c copy",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "copy"
+        "Output_extension": "copy",
+        "Preinput_1": "",
+        "Preinput_2": ""
     }
 ]

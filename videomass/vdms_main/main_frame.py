@@ -1532,25 +1532,24 @@ class MainFrame(wx.Frame):
         """
         if args[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
-            dur, tseq = None, (None, None)
 
         elif args[0] in ('concat_demuxer', 'sequence_to_video'):
-            dur, tseq = args[6], (None, None)
+            kwargs['start-time'], kwargs['end-time'] = '', ''
 
         elif self.time_seq:
             ms = time_to_integer(self.time_seq.split()[3])  # -t duration
             splseq = self.time_seq.split()
             tseq = f'{splseq[0]} {splseq[1]}', f'{splseq[2]} {splseq[3]}'
             dur = [ms for n in self.duration]
+            kwargs['duration'] = dur
+            kwargs['start-time'] = tseq[0]
+            kwargs['end-time'] = tseq[1]
             self.statusbar_msg(_('Processing...'), None)
         else:
-            dur, tseq = self.duration, ('', '')
+            kwargs['start-time'], kwargs['end-time'] = '', ''
+            kwargs['duration'] = self.duration
 
-        args = args + (self.topicname,)
-        kwargs['duration'] = dur
-        kwargs['start-time'] = tseq[0]
-        kwargs['end-time'] = tseq[1]
-
+        args = args + (self.topicname,)  # update args
         self.SetTitle(_('Videomass - FFmpeg Message Monitoring'))
         self.fileDnDTarget.Hide()
         self.VconvPanel.Hide()

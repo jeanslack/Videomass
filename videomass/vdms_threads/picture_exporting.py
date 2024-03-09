@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.17.2024
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -51,20 +51,20 @@ class PicturesFromVideo(Thread):
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ------------------------------------------------------
 
-    def __init__(self, logname, duration, timeseq, *args):
+    def __init__(self, *args, **kwargs):
         """
         Called from `long_processing_task.topic_thread`.
         Also see `main_frame.switch_to_processing`.
+
         """
         self.stop_work_thread = False  # process terminate
-        self.outputdir = args[3]  # output directory
-        self.cmd = args[4]  # comand set on single pass
-        self.duration = duration[0]  # duration list
-        self.time_seq = timeseq  # a time segment
+        self.fname = kwargs['filename']
+        self.outputdir = kwargs['outputdir']  # output directory
+        self.cmd = kwargs['args']  # comand set on single pass
+        self.duration = kwargs['duration'][0]  # duration list
         self.count = 0  # count first for loop
-        self.logname = logname  # title name of file log
-        self.fname = args[1]  # file name
-        self.preargs = args[2]
+        self.logname = args[0]  # log filename
+        self.kwa = kwargs
 
         Thread.__init__(self)
         self.start()  # self.run()
@@ -75,11 +75,11 @@ class PicturesFromVideo(Thread):
         """
         filedone = []
         cmd = (f'"{PicturesFromVideo.appdata["ffmpeg_cmd"]}" '
-               f'{self.time_seq[0]} '
-               f'{self.time_seq[1]} '
+               f'{self.kwa["start-time"]} '
+               f'{self.kwa["end-time"]} '
                f'{PicturesFromVideo.appdata["ffmpeg_default_args"]} '
-               f'{self.preargs} '
-               f'-i "{self.fname}" '
+               f'{self.kwa["pre-input-1"]} '
+               f'-i "{self.kwa["filename"]}" '
                f'{self.cmd}'
                )
         count = 'File 1/1'

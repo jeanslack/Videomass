@@ -5,7 +5,9 @@
         "First_pass": "-c copy -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "avi",
-        "Output_extension": "avi"
+        "Output_extension": "avi",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Repair \"mkv\" video format",
@@ -13,7 +15,9 @@
         "First_pass": "-c copy -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "mkv",
-        "Output_extension": "mkv"
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Repair \"mp4\" video format",
@@ -21,7 +25,9 @@
         "First_pass": "-c copy -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "mp4",
-        "Output_extension": "mp4"
+        "Output_extension": "mp4",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Repair \"ogv\" video format",
@@ -29,7 +35,9 @@
         "First_pass": "-c copy -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "ogv",
-        "Output_extension": "ogv"
+        "Output_extension": "ogv",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Repair \"webm\" video format",
@@ -37,7 +45,9 @@
         "First_pass": "-c copy -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "webm",
-        "Output_extension": "webm"
+        "Output_extension": "webm",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Repair any video format",
@@ -45,6 +55,8 @@
         "First_pass": "-c copy",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "mkv"
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
     }
 ]

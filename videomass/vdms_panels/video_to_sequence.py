@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.05.2024
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -572,18 +572,13 @@ class VideoToSequence(wx.Panel):
                           wx.ICON_ERROR, self)
             return
 
-        self.parent.switch_to_processing('video_to_sequence',
-                                         filename,
-                                         preargs,
-                                         outputdir,
-                                         command,
-                                         None,
-                                         None,
-                                         None,
-                                         'from_movie_to_pictures.log',
-                                         1,
-                                         False,  # reserved
-                                         )
+        kwargs = {'logname': 'from_movie_to_pictures.log',
+                  'type': 'video_to_sequence',
+                  'filename': filename, 'outputdir': outputdir,
+                  'args': command, 'pre-input-1': preargs,
+                  }
+        self.parent.switch_to_processing('video_to_sequence', **kwargs)
+
         return
     # ------------------------------------------------------------------#
 

@@ -5,7 +5,9 @@
         "First_pass": "-c:v libaom-av1 -b:v 2M -usage good -cpu-used 5 -row-mt 1 -tiles 2x2 -g 250 -keyint_min 250 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a: libopus -map 0:a:? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "mkv"
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "libaom (Constant Q)",
@@ -13,7 +15,9 @@
         "First_pass": "-c:v libaom-av1 -crf 30 -b:v 0 -usage good -cpu-used 3 -row-mt 1 -tiles 2x2 -g 250 -keyint_min 250 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a: libopus -compression_level 5 -map 0:a:? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "mkv"
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "libaom (Constrained Q)",
@@ -21,7 +25,9 @@
         "First_pass": "-c:v libaom-av1 -crf 30 -b:v 2000k -usage good -cpu-used 3 -row-mt 1 -tiles 2x2 -g 250 -keyint_min 250 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a: libopus -compression_level 5 -map 0:a:? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "mkv"
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "libaom (Constrained Q, min/max bitrate)",
@@ -29,7 +35,9 @@
         "First_pass": "-c:v libaom-av1 -minrate 500k -b:v 2000k -maxrate 2500k -usage good -cpu-used 2 -row-mt 1 -tiles 2x2 -g 250 -keyint_min 250 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a: libopus -compression_level 5 -map 0:a:? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "mkv"
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "libaom (Constrained Q, min/max bitrate, for streaming)",
@@ -37,7 +45,9 @@
         "First_pass": "-c:v libaom-av1 -minrate 500k -b:v 2000k -maxrate 2500k -movflags -faststart -usage good -cpu-used 1 -row-mt 1 -tiles 2x2 -g 250 -keyint_min 250 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a: libopus -compression_level 2 -map 0:a:? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "mp4"
+        "Output_extension": "mp4",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "libaom (Two-pass)",
@@ -45,7 +55,9 @@
         "First_pass": "-pass 1 -an -sn -c:v libaom-av1 -b:v 2M -usage good -cpu-used 4 -row-mt 1 -tiles 2x2 -g 250 -keyint_min 250 -pix_fmt yuv420p -f null",
         "Second_pass": "-pass 2 -c:v libaom-av1 -b:v 2M -usage good -cpu-used 4 -row-mt 1 -tiles 2x2 -g 250 -keyint_min 250 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a: libopus -compression_level 5 -map 0:a:? -map_metadata 0",
         "Supported_list": "",
-        "Output_extension": "mkv"
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "libaom DVD",
@@ -53,6 +65,8 @@
         "First_pass": "-pass 1 -an -sn -c:v libaom-av1 -b:v 650k -usage good -cpu-used 4 -row-mt 1 -tiles 2x2 -g 250 -keyint_min 250 -pix_fmt yuv420p -f null",
         "Second_pass": "-pass 2 -c:v libaom-av1 -b:v 650k -usage good -cpu-used 4 -row-mt 1 -tiles 2x2 -g 250 -keyint_min 250 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a: libopus -compression_level 5 -ac 2 -map 0:a:? -map_metadata 0",
         "Supported_list": "VOB",
-        "Output_extension": "mkv"
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
     }
 ]

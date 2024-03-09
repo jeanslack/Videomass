@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2024
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -237,9 +237,10 @@ class PrstPan(wx.Panel):
         sbox1 = wx.StaticBox(self, wx.ID_ANY, _("One-Pass Encoding"))
         box_cmd1 = wx.StaticBoxSizer(sbox1, wx.VERTICAL)
         grd_cmd.Add(box_cmd1, 1, wx.ALL | wx.EXPAND, 5)
-
-        self.txt_1glb = wx.TextCtrl(self, wx.ID_ANY, "", size=(-1, -1))
-        box_cmd1.Add(self.txt_1glb, 0, wx.ALL | wx.EXPAND, 5)
+        # self.pass_1_pre = wx.TextCtrl(self, wx.ID_ANY, "",
+        #                             style=wx.TE_PROCESS_ENTER,
+        #                             )
+        # box_cmd1.Add(self.pass_1_pre, 0, wx.ALL | wx.EXPAND, 5)
 
         self.txt_1cmd = wx.TextCtrl(self, wx.ID_ANY, "",
                                     size=(-1, 120), style=wx.TE_MULTILINE
@@ -247,33 +248,51 @@ class PrstPan(wx.Panel):
                                     )
         box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 5)
 
+
+        self.pass_1_pre = wx.TextCtrl(self, wx.ID_ANY, "",
+                                    style=wx.TE_PROCESS_ENTER,
+                                    )
+        box_cmd1.Add(self.pass_1_pre, 0, wx.ALL | wx.EXPAND, 5)
+
+
         sbox2 = wx.StaticBox(self, wx.ID_ANY, _("Two-Pass Encoding"))
         box_cmd2 = wx.StaticBoxSizer(sbox2, wx.VERTICAL)
         grd_cmd.Add(box_cmd2, 1, wx.ALL | wx.EXPAND, 5)
-        self.txt_2glb = wx.TextCtrl(self, wx.ID_ANY, "", size=(-1, -1))
-        box_cmd2.Add(self.txt_2glb, 0, wx.ALL | wx.EXPAND, 5)
+        # self.pass_2_pre = wx.TextCtrl(self, wx.ID_ANY, "",
+        #                               style=wx.TE_PROCESS_ENTER,
+        #                             )
+        # box_cmd2.Add(self.pass_2_pre, 0, wx.ALL | wx.EXPAND, 5)
         self.txt_2cmd = wx.TextCtrl(self, wx.ID_ANY, "",
                                     size=(-1, 120), style=wx.TE_MULTILINE
                                     | wx.TE_PROCESS_ENTER,
                                     )
         box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND, 5)
+
+
+        self.pass_2_pre = wx.TextCtrl(self, wx.ID_ANY, "",
+                                      style=wx.TE_PROCESS_ENTER,
+                                    )
+        box_cmd2.Add(self.pass_2_pre, 0, wx.ALL | wx.EXPAND, 5)
+
+
+
         self.SetSizer(sizer_base)
         self.Layout()
 
         if self.appdata['ostype'] == 'Darwin':
-            self.txt_1glb.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
+            self.pass_1_pre.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
                                           wx.NORMAL, wx.NORMAL))
-            self.txt_2glb.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
-                                          wx.NORMAL, wx.NORMAL))
+            self.pass_2_pre.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
             self.txt_1cmd.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
                                           wx.NORMAL, wx.NORMAL))
             self.txt_2cmd.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
                                           wx.NORMAL, wx.NORMAL))
         else:
-            self.txt_1glb.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
+            self.pass_1_pre.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
                                           wx.NORMAL, wx.NORMAL))
-            self.txt_2glb.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
-                                          wx.NORMAL, wx.NORMAL))
+            self.pass_2_pre.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
             self.txt_1cmd.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
                                           wx.NORMAL, wx.NORMAL))
             self.txt_2cmd.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
@@ -302,14 +321,18 @@ class PrstPan(wx.Panel):
         tip = _("Retrieve all Videomass default presets")
         self.btn_restorealldefault.SetToolTip(tip)
         self.btn_refresh.SetToolTip(_("Update the presets list"))
-        tip = _('Single-pass coding arguments text field')
+        tip = _('FFmpeg arguments code for one-pass encoding')
         self.txt_1cmd.SetToolTip(tip)
-        tip = _('Second-pass coding arguments text field')
+        tip = _('FFmpeg arguments code for two-pass encoding')
         self.txt_2cmd.SetToolTip(tip)
-        tip = _('Single-pass coding global arguments text field')
-        self.txt_1glb.SetToolTip(tip)
-        tip = _('Second-pass coding global arguments text field')
-        self.txt_2glb.SetToolTip(tip)
+        tip = (_('Any optional arguments to add before input file on the '
+                 'one-pass encoding, e.g required names of some hardware '
+                 'accelerations like -hwaccel to use with CUDA.'))
+        self.pass_1_pre.SetToolTip(tip)
+        tip = (_('Any optional arguments to add before input file on the '
+                 'two-pass encoding, e.g required names of some hardware '
+                 'accelerations like -hwaccel to use with CUDA.'))
+        self.pass_2_pre.SetToolTip(tip)
 
         # ----------------------Binder (EVT)----------------------#
         self.Bind(wx.EVT_COMBOBOX, self.on_preset_selection, self.cmbx_prst)
@@ -410,6 +433,8 @@ class PrstPan(wx.Panel):
         self.lctrl.ClearAll()
         self.txt_1cmd.SetValue("")
         self.txt_2cmd.SetValue("")
+        self.pass_1_pre.SetValue("")
+        self.pass_2_pre.SetValue("")
 
         if self.array:
             del self.array[0:6]
@@ -468,7 +493,9 @@ class PrstPan(wx.Panel):
         if cleardata:
             self.txt_1cmd.SetValue("")
             self.txt_2cmd.SetValue("")
-            del self.array[0:6]  # delete all: [0],[1],[2],[3],[4],[5]
+            self.pass_1_pre.SetValue("")
+            self.pass_2_pre.SetValue("")
+            del self.array[0:8]  # delete all: [0],[1],[2],[3],[4],[5],[6],[7]
         self.btn_copyprofile.Disable()
         self.btn_delprofile.Disable()
         self.btn_editprofile.Disable()
@@ -487,10 +514,12 @@ class PrstPan(wx.Panel):
         selected = event.GetText()  # event.GetText is a Name Profile
         self.txt_1cmd.SetValue("")
         self.txt_2cmd.SetValue("")
+        self.pass_1_pre.SetValue("")
+        self.pass_2_pre.SetValue("")
         self.btn_copyprofile.Enable()
         self.btn_delprofile.Enable()
         self.btn_editprofile.Enable()
-        del self.array[0:6]  # delete all: [0],[1],[2],[3],[4],[5]
+        del self.array[0:8]  # delete all: [0],[1],[2],[3],[4],[5],[6],[7]
 
         try:
             for name in collections:
@@ -501,6 +530,8 @@ class PrstPan(wx.Panel):
                     self.array.append(name["Second_pass"])
                     self.array.append(name["Supported_list"])
                     self.array.append(name["Output_extension"])
+                    self.array.append(name["Preinput_1"])
+                    self.array.append(name["Preinput_2"])
 
         except KeyError as err:
             wx.MessageBox(_('ERROR: json Key Error: {}\n\n'
@@ -509,11 +540,15 @@ class PrstPan(wx.Panel):
             return
 
         self.txt_1cmd.AppendText(f'{self.array[2]}')  # cmd1 text ctrl
+        self.pass_1_pre.AppendText(f'{self.array[6]}')  # cmd1 text ctrl
         if self.array[3]:
             self.txt_2cmd.Enable()
+            self.pass_2_pre.Enable()
             self.txt_2cmd.AppendText(f'{self.array[3]}')  # cmd2 text ctrl
+            self.pass_2_pre.AppendText(f'{self.array[7]}')  # cmd1 text ctrl
         else:
             self.txt_2cmd.Disable()
+            self.pass_2_pre.Disable()
 
         sel = f'{self.cmbx_prst.GetValue()} - {self.array[0]}'
         self.parent.statusbar_msg(sel, None)
@@ -812,7 +847,7 @@ class PrstPan(wx.Panel):
         Store new profiles in the selected preset
         """
         filename = self.cmbx_prst.GetValue()
-        title = _('Create a new profile on "{}" preset').format(filename)
+        title = _('New Profile - Preset "{}"').format(filename)
         prstdialog = presets_addnew.MemPresets(self,
                                                'newprofile',
                                                filename,
@@ -830,7 +865,7 @@ class PrstPan(wx.Panel):
         Edit an existing profile
         """
         filename = self.cmbx_prst.GetValue()
-        title = _('Edit profile of the "{}" preset').format(filename)
+        title = _('*Edit Profile - Preset "{}"').format(filename)
         prstdialog = presets_addnew.MemPresets(self,
                                                'edit',
                                                filename,
@@ -856,6 +891,8 @@ class PrstPan(wx.Panel):
                                     Second_pass=self.array[3],
                                     Supported_list=self.array[4],
                                     Output_extension=self.array[5],
+                                    Preinput_1=self.array[6],
+                                    Preinput_2=self.array[7],
                                     )
         if not newprst:
             self.reset_list()
@@ -942,51 +979,44 @@ class PrstPan(wx.Panel):
         """
         Build args string for one pass process
         """
+        preinput_1 = " ".join(self.pass_1_pre.GetValue().split())
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
-        valupdate = self.update_dict(len(filesrc), 'One passes')
+        kwargs = {'logname': 'presets_manager.log', 'type': 'onepass',
+                  'fsrc': filesrc, 'fdest': filedest, 'args': pass1,
+                  'nmax': len(filesrc), 'fext': outext,
+                  'pre-input-1': preinput_1,
+                  }
+        print(kwargs)
+        valupdate = self.update_dict(len(filesrc), _('One-pass Encoding'))
         ending = Formula(self, valupdate[0], valupdate[1], (600, 170),
                          self.parent.movetotrash, self.parent.emptylist,
                          )
         if ending.ShowModal() == wx.ID_OK:
             self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
-            self.parent.switch_to_processing('onepass',
-                                             filesrc,
-                                             outext,
-                                             filedest,
-                                             pass1,
-                                             None,
-                                             '',
-                                             '',
-                                             'presets_manager.log',
-                                             len(filesrc),
-                                             )
+            self.parent.switch_to_processing('onepass', **kwargs)
     # ------------------------------------------------------------------#
 
     def two_Pass(self, filesrc, filedest, outext):
         """
         Build args string for two pass process
         """
+        preinput_1 = " ".join(self.pass_1_pre.GetValue().split())
+        preinput_2 = " ".join(self.pass_2_pre.GetValue().split())
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
         pass2 = " ".join(self.txt_2cmd.GetValue().split())
-        typeproc = 'twopass'
-        valupdate = self.update_dict(len(filesrc), typeproc)
+        kwargs = {'logname': 'presets_manager.log', 'type': 'twopass',
+                  'fsrc': filesrc, 'fdest': filedest, 'args': [pass1, pass2],
+                  'nmax': len(filesrc), 'fext': outext,
+                  'pre-input-1': preinput_1, 'pre-input-2': preinput_2,
+                  }
+        print(kwargs)
+        valupdate = self.update_dict(len(filesrc), _('Two-pass Encoding'))
         ending = Formula(self, valupdate[0], valupdate[1], (600, 170),
                          self.parent.movetotrash, self.parent.emptylist,
                          )
-
         if ending.ShowModal() == wx.ID_OK:
             self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
-            self.parent.switch_to_processing(typeproc,
-                                             filesrc,
-                                             outext,
-                                             filedest,
-                                             None,
-                                             [pass1, pass2],
-                                             '',
-                                             '',
-                                             'presets_manager.log',
-                                             len(filesrc),
-                                             )
+            self.parent.switch_to_processing('twopass', **kwargs)
     # --------------------------------------------------------------------#
 
     def update_dict(self, cntmax, passes):

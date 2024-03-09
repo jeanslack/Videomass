@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 07 Mar 2024 V.5.0.10
+Sat, 09 Mar 2024 V.5.0.10
 
   * [A/V Conversions] Improved UI layout.
   * [A/V Conversions] [NEW] Added/Impoved video encoder controls.
@@ -30,6 +30,8 @@ Thu, 07 Mar 2024 V.5.0.10
   * Removed FFmpeg `-threads` option on preferences dialog.
   * [From Movie to Pictures] Fixed `-fps_mode 0` to `-fps_mode vfr` using
     `Create tiled mosaics` option.
+  * [Presets Manager] add optional arguments for hardware acceleration #272 .
+  * Update presets to v0.23.
 
 +------------------------------------+
 Thu, 23 Feb 2024 V.5.0.6

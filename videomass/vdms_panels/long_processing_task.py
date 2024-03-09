@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.21.2023
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -177,8 +177,7 @@ class LogOut(wx.Panel):
     def topic_thread(self, *args, **kwargs):
         """
         This method is resposible to create the Thread instance.
-        *args: type tuple data object
-        durs: list of file durations or partial if tseq is setted
+
         """
         self.previous = args[1]  # stores the panel from which it starts
 
@@ -192,33 +191,32 @@ class LogOut(wx.Panel):
         self.logname = make_log_template(kwargs['logname'],
                                          self.appdata['logdir'])
         if args[0] == 'onepass':
-            self.thread_type = OnePass(self.logname, durs, tseq, *args)
+            self.thread_type = OnePass(self.logname, **kwargs)
 
         elif args[0] == 'twopass':
-            self.thread_type = TwoPass(self.logname, durs, tseq, *args)
+            self.thread_type = TwoPass(self.logname, **kwargs)
 
         elif args[0] == 'two pass EBU':
             self.thread_type = Loudnorm(self.logname, **kwargs)
 
         elif args[0] == 'video_to_sequence':
             self.with_eta = False
-            self.thread_type = PicturesFromVideo(self.logname, durs,
-                                                 tseq, *args
-                                                 )
+            self.thread_type = PicturesFromVideo(self.logname, **kwargs)
+
         elif args[0] == 'sequence_to_video':
-            self.thread_type = SlideshowMaker(self.logname, durs, *args)
+            self.thread_type = SlideshowMaker(self.logname, **kwargs)
 
         elif args[0] == 'libvidstab':
             self.thread_type = VidStab(self.logname, **kwargs)
 
         elif args[0] == 'concat_demuxer':
             self.with_eta = False
-            self.thread_type = ConcatDemuxer(self.logname, durs, *args)
+            self.thread_type = ConcatDemuxer(self.logname, **kwargs)
     # ----------------------------------------------------------------------
 
     def update_display(self, output, duration, status):
         """
-        Receive message from thread by pubsub UPDATE_EVT protol.
+        Receive message from thread by pubsub UPDATE_EVT protocol.
         The received 'output' is parsed for calculate the bar
         progress value, percentage label and errors management.
         This method can be used even for non-loop threads.

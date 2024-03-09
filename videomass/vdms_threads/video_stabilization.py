@@ -79,14 +79,14 @@ class VidStab(Thread):
              volume,
              duration) in itertools.zip_longest(self.kwa['fsrc'],
                                                 self.kwa['fdest'],
-                                                self.kwa.get('volume'),
+                                                self.kwa.get('volume', ''),
                                                 self.kwa['duration'],
                                                 fillvalue='',
                                                 ):
             # --------------- first pass
             pass1 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
                      f'{VidStab.appdata["ffmpeg_default_args"]} '
-                     f'{self.kwa.get("pre-input-0", "")} '
+                     f'{self.kwa.get("pre-input-1", "")} '
                      f'{self.kwa["start-time"]} '
                      f'-i "{infile}" '
                      f'{self.kwa["end-time"]} '
@@ -172,7 +172,7 @@ class VidStab(Thread):
             # --------------- second pass ----------------#
             pass2 = (f'"{VidStab.appdata["ffmpeg_cmd"]}" '
                      f'{VidStab.appdata["ffmpeg_default_args"]} '
-                     f'{self.kwa.get("pre-input-1", "")} '
+                     f'{self.kwa.get("pre-input-2", "")} '
                      f'{self.kwa["start-time"]} '
                      f'-i "{infile}" '
                      f'{self.kwa["end-time"]} '
