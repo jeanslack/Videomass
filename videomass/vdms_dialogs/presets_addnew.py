@@ -63,8 +63,7 @@ class MemPresets(wx.Dialog):
         self.path_prst = os.path.join(self.appdata['confdir'], 'presets',
                                       f'{filename}.json')
         self.arg = arg  # evaluate if 'edit', 'newprofile', 'addprofile'
-        self.array = array  # param list [name,descript,cmd1,cmd2,
-                                        # supp,ext,global1,global2]
+        self.array = array  # param list [name,descript,cmd1,cmd2,supp,ext,..]
 
         wx.Dialog.__init__(self, parent, -1, title,
                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
@@ -146,22 +145,22 @@ class MemPresets(wx.Dialog):
         # ----- set_properties:
         if self.appdata['ostype'] == 'Darwin':
             self.pass_1_cmd.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
-                                                wx.NORMAL, wx.NORMAL))
+                                            wx.NORMAL, wx.NORMAL))
             self.pass_2_cmd.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
-                                                wx.NORMAL, wx.NORMAL))
+                                            wx.NORMAL, wx.NORMAL))
             self.pass_1_pre.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
-                                                wx.NORMAL, wx.NORMAL))
+                                            wx.NORMAL, wx.NORMAL))
             self.pass_2_pre.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
-                                                wx.NORMAL, wx.NORMAL))
+                                            wx.NORMAL, wx.NORMAL))
         else:
             self.pass_1_cmd.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
-                                               wx.NORMAL, wx.NORMAL))
+                                            wx.NORMAL, wx.NORMAL))
             self.pass_2_cmd.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
-                                               wx.NORMAL, wx.NORMAL))
+                                            wx.NORMAL, wx.NORMAL))
             self.pass_1_pre.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
-                                               wx.NORMAL, wx.NORMAL))
+                                            wx.NORMAL, wx.NORMAL))
             self.pass_2_pre.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
-                                               wx.NORMAL, wx.NORMAL))
+                                            wx.NORMAL, wx.NORMAL))
 
         self.txt_name.SetToolTip(_('A short profile name'))
         self.txt_descript.SetToolTip(_('A long description of the profile'))
@@ -219,9 +218,6 @@ class MemPresets(wx.Dialog):
         self.txt_ext.AppendText(self.array[5])  # extension
         self.pass_1_pre.AppendText(self.array[6])  # input 1
         self.pass_2_pre.AppendText(self.array[7])  # input 2
-
-
-
     # ---------------------Callbacks (event handler)----------------------#
 
     def on_Name(self, event):

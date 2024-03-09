@@ -237,51 +237,33 @@ class PrstPan(wx.Panel):
         sbox1 = wx.StaticBox(self, wx.ID_ANY, _("One-Pass Encoding"))
         box_cmd1 = wx.StaticBoxSizer(sbox1, wx.VERTICAL)
         grd_cmd.Add(box_cmd1, 1, wx.ALL | wx.EXPAND, 5)
-        # self.pass_1_pre = wx.TextCtrl(self, wx.ID_ANY, "",
-        #                             style=wx.TE_PROCESS_ENTER,
-        #                             )
-        # box_cmd1.Add(self.pass_1_pre, 0, wx.ALL | wx.EXPAND, 5)
-
         self.txt_1cmd = wx.TextCtrl(self, wx.ID_ANY, "",
                                     size=(-1, 120), style=wx.TE_MULTILINE
                                     | wx.TE_PROCESS_ENTER,
                                     )
         box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 5)
-
-
         self.pass_1_pre = wx.TextCtrl(self, wx.ID_ANY, "",
-                                    style=wx.TE_PROCESS_ENTER,
-                                    )
+                                      style=wx.TE_PROCESS_ENTER,
+                                      )
         box_cmd1.Add(self.pass_1_pre, 0, wx.ALL | wx.EXPAND, 5)
-
-
         sbox2 = wx.StaticBox(self, wx.ID_ANY, _("Two-Pass Encoding"))
         box_cmd2 = wx.StaticBoxSizer(sbox2, wx.VERTICAL)
         grd_cmd.Add(box_cmd2, 1, wx.ALL | wx.EXPAND, 5)
-        # self.pass_2_pre = wx.TextCtrl(self, wx.ID_ANY, "",
-        #                               style=wx.TE_PROCESS_ENTER,
-        #                             )
-        # box_cmd2.Add(self.pass_2_pre, 0, wx.ALL | wx.EXPAND, 5)
         self.txt_2cmd = wx.TextCtrl(self, wx.ID_ANY, "",
                                     size=(-1, 120), style=wx.TE_MULTILINE
                                     | wx.TE_PROCESS_ENTER,
                                     )
         box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND, 5)
-
-
         self.pass_2_pre = wx.TextCtrl(self, wx.ID_ANY, "",
                                       style=wx.TE_PROCESS_ENTER,
-                                    )
+                                      )
         box_cmd2.Add(self.pass_2_pre, 0, wx.ALL | wx.EXPAND, 5)
-
-
-
         self.SetSizer(sizer_base)
         self.Layout()
 
         if self.appdata['ostype'] == 'Darwin':
             self.pass_1_pre.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
-                                          wx.NORMAL, wx.NORMAL))
+                                            wx.NORMAL, wx.NORMAL))
             self.pass_2_pre.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
                                             wx.NORMAL, wx.NORMAL))
             self.txt_1cmd.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
@@ -290,7 +272,7 @@ class PrstPan(wx.Panel):
                                           wx.NORMAL, wx.NORMAL))
         else:
             self.pass_1_pre.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
-                                          wx.NORMAL, wx.NORMAL))
+                                            wx.NORMAL, wx.NORMAL))
             self.pass_2_pre.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
                                             wx.NORMAL, wx.NORMAL))
             self.txt_1cmd.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,

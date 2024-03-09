@@ -239,6 +239,7 @@ class SlideshowMaker(Thread):
         self.count = 0  # count first for loop
         self.countmax = kwargs['nmax']
         self.logname = args[0]  # log filename
+        self.fdest = kwargs['fdest']
         self.kwa = kwargs
 
         self.start()
@@ -284,17 +285,17 @@ class SlideshowMaker(Thread):
                      f'{self.kwa["pre-input-1"]} '
                      f'-i "{tmpgroup}" '
                      f'{self.kwa["args"]} '
-                     f'"{self.kwa["fdest"]}"'
+                     f'"{self.fdest}"'
                      )
             count = '\nVideo production...'
             log = (f'{count}\nSource: "{tempdir}"\n'
-                   f'Destination: "{self.kwa["fdest"]}"\n\n[COMMAND]:\n{cmd_2}')
+                   f'Destination: "{self.fdest}"\n\n[COMMAND]:\n{cmd_2}')
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
                          fsource=f'Source:  "{tempdir}"',
-                         destination=f'Destination:  "{self.kwa["fdest"]}"',
+                         destination=f'Destination:  "{self.fdest}"',
                          duration=self.duration,
                          end='',
                          )

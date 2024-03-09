@@ -82,10 +82,10 @@ class AV_Conv(wx.Panel):
                 "H.264 10-bit": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
                 "H.265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
                 "H.265 10-bit": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
-                #"AV1 (AOM)": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
-                #"AV1 (SVT)": {"-c:v libsvtav1": ["mkv", "webm"]},
-                #"Theora": {"-c:v libtheora": ["ogv", "mkv"]},
-                #"Vp9": {"-c:v libvpx-vp9": ["webm", "mkv", "mp4"]},
+                # "AV1 (AOM)": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
+                # "AV1 (SVT)": {"-c:v libsvtav1": ["mkv", "webm"]},
+                # "Theora": {"-c:v libtheora": ["ogv", "mkv"]},
+                # "Vp9": {"-c:v libvpx-vp9": ["webm", "mkv", "mp4"]},
                 "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "m4v", "ogv",
                                        "webm", "Copy"]}
                 })
@@ -1108,7 +1108,6 @@ class AV_Conv(wx.Panel):
                 end = ending.getvalue()
                 self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
 
-
                 kwargs = {'logname': logname, 'type': 'two pass EBU',
                           'fsrc': f_src, 'fdest': f_dest,
                           'args': [pass1, pass2], 'EBU': self.opt["EBU"][1],
@@ -1142,7 +1141,6 @@ class AV_Conv(wx.Panel):
                 end = ending.getvalue()
                 self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
 
-
                 kwargs = {'logname': logname, 'type': 'two pass EBU',
                           'fsrc': f_src, 'fdest': f_dest,
                           'args': [pass1, pass2], 'EBU': self.opt["EBU"][1],
@@ -1171,7 +1169,6 @@ class AV_Conv(wx.Panel):
             if ending.ShowModal() == wx.ID_OK:
                 end = ending.getvalue()
                 self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
-
 
                 kwargs = {'logname': logname, 'type': 'two pass EBU',
                           'fsrc': f_src, 'fdest': f_dest,
@@ -1203,12 +1200,11 @@ class AV_Conv(wx.Panel):
         if ending.ShowModal() == wx.ID_OK:
             self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
 
-
             kwargs = {'logname': logname, 'type': 'onepass',
                       'fsrc': f_src, 'fdest': f_dest, 'args': command,
                       'volume': [vol[5] for vol in audnorm],
                       'nmax': len(f_src), 'fext': self.opt["OutputFormat"],
-                          }
+                      }
             self.parent.switch_to_processing('onepass', **kwargs)
 
         return None
@@ -1236,7 +1232,6 @@ class AV_Conv(wx.Panel):
                          )
         if ending.ShowModal() == wx.ID_OK:
             self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
-
 
             kwargs = {'logname': logname, 'type': 'two pass EBU',
                       'fsrc': f_src, 'fdest': f_dest,
