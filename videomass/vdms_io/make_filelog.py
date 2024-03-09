@@ -55,9 +55,6 @@ def make_log_template(logname, logdir, mode="a"):
     Returns the absolute/relative pathname of the log
     """
     current_date = time.strftime("%c")  # date/time
-    if logname is None or logname == "":
-        logname = current_date + ".log"
-
     logfile = os.path.join(logdir, logname)
 
     with open(logfile, mode, encoding='utf8') as log:
