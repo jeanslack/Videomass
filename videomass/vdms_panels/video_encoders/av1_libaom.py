@@ -32,6 +32,11 @@ class AV1_Aom(scrolled.ScrolledPanel):
     """
     This scroll panel implements controls for extra options
     of the `libaom-av1` encoder.
+
+    bit-depht av1-aom:
+        yuv420p yuv422p yuv444p gbrp yuv420p10le yuv422p10le
+        yuv444p10le yuv420p12le yuv422p12le yuv444p12le gbrp10le gbrp12le gray
+        gray10le gray12le
     """
     def __init__(self, parent, opt):
         """

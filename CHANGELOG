@@ -7,26 +7,27 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sat, 09 Mar 2024 V.5.0.10
+Mon, 11 Mar 2024 V.5.0.10
 
   * [A/V Conversions] Improved UI layout.
-  * [A/V Conversions] [NEW] Added/Impoved video encoder controls.
-  * [A/V Conversions] [NEW] Added Av1-SVT video encoder.
+  * [A/V Conversions] Impoved video encoder controls.
+  * [A/V Conversions] [NEW] Controls UI based on the SVT-AV1
+    video encoder have been implemented.
   * [A/V Conversions] [NEW] Added H.264 10-bit option to video encoders.
   * [A/V Conversions] [NEW] Added H.265 10-bit option to video encoders.
   * [A/V Conversions] [NEW] Added XVID MPEG-4 part 2 (xvidcore) video encoder.
   * [A/V Conversions] Removed Vp8 (libvpx) video encoder.
-  * [A/V Conversions] Added new tab for subtitles (work in progress).
+  * [A/V Conversions] Added new tab for subtitles.
   * [A/V Conversions] [NEW] Added One-passes Loudnorm (EBU R128) audio
     normalization available for all tasks.
   * [A/V Conversions] High-quality two-pass Loudnorm normalization (EBU R128)
-    can now be applied at the same time as the "Stabilize" video filter.
-    Additionally, this filter no longer requires enabling Two-pass Encoding
-    as it is optional.
+    can now be applied at the same time as the "Stabilize" video filter
+    (no more limitations). Additionally, this filter no longer requires
+    enabling Two-pass Encoding as it is optional.
   * [A/V Conversions] The "Stabilize" video filter can also now be applied to
     both single-pass and double-pass encoding.
   * [A/V Conversions] "Make Duo" feature on "Stabilize" video filter is now
-    only available for preview, not for final file.
+    only available for preview, not for final video file.
   * Removed FFmpeg `-threads` option on preferences dialog.
   * [From Movie to Pictures] Fixed `-fps_mode 0` to `-fps_mode vfr` using
     `Create tiled mosaics` option.

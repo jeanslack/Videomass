@@ -170,7 +170,8 @@ class AudioEncoders(scrolled.ScrolledPanel):
         self.btn_audio_preview = wx.Button(self, wx.ID_ANY,
                                            _("Preview"), size=(-1, -1))
         self.btn_audio_preview.SetBitmap(bmpapreview, wx.LEFT)
-        sizer_Amap.Add(self.btn_audio_preview, 0, wx.LEFT | wx.CENTRE, 20)
+        sizerbase.Add(self.btn_audio_preview, 0, wx.ALL, 5)
+
         # BOX Audio Filters
         box7 = wx.StaticBox(self, wx.ID_ANY, _("Audio Filters"))
         self.box_aFilters = wx.StaticBoxSizer(box7, wx.VERTICAL)
@@ -214,7 +215,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         sizer_a_normaliz.Add((0, 15), 0)
         grid_ebu = wx.FlexGridSizer(1, 6, 0, 0)
         sizer_a_normaliz.Add(grid_ebu, 0, wx.ALL | wx.EXPAND, 5)
-        lab_i = wx.StaticText(self, wx.ID_ANY, ("I:"))
+        lab_i = wx.StaticText(self, wx.ID_ANY, ("IL:"))
         grid_ebu.Add(lab_i, 0, wx.CENTRE, 0)
         self.spin_i = FS.FloatSpin(self, wx.ID_ANY,
                                    min_val=-70.0, max_val=-5.0,
@@ -347,17 +348,24 @@ class AudioEncoders(scrolled.ScrolledPanel):
                 )
     # ------------------------------------------------------------------#
 
-    def reset_args(self, event):
+    def startup_one_time(self):
         """
-        Set default event
+        This method needs to be called only once when the
+        parent `init` method is started, to create the
+        required default dict keys.
         """
+        self.opt["AudioIndex"] = ""
+        self.opt["AudioMap"] = ["-map 0:a:?", ""]
+        self.opt["PEAK"] = []
+        self.opt["RMS"] = []
+        self.opt["EBU"] = ["", ""]
         self.audio_default()
     # ------------------------------------------------------------------#
 
     def audio_default(self):
         """
-        Set default audio parameters. This method is called at
-        start-up and whenever changes the video container selection.
+        Set default audio parameters. This method is called
+        whenever changes the video container selection.
         """
         self.rdb_a.SetStringSelection("Auto")
         self.opt["AudioCodStr"] = "Auto"

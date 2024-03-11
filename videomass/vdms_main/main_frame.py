@@ -171,7 +171,7 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.icons['videomass'],
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        self.SetMinSize((1140, 800))
+        self.SetMinSize((850, 560))  # ideal minsize (1140, 800)
         self.SetSizer(self.mainSizer)
         self.Fit()
         self.SetSize(tuple(self.appdata['main_window_size']))

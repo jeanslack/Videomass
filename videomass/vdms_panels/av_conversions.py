@@ -49,7 +49,7 @@ from . video_encoders.webm import WebMPan
 from . video_encoders.avc_x264 import Avc_X264
 from . video_encoders.hevc_x265 import Hevc_X265
 from . video_encoders.theora import Theora
-from . video_encoders.copy_vcodec import Copy_Vcodec
+from . video_encoders.video_encodercopy import Copy_Vcodec
 from . audio_encoders.acodecs import AudioEncoders
 
 
@@ -82,8 +82,9 @@ class AV_Conv(wx.Panel):
                 "H.264 10-bit": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
                 "H.265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
                 "H.265 10-bit": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
-                # "AV1 (AOM)": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
-                # "AV1 (SVT)": {"-c:v libsvtav1": ["mkv", "webm"]},
+                "AV1 (AOM)": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
+                "AV1 (SVT)": {"-c:v libsvtav1": ["mkv", "webm"]},
+                "AV1 (SVT) 10-bit": {"-c:v libsvtav1": ["mkv", "webm"]},
                 # "Theora": {"-c:v libtheora": ["ogv", "mkv"]},
                 # "Vp9": {"-c:v libvpx-vp9": ["webm", "mkv", "mp4"]},
                 "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "m4v", "ogv",
@@ -127,29 +128,18 @@ class AV_Conv(wx.Panel):
             bmpsaveprf = wx.Bitmap(icons['addtoprst'], wx.BITMAP_TYPE_ANY)
             bmpcoloreq = wx.Bitmap(icons['coloreq'], wx.BITMAP_TYPE_ANY)
 
-        # Args settings definition
-        self.opt = {
-            "VidCmbxStr": "H.264", "OutputFormat": "mkv",
-            "VideoCodec": "-c:v libx264", "ext_input": "",
-            "Passes": "Auto", "InputDir": "", "OutputDir": "",
-            "VideoSize": "", "AspectRatio": "", "FPS": "", "Preset": "",
-            "Profile": "", "Level": "", "Tune": "", "VideoBitrate": "",
-            "CRF": "", "WebOptim": "",
-            "MinRate": "", "MaxRate": "", "Bufsize": "", "AudioCodStr": "",
-            "AudioIndex": "", "AudioMap": ["-map 0:a:?", ""],
-            "SubtitleMap": "-map 0:s?", "AudioCodec": ["", ""],
-            "AudioChannel": ["", ""], "AudioRate": ["", ""],
-            "AudioBitrate": ["", ""], "AudioDepth": ["", ""], "PEAK": [],
-            "EBU": ["", ""], "RMS": [], "Deinterlace": "", "Interlace": "",
-            "PixelFormat": "", "Orientation": ["", ""], "Crop": "",
-            "CropColor": "", "Scale": "", "Setdar": "", "Setsar": "",
-            "Denoiser": "", "Vidstabtransform": "", "Vidstabdetect": "",
-            "Unsharp": "", "Makeduo": False, "VFilters": "",
-            "PixFmt": "-pix_fmt yuv420p", "Deadline": "", "CpuUsed": "",
-            "RowMthreading": "", "Usage": "", "GOP": "", "ColorEQ": "",
-            "Media": "Video", "passlogfile1": "", "passlogfile2": "",
-            "CmdVideoParams": "", "CmdAudioParams": "",
-        }
+        # Default keys:values dictionary definition in this class
+        self.opt = {"Media": "Video", "VidCmbxStr": "H.264",
+                    "OutputFormat": "mkv", "VideoCodec": "-c:v libx264",
+                    "ext_input": "", "Passes": "Auto", "InputDir": "",
+                    "OutputDir": "", "SubtitleMap": "-map 0:s?",
+                    "Deinterlace": "", "Interlace": "", "ColorEQ": "",
+                    "PixelFormat": "", "Orientation": ["", ""], "Crop": "",
+                    "CropColor": "", "Scale": "", "Setdar": "", "Setsar": "",
+                    "Denoiser": "", "Vidstabtransform": "",
+                    "Vidstabdetect": "", "Unsharp": "", "Makeduo": False,
+                    "VFilters": "", "CmdVideoParams": "", "CmdAudioParams": ""
+                    }
         wx.Panel.__init__(self, parent, -1)
         # ------------ widgets
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -362,9 +352,13 @@ class AV_Conv(wx.Panel):
         self.cmb_Media.SetToolTip(tip)
         tip = _('Preview video filters')
         self.btn_preview.SetToolTip(tip)
-        tip = _('Clear all enabled filters. Remove all video filter '
-                'data and apply default settings.')
+        tip = (_('Clear all enabled filters. Remove all video filter '
+                 'data and apply default settings.'))
         self.btn_reset.SetToolTip(tip)
+        tip = (_('Select "All" to include any subtitles in the output video. '
+                 'To prevent any subtitles from being included in the output '
+                 'video, select "None".'))
+        self.cmb_Submap.SetToolTip(tip)
 
         # ----------------------Binding (EVT)----------------------#
 
@@ -393,13 +387,16 @@ class AV_Conv(wx.Panel):
         self.cmb_Media.SetSelection(0), self.cmb_cont.SetSelection(0)
         self.cmb_Submap.SetSelection(1)
         self.vencoder_panel_set(default=True)
-        self.audioenc.audio_default(), self.audioenc.normalize_default()
+        self.audioenc.startup_one_time(), self.audioenc.normalize_default()
         pub.subscribe(self.reset_on_changed_data, "RESET_ON_CHANGED_LIST")
     # -------------------------------------------------------------------#
 
     def reset_on_changed_data(self, msg):
         """
-        This method is called using pub/sub protocol
+        Called using pub/sub protocol.
+        Be sure to call this method at the end of the `init` code
+        above to allow the `AudioEncoders` class to set the
+        required objects, e.g. some `opt` dictionary keys.
         """
         if self.opt["PEAK"] or self.opt["RMS"]:
             self.audioenc.normalize_default()
@@ -444,7 +441,7 @@ class AV_Conv(wx.Panel):
         elif self.opt["VideoCodec"] == "-c:v libsvtav1":
             self.filterVpanel.Enable(), self.videopanel.Hide()
             self.videopanel = self.svtpanel
-            self.videopanel.Show(), self.videopanel.default()
+            self.videopanel.Show(), self.videopanel.on_reset_args(None)
 
         elif self.opt["VideoCodec"] in ("-c:v mpeg4", "-c:v libxvid"):
             self.filterVpanel.Enable(), self.videopanel.Hide()
@@ -1034,6 +1031,7 @@ class AV_Conv(wx.Panel):
                     )
             pass1 = " ".join(cmd1.split())
             pass2 = " ".join(cmd2.split())
+
             if logname == 'save as profile':
                 return pass1, pass2, self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), [''])
@@ -1059,6 +1057,7 @@ class AV_Conv(wx.Panel):
                        f'{self.opt["EBU"][1]}'
                        )
             command = " ".join(command.split())
+
             if logname == 'save as profile':
                 return command, '', self.opt["OutputFormat"]
             valupdate = self.update_dict(len(f_src), [''])

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-FileName: copy_vcodec.py
+FileName: video_encodercopy.py
 Porpose: Contains h.264 functionality for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -102,7 +102,7 @@ class Copy_Vcodec(scrolled.ScrolledPanel):
                               )
         sizerbase.Add(line1, 0, wx.ALL | wx.CENTER, 5)
 
-        # Option -------------------------------------------
+        # Options -------------------------------------------
         sizerbase.Add((0, 10), 0)
         sizopt = wx.BoxSizer(wx.HORIZONTAL)
         labvaspect = wx.StaticText(self, wx.ID_ANY, 'Aspect Ratio:')
