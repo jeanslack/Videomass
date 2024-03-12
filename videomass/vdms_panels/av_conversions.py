@@ -45,10 +45,9 @@ from . video_encoders.video_no_encs import Video_No_Encs
 from . video_encoders.mpeg4 import Mpeg_4
 from . video_encoders.av1_libaom import AV1_Aom
 from . video_encoders.av1_svt import AV1_Svt
-from . video_encoders.webm import WebMPan
+from . video_encoders.vp9_webm import Vp9_WebM
 from . video_encoders.avc_x264 import Avc_X264
 from . video_encoders.hevc_x265 import Hevc_X265
-from . video_encoders.theora import Theora
 from . video_encoders.video_encodercopy import Copy_Vcodec
 from . audio_encoders.acodecs import AudioEncoders
 
@@ -82,11 +81,10 @@ class AV_Conv(wx.Panel):
                 "H.264 10-bit": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
                 "H.265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
                 "H.265 10-bit": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
-                "AV1 (AOM)": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
-                "AV1 (SVT)": {"-c:v libsvtav1": ["mkv", "webm"]},
-                "AV1 (SVT) 10-bit": {"-c:v libsvtav1": ["mkv", "webm"]},
-                # "Theora": {"-c:v libtheora": ["ogv", "mkv"]},
-                # "Vp9": {"-c:v libvpx-vp9": ["webm", "mkv", "mp4"]},
+                "AOM-AV1": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
+                "SVT-AV1": {"-c:v libsvtav1": ["mkv", "webm"]},
+                "SVT-AV1 10-bit": {"-c:v libsvtav1": ["mkv", "webm"]},
+                "VP9": {"-c:v libvpx-vp9": ["webm", "mkv",]},
                 "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "m4v", "ogv",
                                        "webm", "Copy"]}
                 })
@@ -200,23 +198,22 @@ class AV_Conv(wx.Panel):
         self.mpeg4panel = Mpeg_4(self.nb_Video, self.opt)
         self.aompanel = AV1_Aom(self.nb_Video, self.opt)
         self.svtpanel = AV1_Svt(self.nb_Video, self.opt)
-        self.vp9panel = WebMPan(self.nb_Video, self.opt)
+        self.vp9panel = Vp9_WebM(self.nb_Video, self.opt)
         self.h264panel = Avc_X264(self.nb_Video, self.opt)
         self.h265panel = Hevc_X265(self.nb_Video, self.opt)
         self.vcopypanel = Copy_Vcodec(self.nb_Video, self.opt)
-        self.theorapanel = Theora(self.nb_Video, self.opt)
         self.disablevidpanels = Video_No_Encs(self.nb_Video)
 
         for vpan in (self.aompanel, self.svtpanel, self.vp9panel,
-                     self.mpeg4panel, self.theorapanel, self.h264panel,
-                     self.h265panel, self.vcopypanel, self.disablevidpanels,
+                     self.mpeg4panel, self.h264panel, self.h265panel,
+                     self.vcopypanel, self.disablevidpanels,
                      ):
             box_opt.Add(vpan, 0, wx.ALL | wx.EXPAND, 5)
 
         self.vp9panel.Hide(), self.h265panel.Hide()
         self.aompanel.Hide(), self.svtpanel.Hide()
         self.vcopypanel.Hide(), self.mpeg4panel.Hide()
-        self.theorapanel.Hide(), self.disablevidpanels.Hide()
+        self.disablevidpanels.Hide()
         self.videopanel = self.h264panel
         self.videopanel.Show()
 
@@ -431,7 +428,7 @@ class AV_Conv(wx.Panel):
         elif self.opt["VideoCodec"] == "-c:v libvpx-vp9":
             self.filterVpanel.Enable(), self.videopanel.Hide()
             self.videopanel = self.vp9panel
-            self.videopanel.Show(), self.videopanel.default()
+            self.videopanel.Show(), self.videopanel.on_reset_args(None)
 
         elif self.opt["VideoCodec"] == "-c:v libaom-av1":
             self.filterVpanel.Enable(), self.videopanel.Hide()
@@ -446,11 +443,6 @@ class AV_Conv(wx.Panel):
         elif self.opt["VideoCodec"] in ("-c:v mpeg4", "-c:v libxvid"):
             self.filterVpanel.Enable(), self.videopanel.Hide()
             self.videopanel = self.mpeg4panel
-            self.videopanel.Show(), self.videopanel.default()
-
-        elif self.opt["VideoCodec"] == "-c:v libtheora":
-            self.filterVpanel.Enable(), self.videopanel.Hide()
-            self.videopanel = self.theorapanel
             self.videopanel.Show(), self.videopanel.default()
 
         elif self.opt["VideoCodec"] == "-c:v copy":

@@ -94,7 +94,7 @@ class Copy_Vcodec(scrolled.ScrolledPanel):
                               name=wx.StaticLineNameStr
                               )
         sizerbase.Add(line0, 0, wx.ALL | wx.CENTER, 5)
-        self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_('Use for Web')))
+        self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_('Optimize for Web')))
         sizerbase.Add(self.ckbx_web, 0, wx.ALL | wx.CENTER, 2)
         line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
                               size=(400, -1), style=wx.LI_HORIZONTAL,

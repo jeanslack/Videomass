@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
-FileName: av1_libaom.py
-Porpose: Contains AV1 aom functionalities for A/V Conversions
+FileName: vp9_webm.py
+Porpose: Contains webm vp9 functionalities for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.11.2024
+Rev: Mar.12.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -29,31 +29,65 @@ import wx
 import wx.lib.scrolledpanel as scrolled
 
 
-def presets_aomav1(name):
+def presets_vp9webm(name):
     """
-    Presets collection for AOM-AV1 encoder
+    Presets collection for VP9-WebM encoder
     """
     if name == 'Default':
-        return {"crf": 35, "cpu": 4, "usage": 0, "fps": 0,
-                "vasp": 0, "rmt": True, "trows": 1, "tcols": 1,
+        return {"crf": 31, "speed": 8, "quality": 1, "fps": 0,
+                "vasp": 0, "rmt": True, "trows": 0, "tcols": 0,
                 "vbit": -1, "web": False, "minr": -1, "maxr": -1,
+                "bsize": -1, "pass": False, "gop": -1,
+                }
+    if name == 'Average Bitrate (ABR)':
+        return {"crf": -1, "speed": 8, "quality": 1, "fps": 0,
+                "vasp": 0, "rmt": True, "trows": 0, "tcols": 0,
+                "vbit": 2000, "web": False, "minr": -1, "maxr": -1,
+                "bsize": -1, "pass": True, "gop": -1,
+                }
+    if name == 'Constant quality 2-pass (CQ)':
+        return {"crf": 30, "speed": 8, "quality": 1, "fps": 0,
+                "vasp": 0, "rmt": True, "trows": 0, "tcols": 0,
+                "vbit": 0, "web": False, "minr": -1, "maxr": -1,
+                "bsize": -1, "pass": True, "gop": -1,
+                }
+    if name == 'Constant quality single pass (CQ)':
+        return {"crf": 30, "speed": 8, "quality": 1, "fps": 0,
+                "vasp": 0, "rmt": True, "trows": 0, "tcols": 0,
+                "vbit": 0, "web": False, "minr": -1, "maxr": -1,
+                "bsize": -1, "pass": False, "gop": -1,
+                }
+    if name == 'Constrained Quality (quality target)':
+        return {"crf": 30, "speed": 8, "quality": 1, "fps": 0,
+                "vasp": 0, "rmt": True, "trows": 0, "tcols": 0,
+                "vbit": 2000, "web": False, "minr": -1, "maxr": -1,
+                "bsize": -1, "pass": False, "gop": -1,
+                }
+    if name == 'Constrained Quality (min/max bitrate)':
+        return {"crf": -1, "speed": 8, "quality": 1, "fps": 0,
+                "vasp": 0, "rmt": True, "trows": 0, "tcols": 0,
+                "vbit": 2000, "web": False, "minr": 500, "maxr": 2500,
+                "bsize": -1, "pass": False, "gop": -1,
+                }
+    if name == 'Constant Bitrate (CBR)':
+        return {"crf": -1, "speed": 8, "quality": 1, "fps": 0,
+                "vasp": 0, "rmt": True, "trows": 0, "tcols": 0,
+                "vbit": 1000, "web": False, "minr": 1000, "maxr": 1000,
                 "bsize": -1, "pass": False, "gop": -1,
                 }
     return None
 
 
-class AV1_Aom(scrolled.ScrolledPanel):
+class Vp9_WebM(scrolled.ScrolledPanel):
     """
-    This scroll panel implements AOM-AV1 video controls
-    for A/V Conversions.
-
+    This scroll panel implements controls for the `vp9` encoder.
     """
-    # supported libaom Bit Depths (pixel formats)
-    PIXELFRMT = [('None'), ('yuv420p'), ('yuv422p'), ('yuv444p'), ('gbrp'),
-                 ('yuv420p10le'), ('yuv422p10le'), ('yuv444p10le'),
-                 ('yuv420p12le'), ('yuv422p12le'), ('yuv444p12le'),
-                 ('gbrp10le'), ('gbrp12le'), ('gray'), ('gray10le'),
-                 ('gray12le')
+    # supported vp9 Bit Depths (pixel formats)
+    PIXELFRMT = [('None'), ('yuv420p'), ('yuva420p'), ('yuv422p'),
+                 ('yuv440p'), ('yuv444p'), ('yuv420p10le'), ('yuv422p10le'),
+                 ('yuv440p10le'), ('yuv444p10le'), ('yuv420p12le'),
+                 ('yuv422p12le'), ('yuv440p12le'), ('yuv444p12le'), ('gbrp'),
+                 ('gbrp10le'), ('gbrp12le'),
                  ]
     ASPECTRATIO = [("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
                    ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
@@ -62,7 +96,14 @@ class AV1_Aom(scrolled.ScrolledPanel):
     FPS = [("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
            ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
            ]
-    PRESET = ('Default',)
+    PRESET = ('Default',
+              'Average Bitrate (ABR)',
+              'Constant quality 2-pass (CQ)',
+              'Constant quality single pass (CQ)',
+              'Constrained Quality (quality target)',
+              'Constrained Quality (min/max bitrate)',
+              'Constant Bitrate (CBR)'
+              )
 
     def __init__(self, parent, opt):
         """
@@ -90,13 +131,11 @@ class AV1_Aom(scrolled.ScrolledPanel):
         self.btn_reset = wx.Button(self, wx.ID_ANY, _("Reload"), size=(-1, -1))
         boxset.Add(self.btn_reset, 0)
         self.cmb_defprst = wx.ComboBox(self, wx.ID_ANY,
-                                       choices=AV1_Aom.PRESET,
+                                       choices=Vp9_WebM.PRESET,
                                        size=(-1, -1), style=wx.CB_DROPDOWN
                                        | wx.CB_READONLY,
                                        )
         self.cmb_defprst.SetSelection(0)
-        self.cmb_defprst.Disable()
-
         boxset.Add(self.cmb_defprst, 0, wx.LEFT, 20)
 
         self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_('Optimize for Web')))
@@ -117,22 +156,24 @@ class AV1_Aom(scrolled.ScrolledPanel):
         boxcrf.Add((20, 0), 0)
         sizerbase.Add(boxcrf, 0, wx.ALL | wx.CENTER, 0)
         boxopt = wx.BoxSizer(wx.HORIZONTAL)
-        labcpu = wx.StaticText(self, wx.ID_ANY, 'CPU Used:')
+        labcpu = wx.StaticText(self, wx.ID_ANY, 'Speed:')
         boxopt.Add(labcpu, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.cmb_cpu = wx.ComboBox(self, wx.ID_ANY,
-                                   choices=['0', '1', '2', '3',
-                                            '4', '5', '6', '7', '8'],
-                                   style=wx.CB_DROPDOWN | wx.CB_READONLY,
-                                   )
-        boxopt.Add(self.cmb_cpu, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        boxopt.Add((20, 0), 0)
-        labusage = wx.StaticText(self, wx.ID_ANY, 'Usage:')
-        boxopt.Add(labusage, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.cmb_usage = wx.ComboBox(self, wx.ID_ANY,
-                                     choices=['good', 'realtime', 'allintra'],
+        self.cmb_speed = wx.ComboBox(self, wx.ID_ANY,
+                                     choices=['-8', '-7', '-6', '-5',
+                                              '-4', '-3', '-2', '-1',
+                                              '0', '1', '2', '3',
+                                              '4', '5', '6', '7', '8'],
                                      style=wx.CB_DROPDOWN | wx.CB_READONLY,
                                      )
-        boxopt.Add(self.cmb_usage, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        boxopt.Add(self.cmb_speed, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        boxopt.Add((20, 0), 0)
+        labusage = wx.StaticText(self, wx.ID_ANY, 'Quality:')
+        boxopt.Add(labusage, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        self.cmb_quality = wx.ComboBox(self, wx.ID_ANY,
+                                       choices=['realtime', 'good', 'best'],
+                                       style=wx.CB_DROPDOWN | wx.CB_READONLY,
+                                       )
+        boxopt.Add(self.cmb_quality, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         boxopt.Add((20, 0), 0)
         self.ckbx_rmt = wx.CheckBox(self, wx.ID_ANY, "Row Multi-Threading")
         boxopt.Add(self.ckbx_rmt, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
@@ -146,8 +187,7 @@ class AV1_Aom(scrolled.ScrolledPanel):
         labtrows = wx.StaticText(self, wx.ID_ANY, 'Tile Rows:')
         gridcod.Add(labtrows, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.cmb_trows = wx.ComboBox(self, wx.ID_ANY,
-                                     choices=['-1', '0', '1', '2', '3',
-                                              '4', '5', '6'],
+                                     choices=['-1', '0', '1', '2'],
                                      size=(-1, -1), style=wx.CB_DROPDOWN
                                      | wx.CB_READONLY,
                                      )
@@ -194,7 +234,7 @@ class AV1_Aom(scrolled.ScrolledPanel):
         labpixfrm = wx.StaticText(self, wx.ID_ANY, 'Bit Depth:')
         gridcod.Add(labpixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.cmb_pixfrm = wx.ComboBox(self, wx.ID_ANY,
-                                      choices=AV1_Aom.PIXELFRMT,
+                                      choices=Vp9_WebM.PIXELFRMT,
                                       size=(150, -1), style=wx.CB_DROPDOWN
                                       | wx.CB_READONLY,
                                       )
@@ -218,7 +258,7 @@ class AV1_Aom(scrolled.ScrolledPanel):
         labvaspect = wx.StaticText(self, wx.ID_ANY, 'Aspect Ratio:')
         gridopt.Add(labvaspect, 0, wx.ALIGN_CENTER_VERTICAL)
         self.cmb_vaspect = wx.ComboBox(self, wx.ID_ANY,
-                                       choices=AV1_Aom.ASPECTRATIO,
+                                       choices=Vp9_WebM.ASPECTRATIO,
                                        size=(120, -1), style=wx.CB_DROPDOWN
                                        | wx.CB_READONLY,
                                        )
@@ -226,7 +266,7 @@ class AV1_Aom(scrolled.ScrolledPanel):
         labfps = wx.StaticText(self, wx.ID_ANY, 'FPS:')
         gridopt.Add(labfps, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
         self.cmb_fps = wx.ComboBox(self, wx.ID_ANY,
-                                   choices=AV1_Aom.FPS,
+                                   choices=Vp9_WebM.FPS,
                                    size=(120, -1),
                                    style=wx.CB_DROPDOWN
                                    | wx.CB_READONLY,
@@ -284,31 +324,36 @@ class AV1_Aom(scrolled.ScrolledPanel):
                  'number of times per second. In some countries this is 30 '
                  'for NTSC, other countries (like Italy) use 25 for PAL'))
         self.cmb_fps.SetToolTip(tip)
-        tip = (_('Quality/Speed ratio modifier. CPU Used sets how efficient '
-                 'the compression will be. Lower values mean slower encoding '
-                 'with better quality, and vice-versa. Valid values are from '
-                 '0 to 8 inclusive.'))
-        self.cmb_cpu.SetToolTip(tip)
-        tip = (_('Quality and compression efficiency vs speed trade-off. '
+        tip = (_('Speed sets how efficient the compression will be.\n\nWhen '
+                 'the Quality parameter is "good" or "best", values for Speed '
+                 'can be set between 0 and 5.\n\nUsing 1 or 2 will increase '
+                 'encoding speed at the expense of having some impact on '
+                 'quality and rate control accuracy.\n\n4 or 5 will turn off '
+                 'rate distortion optimization, having even more of an impact '
+                 'on quality.\n\nWhen the Quality is set to realtime, the '
+                 'available values for Speed are 0 to 8.'))
+        self.cmb_speed.SetToolTip(tip)
+        tip = (_('Time to spend encoding.\n\n'
                  '"good" is the default and recommended for most '
-                 'applications; "realtime" is recommended for live/fast '
-                 'encoding (live streaming, video conferencing, etc); '
-                 '"allintra" for All Intra encoding.'))
-        self.cmb_usage.SetToolTip(tip)
-
-        tip = (_('Row Multi-Threading enables row-based multi-threading which '
-                 'maximizes CPU usage.\n\nTo enable fast decoding '
-                 'performance, also set tiles (i.e. Tile Columns 4 and Tile '
-                 'Rows 1 or Tile Columns 2 and Tile Rows 2 for 4 tiles).\n\n'
-                 'Enabling Row Multi-Threading is only faster when the CPU '
-                 'has more threads than the number of encoded tiles.'))
+                 'applications;\n\n"best" is recommended if you have lots of '
+                 'time and want the best compression efficiency;\n\n'
+                 '"realtime" is recommended for live / fast encoding.'))
+        self.cmb_quality.SetToolTip(tip)
+        tip = (_('If enabled, adds support for row based multithreading which '
+                 'greatly enhances the number of threads the encoder can '
+                 'utilise. This improves encoding speed significantly on '
+                 'systems that are otherwise underutilised when encoding VP9. '
+                 'Since the amount of additional threads depends on the '
+                 'number of "tiles", which itself depends on the video '
+                 'resolution, encoding higher resolution videos will see a '
+                 'larger performance improvement.'))
         self.ckbx_rmt.SetToolTip(tip)
 
         self.Bind(wx.EVT_COMBOBOX, self.on_default_preset, self.cmb_defprst)
         self.Bind(wx.EVT_BUTTON, self.on_reset_args, self.btn_reset)
         self.Bind(wx.EVT_CHECKBOX, self.on_web_optimize, self.ckbx_web)
-        self.Bind(wx.EVT_COMBOBOX, self.on_cpu_used, self.cmb_cpu)
-        self.Bind(wx.EVT_COMBOBOX, self.on_usage, self.cmb_usage)
+        self.Bind(wx.EVT_COMBOBOX, self.on_speed, self.cmb_speed)
+        self.Bind(wx.EVT_COMBOBOX, self.on_quality, self.cmb_quality)
         self.Bind(wx.EVT_SPINCTRL, self.on_gop, self.spin_gop)
         self.Bind(wx.EVT_CHECKBOX, self.on_pass, self.ckbx_pass)
         self.Bind(wx.EVT_SPINCTRL, self.on_vbitrate, self.spin_vbrate)
@@ -329,8 +374,8 @@ class AV1_Aom(scrolled.ScrolledPanel):
         Get all video encoder parameters
         """
         return (f'{self.opt["VideoCodec"]} {self.opt["PixFmt"]} '
-                f'{self.opt["CpuUsed"]} {self.opt["TileRows"]} '
-                f'{self.opt["TileColumns"]} {self.opt["Usage"]} '
+                f'{self.opt["Speed"]} {self.opt["TileRows"]} '
+                f'{self.opt["TileColumns"]} {self.opt["Deadline"]} '
                 f'{self.opt["RowMultiThred"]} {self.opt["MinRate"]} '
                 f'{self.opt["VideoBitrate"]} {self.opt["CRF"]} '
                 f'{self.opt["MaxRate"]} {self.opt["Bufsize"]} '
@@ -343,18 +388,14 @@ class AV1_Aom(scrolled.ScrolledPanel):
         """
         Reset all controls to default
         """
-        if self.opt["VidCmbxStr"] == 'AOM-AV1 10-bit':
-            self.labinfo.SetLabel("AOM-AV1 (Alliance for Open Media) 10-bit")
-            self.cmb_pixfrm.SetSelection(2), self.on_bit_depth(None, False)
-        else:
-            self.labinfo.SetLabel("AOM-AV1 (Alliance for Open Media)")
-            self.cmb_pixfrm.SetSelection(1), self.on_bit_depth(None, False)
+        self.labinfo.SetLabel("VP9-WebM (WebM Project open video codec)")
+        prst = presets_vp9webm(self.cmb_defprst.GetStringSelection())
 
-        prst = presets_aomav1('Default')
-
+        self.cmb_pixfrm.SetSelection(0), self.on_bit_depth(None, False)
         self.slider_crf.SetValue(prst['crf']), self.on_crf(None, False)
-        self.cmb_cpu.SetSelection(prst['cpu']), self.on_cpu_used(None, False)
-        self.cmb_usage.SetSelection(prst['usage']), self.on_usage(None, False)
+        self.cmb_speed.SetSelection(prst['speed']), self.on_speed(None, False)
+        self.cmb_quality.SetSelection(prst['quality'])
+        self.on_quality(None, False)
         self.cmb_fps.SetSelection(prst['fps']), self.on_rate_fps(None, False)
         self.cmb_vaspect.SetSelection(prst['vasp'])
         self.on_vaspect(None, False)
@@ -372,7 +413,6 @@ class AV1_Aom(scrolled.ScrolledPanel):
         self.on_buffer_size(None, False)
         self.ckbx_pass.SetValue(prst['pass']), self.on_pass(None, False)
         self.spin_gop.SetValue(prst['gop']), self.on_gop(None, False)
-        self.btn_reset.Disable()
     # ------------------------------------------------------------------#
 
     def on_reset_args(self, event):
@@ -389,8 +429,8 @@ class AV1_Aom(scrolled.ScrolledPanel):
     def on_default_preset(self, event):
         """
         This combobox event is triggered by selecting an argument
-        in the list, then calling `default` ensures that a preset's
-        settings are applied.
+        in the list, then calling `default` method ensures that a
+        preset's settings are applied.
         """
         self.default()
     # ------------------------------------------------------------------#
@@ -500,28 +540,28 @@ class AV1_Aom(scrolled.ScrolledPanel):
         self.on_crf(None, False)
     # ------------------------------------------------------------------#
 
-    def on_cpu_used(self, event, btnreset=True):
+    def on_speed(self, event, btnreset=True):
         """
-        Set cpu used Quality/Speed ratio modifier
-        (from 0 to 8) (default 1)
+        Set -cpu-used (or -speed) parameter ratio modifier
+        (from -8 to 8) (default 0)
         """
         if not self.btn_reset.IsEnabled() and btnreset:
             self.btn_reset.Enable()
 
-        sel = self.cmb_cpu.GetStringSelection()
-        self.opt["CpuUsed"] = f'-cpu-used {sel}'
+        sel = self.cmb_speed.GetStringSelection()
+        self.opt["Speed"] = f'-cpu-used {sel}'
     # ------------------------------------------------------------------#
 
-    def on_usage(self, event, btnreset=True):
+    def on_quality(self, event, btnreset=True):
         """
-        Set usage Quality and compression efficiency vs speed
-        trade-off (from 0 to INT_MAX) (default good)
+        Set -deadline (or -quality) parameter to Time to spend encoding,
+        in microseconds. (from INT_MIN to INT_MAX) (default good)
         """
         if not self.btn_reset.IsEnabled() and btnreset:
             self.btn_reset.Enable()
 
-        sel = self.cmb_usage.GetStringSelection()
-        self.opt["Usage"] = f'-usage {sel}'
+        sel = self.cmb_quality.GetStringSelection()
+        self.opt["Deadline"] = f'-deadline {sel}'
     # ------------------------------------------------------------------#
 
     def on_tile_rows(self, event, btnreset=True):

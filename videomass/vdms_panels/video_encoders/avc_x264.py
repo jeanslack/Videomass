@@ -64,6 +64,7 @@ class Avc_X264(scrolled.ScrolledPanel):
     FPS = [("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
            ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
            ]
+    PRESET = ('Default',)
 
     def __init__(self, parent, opt):
         """
@@ -86,39 +87,50 @@ class Avc_X264(scrolled.ScrolledPanel):
             self.labinfo.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
             self.labinfo.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-
+        boxset = wx.BoxSizer(wx.HORIZONTAL)
         self.btn_reset = wx.Button(self, wx.ID_ANY, _("Reload"), size=(-1, -1))
-        sizerbase.Add(self.btn_reset, 0, wx.TOP | wx.CENTRE, 10)
-        sizerbase.Add((0, 15), 0)
+        boxset.Add(self.btn_reset, 0)
+        self.cmb_defprst = wx.ComboBox(self, wx.ID_ANY,
+                                       choices=Avc_X264.PRESET,
+                                       size=(-1, -1), style=wx.CB_DROPDOWN
+                                       | wx.CB_READONLY,
+                                       )
+        self.cmb_defprst.SetSelection(0)
+        self.cmb_defprst.Disable()
 
-        gridcod = wx.FlexGridSizer(5, 8, 0, 0)
+        boxset.Add(self.cmb_defprst, 0, wx.LEFT, 20)
+        self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_('Optimize for Web')))
+        boxset.Add(self.ckbx_web, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
+
+        sizerbase.Add(boxset, 0, wx.TOP | wx.CENTRE, 10)
+        sizerbase.Add((0, 15), 0)
+        boxcrf = wx.BoxSizer(wx.HORIZONTAL)
+        labcrf = wx.StaticText(self, wx.ID_ANY, 'CRF:')
+        boxcrf.Add(labcrf, 0, wx.ALIGN_CENTER, 2)
+        self.slider_crf = wx.Slider(self, wx.ID_ANY, 1, -1, 51,
+                                    size=(250, -1), style=wx.SL_HORIZONTAL
+                                    | wx.SL_AUTOTICKS
+                                    | wx.SL_VALUE_LABEL
+                                    # | wx.SL_MIN_MAX_LABELS
+                                    # | wx.SL_LABELS,
+                                    )
+        boxcrf.Add(self.slider_crf, 0, wx.BOTTOM | wx.ALIGN_CENTER, 15)
+        boxcrf.Add((20, 0), 0)
         labpresets = wx.StaticText(self, wx.ID_ANY, 'Preset:')
-        gridcod.Add(labpresets, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        boxcrf.Add(labpresets, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.cmb_preset = wx.ComboBox(self, wx.ID_ANY,
                                       choices=Avc_X264.H264_OPT["Presets"],
                                       size=(-1, -1), style=wx.CB_DROPDOWN
                                       | wx.CB_READONLY,
                                       )
-        gridcod.Add(self.cmb_preset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        gridcod.Add((40, 0), 0)
-        labcrf = wx.StaticText(self, wx.ID_ANY, 'CRF:')
-        gridcod.Add(labcrf, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.slider_crf = wx.Slider(self, wx.ID_ANY, 1, -1, 51,
-                                    size=(150, -1), style=wx.SL_HORIZONTAL
-                                    | wx.SL_AUTOTICKS
-                                    | wx.SL_VALUE_LABEL
-                                    | wx.SL_MIN_MAX_LABELS
-                                    # | wx.SL_LABELS,
-                                    )
-        gridcod.Add(self.slider_crf, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        gridcod.Add((40, 0), 0)
-        labminr = wx.StaticText(self, wx.ID_ANY, 'Minrate (kbps):')
-        gridcod.Add(labminr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.spin_minr = wx.SpinCtrl(self, wx.ID_ANY,
-                                     "-1", min=-1, max=900000,
-                                     style=wx.TE_PROCESS_ENTER
-                                     )
-        gridcod.Add(self.spin_minr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        boxcrf.Add(self.cmb_preset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        sizerbase.Add(boxcrf, 0, wx.ALL | wx.CENTER, 0)
+        line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=(-1, -1), style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        sizerbase.Add(line1, 0, wx.ALL | wx.EXPAND, 15)
+        gridcod = wx.FlexGridSizer(3, 8, 0, 0)
         labprofile = wx.StaticText(self, wx.ID_ANY, 'Profile:')
         gridcod.Add(labprofile, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.cmb_profile = wx.ComboBox(self, wx.ID_ANY,
@@ -133,13 +145,14 @@ class Avc_X264(scrolled.ScrolledPanel):
         self.ckbx_pass = wx.CheckBox(self, wx.ID_ANY, "Two-Pass Encoding")
         gridcod.Add(self.ckbx_pass, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         gridcod.Add((40, 0), 0)
-        labmaxr = wx.StaticText(self, wx.ID_ANY, 'Maxrate (kbps):')
-        gridcod.Add(labmaxr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.spin_maxr = wx.SpinCtrl(self, wx.ID_ANY,
+        labminr = wx.StaticText(self, wx.ID_ANY, 'Minrate (kbps):')
+        gridcod.Add(labminr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        self.spin_minr = wx.SpinCtrl(self, wx.ID_ANY,
                                      "-1", min=-1, max=900000,
                                      style=wx.TE_PROCESS_ENTER
                                      )
-        gridcod.Add(self.spin_maxr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        gridcod.Add(self.spin_minr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+
         lablevel = wx.StaticText(self, wx.ID_ANY, 'Level:')
         gridcod.Add(lablevel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.cmb_level = wx.ComboBox(self, wx.ID_ANY,
@@ -157,13 +170,13 @@ class Avc_X264(scrolled.ScrolledPanel):
                                        )
         gridcod.Add(self.spin_vbrate, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         gridcod.Add((40, 0), 0)
-        labbuffer = wx.StaticText(self, wx.ID_ANY, 'Bufsize (kbps):')
-        gridcod.Add(labbuffer, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.spin_bufsize = wx.SpinCtrl(self, wx.ID_ANY,
-                                        "-1", min=-1, max=900000,
-                                        style=wx.TE_PROCESS_ENTER
-                                        )
-        gridcod.Add(self.spin_bufsize, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        labmaxr = wx.StaticText(self, wx.ID_ANY, 'Maxrate (kbps):')
+        gridcod.Add(labmaxr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        self.spin_maxr = wx.SpinCtrl(self, wx.ID_ANY,
+                                     "-1", min=-1, max=900000,
+                                     style=wx.TE_PROCESS_ENTER
+                                     )
+        gridcod.Add(self.spin_maxr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         labtune = wx.StaticText(self, wx.ID_ANY, 'Tune:')
         gridcod.Add(labtune, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.cmb_tune = wx.ComboBox(self, wx.ID_ANY,
@@ -181,21 +194,20 @@ class Avc_X264(scrolled.ScrolledPanel):
                                       | wx.CB_READONLY,
                                       )
         gridcod.Add(self.cmb_pixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        gridcod.Add((40, 0), 0)
+        labbuffer = wx.StaticText(self, wx.ID_ANY, 'Bufsize (kbps):')
+        gridcod.Add(labbuffer, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
+        self.spin_bufsize = wx.SpinCtrl(self, wx.ID_ANY,
+                                        "-1", min=-1, max=900000,
+                                        style=wx.TE_PROCESS_ENTER
+                                        )
+        gridcod.Add(self.spin_bufsize, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         sizerbase.Add(gridcod, 0, wx.ALL | wx.CENTER, 0)
-        sizerbase.Add((0, 20), 0)
         line0 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
                               size=(400, -1), style=wx.LI_HORIZONTAL,
                               name=wx.StaticLineNameStr
                               )
-        sizerbase.Add(line0, 0, wx.ALL | wx.CENTER, 5)
-        # sizerbase.Add((0, 10), 0)
-        self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_('Use for Web')))
-        sizerbase.Add(self.ckbx_web, 0, wx.ALL | wx.CENTER, 2)
-        line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=(400, -1), style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        sizerbase.Add(line1, 0, wx.ALL | wx.CENTER, 5)
+        sizerbase.Add(line0, 0, wx.ALL | wx.EXPAND, 15)
 
         # Option -------------------------------------------
         sizerbase.Add((0, 10), 0)
@@ -208,7 +220,7 @@ class Avc_X264(scrolled.ScrolledPanel):
                                        | wx.CB_READONLY,
                                        )
         gridopt.Add(self.cmb_vaspect, 0, wx.LEFT | wx.CENTER, 5)
-        labfps = wx.StaticText(self, wx.ID_ANY, 'FPS (frame rate):')
+        labfps = wx.StaticText(self, wx.ID_ANY, 'FPS:')
         gridopt.Add(labfps, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
         self.cmb_fps = wx.ComboBox(self, wx.ID_ANY,
                                    choices=Avc_X264.FPS,
@@ -217,7 +229,7 @@ class Avc_X264(scrolled.ScrolledPanel):
                                    | wx.CB_READONLY,
                                    )
         gridopt.Add(self.cmb_fps, 0, wx.LEFT | wx.CENTER, 5)
-        lab_gop = wx.StaticText(self, wx.ID_ANY, ("Group of picture (GOP):"))
+        lab_gop = wx.StaticText(self, wx.ID_ANY, ("GOP:"))
         gridopt.Add(lab_gop, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
         self.spin_gop = wx.SpinCtrl(self, wx.ID_ANY,
                                     "12", min=-1,
@@ -242,9 +254,8 @@ class Avc_X264(scrolled.ScrolledPanel):
         self.cmb_level.SetToolTip(tip)
         tip = _('Tune the encoding params')
         self.cmb_tune.SetToolTip(tip)
-        tip = (_('Set the group of picture (GOP) size '
-                 '(default 12 for H.264, 1 for H.265). '
-                 'Set to -1 to disable this control.'))
+        tip = (_('Set the Group Of Picture (GOP). Set to -1 to disable '
+                 'this control.'))
         self.spin_gop.SetToolTip(tip)
         tip = _('It can reduce the file size, but takes longer.')
         self.ckbx_pass.SetToolTip(tip)
@@ -263,14 +274,19 @@ class Avc_X264(scrolled.ScrolledPanel):
                  'to use. Higher value = higher quality. Set -1 to disable '
                  'this control.'))
         self.spin_vbrate.SetToolTip(tip)
-        tip = (_('Constant rate factor. Lower values = higher quality and '
-                 'a larger file size. Set to -1 to disable this control.'))
+        tip = (_('Constant rate factor. Lower values correspond to higher '
+                 'quality and greater file size. Set to -1 to disable this '
+                 'control.'))
         self.slider_crf.SetToolTip(tip)
+        tip = (_('Specifies the target (average) bit rate for the encoder '
+                 'to use. Higher value = higher quality. Set -1 to disable '
+                 'this control.'))
+        self.spin_vbrate.SetToolTip(tip)
         tip = _('Video width and video height ratio.')
         self.cmb_vaspect.SetToolTip(tip)
-        tip = (_('Frames repeat a given number of times per second. In some '
-                 'countries this is 30 for NTSC, other countries (like '
-                 'Italy) use 25 for PAL'))
+        tip = (_('Frame rate (frames per second). Frames repeat a given '
+                 'number of times per second. In some countries this is 30 '
+                 'for NTSC, other countries (like Italy) use 25 for PAL'))
         self.cmb_fps.SetToolTip(tip)
 
         self.Bind(wx.EVT_BUTTON, self.reset_args, self.btn_reset)

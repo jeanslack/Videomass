@@ -67,7 +67,7 @@ def presets_svtav1(name):
 
 class AV1_Svt(scrolled.ScrolledPanel):
     """
-    This scroll panel implements AV1 (SVT) video controls
+    This scroll panel implements SVT-AV1 video controls
     for A/V Conversions.
     """
     # profile/tunes used by libsvtav1
@@ -126,6 +126,9 @@ class AV1_Svt(scrolled.ScrolledPanel):
                                        )
         self.cmb_defprst.SetSelection(0)
         boxset.Add(self.cmb_defprst, 0, wx.LEFT, 20)
+        self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_('Optimize for Web')))
+        boxset.Add(self.ckbx_web, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
+
         sizerbase.Add(boxset, 0, wx.TOP | wx.CENTRE, 10)
         sizerbase.Add((0, 15), 0)
         boxprst = wx.BoxSizer(wx.HORIZONTAL)
@@ -174,7 +177,11 @@ class AV1_Svt(scrolled.ScrolledPanel):
         self.ckbx_fgrden = wx.CheckBox(self, wx.ID_ANY, "Film Grain Denoise")
         boxsfgr.Add(self.ckbx_fgrden, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         sizerbase.Add(boxsfgr, 0, wx.CENTER, 5)
-        sizerbase.Add((5, 0), 0)
+        line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=(400, -1), style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        sizerbase.Add(line1, 0, wx.ALL | wx.EXPAND, 15)
         gridcod = wx.FlexGridSizer(5, 8, 0, 0)
         labtrows = wx.StaticText(self, wx.ID_ANY, 'Tile Rows:')
         gridcod.Add(labtrows, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
@@ -266,23 +273,13 @@ class AV1_Svt(scrolled.ScrolledPanel):
                                       )
         gridcod.Add(self.cmb_pixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         sizerbase.Add(gridcod, 0, wx.ALL | wx.CENTER, 0)
-        sizerbase.Add((0, 20), 0)
         line0 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
                               size=(400, -1), style=wx.LI_HORIZONTAL,
                               name=wx.StaticLineNameStr
                               )
-        sizerbase.Add(line0, 0, wx.ALL | wx.CENTER, 5)
-        # sizerbase.Add((0, 10), 0)
-        self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_('Use for Web')))
-        sizerbase.Add(self.ckbx_web, 0, wx.ALL | wx.CENTER, 2)
-        line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=(400, -1), style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        sizerbase.Add(line1, 0, wx.ALL | wx.CENTER, 5)
+        sizerbase.Add(line0, 0, wx.ALL | wx.EXPAND, 15)
 
         # Option -------------------------------------------
-        sizerbase.Add((0, 10), 0)
         gridopt = wx.FlexGridSizer(1, 6, 0, 0)
         labvaspect = wx.StaticText(self, wx.ID_ANY, 'Aspect Ratio:')
         gridopt.Add(labvaspect, 0, wx.ALIGN_CENTER_VERTICAL)
@@ -292,7 +289,7 @@ class AV1_Svt(scrolled.ScrolledPanel):
                                        | wx.CB_READONLY,
                                        )
         gridopt.Add(self.cmb_vaspect, 0, wx.LEFT | wx.CENTER, 5)
-        labfps = wx.StaticText(self, wx.ID_ANY, 'FPS (frame rate):')
+        labfps = wx.StaticText(self, wx.ID_ANY, 'FPS:')
         gridopt.Add(labfps, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
         self.cmb_fps = wx.ComboBox(self, wx.ID_ANY,
                                    choices=AV1_Svt.FPS,
@@ -301,7 +298,7 @@ class AV1_Svt(scrolled.ScrolledPanel):
                                    | wx.CB_READONLY,
                                    )
         gridopt.Add(self.cmb_fps, 0, wx.LEFT | wx.CENTER, 5)
-        lab_gop = wx.StaticText(self, wx.ID_ANY, ("Group of picture (GOP):"))
+        lab_gop = wx.StaticText(self, wx.ID_ANY, ("GOP:"))
         gridopt.Add(lab_gop, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
         self.spin_gop = wx.SpinCtrl(self, wx.ID_ANY,
                                     "12", min=-1,
@@ -359,7 +356,6 @@ class AV1_Svt(scrolled.ScrolledPanel):
                  'intensive) bit streams to decode, similar to the fastdecode '
                  'tuning in x264 and x265.'))
         self.ckbx_fastd.SetToolTip(tip)
-
         tip = _('Number of tile rows to use, default changes per resolution')
         self.cmb_trows.SetToolTip(tip)
         tip = (_('Number of tile columns to use, '
@@ -371,9 +367,8 @@ class AV1_Svt(scrolled.ScrolledPanel):
         self.cmb_level.SetToolTip(tip)
         tip = _('Tune the encoding params')
         self.cmb_tune.SetToolTip(tip)
-        tip = (_('Set the group of picture (GOP) size '
-                 '(default 12 for H.264, 1 for H.265). '
-                 'Set to -1 to disable this control.'))
+        tip = (_('Set the Group Of Picture (GOP). Set to -1 to disable '
+                 'this control.'))
         self.spin_gop.SetToolTip(tip)
         tip = _('It can reduce the file size, but takes longer.')
         self.ckbx_pass.SetToolTip(tip)
@@ -388,16 +383,15 @@ class AV1_Svt(scrolled.ScrolledPanel):
                  'variability of the output bitrate. '
                  'Set to -1 to disable this control.'))
         self.spin_bufsize.SetToolTip(tip)
-        tip = (_('specifies the target (average) bit rate for the encoder '
+        tip = (_('Specifies the target (average) bit rate for the encoder '
                  'to use. Higher value = higher quality. Set -1 to disable '
                  'this control.'))
         self.spin_vbrate.SetToolTip(tip)
-
         tip = _('Video width and video height ratio.')
         self.cmb_vaspect.SetToolTip(tip)
-        tip = (_('Frames repeat a given number of times per second. In some '
-                 'countries this is 30 for NTSC, other countries (like '
-                 'Italy) use 25 for PAL'))
+        tip = (_('Frame rate (frames per second). Frames repeat a given '
+                 'number of times per second. In some countries this is 30 '
+                 'for NTSC, other countries (like Italy) use 25 for PAL'))
         self.cmb_fps.SetToolTip(tip)
 
         self.Bind(wx.EVT_COMBOBOX, self.on_default_preset, self.cmb_defprst)
@@ -452,7 +446,7 @@ class AV1_Svt(scrolled.ScrolledPanel):
         """
         Reset all controls to default
         """
-        if self.opt["VidCmbxStr"] == 'AV1 (SVT) 10-bit':
+        if self.opt["VidCmbxStr"] == 'SVT-AV1 10-bit':
             self.labinfo.SetLabel("SVT-AV1 (Scalable Video Technology) 10-bit")
             self.cmb_pixfrm.SetSelection(2), self.on_bit_depth(None, False)
         else:
