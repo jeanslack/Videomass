@@ -464,7 +464,7 @@ class DataSource():
                  'ffplay_cmd': _relativize(userconf['ffplay_cmd']),
                  "ffplay_default_args": (f"{userconf['ffplay_loglev']} "
                                          f"-hide_banner"),
-                 "ffmpeg_default_args": (f"{userconf['ffmpeg_loglev']} "
+                 "ffmpeg_default_args": (f"-y {userconf['ffmpeg_loglev']} "
                                          f"-stats -hide_banner -nostdin"),
                  **userconf
                  })
@@ -487,7 +487,8 @@ class DataSource():
                 'preview_audio', 'profile_copy', 'slideshow',
                 'videotopictures', 'atrack', 'timerset', 'coloreq',
                 'stop', 'home', 'youtube', 'playlist', 'cleanup',
-                'download', 'statistics', 'play', 'subtitles'
+                'download', 'statistics', 'play', 'subtitles',
+                'queue',
                 )  # must match with items on `iconset` tuple, see following
 
         icodir = self.dataloc['icodir']
@@ -555,6 +556,7 @@ class DataSource():
                    f"{choose.get('x22')}/statistics.{ext}",
                    f"{choose.get('x22')}/play.{ext}",
                    f"{choose.get('x16')}/subtitles.{ext}",
+                   # f"{choose.get('x22')}/queue.{ext}",
                    )
         values = (os.path.join(norm) for norm in iconset)  # normalize pathns
 

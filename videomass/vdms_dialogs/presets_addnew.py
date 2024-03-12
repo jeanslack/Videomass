@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.13.2022
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -63,7 +63,7 @@ class MemPresets(wx.Dialog):
         self.path_prst = os.path.join(self.appdata['confdir'], 'presets',
                                       f'{filename}.json')
         self.arg = arg  # evaluate if 'edit', 'newprofile', 'addprofile'
-        self.array = array  # param list [name,descript,cmd1,cmd2,supp,ext]
+        self.array = array  # param list [name,descript,cmd1,cmd2,supp,ext,..]
 
         wx.Dialog.__init__(self, parent, -1, title,
                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
@@ -93,6 +93,10 @@ class MemPresets(wx.Dialog):
                                       style=wx.TE_MULTILINE
                                       )
         box_pass1.Add(self.pass_1_cmd, 1, wx.ALL | wx.EXPAND, 5)
+        self.pass_1_pre = wx.TextCtrl(self, wx.ID_ANY, "",
+                                      style=wx.HSCROLL
+                                      )
+        box_pass1.Add(self.pass_1_pre, 0, wx.ALL | wx.EXPAND, 5)
         box_pass2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                    MemPresets.PASS_2),
                                       wx.VERTICAL
@@ -102,6 +106,10 @@ class MemPresets(wx.Dialog):
                                       style=wx.TE_MULTILINE
                                       )
         box_pass2.Add(self.pass_2_cmd, 1, wx.ALL | wx.EXPAND, 5)
+        self.pass_2_pre = wx.TextCtrl(self, wx.ID_ANY, "",
+                                      style=wx.HSCROLL
+                                      )
+        box_pass2.Add(self.pass_2_pre, 0, wx.ALL | wx.EXPAND, 5)
         size_formats = wx.BoxSizer(wx.HORIZONTAL)
         size_base.Add(size_formats, 0, wx.ALL | wx.EXPAND, 0)
         box_supp = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
@@ -136,26 +144,46 @@ class MemPresets(wx.Dialog):
 
         # ----- set_properties:
         if self.appdata['ostype'] == 'Darwin':
-            self.pass_1_cmd.SetFont(wx.Font(12, wx.MODERN,
+            self.pass_1_cmd.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
                                             wx.NORMAL, wx.NORMAL))
-            self.pass_2_cmd.SetFont(wx.Font(12, wx.MODERN,
+            self.pass_2_cmd.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
+            self.pass_1_pre.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
+            self.pass_2_pre.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
                                             wx.NORMAL, wx.NORMAL))
         else:
-            self.pass_1_cmd.SetFont(wx.Font(9, wx.MODERN,
+            self.pass_1_cmd.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
                                             wx.NORMAL, wx.NORMAL))
-            self.pass_2_cmd.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL,
-                                            wx.NORMAL))
+            self.pass_2_cmd.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
+            self.pass_1_pre.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
+            self.pass_2_pre.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
 
         self.txt_name.SetToolTip(_('A short profile name'))
         self.txt_descript.SetToolTip(_('A long description of the profile'))
-        self.pass_1_cmd.SetToolTip(_('Reserved arguments for the first pass'))
-        self.pass_2_cmd.SetToolTip(_('Reserved arguments for the second pass'))
+        self.pass_1_cmd.SetToolTip(_('FFmpeg arguments code for one-pass '
+                                     'encoding'))
+        self.pass_2_cmd.SetToolTip(_('FFmpeg arguments code for two-pass '
+                                     'encoding'))
         self.txt_supp.SetToolTip(_('One or more comma-separated format names '
-                                   'to include in the profile'))
+                                   'that are not compatible with this '
+                                   'profile.'))
         self.txt_ext.SetToolTip(_('Output format extension. Leave empty to '
                                   'copy codec and format'))
+
+        tip = (_('Any optional arguments to add before input file on the '
+                 'two-pass encoding, e.g required names of some hardware '
+                 'accelerations like -hwaccel to use with CUDA.'))
+        self.pass_1_pre.SetToolTip(tip)
+        tip = (_('Any optional arguments to add before input file on the '
+                 'two-pass encoding, e.g required names of some hardware '
+                 'accelerations like -hwaccel to use with CUDA.'))
+        self.pass_2_pre.SetToolTip(tip)
         # ------ Set Layout
-        self.SetMinSize((950, 450))
+        self.SetMinSize((950, 550))
         self.SetSizer(size_base)
         self.Fit()
         self.Layout()
@@ -188,8 +216,9 @@ class MemPresets(wx.Dialog):
         self.pass_2_cmd.AppendText(self.array[3])  # command 2
         self.txt_supp.AppendText(self.array[4])  # file supportted
         self.txt_ext.AppendText(self.array[5])  # extension
-
-# ---------------------Callback (event handler)----------------------#
+        self.pass_1_pre.AppendText(self.array[6])  # input 1
+        self.pass_2_pre.AppendText(self.array[7])  # input 2
+    # ---------------------Callbacks (event handler)----------------------#
 
     def on_Name(self, event):
         """Set default background"""
@@ -246,6 +275,8 @@ class MemPresets(wx.Dialog):
         file_support = self.txt_supp.GetValue().strip()
         extens = self.txt_ext.GetValue().strip()
         extens = 'copy' if not extens else extens
+        preinput1 = self.pass_1_pre.GetValue()
+        preinput2 = self.pass_2_pre.GetValue()
 
         # ---------------------------------------------------------------
         if [txt for txt in [name, descript, pass_1] if txt.strip() == '']:
@@ -275,6 +306,8 @@ class MemPresets(wx.Dialog):
                                             Second_pass=pass_2,
                                             Supported_list=file_support,
                                             Output_extension=extens,
+                                            Preinput_1=preinput1,
+                                            Preinput_2=preinput2,
                                             )
             if writenewprf == 'already exist':
                 wx.MessageBox(_("Profile already stored with same name"),
@@ -292,6 +325,8 @@ class MemPresets(wx.Dialog):
                                             Second_pass=pass_2,
                                             Supported_list=file_support,
                                             Output_extension=extens,
+                                            Preinput_1=preinput1,
+                                            Preinput_2=preinput2,
                                             )
             if editprf == 'already exist':
                 wx.MessageBox(_("Profile already stored with same name"),

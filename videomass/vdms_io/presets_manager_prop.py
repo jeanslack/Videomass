@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Gen.22.2024
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -70,7 +70,9 @@ def json_data(arg):
       "First_pass": "",
       "Second_pass": "",
       "Supported_list": "",
-      "Output_extension": ""
+      "Output_extension": "",
+      "Preinput_1": "",
+      "Preinput_2": ""
     }]
 
     """
@@ -195,6 +197,8 @@ def edit_existing_profile(path_prst, selected_profile, **kwargs):
             item["Second_pass"] = kwargs['Second_pass']
             item["Supported_list"] = kwargs['Supported_list']
             item["Output_extension"] = kwargs['Output_extension']
+            item["Preinput_1"] = kwargs['Preinput_1']
+            item["Preinput_2"] = kwargs['Preinput_2']
 
     stored_data.sort(key=lambda s: s["Name"])  # make sorted by name
 

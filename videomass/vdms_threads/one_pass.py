@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.17.2024
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -51,21 +51,16 @@ class OnePass(Thread):
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ---------------------------------------------------------------
 
-    def __init__(self, logname, duration, timeseq, *args):
+    def __init__(self, *args, **kwargs):
         """
         Called from `long_processing_task.topic_thread`.
         Also see `main_frame.switch_to_processing`.
+
         """
         self.stop_work_thread = False  # process terminate
-        self.input_flist = args[1]  # list of infile (items)
-        self.command = args[4]  # comand set on single pass
-        self.output_flist = args[3]  # output path
-        self.duration = duration  # duration list
-        self.volume = args[7]  # (lista norm.)se non richiesto rimane None
         self.count = 0  # count first for loop
-        self.countmax = len(args[1])  # length file list
-        self.logname = logname  # title name of file log
-        self.timeseq = timeseq  # ss, t tuple
+        self.logname = args[0]  # log filename
+        self.kwa = kwargs
 
         Thread.__init__(self)
 
@@ -79,24 +74,24 @@ class OnePass(Thread):
         for (infile,
              outfile,
              volume,
-             duration) in itertools.zip_longest(self.input_flist,
-                                                self.output_flist,
-                                                self.volume,
-                                                self.duration,
+             duration) in itertools.zip_longest(self.kwa['fsrc'],
+                                                self.kwa['fdest'],
+                                                self.kwa.get('volume', ''),
+                                                self.kwa['duration'],
                                                 fillvalue='',
                                                 ):
             cmd = (f'"{OnePass.appdata["ffmpeg_cmd"]}" '
-                   f'{self.timeseq[0]} '
                    f'{OnePass.appdata["ffmpeg_default_args"]} '
+                   f'{self.kwa.get("pre-input-1", "")} '
+                   f'{self.kwa["start-time"]} '
                    f'-i "{infile}" '
-                   f'{self.timeseq[1]} '
-                   f'{self.command} '
+                   f'{self.kwa["end-time"]} '
+                   f'{self.kwa["args"]} '
                    f'{volume} '
-                   f'{OnePass.appdata["ffthreads"]} '
-                   f'-y "{outfile}"'
+                   f'"{outfile}"'
                    )
             self.count += 1
-            count = f'File {self.count}/{self.countmax}'
+            count = f'File {self.count}/{self.kwa["nmax"]}'
             com = (f'{count}\nSource: "{infile}"\nDestination: "{outfile}"'
                    f'\n\n[COMMAND]:\n{cmd}')
 

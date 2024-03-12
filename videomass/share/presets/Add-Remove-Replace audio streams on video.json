@@ -1,0 +1,52 @@
+[
+    {
+        "Name": "Add audio stream to video",
+        "Description": "Assume that the video file does not contain any audio stream yet (provide a valid audio path-name between double quotes, after -i)",
+        "First_pass": "-i \"audio.wav\" -c:v copy -c:a copy -map_metadata 0 -shortest",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
+    },
+    {
+        "Name": "Add a new audio stream to video",
+        "Description": "A new audio stream will be added to those already existing in the video file (provide a valid audio path-name between double quotes, after -i)",
+        "First_pass": "-i \"audio.wav\" -c:v copy -c:a copy -map 0 -map 1:a -map_metadata 0 -shortest",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
+    },
+    {
+        "Name": "Replace audio stream on video",
+        "Description": "Replace all current audio streams with a new one (provide a valid audio path-name between double quotes, after -i)",
+        "First_pass": "-i \"track.wav\" -c:v copy -c:a copy -map 0:v:0 -map 1:a:0 -map_metadata 0 -shortest",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
+    },
+    {
+        "Name": "Remove a specific audio stream",
+        "Description": "Remove a specific audio stream from video by providing an index, for example -0: a: 1, -0: a: 2, etc. ",
+        "First_pass": "-map 0 -map -0:a:0 -map_chapters 0 -map 0:s? -map_metadata 0 -c copy",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "copy",
+        "Preinput_1": "",
+        "Preinput_2": ""
+    },
+    {
+        "Name": "Remove all audio streams",
+        "Description": "deselects all audio streams from the input",
+        "First_pass": "-map 0 -map -0:a -map_chapters 0 -map 0:s? -map_metadata 0 -c copy",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "copy",
+        "Preinput_1": "",
+        "Preinput_2": ""
+    }
+]

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.08.2024
+Rev: Mar.01.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -262,19 +262,6 @@ class SetUp(wx.Dialog):
         gridFFplay.Add(self.txtctrl_ffplay, 1, wx.ALL, 5)
         gridFFplay.Add(self.btn_ffplay, 0, wx.RIGHT | wx.CENTER, 5)
         sizerFFmpeg.Add((0, 15))
-        labFFopt = wx.StaticText(tabThree, wx.ID_ANY, _('Other options'))
-        sizerFFmpeg.Add(labFFopt, 0, wx.ALL | wx.EXPAND, 5)
-        gridSizopt = wx.BoxSizer(wx.HORIZONTAL)
-        sizerFFmpeg.Add(gridSizopt, 0, wx.EXPAND)
-        msg = _("Threads used for transcoding (from 0 to 32):")
-        labFFthreads = wx.StaticText(tabThree, wx.ID_ANY, (msg))
-        gridSizopt.Add(labFFthreads, 0, wx.LEFT | wx.ALIGN_CENTER, 5)
-        self.spinctrl_threads = wx.SpinCtrl(tabThree, wx.ID_ANY,
-                                            f"{self.appdata['ffthreads'][9:]}",
-                                            size=(-1, -1), min=0, max=32,
-                                            style=wx.TE_PROCESS_ENTER
-                                            )
-        gridSizopt.Add(self.spinctrl_threads, 1, wx.ALL | wx.ALIGN_CENTER, 5)
         # ----
         tabThree.SetSizer(sizerFFmpeg)
         notebook.AddPage(tabThree, _("FFmpeg"))
@@ -433,7 +420,6 @@ class SetUp(wx.Dialog):
             labfile.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdown.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFexec.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            labFFopt.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdlp.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdw.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdwmsg.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
@@ -449,7 +435,6 @@ class SetUp(wx.Dialog):
             labfile.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdown.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFexec.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            labFFopt.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdlp.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdw.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdwmsg.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
@@ -475,7 +460,6 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.opendir, self.btn_cache)
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffplay, self.rdbFFplay)
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffmpeg, self.rdbFFmpeg)
-        self.Bind(wx.EVT_SPINCTRL, self.on_threads, self.spinctrl_threads)
         self.Bind(wx.EVT_BUTTON, self.on_outputdir, self.btn_fsave)
         self.Bind(wx.EVT_CHECKBOX, self.set_Samedest, self.ckbx_dir)
         self.Bind(wx.EVT_TEXT, self.set_Suffix, self.text_suffix)
@@ -611,15 +595,8 @@ class SetUp(wx.Dialog):
             self.settings['playlistsubfolder'] = False
     # ---------------------------------------------------------------------#
 
-    def on_threads(self, event):
-        """set cpu number threads used as option on ffmpeg"""
-        sett = self.spinctrl_threads.GetValue()
-        self.settings['ffthreads'] = f'-threads {sett}'
-    # ---------------------------------------------------------------------#
-
     def on_outputdir(self, event):
         """set up a custom user path for file exporting"""
-
         dlg = wx.DirDialog(self, _("Choose Destination"),
                            self.appdata['outputdir'], wx.DD_DEFAULT_STYLE
                            )

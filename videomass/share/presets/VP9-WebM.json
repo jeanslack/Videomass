@@ -5,7 +5,9 @@
         "First_pass": "-pass 1 -an -sn -c:v libvpx-vp9 -b:v 2M -deadline good -cpu-used 2 -row-mt 1 -pix_fmt yuv420p -f null",
         "Second_pass": "-pass 2 -c:v libvpx-vp9 -b:v 2M -deadline good -cpu-used 2 -row-mt 1 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a: libopus -compression_level 5 -map 0:a:? -map_metadata 0",
         "Supported_list": "",
-        "Output_extension": "webm"
+        "Output_extension": "webm",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Basic vp9",
@@ -13,7 +15,9 @@
         "First_pass": "-pass 1 -an -sn -c:v libvpx-vp9 -b:v 0k -deadline good -cpu-used 1 -row-mt 1 -f webm",
         "Second_pass": "-pass 2 -c:v libvpx-vp9 -b:v 0k -deadline good -cpu-used 1 -row-mt 1 -f webm",
         "Supported_list": "",
-        "Output_extension": "webm"
+        "Output_extension": "webm",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Basic vp9 (CQ)",
@@ -21,7 +25,9 @@
         "First_pass": "-c:v libvpx-vp9 -crf 30 -b:v 0 -deadline good -cpu-used 1 -row-mt 1 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a: libopus -compression_level 6 -map 0:a:? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "webm"
+        "Output_extension": "webm",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Constant bitrate",
@@ -29,7 +35,9 @@
         "First_pass": "-c:v libvpx-vp9 -minrate 1M -maxrate 1M -b:v 1M -deadline good -cpu-used 1 -row-mt 1 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a: libopus -compression_level 5 -map 0:a:? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "webm"
+        "Output_extension": "webm",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Constant quality",
@@ -37,7 +45,9 @@
         "First_pass": "-pass 1 -an -sn -c:v libvpx-vp9 -b:v 0 -crf 30 -deadline good -cpu-used 1 -row-mt 1 -pix_fmt yuv420p -f null",
         "Second_pass": "-pass 2 -c:v libvpx-vp9 -b:v 0 -crf 30 -deadline good -cpu-used 2 -row-mt 1 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a: libopus -compression_level 5 -map 0:a:? -map_metadata 0",
         "Supported_list": "",
-        "Output_extension": "webm"
+        "Output_extension": "webm",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Lossless VP9",
@@ -45,7 +55,9 @@
         "First_pass": "-c:v libvpx-vp9 -deadline good -cpu-used 1 -row-mt 1 -lossless 1 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a: libopus -compression_level 10 -map 0:a:? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "webm"
+        "Output_extension": "webm",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "vp9 optimized",
@@ -53,6 +65,8 @@
         "First_pass": "-pass 1 -sn -an -c:v libvpx-vp9 -b:v 0k -deadline best -cpu-used 1 -row-mt 1 -lag-in-frames 25 -auto-alt-ref 1 -frame-parallel 0 -tile-columns 6 -g 9999 -colorspace bt709 -pix_fmt yuv420p -f webm",
         "Second_pass": "-pass 2 -c:v libvpx-vp9 -b:v 0k -deadline best -cpu-used 1 -row-mt 1 -lag-in-frames 25 -auto-alt-ref 1 -frame-parallel 0 -tile-columns 6 -g 9999 -colorspace bt709 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -c:a libopus -b:a 0k -map_metadata 0 -f webm",
         "Supported_list": "",
-        "Output_extension": "webm"
+        "Output_extension": "webm",
+        "Preinput_1": "",
+        "Preinput_2": ""
     }
 ]

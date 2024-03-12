@@ -302,7 +302,7 @@ class FileDnD(wx.Panel):
             self.text_path_save.Disable()
 
         # Tooltips
-        self.btn_destpath.SetToolTip(_('Set destination'))
+        self.btn_destpath.SetToolTip(_('Set a new destination for encodings'))
         self.text_path_save.SetToolTip(_("Current destination folder"))
 
         # Binding (EVT)

@@ -5,7 +5,9 @@
         "First_pass": "-c:v libx264 -crf 23 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "mkv"
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Video mkv H.265",
@@ -13,7 +15,9 @@
         "First_pass": "-c:v libx265 -crf 28 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "mkv"
+        "Output_extension": "mkv",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Video webm VP9",
@@ -21,6 +25,8 @@
         "First_pass": "-c:v libvpx-vp9 -crf 30 -b:v 0 -deadline best -cpu-used 0 -row-mt 1 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "webm"
+        "Output_extension": "webm",
+        "Preinput_1": "",
+        "Preinput_2": ""
     }
 ]

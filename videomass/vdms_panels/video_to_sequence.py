@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2024
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -57,13 +57,13 @@ class VideoToSequence(wx.Panel):
               "in the path you specify.")
     # ----------------------------------------------------------------#
 
-    def __init__(self, parent, icons):
+    def __init__(self, parent):
         """
         This is a panel impemented on MainFrame
         """
-        get = wx.GetApp()
-        appdata = get.appset
         self.parent = parent  # parent is the MainFrame
+        appdata = self.parent.appdata
+        icons = self.parent.icons
         self.opt = {"Scale": "scale=w=320:h=-1", "Setdar": "", "Setsar": ""}
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
@@ -447,7 +447,8 @@ class VideoToSequence(wx.Panel):
             if self.opt["Setsar"]:
                 scale = f'{scale},{self.opt["Setsar"]}'
             cmd = ('-skip_frame nokey', f'-vf "{scale},tile={rows}x{cols}:'
-                   f'padding={pad}:margin={marg}:color=White" -an -fps_mode 0')
+                   f'padding={pad}:margin={marg}:color=White" -an '
+                   f'-fps_mode vfr')
 
         elif self.rdbx_opt.GetSelection() == 2:
             setf = ''
@@ -571,18 +572,13 @@ class VideoToSequence(wx.Panel):
                           wx.ICON_ERROR, self)
             return
 
-        self.parent.switch_to_processing('video_to_sequence',
-                                         filename,
-                                         preargs,
-                                         outputdir,
-                                         command,
-                                         None,
-                                         None,
-                                         None,
-                                         'from_movie_to_pictures.log',
-                                         1,
-                                         False,  # reserved
-                                         )
+        kwargs = {'logname': 'from_movie_to_pictures.log',
+                  'type': 'video_to_sequence',
+                  'filename': filename, 'outputdir': outputdir,
+                  'args': command, 'pre-input-1': preargs,
+                  }
+        self.parent.switch_to_processing('video_to_sequence', **kwargs)
+
         return
     # ------------------------------------------------------------------#
 

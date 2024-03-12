@@ -6,7 +6,7 @@ Compatibility: Python3, Python2
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.20.2022
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -52,7 +52,7 @@ def make_log_template(logname, logdir, mode="a"):
     - logname,  example: `mylog.log`
     - logdir, log files location
 
-    Returns the absolute/relative pathname of the log
+    Returns an absolute/relative pathname of the logfile.
     """
     current_date = time.strftime("%c")  # date/time
     logfile = os.path.join(logdir, logname)

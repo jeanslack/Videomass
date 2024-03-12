@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.21.2024
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -234,17 +234,12 @@ class Conc_Demuxer(wx.Panel):
                          )
         if ending.ShowModal() == wx.ID_OK:
             self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
-            self.parent.switch_to_processing('concat_demuxer',
-                                             filesrc,
-                                             None,
-                                             newfile,
-                                             self.args,
-                                             None,
-                                             self.duration,  # modify
-                                             None,
-                                             logname,
-                                             1,
-                                             )
+
+            kwargs = {'logname': logname, 'type': 'concat_demuxer',
+                      'fsrc': filesrc, 'fdest': newfile, 'args': self.args,
+                      'nmax': len(filesrc), 'duration': self.duration,
+                      }
+            self.parent.switch_to_processing('concat_demuxer', **kwargs)
     # -----------------------------------------------------------
 
     def update_dict(self, newfile, destdir, ext):

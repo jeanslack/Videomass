@@ -128,13 +128,8 @@ class MainFrame(wx.Frame):
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
 
         # panel instances:
-        self.ChooseTopic = choose_topic.Choose_Topic(self,
-                                                     self.appdata['ostype'],
-                                                     )
-        self.VconvPanel = av_conversions.AV_Conv(self,
-                                                 self.appdata,
-                                                 self.icons,
-                                                 )
+        self.ChooseTopic = choose_topic.Choose_Topic(self)
+        self.VconvPanel = av_conversions.AV_Conv(self)
         self.fileDnDTarget = filedrop.FileDnD(self,
                                               self.outputdir,
                                               self.outputnames,
@@ -143,13 +138,10 @@ class MainFrame(wx.Frame):
                                               self.duration,
                                               )
         self.ProcessPanel = LogOut(self)
-        self.PrstsPanel = presets_manager.PrstPan(self,
-                                                  self.appdata,
-                                                  self.icons,
-                                                  )
+        self.PrstsPanel = presets_manager.PrstPan(self)
         self.ConcatDemuxer = concatenate.Conc_Demuxer(self,)
-        self.toPictures = video_to_sequence.VideoToSequence(self, self.icons)
-        self.toSlideshow = sequence_to_video.SequenceToVideo(self, self.icons)
+        self.toPictures = video_to_sequence.VideoToSequence(self)
+        self.toSlideshow = sequence_to_video.SequenceToVideo(self)
         # miniframes
         self.TimeLine = timeline.Float_TL(parent=wx.GetTopLevelParent(self))
         self.TimeLine.Hide()
@@ -179,7 +171,7 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.icons['videomass'],
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        self.SetMinSize((850, 560))
+        self.SetMinSize((850, 560))  # ideal minsize (1140, 800)
         self.SetSizer(self.mainSizer)
         self.Fit()
         self.SetSize(tuple(self.appdata['main_window_size']))
@@ -457,7 +449,7 @@ class MainFrame(wx.Frame):
         # ------------------ Edit menu
         editButton = wx.Menu()
         dscrp = (_("Rename selected entry\tCtrl+R"),
-                 _("Renames the file destination with a new name"))
+                 _("Rename the output file name"))
         self.rename = editButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.rename.Enable(False)
         dscrp = (_("Batch renaming\tCtrl+B"),
@@ -563,7 +555,7 @@ class MainFrame(wx.Frame):
         # ------------------ setup menu
         setupButton = wx.Menu()
         dscrp = (_("Set destination"),
-                 _("Set a new destination"))
+                 _("Set a new destination for encodings"))
         path_dest = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         if self.same_destin:
             path_dest.Enable(False)
@@ -750,7 +742,7 @@ class MainFrame(wx.Frame):
                 for fname in files:
                     os.remove(os.path.join(path, fname))
             else:
-                wx.MessageBox(_("Videomass trash already completely emptied"),
+                wx.MessageBox(_("Nothing to clean up."),
                               "Videomass", wx.ICON_INFORMATION, self)
         else:
             wx.MessageBox(_("'{}':\nNo such file or directory").format(path),
@@ -1236,6 +1228,7 @@ class MainFrame(wx.Frame):
             bmphome = get_bmp(self.icons['home'], bmp_size)
             bmpclear = get_bmp(self.icons['cleanup'], bmp_size)
             bmpplay = get_bmp(self.icons['play'], bmp_size)
+            # bmpqueue = get_bmp(self.icons['queue'], bmp_size)
         else:
             bmpback = wx.Bitmap(self.icons['previous'], wx.BITMAP_TYPE_ANY)
             bmpnext = wx.Bitmap(self.icons['next'], wx.BITMAP_TYPE_ANY)
@@ -1246,6 +1239,7 @@ class MainFrame(wx.Frame):
             bmphome = wx.Bitmap(self.icons['home'], wx.BITMAP_TYPE_ANY)
             bmpclear = wx.Bitmap(self.icons['cleanup'], wx.BITMAP_TYPE_ANY)
             bmpplay = wx.Bitmap(self.icons['play'], wx.BITMAP_TYPE_ANY)
+            # bmpqueue = wx.Bitmap(self.icons['queue'], wx.BITMAP_TYPE_ANY)
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
@@ -1308,7 +1302,7 @@ class MainFrame(wx.Frame):
         Click Back toolbar button event
         """
         if self.ProcessPanel.IsShown():
-            self.panelShown(self.ProcessPanel.previus)
+            self.panelShown(self.ProcessPanel.previous)
             return
 
         if self.fileDnDTarget.IsShown():
@@ -1530,7 +1524,7 @@ class MainFrame(wx.Frame):
         self.Layout()
     # ------------------------------------------------------------------#
 
-    def switch_to_processing(self, *args):
+    def switch_to_processing(self, *args, **kwargs):
         """
         This method is called by start methods of any
         topic. It call `ProcessPanel.topic_thread`
@@ -1538,21 +1532,25 @@ class MainFrame(wx.Frame):
         """
         if args[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
-            dur, tseq = None, None
 
         elif args[0] in ('concat_demuxer', 'sequence_to_video'):
-            dur, tseq = args[6], None
+            kwargs['start-time'], kwargs['end-time'] = '', ''
 
         elif self.time_seq:
             ms = time_to_integer(self.time_seq.split()[3])  # -t duration
             splseq = self.time_seq.split()
             tseq = f'{splseq[0]} {splseq[1]}', f'{splseq[2]} {splseq[3]}'
             dur = [ms for n in self.duration]
+            kwargs['duration'] = dur
+            kwargs['start-time'] = tseq[0]
+            kwargs['end-time'] = tseq[1]
             self.statusbar_msg(_('Processing...'), None)
         else:
-            dur, tseq = self.duration, ('', '')
+            kwargs['start-time'], kwargs['end-time'] = '', ''
+            kwargs['duration'] = self.duration
 
-        self.SetTitle(_('Videomass - FFmpeg message monitor'))
+        args = args + (self.topicname,)  # update args
+        self.SetTitle(_('Videomass - FFmpeg Message Monitoring'))
         self.fileDnDTarget.Hide()
         self.VconvPanel.Hide()
         self.PrstsPanel.Hide()
@@ -1570,7 +1568,7 @@ class MainFrame(wx.Frame):
         self.logpan.Enable(False)
         [self.toolbar.EnableTool(x, False) for x in (4, 7, 9)]
 
-        self.ProcessPanel.topic_thread(self.topicname, dur, tseq, *args)
+        self.ProcessPanel.topic_thread(*args, **kwargs)
         self.Layout()
     # ------------------------------------------------------------------#
 

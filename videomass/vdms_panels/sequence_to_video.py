@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2024
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -85,16 +85,15 @@ class SequenceToVideo(wx.Panel):
               "in the path you specify.")
     # ---------------------------------------------------------------------
 
-    def __init__(self, parent, icons):
+    def __init__(self, parent):
         """
         Simple GUI panel with few controls to create slideshows
         based on ffmpeg syntax.
-        .
         """
-        get = wx.GetApp()
-        appdata = get.appset
-        self.ffprobe_cmd = appdata['ffprobe_cmd']
         self.parent = parent  # parent is the MainFrame
+        icons = self.parent.icons
+        appdata = self.parent.appdata
+        self.ffprobe_cmd = appdata['ffprobe_cmd']
         self.opt = {"Scale": "", "Setdar": "", "Setsar": "",
                     "RESIZE": "", "ADuration": 0, "AudioMerging": "",
                     "Map": "-map 0:v?", "Shortest": ["", "Disabled"],
@@ -686,17 +685,16 @@ class SequenceToVideo(wx.Panel):
             wx.MessageBox(f"{err}", "Videomass",
                           wx.ICON_ERROR, self)
             return
-        self.parent.switch_to_processing('sequence_to_video',  # topic
-                                         files,  # file list
-                                         outputdir,
-                                         destdir,
-                                         (self.opt["RESIZE"], args[0]),
-                                         self.opt["Preinput"],
-                                         args[1],  # duration
-                                         None,
-                                         'still_image_maker.log',
-                                         countmax,
-                                         )
+
+        kwargs = {'logname': 'still_image_maker.log',
+                  'type': 'sequence_to_video',
+                  'fsrc': files, 'fdest': destdir, 'outputdir': outputdir,
+                  'args': args[0], 'nmax': countmax, 'duration': args[1],
+                  'pre-input-1': self.opt["Preinput"],
+                  'resize': self.opt["RESIZE"]
+                  }
+        self.parent.switch_to_processing('sequence_to_video', **kwargs)
+
         return
     # -----------------------------------------------------------
 

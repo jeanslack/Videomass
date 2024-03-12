@@ -5,7 +5,9 @@
         "First_pass": "-vn -sn -map 0:1 -c:a:0 ac3 -b:a 192k -f ac3 -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "ac3"
+        "Output_extension": "ac3",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Converts to FLAC",
@@ -13,7 +15,9 @@
         "First_pass": "-vn -sn -map 0:1 -c:a:0 flac -compression_level 5 -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "flac"
+        "Output_extension": "flac",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Converts to MP3",
@@ -21,7 +25,9 @@
         "First_pass": "-vn -sn -map 0:1 -c:a:0 libmp3lame -b:a 320k -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "mp3"
+        "Output_extension": "mp3",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Converts to OGG",
@@ -29,7 +35,9 @@
         "First_pass": "-vn -sn -map 0:1 -c:a:0 libvorbis -aq 3 -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "ogg"
+        "Output_extension": "ogg",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Converts to OPUS",
@@ -37,7 +45,9 @@
         "First_pass": "-vn -sn -map 0:1 -c:a:0 libopus -compression_level 10 -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "opus"
+        "Output_extension": "opus",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Converts to WAV",
@@ -45,7 +55,9 @@
         "First_pass": "-vn -sn -map 0:1 -c:a:0 pcm_s16le -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "wav"
+        "Output_extension": "wav",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Converts to WAV for CD",
@@ -53,7 +65,9 @@
         "First_pass": "-vn -sn -map 0:1 -c:a:0 pcm_s16le -ar 44100 -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "wav"
+        "Output_extension": "wav",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Converts to WMA",
@@ -61,7 +75,9 @@
         "First_pass": "-vn -sn -map 0:1 -c:a:0 wmav2 -b:a 160k -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "wma"
+        "Output_extension": "wma",
+        "Preinput_1": "",
+        "Preinput_2": ""
     },
     {
         "Name": "Converts to m4a",
@@ -69,6 +85,8 @@
         "First_pass": "-vn -sn -map 0:1 -c:a:0 aac -b:a 112k -map_metadata 0",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "m4a"
+        "Output_extension": "m4a",
+        "Preinput_1": "",
+        "Preinput_2": ""
     }
 ]

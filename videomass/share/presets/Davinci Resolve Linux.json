@@ -5,6 +5,8 @@
         "First_pass": "-vcodec mjpeg -q:v 2 -acodec pcm_s16be -q:a 0 -f mov",
         "Second_pass": "",
         "Supported_list": "",
-        "Output_extension": "mov"
+        "Output_extension": "mov",
+        "Preinput_1": "",
+        "Preinput_2": ""
     }
 ]

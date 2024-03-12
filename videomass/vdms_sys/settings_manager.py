@@ -74,9 +74,6 @@ class ConfigManager:
         ffmpeg loglevel, one of `error`, `warning`, `info`,
         `verbose`, `debug`, default is `info` .
 
-    ffthreads (str):
-        Set the number of threads (from 0 to 32)
-
     ffplay_loglev (str):
         -loglevel one of `quiet`, `fatal`, `error`, `warning`, `info`
 
@@ -167,7 +164,7 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 6.6
+    VERSION = 6.7
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputdir": f"{os.path.expanduser('~')}",
                        "outputdir_asinput": False,
@@ -175,7 +172,6 @@ class ConfigManager:
                        "ffmpeg_cmd": "",
                        "ffmpeg_islocal": False,
                        "ffmpeg_loglev": "-loglevel info",
-                       "ffthreads": "-threads 4",
                        "ffplay_cmd": "",
                        "ffplay_islocal": False,
                        "ffplay_loglev": "-loglevel error",

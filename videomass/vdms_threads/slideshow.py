@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.18.2024
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -227,35 +227,31 @@ class SlideshowMaker(Thread):
     SUFFIX = appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
-    def __init__(self, logname, duration, *args):
+    def __init__(self, *args, **kwargs):
         """
         Called from `long_processing_task.topic_thread`.
         Also see `main_frame.switch_to_processing`.
         """
         Thread.__init__(self)
 
-        self.filelist = args[1]  # input file list (items)
-        # self.destdir = varargs[2]  # destination dir
-        self.filedest = args[3]  # filename destination
-        self.args_0 = args[4][0]  # args for temporary process
-        self.preinput_1 = args[5]  # pre-input args for processing
-        self.args_1 = args[4][1]  # args for processing
-        self.duration = duration * 1000  # duration in milliseconds
-        self.countmax = args[9]  # length file list
-        self.count = 0  # count first for loop
-        self.logname = logname  # log name
         self.stop_work_thread = False  # process terminate
+        self.duration = kwargs['duration'] * 1000  # duration in milliseconds
+        self.count = 0  # count first for loop
+        self.countmax = kwargs['nmax']
+        self.logname = args[0]  # log filename
+        self.fdest = kwargs['fdest']
+        self.kwa = kwargs
 
-        self.start()  # start the thread (va in self.run())
+        self.start()
 
     def run(self):
         """
         Subprocess initialize thread.
         """
-        imgtmpnames = 'TMP_' if self.args_0 else 'IMAGE_'
+        imgtmpnames = 'TMP_' if self.kwa["resize"] else 'IMAGE_'
         filedone = []
         with tempfile.TemporaryDirectory() as tempdir:  # make tmp dir
-            tmpproc1 = convert_images(self.filelist,
+            tmpproc1 = convert_images(self.kwa['fsrc'],
                                       tempdir,
                                       self.logname,
                                       imgtmpnames,
@@ -269,9 +265,9 @@ class SlideshowMaker(Thread):
                 return
 
             if imgtmpnames == 'TMP_':
-                tmpproc2 = resizing_process(self.filelist,
+                tmpproc2 = resizing_process(self.kwa['fsrc'],
                                             tempdir,
-                                            self.args_0,
+                                            self.kwa["resize"],
                                             self.logname,
                                             )
                 if tmpproc2 is not None:
@@ -286,20 +282,20 @@ class SlideshowMaker(Thread):
             tmpgroup = os.path.join(tempdir, 'IMAGE_%d.bmp')
             cmd_2 = (f'"{SlideshowMaker.appdata["ffmpeg_cmd"]}" '
                      f'{SlideshowMaker.appdata["ffmpeg_default_args"]} '
-                     f'{self.preinput_1} '
+                     f'{self.kwa["pre-input-1"]} '
                      f'-i "{tmpgroup}" '
-                     f'{self.args_1} '
-                     f'"{self.filedest}"'
+                     f'{self.kwa["args"]} '
+                     f'"{self.fdest}"'
                      )
             count = '\nVideo production...'
             log = (f'{count}\nSource: "{tempdir}"\n'
-                   f'Destination: "{self.filedest}"\n\n[COMMAND]:\n{cmd_2}')
+                   f'Destination: "{self.fdest}"\n\n[COMMAND]:\n{cmd_2}')
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
                          fsource=f'Source:  "{tempdir}"',
-                         destination=f'Destination:  "{self.filedest}"',
+                         destination=f'Destination:  "{self.fdest}"',
                          duration=self.duration,
                          end='',
                          )
@@ -342,7 +338,7 @@ class SlideshowMaker(Thread):
                         time.sleep(1)
 
                     else:  # status ok
-                        filedone = self.filelist
+                        filedone = self.kwa['fsrc']
                         wx.CallAfter(pub.sendMessage,
                                      "COUNT_EVT",
                                      count='',
