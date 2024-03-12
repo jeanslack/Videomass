@@ -322,7 +322,7 @@ class MainYtdl(wx.Frame):
         setupButton = wx.Menu()
 
         dscrp = (_("Set destination"),
-                 _("Set a new destination"))
+                 _("Set a new destination for your downloads"))
         setdownload_tmp = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         setupButton.AppendSeparator()
         dscrp = (_("Restore default destination"),

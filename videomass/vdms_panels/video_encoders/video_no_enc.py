@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-FileName: disable_vidcodecs.py
+FileName: video_no_enc.py
 Porpose: Contains text messages for this option for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -28,7 +28,7 @@ import wx
 import wx.lib.scrolledpanel as scrolled
 
 
-class Video_No_Encs(scrolled.ScrolledPanel):
+class Video_No_Enc(scrolled.ScrolledPanel):
     """
     This scroll panel implements text messages when `Audio`
     is selected from `Media` taget combobox.

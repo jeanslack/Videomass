@@ -7,10 +7,10 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 11 Mar 2024 V.5.0.10
+Tue, 12 Mar 2024 V.5.0.10
 
-  * [A/V Conversions] Improved UI layout.
-  * [A/V Conversions] Impoved video encoder controls.
+  * [A/V Conversions] Code refactoring and UI layout improvement.
+  * [A/V Conversions] [NEW] Added new graphics controls for encoder features.
   * [A/V Conversions] [NEW] Added UI for SVT-AV1 video encoder.
   * [A/V Conversions] [NEW] Added UI for AOM-AV1 video encoder.
   * [A/V Conversions] [NEW] Added H.264 10-bit option to video encoders.

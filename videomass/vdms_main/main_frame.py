@@ -449,7 +449,7 @@ class MainFrame(wx.Frame):
         # ------------------ Edit menu
         editButton = wx.Menu()
         dscrp = (_("Rename selected entry\tCtrl+R"),
-                 _("Renames the file destination with a new name"))
+                 _("Rename the output file name"))
         self.rename = editButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.rename.Enable(False)
         dscrp = (_("Batch renaming\tCtrl+B"),
@@ -555,7 +555,7 @@ class MainFrame(wx.Frame):
         # ------------------ setup menu
         setupButton = wx.Menu()
         dscrp = (_("Set destination"),
-                 _("Set a new destination"))
+                 _("Set a new destination for encodings"))
         path_dest = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         if self.same_destin:
             path_dest.Enable(False)
@@ -742,7 +742,7 @@ class MainFrame(wx.Frame):
                 for fname in files:
                     os.remove(os.path.join(path, fname))
             else:
-                wx.MessageBox(_("Videomass trash already completely emptied"),
+                wx.MessageBox(_("Nothing to clean up."),
                               "Videomass", wx.ICON_INFORMATION, self)
         else:
             wx.MessageBox(_("'{}':\nNo such file or directory").format(path),

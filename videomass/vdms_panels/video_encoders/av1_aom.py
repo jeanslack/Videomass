@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-FileName: av1_libaom.py
+FileName: av1_aom.py
 Porpose: Contains AV1 aom functionalities for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>

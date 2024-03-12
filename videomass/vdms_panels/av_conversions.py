@@ -41,9 +41,9 @@ from videomass.vdms_dialogs.filter_deinterlace import Deinterlace
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_dialogs.filter_stab import VidstabSet
 from videomass.vdms_dialogs.filter_colorcorrection import ColorEQ
-from . video_encoders.video_no_encs import Video_No_Encs
+from . video_encoders.video_no_enc import Video_No_Enc
 from . video_encoders.mpeg4 import Mpeg_4
-from . video_encoders.av1_libaom import AV1_Aom
+from . video_encoders.av1_aom import AV1_Aom
 from . video_encoders.av1_svt import AV1_Svt
 from . video_encoders.vp9_webm import Vp9_WebM
 from . video_encoders.avc_x264 import Avc_X264
@@ -84,7 +84,7 @@ class AV_Conv(wx.Panel):
                 "AOM-AV1": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
                 "SVT-AV1": {"-c:v libsvtav1": ["mkv", "webm"]},
                 "SVT-AV1 10-bit": {"-c:v libsvtav1": ["mkv", "webm"]},
-                "VP9": {"-c:v libvpx-vp9": ["webm", "mkv",]},
+                "VP9": {"-c:v libvpx-vp9": ["webm", "mkv"]},
                 "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "m4v", "ogv",
                                        "webm", "Copy"]}
                 })
@@ -202,7 +202,7 @@ class AV_Conv(wx.Panel):
         self.h264panel = Avc_X264(self.nb_Video, self.opt)
         self.h265panel = Hevc_X265(self.nb_Video, self.opt)
         self.vcopypanel = Copy_Vcodec(self.nb_Video, self.opt)
-        self.disablevidpanels = Video_No_Encs(self.nb_Video)
+        self.disablevidpanels = Video_No_Enc(self.nb_Video)
 
         for vpan in (self.aompanel, self.svtpanel, self.vp9panel,
                      self.mpeg4panel, self.h264panel, self.h265panel,

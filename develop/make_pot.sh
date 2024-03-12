@@ -27,7 +27,7 @@ elif [ "$PLATFORM" = "Linux" ]; then
 fi
 
 $XGETTEXT -d videomass "../gui_app.py" \
-"../vdms_dialogs/audiodialogs.py" \
+"../vdms_dialogs/audioproperties.py" \
 "../vdms_dialogs/epilogue.py" \
 "../vdms_dialogs/filter_crop.py" \
 "../vdms_dialogs/filter_deinterlace.py" \
@@ -59,15 +59,21 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_io/presets_manager_prop.py" \
 "../vdms_main/main_frame.py" \
 "../vdms_panels/av_conversions.py" \
+"../vdms_panels/audio_encoders/acodecs.py" \
+"../vdms_panels/video_encoders/av1_aom.py" \
+"../vdms_panels/video_encoders/av1_svt.py" \
+"../vdms_panels/video_encoders/avc_x264.py" \
+"../vdms_panels/video_encoders/hevc_x265.py" \
+"../vdms_panels/video_encoders/mpeg4.py" \
+"../vdms_panels/video_encoders/video_encodercopy.py" \
+"../vdms_panels/video_encoders/video_no_enc.py" \
+"../vdms_panels/video_encoders/vp9_webm.py" \
 "../vdms_panels/choose_topic.py" \
 "../vdms_panels/concatenate.py" \
 "../vdms_panels/filedrop.py" \
 "../vdms_panels/long_processing_task.py" \
 "../vdms_panels/presets_manager.py" \
 "../vdms_panels/sequence_to_video.py" \
-"../vdms_panels/hevc_avc.py" \
-"../vdms_panels/libaom.py" \
-"../vdms_panels/webm.py" \
 "../vdms_panels/video_to_sequence.py" \
 "../vdms_threads/ffplay_file.py" \
 "../vdms_threads/one_pass.py" \

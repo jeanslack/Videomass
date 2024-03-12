@@ -1,16 +1,18 @@
 videomass (5.0.10-1) UNRELEASED; urgency=medium
 
-  * [A/V Conversions] Improved UI layout.
-  * [A/V Conversions] Impoved video encoder controls.
-  * [A/V Conversions] [NEW] Controls UI based on the SVT-AV1
-    video encoder have been implemented.
+  * [A/V Conversions] Code refactoring and UI layout improvement.
+  * [A/V Conversions] [NEW] Added new graphics controls for encoder features.
+  * [A/V Conversions] [NEW] Added UI for SVT-AV1 video encoder.
+  * [A/V Conversions] [NEW] Added UI for AOM-AV1 video encoder.
   * [A/V Conversions] [NEW] Added H.264 10-bit option to video encoders.
   * [A/V Conversions] [NEW] Added H.265 10-bit option to video encoders.
-  * [A/V Conversions] [NEW] Added XVID MPEG-4 part 2 (xvidcore) video encoder.
+  * [A/V Conversions] [NEW] Added UI for XVID MPEG-4 part 2 (xvidcore) video
+    encoder.
   * [A/V Conversions] Removed Vp8 (libvpx) video encoder.
+  * [A/V Conversions] Removed Theora (libtheora) video encoder.
   * [A/V Conversions] Added new tab for subtitles.
   * [A/V Conversions] [NEW] Added One-passes Loudnorm (EBU R128) audio
-    normalization available for all tasks.
+    normalization feature available for all tasks.
   * [A/V Conversions] High-quality two-pass Loudnorm normalization (EBU R128)
     can now be applied at the same time as the "Stabilize" video filter
     (no more limitations). Additionally, this filter no longer requires
@@ -25,7 +27,7 @@ videomass (5.0.10-1) UNRELEASED; urgency=medium
   * [Presets Manager] add optional arguments for hardware acceleration #272 .
   * Update presets to v0.23.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 11 Mar 2024 17:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 12 Mar 2024 23:00:00 +0200
 
 videomass (5.0.6-1) UNRELEASED; urgency=medium
 
