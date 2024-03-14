@@ -86,15 +86,13 @@ class Mpeg_4(scrolled.ScrolledPanel):
         sizerbase.Add((0, 15), 0)
         boxcrf = wx.BoxSizer(wx.HORIZONTAL)
         labcrf = wx.StaticText(self, wx.ID_ANY, 'QP:')
-        boxcrf.Add(labcrf, 0, wx.ALIGN_CENTER, 2)
+        boxcrf.Add(labcrf, 0, wx.ALIGN_CENTER)
         self.slider_crf = wx.Slider(self, wx.ID_ANY, 1, -1, 31,
                                     size=(250, -1), style=wx.SL_HORIZONTAL
-                                    | wx.SL_AUTOTICKS
-                                    | wx.SL_VALUE_LABEL
-                                    # | wx.SL_MIN_MAX_LABELS
-                                    # | wx.SL_LABELS,
                                     )
-        boxcrf.Add(self.slider_crf, 0, wx.BOTTOM | wx.ALIGN_CENTER, 15)
+        boxcrf.Add(self.slider_crf, 0, wx.LEFT | wx.RIGHT | wx.ALIGN_CENTER, 2)
+        self.labcrfmt = wx.StaticText(self, wx.ID_ANY, '')
+        boxcrf.Add(self.labcrfmt, 0, wx.ALIGN_CENTER)
         boxcrf.Add((20, 0), 0)
         labvtag = wx.StaticText(self, wx.ID_ANY, 'FourCC (vtag):')
         boxcrf.Add(labvtag, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
@@ -261,13 +259,13 @@ class Mpeg_4(scrolled.ScrolledPanel):
         """
         Get all video parameters
         """
-        return (f'{self.opt["VideoCodec"]} {self.opt["FourCC"]} '
-                f'{self.opt["VideoBitrate"]} '
+        return (f'{self.opt["VideoMap"]} {self.opt["VideoCodec"]} '
+                f'{self.opt["FourCC"]} {self.opt["VideoBitrate"]} '
                 f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
                 f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
                 f'{self.opt["GOP"]} {self.opt["AspectRatio"]} '
                 f'{self.opt["FPS"]} '
-                f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
+                f'{self.opt["PixFmt"]} {self.opt["WebOptim"]}'
                 )
     # ------------------------------------------------------------------#
 
@@ -384,6 +382,7 @@ class Mpeg_4(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         num = self.slider_crf.GetValue()
+        self.labcrfmt.SetLabel(str(num))
         val = num + 1 if not num == -1 else ""
         self.opt["CRF"] = val if val == "" else f"-qscale:v {val}"
     # ------------------------------------------------------------------#

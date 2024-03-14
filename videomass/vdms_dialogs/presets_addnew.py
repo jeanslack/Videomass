@@ -75,14 +75,14 @@ class MemPresets(wx.Dialog):
                                                   _("Profile Name")),
                                      wx.VERTICAL)
         size_namedescr.Add(box_name, 1, wx.ALL | wx.EXPAND, 5)
-        self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "")
+        self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.HSCROLL)
         box_name.Add(self.txt_name, 0, wx.ALL | wx.EXPAND, 5)
         box_descr = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                    _("Description")),
                                       wx.VERTICAL
                                       )
         size_namedescr.Add(box_descr, 1, wx.ALL | wx.EXPAND, 5)
-        self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "")
+        self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.HSCROLL)
         box_descr.Add(self.txt_descript, 0, wx.ALL | wx.EXPAND, 5)
         box_pass1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                    MemPresets.PASS_1),

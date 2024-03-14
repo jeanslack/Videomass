@@ -7,19 +7,16 @@ URGENCY: to do soon
 URGENCY: high
 --------------
 
-- A new implementation is needed for embedding subtitles. The infrastructure
-  could be organized on a new A/V Conversions tab or as an independent tool
-  that can be called up from the main menu (Home).
-
 ---------------
 URGENCY: medium
 ----------------
+
+- Queue Management (add to queue, process queue)
 
 
 -------------
 URGENCY: low (New implementations)
 -------------
-- [PRESETS MANAGER] The profile requires additional input (-i FILE -i FILE ...)
 
 - If you plan to refactor code and make it compatible only for wx.Python>=4.1.1:
   - then erase `TestListCtrl` class on `formatcode.py` file.
