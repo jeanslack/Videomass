@@ -373,7 +373,8 @@ class Vp9_WebM(scrolled.ScrolledPanel):
         """
         Get all video encoder parameters
         """
-        return (f'{self.opt["VideoCodec"]} {self.opt["PixFmt"]} '
+        return (f'{self.opt["VideoMap"]} '
+                f'{self.opt["VideoCodec"]} {self.opt["PixFmt"]} '
                 f'{self.opt["Speed"]} {self.opt["TileRows"]} '
                 f'{self.opt["TileColumns"]} {self.opt["Deadline"]} '
                 f'{self.opt["RowMultiThred"]} {self.opt["MinRate"]} '

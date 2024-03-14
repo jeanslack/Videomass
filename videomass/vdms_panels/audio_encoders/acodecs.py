@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.28.2024
+Rev: Mar.14.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -122,62 +122,38 @@ class AudioEncoders(scrolled.ScrolledPanel):
             if not v:  # disable only not compatible with mkv
                 self.rdb_a.EnableItem(n, enable=False)
         sizerbase.Add(self.rdb_a, 0, wx.ALL | wx.CENTRE, 5)
-
-        # BOX audio properties
-        box5 = wx.StaticBox(self, wx.ID_ANY, _("Audio Properties"))
-        self.box_audioProper = wx.StaticBoxSizer(box5, wx.VERTICAL)
-        sizerbase.Add(self.box_audioProper, 0, wx.ALL | wx.CENTRE, 5)
-        sizer_a_ctrl = wx.BoxSizer(wx.HORIZONTAL)
-        self.box_audioProper.Add(sizer_a_ctrl, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_set = wx.Button(self, wx.ID_ANY, _("Settings"), size=(-1, -1))
+        sizproper = wx.BoxSizer(wx.HORIZONTAL)
+        sizerbase.Add(sizproper, 0, wx.CENTRE)
+        self.btn_set = wx.Button(self, wx.ID_ANY, _("Settings"),
+                                 size=(-1, -1))
         self.btn_set.SetBitmap(bmpasettings, wx.LEFT)
-        sizer_a_ctrl.Add(self.btn_set, 0, wx.ALL
-                         | wx.ALIGN_CENTER_VERTICAL, 2,
-                         )
-        self.txt_audio_options = wx.TextCtrl(self, wx.ID_ANY,
-                                             size=(500, -1),
-                                             style=wx.TE_READONLY
-                                             )
-        sizer_a_ctrl.Add(self.txt_audio_options, 1, wx.ALL | wx.EXPAND, 2)
-
-        # BOX stream mapping
-        msg = _("Audio Streams Mapping")
-        box6 = wx.StaticBox(self, wx.ID_ANY, msg)
-        self.box_audioMap = wx.StaticBoxSizer(box6, wx.VERTICAL)
-        sizerbase.Add(self.box_audioMap, 0, wx.ALL | wx.EXPAND, 5)
-        sizer_Amap = wx.BoxSizer(wx.HORIZONTAL)
-        self.box_audioMap.Add(sizer_Amap, 0, wx.ALL | wx.EXPAND, 5)
-        txtAinmap = wx.StaticText(self, wx.ID_ANY,
-                                  _('Index Selection:')
-                                  )
-        sizer_Amap.Add(txtAinmap, 0, wx.LEFT | wx.CENTRE, 5)
+        sizproper.Add(self.btn_set, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        txtAinmap = wx.StaticText(self, wx.ID_ANY, _('Index Selection:'))
+        sizproper.Add(txtAinmap, 0, wx.LEFT | wx.CENTRE, 20)
         self.cmb_A_inMap = wx.ComboBox(self, wx.ID_ANY,
                                        choices=['Auto', '1', '2', '3',
                                                 '4', '5', '6', '7', '8'],
-                                       size=(160, -1), style=wx.CB_DROPDOWN
+                                       size=(-1, -1), style=wx.CB_DROPDOWN
                                        | wx.CB_READONLY,
                                        )
-        sizer_Amap.Add(self.cmb_A_inMap, 0, wx.LEFT | wx.CENTRE, 5)
+        sizproper.Add(self.cmb_A_inMap, 0, wx.LEFT | wx.CENTRE, 5)
         txtAoutmap = wx.StaticText(self, wx.ID_ANY, _('Map:'))
-        sizer_Amap.Add(txtAoutmap, 0, wx.LEFT | wx.CENTRE, 20)
+        sizproper.Add(txtAoutmap, 0, wx.LEFT | wx.CENTRE, 20)
         self.cmb_A_outMap = wx.ComboBox(self, wx.ID_ANY,
                                         choices=['Auto', 'All', 'Index only'],
-                                        size=(160, -1),
+                                        size=(-1, -1),
                                         style=wx.CB_DROPDOWN
                                         | wx.CB_READONLY,
                                         )
-        sizer_Amap.Add(self.cmb_A_outMap, 0, wx.LEFT | wx.CENTRE, 5)
+        sizproper.Add(self.cmb_A_outMap, 0, wx.LEFT | wx.CENTRE, 5)
         self.btn_audio_preview = wx.Button(self, wx.ID_ANY,
                                            _("Preview"), size=(-1, -1))
         self.btn_audio_preview.SetBitmap(bmpapreview, wx.LEFT)
-        sizerbase.Add(self.btn_audio_preview, 0, wx.ALL, 5)
+        sizproper.Add(self.btn_audio_preview, 0, wx.LEFT | wx.CENTRE, 20)
 
-        # BOX Audio Filters
-        box7 = wx.StaticBox(self, wx.ID_ANY, _("Audio Filters"))
-        self.box_aFilters = wx.StaticBoxSizer(box7, wx.VERTICAL)
-        sizerbase.Add(self.box_aFilters, 1, wx.ALL | wx.EXPAND, 5)
+        sizerbase.Add((0, 15), 0)
         sizer_a_normaliz = wx.BoxSizer(wx.VERTICAL)
-        self.box_aFilters.Add(sizer_a_normaliz, 0, wx.EXPAND)
+        sizerbase.Add(sizer_a_normaliz, 0, wx.EXPAND)
         normopt = [('Off'), ('PEAK'), ('RMS'), ('EBU R128 (Worst)'),
                    ('EBU R128 (High-Quality)')]
         self.rdbx_normalize = wx.RadioBox(self, wx.ID_ANY,
@@ -186,10 +162,9 @@ class AudioEncoders(scrolled.ScrolledPanel):
                                           majorDimension=1,
                                           style=wx.RA_SPECIFY_ROWS,
                                           )
-        sizer_a_normaliz.Add(self.rdbx_normalize, 0, wx.ALL | wx.EXPAND, 5)
-        sizer_a_normaliz.Add((0, 15), 0)
+        sizer_a_normaliz.Add(self.rdbx_normalize, 0, wx.ALL | wx.CENTRE, 5)
         grid_peak = wx.FlexGridSizer(1, 4, 15, 4)
-        sizer_a_normaliz.Add(grid_peak, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_a_normaliz.Add(grid_peak, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_voldect = wx.Button(self, wx.ID_ANY,
                                      _("Volume detect"), size=(-1, -1))
         self.btn_voldect.SetBitmap(bmppeaklevel, wx.LEFT)
@@ -207,14 +182,15 @@ class AudioEncoders(scrolled.ScrolledPanel):
                                         agwStyle=FS.FS_LEFT, size=(120, -1)
                                         )
         self.spin_target.SetFormat("%f"), self.spin_target.SetDigits(1)
-        grid_peak.Add(self.spin_target, 0, wx.LEFT | wx.CENTRE, 5)
+        grid_peak.Add(self.spin_target, 0, wx.LEFT | wx.CENTRE, 2)
 
-        self.lab_help_norm = wx.StaticText(self, wx.ID_ANY, (""))
-        sizer_a_normaliz.Add(self.lab_help_norm, 0, wx.ALL | wx.EXPAND, 5)
+        self.lab_help_norm = wx.StaticText(self, wx.ID_ANY, (""),
+                                           style=wx.ALIGN_CENTRE_HORIZONTAL)
+        sizer_a_normaliz.Add(self.lab_help_norm, 0, wx.ALL | wx.CENTRE, 5)
 
         sizer_a_normaliz.Add((0, 15), 0)
         grid_ebu = wx.FlexGridSizer(1, 6, 0, 0)
-        sizer_a_normaliz.Add(grid_ebu, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_a_normaliz.Add(grid_ebu, 0, wx.ALL | wx.CENTRE, 5)
         lab_i = wx.StaticText(self, wx.ID_ANY, ("IL:"))
         grid_ebu.Add(lab_i, 0, wx.CENTRE, 0)
         self.spin_i = FS.FloatSpin(self, wx.ID_ANY,
@@ -244,8 +220,9 @@ class AudioEncoders(scrolled.ScrolledPanel):
                                      )
         self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
         grid_ebu.Add(self.spin_lra, 0, wx.LEFT | wx.CENTRE, 5)
-        self.lab_help_ebu = wx.StaticText(self, wx.ID_ANY, (""))
-        sizer_a_normaliz.Add(self.lab_help_ebu, 0, wx.ALL | wx.EXPAND, 5)
+        self.lab_help_ebu = wx.StaticText(self, wx.ID_ANY, (""),
+                                          style=wx.ALIGN_CENTRE_HORIZONTAL)
+        sizer_a_normaliz.Add(self.lab_help_ebu, 0, wx.ALL | wx.CENTRE, 5)
 
         if self.appdata['ostype'] == 'Darwin':
             self.lab_help_norm.SetFont(wx.Font(11, wx.DEFAULT,
@@ -268,29 +245,35 @@ class AudioEncoders(scrolled.ScrolledPanel):
                  '(when switch to RMS) in dBFS. From -99.0 to +0.0; default '
                  'for PEAK level is -1.0; default for RMS is -20.0'))
         self.spin_target.SetToolTip(tip)
-        tip = (_('Choose an index from the available audio streams. If the '
-                 'source file is a video, it is recommended to select a '
-                 'numeric audio index. If the source file is an audio file, '
-                 'leave this control to "Auto".'))
+        tip = (_('Normally on a video with correctly indexed streams and '
+                 'having one or more audio streams, the first audio stream '
+                 'should be indexed at "1", the second at "2" and so on (the '
+                 'video stream on the other hand is always indexed at "0"). '
+                 'In this case it is recommended to select the desired stream '
+                 'by setting a specific index, e.g "1" for for the first '
+                 'available audio stream.\n\nSet this control to "Auto" if '
+                 'the source file is simply an audio track.'))
         self.cmb_A_inMap.SetToolTip(tip)
-        tip = (_('"Auto" keeps all audio stream but processes '
-                 'only the one of the selected index; "All" keeps all audio '
-                 'streams and processes them all with the properties of the '
-                 'selected index; "Index only" processes and keeps only the '
-                 'selected index audio stream.'))
+        tip = (_('"Auto" keeps all audio streams and processes only the one '
+                 'selected by the "Index Selection" control.\n\n'
+                 '"All" processes all audio streams in a video with the '
+                 'properties of the one selected by the "Index Selection" '
+                 'control.\n\n"Index Only" processes only the audio stream '
+                 'selected by the "Index Selection" control and removes all '
+                 'others from the video'))
         self.cmb_A_outMap.SetToolTip(tip)
         tip = (_('Integrated Loudness Target in LUFS. '
-                 'From -70.0 to -5.0, default is -24.0'))
+                 'From -70.0 to -5.0, default is -16.0'))
         self.spin_i.SetToolTip(tip)
-        tip = (_('Maximum True Peak in dBTP. From -9.0 '
+        tip = (_('Maximum True Peak in dBTP. From -1.5 '
                  'to +0.0, default is -2.0'))
         self.spin_tp.SetToolTip(tip)
         tip = (_('Loudness Range Target in LUFS. '
-                 'From +1.0 to +20.0, default is +7.0'))
+                 'From +1.0 to +20.0, default is +11.0'))
         self.spin_lra.SetToolTip(tip)
-        tip = (_('Play and test the result of the audio filters. If the '
-                 'source file is a video file containing more than one '
-                 'audio stream, you can select it using Index Selection.'))
+        tip = (_('Play the audio stream selected in the "Index Selection" '
+                 'control. Using this function you can test the result of '
+                 'audio normalization.'))
         self.btn_audio_preview.SetToolTip(tip)
 
         self.Bind(wx.EVT_RADIOBOX, self.on_getting_acodec, self.rdb_a)
@@ -338,13 +321,13 @@ class AudioEncoders(scrolled.ScrolledPanel):
                     )
             self.opt["EBU"][1] = loud
 
-        return (f'{self.opt["AudioCodec"][0]} '
+        return (f'{self.opt["AudioMap"][0]} '
+                f'{self.opt["AudioCodec"][0]} '
                 f'{self.opt["AudioCodec"][1]} '
                 f'{self.opt["AudioBitrate"][1]} '
                 f'{self.opt["AudioRate"][1]} '
                 f'{self.opt["AudioChannel"][1]} '
-                f'{self.opt["AudioDepth"][1]} '
-                f'{self.opt["AudioMap"][0]} '
+                f'{self.opt["AudioDepth"][1]}'
                 )
     # ------------------------------------------------------------------#
 
@@ -376,7 +359,6 @@ class AudioEncoders(scrolled.ScrolledPanel):
         self.opt["AudioDepth"] = ["", ""]
         self.btn_set.Disable()
         self.btn_set.SetBackgroundColour(wx.NullColour)
-        self.txt_audio_options.Clear()
         # self.rdbx_normalize.Enable()
         self.cmb_A_outMap.SetSelection(0)
         self.cmb_A_inMap.SetSelection(0)
@@ -561,11 +543,9 @@ class AudioEncoders(scrolled.ScrolledPanel):
                 self.rdbx_normalize.Disable()
             if enablebuttonparameters:
                 self.btn_set.Enable()
-                self.txt_audio_options.SetValue('')
                 self.btn_set.SetBackgroundColour(wx.NullColour)
             else:
-                self.btn_set.Disable(),
-                self.txt_audio_options.SetValue('')
+                self.btn_set.Disable()
                 self.btn_set.SetBackgroundColour(wx.NullColour)
 
         # --------------------------------------------------------
@@ -651,7 +631,6 @@ class AudioEncoders(scrolled.ScrolledPanel):
         else:  # all, except PCM
             self.opt["AudioDepth"] = aparam[3]
 
-        self.txt_audio_options.Clear()
         count = 0
         for descr in (self.opt["AudioRate"],
                       aparam[3],
@@ -660,7 +639,6 @@ class AudioEncoders(scrolled.ScrolledPanel):
                       ):
             if descr[1]:
                 count += 1
-                self.txt_audio_options.AppendText(f" {descr[0]} | ")
 
         if count == 0:
             self.btn_set.SetBackgroundColour(wx.NullColour)
@@ -734,8 +712,8 @@ class AudioEncoders(scrolled.ScrolledPanel):
                    ))
         msg_4 = (_('High-quality two-pass Loudnorm normalization. '
                    'Normalizes the perceived loudness using the '
-                   '\"loudnorm\" filter, which implements the EBU R128 '
-                   'algorithm.\nIdeal for postprocessing.'
+                   '\"loudnorm\" filter, which implements\nthe EBU R128 '
+                   'algorithm. Ideal for postprocessing.'
                    ))
         if self.rdbx_normalize.GetSelection() == 0:
             self.normalize_default('all')
@@ -756,6 +734,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         elif self.rdbx_normalize.GetSelection() == 4:
             self.lab_help_ebu.SetLabel(msg_4), self.lab_help_norm.SetLabel('')
             self.normalize_default('ebu')
+        self.Layout()
     # ------------------------------------------------------------------#
 
     def on_enter_gain(self, event):

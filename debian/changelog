@@ -26,8 +26,11 @@ videomass (5.0.10-1) UNRELEASED; urgency=medium
     `Create tiled mosaics` option.
   * [Presets Manager] add optional arguments for hardware acceleration #272 .
   * Update presets to v0.23.
+  * [A/V Conversions] Add new Miscellaneous tab with some useful option.
+  * [A/V Conversions] Fixed the order of the mappings for the correct indexing
+    of the flows on the video.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 12 Mar 2024 23:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 14 Mar 2024 23:00:00 +0200
 
 videomass (5.0.6-1) UNRELEASED; urgency=medium
 

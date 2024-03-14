@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 12 Mar 2024 V.5.0.10
+Tue, 14 Mar 2024 V.5.0.10
 
   * [A/V Conversions] Code refactoring and UI layout improvement.
   * [A/V Conversions] [NEW] Added new graphics controls for encoder features.
@@ -35,6 +35,9 @@ Tue, 12 Mar 2024 V.5.0.10
     `Create tiled mosaics` option.
   * [Presets Manager] add optional arguments for hardware acceleration #272 .
   * Update presets to v0.23.
+  * [A/V Conversions] Add new Miscellaneous tab with some useful option.
+  * [A/V Conversions] Fixed the order of the mappings for the correct indexing
+    of the flows on the video.
 
 +------------------------------------+
 Thu, 23 Feb 2024 V.5.0.6

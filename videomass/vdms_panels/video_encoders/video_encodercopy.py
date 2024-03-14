@@ -145,9 +145,9 @@ class Copy_Vcodec(scrolled.ScrolledPanel):
         """
         Get all video parameters
         """
-        return (f'{self.opt["VideoCodec"]} {self.opt["PixFmt"]} '
-                f'{self.opt["WebOptim"]} {self.opt["AspectRatio"]} '
-                f'{self.opt["FPS"]} '
+        return (f'{self.opt["VideoMap"]} {self.opt["VideoCodec"]} '
+                f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
+                f'{self.opt["AspectRatio"]} {self.opt["FPS"]}'
                 )
     # ------------------------------------------------------------------#
 

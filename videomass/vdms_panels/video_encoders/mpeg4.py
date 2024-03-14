@@ -261,13 +261,13 @@ class Mpeg_4(scrolled.ScrolledPanel):
         """
         Get all video parameters
         """
-        return (f'{self.opt["VideoCodec"]} {self.opt["FourCC"]} '
-                f'{self.opt["VideoBitrate"]} '
+        return (f'{self.opt["VideoMap"]} {self.opt["VideoCodec"]} '
+                f'{self.opt["FourCC"]} {self.opt["VideoBitrate"]} '
                 f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
                 f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
                 f'{self.opt["GOP"]} {self.opt["AspectRatio"]} '
                 f'{self.opt["FPS"]} '
-                f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
+                f'{self.opt["PixFmt"]} {self.opt["WebOptim"]}'
                 )
     # ------------------------------------------------------------------#
 

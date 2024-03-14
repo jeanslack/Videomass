@@ -432,7 +432,8 @@ class AV1_Svt(scrolled.ScrolledPanel):
         # remove last colon (:) character
         svtparams = ''.join(args.rsplit(sep=':', maxsplit=1))
 
-        return (f'{self.opt["VideoCodec"]} {self.opt["Preset"]} '
+        return (f'{self.opt["VideoMap"]} '
+                f'{self.opt["VideoCodec"]} {self.opt["Preset"]} '
                 f'{self.opt["Profile"]} {self.opt["Level"]} '
                 f'{self.opt["CRF"]} {self.opt["VideoBitrate"]} '
                 f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '

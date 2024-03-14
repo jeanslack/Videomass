@@ -311,7 +311,8 @@ class Avc_X264(scrolled.ScrolledPanel):
         """
         Get all video parameters
         """
-        return (f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
+        return (f'{self.opt["VideoMap"]} '
+                f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
                 f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
                 f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
                 f'{self.opt["GOP"]} {self.opt["Preset"]} '
