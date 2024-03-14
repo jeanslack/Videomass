@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-12 23:18+0100\n"
-"PO-Revision-Date: 2024-03-12 23:24+0100\n"
+"POT-Creation-Date: 2024-03-14 10:55+0100\n"
+"PO-Revision-Date: 2024-03-14 17:03+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -174,7 +174,7 @@ msgid "Advanced Options"
 msgstr "Opzioni Avanzate"
 
 #: ../vdms_dialogs/filter_deinterlace.py:57
-#: ../vdms_panels/av_conversions.py:264
+#: ../vdms_panels/av_conversions.py:267
 msgid "Deinterlace"
 msgstr "Deinterlaccia"
 
@@ -414,8 +414,8 @@ msgstr "Crea un video di confronto fianco a fianco"
 msgid "Create a snapshot"
 msgstr "Crea un'istantanea"
 
-#: ../vdms_dialogs/filter_stab.py:106 ../vdms_panels/av_conversions.py:224
-#: ../vdms_panels/audio_encoders/acodecs.py:171
+#: ../vdms_dialogs/filter_stab.py:106 ../vdms_panels/av_conversions.py:227
+#: ../vdms_panels/audio_encoders/acodecs.py:150
 msgid "Preview"
 msgstr "Anteprima"
 
@@ -1189,7 +1189,7 @@ msgstr ""
 "Assegnando un suffisso aggiuntivo è possibile evitare di sovrascrivere i file"
 
 #: ../vdms_dialogs/preferences.py:449 ../vdms_main/main_frame.py:584
-#: ../vdms_panels/audio_encoders/acodecs.py:132 ../vdms_ytdlp/main_ytdlp.py:333
+#: ../vdms_panels/audio_encoders/acodecs.py:127 ../vdms_ytdlp/main_ytdlp.py:333
 msgid "Settings"
 msgstr "Impostazioni"
 
@@ -1601,11 +1601,11 @@ msgstr "Decodificatori di FFmpeg"
 msgid "supported decoders"
 msgstr "decodificatori supportati"
 
-#: ../vdms_dialogs/ffmpeg_codecs.py:77 ../vdms_panels/av_conversions.py:287
+#: ../vdms_dialogs/ffmpeg_codecs.py:77 ../vdms_panels/av_conversions.py:290
 msgid "Video"
 msgstr "Video"
 
-#: ../vdms_dialogs/ffmpeg_codecs.py:87 ../vdms_panels/av_conversions.py:296
+#: ../vdms_dialogs/ffmpeg_codecs.py:87 ../vdms_panels/av_conversions.py:299
 msgid "Audio"
 msgstr "Audio"
 
@@ -1677,12 +1677,12 @@ msgid "=  Below max peak"
 msgstr "=  Sotto il picco max"
 
 #: ../vdms_dialogs/shownormlist.py:166
-#: ../vdms_panels/audio_encoders/acodecs.py:830
+#: ../vdms_panels/audio_encoders/acodecs.py:809
 msgid "RMS-based volume statistics"
 msgstr "Statistiche del volume basate su RMS"
 
 #: ../vdms_dialogs/shownormlist.py:191
-#: ../vdms_panels/audio_encoders/acodecs.py:828
+#: ../vdms_panels/audio_encoders/acodecs.py:807
 msgid "PEAK-based volume statistics"
 msgstr "Statistiche del volume basate sul PICCO"
 
@@ -2535,66 +2535,68 @@ msgstr "Videomass - Monitor messaggi FFmpeg"
 msgid "yt-dlp is disabled. Check your preferences."
 msgstr "yt-dlp è disabilitato. Controlla le tue preferenze."
 
-#: ../vdms_panels/av_conversions.py:147
+#: ../vdms_panels/av_conversions.py:150
 msgid "Media:"
 msgstr "Media:"
 
-#: ../vdms_panels/av_conversions.py:163
+#: ../vdms_panels/av_conversions.py:166
 msgid "Container:"
 msgstr "Contenitore:"
 
-#: ../vdms_panels/av_conversions.py:174
+#: ../vdms_panels/av_conversions.py:177
 msgid "Save Preset"
 msgstr "Salva Preimpostazione"
 
-#: ../vdms_panels/av_conversions.py:177
+#: ../vdms_panels/av_conversions.py:180
 msgid "Target"
 msgstr "Obiettivo"
 
-#: ../vdms_panels/av_conversions.py:221
+#: ../vdms_panels/av_conversions.py:224
 msgid "Video Filters"
 msgstr "Filtri Video"
 
-#: ../vdms_panels/av_conversions.py:230
+#: ../vdms_panels/av_conversions.py:233
 msgid "Reset all"
 msgstr "Azzera tutto"
 
-#: ../vdms_panels/av_conversions.py:251 ../vdms_panels/sequence_to_video.py:154
+#: ../vdms_panels/av_conversions.py:254 ../vdms_panels/sequence_to_video.py:154
 #: ../vdms_panels/video_to_sequence.py:111
 msgid "Resize"
 msgstr "Ridimensiona"
 
-#: ../vdms_panels/av_conversions.py:255
+#: ../vdms_panels/av_conversions.py:258
 msgid "Crop"
 msgstr "Ritaglia"
 
-#: ../vdms_panels/av_conversions.py:259
+#: ../vdms_panels/av_conversions.py:262
 msgid "Transpose"
 msgstr "Trasponi"
 
-#: ../vdms_panels/av_conversions.py:268
+#: ../vdms_panels/av_conversions.py:271
 msgid "Denoise"
 msgstr "Elimina rumore"
 
-#: ../vdms_panels/av_conversions.py:272
+#: ../vdms_panels/av_conversions.py:275
 msgid "Stabilize"
 msgstr "Stabilizza"
 
-#: ../vdms_panels/av_conversions.py:277
+#: ../vdms_panels/av_conversions.py:280
 msgid "Equalize"
 msgstr "Equalizza"
 
-#: ../vdms_panels/av_conversions.py:318 ../vdms_ytdlp/subtitles_editor.py:70
-msgid "Subtitles"
-msgstr "Sottotitoli"
+#: ../vdms_panels/av_conversions.py:310
+#, fuzzy
+#| msgid "Miscellanea"
+msgid "Miscellaneous"
+msgstr "Varie"
 
-#: ../vdms_panels/av_conversions.py:325
+#: ../vdms_panels/av_conversions.py:317
 msgid ""
 "Save the current settings as a new preset profile for the Preset Manager. "
 "You will find it in the Preset Manager where you can use it quickly."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:329
+#: ../vdms_panels/av_conversions.py:321
 #, fuzzy
 #| msgid ""
 #| "Available video codecs. \"Copy\" is not a codec but indicate that the "
@@ -2609,7 +2611,7 @@ msgstr ""
 "video non deve essere ricodificato e consente di modificare il formato o "
 "altri parametri"
 
-#: ../vdms_panels/av_conversions.py:334
+#: ../vdms_panels/av_conversions.py:326
 msgid ""
 "Container format. It is usually represented by the file extension (output "
 "format).\n"
@@ -2622,7 +2624,7 @@ msgid ""
 "streams from videos, or simply convert audio source files."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:342
+#: ../vdms_panels/av_conversions.py:334
 msgid ""
 "Set output files target: \"Video\" to save output files as video files; "
 "\"Audio\" to save files using an audio encoder and format.\n"
@@ -2632,35 +2634,29 @@ msgid ""
 "streams, convert them and apply audio filters such as normalization."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:350
+#: ../vdms_panels/av_conversions.py:342
 msgid "Preview video filters"
 msgstr "Anteprima dei filtri video"
 
-#: ../vdms_panels/av_conversions.py:352
+#: ../vdms_panels/av_conversions.py:344
 msgid ""
 "Clear all enabled filters. Remove all video filter data and apply default "
 "settings."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:355
-msgid ""
-"Select \"All\" to include any subtitles in the output video. To prevent any "
-"subtitles from being included in the output video, select \"None\"."
-msgstr ""
-
-#: ../vdms_panels/av_conversions.py:521
+#: ../vdms_panels/av_conversions.py:508
 msgid "Unable to preview Video Stabilizer filter"
 msgstr "Impossibile visualizzare in anteprima il filtro stabilizzatore video"
 
-#: ../vdms_panels/av_conversions.py:581
-#: ../vdms_panels/audio_encoders/acodecs.py:783
+#: ../vdms_panels/av_conversions.py:568
+#: ../vdms_panels/audio_encoders/acodecs.py:762
 #: ../vdms_panels/sequence_to_video.py:319
 #: ../vdms_panels/video_to_sequence.py:369
 #: ../vdms_panels/video_to_sequence.py:502
 msgid "A target file must be selected in the queued files"
 msgstr "È necessario selezionare un file di destinazione nei file in coda"
 
-#: ../vdms_panels/av_conversions.py:607
+#: ../vdms_panels/av_conversions.py:594
 msgid ""
 "Unsupported file:\n"
 "Missing decoder or library? Check FFmpeg configuration."
@@ -2668,13 +2664,13 @@ msgstr ""
 "File non supportato:\n"
 "Decoder o libreria mancante? Controlla la configurazione di FFmpeg."
 
-#: ../vdms_panels/av_conversions.py:616 ../vdms_panels/sequence_to_video.py:349
+#: ../vdms_panels/av_conversions.py:603 ../vdms_panels/sequence_to_video.py:349
 #: ../vdms_panels/video_to_sequence.py:399
 msgid "The file is not a frame or a video file"
 msgstr "Il file non è un frame o un file video"
 
-#: ../vdms_panels/av_conversions.py:844
-#: ../vdms_panels/audio_encoders/acodecs.py:429
+#: ../vdms_panels/av_conversions.py:825
+#: ../vdms_panels/audio_encoders/acodecs.py:411
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
 "audio volume data."
@@ -2682,25 +2678,25 @@ msgstr ""
 "Valori del volume non rilevati! Clicca sul pulsante \"Volume detect\" per "
 "analizzare i dati sul volume audio."
 
-#: ../vdms_panels/av_conversions.py:1241
+#: ../vdms_panels/av_conversions.py:1216
 msgid "{} file in queue"
 msgstr "{} file in coda"
 
-#: ../vdms_panels/av_conversions.py:1249
+#: ../vdms_panels/av_conversions.py:1224
 msgid "Off"
 msgstr "Spento"
 
-#: ../vdms_panels/av_conversions.py:1255 ../vdms_panels/presets_manager.py:1010
+#: ../vdms_panels/av_conversions.py:1230 ../vdms_panels/presets_manager.py:1010
 #: ../vdms_panels/video_to_sequence.py:591
 msgid "Unset"
 msgstr "Non settato"
 
-#: ../vdms_panels/av_conversions.py:1258 ../vdms_panels/presets_manager.py:1013
+#: ../vdms_panels/av_conversions.py:1233 ../vdms_panels/presets_manager.py:1013
 #: ../vdms_panels/video_to_sequence.py:594
 msgid "start  {} | duration  {}"
 msgstr "inizio  {} | durata  {}"
 
-#: ../vdms_panels/av_conversions.py:1260
+#: ../vdms_panels/av_conversions.py:1235
 #, fuzzy
 #| msgid ""
 #| "Queued File\n"
@@ -2735,11 +2731,11 @@ msgstr ""
 "Segmento Tempo\n"
 "Mappa Audio in Ingresso"
 
-#: ../vdms_panels/av_conversions.py:1301
+#: ../vdms_panels/av_conversions.py:1276
 msgid "Choose a Videomass preset..."
 msgstr "Scegli una preimpostazione Videomass..."
 
-#: ../vdms_panels/av_conversions.py:1312
+#: ../vdms_panels/av_conversions.py:1287
 #, python-brace-format
 msgid "New Profile - Preset \"{0}\""
 msgstr ""
@@ -2748,43 +2744,31 @@ msgstr ""
 msgid "Audio Encoder"
 msgstr "Codificatore Audio"
 
-#: ../vdms_panels/audio_encoders/acodecs.py:127
-msgid "Audio Properties"
-msgstr "Proprietà Audio"
-
-#: ../vdms_panels/audio_encoders/acodecs.py:144
-msgid "Audio Streams Mapping"
-msgstr "Mappatura Flussi Audio"
-
-#: ../vdms_panels/audio_encoders/acodecs.py:151
+#: ../vdms_panels/audio_encoders/acodecs.py:131
 msgid "Index Selection:"
 msgstr "Selezione Indice:"
 
-#: ../vdms_panels/audio_encoders/acodecs.py:161
+#: ../vdms_panels/audio_encoders/acodecs.py:140
 msgid "Map:"
 msgstr "Mappa:"
 
-#: ../vdms_panels/audio_encoders/acodecs.py:176
-msgid "Audio Filters"
-msgstr "Filtri Audio"
-
-#: ../vdms_panels/audio_encoders/acodecs.py:184
+#: ../vdms_panels/audio_encoders/acodecs.py:160
 msgid "Normalization"
 msgstr "Normalizzazione"
 
-#: ../vdms_panels/audio_encoders/acodecs.py:194
+#: ../vdms_panels/audio_encoders/acodecs.py:169
 msgid "Volume detect"
 msgstr "Volume detect"
 
-#: ../vdms_panels/audio_encoders/acodecs.py:198
+#: ../vdms_panels/audio_encoders/acodecs.py:173
 msgid "Volume Statistics"
 msgstr "Statistiche Volume"
 
-#: ../vdms_panels/audio_encoders/acodecs.py:202
+#: ../vdms_panels/audio_encoders/acodecs.py:177
 msgid "Target level:"
 msgstr "Livello target:"
 
-#: ../vdms_panels/audio_encoders/acodecs.py:264
+#: ../vdms_panels/audio_encoders/acodecs.py:241
 msgid ""
 "Gets maximum volume and average volume data in dBFS, then calculates the "
 "offset amount for audio normalization."
@@ -2792,7 +2776,7 @@ msgstr ""
 "Ottiene i dati di volume massimo e volume medio in dBFS, quindi calcola la "
 "quantità di offset per la normalizzazione audio."
 
-#: ../vdms_panels/audio_encoders/acodecs.py:267
+#: ../vdms_panels/audio_encoders/acodecs.py:244
 msgid ""
 "Limiter for the maximum peak level or the mean level (when switch to RMS) in "
 "dBFS. From -99.0 to +0.0; default for PEAK level is -1.0; default for RMS is "
@@ -2802,53 +2786,64 @@ msgstr ""
 "passa a RMS) in dBFS. Da -99,0 a +0,0; il valore predefinito per il livello "
 "PEAK è -1,0; il valore predefinito per RMS è -20,0"
 
-#: ../vdms_panels/audio_encoders/acodecs.py:271
+#: ../vdms_panels/audio_encoders/acodecs.py:248
 msgid ""
-"Choose an index from the available audio streams. If the source file is a "
-"video, it is recommended to select a numeric audio index. If the source file "
-"is an audio file, leave this control to \"Auto\"."
+"Normally on a video with correctly indexed streams and having one or more "
+"audio streams, the first audio stream should be indexed at \"1\", the second "
+"at \"2\" and so on (the video stream on the other hand is always indexed at "
+"\"0\"). In this case it is recommended to select the desired stream by "
+"setting a specific index, e.g \"1\" for for the first available audio "
+"stream.\n"
+"\n"
+"Set this control to \"Auto\" if the source file is simply an audio track."
 msgstr ""
-"Scegli un indice tra i flussi audio disponibili. Se il file sorgente è un "
-"file video, si consiglia di selezionare un indice audio numerico. Se il file "
-"sorgente è un file audio, lasciare questo controllo su \"Auto\"."
 
-#: ../vdms_panels/audio_encoders/acodecs.py:276
+#: ../vdms_panels/audio_encoders/acodecs.py:257
+#, fuzzy
+#| msgid ""
+#| "\"Auto\" keeps all audio stream but processes only the one of the "
+#| "selected index; \"All\" keeps all audio streams and processes them all "
+#| "with the properties of the selected index; \"Index only\" processes and "
+#| "keeps only the selected index audio stream."
 msgid ""
-"\"Auto\" keeps all audio stream but processes only the one of the selected "
-"index; \"All\" keeps all audio streams and processes them all with the "
-"properties of the selected index; \"Index only\" processes and keeps only "
-"the selected index audio stream."
+"\"Auto\" keeps all audio streams and processes only the one selected by the "
+"\"Index Selection\" control.\n"
+"\n"
+"\"All\" processes all audio streams in a video with the properties of the "
+"one selected by the \"Index Selection\" control.\n"
+"\n"
+"\"Index Only\" processes only the audio stream selected by the \"Index "
+"Selection\" control and removes all others from the video"
 msgstr ""
 "\"Auto\" tieni tutti i flussi audio ma processa solo quello selezionato "
 "dall'indice; \"All\" tieni tutti i flussi audio e processali con le "
 "proprietà dell'indice selezionato; \"Index Only\" applicando il processo "
 "tieni solo il flusso audio selezionato."
 
-#: ../vdms_panels/audio_encoders/acodecs.py:282
+#: ../vdms_panels/audio_encoders/acodecs.py:265
 msgid ""
-"Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -24.0"
+"Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -16.0"
 msgstr ""
 
-#: ../vdms_panels/audio_encoders/acodecs.py:285
-msgid "Maximum True Peak in dBTP. From -9.0 to +0.0, default is -2.0"
+#: ../vdms_panels/audio_encoders/acodecs.py:268
+msgid "Maximum True Peak in dBTP. From -1.5 to +0.0, default is -2.0"
 msgstr ""
 
-#: ../vdms_panels/audio_encoders/acodecs.py:288
-msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +7.0"
+#: ../vdms_panels/audio_encoders/acodecs.py:271
+msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +11.0"
 msgstr ""
 
-#: ../vdms_panels/audio_encoders/acodecs.py:291
+#: ../vdms_panels/audio_encoders/acodecs.py:274
 msgid ""
-"Play and test the result of the audio filters. If the source file is a video "
-"file containing more than one audio stream, you can select it using Index "
-"Selection."
+"Play the audio stream selected in the \"Index Selection\" control. Using "
+"this function you can test the result of audio normalization."
 msgstr ""
 
-#: ../vdms_panels/audio_encoders/acodecs.py:496
+#: ../vdms_panels/audio_encoders/acodecs.py:478
 msgid "Selected index does not exist or does not contain any audio streams"
 msgstr "L'indice selezionato non esiste o non contiene alcun flusso audio"
 
-#: ../vdms_panels/audio_encoders/acodecs.py:501
+#: ../vdms_panels/audio_encoders/acodecs.py:483
 msgid ""
 "ERROR: Missing audio stream:\n"
 "\"{}\""
@@ -2856,11 +2851,11 @@ msgstr ""
 "ERRORE: flusso audio mancante:\n"
 "\"{}\""
 
-#: ../vdms_panels/audio_encoders/acodecs.py:585
+#: ../vdms_panels/audio_encoders/acodecs.py:565
 msgid "No Audio"
 msgstr "No Audio"
 
-#: ../vdms_panels/audio_encoders/acodecs.py:721
+#: ../vdms_panels/audio_encoders/acodecs.py:699
 #, fuzzy
 #| msgid ""
 #| "Activate peak level normalization, which will produce a maximum peak "
@@ -2872,7 +2867,7 @@ msgstr ""
 "Attiva la normalizzazione del livello di picco, la quale produrrà un livello "
 "di picco massimo pari al livello target impostato."
 
-#: ../vdms_panels/audio_encoders/acodecs.py:724
+#: ../vdms_panels/audio_encoders/acodecs.py:702
 #, fuzzy
 #| msgid ""
 #| "Activate RMS-based normalization, which according to mean volume "
@@ -2884,7 +2879,7 @@ msgstr ""
 "Attiva la normalizzazione basata su RMS, che in base al volume medio calcola "
 "la quantità di guadagno per raggiungere la stessa potenza media di segnale."
 
-#: ../vdms_panels/audio_encoders/acodecs.py:728
+#: ../vdms_panels/audio_encoders/acodecs.py:706
 #, fuzzy
 #| msgid ""
 #| "Activate two passes normalization. It Normalizes the perceived loudness "
@@ -2898,16 +2893,15 @@ msgstr ""
 "Attiva la normalizzazione a due passate. Normalizza il volume percepito "
 "usando il filtro \"loudnorm\", che implementa l'algoritmo EBU R128."
 
-#: ../vdms_panels/audio_encoders/acodecs.py:735
+#: ../vdms_panels/audio_encoders/acodecs.py:713
 #, fuzzy
 #| msgid ""
 #| "Activate two passes normalization. It Normalizes the perceived loudness "
 #| "using the \"loudnorm\" filter, which implements the EBU R128 algorithm."
 msgid ""
 "High-quality two-pass Loudnorm normalization. Normalizes the perceived "
-"loudness using the \"loudnorm\" filter, which implements the EBU R128 "
-"algorithm.\n"
-"Ideal for postprocessing."
+"loudness using the \"loudnorm\" filter, which implements\n"
+"the EBU R128 algorithm. Ideal for postprocessing."
 msgstr ""
 "Attiva la normalizzazione a due passate. Normalizza il volume percepito "
 "usando il filtro \"loudnorm\", che implementa l'algoritmo EBU R128."
@@ -3306,6 +3300,43 @@ msgid ""
 "Since the amount of additional threads depends on the number of \"tiles\", "
 "which itself depends on the video resolution, encoding higher resolution "
 "videos will see a larger performance improvement."
+msgstr ""
+
+#: ../vdms_panels/miscellaneous/miscell.py:62
+#, fuzzy
+#| msgid "Subtitle"
+msgid "Subtitle Mapping"
+msgstr "Sottotitolo"
+
+#: ../vdms_panels/miscellaneous/miscell.py:76
+msgid "Copy Chapters"
+msgstr ""
+
+#: ../vdms_panels/miscellaneous/miscell.py:78
+msgid "Copy Metadata"
+msgstr ""
+
+#: ../vdms_panels/miscellaneous/miscell.py:84
+msgid ""
+"Select \"All\" to include any subtitles in the output video. To prevent any "
+"subtitles from being included in the output video, select \"None\". This "
+"option is automatically ignored for audio files."
+msgstr ""
+
+#: ../vdms_panels/miscellaneous/miscell.py:89
+msgid ""
+"Copy the chapter markers as is from source file. This option is "
+"automatically ignored for audio files."
+msgstr ""
+
+#: ../vdms_panels/miscellaneous/miscell.py:92
+msgid ""
+"Copy all incoming metadata from source file, such as audio/video tags, "
+"titles, unique marks, and so on."
+msgstr ""
+
+#: ../vdms_panels/miscellaneous/miscell.py:107
+msgid "Additional options for audio and video streams"
 msgstr ""
 
 #: ../vdms_panels/choose_topic.py:72
@@ -4747,6 +4778,10 @@ msgstr "Albanese"
 msgid "Chinese"
 msgstr "Cinese"
 
+#: ../vdms_ytdlp/subtitles_editor.py:70
+msgid "Subtitles"
+msgstr "Sottotitoli"
+
 #: ../vdms_ytdlp/subtitles_editor.py:74
 msgid "None"
 msgstr "Nessuno"
@@ -4808,6 +4843,24 @@ msgstr ""
 "lingue richieste, ad es. \"all, -it.*, -nl.*\", -fr.*\" ciò scaricherà tutti "
 "i sottotitoli\n"
 "tranne quelli in italiano, olandese e francese."
+
+#~ msgid "Audio Properties"
+#~ msgstr "Proprietà Audio"
+
+#~ msgid "Audio Streams Mapping"
+#~ msgstr "Mappatura Flussi Audio"
+
+#~ msgid "Audio Filters"
+#~ msgstr "Filtri Audio"
+
+#~ msgid ""
+#~ "Choose an index from the available audio streams. If the source file is a "
+#~ "video, it is recommended to select a numeric audio index. If the source "
+#~ "file is an audio file, leave this control to \"Auto\"."
+#~ msgstr ""
+#~ "Scegli un indice tra i flussi audio disponibili. Se il file sorgente è un "
+#~ "file video, si consiglia di selezionare un indice audio numerico. Se il "
+#~ "file sorgente è un file audio, lasciare questo controllo su \"Auto\"."
 
 #~ msgid "Reserved arguments for the first pass"
 #~ msgstr "Argomenti riservati per la prima passata"

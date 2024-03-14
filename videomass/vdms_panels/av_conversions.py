@@ -620,7 +620,7 @@ class AV_Conv(wx.Panel):
         filters = ''.join([f'{x},' for x in orderf if x])[:-1]
 
         if filters:
-            self.opt["VFilters"] = f"-filter:v {filters}"
+            self.opt["VFilters"] = f"-vf {filters}"
             self.btn_preview.Enable(), self.btn_reset.Enable()
         else:
             self.opt["VFilters"] = ""
