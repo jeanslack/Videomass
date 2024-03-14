@@ -133,46 +133,44 @@ class AV1_Svt(scrolled.ScrolledPanel):
         sizerbase.Add((0, 15), 0)
         boxprst = wx.BoxSizer(wx.HORIZONTAL)
         labqtz = wx.StaticText(self, wx.ID_ANY, 'CRF:')
-        boxprst.Add(labqtz, 0, wx.ALIGN_CENTER, 2)
+        boxprst.Add(labqtz, 0, wx.ALIGN_CENTER)
         self.slider_crf = wx.Slider(self, wx.ID_ANY, 30, -1, 63,
-                                    size=(250, -1), style=wx.SL_HORIZONTAL
-                                    | wx.SL_AUTOTICKS
-                                    | wx.SL_VALUE_LABEL
-                                    # | wx.SL_MIN_MAX_LABELS
-                                    # | wx.SL_LABELS,
+                                    size=(230, -1), style=wx.SL_HORIZONTAL
                                     )
-        boxprst.Add(self.slider_crf, 0, wx.BOTTOM | wx.ALIGN_CENTER, 15)
+        boxprst.Add(self.slider_crf, 0, wx.LEFT | wx.ALIGN_CENTER, 2)
+        self.labcrfmt = wx.StaticText(self, wx.ID_ANY, '')
+        boxprst.Add(self.labcrfmt, 0, wx.LEFT | wx.ALIGN_CENTER, 2)
         boxprst.Add((20, 0), 0)
         labpreset = wx.StaticText(self, wx.ID_ANY, 'Preset:')
-        boxprst.Add(labpreset, 0, wx.ALIGN_CENTER, 2)
+        boxprst.Add(labpreset, 0, wx.LEFT | wx.ALIGN_CENTER, 20)
         self.slider_prs = wx.Slider(self, wx.ID_ANY, 5, 0, 13,
-                                    size=(250, -1), style=wx.SL_HORIZONTAL
-                                    | wx.SL_AUTOTICKS
-                                    | wx.SL_VALUE_LABEL
-                                    # | wx.SL_MIN_MAX_LABELS
-                                    # | wx.SL_LABELS,
+                                    size=(230, -1), style=wx.SL_HORIZONTAL
                                     )
-        boxprst.Add(self.slider_prs, 0, wx.BOTTOM | wx.ALIGN_CENTER, 15)
+        boxprst.Add(self.slider_prs, 0, wx.LEFT | wx.ALIGN_CENTER, 2)
+
+        self.labprstmt = wx.StaticText(self, wx.ID_ANY, '')
+        boxprst.Add(self.labprstmt, 0, wx.LEFT | wx.ALIGN_CENTER, 2)
+
         sizerbase.Add(boxprst, 0, wx.ALL | wx.CENTER, 0)
+        sizerbase.Add((0, 15), 0)
         boxopt = wx.BoxSizer(wx.HORIZONTAL)
         self.ckbx_fastd = wx.CheckBox(self, wx.ID_ANY, "Fast Decode")
         boxopt.Add(self.ckbx_fastd, 0)
         self.ckbx_scd = wx.CheckBox(self, wx.ID_ANY, "Scene Detection")
         boxopt.Add(self.ckbx_scd, 0)
         sizerbase.Add(boxopt, 0, wx.ALL | wx.CENTER, 0)
+        sizerbase.Add((0, 15), 0)
 
         boxsfgr = wx.BoxSizer(wx.HORIZONTAL)
         labpfgrain = wx.StaticText(self, wx.ID_ANY, 'Film Grain:')
         boxsfgr.Add(labpfgrain, 0, wx.ALIGN_CENTER_VERTICAL)
         boxsfgr.Add((10, 10), 0)
         self.slider_fgr = wx.Slider(self, wx.ID_ANY, 0, -1, 50,
-                                    size=(250, -1), style=wx.SL_HORIZONTAL
-                                    | wx.SL_AUTOTICKS
-                                    | wx.SL_VALUE_LABEL
-                                    # | wx.SL_MIN_MAX_LABELS
-                                    # | wx.SL_LABELS,
+                                    size=(230, -1), style=wx.SL_HORIZONTAL
                                     )
-        boxsfgr.Add(self.slider_fgr, 0, wx.BOTTOM | wx.ALIGN_CENTER, 15)
+        boxsfgr.Add(self.slider_fgr, 0, wx.LEFT | wx.ALIGN_CENTER, 2)
+        self.labpfgrainmt = wx.StaticText(self, wx.ID_ANY, '')
+        boxsfgr.Add(self.labpfgrainmt, 0, wx.LEFT | wx.ALIGN_CENTER, 2)
         boxsfgr.Add((20, 20), 0)
         self.ckbx_fgrden = wx.CheckBox(self, wx.ID_ANY, "Film Grain Denoise")
         boxsfgr.Add(self.ckbx_fgrden, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
@@ -585,6 +583,8 @@ class AV1_Svt(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.slider_crf.GetValue()
+        self.labcrfmt.SetLabel(str(val))
+
         self.opt["CRF"] = "" if val == -1 else f"-crf {val}"
     # ------------------------------------------------------------------#
 
@@ -617,6 +617,7 @@ class AV1_Svt(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         sel = self.slider_prs.GetValue()
+        self.labprstmt.SetLabel(str(sel))
         self.opt["Preset"] = f'-preset {sel}'
     # ------------------------------------------------------------------#
 
@@ -696,6 +697,7 @@ class AV1_Svt(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.slider_fgr.GetValue()
+        self.labpfgrainmt.SetLabel(str(val))
 
         if val == -1:
             self.opt["FilmGrain"] = ""

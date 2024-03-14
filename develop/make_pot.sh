@@ -68,6 +68,7 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_panels/video_encoders/video_encodercopy.py" \
 "../vdms_panels/video_encoders/video_no_enc.py" \
 "../vdms_panels/video_encoders/vp9_webm.py" \
+"../vdms_panels/miscellaneous/miscell.py" \
 "../vdms_panels/choose_topic.py" \
 "../vdms_panels/concatenate.py" \
 "../vdms_panels/filedrop.py" \

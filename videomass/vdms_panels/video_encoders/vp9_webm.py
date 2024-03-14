@@ -147,14 +147,13 @@ class Vp9_WebM(scrolled.ScrolledPanel):
         boxcrf.Add(labqtz, 0, wx.ALIGN_CENTER, 2)
         self.slider_crf = wx.Slider(self, wx.ID_ANY, 30, -1, 63,
                                     size=(250, -1), style=wx.SL_HORIZONTAL
-                                    | wx.SL_AUTOTICKS
-                                    | wx.SL_VALUE_LABEL
-                                    # | wx.SL_MIN_MAX_LABELS
-                                    # | wx.SL_LABELS,
                                     )
-        boxcrf.Add(self.slider_crf, 0, wx.BOTTOM | wx.ALIGN_CENTER, 15)
-        boxcrf.Add((20, 0), 0)
+        boxcrf.Add(self.slider_crf, 0, wx.LEFT | wx.ALIGN_CENTER, 2)
+        self.labqtzmt = wx.StaticText(self, wx.ID_ANY, '')
+        boxcrf.Add(self.labqtzmt, 0, wx.LEFT | wx.ALIGN_CENTER, 2)
+        # boxcrf.Add((20, 0), 0)
         sizerbase.Add(boxcrf, 0, wx.ALL | wx.CENTER, 0)
+        sizerbase.Add((0, 15), 0)
         boxopt = wx.BoxSizer(wx.HORIZONTAL)
         labcpu = wx.StaticText(self, wx.ID_ANY, 'Speed:')
         boxopt.Add(labcpu, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
@@ -517,6 +516,7 @@ class Vp9_WebM(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.slider_crf.GetValue()
+        self.labqtzmt.SetLabel(str(val))
         self.opt["CRF"] = "" if val == -1 else f"-crf {val}"
     # ------------------------------------------------------------------#
 
