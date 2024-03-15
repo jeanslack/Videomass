@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 FileName: avc_x264.py
-Porpose: Contains H.264 functionality for A/V Conversions
+Porpose: Contains H.264 functionalities for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -31,8 +31,8 @@ import wx.lib.scrolledpanel as scrolled
 
 class Avc_X264(scrolled.ScrolledPanel):
     """
-    This scroll panel implements H.264 video controls
-    for A/V Conversions.
+    This scroll panel implements video controls functions
+    for H.264-AVC encoder on A/V Conversions.
     """
     # presets used by h264 and h265:
     H264_OPT = {("Presets"): ("None", "ultrafast", "superfast",
@@ -52,7 +52,7 @@ class Avc_X264(scrolled.ScrolledPanel):
               '5.0', '5.1', '5.2', '6.0', '6.1', '6.2', '8.5'
               )
     # supported libx264 Bit Depths (10bit need 0 to 63 cfr quantizer scale)
-    PIXELFRMT = [('None'), ('gray'), ('gray10le'), ('nv12'), ('nv16'),
+    PIXELFRMT = [('Auto'), ('gray'), ('gray10le'), ('nv12'), ('nv16'),
                  ('nv20le'), ('nv21'), ('yuv420p'), ('yuv420p10le'),
                  ('yuv422p'), ('yuv422p10le'), ('yuv444p'), ('yuv444p10le'),
                  ('yuvj420p'), ('yuvj422p'), ('yuvj444p'),
@@ -68,7 +68,7 @@ class Avc_X264(scrolled.ScrolledPanel):
 
     def __init__(self, parent, opt):
         """
-        This is a child of `AV_Conv` class-panel (parent).
+        This is a child of `nb_Video` of `AV_Conv` class-panel (parent).
         """
         get = wx.GetApp()
         self.appdata = get.appset
@@ -208,7 +208,6 @@ class Avc_X264(scrolled.ScrolledPanel):
         sizerbase.Add(line0, 0, wx.ALL | wx.EXPAND, 15)
 
         # Option -------------------------------------------
-        sizerbase.Add((0, 10), 0)
         gridopt = wx.FlexGridSizer(1, 6, 0, 0)
         labvaspect = wx.StaticText(self, wx.ID_ANY, 'Aspect Ratio:')
         gridopt.Add(labvaspect, 0, wx.ALIGN_CENTER_VERTICAL)
@@ -368,7 +367,7 @@ class Avc_X264(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.cmb_pixfrm.GetValue()
-        self.opt["PixFmt"] = '' if val == 'None' else f'-pix_fmt {val}'
+        self.opt["PixFmt"] = '' if val == 'Auto' else f'-pix_fmt {val}'
     # ------------------------------------------------------------------#
 
     def on_min_rate(self, event, btnreset=True):

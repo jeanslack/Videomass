@@ -968,7 +968,6 @@ class PrstPan(wx.Panel):
                   'nmax': len(filesrc), 'fext': outext,
                   'pre-input-1': preinput_1,
                   }
-        print(kwargs)
         valupdate = self.update_dict(len(filesrc), _('One-pass Encoding'))
         ending = Formula(self, valupdate[0], valupdate[1], (600, 170),
                          self.parent.movetotrash, self.parent.emptylist,
@@ -991,7 +990,6 @@ class PrstPan(wx.Panel):
                   'nmax': len(filesrc), 'fext': outext,
                   'pre-input-1': preinput_1, 'pre-input-2': preinput_2,
                   }
-        print(kwargs)
         valupdate = self.update_dict(len(filesrc), _('Two-pass Encoding'))
         ending = Formula(self, valupdate[0], valupdate[1], (600, 170),
                          self.parent.movetotrash, self.parent.emptylist,

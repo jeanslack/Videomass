@@ -35,7 +35,7 @@ class Miscellaneous(wx.Panel):
 
     def __init__(self, parent, opt):
         """
-        This is a child of `nb_misc.AV_Conv` class-panel (parent).
+        This is a child of `nb_misc` of AV_Conv` class-panel (parent).
         """
         get = wx.GetApp()
         self.appdata = get.appset
@@ -56,8 +56,9 @@ class Miscellaneous(wx.Panel):
         else:
             self.labinfo.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
+        sizerbase.Add((0, 15), 0)
         gridsub = wx.BoxSizer(wx.HORIZONTAL)
-        sizerbase.Add(gridsub, 0, wx.ALL | wx.EXPAND, 5)
+        sizerbase.Add(gridsub, 0, wx.ALL | wx.CENTRE, 5)
 
         msg = _('Subtitle Mapping')
         txtSubmap = wx.StaticText(self, wx.ID_ANY, (msg))
@@ -72,7 +73,7 @@ class Miscellaneous(wx.Panel):
         gridsub.Add(self.cmb_Submap, 0, wx.ALL, 5)
 
         boxmetad = wx.BoxSizer(wx.HORIZONTAL)
-        sizerbase.Add(boxmetad, 0, wx.ALL | wx.EXPAND, 5)
+        sizerbase.Add(boxmetad, 0, wx.ALL | wx.CENTRE, 5)
         self.ckbx_chap = wx.CheckBox(self, wx.ID_ANY, (_('Copy Chapters')))
         boxmetad.Add(self.ckbx_chap, 0, wx.LEFT, 5)
         msg = _('Copy Metadata')
@@ -81,13 +82,13 @@ class Miscellaneous(wx.Panel):
 
         self.SetSizerAndFit(sizerbase)
 
-        tip = (_('Select "All" to include any subtitles in the output video. '
-                 'To prevent any subtitles from being included in the output '
-                 'video, select "None". This option is automatically ignored '
-                 'for audio files.'))
+        tip = (_('Select "All" to include any source file subtitles in the '
+                 'output video.\n\nSelect "None" to exclude any subtitles '
+                 'stream in the output video.\n\nThis option is '
+                 'automatically ignored for output audio files.'))
         self.cmb_Submap.SetToolTip(tip)
         tip = (_('Copy the chapter markers as is from source file. This '
-                 'option is automatically ignored for audio files.'))
+                 'option is automatically ignored for output audio files.'))
         self.ckbx_chap.SetToolTip(tip)
         tip = (_('Copy all incoming metadata from source file, such as '
                  'audio/video tags, titles, unique marks, and so on.'))
@@ -104,7 +105,7 @@ class Miscellaneous(wx.Panel):
         Reset all controls to default
         """
 
-        msg = _("Additional options for audio and video streams")
+        msg = _("Additional options")
         self.labinfo.SetLabel(msg)
 
         self.cmb_Submap.SetSelection(1), self.on_subtitles(None)

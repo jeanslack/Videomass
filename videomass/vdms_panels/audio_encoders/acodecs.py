@@ -86,7 +86,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
 
     def __init__(self, parent, opt, maindata):
         """
-        This is a child of `AV_Conv` class-panel (parent)
+        This is a child of `nb_Audio` of `AV_Conv` class-panel (parent)
         """
         self.parent = parent  # parent is the `nb_Audio` here.
         self.maindata = maindata  # data on MainFrame
@@ -112,22 +112,37 @@ class AudioEncoders(scrolled.ScrolledPanel):
                                         name="Audio Codecs scrolledpanel",
                                         )
         sizerbase = wx.BoxSizer(wx.VERTICAL)
-        sizerbase.Add((0, 15), 0)
+        self.labinfo = wx.StaticText(self, wx.ID_ANY,
+                                     label=_('Audio encoder settings, '
+                                             'mapping and filters'),
+                                     style=wx.ALIGN_CENTRE_HORIZONTAL)
+        sizerbase.Add(self.labinfo, 0, wx.EXPAND | wx.ALL, 2)
+        if self.appdata['ostype'] == 'Darwin':
+            self.labinfo.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+        else:
+            self.labinfo.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+        # sizerbase.Add((0, 15), 0)
         self.rdb_a = wx.RadioBox(self, wx.ID_ANY,
-                                 (_("Audio Encoder")), size=(-1, 60),
+                                 (_("Audio Encoder")), size=(-1, -1),
                                  choices=list(AudioEncoders.ACODECS.keys()),
                                  majorDimension=0, style=wx.RA_SPECIFY_COLS
                                  )
         for n, v in enumerate(AudioEncoders.AV_FORMATS["mkv"]):
             if not v:  # disable only not compatible with mkv
                 self.rdb_a.EnableItem(n, enable=False)
+
         sizerbase.Add(self.rdb_a, 0, wx.ALL | wx.CENTRE, 5)
-        sizproper = wx.BoxSizer(wx.HORIZONTAL)
-        sizerbase.Add(sizproper, 0, wx.CENTRE)
         self.btn_set = wx.Button(self, wx.ID_ANY, _("Settings"),
                                  size=(-1, -1))
         self.btn_set.SetBitmap(bmpasettings, wx.LEFT)
-        sizproper.Add(self.btn_set, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        sizerbase.Add(self.btn_set, 0, wx.ALL | wx.CENTRE, 5)
+        line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=(-1, -1), style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        sizerbase.Add(line1, 0, wx.ALL | wx.EXPAND, 15)
+        sizproper = wx.BoxSizer(wx.HORIZONTAL)
+        sizerbase.Add(sizproper, 0, wx.CENTRE)
         txtAinmap = wx.StaticText(self, wx.ID_ANY, _('Index Selection:'))
         sizproper.Add(txtAinmap, 0, wx.LEFT | wx.CENTRE, 20)
         self.cmb_A_inMap = wx.ComboBox(self, wx.ID_ANY,
@@ -150,19 +165,24 @@ class AudioEncoders(scrolled.ScrolledPanel):
                                            _("Preview"), size=(-1, -1))
         self.btn_audio_preview.SetBitmap(bmpapreview, wx.LEFT)
         sizproper.Add(self.btn_audio_preview, 0, wx.LEFT | wx.CENTRE, 20)
-
-        sizerbase.Add((0, 15), 0)
+        line2 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=(-1, -1), style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        sizerbase.Add(line2, 0, wx.ALL | wx.EXPAND, 15)
         sizer_a_normaliz = wx.BoxSizer(wx.VERTICAL)
         sizerbase.Add(sizer_a_normaliz, 0, wx.EXPAND)
         normopt = [('Off'), ('PEAK'), ('RMS'), ('EBU R128 (Worst)'),
                    ('EBU R128 (High-Quality)')]
         self.rdbx_normalize = wx.RadioBox(self, wx.ID_ANY,
-                                          (_("Normalization")), size=(-1, 60),
+                                          (_("Normalization")), size=(-1, -1),
                                           choices=normopt,
                                           majorDimension=1,
                                           style=wx.RA_SPECIFY_ROWS,
                                           )
         sizer_a_normaliz.Add(self.rdbx_normalize, 0, wx.ALL | wx.CENTRE, 5)
+        sizer_a_normaliz.Add((0, 10), 0)
+
         grid_peak = wx.FlexGridSizer(1, 4, 15, 4)
         sizer_a_normaliz.Add(grid_peak, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_voldect = wx.Button(self, wx.ID_ANY,

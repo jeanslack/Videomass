@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 FileName: av1_aom.py
-Porpose: Contains AV1 aom functionalities for A/V Conversions
+Porpose: Contains AOM-AV1 functionalities for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -44,12 +44,12 @@ def presets_aomav1(name):
 
 class AV1_Aom(scrolled.ScrolledPanel):
     """
-    This scroll panel implements AOM-AV1 video controls
-    for A/V Conversions.
+    This scroll panel implements video controls functions
+    for AOM-AV1 encoder on A/V Conversions.
 
     """
     # supported libaom Bit Depths (pixel formats)
-    PIXELFRMT = [('None'), ('yuv420p'), ('yuv422p'), ('yuv444p'), ('gbrp'),
+    PIXELFRMT = [('Auto'), ('yuv420p'), ('yuv422p'), ('yuv444p'), ('gbrp'),
                  ('yuv420p10le'), ('yuv422p10le'), ('yuv444p10le'),
                  ('yuv420p12le'), ('yuv422p12le'), ('yuv444p12le'),
                  ('gbrp10le'), ('gbrp12le'), ('gray'), ('gray10le'),
@@ -66,7 +66,7 @@ class AV1_Aom(scrolled.ScrolledPanel):
 
     def __init__(self, parent, opt):
         """
-        This is a child of `AV_Conv` class-panel (parent).
+        This is a child of `nb_Video` on `AV_Conv` class-panel (parent).
         """
         get = wx.GetApp()
         self.appdata = get.appset
@@ -403,7 +403,7 @@ class AV1_Aom(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.cmb_pixfrm.GetValue()
-        self.opt["PixFmt"] = '' if val == 'None' else f'-pix_fmt {val}'
+        self.opt["PixFmt"] = '' if val == 'Auto' else f'-pix_fmt {val}'
     # ------------------------------------------------------------------#
 
     def on_min_rate(self, event, btnreset=True):
