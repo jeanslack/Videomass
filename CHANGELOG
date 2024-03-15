@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 14 Mar 2024 V.5.0.10
+Tue, 15 Mar 2024 V.5.0.10
 
   * [A/V Conversions] Code refactoring and UI layout improvement.
   * [A/V Conversions] [NEW] Added new graphics controls for encoder features.
@@ -36,8 +36,12 @@ Tue, 14 Mar 2024 V.5.0.10
   * [Presets Manager] add optional arguments for hardware acceleration #272 .
   * Update presets to v0.23.
   * [A/V Conversions] Add new Miscellaneous tab with some useful option.
-  * [A/V Conversions] Fixed the order of the mappings for the correct indexing
-    of the flows on the video.
+  * [A/V Conversions] Fixed mappings order for correct steams indexing
+    on the video.
+  * [FFmpeg Message Monitoring] Fixed the size of text can become huge,
+    as the output messages from FFmpeg can be quite verbose, this sets the
+    limit at 10 loops. The rest of the cleaned messages can always be viewed
+    in their respective logs.
 
 +------------------------------------+
 Thu, 23 Feb 2024 V.5.0.6

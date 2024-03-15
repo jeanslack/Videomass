@@ -136,6 +136,7 @@ class LogOut(wx.Panel):
         self.logname = None  # log pathname, None otherwise
         self.result = []  # result of the final process
         self.count = 0  # keeps track of the counts (see `update_count`)
+        self.maxrotate = 0  # max num text rotation (10) (see `update_count`)
         self.clr = self.appdata['icontheme'][1]
 
         wx.Panel.__init__(self, parent=parent)
@@ -200,17 +201,18 @@ class LogOut(wx.Panel):
             self.thread_type = Loudnorm(self.logname, **kwargs)
 
         elif args[0] == 'video_to_sequence':
-            self.with_eta = False
+            self.with_eta, self.maxrotate = False, None
             self.thread_type = PicturesFromVideo(self.logname, **kwargs)
 
         elif args[0] == 'sequence_to_video':
+            self.maxrotate = None
             self.thread_type = SlideshowMaker(self.logname, **kwargs)
 
         elif args[0] == 'libvidstab':
             self.thread_type = VidStab(self.logname, **kwargs)
 
         elif args[0] == 'concat_demuxer':
-            self.with_eta = False
+            self.with_eta, self.maxrotate = False, None
             self.thread_type = ConcatDemuxer(self.logname, **kwargs)
     # ----------------------------------------------------------------------
 
@@ -282,7 +284,7 @@ class LogOut(wx.Panel):
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
                 self.txtout.AppendText(f'{output}')
 
-            elif [x for x in ('warning', 'Warning') if x in output]:
+            elif [x for x in ('warning', 'Warning', 'warn') if x in output]:
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
                 self.txtout.AppendText(f'{output}')
 
@@ -319,6 +321,11 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f'\n{count}\n')
             self.error = True
         else:
+            if self.maxrotate is not None:
+                if self.maxrotate == 10:
+                    self.maxrotate = 0
+                    self.txtout.Clear()
+                self.maxrotate += 1
             self.barprog.SetRange(duration)  # set overall duration range
             self.barprog.SetValue(0)  # reset bar progress
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
@@ -328,7 +335,6 @@ class LogOut(wx.Panel):
             if destination:
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
                 self.txtout.AppendText(f'{destination}\n')
-
         self.count += 1
     # ----------------------------------------------------------------------
 
