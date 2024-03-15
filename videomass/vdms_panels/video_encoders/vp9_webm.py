@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 FileName: vp9_webm.py
-Porpose: Contains webm vp9 functionalities for A/V Conversions
+Porpose: Contains VP9-WEBM functionalities for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -80,10 +80,11 @@ def presets_vp9webm(name):
 
 class Vp9_WebM(scrolled.ScrolledPanel):
     """
-    This scroll panel implements controls for the `vp9` encoder.
+    This scroll panel implements video controls functions
+    for VP9-WEBM encoder on A/V Conversions.
     """
     # supported vp9 Bit Depths (pixel formats)
-    PIXELFRMT = [('None'), ('yuv420p'), ('yuva420p'), ('yuv422p'),
+    PIXELFRMT = [('Auto'), ('yuv420p'), ('yuva420p'), ('yuv422p'),
                  ('yuv440p'), ('yuv444p'), ('yuv420p10le'), ('yuv422p10le'),
                  ('yuv440p10le'), ('yuv444p10le'), ('yuv420p12le'),
                  ('yuv422p12le'), ('yuv440p12le'), ('yuv444p12le'), ('gbrp'),
@@ -107,7 +108,7 @@ class Vp9_WebM(scrolled.ScrolledPanel):
 
     def __init__(self, parent, opt):
         """
-        This is a child of `AV_Conv` class-panel (parent).
+        This is a child of `nb_Video` of `AV_Conv` class-panel (parent).
         """
         get = wx.GetApp()
         self.appdata = get.appset
@@ -443,7 +444,7 @@ class Vp9_WebM(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.cmb_pixfrm.GetValue()
-        self.opt["PixFmt"] = '' if val == 'None' else f'-pix_fmt {val}'
+        self.opt["PixFmt"] = '' if val == 'Auto' else f'-pix_fmt {val}'
     # ------------------------------------------------------------------#
 
     def on_min_rate(self, event, btnreset=True):

@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 FileName: hevc_x265.py
-Porpose: Contains H.265 functionality for A/V Conversions
+Porpose: Contains H.265 functionalities for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -31,8 +31,8 @@ import wx.lib.scrolledpanel as scrolled
 
 class Hevc_X265(scrolled.ScrolledPanel):
     """
-    This scroll panel implements H.265 video controls
-    for A/V Conversions.
+    This scroll panel implements video controls functions
+    for H.265-HEVC encoder on A/V Conversions.
     """
     ASPECTRATIO = [("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
                    ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
@@ -41,7 +41,7 @@ class Hevc_X265(scrolled.ScrolledPanel):
     FPS = [("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
            ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
            ]
-    PIXELFRMT = [('None'), ('yuv420p'), ('yuvj420p'), ('yuv422p'),
+    PIXELFRMT = [('Auto'), ('yuv420p'), ('yuvj420p'), ('yuv422p'),
                  ('yuvj422p'), ('yuv444p'), ('yuvj444p'), ('gbrp'),
                  ('yuv420p10le'), ('yuv422p10le'), ('yuv444p10le'),
                  ('gbrp10le'), ('yuv420p12le'), ('yuv422p12le'),
@@ -75,7 +75,7 @@ class Hevc_X265(scrolled.ScrolledPanel):
 
     def __init__(self, parent, opt):
         """
-        This is a child of `AV_Conv` class-panel (parent).
+        This is a child of `nb_Video` of `AV_Conv` class-panel (parent).
         """
         get = wx.GetApp()
         self.appdata = get.appset
@@ -373,7 +373,7 @@ class Hevc_X265(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.cmb_pixfrm.GetValue()
-        self.opt["PixFmt"] = '' if val == 'None' else f'-pix_fmt {val}'
+        self.opt["PixFmt"] = '' if val == 'Auto' else f'-pix_fmt {val}'
     # ------------------------------------------------------------------#
 
     def on_min_rate(self, event, btnreset=True):

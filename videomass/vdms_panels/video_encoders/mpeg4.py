@@ -31,8 +31,8 @@ import wx.lib.scrolledpanel as scrolled
 
 class Mpeg_4(scrolled.ScrolledPanel):
     """
-    This scroll panel implements `mpeg4 part2` video
-    controls for A/V Conversions.
+    This scroll panel implements video controls functions
+    for MPEG4-part2 encoder on A/V Conversions.
     """
     ASPECTRATIO = [("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
                    ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
@@ -42,13 +42,13 @@ class Mpeg_4(scrolled.ScrolledPanel):
            ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
            ]
     # supported libx264 Bit Depths (10bit need 0 to 63 cfr quantizer scale)
-    PIXELFRMT = [('None'), ('yuv420p')]
+    PIXELFRMT = [('Auto'), ('yuv420p')]
 
     PRESET = ('Default',)
 
     def __init__(self, parent, opt):
         """
-        This is a child of `AV_Conv` class-panel (parent).
+        This is a child of `nb_Video` of `AV_Conv` class-panel (parent).
         """
         get = wx.GetApp()
         self.appdata = get.appset
@@ -311,7 +311,7 @@ class Mpeg_4(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.cmb_pixfrm.GetValue()
-        self.opt["PixFmt"] = '' if val == 'None' else f'-pix_fmt {val}'
+        self.opt["PixFmt"] = '' if val == 'Auto' else f'-pix_fmt {val}'
     # ------------------------------------------------------------------#
 
     def on_min_rate(self, event, btnreset=True):

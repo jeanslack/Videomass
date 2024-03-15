@@ -55,9 +55,9 @@ class AudioProperties(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, title=args[1],
                            style=wx.DEFAULT_DIALOG_STYLE
                            )
-        sizerBase = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_1 = wx.FlexGridSizer(1, 4, 0, 0)  # radiobox
-        sizerBase.Add(grid_sizer_1, 0, wx.ALL, 0)
+        sizerbase = wx.BoxSizer(wx.VERTICAL)
+        boxctrls = wx.BoxSizer(wx.HORIZONTAL)
+        sizerbase.Add(boxctrls, 0, wx.ALL | wx.CENTRE, 0)
 
         bitrate_list = [a[0] for a in self.bitrate.values()]
         self.rdb_bitrate = wx.RadioBox(self, wx.ID_ANY,
@@ -66,7 +66,7 @@ class AudioProperties(wx.Dialog):
                                        majorDimension=0,
                                        style=wx.RA_SPECIFY_ROWS,
                                        )
-        grid_sizer_1.Add(self.rdb_bitrate, 0, wx.ALL, 5)
+        boxctrls.Add(self.rdb_bitrate, 0, wx.ALL, 5)
 
         channel_list = [a[0] for a in self.channels.values()]
         self.rdb_channels = wx.RadioBox(self, wx.ID_ANY,
@@ -75,7 +75,7 @@ class AudioProperties(wx.Dialog):
                                         majorDimension=0,
                                         style=wx.RA_SPECIFY_ROWS,
                                         )
-        grid_sizer_1.Add(self.rdb_channels, 0, wx.ALL, 5)
+        boxctrls.Add(self.rdb_channels, 0, wx.ALL, 5)
 
         samplerate_list = [a[0] for a in self.sample_rate.values()]
         self.rdb_sample_r = wx.RadioBox(self, wx.ID_ANY,
@@ -84,7 +84,7 @@ class AudioProperties(wx.Dialog):
                                         majorDimension=0,
                                         style=wx.RA_SPECIFY_ROWS,
                                         )
-        grid_sizer_1.Add(self.rdb_sample_r, 0, wx.ALL, 5)
+        boxctrls.Add(self.rdb_sample_r, 0, wx.ALL, 5)
 
         bitdepth_list = [a[0] for a in self.bitdepth.values()]
         self.rdb_bitdepth = wx.RadioBox(self, wx.ID_ANY,
@@ -93,7 +93,7 @@ class AudioProperties(wx.Dialog):
                                         majorDimension=0,
                                         style=wx.RA_SPECIFY_ROWS,
                                         )
-        grid_sizer_1.Add(self.rdb_bitdepth, 0, wx.ALL, 5)
+        boxctrls.Add(self.rdb_bitdepth, 0, wx.ALL, 5)
 
         # ---------------------- Bottom buttons ----------------------
         grid_btn = wx.GridSizer(1, 2, 0, 0)
@@ -105,10 +105,10 @@ class AudioProperties(wx.Dialog):
         btn_ok = wx.Button(self, wx.ID_OK)
         gridexit.Add(btn_ok, 0, wx.LEFT, 5)
         grid_btn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 5)
-        sizerBase.Add(grid_btn, 0, wx.EXPAND)
+        sizerbase.Add(grid_btn, 0, wx.EXPAND)
         # ---------------------- main layout ----------------------
-        self.SetSizer(sizerBase)
-        sizerBase.Fit(self)
+        self.SetSizer(sizerbase)
+        sizerbase.Fit(self)
         self.Layout()
 
         # ----------------------Properties----------------------

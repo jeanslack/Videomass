@@ -292,17 +292,20 @@ class AV_Conv(wx.Panel):
 
         # -------------- BEGIN NOTEBOOK PANEL 2 Audio:
         self.nb_Audio = wx.Panel(self.notebook, wx.ID_ANY)
-        sizer_nbAudio = wx.BoxSizer(wx.VERTICAL)
+        sizer_nbAudio = wx.BoxSizer(wx.HORIZONTAL)
+        box5 = wx.StaticBox(self.nb_Audio, wx.ID_ANY, "")
+        box_audio = wx.StaticBoxSizer(box5, wx.VERTICAL)
+        sizer_nbAudio.Add(box_audio, 1, wx.ALL | wx.EXPAND, 5)
         self.audioenc = AudioEncoders(self.nb_Audio, self.opt, self.parent)
-        sizer_nbAudio.Add(self.audioenc, 0, wx.ALL | wx.EXPAND, 5)
+        box_audio.Add(self.audioenc, 1, wx.ALL | wx.EXPAND, 5)
         self.nb_Audio.SetSizer(sizer_nbAudio)
         self.notebook.AddPage(self.nb_Audio, _("Audio"))
 
         # -------------- BEGIN NOTEBOOK PANEL 3 Miscellaneous:
         self.nb_misc = wx.Panel(self.notebook, wx.ID_ANY)
         sizer_nbmisc = wx.BoxSizer(wx.HORIZONTAL)
-        box5 = wx.StaticBox(self.nb_misc, wx.ID_ANY, "")
-        box_misc = wx.StaticBoxSizer(box5, wx.VERTICAL)
+        box6 = wx.StaticBox(self.nb_misc, wx.ID_ANY, "")
+        box_misc = wx.StaticBoxSizer(box6, wx.VERTICAL)
         sizer_nbmisc.Add(box_misc, 1, wx.ALL | wx.EXPAND, 5)
         self.miscfunc = Miscellaneous(self.nb_misc, self.opt)
         box_misc.Add(self.miscfunc, 1, wx.ALL | wx.EXPAND, 5)
@@ -918,6 +921,7 @@ class AV_Conv(wx.Panel):
             if ending.ShowModal() == wx.ID_OK:
                 (self.parent.movetotrash,
                  self.parent.emptylist) = ending.getvalue()
+
                 kwargs = {'logname': logname, 'type': 'two pass EBU',
                           'fsrc': f_src, 'fdest': f_dest,
                           'args': [pass1, pass2], 'EBU': self.opt["EBU"][1],
@@ -983,6 +987,7 @@ class AV_Conv(wx.Panel):
             if ending.ShowModal() == wx.ID_OK:
                 end = ending.getvalue()
                 self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
+
                 kwargs = {'logname': logname, 'type': 'onepass',
                           'fsrc': f_src, 'fdest': f_dest, 'args': command,
                           'volume': [vol[5] for vol in audnorm],
@@ -1012,6 +1017,7 @@ class AV_Conv(wx.Panel):
             if ending.ShowModal() == wx.ID_OK:
                 end = ending.getvalue()
                 self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
+
                 kwargs = {'logname': logname, 'type': 'twopass',
                           'fsrc': f_src, 'fdest': f_dest,
                           'args': [pass1, pass2],

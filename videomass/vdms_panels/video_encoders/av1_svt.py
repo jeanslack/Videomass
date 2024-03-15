@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 FileName: av1_svt.py
-Porpose: Contains AV1 (SVT) functionality for A/V Conversions
+Porpose: Contains SVT-AV1 functionalities for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -67,8 +67,9 @@ def presets_svtav1(name):
 
 class AV1_Svt(scrolled.ScrolledPanel):
     """
-    This scroll panel implements SVT-AV1 video controls
-    for A/V Conversions.
+    This scroll panel implements video controls functions
+    for SVT-AV1 encoder on A/V Conversions..
+
     """
     # profile/tunes used by libsvtav1
     SVT_OPT = {("Profiles"): ("Auto", "main", "high", "professional"),
@@ -80,7 +81,7 @@ class AV1_Svt(scrolled.ScrolledPanel):
               '6.0', '6.1', '6.2', '6.3', '7.0', '7.1', '7.2', '7.3',
               )
     # supported libsvtav1 Bit Depths
-    PIXELFRMT = [('None'), ('yuv420p'), ('yuv420p10le')]
+    PIXELFRMT = [('Auto'), ('yuv420p'), ('yuv420p10le')]
     ASPECTRATIO = [("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
                    ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
                    ("16:10"), ("19:10"), ("21:9"), ("32:9"),
@@ -96,7 +97,7 @@ class AV1_Svt(scrolled.ScrolledPanel):
 
     def __init__(self, parent, opt):
         """
-        This is a child of `AV_Conv` class-panel (parent).
+        This is a child of `nb_Video` of `AV_Conv` class-panel (parent).
         """
         get = wx.GetApp()
         self.appdata = get.appset
@@ -332,7 +333,7 @@ class AV1_Svt(scrolled.ScrolledPanel):
                  'is 30.\n\nSet to -1 to disable this control.'))
         self.slider_crf.SetToolTip(tip)
         tip = (_('The "Film Grain" parameter allows SVT-AV1 to detect and '
-                 'delete film grain from the original video, and replace it '
+                 'delete film grain from the source video, and replace it '
                  'with synthetic grain of the same character, resulting in '
                  'significant bitrate savings.\n\nA value of 8 is a '
                  'reasonable starting point for live-action video with a '
@@ -340,7 +341,7 @@ class AV1_Svt(scrolled.ScrolledPanel):
                  '10-15 enable more aggressive use of this technique for '
                  'video with lots of natural grain.\n\nFor 2D animation, '
                  'lower values in the range of 4-6 are often appropriate. '
-                 '\n\nIf the original video does not have natural grain, this '
+                 '\n\nIf the source video does not have natural grain, this '
                  'parameter can be set to -1 to disable it or at least 0.'))
         self.slider_fgr.SetToolTip(tip)
         tip = (_('If enabled, the "Film Grain Denoiser" option can mitigate '
@@ -512,7 +513,7 @@ class AV1_Svt(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.cmb_pixfrm.GetValue()
-        self.opt["PixFmt"] = '' if val == 'None' else f'-pix_fmt {val}'
+        self.opt["PixFmt"] = '' if val == 'Auto' else f'-pix_fmt {val}'
     # ------------------------------------------------------------------#
 
     def on_min_rate(self, event, btnreset=True):

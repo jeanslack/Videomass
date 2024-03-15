@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 FileName: video_encodercopy.py
-Porpose: Contains h.264 functionality for A/V Conversions
+Porpose: Contains copy-codec functionalities for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -30,11 +30,11 @@ import wx.lib.scrolledpanel as scrolled
 
 class Copy_Vcodec(scrolled.ScrolledPanel):
     """
-    This scroll panel implements video copy controls
-    for A/V Conversions.
+    This scroll panel implements video controls functions
+    for Copy Source Video Codec on A/V Conversions.
     """
     # supported libx264 Bit Depths (10bit need 0 to 63 cfr quantizer scale)
-    PIXELFRMT = [('None'), ('gray'), ('gray10le'), ('nv12'), ('nv16'),
+    PIXELFRMT = [('Auto'), ('gray'), ('gray10le'), ('nv12'), ('nv16'),
                  ('nv20le'), ('nv21'), ('yuv420p'), ('yuv420p10le'),
                  ('yuv422p'), ('yuv422p10le'), ('yuv444p'), ('yuv444p10le'),
                  ('yuvj420p'), ('yuvj422p'), ('yuvj444p'),
@@ -157,7 +157,7 @@ class Copy_Vcodec(scrolled.ScrolledPanel):
         """
         self.cmb_fps.SetSelection(0), self.on_rate_fps(None, False)
         self.cmb_vaspect.SetSelection(0), self.on_vaspect(None, False)
-        self.cmb_pixfrm.SetSelection(7), self.on_bit_depth(None, False)
+        self.cmb_pixfrm.SetSelection(0), self.on_bit_depth(None, False)
         self.ckbx_web.SetValue(False), self.on_web_optimize(None, False)
         self.labinfo.SetLabel("Copy Video Codec")
         self.labsubinfo.SetLabel("This will just copy the video track "
@@ -172,7 +172,7 @@ class Copy_Vcodec(scrolled.ScrolledPanel):
         Event on seting pixel format
         """
         val = self.cmb_pixfrm.GetValue()
-        self.opt["PixFmt"] = '' if val == 'None' else f'-pix_fmt {val}'
+        self.opt["PixFmt"] = '' if val == 'Auto' else f'-pix_fmt {val}'
     # ------------------------------------------------------------------#
 
     def on_web_optimize(self, event, btnreset=True):

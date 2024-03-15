@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 FileName: video_no_enc.py
-Porpose: Contains text messages for this option for A/V Conversions
+Porpose: Contains text messages for A/V Conversions
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -35,7 +35,7 @@ class Video_No_Enc(scrolled.ScrolledPanel):
     """
     def __init__(self, parent):
         """
-        This is a child of `AV_Conv` class-panel (parent).
+        This is a child of `nb_Video` of `AV_Conv` class-panel (parent).
         """
         get = wx.GetApp()
         self.appdata = get.appset
