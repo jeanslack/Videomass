@@ -75,14 +75,14 @@ class MemPresets(wx.Dialog):
                                                   _("Profile Name")),
                                      wx.VERTICAL)
         size_namedescr.Add(box_name, 1, wx.ALL | wx.EXPAND, 5)
-        self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.HSCROLL)
+        self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "")
         box_name.Add(self.txt_name, 0, wx.ALL | wx.EXPAND, 5)
         box_descr = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                    _("Description")),
                                       wx.VERTICAL
                                       )
         size_namedescr.Add(box_descr, 1, wx.ALL | wx.EXPAND, 5)
-        self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.HSCROLL)
+        self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "")
         box_descr.Add(self.txt_descript, 0, wx.ALL | wx.EXPAND, 5)
         box_pass1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                    MemPresets.PASS_1),
@@ -93,9 +93,7 @@ class MemPresets(wx.Dialog):
                                       style=wx.TE_MULTILINE
                                       )
         box_pass1.Add(self.pass_1_cmd, 1, wx.ALL | wx.EXPAND, 5)
-        self.pass_1_pre = wx.TextCtrl(self, wx.ID_ANY, "",
-                                      style=wx.HSCROLL
-                                      )
+        self.pass_1_pre = wx.TextCtrl(self, wx.ID_ANY, "")
         box_pass1.Add(self.pass_1_pre, 0, wx.ALL | wx.EXPAND, 5)
         box_pass2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                    MemPresets.PASS_2),
@@ -106,9 +104,7 @@ class MemPresets(wx.Dialog):
                                       style=wx.TE_MULTILINE
                                       )
         box_pass2.Add(self.pass_2_cmd, 1, wx.ALL | wx.EXPAND, 5)
-        self.pass_2_pre = wx.TextCtrl(self, wx.ID_ANY, "",
-                                      style=wx.HSCROLL
-                                      )
+        self.pass_2_pre = wx.TextCtrl(self, wx.ID_ANY, "")
         box_pass2.Add(self.pass_2_pre, 0, wx.ALL | wx.EXPAND, 5)
         size_formats = wx.BoxSizer(wx.HORIZONTAL)
         size_base.Add(size_formats, 0, wx.ALL | wx.EXPAND, 0)

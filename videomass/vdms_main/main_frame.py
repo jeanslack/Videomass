@@ -449,7 +449,7 @@ class MainFrame(wx.Frame):
         # ------------------ Edit menu
         editButton = wx.Menu()
         dscrp = (_("Rename selected entry\tCtrl+R"),
-                 _("Rename the output file name"))
+                 _("Rename the output file"))
         self.rename = editButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.rename.Enable(False)
         dscrp = (_("Batch renaming\tCtrl+B"),
