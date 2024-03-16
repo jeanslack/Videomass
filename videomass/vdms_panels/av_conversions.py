@@ -1236,9 +1236,9 @@ class AV_Conv(wx.Panel):
             t = self.parent.time_seq.split()
             time = _('start  {} | duration  {}').format(t[1], t[3])
 
-        formula = (_("Files to process\nEncoding passes\nOutput Format"
+        formula = (_("Batch processing items\nEncoding passes\nOutput Format"
                      "\nVideo Codec\nAudio Codec\nAudio Normalization"
-                     "\nTime Period"
+                     "\nOutput file type\nTime Period"
                      ))
         dictions = (f'{countmax}\n'
                     f'{self.opt["Passes"]}\n'
@@ -1246,6 +1246,7 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["VidCmbxStr"]}\n'
                     f'{self.opt["AudioCodStr"]}\n'
                     f'{normalize}\n'
+                    f'{self.opt["Media"]}\n'
                     f'{time}'
                     )
         return formula, dictions

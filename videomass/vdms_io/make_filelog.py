@@ -34,10 +34,12 @@ def logwrite(cmd, stderr, logfile):
     This function writes status messages
     to a given `logfile` during a process.
     """
+    sep = ('\n==============================================='
+           '==============================================\n')
     if stderr:
         apnd = f"...{stderr}\n\n"
     else:
-        apnd = f"{cmd}\n\n"
+        apnd = f"{sep}{cmd}\n\n"
 
     with open(logfile, "a", encoding='utf8') as log:
         log.write(apnd)
@@ -59,7 +61,6 @@ def make_log_template(logname, logdir, mode="a"):
 
     with open(logfile, mode, encoding='utf8') as log:
         log.write(f"""
-==============================================================================
 [DATE]:
 {current_date}
 
@@ -68,5 +69,4 @@ def make_log_template(logname, logdir, mode="a"):
 
 [VIDEOMASS]:
 """)
-
     return logfile

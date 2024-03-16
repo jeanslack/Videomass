@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.08.2024
+Rev: Mar.16.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -40,6 +40,7 @@ from videomass.vdms_threads.video_stabilization import VidStab
 from videomass.vdms_threads.concat_demuxer import ConcatDemuxer
 from videomass.vdms_threads.slideshow import SlideshowMaker
 from videomass.vdms_utils.utils import (time_to_integer, integer_to_time)
+from videomass.vdms_io import io_tools
 
 
 def delete_file_source(flist, trashdir):
@@ -145,6 +146,8 @@ class LogOut(wx.Panel):
         lbl = wx.StaticText(self, label=infolbl)
         if self.appdata['ostype'] != 'Darwin':
             lbl.SetLabelMarkup(f"<b>{infolbl}</b>")
+        self.btn_viewlog = wx.Button(self, wx.ID_ANY, _("View full log"),
+                                     size=(-1, -1))
         self.txtout = wx.TextCtrl(self, wx.ID_ANY, "",
                                   style=wx.TE_MULTILINE
                                   | wx.TE_READONLY
@@ -157,6 +160,7 @@ class LogOut(wx.Panel):
         sizer.Add((0, 10))
         sizer.Add(lbl, 0, wx.ALL, 5)
         sizer.Add(self.txtout, 1, wx.EXPAND | wx.ALL, 5)
+        sizer.Add(self.btn_viewlog, 0, wx.ALL, 5)
         sizer.Add(self.barprog, 0, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.labprog, 0, wx.ALL, 5)
         sizer.Add(self.labffmpeg, 0, wx.ALL, 5)
@@ -169,10 +173,21 @@ class LogOut(wx.Panel):
         self.txtout.SetBackgroundColour(self.clr['BACKGRD'])
         self.SetSizerAndFit(sizer)
         # ------------------------------------------
+        self.Bind(wx.EVT_BUTTON, self.view_log, self.btn_viewlog)
 
         pub.subscribe(self.update_display, "UPDATE_EVT")
         pub.subscribe(self.update_count, "COUNT_EVT")
         pub.subscribe(self.end_proc, "END_EVT")
+    # ----------------------------------------------------------------------
+
+    def view_log(self, event):
+        """
+        Opens the log file corresponding to the last executed process.
+        """
+        if self.logname:
+            fname = str(self.logname)
+            if os.path.exists(fname) and os.path.isfile(fname):
+                io_tools.openpath(fname)
     # ----------------------------------------------------------------------
 
     def topic_thread(self, *args, **kwargs):
@@ -188,9 +203,12 @@ class LogOut(wx.Panel):
         self.txtout.Clear()
         self.labprog.SetLabel('')
         self.labffmpeg.SetLabel('')
+        self.btn_viewlog.Disable()
 
         self.logname = make_log_template(kwargs['logname'],
-                                         self.appdata['logdir'])
+                                         self.appdata['logdir'],
+                                         mode="w",  # overwrite
+                                         )
         if args[0] == 'onepass':
             self.thread_type = OnePass(self.logname, **kwargs)
 
@@ -322,7 +340,7 @@ class LogOut(wx.Panel):
             self.error = True
         else:
             if self.maxrotate is not None:
-                if self.maxrotate == 10:
+                if self.maxrotate == 2:
                     self.maxrotate = 0
                     self.txtout.Clear()
                 self.maxrotate += 1
@@ -405,11 +423,13 @@ class LogOut(wx.Panel):
         """
         Reset to default at any process terminated
         """
-        self.logname = None
+        # self.logname = None
         self.thread_type = None
         self.abort = False
         self.error = False
         self.result.clear()
         self.count = 0
+        self.maxrotate = 0
         self.with_eta = True  # restoring time remaining display
+        self.btn_viewlog.Enable()
     # ----------------------------------------------------------------------
