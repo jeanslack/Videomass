@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-Name: presets_addnew.py
+Name: setting_profiles.py
 Porpose: profiles storing and profiles editing dialog
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -31,7 +31,7 @@ from videomass.vdms_io.presets_manager_prop import write_new_profile
 from videomass.vdms_io.presets_manager_prop import edit_existing_profile
 
 
-class MemPresets(wx.Dialog):
+class SettingProfile(wx.Dialog):
     """
     Show dialog to store and edit profiles of a selected preset.
 
@@ -85,7 +85,7 @@ class MemPresets(wx.Dialog):
         self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "")
         box_descr.Add(self.txt_descript, 0, wx.ALL | wx.EXPAND, 5)
         box_pass1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
-                                                   MemPresets.PASS_1),
+                                                   SettingProfile.PASS_1),
                                       wx.VERTICAL
                                       )
         size_base.Add(box_pass1, 1, wx.ALL | wx.EXPAND, 5)
@@ -96,7 +96,7 @@ class MemPresets(wx.Dialog):
         self.pass_1_pre = wx.TextCtrl(self, wx.ID_ANY, "")
         box_pass1.Add(self.pass_1_pre, 0, wx.ALL | wx.EXPAND, 5)
         box_pass2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
-                                                   MemPresets.PASS_2),
+                                                   SettingProfile.PASS_2),
                                       wx.VERTICAL
                                       )
         size_base.Add(box_pass2, 1, wx.ALL | wx.EXPAND, 5)
@@ -109,7 +109,7 @@ class MemPresets(wx.Dialog):
         size_formats = wx.BoxSizer(wx.HORIZONTAL)
         size_base.Add(size_formats, 0, wx.ALL | wx.EXPAND, 0)
         box_supp = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
-                                                  MemPresets.SUPFORMAT),
+                                                  SettingProfile.SUPFORMAT),
                                      wx.VERTICAL
                                      )
         size_formats.Add(box_supp, 1, wx.ALL | wx.EXPAND, 5)
@@ -117,7 +117,7 @@ class MemPresets(wx.Dialog):
         self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "")
         box_supp.Add(self.txt_supp, 0, wx.ALL | wx.EXPAND, 5)
         box_format = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
-                                                    MemPresets.OUTFORMAT),
+                                                    SettingProfile.OUTFORMAT),
                                        wx.VERTICAL
                                        )
         size_formats.Add(box_format, 1, wx.ALL | wx.EXPAND, 5)

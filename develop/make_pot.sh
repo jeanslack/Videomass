@@ -38,7 +38,7 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_dialogs/list_warning.py" \
 "../vdms_dialogs/wizard_dlg.py" \
 "../vdms_dialogs/about.py" \
-"../vdms_dialogs/presets_addnew.py" \
+"../vdms_dialogs/setting_profiles.py" \
 "../vdms_dialogs/set_timestamp.py" \
 "../vdms_dialogs/preferences.py" \
 "../vdms_dialogs/videomass_check_version.py" \

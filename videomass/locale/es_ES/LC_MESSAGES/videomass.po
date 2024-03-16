@@ -854,14 +854,14 @@ msgstr "¡Terminado!"
 msgid "Cross-platform graphical user interface for FFmpeg and yt-dlp.\n"
 msgstr "Interfaz grafica multiplataforma para FFmpeg y yt-dlp.\n"
 
-#: ../vdms_dialogs/presets_addnew.py:39
+#: ../vdms_dialogs/setting_profiles.py:39
 msgid ""
 "One-Pass, Do not start with `ffmpeg -i filename`; do not end with `output-"
 "filename`"
 msgstr ""
 "Un-Paso, No inicie con `ffmpeg -i archivo`; no termine con `archivo-destino`"
 
-#: ../vdms_dialogs/presets_addnew.py:43
+#: ../vdms_dialogs/setting_profiles.py:43
 msgid ""
 "Two-Pass (optional), Do not start with `ffmpeg -i filename`; do not end with "
 "`output-filename`"
@@ -869,39 +869,39 @@ msgstr ""
 "Dos-Pasos (opcional), No inicie con `ffmpeg -i archivo`; no termine con "
 "`archivo-destino`"
 
-#: ../vdms_dialogs/presets_addnew.py:47
+#: ../vdms_dialogs/setting_profiles.py:47
 msgid "Supported Formats list (optional). Do not include the `.`"
 msgstr "Lista de formatos soportados (opcional). No incluya el `.`"
 
-#: ../vdms_dialogs/presets_addnew.py:48
+#: ../vdms_dialogs/setting_profiles.py:48
 msgid "Output Format. Empty to copy format and codec. Do not include the `.`"
 msgstr "Formato de Salida. Vacio, copia el formato y codec. No incluya el `.`"
 
-#: ../vdms_dialogs/presets_addnew.py:75
+#: ../vdms_dialogs/setting_profiles.py:75
 msgid "Profile Name"
 msgstr "Nombre de Perfil"
 
-#: ../vdms_dialogs/presets_addnew.py:81 ../vdms_panels/presets_manager.py:433
+#: ../vdms_dialogs/setting_profiles.py:81 ../vdms_panels/presets_manager.py:433
 msgid "Description"
 msgstr "Descripción"
 
-#: ../vdms_dialogs/presets_addnew.py:165
+#: ../vdms_dialogs/setting_profiles.py:165
 msgid "A short profile name"
 msgstr "Un nombre corto de perfil"
 
-#: ../vdms_dialogs/presets_addnew.py:166
+#: ../vdms_dialogs/setting_profiles.py:166
 msgid "A long description of the profile"
 msgstr "Una descripción amplia del perfil"
 
-#: ../vdms_dialogs/presets_addnew.py:167 ../vdms_panels/presets_manager.py:306
+#: ../vdms_dialogs/setting_profiles.py:167 ../vdms_panels/presets_manager.py:306
 msgid "FFmpeg arguments code for one-pass encoding"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:169 ../vdms_panels/presets_manager.py:308
+#: ../vdms_dialogs/setting_profiles.py:169 ../vdms_panels/presets_manager.py:308
 msgid "FFmpeg arguments code for two-pass encoding"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:171
+#: ../vdms_dialogs/setting_profiles.py:171
 #, fuzzy
 #| msgid "One or more comma-separated format names to include in the profile"
 msgid ""
@@ -909,12 +909,12 @@ msgid ""
 "profile."
 msgstr "Uno o más nombres de formato separados con coma a incluir en el perfil"
 
-#: ../vdms_dialogs/presets_addnew.py:174
+#: ../vdms_dialogs/setting_profiles.py:174
 msgid "Output format extension. Leave empty to copy codec and format"
 msgstr ""
 "Extensión del formato de salida. Deje vació para copiar codec y formato"
 
-#: ../vdms_dialogs/presets_addnew.py:177 ../vdms_dialogs/presets_addnew.py:181
+#: ../vdms_dialogs/setting_profiles.py:177 ../vdms_dialogs/setting_profiles.py:181
 #: ../vdms_panels/presets_manager.py:314
 msgid ""
 "Any optional arguments to add before input file on the two-pass encoding, e."
@@ -922,23 +922,23 @@ msgid ""
 "CUDA."
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:290
+#: ../vdms_dialogs/setting_profiles.py:290
 msgid "Incomplete profile assignments"
 msgstr "Asignaciones de perfil incompletas"
 
-#: ../vdms_dialogs/presets_addnew.py:297
+#: ../vdms_dialogs/setting_profiles.py:297
 msgid "Formats must be comma-separated"
 msgstr "Debe separar con coma los formatos"
 
-#: ../vdms_dialogs/presets_addnew.py:313 ../vdms_dialogs/presets_addnew.py:332
+#: ../vdms_dialogs/setting_profiles.py:313 ../vdms_dialogs/setting_profiles.py:332
 msgid "Profile already stored with same name"
 msgstr "Ya existe perfil con ese nombre"
 
-#: ../vdms_dialogs/presets_addnew.py:317
+#: ../vdms_dialogs/setting_profiles.py:317
 msgid "Successful storing!"
 msgstr "¡Guardado con exito!"
 
-#: ../vdms_dialogs/presets_addnew.py:335
+#: ../vdms_dialogs/setting_profiles.py:335
 msgid "Successful changes!"
 msgstr "¡Cambios exitosos!"
 

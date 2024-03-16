@@ -33,7 +33,7 @@ from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_io.io_tools import stream_play
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_dialogs.epilogue import Formula
-from videomass.vdms_dialogs import presets_addnew
+from videomass.vdms_dialogs import setting_profiles
 from videomass.vdms_dialogs.filter_crop import Crop
 from videomass.vdms_dialogs.filter_transpose import Transpose
 from videomass.vdms_dialogs.filter_denoisers import Denoisers
@@ -1292,7 +1292,7 @@ class AV_Conv(wx.Panel):
 
             title = _('New Profile - Preset "{0}"').format(basename)
 
-        with presets_addnew.MemPresets(self, 'addprofile',
+        with setting_profiles.SettingProfile(self, 'addprofile',
                                        basename,
                                        parameters,
                                        title,
