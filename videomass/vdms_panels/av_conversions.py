@@ -559,7 +559,7 @@ class AV_Conv(wx.Panel):
 
     def file_selection(self):
         """
-        Gets the selected file on queued files and returns an object
+        Gets the selected file on files list and returns an object
         of type list [str('selected file name'), int(index)].
         Returns None if no files are selected.
 
@@ -568,8 +568,7 @@ class AV_Conv(wx.Panel):
             return (self.parent.file_src[0], 0)
 
         if not self.parent.filedropselected:
-            wx.MessageBox(_("A target file must be selected in the "
-                            "queued files"),
+            wx.MessageBox(_("First Select a target file in the File List"),
                           'Videomass', wx.ICON_INFORMATION, self)
             return None
 
@@ -1219,7 +1218,6 @@ class AV_Conv(wx.Panel):
         """
         Update all settings before send to epilogue
         """
-        numfile = _("{} file in queue").format(str(countmax))
         if self.opt["PEAK"]:
             normalize = 'PEAK'
         elif self.opt["RMS"]:
@@ -1238,11 +1236,11 @@ class AV_Conv(wx.Panel):
             t = self.parent.time_seq.split()
             time = _('start  {} | duration  {}').format(t[1], t[3])
 
-        formula = (_("Queued File\nEncoding passes\nOutput Format"
+        formula = (_("Files to process\nEncoding passes\nOutput Format"
                      "\nVideo Codec\nAudio Codec\nAudio Normalization"
                      "\nTime Period"
                      ))
-        dictions = (f'{numfile}\n'
+        dictions = (f'{countmax}\n'
                     f'{self.opt["Passes"]}\n'
                     f'{outputformat}\n'
                     f'{self.opt["VidCmbxStr"]}\n'
@@ -1293,10 +1291,10 @@ class AV_Conv(wx.Panel):
             title = _('New Profile - Preset "{0}"').format(basename)
 
         with setting_profiles.SettingProfile(self, 'addprofile',
-                                       basename,
-                                       parameters,
-                                       title,
-                                       ) as prstdialog:
+                                             basename,
+                                             parameters,
+                                             title,
+                                             ) as prstdialog:
 
             if prstdialog.ShowModal() == wx.ID_CANCEL:
                 return

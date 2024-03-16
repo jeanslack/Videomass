@@ -209,7 +209,7 @@ class Crop(wx.Dialog):
         toscale = 220 if self.height >= self.width else 350
         self.h_scaled = round((self.height / self.width) * toscale)
         self.w_scaled = round((self.width / self.height) * self.h_scaled)
-        self.filename = kwa['filename']  # selected filename on queued list
+        self.filename = kwa['filename']  # selected filename on file list
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f'{Crop.TMPSRC}', f'{name}.png')  # image
         self.fileclock = os.path.join(Crop.TMPROOT, f'{name}.clock')

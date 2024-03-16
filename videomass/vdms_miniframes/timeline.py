@@ -544,7 +544,7 @@ class Float_TL(wx.MiniFrame):
         Show a message help dialog
         """
         msg = _("The timeline editor is a tool that allows you to trim slices "
-                "of time on selected imported media (see Queued Files panel)."
+                "of time on selected imported media (see File List panel)."
                 "\n\n"
                 "The \"time format\" used to report durations is expressed in "
                 "hours, minutes, seconds and milliseconds (HH:MM:SS.ms).\n\n"
@@ -552,7 +552,7 @@ class Float_TL(wx.MiniFrame):
                 "deselection, deleting items, sorting items (ie by LEFT "
                 "clicking on the column headers), will reset any previous "
                 "settings to default values.\n\n"
-                "If the Queued Files panel is empty or no source files are "
+                "If the File List panel is empty or no source files are "
                 "selected, the overall duration values will be set to "
                 "23:59:59.999, rather than the duration of a selected source "
                 "file (see status bar messages).\n\n"

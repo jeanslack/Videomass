@@ -1228,7 +1228,7 @@ class MainFrame(wx.Frame):
             bmphome = get_bmp(self.icons['home'], bmp_size)
             bmpclear = get_bmp(self.icons['cleanup'], bmp_size)
             bmpplay = get_bmp(self.icons['play'], bmp_size)
-            # bmpqueue = get_bmp(self.icons['queue'], bmp_size)
+            bmpqueue = get_bmp(self.icons['queue'], bmp_size)
         else:
             bmpback = wx.Bitmap(self.icons['previous'], wx.BITMAP_TYPE_ANY)
             bmpnext = wx.Bitmap(self.icons['next'], wx.BITMAP_TYPE_ANY)
@@ -1239,7 +1239,7 @@ class MainFrame(wx.Frame):
             bmphome = wx.Bitmap(self.icons['home'], wx.BITMAP_TYPE_ANY)
             bmpclear = wx.Bitmap(self.icons['cleanup'], wx.BITMAP_TYPE_ANY)
             bmpplay = wx.Bitmap(self.icons['play'], wx.BITMAP_TYPE_ANY)
-            # bmpqueue = wx.Bitmap(self.icons['queue'], wx.BITMAP_TYPE_ANY)
+            bmpqueue = wx.Bitmap(self.icons['queue'], wx.BITMAP_TYPE_ANY)
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
@@ -1395,7 +1395,7 @@ class MainFrame(wx.Frame):
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)
-        self.SetTitle(_('Videomass - Queued Files'))
+        self.SetTitle(_('Videomass - File List'))
     # ------------------------------------------------------------------#
 
     def switch_av_conversions(self, event):

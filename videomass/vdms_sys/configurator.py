@@ -556,7 +556,7 @@ class DataSource():
                    f"{choose.get('x22')}/statistics.{ext}",
                    f"{choose.get('x22')}/play.{ext}",
                    f"{choose.get('x16')}/subtitles.{ext}",
-                   # f"{choose.get('x22')}/queue.{ext}",
+                   f"{choose.get('x22')}/queue.{ext}",
                    )
         values = (os.path.join(norm) for norm in iconset)  # normalize pathns
 

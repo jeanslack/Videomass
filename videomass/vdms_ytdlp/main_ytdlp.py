@@ -591,7 +591,7 @@ class MainYtdl(wx.Frame):
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)
-        self.SetTitle(_('Videomass - Queued URLs'))
+        self.SetTitle(_('Videomass - URL List'))
     # ------------------------------------------------------------------#
 
     def switch_youtube_downloader(self, event):

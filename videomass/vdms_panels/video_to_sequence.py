@@ -357,7 +357,7 @@ class VideoToSequence(wx.Panel):
 
     def file_selection(self):
         """
-        Gets the selected file on queued files and returns an object
+        Gets the selected file on files list and returns an object
         of type list [str('selected file name'), int(index)].
         Returns None if no files are selected.
 
@@ -366,8 +366,7 @@ class VideoToSequence(wx.Panel):
             return (self.parent.file_src[0], 0)
 
         if not self.parent.filedropselected:
-            wx.MessageBox(_("A target file must be selected in the "
-                            "queued files"),
+            wx.MessageBox(_("First Select a target file in the File List"),
                           'Videomass', wx.ICON_INFORMATION, self)
             return None
 
@@ -499,8 +498,7 @@ class VideoToSequence(wx.Panel):
             clicked = fsource[0]
 
         elif not self.parent.filedropselected:
-            wx.MessageBox(_("A target file must be selected in the "
-                            "queued files"),
+            wx.MessageBox(_("First Select a target file in the File List"),
                           'Videomass', wx.ICON_INFORMATION, self)
             return
         else:
