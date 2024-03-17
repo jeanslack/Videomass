@@ -25,11 +25,13 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 from __future__ import unicode_literals
+import os
 from pubsub import pub
 import wx
 from videomass.vdms_dialogs.widget_utils import notification_area
 from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_ytdlp.ydl_downloader import YdlDownloader
+from videomass.vdms_io import io_tools
 
 
 class LogOut(wx.Panel):
@@ -68,6 +70,7 @@ class LogOut(wx.Panel):
         self.logfile = None  # full path log file
         self.result = []  # result of the final process
         self.count = 0  # keeps track of the counts (see `update_count`)
+        self.maxrotate = 0  # max num text rotation (see `update_count`)
         self.clr = self.appdata['icontheme'][1]
 
         wx.Panel.__init__(self, parent=parent)
@@ -80,12 +83,16 @@ class LogOut(wx.Panel):
         sizer.Add((0, 25))
         sizer.Add(lbl, 0, wx.ALL, 5)
         sizer.Add((0, 10))
+        self.btn_viewlog = wx.Button(self, wx.ID_ANY, _("View full log"),
+                                     size=(-1, -1))
+        self.btn_viewlog.Disable()
         self.txtout = wx.TextCtrl(self, wx.ID_ANY, "",
                                   style=wx.TE_MULTILINE
                                   | wx.TE_READONLY
                                   | wx.TE_RICH2
                                   )
         sizer.Add(self.txtout, 1, wx.EXPAND | wx.ALL, 5)
+        sizer.Add(self.btn_viewlog, 0, wx.ALL, 5)
         self.labprog = wx.StaticText(self, label="")
         sizer.Add(self.labprog, 0, wx.ALL, 5)
         line = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
@@ -97,10 +104,21 @@ class LogOut(wx.Panel):
         self.txtout.SetBackgroundColour(self.clr['BACKGRD'])
         self.SetSizerAndFit(sizer)
         # ------------------------------------------
+        self.Bind(wx.EVT_BUTTON, self.view_log, self.btn_viewlog)
 
         pub.subscribe(self.downloader_activity, "UPDATE_YDL_EVT")
         pub.subscribe(self.update_count, "COUNT_YTDL_EVT")
         pub.subscribe(self.end_proc, "END_YTDL_EVT")
+    # ----------------------------------------------------------------------
+
+    def view_log(self, event):
+        """
+        Opens the log file corresponding to the last executed process.
+        """
+        if self.logfile:
+            fname = str(self.logfile)
+            if os.path.exists(fname) and os.path.isfile(fname):
+                io_tools.openpath(fname)
     # ----------------------------------------------------------------------
 
     def topic_thread(self, args):
@@ -114,7 +132,11 @@ class LogOut(wx.Panel):
         self.txtout.Clear()
         self.labprog.SetLabel('')
         logn = args[8]
-        self.logfile = make_log_template(f'{logn}.log', self.appdata['logdir'])
+        self.logfile = make_log_template(f'{logn}.log',
+                                         self.appdata['logdir'],
+                                         mode="w",
+                                         )
+        self.btn_viewlog.Disable()
         self.thread_type = YdlDownloader(args, self.logfile)
     # ----------------------------------------------------------------------
 
@@ -181,6 +203,10 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f'\n{count}\n')
             self.error = True
         else:
+            if self.maxrotate == 1:
+                self.maxrotate = 0
+                self.txtout.Clear()
+            self.maxrotate += 1
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
             self.txtout.AppendText(f'\n{count}\n')
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['DEBUG']))
@@ -251,11 +277,12 @@ class LogOut(wx.Panel):
         """
         Reset to default at any process terminated
         """
-        self.logfile = None
         self.thread_type = None
         self.abort = False
         self.error = False
         self.result.clear()
         self.count = 0
+        self.maxrotate = 0
         self.parent.statusbar_msg(_('Done'), None)
+        self.btn_viewlog.Enable()
     # ----------------------------------------------------------------------

@@ -41,7 +41,7 @@ from videomass.vdms_utils.utils import copy_on
 from videomass.vdms_utils.utils import copydir_recursively
 from videomass.vdms_utils.utils import copy_missing_data
 from videomass.vdms_io.checkup import check_files
-from videomass.vdms_dialogs import presets_addnew
+from videomass.vdms_dialogs import setting_profiles
 from videomass.vdms_dialogs.epilogue import Formula
 
 
@@ -830,12 +830,12 @@ class PrstPan(wx.Panel):
         """
         filename = self.cmbx_prst.GetValue()
         title = _('New Profile - Preset "{}"').format(filename)
-        prstdialog = presets_addnew.MemPresets(self,
-                                               'newprofile',
-                                               filename,
-                                               None,
-                                               title,
-                                               )
+        prstdialog = setting_profiles.SettingProfile(self,
+                                                     'newprofile',
+                                                     filename,
+                                                     None,
+                                                     title,
+                                                     )
         ret = prstdialog.ShowModal()
         if ret == wx.ID_OK:
             self.reset_list()  # re-charging lctrl with newer
@@ -848,11 +848,11 @@ class PrstPan(wx.Panel):
         """
         filename = self.cmbx_prst.GetValue()
         title = _('*Edit Profile - Preset "{}"').format(filename)
-        prstdialog = presets_addnew.MemPresets(self,
-                                               'edit',
-                                               filename,
-                                               self.array,
-                                               title)
+        prstdialog = setting_profiles.SettingProfile(self,
+                                                     'edit',
+                                                     filename,
+                                                     self.array,
+                                                     title)
         ret = prstdialog.ShowModal()
         if ret == wx.ID_OK:
             self.reset_list()  # re-charging lctrl with newer
@@ -1010,11 +1010,9 @@ class PrstPan(wx.Panel):
             t = self.parent.time_seq.split()
             timeseq = _('start  {} | duration  {}').format(t[1], t[3])
 
-        numfile = f"{str(cntmax)} file in queue"
-
-        formula = (_("Queued File\nPass Encoding"
+        formula = (_("Batch processing items\nEncoding passes"
                      "\nProfile Used\nOutput Format\nTime Period"))
-        dictions = (f"{numfile}\n{passes}\n"
+        dictions = (f"{cntmax}\n{passes}\n"
                     f"{self.array[0]}\n{self.array[5]}\n{timeseq}"
                     )
         return formula, dictions

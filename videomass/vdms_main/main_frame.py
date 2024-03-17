@@ -449,7 +449,7 @@ class MainFrame(wx.Frame):
         # ------------------ Edit menu
         editButton = wx.Menu()
         dscrp = (_("Rename selected entry\tCtrl+R"),
-                 _("Rename the output file name"))
+                 _("Rename the output file"))
         self.rename = editButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.rename.Enable(False)
         dscrp = (_("Batch renaming\tCtrl+B"),
@@ -954,13 +954,15 @@ class MainFrame(wx.Frame):
         self.whileplay.Show()
     # ------------------------------------------------------------------#
 
-    def View_logs(self, event):
+    def View_logs(self, event, flog=None):
         """
         Show to view log files dialog
+        flog: filename to select on showlog if any.
         """
         if self.showlogs:
             self.showlogs.Raise()
             return
+
         self.showlogs = ShowLogs(self,
                                  self.appdata['logdir'],
                                  self.appdata['ostype'],
@@ -1228,7 +1230,8 @@ class MainFrame(wx.Frame):
             bmphome = get_bmp(self.icons['home'], bmp_size)
             bmpclear = get_bmp(self.icons['cleanup'], bmp_size)
             bmpplay = get_bmp(self.icons['play'], bmp_size)
-            # bmpqueue = get_bmp(self.icons['queue'], bmp_size)
+            # bmpprocqueue = get_bmp(self.icons['proc-queue'], bmp_size)
+            # bmpaddqueue = get_bmp(self.icons['add-queue'], bmp_size)
         else:
             bmpback = wx.Bitmap(self.icons['previous'], wx.BITMAP_TYPE_ANY)
             bmpnext = wx.Bitmap(self.icons['next'], wx.BITMAP_TYPE_ANY)
@@ -1239,7 +1242,10 @@ class MainFrame(wx.Frame):
             bmphome = wx.Bitmap(self.icons['home'], wx.BITMAP_TYPE_ANY)
             bmpclear = wx.Bitmap(self.icons['cleanup'], wx.BITMAP_TYPE_ANY)
             bmpplay = wx.Bitmap(self.icons['play'], wx.BITMAP_TYPE_ANY)
-            # bmpqueue = wx.Bitmap(self.icons['queue'], wx.BITMAP_TYPE_ANY)
+            # bmpprocqueue = wx.Bitmap(self.icons['proc-queue'],
+            #                          wx.BITMAP_TYPE_ANY)
+            # bmpaddqueue = wx.Bitmap(self.icons['add-queue'],
+            #                         wx.BITMAP_TYPE_ANY)
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
@@ -1283,6 +1289,16 @@ class MainFrame(wx.Frame):
                                      bmpclear,
                                      tip, wx.ITEM_NORMAL
                                      )
+        # tip = _("Add selected file to queue")
+        # pqueue = self.toolbar.AddTool(36, _('Add to Queue'),
+        #                               bmpaddqueue,
+        #                               tip, wx.ITEM_NORMAL
+        #                               )
+        # tip = _("Process queue")
+        # pqueue = self.toolbar.AddTool(37, _('Process Queue'),
+        #                               bmpprocqueue,
+        #                               tip, wx.ITEM_NORMAL
+        #                               )
         self.toolbar.Realize()
 
         # ----------------- Tool Bar Binding (evt)-----------------------#
@@ -1395,7 +1411,7 @@ class MainFrame(wx.Frame):
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)
-        self.SetTitle(_('Videomass - Queued Files'))
+        self.SetTitle(_('Videomass - File List'))
     # ------------------------------------------------------------------#
 
     def switch_av_conversions(self, event):

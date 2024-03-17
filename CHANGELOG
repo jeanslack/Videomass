@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 15 Mar 2024 V.5.0.10
+Tue, 16 Mar 2024 V.5.0.10
 
   * [A/V Conversions] Code refactoring and UI layout improvement.
   * [A/V Conversions] [NEW] Added new graphics controls for encoder features.
@@ -38,10 +38,16 @@ Tue, 15 Mar 2024 V.5.0.10
   * [A/V Conversions] Add new Miscellaneous tab with some useful option.
   * [A/V Conversions] Fixed mappings order for correct steams indexing
     on the video.
-  * [FFmpeg Message Monitoring] Fixed the size of text can become huge,
-    as the output messages from FFmpeg can be quite verbose, this sets the
-    limit at 10 loops. The rest of the cleaned messages can always be viewed
-    in their respective logs.
+  * [FFmpeg Message Monitoring] Fixed text lengh, as the output messages from
+    FFmpeg can be quite verbose, this sets the limit at 2 loops per task.
+    The full list of the log messages can always be viewed in the respective
+    log file or by clicking in the new button placed in this panel.
+  * [yt_dlp Message Monitoring] Fixed text lengh, as the output messages from
+    yt_dlp can be quite verbose, this sets the limit at 1 loops per task.
+    The full list of the log messages can always be viewed in the respective
+    log file or by clicking in the new button placed in this panel.
+  * Fixed log file size, the text can become huge: for each new processing task
+    the corresponding log file will be overwritten with the latest data.
 
 +------------------------------------+
 Thu, 23 Feb 2024 V.5.0.6

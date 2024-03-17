@@ -64,7 +64,7 @@ class Scale(wx.Dialog):
         self.darDen = "0"
         self.sarNum = "0"
         self.sarDen = "0"
-        self.filename = kwa['filename']  # selected filename on queued list
+        self.filename = kwa['filename']  # selected filename on file list
         name = os.path.splitext(os.path.basename(self.filename))[0]
         self.frame = os.path.join(f'{Scale.TMPSRC}', f'{name}.png')  # image
         self.mills = time_to_integer(kwa['duration'].split('.')[0])

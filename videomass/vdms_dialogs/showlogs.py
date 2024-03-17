@@ -52,6 +52,7 @@ class ShowLogs(wx.Dialog):
         self.dirlog > log location directory (depends from OS)
         self.logdata > dict object {KEY=file name.log: VAL=log data, ...}
         self.selected > None if item on listctrl is not selected
+        file > log file name to view
 
         """
         self.dirlog = dirlog
@@ -133,6 +134,20 @@ class ShowLogs(wx.Dialog):
         self.Bind(wx.EVT_CLOSE, self.on_close)
 
     # ----------------------Event handler (callback)----------------------#
+
+    # def on_flog_select(self, logfile):
+    #     """
+    #     Auto-Select a specified logfile name.
+    #     FindItem method:
+    #     <https://docs.wxpython.org/wx.ListCtrl.html#wx.ListCtrl.FindItem>
+    #     """
+    #     logname = os.path.basename(logfile)
+    #     idx = self.log_select.FindItem(-1, logname)
+    #
+    #     if not idx  == -1:
+    #         self.log_select.Focus(idx)  # make the line the current line
+    #         self.log_select.Select(idx, on=1)  # default event selection
+    # --------------------------------------------------------------------#
 
     def on_clear(self, event):
         """

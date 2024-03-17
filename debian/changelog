@@ -27,10 +27,20 @@ videomass (5.0.10-1) UNRELEASED; urgency=medium
   * [Presets Manager] add optional arguments for hardware acceleration #272 .
   * Update presets to v0.23.
   * [A/V Conversions] Add new Miscellaneous tab with some useful option.
-  * [A/V Conversions] Fixed the order of the mappings for the correct indexing
-    of the flows on the video.
+  * [A/V Conversions] Fixed mappings order for correct steams indexing
+    on the video.
+  * [FFmpeg Message Monitoring] Fixed text lengh, as the output messages from
+    FFmpeg can be quite verbose, this sets the limit at 2 loops per task.
+    The full list of the log messages can always be viewed in the respective
+    log file or by clicking in the new button placed in this panel.
+  * [yt_dlp Message Monitoring] Fixed text lengh, as the output messages from
+    yt_dlp can be quite verbose, this sets the limit at 1 loops per task.
+    The full list of the log messages can always be viewed in the respective
+    log file or by clicking in the new button placed in this panel.
+  * Fixed log file size, the text can become huge: for each new processing task
+    the corresponding log file will be overwritten with the latest data.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 14 Mar 2024 23:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 15 Mar 2024 23:00:00 +0200
 
 videomass (5.0.6-1) UNRELEASED; urgency=medium
 

@@ -67,7 +67,7 @@ class VolumeDetectThread(Thread):
         self.data = None
         self.nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
         self.logf = os.path.join(logdir, 'volumedected.log')
-        make_log_template('volumedected.log', logdir)
+        make_log_template('volumedected.log', logdir, mode="w")
         # set initial file LOG
 
         Thread.__init__(self)

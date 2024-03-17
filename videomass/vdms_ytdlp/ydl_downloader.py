@@ -221,7 +221,8 @@ class YdlDownloader(Thread):
                 'logger': MyLogger(),
                 'progress_hooks': [my_hook],
             }
-            logwrite(ydl_opts, '', self.args['logname'])  # write log cmd
+            logtxt = f'{count}\n{ydl_opts}'
+            logwrite(logtxt, '', self.args['logname'])  # write log cmd
 
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([f"{url}"])

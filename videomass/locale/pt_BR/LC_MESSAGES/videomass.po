@@ -897,7 +897,7 @@ msgstr "Concluído!"
 msgid "Cross-platform graphical user interface for FFmpeg and yt-dlp.\n"
 msgstr "Interface gráfica multiplataforma para FFmpeg e youtube-dl.\n"
 
-#: ../vdms_dialogs/presets_addnew.py:39
+#: ../vdms_dialogs/setting_profiles.py:39
 msgid ""
 "One-Pass, Do not start with `ffmpeg -i filename`; do not end with `output-"
 "filename`"
@@ -905,7 +905,7 @@ msgstr ""
 "Primeira passagem, não comece com `ffmpeg -i filename`; não termine com "
 "`output-filename"
 
-#: ../vdms_dialogs/presets_addnew.py:43
+#: ../vdms_dialogs/setting_profiles.py:43
 msgid ""
 "Two-Pass (optional), Do not start with `ffmpeg -i filename`; do not end with "
 "`output-filename`"
@@ -913,40 +913,40 @@ msgstr ""
 "Segunda passagem (opcional), não comece com `ffmpeg -i filename`; não "
 "termine com `output-filename"
 
-#: ../vdms_dialogs/presets_addnew.py:47
+#: ../vdms_dialogs/setting_profiles.py:47
 msgid "Supported Formats list (optional). Do not include the `.`"
 msgstr "Lista de formatos suportados (opcional). Não inclua o `.`"
 
-#: ../vdms_dialogs/presets_addnew.py:48
+#: ../vdms_dialogs/setting_profiles.py:48
 msgid "Output Format. Empty to copy format and codec. Do not include the `.`"
 msgstr ""
 "Formato de saída. Vazio para copiar o formato e o codec. Não inclua o `.`"
 
-#: ../vdms_dialogs/presets_addnew.py:75
+#: ../vdms_dialogs/setting_profiles.py:75
 msgid "Profile Name"
 msgstr "Nome do perfil"
 
-#: ../vdms_dialogs/presets_addnew.py:81 ../vdms_panels/presets_manager.py:433
+#: ../vdms_dialogs/setting_profiles.py:81 ../vdms_panels/presets_manager.py:433
 msgid "Description"
 msgstr "Descrição"
 
-#: ../vdms_dialogs/presets_addnew.py:165
+#: ../vdms_dialogs/setting_profiles.py:165
 msgid "A short profile name"
 msgstr "Um nome de perfil curto"
 
-#: ../vdms_dialogs/presets_addnew.py:166
+#: ../vdms_dialogs/setting_profiles.py:166
 msgid "A long description of the profile"
 msgstr "Uma longa descrição do perfil"
 
-#: ../vdms_dialogs/presets_addnew.py:167 ../vdms_panels/presets_manager.py:306
+#: ../vdms_dialogs/setting_profiles.py:167 ../vdms_panels/presets_manager.py:306
 msgid "FFmpeg arguments code for one-pass encoding"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:169 ../vdms_panels/presets_manager.py:308
+#: ../vdms_dialogs/setting_profiles.py:169 ../vdms_panels/presets_manager.py:308
 msgid "FFmpeg arguments code for two-pass encoding"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:171
+#: ../vdms_dialogs/setting_profiles.py:171
 #, fuzzy
 #| msgid "One or more comma-separated format names to include in the profile"
 msgid ""
@@ -955,12 +955,12 @@ msgid ""
 msgstr ""
 "Um ou mais nomes de formato separados por vírgula para incluir no perfil"
 
-#: ../vdms_dialogs/presets_addnew.py:174
+#: ../vdms_dialogs/setting_profiles.py:174
 msgid "Output format extension. Leave empty to copy codec and format"
 msgstr ""
 "Extensão do formato de saída. Deixe em branco para copiar o codec e formatar"
 
-#: ../vdms_dialogs/presets_addnew.py:177 ../vdms_dialogs/presets_addnew.py:181
+#: ../vdms_dialogs/setting_profiles.py:177 ../vdms_dialogs/setting_profiles.py:181
 #: ../vdms_panels/presets_manager.py:314
 msgid ""
 "Any optional arguments to add before input file on the two-pass encoding, e."
@@ -968,23 +968,23 @@ msgid ""
 "CUDA."
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:290
+#: ../vdms_dialogs/setting_profiles.py:290
 msgid "Incomplete profile assignments"
 msgstr "Atribuições de perfil incompletas"
 
-#: ../vdms_dialogs/presets_addnew.py:297
+#: ../vdms_dialogs/setting_profiles.py:297
 msgid "Formats must be comma-separated"
 msgstr "Os formatos devem ser separados por vírgulas"
 
-#: ../vdms_dialogs/presets_addnew.py:313 ../vdms_dialogs/presets_addnew.py:332
+#: ../vdms_dialogs/setting_profiles.py:313 ../vdms_dialogs/setting_profiles.py:332
 msgid "Profile already stored with same name"
 msgstr "Perfil já armazenado com o mesmo nome"
 
-#: ../vdms_dialogs/presets_addnew.py:317
+#: ../vdms_dialogs/setting_profiles.py:317
 msgid "Successful storing!"
 msgstr "Armazenamento bem-sucedido!"
 
-#: ../vdms_dialogs/presets_addnew.py:335
+#: ../vdms_dialogs/setting_profiles.py:335
 msgid "Successful changes!"
 msgstr "Mudanças bem-sucedidas!"
 

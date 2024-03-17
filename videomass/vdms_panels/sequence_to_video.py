@@ -80,7 +80,7 @@ class SequenceToVideo(wx.Panel):
               "value and leaving the \"Start\" value at 00:00:00.000."
               "\n\n4. Run the conversion."
               "\n\n\nThe produced video will have the name of the selected "
-              "file in the 'Queued File' list, which\nwill be saved in a "
+              "file in the 'File List' panel, which\nwill be saved in a "
               "folder named 'Still_Images' with a progressive digit, "
               "in the path you specify.")
     # ---------------------------------------------------------------------
@@ -307,7 +307,7 @@ class SequenceToVideo(wx.Panel):
 
     def file_selection(self):
         """
-        Gets the selected file on queued files and returns an object
+        Gets the selected file on files list and returns an object
         of type list [str('selected file name'), int(index)].
         Returns None if no files are selected.
 
@@ -316,8 +316,7 @@ class SequenceToVideo(wx.Panel):
             return (self.parent.file_src[0], 0)
 
         if not self.parent.filedropselected:
-            wx.MessageBox(_("A target file must be selected in the "
-                            "queued files"),
+            wx.MessageBox(_("First Select a target file in the File List"),
                           'Videomass', wx.ICON_INFORMATION, self)
             return None
 
@@ -713,7 +712,7 @@ class SequenceToVideo(wx.Panel):
         else:
             addargs = ''
 
-        formula = (_("File to process\nOutput filename"
+        formula = (_("Items to include\nOutput filename"
                      "\nDestination Folder\nOutput Format"
                      "\nAdditional arguments"
                      "\nAudio file\nShortest\nResize\nPre-input"
