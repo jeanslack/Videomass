@@ -134,10 +134,10 @@ class LogOut(wx.Panel):
         self.abort = False  # if True set to abort current process
         self.error = False  # if True, all the tasks was failed
         self.previous = None  # panel name from which it starts
-        self.logname = None  # log pathname, None otherwise
+        self.logfile = None  # log pathname, None otherwise
         self.result = []  # result of the final process
         self.count = 0  # keeps track of the counts (see `update_count`)
-        self.maxrotate = 0  # max num text rotation (10) (see `update_count`)
+        self.maxrotate = 0  # max num text rotation (see `update_count`)
         self.clr = self.appdata['icontheme'][1]
 
         wx.Panel.__init__(self, parent=parent)
@@ -148,6 +148,7 @@ class LogOut(wx.Panel):
             lbl.SetLabelMarkup(f"<b>{infolbl}</b>")
         self.btn_viewlog = wx.Button(self, wx.ID_ANY, _("View full log"),
                                      size=(-1, -1))
+        self.btn_viewlog.Disable()
         self.txtout = wx.TextCtrl(self, wx.ID_ANY, "",
                                   style=wx.TE_MULTILINE
                                   | wx.TE_READONLY
@@ -184,8 +185,8 @@ class LogOut(wx.Panel):
         """
         Opens the log file corresponding to the last executed process.
         """
-        if self.logname:
-            fname = str(self.logname)
+        if self.logfile:
+            fname = str(self.logfile)
             if os.path.exists(fname) and os.path.isfile(fname):
                 io_tools.openpath(fname)
     # ----------------------------------------------------------------------
@@ -205,33 +206,33 @@ class LogOut(wx.Panel):
         self.labffmpeg.SetLabel('')
         self.btn_viewlog.Disable()
 
-        self.logname = make_log_template(kwargs['logname'],
+        self.logfile = make_log_template(kwargs['logname'],
                                          self.appdata['logdir'],
                                          mode="w",  # overwrite
                                          )
         if args[0] == 'onepass':
-            self.thread_type = OnePass(self.logname, **kwargs)
+            self.thread_type = OnePass(self.logfile, **kwargs)
 
         elif args[0] == 'twopass':
-            self.thread_type = TwoPass(self.logname, **kwargs)
+            self.thread_type = TwoPass(self.logfile, **kwargs)
 
         elif args[0] == 'two pass EBU':
-            self.thread_type = Loudnorm(self.logname, **kwargs)
+            self.thread_type = Loudnorm(self.logfile, **kwargs)
 
         elif args[0] == 'video_to_sequence':
             self.with_eta, self.maxrotate = False, None
-            self.thread_type = PicturesFromVideo(self.logname, **kwargs)
+            self.thread_type = PicturesFromVideo(self.logfile, **kwargs)
 
         elif args[0] == 'sequence_to_video':
             self.maxrotate = None
-            self.thread_type = SlideshowMaker(self.logname, **kwargs)
+            self.thread_type = SlideshowMaker(self.logfile, **kwargs)
 
         elif args[0] == 'libvidstab':
-            self.thread_type = VidStab(self.logname, **kwargs)
+            self.thread_type = VidStab(self.logfile, **kwargs)
 
         elif args[0] == 'concat_demuxer':
             self.with_eta, self.maxrotate = False, None
-            self.thread_type = ConcatDemuxer(self.logname, **kwargs)
+            self.thread_type = ConcatDemuxer(self.logfile, **kwargs)
     # ----------------------------------------------------------------------
 
     def update_display(self, output, duration, status):
@@ -310,7 +311,7 @@ class LogOut(wx.Panel):
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT3']))
                 self.txtout.AppendText(f'{output}')
 
-            with open(self.logname, "a", encoding='utf8') as logerr:
+            with open(self.logfile, "a", encoding='utf8') as logerr:
                 logerr.write(f"[FFMPEG]: {output}")
     # ----------------------------------------------------------------------
 
@@ -423,7 +424,6 @@ class LogOut(wx.Panel):
         """
         Reset to default at any process terminated
         """
-        # self.logname = None
         self.thread_type = None
         self.abort = False
         self.error = False

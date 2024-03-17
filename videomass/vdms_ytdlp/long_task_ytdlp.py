@@ -70,7 +70,7 @@ class LogOut(wx.Panel):
         self.logfile = None  # full path log file
         self.result = []  # result of the final process
         self.count = 0  # keeps track of the counts (see `update_count`)
-        self.maxrotate = 0  # max num text rotation (10) (see `update_count`)
+        self.maxrotate = 0  # max num text rotation (see `update_count`)
         self.clr = self.appdata['icontheme'][1]
 
         wx.Panel.__init__(self, parent=parent)
@@ -85,6 +85,7 @@ class LogOut(wx.Panel):
         sizer.Add((0, 10))
         self.btn_viewlog = wx.Button(self, wx.ID_ANY, _("View full log"),
                                      size=(-1, -1))
+        self.btn_viewlog.Disable()
         self.txtout = wx.TextCtrl(self, wx.ID_ANY, "",
                                   style=wx.TE_MULTILINE
                                   | wx.TE_READONLY
@@ -276,7 +277,6 @@ class LogOut(wx.Panel):
         """
         Reset to default at any process terminated
         """
-        # self.logfile = None
         self.thread_type = None
         self.abort = False
         self.error = False

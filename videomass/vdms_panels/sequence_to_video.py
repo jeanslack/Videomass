@@ -712,7 +712,7 @@ class SequenceToVideo(wx.Panel):
         else:
             addargs = ''
 
-        formula = (_("File to process\nOutput filename"
+        formula = (_("Items to include\nOutput filename"
                      "\nDestination Folder\nOutput Format"
                      "\nAdditional arguments"
                      "\nAudio file\nShortest\nResize\nPre-input"

@@ -1010,7 +1010,7 @@ class PrstPan(wx.Panel):
             t = self.parent.time_seq.split()
             timeseq = _('start  {} | duration  {}').format(t[1], t[3])
 
-        formula = (_("Files to process\nPass Encoding"
+        formula = (_("Batch processing items\nEncoding passes"
                      "\nProfile Used\nOutput Format\nTime Period"))
         dictions = (f"{cntmax}\n{passes}\n"
                     f"{self.array[0]}\n{self.array[5]}\n{timeseq}"

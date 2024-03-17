@@ -324,7 +324,7 @@ class FileDnD(wx.Panel):
             self.lbl_info.SetLabel(_('Drag one or more files below'))
 
         elif topic == 'Image Sequence to Video':
-            self.lbl_info.SetLabel(_('Drag the images below'))
+            self.lbl_info.SetLabel(_('Drag images below'))
 
         elif topic == 'Video to Pictures':
             self.lbl_info.SetLabel(_('Drag one or more video below'))
