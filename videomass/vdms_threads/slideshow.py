@@ -238,7 +238,7 @@ class SlideshowMaker(Thread):
         self.duration = kwargs['duration'] * 1000  # duration in milliseconds
         self.count = 0  # count first for loop
         self.countmax = kwargs['nmax']
-        self.logname = args[0]  # log filename
+        self.logfile = args[0]  # log filename
         self.fdest = kwargs['fdest']
         self.kwa = kwargs
 
@@ -253,7 +253,7 @@ class SlideshowMaker(Thread):
         with tempfile.TemporaryDirectory() as tempdir:  # make tmp dir
             tmpproc1 = convert_images(self.kwa['fsrc'],
                                       tempdir,
-                                      self.logname,
+                                      self.logfile,
                                       imgtmpnames,
                                       )
             if tmpproc1 is not None:
@@ -268,7 +268,7 @@ class SlideshowMaker(Thread):
                 tmpproc2 = resizing_process(self.kwa['fsrc'],
                                             tempdir,
                                             self.kwa["resize"],
-                                            self.logname,
+                                            self.logfile,
                                             )
                 if tmpproc2 is not None:
                     self.end_process(filedone)
@@ -300,7 +300,7 @@ class SlideshowMaker(Thread):
                          end='',
                          )
 
-            logwrite(log, '', self.logname)
+            logwrite(log, '', self.logfile)
             time.sleep(1)
 
             if not SlideshowMaker.OS == 'Windows':
@@ -333,7 +333,7 @@ class SlideshowMaker(Thread):
                                      )
                         logwrite('',
                                  f"Exit status: {proc2.wait()}",
-                                 self.logname,
+                                 self.logfile,
                                  )  # append exit error number
                         time.sleep(1)
 

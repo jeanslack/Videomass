@@ -64,7 +64,7 @@ class TwoPass(Thread):
         self.stop_work_thread = False  # process terminate
         self.count = 0  # count first for loop
         self.nul = 'NUL' if TwoPass.OS == 'Windows' else '/dev/null'
-        self.logname = args[0]  # log filename
+        self.logfile = args[0]  # log filename
         self.kwa = kwargs
 
         Thread.__init__(self)
@@ -108,7 +108,7 @@ class TwoPass(Thread):
                          duration=duration,
                          end='',
                          )
-            logwrite(cmd, '', self.logname)  # write n/n + command only
+            logwrite(cmd, '', self.logfile)  # write n/n + command only
 
             if not TwoPass.OS == 'Windows':
                 pass1 = shlex.split(pass1)
@@ -140,7 +140,7 @@ class TwoPass(Thread):
                                      )
                         logwrite('',
                                  f"Exit status: {proc1.wait()}",
-                                 self.logname,
+                                 self.logfile,
                                  )  # append exit error number
 
             except (OSError, FileNotFoundError) as err:
@@ -192,7 +192,7 @@ class TwoPass(Thread):
                          duration=duration,
                          end='',
                          )
-            logwrite(cmd, '', self.logname)
+            logwrite(cmd, '', self.logfile)
 
             if not TwoPass.OS == 'Windows':
                 pass2 = shlex.split(pass2)
@@ -224,7 +224,7 @@ class TwoPass(Thread):
                                  )
                     logwrite('',
                              f"Exit status: {proc2.wait()}",
-                             self.logname,
+                             self.logfile,
                              )  # append exit error number
 
             if self.stop_work_thread:  # break first 'for' loop

@@ -35,6 +35,7 @@ from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_dialogs.epilogue import Formula
 from videomass.vdms_utils.utils import trailing_name_with_prog_digit
+from videomass.vdms_utils.utils import update_timeseq_duration
 
 
 class VideoToSequence(wx.Panel):
@@ -366,7 +367,7 @@ class VideoToSequence(wx.Panel):
             return (self.parent.file_src[0], 0)
 
         if not self.parent.filedropselected:
-            wx.MessageBox(_("First Select a target file in the File List"),
+            wx.MessageBox(_("Have to select an item in the file list first"),
                           'Videomass', wx.ICON_INFORMATION, self)
             return None
 
@@ -498,7 +499,7 @@ class VideoToSequence(wx.Panel):
             clicked = fsource[0]
 
         elif not self.parent.filedropselected:
-            wx.MessageBox(_("First Select a target file in the File List"),
+            wx.MessageBox(_("Have to select an item in the file list first"),
                           'Videomass', wx.ICON_INFORMATION, self)
             return
         else:
@@ -522,10 +523,10 @@ class VideoToSequence(wx.Panel):
         if not checking:  # User changing idea or not such files exist
             return
 
-        self.build_command(clicked, checking[1])
+        self.build_args(clicked, checking[1])
     # ------------------------------------------------------------------#
 
-    def build_command(self, filename, outfile):
+    def build_args(self, filename, outfile):
         """
         Save as files image the selected video input. The saved
         images are named as file name + a progressive number + .jpg
@@ -555,14 +556,27 @@ class VideoToSequence(wx.Panel):
             command = " ".join(f'{arg[1]} {self.txt_args.GetValue()} -y '
                                f'"{outfilename}"'.split())
 
-        valupdate = self.update_dict(filename, outputdir)
-        ending = Formula(self, valupdate[0], valupdate[1], (600, 280),
-                         self.parent.movetotrash, self.parent.emptylist,
+        kwargs = {'logname': 'from_movie_to_pictures.log',
+                  'type': 'video_to_sequence',
+                  'filename': filename, 'outputdir': outputdir,
+                  'args': command, 'pre-input-1': preargs,
+                  }
+        kwargs = update_timeseq_duration(self.parent.time_seq,
+                                         self.parent.duration,
+                                         **kwargs,
+                                         )
+        keyval = self.update_dict(filename, outputdir)
+        ending = Formula(self, (600, 280),
+                         self.parent.movetotrash,
+                         self.parent.emptylist,
+                         **keyval,
                          )
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
+            (self.parent.movetotrash,
+             self.parent.emptylist) = ending.getvalue()
         else:
             return
+
         try:
             os.makedirs(outputdir, mode=0o777)
         except (OSError, FileExistsError) as err:
@@ -570,12 +584,7 @@ class VideoToSequence(wx.Panel):
                           wx.ICON_ERROR, self)
             return
 
-        kwargs = {'logname': 'from_movie_to_pictures.log',
-                  'type': 'video_to_sequence',
-                  'filename': filename, 'outputdir': outputdir,
-                  'args': command, 'pre-input-1': preargs,
-                  }
-        self.parent.switch_to_processing('video_to_sequence', **kwargs)
+        self.parent.switch_to_processing(kwargs["type"], **kwargs)
 
         return
     # ------------------------------------------------------------------#
@@ -612,13 +621,13 @@ class VideoToSequence(wx.Panel):
             elif self.rdbx_opt.GetSelection() == 2:
                 rate, rows, cols, pad, marg = '', '', '', '', ''
 
-        formula = (_("Selected File\nOutput Format\n"
-                     "Destination Folder\nRate (fps)\nResizing\n"
-                     "Mosaic rows\nMosaic columns\nMosaic padding\n"
-                     "Mosaic margin\nCustom Arguments\nTime Period"
-                     ))
-        dictions = (f"{filename}\n{self.cmb_frmt.GetValue()}\n{outputdir}"
-                    f"\n{rate}\n{resize}\n{rows}\n{cols}\n{pad}\n{marg}"
-                    f"\n{args}\n{time}"
-                    )
-        return formula, dictions
+        keys = (_("Selected File\nOutput Format\n"
+                  "Destination Folder\nRate (fps)\nResizing\n"
+                  "Mosaic rows\nMosaic columns\nMosaic padding\n"
+                  "Mosaic margin\nCustom Arguments\nTime Period"
+                  ))
+        vals = (f"{filename}\n{self.cmb_frmt.GetValue()}\n{outputdir}"
+                f"\n{rate}\n{resize}\n{rows}\n{cols}\n{pad}\n{marg}"
+                f"\n{args}\n{time}"
+                )
+        return {'key': keys, 'val': vals}

@@ -83,7 +83,7 @@ class LogOut(wx.Panel):
         sizer.Add((0, 25))
         sizer.Add(lbl, 0, wx.ALL, 5)
         sizer.Add((0, 10))
-        self.btn_viewlog = wx.Button(self, wx.ID_ANY, _("View full log"),
+        self.btn_viewlog = wx.Button(self, wx.ID_ANY, _("Full Log"),
                                      size=(-1, -1))
         self.btn_viewlog.Disable()
         self.txtout = wx.TextCtrl(self, wx.ID_ANY, "",

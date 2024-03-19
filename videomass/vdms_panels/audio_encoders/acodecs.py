@@ -779,7 +779,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         using-ffmpeg?utm_medium=organic>
         """
         if not self.maindata.filedropselected:
-            wx.MessageBox(_("First Select a target file in the File List"),
+            wx.MessageBox(_("Have to select an item in the file list first"),
                           'Videomass', wx.ICON_INFORMATION, self)
             return
 

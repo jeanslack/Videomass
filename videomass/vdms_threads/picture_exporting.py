@@ -63,7 +63,7 @@ class PicturesFromVideo(Thread):
         self.cmd = kwargs['args']  # comand set on single pass
         self.duration = kwargs['duration'][0]  # duration list
         self.count = 0  # count first for loop
-        self.logname = args[0]  # log filename
+        self.logfile = args[0]  # log filename
         self.kwa = kwargs
 
         Thread.__init__(self)
@@ -94,7 +94,7 @@ class PicturesFromVideo(Thread):
                      duration=self.duration,
                      end='',
                      )
-        logwrite(com, '', self.logname)  # write n/n + command only
+        logwrite(com, '', self.logfile)  # write n/n + command only
 
         if not PicturesFromVideo.appdata['ostype'] == 'Windows':
             cmd = shlex.split(cmd)
@@ -125,7 +125,7 @@ class PicturesFromVideo(Thread):
                                  )
                     logwrite('',
                              f"Exit status: {proc.wait()}",
-                             self.logname,
+                             self.logfile,
                              )  # append exit error number
 
                 else:  # status ok

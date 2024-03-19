@@ -316,7 +316,7 @@ class SequenceToVideo(wx.Panel):
             return (self.parent.file_src[0], 0)
 
         if not self.parent.filedropselected:
-            wx.MessageBox(_("First Select a target file in the File List"),
+            wx.MessageBox(_("Have to select an item in the file list first"),
                           'Videomass', wx.ICON_INFORMATION, self)
             return None
 
@@ -664,17 +664,24 @@ class SequenceToVideo(wx.Panel):
                     return
 
         args = self.get_args_line()  # get args for command line
+        kwargs = {'logname': 'still_image_maker.log',
+                  'type': 'sequence_to_video',
+                  'fsrc': files, 'fdest': destdir, 'outputdir': outputdir,
+                  'args': args[0], 'nmax': countmax, 'duration': args[1],
+                  'pre-input-1': self.opt["Preinput"],
+                  'resize': self.opt["RESIZE"],
+                  'start-time': '', 'end-time': '',
+                  }
 
-        valupdate = self.update_dict(f"{name}.mkv",
-                                     outputdir,
-                                     countmax,
-                                     'mkv',
-                                     )
-        ending = Formula(self, valupdate[0], valupdate[1], (600, 320),
-                         self.parent.movetotrash, self.parent.emptylist,
+        keyval = self.update_dict(f"{name}.mkv", outputdir, countmax, 'mkv')
+        ending = Formula(self, (600, 320),
+                         self.parent.movetotrash,
+                         self.parent.emptylist,
+                         **keyval,
                          )
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
+            (self.parent.movetotrash,
+             self.parent.emptylist) = ending.getvalue()
         else:
             return
 
@@ -685,14 +692,7 @@ class SequenceToVideo(wx.Panel):
                           wx.ICON_ERROR, self)
             return
 
-        kwargs = {'logname': 'still_image_maker.log',
-                  'type': 'sequence_to_video',
-                  'fsrc': files, 'fdest': destdir, 'outputdir': outputdir,
-                  'args': args[0], 'nmax': countmax, 'duration': args[1],
-                  'pre-input-1': self.opt["Preinput"],
-                  'resize': self.opt["RESIZE"]
-                  }
-        self.parent.switch_to_processing('sequence_to_video', **kwargs)
+        self.parent.switch_to_processing(kwargs["type"], **kwargs)
 
         return
     # -----------------------------------------------------------
@@ -712,16 +712,16 @@ class SequenceToVideo(wx.Panel):
         else:
             addargs = ''
 
-        formula = (_("Items to include\nOutput filename"
-                     "\nDestination Folder\nOutput Format"
-                     "\nAdditional arguments"
-                     "\nAudio file\nShortest\nResize\nPre-input"
-                     "\nFrame per Second (FPS)\nStill image duration"
-                     "\nOverall video duration"
-                     ))
-        dictions = (f'{count}\n{newfile}\n{destdir}\n{ext}\n{addargs}'
-                    f'\n{self.txt_apath.GetValue()}\n{short}'
-                    f'\n{resize}\n{preinput}\n{self.opt["Fps"][1]}'
-                    f'\n{duration} Seconds\n{time}'
-                    )
-        return formula, dictions
+        keys = (_("Items to include\nOutput filename"
+                  "\nDestination Folder\nOutput Format"
+                  "\nAdditional arguments"
+                  "\nAudio file\nShortest\nResize\nPre-input"
+                  "\nFrame per Second (FPS)\nStill image duration"
+                  "\nOverall video duration"
+                  ))
+        vals = (f'{count}\n{newfile}\n{destdir}\n{ext}\n{addargs}'
+                f'\n{self.txt_apath.GetValue()}\n{short}'
+                f'\n{resize}\n{preinput}\n{self.opt["Fps"][1]}'
+                f'\n{duration} Seconds\n{time}'
+                )
+        return {'key': keys, 'val': vals}

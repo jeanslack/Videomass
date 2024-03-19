@@ -59,7 +59,7 @@ class ConcatDemuxer(Thread):
 
         """
         self.stop_work_thread = False  # process terminate
-        self.logname = args[0]  # log filename
+        self.logfile = args[0]  # log filename
         self.kwa = kwargs
 
         Thread.__init__(self)
@@ -89,7 +89,7 @@ class ConcatDemuxer(Thread):
                      # fname=", ".join(self.kwa['fsrc']),
                      end='',
                      )
-        logwrite(com, '', self.logname)  # write n/n + command only
+        logwrite(com, '', self.logfile)  # write n/n + command only
 
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
@@ -120,7 +120,7 @@ class ConcatDemuxer(Thread):
                                  )
                     logwrite('',
                              f"Exit status: {proc.wait}",
-                             self.logname)  # append exit error number
+                             self.logfile)  # append exit error number
                 else:  # ok
                     filedone = self.kwa["fsrc"]
                     wx.CallAfter(pub.sendMessage,

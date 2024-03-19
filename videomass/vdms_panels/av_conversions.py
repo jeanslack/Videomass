@@ -29,6 +29,7 @@ import sys
 import wx
 import wx.lib.scrolledpanel as scrolled
 from pubsub import pub
+from videomass.vdms_utils.utils import update_timeseq_duration
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_io.io_tools import stream_play
 from videomass.vdms_io.checkup import check_files
@@ -568,7 +569,7 @@ class AV_Conv(wx.Panel):
             return (self.parent.file_src[0], 0)
 
         if not self.parent.filedropselected:
-            wx.MessageBox(_("First Select a target file in the File List"),
+            wx.MessageBox(_("Have to select an item in the file list first"),
                           'Videomass', wx.ICON_INFORMATION, self)
             return None
 
@@ -819,18 +820,39 @@ class AV_Conv(wx.Panel):
                 self.chain_all_video_filters()
     # ------------------------------------------------------------------#
 
-    def check_options(self):
+    def check_options(self, index=None):
         """
-        Update entries.
+        Update entries and file check.
         """
+        # get data from panels
+        self.opt["CmdVideoParams"] = self.videopanel.video_options()
+        self.opt["CmdAudioParams"] = self.audioenc.audio_options()
+
         if self.audioenc.btn_voldect.IsEnabled():
             wx.MessageBox(_('Undetected volume values! Click the '
                             '"Volume detect" button to analyze '
                             'audio volume data.'),
                           'Videomass', wx.ICON_INFORMATION, self)
-            return True
+            return None
 
-        return None
+        if index is not None:
+            infile = [self.parent.file_src[index]]
+            outfilenames = [self.parent.outputnames[index]]
+        else:
+            infile = self.parent.file_src
+            outfilenames = self.parent.outputnames
+
+        filecheck = check_files(infile,
+                                self.parent.outputdir,
+                                self.parent.same_destin,
+                                self.parent.suffix,
+                                self.opt["OutputFormat"],
+                                outfilenames,
+                                )
+        if not filecheck:  # User changing idea or not such files exist
+            return None
+
+        return filecheck
     # ------------------------------------------------------------------#
 
     def on_start(self):
@@ -840,41 +862,44 @@ class AV_Conv(wx.Panel):
 
         """
         logname = 'AV_conversions.log'
+        check = self.check_options()
+        if not check:
+            return None
+        f_src, f_dest = check
 
-        if self.check_options():
-            return
-        checking = check_files(self.parent.file_src,
-                               self.parent.outputdir,
-                               self.parent.same_destin,
-                               self.parent.suffix,
-                               self.opt["OutputFormat"],
-                               self.parent.outputnames
-                               )
-        if not checking:  # User changing idea or not such files exist
-            return
-        f_src, f_dest = checking
-
-        if self.opt["Media"] == 'Video':  # CHECKING
-            # get data from panels
-            self.opt["CmdVideoParams"] = self.videopanel.video_options()
-            self.opt["CmdAudioParams"] = self.audioenc.audio_options()
+        if self.opt["Media"] == 'Video':
 
             if self.opt["Vidstabdetect"]:
-                self.video_stabilizer(f_src, f_dest, logname)
+                kwargs = self.video_stabilizer(f_src, f_dest, logname)
             elif self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
-                self.video_ebu_2pass(f_src, f_dest, logname)
+                kwargs = self.video_ebu(f_src, f_dest, logname)
             else:
-                self.video_stdProc(f_src, f_dest, logname)
+                kwargs = self.video_std(f_src, f_dest, logname)
 
-        elif self.opt["Media"] == 'Audio':  # CHECKING
-            # get data from panels
-            self.opt["CmdAudioParams"] = self.audioenc.audio_options()
+        elif self.opt["Media"] == 'Audio':
 
             if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
-                self.audio_ebu_2pass(f_src, f_dest, logname)
+                kwargs = self.audio_ebu(f_src, f_dest, logname)
             else:
-                self.audio_stdProc(f_src, f_dest, logname)
-        return
+                kwargs = self.audio_std(f_src, f_dest, logname)
+
+        kwargs = update_timeseq_duration(self.parent.time_seq,
+                                         self.parent.duration,
+                                         **kwargs,
+                                         )
+
+        keyval = self.update_dict(len(f_src))
+        ending = Formula(self, (600, 210),
+                         self.parent.movetotrash,
+                         self.parent.emptylist,
+                         **keyval,
+                         )
+        if ending.ShowModal() == wx.ID_OK:
+            (self.parent.movetotrash,
+             self.parent.emptylist) = ending.getvalue()
+            self.parent.switch_to_processing(kwargs["type"], **kwargs)
+
+        return None
     # ------------------------------------------------------------------#
 
     def video_stabilizer(self, f_src, f_dest, logname):
@@ -908,25 +933,12 @@ class AV_Conv(wx.Panel):
                         f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
                         f'{self.opt["MetaData"]}'
                         )
-            pass1 = " ".join(cmd1.split())
-            pass2 = " ".join(cmd2.split())
-
-            if logname == 'save as profile':
-                return pass1, pass2, self.opt["OutputFormat"]
-            valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
-                             self.parent.movetotrash, self.parent.emptylist,
-                             )
-            if ending.ShowModal() == wx.ID_OK:
-                (self.parent.movetotrash,
-                 self.parent.emptylist) = ending.getvalue()
-
-                kwargs = {'logname': logname, 'type': 'two pass EBU',
-                          'fsrc': f_src, 'fdest': f_dest,
-                          'args': [pass1, pass2], 'EBU': self.opt["EBU"][1],
-                          'audiomap': self.opt["AudioMap"], 'nmax': len(f_src)
-                          }
-                self.parent.switch_to_processing('two pass EBU', **kwargs)
+            pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
+            kwargs = {'logname': logname, 'type': 'two pass EBU',
+                      'fsrc': f_src, 'fdest': f_dest,
+                      'args': (pass1, pass2), 'EBU': self.opt["EBU"][1],
+                      'audiomap': self.opt["AudioMap"], 'nmax': len(f_src)
+                      }
         else:
             audnorm = (self.opt["RMS"] if not self.opt["PEAK"]
                        else self.opt["PEAK"])
@@ -939,60 +951,37 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
                     f'{self.opt["MetaData"]}'
                     )
-            pass1 = " ".join(cmd1.split())
-            pass2 = " ".join(cmd2.split())
+            pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
+            kwargs = {'logname': logname, 'type': 'libvidstab',
+                      'fsrc': f_src, 'fdest': f_dest,
+                      'args': (pass1, pass2),
+                      'volume': [vol[5] for vol in audnorm],
+                      'nmax': len(f_src)
+                      }
 
-            if logname == 'save as profile':
-                return pass1, pass2, self.opt["OutputFormat"]
-            valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
-                             self.parent.movetotrash, self.parent.emptylist,
-                             )
-            if ending.ShowModal() == wx.ID_OK:
-                (self.parent.movetotrash,
-                 self.parent.emptylist) = ending.getvalue()
-
-                kwargs = {'logname': logname, 'type': 'libvidstab',
-                          'fsrc': f_src, 'fdest': f_dest,
-                          'args': [pass1, pass2],
-                          'volume': [vol[5] for vol in audnorm],
-                          'nmax': len(f_src)
-                          }
-                self.parent.switch_to_processing('libvidstab', **kwargs)
-
-        return None
+        return kwargs
         # ------------------------------------------------------------------#
 
-    def video_stdProc(self, f_src, f_dest, logname):
+    def video_std(self, f_src, f_dest, logname):
         """
-        Build the ffmpeg command strings for video conversions.
+        Build the ffmpeg args strings for standard
+        video conversions.
         """
         audnorm = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
 
         if self.cmb_vencoder.GetValue() == "Copy":
 
-            command = (f'{self.opt["CmdVideoParams"]} '
-                       f'{self.opt["CmdAudioParams"]} {self.opt["EBU"][1]} '
-                       f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
-                       f'{self.opt["MetaData"]}'
-                       )
-            command = " ".join(command.split())
-            if logname == 'save as profile':
-                return command, '', self.opt["OutputFormat"]
-            valupdate = self.update_dict(len(f_src), ["Copy"])
-            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
-                             self.parent.movetotrash, self.parent.emptylist,
-                             )
-            if ending.ShowModal() == wx.ID_OK:
-                end = ending.getvalue()
-                self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
-
-                kwargs = {'logname': logname, 'type': 'onepass',
-                          'fsrc': f_src, 'fdest': f_dest, 'args': command,
-                          'volume': [vol[5] for vol in audnorm],
-                          'nmax': len(f_src), 'fext': self.opt["OutputFormat"],
-                          }
-                self.parent.switch_to_processing('onepass', **kwargs)
+            args = (f'{self.opt["CmdVideoParams"]} '
+                    f'{self.opt["CmdAudioParams"]} {self.opt["EBU"][1]} '
+                    f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
+                    f'{self.opt["MetaData"]}'
+                    )
+            pass1, pass2 = " ".join(args.split()), ''
+            kwargs = {'logname': logname, 'type': 'onepass',
+                      'fsrc': f_src, 'fdest': f_dest, 'args': (pass1, pass2),
+                      'volume': [vol[5] for vol in audnorm],
+                      'nmax': len(f_src), 'fext': self.opt["OutputFormat"],
+                      }
 
         elif self.opt["Passes"] == "2":
 
@@ -1004,59 +993,32 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["EBU"][1]} {self.opt["SubtitleMap"]} '
                     f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
                     )
-            pass1 = " ".join(cmd1.split())
-            pass2 = " ".join(cmd2.split())
-
-            if logname == 'save as profile':
-                return pass1, pass2, self.opt["OutputFormat"]
-            valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
-                             self.parent.movetotrash, self.parent.emptylist,
-                             )
-            if ending.ShowModal() == wx.ID_OK:
-                end = ending.getvalue()
-                self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
-
-                kwargs = {'logname': logname, 'type': 'twopass',
-                          'fsrc': f_src, 'fdest': f_dest,
-                          'args': [pass1, pass2],
-                          'volume': [vol[5] for vol in audnorm],
-                          'nmax': len(f_src)
-                          }
-                self.parent.switch_to_processing('twopass', **kwargs)
+            pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
+            kwargs = {'logname': logname, 'type': 'twopass', 'fsrc': f_src,
+                      'fdest': f_dest, 'args': (pass1, pass2),
+                      'volume': [vol[5] for vol in audnorm], 'nmax': len(f_src)
+                      }
 
         elif self.opt["Passes"] == "Auto":
-            command = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
-                       f'{self.opt["CmdAudioParams"]} {self.opt["EBU"][1]} '
-                       f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
-                       f'{self.opt["MetaData"]}'
-                       )
-            command = " ".join(command.split())
+            args = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
+                    f'{self.opt["CmdAudioParams"]} {self.opt["EBU"][1]} '
+                    f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
+                    f'{self.opt["MetaData"]}'
+                    )
+            pass1, pass2 = " ".join(args.split()), ''
+            kwargs = {'logname': logname, 'type': 'onepass', 'fsrc': f_src,
+                      'fdest': f_dest, 'args': (pass1, pass2),
+                      'volume': [vol[5] for vol in audnorm],
+                      'nmax': len(f_src), 'fext': self.opt["OutputFormat"],
+                      }
 
-            if logname == 'save as profile':
-                return command, '', self.opt["OutputFormat"]
-            valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
-                             self.parent.movetotrash, self.parent.emptylist,
-                             )
-            if ending.ShowModal() == wx.ID_OK:
-                end = ending.getvalue()
-                self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
-
-                kwargs = {'logname': logname, 'type': 'onepass',
-                          'fsrc': f_src, 'fdest': f_dest, 'args': command,
-                          'volume': [vol[5] for vol in audnorm],
-                          'nmax': len(f_src), 'fext': self.opt["OutputFormat"],
-                          }
-                self.parent.switch_to_processing('onepass', **kwargs)
-
-        return None
+        return kwargs
     # ------------------------------------------------------------------#
 
-    def video_ebu_2pass(self, f_src, f_dest, logname):
+    def video_ebu(self, f_src, f_dest, logname):
         """
-        Define the ffmpeg command strings for batch process with
-        EBU two-passes conversion.
+        Build the ffmpeg args strings for video conversions
+        with two-pass EBU.
         NOTE If you want leave same indexes and process a selected Input Audio
              Index use same Output Audio Index on Audio Streams Mapping box
 
@@ -1071,22 +1033,11 @@ class AV_Conv(wx.Panel):
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
-            if logname == 'save as profile':
-                return pass1, pass2, self.opt["OutputFormat"]
-            valupdate = self.update_dict(len(f_src), ["Copy"])
-            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
-                             self.parent.movetotrash, self.parent.emptylist,
-                             )
-            if ending.ShowModal() == wx.ID_OK:
-                end = ending.getvalue()
-                self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
-
-                kwargs = {'logname': logname, 'type': 'two pass EBU',
-                          'fsrc': f_src, 'fdest': f_dest,
-                          'args': [pass1, pass2], 'EBU': self.opt["EBU"][1],
-                          'audiomap': self.opt["AudioMap"], 'nmax': len(f_src)
-                          }
-                self.parent.switch_to_processing('two pass EBU', **kwargs)
+            kwargs = {'logname': logname, 'type': 'two pass EBU',
+                      'fsrc': f_src, 'fdest': f_dest, 'args': (pass1, pass2),
+                      'EBU': self.opt["EBU"][1],
+                      'audiomap': self.opt["AudioMap"], 'nmax': len(f_src)
+                      }
 
         elif self.opt["Passes"] == "2":
 
@@ -1102,24 +1053,11 @@ class AV_Conv(wx.Panel):
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
-
-            if logname == 'save as profile':
-                return pass1, pass2, self.opt["OutputFormat"]
-            valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
-                             self.parent.movetotrash, self.parent.emptylist,
-                             )
-            if ending.ShowModal() == wx.ID_OK:
-                end = ending.getvalue()
-                self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
-
-                kwargs = {'logname': logname, 'type': 'two pass EBU',
-                          'fsrc': f_src, 'fdest': f_dest,
-                          'args': [pass1, pass2], 'EBU': self.opt["EBU"][1],
-                          'audiomap': self.opt["AudioMap"], 'nmax': len(f_src)
-                          }
-                self.parent.switch_to_processing('two pass EBU', **kwargs)
-
+            kwargs = {'logname': logname, 'type': 'two pass EBU',
+                      'fsrc': f_src, 'fdest': f_dest, 'args': (pass1, pass2),
+                      'EBU': self.opt["EBU"][1],
+                      'audiomap': self.opt["AudioMap"], 'nmax': len(f_src)
+                      }
         else:
             cmd_1 = (f'{self.opt["AudioIndex"]} '
                      f'-filter:a: {self.opt["EBU"][1]} -vn -sn -dn -f null'
@@ -1130,60 +1068,40 @@ class AV_Conv(wx.Panel):
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
+            kwargs = {'logname': logname, 'type': 'two pass EBU',
+                      'fsrc': f_src, 'fdest': f_dest, 'args': (pass1, pass2),
+                      'EBU': self.opt["EBU"][1],
+                      'audiomap': self.opt["AudioMap"], 'nmax': len(f_src)
+                      }
 
-            if logname == 'save as profile':
-                return pass1, pass2, self.opt["OutputFormat"]
-            valupdate = self.update_dict(len(f_src), [''])
-            ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
-                             self.parent.movetotrash, self.parent.emptylist,
-                             )
-            if ending.ShowModal() == wx.ID_OK:
-                end = ending.getvalue()
-                self.parent.movetotrash, self.parent.emptylist = end[0], end[1]
-
-                kwargs = {'logname': logname, 'type': 'two pass EBU',
-                          'fsrc': f_src, 'fdest': f_dest,
-                          'args': [pass1, pass2], 'EBU': self.opt["EBU"][1],
-                          'audiomap': self.opt["AudioMap"], 'nmax': len(f_src)
-                          }
-                self.parent.switch_to_processing('two pass EBU', **kwargs)
-
-        return None
+        return kwargs
     # ------------------------------------------------------------------#
 
-    def audio_stdProc(self, f_src, f_dest, logname):
+    def audio_std(self, f_src, f_dest, logname):
         """
-        Build the ffmpeg command strings for audio conversion.
+        Build the ffmpeg args strings for standard
+        audio conversions.
 
         """
         audnorm = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
 
-        command = (f'{self.opt["CmdAudioParams"]} '
-                   f'{self.opt["EBU"][1]} -vn -sn {self.opt["MetaData"]}'
-                   )
-        command = " ".join(command.split())
-        if logname == 'save as profile':
-            return command, '', self.opt["OutputFormat"]
-        valupdate = self.update_dict(len(f_src), [''])
-        ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
-                         self.parent.movetotrash, self.parent.emptylist,
-                         )
-        if ending.ShowModal() == wx.ID_OK:
-            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
+        args = (f'{self.opt["CmdAudioParams"]} '
+                f'{self.opt["EBU"][1]} -vn -sn {self.opt["MetaData"]}'
+                )
+        pass1, pass2 = " ".join(args.split()), ''
+        kwargs = {'logname': logname, 'type': 'onepass', 'fsrc': f_src,
+                  'fdest': f_dest, 'args': (pass1, pass2),
+                  'volume': [vol[5] for vol in audnorm], 'nmax': len(f_src),
+                  'fext': self.opt["OutputFormat"],
+                  }
 
-            kwargs = {'logname': logname, 'type': 'onepass',
-                      'fsrc': f_src, 'fdest': f_dest, 'args': command,
-                      'volume': [vol[5] for vol in audnorm],
-                      'nmax': len(f_src), 'fext': self.opt["OutputFormat"],
-                      }
-            self.parent.switch_to_processing('onepass', **kwargs)
-
-        return None
+        return kwargs
     # ------------------------------------------------------------------#
 
-    def audio_ebu_2pass(self, f_src, f_dest, logname):
+    def audio_ebu(self, f_src, f_dest, logname):
         """
-        Perform EBU R128 normalization on audio conversion
+        Build the ffmpeg args strings for audio conversions
+        and EBU R128 normalization.
         WARNING do not map output audio file index on filter:a: , -c:a:
         and not send self.opt["AudioMap"] to process because the files
         audio has not indexes
@@ -1195,26 +1113,16 @@ class AV_Conv(wx.Panel):
                  )
         pass1 = " ".join(cmd_1.split())
         pass2 = " ".join(cmd_2.split())
-        if logname == 'save as profile':
-            return pass1, pass2, self.opt["OutputFormat"]
-        valupdate = self.update_dict(len(f_src), [''])
-        ending = Formula(self, valupdate[0], valupdate[1], (600, 210),
-                         self.parent.movetotrash, self.parent.emptylist,
-                         )
-        if ending.ShowModal() == wx.ID_OK:
-            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
+        kwargs = {'logname': logname, 'type': 'two pass EBU', 'fsrc': f_src,
+                  'fdest': f_dest, 'args': (pass1, pass2),
+                  'EBU': self.opt["EBU"][1], 'audiomap': self.opt["AudioMap"],
+                  'nmax': len(f_src)
+                  }
 
-            kwargs = {'logname': logname, 'type': 'two pass EBU',
-                      'fsrc': f_src, 'fdest': f_dest,
-                      'args': [pass1, pass2], 'EBU': self.opt["EBU"][1],
-                      'audiomap': self.opt["AudioMap"], 'nmax': len(f_src)
-                      }
-            self.parent.switch_to_processing('two pass EBU', **kwargs)
-
-        return None
+        return kwargs
     # ------------------------------------------------------------------#
 
-    def update_dict(self, countmax, prof):
+    def update_dict(self, countmax):
         """
         Update all settings before send to epilogue
         """
@@ -1236,26 +1144,28 @@ class AV_Conv(wx.Panel):
             t = self.parent.time_seq.split()
             time = _('start  {} | duration  {}').format(t[1], t[3])
 
-        formula = (_("Batch processing items\nEncoding passes\nOutput Format"
-                     "\nVideo Codec\nAudio Codec\nAudio Normalization"
-                     "\nOutput file type\nTime Period"
-                     ))
-        dictions = (f'{countmax}\n'
-                    f'{self.opt["Passes"]}\n'
-                    f'{outputformat}\n'
-                    f'{self.opt["VidCmbxStr"]}\n'
-                    f'{self.opt["AudioCodStr"]}\n'
-                    f'{normalize}\n'
-                    f'{self.opt["Media"]}\n'
-                    f'{time}'
-                    )
-        return formula, dictions
+        keys = (_("Batch processing items\nEncoding passes\nOutput Format"
+                  "\nVideo Codec\nAudio Codec\nAudio Normalization"
+                  "\nOutput file type\nTime Period"
+                  ))
+        vals = (f'{countmax}\n'
+                f'{self.opt["Passes"]}\n'
+                f'{outputformat}\n'
+                f'{self.opt["VidCmbxStr"]}\n'
+                f'{self.opt["AudioCodStr"]}\n'
+                f'{normalize}\n'
+                f'{self.opt["Media"]}\n'
+                f'{time}'
+                )
+        return {'key': keys, 'val': vals}
     # ------------------------------------------------------------------#
 
     def on_saveprst(self, event):
         """
         Save current setting as profile for the Presets
         Manager panel
+        if logname == 'save as profile':
+            return pass1, pass2, self.opt["OutputFormat"]
         """
         if self.check_options():  # update
             return
@@ -1264,18 +1174,18 @@ class AV_Conv(wx.Panel):
             self.opt["CmdAudioParams"] = self.audioenc.audio_options()
 
             if self.opt["Vidstabdetect"]:
-                parameters = self.video_stabilizer([], [], 'save as profile')
+                kwargs = self.video_stabilizer((), (), None)
             elif self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
-                parameters = self.video_ebu_2pass([], [], 'save as profile')
+                kwargs = self.video_ebu((), (), '')
             else:
-                parameters = self.video_stdProc([], [], 'save as profile')
+                kwargs = self.video_std((), (), None)
 
         elif self.cmb_Media.GetValue() == 'Audio':
             self.opt["CmdAudioParams"] = self.audioenc.audio_options()
             if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
-                parameters = self.audio_ebu_2pass([], [], 'save as profile')
+                kwargs = self.audio_ebu((), (), None)
             else:
-                parameters = self.audio_stdProc([], [], 'save as profile')
+                kwargs = self.audio_std((), (), None)
 
         with wx.FileDialog(
                 None, _("Choose a Videomass preset..."),
@@ -1291,9 +1201,10 @@ class AV_Conv(wx.Panel):
 
             title = _('New Profile - Preset "{0}"').format(basename)
 
+        args = kwargs["args"][0], kwargs["args"][1], self.opt["OutputFormat"]
         with setting_profiles.SettingProfile(self, 'addprofile',
                                              basename,
-                                             parameters,
+                                             args,
                                              title,
                                              ) as prstdialog:
 

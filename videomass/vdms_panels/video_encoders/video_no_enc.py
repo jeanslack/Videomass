@@ -78,3 +78,10 @@ class Video_No_Enc(scrolled.ScrolledPanel):
                  'files.'))
         self.labsubinfo.SetLabel(msg)
     # ------------------------------------------------------------------#
+
+    def video_options(self):
+        """
+        Get all video parameters
+        """
+        return None
+    # ------------------------------------------------------------------#

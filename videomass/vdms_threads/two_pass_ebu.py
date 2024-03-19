@@ -62,7 +62,7 @@ class Loudnorm(Thread):
         self.stop_work_thread = False  # process terminate
         self.count = 0  # count first for loop
         self.nul = 'NUL' if Loudnorm.OS == 'Windows' else '/dev/null'
-        self.logname = args[0]  # log filename
+        self.logfile = args[0]  # log filename
         self.kwa = kwargs
 
         Thread.__init__(self)
@@ -111,7 +111,7 @@ class Loudnorm(Thread):
                          duration=duration,
                          end='',
                          )
-            logwrite(cmd, '', self.logname)  # write n/n + command only
+            logwrite(cmd, '', self.logfile)  # write n/n + command only
 
             if not Loudnorm.OS == 'Windows':
                 pass1 = shlex.split(pass1)
@@ -147,7 +147,7 @@ class Loudnorm(Thread):
                                      )
                         logwrite('',
                                  f"Exit status: {proc1.wait()}",
-                                 self.logname,
+                                 self.logfile,
                                  )  # append exit error number
                         break
 
@@ -214,7 +214,7 @@ class Loudnorm(Thread):
                          duration=duration,
                          end='',
                          )
-            logwrite(cmd, '', self.logname)
+            logwrite(cmd, '', self.logfile)
 
             if not Loudnorm.OS == 'Windows':
                 pass2 = shlex.split(pass2)
@@ -245,7 +245,7 @@ class Loudnorm(Thread):
                                  )
                     logwrite('',
                              f"Exit status: {proc2.wait()}",
-                             self.logname,
+                             self.logfile,
                              )  # append exit error number
 
             if self.stop_work_thread:  # break first 'for' loop

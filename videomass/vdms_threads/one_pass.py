@@ -59,7 +59,7 @@ class OnePass(Thread):
         """
         self.stop_work_thread = False  # process terminate
         self.count = 0  # count first for loop
-        self.logname = args[0]  # log filename
+        self.logfile = args[0]  # log filename
         self.kwa = kwargs
 
         Thread.__init__(self)
@@ -86,7 +86,7 @@ class OnePass(Thread):
                    f'{self.kwa["start-time"]} '
                    f'-i "{infile}" '
                    f'{self.kwa["end-time"]} '
-                   f'{self.kwa["args"]} '
+                   f'{self.kwa["args"][0]} '
                    f'{volume} '
                    f'"{outfile}"'
                    )
@@ -103,7 +103,7 @@ class OnePass(Thread):
                          duration=duration,
                          end='',
                          )
-            logwrite(com, '', self.logname)  # write n/n + command only
+            logwrite(com, '', self.logfile)  # write n/n + command only
 
             if not platform.system() == 'Windows':
                 cmd = shlex.split(cmd)
@@ -135,7 +135,7 @@ class OnePass(Thread):
                                      )
                         logwrite('',
                                  f"Exit status: {proc.wait()}",
-                                 self.logname,
+                                 self.logfile,
                                  )  # append exit error number
                     else:  # ok
                         filedone.append(infile)
