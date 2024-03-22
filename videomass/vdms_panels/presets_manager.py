@@ -40,6 +40,7 @@ from videomass.vdms_utils.utils import copy_restore
 from videomass.vdms_utils.utils import copy_on
 from videomass.vdms_utils.utils import copydir_recursively
 from videomass.vdms_utils.utils import copy_missing_data
+from videomass.vdms_utils.utils import update_timeseq_duration
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_dialogs import setting_profiles
 from videomass.vdms_dialogs.epilogue import Formula
@@ -949,55 +950,42 @@ class PrstPan(wx.Panel):
             # not supported, missing files or user has changed his mind
             return
         fsrc, fdest = checking
-
-        if self.array[3]:  # has double pass
-            self.two_Pass(fsrc, fdest, outext)
-
-        else:
-            self.one_Pass(fsrc, fdest, outext)
+        self.build_args(fsrc, fdest, outext)
     # ----------------------------------------------------------------#
 
-    def one_Pass(self, filesrc, filedest, outext):
+    def build_args(self, filesrc, filedest, outext):
         """
         Build args string for one pass process
         """
-        preinput_1 = " ".join(self.pass_1_pre.GetValue().split())
-        pass1 = " ".join(self.txt_1cmd.GetValue().split())
-        kwargs = {'logname': 'presets_manager.log', 'type': 'onepass',
-                  'fsrc': filesrc, 'fdest': filedest, 'args': pass1,
-                  'nmax': len(filesrc), 'fext': outext,
-                  'pre-input-1': preinput_1,
-                  }
-        valupdate = self.update_dict(len(filesrc), _('One-pass Encoding'))
-        ending = Formula(self, valupdate[0], valupdate[1], (600, 170),
-                         self.parent.movetotrash, self.parent.emptylist,
-                         )
-        if ending.ShowModal() == wx.ID_OK:
-            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
-            self.parent.switch_to_processing('onepass', **kwargs)
-    # ------------------------------------------------------------------#
+        if self.array[3]:
+            passenc, thrtype = _('Two-pass Encoding'), 'twopass'
+        else:
+            passenc, thrtype = _('One-pass Encoding'), 'onepass'
 
-    def two_Pass(self, filesrc, filedest, outext):
-        """
-        Build args string for two pass process
-        """
         preinput_1 = " ".join(self.pass_1_pre.GetValue().split())
         preinput_2 = " ".join(self.pass_2_pre.GetValue().split())
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
         pass2 = " ".join(self.txt_2cmd.GetValue().split())
-        kwargs = {'logname': 'presets_manager.log', 'type': 'twopass',
-                  'fsrc': filesrc, 'fdest': filedest, 'args': [pass1, pass2],
+        kwargs = {'logname': 'presets_manager.log', 'type': thrtype,
+                  'fsrc': filesrc, 'fdest': filedest, 'args': (pass1, pass2),
                   'nmax': len(filesrc), 'fext': outext,
                   'pre-input-1': preinput_1, 'pre-input-2': preinput_2,
                   }
-        valupdate = self.update_dict(len(filesrc), _('Two-pass Encoding'))
-        ending = Formula(self, valupdate[0], valupdate[1], (600, 170),
-                         self.parent.movetotrash, self.parent.emptylist,
+        kwargs = update_timeseq_duration(self.parent.time_seq,
+                                         self.parent.duration,
+                                         **kwargs,
+                                         )
+        keyval = self.update_dict(len(filesrc), passenc)
+        ending = Formula(self, (600, 170),
+                         self.parent.movetotrash,
+                         self.parent.emptylist,
+                         **keyval,
                          )
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
-            self.parent.switch_to_processing('twopass', **kwargs)
-    # --------------------------------------------------------------------#
+            (self.parent.movetotrash,
+             self.parent.emptylist) = ending.getvalue()
+            self.parent.switch_to_processing(kwargs["type"], **kwargs)
+    # ------------------------------------------------------------------#
 
     def update_dict(self, cntmax, passes):
         """
@@ -1010,9 +998,9 @@ class PrstPan(wx.Panel):
             t = self.parent.time_seq.split()
             timeseq = _('start  {} | duration  {}').format(t[1], t[3])
 
-        formula = (_("Batch processing items\nEncoding passes"
-                     "\nProfile Used\nOutput Format\nTime Period"))
-        dictions = (f"{cntmax}\n{passes}\n"
-                    f"{self.array[0]}\n{self.array[5]}\n{timeseq}"
-                    )
-        return formula, dictions
+        keys = (_("Batch processing items\nEncoding passes"
+                  "\nProfile Used\nOutput Format\nTime Period"))
+        vals = (f"{cntmax}\n{passes}\n"
+                f"{self.array[0]}\n{self.array[5]}\n{timeseq}"
+                )
+        return {'key': keys, 'val': vals}

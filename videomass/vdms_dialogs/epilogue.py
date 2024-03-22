@@ -33,12 +33,8 @@ import wx.lib.scrolledpanel as scrolled
 class Formula(wx.Dialog):
     """
     Show a dialog box before run process.
-
-    Example:
-            settings = ("\nEXAMPLES:\n\nExample 1:\nExample 2:\n etc."
-            param = ("type 1\ntype 2\ntype 3\n etc."
     """
-    def __init__(self, parent, settings, param, *args):
+    def __init__(self, parent, *args, **kwargs):
 
         get = wx.GetApp()  # get data from bootstrap
         self.appdata = get.appset
@@ -58,8 +54,8 @@ class Formula(wx.Dialog):
                                              name="panelscr",
                                              )
         sizbase.Add(panelscroll, 1, wx.ALL | wx.EXPAND, 5)
-        label1 = wx.StaticText(panelscroll, wx.ID_ANY, settings)
-        label2 = wx.StaticText(panelscroll, wx.ID_ANY, param)
+        label1 = wx.StaticText(panelscroll, wx.ID_ANY, kwargs['key'])
+        label2 = wx.StaticText(panelscroll, wx.ID_ANY, kwargs['val'])
         panelscroll.SetBackgroundColour(colorscheme['BACKGRD'])
         label1.SetForegroundColour(colorscheme['TXT3'])
         label2.SetForegroundColour(colorscheme['TXT1'])

@@ -219,27 +219,31 @@ class Conc_Demuxer(wx.Panel):
             return
         newfile = checking[1]
 
-        self.concat_demuxer(self.parent.file_src, newfile[0], ext)
+        self.build_args(self.parent.file_src, newfile[0], ext)
     # -----------------------------------------------------------
 
-    def concat_demuxer(self, filesrc, newfile, outext):
+    def build_args(self, filesrc, newfile, outext):
         """
         Redirect to processing
 
         """
         logname = 'concatenate_demuxer.log'
-        valupdate = self.update_dict(newfile, os.path.dirname(newfile), outext)
-        ending = Formula(self, valupdate[0], valupdate[1], (600, 170),
-                         self.parent.movetotrash, self.parent.emptylist,
+
+        kwargs = {'logname': logname, 'type': 'concat_demuxer',
+                  'fsrc': filesrc, 'fdest': newfile, 'args': self.args,
+                  'nmax': len(filesrc), 'duration': self.duration,
+                  'start-time': '', 'end-time': '',
+                  }
+        keyval = self.update_dict(newfile, os.path.dirname(newfile), outext)
+        ending = Formula(self, (600, 170),
+                         self.parent.movetotrash,
+                         self.parent.emptylist,
+                         **keyval,
                          )
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.movetotrash, self.parent.emptylist = ending.getvalue()
-
-            kwargs = {'logname': logname, 'type': 'concat_demuxer',
-                      'fsrc': filesrc, 'fdest': newfile, 'args': self.args,
-                      'nmax': len(filesrc), 'duration': self.duration,
-                      }
-            self.parent.switch_to_processing('concat_demuxer', **kwargs)
+            (self.parent.movetotrash,
+             self.parent.emptylist) = ending.getvalue()
+            self.parent.switch_to_processing(kwargs["type"], **kwargs)
     # -----------------------------------------------------------
 
     def update_dict(self, newfile, destdir, ext):
@@ -249,9 +253,10 @@ class Conc_Demuxer(wx.Panel):
         """
         lenfile = len(self.parent.file_src)
 
-        formula = (_("File to concatenate\nOutput filename"
-                     "\nDestination\nOutput Format\nTime Period"
-                     ))
-        dictions = (f"{lenfile}\n{newfile}\n{destdir}\n{ext}\n"
-                    f"Not applicable")
-        return formula, dictions
+        keys = (_("File to concatenate\nOutput filename"
+                  "\nDestination\nOutput Format\nTime Period"
+                  ))
+        vals = (f"{lenfile}\n{newfile}\n{destdir}\n{ext}\n"
+                f"Not applicable")
+
+        return {'key': keys, 'val': vals}

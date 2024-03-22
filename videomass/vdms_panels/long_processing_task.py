@@ -146,7 +146,7 @@ class LogOut(wx.Panel):
         lbl = wx.StaticText(self, label=infolbl)
         if self.appdata['ostype'] != 'Darwin':
             lbl.SetLabelMarkup(f"<b>{infolbl}</b>")
-        self.btn_viewlog = wx.Button(self, wx.ID_ANY, _("View full log"),
+        self.btn_viewlog = wx.Button(self, wx.ID_ANY, _("Full Log"),
                                      size=(-1, -1))
         self.btn_viewlog.Disable()
         self.txtout = wx.TextCtrl(self, wx.ID_ANY, "",
@@ -197,7 +197,6 @@ class LogOut(wx.Panel):
 
         """
         self.previous = args[1]  # stores the panel from which it starts
-
         if args[0] == 'Viewing last log':
             return
 
@@ -208,7 +207,7 @@ class LogOut(wx.Panel):
 
         self.logfile = make_log_template(kwargs['logname'],
                                          self.appdata['logdir'],
-                                         mode="w",  # overwrite
+                                         mode='w',  # w or a
                                          )
         if args[0] == 'onepass':
             self.thread_type = OnePass(self.logfile, **kwargs)

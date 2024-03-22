@@ -543,6 +543,26 @@ def clockset(duration, fileclock):
 # ------------------------------------------------------------------#
 
 
+def update_timeseq_duration(time_seq, duration, **kwargs):
+    """
+    Return an updated dict with time/duration
+    """
+    if time_seq:
+        ms = time_to_integer(time_seq.split()[3])  # -t duration
+        splseq = time_seq.split()
+        tseq = f'{splseq[0]} {splseq[1]}', f'{splseq[2]} {splseq[3]}'
+        dur = [ms for n in duration]
+        kwargs['duration'] = dur
+        kwargs['start-time'] = tseq[0]
+        kwargs['end-time'] = tseq[1]
+    else:
+        kwargs['start-time'], kwargs['end-time'] = '', ''
+        kwargs['duration'] = duration
+
+    return kwargs
+# ------------------------------------------------------------------#
+
+
 def detect_binaries(executable, additionaldir=None):
     """
     <https://stackoverflow.com/questions/11210104/check-if

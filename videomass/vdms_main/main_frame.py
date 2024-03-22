@@ -55,7 +55,6 @@ from videomass.vdms_io import io_tools
 from videomass.vdms_sys.msg_info import current_release
 from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_sys.argparser import info_this_platform
-from videomass.vdms_utils.utils import time_to_integer
 from videomass.vdms_utils.utils import copydir_recursively
 
 
@@ -1230,8 +1229,6 @@ class MainFrame(wx.Frame):
             bmphome = get_bmp(self.icons['home'], bmp_size)
             bmpclear = get_bmp(self.icons['cleanup'], bmp_size)
             bmpplay = get_bmp(self.icons['play'], bmp_size)
-            # bmpprocqueue = get_bmp(self.icons['proc-queue'], bmp_size)
-            # bmpaddqueue = get_bmp(self.icons['add-queue'], bmp_size)
         else:
             bmpback = wx.Bitmap(self.icons['previous'], wx.BITMAP_TYPE_ANY)
             bmpnext = wx.Bitmap(self.icons['next'], wx.BITMAP_TYPE_ANY)
@@ -1242,10 +1239,6 @@ class MainFrame(wx.Frame):
             bmphome = wx.Bitmap(self.icons['home'], wx.BITMAP_TYPE_ANY)
             bmpclear = wx.Bitmap(self.icons['cleanup'], wx.BITMAP_TYPE_ANY)
             bmpplay = wx.Bitmap(self.icons['play'], wx.BITMAP_TYPE_ANY)
-            # bmpprocqueue = wx.Bitmap(self.icons['proc-queue'],
-            #                          wx.BITMAP_TYPE_ANY)
-            # bmpaddqueue = wx.Bitmap(self.icons['add-queue'],
-            #                         wx.BITMAP_TYPE_ANY)
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
@@ -1289,16 +1282,6 @@ class MainFrame(wx.Frame):
                                      bmpclear,
                                      tip, wx.ITEM_NORMAL
                                      )
-        # tip = _("Add selected file to queue")
-        # pqueue = self.toolbar.AddTool(36, _('Add to Queue'),
-        #                               bmpaddqueue,
-        #                               tip, wx.ITEM_NORMAL
-        #                               )
-        # tip = _("Process queue")
-        # pqueue = self.toolbar.AddTool(37, _('Process Queue'),
-        #                               bmpprocqueue,
-        #                               tip, wx.ITEM_NORMAL
-        #                               )
         self.toolbar.Realize()
 
         # ----------------- Tool Bar Binding (evt)-----------------------#
@@ -1546,26 +1529,6 @@ class MainFrame(wx.Frame):
         topic. It call `ProcessPanel.topic_thread`
         method assigning the corresponding thread.
         """
-        if args[0] == 'Viewing last log':
-            self.statusbar_msg(_('Viewing last log'), None)
-
-        elif args[0] in ('concat_demuxer', 'sequence_to_video'):
-            kwargs['start-time'], kwargs['end-time'] = '', ''
-
-        elif self.time_seq:
-            ms = time_to_integer(self.time_seq.split()[3])  # -t duration
-            splseq = self.time_seq.split()
-            tseq = f'{splseq[0]} {splseq[1]}', f'{splseq[2]} {splseq[3]}'
-            dur = [ms for n in self.duration]
-            kwargs['duration'] = dur
-            kwargs['start-time'] = tseq[0]
-            kwargs['end-time'] = tseq[1]
-            self.statusbar_msg(_('Processing...'), None)
-        else:
-            kwargs['start-time'], kwargs['end-time'] = '', ''
-            kwargs['duration'] = self.duration
-
-        args = args + (self.topicname,)  # update args
         self.SetTitle(_('Videomass - FFmpeg Message Monitoring'))
         self.fileDnDTarget.Hide()
         self.VconvPanel.Hide()
@@ -1584,7 +1547,7 @@ class MainFrame(wx.Frame):
         self.logpan.Enable(False)
         [self.toolbar.EnableTool(x, False) for x in (4, 7, 9)]
 
-        self.ProcessPanel.topic_thread(*args, **kwargs)
+        self.ProcessPanel.topic_thread(args[0], self.topicname, **kwargs)
         self.Layout()
     # ------------------------------------------------------------------#
 
