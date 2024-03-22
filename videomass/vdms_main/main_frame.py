@@ -1529,7 +1529,6 @@ class MainFrame(wx.Frame):
         topic. It call `ProcessPanel.topic_thread`
         method assigning the corresponding thread.
         """
-        args = args + (self.topicname,)  # update args
         self.SetTitle(_('Videomass - FFmpeg Message Monitoring'))
         self.fileDnDTarget.Hide()
         self.VconvPanel.Hide()
@@ -1548,7 +1547,7 @@ class MainFrame(wx.Frame):
         self.logpan.Enable(False)
         [self.toolbar.EnableTool(x, False) for x in (4, 7, 9)]
 
-        self.ProcessPanel.topic_thread(*args, **kwargs)
+        self.ProcessPanel.topic_thread(args[0], self.topicname, **kwargs)
         self.Layout()
     # ------------------------------------------------------------------#
 

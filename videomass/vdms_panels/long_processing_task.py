@@ -191,13 +191,13 @@ class LogOut(wx.Panel):
                 io_tools.openpath(fname)
     # ----------------------------------------------------------------------
 
-    def topic_thread(self, mode='w', *args, **kwargs):
+    def topic_thread(self, *args, **kwargs):
         """
         This method is resposible to create the Thread instance.
 
         """
         self.previous = args[1]  # stores the panel from which it starts
-
+        
         if args[0] == 'Viewing last log':
             return
 
@@ -208,7 +208,7 @@ class LogOut(wx.Panel):
 
         self.logfile = make_log_template(kwargs['logname'],
                                          self.appdata['logdir'],
-                                         mode,  # w or a
+                                         mode='w',  # w or a
                                          )
         if args[0] == 'onepass':
             self.thread_type = OnePass(self.logfile, **kwargs)
