@@ -197,7 +197,6 @@ class LogOut(wx.Panel):
 
         """
         self.previous = args[1]  # stores the panel from which it starts
-        
         if args[0] == 'Viewing last log':
             return
 
