@@ -1164,11 +1164,7 @@ class AV_Conv(wx.Panel):
         """
         Save current setting as profile for the Presets
         Manager panel
-        if logname == 'save as profile':
-            return pass1, pass2, self.opt["OutputFormat"]
         """
-        if self.check_options():  # update
-            return
         if self.cmb_Media.GetValue() == 'Video':
             self.opt["CmdVideoParams"] = self.videopanel.video_options()
             self.opt["CmdAudioParams"] = self.audioenc.audio_options()
