@@ -52,11 +52,11 @@ def convert_images(*varargs):
     logname = varargs[2]
     imagenames = varargs[3]
 
+    count1 = (f'Preparing temporary files...\nSource: Imported file list\n'
+              f'Destination: "{tmpdir}"')
     wx.CallAfter(pub.sendMessage,
                  "COUNT_EVT",
-                 count='Preparing temporary files...',
-                 fsource='Source: Imported file list',
-                 destination=f'Destination: "{tmpdir}"',
+                 count=count1,
                  duration=len(flist),
                  end='',
                  )
@@ -108,8 +108,6 @@ def convert_images(*varargs):
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=excepterr,
-                         fsource='',
-                         destination='',
                          duration=0,
                          end='error',
                          )
@@ -119,8 +117,6 @@ def convert_images(*varargs):
     wx.CallAfter(pub.sendMessage,
                  "COUNT_EVT",
                  count='',
-                 fsource='',
-                 destination='',
                  duration=0,
                  end='Done'
                  )
@@ -142,11 +138,12 @@ def resizing_process(*varargs):
     cmdargs = varargs[2]
     logname = varargs[3]
 
+    count1 = (f'File resizing...\nSource: Temporary directory\n'
+              f'Destination: "{tmpdir}"')
+
     wx.CallAfter(pub.sendMessage,
                  "COUNT_EVT",
-                 count='File resizing...',
-                 fsource='Source: Temporary directory',
-                 destination=f'Destination: "{tmpdir}"',
+                 count=count1,
                  duration=len(flist),
                  end='',
                  )
@@ -196,8 +193,6 @@ def resizing_process(*varargs):
         wx.CallAfter(pub.sendMessage,
                      "COUNT_EVT",
                      count=excepterr,
-                     fsource='',
-                     destination='',
                      duration=0,
                      end='error',
                      )
@@ -207,8 +202,6 @@ def resizing_process(*varargs):
     wx.CallAfter(pub.sendMessage,
                  "COUNT_EVT",
                  count='',
-                 fsource='',
-                 destination='',
                  duration=0,
                  end='Done'
                  )
@@ -287,15 +280,13 @@ class SlideshowMaker(Thread):
                      f'{self.kwa["args"]} '
                      f'"{self.fdest}"'
                      )
-            count = '\nVideo production...'
-            log = (f'{count}\nSource: "{tempdir}"\n'
-                   f'Destination: "{self.fdest}"\n\n[COMMAND]:\n{cmd_2}')
+            count = (f'Video production...\nSource: "{tempdir}"\n'
+                     f'Destination: "{self.fdest}"')
+            log = (f'{count}\n\n[COMMAND]:\n{cmd_2}')
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
-                         fsource=f'Source:  "{tempdir}"',
-                         destination=f'Destination:  "{self.fdest}"',
                          duration=self.duration,
                          end='',
                          )
@@ -342,8 +333,6 @@ class SlideshowMaker(Thread):
                         wx.CallAfter(pub.sendMessage,
                                      "COUNT_EVT",
                                      count='',
-                                     fsource='',
-                                     destination='',
                                      duration=self.duration,
                                      end='Done'
                                      )
@@ -352,8 +341,6 @@ class SlideshowMaker(Thread):
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=excepterr,
-                             fsource='',
-                             destination='',
                              duration=0,
                              end='error',
                              )
@@ -364,7 +351,7 @@ class SlideshowMaker(Thread):
         The process is finished
         """
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT", msg=filedone)
+        wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=filedone)
 
     def stop(self):
         """

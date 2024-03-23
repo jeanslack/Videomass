@@ -76,20 +76,21 @@ class ConcatDemuxer(Thread):
                f'{ConcatDemuxer.appdata["ffmpeg_default_args"]} -f concat '
                f'-safe 0 -i {self.kwa["args"]} "{self.kwa["fdest"]}"')
 
-        count = f'{self.kwa["nmax"]} Files to concat'
-        com = (f'{count}\nSource: "{self.kwa["fsrc"]}"\nDestination: '
-               f'"{self.kwa["fdest"]}"\n\n[COMMAND]:\n{cmd}')
+        count = (f'{self.kwa["nmax"]} Items in progress...\nSource: '
+                 f'"{self.kwa["fsrc"]}"\nDestination: "{self.kwa["fdest"]}"')
+        stamp = (f'{count}\n\n[COMMAND]:\n{cmd}')
+
+        countevt = (f'{self.kwa["nmax"]} Items in progress...\n...for '
+                    f'details see Full Log.\nDestination: '
+                    f'"{self.kwa["fdest"]}"')
 
         wx.CallAfter(pub.sendMessage,
                      "COUNT_EVT",
-                     count=count,
-                     fsource=f'Source:  {self.kwa["fsrc"]}',
-                     destination=f'Destination:  "{self.kwa["fdest"]}"',
+                     count=countevt,
                      duration=self.kwa['duration'],
-                     # fname=", ".join(self.kwa['fsrc']),
                      end='',
                      )
-        logwrite(com, '', self.logfile)  # write n/n + command only
+        logwrite(stamp, '', self.logfile)  # write n/n + command only
 
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
@@ -126,8 +127,6 @@ class ConcatDemuxer(Thread):
                     wx.CallAfter(pub.sendMessage,
                                  "COUNT_EVT",
                                  count='',
-                                 fsource='',
-                                 destination='',
                                  duration='',
                                  end='Done'
                                  )
@@ -136,8 +135,6 @@ class ConcatDemuxer(Thread):
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=excepterr,
-                         fsource='',
-                         destination='',
                          duration=0,
                          end='error',
                          )
@@ -146,7 +143,7 @@ class ConcatDemuxer(Thread):
             proc.terminate()
 
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT", msg=filedone)
+        wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=filedone)
     # --------------------------------------------------------------------#
 
     def stop(self):

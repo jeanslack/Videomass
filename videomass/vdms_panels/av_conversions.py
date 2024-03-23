@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.08.2024
+Rev: Mar.22.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -403,6 +403,7 @@ class AV_Conv(wx.Panel):
             self.filterVpanel.Disable(), self.on_vfilters_clear(self)
             self.videopanel = self.disablevidpanels
             self.videopanel.Show(), self.videopanel.default()
+            self.opt["CmdVideoParams"] = ''
 
         elif self.opt["VideoCodec"] == "-c:v libx264":  # default
             if not default:
@@ -820,14 +821,41 @@ class AV_Conv(wx.Panel):
                 self.chain_all_video_filters()
     # ------------------------------------------------------------------#
 
+    def get_codec_args(self):
+        """
+        Get data from encoder panels and set ffmpeg
+        command arguments
+        """
+        self.opt["CmdVideoParams"] = self.videopanel.video_options()
+        self.opt["CmdAudioParams"] = self.audioenc.audio_options()
+
+        if self.opt["Media"] == 'Video':
+
+            if self.opt["Vidstabdetect"]:
+                kwargs = self.video_stabilizer()
+
+            elif self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
+                kwargs = self.video_ebu()
+            else:
+                kwargs = self.video_std()
+
+        elif self.opt["Media"] == 'Audio':
+
+            if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
+                kwargs = self.audio_ebu()
+            else:
+                kwargs = self.audio_std()
+
+        kwargs['ffmpeg_cmd'] = self.appdata["ffmpeg_cmd"]
+        kwargs['ffmpeg_default_args'] = self.appdata["ffmpeg_default_args"]
+
+        return kwargs
+    # ------------------------------------------------------------------#
+
     def check_options(self, index=None):
         """
         Update entries and file check.
         """
-        # get data from panels
-        self.opt["CmdVideoParams"] = self.videopanel.video_options()
-        self.opt["CmdAudioParams"] = self.audioenc.audio_options()
-
         if self.audioenc.btn_voldect.IsEnabled():
             wx.MessageBox(_('Undetected volume values! Click the '
                             '"Volume detect" button to analyze '
@@ -855,38 +883,71 @@ class AV_Conv(wx.Panel):
         return filecheck
     # ------------------------------------------------------------------#
 
-    def on_start(self):
+    def queue_mode(self):
         """
-        Check all settings before redirecting
-        to the build command.
+        build queue mode arguments. This method is
+        called by `parent.on_add_to_queue`.
+        Return a dictionary of data.
+        """
+        logname = 'Queue-processing.log'
+        index = self.parent.file_src.index(self.parent.filedropselected)
 
+        check = self.check_options(index)
+        if not check:
+            return None
+
+        f_src, f_dest = check[0][0], check[1][0]
+        kwargs = self.get_codec_args()
+        dur, ss, et = update_timeseq_duration(self.parent.time_seq,
+                                              self.parent.duration
+                                              )
+        kwargs['fext'] = self.opt["OutputFormat"]
+        kwargs['pre-input-1'], kwargs['pre-input-2'] = '', ''
+        kwargs['logname'] = logname
+        kwargs['fsrc'] = f_src
+        kwargs['fdest'] = f_dest
+        kwargs["duration"] = dur[index]
+        kwargs['start-time'], kwargs['end-time'] = ss, et
+        if kwargs.get("volume"):
+            kwargs["volume"] = kwargs["volume"][index]
+        else:
+            kwargs["volume"] = ''
+
+        return kwargs
+    # ------------------------------------------------------------------#
+
+    def batch_mode(self):
+        """
+        build batch mode arguments. This method is called
+        by `parent.click_start`
         """
         logname = 'AV_conversions.log'
+
         check = self.check_options()
         if not check:
             return None
+
         f_src, f_dest = check
+        kwargs = self.get_codec_args()
+        dur, ss, et = update_timeseq_duration(self.parent.time_seq,
+                                              self.parent.duration
+                                              )
+        kwargs['fext'] = self.opt["OutputFormat"]
+        kwargs['pre-input-1'], kwargs['pre-input-2'] = '', ''
+        kwargs['logname'] = logname
+        kwargs['start-time'], kwargs['end-time'] = ss, et
 
-        if self.opt["Media"] == 'Video':
-
-            if self.opt["Vidstabdetect"]:
-                kwargs = self.video_stabilizer(f_src, f_dest, logname)
-            elif self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
-                kwargs = self.video_ebu(f_src, f_dest, logname)
+        batchlist = []
+        for index in enumerate(self.parent.file_src):
+            kw = kwargs.copy()
+            kw['fsrc'] = f_src[index[0]]
+            kw['fdest'] = f_dest[index[0]]
+            kw['duration'] = dur[index[0]]
+            if kw.get("volume"):
+                kw["volume"] = kw["volume"][index[0]]
             else:
-                kwargs = self.video_std(f_src, f_dest, logname)
-
-        elif self.opt["Media"] == 'Audio':
-
-            if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
-                kwargs = self.audio_ebu(f_src, f_dest, logname)
-            else:
-                kwargs = self.audio_std(f_src, f_dest, logname)
-
-        kwargs = update_timeseq_duration(self.parent.time_seq,
-                                         self.parent.duration,
-                                         **kwargs,
-                                         )
+                kw["volume"] = ''
+            batchlist.append(kw)
 
         keyval = self.update_dict(len(f_src))
         ending = Formula(self, (600, 210),
@@ -897,12 +958,14 @@ class AV_Conv(wx.Panel):
         if ending.ShowModal() == wx.ID_OK:
             (self.parent.movetotrash,
              self.parent.emptylist) = ending.getvalue()
-            self.parent.switch_to_processing(kwargs["type"], **kwargs)
-
+            self.parent.switch_to_processing(kwargs["type"],
+                                             logname,
+                                             datalist=batchlist
+                                             )
         return None
     # ------------------------------------------------------------------#
 
-    def video_stabilizer(self, f_src, f_dest, logname):
+    def video_stabilizer(self):
         """
         Build ffmpeg command strings for two pass
         video stabilizations process.
@@ -934,10 +997,9 @@ class AV_Conv(wx.Panel):
                         f'{self.opt["MetaData"]}'
                         )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
-            kwargs = {'logname': logname, 'type': 'two pass EBU',
-                      'fsrc': f_src, 'fdest': f_dest,
-                      'args': (pass1, pass2), 'EBU': self.opt["EBU"][1],
-                      'audiomap': self.opt["AudioMap"], 'nmax': len(f_src)
+            kwargs = {'type': 'two pass EBU', 'args': (pass1, pass2),
+                      'EBU': self.opt["EBU"][1],
+                      'audiomap': self.opt["AudioMap"]
                       }
         else:
             audnorm = (self.opt["RMS"] if not self.opt["PEAK"]
@@ -952,17 +1014,13 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
-            kwargs = {'logname': logname, 'type': 'libvidstab',
-                      'fsrc': f_src, 'fdest': f_dest,
-                      'args': (pass1, pass2),
+            kwargs = {'type': 'libvidstab', 'args': (pass1, pass2),
                       'volume': [vol[5] for vol in audnorm],
-                      'nmax': len(f_src)
                       }
-
         return kwargs
         # ------------------------------------------------------------------#
 
-    def video_std(self, f_src, f_dest, logname):
+    def video_std(self):
         """
         Build the ffmpeg args strings for standard
         video conversions.
@@ -977,12 +1035,9 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(args.split()), ''
-            kwargs = {'logname': logname, 'type': 'onepass',
-                      'fsrc': f_src, 'fdest': f_dest, 'args': (pass1, pass2),
+            kwargs = {'type': 'onepass', 'args': (pass1, pass2),
                       'volume': [vol[5] for vol in audnorm],
-                      'nmax': len(f_src), 'fext': self.opt["OutputFormat"],
                       }
-
         elif self.opt["Passes"] == "2":
 
             cmd1 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
@@ -994,11 +1049,9 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
-            kwargs = {'logname': logname, 'type': 'twopass', 'fsrc': f_src,
-                      'fdest': f_dest, 'args': (pass1, pass2),
-                      'volume': [vol[5] for vol in audnorm], 'nmax': len(f_src)
+            kwargs = {'type': 'twopass', 'args': (pass1, pass2),
+                      'volume': [vol[5] for vol in audnorm],
                       }
-
         elif self.opt["Passes"] == "Auto":
             args = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
                     f'{self.opt["CmdAudioParams"]} {self.opt["EBU"][1]} '
@@ -1006,16 +1059,13 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(args.split()), ''
-            kwargs = {'logname': logname, 'type': 'onepass', 'fsrc': f_src,
-                      'fdest': f_dest, 'args': (pass1, pass2),
+            kwargs = {'type': 'onepass', 'args': (pass1, pass2),
                       'volume': [vol[5] for vol in audnorm],
-                      'nmax': len(f_src), 'fext': self.opt["OutputFormat"],
                       }
-
         return kwargs
     # ------------------------------------------------------------------#
 
-    def video_ebu(self, f_src, f_dest, logname):
+    def video_ebu(self):
         """
         Build the ffmpeg args strings for video conversions
         with two-pass EBU.
@@ -1033,12 +1083,10 @@ class AV_Conv(wx.Panel):
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
-            kwargs = {'logname': logname, 'type': 'two pass EBU',
-                      'fsrc': f_src, 'fdest': f_dest, 'args': (pass1, pass2),
+            kwargs = {'type': 'two pass EBU', 'args': (pass1, pass2),
                       'EBU': self.opt["EBU"][1],
-                      'audiomap': self.opt["AudioMap"], 'nmax': len(f_src)
+                      'audiomap': self.opt["AudioMap"]
                       }
-
         elif self.opt["Passes"] == "2":
 
             cmd_1 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
@@ -1053,10 +1101,9 @@ class AV_Conv(wx.Panel):
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
-            kwargs = {'logname': logname, 'type': 'two pass EBU',
-                      'fsrc': f_src, 'fdest': f_dest, 'args': (pass1, pass2),
+            kwargs = {'type': 'two pass EBU', 'args': (pass1, pass2),
                       'EBU': self.opt["EBU"][1],
-                      'audiomap': self.opt["AudioMap"], 'nmax': len(f_src)
+                      'audiomap': self.opt["AudioMap"]
                       }
         else:
             cmd_1 = (f'{self.opt["AudioIndex"]} '
@@ -1068,16 +1115,14 @@ class AV_Conv(wx.Panel):
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
-            kwargs = {'logname': logname, 'type': 'two pass EBU',
-                      'fsrc': f_src, 'fdest': f_dest, 'args': (pass1, pass2),
+            kwargs = {'type': 'two pass EBU', 'args': (pass1, pass2),
                       'EBU': self.opt["EBU"][1],
-                      'audiomap': self.opt["AudioMap"], 'nmax': len(f_src)
+                      'audiomap': self.opt["AudioMap"]
                       }
-
         return kwargs
     # ------------------------------------------------------------------#
 
-    def audio_std(self, f_src, f_dest, logname):
+    def audio_std(self):
         """
         Build the ffmpeg args strings for standard
         audio conversions.
@@ -1089,16 +1134,13 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["EBU"][1]} -vn -sn {self.opt["MetaData"]}'
                 )
         pass1, pass2 = " ".join(args.split()), ''
-        kwargs = {'logname': logname, 'type': 'onepass', 'fsrc': f_src,
-                  'fdest': f_dest, 'args': (pass1, pass2),
-                  'volume': [vol[5] for vol in audnorm], 'nmax': len(f_src),
-                  'fext': self.opt["OutputFormat"],
+        kwargs = {'type': 'onepass', 'args': (pass1, pass2),
+                  'volume': [vol[5] for vol in audnorm],
                   }
-
         return kwargs
     # ------------------------------------------------------------------#
 
-    def audio_ebu(self, f_src, f_dest, logname):
+    def audio_ebu(self):
         """
         Build the ffmpeg args strings for audio conversions
         and EBU R128 normalization.
@@ -1113,18 +1155,15 @@ class AV_Conv(wx.Panel):
                  )
         pass1 = " ".join(cmd_1.split())
         pass2 = " ".join(cmd_2.split())
-        kwargs = {'logname': logname, 'type': 'two pass EBU', 'fsrc': f_src,
-                  'fdest': f_dest, 'args': (pass1, pass2),
+        kwargs = {'type': 'two pass EBU', 'args': (pass1, pass2),
                   'EBU': self.opt["EBU"][1], 'audiomap': self.opt["AudioMap"],
-                  'nmax': len(f_src)
                   }
-
         return kwargs
     # ------------------------------------------------------------------#
 
     def update_dict(self, countmax):
         """
-        Update all settings before send to epilogue
+        Update to epilogue
         """
         if self.opt["PEAK"]:
             normalize = 'PEAK'
@@ -1164,28 +1203,24 @@ class AV_Conv(wx.Panel):
         """
         Save current setting as profile for the Presets
         Manager panel
-        if logname == 'save as profile':
-            return pass1, pass2, self.opt["OutputFormat"]
         """
-        if self.check_options():  # update
-            return
         if self.cmb_Media.GetValue() == 'Video':
             self.opt["CmdVideoParams"] = self.videopanel.video_options()
             self.opt["CmdAudioParams"] = self.audioenc.audio_options()
 
             if self.opt["Vidstabdetect"]:
-                kwargs = self.video_stabilizer((), (), None)
+                kwargs = self.video_stabilizer()
             elif self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
-                kwargs = self.video_ebu((), (), '')
+                kwargs = self.video_ebu()
             else:
-                kwargs = self.video_std((), (), None)
+                kwargs = self.video_std()
 
         elif self.cmb_Media.GetValue() == 'Audio':
             self.opt["CmdAudioParams"] = self.audioenc.audio_options()
             if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
-                kwargs = self.audio_ebu((), (), None)
+                kwargs = self.audio_ebu()
             else:
-                kwargs = self.audio_std((), (), None)
+                kwargs = self.audio_std()
 
         with wx.FileDialog(
                 None, _("Choose a Videomass preset..."),

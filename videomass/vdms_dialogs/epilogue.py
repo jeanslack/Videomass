@@ -74,13 +74,11 @@ class Formula(wx.Dialog):
         sizeropt = wx.BoxSizer(wx.HORIZONTAL)
         sizbase.Add(sizeropt, 0)
 
-        descr = _("Move the source files to Videomass trash\n"
-                  "folder after successful operations")
+        descr = _("Trash the source files when finished")
         self.ckbx_trash = wx.CheckBox(self, wx.ID_ANY, (descr))
         self.ckbx_trash.SetValue(self.movetotrash)
         sizeropt.Add(self.ckbx_trash, 0, wx.ALL, 5)
-        descr = _("Clear the list of\n"
-                  "imported files")
+        descr = _("Clear the File List when the operation is complete")
         self.ckbx_del = wx.CheckBox(self, wx.ID_ANY, (descr))
         self.ckbx_del.SetValue(self.emptylist)
         if self.movetotrash:

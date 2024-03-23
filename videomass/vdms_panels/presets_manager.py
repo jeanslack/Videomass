@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.08.2024
+Rev: Mar.22.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -901,15 +901,14 @@ class PrstPan(wx.Panel):
             self.on_deselect(self, cleardata=False)
     # ------------------------------------------------------------------#
 
-    def on_start(self):
+    def check_options(self, index=None):
         """
-        File data redirecting .
-
+        Update entries and file check.
         """
         if not self.array:
             self.parent.statusbar_msg(_("First select a profile in the list"),
                                       PrstPan.YELLOW, PrstPan.BLACK)
-            return
+            return None
 
         if (self.array[2].strip() != self.txt_1cmd.GetValue().strip()
                 or self.array[3].strip() != self.txt_2cmd.GetValue().strip()):
@@ -931,51 +930,114 @@ class PrstPan(wx.Panel):
                     if dlg.IsCheckBoxChecked():
                         # make sure we won't show it again the next time
                         self.txtcmdedited = False
-                    return
+                    return None
                 if dlg.IsCheckBoxChecked():
                     # make sure we won't show it again the next time
                     self.txtcmdedited = False
 
+        if index is not None:
+            infile = [self.parent.file_src[index]]
+            outfilenames = [self.parent.outputnames[index]]
+        else:
+            infile = self.parent.file_src
+            outfilenames = self.parent.outputnames
+
         outext = '' if self.array[5] == 'copy' else self.array[5]
         extlst = self.array[4]
-        file_src = supported_formats(extlst, self.parent.file_src)
-        checking = check_files(file_src,
-                               self.parent.outputdir,
-                               self.parent.same_destin,
-                               self.parent.suffix,
-                               outext,
-                               self.parent.outputnames
-                               )
-        if not checking:
+        file_src = supported_formats(extlst, infile)
+        filecheck = check_files(file_src,
+                                self.parent.outputdir,
+                                self.parent.same_destin,
+                                self.parent.suffix,
+                                outext,
+                                outfilenames,
+                                )
+        if not filecheck:
             # not supported, missing files or user has changed his mind
-            return
-        fsrc, fdest = checking
-        self.build_args(fsrc, fdest, outext)
+            return None
+
+        return filecheck
     # ----------------------------------------------------------------#
 
-    def build_args(self, filesrc, filedest, outext):
+    def get_codec_args(self):
         """
-        Build args string for one pass process
+        Get data from encoder panels and set ffmpeg
+        command arguments
         """
         if self.array[3]:
-            passenc, thrtype = _('Two-pass Encoding'), 'twopass'
+            thrtype = 'twopass'
         else:
-            passenc, thrtype = _('One-pass Encoding'), 'onepass'
+            thrtype = 'onepass'
 
         preinput_1 = " ".join(self.pass_1_pre.GetValue().split())
         preinput_2 = " ".join(self.pass_2_pre.GetValue().split())
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
         pass2 = " ".join(self.txt_2cmd.GetValue().split())
-        kwargs = {'logname': 'presets_manager.log', 'type': thrtype,
-                  'fsrc': filesrc, 'fdest': filedest, 'args': (pass1, pass2),
-                  'nmax': len(filesrc), 'fext': outext,
+
+        kwargs = {'type': thrtype, 'args': (pass1, pass2),
                   'pre-input-1': preinput_1, 'pre-input-2': preinput_2,
+                  'ffmpeg_cmd': self.appdata["ffmpeg_cmd"],
+                  'ffmpeg_default_args': self.appdata["ffmpeg_default_args"],
                   }
-        kwargs = update_timeseq_duration(self.parent.time_seq,
-                                         self.parent.duration,
-                                         **kwargs,
-                                         )
-        keyval = self.update_dict(len(filesrc), passenc)
+        return kwargs
+    # ----------------------------------------------------------------#
+
+    def queue_mode(self):
+        """
+        build queue mode arguments. This method is
+        called by `parent.on_add_to_queue`.
+        Return a dictionary of data.
+        """
+        logname = 'Queue-processing.log'
+        index = self.parent.file_src.index(self.parent.filedropselected)
+
+        check = self.check_options(index)
+        if not check:
+            return None
+
+        f_src, f_dest = check[0][0], check[1][0]
+        kwargs = self.get_codec_args()
+        dur, ss, et = update_timeseq_duration(self.parent.time_seq,
+                                              self.parent.duration
+                                              )
+        kwargs['start-time'], kwargs['end-time'] = ss, et
+        kwargs['logname'] = logname
+        kwargs['fext'] = '' if self.array[5] == 'copy' else self.array[5]
+        kwargs['fsrc'] = f_src
+        kwargs['fdest'] = f_dest
+        kwargs["duration"] = dur[index]
+
+        return kwargs
+    # ------------------------------------------------------------------#
+
+    def batch_mode(self):
+        """
+        build batch mode arguments. This method is called
+        by `parent.click_start`
+        """
+        logname = 'presets_manager.log'
+
+        check = self.check_options()
+        if not check:
+            return None
+
+        f_src, f_dest = check
+        kwargs = self.get_codec_args()
+        dur, ss, et = update_timeseq_duration(self.parent.time_seq,
+                                              self.parent.duration
+                                              )
+        kwargs['start-time'], kwargs['end-time'] = ss, et
+        kwargs['fext'] = '' if self.array[5] == 'copy' else self.array[5]
+
+        batchlist = []
+        for index in enumerate(self.parent.file_src):
+            kw = kwargs.copy()
+            kw['fsrc'] = f_src[index[0]]
+            kw['fdest'] = f_dest[index[0]]
+            kw['duration'] = dur[index[0]]
+            batchlist.append(kw)
+
+        keyval = self.update_dict(len(self.parent.file_src))
         ending = Formula(self, (600, 170),
                          self.parent.movetotrash,
                          self.parent.emptylist,
@@ -984,14 +1046,21 @@ class PrstPan(wx.Panel):
         if ending.ShowModal() == wx.ID_OK:
             (self.parent.movetotrash,
              self.parent.emptylist) = ending.getvalue()
-            self.parent.switch_to_processing(kwargs["type"], **kwargs)
-    # ------------------------------------------------------------------#
+            self.parent.switch_to_processing(kwargs["type"],
+                                             logname,
+                                             datalist=batchlist)
+    # ----------------------------------------------------------------#
 
-    def update_dict(self, cntmax, passes):
+    def update_dict(self, cntmax):
         """
         Update information before send to epilogue
 
         """
+        if self.array[3]:
+            passes = _('Two-pass Encoding')
+        else:
+            passes = _('One-pass Encoding')
+
         if not self.parent.time_seq:
             timeseq = _('Unset')
         else:

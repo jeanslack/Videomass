@@ -556,15 +556,15 @@ class VideoToSequence(wx.Panel):
             command = " ".join(f'{arg[1]} {self.txt_args.GetValue()} -y '
                                f'"{outfilename}"'.split())
 
+        dur, ss, et = update_timeseq_duration(self.parent.time_seq,
+                                              self.parent.duration
+                                              )
         kwargs = {'logname': 'from_movie_to_pictures.log',
-                  'type': 'video_to_sequence',
-                  'filename': filename, 'outputdir': outputdir,
-                  'args': command, 'pre-input-1': preargs,
+                  'type': 'video_to_sequence', 'duration': dur,
+                  'start-time': ss, 'end-time': et, 'filename': filename,
+                  'outputdir': outputdir, 'args': command,
+                  'pre-input-1': preargs,
                   }
-        kwargs = update_timeseq_duration(self.parent.time_seq,
-                                         self.parent.duration,
-                                         **kwargs,
-                                         )
         keyval = self.update_dict(filename, outputdir)
         ending = Formula(self, (600, 280),
                          self.parent.movetotrash,
@@ -584,8 +584,10 @@ class VideoToSequence(wx.Panel):
                           wx.ICON_ERROR, self)
             return
 
-        self.parent.switch_to_processing(kwargs["type"], **kwargs)
-
+        self.parent.switch_to_processing(kwargs["type"],
+                                         kwargs["logname"],
+                                         datalist=kwargs
+                                         )
         return
     # ------------------------------------------------------------------#
 

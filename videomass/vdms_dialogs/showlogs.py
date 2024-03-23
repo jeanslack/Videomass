@@ -44,6 +44,7 @@ class ShowLogs(wx.Dialog):
                 'still_image_maker.log',
                 'generic_task.log',
                 'yt_dlp.log',
+                'Queue-processing.log',
                 )
 
     def __init__(self, parent, dirlog, OS):

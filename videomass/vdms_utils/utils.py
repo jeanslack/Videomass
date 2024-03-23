@@ -543,7 +543,7 @@ def clockset(duration, fileclock):
 # ------------------------------------------------------------------#
 
 
-def update_timeseq_duration(time_seq, duration, **kwargs):
+def update_timeseq_duration(time_seq, duration):
     """
     Return an updated dict with time/duration
     """
@@ -552,14 +552,13 @@ def update_timeseq_duration(time_seq, duration, **kwargs):
         splseq = time_seq.split()
         tseq = f'{splseq[0]} {splseq[1]}', f'{splseq[2]} {splseq[3]}'
         dur = [ms for n in duration]
-        kwargs['duration'] = dur
-        kwargs['start-time'] = tseq[0]
-        kwargs['end-time'] = tseq[1]
+        duration = dur
+        timestart = tseq[0]
+        endtime = tseq[1]
     else:
-        kwargs['start-time'], kwargs['end-time'] = '', ''
-        kwargs['duration'] = duration
+        timestart, endtime = '', ''
 
-    return kwargs
+    return duration, timestart, endtime
 # ------------------------------------------------------------------#
 
 

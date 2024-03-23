@@ -692,8 +692,10 @@ class SequenceToVideo(wx.Panel):
                           wx.ICON_ERROR, self)
             return
 
-        self.parent.switch_to_processing(kwargs["type"], **kwargs)
-
+        self.parent.switch_to_processing(kwargs["type"],
+                                         kwargs["logname"],
+                                         datalist=kwargs
+                                         )
         return
     # -----------------------------------------------------------
 

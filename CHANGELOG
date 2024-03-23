@@ -7,8 +7,11 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 16 Mar 2024 V.5.0.10
+Tue, 23 Mar 2024 V.5.0.10
 
+  * [A/V Conversions] [Presets Manager] [NEW] Added ability to manage and
+    process file queues. This will make Videomass capable of both processing
+    files in batches (as we know) and processing queues of files.
   * [A/V Conversions] Code refactoring and UI layout improvement.
   * [A/V Conversions] [NEW] Added new graphics controls for encoder features.
   * [A/V Conversions] [NEW] Added UI for SVT-AV1 video encoder.

@@ -83,5 +83,5 @@ class Video_No_Enc(scrolled.ScrolledPanel):
         """
         Get all video parameters
         """
-        return None
+        return ''
     # ------------------------------------------------------------------#

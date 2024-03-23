@@ -243,7 +243,9 @@ class Conc_Demuxer(wx.Panel):
         if ending.ShowModal() == wx.ID_OK:
             (self.parent.movetotrash,
              self.parent.emptylist) = ending.getvalue()
-            self.parent.switch_to_processing(kwargs["type"], **kwargs)
+            self.parent.switch_to_processing(kwargs["type"],
+                                             logname,
+                                             datalist=kwargs)
     # -----------------------------------------------------------
 
     def update_dict(self, newfile, destdir, ext):
