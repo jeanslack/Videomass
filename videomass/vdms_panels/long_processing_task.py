@@ -188,6 +188,7 @@ class LogOut(wx.Panel):
                 io_tools.openpath(fname)
     # ----------------------------------------------------------------------
 
+
     def topic_thread(self, args, data, previous='View', mode='w'):
         """
         This method is resposible to create the Thread instance.
@@ -205,7 +206,7 @@ class LogOut(wx.Panel):
 
         self.logfile = make_log_template(args[1],
                                          self.appdata['logdir'],
-                                         mode,  # w or a
+                                         mode='w',  # w or a
                                          )
         if args[0] in ('onepass', 'twopass', 'two pass EBU',
                        'libvidstab', 'Queue-processing'):
