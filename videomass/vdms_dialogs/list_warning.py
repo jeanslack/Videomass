@@ -79,7 +79,7 @@ class ListWarning(wx.Dialog):
                                | wx.TE_RICH2
                                | wx.HSCROLL,
                                )
-        textlist.SetMinSize((550, 300))
+        textlist.SetMinSize((700, 300))
         sizer.Add(textlist, 1, wx.ALL | wx.EXPAND, 5)
 
         # confirm buttons

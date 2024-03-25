@@ -7,11 +7,15 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 23 Mar 2024 V.5.0.10
+Tue, 25 Mon 2024 V.5.0.10
 
   * [A/V Conversions] [Presets Manager] [NEW] Added ability to manage and
     process file queues. This will make Videomass capable of both processing
-    files in batches (as we know) and processing queues of files.
+    files in batches (as we know) and processing queues of files. Each item
+    added to the queue will can have different settings, such as different
+    times trimming, different filters, etc. To improve productivity, this
+    feature includes the ability to add items to the queue in both Presets
+    Manager and A/V Conversions.
   * [A/V Conversions] Code refactoring and UI layout improvement.
   * [A/V Conversions] [NEW] Added new graphics controls for encoder features.
   * [A/V Conversions] [NEW] Added UI for SVT-AV1 video encoder.
@@ -42,7 +46,7 @@ Tue, 23 Mar 2024 V.5.0.10
   * [A/V Conversions] Fixed mappings order for correct steams indexing
     on the video.
   * [FFmpeg Message Monitoring] Fixed text lengh, as the output messages from
-    FFmpeg can be quite verbose, this sets the limit at 2 loops per task.
+    FFmpeg can be quite verbose, this sets the limit at 1 loops per task.
     The full list of the log messages can always be viewed in the respective
     log file or by clicking in the new button placed in this panel.
   * [yt_dlp Message Monitoring] Fixed text lengh, as the output messages from

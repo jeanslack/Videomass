@@ -24,7 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-from __future__ import unicode_literals
 import time
 import os
 from shutil import move
@@ -188,7 +187,6 @@ class LogOut(wx.Panel):
                 io_tools.openpath(fname)
     # ----------------------------------------------------------------------
 
-
     def topic_thread(self, args, data, previous='View', mode='w'):
         """
         This method is resposible to create the Thread instance.
@@ -206,10 +204,10 @@ class LogOut(wx.Panel):
 
         self.logfile = make_log_template(args[1],
                                          self.appdata['logdir'],
-                                         mode='w',  # w or a
+                                         mode,  # w or a
                                          )
-        if args[0] in ('onepass', 'twopass', 'two pass EBU',
-                       'libvidstab', 'Queue-processing'):
+        if args[0] in ('One pass', 'Two pass', 'Two pass EBU',
+                       'Two pass VIDSTAB', 'Queue Processing'):
             self.thread_type = FFmpeg(self.logfile, data)
 
         elif args[0] == 'video_to_sequence':
@@ -331,7 +329,7 @@ class LogOut(wx.Panel):
             self.error = True
         else:
             if self.maxrotate is not None:
-                if self.maxrotate == 2:
+                if self.maxrotate == 1:
                     self.maxrotate = 0
                     self.txtout.Clear()
                 self.maxrotate += 1
@@ -362,21 +360,18 @@ class LogOut(wx.Panel):
                                             "destination you specified"),
                                   wx.ICON_INFORMATION,
                                   )
+                if os.path.basename(self.logfile) == 'Queue Processing.log':
+                    pub.sendMessage("QUEUE PROCESS SUCCESSFULLY", msg='Done')
+
             else:
                 if len(self.result) == self.count:
                     endmsg = LogOut.MSG_taskfailed
-                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
-                    notification_area(endmsg, _("Check the current output "
-                                                "or read the related log "
-                                                "file for more information."),
-                                      wx.ICON_ERROR,)
                 else:
                     endmsg = LogOut.MSG_unfinished
-                    self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
-                    notification_area(endmsg, _("Check the current output "
-                                                "or read the related log "
-                                                "file for more information."),
-                                      wx.ICON_WARNING, timeout=10)
+
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
+                notification_area(endmsg, _("For more details please read the "
+                                            "Full Log."), wx.ICON_ERROR)
 
             self.parent.statusbar_msg(_('...Finished'), None)
             self.txtout.AppendText(f"\n{endmsg}\n")

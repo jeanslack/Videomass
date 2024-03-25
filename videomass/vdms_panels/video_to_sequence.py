@@ -559,11 +559,12 @@ class VideoToSequence(wx.Panel):
         dur, ss, et = update_timeseq_duration(self.parent.time_seq,
                                               self.parent.duration
                                               )
-        kwargs = {'logname': 'from_movie_to_pictures.log',
+        kwargs = {'logname': 'From Movie to Pictures.log',
                   'type': 'video_to_sequence', 'duration': dur,
                   'start-time': ss, 'end-time': et, 'filename': filename,
                   'outputdir': outputdir, 'args': command,
                   'pre-input-1': preargs,
+                  'preset name': 'From Movies to Pictures',
                   }
         keyval = self.update_dict(filename, outputdir)
         ending = Formula(self, (600, 280),
@@ -626,7 +627,7 @@ class VideoToSequence(wx.Panel):
         keys = (_("Selected File\nOutput Format\n"
                   "Destination Folder\nRate (fps)\nResizing\n"
                   "Mosaic rows\nMosaic columns\nMosaic padding\n"
-                  "Mosaic margin\nCustom Arguments\nTime Period"
+                  "Mosaic margin\nCustom Arguments\nTime Trimming"
                   ))
         vals = (f"{filename}\n{self.cmb_frmt.GetValue()}\n{outputdir}"
                 f"\n{rate}\n{resize}\n{rows}\n{cols}\n{pad}\n{marg}"

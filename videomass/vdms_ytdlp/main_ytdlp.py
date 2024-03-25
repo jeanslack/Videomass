@@ -277,13 +277,14 @@ class MainYtdl(wx.Frame):
 
         # ----------------------- file menu
         fileButton = wx.Menu()
-        dscrp = (_("Open destination\tCtrl+D"),
-                 _("Open the downloads folder"))
-        fold_downloads = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        fileButton.AppendSeparator()
-        dscrp = (_("Work notes\tCtrl+N"),
-                 _("Read and write useful notes and reminders."))
-        notepad = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = _("Open download destination\tCtrl+D")
+        fold_downloads = fileButton.Append(wx.ID_ANY, dscrp)
+        dscrp = (_("Set download destination"),
+                 _("Set a new destination for your downloads"))
+        setdownload_tmp = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = _("Restore default download destination")
+        self.resetfolders_tmp = fileButton.Append(wx.ID_ANY, dscrp)
+        self.resetfolders_tmp.Enable(False)
         fileButton.AppendSeparator()
         closeItem = fileButton.Append(wx.ID_CLOSE, _("Close view\tCtrl+W"),
                                       _("Close the active view keeping the "
@@ -308,6 +309,13 @@ class MainYtdl(wx.Frame):
         self.clearall = editButton.Append(wx.ID_CLEAR, dscrp[0], dscrp[1])
         self.menuBar.Append(editButton, _("Edit"))
 
+        # ------------------ tools menu
+        toolsButton = wx.Menu()
+        dscrp = (_("Work notes\tCtrl+N"),
+                 _("Read and write useful notes and reminders."))
+        notepad = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        self.menuBar.Append(toolsButton, _("Tools"))
+
         # ------------------ View menu
         viewButton = wx.Menu()
         dscrp = (_("Version of yt-dlp"),
@@ -317,21 +325,6 @@ class MainYtdl(wx.Frame):
                  _("Check the latest version available on github.com"))
         self.ydllatest = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(viewButton, _("View"))
-
-        # ------------------ setup menu
-        setupButton = wx.Menu()
-
-        dscrp = (_("Set destination"),
-                 _("Set a new destination for your downloads"))
-        setdownload_tmp = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        setupButton.AppendSeparator()
-        dscrp = (_("Restore default destination"),
-                 _("Restore the default file destination for downloads"))
-        self.resetfolders_tmp = setupButton.Append(wx.ID_ANY, dscrp[0],
-                                                   dscrp[1])
-        self.resetfolders_tmp.Enable(False)
-        self.menuBar.Append(setupButton, _("Settings"))
-
         self.SetMenuBar(self.menuBar)
 
         # -----------------------Binding menu bar-------------------------#
@@ -620,7 +613,7 @@ class MainYtdl(wx.Frame):
             [self.toolbar.EnableTool(x, False) for x in (21, 23, 24, 25)]
             [self.toolbar.EnableTool(x, True) for x in (20, 22)]
 
-        elif args[0] == 'youtube_dl downloading':
+        elif args[0] == 'YouTube Downloader':
             (self.delete.Enable(False),
              self.paste.Enable(False),
              self.clearall.Enable(False)

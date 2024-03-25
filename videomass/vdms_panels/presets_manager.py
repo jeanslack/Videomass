@@ -297,7 +297,7 @@ class PrstPan(wx.Panel):
         self.btn_saveall.SetToolTip(tip)
         tip = _("Import a new preset or update an existing one")
         self.btn_restore.SetToolTip(tip)
-        tip = (_("Import a presets folder, updating those in use"))
+        tip = _("Import a presets folder, updating those in use")
         self.btn_restoreall.SetToolTip(tip)
         tip = _("Replace the selected preset with the Videomass default one")
         self.btn_restoredef.SetToolTip(tip)
@@ -965,19 +965,20 @@ class PrstPan(wx.Panel):
         command arguments
         """
         if self.array[3]:
-            thrtype = 'twopass'
+            thrtype = 'Two pass'
         else:
-            thrtype = 'onepass'
+            thrtype = 'One pass'
 
         preinput_1 = " ".join(self.pass_1_pre.GetValue().split())
         preinput_2 = " ".join(self.pass_2_pre.GetValue().split())
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
         pass2 = " ".join(self.txt_2cmd.GetValue().split())
-
+        preset = self.cmbx_prst.GetValue()
         kwargs = {'type': thrtype, 'args': (pass1, pass2),
                   'pre-input-1': preinput_1, 'pre-input-2': preinput_2,
                   'ffmpeg_cmd': self.appdata["ffmpeg_cmd"],
                   'ffmpeg_default_args': self.appdata["ffmpeg_default_args"],
+                  'preset name': f'Presets Manager - {preset}',
                   }
         return kwargs
     # ----------------------------------------------------------------#
@@ -988,7 +989,7 @@ class PrstPan(wx.Panel):
         called by `parent.on_add_to_queue`.
         Return a dictionary of data.
         """
-        logname = 'Queue-processing.log'
+        logname = 'Queue Processing.log'
         index = self.parent.file_src.index(self.parent.filedropselected)
 
         check = self.check_options(index)
@@ -1015,7 +1016,7 @@ class PrstPan(wx.Panel):
         build batch mode arguments. This method is called
         by `parent.click_start`
         """
-        logname = 'presets_manager.log'
+        logname = 'Presets Manager.log'
 
         check = self.check_options()
         if not check:
@@ -1037,8 +1038,8 @@ class PrstPan(wx.Panel):
             kw['duration'] = dur[index[0]]
             batchlist.append(kw)
 
-        keyval = self.update_dict(len(self.parent.file_src))
-        ending = Formula(self, (600, 170),
+        keyval = self.update_dict(len(self.parent.file_src), **kwargs)
+        ending = Formula(self, (600, 180),
                          self.parent.movetotrash,
                          self.parent.emptylist,
                          **keyval,
@@ -1049,17 +1050,15 @@ class PrstPan(wx.Panel):
             self.parent.switch_to_processing(kwargs["type"],
                                              logname,
                                              datalist=batchlist)
+        return None
     # ----------------------------------------------------------------#
 
-    def update_dict(self, cntmax):
+    def update_dict(self, cntmax, **kwa):
         """
         Update information before send to epilogue
 
         """
-        if self.array[3]:
-            passes = _('Two-pass Encoding')
-        else:
-            passes = _('One-pass Encoding')
+        passes = '2' if self.array[3] else '1'
 
         if not self.parent.time_seq:
             timeseq = _('Unset')
@@ -1067,9 +1066,10 @@ class PrstPan(wx.Panel):
             t = self.parent.time_seq.split()
             timeseq = _('start  {} | duration  {}').format(t[1], t[3])
 
-        keys = (_("Batch processing items\nEncoding passes"
-                  "\nProfile Used\nOutput Format\nTime Period"))
-        vals = (f"{cntmax}\n{passes}\n"
+        keys = (_("Batch processing items\nAutomation/Preset\n"
+                  "Encoding passes\n"
+                  "Profile Used\nOutput Format\nTime Trimming"))
+        vals = (f"{cntmax}\n{kwa['preset name']}\n{passes}\n"
                 f"{self.array[0]}\n{self.array[5]}\n{timeseq}"
                 )
         return {'key': keys, 'val': vals}

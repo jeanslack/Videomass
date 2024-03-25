@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
-Name: get_queue_json.py
-Porpose: checks for appropriate keys/values on a json file
+Name: queue_utils.py
+Porpose: utils for queue managements
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -24,32 +24,44 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+import os
 import json
 import wx
 
 
-def load_json_file_queue():
+def write_json_file_queue(data, queuefile=None):
+    """
+    Write queue json file
+    """
+    if not queuefile:
+        get = wx.GetApp()
+        appdata = get.appset
+        queuefile = os.path.join(appdata["confdir"], 'queue.backup')
+    with open(queuefile, 'w', encoding='utf8') as outfile:
+        json.dump(data, outfile, ensure_ascii=False, indent=4)
+# --------------------------------------------------------------------
+
+
+def load_json_file_queue(newincoming=None):
     """
     Locates, loads and validates a QUEUE json file
     """
-    wildcard = "Source (*.json)|*.json| All files (*.*)|*.*"
+    if not newincoming:
+        wildcard = "Source (*.json)|*.json| All files (*.*)|*.*"
+        with wx.FileDialog(None, _("Import queue"),
+                           "", "", wildcard, wx.FD_OPEN
+                           | wx.FD_FILE_MUST_EXIST) as filedlg:
 
-    with wx.FileDialog(None, _("Load queue"),
-                       "", "", wildcard, wx.FD_OPEN
-                       | wx.FD_FILE_MUST_EXIST) as filedlg:
-
-        if filedlg.ShowModal() == wx.ID_CANCEL:
-            return None
-        newincoming = filedlg.GetPath()
-
+            if filedlg.ShowModal() == wx.ID_CANCEL:
+                return None
+            newincoming = filedlg.GetPath()
     try:
         with open(newincoming, 'r', encoding='utf8') as fln:
             newdata = json.load(fln)
 
     except json.decoder.JSONDecodeError as err:
         msg = _('You are attempting to load a json file written with '
-                'invalid JSON encoding.'
-                )
+                'invalid JSON encoding.')
         wx.MessageBox(f'\nERROR: {err}\n\nFILE: "{newincoming}"\n\n{msg}',
                       ("Videomass"), wx.STAY_ON_TOP
                       | wx.ICON_ERROR

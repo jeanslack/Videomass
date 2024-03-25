@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.19.2024
+Rev: Mar.25.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -27,7 +27,8 @@ This file is part of Videomass.
 import os
 import wx
 import wx.lib.scrolledpanel as scrolled
-from videomass.vdms_utils.get_queue_json import load_json_file_queue
+from videomass.vdms_utils.queue_utils import load_json_file_queue
+from videomass.vdms_utils.queue_utils import write_json_file_queue
 
 
 class QueueManager(wx.Dialog):
@@ -36,7 +37,11 @@ class QueueManager(wx.Dialog):
     managing file queues for viewing, redefining or
     modifying data before sending it to processing.
     """
-    def __init__(self, parent, datalist, movetotrash, emptylist):
+    def __init__(self, parent,
+                 datalist,
+                 movetotrash,
+                 emptylist,
+                 removequeue):
         """
         `datalist` is a class dict.
         `movetotrash`, `emptylist` are class booleans
@@ -47,30 +52,25 @@ class QueueManager(wx.Dialog):
         self.datalist = datalist
         self.movetotrash = movetotrash
         self.emptylist = emptylist
+        self.delqueuefile = removequeue
         wx.Dialog.__init__(self, parent, -1,
                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
         sizerbase = wx.BoxSizer(wx.HORIZONTAL)
         sizerbtn = wx.BoxSizer(wx.VERTICAL)
         sizerbase.Add(sizerbtn, 0)
-        # self.btn_up = wx.Button(self, wx.ID_ANY,
-        #                         _("Move up"), size=(-1, -1))
-        # sizerbtn.Add(self.btn_up, 0, wx.ALL | wx.EXPAND, 5)
-        # self.btn_down = wx.Button(self, wx.ID_ANY,
-        #                           _("Move down"), size=(-1, -1))
-        # sizerbtn.Add(self.btn_down, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_remove = wx.Button(self, wx.ID_ANY,
                                     _("Remove"), size=(-1, -1))
         sizerbtn.Add(self.btn_remove, 0, wx.ALL | wx.EXPAND, 5)
 
         self.btn_remall = wx.Button(self, wx.ID_ANY,
-                                    _("Remove All"), size=(-1, -1))
+                                    _("Remove all"), size=(-1, -1))
         sizerbtn.Add(self.btn_remall, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_expqueue = wx.Button(self, wx.ID_ANY,
-                                      _("Save Queue"), size=(-1, -1))
+                                      _("Export queue"), size=(-1, -1))
         sizerbtn.Add(self.btn_expqueue, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_impqueue = wx.Button(self, wx.ID_ANY,
-                                      _("Load queue"), size=(-1, -1))
+                                      _("Import queue"), size=(-1, -1))
         sizerbtn.Add(self.btn_impqueue, 0, wx.ALL | wx.EXPAND, 5)
 
         self.quelist = wx.ListCtrl(self,
@@ -90,7 +90,7 @@ class QueueManager(wx.Dialog):
         sizervert.Add(self.quelist, 1, wx.EXPAND | wx.ALL, 5)
 
         panelscroll = scrolled.ScrolledPanel(self, wx.ID_ANY,
-                                             size=(700, 210),
+                                             size=(700, 180),
                                              name="panelscr",
                                              style=wx.TAB_TRAVERSAL
                                              | wx.BORDER_THEME,
@@ -112,18 +112,28 @@ class QueueManager(wx.Dialog):
         panelscroll.SetSizer(grid_pan)
         panelscroll.SetAutoLayout(1)
         panelscroll.SetupScrolling()
+
+        lab = (_('When finished, once the operations '
+                 'have been completed successfully:'))
+        lbl = wx.StaticText(self, label=lab)
+        sizervert.Add(lbl, 0, wx.LEFT | wx.TOP, 5)
         sizeropt = wx.BoxSizer(wx.HORIZONTAL)
         sizervert.Add(sizeropt, 0)
-        descr = _("Trash the source files when finished")
+        descr = _('Trash the source files')
         self.ckbx_trash = wx.CheckBox(self, wx.ID_ANY, (descr))
         self.ckbx_trash.SetValue(self.movetotrash)
         sizeropt.Add(self.ckbx_trash, 0, wx.ALL, 5)
-        descr = _("Clear the File List when the operation is complete")
+        descr = _('Clear the File List')
         self.ckbx_del = wx.CheckBox(self, wx.ID_ANY, (descr))
         self.ckbx_del.SetValue(self.emptylist)
         if self.movetotrash:
             self.ckbx_del.Disable()
         sizeropt.Add(self.ckbx_del, 0, wx.ALL, 5)
+
+        descr = _('Remove all items in the queue')
+        self.ckbx_queue = wx.CheckBox(self, wx.ID_ANY, (descr))
+        self.ckbx_queue.SetValue(self.delqueuefile)
+        sizeropt.Add(self.ckbx_queue, 0, wx.ALL, 5)
         btncancel = wx.Button(self, wx.ID_CANCEL, "")
         btnok = wx.Button(self, wx.ID_OK, _("Run"))
         btngrid = wx.FlexGridSizer(1, 2, 0, 0)
@@ -134,8 +144,9 @@ class QueueManager(wx.Dialog):
                       | wx.RIGHT, border=5
                       )
         # ----------------------Properties----------------------#
-        self.SetTitle(_('Videomass Queue'))
-        self.SetMinSize((700, 500))
+        self.SetTitle(_('Queue Processing'))
+        self.SetMinSize((820, 520))
+
         self.SetSizer(sizerbase)
         sizerbase.Fit(self)
         self.Layout()
@@ -146,59 +157,14 @@ class QueueManager(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.on_file_to_trash, self.ckbx_trash)
         self.Bind(wx.EVT_CHECKBOX, self.on_empty_list, self.ckbx_del)
         self.Bind(wx.EVT_BUTTON, self.on_remove_all, self.btn_remall)
+        self.Bind(wx.EVT_CHECKBOX, self.on_keep_queuefile, self.ckbx_queue)
         self.Bind(wx.EVT_BUTTON, self.on_remove_item, self.btn_remove)
         self.Bind(wx.EVT_BUTTON, self.on_save_queue, self.btn_expqueue)
         self.Bind(wx.EVT_BUTTON, self.on_load_queue, self.btn_impqueue)
-        # self.Bind(wx.EVT_BUTTON, self.on_up, self.btn_up)
-        # self.Bind(wx.EVT_BUTTON, self.on_down, self.btn_down)
         self.Bind(wx.EVT_BUTTON, self.on_cancel, btncancel)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btnok)
 
     # ------------------------- Callbacks --------------------------------
-
-    # def on_up(self, event):
-    #     """
-    #     move the selected item to up
-    #     """
-    #     if self.quelist.GetFirstSelected() == -1:  # None
-    #         return
-    #     index = self.quelist.GetFocusedItem()  # index (int)
-    #     item = self.quelist.GetItemText(index)  # name (str)
-    #     count = self.quelist.GetItemCount()  # len items
-    #     print(index)
-    #     print(item)
-    #     print(count)
-    #     curritems = []
-    #
-    #
-    #     current_selection = self.quelist.GetSelectedObject()  # index
-    #     data = self.quelist.GetObjects()
-    #     if current_selection:
-    #         index = data.index(current_selection)
-    #         if index > 0:
-    #             new_index = index - 1
-    #         else:
-    #             new_index = len(data)-1
-    #         data.insert(new_index, data.pop(index))
-    #         # self.products = data
-    #         # self.setBooks()
-    #         self.quelist.Select(new_index)
-    # ----------------------------------------------------------------------
-
-    # def on_down(self, event):
-    #     """
-    #     move the selected item to down
-    #     """
-    #     if self.quelist.GetFirstSelected() == -1:  # None
-    #         return
-    #     index = self.quelist.GetFocusedItem()  # index (int)
-    #     item = self.quelist.GetItemText(index, 0)  # name (str)
-    #     count = self.quelist.GetItemCount()
-    #     print(index)
-    #     print(item)
-    #     print(count)
-    #     curritems = []
-    # ----------------------------------------------------------------------
 
     def on_load_queue(self, event):
         """
@@ -214,26 +180,29 @@ class QueueManager(wx.Dialog):
             desttitle = os.path.basename(item['fdest'])
             self.quelist.InsertItem(index, desttitle)
             index += 1
+
+        write_json_file_queue(self.datalist)
     # ----------------------------------------------------------------------
 
     def on_save_queue(self, event):
         """
-        Save a queue file in local
+        Save a queue file in local. Note, if you intend
+        make `self.datalist` editable by the user, please
+        use `try`/`except` stataments for Context Manager
+        below.
         """
         filename = None
-        with wx.FileDialog(self, _("Save queue"),
+        with wx.FileDialog(self, _("Export queue file"),
                            defaultDir=os.path.expanduser('~'),
-                           wildcard="Videomass queue (*.json;)|*.json;",
+                           wildcard="Queue files (*.json)|*.json",
                            style=wx.FD_SAVE
                            | wx.FD_OVERWRITE_PROMPT) as fileDialog:
             fileDialog.SetFilename('Videomass queue')
-
             if fileDialog.ShowModal() == wx.ID_CANCEL:
                 return
-            filename = f"{fileDialog.GetPath()}.json"
+            filename = fileDialog.GetPath()
 
-        with open(filename, 'w', encoding='utf8') as outfile:
-            json.dump(self.datalist, outfile, ensure_ascii=False, indent=4)
+        write_json_file_queue(self.datalist, filename)
     # ----------------------------------------------------------------------
 
     def on_remove_item(self, event):
@@ -262,6 +231,7 @@ class QueueManager(wx.Dialog):
             self.datalist.pop(num)  # remove selected items
             self.quelist.Select(num - 1)  # select the previous one
 
+        write_json_file_queue(self.datalist)
         return
     # ----------------------------------------------------------------------
 
@@ -274,6 +244,8 @@ class QueueManager(wx.Dialog):
             return
         self.quelist.DeleteAllItems()
         self.datalist.clear()
+        queuebak = os.path.join(self.appdata["confdir"], 'queue.backup')
+        os.remove(queuebak)
     # ----------------------------------------------------------------------
 
     def on_select(self, event):
@@ -282,13 +254,19 @@ class QueueManager(wx.Dialog):
         """
         index = self.quelist.GetFocusedItem()  # index (int)
         itemsel = self.datalist[index]
-        passes = 'One Pass' if itemsel["args"][1] == '' else 'Two pass'
+        passes = '1' if itemsel["args"][1] == '' else '2'
         sst, endt = itemsel["start-time"], itemsel["end-time"]
 
-        keys = (_("Source\nDestination\nType\nEncoding passes\n"
-                  "Output Format\nStart Time\nEnd Time"))
-        vals = (f'{itemsel["fsrc"]}\n{itemsel["fdest"]}\n{itemsel["type"]}\n'
-                f'{passes}\n{itemsel["fext"]}\n{sst}\n{endt}'
+        if not sst or not endt:
+            timeseq = _('Unset')
+        else:
+            timeseq = _('start  {} | duration  {}').format(sst, endt)
+
+        keys = (_("Source\nDestination\nAutomation/Preset\nEncoding passes\n"
+                  "Output Format\nTime Trimming"))
+        vals = (f'{itemsel["fsrc"]}\n{itemsel["fdest"]}'
+                f'\n{itemsel["preset name"]}\n'
+                f'{passes}\n{itemsel["fext"]}\n{timeseq}'
                 )
         self.labkey.SetLabel(keys)
         self.labval.SetLabel(vals)
@@ -333,6 +311,16 @@ class QueueManager(wx.Dialog):
             self.emptylist = False
     # ----------------------------------------------------------------------
 
+    def on_keep_queuefile(self, event):
+        """
+        enable/disable keep or remove queue file backup.
+        """
+        if self.ckbx_queue.IsChecked():
+            self.delqueuefile = True
+        else:
+            self.delqueuefile = False
+    # ----------------------------------------------------------------------
+
     def on_cancel(self, event):
         """
         exit from formula dialog
@@ -354,4 +342,5 @@ class QueueManager(wx.Dialog):
         This method return values via the getvalue() interface
         from the caller. See the caller for more info and usage.
         """
-        return self.datalist, self.movetotrash, self.emptylist
+        return (self.datalist, self.movetotrash,
+                self.emptylist, self.delqueuefile)

@@ -24,7 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-from __future__ import unicode_literals
 import os
 from pubsub import pub
 import wx
@@ -132,7 +131,7 @@ class LogOut(wx.Panel):
         self.txtout.Clear()
         self.labprog.SetLabel('')
         logn = args[8]
-        self.logfile = make_log_template(f'{logn}.log',
+        self.logfile = make_log_template(logn,
                                          self.appdata['logdir'],
                                          mode="w",
                                          )

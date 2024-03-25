@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.08.2024
+Rev: Mar.25.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -28,6 +28,7 @@ import os
 import wx
 import wx.lib.agw.hyperlink as hpl
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
+from videomass.vdms_utils.utils import integer_to_time
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_dialogs.epilogue import Formula
 
@@ -42,13 +43,15 @@ def compare_media_param(data):
     Returns None otherwise.
     """
     if len(data) == 1:
-        return _('At least two files are required to perform concatenation.')
+        return ('error',
+                _('At least two files are required to perform concatenation.'))
     com = {}
-
+    mediatype = []
     for streams in data:
         name = streams.get('format').get('filename')
         com[name] = {}
         for items in streams.get('streams'):
+            mediatype.append(items.get('codec_type'))
             if items.get('codec_type') == 'video':
                 com[name][items.get('index')] = [items.get('codec_name')]
                 size = f"{items.get('width')}x{items.get('height')}"
@@ -56,16 +59,16 @@ def compare_media_param(data):
             if items.get('codec_type') == 'audio':
                 com[name][items.get('index')] = [items.get('codec_name')]
                 com[name][items.get('index')].append(items.get('sample_rate'))
-
     if not com:
-        return _('Invalid data found')
+        return ('error', _('Invalid data found'))
 
     totest = list(com.values())[0]
     if not all(val == totest for val in com.values()):
-        return _('The files do not have the same "codec_types", '
-                 'same "sample_rate" or same "width" or "height". '
-                 'Unable to proceed.')
-    return None
+        return ('error',
+                _('The files do not have the same "codec_types", '
+                  'same "sample_rate" or same "width" or "height". '
+                  'Unable to proceed.'))
+    return None, mediatype[0]
 # -------------------------------------------------------------------------
 
 
@@ -104,6 +107,8 @@ class Conc_Demuxer(wx.Panel):
         self.parent = parent  # parent is the MainFrame
         self.args = ''
         self.duration = None
+        self.ext = None
+        self.mediatype = None
 
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
 
@@ -113,10 +118,6 @@ class Conc_Demuxer(wx.Panel):
         self.btn_help.SetBackgroundColour(wx.Colour(Conc_Demuxer.LGREEN))
         self.btn_help.SetForegroundColour(wx.Colour(Conc_Demuxer.BLACK))
         sizer.Add(self.btn_help, 0, wx.ALL, 5)
-
-        sizer.Add((20, 20))
-        boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
-        sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)
         sizer.Add((20, 20))
         sizer_link2 = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_link2)
@@ -192,12 +193,13 @@ class Conc_Demuxer(wx.Panel):
         ftext = os.path.join(self.cachedir, 'tmp', 'flist.txt')
 
         diff = compare_media_param(self.parent.data_files)
-        if diff:
-            wx.MessageBox(diff, _('ERROR'), wx.ICON_ERROR, self)
+        if diff[0] == 'error':
+            wx.MessageBox(diff[1], _('ERROR'), wx.ICON_ERROR, self)
             return
 
+        self.mediatype = diff[1]
         textstr = []
-        ext = os.path.splitext(self.parent.file_src[0])[1].split('.')[1]
+        self.ext = os.path.splitext(self.parent.file_src[0])[1].split('.')[1]
         self.duration = sum(self.parent.duration)
         for f in self.parent.file_src:
             escaped = f.replace(r"'", r"'\''")  # need escaping some chars
@@ -212,29 +214,30 @@ class Conc_Demuxer(wx.Panel):
                                self.parent.outputdir,
                                self.parent.same_destin,
                                self.parent.suffix,
-                               ext,
+                               self.ext,
                                self.parent.outputnames
                                )
         if not checking:  # User changing idea or not such files exist
             return
         newfile = checking[1]
 
-        self.build_args(self.parent.file_src, newfile[0], ext)
+        self.build_args(self.parent.file_src, newfile[0])
     # -----------------------------------------------------------
 
-    def build_args(self, filesrc, newfile, outext):
+    def build_args(self, filesrc, newfile):
         """
         Redirect to processing
 
         """
-        logname = 'concatenate_demuxer.log'
+        logname = 'Concatenate Media File.log'
 
         kwargs = {'logname': logname, 'type': 'concat_demuxer',
                   'fsrc': filesrc, 'fdest': newfile, 'args': self.args,
                   'nmax': len(filesrc), 'duration': self.duration,
                   'start-time': '', 'end-time': '',
+                  'preset name': 'Concatenate media files',
                   }
-        keyval = self.update_dict(newfile, os.path.dirname(newfile), outext)
+        keyval = self.update_dict(newfile, os.path.dirname(newfile))
         ending = Formula(self, (600, 170),
                          self.parent.movetotrash,
                          self.parent.emptylist,
@@ -248,17 +251,19 @@ class Conc_Demuxer(wx.Panel):
                                              datalist=kwargs)
     # -----------------------------------------------------------
 
-    def update_dict(self, newfile, destdir, ext):
+    def update_dict(self, newfile, destdir):
         """
         Update information before send to epilogue
 
         """
         lenfile = len(self.parent.file_src)
+        dur = integer_to_time(self.duration)
+        dest = os.path.join(destdir, newfile)
 
-        keys = (_("File to concatenate\nOutput filename"
-                  "\nDestination\nOutput Format\nTime Period"
+        keys = (_("Batch processing items\nDestination\nOutput Format"
+                  "\nOutput multimedia type\nDuration"
                   ))
-        vals = (f"{lenfile}\n{newfile}\n{destdir}\n{ext}\n"
-                f"Not applicable")
+        vals = (f"{lenfile}\n{dest}\n{self.ext}\n"
+                f"{self.mediatype}\n{dur}")
 
         return {'key': keys, 'val': vals}

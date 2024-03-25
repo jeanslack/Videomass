@@ -444,7 +444,8 @@ class SequenceToVideo(wx.Panel):
         """
         Add audio track to video.
         """
-        fmt = '*.wav;*.aiff;*.flac;*.oga;*.ogg;*.m4a;*.aac;*.ac3;*.mp3;'
+        fmt = ('*.wav;*.aiff;*.flac;*.oga;*.ogg;*.opus;*.tta;*.m4a;'
+               '*.aac;*.ac3;*.mp3;')
         wild = f"Audio source ({fmt})|{fmt}| All files (*.*)|*.*"
 
         with wx.FileDialog(self, _("Open Audio File"),
@@ -664,13 +665,14 @@ class SequenceToVideo(wx.Panel):
                     return
 
         args = self.get_args_line()  # get args for command line
-        kwargs = {'logname': 'still_image_maker.log',
+        kwargs = {'logname': 'Still Image Maker.log',
                   'type': 'sequence_to_video',
                   'fsrc': files, 'fdest': destdir, 'outputdir': outputdir,
                   'args': args[0], 'nmax': countmax, 'duration': args[1],
                   'pre-input-1': self.opt["Preinput"],
                   'resize': self.opt["RESIZE"],
                   'start-time': '', 'end-time': '',
+                  'preset name': 'Still Image Maker',
                   }
 
         keyval = self.update_dict(f"{name}.mkv", outputdir, countmax, 'mkv')
@@ -714,7 +716,7 @@ class SequenceToVideo(wx.Panel):
         else:
             addargs = ''
 
-        keys = (_("Items to include\nOutput filename"
+        keys = (_("Batch processing items\nOutput filename"
                   "\nDestination Folder\nOutput Format"
                   "\nAdditional arguments"
                   "\nAudio file\nShortest\nResize\nPre-input"

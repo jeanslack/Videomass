@@ -86,7 +86,7 @@ def two_pass(*args, **kwa):
 # ----------------------------------------------------------------------
 
 
-def one_pass_stabilizer(*args, **kwa):
+def one_pass_stab(*args, **kwa):
     """
     Command builder for one pass video stabilizer
     """
@@ -112,7 +112,7 @@ def one_pass_stabilizer(*args, **kwa):
 # ----------------------------------------------------------------------
 
 
-def two_pass_stabilizer(*args, **kwa):
+def two_pass_stab(*args, **kwa):
     """
     Command builder for two pass video stabilizer
     """
@@ -153,7 +153,7 @@ def simple_one_pass(*args, **kwa):
              f'"{kwa["fdest"]}"'
              )
     count1 = (f'File {args[0]}/{args[1]}\nSource: '
-              f'"{kwa["fsrc"]}"\nDestination: "{kwa["fdest"]}')
+              f'"{kwa["fsrc"]}"\nDestination: "{kwa["fdest"]}"')
     stamp1 = f'{count1}\n\n[COMMAND]:\n{pass1}'
 
     if not platform.system() == 'Windows':
@@ -234,7 +234,7 @@ class FFmpeg(Thread):
     from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 
     """
-    NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
+    NOT_EXIST_MSG = "Is 'ffmpeg' installed on your system?"
 
     def __init__(self, *args):
         """
@@ -242,6 +242,8 @@ class FFmpeg(Thread):
         Also see `main_frame.switch_to_processing`.
 
         """
+        get = wx.GetApp()
+        self.appdata = get.appset
         self.stop_work_thread = False  # process terminate
         self.count = 0  # count for loop
         self.logfile = args[0]  # log filename
@@ -258,16 +260,16 @@ class FFmpeg(Thread):
         filedone = []
         for kwa in self.kwargs:
             self.count += 1
-            if kwa['type'] == 'onepass':
+            if kwa['type'] == 'One pass':
                 model = simple_one_pass(self.count, self.nargs, **kwa)
 
-            elif kwa['type'] == 'two pass EBU':
+            elif kwa['type'] == 'Two pass EBU':
                 model = one_pass_ebu(self.count, self.nargs, **kwa)
 
-            elif kwa['type'] == 'libvidstab':
-                model = one_pass_stabilizer(self.count, self.nargs, **kwa)
+            elif kwa['type'] == 'Two pass VIDSTAB':
+                model = one_pass_stab(self.count, self.nargs, **kwa)
 
-            elif kwa['type'] == 'twopass':
+            elif kwa['type'] == 'Two pass':
                 model = one_pass(self.count, self.nargs, **kwa)
 
             wx.CallAfter(pub.sendMessage,
@@ -296,7 +298,7 @@ class FFmpeg(Thread):
                             proc1.terminate()
                             break
 
-                        if kwa["type"] == 'two pass EBU':
+                        if kwa["type"] == 'Two pass EBU':
                             summary = model['summary']
                             for k in summary:
                                 if line.startswith(k):
@@ -313,7 +315,7 @@ class FFmpeg(Thread):
                                  f"Exit status: {proc1.wait()}",
                                  self.logfile,
                                  )  # append exit error number
-                        break
+                        continue
 
             except (OSError, FileNotFoundError) as err:
                 excepterr = f"{err}\n  {FFmpeg.NOT_EXIST_MSG}"
@@ -330,7 +332,7 @@ class FFmpeg(Thread):
                 break  # stop for loop
 
             if proc1.wait() == 0:  # will add '..terminated' to txtctrl
-                if len(kwa["args"]) == 1:
+                if not kwa["args"][1]:
                     filedone.append(kwa["fsrc"])
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
@@ -343,7 +345,7 @@ class FFmpeg(Thread):
                 continue
 
             # --------------- second pass ----------------#
-            if kwa["type"] == 'two pass EBU':
+            if kwa["type"] == 'Two pass EBU':
                 filters = (f'{kwa["EBU"]}'
                            f':measured_I={summary["Input Integrated:"]}'
                            f':measured_LRA={summary["Input LRA:"]}'
@@ -355,10 +357,10 @@ class FFmpeg(Thread):
                 model = two_pass_ebu(self.count, self.nargs, filters, **kwa)
                 time.sleep(.5)
 
-            elif kwa['type'] == 'libvidstab':
-                model = two_pass_stabilizer(self.count, self.nargs, **kwa)
+            elif kwa['type'] == 'Two pass VIDSTAB':
+                model = two_pass_stab(self.count, self.nargs, **kwa)
 
-            elif kwa['type'] == 'twopass':
+            elif kwa['type'] == 'Two pass':
                 model = two_pass(self.count, self.nargs, **kwa)
 
             wx.CallAfter(pub.sendMessage,

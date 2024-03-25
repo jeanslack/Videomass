@@ -889,7 +889,7 @@ class AV_Conv(wx.Panel):
         called by `parent.on_add_to_queue`.
         Return a dictionary of data.
         """
-        logname = 'Queue-processing.log'
+        logname = 'Queue Processing.log'
         index = self.parent.file_src.index(self.parent.filedropselected)
 
         check = self.check_options(index)
@@ -921,7 +921,7 @@ class AV_Conv(wx.Panel):
         build batch mode arguments. This method is called
         by `parent.click_start`
         """
-        logname = 'AV_conversions.log'
+        logname = 'AV Conversions.log'
 
         check = self.check_options()
         if not check:
@@ -949,7 +949,7 @@ class AV_Conv(wx.Panel):
                 kw["volume"] = ''
             batchlist.append(kw)
 
-        keyval = self.update_dict(len(f_src))
+        keyval = self.update_dict(len(f_src), **kwargs)
         ending = Formula(self, (600, 210),
                          self.parent.movetotrash,
                          self.parent.emptylist,
@@ -997,9 +997,11 @@ class AV_Conv(wx.Panel):
                         f'{self.opt["MetaData"]}'
                         )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
-            kwargs = {'type': 'two pass EBU', 'args': (pass1, pass2),
+            kwargs = {'type': 'Two pass EBU', 'args': (pass1, pass2),
                       'EBU': self.opt["EBU"][1],
-                      'audiomap': self.opt["AudioMap"]
+                      'audiomap': self.opt["AudioMap"],
+                      'preset name':
+                          'A/V Conversions - Video VIDSTAB/EBU Norm.',
                       }
         else:
             audnorm = (self.opt["RMS"] if not self.opt["PEAK"]
@@ -1014,8 +1016,9 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
-            kwargs = {'type': 'libvidstab', 'args': (pass1, pass2),
+            kwargs = {'type': 'Two pass VIDSTAB', 'args': (pass1, pass2),
                       'volume': [vol[5] for vol in audnorm],
+                      'preset name': 'A/V Conversions - Video VIDSTAB.',
                       }
         return kwargs
         # ------------------------------------------------------------------#
@@ -1035,8 +1038,9 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(args.split()), ''
-            kwargs = {'type': 'onepass', 'args': (pass1, pass2),
+            kwargs = {'type': 'One pass', 'args': (pass1, pass2),
                       'volume': [vol[5] for vol in audnorm],
+                      'preset name': 'A/V Conversions - Video standard',
                       }
         elif self.opt["Passes"] == "2":
 
@@ -1049,8 +1053,9 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
-            kwargs = {'type': 'twopass', 'args': (pass1, pass2),
+            kwargs = {'type': 'Two pass', 'args': (pass1, pass2),
                       'volume': [vol[5] for vol in audnorm],
+                      'preset name': 'A/V Conversions - Video standard.',
                       }
         elif self.opt["Passes"] == "Auto":
             args = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
@@ -1059,8 +1064,9 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(args.split()), ''
-            kwargs = {'type': 'onepass', 'args': (pass1, pass2),
+            kwargs = {'type': 'One pass', 'args': (pass1, pass2),
                       'volume': [vol[5] for vol in audnorm],
+                      'preset name': 'A/V Conversions - Video standard',
                       }
         return kwargs
     # ------------------------------------------------------------------#
@@ -1083,9 +1089,10 @@ class AV_Conv(wx.Panel):
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
-            kwargs = {'type': 'two pass EBU', 'args': (pass1, pass2),
+            kwargs = {'type': 'Two pass EBU', 'args': (pass1, pass2),
                       'EBU': self.opt["EBU"][1],
-                      'audiomap': self.opt["AudioMap"]
+                      'audiomap': self.opt["AudioMap"],
+                      'preset name': 'A/V Conversions - copy Video/EBU Norm.',
                       }
         elif self.opt["Passes"] == "2":
 
@@ -1101,9 +1108,10 @@ class AV_Conv(wx.Panel):
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
-            kwargs = {'type': 'two pass EBU', 'args': (pass1, pass2),
+            kwargs = {'type': 'Two pass EBU', 'args': (pass1, pass2),
                       'EBU': self.opt["EBU"][1],
-                      'audiomap': self.opt["AudioMap"]
+                      'audiomap': self.opt["AudioMap"],
+                      'preset name': 'A/V Conversions - Video/EBU Norm.',
                       }
         else:
             cmd_1 = (f'{self.opt["AudioIndex"]} '
@@ -1115,9 +1123,10 @@ class AV_Conv(wx.Panel):
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
-            kwargs = {'type': 'two pass EBU', 'args': (pass1, pass2),
+            kwargs = {'type': 'Two pass EBU', 'args': (pass1, pass2),
                       'EBU': self.opt["EBU"][1],
-                      'audiomap': self.opt["AudioMap"]
+                      'audiomap': self.opt["AudioMap"],
+                      'preset name': 'A/V Conversions - Video/EBU Norm.',
                       }
         return kwargs
     # ------------------------------------------------------------------#
@@ -1134,8 +1143,9 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["EBU"][1]} -vn -sn {self.opt["MetaData"]}'
                 )
         pass1, pass2 = " ".join(args.split()), ''
-        kwargs = {'type': 'onepass', 'args': (pass1, pass2),
+        kwargs = {'type': 'One pass', 'args': (pass1, pass2),
                   'volume': [vol[5] for vol in audnorm],
+                  'preset name': 'A/V Conversions - Audio standard',
                   }
         return kwargs
     # ------------------------------------------------------------------#
@@ -1155,13 +1165,14 @@ class AV_Conv(wx.Panel):
                  )
         pass1 = " ".join(cmd_1.split())
         pass2 = " ".join(cmd_2.split())
-        kwargs = {'type': 'two pass EBU', 'args': (pass1, pass2),
+        kwargs = {'type': 'Two pass EBU', 'args': (pass1, pass2),
                   'EBU': self.opt["EBU"][1], 'audiomap': self.opt["AudioMap"],
+                  'preset name': 'A/V Conversions - Audio/EBU Norm.',
                   }
         return kwargs
     # ------------------------------------------------------------------#
 
-    def update_dict(self, countmax):
+    def update_dict(self, countmax, **kwa):
         """
         Update to epilogue
         """
@@ -1183,12 +1194,16 @@ class AV_Conv(wx.Panel):
             t = self.parent.time_seq.split()
             time = _('start  {} | duration  {}').format(t[1], t[3])
 
-        keys = (_("Batch processing items\nEncoding passes\nOutput Format"
+        passes = '1' if kwa["args"][1] == '' else '2'
+
+        keys = (_("Batch processing items\nAutomation/Preset"
+                  "\nEncoding passes\nOutput Format"
                   "\nVideo Codec\nAudio Codec\nAudio Normalization"
-                  "\nOutput file type\nTime Period"
+                  "\nOutput multimedia type\nTime Trimming"
                   ))
         vals = (f'{countmax}\n'
-                f'{self.opt["Passes"]}\n'
+                f'{kwa["preset name"]}\n'
+                f'{passes}\n'
                 f'{outputformat}\n'
                 f'{self.opt["VidCmbxStr"]}\n'
                 f'{self.opt["AudioCodStr"]}\n'

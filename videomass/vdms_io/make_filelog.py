@@ -61,11 +61,9 @@ def make_log_template(logname, logdir, mode="a"):
 
     with open(logfile, mode, encoding='utf8') as log:
         log.write(f"""
-[DATE]:
-{current_date}
+[DATE]: {current_date}
 
-[LOCATION]:
-{logfile}
+[LOCATION]: "{logfile}"
 
 [VIDEOMASS]:
 """)
