@@ -164,15 +164,23 @@ class QueueManager(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_cancel, btncancel)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btnok)
 
+        if self.datalist:
+            self.quelist.Focus(0)  # make the line the current line
+            self.quelist.Select(0, on=1)  # default event selection
     # ------------------------- Callbacks --------------------------------
 
     def on_load_queue(self, event):
         """
         Load a previously saved json queue file
+        HACK this, requires a comparison tool to check equal
+             elements and ask the user whether or not to overwrite
+             existing ones.
         """
+        selidx = self.quelist.GetFirstSelected()
         newdata = load_json_file_queue()
         if not newdata:
             return
+
         self.datalist.extend(newdata)
         self.quelist.DeleteAllItems()
         index = 0
@@ -182,6 +190,10 @@ class QueueManager(wx.Dialog):
             index += 1
 
         write_json_file_queue(self.datalist)
+
+        if not selidx == -1:
+            self.quelist.Focus(selidx)  # make the line the current line
+            self.quelist.Select(selidx, on=1)  # default event selection
     # ----------------------------------------------------------------------
 
     def on_save_queue(self, event):
@@ -191,6 +203,9 @@ class QueueManager(wx.Dialog):
         use `try`/`except` stataments for Context Manager
         below.
         """
+        if not self.datalist:  # []
+            return
+
         filename = None
         with wx.FileDialog(self, _("Export queue file"),
                            defaultDir=os.path.expanduser('~'),
@@ -244,6 +259,7 @@ class QueueManager(wx.Dialog):
             return
         self.quelist.DeleteAllItems()
         self.datalist.clear()
+        self.on_deselect(None)
         queuebak = os.path.join(self.appdata["confdir"], 'queue.backup')
         os.remove(queuebak)
     # ----------------------------------------------------------------------

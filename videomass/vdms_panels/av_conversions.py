@@ -846,9 +846,6 @@ class AV_Conv(wx.Panel):
             else:
                 kwargs = self.audio_std()
 
-        kwargs['ffmpeg_cmd'] = self.appdata["ffmpeg_cmd"]
-        kwargs['ffmpeg_default_args'] = self.appdata["ffmpeg_default_args"]
-
         return kwargs
     # ------------------------------------------------------------------#
 

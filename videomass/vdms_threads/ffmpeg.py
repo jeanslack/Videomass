@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.22.2024
+Rev: Mar.26.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -36,13 +36,26 @@ if not platform.system() == 'Windows':
     import shlex
 
 
+def ffmpeg_cmd_args():
+    """
+    Get ffmpeg command and default args
+    """
+    get = wx.GetApp()
+    appdata = get.appset
+
+    return {"ffmpeg_cmd": appdata["ffmpeg_cmd"],
+            "ffmpeg_default_args": appdata["ffmpeg_default_args"]}
+# ----------------------------------------------------------------------
+
+
 def one_pass(*args, **kwa):
     """
     Command builder for first pass of two
     """
+    cmd = ffmpeg_cmd_args()
     nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
-    pass1 = (f'"{kwa["ffmpeg_cmd"]}" '
-             f'{kwa["ffmpeg_default_args"]} '
+    pass1 = (f'"{cmd["ffmpeg_cmd"]}" '
+             f'{cmd["ffmpeg_default_args"]} '
              f'{kwa.get("pre-input-1", "")} '
              f'{kwa["start-time"]} '
              f'-i "{kwa["fsrc"]}" '
@@ -65,8 +78,9 @@ def two_pass(*args, **kwa):
     """
     Command builder for second pass of two
     """
-    pass2 = (f'"{kwa["ffmpeg_cmd"]}" '
-             f'{kwa["ffmpeg_default_args"]} '
+    cmd = ffmpeg_cmd_args()
+    pass2 = (f'"{cmd["ffmpeg_cmd"]}" '
+             f'{cmd["ffmpeg_default_args"]} '
              f'{kwa.get("pre-input-2", "")} '
              f'{kwa["start-time"]} '
              f'-i "{kwa["fsrc"]}" '
@@ -90,9 +104,10 @@ def one_pass_stab(*args, **kwa):
     """
     Command builder for one pass video stabilizer
     """
+    cmd = ffmpeg_cmd_args()
     nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
-    pass1 = (f'"{kwa["ffmpeg_cmd"]}" '
-             f'{kwa["ffmpeg_default_args"]} '
+    pass1 = (f'"{cmd["ffmpeg_cmd"]}" '
+             f'{cmd["ffmpeg_default_args"]} '
              f'{kwa.get("pre-input-1", "")} '
              f'{kwa["start-time"]} '
              f'-i "{kwa["fsrc"]}" '
@@ -116,8 +131,9 @@ def two_pass_stab(*args, **kwa):
     """
     Command builder for two pass video stabilizer
     """
-    pass2 = (f'"{kwa["ffmpeg_cmd"]}" '
-             f'{kwa["ffmpeg_default_args"]} '
+    cmd = ffmpeg_cmd_args()
+    pass2 = (f'"{cmd["ffmpeg_cmd"]}" '
+             f'{cmd["ffmpeg_default_args"]} '
              f'{kwa.get("pre-input-2", "")} '
              f'{kwa["start-time"]} '
              f'-i "{kwa["fsrc"]}" '
@@ -142,8 +158,9 @@ def simple_one_pass(*args, **kwa):
     """
     Command builder for one pass ebu
     """
-    pass1 = (f'"{kwa["ffmpeg_cmd"]}" '
-             f'{kwa["ffmpeg_default_args"]} '
+    cmd = ffmpeg_cmd_args()
+    pass1 = (f'"{cmd["ffmpeg_cmd"]}" '
+             f'{cmd["ffmpeg_default_args"]} '
              f'{kwa.get("pre-input-1", "")} '
              f'{kwa["start-time"]} '
              f'-i "{kwa["fsrc"]}" '
@@ -167,9 +184,10 @@ def one_pass_ebu(*args, **kwa):
     """
     Command builder for one pass ebu
     """
+    cmd = ffmpeg_cmd_args()
     nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
-    pass1 = (f'"{kwa["ffmpeg_cmd"]}" '
-             f'{kwa["ffmpeg_default_args"]} '
+    pass1 = (f'"{cmd["ffmpeg_cmd"]}" '
+             f'{cmd["ffmpeg_default_args"]} '
              f'{kwa.get("pre-input-1", "")} '
              f'{kwa["start-time"]} '
              f'-i "{kwa["fsrc"]}" '
@@ -200,8 +218,9 @@ def two_pass_ebu(*args, **kwa):
     """
     Command builder for two pass ebu
     """
-    pass2 = (f'"{kwa["ffmpeg_cmd"]}" '
-             f'{kwa["ffmpeg_default_args"]} '
+    cmd = ffmpeg_cmd_args()
+    pass2 = (f'"{cmd["ffmpeg_cmd"]}" '
+             f'{cmd["ffmpeg_default_args"]} '
              f'{kwa.get("pre-input-2", "")} '
              f'{kwa["start-time"]} '
              f'-i "{kwa["fsrc"]}" '
@@ -242,8 +261,6 @@ class FFmpeg(Thread):
         Also see `main_frame.switch_to_processing`.
 
         """
-        get = wx.GetApp()
-        self.appdata = get.appset
         self.stop_work_thread = False  # process terminate
         self.count = 0  # count for loop
         self.logfile = args[0]  # log filename

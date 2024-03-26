@@ -976,8 +976,6 @@ class PrstPan(wx.Panel):
         preset = self.cmbx_prst.GetValue()
         kwargs = {'type': thrtype, 'args': (pass1, pass2),
                   'pre-input-1': preinput_1, 'pre-input-2': preinput_2,
-                  'ffmpeg_cmd': self.appdata["ffmpeg_cmd"],
-                  'ffmpeg_default_args': self.appdata["ffmpeg_default_args"],
                   'preset name': f'Presets Manager - {preset}',
                   }
         return kwargs

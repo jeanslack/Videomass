@@ -70,9 +70,8 @@ def load_json_file_queue(newincoming=None):
                       )
         return None
 
-    keys = ('type', 'args', 'fext', 'logname', 'fsrc', 'ffmpeg_cmd',
-            'fdest', 'duration', 'start-time', 'end-time',
-            'ffmpeg_default_args')
+    keys = ('type', 'args', 'fext', 'logname', 'fsrc',
+            'fdest', 'duration', 'start-time', 'end-time')
     msg = (_(f'Error: invalid data found loading '
              f'queue file:\n\n"{newincoming}"'))
     for ck in newdata:
