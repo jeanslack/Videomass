@@ -89,10 +89,10 @@ def load_json_file_queue(newincoming=None):
     occurences = []
     msg = (_(f"Error: invalid data found loading queue file:\n\n"
              f"'{newincoming}'\n\nCannot contain multiple occurrences "
-             f"of the 'fdest' key value."))
+             f"in 'fdest' keys value."))
     for item in newdata:
         occurences.append(item['fdest'])
-    if any(li.count(x) > 1 for x in li):
+    if any(occurences.count(x) > 1 for x in occurences):
         wx.MessageBox(msg, ("Videomass"),
                       wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK, None)
         return None
