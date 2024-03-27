@@ -71,16 +71,17 @@ class Formula(wx.Dialog):
         panelscroll.SetAutoLayout(1)
         panelscroll.SetupScrolling()
 
+        lab = (_('When finished, once the operations '
+                 'have been completed successfully:'))
+        lbl = wx.StaticText(self, label=lab)
+        sizbase.Add(lbl, 0, wx.LEFT | wx.TOP, 5)
         sizeropt = wx.BoxSizer(wx.HORIZONTAL)
         sizbase.Add(sizeropt, 0)
-
-        descr = _("Move the source files to Videomass trash\n"
-                  "folder after successful operations")
+        descr = _("Trash the source files")
         self.ckbx_trash = wx.CheckBox(self, wx.ID_ANY, (descr))
         self.ckbx_trash.SetValue(self.movetotrash)
         sizeropt.Add(self.ckbx_trash, 0, wx.ALL, 5)
-        descr = _("Clear the list of\n"
-                  "imported files")
+        descr = _("Clear the File List")
         self.ckbx_del = wx.CheckBox(self, wx.ID_ANY, (descr))
         self.ckbx_del.SetValue(self.emptylist)
         if self.movetotrash:
@@ -93,7 +94,7 @@ class Formula(wx.Dialog):
         btngrid.Add(btnok, 0, wx.LEFT, 5)
         sizbase.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
 
-        self.SetTitle(_('Confirm Settings'))
+        self.SetTitle(_('Videomass Batch Mode'))
         self.SetMinSize(args[0])
         self.SetSizer(sizbase)
         sizbase.Fit(self)

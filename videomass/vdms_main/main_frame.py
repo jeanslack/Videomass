@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.17.2024
+Rev: Mar.22.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -30,6 +30,9 @@ import webbrowser
 import wx
 from pubsub import pub
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.queue_utils import load_json_file_queue
+from videomass.vdms_utils.queue_utils import write_json_file_queue
+from videomass.vdms_utils.queue_utils import extend_data_queue
 from videomass.vdms_dialogs import preferences
 from videomass.vdms_dialogs import set_timestamp
 from videomass.vdms_dialogs import about
@@ -38,6 +41,7 @@ from videomass.vdms_dialogs.while_playing import WhilePlaying
 from videomass.vdms_dialogs.ffmpeg_conf import FFmpegConf
 from videomass.vdms_dialogs.ffmpeg_codecs import FFmpegCodecs
 from videomass.vdms_dialogs.ffmpeg_formats import FFmpegFormats
+from videomass.vdms_dialogs.queuedlg import QueueManager
 from videomass.vdms_ytdlp.main_ytdlp import MainYtdl
 from videomass.vdms_dialogs.mediainfo import MediaStreams
 from videomass.vdms_dialogs.showlogs import ShowLogs
@@ -100,6 +104,8 @@ class MainFrame(wx.Frame):
         self.autoexit = True  # set autoexit during ffplay playback
         self.movetotrash = self.appdata['move_file_to_trash']
         self.emptylist = self.appdata['move_file_to_trash']
+        self.queuelist = None  # list data to process queue
+        self.removequeue = True  # Remove items queue when finished
         self.mediastreams = False
         self.showlogs = False
         self.helptopic = False
@@ -128,7 +134,7 @@ class MainFrame(wx.Frame):
 
         # panel instances:
         self.ChooseTopic = choose_topic.Choose_Topic(self)
-        self.VconvPanel = av_conversions.AV_Conv(self)
+        self.AVconvPanel = av_conversions.AV_Conv(self)
         self.fileDnDTarget = filedrop.FileDnD(self,
                                               self.outputdir,
                                               self.outputnames,
@@ -146,7 +152,7 @@ class MainFrame(wx.Frame):
         self.TimeLine.Hide()
         # hide all panels
         self.fileDnDTarget.Hide()
-        self.VconvPanel.Hide()
+        self.AVconvPanel.Hide()
         self.ProcessPanel.Hide()
         self.PrstsPanel.Hide()
         self.ConcatDemuxer.Hide()
@@ -157,7 +163,7 @@ class MainFrame(wx.Frame):
         # Layout external panels:
         self.mainSizer.Add(self.ChooseTopic, 1, wx.EXPAND)
         self.mainSizer.Add(self.fileDnDTarget, 1, wx.EXPAND)
-        self.mainSizer.Add(self.VconvPanel, 1, wx.EXPAND)
+        self.mainSizer.Add(self.AVconvPanel, 1, wx.EXPAND)
         self.mainSizer.Add(self.ProcessPanel, 1, wx.EXPAND)
         self.mainSizer.Add(self.PrstsPanel, 1, wx.EXPAND)
         self.mainSizer.Add(self.ConcatDemuxer, 1, wx.EXPAND)
@@ -183,7 +189,8 @@ class MainFrame(wx.Frame):
         self.sb = self.CreateStatusBar(1)
         self.statusbar_msg(_('Ready'), None)
         # disabling toolbar/menu items
-        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 9, 35)]
+        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8,
+                                                     9, 35, 36, 37)]
         self.menu_items(enable=False)
         self.Layout()
         # ---------------------- Binding (EVT) ----------------------#
@@ -192,6 +199,19 @@ class MainFrame(wx.Frame):
 
         pub.subscribe(self.check_modeless_window, "DESTROY_ORPHANED_WINDOWS")
         pub.subscribe(self.process_terminated, "PROCESS TERMINATED")
+        pub.subscribe(self.end_queue_processing, "QUEUE PROCESS SUCCESSFULLY")
+
+        fque = os.path.join(self.appdata["confdir"], 'queue.backup')
+        if os.path.exists(fque):
+            if wx.MessageBox(_('Not all items in the queue were completed.\n\n'
+                               'Would you like to keep them in the queue?'),
+                             _('Videomass'), wx.ICON_QUESTION | wx.CANCEL
+                             | wx.YES_NO, self) == wx.YES:
+
+                queue = load_json_file_queue(fque)
+                self.queuelist = queue
+            else:
+                os.remove(fque)
 
     # -------------------Status bar settings--------------------#
 
@@ -421,14 +441,23 @@ class MainFrame(wx.Frame):
 
         # ----------------------- file menu
         fileButton = wx.Menu()
-        dscrp = (_("Open files...\tCtrl+O"),
-                 _("Open one or more files"))
-        self.openmedia = fileButton.Append(wx.ID_OPEN, dscrp[0], dscrp[1])
+        dscrp = _("Import files\tCtrl+O")
+        self.openmedia = fileButton.Append(wx.ID_OPEN, dscrp)
         self.openmedia.Enable(False)
+        dscrp = _("Open encoding destination\tCtrl+D")
+        fold_convers = fileButton.Append(wx.ID_ANY, dscrp)
+        dscrp = (_("Set encoding destination"),
+                 _("Set a new destination for encodings"))
+        path_dest = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        if self.same_destin:
+            path_dest.Enable(False)
+        dscrp = _("Restore default encoding destination")
+        self.resetfolders_tmp = fileButton.Append(wx.ID_ANY, dscrp)
+        self.resetfolders_tmp.Enable(False)
         fileButton.AppendSeparator()
-        dscrp = (_("Open destination\tCtrl+D"),
-                 _("Open the file destination folder"))
-        fold_convers = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = (_("Load queue file"),
+                 _("Load a previously exported queue file"))
+        self.loadqueue = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
         dscrp = (_("Open trash"),
                  _("Open the Videomass trash folder if it exists"))
@@ -436,10 +465,6 @@ class MainFrame(wx.Frame):
         dscrp = (_("Empty Trash"),
                  _("Delete all files in the Videomass trash folder"))
         empty_trash = fileButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
-        fileButton.AppendSeparator()
-        dscrp = (_("Work notes\tCtrl+N"),
-                 _("Read and write useful notes and reminders."))
-        notepad = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit\tCtrl+Q"),
                                      _("Completely exit the application"))
@@ -480,6 +505,10 @@ class MainFrame(wx.Frame):
         dscrp = (_("Get latest presets"),
                  _("Get the latest presets from {0}").format(prstpage))
         self.prstdownload = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        toolsButton.AppendSeparator()
+        dscrp = (_("Work notes\tCtrl+N"),
+                 _("Read and write useful notes and reminders."))
+        notepad = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(toolsButton, _("Tools"))
 
         # ------------------ View menu
@@ -502,6 +531,18 @@ class MainFrame(wx.Frame):
         ckdecoders = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffplayButton = wx.Menu()  # ffplay sub menu
         viewButton.AppendSubMenu(ffplayButton, _("FFplay"))
+        dscrp = (_("Enable timestamps on playback"),
+                 _("Displays timestamp when playing media with FFplay"))
+        self.viewtimestamp = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
+                                                 kind=wx.ITEM_CHECK)
+        dscrp = (_("Auto-exit after playback"),
+                 _("If checked, the FFplay window will auto-close "
+                   "when playback is complete"))
+        self.exitplayback = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
+                                                kind=wx.ITEM_CHECK)
+        dscrp = (_("Timestamp settings"), _("Customize the timestamp style"))
+        tscustomize = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        ffplayButton.AppendSeparator()
         dscrp = (_("While playing..."),
                  _("Show useful shortcut keys when playing or previewing "
                    "using FFplay"))
@@ -510,7 +551,6 @@ class MainFrame(wx.Frame):
         dscrp = (_("Show logs\tCtrl+L"),
                  _("Viewing log messages"))
         viewlogs = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-
         viewButton.AppendSeparator()
         dscrp = (_("Show timeline editor\tCtrl+T"),
                  _("Set duration or trim slices of time to remove unwanted "
@@ -518,6 +558,8 @@ class MainFrame(wx.Frame):
         self.viewtimeline = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                               kind=wx.ITEM_CHECK)
         self.menuBar.Append(viewButton, _("View"))
+        self.menuBar.Check(self.exitplayback.GetId(), self.autoexit)
+        self.menuBar.Check(self.viewtimestamp.GetId(), True)
 
         # ------------------ Go menu
         goButton = wx.Menu()
@@ -553,36 +595,10 @@ class MainFrame(wx.Frame):
 
         # ------------------ setup menu
         setupButton = wx.Menu()
-        dscrp = (_("Set destination"),
-                 _("Set a new destination for encodings"))
-        path_dest = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        if self.same_destin:
-            path_dest.Enable(False)
-        setupButton.AppendSeparator()
-        dscrp = (_("Restore default destination"),
-                 _("Restore the default file destination for processed files"))
-        self.resetfolders_tmp = setupButton.Append(wx.ID_ANY, dscrp[0],
-                                                   dscrp[1])
-        self.resetfolders_tmp.Enable(False)
-        setupButton.AppendSeparator()
-        dscrp = (_("Enable timestamps on playback"),
-                 _("Displays timestamp when playing media with FFplay"))
-        self.viewtimestamp = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
-                                                kind=wx.ITEM_CHECK)
-        dscrp = (_("Auto-exit after playback"),
-                 _("If checked, the FFplay window will auto-close "
-                   "when playback is complete"))
-        self.exitplayback = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
-                                               kind=wx.ITEM_CHECK)
-        dscrp = (_("Timestamp settings"), _("Customize the timestamp style"))
-        tscustomize = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        setupButton.AppendSeparator()
         setupItem = setupButton.Append(wx.ID_PREFERENCES,
                                        _("Preferences\tCtrl+P"),
                                        _("Application preferences"))
         self.menuBar.Append(setupButton, _("Settings"))
-        self.menuBar.Check(self.exitplayback.GetId(), self.autoexit)
-        self.menuBar.Check(self.viewtimestamp.GetId(), True)
 
         # ------------------ help menu
         helpButton = wx.Menu()
@@ -605,7 +621,6 @@ class MainFrame(wx.Frame):
         dscrp = (_("Latest version"),
                  _("Check for the latest Videomass version"))
         chklatest = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-
         infoItem = helpButton.Append(wx.ID_ABOUT, _("About Videomass"), "")
         self.menuBar.Append(helpButton, _("Help"))
 
@@ -615,28 +630,32 @@ class MainFrame(wx.Frame):
         # ----FILE----
         self.Bind(wx.EVT_MENU, self.open_media_files, self.openmedia)
         self.Bind(wx.EVT_MENU, self.openMyconversions, fold_convers)
+        self.Bind(wx.EVT_MENU, self.on_destpath_setup, path_dest)
+        self.Bind(wx.EVT_MENU, self.on_Resetfolders_tmp, self.resetfolders_tmp)
+        self.Bind(wx.EVT_MENU, self.on_load_queue, self.loadqueue)
+        self.Bind(wx.EVT_MENU, self.open_trash_folder, dir_trash)
+        self.Bind(wx.EVT_MENU, self.empty_trash_folder, empty_trash)
+        self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
+        # ----EDIT----
         self.Bind(wx.EVT_MENU, self.on_file_renaming, self.rename)
         self.Bind(wx.EVT_MENU, self.on_batch_renaming, self.rename_batch)
         self.Bind(wx.EVT_MENU, self.fileDnDTarget.on_delete_selected,
                   self.delfile)
         self.Bind(wx.EVT_MENU, self.fileDnDTarget.delete_all, self.clearall)
-        self.Bind(wx.EVT_MENU, self.reminder, notepad)
-        self.Bind(wx.EVT_MENU, self.open_trash_folder, dir_trash)
-        self.Bind(wx.EVT_MENU, self.empty_trash_folder, empty_trash)
-        self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         # ----TOOLS----
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
         self.Bind(wx.EVT_MENU, self.prst_downloader, self.prstdownload)
         self.Bind(wx.EVT_MENU, self.prst_checkversion, self.prstcheck)
+        self.Bind(wx.EVT_MENU, self.reminder, notepad)
         # ---- VIEW ----
         self.Bind(wx.EVT_MENU, self.get_ffmpeg_conf, checkconf)
         self.Bind(wx.EVT_MENU, self.get_ffmpeg_formats, ckformats)
         self.Bind(wx.EVT_MENU, self.get_ffmpeg_codecs, ckcoders)
         self.Bind(wx.EVT_MENU, self.get_ffmpeg_decoders, ckdecoders)
-        self.Bind(wx.EVT_MENU, self.durinPlayng, playing)
         self.Bind(wx.EVT_MENU, self.showTimestamp, self.viewtimestamp)
         self.Bind(wx.EVT_MENU, self.timestampCustomize, tscustomize)
         self.Bind(wx.EVT_MENU, self.autoexitFFplay, self.exitplayback)
+        self.Bind(wx.EVT_MENU, self.durinPlayng, playing)
         self.Bind(wx.EVT_MENU, self.View_logs, viewlogs)
         self.Bind(wx.EVT_MENU, self.view_Timeline, self.viewtimeline)
         # ---- GO -----
@@ -649,8 +668,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.logPan, self.logpan)
         self.Bind(wx.EVT_MENU, self.youtubedl, self.winytdlp)
         # ----SETUP----
-        self.Bind(wx.EVT_MENU, self.on_destpath_setup, path_dest)
-        self.Bind(wx.EVT_MENU, self.on_Resetfolders_tmp, self.resetfolders_tmp)
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         # ----HELP----
         self.Bind(wx.EVT_MENU, self.Helpme, helpItem)
@@ -671,11 +688,12 @@ class MainFrame(wx.Frame):
         Open the file dialog to choose media files.
         The order of selected files only supported by GTK
         """
-        wildcard = ("All files |*.*|*.mkv|*.mkv|*.avi|*.avi|*.mp4|*.mp4|"
-                    "*.flv|*.flv|*.m4v|*.m4v|*.wav|*.wav|*.mp3|*.mp3|"
-                    "*.ogg|*.ogg|*.flac|*.flac|*.m4a|*.m4a")
+        wildcard = ("All files |*.*|*.mkv|*.mkv|*.avi|*.avi|*.webm|*.webm"
+                    "|*.ogv|*.ogv|*.mp4|*.mp4|*.flv|*.flv|*.wav|*.wav"
+                    "|*.mp3|*.mp3|*.ogg|*.ogg|*.flac|*.flac|*.opus|*.opus"
+                    "|*.jpg|*.jpg|*.png|*.png|*.bmp|*.bmp")
 
-        with wx.FileDialog(self, _("Open the selected files"),
+        with wx.FileDialog(self, _("Import files"),
                            "", "", wildcard,
                            style=wx.FD_OPEN
                            | wx.FD_MULTIPLE
@@ -984,7 +1002,7 @@ class MainFrame(wx.Frame):
         """
         view last log on console
         """
-        self.switch_to_processing('Viewing last log')
+        self.switch_to_processing('View')
     # ------------------------------------------------------------------#
     # --------- Menu  Preferences  ###
 
@@ -1229,6 +1247,8 @@ class MainFrame(wx.Frame):
             bmphome = get_bmp(self.icons['home'], bmp_size)
             bmpclear = get_bmp(self.icons['cleanup'], bmp_size)
             bmpplay = get_bmp(self.icons['play'], bmp_size)
+            bmpprocqueue = get_bmp(self.icons['proc-queue'], bmp_size)
+            bmpaddqueue = get_bmp(self.icons['add-queue'], bmp_size)
         else:
             bmpback = wx.Bitmap(self.icons['previous'], wx.BITMAP_TYPE_ANY)
             bmpnext = wx.Bitmap(self.icons['next'], wx.BITMAP_TYPE_ANY)
@@ -1239,6 +1259,10 @@ class MainFrame(wx.Frame):
             bmphome = wx.Bitmap(self.icons['home'], wx.BITMAP_TYPE_ANY)
             bmpclear = wx.Bitmap(self.icons['cleanup'], wx.BITMAP_TYPE_ANY)
             bmpplay = wx.Bitmap(self.icons['play'], wx.BITMAP_TYPE_ANY)
+            bmpprocqueue = wx.Bitmap(self.icons['proc-queue'],
+                                     wx.BITMAP_TYPE_ANY)
+            bmpaddqueue = wx.Bitmap(self.icons['add-queue'],
+                                    wx.BITMAP_TYPE_ANY)
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
@@ -1282,6 +1306,16 @@ class MainFrame(wx.Frame):
                                      bmpclear,
                                      tip, wx.ITEM_NORMAL
                                      )
+        tip = _("Add selected file to queue")
+        addqueue = self.toolbar.AddTool(36, _('Add to Queue'),
+                                        bmpaddqueue,
+                                        tip, wx.ITEM_NORMAL
+                                        )
+        tip = _("Manage and process file queues")
+        pqueue = self.toolbar.AddTool(37, _('Process Queue'),
+                                      bmpprocqueue,
+                                      tip, wx.ITEM_NORMAL
+                                      )
         self.toolbar.Realize()
 
         # ----------------- Tool Bar Binding (evt)-----------------------#
@@ -1293,6 +1327,8 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.on_Forward, forward)
         self.Bind(wx.EVT_TOOL, self.media_streams, self.btn_streams)
         self.Bind(wx.EVT_TOOL, self.fileDnDTarget.on_play_select, play)
+        self.Bind(wx.EVT_TOOL, self.on_add_to_queue, addqueue)
+        self.Bind(wx.EVT_TOOL, self.on_process_queue, pqueue)
 
     # --------------- Tool Bar Callback (event handler) -----------------#
 
@@ -1326,7 +1362,7 @@ class MainFrame(wx.Frame):
             elif self.topicname == 'Video to Pictures':
                 self.switch_video_to_pictures(self)
         else:
-            self.switch_to_processing('Viewing last log')
+            self.switch_to_processing('View')
     # ------------------------------------------------------------------#
 
     def startPanel(self, event):
@@ -1344,8 +1380,8 @@ class MainFrame(wx.Frame):
         self.topicname = None
         self.fileDnDTarget.Hide()
 
-        if self.VconvPanel.IsShown():
-            self.VconvPanel.Hide()
+        if self.AVconvPanel.IsShown():
+            self.AVconvPanel.Hide()
         elif self.PrstsPanel.IsShown():
             self.PrstsPanel.Hide()
         elif self.ConcatDemuxer.IsShown():
@@ -1355,7 +1391,8 @@ class MainFrame(wx.Frame):
         elif self.toSlideshow.IsShown():
             self.toSlideshow.Hide()
 
-        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 9, 35)]
+        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7,
+                                                     8, 9, 35, 36, 37)]
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
         self.menu_items(enable=False)
@@ -1373,7 +1410,7 @@ class MainFrame(wx.Frame):
         """
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.Hide()
-        self.VconvPanel.Hide()
+        self.AVconvPanel.Hide()
         self.ChooseTopic.Hide()
         self.PrstsPanel.Hide()
         self.ConcatDemuxer.Hide()
@@ -1387,10 +1424,12 @@ class MainFrame(wx.Frame):
         self.openmedia.Enable(True)
         if self.file_src:
             [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 9, 35)]
-            [self.toolbar.EnableTool(x, False) for x in (7, 8)]
+            [self.toolbar.EnableTool(x, False) for x in (7, 8, 36, 37)]
         else:
             [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 35)]
-            [self.toolbar.EnableTool(x, False) for x in (7, 8, 9)]
+            [self.toolbar.EnableTool(x, False) for x in (7, 8, 9, 36, 37)]
+        if self.queuelist:
+            self.toolbar.EnableTool(37, True)
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)
@@ -1410,15 +1449,18 @@ class MainFrame(wx.Frame):
         self.ConcatDemuxer.Hide()
         self.toPictures.Hide()
         self.toSlideshow.Hide()
-        self.VconvPanel.Show()
+        self.AVconvPanel.Show()
         self.SetTitle(_('Videomass - AV Conversions'))
         self.menu_items(enable=True)  # enable all menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
+        self.loadqueue.Enable(True)
         self.avpan.Enable(False)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 9)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35, 36)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 9, 37)]
+        if self.queuelist:
+            self.toolbar.EnableTool(37, True)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1431,7 +1473,7 @@ class MainFrame(wx.Frame):
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.Hide()
         self.fileDnDTarget.Hide()
-        self.VconvPanel.Hide()
+        self.AVconvPanel.Hide()
         self.ConcatDemuxer.Hide()
         self.toPictures.Hide()
         self.toSlideshow.Hide()
@@ -1441,9 +1483,12 @@ class MainFrame(wx.Frame):
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
+        self.loadqueue.Enable(True)
         self.prstpan.Enable(False)
-        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 9)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35, 36)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 9, 37)]
+        if self.queuelist:
+            self.toolbar.EnableTool(37, True)
         self.Layout()
         self.PrstsPanel.update_preset_state()
     # ------------------------------------------------------------------#
@@ -1457,7 +1502,7 @@ class MainFrame(wx.Frame):
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.Hide()
         self.fileDnDTarget.Hide()
-        self.VconvPanel.Hide()
+        self.AVconvPanel.Hide()
         self.PrstsPanel.Hide()
         self.toPictures.Hide()
         self.toSlideshow.Hide()
@@ -1467,9 +1512,12 @@ class MainFrame(wx.Frame):
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
+        self.loadqueue.Enable(True)
         self.concpan.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 9)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 9, 36, 37)]
+        if self.queuelist:
+            self.toolbar.EnableTool(37, True)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1482,7 +1530,7 @@ class MainFrame(wx.Frame):
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.Hide()
         self.fileDnDTarget.Hide()
-        self.VconvPanel.Hide()
+        self.AVconvPanel.Hide()
         self.PrstsPanel.Hide()
         self.ConcatDemuxer.Hide()
         self.toSlideshow.Hide()
@@ -1492,9 +1540,12 @@ class MainFrame(wx.Frame):
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
+        self.loadqueue.Enable(True)
         self.toseq.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 9)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 9, 36, 37)]
+        if self.queuelist:
+            self.toolbar.EnableTool(37, True)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1507,7 +1558,7 @@ class MainFrame(wx.Frame):
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.Hide()
         self.fileDnDTarget.Hide()
-        self.VconvPanel.Hide()
+        self.AVconvPanel.Hide()
         self.PrstsPanel.Hide()
         self.ConcatDemuxer.Hide()
         self.toPictures.Hide()
@@ -1517,13 +1568,122 @@ class MainFrame(wx.Frame):
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
+        self.loadqueue.Enable(True)
         self.slides.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 9)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 9, 36, 37)]
+        if self.queuelist:
+            self.toolbar.EnableTool(37, True)
         self.Layout()
     # ------------------------------------------------------------------#
 
-    def switch_to_processing(self, *args, **kwargs):
+    def on_load_queue(self, event):
+        """
+        Load a previously saved json queue file
+        """
+        queue = load_json_file_queue()
+        if not queue:
+            return
+
+        if not self.queuelist:
+            self.queuelist = []
+            self.queuelist.extend(queue)
+        else:
+            update = extend_data_queue(self, self.queuelist, queue)
+            if not update:
+                return
+
+        shown = (self.ChooseTopic.IsShown(),
+                 # self.fileDnDTarget.IsShown(),
+                 self.ProcessPanel.IsShown()
+                 )
+        if not [x for x in shown if x is True]:
+            self.toolbar.EnableTool(37, True)
+
+        write_json_file_queue(self.queuelist)
+    # ------------------------------------------------------------------#
+
+    def on_process_queue(self, event):
+        """
+        process queue data if any
+        """
+        with QueueManager(self,
+                          self.queuelist,
+                          self.movetotrash,
+                          self.emptylist,
+                          self.removequeue,
+                          ) as queman:
+            if queman.ShowModal() == wx.ID_OK:
+                data = queman.getvalue()
+                self.queuelist = data[0]
+                self.movetotrash = data[1]
+                self.emptylist = data[2]
+                self.removequeue = data[3]
+                if not self.queuelist:
+                    self.toolbar.EnableTool(37, False)
+                    return None
+                self.switch_to_processing('Queue Processing',
+                                          'Queue Processing.log',
+                                          datalist=self.queuelist
+                                          )
+            else:
+                if not self.queuelist:
+                    self.toolbar.EnableTool(37, False)
+        return None
+    # ------------------------------------------------------------------#
+
+    def end_queue_processing(self, msg):
+        """
+        QUEUE PROCESS SUCCESSFULLY. This method is called using
+        pub/sub protocol. see `long_processing_task.end_proc()`)
+        """
+        if self.removequeue and msg == 'Done':
+            queuef = os.path.join(self.appdata["confdir"], 'queue.backup')
+            os.remove(queuef)  # remove queue.backup
+            self.queuelist.clear()
+            self.toolbar.EnableTool(37, False)
+    # ------------------------------------------------------------------#
+
+    def on_add_to_queue(self, event):
+        """
+        Append data of selected file to queue
+        """
+        if not self.data_files or not self.filedropselected:
+            wx.MessageBox(_("Have to select an item in the file list first"),
+                          'Videomass', wx.ICON_INFORMATION, self)
+            return
+
+        if self.AVconvPanel.IsShown():
+            kwargs = self.AVconvPanel.queue_mode()
+        elif self.PrstsPanel.IsShown():
+            kwargs = self.PrstsPanel.queue_mode()
+
+        if not kwargs:
+            return
+        if not self.queuelist:
+            self.queuelist = []
+            self.queuelist.append(kwargs)
+            self.toolbar.EnableTool(37, True)
+        else:
+            for idx, item in enumerate(self.queuelist):
+                if kwargs["destination"] == item["destination"]:
+                    if wx.MessageBox(_('An item with the same destination '
+                                       'file already exists.\n\nDo you want '
+                                       'to replace it by adding the new item '
+                                       'to the queue?'), _('Videomass'),
+                                     wx.ICON_QUESTION | wx.CANCEL
+                                     | wx.YES_NO, self) != wx.YES:
+                        return
+                    del self.queuelist[idx]
+                    self.queuelist.append(kwargs)
+                    break
+                self.queuelist.append(kwargs)
+                break
+
+        write_json_file_queue(self.queuelist)
+    # ------------------------------------------------------------------#
+
+    def switch_to_processing(self, *args, datalist=None):
         """
         This method is called by start methods of any
         topic. It call `ProcessPanel.topic_thread`
@@ -1531,23 +1691,24 @@ class MainFrame(wx.Frame):
         """
         self.SetTitle(_('Videomass - FFmpeg Message Monitoring'))
         self.fileDnDTarget.Hide()
-        self.VconvPanel.Hide()
+        self.AVconvPanel.Hide()
         self.PrstsPanel.Hide()
         self.ConcatDemuxer.Hide()
         self.toPictures.Hide()
         self.toSlideshow.Hide()
         self.ProcessPanel.Show()
-        if not args[0] == 'Viewing last log':
+        if not args[0] == 'View':
             self.delfile.Enable(False)
             self.clearall.Enable(False)
             self.menu_items(enable=False)  # disable menu items
             self.openmedia.Enable(False)
+            self.loadqueue.Enable(False)
             [self.toolbar.EnableTool(x, True) for x in (6, 8)]
-            [self.toolbar.EnableTool(x, False) for x in (3, 5)]
+            [self.toolbar.EnableTool(x, False) for x in (3, 5, 36, 37)]
         self.logpan.Enable(False)
-        [self.toolbar.EnableTool(x, False) for x in (4, 7, 9)]
+        [self.toolbar.EnableTool(x, False) for x in (4, 7, 9, 36, 37)]
 
-        self.ProcessPanel.topic_thread(args[0], self.topicname, **kwargs)
+        self.ProcessPanel.topic_thread(args, datalist, self.topicname)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1561,10 +1722,10 @@ class MainFrame(wx.Frame):
             self.switch_file_import(self)
             return
 
-        if self.VconvPanel.IsShown():
-            self.VconvPanel.on_start()
+        if self.AVconvPanel.IsShown():
+            self.AVconvPanel.batch_mode()
         elif self.PrstsPanel.IsShown():
-            self.PrstsPanel.on_start()
+            self.PrstsPanel.batch_mode()
         elif self.ConcatDemuxer.IsShown():
             self.ConcatDemuxer.on_start()
         elif self.toPictures.IsShown():
@@ -1589,6 +1750,7 @@ class MainFrame(wx.Frame):
         """
         self.menu_items(enable=True)  # enable all menu items
         self.openmedia.Enable(False)
+        self.loadqueue.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 5)]
         self.toolbar.EnableTool(8, False)
 

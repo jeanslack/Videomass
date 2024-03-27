@@ -653,7 +653,7 @@ class Downloader(wx.Panel):
         else:
             _id = '%(title).100s'
 
-        logname = "yt_dlp"
+        logname = "YouTube Downloader.log"
         postprocessors = []
 
         if self.choice.GetSelection() == 3:
@@ -749,7 +749,7 @@ class Downloader(wx.Panel):
                     'restrictfilenames': self.ckbx_limitfn.GetValue(),
                     'nocheckcertificate': self.ckbx_ssl.GetValue(),
                     }
-        self.parent.switch_to_processing('youtube_dl downloading',
+        self.parent.switch_to_processing('YouTube Downloader',
                                          urls,
                                          '',
                                          self.parent.outputdir,

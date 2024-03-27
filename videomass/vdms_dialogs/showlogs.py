@@ -36,14 +36,15 @@ class ShowLogs(wx.Dialog):
     """
     # list of logs files to include
     LOGNAMES = ('volumedected.log',
-                'AV_conversions.log',
-                'presets_manager.log',
+                'AV Conversions.log',
+                'Presets Manager.log',
                 'ffplay.log',
-                'concatenate_demuxer.log',
-                'from_movie_to_pictures.log',
-                'still_image_maker.log',
+                'Concatenate Media File.log',
+                'From Movie to Pictures.log',
+                'Still Image Maker.log',
                 'generic_task.log',
-                'yt_dlp.log',
+                'YouTube Downloader.log',
+                'Queue Processing.log',
                 )
 
     def __init__(self, parent, dirlog, OS):

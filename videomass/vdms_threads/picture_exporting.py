@@ -82,15 +82,13 @@ class PicturesFromVideo(Thread):
                f'-i "{self.kwa["filename"]}" '
                f'{self.cmd}'
                )
-        count = 'File 1/1'
-        com = (f'{count}\nSource: "{self.fname}"\n'
-               f'Destination: "{self.outputdir}"\n\n[COMMAND]:\n{cmd}')
+        count1 = (f'File 1/1\nSource: "{self.fname}"\n'
+                  f'Destination: "{self.outputdir}"')
+        com = f'{count1}\n\n[COMMAND]:\n{cmd}'
 
         wx.CallAfter(pub.sendMessage,
                      "COUNT_EVT",
-                     count=count,
-                     fsource=f'Source:  "{self.fname}"',
-                     destination=f'Destination:  "{self.outputdir}"',
+                     count=count1,
                      duration=self.duration,
                      end='',
                      )
@@ -133,8 +131,6 @@ class PicturesFromVideo(Thread):
                     wx.CallAfter(pub.sendMessage,
                                  "COUNT_EVT",
                                  count='',
-                                 fsource='',
-                                 destination='',
                                  duration='',
                                  end='Done'
                                  )
@@ -143,13 +139,11 @@ class PicturesFromVideo(Thread):
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=excepterr,
-                         fsource='',
-                         destination='',
                          duration=0,
                          end='error',
                          )
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT", msg=filedone)
+        wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=filedone)
     # --------------------------------------------------------------------#
 
     def stop(self):

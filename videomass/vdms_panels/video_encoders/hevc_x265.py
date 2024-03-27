@@ -24,7 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
 import wx
 import wx.lib.scrolledpanel as scrolled
 
@@ -458,11 +457,8 @@ class Hevc_X265(scrolled.ScrolledPanel):
 
         if self.ckbx_pass.IsChecked():
             self.opt["Passes"] = "2"
-            tmp = os.path.join(self.appdata["cachedir"], 'tmp', 'passlogfile')
-            self.opt["passlogfile1"] = (f'-x265-params "pass=1" '
-                                        f'-passlogfile "{tmp}"')
-            self.opt["passlogfile2"] = (f'-x265-params "pass=2" '
-                                        f'-passlogfile "{tmp}"')
+            self.opt["passlogfile1"] = ('-x265-params "pass=1"')
+            self.opt["passlogfile2"] = ('-x265-params "pass=2"')
             self.slider_crf.SetValue(-1)
             self.slider_crf.Disable()
             self.spin_vbrate.SetValue(4000)

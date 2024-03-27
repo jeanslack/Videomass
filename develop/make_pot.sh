@@ -53,6 +53,8 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_dialogs/ffmpeg_formats.py" \
 "../vdms_dialogs/shownormlist.py" \
 "../vdms_dialogs/while_playing.py" \
+"../vdms_dialogs/queuedlg.py" \
+"../vdms_dialogs/queue_singlechoice.py" \
 "../vdms_miniframes/timeline.py" \
 "../vdms_io/checkup.py" \
 "../vdms_io/io_tools.py" \
@@ -77,10 +79,7 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_panels/sequence_to_video.py" \
 "../vdms_panels/video_to_sequence.py" \
 "../vdms_threads/ffplay_file.py" \
-"../vdms_threads/one_pass.py" \
 "../vdms_threads/picture_exporting.py" \
-"../vdms_threads/two_pass_ebu.py" \
-"../vdms_threads/two_pass.py" \
 "../vdms_threads/slideshow.py" \
 "../vdms_ytdlp/formatcode.py" \
 "../vdms_ytdlp/long_task_ytdlp.py" \
@@ -92,6 +91,7 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_ytdlp/ydl_mediainfo.py" \
 "../vdms_ytdlp/youtubedl_ui.py" \
 "../vdms_ytdlp/subtitles_editor.py" \
+"../vdms_utils/queue_utils.py" \
 
 
 if [ $? != 0 ]; then
