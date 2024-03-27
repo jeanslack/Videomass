@@ -145,7 +145,7 @@ class QueueManager(wx.Dialog):
                       | wx.RIGHT, border=5
                       )
         # ----------------------Properties----------------------#
-        self.SetTitle(_('Queue Processing'))
+        self.SetTitle(_('Videomass Queue'))
         self.SetMinSize((820, 520))
 
         self.SetSizer(sizerbase)
@@ -202,15 +202,11 @@ class QueueManager(wx.Dialog):
 
     def on_save_queue(self, event):
         """
-        Save a queue file in local. Note, if you intend
-        make `self.datalist` editable by the user, please
-        use `try`/`except` stataments for Context Manager
-        below.
+        Save a queue file in local.
         """
-        if not self.datalist:  # []
+        if not self.datalist:
             return
 
-        filename = None
         with wx.FileDialog(self, _("Export queue file"),
                            defaultDir=os.path.expanduser('~'),
                            wildcard="Queue files (*.json)|*.json",

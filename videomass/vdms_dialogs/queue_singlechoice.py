@@ -33,7 +33,7 @@ class SingleChoice_Queue(wx.Dialog):
     This simple dialog asks the user to choose an option when
     there are one or more identical output file names between
     the imported queue file data and current queue data.
-    This feature will ensure that the destination files are not
+    This feature will ensure that no same target files are
     overwritten.
 
     """

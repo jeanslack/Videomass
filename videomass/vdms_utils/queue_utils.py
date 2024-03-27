@@ -45,7 +45,9 @@ def write_json_file_queue(data, queuefile=None):
 
 def load_json_file_queue(newincoming=None):
     """
-    Locates, loads and validates a QUEUE json file
+    Locates, loads and validates a QUEUE json file.
+    Note, a Videomass queue file cannot contain multiple
+    occurrences of the 'fdest' key value
     """
     if not newincoming:
         wildcard = "Source (*.json)|*.json| All files (*.*)|*.*"
@@ -84,7 +86,16 @@ def load_json_file_queue(newincoming=None):
                               None
                               )
                 return None
-
+    occurences = []
+    msg = (_(f"Error: invalid data found loading queue file:\n\n"
+             f"'{newincoming}'\n\nCannot contain multiple occurrences "
+             f"of the 'fdest' key value."))
+    for item in newdata:
+        occurences.append(item['fdest'])
+    if any(li.count(x) > 1 for x in li):
+        wx.MessageBox(msg, ("Videomass"),
+                      wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK, None)
+        return None
     return newdata
 # --------------------------------------------------------------------
 
@@ -111,10 +122,12 @@ def extend_data_queue(parent, currentqueue: list, newqueue: list) -> list:
                 choice = dlg.getvalue()
 
         if choice == 0:
+            indx_orig.sort(reverse=True)  # IMPORTANT before iterate
             for idx in indx_orig:
                 del currentqueue[idx]
             currentqueue.extend(newqueue)
         elif choice == 1:
+            indx_new.sort(reverse=True)  # IMPORTANT before iterate
             for idx in indx_new:
                 del newqueue[idx]
             currentqueue.extend(newqueue)

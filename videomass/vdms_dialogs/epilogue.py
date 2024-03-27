@@ -94,7 +94,7 @@ class Formula(wx.Dialog):
         btngrid.Add(btnok, 0, wx.LEFT, 5)
         sizbase.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
 
-        self.SetTitle(_('Batch Processing'))
+        self.SetTitle(_('Videomass Batch Mode'))
         self.SetMinSize(args[0])
         self.SetSizer(sizbase)
         sizbase.Fit(self)
