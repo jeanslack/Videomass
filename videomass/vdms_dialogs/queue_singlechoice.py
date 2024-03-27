@@ -39,12 +39,14 @@ class SingleChoice_Queue(wx.Dialog):
     """
     get = wx.GetApp()  # get data from bootstrap
     APPICON = get.iconset['videomass']
-    HEADMSG = (_('There appears to be common destination files between the '
-                 'imported\nqueue data and the one in use.\n\nPlease choose '
-                 'one of the following options:'))
-    MSG = (_('1- Replace common items with imported ones.'),
-           _('2- Keep the common items and add only the new ones.'),
-           _('3- Replace all items with imported ones.'),
+    HEADMSG = (_('There appears to be identical occurrences in the '
+                 'destination file names\nbetween the imported queue and '
+                 'the one in use.\n\nPlease choose '
+                 'one of the following actions:'))
+    MSG = (_('1- Replace all occurrences with items in the imported queue.'),
+           _('2- Keep the occurrences and only add the remaining items.'),
+           _('3- Remove all current queue items and replace them with '
+             'imported ones.'),
            )
 
     def __init__(self, parent):

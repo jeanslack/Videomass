@@ -58,13 +58,13 @@ def one_pass(*args, **kwa):
              f'{cmd["ffmpeg_default_args"]} '
              f'{kwa.get("pre-input-1", "")} '
              f'{kwa["start-time"]} '
-             f'-i "{kwa["fsrc"]}" '
+             f'-i "{kwa["source"]}" '
              f'{kwa["end-time"]} '
              f'{kwa["args"][0]} '
              f'{nul}'
              )
     count1 = (f'File {args[0]}/{args[1]} - Pass One\n'
-              f'Source: "{kwa["fsrc"]}"\nDestination: "{nul}"')
+              f'Source: "{kwa["source"]}"\nDestination: "{nul}"')
     stamp1 = f'{count1}\n\n[COMMAND]:\n{pass1}'
 
     if not platform.system() == 'Windows':
@@ -83,14 +83,16 @@ def two_pass(*args, **kwa):
              f'{cmd["ffmpeg_default_args"]} '
              f'{kwa.get("pre-input-2", "")} '
              f'{kwa["start-time"]} '
-             f'-i "{kwa["fsrc"]}" '
+             f'-i "{kwa["source"]}" '
              f'{kwa["end-time"]} '
              f'{kwa["args"][1]} '
              f'{kwa.get("volume", "")} '
-             f'"{kwa["fdest"]}"'
+             f'"{kwa["destination"]}"'
              )
     count2 = (f'File {args[0]}/{args[1]} - Pass Two\n'
-              f'Source: "{kwa["fsrc"]}"\nDestination: "{kwa["fdest"]}"')
+              f'Source: "{kwa["source"]}"\nDestination: '
+              f'"{kwa["destination"]}"'
+              )
     stamp2 = f'\n{count2}\n\n[COMMAND]:\n{pass2}'
 
     if not platform.system() == 'Windows':
@@ -110,14 +112,14 @@ def one_pass_stab(*args, **kwa):
              f'{cmd["ffmpeg_default_args"]} '
              f'{kwa.get("pre-input-1", "")} '
              f'{kwa["start-time"]} '
-             f'-i "{kwa["fsrc"]}" '
+             f'-i "{kwa["source"]}" '
              f'{kwa["end-time"]} '
              f'{kwa["args"][0]} '
              f'{nul}'
              )
     count1 = (f'File {args[0]}/{args[1]} - Pass One\n'
               f'Detecting statistics for measurements...\n\nSource: '
-              f'"{kwa["fsrc"]}"\nDestination: "{nul}"')
+              f'"{kwa["source"]}"\nDestination: "{nul}"')
     stamp1 = f'{count1}\n\n[COMMAND]:\n{pass1}'
 
     if not platform.system() == 'Windows':
@@ -136,15 +138,15 @@ def two_pass_stab(*args, **kwa):
              f'{cmd["ffmpeg_default_args"]} '
              f'{kwa.get("pre-input-2", "")} '
              f'{kwa["start-time"]} '
-             f'-i "{kwa["fsrc"]}" '
+             f'-i "{kwa["source"]}" '
              f'{kwa["end-time"]} '
              f'{kwa["args"][1]} '
              f'{kwa.get("volume", "")} '
-             f'"{kwa["fdest"]}"'
+             f'"{kwa["destination"]}"'
              )
     count2 = (f'File {args[0]}/{args[1]} - Pass Two\n'
               f'Application of Audio/Video filters...\n\nSource: '
-              f'"{kwa["fsrc"]}"\nDestination: "{kwa["fdest"]}"')
+              f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"')
     stamp2 = f'\n{count2}\n\n[COMMAND]:\n{pass2}'
 
     if not platform.system() == 'Windows':
@@ -163,14 +165,14 @@ def simple_one_pass(*args, **kwa):
              f'{cmd["ffmpeg_default_args"]} '
              f'{kwa.get("pre-input-1", "")} '
              f'{kwa["start-time"]} '
-             f'-i "{kwa["fsrc"]}" '
+             f'-i "{kwa["source"]}" '
              f'{kwa["end-time"]} '
              f'{kwa["args"][0]} '
              f'{kwa.get("volume", "")} '
-             f'"{kwa["fdest"]}"'
+             f'"{kwa["destination"]}"'
              )
     count1 = (f'File {args[0]}/{args[1]}\nSource: '
-              f'"{kwa["fsrc"]}"\nDestination: "{kwa["fdest"]}"')
+              f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"')
     stamp1 = f'{count1}\n\n[COMMAND]:\n{pass1}'
 
     if not platform.system() == 'Windows':
@@ -190,14 +192,14 @@ def one_pass_ebu(*args, **kwa):
              f'{cmd["ffmpeg_default_args"]} '
              f'{kwa.get("pre-input-1", "")} '
              f'{kwa["start-time"]} '
-             f'-i "{kwa["fsrc"]}" '
+             f'-i "{kwa["source"]}" '
              f'{kwa["end-time"]} '
              f'{kwa["args"][0]} '
              f'{nul}'
              )
     count1 = (f'File {args[0]}/{args[1]} - Pass One\n'
               f'Detecting statistics for measurements...\n\nSource: '
-              f'"{kwa["fsrc"]}"\nDestination: "{nul}"')
+              f'"{kwa["source"]}"\nDestination: "{nul}"')
     stamp1 = f'{count1}\n\n[COMMAND]:\n{pass1}'
 
     if not platform.system() == 'Windows':
@@ -223,16 +225,16 @@ def two_pass_ebu(*args, **kwa):
              f'{cmd["ffmpeg_default_args"]} '
              f'{kwa.get("pre-input-2", "")} '
              f'{kwa["start-time"]} '
-             f'-i "{kwa["fsrc"]}" '
+             f'-i "{kwa["source"]}" '
              f'{kwa["end-time"]} '
              f'{kwa["args"][1]} '
              f'-filter:a:{kwa["audiomap"][1]} '
              f'{args[2]} '
-             f'"{kwa["fdest"]}"'
+             f'"{kwa["destination"]}"'
              )
     count2 = (f'File {args[0]}/{args[1]} - Pass Two\n'
               f'Application of Audio/Video filters...\n\nSource: '
-              f'"{kwa["fsrc"]}"\nDestination: "{kwa["fdest"]}"')
+              f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"')
     stamp2 = f'\n{count2}\n\n[COMMAND]:\n{pass2}'
 
     if not platform.system() == 'Windows':
@@ -350,7 +352,7 @@ class FFmpeg(Thread):
 
             if proc1.wait() == 0:  # will add '..terminated' to txtctrl
                 if not kwa["args"][1]:
-                    filedone.append(kwa["fsrc"])
+                    filedone.append(kwa["source"])
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count='',
@@ -423,7 +425,7 @@ class FFmpeg(Thread):
                 break  # stop for loop
 
             if proc2.wait() == 0:  # will add '..terminated' to txtctrl
-                filedone.append(kwa["fsrc"])
+                filedone.append(kwa["source"])
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count='',

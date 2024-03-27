@@ -666,8 +666,8 @@ class SequenceToVideo(wx.Panel):
 
         args = self.get_args_line()  # get args for command line
         kwargs = {'logname': 'Still Image Maker.log',
-                  'type': 'sequence_to_video',
-                  'fsrc': files, 'fdest': destdir, 'outputdir': outputdir,
+                  'type': 'sequence_to_video', 'source': files,
+                  'destination': destdir, 'outputdir': outputdir,
                   'args': args[0], 'nmax': countmax, 'duration': args[1],
                   'pre-input-1': self.opt["Preinput"],
                   'resize': self.opt["RESIZE"],

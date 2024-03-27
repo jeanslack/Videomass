@@ -1001,9 +1001,9 @@ class PrstPan(wx.Panel):
                                               )
         kwargs['start-time'], kwargs['end-time'] = ss, et
         kwargs['logname'] = logname
-        kwargs['fext'] = '' if self.array[5] == 'copy' else self.array[5]
-        kwargs['fsrc'] = f_src
-        kwargs['fdest'] = f_dest
+        kwargs['extension'] = '' if self.array[5] == 'copy' else self.array[5]
+        kwargs['source'] = f_src
+        kwargs['destination'] = f_dest
         kwargs["duration"] = dur[index]
 
         return kwargs
@@ -1026,13 +1026,13 @@ class PrstPan(wx.Panel):
                                               self.parent.duration
                                               )
         kwargs['start-time'], kwargs['end-time'] = ss, et
-        kwargs['fext'] = '' if self.array[5] == 'copy' else self.array[5]
+        kwargs['extension'] = '' if self.array[5] == 'copy' else self.array[5]
 
         batchlist = []
         for index in enumerate(self.parent.file_src):
             kw = kwargs.copy()
-            kw['fsrc'] = f_src[index[0]]
-            kw['fdest'] = f_dest[index[0]]
+            kw['source'] = f_src[index[0]]
+            kw['destination'] = f_dest[index[0]]
             kw['duration'] = dur[index[0]]
             batchlist.append(kw)
 

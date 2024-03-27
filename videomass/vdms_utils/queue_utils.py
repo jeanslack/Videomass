@@ -47,7 +47,7 @@ def load_json_file_queue(newincoming=None):
     """
     Locates, loads and validates a QUEUE json file.
     Note, a Videomass queue file cannot contain multiple
-    occurrences of the 'fdest' key value
+    occurrences of the 'destination' key value
     """
     if not newincoming:
         wildcard = "Source (*.json)|*.json| All files (*.*)|*.*"
@@ -73,10 +73,11 @@ def load_json_file_queue(newincoming=None):
                       )
         return None
 
-    keys = ('type', 'args', 'fext', 'logname', 'fsrc',
-            'fdest', 'duration', 'start-time', 'end-time')
+    keys = ('type', 'args', 'extension', 'logname', 'source',
+            'destination', 'duration', 'start-time', 'end-time')
     msg = (_(f'Error: invalid data found loading '
-             f'queue file:\n\n"{newincoming}"'))
+             f'queue file:\n\n"{newincoming}"\n\nKeys mismatched for '
+             f'requested data'))
     for ck in newdata:
         for key in keys:
             if key not in ck:
@@ -89,9 +90,9 @@ def load_json_file_queue(newincoming=None):
     occurences = []
     msg = (_(f"Error: invalid data found loading queue file:\n\n"
              f"'{newincoming}'\n\nCannot contain multiple occurrences "
-             f"in 'fdest' keys value."))
+             f"in 'destination' keys value."))
     for item in newdata:
-        occurences.append(item['fdest'])
+        occurences.append(item['destination'])
     if any(occurences.count(x) > 1 for x in occurences):
         wx.MessageBox(msg, ("Videomass"),
                       wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK, None)
@@ -111,7 +112,7 @@ def extend_data_queue(parent, currentqueue: list, newqueue: list) -> list:
     indx_new = []
     for indx1, olditem in enumerate(currentqueue):
         for indx2, newitem in enumerate(newqueue):
-            if olditem['fdest'] == newitem['fdest']:
+            if olditem['destination'] == newitem['destination']:
                 indx_orig.append(indx1)
                 indx_new.append(indx2)
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-27 12:18+0100\n"
+"POT-Creation-Date: 2024-03-27 23:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,7 +73,7 @@ msgid "Clear the File List"
 msgstr ""
 
 #: ../vdms_dialogs/epilogue.py:97
-msgid "Batch Processing"
+msgid "Videomass Batch Mode"
 msgstr ""
 
 #: ../vdms_dialogs/filter_crop.py:227 ../vdms_dialogs/filter_scale.py:109
@@ -1533,7 +1533,7 @@ msgstr ""
 msgid "Export queue"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:74 ../vdms_utils/queue_utils.py:52
+#: ../vdms_dialogs/queuedlg.py:74 ../vdms_utils/queue_utils.py:54
 msgid "Import queue"
 msgstr ""
 
@@ -1550,26 +1550,26 @@ msgid "Run"
 msgstr ""
 
 #: ../vdms_dialogs/queuedlg.py:148
-msgid "Queue Processing"
+msgid "Videomass Queue"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:214
+#: ../vdms_dialogs/queuedlg.py:210
 msgid "Export queue file"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:281 ../vdms_panels/av_conversions.py:1189
+#: ../vdms_dialogs/queuedlg.py:277 ../vdms_panels/av_conversions.py:1189
 #: ../vdms_panels/presets_manager.py:1062
 #: ../vdms_panels/video_to_sequence.py:601
 msgid "Unset"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:283 ../vdms_panels/av_conversions.py:1192
+#: ../vdms_dialogs/queuedlg.py:279 ../vdms_panels/av_conversions.py:1192
 #: ../vdms_panels/presets_manager.py:1065
 #: ../vdms_panels/video_to_sequence.py:604
 msgid "start  {} | duration  {}"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:285
+#: ../vdms_dialogs/queuedlg.py:281
 msgid ""
 "Source\n"
 "Destination\n"
@@ -1581,25 +1581,25 @@ msgstr ""
 
 #: ../vdms_dialogs/queue_singlechoice.py:42
 msgid ""
-"There appears to be common destination files between the imported\n"
-"queue data and the one in use.\n"
+"There appears to be identical occurrences in the destination file names\n"
+"between the imported queue and the one in use.\n"
 "\n"
-"Please choose one of the following options:"
-msgstr ""
-
-#: ../vdms_dialogs/queue_singlechoice.py:45
-msgid "1- Replace common items with imported ones."
+"Please choose one of the following actions:"
 msgstr ""
 
 #: ../vdms_dialogs/queue_singlechoice.py:46
-msgid "2- Keep the common items and add only the new ones."
+msgid "1- Replace all occurrences with items in the imported queue."
 msgstr ""
 
 #: ../vdms_dialogs/queue_singlechoice.py:47
-msgid "3- Replace all items with imported ones."
+msgid "2- Keep the occurrences and only add the remaining items."
 msgstr ""
 
-#: ../vdms_dialogs/queue_singlechoice.py:88 ../vdms_main/main_frame.py:208
+#: ../vdms_dialogs/queue_singlechoice.py:48
+msgid "3- Remove all current queue items and replace them with imported ones."
+msgstr ""
+
+#: ../vdms_dialogs/queue_singlechoice.py:90 ../vdms_main/main_frame.py:208
 #: ../vdms_main/main_frame.py:357 ../vdms_main/main_frame.py:1086
 #: ../vdms_main/main_frame.py:1401 ../vdms_main/main_frame.py:1673
 #: ../vdms_ytdlp/main_ytdlp.py:147 ../vdms_ytdlp/main_ytdlp.py:229
@@ -4228,11 +4228,17 @@ msgid ""
 "subtitles except those in Italian, Dutch and French."
 msgstr ""
 
-#: ../vdms_utils/queue_utils.py:64
+#: ../vdms_utils/queue_utils.py:66
 msgid ""
 "You are attempting to load a json file written with invalid JSON encoding."
 msgstr ""
 
-#: ../vdms_utils/queue_utils.py:76
+#: ../vdms_utils/queue_utils.py:78
 msgid "Error: invalid data found loading "
+msgstr ""
+
+#: ../vdms_utils/queue_utils.py:91
+msgid ""
+"Error: invalid data found loading queue file:\n"
+"\n"
 msgstr ""

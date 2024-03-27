@@ -1666,7 +1666,7 @@ class MainFrame(wx.Frame):
             self.toolbar.EnableTool(37, True)
         else:
             for idx, item in enumerate(self.queuelist):
-                if kwargs["fdest"] == item["fdest"]:
+                if kwargs["destination"] == item["destination"]:
                     if wx.MessageBox(_('An item with the same destination '
                                        'file already exists.\n\nDo you want '
                                        'to replace it by adding the new item '

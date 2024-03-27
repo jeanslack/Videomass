@@ -232,7 +232,7 @@ class SlideshowMaker(Thread):
         self.count = 0  # count first for loop
         self.countmax = kwargs['nmax']
         self.logfile = args[0]  # log filename
-        self.fdest = kwargs['fdest']
+        self.destination = kwargs['destination']
         self.kwa = kwargs
 
         self.start()
@@ -244,7 +244,7 @@ class SlideshowMaker(Thread):
         imgtmpnames = 'TMP_' if self.kwa["resize"] else 'IMAGE_'
         filedone = []
         with tempfile.TemporaryDirectory() as tempdir:  # make tmp dir
-            tmpproc1 = convert_images(self.kwa['fsrc'],
+            tmpproc1 = convert_images(self.kwa['source'],
                                       tempdir,
                                       self.logfile,
                                       imgtmpnames,
@@ -258,7 +258,7 @@ class SlideshowMaker(Thread):
                 return
 
             if imgtmpnames == 'TMP_':
-                tmpproc2 = resizing_process(self.kwa['fsrc'],
+                tmpproc2 = resizing_process(self.kwa['source'],
                                             tempdir,
                                             self.kwa["resize"],
                                             self.logfile,
@@ -278,10 +278,10 @@ class SlideshowMaker(Thread):
                      f'{self.kwa["pre-input-1"]} '
                      f'-i "{tmpgroup}" '
                      f'{self.kwa["args"]} '
-                     f'"{self.fdest}"'
+                     f'"{self.destination}"'
                      )
             count = (f'Video production...\nSource: "{tempdir}"\n'
-                     f'Destination: "{self.fdest}"')
+                     f'Destination: "{self.destination}"')
             log = (f'{count}\n\n[COMMAND]:\n{cmd_2}')
 
             wx.CallAfter(pub.sendMessage,
@@ -329,7 +329,7 @@ class SlideshowMaker(Thread):
                         time.sleep(1)
 
                     else:  # status ok
-                        filedone = self.kwa['fsrc']
+                        filedone = self.kwa['source']
                         wx.CallAfter(pub.sendMessage,
                                      "COUNT_EVT",
                                      count='',

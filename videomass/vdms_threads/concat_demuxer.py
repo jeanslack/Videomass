@@ -74,15 +74,17 @@ class ConcatDemuxer(Thread):
         filedone = None
         cmd = (f'"{ConcatDemuxer.appdata["ffmpeg_cmd"]}" '
                f'{ConcatDemuxer.appdata["ffmpeg_default_args"]} -f concat '
-               f'-safe 0 -i {self.kwa["args"]} "{self.kwa["fdest"]}"')
+               f'-safe 0 -i {self.kwa["args"]} "{self.kwa["destination"]}"')
 
         count = (f'{self.kwa["nmax"]} Items in progress...\nSource: '
-                 f'"{self.kwa["fsrc"]}"\nDestination: "{self.kwa["fdest"]}"')
+                 f'"{self.kwa["source"]}"\nDestination: '
+                 f'"{self.kwa["destination"]}"'
+                 )
         stamp = (f'{count}\n\n[COMMAND]:\n{cmd}')
 
         countevt = (f'{self.kwa["nmax"]} Items in progress...\n...for '
                     f'details see Full Log.\nDestination: '
-                    f'"{self.kwa["fdest"]}"')
+                    f'"{self.kwa["destination"]}"')
 
         wx.CallAfter(pub.sendMessage,
                      "COUNT_EVT",
@@ -123,7 +125,7 @@ class ConcatDemuxer(Thread):
                              f"Exit status: {proc.wait}",
                              self.logfile)  # append exit error number
                 else:  # ok
-                    filedone = self.kwa["fsrc"]
+                    filedone = self.kwa["source"]
                     wx.CallAfter(pub.sendMessage,
                                  "COUNT_EVT",
                                  count='',

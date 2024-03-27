@@ -232,7 +232,7 @@ class Conc_Demuxer(wx.Panel):
         logname = 'Concatenate Media File.log'
 
         kwargs = {'logname': logname, 'type': 'concat_demuxer',
-                  'fsrc': filesrc, 'fdest': newfile, 'args': self.args,
+                  'source': filesrc, 'destination': newfile, 'args': self.args,
                   'nmax': len(filesrc), 'duration': self.duration,
                   'start-time': '', 'end-time': '',
                   'preset name': 'Concatenate media files',

@@ -82,7 +82,7 @@ class QueueManager(wx.Dialog):
         self.quelist.InsertColumn(0, _('Title/File name'), width=700)
         index = 0
         for items in self.datalist:  # populate listctrl:
-            desttitle = os.path.basename(items['fdest'])
+            desttitle = os.path.basename(items['destination'])
             self.quelist.InsertItem(index, desttitle)
             index += 1
 
@@ -189,7 +189,7 @@ class QueueManager(wx.Dialog):
         self.quelist.DeleteAllItems()
         index = 0
         for item in self.datalist:  # populate listctrl:
-            desttitle = os.path.basename(item['fdest'])
+            desttitle = os.path.basename(item['destination'])
             self.quelist.InsertItem(index, desttitle)
             index += 1
 
@@ -280,9 +280,9 @@ class QueueManager(wx.Dialog):
 
         keys = (_("Source\nDestination\nAutomation/Preset\nEncoding passes\n"
                   "Output Format\nTime Trimming"))
-        vals = (f'{itemsel["fsrc"]}\n{itemsel["fdest"]}'
+        vals = (f'{itemsel["source"]}\n{itemsel["destination"]}'
                 f'\n{itemsel["preset name"]}\n'
-                f'{passes}\n{itemsel["fext"]}\n{timeseq}'
+                f'{passes}\n{itemsel["extension"]}\n{timeseq}'
                 )
         self.labkey.SetLabel(keys)
         self.labval.SetLabel(vals)

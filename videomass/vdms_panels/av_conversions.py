@@ -898,11 +898,11 @@ class AV_Conv(wx.Panel):
         dur, ss, et = update_timeseq_duration(self.parent.time_seq,
                                               self.parent.duration
                                               )
-        kwargs['fext'] = self.opt["OutputFormat"]
+        kwargs['extension'] = self.opt["OutputFormat"]
         kwargs['pre-input-1'], kwargs['pre-input-2'] = '', ''
         kwargs['logname'] = logname
-        kwargs['fsrc'] = f_src
-        kwargs['fdest'] = f_dest
+        kwargs['source'] = f_src
+        kwargs['destination'] = f_dest
         kwargs["duration"] = dur[index]
         kwargs['start-time'], kwargs['end-time'] = ss, et
         if kwargs.get("volume"):
@@ -929,7 +929,7 @@ class AV_Conv(wx.Panel):
         dur, ss, et = update_timeseq_duration(self.parent.time_seq,
                                               self.parent.duration
                                               )
-        kwargs['fext'] = self.opt["OutputFormat"]
+        kwargs['extension'] = self.opt["OutputFormat"]
         kwargs['pre-input-1'], kwargs['pre-input-2'] = '', ''
         kwargs['logname'] = logname
         kwargs['start-time'], kwargs['end-time'] = ss, et
@@ -937,8 +937,8 @@ class AV_Conv(wx.Panel):
         batchlist = []
         for index in enumerate(self.parent.file_src):
             kw = kwargs.copy()
-            kw['fsrc'] = f_src[index[0]]
-            kw['fdest'] = f_dest[index[0]]
+            kw['source'] = f_src[index[0]]
+            kw['destination'] = f_dest[index[0]]
             kw['duration'] = dur[index[0]]
             if kw.get("volume"):
                 kw["volume"] = kw["volume"][index[0]]
