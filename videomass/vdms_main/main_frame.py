@@ -32,6 +32,7 @@ from pubsub import pub
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.queue_utils import load_json_file_queue
 from videomass.vdms_utils.queue_utils import write_json_file_queue
+from videomass.vdms_utils.queue_utils import extend_data_queue
 from videomass.vdms_dialogs import preferences
 from videomass.vdms_dialogs import set_timestamp
 from videomass.vdms_dialogs import about
@@ -1586,7 +1587,11 @@ class MainFrame(wx.Frame):
 
         if not self.queuelist:
             self.queuelist = []
-        self.queuelist.extend(queue)
+            self.queuelist.extend(queue)
+        else:
+            update = extend_data_queue(self, self.queuelist, queue)
+            if not update:
+                return
 
         shown = (self.ChooseTopic.IsShown(),
                  # self.fileDnDTarget.IsShown(),
@@ -1662,6 +1667,13 @@ class MainFrame(wx.Frame):
         else:
             for idx, item in enumerate(self.queuelist):
                 if kwargs["fdest"] == item["fdest"]:
+                    if wx.MessageBox(_('An item with the same destination '
+                                       'file already exists.\n\nDo you want '
+                                       'to replace it by adding the new item '
+                                       'to the queue?'), _('Videomass'),
+                                     wx.ICON_QUESTION | wx.CANCEL
+                                     | wx.YES_NO, self) != wx.YES:
+                        return
                     del self.queuelist[idx]
                     self.queuelist.append(kwargs)
                     break

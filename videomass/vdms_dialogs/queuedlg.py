@@ -29,6 +29,7 @@ import wx
 import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_utils.queue_utils import load_json_file_queue
 from videomass.vdms_utils.queue_utils import write_json_file_queue
+from videomass.vdms_utils.queue_utils import extend_data_queue
 
 
 class QueueManager(wx.Dialog):
@@ -181,7 +182,10 @@ class QueueManager(wx.Dialog):
         if not newdata:
             return
 
-        self.datalist.extend(newdata)
+        update = extend_data_queue(self, self.datalist, newdata)
+        if not update:
+            return
+
         self.quelist.DeleteAllItems()
         index = 0
         for item in self.datalist:  # populate listctrl:
@@ -212,7 +216,7 @@ class QueueManager(wx.Dialog):
                            wildcard="Queue files (*.json)|*.json",
                            style=wx.FD_SAVE
                            | wx.FD_OVERWRITE_PROMPT) as fileDialog:
-            fileDialog.SetFilename('Videomass queue')
+            fileDialog.SetFilename('Videomass queue.json')
             if fileDialog.ShowModal() == wx.ID_CANCEL:
                 return
             filename = fileDialog.GetPath()

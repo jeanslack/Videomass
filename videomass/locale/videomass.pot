@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-25 17:22+0100\n"
+"POT-Creation-Date: 2024-03-27 12:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1533,7 +1533,7 @@ msgstr ""
 msgid "Export queue"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:74 ../vdms_utils/queue_utils.py:51
+#: ../vdms_dialogs/queuedlg.py:74 ../vdms_utils/queue_utils.py:52
 msgid "Import queue"
 msgstr ""
 
@@ -1553,23 +1553,23 @@ msgstr ""
 msgid "Queue Processing"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:196
+#: ../vdms_dialogs/queuedlg.py:214
 msgid "Export queue file"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:262 ../vdms_panels/av_conversions.py:1192
-#: ../vdms_panels/presets_manager.py:1064
+#: ../vdms_dialogs/queuedlg.py:281 ../vdms_panels/av_conversions.py:1189
+#: ../vdms_panels/presets_manager.py:1062
 #: ../vdms_panels/video_to_sequence.py:601
 msgid "Unset"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:264 ../vdms_panels/av_conversions.py:1195
-#: ../vdms_panels/presets_manager.py:1067
+#: ../vdms_dialogs/queuedlg.py:283 ../vdms_panels/av_conversions.py:1192
+#: ../vdms_panels/presets_manager.py:1065
 #: ../vdms_panels/video_to_sequence.py:604
 msgid "start  {} | duration  {}"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:266
+#: ../vdms_dialogs/queuedlg.py:285
 msgid ""
 "Source\n"
 "Destination\n"
@@ -1577,6 +1577,33 @@ msgid ""
 "Encoding passes\n"
 "Output Format\n"
 "Time Trimming"
+msgstr ""
+
+#: ../vdms_dialogs/queue_singlechoice.py:42
+msgid ""
+"There appears to be common destination files between the imported\n"
+"queue data and the one in use.\n"
+"\n"
+"Please choose one of the following options:"
+msgstr ""
+
+#: ../vdms_dialogs/queue_singlechoice.py:45
+msgid "1- Replace common items with imported ones."
+msgstr ""
+
+#: ../vdms_dialogs/queue_singlechoice.py:46
+msgid "2- Keep the common items and add only the new ones."
+msgstr ""
+
+#: ../vdms_dialogs/queue_singlechoice.py:47
+msgid "3- Replace all items with imported ones."
+msgstr ""
+
+#: ../vdms_dialogs/queue_singlechoice.py:88 ../vdms_main/main_frame.py:208
+#: ../vdms_main/main_frame.py:357 ../vdms_main/main_frame.py:1086
+#: ../vdms_main/main_frame.py:1401 ../vdms_main/main_frame.py:1673
+#: ../vdms_ytdlp/main_ytdlp.py:147 ../vdms_ytdlp/main_ytdlp.py:229
+msgid "Videomass"
 msgstr ""
 
 #: ../vdms_miniframes/timeline.py:46
@@ -1765,12 +1792,6 @@ msgid ""
 "Not all items in the queue were completed.\n"
 "\n"
 "Would you like to keep them in the queue?"
-msgstr ""
-
-#: ../vdms_main/main_frame.py:208 ../vdms_main/main_frame.py:357
-#: ../vdms_main/main_frame.py:1086 ../vdms_main/main_frame.py:1401
-#: ../vdms_ytdlp/main_ytdlp.py:147 ../vdms_ytdlp/main_ytdlp.py:229
-msgid "Videomass"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:355 ../vdms_ytdlp/main_ytdlp.py:227
@@ -2274,7 +2295,7 @@ msgstr ""
 msgid "Videomass - Still Image Maker"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1648 ../vdms_panels/av_conversions.py:573
+#: ../vdms_main/main_frame.py:1652 ../vdms_panels/av_conversions.py:573
 #: ../vdms_panels/audio_encoders/acodecs.py:782
 #: ../vdms_panels/sequence_to_video.py:319
 #: ../vdms_panels/video_to_sequence.py:370
@@ -2282,11 +2303,18 @@ msgstr ""
 msgid "Have to select an item in the file list first"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1681
+#: ../vdms_main/main_frame.py:1670
+msgid ""
+"An item with the same destination file already exists.\n"
+"\n"
+"Do you want to replace it by adding the new item to the queue?"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:1692
 msgid "Videomass - FFmpeg Message Monitoring"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1776
+#: ../vdms_main/main_frame.py:1787
 msgid "yt-dlp is disabled. Check your preferences."
 msgstr ""
 
@@ -2404,18 +2432,18 @@ msgstr ""
 msgid "The file is not a frame or a video file"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:860
+#: ../vdms_panels/av_conversions.py:857
 #: ../vdms_panels/audio_encoders/acodecs.py:431
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
 "audio volume data."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1186
+#: ../vdms_panels/av_conversions.py:1183
 msgid "Off"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1199
+#: ../vdms_panels/av_conversions.py:1196
 msgid ""
 "Batch processing items\n"
 "Automation/Preset\n"
@@ -2428,11 +2456,11 @@ msgid ""
 "Time Trimming"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1241
+#: ../vdms_panels/av_conversions.py:1238
 msgid "Choose a Videomass preset..."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1252
+#: ../vdms_panels/av_conversions.py:1249
 #, python-brace-format
 msgid "New Profile - Preset \"{0}\""
 msgstr ""
@@ -3041,7 +3069,7 @@ msgstr ""
 msgid "ERROR"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:265
+#: ../vdms_panels/concatenate.py:263
 msgid ""
 "Batch processing items\n"
 "Destination\n"
@@ -3536,7 +3564,7 @@ msgstr ""
 msgid "Don't show this dialog again"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1069
+#: ../vdms_panels/presets_manager.py:1067
 msgid ""
 "Batch processing items\n"
 "Automation/Preset\n"
@@ -4200,7 +4228,7 @@ msgid ""
 "subtitles except those in Italian, Dutch and French."
 msgstr ""
 
-#: ../vdms_utils/queue_utils.py:63
+#: ../vdms_utils/queue_utils.py:64
 msgid ""
 "You are attempting to load a json file written with invalid JSON encoding."
 msgstr ""

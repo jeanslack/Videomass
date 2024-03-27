@@ -27,6 +27,7 @@ This file is part of Videomass.
 import os
 import json
 import wx
+from videomass.vdms_dialogs.queue_singlechoice import SingleChoice_Queue
 
 
 def write_json_file_queue(data, queuefile=None):
@@ -85,3 +86,44 @@ def load_json_file_queue(newincoming=None):
                 return None
 
     return newdata
+# --------------------------------------------------------------------
+
+
+def extend_data_queue(parent, currentqueue: list, newqueue: list) -> list:
+    """
+    This function is responsible for extending the items of
+    the `currentqueue` list while maintaining the same id.
+    The result varies based on the choice of a specific
+    selection given by the `choice` object.
+    """
+    indx_orig = []
+    indx_new = []
+    for indx1, olditem in enumerate(currentqueue):
+        for indx2, newitem in enumerate(newqueue):
+            if olditem['fdest'] == newitem['fdest']:
+                indx_orig.append(indx1)
+                indx_new.append(indx2)
+
+    if indx_orig and indx_new:
+        choice = None
+        with SingleChoice_Queue(parent) as dlg:
+            if dlg.ShowModal() == wx.ID_OK:
+                choice = dlg.getvalue()
+
+        if choice == 0:
+            for idx in indx_orig:
+                del currentqueue[idx]
+            currentqueue.extend(newqueue)
+        elif choice == 1:
+            for idx in indx_new:
+                del newqueue[idx]
+            currentqueue.extend(newqueue)
+        elif choice == 2:
+            currentqueue.clear()
+            currentqueue.extend(newqueue)
+        else:
+            return None
+    else:
+        currentqueue.extend(newqueue)
+
+    return currentqueue
