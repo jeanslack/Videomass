@@ -11,6 +11,8 @@ URGENCY: high
 URGENCY: medium
 ----------------
 
+- main_frame.py need refactoring.
+
 -------------
 URGENCY: low (New implementations)
 -------------

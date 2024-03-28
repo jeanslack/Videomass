@@ -209,8 +209,9 @@ class MainFrame(wx.Frame):
                              | wx.YES_NO, self) == wx.YES:
 
                 queue = load_json_file_queue(fque)
-                self.queuelist = queue
-                self.queue_tool_counter()
+                if queue:
+                    self.queuelist = queue
+                    self.queue_tool_counter()
             else:
                 os.remove(fque)
 
@@ -1683,20 +1684,21 @@ class MainFrame(wx.Frame):
             self.queuelist.append(kwargs)
             self.toolbar.EnableTool(37, True)
         else:
+            dup = None
             for idx, item in enumerate(self.queuelist):
-                if kwargs["destination"] == item["destination"]:
-                    if wx.MessageBox(_('An item with the same destination '
-                                       'file already exists.\n\nDo you want '
-                                       'to replace it by adding the new item '
-                                       'to the queue?'), _('Videomass'),
-                                     wx.ICON_QUESTION | wx.CANCEL
-                                     | wx.YES_NO, self) != wx.YES:
-                        return
-                    del self.queuelist[idx]
-                    self.queuelist.append(kwargs)
-                    break
+                if item["destination"] == kwargs["destination"]:
+                    dup = idx
+            if dup is not None:
+                if wx.MessageBox(_('An item with the same destination file '
+                                   'already exists.\n\nDo you want to replace '
+                                   'it by adding the new item to the queue?'),
+                                 _('Videomass'), wx.ICON_QUESTION | wx.CANCEL
+                                 | wx.YES_NO, self) != wx.YES:
+                    return
+                self.queuelist[dup] = kwargs
+
+            else:
                 self.queuelist.append(kwargs)
-                break
 
         write_json_file_queue(self.queuelist)
         self.queue_tool_counter()
