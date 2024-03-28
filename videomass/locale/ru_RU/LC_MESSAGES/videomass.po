@@ -1931,7 +1931,7 @@ msgstr ""
 msgid "Videomass - Downloading..."
 msgstr "Videomass - Скачивание..."
 
-#: ../vdms_io/presets_manager_prop.py:49
+#: ../vdms_utils/presets_manager_utils.py:49
 #, python-format
 msgid ""
 "The selected profile is not suitable to convert the following file formats:\n"
@@ -1944,7 +1944,7 @@ msgstr ""
 "%s\n"
 "\n"
 
-#: ../vdms_io/presets_manager_prop.py:84
+#: ../vdms_utils/presets_manager_utils.py:84
 msgid ""
 "You are attempting to load a preset written with invalid JSON encoding.\n"
 "\n"
@@ -1956,7 +1956,7 @@ msgstr ""
 "Вы можете попробовать восстановить его или импортировать правильный, \n"
 "в противном случае рекомендуется его удалить."
 
-#: ../vdms_io/presets_manager_prop.py:95
+#: ../vdms_utils/presets_manager_utils.py:95
 msgid ""
 "No presets found.\n"
 "\n"
@@ -1968,7 +1968,7 @@ msgstr ""
 "Возможное решение: откройте панель Менеджер Пресетов, перейдите в столбец "
 "пресеты и попробуйте нажать кнопку «Восстановить всё ...»"
 
-#: ../vdms_io/presets_manager_prop.py:127
+#: ../vdms_utils/presets_manager_utils.py:127
 msgid ""
 "Operation aborted due to possible JSON encoding/decoding error.\n"
 "Fix any errors in the JSON code contained on the FILE before performing this "

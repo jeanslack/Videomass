@@ -27,8 +27,8 @@ This file is part of Videomass.
 import os
 import webbrowser
 import wx
-from videomass.vdms_io.presets_manager_prop import write_new_profile
-from videomass.vdms_io.presets_manager_prop import edit_existing_profile
+from videomass.vdms_utils.presets_manager_utils import write_new_profile
+from videomass.vdms_utils.presets_manager_utils import edit_existing_profile
 
 
 class SettingProfile(wx.Dialog):
@@ -160,10 +160,8 @@ class SettingProfile(wx.Dialog):
 
         self.txt_name.SetToolTip(_('A short profile name'))
         self.txt_descript.SetToolTip(_('A long description of the profile'))
-        self.pass_1_cmd.SetToolTip(_('FFmpeg arguments code for one-pass '
-                                     'encoding'))
-        self.pass_2_cmd.SetToolTip(_('FFmpeg arguments code for two-pass '
-                                     'encoding'))
+        self.pass_1_cmd.SetToolTip(_('FFmpeg arguments for one-pass encoding'))
+        self.pass_2_cmd.SetToolTip(_('FFmpeg arguments for two-pass encoding'))
         self.txt_supp.SetToolTip(_('One or more comma-separated format names '
                                    'that are not compatible with this '
                                    'profile.'))

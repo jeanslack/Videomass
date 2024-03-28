@@ -210,10 +210,26 @@ class MainFrame(wx.Frame):
 
                 queue = load_json_file_queue(fque)
                 self.queuelist = queue
+                self.queue_tool_counter()
             else:
                 os.remove(fque)
 
     # -------------------Status bar settings--------------------#
+
+    def queue_tool_counter(self):
+        """
+        Set a counter aside Queue text when adding items
+        to queue list
+        """
+        counter = len(self.queuelist)
+        if self.queuelist:
+            self.pqueue.SetLabel(_("Queue ({0})").format(counter))
+            # need to call Realize() to re-draw the toolbar
+            self.toolbar.Realize()
+        else:
+            self.pqueue.SetLabel(_("Queue"))
+            self.toolbar.Realize()
+    # ------------------------------------------------------------------#
 
     def statusbar_msg(self, msg, bcolor, fcolor=None):
         """
@@ -444,14 +460,14 @@ class MainFrame(wx.Frame):
         dscrp = _("Import files\tCtrl+O")
         self.openmedia = fileButton.Append(wx.ID_OPEN, dscrp)
         self.openmedia.Enable(False)
-        dscrp = _("Open encoding destination\tCtrl+D")
+        dscrp = _("Open the encoding destination directory\tCtrl+D")
         fold_convers = fileButton.Append(wx.ID_ANY, dscrp)
         dscrp = (_("Set encoding destination"),
                  _("Set a new destination for encodings"))
         path_dest = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         if self.same_destin:
             path_dest.Enable(False)
-        dscrp = _("Restore default encoding destination")
+        dscrp = _("Restores the default destination for encodings")
         self.resetfolders_tmp = fileButton.Append(wx.ID_ANY, dscrp)
         self.resetfolders_tmp.Enable(False)
         fileButton.AppendSeparator()
@@ -1291,7 +1307,7 @@ class MainFrame(wx.Frame):
                                                 bmpinfo,
                                                 tip, wx.ITEM_NORMAL
                                                 )
-        tip = _("Start rendering")
+        tip = _("Start batch processing")
         self.run_coding = self.toolbar.AddTool(7, _('Run'),
                                                bmpconv,
                                                tip, wx.ITEM_NORMAL
@@ -1306,16 +1322,16 @@ class MainFrame(wx.Frame):
                                      bmpclear,
                                      tip, wx.ITEM_NORMAL
                                      )
-        tip = _("Add selected file to queue")
+        tip = _("Add an item to Queue")
         addqueue = self.toolbar.AddTool(36, _('Add to Queue'),
                                         bmpaddqueue,
                                         tip, wx.ITEM_NORMAL
                                         )
-        tip = _("Manage and process file queues")
-        pqueue = self.toolbar.AddTool(37, _('Process Queue'),
-                                      bmpprocqueue,
-                                      tip, wx.ITEM_NORMAL
-                                      )
+        tip = _("Show queue")
+        self.pqueue = self.toolbar.AddTool(37, _('Queue'),
+                                           bmpprocqueue,
+                                           tip, wx.ITEM_NORMAL
+                                           )
         self.toolbar.Realize()
 
         # ----------------- Tool Bar Binding (evt)-----------------------#
@@ -1328,7 +1344,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.media_streams, self.btn_streams)
         self.Bind(wx.EVT_TOOL, self.fileDnDTarget.on_play_select, play)
         self.Bind(wx.EVT_TOOL, self.on_add_to_queue, addqueue)
-        self.Bind(wx.EVT_TOOL, self.on_process_queue, pqueue)
+        self.Bind(wx.EVT_TOOL, self.on_process_queue, self.pqueue)
 
     # --------------- Tool Bar Callback (event handler) -----------------#
 
@@ -1601,6 +1617,7 @@ class MainFrame(wx.Frame):
             self.toolbar.EnableTool(37, True)
 
         write_json_file_queue(self.queuelist)
+        self.queue_tool_counter()
     # ------------------------------------------------------------------#
 
     def on_process_queue(self, event):
@@ -1642,6 +1659,7 @@ class MainFrame(wx.Frame):
             os.remove(queuef)  # remove queue.backup
             self.queuelist.clear()
             self.toolbar.EnableTool(37, False)
+            self.queue_tool_counter()
     # ------------------------------------------------------------------#
 
     def on_add_to_queue(self, event):
@@ -1681,6 +1699,7 @@ class MainFrame(wx.Frame):
                 break
 
         write_json_file_queue(self.queuelist)
+        self.queue_tool_counter()
     # ------------------------------------------------------------------#
 
     def switch_to_processing(self, *args, datalist=None):

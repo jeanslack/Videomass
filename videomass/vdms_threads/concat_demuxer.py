@@ -83,7 +83,7 @@ class ConcatDemuxer(Thread):
         stamp = (f'{count}\n\n[COMMAND]:\n{cmd}')
 
         countevt = (f'{self.kwa["nmax"]} Items in progress...\n...for '
-                    f'details see Full Log.\nDestination: '
+                    f'details see Current Log.\nDestination: '
                     f'"{self.kwa["destination"]}"')
 
         wx.CallAfter(pub.sendMessage,

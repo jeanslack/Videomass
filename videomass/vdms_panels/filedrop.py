@@ -303,7 +303,7 @@ class FileDnD(wx.Panel):
 
         # Tooltips
         self.btn_destpath.SetToolTip(_('Set a new destination for encodings'))
-        self.text_path_save.SetToolTip(_("Current destination folder"))
+        self.text_path_save.SetToolTip(_("Current destination directory"))
 
         # Binding (EVT)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)

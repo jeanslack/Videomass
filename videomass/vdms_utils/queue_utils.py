@@ -51,7 +51,7 @@ def load_json_file_queue(newincoming=None):
     """
     if not newincoming:
         wildcard = "Source (*.json)|*.json| All files (*.*)|*.*"
-        with wx.FileDialog(None, _("Import queue"),
+        with wx.FileDialog(None, _("Import queue file"),
                            "", "", wildcard, wx.FD_OPEN
                            | wx.FD_FILE_MUST_EXIST) as filedlg:
 
@@ -65,7 +65,7 @@ def load_json_file_queue(newincoming=None):
     except json.decoder.JSONDecodeError as err:
         msg = _('You are attempting to load a json file written with '
                 'invalid JSON encoding.')
-        wx.MessageBox(f'\nERROR: {err}\n\nFILE: "{newincoming}"\n\n{msg}',
+        wx.MessageBox(f'\nERROR: {err}\nFILE: "{newincoming}"\n\n{msg}',
                       ("Videomass"), wx.STAY_ON_TOP
                       | wx.ICON_ERROR
                       | wx.OK,
@@ -73,11 +73,11 @@ def load_json_file_queue(newincoming=None):
                       )
         return None
 
-    keys = ('type', 'args', 'extension', 'logname', 'source',
-            'destination', 'duration', 'start-time', 'end-time')
-    msg = (_(f'Error: invalid data found loading '
-             f'queue file:\n\n"{newincoming}"\n\nKeys mismatched for '
-             f'requested data'))
+    keys = ('type', 'args', 'extension', 'logname', 'source', 'preset name',
+            'destination', 'duration', 'start-time', 'end-time',)
+    msg = (_('ERROR: invalid data found loading queue file.\n'
+             'FILE: "{0}"\n\nKeys mismatched for '
+             'requested data.').format(newincoming))
     for ck in newdata:
         for key in keys:
             if key not in ck:
@@ -88,9 +88,9 @@ def load_json_file_queue(newincoming=None):
                               )
                 return None
     occurences = []
-    msg = (_(f"Error: invalid data found loading queue file:\n\n"
-             f"'{newincoming}'\n\nCannot contain multiple occurrences "
-             f"in 'destination' keys value."))
+    msg = (_('ERROR: invalid data found loading queue file.\n'
+             'FILE: "{0}"\n\nCannot contain multiple occurrences '
+             'in `destination` keys value.').format(newincoming))
     for item in newdata:
         occurences.append(item['destination'])
     if any(occurences.count(x) > 1 for x in occurences):

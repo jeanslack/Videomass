@@ -625,7 +625,7 @@ class VideoToSequence(wx.Panel):
                 rate, rows, cols, pad, marg = '', '', '', '', ''
 
         keys = (_("Selected File\nOutput Format\n"
-                  "Destination Folder\nRate (fps)\nResizing\n"
+                  "Destination directory\nRate (fps)\nResizing\n"
                   "Mosaic rows\nMosaic columns\nMosaic padding\n"
                   "Mosaic margin\nCustom Arguments\nTime Trimming"
                   ))

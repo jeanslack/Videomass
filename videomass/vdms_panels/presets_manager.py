@@ -31,11 +31,11 @@ import sys
 import wx
 import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_io.presets_manager_prop import json_data
-from videomass.vdms_io.presets_manager_prop import supported_formats
-from videomass.vdms_io.presets_manager_prop import delete_profiles
-from videomass.vdms_io.presets_manager_prop import update_oudated_profiles
-from videomass.vdms_io.presets_manager_prop import write_new_profile
+from videomass.vdms_utils.presets_manager_utils import json_data
+from videomass.vdms_utils.presets_manager_utils import supported_formats
+from videomass.vdms_utils.presets_manager_utils import delete_profiles
+from videomass.vdms_utils.presets_manager_utils import update_oudated_profiles
+from videomass.vdms_utils.presets_manager_utils import write_new_profile
 from videomass.vdms_utils.utils import copy_restore
 from videomass.vdms_utils.utils import copy_on
 from videomass.vdms_utils.utils import copydir_recursively
@@ -304,9 +304,9 @@ class PrstPan(wx.Panel):
         tip = _("Retrieve all Videomass default presets")
         self.btn_restorealldefault.SetToolTip(tip)
         self.btn_refresh.SetToolTip(_("Update the presets list"))
-        tip = _('FFmpeg arguments code for one-pass encoding')
+        tip = _('FFmpeg arguments for one-pass encoding')
         self.txt_1cmd.SetToolTip(tip)
-        tip = _('FFmpeg arguments code for two-pass encoding')
+        tip = _('FFmpeg arguments for two-pass encoding')
         self.txt_2cmd.SetToolTip(tip)
         tip = (_('Any optional arguments to add before input file on the '
                  'one-pass encoding, e.g required names of some hardware '
@@ -387,7 +387,7 @@ class PrstPan(wx.Panel):
             with open(conftext, "w", encoding='utf8') as updatevers:
                 updatevers.write(f'{srcversion}\n')
 
-            # copies missing file/dir to the destination folder
+            # copies missing file/dir to the destination directory
             copy_missing_data(self.src_prst, self.user_prst)
     # --------------------------------------------------------------------
 
@@ -428,7 +428,7 @@ class PrstPan(wx.Panel):
     def set_listctrl(self, colw):
         """
         Populates Presets list with JSON data files.
-        See `presets_manager_prop.py`
+        See `presets_manager_utils.py`
         """
         self.lctrl.InsertColumn(0, _('Name'), width=colw[0])
         self.lctrl.InsertColumn(1, _('Description'), width=colw[1])
@@ -452,8 +452,8 @@ class PrstPan(wx.Panel):
                 self.lctrl.SetItem(rows, 3, name["Supported_list"])
 
         except (TypeError, KeyError):
-            wx.MessageBox(_('ERROR: Preset not supported!\n\n'
-                            'File: "{}"'.format(path)),
+            wx.MessageBox(_('ERROR: Preset not supported!\n'
+                            'FILE: "{}"'.format(path)),
                           "Videomass", wx.ICON_ERROR, self)
             return
     # ----------------------Event handler (callback)----------------------#
@@ -517,8 +517,8 @@ class PrstPan(wx.Panel):
                     self.array.append(name["Preinput_2"])
 
         except KeyError as err:
-            wx.MessageBox(_('ERROR: json Key Error: {}\n\n'
-                            'File: "{}"'.format(err, path)),
+            wx.MessageBox(_('ERROR: json key error\n'
+                            'FILE: "{0}"\n\n{1}'.format(path, err)),
                           "Videomass", wx.ICON_ERROR, self)
             return
 
@@ -743,7 +743,7 @@ class PrstPan(wx.Panel):
             if err:
                 wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
                 return err
-        # copies non-existent ones to the destination folder
+        # copies non-existent ones to the destination directory
         if event:  # only `Import group` event
             err = copy_on('prst', source, self.user_prst, overw=False)
             if err:
