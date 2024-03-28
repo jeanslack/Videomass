@@ -54,6 +54,7 @@ class QueueManager(wx.Dialog):
         self.movetotrash = movetotrash
         self.emptylist = emptylist
         self.delqueuefile = removequeue
+        self.parent = parent
         wx.Dialog.__init__(self, parent, -1,
                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
@@ -68,10 +69,10 @@ class QueueManager(wx.Dialog):
                                     _("Remove all"), size=(-1, -1))
         sizerbtn.Add(self.btn_remall, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_expqueue = wx.Button(self, wx.ID_ANY,
-                                      _("Export queue"), size=(-1, -1))
+                                      _("Export\nqueue file"), size=(-1, -1))
         sizerbtn.Add(self.btn_expqueue, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_impqueue = wx.Button(self, wx.ID_ANY,
-                                      _("Import queue"), size=(-1, -1))
+                                      _("Import\nqueue file"), size=(-1, -1))
         sizerbtn.Add(self.btn_impqueue, 0, wx.ALL | wx.EXPAND, 5)
 
         self.quelist = wx.ListCtrl(self,
@@ -145,7 +146,7 @@ class QueueManager(wx.Dialog):
                       | wx.RIGHT, border=5
                       )
         # ----------------------Properties----------------------#
-        self.SetTitle(_('Videomass Queue'))
+        self.SetTitle(_('Videomass - Queue'))
         self.SetMinSize((820, 520))
 
         self.SetSizer(sizerbase)
@@ -198,6 +199,7 @@ class QueueManager(wx.Dialog):
         if not selidx == -1:
             self.quelist.Focus(selidx)  # make the line the current line
             self.quelist.Select(selidx, on=1)  # default event selection
+        self.parent.queue_tool_counter()
     # ----------------------------------------------------------------------
 
     def on_save_queue(self, event):
@@ -247,6 +249,7 @@ class QueueManager(wx.Dialog):
             self.quelist.Select(num - 1)  # select the previous one
 
         write_json_file_queue(self.datalist)
+        self.parent.queue_tool_counter()
         return
     # ----------------------------------------------------------------------
 
@@ -262,6 +265,7 @@ class QueueManager(wx.Dialog):
         self.on_deselect(None)
         queuebak = os.path.join(self.appdata["confdir"], 'queue.backup')
         os.remove(queuebak)
+        self.parent.queue_tool_counter()
     # ----------------------------------------------------------------------
 
     def on_select(self, event):

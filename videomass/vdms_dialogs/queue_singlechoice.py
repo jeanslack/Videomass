@@ -39,15 +39,12 @@ class SingleChoice_Queue(wx.Dialog):
     """
     get = wx.GetApp()  # get data from bootstrap
     APPICON = get.iconset['videomass']
-    HEADMSG = (_('There appears to be identical occurrences in the '
-                 'destination file names\nbetween the imported queue and '
-                 'the one in use.\n\nPlease choose '
-                 'one of the following actions:'))
-    MSG = (_('1- Replace all occurrences with items in the imported queue.'),
-           _('2- Keep the occurrences and only add the remaining items.'),
-           _('3- Remove all current queue items and replace them with '
-             'imported ones.'),
-           )
+    HEADMSG = (_('Multiple matches were found in the destination file names.\n'
+                 'Please choose one of the following actions:'))
+    MSG = (_('Replace occurrences with items from the imported queue.'),
+           _('Add only missing items to the queue.'),
+           _('Remove the current queue and replace it with the imported '
+             'one.'))
 
     def __init__(self, parent):
         """
@@ -87,8 +84,8 @@ class SingleChoice_Queue(wx.Dialog):
         icon.CopyFromBitmap(wx.Bitmap(SingleChoice_Queue.APPICON,
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        self.SetTitle(_('Videomass'))
-        self.SetMinSize((620, 320))
+        self.SetTitle(_('Videomass - Action is required...'))
+        self.SetMinSize((620, 270))
         self.SetSizer(sizbase)
         sizbase.Fit(self)
         self.Layout()

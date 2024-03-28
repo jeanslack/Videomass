@@ -717,7 +717,7 @@ class SequenceToVideo(wx.Panel):
             addargs = ''
 
         keys = (_("Batch processing items\nOutput filename"
-                  "\nDestination Folder\nOutput Format"
+                  "\nDestination directory\nOutput Format"
                   "\nAdditional arguments"
                   "\nAudio file\nShortest\nResize\nPre-input"
                   "\nFrame per Second (FPS)\nStill image duration"

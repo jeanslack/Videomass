@@ -142,7 +142,7 @@ class LogOut(wx.Panel):
         lbl = wx.StaticText(self, label=infolbl)
         if self.appdata['ostype'] != 'Darwin':
             lbl.SetLabelMarkup(f"<b>{infolbl}</b>")
-        self.btn_viewlog = wx.Button(self, wx.ID_ANY, _("Full Log"),
+        self.btn_viewlog = wx.Button(self, wx.ID_ANY, _("Current Log"),
                                      size=(-1, -1))
         self.btn_viewlog.Disable()
         self.txtout = wx.TextCtrl(self, wx.ID_ANY, "",
@@ -371,7 +371,7 @@ class LogOut(wx.Panel):
 
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
                 notification_area(endmsg, _("For more details please read the "
-                                            "Full Log."), wx.ICON_ERROR)
+                                            "Current Log."), wx.ICON_ERROR)
 
             self.parent.statusbar_msg(_('...Finished'), None)
             self.txtout.AppendText(f"\n{endmsg}\n")

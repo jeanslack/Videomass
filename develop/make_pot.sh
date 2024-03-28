@@ -58,7 +58,7 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_miniframes/timeline.py" \
 "../vdms_io/checkup.py" \
 "../vdms_io/io_tools.py" \
-"../vdms_io/presets_manager_prop.py" \
+"../vdms_utils/presets_manager_utils.py" \
 "../vdms_main/main_frame.py" \
 "../vdms_panels/av_conversions.py" \
 "../vdms_panels/audio_encoders/acodecs.py" \

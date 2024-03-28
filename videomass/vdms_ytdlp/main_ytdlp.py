@@ -277,12 +277,12 @@ class MainYtdl(wx.Frame):
 
         # ----------------------- file menu
         fileButton = wx.Menu()
-        dscrp = _("Open download destination\tCtrl+D")
+        dscrp = _("Open the download destination directory\tCtrl+D")
         fold_downloads = fileButton.Append(wx.ID_ANY, dscrp)
         dscrp = (_("Set download destination"),
                  _("Set a new destination for your downloads"))
         setdownload_tmp = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = _("Restore default download destination")
+        dscrp = _("Restores the default destination for downloads")
         self.resetfolders_tmp = fileButton.Append(wx.ID_ANY, dscrp)
         self.resetfolders_tmp.Enable(False)
         fileButton.AppendSeparator()

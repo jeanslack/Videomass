@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-File Name: presets_manager_prop.py
+File Name: presets_manager_utils.py
 Porpose: management of properties of the preset manager panel
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -86,7 +86,7 @@ def json_data(arg):
                 'You can try to restore it or import a correct one, '
                 'otherwise it is recommended to remove it.'
                 )
-        wx.MessageBox(f'\nERROR: {err}\n\nFILE: "{arg}"\n\n{msg}',
+        wx.MessageBox(f'\nERROR: {err}\nFILE: "{arg}"\n\n{msg}',
                       ("Videomass"), wx.ICON_ERROR | wx.OK, None)
 
         return 'error'
@@ -132,13 +132,13 @@ def update_oudated_profiles(new, old):
             try:
                 incoming = json.load(newf)
             except json.decoder.JSONDecodeError as err:
-                return f"ERROR: {str(err)}\n\nFILE: '{new}'\n\n{msg}"
+                return f"ERROR: {str(err)}\nFILE: '{new}'\n\n{msg}"
 
         with open(old, 'r', encoding='utf8') as oldf:
             try:
                 outcoming = json.load(oldf)
             except json.decoder.JSONDecodeError as err:
-                return f"ERROR: {str(err)}\n\nFILE: '{old}'\n\n{msg}"
+                return f"ERROR: {str(err)}\nFILE: '{old}'\n\n{msg}"
 
         items_new = {value["Name"]: value for value in incoming}
         items_old = {value["Name"]: value for value in outcoming}
