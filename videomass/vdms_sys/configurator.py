@@ -377,7 +377,7 @@ class DataSource():
 
             else:
                 msg(f'executable={binarypath}')
-                # pip as normal user, usually Linux, MacOs, Unix
+                # pip as user, usually Linux, MacOs, Unix
                 if binarypath is None:
                     # need if user $PATH is not set yet
                     userbase = site.getuserbase()
