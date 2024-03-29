@@ -7,6 +7,13 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Sat, 30 Mon 2024 V.5.0.11
+
+  * This release fixes `ModuleNotFoundError` issue installing from PyPi and
+    packaging for distributions.
+  * Fix missing `__init__.py` file inside `vdms_panels` directory.
+
++------------------------------------+
 Tue, 25 Mon 2024 V.5.0.10
 
   * [A/V Conversions] [Presets Manager] [NEW] Added ability to manage and

@@ -1,3 +1,11 @@
+videomass (5.0.11-1) UNRELEASED; urgency=medium
+
+  * This release fixes `ModuleNotFoundError` issue installing from PyPi and
+    packaging for distributions.
+  * Fix missing `__init__.py` file inside `vdms_panels` directory.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 30 Mar 2024 00:00:00 +0200
+
 videomass (5.0.10-1) UNRELEASED; urgency=medium
 
   * [A/V Conversions] [Presets Manager] [NEW] Added ability to manage and
