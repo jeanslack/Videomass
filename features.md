@@ -28,6 +28,7 @@ extract audio from videos and much more!
 - No ads
 - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
 - Batch processing.
+- Queue management (only available for Presets Manager and A/V Conversions).
 - Advanced log file management.
 - Multi-panels, switch between panels using keyboard shortcuts.
 - Audio/video processing using advanced tools and sophisticated filters interfaces.
