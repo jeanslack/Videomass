@@ -30,7 +30,7 @@ import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_utils.queue_utils import load_json_file_queue
 from videomass.vdms_utils.queue_utils import write_json_file_queue
 from videomass.vdms_utils.queue_utils import extend_data_queue
-from videomass.vdms_dialogs.edit_queue import Edit_Queue_Item
+from videomass.vdms_dialogs.queue_edit import Edit_Queue_Item
 
 
 class QueueManager(wx.Dialog):

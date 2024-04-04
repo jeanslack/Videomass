@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-28 18:30+0100\n"
+"POT-Creation-Date: 2024-04-04 23:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -60,15 +60,15 @@ msgid ""
 "lossy compression formats, do not have associated bit depths."
 msgstr ""
 
-#: ../vdms_dialogs/epilogue.py:74 ../vdms_dialogs/queuedlg.py:118
+#: ../vdms_dialogs/epilogue.py:74 ../vdms_dialogs/queuedlg.py:122
 msgid "When finished, once the operations have been completed successfully:"
 msgstr ""
 
-#: ../vdms_dialogs/epilogue.py:80 ../vdms_dialogs/queuedlg.py:124
+#: ../vdms_dialogs/epilogue.py:80 ../vdms_dialogs/queuedlg.py:128
 msgid "Trash the source files"
 msgstr ""
 
-#: ../vdms_dialogs/epilogue.py:84 ../vdms_dialogs/queuedlg.py:128
+#: ../vdms_dialogs/epilogue.py:84 ../vdms_dialogs/queuedlg.py:132
 msgid "Clear the File List"
 msgstr ""
 
@@ -658,8 +658,8 @@ msgid ""
 msgstr ""
 
 #: ../vdms_dialogs/wizard_dlg.py:345 ../vdms_dialogs/wizard_dlg.py:362
-#: ../vdms_dialogs/wizard_dlg.py:379 ../vdms_dialogs/preferences.py:764
-#: ../vdms_dialogs/preferences.py:806 ../vdms_dialogs/preferences.py:848
+#: ../vdms_dialogs/wizard_dlg.py:379 ../vdms_dialogs/preferences.py:750
+#: ../vdms_dialogs/preferences.py:792 ../vdms_dialogs/preferences.py:834
 msgid "{} location"
 msgstr ""
 
@@ -727,13 +727,13 @@ msgstr ""
 msgid "Cross-platform graphical user interface for FFmpeg and yt-dlp.\n"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:39
+#: ../vdms_dialogs/setting_profiles.py:39 ../vdms_dialogs/queue_edit.py:36
 msgid ""
 "One-Pass, Do not start with `ffmpeg -i filename`; do not end with `output-"
 "filename`"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:43
+#: ../vdms_dialogs/setting_profiles.py:43 ../vdms_dialogs/queue_edit.py:40
 msgid ""
 "Two-Pass (optional), Do not start with `ffmpeg -i filename`; do not end with "
 "`output-filename`"
@@ -747,44 +747,59 @@ msgstr ""
 msgid "Output Format. Empty to copy format and codec. Do not include the `.`"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:75
+#: ../vdms_dialogs/setting_profiles.py:73
 msgid "Profile Name"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:81 ../vdms_panels/presets_manager.py:434
+#: ../vdms_dialogs/setting_profiles.py:78 ../vdms_panels/presets_manager.py:434
 msgid "Description"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:161
+#: ../vdms_dialogs/setting_profiles.py:93 ../vdms_dialogs/queue_edit.py:71
+msgid "Optional `pre-input` arguments for one-pass encoding"
+msgstr ""
+
+#: ../vdms_dialogs/setting_profiles.py:104 ../vdms_dialogs/queue_edit.py:102
+msgid "Optional `pre-input` arguments for two-pass encoding"
+msgstr ""
+
+#: ../vdms_dialogs/setting_profiles.py:146
 msgid "A short profile name"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:162
+#: ../vdms_dialogs/setting_profiles.py:147
 msgid "A long description of the profile"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:163
+#: ../vdms_dialogs/setting_profiles.py:148 ../vdms_dialogs/queue_edit.py:82
 #: ../vdms_panels/presets_manager.py:307
 msgid "FFmpeg arguments for one-pass encoding"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:164
+#: ../vdms_dialogs/setting_profiles.py:149 ../vdms_dialogs/queue_edit.py:113
 #: ../vdms_panels/presets_manager.py:309
 msgid "FFmpeg arguments for two-pass encoding"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:165
+#: ../vdms_dialogs/setting_profiles.py:150
 msgid ""
 "One or more comma-separated format names that are not compatible with this "
 "profile."
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:168
+#: ../vdms_dialogs/setting_profiles.py:153
 msgid "Output format extension. Leave empty to copy codec and format"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:171
-#: ../vdms_dialogs/setting_profiles.py:175
+#: ../vdms_dialogs/setting_profiles.py:156 ../vdms_dialogs/queue_edit.py:88
+#: ../vdms_panels/presets_manager.py:311
+msgid ""
+"Any optional arguments to add before input file on the one-pass encoding, e."
+"g required names of some hardware accelerations like -hwaccel to use with "
+"CUDA."
+msgstr ""
+
+#: ../vdms_dialogs/setting_profiles.py:160 ../vdms_dialogs/queue_edit.py:119
 #: ../vdms_panels/presets_manager.py:315
 msgid ""
 "Any optional arguments to add before input file on the two-pass encoding, e."
@@ -792,24 +807,24 @@ msgid ""
 "CUDA."
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:284
+#: ../vdms_dialogs/setting_profiles.py:269
 msgid "Incomplete profile assignments"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:291
+#: ../vdms_dialogs/setting_profiles.py:276
 msgid "Formats must be comma-separated"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:307
-#: ../vdms_dialogs/setting_profiles.py:326
+#: ../vdms_dialogs/setting_profiles.py:292
+#: ../vdms_dialogs/setting_profiles.py:311
 msgid "Profile already stored with same name"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:311
+#: ../vdms_dialogs/setting_profiles.py:296
 msgid "Successful storing!"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:329
+#: ../vdms_dialogs/setting_profiles.py:314
 msgid "Successful changes!"
 msgstr ""
 
@@ -843,192 +858,188 @@ msgstr ""
 msgid "Timestamp settings"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:89
+#: ../vdms_dialogs/preferences.py:90
 msgid "Warn on exit"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:93
+#: ../vdms_dialogs/preferences.py:94
 msgid "Application Language"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:104
+#: ../vdms_dialogs/preferences.py:105
 msgid "Configuration directory"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:117
+#: ../vdms_dialogs/preferences.py:118
 msgid "Cache directory"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:129
-msgid "Clear the cache when exiting the application"
+#: ../vdms_dialogs/preferences.py:130
+msgid "Remove cached files during application exit"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:133
+#: ../vdms_dialogs/preferences.py:134
 msgid "Log directory"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:145
-msgid "Delete the contents of the log files when exiting the application"
+#: ../vdms_dialogs/preferences.py:146
+msgid "Clean log files during application exit"
 msgstr ""
 
 #: ../vdms_dialogs/preferences.py:152
-msgid "Miscellanea"
+msgid "General"
 msgstr ""
 
 #: ../vdms_dialogs/preferences.py:158
 msgid "Where do you prefer to save your transcodes?"
 msgstr ""
 
+#: ../vdms_dialogs/preferences.py:168 ../vdms_dialogs/preferences.py:191
+#: ../vdms_dialogs/preferences.py:210 ../vdms_dialogs/preferences.py:228
+#: ../vdms_dialogs/preferences.py:241 ../vdms_dialogs/preferences.py:254
+#: ../vdms_panels/filedrop.py:280 ../vdms_ytdlp/textdrop.py:152
+msgid "Change"
+msgstr ""
+
 #: ../vdms_dialogs/preferences.py:171
-msgid "Save each file in the same folder as input file"
+msgid "Use same destination directory as source file"
 msgstr ""
 
 #: ../vdms_dialogs/preferences.py:176
-msgid "Assign optional suffix to output file names:"
+msgid "Assign optional suffix to destination file names:"
 msgstr ""
 
 #: ../vdms_dialogs/preferences.py:181
-msgid ""
-"Always move source files to the Videomass\n"
-"trash folder after successful encoding"
+msgid "Trash the source files after successful encoding"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:201
+#: ../vdms_dialogs/preferences.py:200
 msgid "Where do you prefer to save your downloads?"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:213
-msgid "Auto-create subfolders when downloading playlists"
+#: ../vdms_dialogs/preferences.py:212
+msgid "Auto-create subdirectories when downloading playlists"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:217
+#: ../vdms_dialogs/preferences.py:216
 msgid "File Preferences"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:224
+#: ../vdms_dialogs/preferences.py:223
 msgid "Path to the executables"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:227
-msgid "Enable custom path to run FFmpeg"
+#: ../vdms_dialogs/preferences.py:226
+msgid "Enable a custom location to run FFmpeg"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:240
-msgid "Enable custom path to run FFprobe"
+#: ../vdms_dialogs/preferences.py:239
+msgid "Enable a custom location to run FFprobe"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:253
-msgid "Enable custom path to run FFplay"
+#: ../vdms_dialogs/preferences.py:252
+msgid "Enable a custom location to run FFplay"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:267
+#: ../vdms_dialogs/preferences.py:266
 msgid "FFmpeg"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:273
+#: ../vdms_dialogs/preferences.py:272
 msgid "Download videos from YouTube.com and other video sites"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:276
+#: ../vdms_dialogs/preferences.py:275
 msgid "Enable/Disable yt-dlp"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:281
+#: ../vdms_dialogs/preferences.py:280
 msgid "External Downloader Preferences"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:283
+#: ../vdms_dialogs/preferences.py:282
 msgid ""
-"In addition to the default (native) one, yt-dlp currently\n"
-"supports the following external downloaders:\n"
+"In addition to the native default one, yt-dlp currently supports the "
+"following external downloaders:\n"
 "aria2c, avconv, axel, curl, ffmpeg, httpie, wget.\n"
-"Please note that if you enable an external downloader, you\n"
-"will not be able to view the progress bar during download\n"
-"operations."
+"Please note that if you enable an external downloader, you will not be able "
+"to view the progress bar\n"
+"during download operations."
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:291
+#: ../vdms_dialogs/preferences.py:290
 msgid "External downloader executable path"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:299
+#: ../vdms_dialogs/preferences.py:298
 msgid "External downloader arguments"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:314
+#: ../vdms_dialogs/preferences.py:313
 msgid "Icon themes"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:316
-msgid ""
-"The chosen icon theme will only change the icons,\n"
-"background and foreground of some text fields."
-msgstr ""
-
-#: ../vdms_dialogs/preferences.py:336
+#: ../vdms_dialogs/preferences.py:327
 msgid "Toolbar customization"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:338
+#: ../vdms_dialogs/preferences.py:329
 msgid "At the top of window (default)"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:339
+#: ../vdms_dialogs/preferences.py:330
 msgid "At the bottom of window"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:340
+#: ../vdms_dialogs/preferences.py:331
 msgid "At the right of window"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:341
+#: ../vdms_dialogs/preferences.py:332
 msgid "At the left of window"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:343
+#: ../vdms_dialogs/preferences.py:334
 msgid "Place the toolbar"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:353
+#: ../vdms_dialogs/preferences.py:344
 msgid "Icon size:"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:366
-msgid "Show text next to toolbar buttons"
-msgstr ""
-
-#: ../vdms_dialogs/preferences.py:371
+#: ../vdms_dialogs/preferences.py:358
 msgid "Appearance"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:378
+#: ../vdms_dialogs/preferences.py:365
 msgid ""
-"The following settings affect output messages and\n"
-"the log messages during transcoding processes.\n"
-"Change only if you know what you are doing.\n"
+"The following settings affect output messages and the log messages during "
+"transcoding processes.\n"
+"Be careful, by changing these settings some functions of the application may "
+"not work correctly,\n"
+"change only if you know what you are doing.\n"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:399
+#: ../vdms_dialogs/preferences.py:388
 msgid "FFmpeg logging levels"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:446
+#: ../vdms_dialogs/preferences.py:433
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:449 ../vdms_main/main_frame.py:617
-#: ../vdms_panels/audio_encoders/acodecs.py:135
-msgid "Settings"
+#: ../vdms_dialogs/preferences.py:436
+msgid "Preferences"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:600 ../vdms_dialogs/preferences.py:679
-#: ../vdms_dialogs/preferences.py:696 ../vdms_main/main_frame.py:850
-#: ../vdms_main/main_frame.py:1030 ../vdms_panels/presets_manager.py:611
-#: ../vdms_panels/presets_manager.py:639 ../vdms_ytdlp/main_ytdlp.py:413
+#: ../vdms_dialogs/preferences.py:586 ../vdms_dialogs/preferences.py:665
+#: ../vdms_dialogs/preferences.py:682 ../vdms_main/main_frame.py:849
+#: ../vdms_main/main_frame.py:1029 ../vdms_panels/presets_manager.py:611
+#: ../vdms_panels/presets_manager.py:639 ../vdms_ytdlp/main_ytdlp.py:412
 msgid "Choose Destination"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:631
+#: ../vdms_dialogs/preferences.py:617
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Spaces are not allowed."
@@ -1084,7 +1095,7 @@ msgstr ""
 
 #: ../vdms_dialogs/mediainfo.py:139 ../vdms_dialogs/mediainfo.py:142
 #: ../vdms_dialogs/mediainfo.py:145 ../vdms_dialogs/mediainfo.py:148
-#: ../vdms_main/main_frame.py:1306
+#: ../vdms_main/main_frame.py:1290
 msgid "Properties"
 msgstr ""
 
@@ -1119,6 +1130,14 @@ msgstr ""
 
 #: ../vdms_dialogs/showlogs.py:82 ../vdms_dialogs/showlogs.py:115
 msgid "Log messages"
+msgstr ""
+
+#: ../vdms_dialogs/showlogs.py:104
+msgid "Refresh log messages"
+msgstr ""
+
+#: ../vdms_dialogs/showlogs.py:106
+msgid "Clear log messages"
 msgstr ""
 
 #: ../vdms_dialogs/showlogs.py:159
@@ -1364,12 +1383,12 @@ msgid "FFplay   ...not found !"
 msgstr ""
 
 #: ../vdms_dialogs/ffmpeg_conf.py:205 ../vdms_panels/sequence_to_video.py:710
-#: ../vdms_panels/video_to_sequence.py:607
+#: ../vdms_panels/video_to_sequence.py:610
 msgid "Enabled"
 msgstr ""
 
 #: ../vdms_dialogs/ffmpeg_conf.py:216 ../vdms_panels/sequence_to_video.py:710
-#: ../vdms_panels/video_to_sequence.py:611
+#: ../vdms_panels/video_to_sequence.py:614
 msgid "Disabled"
 msgstr ""
 
@@ -1521,66 +1540,71 @@ msgstr ""
 msgid "Shortcut keys while playing with FFplay"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:65 ../vdms_panels/presets_manager.py:142
+#: ../vdms_dialogs/queuedlg.py:66 ../vdms_main/main_frame.py:508
+#: ../vdms_panels/presets_manager.py:224
+#: ../vdms_panels/video_to_sequence.py:170 ../vdms_ytdlp/main_ytdlp.py:309
+msgid "Edit"
+msgstr ""
+
+#: ../vdms_dialogs/queuedlg.py:69 ../vdms_panels/presets_manager.py:142
 msgid "Remove"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:69
+#: ../vdms_dialogs/queuedlg.py:73
 msgid "Remove all"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:72
+#: ../vdms_dialogs/queuedlg.py:76
 msgid ""
 "Export\n"
 "queue file"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:75
+#: ../vdms_dialogs/queuedlg.py:79
 msgid ""
 "Import\n"
 "queue file"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:83
-msgid "Title/File name"
+#: ../vdms_dialogs/queuedlg.py:87 ../vdms_panels/filedrop.py:271
+msgid "Destination file name"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:135
+#: ../vdms_dialogs/queuedlg.py:139
 msgid "Remove all items in the queue"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:140 ../vdms_main/main_frame.py:1311
+#: ../vdms_dialogs/queuedlg.py:144 ../vdms_main/main_frame.py:1294
 msgid "Run"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:149
+#: ../vdms_dialogs/queuedlg.py:153
 msgid "Videomass - Queue"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:212
+#: ../vdms_dialogs/queuedlg.py:230
 msgid "Export queue file"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:281 ../vdms_panels/av_conversions.py:1189
+#: ../vdms_dialogs/queuedlg.py:298 ../vdms_panels/av_conversions.py:1189
 #: ../vdms_panels/presets_manager.py:1062
 #: ../vdms_panels/video_to_sequence.py:601
-msgid "Unset"
+msgid "Same as source"
 msgstr ""
 
-#: ../vdms_dialogs/queuedlg.py:283 ../vdms_panels/av_conversions.py:1192
-#: ../vdms_panels/presets_manager.py:1065
-#: ../vdms_panels/video_to_sequence.py:604
-msgid "start  {} | duration  {}"
-msgstr ""
-
-#: ../vdms_dialogs/queuedlg.py:285
+#: ../vdms_dialogs/queuedlg.py:303
 msgid ""
 "Source\n"
 "Destination\n"
 "Automation/Preset\n"
 "Encoding passes\n"
 "Output Format\n"
-"Time Trimming"
+"Start of segment\n"
+"Clip duration"
+msgstr ""
+
+#: ../vdms_dialogs/queue_edit.py:59
+msgid "Videomass - Edit the selected item in the queue"
 msgstr ""
 
 #: ../vdms_dialogs/queue_singlechoice.py:42
@@ -1779,10 +1803,10 @@ msgid ""
 "operation again."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:190 ../vdms_main/main_frame.py:1418
-#: ../vdms_main/main_frame.py:1451 ../vdms_ytdlp/main_ytdlp.py:99
-#: ../vdms_ytdlp/main_ytdlp.py:148 ../vdms_ytdlp/main_ytdlp.py:586
-#: ../vdms_ytdlp/textdrop.py:229 ../vdms_ytdlp/youtubedl_ui.py:455
+#: ../vdms_main/main_frame.py:190 ../vdms_main/main_frame.py:1396
+#: ../vdms_main/main_frame.py:1429 ../vdms_ytdlp/main_ytdlp.py:99
+#: ../vdms_ytdlp/main_ytdlp.py:148 ../vdms_ytdlp/main_ytdlp.py:573
+#: ../vdms_ytdlp/textdrop.py:230 ../vdms_ytdlp/youtubedl_ui.py:455
 msgid "Ready"
 msgstr ""
 
@@ -1793,60 +1817,55 @@ msgid ""
 "Would you like to keep them in the queue?"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:208 ../vdms_main/main_frame.py:373
-#: ../vdms_main/main_frame.py:1102 ../vdms_main/main_frame.py:1417
-#: ../vdms_main/main_frame.py:1691 ../vdms_ytdlp/main_ytdlp.py:147
-#: ../vdms_ytdlp/main_ytdlp.py:229
+#: ../vdms_main/main_frame.py:208 ../vdms_main/main_frame.py:374
+#: ../vdms_main/main_frame.py:1395 ../vdms_main/main_frame.py:1672
+#: ../vdms_ytdlp/main_ytdlp.py:147 ../vdms_ytdlp/main_ytdlp.py:229
 msgid "Videomass"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:226
+#: ../vdms_main/main_frame.py:227
 #, python-brace-format
 msgid "Queue ({0})"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:230 ../vdms_main/main_frame.py:1331
+#: ../vdms_main/main_frame.py:231 ../vdms_main/main_frame.py:1310
 msgid "Queue"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:371 ../vdms_ytdlp/main_ytdlp.py:227
+#: ../vdms_main/main_frame.py:372 ../vdms_ytdlp/main_ytdlp.py:227
 msgid ""
 "There are still processes running. if you want to stop them, use the "
 "\"Abort\" button."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:377
+#: ../vdms_main/main_frame.py:378
 msgid "Are you sure you want to exit the application?"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:379 ../vdms_main/main_frame.py:1107
+#: ../vdms_main/main_frame.py:380
 msgid "Exit"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:385 ../vdms_main/main_frame.py:424
+#: ../vdms_main/main_frame.py:386 ../vdms_main/main_frame.py:425
 msgid ""
 "There are still active windows with running processes, make sure you finish "
 "your work before closing them."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:460
+#: ../vdms_main/main_frame.py:461
 msgid "Import files\tCtrl+O"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:463
-msgid "Open the encoding destination directory\tCtrl+D"
-msgstr ""
-
-#: ../vdms_main/main_frame.py:465
-msgid "Set encoding destination"
+#: ../vdms_main/main_frame.py:464
+msgid "Open encoding destination directory\tCtrl+D"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:466 ../vdms_panels/filedrop.py:305
-msgid "Set a new destination for encodings"
+msgid "Set a new encoding destination directory"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:470
-msgid "Restores the default destination for encodings"
+msgid "Restores default destination dirctory for encodings"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:474
@@ -1862,15 +1881,15 @@ msgid "Open trash"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:479
-msgid "Open the Videomass trash folder if it exists"
+msgid "Open the Videomass trash directory"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:481
-msgid "Empty Trash"
+msgid "Empty trash"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:482
-msgid "Delete all files in the Videomass trash folder"
+msgid "Delete all files in the Videomass trash directory"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:485
@@ -1881,20 +1900,20 @@ msgstr ""
 msgid "Completely exit the application"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:487 ../vdms_ytdlp/main_ytdlp.py:297
+#: ../vdms_main/main_frame.py:487 ../vdms_ytdlp/main_ytdlp.py:296
 msgid "File"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:491
-msgid "Rename selected entry\tCtrl+R"
+msgid "Rename selected file destination\tCtrl+R"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:492
-msgid "Rename the output file"
+msgid "Renames the file destination of the selected entry"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:495
-msgid "Batch renaming\tCtrl+B"
+msgid "Batch rename destinations\tCtrl+B"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:496
@@ -1909,18 +1928,13 @@ msgstr ""
 msgid "Remove the selected file from the list"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:504 ../vdms_ytdlp/main_ytdlp.py:307
-#: ../vdms_ytdlp/textdrop.py:187 ../vdms_ytdlp/textdrop.py:208
+#: ../vdms_main/main_frame.py:504 ../vdms_ytdlp/main_ytdlp.py:306
+#: ../vdms_ytdlp/textdrop.py:188 ../vdms_ytdlp/textdrop.py:209
 msgid "Clear list\tShift+DEL"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:505 ../vdms_main/main_frame.py:1320
+#: ../vdms_main/main_frame.py:505 ../vdms_main/main_frame.py:1301
 msgid "Clear the file list"
-msgstr ""
-
-#: ../vdms_main/main_frame.py:508 ../vdms_panels/presets_manager.py:224
-#: ../vdms_panels/video_to_sequence.py:170 ../vdms_ytdlp/main_ytdlp.py:310
-msgid "Edit"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:512
@@ -1932,7 +1946,7 @@ msgid "A useful tool to search for FFmpeg help topics and options"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:518
-msgid "Check preset updates"
+msgid "Check for preset updates"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:519
@@ -1949,15 +1963,15 @@ msgstr ""
 msgid "Get the latest presets from {0}"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:525 ../vdms_ytdlp/main_ytdlp.py:314
+#: ../vdms_main/main_frame.py:525 ../vdms_ytdlp/main_ytdlp.py:313
 msgid "Work notes\tCtrl+N"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:526 ../vdms_ytdlp/main_ytdlp.py:315
+#: ../vdms_main/main_frame.py:526 ../vdms_ytdlp/main_ytdlp.py:314
 msgid "Read and write useful notes and reminders."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:528 ../vdms_ytdlp/main_ytdlp.py:317
+#: ../vdms_main/main_frame.py:528 ../vdms_ytdlp/main_ytdlp.py:316
 msgid "Tools"
 msgstr ""
 
@@ -2010,196 +2024,204 @@ msgid "Show useful shortcut keys when playing or previewing using FFplay"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:567
-msgid "Show logs\tCtrl+L"
-msgstr ""
-
-#: ../vdms_main/main_frame.py:568
-msgid "Viewing log messages"
-msgstr ""
-
-#: ../vdms_main/main_frame.py:571
 msgid "Show timeline editor\tCtrl+T"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:572
+#: ../vdms_main/main_frame.py:568
 msgid ""
 "Set duration or trim slices of time to remove unwanted parts from your files"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:576 ../vdms_ytdlp/main_ytdlp.py:327
+#: ../vdms_main/main_frame.py:572 ../vdms_ytdlp/main_ytdlp.py:326
 msgid "View"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:583
+#: ../vdms_main/main_frame.py:579
 msgid "Home panel\tCtrl+Shift+H"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:584 ../vdms_main/main_frame.py:1295
+#: ../vdms_main/main_frame.py:580 ../vdms_main/main_frame.py:1281
 msgid "Go to the 'Home' panel"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:587
+#: ../vdms_main/main_frame.py:583
 msgid "Presets Manager\tCtrl+Shift+P"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:588
+#: ../vdms_main/main_frame.py:584
 msgid "Go to the 'Presets Manager' panel"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:590
+#: ../vdms_main/main_frame.py:586
 msgid "A/V Conversions\tCtrl+Shift+V"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:591
+#: ../vdms_main/main_frame.py:587
 msgid "Go to the 'A/V Conversions' panel"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:593
+#: ../vdms_main/main_frame.py:589
 msgid "Concatenate Demuxer\tCtrl+Shift+D"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:594
+#: ../vdms_main/main_frame.py:590
 msgid "Go to the 'Concatenate Demuxer' panel"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:597
+#: ../vdms_main/main_frame.py:593
 msgid "Still Image Maker\tCtrl+Shift+I"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:598
+#: ../vdms_main/main_frame.py:594
 msgid "Go to the 'Still Image Maker' panel"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:600
+#: ../vdms_main/main_frame.py:596
 msgid "From Movie to Pictures\tCtrl+Shift+S"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:601
+#: ../vdms_main/main_frame.py:597
 msgid "Go to the 'From Movie to Pictures' panel"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:604
+#: ../vdms_main/main_frame.py:600
 msgid "YouTube Downloader\tCtrl+Shift+Y"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:605
+#: ../vdms_main/main_frame.py:601
 msgid "Open 'YouTube Downloader' window"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:607
+#: ../vdms_main/main_frame.py:603
 msgid "Output monitor\tCtrl+Shift+O"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:608
+#: ../vdms_main/main_frame.py:604
 msgid "Keeps track of the output for debugging errors"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:610
+#: ../vdms_main/main_frame.py:606
 msgid "Go"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:615
+#: ../vdms_main/main_frame.py:611
 msgid "Preferences\tCtrl+P"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:616
+#: ../vdms_main/main_frame.py:612
 msgid "Application preferences"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:621
+#: ../vdms_main/main_frame.py:613 ../vdms_panels/audio_encoders/acodecs.py:135
+msgid "Settings"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:617
 msgid "User guide"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:622
+#: ../vdms_main/main_frame.py:618
 msgid "Wiki"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:624
+#: ../vdms_main/main_frame.py:620
 msgid "Issue tracker"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:626
+#: ../vdms_main/main_frame.py:622
 msgid "Translation..."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:628
+#: ../vdms_main/main_frame.py:624
 msgid "Donation"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:630
+#: ../vdms_main/main_frame.py:626
 msgid "FFmpeg documentation"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:632
+#: ../vdms_main/main_frame.py:628
 msgid "System version"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:633
+#: ../vdms_main/main_frame.py:629
 msgid ""
 "Get version about your operating system, version of Python and wxPython."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:637
-msgid "Latest version"
+#: ../vdms_main/main_frame.py:632
+msgid "Show log files\tCtrl+L"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:638
+#: ../vdms_main/main_frame.py:633
+msgid "Viewing log messages"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:636
+msgid "Check for newer version"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:637
 msgid "Check for the latest Videomass version"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:640
+#: ../vdms_main/main_frame.py:639
 msgid "About Videomass"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:641
+#: ../vdms_main/main_frame.py:640
 msgid "Help"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:712
+#: ../vdms_main/main_frame.py:711
 msgid "Import files"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:758 ../vdms_main/main_frame.py:781
+#: ../vdms_main/main_frame.py:757 ../vdms_main/main_frame.py:780
 msgid ""
 "'{}':\n"
 "No such file or directory"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:770
+#: ../vdms_main/main_frame.py:769
 msgid "Are you sure to empty trash folder?"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:778
+#: ../vdms_main/main_frame.py:777
 msgid "Nothing to clean up."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:833
+#: ../vdms_main/main_frame.py:832
 #, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:837
+#: ../vdms_main/main_frame.py:836
 #, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:867
+#: ../vdms_main/main_frame.py:866
 msgid ""
 "Wait....\n"
 "The archive is being downloaded"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:878
+#: ../vdms_main/main_frame.py:877
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1052 ../vdms_ytdlp/main_ytdlp.py:432
+#: ../vdms_main/main_frame.py:1051 ../vdms_ytdlp/main_ytdlp.py:431
 msgid "Default destination successfully restored"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1100
+#: ../vdms_main/main_frame.py:1099
 msgid "Changes will take effect once the program has been restarted."
+msgstr ""
+
+#: ../vdms_main/main_frame.py:1101 ../vdms_main/main_frame.py:1107
+msgid "Restart Videomass"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:1104
@@ -2222,91 +2244,91 @@ msgstr ""
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1285 ../vdms_ytdlp/main_ytdlp.py:503
+#: ../vdms_main/main_frame.py:1273 ../vdms_ytdlp/main_ytdlp.py:490
 msgid "Go to the previous panel"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1286 ../vdms_ytdlp/main_ytdlp.py:504
+#: ../vdms_main/main_frame.py:1274 ../vdms_ytdlp/main_ytdlp.py:491
 msgid "Back"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1290 ../vdms_ytdlp/main_ytdlp.py:508
+#: ../vdms_main/main_frame.py:1277 ../vdms_ytdlp/main_ytdlp.py:495
 msgid "Go to the next panel"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1291 ../vdms_ytdlp/main_ytdlp.py:509
+#: ../vdms_main/main_frame.py:1278 ../vdms_ytdlp/main_ytdlp.py:496
 msgid "Next"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1296
+#: ../vdms_main/main_frame.py:1282
 msgid "Home"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1300
+#: ../vdms_main/main_frame.py:1285
 msgid "Play the selected file in the list"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1301
+#: ../vdms_main/main_frame.py:1286
 msgid "Play"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1305
+#: ../vdms_main/main_frame.py:1289
 msgid "Get informative data about imported media streams"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1310
+#: ../vdms_main/main_frame.py:1293
 msgid "Start batch processing"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1315 ../vdms_ytdlp/main_ytdlp.py:523
+#: ../vdms_main/main_frame.py:1297 ../vdms_ytdlp/main_ytdlp.py:510
 msgid "Stops current process"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1316 ../vdms_ytdlp/main_ytdlp.py:524
+#: ../vdms_main/main_frame.py:1298 ../vdms_ytdlp/main_ytdlp.py:511
 msgid "Abort"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1321 ../vdms_ytdlp/main_ytdlp.py:528
+#: ../vdms_main/main_frame.py:1302 ../vdms_ytdlp/main_ytdlp.py:515
 msgid "Clear"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1325
+#: ../vdms_main/main_frame.py:1305
 msgid "Add an item to Queue"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1326
+#: ../vdms_main/main_frame.py:1306
 msgid "Add to Queue"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1330
+#: ../vdms_main/main_frame.py:1309
 msgid "Show queue"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1452
+#: ../vdms_main/main_frame.py:1430
 msgid "Videomass - File List"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1469
+#: ../vdms_main/main_frame.py:1447
 msgid "Videomass - AV Conversions"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1497
+#: ../vdms_main/main_frame.py:1475
 msgid "Videomass - Presets Manager"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1526
+#: ../vdms_main/main_frame.py:1504
 msgid "Videomass - Concatenate Demuxer"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1554
+#: ../vdms_main/main_frame.py:1532
 msgid "Videomass - From Movie to Pictures"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1582
+#: ../vdms_main/main_frame.py:1560
 msgid "Videomass - Still Image Maker"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1670 ../vdms_panels/av_conversions.py:573
+#: ../vdms_main/main_frame.py:1648 ../vdms_panels/av_conversions.py:573
 #: ../vdms_panels/audio_encoders/acodecs.py:782
 #: ../vdms_panels/sequence_to_video.py:319
 #: ../vdms_panels/video_to_sequence.py:370
@@ -2314,18 +2336,18 @@ msgstr ""
 msgid "Have to select an item in the file list first"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1688
+#: ../vdms_main/main_frame.py:1669
 msgid ""
 "An item with the same destination file already exists.\n"
 "\n"
 "Do you want to replace it by adding the new item to the queue?"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1711
+#: ../vdms_main/main_frame.py:1690
 msgid "Videomass - FFmpeg Message Monitoring"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1806
+#: ../vdms_main/main_frame.py:1785
 msgid "yt-dlp is disabled. Check your preferences."
 msgstr ""
 
@@ -2464,14 +2486,15 @@ msgid ""
 "Audio Codec\n"
 "Audio Normalization\n"
 "Output multimedia type\n"
-"Time Trimming"
+"Start of segment\n"
+"Clip duration"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1238
+#: ../vdms_panels/av_conversions.py:1240
 msgid "Choose a Videomass preset..."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1249
+#: ../vdms_panels/av_conversions.py:1251
 #, python-brace-format
 msgid "New Profile - Preset \"{0}\""
 msgstr ""
@@ -3129,7 +3152,7 @@ msgid "Rejected Files"
 msgstr ""
 
 #: ../vdms_panels/filedrop.py:267
-msgid "File Name"
+msgid "Source file"
 msgstr ""
 
 #: ../vdms_panels/filedrop.py:268
@@ -3144,125 +3167,121 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:271
-msgid "Output file name"
-msgstr ""
-
-#: ../vdms_panels/filedrop.py:273 ../vdms_panels/filedrop.py:324
+#: ../vdms_panels/filedrop.py:273 ../vdms_panels/filedrop.py:325
 msgid "Drag one or more files below"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:306 ../vdms_ytdlp/textdrop.py:167
-msgid "Current destination directory"
+#: ../vdms_panels/filedrop.py:307
+msgid "Encodings destination directory"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:327
+#: ../vdms_panels/filedrop.py:328
 msgid "Drag images below"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:330
+#: ../vdms_panels/filedrop.py:331
 msgid "Drag one or more video below"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:412
+#: ../vdms_panels/filedrop.py:413
 msgid "No file selected"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:524
-msgid "File renaming..."
+#: ../vdms_panels/filedrop.py:525
+msgid "Rename the file destination"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:525
+#: ../vdms_panels/filedrop.py:526
 msgid "Rename the selected file to:"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:539 ../vdms_panels/filedrop.py:549
-#: ../vdms_panels/filedrop.py:580
+#: ../vdms_panels/filedrop.py:540 ../vdms_panels/filedrop.py:550
+#: ../vdms_panels/filedrop.py:581
 msgid "Add Files"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:556
-msgid "Rename items"
+#: ../vdms_panels/filedrop.py:557
+msgid "Rename destination items (batch)"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:557
+#: ../vdms_panels/filedrop.py:558
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:559
+#: ../vdms_panels/filedrop.py:560
 msgid "New Name #"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:104
+#: ../vdms_panels/long_processing_task.py:110
 #: ../vdms_ytdlp/long_task_ytdlp.py:44
 msgid "[Videomass]: SUCCESS !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:105
+#: ../vdms_panels/long_processing_task.py:111
 #: ../vdms_ytdlp/long_task_ytdlp.py:45
 msgid "[Videomass]: FAILED !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:106
+#: ../vdms_panels/long_processing_task.py:112
 #: ../vdms_ytdlp/long_task_ytdlp.py:46
 msgid "Sorry, all task failed !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:107
+#: ../vdms_panels/long_processing_task.py:113
 #: ../vdms_ytdlp/long_task_ytdlp.py:47
 msgid "The process was stopped due to a fatal error."
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:108
+#: ../vdms_panels/long_processing_task.py:114
 #: ../vdms_ytdlp/long_task_ytdlp.py:48
 msgid "Interrupted Process !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:109
+#: ../vdms_panels/long_processing_task.py:115
 #: ../vdms_ytdlp/long_task_ytdlp.py:49
 msgid "Successfully completed !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:110
+#: ../vdms_panels/long_processing_task.py:116
 #: ../vdms_ytdlp/long_task_ytdlp.py:50
 msgid "Not everything was successful."
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:141
+#: ../vdms_panels/long_processing_task.py:147
 msgid "Encoding Status"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:145
+#: ../vdms_panels/long_processing_task.py:151
 #: ../vdms_ytdlp/long_task_ytdlp.py:85
 msgid "Current Log"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:350
+#: ../vdms_panels/long_processing_task.py:356
 #: ../vdms_ytdlp/long_task_ytdlp.py:227
 msgid "Fatal Error !"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:359
+#: ../vdms_panels/long_processing_task.py:365
 #: ../vdms_ytdlp/long_task_ytdlp.py:236
 msgid "Get your files at the destination you specified"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:373
+#: ../vdms_panels/long_processing_task.py:379
 msgid "For more details please read the Current Log."
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:376
+#: ../vdms_panels/long_processing_task.py:382
 #: ../vdms_ytdlp/long_task_ytdlp.py:256
 msgid "...Finished"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:395
+#: ../vdms_panels/long_processing_task.py:401
 #: ../vdms_ytdlp/long_task_ytdlp.py:270
 msgid "Please wait... interruption in progress"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:398
+#: ../vdms_panels/long_processing_task.py:404
 msgid "...Interrupted"
 msgstr ""
 
@@ -3376,13 +3395,6 @@ msgstr ""
 
 #: ../vdms_panels/presets_manager.py:306
 msgid "Update the presets list"
-msgstr ""
-
-#: ../vdms_panels/presets_manager.py:311
-msgid ""
-"Any optional arguments to add before input file on the one-pass encoding, e."
-"g required names of some hardware accelerations like -hwaccel to use with "
-"CUDA."
 msgstr ""
 
 #: ../vdms_panels/presets_manager.py:368
@@ -3583,7 +3595,8 @@ msgid ""
 "Encoding passes\n"
 "Profile Used\n"
 "Output Format\n"
-"Time Trimming"
+"Start of segment\n"
+"Clip duration"
 msgstr ""
 
 #: ../vdms_panels/sequence_to_video.py:54
@@ -3758,7 +3771,7 @@ msgstr ""
 msgid "Spaces around the mosaic borders. From 0 to 32 pixels"
 msgstr ""
 
-#: ../vdms_panels/video_to_sequence.py:627
+#: ../vdms_panels/video_to_sequence.py:630
 msgid ""
 "Selected File\n"
 "Output Format\n"
@@ -3770,7 +3783,8 @@ msgid ""
 "Mosaic padding\n"
 "Mosaic margin\n"
 "Custom Arguments\n"
-"Time Trimming"
+"Start of segment\n"
+"Duration"
 msgstr ""
 
 #: ../vdms_threads/picture_exporting.py:51 ../vdms_threads/slideshow.py:49
@@ -3866,115 +3880,111 @@ msgid "Quit YouTube Downloader"
 msgstr ""
 
 #: ../vdms_ytdlp/main_ytdlp.py:280
-msgid "Open the download destination directory\tCtrl+D"
+msgid "Open download destination directory\tCtrl+D"
 msgstr ""
 
 #: ../vdms_ytdlp/main_ytdlp.py:282
-msgid "Set download destination"
+msgid "Set a new download destination directory"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:283 ../vdms_ytdlp/textdrop.py:166
-msgid "Set a new destination for your downloads"
+#: ../vdms_ytdlp/main_ytdlp.py:284
+msgid "Restores default destination directory for downloads"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:285
-msgid "Restores the default destination for downloads"
-msgstr ""
-
-#: ../vdms_ytdlp/main_ytdlp.py:289
+#: ../vdms_ytdlp/main_ytdlp.py:288
 msgid "Close view\tCtrl+W"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:290
+#: ../vdms_ytdlp/main_ytdlp.py:289
 msgid ""
 "Close the active view keeping the data in memory and any background processes"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:294
+#: ../vdms_ytdlp/main_ytdlp.py:293
 msgid "Quit YouTube Downloader\tCtrl+Q"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:295
+#: ../vdms_ytdlp/main_ytdlp.py:294
 msgid "Exit the window by deleting all data in memory"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:301 ../vdms_ytdlp/textdrop.py:185
-#: ../vdms_ytdlp/textdrop.py:202
+#: ../vdms_ytdlp/main_ytdlp.py:300 ../vdms_ytdlp/textdrop.py:186
+#: ../vdms_ytdlp/textdrop.py:203
 msgid "Paste\tCtrl+V"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:302
+#: ../vdms_ytdlp/main_ytdlp.py:301
 msgid "Paste the copied URLs to clipboard"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:304 ../vdms_ytdlp/textdrop.py:186
-#: ../vdms_ytdlp/textdrop.py:205
+#: ../vdms_ytdlp/main_ytdlp.py:303 ../vdms_ytdlp/textdrop.py:187
+#: ../vdms_ytdlp/textdrop.py:206
 msgid "Remove selected URL\tDEL"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:305
+#: ../vdms_ytdlp/main_ytdlp.py:304
 msgid "Remove the selected URL from the list"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:308 ../vdms_ytdlp/main_ytdlp.py:527
+#: ../vdms_ytdlp/main_ytdlp.py:307 ../vdms_ytdlp/main_ytdlp.py:514
 msgid "Clear the URL list"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:321
+#: ../vdms_ytdlp/main_ytdlp.py:320
 msgid "Version of yt-dlp"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:322
+#: ../vdms_ytdlp/main_ytdlp.py:321
 msgid "Shows the version in use"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:324
+#: ../vdms_ytdlp/main_ytdlp.py:323
 msgid "Latest version of yt-dlp"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:325
+#: ../vdms_ytdlp/main_ytdlp.py:324
 msgid "Check the latest version available on github.com"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:384
+#: ../vdms_ytdlp/main_ytdlp.py:383
 #, python-brace-format
 msgid "You are using \"yt-dlp\" version {0}"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:401
+#: ../vdms_ytdlp/main_ytdlp.py:400
 #, python-brace-format
 msgid "\"yt-dlp\": Latest version available: {0}"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:513
+#: ../vdms_ytdlp/main_ytdlp.py:500
 msgid "Shows statistics and information"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:514
+#: ../vdms_ytdlp/main_ytdlp.py:501
 msgid "Statistics"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:518
+#: ../vdms_ytdlp/main_ytdlp.py:505
 msgid "Start downloading"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:519
+#: ../vdms_ytdlp/main_ytdlp.py:506
 msgid "Download"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:587
+#: ../vdms_ytdlp/main_ytdlp.py:574
 msgid "Videomass - URL List"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:595
+#: ../vdms_ytdlp/main_ytdlp.py:582
 msgid "Videomass - YouTube Downloader"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:612
+#: ../vdms_ytdlp/main_ytdlp.py:599
 msgid "Viewing last log"
 msgstr ""
 
-#: ../vdms_ytdlp/main_ytdlp.py:629
+#: ../vdms_ytdlp/main_ytdlp.py:616
 msgid "Videomass - yt_dlp Message Monitoring"
 msgstr ""
 
@@ -4036,6 +4046,14 @@ msgstr ""
 
 #: ../vdms_ytdlp/textdrop.py:135
 msgid "Drag or paste URLs here"
+msgstr ""
+
+#: ../vdms_ytdlp/textdrop.py:166
+msgid "Set a new destination directory for your downloads"
+msgstr ""
+
+#: ../vdms_ytdlp/textdrop.py:168
+msgid "Download destination directory"
 msgstr ""
 
 #: ../vdms_ytdlp/ydl_mediainfo.py:67
