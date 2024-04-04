@@ -603,9 +603,6 @@ class VideoToSequence(wx.Panel):
             endt = self.parent.time_seq.split()[3]
             sst = self.parent.time_seq.split()[1]
 
-
-
-
         if self.txt_args.IsEnabled():
             args = _('Enabled')
             rate = 'Disabled'

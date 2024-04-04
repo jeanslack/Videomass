@@ -277,9 +277,9 @@ class MainYtdl(wx.Frame):
 
         # ----------------------- file menu
         fileButton = wx.Menu()
-        dscrp = _("Open download destination directory\tCtrl+D")
+        dscrp = _("Open destination directory of downloads\tCtrl+D")
         fold_downloads = fileButton.Append(wx.ID_ANY, dscrp)
-        dscrp = _("Set a new download destination directory")
+        dscrp = _("Set a new destination directory for downloads")
         setdownload_tmp = fileButton.Append(wx.ID_ANY, dscrp)
         dscrp = _("Restores default destination directory for downloads")
         self.resetfolders_tmp = fileButton.Append(wx.ID_ANY, dscrp)

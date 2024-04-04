@@ -165,7 +165,7 @@ class Url_DnD_Panel(wx.Panel):
         # Tooltip
         self.btn_save.SetToolTip(_("Set a new destination directory "
                                    "for your downloads"))
-        self.text_path_save.SetToolTip(_("Download destination directory"))
+        self.text_path_save.SetToolTip(_("Destination directory of downloads"))
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
     # ---------------------------------------------------------
 

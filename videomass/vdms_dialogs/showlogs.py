@@ -101,7 +101,8 @@ class ShowLogs(wx.Dialog):
         # ----- confirm buttons section
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grid_funcbtn = wx.BoxSizer(wx.HORIZONTAL)
-        button_update = wx.Button(self, wx.ID_REFRESH, _("Refresh log messages"))
+        button_update = wx.Button(self, wx.ID_REFRESH,
+                                  _("Refresh log messages"))
         grid_funcbtn.Add(button_update, 0)
         button_clear = wx.Button(self, wx.ID_CLEAR, _("Clear log messages"))
         grid_funcbtn.Add(button_clear, 0, wx.LEFT, 5)

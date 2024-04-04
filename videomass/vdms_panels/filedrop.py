@@ -302,8 +302,8 @@ class FileDnD(wx.Panel):
             self.text_path_save.Disable()
 
         # Tooltips
-        self.btn_destpath.SetToolTip(_('Set a new encoding destination '
-                                       'directory'))
+        self.btn_destpath.SetToolTip(_('Set a new destination directory for '
+                                       'encodings'))
         self.text_path_save.SetToolTip(_("Encodings destination directory"))
 
         # Binding (EVT)

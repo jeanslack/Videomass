@@ -89,7 +89,6 @@ class SettingProfile(wx.Dialog):
                                       style=wx.TE_MULTILINE
                                       )
         size_base.Add(self.pass_1_cmd, 1, wx.ALL | wx.EXPAND, 5)
-        #boxpre1 = wx.BoxSizer(wx.HORIZONTAL)
         msg = _("Optional `pre-input` arguments for one-pass encoding")
         labpre1 = wx.StaticText(self, wx.ID_ANY, msg)
         size_base.Add(labpre1, 0, wx.ALL | wx.EXPAND, 5)

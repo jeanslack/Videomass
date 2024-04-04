@@ -110,7 +110,8 @@ class Edit_Queue_Item(wx.Dialog):
                                             wx.NORMAL,
                                             wx.NORMAL
                                             ))
-            self.pass_2_cmd.SetToolTip(_('FFmpeg arguments for two-pass encoding'))
+            tip = _('FFmpeg arguments for two-pass encoding')
+            self.pass_2_cmd.SetToolTip(tip)
             self.pass_2_pre.SetFont(wx.Font(fontsize,
                                             wx.FONTFAMILY_TELETYPE,
                                             wx.NORMAL,

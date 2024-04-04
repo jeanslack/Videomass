@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-04 23:44+0200\n"
+"POT-Creation-Date: 2024-04-05 01:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -902,7 +902,7 @@ msgid "Change"
 msgstr ""
 
 #: ../vdms_dialogs/preferences.py:171
-msgid "Use same destination directory as source file"
+msgid "Use same destination directories as source files"
 msgstr ""
 
 #: ../vdms_dialogs/preferences.py:176
@@ -1857,11 +1857,11 @@ msgid "Import files\tCtrl+O"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:464
-msgid "Open encoding destination directory\tCtrl+D"
+msgid "Open destination directory of encodings\tCtrl+D"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:466 ../vdms_panels/filedrop.py:305
-msgid "Set a new encoding destination directory"
+msgid "Set a new destination directory for encodings"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:470
@@ -1909,7 +1909,7 @@ msgid "Rename selected file destination\tCtrl+R"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:492
-msgid "Renames the file destination of the selected entry"
+msgid "Rename the file destination to the selected entry"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:495
@@ -3880,11 +3880,11 @@ msgid "Quit YouTube Downloader"
 msgstr ""
 
 #: ../vdms_ytdlp/main_ytdlp.py:280
-msgid "Open download destination directory\tCtrl+D"
+msgid "Open destination directory of downloads\tCtrl+D"
 msgstr ""
 
 #: ../vdms_ytdlp/main_ytdlp.py:282
-msgid "Set a new download destination directory"
+msgid "Set a new destination directory for downloads"
 msgstr ""
 
 #: ../vdms_ytdlp/main_ytdlp.py:284
@@ -4053,7 +4053,7 @@ msgid "Set a new destination directory for your downloads"
 msgstr ""
 
 #: ../vdms_ytdlp/textdrop.py:168
-msgid "Download destination directory"
+msgid "Destination directory of downloads"
 msgstr ""
 
 #: ../vdms_ytdlp/ydl_mediainfo.py:67

@@ -62,13 +62,11 @@ class QueueManager(wx.Dialog):
         sizerbase = wx.BoxSizer(wx.HORIZONTAL)
         sizerbtn = wx.BoxSizer(wx.VERTICAL)
         sizerbase.Add(sizerbtn, 0)
-        self.btn_edit = wx.Button(self, wx.ID_ANY,
-                                    _("Edit"), size=(-1, -1))
+        self.btn_edit = wx.Button(self, wx.ID_ANY, _("Edit"), size=(-1, -1))
         sizerbtn.Add(self.btn_edit, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_remove = wx.Button(self, wx.ID_ANY,
                                     _("Remove"), size=(-1, -1))
         sizerbtn.Add(self.btn_remove, 0, wx.ALL | wx.EXPAND, 5)
-
         self.btn_remall = wx.Button(self, wx.ID_ANY,
                                     _("Remove all"), size=(-1, -1))
         sizerbtn.Add(self.btn_remall, 0, wx.ALL | wx.EXPAND, 5)

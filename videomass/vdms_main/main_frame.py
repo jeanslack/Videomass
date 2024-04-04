@@ -461,9 +461,9 @@ class MainFrame(wx.Frame):
         dscrp = _("Import files\tCtrl+O")
         self.openmedia = fileButton.Append(wx.ID_OPEN, dscrp)
         self.openmedia.Enable(False)
-        dscrp = _("Open encoding destination directory\tCtrl+D")
+        dscrp = _("Open destination directory of encodings\tCtrl+D")
         fold_convers = fileButton.Append(wx.ID_ANY, dscrp)
-        dscrp = _("Set a new encoding destination directory")
+        dscrp = _("Set a new destination directory for encodings")
         path_dest = fileButton.Append(wx.ID_ANY, dscrp)
         if self.same_destin:
             path_dest.Enable(False)
@@ -489,7 +489,7 @@ class MainFrame(wx.Frame):
         # ------------------ Edit menu
         editButton = wx.Menu()
         dscrp = (_("Rename selected file destination\tCtrl+R"),
-                 _("Renames the file destination of the selected entry"))
+                 _("Rename the file destination to the selected entry"))
         self.rename = editButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.rename.Enable(False)
         dscrp = (_("Batch rename destinations\tCtrl+B"),

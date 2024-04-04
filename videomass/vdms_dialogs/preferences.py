@@ -168,7 +168,7 @@ class SetUp(wx.Dialog):
         self.btn_fsave = wx.Button(tabTwo, wx.ID_ANY, _('Change'))
         sizeFFdirdest.Add(self.btn_fsave, 0, wx.RIGHT | wx.ALIGN_CENTER, 5)
         sizerFiles.Add((0, 15))
-        descr = _("Use same destination directory as source file")
+        descr = _("Use same destination directories as source files")
         self.ckbx_dir = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_dir, 0, wx.ALL, 5)
         sizeSamedest = wx.BoxSizer(wx.HORIZONTAL)
@@ -322,7 +322,7 @@ class SetUp(wx.Dialog):
                                       size=(200, -1),
                                       style=wx.CB_DROPDOWN | wx.CB_READONLY
                                       )
-        sizerAppearance.Add(self.cmbx_icons, 0,wx.ALL, 5)
+        sizerAppearance.Add(self.cmbx_icons, 0, wx.ALL, 5)
         sizerAppearance.Add((0, 15))
         labTB = wx.StaticText(tabFive, wx.ID_ANY, _("Toolbar customization"))
         sizerAppearance.Add(labTB, 0, wx.ALL | wx.EXPAND, 5)
