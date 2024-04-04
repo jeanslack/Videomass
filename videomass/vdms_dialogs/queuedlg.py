@@ -30,6 +30,7 @@ import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_utils.queue_utils import load_json_file_queue
 from videomass.vdms_utils.queue_utils import write_json_file_queue
 from videomass.vdms_utils.queue_utils import extend_data_queue
+from videomass.vdms_dialogs.edit_queue import Edit_Queue_Item
 
 
 class QueueManager(wx.Dialog):
@@ -44,7 +45,7 @@ class QueueManager(wx.Dialog):
                  emptylist,
                  removequeue):
         """
-        `datalist` is a class dict.
+        `datalist` is a class list.
         `movetotrash`, `emptylist` are class booleans
         """
         get = wx.GetApp()  # get data from bootstrap
@@ -61,6 +62,9 @@ class QueueManager(wx.Dialog):
         sizerbase = wx.BoxSizer(wx.HORIZONTAL)
         sizerbtn = wx.BoxSizer(wx.VERTICAL)
         sizerbase.Add(sizerbtn, 0)
+        self.btn_edit = wx.Button(self, wx.ID_ANY,
+                                    _("Edit"), size=(-1, -1))
+        sizerbtn.Add(self.btn_edit, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_remove = wx.Button(self, wx.ID_ANY,
                                     _("Remove"), size=(-1, -1))
         sizerbtn.Add(self.btn_remove, 0, wx.ALL | wx.EXPAND, 5)
@@ -80,7 +84,7 @@ class QueueManager(wx.Dialog):
                                    | wx.LC_SINGLE_SEL
                                    )
         # self.quelist.SetMinSize((400, 500))
-        self.quelist.InsertColumn(0, _('Title/File name'), width=700)
+        self.quelist.InsertColumn(0, _('Destination file name'), width=700)
         index = 0
         for items in self.datalist:  # populate listctrl:
             desttitle = os.path.basename(items['destination'])
@@ -92,7 +96,7 @@ class QueueManager(wx.Dialog):
         sizervert.Add(self.quelist, 1, wx.EXPAND | wx.ALL, 5)
 
         panelscroll = scrolled.ScrolledPanel(self, wx.ID_ANY,
-                                             size=(700, 180),
+                                             size=(700, 200),
                                              name="panelscr",
                                              style=wx.TAB_TRAVERSAL
                                              | wx.BORDER_THEME,
@@ -147,13 +151,14 @@ class QueueManager(wx.Dialog):
                       )
         # ----------------------Properties----------------------#
         self.SetTitle(_('Videomass - Queue'))
-        self.SetMinSize((820, 520))
+        self.SetMinSize((820, 550))
 
         self.SetSizer(sizerbase)
         sizerbase.Fit(self)
         self.Layout()
 
         # ----------------------Binding (EVT)------------------------#
+        self.Bind(wx.EVT_BUTTON, self.on_edit_item, self.btn_edit)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.quelist)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.quelist)
         self.Bind(wx.EVT_CHECKBOX, self.on_file_to_trash, self.ckbx_trash)
@@ -171,12 +176,25 @@ class QueueManager(wx.Dialog):
             self.quelist.Select(0, on=1)  # default event selection
     # ------------------------- Callbacks --------------------------------
 
+    def on_edit_item(self, event):
+        """
+        This allow to edit a selected item
+        """
+        if self.quelist.GetFirstSelected() == -1:  # None
+            return
+
+        index = self.quelist.GetFocusedItem()  # index (int)
+        with Edit_Queue_Item(self,
+                             self.datalist[index]) as editsel:
+            if editsel.ShowModal() == wx.ID_OK:
+                write_json_file_queue(self.datalist)
+                self.on_select(None)
+        return
+    # ----------------------------------------------------------------------
+
     def on_load_queue(self, event):
         """
         Load a previously saved json queue file
-        HACK this, requires a comparison tool to check equal
-             elements and ask the user whether or not to overwrite
-             existing ones.
         """
         selidx = self.quelist.GetFirstSelected()
         newdata = load_json_file_queue()
@@ -275,18 +293,18 @@ class QueueManager(wx.Dialog):
         index = self.quelist.GetFocusedItem()  # index (int)
         itemsel = self.datalist[index]
         passes = '1' if itemsel["args"][1] == '' else '2'
-        sst, endt = itemsel["start-time"], itemsel["end-time"]
 
-        if not sst or not endt:
-            timeseq = _('Unset')
+        if not itemsel["start-time"] or not itemsel["end-time"]:
+            sst, endt = _('Same as source'), _('Same as source')
         else:
-            timeseq = _('start  {} | duration  {}').format(sst, endt)
+            sst = itemsel["start-time"].split()[1]
+            endt = itemsel["end-time"].split()[1]
 
         keys = (_("Source\nDestination\nAutomation/Preset\nEncoding passes\n"
-                  "Output Format\nTime Trimming"))
-        vals = (f'{itemsel["source"]}\n{itemsel["destination"]}'
-                f'\n{itemsel["preset name"]}\n'
-                f'{passes}\n{itemsel["extension"]}\n{timeseq}'
+                  "Output Format\nStart of segment\nClip duration"))
+        vals = (f'{itemsel["source"]}\n{itemsel["destination"]}\n'
+                f'{itemsel["preset name"]}\n{passes}\n{itemsel["extension"]}\n'
+                f'{sst}\n{endt}'
                 )
         self.labkey.SetLabel(keys)
         self.labval.SetLabel(vals)

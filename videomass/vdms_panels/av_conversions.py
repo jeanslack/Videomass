@@ -994,7 +994,7 @@ class AV_Conv(wx.Panel):
                         f'{self.opt["MetaData"]}'
                         )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
-            kwargs = {'type': 'Two pass EBU', 'args': (pass1, pass2),
+            kwargs = {'type': 'Two pass EBU', 'args': [pass1, pass2],
                       'EBU': self.opt["EBU"][1],
                       'audiomap': self.opt["AudioMap"],
                       'preset name':
@@ -1013,7 +1013,7 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
-            kwargs = {'type': 'Two pass VIDSTAB', 'args': (pass1, pass2),
+            kwargs = {'type': 'Two pass VIDSTAB', 'args': [pass1, pass2],
                       'volume': [vol[5] for vol in audnorm],
                       'preset name': 'A/V Conversions - Video VIDSTAB.',
                       }
@@ -1035,7 +1035,7 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(args.split()), ''
-            kwargs = {'type': 'One pass', 'args': (pass1, pass2),
+            kwargs = {'type': 'One pass', 'args': [pass1, pass2],
                       'volume': [vol[5] for vol in audnorm],
                       'preset name': 'A/V Conversions - Video standard',
                       }
@@ -1050,7 +1050,7 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
-            kwargs = {'type': 'Two pass', 'args': (pass1, pass2),
+            kwargs = {'type': 'Two pass', 'args': [pass1, pass2],
                       'volume': [vol[5] for vol in audnorm],
                       'preset name': 'A/V Conversions - Video standard.',
                       }
@@ -1061,7 +1061,7 @@ class AV_Conv(wx.Panel):
                     f'{self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(args.split()), ''
-            kwargs = {'type': 'One pass', 'args': (pass1, pass2),
+            kwargs = {'type': 'One pass', 'args': [pass1, pass2],
                       'volume': [vol[5] for vol in audnorm],
                       'preset name': 'A/V Conversions - Video standard',
                       }
@@ -1086,7 +1086,7 @@ class AV_Conv(wx.Panel):
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
-            kwargs = {'type': 'Two pass EBU', 'args': (pass1, pass2),
+            kwargs = {'type': 'Two pass EBU', 'args': [pass1, pass2],
                       'EBU': self.opt["EBU"][1],
                       'audiomap': self.opt["AudioMap"],
                       'preset name': 'A/V Conversions - copy Video/EBU Norm.',
@@ -1105,7 +1105,7 @@ class AV_Conv(wx.Panel):
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
-            kwargs = {'type': 'Two pass EBU', 'args': (pass1, pass2),
+            kwargs = {'type': 'Two pass EBU', 'args': [pass1, pass2],
                       'EBU': self.opt["EBU"][1],
                       'audiomap': self.opt["AudioMap"],
                       'preset name': 'A/V Conversions - Video/EBU Norm.',
@@ -1120,7 +1120,7 @@ class AV_Conv(wx.Panel):
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
-            kwargs = {'type': 'Two pass EBU', 'args': (pass1, pass2),
+            kwargs = {'type': 'Two pass EBU', 'args': [pass1, pass2],
                       'EBU': self.opt["EBU"][1],
                       'audiomap': self.opt["AudioMap"],
                       'preset name': 'A/V Conversions - Video/EBU Norm.',
@@ -1140,7 +1140,7 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["EBU"][1]} -vn -sn {self.opt["MetaData"]}'
                 )
         pass1, pass2 = " ".join(args.split()), ''
-        kwargs = {'type': 'One pass', 'args': (pass1, pass2),
+        kwargs = {'type': 'One pass', 'args': [pass1, pass2],
                   'volume': [vol[5] for vol in audnorm],
                   'preset name': 'A/V Conversions - Audio standard',
                   }
@@ -1162,7 +1162,7 @@ class AV_Conv(wx.Panel):
                  )
         pass1 = " ".join(cmd_1.split())
         pass2 = " ".join(cmd_2.split())
-        kwargs = {'type': 'Two pass EBU', 'args': (pass1, pass2),
+        kwargs = {'type': 'Two pass EBU', 'args': [pass1, pass2],
                   'EBU': self.opt["EBU"][1], 'audiomap': self.opt["AudioMap"],
                   'preset name': 'A/V Conversions - Audio/EBU Norm.',
                   }
@@ -1186,17 +1186,18 @@ class AV_Conv(wx.Panel):
         else:
             outputformat = self.opt["OutputFormat"]
         if not self.parent.time_seq:
-            time = _('Unset')
+            sst, endt = _('Same as source'), _('Same as source')
         else:
-            t = self.parent.time_seq.split()
-            time = _('start  {} | duration  {}').format(t[1], t[3])
+            sst = kwa["start-time"].split()[1]
+            endt = kwa["end-time"].split()[1]
 
         passes = '1' if kwa["args"][1] == '' else '2'
 
         keys = (_("Batch processing items\nAutomation/Preset"
                   "\nEncoding passes\nOutput Format"
                   "\nVideo Codec\nAudio Codec\nAudio Normalization"
-                  "\nOutput multimedia type\nTime Trimming"
+                  "\nOutput multimedia type\nStart of segment"
+                  "\nClip duration"
                   ))
         vals = (f'{countmax}\n'
                 f'{kwa["preset name"]}\n'
@@ -1206,7 +1207,8 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["AudioCodStr"]}\n'
                 f'{normalize}\n'
                 f'{self.opt["Media"]}\n'
-                f'{time}'
+                f'{sst}\n'
+                f'{endt}'
                 )
         return {'key': keys, 'val': vals}
     # ------------------------------------------------------------------#

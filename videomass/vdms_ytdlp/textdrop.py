@@ -149,7 +149,7 @@ class Url_DnD_Panel(wx.Panel):
                                           )
         sizer_ctrl.Add(self.text_path_save, 1, wx.LEFT | wx.EXPAND, 5)
 
-        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(35, -1))
+        self.btn_save = wx.Button(self, wx.ID_OPEN, _('Change'))
         sizer_ctrl.Add(self.btn_save, 0, wx.RIGHT | wx.LEFT
                        | wx.ALIGN_CENTER_HORIZONTAL
                        | wx.ALIGN_CENTER_VERTICAL, 5,
@@ -163,8 +163,9 @@ class Url_DnD_Panel(wx.Panel):
 
         self.text_path_save.SetValue(self.parent.outputdir)
         # Tooltip
-        self.btn_save.SetToolTip(_("Set a new destination for your downloads"))
-        self.text_path_save.SetToolTip(_("Current destination directory"))
+        self.btn_save.SetToolTip(_("Set a new destination directory "
+                                   "for your downloads"))
+        self.text_path_save.SetToolTip(_("Download destination directory"))
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
     # ---------------------------------------------------------
 

@@ -277,12 +277,11 @@ class MainYtdl(wx.Frame):
 
         # ----------------------- file menu
         fileButton = wx.Menu()
-        dscrp = _("Open the download destination directory\tCtrl+D")
+        dscrp = _("Open download destination directory\tCtrl+D")
         fold_downloads = fileButton.Append(wx.ID_ANY, dscrp)
-        dscrp = (_("Set download destination"),
-                 _("Set a new destination for your downloads"))
-        setdownload_tmp = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = _("Restores the default destination for downloads")
+        dscrp = _("Set a new download destination directory")
+        setdownload_tmp = fileButton.Append(wx.ID_ANY, dscrp)
+        dscrp = _("Restores default destination directory for downloads")
         self.resetfolders_tmp = fileButton.Append(wx.ID_ANY, dscrp)
         self.resetfolders_tmp.Enable(False)
         fileButton.AppendSeparator()
@@ -441,28 +440,16 @@ class MainYtdl(wx.Frame):
         Return the toolbar style
         """
         if self.appdata['toolbarpos'] == 0:  # on top
-            if self.appdata['toolbartext']:  # show text
-                style = wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_HORIZONTAL
-            else:
-                style = wx.TB_DEFAULT_STYLE
+            style = wx.TB_TEXT
 
         elif self.appdata['toolbarpos'] == 1:  # on bottom
-            if self.appdata['toolbartext']:  # show text
-                style = wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_BOTTOM
-            else:
-                style = wx.TB_DEFAULT_STYLE | wx.TB_BOTTOM
+            style = wx.TB_TEXT | wx.TB_BOTTOM
 
         elif self.appdata['toolbarpos'] == 2:  # on right
-            if self.appdata['toolbartext']:  # show text
-                style = wx.TB_TEXT | wx.TB_RIGHT
-            else:
-                style = wx.TB_DEFAULT_STYLE | wx.TB_RIGHT
+            style = wx.TB_TEXT | wx.TB_RIGHT
 
         elif self.appdata['toolbarpos'] == 3:
-            if self.appdata['toolbartext']:  # show text
-                style = wx.TB_TEXT | wx.TB_LEFT
-            else:
-                style = wx.TB_DEFAULT_STYLE | wx.TB_LEFT
+            style = wx.TB_TEXT | wx.TB_LEFT
 
         return style
     # ------------------------------------------------------------------#

@@ -342,7 +342,7 @@ class PageThree(wx.Panel):
         """
         Open filedialog to locate ffmpeg executable
         """
-        with wx.FileDialog(self, _("{} executable").format(self.ffmpeg),
+        with wx.FileDialog(self, _("{} location").format(self.ffmpeg),
                            "", "", "ffmpeg binary "
                            f"(*{self.ffmpeg})|*{self.ffmpeg}| "
                            f"All files (*.*)|*.*",
@@ -359,7 +359,7 @@ class PageThree(wx.Panel):
         """
         Open filedialog to locate ffprobe executable
         """
-        with wx.FileDialog(self, _("{} executable").format(self.ffprobe),
+        with wx.FileDialog(self, _("{} location").format(self.ffprobe),
                            "", "", "ffprobe binary "
                            f"(*{self.ffprobe})|*{self.ffprobe}| "
                            f"All files (*.*)|*.*",
@@ -376,7 +376,7 @@ class PageThree(wx.Panel):
         """
         Open filedialog to locate ffplay executable
         """
-        with wx.FileDialog(self, _("{} executable").format(self.ffplay),
+        with wx.FileDialog(self, _("{} location").format(self.ffplay),
                            "", "", "ffplay binary "
                            f"(*{self.ffplay})|*{self.ffplay}| "
                            f"All files (*.*)|*.*",

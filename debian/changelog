@@ -1,3 +1,20 @@
+videomass (5.0.12-1) UNRELEASED; urgency=medium
+
+  * Improved description strings on menu bar.
+  * Improved profile settings dialog layout.
+  * Added ability to edit command arguments "on-the-fly" in the queue dialog.
+  * Fixed permanent text on the toolbar buttons because needed for view the
+    queue counter.
+  * Removed text alongside toolbar buttons: Now the text on the toolbar is
+    always shown below the toolbar icons.
+  * Fixed "FileNotFoundError: [Errno 2]" traceback at the end of the process,
+    raised if the "Trash the source files" checkbox had been checked to delete
+    the same file more than once.
+  * Moved Show log messages window on menu bar -> Help.
+  * Made some cosmetic improvements.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 04 Apr 2024 23:00:00 +0200
+
 videomass (5.0.11-1) UNRELEASED; urgency=medium
 
   * This release fixes `ModuleNotFoundError` issue installing from PyPi and

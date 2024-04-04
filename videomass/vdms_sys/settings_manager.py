@@ -91,9 +91,6 @@ class ConfigManager:
         1 placed at the bottom side; 2 placed at the rigth side;
         3 is placed at the left side. default is 0 .
 
-    toolbartext (bool):
-        True, enables text alongside toolbar buttons. Default is True.
-
     main_window_size (list):
         [int(Height), int(Width)] last current window dimension before
         exiting the application.
@@ -164,7 +161,7 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 6.7
+    VERSION = 6.8
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputdir": f"{os.path.expanduser('~')}",
                        "outputdir_asinput": False,
@@ -181,7 +178,6 @@ class ConfigManager:
                        "icontheme": "Videomass-Colours",
                        "toolbarsize": 24,
                        "toolbarpos": 0,
-                       "toolbartext": True,
                        "main_window_size": [850, 560],
                        "main_window_pos": [0, 0],
                        "main_ytdl_size": [850, 560],

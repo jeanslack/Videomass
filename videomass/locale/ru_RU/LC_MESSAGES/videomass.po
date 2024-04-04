@@ -799,7 +799,7 @@ msgstr ""
 #: ../vdms_dialogs/wizard_dlg.py:345 ../vdms_dialogs/wizard_dlg.py:362
 #: ../vdms_dialogs/wizard_dlg.py:379 ../vdms_dialogs/preferences.py:764
 #: ../vdms_dialogs/preferences.py:806 ../vdms_dialogs/preferences.py:848
-msgid "{} executable"
+msgid "{} location"
 msgstr "{} исполняемый файл"
 
 #: ../vdms_dialogs/wizard_dlg.py:402

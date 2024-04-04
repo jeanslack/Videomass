@@ -793,8 +793,8 @@ msgstr ""
 #: ../vdms_dialogs/wizard_dlg.py:379 ../vdms_dialogs/preferences.py:764
 #: ../vdms_dialogs/preferences.py:806 ../vdms_dialogs/preferences.py:848
 #, fuzzy
-#| msgid "Choose the {} executable"
-msgid "{} executable"
+#| msgid "Choose the {} location"
+msgid "{} location"
 msgstr "Choisir l' {} l'éxécutable"
 
 #: ../vdms_dialogs/wizard_dlg.py:402

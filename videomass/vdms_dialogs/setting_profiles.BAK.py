@@ -69,52 +69,61 @@ class SettingProfile(wx.Dialog):
                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
         size_base = wx.BoxSizer(wx.VERTICAL)
-        boxname = wx.BoxSizer(wx.VERTICAL)
-        labname = wx.StaticText(self, wx.ID_ANY, _("Profile Name"))
-        boxname.Add(labname, 0, wx.ALL | wx.EXPAND, 5)
+        size_namedescr = wx.BoxSizer(wx.HORIZONTAL)
+        size_base.Add(size_namedescr, 0, wx.ALL | wx.EXPAND, 0)
+        box_name = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
+                                                  _("Profile Name")),
+                                     wx.VERTICAL)
+        size_namedescr.Add(box_name, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "")
-        boxname.Add(self.txt_name, 0, wx.ALL | wx.EXPAND, 5)
-        boxdescr = wx.BoxSizer(wx.VERTICAL)
-        labdescr = wx.StaticText(self, wx.ID_ANY, _("Description"))
-        boxdescr.Add(labdescr, 0, wx.ALL | wx.EXPAND, 5)
+        box_name.Add(self.txt_name, 0, wx.ALL | wx.EXPAND, 5)
+        box_descr = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
+                                                   _("Description")),
+                                      wx.VERTICAL
+                                      )
+        size_namedescr.Add(box_descr, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "")
-        boxdescr.Add(self.txt_descript, 0, wx.ALL | wx.EXPAND, 5)
-        boxtop = wx.BoxSizer(wx.HORIZONTAL)
-        boxtop.Add(boxname, 1, wx.ALL | wx.EXPAND, 0)
-        boxtop.Add(boxdescr, 1, wx.ALL | wx.EXPAND, 0)
-        size_base.Add(boxtop, 0, wx.ALL | wx.EXPAND, 0)
-        labpass1 = wx.StaticText(self, wx.ID_ANY, SettingProfile.PASS_1)
-        size_base.Add(labpass1, 0, wx.ALL | wx.EXPAND, 5)
+        box_descr.Add(self.txt_descript, 0, wx.ALL | wx.EXPAND, 5)
+        box_pass1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
+                                                   SettingProfile.PASS_1),
+                                      wx.VERTICAL
+                                      )
+        size_base.Add(box_pass1, 1, wx.ALL | wx.EXPAND, 5)
         self.pass_1_cmd = wx.TextCtrl(self, wx.ID_ANY, "",
                                       style=wx.TE_MULTILINE
                                       )
-        size_base.Add(self.pass_1_cmd, 1, wx.ALL | wx.EXPAND, 5)
-        #boxpre1 = wx.BoxSizer(wx.HORIZONTAL)
-        msg = _("Optional `pre-input` arguments for one-pass encoding")
-        labpre1 = wx.StaticText(self, wx.ID_ANY, msg)
-        size_base.Add(labpre1, 0, wx.ALL | wx.EXPAND, 5)
+        box_pass1.Add(self.pass_1_cmd, 1, wx.ALL | wx.EXPAND, 5)
         self.pass_1_pre = wx.TextCtrl(self, wx.ID_ANY, "")
-        size_base.Add(self.pass_1_pre, 0, wx.ALL | wx.EXPAND, 5)
-        labpass2 = wx.StaticText(self, wx.ID_ANY, SettingProfile.PASS_2)
-        size_base.Add(labpass2, 0, wx.ALL | wx.EXPAND, 5)
+        box_pass1.Add(self.pass_1_pre, 0, wx.ALL | wx.EXPAND, 5)
+        box_pass2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
+                                                   SettingProfile.PASS_2),
+                                      wx.VERTICAL
+                                      )
+        size_base.Add(box_pass2, 1, wx.ALL | wx.EXPAND, 5)
         self.pass_2_cmd = wx.TextCtrl(self, wx.ID_ANY, "",
                                       style=wx.TE_MULTILINE
                                       )
-        size_base.Add(self.pass_2_cmd, 1, wx.ALL | wx.EXPAND, 5)
-        msg = _("Optional `pre-input` arguments for two-pass encoding")
-        labpre2 = wx.StaticText(self, wx.ID_ANY, msg)
-        size_base.Add(labpre2, 0, wx.ALL | wx.EXPAND, 5)
+        box_pass2.Add(self.pass_2_cmd, 1, wx.ALL | wx.EXPAND, 5)
         self.pass_2_pre = wx.TextCtrl(self, wx.ID_ANY, "")
-        size_base.Add(self.pass_2_pre, 0, wx.ALL | wx.EXPAND, 5)
-        labsupp = wx.StaticText(self, wx.ID_ANY, SettingProfile.SUPFORMAT)
-        size_base.Add(labsupp, 0, wx.ALL | wx.EXPAND, 5)
+        box_pass2.Add(self.pass_2_pre, 0, wx.ALL | wx.EXPAND, 5)
+        size_formats = wx.BoxSizer(wx.HORIZONTAL)
+        size_base.Add(size_formats, 0, wx.ALL | wx.EXPAND, 0)
+        box_supp = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
+                                                  SettingProfile.SUPFORMAT),
+                                     wx.VERTICAL
+                                     )
+        size_formats.Add(box_supp, 1, wx.ALL | wx.EXPAND, 5)
 
-        self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, size=(350, -1), value="")
-        size_base.Add(self.txt_supp, 0, wx.ALL, 5)
-        labext = wx.StaticText(self, wx.ID_ANY, SettingProfile.OUTFORMAT)
-        size_base.Add(labext, 0, wx.ALL | wx.EXPAND, 5)
+        self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "")
+        box_supp.Add(self.txt_supp, 0, wx.ALL | wx.EXPAND, 5)
+        box_format = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
+                                                    SettingProfile.OUTFORMAT),
+                                       wx.VERTICAL
+                                       )
+        size_formats.Add(box_format, 1, wx.ALL | wx.EXPAND, 5)
+
         self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "")
-        size_base.Add(self.txt_ext, 0, wx.ALL | wx.SHAPED, 5)
+        box_format.Add(self.txt_ext, 0, wx.ALL, 5)
         # ----- confirm buttons section
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grdhelp = wx.GridSizer(1, 1, 0, 0)
@@ -131,17 +140,23 @@ class SettingProfile(wx.Dialog):
 
         # ----- set_properties:
         if self.appdata['ostype'] == 'Darwin':
-            fontsize = 10
+            self.pass_1_cmd.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
+            self.pass_2_cmd.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
+            self.pass_1_pre.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
+            self.pass_2_pre.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
         else:
-            fontsize = 8
-        self.pass_1_cmd.SetFont(wx.Font(fontsize, wx.FONTFAMILY_TELETYPE,
-                                        wx.NORMAL, wx.NORMAL))
-        self.pass_2_cmd.SetFont(wx.Font(fontsize, wx.FONTFAMILY_TELETYPE,
-                                        wx.NORMAL, wx.NORMAL))
-        self.pass_1_pre.SetFont(wx.Font(fontsize, wx.FONTFAMILY_TELETYPE,
-                                        wx.NORMAL, wx.NORMAL))
-        self.pass_2_pre.SetFont(wx.Font(fontsize, wx.FONTFAMILY_TELETYPE,
-                                        wx.NORMAL, wx.NORMAL))
+            self.pass_1_cmd.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
+            self.pass_2_cmd.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
+            self.pass_1_pre.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
+            self.pass_2_pre.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
+                                            wx.NORMAL, wx.NORMAL))
 
         self.txt_name.SetToolTip(_('A short profile name'))
         self.txt_descript.SetToolTip(_('A long description of the profile'))
@@ -154,7 +169,7 @@ class SettingProfile(wx.Dialog):
                                   'copy codec and format'))
 
         tip = (_('Any optional arguments to add before input file on the '
-                 'one-pass encoding, e.g required names of some hardware '
+                 'two-pass encoding, e.g required names of some hardware '
                  'accelerations like -hwaccel to use with CUDA.'))
         self.pass_1_pre.SetToolTip(tip)
         tip = (_('Any optional arguments to add before input file on the '
@@ -162,7 +177,7 @@ class SettingProfile(wx.Dialog):
                  'accelerations like -hwaccel to use with CUDA.'))
         self.pass_2_pre.SetToolTip(tip)
         # ------ Set Layout
-        self.SetMinSize((800, 650))
+        self.SetMinSize((800, 550))
         self.SetSizer(size_base)
         self.Fit()
         self.Layout()

@@ -461,14 +461,13 @@ class MainFrame(wx.Frame):
         dscrp = _("Import files\tCtrl+O")
         self.openmedia = fileButton.Append(wx.ID_OPEN, dscrp)
         self.openmedia.Enable(False)
-        dscrp = _("Open the encoding destination directory\tCtrl+D")
+        dscrp = _("Open encoding destination directory\tCtrl+D")
         fold_convers = fileButton.Append(wx.ID_ANY, dscrp)
-        dscrp = (_("Set encoding destination"),
-                 _("Set a new destination for encodings"))
-        path_dest = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = _("Set a new encoding destination directory")
+        path_dest = fileButton.Append(wx.ID_ANY, dscrp)
         if self.same_destin:
             path_dest.Enable(False)
-        dscrp = _("Restores the default destination for encodings")
+        dscrp = _("Restores default destination dirctory for encodings")
         self.resetfolders_tmp = fileButton.Append(wx.ID_ANY, dscrp)
         self.resetfolders_tmp.Enable(False)
         fileButton.AppendSeparator()
@@ -477,10 +476,10 @@ class MainFrame(wx.Frame):
         self.loadqueue = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
         dscrp = (_("Open trash"),
-                 _("Open the Videomass trash folder if it exists"))
+                 _("Open the Videomass trash directory"))
         dir_trash = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Empty Trash"),
-                 _("Delete all files in the Videomass trash folder"))
+        dscrp = (_("Empty trash"),
+                 _("Delete all files in the Videomass trash directory"))
         empty_trash = fileButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit\tCtrl+Q"),
@@ -489,11 +488,11 @@ class MainFrame(wx.Frame):
 
         # ------------------ Edit menu
         editButton = wx.Menu()
-        dscrp = (_("Rename selected entry\tCtrl+R"),
-                 _("Rename the output file"))
+        dscrp = (_("Rename selected file destination\tCtrl+R"),
+                 _("Renames the file destination of the selected entry"))
         self.rename = editButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.rename.Enable(False)
-        dscrp = (_("Batch renaming\tCtrl+B"),
+        dscrp = (_("Batch rename destinations\tCtrl+B"),
                  _("Renames the destination of all items in the list"))
         self.rename_batch = editButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.rename_batch.Enable(False)
@@ -516,7 +515,7 @@ class MainFrame(wx.Frame):
         searchtopic = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
         prstpage = '<https://github.com/jeanslack/Videomass-presets>'
-        dscrp = (_("Check preset updates"),
+        dscrp = (_("Check for preset updates"),
                  _("Check for new presets updates from {0}").format(prstpage))
         self.prstcheck = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         dscrp = (_("Get latest presets"),
@@ -564,10 +563,6 @@ class MainFrame(wx.Frame):
                  _("Show useful shortcut keys when playing or previewing "
                    "using FFplay"))
         playing = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        viewButton.AppendSeparator()
-        dscrp = (_("Show logs\tCtrl+L"),
-                 _("Viewing log messages"))
-        viewlogs = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         viewButton.AppendSeparator()
         dscrp = (_("Show timeline editor\tCtrl+T"),
                  _("Set duration or trim slices of time to remove unwanted "
@@ -634,8 +629,11 @@ class MainFrame(wx.Frame):
                  _("Get version about your operating system, version of "
                    "Python and wxPython."))
         sysinfo = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = (_("Show log files\tCtrl+L"),
+                 _("Viewing log messages"))
+        viewlogs = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         helpButton.AppendSeparator()
-        dscrp = (_("Latest version"),
+        dscrp = (_("Check for newer version"),
                  _("Check for the latest Videomass version"))
         chklatest = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         infoItem = helpButton.Append(wx.ID_ABOUT, _("About Videomass"), "")
@@ -673,7 +671,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.timestampCustomize, tscustomize)
         self.Bind(wx.EVT_MENU, self.autoexitFFplay, self.exitplayback)
         self.Bind(wx.EVT_MENU, self.durinPlayng, playing)
-        self.Bind(wx.EVT_MENU, self.View_logs, viewlogs)
         self.Bind(wx.EVT_MENU, self.view_Timeline, self.viewtimeline)
         # ---- GO -----
         self.Bind(wx.EVT_MENU, self.startPanel, self.startpan)
@@ -694,6 +691,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Donation, DonationItem)
         self.Bind(wx.EVT_MENU, self.DocFFmpeg, docFFmpeg)
         self.Bind(wx.EVT_MENU, self.CheckNewReleases, chklatest)
+        self.Bind(wx.EVT_MENU, self.View_logs, viewlogs)
         self.Bind(wx.EVT_MENU, self.system_vers, sysinfo)
         self.Bind(wx.EVT_MENU, self.Info, infoItem)
     # --------Menu Bar Event handler (callback)
@@ -1100,13 +1098,14 @@ class MainFrame(wx.Frame):
                     if self.ProcessPanel.thread_type is not None:
                         wx.MessageBox(_("Changes will take effect once the "
                                         "program has been restarted."),
-                                      _('Videomass'), wx.ICON_WARNING, self)
+                                      _('Restart Videomass'),
+                                      wx.ICON_WARNING, self)
                         return
                 if wx.MessageBox(_("Changes will take effect once the program "
                                    "has been restarted.\n\n"
                                    "Do you want to exit the application now?"),
-                                 _('Exit'), wx.ICON_QUESTION | wx.CANCEL
-                                 | wx.YES_NO, self) == wx.YES:
+                                 _('Restart Videomass'), wx.ICON_QUESTION
+                                 | wx.CANCEL | wx.YES_NO, self) == wx.YES:
                     self.on_Kill()
     # ------------------------------------------------------------------#
     # --------- Menu Help  ###
@@ -1214,28 +1213,16 @@ class MainFrame(wx.Frame):
         the user preferences.
         """
         if self.appdata['toolbarpos'] == 0:  # on top
-            if self.appdata['toolbartext']:  # show text
-                style = wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_HORIZONTAL
-            else:
-                style = wx.TB_DEFAULT_STYLE
+            style = wx.TB_TEXT
 
         elif self.appdata['toolbarpos'] == 1:  # on bottom
-            if self.appdata['toolbartext']:  # show text
-                style = wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_BOTTOM
-            else:
-                style = wx.TB_DEFAULT_STYLE | wx.TB_BOTTOM
+            style = wx.TB_TEXT | wx.TB_BOTTOM
 
         elif self.appdata['toolbarpos'] == 2:  # on right
-            if self.appdata['toolbartext']:  # show text
-                style = wx.TB_TEXT | wx.TB_RIGHT
-            else:
-                style = wx.TB_DEFAULT_STYLE | wx.TB_RIGHT
+            style = wx.TB_TEXT | wx.TB_RIGHT
 
         elif self.appdata['toolbarpos'] == 3:
-            if self.appdata['toolbartext']:  # show text
-                style = wx.TB_TEXT | wx.TB_LEFT
-            else:
-                style = wx.TB_DEFAULT_STYLE | wx.TB_LEFT
+            style = wx.TB_TEXT | wx.TB_LEFT
 
         return style
     # ------------------------------------------------------------------#
@@ -1284,53 +1271,43 @@ class MainFrame(wx.Frame):
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
         tip = _("Go to the previous panel")
-        back = self.toolbar.AddTool(3, _('Back'),
-                                    bmpback,
+        back = self.toolbar.AddTool(3, _('Back'), bmpback,
                                     tip, wx.ITEM_NORMAL
                                     )
         tip = _("Go to the next panel")
-        forward = self.toolbar.AddTool(4, _('Next'),
-                                       bmpnext,
+        forward = self.toolbar.AddTool(4, _('Next'), bmpnext,
                                        tip, wx.ITEM_NORMAL
                                        )
         tip = _("Go to the 'Home' panel")
-        home = self.toolbar.AddTool(5, _('Home'),
-                                    bmphome,
+        home = self.toolbar.AddTool(5, _('Home'), bmphome,
                                     tip, wx.ITEM_NORMAL
                                     )
         tip = _("Play the selected file in the list")
-        play = self.toolbar.AddTool(35, _('Play'),
-                                    bmpplay,
+        play = self.toolbar.AddTool(35, _('Play'), bmpplay,
                                     tip, wx.ITEM_NORMAL
                                     )
         tip = _("Get informative data about imported media streams")
-        self.btn_streams = self.toolbar.AddTool(6, _('Properties'),
-                                                bmpinfo,
+        self.btn_streams = self.toolbar.AddTool(6, _('Properties'), bmpinfo,
                                                 tip, wx.ITEM_NORMAL
                                                 )
         tip = _("Start batch processing")
-        self.run_coding = self.toolbar.AddTool(7, _('Run'),
-                                               bmpconv,
+        self.run_coding = self.toolbar.AddTool(7, _('Run'), bmpconv,
                                                tip, wx.ITEM_NORMAL
                                                )
         tip = _("Stops current process")
-        stop_coding = self.toolbar.AddTool(8, _('Abort'),
-                                           bmpstop,
+        stop_coding = self.toolbar.AddTool(8, _('Abort'), bmpstop,
                                            tip, wx.ITEM_NORMAL
                                            )
         tip = _("Clear the file list")
-        clear = self.toolbar.AddTool(9, _('Clear'),
-                                     bmpclear,
+        clear = self.toolbar.AddTool(9, _('Clear'), bmpclear,
                                      tip, wx.ITEM_NORMAL
                                      )
         tip = _("Add an item to Queue")
-        addqueue = self.toolbar.AddTool(36, _('Add to Queue'),
-                                        bmpaddqueue,
+        addqueue = self.toolbar.AddTool(36, _('Add to Queue'), bmpaddqueue,
                                         tip, wx.ITEM_NORMAL
                                         )
         tip = _("Show queue")
-        self.pqueue = self.toolbar.AddTool(37, _('Queue'),
-                                           bmpprocqueue,
+        self.pqueue = self.toolbar.AddTool(37, _('Queue'), bmpprocqueue,
                                            tip, wx.ITEM_NORMAL
                                            )
         self.toolbar.Realize()

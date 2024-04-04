@@ -598,10 +598,13 @@ class VideoToSequence(wx.Panel):
 
         """
         if not self.parent.time_seq:
-            time = _('Unset')
+            sst, endt = _('Same as source'), _('Same as source')
         else:
-            tseq = self.parent.time_seq.split()
-            time = _('start  {} | duration  {}').format(tseq[1], tseq[3])
+            endt = self.parent.time_seq.split()[3]
+            sst = self.parent.time_seq.split()[1]
+
+
+
 
         if self.txt_args.IsEnabled():
             args = _('Enabled')
@@ -627,10 +630,11 @@ class VideoToSequence(wx.Panel):
         keys = (_("Selected File\nOutput Format\n"
                   "Destination directory\nRate (fps)\nResizing\n"
                   "Mosaic rows\nMosaic columns\nMosaic padding\n"
-                  "Mosaic margin\nCustom Arguments\nTime Trimming"
+                  "Mosaic margin\nCustom Arguments\n"
+                  "Start of segment\nDuration"
                   ))
         vals = (f"{filename}\n{self.cmb_frmt.GetValue()}\n{outputdir}"
                 f"\n{rate}\n{resize}\n{rows}\n{cols}\n{pad}\n{marg}"
-                f"\n{args}\n{time}"
+                f"\n{args}\n{sst}\n{endt}"
                 )
         return {'key': keys, 'val': vals}

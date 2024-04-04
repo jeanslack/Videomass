@@ -264,11 +264,11 @@ class FileDnD(wx.Panel):
         # populate columns
         colw = appdata['filedrop_column_width']
         self.flCtrl.InsertColumn(0, '#', width=colw[0])
-        self.flCtrl.InsertColumn(1, _('File Name'), width=colw[1])
+        self.flCtrl.InsertColumn(1, _('Source file'), width=colw[1])
         self.flCtrl.InsertColumn(2, _('Duration'), width=colw[2])
         self.flCtrl.InsertColumn(3, _('Media type'), width=colw[3])
         self.flCtrl.InsertColumn(4, _('Size'), width=colw[4])
-        self.flCtrl.InsertColumn(5, _('Output file name'), width=colw[5])
+        self.flCtrl.InsertColumn(5, _('Destination file name'), width=colw[5])
         # create widgets
         infomsg = _("Drag one or more files below")
         self.lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
@@ -277,7 +277,7 @@ class FileDnD(wx.Panel):
         sizer.Add(self.flCtrl, 1, wx.EXPAND | wx.ALL, 2)
         sizer.Add((0, 10))
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
-        self.btn_destpath = wx.Button(self, wx.ID_OPEN, "...", size=(35, -1),
+        self.btn_destpath = wx.Button(self, wx.ID_OPEN, _('Change'),
                                       name='button destpath filedrop')
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
                                           style=wx.TE_PROCESS_ENTER
@@ -302,8 +302,9 @@ class FileDnD(wx.Panel):
             self.text_path_save.Disable()
 
         # Tooltips
-        self.btn_destpath.SetToolTip(_('Set a new destination for encodings'))
-        self.text_path_save.SetToolTip(_("Current destination directory"))
+        self.btn_destpath.SetToolTip(_('Set a new encoding destination '
+                                       'directory'))
+        self.text_path_save.SetToolTip(_("Encodings destination directory"))
 
         # Binding (EVT)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
@@ -521,7 +522,7 @@ class FileDnD(wx.Panel):
         row_id = self.flCtrl.GetFocusedItem()  # Get the current row
         oldname = self.flCtrl.GetItemText(row_id, 5)  # Get current name
         newname = ''
-        title = _('File renaming...')
+        title = _('Rename the file destination')
         msg = _('Rename the selected file to:')
 
         with Renamer(self,
@@ -553,7 +554,7 @@ class FileDnD(wx.Panel):
         """
         This method is responsible for batch file renaming.
         """
-        title = _('Rename items')
+        title = _('Rename destination items (batch)')
         msg = _('Rename the {0} items to:').format(len(self.outputnames))
         with Renamer(self,
                      nameprop=_('New Name #'),

@@ -974,7 +974,7 @@ class PrstPan(wx.Panel):
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
         pass2 = " ".join(self.txt_2cmd.GetValue().split())
         preset = self.cmbx_prst.GetValue()
-        kwargs = {'type': thrtype, 'args': (pass1, pass2),
+        kwargs = {'type': thrtype, 'args': [pass1, pass2],
                   'pre-input-1': preinput_1, 'pre-input-2': preinput_2,
                   'preset name': f'Presets Manager - {preset}',
                   }
@@ -1059,15 +1059,15 @@ class PrstPan(wx.Panel):
         passes = '2' if self.array[3] else '1'
 
         if not self.parent.time_seq:
-            timeseq = _('Unset')
+            sst, endt = _('Same as source'), _('Same as source')
         else:
-            t = self.parent.time_seq.split()
-            timeseq = _('start  {} | duration  {}').format(t[1], t[3])
+            sst = kwa["start-time"].split()[1]
+            endt = kwa["end-time"].split()[1]
 
         keys = (_("Batch processing items\nAutomation/Preset\n"
-                  "Encoding passes\n"
-                  "Profile Used\nOutput Format\nTime Trimming"))
+                  "Encoding passes\nProfile Used\nOutput Format\n"
+                  "Start of segment\nClip duration"))
         vals = (f"{cntmax}\n{kwa['preset name']}\n{passes}\n"
-                f"{self.array[0]}\n{self.array[5]}\n{timeseq}"
+                f"{self.array[0]}\n{self.array[5]}\n{sst}\n{endt}"
                 )
         return {'key': keys, 'val': vals}
