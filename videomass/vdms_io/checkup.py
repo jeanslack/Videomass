@@ -47,7 +47,7 @@ def check_inout(file_sources, file_dest):
         msg = _('Files already exist, do you want to overwrite them?')
         with ListWarning(None,
                          dict.fromkeys(files_ow, _('Already exist')),
-                         caption=_('Please Confirm'),
+                         caption=_('Please confirm'),
                          header=msg,
                          buttons='CONFIRM',
                          ) as log:
@@ -59,11 +59,10 @@ def check_inout(file_sources, file_dest):
         if not os.path.isfile(os.path.abspath(fln)):
             files_exist.append(f'"{fln}"')
     if files_exist:
-        msg = _('No source files found in the specified path')
         with ListWarning(None,
                          dict.fromkeys(files_exist, _('Not found')),
-                         caption=_('Non-existent source files'),
-                         header=msg,
+                         caption=_('Error list'),
+                         header=_('File(s) not found'),
                          buttons='OK',
                          ) as log:
             log.ShowModal()

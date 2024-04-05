@@ -190,11 +190,10 @@ class MyListCtrl(wx.ListCtrl):
         Handles all rejected files if any
         """
         if self.errors:
-            msg = _('Error details')
             with ListWarning(self,
                              self.errors,
-                             caption=_('Rejected Files'),
-                             header=msg,
+                             caption=_('Error list'),
+                             header=_('Rejected files'),
                              buttons='OK',
                              ) as log:
                 log.ShowModal()

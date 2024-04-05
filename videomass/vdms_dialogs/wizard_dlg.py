@@ -234,7 +234,7 @@ class PageTwo(wx.Panel):
         if exiting == 'provided':
             if wx.MessageBox(_("Videomass already seems to include "
                                "FFmpeg.\n\nDo you want to use that?"),
-                             _('Videomass: Please Confirm'), wx.ICON_QUESTION
+                             _('Please confirm'), wx.ICON_QUESTION
                              | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                 return
 

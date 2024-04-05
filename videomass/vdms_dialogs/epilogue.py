@@ -88,7 +88,7 @@ class Formula(wx.Dialog):
             self.ckbx_del.Disable()
         sizeropt.Add(self.ckbx_del, 0, wx.ALL, 5)
         btncancel = wx.Button(self, wx.ID_CANCEL, "")
-        btnok = wx.Button(self, wx.ID_OK, "")
+        btnok = wx.Button(self, wx.ID_OK, _("Run"))
         btngrid = wx.FlexGridSizer(1, 2, 0, 0)
         btngrid.Add(btncancel, 0)
         btngrid.Add(btnok, 0, wx.LEFT, 5)

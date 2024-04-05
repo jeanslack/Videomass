@@ -205,7 +205,7 @@ class MainFrame(wx.Frame):
         if os.path.exists(fque):
             if wx.MessageBox(_('Not all items in the queue were completed.\n\n'
                                'Would you like to keep them in the queue?'),
-                             _('Videomass'), wx.ICON_QUESTION | wx.CANCEL
+                             _('Please confirm'), wx.ICON_QUESTION | wx.CANCEL
                              | wx.YES_NO, self) == wx.YES:
 
                 queue = load_json_file_queue(fque)
@@ -371,7 +371,7 @@ class MainFrame(wx.Frame):
             if self.ProcessPanel.thread_type is not None:
                 wx.MessageBox(_('There are still processes running. if you '
                                 'want to stop them, use the "Abort" button.'),
-                              _('Videomass'), wx.ICON_WARNING, self)
+                              _('Videomass - Warning!'), wx.ICON_WARNING, self)
                 return
 
         if self.appdata['warnexiting']:
@@ -386,7 +386,7 @@ class MainFrame(wx.Frame):
                 wx.MessageBox(_("There are still active windows with running "
                                 "processes, make sure you finish your work "
                                 "before closing them."),
-                              "Videomass", wx.ICON_WARNING, self)
+                              "Videomass - Warning!", wx.ICON_WARNING, self)
                 return
             self.ytdlframe.on_exit(self, warn=False)
 
@@ -425,7 +425,7 @@ class MainFrame(wx.Frame):
                 wx.MessageBox(_("There are still active windows with running "
                                 "processes, make sure you finish your work "
                                 "before closing them."),
-                              "Videomass", wx.ICON_WARNING, self)
+                              "Videomass - Warning!", wx.ICON_WARNING, self)
                 return
             self.ytdlframe.destroy_orphaned_window()
         self.destroy_orphaned_window()
@@ -767,7 +767,7 @@ class MainFrame(wx.Frame):
             files = os.listdir(path)
             if len(files) > 0:
                 if wx.MessageBox(_("Are you sure to empty trash folder?"),
-                                 "Videomass", wx.ICON_QUESTION | wx.CANCEL
+                                 _("Please confirm"), wx.ICON_QUESTION | wx.CANCEL
                                  | wx.YES_NO, self) != wx.YES:
                     return
 
@@ -1098,13 +1098,13 @@ class MainFrame(wx.Frame):
                     if self.ProcessPanel.thread_type is not None:
                         wx.MessageBox(_("Changes will take effect once the "
                                         "program has been restarted."),
-                                      _('Restart Videomass'),
+                                      _('Videomass - Warning!'),
                                       wx.ICON_WARNING, self)
                         return
                 if wx.MessageBox(_("Changes will take effect once the program "
                                    "has been restarted.\n\n"
                                    "Do you want to exit the application now?"),
-                                 _('Restart Videomass'), wx.ICON_QUESTION
+                                 _('Restart Videomass?'), wx.ICON_QUESTION
                                  | wx.CANCEL | wx.YES_NO, self) == wx.YES:
                     self.on_Kill()
     # ------------------------------------------------------------------#
@@ -1669,7 +1669,7 @@ class MainFrame(wx.Frame):
                 if wx.MessageBox(_('An item with the same destination file '
                                    'already exists.\n\nDo you want to replace '
                                    'it by adding the new item to the queue?'),
-                                 _('Videomass'), wx.ICON_QUESTION | wx.CANCEL
+                                 _('Please confirm'), wx.ICON_QUESTION | wx.CANCEL
                                  | wx.YES_NO, self) != wx.YES:
                     return
                 self.queuelist[dup] = kwargs

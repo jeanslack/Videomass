@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.05.2024
+Rev: Mar.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -69,15 +69,20 @@ class SettingProfile(wx.Dialog):
                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 
         size_base = wx.BoxSizer(wx.VERTICAL)
+        boxname = wx.BoxSizer(wx.VERTICAL)
         labname = wx.StaticText(self, wx.ID_ANY, _("Profile Name"))
-        size_base.Add(labname, 0, wx.ALL | wx.EXPAND, 5)
+        boxname.Add(labname, 0, wx.ALL | wx.EXPAND, 5)
         self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "")
-        size_base.Add(self.txt_name, 0, wx.ALL | wx.EXPAND, 5)
+        boxname.Add(self.txt_name, 0, wx.ALL | wx.EXPAND, 5)
+        boxdescr = wx.BoxSizer(wx.VERTICAL)
         labdescr = wx.StaticText(self, wx.ID_ANY, _("Description"))
-        size_base.Add(labdescr, 0, wx.ALL | wx.EXPAND, 5)
-        self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "", size=(-1, 80),
-                                        style=wx.TE_MULTILINE)
-        size_base.Add(self.txt_descript, 0, wx.ALL | wx.EXPAND, 5)
+        boxdescr.Add(labdescr, 0, wx.ALL | wx.EXPAND, 5)
+        self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "")
+        boxdescr.Add(self.txt_descript, 0, wx.ALL | wx.EXPAND, 5)
+        boxtop = wx.BoxSizer(wx.HORIZONTAL)
+        boxtop.Add(boxname, 1, wx.ALL | wx.EXPAND, 0)
+        boxtop.Add(boxdescr, 1, wx.ALL | wx.EXPAND, 0)
+        size_base.Add(boxtop, 0, wx.ALL | wx.EXPAND, 0)
         labpass1 = wx.StaticText(self, wx.ID_ANY, SettingProfile.PASS_1)
         size_base.Add(labpass1, 0, wx.ALL | wx.EXPAND, 5)
         self.pass_1_cmd = wx.TextCtrl(self, wx.ID_ANY, "",
@@ -100,20 +105,15 @@ class SettingProfile(wx.Dialog):
         size_base.Add(labpre2, 0, wx.ALL | wx.EXPAND, 5)
         self.pass_2_pre = wx.TextCtrl(self, wx.ID_ANY, "")
         size_base.Add(self.pass_2_pre, 0, wx.ALL | wx.EXPAND, 5)
-        boxsupp = wx.BoxSizer(wx.VERTICAL)
         labsupp = wx.StaticText(self, wx.ID_ANY, SettingProfile.SUPFORMAT)
-        boxsupp.Add(labsupp, 0, wx.ALL | wx.EXPAND, 5)
+        size_base.Add(labsupp, 0, wx.ALL | wx.EXPAND, 5)
+
         self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, size=(350, -1), value="")
-        boxsupp.Add(self.txt_supp, 0, wx.ALL, 5)
-        boxext = wx.BoxSizer(wx.VERTICAL)
+        size_base.Add(self.txt_supp, 0, wx.ALL, 5)
         labext = wx.StaticText(self, wx.ID_ANY, SettingProfile.OUTFORMAT)
-        boxext.Add(labext, 0, wx.ALL | wx.EXPAND, 5)
+        size_base.Add(labext, 0, wx.ALL | wx.EXPAND, 5)
         self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "")
-        boxext.Add(self.txt_ext, 0, wx.ALL | wx.SHAPED, 5)
-        boxbot = wx.BoxSizer(wx.HORIZONTAL)
-        boxbot.Add(boxsupp, 1, wx.ALL | wx.EXPAND, 0)
-        boxbot.Add(boxext, 1, wx.ALL | wx.EXPAND, 0)
-        size_base.Add(boxbot, 0, wx.ALL | wx.EXPAND, 0)
+        size_base.Add(self.txt_ext, 0, wx.ALL | wx.SHAPED, 5)
         # ----- confirm buttons section
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grdhelp = wx.GridSizer(1, 1, 0, 0)
@@ -161,7 +161,7 @@ class SettingProfile(wx.Dialog):
                  'accelerations like -hwaccel to use with CUDA.'))
         self.pass_2_pre.SetToolTip(tip)
         # ------ Set Layout
-        self.SetMinSize((850, 700))
+        self.SetMinSize((800, 650))
         self.SetSizer(size_base)
         self.Fit()
         self.Layout()

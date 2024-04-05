@@ -165,7 +165,7 @@ class ShowLogs(wx.Dialog):
         name = self.log_select.GetItemText(index, 0)
 
         if wx.MessageBox(_('Are you sure you want to clear the selected '
-                           'log file?'), "Videomass", wx.ICON_QUESTION
+                           'log file?'), _('Please confirm'), wx.ICON_QUESTION
                          | wx.CANCEL | wx.YES_NO, self) != wx.YES:
             return
 

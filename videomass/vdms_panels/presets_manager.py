@@ -129,7 +129,7 @@ class PrstPan(wx.Panel):
                               )
         boxpresets.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
         boxpresets.Add((5, 5))
-        panelscr = scrolled.ScrolledPanel(self, -1, size=(200, 500),
+        panelscr = scrolled.ScrolledPanel(self, -1, size=(230, 500),
                                           style=wx.TAB_TRAVERSAL
                                           | wx.BORDER_THEME,
                                           name="panelscroll",
@@ -765,7 +765,7 @@ class PrstPan(wx.Panel):
                 "overwritten with the default one. Your profiles "
                 "may be deleted!\n\nDo you want to continue?"
                 )
-        if wx.MessageBox(msg, _("Warning"),
+        if wx.MessageBox(msg, _("Please confirm"),
                          wx.ICON_WARNING
                          | wx.YES_NO
                          | wx.CANCEL,
@@ -793,7 +793,8 @@ class PrstPan(wx.Panel):
                            "In any case, to avoid data loss, the presets "
                            "folder will be backed up in the program's "
                            "configuration directory."
-                           "\n\nDo you want to continue?"), _("Warning"),
+                           "\n\nDo you want to continue?"),
+                         _("Please confirm"),
                          wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                          self) == wx.YES:
 

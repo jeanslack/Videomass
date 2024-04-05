@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 Name: list_warning.py
-Porpose: A custom multipurpose dialog for listing alert messages
+Porpose: A custom multipurpose dialog for listing alert messages and confirms
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -45,7 +45,7 @@ class ListWarning(wx.Dialog):
 
             with ListWarning(Self,
                              dict.fromkeys(list, 'message string'),
-                             caption='Please Confirm',
+                             caption='Please confirm',
                              header='Files that will be overwritten ...',
                              buttons='CONFIRM',
                              ) as log:

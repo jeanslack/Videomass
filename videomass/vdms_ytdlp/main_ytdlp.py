@@ -200,7 +200,7 @@ class MainYtdl(wx.Frame):
         dlg = wx.MessageDialog(self, _('Do you want to close the active view '
                                        'keeping the data in memory and any '
                                        'background processes?'),
-                               _('Closing options'), wx.ICON_QUESTION
+                               _('Please confirm'), wx.ICON_QUESTION
                                | wx.CANCEL | wx.YES_NO)
         res = dlg.ShowModal()
         if res == wx.ID_YES:
@@ -226,13 +226,13 @@ class MainYtdl(wx.Frame):
             if self.ProcessPanel.thread_type is not None:
                 wx.MessageBox(_('There are still processes running. if you '
                                 'want to stop them, use the "Abort" button.'),
-                              _('Videomass'), wx.ICON_WARNING, self)
+                              _('Videomass - Warning!'), wx.ICON_WARNING, self)
                 return
 
         if self.data_url and self.appdata['warnexiting'] and warn:
             if wx.MessageBox(_('Are you sure you want to exit this window?\n'
                                'All data will be lost'),
-                             _('Quit YouTube Downloader'), wx.ICON_QUESTION
+                             _('Quit YouTube Downloader?'), wx.ICON_QUESTION
                              | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                 return
 

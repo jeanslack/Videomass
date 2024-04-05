@@ -81,11 +81,10 @@ class MyListCtrl(wx.ListCtrl):
         Handles all rejected URLs if any
         """
         if self.errors:
-            msg = _('Detailed list of errors')
             with ListWarning(self,
                              self.errors,
-                             caption=_('Invalid URLs'),
-                             header=msg,
+                             caption=_('Error list'),
+                             header=_('Invalid URLs'),
                              buttons='OK',
                              ) as log:
                 log.ShowModal()
@@ -164,7 +163,7 @@ class Url_DnD_Panel(wx.Panel):
         self.text_path_save.SetValue(self.parent.outputdir)
         # Tooltip
         self.btn_save.SetToolTip(_("Set a new destination directory "
-                                   "for your downloads"))
+                                   "for downloads"))
         self.text_path_save.SetToolTip(_("Destination directory of downloads"))
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
     # ---------------------------------------------------------

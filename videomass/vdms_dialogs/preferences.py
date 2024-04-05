@@ -272,19 +272,25 @@ class SetUp(wx.Dialog):
         msg = _('Download videos from YouTube.com and other video sites')
         labytdlp = wx.StaticText(tabFour, wx.ID_ANY, msg)
         sizerytdlp.Add(labytdlp, 0, wx.ALL | wx.EXPAND, 5)
-        msg = _("Enable/Disable yt-dlp")
+        msg = (_('Videomass uses `yt_dlp` as a Python module and not as an '
+                 'executable.\nIf you intend to download audio/video from '
+                 'the web make sure to select the check-box below.\nThe next '
+                 'time you restart the program, the module will be loaded '
+                 'into memory.'))
+        labytdescr = wx.StaticText(tabFour, wx.ID_ANY, msg)
+        sizerytdlp.Add(labytdescr, 0, wx.ALL | wx.EXPAND, 5)
+        msg = _("Enable yt-dlp")
         self.checkbox_ytdlp = wx.CheckBox(tabFour, wx.ID_ANY, (msg))
         sizerytdlp.Add(self.checkbox_ytdlp, 0, wx.ALL, 5)
         sizerytdlp.Add((0, 15))
         labdw = wx.StaticText(tabFour, wx.ID_ANY,
                               _('External Downloader Preferences'))
         sizerytdlp.Add(labdw, 0, wx.ALL | wx.EXPAND, 5)
-        msg = _("In addition to the native default one, yt-dlp currently "
-                "supports the following external downloaders:\n"
-                "aria2c, avconv, axel, curl, ffmpeg, httpie, wget.\n"
-                "Please note that if you enable an external downloader, you "
-                "will not be able to view the progress bar\nduring download "
-                "operations.")
+        msg = (_("In addition to the default native one, yt-dlp currently "
+                 "supports the following external downloaders:\n"
+                 "aria2c, avconv, axel, curl, ffmpeg, httpie, wget.\nPlease "
+                 "note that download status information may not be available."
+                 ))
         labdwmsg = wx.StaticText(tabFour, wx.ID_ANY, (msg))
         sizerytdlp.Add(labdwmsg, 0, wx.ALL, 5)
         msg = _("External downloader executable path")
@@ -361,7 +367,6 @@ class SetUp(wx.Dialog):
         tabSix = wx.Panel(notebook, wx.ID_ANY)
         sizerLog = wx.BoxSizer(wx.VERTICAL)
         sizerLog.Add((0, 15))
-
         msglog = _("The following settings affect output messages and "
                    "the log messages during transcoding processes.\n"
                    "Be careful, by changing these settings some functions "
@@ -410,6 +415,7 @@ class SetUp(wx.Dialog):
             labdown.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFexec.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdlp.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labytdescr.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labdw.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdwmsg.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labTheme.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -424,6 +430,7 @@ class SetUp(wx.Dialog):
             labdown.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFexec.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdlp.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labytdescr.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labdw.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdwmsg.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labTheme.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
