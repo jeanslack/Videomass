@@ -767,8 +767,8 @@ class MainFrame(wx.Frame):
             files = os.listdir(path)
             if len(files) > 0:
                 if wx.MessageBox(_("Are you sure to empty trash folder?"),
-                                 _("Please confirm"), wx.ICON_QUESTION | wx.CANCEL
-                                 | wx.YES_NO, self) != wx.YES:
+                                 _("Please confirm"), wx.ICON_QUESTION
+                                 | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                     return
 
                 for fname in files:
@@ -1669,8 +1669,8 @@ class MainFrame(wx.Frame):
                 if wx.MessageBox(_('An item with the same destination file '
                                    'already exists.\n\nDo you want to replace '
                                    'it by adding the new item to the queue?'),
-                                 _('Please confirm'), wx.ICON_QUESTION | wx.CANCEL
-                                 | wx.YES_NO, self) != wx.YES:
+                                 _('Please confirm'), wx.ICON_QUESTION
+                                 | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                     return
                 self.queuelist[dup] = kwargs
 

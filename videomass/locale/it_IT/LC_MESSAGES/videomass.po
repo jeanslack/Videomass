@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-06 00:40+0200\n"
-"PO-Revision-Date: 2024-04-06 00:43+0200\n"
+"POT-Creation-Date: 2024-04-06 13:14+0200\n"
+"PO-Revision-Date: 2024-04-06 13:27+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -920,33 +920,33 @@ msgstr "Nome Profilo"
 msgid "Description"
 msgstr "Descrizione"
 
-#: ../vdms_dialogs/setting_profiles.py:87 ../vdms_dialogs/queue_edit.py:71
-msgid "Optional `pre-input` arguments for one-pass encoding"
-msgstr "Argomenti facoltativi di \"pre-input\" per la passata uno"
+#: ../vdms_dialogs/setting_profiles.py:94 ../vdms_dialogs/queue_edit.py:71
+msgid "Pre-input arguments for One-Pass (optional)"
+msgstr "Argomenti di pre-input per la passata uno (opzionale)"
 
-#: ../vdms_dialogs/setting_profiles.py:98 ../vdms_dialogs/queue_edit.py:102
-msgid "Optional `pre-input` arguments for two-pass encoding"
-msgstr "Argomenti facoltativi di \"pre-input\" per la passata due"
+#: ../vdms_dialogs/setting_profiles.py:100 ../vdms_dialogs/queue_edit.py:102
+msgid "Pre-input arguments for Two-Pass (optional)"
+msgstr "Argomenti di pre-input per la passata due (opzionale)"
 
-#: ../vdms_dialogs/setting_profiles.py:145
+#: ../vdms_dialogs/setting_profiles.py:151
 msgid "A short profile name"
 msgstr "Un nome di profilo breve"
 
-#: ../vdms_dialogs/setting_profiles.py:146
+#: ../vdms_dialogs/setting_profiles.py:152
 msgid "A long description of the profile"
 msgstr "Una lunga descrizione del profilo"
 
-#: ../vdms_dialogs/setting_profiles.py:147 ../vdms_dialogs/queue_edit.py:82
+#: ../vdms_dialogs/setting_profiles.py:153 ../vdms_dialogs/queue_edit.py:82
 #: ../vdms_panels/presets_manager.py:307
 msgid "FFmpeg arguments for one-pass encoding"
 msgstr "Argomenti FFmpeg per la codifica a passaggio singolo"
 
-#: ../vdms_dialogs/setting_profiles.py:148 ../vdms_dialogs/queue_edit.py:113
+#: ../vdms_dialogs/setting_profiles.py:154 ../vdms_dialogs/queue_edit.py:113
 #: ../vdms_panels/presets_manager.py:309
 msgid "FFmpeg arguments for two-pass encoding"
 msgstr "Argomenti FFmpeg per la codifica a doppio passaggio"
 
-#: ../vdms_dialogs/setting_profiles.py:149
+#: ../vdms_dialogs/setting_profiles.py:155
 msgid ""
 "One or more comma-separated format names that are not compatible with this "
 "profile."
@@ -954,12 +954,12 @@ msgstr ""
 "Uno o più nomi di formato separati da virgole che non sono compatibili con "
 "questo profilo."
 
-#: ../vdms_dialogs/setting_profiles.py:152
+#: ../vdms_dialogs/setting_profiles.py:158
 msgid "Output format extension. Leave empty to copy codec and format"
 msgstr ""
 "Estensione del formato di output. Lascia vuoto per copiare codec e formato"
 
-#: ../vdms_dialogs/setting_profiles.py:155 ../vdms_dialogs/queue_edit.py:88
+#: ../vdms_dialogs/setting_profiles.py:161 ../vdms_dialogs/queue_edit.py:88
 #: ../vdms_panels/presets_manager.py:311
 msgid ""
 "Any optional arguments to add before input file on the one-pass encoding, e."
@@ -970,7 +970,7 @@ msgstr ""
 "codifica a passaggio singolo, ad esempio i nomi richiesti di alcune "
 "accelerazioni hardware come -hwaccel da utilizzare con CUDA."
 
-#: ../vdms_dialogs/setting_profiles.py:159 ../vdms_dialogs/queue_edit.py:120
+#: ../vdms_dialogs/setting_profiles.py:165 ../vdms_dialogs/queue_edit.py:120
 #: ../vdms_panels/presets_manager.py:315
 msgid ""
 "Any optional arguments to add before input file on the two-pass encoding, e."
@@ -981,24 +981,24 @@ msgstr ""
 "codifica a due passaggi, ad esempio i nomi richiesti di alcune accelerazioni "
 "hardware come -hwaccel da utilizzare con CUDA."
 
-#: ../vdms_dialogs/setting_profiles.py:268
+#: ../vdms_dialogs/setting_profiles.py:274
 msgid "Incomplete profile assignments"
 msgstr "Le assegnazioni del profilo sono incomplete"
 
-#: ../vdms_dialogs/setting_profiles.py:275
+#: ../vdms_dialogs/setting_profiles.py:281
 msgid "Formats must be comma-separated"
 msgstr "I formati devono essere separati da una virgola"
 
-#: ../vdms_dialogs/setting_profiles.py:291
-#: ../vdms_dialogs/setting_profiles.py:310
+#: ../vdms_dialogs/setting_profiles.py:297
+#: ../vdms_dialogs/setting_profiles.py:316
 msgid "Profile already stored with same name"
 msgstr "Un profilo e già stato salvato con lo stesso nome"
 
-#: ../vdms_dialogs/setting_profiles.py:295
+#: ../vdms_dialogs/setting_profiles.py:301
 msgid "Successful storing!"
 msgstr "Profilo salvato con successo!"
 
-#: ../vdms_dialogs/setting_profiles.py:313
+#: ../vdms_dialogs/setting_profiles.py:319
 msgid "Successful changes!"
 msgstr "Modifiche riuscite!"
 
@@ -3098,16 +3098,13 @@ msgstr ""
 #: ../vdms_panels/video_encoders/avc_x264.py:273
 #: ../vdms_panels/video_encoders/hevc_x265.py:277
 #: ../vdms_panels/video_encoders/vp9_webm.py:291
-#, fuzzy
-#| msgid ""
-#| "Constant rate factor. Lower values = higher quality and a larger file "
-#| "size. Set to -1 to disable this control."
 msgid ""
 "Constant rate factor. Lower values correspond to higher quality and greater "
 "file size. Set to -1 to disable this control."
 msgstr ""
-"Fattore di tasso costante. Valori più bassi = qualità più elevata e "
-"dimensioni del file maggiori. Impostare a -1 per disabilitare il controllo."
+"Fattore di tasso costante. I valori più bassi corrispondono a una qualità "
+"superiore e a una dimensione del file maggiore. Imposta -1 per disabilitare "
+"questo controllo."
 
 #: ../vdms_panels/video_encoders/av1_aom.py:254
 #: ../vdms_panels/video_encoders/av1_svt.py:357
@@ -3129,14 +3126,10 @@ msgstr ""
 #: ../vdms_panels/video_encoders/hevc_x265.py:261
 #: ../vdms_panels/video_encoders/mpeg4.py:201
 #: ../vdms_panels/video_encoders/vp9_webm.py:300
-#, fuzzy
-#| msgid ""
-#| "Set the group of picture (GOP) size (default 12 for H.264, 1 for H.265). "
-#| "Set to -1 to disable this control."
 msgid "Set the Group Of Picture (GOP). Set to -1 to disable this control."
 msgstr ""
-"Imposta la dimensione del gruppo di immagini (GOP) (predefinito 12 per h264, "
-"1 per h265). Impostare a -1 per disabilitare il controllo."
+"Imposta la dimensione del gruppo di immagini (GOP). Imposta -1 per "
+"disabilitare questo controllo."
 
 #: ../vdms_panels/video_encoders/av1_aom.py:262
 #: ../vdms_panels/video_encoders/av1_svt.py:371
@@ -3228,17 +3221,14 @@ msgstr "Rapporto larghezza e altezza video."
 #: ../vdms_panels/video_encoders/hevc_x265.py:287
 #: ../vdms_panels/video_encoders/mpeg4.py:237
 #: ../vdms_panels/video_encoders/vp9_webm.py:322
-#, fuzzy
-#| msgid ""
-#| "Frames repeat a given number of times per second. In some countries this "
-#| "is 30 for NTSC, other countries (like Italy) use 25 for PAL"
 msgid ""
 "Frame rate (frames per second). Frames repeat a given number of times per "
 "second. In some countries this is 30 for NTSC, other countries (like Italy) "
 "use 25 for PAL"
 msgstr ""
-"I frame si ripetono un determinato numero di volte al secondo. In alcuni "
-"paesi sono 30 NTSC, in paesi PAL come l'Italia sono 25"
+"Frequenza fotogrammi (fotogrammi al secondo). I fotogrammi si ripetono un "
+"determinato numero di volte al secondo. In alcuni paesi sono 30 NTSC, in "
+"altri paesi PAL (come l'Italia) sono 25"
 
 #: ../vdms_panels/video_encoders/av1_aom.py:285
 #, fuzzy

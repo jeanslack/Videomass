@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-06 00:40+0200\n"
+"POT-Creation-Date: 2024-04-06 13:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -768,43 +768,43 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:87 ../vdms_dialogs/queue_edit.py:71
-msgid "Optional `pre-input` arguments for one-pass encoding"
+#: ../vdms_dialogs/setting_profiles.py:94 ../vdms_dialogs/queue_edit.py:71
+msgid "Pre-input arguments for One-Pass (optional)"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:98 ../vdms_dialogs/queue_edit.py:102
-msgid "Optional `pre-input` arguments for two-pass encoding"
+#: ../vdms_dialogs/setting_profiles.py:100 ../vdms_dialogs/queue_edit.py:102
+msgid "Pre-input arguments for Two-Pass (optional)"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:145
+#: ../vdms_dialogs/setting_profiles.py:151
 msgid "A short profile name"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:146
+#: ../vdms_dialogs/setting_profiles.py:152
 msgid "A long description of the profile"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:147 ../vdms_dialogs/queue_edit.py:82
+#: ../vdms_dialogs/setting_profiles.py:153 ../vdms_dialogs/queue_edit.py:82
 #: ../vdms_panels/presets_manager.py:307
 msgid "FFmpeg arguments for one-pass encoding"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:148 ../vdms_dialogs/queue_edit.py:113
+#: ../vdms_dialogs/setting_profiles.py:154 ../vdms_dialogs/queue_edit.py:113
 #: ../vdms_panels/presets_manager.py:309
 msgid "FFmpeg arguments for two-pass encoding"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:149
+#: ../vdms_dialogs/setting_profiles.py:155
 msgid ""
 "One or more comma-separated format names that are not compatible with this "
 "profile."
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:152
+#: ../vdms_dialogs/setting_profiles.py:158
 msgid "Output format extension. Leave empty to copy codec and format"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:155 ../vdms_dialogs/queue_edit.py:88
+#: ../vdms_dialogs/setting_profiles.py:161 ../vdms_dialogs/queue_edit.py:88
 #: ../vdms_panels/presets_manager.py:311
 msgid ""
 "Any optional arguments to add before input file on the one-pass encoding, e."
@@ -812,7 +812,7 @@ msgid ""
 "CUDA."
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:159 ../vdms_dialogs/queue_edit.py:120
+#: ../vdms_dialogs/setting_profiles.py:165 ../vdms_dialogs/queue_edit.py:120
 #: ../vdms_panels/presets_manager.py:315
 msgid ""
 "Any optional arguments to add before input file on the two-pass encoding, e."
@@ -820,24 +820,24 @@ msgid ""
 "CUDA."
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:268
+#: ../vdms_dialogs/setting_profiles.py:274
 msgid "Incomplete profile assignments"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:275
+#: ../vdms_dialogs/setting_profiles.py:281
 msgid "Formats must be comma-separated"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:291
-#: ../vdms_dialogs/setting_profiles.py:310
+#: ../vdms_dialogs/setting_profiles.py:297
+#: ../vdms_dialogs/setting_profiles.py:316
 msgid "Profile already stored with same name"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:295
+#: ../vdms_dialogs/setting_profiles.py:301
 msgid "Successful storing!"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:313
+#: ../vdms_dialogs/setting_profiles.py:319
 msgid "Successful changes!"
 msgstr ""
 

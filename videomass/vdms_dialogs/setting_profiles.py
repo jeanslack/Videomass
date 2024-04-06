@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.05.2024
+Rev: Apr.06.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -84,22 +84,28 @@ class SettingProfile(wx.Dialog):
                                       style=wx.TE_MULTILINE
                                       )
         size_base.Add(self.pass_1_cmd, 1, wx.ALL | wx.EXPAND, 5)
-        msg = _("Optional `pre-input` arguments for one-pass encoding")
-        labpre1 = wx.StaticText(self, wx.ID_ANY, msg)
-        size_base.Add(labpre1, 0, wx.ALL | wx.EXPAND, 5)
-        self.pass_1_pre = wx.TextCtrl(self, wx.ID_ANY, "")
-        size_base.Add(self.pass_1_pre, 0, wx.ALL | wx.EXPAND, 5)
         labpass2 = wx.StaticText(self, wx.ID_ANY, SettingProfile.PASS_2)
         size_base.Add(labpass2, 0, wx.ALL | wx.EXPAND, 5)
         self.pass_2_cmd = wx.TextCtrl(self, wx.ID_ANY, "",
                                       style=wx.TE_MULTILINE
                                       )
         size_base.Add(self.pass_2_cmd, 1, wx.ALL | wx.EXPAND, 5)
-        msg = _("Optional `pre-input` arguments for two-pass encoding")
+        boxpre1 = wx.BoxSizer(wx.VERTICAL)
+        msg = _("Pre-input arguments for One-Pass (optional)")
+        labpre1 = wx.StaticText(self, wx.ID_ANY, msg)
+        boxpre1.Add(labpre1, 0, wx.ALL | wx.EXPAND, 5)
+        self.pass_1_pre = wx.TextCtrl(self, wx.ID_ANY, "")
+        boxpre1.Add(self.pass_1_pre, 1, wx.ALL | wx.EXPAND, 5)
+        boxpre2 = wx.BoxSizer(wx.VERTICAL)
+        msg = _("Pre-input arguments for Two-Pass (optional)")
         labpre2 = wx.StaticText(self, wx.ID_ANY, msg)
-        size_base.Add(labpre2, 0, wx.ALL | wx.EXPAND, 5)
+        boxpre2.Add(labpre2, 0, wx.ALL | wx.EXPAND, 5)
         self.pass_2_pre = wx.TextCtrl(self, wx.ID_ANY, "")
-        size_base.Add(self.pass_2_pre, 0, wx.ALL | wx.EXPAND, 5)
+        boxpre2.Add(self.pass_2_pre, 1, wx.ALL | wx.EXPAND, 5)
+        boxpre = wx.BoxSizer(wx.HORIZONTAL)
+        boxpre.Add(boxpre1, 1, wx.ALL | wx.EXPAND, 0)
+        boxpre.Add(boxpre2, 1, wx.ALL | wx.EXPAND, 0)
+        size_base.Add(boxpre, 0, wx.ALL | wx.EXPAND, 0)
         boxsupp = wx.BoxSizer(wx.VERTICAL)
         labsupp = wx.StaticText(self, wx.ID_ANY, SettingProfile.SUPFORMAT)
         boxsupp.Add(labsupp, 0, wx.ALL | wx.EXPAND, 5)
@@ -161,7 +167,7 @@ class SettingProfile(wx.Dialog):
                  'accelerations like -hwaccel to use with CUDA.'))
         self.pass_2_pre.SetToolTip(tip)
         # ------ Set Layout
-        self.SetMinSize((850, 700))
+        self.SetMinSize((850, 600))
         self.SetSizer(size_base)
         self.Fit()
         self.Layout()

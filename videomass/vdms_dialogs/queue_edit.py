@@ -68,7 +68,7 @@ class Edit_Queue_Item(wx.Dialog):
                                       )
         size_base.Add(self.pass_1_cmd, 1, wx.ALL | wx.EXPAND, 5)
 
-        msg = _("Optional `pre-input` arguments for one-pass encoding")
+        msg = _("Pre-input arguments for One-Pass (optional)")
         labpre1 = wx.StaticText(self, wx.ID_ANY, msg)
         size_base.Add(labpre1, 0, wx.ALL | wx.EXPAND, 5)
 
@@ -99,7 +99,7 @@ class Edit_Queue_Item(wx.Dialog):
                                           style=wx.TE_MULTILINE
                                           )
             size_base.Add(self.pass_2_cmd, 1, wx.ALL | wx.EXPAND, 5)
-            msg = _("Optional `pre-input` arguments for two-pass encoding")
+            msg = _("Pre-input arguments for Two-Pass (optional)")
             labpre2 = wx.StaticText(self, wx.ID_ANY, msg)
             size_base.Add(labpre2, 0, wx.ALL | wx.EXPAND, 5)
 
