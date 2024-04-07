@@ -309,8 +309,65 @@ class FileDnD(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.on_col_click, self.flCtrl)
+        self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
 
         pub.subscribe(self.text_information, "SET_DRAG_AND_DROP_TOPIC")
+    # ----------------------------------------------------------------------
+
+    def onContext(self, event):
+        """
+        Create and show a Context Menu
+        """
+        # only do this part the first time so the events are only bound once
+        if not hasattr(self, "popupID1"):
+            popupID5 = wx.ID_ANY
+            popupID1 = wx.ID_ANY
+            popupID2 = wx.ID_ANY
+            popupID3 = wx.ID_ANY
+            popupID4 = wx.ID_ANY
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID5)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID1)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID2)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID3)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID4)
+        # build the menu
+        menu = wx.Menu()
+        menu.Append(popupID5, _("Play file"))
+        menu.AppendSeparator()
+        menu.Append(popupID2, _("Rename selected file\tCtrl+R"))
+        menu.Append(popupID1, _("Batch rename files\tCtrl+B"))
+        menu.AppendSeparator()
+        menu.Append(popupID3, _("Remove selected entry\tDEL"))
+        menu.Append(popupID4, _("Clear list\tShift+DEL"))
+        # show the popup menu
+        self.PopupMenu(menu)
+        menu.Destroy()
+    # ----------------------------------------------------------------------
+
+    def onPopup(self, event):
+        """
+        Evaluate the label string of the menu item selected
+        and starts the related process
+        """
+        itemId = event.GetId()
+        menu = event.GetEventObject()
+        menuItem = menu.FindItemById(itemId)
+
+        if menuItem.GetItemLabel() == _("Rename selected file\tCtrl+R"):
+            self.renaming_file()
+
+        elif menuItem.GetItemLabel() == _("Batch rename files\tCtrl+B"):
+            if len(self.outputnames) > 1:
+                self.renaming_batch_files()
+
+        elif menuItem.GetItemLabel() == _("Remove selected entry\tDEL"):
+            self.on_delete_selected(None)
+
+        elif menuItem.GetItemLabel() == _("Clear list\tShift+DEL"):
+            self.delete_all(None)
+
+        elif menuItem.GetItemLabel() == _("Play file"):
+            self.on_play_select(None)
     # ----------------------------------------------------------------------
 
     def text_information(self, topic):
@@ -319,15 +376,18 @@ class FileDnD(wx.Panel):
         This method is called using pub/sub protocol
         "SET_DRAG_AND_DROP_TOPIC".
         """
-        if topic in ('Presets Manager', 'Audio/Video Conversions',
-                     'Concatenate Demuxer'):
+        if topic in ('Presets Manager', 'Audio/Video Conversions'):
             self.lbl_info.SetLabel(_('Drag one or more files below'))
 
+        elif topic == 'Concatenate Demuxer':
+            self.lbl_info.SetLabel(_('Drag two or more Audio/Video '
+                                     'files below'))
+
         elif topic == 'Image Sequence to Video':
-            self.lbl_info.SetLabel(_('Drag images below'))
+            self.lbl_info.SetLabel(_('Drag one or more Image files below'))
 
         elif topic == 'Video to Pictures':
-            self.lbl_info.SetLabel(_('Drag one or more video below'))
+            self.lbl_info.SetLabel(_('Drag one or more Video files below'))
     # ----------------------------------------------------------------------
 
     def on_col_click(self, event):
@@ -409,8 +469,8 @@ class FileDnD(wx.Panel):
         Playback the selected file
         """
         if self.flCtrl.GetFirstSelected() == -1:  # None
-            msg = _("No file selected")
-            self.parent.statusbar_msg(msg, FileDnD.YELLOW, FileDnD.BLACK)
+            wx.MessageBox(_("Have to select an item in the file list first"),
+                          'Videomass', wx.ICON_INFORMATION, self)
             return
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index, 1)
@@ -518,6 +578,11 @@ class FileDnD(wx.Panel):
         Names consisting of only whitespaces or tabs or matching
         same name as outputnames are rejected silently.
         """
+        if self.flCtrl.GetFirstSelected() == -1:  # None
+            wx.MessageBox(_("Have to select an item in the file list first"),
+                          'Videomass', wx.ICON_INFORMATION, self)
+            return
+
         row_id = self.flCtrl.GetFocusedItem()  # Get the current row
         oldname = self.flCtrl.GetItemText(row_id, 5)  # Get current name
         newname = ''
@@ -553,7 +618,7 @@ class FileDnD(wx.Panel):
         """
         This method is responsible for batch file renaming.
         """
-        title = _('Rename destination items (batch)')
+        title = _('Batch rename the destination items')
         msg = _('Rename the {0} items to:').format(len(self.outputnames))
         with Renamer(self,
                      nameprop=_('New Name #'),

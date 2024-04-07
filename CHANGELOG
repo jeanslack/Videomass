@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Wed, 03 Apr 2024 V.5.0.12
+Mon, 08 Apr 2024 V.5.0.12
 
   * Improved description strings on menu bar.
   * Improved profile settings dialog layout.
@@ -21,6 +21,10 @@ Wed, 03 Apr 2024 V.5.0.12
     the same file more than once.
   * Show log messages window is been moved to menu bar -> Help.
   * Made some cosmetic improvements.
+  * [A/V Conversions] Added opus output format option to Audio Target Media.
+  * [File drop List] Added context menu by right mouse clicking.
+  * Removed `Clean` icon on toolbar.
+
 
 +------------------------------------+
 Sat, 30 Mar 2024 V.5.0.11

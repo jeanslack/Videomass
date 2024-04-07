@@ -131,24 +131,9 @@
      d="m 3.6612992,13.968438 -8.7055266,5.026138 -8.7055256,5.026138 0,-10.052276 0,-10.0522758 8.7055261,5.0261381 z"
      inkscape:transform-center-x="-1.2310497"
      transform="matrix(0.42423043,0,0,0.79166555,10.647824,0.94166879)" />
-  <rect
-     transform="scale(-1)"
-     rx="0"
-     ry="0"
-     y="-21.468336"
-     x="-16.986849"
-     height="13.049099"
-     width="3.9859412"
+  <path
      id="rect824"
-     style="fill:#32cd32;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.538928;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.984849" />
-  <rect
-     style="fill:#32cd32;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.541366;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.984849"
-     id="rect845"
-     width="4.0220757"
-     height="13.049099"
-     x="-16.954826"
-     y="8.469327"
-     ry="0"
-     rx="0"
-     transform="rotate(-90)" />
+     style="fill:#32cd32;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.339;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M -13 -8.4199219 L -13 -12.933594 L -8.46875 -12.933594 L -8.46875 -16.955078 L -13 -16.955078 L -13 -21.46875 L -16.986328 -21.46875 L -16.986328 -16.955078 L -21.517578 -16.955078 L -21.517578 -12.933594 L -16.986328 -12.933594 L -16.986328 -8.4199219 L -13 -8.4199219 z "
+     transform="scale(-1)" />
 </svg>

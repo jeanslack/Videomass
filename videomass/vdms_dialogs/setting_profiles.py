@@ -175,7 +175,6 @@ class SettingProfile(wx.Dialog):
         # ----------------------Binder (EVT)----------------------#
         self.Bind(wx.EVT_TEXT, self.on_Name, self.txt_name)
         self.Bind(wx.EVT_TEXT, self.on_Descript, self.txt_descript)
-        self.Bind(wx.EVT_TEXT, self.on_Pass1, self.pass_1_cmd)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_canc)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_apply, btn_save)
@@ -218,13 +217,6 @@ class SettingProfile(wx.Dialog):
             self.txt_descript.SetBackgroundColour(wx.NullColour)
     # ------------------------------------------------------------------#
 
-    def on_Pass1(self, event):
-        """Set default background"""
-        if self.pass_1_cmd.GetBackgroundColour() == (152, 131, 19, 255):
-            # html: ('#988313') == rgb: (152, 131, 19, 255) =
-            self.pass_1_cmd.SetBackgroundColour(wx.NullColour)
-    # ------------------------------------------------------------------#
-
     def on_help(self, event):
         """
         Open default web browser via Python Web-browser controller.
@@ -263,13 +255,11 @@ class SettingProfile(wx.Dialog):
         preinput2 = self.pass_2_pre.GetValue()
 
         # ---------------------------------------------------------------
-        if [txt for txt in [name, descript, pass_1] if txt.strip() == '']:
+        if [txt for txt in [name, descript] if txt.strip() == '']:
             if not name.strip():
                 self.txt_name.SetBackgroundColour('#988313')
             if not descript.strip():
                 self.txt_descript.SetBackgroundColour('#988313')
-            if not pass_1.strip():
-                self.pass_1_cmd.SetBackgroundColour('#988313')
 
             wx.MessageBox(_("Incomplete profile assignments"),
                           "Videomass ", wx.ICON_WARNING, self)

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.14.2024
+Rev: Apr.08.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -82,6 +82,8 @@ class AudioEncoders(scrolled.ScrolledPanel):
                             None, 'copy', None),
                   ('aac'): (None, None, None, 'aac', None, None, None, None,
                             None, 'copy', None),
+                  ('opus'): (None, None, None, None, None, None, None, None,
+                             'opus', 'copy', None),
                   }
 
     def __init__(self, parent, opt, maindata):

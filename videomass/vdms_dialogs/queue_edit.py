@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 Name: edit_queue.py
-Porpose: edit a selected item queue if any
+Porpose: edit a selected item queue
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>

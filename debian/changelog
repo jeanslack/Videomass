@@ -10,10 +10,13 @@ videomass (5.0.12-1) UNRELEASED; urgency=medium
   * Fixed "FileNotFoundError: [Errno 2]" traceback at the end of the process,
     raised if the "Trash the source files" checkbox had been checked to delete
     the same file more than once.
-  * Moved Show log messages window on menu bar -> Help.
+  * Show log messages window is been moved to menu bar -> Help.
   * Made some cosmetic improvements.
+  * [A/V Conversions] Added opus output format option to Audio Target Media.
+  * [File drop List] Added context menu by right mouse clicking.
+  * Removed `Clean` icon on toolbar.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 04 Apr 2024 23:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 08 Apr 2024 00:00:00 +0200
 
 videomass (5.0.11-1) UNRELEASED; urgency=medium
 

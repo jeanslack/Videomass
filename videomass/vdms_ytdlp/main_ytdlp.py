@@ -474,7 +474,6 @@ class MainYtdl(wx.Frame):
             bmpstat = get_bmp(self.icons['statistics'], bmp_size)
             bmpydl = get_bmp(self.icons['download'], bmp_size)
             bmpstop = get_bmp(self.icons['stop'], bmp_size)
-            bmpclear = get_bmp(self.icons['cleanup'], bmp_size)
 
         else:
             bmpback = wx.Bitmap(self.icons['previous'], wx.BITMAP_TYPE_ANY)
@@ -482,7 +481,6 @@ class MainYtdl(wx.Frame):
             bmpstat = wx.Bitmap(self.icons['statistics'], wx.BITMAP_TYPE_ANY)
             bmpydl = wx.Bitmap(self.icons['download'], wx.BITMAP_TYPE_ANY)
             bmpstop = wx.Bitmap(self.icons['stop'], wx.BITMAP_TYPE_ANY)
-            bmpclear = wx.Bitmap(self.icons['cleanup'], wx.BITMAP_TYPE_ANY)
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
@@ -511,10 +509,6 @@ class MainYtdl(wx.Frame):
         stop = self.toolbar.AddTool(24, _('Abort'), bmpstop,
                                     tip, wx.ITEM_NORMAL,
                                     )
-        tip = _("Clear the URL list")
-        clear = self.toolbar.AddTool(25, _('Clear'), bmpclear,
-                                     tip, wx.ITEM_NORMAL,
-                                     )
         self.toolbar.Realize()
 
         # ----------------- Tool Bar Binding (evt)-----------------------#
@@ -523,7 +517,6 @@ class MainYtdl(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.on_forward, forward)
         self.Bind(wx.EVT_TOOL, self.on_statistics, self.btn_ydlstatistics)
         self.Bind(wx.EVT_TOOL, self.click_stop, stop)
-        self.Bind(wx.EVT_TOOL, self.textDnDTarget.delete_all, clear)
 
     # --------------- Tool Bar Callback (event handler) -----------------#
 
@@ -562,12 +555,8 @@ class MainYtdl(wx.Frame):
          self.paste.Enable(True),
          self.clearall.Enable(True)
          )
-        if self.data_url:
-            [self.toolbar.EnableTool(x, True) for x in (21, 25)]
-            [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24)]
-        else:
-            self.toolbar.EnableTool(21, True)
-            [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24, 25)]
+        self.toolbar.EnableTool(21, True)
+        [self.toolbar.EnableTool(x, False) for x in (20, 22, 23, 24)]
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)
@@ -587,7 +576,7 @@ class MainYtdl(wx.Frame):
          self.clearall.Enable(False)
          )
         [self.toolbar.EnableTool(x, True) for x in (20, 21, 22, 23)]
-        [self.toolbar.EnableTool(x, False) for x in (24, 25)]
+        self.toolbar.EnableTool(24, False)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -597,7 +586,7 @@ class MainYtdl(wx.Frame):
         """
         if args[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
-            [self.toolbar.EnableTool(x, False) for x in (21, 23, 24, 25)]
+            [self.toolbar.EnableTool(x, False) for x in (21, 23, 24)]
             [self.toolbar.EnableTool(x, True) for x in (20, 22)]
 
         elif args[0] == 'YouTube Downloader':
@@ -607,10 +596,10 @@ class MainYtdl(wx.Frame):
              )
             if len(self.data_url) <= 1:
                 [self.toolbar.EnableTool(x, False) for x
-                 in (20, 21, 23, 25, 24)]
+                 in (20, 21, 23, 24)]
                 self.toolbar.EnableTool(22, True)
             else:
-                [self.toolbar.EnableTool(x, False) for x in (20, 21, 23, 25)]
+                [self.toolbar.EnableTool(x, False) for x in (20, 21, 23)]
                 [self.toolbar.EnableTool(x, True) for x in (22, 24)]
 
         self.SetTitle(_('Videomass - yt_dlp Message Monitoring'))

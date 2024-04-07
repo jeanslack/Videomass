@@ -91,7 +91,7 @@ class AV_Conv(wx.Panel):
                                        "webm", "Copy"]}
                 })
     # Namings in the audio format selection on Container combobox:
-    A_FORMATS = ('wav', 'mp3', 'ac3', 'ogg', 'flac', 'm4a', 'aac')
+    A_FORMATS = ('wav', 'mp3', 'ac3', 'ogg', 'flac', 'm4a', 'aac', 'opus')
     # ------------------------------------------------------------------#
 
     def __init__(self, parent):

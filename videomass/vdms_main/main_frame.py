@@ -190,7 +190,7 @@ class MainFrame(wx.Frame):
         self.statusbar_msg(_('Ready'), None)
         # disabling toolbar/menu items
         [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8,
-                                                     9, 35, 36, 37)]
+                                                     35, 36, 37)]
         self.menu_items(enable=False)
         self.Layout()
         # ---------------------- Binding (EVT) ----------------------#
@@ -488,12 +488,13 @@ class MainFrame(wx.Frame):
 
         # ------------------ Edit menu
         editButton = wx.Menu()
-        dscrp = (_("Rename selected file destination\tCtrl+R"),
-                 _("Rename the file destination to the selected entry"))
+        dscrp = (_("Rename selected file\tCtrl+R"),
+                 _("Rename the destination of the selected file"))
         self.rename = editButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.rename.Enable(False)
-        dscrp = (_("Batch rename destinations\tCtrl+B"),
-                 _("Renames the destination of all items in the list"))
+        dscrp = (_("Batch rename files\tCtrl+B"),
+                 _("Numerically renames the destination of "
+                   "all items in the list"))
         self.rename_batch = editButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.rename_batch.Enable(False)
         editButton.AppendSeparator()
@@ -1249,7 +1250,6 @@ class MainFrame(wx.Frame):
             bmpconv = get_bmp(self.icons['startconv'], bmp_size)
             bmpstop = get_bmp(self.icons['stop'], bmp_size)
             bmphome = get_bmp(self.icons['home'], bmp_size)
-            bmpclear = get_bmp(self.icons['cleanup'], bmp_size)
             bmpplay = get_bmp(self.icons['play'], bmp_size)
             bmpprocqueue = get_bmp(self.icons['proc-queue'], bmp_size)
             bmpaddqueue = get_bmp(self.icons['add-queue'], bmp_size)
@@ -1261,7 +1261,6 @@ class MainFrame(wx.Frame):
             bmpconv = wx.Bitmap(self.icons['startconv'], wx.BITMAP_TYPE_ANY)
             bmpstop = wx.Bitmap(self.icons['stop'], wx.BITMAP_TYPE_ANY)
             bmphome = wx.Bitmap(self.icons['home'], wx.BITMAP_TYPE_ANY)
-            bmpclear = wx.Bitmap(self.icons['cleanup'], wx.BITMAP_TYPE_ANY)
             bmpplay = wx.Bitmap(self.icons['play'], wx.BITMAP_TYPE_ANY)
             bmpprocqueue = wx.Bitmap(self.icons['proc-queue'],
                                      wx.BITMAP_TYPE_ANY)
@@ -1298,10 +1297,6 @@ class MainFrame(wx.Frame):
         stop_coding = self.toolbar.AddTool(8, _('Abort'), bmpstop,
                                            tip, wx.ITEM_NORMAL
                                            )
-        tip = _("Clear the file list")
-        clear = self.toolbar.AddTool(9, _('Clear'), bmpclear,
-                                     tip, wx.ITEM_NORMAL
-                                     )
         tip = _("Add an item to Queue")
         addqueue = self.toolbar.AddTool(36, _('Add to Queue'), bmpaddqueue,
                                         tip, wx.ITEM_NORMAL
@@ -1314,7 +1309,6 @@ class MainFrame(wx.Frame):
 
         # ----------------- Tool Bar Binding (evt)-----------------------#
         self.Bind(wx.EVT_TOOL, self.startPanel, home)
-        self.Bind(wx.EVT_TOOL, self.fileDnDTarget.delete_all, clear)
         self.Bind(wx.EVT_TOOL, self.click_start, self.run_coding)
         self.Bind(wx.EVT_TOOL, self.click_stop, stop_coding)
         self.Bind(wx.EVT_TOOL, self.on_Back, back)
@@ -1386,7 +1380,7 @@ class MainFrame(wx.Frame):
             self.toSlideshow.Hide()
 
         [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7,
-                                                     8, 9, 35, 36, 37)]
+                                                     8, 35, 36, 37)]
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
         self.menu_items(enable=False)
@@ -1417,11 +1411,11 @@ class MainFrame(wx.Frame):
         self.clearall.Enable(True)
         self.openmedia.Enable(True)
         if self.file_src:
-            [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 9, 35)]
+            [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 35)]
             [self.toolbar.EnableTool(x, False) for x in (7, 8, 36, 37)]
         else:
             [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 35)]
-            [self.toolbar.EnableTool(x, False) for x in (7, 8, 9, 36, 37)]
+            [self.toolbar.EnableTool(x, False) for x in (7, 8, 36, 37)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.toolbar.Realize()
@@ -1452,7 +1446,7 @@ class MainFrame(wx.Frame):
         self.loadqueue.Enable(True)
         self.avpan.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35, 36)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 9, 37)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 37)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1480,7 +1474,7 @@ class MainFrame(wx.Frame):
         self.loadqueue.Enable(True)
         self.prstpan.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35, 36)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 9, 37)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 37)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1509,7 +1503,7 @@ class MainFrame(wx.Frame):
         self.loadqueue.Enable(True)
         self.concpan.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 9, 36, 37)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 36, 37)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1537,7 +1531,7 @@ class MainFrame(wx.Frame):
         self.loadqueue.Enable(True)
         self.toseq.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 9, 36, 37)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 36, 37)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1565,7 +1559,7 @@ class MainFrame(wx.Frame):
         self.loadqueue.Enable(True)
         self.slides.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 9, 36, 37)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 36, 37)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1704,7 +1698,7 @@ class MainFrame(wx.Frame):
             [self.toolbar.EnableTool(x, True) for x in (6, 8)]
             [self.toolbar.EnableTool(x, False) for x in (3, 5, 36, 37)]
         self.logpan.Enable(False)
-        [self.toolbar.EnableTool(x, False) for x in (4, 7, 9, 36, 37)]
+        [self.toolbar.EnableTool(x, False) for x in (4, 7, 36, 37)]
 
         self.ProcessPanel.topic_thread(args, datalist, self.topicname)
         self.Layout()
