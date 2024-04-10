@@ -212,8 +212,8 @@ class Conc_Demuxer(wx.Panel):
 
         checking = check_files((fsource[0],),
                                self.appdata['outputdir'],
-                               self.parent.same_destin,
-                               self.parent.suffix,
+                               self.appdata['outputdir_asinput'],
+                               self.appdata['filesuffix'],
                                self.ext,
                                self.parent.outputnames
                                )

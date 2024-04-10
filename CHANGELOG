@@ -24,8 +24,8 @@ Mon, 09 Apr 2024 V.5.0.12
   * [A/V Conversions] Added opus output format option to Audio Target Media.
   * [File drop List] Added context menu by right mouse clicking.
   * Removed `Clean` icon on toolbars.
-  * [YouTube Downloader] Added proxy setup (see #246).
-  * [YouTube Downloader] Added authentication setup.
+  * [YouTube Downloader] Added proxy (experimental) setup (see #246).
+  * [YouTube Downloader] Added authentication (experimental) setup.
   * [YouTube Downloader] Added a specific preferences dialog to configure
     YouTube Downloader options.
   * The preferences dialogs for configuring global and YouTube Downloader

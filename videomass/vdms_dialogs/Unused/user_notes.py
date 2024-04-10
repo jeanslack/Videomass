@@ -58,7 +58,7 @@ class Memos(wx.Dialog):
         get = wx.GetApp()  # get data from bootstrap
         self.filename = os.path.join(get.appset['confdir'], 'user_memos.txt')
         curnotes = check_notes(self.filename)
-        self.colorscheme = get.appset['icontheme'][1]
+        self.colorscheme = get.appset['colorscheme']
 
         wx.Dialog.__init__(self, None,
                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER

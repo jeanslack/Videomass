@@ -88,7 +88,6 @@ class PrstPan(wx.Panel):
         self.src_prst = os.path.join(self.appdata['srcpath'], 'presets')
         self.user_prst = os.path.join(self.appdata['confdir'], 'presets')
         self.array = []  # Parameters of the selected profile
-
         self.txtcmdedited = True  # show warning if cmdline is edited
         self.check_presets_version = False  # see `update_preset_state`
 
@@ -949,8 +948,8 @@ class PrstPan(wx.Panel):
         file_src = supported_formats(extlst, infile)
         filecheck = check_files(file_src,
                                 self.appdata['outputdir'],
-                                self.parent.same_destin,
-                                self.parent.suffix,
+                                self.appdata['outputdir_asinput'],
+                                self.appdata['filesuffix'],
                                 outext,
                                 outfilenames,
                                 )

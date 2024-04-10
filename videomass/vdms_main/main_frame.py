@@ -93,8 +93,6 @@ class MainFrame(wx.Frame):
         self.data_files = []  # list of items in list control
         self.outputnames = []  # output file basenames (even renames)
         self.file_src = []  # input full file names list
-        self.same_destin = self.appdata['outputdir_asinput']  # True/False
-        self.suffix = self.appdata['filesuffix']  # suffix to output names
         self.filedropselected = None  # int(index) or None filedrop selected
         self.time_seq = ""  # FFmpeg time seq.
         self.duration = []  # empty if not file imported
@@ -1084,7 +1082,7 @@ class MainFrame(wx.Frame):
                             wx.MessageBox(msg, _('Videomass - Warning!'),
                                           wx.ICON_WARNING, self)
                             return
-                    if wx.MessageBox(_("{0}\n\nDo you want to exit "
+                    if wx.MessageBox(_("{0}\n\nDo you want to restart "
                                        "the application now?").format(msg),
                                      _('Restart Videomass?'), wx.ICON_QUESTION
                                      | wx.CANCEL | wx.YES_NO, self) == wx.YES:

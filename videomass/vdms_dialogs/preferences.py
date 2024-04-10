@@ -160,7 +160,7 @@ class SetUp(wx.Dialog):
         msg = _("Where do you prefer to save your transcodes?")
         labfile = wx.StaticText(tabTwo, wx.ID_ANY, msg)
         sizerFiles.Add(labfile, 0, wx.ALL | wx.EXPAND, 5)
-        sizerFiles.Add((0, 20))
+        sizerFiles.Add((0, 15))
         sizeFFdirdest = wx.BoxSizer(wx.HORIZONTAL)
         sizerFiles.Add(sizeFFdirdest, 0, wx.EXPAND)
         self.txtctrl_FFpath = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
@@ -185,7 +185,7 @@ class SetUp(wx.Dialog):
         msg = _("File removal preferences")
         labrem = wx.StaticText(tabTwo, wx.ID_ANY, msg)
         sizerFiles.Add(labrem, 0, wx.ALL | wx.EXPAND, 5)
-        sizerFiles.Add((0, 20))
+        sizerFiles.Add((0, 10))
         descr = _("Trash the source files after successful encoding")
         self.ckbx_trash = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_trash, 0, wx.ALL, 5)
@@ -254,7 +254,7 @@ class SetUp(wx.Dialog):
         sizerytdlp = wx.BoxSizer(wx.VERTICAL)
         sizerytdlp.Add((0, 40))
         msg = (_('Download videos from YouTube.com and other video sites\n'
-                 '(requires application restart).'))
+                 '(requires application restart)'))
         labytdlp = wx.StaticText(tabFour, wx.ID_ANY, msg)
         sizerytdlp.Add(labytdlp, 0, wx.ALL | wx.EXPAND, 5)
         msg = (_('Videomass uses `yt_dlp` as a Python module and not as an '
@@ -277,7 +277,7 @@ class SetUp(wx.Dialog):
         sizerAppearance = wx.BoxSizer(wx.VERTICAL)
         sizerAppearance.Add((0, 40))
         msg = _('Customizing the look of the application\n'
-                '(requires application restart).')
+                '(requires application restart)')
         labappe = wx.StaticText(tabFive, wx.ID_ANY, msg)
         sizerAppearance.Add(labappe, 0, wx.ALL | wx.EXPAND, 5)
         sizerAppearance.Add((0, 15))
@@ -634,15 +634,26 @@ class SetUp(wx.Dialog):
     # --------------------------------------------------------------------#
 
     def logging_ffplay(self, event):
-        """specifies loglevel type for ffplay."""
+        """
+        specifies loglevel type for ffplay.
+        """
         strn = self.rdbFFplay.GetStringSelection().split()[0]
         self.settings['ffplay_loglev'] = f'-loglevel {strn}'
+
+        args = f"{self.settings['ffplay_loglev']} -hide_banner"
+        self.settings['ffplay_default_args'] = args
     # --------------------------------------------------------------------#
 
     def logging_ffmpeg(self, event):
-        """specifies loglevel type for ffmpeg"""
+        """
+        specifies loglevel type for ffmpeg
+        """
         strn = self.rdbFFmpeg.GetStringSelection().split()[0]
         self.settings['ffmpeg_loglev'] = f'-loglevel {strn}'
+
+        args = (f"-y {self.settings['ffmpeg_loglev']} "
+                f"-stats -hide_banner -nostdin")
+        self.settings['ffmpeg_default_args'] = args
     # --------------------------------------------------------------------#
 
     def exeFFmpeg(self, event):

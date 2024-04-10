@@ -516,8 +516,8 @@ class VideoToSequence(wx.Panel):
 
         checking = check_files((clicked,),
                                self.appdata['outputdir'],
-                               self.parent.same_destin,
-                               self.parent.suffix,
+                               self.appdata['outputdir_asinput'],
+                               self.appdata['filesuffix'],
                                self.cmb_frmt.GetValue(),
                                self.parent.outputnames
                                )

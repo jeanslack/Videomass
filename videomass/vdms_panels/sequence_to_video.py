@@ -635,7 +635,7 @@ class SequenceToVideo(wx.Panel):
 
         fsource = self.parent.file_src
 
-        if self.parent.same_destin:
+        if self.appdata['outputdir_asinput']:
             destdir = os.path.dirname(fget[0])
         else:
             destdir = self.appdata['outputdir']

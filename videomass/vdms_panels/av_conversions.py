@@ -870,8 +870,8 @@ class AV_Conv(wx.Panel):
 
         filecheck = check_files(infile,
                                 self.appdata['outputdir'],
-                                self.parent.same_destin,
-                                self.parent.suffix,
+                                self.appdata['outputdir_asinput'],
+                                self.appdata['filesuffix'],
                                 self.opt["OutputFormat"],
                                 outfilenames,
                                 )
