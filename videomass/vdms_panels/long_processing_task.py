@@ -43,6 +43,10 @@ def delete_file_source(flist, trashdir):
     """
     Move whole files list to Videomass Trash folder
     after encoding process.
+    NOTE: Use `set()` function here because the source
+    files to be moved to the trash may be the same more than twice.
+    It is then important to also evaluate the existence of those files,
+    see `for name ...` loop below.
     """
     filenotfounderror = None
     if not os.path.exists(trashdir):
@@ -56,9 +60,11 @@ def delete_file_source(flist, trashdir):
         wx.MessageBox(f"{filenotfounderror}", 'Videomass', wx.ICON_ERROR)
     else:
         date = time.strftime('%H%M%S-%a_%d_%B_%Y')
-        for name in flist:
-            dest = os.path.join(trashdir, f'{date}_{os.path.basename(name)}')
-            move(name, dest)
+        for name in set(flist):
+            if os.path.exists(name) and os.path.isfile(name):
+                dest = os.path.join(trashdir,
+                                    f'{date}_{os.path.basename(name)}')
+                move(name, dest)
 
 
 def pairwise(iterable):
@@ -122,7 +128,7 @@ class LogOut(wx.Panel):
         log messages will be written
 
         """
-        get = wx.GetApp()
+        get = wx.GetApp()  # get data from bootstrap
         self.appdata = get.appset
         self.parent = parent  # main frame
         self.thread_type = None  # the instantiated thread
@@ -134,7 +140,7 @@ class LogOut(wx.Panel):
         self.result = []  # result of the final process
         self.count = 0  # keeps track of the counts (see `update_count`)
         self.maxrotate = 0  # max num text rotation (see `update_count`)
-        self.clr = self.appdata['icontheme'][1]
+        self.clr = self.appdata['colorscheme']
 
         wx.Panel.__init__(self, parent=parent)
 

@@ -46,7 +46,7 @@ class MediaStreams(wx.Dialog):
             self.mark = '#3bbbe6'
         else:
             self.mark = '#808080'
-        self.colorscheme = get.appset['icontheme'][1]
+        self.colorscheme = get.appset['colorscheme']
         vidicon = get.iconset['videomass']
 
         wx.Dialog.__init__(self, None,

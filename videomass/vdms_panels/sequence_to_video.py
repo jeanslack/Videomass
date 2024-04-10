@@ -91,9 +91,10 @@ class SequenceToVideo(wx.Panel):
         based on ffmpeg syntax.
         """
         self.parent = parent  # parent is the MainFrame
-        icons = self.parent.icons
-        appdata = self.parent.appdata
-        self.ffprobe_cmd = appdata['ffprobe_cmd']
+        get = wx.GetApp()  # get data from bootstrap
+        self.appdata = get.appset
+        icons = get.iconset
+        self.ffprobe_cmd = self.appdata['ffprobe_cmd']
         self.opt = {"Scale": "", "Setdar": "", "Setsar": "",
                     "RESIZE": "", "ADuration": 0, "AudioMerging": "",
                     "Map": "-map 0:v?", "Shortest": ["", "Disabled"],
@@ -216,7 +217,7 @@ class SequenceToVideo(wx.Panel):
         sizer.Add(fgs1, 0, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer)
 
-        if appdata['ostype'] == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             lbl_link.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
             lbl_link.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
@@ -634,10 +635,10 @@ class SequenceToVideo(wx.Panel):
 
         fsource = self.parent.file_src
 
-        if self.parent.same_destin:
+        if self.appdata['outputdir_asinput']:
             destdir = os.path.dirname(fget[0])
         else:
-            destdir = self.parent.outputdir
+            destdir = self.appdata['outputdir']
 
         name = self.parent.fileDnDTarget.flCtrl.GetItemText(fget[1], 5)
         outputdir = trailing_name_with_prog_digit(destdir, 'Still_Images')

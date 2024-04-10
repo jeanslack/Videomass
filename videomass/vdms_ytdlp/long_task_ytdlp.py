@@ -70,7 +70,7 @@ class LogOut(wx.Panel):
         self.result = []  # result of the final process
         self.count = 0  # keeps track of the counts (see `update_count`)
         self.maxrotate = 0  # max num text rotation (see `update_count`)
-        self.clr = self.appdata['icontheme'][1]
+        self.clr = self.appdata['colorscheme']
 
         wx.Panel.__init__(self, parent=parent)
 

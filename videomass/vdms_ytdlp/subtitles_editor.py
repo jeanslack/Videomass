@@ -107,7 +107,7 @@ class SubtitleEditor(wx.Dialog):
                                     )
         sizcustsub.Add(self.addlangs, 1, wx.LEFT | wx.EXPAND, 5)
         sizbase.Add(10, 10)
-        labtstr3 = _('Options')
+        labtstr3 = _('Subtitle options')
         self.lab3 = wx.StaticText(self, label=labtstr3)
         sizbase.Add(self.lab3, 0, wx.LEFT, 5)
         self.lab3.SetLabelMarkup(f"<b>{labtstr3}</b>")

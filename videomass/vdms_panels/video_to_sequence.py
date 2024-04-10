@@ -63,8 +63,9 @@ class VideoToSequence(wx.Panel):
         This is a panel impemented on MainFrame
         """
         self.parent = parent  # parent is the MainFrame
-        appdata = self.parent.appdata
-        icons = self.parent.icons
+        get = wx.GetApp()  # get data from bootstrap
+        self.appdata = get.appset
+        icons = get.iconset
         self.opt = {"Scale": "scale=w=320:h=-1", "Setdar": "", "Setsar": ""}
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
@@ -220,7 +221,7 @@ class VideoToSequence(wx.Panel):
         sizer.Add(fgs1, 0, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer)
 
-        if appdata['ostype'] == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             lbl_msg1.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             lbl_msg2.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
@@ -514,9 +515,9 @@ class VideoToSequence(wx.Panel):
             return
 
         checking = check_files((clicked,),
-                               self.parent.outputdir,
-                               self.parent.same_destin,
-                               self.parent.suffix,
+                               self.appdata['outputdir'],
+                               self.appdata['outputdir_asinput'],
+                               self.appdata['filesuffix'],
                                self.cmb_frmt.GetValue(),
                                self.parent.outputnames
                                )
@@ -598,10 +599,10 @@ class VideoToSequence(wx.Panel):
 
         """
         if not self.parent.time_seq:
-            time = _('Unset')
+            sst, endt = _('Same as source'), _('Same as source')
         else:
-            tseq = self.parent.time_seq.split()
-            time = _('start  {} | duration  {}').format(tseq[1], tseq[3])
+            endt = self.parent.time_seq.split()[3]
+            sst = self.parent.time_seq.split()[1]
 
         if self.txt_args.IsEnabled():
             args = _('Enabled')
@@ -627,10 +628,11 @@ class VideoToSequence(wx.Panel):
         keys = (_("Selected File\nOutput Format\n"
                   "Destination directory\nRate (fps)\nResizing\n"
                   "Mosaic rows\nMosaic columns\nMosaic padding\n"
-                  "Mosaic margin\nCustom Arguments\nTime Trimming"
+                  "Mosaic margin\nCustom Arguments\n"
+                  "Start of segment\nDuration"
                   ))
         vals = (f"{filename}\n{self.cmb_frmt.GetValue()}\n{outputdir}"
                 f"\n{rate}\n{resize}\n{rows}\n{cols}\n{pad}\n{marg}"
-                f"\n{args}\n{time}"
+                f"\n{args}\n{sst}\n{endt}"
                 )
         return {'key': keys, 'val': vals}

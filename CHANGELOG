@@ -7,14 +7,48 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sat, 30 Mon 2024 V.5.0.11
+Mon, 09 Apr 2024 V.5.0.12
+
+  * Improved description strings on menu bar.
+  * Improved profile settings dialog layout.
+  * Added ability to edit command arguments "on-the-fly" in the queue dialog.
+  * Fixed permanent text on the toolbar buttons because needed for view the
+    queue counter.
+  * Removed text alongside toolbar buttons: Now the text on the toolbar is
+    always shown below the toolbar icons.
+  * Fixed "FileNotFoundError: [Errno 2]" traceback at the end of the process,
+    raised if the "Trash the source files" checkbox had been checked to delete
+    the same file more than once.
+  * Show log messages window is been moved to menu bar -> Help.
+  * Made some cosmetic improvements.
+  * [A/V Conversions] Added opus output format option to Audio Target Media.
+  * [File drop List] Added context menu by right mouse clicking.
+  * Removed `Clean` icon on toolbars.
+  * [YouTube Downloader] Added proxy (experimental) setup (see #246).
+  * [YouTube Downloader] Added authentication (experimental) setup.
+  * [YouTube Downloader] Added a specific preferences dialog to configure
+    YouTube Downloader options.
+  * The preferences dialogs for configuring global and YouTube Downloader
+    options have been moved to the Edit menus.
+  * Most options in the preferences dialogs no longer require restarting the
+    application (finally!), except for toggling yt_dlp, application language,
+    and appearance options.
+  * Removed menu for setting destination folders and restoring default
+    destination folder.
+  * Adding other destination folders can be done in the file list and urls list
+    panels (as well as in the preferences dialogs). Note that when you close the
+    program, this setting will now make the destination path for files and urls
+    the new default path when you reopen the application.
+
++------------------------------------+
+Sat, 30 Mar 2024 V.5.0.11
 
   * This release fixes `ModuleNotFoundError` issue installing from PyPi and
     packaging for distributions.
   * Fix missing `__init__.py` file inside `vdms_panels` directory.
 
 +------------------------------------+
-Tue, 25 Mon 2024 V.5.0.10
+Tue, 25 Mar 2024 V.5.0.10
 
   * [A/V Conversions] [Presets Manager] [NEW] Added ability to manage and
     process file queues. This will make Videomass capable of both processing

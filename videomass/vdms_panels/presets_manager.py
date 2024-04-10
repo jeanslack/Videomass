@@ -82,12 +82,12 @@ class PrstPan(wx.Panel):
         }
         """
         self.parent = parent  # parent is the MainFrame
-        self.appdata = self.parent.appdata
-        icons = self.parent.icons
+        get = wx.GetApp()  # get data from bootstrap
+        self.appdata = get.appset
+        icons = get.iconset
         self.src_prst = os.path.join(self.appdata['srcpath'], 'presets')
         self.user_prst = os.path.join(self.appdata['confdir'], 'presets')
         self.array = []  # Parameters of the selected profile
-
         self.txtcmdedited = True  # show warning if cmdline is edited
         self.check_presets_version = False  # see `update_preset_state`
 
@@ -129,7 +129,7 @@ class PrstPan(wx.Panel):
                               )
         boxpresets.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
         boxpresets.Add((5, 5))
-        panelscr = scrolled.ScrolledPanel(self, -1, size=(200, 500),
+        panelscr = scrolled.ScrolledPanel(self, -1, size=(230, 500),
                                           style=wx.TAB_TRAVERSAL
                                           | wx.BORDER_THEME,
                                           name="panelscroll",
@@ -765,7 +765,7 @@ class PrstPan(wx.Panel):
                 "overwritten with the default one. Your profiles "
                 "may be deleted!\n\nDo you want to continue?"
                 )
-        if wx.MessageBox(msg, _("Warning"),
+        if wx.MessageBox(msg, _("Please confirm"),
                          wx.ICON_WARNING
                          | wx.YES_NO
                          | wx.CANCEL,
@@ -793,7 +793,8 @@ class PrstPan(wx.Panel):
                            "In any case, to avoid data loss, the presets "
                            "folder will be backed up in the program's "
                            "configuration directory."
-                           "\n\nDo you want to continue?"), _("Warning"),
+                           "\n\nDo you want to continue?"),
+                         _("Please confirm"),
                          wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                          self) == wx.YES:
 
@@ -946,9 +947,9 @@ class PrstPan(wx.Panel):
         extlst = self.array[4]
         file_src = supported_formats(extlst, infile)
         filecheck = check_files(file_src,
-                                self.parent.outputdir,
-                                self.parent.same_destin,
-                                self.parent.suffix,
+                                self.appdata['outputdir'],
+                                self.appdata['outputdir_asinput'],
+                                self.appdata['filesuffix'],
                                 outext,
                                 outfilenames,
                                 )
@@ -974,7 +975,7 @@ class PrstPan(wx.Panel):
         pass1 = " ".join(self.txt_1cmd.GetValue().split())
         pass2 = " ".join(self.txt_2cmd.GetValue().split())
         preset = self.cmbx_prst.GetValue()
-        kwargs = {'type': thrtype, 'args': (pass1, pass2),
+        kwargs = {'type': thrtype, 'args': [pass1, pass2],
                   'pre-input-1': preinput_1, 'pre-input-2': preinput_2,
                   'preset name': f'Presets Manager - {preset}',
                   }
@@ -1059,15 +1060,15 @@ class PrstPan(wx.Panel):
         passes = '2' if self.array[3] else '1'
 
         if not self.parent.time_seq:
-            timeseq = _('Unset')
+            sst, endt = _('Same as source'), _('Same as source')
         else:
-            t = self.parent.time_seq.split()
-            timeseq = _('start  {} | duration  {}').format(t[1], t[3])
+            sst = kwa["start-time"].split()[1]
+            endt = kwa["end-time"].split()[1]
 
         keys = (_("Batch processing items\nAutomation/Preset\n"
-                  "Encoding passes\n"
-                  "Profile Used\nOutput Format\nTime Trimming"))
+                  "Encoding passes\nProfile Used\nOutput Format\n"
+                  "Start of segment\nClip duration"))
         vals = (f"{cntmax}\n{kwa['preset name']}\n{passes}\n"
-                f"{self.array[0]}\n{self.array[5]}\n{timeseq}"
+                f"{self.array[0]}\n{self.array[5]}\n{sst}\n{endt}"
                 )
         return {'key': keys, 'val': vals}

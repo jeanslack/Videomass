@@ -89,10 +89,11 @@ class FormatCode(wx.Panel):
         GREEN = '#4CDD67'
     else:
         GREEN = '#40804C'
-    BACKGRD = get.appset['icontheme'][1]['BACKGRD']  # help viewer backgrd
-    DONE = get.appset['icontheme'][1]['TXT3']  # code text done
-    WARN = get.appset['icontheme'][1]['WARN']  # code text warn
-    RED = get.appset['icontheme'][1]['ERR1']   # code text err + sb error
+
+    BACKGRD = get.appset['colorscheme']['BACKGRD']  # help viewer backgrd
+    DONE = get.appset['colorscheme']['TXT3']  # code text done
+    WARN = get.appset['colorscheme']['WARN']  # code text warn
+    RED = get.appset['colorscheme']['ERR1']   # code text err + sb error
 
     MSG_1 = _('At least one "Format Code" must be checked for each '
               'URL selected in green.')

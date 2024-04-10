@@ -81,11 +81,10 @@ class MyListCtrl(wx.ListCtrl):
         Handles all rejected URLs if any
         """
         if self.errors:
-            msg = _('Detailed list of errors')
             with ListWarning(self,
                              self.errors,
-                             caption=_('Invalid URLs'),
-                             header=msg,
+                             caption=_('Error list'),
+                             header=_('Invalid URLs'),
                              buttons='OK',
                              ) as log:
                 log.ShowModal()
@@ -124,10 +123,9 @@ class Url_DnD_Panel(wx.Panel):
         """
         parent is the MainFrame
         """
+        get = wx.GetApp()  # get data from bootstrap
+        self.appdata = get.appset
         self.parent = parent
-        get = wx.GetApp()
-        # colors = get.appset['icontheme'][1]
-
         wx.Panel.__init__(self, parent, -1)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -142,29 +140,35 @@ class Url_DnD_Panel(wx.Panel):
         sizer.Add(self.urlctrl, 1, wx.EXPAND | wx.ALL, 5)
 
         sizer_ctrl = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizer_ctrl, 0, wx.ALL | wx.EXPAND, 0)
+        lblsave = wx.StaticText(self, wx.ID_ANY, label=_("Save to:"))
+        sizer_ctrl.Add(lblsave, 0, wx.LEFT | wx.RIGHT | wx.CENTRE, 2)
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
                                           style=wx.TE_PROCESS_ENTER
                                           | wx.TE_READONLY,
                                           )
-        sizer_ctrl.Add(self.text_path_save, 1, wx.LEFT | wx.EXPAND, 5)
-
-        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(35, -1))
-        sizer_ctrl.Add(self.btn_save, 0, wx.RIGHT | wx.LEFT
-                       | wx.ALIGN_CENTER_HORIZONTAL
-                       | wx.ALIGN_CENTER_VERTICAL, 5,
+        sizer_ctrl.Add(self.text_path_save, 1, wx.LEFT
+                       | wx.RIGHT
+                       | wx.EXPAND, 2,
                        )
+        self.btn_save = wx.Button(self, wx.ID_OPEN, _('Change'))
+        sizer_ctrl.Add(self.btn_save, 0, wx.LEFT | wx.CENTER, 2)
+        sizer.Add(sizer_ctrl, 0, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer)
 
-        if get.appset['ostype'] == 'Darwin':
-            lbl_info.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
+        if self.appdata['ostype'] == 'Darwin':
+            lbl_info.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.BOLD))
+            lblsave.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.BOLD))
         else:
-            lbl_info.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))
+            lbl_info.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
+            lblsave.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
 
-        self.text_path_save.SetValue(self.parent.outputdir)
-        # Tooltip
-        self.btn_save.SetToolTip(_("Set a new destination for your downloads"))
-        self.text_path_save.SetToolTip(_("Current destination directory"))
+        self.text_path_save.SetValue(self.appdata['ydlp-outputdir'])
+        # ---- Tooltips
+        self.btn_save.SetToolTip(_("Set a new destination directory "
+                                   "for downloads"))
+        self.text_path_save.SetToolTip(_("Destination directory of downloads"))
+
+        # ---------------------- Binding (EVT) ----------------------#
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
     # ---------------------------------------------------------
 
@@ -298,4 +302,3 @@ class Url_DnD_Panel(wx.Panel):
         """
         self.text_path_save.SetValue("")
         self.text_path_save.AppendText(path)
-        self.parent.outputdir = path

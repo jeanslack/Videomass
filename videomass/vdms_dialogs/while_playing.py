@@ -67,7 +67,7 @@ class WhilePlaying(wx.Dialog):
         if close videomass also close parent window
         """
         get = wx.GetApp()  # get data from bootstrap
-        colorscheme = get.appset['icontheme'][1]
+        colorscheme = get.appset['colorscheme']
         vidicon = get.iconset['videomass']
 
         wx.Dialog.__init__(self, None,

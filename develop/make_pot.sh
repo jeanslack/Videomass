@@ -54,6 +54,7 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_dialogs/shownormlist.py" \
 "../vdms_dialogs/while_playing.py" \
 "../vdms_dialogs/queuedlg.py" \
+"../vdms_dialogs/queue_edit.py" \
 "../vdms_dialogs/queue_singlechoice.py" \
 "../vdms_miniframes/timeline.py" \
 "../vdms_io/checkup.py" \
@@ -90,6 +91,7 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_ytdlp/ydl_extractinfo.py" \
 "../vdms_ytdlp/ydl_mediainfo.py" \
 "../vdms_ytdlp/youtubedl_ui.py" \
+"../vdms_ytdlp/ydl_preferences.py" \
 "../vdms_ytdlp/subtitles_editor.py" \
 "../vdms_utils/queue_utils.py" \
 

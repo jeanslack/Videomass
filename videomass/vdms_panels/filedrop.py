@@ -190,11 +190,10 @@ class MyListCtrl(wx.ListCtrl):
         Handles all rejected files if any
         """
         if self.errors:
-            msg = _('Error details')
             with ListWarning(self,
                              self.errors,
-                             caption=_('Rejected Files'),
-                             header=msg,
+                             caption=_('Error list'),
+                             header=_('Rejected files'),
                              buttons='OK',
                              ) as log:
                 log.ShowModal()
@@ -241,15 +240,17 @@ class FileDnD(wx.Panel):
     ORANGE = '#f28924'
 
     def __init__(self, parent, *args):
-        """Constructor. This will initiate with an id and a title"""
-        get = wx.GetApp()
-        appdata = get.appset
-        self.themecolor = appdata['icontheme'][1]
+        """
+        Constructor. This will initiate with an id and a title
+        """
+        get = wx.GetApp()  # get data from bootstrap
+        self.appdata = get.appset
+        self.themecolor = self.appdata['colorscheme']
         self.parent = parent  # parent is the MainFrame
-        self.outputnames = args[1]
-        self.data = args[2]
-        self.file_src = args[3]
-        self.duration = args[4]
+        self.outputnames = args[0]
+        self.data = args[1]
+        self.file_src = args[2]
+        self.duration = args[3]
         self.sortingstate = None  # ascending or descending order
 
         wx.Panel.__init__(self, parent, -1)
@@ -262,13 +263,13 @@ class FileDnD(wx.Panel):
         file_drop_target = FileDrop(self.flCtrl)
         self.flCtrl.SetDropTarget(file_drop_target)  # Make drop target.
         # populate columns
-        colw = appdata['filedrop_column_width']
+        colw = self.appdata['filedrop_column_width']
         self.flCtrl.InsertColumn(0, '#', width=colw[0])
-        self.flCtrl.InsertColumn(1, _('File Name'), width=colw[1])
+        self.flCtrl.InsertColumn(1, _('Source file'), width=colw[1])
         self.flCtrl.InsertColumn(2, _('Duration'), width=colw[2])
         self.flCtrl.InsertColumn(3, _('Media type'), width=colw[3])
         self.flCtrl.InsertColumn(4, _('Size'), width=colw[4])
-        self.flCtrl.InsertColumn(5, _('Output file name'), width=colw[5])
+        self.flCtrl.InsertColumn(5, _('Destination file name'), width=colw[5])
         # create widgets
         infomsg = _("Drag one or more files below")
         self.lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
@@ -277,40 +278,98 @@ class FileDnD(wx.Panel):
         sizer.Add(self.flCtrl, 1, wx.EXPAND | wx.ALL, 2)
         sizer.Add((0, 10))
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
-        self.btn_destpath = wx.Button(self, wx.ID_OPEN, "...", size=(35, -1),
+        lblsave = wx.StaticText(self, wx.ID_ANY, label=_("Save to:"))
+        sizer_outdir.Add(lblsave, 0, wx.LEFT | wx.RIGHT | wx.CENTRE, 2)
+        self.btn_destpath = wx.Button(self, wx.ID_OPEN, _('Change'),
                                       name='button destpath filedrop')
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
                                           style=wx.TE_PROCESS_ENTER
                                           | wx.TE_READONLY,
                                           )
-        sizer_outdir.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 2)
-        sizer_outdir.Add(self.btn_destpath, 0, wx.ALL
-                         | wx.ALIGN_CENTER_HORIZONTAL
-                         | wx.ALIGN_CENTER_VERTICAL, 2,
+        sizer_outdir.Add(self.text_path_save, 1, wx.LEFT
+                         | wx.RIGHT
+                         | wx.EXPAND, 2,
                          )
-        sizer.Add(sizer_outdir, 0, wx.EXPAND)
+        sizer_outdir.Add(self.btn_destpath, 0, wx.LEFT | wx.CENTER, 2)
+        sizer.Add(sizer_outdir, 0, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer)
 
-        if appdata['ostype'] == 'Darwin':
-            self.lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+        if self.appdata['ostype'] == 'Darwin':
+            self.lbl_info.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            lblsave.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.BOLD))
         else:
-            self.lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            self.lbl_info.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            lblsave.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
 
-        self.text_path_save.SetValue(args[0])
-        if appdata['outputdir_asinput']:
-            self.btn_destpath.Disable()
-            self.text_path_save.Disable()
+        # ---- Tooltips
+        self.btn_destpath.SetToolTip(_('Set a new destination directory for '
+                                       'encodings'))
+        self.text_path_save.SetToolTip(_("Encodings destination directory"))
 
-        # Tooltips
-        self.btn_destpath.SetToolTip(_('Set a new destination for encodings'))
-        self.text_path_save.SetToolTip(_("Current destination directory"))
-
-        # Binding (EVT)
+        # ---- Binding (EVT)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.on_col_click, self.flCtrl)
+        self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
 
+        self.on_file_save(self.appdata['outputdir'])
         pub.subscribe(self.text_information, "SET_DRAG_AND_DROP_TOPIC")
+    # ----------------------------------------------------------------------
+
+    def onContext(self, event):
+        """
+        Create and show a Context Menu
+        """
+        # only do this part the first time so the events are only bound once
+        if not hasattr(self, "popupID1"):
+            popupID5 = wx.ID_ANY
+            popupID1 = wx.ID_ANY
+            popupID2 = wx.ID_ANY
+            popupID3 = wx.ID_ANY
+            popupID4 = wx.ID_ANY
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID5)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID1)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID2)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID3)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=popupID4)
+        # build the menu
+        menu = wx.Menu()
+        menu.Append(popupID5, _("Play file"))
+        menu.AppendSeparator()
+        menu.Append(popupID2, _("Rename selected file\tCtrl+R"))
+        menu.Append(popupID1, _("Batch rename files\tCtrl+B"))
+        menu.AppendSeparator()
+        menu.Append(popupID3, _("Remove selected entry\tDEL"))
+        menu.Append(popupID4, _("Clear list\tShift+DEL"))
+        # show the popup menu
+        self.PopupMenu(menu)
+        menu.Destroy()
+    # ----------------------------------------------------------------------
+
+    def onPopup(self, event):
+        """
+        Evaluate the label string of the menu item selected
+        and starts the related process
+        """
+        itemId = event.GetId()
+        menu = event.GetEventObject()
+        menuItem = menu.FindItemById(itemId)
+
+        if menuItem.GetItemLabel() == _("Rename selected file\tCtrl+R"):
+            self.renaming_file()
+
+        elif menuItem.GetItemLabel() == _("Batch rename files\tCtrl+B"):
+            if len(self.outputnames) > 1:
+                self.renaming_batch_files()
+
+        elif menuItem.GetItemLabel() == _("Remove selected entry\tDEL"):
+            self.on_delete_selected(None)
+
+        elif menuItem.GetItemLabel() == _("Clear list\tShift+DEL"):
+            self.delete_all(None)
+
+        elif menuItem.GetItemLabel() == _("Play file"):
+            self.on_play_select(None)
     # ----------------------------------------------------------------------
 
     def text_information(self, topic):
@@ -319,15 +378,18 @@ class FileDnD(wx.Panel):
         This method is called using pub/sub protocol
         "SET_DRAG_AND_DROP_TOPIC".
         """
-        if topic in ('Presets Manager', 'Audio/Video Conversions',
-                     'Concatenate Demuxer'):
+        if topic in ('Presets Manager', 'Audio/Video Conversions'):
             self.lbl_info.SetLabel(_('Drag one or more files below'))
 
+        elif topic == 'Concatenate Demuxer':
+            self.lbl_info.SetLabel(_('Drag two or more Audio/Video '
+                                     'files below'))
+
         elif topic == 'Image Sequence to Video':
-            self.lbl_info.SetLabel(_('Drag images below'))
+            self.lbl_info.SetLabel(_('Drag one or more Image files below'))
 
         elif topic == 'Video to Pictures':
-            self.lbl_info.SetLabel(_('Drag one or more video below'))
+            self.lbl_info.SetLabel(_('Drag one or more Video files below'))
     # ----------------------------------------------------------------------
 
     def on_col_click(self, event):
@@ -409,8 +471,8 @@ class FileDnD(wx.Panel):
         Playback the selected file
         """
         if self.flCtrl.GetFirstSelected() == -1:  # None
-            msg = _("No file selected")
-            self.parent.statusbar_msg(msg, FileDnD.YELLOW, FileDnD.BLACK)
+            wx.MessageBox(_("Have to select an item in the file list first"),
+                          'Videomass', wx.ICON_INFORMATION, self)
             return
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index, 1)
@@ -507,8 +569,15 @@ class FileDnD(wx.Panel):
         """
         Set a specific directory for files saving
         """
-        self.text_path_save.SetValue("")
-        self.text_path_save.AppendText(path)
+        if self.appdata['outputdir_asinput']:
+            msg = _('same destination directories as source files')
+            self.text_path_save.SetValue(msg)
+            self.btn_destpath.Disable()
+            self.text_path_save.Disable()
+            return
+        self.btn_destpath.Enable()
+        self.text_path_save.Enable()
+        self.text_path_save.SetValue(path)
     # -----------------------------------------------------------------------
 
     def renaming_file(self):
@@ -518,10 +587,15 @@ class FileDnD(wx.Panel):
         Names consisting of only whitespaces or tabs or matching
         same name as outputnames are rejected silently.
         """
+        if self.flCtrl.GetFirstSelected() == -1:  # None
+            wx.MessageBox(_("Have to select an item in the file list first"),
+                          'Videomass', wx.ICON_INFORMATION, self)
+            return
+
         row_id = self.flCtrl.GetFocusedItem()  # Get the current row
         oldname = self.flCtrl.GetItemText(row_id, 5)  # Get current name
         newname = ''
-        title = _('File renaming...')
+        title = _('Rename the file destination')
         msg = _('Rename the selected file to:')
 
         with Renamer(self,
@@ -553,7 +627,7 @@ class FileDnD(wx.Panel):
         """
         This method is responsible for batch file renaming.
         """
-        title = _('Rename items')
+        title = _('Batch rename the destination items')
         msg = _('Rename the {0} items to:').format(len(self.outputnames))
         with Renamer(self,
                      nameprop=_('New Name #'),

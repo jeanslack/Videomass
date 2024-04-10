@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.06.2023
+Rev: Apr.09.2024
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -428,7 +428,7 @@ class DataSource():
 
         # set color scheme
         theme = get_color_scheme(userconf['icontheme'])
-        userconf['icontheme'] = (userconf['icontheme'], theme)
+        userconf['colorscheme'] = theme
         if theme.get('ERROR'):
             return theme
 
@@ -486,7 +486,7 @@ class DataSource():
                 'profile_edit', 'previous', 'next', 'stabilizer',
                 'preview_audio', 'profile_copy', 'slideshow',
                 'videotopictures', 'atrack', 'timerset', 'coloreq',
-                'stop', 'home', 'youtube', 'playlist', 'cleanup',
+                'stop', 'home', 'youtube', 'playlist',
                 'download', 'statistics', 'play', 'subtitles',
                 'proc-queue', 'add-queue'
                 )  # must match with items on `iconset` tuple, see following
@@ -551,7 +551,6 @@ class DataSource():
                    f"{choose.get('x22')}/home.{ext}",
                    f"{choose.get('x48')}/youtube.{ext}",
                    f"{choose.get('x16')}/playlist.{ext}",
-                   f"{choose.get('x22')}/cleanup.{ext}",
                    f"{choose.get('x22')}/download.{ext}",
                    f"{choose.get('x22')}/statistics.{ext}",
                    f"{choose.get('x22')}/play.{ext}",

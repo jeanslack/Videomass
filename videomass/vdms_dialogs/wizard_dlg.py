@@ -234,7 +234,7 @@ class PageTwo(wx.Panel):
         if exiting == 'provided':
             if wx.MessageBox(_("Videomass already seems to include "
                                "FFmpeg.\n\nDo you want to use that?"),
-                             _('Videomass: Please Confirm'), wx.ICON_QUESTION
+                             _('Please confirm'), wx.ICON_QUESTION
                              | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                 return
 
@@ -342,7 +342,7 @@ class PageThree(wx.Panel):
         """
         Open filedialog to locate ffmpeg executable
         """
-        with wx.FileDialog(self, _("{} executable").format(self.ffmpeg),
+        with wx.FileDialog(self, _("{} location").format(self.ffmpeg),
                            "", "", "ffmpeg binary "
                            f"(*{self.ffmpeg})|*{self.ffmpeg}| "
                            f"All files (*.*)|*.*",
@@ -359,7 +359,7 @@ class PageThree(wx.Panel):
         """
         Open filedialog to locate ffprobe executable
         """
-        with wx.FileDialog(self, _("{} executable").format(self.ffprobe),
+        with wx.FileDialog(self, _("{} location").format(self.ffprobe),
                            "", "", "ffprobe binary "
                            f"(*{self.ffprobe})|*{self.ffprobe}| "
                            f"All files (*.*)|*.*",
@@ -376,7 +376,7 @@ class PageThree(wx.Panel):
         """
         Open filedialog to locate ffplay executable
         """
-        with wx.FileDialog(self, _("{} executable").format(self.ffplay),
+        with wx.FileDialog(self, _("{} location").format(self.ffplay),
                            "", "", "ffplay binary "
                            f"(*{self.ffplay})|*{self.ffplay}| "
                            f"All files (*.*)|*.*",
@@ -451,7 +451,7 @@ class PageFinish(wx.Panel):
     OS = get.appset['ostype']
     MSG0 = _("Wizard completed successfully!\n")
     MSG1 = (_("Remember that you can always change these settings "
-              "later, through the Setup dialog."))
+              "later, through the Preferences dialog."))
     MSG3 = _("Thank You!")
     MSG2 = _('To exit click the "Finish" button')
 

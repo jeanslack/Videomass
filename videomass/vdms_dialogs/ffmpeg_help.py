@@ -102,7 +102,7 @@ class FFmpegHelp(wx.Dialog):
         self.parent = parent
         self.row = None  # output text from `io_tools.findtopic(topic)'
         get = wx.GetApp()  # get data from bootstrap
-        colorscheme = get.appset['icontheme'][1]
+        colorscheme = get.appset['colorscheme']
         vidicon = get.iconset['videomass']
 
         wx.Dialog.__init__(self, None,

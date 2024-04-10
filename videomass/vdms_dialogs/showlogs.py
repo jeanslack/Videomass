@@ -60,7 +60,7 @@ class ShowLogs(wx.Dialog):
         self.logdata = {}
         self.selected = None
         get = wx.GetApp()  # get data from bootstrap
-        colorscheme = get.appset['icontheme'][1]
+        colorscheme = get.appset['colorscheme']
         vidicon = get.iconset['videomass']
 
         wx.Dialog.__init__(self, None,
@@ -101,9 +101,10 @@ class ShowLogs(wx.Dialog):
         # ----- confirm buttons section
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grid_funcbtn = wx.BoxSizer(wx.HORIZONTAL)
-        button_update = wx.Button(self, wx.ID_REFRESH, "")
+        button_update = wx.Button(self, wx.ID_REFRESH,
+                                  _("Refresh log messages"))
         grid_funcbtn.Add(button_update, 0)
-        button_clear = wx.Button(self, wx.ID_CLEAR, "")
+        button_clear = wx.Button(self, wx.ID_CLEAR, _("Clear log messages"))
         grid_funcbtn.Add(button_clear, 0, wx.LEFT, 5)
         grdBtn.Add(grid_funcbtn, 0, wx.ALL, 5)
         grdexit = wx.BoxSizer(wx.HORIZONTAL)
@@ -164,7 +165,7 @@ class ShowLogs(wx.Dialog):
         name = self.log_select.GetItemText(index, 0)
 
         if wx.MessageBox(_('Are you sure you want to clear the selected '
-                           'log file?'), "Videomass", wx.ICON_QUESTION
+                           'log file?'), _('Please confirm'), wx.ICON_QUESTION
                          | wx.CANCEL | wx.YES_NO, self) != wx.YES:
             return
 

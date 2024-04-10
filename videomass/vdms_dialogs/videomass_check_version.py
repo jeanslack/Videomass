@@ -36,7 +36,7 @@ class CheckNewVersion(wx.Dialog):
     get = wx.GetApp()  # get data from bootstrap
     OS = get.appset['ostype']
     APPTYPE = get.appset['app']
-    COLOR = get.appset['icontheme'][1]
+    COLOR = get.appset['colorscheme']
 
     def __init__(self, parent, msg, newvers, this):
         """
