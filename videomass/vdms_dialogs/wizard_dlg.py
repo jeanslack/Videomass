@@ -451,7 +451,7 @@ class PageFinish(wx.Panel):
     OS = get.appset['ostype']
     MSG0 = _("Wizard completed successfully!\n")
     MSG1 = (_("Remember that you can always change these settings "
-              "later, through the Setup dialog."))
+              "later, through the Preferences dialog."))
     MSG3 = _("Thank You!")
     MSG2 = _('To exit click the "Finish" button')
 

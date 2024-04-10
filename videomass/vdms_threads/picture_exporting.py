@@ -46,8 +46,6 @@ class PicturesFromVideo(Thread):
     https://stackoverflow.com/questions/1388753/how-to-get-output-
     from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
     """
-    get = wx.GetApp()  # get videomass wx.App attribute
-    appdata = get.appset
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ------------------------------------------------------
 
@@ -57,6 +55,8 @@ class PicturesFromVideo(Thread):
         Also see `main_frame.switch_to_processing`.
 
         """
+        get = wx.GetApp()  # get videomass wx.App attribute
+        self.appdata = get.appset
         self.stop_work_thread = False  # process terminate
         self.fname = kwargs['filename']
         self.outputdir = kwargs['outputdir']  # output directory
@@ -74,10 +74,10 @@ class PicturesFromVideo(Thread):
         Subprocess initialize thread.
         """
         filedone = []
-        cmd = (f'"{PicturesFromVideo.appdata["ffmpeg_cmd"]}" '
+        cmd = (f'"{self.appdata["ffmpeg_cmd"]}" '
                f'{self.kwa["start-time"]} '
                f'{self.kwa["end-time"]} '
-               f'{PicturesFromVideo.appdata["ffmpeg_default_args"]} '
+               f'{self.appdata["ffmpeg_default_args"]} '
                f'{self.kwa["pre-input-1"]} '
                f'-i "{self.kwa["filename"]}" '
                f'{self.cmd}'
@@ -94,7 +94,7 @@ class PicturesFromVideo(Thread):
                      )
         logwrite(com, '', self.logfile)  # write n/n + command only
 
-        if not PicturesFromVideo.appdata['ostype'] == 'Windows':
+        if not self.appdata['ostype'] == 'Windows':
             cmd = shlex.split(cmd)
         try:
             with Popen(cmd,

@@ -91,6 +91,7 @@ $XGETTEXT -d videomass "../gui_app.py" \
 "../vdms_ytdlp/ydl_extractinfo.py" \
 "../vdms_ytdlp/ydl_mediainfo.py" \
 "../vdms_ytdlp/youtubedl_ui.py" \
+"../vdms_ytdlp/ydl_preferences.py.py" \
 "../vdms_ytdlp/subtitles_editor.py" \
 "../vdms_utils/queue_utils.py" \
 

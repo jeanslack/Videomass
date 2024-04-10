@@ -101,9 +101,9 @@ class Conc_Demuxer(wx.Panel):
         """
         This is a panel impemented on MainFrame
         """
-        get = wx.GetApp()
-        appdata = get.appset
-        self.cachedir = appdata['cachedir']
+        get = wx.GetApp()  # get data from bootstrap
+        self.appdata = get.appset
+        self.cachedir = self.appdata['cachedir']
         self.parent = parent  # parent is the MainFrame
         self.args = ''
         self.duration = None
@@ -125,8 +125,8 @@ class Conc_Demuxer(wx.Panel):
                                       label=_("For more details, see the "
                                               "Videomass User Guide:")
                                       )
-        if appdata['GETLANG'] in appdata['SUPP_LANGs']:
-            lang = appdata['GETLANG'].split('_')[0]
+        if self.appdata['GETLANG'] in self.appdata['SUPP_LANGs']:
+            lang = self.appdata['GETLANG'].split('_')[0]
             page = (f"https://jeanslack.github.io/Videomass/"
                     f"Pages/User-guide-languages/{lang}/1-User_"
                     f"Interface_Overview_{lang}.pdf")
@@ -154,7 +154,7 @@ class Conc_Demuxer(wx.Panel):
         sizer_link1.Add(link1)
         self.SetSizer(sizer)
 
-        if appdata['ostype'] == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             self.lbl_msg2.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             self.lbl_msg3.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
@@ -211,7 +211,7 @@ class Conc_Demuxer(wx.Panel):
             txt.write('\n'.join(textstr))
 
         checking = check_files((fsource[0],),
-                               self.parent.outputdir,
+                               self.appdata['outputdir'],
                                self.parent.same_destin,
                                self.parent.suffix,
                                self.ext,

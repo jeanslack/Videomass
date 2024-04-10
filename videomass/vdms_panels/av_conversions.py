@@ -100,8 +100,9 @@ class AV_Conv(wx.Panel):
         GUI controls used in this panel
         """
         self.parent = parent  # parent is the MainFrame
-        self.appdata = self.parent.appdata
-        icons = self.parent.icons
+        get = wx.GetApp()  # get data from bootstrap
+        self.appdata = get.appset
+        icons = get.iconset
         self.videopanel = None
 
         if 'wx.svg' in sys.modules:  # only available in wx version 4.1 to up
@@ -868,7 +869,7 @@ class AV_Conv(wx.Panel):
             outfilenames = self.parent.outputnames
 
         filecheck = check_files(infile,
-                                self.parent.outputdir,
+                                self.appdata['outputdir'],
                                 self.parent.same_destin,
                                 self.parent.suffix,
                                 self.opt["OutputFormat"],

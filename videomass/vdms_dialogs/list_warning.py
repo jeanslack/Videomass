@@ -63,7 +63,7 @@ class ListWarning(wx.Dialog):
                  (str) 'CONFIRM' show wx.ID_CANCEL/wx.YES_NO buttons.
         """
         get = wx.GetApp()  # get data from bootstrap
-        colorscheme = get.appset['icontheme'][1]
+        colorscheme = get.appset['colorscheme']
         # Use 'parent, -1' param. to make parent, use 'None' otherwise
         wx.Dialog.__init__(self, parent, -1,
                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,

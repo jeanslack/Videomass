@@ -63,8 +63,9 @@ class VideoToSequence(wx.Panel):
         This is a panel impemented on MainFrame
         """
         self.parent = parent  # parent is the MainFrame
-        appdata = self.parent.appdata
-        icons = self.parent.icons
+        get = wx.GetApp()  # get data from bootstrap
+        self.appdata = get.appset
+        icons = get.iconset
         self.opt = {"Scale": "scale=w=320:h=-1", "Setdar": "", "Setsar": ""}
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
@@ -220,7 +221,7 @@ class VideoToSequence(wx.Panel):
         sizer.Add(fgs1, 0, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer)
 
-        if appdata['ostype'] == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             lbl_msg1.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             lbl_msg2.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
@@ -514,7 +515,7 @@ class VideoToSequence(wx.Panel):
             return
 
         checking = check_files((clicked,),
-                               self.parent.outputdir,
+                               self.appdata['outputdir'],
                                self.parent.same_destin,
                                self.parent.suffix,
                                self.cmb_frmt.GetValue(),

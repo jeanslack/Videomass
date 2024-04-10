@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.06.2023
+Rev: Apr.09.2024
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -428,7 +428,7 @@ class DataSource():
 
         # set color scheme
         theme = get_color_scheme(userconf['icontheme'])
-        userconf['icontheme'] = (userconf['icontheme'], theme)
+        userconf['colorscheme'] = theme
         if theme.get('ERROR'):
             return theme
 

@@ -39,10 +39,10 @@ class Choose_Topic(wx.Panel):
         This is a home panel shown when start Videomass to choose the
         appropriate contextual panel.
         """
-        get = wx.GetApp()
+        get = wx.GetApp()  # get data from bootstrap
         self.appdata = get.appset
         self.icons = parent.icons
-        colorscheme = get.appset['icontheme']
+        icontheme = self.appdata['icontheme']
 
         # ----------------------
         self.parent = parent
@@ -145,22 +145,22 @@ class Choose_Topic(wx.Panel):
             version.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.LIGHT))
 
         if self.appdata['IS_DARK_THEME'] is True:
-            if colorscheme[0] in ('Videomass-Colours',
-                                  'Videomass-Dark',
-                                  'Videomass-Light'):
+            if icontheme in ('Videomass-Colours',
+                             'Videomass-Dark',
+                             'Videomass-Light'):
                 self.SetBackgroundColour('#232424')  # Dark grey
-            elif colorscheme[0] in ('Ubuntu-Dark-Aubergine',
-                                    'Ubuntu-Light-Aubergine'):
+            elif icontheme in ('Ubuntu-Dark-Aubergine',
+                               'Ubuntu-Light-Aubergine'):
                 self.SetBackgroundColour('#2C001E')  # Dark Aubergine
             welcome.SetForegroundColour('#E95420')  # Ubuntu orange
             version.SetForegroundColour('#E95420')  # Ubuntu orange
         elif self.appdata['IS_DARK_THEME'] is False:
-            if colorscheme[0] in ('Videomass-Colours',
-                                  'Videomass-Dark',
-                                  'Videomass-Light'):
+            if icontheme in ('Videomass-Colours',
+                             'Videomass-Dark',
+                             'Videomass-Light'):
                 self.SetBackgroundColour('#4eada5')  # blue
-            elif colorscheme[0] in ('Ubuntu-Dark-Aubergine',
-                                    'Ubuntu-Light-Aubergine'):
+            elif icontheme in ('Ubuntu-Dark-Aubergine',
+                               'Ubuntu-Light-Aubergine'):
                 self.SetBackgroundColour('#2C001E')  # Dark Aubergine
                 welcome.SetForegroundColour('#E95420')  # Ubuntu orange
                 version.SetForegroundColour('#E95420')  # Ubuntu orange

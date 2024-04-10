@@ -91,7 +91,7 @@ class Videomass(wx.App):
             appear = wx.SystemSettings.GetAppearance()
             self.appset['IS_DARK_THEME'] = appear.IsDark()
 
-        self.iconset = self.data.icons_set(self.appset['icontheme'][0])
+        self.iconset = self.data.icons_set(self.appset['icontheme'])
 
         # locale
         wx.Locale.AddCatalogLookupPathPrefix(self.appset['localepath'])
@@ -107,7 +107,7 @@ class Videomass(wx.App):
             return True
 
         from videomass.vdms_main.main_frame import MainFrame
-        main_frame = MainFrame()
+        main_frame = MainFrame(self.appset)
         main_frame.Show()
         self.SetTopWindow(main_frame)
         return True

@@ -240,15 +240,17 @@ class FileDnD(wx.Panel):
     ORANGE = '#f28924'
 
     def __init__(self, parent, *args):
-        """Constructor. This will initiate with an id and a title"""
-        get = wx.GetApp()
-        appdata = get.appset
-        self.themecolor = appdata['icontheme'][1]
+        """
+        Constructor. This will initiate with an id and a title
+        """
+        get = wx.GetApp()  # get data from bootstrap
+        self.appdata = get.appset
+        self.themecolor = self.appdata['colorscheme']
         self.parent = parent  # parent is the MainFrame
-        self.outputnames = args[1]
-        self.data = args[2]
-        self.file_src = args[3]
-        self.duration = args[4]
+        self.outputnames = args[0]
+        self.data = args[1]
+        self.file_src = args[2]
+        self.duration = args[3]
         self.sortingstate = None  # ascending or descending order
 
         wx.Panel.__init__(self, parent, -1)
@@ -261,7 +263,7 @@ class FileDnD(wx.Panel):
         file_drop_target = FileDrop(self.flCtrl)
         self.flCtrl.SetDropTarget(file_drop_target)  # Make drop target.
         # populate columns
-        colw = appdata['filedrop_column_width']
+        colw = self.appdata['filedrop_column_width']
         self.flCtrl.InsertColumn(0, '#', width=colw[0])
         self.flCtrl.InsertColumn(1, _('Source file'), width=colw[1])
         self.flCtrl.InsertColumn(2, _('Duration'), width=colw[2])
@@ -276,41 +278,41 @@ class FileDnD(wx.Panel):
         sizer.Add(self.flCtrl, 1, wx.EXPAND | wx.ALL, 2)
         sizer.Add((0, 10))
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
+        lblsave = wx.StaticText(self, wx.ID_ANY, label=_("Save to:"))
+        sizer_outdir.Add(lblsave, 0, wx.LEFT | wx.RIGHT | wx.CENTRE, 2)
         self.btn_destpath = wx.Button(self, wx.ID_OPEN, _('Change'),
                                       name='button destpath filedrop')
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
                                           style=wx.TE_PROCESS_ENTER
                                           | wx.TE_READONLY,
                                           )
-        sizer_outdir.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 2)
-        sizer_outdir.Add(self.btn_destpath, 0, wx.ALL
-                         | wx.ALIGN_CENTER_HORIZONTAL
-                         | wx.ALIGN_CENTER_VERTICAL, 2,
+        sizer_outdir.Add(self.text_path_save, 1, wx.LEFT
+                         | wx.RIGHT
+                         | wx.EXPAND, 2,
                          )
-        sizer.Add(sizer_outdir, 0, wx.EXPAND)
+        sizer_outdir.Add(self.btn_destpath, 0, wx.LEFT | wx.CENTER, 2)
+        sizer.Add(sizer_outdir, 0, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer)
 
-        if appdata['ostype'] == 'Darwin':
-            self.lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+        if self.appdata['ostype'] == 'Darwin':
+            self.lbl_info.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            lblsave.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.BOLD))
         else:
-            self.lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            self.lbl_info.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            lblsave.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
 
-        self.text_path_save.SetValue(args[0])
-        if appdata['outputdir_asinput']:
-            self.btn_destpath.Disable()
-            self.text_path_save.Disable()
-
-        # Tooltips
+        # ---- Tooltips
         self.btn_destpath.SetToolTip(_('Set a new destination directory for '
                                        'encodings'))
         self.text_path_save.SetToolTip(_("Encodings destination directory"))
 
-        # Binding (EVT)
+        # ---- Binding (EVT)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.on_col_click, self.flCtrl)
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
 
+        self.on_file_save(self.appdata['outputdir'])
         pub.subscribe(self.text_information, "SET_DRAG_AND_DROP_TOPIC")
     # ----------------------------------------------------------------------
 
@@ -567,8 +569,15 @@ class FileDnD(wx.Panel):
         """
         Set a specific directory for files saving
         """
-        self.text_path_save.SetValue("")
-        self.text_path_save.AppendText(path)
+        if self.appdata['outputdir_asinput']:
+            msg = _('same destination directories as source files')
+            self.text_path_save.SetValue(msg)
+            self.btn_destpath.Disable()
+            self.text_path_save.Disable()
+            return
+        self.btn_destpath.Enable()
+        self.text_path_save.Enable()
+        self.text_path_save.SetValue(path)
     # -----------------------------------------------------------------------
 
     def renaming_file(self):

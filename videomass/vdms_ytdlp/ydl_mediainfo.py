@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.17.2023
+Rev: Apr.09.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -33,14 +33,14 @@ class YdlMediaInfo(wx.Dialog):
     Display streams information from youtube-dl data.
 
     """
-    def __init__(self, data, opsys):
+    def __init__(self, data):
         """
         NOTE constructor:: with 'None' not depend from videomass.
         With 'parent, -1' if close videomass also close mediainfo window
         """
         self.data = data
         get = wx.GetApp()  # get data from bootstrap
-        colorscheme = get.appset['icontheme'][1]
+        colorscheme = get.appset['colorscheme']
         appicon = get.iconset['videomass']
 
         wx.Dialog.__init__(self, None,
@@ -71,7 +71,7 @@ class YdlMediaInfo(wx.Dialog):
         self.url_select.InsertColumn(1, _('URL'), width=500)
         self.textctrl.SetMinSize((640, 300))
 
-        if opsys == 'Darwin':
+        if get.appset['ostype'] == 'Darwin':
             self.url_select.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL,
                                             wx.NORMAL))
             self.textctrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL,

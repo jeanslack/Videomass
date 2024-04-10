@@ -60,7 +60,7 @@ class ShowLogs(wx.Dialog):
         self.logdata = {}
         self.selected = None
         get = wx.GetApp()  # get data from bootstrap
-        colorscheme = get.appset['icontheme'][1]
+        colorscheme = get.appset['colorscheme']
         vidicon = get.iconset['videomass']
 
         wx.Dialog.__init__(self, None,

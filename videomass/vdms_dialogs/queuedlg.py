@@ -50,7 +50,7 @@ class QueueManager(wx.Dialog):
         """
         get = wx.GetApp()  # get data from bootstrap
         self.appdata = get.appset
-        colorscheme = self.appdata['icontheme'][1]
+        colorscheme = self.appdata['colorscheme']
         self.datalist = datalist
         self.movetotrash = movetotrash
         self.emptylist = emptylist
@@ -332,7 +332,11 @@ class QueueManager(wx.Dialog):
         """
         enable/disable "Move file to trash" after successful encoding
         """
-        trashdir = os.path.join(self.appdata['confdir'], 'Trash')
+        if self.appdata['user_trashdir'] is None:
+            trashdir = self.appdata['conf_trashdir']
+        else:
+            trashdir = self.appdata['user_trashdir']
+
         if self.ckbx_trash.IsChecked():
             self.movetotrash = True
             self.ckbx_del.SetValue(True)

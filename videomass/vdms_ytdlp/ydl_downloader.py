@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.07.2023
+Rev: Apr.09.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -130,15 +130,6 @@ class YdlDownloader(Thread):
     or by help(youtube_dl.YoutubeDL)
 
     """
-    get = wx.GetApp()  # get videomass wx.App attribute
-    appdata = get.appset
-    FFMPEG_URL = appdata['ffmpeg_cmd']
-
-    if appdata['playlistsubfolder']:
-        SUBDIR = '%(uploader)s/%(playlist_title)s/%(playlist_index)s - '
-    else:
-        SUBDIR = ''
-
     def __init__(self, varargs, logname):
         """
         Attributes defined here:
@@ -151,6 +142,14 @@ class YdlDownloader(Thread):
         self.args['countmax']:      length of urls items list
         self.args['logname']:       file name to log messages for logging
         """
+        get = wx.GetApp()  # get videomass wx.App attribute
+        self.appdata = get.appset
+
+        if self.appdata['playlistsubfolder']:
+            self.subdir = ('%(uploader)s/%(playlist_title)'
+                           's/%(playlist_index)s - ')
+        else:
+            self.subdir = ''
         self.stop_work_thread = False  # process terminate
         self.opt = varargs[4]
         self.count = 0
@@ -174,7 +173,7 @@ class YdlDownloader(Thread):
                                                fillvalue='',
                                                ):
             if '/playlist' in url or not self.opt['noplaylist']:
-                outtmpl = YdlDownloader.SUBDIR + self.opt['outtmpl']
+                outtmpl = self.subdir + self.opt['outtmpl']
             else:
                 outtmpl = self.opt['outtmpl']
 
@@ -216,7 +215,11 @@ class YdlDownloader(Thread):
                 'overwrites': self.opt['overwrites'],
                 'no_color': True,
                 'nocheckcertificate': self.opt['nocheckcertificate'],
-                'ffmpeg_location': f'{YdlDownloader.FFMPEG_URL}',
+                'proxy': self.opt["proxy"],
+                'username': self.opt["username"],
+                'password': self.opt["password"],
+                'videopassword': self.opt["videopassword"],
+                'ffmpeg_location': f'{self.appdata["ffmpeg_cmd"]}',
                 'postprocessors': self.opt['postprocessors'],
                 'logger': MyLogger(),
                 'progress_hooks': [my_hook],

@@ -82,8 +82,9 @@ class PrstPan(wx.Panel):
         }
         """
         self.parent = parent  # parent is the MainFrame
-        self.appdata = self.parent.appdata
-        icons = self.parent.icons
+        get = wx.GetApp()  # get data from bootstrap
+        self.appdata = get.appset
+        icons = get.iconset
         self.src_prst = os.path.join(self.appdata['srcpath'], 'presets')
         self.user_prst = os.path.join(self.appdata['confdir'], 'presets')
         self.array = []  # Parameters of the selected profile
@@ -947,7 +948,7 @@ class PrstPan(wx.Panel):
         extlst = self.array[4]
         file_src = supported_formats(extlst, infile)
         filecheck = check_files(file_src,
-                                self.parent.outputdir,
+                                self.appdata['outputdir'],
                                 self.parent.same_destin,
                                 self.parent.suffix,
                                 outext,

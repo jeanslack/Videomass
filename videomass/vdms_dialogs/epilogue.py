@@ -38,7 +38,7 @@ class Formula(wx.Dialog):
 
         get = wx.GetApp()  # get data from bootstrap
         self.appdata = get.appset
-        colorscheme = self.appdata['icontheme'][1]
+        colorscheme = self.appdata['colorscheme']
         self.movetotrash = args[1]
         self.emptylist = args[2]
 
@@ -121,7 +121,11 @@ class Formula(wx.Dialog):
         """
         enable/disable "Move file to trash" after successful encoding
         """
-        trashdir = os.path.join(self.appdata['confdir'], 'Trash')
+        if self.appdata['user_trashdir'] is None:
+            trashdir = self.appdata['conf_trashdir']
+        else:
+            trashdir = self.appdata['user_trashdir']
+
         if self.ckbx_trash.IsChecked():
             self.movetotrash = True
             self.ckbx_del.SetValue(True)

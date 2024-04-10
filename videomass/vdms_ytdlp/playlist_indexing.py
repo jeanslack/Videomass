@@ -82,7 +82,7 @@ class Indexing(wx.Dialog):
         NOTE Use 'parent, -1' param. to make parent, use 'None' otherwise
 
         """
-        self.clrs = Indexing.appdata['icontheme'][1]
+        self.clrs = Indexing.appdata['colorscheme']
         self.urls = url
         self.data = data
 

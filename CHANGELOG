@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 08 Apr 2024 V.5.0.12
+Mon, 09 Apr 2024 V.5.0.12
 
   * Improved description strings on menu bar.
   * Improved profile settings dialog layout.
@@ -23,8 +23,22 @@ Mon, 08 Apr 2024 V.5.0.12
   * Made some cosmetic improvements.
   * [A/V Conversions] Added opus output format option to Audio Target Media.
   * [File drop List] Added context menu by right mouse clicking.
-  * Removed `Clean` icon on toolbar.
-
+  * Removed `Clean` icon on toolbars.
+  * [YouTube Downloader] Added proxy setup (see #246).
+  * [YouTube Downloader] Added authentication setup.
+  * [YouTube Downloader] Added a specific preferences dialog to configure
+    YouTube Downloader options.
+  * The preferences dialogs for configuring global and YouTube Downloader
+    options have been moved to the Edit menus.
+  * Most options in the preferences dialogs no longer require restarting the
+    application (finally!), except for toggling yt_dlp, application language,
+    and appearance options.
+  * Removed menu for setting destination folders and restoring default
+    destination folder.
+  * Adding other destination folders can be done in the file list and urls list
+    panels (as well as in the preferences dialogs). Note that when you close the
+    program, this setting will now make the destination path for files and urls
+    the new default path when you reopen the application.
 
 +------------------------------------+
 Sat, 30 Mar 2024 V.5.0.11

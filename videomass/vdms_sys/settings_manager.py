@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.07.2024
+Rev: Apr.09.2024
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -151,6 +151,21 @@ class ConfigManager:
         args used by external downloader in yt-dlp. Default is None
         List should be passed using aria2c ["-j", "1", "-x", "1", "-s", "1"]
 
+    proxy (str):
+        Use the specified HTTP/HTTPS/SOCKS proxy. To enable SOCKS proxy,
+        specify a proper scheme, e.g. socks5://user:pass@127.0.0.1:1080/ .
+        Pass in an empty string (--proxy "") for direct connection
+
+    username (str):
+        Login with this account ID
+
+    password (str):
+        Account password. If this option is left out, yt-dlp will ask
+        interactively
+
+    videopassword (str):
+        for Video-specific password
+
     prstmng_column_width (list of int)
         column width in the Preset Manager panel.
 
@@ -161,7 +176,7 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 6.8
+    VERSION = 6.9
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputdir": f"{os.path.expanduser('~')}",
                        "outputdir_asinput": False,
@@ -204,6 +219,10 @@ class ConfigManager:
                                              },
                        "external_downloader": None,
                        "external_downloader_args": None,
+                       "proxy": "",
+                       "username": "",
+                       "password": "",
+                       "videopassword": "",
                        "prstmng_column_width": [250, 350, 200, 220],
                        "filedrop_column_width": [30, 200, 200, 200, 150, 200],
                        "fcode_column_width": [120, 60, 200, 80, 160,
