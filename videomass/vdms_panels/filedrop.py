@@ -572,9 +572,7 @@ class FileDnD(wx.Panel):
         if self.appdata['outputdir_asinput']:
             msg = _('Same destination paths as source files')
             self.text_path_save.SetValue(msg)
-            #self.btn_destpath.Disable()
             return
-        #self.btn_destpath.Enable()
         self.text_path_save.SetValue(path)
     # -----------------------------------------------------------------------
 
