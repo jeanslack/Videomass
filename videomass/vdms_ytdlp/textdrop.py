@@ -164,9 +164,9 @@ class Url_DnD_Panel(wx.Panel):
 
         self.text_path_save.SetValue(self.appdata['ydlp-outputdir'])
         # ---- Tooltips
-        self.btn_save.SetToolTip(_("Set a new destination directory "
+        self.btn_save.SetToolTip(_("Set a new destination folder "
                                    "for downloads"))
-        self.text_path_save.SetToolTip(_("Destination directory of downloads"))
+        self.text_path_save.SetToolTip(_("Destination folder of downloads"))
 
         # ---------------------- Binding (EVT) ----------------------#
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)

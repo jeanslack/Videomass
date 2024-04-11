@@ -39,6 +39,10 @@ Mon, 09 Apr 2024 V.5.0.12
     panels (as well as in the preferences dialogs). Note that when you close the
     program, this setting will now make the destination path for files and urls
     the new default path when you reopen the application.
+  * [Presets Manager] Fixed bug in supported formats check.
+  * [Presets Manager] Improved dialog window for supported format errors.
+  * Added destination path display for any confirmation dialog before running
+    batch processes.
 
 +------------------------------------+
 Sat, 30 Mar 2024 V.5.0.11

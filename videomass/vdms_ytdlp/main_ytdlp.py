@@ -270,7 +270,7 @@ class MainYtdl(wx.Frame):
 
         # ----------------------- file menu
         fileButton = wx.Menu()
-        dscrp = _("Open destination directory of downloads\tCtrl+D")
+        dscrp = _("Open destination folder of downloads\tCtrl+D")
         fold_downloads = fileButton.Append(wx.ID_ANY, dscrp)
         fileButton.AppendSeparator()
         closeItem = fileButton.Append(wx.ID_CLOSE, _("Close view\tCtrl+W"),

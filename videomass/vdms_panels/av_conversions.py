@@ -948,7 +948,7 @@ class AV_Conv(wx.Panel):
             batchlist.append(kw)
 
         keyval = self.update_dict(len(f_src), **kwargs)
-        ending = Formula(self, (600, 210),
+        ending = Formula(self, (700, 250),
                          self.parent.movetotrash,
                          self.parent.emptylist,
                          **keyval,
@@ -1191,16 +1191,21 @@ class AV_Conv(wx.Panel):
         else:
             sst = kwa["start-time"].split()[1]
             endt = kwa["end-time"].split()[1]
+        if self.appdata['outputdir_asinput']:
+            dest = _('Same destination paths as source files')
+        else:
+            dest = self.appdata['outputdir']
 
         passes = '1' if kwa["args"][1] == '' else '2'
 
-        keys = (_("Batch processing items\nAutomation/Preset"
+        keys = (_("Batch processing items\nDestination\nAutomation/Preset"
                   "\nEncoding passes\nOutput Format"
                   "\nVideo Codec\nAudio Codec\nAudio Normalization"
                   "\nOutput multimedia type\nStart of segment"
                   "\nClip duration"
                   ))
         vals = (f'{countmax}\n'
+                f'{dest}\n'
                 f'{kwa["preset name"]}\n'
                 f'{passes}\n'
                 f'{outputformat}\n'

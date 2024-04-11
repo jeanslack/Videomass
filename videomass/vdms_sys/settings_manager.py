@@ -58,7 +58,7 @@ class ConfigManager:
         file destination path used by ffmpeg
 
     outputdir_asinput (bool):
-        if True save each ffmpeg files to same folder as source
+        if True, save output files to same paths as source files
 
     filesuffix (str):
         An optional suffix to assign to output files

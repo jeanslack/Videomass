@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 12:24+0200\n"
-"PO-Revision-Date: 2024-04-10 15:41+0200\n"
+"POT-Creation-Date: 2024-04-11 19:14+0200\n"
+"PO-Revision-Date: 2024-04-11 19:21+0200\n"
 "Last-Translator: johannesdedoper <https://github.com/johannesdedoper>\n"
 "Language-Team: Dutch <>\n"
 "Language: nl_NL\n"
@@ -94,7 +94,7 @@ msgid "Clear the File List"
 msgstr "Log bestanden lijst"
 
 #: ../vdms_dialogs/epilogue.py:91 ../vdms_dialogs/queuedlg.py:142
-#: ../vdms_main/main_frame.py:1274
+#: ../vdms_main/main_frame.py:1283
 msgid "Run"
 msgstr ""
 
@@ -813,13 +813,13 @@ msgstr ""
 "Wilt u deze gebruiken?"
 
 #: ../vdms_dialogs/wizard_dlg.py:237 ../vdms_dialogs/showlogs.py:168
-#: ../vdms_io/checkup.py:50 ../vdms_main/main_frame.py:207
-#: ../vdms_main/main_frame.py:765 ../vdms_main/main_frame.py:1647
-#: ../vdms_panels/presets_manager.py:380 ../vdms_panels/presets_manager.py:579
-#: ../vdms_panels/presets_manager.py:619 ../vdms_panels/presets_manager.py:683
-#: ../vdms_panels/presets_manager.py:717 ../vdms_panels/presets_manager.py:769
-#: ../vdms_panels/presets_manager.py:798 ../vdms_panels/presets_manager.py:894
-#: ../vdms_panels/presets_manager.py:924 ../vdms_ytdlp/main_ytdlp.py:201
+#: ../vdms_io/checkup.py:50 ../vdms_main/main_frame.py:205
+#: ../vdms_main/main_frame.py:772 ../vdms_main/main_frame.py:1656
+#: ../vdms_panels/presets_manager.py:379 ../vdms_panels/presets_manager.py:578
+#: ../vdms_panels/presets_manager.py:618 ../vdms_panels/presets_manager.py:682
+#: ../vdms_panels/presets_manager.py:716 ../vdms_panels/presets_manager.py:768
+#: ../vdms_panels/presets_manager.py:797 ../vdms_panels/presets_manager.py:893
+#: ../vdms_panels/presets_manager.py:923 ../vdms_ytdlp/main_ytdlp.py:201
 #: ../vdms_ytdlp/youtubedl_ui.py:584 ../vdms_ytdlp/youtubedl_ui.py:590
 msgid "Please confirm"
 msgstr "Bevestig dit"
@@ -837,8 +837,8 @@ msgstr ""
 "tekstkaders in, door op de betreffende knoppen te drukken."
 
 #: ../vdms_dialogs/wizard_dlg.py:345 ../vdms_dialogs/wizard_dlg.py:362
-#: ../vdms_dialogs/wizard_dlg.py:379 ../vdms_dialogs/preferences.py:675
-#: ../vdms_dialogs/preferences.py:717 ../vdms_dialogs/preferences.py:759
+#: ../vdms_dialogs/wizard_dlg.py:379 ../vdms_dialogs/preferences.py:686
+#: ../vdms_dialogs/preferences.py:728 ../vdms_dialogs/preferences.py:770
 #, fuzzy
 #| msgid "Choose the {} location"
 msgid "{} location"
@@ -955,7 +955,7 @@ msgstr ""
 msgid "Profile Name"
 msgstr "Profiel Naam"
 
-#: ../vdms_dialogs/setting_profiles.py:76 ../vdms_panels/presets_manager.py:435
+#: ../vdms_dialogs/setting_profiles.py:76 ../vdms_panels/presets_manager.py:434
 msgid "Description"
 msgstr "Beschrijving"
 
@@ -976,12 +976,12 @@ msgid "A long description of the profile"
 msgstr "Een uitgebreide beschrijving van het profiel"
 
 #: ../vdms_dialogs/setting_profiles.py:153 ../vdms_dialogs/queue_edit.py:82
-#: ../vdms_panels/presets_manager.py:308
+#: ../vdms_panels/presets_manager.py:307
 msgid "FFmpeg arguments for one-pass encoding"
 msgstr ""
 
 #: ../vdms_dialogs/setting_profiles.py:154 ../vdms_dialogs/queue_edit.py:113
-#: ../vdms_panels/presets_manager.py:310
+#: ../vdms_panels/presets_manager.py:309
 msgid "FFmpeg arguments for two-pass encoding"
 msgstr ""
 
@@ -1000,7 +1000,7 @@ msgstr ""
 "te kopiëren"
 
 #: ../vdms_dialogs/setting_profiles.py:161 ../vdms_dialogs/queue_edit.py:88
-#: ../vdms_panels/presets_manager.py:312
+#: ../vdms_panels/presets_manager.py:311
 msgid ""
 "Any optional arguments to add before input file on the one-pass encoding, e."
 "g required names of some hardware accelerations like -hwaccel to use with "
@@ -1008,7 +1008,7 @@ msgid ""
 msgstr ""
 
 #: ../vdms_dialogs/setting_profiles.py:165 ../vdms_dialogs/queue_edit.py:120
-#: ../vdms_panels/presets_manager.py:316
+#: ../vdms_panels/presets_manager.py:315
 msgid ""
 "Any optional arguments to add before input file on the two-pass encoding, e."
 "g required names of some hardware accelerations like -hwaccel to use with "
@@ -1064,7 +1064,7 @@ msgstr ""
 "De tijdcode-grootte past zich niet automatisch aan bij de video-grootte, u "
 "moet het hier instellen"
 
-#: ../vdms_dialogs/set_timestamp.py:160 ../vdms_main/main_frame.py:557
+#: ../vdms_dialogs/set_timestamp.py:160 ../vdms_main/main_frame.py:556
 msgid "Timestamp settings"
 msgstr "Tijdcode instellingen"
 
@@ -1119,9 +1119,12 @@ msgstr "Waar wilt u transcoderingen bewaren?"
 msgid "Change"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:174
-msgid "Use same destination directories as source files"
-msgstr ""
+#: ../vdms_dialogs/preferences.py:174 ../vdms_panels/av_conversions.py:1195
+#: ../vdms_panels/filedrop.py:573 ../vdms_panels/presets_manager.py:1069
+#, fuzzy
+#| msgid "Create a new preset"
+msgid "Same destination paths as source files"
+msgstr "Maak een nieuwe preset"
 
 #: ../vdms_dialogs/preferences.py:179
 #, fuzzy
@@ -1274,8 +1277,8 @@ msgid "Global Preferences"
 msgstr "Bestands Voorkeuren"
 
 #: ../vdms_dialogs/preferences.py:543 ../vdms_dialogs/preferences.py:622
-#: ../vdms_main/main_frame.py:846 ../vdms_main/main_frame.py:1026
-#: ../vdms_panels/presets_manager.py:612 ../vdms_panels/presets_manager.py:640
+#: ../vdms_main/main_frame.py:853 ../vdms_main/main_frame.py:1033
+#: ../vdms_panels/presets_manager.py:611 ../vdms_panels/presets_manager.py:639
 #: ../vdms_ytdlp/main_ytdlp.py:397 ../vdms_ytdlp/ydl_preferences.py:265
 #, fuzzy
 #| msgid "Destination folder"
@@ -1351,7 +1354,7 @@ msgstr "BESTAND SELECTIE"
 
 #: ../vdms_dialogs/mediainfo.py:139 ../vdms_dialogs/mediainfo.py:142
 #: ../vdms_dialogs/mediainfo.py:145 ../vdms_dialogs/mediainfo.py:148
-#: ../vdms_main/main_frame.py:1270
+#: ../vdms_main/main_frame.py:1279
 #, fuzzy
 #| msgid "Audio Properties"
 msgid "Properties"
@@ -1518,19 +1521,19 @@ msgstr "toon beschikbare HW acceleratie methodes"
 msgid "Show license"
 msgstr ""
 
-#: ../vdms_dialogs/ffmpeg_help.py:123 ../vdms_main/main_frame.py:532
+#: ../vdms_dialogs/ffmpeg_help.py:123 ../vdms_main/main_frame.py:531
 msgid "Show configuration"
 msgstr "Toon configuratie"
 
-#: ../vdms_dialogs/ffmpeg_help.py:127 ../vdms_main/main_frame.py:540
+#: ../vdms_dialogs/ffmpeg_help.py:127 ../vdms_main/main_frame.py:539
 msgid "Encoders"
 msgstr "Encoders"
 
-#: ../vdms_dialogs/ffmpeg_help.py:131 ../vdms_main/main_frame.py:543
+#: ../vdms_dialogs/ffmpeg_help.py:131 ../vdms_main/main_frame.py:542
 msgid "Decoders"
 msgstr "Decoders"
 
-#: ../vdms_dialogs/ffmpeg_help.py:135 ../vdms_main/main_frame.py:536
+#: ../vdms_dialogs/ffmpeg_help.py:135 ../vdms_main/main_frame.py:535
 msgid "Muxers and Demuxers"
 msgstr "Muxers en Demuxers"
 
@@ -1898,13 +1901,13 @@ msgstr ""
 msgid "Shortcut keys while playing with FFplay"
 msgstr "Sneltoetsen bij afspelen met FFplay"
 
-#: ../vdms_dialogs/queuedlg.py:65 ../vdms_main/main_frame.py:506
-#: ../vdms_panels/presets_manager.py:225
+#: ../vdms_dialogs/queuedlg.py:65 ../vdms_main/main_frame.py:505
+#: ../vdms_panels/presets_manager.py:224
 #: ../vdms_panels/video_to_sequence.py:171 ../vdms_ytdlp/main_ytdlp.py:301
 msgid "Edit"
 msgstr "Edit"
 
-#: ../vdms_dialogs/queuedlg.py:68 ../vdms_panels/presets_manager.py:143
+#: ../vdms_dialogs/queuedlg.py:68 ../vdms_panels/presets_manager.py:142
 msgid "Remove"
 msgstr "Verwijder"
 
@@ -1953,21 +1956,45 @@ msgid "Export queue file"
 msgstr "Exporteer geselecteerden"
 
 #: ../vdms_dialogs/queuedlg.py:296 ../vdms_panels/av_conversions.py:1190
-#: ../vdms_panels/presets_manager.py:1064
+#: ../vdms_panels/presets_manager.py:1063
 #: ../vdms_panels/video_to_sequence.py:602
 msgid "Same as source"
 msgstr ""
 
 #: ../vdms_dialogs/queuedlg.py:301
+#, fuzzy
+#| msgid ""
+#| "Queued File\n"
+#| "Output Format\n"
+#| "Web Optimize\n"
+#| "Audio Codec\n"
+#| "Audio bit-rate\n"
+#| "Audio Channels\n"
+#| "Audio Rate\n"
+#| "Bit per Sample\n"
+#| "Audio Normalization\n"
+#| "Time Period\n"
+#| "Input Audio Map"
 msgid ""
 "Source\n"
-"Destination\n"
+"File destination\n"
 "Automation/Preset\n"
 "Encoding passes\n"
 "Output Format\n"
 "Start of segment\n"
 "Clip duration"
 msgstr ""
+"Wachtrij Bestand\n"
+"Output Formaat\n"
+"Web Optimalisatie\n"
+"Audio Codec\n"
+"Audio bit-rate\n"
+"Audio Kanelen\n"
+"Audio Rate\n"
+"Bit per Sample\n"
+"Audio Normalisatie\n"
+"Tijdsperiode\n"
+"Input Audio Map"
 
 #: ../vdms_dialogs/queue_edit.py:59
 #, fuzzy
@@ -2163,21 +2190,22 @@ msgstr ""
 msgid "Videomass - Downloading..."
 msgstr "Videomass - Bezig met downloaden..."
 
-#: ../vdms_utils/presets_manager_utils.py:49
-#, python-format
-msgid ""
-"The selected profile is not suitable to convert the following file formats:\n"
-"\n"
-"%s\n"
-"\n"
+#: ../vdms_utils/presets_manager_utils.py:46
+#, python-brace-format
+msgid "Supports ({0}) formats only, not ({1})"
 msgstr ""
-"Het geselecteerde profiel is ongeschikt voor converteren van de volgende "
-"bestandsformaten:\n"
-"\n"
-"%s\n"
-"\n"
 
-#: ../vdms_utils/presets_manager_utils.py:84
+#: ../vdms_utils/presets_manager_utils.py:49
+#, fuzzy
+#| msgid "First pass of the selected profile"
+msgid "File formats not supported by the selected profile"
+msgstr "Eerste pass van het geselecteerde profiel"
+
+#: ../vdms_utils/presets_manager_utils.py:52
+msgid "Warning"
+msgstr "Waarschuwing"
+
+#: ../vdms_utils/presets_manager_utils.py:86
 msgid ""
 "You are attempting to load a preset written with invalid JSON encoding.\n"
 "\n"
@@ -2185,7 +2213,7 @@ msgid ""
 "recommended to remove it."
 msgstr ""
 
-#: ../vdms_utils/presets_manager_utils.py:95
+#: ../vdms_utils/presets_manager_utils.py:97
 msgid ""
 "No presets found.\n"
 "\n"
@@ -2197,37 +2225,37 @@ msgstr ""
 "Mogelijke oplossing: open het Presets Manager paneel, ga naar de presets "
 "kolom en probeer de \"Herstel allen...\" knop te drukken"
 
-#: ../vdms_utils/presets_manager_utils.py:127
+#: ../vdms_utils/presets_manager_utils.py:129
 msgid ""
 "Operation aborted due to possible JSON encoding/decoding error.\n"
 "Fix any errors in the JSON code contained on the FILE before performing this "
 "operation again."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:188 ../vdms_main/main_frame.py:1371
-#: ../vdms_main/main_frame.py:1404 ../vdms_ytdlp/main_ytdlp.py:97
+#: ../vdms_main/main_frame.py:186 ../vdms_main/main_frame.py:1380
+#: ../vdms_main/main_frame.py:1413 ../vdms_ytdlp/main_ytdlp.py:97
 #: ../vdms_ytdlp/main_ytdlp.py:146 ../vdms_ytdlp/main_ytdlp.py:543
 #: ../vdms_ytdlp/textdrop.py:233 ../vdms_ytdlp/youtubedl_ui.py:418
 msgid "Ready"
 msgstr "Gereed"
 
-#: ../vdms_main/main_frame.py:205
+#: ../vdms_main/main_frame.py:203
 msgid ""
 "Not all items in the queue were completed.\n"
 "\n"
 "Would you like to keep them in the queue?"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:226
+#: ../vdms_main/main_frame.py:224
 #, python-brace-format
 msgid "Queue ({0})"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:230 ../vdms_main/main_frame.py:1286
+#: ../vdms_main/main_frame.py:228 ../vdms_main/main_frame.py:1295
 msgid "Queue"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:371 ../vdms_ytdlp/main_ytdlp.py:225
+#: ../vdms_main/main_frame.py:369 ../vdms_ytdlp/main_ytdlp.py:225
 #, fuzzy
 #| msgid ""
 #| "There are still processes running.. if you want to stop them, use the "
@@ -2242,237 +2270,237 @@ msgstr ""
 "\n"
 "Wilt u de applicatie afbreken?"
 
-#: ../vdms_main/main_frame.py:373 ../vdms_main/main_frame.py:1084
+#: ../vdms_main/main_frame.py:371 ../vdms_main/main_frame.py:1093
 #: ../vdms_ytdlp/main_ytdlp.py:227
 #, fuzzy
 #| msgid "Videomass - Loading..."
 msgid "Videomass - Warning!"
 msgstr "Videomass - Laden..."
 
-#: ../vdms_main/main_frame.py:377
+#: ../vdms_main/main_frame.py:375
 #, fuzzy
 #| msgid "Are you sure you want to exit?"
 msgid "Are you sure you want to exit the application?"
 msgstr "Afsluiten : bent u zeker?"
 
-#: ../vdms_main/main_frame.py:379
+#: ../vdms_main/main_frame.py:377
 msgid "Exit"
 msgstr "Afsluiten"
 
-#: ../vdms_main/main_frame.py:385 ../vdms_main/main_frame.py:425
+#: ../vdms_main/main_frame.py:383 ../vdms_main/main_frame.py:424
 msgid ""
 "There are still active windows with running processes, make sure you finish "
 "your work before closing them."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:461
+#: ../vdms_main/main_frame.py:460
 #, fuzzy
 #| msgid "Open...\tCtrl+O"
 msgid "Import files\tCtrl+O"
 msgstr "Open...\tCtrl+O"
 
-#: ../vdms_main/main_frame.py:464
+#: ../vdms_main/main_frame.py:463
 #, fuzzy
 #| msgid "Create a new preset"
-msgid "Open destination directory of encodings\tCtrl+D"
+msgid "Open destination folder of encodings\tCtrl+D"
 msgstr "Maak een nieuwe preset"
 
-#: ../vdms_main/main_frame.py:467
+#: ../vdms_main/main_frame.py:466
 msgid "Load queue file"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:468
+#: ../vdms_main/main_frame.py:467
 msgid "Load a previously exported queue file"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:471
+#: ../vdms_main/main_frame.py:470
 #, fuzzy
 #| msgid "Trash folder"
 msgid "Open trash"
 msgstr "Videomass Prullenbak"
 
-#: ../vdms_main/main_frame.py:472
+#: ../vdms_main/main_frame.py:471
 #, fuzzy
 #| msgid "Open the Videomass Trash folder if it exists"
-msgid "Open the Videomass trash directory"
+msgid "Open the Videomass trash folder"
 msgstr "Opent de Videomass Prullenbak folder, als deze bestaat"
 
-#: ../vdms_main/main_frame.py:474
+#: ../vdms_main/main_frame.py:473
 #, fuzzy
 #| msgid "Empty Trash"
 msgid "Empty trash"
 msgstr "Prullenbak legen"
 
-#: ../vdms_main/main_frame.py:475
+#: ../vdms_main/main_frame.py:474
 #, fuzzy
 #| msgid "Delete all files in the Videomass Trash folder"
-msgid "Delete all files in the Videomass trash directory"
+msgid "Delete all files in the Videomass trash folder"
 msgstr "Verwijder alle bestanden uit de Videomass Prullenbak"
 
-#: ../vdms_main/main_frame.py:478
+#: ../vdms_main/main_frame.py:477
 msgid "Exit\tCtrl+Q"
 msgstr "Afsluiten\tCtrl+Q"
 
-#: ../vdms_main/main_frame.py:479
+#: ../vdms_main/main_frame.py:478
 #, fuzzy
 #| msgid "Clear the cache when exiting the application"
 msgid "Completely exit the application"
 msgstr "Maak cache leeg als programma beëindigd wordt"
 
-#: ../vdms_main/main_frame.py:480 ../vdms_ytdlp/main_ytdlp.py:284
+#: ../vdms_main/main_frame.py:479 ../vdms_ytdlp/main_ytdlp.py:284
 msgid "File"
 msgstr "Bestand"
 
-#: ../vdms_main/main_frame.py:484 ../vdms_panels/filedrop.py:339
+#: ../vdms_main/main_frame.py:483 ../vdms_panels/filedrop.py:339
 #: ../vdms_panels/filedrop.py:358
 #, fuzzy
 #| msgid "Delete the selected profile"
 msgid "Rename selected file\tCtrl+R"
 msgstr "Verwijder het geselecteerde profiel"
 
-#: ../vdms_main/main_frame.py:485
+#: ../vdms_main/main_frame.py:484
 #, fuzzy
 #| msgid "A target file must be selected in the queued files"
 msgid "Rename the destination of the selected file"
 msgstr "Een doel-bestand moet geselecteerd zijn in de wachtrij-bestanden"
 
-#: ../vdms_main/main_frame.py:488 ../vdms_panels/filedrop.py:340
+#: ../vdms_main/main_frame.py:487 ../vdms_panels/filedrop.py:340
 #: ../vdms_panels/filedrop.py:361
 #, fuzzy
 #| msgid "Show Logs\tCtrl+L"
 msgid "Batch rename files\tCtrl+B"
 msgstr "Toon Log-berichten\tCtrl+L"
 
-#: ../vdms_main/main_frame.py:489
+#: ../vdms_main/main_frame.py:488
 msgid "Numerically renames the destination of all items in the list"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:494 ../vdms_panels/filedrop.py:342
+#: ../vdms_main/main_frame.py:493 ../vdms_panels/filedrop.py:342
 #: ../vdms_panels/filedrop.py:365
 #, fuzzy
 #| msgid "Delete the selected profile"
 msgid "Remove selected entry\tDEL"
 msgstr "Verwijder het geselecteerde profiel"
 
-#: ../vdms_main/main_frame.py:495
+#: ../vdms_main/main_frame.py:494
 #, fuzzy
 #| msgid "Remove the selected file from the list"
 msgid "Remove the selected file from the list"
 msgstr "Verwijder het geselecteerde bestand uit de lijst"
 
-#: ../vdms_main/main_frame.py:498 ../vdms_panels/filedrop.py:343
+#: ../vdms_main/main_frame.py:497 ../vdms_panels/filedrop.py:343
 #: ../vdms_panels/filedrop.py:368 ../vdms_ytdlp/main_ytdlp.py:294
 #: ../vdms_ytdlp/textdrop.py:191 ../vdms_ytdlp/textdrop.py:212
 msgid "Clear list\tShift+DEL"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:499
+#: ../vdms_main/main_frame.py:498
 #, fuzzy
 #| msgid "Log file list"
 msgid "Clear the file list"
 msgstr "Log bestanden lijst"
 
-#: ../vdms_main/main_frame.py:504 ../vdms_ytdlp/main_ytdlp.py:299
+#: ../vdms_main/main_frame.py:503 ../vdms_ytdlp/main_ytdlp.py:299
 msgid "Preferences\tCtrl+P"
 msgstr "Voorkeuren\tCtrl+P"
 
-#: ../vdms_main/main_frame.py:505
+#: ../vdms_main/main_frame.py:504
 #, fuzzy
 #| msgid "File Preferences"
 msgid "Global preferences"
 msgstr "Bestands Voorkeuren"
 
-#: ../vdms_main/main_frame.py:510
+#: ../vdms_main/main_frame.py:509
 #, fuzzy
 #| msgid "FFmpeg help topics"
 msgid "Find FFmpeg topics"
 msgstr "FFmpeg help-onderwerpen"
 
-#: ../vdms_main/main_frame.py:511
+#: ../vdms_main/main_frame.py:510
 msgid "A useful tool to search for FFmpeg help topics and options"
 msgstr "Een nuttig gereedschap om FFmpeg help-onderwerpen en opties te zoeken"
 
-#: ../vdms_main/main_frame.py:516
+#: ../vdms_main/main_frame.py:515
 #, fuzzy
 #| msgid "Check for new presets"
 msgid "Check for preset updates"
 msgstr "Controleer op nieuwe presets"
 
-#: ../vdms_main/main_frame.py:517
+#: ../vdms_main/main_frame.py:516
 #, fuzzy, python-brace-format
 #| msgid "Check for new presets"
 msgid "Check for new presets updates from {0}"
 msgstr "Controleer op nieuwe presets"
 
-#: ../vdms_main/main_frame.py:519
+#: ../vdms_main/main_frame.py:518
 #, fuzzy
 #| msgid "Create a new preset"
 msgid "Get latest presets"
 msgstr "Maak een nieuwe preset"
 
-#: ../vdms_main/main_frame.py:520
+#: ../vdms_main/main_frame.py:519
 #, fuzzy, python-brace-format
 #| msgid "Check for new presets"
 msgid "Get the latest presets from {0}"
 msgstr "Controleer op nieuwe presets"
 
-#: ../vdms_main/main_frame.py:523 ../vdms_ytdlp/main_ytdlp.py:305
+#: ../vdms_main/main_frame.py:522 ../vdms_ytdlp/main_ytdlp.py:305
 #, fuzzy
 #| msgid "Work Notes\tCtrl+N"
 msgid "Work notes\tCtrl+N"
 msgstr "Notities\tCtrl+N"
 
-#: ../vdms_main/main_frame.py:524 ../vdms_ytdlp/main_ytdlp.py:306
+#: ../vdms_main/main_frame.py:523 ../vdms_ytdlp/main_ytdlp.py:306
 msgid "Read and write useful notes and reminders."
 msgstr "Lees en maak notities en reminders."
 
-#: ../vdms_main/main_frame.py:526 ../vdms_ytdlp/main_ytdlp.py:308
+#: ../vdms_main/main_frame.py:525 ../vdms_ytdlp/main_ytdlp.py:308
 msgid "Tools"
 msgstr "Gereedschappen"
 
-#: ../vdms_main/main_frame.py:533
+#: ../vdms_main/main_frame.py:532
 msgid "Show FFmpeg's built-in configuration capabilities"
 msgstr "Toon ingebouwde FFmpeg configuratie mogelijkheden"
 
-#: ../vdms_main/main_frame.py:537
+#: ../vdms_main/main_frame.py:536
 #, fuzzy
 #| msgid "Muxers and demuxers available for used FFmpeg."
 msgid "Muxers and demuxers available on your version of FFmpeg"
 msgstr "Muxers en demuxers beschikbaar voor gebruikte FFmpeg."
 
-#: ../vdms_main/main_frame.py:541
+#: ../vdms_main/main_frame.py:540
 #, fuzzy
 #| msgid "Shows available encoders for FFmpeg"
 msgid "Encoders available on your version of FFmpeg"
 msgstr "Toont beschikbare encoders voor FFmpeg"
 
-#: ../vdms_main/main_frame.py:544
+#: ../vdms_main/main_frame.py:543
 #, fuzzy
 #| msgid "Shows available encoders for FFmpeg"
 msgid "Decoders available on your version of FFmpeg"
 msgstr "Toont beschikbare encoders voor FFmpeg"
 
-#: ../vdms_main/main_frame.py:547
+#: ../vdms_main/main_frame.py:546
 msgid "FFplay"
 msgstr "FFplay"
 
-#: ../vdms_main/main_frame.py:548
+#: ../vdms_main/main_frame.py:547
 #, fuzzy
 #| msgid "Displays timestamp"
 msgid "Enable timestamps on playback"
 msgstr "Toont tijdcode"
 
-#: ../vdms_main/main_frame.py:549
+#: ../vdms_main/main_frame.py:548
 #, fuzzy
 #| msgid "Displays timestamp when playing movies with FFplay"
 msgid "Displays timestamp when playing media with FFplay"
 msgstr "Toont tijdcode bij afspelen van films met FFplay"
 
-#: ../vdms_main/main_frame.py:552
+#: ../vdms_main/main_frame.py:551
 msgid "Auto-exit after playback"
 msgstr "Automatisch afsluiten na afspelen"
 
-#: ../vdms_main/main_frame.py:553
+#: ../vdms_main/main_frame.py:552
 #, fuzzy
 #| msgid "If checked, the FFplay window will auto-close at the end of playback"
 msgid "If checked, the FFplay window will auto-close when playback is complete"
@@ -2480,233 +2508,239 @@ msgstr ""
 "Als geselecteerd, zal het FFplay window auto-sluiten als het afspelen "
 "beëindigd is"
 
-#: ../vdms_main/main_frame.py:557
+#: ../vdms_main/main_frame.py:556
 msgid "Customize the timestamp style"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:560
+#: ../vdms_main/main_frame.py:559
 #, fuzzy
 #| msgid "While playing"
 msgid "While playing..."
 msgstr "Tijdens afspelen"
 
-#: ../vdms_main/main_frame.py:561
+#: ../vdms_main/main_frame.py:560
 #, fuzzy
 #| msgid "Show useful shortcut keys when playing or previewing with FFplay"
 msgid "Show useful shortcut keys when playing or previewing using FFplay"
 msgstr "Toon nuttige sneltoetsen bij afspelen of preview met FFplay"
 
-#: ../vdms_main/main_frame.py:565
+#: ../vdms_main/main_frame.py:564
 #, fuzzy
 #| msgid "Show timeline\tCtrl+T"
 msgid "Show timeline editor\tCtrl+T"
 msgstr "Toon tijdslijn\tCtrl+T"
 
-#: ../vdms_main/main_frame.py:566
+#: ../vdms_main/main_frame.py:565
 msgid ""
 "Set duration or trim slices of time to remove unwanted parts from your files"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:570 ../vdms_ytdlp/main_ytdlp.py:318
+#: ../vdms_main/main_frame.py:569 ../vdms_ytdlp/main_ytdlp.py:318
 msgid "View"
 msgstr "Bekijk"
 
-#: ../vdms_main/main_frame.py:577
+#: ../vdms_main/main_frame.py:576
 #, fuzzy
 #| msgid "Home panel\tShift+H"
 msgid "Home panel\tCtrl+Shift+H"
 msgstr "Home panel\tShift+H"
 
-#: ../vdms_main/main_frame.py:578 ../vdms_main/main_frame.py:1261
+#: ../vdms_main/main_frame.py:577 ../vdms_main/main_frame.py:1270
 #, fuzzy
 #| msgid "Go to the next panel"
 msgid "Go to the 'Home' panel"
 msgstr "Ga naar volgende panel"
 
-#: ../vdms_main/main_frame.py:581
+#: ../vdms_main/main_frame.py:580
 #, fuzzy
 #| msgid "Presets manager\tShift+P"
 msgid "Presets Manager\tCtrl+Shift+P"
 msgstr "Presets manager\tShift+P"
 
-#: ../vdms_main/main_frame.py:582
+#: ../vdms_main/main_frame.py:581
 #, fuzzy
 #| msgid "jump to the Presets Manager panel"
 msgid "Go to the 'Presets Manager' panel"
 msgstr "spring naar het Presets Manager panel"
 
-#: ../vdms_main/main_frame.py:584
+#: ../vdms_main/main_frame.py:583
 #, fuzzy
 #| msgid "A/V conversions\tShift+V"
 msgid "A/V Conversions\tCtrl+Shift+V"
 msgstr "A/V conversies\tShift+V"
 
-#: ../vdms_main/main_frame.py:585
+#: ../vdms_main/main_frame.py:584
 #, fuzzy
 #| msgid "jump to the Audio/Video Conversion panel"
 msgid "Go to the 'A/V Conversions' panel"
 msgstr "spring naar het Audio/Video Conversie panel"
 
-#: ../vdms_main/main_frame.py:587
+#: ../vdms_main/main_frame.py:586
 #, fuzzy
 #| msgid "Concatenate Demuxer\tShift+D"
 msgid "Concatenate Demuxer\tCtrl+Shift+D"
 msgstr "Samenvoeg Demuxer\tShift+D"
 
-#: ../vdms_main/main_frame.py:588
+#: ../vdms_main/main_frame.py:587
 #, fuzzy
 #| msgid "jump to the Concatenate Demuxer panel"
 msgid "Go to the 'Concatenate Demuxer' panel"
 msgstr "spring naar het Samenvoeg Demuxer panel"
 
-#: ../vdms_main/main_frame.py:591
+#: ../vdms_main/main_frame.py:590
 msgid "Still Image Maker\tCtrl+Shift+I"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:592
+#: ../vdms_main/main_frame.py:591
 #, fuzzy
 #| msgid "jump to the start panel"
 msgid "Go to the 'Still Image Maker' panel"
 msgstr "spring naar het start panel"
 
-#: ../vdms_main/main_frame.py:594
+#: ../vdms_main/main_frame.py:593
 #, fuzzy
 #| msgid "From an image sequence to a video file"
 msgid "From Movie to Pictures\tCtrl+Shift+S"
 msgstr "Van afbeelingen serie naar een video file"
 
-#: ../vdms_main/main_frame.py:595
+#: ../vdms_main/main_frame.py:594
 #, fuzzy
 #| msgid "jump to the Audio/Video Conversion panel"
 msgid "Go to the 'From Movie to Pictures' panel"
 msgstr "spring naar het Audio/Video Conversie panel"
 
-#: ../vdms_main/main_frame.py:598
+#: ../vdms_main/main_frame.py:597
 #, fuzzy
 #| msgid "YouTube downloader\tShift+Y"
 msgid "YouTube Downloader\tCtrl+Shift+Y"
 msgstr "YouTube downloader\tShift+Y"
 
-#: ../vdms_main/main_frame.py:599
+#: ../vdms_main/main_frame.py:598
 #, fuzzy
 #| msgid "YouTube Downloader"
 msgid "Open 'YouTube Downloader' window"
 msgstr "YouTube Downloader"
 
-#: ../vdms_main/main_frame.py:601
+#: ../vdms_main/main_frame.py:600
 #, fuzzy
 #| msgid "Output Monitor\tShift+O"
 msgid "Output monitor\tCtrl+Shift+O"
 msgstr "Output Monitor\tShift+O"
 
-#: ../vdms_main/main_frame.py:602
+#: ../vdms_main/main_frame.py:601
 msgid "Keeps track of the output for debugging errors"
 msgstr "Inspecteert output voor debug-fouten"
 
-#: ../vdms_main/main_frame.py:604
+#: ../vdms_main/main_frame.py:603
 #, fuzzy
 #| msgid "Goto"
 msgid "Go"
 msgstr "Ga naar"
 
-#: ../vdms_main/main_frame.py:608
+#: ../vdms_main/main_frame.py:607
 #, fuzzy
 #| msgid "User Guide"
 msgid "User guide"
 msgstr "Handleiding"
 
-#: ../vdms_main/main_frame.py:609
+#: ../vdms_main/main_frame.py:608
 msgid "Wiki"
 msgstr "Wiki"
 
-#: ../vdms_main/main_frame.py:611
+#: ../vdms_main/main_frame.py:610
 msgid "Issue tracker"
 msgstr "Issue tracker"
 
-#: ../vdms_main/main_frame.py:613
+#: ../vdms_main/main_frame.py:612
 msgid "Translation..."
 msgstr "Vertaling..."
 
-#: ../vdms_main/main_frame.py:615
+#: ../vdms_main/main_frame.py:614
 msgid "Donation"
 msgstr "Donatie"
 
-#: ../vdms_main/main_frame.py:617
+#: ../vdms_main/main_frame.py:616
 msgid "FFmpeg documentation"
 msgstr "FFmpeg documentatie"
 
-#: ../vdms_main/main_frame.py:619
+#: ../vdms_main/main_frame.py:618
 #, fuzzy
 #| msgid "Shows the version in use"
 msgid "System version"
 msgstr "Toont de gebruikte versie"
 
-#: ../vdms_main/main_frame.py:620
+#: ../vdms_main/main_frame.py:619
 msgid ""
 "Get version about your operating system, version of Python and wxPython."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:623
+#: ../vdms_main/main_frame.py:622
 #, fuzzy
 #| msgid "Show Logs\tCtrl+L"
 msgid "Show log files\tCtrl+L"
 msgstr "Toon Log-berichten\tCtrl+L"
 
-#: ../vdms_main/main_frame.py:624
+#: ../vdms_main/main_frame.py:623
 msgid "Viewing log messages"
 msgstr "Log-berichten bekijken"
 
-#: ../vdms_main/main_frame.py:627
+#: ../vdms_main/main_frame.py:626
 msgid "Check for newer version"
 msgstr "Ga nieuwere versie na"
 
-#: ../vdms_main/main_frame.py:628
+#: ../vdms_main/main_frame.py:627
 #, fuzzy
 #| msgid "Show the latest version..."
 msgid "Check for the latest Videomass version"
 msgstr "Toon de laatste versie..."
 
-#: ../vdms_main/main_frame.py:630
+#: ../vdms_main/main_frame.py:629
 msgid "About Videomass"
 msgstr "Over Videomass"
 
-#: ../vdms_main/main_frame.py:631
+#: ../vdms_main/main_frame.py:630
 msgid "Help"
 msgstr "Help"
 
-#: ../vdms_main/main_frame.py:699
+#: ../vdms_main/main_frame.py:698
 #, fuzzy
 #| msgid "Log folder"
 msgid "Import files"
 msgstr "Log folder"
 
-#: ../vdms_main/main_frame.py:748 ../vdms_main/main_frame.py:776
+#: ../vdms_main/main_frame.py:720
+msgid ""
+"No default folder has been set for the destination of the encodings. The "
+"current setting is \"Same destination paths as source files\"."
+msgstr ""
+
+#: ../vdms_main/main_frame.py:755 ../vdms_main/main_frame.py:783
 msgid ""
 "'{}':\n"
 "No such file or directory"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:764
+#: ../vdms_main/main_frame.py:771
 msgid "Are you sure to empty trash folder?"
 msgstr "Weet u zeker dat u de Videomass Prullenbak wilt legen?"
 
-#: ../vdms_main/main_frame.py:772
+#: ../vdms_main/main_frame.py:779
 msgid ""
 "'{}':\n"
 "Nothing to clean up."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:829
+#: ../vdms_main/main_frame.py:836
 #, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:833
+#: ../vdms_main/main_frame.py:840
 #, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:863
+#: ../vdms_main/main_frame.py:870
 msgid ""
 "Wait....\n"
 "The archive is being downloaded"
@@ -2714,18 +2748,18 @@ msgstr ""
 "Wacht....\n"
 "Het archief wordt gedownload"
 
-#: ../vdms_main/main_frame.py:874
+#: ../vdms_main/main_frame.py:881
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "Succesvol gedownload naar \"{0}\""
 
-#: ../vdms_main/main_frame.py:1076
+#: ../vdms_main/main_frame.py:1085
 #, fuzzy
 #| msgid "Clear the cache when exiting the application"
 msgid "Some changes require restarting the application."
 msgstr "Maak cache leeg als programma beëindigd wordt"
 
-#: ../vdms_main/main_frame.py:1087
+#: ../vdms_main/main_frame.py:1096
 #, fuzzy, python-brace-format
 #| msgid "Are you sure you want to exit?"
 msgid ""
@@ -2734,122 +2768,122 @@ msgid ""
 "Do you want to restart the application now?"
 msgstr "Afsluiten : bent u zeker?"
 
-#: ../vdms_main/main_frame.py:1089
+#: ../vdms_main/main_frame.py:1098
 #, fuzzy
 #| msgid "Videomass"
 msgid "Restart Videomass?"
 msgstr "Videomass"
 
-#: ../vdms_main/main_frame.py:1159
+#: ../vdms_main/main_frame.py:1168
 #, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr "Er is een nieuwe versie beschikbaar - v.{0}\n"
 
-#: ../vdms_main/main_frame.py:1162
+#: ../vdms_main/main_frame.py:1171
 msgid "You are using a development version that has not yet been released!\n"
 msgstr "U gebruikt een ontwikkelaars versie die nog niet is vrijgegeven!\n"
 
-#: ../vdms_main/main_frame.py:1165
+#: ../vdms_main/main_frame.py:1174
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr "Gefeliciteerd! U gebruikt al de laatste versie.\n"
 
-#: ../vdms_main/main_frame.py:1253 ../vdms_ytdlp/main_ytdlp.py:469
+#: ../vdms_main/main_frame.py:1262 ../vdms_ytdlp/main_ytdlp.py:469
 msgid "Go to the previous panel"
 msgstr "Ga naar vorig panel"
 
-#: ../vdms_main/main_frame.py:1254 ../vdms_ytdlp/main_ytdlp.py:470
+#: ../vdms_main/main_frame.py:1263 ../vdms_ytdlp/main_ytdlp.py:470
 msgid "Back"
 msgstr "Terug"
 
-#: ../vdms_main/main_frame.py:1257 ../vdms_ytdlp/main_ytdlp.py:474
+#: ../vdms_main/main_frame.py:1266 ../vdms_ytdlp/main_ytdlp.py:474
 msgid "Go to the next panel"
 msgstr "Ga naar volgende panel"
 
-#: ../vdms_main/main_frame.py:1258 ../vdms_ytdlp/main_ytdlp.py:475
+#: ../vdms_main/main_frame.py:1267 ../vdms_ytdlp/main_ytdlp.py:475
 msgid "Next"
 msgstr "Volgende"
 
-#: ../vdms_main/main_frame.py:1262
+#: ../vdms_main/main_frame.py:1271
 msgid "Home"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1265
+#: ../vdms_main/main_frame.py:1274
 #, fuzzy
 #| msgid "Play the selected files in the list"
 msgid "Play the selected file in the list"
 msgstr "Speel de geselecteerde bestanden in de lijst af"
 
-#: ../vdms_main/main_frame.py:1266
+#: ../vdms_main/main_frame.py:1275
 msgid "Play"
 msgstr "Speel"
 
-#: ../vdms_main/main_frame.py:1269
+#: ../vdms_main/main_frame.py:1278
 #, fuzzy
 #| msgid "Gathers information of multimedia streams"
 msgid "Get informative data about imported media streams"
 msgstr "Wint informatie in over multimedia streams"
 
-#: ../vdms_main/main_frame.py:1273
+#: ../vdms_main/main_frame.py:1282
 msgid "Start batch processing"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1277 ../vdms_ytdlp/main_ytdlp.py:489
+#: ../vdms_main/main_frame.py:1286 ../vdms_ytdlp/main_ytdlp.py:489
 msgid "Stops current process"
 msgstr "Stopt huidige proces"
 
-#: ../vdms_main/main_frame.py:1278 ../vdms_ytdlp/main_ytdlp.py:490
+#: ../vdms_main/main_frame.py:1287 ../vdms_ytdlp/main_ytdlp.py:490
 msgid "Abort"
 msgstr "Afbreken"
 
-#: ../vdms_main/main_frame.py:1281
+#: ../vdms_main/main_frame.py:1290
 msgid "Add an item to Queue"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1282
+#: ../vdms_main/main_frame.py:1291
 msgid "Add to Queue"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1285
+#: ../vdms_main/main_frame.py:1294
 msgid "Show queue"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1370 ../vdms_ytdlp/main_ytdlp.py:145
+#: ../vdms_main/main_frame.py:1379 ../vdms_ytdlp/main_ytdlp.py:145
 msgid "Videomass"
 msgstr "Videomass"
 
-#: ../vdms_main/main_frame.py:1405
+#: ../vdms_main/main_frame.py:1414
 #, fuzzy
 #| msgid "Videomass - Queued Files"
 msgid "Videomass - File List"
 msgstr "Videomass - Wachtrij Bestanden"
 
-#: ../vdms_main/main_frame.py:1422
+#: ../vdms_main/main_frame.py:1431
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - AV Conversies"
 
-#: ../vdms_main/main_frame.py:1450
+#: ../vdms_main/main_frame.py:1459
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - Presets Manager"
 
-#: ../vdms_main/main_frame.py:1479
+#: ../vdms_main/main_frame.py:1488
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Samenvoeg Demuxer"
 
-#: ../vdms_main/main_frame.py:1507
+#: ../vdms_main/main_frame.py:1516
 #, fuzzy
 #| msgid "From an image sequence to a video file"
 msgid "Videomass - From Movie to Pictures"
 msgstr "Van afbeelingen serie naar een video file"
 
-#: ../vdms_main/main_frame.py:1535
+#: ../vdms_main/main_frame.py:1544
 #, fuzzy
 #| msgid "Videomass - Presets Manager"
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Presets Manager"
 
-#: ../vdms_main/main_frame.py:1623 ../vdms_panels/av_conversions.py:574
+#: ../vdms_main/main_frame.py:1632 ../vdms_panels/av_conversions.py:574
 #: ../vdms_panels/audio_encoders/acodecs.py:784 ../vdms_panels/filedrop.py:474
-#: ../vdms_panels/filedrop.py:591 ../vdms_panels/sequence_to_video.py:320
+#: ../vdms_panels/filedrop.py:589 ../vdms_panels/sequence_to_video.py:320
 #: ../vdms_panels/video_to_sequence.py:371
 #: ../vdms_panels/video_to_sequence.py:503
 #, fuzzy
@@ -2857,20 +2891,20 @@ msgstr "Videomass - Presets Manager"
 msgid "Have to select an item in the file list first"
 msgstr "Selecteer eerst een profiel in de lijst"
 
-#: ../vdms_main/main_frame.py:1644
+#: ../vdms_main/main_frame.py:1653
 msgid ""
 "An item with the same destination file already exists.\n"
 "\n"
 "Do you want to replace it by adding the new item to the queue?"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1665
+#: ../vdms_main/main_frame.py:1674
 #, fuzzy
 #| msgid "Videomass - Output Monitor"
 msgid "Videomass - FFmpeg Message Monitoring"
 msgstr "Videomass - Output Monitor"
 
-#: ../vdms_main/main_frame.py:1760
+#: ../vdms_main/main_frame.py:1769
 #, fuzzy
 #| msgid "The downloader is disabled. Check your preferences."
 msgid "yt-dlp is disabled. Check your preferences."
@@ -3029,7 +3063,7 @@ msgstr ""
 msgid "Off"
 msgstr "Uit"
 
-#: ../vdms_panels/av_conversions.py:1197
+#: ../vdms_panels/av_conversions.py:1201
 #, fuzzy
 #| msgid ""
 #| "Queued File\n"
@@ -3045,6 +3079,7 @@ msgstr "Uit"
 #| "Input Audio Map"
 msgid ""
 "Batch processing items\n"
+"Destination\n"
 "Automation/Preset\n"
 "Encoding passes\n"
 "Output Format\n"
@@ -3067,13 +3102,13 @@ msgstr ""
 "Tijdsperiode\n"
 "Input Audio Map"
 
-#: ../vdms_panels/av_conversions.py:1241
+#: ../vdms_panels/av_conversions.py:1246
 #, fuzzy
 #| msgid "Close Videomass"
 msgid "Choose a Videomass preset..."
 msgstr "Sluit Videomass af"
 
-#: ../vdms_panels/av_conversions.py:1252
+#: ../vdms_panels/av_conversions.py:1257
 #, python-brace-format
 msgid "New Profile - Preset \"{0}\""
 msgstr ""
@@ -3853,13 +3888,25 @@ msgid "ERROR"
 msgstr "FOUT"
 
 #: ../vdms_panels/concatenate.py:263
+#, fuzzy
+#| msgid ""
+#| "File to concatenate\n"
+#| "Output filename\n"
+#| "Destination\n"
+#| "Output Format\n"
+#| "Time Period"
 msgid ""
-"Batch processing items\n"
-"Destination\n"
+"Items to concatenate\n"
+"File destination\n"
 "Output Format\n"
 "Output multimedia type\n"
 "Duration"
 msgstr ""
+"Bestand om aaneen te schakelen\n"
+"Output bestandsnaam\n"
+"Bestemming\n"
+"Output Formaat\n"
+"Tijd Periode"
 
 #: ../vdms_panels/filedrop.py:45
 msgid "File has illegal characters like:"
@@ -3931,13 +3978,13 @@ msgstr "Preset"
 #: ../vdms_panels/filedrop.py:305
 #, fuzzy
 #| msgid "Create a new preset"
-msgid "Set a new destination directory for encodings"
+msgid "Set a new destination folder for encodings"
 msgstr "Maak een nieuwe preset"
 
 #: ../vdms_panels/filedrop.py:307
 #, fuzzy
 #| msgid "Configuration folder"
-msgid "Encodings destination directory"
+msgid "Encodings destination folder"
 msgstr "Configuratie folder"
 
 #: ../vdms_panels/filedrop.py:337 ../vdms_panels/filedrop.py:371
@@ -3964,41 +4011,35 @@ msgstr "Sleep een of meer bestanden hieronder"
 msgid "Drag one or more Video files below"
 msgstr "Sleep een of meer bestanden hieronder"
 
-#: ../vdms_panels/filedrop.py:573
-#, fuzzy
-#| msgid "Create a new preset"
-msgid "same destination directories as source files"
-msgstr "Maak een nieuwe preset"
-
-#: ../vdms_panels/filedrop.py:598
+#: ../vdms_panels/filedrop.py:596
 #, fuzzy
 #| msgid "Restore the default destination folders"
 msgid "Rename the file destination"
 msgstr "Herstel de standaard bestemming-folders"
 
-#: ../vdms_panels/filedrop.py:599
+#: ../vdms_panels/filedrop.py:597
 #, fuzzy
 #| msgid "Delete the selected profile"
 msgid "Rename the selected file to:"
 msgstr "Verwijder het geselecteerde profiel"
 
-#: ../vdms_panels/filedrop.py:613 ../vdms_panels/filedrop.py:623
-#: ../vdms_panels/filedrop.py:654
+#: ../vdms_panels/filedrop.py:611 ../vdms_panels/filedrop.py:621
+#: ../vdms_panels/filedrop.py:652
 msgid "Add Files"
 msgstr "Voeg bestanden toe"
 
-#: ../vdms_panels/filedrop.py:630
+#: ../vdms_panels/filedrop.py:628
 #, fuzzy
 #| msgid "A target file must be selected in the queued files"
 msgid "Batch rename the destination items"
 msgstr "Een doel-bestand moet geselecteerd zijn in de wachtrij-bestanden"
 
-#: ../vdms_panels/filedrop.py:631
+#: ../vdms_panels/filedrop.py:629
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:633
+#: ../vdms_panels/filedrop.py:631
 #, fuzzy
 #| msgid "File Name"
 msgid "New Name #"
@@ -4080,131 +4121,131 @@ msgstr "wacht... bezig met afbreken"
 msgid "...Interrupted"
 msgstr "...Onderbroken"
 
-#: ../vdms_panels/presets_manager.py:117
+#: ../vdms_panels/presets_manager.py:116
 msgid "Presets"
 msgstr "Presets"
 
-#: ../vdms_panels/presets_manager.py:140
+#: ../vdms_panels/presets_manager.py:139
 msgid "New"
 msgstr "Nieuw"
 
-#: ../vdms_panels/presets_manager.py:153
+#: ../vdms_panels/presets_manager.py:152
 msgid "Export selected"
 msgstr "Exporteer geselecteerden"
 
-#: ../vdms_panels/presets_manager.py:156
+#: ../vdms_panels/presets_manager.py:155
 msgid "Export all..."
 msgstr "Exporteer allen..."
 
-#: ../vdms_panels/presets_manager.py:167
+#: ../vdms_panels/presets_manager.py:166
 msgid "Import preset"
 msgstr "Importeer preset"
 
-#: ../vdms_panels/presets_manager.py:170
+#: ../vdms_panels/presets_manager.py:169
 #, fuzzy
 #| msgid "Log folder"
 msgid "Import folder"
 msgstr "Log folder"
 
-#: ../vdms_panels/presets_manager.py:181
+#: ../vdms_panels/presets_manager.py:180
 #, fuzzy
 #| msgid "Export selected"
 msgid "Restore selected"
 msgstr "Exporteer geselecteerden"
 
-#: ../vdms_panels/presets_manager.py:185
+#: ../vdms_panels/presets_manager.py:184
 msgid "Restore all..."
 msgstr "Herstel allen..."
 
-#: ../vdms_panels/presets_manager.py:197
+#: ../vdms_panels/presets_manager.py:196
 #, fuzzy
 #| msgid "Reload"
 msgid "Reload all"
 msgstr "Herlaad"
 
-#: ../vdms_panels/presets_manager.py:211
+#: ../vdms_panels/presets_manager.py:210
 msgid "Profiles"
 msgstr "Profielen"
 
-#: ../vdms_panels/presets_manager.py:216
+#: ../vdms_panels/presets_manager.py:215
 msgid "Add"
 msgstr "Voeg toe"
 
-#: ../vdms_panels/presets_manager.py:220
+#: ../vdms_panels/presets_manager.py:219
 msgid "Delete"
 msgstr "Verwijder"
 
-#: ../vdms_panels/presets_manager.py:230
+#: ../vdms_panels/presets_manager.py:229
 msgid "Duplicate"
 msgstr "Kopieer"
 
-#: ../vdms_panels/presets_manager.py:239
+#: ../vdms_panels/presets_manager.py:238
 #, fuzzy
 #| msgid "One-Pass"
 msgid "One-Pass Encoding"
 msgstr "Een-Pass"
 
-#: ../vdms_panels/presets_manager.py:251
+#: ../vdms_panels/presets_manager.py:250
 #, fuzzy
 #| msgid "Two-Pass"
 msgid "Two-Pass Encoding"
 msgstr "Twee-Pass"
 
-#: ../vdms_panels/presets_manager.py:286
+#: ../vdms_panels/presets_manager.py:285
 msgid "Choose a preset and view its profiles"
 msgstr "Kies een preset en bekijk de profielen ervan"
 
-#: ../vdms_panels/presets_manager.py:287
+#: ../vdms_panels/presets_manager.py:286
 msgid "Create a new profile and save it in the selected preset"
 msgstr "Maak een nieuw profiel en bewaar het in de geselecteerde preset"
 
-#: ../vdms_panels/presets_manager.py:289
+#: ../vdms_panels/presets_manager.py:288
 msgid "Delete the selected profile"
 msgstr "Verwijder het geselecteerde profiel"
 
-#: ../vdms_panels/presets_manager.py:290
+#: ../vdms_panels/presets_manager.py:289
 msgid "Edit the selected profile"
 msgstr "Edit het geselecteerde profiel"
 
-#: ../vdms_panels/presets_manager.py:291
+#: ../vdms_panels/presets_manager.py:290
 msgid "Create a new preset"
 msgstr "Maak een nieuwe preset"
 
-#: ../vdms_panels/presets_manager.py:293
+#: ../vdms_panels/presets_manager.py:292
 msgid "Remove the selected preset from the Presets Manager"
 msgstr "Verwijder de geselecteerde preset uit de Presets Manager"
 
-#: ../vdms_panels/presets_manager.py:295
+#: ../vdms_panels/presets_manager.py:294
 msgid "Export selected preset as copy"
 msgstr "Exporteer geselecteerde preset als copy"
 
-#: ../vdms_panels/presets_manager.py:297
+#: ../vdms_panels/presets_manager.py:296
 msgid "Export entire presets folder as copy"
 msgstr "Exporteer gehele presets folder als copy"
 
-#: ../vdms_panels/presets_manager.py:299
+#: ../vdms_panels/presets_manager.py:298
 msgid "Import a new preset or update an existing one"
 msgstr "Importeer een nieuwe preset of update een bestaande"
 
-#: ../vdms_panels/presets_manager.py:301
+#: ../vdms_panels/presets_manager.py:300
 #, fuzzy
 #| msgid "Import a new preset or update an existing one"
 msgid "Import a presets folder, updating those in use"
 msgstr "Importeer een nieuwe preset of update een bestaande"
 
-#: ../vdms_panels/presets_manager.py:303
+#: ../vdms_panels/presets_manager.py:302
 msgid "Replace the selected preset with the Videomass default one"
 msgstr "Vervang de geselecteerde preset met de Videomass standaard"
 
-#: ../vdms_panels/presets_manager.py:305
+#: ../vdms_panels/presets_manager.py:304
 msgid "Retrieve all Videomass default presets"
 msgstr "Haal alle Videomass standaard presets op"
 
-#: ../vdms_panels/presets_manager.py:307
+#: ../vdms_panels/presets_manager.py:306
 msgid "Update the presets list"
 msgstr "Update de presets lijst"
 
-#: ../vdms_panels/presets_manager.py:369
+#: ../vdms_panels/presets_manager.py:368
 #, python-brace-format
 msgid ""
 "Outdated presets version found: v{1}\n"
@@ -4219,25 +4260,25 @@ msgid ""
 "Do you want to perform this update now?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:434
+#: ../vdms_panels/presets_manager.py:433
 msgid "Name"
 msgstr "Naam"
 
-#: ../vdms_panels/presets_manager.py:436
+#: ../vdms_panels/presets_manager.py:435
 msgid "Output Format"
 msgstr "Output Formaat"
 
-#: ../vdms_panels/presets_manager.py:437
+#: ../vdms_panels/presets_manager.py:436
 msgid "Supported Format List"
 msgstr "Lijst Ondersteunde Formaten"
 
-#: ../vdms_panels/presets_manager.py:456
+#: ../vdms_panels/presets_manager.py:455
 msgid ""
 "ERROR: Preset not supported!\n"
 "FILE: \"{}\""
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:521
+#: ../vdms_panels/presets_manager.py:520
 #, python-brace-format
 msgid ""
 "ERROR: json key error\n"
@@ -4246,15 +4287,15 @@ msgid ""
 "{1}"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:546
+#: ../vdms_panels/presets_manager.py:545
 msgid "Enter name for new preset"
 msgstr "Voer naam in voor nieuwe preset"
 
-#: ../vdms_panels/presets_manager.py:559
+#: ../vdms_panels/presets_manager.py:558
 msgid "Cannot save current data in file '{}'."
 msgstr "Kan huidige data niet in bestand '{}' bewaren."
 
-#: ../vdms_panels/presets_manager.py:563
+#: ../vdms_panels/presets_manager.py:562
 msgid ""
 "'Successful!\n"
 "\n"
@@ -4264,7 +4305,7 @@ msgstr ""
 "\n"
 "Een nieuwe lege preset is gemaakt."
 
-#: ../vdms_panels/presets_manager.py:576
+#: ../vdms_panels/presets_manager.py:575
 #, fuzzy
 #| msgid ""
 #| "Are you sure you want to remove \"{}\" preset?\n"
@@ -4279,7 +4320,7 @@ msgstr ""
 "\n"
 "Deze wordt verplaatst naar de \"Verwijderd\" subfolder in de presets folder."
 
-#: ../vdms_panels/presets_manager.py:587
+#: ../vdms_panels/presets_manager.py:586
 msgid ""
 "{}\n"
 "\n"
@@ -4289,32 +4330,32 @@ msgstr ""
 "\n"
 "Sorry, verwijdering mislukt, kan niet verder gaan.."
 
-#: ../vdms_panels/presets_manager.py:597
+#: ../vdms_panels/presets_manager.py:596
 #, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
 msgstr "De preset \"{0}\" was succesvol verwijderd"
 
-#: ../vdms_panels/presets_manager.py:617
+#: ../vdms_panels/presets_manager.py:616
 msgid "A file with this name already exists, do you want to overwrite it?"
 msgstr "Een bestand met deze naam bestaat al, wilt u het overschrijven?"
 
-#: ../vdms_panels/presets_manager.py:630
+#: ../vdms_panels/presets_manager.py:629
 msgid "The preset was exported successfully"
 msgstr "De preset was succesvol geëxporteerd"
 
-#: ../vdms_panels/presets_manager.py:649
+#: ../vdms_panels/presets_manager.py:648
 msgid "All presets have been exported successfully"
 msgstr "Alle presets zijn succesvol geëxporteerd"
 
-#: ../vdms_panels/presets_manager.py:660
+#: ../vdms_panels/presets_manager.py:659
 msgid "Import a new preset"
 msgstr "Importeer een nieuwe preset"
 
-#: ../vdms_panels/presets_manager.py:671
+#: ../vdms_panels/presets_manager.py:670
 msgid "Error, invalid preset: \"{}\""
 msgstr "Error, ongeldige preset: \"{}\""
 
-#: ../vdms_panels/presets_manager.py:679
+#: ../vdms_panels/presets_manager.py:678
 msgid ""
 "This preset already exists and is about to be updated. Don't worry, it will "
 "keep all your saved profiles.\n"
@@ -4326,11 +4367,11 @@ msgstr ""
 "\n"
 "Wilt u verder gaan?"
 
-#: ../vdms_panels/presets_manager.py:696
+#: ../vdms_panels/presets_manager.py:695
 msgid "A new preset was successfully imported"
 msgstr "Een nieuwe preset is succesvol geïmporteerd"
 
-#: ../vdms_panels/presets_manager.py:714
+#: ../vdms_panels/presets_manager.py:713
 msgid ""
 "This will update the presets database. Don't worry, it will keep all your "
 "saved profiles.\n"
@@ -4342,15 +4383,15 @@ msgstr ""
 "\n"
 "Wilt u verder gaan?"
 
-#: ../vdms_panels/presets_manager.py:721
+#: ../vdms_panels/presets_manager.py:720
 msgid "Import a new presets folder"
 msgstr "Importeer een nieuwe preset folder"
 
-#: ../vdms_panels/presets_manager.py:754
+#: ../vdms_panels/presets_manager.py:753
 msgid "The presets database has been successfully updated"
 msgstr "De presets database is succesvol ge-update"
 
-#: ../vdms_panels/presets_manager.py:765
+#: ../vdms_panels/presets_manager.py:764
 msgid ""
 "Be careful! The selected preset will be overwritten with the default one. "
 "Your profiles may be deleted!\n"
@@ -4362,11 +4403,11 @@ msgstr ""
 "\n"
 "Wilt u verder gaan?"
 
-#: ../vdms_panels/presets_manager.py:783
+#: ../vdms_panels/presets_manager.py:782
 msgid "Successful recovery"
 msgstr "Succesvol herstel"
 
-#: ../vdms_panels/presets_manager.py:792
+#: ../vdms_panels/presets_manager.py:791
 #, fuzzy
 #| msgid ""
 #| "Be careful! This action will restore all presets to default ones. Your "
@@ -4387,32 +4428,32 @@ msgstr ""
 "\n"
 "Wilt u verder gaan?"
 
-#: ../vdms_panels/presets_manager.py:815
+#: ../vdms_panels/presets_manager.py:814
 msgid "All default presets have been successfully recovered"
 msgstr "Alle standaard presets zijn met succes hersteld"
 
-#: ../vdms_panels/presets_manager.py:835
+#: ../vdms_panels/presets_manager.py:834
 msgid "New Profile - Preset \"{}\""
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:853
+#: ../vdms_panels/presets_manager.py:852
 #, fuzzy
 #| msgid "Edit profile of the \"{}\" preset"
 msgid "*Edit Profile - Preset \"{}\""
 msgstr "Edit profiel van de \"{}\" preset"
 
-#: ../vdms_panels/presets_manager.py:892
+#: ../vdms_panels/presets_manager.py:891
 msgid ""
 "Are you sure you want to delete the selected profile? It will no longer be "
 "possible to recover it."
 msgstr ""
 "Geselecteerde profiel verwijderen? Het zal niet meer hersteld kunnen worden."
 
-#: ../vdms_panels/presets_manager.py:911
+#: ../vdms_panels/presets_manager.py:910
 msgid "First select a profile in the list"
 msgstr "Selecteer eerst een profiel in de lijst"
 
-#: ../vdms_panels/presets_manager.py:919
+#: ../vdms_panels/presets_manager.py:918
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
@@ -4420,13 +4461,27 @@ msgstr ""
 "Het geselecteerde profiel commando is handmatig gewijzigd.\n"
 "Wilt u dit toepassen voor het conversie proces?"
 
-#: ../vdms_panels/presets_manager.py:929
+#: ../vdms_panels/presets_manager.py:928
 msgid "Don't show this dialog again"
 msgstr "Toon dit dialoogscherm niet meer"
 
-#: ../vdms_panels/presets_manager.py:1069
+#: ../vdms_panels/presets_manager.py:1073
+#, fuzzy
+#| msgid ""
+#| "Queued File\n"
+#| "Output Format\n"
+#| "Web Optimize\n"
+#| "Audio Codec\n"
+#| "Audio bit-rate\n"
+#| "Audio Channels\n"
+#| "Audio Rate\n"
+#| "Bit per Sample\n"
+#| "Audio Normalization\n"
+#| "Time Period\n"
+#| "Input Audio Map"
 msgid ""
 "Batch processing items\n"
+"Destination\n"
 "Automation/Preset\n"
 "Encoding passes\n"
 "Profile Used\n"
@@ -4434,6 +4489,17 @@ msgid ""
 "Start of segment\n"
 "Clip duration"
 msgstr ""
+"Wachtrij Bestand\n"
+"Output Formaat\n"
+"Web Optimalisatie\n"
+"Audio Codec\n"
+"Audio bit-rate\n"
+"Audio Kanelen\n"
+"Audio Rate\n"
+"Bit per Sample\n"
+"Audio Normalisatie\n"
+"Tijdsperiode\n"
+"Input Audio Map"
 
 #: ../vdms_panels/sequence_to_video.py:54
 msgid "Images need to be resized, please use Resize function."
@@ -4539,9 +4605,9 @@ msgstr ""
 
 #: ../vdms_panels/sequence_to_video.py:720
 msgid ""
-"Batch processing items\n"
+"Items to concatenate\n"
 "Output filename\n"
-"Destination directory\n"
+"Destination\n"
 "Output Format\n"
 "Additional arguments\n"
 "Audio file\n"
@@ -4621,7 +4687,7 @@ msgstr ""
 msgid ""
 "Selected File\n"
 "Output Format\n"
-"Destination directory\n"
+"Destination\n"
 "Rate (fps)\n"
 "Resizing\n"
 "Mosaic rows\n"
@@ -4740,7 +4806,7 @@ msgstr "YouTube Downloader"
 #: ../vdms_ytdlp/main_ytdlp.py:273
 #, fuzzy
 #| msgid "Choose a temporary destination for downloads"
-msgid "Open destination directory of downloads\tCtrl+D"
+msgid "Open destination folder of downloads\tCtrl+D"
 msgstr "Kies een tijdelijke bestemming voor de downloads"
 
 #: ../vdms_ytdlp/main_ytdlp.py:276
@@ -4945,13 +5011,13 @@ msgstr ""
 #: ../vdms_ytdlp/textdrop.py:167
 #, fuzzy
 #| msgid "Choose a temporary destination for downloads"
-msgid "Set a new destination directory for downloads"
+msgid "Set a new destination folder for downloads"
 msgstr "Kies een tijdelijke bestemming voor de downloads"
 
 #: ../vdms_ytdlp/textdrop.py:169
 #, fuzzy
 #| msgid "Choose a temporary destination for downloads"
-msgid "Destination directory of downloads"
+msgid "Destination folder of downloads"
 msgstr "Kies een tijdelijke bestemming voor de downloads"
 
 #: ../vdms_ytdlp/ydl_mediainfo.py:67
@@ -5317,6 +5383,20 @@ msgid ""
 "Cannot contain multiple occurrences in `destination` keys value."
 msgstr ""
 
+#, python-format
+#~ msgid ""
+#~ "The selected profile is not suitable to convert the following file "
+#~ "formats:\n"
+#~ "\n"
+#~ "%s\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Het geselecteerde profiel is ongeschikt voor converteren van de volgende "
+#~ "bestandsformaten:\n"
+#~ "\n"
+#~ "%s\n"
+#~ "\n"
+
 #, fuzzy
 #~| msgid "Application preferences"
 #~ msgid "Application Language"
@@ -5389,9 +5469,6 @@ msgstr ""
 
 #~ msgid "Please Confirm"
 #~ msgstr "Bevestig aub"
-
-#~ msgid "Warning"
-#~ msgstr "Waarschuwing"
 
 #, fuzzy
 #~| msgid "nlmeans options"
@@ -5507,19 +5584,6 @@ msgstr ""
 #~ "Kies een index van de beschikbare audio streams. Als de bron een video "
 #~ "is, dan wordt aanbevolen om een nummer van de audio index te selecteren. "
 #~ "Als de bron een audio bestand is, laat het dan op \"Auto\" staan."
-
-#~ msgid ""
-#~ "File to concatenate\n"
-#~ "Output filename\n"
-#~ "Destination\n"
-#~ "Output Format\n"
-#~ "Time Period"
-#~ msgstr ""
-#~ "Bestand om aaneen te schakelen\n"
-#~ "Output bestandsnaam\n"
-#~ "Bestemming\n"
-#~ "Output Formaat\n"
-#~ "Tijd Periode"
 
 #~ msgid "File Name"
 #~ msgstr "Bestandsnaam"
@@ -5741,9 +5805,6 @@ msgstr ""
 
 #~ msgid "Process log:"
 #~ msgstr "Proces log:"
-
-#~ msgid "First pass of the selected profile"
-#~ msgstr "Eerste pass van het geselecteerde profiel"
 
 #~ msgid "Second pass of the selected profile"
 #~ msgstr "Tweede pass van het geselecteerde profiel"

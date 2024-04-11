@@ -302,9 +302,9 @@ class FileDnD(wx.Panel):
             lblsave.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
 
         # ---- Tooltips
-        self.btn_destpath.SetToolTip(_('Set a new destination directory for '
+        self.btn_destpath.SetToolTip(_('Set a new destination folder for '
                                        'encodings'))
-        self.text_path_save.SetToolTip(_("Encodings destination directory"))
+        self.text_path_save.SetToolTip(_("Encodings destination folder"))
 
         # ---- Binding (EVT)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
@@ -570,13 +570,11 @@ class FileDnD(wx.Panel):
         Set a specific directory for files saving
         """
         if self.appdata['outputdir_asinput']:
-            msg = _('same destination directories as source files')
+            msg = _('Same destination paths as source files')
             self.text_path_save.SetValue(msg)
-            self.btn_destpath.Disable()
-            self.text_path_save.Disable()
+            #self.btn_destpath.Disable()
             return
-        self.btn_destpath.Enable()
-        self.text_path_save.Enable()
+        #self.btn_destpath.Enable()
         self.text_path_save.SetValue(path)
     # -----------------------------------------------------------------------
 

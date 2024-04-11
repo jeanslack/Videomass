@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.08.2024
+Rev: Apr.11.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -28,6 +28,7 @@ This file is part of Videomass.
 import os
 import json
 import wx
+from videomass.vdms_dialogs.list_warning import ListWarning
 
 
 def supported_formats(supp, file_sources):
@@ -36,23 +37,24 @@ def supported_formats(supp, file_sources):
     presets manager panel
     """
     items = ''.join(supp.split()).split(',')
-    exclude = []
+    errors = {}
 
     if not items == ['']:
         for src in file_sources:
             if os.path.splitext(src)[1].split('.')[1] not in items:
-                exclude.append(src)
-        if exclude:
-            for xex in exclude:
-                file_sources.remove(xex)
-            if not file_sources:
-                wx.MessageBox(_("The selected profile is not suitable to "
-                                "convert the following file formats:"
-                                "\n\n%s\n\n") % ('\n'.join(exclude)),
-                              "Videomass",
-                              wx.ICON_INFORMATION | wx.OK,
-                              )
-                return None
+                ext = os.path.splitext(src)[1].split('.')[1]
+                errors[f'"{src}"'] = (_('Supports ({0}) formats only, '
+                                        'not ({1})').format(supp, ext))
+        if errors:
+            msg = _('File formats not supported by the selected profile')
+            with ListWarning(None,
+                             errors,
+                             caption=_('Warning'),
+                             header=msg,
+                             buttons='OK',
+                             ) as log:
+                log.ShowModal()
+            return None
 
     return file_sources
 # ----------------------------------------------------------------------#

@@ -298,8 +298,9 @@ class QueueManager(wx.Dialog):
             sst = itemsel["start-time"].split()[1]
             endt = itemsel["end-time"].split()[1]
 
-        keys = (_("Source\nDestination\nAutomation/Preset\nEncoding passes\n"
-                  "Output Format\nStart of segment\nClip duration"))
+        keys = (_("Source\nFile destination\nAutomation/Preset\n"
+                  "Encoding passes\nOutput Format\nStart of segment\n"
+                  "Clip duration"))
         vals = (f'{itemsel["source"]}\n{itemsel["destination"]}\n'
                 f'{itemsel["preset name"]}\n{passes}\n{itemsel["extension"]}\n'
                 f'{sst}\n{endt}'

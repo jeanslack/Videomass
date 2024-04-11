@@ -406,6 +406,7 @@ class MainFrame(wx.Frame):
                             ]
         sett['filedrop_column_width'] = filedropcolwidth
         sett['outputdir'] = self.appdata['outputdir']
+        sett['outputdir_asinput'] = self.appdata['outputdir_asinput']
         confmanager.write_options(**sett)
         self.destroy_orphaned_window()
         self.Destroy()
@@ -459,18 +460,18 @@ class MainFrame(wx.Frame):
         dscrp = _("Import files\tCtrl+O")
         self.openmedia = fileButton.Append(wx.ID_OPEN, dscrp)
         self.openmedia.Enable(False)
-        dscrp = _("Open destination directory of encodings\tCtrl+D")
-        fold_convers = fileButton.Append(wx.ID_ANY, dscrp)
+        dscrp = _("Open destination folder of encodings\tCtrl+D")
+        opendest = fileButton.Append(wx.ID_ANY, dscrp)
         fileButton.AppendSeparator()
         dscrp = (_("Load queue file"),
                  _("Load a previously exported queue file"))
         self.loadqueue = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
         dscrp = (_("Open trash"),
-                 _("Open the Videomass trash directory"))
+                 _("Open the Videomass trash folder"))
         dir_trash = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         dscrp = (_("Empty trash"),
-                 _("Delete all files in the Videomass trash directory"))
+                 _("Delete all files in the Videomass trash folder"))
         empty_trash = fileButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit\tCtrl+Q"),
@@ -633,7 +634,7 @@ class MainFrame(wx.Frame):
         # -----------------------Binding menu bar-------------------------#
         # ----FILE----
         self.Bind(wx.EVT_MENU, self.open_media_files, self.openmedia)
-        self.Bind(wx.EVT_MENU, self.openMyconversions, fold_convers)
+        self.Bind(wx.EVT_MENU, self.open_dest_encodings, opendest)
         self.Bind(wx.EVT_MENU, self.on_load_queue, self.loadqueue)
         self.Bind(wx.EVT_MENU, self.open_trash_folder, dir_trash)
         self.Bind(wx.EVT_MENU, self.empty_trash_folder, empty_trash)
@@ -711,10 +712,18 @@ class MainFrame(wx.Frame):
             self.fileDnDTarget.flCtrl.rejected_files()
     # -------------------------------------------------------------------#
 
-    def openMyconversions(self, event):
+    def open_dest_encodings(self, event):
         """
         Open the conversions dir with file manager
         """
+        if self.appdata['outputdir_asinput']:
+            wx.MessageBox(_('No default folder has been set for the '
+                            'destination of the encodings. The current '
+                            'setting is "Same destination paths as source '
+                            'files".'),
+                          "Videomass", wx.ICON_INFORMATION, self)
+            return
+
         io_tools.openpath(self.appdata['outputdir'])
     # -------------------------------------------------------------------#
 
@@ -1026,8 +1035,10 @@ class MainFrame(wx.Frame):
                                )
         if dialdir.ShowModal() == wx.ID_OK:
             getpath = self.appdata['getpath'](dialdir.GetPath())
-            self.fileDnDTarget.on_file_save(getpath)
+            self.appdata['outputdir_asinput'] = False
             self.appdata['outputdir'] = getpath
+            self.fileDnDTarget.on_file_save(getpath)
+
             dialdir.Destroy()
     # ------------------------------------------------------------------#
 

@@ -171,7 +171,7 @@ class SetUp(wx.Dialog):
         self.btn_fsave = wx.Button(tabTwo, wx.ID_ANY, _('Change'))
         sizeFFdirdest.Add(self.btn_fsave, 0, wx.RIGHT | wx.ALIGN_CENTER, 5)
         sizerFiles.Add((0, 15))
-        descr = _("Use same destination directories as source files")
+        descr = _("Same destination paths as source files")
         self.ckbx_dir = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_dir, 0, wx.ALL, 5)
         sizeSamedest = wx.BoxSizer(wx.HORIZONTAL)
