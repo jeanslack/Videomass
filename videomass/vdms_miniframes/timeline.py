@@ -172,6 +172,7 @@ class Float_TL(wx.MiniFrame):
         self.bar_x: pixel point val for START selection
         """
         get = wx.GetApp()  # get data from bootstrap
+        # colorscheme = get.appset['colorscheme']
         self.appdata = get.appset
         self.parent = parent
         self.duration = self.parent.duration

@@ -112,9 +112,9 @@ class ConfigManager:
         some other dir.
         default value is False
 
-    user_trashdir (str):
-        If None, it is set to "conf_trashdir" when the program runs
-        (see configurator), user specified Path Name otherwise.
+    trashdir_loc (str):
+        Trash path name (see preferences, wizard and configurator)
+        See also `trashdir_default` on configurator.
 
     locale_name (str):
         "Default", set system language to videomass message catalog
@@ -166,6 +166,18 @@ class ConfigManager:
     videopassword (str):
         for Video-specific password
 
+    geo-restriction setup options:
+        geo_verification_proxy (str)
+        geo_bypass (str)
+        geo_bypass_country (str)
+        geo_bypass_ip_block (str)
+
+   cookie file setup options:
+        cookiefile (str)
+        autogen_cookie_file (bool)
+        webbrowser (str),
+        cookiesfrombrowser (list)
+
     prstmng_column_width (list of int)
         column width in the Preset Manager panel.
 
@@ -176,7 +188,7 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 6.9
+    VERSION = 7.0
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "outputdir": f"{os.path.expanduser('~')}",
                        "outputdir_asinput": False,
@@ -200,7 +212,7 @@ class ConfigManager:
                        "clearcache": True,
                        "clearlogfiles": False,
                        "move_file_to_trash": False,
-                       "user_trashdir": None,
+                       "trashdir_loc": "",
                        "locale_name": "Default",
                        "ydlp-outputdir": f"{os.path.expanduser('~')}",
                        "use-downloader": False,
@@ -223,6 +235,15 @@ class ConfigManager:
                        "username": "",
                        "password": "",
                        "videopassword": "",
+                       "geo_verification_proxy": "",
+                       "geo_bypass": "",
+                       "geo_bypass_country": "",
+                       "geo_bypass_ip_block": "",
+                       "use_cookie_file": False,
+                       "cookiefile": "",
+                       "autogen_cookie_file": False,
+                       "webbrowser": "firefox",
+                       "cookiesfrombrowser": [None, None, None, None],
                        "prstmng_column_width": [250, 350, 200, 220],
                        "filedrop_column_width": [30, 200, 200, 200, 150, 200],
                        "fcode_column_width": [120, 60, 200, 80, 160,

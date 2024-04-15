@@ -623,7 +623,7 @@ class FileDnD(wx.Panel):
         """
         This method is responsible for batch file renaming.
         """
-        title = _('Batch rename the destination items')
+        title = _('Rename in batch')
         msg = _('Rename the {0} items to:').format(len(self.outputnames))
         with Renamer(self,
                      nameprop=_('New Name #'),

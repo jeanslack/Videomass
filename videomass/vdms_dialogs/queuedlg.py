@@ -333,11 +333,7 @@ class QueueManager(wx.Dialog):
         """
         enable/disable "Move file to trash" after successful encoding
         """
-        if self.appdata['user_trashdir'] is None:
-            trashdir = self.appdata['conf_trashdir']
-        else:
-            trashdir = self.appdata['user_trashdir']
-
+        trashdir = self.appdata['trashdir_loc']
         if self.ckbx_trash.IsChecked():
             self.movetotrash = True
             self.ckbx_del.SetValue(True)

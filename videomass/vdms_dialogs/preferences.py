@@ -101,7 +101,7 @@ class SetUp(wx.Dialog):
                                      size=(-1, -1),
                                      style=wx.CB_DROPDOWN | wx.CB_READONLY
                                      )
-        sizerGen.Add(self.cmbx_lang, 0, wx.ALL | wx.EXPAND, 5)
+        sizerGen.Add(self.cmbx_lang, 0, wx.ALL, 5)
         sizerGen.Add((0, 15))
         labconf = wx.StaticText(tabOne, wx.ID_ANY,
                                 _('Configuration directory'))
@@ -195,7 +195,7 @@ class SetUp(wx.Dialog):
                                          style=wx.TE_READONLY
                                          )
         sizetrash.Add(self.txtctrl_trash, 1, wx.ALL, 5)
-        self.txtctrl_trash.AppendText(self.appdata['user_trashdir'])
+        self.txtctrl_trash.AppendText(self.appdata['trashdir_loc'])
         self.btn_trash = wx.Button(tabTwo, wx.ID_ANY, _('Change'))
         sizetrash.Add(self.btn_trash, 0, wx.RIGHT | wx.ALIGN_CENTER, 5)
         # ----
@@ -403,7 +403,7 @@ class SetUp(wx.Dialog):
         tip = (_("By assigning an additional suffix you could avoid "
                  "overwriting files"))
         self.text_suffix.SetToolTip(tip)
-        self.SetTitle(_("Global Preferences"))
+        self.SetTitle(_("Preferences"))
 
         # ------ set sizer
         self.SetMinSize((600, 550))
@@ -601,18 +601,18 @@ class SetUp(wx.Dialog):
         """
         if self.ckbx_trash.IsChecked():
             self.settings['move_file_to_trash'] = True
-            self.settings['user_trashdir'] = self.appdata['conf_trashdir']
+            self.settings['trashdir_loc'] = self.appdata['trashdir_default']
             self.txtctrl_trash.Enable()
             self.btn_trash.Enable()
-            if not os.path.exists(self.appdata['conf_trashdir']):
-                os.mkdir(self.appdata['conf_trashdir'], mode=0o777)
+            if not os.path.exists(self.appdata['trashdir_default']):
+                os.mkdir(self.appdata['trashdir_default'], mode=0o777)
         else:
             self.txtctrl_trash.Clear()
-            self.txtctrl_trash.AppendText(self.appdata['conf_trashdir'])
+            self.txtctrl_trash.AppendText(self.appdata['trashdir_default'])
             self.txtctrl_trash.Disable()
             self.btn_trash.Disable()
             self.settings['move_file_to_trash'] = False
-            self.settings['user_trashdir'] = self.appdata['conf_trashdir']
+            self.settings['trashdir_loc'] = self.appdata['trashdir_default']
     # --------------------------------------------------------------------#
 
     def on_browse_trash(self, event):
@@ -620,14 +620,14 @@ class SetUp(wx.Dialog):
         Browse to set a trash folder.
         """
         dlg = wx.DirDialog(self, _("Choose Destination"),
-                           self.appdata['user_trashdir'],
+                           self.appdata['trashdir_loc'],
                            wx.DD_DEFAULT_STYLE)
 
         if dlg.ShowModal() == wx.ID_OK:
             self.txtctrl_trash.Clear()
             newtrash = self.appdata['getpath'](dlg.GetPath())
             self.txtctrl_trash.AppendText(newtrash)
-            self.settings['user_trashdir'] = newtrash
+            self.settings['trashdir_loc'] = newtrash
             if not os.path.exists(newtrash):
                 os.makedirs(newtrash, mode=0o777)
             dlg.Destroy()
@@ -860,6 +860,8 @@ class SetUp(wx.Dialog):
         Writes the new changes to configuration file
         aka `settings.json` and updates `appdata` dict.
         """
+        if not self.settings['trashdir_loc'].strip():
+            self.settings['trashdir_loc'] = self.appdata['trashdir_default']
         self.retcode = (
             self.settings['locale_name'] == self.appdata['locale_name'],
             self.settings['use-downloader'] == self.appdata['use-downloader'],

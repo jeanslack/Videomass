@@ -99,8 +99,8 @@ class MainFrame(wx.Frame):
         self.topicname = None  # shown panel name
         self.checktimestamp = True  # show timestamp during playback
         self.autoexit = True  # set autoexit during ffplay playback
-        self.movetotrash = self.appdata['move_file_to_trash']
-        self.emptylist = self.appdata['move_file_to_trash']
+        self.movetotrash = self.appdata['move_file_to_trash']  # boolean
+        self.emptylist = self.appdata['move_file_to_trash']  # boolean
         self.queuelist = None  # list data to process queue
         self.removequeue = True  # Remove items queue when finished
         self.mediastreams = False
@@ -499,9 +499,9 @@ class MainFrame(wx.Frame):
         self.clearall = editButton.Append(wx.ID_CLEAR, dscrp[0], dscrp[1])
         self.clearall.Enable(False)
         editButton.AppendSeparator()
-        setupItem = editButton.Append(wx.ID_PREFERENCES,
-                                      _("Preferences\tCtrl+P"),
-                                      _("Global preferences"))
+        self.setupItem = editButton.Append(wx.ID_PREFERENCES,
+                                           _("Preferences\tCtrl+P"),
+                                           _("Application preferences"))
         self.menuBar.Append(editButton, _("Edit"))
 
         # ------------------ tools menu
@@ -645,7 +645,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.fileDnDTarget.on_delete_selected,
                   self.delfile)
         self.Bind(wx.EVT_MENU, self.fileDnDTarget.delete_all, self.clearall)
-        self.Bind(wx.EVT_MENU, self.Setup, setupItem)
+        self.Bind(wx.EVT_MENU, self.Setup, self.setupItem)
         # ----TOOLS----
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
         self.Bind(wx.EVT_MENU, self.prst_downloader, self.prstdownload)
@@ -745,10 +745,7 @@ class MainFrame(wx.Frame):
         """
         Open Videomass trash dir if it exists
         """
-        if self.appdata['user_trashdir'] is None:
-            trashdir = self.appdata['conf_trashdir']
-        else:
-            trashdir = self.appdata['user_trashdir']
+        trashdir = self.appdata['trashdir_loc']
         if os.path.exists(trashdir):
             io_tools.openpath(trashdir)
         else:
@@ -761,10 +758,7 @@ class MainFrame(wx.Frame):
         """
         Delete permanently all files inside trash folder
         """
-        if self.appdata['user_trashdir'] is None:
-            trashdir = self.appdata['conf_trashdir']
-        else:
-            trashdir = self.appdata['user_trashdir']
+        trashdir = self.appdata['trashdir_loc']
         if os.path.exists(trashdir):
             files = os.listdir(trashdir)
             if len(files) > 0:
@@ -776,8 +770,8 @@ class MainFrame(wx.Frame):
                 for fname in files:
                     os.remove(os.path.join(trashdir, fname))
             else:
-                wx.MessageBox(_("'{}':\nNothing to "
-                                "clean up.").format(trashdir),
+                wx.MessageBox(_("'{}':\nThere are no files "
+                                "to delete.").format(trashdir),
                               "Videomass", wx.ICON_INFORMATION, self)
         else:
             wx.MessageBox(_("'{}':\nNo such file "
@@ -1685,6 +1679,11 @@ class MainFrame(wx.Frame):
             self.menu_items(enable=False)  # disable menu items
             self.openmedia.Enable(False)
             self.loadqueue.Enable(False)
+            self.setupItem.Enable(False)
+            if self.rename.IsEnabled():
+                self.rename.Enable(False)
+            if self.rename_batch.IsEnabled():
+                self.rename_batch.Enable(False)
             [self.toolbar.EnableTool(x, True) for x in (6, 8)]
             [self.toolbar.EnableTool(x, False) for x in (3, 5, 36, 37)]
         self.logpan.Enable(False)
@@ -1733,11 +1732,18 @@ class MainFrame(wx.Frame):
         self.menu_items(enable=True)  # enable all menu items
         self.openmedia.Enable(False)
         self.loadqueue.Enable(False)
+        self.setupItem.Enable(True)
+
         [self.toolbar.EnableTool(x, True) for x in (3, 5)]
         self.toolbar.EnableTool(8, False)
 
         if self.emptylist:
             self.fileDnDTarget.delete_all(self)
+
+        if self.filedropselected is not None:
+            self.rename.Enable(True)
+        if self.file_src:
+            self.rename_batch.Enable(True)
     # ------------------------------------------------------------------#
 
     def panelShown(self, panelshown=None):

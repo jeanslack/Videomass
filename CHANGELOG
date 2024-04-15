@@ -7,15 +7,13 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 11 Apr 2024 V.5.0.12
+Mon, 15 Apr 2024 V.5.0.12
 
   * Improved description strings on menu bar.
-  * Improved profile settings dialog layout.
+  * [Presets Manager] Improved profile settings dialog layout.
   * Added ability to edit command arguments "on-the-fly" in the queue dialog.
-  * Fixed permanent text on the toolbar buttons because needed for view the
-    queue counter.
-  * Removed text alongside toolbar buttons: Now the text on the toolbar is
-    always shown below the toolbar icons.
+  * Text on toolbar buttons will now always be shown below their respective
+    icons.
   * Fixed "FileNotFoundError: [Errno 2]" traceback at the end of the process,
     raised if the "Trash the source files" checkbox had been checked to delete
     the same file more than once.
@@ -23,16 +21,17 @@ Thu, 11 Apr 2024 V.5.0.12
   * Made some cosmetic improvements.
   * [A/V Conversions] Added opus output format option to Audio Target Media.
   * [File drop List] Added context menu by right mouse clicking.
-  * Removed `Clean` icon on toolbars.
-  * [YouTube Downloader] Added proxy (experimental) setup (see #246).
-  * [YouTube Downloader] Added authentication (experimental) setup.
-  * [YouTube Downloader] Added a specific preferences dialog to configure
-    YouTube Downloader options.
-  * The preferences dialogs for configuring global and YouTube Downloader
-    options have been moved to the Edit menus.
+  * Removed "Clear" icon on the toolbars because it was obsolete. Now to remove
+    items there are keyboard shortcuts, options in the Edit menus plus
+    mouse right-click context menus.
+  * [YouTube Downloader] Added proxy setup (see #246).
+  * [YouTube Downloader] Added authentication + Video password setup.
+  * [YouTube Downloader] Now it has its own setup dialog, a new convenient
+    window for YouTube Downloader options.
+  * Preferences dialog has been moved to the Edit menu.
   * Most options in the preferences dialogs no longer require restarting the
-    application (finally!), except for toggling yt_dlp, application language,
-    and appearance options.
+    application, except for toggling yt_dlp, application language,
+    and look-and-feel options.
   * Removed menu for setting destination folders and restoring default
     destination folder.
   * Adding other destination folders can be done in the file list and urls list
@@ -42,9 +41,18 @@ Thu, 11 Apr 2024 V.5.0.12
   * [Presets Manager] Fixed bug in supported formats check. If the warning about
     supported formats was triggered, the program silently prevented the
     conversion processes from starting.
-  * [Presets Manager] Improved dialog window for supported format errors.
+  * [Presets Manager] Improved dialog layout when warning about supported
+    formats.
   * Added destination path display for any confirmation dialog before running
     batch processes.
+  * Fixed errors and inconsistencies on initialize trash directory path name.
+  * [YouTube Downloader] Added Geo-restriction options. This feature geo
+    verification proxy, geo bypass, geo bypass country, geo bypass ip block.
+  * [YouTube Downloader] Added cookies options and some convenient automations
+    about cookies.
+  * [YouTube Downloader] Login passwords and video password will not be stored
+    anywhere. The user will be forced to re-enter his credentials every time he
+    restarts the application.
 
 +------------------------------------+
 Sat, 30 Mar 2024 V.5.0.11

@@ -290,7 +290,7 @@ def data_location(args):
             "confdir": confdir,
             "logdir": logdir,
             "cachedir": cachedir,
-            "conf_trashdir": trash_dir,
+            "trashdir_default": trash_dir,
             "this": this,
             "frozen": frozen,
             "meipass": meipass,
@@ -412,15 +412,15 @@ class DataSource():
         if presets_rest.get('ERROR'):
             return presets_rest
 
-        # create required directories if them not exist
+        # create the required directories if not existing
         requiredirs = (os.path.join(self.dataloc['cachedir'], 'tmp'),
                        self.dataloc['logdir'],
                        userconf['outputdir'],
                        userconf['ydlp-outputdir'],
-                       self.dataloc['conf_trashdir']
+                       self.dataloc['trashdir_default']
                        )
-        if not userconf['user_trashdir']:
-            userconf['user_trashdir'] = self.dataloc['conf_trashdir']
+        if not userconf['trashdir_loc'].strip():
+            userconf['trashdir_loc'] = self.dataloc['trashdir_default']
         for dirs in requiredirs:
             create = create_dirs(dirs, self.dataloc['conffile'],)
             if create.get('ERROR'):
@@ -453,7 +453,8 @@ class DataSource():
                  'confdir': _relativize(self.dataloc['confdir']),
                  'logdir': _relativize(self.dataloc['logdir']),
                  'cachedir': _relativize(self.dataloc['cachedir']),
-                 'conf_trashdir': _relativize(self.dataloc['conf_trashdir']),
+                 'trashdir_default':
+                     _relativize(self.dataloc['trashdir_default']),
                  'FFMPEG_videomass_pkg':
                      _relativize(self.dataloc['ffmpeg_pkg']),
                  'app': self.apptype,
@@ -488,7 +489,7 @@ class DataSource():
                 'videotopictures', 'atrack', 'timerset', 'coloreq',
                 'stop', 'home', 'youtube', 'playlist',
                 'download', 'statistics', 'play', 'subtitles',
-                'proc-queue', 'add-queue'
+                'proc-queue', 'add-queue', 'options',
                 )  # must match with items on `iconset` tuple, see following
 
         icodir = self.dataloc['icodir']
@@ -557,6 +558,7 @@ class DataSource():
                    f"{choose.get('x16')}/subtitles.{ext}",
                    f"{choose.get('x22')}/proc-queue.{ext}",
                    f"{choose.get('x22')}/add-queue.{ext}",
+                   f"{choose.get('x22')}/options.{ext}",
                    )
         values = (os.path.join(norm) for norm in iconset)  # normalize pathns
 

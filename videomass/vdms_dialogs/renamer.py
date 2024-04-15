@@ -73,7 +73,7 @@ class Renamer(wx.Dialog):
 
         """
         self.mode = mode
-        msg = _("# It will be replaced by increasing numbers starting with:")
+        msg = _("# will be replaced by ascending numbers starting with:")
         width = 472
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizer_base = wx.BoxSizer(wx.VERTICAL)

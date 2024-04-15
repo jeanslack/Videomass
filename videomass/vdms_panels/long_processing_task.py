@@ -385,7 +385,7 @@ class LogOut(wx.Panel):
 
             if filetotrash:  # move processed files to Videomass trash folder
                 if self.parent.movetotrash:
-                    trashdir = self.appdata['user_trashdir']
+                    trashdir = self.appdata['trashdir_loc']
                     delete_file_source(filetotrash, trashdir)  # filelist, dir
 
         self.txtout.AppendText('\n')
