@@ -87,7 +87,7 @@ def open_default_application(pathname):
     else:  # Linux, FreeBSD or any supported
         cmd = ['xdg-open', pathname]
     try:
-        subprocess.run(cmd, check=True, shell=False, encoding='utf8')
+        subprocess.run(cmd, check=True, shell=False, encoding='utf-8')
     except subprocess.CalledProcessError as error:
         return str(error)
 
@@ -416,7 +416,7 @@ def del_filecontents(filename):
     |    Point in the end    |      |      |      |      |  +   |  +   |
 
     """
-    with open(filename, "r+", encoding='utf8') as fname:
+    with open(filename, "r+", encoding='utf-8') as fname:
         content = fname.read()
         if content:
             fname.flush()  # clear previous content readed
@@ -530,7 +530,7 @@ def clockset(duration, fileclock):
         clock = {'duration': '00:00:00', 'millis': 0}
     else:
         if os.path.exists(fileclock):
-            with open(fileclock, "r", encoding='utf8') as atime:
+            with open(fileclock, "r", encoding='utf-8') as atime:
                 clockread = atime.read().strip()
                 if time_to_integer(clockread) <= millis:
                     clock = {'duration': clockread, 'millis': millis}

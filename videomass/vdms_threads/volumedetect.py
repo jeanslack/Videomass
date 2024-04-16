@@ -103,7 +103,7 @@ class VolumeDetectThread(Thread):
                            stdout=subprocess.PIPE,
                            stderr=subprocess.STDOUT,
                            universal_newlines=True,
-                           encoding='utf8',
+                           encoding='utf-8',
                            ) as proc:
 
                     output = proc.communicate()
@@ -141,7 +141,7 @@ class VolumeDetectThread(Thread):
         """
         write ffmpeg command log
         """
-        with open(self.logf, "a", encoding='utf8') as log:
+        with open(self.logf, "a", encoding='utf-8') as log:
             log.write(f"{cmd}\n")
     # ----------------------------------------------------------------#
 
@@ -149,6 +149,6 @@ class VolumeDetectThread(Thread):
         """
         write ffmpeg volumedected errors
         """
-        with open(self.logf, "a", encoding='utf8') as logerr:
+        with open(self.logf, "a", encoding='utf-8') as logerr:
             logerr.write(f"\n[FFMPEG] volumedetect "
                          f"ERRORS:\n{self.status}\n")

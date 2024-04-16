@@ -166,7 +166,7 @@ class LogOut(wx.Panel):
             elif '[download]' not in output:
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
                 self.txtout.AppendText(f'{output}\n')
-                with open(self.logfile, "a", encoding='utf8') as logerr:
+                with open(self.logfile, "a", encoding='utf-8') as logerr:
                     logerr.write(f"[YT_DLP]: {status} > {output}\n")
 
         elif status == 'DOWNLOAD':
@@ -182,7 +182,7 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f'{duration}\n')
 
         if status in ['ERROR', 'WARNING']:
-            with open(self.logfile, "a", encoding='utf8') as logerr:
+            with open(self.logfile, "a", encoding='utf-8') as logerr:
                 logerr.write(f"[YT_DLP]: {output}\n")
     # ---------------------------------------------------------------------#
 

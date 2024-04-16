@@ -41,7 +41,7 @@ def logwrite(cmd, stderr, logfile):
     else:
         apnd = f"{sep}{cmd}\n\n"
 
-    with open(logfile, "a", encoding='utf8') as log:
+    with open(logfile, "a", encoding='utf-8') as log:
         log.write(apnd)
 
 
@@ -59,7 +59,7 @@ def make_log_template(logname, logdir, mode="a"):
     current_date = time.strftime("%c")  # date/time
     logfile = os.path.join(logdir, logname)
 
-    with open(logfile, mode, encoding='utf8') as log:
+    with open(logfile, mode, encoding='utf-8') as log:
         log.write(f"""
 [DATE]: {current_date}
 

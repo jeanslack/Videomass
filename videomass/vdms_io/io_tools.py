@@ -76,7 +76,7 @@ def stream_play(filepath, timeseq, param, autoexit):
     else:
         tseq = '', ''
     try:
-        with open(filepath, encoding='utf8'):
+        with open(filepath, encoding='utf-8'):
             FilePlay(filepath,
                      tseq,
                      param,

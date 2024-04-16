@@ -305,7 +305,7 @@ class LogOut(wx.Panel):
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT3']))
                 self.txtout.AppendText(f'{output}')
 
-            with open(self.logfile, "a", encoding='utf8') as logerr:
+            with open(self.logfile, "a", encoding='utf-8') as logerr:
                 logerr.write(f"[FFMPEG]: {output}")
     # ----------------------------------------------------------------------
 

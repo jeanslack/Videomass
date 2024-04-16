@@ -79,7 +79,7 @@ def json_data(arg):
 
     """
     try:
-        with open(arg, 'r', encoding='utf8') as fln:
+        with open(arg, 'r', encoding='utf-8') as fln:
             data = json.load(fln)
 
     except json.decoder.JSONDecodeError as err:
@@ -111,12 +111,12 @@ def delete_profiles(path, name):
     """
     Profile deletion from Presets manager panel
     """
-    with open(path, 'r', encoding='utf8') as fln:
+    with open(path, 'r', encoding='utf-8') as fln:
         data = json.load(fln)
 
     new_data = [obj for obj in data if not obj["Name"] == name]
 
-    with open(path, 'w', encoding='utf8') as outfile:
+    with open(path, 'w', encoding='utf-8') as outfile:
         json.dump(new_data, outfile, ensure_ascii=False, indent=4)
 # ------------------------------------------------------------------#
 
@@ -130,13 +130,13 @@ def update_oudated_profiles(new, old):
             "error.\nFix any errors in the JSON code contained on the FILE "
             "before performing this operation again.")
     if new and old:
-        with open(new, 'r', encoding='utf8') as newf:
+        with open(new, 'r', encoding='utf-8') as newf:
             try:
                 incoming = json.load(newf)
             except json.decoder.JSONDecodeError as err:
                 return f"ERROR: {str(err)}\nFILE: '{new}'\n\n{msg}"
 
-        with open(old, 'r', encoding='utf8') as oldf:
+        with open(old, 'r', encoding='utf-8') as oldf:
             try:
                 outcoming = json.load(oldf)
             except json.decoder.JSONDecodeError as err:
@@ -149,7 +149,7 @@ def update_oudated_profiles(new, old):
         items_old = list(items_old.values())
         items_old.sort(key=lambda s: s["Name"])  # make sorted by name
 
-        with open(old, 'w', encoding='utf8') as outfile:
+        with open(old, 'w', encoding='utf-8') as outfile:
             json.dump(items_old, outfile, ensure_ascii=False, indent=4)
     return None
 # ------------------------------------------------------------------#
@@ -160,7 +160,7 @@ def write_new_profile(path_prst, **kwargs):
     Write a new profile using json data
 
     """
-    with open(path_prst, 'r', encoding='utf8') as infile:
+    with open(path_prst, 'r', encoding='utf-8') as infile:
         stored_data = json.load(infile)
 
     for x in stored_data:
@@ -170,7 +170,7 @@ def write_new_profile(path_prst, **kwargs):
     new_data = stored_data + [kwargs]
     new_data.sort(key=lambda s: s["Name"])  # make sorted by name
 
-    with open(path_prst, 'w', encoding='utf8') as outfile:
+    with open(path_prst, 'w', encoding='utf-8') as outfile:
         json.dump(new_data, outfile, ensure_ascii=False, indent=4)
 
     return None
@@ -182,7 +182,7 @@ def edit_existing_profile(path_prst, selected_profile, **kwargs):
     Edit an exixting profile using json data
 
     """
-    with open(path_prst, 'r', encoding='utf8') as infile:
+    with open(path_prst, 'r', encoding='utf-8') as infile:
         stored_data = json.load(infile)
 
     names = [x['Name'] for x in stored_data]
@@ -204,7 +204,7 @@ def edit_existing_profile(path_prst, selected_profile, **kwargs):
 
     stored_data.sort(key=lambda s: s["Name"])  # make sorted by name
 
-    with open(path_prst, 'w', encoding='utf8') as outfile:
+    with open(path_prst, 'w', encoding='utf-8') as outfile:
         json.dump(stored_data, outfile, ensure_ascii=False, indent=4)
 
     return None

@@ -356,7 +356,7 @@ class MainYtdl(wx.Frame):
         if os.path.exists(fname) and os.path.isfile(fname):
             io_tools.openpath(fname)
         else:
-            with open(fname, "w", encoding='utf8') as text:
+            with open(fname, "w", encoding='utf-8') as text:
                 text.write("")
             io_tools.openpath(fname)
     # ------------------------------------------------------------------#

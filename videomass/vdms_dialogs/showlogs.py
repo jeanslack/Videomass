@@ -170,7 +170,7 @@ class ShowLogs(wx.Dialog):
             return
 
         with open(os.path.join(self.dirlog, name),
-                  'w', encoding='utf8') as log:
+                  'w', encoding='utf-8') as log:
             log.write('')
 
         self.on_update(self)
@@ -190,7 +190,7 @@ class ShowLogs(wx.Dialog):
         for f in os.listdir(self.dirlog):
             if os.path.basename(f) in ShowLogs.LOGNAMES:  # append listed only
                 with open(os.path.join(self.dirlog, f),
-                          'r', encoding='utf8') as log:
+                          'r', encoding='utf-8') as log:
                     self.logdata[f] = log.read()  # set value
                     self.log_select.InsertItem(index, f)
                 index += 1

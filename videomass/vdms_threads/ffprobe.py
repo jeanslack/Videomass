@@ -84,14 +84,14 @@ def ffprobe(filename, cmd='ffprobe', **kwargs):
                    stdout=subprocess.PIPE,
                    stderr=subprocess.PIPE,
                    universal_newlines=True,
-                   encoding='utf8',
+                   encoding='utf-8'
                    ) as proc:
             output, error = proc.communicate()
 
             if proc.returncode != 0:
                 return (None, f'ffprobe: {error}')
 
-    except (OSError, FileNotFoundError) as excepterr:
+    except (OSError, FileNotFoundError, UnicodeDecodeError) as excepterr:
         return (None, excepterr)
 
     return json.loads(output), None

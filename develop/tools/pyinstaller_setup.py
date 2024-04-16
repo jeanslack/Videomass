@@ -224,7 +224,7 @@ def genspec(options, specfile=SPECFILE, addplist=None, script=SCRIPT):
         sys.exit(f'\nERROR: {err}\n')
 
     if platform.system() == 'Darwin' and addplist is not None:
-        with open(specfile, 'r', encoding='utf8') as specf:
+        with open(specfile, 'r', encoding='utf-8') as specf:
             arr = specf.readlines()
 
         idx = arr.index("             bundle_identifier='com."
@@ -232,7 +232,7 @@ def genspec(options, specfile=SPECFILE, addplist=None, script=SCRIPT):
         arr[idx] = ("             bundle_identifier='com."
                     "jeanslack.videomass',\n")
         newspec = ''.join(arr) + addplist
-        with open(specfile, 'w', encoding='utf8') as specf:
+        with open(specfile, 'w', encoding='utf-8') as specf:
             specf.write(newspec)
 # --------------------------------------------------------#
 
@@ -312,7 +312,7 @@ def make_portable(here=HERE):
             "'portable_data')\n        kwargs = {'make_portable': data}\n")
     filename = os.path.join(here, 'videomass', 'gui_app.py')
 
-    with open(filename, 'r+', encoding='utf8') as gui_app:
+    with open(filename, 'r+', encoding='utf-8') as gui_app:
         data = gui_app.readlines()
 
         for line in data:
@@ -339,7 +339,7 @@ def restore_sources(data, here=HERE):
     Restore source file `gui_app.py`
     """
     filename = os.path.join(here, 'videomass', 'gui_app.py')
-    with open(filename, 'w', encoding='utf8') as bak:
+    with open(filename, 'w', encoding='utf-8') as bak:
         bak.write(''.join(data))
 # --------------------------------------------------------#
 
@@ -350,7 +350,7 @@ def backup_sources(here=HERE):
     """
     data = None
     filename = os.path.join(here, 'videomass', 'gui_app.py')
-    with open(filename, 'r', encoding='utf8') as gui_app:
+    with open(filename, 'r', encoding='utf-8') as gui_app:
         data = gui_app.readlines()
     return data
 # --------------------------------------------------------#

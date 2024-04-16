@@ -416,7 +416,7 @@ class Crop(wx.Dialog):
             wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR)
             return
         if sseg:
-            with open(self.fileclock, "w", encoding='utf8') as atime:
+            with open(self.fileclock, "w", encoding='utf-8') as atime:
                 atime.write(self.clock)
         self.btn_load.Disable()
         bmp = make_bitmap(self.w_scaled, self.h_scaled, self.frame)

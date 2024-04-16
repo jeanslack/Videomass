@@ -53,6 +53,9 @@ Mon, 15 Apr 2024 V.5.0.12
   * [YouTube Downloader] Login passwords and video password will not be stored
     anywhere. The user will be forced to re-enter his credentials every time he
     restarts the application.
+  * [FFprobe] Added "UnicodeDecodeError" to the exceptions list in the ffprobe
+    module to ensure that files that cannot be encoded with utf-8 unicode are
+    handled by the application.
 
 +------------------------------------+
 Sat, 30 Mar 2024 V.5.0.11

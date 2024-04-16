@@ -389,7 +389,7 @@ class ColorEQ(wx.Dialog):
             return
         self.loader_initial_edit()
 
-        with open(self.fileclock, "w", encoding='utf8') as atime:
+        with open(self.fileclock, "w", encoding='utf-8') as atime:
             atime.write(self.clock)
         self.btn_load.Disable()
     # -----------------------------------------------------------------------#

@@ -38,7 +38,7 @@ def write_json_file_queue(data, queuefile=None):
         get = wx.GetApp()
         appdata = get.appset
         queuefile = os.path.join(appdata["confdir"], 'queue.backup')
-    with open(queuefile, 'w', encoding='utf8') as outfile:
+    with open(queuefile, 'w', encoding='utf-8') as outfile:
         json.dump(data, outfile, ensure_ascii=False, indent=4)
 # --------------------------------------------------------------------
 
@@ -60,7 +60,7 @@ def load_json_file_queue(newincoming=None):
                 return None
             newincoming = fdlg.GetPath()
     try:
-        with open(newincoming, 'r', encoding='utf8') as fln:
+        with open(newincoming, 'r', encoding='utf-8') as fln:
             newdata = json.load(fln)
 
     except json.decoder.JSONDecodeError as err:

@@ -355,9 +355,9 @@ class PrstPan(wx.Panel):
         if not os.path.isfile(conftext) or not os.path.isfile(srctext):
             return
 
-        with open(conftext, "r", encoding='utf8') as vers:
+        with open(conftext, "r", encoding='utf-8') as vers:
             confversion = vers.read().strip()
-        with open(srctext, "r", encoding='utf8') as vers:
+        with open(srctext, "r", encoding='utf-8') as vers:
             srcversion = vers.read().strip()
 
         old = sum((int(x) for x in confversion.split('.')))
@@ -384,7 +384,7 @@ class PrstPan(wx.Panel):
                 return
 
             # update version.txt file to latest version
-            with open(conftext, "w", encoding='utf8') as updatevers:
+            with open(conftext, "w", encoding='utf-8') as updatevers:
                 updatevers.write(f'{srcversion}\n')
 
             # copies missing file/dir to the destination directory
@@ -552,7 +552,7 @@ class PrstPan(wx.Panel):
                 return
             filename = f"{fileDialog.GetPath()}.json"
             try:
-                with open(filename, 'w', encoding='utf8') as file:
+                with open(filename, 'w', encoding='utf-8') as file:
                     file.write('[]')
             except IOError:
                 wx.LogError(_("Cannot save current "

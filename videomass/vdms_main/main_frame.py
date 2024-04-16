@@ -814,7 +814,7 @@ class MainFrame(wx.Frame):
             copydir_recursively(os.path.dirname(presetsrecovery),
                                 os.path.dirname(os.path.dirname(presetsdir))
                                 )
-        with open(presetsdir, "r", encoding='utf8') as vers:
+        with open(presetsdir, "r", encoding='utf-8') as vers:
             fread = vers.read().strip()
 
         newversion = io_tools.get_github_releases(url, "tag_name")
@@ -887,7 +887,7 @@ class MainFrame(wx.Frame):
         if os.path.exists(fname) and os.path.isfile(fname):
             io_tools.openpath(fname)
         else:
-            with open(fname, "w", encoding='utf8') as text:
+            with open(fname, "w", encoding='utf-8') as text:
                 text.write("")
             io_tools.openpath(fname)
     # ------------------------------------------------------------------#

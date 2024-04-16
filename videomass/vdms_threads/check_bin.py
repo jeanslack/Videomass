@@ -50,7 +50,7 @@ def subp(args, ostype):
                    stdout=subprocess.PIPE,
                    stderr=subprocess.STDOUT,
                    universal_newlines=True,  # mod text
-                   encoding='utf8',
+                   encoding='utf-8',
                    ) as proc:
             out = proc.communicate()
 

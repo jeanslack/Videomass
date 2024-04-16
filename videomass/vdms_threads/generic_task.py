@@ -93,7 +93,7 @@ class FFmpegGenericTask(Thread):
             with Popen(cmd,
                        stderr=subprocess.PIPE,
                        universal_newlines=True,
-                       encoding='utf8',
+                       encoding='utf-8',
                        ) as proc:
                 error = proc.communicate()
                 self.logwrite(f'[FFMPEG]:\n{error}')
@@ -118,7 +118,7 @@ class FFmpegGenericTask(Thread):
         """
         write ffmpeg command log
         """
-        with open(self.logfile, "a", encoding='utf8') as log:
+        with open(self.logfile, "a", encoding='utf-8') as log:
             log.write(f"{cmd}\n")
     # ----------------------------------------------------------------#
 
@@ -126,6 +126,6 @@ class FFmpegGenericTask(Thread):
         """
         write ffmpeg volumedected errors
         """
-        with open(self.logfile, "a", encoding='utf8') as logerr:
+        with open(self.logfile, "a", encoding='utf-8') as logerr:
             logerr.write(f"\n[FFMPEG] generic_task "
                          f"ERRORS:\n{self.status}\n")

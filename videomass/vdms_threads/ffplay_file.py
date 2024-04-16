@@ -120,7 +120,7 @@ class FilePlay(Thread):
                                   shell=shell,
                                   stderr=subprocess.PIPE,
                                   universal_newlines=True,
-                                  encoding='utf8',
+                                  encoding='utf-8',
                                   startupinfo=info,
                                   ) as proc:
                 error = proc.communicate()
@@ -146,7 +146,7 @@ class FilePlay(Thread):
         """
         write ffplay command log
         """
-        with open(self.logf, "a", encoding='utf8') as log:
+        with open(self.logf, "a", encoding='utf-8') as log:
             log.write(f"{cmd}\n")
     # ----------------------------------------------------------------#
 
@@ -154,6 +154,6 @@ class FilePlay(Thread):
         """
         write ffplay errors
         """
-        with open(self.logf, "a", encoding='utf8') as logerr:
+        with open(self.logf, "a", encoding='utf-8') as logerr:
             logerr.write(f"\n[FFMPEG] FFplay "
                          f"OUTPUT:\n{error}\n")

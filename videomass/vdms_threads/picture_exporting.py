@@ -101,7 +101,7 @@ class PicturesFromVideo(Thread):
                        stderr=subprocess.PIPE,
                        bufsize=1,
                        universal_newlines=True,
-                       encoding='utf8',
+                       encoding='utf-8',
                        ) as proc:
                 for line in proc.stderr:
                     wx.CallAfter(pub.sendMessage,

@@ -207,7 +207,7 @@ class Conc_Demuxer(wx.Panel):
         self.args = (f'"{ftext}" -map 0:v? -map_chapters 0 '
                      f'-map 0:s? -map 0:a? -map_metadata 0 -c copy')
 
-        with open(ftext, 'w', encoding='utf8') as txt:
+        with open(ftext, 'w', encoding='utf-8') as txt:
             txt.write('\n'.join(textstr))
 
         checking = check_files((fsource[0],),
