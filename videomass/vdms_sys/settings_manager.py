@@ -57,6 +57,10 @@ class ConfigManager:
     outputdir (str):
         file destination path used by ffmpeg
 
+    unienc (str):
+        The unicode standard encoding for text encoding
+        e.g. "utf-8", "ISO 8859-1", "ascii", etc...
+
     outputdir_asinput (bool):
         if True, save output files to same paths as source files
 
@@ -172,7 +176,7 @@ class ConfigManager:
         geo_bypass_country (str)
         geo_bypass_ip_block (str)
 
-   cookie file setup options:
+    cookie file setup options:
         cookiefile (str)
         autogen_cookie_file (bool)
         webbrowser (str),
@@ -188,8 +192,9 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 7.0
+    VERSION = 7.2
     DEFAULT_OPTIONS = {"confversion": VERSION,
+                       "unienc": "utf-8",
                        "outputdir": f"{os.path.expanduser('~')}",
                        "outputdir_asinput": False,
                        "filesuffix": "",

@@ -257,7 +257,8 @@ class Ytdlp_Options(wx.Dialog):
         msg = (_('If you need to login with your credentials please note '
                  'that login with password is not\nsupported for some '
                  'websites (e.g. YouTube, CloudFlare). In this case you can '
-                 'include a\ncookie file for authentication (see cookies tab).'))
+                 'include a\ncookie file for authentication (see cookies '
+                 'tab).'))
         labauthgen = wx.StaticText(tabSix, wx.ID_ANY, (msg))
         sizerauth.Add(labauthgen, 0, wx.ALL, 5)
         sizerauth.Add((0, 20))
