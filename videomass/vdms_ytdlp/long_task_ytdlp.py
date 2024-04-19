@@ -120,7 +120,7 @@ class LogOut(wx.Panel):
                 io_tools.openpath(fname)
     # ----------------------------------------------------------------------
 
-    def topic_thread(self, args):
+    def topic_thread(self, args, urls):
         """
         This method is resposible to create the Thread instance.
         args: type tuple data object.
@@ -130,13 +130,12 @@ class LogOut(wx.Panel):
 
         self.txtout.Clear()
         self.labprog.SetLabel('')
-        logn = args[8]
-        self.logfile = make_log_template(logn,
+        self.logfile = make_log_template("YouTube Downloader.log",
                                          self.appdata['logdir'],
                                          mode="w",
                                          )
         self.btn_viewlog.Disable()
-        self.thread_type = YdlDownloader(args, self.logfile)
+        self.thread_type = YdlDownloader(args[1], urls, self.logfile)
     # ----------------------------------------------------------------------
 
     def downloader_activity(self, output, duration, status):
@@ -167,7 +166,7 @@ class LogOut(wx.Panel):
             elif '[download]' not in output:
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
                 self.txtout.AppendText(f'{output}\n')
-                with open(self.logfile, "a", encoding='utf8') as logerr:
+                with open(self.logfile, "a", encoding='utf-8') as logerr:
                     logerr.write(f"[YT_DLP]: {status} > {output}\n")
 
         elif status == 'DOWNLOAD':
@@ -183,7 +182,7 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f'{duration}\n')
 
         if status in ['ERROR', 'WARNING']:
-            with open(self.logfile, "a", encoding='utf8') as logerr:
+            with open(self.logfile, "a", encoding='utf-8') as logerr:
                 logerr.write(f"[YT_DLP]: {output}\n")
     # ---------------------------------------------------------------------#
 

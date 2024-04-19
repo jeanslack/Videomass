@@ -130,56 +130,35 @@ class YdlDownloader(Thread):
     or by help(youtube_dl.YoutubeDL)
 
     """
-    def __init__(self, varargs, logname):
+    def __init__(self, args, urls, logfile):
         """
         Attributes defined here:
-        self.stop_work_thread:  process terminate value
-        self.args['urls']:          urls list
-        self.opt:           option dict data type to adding
-        self.args['outdir']:     pathname destination
-        self.args['code']:          Format Code, else empty string ''
-        self.count:         increases progressive account elements
-        self.args['countmax']:      length of urls items list
-        self.args['logname']:       file name to log messages for logging
+        self.stop_work_thread -  boolean process terminate value
+        self.urls - type list
+        self.logfile - str path object to log file
+        self.arglist - option arguments list
         """
-        get = wx.GetApp()  # get videomass wx.App attribute
-        self.appdata = get.appset
-
-        if self.appdata['playlistsubfolder']:
-            self.subdir = ('%(uploader)s/%(playlist_title)'
-                           's/%(playlist_index)s - ')
-        else:
-            self.subdir = ''
         self.stop_work_thread = False  # process terminate
-        self.opt = varargs[4]
+        self.urls = urls
+        self.logfile = logfile
+        self.arglist = args
+        self.countmax = len(self.arglist)
         self.count = 0
-        self.args = {'urls': varargs[1],
-                     'code': varargs[6],
-                     'outdir': varargs[3],
-                     'logname': logname,
-                     'countmax': len(varargs[1]),
-                     }
+
         Thread.__init__(self)
         self.start()  # run()
 
     def run(self):
         """
-        Apply the options passed by the user for the
-        download process with yt_dlp
-
+        Apply the option arguments passed by
+        the user for the download process.
         """
-        for url, code in itertools.zip_longest(self.args['urls'],
-                                               self.args['code'],
+        for url, opts in itertools.zip_longest(self.urls,
+                                               self.arglist,
                                                fillvalue='',
                                                ):
-            if '/playlist' in url or not self.opt['noplaylist']:
-                outtmpl = self.subdir + self.opt['outtmpl']
-            else:
-                outtmpl = self.opt['outtmpl']
-
-            format_code = code if code else self.opt['format']
             self.count += 1
-            count = f"URL {self.count}/{self.args['countmax']}"
+            count = f"URL {self.count}/{self.countmax}"
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_YTDL_EVT",
@@ -189,51 +168,25 @@ class YdlDownloader(Thread):
                          duration=100,
                          end='',
                          )
-
             if self.stop_work_thread:
                 break
-
-            ydl_opts = {
-                'compat_opts': 'youtube-dl',
-                'external_downloader': self.appdata["external_downloader"],
-                'external_downloader_args':
-                    self.appdata["external_downloader_args"],
-                'format': format_code,
-                'extractaudio': self.opt['format'],
-                'outtmpl': f"{self.args['outdir']}/{outtmpl}",
-                'writesubtitles': self.opt['writesubtitles'],
-                'subtitleslangs': self.opt['subtitleslangs'],
-                'writeautomaticsub': self.opt['writeautomaticsub'],
-                'skip_download': self.opt['skip_download'],
-                'addmetadata': self.opt['addmetadata'],
-                'restrictfilenames': self.opt['restrictfilenames'],
-                'ignoreerrors': True,
-                'no_warnings': False,
-                'writethumbnail': self.opt['writethumbnail'],
-                'noplaylist': self.opt['noplaylist'],
-                'playlist_items': self.opt['playlist_items'].get(url, None),
-                'overwrites': self.opt['overwrites'],
-                'no_color': True,
-                'nocheckcertificate': self.opt['nocheckcertificate'],
-                'proxy': self.opt["proxy"],
-                'username': self.opt["username"],
-                'password': self.opt["password"],
-                'videopassword': self.opt["videopassword"],
-                'ffmpeg_location': f'{self.appdata["ffmpeg_cmd"]}',
-                'postprocessors': self.opt['postprocessors'],
-                'logger': MyLogger(),
-                'progress_hooks': [my_hook],
-            }
+            ydl_opts = {**opts,
+                        'logger': MyLogger(),
+                        'progress_hooks': [my_hook],
+                        }
             logtxt = f'{count}\n{ydl_opts}'
-            logwrite(logtxt, '', self.args['logname'])  # write log cmd
-
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([f"{url}"])
+            logwrite(logtxt, '', self.logfile)  # write log cmd
+            try:
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([f"{url}"])
+            except Exception:
+                break
 
         wx.CallAfter(pub.sendMessage, "END_YTDL_EVT")
 
     def stop(self):
         """
-        Sets the stop work thread to terminate the current process
+        Sets the stop work thread to
+        terminate the current process
         """
         self.stop_work_thread = True

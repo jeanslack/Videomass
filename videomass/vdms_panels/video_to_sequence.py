@@ -568,7 +568,7 @@ class VideoToSequence(wx.Panel):
                   'preset name': 'From Movies to Pictures',
                   }
         keyval = self.update_dict(filename, outputdir)
-        ending = Formula(self, (600, 280),
+        ending = Formula(self, (700, 280),
                          self.parent.movetotrash,
                          self.parent.emptylist,
                          **keyval,
@@ -626,7 +626,7 @@ class VideoToSequence(wx.Panel):
                 rate, rows, cols, pad, marg = '', '', '', '', ''
 
         keys = (_("Selected File\nOutput Format\n"
-                  "Destination directory\nRate (fps)\nResizing\n"
+                  "Destination\nRate (fps)\nResizing\n"
                   "Mosaic rows\nMosaic columns\nMosaic padding\n"
                   "Mosaic margin\nCustom Arguments\n"
                   "Start of segment\nDuration"

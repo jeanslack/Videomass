@@ -51,9 +51,6 @@ class FFmpegGenericTask(Thread):
     Return: None
 
     """
-    get = wx.GetApp()
-    appdata = get.appset
-
     def __init__(self, args, procname='Unknown', logfile='logfile.log'):
         """
         Attributes defined here:
@@ -66,6 +63,8 @@ class FFmpegGenericTask(Thread):
         handled appropriately, in the other case it is None.
 
         """
+        get = wx.GetApp()
+        self.appdata = get.appset
         self.logfile = logfile
         self.procname = procname
         self.args = args
@@ -81,8 +80,8 @@ class FFmpegGenericTask(Thread):
         OSError exception. Otherwise the getted output is None
 
         """
-        cmd = (f'"{FFmpegGenericTask.appdata["ffmpeg_cmd"]}" '
-               f'{FFmpegGenericTask.appdata["ffmpeg_default_args"]} '
+        cmd = (f'"{self.appdata["ffmpeg_cmd"]}" '
+               f'{self.appdata["ffmpeg_default_args"]} '
                f'{self.args}'
                )
         self.logwrite(f'From: {self.procname}\n{cmd}\n')
@@ -93,21 +92,19 @@ class FFmpegGenericTask(Thread):
             with Popen(cmd,
                        stderr=subprocess.PIPE,
                        universal_newlines=True,
-                       encoding='utf8',
+                       encoding=self.appdata["encoding"],
                        ) as proc:
-                error = proc.communicate()
-                self.logwrite(f'[FFMPEG]:\n{error}')
-                if proc.returncode:  # ffmpeg error
-                    if error[1]:
-                        self.status = error[1]
-                    else:
-                        self.status = "FFmpeg Unrecognized error"
+                output = proc.communicate()[1]
+                if proc.returncode != 0:  # if error occurred
+                    self.status = output
 
         except OSError as err:  # command not found
             self.status = err
 
         if self.status:
             self.logerror()
+        else:
+            self.logwrite(f'[FFMPEG]:\n{output}')
         wx.CallAfter(pub.sendMessage,
                      "RESULT_EVT",
                      status=''
@@ -118,7 +115,7 @@ class FFmpegGenericTask(Thread):
         """
         write ffmpeg command log
         """
-        with open(self.logfile, "a", encoding='utf8') as log:
+        with open(self.logfile, "a", encoding='utf-8') as log:
             log.write(f"{cmd}\n")
     # ----------------------------------------------------------------#
 
@@ -126,6 +123,6 @@ class FFmpegGenericTask(Thread):
         """
         write ffmpeg volumedected errors
         """
-        with open(self.logfile, "a", encoding='utf8') as logerr:
+        with open(self.logfile, "a", encoding='utf-8') as logerr:
             logerr.write(f"\n[FFMPEG] generic_task "
                          f"ERRORS:\n{self.status}\n")

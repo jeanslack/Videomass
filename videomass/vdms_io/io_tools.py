@@ -76,7 +76,7 @@ def stream_play(filepath, timeseq, param, autoexit):
     else:
         tseq = '', ''
     try:
-        with open(filepath, encoding='utf8'):
+        with open(filepath, encoding='utf-8'):
             FilePlay(filepath,
                      tseq,
                      param,
@@ -110,7 +110,8 @@ def volume_detect_process(filelist, timeseq, audiomap, parent=None):
                                 filelist,
                                 audiomap,
                                 get.appset['logdir'],
-                                get.appset['ffmpeg_cmd']
+                                get.appset['ffmpeg_cmd'],
+                                get.appset['encoding'],
                                 )
     dlgload = PopupDialog(parent,
                           _("Videomass - Loading..."),

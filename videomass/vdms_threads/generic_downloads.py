@@ -106,7 +106,7 @@ def download_bigfile(url, filename):
 
     with requests.get(tarball, stream=True, timeout=10) as dwnl:
         dwnl.raise_for_status()
-        with open(filename, 'wb', encoding='utf8') as fname:
+        with open(filename, 'wb', encoding='utf-8') as fname:
             for chunk in dwnl.iter_content(chunk_size=8192):
                 fname.write(chunk)
 

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: April.18.2022
+Rev: April.14.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -30,13 +30,18 @@ from videomass.vdms_utils.utils import detect_binaries
 from videomass.vdms_sys.settings_manager import ConfigManager
 
 
-def write_changes(fileconf, ffmpeg, ffplay, ffprobe, youtubedl, binfound):
+def write_changes(ffmpeg, ffplay, ffprobe, youtubedl, binfound):
     """
     Writes changes to the configuration file
 
     """
-    conf = ConfigManager(fileconf)
+    get = wx.GetApp()
+    appdata = get.appset
+    conf = ConfigManager(appdata['fileconfpath'])
     dataread = conf.read_options()
+    if not dataread['trashdir_loc'].strip():
+        # prevent Nonetype error saving settings from preferences
+        dataread['trashdir_loc'] = appdata['trashdir_default']
     dataread['ffmpeg_cmd'] = ffmpeg
     dataread['ffprobe_cmd'] = ffprobe
     dataread['ffplay_cmd'] = ffplay
@@ -46,6 +51,7 @@ def write_changes(fileconf, ffmpeg, ffplay, ffprobe, youtubedl, binfound):
     dataread['ffprobe_islocal'] = local
     dataread['ffplay_islocal'] = local
     dataread['use-downloader'] = youtubedl
+
     conf.write_options(**dataread)
 
 
@@ -504,10 +510,6 @@ class Wizard(wx.Dialog):
     for configuring Videomass during the startup.
 
     """
-    get = wx.GetApp()
-    getfileconf = get.appset['fileconfpath']
-    OS = get.appset['ostype']
-
     def __init__(self, icon_videomass):
         """
         Note that the attributes of ffmpeg are set in the "PageTwo"
@@ -667,8 +669,7 @@ class Wizard(wx.Dialog):
         elif not self.pageTwo.detectBtn.IsEnabled():
             binfound = 'system'
 
-        write_changes(Wizard.getfileconf,
-                      self.ffmpeg,
+        write_changes(self.ffmpeg,
                       self.ffplay,
                       self.ffprobe,
                       youtubedl,

@@ -38,7 +38,7 @@ def write_json_file_queue(data, queuefile=None):
         get = wx.GetApp()
         appdata = get.appset
         queuefile = os.path.join(appdata["confdir"], 'queue.backup')
-    with open(queuefile, 'w', encoding='utf8') as outfile:
+    with open(queuefile, 'w', encoding='utf-8') as outfile:
         json.dump(data, outfile, ensure_ascii=False, indent=4)
 # --------------------------------------------------------------------
 
@@ -50,16 +50,17 @@ def load_json_file_queue(newincoming=None):
     occurrences of the 'destination' key value
     """
     if not newincoming:
-        wildcard = "Source (*.json)|*.json| All files (*.*)|*.*"
+        wild = "Source (*.json)|*.json| All files (*.*)|*.*"
         with wx.FileDialog(None, _("Import queue file"),
-                           "", "", wildcard, wx.FD_OPEN
-                           | wx.FD_FILE_MUST_EXIST) as filedlg:
+                           defaultDir=os.path.expanduser('~'),
+                           wildcard=wild,
+                           style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
 
-            if filedlg.ShowModal() == wx.ID_CANCEL:
+            if fdlg.ShowModal() == wx.ID_CANCEL:
                 return None
-            newincoming = filedlg.GetPath()
+            newincoming = fdlg.GetPath()
     try:
-        with open(newincoming, 'r', encoding='utf8') as fln:
+        with open(newincoming, 'r', encoding='utf-8') as fln:
             newdata = json.load(fln)
 
     except json.decoder.JSONDecodeError as err:

@@ -677,7 +677,7 @@ class SequenceToVideo(wx.Panel):
                   }
 
         keyval = self.update_dict(f"{name}.mkv", outputdir, countmax, 'mkv')
-        ending = Formula(self, (600, 320),
+        ending = Formula(self, (700, 320),
                          self.parent.movetotrash,
                          self.parent.emptylist,
                          **keyval,
@@ -717,8 +717,8 @@ class SequenceToVideo(wx.Panel):
         else:
             addargs = ''
 
-        keys = (_("Batch processing items\nOutput filename"
-                  "\nDestination directory\nOutput Format"
+        keys = (_("Items to concatenate\nOutput filename"
+                  "\nDestination\nOutput Format"
                   "\nAdditional arguments"
                   "\nAudio file\nShortest\nResize\nPre-input"
                   "\nFrame per Second (FPS)\nStill image duration"

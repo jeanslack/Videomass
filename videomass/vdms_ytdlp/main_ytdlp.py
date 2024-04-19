@@ -270,7 +270,7 @@ class MainYtdl(wx.Frame):
 
         # ----------------------- file menu
         fileButton = wx.Menu()
-        dscrp = _("Open destination directory of downloads\tCtrl+D")
+        dscrp = _("Open destination folder of downloads\tCtrl+D")
         fold_downloads = fileButton.Append(wx.ID_ANY, dscrp)
         fileButton.AppendSeparator()
         closeItem = fileButton.Append(wx.ID_CLOSE, _("Close view\tCtrl+W"),
@@ -295,9 +295,9 @@ class MainYtdl(wx.Frame):
                  _("Clear the URL list"))
         self.clearall = editButton.Append(wx.ID_CLEAR, dscrp[0], dscrp[1])
         editButton.AppendSeparator()
-        setupItem = editButton.Append(wx.ID_PREFERENCES,
-                                      _("Preferences\tCtrl+P"),
-                                      _("YouTube downloader preferences"))
+        self.setupItem = editButton.Append(wx.ID_PREFERENCES,
+                                           _("Options\tCtrl+P"),
+                                           _("YouTube Downloader options"))
         self.menuBar.Append(editButton, _("Edit"))
 
         # ------------------ tools menu
@@ -329,7 +329,7 @@ class MainYtdl(wx.Frame):
         self.Bind(wx.EVT_MENU, self.textDnDTarget.on_del_url_selected,
                   self.delete)
         self.Bind(wx.EVT_MENU, self.textDnDTarget.delete_all, self.clearall)
-        self.Bind(wx.EVT_MENU, self.on_options, setupItem)
+        self.Bind(wx.EVT_MENU, self.on_options, self.setupItem)
         # ----TOOLS----
         self.Bind(wx.EVT_MENU, self.reminder, notepad)
         # ---- VIEW ----
@@ -356,7 +356,7 @@ class MainYtdl(wx.Frame):
         if os.path.exists(fname) and os.path.isfile(fname):
             io_tools.openpath(fname)
         else:
-            with open(fname, "w", encoding='utf8') as text:
+            with open(fname, "w", encoding='utf-8') as text:
                 text.write("")
             io_tools.openpath(fname)
     # ------------------------------------------------------------------#
@@ -440,7 +440,6 @@ class MainYtdl(wx.Frame):
         Makes and attaches the toolsBtn bar.
         To enable or disable styles, use method `SetWindowStyleFlag`
         e.g.
-
             self.toolbar.SetWindowStyleFlag(wx.TB_NODIVIDER | wx.TB_FLAT)
         """
         style = self.toolbar_pos()
@@ -455,6 +454,7 @@ class MainYtdl(wx.Frame):
             bmpstat = get_bmp(self.icons['statistics'], bmp_size)
             bmpydl = get_bmp(self.icons['download'], bmp_size)
             bmpstop = get_bmp(self.icons['stop'], bmp_size)
+            bmpopt = get_bmp(self.icons['options'], bmp_size)
 
         else:
             bmpback = wx.Bitmap(self.icons['previous'], wx.BITMAP_TYPE_ANY)
@@ -462,6 +462,7 @@ class MainYtdl(wx.Frame):
             bmpstat = wx.Bitmap(self.icons['statistics'], wx.BITMAP_TYPE_ANY)
             bmpydl = wx.Bitmap(self.icons['download'], wx.BITMAP_TYPE_ANY)
             bmpstop = wx.Bitmap(self.icons['stop'], wx.BITMAP_TYPE_ANY)
+            bmpopt = wx.Bitmap(self.icons['options'], wx.BITMAP_TYPE_ANY)
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
@@ -481,10 +482,12 @@ class MainYtdl(wx.Frame):
                                                       bmpstat,
                                                       tip, wx.ITEM_NORMAL,
                                                       )
+        tip = _("YouTube Downloader options")
+        options = self.toolbar.AddTool(26, _('Options'),
+                                       bmpopt, tip, wx.ITEM_NORMAL)
         tip = _("Start downloading")
         self.run_download = self.toolbar.AddTool(23, _('Download'),
-                                                 bmpydl,
-                                                 tip, wx.ITEM_NORMAL,
+                                                 bmpydl, tip, wx.ITEM_NORMAL,
                                                  )
         tip = _("Stops current process")
         stop = self.toolbar.AddTool(24, _('Abort'), bmpstop,
@@ -498,6 +501,7 @@ class MainYtdl(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.on_forward, forward)
         self.Bind(wx.EVT_TOOL, self.on_statistics, self.btn_ydlstatistics)
         self.Bind(wx.EVT_TOOL, self.click_stop, stop)
+        self.Bind(wx.EVT_TOOL, self.on_options, options)
 
     # --------------- Tool Bar Callback (event handler) -----------------#
 
@@ -573,14 +577,15 @@ class MainYtdl(wx.Frame):
         elif args[0] == 'YouTube Downloader':
             (self.delete.Enable(False),
              self.paste.Enable(False),
-             self.clearall.Enable(False)
+             self.clearall.Enable(False),
+             self.setupItem.Enable(False)
              )
             if len(self.data_url) <= 1:
                 [self.toolbar.EnableTool(x, False) for x
-                 in (20, 21, 23, 24)]
+                 in (20, 21, 23, 24, 26)]
                 self.toolbar.EnableTool(22, True)
             else:
-                [self.toolbar.EnableTool(x, False) for x in (20, 21, 23)]
+                [self.toolbar.EnableTool(x, False) for x in (20, 21, 23, 26)]
                 [self.toolbar.EnableTool(x, True) for x in (22, 24)]
 
         self.SetTitle(_('Videomass - Downloader Message Monitoring'))
@@ -588,7 +593,7 @@ class MainYtdl(wx.Frame):
         self.ytDownloader.Hide()
         self.ProcessPanel.Show()
         self.Layout()
-        self.ProcessPanel.topic_thread(args)
+        self.ProcessPanel.topic_thread(args, self.data_url)
     # ------------------------------------------------------------------#
 
     def click_start(self, event):
@@ -621,6 +626,8 @@ class MainYtdl(wx.Frame):
         """
         self.toolbar.EnableTool(20, True)
         self.toolbar.EnableTool(24, False)
+        self.toolbar.EnableTool(26, True)
+        self.setupItem.Enable(True)
     # ------------------------------------------------------------------#
 
     def panelShown(self):

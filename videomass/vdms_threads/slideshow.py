@@ -38,14 +38,11 @@ if not platform.system() == 'Windows':
     import shlex
 
 
-def convert_images(*varargs):
+def convert_images(*varargs, **kwargs):
     """
     Convert images to PNG format and assign
     progressive digits to them.
     """
-    get = wx.GetApp()  # get videomass wx.App attribute
-    appdata = get.appset
-    opsystem = appdata['ostype']
     not_exist_msg = _("Is 'ffmpeg' installed on your system?")
     flist = varargs[0]
     tmpdir = varargs[1]
@@ -61,8 +58,8 @@ def convert_images(*varargs):
                  end='',
                  )
     prognum = 0
-    args = (f'"{appdata["ffmpeg_cmd"]}" '
-            f'{appdata["ffmpeg_default_args"]} ')
+    args = (f'"{kwargs["ffmpeg_cmd"]}" '
+            f'{kwargs["ffmpeg_default_args"]} ')
     logwrite(f'Preparing temporary files...\n'
              f'\n[COMMAND:]\n{args}', '', logname)
 
@@ -71,14 +68,14 @@ def convert_images(*varargs):
         tmpf = os.path.join(tmpdir, f'{imagenames}{prognum}.bmp')
         cmd_1 = f'{args} -i "{files}" "{tmpf}"'
 
-        if not opsystem == 'Windows':
+        if not kwargs['ostype'] == 'Windows':
             cmd_1 = shlex.split(cmd_1)
         try:
             with Popen(cmd_1,
                        stderr=subprocess.PIPE,
                        bufsize=1,
                        universal_newlines=True,
-                       encoding='utf8',
+                       encoding=kwargs['encoding'],
                        ) as proc1:
                 error = proc1.communicate()
 
@@ -123,15 +120,12 @@ def convert_images(*varargs):
     return None
 
 
-def resizing_process(*varargs):
+def resizing_process(*varargs, **kwargs):
     """
     After the images have been converted to the required format,
     this process performs the resizing using ffmpeg filters.
     This is a necessary workaround for proper video playback.
     """
-    get = wx.GetApp()  # get videomass wx.App attribute
-    appdata = get.appset
-    opsystem = appdata['ostype']
     not_exist_msg = _("Is 'ffmpeg' installed on your system?")
     flist = varargs[0]
     tmpdir = varargs[1]
@@ -150,20 +144,20 @@ def resizing_process(*varargs):
 
     tmpf = os.path.join(tmpdir, 'TMP_%d.bmp')
     tmpfout = os.path.join(tmpdir, 'IMAGE_%d.bmp')
-    cmd_1 = (f'"{appdata["ffmpeg_cmd"]}" '
-             f'{appdata["ffmpeg_default_args"]} '
+    cmd_1 = (f'"{kwargs["ffmpeg_cmd"]}" '
+             f'{kwargs["ffmpeg_default_args"]} '
              f'-i "{tmpf}" {cmdargs} "{tmpfout}"'
              )
     logwrite(f'\nFile resizing...\n\n[COMMAND]:\n{cmd_1}', '', logname)
 
-    if not opsystem == 'Windows':
+    if not kwargs['ostype'] == 'Windows':
         cmd_1 = shlex.split(cmd_1)
     try:
         with Popen(cmd_1,
                    stderr=subprocess.PIPE,
                    bufsize=1,
                    universal_newlines=True,
-                   encoding='utf8',
+                   encoding=kwargs['encoding'],
                    ) as proc1:
             error = proc1.communicate()
 
@@ -214,10 +208,6 @@ class SlideshowMaker(Thread):
     mkv format from a sequence of images already converted
     and resized in a temporary context.
     """
-    get = wx.GetApp()  # get videomass wx.App attribute
-    appdata = get.appset
-    OS = appdata['ostype']
-    SUFFIX = appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
     def __init__(self, *args, **kwargs):
@@ -227,6 +217,8 @@ class SlideshowMaker(Thread):
         """
         Thread.__init__(self)
 
+        get = wx.GetApp()  # get videomass wx.App attribute
+        self.appdata = get.appset
         self.stop_work_thread = False  # process terminate
         self.duration = kwargs['duration'] * 1000  # duration in milliseconds
         self.count = 0  # count first for loop
@@ -248,6 +240,7 @@ class SlideshowMaker(Thread):
                                       tempdir,
                                       self.logfile,
                                       imgtmpnames,
+                                      **self.appdata,
                                       )
             if tmpproc1 is not None:
                 self.end_process(filedone)
@@ -262,6 +255,7 @@ class SlideshowMaker(Thread):
                                             tempdir,
                                             self.kwa["resize"],
                                             self.logfile,
+                                            **self.appdata,
                                             )
                 if tmpproc2 is not None:
                     self.end_process(filedone)
@@ -273,8 +267,8 @@ class SlideshowMaker(Thread):
 
             # ------------------------------- make video
             tmpgroup = os.path.join(tempdir, 'IMAGE_%d.bmp')
-            cmd_2 = (f'"{SlideshowMaker.appdata["ffmpeg_cmd"]}" '
-                     f'{SlideshowMaker.appdata["ffmpeg_default_args"]} '
+            cmd_2 = (f'"{self.appdata["ffmpeg_cmd"]}" '
+                     f'{self.appdata["ffmpeg_default_args"]} '
                      f'{self.kwa["pre-input-1"]} '
                      f'-i "{tmpgroup}" '
                      f'{self.kwa["args"]} '
@@ -294,7 +288,7 @@ class SlideshowMaker(Thread):
             logwrite(log, '', self.logfile)
             time.sleep(1)
 
-            if not SlideshowMaker.OS == 'Windows':
+            if not self.appdata['ostype'] == 'Windows':
                 cmd_2 = shlex.split(cmd_2)
 
             try:
@@ -302,7 +296,7 @@ class SlideshowMaker(Thread):
                            stderr=subprocess.PIPE,
                            bufsize=1,
                            universal_newlines=True,
-                           encoding='utf8',
+                           encoding=self.appdata['encoding'],
                            ) as proc2:
                     for line in proc2.stderr:
                         wx.CallAfter(pub.sendMessage,

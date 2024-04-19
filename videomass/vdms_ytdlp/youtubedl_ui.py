@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import sys
+import itertools
 import wx
 import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_io.io_tools import youtubedl_getstatistics
@@ -571,9 +572,9 @@ class Downloader(wx.Panel):
                     self.plidx = data
     # -----------------------------------------------------------------#
 
-    def on_start(self):
+    def check_options(self):
         """
-        Builds options and arguments for yt_dlp lib.
+        This method executes for
         """
         urls = self.parent.data_url
 
@@ -583,20 +584,23 @@ class Downloader(wx.Panel):
                                    'Are you sure you want to continue?'),
                                  _('Please confirm'), wx.ICON_QUESTION
                                  | wx.CANCEL | wx.YES_NO, self) != wx.YES:
-                    return
+                    return True
         if [url for url in urls if 'channel' in url]:
             if wx.MessageBox(_('The URLs contain channels. '
                                'Are you sure you want to continue?'),
                              _('Please confirm'), wx.ICON_QUESTION
                              | wx.CANCEL | wx.YES_NO, self) != wx.YES:
-                return
+                return True
 
-        if self.appdata["include_ID_name"]:
-            _id = '%(title).100s-%(id)s'
-        else:
-            _id = '%(title).100s'
+        return False
+    # -----------------------------------------------------------------#
 
-        logname = "YouTube Downloader.log"
+    def default_options(self):
+        """
+        Main mapping of default options.
+        return a type dict object.
+        """
+        data = {}
         postprocessors = []
 
         if self.choice.GetSelection() == 3:
@@ -613,73 +617,112 @@ class Downloader(wx.Panel):
         if self.opt["SUBS"]["embedsubtitle"]:
             postprocessors.append({'key': 'FFmpegEmbedSubtitle'})
 
+        if (self.appdata["use_cookie_file"]
+                and self.appdata["cookiefile"].strip()):
+            data["cookiefile"] = self.appdata["cookiefile"]
+
+        if self.appdata["autogen_cookie_file"]:
+            cfb = tuple(self.appdata["cookiesfrombrowser"])
+            data["cookiesfrombrowser"] = cfb
+
+        data['compat_opts'] = 'youtube-dl'
+        data['external_downloader'] = (
+            self.appdata["external_downloader"])
+        data['external_downloader_args'] = (
+            self.appdata["external_downloader_args"])
+        data['noplaylist'] = self.opt["NO_PLAYLIST"]
+        data['writesubtitles'] = self.opt["SUBS"]["writesubtitles"]
+        data['subtitleslangs'] = self.opt["SUBS"]["subtitleslangs"]
+        data['writeautomaticsub'] = self.opt["SUBS"]["writeautomaticsub"]
+        data['skip_download'] = self.opt["SUBS"]["skip_download"]
+        data['addmetadata'] = self.appdata['add_metadata']
+        data['restrictfilenames'] = self.appdata["restrict_fname"]
+        data['ignoreerrors'] = True
+        data['no_warnings'] = False
+        data['writethumbnail'] = self.appdata["embed_thumbnails"]
+        data['overwrites'] = self.appdata["overwr_dl_files"]
+        data['no_color'] = True
+        data['nocheckcertificate'] = self.appdata["ssl_certificate"]
+        data['proxy'] = self.appdata["proxy"]
+        data['username'] = self.appdata["username"]
+        data['password'] = self.appdata["password"]
+        data['videopassword'] = self.appdata["videopassword"]
+        data["geo_verification_proxy"] = self.appdata["geo_verification_proxy"]
+        data["geo_bypass"] = self.appdata["geo_bypass"]
+        data["geo_bypass_country"] = self.appdata["geo_bypass_country"]
+        data["geo_bypass_ip_block"] = self.appdata["geo_bypass_ip_block"]
+        data['ffmpeg_location'] = f'{self.appdata["ffmpeg_cmd"]}'
+        data['postprocessors'] = postprocessors
+
+        return data
+    # -----------------------------------------------------------------#
+
+    def build_args(self, *args, **data):
+        """
+        Build the options list for yt_dlp,
+        return a type list object.
+        """
+        datalist = []
+        urlslist = self.parent.data_url
+
+        if self.appdata['playlistsubfolder']:
+            subdir = ('%(uploader)s/%(playlist_title)'
+                      's/%(playlist_index)s - ')
+        else:
+            subdir = ''
+
+        for url, code in itertools.zip_longest(urlslist,
+                                               args[2],
+                                               fillvalue='',
+                                               ):
+            if '/playlist' in url or not data['noplaylist']:
+                template = subdir + args[0]
+            else:
+                template = args[0]
+
+            format_code = code if code else args[1]
+            datalist.append(
+                {'format': format_code,
+                 'extractaudio': args[1],
+                 'outtmpl': f"{self.appdata['ydlp-outputdir']}/{template}",
+                 'playlist_items': self.plidx.get(url, None),
+                 'postprocessors': data['postprocessors'],
+                 **data
+                 })
+        return datalist
+    # -----------------------------------------------------------------#
+
+    def on_start(self):
+        """
+        Pass options list to processing.
+        """
+        if self.check_options():
+            return
+        data = self.default_options()
+
+        if self.appdata["include_ID_name"]:
+            _id = '%(title).100s-%(id)s'
+        else:
+            _id = '%(title).100s'
+
         if self.choice.GetSelection() in (0, 1):  # precompiled or quality
             code = []
-            data = {'format': self.quality,
-                    'noplaylist': self.opt["NO_PLAYLIST"],
-                    'playlist_items': self.plidx,
-                    'overwrites': self.appdata["overwr_dl_files"],
-                    'writethumbnail': self.appdata["embed_thumbnails"],
-                    'outtmpl': f'{_id}.%(ext)s',
-                    'extractaudio': False,
-                    'addmetadata': self.appdata['add_metadata'],
-                    'writesubtitles': self.opt["SUBS"]["writesubtitles"],
-                    'subtitleslangs': self.opt["SUBS"]["subtitleslangs"],
-                    'skip_download': self.opt["SUBS"]["skip_download"],
-                    'writeautomaticsub': self.opt["SUBS"]["writeautomaticsub"],
-                    'postprocessors': postprocessors,
-                    'restrictfilenames': self.appdata["restrict_fname"],
-                    'nocheckcertificate': self.appdata["ssl_certificate"],
-                    'proxy': self.appdata["proxy"],
-                    'username': self.appdata["username"],
-                    'password': self.appdata["password"],
-                    'videopassword': self.appdata["videopassword"],
+            formatquality = self.quality
+            outtmpl = f'{_id}.%(ext)s'
+            data['extractaudio'] = False
 
-                    }
         elif self.choice.GetSelection() == 2:  # audio and video splitted
             code = []
-            data = {'format': self.quality,
-                    'noplaylist': self.opt["NO_PLAYLIST"],
-                    'playlist_items': self.plidx,
-                    'overwrites': self.appdata["overwr_dl_files"],
-                    'writethumbnail': self.appdata["embed_thumbnails"],
-                    'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
-                    'extractaudio': False,
-                    'addmetadata': self.appdata['add_metadata'],
-                    'writesubtitles': self.opt["SUBS"]["writesubtitles"],
-                    'subtitleslangs': self.opt["SUBS"]["subtitleslangs"],
-                    'skip_download': self.opt["SUBS"]["skip_download"],
-                    'writeautomaticsub': self.opt["SUBS"]["writeautomaticsub"],
-                    'postprocessors': postprocessors,
-                    'restrictfilenames': self.appdata["restrict_fname"],
-                    'nocheckcertificate': self.appdata['ssl_certificate'],
-                    'proxy': self.appdata["proxy"],
-                    'username': self.appdata["username"],
-                    'password': self.appdata["password"],
-                    'videopassword': self.appdata["videopassword"],
-                    }
+            formatquality = self.quality
+            outtmpl = f'{_id}.f%(format_id)s.%(ext)s'
+            data['extractaudio'] = False
+
         elif self.choice.GetSelection() == 3:  # audio only
             code = []
-            data = {'format': 'bestaudio',
-                    'noplaylist': self.opt["NO_PLAYLIST"],
-                    'playlist_items': self.plidx,
-                    'overwrites': self.appdata["overwr_dl_files"],
-                    'writethumbnail': self.appdata["embed_thumbnails"],
-                    'outtmpl': f'{_id}.%(ext)s',
-                    'extractaudio': True,
-                    'addmetadata': self.appdata['add_metadata'],
-                    'writesubtitles': self.opt["SUBS"]["writesubtitles"],
-                    'subtitleslangs': self.opt["SUBS"]["subtitleslangs"],
-                    'skip_download': self.opt["SUBS"]["skip_download"],
-                    'writeautomaticsub': self.opt["SUBS"]["writeautomaticsub"],
-                    'postprocessors': postprocessors,
-                    'restrictfilenames': self.appdata["restrict_fname"],
-                    'nocheckcertificate': self.appdata['ssl_certificate'],
-                    'proxy': self.appdata["proxy"],
-                    'username': self.appdata["username"],
-                    'password': self.appdata["password"],
-                    'videopassword': self.appdata["videopassword"],
-                    }
+            formatquality = 'bestaudio'
+            outtmpl = f'{_id}.%(ext)s'
+            data['extractaudio'] = True
+
         elif self.choice.GetSelection() == 4:  # format code
             code = self.panel_cod.getformatcode()
             if not code:
@@ -688,35 +731,13 @@ class Downloader(wx.Panel):
                                           Downloader.WHITE
                                           )
                 return
+            formatquality = ''
+            outtmpl = f'{_id}.f%(format_id)s.%(ext)s'
+            data['extractaudio'] = False
 
-            data = {'format': '',
-                    'noplaylist': self.opt["NO_PLAYLIST"],
-                    'playlist_items': self.plidx,
-                    'overwrites': self.appdata["overwr_dl_files"],
-                    'writethumbnail': self.appdata["embed_thumbnails"],
-                    'outtmpl': f'{_id}.f%(format_id)s.%(ext)s',
-                    'extractaudio': False,
-                    'addmetadata': self.appdata['add_metadata'],
-                    'writesubtitles': self.opt["SUBS"]["writesubtitles"],
-                    'subtitleslangs': self.opt["SUBS"]["subtitleslangs"],
-                    'skip_download': self.opt["SUBS"]["skip_download"],
-                    'writeautomaticsub': self.opt["SUBS"]["writeautomaticsub"],
-                    'postprocessors': postprocessors,
-                    'restrictfilenames': self.appdata["restrict_fname"],
-                    'nocheckcertificate': self.appdata['ssl_certificate'],
-                    'proxy': self.appdata["proxy"],
-                    'username': self.appdata["username"],
-                    'password': self.appdata["password"],
-                    'videopassword': self.appdata["videopassword"],
-                    }
-        self.parent.switch_to_processing('YouTube Downloader',
-                                         urls,
-                                         '',
-                                         self.appdata['ydlp-outputdir'],
-                                         data,
-                                         None,
-                                         code,
-                                         '',
-                                         logname,
-                                         len(urls),
-                                         )
+        datalist = self.build_args(outtmpl,
+                                   formatquality,
+                                   code,
+                                   **data
+                                   )
+        self.parent.switch_to_processing('YouTube Downloader', datalist)

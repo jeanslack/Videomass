@@ -36,7 +36,7 @@ def check_notes(fname):
     """
     nts = None
     if os.path.exists(fname) and os.path.isfile(fname):
-        with open(fname, "r", encoding='utf8') as text:
+        with open(fname, "r", encoding='utf-8') as text:
             nts = text.read()
         if nts.strip() == "":
             return None
@@ -146,10 +146,10 @@ class Memos(wx.Dialog):
         """
         Save changes to text file.
         Writing the file is left to the `SaveFile` method of `wx.TxtCtrl`.
-        Make sure it has utf8 encoding enabled, otherwise use the Python
+        Make sure it has utf-8 encoding enabled, otherwise use the Python
         context manager as follows:
 
-        with open(self.filename, "w", encoding='utf8') as text:
+        with open(self.filename, "w", encoding='utf-8') as text:
             text.write(self.textbox.GetValue())
 
         """

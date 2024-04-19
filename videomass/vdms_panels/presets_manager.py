@@ -355,9 +355,9 @@ class PrstPan(wx.Panel):
         if not os.path.isfile(conftext) or not os.path.isfile(srctext):
             return
 
-        with open(conftext, "r", encoding='utf8') as vers:
+        with open(conftext, "r", encoding='utf-8') as vers:
             confversion = vers.read().strip()
-        with open(srctext, "r", encoding='utf8') as vers:
+        with open(srctext, "r", encoding='utf-8') as vers:
             srcversion = vers.read().strip()
 
         old = sum((int(x) for x in confversion.split('.')))
@@ -384,7 +384,7 @@ class PrstPan(wx.Panel):
                 return
 
             # update version.txt file to latest version
-            with open(conftext, "w", encoding='utf8') as updatevers:
+            with open(conftext, "w", encoding='utf-8') as updatevers:
                 updatevers.write(f'{srcversion}\n')
 
             # copies missing file/dir to the destination directory
@@ -552,7 +552,7 @@ class PrstPan(wx.Panel):
                 return
             filename = f"{fileDialog.GetPath()}.json"
             try:
-                with open(filename, 'w', encoding='utf8') as file:
+                with open(filename, 'w', encoding='utf-8') as file:
                     file.write('[]')
             except IOError:
                 wx.LogError(_("Cannot save current "
@@ -945,8 +945,8 @@ class PrstPan(wx.Panel):
 
         outext = '' if self.array[5] == 'copy' else self.array[5]
         extlst = self.array[4]
-        file_src = supported_formats(extlst, infile)
-        filecheck = check_files(file_src,
+        src = supported_formats(extlst, infile)
+        filecheck = check_files(src,
                                 self.appdata['outputdir'],
                                 self.appdata['outputdir_asinput'],
                                 self.appdata['filesuffix'],
@@ -1038,7 +1038,7 @@ class PrstPan(wx.Panel):
             batchlist.append(kw)
 
         keyval = self.update_dict(len(self.parent.file_src), **kwargs)
-        ending = Formula(self, (600, 180),
+        ending = Formula(self, (700, 200),
                          self.parent.movetotrash,
                          self.parent.emptylist,
                          **keyval,
@@ -1065,10 +1065,15 @@ class PrstPan(wx.Panel):
             sst = kwa["start-time"].split()[1]
             endt = kwa["end-time"].split()[1]
 
-        keys = (_("Batch processing items\nAutomation/Preset\n"
+        if self.appdata['outputdir_asinput']:
+            dest = _('Same destination paths as source files')
+        else:
+            dest = self.appdata['outputdir']
+
+        keys = (_("Batch processing items\nDestination\nAutomation/Preset\n"
                   "Encoding passes\nProfile Used\nOutput Format\n"
                   "Start of segment\nClip duration"))
-        vals = (f"{cntmax}\n{kwa['preset name']}\n{passes}\n"
-                f"{self.array[0]}\n{self.array[5]}\n{sst}\n{endt}"
+        vals = (f"{cntmax}\n{dest}\n{kwa['preset name']}"
+                f"\n{passes}\n{self.array[0]}\n{self.array[5]}\n{sst}\n{endt}"
                 )
         return {'key': keys, 'val': vals}

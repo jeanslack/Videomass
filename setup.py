@@ -54,7 +54,7 @@ def source_build():
                      "wheel>=0.34.2",
                      "twine>=3.1.1"
                      ]
-        with open('README.md', 'r', encoding='utf8') as readme:
+        with open('README.md', 'r', encoding='utf-8') as readme:
             long_descript = readme.read()
 
         long_description_ct = 'text/markdown'

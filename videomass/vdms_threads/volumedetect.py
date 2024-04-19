@@ -48,7 +48,13 @@ class VolumeDetectThread(Thread):
 
     """
 
-    def __init__(self, timeseq, filelist, audiomap, logdir, ffmpeg_url):
+    def __init__(self, timeseq,
+                 filelist,
+                 audiomap,
+                 logdir,
+                 ffmpeg_url,
+                 txtenc,
+                 ):
         """
         Replace /dev/null with NUL on Windows.
 
@@ -59,6 +65,7 @@ class VolumeDetectThread(Thread):
                    in the form:
                    ([[maxvol, medvol], [etc,etc]], None or "str errors")
         """
+        self.txtenc = txtenc
         self.filelist = filelist
         self.time_seq = timeseq
         self.audiomap = audiomap
@@ -100,19 +107,16 @@ class VolumeDetectThread(Thread):
                 cmd = shlex.split(cmd)
             try:
                 with Popen(cmd,
-                           stdout=subprocess.PIPE,
-                           stderr=subprocess.STDOUT,
+                           stderr=subprocess.PIPE,
                            universal_newlines=True,
-                           encoding='utf8',
+                           encoding=self.txtenc,
                            ) as proc:
-
-                    output = proc.communicate()
-
-                    if proc.returncode:  # if error occurred
-                        self.status = output[0]
+                    output = proc.communicate()[1]
+                    if proc.returncode != 0:  # if error occurred
+                        self.status = output
                         break
 
-                    raw_list = output[0].split()  # splitta tutti gli spazi
+                    raw_list = output.split()  # splitta tutti gli spazi
                     if 'mean_volume:' in raw_list:
                         mean_volume = raw_list.index("mean_volume:")
                         # mean_volume is indx integear
@@ -141,7 +145,7 @@ class VolumeDetectThread(Thread):
         """
         write ffmpeg command log
         """
-        with open(self.logf, "a", encoding='utf8') as log:
+        with open(self.logf, "a", encoding='utf-8') as log:
             log.write(f"{cmd}\n")
     # ----------------------------------------------------------------#
 
@@ -149,6 +153,6 @@ class VolumeDetectThread(Thread):
         """
         write ffmpeg volumedected errors
         """
-        with open(self.logf, "a", encoding='utf8') as logerr:
+        with open(self.logf, "a", encoding='utf-8') as logerr:
             logerr.write(f"\n[FFMPEG] volumedetect "
                          f"ERRORS:\n{self.status}\n")

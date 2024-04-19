@@ -207,7 +207,7 @@ class Conc_Demuxer(wx.Panel):
         self.args = (f'"{ftext}" -map 0:v? -map_chapters 0 '
                      f'-map 0:s? -map 0:a? -map_metadata 0 -c copy')
 
-        with open(ftext, 'w', encoding='utf8') as txt:
+        with open(ftext, 'w', encoding='utf-8') as txt:
             txt.write('\n'.join(textstr))
 
         checking = check_files((fsource[0],),
@@ -238,7 +238,7 @@ class Conc_Demuxer(wx.Panel):
                   'preset name': 'Concatenate media files',
                   }
         keyval = self.update_dict(newfile, os.path.dirname(newfile))
-        ending = Formula(self, (600, 170),
+        ending = Formula(self, (700, 170),
                          self.parent.movetotrash,
                          self.parent.emptylist,
                          **keyval,
@@ -260,7 +260,7 @@ class Conc_Demuxer(wx.Panel):
         dur = integer_to_time(self.duration)
         dest = os.path.join(destdir, newfile)
 
-        keys = (_("Batch processing items\nDestination\nOutput Format"
+        keys = (_("Items to concatenate\nFile destination\nOutput Format"
                   "\nOutput multimedia type\nDuration"
                   ))
         vals = (f"{lenfile}\n{dest}\n{self.ext}\n"

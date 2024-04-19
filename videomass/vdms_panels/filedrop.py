@@ -108,7 +108,7 @@ class MyListCtrl(wx.ListCtrl):
         listctrl, style must be wx.LC_SINGLE_SEL .
         """
         get = wx.GetApp()
-        self.ffprobe_cmd = get.appset['ffprobe_cmd']
+        self.appdata = get.appset
         self.index = None
         self.parent = parent  # parent is DnDPanel class
         self.data = self.parent.data
@@ -138,7 +138,8 @@ class MyListCtrl(wx.ListCtrl):
             return
 
         if not [x for x in self.data if x['format']['filename'] == path]:
-            probe = ffprobe(path, self.ffprobe_cmd,
+            probe = ffprobe(path, cmd=self.appdata['ffprobe_cmd'],
+                            txtenc=self.appdata['encoding'],
                             hide_banner=None, pretty=None)
             if probe[1]:
                 self.errors[f'"{path}"'] = probe[1]
@@ -302,9 +303,9 @@ class FileDnD(wx.Panel):
             lblsave.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
 
         # ---- Tooltips
-        self.btn_destpath.SetToolTip(_('Set a new destination directory for '
+        self.btn_destpath.SetToolTip(_('Set a new destination folder for '
                                        'encodings'))
-        self.text_path_save.SetToolTip(_("Encodings destination directory"))
+        self.text_path_save.SetToolTip(_("Encodings destination folder"))
 
         # ---- Binding (EVT)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
@@ -570,13 +571,9 @@ class FileDnD(wx.Panel):
         Set a specific directory for files saving
         """
         if self.appdata['outputdir_asinput']:
-            msg = _('same destination directories as source files')
+            msg = _('Same destination paths as source files')
             self.text_path_save.SetValue(msg)
-            self.btn_destpath.Disable()
-            self.text_path_save.Disable()
             return
-        self.btn_destpath.Enable()
-        self.text_path_save.Enable()
         self.text_path_save.SetValue(path)
     # -----------------------------------------------------------------------
 
@@ -627,7 +624,7 @@ class FileDnD(wx.Panel):
         """
         This method is responsible for batch file renaming.
         """
-        title = _('Batch rename the destination items')
+        title = _('Rename in batch')
         msg = _('Rename the {0} items to:').format(len(self.outputnames))
         with Renamer(self,
                      nameprop=_('New Name #'),

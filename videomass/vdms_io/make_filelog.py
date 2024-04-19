@@ -29,7 +29,7 @@ import time
 import os
 
 
-def logwrite(cmd, stderr, logfile):
+def logwrite(cmd, stderr, logfile, txtenc="utf-8"):
     """
     This function writes status messages
     to a given `logfile` during a process.
@@ -41,11 +41,11 @@ def logwrite(cmd, stderr, logfile):
     else:
         apnd = f"{sep}{cmd}\n\n"
 
-    with open(logfile, "a", encoding='utf8') as log:
+    with open(logfile, "a", encoding=txtenc) as log:
         log.write(apnd)
 
 
-def make_log_template(logname, logdir, mode="a"):
+def make_log_template(logname, logdir, mode="a", txtenc="utf-8"):
     """
     Most log files are initialized from a template
     before starting a process and writing status
@@ -59,7 +59,7 @@ def make_log_template(logname, logdir, mode="a"):
     current_date = time.strftime("%c")  # date/time
     logfile = os.path.join(logdir, logname)
 
-    with open(logfile, mode, encoding='utf8') as log:
+    with open(logfile, mode, encoding=txtenc) as log:
         log.write(f"""
 [DATE]: {current_date}
 

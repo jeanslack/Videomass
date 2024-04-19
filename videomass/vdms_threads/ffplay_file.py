@@ -30,7 +30,6 @@ from threading import Thread
 import subprocess
 import platform
 import wx
-from pubsub import pub
 from videomass.vdms_io.make_filelog import make_log_template
 if not platform.system() == 'Windows':
     import shlex
@@ -72,6 +71,8 @@ class FilePlay(Thread):
         WARNING Do not use the "-stats" option as it does not work here.
 
         """
+        get = wx.GetApp()  # get videomass wx.App attribute
+        self.appdata = get.appset
         self.filename = filepath  # file name selected
         self.time_seq = timeseq  # seeking
         self.param = param  # additional parameters if present
@@ -120,25 +121,19 @@ class FilePlay(Thread):
                                   shell=shell,
                                   stderr=subprocess.PIPE,
                                   universal_newlines=True,
-                                  encoding='utf8',
+                                  encoding=self.appdata['encoding'],
                                   startupinfo=info,
                                   ) as proc:
-                error = proc.communicate()
+                error = proc.communicate()[1]
 
-                if error[1]:  # ffplay error
-                    wx.CallAfter(msg_info, error[1])
-                    self.logerror(error[1])  # append log error
-                    pub.sendMessage("STOP_DOWNLOAD_EVT",
-                                    filename=self.filename)
+                if error:  # ffplay error
+                    wx.CallAfter(msg_info, error)
+                    self.logerror(error)  # append log error
                     return
-                # Threads_Handling.stop_download(self, self.filename)
-                pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
-                return
 
         except OSError as err:  # subprocess error
             wx.CallAfter(msg_error, err)
             self.logerror(err)  # append log error
-            pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
             return
     # ----------------------------------------------------------------#
 
@@ -146,7 +141,7 @@ class FilePlay(Thread):
         """
         write ffplay command log
         """
-        with open(self.logf, "a", encoding='utf8') as log:
+        with open(self.logf, "a", encoding='utf-8') as log:
             log.write(f"{cmd}\n")
     # ----------------------------------------------------------------#
 
@@ -154,6 +149,6 @@ class FilePlay(Thread):
         """
         write ffplay errors
         """
-        with open(self.logf, "a", encoding='utf8') as logerr:
+        with open(self.logf, "a", encoding='utf-8') as logerr:
             logerr.write(f"\n[FFMPEG] FFplay "
                          f"OUTPUT:\n{error}\n")

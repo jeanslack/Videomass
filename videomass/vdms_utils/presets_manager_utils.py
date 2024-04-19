@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.08.2024
+Rev: Apr.11.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -28,6 +28,7 @@ This file is part of Videomass.
 import os
 import json
 import wx
+from videomass.vdms_dialogs.list_warning import ListWarning
 
 
 def supported_formats(supp, file_sources):
@@ -36,23 +37,24 @@ def supported_formats(supp, file_sources):
     presets manager panel
     """
     items = ''.join(supp.split()).split(',')
-    exclude = []
+    errors = {}
 
     if not items == ['']:
         for src in file_sources:
             if os.path.splitext(src)[1].split('.')[1] not in items:
-                exclude.append(src)
-        if exclude:
-            for xex in exclude:
-                file_sources.remove(xex)
-            if not file_sources:
-                wx.MessageBox(_("The selected profile is not suitable to "
-                                "convert the following file formats:"
-                                "\n\n%s\n\n") % ('\n'.join(exclude)),
-                              "Videomass",
-                              wx.ICON_INFORMATION | wx.OK,
-                              )
-                return None
+                ext = os.path.splitext(src)[1].split('.')[1]
+                errors[f'"{src}"'] = (_('Supports ({0}) formats only, '
+                                        'not ({1})').format(supp, ext))
+        if errors:
+            msg = _('File formats not supported by the selected profile')
+            with ListWarning(None,
+                             errors,
+                             caption=_('Warning'),
+                             header=msg,
+                             buttons='OK',
+                             ) as log:
+                log.ShowModal()
+            return None
 
     return file_sources
 # ----------------------------------------------------------------------#
@@ -77,7 +79,7 @@ def json_data(arg):
 
     """
     try:
-        with open(arg, 'r', encoding='utf8') as fln:
+        with open(arg, 'r', encoding='utf-8') as fln:
             data = json.load(fln)
 
     except json.decoder.JSONDecodeError as err:
@@ -109,12 +111,12 @@ def delete_profiles(path, name):
     """
     Profile deletion from Presets manager panel
     """
-    with open(path, 'r', encoding='utf8') as fln:
+    with open(path, 'r', encoding='utf-8') as fln:
         data = json.load(fln)
 
     new_data = [obj for obj in data if not obj["Name"] == name]
 
-    with open(path, 'w', encoding='utf8') as outfile:
+    with open(path, 'w', encoding='utf-8') as outfile:
         json.dump(new_data, outfile, ensure_ascii=False, indent=4)
 # ------------------------------------------------------------------#
 
@@ -128,13 +130,13 @@ def update_oudated_profiles(new, old):
             "error.\nFix any errors in the JSON code contained on the FILE "
             "before performing this operation again.")
     if new and old:
-        with open(new, 'r', encoding='utf8') as newf:
+        with open(new, 'r', encoding='utf-8') as newf:
             try:
                 incoming = json.load(newf)
             except json.decoder.JSONDecodeError as err:
                 return f"ERROR: {str(err)}\nFILE: '{new}'\n\n{msg}"
 
-        with open(old, 'r', encoding='utf8') as oldf:
+        with open(old, 'r', encoding='utf-8') as oldf:
             try:
                 outcoming = json.load(oldf)
             except json.decoder.JSONDecodeError as err:
@@ -147,7 +149,7 @@ def update_oudated_profiles(new, old):
         items_old = list(items_old.values())
         items_old.sort(key=lambda s: s["Name"])  # make sorted by name
 
-        with open(old, 'w', encoding='utf8') as outfile:
+        with open(old, 'w', encoding='utf-8') as outfile:
             json.dump(items_old, outfile, ensure_ascii=False, indent=4)
     return None
 # ------------------------------------------------------------------#
@@ -158,7 +160,7 @@ def write_new_profile(path_prst, **kwargs):
     Write a new profile using json data
 
     """
-    with open(path_prst, 'r', encoding='utf8') as infile:
+    with open(path_prst, 'r', encoding='utf-8') as infile:
         stored_data = json.load(infile)
 
     for x in stored_data:
@@ -168,7 +170,7 @@ def write_new_profile(path_prst, **kwargs):
     new_data = stored_data + [kwargs]
     new_data.sort(key=lambda s: s["Name"])  # make sorted by name
 
-    with open(path_prst, 'w', encoding='utf8') as outfile:
+    with open(path_prst, 'w', encoding='utf-8') as outfile:
         json.dump(new_data, outfile, ensure_ascii=False, indent=4)
 
     return None
@@ -180,7 +182,7 @@ def edit_existing_profile(path_prst, selected_profile, **kwargs):
     Edit an exixting profile using json data
 
     """
-    with open(path_prst, 'r', encoding='utf8') as infile:
+    with open(path_prst, 'r', encoding='utf-8') as infile:
         stored_data = json.load(infile)
 
     names = [x['Name'] for x in stored_data]
@@ -202,7 +204,7 @@ def edit_existing_profile(path_prst, selected_profile, **kwargs):
 
     stored_data.sort(key=lambda s: s["Name"])  # make sorted by name
 
-    with open(path_prst, 'w', encoding='utf8') as outfile:
+    with open(path_prst, 'w', encoding='utf-8') as outfile:
         json.dump(stored_data, outfile, ensure_ascii=False, indent=4)
 
     return None
