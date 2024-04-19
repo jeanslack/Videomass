@@ -57,9 +57,9 @@ class ConfigManager:
     outputdir (str):
         file destination path used by ffmpeg
 
-    unienc (str):
-        The unicode standard encoding for text encoding
-        e.g. "utf-8", "ISO 8859-1", "ascii", etc...
+    encoding (str):
+        Encoding for text mode
+        e.g. "utf-8", "ISO 8859-1", "ISO 8859-16", etc...
 
     outputdir_asinput (bool):
         if True, save output files to same paths as source files
@@ -192,9 +192,9 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 7.2
+    VERSION = 7.3
     DEFAULT_OPTIONS = {"confversion": VERSION,
-                       "unienc": "utf-8",
+                       "encoding": "utf-8",
                        "outputdir": f"{os.path.expanduser('~')}",
                        "outputdir_asinput": False,
                        "filesuffix": "",

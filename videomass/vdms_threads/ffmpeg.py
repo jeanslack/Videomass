@@ -266,7 +266,8 @@ class FFmpeg(Thread):
         self.stop_work_thread = False  # process terminate
         self.count = 0  # count for loop
         self.logfile = args[0]  # log filename
-        self.kwargs = args[1]  # it is a list of dictionaries
+        self.txtenc = args[1]  # encoding e.g utf-8
+        self.kwargs = args[2]  # it is a list of dictionaries
         self.nargs = len(self.kwargs)  # how many items...
 
         Thread.__init__(self)
@@ -303,7 +304,7 @@ class FFmpeg(Thread):
                            stderr=subprocess.PIPE,
                            bufsize=1,
                            universal_newlines=True,
-                           encoding='utf-8',
+                           encoding=self.txtenc,
                            ) as proc1:
 
                     for line in proc1.stderr:
@@ -331,9 +332,7 @@ class FFmpeg(Thread):
                                      status=proc1.wait(),
                                      )
                         logwrite('',
-                                 f"Exit status: {proc1.wait()}",
-                                 self.logfile,
-                                 )  # append exit error number
+                                 f"Exit status: {proc1.wait()}", self.logfile)
                         continue
 
             except (OSError, FileNotFoundError) as err:
@@ -394,7 +393,7 @@ class FFmpeg(Thread):
                        stderr=subprocess.PIPE,
                        bufsize=1,
                        universal_newlines=True,
-                       encoding='utf-8',
+                       encoding=self.txtenc,
                        ) as proc2:
 
                 for line2 in proc2.stderr:
@@ -416,9 +415,7 @@ class FFmpeg(Thread):
                                  status=proc2.wait(),
                                  )
                     logwrite('',
-                             f"Exit status: {proc2.wait()}",
-                             self.logfile,
-                             )  # append exit error number
+                             f"Exit status: {proc2.wait()}", self.logfile)
 
             if self.stop_work_thread:  # break first 'for' loop
                 proc2.terminate()

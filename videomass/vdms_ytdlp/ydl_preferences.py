@@ -61,7 +61,7 @@ class Ytdlp_Options(wx.Dialog):
         # -----tab 1
         tabOne = wx.Panel(notebook, wx.ID_ANY)
         sizerGen = wx.BoxSizer(wx.VERTICAL)
-        sizerGen.Add((0, 40))
+        sizerGen.Add((0, 10))
         labwa = wx.StaticText(tabOne, wx.ID_ANY, _("Workarounds"))
         sizerGen.Add(labwa, 0, wx.ALL, 5)
         self.ckbx_ssl = wx.CheckBox(tabOne, wx.ID_ANY,
@@ -108,21 +108,21 @@ class Ytdlp_Options(wx.Dialog):
         # -----tab 2
         tabTwo = wx.Panel(notebook, wx.ID_ANY)
         sizerFiles = wx.BoxSizer(wx.VERTICAL)
-        sizerFiles.Add((0, 40))
+        sizerFiles.Add((0, 10))
         msg = _("Where do you prefer to save your downloads?")
         labdown = wx.StaticText(tabTwo, wx.ID_ANY, msg)
         sizerFiles.Add(labdown, 0, wx.ALL | wx.EXPAND, 5)
-        sizerFiles.Add((0, 20))
+        sizerFiles.Add((0, 10))
         sizeYDLdirdest = wx.BoxSizer(wx.HORIZONTAL)
         sizerFiles.Add(sizeYDLdirdest, 0, wx.EXPAND)
         self.txtctrl_YDLpath = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
                                            style=wx.TE_READONLY
                                            )
-        sizeYDLdirdest.Add(self.txtctrl_YDLpath, 1, wx.ALL | wx.CENTER, 5)
+        sizeYDLdirdest.Add(self.txtctrl_YDLpath, 1, wx.LEFT | wx.CENTER, 5)
         self.txtctrl_YDLpath.AppendText(self.appdata['ydlp-outputdir'])
         self.btn_YDLpath = wx.Button(tabTwo, wx.ID_ANY, _('Change'))
-        sizeYDLdirdest.Add(self.btn_YDLpath, 0, wx.RIGHT | wx.ALIGN_CENTER, 5)
-        sizerFiles.Add((0, 10))
+        sizeYDLdirdest.Add(self.btn_YDLpath, 0, wx.RIGHT | wx.LEFT
+                           | wx.ALIGN_CENTER, 5)
         descr = _("Auto-create subdirectories when downloading playlists")
         self.ckbx_playlist = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
         self.ckbx_playlist.SetValue(self.appdata['playlistsubfolder'])
@@ -133,7 +133,7 @@ class Ytdlp_Options(wx.Dialog):
         # -----tab 3
         tabThree = wx.Panel(notebook, wx.ID_ANY)
         sizerextdown = wx.BoxSizer(wx.VERTICAL)
-        sizerextdown.Add((0, 40))
+        sizerextdown.Add((0, 10))
         msg = _("Choosing an external downloader")
         labexdtitle = wx.StaticText(tabThree, wx.ID_ANY, msg)
         sizerextdown.Add(labexdtitle, 0, wx.ALL | wx.EXPAND, 5)
@@ -167,7 +167,7 @@ class Ytdlp_Options(wx.Dialog):
         # -----tab 4
         tabFour = wx.Panel(notebook, wx.ID_ANY)
         sizernet = wx.BoxSizer(wx.VERTICAL)
-        sizernet.Add((0, 40))
+        sizernet.Add((0, 10))
         msg = _("Using a proxy server")
         labproxtitle = wx.StaticText(tabFour, wx.ID_ANY, msg)
         sizernet.Add(labproxtitle, 0, wx.ALL | wx.EXPAND, 5)
@@ -192,7 +192,7 @@ class Ytdlp_Options(wx.Dialog):
         # -----tab 5
         tabFive = wx.Panel(notebook, wx.ID_ANY)
         sizergeo = wx.BoxSizer(wx.VERTICAL)
-        sizergeo.Add((0, 40))
+        sizergeo.Add((0, 10))
         msg = _("Geo-restriction options")
         labgeoproxtitle = wx.StaticText(tabFive, wx.ID_ANY, msg)
         sizergeo.Add(labgeoproxtitle, 0, wx.ALL | wx.EXPAND, 5)
@@ -250,7 +250,7 @@ class Ytdlp_Options(wx.Dialog):
         # -----tab 6
         tabSix = wx.Panel(notebook, wx.ID_ANY)
         sizerauth = wx.BoxSizer(wx.VERTICAL)
-        sizerauth.Add((0, 40))
+        sizerauth.Add((0, 10))
         msg = _("Authentication with login credentials")
         labauthtitle = wx.StaticText(tabSix, wx.ID_ANY, msg)
         sizerauth.Add(labauthtitle, 0, wx.ALL | wx.EXPAND, 5)
@@ -295,7 +295,7 @@ class Ytdlp_Options(wx.Dialog):
         # -----tab 7
         tabSev = wx.Panel(notebook, wx.ID_ANY)
         sizercook = wx.BoxSizer(wx.VERTICAL)
-        sizercook.Add((0, 40))
+        sizercook.Add((0, 10))
         msg = _("Using cookies to gain access to websites")
         labcooktitle = wx.StaticText(tabSev, wx.ID_ANY, msg)
         sizercook.Add(labcooktitle, 0, wx.ALL | wx.EXPAND, 5)
@@ -319,10 +319,9 @@ class Ytdlp_Options(wx.Dialog):
         msg = _('Allow cookies for authentication')
         self.ckbx_usecook = wx.CheckBox(tabSev, wx.ID_ANY, msg)
         self.ckbx_usecook.SetValue(self.appdata['use_cookie_file'])
-        sizercook.Add(self.ckbx_usecook, 0, wx.LEFT | wx.BOTTOM, 5)
-
+        sizercook.Add(self.ckbx_usecook, 0, wx.LEFT, 5)
         labcookie = wx.StaticText(tabSev, wx.ID_ANY, _("Cookie file"))
-        sizercookie.Add(labcookie, 0, wx.ALL | wx.EXPAND, 5)
+        sizercookie.Add(labcookie, 0, wx.LEFT | wx.TOP | wx.EXPAND, 5)
         self.txtctrl_cook = wx.TextCtrl(tabSev, wx.ID_ANY, "",
                                         style=wx.TE_READONLY
                                         )
@@ -339,8 +338,8 @@ class Ytdlp_Options(wx.Dialog):
         sizercook.Add(self.ckbx_autocook, 0, wx.ALL, 5)
         sizerautocook = wx.BoxSizer(wx.HORIZONTAL)
         self.labautocook = wx.StaticText(tabSev, wx.ID_ANY,
-                                         _("Web Browser:"))
-        sizerautocook.Add(self.labautocook, 0, wx.LEFT | wx.TOP | wx.CENTRE, 5)
+                                         _("Web Browser"))
+        sizerautocook.Add(self.labautocook, 0, wx.LEFT | wx.TOP | wx.CENTER, 5)
         webbrowser = ('brave', 'chrome', 'chromium', 'edge',
                       'firefox', 'opera', 'safari', 'vivaldi')
         self.cmbx_browser = wx.ComboBox(tabSev, wx.ID_ANY,
@@ -356,7 +355,7 @@ class Ytdlp_Options(wx.Dialog):
         if not self.sett['use_cookie_file']:
             self.btn_cookie.Disable(), self.ckbx_autocook.Disable()
             self.txtctrl_cook.Disable()
-        sizercook.Add(sizerautocook, 0)
+        sizercook.Add(sizerautocook, 0, wx.LEFT | wx.EXPAND, 5)
         tabSev.SetSizer(sizercook)
         notebook.AddPage(tabSev, _("Cookies"))
         # ----- confirm buttons section

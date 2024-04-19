@@ -690,13 +690,14 @@ class MainFrame(wx.Frame):
         Open the file dialog to choose media files.
         The order of selected files only supported by GTK
         """
-        wildcard = ("All files |*.*|*.mkv|*.mkv|*.avi|*.avi|*.webm|*.webm"
-                    "|*.ogv|*.ogv|*.mp4|*.mp4|*.flv|*.flv|*.wav|*.wav"
-                    "|*.mp3|*.mp3|*.ogg|*.ogg|*.flac|*.flac|*.opus|*.opus"
-                    "|*.jpg|*.jpg|*.png|*.png|*.bmp|*.bmp")
+        wild = ("All files |*.*|*.mkv|*.mkv|*.avi|*.avi|*.webm|*.webm"
+                "|*.ogv|*.ogv|*.mp4|*.mp4|*.flv|*.flv|*.wav|*.wav"
+                "|*.mp3|*.mp3|*.ogg|*.ogg|*.flac|*.flac|*.opus|*.opus"
+                "|*.jpg|*.jpg|*.png|*.png|*.bmp|*.bmp")
 
         with wx.FileDialog(self, _("Import files"),
-                           "", "", wildcard,
+                           defaultDir=os.path.expanduser('~'),
+                           wildcard=wild,
                            style=wx.FD_OPEN
                            | wx.FD_MULTIPLE
                            | wx.FD_FILE_MUST_EXIST

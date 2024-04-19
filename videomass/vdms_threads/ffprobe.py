@@ -46,7 +46,7 @@ def from_kwargs_to_args(kwargs):
     return args
 
 
-def ffprobe(filename, cmd='ffprobe', **kwargs):
+def ffprobe(filename, cmd='ffprobe', txtenc='utf-8', **kwargs):
     """
     Run ffprobe subprocess on the specified file.
     This function always returns a tuple of two items (data, error),
@@ -84,7 +84,7 @@ def ffprobe(filename, cmd='ffprobe', **kwargs):
                    stdout=subprocess.PIPE,
                    stderr=subprocess.PIPE,
                    universal_newlines=True,
-                   encoding='utf-8'
+                   encoding=txtenc
                    ) as proc:
             output, error = proc.communicate()
 

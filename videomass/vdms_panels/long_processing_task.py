@@ -141,6 +141,7 @@ class LogOut(wx.Panel):
         self.count = 0  # keeps track of the counts (see `update_count`)
         self.maxrotate = 0  # max num text rotation (see `update_count`)
         self.clr = self.appdata['colorscheme']
+        self.txtenc = self.appdata['encoding']
 
         wx.Panel.__init__(self, parent=parent)
 
@@ -214,7 +215,7 @@ class LogOut(wx.Panel):
                                          )
         if args[0] in ('One pass', 'Two pass', 'Two pass EBU',
                        'Two pass VIDSTAB', 'Queue Processing'):
-            self.thread_type = FFmpeg(self.logfile, data)
+            self.thread_type = FFmpeg(self.logfile, self.txtenc, data)
 
         elif args[0] == 'video_to_sequence':
             self.with_eta, self.maxrotate = False, None

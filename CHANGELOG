@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 15 Apr 2024 V.5.0.12
+Fri, 19 Apr 2024 V.5.0.12
 
   * Improved description strings on menu bar.
   * [Presets Manager] Improved profile settings dialog layout.
@@ -56,6 +56,9 @@ Mon, 15 Apr 2024 V.5.0.12
   * [FFprobe] Added "UnicodeDecodeError" to the exceptions list in the ffprobe
     module to ensure that files that cannot be encoded with utf-8 unicode are
     handled by the application.
+  * Added the ability to change the encoding for files that contain metadata
+    with non-UTF-8 encoded characters. The function is found in the Preferences
+    dialog (Advanced tab).
 
 +------------------------------------+
 Sat, 30 Mar 2024 V.5.0.11

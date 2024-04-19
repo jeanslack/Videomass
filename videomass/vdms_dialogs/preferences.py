@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.09.2024
+Rev: Apr.19.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -83,84 +83,14 @@ class SetUp(wx.Dialog):
         notebook = wx.Notebook(self, wx.ID_ANY, style=0)
         sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)
 
-        # -----tab 1
-        tabOne = wx.Panel(notebook, wx.ID_ANY)
-        sizerGen = wx.BoxSizer(wx.VERTICAL)
-        sizerGen.Add((0, 15))
-        self.checkbox_exit = wx.CheckBox(tabOne, wx.ID_ANY,
-                                         (_("Warn on exit"))
-                                         )
-        sizerGen.Add(self.checkbox_exit, 0, wx.ALL, 5)
-        sizerGen.Add((0, 15))
-        msg = _('Application Language\n(requires application restart)')
-        lablang = wx.StaticText(tabOne, wx.ID_ANY, msg)
-        sizerGen.Add(lablang, 0, wx.ALL | wx.EXPAND, 5)
-        langs = [lang[1] for lang in supLang.values()]
-        self.cmbx_lang = wx.ComboBox(tabOne, wx.ID_ANY,
-                                     choices=langs,
-                                     size=(-1, -1),
-                                     style=wx.CB_DROPDOWN | wx.CB_READONLY
-                                     )
-        sizerGen.Add(self.cmbx_lang, 0, wx.ALL, 5)
-        sizerGen.Add((0, 15))
-        labconf = wx.StaticText(tabOne, wx.ID_ANY,
-                                _('Configuration directory'))
-        sizerGen.Add(labconf, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_conf = wx.Button(tabOne, wx.ID_ANY, "...", size=(35, -1),
-                                  name='config dir')
-        self.txtctrl_conf = wx.TextCtrl(tabOne, wx.ID_ANY,
-                                        self.appdata['confdir'],
-                                        style=wx.TE_READONLY,
-                                        )
-        sizerconf = wx.BoxSizer(wx.HORIZONTAL)
-        sizerGen.Add(sizerconf, 0, wx.EXPAND)
-        sizerconf.Add(self.txtctrl_conf, 1, wx.ALL, 5)
-        sizerconf.Add(self.btn_conf, 0, wx.RIGHT | wx.CENTER, 5)
-        sizerGen.Add((0, 15))
-        labcache = wx.StaticText(tabOne, wx.ID_ANY, _('Cache directory'))
-        sizerGen.Add(labcache, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_cache = wx.Button(tabOne, wx.ID_ANY, "...", size=(35, -1),
-                                   name='cache dir')
-        self.txtctrl_cache = wx.TextCtrl(tabOne, wx.ID_ANY,
-                                         self.appdata['cachedir'],
-                                         style=wx.TE_READONLY,
-                                         )
-        sizercache = wx.BoxSizer(wx.HORIZONTAL)
-        sizerGen.Add(sizercache, 0, wx.EXPAND)
-        sizercache.Add(self.txtctrl_cache, 1, wx.ALL, 5)
-        sizercache.Add(self.btn_cache, 0, wx.RIGHT | wx.CENTER, 5)
-        msg = _("Remove cached files during application exit")
-        self.checkbox_cacheclr = wx.CheckBox(tabOne, wx.ID_ANY, (msg))
-        sizerGen.Add(self.checkbox_cacheclr, 0, wx.ALL, 5)
-        sizerGen.Add((0, 15))
-        lablog = wx.StaticText(tabOne, wx.ID_ANY, _('Log directory'))
-        sizerGen.Add(lablog, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_log = wx.Button(tabOne, wx.ID_ANY, "...", size=(35, -1),
-                                 name='log dir')
-        self.txtctrl_log = wx.TextCtrl(tabOne, wx.ID_ANY,
-                                       self.appdata['logdir'],
-                                       style=wx.TE_READONLY,
-                                       )
-        sizerlog = wx.BoxSizer(wx.HORIZONTAL)
-        sizerGen.Add(sizerlog, 0, wx.EXPAND)
-        sizerlog.Add(self.txtctrl_log, 1, wx.ALL, 5)
-        sizerlog.Add(self.btn_log, 0, wx.RIGHT | wx.CENTER, 5)
-        msg = _("Clean log files during application exit")
-        self.checkbox_logclr = wx.CheckBox(tabOne, wx.ID_ANY, (msg))
-        sizerGen.Add(self.checkbox_logclr, 0, wx.ALL, 5)
-        sizerGen.Add((0, 5))
-        # ----
-        tabOne.SetSizer(sizerGen)
-        notebook.AddPage(tabOne, _("General"))
-
         # -----tab 2
         tabTwo = wx.Panel(notebook, wx.ID_ANY)
         sizerFiles = wx.BoxSizer(wx.VERTICAL)
-        sizerFiles.Add((0, 40))
+        sizerFiles.Add((0, 10))
         msg = _("Where do you prefer to save your transcodes?")
         labfile = wx.StaticText(tabTwo, wx.ID_ANY, msg)
         sizerFiles.Add(labfile, 0, wx.ALL | wx.EXPAND, 5)
-        sizerFiles.Add((0, 15))
+        sizerFiles.Add((0, 10))
         sizeFFdirdest = wx.BoxSizer(wx.HORIZONTAL)
         sizerFiles.Add(sizeFFdirdest, 0, wx.EXPAND)
         self.txtctrl_FFpath = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
@@ -170,7 +100,6 @@ class SetUp(wx.Dialog):
         self.txtctrl_FFpath.AppendText(self.appdata['outputdir'])
         self.btn_fsave = wx.Button(tabTwo, wx.ID_ANY, _('Change'))
         sizeFFdirdest.Add(self.btn_fsave, 0, wx.RIGHT | wx.ALIGN_CENTER, 5)
-        sizerFiles.Add((0, 15))
         descr = _("Same destination paths as source files")
         self.ckbx_dir = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_dir, 0, wx.ALL, 5)
@@ -181,7 +110,7 @@ class SetUp(wx.Dialog):
         sizeSamedest.Add(self.lab_suffix, 0, wx.LEFT | wx.ALIGN_CENTER, 5)
         self.text_suffix = wx.TextCtrl(tabTwo, wx.ID_ANY, "", size=(90, -1))
         sizeSamedest.Add(self.text_suffix, 1, wx.ALL | wx.CENTER, 5)
-        sizerFiles.Add((0, 40))
+        sizerFiles.Add((0, 20))
         msg = _("File removal preferences")
         labrem = wx.StaticText(tabTwo, wx.ID_ANY, msg)
         sizerFiles.Add(labrem, 0, wx.ALL | wx.EXPAND, 5)
@@ -198,25 +127,24 @@ class SetUp(wx.Dialog):
         self.txtctrl_trash.AppendText(self.appdata['trashdir_loc'])
         self.btn_trash = wx.Button(tabTwo, wx.ID_ANY, _('Change'))
         sizetrash.Add(self.btn_trash, 0, wx.RIGHT | wx.ALIGN_CENTER, 5)
-        # ----
         tabTwo.SetSizer(sizerFiles)
         notebook.AddPage(tabTwo, _("File Preferences"))
 
         # -----tab 3
         tabThree = wx.Panel(notebook, wx.ID_ANY)
         sizerFFmpeg = wx.BoxSizer(wx.VERTICAL)
-        sizerFFmpeg.Add((0, 40))
+        sizerFFmpeg.Add((0, 10))
         labFFexec = wx.StaticText(tabThree, wx.ID_ANY,
                                   _('Location of executables'))
         sizerFFmpeg.Add(labFFexec, 0, wx.ALL | wx.EXPAND, 5)
-        sizerFFmpeg.Add((0, 20))
+        sizerFFmpeg.Add((0, 10))
         msg = _("Enable a custom location to run FFmpeg")
         self.checkbox_exeFFmpeg = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         self.btn_ffmpeg = wx.Button(tabThree, wx.ID_ANY, _('Change'))
         self.txtctrl_ffmpeg = wx.TextCtrl(tabThree, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
                                           )
-        sizerFFmpeg.Add(self.checkbox_exeFFmpeg, 0, wx.ALL, 5)
+        sizerFFmpeg.Add(self.checkbox_exeFFmpeg, 0, wx.LEFT, 5)
         gridFFmpeg = wx.BoxSizer(wx.HORIZONTAL)
         sizerFFmpeg.Add(gridFFmpeg, 0, wx.EXPAND)
         gridFFmpeg.Add(self.txtctrl_ffmpeg, 1, wx.ALL, 5)
@@ -228,7 +156,7 @@ class SetUp(wx.Dialog):
         self.txtctrl_ffprobe = wx.TextCtrl(tabThree, wx.ID_ANY, "",
                                            style=wx.TE_READONLY
                                            )
-        sizerFFmpeg.Add(self.checkbox_exeFFprobe, 0, wx.ALL, 5)
+        sizerFFmpeg.Add(self.checkbox_exeFFprobe, 0, wx.LEFT, 5)
         gridFFprobe = wx.BoxSizer(wx.HORIZONTAL)
         sizerFFmpeg.Add(gridFFprobe, 0, wx.EXPAND)
         gridFFprobe.Add(self.txtctrl_ffprobe, 1, wx.ALL, 5)
@@ -240,19 +168,18 @@ class SetUp(wx.Dialog):
         self.txtctrl_ffplay = wx.TextCtrl(tabThree, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
                                           )
-        sizerFFmpeg.Add(self.checkbox_exeFFplay, 0, wx.ALL, 5)
+        sizerFFmpeg.Add(self.checkbox_exeFFplay, 0, wx.LEFT, 5)
         gridFFplay = wx.BoxSizer(wx.HORIZONTAL)
         sizerFFmpeg.Add(gridFFplay, 0, wx.EXPAND)
         gridFFplay.Add(self.txtctrl_ffplay, 1, wx.ALL, 5)
         gridFFplay.Add(self.btn_ffplay, 0, wx.RIGHT | wx.CENTER, 5)
-        # ----
         tabThree.SetSizer(sizerFFmpeg)
         notebook.AddPage(tabThree, _("FFmpeg"))
 
         # -----tab 4
         tabFour = wx.Panel(notebook, wx.ID_ANY)
         sizerytdlp = wx.BoxSizer(wx.VERTICAL)
-        sizerytdlp.Add((0, 40))
+        sizerytdlp.Add((0, 10))
         msg = (_('Download videos from YouTube.com and other video sites\n'
                  '(requires application restart)'))
         labytdlp = wx.StaticText(tabFour, wx.ID_ANY, msg)
@@ -268,21 +195,20 @@ class SetUp(wx.Dialog):
         msg = _("Enable yt-dlp")
         self.checkbox_ytdlp = wx.CheckBox(tabFour, wx.ID_ANY, (msg))
         sizerytdlp.Add(self.checkbox_ytdlp, 0, wx.ALL, 5)
-        # ----
         tabFour.SetSizer(sizerytdlp)
         notebook.AddPage(tabFour, "yt-dlp")
 
         # -----tab 5
         tabFive = wx.Panel(notebook, wx.ID_ANY)
         sizerAppearance = wx.BoxSizer(wx.VERTICAL)
-        sizerAppearance.Add((0, 40))
-        msg = _('Customizing the look of the application\n'
-                '(requires application restart)')
+        sizerAppearance.Add((0, 10))
+        msg = _('Look and Feel (requires application restart)')
         labappe = wx.StaticText(tabFive, wx.ID_ANY, msg)
         sizerAppearance.Add(labappe, 0, wx.ALL | wx.EXPAND, 5)
-        sizerAppearance.Add((0, 15))
+        sizerAppearance.Add((0, 10))
+        sizericon = wx.BoxSizer(wx.HORIZONTAL)
         labTheme = wx.StaticText(tabFive, wx.ID_ANY, _('Icon themes'))
-        sizerAppearance.Add(labTheme, 0, wx.ALL | wx.EXPAND, 5)
+        sizericon.Add(labTheme, 0, wx.TOP, 5)
         self.cmbx_icons = wx.ComboBox(tabFive, wx.ID_ANY,
                                       choices=[("Videomass-Light"),
                                                ("Videomass-Dark"),
@@ -293,10 +219,8 @@ class SetUp(wx.Dialog):
                                       size=(200, -1),
                                       style=wx.CB_DROPDOWN | wx.CB_READONLY
                                       )
-        sizerAppearance.Add(self.cmbx_icons, 0, wx.LEFT, 15)
-        sizerAppearance.Add((0, 15))
-        labTB = wx.StaticText(tabFive, wx.ID_ANY, _("Toolbar customization"))
-        sizerAppearance.Add(labTB, 0, wx.ALL | wx.EXPAND, 5)
+        sizericon.Add(self.cmbx_icons, 0, wx.LEFT, 5)
+        sizerAppearance.Add(sizericon, 0, wx.ALL, 5)
         tbchoice = [_('At the top of window (default)'),
                     _('At the bottom of window'),
                     _('At the right of window'),
@@ -307,31 +231,42 @@ class SetUp(wx.Dialog):
                                      majorDimension=1,
                                      style=wx.RA_SPECIFY_COLS
                                      )
-        sizerAppearance.Add(self.rdbTBpref, 0, wx.LEFT | wx.EXPAND, 15)
+        sizerAppearance.Add(self.rdbTBpref, 0, wx.ALL | wx.EXPAND, 5)
         gridTBsize = wx.FlexGridSizer(0, 2, 0, 5)
         sizerAppearance.Add(gridTBsize, 0, wx.ALL, 5)
         lab1_appearance = wx.StaticText(tabFive, wx.ID_ANY,
                                         _("Toolbar's icons size:"))
         gridTBsize.Add(lab1_appearance, 0, wx.LEFT | wx.TOP
-                       | wx.ALIGN_CENTER_VERTICAL, 15)
+                       | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmbx_iconsSize = wx.ComboBox(tabFive, wx.ID_ANY,
                                           choices=[("16"), ("24"), ("32"),
                                                    ("64")], size=(120, -1),
                                           style=wx.CB_DROPDOWN | wx.CB_READONLY
                                           )
         gridTBsize.Add(self.cmbx_iconsSize, 0, wx.TOP
-                       | wx.ALIGN_CENTER_VERTICAL, 15)
+                       | wx.ALIGN_CENTER_VERTICAL, 5)
         if 'wx.svg' not in sys.modules:  # only in wx version 4.1 to up
             self.cmbx_iconsSize.Disable()
             lab1_appearance.Disable()
-        # ----
+        sizerAppearance.Add((0, 10))
+        msg = _('Application Language (requires application restart)')
+        lablang = wx.StaticText(tabFive, wx.ID_ANY, msg)
+        sizerAppearance.Add(lablang, 0, wx.ALL | wx.EXPAND, 5)
+        sizerAppearance.Add((0, 10))
+        langs = [lang[1] for lang in supLang.values()]
+        self.cmbx_lang = wx.ComboBox(tabFive, wx.ID_ANY,
+                                     choices=langs,
+                                     size=(-1, -1),
+                                     style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                     )
+        sizerAppearance.Add(self.cmbx_lang, 0, wx.ALL, 5)
         tabFive.SetSizer(sizerAppearance)  # aggiungo il sizer su tab 4
-        notebook.AddPage(tabFive, _("Look and Feel"))
+        notebook.AddPage(tabFive, _("Look and Language"))
 
         # -----tab 6
         tabSix = wx.Panel(notebook, wx.ID_ANY)
         sizerLog = wx.BoxSizer(wx.VERTICAL)
-        sizerLog.Add((0, 40))
+        sizerLog.Add((0, 10))
         msglog = _("The following settings affect output messages and "
                    "the log messages during transcoding processes.\n"
                    "Be careful, by changing these settings some functions "
@@ -353,9 +288,91 @@ class SetUp(wx.Dialog):
                                      style=wx.RA_SPECIFY_COLS,
                                      )
         sizerLog.Add(self.rdbFFplay, 0, wx.ALL | wx.EXPAND, 5)
-        # ----
         tabSix.SetSizer(sizerLog)
         notebook.AddPage(tabSix, _("FFmpeg logging levels"))
+
+        # -----tab 7
+        tabSev = wx.Panel(notebook, wx.ID_ANY)
+        sizeradv = wx.BoxSizer(wx.VERTICAL)
+        sizeradv.Add((0, 10))
+        msg = _("Specify the character encoding format")
+        labenctitle = wx.StaticText(tabSev, wx.ID_ANY, msg)
+        sizeradv.Add(labenctitle, 0, wx.ALL | wx.EXPAND, 5)
+        msg = (_("If you encounter the error \"'utf-8' codec can't decode "
+                 "byte...\" the file you imported may likely contain "
+                 "metadata with\nnon-UTF-8 encoded characters. If you know "
+                 "the character encoding format the file was written in, you "
+                 "can try specifying\nit here, e.g. `ISO 8859-1`, "
+                 "`ISO 8859-16`, `IBM850`, etc. The default character "
+                 "encoding is `utf-8`, the most widely used\ncharacter "
+                 "encoding standard."))
+        labencgen = wx.StaticText(tabSev, wx.ID_ANY, (msg))
+        sizeradv.Add(labencgen, 0, wx.ALL, 5)
+        sizerenc = wx.BoxSizer(wx.HORIZONTAL)
+        labenc = wx.StaticText(tabSev, wx.ID_ANY, _('Character encoding:'))
+        sizerenc.Add(labenc, 0, wx.LEFT | wx.TOP, 5)
+        self.txtctrl_charenc = wx.TextCtrl(tabSev, wx.ID_ANY,
+                                           self.appdata["encoding"].strip(),
+                                           size=(150, -1)
+                                           )
+        sizerenc.Add(self.txtctrl_charenc, 0, wx.ALL, 5)
+        sizeradv.Add(sizerenc, 0, wx.LEFT, 5)
+        sizeradv.Add((0, 10))
+        msg = _("Default application directories")
+        labdirtitle = wx.StaticText(tabSev, wx.ID_ANY, msg)
+        sizeradv.Add(labdirtitle, 0, wx.ALL | wx.EXPAND, 5)
+        labconf = wx.StaticText(tabSev, wx.ID_ANY,
+                                _('Configuration directory'))
+        self.btn_conf = wx.Button(tabSev, wx.ID_ANY, "...", size=(35, -1),
+                                  name='config dir')
+        self.txtctrl_conf = wx.TextCtrl(tabSev, wx.ID_ANY,
+                                        self.appdata['confdir'],
+                                        size=(500, -1),
+                                        style=wx.TE_READONLY,
+                                        )
+        griddefdirs = wx.FlexGridSizer(3, 3, 5, 0)
+        griddefdirs.Add(labconf, 0, wx.LEFT | wx.TOP, 5)
+        griddefdirs.Add(self.txtctrl_conf, 1, wx.ALL | wx.EXPAND, 5)
+        griddefdirs.Add(self.btn_conf, 0, wx.RIGHT | wx.CENTER, 5)
+        labcache = wx.StaticText(tabSev, wx.ID_ANY, _('Cache directory'))
+        self.btn_cache = wx.Button(tabSev, wx.ID_ANY, "...", size=(35, -1),
+                                   name='cache dir')
+        self.txtctrl_cache = wx.TextCtrl(tabSev, wx.ID_ANY,
+                                         self.appdata['cachedir'],
+                                         size=(500, -1),
+                                         style=wx.TE_READONLY,
+                                         )
+        griddefdirs.Add(labcache, 0, wx.LEFT | wx.TOP, 5)
+        griddefdirs.Add(self.txtctrl_cache, 1, wx.ALL | wx.EXPAND, 5)
+        griddefdirs.Add(self.btn_cache, 0, wx.RIGHT | wx.CENTER, 5)
+        lablog = wx.StaticText(tabSev, wx.ID_ANY, _('Log directory'))
+        self.btn_log = wx.Button(tabSev, wx.ID_ANY, "...", size=(35, -1),
+                                 name='log dir')
+        self.txtctrl_log = wx.TextCtrl(tabSev, wx.ID_ANY,
+                                       self.appdata['logdir'],
+                                       size=(500, -1),
+                                       style=wx.TE_READONLY,
+                                       )
+        griddefdirs.Add(lablog, 0, wx.LEFT | wx.TOP, 5)
+        griddefdirs.Add(self.txtctrl_log, 1, wx.ALL | wx.EXPAND, 5)
+        griddefdirs.Add(self.btn_log, 0, wx.RIGHT | wx.CENTER, 5)
+        sizeradv.Add(griddefdirs, 0, wx.LEFT | wx.EXPAND, 5)
+        sizeradv.Add((0, 10))
+        msg = _('Upon exiting the application...')
+        labexit = wx.StaticText(tabSev, wx.ID_ANY, msg)
+        sizeradv.Add(labexit, 0, wx.ALL | wx.EXPAND, 5)
+        self.checkbox_exit = wx.CheckBox(tabSev, wx.ID_ANY,
+                                         _("Always ask me to confirm"))
+        sizeradv.Add(self.checkbox_exit, 0, wx.LEFT, 5)
+        msg = _("Clean the log files")
+        self.checkbox_logclr = wx.CheckBox(tabSev, wx.ID_ANY, (msg))
+        sizeradv.Add(self.checkbox_logclr, 0, wx.LEFT, 5)
+        msg = _("Remove cached files")
+        self.checkbox_cacheclr = wx.CheckBox(tabSev, wx.ID_ANY, (msg))
+        sizeradv.Add(self.checkbox_cacheclr, 0, wx.LEFT, 5)
+        tabSev.SetSizer(sizeradv)
+        notebook.AddPage(tabSev, _("Advanced"))
+
         # ----- confirm buttons section
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grdhelp = wx.GridSizer(1, 1, 0, 0)
@@ -373,32 +390,30 @@ class SetUp(wx.Dialog):
         # ----- Properties
         if self.appdata['ostype'] == 'Darwin':
             lablang.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            labconf.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            lablog.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            labcache.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labdirtitle.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labexit.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labfile.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFexec.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdlp.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdescr.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            labTheme.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            labTB.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labappe.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labLog.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labrem.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labenctitle.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.BOLD))
+            labencgen.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
             lablang.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            labconf.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            lablog.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            labcache.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labdirtitle.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labexit.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labfile.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFexec.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdlp.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdescr.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            labTheme.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            labTB.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labappe.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labLog.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labrem.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labenctitle.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
+            labencgen.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
         tip = (_("By assigning an additional suffix you could avoid "
                  "overwriting files"))
@@ -406,7 +421,7 @@ class SetUp(wx.Dialog):
         self.SetTitle(_("Preferences"))
 
         # ------ set sizer
-        self.SetMinSize((600, 550))
+        self.SetMinSize((750, 550))
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
@@ -436,6 +451,7 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.exit_warn, self.checkbox_exit)
         self.Bind(wx.EVT_CHECKBOX, self.clear_Cache, self.checkbox_cacheclr)
         self.Bind(wx.EVT_CHECKBOX, self.clear_logs, self.checkbox_logclr)
+        self.Bind(wx.EVT_TEXT, self.on_char_encoding, self.txtctrl_charenc)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_cancel, btn_cancel)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
@@ -830,6 +846,13 @@ class SetUp(wx.Dialog):
         if checked, set to clear all log files on exit
         """
         self.settings['clearlogfiles'] = self.checkbox_logclr.GetValue()
+    # --------------------------------------------------------------------#
+
+    def on_char_encoding(self, event):
+        """
+        TextCtrl event to set character encoding
+        """
+        self.settings['encoding'] = self.txtctrl_charenc.GetValue().strip()
     # --------------------------------------------------------------------#
 
     def on_help(self, event):

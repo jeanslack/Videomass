@@ -108,7 +108,7 @@ class MyListCtrl(wx.ListCtrl):
         listctrl, style must be wx.LC_SINGLE_SEL .
         """
         get = wx.GetApp()
-        self.ffprobe_cmd = get.appset['ffprobe_cmd']
+        self.appdata = get.appset
         self.index = None
         self.parent = parent  # parent is DnDPanel class
         self.data = self.parent.data
@@ -138,7 +138,8 @@ class MyListCtrl(wx.ListCtrl):
             return
 
         if not [x for x in self.data if x['format']['filename'] == path]:
-            probe = ffprobe(path, self.ffprobe_cmd,
+            probe = ffprobe(path, cmd=self.appdata['ffprobe_cmd'],
+                            txtenc=self.appdata['encoding'],
                             hide_banner=None, pretty=None)
             if probe[1]:
                 self.errors[f'"{path}"'] = probe[1]

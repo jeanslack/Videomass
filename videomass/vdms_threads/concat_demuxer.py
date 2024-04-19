@@ -46,9 +46,6 @@ class ConcatDemuxer(Thread):
     https://stackoverflow.com/questions/1388753/how-to-get-output-
     from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
     """
-    get = wx.GetApp()  # get videomass wx.App attribute
-    appdata = get.appset
-    SUFFIX = appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ---------------------------------------------------------------
 
@@ -58,6 +55,8 @@ class ConcatDemuxer(Thread):
         Also see `main_frame.switch_to_processing`.
 
         """
+        get = wx.GetApp()  # get videomass wx.App attribute
+        self.appdata = get.appset
         self.stop_work_thread = False  # process terminate
         self.logfile = args[0]  # log filename
         self.kwa = kwargs
@@ -72,8 +71,8 @@ class ConcatDemuxer(Thread):
 
         """
         filedone = None
-        cmd = (f'"{ConcatDemuxer.appdata["ffmpeg_cmd"]}" '
-               f'{ConcatDemuxer.appdata["ffmpeg_default_args"]} -f concat '
+        cmd = (f'"{self.appdata["ffmpeg_cmd"]}" '
+               f'{self.appdata["ffmpeg_default_args"]} -f concat '
                f'-safe 0 -i {self.kwa["args"]} "{self.kwa["destination"]}"')
 
         count = (f'{self.kwa["nmax"]} Items in progress...\nSource: '
@@ -101,7 +100,7 @@ class ConcatDemuxer(Thread):
                        stderr=subprocess.PIPE,
                        bufsize=1,
                        universal_newlines=True,
-                       encoding='utf-8',
+                       encoding=self.appdata['encoding'],
                        ) as proc:
                 for line in proc.stderr:
                     wx.CallAfter(pub.sendMessage,
