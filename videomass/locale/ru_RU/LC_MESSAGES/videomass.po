@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-16 22:40+0200\n"
-"PO-Revision-Date: 2024-04-16 22:50+0200\n"
+"POT-Creation-Date: 2024-04-19 17:12+0200\n"
+"PO-Revision-Date: 2024-04-19 17:27+0200\n"
 "Last-Translator: Chour <ChourS2008@yandex.ru>\n"
 "Language-Team: Russian (RU)\n"
 "Language: ru_RU\n"
@@ -95,7 +95,7 @@ msgid "Clear the File List"
 msgstr "Очистить список файлов"
 
 #: ../vdms_dialogs/epilogue.py:91 ../vdms_dialogs/queuedlg.py:142
-#: ../vdms_main/main_frame.py:1277
+#: ../vdms_main/main_frame.py:1278
 msgid "Run"
 msgstr "Запуск"
 
@@ -662,7 +662,7 @@ msgid "Video Stabilizer Tool"
 msgstr "Инструмент Video Stabilizer"
 
 #: ../vdms_dialogs/filter_stab.py:538 ../vdms_io/io_tools.py:57
-#: ../vdms_io/io_tools.py:116
+#: ../vdms_io/io_tools.py:117
 msgid "Videomass - Loading..."
 msgstr "Videomass - Загрузка..."
 
@@ -783,7 +783,7 @@ msgstr ""
 
 #: ../vdms_dialogs/wizard_dlg.py:243 ../vdms_dialogs/showlogs.py:168
 #: ../vdms_io/checkup.py:50 ../vdms_main/main_frame.py:205
-#: ../vdms_main/main_frame.py:766 ../vdms_main/main_frame.py:1650
+#: ../vdms_main/main_frame.py:767 ../vdms_main/main_frame.py:1651
 #: ../vdms_panels/presets_manager.py:379 ../vdms_panels/presets_manager.py:578
 #: ../vdms_panels/presets_manager.py:618 ../vdms_panels/presets_manager.py:682
 #: ../vdms_panels/presets_manager.py:716 ../vdms_panels/presets_manager.py:768
@@ -807,8 +807,8 @@ msgstr ""
 "текстовые поля ниже, нажав соответствующие кнопки."
 
 #: ../vdms_dialogs/wizard_dlg.py:351 ../vdms_dialogs/wizard_dlg.py:368
-#: ../vdms_dialogs/wizard_dlg.py:385 ../vdms_dialogs/preferences.py:686
-#: ../vdms_dialogs/preferences.py:728 ../vdms_dialogs/preferences.py:770
+#: ../vdms_dialogs/wizard_dlg.py:385 ../vdms_dialogs/preferences.py:701
+#: ../vdms_dialogs/preferences.py:743 ../vdms_dialogs/preferences.py:785
 msgid "{} location"
 msgstr "{} исполняемый файл"
 
@@ -1035,96 +1035,60 @@ msgstr ""
 msgid "Timestamp settings"
 msgstr "Настройки шкалы времени воспроизведения"
 
-#: ../vdms_dialogs/preferences.py:91
-msgid "Warn on exit"
-msgstr "Предупредить при выходе"
-
-#: ../vdms_dialogs/preferences.py:95
-msgid ""
-"Application Language\n"
-"(requires application restart)"
-msgstr ""
-"Язык приложения\n"
-"(требуется перезапуск приложения)"
-
-#: ../vdms_dialogs/preferences.py:107
-msgid "Configuration directory"
-msgstr "Каталог конфигурации"
-
-#: ../vdms_dialogs/preferences.py:120
-msgid "Cache directory"
-msgstr "Каталог кэша"
-
-#: ../vdms_dialogs/preferences.py:132
-msgid "Remove cached files during application exit"
-msgstr "Удалить кэшированные файлы при выходе из приложения"
-
-#: ../vdms_dialogs/preferences.py:136
-msgid "Log directory"
-msgstr "Папка log-журнала"
-
-#: ../vdms_dialogs/preferences.py:148
-msgid "Clean log files during application exit"
-msgstr "Очистить файлы log-журналов при выходе из приложения"
-
-#: ../vdms_dialogs/preferences.py:154 ../vdms_ytdlp/ydl_preferences.py:106
-msgid "General"
-msgstr "General"
-
-#: ../vdms_dialogs/preferences.py:160
+#: ../vdms_dialogs/preferences.py:90
 msgid "Where do you prefer to save your transcodes?"
 msgstr "Где вы предпочитаете сохранять перекодировки?"
 
-#: ../vdms_dialogs/preferences.py:171 ../vdms_dialogs/preferences.py:199
-#: ../vdms_dialogs/preferences.py:215 ../vdms_dialogs/preferences.py:227
-#: ../vdms_dialogs/preferences.py:239 ../vdms_panels/filedrop.py:283
+#: ../vdms_dialogs/preferences.py:101 ../vdms_dialogs/preferences.py:128
+#: ../vdms_dialogs/preferences.py:143 ../vdms_dialogs/preferences.py:155
+#: ../vdms_dialogs/preferences.py:167 ../vdms_panels/filedrop.py:284
 #: ../vdms_ytdlp/textdrop.py:153 ../vdms_ytdlp/ydl_preferences.py:123
 msgid "Change"
 msgstr "Изменить"
 
-#: ../vdms_dialogs/preferences.py:174 ../vdms_panels/av_conversions.py:1195
-#: ../vdms_panels/filedrop.py:573 ../vdms_panels/presets_manager.py:1069
+#: ../vdms_dialogs/preferences.py:103 ../vdms_panels/av_conversions.py:1195
+#: ../vdms_panels/filedrop.py:574 ../vdms_panels/presets_manager.py:1069
 msgid "Same destination paths as source files"
 msgstr "Те же пути назначения, что и у исходных файлов"
 
-#: ../vdms_dialogs/preferences.py:179
+#: ../vdms_dialogs/preferences.py:108
 msgid "Assign optional suffix to destination file names:"
 msgstr "Присвойте необязательный суффикс именам файлов назначения:"
 
-#: ../vdms_dialogs/preferences.py:185
+#: ../vdms_dialogs/preferences.py:114
 msgid "File removal preferences"
 msgstr "Настройки удаления файлов"
 
-#: ../vdms_dialogs/preferences.py:189
+#: ../vdms_dialogs/preferences.py:118
 msgid "Trash the source files after successful encoding"
 msgstr "Удалить исходные файлы после успешного кодирования"
 
 # Изменил 14-5-2021
-#: ../vdms_dialogs/preferences.py:203 ../vdms_ytdlp/ydl_preferences.py:131
+#: ../vdms_dialogs/preferences.py:131 ../vdms_ytdlp/ydl_preferences.py:131
 msgid "File Preferences"
 msgstr "Файл"
 
-#: ../vdms_dialogs/preferences.py:210
+#: ../vdms_dialogs/preferences.py:138
 msgid "Location of executables"
 msgstr "Расположение исполняемых файлов"
 
-#: ../vdms_dialogs/preferences.py:213
+#: ../vdms_dialogs/preferences.py:141
 msgid "Enable a custom location to run FFmpeg"
 msgstr "Включите собственное местоположение для запуска FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:225
+#: ../vdms_dialogs/preferences.py:153
 msgid "Enable a custom location to run FFprobe"
 msgstr "Включите пользовательское местоположение для запуска FFprobe"
 
-#: ../vdms_dialogs/preferences.py:237
+#: ../vdms_dialogs/preferences.py:165
 msgid "Enable a custom location to run FFplay"
 msgstr "Включите пользовательское местоположение для запуска FFplay"
 
-#: ../vdms_dialogs/preferences.py:250
+#: ../vdms_dialogs/preferences.py:177
 msgid "FFmpeg"
 msgstr "FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:256
+#: ../vdms_dialogs/preferences.py:183
 msgid ""
 "Download videos from YouTube.com and other video sites\n"
 "(requires application restart)"
@@ -1132,7 +1096,7 @@ msgstr ""
 "Скачивайте видео с YouTube.com и других видеосайтов\n"
 "(требуется перезапуск приложения)"
 
-#: ../vdms_dialogs/preferences.py:260
+#: ../vdms_dialogs/preferences.py:187
 msgid ""
 "Videomass uses `yt_dlp` as a Python module and not as an executable. If you "
 "want to\n"
@@ -1146,56 +1110,66 @@ msgstr ""
 "загрузить аудио и видео из Интернета, обязательно установите флажок ниже.\n"
 "При следующем перезапуске приложения модуль будет загружен в память."
 
-#: ../vdms_dialogs/preferences.py:268
+#: ../vdms_dialogs/preferences.py:195
 msgid "Enable yt-dlp"
 msgstr "Включить yt-dlp"
 
-#: ../vdms_dialogs/preferences.py:279
-msgid ""
-"Customizing the look of the application\n"
-"(requires application restart)"
+#: ../vdms_dialogs/preferences.py:205
+#, fuzzy
+#| msgid ""
+#| "Application Language\n"
+#| "(requires application restart)"
+msgid "Look and Feel (requires application restart)"
 msgstr ""
-"Настройка внешнего вида приложения\n"
+"Язык приложения\n"
 "(требуется перезапуск приложения)"
 
-#: ../vdms_dialogs/preferences.py:284
+#: ../vdms_dialogs/preferences.py:210
 msgid "Icon themes"
 msgstr "Темы значков"
 
-#: ../vdms_dialogs/preferences.py:298
-msgid "Toolbar customization"
-msgstr "Настройка панели инструментов"
-
-#: ../vdms_dialogs/preferences.py:300
+#: ../vdms_dialogs/preferences.py:224
 msgid "At the top of window (default)"
 msgstr "Вверху (по умолчанию)"
 
-#: ../vdms_dialogs/preferences.py:301
+#: ../vdms_dialogs/preferences.py:225
 msgid "At the bottom of window"
 msgstr "Внизу"
 
-#: ../vdms_dialogs/preferences.py:302
+#: ../vdms_dialogs/preferences.py:226
 msgid "At the right of window"
 msgstr "Справа"
 
 # слева от окна или в левой части окна?
-#: ../vdms_dialogs/preferences.py:303
+#: ../vdms_dialogs/preferences.py:227
 msgid "At the left of window"
 msgstr "Слева"
 
-#: ../vdms_dialogs/preferences.py:305
+#: ../vdms_dialogs/preferences.py:229
 msgid "Place the toolbar"
 msgstr "Разместите панель инструментов"
 
-#: ../vdms_dialogs/preferences.py:314
+#: ../vdms_dialogs/preferences.py:238
 msgid "Toolbar's icons size:"
 msgstr "Размер значков панели инструментов:"
 
-#: ../vdms_dialogs/preferences.py:329
-msgid "Look and Feel"
+#: ../vdms_dialogs/preferences.py:252
+#, fuzzy
+#| msgid ""
+#| "Application Language\n"
+#| "(requires application restart)"
+msgid "Application Language (requires application restart)"
+msgstr ""
+"Язык приложения\n"
+"(требуется перезапуск приложения)"
+
+#: ../vdms_dialogs/preferences.py:264
+#, fuzzy
+#| msgid "Look and Feel"
+msgid "Look and Language"
 msgstr "Внешний вид"
 
-#: ../vdms_dialogs/preferences.py:335
+#: ../vdms_dialogs/preferences.py:270
 msgid ""
 "The following settings affect output messages and the log messages during "
 "transcoding processes.\n"
@@ -1209,28 +1183,92 @@ msgstr ""
 "приложения \n"
 "могут работать некорректно, изменяйте, только если вы знаете, что делаете.\n"
 
-#: ../vdms_dialogs/preferences.py:358
+#: ../vdms_dialogs/preferences.py:292
 msgid "FFmpeg logging levels"
 msgstr "Комплект log-журналов FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:403
+#: ../vdms_dialogs/preferences.py:298
+msgid "Specify the character encoding format"
+msgstr ""
+
+#: ../vdms_dialogs/preferences.py:301
+msgid ""
+"Although UTF-8 is the default and most widely used standard encoding format, "
+"it is not the only encoding format available.\n"
+"Some file metadata may still contain non-UTF-8 character encodings resulting "
+"in the error \"'utf-8' codec can't decode bytes...\".\n"
+"If you know the encoding format the file was written in, you can try "
+"specifying it here, e.g. ISO 8859-1, ISO 8859-16, etc."
+msgstr ""
+
+#: ../vdms_dialogs/preferences.py:311
+msgid "Character encoding:"
+msgstr ""
+
+#: ../vdms_dialogs/preferences.py:320
+msgid "Default application directories"
+msgstr ""
+
+#: ../vdms_dialogs/preferences.py:324
+msgid "Configuration directory"
+msgstr "Каталог конфигурации"
+
+#: ../vdms_dialogs/preferences.py:336
+msgid "Cache directory"
+msgstr "Каталог кэша"
+
+#: ../vdms_dialogs/preferences.py:347
+msgid "Log directory"
+msgstr "Папка log-журнала"
+
+#: ../vdms_dialogs/preferences.py:360
+#, fuzzy
+#| msgid "Completely exit the application"
+msgid "Upon exiting the application..."
+msgstr "Полностью выйти из приложения"
+
+#: ../vdms_dialogs/preferences.py:364
+#, fuzzy
+#| msgid "Please confirm"
+msgid "Always ask me to confirm"
+msgstr "Пожалуйста, подтвердите"
+
+#: ../vdms_dialogs/preferences.py:366
+#, fuzzy
+#| msgid "Clear the file list"
+msgid "Clean the log files"
+msgstr "Очистить список файлов"
+
+#: ../vdms_dialogs/preferences.py:369
+#, fuzzy
+#| msgid "Rejected files"
+msgid "Remove cached files"
+msgstr "Отклоненные файлы"
+
+#: ../vdms_dialogs/preferences.py:373
+#, fuzzy
+#| msgid "Advanced Options"
+msgid "Advanced"
+msgstr "Расширенные настройки"
+
+#: ../vdms_dialogs/preferences.py:417
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr "Назначив дополнительный суффикс, вы можете избежать перезаписи файлов"
 
-#: ../vdms_dialogs/preferences.py:406
+#: ../vdms_dialogs/preferences.py:420
 #, fuzzy
 #| msgid "References"
 msgid "Preferences"
 msgstr "Наименование"
 
-#: ../vdms_dialogs/preferences.py:543 ../vdms_dialogs/preferences.py:622
-#: ../vdms_main/main_frame.py:847 ../vdms_main/main_frame.py:1027
+#: ../vdms_dialogs/preferences.py:558 ../vdms_dialogs/preferences.py:637
+#: ../vdms_main/main_frame.py:848 ../vdms_main/main_frame.py:1028
 #: ../vdms_panels/presets_manager.py:611 ../vdms_panels/presets_manager.py:639
 #: ../vdms_ytdlp/main_ytdlp.py:397 ../vdms_ytdlp/ydl_preferences.py:504
 msgid "Choose Destination"
 msgstr "Выберите папку назначения"
 
-#: ../vdms_dialogs/preferences.py:574
+#: ../vdms_dialogs/preferences.py:589
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Spaces are not allowed."
@@ -1295,7 +1333,7 @@ msgstr "ВЫБОР ФАЙЛА"
 
 #: ../vdms_dialogs/mediainfo.py:139 ../vdms_dialogs/mediainfo.py:142
 #: ../vdms_dialogs/mediainfo.py:145 ../vdms_dialogs/mediainfo.py:148
-#: ../vdms_main/main_frame.py:1273
+#: ../vdms_main/main_frame.py:1274
 msgid "Properties"
 msgstr "Характеристики"
 
@@ -1829,7 +1867,7 @@ msgstr ""
 "Импортировать\n"
 "файл очереди"
 
-#: ../vdms_dialogs/queuedlg.py:85 ../vdms_panels/filedrop.py:272
+#: ../vdms_dialogs/queuedlg.py:85 ../vdms_panels/filedrop.py:273
 msgid "Destination file name"
 msgstr "Имя файла назначения"
 
@@ -2022,7 +2060,7 @@ msgstr "Уже существует"
 msgid "Not found"
 msgstr "Не найдено"
 
-#: ../vdms_io/checkup.py:64 ../vdms_panels/filedrop.py:195
+#: ../vdms_io/checkup.py:64 ../vdms_panels/filedrop.py:196
 #: ../vdms_ytdlp/textdrop.py:86
 msgid "Error list"
 msgstr "Список ошибок"
@@ -2054,7 +2092,7 @@ msgstr ""
 msgid "File does not exist or is invalid:  %s"
 msgstr "Файл не существует или недействителен:  %s"
 
-#: ../vdms_io/io_tools.py:117
+#: ../vdms_io/io_tools.py:118
 msgid ""
 "Wait....\n"
 "Audio peak analysis."
@@ -2062,7 +2100,7 @@ msgstr ""
 "Пожалуйста, подождите....\n"
 "Анализ звуковых пиков."
 
-#: ../vdms_io/io_tools.py:224
+#: ../vdms_io/io_tools.py:225
 msgid "Videomass - Downloading..."
 msgstr "Videomass - Скачивание..."
 
@@ -2113,8 +2151,8 @@ msgstr ""
 "Исправьте все ошибки в коде JSON, содержащемся в ФАЙЛЕ, прежде чем снова "
 "выполнять эту операцию."
 
-#: ../vdms_main/main_frame.py:186 ../vdms_main/main_frame.py:1374
-#: ../vdms_main/main_frame.py:1407 ../vdms_ytdlp/main_ytdlp.py:97
+#: ../vdms_main/main_frame.py:186 ../vdms_main/main_frame.py:1375
+#: ../vdms_main/main_frame.py:1408 ../vdms_ytdlp/main_ytdlp.py:97
 #: ../vdms_ytdlp/main_ytdlp.py:146 ../vdms_ytdlp/main_ytdlp.py:547
 #: ../vdms_ytdlp/textdrop.py:233 ../vdms_ytdlp/youtubedl_ui.py:419
 msgid "Ready"
@@ -2135,7 +2173,7 @@ msgstr ""
 msgid "Queue ({0})"
 msgstr "Очередь ({0})"
 
-#: ../vdms_main/main_frame.py:228 ../vdms_main/main_frame.py:1289
+#: ../vdms_main/main_frame.py:228 ../vdms_main/main_frame.py:1290
 msgid "Queue"
 msgstr "Очередь"
 
@@ -2147,7 +2185,7 @@ msgstr ""
 "Есть еще запущенные процессы... если вы хотите остановить их, используйте "
 "кнопку «Прервать»."
 
-#: ../vdms_main/main_frame.py:371 ../vdms_main/main_frame.py:1087
+#: ../vdms_main/main_frame.py:371 ../vdms_main/main_frame.py:1088
 #: ../vdms_ytdlp/main_ytdlp.py:227
 msgid "Videomass - Warning!"
 msgstr "Videomass - Предупреждение!"
@@ -2212,8 +2250,8 @@ msgstr "Полностью выйти из приложения"
 msgid "File"
 msgstr "Файл"
 
-#: ../vdms_main/main_frame.py:483 ../vdms_panels/filedrop.py:339
-#: ../vdms_panels/filedrop.py:358
+#: ../vdms_main/main_frame.py:483 ../vdms_panels/filedrop.py:340
+#: ../vdms_panels/filedrop.py:359
 msgid "Rename selected file\tCtrl+R"
 msgstr "Переименовать выбранный файл\tCtrl+R"
 
@@ -2221,8 +2259,8 @@ msgstr "Переименовать выбранный файл\tCtrl+R"
 msgid "Rename the destination of the selected file"
 msgstr "Переименуйте место назначения выбранного файла"
 
-#: ../vdms_main/main_frame.py:487 ../vdms_panels/filedrop.py:340
-#: ../vdms_panels/filedrop.py:361
+#: ../vdms_main/main_frame.py:487 ../vdms_panels/filedrop.py:341
+#: ../vdms_panels/filedrop.py:362
 msgid "Batch rename files\tCtrl+B"
 msgstr "Пакетное переименование файлов\tCtrl+B"
 
@@ -2230,8 +2268,8 @@ msgstr "Пакетное переименование файлов\tCtrl+B"
 msgid "Numerically renames the destination of all items in the list"
 msgstr "Численно переименовывает пункт назначения всех элементов в списке."
 
-#: ../vdms_main/main_frame.py:493 ../vdms_panels/filedrop.py:342
-#: ../vdms_panels/filedrop.py:365
+#: ../vdms_main/main_frame.py:493 ../vdms_panels/filedrop.py:343
+#: ../vdms_panels/filedrop.py:366
 msgid "Remove selected entry\tDEL"
 msgstr "Удалить выбранный файл\tDEL"
 
@@ -2239,8 +2277,8 @@ msgstr "Удалить выбранный файл\tDEL"
 msgid "Remove the selected file from the list"
 msgstr "Удалить выбранный файл из списка"
 
-#: ../vdms_main/main_frame.py:497 ../vdms_panels/filedrop.py:343
-#: ../vdms_panels/filedrop.py:368 ../vdms_ytdlp/main_ytdlp.py:294
+#: ../vdms_main/main_frame.py:497 ../vdms_panels/filedrop.py:344
+#: ../vdms_panels/filedrop.py:369 ../vdms_ytdlp/main_ytdlp.py:294
 #: ../vdms_ytdlp/textdrop.py:191 ../vdms_ytdlp/textdrop.py:212
 msgid "Clear list\tShift+DEL"
 msgstr "Очистить список\tShift+DEL"
@@ -2367,7 +2405,7 @@ msgstr "Посмотр"
 msgid "Home panel\tCtrl+Shift+H"
 msgstr "Начальная панель\tCtrl+Shift+H"
 
-#: ../vdms_main/main_frame.py:577 ../vdms_main/main_frame.py:1264
+#: ../vdms_main/main_frame.py:577 ../vdms_main/main_frame.py:1265
 msgid "Go to the 'Home' panel"
 msgstr "Перейдите к 'Начальной панели'"
 
@@ -2492,7 +2530,7 @@ msgstr "Помощь"
 msgid "Import files"
 msgstr "Импортировать файлы"
 
-#: ../vdms_main/main_frame.py:720
+#: ../vdms_main/main_frame.py:721
 msgid ""
 "No default folder has been set for the destination of the encodings. The "
 "current setting is \"Same destination paths as source files\"."
@@ -2500,7 +2538,7 @@ msgstr ""
 "Для назначения кодировок не установлена ​​папка по умолчанию. Текущая "
 "настройка — «Те же пути назначения, что и исходные файлы»."
 
-#: ../vdms_main/main_frame.py:752 ../vdms_main/main_frame.py:777
+#: ../vdms_main/main_frame.py:753 ../vdms_main/main_frame.py:778
 msgid ""
 "'{}':\n"
 "No such file or directory"
@@ -2508,11 +2546,11 @@ msgstr ""
 "'{}':\n"
 "Данный файл или каталог отсутствует"
 
-#: ../vdms_main/main_frame.py:765
+#: ../vdms_main/main_frame.py:766
 msgid "Are you sure to empty trash folder?"
 msgstr "Вы уверены, что очистили папку \"Корзина\"?"
 
-#: ../vdms_main/main_frame.py:773
+#: ../vdms_main/main_frame.py:774
 #, fuzzy
 #| msgid "There are no logs to show."
 msgid ""
@@ -2520,17 +2558,17 @@ msgid ""
 "There are no files to delete."
 msgstr "Нет log-журналов для просмотра."
 
-#: ../vdms_main/main_frame.py:830
+#: ../vdms_main/main_frame.py:831
 #, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr "Installed release v{0}. A new presets release is available {1}"
 
-#: ../vdms_main/main_frame.py:834
+#: ../vdms_main/main_frame.py:835
 #, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr "Установленная версия {0}. Новых обновлений не обнаружено."
 
-#: ../vdms_main/main_frame.py:864
+#: ../vdms_main/main_frame.py:865
 msgid ""
 "Wait....\n"
 "The archive is being downloaded"
@@ -2538,16 +2576,16 @@ msgstr ""
 "Подождите...\n"
 "Архив скачивается"
 
-#: ../vdms_main/main_frame.py:875
+#: ../vdms_main/main_frame.py:876
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "Успешно загружено в \"{0}\""
 
-#: ../vdms_main/main_frame.py:1079
+#: ../vdms_main/main_frame.py:1080
 msgid "Some changes require restarting the application."
 msgstr "Некоторые изменения требуют перезапуска приложения."
 
-#: ../vdms_main/main_frame.py:1090
+#: ../vdms_main/main_frame.py:1091
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -2558,116 +2596,116 @@ msgstr ""
 "\n"
 "Хотите перезапустить приложение сейчас?"
 
-#: ../vdms_main/main_frame.py:1092
+#: ../vdms_main/main_frame.py:1093
 msgid "Restart Videomass?"
 msgstr "Перезапустить Видеомасс?"
 
-#: ../vdms_main/main_frame.py:1162
+#: ../vdms_main/main_frame.py:1163
 #, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr "Доступна новая версия - v.{0}\n"
 
-#: ../vdms_main/main_frame.py:1165
+#: ../vdms_main/main_frame.py:1166
 msgid "You are using a development version that has not yet been released!\n"
 msgstr "Вы используете версию для разработки, которая еще не выпущена!\n"
 
-#: ../vdms_main/main_frame.py:1168
+#: ../vdms_main/main_frame.py:1169
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr "Поздравляю! Вы уже используете последнюю версию.\n"
 
-#: ../vdms_main/main_frame.py:1256 ../vdms_ytdlp/main_ytdlp.py:470
+#: ../vdms_main/main_frame.py:1257 ../vdms_ytdlp/main_ytdlp.py:470
 msgid "Go to the previous panel"
 msgstr "Перейти к предыдущей панели"
 
-#: ../vdms_main/main_frame.py:1257 ../vdms_ytdlp/main_ytdlp.py:471
+#: ../vdms_main/main_frame.py:1258 ../vdms_ytdlp/main_ytdlp.py:471
 msgid "Back"
 msgstr "Назад"
 
-#: ../vdms_main/main_frame.py:1260 ../vdms_ytdlp/main_ytdlp.py:475
+#: ../vdms_main/main_frame.py:1261 ../vdms_ytdlp/main_ytdlp.py:475
 msgid "Go to the next panel"
 msgstr "Перейти к следующей панели"
 
-#: ../vdms_main/main_frame.py:1261 ../vdms_ytdlp/main_ytdlp.py:476
+#: ../vdms_main/main_frame.py:1262 ../vdms_ytdlp/main_ytdlp.py:476
 msgid "Next"
 msgstr "Вперед"
 
-#: ../vdms_main/main_frame.py:1265
+#: ../vdms_main/main_frame.py:1266
 msgid "Home"
 msgstr "Начальная панель"
 
-#: ../vdms_main/main_frame.py:1268
+#: ../vdms_main/main_frame.py:1269
 msgid "Play the selected file in the list"
 msgstr "Воспроизведение выбранного в списке файла"
 
-#: ../vdms_main/main_frame.py:1269
+#: ../vdms_main/main_frame.py:1270
 msgid "Play"
 msgstr "Воспроизведение"
 
-#: ../vdms_main/main_frame.py:1272
+#: ../vdms_main/main_frame.py:1273
 msgid "Get informative data about imported media streams"
 msgstr "Получайте информативные данные об импортированных медиапотоках"
 
-#: ../vdms_main/main_frame.py:1276
+#: ../vdms_main/main_frame.py:1277
 msgid "Start batch processing"
 msgstr "Начать пакетную обработку"
 
-#: ../vdms_main/main_frame.py:1280 ../vdms_ytdlp/main_ytdlp.py:492
+#: ../vdms_main/main_frame.py:1281 ../vdms_ytdlp/main_ytdlp.py:492
 msgid "Stops current process"
 msgstr "Останавливает текущий процесс"
 
-#: ../vdms_main/main_frame.py:1281 ../vdms_ytdlp/main_ytdlp.py:493
+#: ../vdms_main/main_frame.py:1282 ../vdms_ytdlp/main_ytdlp.py:493
 msgid "Abort"
 msgstr "Прервать"
 
-#: ../vdms_main/main_frame.py:1284
+#: ../vdms_main/main_frame.py:1285
 msgid "Add an item to Queue"
 msgstr "Добавить элемент в очередь"
 
-#: ../vdms_main/main_frame.py:1285
+#: ../vdms_main/main_frame.py:1286
 msgid "Add to Queue"
 msgstr "Добавить в очередь"
 
-#: ../vdms_main/main_frame.py:1288
+#: ../vdms_main/main_frame.py:1289
 msgid "Show queue"
 msgstr "Показать очередь"
 
-#: ../vdms_main/main_frame.py:1373 ../vdms_ytdlp/main_ytdlp.py:145
+#: ../vdms_main/main_frame.py:1374 ../vdms_ytdlp/main_ytdlp.py:145
 msgid "Videomass"
 msgstr "Videomass"
 
-#: ../vdms_main/main_frame.py:1408
+#: ../vdms_main/main_frame.py:1409
 msgid "Videomass - File List"
 msgstr "Videomass - Список файлов"
 
-#: ../vdms_main/main_frame.py:1425
+#: ../vdms_main/main_frame.py:1426
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - AV-конвертация"
 
-#: ../vdms_main/main_frame.py:1453
+#: ../vdms_main/main_frame.py:1454
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - Менеджер Пресетов"
 
-#: ../vdms_main/main_frame.py:1482
+#: ../vdms_main/main_frame.py:1483
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Concatenate Demuxer"
 
-#: ../vdms_main/main_frame.py:1510
+#: ../vdms_main/main_frame.py:1511
 msgid "Videomass - From Movie to Pictures"
 msgstr "Videomass - Картинки из фильма"
 
-#: ../vdms_main/main_frame.py:1538
+#: ../vdms_main/main_frame.py:1539
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Still Image Maker"
 
-#: ../vdms_main/main_frame.py:1626 ../vdms_panels/av_conversions.py:574
-#: ../vdms_panels/audio_encoders/acodecs.py:784 ../vdms_panels/filedrop.py:474
-#: ../vdms_panels/filedrop.py:587 ../vdms_panels/sequence_to_video.py:320
+#: ../vdms_main/main_frame.py:1627 ../vdms_panels/av_conversions.py:574
+#: ../vdms_panels/audio_encoders/acodecs.py:784 ../vdms_panels/filedrop.py:475
+#: ../vdms_panels/filedrop.py:588 ../vdms_panels/sequence_to_video.py:320
 #: ../vdms_panels/video_to_sequence.py:371
 #: ../vdms_panels/video_to_sequence.py:503
 msgid "Have to select an item in the file list first"
 msgstr "Сначала необходимо выбрать элемент в списке файлов"
 
-#: ../vdms_main/main_frame.py:1647
+#: ../vdms_main/main_frame.py:1648
 msgid ""
 "An item with the same destination file already exists.\n"
 "\n"
@@ -2677,11 +2715,11 @@ msgstr ""
 "\n"
 "Хотите заменить его, добавив новый элемент в очередь?"
 
-#: ../vdms_main/main_frame.py:1668
+#: ../vdms_main/main_frame.py:1669
 msgid "Videomass - FFmpeg Message Monitoring"
 msgstr "Videomass - Мониторинг сообщений FFmpeg"
 
-#: ../vdms_main/main_frame.py:1775
+#: ../vdms_main/main_frame.py:1776
 msgid "yt-dlp is disabled. Check your preferences."
 msgstr "yt-dlp отключен. Проверьте свои настройки."
 
@@ -3743,89 +3781,89 @@ msgstr "Имя содержит недопустимые символы, так�
 msgid "Name already in use:"
 msgstr "Имя уже используется:"
 
-#: ../vdms_panels/filedrop.py:184
+#: ../vdms_panels/filedrop.py:185
 msgid "Duplicate file, it has already been added to the list."
 msgstr "Дублирующий файл, он уже добавлен в список."
 
-#: ../vdms_panels/filedrop.py:196
+#: ../vdms_panels/filedrop.py:197
 msgid "Rejected files"
 msgstr "Отклоненные файлы"
 
 # Изменил 14-5-2021
-#: ../vdms_panels/filedrop.py:268
+#: ../vdms_panels/filedrop.py:269
 msgid "Source file"
 msgstr "Исходный файл"
 
-#: ../vdms_panels/filedrop.py:269
+#: ../vdms_panels/filedrop.py:270
 msgid "Duration"
 msgstr "Длина"
 
-#: ../vdms_panels/filedrop.py:270
+#: ../vdms_panels/filedrop.py:271
 msgid "Media type"
 msgstr "Тип медиа"
 
-#: ../vdms_panels/filedrop.py:271 ../vdms_ytdlp/formatcode.py:137
+#: ../vdms_panels/filedrop.py:272 ../vdms_ytdlp/formatcode.py:137
 msgid "Size"
 msgstr "Размер"
 
-#: ../vdms_panels/filedrop.py:274 ../vdms_panels/filedrop.py:382
+#: ../vdms_panels/filedrop.py:275 ../vdms_panels/filedrop.py:383
 msgid "Drag one or more files below"
 msgstr "Перетащите один или несколько файлов ниже"
 
-#: ../vdms_panels/filedrop.py:281 ../vdms_ytdlp/textdrop.py:143
+#: ../vdms_panels/filedrop.py:282 ../vdms_ytdlp/textdrop.py:143
 msgid "Save to:"
 msgstr "Сохранить в:"
 
-#: ../vdms_panels/filedrop.py:305
+#: ../vdms_panels/filedrop.py:306
 msgid "Set a new destination folder for encodings"
 msgstr "Установите новую папку назначения для кодировок"
 
-#: ../vdms_panels/filedrop.py:307
+#: ../vdms_panels/filedrop.py:308
 msgid "Encodings destination folder"
 msgstr "Папка назначения кодировок"
 
-#: ../vdms_panels/filedrop.py:337 ../vdms_panels/filedrop.py:371
+#: ../vdms_panels/filedrop.py:338 ../vdms_panels/filedrop.py:372
 msgid "Play file"
 msgstr "Воспроизвести файл"
 
-#: ../vdms_panels/filedrop.py:385
+#: ../vdms_panels/filedrop.py:386
 msgid "Drag two or more Audio/Video files below"
 msgstr "Перетащите два (или более) аудио/видео файла в поле ниже"
 
-#: ../vdms_panels/filedrop.py:389
+#: ../vdms_panels/filedrop.py:390
 msgid "Drag one or more Image files below"
 msgstr "Перетащите один или несколько файлов изображений ниже"
 
-#: ../vdms_panels/filedrop.py:392
+#: ../vdms_panels/filedrop.py:393
 msgid "Drag one or more Video files below"
 msgstr "Перетащите один или несколько видеофайлов ниже"
 
-#: ../vdms_panels/filedrop.py:594
+#: ../vdms_panels/filedrop.py:595
 msgid "Rename the file destination"
 msgstr "Переименуйте место назначения файла"
 
-#: ../vdms_panels/filedrop.py:595
+#: ../vdms_panels/filedrop.py:596
 msgid "Rename the selected file to:"
 msgstr "Переименуйте выбранный файл в:"
 
-#: ../vdms_panels/filedrop.py:609 ../vdms_panels/filedrop.py:619
-#: ../vdms_panels/filedrop.py:650
+#: ../vdms_panels/filedrop.py:610 ../vdms_panels/filedrop.py:620
+#: ../vdms_panels/filedrop.py:651
 msgid "Add Files"
 msgstr "Добавить файлы"
 
-#: ../vdms_panels/filedrop.py:626
+#: ../vdms_panels/filedrop.py:627
 #, fuzzy
 #| msgid "Rename items"
 msgid "Rename in batch"
 msgstr "Переименовать элементы"
 
 # Здесь изменил фразу исходника для правильного использования в русском языке
-#: ../vdms_panels/filedrop.py:627
+#: ../vdms_panels/filedrop.py:628
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr "Файлов для переименования: {0}"
 
-#: ../vdms_panels/filedrop.py:629
+#: ../vdms_panels/filedrop.py:630
 msgid "New Name #"
 msgstr "Новое имя #"
 
@@ -3864,42 +3902,42 @@ msgstr "Успешно завершено !"
 msgid "Not everything was successful."
 msgstr "Завершено, но не все прошло хорошо."
 
-#: ../vdms_panels/long_processing_task.py:147
+#: ../vdms_panels/long_processing_task.py:148
 msgid "Encoding Status"
 msgstr "Статус кодирования"
 
-#: ../vdms_panels/long_processing_task.py:151
+#: ../vdms_panels/long_processing_task.py:152
 #: ../vdms_ytdlp/long_task_ytdlp.py:85
 msgid "Current Log"
 msgstr "Current Log"
 
-#: ../vdms_panels/long_processing_task.py:356
+#: ../vdms_panels/long_processing_task.py:357
 #: ../vdms_ytdlp/long_task_ytdlp.py:226
 msgid "Fatal Error !"
 msgstr "Фатальная ошибка !"
 
-#: ../vdms_panels/long_processing_task.py:365
+#: ../vdms_panels/long_processing_task.py:366
 #: ../vdms_ytdlp/long_task_ytdlp.py:235
 msgid "Get your files at the destination you specified"
 msgstr "Получите ваши файлы по указанному вами адресу"
 
-#: ../vdms_panels/long_processing_task.py:379
+#: ../vdms_panels/long_processing_task.py:380
 msgid "For more details please read the Current Log."
 msgstr ""
 "Для получения более подробной информации, \n"
 "пожалуйста, прочтите текущий журнал."
 
-#: ../vdms_panels/long_processing_task.py:382
+#: ../vdms_panels/long_processing_task.py:383
 #: ../vdms_ytdlp/long_task_ytdlp.py:255
 msgid "...Finished"
 msgstr "...Завершено"
 
-#: ../vdms_panels/long_processing_task.py:401
+#: ../vdms_panels/long_processing_task.py:402
 #: ../vdms_ytdlp/long_task_ytdlp.py:269
 msgid "Please wait... interruption in progress"
 msgstr "Пожалуйста, подождите... происходит прерывание"
 
-#: ../vdms_panels/long_processing_task.py:404
+#: ../vdms_panels/long_processing_task.py:405
 msgid "...Interrupted"
 msgstr "...Прервано"
 
@@ -4528,8 +4566,8 @@ msgstr ""
 "Начало сегмента\n"
 "Продолжительность"
 
-#: ../vdms_threads/picture_exporting.py:49 ../vdms_threads/slideshow.py:49
-#: ../vdms_threads/slideshow.py:135 ../vdms_threads/slideshow.py:221
+#: ../vdms_threads/picture_exporting.py:49 ../vdms_threads/slideshow.py:46
+#: ../vdms_threads/slideshow.py:129 ../vdms_threads/slideshow.py:211
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' установлен в вашей системе?"
 
@@ -4927,6 +4965,10 @@ msgstr "Добавьте метаданные в файл"
 msgid "Overwrite all files and metadata"
 msgstr "Перезаписать все файлы и метаданные"
 
+#: ../vdms_ytdlp/ydl_preferences.py:106
+msgid "General"
+msgstr "General"
+
 #: ../vdms_ytdlp/ydl_preferences.py:112
 msgid "Where do you prefer to save your downloads?"
 msgstr "Где вы предпочитаете сохранять загрузки?"
@@ -5073,39 +5115,39 @@ msgid ""
 "cookie file for authentication (see cookies tab)."
 msgstr ""
 
-#: ../vdms_ytdlp/ydl_preferences.py:265
+#: ../vdms_ytdlp/ydl_preferences.py:266
 msgid "Username"
 msgstr "Имя пользователя"
 
-#: ../vdms_ytdlp/ydl_preferences.py:269
+#: ../vdms_ytdlp/ydl_preferences.py:270
 msgid "Username for authentication purposes"
 msgstr ""
 
-#: ../vdms_ytdlp/ydl_preferences.py:273
+#: ../vdms_ytdlp/ydl_preferences.py:274
 msgid "Password"
 msgstr "Пароль"
 
-#: ../vdms_ytdlp/ydl_preferences.py:277
+#: ../vdms_ytdlp/ydl_preferences.py:278
 msgid "Password for authentication purposes"
 msgstr ""
 
-#: ../vdms_ytdlp/ydl_preferences.py:282
+#: ../vdms_ytdlp/ydl_preferences.py:283
 msgid "Video Password"
 msgstr "Video Password"
 
-#: ../vdms_ytdlp/ydl_preferences.py:286
+#: ../vdms_ytdlp/ydl_preferences.py:287
 msgid "Password for accessing a video"
 msgstr ""
 
-#: ../vdms_ytdlp/ydl_preferences.py:292
+#: ../vdms_ytdlp/ydl_preferences.py:293
 msgid "Authentication"
 msgstr "Аутентификация"
 
-#: ../vdms_ytdlp/ydl_preferences.py:298
+#: ../vdms_ytdlp/ydl_preferences.py:299
 msgid "Using cookies to gain access to websites"
 msgstr ""
 
-#: ../vdms_ytdlp/ydl_preferences.py:301
+#: ../vdms_ytdlp/ydl_preferences.py:302
 msgid ""
 "Here you can pass your `Netscape HTTP Cookie File` in order to access "
 "websites that require authentication.\n"
@@ -5117,7 +5159,7 @@ msgid ""
 "For more information please consult the documentation at the following link:"
 msgstr ""
 
-#: ../vdms_ytdlp/ydl_preferences.py:318
+#: ../vdms_ytdlp/ydl_preferences.py:319
 #, fuzzy
 #| msgid "Authentication"
 msgid "Allow cookies for authentication"
@@ -5147,7 +5189,7 @@ msgstr ""
 #: ../vdms_ytdlp/ydl_preferences.py:341
 #, fuzzy
 #| msgid "Browse.."
-msgid "Web Browser:"
+msgid "Web Browser"
 msgstr "Обзор.."
 
 #: ../vdms_ytdlp/ydl_preferences.py:360
@@ -5335,6 +5377,25 @@ msgstr ""
 "ФАЙЛ: \"{0}\"\n"
 "\n"
 "Значение ключа назначения не может содержать несколько вхождений."
+
+#~ msgid "Warn on exit"
+#~ msgstr "Предупредить при выходе"
+
+#~ msgid "Remove cached files during application exit"
+#~ msgstr "Удалить кэшированные файлы при выходе из приложения"
+
+#~ msgid "Clean log files during application exit"
+#~ msgstr "Очистить файлы log-журналов при выходе из приложения"
+
+#~ msgid ""
+#~ "Customizing the look of the application\n"
+#~ "(requires application restart)"
+#~ msgstr ""
+#~ "Настройка внешнего вида приложения\n"
+#~ "(требуется перезапуск приложения)"
+
+#~ msgid "Toolbar customization"
+#~ msgstr "Настройка панели инструментов"
 
 # Изменил 14-5-2021
 #~| msgid "File Preferences"

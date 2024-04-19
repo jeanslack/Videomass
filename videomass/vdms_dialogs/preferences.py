@@ -208,7 +208,7 @@ class SetUp(wx.Dialog):
         sizerAppearance.Add((0, 10))
         sizericon = wx.BoxSizer(wx.HORIZONTAL)
         labTheme = wx.StaticText(tabFive, wx.ID_ANY, _('Icon themes'))
-        sizericon.Add(labTheme, 0, wx.TOP, 5)
+        sizericon.Add(labTheme, 0, wx.LEFT | wx.TOP, 5)
         self.cmbx_icons = wx.ComboBox(tabFive, wx.ID_ANY,
                                       choices=[("Videomass-Light"),
                                                ("Videomass-Dark"),
@@ -298,14 +298,13 @@ class SetUp(wx.Dialog):
         msg = _("Specify the character encoding format")
         labenctitle = wx.StaticText(tabSev, wx.ID_ANY, msg)
         sizeradv.Add(labenctitle, 0, wx.ALL | wx.EXPAND, 5)
-        msg = (_("If you encounter the error \"'utf-8' codec can't decode "
-                 "byte...\" the file you imported may likely contain "
-                 "metadata with\nnon-UTF-8 encoded characters. If you know "
-                 "the character encoding format the file was written in, you "
-                 "can try specifying\nit here, e.g. `ISO 8859-1`, "
-                 "`ISO 8859-16`, `IBM850`, etc. The default character "
-                 "encoding is `utf-8`, the most widely used\ncharacter "
-                 "encoding standard."))
+        msg = (_("Although UTF-8 is the default and most widely used standard "
+                 "encoding format, it is not the only encoding format "
+                 "available.\nSome file metadata may still contain non-UTF-8 "
+                 "character encodings resulting in the error \"'utf-8' codec "
+                 "can't decode bytes...\".\nIf you know the encoding format "
+                 "the file was written in, you can try specifying it here, "
+                 "e.g. ISO 8859-1, ISO 8859-16, etc."))
         labencgen = wx.StaticText(tabSev, wx.ID_ANY, (msg))
         sizeradv.Add(labencgen, 0, wx.ALL, 5)
         sizerenc = wx.BoxSizer(wx.HORIZONTAL)
