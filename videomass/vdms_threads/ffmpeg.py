@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.26.2024
+Rev: Apr.20.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -263,11 +263,12 @@ class FFmpeg(Thread):
         Also see `main_frame.switch_to_processing`.
 
         """
+        get = wx.GetApp()  # get data from bootstrap
+        self.appdata = get.appset
         self.stop_work_thread = False  # process terminate
         self.count = 0  # count for loop
         self.logfile = args[0]  # log filename
-        self.txtenc = args[1]  # encoding e.g utf-8
-        self.kwargs = args[2]  # it is a list of dictionaries
+        self.kwargs = args[1]  # it is a list of dictionaries
         self.nargs = len(self.kwargs)  # how many items...
 
         Thread.__init__(self)
@@ -304,7 +305,7 @@ class FFmpeg(Thread):
                            stderr=subprocess.PIPE,
                            bufsize=1,
                            universal_newlines=True,
-                           encoding=self.txtenc,
+                           encoding=self.appdata['encoding'],
                            ) as proc1:
 
                     for line in proc1.stderr:
@@ -393,7 +394,7 @@ class FFmpeg(Thread):
                        stderr=subprocess.PIPE,
                        bufsize=1,
                        universal_newlines=True,
-                       encoding=self.txtenc,
+                       encoding=self.appdata['encoding'],
                        ) as proc2:
 
                 for line2 in proc2.stderr:

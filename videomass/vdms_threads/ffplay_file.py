@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.17.2024
+Rev: Apr.20.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -56,15 +56,7 @@ class FilePlay(Thread):
 
     """
 
-    def __init__(self,
-                 filepath,
-                 timeseq,
-                 param,
-                 logdir,
-                 ffplay_url,
-                 ffplay_default_args,
-                 autoexit
-                 ):
+    def __init__(self, filepath, timeseq, param, autoexit):
         """
         The self.FFPLAY_loglevel has flag 'error -hide_banner' by default,
         see videomass.conf for details.
@@ -76,11 +68,9 @@ class FilePlay(Thread):
         self.filename = filepath  # file name selected
         self.time_seq = timeseq  # seeking
         self.param = param  # additional parameters if present
-        self.ffplay = ffplay_url
-        self.ffplay_default_args = ffplay_default_args
         self.autoexit = '-autoexit' if autoexit else ''
-        self.logf = os.path.join(logdir, 'ffplay.log')
-        make_log_template('ffplay.log', logdir, mode="w")
+        self.logf = os.path.join(self.appdata['logdir'], 'ffplay.log')
+        make_log_template('ffplay.log', self.appdata['logdir'], mode="w")
         # set initial file LOG
 
         Thread.__init__(self)
@@ -95,8 +85,8 @@ class FilePlay(Thread):
 
         """
         # time.sleep(.5)
-        cmd = " ".join(f'"{self.ffplay}" '
-                       f'{self.ffplay_default_args} '
+        cmd = " ".join(f'"{self.appdata["ffplay_cmd"]}" '
+                       f'{self.appdata["ffplay_default_args"]} '
                        f'{self.autoexit} '
                        f'{self.time_seq[0]} '
                        f'-i "{self.filename}" '

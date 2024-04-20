@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.17.2024
+Rev: Apr.20.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -48,13 +48,7 @@ class VolumeDetectThread(Thread):
 
     """
 
-    def __init__(self, timeseq,
-                 filelist,
-                 audiomap,
-                 logdir,
-                 ffmpeg_url,
-                 txtenc,
-                 ):
+    def __init__(self, timeseq, filelist, audiomap):
         """
         Replace /dev/null with NUL on Windows.
 
@@ -65,16 +59,16 @@ class VolumeDetectThread(Thread):
                    in the form:
                    ([[maxvol, medvol], [etc,etc]], None or "str errors")
         """
-        self.txtenc = txtenc
+        get = wx.GetApp()  # get videomass wx.App attribute
+        self.appdata = get.appset
         self.filelist = filelist
         self.time_seq = timeseq
         self.audiomap = audiomap
-        self.ffmpeg_url = ffmpeg_url
         self.status = None
         self.data = None
         self.nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
-        self.logf = os.path.join(logdir, 'volumedected.log')
-        make_log_template('volumedected.log', logdir, mode="w")
+        self.logf = os.path.join(self.appdata['logdir'], 'volumedected.log')
+        make_log_template('volumedected.log', self.appdata['logdir'], mode="w")
         # set initial file LOG
 
         Thread.__init__(self)
@@ -93,7 +87,7 @@ class VolumeDetectThread(Thread):
         volume = []
 
         for files in self.filelist:
-            cmd = (f'"{self.ffmpeg_url}" -hide_banner '
+            cmd = (f'"{self.appdata["ffmpeg_cmd"]}" -hide_banner '
                    f'{self.time_seq[0]} '
                    f'-i "{files}" '
                    f'{self.time_seq[1]} '
@@ -109,7 +103,7 @@ class VolumeDetectThread(Thread):
                 with Popen(cmd,
                            stderr=subprocess.PIPE,
                            universal_newlines=True,
-                           encoding=self.txtenc,
+                           encoding=self.appdata['encoding'],
                            ) as proc:
                     output = proc.communicate()[1]
                     if proc.returncode != 0:  # if error occurred

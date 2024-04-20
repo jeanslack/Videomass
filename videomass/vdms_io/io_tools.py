@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.17.2024
+Rev: Apr.20.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -68,8 +68,6 @@ def stream_play(filepath, timeseq, param, autoexit):
     """
     Call Thread for playback with ffplay
     """
-    get = wx.GetApp()  # get data from bootstrap
-
     if timeseq:
         splseq = timeseq.split()
         tseq = f'{splseq[0]} {splseq[1]}', f'{splseq[2]} {splseq[3]}'
@@ -77,14 +75,7 @@ def stream_play(filepath, timeseq, param, autoexit):
         tseq = '', ''
     try:
         with open(filepath, encoding='utf-8'):
-            FilePlay(filepath,
-                     tseq,
-                     param,
-                     get.appset['logdir'],
-                     get.appset['ffplay_cmd'],
-                     get.appset['ffplay_default_args'],
-                     autoexit
-                     )
+            FilePlay(filepath, tseq, param, autoexit)
             # thread.join() > attende fine thread, se no ritorna subito
             # error = thread.data
     except IOError:
@@ -99,20 +90,12 @@ def volume_detect_process(filelist, timeseq, audiomap, parent=None):
     Run thread to get audio peak level data and show a
     pop-up dialog with message.
     """
-    get = wx.GetApp()
-
     if timeseq:
         splseq = timeseq.split()
         tseq = f'{splseq[0]} {splseq[1]}', f'{splseq[2]} {splseq[3]}'
     else:
         tseq = '', ''
-    thread = VolumeDetectThread(tseq,
-                                filelist,
-                                audiomap,
-                                get.appset['logdir'],
-                                get.appset['ffmpeg_cmd'],
-                                get.appset['encoding'],
-                                )
+    thread = VolumeDetectThread(tseq, filelist, audiomap)
     dlgload = PopupDialog(parent,
                           _("Videomass - Loading..."),
                           _("Wait....\nAudio peak analysis."))
