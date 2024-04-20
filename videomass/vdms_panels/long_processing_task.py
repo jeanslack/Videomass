@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.22.2024
+Rev: Apr.20.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -141,7 +141,6 @@ class LogOut(wx.Panel):
         self.count = 0  # keeps track of the counts (see `update_count`)
         self.maxrotate = 0  # max num text rotation (see `update_count`)
         self.clr = self.appdata['colorscheme']
-        self.txtenc = self.appdata['encoding']
 
         wx.Panel.__init__(self, parent=parent)
 
@@ -215,7 +214,7 @@ class LogOut(wx.Panel):
                                          )
         if args[0] in ('One pass', 'Two pass', 'Two pass EBU',
                        'Two pass VIDSTAB', 'Queue Processing'):
-            self.thread_type = FFmpeg(self.logfile, self.txtenc, data)
+            self.thread_type = FFmpeg(self.logfile, data)
 
         elif args[0] == 'video_to_sequence':
             self.with_eta, self.maxrotate = False, None
