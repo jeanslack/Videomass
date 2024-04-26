@@ -340,7 +340,8 @@ class ColorEQ(wx.Dialog):
         """
         error = self.process(self.frameedit, equalizer=equalizer)
         if error:
-            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+            wx.MessageBox(f'{error}', _('Videomass - Error!'),
+                          wx.ICON_ERROR, self)
             return
         self.loader_initial_edit()
     # -----------------------------------------------------------------------#
@@ -379,13 +380,15 @@ class ColorEQ(wx.Dialog):
         self.clock = integer_to_time(seek, False)  # to 24-hour
         error = self.process(self.framesrc)
         if error:
-            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+            wx.MessageBox(f'{error}', _('Videomass - Error!'),
+                          wx.ICON_ERROR, self)
             return
         self.loader_initial_source()
 
         error = self.process(self.frameedit, self.concat_filter())
         if error:
-            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+            wx.MessageBox(f'{error}', _('Videomass - Error!'),
+                          wx.ICON_ERROR, self)
             return
         self.loader_initial_edit()
 

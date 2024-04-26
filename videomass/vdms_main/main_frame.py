@@ -870,7 +870,8 @@ class MainFrame(wx.Frame):
                                         )
 
         if download[1]:
-            wx.MessageBox(f"{download[1]}", 'ERROR', wx.ICON_ERROR, self)
+            wx.MessageBox(f"{download[1]}", _('Videomass - Error!'),
+                          wx.ICON_ERROR, self)
             return
 
         wx.MessageBox(_('Successfully downloaded to "{0}"').format(pathname),
@@ -904,7 +905,7 @@ class MainFrame(wx.Frame):
 
         out = io_tools.test_conf()
         if 'Not found' in out[0]:
-            wx.MessageBox(f"\n{out[1]}", "Videomass",
+            wx.MessageBox(f"\n{out[1]}", _('Videomass - Error!'),
                           wx.ICON_ERROR, self)
             return
         self.ffmpegconf = FFmpegConf(out,
@@ -926,7 +927,7 @@ class MainFrame(wx.Frame):
 
         out = io_tools.test_formats()
         if 'Not found' in out:
-            wx.MessageBox(f"\n{out['Not found']}", "Videomass",
+            wx.MessageBox(f"\n{out['Not found']}", _('Videomass - Error!'),
                           wx.ICON_ERROR, self)
             return
         self.ffmpegformats = FFmpegFormats(out, self.appdata['ostype'])
@@ -944,7 +945,7 @@ class MainFrame(wx.Frame):
 
         out = io_tools.test_codecs('-encoders')
         if 'Not found' in out:
-            wx.MessageBox(f"\n{out['Not found']}", "Videomass",
+            wx.MessageBox(f"\n{out['Not found']}", _('Videomass - Error!'),
                           wx.ICON_ERROR, self)
             return
         self.ffmpegcodecs = FFmpegCodecs(out,
@@ -964,7 +965,7 @@ class MainFrame(wx.Frame):
 
         out = io_tools.test_codecs('-decoders')
         if 'Not found' in out:
-            wx.MessageBox(f"\n{out['Not found']}", "Videomass",
+            wx.MessageBox(f"\n{out['Not found']}", _('Videomass - Error!'),
                           wx.ICON_ERROR, self)
             return
         self.ffmpegdecoders = FFmpegCodecs(out,
@@ -1279,7 +1280,7 @@ class MainFrame(wx.Frame):
                                                tip, wx.ITEM_NORMAL
                                                )
         tip = _("Stops current process")
-        stop_coding = self.toolbar.AddTool(8, _('Abort'), bmpstop,
+        stop_coding = self.toolbar.AddTool(8, _('Stop'), bmpstop,
                                            tip, wx.ITEM_NORMAL
                                            )
         tip = _("Add an item to Queue")

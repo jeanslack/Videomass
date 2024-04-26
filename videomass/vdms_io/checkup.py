@@ -72,7 +72,7 @@ def check_inout(file_sources, file_dest):
         drn = os.path.abspath(os.path.dirname(drn))
         if not os.path.isdir(drn):
             wx.MessageBox(_('Output folder does not exist:\n\n"{}"\n').format(
-                          drn), 'Videomass', wx.ICON_ERROR
+                          drn), _('Videomass - Error!'), wx.ICON_ERROR
                           )
             return None
 

@@ -6,7 +6,7 @@ Compatibility: Python3 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.04.2023
+Rev: Apr.23.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -51,6 +51,9 @@ class FFmpegGenericTask(Thread):
     Return: None
 
     """
+    ERROR = 'Please, see "generic_task.log" file for error details.'
+    STOP = '[Videomass]: STOP command received. Interrupting !'
+
     def __init__(self, args, procname='Unknown', logfile='logfile.log'):
         """
         Attributes defined here:
@@ -65,6 +68,7 @@ class FFmpegGenericTask(Thread):
         """
         get = wx.GetApp()
         self.appdata = get.appset
+        self.stop_work_thread = False  # process terminate
         self.logfile = logfile
         self.procname = procname
         self.args = args
@@ -80,8 +84,10 @@ class FFmpegGenericTask(Thread):
         OSError exception. Otherwise the getted output is None
 
         """
+        outlist = []
         cmd = (f'"{self.appdata["ffmpeg_cmd"]}" '
-               f'{self.appdata["ffmpeg_default_args"]} '
+               f'{self.appdata["ffmpeg-default-args"]} '
+               f'{self.appdata["ffmpeg_loglev"]} '
                f'{self.args}'
                )
         self.logwrite(f'From: {self.procname}\n{cmd}\n')
@@ -91,20 +97,34 @@ class FFmpegGenericTask(Thread):
         try:
             with Popen(cmd,
                        stderr=subprocess.PIPE,
+                       stdin=subprocess.PIPE,
                        universal_newlines=True,
                        encoding=self.appdata["encoding"],
                        ) as proc:
-                output = proc.communicate()[1]
-                if proc.returncode != 0:  # if error occurred
-                    self.status = output
+                for line in proc.stderr:
+                    outlist.append(line)
+                    if self.stop_work_thread:
+                        proc.stdin.write('q')  # stop ffmpeg
+                        output = proc.communicate()[1]
+                        proc.wait()
+                        self.status = FFmpegGenericTask.STOP
+                        break
 
-        except OSError as err:  # command not found
+                    if proc.wait():
+                        output = proc.communicate()[1]
+                        self.status = FFmpegGenericTask.ERROR
+                        break
+
+        except (OSError, FileNotFoundError) as err:
             self.status = err
+            output = err
 
         if self.status:
-            self.logerror()
+            self.logerror(output)
         else:
+            output = ''.join(outlist)
             self.logwrite(f'[FFMPEG]:\n{output}')
+
         wx.CallAfter(pub.sendMessage,
                      "RESULT_EVT",
                      status=''
@@ -119,10 +139,17 @@ class FFmpegGenericTask(Thread):
             log.write(f"{cmd}\n")
     # ----------------------------------------------------------------#
 
-    def logerror(self):
+    def logerror(self, output):
         """
         write ffmpeg volumedected errors
         """
         with open(self.logfile, "a", encoding='utf-8') as logerr:
             logerr.write(f"\n[FFMPEG] generic_task "
-                         f"ERRORS:\n{self.status}\n")
+                         f"ERRORS:\n{output}\n")
+    # ----------------------------------------------------------------#
+
+    def stop(self):
+        """
+        Sets the stop work thread to terminate the process
+        """
+        self.stop_work_thread = True

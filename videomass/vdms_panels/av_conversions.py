@@ -599,14 +599,14 @@ class AV_Conv(wx.Panel):
                 wx.MessageBox(_('Unsupported file:\n'
                                 'Missing decoder or library? '
                                 'Check FFmpeg configuration.'),
-                              'Videomass', wx.ICON_WARNING, self)
+                              _('Videomass - Warning!'), wx.ICON_WARNING, self)
                 self.on_vfilters_clear(self)
                 return None
             return dict(zip(['width', 'height', 'filename', 'duration'],
                             [width, height, filename, duration]))
 
         wx.MessageBox(_('The file is not a frame or a video file'),
-                      'Videomass', wx.ICON_WARNING, self)
+                      _('Videomass - Warning!'), wx.ICON_WARNING, self)
         self.on_vfilters_clear(self)
         return None
     # ------------------------------------------------------------------#
@@ -934,7 +934,6 @@ class AV_Conv(wx.Panel):
         kwargs['pre-input-1'], kwargs['pre-input-2'] = '', ''
         kwargs['logname'] = logname
         kwargs['start-time'], kwargs['end-time'] = ss, et
-
         batchlist = []
         for index in enumerate(self.parent.file_src):
             kw = kwargs.copy()

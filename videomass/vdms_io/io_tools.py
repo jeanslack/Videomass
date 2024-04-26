@@ -87,8 +87,8 @@ def stream_play(filepath, timeseq, param, autoexit):
 
 def volume_detect_process(filelist, timeseq, audiomap, parent=None):
     """
-    Run thread to get audio peak level data and show a
-    pop-up dialog with message.
+    Run thread to get audio peak level data
+    showing a pop-up message dialog.
     """
     if timeseq:
         splseq = timeseq.split()
@@ -98,7 +98,9 @@ def volume_detect_process(filelist, timeseq, audiomap, parent=None):
     thread = VolumeDetectThread(tseq, filelist, audiomap)
     dlgload = PopupDialog(parent,
                           _("Videomass - Loading..."),
-                          _("Wait....\nAudio peak analysis."))
+                          _("Wait....\nAudio peak analysis."),
+                          thread,
+                          )
     dlgload.ShowModal()
     # thread.join()
     data = thread.data
@@ -166,7 +168,7 @@ def openpath(where):
     """
     ret = open_default_application(where)
     if ret:
-        wx.MessageBox(ret, 'Videomass', wx.ICON_ERROR, None)
+        wx.MessageBox(ret, _('Videomass - Error!'), wx.ICON_ERROR, None)
 # -------------------------------------------------------------------------#
 
 
@@ -181,15 +183,11 @@ def get_github_releases(url, keyname):
     try:
         response = requests.get(url, timeout=15)
         not_found = None, None
-
     except Exception as err:
         not_found = 'request error:', err
-
     else:
-
         try:
             version = response.json()[f"{keyname}"]
-
         except Exception as err:
             not_found = 'response error:', err
 

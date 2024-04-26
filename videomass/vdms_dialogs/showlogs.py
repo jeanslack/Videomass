@@ -35,7 +35,7 @@ class ShowLogs(wx.Dialog):
 
     """
     # list of logs files to include
-    LOGNAMES = ('volumedected.log',
+    LOGNAMES = ('volumedetected.log',
                 'AV Conversions.log',
                 'Presets Manager.log',
                 'ffplay.log',

@@ -398,7 +398,7 @@ class VideoToSequence(wx.Panel):
                             [width, height, filename, duration]))
 
         wx.MessageBox(_('The file is not a frame or a video file'),
-                      'Videomass', wx.ICON_WARNING)
+                      _('Videomass - Warning!'), wx.ICON_WARNING)
         return None
     # ------------------------------------------------------------------#
 
@@ -511,7 +511,7 @@ class VideoToSequence(wx.Panel):
 
         if 'video' not in typemedia or 'sequence' in typemedia:
             wx.MessageBox(_("Invalid file: '{}'").format(clicked),
-                          _('ERROR'), wx.ICON_ERROR, self)
+                          _('Videomass - Error!'), wx.ICON_ERROR, self)
             return
 
         checking = check_files((clicked,),
@@ -582,7 +582,7 @@ class VideoToSequence(wx.Panel):
         try:
             os.makedirs(outputdir, mode=0o777)
         except (OSError, FileExistsError) as err:
-            wx.MessageBox(f"{err}", "Videomass",
+            wx.MessageBox(f"{err}", _('Videomass - Error!'),
                           wx.ICON_ERROR, self)
             return
 

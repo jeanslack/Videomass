@@ -126,7 +126,7 @@ class Videomass(wx.App):
                 import yt_dlp
             except ModuleNotFoundError as err:
                 wx.MessageBox(f"ERROR: {err}\n\n{msg}",
-                              'Videomass - ERROR', wx.ICON_ERROR)
+                              _('Videomass - Error!'), wx.ICON_ERROR)
                 return False
         return None
     # -------------------------------------------------------------------

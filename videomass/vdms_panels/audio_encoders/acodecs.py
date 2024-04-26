@@ -504,7 +504,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         else:
             wx.MessageBox(_('ERROR: Missing audio stream:\n"{}"'
                             ).format(fileselected[0]),
-                          'Videomass', wx.ICON_ERROR, self)
+                          _('Videomass - Error!'), wx.ICON_ERROR, self)
             return None
 
         return True
@@ -791,7 +791,11 @@ class AudioEncoders(scrolled.ScrolledPanel):
                                      parent=self.GetParent(),
                                      )
         if data[1]:
-            wx.MessageBox(f"{data[1]}", "Videomass", wx.ICON_ERROR, self)
+            if data[1][0] == 'ERROR':
+                caption, ico = _('Videomass - Error!'), wx.ICON_ERROR
+            elif data[1][0] == 'INFO':
+                caption, ico = 'Videomass', wx.ICON_INFORMATION
+            wx.MessageBox(f"{data[1][1]}", caption, ico, self)
             return
 
         if self.rdbx_normalize.GetSelection() == 1:  # PEAK

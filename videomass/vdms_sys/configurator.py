@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.09.2024
+Rev: Apr.23.2024
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -220,7 +220,7 @@ def get_color_scheme(theme):
                     'INFO': '#194c7e',  # Blue: other info messages
                     'DEBUG': '#333333',  # light green
                     'FAILED': '#D21814',  # RED_DEEP if failed
-                    'ABORT': '#D21814',  # RED_DEEP if abort
+                    'ABORT': '#A41EA4',  # RED_DEEP if abort
                     }
     elif theme == 'Videomass-Dark':
         c_scheme = {'BACKGRD': '#232424',  # DARK Grey background color
@@ -463,10 +463,8 @@ class DataSource():
                  'ffmpeg_cmd': _relativize(userconf['ffmpeg_cmd']),
                  'ffprobe_cmd': _relativize(userconf['ffprobe_cmd']),
                  'ffplay_cmd': _relativize(userconf['ffplay_cmd']),
-                 "ffplay_default_args": (f"{userconf['ffplay_loglev']} "
-                                         f"-hide_banner"),
-                 "ffmpeg_default_args": (f"-y {userconf['ffmpeg_loglev']} "
-                                         f"-stats -hide_banner -nostdin"),
+                 'ffmpeg-default-args': '-y -stats -hide_banner',
+                 'ffplay-default-args': '-hide_banner',
                  **userconf
                  })
     # --------------------------------------------------------------------

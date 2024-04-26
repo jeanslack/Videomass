@@ -42,9 +42,9 @@ def ffmpeg_cmd_args():
     """
     get = wx.GetApp()
     appdata = get.appset
-
+    defargs = f'-y -stats -hide_banner {appdata["ffmpeg_loglev"]}'
     return {"ffmpeg_cmd": appdata["ffmpeg_cmd"],
-            "ffmpeg_default_args": appdata["ffmpeg_default_args"]}
+            "ffmpeg-default-args": defargs}
 # ----------------------------------------------------------------------
 
 
@@ -55,7 +55,7 @@ def one_pass(*args, **kwa):
     cmd = ffmpeg_cmd_args()
     nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
     pass1 = (f'"{cmd["ffmpeg_cmd"]}" '
-             f'{cmd["ffmpeg_default_args"]} '
+             f'{cmd["ffmpeg-default-args"]} '
              f'{kwa.get("pre-input-1", "")} '
              f'{kwa["start-time"]} '
              f'-i "{kwa["source"]}" '
@@ -80,7 +80,7 @@ def two_pass(*args, **kwa):
     """
     cmd = ffmpeg_cmd_args()
     pass2 = (f'"{cmd["ffmpeg_cmd"]}" '
-             f'{cmd["ffmpeg_default_args"]} '
+             f'{cmd["ffmpeg-default-args"]} '
              f'{kwa.get("pre-input-2", "")} '
              f'{kwa["start-time"]} '
              f'-i "{kwa["source"]}" '
@@ -109,7 +109,7 @@ def one_pass_stab(*args, **kwa):
     cmd = ffmpeg_cmd_args()
     nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
     pass1 = (f'"{cmd["ffmpeg_cmd"]}" '
-             f'{cmd["ffmpeg_default_args"]} '
+             f'{cmd["ffmpeg-default-args"]} '
              f'{kwa.get("pre-input-1", "")} '
              f'{kwa["start-time"]} '
              f'-i "{kwa["source"]}" '
@@ -135,7 +135,7 @@ def two_pass_stab(*args, **kwa):
     """
     cmd = ffmpeg_cmd_args()
     pass2 = (f'"{cmd["ffmpeg_cmd"]}" '
-             f'{cmd["ffmpeg_default_args"]} '
+             f'{cmd["ffmpeg-default-args"]} '
              f'{kwa.get("pre-input-2", "")} '
              f'{kwa["start-time"]} '
              f'-i "{kwa["source"]}" '
@@ -162,7 +162,7 @@ def simple_one_pass(*args, **kwa):
     """
     cmd = ffmpeg_cmd_args()
     pass1 = (f'"{cmd["ffmpeg_cmd"]}" '
-             f'{cmd["ffmpeg_default_args"]} '
+             f'{cmd["ffmpeg-default-args"]} '
              f'{kwa.get("pre-input-1", "")} '
              f'{kwa["start-time"]} '
              f'-i "{kwa["source"]}" '
@@ -189,7 +189,7 @@ def one_pass_ebu(*args, **kwa):
     cmd = ffmpeg_cmd_args()
     nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
     pass1 = (f'"{cmd["ffmpeg_cmd"]}" '
-             f'{cmd["ffmpeg_default_args"]} '
+             f'{cmd["ffmpeg-default-args"]} '
              f'{kwa.get("pre-input-1", "")} '
              f'{kwa["start-time"]} '
              f'-i "{kwa["source"]}" '
@@ -222,7 +222,7 @@ def two_pass_ebu(*args, **kwa):
     """
     cmd = ffmpeg_cmd_args()
     pass2 = (f'"{cmd["ffmpeg_cmd"]}" '
-             f'{cmd["ffmpeg_default_args"]} '
+             f'{cmd["ffmpeg-default-args"]} '
              f'{kwa.get("pre-input-2", "")} '
              f'{kwa["start-time"]} '
              f'-i "{kwa["source"]}" '
@@ -265,7 +265,7 @@ class FFmpeg(Thread):
         """
         get = wx.GetApp()  # get data from bootstrap
         self.appdata = get.appset
-        self.stop_work_thread = False  # process terminate
+        self.stop_work_thread = False  # set stop ffmpeg
         self.count = 0  # count for loop
         self.logfile = args[0]  # log filename
         self.kwargs = args[1]  # it is a list of dictionaries
@@ -276,7 +276,7 @@ class FFmpeg(Thread):
 
     def run(self):
         """
-        Subprocess initialize thread.
+        Run the separated thread.
         """
         filedone = []
         for kwa in self.kwargs:
@@ -297,12 +297,13 @@ class FFmpeg(Thread):
                          "COUNT_EVT",
                          count=model['count1'],
                          duration=kwa['duration'],
-                         end='',
+                         end='CONTINUE',
                          )
             logwrite(model['stamp1'], '', self.logfile)
             try:
                 with Popen(model['pass1'],
                            stderr=subprocess.PIPE,
+                           stdin=subprocess.PIPE,
                            bufsize=1,
                            universal_newlines=True,
                            encoding=self.appdata['encoding'],
@@ -315,9 +316,21 @@ class FFmpeg(Thread):
                                      duration=kwa['duration'],
                                      status=0
                                      )
-                        if self.stop_work_thread:  # break first 'for' loop
-                            proc1.terminate()
-                            break
+                        if self.stop_work_thread:
+                            proc1.stdin.write('q')  # stop ffmpeg
+                            out = proc1.communicate()[1]
+                            proc1.wait()
+                            wx.CallAfter(pub.sendMessage,
+                                         "UPDATE_EVT",
+                                         output='STOP',
+                                         duration=kwa['duration'],
+                                         status=1,
+                                         )
+                            logwrite('', out, self.logfile)
+                            time.sleep(.5)
+                            wx.CallAfter(pub.sendMessage, "END_EVT",
+                                         filetotrash=None)
+                            return
 
                         if kwa["type"] == 'Two pass EBU':
                             summary = model['summary']
@@ -325,39 +338,37 @@ class FFmpeg(Thread):
                                 if line.startswith(k):
                                     summary[k] = line.split(':')[1].split()[0]
 
-                    if proc1.wait():  # will add '..failed' to txtctrl
+                    if proc1.wait():  # ..Failed
+                        out = proc1.communicate()[1]
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
-                                     output='',
+                                     output='FAILED',
                                      duration=kwa['duration'],
                                      status=proc1.wait(),
                                      )
-                        logwrite('',
-                                 f"Exit status: {proc1.wait()}", self.logfile)
+                        logwrite('', (f"[VIDEOMASS]: Error Exit Status: "
+                                      f"{proc1.wait()} {out}"), self.logfile)
+                        time.sleep(1)
                         continue
 
             except (OSError, FileNotFoundError) as err:
-                excepterr = f"{err}\n  {FFmpeg.NOT_EXIST_MSG}"
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
-                             count=excepterr,
+                             count=err,
                              duration=0,
-                             end='error'
+                             end='ERROR'
                              )
+                logwrite('', err, self.logfile)
                 break
 
-            if self.stop_work_thread:  # break first 'for' loop
-                proc1.terminate()
-                break  # stop for loop
-
-            if proc1.wait() == 0:  # will add '..terminated' to txtctrl
+            if proc1.wait() == 0:  # ..Finished
                 if not kwa["args"][1]:
                     filedone.append(kwa["source"])
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count='',
                              duration=kwa['duration'],
-                             end='Done'
+                             end='DONE'
                              )
 
             if not kwa["args"][1]:
@@ -386,12 +397,13 @@ class FFmpeg(Thread):
                          "COUNT_EVT",
                          count=model['count2'],
                          duration=kwa['duration'],
-                         end='',
+                         end='CONTINUE',
                          )
             logwrite(model['stamp2'], '', self.logfile)
 
             with Popen(model['pass2'],
                        stderr=subprocess.PIPE,
+                       stdin=subprocess.PIPE,
                        bufsize=1,
                        universal_newlines=True,
                        encoding=self.appdata['encoding'],
@@ -404,31 +416,42 @@ class FFmpeg(Thread):
                                  duration=kwa['duration'],
                                  status=0,
                                  )
-                    if self.stop_work_thread:  # break first 'for' loop
-                        proc2.terminate()
-                        break
+                    if self.stop_work_thread:
+                        proc2.stdin.write('q')  # stop ffmpeg
+                        out = proc2.communicate()[1]
+                        proc2.wait()
+                        wx.CallAfter(pub.sendMessage,
+                                     "UPDATE_EVT",
+                                     output='STOP',
+                                     duration=kwa['duration'],
+                                     status=1,
+                                     )
+                        logwrite('', out, self.logfile)
+                        time.sleep(.5)
+                        wx.CallAfter(pub.sendMessage, "END_EVT",
+                                     filetotrash=None)
+                        return
 
-                if proc2.wait():  # will add '..failed' to txtctrl
+                if proc2.wait():  # ..Failed
+                    out = proc2.communicate()[1]
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
-                                 output='',
+                                 output='FAILED',
                                  duration=kwa['duration'],
                                  status=proc2.wait(),
                                  )
-                    logwrite('',
-                             f"Exit status: {proc2.wait()}", self.logfile)
+                    logwrite('', (f"[VIDEOMASS]: Error Exit Status: "
+                                  f"{proc2.wait()} {out}"), self.logfile)
+                    time.sleep(1)
+                    continue
 
-            if self.stop_work_thread:  # break first 'for' loop
-                proc2.terminate()
-                break  # stop for loop
-
-            if proc2.wait() == 0:  # will add '..terminated' to txtctrl
+            if proc2.wait() == 0:  # ..Finished
                 filedone.append(kwa["source"])
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count='',
                              duration=kwa['duration'],
-                             end='Done'
+                             end='DONE'
                              )
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=filedone)

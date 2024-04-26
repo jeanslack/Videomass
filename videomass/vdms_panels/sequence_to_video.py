@@ -347,7 +347,7 @@ class SequenceToVideo(wx.Panel):
                             [width, height, filename, duration]))
 
         wx.MessageBox(_('The file is not a frame or a video file'),
-                      'Videomass', wx.ICON_WARNING)
+                      _('Videomass - Warning!'), wx.ICON_WARNING)
         return None
     # ------------------------------------------------------------------#
 
@@ -462,13 +462,13 @@ class SequenceToVideo(wx.Panel):
 
         if probe[1]:  # some error
             msg = _("Invalid file: '{}'\n\n{}").format(pathname, probe[1])
-            wx.MessageBox(msg, _('ERROR'), wx.ICON_ERROR, self)
+            wx.MessageBox(msg, _('Videomass - Error!'), wx.ICON_ERROR, self)
             return
 
         if probe[0]['streams'][0]['codec_type'] != 'audio':
             msg = _("Invalid file: '{}'\n\n"
                     "It doesn't appear to be an audio file.").format(pathname)
-            wx.MessageBox(msg, _('ERROR'), wx.ICON_ERROR, self)
+            wx.MessageBox(msg, _('Videomass - Error!'), wx.ICON_ERROR, self)
             return
 
         self.btn_openaudio.SetBackgroundColour(
@@ -562,7 +562,7 @@ class SequenceToVideo(wx.Panel):
             typemedia = self.parent.fileDnDTarget.flCtrl.GetItemText(itc, 3)
             if 'video' not in typemedia or 'sequence' not in typemedia:
                 wx.MessageBox(_("Invalid file: '{}'").format(fsource[itc]),
-                              _('ERROR'), wx.ICON_ERROR, self)
+                              _('Videomass - Error!'), wx.ICON_ERROR, self)
                 return True
 
         unsupp = [f for f in fsource if os.path.splitext(f)[1]
@@ -572,13 +572,13 @@ class SequenceToVideo(wx.Panel):
         if unsupp:
             ext = os.path.splitext(unsupp[0])[1]
             wx.MessageBox(_("Unsupported format '{}'").format(ext),
-                          _('ERROR'), wx.ICON_ERROR, self)
+                          _('Videomass - Error!'), wx.ICON_ERROR, self)
             return True
 
         for fsrc in fsource:
             if not os.path.isfile(os.path.abspath(fsrc)):
                 wx.MessageBox(_('File does not exist:\n\n"{}"\n').format(fsrc),
-                              "Videomass", wx.ICON_ERROR, self)
+                              _('ERROR'), wx.ICON_ERROR, self)
                 return True
         return None
     # ---------------------------------------------------------
@@ -589,7 +589,7 @@ class SequenceToVideo(wx.Panel):
         """
         if 'video' not in typemedia or 'sequence' not in typemedia:
             wx.MessageBox(_("Invalid file: '{}'").format(clicked),
-                          _('ERROR'), wx.ICON_ERROR, self)
+                          _('Videomass - Error!'), wx.ICON_ERROR, self)
             return True
 
         supp = ('.jpeg', '.jpg', '.png', '.bmp',
@@ -597,13 +597,13 @@ class SequenceToVideo(wx.Panel):
         ext = os.path.splitext(clicked)[1]
         if ext not in supp:
             wx.MessageBox(_("Unsupported format '{}'").format(ext),
-                          _('ERROR'), wx.ICON_ERROR, self)
+                          _('Videomass - Error!'), wx.ICON_ERROR, self)
             return True
 
         if not os.path.isfile(os.path.abspath(clicked)):
             wx.MessageBox(_('File does not exist:'
                             '\n\n"{}"\n').format(clicked),
-                          "Videomass", wx.ICON_ERROR, self)
+                          _('Videomass - Error!'), wx.ICON_ERROR, self)
             return True
         return None
     # ---------------------------------------------------------
@@ -644,7 +644,7 @@ class SequenceToVideo(wx.Panel):
         outputdir = trailing_name_with_prog_digit(destdir, 'Still_Images')
 
         if outputdir[0] == 'ERROR':
-            wx.MessageBox(f"{outputdir[1]}", "Videomass",
+            wx.MessageBox(f"{outputdir[1]}", _('Videomass - Error!'),
                           wx.ICON_ERROR, self)
             return
 
@@ -691,7 +691,7 @@ class SequenceToVideo(wx.Panel):
         try:
             os.makedirs(outputdir, mode=0o777)
         except (OSError, FileExistsError) as err:
-            wx.MessageBox(f"{err}", "Videomass",
+            wx.MessageBox(f"{err}", _('Videomass - Error!'),
                           wx.ICON_ERROR, self)
             return
 

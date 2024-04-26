@@ -601,7 +601,8 @@ class SetUp(wx.Dialog):
                 if c not in ('_', '-'):
                     if not c.isalnum():  # is not alphanumeric
                         self.text_suffix.SetBackgroundColour('#988313')
-                        wx.MessageBox(msg, 'WARNING', wx.ICON_WARNING)
+                        wx.MessageBox(msg, _('Videomass - Warning!'),
+                                      wx.ICON_WARNING)
                         self.settings['filesuffix'] = ""
                         return
 
@@ -654,9 +655,6 @@ class SetUp(wx.Dialog):
         """
         strn = self.rdbFFplay.GetStringSelection().split()[0]
         self.settings['ffplay_loglev'] = f'-loglevel {strn}'
-
-        args = f"{self.settings['ffplay_loglev']} -hide_banner"
-        self.settings['ffplay_default_args'] = args
     # --------------------------------------------------------------------#
 
     def logging_ffmpeg(self, event):
@@ -665,10 +663,6 @@ class SetUp(wx.Dialog):
         """
         strn = self.rdbFFmpeg.GetStringSelection().split()[0]
         self.settings['ffmpeg_loglev'] = f'-loglevel {strn}'
-
-        args = (f"-y {self.settings['ffmpeg_loglev']} "
-                f"-stats -hide_banner -nostdin")
-        self.settings['ffmpeg_default_args'] = args
     # --------------------------------------------------------------------#
 
     def exeFFmpeg(self, event):

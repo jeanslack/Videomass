@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.08.2024
+Rev: Apr.24.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -46,7 +46,6 @@ class ConcatDemuxer(Thread):
     https://stackoverflow.com/questions/1388753/how-to-get-output-
     from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
     """
-    NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ---------------------------------------------------------------
 
     def __init__(self, *args, **kwargs):
@@ -72,7 +71,8 @@ class ConcatDemuxer(Thread):
         """
         filedone = None
         cmd = (f'"{self.appdata["ffmpeg_cmd"]}" '
-               f'{self.appdata["ffmpeg_default_args"]} -f concat '
+               f'{self.appdata["ffmpeg-default-args"]} '
+               f'{self.appdata["ffmpeg_loglev"]} -f concat '
                f'-safe 0 -i {self.kwa["args"]} "{self.kwa["destination"]}"')
 
         count = (f'{self.kwa["nmax"]} Items in progress...\nSource: '
@@ -89,7 +89,7 @@ class ConcatDemuxer(Thread):
                      "COUNT_EVT",
                      count=countevt,
                      duration=self.kwa['duration'],
-                     end='',
+                     end='CONTINUE',
                      )
         logwrite(stamp, '', self.logfile)  # write n/n + command only
 
@@ -98,6 +98,7 @@ class ConcatDemuxer(Thread):
         try:
             with Popen(cmd,
                        stderr=subprocess.PIPE,
+                       stdin=subprocess.PIPE,
                        bufsize=1,
                        universal_newlines=True,
                        encoding=self.appdata['encoding'],
@@ -110,38 +111,49 @@ class ConcatDemuxer(Thread):
                                  status=0,
                                  )
                     if self.stop_work_thread:
-                        proc.terminate()
-                        break  # break second 'for' loop
+                        proc.stdin.write('q')  # stop ffmpeg
+                        out = proc.communicate()[1]
+                        proc.wait()
+                        wx.CallAfter(pub.sendMessage,
+                                     "UPDATE_EVT",
+                                     output='STOP',
+                                     duration=self.kwa['duration'],
+                                     status=1,
+                                     )
+                        logwrite('', out, self.logfile)
+                        time.sleep(1)
+                        wx.CallAfter(pub.sendMessage, "END_EVT",
+                                     filetotrash=filedone)
+                        return
 
                 if proc.wait():  # error
+                    out = proc.communicate()[1]
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
-                                 output='',
+                                 output='FAILED',
                                  duration=self.kwa['duration'],
                                  status=proc.wait(),
                                  )
-                    logwrite('',
-                             f"Exit status: {proc.wait}",
-                             self.logfile)  # append exit error number
-                else:  # ok
+                    logwrite('', (f"[VIDEOMASS]: Error Exit Status: "
+                                  f"{proc.wait()} {out}"), self.logfile)
+                    time.sleep(1)
+
+                else:  # Done
                     filedone = self.kwa["source"]
                     wx.CallAfter(pub.sendMessage,
                                  "COUNT_EVT",
                                  count='',
                                  duration='',
-                                 end='Done'
+                                 end='DONE'
                                  )
         except (OSError, FileNotFoundError) as err:
-            excepterr = f"{err}\n  {ConcatDemuxer.NOT_EXIST_MSG}"
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
-                         count=excepterr,
+                         count=err,
                          duration=0,
-                         end='error',
+                         end='ERROR',
                          )
-
-        if self.stop_work_thread:
-            proc.terminate()
+            logwrite('', err, self.logfile)
 
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=filedone)
