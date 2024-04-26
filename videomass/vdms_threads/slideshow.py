@@ -315,11 +315,11 @@ class SlideshowMaker(Thread):
                             out = proc2.communicate()[1]
                             proc2.wait()
                             wx.CallAfter(pub.sendMessage,
-                                        "UPDATE_EVT",
-                                        output='STOP',
-                                        duration=self.kwa['duration'],
-                                        status=1,
-                                        )
+                                         "UPDATE_EVT",
+                                         output='STOP',
+                                         duration=self.kwa['duration'],
+                                         status=1,
+                                         )
                             logwrite('', out, self.logfile)
                             time.sleep(1)
                             self.end_process(None)

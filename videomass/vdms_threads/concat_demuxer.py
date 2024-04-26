@@ -141,11 +141,11 @@ class ConcatDemuxer(Thread):
                 else:  # Done
                     filedone = self.kwa["source"]
                     wx.CallAfter(pub.sendMessage,
-                                "COUNT_EVT",
-                                count='',
-                                duration='',
-                                end='DONE'
-                                )
+                                 "COUNT_EVT",
+                                 count='',
+                                 duration='',
+                                 end='DONE'
+                                 )
         except (OSError, FileNotFoundError) as err:
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",

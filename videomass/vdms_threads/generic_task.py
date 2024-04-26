@@ -104,7 +104,7 @@ class FFmpegGenericTask(Thread):
                 for line in proc.stderr:
                     outlist.append(line)
                     if self.stop_work_thread:
-                        proc.stdin.write('q') # stop ffmpeg
+                        proc.stdin.write('q')  # stop ffmpeg
                         output = proc.communicate()[1]
                         proc.wait()
                         self.status = FFmpegGenericTask.STOP
@@ -116,8 +116,8 @@ class FFmpegGenericTask(Thread):
                         break
 
         except (OSError, FileNotFoundError) as err:
-                self.status = err
-                output = err
+            self.status = err
+            output = err
 
         if self.status:
             self.logerror(output)

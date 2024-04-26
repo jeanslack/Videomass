@@ -329,7 +329,7 @@ class FFmpeg(Thread):
                             logwrite('', out, self.logfile)
                             time.sleep(.5)
                             wx.CallAfter(pub.sendMessage, "END_EVT",
-                                        filetotrash=None)
+                                         filetotrash=None)
                             return
 
                         if kwa["type"] == 'Two pass EBU':

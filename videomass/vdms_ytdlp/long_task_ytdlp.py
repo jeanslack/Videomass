@@ -264,8 +264,6 @@ class LogOut(wx.Panel):
         """
         The user change idea and was stop process
         """
-        #print(self.thread_type.getpid)
-        #lambda: os.kill(p.pid, CTRL_C_EVENT)
         self.thread_type.stop()
         # self.thread_type.join()  trying not to use thread.join here
         self.parent.statusbar_msg(_("Please wait... interruption in progress"),

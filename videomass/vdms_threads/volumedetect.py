@@ -72,7 +72,7 @@ class VolumeDetectThread(Thread):
         self.nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
         self.logf = os.path.join(self.appdata['logdir'], 'volumedetected.log')
         make_log_template('volumedetected.log',
-                          self.appdata['logdir'], mode="w") # initial file LOG
+                          self.appdata['logdir'], mode="w")  # initial LOG
 
         Thread.__init__(self)
         self.start()
@@ -119,7 +119,7 @@ class VolumeDetectThread(Thread):
                             meanv = line.split(':')[1].strip()
 
                         if self.stop_work_thread:
-                            proc.stdin.write('q') # stop ffmpeg
+                            proc.stdin.write('q')  # stop ffmpeg
                             output = proc.communicate()[1]
                             proc.wait()
                             self.status = 'INFO', VolumeDetectThread.STOP

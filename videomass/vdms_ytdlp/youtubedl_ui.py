@@ -384,7 +384,7 @@ class Downloader(wx.Panel):
             if infoicon == 'information':
                 icon, cap = wx.ICON_INFORMATION, 'Videomass'
             elif infoicon == 'error':
-                icon, cap = wx.ICON_ERROR , _('Videomass - Error!')
+                icon, cap = wx.ICON_ERROR, _('Videomass - Error!')
             wx.MessageBox(msg, cap, icon, self)
             self.choice.SetSelection(0)
             self.on_choicebox(self, False)
