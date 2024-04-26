@@ -190,3 +190,4 @@ class YdlDownloader(Thread):
         terminate the current process
         """
         self.stop_work_thread = True
+

@@ -37,7 +37,7 @@ def logwrite(cmd, stderr, logfile, txtenc="utf-8"):
     sep = ('\n==============================================='
            '==============================================\n')
     if stderr:
-        apnd = f"...{stderr}\n\n"
+        apnd = f"\n{stderr}\n"
     else:
         apnd = f"{sep}{cmd}\n\n"
 

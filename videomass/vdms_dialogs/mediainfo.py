@@ -242,7 +242,7 @@ class MediaStreams(wx.Dialog):
             wx.TheClipboard.Close()
         else:
             wx.MessageBox(_('Unable to open the clipboard on Format tab'),
-                          'Videomass', wx.ICON_ERROR, self)
+                          _('Videomass - Error!'), wx.ICON_ERROR, self)
     # ----------------------------------------------------------------------
 
     def on_video(self):
@@ -262,7 +262,7 @@ class MediaStreams(wx.Dialog):
         else:
             wx.MessageBox(_('Unable to open the clipboard on '
                             'Video Streams tab'),
-                          'Videomass', wx.ICON_ERROR, self)
+                          _('Videomass - Error!'), wx.ICON_ERROR, self)
     # ----------------------------------------------------------------------
 
     def on_audio(self):
@@ -282,7 +282,7 @@ class MediaStreams(wx.Dialog):
         else:
             wx.MessageBox(_('Unable to open the clipboard on '
                             'Audio Streams tab'),
-                          'Videomass', wx.ICON_ERROR, self)
+                          _('Videomass - Error!'), wx.ICON_ERROR, self)
     # ----------------------------------------------------------------------
 
     def on_sub(self):
@@ -302,7 +302,7 @@ class MediaStreams(wx.Dialog):
         else:
             wx.MessageBox(_('Unable to open the clipboard on '
                             'Subtitle Streams tab'),
-                          'Videomass', wx.ICON_ERROR, self)
+                          _('Videomass - Error!'), wx.ICON_ERROR, self)
     # ----------------------------------------------------------------------
 
     def on_select(self, event):

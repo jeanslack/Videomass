@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.18.2024
+Rev: Apr.23.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -470,7 +470,8 @@ class VidstabSet(wx.Dialog):
                                          )
         error = self.process(self.filename, args=detect, mode='detect')
         if error:
-            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+            wx.MessageBox(f'{error}', _('Videomass - Error!'),
+                          wx.ICON_ERROR, self)
             return
 
         error = self.process(self.filename,
@@ -479,7 +480,8 @@ class VidstabSet(wx.Dialog):
                              mode='trasform',
                              )
         if error:
-            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+            wx.MessageBox(f'{error}', _('Videomass - Error!'),
+                          wx.ICON_ERROR, self)
             return
 
         if self.ckbx_duo.IsChecked():
@@ -489,7 +491,8 @@ class VidstabSet(wx.Dialog):
                                  mode='makeduo',
                                  )
             if error:
-                wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+                wx.MessageBox(f'{error}', _('Videomass - Error!'),
+                              wx.ICON_ERROR, self)
                 return
             io_tools.openpath(self.frameduo)
             return
@@ -535,9 +538,9 @@ class VidstabSet(wx.Dialog):
                                    procname=f'VidStab - {mode}',
                                    logfile=self.logfile,
                                    )
-        dlgload = PopupDialog(self, _("Videomass - Loading..."),
-                              _("Please wait,\nThis process will "
-                                "take a few seconds."))
+        caption = _("Videomass - Loading...")
+        msg = _("Please wait,\nThis process will take a few seconds.")
+        dlgload = PopupDialog(self, caption, msg, thread)
         dlgload.ShowModal()
         thread.join()  # wait end thread
         error = thread.status

@@ -413,7 +413,7 @@ class Crop(wx.Dialog):
         thread.join()  # wait end thread
         error = thread.status
         if error:
-            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR)
+            wx.MessageBox(f'{error}', _('Videomass - Error!'), wx.ICON_ERROR)
             return
         if sseg:
             with open(self.fileclock, "w", encoding='utf-8') as atime:

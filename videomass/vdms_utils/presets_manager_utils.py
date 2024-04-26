@@ -88,8 +88,8 @@ def json_data(arg):
                 'You can try to restore it or import a correct one, '
                 'otherwise it is recommended to remove it.'
                 )
-        wx.MessageBox(f'\nERROR: {err}\nFILE: "{arg}"\n\n{msg}',
-                      ("Videomass"), wx.ICON_ERROR | wx.OK, None)
+        wx.MessageBox(f'{err}\nFILE: "{arg}"\n\n{msg}',
+                      _('Videomass - Error!'), wx.ICON_ERROR | wx.OK, None)
 
         return 'error'
 
@@ -98,8 +98,8 @@ def json_data(arg):
                 'Presets Manager panel, go to the presets column and try '
                 'to click the "Restore all..." button'
                 )
-        wx.MessageBox(f'\nERROR: {err}\n\n{msg}',
-                      ("Videomass"), wx.ICON_ERROR | wx.OK, None)
+        wx.MessageBox(f'{err}\n\n{msg}',
+                      _('Videomass - Error!'), wx.ICON_ERROR | wx.OK, None)
 
         return 'error'
 

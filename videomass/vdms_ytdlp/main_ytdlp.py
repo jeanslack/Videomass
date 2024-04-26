@@ -490,7 +490,7 @@ class MainYtdl(wx.Frame):
                                                  bmpydl, tip, wx.ITEM_NORMAL,
                                                  )
         tip = _("Stops current process")
-        stop = self.toolbar.AddTool(24, _('Abort'), bmpstop,
+        stop = self.toolbar.AddTool(24, _('Stop'), bmpstop,
                                     tip, wx.ITEM_NORMAL,
                                     )
         self.toolbar.Realize()

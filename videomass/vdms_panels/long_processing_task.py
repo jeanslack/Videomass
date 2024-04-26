@@ -57,7 +57,8 @@ def delete_file_source(flist, trashdir):
                 filenotfounderror = err
 
     if filenotfounderror is not None:
-        wx.MessageBox(f"{filenotfounderror}", 'Videomass', wx.ICON_ERROR)
+        wx.MessageBox(f"{filenotfounderror}", _('Videomass - Error!'),
+                      wx.ICON_ERROR)
     else:
         date = time.strftime('%H%M%S-%a_%d_%B_%Y')
         for name in set(flist):
@@ -107,8 +108,9 @@ class LogOut(wx.Panel):
 
     """
     # used msg on text
-    MSG_done = _('[Videomass]: SUCCESS !')
-    MSG_failed = _('[Videomass]: FAILED !')
+    MSG_done = '[Videomass]: SUCCESS !'
+    MSG_failed = '[Videomass]: FAILED !'
+    MSG_stop = '[Videomass]: STOP command received. Interrupting !'
     MSG_taskfailed = _('Sorry, all task failed !')
     MSG_fatalerror = _("The process was stopped due to a fatal error.")
     MSG_interrupted = _('Interrupted Process !')
@@ -229,24 +231,47 @@ class LogOut(wx.Panel):
             self.thread_type = ConcatDemuxer(self.logfile, **data)
     # ----------------------------------------------------------------------
 
+    def append_messages(self, output):
+        """
+        Append all others lines on the textctrl and log file.
+        Since not all ffmpeg messages are errors, sometimes
+        it happens to see more output marked with yellow color.
+        """
+        with open(self.logfile, "a", encoding='utf-8') as logerr:
+            logerr.write(f"[FFMPEG]: {output}")
+
+        if [x for x in ('info', 'Info') if x in output]:
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['INFO']))
+            self.txtout.AppendText(f'{output}')
+
+        elif [x for x in ('Failed', 'failed', 'Error', 'error')
+                if x in output]:
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
+            self.txtout.AppendText(f'{output}')
+
+        elif [x for x in ('warning', 'Warning', 'warn') if x in output]:
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
+            self.txtout.AppendText(f'{output}')
+
+        else:
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT3']))
+            self.txtout.AppendText(f'{output}')
+    # ----------------------------------------------------------------------
+
     def update_display(self, output, duration, status):
         """
         Receive message from thread by pubsub UPDATE_EVT protocol.
         The received 'output' is parsed for calculate the bar
         progress value, percentage label and errors management.
         This method can be used even for non-loop threads.
-
-        NOTE: During conversion the ffmpeg errors do not stop all
-              others tasks, if an error occurred it will be marked
-              with 'failed' but the other tasks will continue;
-              if it has finished without errors it will be marked with
-              'done' on `update_count` method. Since not all ffmpeg
-              messages are errors, sometimes it happens to see more
-              output marked with yellow color.
         """
-        if not status == 0:  # error, exit status of the p.wait
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR1']))
-            self.txtout.AppendText(f"{LogOut.MSG_failed}\n")
+        if status != 0:  # error, exit status of the p.wait
+            if output == 'STOP':
+                msg, color = LogOut.MSG_stop, self.clr['ABORT']
+            else:
+                msg, color = LogOut.MSG_failed, self.clr['ERR1']
+            self.txtout.SetDefaultStyle(wx.TextAttr(color))
+            self.txtout.AppendText(f"\n\n{msg}")
             self.result.append('failed')
             return  # must be return here
 
@@ -285,37 +310,17 @@ class LogOut(wx.Panel):
             self.labprog.SetLabel(f'Processing: {str(int(percentage))}% {eta}')
             self.labffmpeg.SetLabel(' | '.join(ffprog))
 
-            del output, duration
-
-        else:  # append all others lines on the textctrl and log file
-            if [x for x in ('info', 'Info') if x in output]:
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['INFO']))
-                self.txtout.AppendText(f'{output}')
-
-            elif [x for x in ('Failed', 'failed', 'Error', 'error')
-                    if x in output]:
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
-                self.txtout.AppendText(f'{output}')
-
-            elif [x for x in ('warning', 'Warning', 'warn') if x in output]:
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
-                self.txtout.AppendText(f'{output}')
-
-            else:
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT3']))
-                self.txtout.AppendText(f'{output}')
-
-            with open(self.logfile, "a", encoding='utf-8') as logerr:
-                logerr.write(f"[FFMPEG]: {output}")
+        else:
+            self.append_messages(output)
     # ----------------------------------------------------------------------
 
     def update_count(self, count, duration, end):
         """
         Receive messages from file count, loop or non-loop thread.
         """
-        if end == 'Done':
+        if end == 'DONE':
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['SUCCESS']))
-            self.txtout.AppendText(f"{LogOut.MSG_done}\n")
+            self.txtout.AppendText(f"\n{LogOut.MSG_done}")
             # set end values for percentage and ETA
             if self.with_eta:
                 newlab = self.labprog.GetLabel().split()
@@ -328,10 +333,9 @@ class LogOut(wx.Panel):
                 self.labprog.SetLabel('Processing: 100%')
             return
 
-        # if STATUS_ERROR == 1:
-        if end == 'error':
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
-            self.txtout.AppendText(f'\n{count}\n\n')
+        if end == 'ERROR':
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR1']))
+            self.txtout.AppendText(f'\nERROR: {count}\n')
             self.error = True
         else:
             if self.maxrotate is not None:
@@ -342,7 +346,7 @@ class LogOut(wx.Panel):
             self.barprog.SetRange(duration)  # set overall duration range
             self.barprog.SetValue(0)  # reset bar progress
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
-            self.txtout.AppendText(f'\n{count}\n\n')
+            self.txtout.AppendText(f'\n{count}\n')
         self.count += 1
     # ----------------------------------------------------------------------
 
@@ -352,7 +356,7 @@ class LogOut(wx.Panel):
         """
         if self.error:
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
-            self.txtout.AppendText(f"\n{LogOut.MSG_fatalerror}\n")
+            self.txtout.AppendText(f"{LogOut.MSG_fatalerror}")
             notification_area(_("Fatal Error !"), LogOut.MSG_fatalerror,
                               wx.ICON_ERROR)
         elif self.abort:

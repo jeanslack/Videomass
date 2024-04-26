@@ -160,7 +160,7 @@ class Memos(wx.Dialog):
             status = True
         else:
             wx.MessageBox(_("Unexpected error: Unable to save changes."),
-                          'Videomass', wx.ICON_ERROR, self)
+                          _('Videomass - Error!'), wx.ICON_ERROR, self)
             status = False
 
         return status
@@ -244,7 +244,7 @@ class Memos(wx.Dialog):
         if self.button_save.IsEnabled() is True:
             curnotes = check_notes(self.filename)
             if curnotes != self.textbox.GetValue():
-                resp = wx.MessageBox(msg, _("Videomass - Save Changes"),
+                resp = wx.MessageBox(msg, _("Videomass - Warning!"),
                                      wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                                      self)
                 if resp == wx.YES:

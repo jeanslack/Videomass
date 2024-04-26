@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 """
 Name: volumedetect.py
-Porpose: Audio Peak level volume analyzes
+Porpose: Get FFmpeg audio Peak level volume analyzes
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.20.2024
+Rev: Apr.23.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -47,32 +47,35 @@ class VolumeDetectThread(Thread):
     lack of ffmpeg of course.
 
     """
+    ERROR = 'Please, see volumedetected.log file for error details.\n'
+    STOP = '[Videomass]: STOP command received. Interrupting !'
 
     def __init__(self, timeseq, filelist, audiomap):
         """
         Replace /dev/null with NUL on Windows.
 
         self.status: None, if nothing error,
-                     'str error' if errors.
+                     tuple(str(message), str(info/error/warn)) if errors.
         self.data: it is a tuple containing the list of audio volume
                    parameters and the self.status of the output error,
                    in the form:
                    ([[maxvol, medvol], [etc,etc]], None or "str errors")
         """
-        get = wx.GetApp()  # get videomass wx.App attribute
+        get = wx.GetApp()
         self.appdata = get.appset
+        self.stop_work_thread = False  # process terminate
         self.filelist = filelist
         self.time_seq = timeseq
         self.audiomap = audiomap
         self.status = None
         self.data = None
         self.nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
-        self.logf = os.path.join(self.appdata['logdir'], 'volumedected.log')
-        make_log_template('volumedected.log', self.appdata['logdir'], mode="w")
-        # set initial file LOG
+        self.logf = os.path.join(self.appdata['logdir'], 'volumedetected.log')
+        make_log_template('volumedetected.log',
+                          self.appdata['logdir'], mode="w") # initial file LOG
 
         Thread.__init__(self)
-        self.start()  # start the thread (va in self.run())
+        self.start()
     # ----------------------------------------------------------------#
 
     def run(self):
@@ -85,9 +88,10 @@ class VolumeDetectThread(Thread):
 
         """
         volume = []
-
         for files in self.filelist:
-            cmd = (f'"{self.appdata["ffmpeg_cmd"]}" -hide_banner '
+            cmd = (f'"{self.appdata["ffmpeg_cmd"]}" '
+                   f'{self.appdata["ffmpeg-default-args"]} '
+                   f'{self.appdata["ffmpeg_loglev"]} '
                    f'{self.time_seq[0]} '
                    f'-i "{files}" '
                    f'{self.time_seq[1]} '
@@ -102,32 +106,41 @@ class VolumeDetectThread(Thread):
             try:
                 with Popen(cmd,
                            stderr=subprocess.PIPE,
+                           stdin=subprocess.PIPE,
+                           bufsize=1,
                            universal_newlines=True,
                            encoding=self.appdata['encoding'],
                            ) as proc:
-                    output = proc.communicate()[1]
-                    if proc.returncode != 0:  # if error occurred
-                        self.status = output
-                        break
+                    meanv, maxv = '', ''
+                    for line in proc.stderr:
+                        if 'max_volume:' in line:
+                            maxv = line.split(':')[1].strip()
+                        if 'mean_volume:' in line:
+                            meanv = line.split(':')[1].strip()
 
-                    raw_list = output.split()  # splitta tutti gli spazi
-                    if 'mean_volume:' in raw_list:
-                        mean_volume = raw_list.index("mean_volume:")
-                        # mean_volume is indx integear
-                        medvol = f"{raw_list[mean_volume + 1]} dB"
-                        max_volume = raw_list.index("max_volume:")
-                        # max_volume is indx integear
-                        maxvol = f"{raw_list[max_volume + 1]} dB"
-                        volume.append([maxvol, medvol])
+                        if self.stop_work_thread:
+                            proc.stdin.write('q') # stop ffmpeg
+                            output = proc.communicate()[1]
+                            proc.wait()
+                            self.status = 'INFO', VolumeDetectThread.STOP
+                            break
 
-            except (OSError, FileNotFoundError) as err:  # ffmpeg do not exist
-                self.status = err
+                        if proc.wait():
+                            output = proc.communicate()[1]
+                            self.status = 'ERROR', VolumeDetectThread.ERROR
+                            break
+
+                    volume.append((maxv, meanv))
+
+            except (OSError, FileNotFoundError) as err:
+                self.status = 'ERROR', VolumeDetectThread.ERROR
+                output = err
+
+            if self.status:
+                self.logerror(output)
                 break
 
         self.data = (volume, self.status)
-
-        if self.status:
-            self.logerror()
 
         wx.CallAfter(pub.sendMessage,
                      "RESULT_EVT",
@@ -143,10 +156,17 @@ class VolumeDetectThread(Thread):
             log.write(f"{cmd}\n")
     # ----------------------------------------------------------------#
 
-    def logerror(self):
+    def logerror(self, output):
         """
         write ffmpeg volumedected errors
         """
         with open(self.logf, "a", encoding='utf-8') as logerr:
             logerr.write(f"\n[FFMPEG] volumedetect "
-                         f"ERRORS:\n{self.status}\n")
+                         f"ERRORS:\n{output}\n")
+    # ----------------------------------------------------------------#
+
+    def stop(self):
+        """
+        Sets the stop work thread to terminate the process
+        """
+        self.stop_work_thread = True

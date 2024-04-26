@@ -262,14 +262,14 @@ class SettingProfile(wx.Dialog):
                 self.txt_descript.SetBackgroundColour('#988313')
 
             wx.MessageBox(_("Incomplete profile assignments"),
-                          "Videomass ", wx.ICON_WARNING, self)
+                          _('Videomass - Warning!'), wx.ICON_WARNING, self)
             return
 
         if len(file_support.split()) > 1:
             supp = ''.join(file_support.split())
             if [i for i in supp.split() if ',' not in i]:
                 wx.MessageBox(_("Formats must be comma-separated"),
-                              "Videomass ", wx.ICON_WARNING, self)
+                              _('Videomass - Warning!'), wx.ICON_WARNING, self)
                 return
 
         if self.arg in ('newprofile', 'addprofile'):
@@ -285,7 +285,7 @@ class SettingProfile(wx.Dialog):
                                             )
             if writenewprf == 'already exist':
                 wx.MessageBox(_("Profile already stored with same name"),
-                              "Videomass", wx.ICON_WARNING, self)
+                              _('Videomass - Warning!'), wx.ICON_WARNING, self)
                 return
 
             wx.MessageBox(_("Successful storing!"))
@@ -304,7 +304,7 @@ class SettingProfile(wx.Dialog):
                                             )
             if editprf == 'already exist':
                 wx.MessageBox(_("Profile already stored with same name"),
-                              "Videomass", wx.ICON_WARNING, self)
+                              _('Videomass - Warning!'), wx.ICON_WARNING, self)
                 return
             wx.MessageBox(_("Successful changes!"))
             # self.Destroy() # con ID_OK e ID_CANCEL non serve

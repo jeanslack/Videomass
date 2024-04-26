@@ -194,7 +194,8 @@ class Conc_Demuxer(wx.Panel):
 
         diff = compare_media_param(self.parent.data_files)
         if diff[0] == 'error':
-            wx.MessageBox(diff[1], _('ERROR'), wx.ICON_ERROR, self)
+            wx.MessageBox(diff[1], _('Videomass - Error!'),
+                          wx.ICON_ERROR, self)
             return
 
         self.mediatype = diff[1]

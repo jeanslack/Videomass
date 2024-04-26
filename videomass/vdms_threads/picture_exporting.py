@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.08.2024
+Rev: Apr.24.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -46,7 +46,6 @@ class PicturesFromVideo(Thread):
     https://stackoverflow.com/questions/1388753/how-to-get-output-
     from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
     """
-    NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ------------------------------------------------------
 
     def __init__(self, *args, **kwargs):
@@ -77,7 +76,8 @@ class PicturesFromVideo(Thread):
         cmd = (f'"{self.appdata["ffmpeg_cmd"]}" '
                f'{self.kwa["start-time"]} '
                f'{self.kwa["end-time"]} '
-               f'{self.appdata["ffmpeg_default_args"]} '
+               f'{self.appdata["ffmpeg-default-args"]} '
+               f'{self.appdata["ffmpeg_loglev"]} '
                f'{self.kwa["pre-input-1"]} '
                f'-i "{self.kwa["filename"]}" '
                f'{self.cmd}'
@@ -90,7 +90,7 @@ class PicturesFromVideo(Thread):
                      "COUNT_EVT",
                      count=count1,
                      duration=self.duration,
-                     end='',
+                     end='CONTINUE',
                      )
         logwrite(com, '', self.logfile)  # write n/n + command only
 
@@ -99,6 +99,7 @@ class PicturesFromVideo(Thread):
         try:
             with Popen(cmd,
                        stderr=subprocess.PIPE,
+                       stdin=subprocess.PIPE,
                        bufsize=1,
                        universal_newlines=True,
                        encoding=self.appdata['encoding'],
@@ -110,38 +111,51 @@ class PicturesFromVideo(Thread):
                                  duration=self.duration,
                                  status=0,
                                  )
-                    if self.stop_work_thread:  # break second 'for' loop
-                        proc.terminate()
-                        break
+                    if self.stop_work_thread:
+                        proc.stdin.write('q')  # stop ffmpeg
+                        out = proc.communicate()[1]
+                        proc.wait()
+                        wx.CallAfter(pub.sendMessage,
+                                     "UPDATE_EVT",
+                                     output='STOP',
+                                     duration=self.kwa['duration'],
+                                     status=1,
+                                     )
+                        logwrite('', out, self.logfile)
+                        time.sleep(1)
+                        wx.CallAfter(pub.sendMessage, "END_EVT",
+                                     filetotrash=None)
+                        return
 
                 if proc.wait():  # error
+                    out = proc.communicate()[1]
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
-                                 output='',
-                                 duration=self.duration,
+                                 output='FAILED',
+                                 duration=self.kwa['duration'],
                                  status=proc.wait(),
                                  )
-                    logwrite('',
-                             f"Exit status: {proc.wait()}",
-                             self.logfile,
-                             )  # append exit error number
+                    logwrite('', (f"[VIDEOMASS]: Error Exit Status: "
+                                  f"{proc.wait()} {out}"), self.logfile)
+                    time.sleep(1)
 
-                else:  # status ok
+                else:  # Done
                     filedone.append(self.fname)
                     wx.CallAfter(pub.sendMessage,
                                  "COUNT_EVT",
                                  count='',
                                  duration='',
-                                 end='Done'
+                                 end='DONE'
                                  )
         except (OSError, FileNotFoundError) as err:
-            excepterr = f"{err}\n  {PicturesFromVideo.NOT_EXIST_MSG}"
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
-                         count=excepterr,
+                         count=err,
                          duration=0,
-                         end='error',
+                         end='ERROR',
                          )
+            logwrite('', err, self.logfile)
+
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=filedone)
     # --------------------------------------------------------------------#

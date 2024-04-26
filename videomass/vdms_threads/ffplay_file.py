@@ -39,7 +39,8 @@ def msg_error(msg):
     """
     Receive error messages via wxCallafter
     """
-    wx.MessageBox(f"FFplay ERROR:  {msg}", "Videomass", wx.ICON_ERROR)
+    wx.MessageBox(f"FFplay ERROR:  {msg}",
+                  _('Videomass - Error!'), wx.ICON_ERROR)
 
 
 def msg_info(msg):
@@ -86,7 +87,8 @@ class FilePlay(Thread):
         """
         # time.sleep(.5)
         cmd = " ".join(f'"{self.appdata["ffplay_cmd"]}" '
-                       f'{self.appdata["ffplay_default_args"]} '
+                       f'{self.appdata["ffplay-default-args"]} '
+                       f'{self.appdata["ffplay_loglev"]} '
                        f'{self.autoexit} '
                        f'{self.time_seq[0]} '
                        f'-i "{self.filename}" '

@@ -613,7 +613,7 @@ class Wizard(wx.Dialog):
                 self.pageFour.Show()
             else:
                 wx.MessageBox(_("Some text boxes are still incomplete"),
-                              ("Videomass"), wx.ICON_INFORMATION, self)
+                              "Videomass", wx.ICON_INFORMATION, self)
 
         elif self.pageFour.IsShown():
             self.pageOne.Hide()

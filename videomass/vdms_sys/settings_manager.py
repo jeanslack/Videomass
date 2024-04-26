@@ -192,7 +192,7 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 7.3
+    VERSION = 7.4
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "encoding": "utf-8",
                        "outputdir": f"{os.path.expanduser('~')}",
@@ -223,7 +223,7 @@ class ConfigManager:
                        "use-downloader": False,
                        "playlistsubfolder": True,
                        "ssl_certificate": False,
-                       "add_metadata": True,
+                       "add_metadata": False,
                        "embed_thumbnails": False,
                        "overwr_dl_files": False,
                        "include_ID_name": False,

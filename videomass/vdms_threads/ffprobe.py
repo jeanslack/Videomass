@@ -83,8 +83,9 @@ def ffprobe(filename, cmd='ffprobe', txtenc='utf-8', **kwargs):
         with Popen(args,
                    stdout=subprocess.PIPE,
                    stderr=subprocess.PIPE,
+                   bufsize=1,
                    universal_newlines=True,
-                   encoding=txtenc
+                   encoding=txtenc,
                    ) as proc:
             output, error = proc.communicate()
 

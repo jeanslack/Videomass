@@ -66,8 +66,8 @@ def load_json_file_queue(newincoming=None):
     except json.decoder.JSONDecodeError as err:
         msg = _('You are attempting to load a json file written with '
                 'invalid JSON encoding.')
-        wx.MessageBox(f'\nERROR: {err}\nFILE: "{newincoming}"\n\n{msg}',
-                      ("Videomass"), wx.STAY_ON_TOP
+        wx.MessageBox(f'{err}\nFILE: "{newincoming}"\n\n{msg}',
+                      _('Videomass - Error!'), wx.STAY_ON_TOP
                       | wx.ICON_ERROR
                       | wx.OK,
                       None
@@ -82,7 +82,7 @@ def load_json_file_queue(newincoming=None):
     for ck in newdata:
         for key in keys:
             if key not in ck:
-                wx.MessageBox(msg, ("Videomass"), wx.STAY_ON_TOP
+                wx.MessageBox(msg, _('Videomass - Error!'), wx.STAY_ON_TOP
                               | wx.ICON_ERROR
                               | wx.OK,
                               None
@@ -95,7 +95,7 @@ def load_json_file_queue(newincoming=None):
     for item in newdata:
         occurences.append(item['destination'])
     if any(occurences.count(x) > 1 for x in occurences):
-        wx.MessageBox(msg, ("Videomass"),
+        wx.MessageBox(msg, _('Videomass - Error!'),
                       wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK, None)
         return None
     return newdata

@@ -452,9 +452,8 @@ class PrstPan(wx.Panel):
                 self.lctrl.SetItem(rows, 3, name["Supported_list"])
 
         except (TypeError, KeyError):
-            wx.MessageBox(_('ERROR: Preset not supported!\n'
-                            'FILE: "{}"'.format(path)),
-                          "Videomass", wx.ICON_ERROR, self)
+            wx.MessageBox(_('Preset not supported!\nFILE: "{}"'.format(path)),
+                          _('Videomass - Error!'), wx.ICON_ERROR, self)
             return
     # ----------------------Event handler (callback)----------------------#
 
@@ -517,9 +516,9 @@ class PrstPan(wx.Panel):
                     self.array.append(name["Preinput_2"])
 
         except KeyError as err:
-            wx.MessageBox(_('ERROR: json key error\n'
+            wx.MessageBox(_('json key error\n'
                             'FILE: "{0}"\n\n{1}'.format(path, err)),
-                          "Videomass", wx.ICON_ERROR, self)
+                          _('Videomass - Error!'), wx.ICON_ERROR, self)
             return
 
         self.txt_1cmd.AppendText(f'{self.array[2]}')  # cmd1 text ctrl
@@ -585,7 +584,7 @@ class PrstPan(wx.Panel):
         except OSError as err:
             wx.MessageBox(_("{}\n\nSorry, removal failed, cannot "
                             "continue..").format(err),
-                          "Videomass", wx.ICON_ERROR, self
+                          _('Videomass - Error!'), wx.ICON_ERROR, self
                           )
             return
 
@@ -594,7 +593,7 @@ class PrstPan(wx.Panel):
         os.replace(s, d)
 
         wx.MessageBox(_('The preset "{0}" was successfully '
-                        'removed').format(filename), "Videomass",
+                        'removed').format(filename), _('Videomass - Error!'),
                       wx.ICON_ERROR, self
                       )
         self.reset_list(True)
@@ -624,7 +623,8 @@ class PrstPan(wx.Panel):
             dlg.Destroy()
 
             if status:
-                wx.MessageBox(f'{status}', "Videomass", wx.ICON_ERROR, self)
+                wx.MessageBox(f'{status}', _('Videomass - Error!'),
+                              wx.ICON_ERROR, self)
                 return
             wx.MessageBox(_("The preset was exported successfully"),
                           "Videomass", wx.OK, self)
@@ -643,7 +643,8 @@ class PrstPan(wx.Panel):
             status = copydir_recursively(src, dest, 'Videomass-Presets-copy')
             dialsave.Destroy()
             if status:
-                wx.MessageBox(f'{status}', "Videomass", wx.ICON_ERROR, self)
+                wx.MessageBox(f'{status}', _('Videomass - Error!'),
+                              wx.ICON_ERROR, self)
             else:
                 wx.MessageBox(_("All presets have been exported successfully"),
                               "Videomass", wx.OK, self)
@@ -669,7 +670,7 @@ class PrstPan(wx.Panel):
         if not newincoming.endswith('.json'):
             wx.MessageBox(_('Error, invalid preset: "{}"').format(
                           os.path.basename(newincoming)),
-                          "Videomass", wx.ICON_ERROR, self
+                          _('Videomass - Error!'), wx.ICON_ERROR, self
                           )
             return
 
@@ -687,7 +688,8 @@ class PrstPan(wx.Panel):
                                     os.path.join(self.user_prst, new))
         status = copy_restore(newincoming, os.path.join(self.user_prst, new))
         if status:
-            wx.MessageBox(f'{status}', "Videomass", wx.ICON_ERROR, self)
+            wx.MessageBox(f'{status}', _('Videomass - Error!'),
+                          wx.ICON_ERROR, self)
             return
 
         self.reset_list(True)  # reload presets
@@ -729,7 +731,8 @@ class PrstPan(wx.Panel):
         err = copydir_recursively(self.user_prst, self.appdata['confdir'],
                                   f'presets-{datenow}-Backup')
         if err:
-            wx.MessageBox(f'{err}', "Videomass", wx.ICON_ERROR, self)
+            wx.MessageBox(f'{err}', _('Videomass - Error!'),
+                          wx.ICON_ERROR, self)
             return err
 
         incom = [n for n in os.listdir(source) if n.endswith('.json')]
@@ -741,13 +744,15 @@ class PrstPan(wx.Panel):
             err = update_oudated_profiles(os.path.join(source, f),
                                           os.path.join(self.user_prst, f))
             if err:
-                wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
+                wx.MessageBox(f"{err}", _('Videomass - Error!'),
+                              wx.ICON_ERROR, self)
                 return err
         # copies non-existent ones to the destination directory
         if event:  # only `Import group` event
             err = copy_on('prst', source, self.user_prst, overw=False)
             if err:
-                wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
+                wx.MessageBox(f"{err}", _('Videomass - Error!'),
+                              wx.ICON_ERROR, self)
                 return err
 
         wx.MessageBox(_("The presets database has been successfully "
@@ -776,7 +781,8 @@ class PrstPan(wx.Panel):
                                   f'{self.user_prst}/{filename}.json'
                                   )
             if status:
-                wx.MessageBox(status, "Videomass", wx.ICON_ERROR, self)
+                wx.MessageBox(status, _('Videomass - Error!'),
+                              wx.ICON_ERROR, self)
                 return
 
             wx.MessageBox(_("Successful recovery"), "Videomass", wx.OK, self)
@@ -804,12 +810,14 @@ class PrstPan(wx.Panel):
                 err = os.rename(self.user_prst,
                                 f"{self.user_prst}-{datenow}-Backup")
                 if err:
-                    wx.MessageBox(f'{err}', "Videomass", wx.ICON_ERROR, self)
+                    wx.MessageBox(f'{err}', _('Videomass - Error!'),
+                                  wx.ICON_ERROR, self)
                     return
 
             err = copydir_recursively(self.src_prst, self.appdata['confdir'])
             if err:
-                wx.MessageBox(f"{err}", "Videomass", wx.ICON_ERROR, self)
+                wx.MessageBox(f"{err}", _('Videomass - Error!'),
+                              wx.ICON_ERROR, self)
             else:
                 wx.MessageBox(_("All default presets have been "
                                 "successfully recovered"),

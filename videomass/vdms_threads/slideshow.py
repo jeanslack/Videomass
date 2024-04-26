@@ -43,23 +43,23 @@ def convert_images(*varargs, **kwargs):
     Convert images to PNG format and assign
     progressive digits to them.
     """
-    not_exist_msg = _("Is 'ffmpeg' installed on your system?")
     flist = varargs[0]
     tmpdir = varargs[1]
     logname = varargs[2]
     imagenames = varargs[3]
 
     count1 = (f'Preparing temporary files...\nSource: Imported file list\n'
-              f'Destination: "{tmpdir}"')
+              f'Destination: "{tmpdir}"\n')
     wx.CallAfter(pub.sendMessage,
                  "COUNT_EVT",
                  count=count1,
                  duration=len(flist),
-                 end='',
+                 end='CONTINUE',
                  )
     prognum = 0
     args = (f'"{kwargs["ffmpeg_cmd"]}" '
-            f'{kwargs["ffmpeg_default_args"]} ')
+            f'{kwargs["ffmpeg-default-args"]} '
+            f'{kwargs["ffmpeg_loglev"]} ')
     logwrite(f'Preparing temporary files...\n'
              f'\n[COMMAND:]\n{args}', '', logname)
 
@@ -77,21 +77,20 @@ def convert_images(*varargs, **kwargs):
                        universal_newlines=True,
                        encoding=kwargs['encoding'],
                        ) as proc1:
-                error = proc1.communicate()
+                error = proc1.communicate()[1]
 
             if proc1.returncode:  # ffmpeg error
-                if error[1]:
+                if error:
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
-                                 output='',
+                                 output='FAILED',
                                  duration=0,
                                  status=proc1.wait(),
                                  )
-                    logwrite('',
-                             f"Exit status: {proc1.wait()}\n{error[1]}",
-                             logname,
-                             )  # append exit error number
-                    return error[1]
+                    logwrite('', (f"[VIDEOMASS]: Error Exit Status: "
+                                  f"{proc1.wait()} {error}"), logname)
+                    time.sleep(1)
+                    return error
 
             else:  # ok
                 wx.CallAfter(pub.sendMessage,
@@ -101,12 +100,11 @@ def convert_images(*varargs, **kwargs):
                              status=0,
                              )
         except (OSError, FileNotFoundError) as err:  # cmd not found
-            excepterr = f"{err}\n  {not_exist_msg}"
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
-                         count=excepterr,
+                         count=err,
                          duration=0,
-                         end='error',
+                         end='ERROR',
                          )
             return err
 
@@ -115,7 +113,7 @@ def convert_images(*varargs, **kwargs):
                  "COUNT_EVT",
                  count='',
                  duration=0,
-                 end='Done'
+                 end='DONE'
                  )
     return None
 
@@ -126,26 +124,26 @@ def resizing_process(*varargs, **kwargs):
     this process performs the resizing using ffmpeg filters.
     This is a necessary workaround for proper video playback.
     """
-    not_exist_msg = _("Is 'ffmpeg' installed on your system?")
     flist = varargs[0]
     tmpdir = varargs[1]
     cmdargs = varargs[2]
     logname = varargs[3]
 
-    count1 = (f'File resizing...\nSource: Temporary directory\n'
+    count1 = (f'\n\nFile resizing...\nSource: Temporary directory\n'
               f'Destination: "{tmpdir}"')
 
     wx.CallAfter(pub.sendMessage,
                  "COUNT_EVT",
                  count=count1,
                  duration=len(flist),
-                 end='',
+                 end='CONTINUE',
                  )
 
     tmpf = os.path.join(tmpdir, 'TMP_%d.bmp')
     tmpfout = os.path.join(tmpdir, 'IMAGE_%d.bmp')
     cmd_1 = (f'"{kwargs["ffmpeg_cmd"]}" '
-             f'{kwargs["ffmpeg_default_args"]} '
+             f'{kwargs["ffmpeg-default-args"]} '
+             f'{kwargs["ffmpeg_loglev"]} '
              f'-i "{tmpf}" {cmdargs} "{tmpfout}"'
              )
     logwrite(f'\nFile resizing...\n\n[COMMAND]:\n{cmd_1}', '', logname)
@@ -159,21 +157,20 @@ def resizing_process(*varargs, **kwargs):
                    universal_newlines=True,
                    encoding=kwargs['encoding'],
                    ) as proc1:
-            error = proc1.communicate()
+            error = proc1.communicate()[1]
 
         if proc1.returncode:  # ffmpeg error
-            if error[1]:
+            if error:
                 wx.CallAfter(pub.sendMessage,
                              "UPDATE_EVT",
-                             output='',
+                             output='FAILED',
                              duration=0,
                              status=proc1.wait(),
                              )
-                logwrite('',
-                         f"Exit status: {proc1.wait()}\n{error[1]}",
-                         logname,
-                         )  # append exit error number
-                return error[1]
+                logwrite('', (f"[VIDEOMASS]: Error Exit Status: "
+                              f"{proc1.wait()} {error}"), logname)
+                time.sleep(1)
+                return error
 
         else:  # ok
             wx.CallAfter(pub.sendMessage,
@@ -182,13 +179,15 @@ def resizing_process(*varargs, **kwargs):
                          duration=0,
                          status=0,
                          )
+            logwrite('', error, logname)
+            time.sleep(1)
+
     except (OSError, FileNotFoundError) as err:  # cmd not found
-        excepterr = f"{err}\n  {not_exist_msg}"
         wx.CallAfter(pub.sendMessage,
                      "COUNT_EVT",
-                     count=excepterr,
+                     count=err,
                      duration=0,
-                     end='error',
+                     end='ERROR',
                      )
         return err
 
@@ -197,7 +196,7 @@ def resizing_process(*varargs, **kwargs):
                  "COUNT_EVT",
                  count='',
                  duration=0,
-                 end='Done'
+                 end='DONE'
                  )
     return None
 
@@ -208,7 +207,6 @@ class SlideshowMaker(Thread):
     mkv format from a sequence of images already converted
     and resized in a temporary context.
     """
-    NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
     def __init__(self, *args, **kwargs):
         """
@@ -242,12 +240,14 @@ class SlideshowMaker(Thread):
                                       imgtmpnames,
                                       **self.appdata,
                                       )
-            if tmpproc1 is not None:
-                self.end_process(filedone)
-                return
-
-            if self.stop_work_thread:  # break second 'for' loop
-                self.end_process(filedone)
+            if tmpproc1 is not None or self.stop_work_thread:
+                wx.CallAfter(pub.sendMessage,
+                             "UPDATE_EVT",
+                             output='ERROR',
+                             duration=self.kwa['duration'],
+                             status=1,
+                             )
+                self.end_process(None)
                 return
 
             if imgtmpnames == 'TMP_':
@@ -257,32 +257,36 @@ class SlideshowMaker(Thread):
                                             self.logfile,
                                             **self.appdata,
                                             )
-                if tmpproc2 is not None:
-                    self.end_process(filedone)
-                    return
 
-                if self.stop_work_thread:  # break second 'for' loop
-                    self.end_process(filedone)
+                if tmpproc2 is not None or self.stop_work_thread:
+                    wx.CallAfter(pub.sendMessage,
+                                 "UPDATE_EVT",
+                                 output='ERROR',
+                                 duration=self.kwa['duration'],
+                                 status=1,
+                                 )
+                    self.end_process(None)
                     return
 
             # ------------------------------- make video
             tmpgroup = os.path.join(tempdir, 'IMAGE_%d.bmp')
             cmd_2 = (f'"{self.appdata["ffmpeg_cmd"]}" '
-                     f'{self.appdata["ffmpeg_default_args"]} '
+                     f'{self.appdata["ffmpeg-default-args"]} '
+                     f'{self.appdata["ffmpeg_loglev"]} '
                      f'{self.kwa["pre-input-1"]} '
                      f'-i "{tmpgroup}" '
                      f'{self.kwa["args"]} '
                      f'"{self.destination}"'
                      )
-            count = (f'Video production...\nSource: "{tempdir}"\n'
-                     f'Destination: "{self.destination}"')
+            count = (f'\n\nVideo production...\nSource: "{tempdir}"\n'
+                     f'Destination: "{self.destination}"\n')
             log = (f'{count}\n\n[COMMAND]:\n{cmd_2}')
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=count,
                          duration=self.duration,
-                         end='',
+                         end='CONTINUE',
                          )
 
             logwrite(log, '', self.logfile)
@@ -294,6 +298,7 @@ class SlideshowMaker(Thread):
             try:
                 with Popen(cmd_2,
                            stderr=subprocess.PIPE,
+                           stdin=subprocess.PIPE,
                            bufsize=1,
                            universal_newlines=True,
                            encoding=self.appdata['encoding'],
@@ -305,21 +310,31 @@ class SlideshowMaker(Thread):
                                      duration=self.duration,
                                      status=0,
                                      )
-                        if self.stop_work_thread:  # break second 'for' loop
-                            proc2.terminate()
-                            break
+                        if self.stop_work_thread:
+                            proc2.stdin.write('q')  # stop ffmpeg
+                            out = proc2.communicate()[1]
+                            proc2.wait()
+                            wx.CallAfter(pub.sendMessage,
+                                        "UPDATE_EVT",
+                                        output='STOP',
+                                        duration=self.kwa['duration'],
+                                        status=1,
+                                        )
+                            logwrite('', out, self.logfile)
+                            time.sleep(1)
+                            self.end_process(None)
+                            return
 
                     if proc2.wait():  # error
+                        out = proc2.communicate()[1]
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
-                                     output='',
-                                     duration=self.duration,
+                                     output='FAILED',
+                                     duration=self.kwa['duration'],
                                      status=proc2.wait(),
                                      )
-                        logwrite('',
-                                 f"Exit status: {proc2.wait()}",
-                                 self.logfile,
-                                 )  # append exit error number
+                        logwrite('', (f"[VIDEOMASS]: Error Exit Status: "
+                                      f"{proc2.wait()} {out}"), self.logfile)
                         time.sleep(1)
 
                     else:  # status ok
@@ -328,16 +343,16 @@ class SlideshowMaker(Thread):
                                      "COUNT_EVT",
                                      count='',
                                      duration=self.duration,
-                                     end='Done'
+                                     end='DONE'
                                      )
             except (OSError, FileNotFoundError) as err:
-                excepterr = f"{err}\n  {SlideshowMaker.NOT_EXIST_MSG}"
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
-                             count=excepterr,
+                             count=err,
                              duration=0,
-                             end='error',
+                             end='ERROR',
                              )
+                logwrite('', err, self.logfile)
         self.end_process(filedone)
 
     def end_process(self, filedone):

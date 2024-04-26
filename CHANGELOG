@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Fri, 19 Apr 2024 V.5.0.12
+Fri, 26 Apr 2024 V.5.0.12
 
   * Improved description strings on menu bar.
   * [Presets Manager] Improved profile settings dialog layout.
@@ -59,6 +59,10 @@ Fri, 19 Apr 2024 V.5.0.12
   * Added the ability to change the encoding for files that contain metadata
     with non-UTF-8 encoded characters. The function is found in the Preferences
     dialog (Advanced tab).
+  * Improved closing of ffmpeg by clicking the stop button to close FFmpeg
+    gracefully programmatically by writing "q" to the subprocess's stdin pipe
+    simulating the user pressing the "q" key.
+  * Improved the pop-up dialog box for temporary messages.
 
 +------------------------------------+
 Sat, 30 Mar 2024 V.5.0.11

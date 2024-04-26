@@ -179,7 +179,8 @@ class Transpose(wx.Dialog):
         """
         error = self.process()
         if error:
-            wx.MessageBox(f'{error}', 'ERROR', wx.ICON_ERROR, self)
+            wx.MessageBox(f'{error}', _('Videomass - Error!'),
+                          wx.ICON_ERROR, self)
             return
 
         bitmap = wx.Bitmap(self.frame)

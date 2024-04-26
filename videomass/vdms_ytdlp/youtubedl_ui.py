@@ -363,7 +363,8 @@ class Downloader(wx.Panel):
             for link in self.parent.data_url:
                 ret = self.get_statistics(link)
                 if ret[0] == 'ERROR':
-                    wx.MessageBox(ret[1], 'Videomass', wx.ICON_ERROR)
+                    wx.MessageBox(ret[1], _('Videomass - Error!'),
+                                  wx.ICON_ERROR)
                     del self.info[:]
                     return None
                 self.info.append(ret[1])
@@ -381,10 +382,10 @@ class Downloader(wx.Panel):
 
         def _error(msg, infoicon):
             if infoicon == 'information':
-                icon = wx.ICON_INFORMATION
+                icon, cap = wx.ICON_INFORMATION, 'Videomass'
             elif infoicon == 'error':
-                icon = wx.ICON_ERROR
-            wx.MessageBox(msg, "Videomass", icon, self)
+                icon, cap = wx.ICON_ERROR , _('Videomass - Error!')
+            wx.MessageBox(msg, cap, icon, self)
             self.choice.SetSelection(0)
             self.on_choicebox(self, False)
             return True
