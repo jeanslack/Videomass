@@ -52,22 +52,18 @@ class NormalTransientPopup(wx.PopupTransientWindow):
 def notification_area(title, message, flag, timeout=5):
     """
     Show the user a message on system tray (Notification Area)
+
+    Various options can be set after the message is created if desired.
+    notify.SetFlags(wx.ICON_INFORMATION/wx.ICON_WARNING/wx.ICON_ERROR)
+    notify.SetTitle("Wooot")
+    notify.SetMessage("It's a message!")
+    notify.SetParent(self)
     """
     notify = wx.adv.NotificationMessage(title=title,
                                         message=message,
                                         parent=None,
                                         flags=flag
                                         )
-
-    # Various options can be set after the message is created if desired.
-    # notify.SetFlags(# wx.ICON_INFORMATION
-    #                 wx.ICON_WARNING
-    #                 # wx.ICON_ERROR
-    #                 )
-    # notify.SetTitle("Wooot")
-    # notify.SetMessage("It's a message!")
-    # notify.SetParent(self)
-
     notify.Show(timeout=timeout)  # 1 for short timeout, 100 for long timeout
     # notify.Close()       # Hides the notification.
 
