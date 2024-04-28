@@ -405,8 +405,6 @@ class MainFrame(wx.Frame):
                             self.fileDnDTarget.flCtrl.GetColumnWidth(5),
                             ]
         sett['filedrop_column_width'] = filedropcolwidth
-        sett['outputdir'] = self.appdata['outputdir']
-        sett['outputdir_asinput'] = self.appdata['outputdir_asinput']
         confmanager.write_options(**sett)
         self.destroy_orphaned_window()
         self.Destroy()
@@ -1032,8 +1030,16 @@ class MainFrame(wx.Frame):
         if dialdir.ShowModal() == wx.ID_OK:
             getpath = self.appdata['getpath'](dialdir.GetPath())
             self.appdata['outputdir_asinput'] = False
+            self.appdata['filesuffix'] = ""
             self.appdata['outputdir'] = getpath
             self.fileDnDTarget.on_file_save(getpath)
+
+            confmanager = ConfigManager(self.appdata['fileconfpath'])
+            sett = confmanager.read_options()
+            sett['outputdir'] = self.appdata['outputdir']
+            sett['outputdir_asinput'] = self.appdata['outputdir_asinput']
+            sett['filesuffix'] = self.appdata['filesuffix']
+            confmanager.write_options(**sett)
 
             dialdir.Destroy()
     # ------------------------------------------------------------------#

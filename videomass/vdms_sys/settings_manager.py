@@ -136,6 +136,13 @@ class ConfigManager:
         One of True or False, where True means load/use yt_dlp
         on sturtup.
 
+    download-using-exec (bool):
+        If True, use yt-dlp as executable/binary for downloading
+        videos (default). Use yt_dlp as API Otherwise.
+
+    yt-dlp-executable-path (str):
+        Path to the yt-dlp or yt-dlp.exe executable.
+
     playlistsubfolder (bool):
         Auto-create subfolders when download the playlists,
         default value is True.
@@ -153,7 +160,8 @@ class ConfigManager:
 
     external_downloader_args (list):
         args used by external downloader in yt-dlp. Default is None
-        List should be passed using aria2c ["-j", "1", "-x", "1", "-s", "1"]
+        List of options should be passed using aria2c:
+        ["-j", "1","-x", "1", "-s", "1"]
 
     proxy (str):
         Use the specified HTTP/HTTPS/SOCKS proxy. To enable SOCKS proxy,
@@ -192,7 +200,7 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 7.4
+    VERSION = 7.5
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "encoding": "utf-8",
                        "outputdir": f"{os.path.expanduser('~')}",
@@ -221,6 +229,8 @@ class ConfigManager:
                        "locale_name": "Default",
                        "ydlp-outputdir": f"{os.path.expanduser('~')}",
                        "use-downloader": False,
+                       "download-using-exec": True,
+                       "yt-dlp-executable-path": "yt-dlp",
                        "playlistsubfolder": True,
                        "ssl_certificate": False,
                        "add_metadata": False,

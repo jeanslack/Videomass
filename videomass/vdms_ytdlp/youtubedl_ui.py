@@ -37,6 +37,73 @@ from videomass.vdms_ytdlp.formatcode import FormatCode
 from videomass.vdms_sys.settings_manager import ConfigManager
 
 
+def from_api_to_cli(data, execpath):
+    """
+    Revert API arguments to command line options
+    """
+    if data["format"] == 'best':
+        dformat = ''
+    else:
+        dformat = f'--format "{data["format"]}"'
+    opt = (f'{execpath} {dformat} --progress-template '
+           f'"download-title:%(info.id)s-%(progress.eta)s" '
+           f'--newline --compat-options "{data["compat_opts"]}" '
+           f'--ignore-errors --ignore-config --no-color ')
+
+    if data['extractaudio']:
+        opt += '--extract-audio '
+    if data['postprocessors']:
+        for pp in data['postprocessors']:
+            for key, val in pp.items():
+                if 'preferredcodec' in key:
+                    opt += f'--audio-format {val} '
+                if 'EmbedThumbnail' in val:
+                    opt += '--embed-thumbnail '
+                if 'FFmpegEmbedSubtitle' in val:
+                    opt += '--embed-subs '
+    if data['addmetadata']:
+        opt += '--embed-metadata '
+    if data['external_downloader']:
+        opt += f'--downloader "{data["external_downloader"]}" '
+    if data['external_downloader_args']:
+        dwargs = ' '.join(data["external_downloader_args"])
+        opt += (f'--downloader-args "{data["external_downloader"]}:{dwargs}" ')
+    opt += '--no-playlist ' if data['noplaylist'] else '--yes-playlist '
+    if data['writesubtitles']:
+        opt += '--write-subs '
+        if data['subtitleslangs'][0]:
+            sublang = ','.join(data["subtitleslangs"])
+            opt += f'--sub-langs "{sublang}" '
+        if data['writeautomaticsub']:
+            opt += '--write-auto-subs '
+        if data['skip_download']:
+            opt += '--skip-download '
+    opt += '--restrict-filenames ' if data['restrictfilenames'] else ''
+    opt += '--write-thumbnail ' if data['writethumbnail'] else ''
+    opt += '--force-overwrites ' if data['overwrites'] else ''
+    opt += '--no-check-certificates ' if data['nocheckcertificate'] else ''
+    opt += f'--proxy "{data["proxy"]}" ' if data["proxy"] else ''
+    if data['geo_verification_proxy']:
+        opt += f'--geo-verification-proxy "{data["geo_verification_proxy"]}" '
+    geo = (f'{data["geo_bypass"]} {data["geo_bypass_country"]} '
+           f'{data["geo_bypass_ip_block"]}')
+    if geo.strip():
+        opt += f'--xff "{geo}" '
+    if data['username']:
+        opt += f'--username {data["username"]} '
+        opt += f'--password {data["password"]} '
+    if data['videopassword']:
+        opt += f'--video-password {data["videopassword"]} '
+    if data.get("cookiefile"):
+        opt += f'--cookies "{data["cookiefile"]}" '
+    if data.get("cookiesfrombrowser"):
+        opt += f'--cookies-from-browser "{data["cookiesfrombrowser"][0]}" '
+    opt += f'--ffmpeg-location "{data["ffmpeg_location"]}" '
+    opt += f'--output "{data["outtmpl"]}" '
+
+    return opt
+
+
 def join_opts(optvideo=None, optaudio=None, vformat=None, selection=None):
     """
     Return a convenient string for audio/video selectors
@@ -612,9 +679,8 @@ class Downloader(wx.Panel):
             postprocessors.append({'key': 'FFmpegMetadata'})
 
         if self.appdata["embed_thumbnails"]:
-            postprocessors.append({'key': 'EmbedThumbnail',
-                                   'already_have_thumbnail': False
-                                   })
+            postprocessors.append({'key': 'EmbedThumbnail'})
+
         if self.opt["SUBS"]["embedsubtitle"]:
             postprocessors.append({'key': 'FFmpegEmbedSubtitle'})
 
@@ -631,7 +697,7 @@ class Downloader(wx.Panel):
             self.appdata["external_downloader"])
         data['external_downloader_args'] = (
             self.appdata["external_downloader_args"])
-        data['noplaylist'] = self.opt["NO_PLAYLIST"]
+        # data['noplaylist'] = self.opt["NO_PLAYLIST"]
         data['writesubtitles'] = self.opt["SUBS"]["writesubtitles"]
         data['subtitleslangs'] = self.opt["SUBS"]["subtitleslangs"]
         data['writeautomaticsub'] = self.opt["SUBS"]["writeautomaticsub"]
@@ -676,17 +742,27 @@ class Downloader(wx.Panel):
                                                args[2],
                                                fillvalue='',
                                                ):
-            if '/playlist' in url or not data['noplaylist']:
-                template = subdir + args[0]
+            if not self.opt["NO_PLAYLIST"]:
+                if '/playlist' in url:
+                    template = subdir + args[0]
+                    playlistitems = self.plidx.get(url, None)
+                    noplaylist = False
+                else:
+                    template = args[0]
+                    playlistitems = None
+                    noplaylist = True
             else:
                 template = args[0]
+                playlistitems = None
+                noplaylist = True
 
             format_code = code if code else args[1]
             datalist.append(
                 {'format': format_code,
                  'extractaudio': args[1],
                  'outtmpl': f"{self.appdata['ydlp-outputdir']}/{template}",
-                 'playlist_items': self.plidx.get(url, None),
+                 'noplaylist': noplaylist,
+                 'playlist_items': playlistitems,
                  'postprocessors': data['postprocessors'],
                  **data
                  })
@@ -736,9 +812,24 @@ class Downloader(wx.Panel):
             outtmpl = f'{_id}.f%(format_id)s.%(ext)s'
             data['extractaudio'] = False
 
-        datalist = self.build_args(outtmpl,
-                                   formatquality,
-                                   code,
-                                   **data
-                                   )
-        self.parent.switch_to_processing('YouTube Downloader', datalist)
+        self.to_processing(self.build_args(outtmpl,
+                                           formatquality,
+                                           code,
+                                           **data
+                                           ))
+    # -----------------------------------------------------------------#
+
+    def to_processing(self, datalist):
+        """
+        Call `main_ytdlp.switch_to_processing`
+        """
+        print(datalist)
+        if self.appdata['download-using-exec']:
+            execlist = []
+            execpath = self.appdata['yt-dlp-executable-path']
+            for args in datalist:
+                execlist.append(from_api_to_cli(args, execpath))
+            print(execlist)
+            self.parent.switch_to_processing('YouTube Downloader', execlist)
+        else:
+            self.parent.switch_to_processing('YouTube Downloader', datalist)

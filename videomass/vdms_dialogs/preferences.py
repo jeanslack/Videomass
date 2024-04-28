@@ -70,10 +70,12 @@ class SetUp(wx.Dialog):
             self.ffmpeg = 'ffmpeg.exe'
             self.ffprobe = 'ffprobe.exe'
             self.ffplay = 'ffplay.exe'
+            self.ytdlp = 'yt-dlp.exe'
         else:
             self.ffmpeg = 'ffmpeg'
             self.ffprobe = 'ffprobe'
             self.ffplay = 'ffplay'
+            self.ytdlp = 'yt-dlp'
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE
                            | wx.RESIZE_BORDER)
@@ -195,6 +197,20 @@ class SetUp(wx.Dialog):
         msg = _("Enable yt-dlp")
         self.checkbox_ytdlp = wx.CheckBox(tabFour, wx.ID_ANY, (msg))
         sizerytdlp.Add(self.checkbox_ytdlp, 0, wx.ALL, 5)
+        sizerytdlp.Add((0, 15))
+        msg = (_('Use the executable for downloads '
+                 'rather than the Python module'))
+        self.checkbox_dlexe = wx.CheckBox(tabFour, wx.ID_ANY, (msg))
+        sizerytdlp.Add(self.checkbox_dlexe, 0, wx.LEFT, 5)
+
+        self.btn_ytdlp = wx.Button(tabFour, wx.ID_ANY, _('Change'))
+        self.txtctrl_ytdlp = wx.TextCtrl(tabFour, wx.ID_ANY, "",
+                                         style=wx.TE_READONLY
+                                         )
+        gridytdlp = wx.BoxSizer(wx.HORIZONTAL)
+        sizerytdlp.Add(gridytdlp, 0, wx.EXPAND)
+        gridytdlp.Add(self.txtctrl_ytdlp, 1, wx.ALL, 5)
+        gridytdlp.Add(self.btn_ytdlp, 0, wx.RIGHT | wx.CENTER, 5)
         tabFour.SetSizer(sizerytdlp)
         notebook.AddPage(tabFour, "yt-dlp")
 
@@ -444,6 +460,8 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.exeFFplay, self.checkbox_exeFFplay)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_ffplay)
         self.Bind(wx.EVT_CHECKBOX, self.on_ytdlp_pref, self.checkbox_ytdlp)
+        self.Bind(wx.EVT_CHECKBOX, self.on_ytdlp_exec, self.checkbox_dlexe)
+        self.Bind(wx.EVT_BUTTON, self.open_path_ytdlp, self.btn_ytdlp)
         self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
         self.Bind(wx.EVT_RADIOBOX, self.on_toolbarPos, self.rdbTBpref)
         self.Bind(wx.EVT_COMBOBOX, self.on_toolbarSize, self.cmbx_iconsSize)
@@ -475,6 +493,11 @@ class SetUp(wx.Dialog):
         self.checkbox_logclr.SetValue(self.appdata['clearlogfiles'])
         self.ckbx_trash.SetValue(self.settings['move_file_to_trash'])
         self.checkbox_ytdlp.SetValue(self.settings['use-downloader'])
+        self.checkbox_dlexe.SetValue(self.settings['download-using-exec'])
+        self.txtctrl_ytdlp.SetValue(self.appdata['yt-dlp-executable-path'])
+
+        if not self.settings['download-using-exec']:
+            self.txtctrl_ytdlp.Disable(), self.btn_ytdlp.Disable()
 
         if not self.settings['move_file_to_trash']:
             self.txtctrl_trash.Disable()
@@ -795,6 +818,34 @@ class SetUp(wx.Dialog):
         set yt-dlp preferences
         """
         self.settings['use-downloader'] = self.checkbox_ytdlp.GetValue()
+    # --------------------------------------------------------------------#
+
+    def on_ytdlp_exec(self, event):
+        """
+        Sets whether to use yt-dlp as a Python
+        module or as an executable.
+        """
+        self.settings['download-using-exec'] = self.checkbox_dlexe.GetValue()
+        if self.checkbox_dlexe.GetValue():
+            self.txtctrl_ytdlp.Enable(), self.btn_ytdlp.Enable()
+        else:
+            self.txtctrl_ytdlp.Disable(), self.btn_ytdlp.Disable()
+    # --------------------------------------------------------------------#
+
+    def open_path_ytdlp(self, event):
+        """Indicates a new yt-dlp path-name"""
+        with wx.FileDialog(self, _("{} location").format(self.ytdlp),
+                           "", "", "yt-dlp binary "
+                           f"(*{self.ytdlp})|*{self.ytdlp}| "
+                           f"All files (*.*)|*.*",
+                           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
+
+            if fdlg.ShowModal() == wx.ID_OK:
+                if os.path.basename(fdlg.GetPath()) == self.ytdlp:
+                    self.txtctrl_ytdlp.Clear()
+                    getpath = self.appdata['getpath'](fdlg.GetPath())
+                    self.txtctrl_ytdlp.write(getpath)
+                    self.settings['yt-dlp-executable-path'] = getpath
     # --------------------------------------------------------------------#
 
     def on_Iconthemes(self, event):
