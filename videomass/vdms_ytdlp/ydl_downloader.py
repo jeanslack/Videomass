@@ -41,6 +41,13 @@ if wx.GetApp().appset['use-downloader']:
     import yt_dlp
 
 
+def killbill(pid):
+    """
+    kill the process sending a Ctrl+C event
+    """
+    lambda: os.kill(pid, signal.CTRL_C_EVENT)
+
+
 class YtdlExecDL(Thread):
     """
     YtdlExecDL represents a separate thread for running
@@ -81,8 +88,7 @@ class YtdlExecDL(Thread):
 
     def run(self):
         """
-        Subprocess initialize thread.
-
+        Subprocess run thread.
         """
         for url, opts in itertools.zip_longest(self.urls,
                                                self.arglist,
@@ -119,7 +125,7 @@ class YtdlExecDL(Thread):
                                      status=0,
                                      )
                         if self.stop_work_thread:
-                            lambda: os.kill(proc.pid, signal.CTRL_C_EVENT)
+                            killbill(proc.pid)
                             wx.CallAfter(pub.sendMessage,
                                          "UPDATE_YDL_EXECUTABLE_EVT",
                                          output='STOP',
@@ -301,6 +307,8 @@ class YdlDownloader(Thread):
                                                self.arglist,
                                                fillvalue='',
                                                ):
+            if not opts['format']:
+                del opts['format']
             self.count += 1
             count = f"URL {self.count}/{self.countmax}"
 

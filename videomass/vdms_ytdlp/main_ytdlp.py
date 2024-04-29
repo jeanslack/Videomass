@@ -575,8 +575,8 @@ class MainYtdl(wx.Frame):
         """
         if args[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
-            [self.toolbar.EnableTool(x, False) for x in (21, 23, 24)]
-            [self.toolbar.EnableTool(x, True) for x in (20, 22)]
+            [self.toolbar.EnableTool(x, False) for x in (21, 24)]
+            [self.toolbar.EnableTool(x, True) for x in (20, 22, 23)]
 
         elif args[0] == 'YouTube Downloader':
             (self.delete.Enable(False),
@@ -626,6 +626,8 @@ class MainYtdl(wx.Frame):
         self.toolbar.EnableTool(20, True)
         self.toolbar.EnableTool(24, False)
         self.toolbar.EnableTool(26, True)
+        self.toolbar.EnableTool(23, True)
+
         self.setupItem.Enable(True)
     # ------------------------------------------------------------------#
 

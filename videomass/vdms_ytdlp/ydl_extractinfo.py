@@ -75,7 +75,7 @@ class YdlExtractInfo(Thread):
     to get output during process (see help(youtube_dl.YoutubeDL) ) .
 
     """
-    def __init__(self, url, ssl):
+    def __init__(self, url, kwargs):
         """
         Attributes defined here:
         self.url  str('url')
@@ -85,7 +85,7 @@ class YdlExtractInfo(Thread):
         self.appdata = get.appset
         self.url = url
         self.data = None
-        self.nocheckcertificate = ssl
+        self.kwargs = kwargs
 
         Thread.__init__(self)
         self.start()  # start the thread (va in self.run())
@@ -95,15 +95,9 @@ class YdlExtractInfo(Thread):
         Defines options to extract_info with youtube_dl
         """
         mylogger = MyLogger()
-        ydl_opts = {'ignoreerrors': True,
-                    'noplaylist': True,
-                    'no_color': True,
-                    'nocheckcertificate': self.nocheckcertificate,
-                    'logger': mylogger,
-                    }
+        ydl_opts = {**self.kwargs, 'logger': mylogger}
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             meta = ydl.extract_info(self.url, download=False)
-
         error = mylogger.get_message()
 
         if error:

@@ -39,7 +39,7 @@ from videomass.vdms_dialogs.widget_utils import PopupDialog
 from videomass.vdms_ytdlp.ydl_extractinfo import YdlExtractInfo
 
 
-def youtubedl_getstatistics(url, ssl, parent=None):
+def youtubedl_getstatistics(url, kwargs, parent=None):
     """
     Call `YdlExtractInfo` thread to extract data info.
     During this process a wait pop-up dialog is shown.
@@ -52,7 +52,7 @@ def youtubedl_getstatistics(url, ssl, parent=None):
         data = thread.data
         yield data
     """
-    thread = YdlExtractInfo(url, ssl)
+    thread = YdlExtractInfo(url, kwargs)
     dlgload = PopupDialog(parent,
                           _("Videomass - Loading..."),
                           _("Wait....\nRetrieving required data."))

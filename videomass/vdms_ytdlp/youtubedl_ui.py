@@ -41,7 +41,7 @@ def from_api_to_cli(data, execpath):
     """
     Revert API arguments to command line options
     """
-    if data["format"] == 'best':
+    if not data["format"]:
         dformat = ''
     else:
         dformat = f'--format "{data["format"]}"'
@@ -160,9 +160,10 @@ class Downloader(wx.Panel):
              ('p144'): ('worstvideo[height>=?144]+worstaudio/worst'),
              ('Worst video resolution'): ('worstvideo+worstaudio/worst'),
              }
-    VPCOMP = {('Best precompiled video'): ('best'),
-              ('Medium precompiled video'): ('18'),
-              ('Worst precompiled video'): ('worst'),
+    VPCOMP = {('Best precompiled video'): (''),
+              ('Medium High precompiled video'): ('bestvideo*+bestaudio/best'),
+              ('Medium Low precompiled video'): ('18'),
+              ('Worst precompiled video'): ('worstvideo'),
               }
     AFORMATS = {("Default audio format"): ("best"),
                 ("wav"): ("wav"),
@@ -382,8 +383,9 @@ class Downloader(wx.Panel):
         Check the first item of list to recognize the exit
         status, which is 'ERROR' or None.
         """
+        kwa = self.default_statistics_options()
         data = youtubedl_getstatistics(link,
-                                       self.appdata["ssl_certificate"],
+                                       kwa,
                                        parent=self.GetParent(),
                                        )
         for meta in data:
@@ -395,7 +397,6 @@ class Downloader(wx.Panel):
                     meta[0]['entries'][0]  # don't parse all playlist
                 except IndexError:
                     pass
-
             if 'duration' in meta[0]:
 
                 ftime = (f"{totimesec(round(meta[0]['duration'] * 1000))} "
@@ -446,10 +447,11 @@ class Downloader(wx.Panel):
         """
         if self.panel_cod.fcode.GetItemCount():  # not changed, already set
             return None
+        kwa = self.default_statistics_options()
 
         def _error(msg, infoicon):
-            if infoicon == 'information':
-                icon, cap = wx.ICON_INFORMATION, 'Videomass'
+            if infoicon == 'warning':
+                icon, cap = wx.ICON_WARNING, _('Videomass - Warning!')
             elif infoicon == 'error':
                 icon, cap = wx.ICON_ERROR, _('Videomass - Error!')
             wx.MessageBox(msg, cap, icon, self)
@@ -465,13 +467,12 @@ class Downloader(wx.Panel):
                            '/videos',
                            ):
                 if unsupp in url:
-                    msg = _("Unable to get format codes on '{0}'\n\n"
-                            "Unsupported '{0}':\n'{1}'"
+                    msg = _("Unable to get format codes on {0}, "
+                            "unsupported URL:\n\n{1}"
                             ).format(unsupp.split('/')[1], url)
-                    return _error(msg, 'information')
+                    return _error(msg, 'warning')
 
-        ret = self.panel_cod.set_formatcode(self.parent.data_url,
-                                            self.appdata["ssl_certificate"])
+        ret = self.panel_cod.set_formatcode(self.parent.data_url, kwa)
         if ret:
             return _error(ret, 'error')
         return None
@@ -663,35 +664,61 @@ class Downloader(wx.Panel):
         return False
     # -----------------------------------------------------------------#
 
-    def default_options(self):
+    def default_statistics_options(self):
         """
-        Main mapping of default options.
+
+        Main mapping for Statistics options used by to
+        get info and format code datas.
+        return a type dict object.
+        """
+        kwa = {}
+        if (self.appdata["use_cookie_file"]
+                and self.appdata["cookiefile"].strip()):
+            kwa["cookiefile"] = self.appdata["cookiefile"]
+        if self.appdata["autogen_cookie_file"]:
+            cfb = tuple(self.appdata["cookiesfrombrowser"])
+            kwa["cookiesfrombrowser"] = cfb
+        kwa['no_color'] = True
+        kwa['nocheckcertificate'] = self.appdata["ssl_certificate"]
+        kwa['ignoreerrors'] = True  # exit code 1 if any errors
+        kwa['noplaylist'] = True
+        kwa['no_color'] = True
+        kwa['proxy'] = self.appdata["proxy"]
+        kwa['username'] = self.appdata["username"]
+        kwa['password'] = self.appdata["password"]
+        kwa['videopassword'] = self.appdata["videopassword"]
+        kwa["geo_verification_proxy"] = self.appdata["geo_verification_proxy"]
+        kwa["geo_bypass"] = self.appdata["geo_bypass"]
+        kwa["geo_bypass_country"] = self.appdata["geo_bypass_country"]
+        kwa["geo_bypass_ip_block"] = self.appdata["geo_bypass_ip_block"]
+
+        return kwa
+    # -----------------------------------------------------------------#
+
+    def default_download_options(self):
+        """
+        default_options
+        Main mapping for download options.
         return a type dict object.
         """
         data = {}
         postprocessors = []
-
         if self.choice.GetSelection() == 3:
             postprocessors.append({'key': 'FFmpegExtractAudio',
                                    'preferredcodec': self.opt["A_FORMAT"],
                                    })
         if self.appdata['add_metadata']:
             postprocessors.append({'key': 'FFmpegMetadata'})
-
         if self.appdata["embed_thumbnails"]:
             postprocessors.append({'key': 'EmbedThumbnail'})
-
         if self.opt["SUBS"]["embedsubtitle"]:
             postprocessors.append({'key': 'FFmpegEmbedSubtitle'})
-
         if (self.appdata["use_cookie_file"]
                 and self.appdata["cookiefile"].strip()):
             data["cookiefile"] = self.appdata["cookiefile"]
-
         if self.appdata["autogen_cookie_file"]:
             cfb = tuple(self.appdata["cookiesfrombrowser"])
             data["cookiesfrombrowser"] = cfb
-
         data['compat_opts'] = 'youtube-dl'
         data['external_downloader'] = (
             self.appdata["external_downloader"])
@@ -775,14 +802,20 @@ class Downloader(wx.Panel):
         """
         if self.check_options():
             return
-        data = self.default_options()
+        data = self.default_download_options()
 
         if self.appdata["include_ID_name"]:
             _id = '%(title).100s-%(id)s'
         else:
             _id = '%(title).100s'
 
-        if self.choice.GetSelection() in (0, 1):  # precompiled or quality
+        if self.choice.GetSelection() == 0:  # precompiled or quality
+            code = []
+            formatquality = self.quality
+            outtmpl = f'{_id}.%(ext)s'
+            data['extractaudio'] = False
+
+        elif self.choice.GetSelection() == 1:  # by video resolution
             code = []
             formatquality = self.quality
             outtmpl = f'{_id}.%(ext)s'

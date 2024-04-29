@@ -23,10 +23,10 @@ web page, which provides the information required to install Videomass on
 each operating system.
 
 ### Requirements
-- **[Python >= 3.7.0 < 3.12.0](https://www.python.org/)**
-- **[wxPython-Phoenix >= 4.0.7](https://wxpython.org/)**
-- **[PyPubSub >= 4.0.3](https://pypi.org/project/PyPubSub/)**
-- **[requests >= 2.26.0](https://pypi.org/project/requests/)**
+- **[Python >=3.7.0 <3.12.0](https://www.python.org/)**
+- **[wxPython-Phoenix >=4.0.7](https://wxpython.org/)**
+- **[PyPubSub >=4.0.3](https://pypi.org/project/PyPubSub/)**
+- **[requests >=2.26.0](https://pypi.org/project/requests/)**
 - **[ffmpeg >=5.1](https://ffmpeg.org/)**
 - **[ffprobe >=5.1](https://ffmpeg.org/ffprobe.html)** (usually bundled with ffmpeg)
 - **[ffplay >=5.1](http://ffmpeg.org/ffplay.html)** (usually bundled with ffmpeg)
@@ -34,6 +34,10 @@ each operating system.
 ### Optionals
 - **[yt-dlp](https://github.com/yt-dlp/yt-dlp)**
 - **[atomicparsley](http://atomicparsley.sourceforge.net/)**
+
+> ### Using yt-dlp   
+> If you plan to use Videomass to download videos, Python =>3.8 is 
+recommended to meet the minimum [yt-dlp requirements](https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#differences-in-default-behavior).
 
 ### Install basic dependencies for your OS
 

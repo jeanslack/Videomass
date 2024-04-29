@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sun, 28 Apr 2024 V.5.0.12
+Mon, 29 Apr 2024 V.5.0.12
 
   * Improved description strings on menu bar.
   * [Presets Manager] Improved profile settings dialog layout.
@@ -65,6 +65,16 @@ Sun, 28 Apr 2024 V.5.0.12
   * [YouTube Downloader] Added ability to use the yt-dlp executable only for
     download not for get format code and statistics. This feature would allow
     you to interrupt the process from any point of the download.
+  * [YouTube Downloader] Fixed `Best precompiled video` issue to truly get the
+    best precompiled video.
+  * [YouTube Downloader] Fixed `Worst precompiled video` issue to truly get the
+    worst precompiled video.
+  * [YouTube Downloader] Added `Medium High precompiled video` and `Medium Low
+    precompiled vieo`.
+  * [YouTube Downloader] Added the ability to run/rerun downloads directly in
+    the `Downloader Message Monitoring` panel.
+  * [YouTube Downloader] Fixed option mapping issue to pass to `YdlExtractInfo`
+    thread to get data for format code and Statistics.
 
 +------------------------------------+
 Sat, 30 Mar 2024 V.5.0.11

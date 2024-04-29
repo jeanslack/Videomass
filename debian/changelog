@@ -56,8 +56,18 @@ videomass (5.0.12-1) UNRELEASED; urgency=medium
   * [YouTube Downloader] Added ability to use the yt-dlp executable only for
     download not for get format code and statistics. This feature would allow
     you to interrupt the process from any point of the download.
+  * [YouTube Downloader] Fixed `Best precompiled video` issue to truly get the
+    best precompiled video.
+  * [YouTube Downloader] Fixed `Worst precompiled video` issue to truly get the
+    worst precompiled video.
+  * [YouTube Downloader] Added `Medium High precompiled video` and `Medium Low
+    precompiled vieo`.
+  * [YouTube Downloader] Added the ability to run/rerun downloads directly in
+    the `Downloader Message Monitoring` panel.
+  * [YouTube Downloader] Fixed option mapping issue to pass to `YdlExtractInfo`
+    thread to get data for format code and Statistics.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 28 Apr 2024 19:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 29 Apr 2024 16:00:00 +0200
 
 videomass (5.0.11-1) UNRELEASED; urgency=medium
 

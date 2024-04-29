@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-25 02:19+0200\n"
-"PO-Revision-Date: 2024-04-28 01:33+0200\n"
+"POT-Creation-Date: 2024-04-29 12:36+0200\n"
+"PO-Revision-Date: 2024-04-29 12:37+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -38,9 +38,9 @@ msgstr ""
 #: ../vdms_dialogs/filter_colorcorrection.py:383
 #: ../vdms_dialogs/filter_colorcorrection.py:390 ../vdms_io/checkup.py:75
 #: ../vdms_io/io_tools.py:171 ../vdms_utils/presets_manager_utils.py:92
-#: ../vdms_utils/presets_manager_utils.py:102 ../vdms_main/main_frame.py:873
-#: ../vdms_main/main_frame.py:908 ../vdms_main/main_frame.py:930
-#: ../vdms_main/main_frame.py:948 ../vdms_main/main_frame.py:968
+#: ../vdms_utils/presets_manager_utils.py:102 ../vdms_main/main_frame.py:871
+#: ../vdms_main/main_frame.py:906 ../vdms_main/main_frame.py:928
+#: ../vdms_main/main_frame.py:946 ../vdms_main/main_frame.py:966
 #: ../vdms_panels/audio_encoders/acodecs.py:507
 #: ../vdms_panels/audio_encoders/acodecs.py:795
 #: ../vdms_panels/concatenate.py:197 ../vdms_panels/long_processing_task.py:60
@@ -62,7 +62,7 @@ msgstr ""
 #: ../vdms_panels/sequence_to_video.py:694
 #: ../vdms_panels/video_to_sequence.py:514
 #: ../vdms_panels/video_to_sequence.py:585 ../vdms_threads/ffplay_file.py:43
-#: ../vdms_ytdlp/youtubedl_ui.py:366 ../vdms_ytdlp/youtubedl_ui.py:387
+#: ../vdms_ytdlp/youtubedl_ui.py:434 ../vdms_ytdlp/youtubedl_ui.py:456
 #: ../vdms_utils/queue_utils.py:70 ../vdms_utils/queue_utils.py:85
 #: ../vdms_utils/queue_utils.py:98
 msgid "Videomass - Error!"
@@ -136,7 +136,7 @@ msgid "Clear the File List"
 msgstr "Cancella l'elenco dei file"
 
 #: ../vdms_dialogs/epilogue.py:91 ../vdms_dialogs/queuedlg.py:142
-#: ../vdms_main/main_frame.py:1279
+#: ../vdms_main/main_frame.py:1285
 msgid "Run"
 msgstr "Avvia"
 
@@ -829,13 +829,13 @@ msgstr ""
 
 #: ../vdms_dialogs/wizard_dlg.py:243 ../vdms_dialogs/showlogs.py:168
 #: ../vdms_io/checkup.py:50 ../vdms_main/main_frame.py:205
-#: ../vdms_main/main_frame.py:767 ../vdms_main/main_frame.py:1652
+#: ../vdms_main/main_frame.py:765 ../vdms_main/main_frame.py:1658
 #: ../vdms_panels/presets_manager.py:379 ../vdms_panels/presets_manager.py:577
 #: ../vdms_panels/presets_manager.py:617 ../vdms_panels/presets_manager.py:683
 #: ../vdms_panels/presets_manager.py:718 ../vdms_panels/presets_manager.py:773
 #: ../vdms_panels/presets_manager.py:803 ../vdms_panels/presets_manager.py:901
 #: ../vdms_panels/presets_manager.py:931 ../vdms_ytdlp/main_ytdlp.py:201
-#: ../vdms_ytdlp/youtubedl_ui.py:586 ../vdms_ytdlp/youtubedl_ui.py:592
+#: ../vdms_ytdlp/youtubedl_ui.py:654 ../vdms_ytdlp/youtubedl_ui.py:660
 #: ../vdms_ytdlp/ydl_preferences.py:438
 msgid "Please confirm"
 msgstr "Prego confermare"
@@ -853,8 +853,9 @@ msgstr ""
 "i campi di testo sottostanti cliccando sui rispettivi pulsanti."
 
 #: ../vdms_dialogs/wizard_dlg.py:351 ../vdms_dialogs/wizard_dlg.py:368
-#: ../vdms_dialogs/wizard_dlg.py:385 ../vdms_dialogs/preferences.py:695
-#: ../vdms_dialogs/preferences.py:737 ../vdms_dialogs/preferences.py:779
+#: ../vdms_dialogs/wizard_dlg.py:385 ../vdms_dialogs/preferences.py:718
+#: ../vdms_dialogs/preferences.py:760 ../vdms_dialogs/preferences.py:802
+#: ../vdms_dialogs/preferences.py:837
 msgid "{} location"
 msgstr "Posizione {}"
 
@@ -1029,11 +1030,12 @@ msgstr "Le assegnazioni del profilo sono incomplete"
 #: ../vdms_dialogs/setting_profiles.py:265
 #: ../vdms_dialogs/setting_profiles.py:272
 #: ../vdms_dialogs/setting_profiles.py:288
-#: ../vdms_dialogs/setting_profiles.py:307 ../vdms_dialogs/preferences.py:604
-#: ../vdms_main/main_frame.py:371 ../vdms_main/main_frame.py:1089
+#: ../vdms_dialogs/setting_profiles.py:307 ../vdms_dialogs/preferences.py:627
+#: ../vdms_main/main_frame.py:371 ../vdms_main/main_frame.py:1095
 #: ../vdms_panels/av_conversions.py:602 ../vdms_panels/av_conversions.py:609
 #: ../vdms_panels/sequence_to_video.py:350
 #: ../vdms_panels/video_to_sequence.py:401 ../vdms_ytdlp/main_ytdlp.py:227
+#: ../vdms_ytdlp/youtubedl_ui.py:454
 msgid "Videomass - Warning!"
 msgstr "Videomass - Attenzione!"
 
@@ -1082,64 +1084,65 @@ msgstr ""
 "La dimensione della marca temporale non si adatta automaticamente alla "
 "dimensione del video, devi impostare la dimensione qui"
 
-#: ../vdms_dialogs/set_timestamp.py:160 ../vdms_main/main_frame.py:556
+#: ../vdms_dialogs/set_timestamp.py:160 ../vdms_main/main_frame.py:554
 msgid "Timestamp settings"
 msgstr "Impostazioni marca temporale"
 
-#: ../vdms_dialogs/preferences.py:90
+#: ../vdms_dialogs/preferences.py:92
 msgid "Where do you prefer to save your transcodes?"
 msgstr "Dove preferisci salvare le tue transcodifiche?"
 
-#: ../vdms_dialogs/preferences.py:101 ../vdms_dialogs/preferences.py:128
-#: ../vdms_dialogs/preferences.py:143 ../vdms_dialogs/preferences.py:155
-#: ../vdms_dialogs/preferences.py:167 ../vdms_panels/filedrop.py:284
-#: ../vdms_ytdlp/textdrop.py:153 ../vdms_ytdlp/ydl_preferences.py:123
+#: ../vdms_dialogs/preferences.py:103 ../vdms_dialogs/preferences.py:130
+#: ../vdms_dialogs/preferences.py:145 ../vdms_dialogs/preferences.py:157
+#: ../vdms_dialogs/preferences.py:169 ../vdms_dialogs/preferences.py:206
+#: ../vdms_panels/filedrop.py:284 ../vdms_ytdlp/textdrop.py:153
+#: ../vdms_ytdlp/ydl_preferences.py:123
 msgid "Change"
 msgstr "Modifica"
 
-#: ../vdms_dialogs/preferences.py:103 ../vdms_panels/av_conversions.py:1194
+#: ../vdms_dialogs/preferences.py:105 ../vdms_panels/av_conversions.py:1194
 #: ../vdms_panels/filedrop.py:574 ../vdms_panels/presets_manager.py:1077
 msgid "Same destination paths as source files"
 msgstr "Stessi percorsi di destinazione dei file di origine"
 
-#: ../vdms_dialogs/preferences.py:108
+#: ../vdms_dialogs/preferences.py:110
 msgid "Assign optional suffix to destination file names:"
 msgstr "Assegna un suffisso opzionale ai nomi dei file di destinazione:"
 
-#: ../vdms_dialogs/preferences.py:114
+#: ../vdms_dialogs/preferences.py:116
 msgid "File removal preferences"
 msgstr "Preferenze sulla rimozione dei file"
 
-#: ../vdms_dialogs/preferences.py:118
+#: ../vdms_dialogs/preferences.py:120
 msgid "Trash the source files after successful encoding"
 msgstr ""
 "Cestinare i file di origine dopo aver eseguito correttamente la codifica"
 
-#: ../vdms_dialogs/preferences.py:131 ../vdms_ytdlp/ydl_preferences.py:131
+#: ../vdms_dialogs/preferences.py:133 ../vdms_ytdlp/ydl_preferences.py:131
 msgid "File Preferences"
 msgstr "Preferenze file"
 
-#: ../vdms_dialogs/preferences.py:138
+#: ../vdms_dialogs/preferences.py:140
 msgid "Location of executables"
 msgstr "Individuazione degli eseguibili"
 
-#: ../vdms_dialogs/preferences.py:141
+#: ../vdms_dialogs/preferences.py:143
 msgid "Enable a custom location to run FFmpeg"
 msgstr "Abilita una posizione personalizzata per eseguire FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:153
+#: ../vdms_dialogs/preferences.py:155
 msgid "Enable a custom location to run FFprobe"
 msgstr "Abilita una posizione personalizzata per eseguire FFprobe"
 
-#: ../vdms_dialogs/preferences.py:165
+#: ../vdms_dialogs/preferences.py:167
 msgid "Enable a custom location to run FFplay"
 msgstr "Abilita una posizione personalizzata per eseguire FFplay"
 
-#: ../vdms_dialogs/preferences.py:177
+#: ../vdms_dialogs/preferences.py:179
 msgid "FFmpeg"
 msgstr "FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:183
+#: ../vdms_dialogs/preferences.py:185
 msgid ""
 "Download videos from YouTube.com and other video sites\n"
 "(requires application restart)"
@@ -1147,7 +1150,7 @@ msgstr ""
 "Scarica video da YouTube.com e altri siti di video\n"
 "(richiede il riavvio dell'applicazione)"
 
-#: ../vdms_dialogs/preferences.py:187
+#: ../vdms_dialogs/preferences.py:189
 msgid ""
 "Videomass uses `yt_dlp` as a Python module and not as an executable. If you "
 "want to\n"
@@ -1162,51 +1165,55 @@ msgstr ""
 "sotto.\n"
 "Al successivo riavvio del programma, il modulo verrà caricato in memoria."
 
-#: ../vdms_dialogs/preferences.py:195
+#: ../vdms_dialogs/preferences.py:197
 msgid "Enable yt-dlp"
 msgstr "Abilita yt-dlp"
 
-#: ../vdms_dialogs/preferences.py:205
+#: ../vdms_dialogs/preferences.py:201
+msgid "Use the executable for downloads rather than the Python module"
+msgstr "Usa l'eseguibile per i download anziché il modulo Python"
+
+#: ../vdms_dialogs/preferences.py:221
 msgid "Look and Feel (requires application restart)"
 msgstr "Aspetto (richiede il riavvio dell'applicazione)"
 
-#: ../vdms_dialogs/preferences.py:210
+#: ../vdms_dialogs/preferences.py:226
 msgid "Icon themes"
 msgstr "Temi icona"
 
-#: ../vdms_dialogs/preferences.py:224
+#: ../vdms_dialogs/preferences.py:240
 msgid "At the top of window (default)"
 msgstr "Sopra alla finestra (default)"
 
-#: ../vdms_dialogs/preferences.py:225
+#: ../vdms_dialogs/preferences.py:241
 msgid "At the bottom of window"
 msgstr "Sotto alla finestra"
 
-#: ../vdms_dialogs/preferences.py:226
+#: ../vdms_dialogs/preferences.py:242
 msgid "At the right of window"
 msgstr "A destra della finestra"
 
-#: ../vdms_dialogs/preferences.py:227
+#: ../vdms_dialogs/preferences.py:243
 msgid "At the left of window"
 msgstr "A sinistra della finestra"
 
-#: ../vdms_dialogs/preferences.py:229
+#: ../vdms_dialogs/preferences.py:245
 msgid "Place the toolbar"
 msgstr "Posiziona la barra degli strumenti"
 
-#: ../vdms_dialogs/preferences.py:238
+#: ../vdms_dialogs/preferences.py:254
 msgid "Toolbar's icons size:"
 msgstr "Dimensioni icone della barra degli strumenti:"
 
-#: ../vdms_dialogs/preferences.py:252
+#: ../vdms_dialogs/preferences.py:268
 msgid "Application Language (requires application restart)"
 msgstr "Lingua dell'applicazione (richiede il riavvio dell'applicazione)"
 
-#: ../vdms_dialogs/preferences.py:264
+#: ../vdms_dialogs/preferences.py:280
 msgid "Look and Language"
 msgstr "Aspetto e Lingua"
 
-#: ../vdms_dialogs/preferences.py:270
+#: ../vdms_dialogs/preferences.py:286
 msgid ""
 "The following settings affect output messages and the log messages during "
 "transcoding processes.\n"
@@ -1221,15 +1228,15 @@ msgstr ""
 "potrebbero non funzionare correttamente, modificale solo se sai cosa stai "
 "facendo.\n"
 
-#: ../vdms_dialogs/preferences.py:292
+#: ../vdms_dialogs/preferences.py:308
 msgid "FFmpeg logging levels"
 msgstr "Livelli logs FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:298
+#: ../vdms_dialogs/preferences.py:314
 msgid "Specify the character encoding format"
 msgstr "Specifica il formato di codifica dei caratteri"
 
-#: ../vdms_dialogs/preferences.py:301
+#: ../vdms_dialogs/preferences.py:317
 msgid ""
 "Although UTF-8 is the default and most widely used standard encoding format, "
 "it is not the only encoding format available.\n"
@@ -1246,63 +1253,63 @@ msgstr ""
 "Se conosci il formato di codifica in cui è stato scritto il file, puoi "
 "provare a specificarlo qui."
 
-#: ../vdms_dialogs/preferences.py:311
+#: ../vdms_dialogs/preferences.py:327
 msgid "Character encoding:"
 msgstr "Codifica dei caratteri:"
 
-#: ../vdms_dialogs/preferences.py:320
+#: ../vdms_dialogs/preferences.py:336
 msgid "Default application directories"
 msgstr "Directory predefinite dell'applicazione"
 
-#: ../vdms_dialogs/preferences.py:324
+#: ../vdms_dialogs/preferences.py:340
 msgid "Configuration directory"
 msgstr "Directory di configurazione"
 
-#: ../vdms_dialogs/preferences.py:336
+#: ../vdms_dialogs/preferences.py:352
 msgid "Cache directory"
 msgstr "Directory della cache"
 
-#: ../vdms_dialogs/preferences.py:347
+#: ../vdms_dialogs/preferences.py:363
 msgid "Log directory"
 msgstr "Directory dei registri"
 
-#: ../vdms_dialogs/preferences.py:360
+#: ../vdms_dialogs/preferences.py:376
 msgid "Upon exiting the application..."
 msgstr "All'uscita dall'applicazione..."
 
-#: ../vdms_dialogs/preferences.py:364
+#: ../vdms_dialogs/preferences.py:380
 msgid "Always ask me to confirm"
 msgstr "Chiedimi sempre di confermare"
 
-#: ../vdms_dialogs/preferences.py:366
+#: ../vdms_dialogs/preferences.py:382
 msgid "Clean the log files"
 msgstr "Pulisci i file di registro"
 
-#: ../vdms_dialogs/preferences.py:369
+#: ../vdms_dialogs/preferences.py:385
 msgid "Remove cached files"
 msgstr "Rimuovi i file memorizzati nella cache"
 
-#: ../vdms_dialogs/preferences.py:373
+#: ../vdms_dialogs/preferences.py:389
 msgid "Advanced"
 msgstr "Avanzate"
 
-#: ../vdms_dialogs/preferences.py:417
+#: ../vdms_dialogs/preferences.py:433
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr ""
 "Assegnando un suffisso aggiuntivo è possibile evitare di sovrascrivere i file"
 
-#: ../vdms_dialogs/preferences.py:420
+#: ../vdms_dialogs/preferences.py:436
 msgid "Preferences"
 msgstr "Preferenze"
 
-#: ../vdms_dialogs/preferences.py:558 ../vdms_dialogs/preferences.py:638
-#: ../vdms_main/main_frame.py:848 ../vdms_main/main_frame.py:1029
+#: ../vdms_dialogs/preferences.py:581 ../vdms_dialogs/preferences.py:661
+#: ../vdms_main/main_frame.py:846 ../vdms_main/main_frame.py:1027
 #: ../vdms_panels/presets_manager.py:610 ../vdms_panels/presets_manager.py:639
-#: ../vdms_ytdlp/main_ytdlp.py:397 ../vdms_ytdlp/ydl_preferences.py:504
+#: ../vdms_ytdlp/main_ytdlp.py:396 ../vdms_ytdlp/ydl_preferences.py:504
 msgid "Choose Destination"
 msgstr "Scegli la Destinazione"
 
-#: ../vdms_dialogs/preferences.py:589
+#: ../vdms_dialogs/preferences.py:612
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Spaces are not allowed."
@@ -1367,7 +1374,7 @@ msgstr "SELEZIONE FILE"
 
 #: ../vdms_dialogs/mediainfo.py:139 ../vdms_dialogs/mediainfo.py:142
 #: ../vdms_dialogs/mediainfo.py:145 ../vdms_dialogs/mediainfo.py:148
-#: ../vdms_main/main_frame.py:1275
+#: ../vdms_main/main_frame.py:1281
 msgid "Properties"
 msgstr "Proprietà"
 
@@ -1396,10 +1403,10 @@ msgstr "Impossibile aprire gli appunti nella scheda Flussi Audio"
 msgid "Unable to open the clipboard on Subtitle Streams tab"
 msgstr "Impossibile aprire gli appunti nella scheda Flussi Sottotitoli"
 
-#: ../vdms_dialogs/widget_utils.py:124 ../vdms_main/main_frame.py:1283
-#: ../vdms_ytdlp/main_ytdlp.py:493
+#: ../vdms_dialogs/widget_utils.py:120 ../vdms_main/main_frame.py:1289
+#: ../vdms_ytdlp/main_ytdlp.py:497
 msgid "Stop"
-msgstr ""
+msgstr "Stop"
 
 #: ../vdms_dialogs/showlogs.py:80
 msgid "Log file list"
@@ -1521,19 +1528,19 @@ msgstr "Mostra i metodi di accelerazione HW disponibili"
 msgid "Show license"
 msgstr "Mostra la licenza"
 
-#: ../vdms_dialogs/ffmpeg_help.py:123 ../vdms_main/main_frame.py:531
+#: ../vdms_dialogs/ffmpeg_help.py:123 ../vdms_main/main_frame.py:529
 msgid "Show configuration"
 msgstr "Mostra configurazione"
 
-#: ../vdms_dialogs/ffmpeg_help.py:127 ../vdms_main/main_frame.py:539
+#: ../vdms_dialogs/ffmpeg_help.py:127 ../vdms_main/main_frame.py:537
 msgid "Encoders"
 msgstr "Codificatori"
 
-#: ../vdms_dialogs/ffmpeg_help.py:131 ../vdms_main/main_frame.py:542
+#: ../vdms_dialogs/ffmpeg_help.py:131 ../vdms_main/main_frame.py:540
 msgid "Decoders"
 msgstr "Decodificatori"
 
-#: ../vdms_dialogs/ffmpeg_help.py:135 ../vdms_main/main_frame.py:535
+#: ../vdms_dialogs/ffmpeg_help.py:135 ../vdms_main/main_frame.py:533
 msgid "Muxers and Demuxers"
 msgstr "Muxers e Demuxers"
 
@@ -1875,9 +1882,9 @@ msgstr ""
 msgid "Shortcut keys while playing with FFplay"
 msgstr "Scorciatoie da tastiera durante la riproduzione con FFplay"
 
-#: ../vdms_dialogs/queuedlg.py:65 ../vdms_main/main_frame.py:505
+#: ../vdms_dialogs/queuedlg.py:65 ../vdms_main/main_frame.py:503
 #: ../vdms_panels/presets_manager.py:224
-#: ../vdms_panels/video_to_sequence.py:171 ../vdms_ytdlp/main_ytdlp.py:301
+#: ../vdms_panels/video_to_sequence.py:171 ../vdms_ytdlp/main_ytdlp.py:300
 msgid "Edit"
 msgstr "Modifica"
 
@@ -2192,10 +2199,10 @@ msgstr ""
 "Prima di rieseguire questa operazione, correggere eventuali errori nel "
 "codice JSON contenuto nel FILE ."
 
-#: ../vdms_main/main_frame.py:186 ../vdms_main/main_frame.py:1376
-#: ../vdms_main/main_frame.py:1409 ../vdms_ytdlp/main_ytdlp.py:97
-#: ../vdms_ytdlp/main_ytdlp.py:146 ../vdms_ytdlp/main_ytdlp.py:547
-#: ../vdms_ytdlp/textdrop.py:233 ../vdms_ytdlp/youtubedl_ui.py:420
+#: ../vdms_main/main_frame.py:186 ../vdms_main/main_frame.py:1382
+#: ../vdms_main/main_frame.py:1415 ../vdms_ytdlp/main_ytdlp.py:97
+#: ../vdms_ytdlp/main_ytdlp.py:146 ../vdms_ytdlp/main_ytdlp.py:551
+#: ../vdms_ytdlp/textdrop.py:233 ../vdms_ytdlp/youtubedl_ui.py:488
 msgid "Ready"
 msgstr "Pronto"
 
@@ -2214,7 +2221,7 @@ msgstr ""
 msgid "Queue ({0})"
 msgstr "Coda ({0})"
 
-#: ../vdms_main/main_frame.py:228 ../vdms_main/main_frame.py:1291
+#: ../vdms_main/main_frame.py:228 ../vdms_main/main_frame.py:1297
 msgid "Queue"
 msgstr "Coda"
 
@@ -2234,7 +2241,7 @@ msgstr "Sei sicuro di voler uscire dall'applicazione?"
 msgid "Exit"
 msgstr "Uscita"
 
-#: ../vdms_main/main_frame.py:383 ../vdms_main/main_frame.py:424
+#: ../vdms_main/main_frame.py:383 ../vdms_main/main_frame.py:422
 msgid ""
 "There are still active windows with running processes, make sure you finish "
 "your work before closing them."
@@ -2242,335 +2249,335 @@ msgstr ""
 "Ci sono ancora finestre attive con processi in esecuzione, assicurati di "
 "finire il tuo lavoro prima di chiuderle."
 
-#: ../vdms_main/main_frame.py:460
+#: ../vdms_main/main_frame.py:458
 msgid "Import files\tCtrl+O"
 msgstr "Importa file\tCtrl+O"
 
-#: ../vdms_main/main_frame.py:463
+#: ../vdms_main/main_frame.py:461
 msgid "Open destination folder of encodings\tCtrl+D"
 msgstr "Apri cartella di destinazione codifiche\tCtrl+D"
 
-#: ../vdms_main/main_frame.py:466
+#: ../vdms_main/main_frame.py:464
 msgid "Load queue file"
 msgstr "Carica file della coda"
 
-#: ../vdms_main/main_frame.py:467
+#: ../vdms_main/main_frame.py:465
 msgid "Load a previously exported queue file"
 msgstr "Carica un file della coda precedentemente esportato"
 
-#: ../vdms_main/main_frame.py:470
+#: ../vdms_main/main_frame.py:468
 msgid "Open trash"
 msgstr "Apri cestino"
 
-#: ../vdms_main/main_frame.py:471
+#: ../vdms_main/main_frame.py:469
 msgid "Open the Videomass trash folder"
 msgstr "Apri cartella del cestino di Videomass"
 
-#: ../vdms_main/main_frame.py:473
+#: ../vdms_main/main_frame.py:471
 msgid "Empty trash"
 msgstr "Svuota il cestino"
 
-#: ../vdms_main/main_frame.py:474
+#: ../vdms_main/main_frame.py:472
 msgid "Delete all files in the Videomass trash folder"
 msgstr "Elimina tutti i file nella cartella cestino di Videomass"
 
-#: ../vdms_main/main_frame.py:477
+#: ../vdms_main/main_frame.py:475
 msgid "Exit\tCtrl+Q"
 msgstr "Esci\tCtrl+Q"
 
-#: ../vdms_main/main_frame.py:478
+#: ../vdms_main/main_frame.py:476
 msgid "Completely exit the application"
 msgstr "Esci completamente dall'applicazione"
 
-#: ../vdms_main/main_frame.py:479 ../vdms_ytdlp/main_ytdlp.py:284
+#: ../vdms_main/main_frame.py:477 ../vdms_ytdlp/main_ytdlp.py:283
 msgid "File"
 msgstr "File"
 
-#: ../vdms_main/main_frame.py:483 ../vdms_panels/filedrop.py:340
+#: ../vdms_main/main_frame.py:481 ../vdms_panels/filedrop.py:340
 #: ../vdms_panels/filedrop.py:359
 msgid "Rename selected file\tCtrl+R"
 msgstr "Rinomina il file selezionato\tCtrl+R"
 
-#: ../vdms_main/main_frame.py:484
+#: ../vdms_main/main_frame.py:482
 msgid "Rename the destination of the selected file"
 msgstr "Rinomina la destinazione del file selezionato"
 
-#: ../vdms_main/main_frame.py:487 ../vdms_panels/filedrop.py:341
+#: ../vdms_main/main_frame.py:485 ../vdms_panels/filedrop.py:341
 #: ../vdms_panels/filedrop.py:362
 msgid "Batch rename files\tCtrl+B"
 msgstr "Rinomina i file in batch\tCtrl+B"
 
-#: ../vdms_main/main_frame.py:488
+#: ../vdms_main/main_frame.py:486
 msgid "Numerically renames the destination of all items in the list"
 msgstr ""
 "Rinomina numericamente la destinazione di tutti gli elementi nell'elenco"
 
 # Warning: DEL refers to the "Del" or "Canc" button on the keyboard. This may depends on your country. This button is an accelerator used as a shortcut.
-#: ../vdms_main/main_frame.py:493 ../vdms_panels/filedrop.py:343
+#: ../vdms_main/main_frame.py:491 ../vdms_panels/filedrop.py:343
 #: ../vdms_panels/filedrop.py:366
 msgid "Remove selected entry\tDEL"
 msgstr "Rimuovi voce selezionata\tDEL"
 
-#: ../vdms_main/main_frame.py:494
+#: ../vdms_main/main_frame.py:492
 msgid "Remove the selected file from the list"
 msgstr "Rimuovi dall'elenco il file selezionato"
 
-#: ../vdms_main/main_frame.py:497 ../vdms_panels/filedrop.py:344
-#: ../vdms_panels/filedrop.py:369 ../vdms_ytdlp/main_ytdlp.py:294
+#: ../vdms_main/main_frame.py:495 ../vdms_panels/filedrop.py:344
+#: ../vdms_panels/filedrop.py:369 ../vdms_ytdlp/main_ytdlp.py:293
 #: ../vdms_ytdlp/textdrop.py:191 ../vdms_ytdlp/textdrop.py:212
 msgid "Clear list\tShift+DEL"
 msgstr "Pulisci elenco\tShift+DEL"
 
-#: ../vdms_main/main_frame.py:498
+#: ../vdms_main/main_frame.py:496
 msgid "Clear the file list"
 msgstr "Cancella l'intero elenco dei file"
 
-#: ../vdms_main/main_frame.py:503
+#: ../vdms_main/main_frame.py:501
 msgid "Preferences\tCtrl+P"
 msgstr "Preferenze\tCtrl+P"
 
-#: ../vdms_main/main_frame.py:504
+#: ../vdms_main/main_frame.py:502
 msgid "Application preferences"
 msgstr "Preferenze dell'applicazione"
 
-#: ../vdms_main/main_frame.py:509
+#: ../vdms_main/main_frame.py:507
 msgid "Find FFmpeg topics"
 msgstr "Trova argomenti di FFmpeg"
 
-#: ../vdms_main/main_frame.py:510
+#: ../vdms_main/main_frame.py:508
 msgid "A useful tool to search for FFmpeg help topics and options"
 msgstr "Uno strumento utile per cercare argomenti e opzioni della guida FFmpeg"
 
-#: ../vdms_main/main_frame.py:515
+#: ../vdms_main/main_frame.py:513
 msgid "Check for preset updates"
 msgstr "Controlla aggiornamenti preimpostazioni"
 
-#: ../vdms_main/main_frame.py:516
+#: ../vdms_main/main_frame.py:514
 #, python-brace-format
 msgid "Check for new presets updates from {0}"
 msgstr "Controlla nuovi aggiornamenti delle preimpostazioni da {0}"
 
-#: ../vdms_main/main_frame.py:518
+#: ../vdms_main/main_frame.py:516
 msgid "Get latest presets"
 msgstr "Ottieni le ultime preimpostazioni"
 
-#: ../vdms_main/main_frame.py:519
+#: ../vdms_main/main_frame.py:517
 #, python-brace-format
 msgid "Get the latest presets from {0}"
 msgstr "Ottieni le ultime preimpostazioni da {0}"
 
-#: ../vdms_main/main_frame.py:522 ../vdms_ytdlp/main_ytdlp.py:305
+#: ../vdms_main/main_frame.py:520 ../vdms_ytdlp/main_ytdlp.py:304
 msgid "Work notes\tCtrl+N"
 msgstr "Note di lavoro\tCtrl+N"
 
-#: ../vdms_main/main_frame.py:523 ../vdms_ytdlp/main_ytdlp.py:306
+#: ../vdms_main/main_frame.py:521 ../vdms_ytdlp/main_ytdlp.py:305
 msgid "Read and write useful notes and reminders."
 msgstr "Leggi e scrivi utili note e promemoria."
 
-#: ../vdms_main/main_frame.py:525 ../vdms_ytdlp/main_ytdlp.py:308
+#: ../vdms_main/main_frame.py:523 ../vdms_ytdlp/main_ytdlp.py:307
 msgid "Tools"
 msgstr "Strumenti"
 
-#: ../vdms_main/main_frame.py:532
+#: ../vdms_main/main_frame.py:530
 msgid "Show FFmpeg's built-in configuration capabilities"
 msgstr "Mostra le funzionalità di configurazione integrate di FFmpeg"
 
-#: ../vdms_main/main_frame.py:536
+#: ../vdms_main/main_frame.py:534
 msgid "Muxers and demuxers available on your version of FFmpeg"
 msgstr "Muxers e demuxers disponibili sulla tua versione di FFmpeg"
 
-#: ../vdms_main/main_frame.py:540
+#: ../vdms_main/main_frame.py:538
 msgid "Encoders available on your version of FFmpeg"
 msgstr "Codificatori disponibili sulla tua versione di FFmpeg"
 
-#: ../vdms_main/main_frame.py:543
+#: ../vdms_main/main_frame.py:541
 msgid "Decoders available on your version of FFmpeg"
 msgstr "Codificatori disponibili sulla tua versione di FFmpeg"
 
-#: ../vdms_main/main_frame.py:546
+#: ../vdms_main/main_frame.py:544
 msgid "FFplay"
 msgstr "FFplay"
 
-#: ../vdms_main/main_frame.py:547
+#: ../vdms_main/main_frame.py:545
 msgid "Enable timestamps on playback"
 msgstr "Abilita marca temporale durante la riproduzione"
 
-#: ../vdms_main/main_frame.py:548
+#: ../vdms_main/main_frame.py:546
 msgid "Displays timestamp when playing media with FFplay"
 msgstr ""
 "Visualizza la marca temporale durante la riproduzione dei media con FFplay"
 
-#: ../vdms_main/main_frame.py:551
+#: ../vdms_main/main_frame.py:549
 msgid "Auto-exit after playback"
 msgstr "Uscita automatica dopo la riproduzione"
 
-#: ../vdms_main/main_frame.py:552
+#: ../vdms_main/main_frame.py:550
 msgid "If checked, the FFplay window will auto-close when playback is complete"
 msgstr ""
 "Se abilitato, la finestra FFplay si chiuderà automaticamente alla fine della "
 "riproduzione"
 
-#: ../vdms_main/main_frame.py:556
+#: ../vdms_main/main_frame.py:554
 msgid "Customize the timestamp style"
 msgstr "Personalizza lo stile della marca temporale"
 
-#: ../vdms_main/main_frame.py:559
+#: ../vdms_main/main_frame.py:557
 msgid "While playing..."
 msgstr "Durante la riproduzione..."
 
-#: ../vdms_main/main_frame.py:560
+#: ../vdms_main/main_frame.py:558
 msgid "Show useful shortcut keys when playing or previewing using FFplay"
 msgstr ""
 "Mostra utili tasti di scelta rapida durante la riproduzione o l'anteprima "
 "utilizzando FFplay"
 
-#: ../vdms_main/main_frame.py:564
+#: ../vdms_main/main_frame.py:562
 msgid "Show timeline editor\tCtrl+T"
 msgstr "Mostra l'editor sequenza temporale\tCtrl+T"
 
-#: ../vdms_main/main_frame.py:565
+#: ../vdms_main/main_frame.py:563
 msgid ""
 "Set duration or trim slices of time to remove unwanted parts from your files"
 msgstr ""
 "Imposta la durata o ritaglia intervalli di tempo per rimuovere parti "
 "indesiderate dai tuoi file"
 
-#: ../vdms_main/main_frame.py:569 ../vdms_ytdlp/main_ytdlp.py:318
+#: ../vdms_main/main_frame.py:567 ../vdms_ytdlp/main_ytdlp.py:317
 msgid "View"
 msgstr "Visualizza"
 
-#: ../vdms_main/main_frame.py:576
+#: ../vdms_main/main_frame.py:574
 msgid "Home panel\tCtrl+Shift+H"
 msgstr "Pannello iniziale\tCtrl+Shift+H"
 
-#: ../vdms_main/main_frame.py:577 ../vdms_main/main_frame.py:1266
+#: ../vdms_main/main_frame.py:575 ../vdms_main/main_frame.py:1272
 msgid "Go to the 'Home' panel"
 msgstr "Vai al pannello 'Home'"
 
-#: ../vdms_main/main_frame.py:580
+#: ../vdms_main/main_frame.py:578
 msgid "Presets Manager\tCtrl+Shift+P"
 msgstr "Gestionale Preimpostazioni\tCtrl+Shift+P"
 
-#: ../vdms_main/main_frame.py:581
+#: ../vdms_main/main_frame.py:579
 msgid "Go to the 'Presets Manager' panel"
 msgstr "Vai al pannello 'Gestionale Preimpostazioni'"
 
-#: ../vdms_main/main_frame.py:583
+#: ../vdms_main/main_frame.py:581
 msgid "A/V Conversions\tCtrl+Shift+V"
 msgstr "Conversioni A/V\tCtrl+Shift+V"
 
-#: ../vdms_main/main_frame.py:584
+#: ../vdms_main/main_frame.py:582
 msgid "Go to the 'A/V Conversions' panel"
 msgstr "Vai al pannello 'Conversioni A/V'"
 
-#: ../vdms_main/main_frame.py:586
+#: ../vdms_main/main_frame.py:584
 msgid "Concatenate Demuxer\tCtrl+Shift+D"
 msgstr "Concatenate Demuxer\tCtrl+Shift+D"
 
-#: ../vdms_main/main_frame.py:587
+#: ../vdms_main/main_frame.py:585
 msgid "Go to the 'Concatenate Demuxer' panel"
 msgstr "Vai al pannello 'Concatenate Demuxer'"
 
-#: ../vdms_main/main_frame.py:590
+#: ../vdms_main/main_frame.py:588
 msgid "Still Image Maker\tCtrl+Shift+I"
 msgstr "Creatore di Presentazioni\tCtrl+Shift+I"
 
-#: ../vdms_main/main_frame.py:591
+#: ../vdms_main/main_frame.py:589
 msgid "Go to the 'Still Image Maker' panel"
 msgstr "Vai al pannello 'Creatore di Presentazioni'"
 
-#: ../vdms_main/main_frame.py:593
+#: ../vdms_main/main_frame.py:591
 msgid "From Movie to Pictures\tCtrl+Shift+S"
 msgstr "Dal Filmato alle Immagini\tCtrl+Shift+S"
 
-#: ../vdms_main/main_frame.py:594
+#: ../vdms_main/main_frame.py:592
 msgid "Go to the 'From Movie to Pictures' panel"
 msgstr "Vai al pannello 'Dal Filmato alle Immagini'"
 
-#: ../vdms_main/main_frame.py:597
+#: ../vdms_main/main_frame.py:595
 msgid "YouTube Downloader\tCtrl+Shift+Y"
 msgstr "YouTube Downloader\tCtrl+Shift+Y"
 
-#: ../vdms_main/main_frame.py:598
+#: ../vdms_main/main_frame.py:596
 msgid "Open 'YouTube Downloader' window"
 msgstr "Apri la finestra 'YouTube Downloader'"
 
-#: ../vdms_main/main_frame.py:600
+#: ../vdms_main/main_frame.py:598
 msgid "Output monitor\tCtrl+Shift+O"
 msgstr "Monitor dell'output\tCtrl+Shift+O"
 
-#: ../vdms_main/main_frame.py:601
+#: ../vdms_main/main_frame.py:599
 msgid "Keeps track of the output for debugging errors"
 msgstr "Tiene traccia dell'output per gli errori di debug"
 
-#: ../vdms_main/main_frame.py:603
+#: ../vdms_main/main_frame.py:601
 msgid "Go"
 msgstr "Vai"
 
-#: ../vdms_main/main_frame.py:607
+#: ../vdms_main/main_frame.py:605
 msgid "User guide"
 msgstr "Guida utente"
 
-#: ../vdms_main/main_frame.py:608
+#: ../vdms_main/main_frame.py:606
 msgid "Wiki"
 msgstr "Wiki"
 
-#: ../vdms_main/main_frame.py:610
+#: ../vdms_main/main_frame.py:608
 msgid "Issue tracker"
 msgstr "Segnala un Problema"
 
-#: ../vdms_main/main_frame.py:612
+#: ../vdms_main/main_frame.py:610
 msgid "Translation..."
 msgstr "Traduzione..."
 
-#: ../vdms_main/main_frame.py:614
+#: ../vdms_main/main_frame.py:612
 msgid "Donation"
 msgstr "Donazione"
 
-#: ../vdms_main/main_frame.py:616
+#: ../vdms_main/main_frame.py:614
 msgid "FFmpeg documentation"
 msgstr "Documentazione di FFmpeg"
 
-#: ../vdms_main/main_frame.py:618
+#: ../vdms_main/main_frame.py:616
 msgid "System version"
 msgstr "Versione Sistema"
 
-#: ../vdms_main/main_frame.py:619
+#: ../vdms_main/main_frame.py:617
 msgid ""
 "Get version about your operating system, version of Python and wxPython."
 msgstr ""
 "Ottieni la versione del tuo sistema operativo, la versione di Python e "
 "wxPython."
 
-#: ../vdms_main/main_frame.py:622
+#: ../vdms_main/main_frame.py:620
 msgid "Show log files\tCtrl+L"
 msgstr "Mostra file di registro\tCtrl+L"
 
-#: ../vdms_main/main_frame.py:623
+#: ../vdms_main/main_frame.py:621
 msgid "Viewing log messages"
 msgstr "Visualizzazione dei messaggi di registro"
 
-#: ../vdms_main/main_frame.py:626
+#: ../vdms_main/main_frame.py:624
 msgid "Check for newer version"
 msgstr "Controlla la versione più recente"
 
-#: ../vdms_main/main_frame.py:627
+#: ../vdms_main/main_frame.py:625
 msgid "Check for the latest Videomass version"
 msgstr "Verifica ultima versione di Videomass"
 
-#: ../vdms_main/main_frame.py:629
+#: ../vdms_main/main_frame.py:627
 msgid "About Videomass"
 msgstr "Informazioni"
 
-#: ../vdms_main/main_frame.py:630
+#: ../vdms_main/main_frame.py:628
 msgid "Help"
 msgstr "Aiuto"
 
-#: ../vdms_main/main_frame.py:698
+#: ../vdms_main/main_frame.py:696
 msgid "Import files"
 msgstr "Importa file"
 
-#: ../vdms_main/main_frame.py:721
+#: ../vdms_main/main_frame.py:719
 msgid ""
 "No default folder has been set for the destination of the encodings. The "
 "current setting is \"Same destination paths as source files\"."
@@ -2579,7 +2586,7 @@ msgstr ""
 "codifiche. L'impostazione corrente è \"Stessi percorsi di destinazione dei "
 "file di origine\"."
 
-#: ../vdms_main/main_frame.py:753 ../vdms_main/main_frame.py:778
+#: ../vdms_main/main_frame.py:751 ../vdms_main/main_frame.py:776
 msgid ""
 "'{}':\n"
 "No such file or directory"
@@ -2587,11 +2594,11 @@ msgstr ""
 "'{}':\n"
 "Nessun file o directory con questo nome"
 
-#: ../vdms_main/main_frame.py:766
+#: ../vdms_main/main_frame.py:764
 msgid "Are you sure to empty trash folder?"
 msgstr "Sei sicuro di voler svuotare la cartella cestino?"
 
-#: ../vdms_main/main_frame.py:774
+#: ../vdms_main/main_frame.py:772
 msgid ""
 "'{}':\n"
 "There are no files to delete."
@@ -2599,19 +2606,19 @@ msgstr ""
 "'{}':\n"
 "Non ci sono file da cancellare."
 
-#: ../vdms_main/main_frame.py:831
+#: ../vdms_main/main_frame.py:829
 #, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr ""
 "Versione installata v{0}. È disponibile una nuova versione delle "
 "preimpostazioni{1}"
 
-#: ../vdms_main/main_frame.py:835
+#: ../vdms_main/main_frame.py:833
 #, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr "Versione installata v{0}. Nessun nuovo aggiornamento trovato."
 
-#: ../vdms_main/main_frame.py:865
+#: ../vdms_main/main_frame.py:863
 msgid ""
 "Wait....\n"
 "The archive is being downloaded"
@@ -2619,16 +2626,16 @@ msgstr ""
 "Attendi....\n"
 "L'archivio è in fase di download"
 
-#: ../vdms_main/main_frame.py:877
+#: ../vdms_main/main_frame.py:875
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "Scaricato correttamente in \"{0}\""
 
-#: ../vdms_main/main_frame.py:1081
+#: ../vdms_main/main_frame.py:1087
 msgid "Some changes require restarting the application."
 msgstr "Alcune modifiche richiedono il riavvio dell'applicazione."
 
-#: ../vdms_main/main_frame.py:1092
+#: ../vdms_main/main_frame.py:1098
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -2639,106 +2646,106 @@ msgstr ""
 "\n"
 "Vuoi riavviare l'applicazione adesso?"
 
-#: ../vdms_main/main_frame.py:1094
+#: ../vdms_main/main_frame.py:1100
 msgid "Restart Videomass?"
 msgstr "Riavviare Videomass?"
 
-#: ../vdms_main/main_frame.py:1164
+#: ../vdms_main/main_frame.py:1170
 #, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr "È disponibile un nuovo rilascio - v.{0}\n"
 
-#: ../vdms_main/main_frame.py:1167
+#: ../vdms_main/main_frame.py:1173
 msgid "You are using a development version that has not yet been released!\n"
 msgstr ""
 "Stai utilizzando una versione di sviluppo che non è ancora stata "
 "rilasciata!\n"
 
-#: ../vdms_main/main_frame.py:1170
+#: ../vdms_main/main_frame.py:1176
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr "Congratulazioni! Stai già usando l'ultima versione.\n"
 
-#: ../vdms_main/main_frame.py:1258 ../vdms_ytdlp/main_ytdlp.py:470
+#: ../vdms_main/main_frame.py:1264 ../vdms_ytdlp/main_ytdlp.py:474
 msgid "Go to the previous panel"
 msgstr "Vai al pannello precedente"
 
-#: ../vdms_main/main_frame.py:1259 ../vdms_ytdlp/main_ytdlp.py:471
+#: ../vdms_main/main_frame.py:1265 ../vdms_ytdlp/main_ytdlp.py:475
 msgid "Back"
 msgstr "Indietro"
 
-#: ../vdms_main/main_frame.py:1262 ../vdms_ytdlp/main_ytdlp.py:475
+#: ../vdms_main/main_frame.py:1268 ../vdms_ytdlp/main_ytdlp.py:479
 msgid "Go to the next panel"
 msgstr "Vai al prossimo pannello"
 
-#: ../vdms_main/main_frame.py:1263 ../vdms_ytdlp/main_ytdlp.py:476
+#: ../vdms_main/main_frame.py:1269 ../vdms_ytdlp/main_ytdlp.py:480
 msgid "Next"
 msgstr "Avanti"
 
-#: ../vdms_main/main_frame.py:1267
+#: ../vdms_main/main_frame.py:1273
 msgid "Home"
 msgstr "Casa"
 
-#: ../vdms_main/main_frame.py:1270
+#: ../vdms_main/main_frame.py:1276
 msgid "Play the selected file in the list"
 msgstr "Riproduci il file selezionato nell'elenco"
 
-#: ../vdms_main/main_frame.py:1271
+#: ../vdms_main/main_frame.py:1277
 msgid "Play"
 msgstr "Riproduci"
 
-#: ../vdms_main/main_frame.py:1274
+#: ../vdms_main/main_frame.py:1280
 msgid "Get informative data about imported media streams"
 msgstr "Ottieni dati informativi sui flussi dei media importati"
 
-#: ../vdms_main/main_frame.py:1278
+#: ../vdms_main/main_frame.py:1284
 msgid "Start batch processing"
 msgstr "Avvia l'elaborazione batch"
 
-#: ../vdms_main/main_frame.py:1282 ../vdms_ytdlp/main_ytdlp.py:492
+#: ../vdms_main/main_frame.py:1288 ../vdms_ytdlp/main_ytdlp.py:496
 msgid "Stops current process"
 msgstr "Interrompi il processo corrente"
 
-#: ../vdms_main/main_frame.py:1286
+#: ../vdms_main/main_frame.py:1292
 msgid "Add an item to Queue"
 msgstr "Aggiungi un elemento alla Coda"
 
-#: ../vdms_main/main_frame.py:1287
+#: ../vdms_main/main_frame.py:1293
 msgid "Add to Queue"
 msgstr "Aggiungi alla Coda"
 
-#: ../vdms_main/main_frame.py:1290
+#: ../vdms_main/main_frame.py:1296
 msgid "Show queue"
 msgstr "Mostra la coda"
 
-#: ../vdms_main/main_frame.py:1375 ../vdms_ytdlp/main_ytdlp.py:145
+#: ../vdms_main/main_frame.py:1381 ../vdms_ytdlp/main_ytdlp.py:145
 msgid "Videomass"
 msgstr "Videomass"
 
-#: ../vdms_main/main_frame.py:1410
+#: ../vdms_main/main_frame.py:1416
 msgid "Videomass - File List"
 msgstr "Videomass - Lista dei File"
 
-#: ../vdms_main/main_frame.py:1427
+#: ../vdms_main/main_frame.py:1433
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - Conversioni AV"
 
-#: ../vdms_main/main_frame.py:1455
+#: ../vdms_main/main_frame.py:1461
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - Gestionale Preimpostazioni"
 
-#: ../vdms_main/main_frame.py:1484
+#: ../vdms_main/main_frame.py:1490
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Concatenate Demuxer"
 
-#: ../vdms_main/main_frame.py:1512
+#: ../vdms_main/main_frame.py:1518
 msgid "Videomass - From Movie to Pictures"
 msgstr "Videomass - Dal Filmato alle Immagini"
 
-#: ../vdms_main/main_frame.py:1540
+#: ../vdms_main/main_frame.py:1546
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Creatore di Presentazioni"
 
-#: ../vdms_main/main_frame.py:1628 ../vdms_panels/av_conversions.py:574
+#: ../vdms_main/main_frame.py:1634 ../vdms_panels/av_conversions.py:574
 #: ../vdms_panels/audio_encoders/acodecs.py:784 ../vdms_panels/filedrop.py:475
 #: ../vdms_panels/filedrop.py:588 ../vdms_panels/sequence_to_video.py:320
 #: ../vdms_panels/video_to_sequence.py:371
@@ -2746,7 +2753,7 @@ msgstr "Videomass - Creatore di Presentazioni"
 msgid "Have to select an item in the file list first"
 msgstr "Prima dovresti selezionare un elemento nella lista dei file"
 
-#: ../vdms_main/main_frame.py:1649
+#: ../vdms_main/main_frame.py:1655
 msgid ""
 "An item with the same destination file already exists.\n"
 "\n"
@@ -2756,11 +2763,11 @@ msgstr ""
 "\n"
 "Vuoi sostituirlo aggiungendo il nuovo elemento alla coda?"
 
-#: ../vdms_main/main_frame.py:1670
+#: ../vdms_main/main_frame.py:1676
 msgid "Videomass - FFmpeg Message Monitoring"
 msgstr "Videomass - Monitoraggio dei messaggi FFmpeg"
 
-#: ../vdms_main/main_frame.py:1777
+#: ../vdms_main/main_frame.py:1786
 msgid "yt-dlp is disabled. Check your preferences."
 msgstr "yt-dlp è disabilitato. Controlla le tue preferenze."
 
@@ -3840,27 +3847,27 @@ msgid "New Name #"
 msgstr "Nuovo Nome #"
 
 #: ../vdms_panels/long_processing_task.py:114
-#: ../vdms_ytdlp/long_task_ytdlp.py:46
+#: ../vdms_ytdlp/long_task_ytdlp.py:47
 msgid "Sorry, all task failed !"
 msgstr "Spiacente, tutte le attività sono fallite !"
 
 #: ../vdms_panels/long_processing_task.py:115
-#: ../vdms_ytdlp/long_task_ytdlp.py:47
+#: ../vdms_ytdlp/long_task_ytdlp.py:48
 msgid "The process was stopped due to a fatal error."
 msgstr "Il processo è stato interrotto a causa di un errore irreversibile."
 
 #: ../vdms_panels/long_processing_task.py:116
-#: ../vdms_ytdlp/long_task_ytdlp.py:48
+#: ../vdms_ytdlp/long_task_ytdlp.py:49
 msgid "Interrupted Process !"
 msgstr "Processo Interrotto !"
 
 #: ../vdms_panels/long_processing_task.py:117
-#: ../vdms_ytdlp/long_task_ytdlp.py:49
+#: ../vdms_ytdlp/long_task_ytdlp.py:50
 msgid "Successfully completed !"
 msgstr "Completato con successo !"
 
 #: ../vdms_panels/long_processing_task.py:118
-#: ../vdms_ytdlp/long_task_ytdlp.py:50
+#: ../vdms_ytdlp/long_task_ytdlp.py:51
 msgid "Not everything was successful."
 msgstr "Non tutto ha avuto successo."
 
@@ -3869,17 +3876,17 @@ msgid "Encoding Status"
 msgstr "Stato della codifica"
 
 #: ../vdms_panels/long_processing_task.py:153
-#: ../vdms_ytdlp/long_task_ytdlp.py:85
+#: ../vdms_ytdlp/long_task_ytdlp.py:86
 msgid "Current Log"
 msgstr "Registro Corrente"
 
 #: ../vdms_panels/long_processing_task.py:360
-#: ../vdms_ytdlp/long_task_ytdlp.py:226
+#: ../vdms_ytdlp/long_task_ytdlp.py:270
 msgid "Fatal Error !"
 msgstr "Errore Fatale !"
 
 #: ../vdms_panels/long_processing_task.py:369
-#: ../vdms_ytdlp/long_task_ytdlp.py:235
+#: ../vdms_ytdlp/long_task_ytdlp.py:279
 msgid "Get your files at the destination you specified"
 msgstr "Ottieni i tuoi file nella destinazione che hai specificato"
 
@@ -3888,12 +3895,12 @@ msgid "For more details please read the Current Log."
 msgstr "Per maggiori dettagli leggere il Registro Corrente."
 
 #: ../vdms_panels/long_processing_task.py:386
-#: ../vdms_ytdlp/long_task_ytdlp.py:255
+#: ../vdms_ytdlp/long_task_ytdlp.py:299
 msgid "...Finished"
 msgstr "...Terminato"
 
 #: ../vdms_panels/long_processing_task.py:405
-#: ../vdms_ytdlp/long_task_ytdlp.py:269
+#: ../vdms_ytdlp/long_task_ytdlp.py:313
 msgid "Please wait... interruption in progress"
 msgstr "Attendere... interruzione in corso"
 
@@ -4468,8 +4475,8 @@ msgstr "Crea mosaici piastrellati"
 msgid "Create animated GIF"
 msgstr "Crea GIF animato"
 
-#: ../vdms_panels/video_to_sequence.py:90 ../vdms_ytdlp/main_ytdlp.py:486
-#: ../vdms_ytdlp/youtubedl_ui.py:158
+#: ../vdms_panels/video_to_sequence.py:90 ../vdms_ytdlp/main_ytdlp.py:490
+#: ../vdms_ytdlp/youtubedl_ui.py:226
 msgid "Options"
 msgstr "Opzioni"
 
@@ -4533,7 +4540,7 @@ msgstr ""
 "Inizio segmento\n"
 "Durata"
 
-#: ../vdms_ytdlp/formatcode.py:98 ../vdms_ytdlp/youtubedl_ui.py:84
+#: ../vdms_ytdlp/formatcode.py:98 ../vdms_ytdlp/youtubedl_ui.py:151
 msgid ""
 "At least one \"Format Code\" must be checked for each URL selected in green."
 msgstr ""
@@ -4593,26 +4600,26 @@ msgstr ""
 "URL non supportato:\n"
 "'{0}'"
 
-#: ../vdms_ytdlp/long_task_ytdlp.py:44
+#: ../vdms_ytdlp/long_task_ytdlp.py:45
 msgid "[Videomass]: SUCCESS !"
 msgstr "[Videomass]: SUCCESSO !"
 
-#: ../vdms_ytdlp/long_task_ytdlp.py:45
+#: ../vdms_ytdlp/long_task_ytdlp.py:46
 msgid "[Videomass]: FAILED !"
 msgstr "[Videomass]: FALLITO !"
 
-#: ../vdms_ytdlp/long_task_ytdlp.py:78
+#: ../vdms_ytdlp/long_task_ytdlp.py:79
 msgid "Download Status"
 msgstr "Stato dello Scaricamento"
 
-#: ../vdms_ytdlp/long_task_ytdlp.py:243 ../vdms_ytdlp/long_task_ytdlp.py:250
+#: ../vdms_ytdlp/long_task_ytdlp.py:287 ../vdms_ytdlp/long_task_ytdlp.py:294
 msgid ""
 "Check the current output or read the related log file for more information."
 msgstr ""
 "Controlla l'output attuale o leggi il relativo file di registro per "
 "ulteriori informazioni."
 
-#: ../vdms_ytdlp/long_task_ytdlp.py:284
+#: ../vdms_ytdlp/long_task_ytdlp.py:328
 msgid "Done"
 msgstr "Fatto"
 
@@ -4636,114 +4643,114 @@ msgstr ""
 msgid "Quit YouTube Downloader?"
 msgstr "Uscire da YouTube Downloader?"
 
-#: ../vdms_ytdlp/main_ytdlp.py:273
+#: ../vdms_ytdlp/main_ytdlp.py:272
 msgid "Open destination folder of downloads\tCtrl+D"
 msgstr "Apri cartella destinazione dei download\tCtrl+D"
 
-#: ../vdms_ytdlp/main_ytdlp.py:276
+#: ../vdms_ytdlp/main_ytdlp.py:275
 msgid "Close view\tCtrl+W"
 msgstr "Chiudi vista\tCtrl+W"
 
-#: ../vdms_ytdlp/main_ytdlp.py:277
+#: ../vdms_ytdlp/main_ytdlp.py:276
 msgid ""
 "Close the active view keeping the data in memory and any background processes"
 msgstr ""
 "Chiudere la vista attiva mantenendo i dati in memoria ed eventuali processi "
 "in background"
 
-#: ../vdms_ytdlp/main_ytdlp.py:281
+#: ../vdms_ytdlp/main_ytdlp.py:280
 msgid "Quit YouTube Downloader\tCtrl+Q"
 msgstr "Esci da YouTube Downloader\tCtrl+Q"
 
-#: ../vdms_ytdlp/main_ytdlp.py:282
+#: ../vdms_ytdlp/main_ytdlp.py:281
 msgid "Exit the window by deleting all data in memory"
 msgstr "Uscire dalla finestra cancellando tutti i dati in memoria"
 
-#: ../vdms_ytdlp/main_ytdlp.py:288 ../vdms_ytdlp/textdrop.py:189
+#: ../vdms_ytdlp/main_ytdlp.py:287 ../vdms_ytdlp/textdrop.py:189
 #: ../vdms_ytdlp/textdrop.py:206
 msgid "Paste\tCtrl+V"
 msgstr "Incolla\tCtrl+V"
 
-#: ../vdms_ytdlp/main_ytdlp.py:289
+#: ../vdms_ytdlp/main_ytdlp.py:288
 msgid "Paste the copied URLs to clipboard"
 msgstr "Incolla gli URL copiati negli appunti"
 
-#: ../vdms_ytdlp/main_ytdlp.py:291 ../vdms_ytdlp/textdrop.py:190
+#: ../vdms_ytdlp/main_ytdlp.py:290 ../vdms_ytdlp/textdrop.py:190
 #: ../vdms_ytdlp/textdrop.py:209
 msgid "Remove selected URL\tDEL"
 msgstr "Rimuovi l'URL selezionato\tDEL"
 
-#: ../vdms_ytdlp/main_ytdlp.py:292
+#: ../vdms_ytdlp/main_ytdlp.py:291
 msgid "Remove the selected URL from the list"
 msgstr "Rimuove l'URL selezionato dall'elenco"
 
-#: ../vdms_ytdlp/main_ytdlp.py:295
+#: ../vdms_ytdlp/main_ytdlp.py:294
 msgid "Clear the URL list"
 msgstr "Cancella l'elenco degli URL"
 
-#: ../vdms_ytdlp/main_ytdlp.py:299
+#: ../vdms_ytdlp/main_ytdlp.py:298
 msgid "Options\tCtrl+P"
 msgstr "Opzioni\tCtrl+P"
 
-#: ../vdms_ytdlp/main_ytdlp.py:300 ../vdms_ytdlp/main_ytdlp.py:485
+#: ../vdms_ytdlp/main_ytdlp.py:299 ../vdms_ytdlp/main_ytdlp.py:489
 msgid "YouTube Downloader options"
 msgstr "Opzioni YouTube Downloader"
 
-#: ../vdms_ytdlp/main_ytdlp.py:312
+#: ../vdms_ytdlp/main_ytdlp.py:311
 msgid "Version of yt-dlp"
 msgstr "Versione di yt-dlp"
 
-#: ../vdms_ytdlp/main_ytdlp.py:313
+#: ../vdms_ytdlp/main_ytdlp.py:312
 msgid "Shows the version in use"
 msgstr "Mostra la versione in uso"
 
-#: ../vdms_ytdlp/main_ytdlp.py:315
+#: ../vdms_ytdlp/main_ytdlp.py:314
 msgid "Latest version of yt-dlp"
 msgstr "Ultima versione di yt-dlp"
 
-#: ../vdms_ytdlp/main_ytdlp.py:316
+#: ../vdms_ytdlp/main_ytdlp.py:315
 msgid "Check the latest version available on github.com"
 msgstr "Mostra l'ultima versione disponibile su github.com"
 
-#: ../vdms_ytdlp/main_ytdlp.py:371
+#: ../vdms_ytdlp/main_ytdlp.py:370
 #, python-brace-format
 msgid "You are using \"yt-dlp\" version {0}"
 msgstr "Stai usando \"yt-dlp\" versione {0}"
 
-#: ../vdms_ytdlp/main_ytdlp.py:388
+#: ../vdms_ytdlp/main_ytdlp.py:387
 #, python-brace-format
 msgid "\"yt-dlp\": Latest version available: {0}"
 msgstr "\"yt-dlp\": Ultima versione disponibile: {0}"
 
-#: ../vdms_ytdlp/main_ytdlp.py:480
+#: ../vdms_ytdlp/main_ytdlp.py:484
 msgid "Shows statistics and information"
 msgstr "Mostra le statistiche e informazioni"
 
-#: ../vdms_ytdlp/main_ytdlp.py:481
+#: ../vdms_ytdlp/main_ytdlp.py:485
 msgid "Statistics"
 msgstr "Statistiche"
 
-#: ../vdms_ytdlp/main_ytdlp.py:488
+#: ../vdms_ytdlp/main_ytdlp.py:492
 msgid "Start downloading"
 msgstr "Avvia il download"
 
-#: ../vdms_ytdlp/main_ytdlp.py:489
+#: ../vdms_ytdlp/main_ytdlp.py:493
 msgid "Download"
 msgstr "Scarica"
 
-#: ../vdms_ytdlp/main_ytdlp.py:548
+#: ../vdms_ytdlp/main_ytdlp.py:552
 msgid "Videomass - List of URLs"
 msgstr "Videomass - Lista degli URL"
 
-#: ../vdms_ytdlp/main_ytdlp.py:556
+#: ../vdms_ytdlp/main_ytdlp.py:560
 msgid "Videomass - YouTube Downloader"
 msgstr "Videomass - YouTube Downloader"
 
-#: ../vdms_ytdlp/main_ytdlp.py:573
+#: ../vdms_ytdlp/main_ytdlp.py:577
 msgid "Viewing last log"
 msgstr "Visualizzazione ultimo log"
 
-#: ../vdms_ytdlp/main_ytdlp.py:591
+#: ../vdms_ytdlp/main_ytdlp.py:590
 msgid "Videomass - Downloader Message Monitoring"
 msgstr "Videomass - Monitoraggio Messaggi del Downloader"
 
@@ -4772,7 +4779,7 @@ msgstr ""
 "con i quali verranno scaricati i media all'indice 1, 2, 3, 7, 10, 11, 12 e "
 "13.\n"
 
-#: ../vdms_ytdlp/playlist_indexing.py:108 ../vdms_ytdlp/youtubedl_ui.py:232
+#: ../vdms_ytdlp/playlist_indexing.py:108 ../vdms_ytdlp/youtubedl_ui.py:300
 msgid "Playlist Editor"
 msgstr "Editor Playlist"
 
@@ -4820,6 +4827,10 @@ msgstr "Imposta nuova cartella di destinazione per i download"
 msgid "Destination folder of downloads"
 msgstr "Cartella di destinazione dei download"
 
+#: ../vdms_ytdlp/ydl_downloader.py:60 ../vdms_ytdlp/ydl_downloader.py:67
+msgid "Unrecognized error"
+msgstr "Errore sconosciuto"
+
 #: ../vdms_ytdlp/ydl_mediainfo.py:67
 msgid "Statistics viewer"
 msgstr "Visualizzatore di statistiche"
@@ -4828,27 +4839,27 @@ msgstr "Visualizzatore di statistiche"
 msgid "TITLE SELECTION"
 msgstr "SELEZIONE TITOLO"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:112
+#: ../vdms_ytdlp/youtubedl_ui.py:180
 msgid "Precompiled Videos"
 msgstr "Video Precompilati"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:113
+#: ../vdms_ytdlp/youtubedl_ui.py:181
 msgid "Download videos by resolution"
 msgstr "Scarica video in base alla risoluzione"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:114
+#: ../vdms_ytdlp/youtubedl_ui.py:182
 msgid "Download split audio and video"
 msgstr "Scarica audio e video divisi"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:115
+#: ../vdms_ytdlp/youtubedl_ui.py:183
 msgid "Download Audio only"
 msgstr "Scarica solo il file audio"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:116
+#: ../vdms_ytdlp/youtubedl_ui.py:184
 msgid "Download by format code"
 msgstr "Scarica per codice formato"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:190
+#: ../vdms_ytdlp/youtubedl_ui.py:258
 msgid ""
 "When not available, the chosen video resolution will be replaced with the "
 "closest one"
@@ -4856,40 +4867,38 @@ msgstr ""
 "Quando non disponibile, la risoluzione video selezionata verrà sostituita "
 "con quella più vicina"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:194
+#: ../vdms_ytdlp/youtubedl_ui.py:262
 msgid "Preferred video format"
 msgstr "Formato video preferito"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:227
+#: ../vdms_ytdlp/youtubedl_ui.py:295
 msgid "Include playlists"
 msgstr "Includi le playlist"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:239 ../vdms_ytdlp/subtitles_editor.py:137
+#: ../vdms_ytdlp/youtubedl_ui.py:307 ../vdms_ytdlp/subtitles_editor.py:137
 msgid "Subtitles Editor"
 msgstr "Editor Sottotitoli"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:401
+#: ../vdms_ytdlp/youtubedl_ui.py:470
 #, python-brace-format
 msgid ""
-"Unable to get format codes on '{0}'\n"
+"Unable to get format codes on {0}, unsupported URL:\n"
 "\n"
-"Unsupported '{0}':\n"
-"'{1}'"
+"{1}"
 msgstr ""
-"Impossibile ottenere i codici di formato su '{0}'\n"
+"Impossibile ottenere i codici di formato su {0}, URL non supportato:\n"
 "\n"
-"'{0}' Non supportato:\n"
-"'{1}'"
+"{1}"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:544
+#: ../vdms_ytdlp/youtubedl_ui.py:612
 msgid "URLs have no playlist references"
 msgstr "Gli URL non hanno riferimenti a playlist"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:584
+#: ../vdms_ytdlp/youtubedl_ui.py:652
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr "Gli URL contengono playlist. Sei sicuro di voler continuare?"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:590
+#: ../vdms_ytdlp/youtubedl_ui.py:658
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "Gli URL contengono canali. Sei sicuro di voler continuare?"
 
@@ -7021,9 +7030,6 @@ msgstr ""
 
 #~ msgid "Sorry, this feature is disabled."
 #~ msgstr "Spiacente, questa funzione è disabilitata."
-
-#~ msgid "Unrecognized error"
-#~ msgstr "Errore sconosciuto"
 
 #~ msgid ""
 #~ "\n"
