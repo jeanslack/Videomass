@@ -37,7 +37,6 @@ class MyLogger:
     Log messages to a logging.Logger instance.
     <https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#embedding-youtube-dl>
     """
-
     def __init__(self):
         """
         make attribute to log messages error

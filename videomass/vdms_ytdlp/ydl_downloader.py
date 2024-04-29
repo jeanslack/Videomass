@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.09.2024
+Rev: Apr.29.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -56,16 +56,6 @@ class YtdlExecDL(Thread):
 
     """
     STOP = '[Videomass]: STOP command received. Interrupting !'
-    if not platform.system() == 'Windows':
-        LINE_MSG = _('Unrecognized error')
-    else:
-        if os.path.isfile(EXECYDL):
-            LINE_MSG = ('\nERROR: MSVCR100.dll is missing!\nPlease, install '
-                        '"Microsoft Visual C++ 2010 Service Pack 1 '
-                        'Redistributable Package (x86)"\n')
-        else:
-            LINE_MSG = _('Unrecognized error')
-
     # -----------------------------------------------------------------------#
 
     def __init__(self, args, urls, logfile):

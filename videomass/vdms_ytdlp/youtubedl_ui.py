@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.09.2024
+Rev: Apr.29.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -856,13 +856,11 @@ class Downloader(wx.Panel):
         """
         Call `main_ytdlp.switch_to_processing`
         """
-        print(datalist)
         if self.appdata['download-using-exec']:
             execlist = []
             execpath = self.appdata['yt-dlp-executable-path']
             for args in datalist:
                 execlist.append(from_api_to_cli(args, execpath))
-            print(execlist)
             self.parent.switch_to_processing('YouTube Downloader', execlist)
         else:
             self.parent.switch_to_processing('YouTube Downloader', datalist)
