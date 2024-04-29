@@ -255,8 +255,6 @@ class FFmpeg(Thread):
     from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 
     """
-    NOT_EXIST_MSG = "Is 'ffmpeg' installed on your system?"
-
     def __init__(self, *args):
         """
         Called from `long_processing_task.topic_thread`.

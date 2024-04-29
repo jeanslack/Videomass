@@ -29,7 +29,7 @@ from pubsub import pub
 import wx
 from videomass.vdms_dialogs.widget_utils import notification_area
 from videomass.vdms_io.make_filelog import make_log_template
-from videomass.vdms_ytdlp.ydl_downloader import YdlDownloader
+from videomass.vdms_ytdlp.ydl_downloader import YdlDownloader, YtdlExecDL
 from videomass.vdms_io import io_tools
 
 
@@ -41,6 +41,7 @@ class LogOut(wx.Panel):
     tasks.
 
     """
+    MSG_stop = '[Videomass]: STOP command received. Interrupting !'
     MSG_done = _('[Videomass]: SUCCESS !')
     MSG_failed = _('[Videomass]: FAILED !')
     MSG_taskfailed = _('Sorry, all task failed !')
@@ -105,6 +106,7 @@ class LogOut(wx.Panel):
         # ------------------------------------------
         self.Bind(wx.EVT_BUTTON, self.view_log, self.btn_viewlog)
 
+        pub.subscribe(self.youtubedl_exec, "UPDATE_YDL_EXECUTABLE_EVT")
         pub.subscribe(self.downloader_activity, "UPDATE_YDL_EVT")
         pub.subscribe(self.update_count, "COUNT_YTDL_EVT")
         pub.subscribe(self.end_proc, "END_YTDL_EVT")
@@ -135,8 +137,52 @@ class LogOut(wx.Panel):
                                          mode="w",
                                          )
         self.btn_viewlog.Disable()
-        self.thread_type = YdlDownloader(args[1], urls, self.logfile)
+        if self.appdata['download-using-exec']:
+            self.thread_type = YtdlExecDL(args[1], urls, self.logfile)
+        else:
+            self.thread_type = YdlDownloader(args[1], urls, self.logfile)
     # ----------------------------------------------------------------------
+
+    def youtubedl_exec(self, output, duration, status):
+        """
+        Receiving output messages from yt-dlp command line execution
+        via pubsub "UPDATE_YDL_EXECUTABLE_EVT" .
+
+        """
+        if status == 'ERROR':  # error, exit status of the p.wait
+            if output == 'STOP':
+                msg, color = LogOut.MSG_stop, self.clr['ABORT']
+            else:
+                msg, color = LogOut.MSG_failed, self.clr['ERR1']
+            self.txtout.SetDefaultStyle(wx.TextAttr(color))
+            self.txtout.AppendText(f"\n{msg}\n")
+            self.result.append('failed')
+            return  # must be return here
+
+        if '[download] Destination:' in output:
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
+            self.txtout.AppendText(f'{output}')
+
+        elif '[download]' in output:
+            self.labprog.SetLabel(output)
+
+        else:
+            if 'WARNING:' in output:
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
+                self.txtout.AppendText(f'{output}')
+            elif '[info]' in output:
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['INFO']))
+                self.txtout.AppendText(f'{output}')
+            elif 'ERROR:' in output:
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
+                self.txtout.AppendText(f'{output}')
+            else:
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['DEBUG']))
+                self.txtout.AppendText(f'{output}')
+
+            with open(self.logfile, "a", encoding='utf-8') as logerr:
+                logerr.write(f"[YT_DLP]: {output}")
+    # ---------------------------------------------------------------------#
 
     def downloader_activity(self, output, duration, status):
         """
@@ -190,14 +236,12 @@ class LogOut(wx.Panel):
         """
         Receive messages from file count, loop or non-loop thread.
         """
-        if end == 'ok':
+        if end == 'DONE':
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['SUCCESS']))
             self.txtout.AppendText(f"{LogOut.MSG_done}\n")
             return
-
-        # if STATUS_ERROR == 1:
-        if end == 'error':
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
+        if end == 'ERROR':
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR1']))
             self.txtout.AppendText(f'\n{count}\n')
             self.error = True
         else:
@@ -253,7 +297,7 @@ class LogOut(wx.Panel):
                                       wx.ICON_WARNING, timeout=10)
 
             self.parent.statusbar_msg(_('...Finished'), None)
-            self.txtout.AppendText(f"\n{endmsg}\n")
+            self.txtout.AppendText(f"{endmsg}\n")
 
         self.txtout.AppendText('\n')
         self.reset_all()

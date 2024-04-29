@@ -10,7 +10,7 @@ BASE DEPENDENCIES
         - requests >=2.26.0
         - FFmpeg (with ffplay and ffprobe) >=5.1
     Optionals:
-        - yt-dlp >=2023.03.04
+        - yt-dlp >=2024.04.09 (Python =>3.8 is recommended to meet the minimum yt-dlp requirements) 
         - atomicparsley (to embed thumbnail in audio file)
 
 Videomass can be run without installing by unpack the source package archive

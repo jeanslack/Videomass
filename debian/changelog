@@ -25,10 +25,9 @@ videomass (5.0.12-1) UNRELEASED; urgency=medium
     and look-and-feel options.
   * Removed menu for setting destination folders and restoring default
     destination folder.
-  * Adding other destination folders can be done in the file list and urls list
-    panels (as well as in the preferences dialogs). Note that when you close the
-    program, this setting will now make the destination path for files and urls
-    the new default path when you reopen the application.
+  * Changing the destination folders in the file list and URL list panels will
+    now make the destination paths the new default paths without the need to
+    open preferences dialog.
   * [Presets Manager] Fixed bug in supported formats check. If the warning about
     supported formats was triggered, the program silently prevented the
     conversion processes from starting.
@@ -54,8 +53,21 @@ videomass (5.0.12-1) UNRELEASED; urgency=medium
     gracefully programmatically by writing "q" to the subprocess's stdin pipe
     simulating the user pressing the "q" key.
   * Improved the pop-up dialog box for temporary messages.
+  * [YouTube Downloader] Added ability to use the yt-dlp executable only for
+    download not for get format code and statistics. This feature would allow
+    you to interrupt the process from any point of the download.
+  * [YouTube Downloader] Fixed `Best precompiled video` issue to truly get the
+    best precompiled video.
+  * [YouTube Downloader] Fixed `Worst precompiled video` issue to truly get the
+    worst precompiled video.
+  * [YouTube Downloader] Added `Medium High precompiled video` and `Medium Low
+    precompiled vieo`.
+  * [YouTube Downloader] Added the ability to run/rerun downloads directly in
+    the `Downloader Message Monitoring` panel.
+  * [YouTube Downloader] Fixed option mapping issue to pass to `YdlExtractInfo`
+    thread to get data for format code and Statistics.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 26 Apr 2024 13:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 29 Apr 2024 16:00:00 +0200
 
 videomass (5.0.11-1) UNRELEASED; urgency=medium
 

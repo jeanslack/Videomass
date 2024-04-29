@@ -250,7 +250,6 @@ class MainYtdl(wx.Frame):
                          self.ytDownloader.panel_cod.fcode.GetColumnWidth(8),
                          ]
         sett['fcode_column_width'] = fcodecolwidth
-        sett['ydlp-outputdir'] = self.appdata['ydlp-outputdir']
         confmanager.write_options(**sett)
         self.destroy_orphaned_window()
         self.Destroy()
@@ -402,6 +401,11 @@ class MainYtdl(wx.Frame):
             getpath = self.appdata['getpath'](dialdir.GetPath())
             self.textDnDTarget.on_file_save(getpath)
             self.appdata['ydlp-outputdir'] = getpath
+
+            confmanager = ConfigManager(self.appdata['fileconfpath'])
+            sett = confmanager.read_options()
+            sett['ydlp-outputdir'] = self.appdata['ydlp-outputdir']
+            confmanager.write_options(**sett)
             dialdir.Destroy()
     # ------------------------------------------------------------------#
 
@@ -571,8 +575,8 @@ class MainYtdl(wx.Frame):
         """
         if args[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
-            [self.toolbar.EnableTool(x, False) for x in (21, 23, 24)]
-            [self.toolbar.EnableTool(x, True) for x in (20, 22)]
+            [self.toolbar.EnableTool(x, False) for x in (21, 24)]
+            [self.toolbar.EnableTool(x, True) for x in (20, 22, 23)]
 
         elif args[0] == 'YouTube Downloader':
             (self.delete.Enable(False),
@@ -580,13 +584,8 @@ class MainYtdl(wx.Frame):
              self.clearall.Enable(False),
              self.setupItem.Enable(False)
              )
-            if len(self.data_url) <= 1:
-                [self.toolbar.EnableTool(x, False) for x
-                 in (20, 21, 23, 24, 26)]
-                self.toolbar.EnableTool(22, True)
-            else:
-                [self.toolbar.EnableTool(x, False) for x in (20, 21, 23, 26)]
-                [self.toolbar.EnableTool(x, True) for x in (22, 24)]
+            [self.toolbar.EnableTool(x, False) for x in (20, 21, 23, 26)]
+            [self.toolbar.EnableTool(x, True) for x in (22, 24)]
 
         self.SetTitle(_('Videomass - Downloader Message Monitoring'))
         self.textDnDTarget.Hide()
@@ -627,6 +626,8 @@ class MainYtdl(wx.Frame):
         self.toolbar.EnableTool(20, True)
         self.toolbar.EnableTool(24, False)
         self.toolbar.EnableTool(26, True)
+        self.toolbar.EnableTool(23, True)
+
         self.setupItem.Enable(True)
     # ------------------------------------------------------------------#
 

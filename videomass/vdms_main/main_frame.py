@@ -405,8 +405,6 @@ class MainFrame(wx.Frame):
                             self.fileDnDTarget.flCtrl.GetColumnWidth(5),
                             ]
         sett['filedrop_column_width'] = filedropcolwidth
-        sett['outputdir'] = self.appdata['outputdir']
-        sett['outputdir_asinput'] = self.appdata['outputdir_asinput']
         confmanager.write_options(**sett)
         self.destroy_orphaned_window()
         self.Destroy()
@@ -1032,8 +1030,16 @@ class MainFrame(wx.Frame):
         if dialdir.ShowModal() == wx.ID_OK:
             getpath = self.appdata['getpath'](dialdir.GetPath())
             self.appdata['outputdir_asinput'] = False
+            self.appdata['filesuffix'] = ""
             self.appdata['outputdir'] = getpath
             self.fileDnDTarget.on_file_save(getpath)
+
+            confmanager = ConfigManager(self.appdata['fileconfpath'])
+            sett = confmanager.read_options()
+            sett['outputdir'] = self.appdata['outputdir']
+            sett['outputdir_asinput'] = self.appdata['outputdir_asinput']
+            sett['filesuffix'] = self.appdata['filesuffix']
+            confmanager.write_options(**sett)
 
             dialdir.Destroy()
     # ------------------------------------------------------------------#
@@ -1078,7 +1084,7 @@ class MainFrame(wx.Frame):
         handle like filters dialogs on Videomass, being need
         to get the return code from getvalue interface.
         """
-        msg = (_("Some changes require restarting the application."))
+        msg = _("Some changes require restarting the application.")
         with preferences.SetUp(self) as set_up:
             if set_up.ShowModal() == wx.ID_OK:
                 changes = set_up.getvalue()
@@ -1618,6 +1624,8 @@ class MainFrame(wx.Frame):
             self.queuelist.clear()
             self.toolbar.EnableTool(37, False)
             self.queue_tool_counter()
+        else:
+            self.toolbar.EnableTool(37, True)
     # ------------------------------------------------------------------#
 
     def on_add_to_queue(self, event):
@@ -1687,10 +1695,10 @@ class MainFrame(wx.Frame):
             if self.rename_batch.IsEnabled():
                 self.rename_batch.Enable(False)
             [self.toolbar.EnableTool(x, True) for x in (6, 8)]
-            [self.toolbar.EnableTool(x, False) for x in (3, 5, 36, 37)]
+            [self.toolbar.EnableTool(x, False) for x in (3, 5, 36, 37, 7)]
+        else:
+            [self.toolbar.EnableTool(x, False) for x in (4, 36)]
         self.logpan.Enable(False)
-        [self.toolbar.EnableTool(x, False) for x in (4, 7, 36, 37)]
-
         self.ProcessPanel.topic_thread(args, datalist, self.topicname)
         self.Layout()
     # ------------------------------------------------------------------#
@@ -1715,6 +1723,9 @@ class MainFrame(wx.Frame):
             self.toPictures.on_start()
         elif self.toSlideshow.IsShown():
             self.toSlideshow.on_start()
+        elif self.ProcessPanel.IsShown():
+            self.panelShown(self.topicname)
+            #  self.click_start(None)  # need recursion here
     # ------------------------------------------------------------------#
 
     def click_stop(self, event):
@@ -1736,7 +1747,7 @@ class MainFrame(wx.Frame):
         self.loadqueue.Enable(False)
         self.setupItem.Enable(True)
 
-        [self.toolbar.EnableTool(x, True) for x in (3, 5)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 5, 7)]
         self.toolbar.EnableTool(8, False)
 
         if self.emptylist:

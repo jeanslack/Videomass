@@ -200,7 +200,7 @@ class FormatCode(wx.Panel):
                             self.format_dict[url].append('Video: ' + dispv)
     # ----------------------------------------------------------------------
 
-    def set_formatcode(self, data_url, ssl):
+    def set_formatcode(self, data_url, kwargs):
         """
         Get URLs data and format codes by generator object
         `youtubedl_getstatistics`. Return `True` if `meta[1]`
@@ -211,7 +211,7 @@ class FormatCode(wx.Panel):
         index = 0
         for link in data_url:
             data = youtubedl_getstatistics(link,
-                                           ssl,
+                                           kwargs,
                                            parent=self.GetParent(),
                                            )
             for meta in data:
@@ -221,7 +221,7 @@ class FormatCode(wx.Panel):
             formats = iter(meta[0].get('formats', [meta[0]]))
             for n, f in enumerate(formats):
                 if f.get('vcodec'):
-                    vcodec, fps = f['vcodec'], f"{f.get('fps')}fps"
+                    vcodec, fps = f['vcodec'], f"{f.get('fps')}"
                 else:
                     vcodec, fps = '', ''
                 if f.get('acodec'):
