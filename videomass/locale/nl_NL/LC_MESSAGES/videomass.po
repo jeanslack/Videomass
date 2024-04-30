@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-29 12:36+0200\n"
-"PO-Revision-Date: 2024-04-29 12:40+0200\n"
+"POT-Creation-Date: 2024-04-30 22:36+0200\n"
+"PO-Revision-Date: 2024-04-30 22:40+0200\n"
 "Last-Translator: johannesdedoper <https://github.com/johannesdedoper>\n"
 "Language-Team: Dutch <>\n"
 "Language: nl_NL\n"
@@ -856,7 +856,7 @@ msgstr ""
 
 #: ../vdms_dialogs/wizard_dlg.py:243 ../vdms_dialogs/showlogs.py:168
 #: ../vdms_io/checkup.py:50 ../vdms_main/main_frame.py:205
-#: ../vdms_main/main_frame.py:765 ../vdms_main/main_frame.py:1658
+#: ../vdms_main/main_frame.py:765 ../vdms_main/main_frame.py:1660
 #: ../vdms_panels/presets_manager.py:379 ../vdms_panels/presets_manager.py:577
 #: ../vdms_panels/presets_manager.py:617 ../vdms_panels/presets_manager.py:683
 #: ../vdms_panels/presets_manager.py:718 ../vdms_panels/presets_manager.py:773
@@ -880,9 +880,9 @@ msgstr ""
 "tekstkaders in, door op de betreffende knoppen te drukken."
 
 #: ../vdms_dialogs/wizard_dlg.py:351 ../vdms_dialogs/wizard_dlg.py:368
-#: ../vdms_dialogs/wizard_dlg.py:385 ../vdms_dialogs/preferences.py:718
-#: ../vdms_dialogs/preferences.py:760 ../vdms_dialogs/preferences.py:802
-#: ../vdms_dialogs/preferences.py:837
+#: ../vdms_dialogs/wizard_dlg.py:385 ../vdms_dialogs/preferences.py:731
+#: ../vdms_dialogs/preferences.py:773 ../vdms_dialogs/preferences.py:815
+#: ../vdms_dialogs/preferences.py:850
 #, fuzzy
 #| msgid "Choose the {} location"
 msgid "{} location"
@@ -1066,7 +1066,7 @@ msgstr "Onvolledige profiel-toewijzingen"
 #: ../vdms_dialogs/setting_profiles.py:265
 #: ../vdms_dialogs/setting_profiles.py:272
 #: ../vdms_dialogs/setting_profiles.py:288
-#: ../vdms_dialogs/setting_profiles.py:307 ../vdms_dialogs/preferences.py:627
+#: ../vdms_dialogs/setting_profiles.py:307 ../vdms_dialogs/preferences.py:640
 #: ../vdms_main/main_frame.py:371 ../vdms_main/main_frame.py:1095
 #: ../vdms_panels/av_conversions.py:602 ../vdms_panels/av_conversions.py:609
 #: ../vdms_panels/sequence_to_video.py:350
@@ -1131,8 +1131,8 @@ msgid "Where do you prefer to save your transcodes?"
 msgstr "Waar wilt u transcoderingen bewaren?"
 
 #: ../vdms_dialogs/preferences.py:103 ../vdms_dialogs/preferences.py:130
-#: ../vdms_dialogs/preferences.py:145 ../vdms_dialogs/preferences.py:157
-#: ../vdms_dialogs/preferences.py:169 ../vdms_dialogs/preferences.py:206
+#: ../vdms_dialogs/preferences.py:151 ../vdms_dialogs/preferences.py:163
+#: ../vdms_dialogs/preferences.py:175 ../vdms_dialogs/preferences.py:215
 #: ../vdms_panels/filedrop.py:284 ../vdms_ytdlp/textdrop.py:153
 #: ../vdms_ytdlp/ydl_preferences.py:123
 msgid "Change"
@@ -1176,95 +1176,109 @@ msgstr "Bestands Voorkeuren"
 msgid "Location of executables"
 msgstr "Bezig FFmpeg programmabestanden te lokaliseren\n"
 
-#: ../vdms_dialogs/preferences.py:143
+#: ../vdms_dialogs/preferences.py:142
+msgid ""
+"FFmpeg can be built by enabling/disabling its options and this depends on "
+"your needs.\n"
+"For some use cases it is possible to provide a custom build of FFmpeg where "
+"you can specify\n"
+"it in this preferences tab."
+msgstr ""
+
+#: ../vdms_dialogs/preferences.py:149
 #, fuzzy
 #| msgid "Enable another location to run FFmpeg"
 msgid "Enable a custom location to run FFmpeg"
 msgstr "Activeer een andere lokatie om FFmpeg uit te voeren"
 
-#: ../vdms_dialogs/preferences.py:155
+#: ../vdms_dialogs/preferences.py:161
 #, fuzzy
 #| msgid "Enable another location to run FFprobe"
 msgid "Enable a custom location to run FFprobe"
 msgstr "Activeer een andere lokatie om FFprobe uit te voeren"
 
-#: ../vdms_dialogs/preferences.py:167
+#: ../vdms_dialogs/preferences.py:173
 #, fuzzy
 #| msgid "Enable another location to run FFplay"
 msgid "Enable a custom location to run FFplay"
 msgstr "Activeer een andere lokatie om FFplay uit te voeren"
 
-#: ../vdms_dialogs/preferences.py:179
+#: ../vdms_dialogs/preferences.py:185
 msgid "FFmpeg"
 msgstr "FFmpeg"
 
-#: ../vdms_dialogs/preferences.py:185
+#: ../vdms_dialogs/preferences.py:191
 msgid ""
 "Download videos from YouTube.com and other video sites\n"
 "(requires application restart)"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:189
+#: ../vdms_dialogs/preferences.py:195
 msgid ""
-"Videomass uses `yt_dlp` as a Python module and not as an executable. If you "
-"want to\n"
-"download audio and video from the web make sure to select the check-box "
-"below.\n"
-"The next time you restart the application, the module will be loaded into "
-"memory."
+"Videomass uses the yt-dlp API which can be activated by selecting the "
+"checkbox below.\n"
+"The next time you restart the application, the yt_dlp module will be loaded "
+"into memory."
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:197
+#: ../vdms_dialogs/preferences.py:201
 #, fuzzy
 #| msgid "Enable youtube-dl"
 msgid "Enable yt-dlp"
 msgstr "Activeer youtube-dl"
 
-#: ../vdms_dialogs/preferences.py:201
+#: ../vdms_dialogs/preferences.py:205
+msgid ""
+"Enabling a specific location of the yt-dlp executable will give you more "
+"control over downloads\n"
+"stop actions and the ability to provide other backend locations."
+msgstr ""
+
+#: ../vdms_dialogs/preferences.py:210
 msgid "Use the executable for downloads rather than the Python module"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:221
+#: ../vdms_dialogs/preferences.py:230
 msgid "Look and Feel (requires application restart)"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:226
+#: ../vdms_dialogs/preferences.py:235
 msgid "Icon themes"
 msgstr "Icoon thema's"
 
-#: ../vdms_dialogs/preferences.py:240
+#: ../vdms_dialogs/preferences.py:249
 msgid "At the top of window (default)"
 msgstr "Bovenaan venster (standaard)"
 
-#: ../vdms_dialogs/preferences.py:241
+#: ../vdms_dialogs/preferences.py:250
 msgid "At the bottom of window"
 msgstr "Onderaan venster"
 
-#: ../vdms_dialogs/preferences.py:242
+#: ../vdms_dialogs/preferences.py:251
 msgid "At the right of window"
 msgstr "Rechts van venster"
 
-#: ../vdms_dialogs/preferences.py:243
+#: ../vdms_dialogs/preferences.py:252
 msgid "At the left of window"
 msgstr "Links van venster"
 
-#: ../vdms_dialogs/preferences.py:245
+#: ../vdms_dialogs/preferences.py:254
 msgid "Place the toolbar"
 msgstr "Plaats de knoppenbalk"
 
-#: ../vdms_dialogs/preferences.py:254
+#: ../vdms_dialogs/preferences.py:263
 msgid "Toolbar's icons size:"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:268
+#: ../vdms_dialogs/preferences.py:277
 msgid "Application Language (requires application restart)"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:280
+#: ../vdms_dialogs/preferences.py:289
 msgid "Look and Language"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:286
+#: ../vdms_dialogs/preferences.py:295
 #, fuzzy
 #| msgid ""
 #| "The following settings affect output messages and\n"
@@ -1281,15 +1295,15 @@ msgstr ""
 "en log-berichten tijdens transcode-processen.\n"
 "Wijzig alleen als u weet wat u doet.\n"
 
-#: ../vdms_dialogs/preferences.py:308
+#: ../vdms_dialogs/preferences.py:317
 msgid "FFmpeg logging levels"
 msgstr "FFmpeg log niveau's"
 
-#: ../vdms_dialogs/preferences.py:314
+#: ../vdms_dialogs/preferences.py:323
 msgid "Specify the character encoding format"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:317
+#: ../vdms_dialogs/preferences.py:326
 msgid ""
 "Although UTF-8 is the default and most widely used standard encoding format, "
 "it is not the only encoding format available.\n"
@@ -1299,75 +1313,75 @@ msgid ""
 "specifying it here, e.g. ISO 8859-1, ISO 8859-16, etc."
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:327
+#: ../vdms_dialogs/preferences.py:336
 msgid "Character encoding:"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:336
+#: ../vdms_dialogs/preferences.py:345
 msgid "Default application directories"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:340
+#: ../vdms_dialogs/preferences.py:349
 #, fuzzy
 #| msgid "Configuration folder"
 msgid "Configuration directory"
 msgstr "Configuratie folder"
 
-#: ../vdms_dialogs/preferences.py:352
+#: ../vdms_dialogs/preferences.py:361
 #, fuzzy
 #| msgid "Cache folder"
 msgid "Cache directory"
 msgstr "Cache folder"
 
-#: ../vdms_dialogs/preferences.py:363
+#: ../vdms_dialogs/preferences.py:372
 #, fuzzy
 #| msgid "Log folder"
 msgid "Log directory"
 msgstr "Log folder"
 
-#: ../vdms_dialogs/preferences.py:376
+#: ../vdms_dialogs/preferences.py:385
 #, fuzzy
 #| msgid "Clear the cache when exiting the application"
 msgid "Upon exiting the application..."
 msgstr "Maak cache leeg als programma beëindigd wordt"
 
-#: ../vdms_dialogs/preferences.py:380
+#: ../vdms_dialogs/preferences.py:389
 #, fuzzy
 #| msgid "Please confirm"
 msgid "Always ask me to confirm"
 msgstr "Bevestig dit"
 
-#: ../vdms_dialogs/preferences.py:382
+#: ../vdms_dialogs/preferences.py:391
 #, fuzzy
 #| msgid "Log file list"
 msgid "Clean the log files"
 msgstr "Log bestanden lijst"
 
-#: ../vdms_dialogs/preferences.py:385
+#: ../vdms_dialogs/preferences.py:394
 #, fuzzy
 #| msgid "Add Files"
 msgid "Remove cached files"
 msgstr "Voeg bestanden toe"
 
-#: ../vdms_dialogs/preferences.py:389
+#: ../vdms_dialogs/preferences.py:398
 #, fuzzy
 #| msgid "Advanced Options"
 msgid "Advanced"
 msgstr "Geavanceerde Opties"
 
-#: ../vdms_dialogs/preferences.py:433
+#: ../vdms_dialogs/preferences.py:446
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr ""
 "Door toewijzing van een achtervoegsel kunt u overschrijven van bestanden "
 "voorkomen"
 
-#: ../vdms_dialogs/preferences.py:436
+#: ../vdms_dialogs/preferences.py:449
 #, fuzzy
 #| msgid "References"
 msgid "Preferences"
 msgstr "Referenties"
 
-#: ../vdms_dialogs/preferences.py:581 ../vdms_dialogs/preferences.py:661
+#: ../vdms_dialogs/preferences.py:594 ../vdms_dialogs/preferences.py:674
 #: ../vdms_main/main_frame.py:846 ../vdms_main/main_frame.py:1027
 #: ../vdms_panels/presets_manager.py:610 ../vdms_panels/presets_manager.py:639
 #: ../vdms_ytdlp/main_ytdlp.py:396 ../vdms_ytdlp/ydl_preferences.py:504
@@ -1376,7 +1390,7 @@ msgstr "Referenties"
 msgid "Choose Destination"
 msgstr "Bestemming folder"
 
-#: ../vdms_dialogs/preferences.py:612
+#: ../vdms_dialogs/preferences.py:625
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Spaces are not allowed."
@@ -2966,7 +2980,7 @@ msgstr "Van afbeelingen serie naar een video file"
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Presets Manager"
 
-#: ../vdms_main/main_frame.py:1634 ../vdms_panels/av_conversions.py:574
+#: ../vdms_main/main_frame.py:1636 ../vdms_panels/av_conversions.py:574
 #: ../vdms_panels/audio_encoders/acodecs.py:784 ../vdms_panels/filedrop.py:475
 #: ../vdms_panels/filedrop.py:588 ../vdms_panels/sequence_to_video.py:320
 #: ../vdms_panels/video_to_sequence.py:371
@@ -2976,20 +2990,20 @@ msgstr "Videomass - Presets Manager"
 msgid "Have to select an item in the file list first"
 msgstr "Selecteer eerst een profiel in de lijst"
 
-#: ../vdms_main/main_frame.py:1655
+#: ../vdms_main/main_frame.py:1657
 msgid ""
 "An item with the same destination file already exists.\n"
 "\n"
 "Do you want to replace it by adding the new item to the queue?"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1676
+#: ../vdms_main/main_frame.py:1678
 #, fuzzy
 #| msgid "Videomass - Output Monitor"
 msgid "Videomass - FFmpeg Message Monitoring"
 msgstr "Videomass - Output Monitor"
 
-#: ../vdms_main/main_frame.py:1786
+#: ../vdms_main/main_frame.py:1788
 #, fuzzy
 #| msgid "The downloader is disabled. Check your preferences."
 msgid "yt-dlp is disabled. Check your preferences."
@@ -5097,10 +5111,6 @@ msgstr "Kies een tijdelijke bestemming voor de downloads"
 msgid "Destination folder of downloads"
 msgstr "Kies een tijdelijke bestemming voor de downloads"
 
-#: ../vdms_ytdlp/ydl_downloader.py:60 ../vdms_ytdlp/ydl_downloader.py:67
-msgid "Unrecognized error"
-msgstr "Onherkenbare error"
-
 #: ../vdms_ytdlp/ydl_mediainfo.py:67
 msgid "Statistics viewer"
 msgstr "Statistieken viewer"
@@ -5615,6 +5625,9 @@ msgid ""
 "\n"
 "Cannot contain multiple occurrences in `destination` keys value."
 msgstr ""
+
+#~ msgid "Unrecognized error"
+#~ msgstr "Onherkenbare error"
 
 #~ msgid "Abort"
 #~ msgstr "Afbreken"

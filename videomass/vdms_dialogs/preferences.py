@@ -139,7 +139,13 @@ class SetUp(wx.Dialog):
         labFFexec = wx.StaticText(tabThree, wx.ID_ANY,
                                   _('Location of executables'))
         sizerFFmpeg.Add(labFFexec, 0, wx.ALL | wx.EXPAND, 5)
-        sizerFFmpeg.Add((0, 10))
+        msg = (_('FFmpeg can be built by enabling/disabling its options '
+                 'and this depends on your needs.\nFor some use cases it '
+                 'is possible to provide a custom build of FFmpeg where you '
+                 'can specify\nit in this preferences tab.'))
+        labffdescr = wx.StaticText(tabThree, wx.ID_ANY, msg)
+        sizerFFmpeg.Add(labffdescr, 0, wx.ALL | wx.EXPAND, 5)
+        sizerFFmpeg.Add((0, 20))
         msg = _("Enable a custom location to run FFmpeg")
         self.checkbox_exeFFmpeg = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         self.btn_ffmpeg = wx.Button(tabThree, wx.ID_ANY, _('Change'))
@@ -186,22 +192,25 @@ class SetUp(wx.Dialog):
                  '(requires application restart)'))
         labytdlp = wx.StaticText(tabFour, wx.ID_ANY, msg)
         sizerytdlp.Add(labytdlp, 0, wx.ALL | wx.EXPAND, 5)
-        msg = (_('Videomass uses `yt_dlp` as a Python module and not as an '
-                 'executable. If you want to\ndownload audio and video from '
-                 'the web make sure to select the check-box below.\nThe next '
-                 'time you restart the application, the module will be loaded '
-                 'into memory.'))
+        msg = (_('Videomass uses the yt-dlp API which can be activated by '
+                 'selecting the checkbox below.\nThe next time you restart '
+                 'the application, the yt_dlp module will be loaded into '
+                 'memory.'))
         labytdescr = wx.StaticText(tabFour, wx.ID_ANY, msg)
         sizerytdlp.Add(labytdescr, 0, wx.ALL | wx.EXPAND, 5)
-        sizerytdlp.Add((0, 20))
         msg = _("Enable yt-dlp")
         self.checkbox_ytdlp = wx.CheckBox(tabFour, wx.ID_ANY, (msg))
         sizerytdlp.Add(self.checkbox_ytdlp, 0, wx.ALL, 5)
-        sizerytdlp.Add((0, 15))
+        sizerytdlp.Add((0, 20))
+        msg = (_('Enabling a specific location of the yt-dlp executable will '
+                 'give you more control over downloads\nstop actions and the '
+                 'ability to provide other backend locations.'))
+        labytexec = wx.StaticText(tabFour, wx.ID_ANY, msg)
+        sizerytdlp.Add(labytexec, 0, wx.ALL | wx.EXPAND, 5)
         msg = (_('Use the executable for downloads '
                  'rather than the Python module'))
         self.checkbox_dlexe = wx.CheckBox(tabFour, wx.ID_ANY, (msg))
-        sizerytdlp.Add(self.checkbox_dlexe, 0, wx.LEFT, 5)
+        sizerytdlp.Add(self.checkbox_dlexe, 0, wx.LEFT | wx.TOP, 5)
 
         self.btn_ytdlp = wx.Button(tabFour, wx.ID_ANY, _('Change'))
         self.txtctrl_ytdlp = wx.TextCtrl(tabFour, wx.ID_ANY, "",
@@ -409,8 +418,10 @@ class SetUp(wx.Dialog):
             labexit.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labfile.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFexec.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labffdescr.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labytdlp.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdescr.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            labytexec.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labappe.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labLog.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labrem.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -422,8 +433,10 @@ class SetUp(wx.Dialog):
             labexit.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labfile.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFexec.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labffdescr.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labytdlp.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdescr.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            labytexec.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labappe.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labLog.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labrem.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))

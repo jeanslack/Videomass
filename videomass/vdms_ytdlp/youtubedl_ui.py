@@ -45,7 +45,7 @@ def from_api_to_cli(data, execpath):
         dformat = ''
     else:
         dformat = f'--format "{data["format"]}"'
-    opt = (f'{execpath} {dformat} --progress-template '
+    opt = (f'"{execpath}" {dformat} --progress-template '
            f'"download-title:%(info.id)s-%(progress.eta)s" '
            f'--newline --compat-options "{data["compat_opts"]}" '
            f'--ignore-errors --ignore-config --no-color ')
