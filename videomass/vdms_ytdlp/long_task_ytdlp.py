@@ -160,7 +160,7 @@ class LogOut(wx.Panel):
             return  # must be return here
 
         if '[download] Destination:' in output:
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['DEBUG']))
             self.txtout.AppendText(f'{output}')
 
         elif '[download]' in output:
@@ -177,7 +177,7 @@ class LogOut(wx.Panel):
                 self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
                 self.txtout.AppendText(f'{output}')
             else:
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['DEBUG']))
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
                 self.txtout.AppendText(f'{output}')
 
             with open(self.logfile, "a", encoding='utf-8') as logerr:
