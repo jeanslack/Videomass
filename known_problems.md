@@ -10,9 +10,9 @@ nav_order: 6
 
 ## Using YouTube Downloader
 
-- Stopping a current download by clicking the "Abort" button is currently not possible as 
-this feature is not yet implemented in the yt-dlp [API](https://en.wikipedia.org/wiki/API).   
-Only subsequent downloads in a URL list can be stopped programmatically by clicking the "Abort" button.  
+- Using yt_dlp API is currently not possible stopping downloads clicking the "Stop" button. 
+To workaround this issue, switch to `Use the executable for downloads rather than Python module` 
+selecting related check box in the `yt-dlp` tab of preferences dialog.
 
 - [Drag-and-drop of text and URLs not working with Firefox under Linux](https://github.com/wxWidgets/wxWidgets/issues/17694). 
 Using a web browser other than Firefox or dragging and dropping text from a text 
