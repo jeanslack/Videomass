@@ -32,12 +32,11 @@ extract audio from videos and much more!
 - Advanced log file management.
 - Multi-panels, switch between panels using keyboard shortcuts.
 - Audio/video processing using advanced tools and sophisticated filters interfaces.
-- Download audio and videos from hundreds of sites in multiple formats and resolutions.
 - While downloading audio or video you can now do other transcoding tasks.
 - Multi languages support (English, French, Italian, Russian, Dutch, Portuguese-BR, simplified Chinese, Spanish-ES, Spanish-CU, Spanish-MX)
 
 
-## Using FFmpeg
+## Conversions and transcodings
 {: .bg-green-300}
 ---
 - Drag and drop to add multiple files simultaneously.
@@ -68,13 +67,13 @@ without re-encoding and therefore without loss of quality.
     - PEAK, RMS and [EBU-R128](http://ffmpeg.org/ffmpeg-filters.html#loudnorm) normalizers.
     - PEAK and RMS volume analysis reporting.
     - Ability to select specified audio streams in videos to apply volume normalization.
-- ...and much more!
+- and much more...
 
-## Using yt-dlp
+## Downloading audio and video
 {: .bg-green-300}
 ---
-- Download from multiple URLs (YouTube and more sites, over 200 are currently supported).
-- Precompiled Videos, quality best, medium, worst.
+- Download using multiple URLs from YouTube and more websites (over 200 are currently supported).
+- Precompiled Videos, from best to worst qualities.
 - Download by format and resolution.
 - Download audio and video separately.
 - Download Audio only.
@@ -84,9 +83,14 @@ without re-encoding and therefore without loss of quality.
 - Playlists can be indexed to download only the files you are interested in.
 - Ability to enable/disable the SSL certificate.
 - Ability to embed thumbnail in audio file.
-- Add metadata to file.
+- Can include the origin metadata to files.
 - Ability to set preferred subtitles.
 - Ability to include IDs in filenames.
-- Ability to restrict file names.
+- Ability to restrict filenames to only ASCII characters.
 - Ability to set alternative downloaders such as aria2c, avconv, axel, curl, ffmpeg, httpie, wget.
+- Ability to specify a proxy server.
+- Various options provided for geo restriction.
+- Login using authentication possible (e.g. username/password and video password).
+- Easy and friendly access via cookies.
+- and more...
 
