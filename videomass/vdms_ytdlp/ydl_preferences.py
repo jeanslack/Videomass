@@ -183,7 +183,7 @@ class Ytdlp_Options(wx.Dialog):
         proxylab = wx.StaticText(tabFour, wx.ID_ANY, _("Proxy"))
         gridproxy.Add(proxylab, 0, wx.ALL | wx.EXPAND, 5)
         self.txtctrl_proxy = wx.TextCtrl(tabFour, wx.ID_ANY, "",
-                                         size=(350, -1))
+                                         size=(450, -1))
         self.txtctrl_proxy.SetValue(self.appdata["proxy"])
         gridproxy.Add(self.txtctrl_proxy, 0, wx.ALL | wx.EXPAND, 5)
         sizernet.Add(gridproxy, 0, wx.ALL | wx.EXPAND, 5)
@@ -206,7 +206,7 @@ class Ytdlp_Options(wx.Dialog):
                                     _("Geo verification proxy"))
         gridgeo.Add(labgeoproxy, 0, wx.ALL | wx.EXPAND, 5)
         self.txtctrl_geoproxy = wx.TextCtrl(tabFive, wx.ID_ANY, "",
-                                            size=(350, -1))
+                                            size=(450, -1))
         tip = _('URL of the proxy to use for IP address verification '
                 'on geo-restricted sites.')
         self.txtctrl_geoproxy.SetToolTip(tip)
@@ -215,7 +215,7 @@ class Ytdlp_Options(wx.Dialog):
         labgeobypass = wx.StaticText(tabFive, wx.ID_ANY, _("Geo bypass"))
         gridgeo.Add(labgeobypass, 0, wx.ALL | wx.EXPAND, 5)
         self.txtctrl_geobypass = wx.TextCtrl(tabFive, wx.ID_ANY, "",
-                                             size=(350, -1))
+                                             size=(450, -1))
         tip = (_('Bypass geographic restriction via faking X-Forwarded-For '
                  'HTTP header. One of "default" (only when known to be '
                  'useful), or "never"'))
@@ -226,7 +226,7 @@ class Ytdlp_Options(wx.Dialog):
                                       _("Geo bypass country"))
         gridgeo.Add(labgeocountry, 0, wx.ALL | wx.EXPAND, 5)
         self.txtctrl_geocountry = wx.TextCtrl(tabFive, wx.ID_ANY, "",
-                                              size=(350, -1))
+                                              size=(450, -1))
         tip = (_('Two-letter ISO 3166-2 country code that will be used for '
                  'explicit geographic restriction bypassing via faking '
                  'X-Forwarded-For HTTP header.'))
@@ -238,7 +238,7 @@ class Ytdlp_Options(wx.Dialog):
                                       _("Geo bypass ip block"))
         gridgeo.Add(labgeoipblock, 0, wx.ALL | wx.EXPAND, 5)
         self.txtctrl_geoipblock = wx.TextCtrl(tabFive, wx.ID_ANY, "",
-                                              size=(350, -1))
+                                              size=(450, -1))
         tip = (_('IP range in CIDR notation that will be used similarly to '
                  'geo_bypass_country'))
         self.txtctrl_geoipblock.SetToolTip(tip)
@@ -535,14 +535,8 @@ class Ytdlp_Options(wx.Dialog):
         Open default web browser via Python Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        if self.appdata['GETLANG'] in self.appdata['SUPP_LANGs']:
-            lang = self.appdata['GETLANG'].split('_')[0]
-            page = (f'https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    f'languages/{lang}/2-Startup_and_Setup_{lang}.pdf')
-        else:
-            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/en/2-Startup_and_Setup_en.pdf')
-
+        page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                'languages/en/YouTube_Downloader_Options_en.pdf')
         webbrowser.open(page)
     # --------------------------------------------------------------------#
 

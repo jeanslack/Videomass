@@ -3,8 +3,9 @@ videomass (5.0.13-1) UNRELEASED; urgency=medium
   * [YouTube Downloader] Fix `--playlist-items` using executable.
   * [YouTube Downloader] Improved playlists/channels check before start
     download.
+  * Update english user guide documentation (pdf docs) and related references.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 02 May 2024 21:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 09 May 2024 00:00:00 +0200
 
 videomass (5.0.12-1) UNRELEASED; urgency=medium
 

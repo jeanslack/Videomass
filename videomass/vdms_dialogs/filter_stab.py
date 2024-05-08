@@ -695,13 +695,8 @@ class VidstabSet(wx.Dialog):
         see <https://docs.python.org/3.8/library/webbrowser.html>
 
         """
-        if VidstabSet.appdata['GETLANG'] in VidstabSet.appdata['SUPP_LANGs']:
-            lang = VidstabSet.appdata['GETLANG'].split('_')[0]
-            page = (f'https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    f'languages/{lang}/4-Video_filters_{lang}.pdf')
-        else:
-            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/en/4-Video_filters_en.pdf')
+        page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                'languages/en/Video_filters_en.pdf')
 
         webbrowser.open(page)
     # ------------------------------------------------------------------#

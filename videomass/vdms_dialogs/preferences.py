@@ -917,13 +917,8 @@ class SetUp(wx.Dialog):
         Open default web browser via Python Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        if self.appdata['GETLANG'] in self.appdata['SUPP_LANGs']:
-            lang = self.appdata['GETLANG'].split('_')[0]
-            page = (f'https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    f'languages/{lang}/2-Startup_and_Setup_{lang}.pdf')
-        else:
-            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/en/2-Startup_and_Setup_en.pdf')
+        page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                'languages/en/Startup_and_Setup_en.pdf')
 
         webbrowser.open(page)
     # --------------------------------------------------------------------#

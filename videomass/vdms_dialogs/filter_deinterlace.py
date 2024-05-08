@@ -492,13 +492,8 @@ class Deinterlace(wx.Dialog):
         Open default web browser via Python Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        if Deinterlace.appdata['GETLANG'] in Deinterlace.appdata['SUPP_LANGs']:
-            lang = Deinterlace.appdata['GETLANG'].split('_')[0]
-            page = (f'https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    f'languages/{lang}/4-Video_filters_{lang}.pdf')
-        else:
-            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/en/4-Video_filters_en.pdf')
+        page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                'languages/en/Video_filters_en.pdf')
 
         webbrowser.open(page)
     # ------------------------------------------------------------------#
