@@ -8,6 +8,8 @@ grand_parent: Documentation
 
 ---
 
+> This documentation is outdated, please consult the most updated one written in English
+
 - [User Interface Overview](1-User_Interface_Overview_ru.pdf)   
 - [Startup and Setting up](2-Startup_and_Setup_ru.pdf)
 - [Presets Manager](3-Presets_Manager_ru.pdf)
