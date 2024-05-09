@@ -6,14 +6,20 @@ nav_order: 5
 ---
 
 # Documentation
-
+Online documentation is work in progress. 
 --- 
 
-## Online documentation
+## User's Guide
 {: .bg-green-300}
 
-For online documentation, go to the [User's Guide](Pages/User_Guide.html) menu 
-and choose an available language.  
+The User Guide was written in English and is available in PDF format only (update to v5.0.13).
+
+- [User Interface Overview](User-guide/User_Interface_Overview_en.pdf)
+- [Startup and Setting up](User-guide/Startup_and_Setup_en.pdf)
+- [Presets Manager](User-guide/Presets_Manager_en.pdf)
+- [Timeline Usage](User-guide/Timeline_en.pdf)
+- [Video Filters](User-guide/Video_filters_en.pdf)
+- [YouTube Downloader Options](User-guide/YouTube_Downloader_Options_en.pdf)
 
 ## Demo videos and screencasts
 {: .bg-green-300}
