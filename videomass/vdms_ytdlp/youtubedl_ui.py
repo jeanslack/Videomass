@@ -68,7 +68,12 @@ def from_api_to_cli(data, execpath):
     if data['external_downloader_args']:
         dwargs = ' '.join(data["external_downloader_args"])
         opt += (f'--downloader-args "{data["external_downloader"]}:{dwargs}" ')
-    opt += '--no-playlist ' if data['noplaylist'] else '--yes-playlist '
+    if data['noplaylist'] is False:
+        opt += '--yes-playlist '
+        if data['playlist_items']:
+            opt += f'--playlist-items "{data["playlist_items"]}" '
+    else:
+        opt += '--no-playlist '
     if data['writesubtitles']:
         opt += '--write-subs '
         if data['subtitleslangs'][0]:
@@ -641,25 +646,35 @@ class Downloader(wx.Panel):
                     self.plidx = data
     # -----------------------------------------------------------------#
 
-    def check_options(self):
+    def check_for_playlist(self):
         """
-        This method executes for
+        Check for playlists and warn the user before continue.
         """
         urls = self.parent.data_url
-
-        if not self.ckbx_pl.IsChecked():
-            if [url for url in urls if 'playlist' in url]:
+        if [url for url in urls if 'playlist' in url]:
+            if not self.ckbx_pl.IsChecked():
                 if wx.MessageBox(_('The URLs contain playlists. '
                                    'Are you sure you want to continue?'),
                                  _('Please confirm'), wx.ICON_QUESTION
-                                 | wx.CANCEL | wx.YES_NO, self) != wx.YES:
-                    return True
+                                 | wx.CANCEL | wx.YES_NO, self) == wx.YES:
+                    return False
+                return True
+
+        return False
+    # -----------------------------------------------------------------#
+
+    def check_for_channels(self):
+        """
+        Check for channels and warn the user before continue.
+        """
+        urls = self.parent.data_url
         if [url for url in urls if 'channel' in url]:
             if wx.MessageBox(_('The URLs contain channels. '
                                'Are you sure you want to continue?'),
                              _('Please confirm'), wx.ICON_QUESTION
-                             | wx.CANCEL | wx.YES_NO, self) != wx.YES:
-                return True
+                             | wx.CANCEL | wx.YES_NO, self) == wx.YES:
+                return False
+            return True
 
         return False
     # -----------------------------------------------------------------#
@@ -800,8 +815,9 @@ class Downloader(wx.Panel):
         """
         Pass options list to processing.
         """
-        if self.check_options():
+        if self.check_for_playlist() or self.check_for_channels():
             return
+
         data = self.default_download_options()
 
         if self.appdata["include_ID_name"]:

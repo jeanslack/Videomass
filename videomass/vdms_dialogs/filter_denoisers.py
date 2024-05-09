@@ -53,7 +53,7 @@ class Denoisers(wx.Dialog):
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        sbox = wx.StaticBox(self, wx.ID_ANY, (_("Apply Denoisers Filters")))
+        sbox = wx.StaticBox(self, wx.ID_ANY, (_("Denoiser Filters")))
         zone = wx.StaticBoxSizer(sbox, wx.VERTICAL)
         sizer_base.Add(zone, 1, wx.ALL | wx.EXPAND, 5)
         self.ckbx_nlmeans = wx.CheckBox(self, wx.ID_ANY,
@@ -259,13 +259,8 @@ class Denoisers(wx.Dialog):
         Open default web browser via Python Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        if Denoisers.appdata['GETLANG'] in Denoisers.appdata['SUPP_LANGs']:
-            lang = Denoisers.appdata['GETLANG'].split('_')[0]
-            page = (f'https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    f'languages/{lang}/4-Video_filters_{lang}.pdf')
-        else:
-            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/en/4-Video_filters_en.pdf')
+        page = ('https://jeanslack.github.io/Videomass/User-guide'
+                '/Video_filters_en.pdf')
 
         webbrowser.open(page)
     # ------------------------------------------------------------------#

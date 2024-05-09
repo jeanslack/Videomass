@@ -43,7 +43,7 @@ if wx.GetApp().appset['use-downloader']:
 
 def killbill(pid):
     """
-    kill the process sending a Ctrl+C event
+    kill the process sending a Ctrl+C event to yt-dlp
     """
     lambda: os.kill(pid, signal.CTRL_C_EVENT)
 

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2023
+Rev: May.09.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -259,15 +259,15 @@ class Deinterlace(wx.Dialog):
                 self.ckbx_interlace.Disable()
                 self.rdbx_w3fdif.Enable()
                 self.rdbx_w3fdif_d.Enable()
-                indx = self.cmd_opt["deinterlace"].split('=')[1].split(':')
-                if indx[0] == 'complex':
+                indx = self.cmd_opt["deinterlace"].split(':')
+                if indx[0].split('=')[2] == 'complex':
                     filt = 1
-                elif indx[0] == 'simple':
+                elif indx[0].split('=')[2] == 'simple':
                     filt = 0
                 self.rdbx_w3fdif.SetSelection(filt)
-                if indx[1] == 'all':
+                if indx[1].split('=')[1] == 'all':
                     deint = 0
-                elif indx[1] == 'interlaced':
+                elif indx[1].split('=')[1] == 'interlaced':
                     deint = 1
                 self.rdbx_w3fdif_d.SetSelection(deint)
 
@@ -277,7 +277,6 @@ class Deinterlace(wx.Dialog):
             self.ckbx_deintYadif.Disable()
             self.rdbx_inter_scan.Enable()
             self.rdbx_inter_lowpass.Enable()
-
             scan = self.cmd_opt["interlace"].split('=')[2].split(':')
             if 'tff' in scan[0]:
                 scan = 0
@@ -304,7 +303,7 @@ class Deinterlace(wx.Dialog):
             self.rdbx_w3fdif_d.Enable()
             self.ckbx_deintYadif.Disable()
             self.ckbx_interlace.Disable()
-            self.cmd_opt["deinterlace"] = "w3fdif=complex:all"
+            self.cmd_opt["deinterlace"] = "w3fdif=filter=complex:deint=all"
 
         elif not self.ckbx_deintW3fdif.IsChecked():
             self.rdbx_w3fdif.Disable()
@@ -320,8 +319,8 @@ class Deinterlace(wx.Dialog):
         radiobox control for setting the additional parameter
         to `simple` or `complex`, default is `complex`.
         """
-        val = (f"w3fdif={self.rdbx_w3fdif.GetStringSelection()}:"
-               f"{self.rdbx_w3fdif_d.GetStringSelection()}")
+        val = (f"w3fdif=filter={self.rdbx_w3fdif.GetStringSelection()}:"
+               f"deint={self.rdbx_w3fdif_d.GetStringSelection()}")
         self.cmd_opt["deinterlace"] = val
     # ------------------------------------------------------------------#
 
@@ -331,8 +330,8 @@ class Deinterlace(wx.Dialog):
         radiobox control for setting the additional parameters
         to `all` or `interlaced`, default is `all`.
         """
-        val = (f"w3fdif={self.rdbx_w3fdif.GetStringSelection()}:"
-               f"{self.rdbx_w3fdif_d.GetStringSelection()}")
+        val = (f"w3fdif=filter={self.rdbx_w3fdif.GetStringSelection()}:"
+               f"deint={self.rdbx_w3fdif_d.GetStringSelection()}")
         self.cmd_opt["deinterlace"] = val
     # ------------------------------------------------------------------#
 
@@ -492,13 +491,8 @@ class Deinterlace(wx.Dialog):
         Open default web browser via Python Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        if Deinterlace.appdata['GETLANG'] in Deinterlace.appdata['SUPP_LANGs']:
-            lang = Deinterlace.appdata['GETLANG'].split('_')[0]
-            page = (f'https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    f'languages/{lang}/4-Video_filters_{lang}.pdf')
-        else:
-            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/en/4-Video_filters_en.pdf')
+        page = ('https://jeanslack.github.io/Videomass/User-guide'
+                '/Video_filters_en.pdf')
 
         webbrowser.open(page)
     # ------------------------------------------------------------------#
