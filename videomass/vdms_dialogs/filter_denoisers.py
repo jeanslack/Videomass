@@ -53,7 +53,7 @@ class Denoisers(wx.Dialog):
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        sbox = wx.StaticBox(self, wx.ID_ANY, (_("Apply Denoisers Filters")))
+        sbox = wx.StaticBox(self, wx.ID_ANY, (_("Denoiser Filters")))
         zone = wx.StaticBoxSizer(sbox, wx.VERTICAL)
         sizer_base.Add(zone, 1, wx.ALL | wx.EXPAND, 5)
         self.ckbx_nlmeans = wx.CheckBox(self, wx.ID_ANY,

@@ -13,6 +13,7 @@ Thu, 09 May 2024 V.5.0.13
   * [YouTube Downloader] Improved playlists/channels check before start
     download.
   * Update english user guide documentation (pdf docs) and related references.
+  * Fixed wrong deinterlace command option using w3fdif filter.
 
 +------------------------------------+
 Mon, 29 Apr 2024 V.5.0.12
