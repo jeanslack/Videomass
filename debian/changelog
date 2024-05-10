@@ -5,8 +5,9 @@ videomass (5.0.13-1) UNRELEASED; urgency=medium
     download.
   * Update english user guide documentation (pdf docs) and related references.
   * Fixed wrong deinterlace command option using w3fdif filter.
+  * [YouTube Downloader] Fixed audio/video qualities (see #305 #307)
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 09 May 2024 00:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 10 May 2024 13:00:00 +0200
 
 videomass (5.0.12-1) UNRELEASED; urgency=medium
 
