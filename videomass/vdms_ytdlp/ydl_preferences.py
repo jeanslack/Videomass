@@ -570,7 +570,7 @@ class Ytdlp_Options(wx.Dialog):
         self.sett['cookiefile'] = self.txtctrl_cook.GetValue()
         self.confmanager.write_options(**self.sett)
         self.appdata.update(self.sett)
-        # Do not store passwords in the configuration file
+        # do not store this data in the configuration file
         self.appdata['password'] = self.txtctrl_pass.GetValue()
         self.appdata['videopassword'] = self.txtctrl_vpass.GetValue()
         event.Skip()

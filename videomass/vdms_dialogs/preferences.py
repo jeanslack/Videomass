@@ -85,156 +85,155 @@ class SetUp(wx.Dialog):
         notebook = wx.Notebook(self, wx.ID_ANY, style=0)
         sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)
 
-        # -----tab 2
-        tabTwo = wx.Panel(notebook, wx.ID_ANY)
+        # -----tab 1
+        tabOne = wx.Panel(notebook, wx.ID_ANY)
         sizerFiles = wx.BoxSizer(wx.VERTICAL)
         sizerFiles.Add((0, 10))
         msg = _("Where do you prefer to save your transcodes?")
-        labfile = wx.StaticText(tabTwo, wx.ID_ANY, msg)
+        labfile = wx.StaticText(tabOne, wx.ID_ANY, msg)
         sizerFiles.Add(labfile, 0, wx.ALL | wx.EXPAND, 5)
         sizerFiles.Add((0, 10))
         sizeFFdirdest = wx.BoxSizer(wx.HORIZONTAL)
         sizerFiles.Add(sizeFFdirdest, 0, wx.EXPAND)
-        self.txtctrl_FFpath = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
+        self.txtctrl_FFpath = wx.TextCtrl(tabOne, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
                                           )
         sizeFFdirdest.Add(self.txtctrl_FFpath, 1, wx.ALL, 5)
         self.txtctrl_FFpath.AppendText(self.appdata['outputdir'])
-        self.btn_fsave = wx.Button(tabTwo, wx.ID_ANY, _('Change'))
+        self.btn_fsave = wx.Button(tabOne, wx.ID_ANY, _('Change'))
         sizeFFdirdest.Add(self.btn_fsave, 0, wx.RIGHT | wx.ALIGN_CENTER, 5)
         descr = _("Same destination paths as source files")
-        self.ckbx_dir = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
+        self.ckbx_dir = wx.CheckBox(tabOne, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_dir, 0, wx.ALL, 5)
         sizeSamedest = wx.BoxSizer(wx.HORIZONTAL)
         sizerFiles.Add(sizeSamedest, 0, wx.EXPAND)
         descr = _("Assign optional suffix to destination file names:")
-        self.lab_suffix = wx.StaticText(tabTwo, wx.ID_ANY, (descr))
+        self.lab_suffix = wx.StaticText(tabOne, wx.ID_ANY, (descr))
         sizeSamedest.Add(self.lab_suffix, 0, wx.LEFT | wx.ALIGN_CENTER, 5)
-        self.text_suffix = wx.TextCtrl(tabTwo, wx.ID_ANY, "", size=(90, -1))
+        self.text_suffix = wx.TextCtrl(tabOne, wx.ID_ANY, "", size=(90, -1))
         sizeSamedest.Add(self.text_suffix, 1, wx.ALL | wx.CENTER, 5)
         sizerFiles.Add((0, 20))
         msg = _("File removal preferences")
-        labrem = wx.StaticText(tabTwo, wx.ID_ANY, msg)
+        labrem = wx.StaticText(tabOne, wx.ID_ANY, msg)
         sizerFiles.Add(labrem, 0, wx.ALL | wx.EXPAND, 5)
         sizerFiles.Add((0, 10))
         descr = _("Trash the source files after successful encoding")
-        self.ckbx_trash = wx.CheckBox(tabTwo, wx.ID_ANY, (descr))
+        self.ckbx_trash = wx.CheckBox(tabOne, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_trash, 0, wx.ALL, 5)
         sizetrash = wx.BoxSizer(wx.HORIZONTAL)
         sizerFiles.Add(sizetrash, 0, wx.EXPAND)
-        self.txtctrl_trash = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
+        self.txtctrl_trash = wx.TextCtrl(tabOne, wx.ID_ANY, "",
                                          style=wx.TE_READONLY
                                          )
         sizetrash.Add(self.txtctrl_trash, 1, wx.ALL, 5)
         self.txtctrl_trash.AppendText(self.appdata['trashdir_loc'])
-        self.btn_trash = wx.Button(tabTwo, wx.ID_ANY, _('Change'))
+        self.btn_trash = wx.Button(tabOne, wx.ID_ANY, _('Change'))
         sizetrash.Add(self.btn_trash, 0, wx.RIGHT | wx.ALIGN_CENTER, 5)
-        tabTwo.SetSizer(sizerFiles)
-        notebook.AddPage(tabTwo, _("File Preferences"))
+        tabOne.SetSizer(sizerFiles)
+        notebook.AddPage(tabOne, _("File Preferences"))
 
-        # -----tab 3
-        tabThree = wx.Panel(notebook, wx.ID_ANY)
+        # -----tab 2
+        tabTwo = wx.Panel(notebook, wx.ID_ANY)
         sizerFFmpeg = wx.BoxSizer(wx.VERTICAL)
         sizerFFmpeg.Add((0, 10))
-        labFFexec = wx.StaticText(tabThree, wx.ID_ANY,
+        labFFexec = wx.StaticText(tabTwo, wx.ID_ANY,
                                   _('Location of executables'))
         sizerFFmpeg.Add(labFFexec, 0, wx.ALL | wx.EXPAND, 5)
         msg = (_('FFmpeg can be built by enabling/disabling its options '
                  'and this depends on your needs.\nFor some use cases it '
                  'is possible to provide a custom build of FFmpeg where you '
                  'can specify\nit in this preferences tab.'))
-        labffdescr = wx.StaticText(tabThree, wx.ID_ANY, msg)
+        labffdescr = wx.StaticText(tabTwo, wx.ID_ANY, msg)
         sizerFFmpeg.Add(labffdescr, 0, wx.ALL | wx.EXPAND, 5)
         sizerFFmpeg.Add((0, 20))
         msg = _("Enable a custom location to run FFmpeg")
-        self.checkbox_exeFFmpeg = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
-        self.btn_ffmpeg = wx.Button(tabThree, wx.ID_ANY, _('Change'))
-        self.txtctrl_ffmpeg = wx.TextCtrl(tabThree, wx.ID_ANY, "",
+        self.ckbx_exeFFmpeg = wx.CheckBox(tabTwo, wx.ID_ANY, (msg))
+        self.btn_ffmpeg = wx.Button(tabTwo, wx.ID_ANY, _('Change'))
+        self.txtctrl_ffmpeg = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
                                           )
-        sizerFFmpeg.Add(self.checkbox_exeFFmpeg, 0, wx.LEFT, 5)
+        sizerFFmpeg.Add(self.ckbx_exeFFmpeg, 0, wx.LEFT, 5)
         gridFFmpeg = wx.BoxSizer(wx.HORIZONTAL)
         sizerFFmpeg.Add(gridFFmpeg, 0, wx.EXPAND)
         gridFFmpeg.Add(self.txtctrl_ffmpeg, 1, wx.ALL, 5)
         gridFFmpeg.Add(self.btn_ffmpeg, 0, wx.RIGHT | wx.CENTER, 5)
         sizerFFmpeg.Add((0, 15))
         msg = _("Enable a custom location to run FFprobe")
-        self.checkbox_exeFFprobe = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
-        self.btn_ffprobe = wx.Button(tabThree, wx.ID_ANY, _('Change'))
-        self.txtctrl_ffprobe = wx.TextCtrl(tabThree, wx.ID_ANY, "",
+        self.ckbx_exeFFprobe = wx.CheckBox(tabTwo, wx.ID_ANY, (msg))
+        self.btn_ffprobe = wx.Button(tabTwo, wx.ID_ANY, _('Change'))
+        self.txtctrl_ffprobe = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
                                            style=wx.TE_READONLY
                                            )
-        sizerFFmpeg.Add(self.checkbox_exeFFprobe, 0, wx.LEFT, 5)
+        sizerFFmpeg.Add(self.ckbx_exeFFprobe, 0, wx.LEFT, 5)
         gridFFprobe = wx.BoxSizer(wx.HORIZONTAL)
         sizerFFmpeg.Add(gridFFprobe, 0, wx.EXPAND)
         gridFFprobe.Add(self.txtctrl_ffprobe, 1, wx.ALL, 5)
         gridFFprobe.Add(self.btn_ffprobe, 0, wx.RIGHT | wx.CENTER, 5)
         sizerFFmpeg.Add((0, 15))
         msg = _("Enable a custom location to run FFplay")
-        self.checkbox_exeFFplay = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
-        self.btn_ffplay = wx.Button(tabThree, wx.ID_ANY, _('Change'))
-        self.txtctrl_ffplay = wx.TextCtrl(tabThree, wx.ID_ANY, "",
+        self.ckbx_exeFFplay = wx.CheckBox(tabTwo, wx.ID_ANY, (msg))
+        self.btn_ffplay = wx.Button(tabTwo, wx.ID_ANY, _('Change'))
+        self.txtctrl_ffplay = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
                                           )
-        sizerFFmpeg.Add(self.checkbox_exeFFplay, 0, wx.LEFT, 5)
+        sizerFFmpeg.Add(self.ckbx_exeFFplay, 0, wx.LEFT, 5)
         gridFFplay = wx.BoxSizer(wx.HORIZONTAL)
         sizerFFmpeg.Add(gridFFplay, 0, wx.EXPAND)
         gridFFplay.Add(self.txtctrl_ffplay, 1, wx.ALL, 5)
         gridFFplay.Add(self.btn_ffplay, 0, wx.RIGHT | wx.CENTER, 5)
-        tabThree.SetSizer(sizerFFmpeg)
-        notebook.AddPage(tabThree, _("FFmpeg"))
+        tabTwo.SetSizer(sizerFFmpeg)
+        notebook.AddPage(tabTwo, _("FFmpeg"))
 
-        # -----tab 4
-        tabFour = wx.Panel(notebook, wx.ID_ANY)
+        # -----tab 3
+        tabThree = wx.Panel(notebook, wx.ID_ANY)
         sizerytdlp = wx.BoxSizer(wx.VERTICAL)
         sizerytdlp.Add((0, 10))
         msg = (_('Download videos from YouTube.com and other video sites\n'
                  '(requires application restart)'))
-        labytdlp = wx.StaticText(tabFour, wx.ID_ANY, msg)
+        labytdlp = wx.StaticText(tabThree, wx.ID_ANY, msg)
         sizerytdlp.Add(labytdlp, 0, wx.ALL | wx.EXPAND, 5)
         msg = (_('Videomass uses the yt-dlp API which can be activated by '
                  'selecting the checkbox below.\nThe next time you restart '
                  'the application, the yt_dlp module will be loaded into '
                  'memory.'))
-        labytdescr = wx.StaticText(tabFour, wx.ID_ANY, msg)
+        labytdescr = wx.StaticText(tabThree, wx.ID_ANY, msg)
         sizerytdlp.Add(labytdescr, 0, wx.ALL | wx.EXPAND, 5)
         msg = _("Enable yt-dlp")
-        self.checkbox_ytdlp = wx.CheckBox(tabFour, wx.ID_ANY, (msg))
-        sizerytdlp.Add(self.checkbox_ytdlp, 0, wx.ALL, 5)
+        self.ckbx_ytdlp = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
+        sizerytdlp.Add(self.ckbx_ytdlp, 0, wx.ALL, 5)
         sizerytdlp.Add((0, 20))
         msg = (_('Enabling a specific location of the yt-dlp executable will '
                  'give you more control over downloads\nstop actions and the '
                  'ability to provide other backend locations.'))
-        labytexec = wx.StaticText(tabFour, wx.ID_ANY, msg)
+        labytexec = wx.StaticText(tabThree, wx.ID_ANY, msg)
         sizerytdlp.Add(labytexec, 0, wx.ALL | wx.EXPAND, 5)
-        msg = (_('Use the executable for downloads '
-                 'rather than the Python module'))
-        self.checkbox_dlexe = wx.CheckBox(tabFour, wx.ID_ANY, (msg))
-        sizerytdlp.Add(self.checkbox_dlexe, 0, wx.LEFT | wx.TOP, 5)
+        msg = (_('Use the executable for downloads rather than API'))
+        self.ckbx_dlexe = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
+        sizerytdlp.Add(self.ckbx_dlexe, 0, wx.LEFT | wx.TOP, 5)
 
-        self.btn_ytdlp = wx.Button(tabFour, wx.ID_ANY, _('Change'))
-        self.txtctrl_ytdlp = wx.TextCtrl(tabFour, wx.ID_ANY, "",
+        self.btn_ytdlp = wx.Button(tabThree, wx.ID_ANY, _('Change'))
+        self.txtctrl_ytdlp = wx.TextCtrl(tabThree, wx.ID_ANY, "",
                                          style=wx.TE_READONLY
                                          )
         gridytdlp = wx.BoxSizer(wx.HORIZONTAL)
         sizerytdlp.Add(gridytdlp, 0, wx.EXPAND)
         gridytdlp.Add(self.txtctrl_ytdlp, 1, wx.ALL, 5)
         gridytdlp.Add(self.btn_ytdlp, 0, wx.RIGHT | wx.CENTER, 5)
-        tabFour.SetSizer(sizerytdlp)
-        notebook.AddPage(tabFour, "yt-dlp")
+        tabThree.SetSizer(sizerytdlp)
+        notebook.AddPage(tabThree, "yt-dlp")
 
-        # -----tab 5
-        tabFive = wx.Panel(notebook, wx.ID_ANY)
+        # -----tab 4
+        tabFour = wx.Panel(notebook, wx.ID_ANY)
         sizerAppearance = wx.BoxSizer(wx.VERTICAL)
         sizerAppearance.Add((0, 10))
         msg = _('Look and Feel (requires application restart)')
-        labappe = wx.StaticText(tabFive, wx.ID_ANY, msg)
+        labappe = wx.StaticText(tabFour, wx.ID_ANY, msg)
         sizerAppearance.Add(labappe, 0, wx.ALL | wx.EXPAND, 5)
         sizerAppearance.Add((0, 10))
         sizericon = wx.BoxSizer(wx.HORIZONTAL)
-        labTheme = wx.StaticText(tabFive, wx.ID_ANY, _('Icon themes'))
+        labTheme = wx.StaticText(tabFour, wx.ID_ANY, _('Icon themes'))
         sizericon.Add(labTheme, 0, wx.LEFT | wx.TOP, 5)
-        self.cmbx_icons = wx.ComboBox(tabFive, wx.ID_ANY,
+        self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY,
                                       choices=[("Videomass-Light"),
                                                ("Videomass-Dark"),
                                                ("Videomass-Colours"),
@@ -250,7 +249,7 @@ class SetUp(wx.Dialog):
                     _('At the bottom of window'),
                     _('At the right of window'),
                     _('At the left of window')]
-        self.rdbTBpref = wx.RadioBox(tabFive, wx.ID_ANY,
+        self.rdbTBpref = wx.RadioBox(tabFour, wx.ID_ANY,
                                      (_("Place the toolbar")),
                                      choices=tbchoice,
                                      majorDimension=1,
@@ -259,11 +258,11 @@ class SetUp(wx.Dialog):
         sizerAppearance.Add(self.rdbTBpref, 0, wx.ALL | wx.EXPAND, 5)
         gridTBsize = wx.FlexGridSizer(0, 2, 0, 5)
         sizerAppearance.Add(gridTBsize, 0, wx.ALL, 5)
-        lab1_appearance = wx.StaticText(tabFive, wx.ID_ANY,
+        lab1_appearance = wx.StaticText(tabFour, wx.ID_ANY,
                                         _("Toolbar's icons size:"))
         gridTBsize.Add(lab1_appearance, 0, wx.LEFT | wx.TOP
                        | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.cmbx_iconsSize = wx.ComboBox(tabFive, wx.ID_ANY,
+        self.cmbx_iconsSize = wx.ComboBox(tabFour, wx.ID_ANY,
                                           choices=[("16"), ("24"), ("32"),
                                                    ("64")], size=(120, -1),
                                           style=wx.CB_DROPDOWN | wx.CB_READONLY
@@ -275,53 +274,67 @@ class SetUp(wx.Dialog):
             lab1_appearance.Disable()
         sizerAppearance.Add((0, 10))
         msg = _('Application Language (requires application restart)')
-        lablang = wx.StaticText(tabFive, wx.ID_ANY, msg)
+        lablang = wx.StaticText(tabFour, wx.ID_ANY, msg)
         sizerAppearance.Add(lablang, 0, wx.ALL | wx.EXPAND, 5)
         sizerAppearance.Add((0, 10))
         langs = [lang[1] for lang in supLang.values()]
-        self.cmbx_lang = wx.ComboBox(tabFive, wx.ID_ANY,
+        self.cmbx_lang = wx.ComboBox(tabFour, wx.ID_ANY,
                                      choices=langs,
                                      size=(-1, -1),
                                      style=wx.CB_DROPDOWN | wx.CB_READONLY
                                      )
         sizerAppearance.Add(self.cmbx_lang, 0, wx.ALL, 5)
-        tabFive.SetSizer(sizerAppearance)  # aggiungo il sizer su tab 4
-        notebook.AddPage(tabFive, _("Look and Language"))
+        tabFour.SetSizer(sizerAppearance)  # aggiungo il sizer su tab 4
+        notebook.AddPage(tabFour, _("Look and Language"))
+
+        # -----tab 5
+        tabFive = wx.Panel(notebook, wx.ID_ANY)
+        sizerexitopt = wx.BoxSizer(wx.VERTICAL)
+        sizerexitopt.Add((0, 10))
+        msg = _('Upon exiting the application')
+        labexitopt = wx.StaticText(tabFive, wx.ID_ANY, msg)
+        sizerexitopt.Add(labexitopt, 0, wx.ALL | wx.EXPAND, 5)
+        sizerexitopt.Add((0, 10))
+        self.ckbx_exitconfirm = wx.CheckBox(tabFive, wx.ID_ANY,
+                                            _("Always ask me to confirm"))
+        sizerexitopt.Add(self.ckbx_exitconfirm, 0, wx.LEFT, 5)
+        msg = _("Clean the log files")
+        self.ckbx_logclr = wx.CheckBox(tabFive, wx.ID_ANY, (msg))
+        sizerexitopt.Add(self.ckbx_logclr, 0, wx.LEFT, 5)
+        msg = _("Remove cached files")
+        self.ckbx_cacheclr = wx.CheckBox(tabFive, wx.ID_ANY, (msg))
+        sizerexitopt.Add(self.ckbx_cacheclr, 0, wx.LEFT, 5)
+        sizerexitopt.Add((0, 20))
+        msg = _('On operations completion')
+        labendop = wx.StaticText(tabFive, wx.ID_ANY, msg)
+        sizerexitopt.Add(labendop, 0, wx.ALL | wx.EXPAND, 5)
+        msg = (_("These options are temporary until the application is "
+                 "closed, if necessary reset them at the next restart."))
+        labendopdescr = wx.StaticText(tabFive, wx.ID_ANY, (msg))
+        sizerexitopt.Add(labendopdescr, 0, wx.ALL, 5)
+        sizerexitopt.Add((0, 10))
+        msg = _("Exit the application")
+        self.ckbx_exitapp = wx.CheckBox(tabFive, wx.ID_ANY, (msg))
+        sizerexitopt.Add(self.ckbx_exitapp, 0, wx.LEFT, 5)
+        msg = _("Shutdown the system")
+        self.ckbx_turnoff = wx.CheckBox(tabFive, wx.ID_ANY, (msg))
+        sizerexitopt.Add(self.ckbx_turnoff, 0, wx.LEFT, 5)
+        sizersudo = wx.BoxSizer(wx.HORIZONTAL)
+        self.labsudo = wx.StaticText(tabFive, wx.ID_ANY, _('SUDO password:'))
+        sizersudo.Add(self.labsudo, 0, wx.LEFT | wx.TOP, 5)
+        self.txtctrl_sudo = wx.TextCtrl(tabFive, wx.ID_ANY, "",
+                                        style=wx.TE_PASSWORD, size=(300, -1))
+        sizersudo.Add(self.txtctrl_sudo, 0, wx.ALL, 5)
+        sizerexitopt.Add(sizersudo, 0, wx.LEFT, 5)
+        tabFive.SetSizer(sizerexitopt)
+        notebook.AddPage(tabFive, _("Exit and Shutdown"))
 
         # -----tab 6
         tabSix = wx.Panel(notebook, wx.ID_ANY)
-        sizerLog = wx.BoxSizer(wx.VERTICAL)
-        sizerLog.Add((0, 10))
-        msglog = _("The following settings affect output messages and "
-                   "the log messages during transcoding processes.\n"
-                   "Be careful, by changing these settings some functions "
-                   "of the application may not work correctly,\n"
-                   "change only if you know what you are doing.\n")
-        labLog = wx.StaticText(tabSix, wx.ID_ANY, (msglog))
-        sizerLog.Add(labLog, 0, wx.ALL, 5)
-        msg = "Set logging level flags used by FFmpeg"
-        self.rdbFFmpeg = wx.RadioBox(tabSix, wx.ID_ANY, (msg),
-                                     choices=SetUp.FFMPEG_LOGLEV,
-                                     majorDimension=1,
-                                     style=wx.RA_SPECIFY_COLS,
-                                     )
-        sizerLog.Add(self.rdbFFmpeg, 0, wx.ALL | wx.EXPAND, 5)
-        msg = "Set logging level flags used by FFplay"
-        self.rdbFFplay = wx.RadioBox(tabSix, wx.ID_ANY, (msg),
-                                     choices=SetUp.FFPLAY_LOGLEV,
-                                     majorDimension=1,
-                                     style=wx.RA_SPECIFY_COLS,
-                                     )
-        sizerLog.Add(self.rdbFFplay, 0, wx.ALL | wx.EXPAND, 5)
-        tabSix.SetSizer(sizerLog)
-        notebook.AddPage(tabSix, _("FFmpeg logging levels"))
-
-        # -----tab 7
-        tabSev = wx.Panel(notebook, wx.ID_ANY)
         sizeradv = wx.BoxSizer(wx.VERTICAL)
         sizeradv.Add((0, 10))
         msg = _("Specify the character encoding format")
-        labenctitle = wx.StaticText(tabSev, wx.ID_ANY, msg)
+        labenctitle = wx.StaticText(tabSix, wx.ID_ANY, msg)
         sizeradv.Add(labenctitle, 0, wx.ALL | wx.EXPAND, 5)
         msg = (_("Although UTF-8 is the default and most widely used standard "
                  "encoding format, it is not the only encoding format "
@@ -330,72 +343,90 @@ class SetUp(wx.Dialog):
                  "can't decode bytes...\".\nIf you know the encoding format "
                  "the file was written in, you can try specifying it here, "
                  "e.g. ISO 8859-1, ISO 8859-16, etc."))
-        labencgen = wx.StaticText(tabSev, wx.ID_ANY, (msg))
+        labencgen = wx.StaticText(tabSix, wx.ID_ANY, (msg))
         sizeradv.Add(labencgen, 0, wx.ALL, 5)
         sizerenc = wx.BoxSizer(wx.HORIZONTAL)
-        labenc = wx.StaticText(tabSev, wx.ID_ANY, _('Character encoding:'))
+        labenc = wx.StaticText(tabSix, wx.ID_ANY, _('Character encoding:'))
         sizerenc.Add(labenc, 0, wx.LEFT | wx.TOP, 5)
-        self.txtctrl_charenc = wx.TextCtrl(tabSev, wx.ID_ANY,
+        self.txtctrl_charenc = wx.TextCtrl(tabSix, wx.ID_ANY,
                                            self.appdata["encoding"].strip(),
                                            size=(150, -1)
                                            )
         sizerenc.Add(self.txtctrl_charenc, 0, wx.ALL, 5)
         sizeradv.Add(sizerenc, 0, wx.LEFT, 5)
-        sizeradv.Add((0, 10))
+        sizeradv.Add((0, 20))
         msg = _("Default application directories")
-        labdirtitle = wx.StaticText(tabSev, wx.ID_ANY, msg)
+        labdirtitle = wx.StaticText(tabSix, wx.ID_ANY, msg)
         sizeradv.Add(labdirtitle, 0, wx.ALL | wx.EXPAND, 5)
-        labconf = wx.StaticText(tabSev, wx.ID_ANY,
+        labconf = wx.StaticText(tabSix, wx.ID_ANY,
                                 _('Configuration directory'))
-        self.btn_conf = wx.Button(tabSev, wx.ID_ANY, "...", size=(35, -1),
+        self.btn_conf = wx.Button(tabSix, wx.ID_ANY, "...", size=(35, -1),
                                   name='config dir')
-        self.txtctrl_conf = wx.TextCtrl(tabSev, wx.ID_ANY,
+        self.txtctrl_conf = wx.TextCtrl(tabSix, wx.ID_ANY,
                                         self.appdata['confdir'],
                                         size=(500, -1),
                                         style=wx.TE_READONLY,
                                         )
         griddefdirs = wx.FlexGridSizer(3, 3, 5, 0)
         griddefdirs.Add(labconf, 0, wx.LEFT | wx.TOP, 5)
-        griddefdirs.Add(self.txtctrl_conf, 1, wx.ALL | wx.EXPAND, 5)
-        griddefdirs.Add(self.btn_conf, 0, wx.RIGHT | wx.CENTER, 5)
-        labcache = wx.StaticText(tabSev, wx.ID_ANY, _('Cache directory'))
-        self.btn_cache = wx.Button(tabSev, wx.ID_ANY, "...", size=(35, -1),
+        griddefdirs.Add(self.txtctrl_conf, 1, wx.RIGHT
+                        | wx.TOP | wx.LEFT | wx.EXPAND, 5)
+        griddefdirs.Add(self.btn_conf, 0, wx.RIGHT | wx.TOP, 5)
+        labcache = wx.StaticText(tabSix, wx.ID_ANY, _('Cache directory'))
+        self.btn_cache = wx.Button(tabSix, wx.ID_ANY, "...", size=(35, -1),
                                    name='cache dir')
-        self.txtctrl_cache = wx.TextCtrl(tabSev, wx.ID_ANY,
+        self.txtctrl_cache = wx.TextCtrl(tabSix, wx.ID_ANY,
                                          self.appdata['cachedir'],
                                          size=(500, -1),
                                          style=wx.TE_READONLY,
                                          )
         griddefdirs.Add(labcache, 0, wx.LEFT | wx.TOP, 5)
-        griddefdirs.Add(self.txtctrl_cache, 1, wx.ALL | wx.EXPAND, 5)
-        griddefdirs.Add(self.btn_cache, 0, wx.RIGHT | wx.CENTER, 5)
-        lablog = wx.StaticText(tabSev, wx.ID_ANY, _('Log directory'))
-        self.btn_log = wx.Button(tabSev, wx.ID_ANY, "...", size=(35, -1),
+        griddefdirs.Add(self.txtctrl_cache, 1, wx.RIGHT
+                        | wx.TOP | wx.LEFT | wx.EXPAND, 5)
+        griddefdirs.Add(self.btn_cache, 0, wx.RIGHT | wx.TOP, 5)
+        lablog = wx.StaticText(tabSix, wx.ID_ANY, _('Log directory'))
+        self.btn_log = wx.Button(tabSix, wx.ID_ANY, "...", size=(35, -1),
                                  name='log dir')
-        self.txtctrl_log = wx.TextCtrl(tabSev, wx.ID_ANY,
+        self.txtctrl_log = wx.TextCtrl(tabSix, wx.ID_ANY,
                                        self.appdata['logdir'],
                                        size=(500, -1),
                                        style=wx.TE_READONLY,
                                        )
         griddefdirs.Add(lablog, 0, wx.LEFT | wx.TOP, 5)
-        griddefdirs.Add(self.txtctrl_log, 1, wx.ALL | wx.EXPAND, 5)
-        griddefdirs.Add(self.btn_log, 0, wx.RIGHT | wx.CENTER, 5)
+        griddefdirs.Add(self.txtctrl_log, 1, wx.RIGHT
+                        | wx.TOP | wx.LEFT | wx.EXPAND, 5)
+        griddefdirs.Add(self.btn_log, 0, wx.RIGHT | wx.TOP, 5)
         sizeradv.Add(griddefdirs, 0, wx.LEFT | wx.EXPAND, 5)
-        sizeradv.Add((0, 10))
-        msg = _('Upon exiting the application...')
-        labexit = wx.StaticText(tabSev, wx.ID_ANY, msg)
-        sizeradv.Add(labexit, 0, wx.ALL | wx.EXPAND, 5)
-        self.checkbox_exit = wx.CheckBox(tabSev, wx.ID_ANY,
-                                         _("Always ask me to confirm"))
-        sizeradv.Add(self.checkbox_exit, 0, wx.LEFT, 5)
-        msg = _("Clean the log files")
-        self.checkbox_logclr = wx.CheckBox(tabSev, wx.ID_ANY, (msg))
-        sizeradv.Add(self.checkbox_logclr, 0, wx.LEFT, 5)
-        msg = _("Remove cached files")
-        self.checkbox_cacheclr = wx.CheckBox(tabSev, wx.ID_ANY, (msg))
-        sizeradv.Add(self.checkbox_cacheclr, 0, wx.LEFT, 5)
-        tabSev.SetSizer(sizeradv)
-        notebook.AddPage(tabSev, _("Advanced"))
+        tabSix.SetSizer(sizeradv)
+        notebook.AddPage(tabSix, _("Advanced"))
+
+        # -----tab 7
+        tabSev = wx.Panel(notebook, wx.ID_ANY)
+        sizerLog = wx.BoxSizer(wx.VERTICAL)
+        sizerLog.Add((0, 10))
+        msglog = _("The following settings affect output messages and "
+                   "the log messages during transcoding processes.\n"
+                   "Be careful, by changing these settings some functions "
+                   "of the application may not work correctly,\n"
+                   "change only if you know what you are doing.\n")
+        labLog = wx.StaticText(tabSev, wx.ID_ANY, (msglog))
+        sizerLog.Add(labLog, 0, wx.ALL, 5)
+        msg = "Set logging level flags used by FFmpeg"
+        self.rdbFFmpeg = wx.RadioBox(tabSev, wx.ID_ANY, (msg),
+                                     choices=SetUp.FFMPEG_LOGLEV,
+                                     majorDimension=1,
+                                     style=wx.RA_SPECIFY_COLS,
+                                     )
+        sizerLog.Add(self.rdbFFmpeg, 0, wx.ALL | wx.EXPAND, 5)
+        msg = "Set logging level flags used by FFplay"
+        self.rdbFFplay = wx.RadioBox(tabSev, wx.ID_ANY, (msg),
+                                     choices=SetUp.FFPLAY_LOGLEV,
+                                     majorDimension=1,
+                                     style=wx.RA_SPECIFY_COLS,
+                                     )
+        sizerLog.Add(self.rdbFFplay, 0, wx.ALL | wx.EXPAND, 5)
+        tabSev.SetSizer(sizerLog)
+        notebook.AddPage(tabSev, _("FFmpeg logging levels"))
 
         # ----- confirm buttons section
         grdBtn = wx.GridSizer(1, 2, 0, 0)
@@ -415,7 +446,9 @@ class SetUp(wx.Dialog):
         if self.appdata['ostype'] == 'Darwin':
             lablang.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdirtitle.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            labexit.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labexitopt.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labendop.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labendopdescr.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labfile.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFexec.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labffdescr.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
@@ -430,7 +463,9 @@ class SetUp(wx.Dialog):
         else:
             lablang.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labdirtitle.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            labexit.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labexitopt.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labendop.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labendopdescr.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labfile.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labFFexec.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labffdescr.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
@@ -446,6 +481,9 @@ class SetUp(wx.Dialog):
         tip = (_("By assigning an additional suffix you could avoid "
                  "overwriting files"))
         self.text_suffix.SetToolTip(tip)
+        tip = (_("Type sudo password here, only for Unix-like operating "
+                 "systems, not for MS Windows"))
+        self.txtctrl_sudo.SetToolTip(tip)
         self.SetTitle(_("Preferences"))
 
         # ------ set sizer
@@ -466,21 +504,23 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_TEXT, self.set_Suffix, self.text_suffix)
         self.Bind(wx.EVT_CHECKBOX, self.on_file_to_trash, self.ckbx_trash)
         self.Bind(wx.EVT_BUTTON, self.on_browse_trash, self.btn_trash)
-        self.Bind(wx.EVT_CHECKBOX, self.exeFFmpeg, self.checkbox_exeFFmpeg)
+        self.Bind(wx.EVT_CHECKBOX, self.exeFFmpeg, self.ckbx_exeFFmpeg)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffmpeg, self.btn_ffmpeg)
-        self.Bind(wx.EVT_CHECKBOX, self.exeFFprobe, self.checkbox_exeFFprobe)
+        self.Bind(wx.EVT_CHECKBOX, self.exeFFprobe, self.ckbx_exeFFprobe)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffprobe, self.btn_ffprobe)
-        self.Bind(wx.EVT_CHECKBOX, self.exeFFplay, self.checkbox_exeFFplay)
+        self.Bind(wx.EVT_CHECKBOX, self.exeFFplay, self.ckbx_exeFFplay)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_ffplay)
-        self.Bind(wx.EVT_CHECKBOX, self.on_ytdlp_pref, self.checkbox_ytdlp)
-        self.Bind(wx.EVT_CHECKBOX, self.on_ytdlp_exec, self.checkbox_dlexe)
+        self.Bind(wx.EVT_CHECKBOX, self.on_ytdlp_pref, self.ckbx_ytdlp)
+        self.Bind(wx.EVT_CHECKBOX, self.on_ytdlp_exec, self.ckbx_dlexe)
         self.Bind(wx.EVT_BUTTON, self.open_path_ytdlp, self.btn_ytdlp)
         self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
         self.Bind(wx.EVT_RADIOBOX, self.on_toolbarPos, self.rdbTBpref)
         self.Bind(wx.EVT_COMBOBOX, self.on_toolbarSize, self.cmbx_iconsSize)
-        self.Bind(wx.EVT_CHECKBOX, self.exit_warn, self.checkbox_exit)
-        self.Bind(wx.EVT_CHECKBOX, self.clear_Cache, self.checkbox_cacheclr)
-        self.Bind(wx.EVT_CHECKBOX, self.clear_logs, self.checkbox_logclr)
+        self.Bind(wx.EVT_CHECKBOX, self.on_exit_after, self.ckbx_exitapp)
+        self.Bind(wx.EVT_CHECKBOX, self.on_shutdown_after, self.ckbx_turnoff)
+        self.Bind(wx.EVT_CHECKBOX, self.exit_warn, self.ckbx_exitconfirm)
+        self.Bind(wx.EVT_CHECKBOX, self.clear_Cache, self.ckbx_cacheclr)
+        self.Bind(wx.EVT_CHECKBOX, self.clear_logs, self.ckbx_logclr)
         self.Bind(wx.EVT_TEXT, self.on_char_encoding, self.txtctrl_charenc)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_cancel, btn_cancel)
@@ -501,13 +541,21 @@ class SetUp(wx.Dialog):
         self.cmbx_iconsSize.SetValue(str(self.appdata['toolbarsize']))
         self.rdbTBpref.SetSelection(self.appdata['toolbarpos'])
 
-        self.checkbox_cacheclr.SetValue(self.appdata['clearcache'])
-        self.checkbox_exit.SetValue(self.appdata['warnexiting'])
-        self.checkbox_logclr.SetValue(self.appdata['clearlogfiles'])
+        self.ckbx_cacheclr.SetValue(self.appdata['clearcache'])
+        self.ckbx_exitconfirm.SetValue(self.appdata['warnexiting'])
+        self.ckbx_logclr.SetValue(self.appdata['clearlogfiles'])
         self.ckbx_trash.SetValue(self.settings['move_file_to_trash'])
-        self.checkbox_ytdlp.SetValue(self.settings['use-downloader'])
-        self.checkbox_dlexe.SetValue(self.settings['download-using-exec'])
+        self.ckbx_ytdlp.SetValue(self.settings['use-downloader'])
+        self.ckbx_dlexe.SetValue(self.settings['download-using-exec'])
         self.txtctrl_ytdlp.SetValue(self.appdata['yt-dlp-executable-path'])
+        self.ckbx_exitapp.SetValue(self.appdata["auto_exit"])
+        self.ckbx_turnoff.SetValue(self.appdata["shutdown"])
+        self.txtctrl_sudo.SetValue(self.appdata.get("sudo_password", ''))
+        if self.ckbx_turnoff.GetValue():
+            if self.appdata['ostype'] != 'Windows':
+                self.txtctrl_sudo.Enable()
+        else:
+            self.labsudo.Disable(), self.txtctrl_sudo.Disable()
 
         if not self.settings['download-using-exec']:
             self.txtctrl_ytdlp.Disable(), self.btn_ytdlp.Disable()
@@ -530,28 +578,28 @@ class SetUp(wx.Dialog):
             self.btn_ffmpeg.Disable()
             self.txtctrl_ffmpeg.Disable()
             self.txtctrl_ffmpeg.AppendText(self.appdata['ffmpeg_cmd'])
-            self.checkbox_exeFFmpeg.SetValue(False)
+            self.ckbx_exeFFmpeg.SetValue(False)
         else:
             self.txtctrl_ffmpeg.AppendText(self.appdata['ffmpeg_cmd'])
-            self.checkbox_exeFFmpeg.SetValue(True)
+            self.ckbx_exeFFmpeg.SetValue(True)
 
         if not self.appdata['ffprobe_islocal']:
             self.btn_ffprobe.Disable()
             self.txtctrl_ffprobe.Disable()
             self.txtctrl_ffprobe.AppendText(self.appdata['ffprobe_cmd'])
-            self.checkbox_exeFFprobe.SetValue(False)
+            self.ckbx_exeFFprobe.SetValue(False)
         else:
             self.txtctrl_ffprobe.AppendText(self.appdata['ffprobe_cmd'])
-            self.checkbox_exeFFprobe.SetValue(True)
+            self.ckbx_exeFFprobe.SetValue(True)
 
         if not self.appdata['ffplay_islocal']:
             self.btn_ffplay.Disable()
             self.txtctrl_ffplay.Disable()
             self.txtctrl_ffplay.AppendText(self.appdata['ffplay_cmd'])
-            self.checkbox_exeFFplay.SetValue(False)
+            self.ckbx_exeFFplay.SetValue(False)
         else:
             self.txtctrl_ffplay.AppendText(self.appdata['ffplay_cmd'])
-            self.checkbox_exeFFplay.SetValue(True)
+            self.ckbx_exeFFplay.SetValue(True)
 
         if not self.appdata['outputdir_asinput']:
             self.lab_suffix.Disable()
@@ -703,7 +751,7 @@ class SetUp(wx.Dialog):
 
     def exeFFmpeg(self, event):
         """Enable or disable ffmpeg local binary"""
-        if self.checkbox_exeFFmpeg.IsChecked():
+        if self.ckbx_exeFFmpeg.IsChecked():
             self.btn_ffmpeg.Enable()
             self.txtctrl_ffmpeg.Enable()
             self.settings['ffmpeg_islocal'] = True
@@ -744,7 +792,7 @@ class SetUp(wx.Dialog):
 
     def exeFFprobe(self, event):
         """Enable or disable ffprobe local binary"""
-        if self.checkbox_exeFFprobe.IsChecked():
+        if self.ckbx_exeFFprobe.IsChecked():
             self.btn_ffprobe.Enable()
             self.txtctrl_ffprobe.Enable()
             self.settings['ffprobe_islocal'] = True
@@ -786,7 +834,7 @@ class SetUp(wx.Dialog):
 
     def exeFFplay(self, event):
         """Enable or disable ffplay local binary"""
-        if self.checkbox_exeFFplay.IsChecked():
+        if self.ckbx_exeFFplay.IsChecked():
             self.btn_ffplay.Enable()
             self.txtctrl_ffplay.Enable()
             self.settings['ffplay_islocal'] = True
@@ -830,7 +878,7 @@ class SetUp(wx.Dialog):
         """
         set yt-dlp preferences
         """
-        self.settings['use-downloader'] = self.checkbox_ytdlp.GetValue()
+        self.settings['use-downloader'] = self.ckbx_ytdlp.GetValue()
     # --------------------------------------------------------------------#
 
     def on_ytdlp_exec(self, event):
@@ -838,8 +886,8 @@ class SetUp(wx.Dialog):
         Sets whether to use yt-dlp as a Python
         module or as an executable.
         """
-        self.settings['download-using-exec'] = self.checkbox_dlexe.GetValue()
-        if self.checkbox_dlexe.GetValue():
+        self.settings['download-using-exec'] = self.ckbx_dlexe.GetValue()
+        if self.ckbx_dlexe.GetValue():
             self.txtctrl_ytdlp.Enable(), self.btn_ytdlp.Enable()
         else:
             self.txtctrl_ytdlp.Disable(), self.btn_ytdlp.Disable()
@@ -883,26 +931,51 @@ class SetUp(wx.Dialog):
         self.settings['toolbarpos'] = self.rdbTBpref.GetSelection()
     # --------------------------------------------------------------------#
 
+    def on_exit_after(self, event):
+        """
+        Exit the app At the end of the operations
+        """
+        if self.ckbx_exitapp.GetValue():
+            if self.ckbx_turnoff.IsChecked():
+                self.ckbx_turnoff.SetValue(False)
+                self.txtctrl_sudo.SetValue(""), self.txtctrl_sudo.Disable()
+                self.labsudo.Disable()
+    # --------------------------------------------------------------------#
+
+    def on_shutdown_after(self, event):
+        """
+        At the end of the processes operations
+        """
+        if self.ckbx_turnoff.GetValue():
+            if self.ckbx_exitapp.IsChecked():
+                self.ckbx_exitapp.SetValue(False)
+            if self.appdata['ostype'] != 'Windows':
+                self.txtctrl_sudo.Enable(), self.labsudo.Enable()
+        else:
+            self.txtctrl_sudo.SetValue(""), self.txtctrl_sudo.Disable()
+            self.labsudo.Disable()
+    # --------------------------------------------------------------------#
+
     def exit_warn(self, event):
         """
         Enable or disable the warning message before
         exiting the program
         """
-        self.settings['warnexiting'] = self.checkbox_exit.GetValue()
+        self.settings['warnexiting'] = self.ckbx_exitconfirm.GetValue()
     # --------------------------------------------------------------------#
 
     def clear_Cache(self, event):
         """
         if checked, set to clear cached data on exit
         """
-        self.settings['clearcache'] = self.checkbox_cacheclr.GetValue()
+        self.settings['clearcache'] = self.ckbx_cacheclr.GetValue()
     # --------------------------------------------------------------------#
 
     def clear_logs(self, event):
         """
         if checked, set to clear all log files on exit
         """
-        self.settings['clearlogfiles'] = self.checkbox_logclr.GetValue()
+        self.settings['clearlogfiles'] = self.ckbx_logclr.GetValue()
     # --------------------------------------------------------------------#
 
     def on_char_encoding(self, event):
@@ -945,6 +1018,10 @@ class SetUp(wx.Dialog):
             self.settings['toolbarpos'] == self.appdata['toolbarpos'])
         self.confmanager.write_options(**self.settings)
         self.appdata.update(self.settings)
+        # do not store this data in the configuration file
+        self.appdata["auto_exit"] = self.ckbx_exitapp.GetValue()
+        self.appdata["shutdown"] = self.ckbx_turnoff.GetValue()
+        self.appdata['sudo_password'] = self.txtctrl_sudo.GetValue()
         event.Skip()
 
     # --------------------------------------------------------------------#

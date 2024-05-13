@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.09.2024
+Rev: May.11.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -46,6 +46,7 @@ from videomass.vdms_ytdlp.main_ytdlp import MainYtdl
 from videomass.vdms_dialogs.mediainfo import MediaStreams
 from videomass.vdms_dialogs.showlogs import ShowLogs
 from videomass.vdms_dialogs.ffmpeg_help import FFmpegHelp
+from videomass.vdms_dialogs.widget_utils import CountDownDlg
 from videomass.vdms_miniframes import timeline
 from videomass.vdms_panels import choose_topic
 from videomass.vdms_panels import filedrop
@@ -60,6 +61,7 @@ from videomass.vdms_sys.msg_info import current_release
 from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_sys.argparser import info_this_platform
 from videomass.vdms_utils.utils import copydir_recursively
+from videomass.vdms_threads.shutdown import shutdown_system
 
 
 class MainFrame(wx.Frame):
@@ -358,35 +360,11 @@ class MainFrame(wx.Frame):
             self.audivolnormalize = False
     # ------------------------------------------------------------------#
 
-    def on_close(self, event):
+    def write_option_before_exit(self):
         """
-        Where possible, it destroys the application and
-        its children programmatically, saving the size
-        and position of the window.
+        Write user settings to the configuration file
+        before exit the application.
         """
-        if self.ProcessPanel.IsShown():
-            if self.ProcessPanel.thread_type is not None:
-                wx.MessageBox(_('There are still processes running. if you '
-                                'want to stop them, use the "Abort" button.'),
-                              _('Videomass - Warning!'), wx.ICON_WARNING, self)
-                return
-
-        if self.appdata['warnexiting']:
-            if wx.MessageBox(_('Are you sure you want to exit '
-                               'the application?'),
-                             _('Exit'), wx.ICON_QUESTION | wx.CANCEL
-                             | wx.YES_NO, self) != wx.YES:
-                return
-
-        if self.ytdlframe:
-            if self.ytdlframe.ProcessPanel.thread_type:
-                wx.MessageBox(_("There are still active windows with running "
-                                "processes, make sure you finish your work "
-                                "before closing them."),
-                              "Videomass - Warning!", wx.ICON_WARNING, self)
-                return
-            self.ytdlframe.on_exit(self, warn=False)
-
         confmanager = ConfigManager(self.appdata['fileconfpath'])
         sett = confmanager.read_options()
         sett['main_window_size'] = list(self.GetSize())
@@ -406,27 +384,71 @@ class MainFrame(wx.Frame):
                             ]
         sett['filedrop_column_width'] = filedropcolwidth
         confmanager.write_options(**sett)
+    # ------------------------------------------------------------------#
+
+    def checks_running_processes(self):
+        """
+        Check currently running processes
+        """
+        if self.ProcessPanel.IsShown():
+            if self.ProcessPanel.thread_type is not None:
+                return True
+        if self.ytdlframe:
+            if self.ytdlframe.ProcessPanel.thread_type:
+                return True
+
+        return False
+    # ------------------------------------------------------------------#
+
+    def on_close(self, event, ):
+        """
+        Application exit request given by the user.
+        """
+        if self.checks_running_processes():
+            wx.MessageBox(_("There are still active windows with running "
+                            "processes, make sure you finish your work "
+                            "before exit."),
+                          _('Videomass - Warning!'), wx.ICON_WARNING, self)
+            return
+
+        if self.appdata['warnexiting']:
+            if wx.MessageBox(_('Are you sure you want to exit '
+                               'the application?'),
+                             _('Exit'), wx.ICON_QUESTION | wx.CANCEL
+                             | wx.YES_NO, self) != wx.YES:
+                return
+
+        if self.ytdlframe:
+            self.ytdlframe.on_exit(self, warn=False)
+        self.write_option_before_exit()
         self.destroy_orphaned_window()
-        self.Destroy()
+        self.destroy_application()
     # ------------------------------------------------------------------#
 
     def on_Kill(self):
         """
-        This method tries to destroy the application and its
-        children more directly than the `on_close` method above.
-        Note that this method may also be called from the `Setup()`
-        method.
+        This method is called after from the `Setup()` method.
         """
+        if self.checks_running_processes():
+            wx.MessageBox(_("There are still active windows with running "
+                            "processes, make sure you finish your work "
+                            "before exit."),
+                          _('Videomass - Warning!'), wx.ICON_WARNING, self)
+            return
+
         if self.ytdlframe:
-            if self.ytdlframe.ProcessPanel.thread_type:
-                wx.MessageBox(_("There are still active windows with running "
-                                "processes, make sure you finish your work "
-                                "before closing them."),
-                              "Videomass - Warning!", wx.ICON_WARNING, self)
-                return
-            self.ytdlframe.destroy_orphaned_window()
+            self.ytdlframe.on_exit(self, warn=False)
         self.destroy_orphaned_window()
+        self.destroy_application()
+    # ------------------------------------------------------------------#
+
+    def destroy_application(self):
+        """
+        Permanent exit from the application.
+        Do not use this method directly.
+        """
         self.Destroy()
+    # ------------------------------------------------------------------#
 
     # -------------   BUILD THE MENU BAR  ----------------###
 
@@ -1090,11 +1112,6 @@ class MainFrame(wx.Frame):
                 changes = set_up.getvalue()
                 self.fileDnDTarget.on_file_save(self.appdata['outputdir'])
                 if [x for x in changes if x is False]:
-                    if self.ProcessPanel.IsShown():
-                        if self.ProcessPanel.thread_type is not None:
-                            wx.MessageBox(msg, _('Videomass - Warning!'),
-                                          wx.ICON_WARNING, self)
-                            return
                     if wx.MessageBox(_("{0}\n\nDo you want to restart "
                                        "the application now?").format(msg),
                                      _('Restart Videomass?'), wx.ICON_QUESTION
@@ -1757,6 +1774,11 @@ class MainFrame(wx.Frame):
             self.rename.Enable(True)
         if self.file_src:
             self.rename_batch.Enable(True)
+
+        if self.appdata['shutdown']:
+            self.auto_shutdown()
+        elif self.appdata['auto_exit']:
+            self.auto_exit()
     # ------------------------------------------------------------------#
 
     def panelShown(self, panelshown=None):
@@ -1799,3 +1821,48 @@ class MainFrame(wx.Frame):
         self.ytdlframe = MainYtdl(self.appdata,
                                   parent=wx.GetTopLevelParent(self))
         self.ytdlframe.Show()
+    # ------------------------------------------------------------------#
+
+    def auto_shutdown(self):
+        """
+        Turn off the system when processing is finished
+        """
+        if self.checks_running_processes():
+            return
+        if self.ytdlframe:
+            self.ytdlframe.on_exit(self, warn=False)
+        self.write_option_before_exit()
+
+        msgdlg = 'The system will turn off in {0} seconds'
+        title = _('Videomass - Shutdown!')
+        dlg = CountDownDlg(self, timeout=59, message=msgdlg, caption=title)
+        res = dlg.ShowModal() == wx.ID_OK
+        dlg.Destroy()
+        if res:
+            succ = shutdown_system(self.appdata['sudo_password'])
+            if not succ:
+                msg = (_("Error while shutting down. Please see\" "
+                         "Shutdown.log\" file for details."))
+                self.statusbar_msg(msg,
+                                   self.appdata['colorscheme']['ERR1'],
+                                   '#fbf4f4')
+    # ------------------------------------------------------------------#
+
+    def auto_exit(self):
+        """
+        Auto-exit the application when processing is finished
+        """
+        if self.checks_running_processes():
+            return
+
+        msgdlg = 'Exiting the application in {0} seconds'
+        title = _('Videomass - Exiting!')
+        dlg = CountDownDlg(self, timeout=10, message=msgdlg, caption=title)
+        res = dlg.ShowModal() == wx.ID_OK
+        dlg.Destroy()
+        if res:
+            if self.ytdlframe:
+                self.ytdlframe.on_exit(self, warn=False)
+            self.write_option_before_exit()
+            self.destroy_orphaned_window()
+            self.destroy_application()
