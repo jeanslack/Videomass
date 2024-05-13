@@ -308,8 +308,8 @@ class SetUp(wx.Dialog):
         msg = _('On operations completion')
         labendop = wx.StaticText(tabFive, wx.ID_ANY, msg)
         sizerexitopt.Add(labendop, 0, wx.ALL | wx.EXPAND, 5)
-        msg = (_("These options are temporary until the application is "
-                 "closed, if necessary reset them at the next restart."))
+        msg = (_("These settings will remain active until the application is "
+                 "closed, If necessary, remember to reactivate them."))
         labendopdescr = wx.StaticText(tabFive, wx.ID_ANY, (msg))
         sizerexitopt.Add(labendopdescr, 0, wx.ALL, 5)
         sizerexitopt.Add((0, 10))
@@ -321,9 +321,11 @@ class SetUp(wx.Dialog):
         sizerexitopt.Add(self.ckbx_turnoff, 0, wx.LEFT, 5)
         sizersudo = wx.BoxSizer(wx.HORIZONTAL)
         self.labsudo = wx.StaticText(tabFive, wx.ID_ANY, _('SUDO password:'))
+        self.labsudo.Disable()
         sizersudo.Add(self.labsudo, 0, wx.LEFT | wx.TOP, 5)
         self.txtctrl_sudo = wx.TextCtrl(tabFive, wx.ID_ANY, "",
                                         style=wx.TE_PASSWORD, size=(300, -1))
+        self.txtctrl_sudo.Disable()
         sizersudo.Add(self.txtctrl_sudo, 0, wx.ALL, 5)
         sizerexitopt.Add(sizersudo, 0, wx.LEFT, 5)
         tabFive.SetSizer(sizerexitopt)
@@ -540,7 +542,6 @@ class SetUp(wx.Dialog):
         self.cmbx_icons.SetValue(self.appdata['icontheme'])
         self.cmbx_iconsSize.SetValue(str(self.appdata['toolbarsize']))
         self.rdbTBpref.SetSelection(self.appdata['toolbarpos'])
-
         self.ckbx_cacheclr.SetValue(self.appdata['clearcache'])
         self.ckbx_exitconfirm.SetValue(self.appdata['warnexiting'])
         self.ckbx_logclr.SetValue(self.appdata['clearlogfiles'])
@@ -553,9 +554,7 @@ class SetUp(wx.Dialog):
         self.txtctrl_sudo.SetValue(self.appdata.get("sudo_password", ''))
         if self.ckbx_turnoff.GetValue():
             if self.appdata['ostype'] != 'Windows':
-                self.txtctrl_sudo.Enable()
-        else:
-            self.labsudo.Disable(), self.txtctrl_sudo.Disable()
+                self.labsudo.Enable(), self.txtctrl_sudo.Enable()
 
         if not self.settings['download-using-exec']:
             self.txtctrl_ytdlp.Disable(), self.btn_ytdlp.Disable()
@@ -938,8 +937,7 @@ class SetUp(wx.Dialog):
         if self.ckbx_exitapp.GetValue():
             if self.ckbx_turnoff.IsChecked():
                 self.ckbx_turnoff.SetValue(False)
-                self.txtctrl_sudo.SetValue(""), self.txtctrl_sudo.Disable()
-                self.labsudo.Disable()
+                self.on_shutdown_after(None)
     # --------------------------------------------------------------------#
 
     def on_shutdown_after(self, event):

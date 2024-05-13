@@ -1841,8 +1841,8 @@ class MainFrame(wx.Frame):
         if res:
             succ = shutdown_system(self.appdata['sudo_password'])
             if not succ:
-                msg = (_("Error while shutting down. Please see\" "
-                         "Shutdown.log\" file for details."))
+                msg = (_("Error while shutting down. Please see "
+                         "file log for details."))
                 self.statusbar_msg(msg,
                                    self.appdata['colorscheme']['ERR1'],
                                    '#fbf4f4')
