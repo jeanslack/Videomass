@@ -51,6 +51,21 @@ class ConfigManager:
 
     Options description:
 
+    shutdown (bool):
+        If True turn off the system when operation is finished.
+        Name space only, the setting will not be stored in the
+        configuration file.
+
+    sudo_password (str):
+        SUDO password for the shutdown process if the user does
+        not have elevated privileges. Name space only, the setting
+        will not be stored in the configuration file.
+
+    auto_exit (bool):
+        exit the application programmatically when processing is
+        finished. Name space only, the setting will not be stored
+        in the configuration file.
+
     confversion (float):
         current version of this configuration file
 
@@ -200,8 +215,11 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 7.5
+    VERSION = 7.7
     DEFAULT_OPTIONS = {"confversion": VERSION,
+                       "shutdown": False,
+                       "sudo_password": "",
+                       "auto_exit": False,
                        "encoding": "utf-8",
                        "outputdir": f"{os.path.expanduser('~')}",
                        "outputdir_asinput": False,

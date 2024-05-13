@@ -5,8 +5,11 @@ videomass (5.0.13-1) UNRELEASED; urgency=medium
     download.
   * Update english user guide documentation (pdf docs) and related references.
   * Fixed wrong deinterlace command option using w3fdif filter.
+  * [YouTube Downloader] Fixed audio/video qualities (see #305 #307)
+  * Added shutdown system and auto-exit the application. These settings are
+    found on the "Exit and Shutdown" tab of Preferences dialog (see #306).
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 09 May 2024 00:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 13 May 2024 14:00:00 +0200
 
 videomass (5.0.12-1) UNRELEASED; urgency=medium
 

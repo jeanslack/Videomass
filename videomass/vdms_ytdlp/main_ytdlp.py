@@ -63,6 +63,7 @@ class MainYtdl(wx.Frame):
         wx.Frame.__init__(self, parent, -1, style=wx.DEFAULT_FRAME_STYLE)
 
         # ---------- panel instances:
+        self.parent = parent
         self.ytDownloader = Downloader(self)
         self.textDnDTarget = Url_DnD_Panel(self)
         self.ProcessPanel = LogOut(self)
@@ -222,8 +223,9 @@ class MainYtdl(wx.Frame):
         """
         if self.ProcessPanel.IsShown():
             if self.ProcessPanel.thread_type is not None:
-                wx.MessageBox(_('There are still processes running. if you '
-                                'want to stop them, use the "Abort" button.'),
+                wx.MessageBox(_("There are still active windows with running "
+                                "processes, make sure you finish your work "
+                                "before exit."),
                               _('Videomass - Warning!'), wx.ICON_WARNING, self)
                 return
 
@@ -627,8 +629,12 @@ class MainYtdl(wx.Frame):
         self.toolbar.EnableTool(24, False)
         self.toolbar.EnableTool(26, True)
         self.toolbar.EnableTool(23, True)
-
         self.setupItem.Enable(True)
+
+        if self.appdata['shutdown']:
+            self.parent.auto_shutdown()
+        elif self.appdata['auto_exit']:
+            self.parent.auto_exit()
     # ------------------------------------------------------------------#
 
     def panelShown(self):

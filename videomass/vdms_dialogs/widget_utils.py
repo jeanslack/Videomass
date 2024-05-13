@@ -157,3 +157,90 @@ class PopupDialog(wx.Dialog):
         # self.Destroy() # do not work
         # self.ai.Stop()
         self.EndModal(1)
+
+
+class CountDownDlg(wx.Dialog):
+    """
+    This dialog notifies the user that something will happen
+    when the countdown expires, e.g. exiting the application
+    or shutting down the system.
+    At the end of the countdown this dialogue will
+    self-destroy and events will be allowed to continue unless
+    the user clicks on the cancel button.
+
+    Usage:
+        dlg = CountDownDlg(self,
+                           timeout=10,
+                           message='Something happens in {0} seconds',
+                           caption='My awesome title'
+                           )
+        res = dlg.ShowModal() == wx.ID_OK
+        dlg.Destroy()
+        if res:
+            ...other code here
+    """
+    get = wx.GetApp()  # get data from bootstrap
+    APPICON = get.iconset['videomass']
+    TIMER_INTERVAL = 1000  # milliseconds
+
+    def __init__(self, parent, timeout, message, caption):
+        """
+        parent: -1 to make parent, use 'None' otherwise
+        timeout: time second (int)
+        message: a message including the format {0} (str)
+        caption: title for caption (str)
+        """
+        wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
+
+        self.timeout = timeout
+        self.message = message
+
+        # ------ Add widget controls
+        sizbase = wx.BoxSizer(wx.VERTICAL)
+        sizbase.Add((0, 20), 0)
+        self.msgtxt = wx.StaticText(self, wx.ID_ANY,
+                                    self.message.format(self.timeout),
+                                    style=wx.ALIGN_CENTRE_VERTICAL
+                                    )
+        sizbase.Add(self.msgtxt, 1, wx.ALL | wx.ALIGN_CENTRE, 5)
+        # ------ bottom layout buttons
+        sizbott = wx.BoxSizer(wx.HORIZONTAL)
+        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        sizbott.Add(btn_cancel, 0)
+        btn_ok = wx.Button(self, wx.ID_OK)
+        sizbott.Add(btn_ok, 0, wx.LEFT, 5)
+        sizbase.Add(sizbott, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
+        # ------ Properties
+        icon = wx.Icon()
+        icon.CopyFromBitmap(wx.Bitmap(CountDownDlg.APPICON,
+                                      wx.BITMAP_TYPE_ANY))
+        self.SetIcon(icon)
+        self.SetTitle(caption)
+        self.SetMinSize((400, 150))
+        self.SetSizer(sizbase)
+        sizbase.Fit(self)
+        self.Layout()
+        self.Center()
+
+        self.timer = wx.Timer(self)
+        self.Bind(wx.EVT_TIMER, self.on_timer, self.timer)
+        self.timer.Start(self.TIMER_INTERVAL)
+    # ------------------------------------------------------------------#
+
+    def autodestroy(self):
+        """
+        stop the timer and destroy this dialog.
+        """
+        self.timer.Stop()
+        return self.Destroy()
+
+    # ----------------------Event handler (callback)----------------------#
+
+    def on_timer(self, event):
+        """
+        Set the timer countdown on message
+        """
+        self.timeout -= 1
+        self.msgtxt.SetLabel(self.message.format(self.timeout))
+        if self.timeout <= 0:
+            self.EndModal(wx.ID_OK)

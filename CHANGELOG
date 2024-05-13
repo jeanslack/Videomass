@@ -7,13 +7,16 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 09 May 2024 V.5.0.13
+Mon, 13 May 2024 V.5.0.13
 
   * [YouTube Downloader] Fix `--playlist-items` using executable.
   * [YouTube Downloader] Improved playlists/channels check before start
     download.
   * Update english user guide documentation (pdf docs) and related references.
   * Fixed wrong deinterlace command option using w3fdif filter.
+  * [YouTube Downloader] Fixed audio/video qualities (see #305 #307)
+  * Added shutdown system and auto-exit the application. These settings are
+    found on the "Exit and Shutdown" tab of Preferences dialog (see #306).
 
 +------------------------------------+
 Mon, 29 Apr 2024 V.5.0.12

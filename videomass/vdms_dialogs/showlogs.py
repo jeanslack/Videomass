@@ -45,6 +45,7 @@ class ShowLogs(wx.Dialog):
                 'generic_task.log',
                 'YouTube Downloader.log',
                 'Queue Processing.log',
+                'Shutdown.log',
                 )
 
     def __init__(self, parent, dirlog, OS):

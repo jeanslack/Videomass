@@ -109,43 +109,6 @@ def from_api_to_cli(data, execpath):
     return opt
 
 
-def join_opts(optvideo=None, optaudio=None, vformat=None, selection=None):
-    """
-    Return a convenient string for audio/video selectors
-
-    - optvideo = string given by self.opt["V_QUALITY"]
-    - optaudio = string given by self.opt["A_QUALITY"] on choice 2 only
-    - vformat = Preferred video format (Default, webm, mp4)
-    - selection = Current choice list selection (0, 1, 2, 3, 4)
-
-    """
-    if vformat == 'Default':  # Preferred video format
-        if selection == 1:
-            options = optvideo
-
-        elif selection == 2:
-            vqual = optvideo.split('+')[0]
-            aqual, lqual = optvideo.split('+')[1].split('/')
-            aqual = aqual if not optaudio else optaudio
-            options = f'{vqual},{aqual}/{lqual}'
-
-    else:
-        vqual = optvideo.split('+')[0] + f'[ext={vformat}]'
-        aqual, lqual = optvideo.split('+')[1].split('/')
-        aqual = aqual if not optaudio else optaudio
-
-        if selection == 1:
-            aformat = 'm4a' if vformat == 'mp4' else 'webm'
-            aqual = aqual + f'[ext={aformat}]'
-            options = f'{vqual}+{aqual}/{lqual}'
-
-        elif selection == 2:
-            aqual = aqual + '[ext=m4a]'
-            options = f'{vqual},{aqual}/{lqual}'
-
-    return options
-
-
 class Downloader(wx.Panel):
     """
     This panel represents the main interface to yt-dlp
@@ -155,20 +118,23 @@ class Downloader(wx.Panel):
 
     MSG_1 = _('At least one "Format Code" must be checked for each '
               'URL selected in green.')
-
-    VQUAL = {('Best video resolution'): ('bestvideo+bestaudio/best'),
-             ('p1080'): ('bestvideo[height<=?1080]+bestaudio/best'),
-             ('p720'): ('bestvideo[height<=?720]+bestaudio/best'),
-             ('p480'): ('bestvideo[height<=?480]+bestaudio/best'),
-             ('p360'): ('bestvideo[height<=?360]+bestaudio/best'),
-             ('p240'): ('bestvideo[height<=?240]+bestaudio/best'),
-             ('p144'): ('worstvideo[height>=?144]+worstaudio/worst'),
-             ('Worst video resolution'): ('worstvideo+worstaudio/worst'),
+    # video resolution
+    VRES = {('p1080'): ('best[height<=?1080]'),
+            ('p720'): ('best[height<=?720]'),
+            ('p480'): ('best[height<=?480]'),
+            ('p360'): ('best[height<=?360]'),
+            ('p240'): ('best[height<=?240]'),
+            ('p144'): ('best[height>=?144]'),
+            }
+    # video qualities best or worst
+    VQUAL = {('Best quality video'): ('bestvideo'),
+             ('Worst quality video'): ('worstvideo'),
              }
+    # precompiled video
     VPCOMP = {('Best precompiled video'): ('bestvideo+bestaudio/best'),
               ('Medium High precompiled video'): ('bestvideo*+bestaudio/best'),
               ('Medium Low precompiled video'): ('18'),
-              ('Worst precompiled video'): ('worstvideo'),
+              ('Worst precompiled video'): ('worstvideo+worstaudio/worst'),
               }
     AFORMATS = {("Default audio format"): ("best"),
                 ("wav"): ("wav"),
@@ -179,6 +145,7 @@ class Downloader(wx.Panel):
                 ("opus"): ("opus"),
                 ("flac"): ("flac"),
                 }
+    # audio qualities best or worst
     AQUAL = {('Best quality audio'): ('bestaudio'),
              ('Worst quality audio'): ('worstaudio')}
 
@@ -335,7 +302,7 @@ class Downloader(wx.Panel):
         # ----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_choicebox)
         self.cmbx_vq.Bind(wx.EVT_COMBOBOX, self.on_vquality)
-        self.rdbvideoformat.Bind(wx.EVT_RADIOBOX, self.on_vformat)
+        self.rdbvideoformat.Bind(wx.EVT_RADIOBOX, self.on_quality)
         self.cmbx_af.Bind(wx.EVT_COMBOBOX, self.on_aformat)
         self.cmbx_aq.Bind(wx.EVT_COMBOBOX, self.on_aquality)
         self.ckbx_pl.Bind(wx.EVT_CHECKBOX, self.on_playlist)
@@ -511,7 +478,7 @@ class Downloader(wx.Panel):
             self.rdbvideoformat.Enable()
             self.panel_cod.enable_widgets(False)
             self.cmbx_vq.Clear()
-            self.cmbx_vq.Append(list(Downloader.VQUAL.keys()))
+            self.cmbx_vq.Append(list(Downloader.VRES.keys()))
             self.cmbx_vq.SetSelection(0)
             self.Layout()
             self.on_vquality(self)
@@ -520,7 +487,7 @@ class Downloader(wx.Panel):
             self.cmbx_af.Disable()
             self.cmbx_aq.Enable()
             self.cmbx_vq.Enable()
-            self.rdbvideoformat.Enable()
+            self.rdbvideoformat.Disable()
             self.panel_cod.enable_widgets(False)
             self.cmbx_vq.Clear()
             self.cmbx_vq.Append(list(Downloader.VQUAL.keys()))
@@ -530,7 +497,7 @@ class Downloader(wx.Panel):
 
         elif self.choice.GetSelection() == 3:
             self.cmbx_vq.Disable()
-            self.cmbx_aq.Disable()
+            self.cmbx_aq.Enable()
             self.cmbx_af.Enable()
             self.rdbvideoformat.Disable()
             self.panel_cod.enable_widgets(False)
@@ -555,55 +522,58 @@ class Downloader(wx.Panel):
         """
         if self.choice.GetSelection() == 0:
             self.opt["V_QUALITY"] = Downloader.VPCOMP[self.cmbx_vq.GetValue()]
-        else:
+        elif self.choice.GetSelection() == 1:
+            self.opt["V_QUALITY"] = Downloader.VRES[self.cmbx_vq.GetValue()]
+        elif self.choice.GetSelection() == 2:
             self.opt["V_QUALITY"] = Downloader.VQUAL[self.cmbx_vq.GetValue()]
-        self.on_vformat(self)
+        self.on_quality(self)
     # -----------------------------------------------------------------#
 
-    def on_vformat(self, event):
+    def on_quality(self, event):
         """
-        Set preferring video format during radiobox event
+        Set preferring video and audio format on radiobox event
         """
         index = self.rdbvideoformat.GetSelection()
         vformat = self.rdbvideoformat.GetString(index)
 
         if self.choice.GetSelection() == 0:
             quality = self.opt["V_QUALITY"]
+            self.parent.statusbar_msg(f'Quality: {quality}', None)
 
         elif self.choice.GetSelection() == 1:
-            quality = join_opts(optvideo=self.opt["V_QUALITY"],
-                                vformat=vformat,
-                                selection=self.choice.GetSelection()
-                                )
+            vf = '' if vformat == 'Default' else f'[ext={vformat}]'
+            quality = self.opt["V_QUALITY"] + vf
+            self.parent.statusbar_msg(f'Quality: {quality}', None)
+
         elif self.choice.GetSelection() == 2:
-            quality = join_opts(optvideo=self.opt["V_QUALITY"],
-                                optaudio=self.opt["A_QUALITY"],
-                                vformat=vformat,
-                                selection=self.choice.GetSelection()
-                                )
-        self.parent.statusbar_msg(f'Quality: {quality}', None)
+            quality = f'{self.opt["V_QUALITY"]},{self.opt["A_QUALITY"]}'
+            self.parent.statusbar_msg(f'Quality: {quality}', None)
+
+        elif self.choice.GetSelection() == 3:
+            quality = f'{self.opt["A_QUALITY"]}/worst'
+            msg = f'Quality: {quality} (format={self.cmbx_af.GetValue()})'
+            self.parent.statusbar_msg(msg, None)
+
         self.quality = quality
     # -----------------------------------------------------------------#
 
     def on_aformat(self, event):
         """
-        Set audio format to exporting during combobox event
-        and self.choice selection == 3
+        Set audio format extension to exporting on combobox event.
+        This is related to "Download Audio only" choice.
         """
         self.opt["A_FORMAT"] = Downloader.AFORMATS.get(self.cmbx_af.GetValue())
-
-        quality = f'bestaudio (format={self.cmbx_af.GetValue()})'
-        self.parent.statusbar_msg(f'Quality: {quality}', None)
-        self.quality = quality
+        self.on_quality(None)
     # -----------------------------------------------------------------#
 
     def on_aquality(self, event):
         """
-        Set audio qualities during combobox event
-        and self.choice selection == 1
+        Set audio qualities on combobox event.
+        This is related to "Download spilt audio and video" and
+        "Download Audio only" choices.
         """
         self.opt["A_QUALITY"] = Downloader.AQUAL.get(self.cmbx_aq.GetValue())
-        self.on_vformat(self)
+        self.on_quality(self)
     # -----------------------------------------------------------------#
 
     def on_playlist(self, event):
@@ -845,7 +815,7 @@ class Downloader(wx.Panel):
 
         elif self.choice.GetSelection() == 3:  # audio only
             code = []
-            formatquality = 'bestaudio'
+            formatquality = self.quality
             outtmpl = f'{_id}.%(ext)s'
             data['extractaudio'] = True
 
