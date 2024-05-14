@@ -27,7 +27,7 @@ Also, if you're interested in how to start videomass using the source code, look
 
 ---
 
-[Videomass 4.0.1 Disk Image](https://github.com/jeanslack/Videomass/releases/latest/download/Videomass-v4.0.1-x86_64.dmg){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }   
+[Videomass 4.0.1 Disk Image](https://github.com/jeanslack/Videomass/releases/download/v4.0.1/Videomass-v4.0.1-x86_64.dmg){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }   
 
 Minimum requirements:
 - [macOS High Sierra](https://en.wikipedia.org/wiki/MacOS_High_Sierra) 10.13.6 x64.   
