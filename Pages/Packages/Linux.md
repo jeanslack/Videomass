@@ -55,9 +55,7 @@ or in AUR part of Manjaro (Arch Linux derivative) Linux.
 
 ## Devuan / Debian
 
-A [precompiled binary package](https://github.com/jeanslack/Videomass/releases/latest) (`.deb`) 
-(arch-independent) is available and can be installed on both **Devuan Chimaera** and **Devuan Daedalus**.
-This precompiled package is also compatible with **Debian11 bullseye** and **Debian12 bookworm**.
+A [deb](https://github.com/jeanslack/Videomass/releases/latest) precompiled package is available and can be installed on both **Devuan Chimaera** and **Devuan Daedalus**, also compatible with **Debian11 bullseye** and **Debian12 bookworm**.
 
 ---
 

@@ -10,8 +10,7 @@ nav_order: 4
 # PyPy Package
 
 If Videomass is not available in your distribution packages, use the 
-[PyPI package](https://pypi.org/project/videomass/). On Linux some dependencies 
-have to be manually installed. More details can be found in the 
+[PyPI package](https://pypi.org/project/videomass/). More details can be found in the 
 [install instructions](https://github.com/jeanslack/Videomass/wiki/Installation-using-pip) .
 
 > To Learn how to install a Python package, read the offcial documentation 

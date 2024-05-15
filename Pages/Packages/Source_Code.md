@@ -14,7 +14,6 @@ nav_order: 5
 
 > You can get latest development version from git repository:
 {: .fs-3 .text-grey-dk-100}
-> `git clone https://github.com/jeanslack/Videomass.git`
+`git clone https://github.com/jeanslack/Videomass.git`
 
-You might also be interested in how to 
 [Run Videomass from source code](https://github.com/jeanslack/Videomass/wiki/Run-Videomass-from-source-code) 

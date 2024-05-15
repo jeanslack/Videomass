@@ -9,16 +9,13 @@ nav_order: 1
 
 # MS Windows
 
-## Executables
+## Portable edition available
 
 Minimum requirements:
-- [Microsoft Windows 7](https://docs.microsoft.com/en-us/lifecycle/products/windows-7)
-- [x86_64](https://en.wikipedia.org/wiki/X86-64) architecture. 
+- Microsoft Windows 10
+- x86_64 Architecture
 
-### Important
-{: .bg-green-300}
-
-For space reasons, the portable version does not include FFmpeg. Before running the executable please read the `README.txt` file included in the archive where you can find other information and useful links.
+For space reasons, this portable edition does not include FFmpeg. Please read the `README.txt` file included in the 7-zip archive for more information.
   
 [Videomass 5.0.13 Portable](https://github.com/jeanslack/Videomass/releases/download/v5.0.13/Videomass-v5.0.13_x86_64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
 [All Versions](https://github.com/jeanslack/Videomass/releases){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2}     
@@ -31,11 +28,8 @@ as malicious. Since these are false positives, to resolve this problem the only 
 to do is to submit the Videomass.exe file to your antivirus vendor for advanced 
 analysis and making a False Positive claim. 
 
-Alternatively, following this installation method: 
+Alternatively, install from [PyPi package](Python_Package) or [Run Videomass from source code](https://github.com/jeanslack/Videomass/wiki/Run-Videomass-from-source-code) 
 
-* [PyPi package](Python_Package) 
-
-Also, if you're interested in how to start videomass using the source code, look [here](Source_Code).
 
 For any other application-related issues, please read 
 [Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.
