@@ -449,6 +449,7 @@ class Float_TL(wx.MiniFrame):
         wx.PaintDC event
         """
         dc = wx.PaintDC(self.paneltime)  # draw window boundary
+        self.paneltime.Refresh()  # needed on wayland to make it work
         self.onRedraw(dc)
     # ------------------------------------------------------------------#
 
