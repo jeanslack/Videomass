@@ -60,8 +60,7 @@ class SettingProfile(wx.Dialog):
         """
         get = wx.GetApp()
         self.appdata = get.appset
-        self.path_prst = os.path.join(self.appdata['confdir'], 'presets',
-                                      f'{filename}.json')
+        self.filename = filename
         self.arg = arg  # evaluate if 'edit', 'newprofile', 'addprofile'
         self.array = array  # param list [name,descript,cmd1,cmd2,supp,ext,..]
 
@@ -268,7 +267,7 @@ class SettingProfile(wx.Dialog):
                 return
 
         if self.arg in ('newprofile', 'addprofile'):
-            writenewprf = write_new_profile(self.path_prst,
+            writenewprf = write_new_profile(self.filename,
                                             Name=name.strip(),
                                             Description=descript,
                                             First_pass=pass_1,
@@ -278,15 +277,25 @@ class SettingProfile(wx.Dialog):
                                             Preinput_1=preinput1,
                                             Preinput_2=preinput2,
                                             )
-            if writenewprf == 'already exist':
+            if writenewprf == 'invalid JSON file':
+                msg = (_('ERROR: Keys mismatched for requested data.\n'
+                         'Invalid file: «{0}»').format(self.filename))
+                wx.MessageBox(msg, _('Videomass - Error!'), wx.STAY_ON_TOP
+                              | wx.ICON_ERROR | wx.OK, self)
+                return
+            elif writenewprf == 'already exist':
                 wx.MessageBox(_("Profile already stored with same name"),
                               _('Videomass - Warning!'), wx.ICON_WARNING, self)
                 return
+            elif writenewprf != None:
+                wx.MessageBox(writenewprf, _('Videomass - Error!'),
+                              wx.ICON_WARNING, self)
+                return
 
-            wx.MessageBox(_("Successful storing!"))
+            wx.MessageBox(_("Profile stored successfully!"))
 
         elif self.arg == 'edit':
-            editprf = edit_existing_profile(self.path_prst,
+            editprf = edit_existing_profile(self.filename,
                                             self.array[0],
                                             Name=name.strip(),
                                             Description=descript,
@@ -301,7 +310,7 @@ class SettingProfile(wx.Dialog):
                 wx.MessageBox(_("Profile already stored with same name"),
                               _('Videomass - Warning!'), wx.ICON_WARNING, self)
                 return
-            wx.MessageBox(_("Successful changes!"))
+            wx.MessageBox(_("Profile change successful!"))
             # self.Destroy() # con ID_OK e ID_CANCEL non serve
 
         event.Skip()

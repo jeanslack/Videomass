@@ -61,7 +61,7 @@ def shutdown_system(password=None):
         if password:
             password = f"{password}\n"
             cmd = ["sudo", "-S", "/sbin/shutdown", "-h", "now"]
-        else:
+        else:  # using root
             cmd = ["/sbin/shutdown", "-h", "now"]
     try:
         with Popen(cmd,

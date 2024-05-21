@@ -2039,7 +2039,7 @@ msgstr ""
 msgid "Videomass - Edit the selected item in the queue"
 msgstr "Videomass - Редактировать выбранный элемент в очереди"
 
-#: ../vdms_dialogs/queue_singlechoice.py:42
+#: ../vdms_dialogs/singlechoicedlg.py:42
 msgid ""
 "Multiple matches were found in the destination file names.\n"
 "Please choose one of the following actions:"
@@ -2047,19 +2047,19 @@ msgstr ""
 "В именах выходных файлов обнаружено несколько совпадений.\n"
 "Пожалуйста, выберите одно из следующих действий:"
 
-#: ../vdms_dialogs/queue_singlechoice.py:44
+#: ../vdms_dialogs/singlechoicedlg.py:44
 msgid "Replace occurrences with items from the imported queue."
 msgstr "Замените вхождения элементами из импортированной очереди."
 
-#: ../vdms_dialogs/queue_singlechoice.py:45
+#: ../vdms_dialogs/singlechoicedlg.py:45
 msgid "Add only missing items to the queue."
 msgstr "Добавляйте в очередь только недостающие элементы."
 
-#: ../vdms_dialogs/queue_singlechoice.py:46
+#: ../vdms_dialogs/singlechoicedlg.py:46
 msgid "Remove the current queue and replace it with the imported one."
 msgstr "Удалите текущую очередь и замените ее импортированной."
 
-#: ../vdms_dialogs/queue_singlechoice.py:87
+#: ../vdms_dialogs/singlechoicedlg.py:87
 msgid "Videomass - Action is required..."
 msgstr "Videomass - Требуется действие..."
 

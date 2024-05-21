@@ -42,6 +42,7 @@ from videomass.vdms_dialogs.filter_deinterlace import Deinterlace
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_dialogs.filter_stab import VidstabSet
 from videomass.vdms_dialogs.filter_colorcorrection import ColorEQ
+from videomass.vdms_dialogs.singlechoicedlg import SingleChoice
 from . video_encoders.video_no_enc import Video_No_Enc
 from . video_encoders.mpeg4 import Mpeg_4
 from . video_encoders.av1_aom import AV1_Aom
@@ -176,7 +177,7 @@ class AV_Conv(wx.Panel):
                                     )
         sizer_convin.Add(self.cmb_cont, 0, wx.LEFT | wx.CENTRE, 5)
         self.btn_saveprst = wx.Button(self, wx.ID_ANY,
-                                      _("Save Preset"), size=(-1, -1))
+                                      _("Save profile"), size=(-1, -1))
         self.btn_saveprst.SetBitmap(bmpsaveprf, wx.LEFT)
         sizer_convin.Add(self.btn_saveprst, 0, wx.LEFT | wx.CENTRE, 20)
         msg = _("Target")
@@ -319,9 +320,7 @@ class AV_Conv(wx.Panel):
         self.Fit()
         self.Layout()
         # ---------------------- Tooltips
-        tip = _('Save the current settings as a new preset profile for the '
-                'Preset Manager. You will find it in the Preset Manager '
-                'where you can use it quickly.')
+        tip = _('Save as a new profile of the Presets Manager.')
         self.btn_saveprst.SetToolTip(tip)
         tip = (_('Available video encoders. "Copy" means that the video '
                  'stream will not be re-encoded and will allow you (depending '
@@ -1218,10 +1217,9 @@ class AV_Conv(wx.Panel):
         return {'key': keys, 'val': vals}
     # ------------------------------------------------------------------#
 
-    def on_saveprst(self, event):
+    def save_to_preset(self, presetname):
         """
-        Save current setting as profile for the Presets
-        Manager panel
+        Save the current profile in the Preset Manager
         """
         if self.cmb_Media.GetValue() == 'Video':
             self.opt["CmdVideoParams"] = self.videopanel.video_options()
@@ -1241,23 +1239,10 @@ class AV_Conv(wx.Panel):
             else:
                 kwargs = self.audio_std()
 
-        with wx.FileDialog(
-                None, _("Choose a Videomass preset..."),
-                defaultDir=os.path.join(self.appdata['confdir'], 'presets'),
-                wildcard="Videomass presets (*.json;)|*.json;",
-                style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
-
-            if fileDialog.ShowModal() == wx.ID_CANCEL:
-                return
-
-            filename = os.path.splitext(fileDialog.GetPath())[0]
-            basename = os.path.basename(filename)
-
-            title = _('New Profile - Preset "{0}"').format(basename)
-
+        title = _('Save profile in «{0}»').format(presetname)
         args = kwargs["args"][0], kwargs["args"][1], self.opt["OutputFormat"]
         with setting_profiles.SettingProfile(self, 'addprofile',
-                                             basename,
+                                             presetname,
                                              args,
                                              title,
                                              ) as prstdialog:
@@ -1265,3 +1250,65 @@ class AV_Conv(wx.Panel):
             if prstdialog.ShowModal() == wx.ID_CANCEL:
                 return
         self.parent.PrstsPanel.presets_refresh(self)
+    # ------------------------------------------------------------------#
+
+    def preset_name(self, action):
+        """
+        Return the preset name
+        """
+        defaultdir = os.path.join(self.appdata['confdir'], 'presets')
+        if action == 0:
+            with wx.FileDialog(self, _("Enter name for new preset"),
+                               defaultDir=defaultdir,
+                               wildcard="Videomass presets (*.json;)|*.json;",
+                               style=wx.FD_SAVE
+                               | wx.FD_OVERWRITE_PROMPT) as fileDialog:
+                fileDialog.SetFilename('New preset.json')
+                if fileDialog.ShowModal() == wx.ID_CANCEL:
+                    return
+                filename = fileDialog.GetPath()
+                if os.path.splitext(filename)[1].strip() != '.json':
+                    wx.LogError(_('Invalid file name, make sure to provide a '
+                                  'valid name including the «.json» '
+                                  'extension'))
+                    return
+            try:
+                with open(filename, 'w', encoding='utf-8') as file:
+                    file.write('[]')
+            except IOError:
+                wx.LogError(_("Cannot save current "
+                              "data in file «{}».").format(filename))
+                return
+
+        elif action == 1:
+            with wx.FileDialog(self, _("Open Videomass preset"),
+                               defaultDir=defaultdir,
+                               wildcard="Videomass presets (*.json;)|*.json;",
+                               style=wx.FD_OPEN
+                               | wx.FD_FILE_MUST_EXIST) as fileDialog:
+                if fileDialog.ShowModal() == wx.ID_CANCEL:
+                    return
+                filename = fileDialog.GetPath()
+        else:
+            return
+
+        return filename
+    # ------------------------------------------------------------------#
+
+    def on_saveprst(self, event):
+        """
+        Asks to the user where add the new profile
+        """
+        caption = _('Videomass - Save new profile')
+        message = _('Where do you want to save this profile?')
+        choices = (_('Save the profile to a new preset'),
+                   _('Save the profile to an existing preset'))
+        with SingleChoice(self, caption, message, choices, 0) as dlg:
+            if dlg.ShowModal() == wx.ID_OK:
+                presetname = self.preset_name(dlg.getvalue())
+            else:
+                return
+        if not presetname:
+            return
+
+        self.save_to_preset(presetname)

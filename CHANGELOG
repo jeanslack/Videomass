@@ -11,6 +11,9 @@ Thu, 16 May 2024 V.5.0.14
 
   * [AV Conversions] Fixed crop area display (crop filter) issue using Wayland.
   * [Timeline] Fixed selected area display using Wayland.
+  * [AV Conversions] Improved `Store profile` functionality + bug fixes.
+  * [Presets Manager] Improved error handling writing profiles.
+
 
 +------------------------------------+
 Mon, 13 May 2024 V.5.0.13

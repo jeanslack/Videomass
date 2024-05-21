@@ -2,6 +2,8 @@ videomass (5.0.14-1) UNRELEASED; urgency=medium
 
   * [AV Conversions] Fixed crop area display (crop filter) issue using Wayland.
   * [Timeline] Fixed selected area display using Wayland.
+  * [AV Conversions] Improved `Store profile` functionality + bug fixes.
+  * [Presets Manager] Improved error handling writing profiles.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 16 May 2024 14:00:00 +0200
 
