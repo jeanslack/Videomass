@@ -124,6 +124,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         resizing, and hiding.
         """
         wx.PaintDC(self)  # draw window boundary
+        self.Refresh()  # needed on wayland to make it work
         self.onRedraw(self.rect)
     # ------------------------------------------------------------------#
 

@@ -1,3 +1,13 @@
+videomass (5.0.14-1) UNRELEASED; urgency=medium
+
+  * [AV Conversions] Fixed crop area display (crop filter) issue using Wayland.
+  * [Timeline] Fixed selected area display using Wayland.
+  * [AV Conversions] Improved `Save profile` functionality + bug fixes #316.
+  * [Presets Manager] Improved error handling writing profiles.
+  * Update user guide.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 22 May 2024 15:00:00 +0200
+
 videomass (5.0.13-1) UNRELEASED; urgency=medium
 
   * [YouTube Downloader] Fix `--playlist-items` using executable.

@@ -1843,9 +1843,7 @@ class MainFrame(wx.Frame):
             if not succ:
                 msg = (_("Error while shutting down. Please see "
                          "file log for details."))
-                self.statusbar_msg(msg,
-                                   self.appdata['colorscheme']['ERR1'],
-                                   '#fbf4f4')
+                wx.LogError(msg)
     # ------------------------------------------------------------------#
 
     def auto_exit(self):

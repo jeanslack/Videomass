@@ -108,7 +108,7 @@ class ConfigManager:
     toolbarpos (int):
         Set toolbar positioning. 0 placed on top side;
         1 placed at the bottom side; 2 placed at the rigth side;
-        3 is placed at the left side. default is 0 .
+        3 is placed at the left side. default is 3 .
 
     main_window_size (list):
         [int(Height), int(Width)] last current window dimension before
@@ -215,7 +215,7 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 7.7
+    VERSION = 7.8
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "shutdown": False,
                        "sudo_password": "",
@@ -235,7 +235,7 @@ class ConfigManager:
                        "warnexiting": True,
                        "icontheme": "Videomass-Colours",
                        "toolbarsize": 24,
-                       "toolbarpos": 0,
+                       "toolbarpos": 3,
                        "main_window_size": [850, 560],
                        "main_window_pos": [0, 0],
                        "main_ytdl_size": [850, 560],

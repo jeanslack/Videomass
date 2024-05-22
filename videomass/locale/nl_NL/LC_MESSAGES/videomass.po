@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 5.0.13\n"
+"Project-Id-Version: Videomass 5.0.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-13 22:02+0200\n"
-"PO-Revision-Date: 2024-05-13 22:13+0200\n"
+"POT-Creation-Date: 2024-05-21 21:20+0200\n"
+"PO-Revision-Date: 2024-05-22 16:10+0200\n"
 "Last-Translator: johannesdedoper <https://github.com/johannesdedoper>\n"
 "Language-Team: Dutch <>\n"
 "Language: nl_NL\n"
@@ -24,29 +24,30 @@ msgid ""
 "from the preferences."
 msgstr ""
 
-#: ../gui_app.py:129 ../vdms_dialogs/filter_crop.py:416
+#: ../gui_app.py:129 ../vdms_dialogs/filter_crop.py:417
 #: ../vdms_dialogs/filter_scale.py:287 ../vdms_dialogs/filter_scale.py:395
 #: ../vdms_dialogs/filter_stab.py:473 ../vdms_dialogs/filter_stab.py:483
 #: ../vdms_dialogs/filter_stab.py:494 ../vdms_dialogs/filter_transpose.py:182
-#: ../vdms_dialogs/mediainfo.py:245 ../vdms_dialogs/mediainfo.py:265
-#: ../vdms_dialogs/mediainfo.py:285 ../vdms_dialogs/mediainfo.py:305
+#: ../vdms_dialogs/setting_profiles.py:283
+#: ../vdms_dialogs/setting_profiles.py:291 ../vdms_dialogs/mediainfo.py:245
+#: ../vdms_dialogs/mediainfo.py:265 ../vdms_dialogs/mediainfo.py:285
+#: ../vdms_dialogs/mediainfo.py:305
 #: ../vdms_dialogs/filter_colorcorrection.py:343
 #: ../vdms_dialogs/filter_colorcorrection.py:383
 #: ../vdms_dialogs/filter_colorcorrection.py:390 ../vdms_io/checkup.py:75
-#: ../vdms_io/io_tools.py:171 ../vdms_utils/presets_manager_utils.py:92
-#: ../vdms_utils/presets_manager_utils.py:102 ../vdms_main/main_frame.py:893
+#: ../vdms_io/io_tools.py:171 ../vdms_utils/presets_manager_utils.py:86
+#: ../vdms_utils/presets_manager_utils.py:95 ../vdms_main/main_frame.py:893
 #: ../vdms_main/main_frame.py:928 ../vdms_main/main_frame.py:950
 #: ../vdms_main/main_frame.py:968 ../vdms_main/main_frame.py:988
 #: ../vdms_panels/audio_encoders/acodecs.py:507
 #: ../vdms_panels/audio_encoders/acodecs.py:795
 #: ../vdms_panels/concatenate.py:197 ../vdms_panels/long_processing_task.py:60
-#: ../vdms_panels/presets_manager.py:456 ../vdms_panels/presets_manager.py:521
-#: ../vdms_panels/presets_manager.py:587 ../vdms_panels/presets_manager.py:596
-#: ../vdms_panels/presets_manager.py:626 ../vdms_panels/presets_manager.py:646
-#: ../vdms_panels/presets_manager.py:673 ../vdms_panels/presets_manager.py:691
-#: ../vdms_panels/presets_manager.py:734 ../vdms_panels/presets_manager.py:747
-#: ../vdms_panels/presets_manager.py:754 ../vdms_panels/presets_manager.py:784
-#: ../vdms_panels/presets_manager.py:813 ../vdms_panels/presets_manager.py:819
+#: ../vdms_panels/presets_manager.py:456 ../vdms_panels/presets_manager.py:520
+#: ../vdms_panels/presets_manager.py:590 ../vdms_panels/presets_manager.py:629
+#: ../vdms_panels/presets_manager.py:649 ../vdms_panels/presets_manager.py:687
+#: ../vdms_panels/presets_manager.py:730 ../vdms_panels/presets_manager.py:743
+#: ../vdms_panels/presets_manager.py:750 ../vdms_panels/presets_manager.py:785
+#: ../vdms_panels/presets_manager.py:814 ../vdms_panels/presets_manager.py:820
 #: ../vdms_panels/sequence_to_video.py:465
 #: ../vdms_panels/sequence_to_video.py:471
 #: ../vdms_panels/sequence_to_video.py:565
@@ -59,8 +60,8 @@ msgstr ""
 #: ../vdms_panels/video_to_sequence.py:514
 #: ../vdms_panels/video_to_sequence.py:585 ../vdms_threads/ffplay_file.py:43
 #: ../vdms_ytdlp/youtubedl_ui.py:406 ../vdms_ytdlp/youtubedl_ui.py:428
-#: ../vdms_utils/queue_utils.py:70 ../vdms_utils/queue_utils.py:85
-#: ../vdms_utils/queue_utils.py:98
+#: ../vdms_utils/queue_utils.py:68 ../vdms_utils/queue_utils.py:82
+#: ../vdms_utils/queue_utils.py:95
 #, fuzzy
 #| msgid "Videomass - Loading..."
 msgid "Videomass - Error!"
@@ -146,44 +147,44 @@ msgstr ""
 msgid "Videomass - Batch Mode"
 msgstr "Videomass - Presets Manager"
 
-#: ../vdms_dialogs/filter_crop.py:227 ../vdms_dialogs/filter_scale.py:109
+#: ../vdms_dialogs/filter_crop.py:228 ../vdms_dialogs/filter_scale.py:109
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "Bron grootte: {0} x {1} pixels"
 
-#: ../vdms_dialogs/filter_crop.py:235
+#: ../vdms_dialogs/filter_crop.py:236
 #, fuzzy
 #| msgid "Crop Filter"
 msgid "Crop color"
 msgstr "Bijsnij Filter"
 
-#: ../vdms_dialogs/filter_crop.py:238
+#: ../vdms_dialogs/filter_crop.py:239
 #: ../vdms_dialogs/filter_colorcorrection.py:103
 msgid "Search for a specific frame"
 msgstr "Zoek naar een specifiek frame"
 
-#: ../vdms_dialogs/filter_crop.py:252
+#: ../vdms_dialogs/filter_crop.py:253
 #: ../vdms_dialogs/filter_colorcorrection.py:117
 msgid "Load"
 msgstr "Laad"
 
-#: ../vdms_dialogs/filter_crop.py:255
+#: ../vdms_dialogs/filter_crop.py:256
 msgid "Cropping area selection "
 msgstr "Gebied-selectie bijsnijden "
 
-#: ../vdms_dialogs/filter_crop.py:260 ../vdms_dialogs/filter_scale.py:121
+#: ../vdms_dialogs/filter_crop.py:261 ../vdms_dialogs/filter_scale.py:121
 msgid "Height"
 msgstr "Hoogte"
 
-#: ../vdms_dialogs/filter_crop.py:280
+#: ../vdms_dialogs/filter_crop.py:281
 msgid "Center"
 msgstr "Centrum"
 
-#: ../vdms_dialogs/filter_crop.py:291 ../vdms_dialogs/filter_scale.py:121
+#: ../vdms_dialogs/filter_crop.py:292 ../vdms_dialogs/filter_scale.py:121
 msgid "Width"
 msgstr "Breedte"
 
-#: ../vdms_dialogs/filter_crop.py:305 ../vdms_dialogs/filter_deinterlace.py:209
+#: ../vdms_dialogs/filter_crop.py:306 ../vdms_dialogs/filter_deinterlace.py:209
 #: ../vdms_dialogs/filter_denoisers.py:110 ../vdms_dialogs/filter_scale.py:210
 #: ../vdms_dialogs/filter_stab.py:316 ../vdms_dialogs/filter_transpose.py:105
 #: ../vdms_dialogs/filter_colorcorrection.py:187
@@ -191,33 +192,33 @@ msgstr "Breedte"
 msgid "Reset"
 msgstr "Reset"
 
-#: ../vdms_dialogs/filter_crop.py:333
+#: ../vdms_dialogs/filter_crop.py:334
 #, fuzzy
 #| msgid "Crop Filter"
 msgid "Crop Tool"
 msgstr "Bijsnij Filter"
 
-#: ../vdms_dialogs/filter_crop.py:334
+#: ../vdms_dialogs/filter_crop.py:335
 msgid "Choose the color to draw the cropping area"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:336
+#: ../vdms_dialogs/filter_crop.py:337
 msgid "Crop to width"
 msgstr "Snij breedte bij"
 
-#: ../vdms_dialogs/filter_crop.py:337
+#: ../vdms_dialogs/filter_crop.py:338
 #, fuzzy
 #| msgid "Move vertically - set to -1 to center the vertical axis"
 msgid "Move vertically (set to -1 to center the vertical axis)"
 msgstr "Verplaats verticaal - zet op -1 om de verticale as te centreren"
 
-#: ../vdms_dialogs/filter_crop.py:339
+#: ../vdms_dialogs/filter_crop.py:340
 #, fuzzy
 #| msgid "Move horizontally - set to -1 to center the horizontal axis"
 msgid "Move horizontally (set to -1 to center the horizontal axis)"
 msgstr "Verplaats horizontaal - zet op -1 om de horizontale as te centreren"
 
-#: ../vdms_dialogs/filter_crop.py:341
+#: ../vdms_dialogs/filter_crop.py:342
 msgid "Crop to height"
 msgstr "Snij hoogte bij"
 
@@ -226,7 +227,7 @@ msgid "Advanced Options"
 msgstr "Geavanceerde Opties"
 
 #: ../vdms_dialogs/filter_deinterlace.py:57
-#: ../vdms_panels/av_conversions.py:269
+#: ../vdms_panels/av_conversions.py:270
 msgid "Deinterlace"
 msgstr "Interlace ongedaan maken"
 
@@ -468,7 +469,7 @@ msgstr ""
 msgid "Create a snapshot"
 msgstr "Maak een nieuwe preset"
 
-#: ../vdms_dialogs/filter_stab.py:106 ../vdms_panels/av_conversions.py:229
+#: ../vdms_dialogs/filter_stab.py:106 ../vdms_panels/av_conversions.py:230
 #: ../vdms_panels/audio_encoders/acodecs.py:167
 msgid "Preview"
 msgstr "Voorvertoning"
@@ -859,11 +860,11 @@ msgstr ""
 #: ../vdms_dialogs/wizard_dlg.py:243 ../vdms_dialogs/showlogs.py:169
 #: ../vdms_io/checkup.py:50 ../vdms_main/main_frame.py:207
 #: ../vdms_main/main_frame.py:787 ../vdms_main/main_frame.py:1677
-#: ../vdms_panels/presets_manager.py:379 ../vdms_panels/presets_manager.py:577
-#: ../vdms_panels/presets_manager.py:617 ../vdms_panels/presets_manager.py:683
-#: ../vdms_panels/presets_manager.py:718 ../vdms_panels/presets_manager.py:773
-#: ../vdms_panels/presets_manager.py:803 ../vdms_panels/presets_manager.py:901
-#: ../vdms_panels/presets_manager.py:931 ../vdms_ytdlp/main_ytdlp.py:202
+#: ../vdms_panels/presets_manager.py:379 ../vdms_panels/presets_manager.py:580
+#: ../vdms_panels/presets_manager.py:620 ../vdms_panels/presets_manager.py:679
+#: ../vdms_panels/presets_manager.py:714 ../vdms_panels/presets_manager.py:778
+#: ../vdms_panels/presets_manager.py:804 ../vdms_panels/presets_manager.py:904
+#: ../vdms_panels/presets_manager.py:934 ../vdms_ytdlp/main_ytdlp.py:202
 #: ../vdms_ytdlp/youtubedl_ui.py:628 ../vdms_ytdlp/youtubedl_ui.py:644
 #: ../vdms_ytdlp/ydl_preferences.py:438
 msgid "Please confirm"
@@ -997,41 +998,41 @@ msgstr ""
 "Output formaat. Bij weglaten worden formaat en codec gekopieerd. Laat de `.` "
 "achterwege"
 
-#: ../vdms_dialogs/setting_profiles.py:72
+#: ../vdms_dialogs/setting_profiles.py:71
 msgid "Profile Name"
 msgstr "Profiel Naam"
 
-#: ../vdms_dialogs/setting_profiles.py:76 ../vdms_panels/presets_manager.py:434
+#: ../vdms_dialogs/setting_profiles.py:75 ../vdms_panels/presets_manager.py:434
 msgid "Description"
 msgstr "Beschrijving"
 
-#: ../vdms_dialogs/setting_profiles.py:94 ../vdms_dialogs/queue_edit.py:71
+#: ../vdms_dialogs/setting_profiles.py:93 ../vdms_dialogs/queue_edit.py:71
 msgid "Pre-input arguments for One-Pass (optional)"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:100 ../vdms_dialogs/queue_edit.py:102
+#: ../vdms_dialogs/setting_profiles.py:99 ../vdms_dialogs/queue_edit.py:102
 msgid "Pre-input arguments for Two-Pass (optional)"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:151
+#: ../vdms_dialogs/setting_profiles.py:150
 msgid "A short profile name"
 msgstr "Een korte profiel naam"
 
-#: ../vdms_dialogs/setting_profiles.py:152
+#: ../vdms_dialogs/setting_profiles.py:151
 msgid "A long description of the profile"
 msgstr "Een uitgebreide beschrijving van het profiel"
 
-#: ../vdms_dialogs/setting_profiles.py:153 ../vdms_dialogs/queue_edit.py:82
+#: ../vdms_dialogs/setting_profiles.py:152 ../vdms_dialogs/queue_edit.py:82
 #: ../vdms_panels/presets_manager.py:307
 msgid "FFmpeg arguments for one-pass encoding"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:154 ../vdms_dialogs/queue_edit.py:113
+#: ../vdms_dialogs/setting_profiles.py:153 ../vdms_dialogs/queue_edit.py:113
 #: ../vdms_panels/presets_manager.py:309
 msgid "FFmpeg arguments for two-pass encoding"
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:155
+#: ../vdms_dialogs/setting_profiles.py:154
 #, fuzzy
 #| msgid "One or more comma-separated format names to include in the profile"
 msgid ""
@@ -1039,13 +1040,13 @@ msgid ""
 "profile."
 msgstr "Een of meerdere komma-gescheiden formaat namen voor het profiel"
 
-#: ../vdms_dialogs/setting_profiles.py:158
+#: ../vdms_dialogs/setting_profiles.py:157
 msgid "Output format extension. Leave empty to copy codec and format"
 msgstr ""
 "Bestandsextensie van output formaat. Laat leeg om codec en bestandsformaat "
 "te kopiëren"
 
-#: ../vdms_dialogs/setting_profiles.py:161 ../vdms_dialogs/queue_edit.py:88
+#: ../vdms_dialogs/setting_profiles.py:160 ../vdms_dialogs/queue_edit.py:88
 #: ../vdms_panels/presets_manager.py:311
 msgid ""
 "Any optional arguments to add before input file on the one-pass encoding, e."
@@ -1053,7 +1054,7 @@ msgid ""
 "CUDA."
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:165 ../vdms_dialogs/queue_edit.py:120
+#: ../vdms_dialogs/setting_profiles.py:164 ../vdms_dialogs/queue_edit.py:120
 #: ../vdms_panels/presets_manager.py:315
 msgid ""
 "Any optional arguments to add before input file on the two-pass encoding, e."
@@ -1061,16 +1062,16 @@ msgid ""
 "CUDA."
 msgstr ""
 
-#: ../vdms_dialogs/setting_profiles.py:259
+#: ../vdms_dialogs/setting_profiles.py:258
 msgid "Incomplete profile assignments"
 msgstr "Onvolledige profiel-toewijzingen"
 
-#: ../vdms_dialogs/setting_profiles.py:260
-#: ../vdms_dialogs/setting_profiles.py:267
-#: ../vdms_dialogs/setting_profiles.py:283
-#: ../vdms_dialogs/setting_profiles.py:302 ../vdms_dialogs/preferences.py:687
+#: ../vdms_dialogs/setting_profiles.py:259
+#: ../vdms_dialogs/setting_profiles.py:266
+#: ../vdms_dialogs/setting_profiles.py:288
+#: ../vdms_dialogs/setting_profiles.py:311 ../vdms_dialogs/preferences.py:687
 #: ../vdms_main/main_frame.py:411 ../vdms_main/main_frame.py:436
-#: ../vdms_panels/av_conversions.py:602 ../vdms_panels/av_conversions.py:609
+#: ../vdms_panels/av_conversions.py:601 ../vdms_panels/av_conversions.py:608
 #: ../vdms_panels/sequence_to_video.py:350
 #: ../vdms_panels/video_to_sequence.py:401 ../vdms_ytdlp/main_ytdlp.py:229
 #: ../vdms_ytdlp/youtubedl_ui.py:426
@@ -1079,22 +1080,31 @@ msgstr "Onvolledige profiel-toewijzingen"
 msgid "Videomass - Warning!"
 msgstr "Videomass - Laden..."
 
-#: ../vdms_dialogs/setting_profiles.py:266
+#: ../vdms_dialogs/setting_profiles.py:265
 msgid "Formats must be comma-separated"
 msgstr "Formaten moeten gescheiden zijn door komma's"
 
-#: ../vdms_dialogs/setting_profiles.py:282
-#: ../vdms_dialogs/setting_profiles.py:301
+#: ../vdms_dialogs/setting_profiles.py:281 ../vdms_utils/queue_utils.py:80
+#, python-brace-format
+msgid ""
+"ERROR: Keys mismatched for requested data.\n"
+"Invalid file: «{0}»"
+msgstr ""
+
+#: ../vdms_dialogs/setting_profiles.py:287
+#: ../vdms_dialogs/setting_profiles.py:310
 msgid "Profile already stored with same name"
 msgstr "Profiel reeds opgeslagen onder dezelfde naam"
 
-#: ../vdms_dialogs/setting_profiles.py:286
-msgid "Successful storing!"
-msgstr "Opslag was succesvol!"
+#: ../vdms_dialogs/setting_profiles.py:295
+#, fuzzy
+#| msgid "Wizard completed successfully!\n"
+msgid "Profile stored successfully!"
+msgstr "Wizard met succes afgerond!\n"
 
-#: ../vdms_dialogs/setting_profiles.py:304
-msgid "Successful changes!"
-msgstr "Veranderingen waren succesvol!"
+#: ../vdms_dialogs/setting_profiles.py:313
+msgid "Profile change successful!"
+msgstr ""
 
 #: ../vdms_dialogs/set_timestamp.py:87
 msgid "Font Size"
@@ -1140,8 +1150,8 @@ msgstr "Waar wilt u transcoderingen bewaren?"
 msgid "Change"
 msgstr ""
 
-#: ../vdms_dialogs/preferences.py:105 ../vdms_panels/av_conversions.py:1194
-#: ../vdms_panels/filedrop.py:574 ../vdms_panels/presets_manager.py:1077
+#: ../vdms_dialogs/preferences.py:105 ../vdms_panels/av_conversions.py:1193
+#: ../vdms_panels/filedrop.py:574 ../vdms_panels/presets_manager.py:1080
 #, fuzzy
 #| msgid "Create a new preset"
 msgid "Same destination paths as source files"
@@ -1421,7 +1431,7 @@ msgstr "Referenties"
 
 #: ../vdms_dialogs/preferences.py:641 ../vdms_dialogs/preferences.py:721
 #: ../vdms_main/main_frame.py:868 ../vdms_main/main_frame.py:1049
-#: ../vdms_panels/presets_manager.py:610 ../vdms_panels/presets_manager.py:639
+#: ../vdms_panels/presets_manager.py:613 ../vdms_panels/presets_manager.py:642
 #: ../vdms_ytdlp/main_ytdlp.py:398 ../vdms_ytdlp/ydl_preferences.py:504
 #, fuzzy
 #| msgid "Destination folder"
@@ -1863,11 +1873,11 @@ msgstr "FFmpeg decoders"
 msgid "supported decoders"
 msgstr "FFmpeg decoders"
 
-#: ../vdms_dialogs/ffmpeg_codecs.py:77 ../vdms_panels/av_conversions.py:292
+#: ../vdms_dialogs/ffmpeg_codecs.py:77 ../vdms_panels/av_conversions.py:293
 msgid "Video"
 msgstr "Video"
 
-#: ../vdms_dialogs/ffmpeg_codecs.py:87 ../vdms_panels/av_conversions.py:304
+#: ../vdms_dialogs/ffmpeg_codecs.py:87 ../vdms_panels/av_conversions.py:305
 msgid "Audio"
 msgstr "Audio"
 
@@ -2103,8 +2113,8 @@ msgstr "Videomass - Wachtrij URLs"
 msgid "Export queue file"
 msgstr "Exporteer geselecteerden"
 
-#: ../vdms_dialogs/queuedlg.py:296 ../vdms_panels/av_conversions.py:1189
-#: ../vdms_panels/presets_manager.py:1071
+#: ../vdms_dialogs/queuedlg.py:296 ../vdms_panels/av_conversions.py:1188
+#: ../vdms_panels/presets_manager.py:1074
 #: ../vdms_panels/video_to_sequence.py:602
 msgid "Same as source"
 msgstr ""
@@ -2149,30 +2159,6 @@ msgstr ""
 #| msgid "Play the selected files in the list"
 msgid "Videomass - Edit the selected item in the queue"
 msgstr "Speel de geselecteerde bestanden in de lijst af"
-
-#: ../vdms_dialogs/queue_singlechoice.py:42
-msgid ""
-"Multiple matches were found in the destination file names.\n"
-"Please choose one of the following actions:"
-msgstr ""
-
-#: ../vdms_dialogs/queue_singlechoice.py:44
-msgid "Replace occurrences with items from the imported queue."
-msgstr ""
-
-#: ../vdms_dialogs/queue_singlechoice.py:45
-msgid "Add only missing items to the queue."
-msgstr ""
-
-#: ../vdms_dialogs/queue_singlechoice.py:46
-msgid "Remove the current queue and replace it with the imported one."
-msgstr ""
-
-#: ../vdms_dialogs/queue_singlechoice.py:87
-#, fuzzy
-#| msgid "Videomass - Updating..."
-msgid "Videomass - Action is required..."
-msgstr "Videomass - Bezig met updaten..."
 
 #: ../vdms_miniframes/timeline.py:46
 #, fuzzy
@@ -2233,25 +2219,25 @@ msgstr "Duur:"
 msgid "WARNING: Invalid selection, out of range."
 msgstr ""
 
-#: ../vdms_miniframes/timeline.py:460
+#: ../vdms_miniframes/timeline.py:461
 msgid ""
 "Start by dragging the bottom left handle,\n"
 "or right-click for options."
 msgstr ""
 
-#: ../vdms_miniframes/timeline.py:496
+#: ../vdms_miniframes/timeline.py:497
 #, fuzzy
 #| msgid "Starts"
 msgid "Start"
 msgstr "Start"
 
-#: ../vdms_miniframes/timeline.py:497
+#: ../vdms_miniframes/timeline.py:498
 #, fuzzy
 #| msgid "Enabled"
 msgid "End"
 msgstr "Geactiveerd"
 
-#: ../vdms_miniframes/timeline.py:547
+#: ../vdms_miniframes/timeline.py:548
 msgid ""
 "The timeline editor is a tool that allows you to trim slices of time on "
 "selected imported media (see File List panel).\n"
@@ -2272,7 +2258,7 @@ msgid ""
 "duration and warnings, please refer to the status bar messages."
 msgstr ""
 
-#: ../vdms_miniframes/timeline.py:564
+#: ../vdms_miniframes/timeline.py:565
 #, fuzzy
 #| msgid "Show timeline\tCtrl+T"
 msgid "Timeline Editor Usage"
@@ -2353,15 +2339,7 @@ msgstr "Eerste pass van het geselecteerde profiel"
 msgid "Warning"
 msgstr "Waarschuwing"
 
-#: ../vdms_utils/presets_manager_utils.py:86
-msgid ""
-"You are attempting to load a preset written with invalid JSON encoding.\n"
-"\n"
-"You can try to restore it or import a correct one, otherwise it is "
-"recommended to remove it."
-msgstr ""
-
-#: ../vdms_utils/presets_manager_utils.py:97
+#: ../vdms_utils/presets_manager_utils.py:90
 msgid ""
 "No presets found.\n"
 "\n"
@@ -2372,13 +2350,6 @@ msgstr ""
 "\n"
 "Mogelijke oplossing: open het Presets Manager paneel, ga naar de presets "
 "kolom en probeer de \"Herstel allen...\" knop te drukken"
-
-#: ../vdms_utils/presets_manager_utils.py:129
-msgid ""
-"Operation aborted due to possible JSON encoding/decoding error.\n"
-"Fix any errors in the JSON code contained on the FILE before performing this "
-"operation again."
-msgstr ""
 
 #: ../vdms_main/main_frame.py:188 ../vdms_main/main_frame.py:1399
 #: ../vdms_main/main_frame.py:1432 ../vdms_ytdlp/main_ytdlp.py:98
@@ -2970,7 +2941,8 @@ msgstr ""
 msgid "Show queue"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1398 ../vdms_ytdlp/main_ytdlp.py:146
+#: ../vdms_main/main_frame.py:1398 ../vdms_panels/presets_manager.py:599
+#: ../vdms_ytdlp/main_ytdlp.py:146
 msgid "Videomass"
 msgstr "Videomass"
 
@@ -3004,7 +2976,7 @@ msgstr "Van afbeelingen serie naar een video file"
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Presets Manager"
 
-#: ../vdms_main/main_frame.py:1653 ../vdms_panels/av_conversions.py:574
+#: ../vdms_main/main_frame.py:1653 ../vdms_panels/av_conversions.py:573
 #: ../vdms_panels/audio_encoders/acodecs.py:784 ../vdms_panels/filedrop.py:475
 #: ../vdms_panels/filedrop.py:588 ../vdms_panels/sequence_to_video.py:320
 #: ../vdms_panels/video_to_sequence.py:371
@@ -3043,90 +3015,90 @@ msgstr "Videomass - Laden..."
 msgid "Error while shutting down. Please see file log for details."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1859
+#: ../vdms_main/main_frame.py:1857
 #, fuzzy
 #| msgid "Videomass - Loading..."
 msgid "Videomass - Exiting!"
 msgstr "Videomass - Laden..."
 
-#: ../vdms_panels/av_conversions.py:152
+#: ../vdms_panels/av_conversions.py:153
 msgid "Media:"
 msgstr "Media:"
 
-#: ../vdms_panels/av_conversions.py:168
+#: ../vdms_panels/av_conversions.py:169
 msgid "Container:"
 msgstr "Container:"
 
-#: ../vdms_panels/av_conversions.py:179
+#: ../vdms_panels/av_conversions.py:180
 #, fuzzy
-#| msgid "Preset"
-msgid "Save Preset"
-msgstr "Preset"
+#| msgid "Save the new profile to..."
+msgid "Save profile"
+msgstr "Schrijf het nieuwe profiel naar..."
 
-#: ../vdms_panels/av_conversions.py:182
+#: ../vdms_panels/av_conversions.py:183
 #, fuzzy
 #| msgid "Target level:"
 msgid "Target"
 msgstr "Doel niveau:"
 
-#: ../vdms_panels/av_conversions.py:226
+#: ../vdms_panels/av_conversions.py:227
 msgid "Video Filters"
 msgstr "Video Filters"
 
-#: ../vdms_panels/av_conversions.py:235
+#: ../vdms_panels/av_conversions.py:236
 #, fuzzy
 #| msgid "Reset"
 msgid "Reset all"
 msgstr "Reset"
 
-#: ../vdms_panels/av_conversions.py:256 ../vdms_panels/sequence_to_video.py:155
+#: ../vdms_panels/av_conversions.py:257 ../vdms_panels/sequence_to_video.py:155
 #: ../vdms_panels/video_to_sequence.py:113
 #, fuzzy
 #| msgid "Resizing"
 msgid "Resize"
 msgstr "Herschalen bezig"
 
-#: ../vdms_panels/av_conversions.py:260
+#: ../vdms_panels/av_conversions.py:261
 #, fuzzy
 #| msgid "Cropping"
 msgid "Crop"
 msgstr "Bijsnijden bezig"
 
-#: ../vdms_panels/av_conversions.py:264
+#: ../vdms_panels/av_conversions.py:265
 #, fuzzy
 #| msgid "Transpose Filter"
 msgid "Transpose"
 msgstr "Transponeer Filter"
 
-#: ../vdms_panels/av_conversions.py:273
+#: ../vdms_panels/av_conversions.py:274
 #, fuzzy
 #| msgid "Denoiser"
 msgid "Denoise"
 msgstr "Denoiser"
 
-#: ../vdms_panels/av_conversions.py:277
+#: ../vdms_panels/av_conversions.py:278
 #, fuzzy
 #| msgid "Stabilizer"
 msgid "Stabilize"
 msgstr "Stabilisatie filter"
 
-#: ../vdms_panels/av_conversions.py:282
+#: ../vdms_panels/av_conversions.py:283
 msgid "Equalize"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:315
+#: ../vdms_panels/av_conversions.py:316
 #, fuzzy
 #| msgid "Miscellanea"
 msgid "Miscellaneous"
 msgstr "Diversen"
 
-#: ../vdms_panels/av_conversions.py:322
-msgid ""
-"Save the current settings as a new preset profile for the Preset Manager. "
-"You will find it in the Preset Manager where you can use it quickly."
-msgstr ""
+#: ../vdms_panels/av_conversions.py:323
+#, fuzzy
+#| msgid "Remove the selected preset from the Presets Manager"
+msgid "Save as a new profile of the Presets Manager."
+msgstr "Verwijder de geselecteerde preset uit de Presets Manager"
 
-#: ../vdms_panels/av_conversions.py:326
+#: ../vdms_panels/av_conversions.py:325
 #, fuzzy
 #| msgid ""
 #| "Available video codecs. \"Copy\" is not a codec but indicate that the "
@@ -3141,7 +3113,7 @@ msgstr ""
 "stream niet her-encoded dient te worden en staat toe het formaat of andere "
 "parameters te wijzigen"
 
-#: ../vdms_panels/av_conversions.py:331
+#: ../vdms_panels/av_conversions.py:330
 msgid ""
 "Container format. It is usually represented by the file extension (output "
 "format).\n"
@@ -3154,7 +3126,7 @@ msgid ""
 "streams from videos, or simply convert audio source files."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:339
+#: ../vdms_panels/av_conversions.py:338
 msgid ""
 "Set output files target: \"Video\" to save output files as video files; "
 "\"Audio\" to save files using an audio encoder and format.\n"
@@ -3164,32 +3136,32 @@ msgid ""
 "streams, convert them and apply audio filters such as normalization."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:347
+#: ../vdms_panels/av_conversions.py:346
 msgid "Preview video filters"
 msgstr "Voorvertoon video filters"
 
-#: ../vdms_panels/av_conversions.py:349
+#: ../vdms_panels/av_conversions.py:348
 msgid ""
 "Clear all enabled filters. Remove all video filter data and apply default "
 "settings."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:514
+#: ../vdms_panels/av_conversions.py:513
 msgid "Unable to preview Video Stabilizer filter"
 msgstr "Geen preview van Video Stabilisatie filter mogelijk"
 
-#: ../vdms_panels/av_conversions.py:599
+#: ../vdms_panels/av_conversions.py:598
 msgid ""
 "Unsupported file:\n"
 "Missing decoder or library? Check FFmpeg configuration."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:608 ../vdms_panels/sequence_to_video.py:349
+#: ../vdms_panels/av_conversions.py:607 ../vdms_panels/sequence_to_video.py:349
 #: ../vdms_panels/video_to_sequence.py:400
 msgid "The file is not a frame or a video file"
 msgstr "Het bestand is geen frame en geen video bestand"
 
-#: ../vdms_panels/av_conversions.py:858
+#: ../vdms_panels/av_conversions.py:857
 #: ../vdms_panels/audio_encoders/acodecs.py:433
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
@@ -3198,11 +3170,11 @@ msgstr ""
 "Volume waarden niet gedetecteerd! Druk de \"Volume detect\" knop om de audio "
 "volume data te laten analyseren."
 
-#: ../vdms_panels/av_conversions.py:1183
+#: ../vdms_panels/av_conversions.py:1182
 msgid "Off"
 msgstr "Uit"
 
-#: ../vdms_panels/av_conversions.py:1200
+#: ../vdms_panels/av_conversions.py:1199
 #, fuzzy
 #| msgid ""
 #| "Queued File\n"
@@ -3241,16 +3213,56 @@ msgstr ""
 "Tijdsperiode\n"
 "Input Audio Map"
 
-#: ../vdms_panels/av_conversions.py:1245
+#: ../vdms_panels/av_conversions.py:1242
+#, python-brace-format
+msgid "Save profile in «{0}»"
+msgstr ""
+
+#: ../vdms_panels/av_conversions.py:1261 ../vdms_panels/presets_manager.py:543
+msgid "Enter name for new preset"
+msgstr "Voer naam in voor nieuwe preset"
+
+#: ../vdms_panels/av_conversions.py:1271 ../vdms_panels/presets_manager.py:554
+msgid ""
+"Invalid file name, make sure to provide a valid name including the «.json» "
+"extension"
+msgstr ""
+
+#: ../vdms_panels/av_conversions.py:1279
+#, fuzzy
+#| msgid "Cannot save current data in file '{}'."
+msgid "Cannot save current data in file «{}»."
+msgstr "Kan huidige data niet in bestand '{}' bewaren."
+
+#: ../vdms_panels/av_conversions.py:1284
 #, fuzzy
 #| msgid "Close Videomass"
-msgid "Choose a Videomass preset..."
+msgid "Open Videomass preset"
 msgstr "Sluit Videomass af"
 
-#: ../vdms_panels/av_conversions.py:1256
-#, python-brace-format
-msgid "New Profile - Preset \"{0}\""
-msgstr ""
+#: ../vdms_panels/av_conversions.py:1302
+#, fuzzy
+#| msgid "Create a new profile"
+msgid "Videomass - Save new profile"
+msgstr "Maak een nieuw profiel"
+
+#: ../vdms_panels/av_conversions.py:1303
+#, fuzzy
+#| msgid " Do you want to enable this feature?"
+msgid "Where do you want to save this profile?"
+msgstr " Wilt u deze mogelijkheid activeren?"
+
+#: ../vdms_panels/av_conversions.py:1304
+#, fuzzy
+#| msgid "Create a new profile on \"{}\" preset"
+msgid "Save the profile to a new preset"
+msgstr "Maak een nieuw profiel op \"{}\" preset"
+
+#: ../vdms_panels/av_conversions.py:1305
+#, fuzzy
+#| msgid "Create a new profile on \"{}\" preset"
+msgid "Save the profile to an existing preset"
+msgstr "Maak een nieuw profiel op \"{}\" preset"
 
 #: ../vdms_panels/audio_encoders/acodecs.py:118
 msgid "Audio encoder settings, mapping and filters"
@@ -4389,40 +4401,15 @@ msgstr "Output Formaat"
 msgid "Supported Format List"
 msgstr "Lijst Ondersteunde Formaten"
 
-#: ../vdms_panels/presets_manager.py:455
-msgid ""
-"Preset not supported!\n"
-"FILE: \"{}\""
-msgstr ""
-
-#: ../vdms_panels/presets_manager.py:519
-#, python-brace-format
-msgid ""
-"json key error\n"
-"FILE: \"{0}\"\n"
-"\n"
-"{1}"
-msgstr ""
-
-#: ../vdms_panels/presets_manager.py:544
-msgid "Enter name for new preset"
-msgstr "Voer naam in voor nieuwe preset"
-
-#: ../vdms_panels/presets_manager.py:557
+#: ../vdms_panels/presets_manager.py:561
 msgid "Cannot save current data in file '{}'."
 msgstr "Kan huidige data niet in bestand '{}' bewaren."
 
-#: ../vdms_panels/presets_manager.py:561
-msgid ""
-"'Successful!\n"
-"\n"
-"A new empty preset has been created."
+#: ../vdms_panels/presets_manager.py:565
+msgid "You just successfully created a new preset!"
 msgstr ""
-"'Succesvol!\n"
-"\n"
-"Een nieuwe lege preset is gemaakt."
 
-#: ../vdms_panels/presets_manager.py:574
+#: ../vdms_panels/presets_manager.py:577
 #, fuzzy
 #| msgid ""
 #| "Are you sure you want to remove \"{}\" preset?\n"
@@ -4437,7 +4424,7 @@ msgstr ""
 "\n"
 "Deze wordt verplaatst naar de \"Verwijderd\" subfolder in de presets folder."
 
-#: ../vdms_panels/presets_manager.py:585
+#: ../vdms_panels/presets_manager.py:588
 msgid ""
 "{}\n"
 "\n"
@@ -4447,32 +4434,30 @@ msgstr ""
 "\n"
 "Sorry, verwijdering mislukt, kan niet verder gaan.."
 
-#: ../vdms_panels/presets_manager.py:595
+#: ../vdms_panels/presets_manager.py:598
 #, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
 msgstr "De preset \"{0}\" was succesvol verwijderd"
 
-#: ../vdms_panels/presets_manager.py:615
+#: ../vdms_panels/presets_manager.py:618
 msgid "A file with this name already exists, do you want to overwrite it?"
 msgstr "Een bestand met deze naam bestaat al, wilt u het overschrijven?"
 
-#: ../vdms_panels/presets_manager.py:629
+#: ../vdms_panels/presets_manager.py:632
 msgid "The preset was exported successfully"
 msgstr "De preset was succesvol geëxporteerd"
 
-#: ../vdms_panels/presets_manager.py:649
+#: ../vdms_panels/presets_manager.py:652
 msgid "All presets have been exported successfully"
 msgstr "Alle presets zijn succesvol geëxporteerd"
 
-#: ../vdms_panels/presets_manager.py:660
-msgid "Import a new preset"
+#: ../vdms_panels/presets_manager.py:661
+#, fuzzy
+#| msgid "Import a new preset"
+msgid "Import a new Videomass preset"
 msgstr "Importeer een nieuwe preset"
 
-#: ../vdms_panels/presets_manager.py:671
-msgid "Error, invalid preset: \"{}\""
-msgstr "Error, ongeldige preset: \"{}\""
-
-#: ../vdms_panels/presets_manager.py:679
+#: ../vdms_panels/presets_manager.py:675
 msgid ""
 "This preset already exists and is about to be updated. Don't worry, it will "
 "keep all your saved profiles.\n"
@@ -4484,11 +4469,11 @@ msgstr ""
 "\n"
 "Wilt u verder gaan?"
 
-#: ../vdms_panels/presets_manager.py:697
+#: ../vdms_panels/presets_manager.py:693
 msgid "A new preset was successfully imported"
 msgstr "Een nieuwe preset is succesvol geïmporteerd"
 
-#: ../vdms_panels/presets_manager.py:715
+#: ../vdms_panels/presets_manager.py:711
 msgid ""
 "This will update the presets database. Don't worry, it will keep all your "
 "saved profiles.\n"
@@ -4500,15 +4485,21 @@ msgstr ""
 "\n"
 "Wilt u verder gaan?"
 
-#: ../vdms_panels/presets_manager.py:722
+#: ../vdms_panels/presets_manager.py:718
 msgid "Import a new presets folder"
 msgstr "Importeer een nieuwe preset folder"
 
-#: ../vdms_panels/presets_manager.py:758
+#: ../vdms_panels/presets_manager.py:754
 msgid "The presets database has been successfully updated"
 msgstr "De presets database is succesvol ge-update"
 
 #: ../vdms_panels/presets_manager.py:769
+#, fuzzy
+#| msgid "Replace the selected preset with the Videomass default one"
+msgid "The selected preset is not part of Videomass's default presets."
+msgstr "Vervang de geselecteerde preset met de Videomass standaard"
+
+#: ../vdms_panels/presets_manager.py:774
 msgid ""
 "Be careful! The selected preset will be overwritten with the default one. "
 "Your profiles may be deleted!\n"
@@ -4520,11 +4511,11 @@ msgstr ""
 "\n"
 "Wilt u verder gaan?"
 
-#: ../vdms_panels/presets_manager.py:788
+#: ../vdms_panels/presets_manager.py:789
 msgid "Successful recovery"
 msgstr "Succesvol herstel"
 
-#: ../vdms_panels/presets_manager.py:797
+#: ../vdms_panels/presets_manager.py:798
 #, fuzzy
 #| msgid ""
 #| "Be careful! This action will restore all presets to default ones. Your "
@@ -4545,32 +4536,30 @@ msgstr ""
 "\n"
 "Wilt u verder gaan?"
 
-#: ../vdms_panels/presets_manager.py:822
+#: ../vdms_panels/presets_manager.py:823
 msgid "All default presets have been successfully recovered"
 msgstr "Alle standaard presets zijn met succes hersteld"
 
-#: ../vdms_panels/presets_manager.py:842
-msgid "New Profile - Preset \"{}\""
+#: ../vdms_panels/presets_manager.py:844
+msgid "Add new profile to «{}»"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:860
-#, fuzzy
-#| msgid "Edit profile of the \"{}\" preset"
-msgid "*Edit Profile - Preset \"{}\""
-msgstr "Edit profiel van de \"{}\" preset"
+#: ../vdms_panels/presets_manager.py:863
+msgid "Edit existing profile on «{}»"
+msgstr ""
 
-#: ../vdms_panels/presets_manager.py:899
+#: ../vdms_panels/presets_manager.py:902
 msgid ""
 "Are you sure you want to delete the selected profile? It will no longer be "
 "possible to recover it."
 msgstr ""
 "Geselecteerde profiel verwijderen? Het zal niet meer hersteld kunnen worden."
 
-#: ../vdms_panels/presets_manager.py:918
+#: ../vdms_panels/presets_manager.py:921
 msgid "First select a profile in the list"
 msgstr "Selecteer eerst een profiel in de lijst"
 
-#: ../vdms_panels/presets_manager.py:926
+#: ../vdms_panels/presets_manager.py:929
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
@@ -4578,11 +4567,11 @@ msgstr ""
 "Het geselecteerde profiel commando is handmatig gewijzigd.\n"
 "Wilt u dit toepassen voor het conversie proces?"
 
-#: ../vdms_panels/presets_manager.py:936
+#: ../vdms_panels/presets_manager.py:939
 msgid "Don't show this dialog again"
 msgstr "Toon dit dialoogscherm niet meer"
 
-#: ../vdms_panels/presets_manager.py:1081
+#: ../vdms_panels/presets_manager.py:1084
 #, fuzzy
 #| msgid ""
 #| "Queued File\n"
@@ -5643,28 +5632,71 @@ msgstr ""
 msgid "Import queue file"
 msgstr "Log folder"
 
-#: ../vdms_utils/queue_utils.py:67
-msgid ""
-"You are attempting to load a json file written with invalid JSON encoding."
-msgstr ""
-
-#: ../vdms_utils/queue_utils.py:79
+#: ../vdms_utils/queue_utils.py:89
 #, python-brace-format
 msgid ""
 "ERROR: invalid data found loading queue file.\n"
-"FILE: \"{0}\"\n"
-"\n"
-"Keys mismatched for requested data."
-msgstr ""
-
-#: ../vdms_utils/queue_utils.py:92
-#, python-brace-format
-msgid ""
-"ERROR: invalid data found loading queue file.\n"
-"FILE: \"{0}\"\n"
+"«{0}»\n"
 "\n"
 "Cannot contain multiple occurrences in `destination` keys value."
 msgstr ""
+
+#: ../vdms_utils/queue_utils.py:118
+#, fuzzy
+#| msgid "Videomass - Queued URLs"
+msgid "Videomass - Add Items to Queue"
+msgstr "Videomass - Wachtrij URLs"
+
+#: ../vdms_utils/queue_utils.py:119
+msgid ""
+"Multiple items with identical names and destination paths cannot coexist.\n"
+"Please choose one of the following actions:"
+msgstr ""
+
+#: ../vdms_utils/queue_utils.py:123
+msgid "Replace occurrences with items from the imported queue."
+msgstr ""
+
+#: ../vdms_utils/queue_utils.py:124
+msgid "Add only the currently missing items to the queue."
+msgstr ""
+
+#: ../vdms_utils/queue_utils.py:125
+msgid "Remove the current queue and replace it with the imported one."
+msgstr ""
+
+#~ msgid "Successful storing!"
+#~ msgstr "Opslag was succesvol!"
+
+#~ msgid "Successful changes!"
+#~ msgstr "Veranderingen waren succesvol!"
+
+#, fuzzy
+#~| msgid "Videomass - Updating..."
+#~ msgid "Videomass - Action is required..."
+#~ msgstr "Videomass - Bezig met updaten..."
+
+#, fuzzy
+#~| msgid "Preset"
+#~ msgid "Save Preset"
+#~ msgstr "Preset"
+
+#~ msgid ""
+#~ "'Successful!\n"
+#~ "\n"
+#~ "A new empty preset has been created."
+#~ msgstr ""
+#~ "'Succesvol!\n"
+#~ "\n"
+#~ "Een nieuwe lege preset is gemaakt."
+
+#~ msgid "Error, invalid preset: \"{}\""
+#~ msgstr "Error, ongeldige preset: \"{}\""
+
+#, fuzzy
+#~| msgid "Edit profile of the \"{}\" preset"
+#~ msgid "*Edit Profile - Preset \"{}\""
+#~ msgstr "Edit profiel van de \"{}\" preset"
 
 #~ msgid "Apply Denoisers Filters"
 #~ msgstr "Pas Denoisers Filters toe"
@@ -6138,17 +6170,11 @@ msgstr ""
 #~ "Audio normalisatie processen kunnen niet in de Presets Manager bewaard "
 #~ "worden."
 
-#~ msgid "Create a new profile"
-#~ msgstr "Maak een nieuw profiel"
-
 #~ msgid "Process log:"
 #~ msgstr "Proces log:"
 
 #~ msgid "Second pass of the selected profile"
 #~ msgstr "Tweede pass van het geselecteerde profiel"
-
-#~ msgid "Create a new profile on \"{}\" preset"
-#~ msgstr "Maak een nieuw profiel op \"{}\" preset"
 
 #, fuzzy
 #~| msgid ""
@@ -6618,9 +6644,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Audio normalisatie zal niet toegepast worden omdat het bronsignaal gelijk "
 #~ "is"
-
-#~ msgid "Save the new profile to..."
-#~ msgstr "Schrijf het nieuwe profiel naar..."
 
 #, python-brace-format
 #~ msgid ""

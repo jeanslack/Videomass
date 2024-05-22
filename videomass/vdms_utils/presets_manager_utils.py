@@ -60,12 +60,12 @@ def supported_formats(supp, file_sources):
 # ----------------------------------------------------------------------#
 
 
-def json_data(arg):
+def json_data(filename):
     """
     Used by presets_mng_panel.py to get JSON data files.
-    The `arg` parameter refer to each file name to parse. Return a list
-    type object from getting data using `json` module in the following
-    form:
+    The `filename` parameter refer to each file name to parse.
+    Return a list type object from getting data using `json`
+    module in the following form:
 
     [{"Name": "",
       "Descritpion": "",
@@ -79,18 +79,11 @@ def json_data(arg):
 
     """
     try:
-        with open(arg, 'r', encoding='utf-8') as fln:
+        with open(filename, 'r', encoding='utf-8') as fln:
             data = json.load(fln)
-
     except json.decoder.JSONDecodeError as err:
-        msg = _('You are attempting to load a preset written with '
-                'invalid JSON encoding.\n\n'
-                'You can try to restore it or import a correct one, '
-                'otherwise it is recommended to remove it.'
-                )
-        wx.MessageBox(f'{err}\nFILE: "{arg}"\n\n{msg}',
+        wx.MessageBox(f"ERROR: {str(err)}.\nInvalid file: «{filename}»",
                       _('Videomass - Error!'), wx.ICON_ERROR | wx.OK, None)
-
         return 'error'
 
     except FileNotFoundError as err:
@@ -100,23 +93,22 @@ def json_data(arg):
                 )
         wx.MessageBox(f'{err}\n\n{msg}',
                       _('Videomass - Error!'), wx.ICON_ERROR | wx.OK, None)
-
         return 'error'
 
     return data
 # ------------------------------------------------------------------#
 
 
-def delete_profiles(path, name):
+def delete_profiles(filename, profilename):
     """
     Profile deletion from Presets manager panel
     """
-    with open(path, 'r', encoding='utf-8') as fln:
+    with open(filename, 'r', encoding='utf-8') as fln:
         data = json.load(fln)
 
-    new_data = [obj for obj in data if not obj["Name"] == name]
+    new_data = [obj for obj in data if not obj["Name"] == profilename]
 
-    with open(path, 'w', encoding='utf-8') as outfile:
+    with open(filename, 'w', encoding='utf-8') as outfile:
         json.dump(new_data, outfile, ensure_ascii=False, indent=4)
 # ------------------------------------------------------------------#
 
@@ -126,21 +118,18 @@ def update_oudated_profiles(new, old):
     Updates (replaces with new ones) old profiles with same
     name as new profiles but Keep all others.
     """
-    msg = _("Operation aborted due to possible JSON encoding/decoding "
-            "error.\nFix any errors in the JSON code contained on the FILE "
-            "before performing this operation again.")
     if new and old:
         with open(new, 'r', encoding='utf-8') as newf:
             try:
                 incoming = json.load(newf)
             except json.decoder.JSONDecodeError as err:
-                return f"ERROR: {str(err)}\nFILE: '{new}'\n\n{msg}"
+                return f"ERROR: {str(err)}.\nInvalid file: «{new}»"
 
         with open(old, 'r', encoding='utf-8') as oldf:
             try:
                 outcoming = json.load(oldf)
             except json.decoder.JSONDecodeError as err:
-                return f"ERROR: {str(err)}\nFILE: '{old}'\n\n{msg}"
+                return f"ERROR: {str(err)}.\nInvalid file: «{old}»"
 
         items_new = {value["Name"]: value for value in incoming}
         items_old = {value["Name"]: value for value in outcoming}
@@ -151,17 +140,28 @@ def update_oudated_profiles(new, old):
 
         with open(old, 'w', encoding='utf-8') as outfile:
             json.dump(items_old, outfile, ensure_ascii=False, indent=4)
+
     return None
 # ------------------------------------------------------------------#
 
 
-def write_new_profile(path_prst, **kwargs):
+def write_new_profile(filename, **kwargs):
     """
     Write a new profile using json data
-
     """
-    with open(path_prst, 'r', encoding='utf-8') as infile:
-        stored_data = json.load(infile)
+    with open(filename, 'r', encoding='utf-8') as infile:
+        try:
+            stored_data = json.load(infile)
+        except json.decoder.JSONDecodeError as err:
+            return f"ERROR: {str(err)}.\nInvalid file: «{filename}»"
+
+    keys = ('Name', 'Description', 'First_pass',
+            'Second_pass', 'Supported_list', 'Output_extension',
+            'Preinput_1', 'Preinput_2',)
+    for ck in stored_data:
+        for key in keys:
+            if key not in ck:
+                return 'invalid JSON file'
 
     for x in stored_data:
         if x["Name"] == kwargs['Name']:
@@ -170,19 +170,19 @@ def write_new_profile(path_prst, **kwargs):
     new_data = stored_data + [kwargs]
     new_data.sort(key=lambda s: s["Name"])  # make sorted by name
 
-    with open(path_prst, 'w', encoding='utf-8') as outfile:
+    with open(filename, 'w', encoding='utf-8') as outfile:
         json.dump(new_data, outfile, ensure_ascii=False, indent=4)
 
     return None
 # ------------------------------------------------------------------#
 
 
-def edit_existing_profile(path_prst, selected_profile, **kwargs):
+def edit_existing_profile(filename, selected_profile, **kwargs):
     """
     Edit an exixting profile using json data
 
     """
-    with open(path_prst, 'r', encoding='utf-8') as infile:
+    with open(filename, 'r', encoding='utf-8') as infile:
         stored_data = json.load(infile)
 
     names = [x['Name'] for x in stored_data]
@@ -204,7 +204,7 @@ def edit_existing_profile(path_prst, selected_profile, **kwargs):
 
     stored_data.sort(key=lambda s: s["Name"])  # make sorted by name
 
-    with open(path_prst, 'w', encoding='utf-8') as outfile:
+    with open(filename, 'w', encoding='utf-8') as outfile:
         json.dump(stored_data, outfile, ensure_ascii=False, indent=4)
 
     return None

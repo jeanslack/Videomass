@@ -27,7 +27,7 @@ This file is part of Videomass.
 import os
 import json
 import wx
-from videomass.vdms_dialogs.queue_singlechoice import SingleChoice_Queue
+from videomass.vdms_dialogs.singlechoicedlg import SingleChoice
 
 
 def write_json_file_queue(data, queuefile=None):
@@ -64,9 +64,7 @@ def load_json_file_queue(newincoming=None):
             newdata = json.load(fln)
 
     except json.decoder.JSONDecodeError as err:
-        msg = _('You are attempting to load a json file written with '
-                'invalid JSON encoding.')
-        wx.MessageBox(f'{err}\nFILE: "{newincoming}"\n\n{msg}',
+        wx.MessageBox(f"ERROR: {str(err)}.\nInvalid file: «{newincoming}»",
                       _('Videomass - Error!'), wx.STAY_ON_TOP
                       | wx.ICON_ERROR
                       | wx.OK,
@@ -76,12 +74,11 @@ def load_json_file_queue(newincoming=None):
 
     keys = ('type', 'args', 'extension', 'logname', 'source', 'preset name',
             'destination', 'duration', 'start-time', 'end-time',)
-    msg = (_('ERROR: invalid data found loading queue file.\n'
-             'FILE: "{0}"\n\nKeys mismatched for '
-             'requested data.').format(newincoming))
     for ck in newdata:
         for key in keys:
             if key not in ck:
+                msg = (_('ERROR: Keys mismatched for requested data.\n'
+                         'Invalid file: «{0}»').format(newincoming))
                 wx.MessageBox(msg, _('Videomass - Error!'), wx.STAY_ON_TOP
                               | wx.ICON_ERROR
                               | wx.OK,
@@ -90,7 +87,7 @@ def load_json_file_queue(newincoming=None):
                 return None
     occurences = []
     msg = (_('ERROR: invalid data found loading queue file.\n'
-             'FILE: "{0}"\n\nCannot contain multiple occurrences '
+             '«{0}»\n\nCannot contain multiple occurrences '
              'in `destination` keys value.').format(newincoming))
     for item in newdata:
         occurences.append(item['destination'])
@@ -106,8 +103,8 @@ def extend_data_queue(parent, currentqueue: list, newqueue: list) -> list:
     """
     This function is responsible for extending the items of
     the `currentqueue` list while maintaining the same id.
-    The result varies based on the choice of a specific
-    selection given by the `choice` object.
+    The result varies based on the index of a specific
+    selection given by the `selected` object.
     """
     indx_orig = []
     indx_new = []
@@ -118,22 +115,32 @@ def extend_data_queue(parent, currentqueue: list, newqueue: list) -> list:
                 indx_new.append(indx2)
 
     if indx_orig and indx_new:
-        choice = None
-        with SingleChoice_Queue(parent) as dlg:
+        caption = _('Videomass - Add Items to Queue')
+        message = (_('Multiple items with identical names and destination '
+                     'paths cannot coexist.\nPlease choose one of the '
+                     'following actions:'))
+        choices = (
+            _('Replace occurrences with items from the imported queue.'),
+            _('Add only the currently missing items to the queue.'),
+            _('Remove the current queue and replace it with the imported '
+              'one.'))
+        selected = None
+        with SingleChoice(parent, caption, message, choices, setsel=2,
+                          ) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
-                choice = dlg.getvalue()
+                selected = dlg.getvalue()
 
-        if choice == 0:
+        if selected == 0:
             indx_orig.sort(reverse=True)  # IMPORTANT before iterate
             for idx in indx_orig:
                 del currentqueue[idx]
             currentqueue.extend(newqueue)
-        elif choice == 1:
+        elif selected == 1:
             indx_new.sort(reverse=True)  # IMPORTANT before iterate
             for idx in indx_new:
                 del newqueue[idx]
             currentqueue.extend(newqueue)
-        elif choice == 2:
+        elif selected == 2:
             currentqueue.clear()
             currentqueue.extend(newqueue)
         else:

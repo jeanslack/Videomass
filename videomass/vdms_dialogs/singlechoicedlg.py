@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
-Name: queue_singlechoice.py
-Porpose: shows an useful single choice dialog box for queue management
+Name: singlechoice.py
+Porpose: shows a single choice dialog box
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -27,28 +27,30 @@ This file is part of Videomass.
 import wx
 
 
-class SingleChoice_Queue(wx.Dialog):
+class SingleChoice(wx.Dialog):
     """
-    Shows an useful single-choice dialog box for managing queues.
-    This simple dialog asks the user to choose an option when
-    there are one or more identical output file names between
-    the imported queue file data and current queue data.
-    This feature will ensure that no same target files are
-    overwritten.
+    Shows a custom dialog for single-choice actions.
+    This simple dialog box asks the user to select an item
+    from the available options.
+    Return index (int) of selected item.
 
     """
     get = wx.GetApp()  # get data from bootstrap
     APPICON = get.iconset['videomass']
-    HEADMSG = (_('Multiple matches were found in the destination file names.\n'
-                 'Please choose one of the following actions:'))
-    MSG = (_('Replace occurrences with items from the imported queue.'),
-           _('Add only missing items to the queue.'),
-           _('Remove the current queue and replace it with the imported '
-             'one.'))
 
-    def __init__(self, parent):
+    def __init__(self,
+                 parent,
+                 caption='Single Choice dialog',
+                 message='Test message',
+                 choices=('1', '2', '3', '4'),
+                 setsel=0,
+                 ):
         """
         Usage: `parent, -1` to make parent, use 'None' otherwise
+        caption: the text dialog caption to display (str)
+        message: message head to display on top of this dialog (str)
+        choices: Two or more choice items to list (list)
+        setsel: Sets the index of the initially selected item (int)
 
         """
         wx.Dialog.__init__(self, parent, -1,
@@ -57,18 +59,15 @@ class SingleChoice_Queue(wx.Dialog):
         # ------ Add widget controls
         sizbase = wx.BoxSizer(wx.VERTICAL)
         sizbase.Add((0, 20), 0)
-        labhead = SingleChoice_Queue.HEADMSG
-        lab = wx.StaticText(self, label=labhead)
+        lab = wx.StaticText(self, label=message)
         sizbase.Add(lab, 0, wx.LEFT | wx.EXPAND, 5)
         sizbase.Add((0, 10), 0)
-
-        choice = SingleChoice_Queue.MSG
         self.listchoice = wx.ListBox(self, wx.ID_ANY,
-                                     choices=choice,
+                                     choices=choices,
                                      style=0,
                                      name='ListBox',
                                      )
-        self.listchoice.SetSelection(2)
+        self.listchoice.SetSelection(setsel)
         sizbase.Add(self.listchoice, 1, wx.ALL | wx.EXPAND, 5)
 
         # ------ bottom layout buttons
@@ -81,10 +80,10 @@ class SingleChoice_Queue(wx.Dialog):
 
         # ------ Properties
         icon = wx.Icon()
-        icon.CopyFromBitmap(wx.Bitmap(SingleChoice_Queue.APPICON,
+        icon.CopyFromBitmap(wx.Bitmap(SingleChoice.APPICON,
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        self.SetTitle(_('Videomass - Action is required...'))
+        self.SetTitle(caption)
         self.SetMinSize((620, 270))
         self.SetSizer(sizbase)
         sizbase.Fit(self)
