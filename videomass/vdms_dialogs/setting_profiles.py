@@ -282,11 +282,11 @@ class SettingProfile(wx.Dialog):
                 wx.MessageBox(msg, _('Videomass - Error!'), wx.STAY_ON_TOP
                               | wx.ICON_ERROR | wx.OK, self)
                 return
-            elif writenewprf == 'already exist':
+            if writenewprf == 'already exist':
                 wx.MessageBox(_("Profile already stored with same name"),
                               _('Videomass - Warning!'), wx.ICON_WARNING, self)
                 return
-            elif writenewprf is not None:
+            if writenewprf is not None:
                 wx.MessageBox(writenewprf, _('Videomass - Error!'),
                               wx.ICON_WARNING, self)
                 return
