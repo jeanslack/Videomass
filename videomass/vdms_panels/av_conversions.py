@@ -1238,8 +1238,7 @@ class AV_Conv(wx.Panel):
                 kwargs = self.audio_ebu()
             else:
                 kwargs = self.audio_std()
-
-        title = _('Save profile in «{0}»').format(presetname)
+        title = _('Save profile in «{0}»').format(os.path.basename(presetname))
         args = kwargs["args"][0], kwargs["args"][1], self.opt["OutputFormat"]
         with setting_profiles.SettingProfile(self, 'addprofile',
                                              presetname,

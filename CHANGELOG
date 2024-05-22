@@ -7,12 +7,13 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 16 May 2024 V.5.0.14
+Wed, 22 May 2024 V.5.0.14
 
   * [AV Conversions] Fixed crop area display (crop filter) issue using Wayland.
   * [Timeline] Fixed selected area display using Wayland.
-  * [AV Conversions] Improved `Store profile` functionality + bug fixes.
+  * [AV Conversions] Improved `Save profile` functionality + bug fixes #316.
   * [Presets Manager] Improved error handling writing profiles.
+  * Update user guide.
 
 
 +------------------------------------+

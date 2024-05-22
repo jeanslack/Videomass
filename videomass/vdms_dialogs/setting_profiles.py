@@ -24,7 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
 import webbrowser
 import wx
 from videomass.vdms_utils.presets_manager_utils import write_new_profile
@@ -287,7 +286,7 @@ class SettingProfile(wx.Dialog):
                 wx.MessageBox(_("Profile already stored with same name"),
                               _('Videomass - Warning!'), wx.ICON_WARNING, self)
                 return
-            elif writenewprf != None:
+            elif writenewprf is not None:
                 wx.MessageBox(writenewprf, _('Videomass - Error!'),
                               wx.ICON_WARNING, self)
                 return
