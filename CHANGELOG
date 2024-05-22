@@ -14,6 +14,8 @@ Wed, 22 May 2024 V.5.0.14
   * [AV Conversions] Improved `Save profile` functionality + bug fixes #316.
   * [Presets Manager] Improved error handling writing profiles.
   * Update user guide.
+  * [Still Image Maker] Fixed duration to milliseconds conversion issue that
+    raised wxAssertionError `invalid value in wxGauge::SetValue()`.
 
 
 +------------------------------------+

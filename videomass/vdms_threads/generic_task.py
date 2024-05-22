@@ -52,7 +52,7 @@ class FFmpegGenericTask(Thread):
 
     """
     ERROR = 'Please, see "generic_task.log" file for error details.'
-    STOP = '[Videomass]: STOP command received. Interrupting !'
+    STOP = '[Videomass]: STOP command received.'
 
     def __init__(self, args, procname='Unknown', logfile='logfile.log'):
         """

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.08.2024
+Rev: May.22.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -487,20 +487,17 @@ class SequenceToVideo(wx.Panel):
         Set ffmpeg arguments for a slideshow.
         """
         loop = ''
-        if self.ckbx_audio.IsChecked():
-            if self.opt["Shortest"][0]:
-                sec = time_to_integer(timeline, sec=True, rnd=True)
-                duration = sec * len(self.parent.file_src)
-                self.opt["Clock"] = integer_to_time(duration * 1000)
-            else:
-                self.opt["Clock"] = integer_to_time(self.opt["ADuration"])
-                sec = time_to_integer(timeline, sec=True, rnd=True)
-                duration = self.opt["ADuration"]
-                loop = f'-loop 1 -t {self.opt["Clock"]}'
+        if (self.ckbx_audio.IsChecked()
+                and self.txt_apath.GetValue().strip()
+                and not self.opt["Shortest"][0]):
+            self.opt["Clock"] = integer_to_time(self.opt["ADuration"])
+            sec = time_to_integer(timeline, sec=True, rnd=True)
+            duration = self.opt["ADuration"]
+            loop = f'-loop 1 -t {self.opt["Clock"]}'
         else:
             sec = time_to_integer(timeline, sec=True, rnd=True)
-            duration = sec * len(self.parent.file_src)
-            self.opt["Clock"] = integer_to_time(duration * 1000)
+            duration = sec * len(self.parent.file_src) * 1000
+            self.opt["Clock"] = integer_to_time(duration)
 
         framerate = '-framerate 1/1' if not sec else f'-framerate 1/{sec}'
         self.opt["Preinput"] = f'{loop} {framerate}'
@@ -524,19 +521,16 @@ class SequenceToVideo(wx.Panel):
         the checkbox `create a static video from image` is checked.
 
         """
-        if self.ckbx_audio.IsChecked():
-            if self.opt["Shortest"][0]:
-                sec = time_to_integer(timeline, sec=True, rnd=True)
-                duration = sec
-                self.opt["Clock"] = integer_to_time(duration * 1000)
-            else:
-                self.opt["Clock"] = integer_to_time(self.opt["ADuration"])
-                duration = self.opt["ADuration"]
-                sec = round(self.opt["ADuration"] / 1000)
+        if (self.ckbx_audio.IsChecked()
+                and self.txt_apath.GetValue().strip()
+                and not self.opt["Shortest"][0]):
+            self.opt["Clock"] = integer_to_time(self.opt["ADuration"])
+            duration = self.opt["ADuration"]
+            sec = round(self.opt["ADuration"] / 1000)
         else:
             sec = time_to_integer(timeline, sec=True, rnd=True)
-            duration = sec
-            self.opt["Clock"] = integer_to_time(duration * 1000)
+            duration = sec * 1000
+            self.opt["Clock"] = integer_to_time(duration)
 
         self.opt["Preinput"] = f'-loop 1 -t {self.opt["Clock"]}'
         self.opt["Interval"] = sec
@@ -675,7 +669,6 @@ class SequenceToVideo(wx.Panel):
                   'start-time': '', 'end-time': '',
                   'preset name': 'Still Image Maker',
                   }
-
         keyval = self.update_dict(f"{name}.mkv", outputdir, countmax, 'mkv')
         ending = Formula(self, (700, 320),
                          self.parent.movetotrash,
