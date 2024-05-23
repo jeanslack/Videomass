@@ -55,7 +55,7 @@ class YtdlExecDL(Thread):
     media and capture its stdout/stderr output in real time .
 
     """
-    STOP = '[Videomass]: STOP command received. Interrupting !'
+    STOP = '[Videomass]: STOP command received.'
     # -----------------------------------------------------------------------#
 
     def __init__(self, args, urls, logfile):

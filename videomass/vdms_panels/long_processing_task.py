@@ -32,7 +32,7 @@ import wx
 from videomass.vdms_dialogs.widget_utils import notification_area
 from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_threads.ffmpeg import FFmpeg
-from videomass.vdms_threads.picture_exporting import PicturesFromVideo
+from videomass.vdms_threads.image_extractor import PicturesFromVideo
 from videomass.vdms_threads.concat_demuxer import ConcatDemuxer
 from videomass.vdms_threads.slideshow import SlideshowMaker
 from videomass.vdms_utils.utils import (time_to_integer, integer_to_time)
@@ -110,7 +110,7 @@ class LogOut(wx.Panel):
     # used msg on text
     MSG_done = '[Videomass]: SUCCESS !'
     MSG_failed = '[Videomass]: FAILED !'
-    MSG_stop = '[Videomass]: STOP command received. Interrupting !'
+    MSG_stop = '[Videomass]: STOP command received.'
     MSG_taskfailed = _('Sorry, all task failed !')
     MSG_fatalerror = _("The process was stopped due to a fatal error.")
     MSG_interrupted = _('Interrupted Process !')
@@ -223,7 +223,7 @@ class LogOut(wx.Panel):
             self.thread_type = PicturesFromVideo(self.logfile, **data)
 
         elif args[0] == 'sequence_to_video':
-            self.maxrotate = None
+            self.with_eta, self.maxrotate = False, None
             self.thread_type = SlideshowMaker(self.logfile, **data)
 
         elif args[0] == 'concat_demuxer':

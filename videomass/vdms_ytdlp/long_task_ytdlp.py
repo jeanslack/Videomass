@@ -41,7 +41,7 @@ class LogOut(wx.Panel):
     tasks.
 
     """
-    MSG_stop = '[Videomass]: STOP command received. Interrupting !'
+    MSG_stop = '[Videomass]: STOP command received.'
     MSG_done = _('[Videomass]: SUCCESS !')
     MSG_failed = _('[Videomass]: FAILED !')
     MSG_taskfailed = _('Sorry, all task failed !')

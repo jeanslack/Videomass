@@ -218,7 +218,7 @@ class SlideshowMaker(Thread):
         get = wx.GetApp()  # get videomass wx.App attribute
         self.appdata = get.appset
         self.stop_work_thread = False  # process terminate
-        self.duration = kwargs['duration'] * 1000  # duration in milliseconds
+        self.duration = kwargs['duration']
         self.count = 0  # count first for loop
         self.countmax = kwargs['nmax']
         self.logfile = args[0]  # log filename
