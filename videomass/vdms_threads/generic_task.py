@@ -6,7 +6,7 @@ Compatibility: Python3 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.23.2024
+Rev: May.23.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.

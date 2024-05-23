@@ -6,7 +6,7 @@ Compatibility: Python3 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.11.2024
+Rev: May.23.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,7 +24,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import platform
 import subprocess
 import wx
 from videomass.vdms_utils.utils import Popen
@@ -53,16 +52,27 @@ def shutdown_system(password=None):
     """
     get = wx.GetApp()
     appdata = get.appset
+    ostype = appdata['ostype']
     logfile = make_log_template("Shutdown.log", appdata['logdir'], mode="w")
 
-    if platform.system() == 'Windows':
-        cmd = ["shutdown", "/s", "/t", "1"]
-    else:
+    if ostype == 'Linux':
         if password:
             password = f"{password}\n"
-            cmd = ["sudo", "-S", "/sbin/shutdown", "-h", "now"]
+            cmd = ["sudo", "-S", "shutdown", "-h", "now"]
         else:  # using root
             cmd = ["/sbin/shutdown", "-h", "now"]
+
+    elif ostype == 'Darwin':
+        password = f"{password}\n"
+        cmd = ["sudo", "-S", "shutdown", "-h", "now"]
+
+    elif ostype == 'Windows':
+        cmd = ["shutdown", "/s", "/t", "1"]
+
+    elif ostype in ['OpenBSD', 'FreeBSD']:
+        password = f"{password}\n"
+        cmd = ["sudo", "-S", "shutdown", "-p", "now"]
+
     try:
         with Popen(cmd,
                    stdin=subprocess.PIPE,

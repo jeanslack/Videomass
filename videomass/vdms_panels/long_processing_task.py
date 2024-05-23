@@ -32,7 +32,7 @@ import wx
 from videomass.vdms_dialogs.widget_utils import notification_area
 from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_threads.ffmpeg import FFmpeg
-from videomass.vdms_threads.picture_exporting import PicturesFromVideo
+from videomass.vdms_threads.image_extractor import PicturesFromVideo
 from videomass.vdms_threads.concat_demuxer import ConcatDemuxer
 from videomass.vdms_threads.slideshow import SlideshowMaker
 from videomass.vdms_utils.utils import (time_to_integer, integer_to_time)
