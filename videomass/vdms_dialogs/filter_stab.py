@@ -540,7 +540,7 @@ class VidstabSet(wx.Dialog):
                                    )
         caption = _("Videomass - Loading...")
         msg = _("Please wait,\nThis process will take a few seconds.")
-        dlgload = PopupDialog(self, caption, msg, thread)
+        dlgload = PopupDialog(self, caption, msg)
         dlgload.ShowModal()
         thread.join()  # wait end thread
         error = thread.status

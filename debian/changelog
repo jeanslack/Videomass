@@ -7,9 +7,10 @@ videomass (5.0.14-1) UNRELEASED; urgency=medium
   * Update user guide.
   * [Still Image Maker] Fixed duration to milliseconds conversion issue that
     raised wxAssertionError `invalid value in wxGauge::SetValue()`.
+  * [AV Conversions] Fixed preview issue using stabilze filter on MS-Windows.
 
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 22 May 2024 15:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 23 May 2024 15:00:00 +0200
 
 videomass (5.0.13-1) UNRELEASED; urgency=medium
 
