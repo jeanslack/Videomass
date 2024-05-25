@@ -224,65 +224,65 @@ class AV_Conv(wx.Panel):
         self.videopanel.Show()
 
         # BOX Video filters
-        box4 = wx.StaticBox(self.nb_Video, wx.ID_ANY, _("Video Filters"))
+        box4 = wx.StaticBox(self.nb_Video, wx.ID_ANY, "")
         self.box_Vfilters = wx.StaticBoxSizer(box4, wx.VERTICAL)
-        self.btn_preview = wx.Button(self.nb_Video, wx.ID_ANY,
-                                     _("Preview"), size=(-1, -1))
-        self.btn_preview.SetBitmap(bmpplay, wx.LEFT)
+        sizer_nbVideo.Add(self.box_Vfilters, 0, wx.ALL | wx.EXPAND, 5)
+        self.filterVpanel = scrolled.ScrolledPanel(self.nb_Video, -1,
+                                                   size=(80, 700),
+                                                   style=wx.TAB_TRAVERSAL
+                                                   | wx.BORDER_NONE,
+                                                   name="panelscroll",
+                                                   )
+        sizer_Vfilter = wx.BoxSizer(wx.VERTICAL)
 
-        self.box_Vfilters.Add(self.btn_preview, 0, wx.ALL | wx.EXPAND, 5)
+        self.btn_preview = wx.Button(self.filterVpanel, wx.ID_ANY,
+                                     "", size=(50, -1))
+        self.btn_preview.SetBitmap(bmpplay, wx.LEFT)
+        sizer_Vfilter.Add(self.btn_preview, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_preview.Disable()
-        self.btn_reset = wx.Button(self.nb_Video, wx.ID_ANY,
-                                   _("Reset all"), size=(-1, -1))
+        self.btn_reset = wx.Button(self.filterVpanel, wx.ID_ANY,
+                                   "", size=(50, -1))
         self.btn_reset.SetBitmap(self.bmpreset, wx.LEFT)
-        self.box_Vfilters.Add(self.btn_reset, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_Vfilter.Add(self.btn_reset, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_reset.Disable()
-        lineflt = wx.StaticLine(self.nb_Video,
+        lineflt = wx.StaticLine(self.filterVpanel,
                                 wx.ID_ANY,
                                 pos=wx.DefaultPosition,
                                 size=wx.DefaultSize,
                                 style=wx.LI_HORIZONTAL,
                                 name=wx.StaticLineNameStr,
                                 )
-        self.box_Vfilters.Add(lineflt, 0, wx.ALL | wx.EXPAND, 10)
-        sizer_nbVideo.Add(self.box_Vfilters, 0, wx.ALL | wx.EXPAND, 5)
-        self.filterVpanel = scrolled.ScrolledPanel(self.nb_Video, -1,
-                                                   size=(180, 700),
-                                                   style=wx.TAB_TRAVERSAL
-                                                   | wx.BORDER_NONE,
-                                                   name="panelscroll",
-                                                   )
-        sizer_Vfilter = wx.BoxSizer(wx.VERTICAL)
+        sizer_Vfilter.Add(lineflt, 0, wx.ALL | wx.EXPAND, 10)
         self.btn_videosize = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                       _("Resize"), size=(-1, -1))
+                                       "", size=(50, -1))
         self.btn_videosize.SetBitmap(bmpresize, wx.LEFT)
-        sizer_Vfilter.Add(self.btn_videosize, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_Vfilter.Add(self.btn_videosize, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_crop = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                  _("Crop"), size=(-1, -1))
+                                  "", size=(50, -1))
         self.btn_crop.SetBitmap(bmpcrop, wx.LEFT)
-        sizer_Vfilter.Add(self.btn_crop, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_Vfilter.Add(self.btn_crop, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_rotate = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                    _("Transpose"), size=(-1, -1))
+                                    "", size=(50, -1))
         self.btn_rotate.SetBitmap(bmprotate, wx.LEFT)
 
-        sizer_Vfilter.Add(self.btn_rotate, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_Vfilter.Add(self.btn_rotate, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_lacing = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                    _("Deinterlace"), size=(-1, -1))
+                                    "", size=(50, -1))
         self.btn_lacing.SetBitmap(bmpdeinterlace, wx.LEFT)
-        sizer_Vfilter.Add(self.btn_lacing, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_Vfilter.Add(self.btn_lacing, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_denois = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                    _("Denoise"), size=(-1, -1))
+                                    "", size=(50, -1))
         self.btn_denois.SetBitmap(bmpdenoiser, wx.LEFT)
-        sizer_Vfilter.Add(self.btn_denois, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_Vfilter.Add(self.btn_denois, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_vidstab = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     _("Stabilize"), size=(-1, -1))
+                                     "", size=(50, -1))
         self.btn_vidstab.SetBitmap(bmpstab, wx.LEFT)
-        sizer_Vfilter.Add(self.btn_vidstab, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_Vfilter.Add(self.btn_vidstab, 0, wx.ALL | wx.CENTRE, 5)
 
         self.btn_coloreq = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     _("Equalize"), size=(-1, -1))
+                                     "", size=(50, -1))
         self.btn_coloreq.SetBitmap(bmpcoloreq, wx.LEFT)
-        sizer_Vfilter.Add(self.btn_coloreq, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_Vfilter.Add(self.btn_coloreq, 0, wx.ALL | wx.CENTRE, 5)
 
         self.box_Vfilters.Add(self.filterVpanel, 1, wx.EXPAND)
         self.filterVpanel.SetSizer(sizer_Vfilter)  # set panel
@@ -343,11 +343,16 @@ class AV_Conv(wx.Panel):
                  'convert them and apply audio filters such as '
                  'normalization.'))
         self.cmb_Media.SetToolTip(tip)
-        tip = _('Preview video filters')
-        self.btn_preview.SetToolTip(tip)
-        tip = (_('Clear all enabled filters. Remove all video filter '
-                 'data and apply default settings.'))
-        self.btn_reset.SetToolTip(tip)
+        self.btn_preview.SetToolTip(_('Preview video filters'))
+        self.btn_reset.SetToolTip(_('Clear all enabled filters'))
+        self.btn_videosize.SetToolTip(_("Resize"))
+        self.btn_crop.SetToolTip(_("Crop"))
+        self.btn_rotate.SetToolTip(_("Transpose"))
+        self.btn_lacing.SetToolTip(_("Deinterlace"))
+        self.btn_denois.SetToolTip(_("Denoise"))
+        self.btn_vidstab.SetToolTip(_("Stabilize"))
+        self.btn_coloreq.SetToolTip(_("Equalize"))
+
 
         # ----------------------Binding (EVT)----------------------#
 

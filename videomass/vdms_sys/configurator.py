@@ -487,7 +487,9 @@ class DataSource():
                 'videotopictures', 'atrack', 'timerset', 'coloreq',
                 'stop', 'home', 'youtube', 'playlist',
                 'download', 'statistics', 'play', 'subtitles',
-                'proc-queue', 'add-queue', 'options',
+                'proc-queue', 'add-queue', 'options', 'delpreset',
+                'exportall', 'exportselected', 'importfolder', 'importpreset',
+                'newpreset', 'reload', 'restoreall', 'restoreselected',
                 )  # must match with items on `iconset` tuple, see following
 
         icodir = self.dataloc['icodir']
@@ -557,6 +559,15 @@ class DataSource():
                    f"{choose.get('x22')}/proc-queue.{ext}",
                    f"{choose.get('x22')}/add-queue.{ext}",
                    f"{choose.get('x22')}/options.{ext}",
+                   f"{choose.get('x16')}/delpreset.{ext}",
+                   f"{choose.get('x16')}/exportall.{ext}",
+                   f"{choose.get('x16')}/exportselected.{ext}",
+                   f"{choose.get('x16')}/importfolder.{ext}",
+                   f"{choose.get('x16')}/importpreset.{ext}",
+                   f"{choose.get('x16')}/newpreset.{ext}",
+                   f"{choose.get('x16')}/reload.{ext}",
+                   f"{choose.get('x16')}/restoreall.{ext}",
+                   f"{choose.get('x16')}/restoreselected.{ext}",
                    )
         values = (os.path.join(norm) for norm in iconset)  # normalize pathns
 

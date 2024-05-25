@@ -136,7 +136,7 @@ class Downloader(wx.Panel):
               ('Medium Low precompiled video'): ('18'),
               ('Worst precompiled video'): ('worstvideo+worstaudio/worst'),
               }
-    AFORMATS = {("Default audio format"): ("best"),
+    AFORMATS = {("Default"): ("best"),
                 ("wav"): ("wav"),
                 ("mp3"): ("mp3"),
                 ("aac"): ("aac"),
@@ -191,54 +191,63 @@ class Downloader(wx.Panel):
         self.oldwx = None  # test result of hasattr EVT_LIST_ITEM_CHECKED
 
         wx.Panel.__init__(self, parent, -1, style=wx.TAB_TRAVERSAL)
-
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        sizer_div = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_base.Add(sizer_div, 1, wx.EXPAND)
-        box = wx.StaticBox(self, wx.ID_ANY, _('Options'))
-        boxoptions = wx.StaticBoxSizer(box, wx.VERTICAL)
-        sizer_div.Add(boxoptions, 0, wx.ALL | wx.EXPAND, 5)
-
         # ------------- choice and comboboxes
+        fgs1 = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_base.Add(fgs1, 0, wx.ALL | wx.CENTRE, 5)
         self.choice = wx.Choice(self, wx.ID_ANY,
                                 choices=Downloader.CHOICE,
                                 size=(-1, -1),
                                 )
         self.choice.SetSelection(0)
-        boxoptions.Add(self.choice, 0, wx.ALL | wx.EXPAND, 5)
-        boxoptions.Add((5, 5))
-        line0 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        boxoptions.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
-        boxoptions.Add((5, 5))
-        panelscroll = scrolled.ScrolledPanel(self, -1, size=(300, 1000),
-                                             style=wx.TAB_TRAVERSAL
-                                             | wx.BORDER_THEME,
-                                             name="panelscr",
-                                             )
-        fgs1 = wx.BoxSizer(wx.VERTICAL)
-        # fgs1.Add((5, 5))
-        self.cmbx_vq = wx.ComboBox(panelscroll, wx.ID_ANY,
+        fgs1.Add(self.choice, 0, wx.LEFT | wx.CENTRE, 5)
+
+        self.ckbx_pl = wx.CheckBox(self, wx.ID_ANY,
+                                   (_('Include playlists'))
+                                   )
+        fgs1.Add(self.ckbx_pl, 0, wx.LEFT | wx.CENTRE, 20)
+        self.btn_plidx = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_plidx.SetToolTip(_('Playlist Editor'))
+        self.btn_plidx.SetBitmap(bmplistindx, wx.LEFT)
+        fgs1.Add(self.btn_plidx, 0, wx.LEFT | wx.CENTRE, 2)
+        self.btn_plidx.Disable()
+        self.btn_subeditor = wx.Button(self, wx.ID_ANY, "",
+                                       size=(50, -1))
+        self.btn_subeditor.SetBitmap(bmpsubtitles, wx.LEFT)
+        self.btn_subeditor.SetToolTip(_('Subtitles Editor'))
+        fgs1.Add(self.btn_subeditor, 0, wx.LEFT | wx.CENTRE, 20)
+        if sett['subtitles_options']['writesubtitles']:
+            self.btn_subeditor.SetBackgroundColour(
+                wx.Colour(Downloader.VIOLET))
+
+        # ------------- quality pref
+        box = wx.StaticBox(self, wx.ID_ANY, _('Quality Preferences'))
+        boxoptions = wx.StaticBoxSizer(box, wx.VERTICAL)
+        sizer_base.Add(boxoptions, 0, wx.ALL | wx.EXPAND, 5)
+        fgs2 = wx.BoxSizer(wx.HORIZONTAL)
+        boxoptions.Add(fgs2, 0, wx.ALL | wx.EXPAND, 0)
+        self.cmbx_vq = wx.ComboBox(self, wx.ID_ANY,
                                    choices=(),
                                    size=(-1, -1), style=wx.CB_DROPDOWN
                                    | wx.CB_READONLY
                                    )
         # grid_v.Add((20, 20), 0,)
-        fgs1.Add(self.cmbx_vq, 0, wx.ALL | wx.EXPAND, 5)
+        fgs2.Add(self.cmbx_vq, 0, wx.ALL | wx.CENTRE, 5)
         tip = (_('When not available, the chosen video resolution will '
                  'be replaced with the closest one'))
         self.cmbx_vq.SetToolTip(tip)
-        self.rdbvideoformat = wx.RadioBox(panelscroll, wx.ID_ANY,
-                                          (_("Preferred video format")),
-                                          choices=['Default', 'webm', 'mp4'],
-                                          majorDimension=1,
-                                          style=wx.RA_SPECIFY_COLS
-                                          )
-        fgs1.Add(self.rdbvideoformat, 0, wx.ALL | wx.EXPAND, 5)
 
-        self.cmbx_aq = wx.ComboBox(panelscroll, wx.ID_ANY,
+        txtvformat = wx.StaticText(self, wx.ID_ANY, _('Video format:'))
+        fgs2.Add(txtvformat, 0, wx.LEFT | wx.CENTRE, 5)
+        self.cmbx_vformat = wx.ComboBox(self, wx.ID_ANY,
+                                        choices=['Default', 'webm', 'mp4'],
+                                        size=(-1, -1), style=wx.CB_DROPDOWN
+                                        | wx.CB_READONLY
+                                        )
+        self.cmbx_vformat.SetSelection(0)
+        fgs2.Add(self.cmbx_vformat, 0, wx.ALL | wx.CENTRE, 5)
+        fgs2.Add((20, 20), 0,)
+        self.cmbx_aq = wx.ComboBox(self, wx.ID_ANY,
                                    choices=list(Downloader.AQUAL.keys()),
                                    size=(-1, -1),
                                    style=wx.CB_DROPDOWN
@@ -247,8 +256,11 @@ class Downloader(wx.Panel):
         self.cmbx_aq.SetSelection(0)
         self.cmbx_aq.Disable()
         # grid_v.Add((20, 20), 0,)
-        fgs1.Add(self.cmbx_aq, 0, wx.ALL | wx.EXPAND, 5)
-        self.cmbx_af = wx.ComboBox(panelscroll, wx.ID_ANY,
+        fgs2.Add(self.cmbx_aq, 0, wx.ALL | wx.CENTRE, 5)
+
+        txtaformat = wx.StaticText(self, wx.ID_ANY, _('Audio format:'))
+        fgs2.Add(txtaformat, 0, wx.LEFT | wx.CENTRE, 5)
+        self.cmbx_af = wx.ComboBox(self, wx.ID_ANY,
                                    choices=list(Downloader.AFORMATS.keys()),
                                    size=(-1, -1),
                                    style=wx.CB_DROPDOWN
@@ -256,43 +268,12 @@ class Downloader(wx.Panel):
                                    )
         self.cmbx_af.Disable()
         self.cmbx_af.SetSelection(0)
-        fgs1.Add(self.cmbx_af, 0, wx.ALL | wx.EXPAND, 5)
-        # ------------- checkboxes
-        line1 = wx.StaticLine(panelscroll, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        fgs1.Add(line1, 0, wx.ALL | wx.EXPAND, 10)
-        self.ckbx_pl = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                   (_('Include playlists'))
-                                   )
-        fgs1.Add(self.ckbx_pl, 0, wx.ALL, 5)
-
-        self.btn_plidx = wx.Button(panelscroll, wx.ID_ANY,
-                                   (_('Playlist Editor'))
-                                   )
-        self.btn_plidx.SetBitmap(bmplistindx, wx.LEFT)
-        fgs1.Add(self.btn_plidx, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_plidx.Disable()
-
-        self.btn_subeditor = wx.Button(panelscroll, wx.ID_ANY,
-                                       (_('Subtitles Editor'))
-                                       )
-        self.btn_subeditor.SetBitmap(bmpsubtitles, wx.LEFT)
-        fgs1.Add(self.btn_subeditor, 0, wx.ALL | wx.EXPAND, 5)
-        if sett['subtitles_options']['writesubtitles']:
-            self.btn_subeditor.SetBackgroundColour(
-                wx.Colour(Downloader.VIOLET))
-        boxoptions.Add(panelscroll, 0, wx.ALL | wx.CENTRE, 0)
-
-        panelscroll.SetSizer(fgs1)
-        panelscroll.SetAutoLayout(1)
-        panelscroll.SetupScrolling()
+        fgs2.Add(self.cmbx_af, 0, wx.ALL | wx.CENTRE, 5)
 
         # ------------- simple listctrl
         box = wx.StaticBox(self, wx.ID_ANY, '')
         boxpanel = wx.StaticBoxSizer(box, wx.VERTICAL)
-        sizer_div.Add(boxpanel, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_base.Add(boxpanel, 1, wx.ALL | wx.EXPAND, 5)
         self.panel_cod = FormatCode(self, self.format_dict)
         self.panel_cod.enable_widgets(False)
         boxpanel.Add(self.panel_cod, 1, wx.EXPAND)
@@ -302,7 +283,7 @@ class Downloader(wx.Panel):
         # ----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_choicebox)
         self.cmbx_vq.Bind(wx.EVT_COMBOBOX, self.on_vquality)
-        self.rdbvideoformat.Bind(wx.EVT_RADIOBOX, self.on_quality)
+        self.cmbx_vformat.Bind(wx.EVT_COMBOBOX, self.on_quality)
         self.cmbx_af.Bind(wx.EVT_COMBOBOX, self.on_aformat)
         self.cmbx_aq.Bind(wx.EVT_COMBOBOX, self.on_aquality)
         self.ckbx_pl.Bind(wx.EVT_CHECKBOX, self.on_playlist)
@@ -463,7 +444,7 @@ class Downloader(wx.Panel):
             self.cmbx_af.Disable()
             self.cmbx_aq.Disable()
             self.cmbx_vq.Enable()
-            self.rdbvideoformat.Disable()
+            self.cmbx_vformat.Disable()
             self.panel_cod.enable_widgets(False)
             self.cmbx_vq.Clear()
             self.cmbx_vq.Append(list(Downloader.VPCOMP.keys()))
@@ -475,7 +456,7 @@ class Downloader(wx.Panel):
             self.cmbx_af.Disable()
             self.cmbx_aq.Disable()
             self.cmbx_vq.Enable()
-            self.rdbvideoformat.Enable()
+            self.cmbx_vformat.Enable()
             self.panel_cod.enable_widgets(False)
             self.cmbx_vq.Clear()
             self.cmbx_vq.Append(list(Downloader.VRES.keys()))
@@ -487,7 +468,7 @@ class Downloader(wx.Panel):
             self.cmbx_af.Disable()
             self.cmbx_aq.Enable()
             self.cmbx_vq.Enable()
-            self.rdbvideoformat.Disable()
+            self.cmbx_vformat.Disable()
             self.panel_cod.enable_widgets(False)
             self.cmbx_vq.Clear()
             self.cmbx_vq.Append(list(Downloader.VQUAL.keys()))
@@ -499,7 +480,7 @@ class Downloader(wx.Panel):
             self.cmbx_vq.Disable()
             self.cmbx_aq.Enable()
             self.cmbx_af.Enable()
-            self.rdbvideoformat.Disable()
+            self.cmbx_vformat.Disable()
             self.panel_cod.enable_widgets(False)
             self.Layout()
             self.on_aformat(self)
@@ -508,7 +489,7 @@ class Downloader(wx.Panel):
             self.cmbx_vq.Disable()
             self.cmbx_aq.Disable()
             self.cmbx_af.Disable()
-            self.rdbvideoformat.Disable()
+            self.cmbx_vformat.Disable()
             self.panel_cod.enable_widgets()
             ret = self.on_format_codes()
             if ret:
@@ -533,8 +514,7 @@ class Downloader(wx.Panel):
         """
         Set preferring video and audio format on radiobox event
         """
-        index = self.rdbvideoformat.GetSelection()
-        vformat = self.rdbvideoformat.GetString(index)
+        vformat = self.cmbx_vformat.GetValue()
 
         if self.choice.GetSelection() == 0:
             quality = self.opt["V_QUALITY"]

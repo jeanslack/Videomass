@@ -96,109 +96,78 @@ class PrstPan(wx.Panel):
             bmpeditprf = get_bmp(icons['profile_edit'], ((16, 16)))
             bmpdelprf = get_bmp(icons['profile_del'], ((16, 16)))
             bmpcopyprf = get_bmp(icons['profile_copy'], ((16, 16)))
+            bmpdelprst = get_bmp(icons['delpreset'], ((16, 16)))
+            bmpexpall = get_bmp(icons['exportall'], ((16, 16)))
+            bmpexpsel = get_bmp(icons['exportselected'], ((16, 16)))
+            bmpimpdir = get_bmp(icons['importfolder'], ((16, 16)))
+            bmpimpprst = get_bmp(icons['importpreset'], ((16, 16)))
+            bmpnewprst = get_bmp(icons['newpreset'], ((16, 16)))
+            bmpreload = get_bmp(icons['reload'], ((16, 16)))
+            bmprestall = get_bmp(icons['restoreall'], ((16, 16)))
+            bmprestsel = get_bmp(icons['restoreselected'], ((16, 16)))
         else:
             bmpnewprf = wx.Bitmap(icons['profile_add'], wx.BITMAP_TYPE_ANY)
             bmpeditprf = wx.Bitmap(icons['profile_edit'], wx.BITMAP_TYPE_ANY)
             bmpdelprf = wx.Bitmap(icons['profile_del'], wx.BITMAP_TYPE_ANY)
             bmpcopyprf = wx.Bitmap(icons['profile_copy'], wx.BITMAP_TYPE_ANY)
+            bmpdelprst = wx.Bitmap(icons['delpreset'], wx.BITMAP_TYPE_ANY)
+            bmpexpall = wx.Bitmap(icons['exportall'], wx.BITMAP_TYPE_ANY)
+            bmpexpsel = wx.Bitmap(icons['exportselected'], wx.BITMAP_TYPE_ANY)
+            bmpimpdir = wx.Bitmap(icons['importfolder'], wx.BITMAP_TYPE_ANY)
+            bmpimpprst = wx.Bitmap(icons['importpreset'], wx.BITMAP_TYPE_ANY)
+            bmpnewprst = wx.Bitmap(icons['newpreset'], wx.BITMAP_TYPE_ANY)
+            bmpreload = wx.Bitmap(icons['reload'], wx.BITMAP_TYPE_ANY)
+            bmprestall = wx.Bitmap(icons['restoreall'], wx.BITMAP_TYPE_ANY)
+            bmprestsel = wx.Bitmap(icons['restoreselected'],
+                                   wx.BITMAP_TYPE_ANY)
 
         prst = sorted([os.path.splitext(x)[0] for x in
                        os.listdir(self.user_prst) if
                        os.path.splitext(x)[1] == '.json'
                        ])
         wx.Panel.__init__(self, parent, -1)
-
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        sizer_div = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_base.Add(sizer_div, 1, wx.EXPAND)
         # ------- BOX PRESETS
         boxpresets = wx.StaticBoxSizer(wx.StaticBox(
-            self, wx.ID_ANY, _('Presets')), wx.VERTICAL)
-        sizer_div.Add(boxpresets, 0, wx.ALL | wx.EXPAND, 5)
+            self, wx.ID_ANY, _('Presets')), wx.HORIZONTAL)
+        sizer_base.Add(boxpresets, 0, wx.ALL | wx.EXPAND, 5)
+        fgs1 = wx.BoxSizer(wx.HORIZONTAL)
         self.cmbx_prst = wx.ComboBox(self, wx.ID_ANY,
                                      choices=prst,
-                                     size=(200, -1),
+                                     size=(150, -1),
                                      style=wx.CB_DROPDOWN
                                      | wx.CB_READONLY,
                                      )
-        boxpresets.Add(self.cmbx_prst, 0, wx.ALL | wx.EXPAND, 5)
-        boxpresets.Add((5, 5))
-        line0 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        boxpresets.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
-        boxpresets.Add((5, 5))
-        panelscr = scrolled.ScrolledPanel(self, -1, size=(230, 500),
-                                          style=wx.TAB_TRAVERSAL
-                                          | wx.BORDER_THEME,
-                                          name="panelscroll",
-                                          )
-        fgs1 = wx.BoxSizer(wx.VERTICAL)
-        self.btn_newpreset = wx.Button(panelscr, wx.ID_ANY,
-                                       _("New"), size=(-1, -1))
-        fgs1.Add(self.btn_newpreset, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_delpreset = wx.Button(panelscr, wx.ID_ANY,
-                                       _("Remove"), size=(-1, -1))
-        fgs1.Add(self.btn_delpreset, 0, wx.ALL | wx.EXPAND, 5)
-        line1 = wx.StaticLine(panelscr, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        fgs1.Add((5, 5))
-        fgs1.Add(line1, 0, wx.ALL | wx.EXPAND, 5)
-        fgs1.Add((5, 5))
-        self.btn_savecopy = wx.Button(panelscr, wx.ID_ANY,
-                                      _("Export selected"), size=(-1, -1))
-        fgs1.Add(self.btn_savecopy, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_saveall = wx.Button(panelscr, wx.ID_ANY,
-                                     _("Export all..."), size=(-1, -1))
-        fgs1.Add(self.btn_saveall, 0, wx.ALL | wx.EXPAND, 5)
-
-        line2 = wx.StaticLine(panelscr, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        fgs1.Add((5, 5))
-        fgs1.Add(line2, 0, wx.ALL | wx.EXPAND, 5)
-        fgs1.Add((5, 5))
-        self.btn_restore = wx.Button(panelscr, wx.ID_ANY,
-                                     _("Import preset"), size=(-1, -1))
-        fgs1.Add(self.btn_restore, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_restoreall = wx.Button(panelscr, wx.ID_ANY,
-                                        _("Import folder"), size=(-1, -1))
-        fgs1.Add(self.btn_restoreall, 0, wx.ALL | wx.EXPAND, 5)
-
-        line3 = wx.StaticLine(panelscr, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        fgs1.Add((5, 5))
-        fgs1.Add(line3, 0, wx.ALL | wx.EXPAND, 5)
-        fgs1.Add((5, 5))
-        self.btn_restoredef = wx.Button(panelscr, wx.ID_ANY,
-                                        _("Restore selected"), size=(-1, -1))
-        fgs1.Add(self.btn_restoredef, 0, wx.ALL | wx.EXPAND, 5)
-
-        self.btn_restorealldefault = wx.Button(panelscr, wx.ID_ANY,
-                                               _("Restore all..."),
-                                               size=(-1, -1)
-                                               )
-        fgs1.Add(self.btn_restorealldefault, 0, wx.ALL | wx.EXPAND, 5)
-        line4 = wx.StaticLine(panelscr, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        fgs1.Add((5, 5))
-        fgs1.Add(line4, 0, wx.ALL | wx.EXPAND, 5)
-        fgs1.Add((5, 5))
-        self.btn_refresh = wx.Button(panelscr, wx.ID_ANY,
-                                     _("Reload all"), size=(-1, -1))
-        fgs1.Add(self.btn_refresh, 0, wx.ALL | wx.EXPAND, 5)
-        boxpresets.Add(panelscr, 0, wx.ALL | wx.CENTRE, 5)
-        panelscr.SetSizer(fgs1)
-        panelscr.SetAutoLayout(1)
-        panelscr.SetupScrolling()
+        fgs1.Add(self.cmbx_prst, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_newpreset = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_newpreset.SetBitmap(bmpnewprst, wx.LEFT)
+        fgs1.Add(self.btn_newpreset, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_delpreset = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_delpreset.SetBitmap(bmpdelprst, wx.LEFT)
+        fgs1.Add(self.btn_delpreset, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_savecopy = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_savecopy.SetBitmap(bmpexpsel, wx.LEFT)
+        fgs1.Add(self.btn_savecopy, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_saveall = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_saveall.SetBitmap(bmpexpall, wx.LEFT)
+        fgs1.Add(self.btn_saveall, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_restore = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_restore.SetBitmap(bmpimpprst, wx.LEFT)
+        fgs1.Add(self.btn_restore, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_restoreall = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_restoreall.SetBitmap(bmpimpdir, wx.LEFT)
+        fgs1.Add(self.btn_restoreall, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_restoredef = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_restoredef.SetBitmap(bmprestsel, wx.LEFT)
+        fgs1.Add(self.btn_restoredef, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_restorealldefault = wx.Button(self, wx.ID_ANY,
+                                               "", size=(50, -1))
+        self.btn_restorealldefault.SetBitmap(bmprestall, wx.LEFT)
+        fgs1.Add(self.btn_restorealldefault, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_refresh = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_refresh.SetBitmap(bmpreload, wx.LEFT)
+        fgs1.Add(self.btn_refresh, 0, wx.ALL | wx.CENTRE, 5)
+        boxpresets.Add(fgs1, 0, wx.ALL | wx.CENTRE, 5)
         # ------ LIST CONTROL & BOX PROFILES
         # --- listctrl
         self.lctrl = wx.ListCtrl(self, wx.ID_ANY,
@@ -231,7 +200,7 @@ class PrstPan(wx.Panel):
         self.btn_copyprofile.Disable()
         grid_profiles.Add(self.btn_copyprofile, 0, wx.ALL, 0)
         boxprofiles.Add(grid_profiles, 0, wx.ALL, 5)
-        sizer_div.Add(boxprofiles, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_base.Add(boxprofiles, 1, wx.ALL | wx.EXPAND, 5)
         # ------- command line
         grd_cmd = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(grd_cmd, 0, wx.EXPAND)
