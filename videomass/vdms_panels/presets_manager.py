@@ -241,7 +241,7 @@ class PrstPan(wx.Panel):
         self.btn_delpreset.SetToolTip(tip)
         tip = _("Backup selected preset")
         self.btn_savecopy.SetToolTip(tip)
-        tip = _("Backup presets folder")
+        tip = _("Backup the presets folder")
         self.btn_saveall.SetToolTip(tip)
         tip = _("Restore a preset")
         self.btn_restore.SetToolTip(tip)
@@ -810,7 +810,7 @@ class PrstPan(wx.Panel):
         """
         selprst = self.cmbx_prst.GetValue()
         tofile = os.path.join(self.user_prst, selprst + '.json')
-        title = _('Add new profile to «{}»').format(selprst)
+        title = _('Write profile on «{0}»').format(selprst)
         prstdialog = setting_profiles.SettingProfile(self,
                                                      'newprofile',
                                                      tofile,
@@ -829,7 +829,7 @@ class PrstPan(wx.Panel):
         """
         selprst = self.cmbx_prst.GetValue()
         tofile = os.path.join(self.user_prst, selprst + '.json')
-        title = _('Edit existing profile on «{}»').format(selprst)
+        title = _('Edit profile on «{0}»').format(selprst)
         prstdialog = setting_profiles.SettingProfile(self,
                                                      'edit',
                                                      tofile,

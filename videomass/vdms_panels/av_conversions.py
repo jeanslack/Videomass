@@ -344,7 +344,7 @@ class AV_Conv(wx.Panel):
                  'normalization.'))
         self.cmb_Media.SetToolTip(tip)
         self.btn_preview.SetToolTip(_('Preview video filters'))
-        self.btn_reset.SetToolTip(_('Clear all enabled filters'))
+        self.btn_reset.SetToolTip(_('Disable active filters'))
         self.btn_videosize.SetToolTip(_("Resize"))
         self.btn_crop.SetToolTip(_("Crop"))
         self.btn_rotate.SetToolTip(_("Transpose"))
@@ -1242,7 +1242,7 @@ class AV_Conv(wx.Panel):
                 kwargs = self.audio_ebu()
             else:
                 kwargs = self.audio_std()
-        title = _('Save profile in «{0}»').format(os.path.basename(presetname))
+        title = _('Write profile on «{0}»').format(os.path.basename(presetname))
         args = kwargs["args"][0], kwargs["args"][1], self.opt["OutputFormat"]
         with setting_profiles.SettingProfile(self, 'addprofile',
                                              presetname,

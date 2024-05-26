@@ -84,7 +84,7 @@ class MainYtdl(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.icons['videomass'],
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        self.SetMinSize((850, 560))
+        self.SetMinSize((1100, 715))
         self.SetSizer(mainSizer)
         self.Fit()
         self.SetSize(tuple(self.appdata['main_ytdl_size']))
