@@ -67,6 +67,11 @@
        type="xygrid"
        id="grid4510" />
   </sodipodi:namedview>
+  <path
+     id="path245"
+     style="color:#444444;fill:#c061cb;stroke-width:1.05514"
+     class="ColorScheme-Text"
+     d="m 1.6691471,1.1415759 c 0,0 -1.05514195,1.1e-6 -1.05514195,1.0551421 v 11.606564 c 0,0 1e-6,1.055142 1.05514195,1.055142 H 14.330853 c 0,0 1.055142,-2e-6 1.055142,-1.055142 V 4.3070024 c 0,-1.055141 -1.055142,-1.0551422 -1.055142,-1.0551422 H 9.0551422 L 6.9448581,1.1415759 Z" />
   <rect
      style="display:none;opacity:1;fill:#555753;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.01552558;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
      id="rect6013"
@@ -107,22 +112,18 @@
      x="-21.169252"
      y="-12.913888"
      ry="0.020953707" />
-  <path
-     id="rect563"
-     style="fill:#b4e2ff;fill-opacity:0.999944;stroke-width:0.413189"
-     d="m 2.7103125,1.9814298 c -0.905568,0 -1.634242,0.7286741 -1.634242,1.6342421 v 8.7686561 c 0,0.905568 0.728674,1.634242 1.634242,1.634242 H 13.289687 c 0.905568,0 1.634243,-0.728674 1.634243,-1.634242 V 5.2701353 H 9.8943605 L 6.6865391,2.0034893 Z m 3.9762266,0.022059 H 6.8023516 V 1.9906207 H 6.6736709 Z" />
   <rect
-     style="fill:#009900;fill-opacity:0.999944;stroke-width:0.376482"
-     id="rect349"
-     width="6.0152111"
-     height="7.3024511"
-     x="4.9923944"
-     y="2.4660761"
-     ry="0.057555702" />
+     style="fill:#e5a50a;fill-opacity:0.999944;stroke-width:0.31816"
+     id="rect349-3-3"
+     width="4.4380817"
+     height="7.0684757"
+     x="6.021112"
+     y="3.2480249"
+     ry="0.055711582" />
   <path
      sodipodi:type="star"
-     style="fill:#009900;fill-opacity:0.999944;stroke-width:0.439"
-     id="path403"
+     style="fill:#e5a50a;fill-opacity:0.999944;stroke-width:0.439"
+     id="path403-6-6"
      inkscape:flatsided="false"
      sodipodi:sides="3"
      sodipodi:cx="-28.106035"
@@ -134,6 +135,6 @@
      inkscape:rounded="0"
      inkscape:randomized="0"
      d="m -21.946045,3.2096035 -3.079995,5.3347083 -3.079995,5.3347082 -3.079996,-5.3347083 -3.079995,-5.3347081 6.159991,-3e-7 z"
-     inkscape:transform-center-y="1.094294"
-     transform="matrix(0.89035311,0,0,0.61538171,33.024296,5.493582)" />
+     transform="matrix(0.76905442,0,0,0.54067671,29.855223,7.3449698)"
+     inkscape:transform-center-y="0.96145127" />
 </svg>

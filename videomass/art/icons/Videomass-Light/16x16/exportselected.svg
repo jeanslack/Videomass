@@ -50,9 +50,9 @@
      inkscape:window-height="1007"
      id="namedview14"
      showgrid="true"
-     inkscape:zoom="9.942492"
-     inkscape:cx="9.1023458"
-     inkscape:cy="4.2242931"
+     inkscape:zoom="19.884984"
+     inkscape:cx="8.7503213"
+     inkscape:cy="8.5491645"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -101,24 +101,24 @@
      style="display:none;opacity:1;fill:#555753;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.01552558;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers" />
   <path
      id="rect433"
-     style="fill:#62a0ea;fill-opacity:0.999944;stroke:none;stroke-width:0.476986"
-     d="M 0.57934662,0.41127231 V 15.588728 H 11.370364 V 5.1669594 H 9.8700205 V 14.069284 H 2.0818123 V 1.9795241 H 6.6167991 V 0.41127231 Z" />
+     style="fill:#444444;fill-opacity:1;stroke:none;stroke-width:0.476986"
+     d="M 0.58007812 0.41210938 L 0.58007812 15.587891 L 11.371094 15.587891 L 11.371094 14.078125 L 7.5957031 14.078125 C 7.5837981 14.078125 7.5735961 14.074526 7.5644531 14.068359 L 2.0820312 14.068359 L 2.0820312 1.9804688 L 6.6171875 1.9804688 L 6.6171875 0.41210938 L 0.58007812 0.41210938 z " />
   <path
      id="rect493"
-     style="fill:#62a0ea;fill-opacity:0.999944;stroke:none;stroke-width:0.476427"
+     style="fill:#444444;fill-opacity:1;stroke:none;stroke-width:0.476427"
      d="M 6.6097433,0.41413214 V 5.1684778 H 11.36408 v -0.00207 L 6.6267003,0.41413214 Z" />
   <rect
-     style="fill:#e5a50a;fill-opacity:0.999944;stroke-width:0.31816"
+     style="fill:#444444;fill-opacity:1;stroke-width:0.279915"
      id="rect349-3"
-     width="4.4380817"
-     height="7.0684757"
-     x="-12.219041"
-     y="4.0197887"
-     ry="0.055711582"
+     width="3.9046006"
+     height="6.2188072"
+     x="-11.549987"
+     y="5.3040295"
+     ry="0.049014755"
      transform="rotate(-90)" />
   <path
      sodipodi:type="star"
-     style="fill:#e5a50a;fill-opacity:0.999944;stroke-width:0.439"
+     style="fill:#444444;fill-opacity:1;stroke-width:0.439"
      id="path403-6"
      inkscape:flatsided="false"
      sodipodi:sides="3"
@@ -131,6 +131,6 @@
      inkscape:rounded="0"
      inkscape:randomized="0"
      d="m -21.946045,3.2096035 -3.079995,5.3347083 -3.079995,5.3347082 -3.079996,-5.3347083 -3.079995,-5.3347081 6.159991,-3e-7 z"
-     transform="matrix(0,-0.76905442,0.54067671,0,8.1167326,-11.615071)"
-     inkscape:transform-center-x="-0.96145095" />
+     transform="matrix(0,-0.67660999,0.4756845,0,8.9084996,-9.4191383)"
+     inkscape:transform-center-x="-0.84587946" />
 </svg>

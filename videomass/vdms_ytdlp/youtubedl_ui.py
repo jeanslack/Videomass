@@ -221,7 +221,7 @@ class Downloader(wx.Panel):
                 wx.Colour(Downloader.VIOLET))
 
         # ------------- quality pref
-        box = wx.StaticBox(self, wx.ID_ANY, _('Quality Preferences'))
+        box = wx.StaticBox(self, wx.ID_ANY, _('Quality settings'))
         boxoptions = wx.StaticBoxSizer(box, wx.VERTICAL)
         sizer_base.Add(boxoptions, 0, wx.ALL | wx.EXPAND, 5)
         fgs2 = wx.BoxSizer(wx.HORIZONTAL)
