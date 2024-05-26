@@ -353,7 +353,6 @@ class AV_Conv(wx.Panel):
         self.btn_vidstab.SetToolTip(_("Stabilize"))
         self.btn_coloreq.SetToolTip(_("Equalize"))
 
-
         # ----------------------Binding (EVT)----------------------#
 
         # Note: wx.EVT_TEXT_ENTER é diverso da wx.EVT_TEXT: Il primo

@@ -27,7 +27,6 @@ This file is part of Videomass.
 import sys
 import itertools
 import wx
-import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_io.io_tools import youtubedl_getstatistics
 from videomass.vdms_utils.utils import integer_to_time as totimesec
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp

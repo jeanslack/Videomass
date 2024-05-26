@@ -29,7 +29,6 @@ import time
 import os
 import sys
 import wx
-import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.presets_manager_utils import json_data
 from videomass.vdms_utils.presets_manager_utils import supported_formats
