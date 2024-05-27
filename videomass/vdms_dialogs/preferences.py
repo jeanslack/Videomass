@@ -207,7 +207,7 @@ class SetUp(wx.Dialog):
                  'ability to provide other backend locations.'))
         labytexec = wx.StaticText(tabThree, wx.ID_ANY, msg)
         sizerytdlp.Add(labytexec, 0, wx.ALL | wx.EXPAND, 5)
-        msg = (_('Use the executable for downloads rather than API'))
+        msg = _('Use the executable for downloads rather than API')
         self.ckbx_dlexe = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         sizerytdlp.Add(self.ckbx_dlexe, 0, wx.LEFT | wx.TOP, 5)
 
@@ -878,6 +878,8 @@ class SetUp(wx.Dialog):
         set yt-dlp preferences
         """
         self.settings['use-downloader'] = self.ckbx_ytdlp.GetValue()
+        if self.appdata['yt_dlp'] is not True:
+            self.appdata['yt_dlp'] = 'reload'
     # --------------------------------------------------------------------#
 
     def on_ytdlp_exec(self, event):

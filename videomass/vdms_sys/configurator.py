@@ -465,6 +465,7 @@ class DataSource():
                  'ffplay_cmd': _relativize(userconf['ffplay_cmd']),
                  'ffmpeg-default-args': '-y -stats -hide_banner',
                  'ffplay-default-args': '-hide_banner',
+                 'yt_dlp': '',
                  **userconf
                  })
     # --------------------------------------------------------------------

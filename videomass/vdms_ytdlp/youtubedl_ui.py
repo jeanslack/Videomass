@@ -511,7 +511,7 @@ class Downloader(wx.Panel):
 
     def on_quality(self, event):
         """
-        Set preferring video and audio format on radiobox event
+        Set preferring video and audio format on combobox event
         """
         vformat = self.cmbx_vformat.GetValue()
 

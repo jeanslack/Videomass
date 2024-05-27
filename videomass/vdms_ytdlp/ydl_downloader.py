@@ -37,7 +37,7 @@ from videomass.vdms_utils.utils import Popen
 from videomass.vdms_io.make_filelog import logwrite
 if not platform.system() == 'Windows':
     import shlex
-if wx.GetApp().appset['use-downloader']:
+if wx.GetApp().appset['yt_dlp'] is True:
     import yt_dlp
 
 

@@ -36,7 +36,7 @@ from videomass.vdms_ytdlp.long_task_ytdlp import LogOut
 from videomass.vdms_io import io_tools
 from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_ytdlp.ydl_preferences import Ytdlp_Options
-if wx.GetApp().appset['use-downloader']:
+if wx.GetApp().appset['yt_dlp'] is True:
     import yt_dlp
 
 
