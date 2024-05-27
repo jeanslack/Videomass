@@ -29,7 +29,6 @@ import time
 import os
 import sys
 import wx
-import wx.lib.scrolledpanel as scrolled
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.presets_manager_utils import json_data
 from videomass.vdms_utils.presets_manager_utils import supported_formats
@@ -96,109 +95,78 @@ class PrstPan(wx.Panel):
             bmpeditprf = get_bmp(icons['profile_edit'], ((16, 16)))
             bmpdelprf = get_bmp(icons['profile_del'], ((16, 16)))
             bmpcopyprf = get_bmp(icons['profile_copy'], ((16, 16)))
+            bmpdelprst = get_bmp(icons['delpreset'], ((16, 16)))
+            bmpexpall = get_bmp(icons['exportall'], ((16, 16)))
+            bmpexpsel = get_bmp(icons['exportselected'], ((16, 16)))
+            bmpimpdir = get_bmp(icons['importfolder'], ((16, 16)))
+            bmpimpprst = get_bmp(icons['importpreset'], ((16, 16)))
+            bmpnewprst = get_bmp(icons['newpreset'], ((16, 16)))
+            bmpreload = get_bmp(icons['reload'], ((16, 16)))
+            bmprestall = get_bmp(icons['restoreall'], ((16, 16)))
+            bmprestsel = get_bmp(icons['restoreselected'], ((16, 16)))
         else:
             bmpnewprf = wx.Bitmap(icons['profile_add'], wx.BITMAP_TYPE_ANY)
             bmpeditprf = wx.Bitmap(icons['profile_edit'], wx.BITMAP_TYPE_ANY)
             bmpdelprf = wx.Bitmap(icons['profile_del'], wx.BITMAP_TYPE_ANY)
             bmpcopyprf = wx.Bitmap(icons['profile_copy'], wx.BITMAP_TYPE_ANY)
+            bmpdelprst = wx.Bitmap(icons['delpreset'], wx.BITMAP_TYPE_ANY)
+            bmpexpall = wx.Bitmap(icons['exportall'], wx.BITMAP_TYPE_ANY)
+            bmpexpsel = wx.Bitmap(icons['exportselected'], wx.BITMAP_TYPE_ANY)
+            bmpimpdir = wx.Bitmap(icons['importfolder'], wx.BITMAP_TYPE_ANY)
+            bmpimpprst = wx.Bitmap(icons['importpreset'], wx.BITMAP_TYPE_ANY)
+            bmpnewprst = wx.Bitmap(icons['newpreset'], wx.BITMAP_TYPE_ANY)
+            bmpreload = wx.Bitmap(icons['reload'], wx.BITMAP_TYPE_ANY)
+            bmprestall = wx.Bitmap(icons['restoreall'], wx.BITMAP_TYPE_ANY)
+            bmprestsel = wx.Bitmap(icons['restoreselected'],
+                                   wx.BITMAP_TYPE_ANY)
 
         prst = sorted([os.path.splitext(x)[0] for x in
                        os.listdir(self.user_prst) if
                        os.path.splitext(x)[1] == '.json'
                        ])
         wx.Panel.__init__(self, parent, -1)
-
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        sizer_div = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_base.Add(sizer_div, 1, wx.EXPAND)
         # ------- BOX PRESETS
-        boxpresets = wx.StaticBoxSizer(wx.StaticBox(
-            self, wx.ID_ANY, _('Presets')), wx.VERTICAL)
-        sizer_div.Add(boxpresets, 0, wx.ALL | wx.EXPAND, 5)
+        fgs1 = wx.BoxSizer(wx.HORIZONTAL)
         self.cmbx_prst = wx.ComboBox(self, wx.ID_ANY,
                                      choices=prst,
-                                     size=(200, -1),
+                                     size=(150, -1),
                                      style=wx.CB_DROPDOWN
                                      | wx.CB_READONLY,
                                      )
-        boxpresets.Add(self.cmbx_prst, 0, wx.ALL | wx.EXPAND, 5)
-        boxpresets.Add((5, 5))
-        line0 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        boxpresets.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
-        boxpresets.Add((5, 5))
-        panelscr = scrolled.ScrolledPanel(self, -1, size=(230, 500),
-                                          style=wx.TAB_TRAVERSAL
-                                          | wx.BORDER_THEME,
-                                          name="panelscroll",
-                                          )
-        fgs1 = wx.BoxSizer(wx.VERTICAL)
-        self.btn_newpreset = wx.Button(panelscr, wx.ID_ANY,
-                                       _("New"), size=(-1, -1))
-        fgs1.Add(self.btn_newpreset, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_delpreset = wx.Button(panelscr, wx.ID_ANY,
-                                       _("Remove"), size=(-1, -1))
-        fgs1.Add(self.btn_delpreset, 0, wx.ALL | wx.EXPAND, 5)
-        line1 = wx.StaticLine(panelscr, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        fgs1.Add((5, 5))
-        fgs1.Add(line1, 0, wx.ALL | wx.EXPAND, 5)
-        fgs1.Add((5, 5))
-        self.btn_savecopy = wx.Button(panelscr, wx.ID_ANY,
-                                      _("Export selected"), size=(-1, -1))
-        fgs1.Add(self.btn_savecopy, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_saveall = wx.Button(panelscr, wx.ID_ANY,
-                                     _("Export all..."), size=(-1, -1))
-        fgs1.Add(self.btn_saveall, 0, wx.ALL | wx.EXPAND, 5)
-
-        line2 = wx.StaticLine(panelscr, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        fgs1.Add((5, 5))
-        fgs1.Add(line2, 0, wx.ALL | wx.EXPAND, 5)
-        fgs1.Add((5, 5))
-        self.btn_restore = wx.Button(panelscr, wx.ID_ANY,
-                                     _("Import preset"), size=(-1, -1))
-        fgs1.Add(self.btn_restore, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_restoreall = wx.Button(panelscr, wx.ID_ANY,
-                                        _("Import folder"), size=(-1, -1))
-        fgs1.Add(self.btn_restoreall, 0, wx.ALL | wx.EXPAND, 5)
-
-        line3 = wx.StaticLine(panelscr, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        fgs1.Add((5, 5))
-        fgs1.Add(line3, 0, wx.ALL | wx.EXPAND, 5)
-        fgs1.Add((5, 5))
-        self.btn_restoredef = wx.Button(panelscr, wx.ID_ANY,
-                                        _("Restore selected"), size=(-1, -1))
-        fgs1.Add(self.btn_restoredef, 0, wx.ALL | wx.EXPAND, 5)
-
-        self.btn_restorealldefault = wx.Button(panelscr, wx.ID_ANY,
-                                               _("Restore all..."),
-                                               size=(-1, -1)
-                                               )
-        fgs1.Add(self.btn_restorealldefault, 0, wx.ALL | wx.EXPAND, 5)
-        line4 = wx.StaticLine(panelscr, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
-        fgs1.Add((5, 5))
-        fgs1.Add(line4, 0, wx.ALL | wx.EXPAND, 5)
-        fgs1.Add((5, 5))
-        self.btn_refresh = wx.Button(panelscr, wx.ID_ANY,
-                                     _("Reload all"), size=(-1, -1))
-        fgs1.Add(self.btn_refresh, 0, wx.ALL | wx.EXPAND, 5)
-        boxpresets.Add(panelscr, 0, wx.ALL | wx.CENTRE, 5)
-        panelscr.SetSizer(fgs1)
-        panelscr.SetAutoLayout(1)
-        panelscr.SetupScrolling()
+        fgs1.Add(self.cmbx_prst, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_newpreset = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_newpreset.SetBitmap(bmpnewprst, wx.LEFT)
+        fgs1.Add(self.btn_newpreset, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_delpreset = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_delpreset.SetBitmap(bmpdelprst, wx.LEFT)
+        fgs1.Add(self.btn_delpreset, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_savecopy = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_savecopy.SetBitmap(bmpexpsel, wx.LEFT)
+        fgs1.Add(self.btn_savecopy, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_saveall = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_saveall.SetBitmap(bmpexpall, wx.LEFT)
+        fgs1.Add(self.btn_saveall, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_restore = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_restore.SetBitmap(bmpimpprst, wx.LEFT)
+        fgs1.Add(self.btn_restore, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_restoreall = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_restoreall.SetBitmap(bmpimpdir, wx.LEFT)
+        fgs1.Add(self.btn_restoreall, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_restoredef = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_restoredef.SetBitmap(bmprestsel, wx.LEFT)
+        fgs1.Add(self.btn_restoredef, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_restorealldefault = wx.Button(self, wx.ID_ANY,
+                                               "", size=(50, -1))
+        self.btn_restorealldefault.SetBitmap(bmprestall, wx.LEFT)
+        fgs1.Add(self.btn_restorealldefault, 0, wx.ALL | wx.CENTRE, 5)
+        self.btn_refresh = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_refresh.SetBitmap(bmpreload, wx.LEFT)
+        fgs1.Add(self.btn_refresh, 0, wx.ALL | wx.CENTRE, 5)
+        boxprst = wx.StaticBox(self, wx.ID_ANY, _("Presets"))
+        boxpresets = wx.StaticBoxSizer(boxprst, wx.VERTICAL)
+        sizer_base.Add(boxpresets, 0, wx.ALL | wx.EXPAND, 5)
+        boxpresets.Add(fgs1, 0, wx.ALL | wx.CENTRE, 5)
         # ------ LIST CONTROL & BOX PROFILES
         # --- listctrl
         self.lctrl = wx.ListCtrl(self, wx.ID_ANY,
@@ -206,13 +174,10 @@ class PrstPan(wx.Panel):
                                  | wx.SUNKEN_BORDER
                                  | wx.LC_SINGLE_SEL,
                                  )
-        boxprofiles = wx.StaticBoxSizer(wx.StaticBox(
-            self, wx.ID_ANY, _('Profiles')), wx.VERTICAL)
-        boxprofiles.Add(self.lctrl, 1, wx.ALL | wx.EXPAND, 5)
         # --- profile buttons
         grid_profiles = wx.FlexGridSizer(0, 4, 0, 5)
         self.btn_newprofile = wx.Button(self, wx.ID_ANY,
-                                        _("Add"), size=(-1, -1))
+                                        _("Write"), size=(-1, -1))
         self.btn_newprofile.SetBitmap(bmpnewprf, wx.LEFT)
         grid_profiles.Add(self.btn_newprofile, 0, wx.ALL, 0)
         self.btn_delprofile = wx.Button(self, wx.ID_ANY,
@@ -230,8 +195,11 @@ class PrstPan(wx.Panel):
         self.btn_copyprofile.SetBitmap(bmpcopyprf, wx.LEFT)
         self.btn_copyprofile.Disable()
         grid_profiles.Add(self.btn_copyprofile, 0, wx.ALL, 0)
+        boxprofiles = wx.StaticBoxSizer(wx.StaticBox(
+            self, wx.ID_ANY, _('Profiles')), wx.VERTICAL)
+        boxprofiles.Add(self.lctrl, 1, wx.ALL | wx.EXPAND, 5)
         boxprofiles.Add(grid_profiles, 0, wx.ALL, 5)
-        sizer_div.Add(boxprofiles, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_base.Add(boxprofiles, 1, wx.ALL | wx.EXPAND, 5)
         # ------- command line
         grd_cmd = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(grd_cmd, 0, wx.EXPAND)
@@ -259,6 +227,44 @@ class PrstPan(wx.Panel):
                                       style=wx.TE_PROCESS_ENTER,
                                       )
         box_cmd2.Add(self.pass_2_pre, 0, wx.ALL | wx.EXPAND, 5)
+
+        # ------- tipips
+        self.cmbx_prst.SetToolTip(_("Choose a preset and view its profiles"))
+        tip = _("Write a new profile and save it in the selected preset")
+        self.btn_newprofile.SetToolTip(tip)
+        self.btn_delprofile.SetToolTip(_("Delete the selected profile"))
+        self.btn_editprofile.SetToolTip(_("Edit the selected profile"))
+        self.btn_copyprofile.SetToolTip(_("Duplicate the selected profile"))
+        tip = _("Create new preset")
+        self.btn_newpreset.SetToolTip(tip)
+        tip = _("Remove selected preset")
+        self.btn_delpreset.SetToolTip(tip)
+        tip = _("Backup selected preset")
+        self.btn_savecopy.SetToolTip(tip)
+        tip = _("Backup the presets folder")
+        self.btn_saveall.SetToolTip(tip)
+        tip = _("Restore a preset")
+        self.btn_restore.SetToolTip(tip)
+        tip = _("Restore a presets folder")
+        self.btn_restoreall.SetToolTip(tip)
+        tip = _("Resets the selected preset to default values")
+        self.btn_restoredef.SetToolTip(tip)
+        tip = _("Reset all presets to default values")
+        self.btn_restorealldefault.SetToolTip(tip)
+        self.btn_refresh.SetToolTip(_("Refresh the presets list"))
+        tip = _('FFmpeg arguments for one-pass encoding')
+        self.txt_1cmd.SetToolTip(tip)
+        tip = _('FFmpeg arguments for two-pass encoding')
+        self.txt_2cmd.SetToolTip(tip)
+        tip = (_('Any optional arguments to add before input file on the '
+                 'one-pass encoding, e.g required names of some hardware '
+                 'accelerations like -hwaccel to use with CUDA.'))
+        self.pass_1_pre.SetToolTip(tip)
+        tip = (_('Any optional arguments to add before input file on the '
+                 'two-pass encoding, e.g required names of some hardware '
+                 'accelerations like -hwaccel to use with CUDA.'))
+        self.pass_2_pre.SetToolTip(tip)
+
         self.SetSizer(sizer_base)
         self.Layout()
 
@@ -280,42 +286,6 @@ class PrstPan(wx.Panel):
                                           wx.NORMAL, wx.NORMAL))
             self.txt_2cmd.SetFont(wx.Font(8, wx.FONTFAMILY_TELETYPE,
                                           wx.NORMAL, wx.NORMAL))
-
-        # ------- tipips
-        self.cmbx_prst.SetToolTip(_("Choose a preset and view its profiles"))
-        tip = _("Create a new profile and save it in the selected preset")
-        self.btn_newprofile.SetToolTip(tip)
-        self.btn_delprofile.SetToolTip(_("Delete the selected profile"))
-        self.btn_editprofile.SetToolTip(_("Edit the selected profile"))
-        tip = _("Create a new preset")
-        self.btn_newpreset.SetToolTip(tip)
-        tip = _("Remove the selected preset from the Presets Manager")
-        self.btn_delpreset.SetToolTip(tip)
-        tip = _("Export selected preset as copy")
-        self.btn_savecopy.SetToolTip(tip)
-        tip = _("Export entire presets folder as copy")
-        self.btn_saveall.SetToolTip(tip)
-        tip = _("Import a new preset or update an existing one")
-        self.btn_restore.SetToolTip(tip)
-        tip = _("Import a presets folder, updating those in use")
-        self.btn_restoreall.SetToolTip(tip)
-        tip = _("Replace the selected preset with the Videomass default one")
-        self.btn_restoredef.SetToolTip(tip)
-        tip = _("Retrieve all Videomass default presets")
-        self.btn_restorealldefault.SetToolTip(tip)
-        self.btn_refresh.SetToolTip(_("Update the presets list"))
-        tip = _('FFmpeg arguments for one-pass encoding')
-        self.txt_1cmd.SetToolTip(tip)
-        tip = _('FFmpeg arguments for two-pass encoding')
-        self.txt_2cmd.SetToolTip(tip)
-        tip = (_('Any optional arguments to add before input file on the '
-                 'one-pass encoding, e.g required names of some hardware '
-                 'accelerations like -hwaccel to use with CUDA.'))
-        self.pass_1_pre.SetToolTip(tip)
-        tip = (_('Any optional arguments to add before input file on the '
-                 'two-pass encoding, e.g required names of some hardware '
-                 'accelerations like -hwaccel to use with CUDA.'))
-        self.pass_2_pre.SetToolTip(tip)
 
         # ----------------------Binder (EVT)----------------------#
         self.Bind(wx.EVT_COMBOBOX, self.on_preset_selection, self.cmbx_prst)
@@ -610,7 +580,7 @@ class PrstPan(wx.Panel):
         combvalue = self.cmbx_prst.GetValue()
         tofile = os.path.join(self.user_prst, combvalue + '.json')
 
-        dlg = wx.DirDialog(self, _("Choose Destination"),
+        dlg = wx.DirDialog(self, _("Open a destination folder"),
                            "", style=wx.DD_DEFAULT_STYLE)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
@@ -629,7 +599,7 @@ class PrstPan(wx.Panel):
                 wx.MessageBox(f'{status}', _('Videomass - Error!'),
                               wx.ICON_ERROR, self)
                 return
-            wx.MessageBox(_("The preset was exported successfully"),
+            wx.MessageBox(_("Backup completed successfully"),
                           "Videomass", wx.OK, self)
     # ------------------------------------------------------------------#
 
@@ -639,17 +609,17 @@ class PrstPan(wx.Panel):
         """
         src = self.user_prst
 
-        dialsave = wx.DirDialog(self, _("Choose Destination"),
+        dialsave = wx.DirDialog(self, _("Open a destination folder"),
                                 "", wx.DD_DEFAULT_STYLE)
         if dialsave.ShowModal() == wx.ID_OK:
             dest = dialsave.GetPath()
-            status = copydir_recursively(src, dest, 'Videomass-Presets-copy')
+            status = copydir_recursively(src, dest, 'Videomass-presets-backup')
             dialsave.Destroy()
             if status:
                 wx.MessageBox(f'{status}', _('Videomass - Error!'),
                               wx.ICON_ERROR, self)
             else:
-                wx.MessageBox(_("All presets have been exported successfully"),
+                wx.MessageBox(_("Backup completed successfully"),
                               "Videomass", wx.OK, self)
     # ------------------------------------------------------------------#
 
@@ -658,7 +628,7 @@ class PrstPan(wx.Panel):
         Import a new preset. If the preset already exists you will
         be asked to overwrite it or not.
         """
-        with wx.FileDialog(self, _("Import a new Videomass preset"),
+        with wx.FileDialog(self, _("Restore a preset"),
                            defaultDir=os.path.expanduser('~'),
                            wildcard="Videomass presets (*.json;)|*.json;",
                            style=wx.FD_OPEN
@@ -690,7 +660,7 @@ class PrstPan(wx.Panel):
 
         self.reset_list(True)  # reload presets
         self.on_deselect(self, cleardata=False)
-        wx.MessageBox(_("A new preset was successfully imported"),
+        wx.MessageBox(_("Restore successful"),
                       "Videomass", wx.OK, self)
     # ------------------------------------------------------------------#
 
@@ -745,7 +715,7 @@ class PrstPan(wx.Panel):
                 return err
         # copies non-existent ones to the destination directory
         if event:  # only `Import group` event
-            err = copy_on('prst', source, self.user_prst, overw=False)
+            err = copy_on('json', source, self.user_prst, overw=False)
             if err:
                 wx.MessageBox(f"{err}", _('Videomass - Error!'),
                               wx.ICON_ERROR, self)
@@ -820,8 +790,7 @@ class PrstPan(wx.Panel):
                 wx.MessageBox(f"{err}", _('Videomass - Error!'),
                               wx.ICON_ERROR, self)
             else:
-                wx.MessageBox(_("All default presets have been "
-                                "successfully recovered"),
+                wx.MessageBox(_("Successful recovery"),
                               "Videomass", wx.OK, self)
                 self.reset_list(True)
                 self.on_deselect(self, cleardata=False)
@@ -841,7 +810,7 @@ class PrstPan(wx.Panel):
         """
         selprst = self.cmbx_prst.GetValue()
         tofile = os.path.join(self.user_prst, selprst + '.json')
-        title = _('Add new profile to «{}»').format(selprst)
+        title = _('Write profile on «{0}»').format(selprst)
         prstdialog = setting_profiles.SettingProfile(self,
                                                      'newprofile',
                                                      tofile,
@@ -860,7 +829,7 @@ class PrstPan(wx.Panel):
         """
         selprst = self.cmbx_prst.GetValue()
         tofile = os.path.join(self.user_prst, selprst + '.json')
-        title = _('Edit existing profile on «{}»').format(selprst)
+        title = _('Edit profile on «{0}»').format(selprst)
         prstdialog = setting_profiles.SettingProfile(self,
                                                      'edit',
                                                      tofile,

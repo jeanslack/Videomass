@@ -138,11 +138,11 @@ class Choose_Topic(wx.Panel):
         videotoimages.SetToolTip(tip)
 
         if self.appdata['ostype'] == 'Darwin':
-            welcome.SetFont(wx.Font(14, wx.SWISS, wx.NORMAL, wx.BOLD))
-            version.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            welcome.SetFont(wx.Font(16, wx.SWISS, wx.NORMAL, wx.BOLD))
+            version.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
-            welcome.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            version.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.LIGHT))
+            welcome.SetFont(wx.Font(14, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            version.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.LIGHT))
 
         if self.appdata['IS_DARK_THEME'] is True:
             if icontheme in ('Videomass-Colours',

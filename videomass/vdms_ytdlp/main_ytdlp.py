@@ -36,7 +36,7 @@ from videomass.vdms_ytdlp.long_task_ytdlp import LogOut
 from videomass.vdms_io import io_tools
 from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_ytdlp.ydl_preferences import Ytdlp_Options
-if wx.GetApp().appset['use-downloader']:
+if wx.GetApp().appset['yt_dlp'] is True:
     import yt_dlp
 
 
@@ -84,7 +84,7 @@ class MainYtdl(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.icons['videomass'],
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        self.SetMinSize((850, 560))
+        self.SetMinSize((1100, 715))
         self.SetSizer(mainSizer)
         self.Fit()
         self.SetSize(tuple(self.appdata['main_ytdl_size']))

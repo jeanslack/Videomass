@@ -174,7 +174,7 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.icons['videomass'],
                                       wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        self.SetMinSize((850, 560))  # ideal minsize (1140, 800)
+        self.SetMinSize((1070, 685))  # ideal minsize (1140, 800)
         self.SetSizer(self.mainSizer)
         self.Fit()
         self.SetSize(tuple(self.appdata['main_window_size']))
@@ -1806,10 +1806,18 @@ class MainFrame(wx.Frame):
         Start a separate, self-contained frame
         for yt-dlp GUI functionality.
         """
+        msg = None
         if not self.appdata['use-downloader']:
-            wx.MessageBox(_("yt-dlp is disabled. "
-                            "Check your preferences."),
-                          "Videomass", wx.ICON_INFORMATION, self)
+            msg = _("yt-dlp is disabled. Check your preferences.")
+
+        elif self.appdata['yt_dlp'] == 'reload':
+            msg = _("The application requires to be restarted.")
+
+        elif self.appdata['yt_dlp'] == 'no module':
+            msg = _("The Python module «yt_dlp» was not found. Make sure "
+                    "you have installed yt-dlp correctly.")
+        if msg:
+            wx.MessageBox(msg, "Videomass", wx.ICON_INFORMATION, self)
             return
 
         if self.ytdlframe:

@@ -99,7 +99,7 @@ class Videomass(wx.App):
 
         ytdlp = self.check_youtube_dl()
         if ytdlp is False:
-            self.appset['use-downloader'] = False  # force disable
+            self.appset['yt_dlp'] = 'no module'
 
         ffmpeg = self.check_ffmpeg()
         if ffmpeg:
@@ -124,11 +124,13 @@ class Videomass(wx.App):
         if self.appset['use-downloader']:
             try:
                 import yt_dlp
+                self.appset['yt_dlp'] = True
+                return True
             except ModuleNotFoundError as err:
                 wx.MessageBox(f"ERROR: {err}\n\n{msg}",
                               _('Videomass - Error!'), wx.ICON_ERROR)
                 return False
-        return None
+        return False
     # -------------------------------------------------------------------
 
     def check_ffmpeg(self):

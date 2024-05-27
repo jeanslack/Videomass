@@ -4,13 +4,17 @@ videomass (5.0.14-1) UNRELEASED; urgency=medium
   * [Timeline] Fixed selected area display using Wayland.
   * [AV Conversions] Improved `Save profile` functionality + bug fixes #316.
   * [Presets Manager] Improved error handling writing profiles.
-  * Update user guide.
+  * Update user guide to v5.0.14.
   * [Still Image Maker] Fixed duration to milliseconds conversion issue that
     raised wxAssertionError `invalid value in wxGauge::SetValue()`.
   * [AV Conversions] Fixed preview issue using stabilze filter on MS-Windows.
+  * Improved GUI layout for AV-Conversions, Presets Manager and
+    YouTube Downloader.
+  * Fixed issue in Preferences dialog when yt-dlp was enabled but the yt_dlp
+    Python module was not found. This fixes the incorrect display of the restart
+    message by setting other preferences.
 
-
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 23 May 2024 15:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 27 May 2024 12:00:00 +0200
 
 videomass (5.0.13-1) UNRELEASED; urgency=medium
 

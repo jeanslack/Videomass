@@ -27,7 +27,7 @@ This file is part of Videomass.
 from threading import Thread
 import wx
 from pubsub import pub
-if wx.GetApp().appset['use-downloader']:
+if wx.GetApp().appset['yt_dlp'] is True:
     import yt_dlp
 
 
