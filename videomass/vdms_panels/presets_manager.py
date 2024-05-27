@@ -580,7 +580,7 @@ class PrstPan(wx.Panel):
         combvalue = self.cmbx_prst.GetValue()
         tofile = os.path.join(self.user_prst, combvalue + '.json')
 
-        dlg = wx.DirDialog(self, _("Open a backup destination folder"),
+        dlg = wx.DirDialog(self, _("Open a destination folder"),
                            "", style=wx.DD_DEFAULT_STYLE)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
@@ -609,11 +609,11 @@ class PrstPan(wx.Panel):
         """
         src = self.user_prst
 
-        dialsave = wx.DirDialog(self, _("Open a backup destination folder"),
+        dialsave = wx.DirDialog(self, _("Open a destination folder"),
                                 "", wx.DD_DEFAULT_STYLE)
         if dialsave.ShowModal() == wx.ID_OK:
             dest = dialsave.GetPath()
-            status = copydir_recursively(src, dest, 'Videomass-Presets-copy')
+            status = copydir_recursively(src, dest, 'Videomass-presets-backup')
             dialsave.Destroy()
             if status:
                 wx.MessageBox(f'{status}', _('Videomass - Error!'),

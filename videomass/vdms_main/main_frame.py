@@ -1814,8 +1814,8 @@ class MainFrame(wx.Frame):
             msg = _("The application requires to be restarted.")
 
         elif self.appdata['yt_dlp'] == 'no module':
-            msg = _("The module «yt_dlp» was not found. Make sure you "
-                    "have installed yt-dlp correctly.")
+            msg = _("The Python module «yt_dlp» was not found. Make sure "
+                    "you have installed yt-dlp correctly.")
         if msg:
             wx.MessageBox(msg, "Videomass", wx.ICON_INFORMATION, self)
             return

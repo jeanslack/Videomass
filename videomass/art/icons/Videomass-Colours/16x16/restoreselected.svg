@@ -50,9 +50,9 @@
      inkscape:window-height="1007"
      id="namedview14"
      showgrid="true"
-     inkscape:zoom="39.769968"
-     inkscape:cx="0.20115681"
-     inkscape:cy="6.3615842"
+     inkscape:zoom="19.884984"
+     inkscape:cx="6.1604274"
+     inkscape:cy="6.8896208"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -100,11 +100,15 @@
      id="rect6011"
      style="display:none;opacity:1;fill:#555753;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.01552558;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers" />
   <path
-     id="rect433"
+     id="rect433-6"
      style="fill:#62a0ea;fill-opacity:0.999944;stroke:none;stroke-width:0.476986"
-     d="M 2.176229,0.45283767 V 15.630294 H 12.967274 V 5.2085247 H 11.466926 V 14.11085 H 3.678694 V 2.0210894 H 8.213681 V 0.45283767 Z" />
+     d="M 4.6044915,0.41127195 V 15.588728 H 15.395509 V 5.166959 h -1.500344 v 8.902325 H 6.1069565 V 1.9795237 H 10.641944 V 0.41127195 Z" />
   <path
-     id="rect349-3"
-     style="fill:#00ff00;fill-opacity:0.999944;stroke:#000000;stroke-width:0.231429;stroke-opacity:1"
-     d="m 5.7617188,0.57128152 c -0.035551,1e-8 -0.064453,0.0269494 -0.064453,0.0625 V 3.735344 c 0,0.035551 0.028903,0.064453 0.064453,0.064453 H 10.611328 V 6.3330003 H 8.7792969 l 1.7226561,2.0976562 1.724609,2.0996115 1.722657,-2.0996115 1.722656,-2.0976562 H 13.839844 V 2.1318284 c 0,-0.00281 -0.0014,-0.00517 -0.002,-0.00781 V 0.63378152 c 0,-0.0355506 -0.02695,-0.0625 -0.0625,-0.0625 z" />
+     id="rect493"
+     style="fill:#62a0ea;fill-opacity:0.999944;stroke:none;stroke-width:0.476427"
+     d="M 10.637128,0.41979716 V 5.1741429 h 4.754337 v -0.0021 l -4.73738,-4.75224574 z" />
+  <path
+     id="rect349-3-3"
+     style="fill:#00ff00;fill-opacity:0.999944;stroke:none;stroke-width:0.31816;stroke-opacity:1"
+     d="m 0.86914,3.7441406 c -0.03086,0 -0.05664,0.023819 -0.05664,0.054687 v 4.328125 c 0,0.03087 0.02578,0.054687 0.05664,0.054687 H 5.6640615 V 9.5761719 H 3.14453 l 2.3691409,2.8847661 2.3691406,2.884765 2.3691405,-2.884765 2.369141,-2.8847661 H 10.101561 V 3.8007812 c 0,-0.03086 -0.02382,-0.056641 -0.05469,-0.056641 H 6.5410146 5.718749 Z" />
 </svg>

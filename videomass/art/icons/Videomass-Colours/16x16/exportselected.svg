@@ -51,8 +51,8 @@
      id="namedview14"
      showgrid="true"
      inkscape:zoom="9.942492"
-     inkscape:cx="8.8508998"
-     inkscape:cy="4.3248715"
+     inkscape:cx="8.6497429"
+     inkscape:cy="4.4254499"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -109,7 +109,7 @@
      d="M 6.6097433,0.41413214 V 5.1684778 H 11.36408 v -0.00207 L 6.6267003,0.41413214 Z" />
   <path
      id="rect349-3"
-     style="fill:#00ff00;fill-opacity:0.999944;stroke-width:0.31816;stroke:#000000;stroke-opacity:1"
+     style="fill:#00ff00;fill-opacity:0.999944;stroke-width:0.31816;stroke:none;stroke-opacity:1"
      d="M -5.2617188 9.8515625 L -7.78125 9.8515625 L -7.78125 4.0761719 C -7.78125 4.0453077 -7.8050733 4.0195312 -7.8359375 4.0195312 L -12.164062 4.0195312 C -12.194927 4.0195312 -12.21875 4.0453077 -12.21875 4.0761719 L -12.21875 9.8515625 L -14.738281 9.8515625 L -12.369141 12.736328 L -10 15.621094 L -7.6308594 12.736328 L -5.2617188 9.8515625 z "
      transform="rotate(-90)" />
 </svg>

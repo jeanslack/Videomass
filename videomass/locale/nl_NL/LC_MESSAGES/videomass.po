@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-26 21:51+0200\n"
-"PO-Revision-Date: 2024-05-27 00:34+0200\n"
+"POT-Creation-Date: 2024-05-27 16:53+0200\n"
+"PO-Revision-Date: 2024-05-27 16:55+0200\n"
 "Last-Translator: johannesdedoper <https://github.com/johannesdedoper>\n"
 "Language-Team: Dutch <>\n"
 "Language: nl_NL\n"
@@ -24,7 +24,7 @@ msgid ""
 "from the preferences."
 msgstr ""
 
-#: ../gui_app.py:129 ../vdms_dialogs/filter_crop.py:417
+#: ../gui_app.py:131 ../vdms_dialogs/filter_crop.py:417
 #: ../vdms_dialogs/filter_scale.py:287 ../vdms_dialogs/filter_scale.py:395
 #: ../vdms_dialogs/filter_stab.py:473 ../vdms_dialogs/filter_stab.py:483
 #: ../vdms_dialogs/filter_stab.py:494 ../vdms_dialogs/filter_transpose.py:182
@@ -67,7 +67,7 @@ msgstr ""
 msgid "Videomass - Error!"
 msgstr "Videomass - Laden..."
 
-#: ../gui_app.py:218
+#: ../gui_app.py:220
 #, python-brace-format
 msgid ""
 "Unexpected error while deleting file contents:\n"
@@ -885,7 +885,7 @@ msgstr ""
 #: ../vdms_dialogs/wizard_dlg.py:351 ../vdms_dialogs/wizard_dlg.py:368
 #: ../vdms_dialogs/wizard_dlg.py:385 ../vdms_dialogs/preferences.py:778
 #: ../vdms_dialogs/preferences.py:820 ../vdms_dialogs/preferences.py:862
-#: ../vdms_dialogs/preferences.py:897
+#: ../vdms_dialogs/preferences.py:899
 #, fuzzy
 #| msgid "Choose the {} location"
 msgid "{} location"
@@ -2998,23 +2998,33 @@ msgstr ""
 msgid "Videomass - FFmpeg Message Monitoring"
 msgstr "Videomass - Output Monitor"
 
-#: ../vdms_main/main_frame.py:1810
+#: ../vdms_main/main_frame.py:1811
 #, fuzzy
 #| msgid "The downloader is disabled. Check your preferences."
 msgid "yt-dlp is disabled. Check your preferences."
 msgstr "De youtube-dl is uitgezet. Controleer uw voorkeuren."
 
-#: ../vdms_main/main_frame.py:1837
+#: ../vdms_main/main_frame.py:1814
+msgid "The application requires to be restarted."
+msgstr ""
+
+#: ../vdms_main/main_frame.py:1817
+msgid ""
+"The Python module «yt_dlp» was not found. Make sure you have installed yt-"
+"dlp correctly."
+msgstr ""
+
+#: ../vdms_main/main_frame.py:1845
 #, fuzzy
 #| msgid "Videomass - Loading..."
 msgid "Videomass - Shutdown!"
 msgstr "Videomass - Laden..."
 
-#: ../vdms_main/main_frame.py:1844
+#: ../vdms_main/main_frame.py:1852
 msgid "Error while shutting down. Please see file log for details."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1857
+#: ../vdms_main/main_frame.py:1865
 #, fuzzy
 #| msgid "Videomass - Loading..."
 msgid "Videomass - Exiting!"
@@ -3202,52 +3212,52 @@ msgstr ""
 "Tijdsperiode\n"
 "Input Audio Map"
 
-#: ../vdms_panels/av_conversions.py:1245 ../vdms_panels/presets_manager.py:813
+#: ../vdms_panels/av_conversions.py:1246 ../vdms_panels/presets_manager.py:813
 #, python-brace-format
 msgid "Write profile on «{0}»"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1264 ../vdms_panels/presets_manager.py:513
+#: ../vdms_panels/av_conversions.py:1265 ../vdms_panels/presets_manager.py:513
 msgid "Enter name for new preset"
 msgstr "Voer naam in voor nieuwe preset"
 
-#: ../vdms_panels/av_conversions.py:1274 ../vdms_panels/presets_manager.py:524
+#: ../vdms_panels/av_conversions.py:1275 ../vdms_panels/presets_manager.py:524
 msgid ""
 "Invalid file name, make sure to provide a valid name including the «.json» "
 "extension"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1282
+#: ../vdms_panels/av_conversions.py:1283
 #, fuzzy
 #| msgid "Cannot save current data in file '{}'."
 msgid "Cannot save current data in file «{}»."
 msgstr "Kan huidige data niet in bestand '{}' bewaren."
 
-#: ../vdms_panels/av_conversions.py:1287
+#: ../vdms_panels/av_conversions.py:1288
 #, fuzzy
 #| msgid "Close Videomass"
 msgid "Open Videomass preset"
 msgstr "Sluit Videomass af"
 
-#: ../vdms_panels/av_conversions.py:1305
+#: ../vdms_panels/av_conversions.py:1306
 #, fuzzy
 #| msgid "Create a new profile"
 msgid "Videomass - Save new profile"
 msgstr "Maak een nieuw profiel"
 
-#: ../vdms_panels/av_conversions.py:1306
+#: ../vdms_panels/av_conversions.py:1307
 #, fuzzy
 #| msgid " Do you want to enable this feature?"
 msgid "Where do you want to save this profile?"
 msgstr " Wilt u deze mogelijkheid activeren?"
 
-#: ../vdms_panels/av_conversions.py:1307
+#: ../vdms_panels/av_conversions.py:1308
 #, fuzzy
 #| msgid "Create a new profile on \"{}\" preset"
 msgid "Save the profile to a new preset"
 msgstr "Maak een nieuw profiel op \"{}\" preset"
 
-#: ../vdms_panels/av_conversions.py:1308
+#: ../vdms_panels/av_conversions.py:1309
 #, fuzzy
 #| msgid "Create a new profile on \"{}\" preset"
 msgid "Save the profile to an existing preset"
