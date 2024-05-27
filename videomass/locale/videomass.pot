@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-27 16:53+0200\n"
+"POT-Creation-Date: 2024-05-27 22:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3543,7 +3543,7 @@ msgid "The preset \"{0}\" was successfully removed"
 msgstr ""
 
 #: ../vdms_panels/presets_manager.py:583 ../vdms_panels/presets_manager.py:612
-msgid "Open a backup destination folder"
+msgid "Open a destination folder"
 msgstr ""
 
 #: ../vdms_panels/presets_manager.py:588
