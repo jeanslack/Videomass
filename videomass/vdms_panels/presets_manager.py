@@ -166,7 +166,7 @@ class PrstPan(wx.Panel):
         boxprst = wx.StaticBox(self, wx.ID_ANY, _("Presets"))
         boxpresets = wx.StaticBoxSizer(boxprst, wx.VERTICAL)
         sizer_base.Add(boxpresets, 0, wx.ALL | wx.EXPAND, 5)
-        boxpresets.Add(fgs1, 0, wx.ALL | wx.CENTRE, 5)
+        boxpresets.Add(fgs1, 0, wx.ALL, 5)
         # ------ LIST CONTROL & BOX PROFILES
         # --- listctrl
         self.lctrl = wx.ListCtrl(self, wx.ID_ANY,
