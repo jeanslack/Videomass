@@ -228,7 +228,7 @@ class AV_Conv(wx.Panel):
         self.box_Vfilters = wx.StaticBoxSizer(box4, wx.VERTICAL)
         sizer_nbVideo.Add(self.box_Vfilters, 0, wx.ALL | wx.EXPAND, 5)
         self.filterVpanel = scrolled.ScrolledPanel(self.nb_Video, -1,
-                                                   size=(80, 700),
+                                                   size=(70, 700),
                                                    style=wx.TAB_TRAVERSAL
                                                    | wx.BORDER_NONE,
                                                    name="panelscroll",
@@ -236,12 +236,12 @@ class AV_Conv(wx.Panel):
         sizer_Vfilter = wx.BoxSizer(wx.VERTICAL)
 
         self.btn_preview = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     "", size=(50, -1))
+                                     "", size=(40, -1))
         self.btn_preview.SetBitmap(bmpplay, wx.LEFT)
         sizer_Vfilter.Add(self.btn_preview, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_preview.Disable()
         self.btn_reset = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                   "", size=(50, -1))
+                                   "", size=(40, -1))
         self.btn_reset.SetBitmap(self.bmpreset, wx.LEFT)
         sizer_Vfilter.Add(self.btn_reset, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_reset.Disable()
@@ -254,33 +254,33 @@ class AV_Conv(wx.Panel):
                                 )
         sizer_Vfilter.Add(lineflt, 0, wx.ALL | wx.EXPAND, 10)
         self.btn_videosize = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                       "", size=(50, -1))
+                                       "", size=(40, -1))
         self.btn_videosize.SetBitmap(bmpresize, wx.LEFT)
         sizer_Vfilter.Add(self.btn_videosize, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_crop = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                  "", size=(50, -1))
+                                  "", size=(40, -1))
         self.btn_crop.SetBitmap(bmpcrop, wx.LEFT)
         sizer_Vfilter.Add(self.btn_crop, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_rotate = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                    "", size=(50, -1))
+                                    "", size=(40, -1))
         self.btn_rotate.SetBitmap(bmprotate, wx.LEFT)
 
         sizer_Vfilter.Add(self.btn_rotate, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_lacing = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                    "", size=(50, -1))
+                                    "", size=(40, -1))
         self.btn_lacing.SetBitmap(bmpdeinterlace, wx.LEFT)
         sizer_Vfilter.Add(self.btn_lacing, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_denois = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                    "", size=(50, -1))
+                                    "", size=(40, -1))
         self.btn_denois.SetBitmap(bmpdenoiser, wx.LEFT)
         sizer_Vfilter.Add(self.btn_denois, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_vidstab = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     "", size=(50, -1))
+                                     "", size=(40, -1))
         self.btn_vidstab.SetBitmap(bmpstab, wx.LEFT)
         sizer_Vfilter.Add(self.btn_vidstab, 0, wx.ALL | wx.CENTRE, 5)
 
         self.btn_coloreq = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     "", size=(50, -1))
+                                     "", size=(40, -1))
         self.btn_coloreq.SetBitmap(bmpcoloreq, wx.LEFT)
         sizer_Vfilter.Add(self.btn_coloreq, 0, wx.ALL | wx.CENTRE, 5)
 
