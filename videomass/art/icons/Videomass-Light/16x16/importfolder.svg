@@ -51,7 +51,7 @@
      id="namedview14"
      showgrid="true"
      inkscape:zoom="19.884984"
-     inkscape:cx="-5.3306555"
+     inkscape:cx="-6.2358612"
      inkscape:cy="15.13705"
      inkscape:window-x="0"
      inkscape:window-y="0"
@@ -67,11 +67,6 @@
        type="xygrid"
        id="grid4510" />
   </sodipodi:namedview>
-  <path
-     id="path245"
-     style="color:#444444;fill:#444444;stroke-width:1.05514;fill-opacity:1"
-     class="ColorScheme-Text"
-     d="m 1.6691471,1.1415759 c 0,0 -1.05514195,1.1e-6 -1.05514195,1.0551421 v 11.606564 c 0,0 1e-6,1.055142 1.05514195,1.055142 H 14.330853 c 0,0 1.055142,-2e-6 1.055142,-1.055142 V 4.3070024 c 0,-1.055141 -1.055142,-1.0551422 -1.055142,-1.0551422 H 9.0551422 L 6.9448581,1.1415759 Z" />
   <rect
      style="display:none;opacity:1;fill:#555753;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.01552558;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
      id="rect6013"
@@ -112,29 +107,9 @@
      x="-21.169252"
      y="-12.913888"
      ry="0.020953707" />
-  <rect
-     style="fill:#dfdfdf;fill-opacity:1;stroke-width:0.31816"
-     id="rect349-3-3"
-     width="4.4380817"
-     height="7.0684757"
-     x="6.021112"
-     y="3.2480249"
-     ry="0.055711582" />
   <path
-     sodipodi:type="star"
-     style="fill:#dfdfdf;fill-opacity:1;stroke-width:0.439"
-     id="path403-6-6"
-     inkscape:flatsided="false"
-     sodipodi:sides="3"
-     sodipodi:cx="-28.106035"
-     sodipodi:cy="6.7660756"
-     sodipodi:r1="7.1129441"
-     sodipodi:r2="3.5564723"
-     sodipodi:arg1="-0.52359878"
-     sodipodi:arg2="0.52359878"
-     inkscape:rounded="0"
-     inkscape:randomized="0"
-     d="m -21.946045,3.2096035 -3.079995,5.3347083 -3.079995,5.3347082 -3.079996,-5.3347083 -3.079995,-5.3347081 6.159991,-3e-7 z"
-     transform="matrix(0.76905442,0,0,0.54067671,29.855223,7.3449698)"
-     inkscape:transform-center-y="0.96145127" />
+     id="path5"
+     style="color:#444444;fill:#444444;fill-opacity:1"
+     class="ColorScheme-Text"
+     d="m 2.0000001,1.5 c 0,0 -0.9999999,10e-7 -0.9999999,1 v 11 c 0,0 1e-6,1 0.9999999,1 H 14 c 0,0 1,-10e-7 1,-1 v -9 c 0,-0.999999 -1,-1 -1,-1 H 9.0000001 l -2,-2 z m 4.085938,3.08789 h 3.8281238 c 0.0213,0 0.039063,0.01581 0.039063,0.03711 v 3.751953 h 2.2148441 l -2.083985,2.539064 -2.0839839,2.537109 -2.083984,-2.537109 -2.083985,-2.539064 h 2.214844 V 4.625 c 0,-0.0213 0.01776,-0.03711 0.03906,-0.03711 z" />
 </svg>

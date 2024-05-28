@@ -205,13 +205,13 @@ class Downloader(wx.Panel):
                                    (_('Include playlists'))
                                    )
         fgs1.Add(self.ckbx_pl, 0, wx.LEFT | wx.CENTRE, 20)
-        self.btn_plidx = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_plidx = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
         self.btn_plidx.SetToolTip(_('Playlist Editor'))
         self.btn_plidx.SetBitmap(bmplistindx, wx.LEFT)
         fgs1.Add(self.btn_plidx, 0, wx.LEFT | wx.CENTRE, 2)
         self.btn_plidx.Disable()
         self.btn_subeditor = wx.Button(self, wx.ID_ANY, "",
-                                       size=(50, -1))
+                                       size=(40, -1))
         self.btn_subeditor.SetBitmap(bmpsubtitles, wx.LEFT)
         self.btn_subeditor.SetToolTip(_('Subtitles Editor'))
         fgs1.Add(self.btn_subeditor, 0, wx.LEFT | wx.CENTRE, 20)
@@ -559,6 +559,11 @@ class Downloader(wx.Panel):
         """
         Enable or disable playlists downloading
         """
+        if not self.parent.data_url:
+            self.ckbx_pl.SetValue(False)
+            self.parent.click_start(None)
+            return
+
         if self.ckbx_pl.IsChecked():
             playlist = [url for url in self.parent.data_url
                         if '/playlist' in url]

@@ -51,7 +51,7 @@
      id="namedview14"
      showgrid="true"
      inkscape:zoom="14.060807"
-     inkscape:cx="8.8188395"
+     inkscape:cx="7.8942837"
      inkscape:cy="4.4094197"
      inkscape:window-x="0"
      inkscape:window-y="0"
@@ -102,19 +102,23 @@
   <path
      id="rect433"
      style="fill:#444444;fill-opacity:1;stroke:none;stroke-width:0.479025"
-     d="M 4.5546875 0.37890625 L 4.5546875 3.8261719 L 6.0644531 3.8261719 L 6.0644531 1.953125 L 10.619141 1.953125 L 10.619141 0.37890625 L 4.5546875 0.37890625 z M 13.884766 5.1542969 L 13.884766 14.095703 L 9.03125 14.095703 L 9.03125 15.621094 L 15.392578 15.621094 L 15.392578 5.1542969 L 13.884766 5.1542969 z " />
+     d="M 4.5546875 0.37890625 L 4.5546875 3.8242188 L 6.0644531 3.8242188 L 6.0644531 1.953125 L 10.619141 1.953125 L 10.619141 0.37890625 L 4.5546875 0.37890625 z M 13.884766 5.1542969 L 13.884766 14.095703 L 9.4277344 14.095703 L 9.4277344 15.621094 L 15.392578 15.621094 L 15.392578 5.1542969 L 13.884766 5.1542969 z " />
+  <path
+     id="rect493"
+     style="fill:#444444;fill-opacity:1;stroke:none;stroke-width:0.479025"
+     d="M 10.601576,0.37898308 V 5.1592613 h 4.780271 v -0.00207 L 10.618626,0.37898308 Z" />
   <rect
-     style="fill:#444444;fill-opacity:1;stroke-width:0.279915"
-     id="rect349-3-3"
+     style="fill:#444444;fill-opacity:1;stroke-width:0.247908"
+     id="rect3634"
      width="3.9046006"
-     height="6.2188072"
-     x="4.5714836"
-     y="5.4224615"
-     ry="0.049014755" />
+     height="4.8779497"
+     x="4.5546875"
+     y="5.7993393"
+     ry="0.03844652" />
   <path
      sodipodi:type="star"
      style="fill:#444444;fill-opacity:1;stroke-width:0.439"
-     id="path403-6-6"
+     id="path3636"
      inkscape:flatsided="false"
      sodipodi:sides="3"
      sodipodi:cx="-28.106035"
@@ -126,10 +130,6 @@
      inkscape:rounded="0"
      inkscape:randomized="0"
      d="m -21.946045,3.2096035 -3.079995,5.3347083 -3.079995,5.3347082 -3.079996,-5.3347083 -3.079995,-5.3347081 6.159991,-3e-7 z"
-     transform="matrix(0.67660999,0,0,0.4756845,25.540609,9.02693)"
+     transform="matrix(0.67660999,0,0,0.4756845,25.523814,8.0629483)"
      inkscape:transform-center-y="0.84587943" />
-  <path
-     id="rect493"
-     style="fill:#444444;fill-opacity:1;stroke:none;stroke-width:0.479025"
-     d="M 10.601576,0.37898308 V 5.1592613 h 4.780271 v -0.00207 L 10.618626,0.37898308 Z" />
 </svg>

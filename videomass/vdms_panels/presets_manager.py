@@ -135,38 +135,38 @@ class PrstPan(wx.Panel):
                                      | wx.CB_READONLY,
                                      )
         fgs1.Add(self.cmbx_prst, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_newpreset = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_newpreset = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
         self.btn_newpreset.SetBitmap(bmpnewprst, wx.LEFT)
         fgs1.Add(self.btn_newpreset, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_delpreset = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_delpreset = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
         self.btn_delpreset.SetBitmap(bmpdelprst, wx.LEFT)
         fgs1.Add(self.btn_delpreset, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_savecopy = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_savecopy = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
         self.btn_savecopy.SetBitmap(bmpexpsel, wx.LEFT)
         fgs1.Add(self.btn_savecopy, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_saveall = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_saveall = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
         self.btn_saveall.SetBitmap(bmpexpall, wx.LEFT)
         fgs1.Add(self.btn_saveall, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_restore = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_restore = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
         self.btn_restore.SetBitmap(bmpimpprst, wx.LEFT)
         fgs1.Add(self.btn_restore, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_restoreall = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_restoreall = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
         self.btn_restoreall.SetBitmap(bmpimpdir, wx.LEFT)
         fgs1.Add(self.btn_restoreall, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_restoredef = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_restoredef = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
         self.btn_restoredef.SetBitmap(bmprestsel, wx.LEFT)
         fgs1.Add(self.btn_restoredef, 0, wx.ALL | wx.CENTRE, 5)
         self.btn_restorealldefault = wx.Button(self, wx.ID_ANY,
-                                               "", size=(50, -1))
+                                               "", size=(40, -1))
         self.btn_restorealldefault.SetBitmap(bmprestall, wx.LEFT)
         fgs1.Add(self.btn_restorealldefault, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_refresh = wx.Button(self, wx.ID_ANY, "", size=(50, -1))
+        self.btn_refresh = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
         self.btn_refresh.SetBitmap(bmpreload, wx.LEFT)
         fgs1.Add(self.btn_refresh, 0, wx.ALL | wx.CENTRE, 5)
         boxprst = wx.StaticBox(self, wx.ID_ANY, _("Presets"))
         boxpresets = wx.StaticBoxSizer(boxprst, wx.VERTICAL)
         sizer_base.Add(boxpresets, 0, wx.ALL | wx.EXPAND, 5)
-        boxpresets.Add(fgs1, 0, wx.ALL | wx.CENTRE, 5)
+        boxpresets.Add(fgs1, 0, wx.ALL, 5)
         # ------ LIST CONTROL & BOX PROFILES
         # --- listctrl
         self.lctrl = wx.ListCtrl(self, wx.ID_ANY,
@@ -341,7 +341,7 @@ class PrstPan(wx.Panel):
                     'latest versions of Videomass.\n\n'
                     'To avoid data loss and allow for possible recovery, '
                     'the outdated presets folder will be backed up in the '
-                    'program configuration directory: "{2}"\n\n'
+                    'program configuration directory:\n«{2}»\n\n'
                     'Do you want to perform this '
                     'update now?').format(srcversion,
                                           confversion,
@@ -628,7 +628,7 @@ class PrstPan(wx.Panel):
         Import a new preset. If the preset already exists you will
         be asked to overwrite it or not.
         """
-        with wx.FileDialog(self, _("Restore a preset"),
+        with wx.FileDialog(self, _("Open the preset you want to restore"),
                            defaultDir=os.path.expanduser('~'),
                            wildcard="Videomass presets (*.json;)|*.json;",
                            style=wx.FD_OPEN
@@ -685,7 +685,8 @@ class PrstPan(wx.Panel):
                              | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                 return None
 
-            dialsave = wx.DirDialog(self, _("Import a new presets folder"),
+            dialsave = wx.DirDialog(self,
+                                    _("Open the presets folder to restore"),
                                     "", style=wx.DD_DEFAULT_STYLE)
             if dialsave.ShowModal() == wx.ID_CANCEL:
                 return None

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-27 16:53+0200\n"
-"PO-Revision-Date: 2024-05-27 16:55+0200\n"
+"POT-Creation-Date: 2024-05-28 17:38+0200\n"
+"PO-Revision-Date: 2024-05-28 17:42+0200\n"
 "Last-Translator: Phil Aug <philiaug@live.fr>\n"
 "Language-Team: French (FR)\n"
 "Language: fr_FR\n"
@@ -47,9 +47,9 @@ msgstr ""
 #: ../vdms_panels/presets_manager.py:426 ../vdms_panels/presets_manager.py:490
 #: ../vdms_panels/presets_manager.py:560 ../vdms_panels/presets_manager.py:599
 #: ../vdms_panels/presets_manager.py:619 ../vdms_panels/presets_manager.py:657
-#: ../vdms_panels/presets_manager.py:700 ../vdms_panels/presets_manager.py:713
-#: ../vdms_panels/presets_manager.py:720 ../vdms_panels/presets_manager.py:755
-#: ../vdms_panels/presets_manager.py:784 ../vdms_panels/presets_manager.py:790
+#: ../vdms_panels/presets_manager.py:701 ../vdms_panels/presets_manager.py:714
+#: ../vdms_panels/presets_manager.py:721 ../vdms_panels/presets_manager.py:756
+#: ../vdms_panels/presets_manager.py:785 ../vdms_panels/presets_manager.py:791
 #: ../vdms_panels/sequence_to_video.py:465
 #: ../vdms_panels/sequence_to_video.py:471
 #: ../vdms_panels/sequence_to_video.py:559
@@ -830,9 +830,9 @@ msgstr ""
 #: ../vdms_main/main_frame.py:787 ../vdms_main/main_frame.py:1677
 #: ../vdms_panels/presets_manager.py:349 ../vdms_panels/presets_manager.py:550
 #: ../vdms_panels/presets_manager.py:590 ../vdms_panels/presets_manager.py:649
-#: ../vdms_panels/presets_manager.py:684 ../vdms_panels/presets_manager.py:748
-#: ../vdms_panels/presets_manager.py:774 ../vdms_panels/presets_manager.py:873
-#: ../vdms_panels/presets_manager.py:903 ../vdms_ytdlp/main_ytdlp.py:202
+#: ../vdms_panels/presets_manager.py:684 ../vdms_panels/presets_manager.py:749
+#: ../vdms_panels/presets_manager.py:775 ../vdms_panels/presets_manager.py:874
+#: ../vdms_panels/presets_manager.py:904 ../vdms_ytdlp/main_ytdlp.py:202
 #: ../vdms_ytdlp/youtubedl_ui.py:607 ../vdms_ytdlp/youtubedl_ui.py:623
 #: ../vdms_ytdlp/ydl_preferences.py:438
 msgid "Please confirm"
@@ -1113,7 +1113,7 @@ msgid "Change"
 msgstr ""
 
 #: ../vdms_dialogs/preferences.py:105 ../vdms_panels/av_conversions.py:1197
-#: ../vdms_panels/filedrop.py:574 ../vdms_panels/presets_manager.py:1049
+#: ../vdms_panels/filedrop.py:574 ../vdms_panels/presets_manager.py:1050
 #, fuzzy
 #| msgid "Set profile restrictions"
 msgid "Same destination paths as source files"
@@ -2044,7 +2044,7 @@ msgid "Export queue file"
 msgstr "Exporter la sélection"
 
 #: ../vdms_dialogs/queuedlg.py:296 ../vdms_panels/av_conversions.py:1192
-#: ../vdms_panels/presets_manager.py:1043
+#: ../vdms_panels/presets_manager.py:1044
 #: ../vdms_panels/video_to_sequence.py:602
 msgid "Same as source"
 msgstr ""
@@ -3132,7 +3132,7 @@ msgstr ""
 "Time Périod\n"
 "Input Audio Map"
 
-#: ../vdms_panels/av_conversions.py:1246 ../vdms_panels/presets_manager.py:813
+#: ../vdms_panels/av_conversions.py:1246 ../vdms_panels/presets_manager.py:814
 #, python-brace-format
 msgid "Write profile on «{0}»"
 msgstr ""
@@ -4252,7 +4252,7 @@ msgstr "Exporter le préréglage en tant que copie"
 msgid "Backup the presets folder"
 msgstr "Importer un nouveau dossier de profils"
 
-#: ../vdms_panels/presets_manager.py:246 ../vdms_panels/presets_manager.py:631
+#: ../vdms_panels/presets_manager.py:246
 #, fuzzy
 #| msgid "Export selected"
 msgid "Restore a preset"
@@ -4303,7 +4303,8 @@ msgid ""
 "Videomass.\n"
 "\n"
 "To avoid data loss and allow for possible recovery, the outdated presets "
-"folder will be backed up in the program configuration directory: \"{2}\"\n"
+"folder will be backed up in the program configuration directory:\n"
+"«{2}»\n"
 "\n"
 "Do you want to perform this update now?"
 msgstr ""
@@ -4370,7 +4371,7 @@ msgstr "Le pré-réglage\"{0}\" a été supprimé avec succès"
 #: ../vdms_panels/presets_manager.py:583 ../vdms_panels/presets_manager.py:612
 #, fuzzy
 #| msgid "Destination folder"
-msgid "Open a backup destination folder"
+msgid "Open a destination folder"
 msgstr "Dossier de destination"
 
 #: ../vdms_panels/presets_manager.py:588
@@ -4382,6 +4383,10 @@ msgstr "Un fichier avec ce nom existe déjà, voulez-vous l'écraser ?"
 #| msgid "Wizard completed successfully!\n"
 msgid "Backup completed successfully"
 msgstr "Assistant complété avec succès!\n"
+
+#: ../vdms_panels/presets_manager.py:631
+msgid "Open the preset you want to restore"
+msgstr ""
 
 #: ../vdms_panels/presets_manager.py:645
 msgid ""
@@ -4413,21 +4418,23 @@ msgstr ""
 "\n"
 "Voulez-vous continuer ?"
 
-#: ../vdms_panels/presets_manager.py:688
-msgid "Import a new presets folder"
+#: ../vdms_panels/presets_manager.py:689
+#, fuzzy
+#| msgid "Import a new presets folder"
+msgid "Open the presets folder to restore"
 msgstr "Importer un nouveau dossier de profils"
 
-#: ../vdms_panels/presets_manager.py:724
+#: ../vdms_panels/presets_manager.py:725
 msgid "The presets database has been successfully updated"
 msgstr "La base de données Profils a été mise à jour avec succès"
 
-#: ../vdms_panels/presets_manager.py:739
+#: ../vdms_panels/presets_manager.py:740
 #, fuzzy
 #| msgid "Replace the selected preset with the Videomass default one"
 msgid "The selected preset is not part of Videomass's default presets."
 msgstr "Remplacez le préréglage sélectionné par celui de Videomass par défaut"
 
-#: ../vdms_panels/presets_manager.py:744
+#: ../vdms_panels/presets_manager.py:745
 msgid ""
 "Be careful! The selected preset will be overwritten with the default one. "
 "Your profiles may be deleted!\n"
@@ -4439,11 +4446,11 @@ msgstr ""
 "\n"
 "Voulez-vous continuer ?"
 
-#: ../vdms_panels/presets_manager.py:759 ../vdms_panels/presets_manager.py:793
+#: ../vdms_panels/presets_manager.py:760 ../vdms_panels/presets_manager.py:794
 msgid "Successful recovery"
 msgstr "Récupération réussie"
 
-#: ../vdms_panels/presets_manager.py:768
+#: ../vdms_panels/presets_manager.py:769
 #, fuzzy
 #| msgid ""
 #| "Be careful! This action will restore all presets to default ones. Your "
@@ -4464,13 +4471,13 @@ msgstr ""
 "\n"
 "Voulez-vous continuer ?"
 
-#: ../vdms_panels/presets_manager.py:832
+#: ../vdms_panels/presets_manager.py:833
 #, fuzzy, python-brace-format
 #| msgid "Edit profile of the \"{}\" preset"
 msgid "Edit profile on «{0}»"
 msgstr "Éditer un profil de \"{}\" pré-réglage"
 
-#: ../vdms_panels/presets_manager.py:871
+#: ../vdms_panels/presets_manager.py:872
 msgid ""
 "Are you sure you want to delete the selected profile? It will no longer be "
 "possible to recover it."
@@ -4478,11 +4485,11 @@ msgstr ""
 "Etes vous sûr de vouloir supprimer le profil? Il sera impossible de le "
 "récupérer."
 
-#: ../vdms_panels/presets_manager.py:890
+#: ../vdms_panels/presets_manager.py:891
 msgid "First select a profile in the list"
 msgstr "Sélectionnez d'abord un profil dans la liste"
 
-#: ../vdms_panels/presets_manager.py:898
+#: ../vdms_panels/presets_manager.py:899
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
@@ -4490,11 +4497,11 @@ msgstr ""
 "La commande de profil sélectionnée a été modifiée manuellement..\n"
 "Voulez-vous l'appliquer pendant le processus de conversion?"
 
-#: ../vdms_panels/presets_manager.py:908
+#: ../vdms_panels/presets_manager.py:909
 msgid "Don't show this dialog again"
 msgstr "Ne plus afficher cette boîte de dialogue"
 
-#: ../vdms_panels/presets_manager.py:1053
+#: ../vdms_panels/presets_manager.py:1054
 #, fuzzy
 #| msgid ""
 #| "Queued File\n"
@@ -5698,6 +5705,9 @@ msgstr ""
 #: ../vdms_utils/queue_utils.py:125
 msgid "Remove the current queue and replace it with the imported one."
 msgstr ""
+
+#~ msgid "Import a new presets folder"
+#~ msgstr "Importer un nouveau dossier de profils"
 
 #~ msgid "Video Filters"
 #~ msgstr "Filtres Vidéo"

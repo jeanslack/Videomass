@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-27 22:56+0200\n"
-"PO-Revision-Date: 2024-05-27 22:57+0200\n"
+"POT-Creation-Date: 2024-05-28 17:38+0200\n"
+"PO-Revision-Date: 2024-05-28 17:40+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -49,9 +49,9 @@ msgstr ""
 #: ../vdms_panels/presets_manager.py:426 ../vdms_panels/presets_manager.py:490
 #: ../vdms_panels/presets_manager.py:560 ../vdms_panels/presets_manager.py:599
 #: ../vdms_panels/presets_manager.py:619 ../vdms_panels/presets_manager.py:657
-#: ../vdms_panels/presets_manager.py:700 ../vdms_panels/presets_manager.py:713
-#: ../vdms_panels/presets_manager.py:720 ../vdms_panels/presets_manager.py:755
-#: ../vdms_panels/presets_manager.py:784 ../vdms_panels/presets_manager.py:790
+#: ../vdms_panels/presets_manager.py:701 ../vdms_panels/presets_manager.py:714
+#: ../vdms_panels/presets_manager.py:721 ../vdms_panels/presets_manager.py:756
+#: ../vdms_panels/presets_manager.py:785 ../vdms_panels/presets_manager.py:791
 #: ../vdms_panels/sequence_to_video.py:465
 #: ../vdms_panels/sequence_to_video.py:471
 #: ../vdms_panels/sequence_to_video.py:559
@@ -833,9 +833,9 @@ msgstr ""
 #: ../vdms_main/main_frame.py:787 ../vdms_main/main_frame.py:1677
 #: ../vdms_panels/presets_manager.py:349 ../vdms_panels/presets_manager.py:550
 #: ../vdms_panels/presets_manager.py:590 ../vdms_panels/presets_manager.py:649
-#: ../vdms_panels/presets_manager.py:684 ../vdms_panels/presets_manager.py:748
-#: ../vdms_panels/presets_manager.py:774 ../vdms_panels/presets_manager.py:873
-#: ../vdms_panels/presets_manager.py:903 ../vdms_ytdlp/main_ytdlp.py:202
+#: ../vdms_panels/presets_manager.py:684 ../vdms_panels/presets_manager.py:749
+#: ../vdms_panels/presets_manager.py:775 ../vdms_panels/presets_manager.py:874
+#: ../vdms_panels/presets_manager.py:904 ../vdms_ytdlp/main_ytdlp.py:202
 #: ../vdms_ytdlp/youtubedl_ui.py:607 ../vdms_ytdlp/youtubedl_ui.py:623
 #: ../vdms_ytdlp/ydl_preferences.py:438
 msgid "Please confirm"
@@ -1111,7 +1111,7 @@ msgid "Change"
 msgstr "Modifica"
 
 #: ../vdms_dialogs/preferences.py:105 ../vdms_panels/av_conversions.py:1197
-#: ../vdms_panels/filedrop.py:574 ../vdms_panels/presets_manager.py:1049
+#: ../vdms_panels/filedrop.py:574 ../vdms_panels/presets_manager.py:1050
 msgid "Same destination paths as source files"
 msgstr "Stessi percorsi di destinazione dei file di origine"
 
@@ -1996,7 +1996,7 @@ msgid "Export queue file"
 msgstr "Esporta file della coda"
 
 #: ../vdms_dialogs/queuedlg.py:296 ../vdms_panels/av_conversions.py:1192
-#: ../vdms_panels/presets_manager.py:1043
+#: ../vdms_panels/presets_manager.py:1044
 #: ../vdms_panels/video_to_sequence.py:602
 msgid "Same as source"
 msgstr "Uguale all'origine"
@@ -2971,7 +2971,7 @@ msgstr ""
 "Inizio segmento\n"
 "Durata clip"
 
-#: ../vdms_panels/av_conversions.py:1246 ../vdms_panels/presets_manager.py:813
+#: ../vdms_panels/av_conversions.py:1246 ../vdms_panels/presets_manager.py:814
 #, python-brace-format
 msgid "Write profile on «{0}»"
 msgstr "Scrivi il profilo su «{0}»"
@@ -4026,7 +4026,7 @@ msgstr "Effettua il backup della preimpostazione selezionata"
 msgid "Backup the presets folder"
 msgstr "Eseguire il backup della cartella delle preimpostazioni"
 
-#: ../vdms_panels/presets_manager.py:246 ../vdms_panels/presets_manager.py:631
+#: ../vdms_panels/presets_manager.py:246
 msgid "Restore a preset"
 msgstr "Ripristina una preimpostazione"
 
@@ -4056,7 +4056,8 @@ msgid ""
 "Videomass.\n"
 "\n"
 "To avoid data loss and allow for possible recovery, the outdated presets "
-"folder will be backed up in the program configuration directory: \"{2}\"\n"
+"folder will be backed up in the program configuration directory:\n"
+"«{2}»\n"
 "\n"
 "Do you want to perform this update now?"
 msgstr ""
@@ -4068,7 +4069,8 @@ msgstr ""
 "\n"
 "Per evitare la perdita di dati e consentire un possibile ripristino, verrà "
 "eseguito il backup della cartella delle preimpostazioni obsolete nella "
-"directory di configurazione del programma: \"{2}\"\n"
+"directory di configurazione del programma:\n"
+"«{2}»\n"
 "\n"
 "Vuoi eseguire questo aggiornamento adesso?"
 
@@ -4130,6 +4132,10 @@ msgstr "Esiste già un file con lo stesso nome, vuoi sovrascriverlo?"
 msgid "Backup completed successfully"
 msgstr "Backup completato con successo"
 
+#: ../vdms_panels/presets_manager.py:631
+msgid "Open the preset you want to restore"
+msgstr "Apri preimpostazione da ripristinare"
+
 #: ../vdms_panels/presets_manager.py:645
 msgid ""
 "This preset already exists and is about to be updated. Don't worry, it will "
@@ -4158,21 +4164,21 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:688
-msgid "Import a new presets folder"
-msgstr "Importa una nuova cartella delle preimpostazioni"
+#: ../vdms_panels/presets_manager.py:689
+msgid "Open the presets folder to restore"
+msgstr "Apri cartella preimpostazioni da ripristinare"
 
-#: ../vdms_panels/presets_manager.py:724
+#: ../vdms_panels/presets_manager.py:725
 msgid "The presets database has been successfully updated"
 msgstr "Il database delle preimpostazioni è stato aggiornato con successo"
 
-#: ../vdms_panels/presets_manager.py:739
+#: ../vdms_panels/presets_manager.py:740
 msgid "The selected preset is not part of Videomass's default presets."
 msgstr ""
 "La preimpostazione selezionata non è parte delle preimpostazioni predefinite "
 "di Videomass."
 
-#: ../vdms_panels/presets_manager.py:744
+#: ../vdms_panels/presets_manager.py:745
 msgid ""
 "Be careful! The selected preset will be overwritten with the default one. "
 "Your profiles may be deleted!\n"
@@ -4184,11 +4190,11 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:759 ../vdms_panels/presets_manager.py:793
+#: ../vdms_panels/presets_manager.py:760 ../vdms_panels/presets_manager.py:794
 msgid "Successful recovery"
 msgstr "Ripristino riuscito"
 
-#: ../vdms_panels/presets_manager.py:768
+#: ../vdms_panels/presets_manager.py:769
 msgid ""
 "Be careful! This action will restore all presets to default ones. Your "
 "profiles may be deleted!\n"
@@ -4207,12 +4213,12 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:832
+#: ../vdms_panels/presets_manager.py:833
 #, python-brace-format
 msgid "Edit profile on «{0}»"
 msgstr "Modifica il profilo su «{0}»"
 
-#: ../vdms_panels/presets_manager.py:871
+#: ../vdms_panels/presets_manager.py:872
 msgid ""
 "Are you sure you want to delete the selected profile? It will no longer be "
 "possible to recover it."
@@ -4220,11 +4226,11 @@ msgstr ""
 "Sei sicuro di voler eliminare il profilo selezionato? non sarà più possibile "
 "recuperarlo."
 
-#: ../vdms_panels/presets_manager.py:890
+#: ../vdms_panels/presets_manager.py:891
 msgid "First select a profile in the list"
 msgstr "Dovresti selezionare un profilo nella lista"
 
-#: ../vdms_panels/presets_manager.py:898
+#: ../vdms_panels/presets_manager.py:899
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
@@ -4232,11 +4238,11 @@ msgstr ""
 "Il comando del profilo selezionato è stato cambiato manualmente.\n"
 "Vuoi applicarlo durante il processo di conversione?"
 
-#: ../vdms_panels/presets_manager.py:908
+#: ../vdms_panels/presets_manager.py:909
 msgid "Don't show this dialog again"
 msgstr "Non mostrare ancora questo dialogo"
 
-#: ../vdms_panels/presets_manager.py:1053
+#: ../vdms_panels/presets_manager.py:1054
 msgid ""
 "Batch processing items\n"
 "Destination\n"
@@ -5328,6 +5334,9 @@ msgstr "Aggiungi solo gli elementi attualmente mancanti alla coda."
 #: ../vdms_utils/queue_utils.py:125
 msgid "Remove the current queue and replace it with the imported one."
 msgstr "Rimuovi la coda corrente e sostituiscila con quella importata."
+
+#~ msgid "Import a new presets folder"
+#~ msgstr "Importa una nuova cartella delle preimpostazioni"
 
 #~ msgid "Add new profile to «{}»"
 #~ msgstr "Aggiungi un nuovo profilo a «{}»"
@@ -6664,9 +6673,6 @@ msgstr "Rimuovi la coda corrente e sostituiscila con quella importata."
 
 #~ msgid "Delete all text from the list"
 #~ msgstr "Elimina tutto il testo dall'elenco"
-
-#~ msgid "Type of media you want to produce"
-#~ msgstr "Tipo di media da produrre"
 
 #~ msgid ""
 #~ "Duration segment from the start of the selection, in 24-hour format (HH:"
