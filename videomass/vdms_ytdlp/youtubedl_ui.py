@@ -559,6 +559,11 @@ class Downloader(wx.Panel):
         """
         Enable or disable playlists downloading
         """
+        if not self.parent.data_url:
+            self.ckbx_pl.SetValue(False)
+            self.parent.click_start(None)
+            return
+
         if self.ckbx_pl.IsChecked():
             playlist = [url for url in self.parent.data_url
                         if '/playlist' in url]

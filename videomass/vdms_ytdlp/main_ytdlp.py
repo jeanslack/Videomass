@@ -136,7 +136,6 @@ class MainYtdl(wx.Frame):
         """
         Retrieve to choose topic panel
         """
-
         if self.ytDownloader.IsShown():
             self.ytDownloader.Hide()
             self.textDnDTarget.Show()
