@@ -341,7 +341,7 @@ class PrstPan(wx.Panel):
                     'latest versions of Videomass.\n\n'
                     'To avoid data loss and allow for possible recovery, '
                     'the outdated presets folder will be backed up in the '
-                    'program configuration directory: "{2}"\n\n'
+                    'program configuration directory:\n«{2}»\n\n'
                     'Do you want to perform this '
                     'update now?').format(srcversion,
                                           confversion,
@@ -628,7 +628,7 @@ class PrstPan(wx.Panel):
         Import a new preset. If the preset already exists you will
         be asked to overwrite it or not.
         """
-        with wx.FileDialog(self, _("Restore a preset"),
+        with wx.FileDialog(self, _("Open the preset you want to restore"),
                            defaultDir=os.path.expanduser('~'),
                            wildcard="Videomass presets (*.json;)|*.json;",
                            style=wx.FD_OPEN
@@ -685,7 +685,8 @@ class PrstPan(wx.Panel):
                              | wx.CANCEL | wx.YES_NO, self) != wx.YES:
                 return None
 
-            dialsave = wx.DirDialog(self, _("Import a new presets folder"),
+            dialsave = wx.DirDialog(self,
+                                    _("Open the presets folder to restore"),
                                     "", style=wx.DD_DEFAULT_STYLE)
             if dialsave.ShowModal() == wx.ID_CANCEL:
                 return None

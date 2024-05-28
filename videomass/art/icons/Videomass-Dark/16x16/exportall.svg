@@ -51,7 +51,7 @@
      id="namedview14"
      showgrid="true"
      inkscape:zoom="19.884984"
-     inkscape:cx="8.2474293"
+     inkscape:cx="7.9456941"
      inkscape:cy="4.8277635"
      inkscape:window-x="0"
      inkscape:window-y="0"
@@ -67,11 +67,6 @@
        type="xygrid"
        id="grid4510" />
   </sodipodi:namedview>
-  <path
-     id="path245"
-     style="color:#444444;fill:#dfdfdf;stroke-width:1.05514;fill-opacity:1"
-     class="ColorScheme-Text"
-     d="M 1.6699219 1.140625 C 1.6699219 1.140625 0.61328125 1.1421257 0.61328125 2.1972656 L 0.61328125 13.802734 C 0.61328125 13.802734 0.61478175 14.859375 1.6699219 14.859375 L 14.330078 14.859375 C 14.330078 14.859375 15.386719 14.857874 15.386719 13.802734 L 15.386719 4.3066406 C 15.386719 3.2515007 14.330078 3.2519531 14.330078 3.2519531 L 9.0546875 3.2519531 L 6.9453125 1.140625 L 1.6699219 1.140625 z M 6.4609375 3.3125 L 9.3457031 5.6816406 L 12.230469 8.0507812 L 9.3457031 10.419922 L 6.4609375 12.787109 L 6.4609375 10.269531 L 0.68554688 10.269531 C 0.65468191 10.269531 0.62890625 10.243751 0.62890625 10.212891 L 0.62890625 5.8867188 C 0.62890625 5.8558538 0.65468291 5.8320312 0.68554688 5.8320312 L 6.4609375 5.8320312 L 6.4609375 3.3125 z " />
   <rect
      style="display:none;opacity:1;fill:#555753;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.01552558;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
      id="rect6013"
@@ -104,4 +99,9 @@
      width="36.7374"
      id="rect6011"
      style="display:none;opacity:1;fill:#555753;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.01552558;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers" />
+  <path
+     id="path4897-3"
+     style="color:#444444;fill:#dfdfdf;fill-opacity:1"
+     class="ColorScheme-Text"
+     d="M 2 1.5 C 2 1.5 1 1.5000011 1 2.5 L 1 13.5 C 1 13.5 1.000001 14.5 2 14.5 L 14 14.5 C 14 14.5 15 14.499999 15 13.5 L 15 4.5 C 15 3.500001 14 3.5 14 3.5 L 9 3.5 L 7 1.5 L 2 1.5 z M 7.3554688 4.8378906 L 9.8964844 6.921875 L 12.431641 9.0058594 L 9.8964844 11.089844 L 7.3554688 13.173828 L 7.3554688 10.958984 L 3.6035156 10.958984 C 3.5822166 10.958984 3.5683594 10.941222 3.5683594 10.919922 L 3.5683594 7.0917969 C 3.5683594 7.0704979 3.5822166 7.0546875 3.6035156 7.0546875 L 7.3554688 7.0546875 L 7.3554688 4.8378906 z " />
 </svg>
