@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-28 17:38+0200\n"
-"PO-Revision-Date: 2024-05-28 17:40+0200\n"
+"POT-Creation-Date: 2024-05-30 15:37+0200\n"
+"PO-Revision-Date: 2024-05-30 15:37+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Italian <>\n"
 "Language: it_IT\n"
@@ -835,8 +835,8 @@ msgstr ""
 #: ../vdms_panels/presets_manager.py:590 ../vdms_panels/presets_manager.py:649
 #: ../vdms_panels/presets_manager.py:684 ../vdms_panels/presets_manager.py:749
 #: ../vdms_panels/presets_manager.py:775 ../vdms_panels/presets_manager.py:874
-#: ../vdms_panels/presets_manager.py:904 ../vdms_ytdlp/main_ytdlp.py:202
-#: ../vdms_ytdlp/youtubedl_ui.py:607 ../vdms_ytdlp/youtubedl_ui.py:623
+#: ../vdms_panels/presets_manager.py:904 ../vdms_ytdlp/main_ytdlp.py:201
+#: ../vdms_ytdlp/youtubedl_ui.py:612 ../vdms_ytdlp/youtubedl_ui.py:628
 #: ../vdms_ytdlp/ydl_preferences.py:438
 msgid "Please confirm"
 msgstr "Prego confermare"
@@ -1035,7 +1035,7 @@ msgstr "Le assegnazioni del profilo sono incomplete"
 #: ../vdms_main/main_frame.py:411 ../vdms_main/main_frame.py:436
 #: ../vdms_panels/av_conversions.py:605 ../vdms_panels/av_conversions.py:612
 #: ../vdms_panels/sequence_to_video.py:350
-#: ../vdms_panels/video_to_sequence.py:401 ../vdms_ytdlp/main_ytdlp.py:229
+#: ../vdms_panels/video_to_sequence.py:401 ../vdms_ytdlp/main_ytdlp.py:228
 #: ../vdms_ytdlp/youtubedl_ui.py:406
 msgid "Videomass - Warning!"
 msgstr "Videomass - Attenzione!"
@@ -1372,7 +1372,7 @@ msgstr "Preferenze"
 
 #: ../vdms_dialogs/preferences.py:641 ../vdms_dialogs/preferences.py:721
 #: ../vdms_main/main_frame.py:868 ../vdms_main/main_frame.py:1049
-#: ../vdms_ytdlp/main_ytdlp.py:398 ../vdms_ytdlp/ydl_preferences.py:504
+#: ../vdms_ytdlp/main_ytdlp.py:397 ../vdms_ytdlp/ydl_preferences.py:504
 msgid "Choose Destination"
 msgstr "Scegli la Destinazione"
 
@@ -1471,7 +1471,7 @@ msgid "Unable to open the clipboard on Subtitle Streams tab"
 msgstr "Impossibile aprire gli appunti nella scheda Flussi Sottotitoli"
 
 #: ../vdms_dialogs/widget_utils.py:120 ../vdms_main/main_frame.py:1306
-#: ../vdms_ytdlp/main_ytdlp.py:499
+#: ../vdms_ytdlp/main_ytdlp.py:498
 msgid "Stop"
 msgstr "Stop"
 
@@ -1951,7 +1951,7 @@ msgstr "Scorciatoie da tastiera durante la riproduzione con FFplay"
 
 #: ../vdms_dialogs/queuedlg.py:65 ../vdms_main/main_frame.py:525
 #: ../vdms_panels/presets_manager.py:189
-#: ../vdms_panels/video_to_sequence.py:171 ../vdms_ytdlp/main_ytdlp.py:302
+#: ../vdms_panels/video_to_sequence.py:171 ../vdms_ytdlp/main_ytdlp.py:301
 msgid "Edit"
 msgstr "Modifica"
 
@@ -2220,7 +2220,7 @@ msgstr ""
 
 #: ../vdms_main/main_frame.py:188 ../vdms_main/main_frame.py:1399
 #: ../vdms_main/main_frame.py:1432 ../vdms_ytdlp/main_ytdlp.py:98
-#: ../vdms_ytdlp/main_ytdlp.py:147 ../vdms_ytdlp/main_ytdlp.py:553
+#: ../vdms_ytdlp/main_ytdlp.py:146 ../vdms_ytdlp/main_ytdlp.py:552
 #: ../vdms_ytdlp/textdrop.py:233 ../vdms_ytdlp/youtubedl_ui.py:440
 msgid "Ready"
 msgstr "Pronto"
@@ -2245,7 +2245,7 @@ msgid "Queue"
 msgstr "Coda"
 
 #: ../vdms_main/main_frame.py:408 ../vdms_main/main_frame.py:433
-#: ../vdms_ytdlp/main_ytdlp.py:226
+#: ../vdms_ytdlp/main_ytdlp.py:225
 msgid ""
 "There are still active windows with running processes, make sure you finish "
 "your work before exit."
@@ -2301,7 +2301,7 @@ msgstr "Esci\tCtrl+Q"
 msgid "Completely exit the application"
 msgstr "Esci completamente dall'applicazione"
 
-#: ../vdms_main/main_frame.py:499 ../vdms_ytdlp/main_ytdlp.py:285
+#: ../vdms_main/main_frame.py:499 ../vdms_ytdlp/main_ytdlp.py:284
 msgid "File"
 msgstr "File"
 
@@ -2335,7 +2335,7 @@ msgid "Remove the selected file from the list"
 msgstr "Rimuovi dall'elenco il file selezionato"
 
 #: ../vdms_main/main_frame.py:517 ../vdms_panels/filedrop.py:344
-#: ../vdms_panels/filedrop.py:369 ../vdms_ytdlp/main_ytdlp.py:295
+#: ../vdms_panels/filedrop.py:369 ../vdms_ytdlp/main_ytdlp.py:294
 #: ../vdms_ytdlp/textdrop.py:191 ../vdms_ytdlp/textdrop.py:212
 msgid "Clear list\tShift+DEL"
 msgstr "Pulisci elenco\tShift+DEL"
@@ -2378,15 +2378,15 @@ msgstr "Ottieni le ultime preimpostazioni"
 msgid "Get the latest presets from {0}"
 msgstr "Ottieni le ultime preimpostazioni da {0}"
 
-#: ../vdms_main/main_frame.py:542 ../vdms_ytdlp/main_ytdlp.py:306
+#: ../vdms_main/main_frame.py:542 ../vdms_ytdlp/main_ytdlp.py:305
 msgid "Work notes\tCtrl+N"
 msgstr "Note di lavoro\tCtrl+N"
 
-#: ../vdms_main/main_frame.py:543 ../vdms_ytdlp/main_ytdlp.py:307
+#: ../vdms_main/main_frame.py:543 ../vdms_ytdlp/main_ytdlp.py:306
 msgid "Read and write useful notes and reminders."
 msgstr "Leggi e scrivi utili note e promemoria."
 
-#: ../vdms_main/main_frame.py:545 ../vdms_ytdlp/main_ytdlp.py:309
+#: ../vdms_main/main_frame.py:545 ../vdms_ytdlp/main_ytdlp.py:308
 msgid "Tools"
 msgstr "Strumenti"
 
@@ -2454,7 +2454,7 @@ msgstr ""
 "Imposta la durata o ritaglia intervalli di tempo per rimuovere parti "
 "indesiderate dai tuoi file"
 
-#: ../vdms_main/main_frame.py:589 ../vdms_ytdlp/main_ytdlp.py:319
+#: ../vdms_main/main_frame.py:589 ../vdms_ytdlp/main_ytdlp.py:318
 msgid "View"
 msgstr "Visualizza"
 
@@ -2677,19 +2677,19 @@ msgstr ""
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr "Congratulazioni! Stai già usando l'ultima versione.\n"
 
-#: ../vdms_main/main_frame.py:1281 ../vdms_ytdlp/main_ytdlp.py:476
+#: ../vdms_main/main_frame.py:1281 ../vdms_ytdlp/main_ytdlp.py:475
 msgid "Go to the previous panel"
 msgstr "Vai al pannello precedente"
 
-#: ../vdms_main/main_frame.py:1282 ../vdms_ytdlp/main_ytdlp.py:477
+#: ../vdms_main/main_frame.py:1282 ../vdms_ytdlp/main_ytdlp.py:476
 msgid "Back"
 msgstr "Indietro"
 
-#: ../vdms_main/main_frame.py:1285 ../vdms_ytdlp/main_ytdlp.py:481
+#: ../vdms_main/main_frame.py:1285 ../vdms_ytdlp/main_ytdlp.py:480
 msgid "Go to the next panel"
 msgstr "Vai al prossimo pannello"
 
-#: ../vdms_main/main_frame.py:1286 ../vdms_ytdlp/main_ytdlp.py:482
+#: ../vdms_main/main_frame.py:1286 ../vdms_ytdlp/main_ytdlp.py:481
 msgid "Next"
 msgstr "Avanti"
 
@@ -2713,7 +2713,7 @@ msgstr "Ottieni dati informativi sui flussi dei media importati"
 msgid "Start batch processing"
 msgstr "Avvia l'elaborazione batch"
 
-#: ../vdms_main/main_frame.py:1305 ../vdms_ytdlp/main_ytdlp.py:498
+#: ../vdms_main/main_frame.py:1305 ../vdms_ytdlp/main_ytdlp.py:497
 msgid "Stops current process"
 msgstr "Interrompi il processo corrente"
 
@@ -2730,7 +2730,7 @@ msgid "Show queue"
 msgstr "Mostra la coda"
 
 #: ../vdms_main/main_frame.py:1398 ../vdms_panels/presets_manager.py:569
-#: ../vdms_ytdlp/main_ytdlp.py:146
+#: ../vdms_ytdlp/main_ytdlp.py:145
 msgid "Videomass"
 msgstr "Videomass"
 
@@ -4464,7 +4464,7 @@ msgstr "Crea mosaici piastrellati"
 msgid "Create animated GIF"
 msgstr "Crea GIF animato"
 
-#: ../vdms_panels/video_to_sequence.py:90 ../vdms_ytdlp/main_ytdlp.py:492
+#: ../vdms_panels/video_to_sequence.py:90 ../vdms_ytdlp/main_ytdlp.py:491
 msgid "Options"
 msgstr "Opzioni"
 
@@ -4611,7 +4611,7 @@ msgstr ""
 msgid "Done"
 msgstr "Fatto"
 
-#: ../vdms_ytdlp/main_ytdlp.py:199
+#: ../vdms_ytdlp/main_ytdlp.py:198
 msgid ""
 "Do you want to close the active view keeping the data in memory and any "
 "background processes?"
@@ -4619,7 +4619,7 @@ msgstr ""
 "Vuoi chiudere la vista attiva mantenendo i dati in memoria ed eventuali "
 "processi in background?"
 
-#: ../vdms_ytdlp/main_ytdlp.py:233
+#: ../vdms_ytdlp/main_ytdlp.py:232
 msgid ""
 "Are you sure you want to exit this window?\n"
 "All data will be lost"
@@ -4627,118 +4627,118 @@ msgstr ""
 "Sei sicuro di voler uscire da questa finestra?\n"
 "Tutti i dati saranno persi"
 
-#: ../vdms_ytdlp/main_ytdlp.py:235
+#: ../vdms_ytdlp/main_ytdlp.py:234
 msgid "Quit YouTube Downloader?"
 msgstr "Uscire da YouTube Downloader?"
 
-#: ../vdms_ytdlp/main_ytdlp.py:274
+#: ../vdms_ytdlp/main_ytdlp.py:273
 msgid "Open destination folder of downloads\tCtrl+D"
 msgstr "Apri cartella destinazione dei download\tCtrl+D"
 
-#: ../vdms_ytdlp/main_ytdlp.py:277
+#: ../vdms_ytdlp/main_ytdlp.py:276
 msgid "Close view\tCtrl+W"
 msgstr "Chiudi vista\tCtrl+W"
 
-#: ../vdms_ytdlp/main_ytdlp.py:278
+#: ../vdms_ytdlp/main_ytdlp.py:277
 msgid ""
 "Close the active view keeping the data in memory and any background processes"
 msgstr ""
 "Chiudere la vista attiva mantenendo i dati in memoria ed eventuali processi "
 "in background"
 
-#: ../vdms_ytdlp/main_ytdlp.py:282
+#: ../vdms_ytdlp/main_ytdlp.py:281
 msgid "Quit YouTube Downloader\tCtrl+Q"
 msgstr "Esci da YouTube Downloader\tCtrl+Q"
 
-#: ../vdms_ytdlp/main_ytdlp.py:283
+#: ../vdms_ytdlp/main_ytdlp.py:282
 msgid "Exit the window by deleting all data in memory"
 msgstr "Uscire dalla finestra cancellando tutti i dati in memoria"
 
-#: ../vdms_ytdlp/main_ytdlp.py:289 ../vdms_ytdlp/textdrop.py:189
+#: ../vdms_ytdlp/main_ytdlp.py:288 ../vdms_ytdlp/textdrop.py:189
 #: ../vdms_ytdlp/textdrop.py:206
 msgid "Paste\tCtrl+V"
 msgstr "Incolla\tCtrl+V"
 
-#: ../vdms_ytdlp/main_ytdlp.py:290
+#: ../vdms_ytdlp/main_ytdlp.py:289
 msgid "Paste the copied URLs to clipboard"
 msgstr "Incolla gli URL copiati negli appunti"
 
-#: ../vdms_ytdlp/main_ytdlp.py:292 ../vdms_ytdlp/textdrop.py:190
+#: ../vdms_ytdlp/main_ytdlp.py:291 ../vdms_ytdlp/textdrop.py:190
 #: ../vdms_ytdlp/textdrop.py:209
 msgid "Remove selected URL\tDEL"
 msgstr "Rimuovi l'URL selezionato\tDEL"
 
-#: ../vdms_ytdlp/main_ytdlp.py:293
+#: ../vdms_ytdlp/main_ytdlp.py:292
 msgid "Remove the selected URL from the list"
 msgstr "Rimuove l'URL selezionato dall'elenco"
 
-#: ../vdms_ytdlp/main_ytdlp.py:296
+#: ../vdms_ytdlp/main_ytdlp.py:295
 msgid "Clear the URL list"
 msgstr "Cancella l'elenco degli URL"
 
-#: ../vdms_ytdlp/main_ytdlp.py:300
+#: ../vdms_ytdlp/main_ytdlp.py:299
 msgid "Options\tCtrl+P"
 msgstr "Opzioni\tCtrl+P"
 
-#: ../vdms_ytdlp/main_ytdlp.py:301 ../vdms_ytdlp/main_ytdlp.py:491
+#: ../vdms_ytdlp/main_ytdlp.py:300 ../vdms_ytdlp/main_ytdlp.py:490
 msgid "YouTube Downloader options"
 msgstr "Opzioni YouTube Downloader"
 
-#: ../vdms_ytdlp/main_ytdlp.py:313
+#: ../vdms_ytdlp/main_ytdlp.py:312
 msgid "Version of yt-dlp"
 msgstr "Versione di yt-dlp"
 
-#: ../vdms_ytdlp/main_ytdlp.py:314
+#: ../vdms_ytdlp/main_ytdlp.py:313
 msgid "Shows the version in use"
 msgstr "Mostra la versione in uso"
 
-#: ../vdms_ytdlp/main_ytdlp.py:316
+#: ../vdms_ytdlp/main_ytdlp.py:315
 msgid "Latest version of yt-dlp"
 msgstr "Ultima versione di yt-dlp"
 
-#: ../vdms_ytdlp/main_ytdlp.py:317
+#: ../vdms_ytdlp/main_ytdlp.py:316
 msgid "Check the latest version available on github.com"
 msgstr "Mostra l'ultima versione disponibile su github.com"
 
-#: ../vdms_ytdlp/main_ytdlp.py:372
+#: ../vdms_ytdlp/main_ytdlp.py:371
 #, python-brace-format
 msgid "You are using \"yt-dlp\" version {0}"
 msgstr "Stai usando \"yt-dlp\" versione {0}"
 
-#: ../vdms_ytdlp/main_ytdlp.py:389
+#: ../vdms_ytdlp/main_ytdlp.py:388
 #, python-brace-format
 msgid "\"yt-dlp\": Latest version available: {0}"
 msgstr "\"yt-dlp\": Ultima versione disponibile: {0}"
 
-#: ../vdms_ytdlp/main_ytdlp.py:486
+#: ../vdms_ytdlp/main_ytdlp.py:485
 msgid "Shows statistics and information"
 msgstr "Mostra le statistiche e informazioni"
 
-#: ../vdms_ytdlp/main_ytdlp.py:487
+#: ../vdms_ytdlp/main_ytdlp.py:486
 msgid "Statistics"
 msgstr "Statistiche"
 
-#: ../vdms_ytdlp/main_ytdlp.py:494
+#: ../vdms_ytdlp/main_ytdlp.py:493
 msgid "Start downloading"
 msgstr "Avvia il download"
 
-#: ../vdms_ytdlp/main_ytdlp.py:495
+#: ../vdms_ytdlp/main_ytdlp.py:494
 msgid "Download"
 msgstr "Scarica"
 
-#: ../vdms_ytdlp/main_ytdlp.py:554
+#: ../vdms_ytdlp/main_ytdlp.py:553
 msgid "Videomass - List of URLs"
 msgstr "Videomass - Lista degli URL"
 
-#: ../vdms_ytdlp/main_ytdlp.py:562
+#: ../vdms_ytdlp/main_ytdlp.py:561
 msgid "Videomass - YouTube Downloader"
 msgstr "Videomass - YouTube Downloader"
 
-#: ../vdms_ytdlp/main_ytdlp.py:579
+#: ../vdms_ytdlp/main_ytdlp.py:578
 msgid "Viewing last log"
 msgstr "Visualizzazione ultimo log"
 
-#: ../vdms_ytdlp/main_ytdlp.py:592
+#: ../vdms_ytdlp/main_ytdlp.py:591
 msgid "Videomass - Downloader Message Monitoring"
 msgstr "Videomass - Monitoraggio Messaggi del Downloader"
 
@@ -4882,15 +4882,15 @@ msgstr ""
 "\n"
 "{1}"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:566
+#: ../vdms_ytdlp/youtubedl_ui.py:571
 msgid "URLs have no playlist references"
 msgstr "Gli URL non hanno riferimenti a playlist"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:605
+#: ../vdms_ytdlp/youtubedl_ui.py:610
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr "Gli URL contengono playlist. Sei sicuro di voler continuare?"
 
-#: ../vdms_ytdlp/youtubedl_ui.py:621
+#: ../vdms_ytdlp/youtubedl_ui.py:626
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "Gli URL contengono canali. Sei sicuro di voler continuare?"
 
