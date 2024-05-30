@@ -15,6 +15,7 @@ Online documentation is work in progress.
 The User Guide was written in English and is available in PDF format only (update to v5.0.13).
 
 - [User Interface Overview](User-guide/User_Interface_Overview_en.pdf)
+- [Toolbars](User-guide/Toolbars_en.pdf)
 - [Startup and Setting up](User-guide/Startup_and_Setup_en.pdf)
 - [Presets Manager](User-guide/Presets_Manager_en.pdf)
 - [Timeline Usage](User-guide/Timeline_en.pdf)
