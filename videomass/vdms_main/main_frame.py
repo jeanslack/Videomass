@@ -1402,7 +1402,7 @@ class MainFrame(wx.Frame):
 
     def switch_file_import(self, event):
         """
-        Shared event by manubar and toolbar
+        Shared event by menubar and toolbar
         to switch on Drag&Drop panel.
         """
         if self.ProcessPanel.IsShown():
