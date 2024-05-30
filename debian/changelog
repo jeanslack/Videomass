@@ -14,7 +14,7 @@ videomass (5.0.14-1) UNRELEASED; urgency=medium
     Python module was not found. This fixes the incorrect display of the restart
     message by setting other preferences.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 27 May 2024 12:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 30 May 2024 17:00:00 +0200
 
 videomass (5.0.13-1) UNRELEASED; urgency=medium
 

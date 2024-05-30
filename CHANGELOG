@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 27 May 2024 V.5.0.14
+Thu, 30 May 2024 V.5.0.14
 
   * [AV Conversions] Fixed crop area display (crop filter) issue using Wayland.
   * [Timeline] Fixed selected area display using Wayland.
@@ -22,6 +22,7 @@ Mon, 27 May 2024 V.5.0.14
   * Fixed issue in Preferences dialog when yt-dlp was enabled but the yt_dlp
     Python module was not found. This fixes the incorrect display of the restart
     message by setting other preferences.
+  * Fixed «Next» button incorrectly enabled during transcoding.
 
 +------------------------------------+
 Mon, 13 May 2024 V.5.0.13
