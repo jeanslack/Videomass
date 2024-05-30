@@ -1712,7 +1712,7 @@ class MainFrame(wx.Frame):
             if self.rename_batch.IsEnabled():
                 self.rename_batch.Enable(False)
             [self.toolbar.EnableTool(x, True) for x in (6, 8)]
-            [self.toolbar.EnableTool(x, False) for x in (3, 5, 36, 37, 7)]
+            [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 36, 37, 7)]
         else:
             [self.toolbar.EnableTool(x, False) for x in (4, 36)]
         self.logpan.Enable(False)
