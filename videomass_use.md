@@ -12,7 +12,7 @@ Online documentation is work in progress.
 ## User's Guide
 {: .bg-green-300}
 
-The User Guide was written in English and is available in PDF format only (update to v5.0.13).
+The User Guide was written in English and is available in PDF format only (update to v5.0.14).
 
 - [User Interface Overview](User-guide/User_Interface_Overview_en.pdf)
 - [Toolbars](User-guide/Toolbars_en.pdf)
