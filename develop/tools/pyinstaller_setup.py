@@ -7,7 +7,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.11.2023
+Rev: June.14.2024
 ########################################################
 This file is part of Videomass.
     Videomass is free software: you can redistribute it and/or modify
@@ -60,11 +60,11 @@ def videomass_data_source(here=HERE, name=NAME):
                 AUTHOR=release[6],
                 EMAIL=release[7],
                 COMMENT=release[8],
-                ART=os.path.join(here, 'videomass', 'art'),
-                LOCALE=os.path.join(here, 'videomass', 'locale'),
-                SHARE=os.path.join(here, 'videomass', 'share'),
-                FFMPEG=os.path.join(here, 'videomass', 'FFMPEG'),
-                NOTICE=os.path.join(here, 'videomass',
+                ART=os.path.join(here, 'resources', 'art'),
+                LOCALE=os.path.join(here, 'resources', 'locale'),
+                SHARE=os.path.join(here, 'resources', 'presets'),
+                FFMPEG=os.path.join(here, 'resources', 'FFMPEG'),
+                NOTICE=os.path.join(here, 'resources',
                                     'FFMPEG', 'NOTICE.rtf'),
                 AUTH=os.path.join(here, 'AUTHORS'),
                 BUGS=os.path.join(here, 'BUGS'),
@@ -73,9 +73,9 @@ def videomass_data_source(here=HERE, name=NAME):
                 INSTALL=os.path.join(here, 'INSTALL'),
                 README=os.path.join(here, 'README.md'),
                 TODO=os.path.join(here, 'TODO'),
-                ICNS=os.path.join(here, 'videomass',
+                ICNS=os.path.join(here, 'resources',
                                   'art', 'videomass.icns'),
-                ICO=os.path.join(here, 'videomass', 'art', 'videomass.ico'),
+                ICO=os.path.join(here, 'resources', 'art', 'videomass.ico'),
                 )
 
 
@@ -99,7 +99,7 @@ class PyinstallerSpec():
 
         self.datas = (f"--add-data {self.getdata['ART']}{sep}art "
                       f"--add-data {self.getdata['LOCALE']}{sep}locale "
-                      f"--add-data {self.getdata['SHARE']}{sep}share "
+                      f"--add-data {self.getdata['SHARE']}{sep}presets "
                       f"--add-data {self.getdata['FFMPEG']}{sep}FFMPEG "
                       f"--add-data {self.getdata['AUTH']}{sep}DOC "
                       f"--add-data {self.getdata['BUGS']}{sep}DOC "

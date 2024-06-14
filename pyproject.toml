@@ -1,0 +1,113 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "videomass"
+version = "5.0.14"
+readme = "README.md"
+dependencies = [
+  "wxpython>=4.0.7",
+  "pypubsub>=4.0.3",
+  "requests>=2.31.0"
+]
+requires-python = ">=3.8"
+authors = [
+  {name = "Gianluca Pernigotto", email = "jeanlucperni@gmail.com"}
+]
+maintainers = [
+  {name = "Gianluca Pernigotto", email = "jeanlucperni@gmail.com"}
+]
+description = "Videomass is a cross-platform GUI for FFmpeg and yt-dlp"
+license = {file = "LICENSE"}
+keywords = ["videomass", "converter", "wxpython", "yt-dlp", "ffmpeg"]
+classifiers = [
+  "Environment :: X11 Applications :: GTK",
+  "Development Status :: 5 - Production/Stable",
+  "Operating System :: MacOS",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX :: Linux",
+  "Intended Audience :: End Users/Desktop",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "Natural Language :: Chinese (Simplified)",
+  "Natural Language :: Dutch",
+  "Natural Language :: English",
+  "Natural Language :: French",
+  "Natural Language :: Italian",
+  "Natural Language :: Portuguese (Brazilian)",
+  "Natural Language :: Russian",
+  "Natural Language :: Spanish",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Multimedia :: Video",
+  "Topic :: Multimedia :: Video :: Conversion",
+  "Topic :: Multimedia :: Sound/Audio :: Conversion"
+]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "videomass",
+  "/resources",
+  "/debian",
+  "/docs/man",
+  "/develop",
+  "/tests",
+  "AUTHORS",
+  "BUGS",
+  "CHANGELOG",
+  "INSTALL",
+  "LICENSE",
+  "README.md",
+  "TODO",
+  "io.github.jeanslack.videomass.appdata.xml",
+  "launcher",
+  "setup.cfg",
+]
+exclude = [
+  "/resources/art/videomass.icns",
+  "/resources/art/videomass.ico",
+  "/resources/locale/videomass.pot",
+  "/resources/locale/README",
+  "/resources/FFMPEG",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["videomass"]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"resources/art/icons" = "share/videomass/art/icons"
+"resources/locale" = "share/videomass/locale"
+"resources/presets" = "share/videomass/presets"
+"docs/man/man1/videomass.1.gz" = "share/man/man1/videomass.1.gz"
+"io.github.jeanslack.videomass.appdata.xml" = "share/metainfo/io.github.jeanslack.videomass.appdata.xml"
+"resources/art/io.github.jeanslack.videomass.desktop" = "share/applications/io.github.jeanslack.videomass.desktop"
+"resources/art/icons/videomass.png" = "share/pixmaps/videomass.png"
+"resources/hicolor/48x48/apps/videomass.xpm" = "share/icons/hicolor/48x48/apps/videomass.xpm"
+"resources/hicolor/48x48/apps/videomass.png" = "share/icons/hicolor/48x48/apps/videomass.png"
+"resources/hicolor/256x256/apps/videomass.png" = "share/icons/hicolor/256x256/apps/videomass.png"
+"resources/hicolor/scalable/apps/videomass.svg" = "share/icons/hicolor/scalable/apps/videomass.svg"
+
+[project.optional-dependencies]
+cli = [
+  "yt-dlp",
+]
+build = [
+    "build",
+    "hatchling",
+    "pip",
+    "setuptools",
+    "wheel",
+]
+
+[project.gui-scripts]
+videomass = "videomass.gui_app:main"
+
+[project.urls]
+Homepage = "https://jeanslack.github.io/Videomass/"
+Documentation = "https://jeanslack.github.io/Videomass/videomass_use.html"
+Repository = "https://github.com/jeanslack/Videomass"
+Issues = "https://github.com/jeanslack/Videomass/issues"

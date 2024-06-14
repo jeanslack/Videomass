@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.23.2024
+Rev: June.14.2024
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -26,8 +26,6 @@ Code checker: flake8, pylint
 """
 import os
 import sys
-import site
-import shutil
 import platform
 from videomass.vdms_utils.utils import copydir_recursively
 from videomass.vdms_sys.settings_manager import ConfigManager
@@ -121,30 +119,6 @@ def get_options(dirconf, fileconf, srcpath, makeportable):
             data = {'R': conf.read_options()}
 
     return data
-
-
-def get_pyinstaller():
-    """
-    Get pyinstaller-based package attributes to determine
-    how to use sys.executable
-    When a bundled app starts up, the bootloader sets the sys.frozen
-    attribute and stores the absolute path to the bundle folder
-    in sys._MEIPASS.
-    For a one-folder bundle, this is the path to that folder.
-    For a one-file bundle, this is the path to the temporary folder
-    created by the bootloader.
-    """
-    if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-        frozen, meipass = True, True
-        this = getattr(sys, '_MEIPASS', os.path.abspath(__file__))
-        data_locat = this
-
-    else:
-        frozen, meipass = False, False
-        this = os.path.realpath(os.path.abspath(__file__))
-        data_locat = os.path.dirname(os.path.dirname(this))
-
-    return frozen, meipass, this, data_locat
 
 
 def conventional_paths():
@@ -270,17 +244,14 @@ def get_color_scheme(theme):
     return c_scheme
 
 
-def data_location(args):
+def data_location(kwargs):
     """
     Determines data location and modes to make the app
     portable, fully portable or using conventional paths.
     return data location.
     """
-    frozen, meipass, this, locat = get_pyinstaller()
-    workdir = os.path.dirname(os.path.dirname(os.path.dirname(this)))
-
-    if args['make_portable']:
-        portdir = args['make_portable']
+    if kwargs['make_portable']:
+        portdir = kwargs['make_portable']
         (conffile, confdir, logdir,
          cachedir, trash_dir) = portable_paths(portdir)
     else:
@@ -291,15 +262,6 @@ def data_location(args):
             "logdir": logdir,
             "cachedir": cachedir,
             "trashdir_default": trash_dir,
-            "this": this,
-            "frozen": frozen,
-            "meipass": meipass,
-            "locat": locat,
-            "localepath": os.path.join(locat, 'locale'),
-            "workdir": workdir,
-            "srcpath": os.path.join(locat, 'share'),
-            "icodir": os.path.join(locat, 'art', 'icons'),
-            "ffmpeg_pkg": os.path.join(locat, 'FFMPEG'),
             }
 
 
@@ -307,20 +269,8 @@ class DataSource():
     """
     DataSource class determines the Videomass's configuration
     according to the used Operating System (Linux/*BSD, MacOS, Windows).
-    Remember that all specifications defined in this class refer
-    only to the following packaging methods:
-
-        - Videomass Python package by PyPi (cross-platform, multiuser/user)
-        - Linux's distributions packaging (multiuser)
-        - Bundled app by pyinstaller (windowed for MacOs and Windows)
-        - AppImage for Linux (user)
-
-        * multiuser: system installation
-        * user: local installation
 
     """
-    # -------------------------------------------------------------------
-
     def __init__(self, kwargs):
         """
         Having the pathnames returned by `dataloc` it
@@ -330,61 +280,34 @@ class DataSource():
         self.dataloc = data_location(kwargs)
         self.relativepaths = bool(kwargs['make_portable'])
         self.makeportable = kwargs['make_portable']
-        self.apptype = None  # appimage, pyinstaller on None
-        launcher = os.path.isfile(f"{self.dataloc['workdir']}/launcher")
+        launcher = os.path.join(os.getcwd(), 'launcher')
 
-        if self.dataloc['frozen'] and self.dataloc['meipass'] or launcher:
-            msg(f"frozen={self.dataloc['frozen']} "
-                f"meipass={self.dataloc['meipass']} "
-                f"launcher={launcher}")
+        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+            locat = getattr(sys, '_MEIPASS', os.path.abspath(__file__))
+            srcdir = locat
+            self.apptype = 'pyinstaller'
+            msg('Execute Stand-Alone app from pyinstaller')
 
-            self.apptype = 'pyinstaller' if not launcher else None
-            self.prg_icon = f"{self.dataloc['icodir']}/videomass.png"
-
-        elif ('/tmp/.mount_' in sys.executable or os.path.exists(
-              os.path.dirname(os.path.dirname(os.path.dirname(
-                  sys.argv[0])))
-              + '/AppRun')):
-            # embedded on python appimage
-            msg('Embedded on python appimage')
-            self.apptype = 'appimage'
-            userbase = os.path.dirname(os.path.dirname(sys.argv[0]))
-            pixmaps = '/share/pixmaps/videomass.png'
-            self.prg_icon = os.path.join(userbase + pixmaps)
+        elif os.path.isfile(launcher):
+            locat = os.path.join(os.path.dirname(launcher))
+            srcdir = os.path.join(locat, 'resources')
+            self.apptype = None
+            msg('Import videomass package from sources')
 
         else:
-            binarypath = shutil.which('videomass')
-            if platform.system() == 'Windows':  # any other packages
-                exe = binarypath if binarypath else sys.executable
-                msg(f'Win32 executable={exe}')
-                # HACK check this
-                # dirname = os.path.dirname(sys.executable)
-                # pythonpath = os.path.join(dirname, 'Script', 'videomass')
-                # self.icodir = dirname + '\\share\\videomass\\icons'
-                self.prg_icon = self.dataloc['icodir'] + "\\videomass.png"
+            locat = sys.prefix
+            srcdir = os.path.join(locat, 'share', 'videomass')
+            self.apptype = None
+            msg(f'Execute app from {locat}')
 
-            elif binarypath == '/usr/local/bin/videomass':
-                msg(f'executable={binarypath}')
-                # pip as super user, usually Linux, MacOs, Unix
-                share = '/usr/local/share/pixmaps'
-                self.prg_icon = share + '/videomass.png'
 
-            elif binarypath == '/usr/bin/videomass':
-                msg(f'executable={binarypath}')
-                # installed via apt, rpm, etc, usually Linux
-                share = '/usr/share/pixmaps'
-                self.prg_icon = share + "/videomass.png"
+        self.dataloc["locat"] = locat
+        self.dataloc["localepath"] = os.path.join(srcdir, 'locale')
+        self.dataloc["srcpath"] = srcdir
+        self.dataloc["icodir"] = os.path.join(srcdir, 'art', 'icons')
+        self.dataloc["ffmpeg_pkg"] = os.path.join(srcdir, 'FFMPEG')
 
-            else:
-                msg(f'executable={binarypath}')
-                # pip as user, usually Linux, MacOs, Unix
-                if binarypath is None:
-                    # need if user $PATH is not set yet
-                    userbase = site.getuserbase()
-                else:
-                    userbase = os.path.dirname(os.path.dirname(binarypath))
-                pixmaps = '/share/pixmaps/videomass.png'
-                self.prg_icon = os.path.join(userbase + pixmaps)
+        self.prg_icon = os.path.join(self.dataloc['icodir'], "videomass.png")
     # ---------------------------------------------------------------------
 
     def get_fileconf(self):
@@ -449,7 +372,6 @@ class DataSource():
                  'srcpath': _relativize(self.dataloc['srcpath']),
                  'localepath': _relativize(self.dataloc['localepath']),
                  'fileconfpath': _relativize(self.dataloc['conffile']),
-                 'workdir': _relativize(self.dataloc['workdir']),
                  'confdir': _relativize(self.dataloc['confdir']),
                  'logdir': _relativize(self.dataloc['logdir']),
                  'cachedir': _relativize(self.dataloc['cachedir']),
