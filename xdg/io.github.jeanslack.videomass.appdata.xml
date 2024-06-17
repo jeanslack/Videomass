@@ -5,7 +5,7 @@
   <project_license>GPL-3.0-only</project_license>
   <name>Videomass</name>
   <summary>GUI for FFmpeg and yt-dlp</summary>
-  <icon type="remote">https://raw.githubusercontent.com/jeanslack/Videomass/master/resources/hicolor/scalable/apps/videomass.svg</icon>
+  <icon type="remote">https://raw.githubusercontent.com/jeanslack/Videomass/master/videomass/data/hicolor/scalable/apps/videomass.svg</icon>
   <categories>
     <category>AudioVideo</category>
   </categories>

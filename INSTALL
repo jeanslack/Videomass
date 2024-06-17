@@ -28,13 +28,13 @@ Videomass can also be imported from the Python3 console (interactive mode):
 #--------------------------------------------------------------------------#
 
 Installing using pip tool: (Linux, MacOs, FreeBSD, Windows, etc.)
-    
-    python3 -m venv VENV 
-    
+
+    python3 -m venv VENV
+
     source VENV/bin/activate
-    
+
     python3 -m pip install --upgrade pip
-    
+
     python3 -m pip install videomass
 
 To Update:
@@ -43,7 +43,7 @@ To Update:
 
 To uninstall:
 
-    $ python3 -m pip uninstall videomass
+    python3 -m pip uninstall videomass
 
 Please, Visit the Wiki page for more info:
 <https://github.com/jeanslack/Videomass/wiki/Installation-using-pip>

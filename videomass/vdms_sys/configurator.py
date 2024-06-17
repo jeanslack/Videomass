@@ -29,7 +29,6 @@ import sys
 import platform
 from videomass.vdms_utils.utils import copydir_recursively
 from videomass.vdms_sys.settings_manager import ConfigManager
-from videomass.vdms_sys import __about__
 
 
 def msg(arg):
@@ -283,28 +282,17 @@ class DataSource():
         self.makeportable = kwargs['make_portable']
 
         if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-            locat = getattr(sys, '_MEIPASS', os.path.abspath(__file__))
-            srcdata = locat
-            self.apptype = 'pyinstaller'
+            sitepkg = getattr(sys, '_MEIPASS', os.path.abspath(__file__))
+            srcdata = sitepkg
+            self.dataloc["app"] = 'pyinstaller'
             msg('Stand-Alone app bundle (build by pyinstaller)')
-
         else:
-            this = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-            distinfoname = f'videomass-{__about__.__version__}.dist-info'
-            distinfodir = os.path.join(this, distinfoname)
+            sitepkg = os.path.dirname(
+                os.path.dirname(os.path.dirname(__file__)))
+            srcdata = os.path.join(sitepkg, 'videomass', 'data')
+            self.dataloc["app"] = None
+            msg(f"Import package from «{sitepkg}»")
 
-            if os.path.isdir(distinfodir):
-                locat = sys.prefix
-                srcdata = os.path.join(locat, 'share', 'videomass')
-                self.apptype = None
-                msg(f"Import package from «{this}»")
-            else:
-                locat = this
-                srcdata = os.path.join(locat, 'resources')
-                self.apptype = None
-                msg(f"Import package from «{this}»")
-
-        self.dataloc["locat"] = locat
         self.dataloc["localepath"] = os.path.join(srcdata, 'locale')
         self.dataloc["srcdata"] = srcdata
         self.dataloc["icodir"] = os.path.join(srcdata, 'icons')
@@ -372,6 +360,7 @@ class DataSource():
                 return path
 
         return ({'ostype': platform.system(),
+                 'app': self.dataloc['app'],
                  'srcdata': _relativize(self.dataloc['srcdata']),
                  'localepath': _relativize(self.dataloc['localepath']),
                  'fileconfpath': _relativize(self.dataloc['conffile']),
@@ -381,7 +370,6 @@ class DataSource():
                  'trashdir_default':
                      _relativize(self.dataloc['trashdir_default']),
                  'FFMPEG_DIR': _relativize(self.dataloc['FFMPEG_DIR']),
-                 'app': self.apptype,
                  'relpath': self.relativepaths,
                  'getpath': _relativize,
                  'ffmpeg_cmd': _relativize(userconf['ffmpeg_cmd']),

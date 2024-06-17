@@ -59,8 +59,8 @@ executing the "launcher" script inside the directory:
 > First, make sure you have installed at least all the above required 
 dependencies.   
 
-Visit [Installing dependencies](https://github.com/jeanslack/Videomass/wiki/Installing-dependencies) 
-wiki page for more explanations.
+Please Visit [Installing dependencies](https://github.com/jeanslack/Videomass/wiki/Installing-dependencies) 
+wiki page.
 
 Videomass can also be run in interactive mode with the Python interpreter, 
 always within the same unpacked directory:   
