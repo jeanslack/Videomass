@@ -57,7 +57,7 @@ from videomass.vdms_panels import sequence_to_video
 from videomass.vdms_panels.long_processing_task import LogOut
 from videomass.vdms_panels import presets_manager
 from videomass.vdms_io import io_tools
-from videomass.vdms_sys.msg_info import current_release
+from videomass.vdms_sys.__about__ import __version__
 from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_sys.argparser import info_this_platform
 from videomass.vdms_utils.utils import copydir_recursively
@@ -829,7 +829,7 @@ class MainFrame(wx.Frame):
 
         presetsdir = os.path.join(self.appdata['confdir'], 'presets',
                                   'version', 'version.txt')
-        presetsrecovery = os.path.join(self.appdata['srcpath'], 'presets',
+        presetsrecovery = os.path.join(self.appdata['srcdata'], 'presets',
                                        'version', 'version.txt')
         if not os.path.isfile(presetsdir):
             copydir_recursively(os.path.dirname(presetsrecovery),
@@ -1167,7 +1167,6 @@ class MainFrame(wx.Frame):
         Compare the Videomass version with a given
         new version found on github.
         """
-        this = current_release()  # this version
         url = ("https://api.github.com/repos/jeanslack/"
                "Videomass/releases/latest")
         version = io_tools.get_github_releases(url, "tag_name")
@@ -1180,7 +1179,7 @@ class MainFrame(wx.Frame):
         version = version[0].split('v')[1]
         newmajor, newminor, newmicro = version.split('.')
         new_version = int(f'{newmajor}{newminor}{newmicro}')
-        major, minor, micro = this[2].split('.')
+        major, minor, micro = __version__.split('.')
         this_version = int(f'{major}{minor}{micro}')
 
         if new_version > this_version:
@@ -1196,7 +1195,7 @@ class MainFrame(wx.Frame):
         dlg = videomass_check_version.CheckNewVersion(self,
                                                       msg,
                                                       version,
-                                                      this[2],
+                                                      __version__,
                                                       )
         dlg.ShowModal()
     # -------------------------------------------------------------------#

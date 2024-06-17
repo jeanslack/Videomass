@@ -759,9 +759,7 @@ class SetUp(wx.Dialog):
             self.txtctrl_ffmpeg.Disable()
             self.settings['ffmpeg_islocal'] = False
 
-            status = detect_binaries(self.ffmpeg,
-                                     self.appdata['FFMPEG_videomass_pkg']
-                                     )
+            status = detect_binaries(self.ffmpeg, self.appdata['FFMPEG_DIR'])
             if status[0] == 'not installed':
                 self.txtctrl_ffmpeg.Clear()
                 self.txtctrl_ffmpeg.write(status[0])
@@ -801,9 +799,7 @@ class SetUp(wx.Dialog):
             self.txtctrl_ffprobe.Disable()
             self.settings['ffprobe_islocal'] = False
 
-            status = detect_binaries(self.ffprobe,
-                                     self.appdata['FFMPEG_videomass_pkg']
-                                     )
+            status = detect_binaries(self.ffprobe, self.appdata['FFMPEG_DIR'])
             if status[0] == 'not installed':
                 self.txtctrl_ffprobe.Clear()
                 self.txtctrl_ffprobe.write(status[0])
@@ -843,9 +839,7 @@ class SetUp(wx.Dialog):
             self.txtctrl_ffplay.Disable()
             self.settings['ffplay_islocal'] = False
 
-            status = detect_binaries(self.ffplay,
-                                     self.appdata['FFMPEG_videomass_pkg']
-                                     )
+            status = detect_binaries(self.ffplay, self.appdata['FFMPEG_DIR'])
             if status[0] == 'not installed':
                 self.txtctrl_ffplay.Clear()
                 self.txtctrl_ffplay.write(status[0])

@@ -35,7 +35,7 @@ if not platform.system() == 'Windows':
     import shlex
 
 
-def msg_error(msg):
+def showmsgerr(msg):
     """
     Receive error messages via wxCallafter
     """
@@ -43,7 +43,7 @@ def msg_error(msg):
                   _('Videomass - Error!'), wx.ICON_ERROR)
 
 
-def msg_info(msg):
+def showmsginfo(msg):
     """
     Receive info messages via wxCallafter
     """
@@ -119,12 +119,12 @@ class FilePlay(Thread):
                 error = proc.communicate()[1]
 
                 if error:  # ffplay error
-                    wx.CallAfter(msg_info, error)
+                    wx.CallAfter(showmsginfo, error)
                     self.logerror(error)  # append log error
                     return
 
         except OSError as err:  # subprocess error
-            wx.CallAfter(msg_error, err)
+            wx.CallAfter(showmsgerr, err)
             self.logerror(err)  # append log error
             return
     # ----------------------------------------------------------------#

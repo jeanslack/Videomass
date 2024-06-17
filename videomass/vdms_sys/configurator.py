@@ -29,6 +29,7 @@ import sys
 import platform
 from videomass.vdms_utils.utils import copydir_recursively
 from videomass.vdms_sys.settings_manager import ConfigManager
+from videomass.vdms_sys import __about__
 
 
 def msg(arg):
@@ -60,7 +61,7 @@ def create_dirs(dirname, fconf):
     return {'R': None}
 
 
-def restore_presets_dir(dirconf, srcpath):
+def restore_presets_dir(dirconf, srcdata):
     """
     Restore preset directory from source if it doesn't exist.
     Returns dict:
@@ -69,14 +70,14 @@ def restore_presets_dir(dirconf, srcpath):
     """
     if not os.path.exists(os.path.join(dirconf, "presets")):
         # try to restoring presets directory on videomass dir
-        drest = copydir_recursively(os.path.join(srcpath, "presets"), dirconf)
+        drest = copydir_recursively(os.path.join(srcdata, "presets"), dirconf)
         if drest:
             return {'ERROR': drest}
 
     return {'R': None}
 
 
-def get_options(dirconf, fileconf, srcpath, makeportable):
+def get_options(dirconf, fileconf, srcdata, makeportable):
     """
     Check the application options. Reads the `settings.json`
     file; if it does not exist or is unreadable try to restore
@@ -108,7 +109,7 @@ def get_options(dirconf, fileconf, srcpath, makeportable):
             data = {'R': conf.read_options()}
 
     else:  # try to restore entire configuration directory
-        dconf = copydir_recursively(srcpath,
+        dconf = copydir_recursively(srcdata,
                                     os.path.dirname(dirconf),
                                     "videomass",
                                     )
@@ -280,32 +281,34 @@ class DataSource():
         self.dataloc = data_location(kwargs)
         self.relativepaths = bool(kwargs['make_portable'])
         self.makeportable = kwargs['make_portable']
-        launcher = os.path.join(os.getcwd(), 'launcher')
 
         if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
             locat = getattr(sys, '_MEIPASS', os.path.abspath(__file__))
-            srcdir = locat
+            srcdata = locat
             self.apptype = 'pyinstaller'
-            msg('Execute Stand-Alone app from pyinstaller')
-
-        elif os.path.isfile(launcher):
-            locat = os.path.join(os.path.dirname(launcher))
-            srcdir = os.path.join(locat, 'resources')
-            self.apptype = None
-            msg('Import videomass package from sources')
+            msg('Stand-Alone app bundle (build by pyinstaller)')
 
         else:
-            locat = sys.prefix
-            srcdir = os.path.join(locat, 'share', 'videomass')
-            self.apptype = None
-            msg(f'Execute app from {locat}')
+            this = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+            distinfoname = f'videomass-{__about__.__version__}.dist-info'
+            distinfodir = os.path.join(this, distinfoname)
 
+            if os.path.isdir(distinfodir):
+                locat = sys.prefix
+                srcdata = os.path.join(locat, 'share', 'videomass')
+                self.apptype = None
+                msg(f"Import package from «{this}»")
+            else:
+                locat = this
+                srcdata = os.path.join(locat, 'resources')
+                self.apptype = None
+                msg(f"Import package from «{this}»")
 
         self.dataloc["locat"] = locat
-        self.dataloc["localepath"] = os.path.join(srcdir, 'locale')
-        self.dataloc["srcpath"] = srcdir
-        self.dataloc["icodir"] = os.path.join(srcdir, 'art', 'icons')
-        self.dataloc["ffmpeg_pkg"] = os.path.join(srcdir, 'FFMPEG')
+        self.dataloc["localepath"] = os.path.join(srcdata, 'locale')
+        self.dataloc["srcdata"] = srcdata
+        self.dataloc["icodir"] = os.path.join(srcdata, 'icons')
+        self.dataloc["FFMPEG_DIR"] = os.path.join(srcdata, 'FFMPEG')
 
         self.prg_icon = os.path.join(self.dataloc['icodir'], "videomass.png")
     # ---------------------------------------------------------------------
@@ -321,7 +324,7 @@ class DataSource():
         # handle configuration file
         userconf = get_options(self.dataloc['confdir'],
                                self.dataloc['conffile'],
-                               self.dataloc['srcpath'],
+                               self.dataloc['srcdata'],
                                self.makeportable,
                                )
         if userconf.get('ERROR'):
@@ -330,7 +333,7 @@ class DataSource():
 
         # restore presets folder
         presets_rest = restore_presets_dir(self.dataloc['confdir'],
-                                           self.dataloc['srcpath'],
+                                           self.dataloc['srcdata'],
                                            )
         if presets_rest.get('ERROR'):
             return presets_rest
@@ -369,7 +372,7 @@ class DataSource():
                 return path
 
         return ({'ostype': platform.system(),
-                 'srcpath': _relativize(self.dataloc['srcpath']),
+                 'srcdata': _relativize(self.dataloc['srcdata']),
                  'localepath': _relativize(self.dataloc['localepath']),
                  'fileconfpath': _relativize(self.dataloc['conffile']),
                  'confdir': _relativize(self.dataloc['confdir']),
@@ -377,8 +380,7 @@ class DataSource():
                  'cachedir': _relativize(self.dataloc['cachedir']),
                  'trashdir_default':
                      _relativize(self.dataloc['trashdir_default']),
-                 'FFMPEG_videomass_pkg':
-                     _relativize(self.dataloc['ffmpeg_pkg']),
+                 'FFMPEG_DIR': _relativize(self.dataloc['FFMPEG_DIR']),
                  'app': self.apptype,
                  'relpath': self.relativepaths,
                  'getpath': _relativize,

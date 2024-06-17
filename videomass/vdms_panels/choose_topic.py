@@ -27,7 +27,7 @@ This file is part of Videomass.
 import sys
 import wx
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_sys.msg_info import current_release
+from videomass.vdms_sys.__about__ import __version__
 
 
 class Choose_Topic(wx.Panel):
@@ -46,7 +46,6 @@ class Choose_Topic(wx.Panel):
 
         # ----------------------
         self.parent = parent
-        version = current_release()
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpAVconv = get_bmp(self.icons['A/V-Conv'], ((48, 48)))
@@ -72,7 +71,7 @@ class Choose_Topic(wx.Panel):
         welcome = wx.StaticText(self, wx.ID_ANY, (_("Welcome to Videomass")),
                                 style=wx.ALIGN_CENTER)
         version = wx.StaticText(self, wx.ID_ANY, (_('Version {}'
-                                                    ).format(version[2])))
+                                                    ).format(__version__)))
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizer_base.Add(50, 50)
         sizer_base.Add(welcome, 0, wx.EXPAND, 0)

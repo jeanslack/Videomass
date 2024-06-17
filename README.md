@@ -39,27 +39,16 @@ each operating system.
 
 | **OS**           | **Basic Dependencies**                              |
 |:-----------------|:----------------------------------------------------|
-|Linux/FreeBSD     |*python3, wxpython-phoenix, pip for python3, ffmpeg* |
+|Linux/FreeBSD     |*python3, wxpython-phoenix, pip, ffmpeg* |
 |MS Windows        |*python3, ffmpeg*                                    |
-|MacOs             |*python3, pip for python3, ffmpeg*                   |
+|MacOs             |*python3, pip, ffmpeg*                   |
 
 ### Install Videomass using pip
 
-`python3 -m pip install videomass`   
+Please Visit [Installing dependencies](https://github.com/jeanslack/Videomass/wiki/Installing-dependencies) 
+wiki page.
 
-> This should also automatically install the remaining required dependencies 
-such as wxPython (only for Mac-Os and Windows), PyPubSub, yt-dlp and requests.   
->
-> On Linux and FreeBSD a launcher should be even created in the application 
-launcher of your desktop environment.   
->
-> To start Videomass on Mac-Os and MS-Windows open a console and type 
-`videomass` command.   
-
-Visit [Installing dependencies](https://github.com/jeanslack/Videomass/wiki/Installing-dependencies) 
-wiki page for more explanations.
-
-# Start Videomass manually from source code
+# Execute Videomass from source code
 
 Videomass can be run without installing it, just download and unzip the 
 [source code](https://github.com/jeanslack/Videomass/releases) archive and 
