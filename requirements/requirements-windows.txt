@@ -1,0 +1,11 @@
+attrdict3==2.0.2
+numpy==1.24.2
+pillow==9.4.0
+pypubsub==4.0.3
+six==1.16.0
+wxpython==4.2.0
+requests
+yt-dlp
+
+# Requirements for Windows
+

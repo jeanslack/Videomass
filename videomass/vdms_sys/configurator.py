@@ -267,14 +267,16 @@ def data_location(kwargs):
 
 class DataSource():
     """
-    DataSource class determines the Videomass's configuration
-    according to the used Operating System (Linux/*BSD, MacOS, Windows).
+    DataSource class determines the Videomass's
+    configuration according to the used Operating
+    System and installed package.
 
     """
     def __init__(self, kwargs):
         """
-        Having the pathnames returned by `dataloc` it
-        performs the initialization described in DataSource.
+        Having the pathnames returned by `dataloc`
+        it performs the initialization described in
+        DataSource.
 
         """
         self.dataloc = data_location(kwargs)

@@ -1,0 +1,11 @@
+hatchling
+pkginfo>=1.11.1
+build
+twine
+pyinstaller
+
+# Install the above require list using `python3 -m pip install -r «this file»` inside a virtual environment dir.
+
+# To make deb source distribution using `hatchling` as build backend, please install:
+# `apt update && apt install python3-pip python3-all debhelper dh-python devscripts debmake pybuild-plugin-pyproject`
+# visit <https://github.com/jeanslack/Videomass/wiki/Packaging-for-Debian-and-derivatives> for compile how-to.
