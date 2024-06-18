@@ -35,7 +35,7 @@ def msg(arg):
     """
     print logging messages during startup
     """
-    print('Info:', arg)
+    print(arg)
 
 
 def create_dirs(dirname, fconf):
@@ -287,13 +287,13 @@ class DataSource():
             sitepkg = getattr(sys, '_MEIPASS', os.path.abspath(__file__))
             srcdata = sitepkg
             self.dataloc["app"] = 'pyinstaller'
-            msg('Stand-Alone app bundle (build by pyinstaller)')
+            msg('Info: Stand-Alone application bundle (build by pyinstaller)')
         else:
             sitepkg = os.path.dirname(
                 os.path.dirname(os.path.dirname(__file__)))
             srcdata = os.path.join(sitepkg, 'videomass', 'data')
             self.dataloc["app"] = None
-            msg(f"Import package from «{sitepkg}»")
+            msg(f"Info: Package: «videomass»\nInfo: Location: «{sitepkg}»")
 
         self.dataloc["localepath"] = os.path.join(srcdata, 'locale')
         self.dataloc["srcdata"] = srcdata
