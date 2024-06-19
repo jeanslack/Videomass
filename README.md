@@ -13,67 +13,11 @@ written in [Python3](https://www.python.org/) using the
 **[Features](https://jeanslack.github.io/Videomass/features.html)**   
 **[Screenshots](https://jeanslack.github.io/Videomass/screenshots.html)**   
 
-# Installing and Dependencies
-
-> ### For regular users (non-developers)   
-> If you are not a programmer or if you are not familiar with the command line 
-you can skip the whole part below and visit the 
-[Download and installation](https://jeanslack.github.io/Videomass/download_installation.html) 
-web page, which provides the information required to install Videomass on 
-each operating system.
-
-### Requirements
-- **[Python >=3.8.0 <=3.12.0](https://www.python.org/)**
-- **[wxPython-Phoenix >=4.0.7](https://wxpython.org/)**
-- **[PyPubSub >=4.0.3](https://pypi.org/project/PyPubSub/)**
-- **[requests >=2.26.0](https://pypi.org/project/requests/)**
-- **[ffmpeg >=5.1](https://ffmpeg.org/)**
-- **[ffprobe >=5.1](https://ffmpeg.org/ffprobe.html)** (usually bundled with ffmpeg)
-- **[ffplay >=5.1](http://ffmpeg.org/ffplay.html)** (usually bundled with ffmpeg)
-
-### Optionals
-- **[yt-dlp](https://github.com/yt-dlp/yt-dlp)**
-- **[atomicparsley](http://atomicparsley.sourceforge.net/)**
-
-### Install basic dependencies for your OS
-
-| **OS**           | **Basic Dependencies**                              |
-|:-----------------|:----------------------------------------------------|
-|Linux/FreeBSD     |*python3, wxpython-phoenix, pip, ffmpeg* |
-|MS Windows        |*python3, ffmpeg*                                    |
-|MacOs             |*python3, pip, ffmpeg*                   |
-
-### Install Videomass using pip
-
-Please Visit [Installing dependencies](https://github.com/jeanslack/Videomass/wiki/Installing-dependencies) 
-wiki page.
-
-# Execute Videomass from source code
-
-Videomass can be run without installing it, just download and unzip the 
-[source code](https://github.com/jeanslack/Videomass/releases) archive and 
-executing the "launcher" script inside the directory:   
-
-`python3 launcher`   
-
-> First, make sure you have installed at least all the above required 
-dependencies.   
-
-Please Visit [Installing dependencies](https://github.com/jeanslack/Videomass/wiki/Installing-dependencies) 
-wiki page.
-
-Videomass can also be run in interactive mode with the Python interpreter, 
-always within the same unpacked directory:   
-
-```Python
->>> from videomass import gui_app
->>> gui_app.main()
-```
-
 # Resources
 
-* [Support Page and Documentation](http://jeanslack.github.io/Videomass)
+* [Official Page](http://jeanslack.github.io/Videomass)
+* [Documentations](https://jeanslack.github.io/Videomass/videomass_use.html)
 * [Wiki page](https://github.com/jeanslack/Videomass/wiki)
 * [Videomass on PyPi](https://pypi.org/project/videomass/)
 * [Development](https://github.com/jeanslack/Videomass)
-* [Official download page](https://github.com/jeanslack/Videomass/releases)
+* [Downloads](https://github.com/jeanslack/Videomass/releases)
