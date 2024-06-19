@@ -68,6 +68,8 @@ include = [
   "launcher",
   "requirements",
   "xdg",
+  ".flake8",
+  ".pylintrc",
 ]
 exclude = [
   "videomass/data/icons/videomass.icns",
