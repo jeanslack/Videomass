@@ -1,4 +1,4 @@
-videomass (5.0.15-1) focal; urgency=medium
+videomass (5.0.15-1) UNRELEASED; urgency=medium
 
   * Videomass now uses `hatchling` as the default build backend which replaces
     `setuptools`.
