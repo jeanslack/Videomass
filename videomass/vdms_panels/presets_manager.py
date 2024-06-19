@@ -84,7 +84,7 @@ class PrstPan(wx.Panel):
         get = wx.GetApp()  # get data from bootstrap
         self.appdata = get.appset
         icons = get.iconset
-        self.src_prst = os.path.join(self.appdata['srcpath'], 'presets')
+        self.src_prst = os.path.join(self.appdata['srcdata'], 'presets')
         self.user_prst = os.path.join(self.appdata['confdir'], 'presets')
         self.array = []  # Parameters of the selected profile
         self.txtcmdedited = True  # show warning if cmdline is edited

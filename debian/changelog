@@ -1,3 +1,13 @@
+videomass (5.0.15-1) UNRELEASED; urgency=medium
+
+  * Videomass now uses `hatchling` as the default build backend which replaces
+    `setuptools`.
+  * Improved startup configuration script.
+  * Created a new convenient `__about__` script to store program description
+    data which replace `msg_info`.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 15 Jun 2024 14:00:00 +0200
+
 videomass (5.0.14-1) UNRELEASED; urgency=medium
 
   * [AV Conversions] Fixed crop area display (crop filter) issue using Wayland.

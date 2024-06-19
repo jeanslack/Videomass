@@ -29,7 +29,10 @@ import sys
 from shutil import which
 import argparse
 import platform
-from videomass.vdms_sys.msg_info import current_release
+from videomass.vdms_sys.__about__ import (__prgname__,
+                                          __version__,
+                                          __relstate__
+                                          )
 try:
     import wx
     MSGWX = f"{wx.version()}"
@@ -110,8 +113,7 @@ def arguments():
         parser.exit(status=0, message=None)
 
     elif argmts.version:
-        crel = current_release()
-        print(f'{crel[0]}: {crel[2]} ({crel[3]})')
+        print(f'{__prgname__}: {__version__} ({__relstate__})')
         print(info_this_platform())
         parser.exit(status=0, message=None)
 

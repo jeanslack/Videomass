@@ -7,6 +7,15 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Sat, 15 June 2024 V.5.0.14
+
+  * Videomass now uses `hatchling` as the default build backend which replaces
+    `setuptools`.
+  * Improved startup configuration script.
+  * Created a new convenient `__about__` script to store program description
+    data which replace `msg_info`.
+
++------------------------------------+
 Thu, 30 May 2024 V.5.0.14
 
   * [AV Conversions] Fixed crop area display (crop filter) issue using Wayland.

@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.23.2024
+Rev: June.14.2024
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -26,8 +26,6 @@ Code checker: flake8, pylint
 """
 import os
 import sys
-import site
-import shutil
 import platform
 from videomass.vdms_utils.utils import copydir_recursively
 from videomass.vdms_sys.settings_manager import ConfigManager
@@ -37,7 +35,7 @@ def msg(arg):
     """
     print logging messages during startup
     """
-    print('Info:', arg)
+    print(arg)
 
 
 def create_dirs(dirname, fconf):
@@ -62,7 +60,7 @@ def create_dirs(dirname, fconf):
     return {'R': None}
 
 
-def restore_presets_dir(dirconf, srcpath):
+def restore_presets_dir(dirconf, srcdata):
     """
     Restore preset directory from source if it doesn't exist.
     Returns dict:
@@ -71,14 +69,14 @@ def restore_presets_dir(dirconf, srcpath):
     """
     if not os.path.exists(os.path.join(dirconf, "presets")):
         # try to restoring presets directory on videomass dir
-        drest = copydir_recursively(os.path.join(srcpath, "presets"), dirconf)
+        drest = copydir_recursively(os.path.join(srcdata, "presets"), dirconf)
         if drest:
             return {'ERROR': drest}
 
     return {'R': None}
 
 
-def get_options(dirconf, fileconf, srcpath, makeportable):
+def get_options(dirconf, fileconf, srcdata, makeportable):
     """
     Check the application options. Reads the `settings.json`
     file; if it does not exist or is unreadable try to restore
@@ -110,7 +108,7 @@ def get_options(dirconf, fileconf, srcpath, makeportable):
             data = {'R': conf.read_options()}
 
     else:  # try to restore entire configuration directory
-        dconf = copydir_recursively(srcpath,
+        dconf = copydir_recursively(srcdata,
                                     os.path.dirname(dirconf),
                                     "videomass",
                                     )
@@ -121,30 +119,6 @@ def get_options(dirconf, fileconf, srcpath, makeportable):
             data = {'R': conf.read_options()}
 
     return data
-
-
-def get_pyinstaller():
-    """
-    Get pyinstaller-based package attributes to determine
-    how to use sys.executable
-    When a bundled app starts up, the bootloader sets the sys.frozen
-    attribute and stores the absolute path to the bundle folder
-    in sys._MEIPASS.
-    For a one-folder bundle, this is the path to that folder.
-    For a one-file bundle, this is the path to the temporary folder
-    created by the bootloader.
-    """
-    if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-        frozen, meipass = True, True
-        this = getattr(sys, '_MEIPASS', os.path.abspath(__file__))
-        data_locat = this
-
-    else:
-        frozen, meipass = False, False
-        this = os.path.realpath(os.path.abspath(__file__))
-        data_locat = os.path.dirname(os.path.dirname(this))
-
-    return frozen, meipass, this, data_locat
 
 
 def conventional_paths():
@@ -270,17 +244,14 @@ def get_color_scheme(theme):
     return c_scheme
 
 
-def data_location(args):
+def data_location(kwargs):
     """
     Determines data location and modes to make the app
     portable, fully portable or using conventional paths.
     return data location.
     """
-    frozen, meipass, this, locat = get_pyinstaller()
-    workdir = os.path.dirname(os.path.dirname(os.path.dirname(this)))
-
-    if args['make_portable']:
-        portdir = args['make_portable']
+    if kwargs['make_portable']:
+        portdir = kwargs['make_portable']
         (conffile, confdir, logdir,
          cachedir, trash_dir) = portable_paths(portdir)
     else:
@@ -291,100 +262,45 @@ def data_location(args):
             "logdir": logdir,
             "cachedir": cachedir,
             "trashdir_default": trash_dir,
-            "this": this,
-            "frozen": frozen,
-            "meipass": meipass,
-            "locat": locat,
-            "localepath": os.path.join(locat, 'locale'),
-            "workdir": workdir,
-            "srcpath": os.path.join(locat, 'share'),
-            "icodir": os.path.join(locat, 'art', 'icons'),
-            "ffmpeg_pkg": os.path.join(locat, 'FFMPEG'),
             }
 
 
 class DataSource():
     """
-    DataSource class determines the Videomass's configuration
-    according to the used Operating System (Linux/*BSD, MacOS, Windows).
-    Remember that all specifications defined in this class refer
-    only to the following packaging methods:
-
-        - Videomass Python package by PyPi (cross-platform, multiuser/user)
-        - Linux's distributions packaging (multiuser)
-        - Bundled app by pyinstaller (windowed for MacOs and Windows)
-        - AppImage for Linux (user)
-
-        * multiuser: system installation
-        * user: local installation
+    DataSource class determines the Videomass's
+    configuration according to the used Operating
+    System and installed package.
 
     """
-    # -------------------------------------------------------------------
-
     def __init__(self, kwargs):
         """
-        Having the pathnames returned by `dataloc` it
-        performs the initialization described in DataSource.
+        Having the pathnames returned by `dataloc`
+        it performs the initialization described in
+        DataSource.
 
         """
         self.dataloc = data_location(kwargs)
         self.relativepaths = bool(kwargs['make_portable'])
         self.makeportable = kwargs['make_portable']
-        self.apptype = None  # appimage, pyinstaller on None
-        launcher = os.path.isfile(f"{self.dataloc['workdir']}/launcher")
 
-        if self.dataloc['frozen'] and self.dataloc['meipass'] or launcher:
-            msg(f"frozen={self.dataloc['frozen']} "
-                f"meipass={self.dataloc['meipass']} "
-                f"launcher={launcher}")
-
-            self.apptype = 'pyinstaller' if not launcher else None
-            self.prg_icon = f"{self.dataloc['icodir']}/videomass.png"
-
-        elif ('/tmp/.mount_' in sys.executable or os.path.exists(
-              os.path.dirname(os.path.dirname(os.path.dirname(
-                  sys.argv[0])))
-              + '/AppRun')):
-            # embedded on python appimage
-            msg('Embedded on python appimage')
-            self.apptype = 'appimage'
-            userbase = os.path.dirname(os.path.dirname(sys.argv[0]))
-            pixmaps = '/share/pixmaps/videomass.png'
-            self.prg_icon = os.path.join(userbase + pixmaps)
-
+        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+            sitepkg = getattr(sys, '_MEIPASS', os.path.abspath(__file__))
+            srcdata = sitepkg
+            self.dataloc["app"] = 'pyinstaller'
+            msg('Info: Stand-Alone application bundle (build by pyinstaller)')
         else:
-            binarypath = shutil.which('videomass')
-            if platform.system() == 'Windows':  # any other packages
-                exe = binarypath if binarypath else sys.executable
-                msg(f'Win32 executable={exe}')
-                # HACK check this
-                # dirname = os.path.dirname(sys.executable)
-                # pythonpath = os.path.join(dirname, 'Script', 'videomass')
-                # self.icodir = dirname + '\\share\\videomass\\icons'
-                self.prg_icon = self.dataloc['icodir'] + "\\videomass.png"
+            sitepkg = os.path.dirname(
+                os.path.dirname(os.path.dirname(__file__)))
+            srcdata = os.path.join(sitepkg, 'videomass', 'data')
+            self.dataloc["app"] = None
+            msg(f"Info: Package: «videomass»\nInfo: Location: «{sitepkg}»")
 
-            elif binarypath == '/usr/local/bin/videomass':
-                msg(f'executable={binarypath}')
-                # pip as super user, usually Linux, MacOs, Unix
-                share = '/usr/local/share/pixmaps'
-                self.prg_icon = share + '/videomass.png'
+        self.dataloc["localepath"] = os.path.join(srcdata, 'locale')
+        self.dataloc["srcdata"] = srcdata
+        self.dataloc["icodir"] = os.path.join(srcdata, 'icons')
+        self.dataloc["FFMPEG_DIR"] = os.path.join(srcdata, 'FFMPEG')
 
-            elif binarypath == '/usr/bin/videomass':
-                msg(f'executable={binarypath}')
-                # installed via apt, rpm, etc, usually Linux
-                share = '/usr/share/pixmaps'
-                self.prg_icon = share + "/videomass.png"
-
-            else:
-                msg(f'executable={binarypath}')
-                # pip as user, usually Linux, MacOs, Unix
-                if binarypath is None:
-                    # need if user $PATH is not set yet
-                    userbase = site.getuserbase()
-                else:
-                    userbase = os.path.dirname(os.path.dirname(binarypath))
-                pixmaps = '/share/pixmaps/videomass.png'
-                self.prg_icon = os.path.join(userbase + pixmaps)
+        self.prg_icon = os.path.join(self.dataloc['icodir'], "videomass.png")
     # ---------------------------------------------------------------------
 
     def get_fileconf(self):
@@ -398,7 +314,7 @@ class DataSource():
         # handle configuration file
         userconf = get_options(self.dataloc['confdir'],
                                self.dataloc['conffile'],
-                               self.dataloc['srcpath'],
+                               self.dataloc['srcdata'],
                                self.makeportable,
                                )
         if userconf.get('ERROR'):
@@ -407,7 +323,7 @@ class DataSource():
 
         # restore presets folder
         presets_rest = restore_presets_dir(self.dataloc['confdir'],
-                                           self.dataloc['srcpath'],
+                                           self.dataloc['srcdata'],
                                            )
         if presets_rest.get('ERROR'):
             return presets_rest
@@ -446,18 +362,16 @@ class DataSource():
                 return path
 
         return ({'ostype': platform.system(),
-                 'srcpath': _relativize(self.dataloc['srcpath']),
+                 'app': self.dataloc['app'],
+                 'srcdata': _relativize(self.dataloc['srcdata']),
                  'localepath': _relativize(self.dataloc['localepath']),
                  'fileconfpath': _relativize(self.dataloc['conffile']),
-                 'workdir': _relativize(self.dataloc['workdir']),
                  'confdir': _relativize(self.dataloc['confdir']),
                  'logdir': _relativize(self.dataloc['logdir']),
                  'cachedir': _relativize(self.dataloc['cachedir']),
                  'trashdir_default':
                      _relativize(self.dataloc['trashdir_default']),
-                 'FFMPEG_videomass_pkg':
-                     _relativize(self.dataloc['ffmpeg_pkg']),
-                 'app': self.apptype,
+                 'FFMPEG_DIR': _relativize(self.dataloc['FFMPEG_DIR']),
                  'relpath': self.relativepaths,
                  'getpath': _relativize,
                  'ffmpeg_cmd': _relativize(userconf['ffmpeg_cmd']),

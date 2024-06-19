@@ -118,7 +118,7 @@ class PageTwo(wx.Panel):
     get = wx.GetApp()
     OS = get.appset['ostype']
     GETPATH = get.appset['getpath']
-    FFMPEG_LOCALDIR = get.appset['FFMPEG_videomass_pkg']
+    FFMPEG_LOCALDIR = get.appset['FFMPEG_DIR']
 
     MSG0 = _('Videomass is an application based on FFmpeg\n')
 

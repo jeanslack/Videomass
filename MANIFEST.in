@@ -1,8 +1,0 @@
-include launcher README.md AUTHORS BUGS CHANGELOG INSTALL LICENSE TODO
-include tests/*
-recursive-include debian *
-recursive-include docs/man *
-recursive-include videomass/art *
-recursive-include videomass/share *
-recursive-include videomass/locale *
-recursive-include videomass/FFMPEG *

@@ -7,7 +7,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.11.2023
+Rev: June.14.2024
 ########################################################
 This file is part of Videomass.
     Videomass is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ this = os.path.realpath(os.path.abspath(__file__))
 HERE = os.path.dirname(os.path.dirname(os.path.dirname(this)))
 sys.path.insert(0, HERE)
 try:
-    from videomass.vdms_sys.msg_info import current_release
+    from videomass.vdms_sys import __about__
 except ModuleNotFoundError as modulerror:
     sys.exit(modulerror)
 
@@ -43,28 +43,26 @@ BINARY = os.path.join(HERE, SCRIPT)
 SPECFILE = os.path.join(HERE, f'{NAME}.spec')
 
 
-def videomass_data_source(here=HERE, name=NAME):
+def videomass_data_source(here=HERE, name=NAME, release=__about__):
     """
     Returns a dict object of the Videomass data
     and pathnames needed to spec file.
     """
-    release = current_release()  # Gets data list
-
-    return dict(RLS_NAME=release[0],  # first letter is Uppercase
-                PRG_NAME=release[1],  # first letter is lower
+    return dict(RLS_NAME=release.__relname__,  # first letter is Uppercase
+                PRG_NAME=release.__prgname__,  # first letter is lower
                 NAME=name,
-                VERSION=release[2],
-                RELEASE=release[3],
-                COPYRIGHT=release[4],
-                WEBSITE=release[5],
-                AUTHOR=release[6],
-                EMAIL=release[7],
-                COMMENT=release[8],
-                ART=os.path.join(here, 'videomass', 'art'),
-                LOCALE=os.path.join(here, 'videomass', 'locale'),
-                SHARE=os.path.join(here, 'videomass', 'share'),
-                FFMPEG=os.path.join(here, 'videomass', 'FFMPEG'),
-                NOTICE=os.path.join(here, 'videomass',
+                VERSION=release.__version__,
+                RELEASE=release.__relstate__,
+                COPYRIGHT=release.__copyright__,
+                WEBSITE=release.__website__,
+                AUTHOR=release.__author__,
+                EMAIL=release.__mail__,
+                COMMENT=release.__comment__,
+                ART=os.path.join(here, 'videomass', 'data', 'icons'),
+                LOCALE=os.path.join(here, 'videomass', 'data', 'locale'),
+                SHARE=os.path.join(here, 'videomass', 'data', 'presets'),
+                FFMPEG=os.path.join(here, 'videomass', 'data', 'FFMPEG'),
+                NOTICE=os.path.join(here, 'videomass', 'data',
                                     'FFMPEG', 'NOTICE.rtf'),
                 AUTH=os.path.join(here, 'AUTHORS'),
                 BUGS=os.path.join(here, 'BUGS'),
@@ -73,9 +71,16 @@ def videomass_data_source(here=HERE, name=NAME):
                 INSTALL=os.path.join(here, 'INSTALL'),
                 README=os.path.join(here, 'README.md'),
                 TODO=os.path.join(here, 'TODO'),
-                ICNS=os.path.join(here, 'videomass',
-                                  'art', 'videomass.icns'),
-                ICO=os.path.join(here, 'videomass', 'art', 'videomass.ico'),
+                ICNS=os.path.join(here,
+                                  'videomass',
+                                  'data',
+                                  'icons',
+                                  'videomass.icns'),
+                ICO=os.path.join(here,
+                                 'videomass',
+                                 'data',
+                                 'icons',
+                                 'videomass.ico')
                 )
 
 
@@ -97,9 +102,9 @@ class PyinstallerSpec():
         self.getdata = videomass_data_source()
         sep = ';' if platform.system() == 'Windows' else ':'
 
-        self.datas = (f"--add-data {self.getdata['ART']}{sep}art "
+        self.datas = (f"--add-data {self.getdata['ART']}{sep}icons "
                       f"--add-data {self.getdata['LOCALE']}{sep}locale "
-                      f"--add-data {self.getdata['SHARE']}{sep}share "
+                      f"--add-data {self.getdata['SHARE']}{sep}presets "
                       f"--add-data {self.getdata['FFMPEG']}{sep}FFMPEG "
                       f"--add-data {self.getdata['AUTH']}{sep}DOC "
                       f"--add-data {self.getdata['BUGS']}{sep}DOC "

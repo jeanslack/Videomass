@@ -562,57 +562,29 @@ def update_timeseq_duration(time_seq, duration):
 # ------------------------------------------------------------------#
 
 
-def detect_binaries(executable, additionaldir=None):
+def detect_binaries(name, extradir=None):
     """
     <https://stackoverflow.com/questions/11210104/check-if
     -a-program-exists-from-a-python-script>
 
-    executable = name of executable without extension
-    additionaldir = additional dirname to perform search
+    name = name of executable without extension
+    extradir = additional dirname to perform search
 
     Given an executable (binary) file name, it looks for it
     in the operating system using the `which` function, if it
     doesn't find it, it tries to look for it in the optional
-    `additionaldir` .
+    `extradir` .
 
-        Return (None, executable) if found in the OS $PATH.
-        Return ('provided', executable) if found on the `additionaldir`
+        Return (None, path) if found in the OS $PATH.
+        Return ('provided', path) if found on the `extradir`
         Return ('not installed', None) if both failed.
 
     """
-    local = False
-
-    if shutil.which(executable):
-        installed = True
-    else:
-        if platform == 'Windows':
-            installed = False
-
-        elif platform == 'Darwin':
-            if os.path.isfile(f"/usr/local/bin/{executable}"):
-                local = True
-                installed = True
-            else:
-                local = False
-                installed = False
-        else:  # Linux, FreeBSD, etc.
-            installed = False
-
-    if not installed:
-        if additionaldir:  # check onto additionaldir
-            if not os.path.isfile(os.path.join(f"{additionaldir}", "bin",
-                                               f"{executable}")):
-                provided = False
-            else:
-                provided = True
-
-            if not provided:
-                return 'not installed', None
-            # only if ffmpeg is not installed, offer it if found
-            return 'provided', os.path.join(f"{additionaldir}",
-                                            "bin", f"{executable}")
-        return 'not installed', None
-
-    if local:  # only for MacOs
-        return None, f"/usr/local/bin/{executable}"
-    return None, shutil.which(executable)
+    execpath = shutil.which(name)
+    if execpath:
+        return None, execpath
+    if extradir:  # check onto extradir
+        execpath = os.path.join(extradir, "bin", name)
+        if os.path.isfile(execpath):
+            return 'provided', execpath
+    return 'not installed', None

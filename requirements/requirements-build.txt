@@ -1,0 +1,57 @@
+hatchling
+pkginfo>=1.11.1
+build
+twine
+pyinstaller
+
+# Install the above require list using `python3 -m pip install -r «this file»`
+# inside a virtual environment dir.
+
+# Packaging for Debian and derivatives
+#     - Make a Videomass debian source package from upstream source code.
+#     - Build and install a .deb file in your Debian or derivative OS.
+#
+# Required dependencies for building:
+#
+#     Python >= 3.8.0
+#     python3-pip
+#     python3-all
+#     debhelper
+#     dh-python
+#     devscripts
+#     debmake
+#     pybuild-plugin-pyproject
+#
+#     ~# apt update && apt install python3-pip python3-all debhelper dh-python devscripts debmake pybuild-plugin-pyproject
+#
+#     Inside the repo dir build a Debian package from the upstream source:
+#     ~$ debmake --tar -b:python3
+#
+#     Alternativity you can Make a source distribution tarball first:
+#     ~$ python3 -m build
+#     ~$ cd dist/
+#     ~$ tar –xvzf videomass-?.?.?.tar.gz
+#     ~$ cd videomass-?.?.?
+#     ~$ debmake --tar -b:python3
+#
+#     Edit changelog file:
+#     Inside videomass-?.?.?/debian edit the changelog file and replace UNRELEASED
+#     row with specified Debian release e.g. unstable, bionic, focal, etc. then save it.
+#
+#     To generate a debian source package type:
+#     ~$ debuild -S (you could add the -sa option to digitally sign)
+#
+#     Instead, to make a .deb file (aka binary package) type:
+#     $ debuild -b (you could add the -sa option to digitally sign)
+#
+#     This installs it
+#     $ cd ..
+#     $ sudo dpkg -i python3-videomass_?.?.?-1_all.deb
+#
+# Resources:
+#
+#     <https://wiki.debian.org/Packaging/SourcePackage> (debian source package)
+#     https://www.debian.org/doc/manuals/debmake-doc/ch04.en.html
+#     https://wiki.debian.org/SimplePackagingTutorial
+#     https://wiki.debian.org/CreatePackageFromPPA#Install_the_Debian_SDK
+#     https://wiki.debian.org/Python/LibraryStyleGuide
