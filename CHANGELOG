@@ -7,13 +7,16 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sat, 15 June 2024 V.5.0.14
+Thu, 20 June 2024 V.5.0.15
 
   * Videomass now uses `hatchling` as the default build backend which replaces
     `setuptools`.
   * Improved startup configuration script.
   * Created a new convenient `__about__` script to store program description
     data which replace `msg_info`.
+  * New feature created that allows you to import the yt_dlp module externally,
+    replacing the one installed on your system or the one on your virtual
+    environment or the one on the standalone application (see #328) .
 
 +------------------------------------+
 Thu, 30 May 2024 V.5.0.14

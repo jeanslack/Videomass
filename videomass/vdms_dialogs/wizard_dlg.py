@@ -50,7 +50,7 @@ def write_changes(ffmpeg, ffplay, ffprobe, youtubedl, binfound):
     dataread['ffmpeg_islocal'] = local
     dataread['ffprobe_islocal'] = local
     dataread['ffplay_islocal'] = local
-    dataread['use-downloader'] = youtubedl
+    dataread['enable-ytdlp'] = youtubedl
 
     conf.write_options(**dataread)
 

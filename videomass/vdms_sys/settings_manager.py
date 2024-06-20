@@ -146,17 +146,23 @@ class ConfigManager:
     ydlp-outputdir (str):
         file destination path used by the youtube-dl UI
 
-    use-downloader (bool):
+    enable-ytdlp (bool):
         sets the ability to download videos from YouTube.com.
         One of True or False, where True means load/use yt_dlp
         on sturtup.
 
-    download-using-exec (bool):
+    ytdlp-useexec (bool):
         If True, use yt-dlp as executable/binary for downloading
         videos (default). Use yt_dlp as API Otherwise.
 
-    yt-dlp-executable-path (str):
+    ytdlp-executable-path (str):
         Path to the yt-dlp or yt-dlp.exe executable.
+
+    ytdlp-usemodule (bool):
+        If True, allow to open specified yt_dlp module dir
+
+    ytdlp-module-path (str),
+        Path to the yt-dlp dir
 
     playlistsubfolder (bool):
         Auto-create subfolders when download the playlists,
@@ -215,7 +221,7 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 7.8
+    VERSION = 8.0
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "shutdown": False,
                        "sudo_password": "",
@@ -246,9 +252,11 @@ class ConfigManager:
                        "trashdir_loc": "",
                        "locale_name": "Default",
                        "ydlp-outputdir": f"{os.path.expanduser('~')}",
-                       "use-downloader": False,
-                       "download-using-exec": True,
-                       "yt-dlp-executable-path": "yt-dlp",
+                       "enable-ytdlp": False,
+                       "ytdlp-useexec": True,
+                       "ytdlp-executable-path": "yt-dlp",
+                       "ytdlp-usemodule": False,
+                       "ytdlp-module-path": "",
                        "playlistsubfolder": True,
                        "ssl_certificate": False,
                        "add_metadata": False,

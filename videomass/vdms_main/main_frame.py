@@ -1806,7 +1806,7 @@ class MainFrame(wx.Frame):
         for yt-dlp GUI functionality.
         """
         msg = None
-        if not self.appdata['use-downloader']:
+        if not self.appdata['enable-ytdlp']:
             msg = _("yt-dlp is disabled. Check your preferences.")
 
         elif self.appdata['yt_dlp'] == 'reload':
