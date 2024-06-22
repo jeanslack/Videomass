@@ -127,9 +127,9 @@ class Videomass(wx.App):
             if (self.appset['ytdlp-module-path']
                     and self.appset['ytdlp-usemodule']):
                 check = importer_init_file(self.appset['ytdlp-module-path'],
-                                          test=['yt_dlp.YoutubeDL',
-                                                'yt_dlp.version']
-                                          )
+                                           test=['yt_dlp.YoutubeDL',
+                                                 'yt_dlp.version']
+                                           )
                 if check:
                     wx.MessageBox(f"ERROR: {check}\n\n{msg}",
                                   _('Videomass - Error!'), wx.ICON_ERROR)
