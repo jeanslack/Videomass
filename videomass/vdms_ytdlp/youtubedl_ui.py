@@ -826,9 +826,9 @@ class Downloader(wx.Panel):
         """
         Call `main_ytdlp.switch_to_processing`
         """
-        if self.appdata['download-using-exec']:
+        if self.appdata['ytdlp-useexec']:
             execlist = []
-            execpath = self.appdata['yt-dlp-executable-path']
+            execpath = self.appdata['ytdlp-executable-path']
             for args in datalist:
                 execlist.append(from_api_to_cli(args, execpath))
             self.parent.switch_to_processing('YouTube Downloader', execlist)

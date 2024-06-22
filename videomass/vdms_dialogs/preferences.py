@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.19.2024
+Rev: June.20.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -208,17 +208,34 @@ class SetUp(wx.Dialog):
         labytexec = wx.StaticText(tabThree, wx.ID_ANY, msg)
         sizerytdlp.Add(labytexec, 0, wx.ALL | wx.EXPAND, 5)
         msg = _('Use the executable for downloads rather than API')
-        self.ckbx_dlexe = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
-        sizerytdlp.Add(self.ckbx_dlexe, 0, wx.LEFT | wx.TOP, 5)
+        self.ckbx_ytexe = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
+        sizerytdlp.Add(self.ckbx_ytexe, 0, wx.LEFT | wx.TOP, 5)
 
-        self.btn_ytdlp = wx.Button(tabThree, wx.ID_ANY, _('Change'))
-        self.txtctrl_ytdlp = wx.TextCtrl(tabThree, wx.ID_ANY, "",
-                                         style=wx.TE_READONLY
-                                         )
+        self.btn_ytexec = wx.Button(tabThree, wx.ID_ANY, _('Change'))
+        self.txtctrl_ytexec = wx.TextCtrl(tabThree, wx.ID_ANY, "",
+                                          style=wx.TE_READONLY
+                                          )
         gridytdlp = wx.BoxSizer(wx.HORIZONTAL)
         sizerytdlp.Add(gridytdlp, 0, wx.EXPAND)
-        gridytdlp.Add(self.txtctrl_ytdlp, 1, wx.ALL, 5)
-        gridytdlp.Add(self.btn_ytdlp, 0, wx.RIGHT | wx.CENTER, 5)
+        gridytdlp.Add(self.txtctrl_ytexec, 1, wx.ALL, 5)
+        gridytdlp.Add(self.btn_ytexec, 0, wx.RIGHT | wx.CENTER, 5)
+        sizerytdlp.Add((0, 15))
+        msg = _('Import «yd_dlp» Python package externally')
+        self.ckbx_ytmod = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
+        sizerytdlp.Add(self.ckbx_ytmod, 0, wx.LEFT | wx.TOP, 5)
+
+        self.btn_ytmod = wx.Button(tabThree, wx.ID_ANY, _('Change'))
+        self.txtctrl_ytmod = wx.TextCtrl(tabThree, wx.ID_ANY, "",
+                                         style=wx.TE_READONLY
+                                         )
+        if self.appdata['app'] == 'pyinstaller':
+            self.ckbx_ytmod.Hide()
+            self.txtctrl_ytmod.Hide()
+            self.btn_ytmod.Hide()
+        gridytmod = wx.BoxSizer(wx.HORIZONTAL)
+        sizerytdlp.Add(gridytmod, 0, wx.EXPAND)
+        gridytmod.Add(self.txtctrl_ytmod, 1, wx.ALL, 5)
+        gridytmod.Add(self.btn_ytmod, 0, wx.RIGHT | wx.CENTER, 5)
         tabThree.SetSizer(sizerytdlp)
         notebook.AddPage(tabThree, "yt-dlp")
 
@@ -513,8 +530,10 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.exeFFplay, self.ckbx_exeFFplay)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_ffplay)
         self.Bind(wx.EVT_CHECKBOX, self.on_ytdlp_pref, self.ckbx_ytdlp)
-        self.Bind(wx.EVT_CHECKBOX, self.on_ytdlp_exec, self.ckbx_dlexe)
-        self.Bind(wx.EVT_BUTTON, self.open_path_ytdlp, self.btn_ytdlp)
+        self.Bind(wx.EVT_CHECKBOX, self.on_ytdlp_exec, self.ckbx_ytexe)
+        self.Bind(wx.EVT_BUTTON, self.open_ytdlp_exec, self.btn_ytexec)
+        self.Bind(wx.EVT_CHECKBOX, self.on_ytdlp_package, self.ckbx_ytmod)
+        self.Bind(wx.EVT_BUTTON, self.open_ytdlp_package, self.btn_ytmod)
         self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
         self.Bind(wx.EVT_RADIOBOX, self.on_toolbarPos, self.rdbTBpref)
         self.Bind(wx.EVT_COMBOBOX, self.on_toolbarSize, self.cmbx_iconsSize)
@@ -546,9 +565,11 @@ class SetUp(wx.Dialog):
         self.ckbx_exitconfirm.SetValue(self.appdata['warnexiting'])
         self.ckbx_logclr.SetValue(self.appdata['clearlogfiles'])
         self.ckbx_trash.SetValue(self.settings['move_file_to_trash'])
-        self.ckbx_ytdlp.SetValue(self.settings['use-downloader'])
-        self.ckbx_dlexe.SetValue(self.settings['download-using-exec'])
-        self.txtctrl_ytdlp.SetValue(self.appdata['yt-dlp-executable-path'])
+        self.ckbx_ytdlp.SetValue(self.settings['enable-ytdlp'])
+        self.ckbx_ytexe.SetValue(self.settings['ytdlp-useexec'])
+        self.txtctrl_ytexec.SetValue(self.appdata['ytdlp-executable-path'])
+        self.ckbx_ytmod.SetValue(self.settings['ytdlp-usemodule'])
+        self.txtctrl_ytmod.SetValue(self.appdata['ytdlp-module-path'])
         self.ckbx_exitapp.SetValue(self.appdata["auto_exit"])
         self.ckbx_turnoff.SetValue(self.appdata["shutdown"])
         self.txtctrl_sudo.SetValue(self.appdata.get("sudo_password", ''))
@@ -556,8 +577,11 @@ class SetUp(wx.Dialog):
             if self.appdata['ostype'] != 'Windows':
                 self.labsudo.Enable(), self.txtctrl_sudo.Enable()
 
-        if not self.settings['download-using-exec']:
-            self.txtctrl_ytdlp.Disable(), self.btn_ytdlp.Disable()
+        if not self.settings['ytdlp-useexec']:
+            self.txtctrl_ytexec.Disable(), self.btn_ytexec.Disable()
+
+        if not self.settings['ytdlp-usemodule']:
+            self.txtctrl_ytmod.Disable(), self.btn_ytmod.Disable()
 
         if not self.settings['move_file_to_trash']:
             self.txtctrl_trash.Disable()
@@ -871,7 +895,7 @@ class SetUp(wx.Dialog):
         """
         set yt-dlp preferences
         """
-        self.settings['use-downloader'] = self.ckbx_ytdlp.GetValue()
+        self.settings['enable-ytdlp'] = self.ckbx_ytdlp.GetValue()
         if self.appdata['yt_dlp'] is not True:
             self.appdata['yt_dlp'] = 'reload'
     # --------------------------------------------------------------------#
@@ -881,27 +905,63 @@ class SetUp(wx.Dialog):
         Sets whether to use yt-dlp as a Python
         module or as an executable.
         """
-        self.settings['download-using-exec'] = self.ckbx_dlexe.GetValue()
-        if self.ckbx_dlexe.GetValue():
-            self.txtctrl_ytdlp.Enable(), self.btn_ytdlp.Enable()
+        self.settings['ytdlp-useexec'] = self.ckbx_ytexe.GetValue()
+        if self.ckbx_ytexe.GetValue():
+            self.txtctrl_ytexec.Enable(), self.btn_ytexec.Enable()
         else:
-            self.txtctrl_ytdlp.Disable(), self.btn_ytdlp.Disable()
+            self.txtctrl_ytexec.Disable(), self.btn_ytexec.Disable()
     # --------------------------------------------------------------------#
 
-    def open_path_ytdlp(self, event):
-        """Indicates a new yt-dlp path-name"""
-        with wx.FileDialog(self, _("{} location").format(self.ytdlp),
-                           "", "", "yt-dlp binary "
-                           f"(*{self.ytdlp})|*{self.ytdlp}| "
-                           f"All files (*.*)|*.*",
-                           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
+    def open_ytdlp_exec(self, event):
+        """
+        Indicates a new yt-dlp executable path-name
+        """
+        fmt = f'*{self.ytdlp};*yt-dlp;'
+        wild = f"yt-dlp executable ({fmt})|{fmt}| All files (*.*)|*.*"
+        msg = _('Location of the «yt-dlp» executable')
+
+        with wx.FileDialog(self, msg, "", "", wildcard=wild,
+                           style=wx.FD_OPEN
+                           | wx.FD_FILE_MUST_EXIST) as fdlg:
 
             if fdlg.ShowModal() == wx.ID_OK:
-                if os.path.basename(fdlg.GetPath()) == self.ytdlp:
-                    self.txtctrl_ytdlp.Clear()
-                    getpath = self.appdata['getpath'](fdlg.GetPath())
-                    self.txtctrl_ytdlp.write(getpath)
-                    self.settings['yt-dlp-executable-path'] = getpath
+                self.txtctrl_ytexec.Clear()
+                getpath = self.appdata['getpath'](fdlg.GetPath())
+                self.txtctrl_ytexec.write(getpath)
+                self.settings['ytdlp-executable-path'] = getpath
+    # --------------------------------------------------------------------#
+
+    def on_ytdlp_package(self, event):
+        """
+        Enables external yt_dlp .
+        """
+        self.settings['ytdlp-usemodule'] = self.ckbx_ytmod.GetValue()
+        if self.ckbx_ytmod.GetValue():
+            self.txtctrl_ytmod.Enable(), self.btn_ytmod.Enable()
+        else:
+            self.txtctrl_ytmod.Disable(), self.btn_ytmod.Disable()
+            self.txtctrl_ytmod.Clear()
+            self.settings['ytdlp-module-path'] = ""
+    # --------------------------------------------------------------------#
+
+    def open_ytdlp_package(self, event):
+        """
+        Sets path to yt-dlp module. Note
+        """
+        dlg = wx.DirDialog(self, _("Open «yt_dlp» python package directory"),
+                           "", wx.DD_DEFAULT_STYLE
+                           )
+        if dlg.ShowModal() == wx.ID_OK:
+            self.txtctrl_ytmod.Clear()
+            getpath = self.appdata['getpath'](dlg.GetPath())
+            self.txtctrl_ytmod.AppendText(getpath)
+            self.settings['ytdlp-module-path'] = getpath
+            ytexec = os.path.join(os.path.dirname(getpath), 'yt-dlp')
+            if os.path.exists(ytexec) and os.path.isfile(ytexec):
+                self.txtctrl_ytexec.Clear()
+                self.txtctrl_ytexec.write(ytexec)
+                self.settings['ytdlp-executable-path'] = ytexec
+            dlg.Destroy()
     # --------------------------------------------------------------------#
 
     def on_Iconthemes(self, event):
@@ -1006,7 +1066,9 @@ class SetUp(wx.Dialog):
             self.settings['trashdir_loc'] = self.appdata['trashdir_default']
         self.retcode = (
             self.settings['locale_name'] == self.appdata['locale_name'],
-            self.settings['use-downloader'] == self.appdata['use-downloader'],
+            self.settings['enable-ytdlp'] == self.appdata['enable-ytdlp'],
+            (self.settings['ytdlp-module-path']
+             == self.appdata['ytdlp-module-path']),
             self.settings['icontheme'] == self.appdata['icontheme'],
             self.settings['toolbarsize'] == self.appdata['toolbarsize'],
             self.settings['toolbarpos'] == self.appdata['toolbarpos'])

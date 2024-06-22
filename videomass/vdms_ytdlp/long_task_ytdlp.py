@@ -137,7 +137,7 @@ class LogOut(wx.Panel):
                                          mode="w",
                                          )
         self.btn_viewlog.Disable()
-        if self.appdata['download-using-exec']:
+        if self.appdata['ytdlp-useexec']:
             self.thread_type = YtdlExecDL(args[1], urls, self.logfile)
         else:
             self.thread_type = YdlDownloader(args[1], urls, self.logfile)
