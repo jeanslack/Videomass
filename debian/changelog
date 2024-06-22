@@ -7,9 +7,10 @@ videomass (5.0.15-1) UNRELEASED; urgency=medium
     data which replace `msg_info`.
   * New feature created that allows you to import the yt_dlp module externally,
     replacing the one installed on your system or the one on your virtual
-    environment or the one on the standalone application (see #328) .
+    environment (see #328). Standalone application are excluded from using this
+    feature.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 20 Jun 2024 17:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 22 Jun 2024 15:00:00 +0200
 
 videomass (5.0.14-1) UNRELEASED; urgency=medium
 

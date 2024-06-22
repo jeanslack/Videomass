@@ -28,7 +28,6 @@ import os
 import sys
 import webbrowser
 import wx
-import wx.lib.agw.hyperlink as hpl
 from videomass.vdms_utils.utils import detect_binaries
 from videomass.vdms_io import io_tools
 from videomass.vdms_sys.settings_manager import ConfigManager
@@ -220,18 +219,8 @@ class SetUp(wx.Dialog):
         sizerytdlp.Add(gridytdlp, 0, wx.EXPAND)
         gridytdlp.Add(self.txtctrl_ytexec, 1, wx.ALL, 5)
         gridytdlp.Add(self.btn_ytexec, 0, wx.RIGHT | wx.CENTER, 5)
-        sizerytdlp.Add((0, 20))
-        msg = (_('Import module externally. The appropriate source directory '
-                 'is required. Click on the link below\nto directly download '
-                 'the latest version, then extract the tarball archive and '
-                 'indicate the path to\nthe extracted directory here.'))
-        labytmod = wx.StaticText(tabThree, wx.ID_ANY, msg)
-        sizerytdlp.Add(labytmod, 0, wx.ALL | wx.EXPAND, 5)
-        url1 = ("https://github.com/yt-dlp/yt-dlp/releases/latest/"
-                "download/yt-dlp.tar.gz")
-        link1 = hpl.HyperLinkCtrl(tabThree, -1, url1, URL=(url1))
-        sizerytdlp.Add(link1, 0, wx.LEFT | wx.EXPAND, 15)
-        msg = _('Import yt-dlp externally')
+        sizerytdlp.Add((0, 15))
+        msg = _('Import «yd_dlp» Python package externally')
         self.ckbx_ytmod = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         sizerytdlp.Add(self.ckbx_ytmod, 0, wx.LEFT | wx.TOP, 5)
 
@@ -239,6 +228,10 @@ class SetUp(wx.Dialog):
         self.txtctrl_ytmod = wx.TextCtrl(tabThree, wx.ID_ANY, "",
                                          style=wx.TE_READONLY
                                          )
+        if self.appdata['app'] == 'pyinstaller':
+            self.ckbx_ytmod.Hide()
+            self.txtctrl_ytmod.Hide()
+            self.btn_ytmod.Hide()
         gridytmod = wx.BoxSizer(wx.HORIZONTAL)
         sizerytdlp.Add(gridytmod, 0, wx.EXPAND)
         gridytmod.Add(self.txtctrl_ytmod, 1, wx.ALL, 5)
@@ -481,7 +474,6 @@ class SetUp(wx.Dialog):
             labytdlp.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdescr.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labytexec.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            labytmod.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labappe.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labLog.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labrem.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -499,7 +491,6 @@ class SetUp(wx.Dialog):
             labytdlp.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdescr.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labytexec.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            labytmod.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labappe.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labLog.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labrem.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -540,9 +531,9 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_ffplay)
         self.Bind(wx.EVT_CHECKBOX, self.on_ytdlp_pref, self.ckbx_ytdlp)
         self.Bind(wx.EVT_CHECKBOX, self.on_ytdlp_exec, self.ckbx_ytexe)
-        self.Bind(wx.EVT_BUTTON, self.open_path_ytdlp, self.btn_ytexec)
-        self.Bind(wx.EVT_CHECKBOX, self.on_ytdlp_module, self.ckbx_ytmod)
-        self.Bind(wx.EVT_BUTTON, self.open_path_ytmodule, self.btn_ytmod)
+        self.Bind(wx.EVT_BUTTON, self.open_ytdlp_exec, self.btn_ytexec)
+        self.Bind(wx.EVT_CHECKBOX, self.on_ytdlp_package, self.ckbx_ytmod)
+        self.Bind(wx.EVT_BUTTON, self.open_ytdlp_package, self.btn_ytmod)
         self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
         self.Bind(wx.EVT_RADIOBOX, self.on_toolbarPos, self.rdbTBpref)
         self.Bind(wx.EVT_COMBOBOX, self.on_toolbarSize, self.cmbx_iconsSize)
@@ -921,11 +912,11 @@ class SetUp(wx.Dialog):
             self.txtctrl_ytexec.Disable(), self.btn_ytexec.Disable()
     # --------------------------------------------------------------------#
 
-    def open_path_ytdlp(self, event):
+    def open_ytdlp_exec(self, event):
         """
         Indicates a new yt-dlp executable path-name
         """
-        fmt = (f'*{self.ytdlp};*yt-dlp;')
+        fmt = f'*{self.ytdlp};*yt-dlp;'
         wild = f"yt-dlp executable ({fmt})|{fmt}| All files (*.*)|*.*"
         msg = _('Location of the «yt-dlp» executable')
 
@@ -940,7 +931,7 @@ class SetUp(wx.Dialog):
                 self.settings['ytdlp-executable-path'] = getpath
     # --------------------------------------------------------------------#
 
-    def on_ytdlp_module(self, event):
+    def on_ytdlp_package(self, event):
         """
         Enables external yt_dlp .
         """
@@ -953,11 +944,11 @@ class SetUp(wx.Dialog):
             self.settings['ytdlp-module-path'] = ""
     # --------------------------------------------------------------------#
 
-    def open_path_ytmodule(self, event):
+    def open_ytdlp_package(self, event):
         """
         Sets path to yt-dlp module. Note
         """
-        dlg = wx.DirDialog(self, _("Open yt-dlp source directory"),
+        dlg = wx.DirDialog(self, _("Open «yt_dlp» python package directory"),
                            "", wx.DD_DEFAULT_STYLE
                            )
         if dlg.ShowModal() == wx.ID_OK:
@@ -965,7 +956,7 @@ class SetUp(wx.Dialog):
             getpath = self.appdata['getpath'](dlg.GetPath())
             self.txtctrl_ytmod.AppendText(getpath)
             self.settings['ytdlp-module-path'] = getpath
-            ytexec = os.path.join(getpath, 'yt-dlp')
+            ytexec = os.path.join(os.path.dirname(getpath), 'yt-dlp')
             if os.path.exists(ytexec) and os.path.isfile(ytexec):
                 self.txtctrl_ytexec.Clear()
                 self.txtctrl_ytexec.write(ytexec)
