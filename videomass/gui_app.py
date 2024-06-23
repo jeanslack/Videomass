@@ -98,12 +98,10 @@ class Videomass(wx.App):
         wx.Locale.AddCatalogLookupPathPrefix(self.appset['localepath'])
         self.update_language(self.appset['locale_name'])
 
-        ytdlp = self.check_youtube_dl()
-        if ytdlp is False:
+        if self.check_ytdlp() is False:
             self.appset['yt_dlp'] = 'no module'
 
-        ffmpeg = self.check_ffmpeg()
-        if ffmpeg:
+        if self.check_ffmpeg():
             self.wizard(self.iconset['videomass'])
             return True
 
@@ -114,7 +112,7 @@ class Videomass(wx.App):
         return True
     # -------------------------------------------------------------------
 
-    def check_youtube_dl(self):
+    def check_ytdlp(self):
         """
         Check for `yt_dlp` python module. If enabled by the user
         but not yet installed, the session should still start

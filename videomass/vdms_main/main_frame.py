@@ -189,7 +189,7 @@ class MainFrame(wx.Frame):
         # disabling toolbar/menu items
         [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8,
                                                      35, 36, 37)]
-        self.menu_items(enable=False)
+        self.menu_items(enable=True), self.startpan.Enable(False)
         self.Layout()
         # ---------------------- Binding (EVT) ----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_destpath_setup)
@@ -1391,7 +1391,7 @@ class MainFrame(wx.Frame):
                                                      8, 35, 36, 37)]
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
-        self.menu_items(enable=False)
+        self.menu_items(enable=True), self.startpan.Enable(False)
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.SetTitle(_('Videomass'))
@@ -1414,7 +1414,7 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         self.fileDnDTarget.Show()
         pub.sendMessage("SET_DRAG_AND_DROP_TOPIC", topic=self.topicname)
-        self.menu_items(enable=False)  # disable menu items
+        self.menu_items(enable=True)  # disable menu items
         self.delfile.Enable(True)
         self.clearall.Enable(True)
         self.openmedia.Enable(True)
@@ -1440,6 +1440,7 @@ class MainFrame(wx.Frame):
         self.topicname = 'Audio/Video Conversions'
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.Hide()
+        self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.PrstsPanel.Hide()
         self.ConcatDemuxer.Hide()
@@ -1468,6 +1469,7 @@ class MainFrame(wx.Frame):
         self.topicname = 'Presets Manager'
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.Hide()
+        self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
         self.ConcatDemuxer.Hide()
@@ -1497,6 +1499,7 @@ class MainFrame(wx.Frame):
         self.topicname = 'Concatenate Demuxer'
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.Hide()
+        self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
         self.PrstsPanel.Hide()
@@ -1525,6 +1528,7 @@ class MainFrame(wx.Frame):
         self.topicname = 'Video to Pictures'
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.Hide()
+        self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
         self.PrstsPanel.Hide()
@@ -1553,6 +1557,7 @@ class MainFrame(wx.Frame):
         self.topicname = 'Image Sequence to Video'
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.Hide()
+        self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
         self.PrstsPanel.Hide()
@@ -1713,7 +1718,10 @@ class MainFrame(wx.Frame):
             [self.toolbar.EnableTool(x, True) for x in (6, 8)]
             [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 36, 37, 7)]
         else:
-            [self.toolbar.EnableTool(x, False) for x in (4, 36)]
+            self.startpan.Enable(True)
+            self.ChooseTopic.Hide()
+            [self.toolbar.EnableTool(x, False) for x in (4, 8, 36)]
+            [self.toolbar.EnableTool(x, True) for x in (3, 5, 6, 7, 35)]
         self.logpan.Enable(False)
         self.ProcessPanel.topic_thread(args, datalist, self.topicname)
         self.Layout()
@@ -1725,6 +1733,10 @@ class MainFrame(wx.Frame):
         of the corresponding class panel shown, which calls the
         'switch_to_processing' method above.
         """
+        if not self.topicname:
+            self.startPanel(None)
+            return
+
         if not self.data_files:
             self.switch_file_import(self)
             return

@@ -228,10 +228,6 @@ class SetUp(wx.Dialog):
         self.txtctrl_ytmod = wx.TextCtrl(tabThree, wx.ID_ANY, "",
                                          style=wx.TE_READONLY
                                          )
-        if self.appdata['app'] == 'pyinstaller':
-            self.ckbx_ytmod.Hide()
-            self.txtctrl_ytmod.Hide()
-            self.btn_ytmod.Hide()
         gridytmod = wx.BoxSizer(wx.HORIZONTAL)
         sizerytdlp.Add(gridytmod, 0, wx.EXPAND)
         gridytmod.Add(self.txtctrl_ytmod, 1, wx.ALL, 5)
@@ -568,7 +564,6 @@ class SetUp(wx.Dialog):
         self.ckbx_ytdlp.SetValue(self.settings['enable-ytdlp'])
         self.ckbx_ytexe.SetValue(self.settings['ytdlp-useexec'])
         self.txtctrl_ytexec.SetValue(self.appdata['ytdlp-executable-path'])
-        self.ckbx_ytmod.SetValue(self.settings['ytdlp-usemodule'])
         self.txtctrl_ytmod.SetValue(self.appdata['ytdlp-module-path'])
         self.ckbx_exitapp.SetValue(self.appdata["auto_exit"])
         self.ckbx_turnoff.SetValue(self.appdata["shutdown"])
@@ -580,8 +575,14 @@ class SetUp(wx.Dialog):
         if not self.settings['ytdlp-useexec']:
             self.txtctrl_ytexec.Disable(), self.btn_ytexec.Disable()
 
-        if not self.settings['ytdlp-usemodule']:
-            self.txtctrl_ytmod.Disable(), self.btn_ytmod.Disable()
+        if self.appdata['app'] == 'pyinstaller':
+            self.ckbx_ytmod.Disable()
+            self.txtctrl_ytmod.Disable()
+            self.btn_ytmod.Disable()
+        else:
+            self.ckbx_ytmod.SetValue(self.settings['ytdlp-usemodule'])
+            if not self.settings['ytdlp-usemodule']:
+                self.txtctrl_ytmod.Disable(), self.btn_ytmod.Disable()
 
         if not self.settings['move_file_to_trash']:
             self.txtctrl_trash.Disable()
@@ -946,7 +947,7 @@ class SetUp(wx.Dialog):
 
     def open_ytdlp_package(self, event):
         """
-        Sets path to yt-dlp module. Note
+        Sets path to yt-dlp module.
         """
         dlg = wx.DirDialog(self, _("Open «yt_dlp» python package directory"),
                            "", wx.DD_DEFAULT_STYLE
@@ -956,11 +957,6 @@ class SetUp(wx.Dialog):
             getpath = self.appdata['getpath'](dlg.GetPath())
             self.txtctrl_ytmod.AppendText(getpath)
             self.settings['ytdlp-module-path'] = getpath
-            ytexec = os.path.join(os.path.dirname(getpath), 'yt-dlp')
-            if os.path.exists(ytexec) and os.path.isfile(ytexec):
-                self.txtctrl_ytexec.Clear()
-                self.txtctrl_ytexec.write(ytexec)
-                self.settings['ytdlp-executable-path'] = ytexec
             dlg.Destroy()
     # --------------------------------------------------------------------#
 
