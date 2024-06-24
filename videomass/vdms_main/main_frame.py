@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.11.2024
+Rev: June.24.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -189,7 +189,7 @@ class MainFrame(wx.Frame):
         # disabling toolbar/menu items
         [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8,
                                                      35, 36, 37)]
-        self.menu_items(enable=True), self.startpan.Enable(False)
+        self.menu_go_items((0, 1, 1, 1, 1, 1, 1, 1))  # Go menu items
         self.Layout()
         # ---------------------- Binding (EVT) ----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_destpath_setup)
@@ -255,27 +255,17 @@ class MainFrame(wx.Frame):
         self.sb.Refresh()
     # ------------------------------------------------------------------#
 
-    def menu_items(self, enable=True):
+    def menu_go_items(self, enablelist: list = None):
         """
-        enable or disable some menu items in
-        according by showing panels
+        Enables `Go` menu bar items based on showing panels.
+        The `enablelist` default arg is a boolean list containing
+        enable items (1) or disable items (0).
         """
-        if enable:
-            self.avpan.Enable(True)
-            self.prstpan.Enable(True)
-            self.concpan.Enable(True)
-            self.toseq.Enable(True)
-            self.slides.Enable(True)
-            self.startpan.Enable(True)
-            self.logpan.Enable(True)
-        else:
-            self.avpan.Enable(False)
-            self.prstpan.Enable(False)
-            self.concpan.Enable(False)
-            self.toseq.Enable(False)
-            self.slides.Enable(False)
-            self.startpan.Enable(False)
-            self.logpan.Enable(False)
+        if not enablelist:
+            return
+        items = [self.startpan, self.prstpan, self.avpan, self.concpan,
+                 self.slides, self.toseq, self.winytdlp, self.logpan,]
+        [x.Enable(y) for x, y in zip(items, enablelist)]
     # ------------------------------------------------------------------#
 
     def check_modeless_window(self, msg=None):
@@ -1391,7 +1381,7 @@ class MainFrame(wx.Frame):
                                                      8, 35, 36, 37)]
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
-        self.menu_items(enable=True), self.startpan.Enable(False)
+        self.menu_go_items((0, 1, 1, 1, 1, 1, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.SetTitle(_('Videomass'))
@@ -1414,7 +1404,7 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         self.fileDnDTarget.Show()
         pub.sendMessage("SET_DRAG_AND_DROP_TOPIC", topic=self.topicname)
-        self.menu_items(enable=True)  # disable menu items
+        self.menu_go_items((1, 1, 1, 1, 1, 1, 1, 1))  # Go menu items
         self.delfile.Enable(True)
         self.clearall.Enable(True)
         self.openmedia.Enable(True)
@@ -1448,12 +1438,11 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         self.AVconvPanel.Show()
         self.SetTitle(_('Videomass - AV Conversions'))
-        self.menu_items(enable=True)  # enable all menu items
+        self.menu_go_items((1, 1, 0, 1, 1, 1, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
-        self.avpan.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35, 36)]
         [self.toolbar.EnableTool(x, False) for x in (8, 37)]
         if self.queuelist:
@@ -1477,12 +1466,11 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         self.PrstsPanel.Show()
         self.SetTitle(_('Videomass - Presets Manager'))
-        self.menu_items(enable=True)  # enable all menu items
+        self.menu_go_items((1, 0, 1, 1, 1, 1, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
-        self.prstpan.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35, 36)]
         [self.toolbar.EnableTool(x, False) for x in (8, 37)]
         if self.queuelist:
@@ -1507,12 +1495,11 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         self.ConcatDemuxer.Show()
         self.SetTitle(_('Videomass - Concatenate Demuxer'))
-        self.menu_items(enable=True)  # enable all menu items
+        self.menu_go_items((1, 1, 1, 0, 1, 1, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
-        self.concpan.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
         [self.toolbar.EnableTool(x, False) for x in (8, 36, 37)]
         if self.queuelist:
@@ -1536,12 +1523,11 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         self.toPictures.Show()
         self.SetTitle(_('Videomass - From Movie to Pictures'))
-        self.menu_items(enable=True)  # enable all menu items
+        self.menu_go_items((1, 1, 1, 1, 1, 0, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
-        self.toseq.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
         [self.toolbar.EnableTool(x, False) for x in (8, 36, 37)]
         if self.queuelist:
@@ -1565,12 +1551,11 @@ class MainFrame(wx.Frame):
         self.toPictures.Hide()
         self.toSlideshow.Show()
         self.SetTitle(_('Videomass - Still Image Maker'))
-        self.menu_items(enable=True)  # enable all menu items
+        self.menu_go_items((1, 1, 1, 1, 0, 1, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
-        self.slides.Enable(False)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
         [self.toolbar.EnableTool(x, False) for x in (8, 36, 37)]
         if self.queuelist:
@@ -1707,7 +1692,7 @@ class MainFrame(wx.Frame):
         if not args[0] == 'View':
             self.delfile.Enable(False)
             self.clearall.Enable(False)
-            self.menu_items(enable=False)  # disable menu items
+            self.menu_go_items((0, 0, 0, 0, 0, 0, 1, 0))  # Go menu items
             self.openmedia.Enable(False)
             self.loadqueue.Enable(False)
             self.setupItem.Enable(False)
@@ -1718,11 +1703,10 @@ class MainFrame(wx.Frame):
             [self.toolbar.EnableTool(x, True) for x in (6, 8)]
             [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 36, 37, 7)]
         else:
-            self.startpan.Enable(True)
+            self.menu_go_items((1, 1, 1, 1, 1, 1, 1, 0))  # Go menu items
             self.ChooseTopic.Hide()
             [self.toolbar.EnableTool(x, False) for x in (4, 8, 36)]
             [self.toolbar.EnableTool(x, True) for x in (3, 5, 6, 7, 35)]
-        self.logpan.Enable(False)
         self.ProcessPanel.topic_thread(args, datalist, self.topicname)
         self.Layout()
     # ------------------------------------------------------------------#
@@ -1770,7 +1754,7 @@ class MainFrame(wx.Frame):
         Process report terminated. This method is called using
         pub/sub protocol. see `long_processing_task.end_proc()`)
         """
-        self.menu_items(enable=True)  # enable all menu items
+        self.menu_go_items((1, 1, 1, 1, 1, 1, 1, 0))  # Go menu items
         self.openmedia.Enable(False)
         self.loadqueue.Enable(False)
         self.setupItem.Enable(True)
@@ -1794,11 +1778,10 @@ class MainFrame(wx.Frame):
 
     def panelShown(self, panelshown=None):
         """
-        Closing the `long_processing_task` panel, retrieval at previous
+        Clicking Back arrow on tool bar it Closes the
+        `long_processing_task` panel and retrieval at previous
         panel shown (see `switch_to_processing` method above).
         """
-        self.logpan.Enable(True)  # menu item
-        self.ProcessPanel.Hide()
         if panelshown == 'Audio/Video Conversions':
             self.switch_av_conversions(self)
         elif panelshown == 'Presets Manager':

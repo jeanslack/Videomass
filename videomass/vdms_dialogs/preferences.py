@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.20.2024
+Rev: June.24.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -219,8 +219,13 @@ class SetUp(wx.Dialog):
         sizerytdlp.Add(gridytdlp, 0, wx.EXPAND)
         gridytdlp.Add(self.txtctrl_ytexec, 1, wx.ALL, 5)
         gridytdlp.Add(self.btn_ytexec, 0, wx.RIGHT | wx.CENTER, 5)
-        sizerytdlp.Add((0, 15))
-        msg = _('Import «yd_dlp» Python package externally')
+        sizerytdlp.Add((0, 20))
+        msg = (_('Import the «yt_dlp» package externally. This may include '
+                 'the source package directory or the\npackage path in a '
+                 'virtual environment.'))
+        labytmod = wx.StaticText(tabThree, wx.ID_ANY, msg)
+        sizerytdlp.Add(labytmod, 0, wx.ALL | wx.EXPAND, 5)
+        msg = _('Enable external import of «yd_dlp» package')
         self.ckbx_ytmod = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         sizerytdlp.Add(self.ckbx_ytmod, 0, wx.LEFT | wx.TOP, 5)
 
@@ -470,6 +475,7 @@ class SetUp(wx.Dialog):
             labytdlp.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdescr.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labytexec.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            labytmod.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labappe.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labLog.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labrem.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -487,6 +493,7 @@ class SetUp(wx.Dialog):
             labytdlp.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdescr.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labytexec.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            labytmod.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labappe.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labLog.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labrem.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -917,13 +924,12 @@ class SetUp(wx.Dialog):
         """
         Indicates a new yt-dlp executable path-name
         """
-        fmt = f'*{self.ytdlp};*yt-dlp;'
-        wild = f"yt-dlp executable ({fmt})|{fmt}| All files (*.*)|*.*"
-        msg = _('Location of the «yt-dlp» executable')
+        fmt = f'*{self.ytdlp};'
+        wild = f"Executable ({fmt})|{fmt}| All files (*.*)|*.*"
+        msg = _('Open «{}» executable file'.format(self.ytdlp))
 
         with wx.FileDialog(self, msg, "", "", wildcard=wild,
-                           style=wx.FD_OPEN
-                           | wx.FD_FILE_MUST_EXIST) as fdlg:
+                           style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
 
             if fdlg.ShowModal() == wx.ID_OK:
                 self.txtctrl_ytexec.Clear()
