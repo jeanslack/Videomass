@@ -220,9 +220,10 @@ class SetUp(wx.Dialog):
         gridytdlp.Add(self.txtctrl_ytexec, 1, wx.ALL, 5)
         gridytdlp.Add(self.btn_ytexec, 0, wx.RIGHT | wx.CENTER, 5)
         sizerytdlp.Add((0, 20))
-        msg = (_('Import the «yt_dlp» package externally. This may include '
-                 'the source package directory or the\npackage path in a '
-                 'virtual environment.'))
+        msg = (_('Import the «yt_dlp» package externally. E.g, you can '
+                 'include the source package directory\nor the path '
+                 'to the package installed in an external virtual '
+                 'environment.'))
         labytmod = wx.StaticText(tabThree, wx.ID_ANY, msg)
         sizerytdlp.Add(labytmod, 0, wx.ALL | wx.EXPAND, 5)
         msg = _('Enable external import of «yd_dlp» package')
