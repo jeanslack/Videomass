@@ -18,6 +18,7 @@ Thu, 22 June 2024 V.5.0.15
     replacing the one installed on your system or the one on your virtual
     environment (see #328). Standalone application are excluded from using this
     feature.
+  * 'Go' menu bar items are now fully enabled on every panel (see #332).
 
 +------------------------------------+
 Thu, 30 May 2024 V.5.0.14

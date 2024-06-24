@@ -9,6 +9,7 @@ videomass (5.0.15-1) UNRELEASED; urgency=medium
     replacing the one installed on your system or the one on your virtual
     environment (see #328). Standalone application are excluded from using this
     feature.
+  * 'Go' menu bar items are now fully enabled on every panel (see #332).
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 22 Jun 2024 15:00:00 +0200
 

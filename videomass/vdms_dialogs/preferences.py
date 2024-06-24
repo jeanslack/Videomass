@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.20.2024
+Rev: June.24.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -219,8 +219,14 @@ class SetUp(wx.Dialog):
         sizerytdlp.Add(gridytdlp, 0, wx.EXPAND)
         gridytdlp.Add(self.txtctrl_ytexec, 1, wx.ALL, 5)
         gridytdlp.Add(self.btn_ytexec, 0, wx.RIGHT | wx.CENTER, 5)
-        sizerytdlp.Add((0, 15))
-        msg = _('Import «yd_dlp» Python package externally')
+        sizerytdlp.Add((0, 20))
+        msg = (_('Import the «yt_dlp» package externally. E.g, you can '
+                 'include the source package directory\nor the path '
+                 'to the package installed in an external virtual '
+                 'environment.'))
+        labytmod = wx.StaticText(tabThree, wx.ID_ANY, msg)
+        sizerytdlp.Add(labytmod, 0, wx.ALL | wx.EXPAND, 5)
+        msg = _('Enable external import of «yd_dlp» package')
         self.ckbx_ytmod = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         sizerytdlp.Add(self.ckbx_ytmod, 0, wx.LEFT | wx.TOP, 5)
 
@@ -228,10 +234,6 @@ class SetUp(wx.Dialog):
         self.txtctrl_ytmod = wx.TextCtrl(tabThree, wx.ID_ANY, "",
                                          style=wx.TE_READONLY
                                          )
-        if self.appdata['app'] == 'pyinstaller':
-            self.ckbx_ytmod.Hide()
-            self.txtctrl_ytmod.Hide()
-            self.btn_ytmod.Hide()
         gridytmod = wx.BoxSizer(wx.HORIZONTAL)
         sizerytdlp.Add(gridytmod, 0, wx.EXPAND)
         gridytmod.Add(self.txtctrl_ytmod, 1, wx.ALL, 5)
@@ -474,6 +476,7 @@ class SetUp(wx.Dialog):
             labytdlp.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdescr.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labytexec.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            labytmod.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labappe.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labLog.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labrem.SetFont(wx.Font(13, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -491,6 +494,7 @@ class SetUp(wx.Dialog):
             labytdlp.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labytdescr.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labytexec.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            labytmod.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labappe.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
             labLog.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             labrem.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
@@ -568,7 +572,6 @@ class SetUp(wx.Dialog):
         self.ckbx_ytdlp.SetValue(self.settings['enable-ytdlp'])
         self.ckbx_ytexe.SetValue(self.settings['ytdlp-useexec'])
         self.txtctrl_ytexec.SetValue(self.appdata['ytdlp-executable-path'])
-        self.ckbx_ytmod.SetValue(self.settings['ytdlp-usemodule'])
         self.txtctrl_ytmod.SetValue(self.appdata['ytdlp-module-path'])
         self.ckbx_exitapp.SetValue(self.appdata["auto_exit"])
         self.ckbx_turnoff.SetValue(self.appdata["shutdown"])
@@ -580,8 +583,14 @@ class SetUp(wx.Dialog):
         if not self.settings['ytdlp-useexec']:
             self.txtctrl_ytexec.Disable(), self.btn_ytexec.Disable()
 
-        if not self.settings['ytdlp-usemodule']:
-            self.txtctrl_ytmod.Disable(), self.btn_ytmod.Disable()
+        if self.appdata['app'] == 'pyinstaller':
+            self.ckbx_ytmod.Disable()
+            self.txtctrl_ytmod.Disable()
+            self.btn_ytmod.Disable()
+        else:
+            self.ckbx_ytmod.SetValue(self.settings['ytdlp-usemodule'])
+            if not self.settings['ytdlp-usemodule']:
+                self.txtctrl_ytmod.Disable(), self.btn_ytmod.Disable()
 
         if not self.settings['move_file_to_trash']:
             self.txtctrl_trash.Disable()
@@ -916,13 +925,12 @@ class SetUp(wx.Dialog):
         """
         Indicates a new yt-dlp executable path-name
         """
-        fmt = f'*{self.ytdlp};*yt-dlp;'
-        wild = f"yt-dlp executable ({fmt})|{fmt}| All files (*.*)|*.*"
-        msg = _('Location of the «yt-dlp» executable')
+        fmt = f'*{self.ytdlp};'
+        wild = f"Executable ({fmt})|{fmt}| All files (*.*)|*.*"
+        msg = _('Open «{}» executable file'.format(self.ytdlp))
 
         with wx.FileDialog(self, msg, "", "", wildcard=wild,
-                           style=wx.FD_OPEN
-                           | wx.FD_FILE_MUST_EXIST) as fdlg:
+                           style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
 
             if fdlg.ShowModal() == wx.ID_OK:
                 self.txtctrl_ytexec.Clear()
@@ -946,7 +954,7 @@ class SetUp(wx.Dialog):
 
     def open_ytdlp_package(self, event):
         """
-        Sets path to yt-dlp module. Note
+        Sets path to yt-dlp module.
         """
         dlg = wx.DirDialog(self, _("Open «yt_dlp» python package directory"),
                            "", wx.DD_DEFAULT_STYLE
@@ -956,11 +964,6 @@ class SetUp(wx.Dialog):
             getpath = self.appdata['getpath'](dlg.GetPath())
             self.txtctrl_ytmod.AppendText(getpath)
             self.settings['ytdlp-module-path'] = getpath
-            ytexec = os.path.join(os.path.dirname(getpath), 'yt-dlp')
-            if os.path.exists(ytexec) and os.path.isfile(ytexec):
-                self.txtctrl_ytexec.Clear()
-                self.txtctrl_ytexec.write(ytexec)
-                self.settings['ytdlp-executable-path'] = ytexec
             dlg.Destroy()
     # --------------------------------------------------------------------#
 
