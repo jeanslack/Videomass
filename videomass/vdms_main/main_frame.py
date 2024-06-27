@@ -35,7 +35,7 @@ from videomass.vdms_utils.queue_utils import write_json_file_queue
 from videomass.vdms_utils.queue_utils import extend_data_queue
 from videomass.vdms_dialogs import preferences
 from videomass.vdms_dialogs import set_timestamp
-from videomass.vdms_dialogs import about
+from videomass.vdms_dialogs import about_dialog
 from videomass.vdms_dialogs import videomass_check_version
 from videomass.vdms_dialogs.while_playing import WhilePlaying
 from videomass.vdms_dialogs.ffmpeg_conf import FFmpegConf
@@ -57,7 +57,7 @@ from videomass.vdms_panels import sequence_to_video
 from videomass.vdms_panels.long_processing_task import LogOut
 from videomass.vdms_panels import presets_manager
 from videomass.vdms_io import io_tools
-from videomass.vdms_sys.__about__ import __version__
+from videomass.vdms_sys.about_app import VERSION
 from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_sys.argparser import info_this_platform
 from videomass.vdms_utils.utils import copydir_recursively
@@ -263,8 +263,10 @@ class MainFrame(wx.Frame):
         """
         if not enablelist:
             return
+
         items = [self.startpan, self.prstpan, self.avpan, self.concpan,
                  self.slides, self.toseq, self.winytdlp, self.logpan,]
+
         [x.Enable(y) for x, y in zip(items, enablelist)]
     # ------------------------------------------------------------------#
 
@@ -1169,7 +1171,7 @@ class MainFrame(wx.Frame):
         version = version[0].split('v')[1]
         newmajor, newminor, newmicro = version.split('.')
         new_version = int(f'{newmajor}{newminor}{newmicro}')
-        major, minor, micro = __version__.split('.')
+        major, minor, micro = VERSION.split('.')
         this_version = int(f'{major}{minor}{micro}')
 
         if new_version > this_version:
@@ -1185,7 +1187,7 @@ class MainFrame(wx.Frame):
         dlg = videomass_check_version.CheckNewVersion(self,
                                                       msg,
                                                       version,
-                                                      __version__,
+                                                      VERSION,
                                                       )
         dlg.ShowModal()
     # -------------------------------------------------------------------#
@@ -1202,7 +1204,7 @@ class MainFrame(wx.Frame):
         """
         Display the program informations and developpers
         """
-        about.aboutdlg(self, self.icons['videomass'])
+        about_dialog.show_about_dlg(self, self.icons['videomass'])
 
     # -----------------  BUILD THE TOOL BAR  --------------------###
 
@@ -1212,18 +1214,18 @@ class MainFrame(wx.Frame):
         the user preferences.
         """
         if self.appdata['toolbarpos'] == 0:  # on top
-            style = wx.TB_TEXT
+            return wx.TB_TEXT
 
-        elif self.appdata['toolbarpos'] == 1:  # on bottom
-            style = wx.TB_TEXT | wx.TB_BOTTOM
+        if self.appdata['toolbarpos'] == 1:  # on bottom
+            return wx.TB_TEXT | wx.TB_BOTTOM
 
-        elif self.appdata['toolbarpos'] == 2:  # on right
-            style = wx.TB_TEXT | wx.TB_RIGHT
+        if self.appdata['toolbarpos'] == 2:  # on right
+            return wx.TB_TEXT | wx.TB_RIGHT
 
-        elif self.appdata['toolbarpos'] == 3:
-            style = wx.TB_TEXT | wx.TB_LEFT
+        if self.appdata['toolbarpos'] == 3:
+            return wx.TB_TEXT | wx.TB_LEFT
 
-        return style
+        return None
     # ------------------------------------------------------------------#
 
     def videomass_tool_bar(self):
@@ -1643,6 +1645,7 @@ class MainFrame(wx.Frame):
                           'Videomass', wx.ICON_INFORMATION, self)
             return
 
+        kwargs = None
         if self.AVconvPanel.IsShown():
             kwargs = self.AVconvPanel.queue_mode()
         elif self.PrstsPanel.IsShown():

@@ -27,23 +27,23 @@ This file is part of Videomass.
 
 import wx
 import wx.adv
-from videomass.vdms_sys import __about__
+from videomass.vdms_sys import about_app
 
 
-def aboutdlg(parent, videomass_icon, aboutrel=__about__):
+def show_about_dlg(parent, videomass_icon, aboutrel=about_app):
     """
     It's a predefined template to create a dialogue on
     the program information
 
     """
     # ------------------
-    name_upper = aboutrel.__relname__
-    version = aboutrel.__version__
-    copyr = aboutrel.__copyright__
-    website = aboutrel.__website__
-    author = aboutrel.__author__
-    mail = aboutrel.__mail__
-    long_lic = aboutrel.__license__
+    name_upper = aboutrel.RELNAME
+    version = aboutrel.VERSION
+    copyr = aboutrel.COPYRIGHT
+    website = aboutrel.WEBSITE
+    author = aboutrel.AUTHOR
+    mail = aboutrel.MAIL
+    long_lic = aboutrel.LICENSE
     # ------------------
     info = wx.adv.AboutDialogInfo()
     info.SetIcon(wx.Icon(videomass_icon, type=wx.BITMAP_TYPE_PNG))

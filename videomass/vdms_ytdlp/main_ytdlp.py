@@ -366,12 +366,13 @@ class MainYtdl(wx.Frame):
         check version of youtube-dl used from
         'Version in Use' bar menu
         """
-        this = yt_dlp.version.__version__
-        if msgbox:
-            wx.MessageBox(_("You are using \"yt-dlp\" "
-                            "version {0}").format(this),
-                          'Videomass', wx.ICON_INFORMATION, self)
-            return this
+        if wx.GetApp().appset['yt_dlp'] is True:
+            this = yt_dlp.version.__version__
+            if msgbox:
+                wx.MessageBox(_("You are using \"yt-dlp\" "
+                                "version {0}").format(this),
+                              'Videomass', wx.ICON_INFORMATION, self)
+                return this
         return None
     # -----------------------------------------------------------------#
 
@@ -426,18 +427,18 @@ class MainYtdl(wx.Frame):
         Return the toolbar style
         """
         if self.appdata['toolbarpos'] == 0:  # on top
-            style = wx.TB_TEXT
+            return wx.TB_TEXT
 
-        elif self.appdata['toolbarpos'] == 1:  # on bottom
-            style = wx.TB_TEXT | wx.TB_BOTTOM
+        if self.appdata['toolbarpos'] == 1:  # on bottom
+            return wx.TB_TEXT | wx.TB_BOTTOM
 
-        elif self.appdata['toolbarpos'] == 2:  # on right
-            style = wx.TB_TEXT | wx.TB_RIGHT
+        if self.appdata['toolbarpos'] == 2:  # on right
+            return wx.TB_TEXT | wx.TB_RIGHT
 
-        elif self.appdata['toolbarpos'] == 3:
-            style = wx.TB_TEXT | wx.TB_LEFT
+        if self.appdata['toolbarpos'] == 3:
+            return wx.TB_TEXT | wx.TB_LEFT
 
-        return style
+        return None
     # ------------------------------------------------------------------#
 
     def videomass_tool_bar(self):

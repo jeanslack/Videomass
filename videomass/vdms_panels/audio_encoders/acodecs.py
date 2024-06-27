@@ -462,6 +462,8 @@ class AudioEncoders(scrolled.ScrolledPanel):
             afilter = (f'-af loudnorm=I={str(self.spin_i.GetValue())}'
                        f':LRA={str(self.spin_lra.GetValue())}'
                        f':TP={str(self.spin_tp.GetValue())}')
+        else:
+            return None
 
         if self.maindata.checktimestamp:
             args = (f'-showmode waves -vf "{self.maindata.cmdtimestamp}" '
@@ -802,6 +804,8 @@ class AudioEncoders(scrolled.ScrolledPanel):
             target = "PEAK"
         elif self.rdbx_normalize.GetSelection() == 2:  # RMS
             target = "RMS"
+        else:
+            return
 
         del self.opt["PEAK"][:]
         del self.opt["RMS"][:]
@@ -832,6 +836,8 @@ class AudioEncoders(scrolled.ScrolledPanel):
             title = _('PEAK-based volume statistics')
         elif self.rdbx_normalize.GetSelection() == 2:  # RMS
             title = _('RMS-based volume statistics')
+        else:
+            return
 
         if self.btn_voldect.IsEnabled():
             self.on_analyzes(self)

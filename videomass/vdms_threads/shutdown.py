@@ -73,6 +73,9 @@ def shutdown_system(password=None):
         password = f"{password}\n"
         cmd = ["sudo", "-S", "shutdown", "-p", "now"]
 
+    else:
+        return 'Error: unsupported platform'
+
     try:
         with Popen(cmd,
                    stdin=subprocess.PIPE,

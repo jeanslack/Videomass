@@ -311,7 +311,7 @@ class Ytdlp_Options(wx.Dialog):
         sizercook.Add(labcookgen, 0, wx.ALL, 5)
         url1 = ("https://github.com/yt-dlp/yt-dlp/wiki/"
                 "FAQ#how-do-i-pass-cookies-to-yt-dlp")
-        link1 = hpl.HyperLinkCtrl(tabSev, -1, url1, URL=(url1))
+        link1 = hpl.HyperLinkCtrl(tabSev, -1, url1, URL=url1)
         sizercook.Add(link1, 0, wx.LEFT | wx.EXPAND, 15)
         sizercook.Add((0, 20))
         sizercookie = wx.BoxSizer(wx.HORIZONTAL)
@@ -340,10 +340,10 @@ class Ytdlp_Options(wx.Dialog):
         self.labautocook = wx.StaticText(tabSev, wx.ID_ANY,
                                          _("Web Browser"))
         sizerautocook.Add(self.labautocook, 0, wx.LEFT | wx.TOP | wx.CENTER, 5)
-        webbrowser = ('brave', 'chrome', 'chromium', 'edge',
-                      'firefox', 'opera', 'safari', 'vivaldi')
+        suppwebbrowser = ('brave', 'chrome', 'chromium', 'edge',
+                          'firefox', 'opera', 'safari', 'vivaldi')
         self.cmbx_browser = wx.ComboBox(tabSev, wx.ID_ANY,
-                                        choices=webbrowser,
+                                        choices=suppwebbrowser,
                                         size=(-1, -1),
                                         style=wx.CB_DROPDOWN | wx.CB_READONLY
                                         )
@@ -484,7 +484,7 @@ class Ytdlp_Options(wx.Dialog):
         Event triggered clicking on Button to
         select a new cookies.txt file.
         """
-        fmt = ('*cookies.txt')
+        fmt = '*cookies.txt'
         wild = f"Netscape HTTP Cookie File ({fmt})|{fmt}"
         with wx.FileDialog(self, _("Locate your cookie file"),
                            defaultDir=os.path.expanduser('~'),

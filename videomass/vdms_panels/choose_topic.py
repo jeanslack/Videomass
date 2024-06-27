@@ -27,7 +27,7 @@ This file is part of Videomass.
 import sys
 import wx
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_sys.__about__ import __version__
+from videomass.vdms_sys.about_app import VERSION
 
 
 class Choose_Topic(wx.Panel):
@@ -71,7 +71,7 @@ class Choose_Topic(wx.Panel):
         welcome = wx.StaticText(self, wx.ID_ANY, (_("Welcome to Videomass")),
                                 style=wx.ALIGN_CENTER)
         version = wx.StaticText(self, wx.ID_ANY, (_('Version {}'
-                                                    ).format(__version__)))
+                                                    ).format(VERSION)))
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizer_base.Add(50, 50)
         sizer_base.Add(welcome, 0, wx.EXPAND, 0)

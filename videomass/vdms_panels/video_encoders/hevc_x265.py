@@ -457,8 +457,8 @@ class Hevc_X265(scrolled.ScrolledPanel):
 
         if self.ckbx_pass.IsChecked():
             self.opt["Passes"] = "2"
-            self.opt["passlogfile1"] = ('-x265-params "pass=1"')
-            self.opt["passlogfile2"] = ('-x265-params "pass=2"')
+            self.opt["passlogfile1"] = '-x265-params "pass=1"'
+            self.opt["passlogfile2"] = '-x265-params "pass=2"'
             self.slider_crf.SetValue(-1)
             self.slider_crf.Disable()
             self.spin_vbrate.SetValue(4000)

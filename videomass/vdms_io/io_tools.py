@@ -81,7 +81,6 @@ def stream_play(filepath, timeseq, param, autoexit):
     except IOError:
         wx.MessageBox(_("File does not exist or is invalid:  %s") % (
             filepath), "Videomass", wx.ICON_EXCLAMATION, None)
-        return
 # -----------------------------------------------------------------------#
 
 

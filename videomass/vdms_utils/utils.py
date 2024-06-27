@@ -176,12 +176,11 @@ def to_bytes(string, key='ydl'):
 
     """
     value = 0.0
+    unit = ["byte", "Kibyte", "Mibyte", "Gibyte", "Tibyte",
+            "Pibyte", "Eibyte", "Zibyte", "Yibyte"]
+
     if key == 'ydl':
         unit = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
-
-    elif key == 'ffmpeg':
-        unit = ["byte", "Kibyte", "Mibyte", "Gibyte", "Tibyte",
-                "Pibyte", "Eibyte", "Zibyte", "Yibyte"]
 
     const = 1024.0
 
