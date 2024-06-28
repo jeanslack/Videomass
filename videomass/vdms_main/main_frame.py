@@ -1269,19 +1269,19 @@ class MainFrame(wx.Frame):
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
-        tip = _("Go to the previous panel")
+        tip = _("Previous panel")
         back = self.toolbar.AddTool(3, _('Back'), bmpback,
                                     tip, wx.ITEM_NORMAL
                                     )
-        tip = _("Go to the next panel")
+        tip = _("Next panel")
         forward = self.toolbar.AddTool(4, _('Next'), bmpnext,
                                        tip, wx.ITEM_NORMAL
                                        )
-        tip = _("Go to the 'Home' panel")
+        tip = _("Home panel")
         home = self.toolbar.AddTool(5, _('Home'), bmphome,
                                     tip, wx.ITEM_NORMAL
                                     )
-        tip = _("Play the selected file in the list")
+        tip = _("Play the selected imput file")
         play = self.toolbar.AddTool(35, _('Play'), bmpplay,
                                     tip, wx.ITEM_NORMAL
                                     )
