@@ -49,7 +49,7 @@ classifiers = [
 ]
 
 [tool.hatch.version]
-path = "videomass/vdms_sys/__about__.py"
+path = "videomass/vdms_sys/about_app.py"
 
 [tool.hatch.build.targets.sdist]
 include = [

@@ -29,9 +29,9 @@ import sys
 from shutil import which
 import argparse
 import platform
-from videomass.vdms_sys.__about__ import (__prgname__,
-                                          __version__,
-                                          __relstate__
+from videomass.vdms_sys.about_app import (PRGNAME,
+                                          VERSION,
+                                          RELSTATE
                                           )
 try:
     import wx
@@ -113,7 +113,7 @@ def arguments():
         parser.exit(status=0, message=None)
 
     elif argmts.version:
-        print(f'{__prgname__}: {__version__} ({__relstate__})')
+        print(f'{PRGNAME}: {VERSION} ({RELSTATE})')
         print(info_this_platform())
         parser.exit(status=0, message=None)
 

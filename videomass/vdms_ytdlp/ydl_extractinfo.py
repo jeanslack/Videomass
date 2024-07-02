@@ -93,16 +93,17 @@ class YdlExtractInfo(Thread):
         """
         Defines options to extract_info with youtube_dl
         """
-        mylogger = MyLogger()
-        ydl_opts = {**self.kwargs, 'logger': mylogger}
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            meta = ydl.extract_info(self.url, download=False)
-        error = mylogger.get_message()
+        if wx.GetApp().appset['yt_dlp'] is True:
+            mylogger = MyLogger()
+            ydl_opts = {**self.kwargs, 'logger': mylogger}
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                meta = ydl.extract_info(self.url, download=False)
+            error = mylogger.get_message()
 
-        if error:
-            self.data = (None, error)
-        elif meta:
-            self.data = (meta, None)
+            if error:
+                self.data = (None, error)
+            elif meta:
+                self.data = (meta, None)
 
         wx.CallAfter(pub.sendMessage,
                      "RESULT_EVT",

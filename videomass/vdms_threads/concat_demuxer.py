@@ -79,7 +79,7 @@ class ConcatDemuxer(Thread):
                  f'"{self.kwa["source"]}"\nDestination: '
                  f'"{self.kwa["destination"]}"'
                  )
-        stamp = (f'{count}\n\n[COMMAND]:\n{cmd}')
+        stamp = f'{count}\n\n[COMMAND]:\n{cmd}'
 
         countevt = (f'{self.kwa["nmax"]} Items in progress...\n...for '
                     f'details see Current Log.\nDestination: '

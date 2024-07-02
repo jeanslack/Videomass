@@ -290,6 +290,8 @@ class FFmpeg(Thread):
 
             elif kwa['type'] == 'Two pass':
                 model = one_pass(self.count, self.nargs, **kwa)
+            else:
+                return
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
