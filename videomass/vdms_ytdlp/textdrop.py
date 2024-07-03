@@ -242,6 +242,7 @@ class Url_DnD_Panel(wx.Panel):
         text data on the ListCtrl
         """
         text_data = wx.TextDataObject()
+        success = False
         if wx.TheClipboard.Open():
             success = wx.TheClipboard.GetData(text_data)
             wx.TheClipboard.Close()

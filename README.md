@@ -9,14 +9,14 @@ Videomass is [Free (libre) Software](https://en.wikipedia.org/wiki/Free_software
 written in [Python3](https://www.python.org/) using the
 [wxPython Phoenix](https://www.wxpython.org/) toolkit; it works on Linux, MacOs, Windows and FreeBSD.
 
-**[Changelog](https://github.com/jeanslack/Videomass/blob/master/CHANGELOG)**   
-**[Features](https://jeanslack.github.io/Videomass/features.html)**   
-**[Screenshots](https://jeanslack.github.io/Videomass/screenshots.html)**   
+**[Changelog](https://github.com/jeanslack/Videomass/blob/master/CHANGELOG)**
+**[Features](https://jeanslack.github.io/Videomass/features.html)**
+**[Screenshots](https://jeanslack.github.io/Videomass/screenshots.html)**
 
 # Resources
 
 * [Official Page](http://jeanslack.github.io/Videomass)
-* [Documentations](https://jeanslack.github.io/Videomass/videomass_use.html)
+* [Documentations](https://jeanslack.github.io/Videomass/Docs.html)
 * [Wiki page](https://github.com/jeanslack/Videomass/wiki)
 * [Videomass on PyPi](https://pypi.org/project/videomass/)
 * [Development](https://github.com/jeanslack/Videomass)

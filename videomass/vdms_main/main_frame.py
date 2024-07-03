@@ -35,7 +35,7 @@ from videomass.vdms_utils.queue_utils import write_json_file_queue
 from videomass.vdms_utils.queue_utils import extend_data_queue
 from videomass.vdms_dialogs import preferences
 from videomass.vdms_dialogs import set_timestamp
-from videomass.vdms_dialogs import about
+from videomass.vdms_dialogs import about_dialog
 from videomass.vdms_dialogs import videomass_check_version
 from videomass.vdms_dialogs.while_playing import WhilePlaying
 from videomass.vdms_dialogs.ffmpeg_conf import FFmpegConf
@@ -57,7 +57,7 @@ from videomass.vdms_panels import sequence_to_video
 from videomass.vdms_panels.long_processing_task import LogOut
 from videomass.vdms_panels import presets_manager
 from videomass.vdms_io import io_tools
-from videomass.vdms_sys.__about__ import __version__
+from videomass.vdms_sys.about_app import VERSION
 from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_sys.argparser import info_this_platform
 from videomass.vdms_utils.utils import copydir_recursively
@@ -263,8 +263,10 @@ class MainFrame(wx.Frame):
         """
         if not enablelist:
             return
+
         items = [self.startpan, self.prstpan, self.avpan, self.concpan,
                  self.slides, self.toseq, self.winytdlp, self.logpan,]
+
         [x.Enable(y) for x, y in zip(items, enablelist)]
     # ------------------------------------------------------------------#
 
@@ -417,7 +419,7 @@ class MainFrame(wx.Frame):
 
     def on_Kill(self):
         """
-        This method is called after from the `Setup()` method.
+        This method is called after from the `main_setup_dlg()` method.
         """
         if self.checks_running_processes():
             wx.MessageBox(_("There are still active windows with running "
@@ -614,31 +616,32 @@ class MainFrame(wx.Frame):
 
         # ------------------ help menu
         helpButton = wx.Menu()
-        helpItem = helpButton.Append(wx.ID_HELP, _("User guide"), "")
-        wikiItem = helpButton.Append(wx.ID_ANY, _("Wiki"), "")
-        helpButton.AppendSeparator()
-        issueItem = helpButton.Append(wx.ID_ANY, _("Issue tracker"), "")
-        helpButton.AppendSeparator()
-        transItem = helpButton.Append(wx.ID_ANY, _('Translation...'), '')
-        helpButton.AppendSeparator()
-        DonationItem = helpButton.Append(wx.ID_ANY, _("Donation"), "")
-        helpButton.AppendSeparator()
-        docFFmpeg = helpButton.Append(wx.ID_ANY, _("FFmpeg documentation"), "")
-        helpButton.AppendSeparator()
-        dscrp = (_("System version"),
-                 _("Get version about your operating system, version of "
-                   "Python and wxPython."))
-        sysinfo = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Show log files\tCtrl+L"),
-                 _("Viewing log messages"))
-        viewlogs = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        helpItem = helpButton.Append(wx.ID_HELP, _("User guide"),
+                                     ("https://jeanslack.github.io/"
+                                      "Videomass/videomass_use.html"))
+        issueItem = helpButton.Append(wx.ID_ANY, _("Issue tracker"),
+                                      "https://github.com/jeanslack/"
+                                      "Videomass/issues")
         helpButton.AppendSeparator()
         dscrp = (_("Check for newer version"),
                  _("Check for the latest Videomass version"))
         chklatest = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = (_("System version"),
+                 _("Get version about your operating system, version of "
+                   "Python and wxPython."))
+        sysinfo = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        helpButton.AppendSeparator()
+        dscrp = (_("Show log files\tCtrl+L"),
+                 _("Viewing log messages"))
+        viewlogs = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        helpButton.AppendSeparator()
+        contribution = helpButton.Append(wx.ID_ANY,
+                                         _('Contribute to the project'),
+                                         ('https://jeanslack.github.io/'
+                                          'Videomass/Contribute.html'))
+        helpButton.AppendSeparator()
         infoItem = helpButton.Append(wx.ID_ABOUT, _("About Videomass"), "")
         self.menuBar.Append(helpButton, _("Help"))
-
         self.SetMenuBar(self.menuBar)
 
         # -----------------------Binding menu bar-------------------------#
@@ -648,16 +651,16 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.on_load_queue, self.loadqueue)
         self.Bind(wx.EVT_MENU, self.open_trash_folder, dir_trash)
         self.Bind(wx.EVT_MENU, self.empty_trash_folder, empty_trash)
-        self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
+        self.Bind(wx.EVT_MENU, self.quiet_app, exitItem)
         # ----EDIT----
         self.Bind(wx.EVT_MENU, self.on_file_renaming, self.rename)
         self.Bind(wx.EVT_MENU, self.on_batch_renaming, self.rename_batch)
         self.Bind(wx.EVT_MENU, self.fileDnDTarget.on_delete_selected,
                   self.delfile)
         self.Bind(wx.EVT_MENU, self.fileDnDTarget.delete_all, self.clearall)
-        self.Bind(wx.EVT_MENU, self.Setup, self.setupItem)
+        self.Bind(wx.EVT_MENU, self.main_setup_dlg, self.setupItem)
         # ----TOOLS----
-        self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
+        self.Bind(wx.EVT_MENU, self.find_topics, searchtopic)
         self.Bind(wx.EVT_MENU, self.prst_downloader, self.prstdownload)
         self.Bind(wx.EVT_MENU, self.prst_checkversion, self.prstcheck)
         self.Bind(wx.EVT_MENU, self.reminder, notepad)
@@ -681,16 +684,13 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.logPan, self.logpan)
         self.Bind(wx.EVT_MENU, self.youtubedl, self.winytdlp)
         # ----HELP----
-        self.Bind(wx.EVT_MENU, self.Helpme, helpItem)
-        self.Bind(wx.EVT_MENU, self.Wiki, wikiItem)
-        self.Bind(wx.EVT_MENU, self.Issues, issueItem)
-        self.Bind(wx.EVT_MENU, self.Translations, transItem)
-        self.Bind(wx.EVT_MENU, self.Donation, DonationItem)
-        self.Bind(wx.EVT_MENU, self.DocFFmpeg, docFFmpeg)
-        self.Bind(wx.EVT_MENU, self.CheckNewReleases, chklatest)
-        self.Bind(wx.EVT_MENU, self.View_logs, viewlogs)
+        self.Bind(wx.EVT_MENU, self.helpme, helpItem)
+        self.Bind(wx.EVT_MENU, self.issues, issueItem)
+        self.Bind(wx.EVT_MENU, self.contribute, contribution)
+        self.Bind(wx.EVT_MENU, self.check_new_releases, chklatest)
+        self.Bind(wx.EVT_MENU, self.view_logs, viewlogs)
         self.Bind(wx.EVT_MENU, self.system_vers, sysinfo)
-        self.Bind(wx.EVT_MENU, self.Info, infoItem)
+        self.Bind(wx.EVT_MENU, self.about_videomass, infoItem)
     # --------Menu Bar Event handler (callback)
 
     # --------- Menu  Files
@@ -790,7 +790,7 @@ class MainFrame(wx.Frame):
                           "Videomass", wx.ICON_INFORMATION, self)
     # -------------------------------------------------------------------#
 
-    def Quiet(self, event):
+    def quiet_app(self, event):
         """
         destroy the videomass.
         """
@@ -798,7 +798,7 @@ class MainFrame(wx.Frame):
     # -------------------------------------------------------------------#
     # --------- Menu Tools  ###
 
-    def Search_topic(self, event):
+    def find_topics(self, event):
         """
         Show a dialog box to help you find FFmpeg topics
         """
@@ -996,7 +996,7 @@ class MainFrame(wx.Frame):
         self.whileplay.Show()
     # ------------------------------------------------------------------#
 
-    def View_logs(self, event, flog=None):
+    def view_logs(self, event, flog=None):
         """
         Show to view log files dialog
         flog: filename to select on showlog if any.
@@ -1090,7 +1090,7 @@ class MainFrame(wx.Frame):
         self.autoexit = self.exitplayback.IsChecked()
     # ------------------------------------------------------------------#
 
-    def Setup(self, event):
+    def main_setup_dlg(self, event):
         """
         Calls user settings dialog. Note, this dialog is
         handle like filters dialogs on Videomass, being need
@@ -1110,49 +1110,29 @@ class MainFrame(wx.Frame):
     # ------------------------------------------------------------------#
     # --------- Menu Help  ###
 
-    def Helpme(self, event):
+    def helpme(self, event):
         """
         Online User guide: Open default web browser via Python
         Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        page = 'https://jeanslack.github.io/Videomass/videomass_use.html'
+        page = 'https://jeanslack.github.io/Videomass/Docs.html'
         webbrowser.open(page)
     # ------------------------------------------------------------------#
 
-    def Wiki(self, event):
-        """Wiki page """
-        page = 'https://github.com/jeanslack/Videomass/wiki'
-        webbrowser.open(page)
-    # ------------------------------------------------------------------#
-
-    def Issues(self, event):
+    def issues(self, event):
         """Display Issues page on github"""
         page = 'https://github.com/jeanslack/Videomass/issues'
         webbrowser.open(page)
     # ------------------------------------------------------------------#
 
-    def Translations(self, event):
-        """Display translation how to on github"""
-        page = ('https://jeanslack.github.io/Videomass/Pages/'
-                'Localization_Guidelines.html')
+    def contribute(self, event):
+        """Display contribute web page"""
+        page = 'https://jeanslack.github.io/Videomass/Contribute.html'
         webbrowser.open(page)
     # ------------------------------------------------------------------#
 
-    def Donation(self, event):
-        """Display donation page on github"""
-        page = ('https://jeanslack.github.io/Videomass/Contribute.html'
-                '#donations')
-        webbrowser.open(page)
-    # ------------------------------------------------------------------#
-
-    def DocFFmpeg(self, event):
-        """Display FFmpeg page documentation"""
-        page = 'https://www.ffmpeg.org/documentation.html'
-        webbrowser.open(page)
-    # -------------------------------------------------------------------#
-
-    def CheckNewReleases(self, event):
+    def check_new_releases(self, event):
         """
         Compare the Videomass version with a given
         new version found on github.
@@ -1169,7 +1149,7 @@ class MainFrame(wx.Frame):
         version = version[0].split('v')[1]
         newmajor, newminor, newmicro = version.split('.')
         new_version = int(f'{newmajor}{newminor}{newmicro}')
-        major, minor, micro = __version__.split('.')
+        major, minor, micro = VERSION.split('.')
         this_version = int(f'{major}{minor}{micro}')
 
         if new_version > this_version:
@@ -1185,7 +1165,7 @@ class MainFrame(wx.Frame):
         dlg = videomass_check_version.CheckNewVersion(self,
                                                       msg,
                                                       version,
-                                                      __version__,
+                                                      VERSION,
                                                       )
         dlg.ShowModal()
     # -------------------------------------------------------------------#
@@ -1198,11 +1178,11 @@ class MainFrame(wx.Frame):
                       wx.ICON_INFORMATION, self)
     # -------------------------------------------------------------------#
 
-    def Info(self, event):
+    def about_videomass(self, event):
         """
         Display the program informations and developpers
         """
-        about.aboutdlg(self, self.icons['videomass'])
+        about_dialog.show_about_dlg(self, self.icons['videomass'])
 
     # -----------------  BUILD THE TOOL BAR  --------------------###
 
@@ -1212,18 +1192,18 @@ class MainFrame(wx.Frame):
         the user preferences.
         """
         if self.appdata['toolbarpos'] == 0:  # on top
-            style = wx.TB_TEXT
+            return wx.TB_TEXT
 
-        elif self.appdata['toolbarpos'] == 1:  # on bottom
-            style = wx.TB_TEXT | wx.TB_BOTTOM
+        if self.appdata['toolbarpos'] == 1:  # on bottom
+            return wx.TB_TEXT | wx.TB_BOTTOM
 
-        elif self.appdata['toolbarpos'] == 2:  # on right
-            style = wx.TB_TEXT | wx.TB_RIGHT
+        if self.appdata['toolbarpos'] == 2:  # on right
+            return wx.TB_TEXT | wx.TB_RIGHT
 
-        elif self.appdata['toolbarpos'] == 3:
-            style = wx.TB_TEXT | wx.TB_LEFT
+        if self.appdata['toolbarpos'] == 3:
+            return wx.TB_TEXT | wx.TB_LEFT
 
-        return style
+        return None
     # ------------------------------------------------------------------#
 
     def videomass_tool_bar(self):
@@ -1267,19 +1247,19 @@ class MainFrame(wx.Frame):
 
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
-        tip = _("Go to the previous panel")
+        tip = _("Previous panel")
         back = self.toolbar.AddTool(3, _('Back'), bmpback,
                                     tip, wx.ITEM_NORMAL
                                     )
-        tip = _("Go to the next panel")
+        tip = _("Next panel")
         forward = self.toolbar.AddTool(4, _('Next'), bmpnext,
                                        tip, wx.ITEM_NORMAL
                                        )
-        tip = _("Go to the 'Home' panel")
+        tip = _("Home panel")
         home = self.toolbar.AddTool(5, _('Home'), bmphome,
                                     tip, wx.ITEM_NORMAL
                                     )
-        tip = _("Play the selected file in the list")
+        tip = _("Play the selected imput file")
         play = self.toolbar.AddTool(35, _('Play'), bmpplay,
                                     tip, wx.ITEM_NORMAL
                                     )
@@ -1643,6 +1623,7 @@ class MainFrame(wx.Frame):
                           'Videomass', wx.ICON_INFORMATION, self)
             return
 
+        kwargs = None
         if self.AVconvPanel.IsShown():
             kwargs = self.AVconvPanel.queue_mode()
         elif self.PrstsPanel.IsShown():

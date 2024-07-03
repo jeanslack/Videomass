@@ -94,7 +94,7 @@ class PicturesFromVideo(Thread):
                      )
         logwrite(com, '', self.logfile)  # write n/n + command only
 
-        if not self.appdata['ostype'] == 'Windows':
+        if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
         try:
             with Popen(cmd,

@@ -37,20 +37,20 @@ this = os.path.realpath(os.path.abspath(__file__))
 here = os.path.dirname(os.path.dirname(os.path.dirname(this)))
 sys.path.insert(0, here)
 try:
-    from videomass.vdms_sys import __about__ as aboutrel
+    from videomass.vdms_sys import about_app as aboutrel
 except ModuleNotFoundError as error:
     sys.exit(error)
 # here = os.path.dirname(this)
 
-RLS_NAME = aboutrel.__relname__  # first letter is Uppercase
-PRG_NAME = aboutrel.__prgname__  # first letter is lower
-VERSION = aboutrel.__version__
-RELEASE=aboutrel.__relstate__
-COPYRIGHT=aboutrel.__copyright__
-WEBSITE=aboutrel.__website__
-AUTHOR=aboutrel.__author__
-EMAIL=aboutrel.__mail__
-COMMENT=aboutrel.__comment__
+RLS_NAME = aboutrel.RELNAME  # first letter is Uppercase
+PRG_NAME = aboutrel.PRGNAME  # first letter is lower
+VERSION = aboutrel.VERSION
+RELEASE=aboutrel.RELSTATE
+COPYRIGHT=aboutrel.COPYRIGHT
+WEBSITE=aboutrel.WEBSITE
+AUTHOR=aboutrel.AUTHOR
+EMAIL=aboutrel.MAIL
+COMMENT=aboutrel.COMMENT
 BUILD_DIR = os.path.join(here, 'dist', RLS_NAME)  # dist/Videomass folder
 COPYING = os.path.join(BUILD_DIR, 'DOC', 'LICENSE')
 INFO_RTF = os.path.join(BUILD_DIR, 'DOC', 'NOTICE.rtf')

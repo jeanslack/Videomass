@@ -3,7 +3,7 @@ videomass (5.0.15-1) UNRELEASED; urgency=medium
   * Videomass now uses `hatchling` as the default build backend which replaces
     `setuptools`.
   * Improved startup configuration script.
-  * Created a new convenient `__about__` script to store program description
+  * Created a new convenient `about_app` script to store program description
     data which replace `msg_info`.
   * New feature created that allows you to import the yt_dlp module externally,
     replacing the one installed on your system or the one on your virtual

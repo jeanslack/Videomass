@@ -33,55 +33,55 @@ this = os.path.realpath(os.path.abspath(__file__))
 HERE = os.path.dirname(os.path.dirname(os.path.dirname(this)))
 sys.path.insert(0, HERE)
 try:
-    from videomass.vdms_sys import __about__
+    from videomass.vdms_sys import about_app
 except ModuleNotFoundError as modulerror:
     sys.exit(modulerror)
 
 SCRIPT = 'launcher'
-NAME = 'videomass'
+NAME = about_app.PRGNAME
 BINARY = os.path.join(HERE, SCRIPT)
 SPECFILE = os.path.join(HERE, f'{NAME}.spec')
 
 
-def videomass_data_source(here=HERE, name=NAME, release=__about__):
+def videomass_data_source(here=HERE, name=NAME, release=about_app):
     """
     Returns a dict object of the Videomass data
     and pathnames needed to spec file.
     """
-    return dict(RLS_NAME=release.__relname__,  # first letter is Uppercase
-                PRG_NAME=release.__prgname__,  # first letter is lower
-                NAME=name,
-                VERSION=release.__version__,
-                RELEASE=release.__relstate__,
-                COPYRIGHT=release.__copyright__,
-                WEBSITE=release.__website__,
-                AUTHOR=release.__author__,
-                EMAIL=release.__mail__,
-                COMMENT=release.__comment__,
-                ART=os.path.join(here, 'videomass', 'data', 'icons'),
-                LOCALE=os.path.join(here, 'videomass', 'data', 'locale'),
-                SHARE=os.path.join(here, 'videomass', 'data', 'presets'),
-                FFMPEG=os.path.join(here, 'videomass', 'data', 'FFMPEG'),
-                NOTICE=os.path.join(here, 'videomass', 'data',
-                                    'FFMPEG', 'NOTICE.rtf'),
-                AUTH=os.path.join(here, 'AUTHORS'),
-                BUGS=os.path.join(here, 'BUGS'),
-                CHANGELOG=os.path.join(here, 'CHANGELOG'),
-                COPYING=os.path.join(here, 'LICENSE'),
-                INSTALL=os.path.join(here, 'INSTALL'),
-                README=os.path.join(here, 'README.md'),
-                TODO=os.path.join(here, 'TODO'),
-                ICNS=os.path.join(here,
-                                  'videomass',
-                                  'data',
-                                  'icons',
-                                  'videomass.icns'),
-                ICO=os.path.join(here,
+    return {"RLS_NAM": release.RELNAME,  # first letter is Uppercase
+            "PRG_NAME": release.PRGNAME,  # first letter is lower
+            "NAME": name,
+            "VERSION": release.VERSION,
+            "RELEASE": release.RELSTATE,
+            "COPYRIGHT": release.COPYRIGHT,
+            "WEBSITE": release.WEBSITE,
+            "AUTHOR": release.AUTHOR,
+            "EMAIL": release.MAIL,
+            "COMMENT": release.COMMENT,
+            "ART": os.path.join(here, 'videomass', 'data', 'icons'),
+            "LOCALE": os.path.join(here, 'videomass', 'data', 'locale'),
+            "SHARE": os.path.join(here, 'videomass', 'data', 'presets'),
+            "FFMPEG": os.path.join(here, 'videomass', 'data', 'FFMPEG'),
+            "NOTICE": os.path.join(here, 'videomass', 'data',
+                                   'FFMPEG', 'NOTICE.rtf'),
+            "AUTH": os.path.join(here, 'AUTHORS'),
+            "BUGS": os.path.join(here, 'BUGS'),
+            "CHANGELOG": os.path.join(here, 'CHANGELOG'),
+            "COPYING": os.path.join(here, 'LICENSE'),
+            "INSTALL": os.path.join(here, 'INSTALL'),
+            "README": os.path.join(here, 'README.md'),
+            "TODO": os.path.join(here, 'TODO'),
+            "ICNS": os.path.join(here,
                                  'videomass',
                                  'data',
                                  'icons',
-                                 'videomass.ico')
-                )
+                                 'videomass.icns'),
+            "ICO": os.path.join(here,
+                                'videomass',
+                                'data',
+                                'icons',
+                                'videomass.ico')
+            }
 
 
 class PyinstallerSpec():
@@ -311,7 +311,7 @@ def make_portable(here=HERE):
     if portable in ('n', 'N'):
         return False
 
-    error = False
+    idx = None
     row = "        kwargs = {'make_portable': None}"
     code = ("        data = os.path.join(os.path.dirname(sys.executable), "
             "'portable_data')\n        kwargs = {'make_portable': data}\n")
@@ -330,10 +330,7 @@ def make_portable(here=HERE):
             gui_app.writelines(data)
             gui_app.truncate()
         else:
-            error = True
-
-    if error:
-        sys.exit("\nERROR on writing file `gui_app.py`")
+            sys.exit("\nERROR on writing file `gui_app.py`")
 
     return True
 # --------------------------------------------------------#
@@ -435,7 +432,6 @@ def main():
             restore_sources(backup)
     else:
         print("\nType 'pyinstaller_setup.py -h' for help.\n")
-        return
 
 
 if __name__ == '__main__':

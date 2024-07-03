@@ -220,13 +220,13 @@ class SetUp(wx.Dialog):
         gridytdlp.Add(self.txtctrl_ytexec, 1, wx.ALL, 5)
         gridytdlp.Add(self.btn_ytexec, 0, wx.RIGHT | wx.CENTER, 5)
         sizerytdlp.Add((0, 20))
-        msg = (_('Import the «yt_dlp» package externally. E.g, you can '
-                 'include the source package directory\nor the path '
+        msg = (_('Import the yt_dlp Python package externally. E.g, you can '
+                 'include the source package\ndirectory or the path '
                  'to the package installed in an external virtual '
                  'environment.'))
         labytmod = wx.StaticText(tabThree, wx.ID_ANY, msg)
         sizerytdlp.Add(labytmod, 0, wx.ALL | wx.EXPAND, 5)
-        msg = _('Enable external import of «yd_dlp» package')
+        msg = _('Enable external import of yd_dlp package')
         self.ckbx_ytmod = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         sizerytdlp.Add(self.ckbx_ytmod, 0, wx.LEFT | wx.TOP, 5)
 
@@ -662,7 +662,7 @@ class SetUp(wx.Dialog):
 
     def on_set_lang(self, event):
         """set application language"""
-
+        lang = 'Default'
         for key, val in supLang.items():
             if val[1] == self.cmbx_lang.GetValue():
                 lang = key

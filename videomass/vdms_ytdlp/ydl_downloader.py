@@ -318,11 +318,12 @@ class YdlDownloader(Thread):
                         }
             logtxt = f'{count}\n{ydl_opts}'
             logwrite(logtxt, '', self.logfile)  # write log cmd
-            try:
-                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                    ydl.download([f"{url}"])
-            except Exception:
-                break
+            if wx.GetApp().appset['yt_dlp'] is True:
+                try:
+                    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                        ydl.download([f"{url}"])
+                except Exception:
+                    break
 
         wx.CallAfter(pub.sendMessage, "END_YTDL_EVT")
 

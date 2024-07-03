@@ -401,11 +401,7 @@ class Downloader(wx.Panel):
             return None
         kwa = self.default_statistics_options()
 
-        def _error(msg, infoicon):
-            if infoicon == 'warning':
-                icon, cap = wx.ICON_WARNING, _('Videomass - Warning!')
-            elif infoicon == 'error':
-                icon, cap = wx.ICON_ERROR, _('Videomass - Error!')
+        def _error(msg, icon, cap):
             wx.MessageBox(msg, cap, icon, self)
             self.choice.SetSelection(0)
             self.on_choicebox(self, False)
@@ -422,11 +418,12 @@ class Downloader(wx.Panel):
                     msg = _("Unable to get format codes on {0}, "
                             "unsupported URL:\n\n{1}"
                             ).format(unsupp.split('/')[1], url)
-                    return _error(msg, 'warning')
+                    return _error(msg, wx.ICON_WARNING,
+                                  _('Videomass - Warning!'))
 
         ret = self.panel_cod.set_formatcode(self.parent.data_url, kwa)
         if ret:
-            return _error(ret, 'error')
+            return _error(ret, wx.ICON_ERROR, _('Videomass - Error!'))
         return None
     # -----------------------------------------------------------------#
 
@@ -779,41 +776,37 @@ class Downloader(wx.Panel):
         else:
             _id = '%(title).100s'
 
+        formatquality = self.quality
+        outtmpl = f'{_id}.%(ext)s'
+
         if self.choice.GetSelection() == 0:  # precompiled or quality
             code = []
-            formatquality = self.quality
-            outtmpl = f'{_id}.%(ext)s'
             data['extractaudio'] = False
 
         elif self.choice.GetSelection() == 1:  # by video resolution
             code = []
-            formatquality = self.quality
-            outtmpl = f'{_id}.%(ext)s'
             data['extractaudio'] = False
 
         elif self.choice.GetSelection() == 2:  # audio and video splitted
             code = []
-            formatquality = self.quality
             outtmpl = f'{_id}.f%(format_id)s.%(ext)s'
             data['extractaudio'] = False
 
         elif self.choice.GetSelection() == 3:  # audio only
             code = []
-            formatquality = self.quality
-            outtmpl = f'{_id}.%(ext)s'
             data['extractaudio'] = True
 
         elif self.choice.GetSelection() == 4:  # format code
             code = self.panel_cod.getformatcode()
+            formatquality = ''
+            outtmpl = f'{_id}.f%(format_id)s.%(ext)s'
+            data['extractaudio'] = False
             if not code:
                 self.parent.statusbar_msg(Downloader.MSG_1,
                                           self.red,
                                           Downloader.WHITE
                                           )
                 return
-            formatquality = ''
-            outtmpl = f'{_id}.f%(format_id)s.%(ext)s'
-            data['extractaudio'] = False
 
         self.to_processing(self.build_args(outtmpl,
                                            formatquality,

@@ -68,7 +68,7 @@ def convert_images(*varargs, **kwargs):
         tmpf = os.path.join(tmpdir, f'{imagenames}{prognum}.bmp')
         cmd_1 = f'{args} -i "{files}" "{tmpf}"'
 
-        if not kwargs['ostype'] == 'Windows':
+        if not platform.system() == 'Windows':
             cmd_1 = shlex.split(cmd_1)
         try:
             with Popen(cmd_1,
@@ -148,7 +148,7 @@ def resizing_process(*varargs, **kwargs):
              )
     logwrite(f'\nFile resizing...\n\n[COMMAND]:\n{cmd_1}', '', logname)
 
-    if not kwargs['ostype'] == 'Windows':
+    if not platform.system() == 'Windows':
         cmd_1 = shlex.split(cmd_1)
     try:
         with Popen(cmd_1,
@@ -280,7 +280,7 @@ class SlideshowMaker(Thread):
                      )
             count = (f'\n\nVideo production...\nSource: "{tempdir}"\n'
                      f'Destination: "{self.destination}"\n')
-            log = (f'{count}\n\n[COMMAND]:\n{cmd_2}')
+            log = f'{count}\n\n[COMMAND]:\n{cmd_2}'
 
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",

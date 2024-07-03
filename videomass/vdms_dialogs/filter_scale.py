@@ -286,7 +286,6 @@ class Scale(wx.Dialog):
         if error:
             wx.MessageBox(f'{error}', _('Videomass - Error!'),
                           wx.ICON_ERROR, self)
-            return
 
     def keep_aspect_ratio_on(self):
         """

@@ -1254,6 +1254,7 @@ class AV_Conv(wx.Panel):
             if prstdialog.ShowModal() == wx.ID_CANCEL:
                 return
         self.parent.PrstsPanel.presets_refresh(self)
+        return
     # ------------------------------------------------------------------#
 
     def preset_name(self, action):
@@ -1269,20 +1270,20 @@ class AV_Conv(wx.Panel):
                                | wx.FD_OVERWRITE_PROMPT) as fileDialog:
                 fileDialog.SetFilename('New preset.json')
                 if fileDialog.ShowModal() == wx.ID_CANCEL:
-                    return
+                    return None
                 filename = fileDialog.GetPath()
                 if os.path.splitext(filename)[1].strip() != '.json':
                     wx.LogError(_('Invalid file name, make sure to provide a '
                                   'valid name including the «.json» '
                                   'extension'))
-                    return
+                    return None
             try:
                 with open(filename, 'w', encoding='utf-8') as file:
                     file.write('[]')
             except IOError:
                 wx.LogError(_("Cannot save current "
                               "data in file «{}».").format(filename))
-                return
+                return None
 
         elif action == 1:
             with wx.FileDialog(self, _("Open Videomass preset"),
@@ -1291,10 +1292,10 @@ class AV_Conv(wx.Panel):
                                style=wx.FD_OPEN
                                | wx.FD_FILE_MUST_EXIST) as fileDialog:
                 if fileDialog.ShowModal() == wx.ID_CANCEL:
-                    return
+                    return None
                 filename = fileDialog.GetPath()
         else:
-            return
+            return None
 
         return filename
     # ------------------------------------------------------------------#

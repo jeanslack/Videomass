@@ -145,7 +145,6 @@ class SubtitleEditor(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_help, self.btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
-
         if not self.data["writesubtitles"]:
             self.default_setting()
         else:
@@ -230,6 +229,9 @@ class SubtitleEditor(wx.Dialog):
             writeautomaticsub = self.ckbx_autogen.GetValue()
             embedsubtitle = self.ckbx_embed.GetValue()
             skip_download = self.ckbx_skip_dl.GetValue()
+
+        else:
+            return self.data
 
         return {'writesubtitles': writesubtitles,
                 'subtitleslangs': subtitleslangs,

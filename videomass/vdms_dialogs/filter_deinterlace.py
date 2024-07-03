@@ -261,15 +261,13 @@ class Deinterlace(wx.Dialog):
                 self.rdbx_w3fdif_d.Enable()
                 indx = self.cmd_opt["deinterlace"].split(':')
                 if indx[0].split('=')[2] == 'complex':
-                    filt = 1
+                    self.rdbx_w3fdif.SetSelection(1)
                 elif indx[0].split('=')[2] == 'simple':
-                    filt = 0
-                self.rdbx_w3fdif.SetSelection(filt)
+                    self.rdbx_w3fdif.SetSelection(0)
                 if indx[1].split('=')[1] == 'all':
-                    deint = 0
+                    self.rdbx_w3fdif_d.SetSelection(0)
                 elif indx[1].split('=')[1] == 'interlaced':
-                    deint = 1
-                self.rdbx_w3fdif_d.SetSelection(deint)
+                    self.rdbx_w3fdif_d.SetSelection(1)
 
         elif 'interlace' in self.cmd_opt:
             self.ckbx_interlace.SetValue(True)
