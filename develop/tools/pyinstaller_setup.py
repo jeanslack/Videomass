@@ -48,7 +48,7 @@ def videomass_data_source(here=HERE, name=NAME, release=about_app):
     Returns a dict object of the Videomass data
     and pathnames needed to spec file.
     """
-    return {"RLS_NAM": release.RELNAME,  # first letter is Uppercase
+    return {"RLS_NAME": release.RELNAME,  # first letter is Uppercase
             "PRG_NAME": release.PRGNAME,  # first letter is lower
             "NAME": name,
             "VERSION": release.VERSION,
