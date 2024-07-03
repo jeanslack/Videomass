@@ -109,7 +109,7 @@ videomass = "videomass.gui_app:main"
 
 [project.urls]
 Homepage = "https://jeanslack.github.io/Videomass/"
-Documentation = "https://jeanslack.github.io/Videomass/videomass_use.html"
+Documentation = "https://jeanslack.github.io/Videomass/Docs.html"
 Wiki = "https://github.com/jeanslack/Videomass/wiki"
 Repository = "https://github.com/jeanslack/Videomass"
 Issues = "https://github.com/jeanslack/Videomass/issues"

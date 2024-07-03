@@ -60,7 +60,7 @@ class Videomass(wx.App):
         - filename='path/to/file.txt' Redirect sys.stdout
           and sys.stderr to file
 
-        See main() function below to settings it.
+        Also see main() function.
 
         """
         self.locale = None
@@ -238,7 +238,7 @@ class Videomass(wx.App):
 
 def main():
     """
-    Without command line arguments starts the
+    With the default command line arguments starts
     wx.App mainloop with default keyword arguments.
     """
     if not sys.argv[1:]:
