@@ -73,13 +73,15 @@ to date with the original project. The project development page can be found
 ---
 
 ## Special Thanks to:
-- All **[FFmpeg](https://www.ffmpeg.org/)** community and developpers.
-- All **[youtube-dl](https://github.com/ytdl-org/youtube-dl/)** and **[yt-dlp](https://github.com/yt-dlp/yt-dlp)** contributors and developpers.
+- [Python Software Foundation](https://www.python.org/psf-landing/)
+- [wxPython](https://wxpython.org/index.html)
+- [FFmpeg](https://www.ffmpeg.org/)
+- [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 
 ## Also special thanks to:
-- **[Roelof Berkepeis](https://github.com/tissatussa)**
+- [Roelof Berkepeis](https://github.com/tissatussa)
 - **ChourS** from Russia
-- **[johannesdedoper](https://github.com/johannesdedoper)**
+- [johannesdedoper](https://github.com/johannesdedoper)
 
 For their support, suggestions and invaluable help for Videomass.
 

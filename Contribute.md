@@ -14,6 +14,19 @@ There are several ways to help the development of Videomass:
 
 ---
 
+## By becoming a sponsor
+{: .bg-green-300}
+
+I'd love to get a little sponsorship for the time and effort spent on my projects.   
+
+<iframe src="https://github.com/sponsors/jeanslack/card" title="Sponsor jeanslack" height="225" width="600" style="border: 0;"></iframe>
+
+Alternatively you can PayPal me at this link:   
+
+**[https://www.paypal.me/GPernigotto](https://www.paypal.me/GPernigotto)**
+
+---
+
 ## Issue Reporting
 {: .bg-green-300}
 
@@ -53,6 +66,6 @@ unofficial repositories of any distribution.
 {: .bg-green-300}
 
 User documentation of Videomass is still a work in progress. The source files 
-are hosted on [github](https://github.com/jeanslack/Videomass/tree/gh-pages/Pages/User-guide-languages). 
+are hosted on [github](https://github.com/jeanslack/Videomass/tree/gh-pages/User-guide). 
 You can contribute to its content by sending pull requests on GitHub or by 
 email <jeanlucperni@gmail.com> .

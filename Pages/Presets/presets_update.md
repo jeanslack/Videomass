@@ -5,7 +5,7 @@ parent: Documentation
 nav_order: 2
 ---
 
-# How to update to new versions of presets
+# Updating presets
 
 ---
 
@@ -30,7 +30,6 @@ To update your presets, choose one of the options below.
 ## Downloading from the development page (Option 2)
 {: .bg-green-300}
 
-1. Go to [Videomass-presets page](https://github.com/jeanslack/Videomass-presets)
-2. Download the [latest release](https://github.com/jeanslack/Videomass-presets/releases) available
-3. Extract tarball or zipball archive.
-4. Launch the Videomass application and follow steps 5 through 8 of option 1 above.
+1. Download the latest presets archive from available [releases](https://github.com/jeanslack/Videomass-presets/releases).
+2. Extract the archive.
+3. Launch the Videomass application and follow steps 5 through 8 of option 1 above.

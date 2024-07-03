@@ -5,7 +5,7 @@ has_children: true
 nav_order: 5
 ---
 
-# Documentation
+# Videomass Documentation
 Online documentation is work in progress. 
 --- 
 

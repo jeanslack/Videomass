@@ -16,7 +16,7 @@ Designed for advanced and beginner users, it offers a wide range of features and
 {: .fs-3 .fw-300 }
 
 
-[Get started now](videomass_use.md){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } 
+[Get started now](Docs.md){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } 
 [Downloads](download_installation.md){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } 
 [View it on GitHub](https://github.com/jeanslack/Videomass){: .btn .fs-5 .mb-4 .mb-md-0 }
 

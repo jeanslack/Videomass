@@ -14,10 +14,10 @@ nav_order: 3
 This PPA currently publishes packages for [Ubuntu](https://ubuntu.com/), including official and 
 derivative distributions.   
 
-- [Ubuntu 24.04 Noble](https://cloud-images.ubuntu.com/noble/current/)
-- [Ubuntu 23.10 Mantic (Daily-Live))](https://cdimage.ubuntu.com/daily-live/current/)
-- [Ubuntu 22.04 Jammy](https://releases.ubuntu.com/22.04/) 
-- [Ubuntu 20.04 Focal](https://releases.ubuntu.com/focal/)     
+- [Ubuntu 24.10 Oracular](http://cdimage.ubuntu.com/daily-live/current/)
+- [Ubuntu 24.04 Noble](https://releases.ubuntu.com/noble/)
+- [Ubuntu 23.10 Mantic)](https://releases.ubuntu.com/mantic/)
+- [Ubuntu 22.04 Jammy](https://releases.ubuntu.com/jammy/) 
 
 
 To install Videomass add this 
@@ -26,7 +26,7 @@ To install Videomass add this
 
 `$ sudo apt-add-repository ppa:jeanslack/videomass`   
 `$ sudo apt-get update`  
-`$ sudo apt install python3-videomass`   
+`$ sudo apt install videomass`   
 
 For any other application-related issues, please read 
 [Known Problems](../../known_problems) and [Bug Reports](../Bugs) pages.
