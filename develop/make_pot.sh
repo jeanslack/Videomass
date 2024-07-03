@@ -37,7 +37,7 @@ $XGETTEXT -d videomass "../../../videomass/gui_app.py" \
 "../../../videomass/vdms_dialogs/filter_transpose.py" \
 "../../../videomass/vdms_dialogs/list_warning.py" \
 "../../../videomass/vdms_dialogs/wizard_dlg.py" \
-"../../../videomass/vdms_dialogs/about.py" \
+"../../../videomass/vdms_dialogs/about_dialog.py" \
 "../../../videomass/vdms_dialogs/setting_profiles.py" \
 "../../../videomass/vdms_dialogs/set_timestamp.py" \
 "../../../videomass/vdms_dialogs/preferences.py" \

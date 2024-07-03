@@ -423,7 +423,7 @@ class Downloader(wx.Panel):
 
         ret = self.panel_cod.set_formatcode(self.parent.data_url, kwa)
         if ret:
-            return _error(ret, wx.ICON_ERROR, _('Videomass - Error! ME'))
+            return _error(ret, wx.ICON_ERROR, _('Videomass - Error!'))
         return None
     # -----------------------------------------------------------------#
 
