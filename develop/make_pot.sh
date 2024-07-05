@@ -79,6 +79,7 @@ $XGETTEXT -d videomass "../../../videomass/gui_app.py" \
 "../../../videomass/vdms_panels/presets_manager.py" \
 "../../../videomass/vdms_panels/sequence_to_video.py" \
 "../../../videomass/vdms_panels/video_to_sequence.py" \
+"../../../videomass/vdms_sys/argparser.py" \
 "../../../videomass/vdms_threads/ffplay_file.py" \
 "../../../videomass/vdms_threads/image_extractor.py" \
 "../../../videomass/vdms_threads/slideshow.py" \
