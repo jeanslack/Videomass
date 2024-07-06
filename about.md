@@ -53,13 +53,17 @@ to date with the original project. The project development page can be found
 
 ## Translators
 
-- Italian translation by [Gianluca Pernigotto](https://github.com/jeanslack)
-- Russian translation by ChourS
-- Dutch translation by [Roelof Berkepeis](https://github.com/tissatussa) and [johannesdedoper](https://github.com/johannesdedoper)
-- Spanish translation by katnatek from [https://blogdrake.net/](https://blogdrake.net/) 
-- Portuguese (Brazialian) translation by Samuel
-- French translation by Phil Aug
-- Simplified Chinese by [MaiJZ](https://github.com/maijz128)
+- Chinese (Simplified) - MaiJZ <https://github.com/maijz128>
+- Dutch - Roelof Berkepeis <roelof@imoma.eu>
+- Dutch - @johannesdedoper <https://github.com/johannesdedoper>
+- French - Phil Aug <philiaug@live.fr>
+- Italian - Gianluca Pernigotto <jeanlucperni@gmail.com>
+- Italian - bovirus <bovirus@gmail.com>
+- Portuguese (Brazilian) - Samuel <http://littlesvr.ca/ostd/>
+- Russian - ChourS <chours2008@yandex.ru>
+- Spanish (Cuba) - katnatek <https://www.blogdrake.net/>
+- Spanish (Mexico) - katnatek <https://www.blogdrake.net/>
+- Spanish (Spain) - katnatek <https://www.blogdrake.net/>
 
 ---
 
@@ -69,6 +73,7 @@ to date with the original project. The project development page can be found
 - [maijz128](https://github.com/maijz128)
 - [CComparon](https://github.com/CComparon)
 - [samarthshrivas](https://github.com/samarthshrivas)
+- [bovirus](https://github.com/bovirus)
 
 ---
 
