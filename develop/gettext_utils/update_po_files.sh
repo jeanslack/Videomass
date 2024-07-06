@@ -6,51 +6,34 @@
 # Rev: July.05.2024
 #
 # PORPOSE: Updates all translation strings of videomass.po files contained in
-#          a given directory (usually "videomass/data/locale"). It accept
-#          absolute or relative path names. If `compile=true` argument is given
-#          it compile MO bin
+#          in "videomass/data/locale". If `--compile` argument is given
+#          it also compile MO bin files.
 #
-# USAGE: ~$ update_po_files.sh '/path/to/locale/directory' [compile=true]
+# USAGE: ~$ cd /Videomass/source/directory
+#        ~$ develop/gettext_utils/update_po_files.sh [--compile]
 
-TARGET=$1
-POTFILE="$TARGET/videomass.pot"
-COMPILE_MO_BIN=$2
+set -e  # Exit immediately if a command exits with a non-zero status.
 
-if [ -z "$1" ]; then
-    echo 'Missing argument: Path to directory named "locale" is required (e.g "videomass/data/locale")'
-    exit 1
-fi
+TARGET="videomass/data/locale"  # relative path to "locale" directory
+POT="$TARGET/videomass.pot"  # pot file
+COMPILE_MO=$1  # optional positional argument
 
-if [ -d "${TARGET}" ] ; then
-    echo "Target directory: '${TARGET}'";
-else
-    if [ -f "${TARGET}" ]; then
-        echo "'${TARGET}' is a file";
-        exit 1
-    else
-        echo "'${TARGET}' is not valid";
-        exit 1
-    fi
-fi
+echo -e "\nTarget directory: \033[34m\e[1m'${TARGET}'\e[0m"
 
-if [ ! -f "${POTFILE}" ]; then
-    echo "File not found: videomass.pot"
+if [ ! -f "${POT}" ]; then
+    echo -e "\033[31mERROR:\e[0m File not found: videomass.pot"
     exit 1
 fi
 
 for langdirs in $(ls -d ${TARGET}/*/)
 do
     PO="${langdirs}LC_MESSAGES/videomass.po"
-    msgmerge --update --no-fuzzy-matching --width=400 --no-wrap $PO $POTFILE
-    if [ "${COMPILE_MO_BIN}" = 'compile=true' ]; then
-        echo "Now compile videomass.mo file because compile=true"
+    msgmerge --update --no-fuzzy-matching --width=400 --no-wrap $PO $POT
+    if [ "${COMPILE_MO}" = '--compile' ]; then
+        echo 'Now Compile the videomass.mo file because the "--compile" argument is given'
         msgfmt -c "${PO}" -o "${langdirs}LC_MESSAGES/videomass.mo"
     fi
 done
 
-if [ $? != 0 ]; then
-    echo 'Failed!'
-else
-    echo "All PO files was updated successfully."
-    echo "Done!"
-fi
+echo -e "\n\e[1mSuccessful update.\e[0m"
+echo -e "\033[32mDone!\e[0m"

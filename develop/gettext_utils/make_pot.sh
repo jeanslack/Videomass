@@ -6,38 +6,25 @@
 # Rev: July.05.2024
 #
 # PORPOSE: Create a new `videomass.pot` file with the latest strings.
-# USAGE: ~$ make_pot.sh '/path/to/locale/directory'
+#
+# USAGE: ~$ cd /Videomass/source/directory
+#        ~$ develop/gettext_utils/make_pot.sh
 
-TARGET=$1  # locale directory
+TARGET="videomass/data/locale"  # relative path to "locale" directory
 POTFILE="$TARGET/videomass.pot"  # store the new .pot file here
 self="$(readlink -f -- $0)"  # this file
 HERE="${self%/*}"  # dirname of this file
-FILE_CATALOG=$(<"${HERE}/Translation_Catalog.txt")
+CATALOG=$(<"${HERE}/Translation_Catalog.txt")  # read catalog file
 
-if [ -z "$1" ]; then
-    echo 'Missing argument: Path to directory named "locale" is required (e.g "videomass/data/locale")'
-    exit 1
-fi
-
-if [ -d "${TARGET}" ] ; then
-    echo "Target directory: '${TARGET}'";
-else
-    if [ -f "${TARGET}" ]; then
-        echo "'${TARGET}' is a file";
-        exit 1
-    else
-        echo "'${TARGET}' is not valid";
-        exit 1
-    fi
-fi
+echo -e "\nTarget directory: \033[34m\e[1m'${TARGET}'\e[0m"
 
 cd "${TARGET}"
-xgettext --width=400 --default-domain videomass ${FILE_CATALOG}
+xgettext --width=400 --default-domain videomass ${CATALOG}
 
 if [ $? != 0 ]; then
-    echo 'Failed!'
+    echo -e '\e[1m\033[31mFailed!\e[0m'
 else
     mv videomass.po videomass.pot
-    echo "A new file 'videomass.pot' has been created successfully."
-    echo "Done!"
+    echo -e "\e[1m«videomass.pot» was successfully created.\e[0m"
+    echo -e "\033[32mDone!\e[0m"
 fi
