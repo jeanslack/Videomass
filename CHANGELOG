@@ -7,6 +7,13 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Sat, 06 July 2024 V.5.0.17
+
+  * Created new gettext utilities.
+  * Italian translation completed thanks to @bovirus .
+  * Improved AUTHORS and traslation list on about dialog.
+
++------------------------------------+
 Wed, 03 July 2024 V.5.0.16
 
   * Videomass now uses `hatchling` as the default build backend which replaces
