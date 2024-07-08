@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-08 14:36+0200\n"
+"POT-Creation-Date: 2024-07-09 00:51+0200\n"
 "PO-Revision-Date: 2024-07-03 18:48+0200\n"
 "Last-Translator: johannesdedoper <https://github.com/johannesdedoper>\n"
 "Language-Team: Dutch <>\n"
@@ -615,7 +615,7 @@ msgstr ""
 "\n"
 "Wilt u deze gebruiken?"
 
-#: ../../vdms_dialogs/wizard_dlg.py:243 ../../vdms_dialogs/showlogs.py:169 ../../vdms_io/checkup.py:50 ../../vdms_main/main_frame.py:207 ../../vdms_main/main_frame.py:778 ../../vdms_main/main_frame.py:1643 ../../vdms_panels/presets_manager.py:349 ../../vdms_panels/presets_manager.py:550 ../../vdms_panels/presets_manager.py:590 ../../vdms_panels/presets_manager.py:649
+#: ../../vdms_dialogs/wizard_dlg.py:243 ../../vdms_dialogs/showlogs.py:169 ../../vdms_io/checkup.py:50 ../../vdms_main/main_frame.py:207 ../../vdms_main/main_frame.py:778 ../../vdms_main/main_frame.py:1636 ../../vdms_panels/presets_manager.py:349 ../../vdms_panels/presets_manager.py:550 ../../vdms_panels/presets_manager.py:590 ../../vdms_panels/presets_manager.py:649
 #: ../../vdms_panels/presets_manager.py:684 ../../vdms_panels/presets_manager.py:749 ../../vdms_panels/presets_manager.py:775 ../../vdms_panels/presets_manager.py:874 ../../vdms_panels/presets_manager.py:904 ../../vdms_ytdlp/main_ytdlp.py:201 ../../vdms_ytdlp/youtubedl_ui.py:609 ../../vdms_ytdlp/youtubedl_ui.py:625 ../../vdms_ytdlp/ydl_preferences.py:438
 msgid "Please confirm"
 msgstr "Bevestig dit"
@@ -1902,7 +1902,7 @@ msgstr ""
 "\n"
 "Mogelijke oplossing: open het Presets Manager paneel, ga naar de presets kolom en probeer de \"Herstel allen...\" knop te drukken"
 
-#: ../../vdms_main/main_frame.py:188 ../../vdms_main/main_frame.py:1371 ../../vdms_main/main_frame.py:1404 ../../vdms_ytdlp/main_ytdlp.py:98 ../../vdms_ytdlp/main_ytdlp.py:146 ../../vdms_ytdlp/main_ytdlp.py:553 ../../vdms_ytdlp/textdrop.py:233 ../../vdms_ytdlp/youtubedl_ui.py:437
+#: ../../vdms_main/main_frame.py:188 ../../vdms_main/main_frame.py:1368 ../../vdms_main/main_frame.py:1397 ../../vdms_ytdlp/main_ytdlp.py:98 ../../vdms_ytdlp/main_ytdlp.py:146 ../../vdms_ytdlp/main_ytdlp.py:553 ../../vdms_ytdlp/textdrop.py:233 ../../vdms_ytdlp/youtubedl_ui.py:437
 msgid "Ready"
 msgstr "Gereed"
 
@@ -2408,77 +2408,87 @@ msgstr ""
 msgid "Show queue"
 msgstr ""
 
-#: ../../vdms_main/main_frame.py:1370 ../../vdms_panels/presets_manager.py:569 ../../vdms_ytdlp/main_ytdlp.py:145
+#: ../../vdms_main/main_frame.py:1367 ../../vdms_panels/presets_manager.py:569 ../../vdms_ytdlp/main_ytdlp.py:145
 msgid "Videomass"
 msgstr "Videomass"
 
-#: ../../vdms_main/main_frame.py:1405
+#: ../../vdms_main/main_frame.py:1398
 #, fuzzy
 msgid "Videomass - File List"
 msgstr "Videomass - Wachtrij Bestanden"
 
-#: ../../vdms_main/main_frame.py:1423
+#: ../../vdms_main/main_frame.py:1416
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - AV Conversies"
 
-#: ../../vdms_main/main_frame.py:1451
+#: ../../vdms_main/main_frame.py:1444
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - Presets Manager"
 
-#: ../../vdms_main/main_frame.py:1480
+#: ../../vdms_main/main_frame.py:1473
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Samenvoeg Demuxer"
 
-#: ../../vdms_main/main_frame.py:1508
+#: ../../vdms_main/main_frame.py:1501
 #, fuzzy
 msgid "Videomass - From Movie to Pictures"
 msgstr "Van afbeelingen serie naar een video file"
 
-#: ../../vdms_main/main_frame.py:1536
+#: ../../vdms_main/main_frame.py:1529
 #, fuzzy
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Presets Manager"
 
-#: ../../vdms_main/main_frame.py:1618 ../../vdms_panels/av_conversions.py:577 ../../vdms_panels/audio_encoders/acodecs.py:786 ../../vdms_panels/filedrop.py:475 ../../vdms_panels/filedrop.py:588 ../../vdms_panels/sequence_to_video.py:320 ../../vdms_panels/video_to_sequence.py:371 ../../vdms_panels/video_to_sequence.py:503
+#: ../../vdms_main/main_frame.py:1611 ../../vdms_panels/av_conversions.py:577 ../../vdms_panels/audio_encoders/acodecs.py:786 ../../vdms_panels/filedrop.py:475 ../../vdms_panels/filedrop.py:588 ../../vdms_panels/sequence_to_video.py:320 ../../vdms_panels/video_to_sequence.py:371 ../../vdms_panels/video_to_sequence.py:503
 #, fuzzy
 msgid "Have to select an item in the file list first"
 msgstr "Selecteer eerst een profiel in de lijst"
 
-#: ../../vdms_main/main_frame.py:1640
+#: ../../vdms_main/main_frame.py:1633
 msgid ""
 "An item with the same destination file already exists.\n"
 "\n"
 "Do you want to replace it by adding the new item to the queue?"
 msgstr ""
 
-#: ../../vdms_main/main_frame.py:1661
+#: ../../vdms_main/main_frame.py:1654
 #, fuzzy
 msgid "Videomass - FFmpeg Message Monitoring"
 msgstr "Videomass - Output Monitor"
 
-#: ../../vdms_main/main_frame.py:1786
+#: ../../vdms_main/main_frame.py:1779
 #, fuzzy
 msgid "yt-dlp is disabled. Check your preferences."
 msgstr "De youtube-dl is uitgezet. Controleer uw voorkeuren."
 
-#: ../../vdms_main/main_frame.py:1789
+#: ../../vdms_main/main_frame.py:1782
 msgid "The application requires to be restarted."
 msgstr ""
 
-#: ../../vdms_main/main_frame.py:1792
+#: ../../vdms_main/main_frame.py:1785
 msgid "The Python module «yt_dlp» was not found. Make sure you have installed yt-dlp correctly."
 msgstr ""
 
-#: ../../vdms_main/main_frame.py:1820
+#: ../../vdms_main/main_frame.py:1812
+#, python-brace-format
+msgid "The system will turn off in {0} seconds"
+msgstr ""
+
+#: ../../vdms_main/main_frame.py:1813
 #, fuzzy
 msgid "Videomass - Shutdown!"
 msgstr "Videomass - Laden..."
 
-#: ../../vdms_main/main_frame.py:1827
+#: ../../vdms_main/main_frame.py:1820
 msgid "Error while shutting down. Please see file log for details."
 msgstr ""
 
-#: ../../vdms_main/main_frame.py:1840
+#: ../../vdms_main/main_frame.py:1832
+#, python-brace-format
+msgid "Exiting the application in {0} seconds"
+msgstr ""
+
+#: ../../vdms_main/main_frame.py:1833
 #, fuzzy
 msgid "Videomass - Exiting!"
 msgstr "Videomass - Laden..."

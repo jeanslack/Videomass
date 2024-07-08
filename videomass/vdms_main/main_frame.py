@@ -1358,8 +1358,7 @@ class MainFrame(wx.Frame):
         elif self.toSlideshow.IsShown():
             self.toSlideshow.Hide()
 
-        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7,
-                                                     8, 35, 36)]
+        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 35, 36)]
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
         self.menu_go_items((0, 1, 1, 1, 1, 1, 1, 1))  # Go menu items
@@ -1389,12 +1388,8 @@ class MainFrame(wx.Frame):
         self.delfile.Enable(True)
         self.clearall.Enable(True)
         self.openmedia.Enable(True)
-        if self.file_src:
-            [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 35)]
-            [self.toolbar.EnableTool(x, False) for x in (7, 8, 36, 37)]
-        else:
-            [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 35)]
-            [self.toolbar.EnableTool(x, False) for x in (7, 8, 36, 37)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 35)]
+        [self.toolbar.EnableTool(x, False) for x in (7, 8, 36)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.toolbar.Realize()
@@ -1425,7 +1420,7 @@ class MainFrame(wx.Frame):
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35, 36)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 37)]
+        self.toolbar.EnableTool(8, False)
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1453,7 +1448,7 @@ class MainFrame(wx.Frame):
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35, 36)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 37)]
+        self.toolbar.EnableTool(8, False)
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1482,7 +1477,7 @@ class MainFrame(wx.Frame):
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 36, 37)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 36)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1510,7 +1505,7 @@ class MainFrame(wx.Frame):
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 36, 37)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 36)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1538,7 +1533,7 @@ class MainFrame(wx.Frame):
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 36, 37)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 36)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1814,7 +1809,7 @@ class MainFrame(wx.Frame):
             self.ytdlframe.on_exit(self, warn=False)
         self.write_option_before_exit()
 
-        msgdlg = 'The system will turn off in {0} seconds'
+        msgdlg = _('The system will turn off in {0} seconds')
         title = _('Videomass - Shutdown!')
         dlg = CountDownDlg(self, timeout=59, message=msgdlg, caption=title)
         res = dlg.ShowModal() == wx.ID_OK
@@ -1834,7 +1829,7 @@ class MainFrame(wx.Frame):
         if self.checks_running_processes():
             return
 
-        msgdlg = 'Exiting the application in {0} seconds'
+        msgdlg = _('Exiting the application in {0} seconds')
         title = _('Videomass - Exiting!')
         dlg = CountDownDlg(self, timeout=10, message=msgdlg, caption=title)
         res = dlg.ShowModal() == wx.ID_OK
