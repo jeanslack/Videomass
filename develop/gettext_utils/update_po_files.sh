@@ -29,6 +29,7 @@ for langdirs in $(ls -d ${TARGET}/*/)
 do
     PO="${langdirs}LC_MESSAGES/videomass.po"
     msgmerge --update --no-fuzzy-matching --width=400 --no-wrap $PO $POT
+
     if [ "${COMPILE_MO}" = '--compile' ]; then
         echo 'Now Compile the videomass.mo file because the "--compile" argument is given'
         msgfmt -c "${PO}" -o "${langdirs}LC_MESSAGES/videomass.mo"

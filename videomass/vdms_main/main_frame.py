@@ -226,6 +226,7 @@ class MainFrame(wx.Frame):
             self.pqueue.SetLabel(_("Queue ({0})").format(counter))
             # need to call Realize() to re-draw the toolbar
             self.toolbar.Realize()
+            self.toolbar.EnableTool(37, True)
         else:
             self.pqueue.SetLabel(_("Queue"))
             self.toolbar.Realize()
@@ -586,28 +587,28 @@ class MainFrame(wx.Frame):
         goButton = wx.Menu()
         self.startpan = goButton.Append(wx.ID_ANY,
                                         _("Home panel\tCtrl+Shift+H"),
-                                        _("Go to the 'Home' panel"))
+                                        _("Go to the «Home» panel"))
         goButton.AppendSeparator()
         self.prstpan = goButton.Append(wx.ID_ANY,
                                        _("Presets Manager\tCtrl+Shift+P"),
-                                       _("Go to the 'Presets Manager' panel"))
+                                       _("Go to the «Presets Manager» panel"))
         self.avpan = goButton.Append(wx.ID_ANY,
                                      _("A/V Conversions\tCtrl+Shift+V"),
-                                     _("Go to the 'A/V Conversions' panel"))
+                                     _("Go to the «A/V Conversions» panel"))
         self.concpan = goButton.Append(wx.ID_ANY,
                                        _("Concatenate Demuxer\tCtrl+Shift+D"),
-                                       _("Go to the 'Concatenate Demuxer' "
+                                       _("Go to the «Concatenate Demuxer» "
                                          "panel"))
         self.slides = goButton.Append(wx.ID_ANY,
                                       _("Still Image Maker\tCtrl+Shift+I"),
-                                      _("Go to the 'Still Image Maker' panel"))
+                                      _("Go to the «Still Image Maker» panel"))
         self.toseq = goButton.Append(wx.ID_ANY,
                                      _("From Movie to Pictures\tCtrl+Shift+S"),
-                                     _("Go to the 'From Movie to Pictures' "
+                                     _("Go to the «From Movie to Pictures» "
                                        "panel"))
         self.winytdlp = goButton.Append(wx.ID_ANY,
                                         _("YouTube Downloader\tCtrl+Shift+Y"),
-                                        _("Open 'YouTube Downloader' window"))
+                                        _("Open «YouTube Downloader» window"))
         goButton.AppendSeparator()
         dscrp = (_("Output monitor\tCtrl+Shift+O"),
                  _("Keeps track of the output for debugging errors"))
@@ -1357,8 +1358,10 @@ class MainFrame(wx.Frame):
         elif self.toSlideshow.IsShown():
             self.toSlideshow.Hide()
 
+        #[self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7,
+                                                     #8, 35, 36, 37)]
         [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7,
-                                                     8, 35, 36, 37)]
+                                                     8, 35, 36)]
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
         self.menu_go_items((0, 1, 1, 1, 1, 1, 1, 1))  # Go menu items
@@ -1559,13 +1562,6 @@ class MainFrame(wx.Frame):
             if not update:
                 return
 
-        shown = (self.ChooseTopic.IsShown(),
-                 # self.fileDnDTarget.IsShown(),
-                 self.ProcessPanel.IsShown()
-                 )
-        if not [x for x in shown if x is True]:
-            self.toolbar.EnableTool(37, True)
-
         write_json_file_queue(self.queuelist)
         self.queue_tool_counter()
     # ------------------------------------------------------------------#
@@ -1663,6 +1659,7 @@ class MainFrame(wx.Frame):
         method assigning the corresponding thread.
         """
         self.SetTitle(_('Videomass - FFmpeg Message Monitoring'))
+        self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
         self.PrstsPanel.Hide()
@@ -1685,7 +1682,6 @@ class MainFrame(wx.Frame):
             [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 36, 37, 7)]
         else:
             self.menu_go_items((1, 1, 1, 1, 1, 1, 1, 0))  # Go menu items
-            self.ChooseTopic.Hide()
             [self.toolbar.EnableTool(x, False) for x in (4, 8, 36)]
             [self.toolbar.EnableTool(x, True) for x in (3, 5, 6, 7, 35)]
         self.ProcessPanel.topic_thread(args, datalist, self.topicname)
@@ -1703,7 +1699,7 @@ class MainFrame(wx.Frame):
             return
 
         if not self.data_files:
-            self.switch_file_import(self)
+            self.switch_file_import(None)
             return
 
         if self.AVconvPanel.IsShown():
@@ -1773,6 +1769,10 @@ class MainFrame(wx.Frame):
             self.switch_video_to_pictures(self)
         elif panelshown == 'Image Sequence to Video':
             self.switch_slideshow_maker(self)
+
+        if not panelshown:
+            self.startPanel(self)
+
         self.Layout()
     # ------------------------------------------------------------------#
 
