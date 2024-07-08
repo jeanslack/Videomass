@@ -72,10 +72,10 @@ class Video_No_Enc(scrolled.ScrolledPanel):
         Reset all controls to default
         """
         self.labinfo.SetLabel(_("Video export disabled"))
-        msg = (_('The Media target you just selected will only allow you '
-                 'to export files as audio tracks.\nYou can then process audio '
-                 'source files only or extract indexed audio streams on\nvideo '
-                 'files.'))
+        msg = (_('The Media target you just selected will only allow you to '
+                 'export files as audio tracks.\nYou can then process audio '
+                 'source files only or extract indexed audio streams on\n'
+                 'video files.'))
         self.labsubinfo.SetLabel(msg)
     # ------------------------------------------------------------------#
 

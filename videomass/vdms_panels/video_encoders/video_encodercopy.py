@@ -161,10 +161,10 @@ class Copy_Vcodec(scrolled.ScrolledPanel):
         self.ckbx_web.SetValue(False), self.on_web_optimize(None, False)
         self.labinfo.SetLabel(_("Copy Video Codec"))
         self.labsubinfo.SetLabel(_("This will just copy the video track "
-                                 "as is, without any video re-encoding.\n"
-                                 "You will only be able to change output "
-                                 "format, select other audio encoders and\n"
-                                 "a few other options."))
+                                   "as is, without any video re-encoding.\n"
+                                   "You will only be able to change output "
+                                   "format, select other audio encoders and\n"
+                                   "a few other options."))
     # ------------------------------------------------------------------#
 
     def on_bit_depth(self, event, btnreset=True):

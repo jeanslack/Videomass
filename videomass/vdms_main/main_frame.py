@@ -1358,8 +1358,6 @@ class MainFrame(wx.Frame):
         elif self.toSlideshow.IsShown():
             self.toSlideshow.Hide()
 
-        #[self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7,
-                                                     #8, 35, 36, 37)]
         [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7,
                                                      8, 35, 36)]
         self.ChooseTopic.Show()
