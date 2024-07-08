@@ -3,6 +3,7 @@ videomass (5.0.17-1) UNRELEASED; urgency=medium
   * Created new gettext utilities.
   * Italian translation completed thanks to @bovirus .
   * Improved AUTHORS and traslation list on about dialog.
+  * Enabling the Queue button on any panel if a queue is set up.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 06 Jul 2024 12:00:00 +0200
 

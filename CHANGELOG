@@ -12,6 +12,7 @@ Sat, 06 July 2024 V.5.0.17
   * Created new gettext utilities.
   * Italian translation completed thanks to @bovirus .
   * Improved AUTHORS and traslation list on about dialog.
+  * Enabling the Queue button on any panel if a queue is set up.
 
 +------------------------------------+
 Wed, 03 July 2024 V.5.0.16
