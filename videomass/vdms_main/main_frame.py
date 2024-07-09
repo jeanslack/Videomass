@@ -1308,9 +1308,9 @@ class MainFrame(wx.Frame):
             return
 
         if self.fileDnDTarget.IsShown():
-            self.startPanel(self)
+            self.startPanel(None)
         else:
-            self.switch_file_import(self)
+            self.switch_file_import(None)
     # ------------------------------------------------------------------#
 
     def on_Forward(self, event):
@@ -1319,15 +1319,15 @@ class MainFrame(wx.Frame):
         """
         if self.fileDnDTarget.IsShown():
             if self.topicname == 'Audio/Video Conversions':
-                self.switch_av_conversions(self)
+                self.switch_av_conversions(None)
             elif self.topicname == 'Concatenate Demuxer':
-                self.switch_concat_demuxer(self)
+                self.switch_concat_demuxer(None)
             elif self.topicname == 'Presets Manager':
-                self.switch_presets_manager(self)
+                self.switch_presets_manager(None)
             elif self.topicname == 'Image Sequence to Video':
-                self.switch_slideshow_maker(self)
+                self.switch_slideshow_maker(None)
             elif self.topicname == 'Video to Pictures':
-                self.switch_video_to_pictures(self)
+                self.switch_video_to_pictures(None)
         else:
             self.switch_to_processing('View')
     # ------------------------------------------------------------------#
@@ -1339,25 +1339,14 @@ class MainFrame(wx.Frame):
         Note, this event could be called indirectly from the
         "Back" toolbar button.
         """
-        if self.ProcessPanel.IsShown():
-            if self.ProcessPanel.thread_type:
-                return
-            self.ProcessPanel.Hide()
-
         self.topicname = None
+        self.ProcessPanel.Hide()
         self.fileDnDTarget.Hide()
-
-        if self.AVconvPanel.IsShown():
-            self.AVconvPanel.Hide()
-        elif self.PrstsPanel.IsShown():
-            self.PrstsPanel.Hide()
-        elif self.ConcatDemuxer.IsShown():
-            self.ConcatDemuxer.Hide()
-        elif self.toPictures.IsShown():
-            self.toPictures.Hide()
-        elif self.toSlideshow.IsShown():
-            self.toSlideshow.Hide()
-
+        self.AVconvPanel.Hide()
+        self.PrstsPanel.Hide()
+        self.ConcatDemuxer.Hide()
+        self.toPictures.Hide()
+        self.toSlideshow.Hide()
         [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 35, 36)]
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
@@ -1374,8 +1363,7 @@ class MainFrame(wx.Frame):
         Shared event by menubar and toolbar
         to switch on Drag&Drop panel.
         """
-        if self.ProcessPanel.IsShown():
-            self.ProcessPanel.Hide()
+        self.ProcessPanel.Hide()
         self.AVconvPanel.Hide()
         self.ChooseTopic.Hide()
         self.PrstsPanel.Hide()
@@ -1404,8 +1392,7 @@ class MainFrame(wx.Frame):
         Menu bar event to show Video converter panel
         """
         self.topicname = 'Audio/Video Conversions'
-        if self.ProcessPanel.IsShown():
-            self.ProcessPanel.Hide()
+        self.ProcessPanel.Hide()
         self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.PrstsPanel.Hide()
@@ -1432,8 +1419,7 @@ class MainFrame(wx.Frame):
         Menu bar event to show presets manager panel
         """
         self.topicname = 'Presets Manager'
-        if self.ProcessPanel.IsShown():
-            self.ProcessPanel.Hide()
+        self.ProcessPanel.Hide()
         self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
@@ -1461,8 +1447,7 @@ class MainFrame(wx.Frame):
         Menu bar event to show `ConcatDemuxer` panel
         """
         self.topicname = 'Concatenate Demuxer'
-        if self.ProcessPanel.IsShown():
-            self.ProcessPanel.Hide()
+        self.ProcessPanel.Hide()
         self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
@@ -1489,8 +1474,7 @@ class MainFrame(wx.Frame):
         Menu bar event to show `toPictures` panel
         """
         self.topicname = 'Video to Pictures'
-        if self.ProcessPanel.IsShown():
-            self.ProcessPanel.Hide()
+        self.ProcessPanel.Hide()
         self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
@@ -1517,8 +1501,7 @@ class MainFrame(wx.Frame):
         Menu bar event to show `toSlideshow` panel
         """
         self.topicname = 'Image Sequence to Video'
-        if self.ProcessPanel.IsShown():
-            self.ProcessPanel.Hide()
+        self.ProcessPanel.Hide()
         self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
@@ -1753,18 +1736,18 @@ class MainFrame(wx.Frame):
         panel shown (see `switch_to_processing` method above).
         """
         if panelshown == 'Audio/Video Conversions':
-            self.switch_av_conversions(self)
+            self.switch_av_conversions(None)
         elif panelshown == 'Presets Manager':
-            self.switch_presets_manager(self)
+            self.switch_presets_manager(None)
         elif panelshown == 'Concatenate Demuxer':
-            self.switch_concat_demuxer(self)
+            self.switch_concat_demuxer(None)
         elif panelshown == 'Video to Pictures':
-            self.switch_video_to_pictures(self)
+            self.switch_video_to_pictures(None)
         elif panelshown == 'Image Sequence to Video':
-            self.switch_slideshow_maker(self)
+            self.switch_slideshow_maker(None)
 
         if not panelshown:
-            self.startPanel(self)
+            self.startPanel(None)
 
         self.Layout()
     # ------------------------------------------------------------------#
