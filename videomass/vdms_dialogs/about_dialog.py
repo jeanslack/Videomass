@@ -57,13 +57,18 @@ def show_about_dlg(parent, videomass_icon, aboutrel=about_app):
     info.AddDeveloper(f"{author[0]} <{mail}>")
     info.AddDocWriter("Gianluca Pernigotto <jeanlucperni@gmail.com>")
     info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> (it_IT)")
+    info.AddTranslator("bovirus https://github.com/bovirus (it_IT)")
     info.AddTranslator("ChourS <ChourS2008@yandex.ru> (ru_RU)")
     info.AddTranslator("Roelof Berkepeis <roelof@imoma.eu> (nl_NL)")
     info.AddTranslator("johannesdedoper https://github.com/johannesdedoper "
                        "(nl_NL)")
-    info.AddTranslator("Samuel (pt_BR)")
+    info.AddTranslator("Samuel http://littlesvr.ca/ostd/ (pt_BR)")
     info.AddTranslator("katnatek from blogdrake https://www.blogdrake.net/ "
                        "(es_ES)")
+    info.AddTranslator("katnatek from blogdrake https://www.blogdrake.net/ "
+                       "(es_CU)")
+    info.AddTranslator("katnatek from blogdrake https://www.blogdrake.net/ "
+                       "(es_MX)")
     info.AddTranslator("Phil Aug <philiaug@live.fr> (fr_FR)")
     info.AddTranslator("MaiJZ https://github.com/maijz128 (zh_CN)")
 

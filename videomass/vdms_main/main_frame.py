@@ -226,6 +226,7 @@ class MainFrame(wx.Frame):
             self.pqueue.SetLabel(_("Queue ({0})").format(counter))
             # need to call Realize() to re-draw the toolbar
             self.toolbar.Realize()
+            self.toolbar.EnableTool(37, True)
         else:
             self.pqueue.SetLabel(_("Queue"))
             self.toolbar.Realize()
@@ -586,28 +587,28 @@ class MainFrame(wx.Frame):
         goButton = wx.Menu()
         self.startpan = goButton.Append(wx.ID_ANY,
                                         _("Home panel\tCtrl+Shift+H"),
-                                        _("Go to the 'Home' panel"))
+                                        _("Go to the «Home» panel"))
         goButton.AppendSeparator()
         self.prstpan = goButton.Append(wx.ID_ANY,
                                        _("Presets Manager\tCtrl+Shift+P"),
-                                       _("Go to the 'Presets Manager' panel"))
+                                       _("Go to the «Presets Manager» panel"))
         self.avpan = goButton.Append(wx.ID_ANY,
                                      _("A/V Conversions\tCtrl+Shift+V"),
-                                     _("Go to the 'A/V Conversions' panel"))
+                                     _("Go to the «A/V Conversions» panel"))
         self.concpan = goButton.Append(wx.ID_ANY,
                                        _("Concatenate Demuxer\tCtrl+Shift+D"),
-                                       _("Go to the 'Concatenate Demuxer' "
+                                       _("Go to the «Concatenate Demuxer» "
                                          "panel"))
         self.slides = goButton.Append(wx.ID_ANY,
                                       _("Still Image Maker\tCtrl+Shift+I"),
-                                      _("Go to the 'Still Image Maker' panel"))
+                                      _("Go to the «Still Image Maker» panel"))
         self.toseq = goButton.Append(wx.ID_ANY,
                                      _("From Movie to Pictures\tCtrl+Shift+S"),
-                                     _("Go to the 'From Movie to Pictures' "
+                                     _("Go to the «From Movie to Pictures» "
                                        "panel"))
         self.winytdlp = goButton.Append(wx.ID_ANY,
                                         _("YouTube Downloader\tCtrl+Shift+Y"),
-                                        _("Open 'YouTube Downloader' window"))
+                                        _("Open «YouTube Downloader» window"))
         goButton.AppendSeparator()
         dscrp = (_("Output monitor\tCtrl+Shift+O"),
                  _("Keeps track of the output for debugging errors"))
@@ -1307,9 +1308,9 @@ class MainFrame(wx.Frame):
             return
 
         if self.fileDnDTarget.IsShown():
-            self.startPanel(self)
+            self.startPanel(None)
         else:
-            self.switch_file_import(self)
+            self.switch_file_import(None)
     # ------------------------------------------------------------------#
 
     def on_Forward(self, event):
@@ -1318,15 +1319,15 @@ class MainFrame(wx.Frame):
         """
         if self.fileDnDTarget.IsShown():
             if self.topicname == 'Audio/Video Conversions':
-                self.switch_av_conversions(self)
+                self.switch_av_conversions(None)
             elif self.topicname == 'Concatenate Demuxer':
-                self.switch_concat_demuxer(self)
+                self.switch_concat_demuxer(None)
             elif self.topicname == 'Presets Manager':
-                self.switch_presets_manager(self)
+                self.switch_presets_manager(None)
             elif self.topicname == 'Image Sequence to Video':
-                self.switch_slideshow_maker(self)
+                self.switch_slideshow_maker(None)
             elif self.topicname == 'Video to Pictures':
-                self.switch_video_to_pictures(self)
+                self.switch_video_to_pictures(None)
         else:
             self.switch_to_processing('View')
     # ------------------------------------------------------------------#
@@ -1338,27 +1339,15 @@ class MainFrame(wx.Frame):
         Note, this event could be called indirectly from the
         "Back" toolbar button.
         """
-        if self.ProcessPanel.IsShown():
-            if self.ProcessPanel.thread_type:
-                return
-            self.ProcessPanel.Hide()
-
         self.topicname = None
+        self.ProcessPanel.Hide()
         self.fileDnDTarget.Hide()
-
-        if self.AVconvPanel.IsShown():
-            self.AVconvPanel.Hide()
-        elif self.PrstsPanel.IsShown():
-            self.PrstsPanel.Hide()
-        elif self.ConcatDemuxer.IsShown():
-            self.ConcatDemuxer.Hide()
-        elif self.toPictures.IsShown():
-            self.toPictures.Hide()
-        elif self.toSlideshow.IsShown():
-            self.toSlideshow.Hide()
-
-        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7,
-                                                     8, 35, 36, 37)]
+        self.AVconvPanel.Hide()
+        self.PrstsPanel.Hide()
+        self.ConcatDemuxer.Hide()
+        self.toPictures.Hide()
+        self.toSlideshow.Hide()
+        [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 35, 36)]
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
         self.menu_go_items((0, 1, 1, 1, 1, 1, 1, 1))  # Go menu items
@@ -1374,8 +1363,7 @@ class MainFrame(wx.Frame):
         Shared event by menubar and toolbar
         to switch on Drag&Drop panel.
         """
-        if self.ProcessPanel.IsShown():
-            self.ProcessPanel.Hide()
+        self.ProcessPanel.Hide()
         self.AVconvPanel.Hide()
         self.ChooseTopic.Hide()
         self.PrstsPanel.Hide()
@@ -1388,12 +1376,8 @@ class MainFrame(wx.Frame):
         self.delfile.Enable(True)
         self.clearall.Enable(True)
         self.openmedia.Enable(True)
-        if self.file_src:
-            [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 35)]
-            [self.toolbar.EnableTool(x, False) for x in (7, 8, 36, 37)]
-        else:
-            [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 35)]
-            [self.toolbar.EnableTool(x, False) for x in (7, 8, 36, 37)]
+        [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 35)]
+        [self.toolbar.EnableTool(x, False) for x in (7, 8, 36)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.toolbar.Realize()
@@ -1408,8 +1392,7 @@ class MainFrame(wx.Frame):
         Menu bar event to show Video converter panel
         """
         self.topicname = 'Audio/Video Conversions'
-        if self.ProcessPanel.IsShown():
-            self.ProcessPanel.Hide()
+        self.ProcessPanel.Hide()
         self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.PrstsPanel.Hide()
@@ -1424,7 +1407,7 @@ class MainFrame(wx.Frame):
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35, 36)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 37)]
+        self.toolbar.EnableTool(8, False)
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1436,8 +1419,7 @@ class MainFrame(wx.Frame):
         Menu bar event to show presets manager panel
         """
         self.topicname = 'Presets Manager'
-        if self.ProcessPanel.IsShown():
-            self.ProcessPanel.Hide()
+        self.ProcessPanel.Hide()
         self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
@@ -1452,7 +1434,7 @@ class MainFrame(wx.Frame):
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35, 36)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 37)]
+        self.toolbar.EnableTool(8, False)
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1465,8 +1447,7 @@ class MainFrame(wx.Frame):
         Menu bar event to show `ConcatDemuxer` panel
         """
         self.topicname = 'Concatenate Demuxer'
-        if self.ProcessPanel.IsShown():
-            self.ProcessPanel.Hide()
+        self.ProcessPanel.Hide()
         self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
@@ -1481,7 +1462,7 @@ class MainFrame(wx.Frame):
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 36, 37)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 36)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1493,8 +1474,7 @@ class MainFrame(wx.Frame):
         Menu bar event to show `toPictures` panel
         """
         self.topicname = 'Video to Pictures'
-        if self.ProcessPanel.IsShown():
-            self.ProcessPanel.Hide()
+        self.ProcessPanel.Hide()
         self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
@@ -1509,7 +1489,7 @@ class MainFrame(wx.Frame):
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 36, 37)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 36)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1521,8 +1501,7 @@ class MainFrame(wx.Frame):
         Menu bar event to show `toSlideshow` panel
         """
         self.topicname = 'Image Sequence to Video'
-        if self.ProcessPanel.IsShown():
-            self.ProcessPanel.Hide()
+        self.ProcessPanel.Hide()
         self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
@@ -1537,7 +1516,7 @@ class MainFrame(wx.Frame):
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
-        [self.toolbar.EnableTool(x, False) for x in (8, 36, 37)]
+        [self.toolbar.EnableTool(x, False) for x in (8, 36)]
         if self.queuelist:
             self.toolbar.EnableTool(37, True)
         self.Layout()
@@ -1558,13 +1537,6 @@ class MainFrame(wx.Frame):
             update = extend_data_queue(self, self.queuelist, queue)
             if not update:
                 return
-
-        shown = (self.ChooseTopic.IsShown(),
-                 # self.fileDnDTarget.IsShown(),
-                 self.ProcessPanel.IsShown()
-                 )
-        if not [x for x in shown if x is True]:
-            self.toolbar.EnableTool(37, True)
 
         write_json_file_queue(self.queuelist)
         self.queue_tool_counter()
@@ -1663,6 +1635,7 @@ class MainFrame(wx.Frame):
         method assigning the corresponding thread.
         """
         self.SetTitle(_('Videomass - FFmpeg Message Monitoring'))
+        self.ChooseTopic.Hide()
         self.fileDnDTarget.Hide()
         self.AVconvPanel.Hide()
         self.PrstsPanel.Hide()
@@ -1685,7 +1658,6 @@ class MainFrame(wx.Frame):
             [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 36, 37, 7)]
         else:
             self.menu_go_items((1, 1, 1, 1, 1, 1, 1, 0))  # Go menu items
-            self.ChooseTopic.Hide()
             [self.toolbar.EnableTool(x, False) for x in (4, 8, 36)]
             [self.toolbar.EnableTool(x, True) for x in (3, 5, 6, 7, 35)]
         self.ProcessPanel.topic_thread(args, datalist, self.topicname)
@@ -1703,7 +1675,7 @@ class MainFrame(wx.Frame):
             return
 
         if not self.data_files:
-            self.switch_file_import(self)
+            self.switch_file_import(None)
             return
 
         if self.AVconvPanel.IsShown():
@@ -1764,15 +1736,19 @@ class MainFrame(wx.Frame):
         panel shown (see `switch_to_processing` method above).
         """
         if panelshown == 'Audio/Video Conversions':
-            self.switch_av_conversions(self)
+            self.switch_av_conversions(None)
         elif panelshown == 'Presets Manager':
-            self.switch_presets_manager(self)
+            self.switch_presets_manager(None)
         elif panelshown == 'Concatenate Demuxer':
-            self.switch_concat_demuxer(self)
+            self.switch_concat_demuxer(None)
         elif panelshown == 'Video to Pictures':
-            self.switch_video_to_pictures(self)
+            self.switch_video_to_pictures(None)
         elif panelshown == 'Image Sequence to Video':
-            self.switch_slideshow_maker(self)
+            self.switch_slideshow_maker(None)
+
+        if not panelshown:
+            self.startPanel(None)
+
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1816,7 +1792,7 @@ class MainFrame(wx.Frame):
             self.ytdlframe.on_exit(self, warn=False)
         self.write_option_before_exit()
 
-        msgdlg = 'The system will turn off in {0} seconds'
+        msgdlg = _('The system will turn off in {0} seconds')
         title = _('Videomass - Shutdown!')
         dlg = CountDownDlg(self, timeout=59, message=msgdlg, caption=title)
         res = dlg.ShowModal() == wx.ID_OK
@@ -1836,7 +1812,7 @@ class MainFrame(wx.Frame):
         if self.checks_running_processes():
             return
 
-        msgdlg = 'Exiting the application in {0} seconds'
+        msgdlg = _('Exiting the application in {0} seconds')
         title = _('Videomass - Exiting!')
         dlg = CountDownDlg(self, timeout=10, message=msgdlg, caption=title)
         res = dlg.ShowModal() == wx.ID_OK
