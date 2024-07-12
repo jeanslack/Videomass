@@ -2,6 +2,7 @@ hatchling
 pkginfo
 build
 twine
+babel
 pyinstaller
 
 # Install the above require list using `python3 -m pip install -r «this file»`
@@ -16,13 +17,14 @@ pyinstaller
 #     Python >= 3.8.0
 #     python3-pip
 #     python3-all
+#     python3-babel
 #     debhelper
 #     dh-python
 #     devscripts
 #     debmake
 #     pybuild-plugin-pyproject
 #
-#     ~# apt update && apt install python3-pip python3-all debhelper dh-python devscripts debmake pybuild-plugin-pyproject
+#     ~# apt update && apt install python3-pip python3-all python3-babel debhelper dh-python devscripts debmake pybuild-plugin-pyproject
 #
 #     Inside the repo dir build a Debian package from the upstream source:
 #     ~$ debmake --tar -b:python3

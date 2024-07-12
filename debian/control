@@ -6,6 +6,7 @@ Build-Depends: debhelper-compat (= 13),
                dh-sequence-python3,
                pybuild-plugin-pyproject,
                python3-all,
+               python3-babel,
                python3-hatchling
 Standards-Version: 4.1.4
 Homepage: https://github.com/jeanslack/Videomass
