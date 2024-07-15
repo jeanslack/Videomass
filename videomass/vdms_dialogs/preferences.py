@@ -432,14 +432,14 @@ class SetUp(wx.Dialog):
                    "change only if you know what you are doing.\n")
         labLog = wx.StaticText(tabSev, wx.ID_ANY, (msglog))
         sizerLog.Add(labLog, 0, wx.ALL, 5)
-        msg = "Set logging level flags used by FFmpeg"
+        msg = _("Set logging level flags used by FFmpeg")
         self.rdbFFmpeg = wx.RadioBox(tabSev, wx.ID_ANY, (msg),
                                      choices=SetUp.FFMPEG_LOGLEV,
                                      majorDimension=1,
                                      style=wx.RA_SPECIFY_COLS,
                                      )
         sizerLog.Add(self.rdbFFmpeg, 0, wx.ALL | wx.EXPAND, 5)
-        msg = "Set logging level flags used by FFplay"
+        msg = _("Set logging level flags used by FFplay")
         self.rdbFFplay = wx.RadioBox(tabSev, wx.ID_ANY, (msg),
                                      choices=SetUp.FFPLAY_LOGLEV,
                                      majorDimension=1,

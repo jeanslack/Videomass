@@ -26,11 +26,11 @@ import os
 import sys
 import argparse
 try:
-    from babe.messages.frontend import (compile_catalog,
-                                        extract_messages,
-                                        update_catalog,
-                                        init_catalog
-                                        )
+    from babel.messages.frontend import (compile_catalog,
+                                         extract_messages,
+                                         update_catalog,
+                                         init_catalog
+                                         )
 except ModuleNotFoundError:
     sys.exit('babel is required, please install babel (or python3-babel)')
 
@@ -122,6 +122,7 @@ def create_pot_file(nameprogram):
     Extract messages from the catalog, similarly to what
     the GNU gettext program does.
     """
+    here = os.getcwd()
     parser = argparse.ArgumentParser(prog=f'{nameprogram}',
                                      description=description(),
                                      add_help=True,
@@ -154,20 +155,26 @@ def create_pot_file(nameprogram):
                         help=("Absolute or relative destination path to "
                               "the Python modules/package dir to extract "
                               "recursively all messages from *.py files."),
-                        required=True
+                        required=True,
+                        # default='../../'
                         )
     args = parser.parse_args()
+    makeabs_locdir = os.path.abspath(args.locale_directory)
+    makeabs_pydir = os.path.abspath(args.python_package_dir)
+    os.chdir(args.locale_directory)
+    pydir = os.path.relpath(makeabs_pydir)
     try:
         cmd = extract_messages()
-        cmd.input_dirs = args.python_package_dir  # path to Pytohn package
-        cmd.output_file = os.path.join(args.locale_directory,
+        cmd.input_dirs = pydir  # path to Pytohn package
+        cmd.output_file = os.path.join(makeabs_locdir,
                                        args.domain_name.lower() + ".pot")
         cmd.no_wrap = True
         cmd.finalize_options()
         cmd.run()
     except Exception as err:
+        os.chdir(here)
         return err
-
+    os.chdir(here)
     return None
 
 
