@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sat, 13 July 2024 V.5.0.17
+Mon, 15 July 2024 V.5.0.17
 
   * Created new gettext utilities.
   * Italian translation completed thanks to @bovirus .
@@ -21,6 +21,12 @@ Sat, 13 July 2024 V.5.0.17
   * Added `babel` as a new dependency needed for compiling language catalogs
     when building binaries.
   * Added compile MO files option before build standalone App using pyinstaller.
+  * Fixed accelerators shortcuts on Italian language catalog (leave same as
+    English language).
+  * Added a new Python script that includes some functionality based on the
+    babel program, convenient on operating systems that do not have gettext
+    installed.
+  * Fixed `app_const` not listing the es_CU locale code language.
 
 +------------------------------------+
 Wed, 03 July 2024 V.5.0.16

@@ -12,8 +12,14 @@ videomass (5.0.17-1) UNRELEASED; urgency=medium
   * Added `babel` as a new dependency needed for compiling language catalogs
     when building binaries.
   * Added compile MO files option before build standalone App using pyinstaller.
+  * Fixed accelerators shortcuts on Italian language catalog (leave same as
+    English language).
+  * Added a new Python script that includes some functionality based on the
+    babel program, convenient on operating systems that do not have gettext
+    installed.
+  * Fixed `app_const` not listing the es_CU locale code language.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 13 Jul 2024 12:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 15 Jul 2024 09:00:00 +0200
 
 videomass (5.0.16-1) UNRELEASED; urgency=medium
 

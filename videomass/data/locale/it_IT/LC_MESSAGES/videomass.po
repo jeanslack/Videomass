@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Traduzione Videomass 09.07.2024\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-09 00:51+0200\n"
-"PO-Revision-Date: 2024-07-09 21:13+0200\n"
+"PO-Revision-Date: 2024-07-13 13:16+0200\n"
 "Last-Translator: bovirus <bovirus@gmail.comn>\n"
 "Language-Team: bovirus (bovirus@gmail.com)\n"
 "Language: it_IT\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../../gui_app.py:121
@@ -2095,7 +2095,7 @@ msgstr "Rinomina numericamente la destinazione di tutti gli elementi nell'elenco
 #: ../../vdms_main/main_frame.py:506 ../../vdms_panels/filedrop.py:343
 #: ../../vdms_panels/filedrop.py:366
 msgid "Remove selected entry\tDEL"
-msgstr "Rimuovi voce selezionata\tCANC"
+msgstr "Rimuovi voce selezionata\tDEL"
 
 #: ../../vdms_main/main_frame.py:507
 msgid "Remove the selected file from the list"
@@ -2105,7 +2105,7 @@ msgstr "Rimuovi dall'elenco il file selezionato"
 #: ../../vdms_panels/filedrop.py:369 ../../vdms_ytdlp/main_ytdlp.py:294
 #: ../../vdms_ytdlp/textdrop.py:191 ../../vdms_ytdlp/textdrop.py:212
 msgid "Clear list\tShift+DEL"
-msgstr "Azzera elenco\tMaiusc+CANC"
+msgstr "Azzera elenco\tShift+DEL"
 
 #: ../../vdms_main/main_frame.py:511
 msgid "Clear the file list"
@@ -2219,7 +2219,7 @@ msgstr "Visualizza"
 
 #: ../../vdms_main/main_frame.py:589
 msgid "Home panel\tCtrl+Shift+H"
-msgstr "Pannello principale\tCtrl+Maiusc+H"
+msgstr "Pannello principale\tCtrl+Shift+H"
 
 #: ../../vdms_main/main_frame.py:590
 msgid "Go to the «Home» panel"
@@ -2227,7 +2227,7 @@ msgstr "Vai al pannello «Home»"
 
 #: ../../vdms_main/main_frame.py:593
 msgid "Presets Manager\tCtrl+Shift+P"
-msgstr "Gestione profili\tCtrl+Maiusc+P"
+msgstr "Gestione profili\tCtrl+Shift+P"
 
 #: ../../vdms_main/main_frame.py:594
 msgid "Go to the «Presets Manager» panel"
@@ -2235,7 +2235,7 @@ msgstr "Vai al pannello «Gestione profili»"
 
 #: ../../vdms_main/main_frame.py:596
 msgid "A/V Conversions\tCtrl+Shift+V"
-msgstr "Conversioni audio/video\tCtrl+Maiusc+V"
+msgstr "Conversioni audio/video\tCtrl+Shift+V"
 
 #: ../../vdms_main/main_frame.py:597
 msgid "Go to the «A/V Conversions» panel"
@@ -2243,7 +2243,7 @@ msgstr "Vai al pannello «Conversione audio/video»"
 
 #: ../../vdms_main/main_frame.py:599
 msgid "Concatenate Demuxer\tCtrl+Shift+D"
-msgstr "Unione con demuxer\tCtrl+Maiusc+D"
+msgstr "Unione con demuxer\tCtrl+Shift+D"
 
 #: ../../vdms_main/main_frame.py:600
 msgid "Go to the «Concatenate Demuxer» panel"
@@ -2251,15 +2251,15 @@ msgstr "Vai al pannello «Unione con demuxer»"
 
 #: ../../vdms_main/main_frame.py:603
 msgid "Still Image Maker\tCtrl+Shift+I"
-msgstr "Crea presentazioni\tCtrl+Maiusc+I"
+msgstr "Crea presentazioni\tCtrl+Shift+I"
 
 #: ../../vdms_main/main_frame.py:604
 msgid "Go to the «Still Image Maker» panel"
-msgstr "Vai al pannello «Crea presentazione"
+msgstr "Vai al pannello «Crea presentazione»"
 
 #: ../../vdms_main/main_frame.py:606
 msgid "From Movie to Pictures\tCtrl+Shift+S"
-msgstr "Converti filmato in immagini\tCtrl+Maiusc+S"
+msgstr "Converti filmato in immagini\tCtrl+Shift+S"
 
 #: ../../vdms_main/main_frame.py:607
 msgid "Go to the «From Movie to Pictures» panel"
@@ -2267,7 +2267,7 @@ msgstr "Vai al pannello «Converti filmato in immagini»"
 
 #: ../../vdms_main/main_frame.py:610
 msgid "YouTube Downloader\tCtrl+Shift+Y"
-msgstr "YouTube Downloader\tCtrl+Maiusc+Y"
+msgstr "YouTube Downloader\tCtrl+Shift+Y"
 
 #: ../../vdms_main/main_frame.py:611
 msgid "Open «YouTube Downloader» window"
@@ -2275,7 +2275,7 @@ msgstr "Apri finestra «YouTube Downloader»"
 
 #: ../../vdms_main/main_frame.py:613
 msgid "Output monitor\tCtrl+Shift+O"
-msgstr "Monitor file destinazione\tCtrl+Maiusc+O"
+msgstr "Monitor file destinazione\tCtrl+Shift+O"
 
 #: ../../vdms_main/main_frame.py:614
 msgid "Keeps track of the output for debugging errors"
@@ -2491,7 +2491,7 @@ msgstr "Videomass - Gestione profili"
 
 #: ../../vdms_main/main_frame.py:1473
 msgid "Videomass - Concatenate Demuxer"
-msgstr "Videomass - Unioen con demuxer"
+msgstr "Videomass - Unione con demuxer"
 
 #: ../../vdms_main/main_frame.py:1501
 msgid "Videomass - From Movie to Pictures"
@@ -4201,7 +4201,7 @@ msgstr "Incolla gli URL copiati negli appunti"
 #: ../../vdms_ytdlp/main_ytdlp.py:291 ../../vdms_ytdlp/textdrop.py:190
 #: ../../vdms_ytdlp/textdrop.py:209
 msgid "Remove selected URL\tDEL"
-msgstr "Rimuovi l'URL selezionato\tCANC"
+msgstr "Rimuovi l'URL selezionato\tDEL"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:292
 msgid "Remove the selected URL from the list"

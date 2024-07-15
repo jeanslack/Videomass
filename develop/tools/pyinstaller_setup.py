@@ -412,7 +412,7 @@ def main():
     Users inputs parser (positional/optional arguments)
     """
     descr = 'Wrap the pyinstaller setup for Videomass application'
-    parser = argparse.ArgumentParser(prog=NAME,
+    parser = argparse.ArgumentParser(prog=this,
                                      description=descr,
                                      add_help=True,
                                      )
