@@ -4,7 +4,7 @@
 # Created: 06/04/2012
 #
 # Edited by Gianluca (jeanslack) Pernigotto
-# Update: January 16 2023
+# Update: July 13 2024
 
 # NOTE for translators: when you add new languages you
 # also add them to "langnames"
@@ -27,6 +27,7 @@ supLang = {
     "it_IT": (wx.LANGUAGE_ITALIAN, ("Italian")),
     "pt_BR": (wx.LANGUAGE_PORTUGUESE_BRAZILIAN, ("Portuguese (Brazilian)")),
     "ru_RU": (wx.LANGUAGE_RUSSIAN, ("Russian")),
-    "es_ES": (wx.LANGUAGE_SPANISH, ("Spanish")),
+    "es_ES": (wx.LANGUAGE_SPANISH, ("Spanish (Spain)")),
     "es_MX": (wx.LANGUAGE_SPANISH_MEXICAN, ("Spanish (Mexico)")),
+    "es_CU": (wx.LANGUAGE_SPANISH_CUBA, ("Spanish (Cuba)")),
 }

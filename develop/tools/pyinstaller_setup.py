@@ -28,6 +28,7 @@ import platform
 import argparse
 import time
 import subprocess
+from babel.messages.frontend import compile_catalog
 
 this = os.path.realpath(os.path.abspath(__file__))
 HERE = os.path.dirname(os.path.dirname(os.path.dirname(this)))
@@ -41,6 +42,28 @@ SCRIPT = 'launcher'
 NAME = about_app.PRGNAME
 BINARY = os.path.join(HERE, SCRIPT)
 SPECFILE = os.path.join(HERE, f'{NAME}.spec')
+
+
+def build_language_catalog(here=HERE):
+    """
+    Before build standalone App make sure to compile
+    MO files for this macchine.
+    """
+    while True:
+        quest = input('\nDo you want to compile MO files for '
+                      'this macchine? (y/n)? ')
+        if quest.strip() in ('Y', 'y', 'n', 'N'):
+            break
+        print(f"\nInvalid option '{quest}'")
+        continue
+
+    if quest in ('y', 'Y'):
+        cmd = compile_catalog()
+        cmd.directory = os.path.join(here, 'videomass', 'data', 'locale')
+        cmd.domain = "videomass"
+        cmd.statistics = True
+        cmd.finalize_options()
+        cmd.run()
 
 
 def videomass_data_source(here=HERE, name=NAME, release=about_app):
@@ -389,7 +412,7 @@ def main():
     Users inputs parser (positional/optional arguments)
     """
     descr = 'Wrap the pyinstaller setup for Videomass application'
-    parser = argparse.ArgumentParser(prog=NAME,
+    parser = argparse.ArgumentParser(prog=this,
                                      description=descr,
                                      add_help=True,
                                      )
@@ -415,6 +438,7 @@ def main():
         get_data_platform()
 
     elif args.genspec_build:
+        build_language_catalog()
         get_data_platform()
         clean_buildingdirs()
         backup = backup_sources()
@@ -424,6 +448,7 @@ def main():
             restore_sources(backup)
 
     elif args.start_build:
+        build_language_catalog()
         clean_buildingdirs()
         backup = backup_sources()
         ret = make_portable()

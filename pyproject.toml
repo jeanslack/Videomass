@@ -104,6 +104,11 @@ build = [
     "wheel",
 ]
 
+[tool.hatch.build.hooks.custom]
+dependencies = [
+    "Babel"
+]
+
 [project.gui-scripts]
 videomass = "videomass.gui_app:main"
 
