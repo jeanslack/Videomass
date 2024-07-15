@@ -60,7 +60,7 @@ def long_description():
              'directory based on a POT template file.\n'
              '- Automatically compiles MO (Machine Object) files from all PO '
              '(portable object) files found in the provided locale '
-             'directory.\n\nPlease note that these arguments are mutually '
+             'directory.\n\nPlease note that these features are mutually '
              'exclusive, use one at a time.\n')
 
     return descr
