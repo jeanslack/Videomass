@@ -7,7 +7,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.14.2024
+Rev: July.17.2024
 ########################################################
 This file is part of Videomass.
     Videomass is free software: you can redistribute it and/or modify
@@ -28,11 +28,14 @@ import platform
 import argparse
 import time
 import subprocess
-from babel.messages.frontend import compile_catalog
+try:
+    from babel.messages.frontend import compile_catalog
+except ModuleNotFoundError:
+    sys.exit('Babel for Python3 is required, please install babel before '
+             'launch this script.')
 
-this = os.path.realpath(os.path.abspath(__file__))
-HERE = os.path.dirname(os.path.dirname(os.path.dirname(this)))
-sys.path.insert(0, HERE)
+THIS = os.path.realpath(os.path.abspath(__file__))
+sys.path.insert(0, os.getcwd())
 try:
     from videomass.vdms_sys import about_app
 except ModuleNotFoundError as modulerror:
@@ -40,11 +43,11 @@ except ModuleNotFoundError as modulerror:
 
 SCRIPT = 'launcher'
 NAME = about_app.PRGNAME
-BINARY = os.path.join(HERE, SCRIPT)
-SPECFILE = os.path.join(HERE, f'{NAME}.spec')
+BINARY = SCRIPT
+SPECFILE = f'{NAME}.spec'
 
 
-def build_language_catalog(here=HERE):
+def build_language_catalog():
     """
     Before build standalone App make sure to compile
     MO files for this macchine.
@@ -58,15 +61,20 @@ def build_language_catalog(here=HERE):
         continue
 
     if quest in ('y', 'Y'):
-        cmd = compile_catalog()
-        cmd.directory = os.path.join(here, 'videomass', 'data', 'locale')
-        cmd.domain = "videomass"
-        cmd.statistics = True
-        cmd.finalize_options()
-        cmd.run()
+        try:
+            cmd = compile_catalog()
+            cmd.directory = os.path.join('videomass', 'data', 'locale')
+            cmd.domain = "videomass"
+            cmd.statistics = True
+            cmd.finalize_options()
+            cmd.run()
+        except Exception as err:
+            sys.exit(err)
+
+        print("....MO files Compiled successfully!")
 
 
-def videomass_data_source(here=HERE, name=NAME, release=about_app):
+def videomass_data_source(name=NAME, release=about_app):
     """
     Returns a dict object of the Videomass data
     and pathnames needed to spec file.
@@ -81,26 +89,24 @@ def videomass_data_source(here=HERE, name=NAME, release=about_app):
             "AUTHOR": release.AUTHOR,
             "EMAIL": release.MAIL,
             "COMMENT": release.COMMENT,
-            "ART": os.path.join(here, 'videomass', 'data', 'icons'),
-            "LOCALE": os.path.join(here, 'videomass', 'data', 'locale'),
-            "SHARE": os.path.join(here, 'videomass', 'data', 'presets'),
-            "FFMPEG": os.path.join(here, 'videomass', 'data', 'FFMPEG'),
-            "NOTICE": os.path.join(here, 'videomass', 'data',
+            "ART": os.path.join('videomass', 'data', 'icons'),
+            "LOCALE": os.path.join('videomass', 'data', 'locale'),
+            "SHARE": os.path.join('videomass', 'data', 'presets'),
+            "FFMPEG": os.path.join('videomass', 'data', 'FFMPEG'),
+            "NOTICE": os.path.join('videomass', 'data',
                                    'FFMPEG', 'NOTICE.rtf'),
-            "AUTH": os.path.join(here, 'AUTHORS'),
-            "BUGS": os.path.join(here, 'BUGS'),
-            "CHANGELOG": os.path.join(here, 'CHANGELOG'),
-            "COPYING": os.path.join(here, 'LICENSE'),
-            "INSTALL": os.path.join(here, 'INSTALL'),
-            "README": os.path.join(here, 'README.md'),
-            "TODO": os.path.join(here, 'TODO'),
-            "ICNS": os.path.join(here,
-                                 'videomass',
+            "AUTH": 'AUTHORS',
+            "BUGS": 'BUGS',
+            "CHANGELOG": 'CHANGELOG',
+            "COPYING": 'LICENSE',
+            "INSTALL": 'INSTALL',
+            "README": 'README.md',
+            "TODO": 'TODO',
+            "ICNS": os.path.join('videomass',
                                  'data',
                                  'icons',
                                  'videomass.icns'),
-            "ICO": os.path.join(here,
-                                'videomass',
+            "ICO": os.path.join('videomass',
                                 'data',
                                 'icons',
                                 'videomass.ico')
@@ -207,9 +213,9 @@ def onefile_onedir():
     The `--onedir` option is the default.
     """
     text = ('\nChoose from the following options:\n'
-            '[1] Create a one-folder bundle containing an '
-            'executable (default)\n'
-            '[2] Create a one-file bundled executable\n'
+            '[1] Build a one-folder bundle containing an '
+            'executable (default).\n'
+            '[2] Build a one-file bundled executable\n'
             '(1/2) ')
 
     while True:
@@ -265,13 +271,13 @@ def genspec(options, specfile=SPECFILE, addplist=None, script=SCRIPT):
 # --------------------------------------------------------#
 
 
-def clean_buildingdirs(here=HERE, name=NAME):
+def clean_buildingdirs(name=NAME):
     """
     Asks the user if they want to clean-up building
     directories, usually "dist", "build", "*.egg-info" dirs.
     """
-    target = ('dist', 'build', f'{NAME}.egg-info')
-    aredirs = [x for x in os.listdir(HERE) if os.path.isdir(x)]
+    target = ('dist', 'build', f'{name}.egg-info')
+    aredirs = [x for x in os.listdir() if os.path.isdir(x)]
     toremove = [t for t in aredirs if t in target]
 
     if toremove:
@@ -284,15 +290,14 @@ def clean_buildingdirs(here=HERE, name=NAME):
 
         if clean in ('y', 'Y'):
             for names in toremove:
-                dirname = os.path.join(HERE, names)
-                print('Removing: ', dirname)
-                shutil.rmtree(os.path.join(HERE, dirname), ignore_errors=True)
+                print('Removing: ', names)
+                shutil.rmtree(names, ignore_errors=True)
             print('\n')
 
 # --------------------------------------------------------#
 
 
-def run_pyinst(specfile=SPECFILE):
+def run_pyinst(specfile=SPECFILE, this=THIS):
     """
     wrap `pyinstaller --clean videomass.spec`
     """
@@ -303,15 +308,18 @@ def run_pyinst(specfile=SPECFILE):
             subprocess.run(f'pyinstaller --clean {specfile}',
                            shell=True, check=True)
         except subprocess.CalledProcessError as err:
-            sys.exit(f'\nERROR: {err}\n')
+            return f'\nERROR: {err}\n'
 
-        print("\nSUCCESS: pyinstaller_setup.py: Build finished.\n")
+        print(f"\nSUCCESS: {os.path.basename(THIS)}: Build finished.\n")
     else:
-        sys.exit(f"ERROR: no such file {specfile}")
+        return (f"ERROR: no such file \"{specfile}\", please use "
+                f"`--gen-spec` argument.")
+
+    return None
 # --------------------------------------------------------#
 
 
-def make_portable(here=HERE):
+def make_portable():
     """
     If you plan to make definively fully portable the application
     bundled, use this function to implements this feature.
@@ -338,7 +346,7 @@ def make_portable(here=HERE):
     row = "        kwargs = {'make_portable': None}"
     code = ("        data = os.path.join(os.path.dirname(sys.executable), "
             "'portable_data')\n        kwargs = {'make_portable': data}\n")
-    filename = os.path.join(here, 'videomass', 'gui_app.py')
+    filename = os.path.join('videomass', 'gui_app.py')
 
     with open(filename, 'r+', encoding='utf-8') as gui_app:
         data = gui_app.readlines()
@@ -359,22 +367,22 @@ def make_portable(here=HERE):
 # --------------------------------------------------------#
 
 
-def restore_sources(data, here=HERE):
+def restore_sources(data):
     """
     Restore source file `gui_app.py`
     """
-    filename = os.path.join(here, 'videomass', 'gui_app.py')
+    filename = os.path.join('videomass', 'gui_app.py')
     with open(filename, 'w', encoding='utf-8') as bak:
         bak.write(''.join(data))
 # --------------------------------------------------------#
 
 
-def backup_sources(here=HERE):
+def backup_sources():
     """
     Backup source file `gui_app.py`
     """
     data = None
-    filename = os.path.join(here, 'videomass', 'gui_app.py')
+    filename = os.path.join('videomass', 'gui_app.py')
     with open(filename, 'r', encoding='utf-8') as gui_app:
         data = gui_app.readlines()
     return data
@@ -411,50 +419,40 @@ def main():
     """
     Users inputs parser (positional/optional arguments)
     """
-    descr = 'Wrap the pyinstaller setup for Videomass application'
-    parser = argparse.ArgumentParser(prog=this,
+    descr = 'Wrap pyinstaller setup for Videomass application.'
+    parser = argparse.ArgumentParser(prog=THIS,
                                      description=descr,
                                      add_help=True,
                                      )
     parser.add_argument(
-        '-g', '--gen_spec',
-        help="Generates a ready-to-use videomass.spec file.",
+        '-g', '--gen-spec',
+        help="Generates only a videomass.spec file.",
         action="store_true",
     )
     parser.add_argument(
-        '-gb', '--genspec_build',
-        help="Generate a videomass.spec file and start building bundle.",
-        action="store_true",
-    )
-    parser.add_argument(
-        '-s', '--start_build',
-        help="Start the building bundle by an existing videomass.spec file.",
+        '-b', '--build',
+        help=("Start the building bundle. Can be used with `--gen-spec` "
+              "argument to generate a `videomass.spec` file."),
         action="store_true",
     )
 
     args = parser.parse_args()
 
-    if args.gen_spec:
+    if args.gen_spec and not args.build:
         get_data_platform()
 
-    elif args.genspec_build:
+    elif args.build:
         build_language_catalog()
-        get_data_platform()
+        if args.gen_spec:
+            get_data_platform()
         clean_buildingdirs()
         backup = backup_sources()
         ret = make_portable()
-        run_pyinst()
+        startpyinst = run_pyinst()
         if ret:
             restore_sources(backup)
-
-    elif args.start_build:
-        build_language_catalog()
-        clean_buildingdirs()
-        backup = backup_sources()
-        ret = make_portable()
-        run_pyinst()
-        if ret:
-            restore_sources(backup)
+        if startpyinst:
+            sys.exit(startpyinst)
     else:
         print("\nType 'pyinstaller_setup.py -h' for help.\n")
 

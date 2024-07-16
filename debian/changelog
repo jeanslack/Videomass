@@ -1,4 +1,4 @@
-videomass (5.0.17-1) UNRELEASED; urgency=medium
+videomass (5.0.18-1) UNRELEASED; urgency=medium
 
   * Created new gettext utilities.
   * Italian translation completed thanks to @bovirus .
@@ -18,8 +18,9 @@ videomass (5.0.17-1) UNRELEASED; urgency=medium
     babel program, convenient on operating systems that do not have gettext
     installed.
   * Fixed `app_const` not listing the es_CU locale code language.
+  * Improved build using pyinstaller.py wrap script .
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 15 Jul 2024 09:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 17 Jul 2024 1:00:00 +0200
 
 videomass (5.0.16-1) UNRELEASED; urgency=medium
 

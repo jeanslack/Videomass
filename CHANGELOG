@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 15 July 2024 V.5.0.17
+Wed, 17 July 2024 V.5.0.18
 
   * Created new gettext utilities.
   * Italian translation completed thanks to @bovirus .
@@ -27,6 +27,7 @@ Mon, 15 July 2024 V.5.0.17
     babel program, convenient on operating systems that do not have gettext
     installed.
   * Fixed `app_const` not listing the es_CU locale code language.
+  * Improved build using pyinstaller.py wrap script .
 
 +------------------------------------+
 Wed, 03 July 2024 V.5.0.16

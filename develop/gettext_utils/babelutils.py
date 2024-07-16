@@ -32,7 +32,8 @@ try:
                                          init_catalog
                                          )
 except ModuleNotFoundError:
-    sys.exit('babel is required, please install babel (or python3-babel)')
+    sys.exit('Babel for Python3 is required, please install babel before '
+             'launch this script.')
 
 
 def description():
@@ -52,27 +53,31 @@ def long_description():
     descr = ('Encapsulates the main functionalities for managing '
              'the translation message catalog based on babel.\n\n'
              'It provides the following main features:\n'
-             '- Extracts translation messages from the catalog and adds them '
-             'to a new POT file\n'
-             '- Automatically creates a new language catalog based on the '
-             'provided POT file and a locale code.\n'
-             '- Updates all existing PO files found on the given locale '
-             'directory based on a POT template file.\n'
-             '- Automatically compiles MO (Machine Object) files from all PO '
-             '(portable object) files found in the provided locale '
-             'directory.\n\nPlease note that these features are mutually '
-             'exclusive, use one at a time.\n')
+             '(--extract-msg) Extracts translation messages from the catalog '
+             'and adds them to a new POT file\n'
+             '(--new-catalog) Automatically creates a new language catalog '
+             'based on the provided POT file and a locale code.\n'
+             '(--update-catalogs) Updates all existing PO files found '
+             'on the given locale directory based on a POT template file.\n'
+             '(--compile-catalogs) Automatically compiles MO (Machine Object) '
+             'files from all PO (portable object) files found in the provided '
+             'locale directory.\n\nPlease note that these features '
+             'are mutually exclusive, use one at a time.\n')
 
     return descr
 
 
-def exit_from_prog(nameprogram):
+def exit_from_prog(nameprogram, args=None):
     """
     print message error and exit from program
     """
     print(f"usage: {nameprogram} [-h] (--extract-msg | --new-catalog | "
-          f"--update-catalogs | --compile-catalogs)\n")
-    sys.exit(long_description())
+          f"--update-catalogs | --compile-catalogs)\n{long_description()}")
+
+    if args:
+        print(args)
+
+    sys.exit()
 
 
 def build_translation_catalog(nameprogram):
@@ -271,10 +276,10 @@ def init_new_catalog(nameprogram):
     args = parser.parse_args()
     try:
         cmd = init_catalog()
-        cmd.domain = args.domain.lower()
+        cmd.domain = args.domain_name.lower()
         cmd.locale = args.locale_code
         cmd.input_file = os.path.join(args.locale_directory,
-                                      args.domain.lower() + ".pot")
+                                      args.domain_name.lower() + ".pot")
         cmd.output_dir = args.locale_directory
         cmd.finalize_options()
         cmd.run()
@@ -296,9 +301,10 @@ if __name__ == '__main__':
         exit_from_prog(prgname)
 
     if len(appendact) > 1:
-        print(f"{prgname}: error: the following arguments "
-              f"are mutually exclusive: {mode}")
-        exit_from_prog(prgname)
+        msg = (f"\033[31;1mERROR:\033[0m {prgname}: the following arguments "
+               f"are mutually exclusive: {mode} "
+               f"go for > {' '.join(appendact)}")
+        exit_from_prog(prgname, msg)
 
     if appendact[0] == "--new-catalog":
         status = init_new_catalog(prgname)

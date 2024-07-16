@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 5.0.16\n"
+"Project-Id-Version: Videomass 5.0.18\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-15 13:07+0200\n"
 "PO-Revision-Date: 2024-07-03 18:47+0200\n"
