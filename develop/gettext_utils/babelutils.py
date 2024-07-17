@@ -301,7 +301,7 @@ if __name__ == '__main__':
         exit_from_prog(prgname)
 
     if len(appendact) > 1:
-        msg = (f"\033[31;1mERROR:\033[0m {prgname}: the following arguments "
+        msg = (f"ERROR: {prgname}: the following arguments "
                f"are mutually exclusive: {mode} "
                f"go for > {' '.join(appendact)}")
         exit_from_prog(prgname, msg)
@@ -319,6 +319,6 @@ if __name__ == '__main__':
         status = build_translation_catalog(prgname)
 
     if status:
-        print(f"\033[31;1mERROR:\033[0m babel: {status}")
+        print(f"ERROR: babel: {status}")
     else:
-        print("\033[32;1mCOMPLETED SUCCESSFULLY!\033[0m")
+        print("COMPLETED SUCCESSFULLY!")

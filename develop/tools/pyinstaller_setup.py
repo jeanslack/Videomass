@@ -426,13 +426,16 @@ def main():
                                      )
     parser.add_argument(
         '-g', '--gen-spec',
-        help="Generates only a videomass.spec file.",
+        help=("Generate the `videomass.spec` file needed by pyinstaller "
+              "to build the App based on the operating system. This "
+              "argument can be given alone."),
         action="store_true",
     )
     parser.add_argument(
         '-b', '--build',
-        help=("Start the building bundle. Can be used with `--gen-spec` "
-              "argument to generate a `videomass.spec` file."),
+        help=("Build the bundle App. Can be used with `--gen-spec` "
+              "argument to generate a `videomass.spec` file before "
+              "start App building."),
         action="store_true",
     )
 
