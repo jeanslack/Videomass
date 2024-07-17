@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Traduzione Videomass 09.07.2024\n"
+"Project-Id-Version: Traduzione Videomass 17.07.2024\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-15 13:07+0200\n"
 "PO-Revision-Date: 2024-07-13 13:16+0200\n"
@@ -1225,11 +1225,11 @@ msgstr ""
 
 #: ../../vdms_dialogs/preferences.py:435
 msgid "Set logging level flags used by FFmpeg"
-msgstr ""
+msgstr "Imposta flag livello registro eventi usati da FFmpeg"
 
 #: ../../vdms_dialogs/preferences.py:442
 msgid "Set logging level flags used by FFplay"
-msgstr ""
+msgstr "Set event log level flags used by FFplay"
 
 #: ../../vdms_dialogs/preferences.py:450
 msgid "FFmpeg logging levels"
@@ -3418,7 +3418,7 @@ msgstr "ERRORE"
 
 #: ../../vdms_panels/sequence_to_video.py:705
 msgid "Shortest"
-msgstr ""
+msgstr "Più breve"
 
 #: ../../vdms_panels/sequence_to_video.py:713
 msgid ""
