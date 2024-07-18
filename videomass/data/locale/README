@@ -2,13 +2,10 @@
 
 NOTE FOR VOLUNTARY TRANSLATORS:
 
-If you are interested in translating any language or adding a new translation,
-please see `localization_guidelines.md` on
-<https://github.com/jeanslack/Videomass/blob/master/docs/localization_guidelines.md>
-web page, thanks.
+If you are interested in translating any language or adding a new translation language,
+please visit <https://jeanslack.github.io/Videomass/Pages/Localization_Guidelines>
+web page.
 
-IMPORTANT! Before translate, update in place the videomass.po strings:
-Open PoEdit and go to menu bar -> Catalog -> Update from POT file...
-The videomass.pot file is located next to this README file.
+thanks.
 
 ===================================================

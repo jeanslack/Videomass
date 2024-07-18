@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.18\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-15 13:07+0200\n"
+"POT-Creation-Date: 2024-07-18 22:40+0200\n"
 "PO-Revision-Date: 2024-07-03 18:50+0200\n"
 "Last-Translator: MaiJZ https://github.com/maijz128\n"
 "Language: zh_CN\n"
@@ -32,8 +32,8 @@ msgstr ""
 #: ../../vdms_dialogs/filter_transpose.py:182
 #: ../../vdms_dialogs/mediainfo.py:245 ../../vdms_dialogs/mediainfo.py:265
 #: ../../vdms_dialogs/mediainfo.py:285 ../../vdms_dialogs/mediainfo.py:305
-#: ../../vdms_dialogs/setting_profiles.py:282
-#: ../../vdms_dialogs/setting_profiles.py:290 ../../vdms_io/checkup.py:75
+#: ../../vdms_dialogs/setting_profiles.py:281
+#: ../../vdms_dialogs/setting_profiles.py:289 ../../vdms_io/checkup.py:75
 #: ../../vdms_io/io_tools.py:170 ../../vdms_main/main_frame.py:884
 #: ../../vdms_main/main_frame.py:919 ../../vdms_main/main_frame.py:941
 #: ../../vdms_main/main_frame.py:959 ../../vdms_main/main_frame.py:979
@@ -1343,10 +1343,10 @@ msgid "Enter only alphanumeric characters. You can also use the hyphen (\"-\") a
 msgstr "只输入字母数字字符。你也可以使用连字符（\"-\"）和下划线（\"_\"）。不允许有空格。"
 
 #: ../../vdms_dialogs/preferences.py:720
-#: ../../vdms_dialogs/setting_profiles.py:258
-#: ../../vdms_dialogs/setting_profiles.py:265
-#: ../../vdms_dialogs/setting_profiles.py:287
-#: ../../vdms_dialogs/setting_profiles.py:310 ../../vdms_main/main_frame.py:404
+#: ../../vdms_dialogs/setting_profiles.py:257
+#: ../../vdms_dialogs/setting_profiles.py:264
+#: ../../vdms_dialogs/setting_profiles.py:286
+#: ../../vdms_dialogs/setting_profiles.py:309 ../../vdms_main/main_frame.py:404
 #: ../../vdms_main/main_frame.py:429 ../../vdms_panels/av_conversions.py:605
 #: ../../vdms_panels/av_conversions.py:612
 #: ../../vdms_panels/sequence_to_video.py:350
@@ -1400,7 +1400,7 @@ msgid "FFmpeg arguments for one-pass encoding"
 msgstr ""
 
 #: ../../vdms_dialogs/queue_edit.py:88
-#: ../../vdms_dialogs/setting_profiles.py:159
+#: ../../vdms_dialogs/setting_profiles.py:158
 #: ../../vdms_panels/presets_manager.py:259
 msgid "Any optional arguments to add before input file on the one-pass encoding, e.g required names of some hardware accelerations like -hwaccel to use with CUDA."
 msgstr ""
@@ -1417,7 +1417,7 @@ msgid "FFmpeg arguments for two-pass encoding"
 msgstr ""
 
 #: ../../vdms_dialogs/queue_edit.py:120
-#: ../../vdms_dialogs/setting_profiles.py:163
+#: ../../vdms_dialogs/setting_profiles.py:162
 #: ../../vdms_panels/presets_manager.py:263
 msgid "Any optional arguments to add before input file on the two-pass encoding, e.g required names of some hardware accelerations like -hwaccel to use with CUDA."
 msgstr ""
@@ -1565,24 +1565,23 @@ msgid "A long description of the profile"
 msgstr "对简介的长篇描述"
 
 #: ../../vdms_dialogs/setting_profiles.py:153
-#, fuzzy
-msgid "One or more comma-separated format names that are not compatible with this profile."
-msgstr "一个或多个逗号分隔的格式名称，以包括在简介中。"
+msgid "One or more comma-separated format names compatible with this profile"
+msgstr ""
 
-#: ../../vdms_dialogs/setting_profiles.py:156
+#: ../../vdms_dialogs/setting_profiles.py:155
 msgid "Output format extension. Leave empty to copy codec and format"
 msgstr "输出格式的扩展名。留空以复制编解码器和格式"
 
-#: ../../vdms_dialogs/setting_profiles.py:257
+#: ../../vdms_dialogs/setting_profiles.py:256
 #, fuzzy
 msgid "Incomplete profile assignments"
 msgstr "不完整的个人资料分配"
 
-#: ../../vdms_dialogs/setting_profiles.py:264
+#: ../../vdms_dialogs/setting_profiles.py:263
 msgid "Formats must be comma-separated"
 msgstr "格式必须是以逗号分隔的"
 
-#: ../../vdms_dialogs/setting_profiles.py:280
+#: ../../vdms_dialogs/setting_profiles.py:279
 #: ../../vdms_utils/queue_utils.py:80
 #, python-brace-format
 msgid ""
@@ -1590,19 +1589,19 @@ msgid ""
 "Invalid file: «{0}»"
 msgstr ""
 
-#: ../../vdms_dialogs/setting_profiles.py:286
-#: ../../vdms_dialogs/setting_profiles.py:309
+#: ../../vdms_dialogs/setting_profiles.py:285
+#: ../../vdms_dialogs/setting_profiles.py:308
 msgid "Profile already stored with same name"
 msgstr "已有相同名称的配置文件"
 
-#: ../../vdms_dialogs/setting_profiles.py:294
+#: ../../vdms_dialogs/setting_profiles.py:293
 #, fuzzy
 msgid "Profile stored successfully!"
 msgstr ""
 "向导已成功完成!\n"
 "\n"
 
-#: ../../vdms_dialogs/setting_profiles.py:312
+#: ../../vdms_dialogs/setting_profiles.py:311
 msgid "Profile change successful!"
 msgstr ""
 
@@ -6109,4 +6108,7 @@ msgstr "URL包含通道。你确定要继续吗？"
 
 #~ msgid "Failed! {}"
 #~ msgstr "失败了! {}"
+
+#~ msgid "One or more comma-separated format names that are not compatible with this profile."
+#~ msgstr "一个或多个逗号分隔的格式名称，以包括在简介中。"
 

@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Wed, 17 July 2024 V.5.0.18
+Thue, 18 July 2024 V.5.0.18
 
   * Created new gettext utilities.
   * Italian translation completed thanks to @bovirus .
@@ -28,6 +28,10 @@ Wed, 17 July 2024 V.5.0.18
     installed.
   * Fixed `app_const` not listing the es_CU locale code language.
   * Improved build using pyinstaller.py wrap script .
+  * Added support for Arabic (Saudi Arabia), Czech (Czechia), German (Germany),
+    Hungarian (Hungary) translations.
+  * Update Localization_Guidelines at:
+    <https://jeanslack.github.io/Videomass/Pages/Localization_Guidelines.html>
 
 +------------------------------------+
 Wed, 03 July 2024 V.5.0.16

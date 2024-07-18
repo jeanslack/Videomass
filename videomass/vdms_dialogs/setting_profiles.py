@@ -151,8 +151,7 @@ class SettingProfile(wx.Dialog):
         self.pass_1_cmd.SetToolTip(_('FFmpeg arguments for one-pass encoding'))
         self.pass_2_cmd.SetToolTip(_('FFmpeg arguments for two-pass encoding'))
         self.txt_supp.SetToolTip(_('One or more comma-separated format names '
-                                   'that are not compatible with this '
-                                   'profile.'))
+                                   'compatible with this profile'))
         self.txt_ext.SetToolTip(_('Output format extension. Leave empty to '
                                   'copy codec and format'))
 

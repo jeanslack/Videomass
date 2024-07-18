@@ -10,6 +10,26 @@
         "Preinput_2": ""
     },
     {
+        "Name": "Album art",
+        "Description": "Add an album art to one or more audio files.",
+        "First_pass": "-i \"/path/to/file.jpg\" -map 0 -map 1 -c copy -disposition:v:0 attached_pic -sn -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "mp3, m4a, mp4, flac",
+        "Output_extension": "copy",
+        "Preinput_1": "",
+        "Preinput_2": ""
+    },
+    {
+        "Name": "Album art 2",
+        "Description": "Add an album art to one or more audio files in ogg format.",
+        "First_pass": "-i \"/path/to/file.jpg\" -map 0 -map 1 -c:a copy -sn -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "ogg",
+        "Output_extension": "copy",
+        "Preinput_1": "",
+        "Preinput_2": ""
+    },
+    {
         "Name": "Drawing text",
         "Description": "Complex system for printing text on video",
         "First_pass": "-c:v libx264 -crf 23 -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0 -vf drawtext=text='Add your text here':x=100:y=50:fontsize=24:fontcolor=yellow:box=1:boxcolor=red",

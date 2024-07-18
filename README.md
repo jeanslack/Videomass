@@ -21,3 +21,7 @@ written in [Python3](https://www.python.org/) using the
 * [Videomass on PyPi](https://pypi.org/project/videomass/)
 * [Development](https://github.com/jeanslack/Videomass)
 * [Downloads](https://github.com/jeanslack/Videomass/releases)
+
+# Help translate the program into other languages
+DISCLAIMER: By sending a translation you agree to publish your work under the GPL3 license!
+- [Localization_Guidelines](https://jeanslack.github.io/Videomass/Pages/Localization_Guidelines)

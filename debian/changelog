@@ -19,8 +19,12 @@ videomass (5.0.18-1) UNRELEASED; urgency=medium
     installed.
   * Fixed `app_const` not listing the es_CU locale code language.
   * Improved build using pyinstaller.py wrap script .
+  * Added support for Arabic (Saudi Arabia), Czech (Czechia), German (Germany),
+    Hungarian (Hungary) translations.
+  * Update Localization_Guidelines at:
+    <https://jeanslack.github.io/Videomass/Pages/Localization_Guidelines.html>
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 17 Jul 2024 1:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 18 Jul 2024 00:00:00 +0200
 
 videomass (5.0.16-1) UNRELEASED; urgency=medium
 
