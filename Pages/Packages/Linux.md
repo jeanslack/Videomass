@@ -16,7 +16,6 @@ derivative distributions.
 
 - [Ubuntu 24.10 Oracular](http://cdimage.ubuntu.com/daily-live/current/)
 - [Ubuntu 24.04 Noble](https://releases.ubuntu.com/noble/)
-- [Ubuntu 23.10 Mantic)](https://releases.ubuntu.com/mantic/)
 - [Ubuntu 22.04 Jammy](https://releases.ubuntu.com/jammy/) 
 
 

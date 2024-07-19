@@ -18,7 +18,7 @@ Minimum requirements:
 For space reasons, this portable edition does not include FFmpeg. Please read 
 the `README.txt` file included in the 7-zip archive for more information.
   
-[Videomass 5.0.16 Portable](https://github.com/jeanslack/Videomass/releases/download/v5.0.16/Videomass-v5.0.16_x86_64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
+[Videomass 5.0.18 Portable](https://github.com/jeanslack/Videomass/releases/download/v5.0.18/Videomass-v5.0.18_x86_64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
 [All Versions](https://github.com/jeanslack/Videomass/releases){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2}     
 
 ### Warning
