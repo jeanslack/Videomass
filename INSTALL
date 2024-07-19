@@ -13,8 +13,8 @@ Application Dependencies
         - yt-dlp >=2024.04.09
         - atomicparsley (to embed thumbnail in audio file)
 
-Videomass can be run without installing by unpack the source package archive
-and executing the "launcher" script inside the root Videomass directory.
+Videomass can be run without installing by extratc the source archive
+and executing the "launcher" script inside the source Videomass directory.
 
     cd Videomass
 
