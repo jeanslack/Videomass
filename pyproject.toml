@@ -81,6 +81,9 @@ exclude = [
 
 [tool.hatch.build.targets.wheel]
 packages = ["videomass"]
+artifacts = [ # https://hatch.pypa.io/latest/config/build/#artifacts
+  "*.mo",
+]
 
 [tool.hatch.build.targets.wheel.shared-data]
 "docs/man/videomass.1.gz" = "share/man/man1/videomass.1.gz"

@@ -1,7 +1,7 @@
 attrdict3
 numpy
 pillow
-pypubsub==4.0.3
+pypubsub
 six
 wxpython
 requests

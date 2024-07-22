@@ -1,4 +1,5 @@
 #Files mentioned in this file will be ignored by git
+*__pycache__
 *.pyc
 *.eggs
 *.log
@@ -25,3 +26,4 @@ Pipfile.lock
 portable_data
 My_Files
 *~
+*.mo
