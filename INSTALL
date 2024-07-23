@@ -1,9 +1,10 @@
-Videomass Installation Instructions and buildings
+VIDEOMASS INSTALLATION INSTRUCTIONS AND BUILDINGS
 
-Application Dependencies
------------------
+-----------------------------
+Base application dependencies
+-----------------------------
 
-    Required:
+    Requires:
         - Python >=3.8.0 <=3.12.0
         - wxPython-Phoenix >=4.0.7
         - PyPubSub >=4.0.3
@@ -13,10 +14,14 @@ Application Dependencies
         - yt-dlp >=2024.04.09
         - atomicparsley (to embed thumbnail in audio file)
 
-Videomass can be run without installing by extratc the source archive
+-------------------------
+Run from source directory
+-------------------------
+
+Videomass can be run without installing by extracting the source archive
 and executing the "launcher" script inside the source Videomass directory.
 
-    cd Videomass
+    cd Videomass (source directory)
 
     python3 launcher
 
@@ -25,57 +30,121 @@ Videomass can also be imported from the Python3 console (interactive mode):
     >>> from videomass import gui_app
     >>> gui_app.main()
 
-#--------------------------------------------------------------------------#
+--------------------------------------
+Compiles language translation catalog
+--------------------------------------
 
-Installing using pip tool: (Linux, MacOs, FreeBSD, Windows, etc.)
+By default Videomass does not include the compiled catalog for language
+translations, i.e. `videomass.mo` files, especially on source code. If this
+is your case and you want to compile the language catalog to make the
+translations available on Videomass, use one of the following options based on
+your operating system requirements:
 
-    python3 -m venv VENV
+- Using `generate_MO_files.sh` shell script (only for Linux, FreeBSD, MacOs)
 
-    source VENV/bin/activate
+    Requires:
+        - shell (/bin/bash)
+        - msgfmt (from GNU-gettext)
 
-    python3 -m pip install --upgrade pip
+    cd Videomass (source directory)
+    ./develop/gettext_utils/generate_MO_files.sh
 
-    python3 -m pip install videomass
+- Using `babelutils.py` python script (multi-platform)
 
-To Update:
+    Requires:
+        - babel (also installable via pip)
 
-    python3 -m pip install -U videomass
+    cd Videomass (source directory)
+    python3 develop/gettext_utils/babelutils.py --compile-catalogs --output-dir videomass/data/locale --domain videomass
 
-To uninstall:
+-----------------------
+Installation using pip
+-----------------------
+
+- Installing on Linux/FreeBSD:
+
+    IMPORTANT! Before installing Videomass make sure to install wxPython from
+    your Linux distribution's package manager first. This will avoid having pip
+    install a version of wxPython that is not a `manylinux` package.
+
+    This assumes installation in a virtual environment using python3-venv
+    module, like this:
+
+        python3 -m venv --system-site-packages --upgrade-deps VENV
+        source VENV/bin/activate
+
+    To install videomass type:
+        python3 -m pip install videomass
+
+    Optionally install yt-dlp:
+        python3 -m pip install yt-dlp
+
+- Installing on Windows and MacOs:
+
+    This assumes installation in a virtual environment using python3-venv
+    module, like this:
+
+        python -m venv --upgrade-deps VENV
+        source VENV/bin/activate
+
+    To install videomass type:
+        python3 -m pip install videomass
+
+    Optionally install yt-dlp:
+        python3 -m pip install yt-dlp
+
+- To Update on Windows, MacOs, Linux, FreeBSD:
+
+    python3 -m pip install --upgrade videomass
+
+- To uninstall on Windows, MacOs, Linux, FreeBSD:
 
     python3 -m pip uninstall videomass
 
 Please, Visit the Wiki page for more info:
 <https://github.com/jeanslack/Videomass/wiki/Installation-using-pip>
 
-#--------------------------------------------------------------------------#
+------------------------------
+Build as standalone executable
+------------------------------
 
-Build sdist and wheel (Require python3-hatchling)
+This build a standalone executable package for OS in use. The current supported
+OS are Windows, MacOs, Linux.
 
+    Requires:
+        - pyinstaller
+        - babel
+
+    cd Videomass (source directory)
+
+Use the `pyinstaller_setup.py` script like this:
+
+
+    python3 develop/tools/pyinstaller_setup.py -h
+
+Then choose the build option you want.
+
+---------------------
+Build sdist and wheel
+---------------------
+
+    Requires:
+        - hatchling
+        - pkginfo
+        - build
+        - babel
+
+    cd Videomass (source directory)
     python3 -m build
 
 For more info visit: <https://packaging.python.org/tutorials/packaging-projects/>
-#--------------------------------------------------------------------------#
 
-Make a Debian source package from upstream source code:
+------------------------------------------------------
+Make a Debian source package from upstream source code
+------------------------------------------------------
 
 This will transform upstream source code into policy-compliant binary packages.
 
 Please, Visit the Videomass Wiki page for istructions:
 
 <https://github.com/jeanslack/Videomass/wiki/Packaging-for-Debian-and-derivatives>
-
-#--------------------------------------------------------------------------#
-
-Build as executable (Linux, Windows, MacOs)
-
-require: pyinstaller
-
-Use the 'develop/tools/pyinstaller_setup.py' script like this
-
-    python3 develop/tools/pyinstaller_setup.py -h
-
-Then choose the option you want.
-
-#--------------------------------------------------------------------------#
-

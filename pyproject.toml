@@ -62,12 +62,13 @@ include = [
   "BUGS",
   "CHANGELOG",
   "INSTALL",
-  "LICENSE",
-  "README.md",
+  "LICENSE",  # included as license
+  "README.md",  # included as readme
   "TODO",
   "launcher",
   "requirements",
   "xdg",
+  ".gitignore",  # included by default, needed for auto-excludes
   ".flake8",
   ".pylintrc",
 ]
