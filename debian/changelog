@@ -1,3 +1,15 @@
+videomass (5.0.20-1) UNRELEASED; urgency=medium
+
+  * Added requirements-linux.txt to build videomass wheel from source.
+  * Update INSTALL file. It now also includes the manual procedure for compiling
+    the language catalog using included scripts.
+  * Added *.mo item to .gitignore file to auto-escludes that item.
+  * Fix pyproject.toml file (added artifacts to include MO files on wheel binary
+    even if the `*.mo` item is present on the .gitignore file).
+  * Update dependencies list on hatchling.toml file.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 24 Jul 2024 00:00:00 +0200
+
 videomass (5.0.18-1) UNRELEASED; urgency=medium
 
   * Created new gettext utilities.

@@ -3,15 +3,19 @@ yt-dlp
 hatchling
 pkginfo
 build
+wheel
 babel
+
+# This installation method involves compiling Videomass from source distribution
+# (sdist), so it also requires packages to build the binary (wheel).
 
 # IMPORTANT! Before installing Videomass using this `requirements` file,
 # make sure to install wxPython from your Linux distribution's package manager.
-# This will avoid having pip install a version of wxPython that is not a `manylinux`
-# package.
-#
-# This requirements assumes installation in a virtual environment using
-# python3-venv module, like this:
+# This will prevent pip from attempting to build wxPython from source, as
+# wxPython's PyPi wheels only provides support for Windows and MacOS.
+
+# This assumes installation in a virtual environment using python3-venv module
+# with `--system-site-package` option, like this:
 #
 #   ~$ python3 -m venv --system-site-packages --upgrade-deps VENV
 #   ~$ source VENV/bin/activate

@@ -7,6 +7,17 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Wed, 24 July 2024 V.5.0.20
+
+  * Added requirements-linux.txt to build videomass wheel from source.
+  * Update INSTALL file. It now also includes the manual procedure for compiling
+    the language catalog using included scripts.
+  * Added *.mo item to .gitignore file to auto-escludes that item.
+  * Fix pyproject.toml file (added artifacts to include MO files on wheel binary
+    even if the `*.mo` item is present on the .gitignore file).
+  * Update dependencies list on hatchling.toml file.
+
++------------------------------------+
 Thue, 18 July 2024 V.5.0.18
 
   * Created new gettext utilities.
