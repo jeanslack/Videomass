@@ -1,24 +1,25 @@
 # -*- coding: UTF-8 -*-
-# Author:  Werner F. Bruhin
-# Purpose: Application constants
-# Created: 06/04/2012
-#
-# Edited by Gianluca (jeanslack) Pernigotto
-# Update: July 17 2024
+"""
+Author:  Werner F. Bruhin
+Purpose: Application constants
+Created: 06/04/2012
 
-# NOTE for translators: when you add new languages you
-# also add them to "langnames"
-# please refers to
-# <https://docs.wxpython.org/wx.Language.enumeration.html#wx-language>
-# for new supported languages.
+Edited by Gianluca (jeanslack) Pernigotto
+Update: July 17 2024
+
+Visit the complete list of the wx.Language CONSTANT identifiers at:
+<https://docs.wxpython.org/wx.Language.enumeration.html#wx-language>
+"""
 
 import wx
 
 # language domain
 langDomain = "videomass"
 
-# languages you want to support
-supLang = {
+# The wx.Language identifiers of the locale are COSTANTS rappresenting
+# `int` objects, e.g wx.LANGUAGE_CZECH is 150 and wx.LANGUAGE_CZECH_CZECHIA
+# is 151, ecc.
+supLang = {  # languages you want to support.
     "Default": (wx.LANGUAGE_DEFAULT, ("System default language")),
     "ar_SA": (wx.LANGUAGE_ARABIC_SAUDI_ARABIA, ("Arabic (Saudi Arabia)")),
     "zh_CN": (wx.LANGUAGE_CHINESE_SIMPLIFIED, ("Chinese (simplified)")),
