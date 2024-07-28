@@ -1,11 +1,12 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-
 Name=Videomass
 Comment=GUI for FFmpeg and yt-dlp
+Comment[it]=Interfaccia grafica per FFmpeg e yt-dlp
 Categories=AudioVideo;
-
 Icon=videomass
+StartupNotify=true
+StartupWMClass=videomass
 Exec=videomass
 Terminal=false

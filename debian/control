@@ -7,7 +7,8 @@ Build-Depends: debhelper-compat (= 13),
                pybuild-plugin-pyproject,
                python3-all,
                python3-babel,
-               python3-hatchling
+               python3-hatchling,
+               python3-setuptools
 Standards-Version: 4.1.4
 Homepage: https://github.com/jeanslack/Videomass
 X-Python3-Version: >= 3.8

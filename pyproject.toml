@@ -6,11 +6,6 @@ build-backend = "hatchling.build"
 name = "videomass"
 dynamic = ["version"]
 readme = "README.md"
-dependencies = [
-  "wxpython>=4.0.7",
-  "pypubsub>=4.0.3",
-  "requests>=2.31.0"
-]
 requires-python = ">=3.8"
 authors = [
   {name = "Gianluca Pernigotto", email = "jeanlucperni@gmail.com"}
@@ -20,32 +15,64 @@ maintainers = [
 ]
 description = "Videomass is a cross-platform GUI for FFmpeg and yt-dlp"
 license = {file = "LICENSE"}
-keywords = ["videomass", "converter", "wxpython", "yt-dlp", "ffmpeg"]
+keywords = [
+    "videomass",
+    "converter",
+    "wxpython",
+    "yt-dlp",
+    "ffmpeg"]
 classifiers = [
-  "Environment :: X11 Applications :: GTK",
-  "Development Status :: 5 - Production/Stable",
-  "Operating System :: MacOS",
-  "Operating System :: Microsoft :: Windows",
-  "Operating System :: POSIX :: Linux",
-  "Intended Audience :: End Users/Desktop",
-  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-  "Natural Language :: Chinese (Simplified)",
-  "Natural Language :: Dutch",
-  "Natural Language :: English",
-  "Natural Language :: French",
-  "Natural Language :: Italian",
-  "Natural Language :: Portuguese (Brazilian)",
-  "Natural Language :: Russian",
-  "Natural Language :: Spanish",
-  "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Topic :: Multimedia :: Video",
-  "Topic :: Multimedia :: Video :: Conversion",
-  "Topic :: Multimedia :: Sound/Audio :: Conversion"
+    "Environment :: X11 Applications :: GTK",
+    "Development Status :: 5 - Production/Stable",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Natural Language :: Chinese (Simplified)",
+    "Natural Language :: Dutch",
+    "Natural Language :: English",
+    "Natural Language :: French",
+    "Natural Language :: Italian",
+    "Natural Language :: Portuguese (Brazilian)",
+    "Natural Language :: Russian",
+    "Natural Language :: Spanish",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Multimedia :: Video :: Conversion",
+    "Topic :: Multimedia :: Sound/Audio :: Conversion"
+]
+dependencies = [
+    "wxpython>=4.0.7",
+    "pypubsub>=4.0.3",
+    "requests>=2.31.0"
+]
+
+[project.optional-dependencies]
+cli = [
+    "yt-dlp",
+]
+build = [
+    "build",
+    "hatchling",
+    "pip",
+    "six",
+    "wheel",
+    "setuptools",
+    "babel",
+]
+pyinstaller = [
+    "pyinstaller",
+]
+
+[tool.hatch.build.hooks.custom]  # pluggin to compile langs catalog
+dependencies = [
+    "babel"
 ]
 
 [tool.hatch.version]
@@ -53,34 +80,39 @@ path = "videomass/vdms_sys/about_app.py"
 
 [tool.hatch.build.targets.sdist]
 include = [
-  "videomass",
-  "debian",
-  "docs/man",
-  "develop",
-  "tests",
-  "AUTHORS",
-  "BUGS",
-  "CHANGELOG",
-  "INSTALL",
-  "LICENSE",
-  "README.md",
-  "TODO",
-  "launcher",
-  "requirements",
-  "xdg",
-  ".flake8",
-  ".pylintrc",
+    "videomass",
+    "debian",
+    "docs/man",
+    "develop",
+    "tests",
+    "AUTHORS",
+    "BUGS",
+    "CHANGELOG",
+    "INSTALL",
+    "LICENSE",  # already included as license
+    "README.md",  # already included as readme
+    "TODO",
+    "launcher",
+    "requirements",
+    "xdg",
+    ".gitignore",  # already included by default, needed for auto-excludes
+    ".flake8",
+    ".pylintrc",
 ]
 exclude = [
-  "videomass/data/icons/videomass.icns",
-  "videomass/data/icons/videomass.ico",
-  "videomass/data/locale/videomass.pot",
-  "videomass/data/locale/README",
-  "videomass/data/FFMPEG",
+    "videomass/data/icons/videomass.icns",
+    "videomass/data/icons/videomass.ico",
+    "videomass/data/locale/videomass.pot",
+    "videomass/data/locale/README",
+    "videomass/data/FFMPEG",
 ]
 
 [tool.hatch.build.targets.wheel]
 packages = ["videomass"]
+artifacts = [
+    # https://hatch.pypa.io/latest/config/build/#artifacts
+    "*.mo",
+]
 
 [tool.hatch.build.targets.wheel.shared-data]
 "docs/man/videomass.1.gz" = "share/man/man1/videomass.1.gz"
@@ -91,23 +123,6 @@ packages = ["videomass"]
 "videomass/data/hicolor/48x48/apps/videomass.png" = "share/icons/hicolor/48x48/apps/videomass.png"
 "videomass/data/hicolor/256x256/apps/videomass.png" = "share/icons/hicolor/256x256/apps/videomass.png"
 "videomass/data/hicolor/scalable/apps/videomass.svg" = "share/icons/hicolor/scalable/apps/videomass.svg"
-
-[project.optional-dependencies]
-cli = [
-  "yt-dlp",
-]
-build = [
-    "build",
-    "hatchling",
-    "pip",
-    "setuptools",
-    "wheel",
-]
-
-[tool.hatch.build.hooks.custom]
-dependencies = [
-    "Babel"
-]
 
 [project.gui-scripts]
 videomass = "videomass.gui_app:main"

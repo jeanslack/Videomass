@@ -1,6 +1,7 @@
 hatchling
 pkginfo
 build
+wheel
 twine
 babel
 pyinstaller
