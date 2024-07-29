@@ -9,18 +9,16 @@ nav_order: 3
 
 # Linux - Third-Party Repositories
 
-## Ubuntu/Mint PPA
+## Ubuntu PPA
 
 This PPA currently publishes packages for [Ubuntu](https://ubuntu.com/), including official and 
-derivative distributions.   
+derivative distributions such as Ubuntu, Xubuntu, Kubuntu, Lubuntu, LinuxMint, etc.   
 
 - [Ubuntu 24.10 Oracular](http://cdimage.ubuntu.com/daily-live/current/)
 - [Ubuntu 24.04 Noble](https://releases.ubuntu.com/noble/)
-- [Ubuntu 22.04 Jammy](https://releases.ubuntu.com/jammy/) 
+- [Ubuntu 22.04 Jammy](https://releases.ubuntu.com/jammy/)
 
-
-To install Videomass add this 
-[PPA](https://launchpad.net/~jeanslack/+archive/ubuntu/videomass) to your system: 
+To install Videomass add this [PPA](https://launchpad.net/~jeanslack/+archive/ubuntu/videomass) to your system: 
   
 
 `$ sudo apt-add-repository ppa:jeanslack/videomass`   
@@ -35,8 +33,8 @@ For any other application-related issues, please read
 
 ## Slackware
 
-Videomass is available as a SlackBuild archive on the [SlackBuilds.org](https://slackbuilds.org/) 
-("Sbo") repository, a collection of third-party SlackBuild scripts to build Slackware packages.
+Videomass is available on the [SlackBuilds.org](https://slackbuilds.org/) 
+("Sbo") repository, a collection of third-party SlackBuild scripts to build Slackware packages from sources.
 
 It can be downloaded, built and installed automatically using the [sbopkg](https://sbopkg.org/) 
 tool, or manually using the traditional method (see howto at [https://slackbuilds.org/howto/](https://slackbuilds.org/howto/))   
@@ -54,7 +52,14 @@ or in AUR part of Manjaro (Arch Linux derivative) Linux.
 
 ## Devuan / Debian
 
-A [deb](https://github.com/jeanslack/Videomass/releases/latest) precompiled package is available and can be installed on both **Devuan Chimaera** and **Devuan Daedalus**, also compatible with **Debian11 bullseye** and **Debian12 bookworm**.
+A pre-compiled, architecture-independent **.deb** package is available, primarily compatible with:
+
+- Devuan Chimaera
+- Devuan Daedalus
+- Debian11 bullseye
+- Debian12 bookworm
+
+Download: [videomass_5.0.20-1_all.deb](https://github.com/jeanslack/Videomass/releases/download/v5.0.20/videomass_5.0.20-1_all.deb)
 
 ---
 
