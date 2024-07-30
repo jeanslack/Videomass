@@ -14,7 +14,7 @@ maintainers = [
   {name = "Gianluca Pernigotto", email = "jeanlucperni@gmail.com"}
 ]
 description = "Videomass is a cross-platform GUI for FFmpeg and yt-dlp"
-license = {file = "LICENSE"}
+license =  {text = "GNU General Public License v3 (GPLv3)"}
 keywords = [
     "videomass",
     "converter",
@@ -29,10 +29,14 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
     "Intended Audience :: End Users/Desktop",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Natural Language :: Arabic",
     "Natural Language :: Chinese (Simplified)",
+    "Natural Language :: Czech",
     "Natural Language :: Dutch",
     "Natural Language :: English",
     "Natural Language :: French",
+    "Natural Language :: German",
+    "Natural Language :: Hungarian",
     "Natural Language :: Italian",
     "Natural Language :: Portuguese (Brazilian)",
     "Natural Language :: Russian",
@@ -89,7 +93,7 @@ include = [
     "BUGS",
     "CHANGELOG",
     "INSTALL",
-    "LICENSE",  # already included as license
+    "LICENSE",
     "README.md",  # already included as readme
     "TODO",
     "launcher",
