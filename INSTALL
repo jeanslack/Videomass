@@ -160,7 +160,6 @@ Build sdist and wheel
 
     Requires:
         - hatchling
-        - pkginfo
         - build
         - wheel
         - babel

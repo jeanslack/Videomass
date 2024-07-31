@@ -1,2 +1,6 @@
 pylint
 flake8
+
+# This requirements include linters used by developper/mantainer.
+# See .pylintrc file and .flake8 file in the source directory for
+# the exclude, ignore references details and other linter exceptions .

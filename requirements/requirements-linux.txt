@@ -1,7 +1,6 @@
 videomass
 yt-dlp
 hatchling
-pkginfo
 build
 wheel
 babel

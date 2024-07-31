@@ -1,9 +1,8 @@
 hatchling
-pkginfo
 build
 wheel
-twine
 babel
+twine
 pyinstaller
 
 # Install the above require list using `python3 -m pip install -r «this file»`
