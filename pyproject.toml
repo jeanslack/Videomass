@@ -74,7 +74,7 @@ pyinstaller = [
     "pyinstaller",
 ]
 
-[tool.hatch.build.hooks.custom]  # pluggin to compile langs catalog
+[tool.hatch.build.hooks.custom]  # see hatch_build.py file
 dependencies = [
     "babel"
 ]

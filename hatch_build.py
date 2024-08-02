@@ -2,6 +2,9 @@
 # -*- coding: UTF-8 -*-
 """
 Name: hatch_build.py
+Porpose: Defines code that will be executed at various stages
+         of the build process, see [tool.hatch.build.hooks.custom] on
+         pyproject.toml file.
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
@@ -31,7 +34,8 @@ from babel.messages.frontend import compile_catalog
 class VideomassLanguageBuildHook(BuildHookInterface):
     """
     Compile the translation files from their PO-format into
-    their binary representating MO-format using python `babel`.
+    their binary representating MO-format using python `babel`
+    pluggin.
     """
     def initialize(self, version, build_data):
         """
