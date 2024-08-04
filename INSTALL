@@ -13,7 +13,6 @@ Base application dependencies
         - FFmpeg (included ffplay and ffprobe) >=5.1
     Optionals:
         - yt-dlp >=2024.04.09
-            - atomicparsley (to embed thumbnail in audio file)
 
 =========================
 Run from source directory
@@ -80,8 +79,8 @@ Installing on Linux/FreeBSD:
     IMPORTANT!
     Before pip install Videomass make sure to install wxPython from your Linux
     distribution's package manager. This will prevent pip from attempting to
-    build wxPython from source, as wxPython's PyPi wheels only provides support
-    for Windows and MacOS.
+    build wxPython from source, as wxPython's PyPi wheels provides support for
+    Windows and MacOS only.
 
     This assumes installation in a virtual environment using python3-venv
     module with `--system-site-package` option, like this:

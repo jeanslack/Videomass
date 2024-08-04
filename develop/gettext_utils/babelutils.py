@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """"
-Copyleft (c) Videomass Development Team.
-Distributed under the terms of the GPL3 License.
-Rev: July.15.2024
+Porpose: Manage the translation message catalog independently
+         of the GNU-xgettext utilities.
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: Distributed under the terms of the GPL3 License.
+Rev: Aug.03.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.

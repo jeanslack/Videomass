@@ -2,24 +2,27 @@
 # -*- coding: UTF-8 -*-
 """
 Name: pyinstaller_setup.py
-Porpose: Setup the videomass.spec and build bundle via Pyinstaller
-Compatibility: Python3
+Porpose: Provide build options to bundle the Videomass application.
+Platform: Gnu-Linux, MacOs, MS-Windows
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2024
-########################################################
+Rev: Aug.04.2024
+
 This file is part of Videomass.
-    Videomass is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    Videomass is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-    You should have received a copy of the GNU General Public License
-    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
 import sys
@@ -28,19 +31,24 @@ import platform
 import argparse
 import time
 import subprocess
+
+for x in ('pyinstaller', 'pyi-makespec'):
+    if not shutil.which(x):
+        sys.exit(f'ERROR: {x} is required, please install '
+                 f'`pyinstaller` before launch this script.')
 try:
     from babel.messages.frontend import compile_catalog
-except ModuleNotFoundError:
-    sys.exit('Babel for Python3 is required, please install babel before '
-             'launch this script.')
+except ModuleNotFoundError as modulerror:
+    sys.exit(f'ERROR: {modulerror}\nBabel for Python3 is required, '
+             f'please install babel before launch this script.')
 
 THIS = os.path.realpath(os.path.abspath(__file__))
 sys.path.insert(0, os.getcwd())
 try:
     from videomass.vdms_sys import about_app
 except ModuleNotFoundError as modulerror:
-    sys.exit(modulerror)
-
+    sys.exit(f'ERROR: {modulerror}\nMake sure to cd to Videomass source '
+             f'directory first.')
 SCRIPT = 'launcher'
 NAME = about_app.PRGNAME
 BINARY = SCRIPT
@@ -207,7 +215,7 @@ class PyinstallerSpec():
 # --------------------------------------------------------#
 
 
-def onefile_onedir():
+def onefile_or_onedir():
     """
     Pyinstaller offer two options to generate stand-alone executables.
     The `--onedir` option is the default.
@@ -312,8 +320,9 @@ def run_pyinst(specfile=SPECFILE, this=THIS):
 
         print(f"\nSUCCESS: {os.path.basename(THIS)}: Build finished.\n")
     else:
-        return (f"ERROR: no such file \"{specfile}\", please use "
-                f"`--gen-spec` argument.")
+        return (f"\nERROR: no such file \"{specfile}\", Make sure to generate "
+                f"a *.spec file first. You can use the `-g`, `--gen-spec` "
+                f"option along with the `-b`, `--build` option.")
 
     return None
 # --------------------------------------------------------#
@@ -399,7 +408,7 @@ def get_data_platform():
                  "following command:\n"
                  "\"pyi-makespec [options] videomass.py\"\n"
                  )
-    wrap = PyinstallerSpec(onefile_onedir())
+    wrap = PyinstallerSpec(onefile_or_onedir())
 
     if platform.system() == 'Linux':
         getopts = wrap.linux_platform()
@@ -417,25 +426,31 @@ def get_data_platform():
 
 def main():
     """
-    Users inputs parser (positional/optional arguments)
+    Inputs parser (positional/optional arguments)
     """
-    descr = 'Wrap pyinstaller setup for Videomass application.'
+    descr = ('Provides build options to help bundle a Videomass application. '
+             'A bundle application is a stand-alone application that '
+             'can be run on the same operating system it is created on. '
+             'Currently supported operating systems are Gnu-Linux, '
+             'MacOs, MS-Windows.')
     parser = argparse.ArgumentParser(prog=THIS,
                                      description=descr,
                                      add_help=True,
                                      )
     parser.add_argument(
         '-g', '--gen-spec',
-        help=("Generate the `videomass.spec` file needed by pyinstaller "
-              "to build the App based on the operating system. This "
-              "argument can be given alone."),
+        help=("Generate a `videomass.spec` file only. A *.spec file is "
+              "only specific for the operating system in use and is required "
+              "by pyinstaller to bundle the stand-alone application. This "
+              "option can be given alone."),
         action="store_true",
     )
     parser.add_argument(
         '-b', '--build',
-        help=("Build the bundle App. Can be used with `--gen-spec` "
-              "argument to generate a `videomass.spec` file before "
-              "start App building."),
+        help=("Build the bundle application. Can be used with `--gen-spec` "
+              "option before starting the build to generate a "
+              "`videomass.spec` file if not present or if you want to "
+              "overwrite the existing one."),
         action="store_true",
     )
 
