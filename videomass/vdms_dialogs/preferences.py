@@ -32,6 +32,7 @@ from videomass.vdms_utils.utils import detect_binaries
 from videomass.vdms_io import io_tools
 from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_sys.app_const import supLang
+from videomass.vdms_threads.shutdown import uses_systemd
 
 
 class SetUp(wx.Dialog):
@@ -338,15 +339,17 @@ class SetUp(wx.Dialog):
         msg = _("Shutdown the system")
         self.ckbx_turnoff = wx.CheckBox(tabFive, wx.ID_ANY, (msg))
         sizerexitopt.Add(self.ckbx_turnoff, 0, wx.LEFT, 5)
-        sizersudo = wx.BoxSizer(wx.HORIZONTAL)
-        self.labsudo = wx.StaticText(tabFive, wx.ID_ANY, _('SUDO password:'))
-        self.labsudo.Disable()
-        sizersudo.Add(self.labsudo, 0, wx.LEFT | wx.TOP, 5)
-        self.txtctrl_sudo = wx.TextCtrl(tabFive, wx.ID_ANY, "",
-                                        style=wx.TE_PASSWORD, size=(300, -1))
-        self.txtctrl_sudo.Disable()
-        sizersudo.Add(self.txtctrl_sudo, 0, wx.ALL, 5)
-        sizerexitopt.Add(sizersudo, 0, wx.LEFT, 5)
+        # no need to ask for a password to shutdown under systemd
+        if not uses_systemd():
+            sizersudo = wx.BoxSizer(wx.HORIZONTAL)
+            self.labsudo = wx.StaticText(tabFive, wx.ID_ANY, _('SUDO password:'))
+            self.labsudo.Disable()
+            sizersudo.Add(self.labsudo, 0, wx.LEFT | wx.TOP, 5)
+            self.txtctrl_sudo = wx.TextCtrl(tabFive, wx.ID_ANY, "",
+                                            style=wx.TE_PASSWORD, size=(300, -1))
+            self.txtctrl_sudo.Disable()
+            sizersudo.Add(self.txtctrl_sudo, 0, wx.ALL, 5)
+            sizerexitopt.Add(sizersudo, 0, wx.LEFT, 5)
         tabFive.SetSizer(sizerexitopt)
         notebook.AddPage(tabFive, _("Exit and Shutdown"))
 
@@ -504,9 +507,10 @@ class SetUp(wx.Dialog):
         tip = (_("By assigning an additional suffix you could avoid "
                  "overwriting files"))
         self.text_suffix.SetToolTip(tip)
-        tip = (_("Type sudo password here, only for Unix-like operating "
-                 "systems, not for MS Windows"))
-        self.txtctrl_sudo.SetToolTip(tip)
+        if not uses_systemd():
+            tip = (_("Type sudo password here, only for Unix-like operating "
+                     "systems, not for MS Windows"))
+            self.txtctrl_sudo.SetToolTip(tip)
         self.SetTitle(_("Preferences"))
 
         # ------ set sizer
@@ -575,7 +579,8 @@ class SetUp(wx.Dialog):
         self.txtctrl_ytmod.SetValue(self.appdata['ytdlp-module-path'])
         self.ckbx_exitapp.SetValue(self.appdata["auto_exit"])
         self.ckbx_turnoff.SetValue(self.appdata["shutdown"])
-        self.txtctrl_sudo.SetValue(self.appdata.get("sudo_password", ''))
+        if not uses_systemd():
+            self.txtctrl_sudo.SetValue(self.appdata.get("sudo_password", ''))
         if self.ckbx_turnoff.GetValue():
             if self.appdata['ostype'] != 'Windows':
                 self.labsudo.Enable(), self.txtctrl_sudo.Enable()
@@ -1080,7 +1085,10 @@ class SetUp(wx.Dialog):
         # do not store this data in the configuration file
         self.appdata["auto_exit"] = self.ckbx_exitapp.GetValue()
         self.appdata["shutdown"] = self.ckbx_turnoff.GetValue()
-        self.appdata['sudo_password'] = self.txtctrl_sudo.GetValue()
+        if not uses_systemd():
+            self.appdata['sudo_password'] = self.txtctrl_sudo.GetValue()
+        else:
+            self.appdata['sudo_password'] = None
         event.Skip()
 
     # --------------------------------------------------------------------#

@@ -46,6 +46,30 @@ def logerror(logfile, output):
         logerr.write(f"\nERRORS:\n{output}\n")
 
 
+def uses_systemd() -> bool:
+    """
+    checks if the init system is systemd
+    this should only be run on a linux system
+    """
+
+    """
+    ps shows info about a command
+    -p defines the PID of the command to show info about
+    -o comm= prints only the name of the command
+    """
+    cmd = ["ps", "-p", "1", "-o", "comm="]
+    with Popen(cmd,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                universal_newlines=True,
+                encoding='utf-8',
+                ) as proc:
+        output = proc.communicate()[0]
+        proc.wait()
+
+        return output.strip() == "systemd"
+
 def shutdown_system(password=None):
     """
     Turn off the system using subprocess
@@ -60,7 +84,10 @@ def shutdown_system(password=None):
             password = f"{password}\n"
             cmd = ["sudo", "-S", "shutdown", "-h", "now"]
         else:  # using root
-            cmd = ["/sbin/shutdown", "-h", "now"]
+            if uses_systemd():
+                cmd = ["systemctl", "poweroff"]
+            else:
+                cmd = ["/sbin/shutdown", "-h", "now"]
 
     elif ostype == 'Darwin':
         password = f"{password}\n"
