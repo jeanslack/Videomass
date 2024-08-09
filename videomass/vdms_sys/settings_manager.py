@@ -224,7 +224,7 @@ class ConfigManager:
     VERSION = 8.0
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "shutdown": False,
-                       "sudo_password": "",
+                       "sudo_password": None,
                        "auto_exit": False,
                        "encoding": "utf-8",
                        "outputdir": f"{os.path.expanduser('~')}",
