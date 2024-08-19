@@ -1,3 +1,13 @@
+videomass (5.0.21-1) UNRELEASED; urgency=medium
+
+  * Update French language (thanks to Phil Aug)
+  * Improved file doc-strings.
+  * Improved build using pyproject.toml file.
+  * Improved build using pyinstaller_setup.py file.
+  * Improved requirements.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 19 Aug 2024 23:30:00 +0200
+
 videomass (5.0.20-1) UNRELEASED; urgency=medium
 
   * Added requirements-linux.txt to build videomass wheel from source.

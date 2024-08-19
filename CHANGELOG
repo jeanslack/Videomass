@@ -7,6 +7,16 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Mon, 19 Aug 2024 V.5.0.21
+
+  * Update French language (thanks to Phil Aug)
+  * Improved file doc-strings.
+  * Improved build using pyproject.toml file.
+  * Improved build using pyinstaller_setup.py file.
+  * Improved requirements.
+
+
++------------------------------------+
 Sun, 28 July 2024 V.5.0.20
 
   * Added requirements-linux.txt to build videomass wheel from source.
