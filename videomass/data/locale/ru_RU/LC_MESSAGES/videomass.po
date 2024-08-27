@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.18\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-07-18 22:40+0200\n"
 "PO-Revision-Date: 2024-07-03 18:49+0200\n"
 "Last-Translator: Chour <ChourS2008@yandex.ru>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.3\n"
+"Generated-By: Babel 2.16.0\n"
 
 #: ../../gui_app.py:121
 msgid "To suppress this message on startup, please install yt-dlp or disable it from the preferences."
@@ -75,7 +75,6 @@ msgid "Videomass - Error!"
 msgstr "Videomass - Предупреждение!"
 
 #: ../../gui_app.py:230
-#, python-brace-format
 msgid ""
 "Unexpected error while deleting file contents:\n"
 "\n"
@@ -481,7 +480,6 @@ msgid "Color Correction EQ Tool"
 msgstr "Эквалайзер для цветокоррекции"
 
 #: ../../vdms_dialogs/filter_crop.py:228 ../../vdms_dialogs/filter_scale.py:109
-#, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "Размер источника: {0} x {1} пикселей"
 
@@ -1493,7 +1491,6 @@ msgstr "Форматы должны быть разделены запятыми
 
 #: ../../vdms_dialogs/setting_profiles.py:279
 #: ../../vdms_utils/queue_utils.py:80
-#, python-brace-format
 msgid ""
 "ERROR: Keys mismatched for requested data.\n"
 "Invalid file: «{0}»"
@@ -1647,7 +1644,6 @@ msgstr ""
 "Новые выпуски исправляют ошибки и предлагают новые функции."
 
 #: ../../vdms_dialogs/videomass_check_version.py:96
-#, python-brace-format
 msgid ""
 "\n"
 "\n"
@@ -1923,7 +1919,6 @@ msgstr ""
 "Хотите оставить их в очереди?"
 
 #: ../../vdms_main/main_frame.py:226
-#, python-brace-format
 msgid "Queue ({0})"
 msgstr "Очередь ({0})"
 
@@ -2047,7 +2042,6 @@ msgid "Check for preset updates"
 msgstr "Проверьте наличие обновления пресетов"
 
 #: ../../vdms_main/main_frame.py:529
-#, python-brace-format
 msgid "Check for new presets updates from {0}"
 msgstr "Проверьте наличие новых обновлений пресетов на {0}"
 
@@ -2056,7 +2050,6 @@ msgid "Get latest presets"
 msgstr "Получить последние пресеты"
 
 #: ../../vdms_main/main_frame.py:532
-#, python-brace-format
 msgid "Get the latest presets from {0}"
 msgstr "Получить последние пресеты по адресу {0}"
 
@@ -2278,12 +2271,10 @@ msgid ""
 msgstr "Нет log-журналов для просмотра."
 
 #: ../../vdms_main/main_frame.py:842
-#, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr "Installed release v{0}. A new presets release is available {1}"
 
 #: ../../vdms_main/main_frame.py:846
-#, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr "Установленная версия {0}. Новых обновлений не обнаружено."
 
@@ -2296,7 +2287,6 @@ msgstr ""
 "Архив скачивается"
 
 #: ../../vdms_main/main_frame.py:888
-#, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "Успешно загружено в \"{0}\""
 
@@ -2305,7 +2295,6 @@ msgid "Some changes require restarting the application."
 msgstr "Некоторые изменения требуют перезапуска приложения."
 
 #: ../../vdms_main/main_frame.py:1106
-#, python-brace-format
 msgid ""
 "{0}\n"
 "\n"
@@ -2320,7 +2309,6 @@ msgid "Restart Videomass?"
 msgstr "Перезапустить Видеомасс?"
 
 #: ../../vdms_main/main_frame.py:1157
-#, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr "Доступна новая версия - v.{0}\n"
 
@@ -2460,7 +2448,6 @@ msgid "The Python module «yt_dlp» was not found. Make sure you have installed 
 msgstr ""
 
 #: ../../vdms_main/main_frame.py:1795
-#, python-brace-format
 msgid "The system will turn off in {0} seconds"
 msgstr ""
 
@@ -2474,7 +2461,6 @@ msgid "Error while shutting down. Please see file log for details."
 msgstr ""
 
 #: ../../vdms_main/main_frame.py:1815
-#, python-brace-format
 msgid "Exiting the application in {0} seconds"
 msgstr ""
 
@@ -2514,7 +2500,6 @@ msgstr "Нет длительности источника:"
 #: ../../vdms_miniframes/timeline.py:208 ../../vdms_miniframes/timeline.py:298
 #: ../../vdms_miniframes/timeline.py:333 ../../vdms_miniframes/timeline.py:338
 #: ../../vdms_miniframes/timeline.py:441
-#, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr "{0} {1}  |  Продолжительность сегмента: {2}"
 
@@ -2722,7 +2707,6 @@ msgstr ""
 
 #: ../../vdms_panels/av_conversions.py:1246
 #: ../../vdms_panels/presets_manager.py:814
-#, python-brace-format
 msgid "Write profile on «{0}»"
 msgstr ""
 
@@ -2906,7 +2890,6 @@ msgid "File without format extension: please give an appropriate extension to th
 msgstr "Файл без расширения формата: укажите соответствующее расширение имени файла, например «.mkv», «.avi», «.mp3» и т.д."
 
 #: ../../vdms_panels/filedrop.py:84
-#, python-brace-format
 msgid "Name has illegal characters like: {0}"
 msgstr "Имя содержит недопустимые символы, такие как: {0}"
 
@@ -2991,7 +2974,6 @@ msgstr "Переименовать элементы"
 
 # Здесь изменил фразу исходника для правильного использования в русском языке
 #: ../../vdms_panels/filedrop.py:628
-#, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr "Файлов для переименования: {0}"
 
@@ -3159,7 +3141,7 @@ msgid "Refresh the presets list"
 msgstr "Обновить список пресетов"
 
 #: ../../vdms_panels/presets_manager.py:338
-#, fuzzy, python-brace-format
+#, fuzzy
 msgid ""
 "Outdated presets version found: v{1}\n"
 "A new version is available: v{0}\n"
@@ -3221,7 +3203,6 @@ msgstr ""
 "Извините, удаление не получилось, продолжение невозможно."
 
 #: ../../vdms_panels/presets_manager.py:568
-#, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
 msgstr "Пресет \"{0}\" был успешно удален"
 
@@ -3317,7 +3298,7 @@ msgstr ""
 "Вы хотите продолжать?"
 
 #: ../../vdms_panels/presets_manager.py:833
-#, fuzzy, python-brace-format
+#, fuzzy
 msgid "Edit profile on «{0}»"
 msgstr "*Редактировать профиль — Пресет \"{}\""
 
@@ -4099,7 +4080,6 @@ msgid "If enabled, adds support for row based multithreading which greatly enhan
 msgstr "Если этот параметр включен, добавляется поддержка многопоточности на основе строк, что значительно увеличивает количество потоков, которые может использовать кодер. Это значительно повышает скорость кодирования в системах, которые в противном случае недостаточно используются при кодировании VP9. Поскольку количество дополнительных потоков зависит от количества «плиток», которое в свою очередь зависит от разрешения видео, кодирование видео с более высоким разрешением приведет к большему повышению производительности."
 
 #: ../../vdms_utils/presets_manager_utils.py:46
-#, python-brace-format
 msgid "Supports ({0}) formats only, not ({1})"
 msgstr "Поддерживаются только форматы ({0}), но не ({1})"
 
@@ -4126,7 +4106,7 @@ msgid "Import queue file"
 msgstr "Импортировать файл очереди(.json)"
 
 #: ../../vdms_utils/queue_utils.py:89
-#, fuzzy, python-brace-format
+#, fuzzy
 msgid ""
 "ERROR: invalid data found loading queue file.\n"
 "«{0}»\n"
@@ -4212,7 +4192,6 @@ msgstr ""
 "отобранные качества"
 
 #: ../../vdms_ytdlp/formatcode.py:249
-#, python-brace-format
 msgid ""
 "ERROR: Unable to get format codes.\n"
 "\n"
@@ -4330,12 +4309,10 @@ msgid "Check the latest version available on github.com"
 msgstr "Проверьте последнюю версию, доступную на github.com"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:372
-#, python-brace-format
 msgid "You are using \"yt-dlp\" version {0}"
 msgstr "Вы используете версию \"yt-dlp\" {0}"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:389
-#, python-brace-format
 msgid "\"yt-dlp\": Latest version available: {0}"
 msgstr "\"yt-dlp\": Доступна последняя версия:{0}"
 
@@ -4874,7 +4851,7 @@ msgid "Audio format:"
 msgstr "Аудио фильтры"
 
 #: ../../vdms_ytdlp/youtubedl_ui.py:418
-#, fuzzy, python-brace-format
+#, fuzzy
 msgid ""
 "Unable to get format codes on {0}, unsupported URL:\n"
 "\n"
