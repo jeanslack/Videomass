@@ -1,18 +1,18 @@
 # Russian translation for Videomass.
-# Copyleft -  2023 Gianluca Pernigotto
+# Copyleft -  2024 Gianluca Pernigotto
 # This file is distributed under the same license as the Videomass package
 # FIRST AUTHOR ChourS <chours2008@yandex.ru>, 2020.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 5.0.18\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"Project-Id-Version: Videomass 5.0.20\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-18 22:40+0200\n"
-"PO-Revision-Date: 2024-07-03 18:49+0200\n"
+"PO-Revision-Date: 2024-09-04 13:13+0300\n"
 "Last-Translator: Chour <ChourS2008@yandex.ru>\n"
 "Language: ru_RU\n"
 "Language-Team: Chour <ChourS2008@yandex.ru>\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -70,11 +70,11 @@ msgstr "Чтобы скрыть это сообщение при запуске,
 #: ../../vdms_utils/queue_utils.py:68 ../../vdms_utils/queue_utils.py:82
 #: ../../vdms_utils/queue_utils.py:95 ../../vdms_ytdlp/youtubedl_ui.py:386
 #: ../../vdms_ytdlp/youtubedl_ui.py:426
-#, fuzzy
 msgid "Videomass - Error!"
-msgstr "Videomass - Предупреждение!"
+msgstr "Videomass - Ошибка!"
 
 #: ../../gui_app.py:230
+#, python-brace-format
 msgid ""
 "Unexpected error while deleting file contents:\n"
 "\n"
@@ -480,6 +480,7 @@ msgid "Color Correction EQ Tool"
 msgstr "Эквалайзер для цветокоррекции"
 
 #: ../../vdms_dialogs/filter_crop.py:228 ../../vdms_dialogs/filter_scale.py:109
+#, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "Размер источника: {0} x {1} пикселей"
 
@@ -612,7 +613,6 @@ msgstr ""
 "По умолчанию настройка отсутствует."
 
 #: ../../vdms_dialogs/filter_denoisers.py:56
-#, fuzzy
 msgid "Denoiser Filters"
 msgstr "Фильтры шумоподавления"
 
@@ -1028,6 +1028,9 @@ msgid ""
 "For some use cases it is possible to provide a custom build of FFmpeg where you can specify\n"
 "it in this preferences tab."
 msgstr ""
+"FFmpeg можно создать, включив/отключив его параметры, и это зависит от ваших потребностей.\n"
+"Для некоторых случаев использования можно предоставить собственную сборку FFmpeg, \n"
+"которую вы можете указать на этой вкладке настроек."
 
 #: ../../vdms_dialogs/preferences.py:149
 msgid "Enable a custom location to run FFmpeg"
@@ -1054,14 +1057,12 @@ msgstr ""
 "(требуется перезапуск приложения)"
 
 #: ../../vdms_dialogs/preferences.py:195
-#, fuzzy
 msgid ""
 "Videomass uses the yt-dlp API which can be activated by selecting the checkbox below.\n"
 "The next time you restart the application, the yt_dlp module will be loaded into memory."
 msgstr ""
-"Videomass использует yt_dlp как модуль Python, а не как исполняемый файл. Если вы хотите\n"
-"загрузить аудио и видео из Интернета, обязательно установите флажок ниже.\n"
-"При следующем перезапуске приложения модуль будет загружен в память."
+"Videomass использует API yt-dlp, который можно активировать, установив флажок ниже.\n"
+"При следующем запуске Videomass модуль yt_dlp будет загружен в память."
 
 #: ../../vdms_dialogs/preferences.py:201
 msgid "Enable yt-dlp"
@@ -1072,27 +1073,29 @@ msgid ""
 "Enabling a specific location of the yt-dlp executable will give you more control over downloads\n"
 "stop actions and the ability to provide other backend locations."
 msgstr ""
+"Включение определенного местоположения исполняемого файла yt-dlp даст вам \n"
+"больше контроля над действиями по остановке загрузки и возможность указать \n"
+"другие серверные местоположения."
 
 #: ../../vdms_dialogs/preferences.py:210
 msgid "Use the executable for downloads rather than API"
-msgstr ""
+msgstr "Используйте исполняемый файл для загрузки, а не API"
 
 #: ../../vdms_dialogs/preferences.py:223
 msgid ""
 "Import the yt_dlp Python package externally. E.g, you can include the source package\n"
 "directory or the path to the package installed in an external virtual environment."
 msgstr ""
+"Импортируйте пакет Python yt_dlp извне. Например, вы можете указать каталог \n"
+"исходного пакета или путь к пакету, установленному во внешней виртуальной среде."
 
 #: ../../vdms_dialogs/preferences.py:229
 msgid "Enable external import of yd_dlp package"
-msgstr ""
+msgstr "Включить внешний импорт пакета yd_dlp"
 
 #: ../../vdms_dialogs/preferences.py:248
-#, fuzzy
 msgid "Look and Feel (requires application restart)"
-msgstr ""
-"Язык приложения\n"
-"(требуется перезапуск приложения)"
+msgstr "Внешний вид (требуется перезапуск Videomass)"
 
 #: ../../vdms_dialogs/preferences.py:253
 msgid "Icon themes"
@@ -1124,68 +1127,59 @@ msgid "Toolbar's icons size:"
 msgstr "Размер значков панели инструментов:"
 
 #: ../../vdms_dialogs/preferences.py:295
-#, fuzzy
 msgid "Application Language (requires application restart)"
-msgstr ""
-"Язык приложения\n"
-"(требуется перезапуск приложения)"
+msgstr "Язык приложения (требуется перезапуск Videomass)"
 
 #: ../../vdms_dialogs/preferences.py:307
-#, fuzzy
 msgid "Look and Language"
-msgstr "Внешний вид"
+msgstr "Внешний вид и язык"
 
 #: ../../vdms_dialogs/preferences.py:313
-#, fuzzy
 msgid "Upon exiting the application"
-msgstr "Полностью выйти из приложения"
+msgstr "При выходе из приложения"
 
 #: ../../vdms_dialogs/preferences.py:318
-#, fuzzy
 msgid "Always ask me to confirm"
-msgstr "Пожалуйста, подтвердите"
+msgstr "Всегда просить подтверждения"
 
 #: ../../vdms_dialogs/preferences.py:320
-#, fuzzy
 msgid "Clean the log files"
-msgstr "Очистить список файлов"
+msgstr "Очистите файлы log-журналов"
 
 #: ../../vdms_dialogs/preferences.py:323
-#, fuzzy
 msgid "Remove cached files"
-msgstr "Отклоненные файлы"
+msgstr "Удалить кэшированные файлы"
 
 # Особенности русской фразы
 #: ../../vdms_dialogs/preferences.py:327
-#, fuzzy
 msgid "On operations completion"
-msgstr "Параметры фильтра nlmeans"
+msgstr "По завершению операции"
 
 #: ../../vdms_dialogs/preferences.py:330
 msgid "These settings will remain active until the application is closed, If necessary, remember to reactivate them."
 msgstr ""
+"Эти настройки будут оставаться активными до тех пор, пока приложение не будет закрыто. \n"
+"При необходимости не забудьте повторно активировать их."
 
 #: ../../vdms_dialogs/preferences.py:335
-#, fuzzy
 msgid "Exit the application"
-msgstr "Полностью выйти из приложения"
+msgstr "Выйти из приложения"
 
 #: ../../vdms_dialogs/preferences.py:338
 msgid "Shutdown the system"
-msgstr ""
+msgstr "Выключить систему"
 
 #: ../../vdms_dialogs/preferences.py:342
-#, fuzzy
 msgid "SUDO password:"
-msgstr "Пароль"
+msgstr "SUDO пароль:"
 
 #: ../../vdms_dialogs/preferences.py:351
 msgid "Exit and Shutdown"
-msgstr ""
+msgstr "Выход и завершение работы"
 
 #: ../../vdms_dialogs/preferences.py:357
 msgid "Specify the character encoding format"
-msgstr ""
+msgstr "Укажите формат кодировки символов"
 
 #: ../../vdms_dialogs/preferences.py:360
 msgid ""
@@ -1193,14 +1187,20 @@ msgid ""
 "Some file metadata may still contain non-UTF-8 character encodings resulting in the error \"'utf-8' codec can't decode bytes...\".\n"
 "If you know the encoding format the file was written in, you can try specifying it here, e.g. ISO 8859-1, ISO 8859-16, etc."
 msgstr ""
+"Хотя UTF-8 является стандартным форматом кодировки по умолчанию и наиболее \n"
+"широко используемым, это не единственный доступный формат кодировки.\n"
+"Некоторые метаданные файла могут по-прежнему содержать кодировки символов, \n"
+"отличные от UTF-8, что приводит к ошибке «Кодек 'utf-8' не может декодировать байты...».\n"
+"Если вы знаете формат кодировки, в котором был записан файл, вы можете \n"
+"попробовать указать его здесь, например. ИСО 8859-1, ИСО 8859-16 и т. д."
 
 #: ../../vdms_dialogs/preferences.py:370
 msgid "Character encoding:"
-msgstr ""
+msgstr "Кодировка символов:"
 
 #: ../../vdms_dialogs/preferences.py:379
 msgid "Default application directories"
-msgstr ""
+msgstr "Каталоги приложений по умолчанию"
 
 #: ../../vdms_dialogs/preferences.py:383
 msgid "Configuration directory"
@@ -1215,7 +1215,6 @@ msgid "Log directory"
 msgstr "Папка log-журнала"
 
 #: ../../vdms_dialogs/preferences.py:422
-#, fuzzy
 msgid "Advanced"
 msgstr "Расширенные настройки"
 
@@ -1232,11 +1231,11 @@ msgstr ""
 
 #: ../../vdms_dialogs/preferences.py:435
 msgid "Set logging level flags used by FFmpeg"
-msgstr ""
+msgstr "Установите флаги уровня ведения журнала, используемые FFmpeg"
 
 #: ../../vdms_dialogs/preferences.py:442
 msgid "Set logging level flags used by FFplay"
-msgstr ""
+msgstr "Установите флаги уровня ведения журнала, используемые FFplay"
 
 #: ../../vdms_dialogs/preferences.py:450
 msgid "FFmpeg logging levels"
@@ -1248,12 +1247,11 @@ msgstr "Назначив дополнительный суффикс, вы мо�
 
 #: ../../vdms_dialogs/preferences.py:507
 msgid "Type sudo password here, only for Unix-like operating systems, not for MS Windows"
-msgstr ""
+msgstr "Введите здесь пароль sudo, только для Unix-подобных операционных систем, но не для MS Windows"
 
 #: ../../vdms_dialogs/preferences.py:510
-#, fuzzy
 msgid "Preferences"
-msgstr "Наименование"
+msgstr "Настройки"
 
 #: ../../vdms_dialogs/preferences.py:674 ../../vdms_dialogs/preferences.py:754
 #: ../../vdms_main/main_frame.py:859 ../../vdms_main/main_frame.py:1040
@@ -1285,13 +1283,12 @@ msgid "{} location"
 msgstr "{} исполняемый файл"
 
 #: ../../vdms_dialogs/preferences.py:930
-#, fuzzy
 msgid "Open «{}» executable file"
-msgstr "Открыть выбранные файлы"
+msgstr "Открыть «{}» исполняемый файл"
 
 #: ../../vdms_dialogs/preferences.py:959
 msgid "Open «yt_dlp» python package directory"
-msgstr ""
+msgstr "Откройте каталог пакета Python «yt_dlp»"
 
 #: ../../vdms_dialogs/queue_edit.py:36
 #: ../../vdms_dialogs/setting_profiles.py:38
@@ -1413,9 +1410,8 @@ msgstr ""
 "Продолжительность клипа"
 
 #: ../../vdms_dialogs/renamer.py:76
-#, fuzzy
 msgid "# will be replaced by ascending numbers starting with:"
-msgstr "# Имя будет заменено возрастающими числами, начинающимися с:"
+msgstr "# будут заменены возрастающими числами, начинающимися с:"
 
 #: ../../vdms_dialogs/set_timestamp.py:87
 msgid "Font Size"
@@ -1475,7 +1471,7 @@ msgstr "Подробное описание профиля"
 
 #: ../../vdms_dialogs/setting_profiles.py:153
 msgid "One or more comma-separated format names compatible with this profile"
-msgstr ""
+msgstr "Одно или несколько названий форматов, разделенных запятыми, совместимых с этим профилем"
 
 #: ../../vdms_dialogs/setting_profiles.py:155
 msgid "Output format extension. Leave empty to copy codec and format"
@@ -1491,10 +1487,13 @@ msgstr "Форматы должны быть разделены запятыми
 
 #: ../../vdms_dialogs/setting_profiles.py:279
 #: ../../vdms_utils/queue_utils.py:80
+#, python-brace-format
 msgid ""
 "ERROR: Keys mismatched for requested data.\n"
 "Invalid file: «{0}»"
 msgstr ""
+"ОШИБКА: Ключи не соответствуют запрошенным данным.\n"
+"Неверный файл: «{0}»"
 
 #: ../../vdms_dialogs/setting_profiles.py:285
 #: ../../vdms_dialogs/setting_profiles.py:308
@@ -1502,13 +1501,12 @@ msgid "Profile already stored with same name"
 msgstr "Профиль с таким именем уже сохранен"
 
 #: ../../vdms_dialogs/setting_profiles.py:293
-#, fuzzy
 msgid "Profile stored successfully!"
-msgstr "Помощник успешно завершен!\n"
+msgstr "Profile stored successfully!"
 
 #: ../../vdms_dialogs/setting_profiles.py:311
 msgid "Profile change successful!"
-msgstr ""
+msgstr "Смена профиля прошла успешно!"
 
 #: ../../vdms_dialogs/showlogs.py:81
 msgid "Log file list"
@@ -1644,6 +1642,7 @@ msgstr ""
 "Новые выпуски исправляют ошибки и предлагают новые функции."
 
 #: ../../vdms_dialogs/videomass_check_version.py:96
+#, python-brace-format
 msgid ""
 "\n"
 "\n"
@@ -1704,7 +1703,7 @@ msgstr "Сочетания клавиш во время проигрывания
 #: ../../vdms_dialogs/widget_utils.py:120 ../../vdms_main/main_frame.py:1276
 #: ../../vdms_ytdlp/main_ytdlp.py:499
 msgid "Stop"
-msgstr ""
+msgstr "Стоп"
 
 #: ../../vdms_dialogs/wizard_dlg.py:65
 msgid "Please take a moment to set up the application"
@@ -1712,7 +1711,7 @@ msgstr "Пожалуйста, найдите время, чтобы настро
 
 #: ../../vdms_dialogs/wizard_dlg.py:66
 msgid "Click the \"Next\" button to get started"
-msgstr "Нажмите кнопку \"Следующий\", чтобы начать"
+msgstr "Нажмите кнопку \"Next\", чтобы начать"
 
 #: ../../vdms_dialogs/wizard_dlg.py:81
 msgid "Welcome to the Videomass Wizard!"
@@ -1756,7 +1755,7 @@ msgstr "Найдите"
 
 #: ../../vdms_dialogs/wizard_dlg.py:206
 msgid "Click the \"Next\" button"
-msgstr "Нажмите кнопку \"Далее\""
+msgstr "Нажмите кнопку \"Next\""
 
 #: ../../vdms_dialogs/wizard_dlg.py:227
 msgid "'{}' is not installed on your computer. Install it or indicate another location by clicking the 'Locate' button."
@@ -1919,6 +1918,7 @@ msgstr ""
 "Хотите оставить их в очереди?"
 
 #: ../../vdms_main/main_frame.py:226
+#, python-brace-format
 msgid "Queue ({0})"
 msgstr "Очередь ({0})"
 
@@ -1928,9 +1928,8 @@ msgstr "Очередь"
 
 #: ../../vdms_main/main_frame.py:401 ../../vdms_main/main_frame.py:426
 #: ../../vdms_ytdlp/main_ytdlp.py:225
-#, fuzzy
 msgid "There are still active windows with running processes, make sure you finish your work before exit."
-msgstr "Есть все еще активные окна с запущенными процессами, убедитесь, что вы закончили свою работу, прежде чем закрывать их."
+msgstr "Еще есть активные окна с запущенными процессами, перед выходом обязательно завершите работу."
 
 #: ../../vdms_main/main_frame.py:408
 msgid "Are you sure you want to exit the application?"
@@ -2042,6 +2041,7 @@ msgid "Check for preset updates"
 msgstr "Проверьте наличие обновления пресетов"
 
 #: ../../vdms_main/main_frame.py:529
+#, python-brace-format
 msgid "Check for new presets updates from {0}"
 msgstr "Проверьте наличие новых обновлений пресетов на {0}"
 
@@ -2050,6 +2050,7 @@ msgid "Get latest presets"
 msgstr "Получить последние пресеты"
 
 #: ../../vdms_main/main_frame.py:532
+#, python-brace-format
 msgid "Get the latest presets from {0}"
 msgstr "Получить последние пресеты по адресу {0}"
 
@@ -2137,7 +2138,7 @@ msgstr "Начальная панель\tCtrl+Shift+H"
 
 #: ../../vdms_main/main_frame.py:590
 msgid "Go to the «Home» panel"
-msgstr ""
+msgstr "Перейти на «Начальная панель»"
 
 #: ../../vdms_main/main_frame.py:593
 msgid "Presets Manager\tCtrl+Shift+P"
@@ -2145,7 +2146,7 @@ msgstr "Менеджер Пресетов\tCtrl+Shift+P"
 
 #: ../../vdms_main/main_frame.py:594
 msgid "Go to the «Presets Manager» panel"
-msgstr ""
+msgstr "Перейдите на панель «Менеджер пресетов»"
 
 #: ../../vdms_main/main_frame.py:596
 msgid "A/V Conversions\tCtrl+Shift+V"
@@ -2153,7 +2154,7 @@ msgstr "A/V Конвертация\tCtrl+Shift+V"
 
 #: ../../vdms_main/main_frame.py:597
 msgid "Go to the «A/V Conversions» panel"
-msgstr ""
+msgstr "Перейдите на панель «A/V-конверсии»"
 
 #: ../../vdms_main/main_frame.py:599
 msgid "Concatenate Demuxer\tCtrl+Shift+D"
@@ -2161,7 +2162,7 @@ msgstr "Concatenate Demuxer\tCtrl+Shift+D"
 
 #: ../../vdms_main/main_frame.py:600
 msgid "Go to the «Concatenate Demuxer» panel"
-msgstr ""
+msgstr "Перейдите на панель «Объединить медиафайлы»"
 
 #: ../../vdms_main/main_frame.py:603
 msgid "Still Image Maker\tCtrl+Shift+I"
@@ -2169,7 +2170,7 @@ msgstr "Still Image Maker\tCtrl+Shift+I"
 
 #: ../../vdms_main/main_frame.py:604
 msgid "Go to the «Still Image Maker» panel"
-msgstr ""
+msgstr "Перейдите на панель 'Still Image Maker'"
 
 #: ../../vdms_main/main_frame.py:606
 msgid "From Movie to Pictures\tCtrl+Shift+S"
@@ -2177,7 +2178,7 @@ msgstr "Картинки из фильма\tCtrl+Shift+S"
 
 #: ../../vdms_main/main_frame.py:607
 msgid "Go to the «From Movie to Pictures» panel"
-msgstr ""
+msgstr "Переходим на панель «Картинки из фильма»"
 
 #: ../../vdms_main/main_frame.py:610
 msgid "YouTube Downloader\tCtrl+Shift+Y"
@@ -2185,7 +2186,7 @@ msgstr "Загрузчик YouTube\tCtrl+Shift+Y"
 
 #: ../../vdms_main/main_frame.py:611
 msgid "Open «YouTube Downloader» window"
-msgstr ""
+msgstr "Откройте окно «YouTube Downloader»"
 
 #: ../../vdms_main/main_frame.py:613
 msgid "Output monitor\tCtrl+Shift+O"
@@ -2233,7 +2234,7 @@ msgstr "Просмотр сообщений log-журнала"
 
 #: ../../vdms_main/main_frame.py:640
 msgid "Contribute to the project"
-msgstr ""
+msgstr "Внести свой вклад в проект"
 
 #: ../../vdms_main/main_frame.py:644
 msgid "About Videomass"
@@ -2264,17 +2265,20 @@ msgid "Are you sure to empty trash folder?"
 msgstr "Вы уверены, что очистили папку \"Корзина\"?"
 
 #: ../../vdms_main/main_frame.py:785
-#, fuzzy
 msgid ""
 "'{}':\n"
 "There are no files to delete."
-msgstr "Нет log-журналов для просмотра."
+msgstr ""
+"'{}':\n"
+"Нет файлов для удаления."
 
 #: ../../vdms_main/main_frame.py:842
+#, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr "Installed release v{0}. A new presets release is available {1}"
 
 #: ../../vdms_main/main_frame.py:846
+#, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr "Установленная версия {0}. Новых обновлений не обнаружено."
 
@@ -2287,6 +2291,7 @@ msgstr ""
 "Архив скачивается"
 
 #: ../../vdms_main/main_frame.py:888
+#, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "Успешно загружено в \"{0}\""
 
@@ -2295,6 +2300,7 @@ msgid "Some changes require restarting the application."
 msgstr "Некоторые изменения требуют перезапуска приложения."
 
 #: ../../vdms_main/main_frame.py:1106
+#, python-brace-format
 msgid ""
 "{0}\n"
 "\n"
@@ -2309,6 +2315,7 @@ msgid "Restart Videomass?"
 msgstr "Перезапустить Видеомасс?"
 
 #: ../../vdms_main/main_frame.py:1157
+#, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr "Доступна новая версия - v.{0}\n"
 
@@ -2321,36 +2328,32 @@ msgid "Congratulation! You are already using the latest version.\n"
 msgstr "Поздравляю! Вы уже используете последнюю версию.\n"
 
 #: ../../vdms_main/main_frame.py:1251
-#, fuzzy
 msgid "Previous panel"
-msgstr "Перейти к предыдущей панели"
+msgstr "Предыдущая панель"
 
 #: ../../vdms_main/main_frame.py:1252 ../../vdms_ytdlp/main_ytdlp.py:477
 msgid "Back"
 msgstr "Назад"
 
 #: ../../vdms_main/main_frame.py:1255
-#, fuzzy
 msgid "Next panel"
-msgstr "Следующий >"
+msgstr "Следующая панель"
 
 #: ../../vdms_main/main_frame.py:1256 ../../vdms_ytdlp/main_ytdlp.py:482
 msgid "Next"
 msgstr "Вперед"
 
 #: ../../vdms_main/main_frame.py:1259
-#, fuzzy
 msgid "Home panel"
-msgstr "Перейдите к 'Начальной панели'"
+msgstr "Начальная панель"
 
 #: ../../vdms_main/main_frame.py:1260
 msgid "Home"
 msgstr "Начальная панель"
 
 #: ../../vdms_main/main_frame.py:1263
-#, fuzzy
 msgid "Play the selected imput file"
-msgstr "Удалить выбранный профиль"
+msgstr "Воспроизвести выбранный входной файл"
 
 #: ../../vdms_main/main_frame.py:1264
 msgid "Play"
@@ -2437,37 +2440,36 @@ msgid "yt-dlp is disabled. Check your preferences."
 msgstr "yt-dlp отключен. Проверьте свои настройки."
 
 #: ../../vdms_main/main_frame.py:1765
-#, fuzzy
 msgid "The application requires to be restarted."
-msgstr ""
-"Язык приложения\n"
-"(требуется перезапуск приложения)"
+msgstr "Приложение требует перезапуска."
 
 #: ../../vdms_main/main_frame.py:1768
 msgid "The Python module «yt_dlp» was not found. Make sure you have installed yt-dlp correctly."
-msgstr ""
+msgstr "Модуль Python «yt_dlp» не найден. Убедитесь, что вы правильно установили yt-dlp."
 
+# русское сокращение последнего слова
 #: ../../vdms_main/main_frame.py:1795
+#, python-brace-format
 msgid "The system will turn off in {0} seconds"
-msgstr ""
+msgstr "Система выключится через {0} сек."
 
 #: ../../vdms_main/main_frame.py:1796
-#, fuzzy
 msgid "Videomass - Shutdown!"
-msgstr "Videomass - Предупреждение!"
+msgstr "Videomass - Выключение!"
 
 #: ../../vdms_main/main_frame.py:1803
 msgid "Error while shutting down. Please see file log for details."
-msgstr ""
+msgstr "Ошибка при выключении. Подробности смотрите в журнале файлов."
 
+# русское сокращение последнего слова
 #: ../../vdms_main/main_frame.py:1815
+#, python-brace-format
 msgid "Exiting the application in {0} seconds"
-msgstr ""
+msgstr "Выход из приложения через {0} сек."
 
 #: ../../vdms_main/main_frame.py:1816
-#, fuzzy
 msgid "Videomass - Exiting!"
-msgstr "Videomass - Предупреждение!"
+msgstr "Videomass - Выход!"
 
 #: ../../vdms_miniframes/timeline.py:46
 msgid "Start point adjustment"
@@ -2500,6 +2502,7 @@ msgstr "Нет длительности источника:"
 #: ../../vdms_miniframes/timeline.py:208 ../../vdms_miniframes/timeline.py:298
 #: ../../vdms_miniframes/timeline.py:333 ../../vdms_miniframes/timeline.py:338
 #: ../../vdms_miniframes/timeline.py:441
+#, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr "{0} {1}  |  Продолжительность сегмента: {2}"
 
@@ -2570,9 +2573,8 @@ msgid "Container:"
 msgstr "Контейнер:"
 
 #: ../../vdms_panels/av_conversions.py:180
-#, fuzzy
 msgid "Save profile"
-msgstr "Сохраните новый профиль в ..."
+msgstr "Сохранить профиль"
 
 #: ../../vdms_panels/av_conversions.py:183
 msgid "Target"
@@ -2583,13 +2585,12 @@ msgid "Miscellaneous"
 msgstr "Разное"
 
 #: ../../vdms_panels/av_conversions.py:323
-#, fuzzy
 msgid "Save as a new profile of the Presets Manager."
-msgstr "Удалить выбранный пресет из Менеджера Пресетов"
+msgstr "Сохранить как новый профиль в Менеджере Пресетов."
 
 #: ../../vdms_panels/av_conversions.py:325
 msgid "Available video encoders. \"Copy\" means that the video stream will not be re-encoded and will allow you (depending on the encoder) to change the container, audio codec and a few other parameters."
-msgstr "Доступные видеокодеры. «Копировать» означает, что видеопоток не будет перекодироваться и позволит вам (в зависимости от кодировщика) изменить контейнер, аудиокодек и некоторые другие параметры."
+msgstr "Доступные видеокодеры. «Copy» означает, что видеопоток не будет перекодироваться и позволит вам (в зависимости от кодировщика) изменить контейнер, аудиокодек и некоторые другие параметры."
 
 #: ../../vdms_panels/av_conversions.py:330
 msgid ""
@@ -2601,7 +2602,7 @@ msgid ""
 msgstr ""
 "Формат контейнера. Обычно он представлен расширением файла (выходным форматом).\n"
 "\n"
-"Если для цели мультимедиа установлено значение «Видео», а для видеокодера — «Копировать», при желании вы можете установить для этого элемента управления значение «Копировать» тот же контейнер, что и исходный файл.\n"
+"Если для цели мультимедиа установлено значение «Видео», а для видеокодера — «Copy», при желании вы можете установить для этого элемента управления значение «Copy» тот же контейнер, что и исходный файл.\n"
 "\n"
 "Если для цели мультимедиа установлено значение «Аудио», вы можете извлекать из видео только аудиопотоки или просто конвертировать исходные аудиофайлы."
 
@@ -2622,9 +2623,8 @@ msgid "Preview video filters"
 msgstr "Предварительный просмотр с учётом фильтров FFplay"
 
 #: ../../vdms_panels/av_conversions.py:347
-#, fuzzy
 msgid "Disable active filters"
-msgstr "Отключено"
+msgstr "Отключить активные фильтры"
 
 #: ../../vdms_panels/av_conversions.py:348
 #: ../../vdms_panels/sequence_to_video.py:155
@@ -2707,8 +2707,9 @@ msgstr ""
 
 #: ../../vdms_panels/av_conversions.py:1246
 #: ../../vdms_panels/presets_manager.py:814
+#, python-brace-format
 msgid "Write profile on «{0}»"
-msgstr ""
+msgstr "Написать профиль в «{0}»"
 
 #: ../../vdms_panels/av_conversions.py:1266
 #: ../../vdms_panels/presets_manager.py:513
@@ -2718,37 +2719,31 @@ msgstr "Введите имя для нового пресета"
 #: ../../vdms_panels/av_conversions.py:1276
 #: ../../vdms_panels/presets_manager.py:524
 msgid "Invalid file name, make sure to provide a valid name including the «.json» extension"
-msgstr ""
+msgstr "Недопустимое имя файла. Обязательно укажите допустимое имя, включая расширение «.json»"
 
 #: ../../vdms_panels/av_conversions.py:1284
-#, fuzzy
 msgid "Cannot save current data in file «{}»."
-msgstr "Невозможно сохранить текущие данные в файл '{}'."
+msgstr "Невозможно сохранить текущие данные в файл «{}»."
 
 #: ../../vdms_panels/av_conversions.py:1289
-#, fuzzy
 msgid "Open Videomass preset"
-msgstr "Выберите пресет Videomass..."
+msgstr "Открыть пресет Videomass"
 
 #: ../../vdms_panels/av_conversions.py:1307
-#, fuzzy
 msgid "Videomass - Save new profile"
-msgstr "Создать новый профиль"
+msgstr "Videomass - Сохранить новый профиль"
 
 #: ../../vdms_panels/av_conversions.py:1308
-#, fuzzy
 msgid "Where do you want to save this profile?"
-msgstr "Где вы предпочитаете сохранять файлы вывода FFmpeg?"
+msgstr "Где вы хотите сохранить этот профиль?"
 
 #: ../../vdms_panels/av_conversions.py:1309
-#, fuzzy
 msgid "Save the profile to a new preset"
-msgstr "Создайте новый профиль на пресете \"{}\""
+msgstr "Сохраните профиль в новом пресете"
 
 #: ../../vdms_panels/av_conversions.py:1310
-#, fuzzy
 msgid "Save the profile to an existing preset"
-msgstr "Создайте новый профиль на пресете \"{}\""
+msgstr "Сохраните профиль в существующем пресете"
 
 #: ../../vdms_panels/choose_topic.py:71
 msgid "Welcome to Videomass"
@@ -2890,6 +2885,7 @@ msgid "File without format extension: please give an appropriate extension to th
 msgstr "Файл без расширения формата: укажите соответствующее расширение имени файла, например «.mkv», «.avi», «.mp3» и т.д."
 
 #: ../../vdms_panels/filedrop.py:84
+#, python-brace-format
 msgid "Name has illegal characters like: {0}"
 msgstr "Имя содержит недопустимые символы, такие как: {0}"
 
@@ -2968,12 +2964,12 @@ msgid "Add Files"
 msgstr "Добавить файлы"
 
 #: ../../vdms_panels/filedrop.py:627
-#, fuzzy
 msgid "Rename in batch"
-msgstr "Переименовать элементы"
+msgstr "Переименование в пакетном режиме"
 
 # Здесь изменил фразу исходника для правильного использования в русском языке
 #: ../../vdms_panels/filedrop.py:628
+#, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr "Файлов для переименования: {0}"
 
@@ -3051,7 +3047,7 @@ msgstr "Пресеты"
 
 #: ../../vdms_panels/presets_manager.py:180
 msgid "Write"
-msgstr ""
+msgstr "Записать"
 
 #: ../../vdms_panels/presets_manager.py:184
 msgid "Delete"
@@ -3078,9 +3074,8 @@ msgid "Choose a preset and view its profiles"
 msgstr "Выберите пресет и просмотрите его профили"
 
 #: ../../vdms_panels/presets_manager.py:233
-#, fuzzy
 msgid "Write a new profile and save it in the selected preset"
-msgstr "Создайте новый профиль и сохраните его в выбранном пресете"
+msgstr "Напишите новый профиль и сохраните его в выбранном пресете"
 
 #: ../../vdms_panels/presets_manager.py:235
 msgid "Delete the selected profile"
@@ -3091,57 +3086,47 @@ msgid "Edit the selected profile"
 msgstr "Редактировать выбранный профиль"
 
 #: ../../vdms_panels/presets_manager.py:237
-#, fuzzy
 msgid "Duplicate the selected profile"
-msgstr "Удалить выбранный профиль"
+msgstr "Дублировать выбранный профиль"
 
 #: ../../vdms_panels/presets_manager.py:238
-#, fuzzy
 msgid "Create new preset"
 msgstr "Создать новый пресет"
 
 #: ../../vdms_panels/presets_manager.py:240
-#, fuzzy
 msgid "Remove selected preset"
-msgstr "Удалить выбранный файл\tDEL"
+msgstr "Удалить выбранный пресет"
 
 #: ../../vdms_panels/presets_manager.py:242
-#, fuzzy
 msgid "Backup selected preset"
-msgstr "Экспорт выбранного пресета как копии"
+msgstr "Резервное копирование выбранного пресета"
 
 #: ../../vdms_panels/presets_manager.py:244
-#, fuzzy
 msgid "Backup the presets folder"
-msgstr "Импортировать новую папку пресетов"
+msgstr "Сделайте резервную копию папки пресетов"
 
 #: ../../vdms_panels/presets_manager.py:246
-#, fuzzy
 msgid "Restore a preset"
-msgstr "Восстановить выбранное"
+msgstr "Восстановить пресет"
 
 #: ../../vdms_panels/presets_manager.py:248
-#, fuzzy
 msgid "Restore a presets folder"
-msgstr "Импортировать новую папку пресетов"
+msgstr "Восстановить папку пресетов"
 
 #: ../../vdms_panels/presets_manager.py:250
-#, fuzzy
 msgid "Resets the selected preset to default values"
-msgstr "Заменить выбранный пресет на стандартный для Videomass"
+msgstr "Сбрасывает выбранный пресет к значениям по умолчанию"
 
 #: ../../vdms_panels/presets_manager.py:252
-#, fuzzy
 msgid "Reset all presets to default values"
-msgstr "Возвратить все пресеты Videomass в состояние по умолчанию"
+msgstr "Сброс всех пресетов к значениям по умолчанию"
 
 #: ../../vdms_panels/presets_manager.py:254
-#, fuzzy
 msgid "Refresh the presets list"
 msgstr "Обновить список пресетов"
 
 #: ../../vdms_panels/presets_manager.py:338
-#, fuzzy
+#, python-brace-format
 msgid ""
 "Outdated presets version found: v{1}\n"
 "A new version is available: v{0}\n"
@@ -3158,7 +3143,9 @@ msgstr ""
 "\n"
 "Это обновление предоставляет новые пресеты, включенные в последние версии Videomass.\n"
 "\n"
-"Чтобы избежать потери данных и обеспечить возможность восстановления, папка устаревших пресетов будет скопирована в каталог конфигурации программы: \"{2}\"\n"
+"Чтобы избежать потери данных и обеспечить возможность возможного восстановления, \n"
+"папка устаревших пресетов будет скопирована в каталог конфигурации программы:\n"
+"«{2}»\n"
 "\n"
 "Вы хотите выполнить это обновление сейчас?"
 
@@ -3180,7 +3167,7 @@ msgstr "Невозможно сохранить текущие данные в �
 
 #: ../../vdms_panels/presets_manager.py:535
 msgid "You just successfully created a new preset!"
-msgstr ""
+msgstr "Вы только что успешно создали новый пресет!"
 
 #: ../../vdms_panels/presets_manager.py:547
 msgid ""
@@ -3203,14 +3190,14 @@ msgstr ""
 "Извините, удаление не получилось, продолжение невозможно."
 
 #: ../../vdms_panels/presets_manager.py:568
+#, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
 msgstr "Пресет \"{0}\" был успешно удален"
 
 #: ../../vdms_panels/presets_manager.py:583
 #: ../../vdms_panels/presets_manager.py:612
-#, fuzzy
 msgid "Open a destination folder"
-msgstr "Текущая папка назначения"
+msgstr "Открыть папку назначения"
 
 #: ../../vdms_panels/presets_manager.py:588
 msgid "A file with this name already exists, do you want to overwrite it?"
@@ -3218,14 +3205,12 @@ msgstr "Файл с таким именем уже существует. Вы х
 
 #: ../../vdms_panels/presets_manager.py:602
 #: ../../vdms_panels/presets_manager.py:622
-#, fuzzy
 msgid "Backup completed successfully"
-msgstr "Помощник успешно завершен!\n"
+msgstr "Резервное копирование успешно завершено"
 
 #: ../../vdms_panels/presets_manager.py:631
-#, fuzzy
 msgid "Open the preset you want to restore"
-msgstr "Откройте пресет, чтобы сохранить новый профиль"
+msgstr "Откройте пресет, который хотите восстановить"
 
 #: ../../vdms_panels/presets_manager.py:645
 msgid ""
@@ -3238,9 +3223,8 @@ msgstr ""
 "Вы хотите продолжить?"
 
 #: ../../vdms_panels/presets_manager.py:663
-#, fuzzy
 msgid "Restore successful"
-msgstr "Помощник успешно завершен!\n"
+msgstr "Восстановление успешно завершено"
 
 #: ../../vdms_panels/presets_manager.py:681
 msgid ""
@@ -3253,18 +3237,16 @@ msgstr ""
 "Вы хотите продолжить?"
 
 #: ../../vdms_panels/presets_manager.py:689
-#, fuzzy
 msgid "Open the presets folder to restore"
-msgstr "Импортировать новую папку пресетов"
+msgstr "Откройте папку пресетов для восстановления"
 
 #: ../../vdms_panels/presets_manager.py:725
 msgid "The presets database has been successfully updated"
 msgstr "База данных пресетов успешно обновлена"
 
 #: ../../vdms_panels/presets_manager.py:740
-#, fuzzy
 msgid "The selected preset is not part of Videomass's default presets."
-msgstr "Заменить выбранный пресет на стандартный для Videomass"
+msgstr "Выбранный пресет не является частью пресетов Videomass по умолчанию."
 
 #: ../../vdms_panels/presets_manager.py:745
 msgid ""
@@ -3298,9 +3280,9 @@ msgstr ""
 "Вы хотите продолжать?"
 
 #: ../../vdms_panels/presets_manager.py:833
-#, fuzzy
+#, python-brace-format
 msgid "Edit profile on «{0}»"
-msgstr "*Редактировать профиль — Пресет \"{}\""
+msgstr "Редактировать профиль в «{0}»"
 
 #: ../../vdms_panels/presets_manager.py:872
 msgid "Are you sure you want to delete the selected profile? It will no longer be possible to recover it."
@@ -3460,7 +3442,7 @@ msgstr "ОШИБКА"
 
 #: ../../vdms_panels/sequence_to_video.py:705
 msgid "Shortest"
-msgstr ""
+msgstr "Коротко"
 
 #: ../../vdms_panels/sequence_to_video.py:713
 msgid ""
@@ -3727,11 +3709,11 @@ msgstr "Сопоставление субтитров"
 
 #: ../../vdms_panels/miscellaneous/miscell.py:77
 msgid "Copy Chapters"
-msgstr "Копировать главы"
+msgstr "Копировать Главы"
 
 #: ../../vdms_panels/miscellaneous/miscell.py:79
 msgid "Copy Metadata"
-msgstr "Копировать метаданные"
+msgstr "Копировать Метаданные"
 
 #: ../../vdms_panels/miscellaneous/miscell.py:85
 msgid ""
@@ -4015,7 +3997,7 @@ msgstr "По умолчанию FourCC, хранящийся в файле с к
 
 #: ../../vdms_panels/video_encoders/video_encodercopy.py:162
 msgid "Copy Video Codec"
-msgstr ""
+msgstr "Копировать Видеокодек"
 
 #: ../../vdms_panels/video_encoders/video_encodercopy.py:163
 msgid ""
@@ -4023,10 +4005,13 @@ msgid ""
 "You will only be able to change output format, select other audio encoders and\n"
 "a few other options."
 msgstr ""
+"Это просто скопирует видеодорожку как есть, без перекодирования видео.\n"
+"Вы сможете только изменить выходной формат, выбрать другие аудиокодеры \n"
+"и несколько других опций."
 
 #: ../../vdms_panels/video_encoders/video_no_enc.py:74
 msgid "Video export disabled"
-msgstr ""
+msgstr "Экспорт видео отключен"
 
 #: ../../vdms_panels/video_encoders/video_no_enc.py:75
 msgid ""
@@ -4034,6 +4019,10 @@ msgid ""
 "You can then process audio source files only or extract indexed audio streams on\n"
 "video files."
 msgstr ""
+"Только что выбранная цель Media позволит вам экспортировать файлы \n"
+"только в виде звуковых дорожек.\n"
+"Затем вы можете обрабатывать только исходные аудиофайлы или извлекать \n"
+"индексированные аудиопотоки из видеофайлов."
 
 #: ../../vdms_panels/video_encoders/vp9_webm.py:326
 msgid ""
@@ -4080,6 +4069,7 @@ msgid "If enabled, adds support for row based multithreading which greatly enhan
 msgstr "Если этот параметр включен, добавляется поддержка многопоточности на основе строк, что значительно увеличивает количество потоков, которые может использовать кодер. Это значительно повышает скорость кодирования в системах, которые в противном случае недостаточно используются при кодировании VP9. Поскольку количество дополнительных потоков зависит от количества «плиток», которое в свою очередь зависит от разрешения видео, кодирование видео с более высоким разрешением приведет к большему повышению производительности."
 
 #: ../../vdms_utils/presets_manager_utils.py:46
+#, python-brace-format
 msgid "Supports ({0}) formats only, not ({1})"
 msgstr "Поддерживаются только форматы ({0}), но не ({1})"
 
@@ -4106,7 +4096,7 @@ msgid "Import queue file"
 msgstr "Импортировать файл очереди(.json)"
 
 #: ../../vdms_utils/queue_utils.py:89
-#, fuzzy
+#, python-brace-format
 msgid ""
 "ERROR: invalid data found loading queue file.\n"
 "«{0}»\n"
@@ -4114,22 +4104,20 @@ msgid ""
 "Cannot contain multiple occurrences in `destination` keys value."
 msgstr ""
 "ОШИБКА: обнаружены недопустимые данные при загрузке файла очереди.\n"
-"ФАЙЛ: \"{0}\"\n"
+"«{0}»\n"
 "\n"
-"Значение ключа назначения не может содержать несколько вхождений."
+"Значение ключа 'назначения' не может содержать несколько вхождений."
 
 #: ../../vdms_utils/queue_utils.py:118
-#, fuzzy
 msgid "Videomass - Add Items to Queue"
-msgstr "Videomass - Очередь"
+msgstr "Videomass - Добавить элементы в очередь"
 
 #: ../../vdms_utils/queue_utils.py:119
-#, fuzzy
 msgid ""
 "Multiple items with identical names and destination paths cannot coexist.\n"
 "Please choose one of the following actions:"
 msgstr ""
-"В именах выходных файлов обнаружено несколько совпадений.\n"
+"Несколько элементов с одинаковыми именами и путями назначения не могут сосуществовать.\n"
 "Пожалуйста, выберите одно из следующих действий:"
 
 #: ../../vdms_utils/queue_utils.py:123
@@ -4137,9 +4125,8 @@ msgid "Replace occurrences with items from the imported queue."
 msgstr "Замените вхождения элементами из импортированной очереди."
 
 #: ../../vdms_utils/queue_utils.py:124
-#, fuzzy
 msgid "Add only the currently missing items to the queue."
-msgstr "Добавляйте в очередь только недостающие элементы."
+msgstr "Добавлять в очередь только недостающие элементы."
 
 #: ../../vdms_utils/queue_utils.py:125
 msgid "Remove the current queue and replace it with the imported one."
@@ -4192,6 +4179,7 @@ msgstr ""
 "отобранные качества"
 
 #: ../../vdms_ytdlp/formatcode.py:249
+#, python-brace-format
 msgid ""
 "ERROR: Unable to get format codes.\n"
 "\n"
@@ -4283,14 +4271,12 @@ msgid "Clear the URL list"
 msgstr "Очистить список URL"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:299
-#, fuzzy
 msgid "Options\tCtrl+P"
-msgstr "Параметры"
+msgstr "Параметры\tCtrl+P"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:300 ../../vdms_ytdlp/main_ytdlp.py:491
-#, fuzzy
 msgid "YouTube Downloader options"
-msgstr "YouTube Downloader"
+msgstr "Параметры загрузчика YouTube"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:312
 msgid "Version of yt-dlp"
@@ -4309,10 +4295,12 @@ msgid "Check the latest version available on github.com"
 msgstr "Проверьте последнюю версию, доступную на github.com"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:372
+#, python-brace-format
 msgid "You are using \"yt-dlp\" version {0}"
 msgstr "Вы используете версию \"yt-dlp\" {0}"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:389
+#, python-brace-format
 msgid "\"yt-dlp\": Latest version available: {0}"
 msgstr "\"yt-dlp\": Доступна последняя версия:{0}"
 
@@ -4612,16 +4600,15 @@ msgid "Choosing an external downloader"
 msgstr "Выбор внешнего загрузчика"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:140
-#, fuzzy
 msgid ""
 "In addition to the default `native` one, yt-dlp can use the following external downloaders:\n"
 "`aria2c`, `avconv`, `axel`, `curl`, `ffmpeg`, `httpie`, `wget`.\n"
 "Please note that using an external downloader the download status information may not be available."
 msgstr ""
-"Помимо встроенного по умолчанию, yt-dlp в настоящее время поддерживает\n"
-"следующие внешние загрузчики:\n"
-"aria2c, avconv, axel, curl, ffmpeg, httpie, wget.\n"
-"Обратите внимание, что информация о статусе загрузки может быть недоступна."
+"Помимо встроенного по умолчанию, yt-dlp может использовать следующие внешние загрузчики:\n"
+"`aria2c`, `avconv`, `axel`, `curl`, `ffmpeg`, `httpie`, `wget`.\n"
+"Обратите внимание, что при использовании внешнего загрузчика информация о статусе загрузки \n"
+"может быть недоступна."
 
 #: ../../vdms_ytdlp/ydl_preferences.py:149
 msgid "External downloader executable path"
@@ -4632,25 +4619,21 @@ msgid "External downloader arguments"
 msgstr "Аргументы внешнего загрузчика"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:165
-#, fuzzy
 msgid "Download Options"
-msgstr "Статус загрузки"
+msgstr "Опции загрузки"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:171
-#, fuzzy
 msgid "Using a proxy server"
-msgstr "Использование прокси"
+msgstr "Использование прокси-сервера"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:175
-#, fuzzy
 msgid ""
 "Use the specified HTTP/HTTPS/SOCKS proxy. To enable SOCKS proxy, specify a proper\n"
 "scheme, e.g.\t{}\n"
 "Leave the text field blank for direct connection."
 msgstr ""
-"Используйте указанный прокси-сервер HTTP/HTTPS/SOCKS.\n"
-"Чтобы включить прокси-сервер SOCKS, укажите правильную схему, \n"
-"например {}\n"
+"Используйте указанный прокси-сервер HTTP/HTTPS/SOCKS. \n"
+"Чтобы включить прокси-сервер SOCKS, укажите правильную схему, например\t{}\n"
 "Оставьте текстовое поле пустым для прямого подключения."
 
 #: ../../vdms_ytdlp/ydl_preferences.py:183
@@ -4662,55 +4645,54 @@ msgid "Network"
 msgstr "Network"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:196
-#, fuzzy
 msgid "Geo-restriction options"
-msgstr "Дополнительные опции"
+msgstr "Параметры гео-ограничения"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:199
 msgid "Use the following options to try bypassing geographic restriction."
-msgstr ""
+msgstr "Используйте следующие параметры, чтобы попытаться обойти географические ограничения."
 
 #: ../../vdms_ytdlp/ydl_preferences.py:206
 msgid "Geo verification proxy"
-msgstr ""
+msgstr "Прокси-сервер для геопроверки"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:210
 msgid "URL of the proxy to use for IP address verification on geo-restricted sites."
 msgstr ""
+"URL-адрес прокси-сервера, который будет использоваться для проверки IP-адреса на сайтах \n"
+"с географическим ограничением."
 
 #: ../../vdms_ytdlp/ydl_preferences.py:215
-#, fuzzy
 msgid "Geo bypass"
-msgstr "Два прохода"
+msgstr "Геообход"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:219
 msgid "Bypass geographic restriction via faking X-Forwarded-For HTTP header. One of \"default\" (only when known to be useful), or \"never\""
-msgstr ""
+msgstr "Обход географических ограничений с помощью подделки HTTP-заголовка X-Forwarded-For. Одно из значений «по умолчанию» (только если известно, что оно полезно) или «никогда»."
 
 #: ../../vdms_ytdlp/ydl_preferences.py:226
 msgid "Geo bypass country"
-msgstr ""
+msgstr "Географический обход страны"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:230
 msgid "Two-letter ISO 3166-2 country code that will be used for explicit geographic restriction bypassing via faking X-Forwarded-For HTTP header."
-msgstr ""
+msgstr "Двухбуквенный код страны по стандарту ISO 3166-2, который будет использоваться для явного обхода географических ограничений посредством подделки HTTP-заголовка X-Forwarded-For."
 
 #: ../../vdms_ytdlp/ydl_preferences.py:238
 msgid "Geo bypass ip block"
-msgstr ""
+msgstr "Геообход блокировки IP"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:242
 msgid "IP range in CIDR notation that will be used similarly to geo_bypass_country"
-msgstr ""
+msgstr "Диапазон IP-адресов в нотации CIDR, который будет использоваться аналогично geo_bypass_country"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:249
-#, fuzzy
 msgid "Geo-Restriction"
-msgstr "Автоматическое определение"
+msgstr "Гео-ограничение"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:254
 msgid "Authentication with login credentials"
-msgstr ""
+msgstr "Аутентификация с использованием учётных данных для входа"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:257
 msgid ""
@@ -4718,6 +4700,9 @@ msgid ""
 "supported for some websites (e.g. YouTube, CloudFlare). In this case you can include a\n"
 "cookie file for authentication (see cookies tab)."
 msgstr ""
+"Если вам необходимо войти в систему, используя свои учетные данные, обратите внимание, \n"
+"что вход с паролем не поддерживается для некоторых веб-сайтов (например, YouTube, CloudFlare).\n"
+"В этом случае вы можете включить файл cookie для аутентификации (см. вкладку «cookies»)."
 
 #: ../../vdms_ytdlp/ydl_preferences.py:266
 msgid "Username"
@@ -4725,7 +4710,7 @@ msgstr "Имя пользователя"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:270
 msgid "Username for authentication purposes"
-msgstr ""
+msgstr "Имя пользователя для целей аутентификации"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:274
 msgid "Password"
@@ -4733,7 +4718,7 @@ msgstr "Пароль"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:278
 msgid "Password for authentication purposes"
-msgstr ""
+msgstr "Пароль для целей аутентификации"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:283
 msgid "Video Password"
@@ -4741,7 +4726,7 @@ msgstr "Video Password"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:287
 msgid "Password for accessing a video"
-msgstr ""
+msgstr "Пароль для доступа к видео"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:293
 msgid "Authentication"
@@ -4749,7 +4734,7 @@ msgstr "Аутентификация"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:299
 msgid "Using cookies to gain access to websites"
-msgstr ""
+msgstr "Использование файлов cookie для доступа к веб-сайтам"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:302
 msgid ""
@@ -4759,53 +4744,55 @@ msgid ""
 "\n"
 "For more information please consult the documentation at the following link:"
 msgstr ""
+"Здесь вы можете передать свой файл cookie Netscape HTTP для доступа к веб-сайтам, \n"
+"требующим аутентификации.\n"
+"Если вы не знаете, как получить файл этого типа, вы можете позволить приложению \n"
+"попытаться автоматически извлечь его из вашего браузера. \n"
+"В настоящее время поддерживаются браузеры: \n"
+"brave, chrome, chromium, edge, firefox, opera, safari, vivaldi.\n"
+"\n"
+"Для получения дополнительной информации обратитесь к документации по следующей ссылке:"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:319
-#, fuzzy
 msgid "Allow cookies for authentication"
-msgstr "Аутентификация"
+msgstr "Разрешить использование файлов cookie для аутентификации"
 
 # Изменил 14-5-2021
 #: ../../vdms_ytdlp/ydl_preferences.py:323
-#, fuzzy
 msgid "Cookie file"
-msgstr "Исходный файл"
+msgstr "Файл cookie"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:329
 msgid "File name from where cookies should be read and dumped to"
-msgstr ""
+msgstr "Имя файла, из которого файлы cookie должны быть прочитаны и сохранены"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:332
-#, fuzzy
 msgid "Browse"
-msgstr "Обзор.."
+msgstr "Обзор"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:335
 msgid "Extract cookies automatically from your browser"
-msgstr ""
+msgstr "Автоматическое извлечение файлов cookie из вашего браузера"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:341
-#, fuzzy
 msgid "Web Browser"
-msgstr "Обзор.."
+msgstr "Веб-браузер"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:360
 msgid "Cookies"
-msgstr ""
+msgstr "Cookies"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:403
-#, fuzzy
 msgid "YouTube Downloader Options"
-msgstr "YouTube Downloader"
+msgstr "Параметры загрузчика YouTube Downloader"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:436
 msgid "Do you want to remove the current cookie file from your system?"
-msgstr ""
+msgstr "Вы хотите удалить текущий файл cookie из вашей системы?"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:489
-#, fuzzy
 msgid "Locate your cookie file"
-msgstr "Удалить исходные файлы в корзину"
+msgstr "Найдите ваш файл cookie"
 
 #: ../../vdms_ytdlp/youtubedl_ui.py:151
 msgid "Precompiled Videos"
@@ -4832,35 +4819,31 @@ msgid "Include playlists"
 msgstr "Включить плейлисты"
 
 #: ../../vdms_ytdlp/youtubedl_ui.py:223
-#, fuzzy
 msgid "Quality settings"
-msgstr "Настройки флагов"
+msgstr "Настройки качества"
 
 #: ../../vdms_ytdlp/youtubedl_ui.py:235
 msgid "When not available, the chosen video resolution will be replaced with the closest one"
 msgstr "Когда недоступно, выбранное разрешение видео будет заменено ближайшим"
 
 #: ../../vdms_ytdlp/youtubedl_ui.py:239
-#, fuzzy
 msgid "Video format:"
-msgstr "Преобразование видео"
+msgstr "Формат видео:"
 
 #: ../../vdms_ytdlp/youtubedl_ui.py:260
-#, fuzzy
 msgid "Audio format:"
-msgstr "Аудио фильтры"
+msgstr "Аудио формат:"
 
 #: ../../vdms_ytdlp/youtubedl_ui.py:418
-#, fuzzy
+#, python-brace-format
 msgid ""
 "Unable to get format codes on {0}, unsupported URL:\n"
 "\n"
 "{1}"
 msgstr ""
-"Не удается получить коды формата для '{0}'\n"
+"Не удалось получить коды формата {0}, неподдерживаемый URL-адрес:\n"
 "\n"
-"Неподдерживаемый '{0}':\n"
-"'{1}'"
+"{1}"
 
 #: ../../vdms_ytdlp/youtubedl_ui.py:568
 msgid "URLs have no playlist references"
