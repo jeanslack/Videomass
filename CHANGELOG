@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Wed, 04 Sep 2024 V.5.0.21
+Sun, 13 Oct 2024 V.5.0.21
 
   * Update French language (thanks to Phil Aug).
   * Update Spanish language (thanks to katnatek).
@@ -16,6 +16,7 @@ Wed, 04 Sep 2024 V.5.0.21
   * Improved build using pyproject.toml file.
   * Improved build using pyinstaller_setup.py file.
   * Improved requirements.
+  * Fixed some broken link.
 
 
 +------------------------------------+

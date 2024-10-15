@@ -178,15 +178,13 @@ class VideoToSequence(wx.Panel):
         sizer_link1 = wx.BoxSizer(wx.HORIZONTAL)
         fgs1.Add(sizer_link1)
         lbl_msg1 = wx.StaticText(self, wx.ID_ANY,
-                                 label=_("For more information, "
-                                         "visit the official FFmpeg "
-                                         "documentation:")
+                                 label=_("Official FFmpeg documentation:")
                                  )
-        link1 = hpl.HyperLinkCtrl(self, -1, "4.19 image2",
+        link1 = hpl.HyperLinkCtrl(self, -1, "image2",
                                   URL="https://ffmpeg.org/ffmpeg-"
-                                      "formats.html#image2-2"
+                                      "formats.html#image2"
                                   )
-        link2 = hpl.HyperLinkCtrl(self, -1, ("3.3 FFmpeg FAQ"),
+        link2 = hpl.HyperLinkCtrl(self, -1, ("FFmpeg FAQ"),
                                   URL="https://ffmpeg.org/faq.html#How-do-I-"
                                       "encode-movie-to-single-pictures_003f"
                                   )

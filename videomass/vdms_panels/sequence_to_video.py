@@ -205,11 +205,9 @@ class SequenceToVideo(wx.Panel):
         sizer_link1 = wx.BoxSizer(wx.HORIZONTAL)
         fgs1.Add(sizer_link1)
         lbl_link = wx.StaticText(self, wx.ID_ANY,
-                                 label=_("For more information, "
-                                         "visit the official FFmpeg "
-                                         "documentation:")
+                                 label=_("Official FFmpeg documentation:")
                                  )
-        link1 = hpl.HyperLinkCtrl(self, -1, ("FFmpeg Slideshow wiki"),
+        link1 = hpl.HyperLinkCtrl(self, -1, ("FFmpeg Slideshow Wiki"),
                                   URL="https://trac.ffmpeg.org/wiki/Slideshow"
                                   )
         sizer_link1.Add(lbl_link, 0, wx.ALL | wx.EXPAND, 5)

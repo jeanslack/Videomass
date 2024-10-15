@@ -7,8 +7,9 @@ videomass (5.0.21-1) UNRELEASED; urgency=medium
   * Improved build using pyproject.toml file.
   * Improved build using pyinstaller_setup.py file.
   * Improved requirements.
+  * Fixed some broken link.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 04 Sep 2024 16:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 13 Oct 2024 12:00:00 +0200
 
 videomass (5.0.20-1) UNRELEASED; urgency=medium
 
