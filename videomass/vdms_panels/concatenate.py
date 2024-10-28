@@ -122,31 +122,20 @@ class Conc_Demuxer(wx.Panel):
         sizer_link2 = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_link2)
         self.lbl_msg3 = wx.StaticText(self, wx.ID_ANY,
-                                      label=_("For more details, see the "
-                                              "Videomass User Guide:")
+                                      label=_("Videomass Documentation:")
                                       )
-        if self.appdata['GETLANG'] in self.appdata['SUPP_LANGs']:
-            lang = self.appdata['GETLANG'].split('_')[0]
-            page = (f"https://jeanslack.github.io/Videomass/"
-                    f"Pages/User-guide-languages/{lang}/1-User_"
-                    f"Interface_Overview_{lang}.pdf")
-        else:
-            page = ("https://jeanslack.github.io/Videomass/"
-                    "Pages/User-guide-languages/en/1-User_"
-                    "Interface_Overview_en.pdf"
-                    )
-        link2 = hpl.HyperLinkCtrl(self, -1, ("1.4 Concatenate media files "
-                                             "(demuxer)"), URL=page)
+        page = ("https://jeanslack.github.io/Videomass/User-guide/"
+                "User_Interface_Overview_en.pdf")
+        link2 = hpl.HyperLinkCtrl(self, -1, ("User Interface Overview"),
+                                  URL=page)
         sizer_link2.Add(self.lbl_msg3, 0, wx.ALL | wx.EXPAND, 5)
         sizer_link2.Add(link2)
         sizer_link1 = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_link1)
         self.lbl_msg2 = wx.StaticText(self, wx.ID_ANY,
-                                      label=_("For more information, "
-                                              "visit the official FFmpeg "
-                                              "documentation:")
+                                      label=_("Official FFmpeg documentation:")
                                       )
-        link1 = hpl.HyperLinkCtrl(self, -1, "3.4 concat",
+        link1 = hpl.HyperLinkCtrl(self, -1, "Concat",
                                   URL="https://ffmpeg.org/ffmpeg-formats."
                                       "html#concat"
                                   )
