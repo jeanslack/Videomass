@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.14.2024
+Rev: Oct.28.2024
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -60,15 +60,21 @@ def create_dirs(dirname, fconf):
     return {'R': None}
 
 
-def restore_presets_dir(dirconf, srcdata):
+def restore_dirconf(dirconf, srcdata):
     """
-    Restore preset directory from source if it doesn't exist.
+    check existence of configuration directory
+    with possibility of restore.
     Returns dict:
         key == 'R'
         key == ERROR (if any errors)
     """
+    if not os.path.exists(dirconf):  # create the configuration directory
+        try:
+            os.mkdir(dirconf, mode=0o777)
+        except FileNotFoundError as err:  # parent directory does not exist
+            return {'ERROR': err}
+
     if not os.path.exists(os.path.join(dirconf, "presets")):
-        # try to restoring presets directory on videomass dir
         drest = copydir_recursively(os.path.join(srcdata, "presets"), dirconf)
         if drest:
             return {'ERROR': drest}
@@ -76,14 +82,13 @@ def restore_presets_dir(dirconf, srcdata):
     return {'R': None}
 
 
-def get_options(dirconf, fileconf, srcdata, makeportable):
+def get_options(fileconf, makeportable):
     """
     Check the application options. Reads the `settings.json`
     file; if it does not exist or is unreadable try to restore
-    it. If `dirconf` does not exist try to restore both `dirconf`
-    and `settings.json`. If VERSION is not the same as the version
-    readed, it adds new missing items while preserving the old ones
-    with the same values.
+    it. If VERSION is not the same as the version readed, it adds
+    new missing items while preserving the old ones with the same
+    values.
 
     Returns dict:
         key == 'R'
@@ -92,31 +97,19 @@ def get_options(dirconf, fileconf, srcdata, makeportable):
     conf = ConfigManager(fileconf, makeportable)
     version = ConfigManager.VERSION
 
-    if os.path.exists(dirconf):  # i.e ~/.conf/videomass dir
-        if os.path.isfile(fileconf):
-            data = {'R': conf.read_options()}
-            if not data['R']:
-                conf.write_options()
-                data = {'R': conf.read_options()}
-            if float(data['R']['confversion']) != version:  # conf version
-                data['R']['confversion'] = version
-                new = ConfigManager.DEFAULT_OPTIONS  # model
-                data = {'R': {**new, **data['R']}}
-                conf.write_options(**data['R'])
-        else:
+    if os.path.isfile(fileconf):
+        data = {'R': conf.read_options()}
+        if not data['R']:
             conf.write_options()
             data = {'R': conf.read_options()}
-
-    else:  # try to restore entire configuration directory
-        dconf = copydir_recursively(srcdata,
-                                    os.path.dirname(dirconf),
-                                    "videomass",
-                                    )
-        if dconf:
-            data = {'ERROR': dconf}
-        else:
-            conf.write_options()
-            data = {'R': conf.read_options()}
+        if float(data['R']['confversion']) != version:  # conf version
+            data['R']['confversion'] = version
+            new = ConfigManager.DEFAULT_OPTIONS  # model
+            data = {'R': {**new, **data['R']}}
+            conf.write_options(**data['R'])
+    else:
+        conf.write_options()
+        data = {'R': conf.read_options()}
 
     return data
 
@@ -248,7 +241,7 @@ def data_location(kwargs):
     """
     Determines data location and modes to make the app
     portable, fully portable or using conventional paths.
-    return data location.
+    Returns data location dict.
     """
     if kwargs['make_portable']:
         portdir = kwargs['make_portable']
@@ -303,30 +296,26 @@ class DataSource():
         self.prg_icon = os.path.join(self.dataloc['icodir'], "videomass.png")
     # ---------------------------------------------------------------------
 
-    def get_fileconf(self):
+    def get_configuration(self):
         """
-        Get settings.json configuration data and returns a dict object
-        with current data-set for bootstrap.
+        Get configuration data of the application.
+        Returns a dict object with current data-set for bootstrap.
 
         Note: If returns a dict key == ERROR it will raise a windowed
         fatal error in the gui_app bootstrap.
         """
+        # checks configuration directory
+        ckdconf = restore_dirconf(self.dataloc['confdir'],
+                                  self.dataloc['srcdata'],
+                                  )
+        if ckdconf.get('ERROR'):
+            return ckdconf
+
         # handle configuration file
-        userconf = get_options(self.dataloc['confdir'],
-                               self.dataloc['conffile'],
-                               self.dataloc['srcdata'],
-                               self.makeportable,
-                               )
+        userconf = get_options(self.dataloc['conffile'], self.makeportable)
         if userconf.get('ERROR'):
             return userconf
         userconf = userconf['R']
-
-        # restore presets folder
-        presets_rest = restore_presets_dir(self.dataloc['confdir'],
-                                           self.dataloc['srcdata'],
-                                           )
-        if presets_rest.get('ERROR'):
-            return presets_rest
 
         # create the required directories if not existing
         requiredirs = (os.path.join(self.dataloc['cachedir'], 'tmp'),
@@ -358,7 +347,7 @@ class DataSource():
             try:
                 return os.path.relpath(path) if relative else path
             except (ValueError, TypeError):
-                # return {'ERROR': f'{error}'}  # use `as error` here
+                # return {'ERROR': f'{error}'}  # used `as error` here
                 return path
 
         return ({'ostype': platform.system(),
@@ -386,11 +375,9 @@ class DataSource():
 
     def icons_set(self, icontheme):
         """
-        Determines icons set assignment defined on the configuration
-        file (see `Set icon themes map:`, on paragraph `6- GUI setup`
-        in the settings.json file).
+        Determines icons set assignment defined on the
+        configuration file.
         Returns a icontheme dict object.
-
         """
         keys = ('videomass', 'A/V-Conv', 'startconv', 'fileproperties',
                 'playback', 'concatenate', 'preview', 'clear',

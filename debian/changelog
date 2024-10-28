@@ -8,8 +8,10 @@ videomass (5.0.21-1) UNRELEASED; urgency=medium
   * Improved build using pyinstaller_setup.py file.
   * Improved requirements.
   * Fixed some broken link.
+  * Fixed an issue when restoring the configuration directory, which copied
+    unnecessary files and directories.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 13 Oct 2024 12:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 28 Oct 2024 00:00:00 +0200
 
 videomass (5.0.20-1) UNRELEASED; urgency=medium
 

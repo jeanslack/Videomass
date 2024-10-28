@@ -72,7 +72,7 @@ class Videomass(wx.App):
                        # supported langs for online help (user guide)
                        }
         self.data = DataSource(kwargs)  # instance data
-        self.appset.update(self.data.get_fileconf())  # data system
+        self.appset.update(self.data.get_configuration())  # data system
         self.iconset = None
 
         wx.App.__init__(self, redirect, filename)  # constructor
