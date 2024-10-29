@@ -342,7 +342,7 @@ class ConfigManager:
     def default_outputdirs(self, **options):
         """
         Restores default output paths.
-        This method is needed to set the values ​​of the `outputdir`
+        This method is needed to set the values of the `outputdir`
         and `ydlp-outputdir` keys set to physically non-existent
         filesystem paths (such as pendrives, hard-drives, etc.).
         Returns a dictionary object.
