@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 28 Oct 2024 V.5.0.21
+Tue, 29 Oct 2024 V.5.0.21
 
   * Update French language (thanks to Phil Aug).
   * Update Spanish language (thanks to katnatek).
@@ -19,7 +19,9 @@ Mon, 28 Oct 2024 V.5.0.21
   * Fixed some broken link.
   * Fixed an issue when restoring the configuration directory, which copied
     unnecessary files and directories.
-
+  * Fixed issue with using physically non-existent and access-denied output
+    paths (e.g. removing USB sticks, hard drives, etc.) which would inevitably
+    lead to an application reset.
 
 +------------------------------------+
 Sun, 28 July 2024 V.5.0.20

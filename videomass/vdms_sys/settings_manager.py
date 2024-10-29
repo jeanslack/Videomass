@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.09.2024
+Rev: Oct.29.2024
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -336,5 +336,20 @@ class ConfigManager:
                 options = json.load(settings_file)
             except json.JSONDecodeError:
                 return None
+
+        return options
+
+    def default_outputdirs(self, **options):
+        """
+        Restores default output paths.
+        This method is needed to set the values ​​of the `outputdir`
+        and `ydlp-outputdir` keys set to physically non-existent
+        filesystem paths (such as pendrives, hard-drives, etc.).
+        Returns a dictionary object.
+        """
+        if not os.path.exists(os.path.dirname(options['outputdir'])):
+            options['outputdir'] = f"{os.path.expanduser('~')}"
+        if not os.path.exists(os.path.dirname(options['ydlp-outputdir'])):
+            options['ydlp-outputdir'] = f"{os.path.expanduser('~')}"
 
         return options

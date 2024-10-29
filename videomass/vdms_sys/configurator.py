@@ -49,13 +49,8 @@ def create_dirs(dirname, fconf):
     if not os.path.exists(dirname):
         try:
             os.makedirs(dirname, mode=0o777)
-        except FileExistsError as err:
+        except Exception as err:
             return {'ERROR': err}
-        except OSError as err:
-            os.remove(fconf)  # force to restart on deleting
-            thismsg = ('Please try restarting Videomass to '
-                       'restore default settings now.')
-            return {'ERROR': f'{err}\n{thismsg}'}
 
     return {'R': None}
 
@@ -111,6 +106,11 @@ def get_options(fileconf, makeportable):
         conf.write_options()
         data = {'R': conf.read_options()}
 
+    diff = conf.default_outputdirs(**data['R'])
+    if diff != data['R']:
+        conf.write_options(**diff)  # restore default outputdirs
+        data = {'R': conf.read_options()}
+
     return data
 
 
@@ -158,9 +158,6 @@ def portable_paths(portdirname):
     log_dir = os.path.join(dir_conf, 'log')  # logs
     cache_dir = os.path.join(dir_conf, 'cache')  # updates executable
     trash_dir = os.path.join(dir_conf, "Trash")
-
-    if not os.path.exists(dir_conf):
-        os.makedirs(dir_conf, mode=0o777)
 
     return file_conf, dir_conf, log_dir, cache_dir, trash_dir
 
