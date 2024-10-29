@@ -301,10 +301,12 @@ class ConfigManager:
         self.filename = filename
 
         if makeportable:
-            path = os.path.join(makeportable, "My_Files")
-            outputdir = os.path.relpath(path)
-            ConfigManager.DEFAULT_OPTIONS['outputdir'] = outputdir
-            ConfigManager.DEFAULT_OPTIONS['ydlp-outputdir'] = outputdir
+            trscodepath = os.path.join(makeportable, "Media", "Transcoding")
+            dwldpath = os.path.join(makeportable, "Media", "Downloads")
+            trscodedir = os.path.relpath(trscodepath)
+            dwlddir = os.path.relpath(dwldpath)
+            ConfigManager.DEFAULT_OPTIONS['outputdir'] = trscodedir
+            ConfigManager.DEFAULT_OPTIONS['ydlp-outputdir'] = dwlddir
 
     def write_options(self, **options):
         """
@@ -347,9 +349,9 @@ class ConfigManager:
         filesystem paths (such as pendrives, hard-drives, etc.).
         Returns a dictionary object.
         """
-        if not os.path.exists(os.path.dirname(options['outputdir'])):
+        if not os.path.exists(options['outputdir']):
             options['outputdir'] = f"{os.path.expanduser('~')}"
-        if not os.path.exists(os.path.dirname(options['ydlp-outputdir'])):
+        if not os.path.exists(options['ydlp-outputdir']):
             options['ydlp-outputdir'] = f"{os.path.expanduser('~')}"
 
         return options

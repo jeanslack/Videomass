@@ -55,10 +55,11 @@ def create_dirs(dirname, fconf):
     return {'R': None}
 
 
-def restore_dirconf(dirconf, srcdata):
+def restore_dirconf(dirconf, srcdata, portable):
     """
-    check existence of configuration directory
-    with possibility of restore.
+    This function is responsible for restoring the
+    configuration directory if it is missing and
+    populating it with its essential files.
     Returns dict:
         key == 'R'
         key == ERROR (if any errors)
@@ -73,6 +74,17 @@ def restore_dirconf(dirconf, srcdata):
         drest = copydir_recursively(os.path.join(srcdata, "presets"), dirconf)
         if drest:
             return {'ERROR': drest}
+
+    if portable:
+        transoutdir = os.path.join(dirconf, "Media", "Transcoding")
+        dwlddir = os.path.join(dirconf, "Media", "Downloads")
+        try:
+            if not os.path.exists(transoutdir):
+                os.makedirs(transoutdir, mode=0o777)
+            if not os.path.exists(dwlddir):
+                os.makedirs(dwlddir, mode=0o777)
+        except Exception as err:
+            return {'ERROR': err}
 
     return {'R': None}
 
@@ -108,7 +120,7 @@ def get_options(fileconf, makeportable):
 
     diff = conf.default_outputdirs(**data['R'])
     if diff != data['R']:
-        conf.write_options(**diff)  # restore default outputdirs
+        conf.write_options(**diff)  # write default outputdirs
         data = {'R': conf.read_options()}
 
     return data
@@ -304,6 +316,7 @@ class DataSource():
         # checks configuration directory
         ckdconf = restore_dirconf(self.dataloc['confdir'],
                                   self.dataloc['srcdata'],
+                                  self.makeportable,
                                   )
         if ckdconf.get('ERROR'):
             return ckdconf
@@ -317,8 +330,6 @@ class DataSource():
         # create the required directories if not existing
         requiredirs = (os.path.join(self.dataloc['cachedir'], 'tmp'),
                        self.dataloc['logdir'],
-                       userconf['outputdir'],
-                       userconf['ydlp-outputdir'],
                        self.dataloc['trashdir_default']
                        )
         if not userconf['trashdir_loc'].strip():

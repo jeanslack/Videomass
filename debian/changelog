@@ -12,9 +12,15 @@ videomass (5.0.21-1) UNRELEASED; urgency=medium
     unnecessary files and directories.
   * Fixed issue with using physically non-existent and access-denied output
     paths (e.g. removing USB sticks, hard drives, etc.) which would inevitably
-    lead to an application reset.
+    lead to an application reset during startup (Very annoying).
+  * Fixed NameError: name 'tarbal' is not defined. Did you mean: 'tarball'?
+    during presets download operation.
+  * Changed: Unlike portable mode, In installed mode output directories are no
+    longer recreated if they do not exist.
+  * Changed the names of the default output directories when using the
+    application in portable mode.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 29 Oct 2024 14:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 30 Oct 2024 00:00:00 +0200
 
 videomass (5.0.20-1) UNRELEASED; urgency=medium
 
