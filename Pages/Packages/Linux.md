@@ -59,7 +59,7 @@ A pre-compiled, architecture-independent **.deb** package is available, primaril
 - Debian11 bullseye
 - Debian12 bookworm
 
-Download: [videomass_5.0.20-1_all.deb](https://github.com/jeanslack/Videomass/releases/download/v5.0.20/videomass_5.0.20-1_all.deb)
+Download: [videomass_5.0.21-1_all.deb](https://github.com/jeanslack/Videomass/releases/download/v5.0.21/videomass_5.0.21-1_all.deb)
 
 ---
 
