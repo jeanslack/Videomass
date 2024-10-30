@@ -14,10 +14,6 @@ nav_order: 3
 This PPA currently publishes packages for [Ubuntu](https://ubuntu.com/), including official and 
 derivative distributions such as Ubuntu, Xubuntu, Kubuntu, Lubuntu, LinuxMint, etc.   
 
-- [Ubuntu 24.10 Oracular](http://cdimage.ubuntu.com/daily-live/current/)
-- [Ubuntu 24.04 Noble](https://releases.ubuntu.com/noble/)
-- [Ubuntu 22.04 Jammy](https://releases.ubuntu.com/jammy/)
-
 To install Videomass add this [PPA](https://launchpad.net/~jeanslack/+archive/ubuntu/videomass) to your system: 
   
 
