@@ -1,5 +1,5 @@
 videomass
-yt-dlp
+yt-dlp[default]
 hatchling
 build
 wheel

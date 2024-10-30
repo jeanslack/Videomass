@@ -93,7 +93,10 @@ Installing on Linux/FreeBSD:
         python3 -m pip install videomass
 
     Optionally install yt-dlp:
-        python3 -m pip install yt-dlp
+        please read this before installing yt-dlp: https://github.com/yt-dlp/yt-dlp/pull/11255
+        
+        python3 -m pip install "yt-dlp[default]"
+        
 
 
 Installing on Windows and MacOs:
@@ -110,7 +113,9 @@ Installing on Windows and MacOs:
         python3 -m pip install videomass
 
     Optionally install yt-dlp:
-        python3 -m pip install yt-dlp
+        please read this before installing yt-dlp: https://github.com/yt-dlp/yt-dlp/pull/11255
+        
+        python3 -m pip install "yt-dlp[default]"
 
 
 To Update on Windows, MacOs, Linux, FreeBSD:

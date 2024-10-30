@@ -5,7 +5,7 @@ pypubsub
 six
 wxpython
 requests
-yt-dlp
+yt-dlp[default]
 
 # Requirements for Windows
 

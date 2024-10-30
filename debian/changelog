@@ -16,9 +16,9 @@ videomass (5.0.21-1) UNRELEASED; urgency=medium
   * Fixed NameError: name 'tarbal' is not defined. Did you mean: 'tarball'?
     during presets download operation.
   * Changed: Unlike portable mode, In installed mode output directories are no
-    longer recreated if they do not exist.
+    longer automatically recreated if they do not exist.
   * Changed the names of the default output directories when using the
-    application in portable mode.
+    application in portable mode (see Media/Transcoding + Media/Downloads).
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 30 Oct 2024 00:00:00 +0200
 
