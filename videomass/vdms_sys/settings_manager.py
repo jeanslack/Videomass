@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.09.2024
+Rev: Oct.29.2024
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -301,10 +301,12 @@ class ConfigManager:
         self.filename = filename
 
         if makeportable:
-            path = os.path.join(makeportable, "My_Files")
-            outputdir = os.path.relpath(path)
-            ConfigManager.DEFAULT_OPTIONS['outputdir'] = outputdir
-            ConfigManager.DEFAULT_OPTIONS['ydlp-outputdir'] = outputdir
+            trscodepath = os.path.join(makeportable, "Media", "Transcoding")
+            dwldpath = os.path.join(makeportable, "Media", "Downloads")
+            trscodedir = os.path.relpath(trscodepath)
+            dwlddir = os.path.relpath(dwldpath)
+            ConfigManager.DEFAULT_OPTIONS['outputdir'] = trscodedir
+            ConfigManager.DEFAULT_OPTIONS['ydlp-outputdir'] = dwlddir
 
     def write_options(self, **options):
         """
@@ -336,5 +338,20 @@ class ConfigManager:
                 options = json.load(settings_file)
             except json.JSONDecodeError:
                 return None
+
+        return options
+
+    def default_outputdirs(self, **options):
+        """
+        Restores default output paths.
+        This method is needed to set the values of the `outputdir`
+        and `ydlp-outputdir` keys set to physically non-existent
+        filesystem paths (such as pendrives, hard-drives, etc.).
+        Returns a dictionary object.
+        """
+        if not os.path.exists(options['outputdir']):
+            options['outputdir'] = f"{os.path.expanduser('~')}"
+        if not os.path.exists(options['ydlp-outputdir']):
+            options['ydlp-outputdir'] = f"{os.path.expanduser('~')}"
 
         return options

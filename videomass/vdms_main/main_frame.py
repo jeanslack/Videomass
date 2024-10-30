@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.24.2024
+Rev: Oct.29.2024
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -867,8 +867,8 @@ class MainFrame(wx.Frame):
         tarball = io_tools.get_github_releases(url, "tarball_url")
 
         if tarball[0] in ['request error:', 'response error:']:
-            wx.MessageBox(f"{tarbal[0]} {tarbal[1]}",
-                          f"{tarbal[0]}", wx.ICON_ERROR, self)
+            wx.MessageBox(f"{tarball[0]} {tarball[1]}",
+                          f"{tarball[0]}", wx.ICON_ERROR, self)
             return
 
         name = f"Videomass-presets-{tarball[0].split('/v')[-1]}.tar.gz"
