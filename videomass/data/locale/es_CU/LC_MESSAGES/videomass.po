@@ -1083,8 +1083,8 @@ msgstr ""
 "o la trayectoria del paquete instalado en un entorno virtual externo."
 
 #: ../../vdms_dialogs/preferences.py:229
-msgid "Enable external import of yd_dlp package"
-msgstr "Habilitar importación yd_dlp externo"
+msgid "Enable external import of yt_dlp package"
+msgstr "Habilitar importación yt_dlp externo"
 
 #: ../../vdms_dialogs/preferences.py:248
 msgid "Look and Feel (requires application restart)"

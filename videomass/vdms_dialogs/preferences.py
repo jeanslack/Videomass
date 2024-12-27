@@ -226,7 +226,7 @@ class SetUp(wx.Dialog):
                  'environment.'))
         labytmod = wx.StaticText(tabThree, wx.ID_ANY, msg)
         sizerytdlp.Add(labytmod, 0, wx.ALL | wx.EXPAND, 5)
-        msg = _('Enable external import of yd_dlp package')
+        msg = _('Enable external import of yt_dlp package')
         self.ckbx_ytmod = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         sizerytdlp.Add(self.ckbx_ytmod, 0, wx.LEFT | wx.TOP, 5)
 
