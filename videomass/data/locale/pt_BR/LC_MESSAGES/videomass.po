@@ -1098,7 +1098,7 @@ msgid ""
 msgstr ""
 
 #: ../../vdms_dialogs/preferences.py:229
-msgid "Enable external import of yd_dlp package"
+msgid "Enable external import of yt_dlp package"
 msgstr ""
 
 #: ../../vdms_dialogs/preferences.py:248

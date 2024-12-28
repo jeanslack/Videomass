@@ -1090,8 +1090,8 @@ msgstr ""
 "исходного пакета или путь к пакету, установленному во внешней виртуальной среде."
 
 #: ../../vdms_dialogs/preferences.py:229
-msgid "Enable external import of yd_dlp package"
-msgstr "Включить внешний импорт пакета yd_dlp"
+msgid "Enable external import of yt_dlp package"
+msgstr "Включить внешний импорт пакета yt_dlp"
 
 #: ../../vdms_dialogs/preferences.py:248
 msgid "Look and Feel (requires application restart)"
