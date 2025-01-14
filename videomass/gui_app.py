@@ -256,8 +256,6 @@ def auto_restart(apptype, portmode):
         cmdargs = f'{sys.executable} {sys.argv[0]} {makeportable}'
         wx.Execute(cmdargs, flags=wx.EXEC_SYNC)
 
-    return
-
 
 def main():
     """

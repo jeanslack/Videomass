@@ -41,9 +41,8 @@ def check_destination_dir(file_dest):
     if os.path.exists(drn) and os.path.isdir(drn):
         return None
 
-    wx.MessageBox(_('Output folder does not exist:\n\n"{}"\n').format(
-                    drn), _('Videomass - Error!'), wx.ICON_ERROR
-                    )
+    wx.MessageBox(_('Output folder does not exist:\n\n"{}"\n').format(drn),
+                  _('Videomass - Error!'), wx.ICON_ERROR)
     return True
 # ------------------------------------------------------------------------#
 

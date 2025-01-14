@@ -666,7 +666,7 @@ class Wizard(wx.Dialog):
         youtubedl = self.pageFour.ckbx_yn.GetValue()
         if not self.pageTwo.locateBtn.IsEnabled():
             binfound = 'local'
-        elif not self.pageTwo.detectBtn.IsEnabled():
+        else:  # if not self.pageTwo.detectBtn.IsEnabled():
             binfound = 'system'
 
         write_changes(self.ffmpeg,
