@@ -1,3 +1,16 @@
+videomass (5.0.25-1) UNRELEASED; urgency=medium
+
+  * Checking the output folder before running processes.
+  * Requires minimum Python version 3.9.0 .
+  * Fix typo in message 'Enable external import of ... package',
+    thanks to @nxjosephofficial .
+  * The application has been scheduled to restart automatically, e.g. at the
+    end of the wizard or after applying settings that require the application
+    to restart.
+  * Updated copyleft year.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 14 Gen 2025 15:30:00 +0200
+
 videomass (5.0.21-1) UNRELEASED; urgency=medium
 
   * Update French language (thanks to Phil Aug).

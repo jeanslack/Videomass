@@ -4,9 +4,9 @@ Name: wizard_dlg.py
 Porpose: wizard setup dialog
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: April.14.2024
+Rev: Gen.14.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -675,7 +675,7 @@ class Wizard(wx.Dialog):
                       youtubedl,
                       binfound
                       )
-        self.Hide()
-        wx.MessageBox(_("Re-start is required"),
-                      _("Done!"), wx.ICON_INFORMATION, self)
+        get = wx.GetApp()
+        appdata = get.appset
+        appdata['auto-restart-app'] = True
         self.Destroy()

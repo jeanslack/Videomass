@@ -5,7 +5,7 @@ Name: pyinstaller_setup.py
 Porpose: Provide build options to bundle the Videomass application.
 Platform: Gnu-Linux, MacOs, MS-Windows
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Aug.04.2024
 

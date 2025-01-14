@@ -1,10 +1,22 @@
 # encoding: utf-8
 Videomass
 Author: Gianluca (jeanslack) Pernigotto
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 License: GPL3
 
 Change Log:
+
++------------------------------------+
+Mon, 14 Gen 2025 V.5.0.25
+
+  * Checking the output folder before running processes.
+  * Requires minimum Python version 3.9.0 .
+  * Fix typo in message 'Enable external import of ... package',
+    thanks to @nxjosephofficial .
+  * The application has been scheduled to restart automatically, e.g. at the
+    end of the wizard or after applying settings that require the application
+    to restart.
+  * Updated copyleft year.
 
 +------------------------------------+
 Wed, 30 Oct 2024 V.5.0.21

@@ -4,7 +4,7 @@
 Porpose: Manage the translation message catalog independently
          of the GNU-xgettext utilities.
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: Distributed under the terms of the GPL3 License.
 Rev: Aug.03.2024
 Code checker: flake8, pylint

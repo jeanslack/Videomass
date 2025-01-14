@@ -4,7 +4,7 @@ Name: about_app.py
 Porpose: Gets information about the program
 Compatibility: Python3, Python2
 author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 lic: GPL3
 Rev: June.26.2024
 Code checker: flake8, pylint
@@ -26,9 +26,9 @@ This file is part of Videomass.
 """
 PRGNAME = 'videomass'
 RELNAME = 'Videomass'
-VERSION = '5.0.21'
+VERSION = '5.0.25'
 RELSTATE = 'released'
-COPYRIGHT = '2013-2024'
+COPYRIGHT = '2013-2025'
 WEBSITE = 'http://jeanslack.github.io/Videomass/'
 AUTHOR = ('Gianluca Pernigotto', '(aka jeanslack)')
 MAIL = 'jeanlucperni@gmail.com'

@@ -6,7 +6,7 @@ Porpose: Defines code that will be executed at various stages
          of the build process, see [tool.hatch.build.hooks.custom] on
          pyproject.toml file.
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: July.22.2024
 Code checker: flake8, pylint

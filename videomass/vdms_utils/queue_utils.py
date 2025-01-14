@@ -4,7 +4,7 @@ Name: queue_utils.py
 Porpose: utils for queue managements
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Mar.23.2024
 Code checker: flake8, pylint .
@@ -102,7 +102,7 @@ def load_json_file_queue(newincoming=None):
 def extend_data_queue(parent, currentqueue: list, newqueue: list) -> list:
     """
     This function is responsible for extending the items of
-    the `currentqueue` list while maintaining the same id.
+    the `currentqueue` list while maintaining the same ID.
     The result varies based on the index of a specific
     selection given by the `selected` object.
     """

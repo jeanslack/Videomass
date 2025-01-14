@@ -4,9 +4,9 @@ Name: gui_app.py
 Porpose: bootstrap for Videomass app.
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.19.2024
+Rev: Gen.14.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -232,8 +232,31 @@ class Videomass(wx.App):
                                             "{0}").format(err),
                                           'Videomass', wx.ICON_STOP)
                             return False
+
+        if self.appset['auto-restart-app']:
+            auto_restart(self.appset['app'], self.appset['make_portable'])
+            return True
+
         return True
     # -------------------------------------------------------------------
+
+
+def auto_restart(apptype, portmode):
+    """
+    This function spawn the same executable again, automatically
+    restarting this application (Videomass), for example after
+    the wizard dialog or after applying settings that require
+    the application to be restarted.
+    """
+    if apptype == 'pyinstaller':
+        executable = sys.executable
+        wx.Execute(f'{executable}', flags=wx.EXEC_SYNC)
+    else:
+        makeportable = '' if not portmode else f'--make-portable {portmode}'
+        cmdargs = f'{sys.executable} {sys.argv[0]} {makeportable}'
+        wx.Execute(cmdargs, flags=wx.EXEC_SYNC)
+
+    return
 
 
 def main():

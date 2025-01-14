@@ -4,7 +4,7 @@ Name: main_ytdlp.py
 Porpose: window main frame for yt_dlp library
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Apr.09.2024
 Code checker: flake8, pylint
@@ -34,6 +34,7 @@ from videomass.vdms_ytdlp.textdrop import Url_DnD_Panel
 from videomass.vdms_ytdlp.youtubedl_ui import Downloader
 from videomass.vdms_ytdlp.long_task_ytdlp import LogOut
 from videomass.vdms_io import io_tools
+from videomass.vdms_io.checkup import check_destination_dir
 from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_ytdlp.ydl_preferences import Ytdlp_Options
 if wx.GetApp().appset['yt_dlp'] is True:
@@ -606,6 +607,8 @@ class MainYtdl(wx.Frame):
         if self.ytDownloader.IsShown() or self.ProcessPanel.IsShown():
             if not self.data_url:
                 self.switch_text_import(self)
+                return
+            if check_destination_dir(self.appdata['ydlp-outputdir']):
                 return
             self.ytDownloader.on_start()
             return
