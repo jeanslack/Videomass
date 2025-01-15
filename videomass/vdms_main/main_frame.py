@@ -4,9 +4,9 @@ Name: main_frame.py
 Porpose: top window main frame
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.29.2024
+Rev: Jan.14.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -427,6 +427,7 @@ class MainFrame(wx.Frame):
                             "processes, make sure you finish your work "
                             "before exit."),
                           _('Videomass - Warning!'), wx.ICON_WARNING, self)
+            self.appdata['auto-restart-app'] = False
             return
 
         if self.ytdlframe:
@@ -1107,6 +1108,7 @@ class MainFrame(wx.Frame):
                                        "the application now?").format(msg),
                                      _('Restart Videomass?'), wx.ICON_QUESTION
                                      | wx.CANCEL | wx.YES_NO, self) == wx.YES:
+                        self.appdata['auto-restart-app'] = True
                         self.on_Kill()
     # ------------------------------------------------------------------#
     # --------- Menu Help  ###

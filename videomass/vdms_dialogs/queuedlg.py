@@ -4,7 +4,7 @@ Name: queuedlg.py
 Porpose: A proper dialog for queue managements
 Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Mar.25.2024
 Code checker: flake8, pylint

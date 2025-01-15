@@ -4,9 +4,9 @@ Name: configurator.py
 Porpose: Set Videomass configuration on startup
 Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.28.2024
+Rev: Jan.14.2025
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -377,6 +377,8 @@ class DataSource():
                  'ffmpeg-default-args': '-y -stats -hide_banner',
                  'ffplay-default-args': '-hide_banner',
                  'yt_dlp': '',
+                 'auto-restart-app': False,
+                 'make_portable': self.makeportable,
                  **userconf
                  })
     # --------------------------------------------------------------------

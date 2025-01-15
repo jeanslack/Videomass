@@ -14,7 +14,7 @@ pyinstaller
 #
 # Required dependencies for building:
 #
-#     Python >= 3.8.0
+#     Python >= 3.9.0
 #     python3-pip
 #     python3-all
 #     python3-babel

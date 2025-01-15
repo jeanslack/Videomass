@@ -4,7 +4,7 @@ Name: ffmpeg_conf.py
 Porpose: Shows the features of the FFmpeg build configuration
 Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: March.12.2023
 Code checker: flake8, pylint

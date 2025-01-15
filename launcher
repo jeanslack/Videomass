@@ -5,7 +5,7 @@ Name: launcher.py
 Porpose: main launch script of videomass
 Compatibility: Python2, Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: May.09.2021
 Code checker: flake8, pylint

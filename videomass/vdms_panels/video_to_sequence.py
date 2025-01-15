@@ -4,7 +4,7 @@ Name: video_to_sequence.py
 Porpose: A simple images extractor UI
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Mar.08.2024
 Code checker: flake8, pylint

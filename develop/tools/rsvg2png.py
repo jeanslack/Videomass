@@ -5,7 +5,7 @@ Name: rsvg2png
 Porpose: Wrapper interface to perform batch conversion using the rsvg library
 Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: 11 Feb 2023
 

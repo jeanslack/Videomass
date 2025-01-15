@@ -4,9 +4,9 @@ Name: gui_app.py
 Porpose: bootstrap for Videomass app.
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2024 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.19.2024
+Rev: Jan.14.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -232,8 +232,42 @@ class Videomass(wx.App):
                                             "{0}").format(err),
                                           'Videomass', wx.ICON_STOP)
                             return False
+
+        if self.appset['auto-restart-app']:
+            auto_restart(self.appset['ostype'],
+                         self.appset['app'],
+                         self.appset['make_portable'],
+                         )
+            return True
+
         return True
     # -------------------------------------------------------------------
+
+
+def auto_restart(ostype, apptype, portmode):
+    """
+    This function spawn the same executable again, automatically
+    restarting this application (Videomass), for example after
+    the wizard dialog or after applying settings that require
+    the application to be restarted.
+    """
+    if not ''.join(sys.argv):
+        sys.exit()
+
+    if apptype == 'pyinstaller':
+        executable = sys.executable
+        wx.Execute(f'{executable}', flags=wx.EXEC_SYNC)
+    else:
+        makeportable = '' if not portmode else fr'--make-portable "{portmode}"'
+        if ostype == 'Windows':
+            if os.path.basename(sys.argv[0]) == 'launcher':
+                cmdargs = f'{sys.executable} {sys.argv[0]} {makeportable}'
+            else:
+                cmdargs = f'{sys.argv[0]} {makeportable}'
+            wx.Execute(f'{cmdargs}', flags=wx.EXEC_SYNC)
+        else:
+            cmdargs = f'{sys.executable} {sys.argv[0]} {makeportable}'
+            wx.Execute(cmdargs, flags=wx.EXEC_SYNC)
 
 
 def main():
