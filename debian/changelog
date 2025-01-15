@@ -3,12 +3,13 @@ videomass (5.0.25-1) UNRELEASED; urgency=medium
   * Checking the output directories before running processes.
   * Requires minimum Python version 3.9.0 .
   * Fix typo in message 'Enable external import of ... package',
-    thanks to @nxjosephofficial .
+    (thanks to @nxjosephofficial) .
   * The application has been scheduled to restart automatically, e.g. after
     the wizard dialog ends or after applying settings that require
     the application to be restarted. Note that this behavior it is disabled
     using the Python interpreter (interactive mode).
   * Updated copyleft year.
+  * Updated Italian translation (thanks to @bovirus).
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 15 Jan 2025 09:00:00 +0200
 
