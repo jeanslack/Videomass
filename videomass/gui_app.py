@@ -247,27 +247,25 @@ class Videomass(wx.App):
 def auto_restart(ostype, apptype, portmode):
     """
     This function spawn the same executable again, automatically
-    restarting this application (Videomass), for example after
-    the wizard dialog or after applying settings that require
-    the application to be restarted.
+    restarting this application if required, for example after
+    the wizard dialog ends or after applying settings that require
+    the application to be restarted. Note that this behavior
+    it is disabled using the Python interpreter (interactive
+    mode).
     """
     if not ''.join(sys.argv):
         sys.exit()
 
     if apptype == 'pyinstaller':
-        executable = sys.executable
-        wx.Execute(f'{executable}', flags=wx.EXEC_SYNC)
+        wx.Execute(f'{sys.executable}', flags=wx.EXEC_SYNC)
     else:
         makeportable = '' if not portmode else fr'--make-portable "{portmode}"'
-        if ostype == 'Windows':
-            if os.path.basename(sys.argv[0]) == 'launcher':
-                cmdargs = f'{sys.executable} {sys.argv[0]} {makeportable}'
-            else:
-                cmdargs = f'{sys.argv[0]} {makeportable}'
-            wx.Execute(f'{cmdargs}', flags=wx.EXEC_SYNC)
-        else:
+
+        if os.path.basename(sys.argv[0]) == 'launcher':
             cmdargs = f'{sys.executable} {sys.argv[0]} {makeportable}'
-            wx.Execute(cmdargs, flags=wx.EXEC_SYNC)
+        else:
+            cmdargs = f'{sys.argv[0]} {makeportable}'
+        wx.Execute(f'{cmdargs}', flags=wx.EXEC_SYNC)
 
 
 def main():
