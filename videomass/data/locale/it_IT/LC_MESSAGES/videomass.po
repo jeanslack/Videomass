@@ -5,22 +5,24 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Traduzione Videomass 17.07.2024\n"
+"Project-Id-Version: Traduzione Videomass 15.01.2024\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-01-14 17:11+0100\n"
-"PO-Revision-Date: 2025-01-14 17:14+0100\n"
+"PO-Revision-Date: 2025-01-15 11:54+0100\n"
 "Last-Translator: bovirus <bovirus@gmail.comn>\n"
-"Language: it_IT\n"
 "Language-Team: bovirus (bovirus@gmail.com)\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: it_IT\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.16.0\n"
+"X-Generator: Poedit 3.5\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../../gui_app.py:121
 msgid "To suppress this message on startup, please install yt-dlp or disable it from the preferences."
-msgstr "Per non viaulizzare questo messaggio all'avvio, installa yt-dlp o disabilitalo dalle preferenze."
+msgstr "Per non visualizzare questo messaggio all'avvio, installa yt-dlp o disabilitalo dalle preferenze."
 
 #: ../../gui_app.py:133 ../../gui_app.py:141
 #: ../../vdms_dialogs/filter_colorcorrection.py:343
@@ -170,7 +172,7 @@ msgstr "Informazioni"
 
 #: ../../vdms_dialogs/ffmpeg_conf.py:83
 msgid "Flags settings"
-msgstr "Impostazioni dei flag"
+msgstr "Impostazioni flag"
 
 #: ../../vdms_dialogs/ffmpeg_conf.py:93
 msgid "Flags enabled"
@@ -186,7 +188,7 @@ msgstr "Configurazione di FFmpeg"
 
 #: ../../vdms_dialogs/ffmpeg_conf.py:124
 msgid "flags"
-msgstr "flags"
+msgstr "flag"
 
 #: ../../vdms_dialogs/ffmpeg_conf.py:125 ../../vdms_dialogs/ffmpeg_conf.py:129
 #: ../../vdms_dialogs/ffmpeg_conf.py:133
@@ -316,7 +318,7 @@ msgstr "Elenca le fonti del dispositivo di input"
 
 #: ../../vdms_dialogs/ffmpeg_help.py:80
 msgid "List sinks of the output device"
-msgstr "Elenca i sink del dispositivo di output"
+msgstr "Elenca sink dispositivo output"
 
 #: ../../vdms_dialogs/ffmpeg_help.py:81
 msgid "Show available HW acceleration methods"
@@ -554,7 +556,7 @@ msgstr "Interlaccia con il filtro interlace"
 
 #: ../../vdms_dialogs/filter_deinterlace.py:118
 msgid "Deinterlacing and Interlacing"
-msgstr "Deinterlacciamento e interlacciamento"
+msgstr "Deinterlacciamento/interlacciamento"
 
 #: ../../vdms_dialogs/filter_deinterlace.py:144
 msgid "Deinterlace the input video with `w3fdif` filter"
@@ -586,7 +588,7 @@ msgid ""
 "parity\n"
 "The picture field parity assumed for the input interlaced video."
 msgstr ""
-"parity\n"
+"parità\n"
 "La parità del campo dell'immagine presupposta per il video interlacciato sorgente."
 
 #: ../../vdms_dialogs/filter_deinterlace.py:160
@@ -727,7 +729,7 @@ msgid ""
 "specify only one dimension, either width or height, and set the other dimension\n"
 "to -1 or -2 (some codecs require -2, so you should do some testing first)."
 msgstr ""
-"Se desideri mantenere le proporzioni, seleziona \"Vincola proporzioni\" di seguito\n"
+"Se vuoi mantenere le proporzioni, seleziona \"Vincola proporzioni\" di seguito\n"
 "e specifica solo una dimensione, larghezza o altezza, e imposta l'altra dimensione\n"
 "a -1 o -2 (alcuni codec richiedono -2, quindi prima dovresti fare qualche test)."
 
@@ -826,7 +828,7 @@ msgstr "Imposta il numero del fotogramma di riferimento per la modalità treppie
 
 #: ../../vdms_dialogs/filter_stab.py:355
 msgid "Set the number of frames (value*2 + 1) used for lowpass filtering the camera movements. Default value is 15. For example a number of 10 means that 21 frames are used (10 in the past and 10 in the future) to smoothen the motion in the video. A larger value leads to a smoother video, but limits the acceleration of the camera (pan/tilt movements). 0 is a special case where a static camera is simulated."
-msgstr "Imposta il numero di fotogrammi (valore * 2 + 1) utilizzati per il filtraggio passa-basso dei movimenti della telecamera. Il valore predefinito è 15. Ad esempio, un numero di 10 significa che vengono utilizzati 21 fotogrammi (10 in passato e 10 in futuro) per rendere più uniforme il movimento nel video. Un valore maggiore porta a un video più fluido, ma limita l'accelerazione della telecamera (movimenti di panoramica / inclinazione). 0 è un caso speciale in cui viene simulata una telecamera statica."
+msgstr "Imposta il numero di fotogrammi (valore * 2 + 1) usati per il filtraggio passa-basso dei movimenti della telecamera. Il valore predefinito è 15. Ad esempio, un numero di 10 significa che vengono usati 21 fotogrammi (10 in passato e 10 in futuro) per rendere più uniforme il movimento nel video. Un valore maggiore porta a un video più fluido, ma limita l'accelerazione della telecamera (movimenti di panoramica / inclinazione). 0 è un caso speciale in cui viene simulata una telecamera statica."
 
 #: ../../vdms_dialogs/filter_stab.py:363
 msgid "Set the camera path optimization algorithm. Values are: `gauss`: gaussian kernel low-pass filter on camera motion (default), and `avg`: averaging on transformations"
@@ -1228,7 +1230,7 @@ msgstr "Imposta flag livello registro eventi usati da FFmpeg"
 
 #: ../../vdms_dialogs/preferences.py:442
 msgid "Set logging level flags used by FFplay"
-msgstr "Set event log level flags used by FFplay"
+msgstr "Imposta flag livello registrazione FFplay"
 
 #: ../../vdms_dialogs/preferences.py:450
 msgid "FFmpeg logging levels"
@@ -1254,7 +1256,7 @@ msgstr "Scegli la Destinazione"
 
 #: ../../vdms_dialogs/preferences.py:705
 msgid "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and the underscore (\"_\"). Spaces are not allowed."
-msgstr "Immettere solo caratteri alfanumerici. È inoltre possibile utilizzare il trattino (\"-\") e il trattino basso (\"_\"). Non sono ammessi spazi vuoti."
+msgstr "Immettere solo caratteri alfanumerici. È inoltre possibile usare il trattino (\"-\") e il trattino basso (\"_\"). Non sono ammessi spazi vuoti."
 
 #: ../../vdms_dialogs/preferences.py:720
 #: ../../vdms_dialogs/setting_profiles.py:257
@@ -1900,7 +1902,7 @@ msgstr "Coda"
 #: ../../vdms_main/main_frame.py:401 ../../vdms_main/main_frame.py:426
 #: ../../vdms_ytdlp/main_ytdlp.py:226
 msgid "There are still active windows with running processes, make sure you finish your work before exit."
-msgstr "Ci sono ancora finestre attive con processi in esecuzione, assicurati di finire il tuo lavoro prima di uscire."
+msgstr "Ci sono ancora finestre attive con processi in esecuzione, assicurati di finire il lavoro prima di uscire."
 
 #: ../../vdms_main/main_frame.py:408
 msgid "Are you sure you want to exit the application?"
@@ -2043,7 +2045,7 @@ msgstr "Visualizza funzionalità configurazione integrate in FFmpeg"
 
 #: ../../vdms_main/main_frame.py:550
 msgid "Muxers and demuxers available on your version of FFmpeg"
-msgstr "Muxers e demuxers disponibili sulla tua versione di FFmpeg"
+msgstr "Muxer e demuxer disponibili sulla tua versione di FFmpeg"
 
 #: ../../vdms_main/main_frame.py:554
 msgid "Encoders available on your version of FFmpeg"
@@ -2083,7 +2085,7 @@ msgstr "Durante la riproduzione..."
 
 #: ../../vdms_main/main_frame.py:574
 msgid "Show useful shortcut keys when playing or previewing using FFplay"
-msgstr "Visualizza tasti scelta rapida utili durante la riproduzione o l'anteprima utilizzando FFplay"
+msgstr "Visualizza tasti scelta rapida utili durante la riproduzione o l'anteprima usando FFplay"
 
 #: ../../vdms_main/main_frame.py:578
 msgid "Show timeline editor\tCtrl+T"
@@ -2091,7 +2093,7 @@ msgstr "Editor sequenza temporale\tCtrl+T"
 
 #: ../../vdms_main/main_frame.py:579
 msgid "Set duration or trim slices of time to remove unwanted parts from your files"
-msgstr "Imposta la durata o ritaglia intervalli di tempo per rimuovere parti indesiderate dai tuoi file"
+msgstr "Imposta la durata o ritaglia intervalli di tempo per rimuovere parti indesiderate dai file"
 
 #: ../../vdms_main/main_frame.py:583 ../../vdms_ytdlp/main_ytdlp.py:319
 msgid "View"
@@ -2175,7 +2177,7 @@ msgstr "Segnala problema"
 
 #: ../../vdms_main/main_frame.py:628
 msgid "Check for newer version"
-msgstr "Veifica aggiornamenti programma"
+msgstr "Controlla aggiornamenti programma"
 
 #: ../../vdms_main/main_frame.py:629
 msgid "Check for the latest Videomass version"
@@ -2187,7 +2189,7 @@ msgstr "Versione sistema"
 
 #: ../../vdms_main/main_frame.py:632
 msgid "Get version about your operating system, version of Python and wxPython."
-msgstr "Ottieni la versione del tuo sistema operativo, la versione di Python e wxPython."
+msgstr "Ottieni la versione del sistema operativo, la versione di Python e wxPython."
 
 #: ../../vdms_main/main_frame.py:636
 msgid "Show log files\tCtrl+L"
@@ -2277,19 +2279,19 @@ msgstr ""
 
 #: ../../vdms_main/main_frame.py:1109
 msgid "Restart Videomass?"
-msgstr "Riavviare Videomass?"
+msgstr "Vuoi riavviare Videomass?"
 
 #: ../../vdms_main/main_frame.py:1159
 msgid "A new release is available - v.{0}\n"
-msgstr "È disponibile un nuovo rilascio - v.{0}\n"
+msgstr "È disponibile una nuovo versione - v.{0}\n"
 
 #: ../../vdms_main/main_frame.py:1162
 msgid "You are using a development version that has not yet been released!\n"
-msgstr "Stai utilizzando una versione di sviluppo che non è ancora stata rilasciata!\n"
+msgstr "Stai usando una versione di sviluppo che non è ancora stata rilasciata!\n"
 
 #: ../../vdms_main/main_frame.py:1165
 msgid "Congratulation! You are already using the latest version.\n"
-msgstr "Congratulazioni! Stai già usando l'ultima versione.\n"
+msgstr "Congratulazioni! L'applicazione è aggiornata.\n"
 
 #: ../../vdms_main/main_frame.py:1253
 msgid "Previous panel"
@@ -2513,7 +2515,7 @@ msgid ""
 msgstr ""
 "L'editor timeline è uno strumento che consente di ritagliare porzioni di tempo sui media importati e selezionati (vedere pannello Lista dei File). \n"
 "\n"
-"Il \"formato tempo\" utilizzato per riportare le durate è espresso in ore, minuti, secondi e millisecondi (HH:MM:SS.ms).\n"
+"Il \"formato tempo\" usato per riportare le durate è espresso in ore, minuti, secondi e millisecondi (HH:MM:SS.ms).\n"
 "\n"
 "Si noti che l'importazione di nuovi file, l'effettuare nuove selezioni, deselezioni, l'eliminazione di elementi, l'ordinamento di elementi (ad es. facendo clic con il pulsante SINISTRO sulle intestazioni delle colonne), ripristineranno tutte le impostazioni precedenti ai valori predefiniti.\n"
 "\n"
@@ -2523,7 +2525,7 @@ msgstr ""
 
 #: ../../vdms_miniframes/timeline.py:565
 msgid "Timeline Editor Usage"
-msgstr "Utilizzo dell'editor Timeline"
+msgstr "Uso editor timeline"
 
 #: ../../vdms_panels/av_conversions.py:153
 msgid "Media:"
@@ -2573,9 +2575,9 @@ msgid ""
 "\n"
 "Note that by using \"Audio\" as the target, you will still be able to work on the video source files but you will only be able to extract the audio streams, convert them and apply audio filters such as normalization."
 msgstr ""
-"Imposta l'obiettivo dei file destinazione: \"Video\" per salvare i file destinazione come file video; \"Audio\" per salvare file utilizzando un codificatore e un formato audio.\n"
+"Imposta l'obiettivo dei file destinazione: \"Video\" per salvare i file destinazione come file video; \"Audio\" per salvare file usando un codificatore e un formato audio.\n"
 "\n"
-"Tieni presente che utilizzando \"Audio\" come obiettivo, sarai comunque in grado di lavorare su sorgenti video ma potrai solo estrarre i flussi audio, convertirli e applicare filtri come la normalizzazione."
+"Tieni presente che usando \"Audio\" come obiettivo, sarai comunque in grado di lavorare su sorgenti video ma potrai solo estrarre i flussi audio, convertirli e applicare filtri come la normalizzazione."
 
 #: ../../vdms_panels/av_conversions.py:346
 msgid "Preview video filters"
@@ -2633,7 +2635,7 @@ msgstr "Il file non è un frame o un file video"
 #: ../../vdms_panels/audio_encoders/acodecs.py:433
 #: ../../vdms_panels/av_conversions.py:861
 msgid "Undetected volume values! Click the \"Volume detect\" button to analyze audio volume data."
-msgstr "Valori del volume non rilevati! Clicca sul pulsante \"Volume detect\" per analizzare i dati sul volume audio."
+msgstr "Valori del volume non rilevati!\nPer analizzare i dati sul volume audio seleziona \"Rilevazione volume\"."
 
 #: ../../vdms_panels/av_conversions.py:1186
 msgid "Off"
@@ -2673,7 +2675,7 @@ msgstr "Scrivi il profilo su «{0}»"
 #: ../../vdms_panels/av_conversions.py:1266
 #: ../../vdms_panels/presets_manager.py:513
 msgid "Enter name for new preset"
-msgstr "Inserisci il nome per la nuova preimpostazione"
+msgstr "Inserisci il nome per la nuova pre-impostazione"
 
 #: ../../vdms_panels/av_conversions.py:1276
 #: ../../vdms_panels/presets_manager.py:524
@@ -2686,7 +2688,7 @@ msgstr "Impossibile salvare i dati correnti nel file «{}»."
 
 #: ../../vdms_panels/av_conversions.py:1289
 msgid "Open Videomass preset"
-msgstr "Apri preimpostazione Videomass"
+msgstr "Apri pre-impostazione Videomass"
 
 #: ../../vdms_panels/av_conversions.py:1307
 msgid "Videomass - Save new profile"
@@ -2698,11 +2700,11 @@ msgstr "Dove preferisci salvare questo profilo?"
 
 #: ../../vdms_panels/av_conversions.py:1309
 msgid "Save the profile to a new preset"
-msgstr "Salva il profilo in una nuova preimpostazione"
+msgstr "Salva il profilo in una nuova pre-impostazione"
 
 #: ../../vdms_panels/av_conversions.py:1310
 msgid "Save the profile to an existing preset"
-msgstr "Salva il profilo in una preimpostazione esistente"
+msgstr "Salva il profilo in una pre-impostazione esistente"
 
 #: ../../vdms_panels/choose_topic.py:71
 msgid "Welcome to Videomass"
@@ -2919,7 +2921,7 @@ msgstr "Rinomina il file selezionato in:"
 #: ../../vdms_panels/filedrop.py:610 ../../vdms_panels/filedrop.py:620
 #: ../../vdms_panels/filedrop.py:651
 msgid "Add Files"
-msgstr "Aggiungi Files"
+msgstr "Aggiungi file"
 
 #: ../../vdms_panels/filedrop.py:627
 msgid "Rename in batch"
@@ -2951,12 +2953,12 @@ msgstr "Processo Interrotto !"
 #: ../../vdms_panels/long_processing_task.py:117
 #: ../../vdms_ytdlp/long_task_ytdlp.py:50
 msgid "Successfully completed !"
-msgstr "Completato corretamente!"
+msgstr "Completato correttamente!"
 
 #: ../../vdms_panels/long_processing_task.py:118
 #: ../../vdms_ytdlp/long_task_ytdlp.py:51
 msgid "Not everything was successful."
-msgstr "Non tutto è stato effettuato corretamente."
+msgstr "Non tutto è stato effettuato correttamente."
 
 #: ../../vdms_panels/long_processing_task.py:149
 msgid "Encoding Status"
@@ -2975,7 +2977,7 @@ msgstr "Errore Fatale !"
 #: ../../vdms_panels/long_processing_task.py:369
 #: ../../vdms_ytdlp/long_task_ytdlp.py:279
 msgid "Get your files at the destination you specified"
-msgstr "Ottieni i tuoi file nella destinazione che hai specificato"
+msgstr "Ottieni i file nella destinazione che hai specificato"
 
 #: ../../vdms_panels/long_processing_task.py:383
 msgid "For more details please read the Current Log."
@@ -2997,7 +2999,7 @@ msgstr "...Interrotto"
 
 #: ../../vdms_panels/presets_manager.py:166
 msgid "Presets"
-msgstr "Preimpostazioni"
+msgstr "Pre-impostazioni"
 
 #: ../../vdms_panels/presets_manager.py:180
 msgid "Write"
@@ -3025,11 +3027,11 @@ msgstr "Codifica a due passaggi"
 
 #: ../../vdms_panels/presets_manager.py:232
 msgid "Choose a preset and view its profiles"
-msgstr "Scegli una preimpostazione e visualizza i suoi profili"
+msgstr "Scegli una pre-impostazione e visualizza i suoi profili"
 
 #: ../../vdms_panels/presets_manager.py:233
 msgid "Write a new profile and save it in the selected preset"
-msgstr "Scrivi un nuovo profilo e salvalo nella preimpostazione selezionata"
+msgstr "Scrivi un nuovo profilo e salvalo nella pre-impostazione selezionata"
 
 #: ../../vdms_panels/presets_manager.py:235
 msgid "Delete the selected profile"
@@ -3045,15 +3047,15 @@ msgstr "Duplica il profilo selezionato"
 
 #: ../../vdms_panels/presets_manager.py:238
 msgid "Create new preset"
-msgstr "Crea nuova preimpostazione"
+msgstr "Crea nuova pre-impostazione"
 
 #: ../../vdms_panels/presets_manager.py:240
 msgid "Remove selected preset"
-msgstr "Rimuovi la preimpostazione selezionata"
+msgstr "Rimuovi la pre-impostazione selezionata"
 
 #: ../../vdms_panels/presets_manager.py:242
 msgid "Backup selected preset"
-msgstr "Effettua il backup della preimpostazione selezionata"
+msgstr "Effettua il backup della pre-impostazione selezionata"
 
 #: ../../vdms_panels/presets_manager.py:244
 msgid "Backup the presets folder"
@@ -3061,7 +3063,7 @@ msgstr "Esegui il backup della cartella dei profili"
 
 #: ../../vdms_panels/presets_manager.py:246
 msgid "Restore a preset"
-msgstr "Ripristina una preimpostazione"
+msgstr "Ripristina una pre-impostazione"
 
 #: ../../vdms_panels/presets_manager.py:248
 msgid "Restore a presets folder"
@@ -3069,7 +3071,7 @@ msgstr "Ripristina cartella profili"
 
 #: ../../vdms_panels/presets_manager.py:250
 msgid "Resets the selected preset to default values"
-msgstr "Ripristina la preimpostazione selezionata ai valori predefiniti"
+msgstr "Ripristina la pre-impostazione selezionata ai valori predefiniti"
 
 #: ../../vdms_panels/presets_manager.py:252
 msgid "Reset all presets to default values"
@@ -3127,7 +3129,7 @@ msgid ""
 "\n"
 " It will be moved to the \"Removals\" subfolder inside the presets folder."
 msgstr ""
-"Sei sicuro di rimuovere la preimpostazione \"{}\" ?\n"
+"Sei sicuro di rimuovere la pre-impostazione \"{}\" ?\n"
 "\n"
 "Sarà spostata nella sotto-cartella \"Removals\" dentro la cartella dei profili."
 
@@ -3143,7 +3145,7 @@ msgstr ""
 
 #: ../../vdms_panels/presets_manager.py:568
 msgid "The preset \"{0}\" was successfully removed"
-msgstr "La preimpostazione \"{0}\" è stata correttamente rimossa"
+msgstr "La pre-impostazione \"{0}\" è stata correttamente rimossa"
 
 #: ../../vdms_panels/presets_manager.py:583
 #: ../../vdms_panels/presets_manager.py:612
@@ -3161,7 +3163,7 @@ msgstr "Backup completato correttamente"
 
 #: ../../vdms_panels/presets_manager.py:631
 msgid "Open the preset you want to restore"
-msgstr "Apri preimpostazione da ripristinare"
+msgstr "Apri pre-impostazione da ripristinare"
 
 #: ../../vdms_panels/presets_manager.py:645
 msgid ""
@@ -3169,7 +3171,7 @@ msgid ""
 "\n"
 "Do you want to continue?"
 msgstr ""
-"Questa preimpostazione esiste già e sta per essere aggiornata. Non preoccuparti, manterrà tutti i tuoi profili salvati.\n"
+"Questa pre-impostazione esiste già e sta per essere aggiornata. Non preoccuparti, manterrà tutti i profili salvati.\n"
 "\n"
 "Vuoi continuare?"
 
@@ -3184,7 +3186,7 @@ msgid ""
 "Do you want to continue?"
 msgstr ""
 "Questa operazione aggiornerà il database dei profili. \n"
-"Non preoccuparti, manterrà tutti i tuoi profili salvati.\n"
+"Non preoccuparti, manterrà tutti i profili salvati.\n"
 "Vuoi continuare?"
 
 #: ../../vdms_panels/presets_manager.py:689
@@ -3205,7 +3207,7 @@ msgid ""
 "\n"
 "Do you want to continue?"
 msgstr ""
-"Attenzione! La preimpostazione selezionata verrà sovrascritta con quella predefinita. I tuoi profili potrebbero essere cancellati!\n"
+"Attenzione! La pre-impostazione selezionata verrà sovrascritta con quella predefinita. I profili potrebbero essere cancellati!\n"
 "\n"
 "Vuoi continuare?"
 
@@ -3274,7 +3276,7 @@ msgstr ""
 
 #: ../../vdms_panels/sequence_to_video.py:54
 msgid "Images need to be resized, please use Resize function."
-msgstr "Le immagini devono essere ridimensionate, utilizzare la funzione ridimensiona."
+msgstr "Le immagini devono essere ridimensionate, usa la funzione ridimensiona."
 
 #: ../../vdms_panels/sequence_to_video.py:73
 msgid ""
@@ -3439,8 +3441,8 @@ msgstr ""
 "\n"
 "1. Importa uno o più file video, quindi selezionane uno.\n"
 "\n"
-"2. Per selezionare un intervallo di tempo utilizzare l'editor Timeline (CTRL+T), e \n"
-"regolare i valori di durata di \"Inizio\" e \"Fine\" come desiderato.\n"
+"2. Per selezionare un intervallo di tempo usa l'editor rimeline (CTRL+T), e \n"
+"regola i valori durata \"Inizio\" e \"Fine\" come desiderato.\n"
 "\n"
 "3. Selezionare un formato di output (jpg, png, bmp o gif).\n"
 "\n"
@@ -3548,7 +3550,7 @@ msgstr "Normalizzazione"
 
 #: ../../vdms_panels/audio_encoders/acodecs.py:191
 msgid "Volume detect"
-msgstr "Volume detect"
+msgstr "Rilevazione volume"
 
 #: ../../vdms_panels/audio_encoders/acodecs.py:195
 msgid "Volume Statistics"
@@ -3635,7 +3637,7 @@ msgid ""
 "Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements the EBU R128 algorithm.\n"
 "Ideal for live normalization. It produces worse results than the High-quality two-pass Loudnorm normalization, but is faster."
 msgstr ""
-"Normalizzazione Loudnorm. Normalizza il volume percepito utilizzando il filtro \"loudnorm\", il quale implementa l'algoritmo EBU R128.\n"
+"Normalizzazione Loudnorm. Normalizza il volume percepito usando il filtro \"loudnorm\", il quale implementa l'algoritmo EBU R128.\n"
 "Ideale per la normalizzazione dal vivo. Produce risultati meno precisi della normalizzazione ad alta qualità Loudnorm a due passaggi, ma è più veloce."
 
 #: ../../vdms_panels/audio_encoders/acodecs.py:737
@@ -3643,7 +3645,7 @@ msgid ""
 "High-quality two-pass Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements\n"
 "the EBU R128 algorithm. Ideal for postprocessing."
 msgstr ""
-"Normalizzazione Loudnorm a due passaggi di alta qualità. Normalizza il volume percepito utilizzando il filtro \"loudnorm\", il quale\n"
+"Normalizzazione Loudnorm a due passaggi di alta qualità. Normalizza il volume percepito usando il filtro \"loudnorm\", il quale\n"
 "implementa l'algoritmo EBU R128. Ideale per la post-elaborazione."
 
 #: ../../vdms_panels/miscellaneous/miscell.py:63
@@ -3723,13 +3725,13 @@ msgstr "Fattore di tasso costante. I valori più bassi corrispondono a una quali
 #: ../../vdms_panels/video_encoders/av1_svt.py:357
 #: ../../vdms_panels/video_encoders/vp9_webm.py:295
 msgid "Number of tile rows to use, default changes per resolution"
-msgstr "Numero di Tile Rows da utilizzare, modifiche predefinite per risoluzione"
+msgstr "Numero righe anteprime da usare, modifiche predefinite per risoluzione"
 
 #: ../../vdms_panels/video_encoders/av1_aom.py:256
 #: ../../vdms_panels/video_encoders/av1_svt.py:359
 #: ../../vdms_panels/video_encoders/vp9_webm.py:297
 msgid "Number of tile columns to use, default changes per resolution"
-msgstr "Numero di Tile Columns da utilizzare, modifiche predefinite per risoluzione"
+msgstr "Numero colonne anteprime da usare, modifiche predefinite per risoluzione"
 
 #: ../../vdms_panels/video_encoders/av1_aom.py:259
 #: ../../vdms_panels/video_encoders/av1_svt.py:368
@@ -3837,7 +3839,7 @@ msgid ""
 "\n"
 "Enabling Row Multi-Threading is only faster when the CPU has more threads than the number of encoded tiles."
 msgstr ""
-"Row Multi-Threading consente il multithreading basato su righe che massimizza l'utilizzo della CPU.\n"
+"Row Multi-Threading consente il multi threading basato su righe che massimizza l'uso della CPU.\n"
 "\n"
 "Per consentire prestazioni di decodifica veloci, impostare anche i Tile (ad esempio Tile Columns 4 e Tile Rows 1, oppure Tile Columns 2 e Tile Rows 2 per 4 Tile).\n"
 "\n"
@@ -3857,7 +3859,7 @@ msgstr ""
 "\n"
 "i profili 4-6 sono comunemente usati dagli appassionati domestici poiché rappresentano un equilibrio tra efficienza e tempo di elaborazione ragionevole.\n"
 "\n"
-"I profili da 7 a 12 vengono utilizzate per la codifica veloce e in tempo reale.\n"
+"I profili da 7 a 12 vengono usati per la codifica veloce e in tempo reale.\n"
 "\n"
 "Il profilo 13 è ancora più veloce ma non è destinato all'utente consumer: può essere usato, ad esempio, come metrica di qualità per scena nelle applicazioni VOD.\n"
 "Si dovrebbe usare il profilo più basso tollerabile."
@@ -4027,15 +4029,15 @@ msgstr ""
 "\n"
 "\"good\" è l'impostazione predefinita e consigliata per la maggior parte delle applicazioni;\n"
 "\n"
-"\"best\" è consigliato se hai molto tempo e desideri la migliore efficienza di compressione;\n"
+"\"best\" è consigliato se hai molto tempo e vuoi la migliore efficienza di compressione;\n"
 "\n"
 "\"Realtime\" è consigliato per la codifica live/veloce."
 
 #: ../../vdms_panels/video_encoders/vp9_webm.py:341
 msgid "If enabled, adds support for row based multithreading which greatly enhances the number of threads the encoder can utilise. This improves encoding speed significantly on systems that are otherwise underutilised when encoding VP9. Since the amount of additional threads depends on the number of \"tiles\", which itself depends on the video resolution, encoding higher resolution videos will see a larger performance improvement."
 msgstr ""
-"Se abilitato, aggiunge il supporto per il multithreading basato su righe che aumenta notevolmente il numero di thread che il codificatore può utilizzare. \n"
-"Ciò migliora significativamente la velocità di codifica su sistemi che altrimenti sarebbero sottoutilizzati durante la codifica VP9. \n"
+"Se abilitato, aggiunge il supporto per il multi threading basato su righe che aumenta notevolmente il numero di thread che il codificatore può usare. \n"
+"Ciò migliora significativamente la velocità di codifica su sistemi che altrimenti sarebbero sotto usati durante la codifica VP9. \n"
 "Poiché la quantità di thread aggiuntivi dipende dal numero di \"riquadri\", che a sua volta dipende dalla risoluzione video, la codifica di video a risoluzione più elevata vedrà un maggiore miglioramento delle prestazioni."
 
 #: ../../vdms_utils/presets_manager_utils.py:46
@@ -4056,7 +4058,7 @@ msgid ""
 "\n"
 "Possible solution: open the Presets Manager panel, go to the presets column and try to click the \"Restore all...\" button"
 msgstr ""
-"Nessuna preimpostazione trovata.\n"
+"Nessuna pre-impostazione trovata.\n"
 "\n"
 "Possibile soluzione: apri il pannello \"Gestione profili\", vai alla colonna \"Profili\" e prova a seleziona \"Ripristina tutto ...\""
 
@@ -4305,7 +4307,7 @@ msgstr "Visualizzazione ultimo log"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:593
 msgid "Videomass - Downloader Message Monitoring"
-msgstr "Videomass - Monitoraggio Messaggi del Downloader"
+msgstr "Videomass - Monitoraggio messaggi downloader"
 
 #: ../../vdms_ytdlp/playlist_indexing.py:50
 #: ../../vdms_ytdlp/ydl_mediainfo.py:71
@@ -4550,7 +4552,7 @@ msgstr "Generale"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:112
 msgid "Where do you prefer to save your downloads?"
-msgstr "Dove desideri salvare i tuoi download?"
+msgstr "Dove vuoi salvare i download?"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:126
 msgid "Auto-create subdirectories when downloading playlists"
@@ -4558,7 +4560,7 @@ msgstr "Crea automaticamente le sotto cartelle durante il download delle playlis
 
 #: ../../vdms_ytdlp/ydl_preferences.py:137
 msgid "Choosing an external downloader"
-msgstr "Scelta di un downloader esterno"
+msgstr "Scelta downloader esterno"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:140
 msgid ""
@@ -4573,15 +4575,15 @@ msgstr ""
 
 #: ../../vdms_ytdlp/ydl_preferences.py:149
 msgid "External downloader executable path"
-msgstr "Percorso eseguibile del downloader esterno"
+msgstr "Percorso eseguibile downloader esterno"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:157
 msgid "External downloader arguments"
-msgstr "Argomenti del downloader esterno"
+msgstr "Argomenti downloader esterno"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:165
 msgid "Download Options"
-msgstr "Opzioni di Download"
+msgstr "Opzioni download"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:171
 msgid "Using a proxy server"
@@ -4662,7 +4664,7 @@ msgid ""
 "cookie file for authentication (see cookies tab)."
 msgstr ""
 "Se vuoi accedere con le tue credenziali, tieni presente che l'accesso con password non\n"
-"è supportato per alcuni siti Web (ad esempio YouTube, CloudFlare). Se questo è il tuo\n"
+"è supportato per alcuni siti Web (ad esempio YouTube, CloudFlare). Se questo è il \n"
 "caso, considera di includere un file cookie per l'autenticazione (vedi scheda cookies)."
 
 #: ../../vdms_ytdlp/ydl_preferences.py:266
@@ -4705,9 +4707,9 @@ msgid ""
 "\n"
 "For more information please consult the documentation at the following link:"
 msgstr ""
-"Per accedere ai siti Web che richiedono l'autenticazione, qui puoi includere il tuo `File cookie HTTP Netscape`.\n"
+"Per accedere ai siti Web che richiedono l'autenticazione, qui puoi includere il `File cookie HTTP Netscape`.\n"
 "Se non sai come ottenere questo tipo di file, puoi lasciare che l'applicazione provi a estrarlo automaticamente\n"
-"dal tuo browser. I browser attualmente supportati sono: brave, chrome, chromium, edge, firefox, opera, safari,\n"
+"dal browser. I browser attualmente supportati sono: brave, chrome, chromium, edge, firefox, opera, safari,\n"
 "vivaldi.\n"
 "\n"
 "Per maggiori informazioni consultare la documentazione al seguente link:"
@@ -4730,7 +4732,7 @@ msgstr "Sfoglia"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:335
 msgid "Extract cookies automatically from your browser"
-msgstr "Estrai i cookie automaticamente dal tuo browser"
+msgstr "Estrai i cookie automaticamente dal browser"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:341
 msgid "Web Browser"
@@ -4738,7 +4740,7 @@ msgstr "Browser Web"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:360
 msgid "Cookies"
-msgstr "Cookies"
+msgstr "Cookie"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:403
 msgid "YouTube Downloader Options"
@@ -4746,11 +4748,11 @@ msgstr "Opzioni YouTube Downloader"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:436
 msgid "Do you want to remove the current cookie file from your system?"
-msgstr "Vuoi rimuovere l'attuale file cookie dal tuo sistema?"
+msgstr "Vuoi rimuovere l'attuale file cookie dal sistema?"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:489
 msgid "Locate your cookie file"
-msgstr "Individua il tuo file cookie"
+msgstr "Individua il file cookie"
 
 #: ../../vdms_ytdlp/youtubedl_ui.py:151
 msgid "Precompiled Videos"
@@ -4825,4 +4827,3 @@ msgstr "Gli URL contengono canali. Sei sicuro di voler continuare?"
 
 #~ msgid "One or more comma-separated format names that are not compatible with this profile."
 #~ msgstr "Uno o più nomi di formato separati da virgole che non sono compatibili con questo profilo."
-
