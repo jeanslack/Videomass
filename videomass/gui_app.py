@@ -234,17 +234,14 @@ class Videomass(wx.App):
                             return False
 
         if self.appset['auto-restart-app']:
-            auto_restart(self.appset['ostype'],
-                         self.appset['app'],
-                         self.appset['make_portable'],
-                         )
+            auto_restart(self.appset['app'], self.appset['make_portable'])
             return True
 
         return True
     # -------------------------------------------------------------------
 
 
-def auto_restart(ostype, apptype, portmode):
+def auto_restart(apptype, portmode):
     """
     This function spawn the same executable again, automatically
     restarting this application if required, for example after
@@ -253,7 +250,7 @@ def auto_restart(ostype, apptype, portmode):
     it is disabled using the Python interpreter (interactive
     mode).
     """
-    if not ''.join(sys.argv):
+    if not ''.join(sys.argv) or sys.argv[0].startswith('-'):
         sys.exit()
 
     if apptype == 'pyinstaller':
