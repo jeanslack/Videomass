@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.08.2024
+Rev: Jan.18.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -581,13 +581,15 @@ class AudioEncoders(scrolled.ScrolledPanel):
                     self.opt["AudioCodec"] = ["", ""]
 
                 elif audiocodec == "Copy":
-                    self.normalize_default()
+                    self.rdbx_normalize.SetSelection(0)
+                    self.on_normalize(self)
                     _param(False, False)
                     amap = f'-c:a:{self.opt["AudioMap"][1]}'
                     self.opt["AudioCodec"] = [amap, v]
 
-                elif audiocodec == _("No Audio"):
-                    self.normalize_default()
+                elif audiocodec == "No Audio":
+                    self.rdbx_normalize.SetSelection(0)
+                    self.on_normalize(self)
                     self.opt["AudioCodec"] = ["", v]
                     _param(False, False)
                     # break
