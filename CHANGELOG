@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Fri, 17 Jan 2025 V.5.0.25
+Sat, 18 Jan 2025 V.5.0.25
 
   * Checking the output directories before running processes.
   * Requires minimum Python version 3.9.0 .
@@ -20,6 +20,8 @@ Fri, 17 Jan 2025 V.5.0.25
   * Updated copyleft year.
   * Updated Italian translation (thanks to @bovirus).
   * Updated Russian translation (thanks to ChourS)
+  * [AV Conversions] Fixed disabling widgets and tooltips when selecting
+    `No Audio` and `Copy` on the audio encoder radiobox.
 
 +------------------------------------+
 Wed, 30 Oct 2024 V.5.0.21

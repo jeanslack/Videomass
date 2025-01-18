@@ -11,8 +11,10 @@ videomass (5.0.25-1) UNRELEASED; urgency=medium
   * Updated copyleft year.
   * Updated Italian translation (thanks to @bovirus).
   * Updated Russian translation (thanks to ChourS)
+  * [AV Conversions] Fixed disabling widgets and tooltips when selecting
+    `No Audio` and `Copy` on the audio encoder radiobox.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 17 Jan 2025 23:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 18 Jan 2025 15:00:00 +0200
 
 videomass (5.0.21-1) UNRELEASED; urgency=medium
 
