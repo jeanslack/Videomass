@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Wed, 15 Jan 2025 V.5.0.25
+Fri, 17 Jan 2025 V.5.0.25
 
   * Checking the output directories before running processes.
   * Requires minimum Python version 3.9.0 .
@@ -19,6 +19,7 @@ Wed, 15 Jan 2025 V.5.0.25
     using the Python interpreter (interactive mode).
   * Updated copyleft year.
   * Updated Italian translation (thanks to @bovirus).
+  * Updated Russian translation (thanks to ChourS)
 
 +------------------------------------+
 Wed, 30 Oct 2024 V.5.0.21
