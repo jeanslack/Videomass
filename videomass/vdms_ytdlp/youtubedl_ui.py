@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.29.2024
+Rev: March.22.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import sys
+import shutil
 import itertools
 import wx
 from videomass.vdms_io.io_tools import youtubedl_getstatistics
@@ -165,6 +166,8 @@ class Downloader(wx.Panel):
         get = wx.GetApp()  # get data from bootstrap
         icons = get.iconset
         self.appdata = get.appset
+        self.execname = ('yt-dlp.exe' if self.appdata['ostype']
+                         == 'Windows' else 'yt-dlp')
         self.parent = parent
         self.red = self.appdata['colorscheme']['ERR1']  # code err + sb error
         confmanager = ConfigManager(self.appdata['fileconfpath'])
@@ -384,7 +387,7 @@ class Downloader(wx.Panel):
                 ret = self.get_statistics(link)
                 if ret[0] == 'ERROR':
                     wx.MessageBox(ret[1], _('Videomass - Error!'),
-                                  wx.ICON_ERROR)
+                                  wx.ICON_ERROR, self)
                     del self.info[:]
                     return None
                 self.info.append(ret[1])
@@ -821,7 +824,16 @@ class Downloader(wx.Panel):
         """
         if self.appdata['ytdlp-useexec']:
             execlist = []
-            execpath = self.appdata['ytdlp-executable-path']
+            execpath = self.appdata['ytdlp-exec-path']
+            if (not execpath.strip().endswith(self.execname)
+                    or not shutil.which(execpath)):
+                wx.MessageBox(_('Missing executable: «{0}».\nBefore '
+                                'continuing, be sure to make the correct '
+                                'settings in the preferences dialog.'
+                                ).format(self.execname),
+                              _('Videomass - Warning!'), wx.ICON_WARNING, self)
+                return
+
             for args in datalist:
                 execlist.append(from_api_to_cli(args, execpath))
             self.parent.switch_to_processing('YouTube Downloader', execlist)

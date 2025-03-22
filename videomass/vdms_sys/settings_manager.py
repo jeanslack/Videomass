@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.29.2024
+Rev: March.22.2025
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -155,7 +155,7 @@ class ConfigManager:
         If True, use yt-dlp as executable/binary for downloading
         videos (default). Use yt_dlp as API Otherwise.
 
-    ytdlp-executable-path (str):
+    ytdlp-exec-path (str):
         Path to the yt-dlp or yt-dlp.exe executable.
 
     ytdlp-usemodule (bool):
@@ -221,7 +221,7 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 8.0
+    VERSION = 8.1
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "shutdown": False,
                        "sudo_password": "",
@@ -254,7 +254,7 @@ class ConfigManager:
                        "ydlp-outputdir": f"{os.path.expanduser('~')}",
                        "enable-ytdlp": False,
                        "ytdlp-useexec": True,
-                       "ytdlp-executable-path": "yt-dlp",
+                       "ytdlp-exec-path": "",
                        "ytdlp-usemodule": False,
                        "ytdlp-module-path": "",
                        "playlistsubfolder": True,
