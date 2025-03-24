@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.14.2025
+Rev: March.22.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -51,6 +51,10 @@ def write_changes(ffmpeg, ffplay, ffprobe, youtubedl, binfound):
     dataread['ffprobe_islocal'] = local
     dataread['ffplay_islocal'] = local
     dataread['enable-ytdlp'] = youtubedl
+    ytdlpexec = 'yt-dlp.exe' if appdata['ostype'] == 'Windows' else 'yt-dlp'
+    status = detect_binaries(ytdlpexec)
+    if status[1]:
+        dataread['ytdlp-exec-path'] = appdata['getpath'](status[1])
 
     conf.write_options(**dataread)
 

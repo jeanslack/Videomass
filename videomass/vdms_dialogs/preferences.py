@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.24.2024
+Rev: March.20.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -103,8 +103,8 @@ class SetUp(wx.Dialog):
         self.btn_fsave = wx.Button(tabOne, wx.ID_ANY, _('Change'))
         sizeFFdirdest.Add(self.btn_fsave, 0, wx.RIGHT | wx.ALIGN_CENTER, 5)
         descr = _("Same destination paths as source files")
-        self.ckbx_dir = wx.CheckBox(tabOne, wx.ID_ANY, (descr))
-        sizerFiles.Add(self.ckbx_dir, 0, wx.ALL, 5)
+        self.ckbx_same_dest = wx.CheckBox(tabOne, wx.ID_ANY, (descr))
+        sizerFiles.Add(self.ckbx_same_dest, 0, wx.ALL, 5)
         sizeSamedest = wx.BoxSizer(wx.HORIZONTAL)
         sizerFiles.Add(sizeSamedest, 0, wx.EXPAND)
         descr = _("Assign optional suffix to destination file names:")
@@ -523,7 +523,7 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffplay, self.rdbFFplay)
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffmpeg, self.rdbFFmpeg)
         self.Bind(wx.EVT_BUTTON, self.on_outputdir, self.btn_fsave)
-        self.Bind(wx.EVT_CHECKBOX, self.set_Samedest, self.ckbx_dir)
+        self.Bind(wx.EVT_CHECKBOX, self.same_dir_dest, self.ckbx_same_dest)
         self.Bind(wx.EVT_TEXT, self.set_Suffix, self.text_suffix)
         self.Bind(wx.EVT_CHECKBOX, self.on_file_to_trash, self.ckbx_trash)
         self.Bind(wx.EVT_BUTTON, self.on_browse_trash, self.btn_trash)
@@ -551,17 +551,20 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_cancel, btn_cancel)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         # --------------------------------------------#
-        self.current_settings()  # call function for initialize setting layout
 
-    def current_settings(self):
+        self.general_current_settings(), self.yt_dlp_current_settings()
+        self.ffmpeg_current_settings()
+
+    def general_current_settings(self):
         """
-        Setting enable/disable in according to the configuration file
+        Performs the current settings for preferences dialog
         """
         if self.appdata['locale_name'] in supLang:
             lang = supLang[self.appdata['locale_name']][1]
         else:
             lang = supLang["en_US"][1]
         self.cmbx_lang.SetValue(lang)
+
         self.cmbx_icons.SetValue(self.appdata['icontheme'])
         self.cmbx_iconsSize.SetValue(str(self.appdata['toolbarsize']))
         self.rdbTBpref.SetSelection(self.appdata['toolbarpos'])
@@ -569,10 +572,7 @@ class SetUp(wx.Dialog):
         self.ckbx_exitconfirm.SetValue(self.appdata['warnexiting'])
         self.ckbx_logclr.SetValue(self.appdata['clearlogfiles'])
         self.ckbx_trash.SetValue(self.settings['move_file_to_trash'])
-        self.ckbx_ytdlp.SetValue(self.settings['enable-ytdlp'])
-        self.ckbx_ytexe.SetValue(self.settings['ytdlp-useexec'])
-        self.txtctrl_ytexec.SetValue(self.appdata['ytdlp-executable-path'])
-        self.txtctrl_ytmod.SetValue(self.appdata['ytdlp-module-path'])
+
         self.ckbx_exitapp.SetValue(self.appdata["auto_exit"])
         self.ckbx_turnoff.SetValue(self.appdata["shutdown"])
         self.txtctrl_sudo.SetValue(self.appdata.get("sudo_password", ''))
@@ -580,22 +580,58 @@ class SetUp(wx.Dialog):
             if self.appdata['ostype'] != 'Windows':
                 self.labsudo.Enable(), self.txtctrl_sudo.Enable()
 
-        if not self.settings['ytdlp-useexec']:
-            self.txtctrl_ytexec.Disable(), self.btn_ytexec.Disable()
-
-        if self.appdata['app'] == 'pyinstaller':
-            self.ckbx_ytmod.Disable()
-            self.txtctrl_ytmod.Disable()
-            self.btn_ytmod.Disable()
-        else:
-            self.ckbx_ytmod.SetValue(self.settings['ytdlp-usemodule'])
-            if not self.settings['ytdlp-usemodule']:
-                self.txtctrl_ytmod.Disable(), self.btn_ytmod.Disable()
-
         if not self.settings['move_file_to_trash']:
             self.txtctrl_trash.Disable()
             self.btn_trash.Disable()
 
+        if not self.appdata['outputdir_asinput']:
+            self.lab_suffix.Disable()
+            self.text_suffix.Disable()
+            self.ckbx_same_dest.SetValue(False)
+        else:
+            self.lab_suffix.Enable()
+            self.text_suffix.Enable()
+            self.ckbx_same_dest.SetValue(True)
+            self.btn_fsave.Disable()
+            self.txtctrl_FFpath.Disable()
+            if not self.appdata['filesuffix'] == "":
+                self.text_suffix.AppendText(self.appdata['filesuffix'])
+    # --------------------------------------------------------------------#
+
+    def yt_dlp_current_settings(self):
+        """
+        Performs the current settings for the yt_dlp tab in
+        the preferences dialog
+        """
+        self.ckbx_ytdlp.SetValue(self.settings['enable-ytdlp'])
+        self.ckbx_ytexe.SetValue(self.settings['ytdlp-useexec'])
+        execstr = ('Not found' if self.appdata['ytdlp-exec-path'] == ''
+                   else self.appdata['ytdlp-exec-path'])
+        self.txtctrl_ytexec.SetValue(execstr)
+        self.ckbx_ytmod.SetValue(self.settings['ytdlp-usemodule'])
+        self.txtctrl_ytmod.SetValue(self.appdata['ytdlp-module-path'])
+
+        if self.ckbx_ytdlp.IsChecked():
+            self.ckbx_ytexe.Enable(), self.ckbx_ytmod.Enable()
+            if self.ckbx_ytexe.IsChecked():
+                self.txtctrl_ytexec.Enable(), self.btn_ytexec.Enable()
+            else:
+                self.txtctrl_ytexec.Disable(), self.btn_ytexec.Disable()
+            if self.ckbx_ytmod.IsChecked():
+                self.txtctrl_ytmod.Enable(), self.btn_ytmod.Enable()
+            else:
+                self.txtctrl_ytmod.Disable(), self.btn_ytmod.Disable()
+        else:
+            self.ckbx_ytexe.Disable(), self.txtctrl_ytexec.Disable()
+            self.ckbx_ytmod.Disable(), self.txtctrl_ytmod.Disable()
+            self.btn_ytexec.Disable(), self.btn_ytmod.Disable()
+    # --------------------------------------------------------------------#
+
+    def ffmpeg_current_settings(self):
+        """
+        Performs the current settings for the FFmpeg tab in
+        the preferences dialog
+        """
         for strs in range(self.rdbFFplay.GetCount()):
             if (self.appdata['ffplay_loglev'].split()[1] in
                self.rdbFFplay.GetString(strs).split()[0]):
@@ -632,19 +668,6 @@ class SetUp(wx.Dialog):
         else:
             self.txtctrl_ffplay.AppendText(self.appdata['ffplay_cmd'])
             self.ckbx_exeFFplay.SetValue(True)
-
-        if not self.appdata['outputdir_asinput']:
-            self.lab_suffix.Disable()
-            self.text_suffix.Disable()
-            self.ckbx_dir.SetValue(False)
-        else:
-            self.lab_suffix.Enable()
-            self.text_suffix.Enable()
-            self.ckbx_dir.SetValue(True)
-            self.btn_fsave.Disable()
-            self.txtctrl_FFpath.Disable()
-            if not self.appdata['filesuffix'] == "":
-                self.text_suffix.AppendText(self.appdata['filesuffix'])
     # --------------------------------------------------------------------#
 
     def opendir(self, event):
@@ -682,9 +705,9 @@ class SetUp(wx.Dialog):
             dlg.Destroy()
     # --------------------------------------------------------------------#
 
-    def set_Samedest(self, event):
+    def same_dir_dest(self, event):
         """Save the FFmpeg output files in the same source folder"""
-        if self.ckbx_dir.IsChecked():
+        if self.ckbx_same_dest.IsChecked():
             self.lab_suffix.Enable()
             self.text_suffix.Enable()
             self.btn_fsave.Disable()
@@ -795,7 +818,7 @@ class SetUp(wx.Dialog):
             status = detect_binaries(self.ffmpeg, self.appdata['FFMPEG_DIR'])
             if status[0] == 'not installed':
                 self.txtctrl_ffmpeg.Clear()
-                self.txtctrl_ffmpeg.write(status[0])
+                self.txtctrl_ffmpeg.write('Not found')
                 self.settings['ffmpeg_cmd'] = ''
             else:
                 self.txtctrl_ffmpeg.Clear()
@@ -835,7 +858,7 @@ class SetUp(wx.Dialog):
             status = detect_binaries(self.ffprobe, self.appdata['FFMPEG_DIR'])
             if status[0] == 'not installed':
                 self.txtctrl_ffprobe.Clear()
-                self.txtctrl_ffprobe.write(status[0])
+                self.txtctrl_ffprobe.write('Not found')
                 self.settings['ffprobe_cmd'] = ''
             else:
                 self.txtctrl_ffprobe.Clear()
@@ -875,7 +898,7 @@ class SetUp(wx.Dialog):
             status = detect_binaries(self.ffplay, self.appdata['FFMPEG_DIR'])
             if status[0] == 'not installed':
                 self.txtctrl_ffplay.Clear()
-                self.txtctrl_ffplay.write(status[0])
+                self.txtctrl_ffplay.write('Not found')
                 self.settings['ffplay_cmd'] = ''
             else:
                 self.txtctrl_ffplay.Clear()
@@ -907,6 +930,21 @@ class SetUp(wx.Dialog):
         self.settings['enable-ytdlp'] = self.ckbx_ytdlp.GetValue()
         if self.appdata['yt_dlp'] is not True:
             self.appdata['yt_dlp'] = 'reload'
+
+        if self.ckbx_ytdlp.IsChecked():
+            self.ckbx_ytexe.Enable(), self.ckbx_ytmod.Enable()
+            if self.ckbx_ytexe.IsChecked():
+                self.txtctrl_ytexec.Enable(), self.btn_ytexec.Enable()
+            else:
+                self.txtctrl_ytexec.Disable(), self.btn_ytexec.Disable()
+            if self.ckbx_ytmod.IsChecked():
+                self.txtctrl_ytmod.Enable(), self.btn_ytmod.Enable()
+            else:
+                self.txtctrl_ytmod.Disable(), self.btn_ytmod.Disable()
+        else:
+            self.ckbx_ytexe.Disable(), self.txtctrl_ytexec.Disable()
+            self.ckbx_ytmod.Disable(), self.txtctrl_ytmod.Disable()
+            self.btn_ytexec.Disable(), self.btn_ytmod.Disable()
     # --------------------------------------------------------------------#
 
     def on_ytdlp_exec(self, event):
@@ -914,11 +952,23 @@ class SetUp(wx.Dialog):
         Sets whether to use yt-dlp as a Python
         module or as an executable.
         """
-        self.settings['ytdlp-useexec'] = self.ckbx_ytexe.GetValue()
         if self.ckbx_ytexe.GetValue():
             self.txtctrl_ytexec.Enable(), self.btn_ytexec.Enable()
         else:
             self.txtctrl_ytexec.Disable(), self.btn_ytexec.Disable()
+            self.txtctrl_ytexec.Clear()
+            status = detect_binaries(self.ytdlp)
+            if status[0] == 'not installed':
+                self.txtctrl_ytexec.Clear()
+                self.txtctrl_ytexec.write('Not found')
+                self.settings['ytdlp-exec-path'] = ''
+            else:
+                self.txtctrl_ytexec.Clear()
+                getpath = self.appdata['getpath'](status[1])
+                self.txtctrl_ytexec.write(getpath)
+                self.settings['ytdlp-exec-path'] = getpath
+
+            self.settings['ytdlp-useexec'] = self.ckbx_ytexe.GetValue()
     # --------------------------------------------------------------------#
 
     def open_ytdlp_exec(self, event):
@@ -936,20 +986,21 @@ class SetUp(wx.Dialog):
                 self.txtctrl_ytexec.Clear()
                 getpath = self.appdata['getpath'](fdlg.GetPath())
                 self.txtctrl_ytexec.write(getpath)
-                self.settings['ytdlp-executable-path'] = getpath
+                self.settings['ytdlp-exec-path'] = getpath
+                self.settings['ytdlp-useexec'] = self.ckbx_ytexe.GetValue()
     # --------------------------------------------------------------------#
 
     def on_ytdlp_package(self, event):
         """
         Enables external yt_dlp .
         """
-        self.settings['ytdlp-usemodule'] = self.ckbx_ytmod.GetValue()
         if self.ckbx_ytmod.GetValue():
             self.txtctrl_ytmod.Enable(), self.btn_ytmod.Enable()
         else:
             self.txtctrl_ytmod.Disable(), self.btn_ytmod.Disable()
             self.txtctrl_ytmod.Clear()
             self.settings['ytdlp-module-path'] = ""
+            self.settings['ytdlp-usemodule'] = self.ckbx_ytmod.GetValue()
     # --------------------------------------------------------------------#
 
     def open_ytdlp_package(self, event):
@@ -964,6 +1015,7 @@ class SetUp(wx.Dialog):
             getpath = self.appdata['getpath'](dlg.GetPath())
             self.txtctrl_ytmod.AppendText(getpath)
             self.settings['ytdlp-module-path'] = getpath
+            self.settings['ytdlp-usemodule'] = self.ckbx_ytmod.GetValue()
             dlg.Destroy()
     # --------------------------------------------------------------------#
 
