@@ -299,14 +299,16 @@ class Ytdlp_Options(wx.Dialog):
         msg = _("Using cookies to gain access to websites")
         labcooktitle = wx.StaticText(tabSev, wx.ID_ANY, msg)
         sizercook.Add(labcooktitle, 0, wx.ALL | wx.EXPAND, 5)
+        suppwebbrowser = ('brave', 'chrome', 'chromium', 'edge', 'firefox',
+                          'opera', 'safari', 'vivaldi', 'whale')
         msg = (_("Here you can pass your `Netscape HTTP Cookie File` in order "
                  "to access websites that require authentication.\nIf you "
                  "don't know how to obtain this type of file, you can let "
                  "the application try to extract it from "
                  "your browser\nautomatically. The currently supported "
-                 "browsers are: brave, chrome, chromium, edge, firefox, "
-                 "opera, safari, vivaldi.\n\nFor more information please "
-                 "consult the documentation at the following link:"))
+                 "browsers are:\n{0}.\n\nFor more information please consult "
+                 "the documentation at the following link:")).format(
+                     ', '.join(suppwebbrowser))
         labcookgen = wx.StaticText(tabSev, wx.ID_ANY, (msg))
         sizercook.Add(labcookgen, 0, wx.ALL, 5)
         url1 = ("https://github.com/yt-dlp/yt-dlp/wiki/"
@@ -340,8 +342,6 @@ class Ytdlp_Options(wx.Dialog):
         self.labautocook = wx.StaticText(tabSev, wx.ID_ANY,
                                          _("Web Browser"))
         sizerautocook.Add(self.labautocook, 0, wx.LEFT | wx.TOP | wx.CENTER, 5)
-        suppwebbrowser = ('brave', 'chrome', 'chromium', 'edge',
-                          'firefox', 'opera', 'safari', 'vivaldi')
         self.cmbx_browser = wx.ComboBox(tabSev, wx.ID_ANY,
                                         choices=suppwebbrowser,
                                         size=(-1, -1),

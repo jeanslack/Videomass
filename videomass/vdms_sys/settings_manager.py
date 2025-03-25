@@ -156,7 +156,7 @@ class ConfigManager:
         videos (default). Use yt_dlp as API Otherwise.
 
     ytdlp-exec-path (str):
-        Path to the yt-dlp or yt-dlp.exe executable.
+        Path to the yt-dlp (yt-dlp.exe on Windows) executable.
 
     ytdlp-usemodule (bool):
         If True, allow to open specified yt_dlp module dir

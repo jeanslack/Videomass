@@ -1,12 +1,15 @@
 videomass (5.0.26-1) UNRELEASED; urgency=medium
 
   * Fixed yt-dlp preferences tab issue (see #372)
-  * Enabled import of the external «yt_dlp» package also on the Videomass
-    standalone executable built with Pyinstaller.
-  * Improved handling of the yt-dlp executable (yt-dlp.exe on Windows) which
-    now provides some automation and useful information for the users.
+  * [YouTube Downloader] Enabled import of the external «yt_dlp» package also
+    on the Videomass standalone executable built with Pyinstaller.
+  * [YouTube Downloader] Improved handling of the yt-dlp executable
+    (yt-dlp.exe on Windows) which now provides some automation and useful
+    information for the users.
+  * [YouTube Downloader] Added «Whale» browser to the supported browser list for
+    cookie automations.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 20 Mar 2025 09:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 25 Mar 2025 09:00:00 +0200
 
 videomass (5.0.25-1) UNRELEASED; urgency=medium
 
