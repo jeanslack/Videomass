@@ -307,8 +307,8 @@ class Ytdlp_Options(wx.Dialog):
                  "the application try to extract it from "
                  "your browser\nautomatically. The currently supported "
                  "browsers are:\n{0}.\n\nFor more information please consult "
-                 "the documentation at the following link:")).format(
-                     ', '.join(suppwebbrowser))
+                 "the documentation at the following link:").format(
+                     ', '.join(suppwebbrowser)))
         labcookgen = wx.StaticText(tabSev, wx.ID_ANY, (msg))
         sizercook.Add(labcookgen, 0, wx.ALL, 5)
         url1 = ("https://github.com/yt-dlp/yt-dlp/wiki/"
