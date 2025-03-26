@@ -1,0 +1,32 @@
+[
+    {
+        "Name": "FLAC 16 bit-depth 44100Hz SoX",
+        "Description": "Converts FLAC files to 16 bit-deph 44100Hz using «libsoxr» library ",
+        "First_pass": "-resampler soxr -sample_fmt s16 -ar 44100 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "flac",
+        "Output_extension": "flac",
+        "Preinput_1": "",
+        "Preinput_2": ""
+    },
+    {
+        "Name": "FLAC 16 bit-depth 44100Hz soxr",
+        "Description": "Converts FLAC files to 16 bit-deph 44100Hz using resampler «soxr» engine (https://ffmpeg.org/ffmpeg-filters.html#aresample)",
+        "First_pass": "-af aresample=resampler=soxr:out_sample_fmt=s16:out_sample_rate=44100 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "flac",
+        "Output_extension": "flac",
+        "Preinput_1": "",
+        "Preinput_2": ""
+    },
+    {
+        "Name": "FLAC 16 bit-depth 44100Hz swr",
+        "Description": "Converts FLAC files to 16 bit-deph 44100Hz using «libswresample» library (https://ffmpeg.org/ffmpeg-filters.html#aresample)",
+        "First_pass": "-af aresample=out_sample_fmt=s16:out_sample_rate=44100 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "flac",
+        "Output_extension": "flac",
+        "Preinput_1": "",
+        "Preinput_2": ""
+    }
+]
