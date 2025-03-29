@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.20\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-14 17:11+0100\n"
+"POT-Creation-Date: 2025-03-25 16:34+0100\n"
 "PO-Revision-Date: 2025-01-18 00:00+0300\n"
 "Last-Translator: Chour <ChourS2008@yandex.ru>\n"
-"Language-Team: Chour <ChourS2008@yandex.ru>\n"
 "Language: ru_RU\n"
+"Language-Team: Chour <ChourS2008@yandex.ru>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Generated-By: Babel 2.16.0\n"
-"X-Generator: Poedit 3.5\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../gui_app.py:121
 msgid "To suppress this message on startup, please install yt-dlp or disable it from the preferences."
@@ -40,7 +39,7 @@ msgstr "Чтобы скрыть это сообщение при запуске,
 #: ../../vdms_main/main_frame.py:942 ../../vdms_main/main_frame.py:960
 #: ../../vdms_main/main_frame.py:980
 #: ../../vdms_panels/audio_encoders/acodecs.py:509
-#: ../../vdms_panels/audio_encoders/acodecs.py:797
+#: ../../vdms_panels/audio_encoders/acodecs.py:799
 #: ../../vdms_panels/concatenate.py:186
 #: ../../vdms_panels/long_processing_task.py:60
 #: ../../vdms_panels/presets_manager.py:426
@@ -70,8 +69,8 @@ msgstr "Чтобы скрыть это сообщение при запуске,
 #: ../../vdms_utils/presets_manager_utils.py:86
 #: ../../vdms_utils/presets_manager_utils.py:95
 #: ../../vdms_utils/queue_utils.py:68 ../../vdms_utils/queue_utils.py:82
-#: ../../vdms_utils/queue_utils.py:95 ../../vdms_ytdlp/youtubedl_ui.py:386
-#: ../../vdms_ytdlp/youtubedl_ui.py:426
+#: ../../vdms_utils/queue_utils.py:95 ../../vdms_ytdlp/youtubedl_ui.py:389
+#: ../../vdms_ytdlp/youtubedl_ui.py:429
 msgid "Videomass - Error!"
 msgstr "Videomass - Ошибка!"
 
@@ -1255,17 +1254,17 @@ msgstr "Введите здесь пароль sudo, только для Unix-п
 msgid "Preferences"
 msgstr "Настройки"
 
-#: ../../vdms_dialogs/preferences.py:674 ../../vdms_dialogs/preferences.py:754
+#: ../../vdms_dialogs/preferences.py:697 ../../vdms_dialogs/preferences.py:777
 #: ../../vdms_main/main_frame.py:860 ../../vdms_main/main_frame.py:1041
 #: ../../vdms_ytdlp/main_ytdlp.py:399 ../../vdms_ytdlp/ydl_preferences.py:504
 msgid "Choose Destination"
 msgstr "Выберите папку назначения"
 
-#: ../../vdms_dialogs/preferences.py:705
+#: ../../vdms_dialogs/preferences.py:728
 msgid "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and the underscore (\"_\"). Spaces are not allowed."
 msgstr "Вводите только буквенно-цифровые символы. Вы также можете использовать дефис (\"-\") и подчеркивание (\"_\"). Пробелы не допускаются."
 
-#: ../../vdms_dialogs/preferences.py:720
+#: ../../vdms_dialogs/preferences.py:743
 #: ../../vdms_dialogs/setting_profiles.py:257
 #: ../../vdms_dialogs/setting_profiles.py:264
 #: ../../vdms_dialogs/setting_profiles.py:286
@@ -1274,21 +1273,24 @@ msgstr "Вводите только буквенно-цифровые симво
 #: ../../vdms_panels/av_conversions.py:612
 #: ../../vdms_panels/sequence_to_video.py:348
 #: ../../vdms_panels/video_to_sequence.py:399
-#: ../../vdms_ytdlp/main_ytdlp.py:229 ../../vdms_ytdlp/youtubedl_ui.py:422
+#: ../../vdms_ytdlp/main_ytdlp.py:229 ../../vdms_ytdlp/youtubedl_ui.py:425
+#: ../../vdms_ytdlp/youtubedl_ui.py:834
 msgid "Videomass - Warning!"
 msgstr "Videomass - Предупреждение!"
 
-#: ../../vdms_dialogs/preferences.py:809 ../../vdms_dialogs/preferences.py:849
-#: ../../vdms_dialogs/preferences.py:889 ../../vdms_dialogs/wizard_dlg.py:351
-#: ../../vdms_dialogs/wizard_dlg.py:368 ../../vdms_dialogs/wizard_dlg.py:385
+#: ../../vdms_dialogs/preferences.py:832 ../../vdms_dialogs/preferences.py:872
+#: ../../vdms_dialogs/preferences.py:912 ../../vdms_dialogs/wizard_dlg.py:355
+#: ../../vdms_dialogs/wizard_dlg.py:372 ../../vdms_dialogs/wizard_dlg.py:389
+#, python-brace-format
 msgid "{} location"
 msgstr "{} исполняемый файл"
 
-#: ../../vdms_dialogs/preferences.py:930
+#: ../../vdms_dialogs/preferences.py:980
+#, python-brace-format
 msgid "Open «{}» executable file"
 msgstr "Открыть «{}» исполняемый файл"
 
-#: ../../vdms_dialogs/preferences.py:959
+#: ../../vdms_dialogs/preferences.py:1010
 msgid "Open «yt_dlp» python package directory"
 msgstr "Откройте каталог пакета Python «yt_dlp»"
 
@@ -1534,7 +1536,7 @@ msgstr "Выберите файл журнала"
 msgid "Are you sure you want to clear the selected log file?"
 msgstr "Вы действительно хотите удалить выбранный файл log-журнала?"
 
-#: ../../vdms_dialogs/showlogs.py:169 ../../vdms_dialogs/wizard_dlg.py:243
+#: ../../vdms_dialogs/showlogs.py:169 ../../vdms_dialogs/wizard_dlg.py:247
 #: ../../vdms_io/checkup.py:68 ../../vdms_main/main_frame.py:207
 #: ../../vdms_main/main_frame.py:779 ../../vdms_main/main_frame.py:1621
 #: ../../vdms_panels/presets_manager.py:349
@@ -1546,8 +1548,8 @@ msgstr "Вы действительно хотите удалить выбран
 #: ../../vdms_panels/presets_manager.py:775
 #: ../../vdms_panels/presets_manager.py:874
 #: ../../vdms_panels/presets_manager.py:904 ../../vdms_ytdlp/main_ytdlp.py:202
-#: ../../vdms_ytdlp/ydl_preferences.py:438 ../../vdms_ytdlp/youtubedl_ui.py:609
-#: ../../vdms_ytdlp/youtubedl_ui.py:625
+#: ../../vdms_ytdlp/ydl_preferences.py:438 ../../vdms_ytdlp/youtubedl_ui.py:612
+#: ../../vdms_ytdlp/youtubedl_ui.py:628
 msgid "Please confirm"
 msgstr "Пожалуйста, подтвердите"
 
@@ -1588,12 +1590,12 @@ msgid "=  Below max peak"
 msgstr "=  Ниже максимального пика"
 
 #: ../../vdms_dialogs/shownormlist.py:166
-#: ../../vdms_panels/audio_encoders/acodecs.py:838
+#: ../../vdms_panels/audio_encoders/acodecs.py:840
 msgid "RMS-based volume statistics"
 msgstr "Статистика звука на основе RMS"
 
 #: ../../vdms_dialogs/shownormlist.py:191
-#: ../../vdms_panels/audio_encoders/acodecs.py:836
+#: ../../vdms_panels/audio_encoders/acodecs.py:838
 msgid "PEAK-based volume statistics"
 msgstr "Статистика звука на основе PEAK"
 
@@ -1707,29 +1709,29 @@ msgstr "Сочетания клавиш во время проигрывания
 msgid "Stop"
 msgstr "Стоп"
 
-#: ../../vdms_dialogs/wizard_dlg.py:65
+#: ../../vdms_dialogs/wizard_dlg.py:69
 msgid "Please take a moment to set up the application"
 msgstr "Пожалуйста, найдите время, чтобы настроить приложение"
 
-#: ../../vdms_dialogs/wizard_dlg.py:66
+#: ../../vdms_dialogs/wizard_dlg.py:70
 msgid "Click the \"Next\" button to get started"
 msgstr "Нажмите кнопку \"Next\", чтобы начать"
 
-#: ../../vdms_dialogs/wizard_dlg.py:81
+#: ../../vdms_dialogs/wizard_dlg.py:85
 msgid "Welcome to the Videomass Wizard!"
 msgstr "Добро пожаловать в Помощник Videomass!"
 
-#: ../../vdms_dialogs/wizard_dlg.py:123
+#: ../../vdms_dialogs/wizard_dlg.py:127
 msgid "Videomass is an application based on FFmpeg\n"
 msgstr "Videomass - это приложение на основе FFmpeg\n"
 
-#: ../../vdms_dialogs/wizard_dlg.py:125
+#: ../../vdms_dialogs/wizard_dlg.py:129
 msgid "If FFmpeg is not on your computer, this application will be unusable"
 msgstr ""
 "Если FFmpeg отсутствует на вашем компьютере, это приложение\n"
 "будет невозможно использовать"
 
-#: ../../vdms_dialogs/wizard_dlg.py:128
+#: ../../vdms_dialogs/wizard_dlg.py:132
 msgid ""
 "If you have already installed FFmpeg on your operating\n"
 "system, click the \"Auto-detection\" button."
@@ -1737,7 +1739,7 @@ msgstr ""
 "Если вы уже установили FFmpeg в своей операционной\n"
 "системе, щелкните кнопку \"Автоопределение\"."
 
-#: ../../vdms_dialogs/wizard_dlg.py:131
+#: ../../vdms_dialogs/wizard_dlg.py:135
 msgid ""
 "If you want to use a version of FFmpeg located on your\n"
 "filesystem but not installed on your operating system,\n"
@@ -1747,23 +1749,24 @@ msgstr ""
 "находится в вашей файловой системе, но не установлена\n"
 "​​в вашей операционной системе, нажмите кнопку \"Найти\"."
 
-#: ../../vdms_dialogs/wizard_dlg.py:153
+#: ../../vdms_dialogs/wizard_dlg.py:157
 msgid "Auto-detection"
 msgstr "Автоматическое определение"
 
-#: ../../vdms_dialogs/wizard_dlg.py:155
+#: ../../vdms_dialogs/wizard_dlg.py:159
 msgid "Locate"
 msgstr "Найдите"
 
-#: ../../vdms_dialogs/wizard_dlg.py:206
+#: ../../vdms_dialogs/wizard_dlg.py:210
 msgid "Click the \"Next\" button"
 msgstr "Нажмите кнопку \"Next\""
 
-#: ../../vdms_dialogs/wizard_dlg.py:227
+#: ../../vdms_dialogs/wizard_dlg.py:231
+#, python-brace-format
 msgid "'{}' is not installed on your computer. Install it or indicate another location by clicking the 'Locate' button."
 msgstr "'{}' не установлен на вашем компьютере. Установите его или укажите другое место, нажав кнопку 'Найти'."
 
-#: ../../vdms_dialogs/wizard_dlg.py:241
+#: ../../vdms_dialogs/wizard_dlg.py:245
 msgid ""
 "Videomass already seems to include FFmpeg.\n"
 "\n"
@@ -1773,11 +1776,11 @@ msgstr ""
 "\n"
 "Вы хотите использовать это?"
 
-#: ../../vdms_dialogs/wizard_dlg.py:267
+#: ../../vdms_dialogs/wizard_dlg.py:271
 msgid "Locating FFmpeg executables\n"
 msgstr "Поиск исполняемых файлов FFmpeg\n"
 
-#: ../../vdms_dialogs/wizard_dlg.py:269
+#: ../../vdms_dialogs/wizard_dlg.py:273
 msgid ""
 "\"ffmpeg\", \"ffprobe\" and \"ffplay\" are required. Complete all\n"
 "the text boxes below by clicking on the respective buttons."
@@ -1785,11 +1788,11 @@ msgstr ""
 "\"ffmpeg\", \"ffprobe\" и \"ffplay\" обязательны. Заполните все\n"
 "текстовые поля ниже, нажав соответствующие кнопки."
 
-#: ../../vdms_dialogs/wizard_dlg.py:408
+#: ../../vdms_dialogs/wizard_dlg.py:412
 msgid "Videomass has a simple graphical interface for yt-dlp\n"
 msgstr "Videomass имеет простой графический интерфейс для yt-dlp\n"
 
-#: ../../vdms_dialogs/wizard_dlg.py:409
+#: ../../vdms_dialogs/wizard_dlg.py:413
 msgid ""
 "This feature allows you to download video and audio from\n"
 "many sites, including YouTube.com and even Facebook."
@@ -1797,48 +1800,49 @@ msgstr ""
 "Эта функция позволяет загружать видео и аудио из\n"
 "многих сайтов, включая YouTube.com и даже Facebook."
 
-#: ../../vdms_dialogs/wizard_dlg.py:428
+#: ../../vdms_dialogs/wizard_dlg.py:432
 msgid " Do you want to enable this feature?"
 msgstr " Вы хотите включить эту функцию?"
 
-#: ../../vdms_dialogs/wizard_dlg.py:458
+#: ../../vdms_dialogs/wizard_dlg.py:462
 msgid "Wizard completed successfully!\n"
 msgstr "Помощник успешно завершен!\n"
 
-#: ../../vdms_dialogs/wizard_dlg.py:459
+#: ../../vdms_dialogs/wizard_dlg.py:463
 msgid "Remember that you can always change these settings later, through the Preferences dialog."
 msgstr "Помните, что вы всегда можете изменить эти настройки позже через диалоговое окно «Настройки»."
 
-#: ../../vdms_dialogs/wizard_dlg.py:461
+#: ../../vdms_dialogs/wizard_dlg.py:465
 msgid "Thank You!"
 msgstr "Благодарю вас!"
 
 # сделал одинарные кавычки
-#: ../../vdms_dialogs/wizard_dlg.py:462
+#: ../../vdms_dialogs/wizard_dlg.py:466
 msgid "To exit click the \"Finish\" button"
 msgstr "Для выхода нажмите кнопку \"Завершено\""
 
-#: ../../vdms_dialogs/wizard_dlg.py:550
+#: ../../vdms_dialogs/wizard_dlg.py:554
 msgid "< Previous"
 msgstr "< Предыдущий"
 
-#: ../../vdms_dialogs/wizard_dlg.py:553 ../../vdms_dialogs/wizard_dlg.py:653
+#: ../../vdms_dialogs/wizard_dlg.py:557 ../../vdms_dialogs/wizard_dlg.py:657
 msgid "Next >"
 msgstr "Следующий >"
 
-#: ../../vdms_dialogs/wizard_dlg.py:558
+#: ../../vdms_dialogs/wizard_dlg.py:562
 msgid "Videomass Wizard"
 msgstr "Videomass Помощник"
 
-#: ../../vdms_dialogs/wizard_dlg.py:587 ../../vdms_dialogs/wizard_dlg.py:623
+#: ../../vdms_dialogs/wizard_dlg.py:591 ../../vdms_dialogs/wizard_dlg.py:627
 msgid "Finish"
 msgstr "Завершено"
 
-#: ../../vdms_dialogs/wizard_dlg.py:615
+#: ../../vdms_dialogs/wizard_dlg.py:619
 msgid "Some text boxes are still incomplete"
 msgstr "Некоторые текстовые поля все еще не заполнены"
 
 #: ../../vdms_io/checkup.py:44 ../../vdms_io/checkup.py:92
+#, python-brace-format
 msgid ""
 "Output folder does not exist:\n"
 "\n"
@@ -1897,7 +1901,7 @@ msgstr "Videomass - Скачивание..."
 #: ../../vdms_main/main_frame.py:188 ../../vdms_main/main_frame.py:1359
 #: ../../vdms_main/main_frame.py:1387 ../../vdms_ytdlp/main_ytdlp.py:99
 #: ../../vdms_ytdlp/main_ytdlp.py:147 ../../vdms_ytdlp/main_ytdlp.py:554
-#: ../../vdms_ytdlp/textdrop.py:233 ../../vdms_ytdlp/youtubedl_ui.py:437
+#: ../../vdms_ytdlp/textdrop.py:233 ../../vdms_ytdlp/youtubedl_ui.py:440
 msgid "Ready"
 msgstr "Готово"
 
@@ -2247,6 +2251,7 @@ msgid "No default folder has been set for the destination of the encodings. The 
 msgstr "Для назначения кодировок не установлена ​​папка по умолчанию. Текущая настройка — «Те же пути назначения, что и исходные файлы»."
 
 #: ../../vdms_main/main_frame.py:765 ../../vdms_main/main_frame.py:790
+#, python-brace-format
 msgid ""
 "'{}':\n"
 "No such file or directory"
@@ -2259,6 +2264,7 @@ msgid "Are you sure to empty trash folder?"
 msgstr "Вы уверены, что очистили папку \"Корзина\"?"
 
 #: ../../vdms_main/main_frame.py:786
+#, python-brace-format
 msgid ""
 "'{}':\n"
 "There are no files to delete."
@@ -2407,7 +2413,7 @@ msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Still Image Maker"
 
 #: ../../vdms_main/main_frame.py:1596
-#: ../../vdms_panels/audio_encoders/acodecs.py:786
+#: ../../vdms_panels/audio_encoders/acodecs.py:788
 #: ../../vdms_panels/av_conversions.py:577 ../../vdms_panels/filedrop.py:475
 #: ../../vdms_panels/filedrop.py:588 ../../vdms_panels/sequence_to_video.py:318
 #: ../../vdms_panels/video_to_sequence.py:369
@@ -2716,6 +2722,7 @@ msgid "Invalid file name, make sure to provide a valid name including the «.jso
 msgstr "Недопустимое имя файла. Обязательно укажите допустимое имя, включая расширение «.json»"
 
 #: ../../vdms_panels/av_conversions.py:1284
+#, python-brace-format
 msgid "Cannot save current data in file «{}»."
 msgstr "Невозможно сохранить текущие данные в файл «{}»."
 
@@ -2744,6 +2751,7 @@ msgid "Welcome to Videomass"
 msgstr "Добро пожаловать в Videomass"
 
 #: ../../vdms_panels/choose_topic.py:73
+#, python-brace-format
 msgid "Version {}"
 msgstr "Версия {}"
 
@@ -3156,6 +3164,7 @@ msgid "Supported Format List"
 msgstr "Список поддерживаемых форматов"
 
 #: ../../vdms_panels/presets_manager.py:531
+#, python-brace-format
 msgid "Cannot save current data in file '{}'."
 msgstr "Невозможно сохранить текущие данные в файл '{}'."
 
@@ -3164,6 +3173,7 @@ msgid "You just successfully created a new preset!"
 msgstr "Вы только что успешно создали новый пресет!"
 
 #: ../../vdms_panels/presets_manager.py:547
+#, python-brace-format
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
 "\n"
@@ -3174,6 +3184,7 @@ msgstr ""
 "Он будет перемещен в подпапку «Удалённые» внутри папки пресетов."
 
 #: ../../vdms_panels/presets_manager.py:558
+#, python-brace-format
 msgid ""
 "{}\n"
 "\n"
@@ -3389,6 +3400,7 @@ msgid "Open Audio File"
 msgstr "Открыть аудиофайл"
 
 #: ../../vdms_panels/sequence_to_video.py:462
+#, python-brace-format
 msgid ""
 "Invalid file: '{}'\n"
 "\n"
@@ -3399,6 +3411,7 @@ msgstr ""
 "{}"
 
 #: ../../vdms_panels/sequence_to_video.py:467
+#, python-brace-format
 msgid ""
 "Invalid file: '{}'\n"
 "\n"
@@ -3411,16 +3424,19 @@ msgstr ""
 #: ../../vdms_panels/sequence_to_video.py:556
 #: ../../vdms_panels/sequence_to_video.py:583
 #: ../../vdms_panels/video_to_sequence.py:511
+#, python-brace-format
 msgid "Invalid file: '{}'"
 msgstr "Недопустимый файл: '{}'"
 
 #: ../../vdms_panels/sequence_to_video.py:566
 #: ../../vdms_panels/sequence_to_video.py:591
+#, python-brace-format
 msgid "Unsupported format '{}'"
 msgstr "Неподдерживаемый формат '{}'"
 
 #: ../../vdms_panels/sequence_to_video.py:572
 #: ../../vdms_panels/sequence_to_video.py:596
+#, python-brace-format
 msgid ""
 "File does not exist:\n"
 "\n"
@@ -3661,6 +3677,7 @@ msgid "Selected index does not exist or does not contain any audio streams"
 msgstr "Выбранный индекс не существует или не содержит никаких аудиопотоков"
 
 #: ../../vdms_panels/audio_encoders/acodecs.py:507
+#, python-brace-format
 msgid ""
 "ERROR: Missing audio stream:\n"
 "\"{}\""
@@ -3668,19 +3685,15 @@ msgstr ""
 "ОШИБКА: Отсутствует аудиопоток:\n"
 "\"{}\""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:589
-msgid "No Audio"
-msgstr "Нет звука"
-
-#: ../../vdms_panels/audio_encoders/acodecs.py:723
+#: ../../vdms_panels/audio_encoders/acodecs.py:725
 msgid "PEAK level normalization, which will produce a maximum peak level equal to the set target level."
 msgstr "Нормализация уровня PEAK, которая обеспечивает максимальный пиковый уровень, равный установленному целевому уровню."
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:726
+#: ../../vdms_panels/audio_encoders/acodecs.py:728
 msgid "RMS-based normalization, which according to mean volume calculates the amount of gain to reach same average power signal."
 msgstr "Нормализация на основе среднеквадратичного значения(RMS), которая в соответствии со средним объемом вычисляет величину усиления, необходимую для достижения сигнала той же средней мощности."
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:730
+#: ../../vdms_panels/audio_encoders/acodecs.py:732
 msgid ""
 "Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements the EBU R128 algorithm.\n"
 "Ideal for live normalization. It produces worse results than the High-quality two-pass Loudnorm normalization, but is faster."
@@ -3688,7 +3701,7 @@ msgstr ""
 "Нормализация громкости. Нормализует воспринимаемую громкость с помощью фильтра «loudnorm», реализующего алгоритм EBU R128.\n"
 "Идеально подходит для живой нормализации. Он дает худшие результаты, чем высококачественная двухпроходная нормализация Loudnorm, но работает быстрее."
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:737
+#: ../../vdms_panels/audio_encoders/acodecs.py:739
 msgid ""
 "High-quality two-pass Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements\n"
 "the EBU R128 algorithm. Ideal for postprocessing."
@@ -4126,7 +4139,7 @@ msgstr "Добавлять в очередь только недостающие
 msgid "Remove the current queue and replace it with the imported one."
 msgstr "Удалите текущую очередь и замените ее импортированной."
 
-#: ../../vdms_ytdlp/formatcode.py:98 ../../vdms_ytdlp/youtubedl_ui.py:118
+#: ../../vdms_ytdlp/formatcode.py:98 ../../vdms_ytdlp/youtubedl_ui.py:119
 msgid "At least one \"Format Code\" must be checked for each URL selected in green."
 msgstr "По крайней мере один \" Код формата \" должен быть проверен для каждого URL, выделенного зеленым цветом."
 
@@ -4357,7 +4370,7 @@ msgstr ""
 "Также можно указать интервалы, например. «1-3,7,10-13», с помощью которого будут загружаться медиафайлы с индексами 1, 2, 3, 7, 10, 11, 12 и 13.\n"
 
 #: ../../vdms_ytdlp/playlist_indexing.py:108
-#: ../../vdms_ytdlp/youtubedl_ui.py:209
+#: ../../vdms_ytdlp/youtubedl_ui.py:212
 msgid "Playlist Editor"
 msgstr "Редактор плейлистов(playlist)"
 
@@ -4482,7 +4495,7 @@ msgid "Download subtitles only (do not include audio and video)"
 msgstr "Загружать только субтитры (без аудио и видео)"
 
 #: ../../vdms_ytdlp/subtitles_editor.py:137
-#: ../../vdms_ytdlp/youtubedl_ui.py:216
+#: ../../vdms_ytdlp/youtubedl_ui.py:219
 msgid "Subtitles Editor"
 msgstr "Редактор субтитров"
 
@@ -4621,6 +4634,7 @@ msgid "Using a proxy server"
 msgstr "Использование прокси-сервера"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:175
+#, python-brace-format
 msgid ""
 "Use the specified HTTP/HTTPS/SOCKS proxy. To enable SOCKS proxy, specify a proper\n"
 "scheme, e.g.\t{}\n"
@@ -4730,45 +4744,39 @@ msgstr "Аутентификация"
 msgid "Using cookies to gain access to websites"
 msgstr "Использование файлов cookie для доступа к веб-сайтам"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:302
+#: ../../vdms_ytdlp/ydl_preferences.py:304
+#, python-brace-format
 msgid ""
 "Here you can pass your `Netscape HTTP Cookie File` in order to access websites that require authentication.\n"
 "If you don't know how to obtain this type of file, you can let the application try to extract it from your browser\n"
-"automatically. The currently supported browsers are: brave, chrome, chromium, edge, firefox, opera, safari, vivaldi.\n"
+"automatically. The currently supported browsers are:\n"
+"{0}.\n"
 "\n"
 "For more information please consult the documentation at the following link:"
 msgstr ""
-"Здесь вы можете передать свой файл cookie Netscape HTTP для доступа к веб-сайтам, \n"
-"требующим аутентификации.\n"
-"Если вы не знаете, как получить файл этого типа, вы можете позволить приложению \n"
-"попытаться автоматически извлечь его из вашего браузера. \n"
-"В настоящее время поддерживаются браузеры: \n"
-"brave, chrome, chromium, edge, firefox, opera, safari, vivaldi.\n"
-"\n"
-"Для получения дополнительной информации обратитесь к документации по следующей ссылке:"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:319
+#: ../../vdms_ytdlp/ydl_preferences.py:321
 msgid "Allow cookies for authentication"
 msgstr "Разрешить использование файлов cookie для аутентификации"
 
 # Изменил 14-5-2021
-#: ../../vdms_ytdlp/ydl_preferences.py:323
+#: ../../vdms_ytdlp/ydl_preferences.py:325
 msgid "Cookie file"
 msgstr "Файл cookie"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:329
+#: ../../vdms_ytdlp/ydl_preferences.py:331
 msgid "File name from where cookies should be read and dumped to"
 msgstr "Имя файла, из которого файлы cookie должны быть прочитаны и сохранены"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:332
+#: ../../vdms_ytdlp/ydl_preferences.py:334
 msgid "Browse"
 msgstr "Обзор"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:335
+#: ../../vdms_ytdlp/ydl_preferences.py:337
 msgid "Extract cookies automatically from your browser"
 msgstr "Автоматическое извлечение файлов cookie из вашего браузера"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:341
+#: ../../vdms_ytdlp/ydl_preferences.py:343
 msgid "Web Browser"
 msgstr "Веб-браузер"
 
@@ -4788,47 +4796,47 @@ msgstr "Вы хотите удалить текущий файл cookie из в�
 msgid "Locate your cookie file"
 msgstr "Найдите ваш файл cookie"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:151
+#: ../../vdms_ytdlp/youtubedl_ui.py:152
 msgid "Precompiled Videos"
 msgstr "Предварительно скомпилированные видео"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:152
+#: ../../vdms_ytdlp/youtubedl_ui.py:153
 msgid "Download videos by resolution"
 msgstr "Загрузка видео по разрешению"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:153
+#: ../../vdms_ytdlp/youtubedl_ui.py:154
 msgid "Download split audio and video"
 msgstr "Скачать аудио и видео раздельно"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:154
+#: ../../vdms_ytdlp/youtubedl_ui.py:155
 msgid "Download Audio only"
 msgstr "Загрузить только аудиофайл"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:155
+#: ../../vdms_ytdlp/youtubedl_ui.py:156
 msgid "Download by format code"
 msgstr "Скачать код формата"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:205
+#: ../../vdms_ytdlp/youtubedl_ui.py:208
 msgid "Include playlists"
 msgstr "Включить плейлисты"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:223
+#: ../../vdms_ytdlp/youtubedl_ui.py:226
 msgid "Quality settings"
 msgstr "Настройки качества"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:235
+#: ../../vdms_ytdlp/youtubedl_ui.py:238
 msgid "When not available, the chosen video resolution will be replaced with the closest one"
 msgstr "Когда недоступно, выбранное разрешение видео будет заменено ближайшим"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:239
+#: ../../vdms_ytdlp/youtubedl_ui.py:242
 msgid "Video format:"
 msgstr "Формат видео:"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:260
+#: ../../vdms_ytdlp/youtubedl_ui.py:263
 msgid "Audio format:"
 msgstr "Аудио формат:"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:418
+#: ../../vdms_ytdlp/youtubedl_ui.py:421
 #, python-brace-format
 msgid ""
 "Unable to get format codes on {0}, unsupported URL:\n"
@@ -4839,17 +4847,24 @@ msgstr ""
 "\n"
 "{1}"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:568
+#: ../../vdms_ytdlp/youtubedl_ui.py:571
 msgid "URLs have no playlist references"
 msgstr "URL-адреса не имеют ссылок на плейлисты"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:607
+#: ../../vdms_ytdlp/youtubedl_ui.py:610
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr "URL-адреса содержат списки воспроизведения. Вы уверены, что хотите продолжить?"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:623
+#: ../../vdms_ytdlp/youtubedl_ui.py:626
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "URL-адреса содержат видеоканалы. Вы уверены, что хотите продолжить?"
+
+#: ../../vdms_ytdlp/youtubedl_ui.py:830
+#, python-brace-format
+msgid ""
+"Missing executable: «{0}».\n"
+"Before continuing, be sure to make the correct settings in the preferences dialog."
+msgstr ""
 
 #~ msgid "Go to the 'Home' panel"
 #~ msgstr "Перейдите к 'Начальной панели'"
@@ -6810,3 +6825,23 @@ msgstr "URL-адреса содержат видеоканалы. Вы увер�
 
 #~ msgid "For more information, visit the official FFmpeg documentation:"
 #~ msgstr "Для получения дополнительной информации посетите официальную документацию FFmpeg:"
+
+#~ msgid "No Audio"
+#~ msgstr "Нет звука"
+
+#~ msgid ""
+#~ "Here you can pass your `Netscape HTTP Cookie File` in order to access websites that require authentication.\n"
+#~ "If you don't know how to obtain this type of file, you can let the application try to extract it from your browser\n"
+#~ "automatically. The currently supported browsers are: brave, chrome, chromium, edge, firefox, opera, safari, vivaldi.\n"
+#~ "\n"
+#~ "For more information please consult the documentation at the following link:"
+#~ msgstr ""
+#~ "Здесь вы можете передать свой файл cookie Netscape HTTP для доступа к веб-сайтам, \n"
+#~ "требующим аутентификации.\n"
+#~ "Если вы не знаете, как получить файл этого типа, вы можете позволить приложению \n"
+#~ "попытаться автоматически извлечь его из вашего браузера. \n"
+#~ "В настоящее время поддерживаются браузеры: \n"
+#~ "brave, chrome, chromium, edge, firefox, opera, safari, vivaldi.\n"
+#~ "\n"
+#~ "Для получения дополнительной информации обратитесь к документации по следующей ссылке:"
+

@@ -7,18 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Traduzione Videomass 15.01.2024\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-14 17:11+0100\n"
+"POT-Creation-Date: 2025-03-25 16:34+0100\n"
 "PO-Revision-Date: 2025-01-15 11:54+0100\n"
 "Last-Translator: bovirus <bovirus@gmail.comn>\n"
-"Language-Team: bovirus (bovirus@gmail.com)\n"
 "Language: it_IT\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: bovirus (bovirus@gmail.com)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Generated-By: Babel 2.16.0\n"
-"X-Generator: Poedit 3.5\n"
-"X-Poedit-SourceCharset: UTF-8\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../gui_app.py:121
 msgid "To suppress this message on startup, please install yt-dlp or disable it from the preferences."
@@ -41,7 +39,7 @@ msgstr "Per non visualizzare questo messaggio all'avvio, installa yt-dlp o disab
 #: ../../vdms_main/main_frame.py:942 ../../vdms_main/main_frame.py:960
 #: ../../vdms_main/main_frame.py:980
 #: ../../vdms_panels/audio_encoders/acodecs.py:509
-#: ../../vdms_panels/audio_encoders/acodecs.py:797
+#: ../../vdms_panels/audio_encoders/acodecs.py:799
 #: ../../vdms_panels/concatenate.py:186
 #: ../../vdms_panels/long_processing_task.py:60
 #: ../../vdms_panels/presets_manager.py:426
@@ -71,12 +69,13 @@ msgstr "Per non visualizzare questo messaggio all'avvio, installa yt-dlp o disab
 #: ../../vdms_utils/presets_manager_utils.py:86
 #: ../../vdms_utils/presets_manager_utils.py:95
 #: ../../vdms_utils/queue_utils.py:68 ../../vdms_utils/queue_utils.py:82
-#: ../../vdms_utils/queue_utils.py:95 ../../vdms_ytdlp/youtubedl_ui.py:386
-#: ../../vdms_ytdlp/youtubedl_ui.py:426
+#: ../../vdms_utils/queue_utils.py:95 ../../vdms_ytdlp/youtubedl_ui.py:389
+#: ../../vdms_ytdlp/youtubedl_ui.py:429
 msgid "Videomass - Error!"
 msgstr "Videomass - Errore!"
 
 #: ../../gui_app.py:230
+#, python-brace-format
 msgid ""
 "Unexpected error while deleting file contents:\n"
 "\n"
@@ -482,6 +481,7 @@ msgid "Color Correction EQ Tool"
 msgstr "Strumento correzione del colore"
 
 #: ../../vdms_dialogs/filter_crop.py:228 ../../vdms_dialogs/filter_scale.py:109
+#, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "Dimensione sorgente: {0} x {1} pixel"
 
@@ -1248,17 +1248,17 @@ msgstr "Digita qui la password sudo, solo per i sistemi operativi Unix-like, non
 msgid "Preferences"
 msgstr "Impostazioni"
 
-#: ../../vdms_dialogs/preferences.py:674 ../../vdms_dialogs/preferences.py:754
+#: ../../vdms_dialogs/preferences.py:697 ../../vdms_dialogs/preferences.py:777
 #: ../../vdms_main/main_frame.py:860 ../../vdms_main/main_frame.py:1041
 #: ../../vdms_ytdlp/main_ytdlp.py:399 ../../vdms_ytdlp/ydl_preferences.py:504
 msgid "Choose Destination"
 msgstr "Scegli la Destinazione"
 
-#: ../../vdms_dialogs/preferences.py:705
+#: ../../vdms_dialogs/preferences.py:728
 msgid "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and the underscore (\"_\"). Spaces are not allowed."
 msgstr "Immettere solo caratteri alfanumerici. È inoltre possibile usare il trattino (\"-\") e il trattino basso (\"_\"). Non sono ammessi spazi vuoti."
 
-#: ../../vdms_dialogs/preferences.py:720
+#: ../../vdms_dialogs/preferences.py:743
 #: ../../vdms_dialogs/setting_profiles.py:257
 #: ../../vdms_dialogs/setting_profiles.py:264
 #: ../../vdms_dialogs/setting_profiles.py:286
@@ -1267,21 +1267,24 @@ msgstr "Immettere solo caratteri alfanumerici. È inoltre possibile usare il tra
 #: ../../vdms_panels/av_conversions.py:612
 #: ../../vdms_panels/sequence_to_video.py:348
 #: ../../vdms_panels/video_to_sequence.py:399
-#: ../../vdms_ytdlp/main_ytdlp.py:229 ../../vdms_ytdlp/youtubedl_ui.py:422
+#: ../../vdms_ytdlp/main_ytdlp.py:229 ../../vdms_ytdlp/youtubedl_ui.py:425
+#: ../../vdms_ytdlp/youtubedl_ui.py:834
 msgid "Videomass - Warning!"
 msgstr "Videomass - Attenzione!"
 
-#: ../../vdms_dialogs/preferences.py:809 ../../vdms_dialogs/preferences.py:849
-#: ../../vdms_dialogs/preferences.py:889 ../../vdms_dialogs/wizard_dlg.py:351
-#: ../../vdms_dialogs/wizard_dlg.py:368 ../../vdms_dialogs/wizard_dlg.py:385
+#: ../../vdms_dialogs/preferences.py:832 ../../vdms_dialogs/preferences.py:872
+#: ../../vdms_dialogs/preferences.py:912 ../../vdms_dialogs/wizard_dlg.py:355
+#: ../../vdms_dialogs/wizard_dlg.py:372 ../../vdms_dialogs/wizard_dlg.py:389
+#, python-brace-format
 msgid "{} location"
 msgstr "Percorso {}"
 
-#: ../../vdms_dialogs/preferences.py:930
+#: ../../vdms_dialogs/preferences.py:980
+#, python-brace-format
 msgid "Open «{}» executable file"
 msgstr "Apri file eseguibile «{}»"
 
-#: ../../vdms_dialogs/preferences.py:959
+#: ../../vdms_dialogs/preferences.py:1010
 msgid "Open «yt_dlp» python package directory"
 msgstr "Apri la cartella del pacchetto Python «yt_dlp»"
 
@@ -1479,6 +1482,7 @@ msgstr "I formati devono essere separati da una virgola"
 
 #: ../../vdms_dialogs/setting_profiles.py:279
 #: ../../vdms_utils/queue_utils.py:80
+#, python-brace-format
 msgid ""
 "ERROR: Keys mismatched for requested data.\n"
 "Invalid file: «{0}»"
@@ -1523,7 +1527,7 @@ msgstr "Seleziona un file registro"
 msgid "Are you sure you want to clear the selected log file?"
 msgstr "Sei sicuro di voler eliminare il file registro selezionato?"
 
-#: ../../vdms_dialogs/showlogs.py:169 ../../vdms_dialogs/wizard_dlg.py:243
+#: ../../vdms_dialogs/showlogs.py:169 ../../vdms_dialogs/wizard_dlg.py:247
 #: ../../vdms_io/checkup.py:68 ../../vdms_main/main_frame.py:207
 #: ../../vdms_main/main_frame.py:779 ../../vdms_main/main_frame.py:1621
 #: ../../vdms_panels/presets_manager.py:349
@@ -1535,8 +1539,8 @@ msgstr "Sei sicuro di voler eliminare il file registro selezionato?"
 #: ../../vdms_panels/presets_manager.py:775
 #: ../../vdms_panels/presets_manager.py:874
 #: ../../vdms_panels/presets_manager.py:904 ../../vdms_ytdlp/main_ytdlp.py:202
-#: ../../vdms_ytdlp/ydl_preferences.py:438 ../../vdms_ytdlp/youtubedl_ui.py:609
-#: ../../vdms_ytdlp/youtubedl_ui.py:625
+#: ../../vdms_ytdlp/ydl_preferences.py:438 ../../vdms_ytdlp/youtubedl_ui.py:612
+#: ../../vdms_ytdlp/youtubedl_ui.py:628
 msgid "Please confirm"
 msgstr "Conferma"
 
@@ -1577,12 +1581,12 @@ msgid "=  Below max peak"
 msgstr "=  Sotto il picco max"
 
 #: ../../vdms_dialogs/shownormlist.py:166
-#: ../../vdms_panels/audio_encoders/acodecs.py:838
+#: ../../vdms_panels/audio_encoders/acodecs.py:840
 msgid "RMS-based volume statistics"
 msgstr "Statistiche del volume basate su RMS"
 
 #: ../../vdms_dialogs/shownormlist.py:191
-#: ../../vdms_panels/audio_encoders/acodecs.py:836
+#: ../../vdms_panels/audio_encoders/acodecs.py:838
 msgid "PEAK-based volume statistics"
 msgstr "Statistiche del volume basate sul PICCO"
 
@@ -1633,6 +1637,7 @@ msgstr ""
 "Le nuove versioni risolvono bug e offrono nuove funzionalità."
 
 #: ../../vdms_dialogs/videomass_check_version.py:96
+#, python-brace-format
 msgid ""
 "\n"
 "\n"
@@ -1695,58 +1700,59 @@ msgstr "Scorciatoie da tastiera durante la riproduzione con FFplay"
 msgid "Stop"
 msgstr "Stop"
 
-#: ../../vdms_dialogs/wizard_dlg.py:65
+#: ../../vdms_dialogs/wizard_dlg.py:69
 msgid "Please take a moment to set up the application"
 msgstr "Dedica qualche istante alla configurazione dell'applicazione"
 
-#: ../../vdms_dialogs/wizard_dlg.py:66
+#: ../../vdms_dialogs/wizard_dlg.py:70
 msgid "Click the \"Next\" button to get started"
 msgstr "Per iniziare seleziona \"Avanti\""
 
-#: ../../vdms_dialogs/wizard_dlg.py:81
+#: ../../vdms_dialogs/wizard_dlg.py:85
 msgid "Welcome to the Videomass Wizard!"
 msgstr "Benvenuto nell'assistente di Videomass!"
 
-#: ../../vdms_dialogs/wizard_dlg.py:123
+#: ../../vdms_dialogs/wizard_dlg.py:127
 msgid "Videomass is an application based on FFmpeg\n"
 msgstr "Videomass è un'applicazione basata su FFmpeg\n"
 
-#: ../../vdms_dialogs/wizard_dlg.py:125
+#: ../../vdms_dialogs/wizard_dlg.py:129
 msgid "If FFmpeg is not on your computer, this application will be unusable"
 msgstr "Se FFmpeg non è disponibile nel computer, questa applicazione non potrà essere usata"
 
-#: ../../vdms_dialogs/wizard_dlg.py:128
+#: ../../vdms_dialogs/wizard_dlg.py:132
 msgid ""
 "If you have already installed FFmpeg on your operating\n"
 "system, click the \"Auto-detection\" button."
 msgstr "Se hai già installato FFmpeg nel sistema operativo, seleziona \"Rileva automaticamente\"."
 
-#: ../../vdms_dialogs/wizard_dlg.py:131
+#: ../../vdms_dialogs/wizard_dlg.py:135
 msgid ""
 "If you want to use a version of FFmpeg located on your\n"
 "filesystem but not installed on your operating system,\n"
 "click the \"Locate\" button."
 msgstr "Se vuoi usare una versione di FFmpeg presente ma non installata nel sistema operativo, seleziona \"Individua\"."
 
-#: ../../vdms_dialogs/wizard_dlg.py:153
+#: ../../vdms_dialogs/wizard_dlg.py:157
 msgid "Auto-detection"
 msgstr "Rileva automaticamente"
 
-#: ../../vdms_dialogs/wizard_dlg.py:155
+#: ../../vdms_dialogs/wizard_dlg.py:159
 msgid "Locate"
 msgstr "Individua"
 
-#: ../../vdms_dialogs/wizard_dlg.py:206
+#: ../../vdms_dialogs/wizard_dlg.py:210
 msgid "Click the \"Next\" button"
 msgstr "Seleziona \"Avanti\""
 
-#: ../../vdms_dialogs/wizard_dlg.py:227
+#: ../../vdms_dialogs/wizard_dlg.py:231
+#, python-brace-format
 msgid "'{}' is not installed on your computer. Install it or indicate another location by clicking the 'Locate' button."
 msgstr ""
 "\"{}\" non è installato nel computer. \n"
 "Installalo o indica un altro percorso selezionando \"Individua\"."
 
-#: ../../vdms_dialogs/wizard_dlg.py:241
+#: ../../vdms_dialogs/wizard_dlg.py:245
 msgid ""
 "Videomass already seems to include FFmpeg.\n"
 "\n"
@@ -1756,11 +1762,11 @@ msgstr ""
 "\n"
 "Vuoi usare quello?"
 
-#: ../../vdms_dialogs/wizard_dlg.py:267
+#: ../../vdms_dialogs/wizard_dlg.py:271
 msgid "Locating FFmpeg executables\n"
 msgstr "Individuazione eseguibili FFmpeg\n"
 
-#: ../../vdms_dialogs/wizard_dlg.py:269
+#: ../../vdms_dialogs/wizard_dlg.py:273
 msgid ""
 "\"ffmpeg\", \"ffprobe\" and \"ffplay\" are required. Complete all\n"
 "the text boxes below by clicking on the respective buttons."
@@ -1768,57 +1774,58 @@ msgstr ""
 "Sono richiesti \"ffmpeg\", \"ffprobe\" ed \" ffplay\". \n"
 "Completa tutti i campi di testo sottostanti selezionando i rispettivi pulsanti."
 
-#: ../../vdms_dialogs/wizard_dlg.py:408
+#: ../../vdms_dialogs/wizard_dlg.py:412
 msgid "Videomass has a simple graphical interface for yt-dlp\n"
 msgstr "Videomass dispone di una semplice interfaccia grafica per yt-dlp\n"
 
-#: ../../vdms_dialogs/wizard_dlg.py:409
+#: ../../vdms_dialogs/wizard_dlg.py:413
 msgid ""
 "This feature allows you to download video and audio from\n"
 "many sites, including YouTube.com and even Facebook."
 msgstr "Questa funzione consente di scaricare video e audio da molti siti, inclusi YouTube.com e persino Facebook."
 
-#: ../../vdms_dialogs/wizard_dlg.py:428
+#: ../../vdms_dialogs/wizard_dlg.py:432
 msgid " Do you want to enable this feature?"
 msgstr " Vuoi abilitare questa funzione?"
 
-#: ../../vdms_dialogs/wizard_dlg.py:458
+#: ../../vdms_dialogs/wizard_dlg.py:462
 msgid "Wizard completed successfully!\n"
 msgstr "Procedura guidata completata correttamente!\n"
 
-#: ../../vdms_dialogs/wizard_dlg.py:459
+#: ../../vdms_dialogs/wizard_dlg.py:463
 msgid "Remember that you can always change these settings later, through the Preferences dialog."
 msgstr "Ricorda che puoi sempre modificare più tardi queste impostazioni attraverso le preferenze globali."
 
-#: ../../vdms_dialogs/wizard_dlg.py:461
+#: ../../vdms_dialogs/wizard_dlg.py:465
 msgid "Thank You!"
 msgstr "Grazie!"
 
-#: ../../vdms_dialogs/wizard_dlg.py:462
+#: ../../vdms_dialogs/wizard_dlg.py:466
 msgid "To exit click the \"Finish\" button"
 msgstr "Per uscire seleziona \"Fine\""
 
-#: ../../vdms_dialogs/wizard_dlg.py:550
+#: ../../vdms_dialogs/wizard_dlg.py:554
 msgid "< Previous"
 msgstr "< Indietro"
 
-#: ../../vdms_dialogs/wizard_dlg.py:553 ../../vdms_dialogs/wizard_dlg.py:653
+#: ../../vdms_dialogs/wizard_dlg.py:557 ../../vdms_dialogs/wizard_dlg.py:657
 msgid "Next >"
 msgstr "Avanti >"
 
-#: ../../vdms_dialogs/wizard_dlg.py:558
+#: ../../vdms_dialogs/wizard_dlg.py:562
 msgid "Videomass Wizard"
 msgstr "Procedura guidata Videomass"
 
-#: ../../vdms_dialogs/wizard_dlg.py:587 ../../vdms_dialogs/wizard_dlg.py:623
+#: ../../vdms_dialogs/wizard_dlg.py:591 ../../vdms_dialogs/wizard_dlg.py:627
 msgid "Finish"
 msgstr "Fine"
 
-#: ../../vdms_dialogs/wizard_dlg.py:615
+#: ../../vdms_dialogs/wizard_dlg.py:619
 msgid "Some text boxes are still incomplete"
 msgstr "Alcune caselle di testo non sono complete"
 
 #: ../../vdms_io/checkup.py:44 ../../vdms_io/checkup.py:92
+#, python-brace-format
 msgid ""
 "Output folder does not exist:\n"
 "\n"
@@ -1877,7 +1884,7 @@ msgstr "Download in corso..."
 #: ../../vdms_main/main_frame.py:188 ../../vdms_main/main_frame.py:1359
 #: ../../vdms_main/main_frame.py:1387 ../../vdms_ytdlp/main_ytdlp.py:99
 #: ../../vdms_ytdlp/main_ytdlp.py:147 ../../vdms_ytdlp/main_ytdlp.py:554
-#: ../../vdms_ytdlp/textdrop.py:233 ../../vdms_ytdlp/youtubedl_ui.py:437
+#: ../../vdms_ytdlp/textdrop.py:233 ../../vdms_ytdlp/youtubedl_ui.py:440
 msgid "Ready"
 msgstr "Pronto"
 
@@ -1892,6 +1899,7 @@ msgstr ""
 "Vorresti tenerli in coda?"
 
 #: ../../vdms_main/main_frame.py:226
+#, python-brace-format
 msgid "Queue ({0})"
 msgstr "Coda ({0})"
 
@@ -2016,6 +2024,7 @@ msgid "Check for preset updates"
 msgstr "Controlla aggiornamenti profili"
 
 #: ../../vdms_main/main_frame.py:530
+#, python-brace-format
 msgid "Check for new presets updates from {0}"
 msgstr "Controlla nuovi aggiornamenti profili da {0}"
 
@@ -2024,6 +2033,7 @@ msgid "Get latest presets"
 msgstr "Scarica profili aggiornati"
 
 #: ../../vdms_main/main_frame.py:533
+#, python-brace-format
 msgid "Get the latest presets from {0}"
 msgstr "Scarica profili aggiornati da {0}"
 
@@ -2220,6 +2230,7 @@ msgid "No default folder has been set for the destination of the encodings. The 
 msgstr "Nessuna cartella predefinita è stata impostata per la destinazione delle codifiche. L'impostazione corrente è \"Stessi percorsi per file destinazione e sorgente\"."
 
 #: ../../vdms_main/main_frame.py:765 ../../vdms_main/main_frame.py:790
+#, python-brace-format
 msgid ""
 "'{}':\n"
 "No such file or directory"
@@ -2232,6 +2243,7 @@ msgid "Are you sure to empty trash folder?"
 msgstr "Sei sicuro di voler svuotare la cartella cestino?"
 
 #: ../../vdms_main/main_frame.py:786
+#, python-brace-format
 msgid ""
 "'{}':\n"
 "There are no files to delete."
@@ -2240,12 +2252,14 @@ msgstr ""
 "Non ci sono file da cancellare."
 
 #: ../../vdms_main/main_frame.py:843
+#, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr ""
 "Versione profili installata v. {0}. \n"
 "È disponibile una nuova versione dei profili {1}"
 
 #: ../../vdms_main/main_frame.py:847
+#, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr ""
 "Versione profili installata v{0}. \n"
@@ -2260,6 +2274,7 @@ msgstr ""
 "L'archivio è in fase di download"
 
 #: ../../vdms_main/main_frame.py:889
+#, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "Scaricato correttamente in \"{0}\""
 
@@ -2268,6 +2283,7 @@ msgid "Some changes require restarting the application."
 msgstr "Alcune modifiche richiedono il riavvio dell'applicazione."
 
 #: ../../vdms_main/main_frame.py:1107
+#, python-brace-format
 msgid ""
 "{0}\n"
 "\n"
@@ -2282,6 +2298,7 @@ msgid "Restart Videomass?"
 msgstr "Vuoi riavviare Videomass?"
 
 #: ../../vdms_main/main_frame.py:1159
+#, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr "È disponibile una nuovo versione - v.{0}\n"
 
@@ -2379,7 +2396,7 @@ msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Crea presentazioni"
 
 #: ../../vdms_main/main_frame.py:1596
-#: ../../vdms_panels/audio_encoders/acodecs.py:786
+#: ../../vdms_panels/audio_encoders/acodecs.py:788
 #: ../../vdms_panels/av_conversions.py:577 ../../vdms_panels/filedrop.py:475
 #: ../../vdms_panels/filedrop.py:588 ../../vdms_panels/sequence_to_video.py:318
 #: ../../vdms_panels/video_to_sequence.py:369
@@ -2414,6 +2431,7 @@ msgid "The Python module «yt_dlp» was not found. Make sure you have installed 
 msgstr "Il modulo Python «yt_dlp» non è stato trovato. Assicurati di aver installato yt-dlp correttamente."
 
 #: ../../vdms_main/main_frame.py:1797
+#, python-brace-format
 msgid "The system will turn off in {0} seconds"
 msgstr "Il sistema si spegnerà tra {0} secondi"
 
@@ -2428,6 +2446,7 @@ msgstr ""
 "Per i dettagli consultare il file registro."
 
 #: ../../vdms_main/main_frame.py:1817
+#, python-brace-format
 msgid "Exiting the application in {0} seconds"
 msgstr "Chiusura dell'applicazione tra {0} secondi"
 
@@ -2466,6 +2485,7 @@ msgstr "Nessuna durata sorgente:"
 #: ../../vdms_miniframes/timeline.py:208 ../../vdms_miniframes/timeline.py:298
 #: ../../vdms_miniframes/timeline.py:333 ../../vdms_miniframes/timeline.py:338
 #: ../../vdms_miniframes/timeline.py:441
+#, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr "{0} {1}  |  Durata Segmento: {2}"
 
@@ -2635,7 +2655,9 @@ msgstr "Il file non è un frame o un file video"
 #: ../../vdms_panels/audio_encoders/acodecs.py:433
 #: ../../vdms_panels/av_conversions.py:861
 msgid "Undetected volume values! Click the \"Volume detect\" button to analyze audio volume data."
-msgstr "Valori del volume non rilevati!\nPer analizzare i dati sul volume audio seleziona \"Rilevazione volume\"."
+msgstr ""
+"Valori del volume non rilevati!\n"
+"Per analizzare i dati sul volume audio seleziona \"Rilevazione volume\"."
 
 #: ../../vdms_panels/av_conversions.py:1186
 msgid "Off"
@@ -2669,6 +2691,7 @@ msgstr ""
 
 #: ../../vdms_panels/av_conversions.py:1246
 #: ../../vdms_panels/presets_manager.py:814
+#, python-brace-format
 msgid "Write profile on «{0}»"
 msgstr "Scrivi il profilo su «{0}»"
 
@@ -2683,6 +2706,7 @@ msgid "Invalid file name, make sure to provide a valid name including the «.jso
 msgstr "Nome file non valido, assicurati di fornire un nome valido includendo l'estensione «.json»"
 
 #: ../../vdms_panels/av_conversions.py:1284
+#, python-brace-format
 msgid "Cannot save current data in file «{}»."
 msgstr "Impossibile salvare i dati correnti nel file «{}»."
 
@@ -2711,6 +2735,7 @@ msgid "Welcome to Videomass"
 msgstr "Benvenuto in Videomass"
 
 #: ../../vdms_panels/choose_topic.py:73
+#, python-brace-format
 msgid "Version {}"
 msgstr "Versione {}"
 
@@ -2847,6 +2872,7 @@ msgid "File without format extension: please give an appropriate extension to th
 msgstr "File senza estensione di formato: fornire un'estensione appropriata al nome del file, ad esempio '.mkv', '.avi', '.mp3', ecc."
 
 #: ../../vdms_panels/filedrop.py:84
+#, python-brace-format
 msgid "Name has illegal characters like: {0}"
 msgstr "Il nome ha caratteri non validi come: {0}"
 
@@ -2928,6 +2954,7 @@ msgid "Rename in batch"
 msgstr "Rinomina in batch"
 
 #: ../../vdms_panels/filedrop.py:628
+#, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr "Rinominare i {0} elementi in:"
 
@@ -3082,6 +3109,7 @@ msgid "Refresh the presets list"
 msgstr "Ricarica elenco profili"
 
 #: ../../vdms_panels/presets_manager.py:338
+#, python-brace-format
 msgid ""
 "Outdated presets version found: v{1}\n"
 "A new version is available: v{0}\n"
@@ -3116,6 +3144,7 @@ msgid "Supported Format List"
 msgstr "Elenco formati supportati"
 
 #: ../../vdms_panels/presets_manager.py:531
+#, python-brace-format
 msgid "Cannot save current data in file '{}'."
 msgstr "Impossibile salvare i dati correnti nel file '{}'."
 
@@ -3124,6 +3153,7 @@ msgid "You just successfully created a new preset!"
 msgstr "Hai appena creato correttamente un nuovo profilo!"
 
 #: ../../vdms_panels/presets_manager.py:547
+#, python-brace-format
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
 "\n"
@@ -3134,6 +3164,7 @@ msgstr ""
 "Sarà spostata nella sotto-cartella \"Removals\" dentro la cartella dei profili."
 
 #: ../../vdms_panels/presets_manager.py:558
+#, python-brace-format
 msgid ""
 "{}\n"
 "\n"
@@ -3144,6 +3175,7 @@ msgstr ""
 "Spiacente, rimozione non riuscita, impossibile procedere.."
 
 #: ../../vdms_panels/presets_manager.py:568
+#, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
 msgstr "La pre-impostazione \"{0}\" è stata correttamente rimossa"
 
@@ -3231,6 +3263,7 @@ msgstr ""
 "Vuoi continuare?"
 
 #: ../../vdms_panels/presets_manager.py:833
+#, python-brace-format
 msgid "Edit profile on «{0}»"
 msgstr "Modifica il profilo su «{0}»"
 
@@ -3345,6 +3378,7 @@ msgid "Open Audio File"
 msgstr "Apri File Audio"
 
 #: ../../vdms_panels/sequence_to_video.py:462
+#, python-brace-format
 msgid ""
 "Invalid file: '{}'\n"
 "\n"
@@ -3355,6 +3389,7 @@ msgstr ""
 "{}"
 
 #: ../../vdms_panels/sequence_to_video.py:467
+#, python-brace-format
 msgid ""
 "Invalid file: '{}'\n"
 "\n"
@@ -3367,16 +3402,19 @@ msgstr ""
 #: ../../vdms_panels/sequence_to_video.py:556
 #: ../../vdms_panels/sequence_to_video.py:583
 #: ../../vdms_panels/video_to_sequence.py:511
+#, python-brace-format
 msgid "Invalid file: '{}'"
 msgstr "File non valido: '{}'"
 
 #: ../../vdms_panels/sequence_to_video.py:566
 #: ../../vdms_panels/sequence_to_video.py:591
+#, python-brace-format
 msgid "Unsupported format '{}'"
 msgstr "Formato non supportato '{}'"
 
 #: ../../vdms_panels/sequence_to_video.py:572
 #: ../../vdms_panels/sequence_to_video.py:596
+#, python-brace-format
 msgid ""
 "File does not exist:\n"
 "\n"
@@ -3613,6 +3651,7 @@ msgid "Selected index does not exist or does not contain any audio streams"
 msgstr "L'indice selezionato non esiste o non contiene alcun flusso audio"
 
 #: ../../vdms_panels/audio_encoders/acodecs.py:507
+#, python-brace-format
 msgid ""
 "ERROR: Missing audio stream:\n"
 "\"{}\""
@@ -3620,19 +3659,15 @@ msgstr ""
 "ERRORE: flusso audio mancante:\n"
 "\"{}\""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:589
-msgid "No Audio"
-msgstr "No audio"
-
-#: ../../vdms_panels/audio_encoders/acodecs.py:723
+#: ../../vdms_panels/audio_encoders/acodecs.py:725
 msgid "PEAK level normalization, which will produce a maximum peak level equal to the set target level."
 msgstr "Normalizzazione del livello di picco, il quale produrrà un livello di picco massimo pari al livello target impostato."
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:726
+#: ../../vdms_panels/audio_encoders/acodecs.py:728
 msgid "RMS-based normalization, which according to mean volume calculates the amount of gain to reach same average power signal."
 msgstr "Normalizzazione basata su RMS. In base al volume medio viene calcolata la quantità di guadagno per raggiungere lo stesso segnale di potenza medio."
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:730
+#: ../../vdms_panels/audio_encoders/acodecs.py:732
 msgid ""
 "Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements the EBU R128 algorithm.\n"
 "Ideal for live normalization. It produces worse results than the High-quality two-pass Loudnorm normalization, but is faster."
@@ -3640,7 +3675,7 @@ msgstr ""
 "Normalizzazione Loudnorm. Normalizza il volume percepito usando il filtro \"loudnorm\", il quale implementa l'algoritmo EBU R128.\n"
 "Ideale per la normalizzazione dal vivo. Produce risultati meno precisi della normalizzazione ad alta qualità Loudnorm a due passaggi, ma è più veloce."
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:737
+#: ../../vdms_panels/audio_encoders/acodecs.py:739
 msgid ""
 "High-quality two-pass Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements\n"
 "the EBU R128 algorithm. Ideal for postprocessing."
@@ -4041,6 +4076,7 @@ msgstr ""
 "Poiché la quantità di thread aggiuntivi dipende dal numero di \"riquadri\", che a sua volta dipende dalla risoluzione video, la codifica di video a risoluzione più elevata vedrà un maggiore miglioramento delle prestazioni."
 
 #: ../../vdms_utils/presets_manager_utils.py:46
+#, python-brace-format
 msgid "Supports ({0}) formats only, not ({1})"
 msgstr "Supporta solo i formati ({0}) , non ({1})"
 
@@ -4067,6 +4103,7 @@ msgid "Import queue file"
 msgstr "Importa file della coda"
 
 #: ../../vdms_utils/queue_utils.py:89
+#, python-brace-format
 msgid ""
 "ERROR: invalid data found loading queue file.\n"
 "«{0}»\n"
@@ -4102,7 +4139,7 @@ msgstr "Aggiungi solo gli elementi attualmente mancanti alla coda."
 msgid "Remove the current queue and replace it with the imported one."
 msgstr "Rimuovi la coda corrente e sostituiscila con quella importata."
 
-#: ../../vdms_ytdlp/formatcode.py:98 ../../vdms_ytdlp/youtubedl_ui.py:118
+#: ../../vdms_ytdlp/formatcode.py:98 ../../vdms_ytdlp/youtubedl_ui.py:119
 msgid "At least one \"Format Code\" must be checked for each URL selected in green."
 msgstr "È necessario spuntare almeno un \"Codice Formato\" per ciascun URL selezionato in verde."
 
@@ -4147,6 +4184,7 @@ msgid "Download only the best selected qualities"
 msgstr "Scarica solo le qualità selezionate migliori"
 
 #: ../../vdms_ytdlp/formatcode.py:249
+#, python-brace-format
 msgid ""
 "ERROR: Unable to get format codes.\n"
 "\n"
@@ -4262,10 +4300,12 @@ msgid "Check the latest version available on github.com"
 msgstr "Visualizza versione più recente disponibile in github.com"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:373
+#, python-brace-format
 msgid "You are using \"yt-dlp\" version {0}"
 msgstr "Stai usando \"yt-dlp\" versione {0}"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:390
+#, python-brace-format
 msgid "\"yt-dlp\": Latest version available: {0}"
 msgstr "\"yt-dlp\": Ultima versione disponibile: {0}"
 
@@ -4327,7 +4367,7 @@ msgstr ""
 "È possibile, inoltre, specificare degli intervalli, esempio: \"1-3,7,10-13\" con i quali verranno scaricati i media all'indice 1, 2, 3, 7, 10, 11, 12 e 13.\n"
 
 #: ../../vdms_ytdlp/playlist_indexing.py:108
-#: ../../vdms_ytdlp/youtubedl_ui.py:209
+#: ../../vdms_ytdlp/youtubedl_ui.py:212
 msgid "Playlist Editor"
 msgstr "Editor Playlist"
 
@@ -4452,7 +4492,7 @@ msgid "Download subtitles only (do not include audio and video)"
 msgstr "Scarica solo i sottotitoli (non includere audio e video)"
 
 #: ../../vdms_ytdlp/subtitles_editor.py:137
-#: ../../vdms_ytdlp/youtubedl_ui.py:216
+#: ../../vdms_ytdlp/youtubedl_ui.py:219
 msgid "Subtitles Editor"
 msgstr "Editor Sottotitoli"
 
@@ -4590,6 +4630,7 @@ msgid "Using a proxy server"
 msgstr "Utilizzo di un server proxy"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:175
+#, python-brace-format
 msgid ""
 "Use the specified HTTP/HTTPS/SOCKS proxy. To enable SOCKS proxy, specify a proper\n"
 "scheme, e.g.\t{}\n"
@@ -4699,42 +4740,38 @@ msgstr "Autenticazione"
 msgid "Using cookies to gain access to websites"
 msgstr "Utilizzo dei cookie per accedere ai siti web"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:302
+#: ../../vdms_ytdlp/ydl_preferences.py:304
+#, python-brace-format
 msgid ""
 "Here you can pass your `Netscape HTTP Cookie File` in order to access websites that require authentication.\n"
 "If you don't know how to obtain this type of file, you can let the application try to extract it from your browser\n"
-"automatically. The currently supported browsers are: brave, chrome, chromium, edge, firefox, opera, safari, vivaldi.\n"
+"automatically. The currently supported browsers are:\n"
+"{0}.\n"
 "\n"
 "For more information please consult the documentation at the following link:"
 msgstr ""
-"Per accedere ai siti Web che richiedono l'autenticazione, qui puoi includere il `File cookie HTTP Netscape`.\n"
-"Se non sai come ottenere questo tipo di file, puoi lasciare che l'applicazione provi a estrarlo automaticamente\n"
-"dal browser. I browser attualmente supportati sono: brave, chrome, chromium, edge, firefox, opera, safari,\n"
-"vivaldi.\n"
-"\n"
-"Per maggiori informazioni consultare la documentazione al seguente link:"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:319
+#: ../../vdms_ytdlp/ydl_preferences.py:321
 msgid "Allow cookies for authentication"
 msgstr "Consenti i cookie per l'autenticazione"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:323
+#: ../../vdms_ytdlp/ydl_preferences.py:325
 msgid "Cookie file"
 msgstr "File cookie"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:329
+#: ../../vdms_ytdlp/ydl_preferences.py:331
 msgid "File name from where cookies should be read and dumped to"
 msgstr "Nome del file da cui leggere e scaricare i cookie"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:332
+#: ../../vdms_ytdlp/ydl_preferences.py:334
 msgid "Browse"
 msgstr "Sfoglia"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:335
+#: ../../vdms_ytdlp/ydl_preferences.py:337
 msgid "Extract cookies automatically from your browser"
 msgstr "Estrai i cookie automaticamente dal browser"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:341
+#: ../../vdms_ytdlp/ydl_preferences.py:343
 msgid "Web Browser"
 msgstr "Browser Web"
 
@@ -4754,47 +4791,48 @@ msgstr "Vuoi rimuovere l'attuale file cookie dal sistema?"
 msgid "Locate your cookie file"
 msgstr "Individua il file cookie"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:151
+#: ../../vdms_ytdlp/youtubedl_ui.py:152
 msgid "Precompiled Videos"
 msgstr "Video Precompilati"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:152
+#: ../../vdms_ytdlp/youtubedl_ui.py:153
 msgid "Download videos by resolution"
 msgstr "Scarica video in base alla risoluzione"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:153
+#: ../../vdms_ytdlp/youtubedl_ui.py:154
 msgid "Download split audio and video"
 msgstr "Scarica audio e video divisi"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:154
+#: ../../vdms_ytdlp/youtubedl_ui.py:155
 msgid "Download Audio only"
 msgstr "Scarica solo il file audio"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:155
+#: ../../vdms_ytdlp/youtubedl_ui.py:156
 msgid "Download by format code"
 msgstr "Scarica per codice formato"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:205
+#: ../../vdms_ytdlp/youtubedl_ui.py:208
 msgid "Include playlists"
 msgstr "Includi le playlist"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:223
+#: ../../vdms_ytdlp/youtubedl_ui.py:226
 msgid "Quality settings"
 msgstr "Impostazioni qualità"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:235
+#: ../../vdms_ytdlp/youtubedl_ui.py:238
 msgid "When not available, the chosen video resolution will be replaced with the closest one"
 msgstr "Quando non disponibile, la risoluzione video selezionata verrà sostituita con quella più vicina"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:239
+#: ../../vdms_ytdlp/youtubedl_ui.py:242
 msgid "Video format:"
 msgstr "Formato Video:"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:260
+#: ../../vdms_ytdlp/youtubedl_ui.py:263
 msgid "Audio format:"
 msgstr "Formato audio:"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:418
+#: ../../vdms_ytdlp/youtubedl_ui.py:421
+#, python-brace-format
 msgid ""
 "Unable to get format codes on {0}, unsupported URL:\n"
 "\n"
@@ -4804,17 +4842,24 @@ msgstr ""
 "\n"
 "{1}"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:568
+#: ../../vdms_ytdlp/youtubedl_ui.py:571
 msgid "URLs have no playlist references"
 msgstr "Gli URL non hanno riferimenti a playlist"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:607
+#: ../../vdms_ytdlp/youtubedl_ui.py:610
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr "Gli URL contengono playlist. Sei sicuro di voler continuare?"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:623
+#: ../../vdms_ytdlp/youtubedl_ui.py:626
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "Gli URL contengono canali. Sei sicuro di voler continuare?"
+
+#: ../../vdms_ytdlp/youtubedl_ui.py:830
+#, python-brace-format
+msgid ""
+"Missing executable: «{0}».\n"
+"Before continuing, be sure to make the correct settings in the preferences dialog."
+msgstr ""
 
 #~ msgid "Re-start is required"
 #~ msgstr "È necessario riavviare l'applicazione per applicare le modifiche"
@@ -4827,3 +4872,21 @@ msgstr "Gli URL contengono canali. Sei sicuro di voler continuare?"
 
 #~ msgid "One or more comma-separated format names that are not compatible with this profile."
 #~ msgstr "Uno o più nomi di formato separati da virgole che non sono compatibili con questo profilo."
+
+#~ msgid "No Audio"
+#~ msgstr "No audio"
+
+#~ msgid ""
+#~ "Here you can pass your `Netscape HTTP Cookie File` in order to access websites that require authentication.\n"
+#~ "If you don't know how to obtain this type of file, you can let the application try to extract it from your browser\n"
+#~ "automatically. The currently supported browsers are: brave, chrome, chromium, edge, firefox, opera, safari, vivaldi.\n"
+#~ "\n"
+#~ "For more information please consult the documentation at the following link:"
+#~ msgstr ""
+#~ "Per accedere ai siti Web che richiedono l'autenticazione, qui puoi includere il `File cookie HTTP Netscape`.\n"
+#~ "Se non sai come ottenere questo tipo di file, puoi lasciare che l'applicazione provi a estrarlo automaticamente\n"
+#~ "dal browser. I browser attualmente supportati sono: brave, chrome, chromium, edge, firefox, opera, safari,\n"
+#~ "vivaldi.\n"
+#~ "\n"
+#~ "Per maggiori informazioni consultare la documentazione al seguente link:"
+

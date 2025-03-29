@@ -188,7 +188,7 @@ def create_pot_file(nameprogram):
 
 def update_po_files(nameprogram):
     """
-    Updates all existing translations catalogs based on a
+    Updates all existing translation catalogs based on a
     PO template file (POT), basically equivalent to the GNU
     msgmerge program.
     """
@@ -197,7 +197,7 @@ def update_po_files(nameprogram):
                                      add_help=True,
                                      )
     parser.add_argument('--update-catalogs',
-                        help=("Updates all existing translations catalogs "
+                        help=("Updates all existing translation catalogs "
                               "found on the given locale directory based on "
                               "a POT template file."),
                         action="store_true",

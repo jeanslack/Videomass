@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.18\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-14 17:11+0100\n"
+"POT-Creation-Date: 2025-03-25 16:34+0100\n"
 "PO-Revision-Date: 2024-07-03 18:50+0200\n"
 "Last-Translator: MaiJZ https://github.com/maijz128\n"
 "Language: zh_CN\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.16.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: ../../gui_app.py:121
 msgid "To suppress this message on startup, please install yt-dlp or disable it from the preferences."
@@ -39,7 +39,7 @@ msgstr ""
 #: ../../vdms_main/main_frame.py:942 ../../vdms_main/main_frame.py:960
 #: ../../vdms_main/main_frame.py:980
 #: ../../vdms_panels/audio_encoders/acodecs.py:509
-#: ../../vdms_panels/audio_encoders/acodecs.py:797
+#: ../../vdms_panels/audio_encoders/acodecs.py:799
 #: ../../vdms_panels/concatenate.py:186
 #: ../../vdms_panels/long_processing_task.py:60
 #: ../../vdms_panels/presets_manager.py:426
@@ -69,14 +69,14 @@ msgstr ""
 #: ../../vdms_utils/presets_manager_utils.py:86
 #: ../../vdms_utils/presets_manager_utils.py:95
 #: ../../vdms_utils/queue_utils.py:68 ../../vdms_utils/queue_utils.py:82
-#: ../../vdms_utils/queue_utils.py:95 ../../vdms_ytdlp/youtubedl_ui.py:386
-#: ../../vdms_ytdlp/youtubedl_ui.py:426
+#: ../../vdms_utils/queue_utils.py:95 ../../vdms_ytdlp/youtubedl_ui.py:389
+#: ../../vdms_ytdlp/youtubedl_ui.py:429
 #, fuzzy
 msgid "Videomass - Error!"
 msgstr "Videomass - 加载中..."
 
 #: ../../gui_app.py:230
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid ""
 "Unexpected error while deleting file contents:\n"
 "\n"
@@ -497,6 +497,7 @@ msgid "Color Correction EQ Tool"
 msgstr ""
 
 #: ../../vdms_dialogs/filter_crop.py:228 ../../vdms_dialogs/filter_scale.py:109
+#, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "源尺寸：{0}×{1}像素"
 
@@ -1330,19 +1331,19 @@ msgstr ""
 msgid "Preferences"
 msgstr "参考文献"
 
-#: ../../vdms_dialogs/preferences.py:674 ../../vdms_dialogs/preferences.py:754
+#: ../../vdms_dialogs/preferences.py:697 ../../vdms_dialogs/preferences.py:777
 #: ../../vdms_main/main_frame.py:860 ../../vdms_main/main_frame.py:1041
 #: ../../vdms_ytdlp/main_ytdlp.py:399 ../../vdms_ytdlp/ydl_preferences.py:504
 #, fuzzy
 msgid "Choose Destination"
 msgstr "目的地文件夹"
 
-#: ../../vdms_dialogs/preferences.py:705
+#: ../../vdms_dialogs/preferences.py:728
 #, fuzzy
 msgid "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and the underscore (\"_\"). Spaces are not allowed."
 msgstr "只输入字母数字字符。你也可以使用连字符（\"-\"）和下划线（\"_\"）。不允许有空格。"
 
-#: ../../vdms_dialogs/preferences.py:720
+#: ../../vdms_dialogs/preferences.py:743
 #: ../../vdms_dialogs/setting_profiles.py:257
 #: ../../vdms_dialogs/setting_profiles.py:264
 #: ../../vdms_dialogs/setting_profiles.py:286
@@ -1351,23 +1352,25 @@ msgstr "只输入字母数字字符。你也可以使用连字符（\"-\"）和�
 #: ../../vdms_panels/av_conversions.py:612
 #: ../../vdms_panels/sequence_to_video.py:348
 #: ../../vdms_panels/video_to_sequence.py:399
-#: ../../vdms_ytdlp/main_ytdlp.py:229 ../../vdms_ytdlp/youtubedl_ui.py:422
+#: ../../vdms_ytdlp/main_ytdlp.py:229 ../../vdms_ytdlp/youtubedl_ui.py:425
+#: ../../vdms_ytdlp/youtubedl_ui.py:834
 #, fuzzy
 msgid "Videomass - Warning!"
 msgstr "Videomass - 加载中..."
 
-#: ../../vdms_dialogs/preferences.py:809 ../../vdms_dialogs/preferences.py:849
-#: ../../vdms_dialogs/preferences.py:889 ../../vdms_dialogs/wizard_dlg.py:351
-#: ../../vdms_dialogs/wizard_dlg.py:368 ../../vdms_dialogs/wizard_dlg.py:385
-#, fuzzy
+#: ../../vdms_dialogs/preferences.py:832 ../../vdms_dialogs/preferences.py:872
+#: ../../vdms_dialogs/preferences.py:912 ../../vdms_dialogs/wizard_dlg.py:355
+#: ../../vdms_dialogs/wizard_dlg.py:372 ../../vdms_dialogs/wizard_dlg.py:389
+#, fuzzy, python-brace-format
 msgid "{} location"
 msgstr "选择{}可执行文件"
 
-#: ../../vdms_dialogs/preferences.py:930
+#: ../../vdms_dialogs/preferences.py:980
+#, python-brace-format
 msgid "Open «{}» executable file"
 msgstr ""
 
-#: ../../vdms_dialogs/preferences.py:959
+#: ../../vdms_dialogs/preferences.py:1010
 msgid "Open «yt_dlp» python package directory"
 msgstr ""
 
@@ -1583,6 +1586,7 @@ msgstr "格式必须是以逗号分隔的"
 
 #: ../../vdms_dialogs/setting_profiles.py:279
 #: ../../vdms_utils/queue_utils.py:80
+#, python-brace-format
 msgid ""
 "ERROR: Keys mismatched for requested data.\n"
 "Invalid file: «{0}»"
@@ -1630,7 +1634,7 @@ msgstr "选择一个日志文件"
 msgid "Are you sure you want to clear the selected log file?"
 msgstr "你确定要清除选定的日志文件吗？"
 
-#: ../../vdms_dialogs/showlogs.py:169 ../../vdms_dialogs/wizard_dlg.py:243
+#: ../../vdms_dialogs/showlogs.py:169 ../../vdms_dialogs/wizard_dlg.py:247
 #: ../../vdms_io/checkup.py:68 ../../vdms_main/main_frame.py:207
 #: ../../vdms_main/main_frame.py:779 ../../vdms_main/main_frame.py:1621
 #: ../../vdms_panels/presets_manager.py:349
@@ -1642,8 +1646,8 @@ msgstr "你确定要清除选定的日志文件吗？"
 #: ../../vdms_panels/presets_manager.py:775
 #: ../../vdms_panels/presets_manager.py:874
 #: ../../vdms_panels/presets_manager.py:904 ../../vdms_ytdlp/main_ytdlp.py:202
-#: ../../vdms_ytdlp/ydl_preferences.py:438 ../../vdms_ytdlp/youtubedl_ui.py:609
-#: ../../vdms_ytdlp/youtubedl_ui.py:625
+#: ../../vdms_ytdlp/ydl_preferences.py:438 ../../vdms_ytdlp/youtubedl_ui.py:612
+#: ../../vdms_ytdlp/youtubedl_ui.py:628
 msgid "Please confirm"
 msgstr "请确认"
 
@@ -1689,13 +1693,13 @@ msgid "=  Below max peak"
 msgstr "=低于最大峰值"
 
 #: ../../vdms_dialogs/shownormlist.py:166
-#: ../../vdms_panels/audio_encoders/acodecs.py:838
+#: ../../vdms_panels/audio_encoders/acodecs.py:840
 #, fuzzy
 msgid "RMS-based volume statistics"
 msgstr "基于RMS的体积统计"
 
 #: ../../vdms_dialogs/shownormlist.py:191
-#: ../../vdms_panels/audio_encoders/acodecs.py:836
+#: ../../vdms_panels/audio_encoders/acodecs.py:838
 #, fuzzy
 msgid "PEAK-based volume statistics"
 msgstr "基于PEAK的体积统计"
@@ -1756,6 +1760,7 @@ msgstr ""
 "新版本修复了错误并提供了新的功能。"
 
 #: ../../vdms_dialogs/videomass_check_version.py:96
+#, python-brace-format
 msgid ""
 "\n"
 "\n"
@@ -1819,27 +1824,27 @@ msgstr "使用FFplay时的快捷键"
 msgid "Stop"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:65
+#: ../../vdms_dialogs/wizard_dlg.py:69
 msgid "Please take a moment to set up the application"
 msgstr "请花一点时间来设置应用程序"
 
-#: ../../vdms_dialogs/wizard_dlg.py:66
+#: ../../vdms_dialogs/wizard_dlg.py:70
 msgid "Click the \"Next\" button to get started"
 msgstr "点击 \"下一步 \"按钮，开始工作。"
 
-#: ../../vdms_dialogs/wizard_dlg.py:81
+#: ../../vdms_dialogs/wizard_dlg.py:85
 msgid "Welcome to the Videomass Wizard!"
 msgstr "欢迎来到 Videomass 向导!"
 
-#: ../../vdms_dialogs/wizard_dlg.py:123
+#: ../../vdms_dialogs/wizard_dlg.py:127
 msgid "Videomass is an application based on FFmpeg\n"
 msgstr "Videomass 是一个基于 FFmpeg 的应用程序。\n"
 
-#: ../../vdms_dialogs/wizard_dlg.py:125
+#: ../../vdms_dialogs/wizard_dlg.py:129
 msgid "If FFmpeg is not on your computer, this application will be unusable"
 msgstr "如果你的电脑上没有FFmpeg，这个应用程序将无法使用"
 
-#: ../../vdms_dialogs/wizard_dlg.py:128
+#: ../../vdms_dialogs/wizard_dlg.py:132
 msgid ""
 "If you have already installed FFmpeg on your operating\n"
 "system, click the \"Auto-detection\" button."
@@ -1847,7 +1852,7 @@ msgstr ""
 "如果在你的操作系统中\n"
 "已经安装了FFmpeg，请点击 \"自动检测 \"按钮。"
 
-#: ../../vdms_dialogs/wizard_dlg.py:131
+#: ../../vdms_dialogs/wizard_dlg.py:135
 msgid ""
 "If you want to use a version of FFmpeg located on your\n"
 "filesystem but not installed on your operating system,\n"
@@ -1857,23 +1862,24 @@ msgstr ""
 "文件系统上，但没有安装在您的操作系统上，请\n"
 "点击 \"定位 \"按钮。"
 
-#: ../../vdms_dialogs/wizard_dlg.py:153
+#: ../../vdms_dialogs/wizard_dlg.py:157
 msgid "Auto-detection"
 msgstr "自动侦测"
 
-#: ../../vdms_dialogs/wizard_dlg.py:155
+#: ../../vdms_dialogs/wizard_dlg.py:159
 msgid "Locate"
 msgstr "定位"
 
-#: ../../vdms_dialogs/wizard_dlg.py:206
+#: ../../vdms_dialogs/wizard_dlg.py:210
 msgid "Click the \"Next\" button"
 msgstr "点击 \"下一步 \"按钮"
 
-#: ../../vdms_dialogs/wizard_dlg.py:227
+#: ../../vdms_dialogs/wizard_dlg.py:231
+#, python-brace-format
 msgid "'{}' is not installed on your computer. Install it or indicate another location by clicking the 'Locate' button."
 msgstr "你的电脑上没有安装'{}'。安装它或通过点击'定位'按钮指出其他位置。"
 
-#: ../../vdms_dialogs/wizard_dlg.py:241
+#: ../../vdms_dialogs/wizard_dlg.py:245
 #, fuzzy
 msgid ""
 "Videomass already seems to include FFmpeg.\n"
@@ -1884,11 +1890,11 @@ msgstr ""
 "\n"
 "你想用这个吗？"
 
-#: ../../vdms_dialogs/wizard_dlg.py:267
+#: ../../vdms_dialogs/wizard_dlg.py:271
 msgid "Locating FFmpeg executables\n"
 msgstr "定位FFmpeg可执行文件\n"
 
-#: ../../vdms_dialogs/wizard_dlg.py:269
+#: ../../vdms_dialogs/wizard_dlg.py:273
 msgid ""
 "\"ffmpeg\", \"ffprobe\" and \"ffplay\" are required. Complete all\n"
 "the text boxes below by clicking on the respective buttons."
@@ -1896,14 +1902,14 @@ msgstr ""
 "\"ffmpeg\"、\"ffprobe \"和 \"ffplay \"是必需的。完成所有\n"
 "下面的文本框，点击相应的按钮。"
 
-#: ../../vdms_dialogs/wizard_dlg.py:408
+#: ../../vdms_dialogs/wizard_dlg.py:412
 #, fuzzy
 msgid "Videomass has a simple graphical interface for yt-dlp\n"
 msgstr ""
 "Videomass有一个简单的graphical界面，用于YouTube-DL和YT-Dlp\n"
 "\n"
 
-#: ../../vdms_dialogs/wizard_dlg.py:409
+#: ../../vdms_dialogs/wizard_dlg.py:413
 #, fuzzy
 msgid ""
 "This feature allows you to download video and audio from\n"
@@ -1912,54 +1918,55 @@ msgstr ""
 "这项功能允许你从许多网站下载视频和音频。\n"
 "许多网站，包括YouTube.com和甚至Facebook。"
 
-#: ../../vdms_dialogs/wizard_dlg.py:428
+#: ../../vdms_dialogs/wizard_dlg.py:432
 msgid " Do you want to enable this feature?"
 msgstr " 你想启用这个功能吗？"
 
-#: ../../vdms_dialogs/wizard_dlg.py:458
+#: ../../vdms_dialogs/wizard_dlg.py:462
 msgid "Wizard completed successfully!\n"
 msgstr ""
 "向导已成功完成!\n"
 "\n"
 
-#: ../../vdms_dialogs/wizard_dlg.py:459
+#: ../../vdms_dialogs/wizard_dlg.py:463
 #, fuzzy
 msgid "Remember that you can always change these settings later, through the Preferences dialog."
 msgstr "记住，你可以在以后通过设置对话框随时改变这些设置。"
 
-#: ../../vdms_dialogs/wizard_dlg.py:461
+#: ../../vdms_dialogs/wizard_dlg.py:465
 msgid "Thank You!"
 msgstr "谢谢你!"
 
-#: ../../vdms_dialogs/wizard_dlg.py:462
+#: ../../vdms_dialogs/wizard_dlg.py:466
 #, fuzzy
 msgid "To exit click the \"Finish\" button"
 msgstr "要退出，请点击 \"完成 \"按钮"
 
-#: ../../vdms_dialogs/wizard_dlg.py:550
+#: ../../vdms_dialogs/wizard_dlg.py:554
 #, fuzzy
 msgid "< Previous"
 msgstr "< 上一页"
 
-#: ../../vdms_dialogs/wizard_dlg.py:553 ../../vdms_dialogs/wizard_dlg.py:653
+#: ../../vdms_dialogs/wizard_dlg.py:557 ../../vdms_dialogs/wizard_dlg.py:657
 #, fuzzy
 msgid "Next >"
 msgstr "下一篇>>"
 
-#: ../../vdms_dialogs/wizard_dlg.py:558
+#: ../../vdms_dialogs/wizard_dlg.py:562
 msgid "Videomass Wizard"
 msgstr "Videomass 向导"
 
-#: ../../vdms_dialogs/wizard_dlg.py:587 ../../vdms_dialogs/wizard_dlg.py:623
+#: ../../vdms_dialogs/wizard_dlg.py:591 ../../vdms_dialogs/wizard_dlg.py:627
 msgid "Finish"
 msgstr "完成"
 
-#: ../../vdms_dialogs/wizard_dlg.py:615
+#: ../../vdms_dialogs/wizard_dlg.py:619
 #, fuzzy
 msgid "Some text boxes are still incomplete"
 msgstr "一些文本框仍然不完整"
 
 #: ../../vdms_io/checkup.py:44 ../../vdms_io/checkup.py:92
+#, python-brace-format
 msgid ""
 "Output folder does not exist:\n"
 "\n"
@@ -2022,7 +2029,7 @@ msgstr "Videomass - 下载中..."
 #: ../../vdms_main/main_frame.py:188 ../../vdms_main/main_frame.py:1359
 #: ../../vdms_main/main_frame.py:1387 ../../vdms_ytdlp/main_ytdlp.py:99
 #: ../../vdms_ytdlp/main_ytdlp.py:147 ../../vdms_ytdlp/main_ytdlp.py:554
-#: ../../vdms_ytdlp/textdrop.py:233 ../../vdms_ytdlp/youtubedl_ui.py:437
+#: ../../vdms_ytdlp/textdrop.py:233 ../../vdms_ytdlp/youtubedl_ui.py:440
 msgid "Ready"
 msgstr "准备就绪"
 
@@ -2034,6 +2041,7 @@ msgid ""
 msgstr ""
 
 #: ../../vdms_main/main_frame.py:226
+#, python-brace-format
 msgid "Queue ({0})"
 msgstr ""
 
@@ -2172,7 +2180,7 @@ msgid "Check for preset updates"
 msgstr "检查新的预设"
 
 #: ../../vdms_main/main_frame.py:530
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Check for new presets updates from {0}"
 msgstr "检查新的预设"
 
@@ -2182,7 +2190,7 @@ msgid "Get latest presets"
 msgstr "创建一个新的预设"
 
 #: ../../vdms_main/main_frame.py:533
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Get the latest presets from {0}"
 msgstr "检查新的预设"
 
@@ -2405,6 +2413,7 @@ msgid "No default folder has been set for the destination of the encodings. The 
 msgstr ""
 
 #: ../../vdms_main/main_frame.py:765 ../../vdms_main/main_frame.py:790
+#, python-brace-format
 msgid ""
 "'{}':\n"
 "No such file or directory"
@@ -2415,17 +2424,19 @@ msgid "Are you sure to empty trash folder?"
 msgstr "你确定清空垃圾文件夹吗?"
 
 #: ../../vdms_main/main_frame.py:786
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid ""
 "'{}':\n"
 "There are no files to delete."
 msgstr "没有要删除的文件"
 
 #: ../../vdms_main/main_frame.py:843
+#, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr ""
 
 #: ../../vdms_main/main_frame.py:847
+#, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr ""
 
@@ -2439,6 +2450,7 @@ msgstr ""
 "档案正在下载中"
 
 #: ../../vdms_main/main_frame.py:889
+#, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "成功下载到\"{0}\"。"
 
@@ -2448,7 +2460,7 @@ msgid "Some changes require restarting the application."
 msgstr "退出应用程序时清除缓存"
 
 #: ../../vdms_main/main_frame.py:1107
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid ""
 "{0}\n"
 "\n"
@@ -2461,6 +2473,7 @@ msgid "Restart Videomass?"
 msgstr "Videomass"
 
 #: ../../vdms_main/main_frame.py:1159
+#, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr ""
 "一个新的版本已经推出--v.{0}/n\n"
@@ -2575,7 +2588,7 @@ msgid "Videomass - Still Image Maker"
 msgstr "Videomass - 静态图像制作"
 
 #: ../../vdms_main/main_frame.py:1596
-#: ../../vdms_panels/audio_encoders/acodecs.py:786
+#: ../../vdms_panels/audio_encoders/acodecs.py:788
 #: ../../vdms_panels/av_conversions.py:577 ../../vdms_panels/filedrop.py:475
 #: ../../vdms_panels/filedrop.py:588 ../../vdms_panels/sequence_to_video.py:318
 #: ../../vdms_panels/video_to_sequence.py:369
@@ -2610,6 +2623,7 @@ msgid "The Python module «yt_dlp» was not found. Make sure you have installed 
 msgstr ""
 
 #: ../../vdms_main/main_frame.py:1797
+#, python-brace-format
 msgid "The system will turn off in {0} seconds"
 msgstr ""
 
@@ -2623,6 +2637,7 @@ msgid "Error while shutting down. Please see file log for details."
 msgstr ""
 
 #: ../../vdms_main/main_frame.py:1817
+#, python-brace-format
 msgid "Exiting the application in {0} seconds"
 msgstr ""
 
@@ -2664,6 +2679,7 @@ msgstr ""
 #: ../../vdms_miniframes/timeline.py:208 ../../vdms_miniframes/timeline.py:298
 #: ../../vdms_miniframes/timeline.py:333 ../../vdms_miniframes/timeline.py:338
 #: ../../vdms_miniframes/timeline.py:441
+#, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr ""
 
@@ -2867,6 +2883,7 @@ msgstr ""
 
 #: ../../vdms_panels/av_conversions.py:1246
 #: ../../vdms_panels/presets_manager.py:814
+#, python-brace-format
 msgid "Write profile on «{0}»"
 msgstr ""
 
@@ -2881,7 +2898,7 @@ msgid "Invalid file name, make sure to provide a valid name including the «.jso
 msgstr ""
 
 #: ../../vdms_panels/av_conversions.py:1284
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Cannot save current data in file «{}»."
 msgstr "无法在文件'{}'中保存当前数据。"
 
@@ -2915,6 +2932,7 @@ msgid "Welcome to Videomass"
 msgstr "欢迎来到 Videomass"
 
 #: ../../vdms_panels/choose_topic.py:73
+#, python-brace-format
 msgid "Version {}"
 msgstr "版本 {}"
 
@@ -3061,6 +3079,7 @@ msgid "File without format extension: please give an appropriate extension to th
 msgstr "没有格式扩展名的文件：请给文件名加上适当的扩展名，例如\".mkv\"、\".avi\"、\".mp3 \"等。"
 
 #: ../../vdms_panels/filedrop.py:84
+#, python-brace-format
 msgid "Name has illegal characters like: {0}"
 msgstr ""
 
@@ -3153,6 +3172,7 @@ msgid "Rename in batch"
 msgstr ""
 
 #: ../../vdms_panels/filedrop.py:628
+#, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr ""
 
@@ -3327,6 +3347,7 @@ msgid "Refresh the presets list"
 msgstr "更新预设列表"
 
 #: ../../vdms_panels/presets_manager.py:338
+#, python-brace-format
 msgid ""
 "Outdated presets version found: v{1}\n"
 "A new version is available: v{0}\n"
@@ -3352,6 +3373,7 @@ msgid "Supported Format List"
 msgstr "支持的格式列表"
 
 #: ../../vdms_panels/presets_manager.py:531
+#, python-brace-format
 msgid "Cannot save current data in file '{}'."
 msgstr "无法在文件'{}'中保存当前数据。"
 
@@ -3360,7 +3382,7 @@ msgid "You just successfully created a new preset!"
 msgstr ""
 
 #: ../../vdms_panels/presets_manager.py:547
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
 "\n"
@@ -3371,6 +3393,7 @@ msgstr ""
 " 它将被移到预设文件夹的 \"移除 \"子文件夹中。"
 
 #: ../../vdms_panels/presets_manager.py:558
+#, python-brace-format
 msgid ""
 "{}\n"
 "\n"
@@ -3381,7 +3404,7 @@ msgstr ""
 "对不起，删除失败，无法继续。"
 
 #: ../../vdms_panels/presets_manager.py:568
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
 msgstr "预设\"{0}\"已成功删除"
 
@@ -3478,7 +3501,7 @@ msgstr ""
 "你想要继续吗?"
 
 #: ../../vdms_panels/presets_manager.py:833
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Edit profile on «{0}»"
 msgstr "编辑\"{}\"预设的配置文件"
 
@@ -3604,7 +3627,7 @@ msgid "Open Audio File"
 msgstr "打开音频文件"
 
 #: ../../vdms_panels/sequence_to_video.py:462
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid ""
 "Invalid file: '{}'\n"
 "\n"
@@ -3612,6 +3635,7 @@ msgid ""
 msgstr "无效文件：'{}'"
 
 #: ../../vdms_panels/sequence_to_video.py:467
+#, python-brace-format
 msgid ""
 "Invalid file: '{}'\n"
 "\n"
@@ -3621,16 +3645,19 @@ msgstr ""
 #: ../../vdms_panels/sequence_to_video.py:556
 #: ../../vdms_panels/sequence_to_video.py:583
 #: ../../vdms_panels/video_to_sequence.py:511
+#, python-brace-format
 msgid "Invalid file: '{}'"
 msgstr "无效文件：'{}'"
 
 #: ../../vdms_panels/sequence_to_video.py:566
 #: ../../vdms_panels/sequence_to_video.py:591
+#, python-brace-format
 msgid "Unsupported format '{}'"
 msgstr "不支持的格式'{}'"
 
 #: ../../vdms_panels/sequence_to_video.py:572
 #: ../../vdms_panels/sequence_to_video.py:596
+#, python-brace-format
 msgid ""
 "File does not exist:\n"
 "\n"
@@ -3877,6 +3904,7 @@ msgid "Selected index does not exist or does not contain any audio streams"
 msgstr "所选索引不存在或不包含任何音频流"
 
 #: ../../vdms_panels/audio_encoders/acodecs.py:507
+#, python-brace-format
 msgid ""
 "ERROR: Missing audio stream:\n"
 "\"{}\""
@@ -3884,28 +3912,24 @@ msgstr ""
 "ERROR：缺少音频流:\n"
 "\"{}\""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:589
-msgid "No Audio"
-msgstr "没有音频"
-
-#: ../../vdms_panels/audio_encoders/acodecs.py:723
+#: ../../vdms_panels/audio_encoders/acodecs.py:725
 #, fuzzy
 msgid "PEAK level normalization, which will produce a maximum peak level equal to the set target level."
 msgstr "激活峰值电平正常化，这将产生一个等于设定的目标电平的最大峰值电平。"
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:726
+#: ../../vdms_panels/audio_encoders/acodecs.py:728
 #, fuzzy
 msgid "RMS-based normalization, which according to mean volume calculates the amount of gain to reach same average power signal."
 msgstr "激活基于有效值的归一化，根据平均音量计算出达到相同平均功率信号的增益量。"
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:730
+#: ../../vdms_panels/audio_encoders/acodecs.py:732
 #, fuzzy
 msgid ""
 "Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements the EBU R128 algorithm.\n"
 "Ideal for live normalization. It produces worse results than the High-quality two-pass Loudnorm normalization, but is faster."
 msgstr "激活两个通道的正常化。它使用 \"loudnorm \"滤波器对感知的响度进行归一化，该滤波器实现了EBU R128算法。"
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:737
+#: ../../vdms_panels/audio_encoders/acodecs.py:739
 #, fuzzy
 msgid ""
 "High-quality two-pass Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements\n"
@@ -4236,6 +4260,7 @@ msgid "If enabled, adds support for row based multithreading which greatly enhan
 msgstr ""
 
 #: ../../vdms_utils/presets_manager_utils.py:46
+#, python-brace-format
 msgid "Supports ({0}) formats only, not ({1})"
 msgstr ""
 
@@ -4265,6 +4290,7 @@ msgid "Import queue file"
 msgstr "日志文件夹"
 
 #: ../../vdms_utils/queue_utils.py:89
+#, python-brace-format
 msgid ""
 "ERROR: invalid data found loading queue file.\n"
 "«{0}»\n"
@@ -4295,7 +4321,7 @@ msgstr ""
 msgid "Remove the current queue and replace it with the imported one."
 msgstr ""
 
-#: ../../vdms_ytdlp/formatcode.py:98 ../../vdms_ytdlp/youtubedl_ui.py:118
+#: ../../vdms_ytdlp/formatcode.py:98 ../../vdms_ytdlp/youtubedl_ui.py:119
 #, fuzzy
 msgid "At least one \"Format Code\" must be checked for each URL selected in green."
 msgstr "对于每个以绿色选择的URL，必须至少勾选一个 \"格式代码\"。"
@@ -4342,7 +4368,7 @@ msgid "Download only the best selected qualities"
 msgstr "下载最新的预设文件"
 
 #: ../../vdms_ytdlp/formatcode.py:249
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid ""
 "ERROR: Unable to get format codes.\n"
 "\n"
@@ -4469,12 +4495,12 @@ msgid "Check the latest version available on github.com"
 msgstr "显示github.com上的最新版本"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:373
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "You are using \"yt-dlp\" version {0}"
 msgstr "你正在使用'{0}'版本{1}。"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:390
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "\"yt-dlp\": Latest version available: {0}"
 msgstr "{0}: 可用的最新版本。{1}"
 
@@ -4546,7 +4572,7 @@ msgstr ""
 "\n"
 
 #: ../../vdms_ytdlp/playlist_indexing.py:108
-#: ../../vdms_ytdlp/youtubedl_ui.py:209
+#: ../../vdms_ytdlp/youtubedl_ui.py:212
 msgid "Playlist Editor"
 msgstr "播放列表编辑器"
 
@@ -4679,7 +4705,7 @@ msgid "Download subtitles only (do not include audio and video)"
 msgstr "下载分割的音频和视频"
 
 #: ../../vdms_ytdlp/subtitles_editor.py:137
-#: ../../vdms_ytdlp/youtubedl_ui.py:216
+#: ../../vdms_ytdlp/youtubedl_ui.py:219
 #, fuzzy
 msgid "Subtitles Editor"
 msgstr "字幕 Streams"
@@ -4820,6 +4846,7 @@ msgid "Using a proxy server"
 msgstr ""
 
 #: ../../vdms_ytdlp/ydl_preferences.py:175
+#, python-brace-format
 msgid ""
 "Use the specified HTTP/HTTPS/SOCKS proxy. To enable SOCKS proxy, specify a proper\n"
 "scheme, e.g.\t{}\n"
@@ -4926,38 +4953,40 @@ msgstr "自动侦测"
 msgid "Using cookies to gain access to websites"
 msgstr ""
 
-#: ../../vdms_ytdlp/ydl_preferences.py:302
+#: ../../vdms_ytdlp/ydl_preferences.py:304
+#, python-brace-format
 msgid ""
 "Here you can pass your `Netscape HTTP Cookie File` in order to access websites that require authentication.\n"
 "If you don't know how to obtain this type of file, you can let the application try to extract it from your browser\n"
-"automatically. The currently supported browsers are: brave, chrome, chromium, edge, firefox, opera, safari, vivaldi.\n"
+"automatically. The currently supported browsers are:\n"
+"{0}.\n"
 "\n"
 "For more information please consult the documentation at the following link:"
 msgstr ""
 
-#: ../../vdms_ytdlp/ydl_preferences.py:319
+#: ../../vdms_ytdlp/ydl_preferences.py:321
 #, fuzzy
 msgid "Allow cookies for authentication"
 msgstr "自动侦测"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:323
+#: ../../vdms_ytdlp/ydl_preferences.py:325
 #, fuzzy
 msgid "Cookie file"
 msgstr "文件首选项"
 
-#: ../../vdms_ytdlp/ydl_preferences.py:329
+#: ../../vdms_ytdlp/ydl_preferences.py:331
 msgid "File name from where cookies should be read and dumped to"
 msgstr ""
 
-#: ../../vdms_ytdlp/ydl_preferences.py:332
+#: ../../vdms_ytdlp/ydl_preferences.py:334
 msgid "Browse"
 msgstr ""
 
-#: ../../vdms_ytdlp/ydl_preferences.py:335
+#: ../../vdms_ytdlp/ydl_preferences.py:337
 msgid "Extract cookies automatically from your browser"
 msgstr ""
 
-#: ../../vdms_ytdlp/ydl_preferences.py:341
+#: ../../vdms_ytdlp/ydl_preferences.py:343
 msgid "Web Browser"
 msgstr ""
 
@@ -4979,53 +5008,53 @@ msgstr ""
 msgid "Locate your cookie file"
 msgstr "打开选定的文件"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:151
+#: ../../vdms_ytdlp/youtubedl_ui.py:152
 msgid "Precompiled Videos"
 msgstr "预编译的视频"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:152
+#: ../../vdms_ytdlp/youtubedl_ui.py:153
 msgid "Download videos by resolution"
 msgstr "按分辨率下载视频"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:153
+#: ../../vdms_ytdlp/youtubedl_ui.py:154
 #, fuzzy
 msgid "Download split audio and video"
 msgstr "下载分割的音频和视频"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:154
+#: ../../vdms_ytdlp/youtubedl_ui.py:155
 msgid "Download Audio only"
 msgstr "仅下载音频"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:155
+#: ../../vdms_ytdlp/youtubedl_ui.py:156
 #, fuzzy
 msgid "Download by format code"
 msgstr "按格式代码下载"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:205
+#: ../../vdms_ytdlp/youtubedl_ui.py:208
 msgid "Include playlists"
 msgstr ""
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:223
+#: ../../vdms_ytdlp/youtubedl_ui.py:226
 #, fuzzy
 msgid "Quality settings"
 msgstr "标记设置"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:235
+#: ../../vdms_ytdlp/youtubedl_ui.py:238
 msgid "When not available, the chosen video resolution will be replaced with the closest one"
 msgstr "当无法使用时，所选择的视频分辨率将被替换成最接近的一个。"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:239
+#: ../../vdms_ytdlp/youtubedl_ui.py:242
 #, fuzzy
 msgid "Video format:"
 msgstr "视频转换"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:260
+#: ../../vdms_ytdlp/youtubedl_ui.py:263
 #, fuzzy
 msgid "Audio format:"
 msgstr "输出格式："
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:418
-#, fuzzy
+#: ../../vdms_ytdlp/youtubedl_ui.py:421
+#, fuzzy, python-brace-format
 msgid ""
 "Unable to get format codes on {0}, unsupported URL:\n"
 "\n"
@@ -5036,20 +5065,27 @@ msgstr ""
 "Unsupported '{0}':n\n"
 "'{1}'"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:568
+#: ../../vdms_ytdlp/youtubedl_ui.py:571
 #, fuzzy
 msgid "URLs have no playlist references"
 msgstr "URLs没有播放列表参考"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:607
+#: ../../vdms_ytdlp/youtubedl_ui.py:610
 #, fuzzy
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr "这些URL包含播放列表。你确定要继续吗？"
 
-#: ../../vdms_ytdlp/youtubedl_ui.py:623
+#: ../../vdms_ytdlp/youtubedl_ui.py:626
 #, fuzzy
 msgid "The URLs contain channels. Are you sure you want to continue?"
 msgstr "URL包含通道。你确定要继续吗？"
+
+#: ../../vdms_ytdlp/youtubedl_ui.py:830
+#, python-brace-format
+msgid ""
+"Missing executable: «{0}».\n"
+"Before continuing, be sure to make the correct settings in the preferences dialog."
+msgstr ""
 
 #~ msgid "Go to the 'Home' panel"
 #~ msgstr "转到 \"主页 \"面板"
@@ -6099,4 +6135,15 @@ msgstr "URL包含通道。你确定要继续吗？"
 
 #~ msgid "For more information, visit the official FFmpeg documentation:"
 #~ msgstr "更多信息，请访问官方FFmpeg文档："
+
+#~ msgid "No Audio"
+#~ msgstr "没有音频"
+
+#~ msgid ""
+#~ "Here you can pass your `Netscape HTTP Cookie File` in order to access websites that require authentication.\n"
+#~ "If you don't know how to obtain this type of file, you can let the application try to extract it from your browser\n"
+#~ "automatically. The currently supported browsers are: brave, chrome, chromium, edge, firefox, opera, safari, vivaldi.\n"
+#~ "\n"
+#~ "For more information please consult the documentation at the following link:"
+#~ msgstr ""
 
