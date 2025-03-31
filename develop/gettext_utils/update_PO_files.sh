@@ -29,11 +29,15 @@ fi
 for langdirs in $(ls -d ${TARGET}/*/)
 do
     PO="${langdirs}LC_MESSAGES/videomass.po"
-    msgmerge --update --no-fuzzy-matching --width=400 --no-wrap --quiet $PO $POT
+    msgmerge --update --no-fuzzy-matching --width=400 --no-wrap --quiet --no-location $PO $POT
     if [[ $? -ne 0 ]]; then
         echo -e '\e[1m\033[31mFailed!\e[0m'
         exit $?
     fi
+    # remove obsolete strings
+    msgattrib --no-obsolete $PO > temp.po
+    \cp -rf temp.po $PO
+    \rm test.po
     echo "Update '${langdirs}LC_MESSAGES/videomass.po' ...OK"
 done
 
