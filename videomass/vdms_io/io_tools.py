@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.20.2024
+Rev: June.06.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -33,6 +33,7 @@ from videomass.vdms_threads.check_bin import (ff_conf,
                                               ff_formats,
                                               ff_codecs,
                                               ff_topics,
+                                              subp,
                                               )
 from videomass.vdms_utils.utils import open_default_application
 from videomass.vdms_dialogs.widget_utils import PopupDialog
@@ -61,6 +62,16 @@ def youtubedl_getstatistics(url, kwargs, parent=None):
     data = thread.data
     dlgload.Destroy()
     yield data
+# --------------------------------------------------------------------------#
+
+
+def youtubedl_get_executable_version(execpath):
+    """
+    Call `check_bin.subp` to get yt-dlp executable version.
+    """
+    get = wx.GetApp()
+    res = subp([execpath, '--version'], get.appset['ostype'])
+    return res[1] if res[0] == 'None' else f'{res[0]} [ERROR]\n'
 # --------------------------------------------------------------------------#
 
 

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.09.2024
+Rev: June.06.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -310,12 +310,9 @@ class MainYtdl(wx.Frame):
 
         # ------------------ View menu
         viewButton = wx.Menu()
-        dscrp = (_("Version of yt-dlp"),
-                 _("Shows the version in use"))
+        dscrp = (_("About yt-dlp"),
+                 _("Shows useful information about yt-dlp"))
         self.ydlused = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Latest version of yt-dlp"),
-                 _("Check the latest version available on github.com"))
-        self.ydllatest = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(viewButton, _("View"))
         # -------
         self.SetMenuBar(self.menuBar)
@@ -334,15 +331,13 @@ class MainYtdl(wx.Frame):
         # ----TOOLS----
         self.Bind(wx.EVT_MENU, self.reminder, notepad)
         # ---- VIEW ----
-        self.Bind(wx.EVT_MENU, self.ydl_used, self.ydlused)
-        self.Bind(wx.EVT_MENU, self.ydl_latest, self.ydllatest)
+        self.Bind(wx.EVT_MENU, self.get_ytdlp_version, self.ydlused)
 
     # --------Menu Bar Event handler (callbacks)
 
     def openMydownload(self, event):
         """
-        Open the download dir with file manager
-
+        Open the download dir using default file manager
         """
         io_tools.openpath(self.appdata['ydlp-outputdir'])
     # -------------------------------------------------------------------#
@@ -362,34 +357,44 @@ class MainYtdl(wx.Frame):
             io_tools.openpath(fname)
     # ------------------------------------------------------------------#
 
-    def ydl_used(self, event, msgbox=True):
+    def get_ytdlp_version(self, event):
         """
-        check version of youtube-dl used from
-        'Version in Use' bar menu
+        Displays a dialog box that gathers useful information about yt-dlp.
+        """
+        pkg_version = 'Not found' if not self.ytdl_pkg() else self.ytdl_pkg()
+
+        execpath = wx.GetApp().appset['ytdlp-exec-path']
+        exec_version = io_tools.youtubedl_get_executable_version(execpath)
+
+        latest = self.ydl_latest()
+        url = '<https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest>'
+        wx.MessageBox(_("- Version of the package currently used: {0}\n"
+                        "- Executable version currently used: {1}\n"
+                        "Latest version available on github.com: {2}\n"
+                        "{3}").format(pkg_version, exec_version, latest, url),
+                      _('Videomass - About «yt-dlp»'),
+                      wx.ICON_INFORMATION, self)
+    # ------------------------------------------------------------------#
+
+    def ytdl_pkg(self):
+        """
+        Retrieve the version of yt_dlp from Python package
+        currently used.
         """
         if wx.GetApp().appset['yt_dlp'] is True:
-            this = yt_dlp.version.__version__
-            if msgbox:
-                wx.MessageBox(_("You are using \"yt-dlp\" "
-                                "version {0}").format(this),
-                              'Videomass', wx.ICON_INFORMATION, self)
-                return this
+            return yt_dlp.version.__version__
         return None
     # -----------------------------------------------------------------#
 
-    def ydl_latest(self, event):
+    def ydl_latest(self):
         """
-        check for new version from github.com
+        Check the latest version of yt-dlp available on github.com
         """
         url = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest"
         latest = io_tools.get_github_releases(url, "tag_name")
         if latest[0] in ['request error:', 'response error:']:
-            wx.MessageBox(f"{latest[0]} {latest[1]}",
-                          f"{latest[0]}", wx.ICON_ERROR, self)
-            return
-        wx.MessageBox(_("\"yt-dlp\": Latest version "
-                        "available: {0}").format(latest[0]),
-                      "Videomass", wx.ICON_INFORMATION, self)
+            return f"{latest[0]} {latest[1]}"
+        return latest[0]
     # -----------------------------------------------------------------#
 
     def on_outputdir(self, event):

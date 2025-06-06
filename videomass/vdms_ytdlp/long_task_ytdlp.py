@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.17.2023
+Rev: June.05.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -29,7 +29,7 @@ from pubsub import pub
 import wx
 from videomass.vdms_dialogs.widget_utils import notification_area
 from videomass.vdms_io.make_filelog import make_log_template
-from videomass.vdms_ytdlp.ydl_downloader import YdlDownloader, YtdlExecDL
+from videomass.vdms_ytdlp.ydl_downloader import YtdlExecDL
 from videomass.vdms_io import io_tools
 
 
@@ -70,7 +70,6 @@ class LogOut(wx.Panel):
         self.logfile = None  # full path log file
         self.result = []  # result of the final process
         self.count = 0  # keeps track of the counts (see `update_count`)
-        self.maxrotate = 0  # max num text rotation (see `update_count`)
         self.clr = self.appdata['colorscheme']
 
         wx.Panel.__init__(self, parent=parent)
@@ -107,7 +106,6 @@ class LogOut(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.view_log, self.btn_viewlog)
 
         pub.subscribe(self.youtubedl_exec, "UPDATE_YDL_EXECUTABLE_EVT")
-        pub.subscribe(self.downloader_activity, "UPDATE_YDL_EVT")
         pub.subscribe(self.update_count, "COUNT_YTDL_EVT")
         pub.subscribe(self.end_proc, "END_YTDL_EVT")
     # ----------------------------------------------------------------------
@@ -137,10 +135,7 @@ class LogOut(wx.Panel):
                                          mode="w",
                                          )
         self.btn_viewlog.Disable()
-        if self.appdata['ytdlp-useexec']:
-            self.thread_type = YtdlExecDL(args[1], urls, self.logfile)
-        else:
-            self.thread_type = YdlDownloader(args[1], urls, self.logfile)
+        self.thread_type = YtdlExecDL(args[1], urls, self.logfile)
     # ----------------------------------------------------------------------
 
     def youtubedl_exec(self, output, duration, status):
@@ -184,54 +179,6 @@ class LogOut(wx.Panel):
                 logerr.write(f"[YT_DLP]: {output}")
     # ---------------------------------------------------------------------#
 
-    def downloader_activity(self, output, duration, status):
-        """
-        Receiving output messages from youtube_dl library via
-        pubsub "UPDATE_YDL_EVT" .
-        """
-        if status == 'ERROR':
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
-            self.txtout.AppendText(f'{output}\n')
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['FAILED']))
-            self.txtout.AppendText(f"{LogOut.MSG_failed}\n")
-            self.result.append('failed')
-
-        elif status == 'WARNING':
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
-            self.txtout.AppendText(f'{output}\n')
-
-        elif status == 'DEBUG':
-            if '[download] Destination' in output:
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['DEBUG']))
-                self.txtout.AppendText(f'{output}\n')
-
-            elif '[info]' in output:
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['INFO']))
-                self.txtout.AppendText(f'{output}\n')
-
-            elif '[download]' not in output:
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
-                self.txtout.AppendText(f'{output}\n')
-                with open(self.logfile, "a", encoding='utf-8') as logerr:
-                    logerr.write(f"[YT_DLP]: {status} > {output}\n")
-
-        elif status == 'DOWNLOAD':
-            perc = duration['_percent_str'].strip()
-            tbytes = duration['_total_bytes_str'].strip()
-            speed = duration['_speed_str'].strip()
-            eta = duration['_eta_str'].strip()
-            self.labprog.SetLabel(f'Downloading: {perc}  |  Size: {tbytes}  '
-                                  f'|  Speed: {speed} |  ETA: {eta}')
-
-        elif status == 'FINISHED':
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT1']))
-            self.txtout.AppendText(f'{duration}\n')
-
-        if status in ['ERROR', 'WARNING']:
-            with open(self.logfile, "a", encoding='utf-8') as logerr:
-                logerr.write(f"[YT_DLP]: {output}\n")
-    # ---------------------------------------------------------------------#
-
     def update_count(self, count, fsource, destination, duration, end):
         """
         Receive messages from file count, loop or non-loop thread.
@@ -245,10 +192,6 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f'\n{count}\n')
             self.error = True
         else:
-            if self.maxrotate == 1:
-                self.maxrotate = 0
-                self.txtout.Clear()
-            self.maxrotate += 1
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
             self.txtout.AppendText(f'\n{count}\n')
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['DEBUG']))
@@ -324,7 +267,6 @@ class LogOut(wx.Panel):
         self.error = False
         self.result.clear()
         self.count = 0
-        self.maxrotate = 0
         self.parent.statusbar_msg(_('Done'), None)
         self.btn_viewlog.Enable()
     # ----------------------------------------------------------------------

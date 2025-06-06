@@ -2,14 +2,21 @@ videomass (5.0.26-1) UNRELEASED; urgency=medium
 
   * Fixed yt-dlp preferences tab issue (see #372)
   * [YouTube Downloader] Enabled import of the external «yt_dlp» package also
-    on the Videomass standalone executable built with Pyinstaller.
+    on the Videomass standalone executable built by Pyinstaller.
   * [YouTube Downloader] Improved handling of the yt-dlp executable
     (yt-dlp.exe on Windows) which now provides some automation and useful
     information for the users.
   * [YouTube Downloader] Added «Whale» browser to the supported browser list for
     cookie automations.
+  * Update it_IT i18n, thanks to @bovirus
+  * Update zh_CN i18n, thanks to @userwljs
+  * [YouTube Downloader] Removed API functionality for download operations. Now
+    only the yt-dlp executable is used for download operations. The API is still
+    needed and will only be used for statistics extraction and format code
+    listing.
+  * Fixed #374
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 25 Mar 2025 09:00:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 06 Jun 2025 13:00:00 +0200
 
 videomass (5.0.25-1) UNRELEASED; urgency=medium
 

@@ -57,7 +57,7 @@ def subp(args, ostype):
             if proc.returncode:  # if returncode == 1
                 return ('Not found', out[0])
 
-    except (OSError, FileNotFoundError) as oserr:  # if ffmpeg do not exist
+    except (OSError, FileNotFoundError) as oserr:  # no executable found
         return ('Not found', oserr)
 
     return ('None', out[0])
