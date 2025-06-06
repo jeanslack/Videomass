@@ -8,6 +8,7 @@ videomass (5.0.26-1) UNRELEASED; urgency=medium
     information for the users.
   * [YouTube Downloader] Added «Whale» browser to the supported browser list for
     cookie automations.
+  * Update it_IT i18n, thanks to @bovirus
   * Update zh_CN i18n, thanks to @userwljs
   * [YouTube Downloader] Removed API functionality for download operations. Now
     only the yt-dlp executable is used for download operations. The API is still
