@@ -24,6 +24,7 @@ Fri, 05 Jun 2025 V.5.0.26
     needed and will only be used for statistics extraction and format code
     listing.
   * Fixed #374
+  * Added «FLAC resampler» new preset.
 
 +------------------------------------+
 Sat, 18 Jan 2025 V.5.0.25

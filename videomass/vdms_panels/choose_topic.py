@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2024
+Rev: Jun.06.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,6 +26,7 @@ This file is part of Videomass.
 """
 import sys
 import wx
+import wx.lib.agw.hyperlink as hpl
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_sys.about_app import VERSION
 
@@ -111,6 +112,20 @@ class Choose_Topic(wx.Panel):
         sizer_base.Add(grid_buttons, 1, wx.ALIGN_CENTER_VERTICAL
                        | wx.ALIGN_CENTER_HORIZONTAL, 5,
                        )
+        sizer_base.Add(50, 50)
+        textsupp = _("If you like this project, please support it with a "
+                     "donation, Thanks!")
+        support = wx.StaticText(self, wx.ID_ANY,
+                                (textsupp),
+                                style=wx.ALIGN_CENTER)
+        sizer_base.Add(support, 0, wx.ALIGN_CENTER, 0)
+
+        url = 'https://www.paypal.com/paypalme/GPernigotto'
+        link1 = hpl.HyperLinkCtrl(self, -1, url, URL=url)
+        link1.SetColours("GREEN", "DARK GREEN", "NAVY")
+        link1.SetBold(True)
+        link1.UpdateLink()
+        sizer_base.Add(link1, 1, wx.ALIGN_CENTER, 0)
         self.SetSizerAndFit(sizer_base)
 
         # ---------------------- Tooltips
@@ -139,9 +154,11 @@ class Choose_Topic(wx.Panel):
         if self.appdata['ostype'] == 'Darwin':
             welcome.SetFont(wx.Font(16, wx.SWISS, wx.NORMAL, wx.BOLD))
             version.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            support.SetFont(wx.Font(16, wx.SWISS, wx.NORMAL, wx.BOLD))
         else:
             welcome.SetFont(wx.Font(14, wx.SWISS, wx.NORMAL, wx.NORMAL))
             version.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.LIGHT))
+            support.SetFont(wx.Font(14, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
         if self.appdata['IS_DARK_THEME'] is True:
             if icontheme in ('Videomass-Colours',
