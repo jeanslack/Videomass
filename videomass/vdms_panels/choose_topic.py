@@ -112,7 +112,7 @@ class Choose_Topic(wx.Panel):
         sizer_base.Add(grid_buttons, 1, wx.ALIGN_CENTER_VERTICAL
                        | wx.ALIGN_CENTER_HORIZONTAL, 5,
                        )
-        sizer_base.Add(50, 50)
+        sizer_base.Add(80, 80)
         textsupp = _("If you like this project, please support it with a "
                      "donation, Thanks!")
         support = wx.StaticText(self, wx.ID_ANY,
@@ -122,9 +122,11 @@ class Choose_Topic(wx.Panel):
 
         url = 'https://www.paypal.com/paypalme/GPernigotto'
         link1 = hpl.HyperLinkCtrl(self, -1, url, URL=url)
-        link1.SetColours("GREEN", "DARK GREEN", "NAVY")
-        link1.SetBold(True)
-        link1.UpdateLink()
+        link1.SetColours("GREEN YELLOW", "GREEN YELLOW", "GREEN YELLOW")
+        # link1.SetBold(True)
+        link1.SetFont(wx.Font(12, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL,
+                              wx.FONTWEIGHT_BOLD, False, 'Verdana'))
+        link1.UpdateLink()  # required for rendering
         sizer_base.Add(link1, 1, wx.ALIGN_CENTER, 0)
         self.SetSizerAndFit(sizer_base)
 
@@ -170,6 +172,7 @@ class Choose_Topic(wx.Panel):
                 self.SetBackgroundColour('#2C001E')  # Dark Aubergine
             welcome.SetForegroundColour('#E95420')  # Ubuntu orange
             version.SetForegroundColour('#E95420')  # Ubuntu orange
+            support.SetForegroundColour('#E95420')  # Ubuntu orange
         elif self.appdata['IS_DARK_THEME'] is False:
             if icontheme in ('Videomass-Colours',
                              'Videomass-Dark',
@@ -180,6 +183,7 @@ class Choose_Topic(wx.Panel):
                 self.SetBackgroundColour('#2C001E')  # Dark Aubergine
                 welcome.SetForegroundColour('#E95420')  # Ubuntu orange
                 version.SetForegroundColour('#E95420')  # Ubuntu orange
+                support.SetForegroundColour('#E95420')  # Ubuntu orange
 
         self.Bind(wx.EVT_BUTTON, self.on_avconversions, avconv)
         self.Bind(wx.EVT_BUTTON, self.on_prst_mng, presets_mng)
