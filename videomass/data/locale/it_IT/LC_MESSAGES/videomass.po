@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: Videomass - Traduzione IT 29.03.2025\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-06-06 18:40+0200\n"
-"PO-Revision-Date: 2025-03-31 07:58+0200\n"
+"PO-Revision-Date: 2025-06-07 00:54+0200\n"
 "Last-Translator: bovirus <bovirus@gmail.comn>\n"
-"Language: it_IT\n"
 "Language-Team: bovirus (bovirus@gmail.com)\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.17.0\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: ../../gui_app.py:121
 msgid "To suppress this message on startup, please install yt-dlp or disable it from the preferences."
@@ -1058,7 +1059,7 @@ msgstr ""
 
 #: ../../vdms_dialogs/preferences.py:195
 msgid "By selecting the checkbox below you will be able to download videos and audio from the net."
-msgstr ""
+msgstr "Selezionando la casella sottostante potrai scaricare video e audio dalla rete."
 
 #: ../../vdms_dialogs/preferences.py:199
 msgid "Enable yt-dlp"
@@ -1070,10 +1071,12 @@ msgid ""
 "Here you can provide the path to the latest version of the {0} executable, this allows you\n"
 "to always keep it up to date."
 msgstr ""
+"Specifica qui il percorso all'ultima versione dell'eseguibile {0}, in modo da mantenerlo\n"
+"sempre aggiornato."
 
 #: ../../vdms_dialogs/preferences.py:208
 msgid "Enable a custom location to run yt-dlp executable."
-msgstr ""
+msgstr "Abilita percorso personalizzato esecuzione yt-dlp"
 
 #: ../../vdms_dialogs/preferences.py:221
 msgid ""
@@ -2760,7 +2763,7 @@ msgstr "Converti filmato in immagini"
 
 #: ../../vdms_panels/choose_topic.py:116
 msgid "If you like this project, please support it with a donation, Thanks!"
-msgstr ""
+msgstr "Se ti piace questo progetto, per favore sostienilo con una donazione. Grazie!"
 
 #: ../../vdms_panels/choose_topic.py:132
 msgid "Create, edit and use quickly your favorite FFmpeg presets and profiles with full formats support and codecs."
@@ -4284,11 +4287,11 @@ msgstr "Opzioni YouTube Downloader"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:313
 msgid "About yt-dlp"
-msgstr ""
+msgstr "Informazioni su yt-dlp"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:314
 msgid "Shows useful information about yt-dlp"
-msgstr ""
+msgstr "Mostra informazioni utili su yt-dlp"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:371
 #, python-brace-format
@@ -4298,10 +4301,14 @@ msgid ""
 "Latest version available on github.com: {2}\n"
 "{3}"
 msgstr ""
+"- Versione pacchetto Python yt-dlp: {0}\n"
+"- Versione eseguibile: {1}\n"
+"Ultima versione disponibile su github.com: {2}\n"
+"{3}"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:375
 msgid "Videomass - About «yt-dlp»"
-msgstr ""
+msgstr "Videomass - Informazioni su «yt-dlp»"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:482
 msgid "Go to the previous panel"
@@ -4897,7 +4904,3 @@ msgstr ""
 
 #~ msgid "\"yt-dlp\": Latest version available: {0}"
 #~ msgstr "\"yt-dlp\": Ultima versione disponibile: {0}"
-
-#~ msgid "If you like this project, please support it with a donation"
-#~ msgstr ""
-

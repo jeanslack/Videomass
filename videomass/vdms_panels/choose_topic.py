@@ -112,22 +112,23 @@ class Choose_Topic(wx.Panel):
         sizer_base.Add(grid_buttons, 1, wx.ALIGN_CENTER_VERTICAL
                        | wx.ALIGN_CENTER_HORIZONTAL, 5,
                        )
-        sizer_base.Add(80, 80)
+        #sizer_base.Add(60, 60)
         textsupp = _("If you like this project, please support it with a "
                      "donation, Thanks!")
         support = wx.StaticText(self, wx.ID_ANY,
                                 (textsupp),
                                 style=wx.ALIGN_CENTER)
-        sizer_base.Add(support, 0, wx.ALIGN_CENTER, 0)
+        sizer_base.Add(support, 0, wx.ALIGN_CENTER, 5)
 
         url = 'https://www.paypal.com/paypalme/GPernigotto'
         link1 = hpl.HyperLinkCtrl(self, -1, url, URL=url)
-        link1.SetColours("GREEN YELLOW", "GREEN YELLOW", "GREEN YELLOW")
+        link1.SetColours("BLUE", "BLUE", "BLUE")
         # link1.SetBold(True)
-        link1.SetFont(wx.Font(12, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL,
-                              wx.FONTWEIGHT_BOLD, False, 'Verdana'))
-        link1.UpdateLink()  # required for rendering
-        sizer_base.Add(link1, 1, wx.ALIGN_CENTER, 0)
+        link1.SetFont(wx.Font(11, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL,
+                              wx.FONTWEIGHT_BOLD, True, 'Verdana'))
+        #link1.UpdateLink()  # required for rendering
+        sizer_base.Add(link1, 0, wx.ALIGN_CENTER, 0)
+        sizer_base.Add(130, 130)
         self.SetSizerAndFit(sizer_base)
 
         # ---------------------- Tooltips
@@ -156,20 +157,22 @@ class Choose_Topic(wx.Panel):
         if self.appdata['ostype'] == 'Darwin':
             welcome.SetFont(wx.Font(16, wx.SWISS, wx.NORMAL, wx.BOLD))
             version.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            support.SetFont(wx.Font(16, wx.SWISS, wx.NORMAL, wx.BOLD))
+            support.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.BOLD))
         else:
             welcome.SetFont(wx.Font(14, wx.SWISS, wx.NORMAL, wx.NORMAL))
             version.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.LIGHT))
-            support.SetFont(wx.Font(14, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            support.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
         if self.appdata['IS_DARK_THEME'] is True:
             if icontheme in ('Videomass-Colours',
                              'Videomass-Dark',
                              'Videomass-Light'):
                 self.SetBackgroundColour('#232424')  # Dark grey
+                link1.SetBackgroundColour('#232424')
             elif icontheme in ('Ubuntu-Dark-Aubergine',
                                'Ubuntu-Light-Aubergine'):
                 self.SetBackgroundColour('#2C001E')  # Dark Aubergine
+                link1.SetBackgroundColour('#2C001E')
             welcome.SetForegroundColour('#E95420')  # Ubuntu orange
             version.SetForegroundColour('#E95420')  # Ubuntu orange
             support.SetForegroundColour('#E95420')  # Ubuntu orange
@@ -178,12 +181,15 @@ class Choose_Topic(wx.Panel):
                              'Videomass-Dark',
                              'Videomass-Light'):
                 self.SetBackgroundColour('#4eada5')  # blue
+                link1.SetBackgroundColour('#4eada5')
             elif icontheme in ('Ubuntu-Dark-Aubergine',
                                'Ubuntu-Light-Aubergine'):
                 self.SetBackgroundColour('#2C001E')  # Dark Aubergine
+                link1.SetBackgroundColour('#2C001E')
                 welcome.SetForegroundColour('#E95420')  # Ubuntu orange
                 version.SetForegroundColour('#E95420')  # Ubuntu orange
                 support.SetForegroundColour('#E95420')  # Ubuntu orange
+        link1.UpdateLink()  # required for rendering
 
         self.Bind(wx.EVT_BUTTON, self.on_avconversions, avconv)
         self.Bind(wx.EVT_BUTTON, self.on_prst_mng, presets_mng)
