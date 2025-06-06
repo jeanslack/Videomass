@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.20.2025
+Rev: June.05.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -192,22 +192,20 @@ class SetUp(wx.Dialog):
                  '(requires application restart)'))
         labytdlp = wx.StaticText(tabThree, wx.ID_ANY, msg)
         sizerytdlp.Add(labytdlp, 0, wx.ALL | wx.EXPAND, 5)
-        msg = (_('Videomass uses the yt-dlp API which can be activated by '
-                 'selecting the checkbox below.\nThe next time you restart '
-                 'the application, the yt_dlp module will be loaded into '
-                 'memory.'))
+        msg = (_('By selecting the checkbox below you will be able to '
+                 'download videos and audio from the net.'))
         labytdescr = wx.StaticText(tabThree, wx.ID_ANY, msg)
         sizerytdlp.Add(labytdescr, 0, wx.ALL | wx.EXPAND, 5)
         msg = _("Enable yt-dlp")
         self.ckbx_ytdlp = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         sizerytdlp.Add(self.ckbx_ytdlp, 0, wx.ALL, 5)
         sizerytdlp.Add((0, 20))
-        msg = (_('Enabling a specific location of the yt-dlp executable will '
-                 'give you more control over downloads\nstop actions and the '
-                 'ability to provide other backend locations.'))
+        msg = (_('Here you can provide the path to the latest version of the '
+                 '{0} executable, this allows you\nto always keep it up to '
+                 'date.').format(self.ytdlp))
         labytexec = wx.StaticText(tabThree, wx.ID_ANY, msg)
         sizerytdlp.Add(labytexec, 0, wx.ALL | wx.EXPAND, 5)
-        msg = _('Use the executable for downloads rather than API')
+        msg = _('Enable a custom location to run yt-dlp executable.')
         self.ckbx_ytexe = wx.CheckBox(tabThree, wx.ID_ANY, (msg))
         sizerytdlp.Add(self.ckbx_ytexe, 0, wx.LEFT | wx.TOP, 5)
 
@@ -552,7 +550,8 @@ class SetUp(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         # --------------------------------------------#
 
-        self.general_current_settings(), self.yt_dlp_current_settings()
+        self.general_current_settings()
+        self.yt_dlp_current_settings()
         self.ffmpeg_current_settings()
 
     def general_current_settings(self):
@@ -604,7 +603,7 @@ class SetUp(wx.Dialog):
         the preferences dialog
         """
         self.ckbx_ytdlp.SetValue(self.settings['enable-ytdlp'])
-        self.ckbx_ytexe.SetValue(self.settings['ytdlp-useexec'])
+        self.ckbx_ytexe.SetValue(self.appdata['ytdlp-enable-exec'])
         execstr = ('Not found' if self.appdata['ytdlp-exec-path'] == ''
                    else self.appdata['ytdlp-exec-path'])
         self.txtctrl_ytexec.SetValue(execstr)
@@ -954,21 +953,22 @@ class SetUp(wx.Dialog):
         """
         if self.ckbx_ytexe.GetValue():
             self.txtctrl_ytexec.Enable(), self.btn_ytexec.Enable()
+            self.settings['ytdlp-enable-exec'] = True
         else:
             self.txtctrl_ytexec.Disable(), self.btn_ytexec.Disable()
             self.txtctrl_ytexec.Clear()
-            status = detect_binaries(self.ytdlp)
-            if status[0] == 'not installed':
-                self.txtctrl_ytexec.Clear()
-                self.txtctrl_ytexec.write('Not found')
-                self.settings['ytdlp-exec-path'] = ''
-            else:
-                self.txtctrl_ytexec.Clear()
-                getpath = self.appdata['getpath'](status[1])
-                self.txtctrl_ytexec.write(getpath)
-                self.settings['ytdlp-exec-path'] = getpath
+            self.settings['ytdlp-enable-exec'] = False
 
-            self.settings['ytdlp-useexec'] = self.ckbx_ytexe.GetValue()
+        status = detect_binaries(self.ytdlp)
+        if status[0] == 'not installed':
+            self.txtctrl_ytexec.Clear()
+            self.txtctrl_ytexec.write('Not found')
+            self.settings['ytdlp-exec-path'] = ''
+        else:
+            self.txtctrl_ytexec.Clear()
+            getpath = self.appdata['getpath'](status[1])
+            self.txtctrl_ytexec.write(getpath)
+            self.settings['ytdlp-exec-path'] = getpath
     # --------------------------------------------------------------------#
 
     def open_ytdlp_exec(self, event):
@@ -987,7 +987,6 @@ class SetUp(wx.Dialog):
                 getpath = self.appdata['getpath'](fdlg.GetPath())
                 self.txtctrl_ytexec.write(getpath)
                 self.settings['ytdlp-exec-path'] = getpath
-                self.settings['ytdlp-useexec'] = self.ckbx_ytexe.GetValue()
     # --------------------------------------------------------------------#
 
     def on_ytdlp_package(self, event):

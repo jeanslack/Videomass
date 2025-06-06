@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.20.2024
+Rev: March.28.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -141,7 +141,6 @@ class LogOut(wx.Panel):
         self.logfile = None  # log pathname, None otherwise
         self.result = []  # result of the final process
         self.count = 0  # keeps track of the counts (see `update_count`)
-        self.maxrotate = 0  # max num text rotation (see `update_count`)
         self.clr = self.appdata['colorscheme']
 
         wx.Panel.__init__(self, parent=parent)
@@ -219,15 +218,15 @@ class LogOut(wx.Panel):
             self.thread_type = FFmpeg(self.logfile, data)
 
         elif args[0] == 'video_to_sequence':
-            self.with_eta, self.maxrotate = False, None
+            self.with_eta = False
             self.thread_type = PicturesFromVideo(self.logfile, **data)
 
         elif args[0] == 'sequence_to_video':
-            self.with_eta, self.maxrotate = False, None
+            self.with_eta = False
             self.thread_type = SlideshowMaker(self.logfile, **data)
 
         elif args[0] == 'concat_demuxer':
-            self.with_eta, self.maxrotate = False, None
+            self.with_eta = False
             self.thread_type = ConcatDemuxer(self.logfile, **data)
     # ----------------------------------------------------------------------
 
@@ -338,11 +337,6 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f'\nERROR: {count}\n')
             self.error = True
         else:
-            if self.maxrotate is not None:
-                if self.maxrotate == 1:
-                    self.maxrotate = 0
-                    self.txtout.Clear()
-                self.maxrotate += 1
             self.barprog.SetRange(duration)  # set overall duration range
             self.barprog.SetValue(0)  # reset bar progress
             self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
@@ -419,7 +413,6 @@ class LogOut(wx.Panel):
         self.error = False
         self.result.clear()
         self.count = 0
-        self.maxrotate = 0
         self.with_eta = True  # restoring time remaining display
         self.btn_viewlog.Enable()
     # ----------------------------------------------------------------------

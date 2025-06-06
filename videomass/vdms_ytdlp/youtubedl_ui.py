@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.22.2025
+Rev: June.05.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -822,20 +822,17 @@ class Downloader(wx.Panel):
         """
         Call `main_ytdlp.switch_to_processing`
         """
-        if self.appdata['ytdlp-useexec']:
-            execlist = []
-            execpath = self.appdata['ytdlp-exec-path']
-            if (not execpath.strip().endswith(self.execname)
-                    or not shutil.which(execpath)):
-                wx.MessageBox(_('Missing executable: «{0}».\nBefore '
-                                'continuing, be sure to make the correct '
-                                'settings in the preferences dialog.'
-                                ).format(self.execname),
-                              _('Videomass - Warning!'), wx.ICON_WARNING, self)
-                return
+        execlist = []
+        execpath = self.appdata['ytdlp-exec-path']
+        if (not execpath.strip().endswith(self.execname)
+                or not shutil.which(execpath)):
+            wx.MessageBox(_('Missing executable: «{0}».\nBefore '
+                            'continuing, be sure to make the correct '
+                            'settings in the preferences dialog.'
+                            ).format(self.execname),
+                          _('Videomass - Warning!'), wx.ICON_WARNING, self)
+            return
 
-            for args in datalist:
-                execlist.append(from_api_to_cli(args, execpath))
-            self.parent.switch_to_processing('YouTube Downloader', execlist)
-        else:
-            self.parent.switch_to_processing('YouTube Downloader', datalist)
+        for args in datalist:
+            execlist.append(from_api_to_cli(args, execpath))
+        self.parent.switch_to_processing('YouTube Downloader', execlist)
