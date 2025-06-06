@@ -15,6 +15,7 @@ videomass (5.0.26-1) UNRELEASED; urgency=medium
     needed and will only be used for statistics extraction and format code
     listing.
   * Fixed #374
+  * Added «FLAC resampler» new preset.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 06 Jun 2025 13:00:00 +0200
 
