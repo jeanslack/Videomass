@@ -112,7 +112,6 @@ class Choose_Topic(wx.Panel):
         sizer_base.Add(grid_buttons, 1, wx.ALIGN_CENTER_VERTICAL
                        | wx.ALIGN_CENTER_HORIZONTAL, 5,
                        )
-        #sizer_base.Add(60, 60)
         textsupp = _("If you like this project, please support it with a "
                      "donation, Thanks!")
         support = wx.StaticText(self, wx.ID_ANY,
@@ -126,7 +125,7 @@ class Choose_Topic(wx.Panel):
         # link1.SetBold(True)
         link1.SetFont(wx.Font(11, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL,
                               wx.FONTWEIGHT_BOLD, True, 'Verdana'))
-        #link1.UpdateLink()  # required for rendering
+        link1.UpdateLink()  # required for rendering
         sizer_base.Add(link1, 0, wx.ALIGN_CENTER, 0)
         sizer_base.Add(130, 130)
         self.SetSizerAndFit(sizer_base)
@@ -189,7 +188,6 @@ class Choose_Topic(wx.Panel):
                 welcome.SetForegroundColour('#E95420')  # Ubuntu orange
                 version.SetForegroundColour('#E95420')  # Ubuntu orange
                 support.SetForegroundColour('#E95420')  # Ubuntu orange
-        link1.UpdateLink()  # required for rendering
 
         self.Bind(wx.EVT_BUTTON, self.on_avconversions, avconv)
         self.Bind(wx.EVT_BUTTON, self.on_prst_mng, presets_mng)
