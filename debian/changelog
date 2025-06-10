@@ -1,5 +1,12 @@
 videomass (5.0.26-1) UNRELEASED; urgency=medium
 
+  * Update it_IT i18n, thanks to @bovirus .
+  * Update ru_RU i18n, thanks to ChourS.
+
+-- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 10 Jun 2025 10:00:00 +0200
+
+videomass (5.0.26-1) UNRELEASED; urgency=medium
+
   * Fixed yt-dlp preferences tab issue (see #372)
   * [YouTube Downloader] Enabled import of the external «yt_dlp» package also
     on the Videomass standalone executable built by Pyinstaller.
