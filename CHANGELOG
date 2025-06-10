@@ -7,6 +7,12 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Tue, 10 Jun 2025 V.5.0.27
+
+  * Update it_IT i18n, thanks to @bovirus .
+  * Update ru_RU i18n, thanks to ChourS.
+
++------------------------------------+
 Fri, 05 Jun 2025 V.5.0.26
 
   * Fixed yt-dlp preferences tab issue (see #372)

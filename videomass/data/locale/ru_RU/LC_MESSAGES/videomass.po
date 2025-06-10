@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: Videomass 5.0.20\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-06 18:40+0200\n"
-"PO-Revision-Date: 2025-01-18 00:00+0300\n"
-"Last-Translator: Chour <ChourS2008@yandex.ru>\n"
-"Language: ru_RU\n"
+"PO-Revision-Date: 2025-06-09 19:36+0300\n"
+"Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language-Team: Chour <ChourS2008@yandex.ru>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.17.0\n"
+"X-Generator: Poedit 3.6\n"
 
 #: ../../gui_app.py:121
 msgid "To suppress this message on startup, please install yt-dlp or disable it from the preferences."
@@ -1059,7 +1060,7 @@ msgstr ""
 
 #: ../../vdms_dialogs/preferences.py:195
 msgid "By selecting the checkbox below you will be able to download videos and audio from the net."
-msgstr ""
+msgstr "Установив флажок ниже, вы сможете загружать видео и аудио из сети."
 
 #: ../../vdms_dialogs/preferences.py:199
 msgid "Enable yt-dlp"
@@ -1071,10 +1072,12 @@ msgid ""
 "Here you can provide the path to the latest version of the {0} executable, this allows you\n"
 "to always keep it up to date."
 msgstr ""
+"Здесь вы можете указать путь к последней версии исполняемого файла {0}, \n"
+"это позволит вам всегда поддерживать его в актуальном состоянии."
 
 #: ../../vdms_dialogs/preferences.py:208
 msgid "Enable a custom location to run yt-dlp executable."
-msgstr ""
+msgstr "Включите пользовательское расположение для запуска исполняемого файла yt-dlp."
 
 #: ../../vdms_dialogs/preferences.py:221
 msgid ""
@@ -2775,7 +2778,7 @@ msgstr "Картинки из фильма"
 
 #: ../../vdms_panels/choose_topic.py:116
 msgid "If you like this project, please support it with a donation, Thanks!"
-msgstr ""
+msgstr "Если вам нравится этот проект, пожалуйста, поддержите его пожертвованием, спасибо!"
 
 #: ../../vdms_panels/choose_topic.py:132
 msgid "Create, edit and use quickly your favorite FFmpeg presets and profiles with full formats support and codecs."
@@ -4285,11 +4288,11 @@ msgstr "Параметры загрузчика YouTube"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:313
 msgid "About yt-dlp"
-msgstr ""
+msgstr "О yt-dlp"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:314
 msgid "Shows useful information about yt-dlp"
-msgstr ""
+msgstr "Отображает полезную информацию об yt-dlp"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:371
 #, python-brace-format
@@ -4299,10 +4302,14 @@ msgid ""
 "Latest version available on github.com: {2}\n"
 "{3}"
 msgstr ""
+"- Версия используемого в данный момент пакета: {0}\n"
+"- Используемая в настоящее время исполняемая версия:{1}\n"
+"Последняя версия доступна на github.com: {2}\n"
+"{3}"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:375
 msgid "Videomass - About «yt-dlp»"
-msgstr ""
+msgstr "Videomass - О «yt-dlp»"
 
 #: ../../vdms_ytdlp/main_ytdlp.py:482
 msgid "Go to the previous panel"
@@ -4747,6 +4754,12 @@ msgid ""
 "\n"
 "For more information please consult the documentation at the following link:"
 msgstr ""
+"Здесь вы можете ввести свой `Netscape HTTP Cookie File`для доступа к веб-сайтам, требующим аутентификации.\n"
+"Если вы не знаете, как получить файл такого типа, вы можете позволить приложению попытаться извлечь его из вашего браузера автоматически. \n"
+"В настоящее время поддерживаются следующие браузеры:\n"
+"{0}.\n"
+"\n"
+"Для получения дополнительной информации, пожалуйста, ознакомьтесь с документацией по следующей ссылке:"
 
 #: ../../vdms_ytdlp/ydl_preferences.py:321
 msgid "Allow cookies for authentication"
@@ -4858,6 +4871,8 @@ msgid ""
 "Missing executable: «{0}».\n"
 "Before continuing, be sure to make the correct settings in the preferences dialog."
 msgstr ""
+"Отсутствующий исполняемый файл: «{0}».\n"
+"Прежде чем продолжить, убедитесь в правильности настроек в диалоговом окне настроек."
 
 #~ msgid "Go to the 'Home' panel"
 #~ msgstr "Перейдите к 'Начальной панели'"
@@ -6873,7 +6888,3 @@ msgstr ""
 
 #~ msgid "\"yt-dlp\": Latest version available: {0}"
 #~ msgstr "\"yt-dlp\": Доступна последняя версия:{0}"
-
-#~ msgid "If you like this project, please support it with a donation"
-#~ msgstr ""
-
