@@ -3,6 +3,10 @@
 URGENCY: to do soon
 --------------------
 
+- [DONE] Update settings_manager using code from ffaudiocue
+- [DONE] lower the minimum version of the requests package to requests>=2.28.1
+- [DONE] Try to Update debian dir
+
 --------------
 URGENCY: high
 --------------

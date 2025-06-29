@@ -4,7 +4,7 @@ pillow
 pypubsub
 six
 wxpython
-requests
+requests>=2.28.1
 yt-dlp[default]
 
 # Requirements for Windows
