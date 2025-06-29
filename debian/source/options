@@ -1,1 +1,5 @@
+#
+# ### dgit-maint-merge(7) workflow user need this ###
+# single-debian-patch
+# auto-commit
 extend-diff-ignore="^[^/]+.egg-info/"

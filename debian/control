@@ -1,32 +1,50 @@
 Source: videomass
-Maintainer: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Section: video
 Priority: optional
+Maintainer: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Build-Depends: debhelper-compat (= 13),
-               dh-sequence-python3,
                pybuild-plugin-pyproject,
                python3-all,
                python3-babel,
                python3-hatchling,
                python3-setuptools
-Standards-Version: 4.1.4
+Standards-Version: 4.5.1
 Homepage: https://github.com/jeanslack/Videomass
+Rules-Requires-Root: no
+#Vcs-Git: https://salsa.debian.org/debian/videomass.git
+#Vcs-Browser: https://salsa.debian.org/debian/videomass
 X-Python3-Version: >= 3.8
 
 Package: videomass
 Architecture: all
+Multi-Arch: foreign
 Depends: python3-pubsub,
-         python3-requests,
+         python3-requests (>= 2.28.1),
          python3-wxgtk4.0,
          ${misc:Depends},
          ${python3:Depends}
 Recommends: ffmpeg
 Suggests: atomicparsley, yt-dlp
-Description: It is a cross-platform GUI for FFmpeg and yt-dlp
+Description: Cross-platform GUI for FFmpeg and yt-dlp
  Videomass is a powerful, multitasking and cross-platform graphical user
- interface (GUI) for FFmpeg and yt-dlp.
+ interface for FFmpeg and yt-dlp. Videomass is written in Python3 using
+ the wxPython-Phoenix GUI toolkit.
  .
  It offers a wide range of features and functions, making it a comprehensive
  software solution.
  .
- Videomass is written in Python3 using the wxPython-Phoenix GUI toolkit.
+ It features file concatenation, batch-mode, queue management, time trimmer,
+ ability to create thumbnails, tiled mosaics and animated giffs from movies;
+ it has sophisticated GUIs for video filters and previews like resizing,
+ croping, transposing, color equalization. It features PEAK, RMS and EBU audio
+ normalization with streams indexing capabilities, audio volume analyzer,
+ audio preview and many more interesting features…
+ For the people that are familiar with FFmpeg, it has a highly customizable
+ preset manager with the possbility to easily make your own presets. For less
+ experienced people there are also ready-to-use presets.
+ It offers out-of-the-box all possible
+ file formats like MP4, M4V, M4A, MKV, AVI, OGV, WEBM, MP3, AC-3, WAV, OPUS,
+ FLAC, OGG and encoders like MPEG-4, H.264/AVC, H.265/HEVC, VP8, VP9,
+ LIBAOM-AVI, VORBIS, PCM, LAME, ALAC, etc. Also you can copy audio or video
+ streams (lossless mode) without re-encoding, or extract audio from videos and
+ much more!

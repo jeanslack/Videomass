@@ -53,7 +53,7 @@ classifiers = [
 dependencies = [
     "wxpython>=4.0.7",
     "pypubsub>=4.0.3",
-    "requests>=2.31.0"
+    "requests>=2.28.1"
 ]
 
 [project.optional-dependencies]
