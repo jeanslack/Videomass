@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 29 Jun 2025 V.5.0.27
+Mon, 30 Jun 2025 V.5.0.27
 
   * Update it_IT i18n, thanks to @bovirus .
   * Update ru_RU i18n, thanks to ChourS.
@@ -17,7 +17,7 @@ Tue, 29 Jun 2025 V.5.0.27
   * Fixed `requests` minimum version to >=2.28.1.
   * Improved files on requirements dir.
   * Fixed OS-based dependencies on pyproject.toml and requirements.
-  * Made new requirements.txt file for installation.
+  * Made requirements.txt file for installation.
 
 +------------------------------------+
 Fri, 05 Jun 2025 V.5.0.26
