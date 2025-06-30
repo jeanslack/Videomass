@@ -1,0 +1,47 @@
+
+
+# Packaging for Debian and derivatives
+#     - Make a Videomass debian source package from upstream source code.
+#     - Build a .deb file in your Debian or derivative OS.
+#
+# Required dependencies for building:
+#
+#     Python >= 3.9.0
+#     python3-pip
+#     python3-all
+#     python3-babel
+#     debhelper
+#     dh-python
+#     devscripts
+#     debmake
+#     pybuild-plugin-pyproject
+#     python3-hatchling
+#     python3-setuptools
+#
+#     ~# apt update && apt install python3-pip python3-all python3-babel debhelper dh-python devscripts debmake pybuild-plugin-pyproject python3-setuptools python3-hatchling
+#
+# - Download the upstream tarball as the `package-version.tar.gz` file.
+# - Untar to create many files under the package-version/ directory.
+# - debmake is invoked in the package-version/ directory:
+#
+#     ~$ debmake -b:python3
+#
+# - Files in the package-version/debian/ directory are manually adjusted, for instance edit debian/changelog file and replace UNRELEASED
+#   row with specified Debian release e.g. unstable, or Ubuntu release e.g. bionic, focal, etc, then save the changes to file.
+# - dpkg-buildpackage (usually from its wrapper debuild or pdebuild) is invoked in the package-version/ directory to make debian packages.
+#     
+# - To generate a debian source package type:
+#
+#     ~$ debuild -S (you could add the -sa option to digitally sign)
+#
+# - Instead, to make a .deb file (aka binary package) type:
+#
+#      $ debuild -b (you could add the -sa option to digitally sign)
+#
+# Resources:
+#
+#     <https://wiki.debian.org/Packaging/SourcePackage> (debian source package)
+#     https://www.debian.org/doc/manuals/debmake-doc/ch04.en.html
+#     https://wiki.debian.org/SimplePackagingTutorial
+#     https://wiki.debian.org/CreatePackageFromPPA#Install_the_Debian_SDK
+#     https://wiki.debian.org/Python/LibraryStyleGuide

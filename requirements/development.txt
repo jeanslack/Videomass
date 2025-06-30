@@ -1,0 +1,35 @@
+# IMPORTANT! if you are a Linux/FreeBSD user, make sure to install wxPython from
+# your Linux distribution's package manager. This will prevent pip from
+# attempting to build wxPython from source, as wxPython's PyPi wheels only
+# provides support for Windows and MacOS.
+
+PyPubSub>=4.0.3
+requests>=2.28.1
+yt-dlp[default]
+hatchling
+build
+wheel
+babel
+pyinstaller
+wxpython>=4.0.7; platform_system == "Windows" or platform_system == "Darwin"
+
+
+# This requirements include linters used by developper/mantainer.
+# See .pylintrc file and .flake8 file in the source directory for
+# the exclude, ignore references details and other linter exceptions .
+
+pylint
+flake8
+
+
+# Other Notes for Tester:
+
+# The following installation method involves compiling Videomass from source 
+# distribution (sdist), so it also requires packages to build the binary (wheel).
+
+# This assumes installation in a virtual environment using python3-venv module
+# with `--system-site-package` option, like this:
+#
+#   ~$ python3 -m venv --system-site-packages --upgrade-deps VENV
+#   ~$ source VENV/bin/activate
+#   ~$ python3 -m pip install --no-binary videomass -r requirements-linux.txt

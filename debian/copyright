@@ -5,24 +5,10 @@ Source: https://github.com/jeanslack/Videomass
 #
 # Please double check copyright with the licensecheck(1) command.
 
-Files:     .flake8
-           .github/FUNDING.yml
-           .github/ISSUE_TEMPLATE/ask-a-question.md
-           .github/ISSUE_TEMPLATE/bug_report.md
-           .github/ISSUE_TEMPLATE/feature_request.md
-           .github/workflows/tests.yml
-           .gitignore
-           .pylintrc
-           videomass/data/icons/videomass.icns
-
-Copyright: __NO_COPYRIGHT_NOR_LICENSE__
-License:   __NO_COPYRIGHT_NOR_LICENSE__
-
 Files:     *
 Copyright: 2025 Gianluca Pernigotto
 License:   GPL-3.0+
-
- This file is part of Videomass.
+ All files are part of Videomass.
  .
  Videomass is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -40,8 +26,12 @@ License:   GPL-3.0+
  On Debian systems, the complete text of the GNU General Public License
  Version 3 can be found in `/usr/share/common-licenses/GPL-3'.
 
+
+#----------------------------------------------------------------------------
+# xml and html files (skipped):
+#
+#         xdg/io.github.jeanslack.videomass.appdata.xml
+
 #----------------------------------------------------------------------------
 # Files marked as NO_LICENSE_TEXT_FOUND may be covered by the following
 # license/copyright files.
-
-#----------------------------------------------------------------------------

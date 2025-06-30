@@ -1,0 +1,4 @@
+# Use like this:
+#    python -m pip install -r requirements.txt
+
+-r requirements/installation.txt
