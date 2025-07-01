@@ -26,17 +26,21 @@
 #
 #     ~$ debmake -b:python3
 #
-# - Files in the package-version/debian/ directory are manually adjusted, for instance edit debian/changelog file and replace UNRELEASED
-#   row with specified Debian release e.g. unstable, or Ubuntu release e.g. bionic, focal, etc, then save the changes to file.
-# - dpkg-buildpackage (usually from its wrapper debuild or pdebuild) is invoked in the package-version/ directory to make debian packages.
-#     
-# - To generate a debian source package type:
+# - Files in the package-version/debian/ directory are manually adjusted, for
+#   instance edit debian/changelog file and replace UNRELEASED row with
+#   specified Debian release e.g. unstable, or Ubuntu release e.g. bionic,
+#   focal, etc, then save the changes to file.
 #
-#     ~$ debuild -S (you could add the -sa option to digitally sign)
+# - dpkg-buildpackage (usually from its wrapper debuild or pdebuild) is invoked
+#   in the package-version/ directory to make debian packages:
 #
-# - Instead, to make a .deb file (aka binary package) type:
+#   - To generate a debian source package type:
 #
-#      $ debuild -b (you could add the -sa option to digitally sign)
+#       ~$ debuild -S (you could add the -sa option to digitally sign)
+#
+#   - Instead, to make a .deb file (aka binary package) type:
+#
+#       $ debuild -b (you could add the -sa option to digitally sign)
 #
 # Resources:
 #

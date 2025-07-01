@@ -16,13 +16,13 @@ Base application dependencies
 =============================
 
     Requires:
-        - Python >=3.9.0 <=3.13.0
+        - Python >=3.9.0
         - wxPython >=4.0.7
         - PyPubSub >=4.0.3
         - requests >=2.28.1
         - FFmpeg (included ffplay and ffprobe) >=5.1
     Optionals:
-        - yt-dlp >=2024.04.09
+        - yt-dlp >=2025.06.30
 
 
 =========================
