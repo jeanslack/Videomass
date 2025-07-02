@@ -221,7 +221,7 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 8.3
+    VERSION = 8.4
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "shutdown": False,
                        "sudo_password": "",

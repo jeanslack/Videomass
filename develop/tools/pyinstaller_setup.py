@@ -102,7 +102,7 @@ def videomass_data_source(name=NAME, release=about_app):
             "SHARE": os.path.join('videomass', 'data', 'presets'),
             "FFMPEG": os.path.join('videomass', 'data', 'FFMPEG'),
             "NOTICE": os.path.join('videomass', 'data',
-                                   'FFMPEG', 'NOTICE.rtf'),
+                                   'FFMPEG', 'README'),
             "AUTH": 'AUTHORS',
             "BUGS": 'BUGS',
             "CHANGELOG": 'CHANGELOG',
