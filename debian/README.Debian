@@ -1,0 +1,110 @@
+videomass for Debian
+
+Please edit this to provide information specific to
+this videomass Debian package.
+
+    Videomass is a multifunctional, multitasking front-end for FFmpeg and
+    yt-dlp, it was designed for people who need a GUI to collect custom presets
+    and profiles and to facilitate the application of specific video and audio
+    filters or automate the conversion/transcoding processes even in batch mode.
+
+    It features graphical tools for viewing, analyzing, filtering and processing
+    multimedia streams with the additional ability to downloading audio/videos
+    via yt-dlp.
+
+    Videomass is Free (libre) Software, created and maintained by Gianluca
+    (jeanslack) Pernigotto; it was written in Python3 using the wxPython4
+    toolkit; it is cross-platform and works on Linux, MacOs, Windows and
+    FreeBSD.
+
+    Videomass is not just a common converter, it features file concatenation,
+    time trimmer, ability to create thumbnails, tiled mosaics and animated giffs
+    from movies; it has sophisticated GUIs for video filters, previews for video
+    stabilization, resizing, croping, transposing, color equalization.
+    It features PEAK, RMS and EBU audio normalization with streams indexing
+    capabilities, a volume analyzer, audio preview and many more interesting
+    features… For the people that are familiar with FFmpeg, it has a highly
+    customizable preset manager with the possbility to easily make your own
+    presets through the GUI and adapt this to your specific needs or create new
+    presets using the FFmpeg command line. For less experienced people there are
+    also ready-to-use presets. It offers out-of-the-box all possible file
+    formats like MP4, M4V, M4A, MKV, AVI, OGV, WEBM, MP3, AC-3, WAV, OPUS, FLAC,
+    OGG and encoders like MPEG-4, H.264/AVC, H.265/HEVC, VP8, VP9, LIBAOM-AVI,
+    VORBIS, PCM, LAME, ALAC, etc. Also you can copy audio or video streams
+    (lossless mode) without re-encoding, or extract audio from videos and much
+    more!
+
+    Main features:
+
+    - No ads
+    - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
+    - Batch processing.
+    - Queue management (only available for Presets Manager and A/V Conversions).
+    - Advanced log file management.
+    - Multi-panels, switch between panels using keyboard shortcuts.
+    - Audio/video processing using advanced and sophisticated filter GUIs.
+    - While downloading audio or video you can now do other transcoding tasks.
+    - Multi languages support.
+
+    Conversions and transcodings:
+
+    - Drag and drop to add multiple files simultaneously.
+    - Fully customizable presets and profiles.
+    - Possibility to create your new presets and profiles from scratch.
+    - Has useful presets to start with.
+    - Using the Presets Manager, you can set any format and codec supported by
+      your FFmpeg build.
+    - Media file info (from FFprobe) and streams analyzer (from volumedetect).
+    - Shows the estimated time of arrival during encodings.
+    - Concatenate, merge media files losslessly.
+    - Create Slideshows.
+    - Extract images from video.
+    - Ability to switch between different FFmpeg builds.
+    - Has useful graphical tools for evaluating the supported features of a specific FFmpeg build.
+    - Audio stream mapping using selectable indexes.
+    - You can set both audio and video to copy when you just want to convert
+      formats (lossless process).
+    - Timeline editor to slice time segments or trim the duration of your media
+      even without re-encoding and therefore without loss of quality.
+    - It has GUI video filters such as:
+        Resize
+        Crop
+        Transpose
+        Deinterlace
+        Denoise
+        Stabilize
+        Equalize
+    - Audio filters for volume normalization such us:
+        PEAK, RMS and EBU-R128 normalizers.
+        PEAK and RMS volume analysis reporting.
+        Ability to select specified audio streams in videos to apply volume
+        normalization.
+
+    Downloading audio and video
+
+    - Download using multiple URLs from YouTube and more websites (over 200 are
+      currently supported).
+    - Precompiled Videos, from best to worst qualities.
+    - Download by format and resolution.
+    - Download audio and video separately.
+    - Download Audio only.
+    - Download by ID selecting “format codes” and ability to download both
+      separated or merged files.
+    - Shows download statistics.
+    - Ability to download entire playlists.
+    - Playlists can be indexed to download only the files you are interested in.
+    - Ability to enable/disable the SSL certificate.
+    - Ability to embed thumbnail in audio file.
+    - Can include the origin metadata to files.
+    - Ability to set preferred subtitles.
+    - Ability to include IDs in filenames.
+    - Ability to restrict filenames to only ASCII characters.
+    - Ability to set alternative downloaders such as aria2c, avconv, axel, curl,
+      ffmpeg, httpie, wget.
+    - Ability to specify a proxy server.
+    - Various options provided for geo restriction.
+    - Login using authentication possible (e.g. username/password and video password).
+    - Easy and friendly access via cookies.
+    - and more…
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 29 Jun 2025 10:09:27 +0200

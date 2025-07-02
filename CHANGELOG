@@ -7,10 +7,17 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 10 Jun 2025 V.5.0.27
+Tue, 01 Jun 2025 V.5.0.27
 
   * Update it_IT i18n, thanks to @bovirus .
   * Update ru_RU i18n, thanks to ChourS.
+  * Fixed default output directory during application bootstrap
+    (setting_manager.py)
+  * Fixed lint errors and typos.
+  * Fixed `requests` minimum version to >=2.28.1.
+  * Improved files on requirements dir.
+  * Fixed OS-based dependencies on pyproject.toml and requirements.
+  * Created requirements.txt file for installing dependencies using pip.
 
 +------------------------------------+
 Fri, 05 Jun 2025 V.5.0.26

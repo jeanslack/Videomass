@@ -1,18 +1,29 @@
 
 VIDEOMASS INSTALLATION INSTRUCTIONS AND BUILDINGS
 
+==============================
+Executable packages availables
+==============================
+
+If you are not a developer and just want to install Videomass on your operating
+system, please visit the following page:
+
+    https://jeanslack.github.io/Videomass/download_installation.html
+
+
 =============================
 Base application dependencies
 =============================
 
     Requires:
-        - Python >=3.9.0 <=3.12.0
-        - wxPython-Phoenix >=4.0.7
+        - Python >=3.9.0
+        - wxPython >=4.0.7
         - PyPubSub >=4.0.3
-        - requests >=2.26.0
+        - requests >=2.28.1
         - FFmpeg (included ffplay and ffprobe) >=5.1
     Optionals:
-        - yt-dlp >=2024.04.09
+        - yt-dlp >=2025.06.30
+
 
 =========================
 Run from source directory
@@ -23,12 +34,13 @@ and executing the "launcher" script inside the source Videomass directory.
 
     cd Videomass (source directory)
 
-    python3 launcher
+    python launcher
 
 Videomass can also be imported from the Python3 console (interactive mode):
 
     >>> from videomass import gui_app
     >>> gui_app.main()
+
 
 =====================================
 Compiles language translation catalog
@@ -67,121 +79,27 @@ Using `babelutils.py` python script (multi-platform)
 Installation using pip
 ======================
 
-Requires:
-    - Python >=3.9.0 <=3.12.0
-    - pip
-    - venv
+    -----------------------------------------------------------------------
+    If you are a Linux/FreeBSD user, the standard installation procedure
+    will not install wxPython, as wxPython's PyPi wheels provides support for
+    Windows and MacOS only. Please install wxPython manually using your OS's
+    package manager.
 
+    Then, this assumes a virtual environment activated using python-venv
+    module with `--system-site-package` option to share wxPython module
+    installed in your OS,
+    like this:
 
-Installing on Linux/FreeBSD:
-----------------------------
-
-    IMPORTANT!
-    Before pip install Videomass make sure to install wxPython from your Linux
-    distribution's package manager. This will prevent pip from attempting to
-    build wxPython from source, as wxPython's PyPi wheels provides support for
-    Windows and MacOS only.
-
-    This assumes installation in a virtual environment using python3-venv
-    module with `--system-site-package` option, like this:
-
-        python3 -m venv --system-site-packages --upgrade-deps VENV
+        python -m venv --system-site-packages --upgrade-deps VENV
 
         source VENV/bin/activate
+    ------------------------------------------------------------------------
 
-    To install videomass type:
-        python3 -m pip install videomass
+python -m pip install videomass
 
-    Optionally install yt-dlp:
-        please read this before installing yt-dlp: https://github.com/yt-dlp/yt-dlp/pull/11255
+OR, inside source directory:
 
-        python3 -m pip install "yt-dlp[default]"
-
-
-
-Installing on Windows and MacOs:
---------------------------------
-
-    This assumes installation in a virtual environment using python3-venv
-    module, like this:
-
-        python -m venv --upgrade-deps VENV
-
-        source VENV/bin/activate
-
-    To install videomass type:
-        python3 -m pip install videomass
-
-    Optionally install yt-dlp:
-        please read this before installing yt-dlp: https://github.com/yt-dlp/yt-dlp/pull/11255
-
-        python3 -m pip install "yt-dlp[default]"
-
-
-To Update on Windows, MacOs, Linux, FreeBSD:
---------------------------------------------
-
-    python3 -m pip install --upgrade videomass
-
-
-To uninstall on Windows, MacOs, Linux, FreeBSD:
------------------------------------------------
-
-    python3 -m pip uninstall videomass
-
+    python -m pip install -r requirements.txt
 
 Please, Visit the Wiki page for more info:
 <https://github.com/jeanslack/Videomass/wiki/Installation-using-pip>
-
-==============================
-Build as standalone executable
-==============================
-
-This build a standalone executable package only compatible for the operating
-system in use. The current supported OS are Windows, MacOs, Linux.
-
-It is assumed that you are working on a virtual environment created with
-the `venv` or `virtualenv` module and that you have installed the `Base
-application dependencies` described at the beginning of this file.
-
-    Requires:
-        - pyinstaller
-        - babel
-
-    activate a virtual environment first
-
-    cd Videomass (source directory)
-
-    python3 -m pip install pyinstaller babel
-
-    Use the `pyinstaller_setup.py` script like this:
-
-        python3 develop/tools/pyinstaller_setup.py --gen-spec --build
-
-=====================
-Build sdist and wheel
-=====================
-
-    Requires:
-        - hatchling
-        - build
-        - wheel
-        - babel
-
-    cd Videomass (source directory)
-
-    python3 -m build
-
-
-For more info visit: <https://packaging.python.org/tutorials/packaging-projects/>
-
-
-======================================================
-Make a Debian source package from upstream source code
-======================================================
-
-This will transform upstream source code into policy-compliant binary packages.
-
-Please, Visit the Videomass Wiki page for istructions:
-
-<https://github.com/jeanslack/Videomass/wiki/Packaging-for-Debian-and-derivatives>

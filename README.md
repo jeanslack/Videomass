@@ -3,7 +3,7 @@
 [![Image](https://img.shields.io/badge/license-GPLv3-orange)](https://github.com/jeanslack/Videomass/blob/master/LICENSE)
 [![Python application](https://github.com/jeanslack/Videomass/actions/workflows/tests.yml/badge.svg)](https://github.com/jeanslack/Videomass/actions/workflows/tests.yml)
 
-It is a FLOSS, powerful, multitasking and cross-platform graphical user interface (GUI) for [FFmpeg](https://www.ffmpeg.org/) and [yt-dlp](https://github.com/yt-dlp/yt-dlp). Designed for advanced and beginner users, it offers a wide range of features and functions, making it a comprehensive software solution.
+A FLOSS, powerful, multitasking and cross-platform graphical user interface for [FFmpeg](https://www.ffmpeg.org/) and [yt-dlp](https://github.com/yt-dlp/yt-dlp). Designed for advanced and beginner users, it offers a wide range of features and functions, making it a comprehensive software solution.
 
 Videomass is [Free (libre) Software](https://en.wikipedia.org/wiki/Free_software),
 written in [Python3](https://www.python.org/) using the

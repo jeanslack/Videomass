@@ -393,7 +393,7 @@ class MainFrame(wx.Frame):
         return False
     # ------------------------------------------------------------------#
 
-    def on_close(self, event, ):
+    def on_close(self, event):
         """
         Application exit request given by the user.
         """

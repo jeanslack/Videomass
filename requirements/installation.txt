@@ -1,0 +1,10 @@
+# If you are a Linux/FreeBsd user this installation.txt file should prevent
+# the automatic installation of wxPython. Please install wxPython using your
+# OS's package manager.
+#
+# Notes for yt-dlp deps: yt-dlp: https://github.com/yt-dlp/yt-dlp/pull/11255
+
+pypubsub
+requests>=2.28.1
+yt-dlp[default]
+wxpython>=4.0.7; platform_system == "Windows" or platform_system == "Darwin"

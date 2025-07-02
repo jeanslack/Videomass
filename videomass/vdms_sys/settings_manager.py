@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.05.2025
+Rev: June.29.2025
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -221,13 +221,13 @@ class ConfigManager:
         column width in the format code panel (ytdownloader).
 
     """
-    VERSION = 8.3
+    VERSION = 8.4
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "shutdown": False,
                        "sudo_password": "",
                        "auto_exit": False,
                        "encoding": "utf-8",
-                       "outputdir": f"{os.path.expanduser('~')}",
+                       "outputdir": "",
                        "outputdir_asinput": False,
                        "filesuffix": "",
                        "ffmpeg_cmd": "",
@@ -251,7 +251,7 @@ class ConfigManager:
                        "move_file_to_trash": False,
                        "trashdir_loc": "",
                        "locale_name": "Default",
-                       "ydlp-outputdir": f"{os.path.expanduser('~')}",
+                       "ydlp-outputdir": "",
                        "enable-ytdlp": False,
                        "ytdlp-enable-exec": False,
                        "ytdlp-exec-path": "",
@@ -299,14 +299,20 @@ class ConfigManager:
         set as relative paths.
         """
         self.filename = filename
+        self.makeportable = makeportable
 
-        if makeportable:
+        if self.makeportable:
             trscodepath = os.path.join(makeportable, "Media", "Transcoding")
             dwldpath = os.path.join(makeportable, "Media", "Downloads")
             trscodedir = os.path.relpath(trscodepath)
             dwlddir = os.path.relpath(dwldpath)
             ConfigManager.DEFAULT_OPTIONS['outputdir'] = trscodedir
             ConfigManager.DEFAULT_OPTIONS['ydlp-outputdir'] = dwlddir
+            self.trscodedir = trscodedir
+            self.dwlddir = dwlddir
+        else:
+            self.trscodedir = os.path.expanduser('~')
+            self.dwlddir = os.path.expanduser('~')
 
     def write_options(self, **options):
         """
@@ -343,15 +349,24 @@ class ConfigManager:
 
     def default_outputdirs(self, **options):
         """
-        Restores default output paths.
-        This method is needed to set the values of the `outputdir`
-        and `ydlp-outputdir` keys set to physically non-existent
-        filesystem paths (such as pendrives, hard-drives, etc.).
-        Returns a dictionary object.
+        This method is useful for restoring consistent output
+        directories for file destinations, in case they were
+        previously set to physically non-existent file system paths
+        (such as pendrives, hard drives, etc.) or to deleted directories.
+        Returns a dict object.
         """
-        if not os.path.exists(options['outputdir']):
-            options['outputdir'] = f"{os.path.expanduser('~')}"
-        if not os.path.exists(options['ydlp-outputdir']):
-            options['ydlp-outputdir'] = f"{os.path.expanduser('~')}"
+        trscpath = options['outputdir']
+        if not os.path.exists(trscpath) and not os.path.isdir(trscpath):
+            if self.makeportable:
+                options['outputdir'] = self.trscodedir
+            else:
+                options['outputdir'] = f"{os.path.expanduser('~')}"
+
+        dwldpath = options['ydlp-outputdir']
+        if not os.path.exists(dwldpath) and not os.path.isdir(dwldpath):
+            if self.makeportable:
+                options['ydlp-outputdir'] = self.dwlddir
+            else:
+                options['ydlp-outputdir'] = f"{os.path.expanduser('~')}"
 
         return options
