@@ -2,34 +2,49 @@
 Purpose of the FFMPEG directory
 ========================================
 
-This directory was created to satisfy the portability needs in case the
-Videomass application was completely self-contained in a bundle.
+This directory was created to satisfy the portability needs, for example when
+the whole application is self-contained in a bundle.
 
-Optionally, it can be used to host a statically compiled build of FFmpeg.
-Please note that a static build included in this directory is automatically
-selected by Videomass only if FFmpeg is not included in the operating system
-environment variables. Otherwise, you can set it in the preferences dialog (see
-FFmpeg table).
+In the most typical common cases a portable application can be moved between a
+directory and another (see pen-drive, external hard-drive on different PC
+workstations, etc). On Videomass this would imply resetting the paths to the
+FFmpeg executables making portability inconvenient.
 
-If you want to use this approach, make sure that your directory tree
-looks like this:
+You can include here a statically compiled build of FFmpeg to be used on
+multiple PC workstations with the same platform without having to reset the
+executable paths each time.
+
+Note that Videomass will tend to give priority to the executables included in
+your OS environment variables, but you can still set once and for all the
+executables included in this location from the preferences dialog
+(see Preferences --> FFmpeg tab).
+
+To use this approach, make sure this directory tree looks like this:
 
     |--------------------------|-------------------------|
     |   **Unix**               |       **Windows**       |
     |--------------------------|-------------------------|
-         videomass (pkg)       |     videomass (pkg)
-         |__ FFMPEG            |     |__ FFMPEG
-         |   |__ bin           |     |   |__ bin
-         |   |   |__ ffmpeg    |     |   |   |__ ffmpeg.exe
-         |   |   |__ ffprobe   |     |   |   |__ ffprobe.exe
-         |   |   |__ ffplay    |     |   |   |__ ffplay.exe
-         |   |__ presets       |     |   |__ presets
-         |   |__ doc           |     |   |__ doc
-         |   |__ LICENSE.txt   |     |   |__ LICENSE.txt
-         |   |__ README.txt    |     |   |__ README.txt
+                               |
+           FFMPEG              |       FFMPEG
+           |__ bin             |       |__ bin
+           |   |__ ffmpeg      |       |   |__ ffmpeg.exe
+           |   |__ ffprobe     |       |   |__ ffprobe.exe
+           |   |__ ffplay      |       |   |__ ffplay.exe
+           |__ presets         |       |__ presets
+           |__ doc             |       |__ doc
+           |__ LICENSE.txt     |       |__ LICENSE.txt
+           |__ README.txt      |       |__ README.txt
                                |
     |--------------------------|-------------------------|
 
+
+=======================================
+Linux
+=======================================
+
+    - https://github.com/BtbN/FFmpeg-Builds/releases
+
+    - https://johnvansickle.com/ffmpeg/
 
 =======================================
 MAcOS
@@ -43,8 +58,8 @@ If you don't want to use statically compiled builds, leave this folder empty.
 You can later use Homebrew to install FFmpeg. Building options and steps can be
 found here:
 
-    https://gist.github.com/clayton/6196167
-    https://trac.ffmpeg.org/wiki/CompilationGuide/MacOS
+    - https://gist.github.com/clayton/6196167
+    - https://trac.ffmpeg.org/wiki/CompilationGuide/MacOS
 
 =======================================
 MS-Windows
@@ -52,11 +67,13 @@ MS-Windows
 
 The static builds for MS Windows can be downloaded at:
 
-    https://www.gyan.dev/ffmpeg/builds/
+    - https://www.gyan.dev/ffmpeg/builds/
+
+    - https://github.com/BtbN/FFmpeg-Builds/releases
 
 Building options and steps can be found here:
 
-    https://trac.ffmpeg.org/wiki/CompilationGuide
+    - https://trac.ffmpeg.org/wiki/CompilationGuide
 
 
 ===============================================================================
@@ -70,12 +87,12 @@ faac codec support.
 
 More Infos about the legal issues can be found here:
 
-    http://www.ffmpeg.org/legal.html
+    - http://www.ffmpeg.org/legal.html
 
 Others resources:
 
-    http://www.ffmpeg.org/documentation.html
+    - http://www.ffmpeg.org/documentation.html
 ===============================================================================
 
-Update on July 02 2015
+Update on July 03 2025
 Gianluca (jeanslack) Pernigotto
