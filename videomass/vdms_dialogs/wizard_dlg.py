@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.22.2025
+Rev: July.10.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -30,7 +30,7 @@ from videomass.vdms_utils.utils import detect_binaries
 from videomass.vdms_sys.settings_manager import ConfigManager
 
 
-def write_changes(ffmpeg, ffplay, ffprobe, youtubedl, binfound):
+def write_changes(ffmpeg, ffplay, ffprobe, binfound):
     """
     Writes changes to the configuration file
 
@@ -50,18 +50,13 @@ def write_changes(ffmpeg, ffplay, ffprobe, youtubedl, binfound):
     dataread['ffmpeg_islocal'] = local
     dataread['ffprobe_islocal'] = local
     dataread['ffplay_islocal'] = local
-    dataread['enable-ytdlp'] = youtubedl
-    ytdlpexec = 'yt-dlp.exe' if appdata['ostype'] == 'Windows' else 'yt-dlp'
-    status = detect_binaries(ytdlpexec)
-    if status[1]:
-        dataread['ytdlp-exec-path'] = appdata['getpath'](status[1])
 
     conf.write_options(**dataread)
 
 
 class PageOne(wx.Panel):
     """
-    This is a first panel displayed on Wizard dialog box
+    This is the first panel displayed on Wizard dialog box
 
     """
     get = wx.GetApp()
@@ -115,9 +110,11 @@ class PageOne(wx.Panel):
 
 class PageTwo(wx.Panel):
     """
-    Shows panel wizard to locate FFmpeg executables
-    and set the Wizard attributes on parent.
-
+    The PageTwo panel help the user to set the FFmpeg executables.
+    This class offers the user two options for determining these
+    pathnames:
+        - Auto-detect the executables in environment variables.
+        - Manually set the user's preferred executables.
     """
     get = wx.GetApp()
     OS = get.appset['ostype']
@@ -129,16 +126,19 @@ class PageTwo(wx.Panel):
     MSG1 = (_('If FFmpeg is not on your computer, this application '
               'will be unusable'))
 
-    MSG2 = (_('If you have already installed FFmpeg on your operating\n'
-              'system, click the "Auto-detection" button.'))
+    MSG2 = (_('If you have already installed FFmpeg on your operating '
+              'system,\nclick the "Auto-detection" button.'))
 
-    MSG3 = (_('If you want to use a version of FFmpeg located on your\n'
-              'filesystem but not installed on your operating system,\n'
+    MSG3 = (_('If you want to use a version of FFmpeg located on your '
+              'filesystem\nbut not installed on your operating system,\n'
               'click the "Locate" button.'))
 
     def __init__(self, parent):
         """
-        constructor
+        The purpose of this class is to get the FFmpeg
+        executables in environment variables as and set
+        them to the values of `parent.ffmpeg/ffprobe/ffplay`
+        attributes (see Wizard class).
         """
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
 
@@ -152,8 +152,14 @@ class PageTwo(wx.Panel):
                              )
         lab1 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG1,
                              style=wx.ALIGN_CENTRE_HORIZONTAL)
-        lab2 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG2)
-        lab3 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG3)
+        lab2 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG2,
+                             style=wx.ST_ELLIPSIZE_END
+                             | wx.ALIGN_CENTRE_HORIZONTAL,
+                             )
+        lab3 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG3,
+                             style=wx.ST_ELLIPSIZE_END
+                             | wx.ALIGN_CENTRE_HORIZONTAL,
+                             )
         self.detectBtn = wx.Button(self, wx.ID_ANY, _("Auto-detection"),
                                    size=(250, -1))
         self.locateBtn = wx.Button(self, wx.ID_ANY, _("Locate"),
@@ -260,8 +266,8 @@ class PageTwo(wx.Panel):
 
 class PageThree(wx.Panel):
     """
-    Shows panel to locate manually ffmpeg, ffprobe,
-    and ffplay executables and set attributes on parent.
+    Shows panel to locate manually ffmpeg, ffprobe, and
+    ffplay executables to setting attributes on parent class.
 
     """
     get = wx.GetApp()
@@ -275,7 +281,9 @@ class PageThree(wx.Panel):
 
     def __init__(self, parent):
         """
-        constructor
+        The purpose of this class is to get the FFmpeg
+        executables manually as and set them to the values
+        of `parent.ffmpeg/ffprobe/ffplay` attributes (see Wizard class).
         """
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
 
@@ -296,7 +304,10 @@ class PageThree(wx.Panel):
                              style=wx.ST_ELLIPSIZE_END
                              | wx.ALIGN_CENTRE_HORIZONTAL,
                              )
-        lab1 = wx.StaticText(self, wx.ID_ANY, PageThree.MSG1)
+        lab1 = wx.StaticText(self, wx.ID_ANY, PageThree.MSG1,
+                             style=wx.ST_ELLIPSIZE_END
+                             | wx.ALIGN_CENTRE_HORIZONTAL,
+                             )
         #  ffmpeg
         gridffmpeg = wx.BoxSizer(wx.HORIZONTAL)
         self.ffmpegTxt = wx.TextCtrl(self, wx.ID_ANY, "",
@@ -400,61 +411,9 @@ class PageThree(wx.Panel):
                     self.parent.ffplay = ffplaypath
 
 
-class PageFour(wx.Panel):
-    """
-    The PageFour panel asks the user if they want
-    to enable youtube-dl.
-
-    """
-    get = wx.GetApp()
-    OS = get.appset['ostype']
-
-    MSG0 = _('Videomass has a simple graphical interface for yt-dlp\n')
-    MSG1 = _('This feature allows you to download video and audio from\n'
-             'many sites, including YouTube.com and even Facebook.')
-
-    def __init__(self, parent):
-        """
-        NOTE: note the pass statement on `choose_Youtubedl`
-        the values of this panel are get by Wizard.wizard_Finish method
-        """
-        wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
-
-        self.parent = parent
-        sizer_base = wx.BoxSizer(wx.VERTICAL)
-        sizerText = wx.BoxSizer(wx.VERTICAL)
-
-        lab0 = wx.StaticText(self, wx.ID_ANY, PageFour.MSG0,
-                             style=wx.ST_ELLIPSIZE_END
-                             | wx.ALIGN_CENTRE_HORIZONTAL,
-                             )
-        lab1 = wx.StaticText(self, wx.ID_ANY, PageFour.MSG1)
-        descr = _(" Do you want to enable this feature?")
-        self.ckbx_yn = wx.CheckBox(self, wx.ID_ANY, (descr))
-
-        if PageFour.OS == 'Darwin':
-            lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-        else:
-            lab0.SetFont(wx.Font(12, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-        # layout
-        sizer_base.Add((0, 50), 0)
-        sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 40), 0)
-
-        sizer_base.Add(sizerText, 0, wx.CENTER)
-        sizerText.Add(lab1, 0, wx.CENTER | wx.EXPAND)
-        sizerText.Add((0, 50), 0)
-        sizerText.Add(self.ckbx_yn, 0, wx.CENTER | wx.ALL, 10)
-        sizerText.Add((0, 50), 0)
-
-        self.SetSizer(sizer_base)
-        sizer_base.Fit(self)
-        self.Layout()
-
-
 class PageFinish(wx.Panel):
     """
-    This is last panel to show during wizard session
+    This is the last panel displayed on Wizard dialog box
 
     """
     get = wx.GetApp()
@@ -510,15 +469,16 @@ class PageFinish(wx.Panel):
 
 class Wizard(wx.Dialog):
     """
-    Provides a multi-panel dialog box (dynamic wizard)
-    for configuring Videomass during the startup.
+    This Wizard dialog is a container for all panels instantiated
+    on the constructor method of this class. It provides a
+    multi-panel dialog box (dynamic wizard) for configuring Videomass
+    during the startup.
 
     """
     def __init__(self, icon_videomass):
         """
-        Note that the attributes of ffmpeg are set in the "PageTwo"
-        and "PageThree" panels. The other values are obtained with
-        the `wizard_Finish` method and not on the panels
+        Note that the attributes of ffmpeg are set in the
+        "PageTwo" and/or "PageThree" classes.
 
         """
         self.ffmpeg = None
@@ -533,18 +493,15 @@ class Wizard(wx.Dialog):
         self.pageOne = PageOne(self, icon_videomass)  # start...
         self.pageTwo = PageTwo(self)  # choose ffmpeg modality
         self.pageThree = PageThree(self)  # browse for ffmpeg binaries
-        self.pageFour = PageFour(self)  # enable or disable youtube-dl
         self.pageFinish = PageFinish(self)  # ...end
         #  hide panels
         self.pageTwo.Hide()
         self.pageThree.Hide()
-        self.pageFour.Hide()
         self.pageFinish.Hide()
         #  adds panels to sizer
         mainSizer.Add(self.pageOne, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageTwo, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageThree, 1, wx.ALL | wx.EXPAND, 5)
-        mainSizer.Add(self.pageFour, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageFinish, 1, wx.ALL | wx.EXPAND, 5)
         # bottom side layout
         gridBtn = wx.GridSizer(1, 2, 0, 0)
@@ -584,8 +541,7 @@ class Wizard(wx.Dialog):
 
     def on_Next(self, event):
         """
-        Set the panels to show when the 'Next'
-        button is clicked
+        Shows next panel when the 'Next' button is clicked.
 
         """
         if self.btnNext.GetLabel() == _('Finish'):
@@ -595,44 +551,34 @@ class Wizard(wx.Dialog):
             self.pageOne.Hide()
             self.pageTwo.Show()
             self.btnBack.Enable()
-
             if (self.pageTwo.locateBtn.IsEnabled()
                     and self.pageTwo.detectBtn.IsEnabled()):
                 self.btnNext.Disable()
 
         elif self.pageTwo.IsShown():
-
+            self.pageTwo.Hide()
             if not self.pageTwo.locateBtn.IsEnabled():
-                self.pageTwo.Hide()
                 self.pageThree.Show()
             else:
-                self.pageTwo.Hide()
-                self.pageFour.Show()
+                self.pageFinish.Show()
+                self.btnNext.SetLabel(_('Finish'))
 
         elif self.pageThree.IsShown():
             if (self.pageThree.ffmpegTxt.GetValue()
                     and self.pageThree.ffprobeTxt.GetValue()
                     and self.pageThree.ffplayTxt.GetValue()):
                 self.pageThree.Hide()
-                self.pageFour.Show()
+                self.pageFinish.Show()
+                self.btnNext.SetLabel(_('Finish'))
             else:
                 wx.MessageBox(_("Some text boxes are still incomplete"),
                               "Videomass", wx.ICON_INFORMATION, self)
-
-        elif self.pageFour.IsShown():
-            self.pageOne.Hide()
-            self.pageTwo.Hide()
-            self.pageFour.Hide()
-            self.pageFinish.Show()
-            self.btnNext.SetLabel(_('Finish'))
-
         self.Layout()
     # -------------------------------------------------------------------#
 
     def on_Back(self, event):
         """
-        Set the panels to show when the 'Previous'
-        button is clicked
+        Shows previous panel when the 'Previous' button is clicked.
 
         """
         if self.pageTwo.IsShown():
@@ -645,29 +591,23 @@ class Wizard(wx.Dialog):
             self.pageThree.Hide()
             self.pageTwo.Show()
 
-        elif self.pageFour.IsShown():
-            if self.pageTwo.locateBtn.IsEnabled():
-                self.pageFour.Hide()
-                self.pageTwo.Show()
-            else:
-                self.pageFour.Hide()
-                self.pageThree.Show()
-
         elif self.pageFinish.IsShown():
             self.btnNext.SetLabel(_('Next >'))
             self.pageFinish.Hide()
-            self.pageFour.Show()
+            if self.pageTwo.locateBtn.IsEnabled():
+                self.pageTwo.Show()
+            else:
+                self.pageThree.Show()
 
         self.Layout()
     # -------------------------------------------------------------------#
 
     def wizard_Finish(self):
         """
-        Get all settings and call `write_changes`
-        to applies changes.
+        This method is called by `on_Next` method of this class,
+        e.g. when the user has reached the last step of the wizard
 
         """
-        youtubedl = self.pageFour.ckbx_yn.GetValue()
         if not self.pageTwo.locateBtn.IsEnabled():
             binfound = 'local'
         else:  # if not self.pageTwo.detectBtn.IsEnabled():
@@ -676,7 +616,6 @@ class Wizard(wx.Dialog):
         write_changes(self.ffmpeg,
                       self.ffplay,
                       self.ffprobe,
-                      youtubedl,
                       binfound
                       )
         get = wx.GetApp()

@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.29.2025
+Rev: July.10.2025
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -143,85 +143,14 @@ class ConfigManager:
         YY is ISO 3166 code of the country. Examples are "en", "en_GB",
         "en_US" or "fr_FR", etc.
 
-    ydlp-outputdir (str):
-        file destination path used by the youtube-dl UI
-
-    enable-ytdlp (bool):
-        sets the ability to download videos from YouTube.com.
-        One of True or False, where True means load/use yt_dlp
-        on sturtup.
-
-    ytdlp-enable-exec (bool):
-        If `True`, the user enable a custom location (pathname) for
-        yt-dlp executable. Default is `False`.
-
-    ytdlp-exec-path (str):
-        Path to the yt-dlp (yt-dlp.exe on Windows) executable.
-
-    ytdlp-usemodule (bool):
-        If True, allow to open specified yt_dlp module dir
-
-    ytdlp-module-path (str),
-        Path to the yt-dlp dir
-
-    playlistsubfolder (bool):
-        Auto-create subfolders when download the playlists,
-        default value is True.
-
-    ("ssl_certificate", "add_metadata", "embed_thumbnails",
-    "overwr_dl_files", "include_ID_name", "restrict_fname")
-    (bool):
-        Checkboxes option (see YouTube Downloader)
-
-    subtitles_options (dict):
-        (see YouTube Downloader)
-
-    external_downloader (str):
-        external downloader used by yt-dlp. Default is None
-
-    external_downloader_args (list):
-        args used by external downloader in yt-dlp. Default is None
-        List of options should be passed using aria2c:
-        ["-j", "1","-x", "1", "-s", "1"]
-
-    proxy (str):
-        Use the specified HTTP/HTTPS/SOCKS proxy. To enable SOCKS proxy,
-        specify a proper scheme, e.g. socks5://user:pass@127.0.0.1:1080/ .
-        Pass in an empty string (--proxy "") for direct connection
-
-    username (str):
-        Login with this account ID
-
-    password (str):
-        Account password. If this option is left out, yt-dlp will ask
-        interactively
-
-    videopassword (str):
-        for Video-specific password
-
-    geo-restriction setup options:
-        geo_verification_proxy (str)
-        geo_bypass (str)
-        geo_bypass_country (str)
-        geo_bypass_ip_block (str)
-
-    cookie file setup options:
-        cookiefile (str)
-        autogen_cookie_file (bool)
-        webbrowser (str),
-        cookiesfrombrowser (list)
-
     prstmng_column_width (list of int)
         column width in the Preset Manager panel.
 
     filedrop_column_width (list of int)
         column width in the File Drop panel.
 
-    fcode_column_width (list of int)
-        column width in the format code panel (ytdownloader).
-
     """
-    VERSION = 8.4
+    VERSION = 8.5
     DEFAULT_OPTIONS = {"confversion": VERSION,
                        "shutdown": False,
                        "sudo_password": "",
@@ -244,51 +173,13 @@ class ConfigManager:
                        "toolbarpos": 3,
                        "main_window_size": [850, 560],
                        "main_window_pos": [0, 0],
-                       "main_ytdl_size": [850, 560],
-                       "main_ytdl_pos": [0, 0],
                        "clearcache": True,
                        "clearlogfiles": False,
                        "move_file_to_trash": False,
                        "trashdir_loc": "",
                        "locale_name": "Default",
-                       "ydlp-outputdir": "",
-                       "enable-ytdlp": False,
-                       "ytdlp-enable-exec": False,
-                       "ytdlp-exec-path": "",
-                       "ytdlp-usemodule": False,
-                       "ytdlp-module-path": "",
-                       "playlistsubfolder": True,
-                       "ssl_certificate": False,
-                       "add_metadata": False,
-                       "embed_thumbnails": False,
-                       "overwr_dl_files": False,
-                       "include_ID_name": False,
-                       "restrict_fname": False,
-                       "subtitles_options": {"writesubtitles": False,
-                                             "subtitleslangs": [],
-                                             "writeautomaticsub": False,
-                                             "embedsubtitle": False,
-                                             "skip_download": False
-                                             },
-                       "external_downloader": None,
-                       "external_downloader_args": None,
-                       "proxy": "",
-                       "username": "",
-                       "password": "",
-                       "videopassword": "",
-                       "geo_verification_proxy": "",
-                       "geo_bypass": "",
-                       "geo_bypass_country": "",
-                       "geo_bypass_ip_block": "",
-                       "use_cookie_file": False,
-                       "cookiefile": "",
-                       "autogen_cookie_file": False,
-                       "webbrowser": "firefox",
-                       "cookiesfrombrowser": [None, None, None, None],
                        "prstmng_column_width": [250, 350, 200, 220],
                        "filedrop_column_width": [30, 200, 200, 200, 150, 200],
-                       "fcode_column_width": [120, 60, 200, 80, 160,
-                                              110, 80, 110, 100],
                        }
 
     def __init__(self, filename, makeportable=None):
@@ -303,16 +194,11 @@ class ConfigManager:
 
         if self.makeportable:
             trscodepath = os.path.join(makeportable, "Media", "Transcoding")
-            dwldpath = os.path.join(makeportable, "Media", "Downloads")
             trscodedir = os.path.relpath(trscodepath)
-            dwlddir = os.path.relpath(dwldpath)
             ConfigManager.DEFAULT_OPTIONS['outputdir'] = trscodedir
-            ConfigManager.DEFAULT_OPTIONS['ydlp-outputdir'] = dwlddir
             self.trscodedir = trscodedir
-            self.dwlddir = dwlddir
         else:
             self.trscodedir = os.path.expanduser('~')
-            self.dwlddir = os.path.expanduser('~')
 
     def write_options(self, **options):
         """
@@ -361,12 +247,5 @@ class ConfigManager:
                 options['outputdir'] = self.trscodedir
             else:
                 options['outputdir'] = f"{os.path.expanduser('~')}"
-
-        dwldpath = options['ydlp-outputdir']
-        if not os.path.exists(dwldpath) and not os.path.isdir(dwldpath):
-            if self.makeportable:
-                options['ydlp-outputdir'] = self.dwlddir
-            else:
-                options['ydlp-outputdir'] = f"{os.path.expanduser('~')}"
 
         return options

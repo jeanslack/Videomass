@@ -42,7 +42,6 @@ from videomass.vdms_dialogs.ffmpeg_conf import FFmpegConf
 from videomass.vdms_dialogs.ffmpeg_codecs import FFmpegCodecs
 from videomass.vdms_dialogs.ffmpeg_formats import FFmpegFormats
 from videomass.vdms_dialogs.queuedlg import QueueManager
-from videomass.vdms_ytdlp.main_ytdlp import MainYtdl
 from videomass.vdms_dialogs.mediainfo import MediaStreams
 from videomass.vdms_dialogs.showlogs import ShowLogs
 from videomass.vdms_dialogs.ffmpeg_help import FFmpegHelp
@@ -114,7 +113,6 @@ class MainFrame(wx.Frame):
         self.ffmpegdecoders = False
         self.ffmpegformats = False
         self.audivolnormalize = False
-        self.ytdlframe = False
         # set fontconfig for timestamp
         if self.appdata['ostype'] == 'Darwin':
             tsfont = '/Library/Fonts/Arial.ttf'
@@ -266,7 +264,7 @@ class MainFrame(wx.Frame):
             return
 
         items = [self.startpan, self.prstpan, self.avpan, self.concpan,
-                 self.slides, self.toseq, self.winytdlp, self.logpan,]
+                 self.slides, self.toseq, self.logpan,]
 
         [x.Enable(y) for x, y in zip(items, enablelist)]
     # ------------------------------------------------------------------#
@@ -386,9 +384,6 @@ class MainFrame(wx.Frame):
         if self.ProcessPanel.IsShown():
             if self.ProcessPanel.thread_type is not None:
                 return True
-        if self.ytdlframe:
-            if self.ytdlframe.ProcessPanel.thread_type:
-                return True
 
         return False
     # ------------------------------------------------------------------#
@@ -410,9 +405,6 @@ class MainFrame(wx.Frame):
                              _('Exit'), wx.ICON_QUESTION | wx.CANCEL
                              | wx.YES_NO, self) != wx.YES:
                 return
-
-        if self.ytdlframe:
-            self.ytdlframe.on_exit(self, warn=False)
         self.write_option_before_exit()
         self.destroy_orphaned_window()
         self.destroy_application()
@@ -429,9 +421,6 @@ class MainFrame(wx.Frame):
                           _('Videomass - Warning!'), wx.ICON_WARNING, self)
             self.appdata['auto-restart-app'] = False
             return
-
-        if self.ytdlframe:
-            self.ytdlframe.on_exit(self, warn=False)
         self.destroy_orphaned_window()
         self.destroy_application()
     # ------------------------------------------------------------------#
@@ -607,9 +596,6 @@ class MainFrame(wx.Frame):
                                      _("From Movie to Pictures\tCtrl+Shift+S"),
                                      _("Go to the «From Movie to Pictures» "
                                        "panel"))
-        self.winytdlp = goButton.Append(wx.ID_ANY,
-                                        _("YouTube Downloader\tCtrl+Shift+Y"),
-                                        _("Open «YouTube Downloader» window"))
         goButton.AppendSeparator()
         dscrp = (_("Output monitor\tCtrl+Shift+O"),
                  _("Keeps track of the output for debugging errors"))
@@ -621,13 +607,7 @@ class MainFrame(wx.Frame):
         helpItem = helpButton.Append(wx.ID_HELP, _("User guide"),
                                      ("https://jeanslack.github.io/"
                                       "Videomass/videomass_use.html"))
-        issueItem = helpButton.Append(wx.ID_ANY, _("Issue tracker"),
-                                      "https://github.com/jeanslack/"
-                                      "Videomass/issues")
         helpButton.AppendSeparator()
-        dscrp = (_("Check for newer version"),
-                 _("Check for the latest Videomass version"))
-        chklatest = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         dscrp = (_("System version"),
                  _("Get version about your operating system, version of "
                    "Python and wxPython."))
@@ -637,12 +617,40 @@ class MainFrame(wx.Frame):
                  _("Viewing log messages"))
         viewlogs = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         helpButton.AppendSeparator()
+        issueItem = helpButton.Append(wx.ID_ANY, _("Issue tracker"),
+                                      "https://github.com/jeanslack/"
+                                      "Videomass/issues")
         contribution = helpButton.Append(wx.ID_ANY,
                                          _('Contribute to the project'),
                                          ('https://jeanslack.github.io/'
                                           'Videomass/Contribute.html'))
+        spons = helpButton.Append(wx.ID_ANY, _("Sponsor this project"),
+                                  _("Become a developer supporter"))
+        donat = helpButton.Append(wx.ID_ANY, _("Donate"),
+                                  _("Donate to the app developer"))
+        helpButton.AppendSeparator()
+        projButton = wx.Menu()  # projects sub menu
+        helpButton.AppendSubMenu(projButton,
+                                 _("Other projects by the developer"))
+        dscrp = ("Vidtuber",
+                 ("A simple multi-platform GUI for yt-dlp"))
+        proj1 = projButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = ("FFcuesplitter",
+                 ("FFmpeg based audio splitter for CDDA images associated "
+                  "with .cue files"))
+        proj2 = projButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = ("FFaudiocue",
+                 ("GUI based on FFcuesplitter library written in "
+                  "wxPython-Phoenix"))
+        proj3 = projButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = ("Videomass-Presets",
+                 "A collection of additional presets for Videomass")
+        proj4 = projButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         helpButton.AppendSeparator()
         infoItem = helpButton.Append(wx.ID_ABOUT, _("About Videomass"), "")
+        dscrp = (_("Check for newer version"),
+                 _("Check for the latest Videomass version"))
+        chklatest = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(helpButton, _("Help"))
         self.SetMenuBar(self.menuBar)
 
@@ -684,15 +692,26 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.switch_slideshow_maker, self.slides)
         self.Bind(wx.EVT_MENU, self.switch_video_to_pictures, self.toseq)
         self.Bind(wx.EVT_MENU, self.logPan, self.logpan)
-        self.Bind(wx.EVT_MENU, self.youtubedl, self.winytdlp)
         # ----HELP----
         self.Bind(wx.EVT_MENU, self.helpme, helpItem)
+        self.Bind(wx.EVT_MENU, self.system_vers, sysinfo)
+        self.Bind(wx.EVT_MENU, self.view_logs, viewlogs)
         self.Bind(wx.EVT_MENU, self.issues, issueItem)
         self.Bind(wx.EVT_MENU, self.contribute, contribution)
-        self.Bind(wx.EVT_MENU, self.check_new_releases, chklatest)
-        self.Bind(wx.EVT_MENU, self.view_logs, viewlogs)
-        self.Bind(wx.EVT_MENU, self.system_vers, sysinfo)
+        self.Bind(wx.EVT_MENU, self.sponsor_this_project, spons)
+        self.Bind(wx.EVT_MENU, self.donate_to_dev, donat)
+        self.Bind(wx.EVT_MENU,
+                  lambda event: self.dev_projects(event, 'Vidtuber'), proj1)
+        self.Bind(wx.EVT_MENU,
+                  lambda event: self.dev_projects(event,
+                                                  'FFcuesplitter'), proj2)
+        self.Bind(wx.EVT_MENU,
+                  lambda event: self.dev_projects(event, 'FFaudiocue'), proj3)
+        self.Bind(wx.EVT_MENU,
+                  lambda event: self.dev_projects(event,
+                                                  'Videomass-Presets'), proj4)
         self.Bind(wx.EVT_MENU, self.about_videomass, infoItem)
+        self.Bind(wx.EVT_MENU, self.check_new_releases, chklatest)
     # --------Menu Bar Event handler (callback)
 
     # --------- Menu  Files
@@ -1135,6 +1154,35 @@ class MainFrame(wx.Frame):
         webbrowser.open(page)
     # ------------------------------------------------------------------#
 
+    def sponsor_this_project(self, event):
+        """Go to sponsor page"""
+        page = 'https://github.com/sponsors/jeanslack'
+        webbrowser.open(page)
+    # ------------------------------------------------------------------#
+
+    def donate_to_dev(self, event):
+        """Go to donation page"""
+        page = 'https://www.paypal.me/GPernigotto'
+        webbrowser.open(page)
+    # ------------------------------------------------------------------#
+
+    def dev_projects(self, event, topic):
+        """Go to project pages"""
+        if topic == 'Vidtuber':
+            page = 'https://github.com/jeanslack/Vidtuber'
+        elif topic == 'FFcuesplitter':
+            page = 'https://github.com/jeanslack/FFcuesplitter'
+        elif topic == 'Videomass-Presets':
+            page = 'https://github.com/jeanslack/Videomass-presets'
+        elif topic == 'FFaudiocue':
+            page = 'https://github.com/jeanslack/FFaudiocue'
+        else:
+            page = None
+
+        if page:
+            webbrowser.open(page)
+    # ------------------------------------------------------------------#
+
     def check_new_releases(self, event):
         """
         Compare the Videomass version with a given
@@ -1150,15 +1198,15 @@ class MainFrame(wx.Frame):
             return
 
         version = version[0].split('v')[1]
-        newmajor, newminor, newmicro = version.split('.')
-        new_version = int(f'{newmajor}{newminor}{newmicro}')
+        major, minor, micro = version.split('.')
+        released_version = int(f'{major}{minor}{micro}')
         major, minor, micro = VERSION.split('.')
         this_version = int(f'{major}{minor}{micro}')
 
-        if new_version > this_version:
+        if released_version > this_version:
             msg = _('A new release is available - '
                     'v.{0}\n').format(version)
-        elif this_version > new_version:
+        elif this_version > released_version:
             msg = _('You are using a development version '
                     'that has not yet been released!\n')
         else:
@@ -1754,44 +1802,13 @@ class MainFrame(wx.Frame):
         self.Layout()
     # ------------------------------------------------------------------#
 
-    def youtubedl(self, event):
-        """
-        Start a separate, self-contained frame
-        for yt-dlp GUI functionality.
-        """
-        msg = None
-        if not self.appdata['enable-ytdlp']:
-            msg = _("yt-dlp is disabled. Check your preferences.")
-
-        elif self.appdata['yt_dlp'] == 'reload':
-            msg = _("The application requires to be restarted.")
-
-        elif self.appdata['yt_dlp'] == 'no module':
-            msg = _("The Python module «yt_dlp» was not found. Make sure "
-                    "you have installed yt-dlp correctly.")
-        if msg:
-            wx.MessageBox(msg, "Videomass", wx.ICON_INFORMATION, self)
-            return
-
-        if self.ytdlframe:
-            if not self.ytdlframe.IsShown():
-                self.ytdlframe.Show()
-            self.ytdlframe.Raise()
-            return
-
-        self.ytdlframe = MainYtdl(self.appdata,
-                                  parent=wx.GetTopLevelParent(self))
-        self.ytdlframe.Show()
-    # ------------------------------------------------------------------#
-
     def auto_shutdown(self):
         """
         Turn off the system when processing is finished
         """
         if self.checks_running_processes():
             return
-        if self.ytdlframe:
-            self.ytdlframe.on_exit(self, warn=False)
+
         self.write_option_before_exit()
 
         msgdlg = _('The system will turn off in {0} seconds')
@@ -1820,8 +1837,6 @@ class MainFrame(wx.Frame):
         res = dlg.ShowModal() == wx.ID_OK
         dlg.Destroy()
         if res:
-            if self.ytdlframe:
-                self.ytdlframe.on_exit(self, warn=False)
             self.write_option_before_exit()
             self.destroy_orphaned_window()
             self.destroy_application()

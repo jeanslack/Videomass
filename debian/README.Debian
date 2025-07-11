@@ -3,14 +3,13 @@ videomass for Debian
 Please edit this to provide information specific to
 this videomass Debian package.
 
-    Videomass is a multifunctional, multitasking front-end for FFmpeg and
-    yt-dlp, it was designed for people who need a GUI to collect custom presets
+    Videomass is a multifunctional, multitasking front-end for FFmpeg,
+    it was designed for people who need a GUI to collect custom presets
     and profiles and to facilitate the application of specific video and audio
     filters or automate the conversion/transcoding processes even in batch mode.
 
     It features graphical tools for viewing, analyzing, filtering and processing
-    multimedia streams with the additional ability to downloading audio/videos
-    via yt-dlp.
+    multimedia streams.
 
     Videomass is Free (libre) Software, created and maintained by Gianluca
     (jeanslack) Pernigotto; it was written in Python3 using the wxPython4
@@ -43,7 +42,6 @@ this videomass Debian package.
     - Advanced log file management.
     - Multi-panels, switch between panels using keyboard shortcuts.
     - Audio/video processing using advanced and sophisticated filter GUIs.
-    - While downloading audio or video you can now do other transcoding tasks.
     - Multi languages support.
 
     Conversions and transcodings:
@@ -79,32 +77,5 @@ this videomass Debian package.
         PEAK and RMS volume analysis reporting.
         Ability to select specified audio streams in videos to apply volume
         normalization.
-
-    Downloading audio and video
-
-    - Download using multiple URLs from YouTube and more websites (over 200 are
-      currently supported).
-    - Precompiled Videos, from best to worst qualities.
-    - Download by format and resolution.
-    - Download audio and video separately.
-    - Download Audio only.
-    - Download by ID selecting “format codes” and ability to download both
-      separated or merged files.
-    - Shows download statistics.
-    - Ability to download entire playlists.
-    - Playlists can be indexed to download only the files you are interested in.
-    - Ability to enable/disable the SSL certificate.
-    - Ability to embed thumbnail in audio file.
-    - Can include the origin metadata to files.
-    - Ability to set preferred subtitles.
-    - Ability to include IDs in filenames.
-    - Ability to restrict filenames to only ASCII characters.
-    - Ability to set alternative downloaders such as aria2c, avconv, axel, curl,
-      ffmpeg, httpie, wget.
-    - Ability to specify a proxy server.
-    - Various options provided for geo restriction.
-    - Login using authentication possible (e.g. username/password and video password).
-    - Easy and friendly access via cookies.
-    - and more…
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 29 Jun 2025 10:09:27 +0200

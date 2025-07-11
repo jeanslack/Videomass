@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.14.2025
+Rev: July.10.2025
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -77,12 +77,9 @@ def restore_dirconf(dirconf, srcdata, portable):
 
     if portable:
         transoutdir = os.path.join(dirconf, "Media", "Transcoding")
-        dwlddir = os.path.join(dirconf, "Media", "Downloads")
         try:
             if not os.path.exists(transoutdir):
                 os.makedirs(transoutdir, mode=0o777)
-            if not os.path.exists(dwlddir):
-                os.makedirs(dwlddir, mode=0o777)
         except Exception as err:
             return {'ERROR': err}
 
@@ -376,7 +373,6 @@ class DataSource():
                  'ffplay_cmd': _relativize(userconf['ffplay_cmd']),
                  'ffmpeg-default-args': '-y -stats -hide_banner',
                  'ffplay-default-args': '-hide_banner',
-                 'yt_dlp': '',
                  'auto-restart-app': False,
                  'make_portable': self.makeportable,
                  **userconf
@@ -397,11 +393,10 @@ class DataSource():
                 'profile_edit', 'previous', 'next', 'stabilizer',
                 'preview_audio', 'profile_copy', 'slideshow',
                 'videotopictures', 'atrack', 'timerset', 'coloreq',
-                'stop', 'home', 'youtube', 'playlist',
-                'download', 'statistics', 'play', 'subtitles',
-                'proc-queue', 'add-queue', 'options', 'delpreset',
-                'exportall', 'exportselected', 'importfolder', 'importpreset',
-                'newpreset', 'reload', 'restoreall', 'restoreselected',
+                'stop', 'home', 'play', 'proc-queue',
+                'add-queue', 'delpreset', 'exportall', 'exportselected',
+                'importfolder', 'importpreset', 'newpreset', 'reload',
+                'restoreall', 'restoreselected',
                 )  # must match with items on `iconset` tuple, see following
 
         icodir = self.dataloc['icodir']
@@ -444,7 +439,7 @@ class DataSource():
                    f"{choose.get('x16')}/deinterlace.{ext}",
                    f"{choose.get('x16')}/denoise.{ext}",
                    f"{choose.get('x16')}/volanalyze.{ext}",
-                   f"{choose.get('x16')}/configure.{ext}",
+                   f"{choose.get('x16')}/settings.{ext}",
                    f"{choose.get('x16')}/player-volume.{ext}",
                    f"{choose.get('x48')}/icon_prst_mng.{ext}",
                    f"{choose.get('x16')}/newprf.{ext}",
@@ -462,15 +457,9 @@ class DataSource():
                    f"{choose.get('x16')}/coloreq.{ext}",
                    f"{choose.get('x22')}/stop.{ext}",
                    f"{choose.get('x22')}/home.{ext}",
-                   f"{choose.get('x48')}/youtube.{ext}",
-                   f"{choose.get('x16')}/playlist.{ext}",
-                   f"{choose.get('x22')}/download.{ext}",
-                   f"{choose.get('x22')}/statistics.{ext}",
                    f"{choose.get('x22')}/play.{ext}",
-                   f"{choose.get('x16')}/subtitles.{ext}",
                    f"{choose.get('x22')}/proc-queue.{ext}",
                    f"{choose.get('x22')}/add-queue.{ext}",
-                   f"{choose.get('x22')}/options.{ext}",
                    f"{choose.get('x16')}/delpreset.{ext}",
                    f"{choose.get('x16')}/exportall.{ext}",
                    f"{choose.get('x16')}/exportselected.{ext}",

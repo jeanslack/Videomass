@@ -49,8 +49,8 @@ def show_about_dlg(parent, videomass_icon, aboutrel=about_app):
     info.SetIcon(wx.Icon(videomass_icon, type=wx.BITMAP_TYPE_PNG))
     info.SetName(f"{name_upper}")
     info.SetVersion(f"v{version}")
-    info.SetDescription(_("Cross-platform graphical user interface for FFmpeg "
-                          "and yt-dlp.\n"))
+    info.SetDescription(_("Cross-platform graphical user interface for FFmpeg"
+                          "\n"))
     info.SetCopyright(f"Copyright {copyr} {author[0]} {author[1]}")
     info.SetWebSite(website)
     info.SetLicence(long_lic)

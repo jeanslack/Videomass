@@ -4,7 +4,7 @@
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-3.0-only</project_license>
   <name>Videomass</name>
-  <summary>GUI for FFmpeg and yt-dlp</summary>
+  <summary>GUI for FFmpeg</summary>
   <icon type="remote">https://raw.githubusercontent.com/jeanslack/Videomass/master/videomass/data/hicolor/scalable/apps/videomass.svg</icon>
   <categories>
     <category>AudioVideo</category>
@@ -12,8 +12,8 @@
   <description>
     <p>
       Videomass is a powerful, multitasking and cross-platform graphical user
-      interface (GUI) for FFmpeg and yt-dlp. It offers a wide range of features
-      and functions, making it a comprehensive software solution.
+      interface (GUI) for FFmpeg. It offers a wide range of features and
+      functions, making it a comprehensive software solution.
     </p>
     <p>
       Videomass is written in Python3 using the wxPython-Phoenix GUI toolkit.
