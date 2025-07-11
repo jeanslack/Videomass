@@ -3,7 +3,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: July.10.2024
+# Rev: July.11.2025
 #
 # PORPOSE: Delete obsolete translation messages on videomass.po files
 #          for each locale found on the TARGET directory.
@@ -23,7 +23,6 @@ fi
 for langdirs in $(ls -d ${TARGET}/*/)
 do
     PO="${langdirs}LC_MESSAGES/videomass.po"
-    #msgfmt --check "${PO}" --output-file="${langdirs}LC_MESSAGES/videomass.mo"
     msgattrib --output-file="${PO}" --no-obsolete "${PO}"
     if [[ $? -ne 0 ]]; then
         echo -e '\e[1m\033[31mFailed!\e[0m'
