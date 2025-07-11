@@ -21,8 +21,6 @@ Base application dependencies
         - PyPubSub >=4.0.3
         - requests >=2.28.1
         - FFmpeg (included ffplay and ffprobe) >=5.1
-    Optionals:
-        - yt-dlp >=2025.06.30
 
 
 =========================

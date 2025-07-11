@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jun.06.2025
+Rev: July.10.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,7 +26,6 @@ This file is part of Videomass.
 """
 import sys
 import wx
-import wx.lib.agw.hyperlink as hpl
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_sys.about_app import VERSION
 
@@ -51,7 +50,6 @@ class Choose_Topic(wx.Panel):
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpAVconv = get_bmp(self.icons['A/V-Conv'], ((48, 48)))
             bmpPrstmng = get_bmp(self.icons['presets_manager'], ((48, 48)))
-            bmpYdl = get_bmp(self.icons['youtube'], ((48, 48)))
             bmpConcat = get_bmp(self.icons['concatenate'], ((48, 48)))
             bmpSlideshow = get_bmp(self.icons['slideshow'], ((48, 48)))
             bmpTopictures = get_bmp(self.icons['videotopictures'], ((48, 48)))
@@ -59,7 +57,6 @@ class Choose_Topic(wx.Panel):
             bmpAVconv = wx.Bitmap(self.icons['A/V-Conv'], wx.BITMAP_TYPE_ANY)
             bmpPrstmng = wx.Bitmap(self.icons['presets_manager'],
                                    wx.BITMAP_TYPE_ANY)
-            bmpYdl = wx.Bitmap(self.icons['youtube'], wx.BITMAP_TYPE_ANY)
             bmpConcat = wx.Bitmap(self.icons['concatenate'],
                                   wx.BITMAP_TYPE_ANY)
             bmpSlideshow = wx.Bitmap(self.icons['slideshow'],
@@ -91,43 +88,35 @@ class Choose_Topic(wx.Panel):
         conc = wx.Button(self, wx.ID_ANY, _('Concatenate media files'),
                          size=(300, -1), style=style)
         conc.SetBitmap(bmpConcat, wx.LEFT)
-        youtube = wx.Button(self, wx.ID_ANY, _('YouTube Downloader'),
-                            size=(300, -1), style=style)
-        youtube.SetBitmap(bmpYdl, wx.LEFT)
         slideshow = wx.Button(self, wx.ID_ANY, _('Still Image Maker'),
                               size=(300, -1), style=style)
         slideshow.SetBitmap(bmpSlideshow, wx.LEFT)
         videotoimages = wx.Button(self, wx.ID_ANY, _('From Movie to Pictures'),
                                   size=(300, -1), style=style)
         videotoimages.SetBitmap(bmpTopictures, wx.LEFT)
-        grid_buttons = wx.FlexGridSizer(3, 2, 20, 20)
-        grid_buttons.AddMany([(presets_mng, 0, wx.EXPAND, 5),
-                              (avconv, 0, wx.EXPAND, 5),
-                              (conc, 0, wx.EXPAND, 5),
-                              (youtube, 0, wx.EXPAND, 5),
-                              (slideshow, 0, wx.EXPAND, 5),
-                              (videotoimages, 0, wx.EXPAND, 5),
-                              ])
-        sizer_base.Add(50, 50)
-        sizer_base.Add(grid_buttons, 1, wx.ALIGN_CENTER_VERTICAL
+        grid_btntop = wx.FlexGridSizer(1, 2, 20, 20)
+        grid_btntop.AddMany([(presets_mng, 0, wx.EXPAND, 5),
+                             (avconv, 0, wx.EXPAND, 5),
+                             ])
+        sizer_base.Add(80, 80)
+        sizer_base.Add(grid_btntop, 0, wx.ALIGN_CENTER_VERTICAL
                        | wx.ALIGN_CENTER_HORIZONTAL, 5,
                        )
-        textsupp = _("If you like this project, please support it with a "
-                     "donation, Thanks!")
-        support = wx.StaticText(self, wx.ID_ANY,
-                                (textsupp),
-                                style=wx.ALIGN_CENTER)
-        sizer_base.Add(support, 0, wx.ALIGN_CENTER, 5)
 
-        url = 'https://www.paypal.com/paypalme/GPernigotto'
-        link1 = hpl.HyperLinkCtrl(self, -1, url, URL=url)
-        link1.SetColours("BLUE", "BLUE", "BLUE")
-        # link1.SetBold(True)
-        link1.SetFont(wx.Font(11, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL,
-                              wx.FONTWEIGHT_BOLD, True, 'Verdana'))
-        link1.UpdateLink()  # required for rendering
-        sizer_base.Add(link1, 0, wx.ALIGN_CENTER, 0)
-        sizer_base.Add(130, 130)
+        grid_btncntr = wx.FlexGridSizer(1, 1, 20, 20)
+        grid_btncntr.Add(conc, 0, wx.EXPAND, 5)
+        sizer_base.Add(20, 20)
+        sizer_base.Add(grid_btncntr, 0, wx.ALIGN_CENTER_VERTICAL
+                       | wx.ALIGN_CENTER_HORIZONTAL, 5,
+                       )
+        sizer_base.Add(20, 20)
+        grid_btnbot = wx.FlexGridSizer(2, 2, 20, 20)
+        grid_btnbot.AddMany([(slideshow, 0, wx.EXPAND, 5),
+                             (videotoimages, 0, wx.EXPAND, 5),
+                             ])
+        sizer_base.Add(grid_btnbot, 0, wx.ALIGN_CENTER_VERTICAL
+                       | wx.ALIGN_CENTER_HORIZONTAL, 5,
+                       )
         self.SetSizerAndFit(sizer_base)
 
         # ---------------------- Tooltips
@@ -139,10 +128,6 @@ class Choose_Topic(wx.Panel):
                  'Save your profiles and reuse them with Presets '
                  'Manager.'))
         avconv.SetToolTip(tip)
-        tip = (_('Easily download videos and audio in different '
-                 'formats and quality from YouTube, Facebook and '
-                 'more sites.'))
-        youtube.SetToolTip(tip)
         tip = (_('Concatenate multiple media files based on import '
                  'order without re-encoding'))
         conc.SetToolTip(tip)
@@ -156,45 +141,36 @@ class Choose_Topic(wx.Panel):
         if self.appdata['ostype'] == 'Darwin':
             welcome.SetFont(wx.Font(16, wx.SWISS, wx.NORMAL, wx.BOLD))
             version.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            support.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.BOLD))
         else:
             welcome.SetFont(wx.Font(14, wx.SWISS, wx.NORMAL, wx.NORMAL))
             version.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.LIGHT))
-            support.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
         if self.appdata['IS_DARK_THEME'] is True:
             if icontheme in ('Videomass-Colours',
                              'Videomass-Dark',
                              'Videomass-Light'):
                 self.SetBackgroundColour('#232424')  # Dark grey
-                link1.SetBackgroundColour('#232424')
             elif icontheme in ('Ubuntu-Dark-Aubergine',
                                'Ubuntu-Light-Aubergine'):
                 self.SetBackgroundColour('#2C001E')  # Dark Aubergine
-                link1.SetBackgroundColour('#2C001E')
             welcome.SetForegroundColour('#E95420')  # Ubuntu orange
             version.SetForegroundColour('#E95420')  # Ubuntu orange
-            support.SetForegroundColour('#E95420')  # Ubuntu orange
         elif self.appdata['IS_DARK_THEME'] is False:
             if icontheme in ('Videomass-Colours',
                              'Videomass-Dark',
                              'Videomass-Light'):
                 self.SetBackgroundColour('#4eada5')  # blue
-                link1.SetBackgroundColour('#4eada5')
             elif icontheme in ('Ubuntu-Dark-Aubergine',
                                'Ubuntu-Light-Aubergine'):
                 self.SetBackgroundColour('#2C001E')  # Dark Aubergine
-                link1.SetBackgroundColour('#2C001E')
                 welcome.SetForegroundColour('#E95420')  # Ubuntu orange
                 version.SetForegroundColour('#E95420')  # Ubuntu orange
-                support.SetForegroundColour('#E95420')  # Ubuntu orange
 
         self.Bind(wx.EVT_BUTTON, self.on_avconversions, avconv)
         self.Bind(wx.EVT_BUTTON, self.on_prst_mng, presets_mng)
         self.Bind(wx.EVT_BUTTON, self.on_concatenate, conc)
         self.Bind(wx.EVT_BUTTON, self.on_slideshow, slideshow)
         self.Bind(wx.EVT_BUTTON, self.on_to_pictures, videotoimages)
-        self.Bind(wx.EVT_BUTTON, self.on_youtube_dl, youtube)
     # ------------------------------------------------------------------#
 
     def on_prst_mng(self, event):
@@ -236,10 +212,3 @@ class Choose_Topic(wx.Panel):
         """
         self.parent.topicname = 'Video to Pictures'
         self.parent.switch_file_import(self)
-    # ------------------------------------------------------------------#
-
-    def on_youtube_dl(self, event):
-        """
-        Open a separated downloader frame for yt-dlp.
-        """
-        self.parent.youtubedl(self)

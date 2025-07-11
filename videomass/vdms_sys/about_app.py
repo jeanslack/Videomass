@@ -26,7 +26,7 @@ This file is part of Videomass.
 """
 PRGNAME = 'videomass'
 RELNAME = 'Videomass'
-VERSION = '5.0.27'
+VERSION = '6.01.1'
 RELSTATE = 'not released'
 COPYRIGHT = '2013-2025'
 WEBSITE = 'http://jeanslack.github.io/Videomass/'
@@ -39,14 +39,12 @@ COMMENT = ("\nThanks to:\n"
            "- FFmpeg, FFmpeg is a trademark of Fabrice Bellard, \n"
            "originator of the FFmpeg project:\n"
            "<http://ffmpeg.org/>\n"
-           "- yt-dlp: <https://github.com/yt-dlp/yt-dlp>\n"
-           "Download videos from YouTube and more sites\n"
            )
-SHORTDESCRIPT = "Videomass is a cross-platform GUI for FFmpeg and yt-dlp"
+SHORTDESCRIPT = "Videomass is a cross-platform GUI for FFmpeg"
 LONGDESCRIPT = """
 Videomass is a powerful, multitasking and cross-platform graphical user
-interface (GUI) for FFmpeg and yt-dlp. It offers a wide range of features and
-functions, making it a comprehensive software solution.
+interface (GUI) for FFmpeg. It offers a wide range of features and functions,
+making it a comprehensive software solution.
 
 Videomass is written in Python3 using the wxPython4-Phoenix toolkit.
 """

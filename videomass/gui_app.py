@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.14.2025
+Rev: July.10.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -37,7 +37,7 @@ from videomass.vdms_sys.argparser import arguments
 from videomass.vdms_sys.configurator import DataSource
 from videomass.vdms_sys import app_const as appC
 from videomass.vdms_utils.utils import del_filecontents
-from videomass.vdms_sys.external_package import importer_init_file
+# from videomass.vdms_sys.external_package import importer_init_file
 
 # add translation macro to builtin similar to what gettext does
 builtins.__dict__['_'] = wx.GetTranslation
@@ -98,9 +98,6 @@ class Videomass(wx.App):
         wx.Locale.AddCatalogLookupPathPrefix(self.appset['localepath'])
         self.update_language(self.appset['locale_name'])
 
-        if self.check_ytdlp() is False:
-            self.appset['yt_dlp'] = 'no module'
-
         if self.check_ffmpeg():
             self.wizard(self.iconset['videomass'])
             return True
@@ -110,37 +107,6 @@ class Videomass(wx.App):
         main_frame.Show()
         self.SetTopWindow(main_frame)
         return True
-    # -------------------------------------------------------------------
-
-    def check_ytdlp(self):
-        """
-        Check for `yt_dlp` python module. If enabled by the user
-        but not yet installed, the session should still start
-        forcing a temporary disable.
-        """
-        msg = (_("To suppress this message on startup, please install "
-                 "yt-dlp or disable it from the preferences."))
-
-        if self.appset['enable-ytdlp']:
-            if (self.appset['ytdlp-module-path']
-                    and self.appset['ytdlp-usemodule']):
-                check = importer_init_file(self.appset['ytdlp-module-path'],
-                                           test=['yt_dlp.YoutubeDL',
-                                                 'yt_dlp.version']
-                                           )
-                if check:
-                    wx.MessageBox(f"ERROR: {check}\n\n{msg}",
-                                  _('Videomass - Error!'), wx.ICON_ERROR)
-                    return False
-            try:
-                import yt_dlp
-                self.appset['yt_dlp'] = True
-                return True
-            except ModuleNotFoundError as err:
-                wx.MessageBox(f"ERROR: {err}\n\n{msg}",
-                              _('Videomass - Error!'), wx.ICON_ERROR)
-                return False
-        return False
     # -------------------------------------------------------------------
 
     def check_ffmpeg(self):

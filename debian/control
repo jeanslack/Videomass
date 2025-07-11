@@ -21,14 +21,15 @@ Multi-Arch: foreign
 Depends: python3-pubsub,
          python3-requests (>= 2.28.1),
          python3-wxgtk4.0,
+         ffmpeg,
          ${misc:Depends},
          ${python3:Depends}
-Recommends: ffmpeg
-Suggests: atomicparsley, yt-dlp
-Description: Cross-platform GUI for FFmpeg and yt-dlp
+#Recommends:
+#Suggests:
+Description: Cross-platform GUI for FFmpeg
  Videomass is a powerful, multitasking and cross-platform graphical user
- interface for FFmpeg and yt-dlp. Videomass is written in Python3 using
- the wxPython-Phoenix GUI toolkit.
+ interface for FFmpeg. Videomass is written in Python3 using the
+ wxPython-Phoenix GUI toolkit.
  .
  It offers a wide range of features and functions, making it a comprehensive
  software solution.

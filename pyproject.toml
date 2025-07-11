@@ -13,13 +13,13 @@ authors = [
 maintainers = [
   {name = "Gianluca Pernigotto", email = "jeanlucperni@gmail.com"}
 ]
-description = "Videomass is a cross-platform GUI for FFmpeg and yt-dlp"
+description = "Videomass is a cross-platform GUI for FFmpeg"
 license =  {text = "GNU General Public License v3 (GPLv3)"}
 keywords = [
     "videomass",
     "converter",
+    "converters",
     "wxpython",
-    "yt-dlp",
     "ffmpeg"]
 classifiers = [
     "Environment :: X11 Applications :: GTK",
@@ -57,9 +57,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-cli = [
-    "yt-dlp",
-]
+cli = []
 build = [
     "build",
     "hatchling",
