@@ -32,8 +32,7 @@ extract audio from videos and much more!
 - Advanced log file management.
 - Multi-panels, switch between panels using keyboard shortcuts.
 - Audio/video processing using advanced tools and sophisticated filters interfaces.
-- While downloading audio or video you can now do other transcoding tasks.
-- Multi languages support (English, French, Italian, Russian, Dutch, Portuguese-BR, simplified Chinese, Spanish-ES, Spanish-CU, Spanish-MX)
+- Multi languages support
 
 
 ## Conversions and transcodings
@@ -68,29 +67,3 @@ without re-encoding and therefore without loss of quality.
     - PEAK and RMS volume analysis reporting.
     - Ability to select specified audio streams in videos to apply volume normalization.
 - and much more...
-
-## Downloading audio and video
-{: .bg-green-300}
----
-- Download using multiple URLs from YouTube and more websites (over 200 are currently supported).
-- Precompiled Videos, from best to worst qualities.
-- Download by format and resolution.
-- Download audio and video separately.
-- Download Audio only.
-- Download by ID selecting "format codes" and ability to download both separated or merged files.
-- Shows download statistics.
-- Ability to download entire playlists.
-- Playlists can be indexed to download only the files you are interested in.
-- Ability to enable/disable the SSL certificate.
-- Ability to embed thumbnail in audio file.
-- Can include the origin metadata to files.
-- Ability to set preferred subtitles.
-- Ability to include IDs in filenames.
-- Ability to restrict filenames to only ASCII characters.
-- Ability to set alternative downloaders such as aria2c, avconv, axel, curl, ffmpeg, httpie, wget.
-- Ability to specify a proxy server.
-- Various options provided for geo restriction.
-- Login using authentication possible (e.g. username/password and video password).
-- Easy and friendly access via cookies.
-- and more...
-

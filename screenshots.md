@@ -93,27 +93,3 @@ Confirm Settings window:
 File Processing:   
 
 ![Image](/images/screenshots/FileProcessing.png)    
-
-----
-
-YouTube Downloader (GUI for yt-dlp):   
-
-![Image](/images/screenshots/enterURL.png)   
-
-----
-
-![Image](/images/screenshots/ytdlpUI.png)    
-
-----
-
-![Image](/images/screenshots/download.png)   
-
-----
-
-![Image](/images/screenshots/download2.png)   
-
-----
-
-![Image](/images/screenshots/YoutubeDownloaderstatistics.png)   
-
-

@@ -20,7 +20,6 @@ The User Guide was written in English and is available in PDF format only (updat
 - [Presets Manager](User-guide/Presets_Manager_en.pdf)
 - [Timeline Usage](User-guide/Timeline_en.pdf)
 - [Video Filters](User-guide/Video_filters_en.pdf)
-- [YouTube Downloader Options](User-guide/YouTube_Downloader_Options_en.pdf)
 
 ## Demo videos and screencasts
 {: .bg-green-300}
