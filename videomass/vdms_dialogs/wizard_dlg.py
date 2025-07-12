@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 Name: wizard_dlg.py
-Porpose: wizard setup dialog
+Porpose: wizard setup dialog for Videomass
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -45,7 +45,6 @@ def write_changes(ffmpeg, ffplay, ffprobe, binfound):
     dataread['ffmpeg_cmd'] = ffmpeg
     dataread['ffprobe_cmd'] = ffprobe
     dataread['ffplay_cmd'] = ffplay
-    # local = False if binfound == 'system' else True
     local = not binfound == 'system'
     dataread['ffmpeg_islocal'] = local
     dataread['ffprobe_islocal'] = local
@@ -66,7 +65,7 @@ class PageOne(wx.Panel):
 
     def __init__(self, parent, icon):
         """
-        constructor
+        A simple welcome message is displayed
         """
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
 
@@ -206,8 +205,7 @@ class PageTwo(wx.Panel):
 
     def Locate(self, event):
         """
-        The user browse manually to find ffmpeg, ffprobe,
-        ffplay executables
+        The user browse manually to find FFmpeg executables
 
         """
         self.parent.btnNext.Enable()
@@ -220,7 +218,7 @@ class PageTwo(wx.Panel):
     def detectbin(self, event):
         """
         The user push the auto-detect button to automatically
-        detect ffmpeg, ffprobe and ffplay on the O.S.
+        detect FFmpeg based on the OS environment variables.
 
         """
         if PageTwo.OS == 'Windows':
@@ -358,6 +356,7 @@ class PageThree(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_ffmpeg, self.ffmpegBtn)
         self.Bind(wx.EVT_BUTTON, self.on_ffprobe, self.ffprobeBtn)
         self.Bind(wx.EVT_BUTTON, self.on_ffplay, self.ffplayBtn)
+    # -------------------------------------------------------------------#
 
     def on_ffmpeg(self, event):
         """
@@ -375,6 +374,8 @@ class PageThree(wx.Panel):
                     ffmpegpath = PageThree.GETPATH(dlgfile.GetPath())
                     self.ffmpegTxt.write(ffmpegpath)
                     self.parent.ffmpeg = ffmpegpath
+                    self.check_text_fields()
+    # -------------------------------------------------------------------#
 
     def on_ffprobe(self, event):
         """
@@ -392,6 +393,8 @@ class PageThree(wx.Panel):
                     ffprobepath = PageThree.GETPATH(dlgfile.GetPath())
                     self.ffprobeTxt.write(ffprobepath)
                     self.parent.ffprobe = ffprobepath
+                    self.check_text_fields()
+    # -------------------------------------------------------------------#
 
     def on_ffplay(self, event):
         """
@@ -409,6 +412,19 @@ class PageThree(wx.Panel):
                     ffplaypath = PageThree.GETPATH(dlgfile.GetPath())
                     self.ffplayTxt.write(ffplaypath)
                     self.parent.ffplay = ffplaypath
+                    self.check_text_fields()
+    # -------------------------------------------------------------------#
+
+    def check_text_fields(self):
+        """
+        Text boxes must not be empty to enable the
+        `parent.Next` button.
+        """
+        if (self.ffprobeTxt.GetValue() and self.ffmpegTxt.GetValue()
+                and self.ffplayTxt.GetValue()):
+            self.parent.btnNext.Enable()
+        else:
+            self.parent.btnNext.Disable()
 
 
 class PageFinish(wx.Panel):
@@ -426,7 +442,7 @@ class PageFinish(wx.Panel):
 
     def __init__(self, parent):
         """
-        constructor
+        A thank you message is displayed.
         """
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
 
@@ -477,8 +493,8 @@ class Wizard(wx.Dialog):
     """
     def __init__(self, icon_videomass):
         """
-        Note that the attributes of ffmpeg are set in the
-        "PageTwo" and/or "PageThree" classes.
+        The attributes of ffmpeg, ffprobe, ffplay are set
+        in the "PageTwo" and/or "PageThree" classes.
 
         """
         self.ffmpeg = None
@@ -556,23 +572,24 @@ class Wizard(wx.Dialog):
                 self.btnNext.Disable()
 
         elif self.pageTwo.IsShown():
-            self.pageTwo.Hide()
-            if not self.pageTwo.locateBtn.IsEnabled():
+
+            if self.pageTwo.detectBtn.IsEnabled():
+                self.pageTwo.Hide()
                 self.pageThree.Show()
+                if (not self.pageThree.ffmpegTxt.GetValue()
+                        and not self.pageThree.ffprobeTxt.GetValue()
+                        and not self.pageThree.ffplayTxt.GetValue()):
+                    self.btnNext.Disable()
             else:
+                self.pageTwo.Hide()
                 self.pageFinish.Show()
                 self.btnNext.SetLabel(_('Finish'))
 
         elif self.pageThree.IsShown():
-            if (self.pageThree.ffmpegTxt.GetValue()
-                    and self.pageThree.ffprobeTxt.GetValue()
-                    and self.pageThree.ffplayTxt.GetValue()):
-                self.pageThree.Hide()
-                self.pageFinish.Show()
-                self.btnNext.SetLabel(_('Finish'))
-            else:
-                wx.MessageBox(_("Some text boxes are still incomplete"),
-                              "Videomass", wx.ICON_INFORMATION, self)
+            self.pageThree.Hide()
+            self.pageFinish.Show()
+            self.btnNext.SetLabel(_('Finish'))
+
         self.Layout()
     # -------------------------------------------------------------------#
 
@@ -590,6 +607,7 @@ class Wizard(wx.Dialog):
         elif self.pageThree.IsShown():
             self.pageThree.Hide()
             self.pageTwo.Show()
+            self.btnNext.Enable()
 
         elif self.pageFinish.IsShown():
             self.btnNext.SetLabel(_('Next >'))

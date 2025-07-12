@@ -9,7 +9,7 @@
 #          for each locale found on the TARGET directory.
 #
 # USAGE: ~$ cd /Videomass/source/directory
-#        ~$ develop/gettext_utils/update_MO_files.sh
+#        ~$ develop/gettext_utils/purge_deleted_translation.sh
 
 TARGET="videomass/data/locale"  # relative path to "locale" directory
 
@@ -28,7 +28,7 @@ do
         echo -e '\e[1m\033[31mFailed!\e[0m'
         exit $?
     fi
-    echo "INFO: Deleting obsolete: '${langdirs}LC_MESSAGES/videomass.mo' ...OK"
+    echo "INFO: Deleting obsolete: '"${PO}"' ...OK"
 done
 
 echo -e "\n\e[1mSuccessfully updated.\e[0m"

@@ -19,6 +19,7 @@ Fri, 11 July 2025 v6.01.1
   * Improved files on requirements dir.
   * Fixed OS-based dependencies on pyproject.toml and requirements.
   * Created requirements.txt file for installing dependencies using pip.
+  * Fixed Wizard dialog.
 
 +------------------------------------+
 Fri, 05 Jun 2025 V.5.0.26
