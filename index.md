@@ -22,9 +22,9 @@ Designed for advanced and beginner users, it offers a wide range of features and
 ## Notice
 {: .bg-yellow-300 .text-grey-dk-100}
 
-The yt-dlp GUI included in Videomass has been moved to [Vidtuber](https://github.com/jeanslack/Vidtuber).
+The yt-dlp GUI included in Videomass has been moved to [Vidtuber](https://github.com/jeanslack/Vidtuber), the new GUI aimed only at yt-dlp.
 
-Vidtuber provides exactly the same GUI, including the same features developed to date for Videomass, but will also be more user-friendly and already includes various installation methods. Please visit development page for more details: 
+Vidtuber provides exactly the same features developed to date for Videomass, but will also be more user-friendly and already includes various installation methods. Please visit development page for more details: 
 [https://github.com/jeanslack/Vidtuber](https://github.com/jeanslack/Vidtuber).
 
 For further clarification, please refer to this Github issue: [https://github.com/jeanslack/Videomass/issues/394](https://github.com/jeanslack/Videomass/issues/394)
