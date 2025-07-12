@@ -5,19 +5,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass - IT - 10.06.2025\n"
+"Project-Id-Version: Videomass - IT - 12.07.2025\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-07-11 08:29+0200\n"
-"PO-Revision-Date: 2025-07-11 08:56+0200\n"
+"PO-Revision-Date: 2025-07-12 09:35+0200\n"
 "Last-Translator: bovirus <bovirus@gmail.comn>\n"
 "Language-Team: bovirus (bovirus@gmail.com)\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.17.0\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.6\n"
 
 #: ../../gui_app.py:196
 #, python-brace-format
@@ -32,7 +32,7 @@ msgstr ""
 
 #: ../../vdms_dialogs/about_dialog.py:52
 msgid "Cross-platform graphical user interface for FFmpeg\n"
-msgstr ""
+msgstr "Interfaccia utente grafica multipiattaforma per FFMPEG\n"
 
 #: ../../vdms_dialogs/audioproperties.py:224
 msgid ""
@@ -1030,8 +1030,9 @@ msgstr ""
 
 #: ../../vdms_dialogs/filter_stab.py:400
 msgid ""
-"Enable virtual tripod mode if checked, which is equivalent to relative=0:"
-"smoothing=0. Default is unchecked. Use also tripod option of vidstabdetect."
+"Enable virtual tripod mode if checked, which is equivalent to "
+"relative=0:smoothing=0. Default is unchecked. Use also tripod option of "
+"vidstabdetect."
 msgstr ""
 "Abilita la modalità treppiede virtuale se selezionata, che è equivalente a "
 "relative=abilitato: smoothing=0. Per impostazione predefinita è "
@@ -1461,8 +1462,8 @@ msgstr "Argomenti FFmpeg per la codifica a passaggio singolo"
 #: ../../vdms_dialogs/setting_profiles.py:158
 #: ../../vdms_panels/presets_manager.py:259
 msgid ""
-"Any optional arguments to add before input file on the one-pass encoding, e."
-"g required names of some hardware accelerations like -hwaccel to use with "
+"Any optional arguments to add before input file on the one-pass encoding, "
+"e.g required names of some hardware accelerations like -hwaccel to use with "
 "CUDA."
 msgstr ""
 "Eventuali argomenti facoltativi da aggiungere prima del file sorgente "
@@ -1484,8 +1485,8 @@ msgstr "Argomenti FFmpeg per la codifica a doppio passaggio"
 #: ../../vdms_dialogs/setting_profiles.py:162
 #: ../../vdms_panels/presets_manager.py:263
 msgid ""
-"Any optional arguments to add before input file on the two-pass encoding, e."
-"g required names of some hardware accelerations like -hwaccel to use with "
+"Any optional arguments to add before input file on the two-pass encoding, "
+"e.g required names of some hardware accelerations like -hwaccel to use with "
 "CUDA."
 msgstr ""
 "Eventuali argomenti facoltativi da aggiungere prima del file sorgente nella "
@@ -2361,23 +2362,23 @@ msgstr "Contribuisci al progetto"
 
 #: ../../vdms_main/main_frame.py:627
 msgid "Sponsor this project"
-msgstr ""
+msgstr "Sponsorizza questo progetto"
 
 #: ../../vdms_main/main_frame.py:628
 msgid "Become a developer supporter"
-msgstr ""
+msgstr "Diventa un supporter dello sviluppatore"
 
 #: ../../vdms_main/main_frame.py:629
 msgid "Donate"
-msgstr ""
+msgstr "Dona"
 
 #: ../../vdms_main/main_frame.py:630
 msgid "Donate to the app developer"
-msgstr ""
+msgstr "Dona allo sviluppatore dell'app"
 
 #: ../../vdms_main/main_frame.py:634
 msgid "Other projects by the developer"
-msgstr ""
+msgstr "Altri progetti dello sviluppatore"
 
 #: ../../vdms_main/main_frame.py:650
 msgid "About Videomass"
