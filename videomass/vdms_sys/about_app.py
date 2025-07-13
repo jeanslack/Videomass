@@ -26,7 +26,7 @@ This file is part of Videomass.
 """
 PRGNAME = 'videomass'
 RELNAME = 'Videomass'
-VERSION = '6.01.1'
+VERSION = '6.1.11'
 RELSTATE = 'not released'
 COPYRIGHT = '2013-2025'
 WEBSITE = 'http://jeanslack.github.io/Videomass/'

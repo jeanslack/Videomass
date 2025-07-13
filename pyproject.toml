@@ -46,6 +46,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Multimedia :: Video",
     "Topic :: Multimedia :: Video :: Conversion",
     "Topic :: Multimedia :: Sound/Audio :: Conversion"
@@ -83,7 +84,6 @@ path = "videomass/vdms_sys/about_app.py"
 [tool.hatch.build.targets.sdist]
 include = [
     "videomass",
-    "debian",
     "docs/man",
     "develop",
     "tests",
@@ -103,6 +103,9 @@ include = [
     ".pylintrc",
 ]
 exclude = [
+    "debian",
+    "docs/UserGuide",
+    "docs/EBU_resources.md",
     "videomass/data/icons/videomass.icns",
     "videomass/data/icons/videomass.ico",
     "videomass/data/locale/videomass.pot",

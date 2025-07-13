@@ -7,19 +7,21 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Fri, 11 July 2025 v6.01.1
+Sun, 13 July 2025 v6.1.11
 
   * [REMOVED] The yt-dlp GUI has been completely removed.
   * Update it_IT i18n, thanks to @bovirus .
   * Update ru_RU i18n, thanks to ChourS.
-  * Fixed default output directory during application bootstrap
-    (setting_manager.py), specially in portable mode.
+  * Fixed inconsistencies in the setting_manager.py file for the default output
+    directory when bootstrapping the application, especially in portable mode.
   * Fixed lint errors and typos.
   * Fixed `requests` minimum version to >=2.28.1.
-  * Improved files on requirements dir.
-  * Fixed OS-based dependencies on pyproject.toml and requirements.
+  * Changed and improved files on requirements dir.
+  * Fixed OS-based dependencies and requirements on the pyproject.toml file.
+  * Fixed pyproject.toml file to include only essential data in the source
+    archive.
   * Created requirements.txt file for installing dependencies using pip.
-  * Fixed Wizard dialog.
+  * Improved wizard UI.
 
 +------------------------------------+
 Fri, 05 Jun 2025 V.5.0.26
