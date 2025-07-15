@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sun, 13 July 2025 v6.1.11
+Tue, 15 July 2025 v6.1.11
 
   * [REMOVED] The yt-dlp GUI has been completely removed.
   * Update it_IT i18n, thanks to @bovirus .
@@ -22,6 +22,11 @@ Sun, 13 July 2025 v6.1.11
     archive.
   * Created requirements.txt file for installing dependencies using pip.
   * Improved wizard UI.
+  * Updated documentations to 6.1.12 version.
+  * Fixed missing icon issue for application launch on Ubuntu using deb package
+    from PPA. This was fixed by upgrading to the Noble series for application
+    build.
+
 
 +------------------------------------+
 Fri, 05 Jun 2025 V.5.0.26

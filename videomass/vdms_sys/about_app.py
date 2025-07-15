@@ -26,8 +26,8 @@ This file is part of Videomass.
 """
 PRGNAME = 'videomass'
 RELNAME = 'Videomass'
-VERSION = '6.1.11'
-RELSTATE = 'not released'
+VERSION = '6.1.12'
+RELSTATE = 'released'
 COPYRIGHT = '2013-2025'
 WEBSITE = 'http://jeanslack.github.io/Videomass/'
 AUTHOR = ('Gianluca Pernigotto', '(aka jeanslack)')
