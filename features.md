@@ -6,21 +6,21 @@ nav_order: 2
 # Features
 ---
 
-Videomass is not just a common converter, it features file concatenation, time 
-trimmer, ability to create thumbnails, tiled mosaics and animated giffs from movies; 
-it has sophisticated GUIs for video filters, previews for video stabilization, 
-resizing, croping, transposing, color equalization. It features PEAK, RMS and EBU 
-audio normalization with streams indexing capabilities, a volume analyzer, audio 
-preview and many more interesting features...
-For the people that are familiar with FFmpeg, it has a highly customizable preset 
-manager with the possbility to easily make your own presets through the GUI and 
-adapt this to your specific needs or create new presets using the FFmpeg command line. 
-For less experienced people there are also ready-to-use presets.
-It offers out-of-the-box all possible file formats like MP4, M4V, M4A, MKV, AVI, 
-OGV, WEBM, MP3, AC-3, WAV, OPUS, FLAC, OGG and encoders like MPEG-4, H.264/AVC, 
-H.265/HEVC, VP8, VP9, LIBAOM-AVI, VORBIS, PCM, LAME, ALAC, etc.
-Also you can copy audio or video streams (lossless mode) without re-encoding, or 
-extract audio from videos and much more!
+It includes file concatenation, batch-mode, queue management, time trimmer, 
+ability to create thumbnails, tiled mosaics and animated giffs from movies; 
+it has sophisticated GUIs for video filters and previews like resizing, 
+croping, transposing, color equalization. It features PEAK, RMS and EBU audio 
+normalization with streams indexing capabilities, audio volume analyzer, 
+audio preview and many more interesting features… 
+For the people that are familiar with FFmpeg, it has a highly customizable 
+preset manager with the possbility to easily make your own presets. For less 
+experienced people there are also ready-to-use presets. 
+It offers out-of-the-box all possible 
+file formats like MP4, M4V, M4A, MKV, AVI, OGV, WEBM, MP3, AC-3, WAV, OPUS, 
+FLAC, OGG and encoders like MPEG-4, H.264/AVC, H.265/HEVC, VP8, VP9, 
+LIBAOM-AVI, VORBIS, PCM, LAME, ALAC, etc. Also you can copy audio or video 
+ streams (lossless mode) without re-encoding, or extract audio from videos and 
+ much more!
 
 ## Main features
 {: .bg-green-300}
