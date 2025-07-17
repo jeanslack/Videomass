@@ -3,6 +3,9 @@
 
 # If you want install dependencies + Videomass, Use like this:
 #   python3 -m pip install videomass -r requirements.txt
+#
+#   OR
+#       python3 -m pip install videomass
 
 # Notes for Tester:
 # -----------------

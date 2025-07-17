@@ -1,4 +1,4 @@
-
+# NOTE: This file is just a reminder, it does not install anything.
 
 # Packaging for Debian and derivatives
 #     - Make a Videomass debian source package from upstream source code.

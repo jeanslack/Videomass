@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.22.2024
+Rev: July.17.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -1265,7 +1265,7 @@ class AV_Conv(wx.Panel):
         if action == 0:
             with wx.FileDialog(self, _("Enter name for new preset"),
                                defaultDir=defaultdir,
-                               wildcard="Videomass presets (*.json;)|*.json;",
+                               wildcard="Videomass preset (*.json;)|*.json;",
                                style=wx.FD_SAVE
                                | wx.FD_OVERWRITE_PROMPT) as fileDialog:
                 fileDialog.SetFilename('New preset.json')
@@ -1288,7 +1288,7 @@ class AV_Conv(wx.Panel):
         elif action == 1:
             with wx.FileDialog(self, _("Open Videomass preset"),
                                defaultDir=defaultdir,
-                               wildcard="Videomass presets (*.json;)|*.json;",
+                               wildcard="Videomass preset (*.json;)|*.json;",
                                style=wx.FD_OPEN
                                | wx.FD_FILE_MUST_EXIST) as fileDialog:
                 if fileDialog.ShowModal() == wx.ID_CANCEL:

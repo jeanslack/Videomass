@@ -7,6 +7,12 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Thu, 17 July 2025 v6.1.13
+
+  * Fixed "Go" menu item issue on showing panels.
+  * Fixed some typos.
+
++------------------------------------+
 Tue, 15 July 2025 v6.1.12
 
   * [REMOVED] The yt-dlp GUI has been completely removed.

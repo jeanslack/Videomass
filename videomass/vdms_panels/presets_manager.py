@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.22.2024
+Rev: July.17.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -512,7 +512,7 @@ class PrstPan(wx.Panel):
         filename = None
         with wx.FileDialog(self, _("Enter name for new preset"),
                            defaultDir=self.user_prst,
-                           wildcard="Videomass presets (*.json;)|*.json;",
+                           wildcard="Videomass preset (*.json;)|*.json;",
                            style=wx.FD_SAVE
                            | wx.FD_OVERWRITE_PROMPT) as fileDialog:
             fileDialog.SetFilename('New preset.json')
@@ -630,7 +630,7 @@ class PrstPan(wx.Panel):
         """
         with wx.FileDialog(self, _("Open the preset you want to restore"),
                            defaultDir=os.path.expanduser('~'),
-                           wildcard="Videomass presets (*.json;)|*.json;",
+                           wildcard="Videomass preset (*.json;)|*.json;",
                            style=wx.FD_OPEN
                            | wx.FD_FILE_MUST_EXIST) as filedlg:
 

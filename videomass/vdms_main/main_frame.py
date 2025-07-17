@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Jan.14.2025
+Rev: July.17.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -187,7 +187,7 @@ class MainFrame(wx.Frame):
         # disabling toolbar/menu items
         [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8,
                                                      35, 36, 37)]
-        self.menu_go_items((0, 1, 1, 1, 1, 1, 1, 1))  # Go menu items
+        self.menu_go_items((0, 1, 1, 1, 1, 1, 1))  # Go menu items
         self.Layout()
         # ---------------------- Binding (EVT) ----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_destpath_setup)
@@ -212,7 +212,7 @@ class MainFrame(wx.Frame):
             else:
                 os.remove(fque)
 
-    # -------------------Status bar settings--------------------#
+    # ------------------------------------------------------------------#
 
     def queue_tool_counter(self):
         """
@@ -546,7 +546,7 @@ class MainFrame(wx.Frame):
                  _("Decoders available on your version of FFmpeg"))
         ckdecoders = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffplayButton = wx.Menu()  # ffplay sub menu
-        viewButton.AppendSubMenu(ffplayButton, _("FFplay"))
+        viewButton.AppendSubMenu(ffplayButton, "FFplay")
         dscrp = (_("Enable timestamps on playback"),
                  _("Displays timestamp when playing media with FFplay"))
         self.viewtimestamp = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
@@ -1400,7 +1400,7 @@ class MainFrame(wx.Frame):
         [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 6, 7, 8, 35, 36)]
         self.ChooseTopic.Show()
         self.openmedia.Enable(False)
-        self.menu_go_items((0, 1, 1, 1, 1, 1, 1, 1))  # Go menu items
+        self.menu_go_items((0, 1, 1, 1, 1, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.SetTitle(_('Videomass'))
@@ -1422,7 +1422,7 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         self.fileDnDTarget.Show()
         pub.sendMessage("SET_DRAG_AND_DROP_TOPIC", topic=self.topicname)
-        self.menu_go_items((1, 1, 1, 1, 1, 1, 1, 1))  # Go menu items
+        self.menu_go_items((1, 1, 1, 1, 1, 1, 1))  # Go menu items
         self.delfile.Enable(True)
         self.clearall.Enable(True)
         self.openmedia.Enable(True)
@@ -1451,7 +1451,7 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         self.AVconvPanel.Show()
         self.SetTitle(_('Videomass - AV Conversions'))
-        self.menu_go_items((1, 1, 0, 1, 1, 1, 1, 1))  # Go menu items
+        self.menu_go_items((1, 1, 0, 1, 1, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
@@ -1478,7 +1478,7 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         self.PrstsPanel.Show()
         self.SetTitle(_('Videomass - Presets Manager'))
-        self.menu_go_items((1, 0, 1, 1, 1, 1, 1, 1))  # Go menu items
+        self.menu_go_items((1, 0, 1, 1, 1, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
@@ -1506,7 +1506,7 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         self.ConcatDemuxer.Show()
         self.SetTitle(_('Videomass - Concatenate Demuxer'))
-        self.menu_go_items((1, 1, 1, 0, 1, 1, 1, 1))  # Go menu items
+        self.menu_go_items((1, 1, 1, 0, 1, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
@@ -1533,7 +1533,7 @@ class MainFrame(wx.Frame):
         self.toSlideshow.Hide()
         self.toPictures.Show()
         self.SetTitle(_('Videomass - From Movie to Pictures'))
-        self.menu_go_items((1, 1, 1, 1, 1, 0, 1, 1))  # Go menu items
+        self.menu_go_items((1, 1, 1, 1, 1, 0, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
@@ -1560,7 +1560,7 @@ class MainFrame(wx.Frame):
         self.toPictures.Hide()
         self.toSlideshow.Show()
         self.SetTitle(_('Videomass - Still Image Maker'))
-        self.menu_go_items((1, 1, 1, 1, 0, 1, 1, 1))  # Go menu items
+        self.menu_go_items((1, 1, 1, 1, 0, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
         self.openmedia.Enable(True)
@@ -1696,7 +1696,7 @@ class MainFrame(wx.Frame):
         if not args[0] == 'View':
             self.delfile.Enable(False)
             self.clearall.Enable(False)
-            self.menu_go_items((0, 0, 0, 0, 0, 0, 1, 0))  # Go menu items
+            self.menu_go_items((0, 0, 0, 0, 0, 0, 0))  # Go menu items
             self.openmedia.Enable(False)
             self.loadqueue.Enable(False)
             self.setupItem.Enable(False)
@@ -1707,7 +1707,7 @@ class MainFrame(wx.Frame):
             [self.toolbar.EnableTool(x, True) for x in (6, 8)]
             [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 36, 37, 7)]
         else:
-            self.menu_go_items((1, 1, 1, 1, 1, 1, 1, 0))  # Go menu items
+            self.menu_go_items((1, 1, 1, 1, 1, 1, 0))  # Go menu items
             [self.toolbar.EnableTool(x, False) for x in (4, 8, 36)]
             [self.toolbar.EnableTool(x, True) for x in (3, 5, 6, 7, 35)]
         self.ProcessPanel.topic_thread(args, datalist, self.topicname)
@@ -1757,7 +1757,7 @@ class MainFrame(wx.Frame):
         Process report terminated. This method is called using
         pub/sub protocol. see `long_processing_task.end_proc()`)
         """
-        self.menu_go_items((1, 1, 1, 1, 1, 1, 1, 0))  # Go menu items
+        self.menu_go_items((1, 1, 1, 1, 1, 1, 0))  # Go menu items
         self.openmedia.Enable(False)
         self.loadqueue.Enable(False)
         self.setupItem.Enable(True)
