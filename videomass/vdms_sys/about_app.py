@@ -6,7 +6,7 @@ Compatibility: Python3, Python2
 author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 lic: GPL3
-Rev: March.22.2025
+Rev: July.17.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,8 +26,8 @@ This file is part of Videomass.
 """
 PRGNAME = 'videomass'
 RELNAME = 'Videomass'
-VERSION = '6.1.12'
-RELSTATE = 'released'
+VERSION = '6.1.13'
+RELSTATE = 'not released'
 COPYRIGHT = '2013-2025'
 WEBSITE = 'http://jeanslack.github.io/Videomass/'
 AUTHOR = ('Gianluca Pernigotto', '(aka jeanslack)')
