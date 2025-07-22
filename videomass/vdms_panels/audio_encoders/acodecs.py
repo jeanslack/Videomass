@@ -197,8 +197,8 @@ class AudioEncoders(scrolled.ScrolledPanel):
         grid_peak.Add(self.btn_stat, 0, wx.ALIGN_CENTER_VERTICAL, 0)
 
         self.lab_amplitude = wx.StaticText(self, wx.ID_ANY, _("Target level:"))
-        grid_peak.Add(self.lab_amplitude, 0, wx.LEFT |
-                      wx.ALIGN_CENTER_VERTICAL, 20)
+        grid_peak.Add(self.lab_amplitude, 0, wx.LEFT
+                      | wx.ALIGN_CENTER_VERTICAL, 20)
         self.spin_target = FS.FloatSpin(self, wx.ID_ANY,
                                         min_val=-99.0, max_val=0.0,
                                         increment=0.5, value=-1.0,

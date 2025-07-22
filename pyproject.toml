@@ -54,7 +54,7 @@ classifiers = [
 dependencies = [
     "wxpython>=4.0.7;platform_system == 'Windows' or platform_system == 'Darwin'",
     "pypubsub>=4.0.3",
-    "requests>=2.28.1"
+    "requests"
 ]
 
 [project.optional-dependencies]
