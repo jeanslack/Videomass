@@ -7,10 +7,15 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 17 July 2025 v6.1.13
+Fri, 18 July 2025 v6.1.13
 
-  * Fixed "Go" menu item issue on showing panels.
+  * Fixed "Go" menu item that was incorrectly left enabled on "Output Monitor"
+    during transcoding processes, leaving the user able to click on it, leading
+    to unexpected interface behavior.
   * Fixed some typos.
+  * [AV/CONVERSIONS] Fixed static text allignements on Audio tab and
+    Miscellaneous tab.
+  * [STILL IMAGE MAKER] Improved UI layout adding spaces between the widgets.
 
 +------------------------------------+
 Tue, 15 July 2025 v6.1.12

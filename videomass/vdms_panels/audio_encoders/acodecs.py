@@ -197,7 +197,8 @@ class AudioEncoders(scrolled.ScrolledPanel):
         grid_peak.Add(self.btn_stat, 0, wx.ALIGN_CENTER_VERTICAL, 0)
 
         self.lab_amplitude = wx.StaticText(self, wx.ID_ANY, _("Target level:"))
-        grid_peak.Add(self.lab_amplitude, 0, wx.LEFT | wx.CENTRE, 20)
+        grid_peak.Add(self.lab_amplitude, 0, wx.LEFT |
+                      wx.ALIGN_CENTER_VERTICAL, 20)
         self.spin_target = FS.FloatSpin(self, wx.ID_ANY,
                                         min_val=-99.0, max_val=0.0,
                                         increment=0.5, value=-1.0,
@@ -214,7 +215,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         grid_ebu = wx.FlexGridSizer(1, 6, 0, 0)
         sizer_a_normaliz.Add(grid_ebu, 0, wx.ALL | wx.CENTRE, 5)
         lab_i = wx.StaticText(self, wx.ID_ANY, ("IL:"))
-        grid_ebu.Add(lab_i, 0, wx.CENTRE, 0)
+        grid_ebu.Add(lab_i, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.spin_i = FS.FloatSpin(self, wx.ID_ANY,
                                    min_val=-70.0, max_val=-5.0,
                                    increment=0.5, value=-16.0,
@@ -224,7 +225,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         grid_ebu.Add(self.spin_i, 0, wx.LEFT | wx.CENTRE, 5)
 
         lab_tp = wx.StaticText(self, wx.ID_ANY, ("TP:"))
-        grid_ebu.Add(lab_tp, 0, wx.LEFT | wx.CENTRE, 20)
+        grid_ebu.Add(lab_tp, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
         self.spin_tp = FS.FloatSpin(self, wx.ID_ANY,
                                     min_val=-9.0, max_val=0.0,
                                     increment=0.5, value=-1.5,
@@ -234,7 +235,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         grid_ebu.Add(self.spin_tp, 0, wx.LEFT | wx.CENTRE, 5)
 
         lab_lra = wx.StaticText(self, wx.ID_ANY, ("LRA:"))
-        grid_ebu.Add(lab_lra, 0, wx.LEFT | wx.CENTRE, 20)
+        grid_ebu.Add(lab_lra, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
         self.spin_lra = FS.FloatSpin(self, wx.ID_ANY,
                                      min_val=1.0, max_val=20.0,
                                      increment=0.5, value=11.0,

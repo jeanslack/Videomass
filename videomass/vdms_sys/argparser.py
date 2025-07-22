@@ -29,7 +29,7 @@ import sys
 from shutil import which
 import argparse
 import platform
-from videomass.vdms_sys.about_app import (PRGNAME,
+from videomass.vdms_sys.about_app import (RELNAME,
                                           VERSION,
                                           RELSTATE
                                           )
@@ -107,7 +107,7 @@ def arguments():
         parser.exit(status=0, message=None)
 
     elif argmts.version:
-        print(f'{PRGNAME}: {VERSION} ({RELSTATE})')
+        print(f'{RELNAME}: {VERSION} ({RELSTATE})')
         print(info_this_platform())
         parser.exit(status=0, message=None)
 

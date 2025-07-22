@@ -168,7 +168,7 @@ class CountDownDlg(wx.Dialog):
     self-destroy and events will be allowed to continue unless
     the user clicks on the cancel button.
 
-    Usage:
+    Usage example:
         dlg = CountDownDlg(self,
                            timeout=10,
                            message='Something happens in {0} seconds',

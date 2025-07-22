@@ -60,9 +60,9 @@ class Miscellaneous(wx.Panel):
         gridsub = wx.BoxSizer(wx.HORIZONTAL)
         sizerbase.Add(gridsub, 0, wx.ALL | wx.CENTRE, 5)
 
-        msg = _('Subtitle Mapping')
+        msg = _('Subtitle Mapping:')
         txtSubmap = wx.StaticText(self, wx.ID_ANY, (msg))
-        gridsub.Add(txtSubmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridsub.Add(txtSubmap, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.cmb_Submap = wx.ComboBox(self, wx.ID_ANY,
                                       choices=[('None'),
                                                ('All'),
@@ -70,7 +70,7 @@ class Miscellaneous(wx.Panel):
                                       size=(120, -1), style=wx.CB_DROPDOWN
                                       | wx.CB_READONLY,
                                       )
-        gridsub.Add(self.cmb_Submap, 0, wx.ALL, 5)
+        gridsub.Add(self.cmb_Submap, 0, wx.LEFT | wx.CENTRE, 5)
 
         boxmetad = wx.BoxSizer(wx.HORIZONTAL)
         sizerbase.Add(boxmetad, 0, wx.ALL | wx.CENTRE, 5)

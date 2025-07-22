@@ -128,6 +128,7 @@ class SequenceToVideo(wx.Panel):
         self.ckbx_static_img = wx.CheckBox(self, wx.ID_ANY,
                                            _('Enable a single still image'))
         boxctrl.Add(self.ckbx_static_img, 0, wx.ALL | wx.EXPAND, 5)
+        boxctrl.Add((15, 15), 0)
         siz_pict = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_pict)
         lbl_fps = wx.StaticText(self, wx.ID_ANY, label="FPS:")
@@ -162,15 +163,17 @@ class SequenceToVideo(wx.Panel):
                                       'padding rather than stretching'))
         siz_pict.Add(self.ckbx_far, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.ckbx_far.Disable()
+
+        boxctrl.Add((15, 15), 0)
         siz_audio = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_audio)
         self.ckbx_audio = wx.CheckBox(self, wx.ID_ANY, _('Include audio file'))
-        siz_audio.Add(self.ckbx_audio, 0, wx.ALL | wx.EXPAND, 5)
+        siz_audio.Add(self.ckbx_audio, 0, wx.ALL | wx.CENTRE, 5)
         self.ckbx_shortest = wx.CheckBox(self, wx.ID_ANY,
                                          _('Play the video until '
                                            'audio track finishes'
                                            ))
-        siz_audio.Add(self.ckbx_shortest, 0, wx.ALL | wx.EXPAND, 5)
+        siz_audio.Add(self.ckbx_shortest, 0, wx.ALL | wx.CENTRE, 5)
         self.ckbx_shortest.Disable()
         siz_afile = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_afile)
@@ -188,12 +191,13 @@ class SequenceToVideo(wx.Panel):
         siz_afile.Add(self.txt_apath, 0, wx.ALL, 5)
         self.txt_apath.Disable()
 
+        boxctrl.Add((15, 15), 0)
         siz_addparams = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_addparams, 0, wx.EXPAND, 0)
 
         self.ckbx_edit = wx.CheckBox(self, wx.ID_ANY,
                                      _('Additional arguments'))
-        siz_addparams.Add(self.ckbx_edit, 0, wx.ALL, 5)
+        siz_addparams.Add(self.ckbx_edit, 0, wx.ALL | wx.CENTRE, 5)
         self.txt_addparams = wx.TextCtrl(self, wx.ID_ANY,
                                          value=('-c:v libx264 -crf 23 '
                                                 '-tune:v stillimage'),
