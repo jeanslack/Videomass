@@ -6,23 +6,23 @@ Porpose: Manage the translation message catalog independently
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: Distributed under the terms of the GPL3 License.
-Rev: Aug.03.2024
+Rev: July.23.2025
 Code checker: flake8, pylint
 
-This file is part of Videomass.
+This file is part of videomass.
 
-    Videomass is free software: you can redistribute it and/or modify
+    videomass is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Videomass is distributed in the hope that it will be useful,
+    videomass is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+    along with videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os
@@ -54,18 +54,9 @@ def long_description():
     print a long description of the program
     """
     descr = ('Encapsulates the main functionalities for managing '
-             'the translation message catalog based on babel.\n\n'
-             'It provides the following main features:\n'
-             '(--extract-msg) Extracts translation messages from the catalog '
-             'and adds them to a new POT file\n'
-             '(--new-catalog) Automatically creates a new language catalog '
-             'based on the provided POT file and a locale code.\n'
-             '(--update-catalogs) Updates all existing PO files found '
-             'on the given locale directory based on a POT template file.\n'
-             '(--compile-catalogs) Automatically compiles MO (Machine Object) '
-             'files from all PO (portable object) files found in the provided '
-             'locale directory.\n\nPlease note that these features '
-             'are mutually exclusive, use one at a time.\n')
+             'the translation message catalog based on babel.\n'
+             'Please note that these functionalities are mutually '
+             'exclusive, use one at a time.\n')
 
     return descr
 
@@ -74,16 +65,19 @@ def exit_from_prog(nameprogram, args=None):
     """
     print message error and exit from program
     """
-    print(f"usage: {nameprogram} [-h] (--extract-msg | --new-catalog | "
-          f"--update-catalogs | --compile-catalogs)\n{long_description()}")
 
+    print(f"\nIMPORTANT: This script is semi-automatic, in order to use "
+          f"the default directories it is encouraged to call this script "
+          f"from the source directory location.\n\n"
+          f"usage: {nameprogram} [-h] (--extract-msg | --new-catalog | "
+          f"--update-catalogs | --compile-catalogs)\n\n{long_description()}")
     if args:
         print(args)
 
     sys.exit()
 
 
-def build_translation_catalog(nameprogram):
+def build_translation_catalog(nameprogram, def_locdir, def_domain):
     """
     Compile MO files for this macchine using babel.
     """
@@ -100,16 +94,18 @@ def build_translation_catalog(nameprogram):
     parser.add_argument("-o", "--output-dir",
                         action="store",
                         dest="locale_directory",
-                        help=("Absolute or relative destination path to "
-                              "locale directory."),
-                        required=True
+                        help=(f'Absolute or relative destination path to '
+                              f'locale directory, default is "{def_locdir}".'),
+                        required=False,
+                        default=def_locdir,
                         )
     parser.add_argument("-d", "--domain",
                         action="store",
                         dest="domain_name",
-                        help=("The name given to the domain of the PO file "
-                              "of any catalogs"),
-                        required=True,
+                        help=(f'The name given to the domain of the PO file '
+                              f'of any catalogs, default is "{def_domain}".'),
+                        required=False,
+                        default=def_domain,
                         )
     args = parser.parse_args()
     try:
@@ -125,12 +121,11 @@ def build_translation_catalog(nameprogram):
     return None
 
 
-def create_pot_file(nameprogram):
+def create_pot_file(nameprogram, here, def_locdir, def_domain, def_pypkg):
     """
     Extract messages from the catalog, similarly to what
     the GNU gettext program does.
     """
-    here = os.getcwd()
     parser = argparse.ArgumentParser(prog=f'{nameprogram}',
                                      description=description(),
                                      add_help=True,
@@ -145,26 +140,30 @@ def create_pot_file(nameprogram):
     parser.add_argument("-o", "--output-dir",
                         action="store",
                         dest="locale_directory",
-                        help=("Absolute or relative destination path to "
-                              "locale directory."),
-                        required=True
+                        help=(f'Absolute or relative destination path to '
+                              f'locale directory, default is "{def_locdir}".'),
+                        required=False,
+                        default=def_locdir,
                         )
     parser.add_argument("-d", "--domain",
                         action="store",
                         dest="domain_name",
-                        help=("The name you want to give to the domain, "
-                              "usually coincides with the name of your app "
-                              "or the existing PO/POT file (in lowercase)."),
-                        required=True,
+                        help=(f'The name you want to give to the domain, '
+                              f'usually coincides with the name of your app '
+                              f'or the existing PO/POT file (in lowercase), '
+                              f'default is "{def_domain}".'),
+                        required=False,
+                        default=def_domain,
                         )
     parser.add_argument("-p", "--package-dir",
                         action="store",
                         dest="python_package_dir",
-                        help=("Absolute or relative destination path to "
-                              "the Python modules/package dir to extract "
-                              "recursively all messages from *.py files."),
-                        required=True,
-                        # default='../../'
+                        help=(f'Absolute or relative destination path to '
+                              f'the Python modules/package dir to extract '
+                              f'recursively all messages from *.py files, '
+                              f'default is "{def_pypkg}".'),
+                        required=False,
+                        default=def_pypkg,
                         )
     args = parser.parse_args()
     makeabs_locdir = os.path.abspath(args.locale_directory)
@@ -186,7 +185,7 @@ def create_pot_file(nameprogram):
     return None
 
 
-def update_po_files(nameprogram):
+def update_po_files(nameprogram, def_locdir, def_domain, def_potfile):
     """
     Updates all existing translation catalogs based on a
     PO template file (POT), basically equivalent to the GNU
@@ -206,22 +205,26 @@ def update_po_files(nameprogram):
     parser.add_argument("-o", "--output-dir",
                         action="store",
                         dest="locale_directory",
-                        help=("Absolute or relative destination path to "
-                              "locale directory."),
-                        required=True
+                        help=(f'Absolute or relative destination path to '
+                              f'locale directory, default is "{def_locdir}".'),
+                        required=False,
+                        default=def_locdir,
                         )
     parser.add_argument("-d", "--domain",
                         action="store",
                         dest="domain_name",
-                        help=("The name given to the domain of the PO file "
-                              "of any catalogs."),
-                        required=True,
+                        help=(f'The name given to the domain of the PO file '
+                              f'of any catalogs, default is "{def_domain}".'),
+                        required=False,
+                        default=def_domain,
                         )
     parser.add_argument("-f", "--pot-file",
                         action="store",
                         dest="pot_file",
-                        help=("POT filename location."),
-                        required=True
+                        help=(f'POT filename location, default is '
+                              f'"{def_potfile}".'),
+                        required=False,
+                        default=def_potfile,
                         )
     args = parser.parse_args()
     try:
@@ -239,7 +242,7 @@ def update_po_files(nameprogram):
     return None
 
 
-def init_new_catalog(nameprogram):
+def init_new_catalog(nameprogram, def_locdir, def_domain):
     """
     Basically equivalent to the GNU msginit program: it creates
     a new translation catalog based on a PO template file (POT).
@@ -257,17 +260,20 @@ def init_new_catalog(nameprogram):
     parser.add_argument("-o", "--output-dir",
                         action="store",
                         dest="locale_directory",
-                        help=("Absolute or relative destination path to "
-                              "locale directory."),
-                        required=True
+                        help=(f'Absolute or relative destination path to '
+                              f'locale directory, default is "{def_locdir}".'),
+                        required=False,
+                        default=def_locdir,
                         )
     parser.add_argument("-d", "--domain",
                         action="store",
                         dest="domain_name",
-                        help=("The name you want to give to the domain, "
-                              "usually coincides with the name of your app "
-                              "or the POT file (in lowercase)"),
-                        required=True,
+                        help=(f'The name you want to give to the domain, '
+                              f'usually coincides with the name of your app '
+                              f'or the existing PO/POT file (in lowercase), '
+                              f'default is "{def_domain}".'),
+                        required=False,
+                        default=def_domain,
                         )
     parser.add_argument("-l", "--locale",
                         action="store",
@@ -294,6 +300,12 @@ def init_new_catalog(nameprogram):
 
 if __name__ == '__main__':
     prgname = os.path.basename(__file__)
+    heredir = os.getcwd()  # must be source directory
+    locdir = os.path.join(heredir, 'videomass', 'data', 'locale')
+    domain = 'videomass'
+    pypkgdir = os.path.join(heredir, 'videomass')
+    potfilename = os.path.join(locdir, 'videomass.pot')
+
     mode = ('--new-catalog', '--extract-msg',
             '--update-catalogs', '--compile-catalogs')
     arg = sys.argv
@@ -310,16 +322,16 @@ if __name__ == '__main__':
         exit_from_prog(prgname, msg)
 
     if appendact[0] == "--new-catalog":
-        status = init_new_catalog(prgname)
+        status = init_new_catalog(prgname, locdir, domain)
 
     elif appendact[0] == "--extract-msg":
-        status = create_pot_file(prgname)
+        status = create_pot_file(prgname, heredir, locdir, domain, pypkgdir)
 
     elif appendact[0] == "--update-catalogs":
-        status = update_po_files(prgname)
+        status = update_po_files(prgname, locdir, domain, potfilename)
 
     elif appendact[0] == "--compile-catalogs":
-        status = build_translation_catalog(prgname)
+        status = build_translation_catalog(prgname, locdir, domain)
 
     if status:
         print(f"ERROR: babel: {status}")

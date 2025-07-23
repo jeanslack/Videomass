@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-11 08:29+0200\n"
+"POT-Creation-Date: 2025-07-22 23:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,13 +147,13 @@ msgid "FFplay   ...not found !"
 msgstr ""
 
 #: ../../vdms_dialogs/ffmpeg_conf.py:205
-#: ../../vdms_panels/sequence_to_video.py:702
+#: ../../vdms_panels/sequence_to_video.py:706
 #: ../../vdms_panels/video_to_sequence.py:606
 msgid "Enabled"
 msgstr ""
 
 #: ../../vdms_dialogs/ffmpeg_conf.py:216
-#: ../../vdms_panels/sequence_to_video.py:702
+#: ../../vdms_panels/sequence_to_video.py:706
 #: ../../vdms_panels/video_to_sequence.py:610
 msgid "Disabled"
 msgstr ""
@@ -411,8 +411,8 @@ msgstr ""
 #: ../../vdms_main/main_frame.py:904 ../../vdms_main/main_frame.py:939
 #: ../../vdms_main/main_frame.py:961 ../../vdms_main/main_frame.py:979
 #: ../../vdms_main/main_frame.py:999
-#: ../../vdms_panels/audio_encoders/acodecs.py:509
-#: ../../vdms_panels/audio_encoders/acodecs.py:799
+#: ../../vdms_panels/audio_encoders/acodecs.py:510
+#: ../../vdms_panels/audio_encoders/acodecs.py:800
 #: ../../vdms_panels/concatenate.py:186
 #: ../../vdms_panels/long_processing_task.py:60
 #: ../../vdms_panels/presets_manager.py:426
@@ -427,15 +427,15 @@ msgstr ""
 #: ../../vdms_panels/presets_manager.py:756
 #: ../../vdms_panels/presets_manager.py:785
 #: ../../vdms_panels/presets_manager.py:791
-#: ../../vdms_panels/sequence_to_video.py:463
-#: ../../vdms_panels/sequence_to_video.py:469
-#: ../../vdms_panels/sequence_to_video.py:557
-#: ../../vdms_panels/sequence_to_video.py:567
-#: ../../vdms_panels/sequence_to_video.py:584
-#: ../../vdms_panels/sequence_to_video.py:592
-#: ../../vdms_panels/sequence_to_video.py:598
-#: ../../vdms_panels/sequence_to_video.py:639
-#: ../../vdms_panels/sequence_to_video.py:685
+#: ../../vdms_panels/sequence_to_video.py:467
+#: ../../vdms_panels/sequence_to_video.py:473
+#: ../../vdms_panels/sequence_to_video.py:561
+#: ../../vdms_panels/sequence_to_video.py:571
+#: ../../vdms_panels/sequence_to_video.py:588
+#: ../../vdms_panels/sequence_to_video.py:596
+#: ../../vdms_panels/sequence_to_video.py:602
+#: ../../vdms_panels/sequence_to_video.py:643
+#: ../../vdms_panels/sequence_to_video.py:689
 #: ../../vdms_panels/video_to_sequence.py:512
 #: ../../vdms_panels/video_to_sequence.py:583
 #: ../../vdms_threads/ffplay_file.py:43
@@ -1145,14 +1145,14 @@ msgstr ""
 #: ../../vdms_dialogs/setting_profiles.py:309 ../../vdms_main/main_frame.py:399
 #: ../../vdms_main/main_frame.py:421 ../../vdms_panels/av_conversions.py:605
 #: ../../vdms_panels/av_conversions.py:612
-#: ../../vdms_panels/sequence_to_video.py:348
+#: ../../vdms_panels/sequence_to_video.py:352
 #: ../../vdms_panels/video_to_sequence.py:399
 msgid "Videomass - Warning!"
 msgstr ""
 
 #: ../../vdms_dialogs/preferences.py:731 ../../vdms_dialogs/preferences.py:771
-#: ../../vdms_dialogs/preferences.py:811 ../../vdms_dialogs/wizard_dlg.py:366
-#: ../../vdms_dialogs/wizard_dlg.py:383 ../../vdms_dialogs/wizard_dlg.py:400
+#: ../../vdms_dialogs/preferences.py:811 ../../vdms_dialogs/wizard_dlg.py:365
+#: ../../vdms_dialogs/wizard_dlg.py:384 ../../vdms_dialogs/wizard_dlg.py:403
 #, python-brace-format
 msgid "{} location"
 msgstr ""
@@ -1382,7 +1382,7 @@ msgstr ""
 msgid "Are you sure you want to clear the selected log file?"
 msgstr ""
 
-#: ../../vdms_dialogs/showlogs.py:169 ../../vdms_dialogs/wizard_dlg.py:253
+#: ../../vdms_dialogs/showlogs.py:169 ../../vdms_dialogs/wizard_dlg.py:251
 #: ../../vdms_io/checkup.py:68 ../../vdms_main/main_frame.py:205
 #: ../../vdms_main/main_frame.py:798 ../../vdms_main/main_frame.py:1669
 #: ../../vdms_panels/presets_manager.py:349
@@ -1434,12 +1434,12 @@ msgid "=  Below max peak"
 msgstr ""
 
 #: ../../vdms_dialogs/shownormlist.py:166
-#: ../../vdms_panels/audio_encoders/acodecs.py:840
+#: ../../vdms_panels/audio_encoders/acodecs.py:841
 msgid "RMS-based volume statistics"
 msgstr ""
 
 #: ../../vdms_dialogs/shownormlist.py:191
-#: ../../vdms_panels/audio_encoders/acodecs.py:838
+#: ../../vdms_panels/audio_encoders/acodecs.py:839
 msgid "PEAK-based volume statistics"
 msgstr ""
 
@@ -1518,108 +1518,104 @@ msgstr ""
 msgid "Stop"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:64
+#: ../../vdms_dialogs/wizard_dlg.py:63
 msgid "Please take a moment to set up the application"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:65
+#: ../../vdms_dialogs/wizard_dlg.py:64
 msgid "Click the \"Next\" button to get started"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:80
+#: ../../vdms_dialogs/wizard_dlg.py:79
 msgid "Welcome to the Videomass Wizard!"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:124
+#: ../../vdms_dialogs/wizard_dlg.py:123
 msgid "Videomass is an application based on FFmpeg\n"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:126
+#: ../../vdms_dialogs/wizard_dlg.py:125
 msgid "If FFmpeg is not on your computer, this application will be unusable"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:129
+#: ../../vdms_dialogs/wizard_dlg.py:128
 msgid ""
 "If you have already installed FFmpeg on your operating system,\n"
 "click the \"Auto-detection\" button."
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:132
+#: ../../vdms_dialogs/wizard_dlg.py:131
 msgid ""
 "If you want to use a version of FFmpeg located on your filesystem\n"
 "but not installed on your operating system,\n"
 "click the \"Locate\" button."
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:163
+#: ../../vdms_dialogs/wizard_dlg.py:162
 msgid "Auto-detection"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:165
+#: ../../vdms_dialogs/wizard_dlg.py:164
 msgid "Locate"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:216
+#: ../../vdms_dialogs/wizard_dlg.py:214
 msgid "Click the \"Next\" button"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:237
+#: ../../vdms_dialogs/wizard_dlg.py:235
 #, python-brace-format
 msgid "'{}' is not installed on your computer. Install it or indicate another location by clicking the 'Locate' button."
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:251
+#: ../../vdms_dialogs/wizard_dlg.py:249
 msgid ""
 "Videomass already seems to include FFmpeg.\n"
 "\n"
 "Do you want to use that?"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:277
+#: ../../vdms_dialogs/wizard_dlg.py:275
 msgid "Locating FFmpeg executables\n"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:279
+#: ../../vdms_dialogs/wizard_dlg.py:277
 msgid ""
 "\"ffmpeg\", \"ffprobe\" and \"ffplay\" are required. Complete all\n"
 "the text boxes below by clicking on the respective buttons."
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:421
+#: ../../vdms_dialogs/wizard_dlg.py:437
 msgid "Wizard completed successfully!\n"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:422
+#: ../../vdms_dialogs/wizard_dlg.py:438
 msgid "Remember that you can always change these settings later, through the Preferences dialog."
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:424
+#: ../../vdms_dialogs/wizard_dlg.py:440
 msgid "Thank You!"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:425
+#: ../../vdms_dialogs/wizard_dlg.py:441
 msgid "To exit click the \"Finish\" button"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:511
+#: ../../vdms_dialogs/wizard_dlg.py:527
 msgid "< Previous"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:514 ../../vdms_dialogs/wizard_dlg.py:595
+#: ../../vdms_dialogs/wizard_dlg.py:530 ../../vdms_dialogs/wizard_dlg.py:613
 msgid "Next >"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:519
+#: ../../vdms_dialogs/wizard_dlg.py:535
 msgid "Videomass Wizard"
 msgstr ""
 
-#: ../../vdms_dialogs/wizard_dlg.py:547 ../../vdms_dialogs/wizard_dlg.py:564
-#: ../../vdms_dialogs/wizard_dlg.py:572
+#: ../../vdms_dialogs/wizard_dlg.py:563 ../../vdms_dialogs/wizard_dlg.py:586
+#: ../../vdms_dialogs/wizard_dlg.py:591
 msgid "Finish"
-msgstr ""
-
-#: ../../vdms_dialogs/wizard_dlg.py:574
-msgid "Some text boxes are still incomplete"
 msgstr ""
 
 #: ../../vdms_io/checkup.py:44 ../../vdms_io/checkup.py:92
@@ -1838,10 +1834,6 @@ msgstr ""
 
 #: ../../vdms_main/main_frame.py:546
 msgid "Decoders available on your version of FFmpeg"
-msgstr ""
-
-#: ../../vdms_main/main_frame.py:549
-msgid "FFplay"
 msgstr ""
 
 #: ../../vdms_main/main_frame.py:550
@@ -2169,9 +2161,9 @@ msgid "Videomass - Still Image Maker"
 msgstr ""
 
 #: ../../vdms_main/main_frame.py:1644
-#: ../../vdms_panels/audio_encoders/acodecs.py:788
+#: ../../vdms_panels/audio_encoders/acodecs.py:789
 #: ../../vdms_panels/av_conversions.py:577 ../../vdms_panels/filedrop.py:475
-#: ../../vdms_panels/filedrop.py:588 ../../vdms_panels/sequence_to_video.py:318
+#: ../../vdms_panels/filedrop.py:588 ../../vdms_panels/sequence_to_video.py:322
 #: ../../vdms_panels/video_to_sequence.py:369
 #: ../../vdms_panels/video_to_sequence.py:501
 msgid "Have to select an item in the file list first"
@@ -2345,7 +2337,7 @@ msgid "Disable active filters"
 msgstr ""
 
 #: ../../vdms_panels/av_conversions.py:348
-#: ../../vdms_panels/sequence_to_video.py:155
+#: ../../vdms_panels/sequence_to_video.py:156
 #: ../../vdms_panels/video_to_sequence.py:113
 msgid "Resize"
 msgstr ""
@@ -2381,12 +2373,12 @@ msgid ""
 msgstr ""
 
 #: ../../vdms_panels/av_conversions.py:611
-#: ../../vdms_panels/sequence_to_video.py:347
+#: ../../vdms_panels/sequence_to_video.py:351
 #: ../../vdms_panels/video_to_sequence.py:398
 msgid "The file is not a frame or a video file"
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:433
+#: ../../vdms_panels/audio_encoders/acodecs.py:434
 #: ../../vdms_panels/av_conversions.py:861
 msgid "Undetected volume values! Click the \"Volume detect\" button to analyze audio volume data."
 msgstr ""
@@ -2533,7 +2525,7 @@ msgid "Videomass Documentation:"
 msgstr ""
 
 #: ../../vdms_panels/concatenate.py:136
-#: ../../vdms_panels/sequence_to_video.py:208
+#: ../../vdms_panels/sequence_to_video.py:212
 #: ../../vdms_panels/video_to_sequence.py:181
 msgid "Official FFmpeg documentation:"
 msgstr ""
@@ -2976,34 +2968,34 @@ msgstr ""
 msgid "Enable a single still image"
 msgstr ""
 
-#: ../../vdms_panels/sequence_to_video.py:161
+#: ../../vdms_panels/sequence_to_video.py:162
 msgid ""
 "Force original aspect ratio using\n"
 "padding rather than stretching"
 msgstr ""
 
-#: ../../vdms_panels/sequence_to_video.py:167
+#: ../../vdms_panels/sequence_to_video.py:170
 msgid "Include audio file"
 msgstr ""
 
-#: ../../vdms_panels/sequence_to_video.py:170
+#: ../../vdms_panels/sequence_to_video.py:173
 msgid "Play the video until audio track finishes"
 msgstr ""
 
-#: ../../vdms_panels/sequence_to_video.py:177
-#: ../../vdms_panels/sequence_to_video.py:435
+#: ../../vdms_panels/sequence_to_video.py:180
+#: ../../vdms_panels/sequence_to_video.py:439
 msgid "Open audio file"
 msgstr ""
 
-#: ../../vdms_panels/sequence_to_video.py:195
+#: ../../vdms_panels/sequence_to_video.py:199
 msgid "Additional arguments"
 msgstr ""
 
-#: ../../vdms_panels/sequence_to_video.py:450
+#: ../../vdms_panels/sequence_to_video.py:454
 msgid "Open Audio File"
 msgstr ""
 
-#: ../../vdms_panels/sequence_to_video.py:462
+#: ../../vdms_panels/sequence_to_video.py:466
 #, python-brace-format
 msgid ""
 "Invalid file: '{}'\n"
@@ -3011,7 +3003,7 @@ msgid ""
 "{}"
 msgstr ""
 
-#: ../../vdms_panels/sequence_to_video.py:467
+#: ../../vdms_panels/sequence_to_video.py:471
 #, python-brace-format
 msgid ""
 "Invalid file: '{}'\n"
@@ -3019,21 +3011,21 @@ msgid ""
 "It doesn't appear to be an audio file."
 msgstr ""
 
-#: ../../vdms_panels/sequence_to_video.py:556
-#: ../../vdms_panels/sequence_to_video.py:583
+#: ../../vdms_panels/sequence_to_video.py:560
+#: ../../vdms_panels/sequence_to_video.py:587
 #: ../../vdms_panels/video_to_sequence.py:511
 #, python-brace-format
 msgid "Invalid file: '{}'"
 msgstr ""
 
-#: ../../vdms_panels/sequence_to_video.py:566
-#: ../../vdms_panels/sequence_to_video.py:591
+#: ../../vdms_panels/sequence_to_video.py:570
+#: ../../vdms_panels/sequence_to_video.py:595
 #, python-brace-format
 msgid "Unsupported format '{}'"
 msgstr ""
 
-#: ../../vdms_panels/sequence_to_video.py:572
-#: ../../vdms_panels/sequence_to_video.py:596
+#: ../../vdms_panels/sequence_to_video.py:576
+#: ../../vdms_panels/sequence_to_video.py:600
 #, python-brace-format
 msgid ""
 "File does not exist:\n"
@@ -3041,15 +3033,15 @@ msgid ""
 "\"{}\"\n"
 msgstr ""
 
-#: ../../vdms_panels/sequence_to_video.py:573
+#: ../../vdms_panels/sequence_to_video.py:577
 msgid "ERROR"
 msgstr ""
 
-#: ../../vdms_panels/sequence_to_video.py:703
+#: ../../vdms_panels/sequence_to_video.py:707
 msgid "Shortest"
 msgstr ""
 
-#: ../../vdms_panels/sequence_to_video.py:711
+#: ../../vdms_panels/sequence_to_video.py:715
 msgid ""
 "Items to concatenate\n"
 "Output filename\n"
@@ -3178,22 +3170,22 @@ msgstr ""
 msgid "Target level:"
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:263
+#: ../../vdms_panels/audio_encoders/acodecs.py:264
 msgid "Gets maximum volume and average volume data in dBFS, then calculates the offset amount for audio normalization."
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:266
+#: ../../vdms_panels/audio_encoders/acodecs.py:267
 msgid "Limiter for the maximum peak level or the mean level (when switch to RMS) in dBFS. From -99.0 to +0.0; default for PEAK level is -1.0; default for RMS is -20.0"
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:270
+#: ../../vdms_panels/audio_encoders/acodecs.py:271
 msgid ""
 "Normally on a video with correctly indexed streams and having one or more audio streams, the first audio stream should be indexed at \"1\", the second at \"2\" and so on (the video stream on the other hand is always indexed at \"0\"). In this case it is recommended to select the desired stream by setting a specific index, e.g \"1\" for for the first available audio stream.\n"
 "\n"
 "Set this control to \"Auto\" if the source file is simply an audio track."
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:279
+#: ../../vdms_panels/audio_encoders/acodecs.py:280
 msgid ""
 "\"Auto\" keeps all audio streams and processes only the one selected by the \"Index Selection\" control.\n"
 "\n"
@@ -3202,55 +3194,55 @@ msgid ""
 "\"Index Only\" processes only the audio stream selected by the \"Index Selection\" control and removes all others from the video"
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:287
+#: ../../vdms_panels/audio_encoders/acodecs.py:288
 msgid "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -16.0"
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:290
+#: ../../vdms_panels/audio_encoders/acodecs.py:291
 msgid "Maximum True Peak in dBTP. From -1.5 to +0.0, default is -2.0"
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:293
+#: ../../vdms_panels/audio_encoders/acodecs.py:294
 msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +11.0"
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:296
+#: ../../vdms_panels/audio_encoders/acodecs.py:297
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:502
+#: ../../vdms_panels/audio_encoders/acodecs.py:503
 msgid "Selected index does not exist or does not contain any audio streams"
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:507
+#: ../../vdms_panels/audio_encoders/acodecs.py:508
 #, python-brace-format
 msgid ""
 "ERROR: Missing audio stream:\n"
 "\"{}\""
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:725
+#: ../../vdms_panels/audio_encoders/acodecs.py:726
 msgid "PEAK level normalization, which will produce a maximum peak level equal to the set target level."
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:728
+#: ../../vdms_panels/audio_encoders/acodecs.py:729
 msgid "RMS-based normalization, which according to mean volume calculates the amount of gain to reach same average power signal."
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:732
+#: ../../vdms_panels/audio_encoders/acodecs.py:733
 msgid ""
 "Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements the EBU R128 algorithm.\n"
 "Ideal for live normalization. It produces worse results than the High-quality two-pass Loudnorm normalization, but is faster."
 msgstr ""
 
-#: ../../vdms_panels/audio_encoders/acodecs.py:739
+#: ../../vdms_panels/audio_encoders/acodecs.py:740
 msgid ""
 "High-quality two-pass Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements\n"
 "the EBU R128 algorithm. Ideal for postprocessing."
 msgstr ""
 
 #: ../../vdms_panels/miscellaneous/miscell.py:63
-msgid "Subtitle Mapping"
+msgid "Subtitle Mapping:"
 msgstr ""
 
 #: ../../vdms_panels/miscellaneous/miscell.py:77
