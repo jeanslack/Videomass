@@ -153,7 +153,8 @@ class VolumeDetectThread(Thread):
         write ffmpeg command log
         """
         with open(self.logf, "a", encoding='utf-8') as log:
-            log.write(f"{cmd}\n")
+            line = '=' * 80
+            log.write(f"\n{line}\n{cmd}\n")
     # ----------------------------------------------------------------#
 
     def logerror(self, output):

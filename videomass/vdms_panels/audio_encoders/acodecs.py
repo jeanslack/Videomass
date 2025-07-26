@@ -785,8 +785,8 @@ class AudioEncoders(scrolled.ScrolledPanel):
         <https://superuser.com/questions/323119/how-can-i-normalize-audio-
         using-ffmpeg?utm_medium=organic>
         """
-        if not self.maindata.filedropselected:
-            wx.MessageBox(_("Have to select an item in the file list first"),
+        if not self.maindata.data_files:
+            wx.MessageBox(_("You need to import at least one file"),
                           'Videomass', wx.ICON_INFORMATION, self)
             return
 

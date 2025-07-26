@@ -1403,6 +1403,8 @@ class MainFrame(wx.Frame):
         self.menu_go_items((0, 1, 1, 1, 1, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
+        self.rename.Enable(False)
+        self.rename_batch.Enable(False)
         self.SetTitle(_('Videomass'))
         self.statusbar_msg(_('Ready'), None)
         self.Layout()
@@ -1423,8 +1425,12 @@ class MainFrame(wx.Frame):
         self.fileDnDTarget.Show()
         pub.sendMessage("SET_DRAG_AND_DROP_TOPIC", topic=self.topicname)
         self.menu_go_items((1, 1, 1, 1, 1, 1, 1))  # Go menu items
-        self.delfile.Enable(True)
-        self.clearall.Enable(True)
+        if self.filedropselected:
+            self.delfile.Enable(True)
+            self.rename.Enable(True)
+        if self.outputnames:
+            self.clearall.Enable(True)
+            self.rename_batch.Enable(True)
         self.openmedia.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 35)]
         [self.toolbar.EnableTool(x, False) for x in (7, 8, 36)]
@@ -1454,6 +1460,8 @@ class MainFrame(wx.Frame):
         self.menu_go_items((1, 1, 0, 1, 1, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
+        self.rename.Enable(False)
+        self.rename_batch.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35, 36)]
@@ -1481,6 +1489,8 @@ class MainFrame(wx.Frame):
         self.menu_go_items((1, 0, 1, 1, 1, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
+        self.rename.Enable(False)
+        self.rename_batch.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35, 36)]
@@ -1509,6 +1519,8 @@ class MainFrame(wx.Frame):
         self.menu_go_items((1, 1, 1, 0, 1, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
+        self.rename.Enable(False)
+        self.rename_batch.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
@@ -1536,6 +1548,8 @@ class MainFrame(wx.Frame):
         self.menu_go_items((1, 1, 1, 1, 1, 0, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
+        self.rename.Enable(False)
+        self.rename_batch.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
@@ -1563,6 +1577,8 @@ class MainFrame(wx.Frame):
         self.menu_go_items((1, 1, 1, 1, 0, 1, 1))  # Go menu items
         self.delfile.Enable(False)
         self.clearall.Enable(False)
+        self.rename.Enable(False)
+        self.rename_batch.Enable(False)
         self.openmedia.Enable(True)
         self.loadqueue.Enable(True)
         [self.toolbar.EnableTool(x, True) for x in (3, 4, 5, 6, 7, 35)]
@@ -1693,17 +1709,15 @@ class MainFrame(wx.Frame):
         self.toPictures.Hide()
         self.toSlideshow.Hide()
         self.ProcessPanel.Show()
+        self.delfile.Enable(False)
+        self.clearall.Enable(False)
+        self.rename.Enable(False)
+        self.rename_batch.Enable(False)
         if not args[0] == 'View':
-            self.delfile.Enable(False)
-            self.clearall.Enable(False)
             self.menu_go_items((0, 0, 0, 0, 0, 0, 0))  # Go menu items
             self.openmedia.Enable(False)
             self.loadqueue.Enable(False)
             self.setupItem.Enable(False)
-            if self.rename.IsEnabled():
-                self.rename.Enable(False)
-            if self.rename_batch.IsEnabled():
-                self.rename_batch.Enable(False)
             [self.toolbar.EnableTool(x, True) for x in (6, 8)]
             [self.toolbar.EnableTool(x, False) for x in (3, 4, 5, 36, 37, 7)]
         else:
