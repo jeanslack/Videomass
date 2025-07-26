@@ -7,16 +7,25 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 22 July 2025 v6.1.13
+Sat, 26 July 2025 v6.1.13
 
   * Fixed "Go" menu item that was incorrectly left enabled on "Output Monitor"
     during transcoding processes, leaving the user able to click on it, leading
     to unexpected interface behavior.
+  * Fixed "Edit" menu subitems according to user actions.
+  * Fixed the popup menu (aka context menu) items displayed when right-clicking
+    in the "File List" panel. Enabling/disabling items depends on user actions.
   * Fixed some typos.
   * [AV/CONVERSIONS] Fixed static text allignements on Audio tab and
     Miscellaneous tab.
   * [STILL IMAGE MAKER] Improved UI layout adding spaces between the widgets.
-  * Fix compatibility issues between versions of the Python requests #15 .
+  * Fixed compatibility issues between versions of the Python requests #15 .
+  * Removed unnecessary log file names from showlogs dialog.
+  * [AV/CONVERSIONS] Fixed `IndexError: list index out of range` stack-traces
+    raised with audio volumedetect list while the user import new files and Run
+    transcoding process.
+  * Improved text formatting on volumedetected.log file.
+  * [AV/CONVERSIONS] Volume detect requires at least one file, not a selection.
 
 +------------------------------------+
 Tue, 15 July 2025 v6.1.12

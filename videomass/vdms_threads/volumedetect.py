@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.23.2024
+Rev: July.26.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -153,7 +153,8 @@ class VolumeDetectThread(Thread):
         write ffmpeg command log
         """
         with open(self.logf, "a", encoding='utf-8') as log:
-            log.write(f"{cmd}\n")
+            line = '=' * 80
+            log.write(f"\n{line}\n{cmd}\n")
     # ----------------------------------------------------------------#
 
     def logerror(self, output):

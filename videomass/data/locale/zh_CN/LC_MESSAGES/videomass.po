@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.26\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-22 23:33+0200\n"
+"POT-Creation-Date: 2025-07-26 15:04+0200\n"
 "PO-Revision-Date: 2025-04-19 11:19+0800\n"
 "Last-Translator: Gao Zimu <gaozimu_0502@163.com>\n"
 "Language: zh_CN\n"
@@ -1030,7 +1030,7 @@ msgid "Change"
 msgstr "更改"
 
 #: ../../vdms_dialogs/preferences.py:103
-#: ../../vdms_panels/av_conversions.py:1197 ../../vdms_panels/filedrop.py:574
+#: ../../vdms_panels/av_conversions.py:1197 ../../vdms_panels/filedrop.py:602
 #: ../../vdms_panels/presets_manager.py:1050
 msgid "Same destination paths as source files"
 msgstr "使用与源文件相同的输出路径"
@@ -1480,33 +1480,33 @@ msgstr "配置文件保存完成！"
 msgid "Profile change successful!"
 msgstr "配置文件更改完成！"
 
-#: ../../vdms_dialogs/showlogs.py:81
+#: ../../vdms_dialogs/showlogs.py:80
 msgid "Log file list"
 msgstr "日志文件列表"
 
-#: ../../vdms_dialogs/showlogs.py:83 ../../vdms_dialogs/showlogs.py:117
+#: ../../vdms_dialogs/showlogs.py:82 ../../vdms_dialogs/showlogs.py:116
 msgid "Log messages"
 msgstr "日志信息"
 
-#: ../../vdms_dialogs/showlogs.py:106
+#: ../../vdms_dialogs/showlogs.py:105
 msgid "Refresh log messages"
 msgstr "刷新日志消息"
 
-#: ../../vdms_dialogs/showlogs.py:108
+#: ../../vdms_dialogs/showlogs.py:107
 msgid "Clear log messages"
 msgstr "清空日志消息"
 
-#: ../../vdms_dialogs/showlogs.py:161
+#: ../../vdms_dialogs/showlogs.py:160
 msgid "Select a log file"
 msgstr "选择一个日志文件"
 
-#: ../../vdms_dialogs/showlogs.py:168
+#: ../../vdms_dialogs/showlogs.py:167
 msgid "Are you sure you want to clear the selected log file?"
 msgstr "你确定要清除选定的日志文件吗？"
 
-#: ../../vdms_dialogs/showlogs.py:169 ../../vdms_dialogs/wizard_dlg.py:251
+#: ../../vdms_dialogs/showlogs.py:168 ../../vdms_dialogs/wizard_dlg.py:251
 #: ../../vdms_io/checkup.py:68 ../../vdms_main/main_frame.py:205
-#: ../../vdms_main/main_frame.py:798 ../../vdms_main/main_frame.py:1669
+#: ../../vdms_main/main_frame.py:798 ../../vdms_main/main_frame.py:1685
 #: ../../vdms_panels/presets_manager.py:349
 #: ../../vdms_panels/presets_manager.py:550
 #: ../../vdms_panels/presets_manager.py:590
@@ -1845,8 +1845,8 @@ msgstr ""
 msgid "Videomass - Downloading..."
 msgstr "Videomass - 下载中..."
 
-#: ../../vdms_main/main_frame.py:186 ../../vdms_main/main_frame.py:1407
-#: ../../vdms_main/main_frame.py:1435
+#: ../../vdms_main/main_frame.py:186 ../../vdms_main/main_frame.py:1409
+#: ../../vdms_main/main_frame.py:1441
 msgid "Ready"
 msgstr "准备就绪"
 
@@ -1923,7 +1923,7 @@ msgid "File"
 msgstr "文件"
 
 #: ../../vdms_main/main_frame.py:486 ../../vdms_panels/filedrop.py:340
-#: ../../vdms_panels/filedrop.py:359
+#: ../../vdms_panels/filedrop.py:381
 msgid "Rename selected file\tCtrl+R"
 msgstr "重命名选中的文件\tCtrl+R"
 
@@ -1932,7 +1932,7 @@ msgid "Rename the destination of the selected file"
 msgstr "重命名选中的文件的输出"
 
 #: ../../vdms_main/main_frame.py:490 ../../vdms_panels/filedrop.py:341
-#: ../../vdms_panels/filedrop.py:362
+#: ../../vdms_panels/filedrop.py:384
 msgid "Batch rename files\tCtrl+B"
 msgstr "批量重命名\tCtrl+B"
 
@@ -1941,7 +1941,7 @@ msgid "Numerically renames the destination of all items in the list"
 msgstr "对列表中的所有项目目标按数字顺序重命名"
 
 #: ../../vdms_main/main_frame.py:496 ../../vdms_panels/filedrop.py:343
-#: ../../vdms_panels/filedrop.py:366
+#: ../../vdms_panels/filedrop.py:388
 msgid "Remove selected entry\tDEL"
 msgstr "移除选中项\tDEL"
 
@@ -1950,7 +1950,7 @@ msgid "Remove the selected file from the list"
 msgstr "从列表中移除选定的文件"
 
 #: ../../vdms_main/main_frame.py:500 ../../vdms_panels/filedrop.py:344
-#: ../../vdms_panels/filedrop.py:369
+#: ../../vdms_panels/filedrop.py:391
 msgid "Clear list\tShift+DEL"
 msgstr "清空列表\tShift+DEL"
 
@@ -2330,75 +2330,74 @@ msgstr "添加至队列"
 msgid "Show queue"
 msgstr "显示队列"
 
-#: ../../vdms_main/main_frame.py:1406 ../../vdms_panels/presets_manager.py:569
+#: ../../vdms_main/main_frame.py:1408 ../../vdms_panels/presets_manager.py:569
 msgid "Videomass"
 msgstr "Videomass"
 
-#: ../../vdms_main/main_frame.py:1436
+#: ../../vdms_main/main_frame.py:1442
 msgid "Videomass - File List"
 msgstr "Videomass - 文件列表"
 
-#: ../../vdms_main/main_frame.py:1453
+#: ../../vdms_main/main_frame.py:1459
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - 视频、音频转换"
 
-#: ../../vdms_main/main_frame.py:1480
+#: ../../vdms_main/main_frame.py:1488
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - 预设管理器"
 
-#: ../../vdms_main/main_frame.py:1508
+#: ../../vdms_main/main_frame.py:1518
 #, fuzzy
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Concatenate Demuxer"
 
-#: ../../vdms_main/main_frame.py:1535
+#: ../../vdms_main/main_frame.py:1547
 msgid "Videomass - From Movie to Pictures"
 msgstr "Videomass - 转换视频为图片序列"
 
-#: ../../vdms_main/main_frame.py:1562
+#: ../../vdms_main/main_frame.py:1576
 #, fuzzy
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - 静态图像制作"
 
-#: ../../vdms_main/main_frame.py:1644
-#: ../../vdms_panels/audio_encoders/acodecs.py:789
-#: ../../vdms_panels/av_conversions.py:577 ../../vdms_panels/filedrop.py:475
-#: ../../vdms_panels/filedrop.py:588 ../../vdms_panels/sequence_to_video.py:322
+#: ../../vdms_main/main_frame.py:1660 ../../vdms_panels/av_conversions.py:577
+#: ../../vdms_panels/filedrop.py:500 ../../vdms_panels/filedrop.py:616
+#: ../../vdms_panels/sequence_to_video.py:322
 #: ../../vdms_panels/video_to_sequence.py:369
 #: ../../vdms_panels/video_to_sequence.py:501
 msgid "Have to select an item in the file list first"
 msgstr "需要在列表中选择一个项"
 
-#: ../../vdms_main/main_frame.py:1666
+#: ../../vdms_main/main_frame.py:1682
 msgid ""
 "An item with the same destination file already exists.\n"
 "\n"
 "Do you want to replace it by adding the new item to the queue?"
 msgstr ""
 
-#: ../../vdms_main/main_frame.py:1687
+#: ../../vdms_main/main_frame.py:1703
 msgid "Videomass - FFmpeg Message Monitoring"
 msgstr "Videomass - FFmpeg 消息监控"
 
-#: ../../vdms_main/main_frame.py:1814
+#: ../../vdms_main/main_frame.py:1828
 #, python-brace-format
 msgid "The system will turn off in {0} seconds"
 msgstr "系统将在 {0} 秒后关机"
 
-#: ../../vdms_main/main_frame.py:1815
+#: ../../vdms_main/main_frame.py:1829
 msgid "Videomass - Shutdown!"
 msgstr "Videomass - 关机！"
 
-#: ../../vdms_main/main_frame.py:1822
+#: ../../vdms_main/main_frame.py:1836
 msgid "Error while shutting down. Please see file log for details."
 msgstr "关机时出现错误。请查看日志以获取详情。"
 
-#: ../../vdms_main/main_frame.py:1834
+#: ../../vdms_main/main_frame.py:1848
 #, python-brace-format
 msgid "Exiting the application in {0} seconds"
 msgstr "此程序将在 {0} 秒后退出"
 
-#: ../../vdms_main/main_frame.py:1835
+#: ../../vdms_main/main_frame.py:1849
 msgid "Videomass - Exiting!"
 msgstr "Videomass - 退出中！"
 
@@ -2851,7 +2850,7 @@ msgstr "媒体类型"
 msgid "Size"
 msgstr "大小"
 
-#: ../../vdms_panels/filedrop.py:275 ../../vdms_panels/filedrop.py:383
+#: ../../vdms_panels/filedrop.py:275 ../../vdms_panels/filedrop.py:405
 msgid "Drag one or more files below"
 msgstr "拖动下面的一个或多个文件"
 
@@ -2869,50 +2868,50 @@ msgstr "创建一个新的预设"
 msgid "Encodings destination folder"
 msgstr "配置文件夹"
 
-#: ../../vdms_panels/filedrop.py:338 ../../vdms_panels/filedrop.py:372
+#: ../../vdms_panels/filedrop.py:338 ../../vdms_panels/filedrop.py:394
 #, fuzzy
 msgid "Play file"
 msgstr "配置文件"
 
-#: ../../vdms_panels/filedrop.py:386
+#: ../../vdms_panels/filedrop.py:408
 #, fuzzy
 msgid "Drag two or more Audio/Video files below"
 msgstr "拖动下面的一个或多个文件"
 
-#: ../../vdms_panels/filedrop.py:390
+#: ../../vdms_panels/filedrop.py:412
 #, fuzzy
 msgid "Drag one or more Image files below"
 msgstr "拖动下面的一个或多个文件"
 
-#: ../../vdms_panels/filedrop.py:393
+#: ../../vdms_panels/filedrop.py:415
 #, fuzzy
 msgid "Drag one or more Video files below"
 msgstr "拖动下面的一个或多个文件"
 
-#: ../../vdms_panels/filedrop.py:595
+#: ../../vdms_panels/filedrop.py:623
 #, fuzzy
 msgid "Rename the file destination"
 msgstr "恢复默认的目标文件夹"
 
-#: ../../vdms_panels/filedrop.py:596
+#: ../../vdms_panels/filedrop.py:624
 msgid "Rename the selected file to:"
 msgstr "重命名选中的文件至："
 
-#: ../../vdms_panels/filedrop.py:610 ../../vdms_panels/filedrop.py:620
-#: ../../vdms_panels/filedrop.py:651
+#: ../../vdms_panels/filedrop.py:638 ../../vdms_panels/filedrop.py:648
+#: ../../vdms_panels/filedrop.py:679
 msgid "Add Files"
 msgstr "添加文件"
 
-#: ../../vdms_panels/filedrop.py:627
+#: ../../vdms_panels/filedrop.py:655
 msgid "Rename in batch"
 msgstr ""
 
-#: ../../vdms_panels/filedrop.py:628
+#: ../../vdms_panels/filedrop.py:656
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr ""
 
-#: ../../vdms_panels/filedrop.py:630
+#: ../../vdms_panels/filedrop.py:658
 msgid "New Name #"
 msgstr "新名称 #"
 
@@ -3651,6 +3650,10 @@ msgid ""
 "High-quality two-pass Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements\n"
 "the EBU R128 algorithm. Ideal for postprocessing."
 msgstr "激活两个通道的正常化。它使用 \"loudnorm \"滤波器对感知的响度进行归一化，该滤波器实现了EBU R128算法。"
+
+#: ../../vdms_panels/audio_encoders/acodecs.py:789
+msgid "You need to import at least one file"
+msgstr ""
 
 #: ../../vdms_panels/miscellaneous/miscell.py:63
 msgid "Subtitle Mapping:"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.18\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-22 23:33+0200\n"
+"POT-Creation-Date: 2025-07-26 15:04+0200\n"
 "PO-Revision-Date: 2024-07-03 18:48+0200\n"
 "Last-Translator: johannesdedoper <https://github.com/johannesdedoper>\n"
 "Language: nl_NL\n"
@@ -1005,7 +1005,7 @@ msgid "Change"
 msgstr ""
 
 #: ../../vdms_dialogs/preferences.py:103
-#: ../../vdms_panels/av_conversions.py:1197 ../../vdms_panels/filedrop.py:574
+#: ../../vdms_panels/av_conversions.py:1197 ../../vdms_panels/filedrop.py:602
 #: ../../vdms_panels/presets_manager.py:1050
 #, fuzzy
 msgid "Same destination paths as source files"
@@ -1473,33 +1473,33 @@ msgstr "Wizard met succes afgerond!\n"
 msgid "Profile change successful!"
 msgstr ""
 
-#: ../../vdms_dialogs/showlogs.py:81
+#: ../../vdms_dialogs/showlogs.py:80
 msgid "Log file list"
 msgstr "Log bestanden lijst"
 
-#: ../../vdms_dialogs/showlogs.py:83 ../../vdms_dialogs/showlogs.py:117
+#: ../../vdms_dialogs/showlogs.py:82 ../../vdms_dialogs/showlogs.py:116
 msgid "Log messages"
 msgstr "Log-berichten"
 
-#: ../../vdms_dialogs/showlogs.py:106
+#: ../../vdms_dialogs/showlogs.py:105
 msgid "Refresh log messages"
 msgstr "Ververs log-berichten"
 
-#: ../../vdms_dialogs/showlogs.py:108
+#: ../../vdms_dialogs/showlogs.py:107
 msgid "Clear log messages"
 msgstr "Wis log-berichten"
 
-#: ../../vdms_dialogs/showlogs.py:161
+#: ../../vdms_dialogs/showlogs.py:160
 msgid "Select a log file"
 msgstr "Selecteer een log bestand"
 
-#: ../../vdms_dialogs/showlogs.py:168
+#: ../../vdms_dialogs/showlogs.py:167
 msgid "Are you sure you want to clear the selected log file?"
 msgstr "Wilt u echt dit log-bestand legen ?"
 
-#: ../../vdms_dialogs/showlogs.py:169 ../../vdms_dialogs/wizard_dlg.py:251
+#: ../../vdms_dialogs/showlogs.py:168 ../../vdms_dialogs/wizard_dlg.py:251
 #: ../../vdms_io/checkup.py:68 ../../vdms_main/main_frame.py:205
-#: ../../vdms_main/main_frame.py:798 ../../vdms_main/main_frame.py:1669
+#: ../../vdms_main/main_frame.py:798 ../../vdms_main/main_frame.py:1685
 #: ../../vdms_panels/presets_manager.py:349
 #: ../../vdms_panels/presets_manager.py:550
 #: ../../vdms_panels/presets_manager.py:590
@@ -1831,8 +1831,8 @@ msgstr ""
 msgid "Videomass - Downloading..."
 msgstr "Videomass - Bezig met downloaden..."
 
-#: ../../vdms_main/main_frame.py:186 ../../vdms_main/main_frame.py:1407
-#: ../../vdms_main/main_frame.py:1435
+#: ../../vdms_main/main_frame.py:186 ../../vdms_main/main_frame.py:1409
+#: ../../vdms_main/main_frame.py:1441
 msgid "Ready"
 msgstr "Gereed"
 
@@ -1917,7 +1917,7 @@ msgid "File"
 msgstr "Bestand"
 
 #: ../../vdms_main/main_frame.py:486 ../../vdms_panels/filedrop.py:340
-#: ../../vdms_panels/filedrop.py:359
+#: ../../vdms_panels/filedrop.py:381
 #, fuzzy
 msgid "Rename selected file\tCtrl+R"
 msgstr "Verwijder het geselecteerde profiel"
@@ -1928,7 +1928,7 @@ msgid "Rename the destination of the selected file"
 msgstr "Een doel-bestand moet geselecteerd zijn in de wachtrij-bestanden"
 
 #: ../../vdms_main/main_frame.py:490 ../../vdms_panels/filedrop.py:341
-#: ../../vdms_panels/filedrop.py:362
+#: ../../vdms_panels/filedrop.py:384
 #, fuzzy
 msgid "Batch rename files\tCtrl+B"
 msgstr "Toon Log-berichten\tCtrl+L"
@@ -1938,7 +1938,7 @@ msgid "Numerically renames the destination of all items in the list"
 msgstr ""
 
 #: ../../vdms_main/main_frame.py:496 ../../vdms_panels/filedrop.py:343
-#: ../../vdms_panels/filedrop.py:366
+#: ../../vdms_panels/filedrop.py:388
 #, fuzzy
 msgid "Remove selected entry\tDEL"
 msgstr "Verwijder het geselecteerde profiel"
@@ -1949,7 +1949,7 @@ msgid "Remove the selected file from the list"
 msgstr "Verwijder het geselecteerde bestand uit de lijst"
 
 #: ../../vdms_main/main_frame.py:500 ../../vdms_panels/filedrop.py:344
-#: ../../vdms_panels/filedrop.py:369
+#: ../../vdms_panels/filedrop.py:391
 msgid "Clear list\tShift+DEL"
 msgstr ""
 
@@ -2350,79 +2350,78 @@ msgstr ""
 msgid "Show queue"
 msgstr ""
 
-#: ../../vdms_main/main_frame.py:1406 ../../vdms_panels/presets_manager.py:569
+#: ../../vdms_main/main_frame.py:1408 ../../vdms_panels/presets_manager.py:569
 msgid "Videomass"
 msgstr "Videomass"
 
-#: ../../vdms_main/main_frame.py:1436
+#: ../../vdms_main/main_frame.py:1442
 #, fuzzy
 msgid "Videomass - File List"
 msgstr "Videomass - Wachtrij Bestanden"
 
-#: ../../vdms_main/main_frame.py:1453
+#: ../../vdms_main/main_frame.py:1459
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - AV Conversies"
 
-#: ../../vdms_main/main_frame.py:1480
+#: ../../vdms_main/main_frame.py:1488
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - Presets Manager"
 
-#: ../../vdms_main/main_frame.py:1508
+#: ../../vdms_main/main_frame.py:1518
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - Samenvoeg Demuxer"
 
-#: ../../vdms_main/main_frame.py:1535
+#: ../../vdms_main/main_frame.py:1547
 #, fuzzy
 msgid "Videomass - From Movie to Pictures"
 msgstr "Van afbeelingen serie naar een video file"
 
-#: ../../vdms_main/main_frame.py:1562
+#: ../../vdms_main/main_frame.py:1576
 #, fuzzy
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - Presets Manager"
 
-#: ../../vdms_main/main_frame.py:1644
-#: ../../vdms_panels/audio_encoders/acodecs.py:789
-#: ../../vdms_panels/av_conversions.py:577 ../../vdms_panels/filedrop.py:475
-#: ../../vdms_panels/filedrop.py:588 ../../vdms_panels/sequence_to_video.py:322
+#: ../../vdms_main/main_frame.py:1660 ../../vdms_panels/av_conversions.py:577
+#: ../../vdms_panels/filedrop.py:500 ../../vdms_panels/filedrop.py:616
+#: ../../vdms_panels/sequence_to_video.py:322
 #: ../../vdms_panels/video_to_sequence.py:369
 #: ../../vdms_panels/video_to_sequence.py:501
 #, fuzzy
 msgid "Have to select an item in the file list first"
 msgstr "Selecteer eerst een profiel in de lijst"
 
-#: ../../vdms_main/main_frame.py:1666
+#: ../../vdms_main/main_frame.py:1682
 msgid ""
 "An item with the same destination file already exists.\n"
 "\n"
 "Do you want to replace it by adding the new item to the queue?"
 msgstr ""
 
-#: ../../vdms_main/main_frame.py:1687
+#: ../../vdms_main/main_frame.py:1703
 #, fuzzy
 msgid "Videomass - FFmpeg Message Monitoring"
 msgstr "Videomass - Output Monitor"
 
-#: ../../vdms_main/main_frame.py:1814
+#: ../../vdms_main/main_frame.py:1828
 #, python-brace-format
 msgid "The system will turn off in {0} seconds"
 msgstr ""
 
-#: ../../vdms_main/main_frame.py:1815
+#: ../../vdms_main/main_frame.py:1829
 #, fuzzy
 msgid "Videomass - Shutdown!"
 msgstr "Videomass - Laden..."
 
-#: ../../vdms_main/main_frame.py:1822
+#: ../../vdms_main/main_frame.py:1836
 msgid "Error while shutting down. Please see file log for details."
 msgstr ""
 
-#: ../../vdms_main/main_frame.py:1834
+#: ../../vdms_main/main_frame.py:1848
 #, python-brace-format
 msgid "Exiting the application in {0} seconds"
 msgstr ""
 
-#: ../../vdms_main/main_frame.py:1835
+#: ../../vdms_main/main_frame.py:1849
 #, fuzzy
 msgid "Videomass - Exiting!"
 msgstr "Videomass - Laden..."
@@ -2871,7 +2870,7 @@ msgstr "Media type"
 msgid "Size"
 msgstr "Grootte"
 
-#: ../../vdms_panels/filedrop.py:275 ../../vdms_panels/filedrop.py:383
+#: ../../vdms_panels/filedrop.py:275 ../../vdms_panels/filedrop.py:405
 msgid "Drag one or more files below"
 msgstr "Sleep een of meer bestanden hieronder"
 
@@ -2890,51 +2889,51 @@ msgstr "Maak een nieuwe preset"
 msgid "Encodings destination folder"
 msgstr "Configuratie folder"
 
-#: ../../vdms_panels/filedrop.py:338 ../../vdms_panels/filedrop.py:372
+#: ../../vdms_panels/filedrop.py:338 ../../vdms_panels/filedrop.py:394
 #, fuzzy
 msgid "Play file"
 msgstr "Profiel"
 
-#: ../../vdms_panels/filedrop.py:386
+#: ../../vdms_panels/filedrop.py:408
 #, fuzzy
 msgid "Drag two or more Audio/Video files below"
 msgstr "Sleep een of meer bestanden hieronder"
 
-#: ../../vdms_panels/filedrop.py:390
+#: ../../vdms_panels/filedrop.py:412
 #, fuzzy
 msgid "Drag one or more Image files below"
 msgstr "Sleep een of meer bestanden hieronder"
 
-#: ../../vdms_panels/filedrop.py:393
+#: ../../vdms_panels/filedrop.py:415
 #, fuzzy
 msgid "Drag one or more Video files below"
 msgstr "Sleep een of meer bestanden hieronder"
 
-#: ../../vdms_panels/filedrop.py:595
+#: ../../vdms_panels/filedrop.py:623
 #, fuzzy
 msgid "Rename the file destination"
 msgstr "Herstel de standaard bestemming-folders"
 
-#: ../../vdms_panels/filedrop.py:596
+#: ../../vdms_panels/filedrop.py:624
 #, fuzzy
 msgid "Rename the selected file to:"
 msgstr "Verwijder het geselecteerde profiel"
 
-#: ../../vdms_panels/filedrop.py:610 ../../vdms_panels/filedrop.py:620
-#: ../../vdms_panels/filedrop.py:651
+#: ../../vdms_panels/filedrop.py:638 ../../vdms_panels/filedrop.py:648
+#: ../../vdms_panels/filedrop.py:679
 msgid "Add Files"
 msgstr "Voeg bestanden toe"
 
-#: ../../vdms_panels/filedrop.py:627
+#: ../../vdms_panels/filedrop.py:655
 msgid "Rename in batch"
 msgstr ""
 
-#: ../../vdms_panels/filedrop.py:628
+#: ../../vdms_panels/filedrop.py:656
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr ""
 
-#: ../../vdms_panels/filedrop.py:630
+#: ../../vdms_panels/filedrop.py:658
 #, fuzzy
 msgid "New Name #"
 msgstr "Bestandsnaam"
@@ -3600,6 +3599,10 @@ msgid ""
 "High-quality two-pass Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements\n"
 "the EBU R128 algorithm. Ideal for postprocessing."
 msgstr "Activeer twee-pass normalisatie. Het normaliseert de ervaarde loudness door gebruikmaking van het \"​loudnorm\" filter, wat het EBU R128 algoritme toepast."
+
+#: ../../vdms_panels/audio_encoders/acodecs.py:789
+msgid "You need to import at least one file"
+msgstr ""
 
 #: ../../vdms_panels/miscellaneous/miscell.py:63
 msgid "Subtitle Mapping:"

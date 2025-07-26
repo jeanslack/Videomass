@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.18.2024
+Rev: July.26.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -335,13 +335,35 @@ class FileDnD(wx.Panel):
             self.Bind(wx.EVT_MENU, self.onPopup, id=popupID4)
         # build the menu
         menu = wx.Menu()
-        menu.Append(popupID5, _("Play file"))
+        playfile = menu.Append(popupID5, _("Play file"))
         menu.AppendSeparator()
-        menu.Append(popupID2, _("Rename selected file\tCtrl+R"))
-        menu.Append(popupID1, _("Batch rename files\tCtrl+B"))
+        rename = menu.Append(popupID2, _("Rename selected file\tCtrl+R"))
+        rename_batch = menu.Append(popupID1, _("Batch rename files\tCtrl+B"))
         menu.AppendSeparator()
-        menu.Append(popupID3, _("Remove selected entry\tDEL"))
-        menu.Append(popupID4, _("Clear list\tShift+DEL"))
+        delfile = menu.Append(popupID3, _("Remove selected entry\tDEL"))
+        clearall = menu.Append(popupID4, _("Clear list\tShift+DEL"))
+        # Enabling the correct items
+        if self.outputnames:
+            clearall.Enable(True)
+            if len(self.outputnames) > 1:
+                rename_batch.Enable(True)
+            else:
+                rename_batch.Enable(False)
+            if self.parent.filedropselected:
+                playfile.Enable(True)
+                rename.Enable(True)
+                delfile.Enable(True)
+            else:
+                playfile.Enable(False)
+                rename.Enable(False)
+                delfile.Enable(False)
+        else:
+            playfile.Enable(False)
+            rename.Enable(False)
+            rename_batch.Enable(False)
+            delfile.Enable(False)
+            clearall.Enable(False)
+
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()
@@ -367,7 +389,7 @@ class FileDnD(wx.Panel):
             self.on_delete_selected(None)
 
         elif menuItem.GetItemLabel() == _("Clear list\tShift+DEL"):
-            self.delete_all(None)
+            self.delete_all(event)  # need pass event here
 
         elif menuItem.GetItemLabel() == _("Play file"):
             self.on_play_select(None)
@@ -431,7 +453,7 @@ class FileDnD(wx.Panel):
             elif event.GetColumn() == 5:
                 curritems.sort(key=lambda item: item[4])
 
-            self.delete_all(None, setstate=False)  # does not setstate here
+            self.delete_all(None, setstate=False)  # no event, no setstate here
 
             if self.sortingstate == 'descending':
                 self.sortingstate = 'ascending'
@@ -459,12 +481,15 @@ class FileDnD(wx.Panel):
             self.parent.rename_batch.Enable(True)
         else:
             self.parent.rename_batch.Enable(False)
+        self.parent.clearall.Enable(True)
 
         if setfocus:
             sel = self.flCtrl.GetFocusedItem()  # Get the current row
             selitem = sel if sel != -1 else 0
             self.flCtrl.Focus(selitem)  # make the line the current line
             self.flCtrl.Select(selitem, on=1)  # default event selection
+
+        pub.sendMessage("RESET_ON_CHANGED_LIST", msg=None)
     # ----------------------------------------------------------------------
 
     def on_play_select(self, event):
@@ -538,8 +563,9 @@ class FileDnD(wx.Panel):
             self.changes_in_progress(setfocus=False)
             self.parent.rename.Enable(False)
             self.parent.rename_batch.Enable(False)
+            self.parent.delfile.Enable(False)
+            self.parent.clearall.Enable(False)
             self.parent.filedropselected = None
-            pub.sendMessage("RESET_ON_CHANGED_LIST", msg=None)
         if setstate:
             self.sortingstate = None
             self.parent.toolbar.EnableTool(9, False)
@@ -553,6 +579,7 @@ class FileDnD(wx.Panel):
         item = self.flCtrl.GetItemText(index, 1)
         self.parent.filedropselected = item
         self.parent.rename.Enable(True)
+        self.parent.delfile.Enable(True)
         pub.sendMessage("RESET_ON_CHANGED_LIST", msg=index)
     # ----------------------------------------------------------------------
 
@@ -563,6 +590,7 @@ class FileDnD(wx.Panel):
         """
         self.parent.filedropselected = None
         self.parent.rename.Enable(False)
+        self.parent.delfile.Enable(False)
         pub.sendMessage("RESET_ON_CHANGED_LIST", msg=None)
     # ----------------------------------------------------------------------
 

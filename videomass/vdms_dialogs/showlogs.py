@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2023
+Rev: July.25.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -43,7 +43,6 @@ class ShowLogs(wx.Dialog):
                 'From Movie to Pictures.log',
                 'Still Image Maker.log',
                 'generic_task.log',
-                'YouTube Downloader.log',
                 'Queue Processing.log',
                 'Shutdown.log',
                 )
