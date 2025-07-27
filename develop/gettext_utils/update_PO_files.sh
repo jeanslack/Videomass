@@ -35,7 +35,7 @@ do
         exit $?
     fi
     # remove obsolete strings
-    msgattrib --no-obsolete $PO > temp.po
+    msgattrib --no-obsolete --width=400 --no-wrap --no-location $PO > temp.po
     \cp -rf temp.po $PO
     \rm test.po
     echo "Update '${langdirs}LC_MESSAGES/videomass.po' ...OK"
