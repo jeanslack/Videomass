@@ -32,7 +32,7 @@ DATA=$(<"${CATALOG}")  # read catalog data
 
 cd "${TARGET}"
 #xgettext --width=400 --default-domain videomass ${DATA}
-pygettext3 -v -o videomass.pot $DATA
+pygettext3 --no-location --width=400 -v -o videomass.pot $DATA
 
 
 if [[ $? -ne 0 ]]; then
