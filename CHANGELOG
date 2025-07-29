@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 29 July 2025 v6.1.13
+Tue, 29 July 2025 v6.1.13
 
   * Fixed "Go" menu item that was incorrectly left enabled on "Output Monitor"
     during transcoding processes, leaving the user able to click on it, leading

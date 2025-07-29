@@ -9,10 +9,10 @@
 
 # Notes for Tester:
 # -----------------
-# The following installation method involves compiling Videomass from source
-# distribution (sdist), so to build the binary wheel additional packages are
-# required: Please also install the dependencies declared in
-# "requirements/development.txt" file first.
+# Test installations also include compiling Videomass from source
+# distribution (sdist), so to build the binary wheel, additional packages are
+# required. If this is your case, to proceed, first install the dependencies
+# declared in the "requirements/development.txt" file first.
 
 # This assumes installation in a virtual environment using python3-venv module
 # with `--system-site-package` option, like this:

@@ -1,6 +1,8 @@
 
 VIDEOMASS INSTALLATION INSTRUCTIONS AND BUILDINGS
 
+Notes: On some systems, you may need to replace "python3" with "py" or "python".
+
 ==============================
 Executable packages availables
 ==============================
@@ -32,7 +34,7 @@ and executing the "launcher" script inside the source Videomass directory.
 
     cd Videomass (source directory)
 
-    python launcher
+    python3 launcher
 
 Videomass can also be imported from the Python3 console (interactive mode):
 
@@ -62,15 +64,16 @@ Using `generate_MO_files.sh` shell script (only for Linux, FreeBSD, MacOs)
     ./develop/gettext_utils/generate_MO_files.sh
 
 
-Using `babelutils.py` python script (multi-platform)
+Using `babelutils.py` python script (Platform-independent)
 ----------------------------------------------------
 
     Requires:
-        - babel (also installable via pip)
+        - Python >= 3.9.0
+        - babel (installable via pip)
 
     cd Videomass (source directory)
 
-    python3 develop/gettext_utils/babelutils.py --compile-catalogs --output-dir videomass/data/locale --domain videomass
+    python3 develop/gettext_utils/babelutils.py --compile --output-dir videomass/data/locale --domain videomass
 
 
 ======================
@@ -88,16 +91,16 @@ Installation using pip
     installed in your OS,
     like this:
 
-        python -m venv --system-site-packages --upgrade-deps VENV
+        python3 -m venv --system-site-packages --upgrade-deps VENV
 
         source VENV/bin/activate
     ------------------------------------------------------------------------
 
-python -m pip install videomass
+python3 -m pip install videomass
 
 OR, inside source directory:
 
-    python -m pip install -r requirements.txt
+    python3 -m pip install -r requirements.txt
 
 Please, Visit the Wiki page for more info:
 <https://github.com/jeanslack/Videomass/wiki/Installation-using-pip>

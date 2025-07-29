@@ -39,25 +39,15 @@ except ModuleNotFoundError:
              'launch this script.')
 
 
-def description():
-    """
-    print description of the program
-    """
-    descr = ('Encapsulates the babel API for working with message '
-             'catalog conveniently.')
-
-    return descr
-
-
-def long_description():
+def long_descript():
     """
     print a long description of the program
     """
     descr = ('Encapsulates the babel API for working with message '
              'catalog conveniently.\n'
-             'Please note that these functionalities are mutually '
-             'exclusive, use one at a time.\n')
-
+             'Please note that this script is not intended to replace the '
+             '`pybabel` command line.\nIt is intended to study the Babel API '
+             'and provide some convenience for the program that uses it.\n')
     return descr
 
 
@@ -66,11 +56,8 @@ def exit_from_prog(nameprogram, args=None):
     print message error and exit from program
     """
 
-    print(f"\nIMPORTANT: This script is semi-automatic, in order to use "
-          f"the default directories it is encouraged to call this script "
-          f"from the source directory location.\n\n"
-          f"Usage: {nameprogram} [-h] (compile | extract | init | "
-          f"update)\n\n{long_description()}")
+    print(f"Usage: {nameprogram} [-h] (--init | --extract | --update | "
+          f"--compile)\n\n{long_descript()}")
     if args:
         print(args)
 
@@ -82,7 +69,7 @@ def build_translation_catalog(nameprogram, def_locdir, def_domain):
     Compile MO files for this macchine using babel.
     """
     parser = argparse.ArgumentParser(prog=f'{nameprogram}',
-                                     description=description(),
+                                     description=long_descript(),
                                      add_help=True,
                                      )
     parser.add_argument('compile',
@@ -125,9 +112,13 @@ def create_pot_file(*args):
     """
     Extract messages from the catalog, similarly to what
     the GNU gettext program does.
+    This is equivalent to pybabel command line:
+        pybabel extract --no-location -o /path/videomass.pot  -w 400
+        --project Videomass --version 6.1.13 --ignore-dirs="DATA __pycache__"
+        --input-dirs="/path/Videomass/videomass"
     """
     parser = argparse.ArgumentParser(prog=f'{args[0]}',
-                                     description=description(),
+                                     description=long_descript(),
                                      add_help=True,
                                      )
     parser.add_argument('--extract',
@@ -205,6 +196,9 @@ def create_pot_file(*args):
         cmd.input_dirs = pydir  # path to Pytohn package
         cmd.output_file = os.path.join(makeabs_locdir,
                                        parsargs.domain_name.lower() + ".pot")
+        cmd.ignore_dirs = "DATA __pycache__"
+        cmd.project = 'Videomass'
+        # cmd.version = '6.1.13'
         cmd.width = parsargs.width
         if parsargs.no_wrap:
             cmd.no_wrap = parsargs.no_wrap
@@ -225,9 +219,13 @@ def update_po_files(*args):
     """
     Updates existing message catalogs based on the template
     file (POT). Basically equivalent to the GNU msgmerge program.
+    Also equivalent to pybabel command line:
+        pybabel update -D videomass -i "videomass/data/locale/videomass.pot"
+        -d "videomass/data/locale" -w 400 --ignore-obsolete -N
+        --update-header-comment
     """
     parser = argparse.ArgumentParser(prog=f'{args[0]}',
-                                     description=description(),
+                                     description=long_descript(),
                                      add_help=True,
                                      )
     parser.add_argument('--update',
@@ -299,6 +297,7 @@ def update_po_files(*args):
         cmd.domain = parsargs.domain_name
         cmd.output_dir = parsargs.locale_directory
         cmd.width = parsargs.width
+        cmd.update_header_comment = True
         if parsargs.no_wrap:
             cmd.no_wrap = parsargs.no_wrap
         if parsargs.no_fuzzy:
@@ -319,7 +318,7 @@ def init_new_catalog(nameprogram, def_locdir, def_domain):
     a new translation catalog based on a PO template file (POT).
     """
     parser = argparse.ArgumentParser(prog=f'{nameprogram}',
-                                     description=description(),
+                                     description=long_descript(),
                                      add_help=True,
                                      )
     parser.add_argument('init',
