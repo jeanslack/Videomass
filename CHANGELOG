@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sat, 26 July 2025 v6.1.13
+Mon, 29 July 2025 v6.1.13
 
   * Fixed "Go" menu item that was incorrectly left enabled on "Output Monitor"
     during transcoding processes, leaving the user able to click on it, leading
@@ -26,6 +26,18 @@ Sat, 26 July 2025 v6.1.13
     transcoding process.
   * Improved text formatting on volumedetected.log file.
   * [AV/CONVERSIONS] Volume detect requires at least one file, not a selection.
+  * Update ru_RU i18n, thanks to ChourS.
+  * Update File_Catalog.txt for xgettext usability.
+  * Added options to create a pot file without source refences, #401 thanks to
+    @bovirus.
+  * Added options to have always long lines without forced CR/LF without
+    obsolete strings and without source references, #401 thanks to @bovirus.
+  * Improved babelutils.py command line, adding more features, including those
+    added by @bovirus in #401 .
+  * Fixed typo on shownormalist.py incorrectly aliased to _(
+  * Fixed typo on sequence_to_video.py incorrectly aliased to _(
+
+
 
 +------------------------------------+
 Tue, 15 July 2025 v6.1.12

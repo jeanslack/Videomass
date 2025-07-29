@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """"
-Porpose: Manage the translation message catalog independently
-         of the GNU-xgettext utilities.
+Porpose: Conveniently wraps the Babel API to suit your specific needs,
+         independently of the GNU-xgettext utilities.
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: Distributed under the terms of the GPL3 License.
-Rev: July.23.2025
+Rev: July.29.2025
 Code checker: flake8, pylint
 
 This file is part of videomass.
@@ -43,8 +43,8 @@ def description():
     """
     print description of the program
     """
-    descr = ('Encapsulates the main functionalities for managing '
-             'the translation message catalog based on babel.')
+    descr = ('Encapsulates the babel API for working with message '
+             'catalog conveniently.')
 
     return descr
 
@@ -53,8 +53,8 @@ def long_description():
     """
     print a long description of the program
     """
-    descr = ('Encapsulates the main functionalities for managing '
-             'the translation message catalog based on babel.\n'
+    descr = ('Encapsulates the babel API for working with message '
+             'catalog conveniently.\n'
              'Please note that these functionalities are mutually '
              'exclusive, use one at a time.\n')
 
@@ -69,8 +69,8 @@ def exit_from_prog(nameprogram, args=None):
     print(f"\nIMPORTANT: This script is semi-automatic, in order to use "
           f"the default directories it is encouraged to call this script "
           f"from the source directory location.\n\n"
-          f"usage: {nameprogram} [-h] (--extract-msg | --new-catalog | "
-          f"--update-catalogs | --compile-catalogs)\n\n{long_description()}")
+          f"Usage: {nameprogram} [-h] (compile | extract | init | "
+          f"update)\n\n{long_description()}")
     if args:
         print(args)
 
@@ -85,7 +85,7 @@ def build_translation_catalog(nameprogram, def_locdir, def_domain):
                                      description=description(),
                                      add_help=True,
                                      )
-    parser.add_argument('--compile-catalogs',
+    parser.add_argument('compile',
                         help=("Compile recursively MO (Machine Object) files "
                               "for this macchine."),
                         action="store_true",
@@ -107,11 +107,11 @@ def build_translation_catalog(nameprogram, def_locdir, def_domain):
                         required=False,
                         default=def_domain,
                         )
-    args = parser.parse_args()
+    parsargs = parser.parse_args()
     try:
         cmd = compile_catalog()
-        cmd.directory = args.locale_directory
-        cmd.domain = args.domain_name
+        cmd.directory = parsargs.locale_directory
+        cmd.domain = parsargs.domain_name
         cmd.statistics = True
         cmd.finalize_options()
         cmd.run()
@@ -121,19 +121,18 @@ def build_translation_catalog(nameprogram, def_locdir, def_domain):
     return None
 
 
-def create_pot_file(nameprogram, here, def_locdir, def_domain, def_pypkg):
+def create_pot_file(*args):
     """
     Extract messages from the catalog, similarly to what
     the GNU gettext program does.
     """
-    parser = argparse.ArgumentParser(prog=f'{nameprogram}',
+    parser = argparse.ArgumentParser(prog=f'{args[0]}',
                                      description=description(),
                                      add_help=True,
                                      )
-
-    parser.add_argument('--extract-msg',
-                        help=("Extracts messages from the catalog and adds "
-                              "them to a new POT file."),
+    parser.add_argument('--extract',
+                        help=("Extract messages from source files and "
+                              "generate a POT file."),
                         action="store_true",
                         required=True
                         )
@@ -141,9 +140,9 @@ def create_pot_file(nameprogram, here, def_locdir, def_domain, def_pypkg):
                         action="store",
                         dest="locale_directory",
                         help=(f'Absolute or relative destination path to '
-                              f'locale directory, default is "{def_locdir}".'),
+                              f'locale directory, default is "{args[2]}".'),
                         required=False,
-                        default=def_locdir,
+                        default=args[2],
                         )
     parser.add_argument("-d", "--domain",
                         action="store",
@@ -151,9 +150,9 @@ def create_pot_file(nameprogram, here, def_locdir, def_domain, def_pypkg):
                         help=(f'The name you want to give to the domain, '
                               f'usually coincides with the name of your app '
                               f'or the existing PO/POT file (in lowercase), '
-                              f'default is "{def_domain}".'),
+                              f'default is "{args[3]}".'),
                         required=False,
-                        default=def_domain,
+                        default=args[3],
                         )
     parser.add_argument("-p", "--package-dir",
                         action="store",
@@ -161,44 +160,80 @@ def create_pot_file(nameprogram, here, def_locdir, def_domain, def_pypkg):
                         help=(f'Absolute or relative destination path to '
                               f'the Python modules/package dir to extract '
                               f'recursively all messages from *.py files, '
-                              f'default is "{def_pypkg}".'),
+                              f'default is "{args[4]}".'),
                         required=False,
-                        default=def_pypkg,
+                        default=args[4],
                         )
-    args = parser.parse_args()
-    makeabs_locdir = os.path.abspath(args.locale_directory)
-    makeabs_pydir = os.path.abspath(args.python_package_dir)
-    os.chdir(args.locale_directory)
+    parser.add_argument('-w', "--no-wrap",
+                        action="store_true",
+                        dest="no_wrap",
+                        help=('Do not break long message lines, longer than '
+                              'the output line width, into several lines.'),
+                        required=False,
+                        default=False,
+                        )
+    parser.add_argument('-W', "--width",
+                        action="store",
+                        type=int,
+                        dest="width",
+                        help=('set output line width (default 76)'),
+                        required=False,
+                        default=76,
+                        )
+    parser.add_argument('-Nf', "--no-fuzzy-matching",
+                        action="store_true",
+                        dest="no_fuzzy",
+                        help=('do not use fuzzy matching'),
+                        required=False,
+                        default=False,
+                        )
+    parser.add_argument('-Nl', "--no-location",
+                        action="store_true",
+                        dest="no_location",
+                        help=('do not include location comments with filename '
+                              'and line number'),
+                        required=False,
+                        default=False,
+                        )
+    parsargs = parser.parse_args()
+    makeabs_locdir = os.path.abspath(parsargs.locale_directory)
+    makeabs_pydir = os.path.abspath(parsargs.python_package_dir)
+    os.chdir(parsargs.locale_directory)
     pydir = os.path.relpath(makeabs_pydir)
     try:
         cmd = extract_messages()
         cmd.input_dirs = pydir  # path to Pytohn package
         cmd.output_file = os.path.join(makeabs_locdir,
-                                       args.domain_name.lower() + ".pot")
-        cmd.no_wrap = True
+                                       parsargs.domain_name.lower() + ".pot")
+        cmd.width = parsargs.width
+        if parsargs.no_wrap:
+            cmd.no_wrap = parsargs.no_wrap
+        if parsargs.no_fuzzy:
+            cmd.no_fuzzy_matching = parsargs.no_fuzzy
+        if parsargs.no_location:
+            cmd.no_location = parsargs.no_location
         cmd.finalize_options()
         cmd.run()
     except Exception as err:
-        os.chdir(here)
+        os.chdir(args[1])
         return err
-    os.chdir(here)
+    os.chdir(args[1])
     return None
 
 
-def update_po_files(nameprogram, def_locdir, def_domain, def_potfile):
+def update_po_files(*args):
     """
-    Updates all existing translation catalogs based on a
-    PO template file (POT), basically equivalent to the GNU
-    msgmerge program.
+    Updates existing message catalogs based on the template
+    file (POT). Basically equivalent to the GNU msgmerge program.
     """
-    parser = argparse.ArgumentParser(prog=f'{nameprogram}',
+    parser = argparse.ArgumentParser(prog=f'{args[0]}',
                                      description=description(),
                                      add_help=True,
                                      )
-    parser.add_argument('--update-catalogs',
-                        help=("Updates all existing translation catalogs "
-                              "found on the given locale directory based on "
-                              "a POT template file."),
+    parser.add_argument('--update',
+                        help=("Updates existing message catalogs found "
+                              "on the given locale directory from a POT file."
+                              ),
                         action="store_true",
                         required=True,
                         )
@@ -206,34 +241,70 @@ def update_po_files(nameprogram, def_locdir, def_domain, def_potfile):
                         action="store",
                         dest="locale_directory",
                         help=(f'Absolute or relative destination path to '
-                              f'locale directory, default is "{def_locdir}".'),
+                              f'locale directory, default is "{args[1]}".'),
                         required=False,
-                        default=def_locdir,
+                        default=args[1],
                         )
     parser.add_argument("-d", "--domain",
                         action="store",
                         dest="domain_name",
                         help=(f'The name given to the domain of the PO file '
-                              f'of any catalogs, default is "{def_domain}".'),
+                              f'of any catalogs, default is "{args[2]}".'),
                         required=False,
-                        default=def_domain,
+                        default=args[2],
                         )
     parser.add_argument("-f", "--pot-file",
                         action="store",
                         dest="pot_file",
                         help=(f'POT filename location, default is '
-                              f'"{def_potfile}".'),
+                              f'"{args[3]}".'),
                         required=False,
-                        default=def_potfile,
+                        default=args[3],
                         )
-    args = parser.parse_args()
+    parser.add_argument('-w', "--no-wrap",
+                        action="store_true",
+                        dest="no_wrap",
+                        help=('Do not break long message lines, longer than '
+                              'the output line width, into several lines.'),
+                        required=False,
+                        default=False,
+                        )
+    parser.add_argument('-W', "--width",
+                        action="store",
+                        type=int,
+                        dest="width",
+                        help=('set output line width (default 76)'),
+                        required=False,
+                        default=76,
+                        )
+    parser.add_argument('-Nf', "--no-fuzzy-matching",
+                        action="store_true",
+                        dest="no_fuzzy",
+                        help=('do not use fuzzy matching'),
+                        required=False,
+                        default=False,
+                        )
+    parser.add_argument('-Nl', "--no-location",
+                        action="store_true",
+                        dest="no_location",
+                        help=('do not include location comments with filename '
+                              'and line number'),
+                        required=False,
+                        default=False,
+                        )
+    parsargs = parser.parse_args()
     try:
         cmd = update_catalog()
-        cmd.input_file = args.pot_file
-        cmd.domain = args.domain_name
-        cmd.output_dir = args.locale_directory
-        cmd.no_wrap = True
-        cmd.no_fuzzy_matching = True
+        cmd.input_file = parsargs.pot_file
+        cmd.domain = parsargs.domain_name
+        cmd.output_dir = parsargs.locale_directory
+        cmd.width = parsargs.width
+        if parsargs.no_wrap:
+            cmd.no_wrap = parsargs.no_wrap
+        if parsargs.no_fuzzy:
+            cmd.no_fuzzy_matching = parsargs.no_fuzzy
+        if parsargs.no_location:
+            cmd.no_location = parsargs.no_location
         cmd.finalize_options()
         cmd.run()
     except Exception as err:
@@ -251,7 +322,7 @@ def init_new_catalog(nameprogram, def_locdir, def_domain):
                                      description=description(),
                                      add_help=True,
                                      )
-    parser.add_argument('--new-catalog',
+    parser.add_argument('init',
                         help=("It creates a new translation catalog based on "
                               "a POT template file."),
                         action="store_true",
@@ -282,14 +353,14 @@ def init_new_catalog(nameprogram, def_locdir, def_domain):
                               "add, e.g 'de_DE' for German language."),
                         required=True,
                         )
-    args = parser.parse_args()
+    parsargs = parser.parse_args()
     try:
         cmd = init_catalog()
-        cmd.domain = args.domain_name.lower()
-        cmd.locale = args.locale_code
-        cmd.input_file = os.path.join(args.locale_directory,
-                                      args.domain_name.lower() + ".pot")
-        cmd.output_dir = args.locale_directory
+        cmd.domain = parsargs.domain_name.lower()
+        cmd.locale = parsargs.locale_code
+        cmd.input_file = os.path.join(parsargs.locale_directory,
+                                      parsargs.domain_name.lower() + ".pot")
+        cmd.output_dir = parsargs.locale_directory
         cmd.finalize_options()
         cmd.run()
     except Exception as err:
@@ -302,38 +373,37 @@ if __name__ == '__main__':
     prgname = os.path.basename(__file__)
     heredir = os.getcwd()  # must be source directory
     locdir = os.path.join(heredir, 'videomass', 'data', 'locale')
-    domain = 'videomass'
+    DOMAIN = 'videomass'
     pypkgdir = os.path.join(heredir, 'videomass')
     potfilename = os.path.join(locdir, 'videomass.pot')
 
-    mode = ('--new-catalog', '--extract-msg',
-            '--update-catalogs', '--compile-catalogs')
+    mode = ('--init', '--extract', '--update', '--compile')
     arg = sys.argv
     appendact = [a for a in sys.argv if a in mode]
-    status = None
+    STATUS = None
 
     if not appendact:
         exit_from_prog(prgname)
 
     if len(appendact) > 1:
-        msg = (f"ERROR: {prgname}: the following arguments "
+        MSG = (f"ERROR: {prgname}: the following arguments "
                f"are mutually exclusive: {mode} "
                f"go for > {' '.join(appendact)}")
-        exit_from_prog(prgname, msg)
+        exit_from_prog(prgname, MSG)
 
-    if appendact[0] == "--new-catalog":
-        status = init_new_catalog(prgname, locdir, domain)
+    if appendact[0] == "--init":
+        STATUS = init_new_catalog(prgname, locdir, DOMAIN)
 
-    elif appendact[0] == "--extract-msg":
-        status = create_pot_file(prgname, heredir, locdir, domain, pypkgdir)
+    elif appendact[0] == "--extract":
+        STATUS = create_pot_file(prgname, heredir, locdir, DOMAIN, pypkgdir)
 
-    elif appendact[0] == "--update-catalogs":
-        status = update_po_files(prgname, locdir, domain, potfilename)
+    elif appendact[0] == "--update":
+        STATUS = update_po_files(prgname, locdir, DOMAIN, potfilename)
 
-    elif appendact[0] == "--compile-catalogs":
-        status = build_translation_catalog(prgname, locdir, domain)
+    elif appendact[0] == "--compile":
+        STATUS = build_translation_catalog(prgname, locdir, DOMAIN)
 
-    if status:
-        print(f"ERROR: babel: {status}")
+    if STATUS:
+        print(f"ERROR: babel: {STATUS}")
     else:
         print("COMPLETED SUCCESSFULLY!")
