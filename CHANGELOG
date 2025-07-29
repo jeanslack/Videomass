@@ -37,8 +37,6 @@ Tue, 29 July 2025 v6.1.13
   * Fixed typo on shownormalist.py incorrectly aliased to _(
   * Fixed typo on sequence_to_video.py incorrectly aliased to _(
 
-
-
 +------------------------------------+
 Tue, 15 July 2025 v6.1.12
 
@@ -59,7 +57,6 @@ Tue, 15 July 2025 v6.1.12
   * Fixed missing icon issue for application launch on Ubuntu using deb package
     from PPA. This was fixed by upgrading to the Noble series for application
     build.
-
 
 +------------------------------------+
 Fri, 05 Jun 2025 V.5.0.26
