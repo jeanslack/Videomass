@@ -1,22 +1,23 @@
 # Russian translation for Videomass.
-# Copyleft -  2024 Gianluca Pernigotto
+# Copyleft -  2025 Gianluca Pernigotto
 # This file is distributed under the same license as the Videomass package
 # FIRST AUTHOR ChourS <chours2008@yandex.ru>, 2020.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 5.0.20\n"
+"Project-Id-Version: Videomass 6.1.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-26 15:04+0200\n"
-"PO-Revision-Date: 2025-06-09 19:36+0300\n"
+"PO-Revision-Date: 2025-07-27 12:27+0300\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
-"Language: ru_RU\n"
 "Language-Team: Chour <ChourS2008@yandex.ru>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.17.0\n"
+"X-Generator: Poedit 3.6\n"
 
 #: ../../gui_app.py:196
 #, python-brace-format
@@ -31,7 +32,7 @@ msgstr ""
 
 #: ../../vdms_dialogs/about_dialog.py:52
 msgid "Cross-platform graphical user interface for FFmpeg\n"
-msgstr ""
+msgstr "Кроссплатформенный графический интерфейс пользователя для FFmpeg\n"
 
 #: ../../vdms_dialogs/audioproperties.py:224
 msgid "Videomass supports mono and stereo audio channels. If you are not sure set to \"Auto\" and source values will be copied."
@@ -1643,7 +1644,7 @@ msgstr "Пожалуйста, найдите время, чтобы настро
 
 #: ../../vdms_dialogs/wizard_dlg.py:64
 msgid "Click the \"Next\" button to get started"
-msgstr "Нажмите кнопку \"Next\", чтобы начать"
+msgstr "Нажмите кнопку \"Следующий\", чтобы начать"
 
 #: ../../vdms_dialogs/wizard_dlg.py:79
 msgid "Welcome to the Videomass Wizard!"
@@ -1664,6 +1665,8 @@ msgid ""
 "If you have already installed FFmpeg on your operating system,\n"
 "click the \"Auto-detection\" button."
 msgstr ""
+"Если вы уже установили FFmpeg в свою операционную систему, \n"
+"нажмите кнопку \"Автоматическое определение\"."
 
 #: ../../vdms_dialogs/wizard_dlg.py:131
 msgid ""
@@ -1671,6 +1674,8 @@ msgid ""
 "but not installed on your operating system,\n"
 "click the \"Locate\" button."
 msgstr ""
+"Если вы хотите использовать версию FFmpeg, расположенную в вашей файловой системе, \n"
+"но не установленную в вашей операционной системе, нажмите кнопку \"Найти\"."
 
 #: ../../vdms_dialogs/wizard_dlg.py:162
 msgid "Auto-detection"
@@ -1682,7 +1687,7 @@ msgstr "Найдите"
 
 #: ../../vdms_dialogs/wizard_dlg.py:214
 msgid "Click the \"Next\" button"
-msgstr "Нажмите кнопку \"Next\""
+msgstr "Нажмите кнопку \"Следующий\""
 
 #: ../../vdms_dialogs/wizard_dlg.py:235
 #, python-brace-format
@@ -1911,7 +1916,7 @@ msgstr "Очистить список файлов"
 
 #: ../../vdms_main/main_frame.py:506
 msgid "Preferences\tCtrl+P"
-msgstr "Основные настройки\tCtrl+P"
+msgstr "Настройки\tCtrl+P"
 
 #: ../../vdms_main/main_frame.py:507
 msgid "Application preferences"
@@ -2107,23 +2112,23 @@ msgstr "Внести свой вклад в проект"
 
 #: ../../vdms_main/main_frame.py:627
 msgid "Sponsor this project"
-msgstr ""
+msgstr "Спонсируйте этот проект"
 
 #: ../../vdms_main/main_frame.py:628
 msgid "Become a developer supporter"
-msgstr ""
+msgstr "Станьте сторонником разработчиков"
 
 #: ../../vdms_main/main_frame.py:629
 msgid "Donate"
-msgstr ""
+msgstr "Пожертвовать"
 
 #: ../../vdms_main/main_frame.py:630
 msgid "Donate to the app developer"
-msgstr ""
+msgstr "Пожертвуйте разработчику приложения"
 
 #: ../../vdms_main/main_frame.py:634
 msgid "Other projects by the developer"
-msgstr ""
+msgstr "Другие проекты разработчика"
 
 #: ../../vdms_main/main_frame.py:650
 msgid "About Videomass"
@@ -3579,11 +3584,11 @@ msgstr ""
 
 #: ../../vdms_panels/audio_encoders/acodecs.py:789
 msgid "You need to import at least one file"
-msgstr ""
+msgstr "Вам необходимо импортировать хотя бы один файл"
 
 #: ../../vdms_panels/miscellaneous/miscell.py:63
 msgid "Subtitle Mapping:"
-msgstr ""
+msgstr "Отображение субтитров:"
 
 #: ../../vdms_panels/miscellaneous/miscell.py:77
 msgid "Copy Chapters"
@@ -4018,4 +4023,3 @@ msgstr "Удалите текущую очередь и замените ее и
 
 #~ msgid "Subtitle Mapping"
 #~ msgstr "Сопоставление субтитров"
-

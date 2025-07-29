@@ -704,7 +704,7 @@ class SequenceToVideo(wx.Panel):
         """
         time = self.opt["Clock"]
         resize = _('Enabled') if self.opt["RESIZE"] else _('Disabled')
-        short = _(self.opt["Shortest"][1])
+        short = (self.opt["Shortest"][1])
         preinput = self.opt["Preinput"]
         duration = self.opt["Interval"]
         if self.ckbx_edit.IsChecked():

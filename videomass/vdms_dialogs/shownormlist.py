@@ -133,7 +133,7 @@ class AudioVolNormal(wx.Dialog):
         icon = wx.Icon()
         icon.CopyFromBitmap(wx.Bitmap(vidicon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        self.SetTitle(_(title))
+        self.SetTitle(title)
         self.SetMinSize((850, 400))
         self.panel.SetSizer(sizer)
         sizer.Fit(self)
