@@ -49,14 +49,14 @@ or in AUR part of Manjaro (Arch Linux derivative) Linux.
 
 ## Devuan / Debian
 
-A pre-compiled, architecture-independent **.deb** package is available, tested on:
+The latest pre-compiled, architecture-independent **DEB** package is available here: [videomass_6.1.13-1_all.deb](https://github.com/jeanslack/Videomass/releases/download/v6.1.13/videomass_6.1.13-1_all.deb){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2}
+
+Tested on:
 
 - Devuan Chimaera
 - Devuan Daedalus
 - Debian11 bullseye
 - Debian12 bookworm
-
-Download: [videomass6.1.13-1_all.deb](https://github.com/jeanslack/Videomass/releases/download/v6.1.13/videomass_6.1.13-1_all.deb)
 
 ---
 
