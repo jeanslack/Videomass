@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+import webbrowser
 import wx
 import wx.lib.statbmp
 import wx.lib.colourselect as csel
@@ -300,18 +301,24 @@ class Crop(wx.Dialog):
         boxctrl.Add(self.spin_y, 0, wx.CENTRE)
         label_Y = wx.StaticText(self, wx.ID_ANY, ("Y"))
         boxctrl.Add(label_Y, 0, wx.BOTTOM | wx.CENTRE, 5)
-        # bottom layout for buttons
-        gridBtn = wx.GridSizer(1, 2, 0, 0)
-        gridexit = wx.BoxSizer(wx.HORIZONTAL)
+
+        # ----- confirm buttons section
+        gridbtns = wx.GridSizer(1, 2, 0, 0)
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        btn_help = wx.Button(self, wx.ID_HELP, "")
+        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridbtns.Add(gridhelp)
+        boxaff = wx.BoxSizer(wx.HORIZONTAL)
+        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        boxaff.Add(btn_cancel, 0)
+        btn_ok = wx.Button(self, wx.ID_OK)
+        boxaff.Add(btn_ok, 0, wx.LEFT, 5)
         btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
         btn_reset.SetBitmap(args[2], wx.LEFT)
-        gridBtn.Add(btn_reset, 0, wx.ALL, 5)
-        btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        gridexit.Add(btn_close, 0)
-        btn_ok = wx.Button(self, wx.ID_OK)
-        gridexit.Add(btn_ok, 0, wx.LEFT, 5)
-        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
-        sizerBase.Add(gridBtn, 0, wx.EXPAND)
+        boxaff.Add(btn_reset, 0, wx.LEFT, 5)
+        gridbtns.Add(boxaff, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
+        sizerBase.Add(gridbtns, 0, wx.EXPAND)
+
         # instance to Actor widget
         if os.path.exists(self.frame):
             bmp = make_bitmap(self.w_scaled, self.h_scaled, self.frame)
@@ -321,9 +328,6 @@ class Crop(wx.Dialog):
             self.bob = Actor(self.panelrect, bmp, 1, "")
             self.make_frame_from_file(None)
 
-        self.SetSizer(sizerBase)
-        sizerBase.Fit(self)
-        self.Layout()
         # ----------------------Properties-----------------------#
         self.panelrect.SetBackgroundColour(wx.Colour(Crop.BACKGROUND))
         if Crop.OS == 'Darwin':
@@ -341,6 +345,11 @@ class Crop(wx.Dialog):
                                  'the horizontal axis)'))
         self.spin_h.SetToolTip(_('Crop to height'))
 
+        # ----- Set layout
+        self.SetSizer(sizerBase)
+        sizerBase.Fit(self)
+        self.Layout()
+
         # ----------------------Binding (EVT)------------------------#
         self.Bind(wx.EVT_SPINCTRL, self.onWidth, self.spin_w)
         self.Bind(wx.EVT_SPINCTRL, self.onHeight, self.spin_h)
@@ -350,9 +359,10 @@ class Crop(wx.Dialog):
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Seek, self.sld_time)
         self.Bind(wx.EVT_BUTTON, self.make_frame_from_file, self.btn_load)
 
-        self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
+        self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.btn_color.Bind(csel.EVT_COLOURSELECT, self.bob.oncolor)
         # self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         pub.subscribe(self.to_real_scale_coords, "TO_REAL_SCALE")
@@ -516,6 +526,20 @@ class Crop(wx.Dialog):
         self.spin_h.SetValue(0)
         self.spin_y.SetValue(0)
         self.onDrawing()
+    # ------------------------------------------------------------------#
+
+    def on_help(self, event):
+        """
+        Open default web browser via Python Web-browser controller.
+        see <https://docs.python.org/3.8/library/webbrowser.html>
+
+        """
+        page = ('https://jeanslack.github.io/Videomass/User-guide/'
+                'Video_filters_en.pdf#%5B%7B%22num%22%3A13%2C%22gen'
+                '%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C785.'
+                '189%2C0%5D')
+
+        webbrowser.open(page)
     # ------------------------------------------------------------------#
 
     def on_close(self, event):

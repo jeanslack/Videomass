@@ -442,8 +442,10 @@ class Scale(wx.Dialog):
         Open default web browser via Python Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        page = ('https://jeanslack.github.io/Videomass/User-guide'
-                '/Video_filters_en.pdf')
+        page = ('https://jeanslack.github.io/Videomass/User-guide/'
+                'Video_filters_en.pdf#%5B%7B%22num%22%3A10%2C%22gen%22%'
+                '3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C785.'
+                '189%2C0%5D')
 
         webbrowser.open(page)
     # ------------------------------------------------------------------#

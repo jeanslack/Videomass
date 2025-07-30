@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+import webbrowser
 from math import pi as pigreco
 import wx
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
@@ -99,18 +100,24 @@ class Transpose(wx.Dialog):
         self.button_down = wx.Button(self, wx.ID_ANY,
                                      (_("180°")))  # capovolgi sotto
         boxctrl.Add(self.button_down, 0, wx.ALL | wx.CENTRE, 5)
+
         # ----- confirm buttons section
-        gridBtn = wx.GridSizer(1, 2, 0, 0)
-        gridexit = wx.BoxSizer(wx.HORIZONTAL)
+        gridbtns = wx.GridSizer(1, 2, 0, 0)
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        btn_help = wx.Button(self, wx.ID_HELP, "")
+        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridbtns.Add(gridhelp)
+        boxaff = wx.BoxSizer(wx.HORIZONTAL)
+        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        boxaff.Add(btn_cancel, 0)
+        btn_ok = wx.Button(self, wx.ID_OK)
+        boxaff.Add(btn_ok, 0, wx.LEFT, 5)
         btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
         btn_reset.SetBitmap(args[2], wx.LEFT)
-        gridBtn.Add(btn_reset, 0, wx.ALL, 5)
-        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
-        gridexit.Add(btn_cancel, 0)
-        btn_ok = wx.Button(self, wx.ID_OK)
-        gridexit.Add(btn_ok, 0, wx.LEFT, 5)
-        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
-        sizerBase.Add(gridBtn, 0, wx.EXPAND)
+        boxaff.Add(btn_reset, 0, wx.LEFT, 5)
+        gridbtns.Add(boxaff, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
+        sizerBase.Add(gridbtns, 0, wx.EXPAND)
+
         # ----------------------Properties--------------------------------#
         self.SetTitle(_("Transpose Tool"))
         self.panelimg.SetBackgroundColour(wx.Colour(Transpose.BACKGROUND))
@@ -146,6 +153,7 @@ class Transpose(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
     # ------------------------------------------------------------------#
 
     def process(self):
@@ -292,6 +300,20 @@ class Transpose(wx.Dialog):
         self.transpose['degrees'] = ["", 0]
         self.statictxt.SetLabel(_("Default position"))
         self.Layout()
+    # ------------------------------------------------------------------#
+
+    def on_help(self, event):
+        """
+        Open default web browser via Python Web-browser controller.
+        see <https://docs.python.org/3.8/library/webbrowser.html>
+
+        """
+        page = ('https://jeanslack.github.io/Videomass/User-guide/'
+                'Video_filters_en.pdf#%5B%7B%22num%22%3A19%2C%22gen'
+                '%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C711.'
+                '639%2C0%5D')
+
+        webbrowser.open(page)
     # ------------------------------------------------------------------#
 
     def on_close(self, event):

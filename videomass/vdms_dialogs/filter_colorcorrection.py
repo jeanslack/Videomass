@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+import webbrowser
 import wx
 from videomass.vdms_utils.utils import time_to_integer
 from videomass.vdms_utils.utils import integer_to_time
@@ -181,21 +182,24 @@ class ColorEQ(wx.Dialog):
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 10)
         sizercolor.Add(sizerflex2, 0, wx.ALL | wx.CENTRE, 5)
-        # bottom btns
-        gridBtn = wx.GridSizer(1, 2, 0, 0)
-        gridexit = wx.BoxSizer(wx.HORIZONTAL)
+
+        # ----- confirm buttons section
+        gridbtns = wx.GridSizer(1, 2, 0, 0)
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        btn_help = wx.Button(self, wx.ID_HELP, "")
+        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridbtns.Add(gridhelp)
+        boxaff = wx.BoxSizer(wx.HORIZONTAL)
+        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
+        boxaff.Add(btn_cancel, 0)
+        btn_ok = wx.Button(self, wx.ID_OK)
+        boxaff.Add(btn_ok, 0, wx.LEFT, 5)
         btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
         btn_reset.SetBitmap(iconreset, wx.LEFT)
-        gridBtn.Add(btn_reset, 0, wx.ALL, 5)
-        btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
-        gridexit.Add(btn_cancel, 0)
-        btn_ok = wx.Button(self, wx.ID_OK)
-        gridexit.Add(btn_ok, 0, wx.LEFT, 5)
-        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
-        sizerBase.Add(gridBtn, 0, wx.EXPAND)
-        self.SetSizer(sizerBase)
-        sizerBase.Fit(self)
-        self.Layout()
+        boxaff.Add(btn_reset, 0, wx.LEFT, 5)
+        gridbtns.Add(boxaff, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
+        sizerBase.Add(gridbtns, 0, wx.EXPAND)
+
         # ----------------------Properties-----------------------#
         if ColorEQ.OS == 'Darwin':
             lab_imgsrc.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
@@ -205,6 +209,10 @@ class ColorEQ(wx.Dialog):
             lab_imgedit.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
         self.SetTitle(_("Color Correction EQ Tool"))
+        # ----- Set layout
+        self.SetSizer(sizerBase)
+        sizerBase.Fit(self)
+        self.Layout()
         # ----------------------Binding (EVT)-------------------------#
 
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_seek_time, self.sld_time)
@@ -249,6 +257,7 @@ class ColorEQ(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_cancel)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
 
         if not self.mills:
             self.sld_time.Disable()
@@ -454,6 +463,20 @@ class ColorEQ(wx.Dialog):
         self.sld_saturation.SetValue(100)
         self.sld_gamma.SetValue(10)
         self.equalize_image(self.concat_filter())
+    # -----------------------------------------------------------------------#
+
+    def on_help(self, event):
+        """
+        Open default web browser via Python Web-browser controller.
+        see <https://docs.python.org/3.8/library/webbrowser.html>
+
+        """
+        page = ('https://jeanslack.github.io/Videomass/User-guide/'
+                'Video_filters_en.pdf#%5B%7B%22num%22%3A40%2C%22gen'
+                '%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C625.'
+                '389%2C0%5D')
+
+        webbrowser.open(page)
     # -----------------------------------------------------------------------#
 
     def on_close(self, event):
