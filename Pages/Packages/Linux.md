@@ -11,8 +11,9 @@ nav_order: 3
 
 ## Ubuntu PPA
 
-This PPA currently publishes packages for [Ubuntu](https://ubuntu.com/), including official and 
-derivative distributions such as Ubuntu, Xubuntu, Kubuntu, Lubuntu, LinuxMint, etc.   
+This PPA currently publishes packages for [Ubuntu](https://ubuntu.com/) flavors, including 
+[official derivatives](https://ubuntu.com/desktop/flavors) and unofficial derivative distributions 
+such as [Linuxmint](https://linuxmint.com/), etc.   
 
 To install Videomass add this [PPA](https://launchpad.net/~jeanslack/+archive/ubuntu/videomass) to your system: 
   
@@ -48,14 +49,14 @@ or in AUR part of Manjaro (Arch Linux derivative) Linux.
 
 ## Devuan / Debian
 
-A pre-compiled, architecture-independent **.deb** package is available, primarily compatible with:
+A pre-compiled, architecture-independent **.deb** package is available, tested on:
 
 - Devuan Chimaera
 - Devuan Daedalus
 - Debian11 bullseye
 - Debian12 bookworm
 
-Download: [videomass6.1.12-1_all.deb](https://github.com/jeanslack/Videomass/releases/download/v6.1.12/videomass_6.1.12-1_all.deb)
+Download: [videomass6.1.13-1_all.deb](https://github.com/jeanslack/Videomass/releases/download/v6.1.13/videomass_6.1.13-1_all.deb)
 
 ---
 

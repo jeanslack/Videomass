@@ -9,8 +9,8 @@ nav_order: 5
   
 # Source Code
 
-[Videomass 6.1.12 tar.gz](https://github.com/jeanslack/Videomass/archive/refs/tags/v6.1.12.tar.gz){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2}
-[Videomass 6.1.12 zip](https://github.com/jeanslack/Videomass/archive/refs/tags/v6.1.12.zip){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }
+[Videomass 6.1.13 tar.gz](https://github.com/jeanslack/Videomass/archive/refs/tags/v6.1.13.tar.gz){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2}
+[Videomass 6.1.13 zip](https://github.com/jeanslack/Videomass/archive/refs/tags/v6.1.13.zip){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }
 
 > You can get latest development version from git repository:
 {: .fs-3 .text-grey-dk-100}

@@ -18,16 +18,15 @@ Minimum requirements:
 For space reasons, this portable edition does not include FFmpeg. Please read 
 the `README.txt` file included in the 7-zip archive for more information.
   
-[Videomass 6.1.12 Portable](https://github.com/jeanslack/Videomass/releases/download/v6.1.12/Videomass-v6.1.12_x86_64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
+[Videomass 6.1.13 Portable](https://github.com/jeanslack/Videomass/releases/download/v6.1.13/ Videomass-6.1.13-win64-portable.7z){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2} 
 [All Versions](https://github.com/jeanslack/Videomass/releases){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 .mr-2}     
 
 ### Warning
 {: .bg-red-300}
 
-A lot of antivirus vendors detect **Videomass.exe** as malicious. 
-Since these are false positives, to resolve this problem the only thing to do is 
-to submit the Videomass.exe file to your antivirus vendor for advanced analysis 
-and making a False Positive claim. 
+If your antivirus detect **Videomass.exe** as malicious, please submit 
+the Videomass.exe file to your antivirus vendor for advanced analysis and 
+making a False Positive claim. 
 
 Alternatively, install from [PyPi package](Python_Package) or [Run Videomass from source code](https://github.com/jeanslack/Videomass/wiki/Run-Videomass-from-source-code) 
 
