@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 29 July 2025 v6.1.13
+Wed, 30 July 2025 v6.1.13
 
   * Fixed "Go" menu item that was incorrectly left enabled on "Output Monitor"
     during transcoding processes, leaving the user able to click on it, leading
@@ -36,6 +36,8 @@ Tue, 29 July 2025 v6.1.13
     added by @bovirus in #401 .
   * Fixed typo on shownormalist.py incorrectly aliased to _(
   * Fixed typo on sequence_to_video.py incorrectly aliased to _(
+  * Added contextual help for all video filters. Clicking the contextual help
+    buttons will direct the user to the corresponding web page.
 
 +------------------------------------+
 Tue, 15 July 2025 v6.1.12

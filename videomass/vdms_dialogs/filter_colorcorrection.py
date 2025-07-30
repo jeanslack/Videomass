@@ -182,6 +182,7 @@ class ColorEQ(wx.Dialog):
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 10)
         sizercolor.Add(sizerflex2, 0, wx.ALL | wx.CENTRE, 5)
+
         # ----- confirm buttons section
         gridbtns = wx.GridSizer(1, 2, 0, 0)
         gridhelp = wx.GridSizer(1, 1, 0, 0)

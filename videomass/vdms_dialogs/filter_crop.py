@@ -319,22 +319,6 @@ class Crop(wx.Dialog):
         gridbtns.Add(boxaff, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         sizerBase.Add(gridbtns, 0, wx.EXPAND)
 
-
-        # # bottom layout for buttons
-        # gridBtn = wx.GridSizer(1, 2, 0, 0)
-        # gridexit = wx.BoxSizer(wx.HORIZONTAL)
-        # btn_reset = wx.Button(self, wx.ID_ANY, _("Reset"))
-        # btn_reset.SetBitmap(args[2], wx.LEFT)
-        # gridBtn.Add(btn_reset, 0, wx.ALL, 5)
-        # btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
-        # gridexit.Add(btn_cancel, 0)
-        # btn_ok = wx.Button(self, wx.ID_OK)
-        # gridexit.Add(btn_ok, 0, wx.LEFT, 5)
-        # gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
-        # sizerBase.Add(gridBtn, 0, wx.EXPAND)
-
-
-
         # instance to Actor widget
         if os.path.exists(self.frame):
             bmp = make_bitmap(self.w_scaled, self.h_scaled, self.frame)
