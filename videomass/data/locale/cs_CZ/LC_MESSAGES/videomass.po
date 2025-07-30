@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-30 11:02+0200\n"
+"POT-Creation-Date: 2025-07-30 15:28+0200\n"
 "PO-Revision-Date: 2024-07-17 16:33+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cs_CZ\n"
@@ -2633,16 +2633,4 @@ msgstr ""
 
 msgid "Remove the current queue and replace it with the imported one."
 msgstr ""
-
-#~ msgid "Some text boxes are still incomplete"
-#~ msgstr ""
-
-#~ msgid "FFplay"
-#~ msgstr ""
-
-#~ msgid "Subtitle Mapping"
-#~ msgstr ""
-
-#~ msgid "Shortest"
-#~ msgstr ""
 

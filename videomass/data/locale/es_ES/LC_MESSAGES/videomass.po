@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.18\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-30 11:02+0200\n"
+"POT-Creation-Date: 2025-07-30 15:28+0200\n"
 "PO-Revision-Date: 2024-08-26 17:29-0600\n"
 "Last-Translator: José Alberto Valle Cid j.alberto.vc@gmail.com\n"
 "Language: es_ES\n"
@@ -3010,16 +3010,4 @@ msgstr "Añadir solo entradas faltantes a la lista."
 
 msgid "Remove the current queue and replace it with the imported one."
 msgstr "Eliminar lista actual y reemplazar con la importada."
-
-#~ msgid "Some text boxes are still incomplete"
-#~ msgstr "Algunas cajas de texto están incompletas"
-
-#~ msgid "FFplay"
-#~ msgstr "FFplay"
-
-#~ msgid "Subtitle Mapping"
-#~ msgstr "Mapeo de Subtitulos"
-
-#~ msgid "Shortest"
-#~ msgstr "MiniPrueba"
 

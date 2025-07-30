@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 6.1.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-30 11:02+0200\n"
+"POT-Creation-Date: 2025-07-30 15:28+0200\n"
 "PO-Revision-Date: 2025-07-27 12:27+0300\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language: ru_RU\n"
@@ -3047,16 +3047,4 @@ msgstr "Добавлять в очередь только недостающие
 
 msgid "Remove the current queue and replace it with the imported one."
 msgstr "Удалите текущую очередь и замените ее импортированной."
-
-#~ msgid "Some text boxes are still incomplete"
-#~ msgstr "Некоторые текстовые поля все еще не заполнены"
-
-#~ msgid "FFplay"
-#~ msgstr "FFplay"
-
-#~ msgid "Subtitle Mapping"
-#~ msgstr "Сопоставление субтитров"
-
-#~ msgid "Shortest"
-#~ msgstr "Коротко"
 

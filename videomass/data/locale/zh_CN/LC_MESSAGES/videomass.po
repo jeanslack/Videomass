@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.26\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-30 11:02+0200\n"
+"POT-Creation-Date: 2025-07-30 15:28+0200\n"
 "PO-Revision-Date: 2025-04-19 11:19+0800\n"
 "Last-Translator: Gao Zimu <gaozimu_0502@163.com>\n"
 "Language: zh_CN\n"
@@ -3066,16 +3066,4 @@ msgstr "仅添加当前没有的项到队列。"
 
 msgid "Remove the current queue and replace it with the imported one."
 msgstr "移除当前队列并用导入的队列替换它。"
-
-#~ msgid "Some text boxes are still incomplete"
-#~ msgstr "一些文本框仍然不完整"
-
-#~ msgid "FFplay"
-#~ msgstr "FFplay"
-
-#~ msgid "Subtitle Mapping"
-#~ msgstr "字幕 Map"
-
-#~ msgid "Shortest"
-#~ msgstr ""
 

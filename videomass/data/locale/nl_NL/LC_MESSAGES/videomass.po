@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.18\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-30 11:02+0200\n"
+"POT-Creation-Date: 2025-07-30 15:28+0200\n"
 "PO-Revision-Date: 2024-07-03 18:48+0200\n"
 "Last-Translator: johannesdedoper <https://github.com/johannesdedoper>\n"
 "Language: nl_NL\n"
@@ -3015,16 +3015,4 @@ msgstr ""
 
 msgid "Remove the current queue and replace it with the imported one."
 msgstr ""
-
-#~ msgid "Some text boxes are still incomplete"
-#~ msgstr "Enkele tekstkaders zijn nog onvolledig"
-
-#~ msgid "FFplay"
-#~ msgstr "FFplay"
-
-#~ msgid "Subtitle Mapping"
-#~ msgstr "Ondertitel Map"
-
-#~ msgid "Shortest"
-#~ msgstr ""
 
