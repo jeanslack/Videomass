@@ -7,6 +7,15 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Thu, 07 July 2025 v6.1.15
+
+  * Fixed `ValueError: could not convert string to float:` in
+    long_processing_task.py using latest FFmpeg versions.
+  * Fixed enabling "Batch rename files" on `switch_file_import` method.
+  * [AV/CONVERSIONS] New feature: Added the ability to set more parameters for
+    subtitle streams, such as subtitle codec and map indexing.
+
++------------------------------------+
 Wed, 30 July 2025 v6.1.13
 
   * Fixed "Go" menu item that was incorrectly left enabled on "Output Monitor"

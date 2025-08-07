@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.28.2025
+Rev: Aug.07.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -292,11 +292,10 @@ class LogOut(wx.Panel):
             ffprog = []
             for key, val in pairwise(out):
                 ffprog.append(f"{key}: {val}")
-
             if self.with_eta:
                 if 'speed=' in output:
                     speed = output.split('speed=')[-1].strip().split('x')[0]
-                    if speed in ('N/A', '0'):
+                    if speed in ('N/A', '0') or 'N/A' in speed:
                         eta = "   ETA: N/A"
                     else:  # is float
                         rem = (duration - msec) / float(speed)

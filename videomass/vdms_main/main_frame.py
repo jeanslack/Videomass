@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.26.2025
+Rev: Aug.07.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -1428,7 +1428,7 @@ class MainFrame(wx.Frame):
         if self.filedropselected:
             self.delfile.Enable(True)
             self.rename.Enable(True)
-        if self.outputnames:
+        if len(self.outputnames) > 1:
             self.clearall.Enable(True)
             self.rename_batch.Enable(True)
         self.openmedia.Enable(True)

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2025
+Rev: Aug.07.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -135,6 +135,7 @@ class AV_Conv(wx.Panel):
                     "OutputFormat": "mkv", "VideoCodec": "-c:v libx264",
                     "ext_input": "", "Passes": "Auto", "InputDir": "",
                     "OutputDir": "", "SubtitleMap": "-map 0:s?",
+                    "SubtitleEnc": "",
                     "Deinterlace": "", "Interlace": "", "ColorEQ": "",
                     "PixelFormat": "", "Orientation": ["", ""], "Crop": "",
                     "CropColor": "", "Scale": "", "Setdar": "", "Setsar": "",
@@ -503,6 +504,7 @@ class AV_Conv(wx.Panel):
         else:
             self.opt["OutputFormat"] = self.cmb_cont.GetValue()
         self.audioenc.set_audio_radiobox(None)
+        self.miscfunc.set_subt_radiobox()
     # ------------------------------------------------------------------#
 
     def on_video_preview(self, event):
@@ -983,8 +985,8 @@ class AV_Conv(wx.Panel):
                 cmd2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
                         f'{self.opt["passlogfile2"]} '
                         f'{self.opt["CmdAudioParams"]} '
-                        f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
-                        f'{self.opt["MetaData"]}'
+                        f'{self.opt["SubtitleEnc"]} {self.opt["SubtitleMap"]} '
+                        f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
                         )
             else:  # single pass
                 cmd1 = (f'-filter:v {self.opt["Vidstabdetect"]} '
@@ -993,8 +995,8 @@ class AV_Conv(wx.Panel):
                         )
                 cmd2 = (f'{self.opt["CmdVideoParams"]} '
                         f'{self.opt["VFilters"]} {self.opt["CmdAudioParams"]} '
-                        f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
-                        f'{self.opt["MetaData"]}'
+                        f'{self.opt["SubtitleEnc"]} {self.opt["SubtitleMap"]} '
+                        f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
                         )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
             kwargs = {'type': 'Two pass EBU', 'args': [pass1, pass2],
@@ -1012,8 +1014,8 @@ class AV_Conv(wx.Panel):
                     )
             cmd2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
                     f'{self.opt["CmdAudioParams"]} {self.opt["EBU"][1]} '
-                    f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
-                    f'{self.opt["MetaData"]}'
+                    f'{self.opt["SubtitleEnc"]} {self.opt["SubtitleMap"]} '
+                    f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
             kwargs = {'type': 'Two pass VIDSTAB', 'args': [pass1, pass2],
@@ -1034,8 +1036,8 @@ class AV_Conv(wx.Panel):
 
             args = (f'{self.opt["CmdVideoParams"]} '
                     f'{self.opt["CmdAudioParams"]} {self.opt["EBU"][1]} '
-                    f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
-                    f'{self.opt["MetaData"]}'
+                    f'{self.opt["SubtitleEnc"]} {self.opt["SubtitleMap"]} '
+                    f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(args.split()), ''
             kwargs = {'type': 'One pass', 'args': [pass1, pass2],
@@ -1049,8 +1051,9 @@ class AV_Conv(wx.Panel):
                     )
             cmd2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
                     f'{self.opt["passlogfile2"]} {self.opt["CmdAudioParams"]} '
-                    f'{self.opt["EBU"][1]} {self.opt["SubtitleMap"]} '
-                    f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
+                    f'{self.opt["EBU"][1]} {self.opt["SubtitleEnc"]} '
+                    f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
+                    f'{self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(cmd1.split()), " ".join(cmd2.split())
             kwargs = {'type': 'Two pass', 'args': [pass1, pass2],
@@ -1060,8 +1063,8 @@ class AV_Conv(wx.Panel):
         elif self.opt["Passes"] == "Auto":
             args = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
                     f'{self.opt["CmdAudioParams"]} {self.opt["EBU"][1]} '
-                    f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
-                    f'{self.opt["MetaData"]}'
+                    f'{self.opt["SubtitleEnc"]} {self.opt["SubtitleMap"]} '
+                    f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
                     )
             pass1, pass2 = " ".join(args.split()), ''
             kwargs = {'type': 'One pass', 'args': [pass1, pass2],
@@ -1084,8 +1087,9 @@ class AV_Conv(wx.Panel):
                      f'-filter:a: {self.opt["EBU"][1]} -vn -sn -dn  -f null'
                      )
             cmd_2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
-                     f'{self.opt["CmdAudioParams"]} {self.opt["SubtitleMap"]} '
-                     f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
+                     f'{self.opt["CmdAudioParams"]} {self.opt["SubtitleEnc"]} '
+                     f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
+                     f'{self.opt["MetaData"]}'
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
@@ -1103,8 +1107,9 @@ class AV_Conv(wx.Panel):
                      )
             cmd_2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
                      f'{self.opt["passlogfile2"]} '
-                     f'{self.opt["CmdAudioParams"]} {self.opt["SubtitleMap"]} '
-                     f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
+                     f'{self.opt["CmdAudioParams"]} {self.opt["SubtitleEnc"]} '
+                     f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
+                     f'{self.opt["MetaData"]}'
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
@@ -1118,8 +1123,9 @@ class AV_Conv(wx.Panel):
                      f'-filter:a: {self.opt["EBU"][1]} -vn -sn -dn -f null'
                      )
             cmd_2 = (f'{self.opt["CmdVideoParams"]} {self.opt["VFilters"]} '
-                     f'{self.opt["CmdAudioParams"]} {self.opt["SubtitleMap"]} '
-                     f'{self.opt["Chapters"]} {self.opt["MetaData"]}'
+                     f'{self.opt["CmdAudioParams"]} {self.opt["SubtitleEnc"]} '
+                     f'{self.opt["SubtitleMap"]} {self.opt["Chapters"]} '
+                     f'{self.opt["MetaData"]}'
                      )
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())

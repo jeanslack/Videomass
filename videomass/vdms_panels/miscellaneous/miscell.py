@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.13.2024
+Rev: Aug.07.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -32,6 +32,29 @@ class Miscellaneous(wx.Panel):
     This Panel implements various functionalities
     controls for A/V Conversions.
     """
+    # Namings in the subtitle codec selection on subtitle radio box:
+    SCODECS = {('Auto'): (""),
+               ('MOV_TEXT'): ("mov_text"),
+               ('SUBRIP'): ("subrip"),
+               ('WEBVTT'): ("webvtt"),
+               ('ASS'): ("alac"),
+               ('SSA'): ("ac3"),
+               ('SRT'): ("libvorbis"),
+               ('Copy'): ("copy"),
+               ('No Subtitles'): ("-sn")
+               }
+    # compatibility between video formats and related subtitle formats:
+    S_FORMATS = {('avi'): ('default', None, None, None, None, None, None,
+                           'copy', 'No Subtitles'),
+                 ('mp4'): ('default', 'mov_text', None, None, None, None, None,
+                           'copy', 'No Subtitles'),
+                 ('m4v'): ('default', 'mov_text', None, None, None, None, None,
+                           'copy', 'No Subtitles'),
+                 ('mkv'): ('default', None, 'subrip', 'webvtt', 'ass', 'ssa',
+                           'srt', 'copy', 'No Subtitles'),
+                 ('webm'): ('default', None, None, 'webvtt', None, None, None,
+                            'copy', 'No Subtitles'),
+                 }
 
     def __init__(self, parent, opt):
         """
@@ -55,23 +78,40 @@ class Miscellaneous(wx.Panel):
             self.labinfo.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
             self.labinfo.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-
-        sizerbase.Add((0, 15), 0)
+        self.rdb_s = wx.RadioBox(self, wx.ID_ANY,
+                                 (_("Subtitle Encoder")), size=(-1, -1),
+                                 choices=list(Miscellaneous.SCODECS.keys()),
+                                 majorDimension=0, style=wx.RA_SPECIFY_COLS
+                                 )
+        for n, v in enumerate(Miscellaneous.S_FORMATS["mkv"]):
+            if not v:  # disable only not compatible with mkv
+                self.rdb_s.EnableItem(n, enable=False)
+        sizerbase.Add(self.rdb_s, 0, wx.ALL | wx.CENTRE, 5)
+        line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=(-1, -1), style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        sizerbase.Add(line1, 0, wx.ALL | wx.EXPAND, 15)
         gridsub = wx.BoxSizer(wx.HORIZONTAL)
         sizerbase.Add(gridsub, 0, wx.ALL | wx.CENTRE, 5)
-
         msg = _('Subtitle Mapping:')
         txtSubmap = wx.StaticText(self, wx.ID_ANY, (msg))
         gridsub.Add(txtSubmap, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.cmb_Submap = wx.ComboBox(self, wx.ID_ANY,
-                                      choices=[('None'),
-                                               ('All'),
+                                      choices=['All', '1', '2', '3', '4',
+                                               '5', '6', '7', '8',
                                                ],
                                       size=(120, -1), style=wx.CB_DROPDOWN
                                       | wx.CB_READONLY,
                                       )
         gridsub.Add(self.cmb_Submap, 0, wx.LEFT | wx.CENTRE, 5)
-
+        line2 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=(-1, -1), style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        sizerbase.Add(line2, 0, wx.ALL | wx.EXPAND, 15)
+        ######################
+        sizerbase.Add((0, 15), 0)
         boxmetad = wx.BoxSizer(wx.HORIZONTAL)
         sizerbase.Add(boxmetad, 0, wx.ALL | wx.CENTRE, 5)
         self.ckbx_chap = wx.CheckBox(self, wx.ID_ANY, (_('Copy Chapters')))
@@ -94,8 +134,9 @@ class Miscellaneous(wx.Panel):
                  'audio/video tags, titles, unique marks, and so on.'))
         self.ckbx_metad.SetToolTip(tip)
 
+        self.Bind(wx.EVT_RADIOBOX, self.on_sub_enc, self.rdb_s)
         self.Bind(wx.EVT_CHECKBOX, self.on_chapters, self.ckbx_chap)
-        self.Bind(wx.EVT_COMBOBOX, self.on_subtitles, self.cmb_Submap)
+        self.Bind(wx.EVT_COMBOBOX, self.on_sub_map, self.cmb_Submap)
         self.Bind(wx.EVT_CHECKBOX, self.on_metadata, self.ckbx_metad)
 
         self.default()
@@ -105,23 +146,107 @@ class Miscellaneous(wx.Panel):
         Reset all controls to default
         """
 
-        msg = _("Additional options")
+        msg = _("Subtitle encoder and mapping")
         self.labinfo.SetLabel(msg)
 
-        self.cmb_Submap.SetSelection(1), self.on_subtitles(None)
+        self.cmb_Submap.SetSelection(0), self.on_sub_map(None)
         self.ckbx_chap.SetValue(True), self.on_chapters(None)
         self.ckbx_metad.SetValue(True), self.on_metadata(None)
     # ------------------------------------------------------------------#
 
-    def on_subtitles(self, event):
+    def set_subt_radiobox(self):
+        """
+        Sets compatible subtitle codec
+        for the selected video format. See S_FORMATS dict.
+        This method is called changing video format (container)
+        """
+        if not self.opt["OutputFormat"]:  # Copy, enable all audio enc
+            for n in range(self.rdb_s.GetCount()):
+                self.rdb_s.EnableItem(n, enable=True)
+            self.cmb_Submap.Enable()
+            self.cmb_Submap.SetSelection(0)
+            self.rdb_s.SetSelection(0)
+            self.opt["SubtitleMap"] = '-map 0:s?'
+            self.opt["SubtitleEnc"] = ''
+            return
+
+        for n, v in enumerate(Miscellaneous.S_FORMATS[
+                self.opt["OutputFormat"]]):
+            if v:
+                self.rdb_s.EnableItem(n, enable=True)
+            else:
+                self.rdb_s.EnableItem(n, enable=False)
+
+        if self.opt["OutputFormat"] in ('mp4', 'm4v'):
+            self.cmb_Submap.SetSelection(0)
+            self.cmb_Submap.Disable()
+            self.opt["SubtitleMap"] = '-map 0:s?'
+            self.rdb_s.SetSelection(1)
+            subcodec = self.rdb_s.GetStringSelection()
+            codec = Miscellaneous.SCODECS[subcodec]
+            self.opt["SubtitleEnc"] = f'-c:s {codec}'
+
+        elif self.opt["OutputFormat"] == 'avi':
+            self.cmb_Submap.SetSelection(0)
+            self.cmb_Submap.Disable()
+            self.opt["SubtitleMap"] = ''
+            self.rdb_s.SetSelection(8)
+            self.opt["SubtitleEnc"] = '-sn'
+
+        else:
+            self.cmb_Submap.Enable()
+            self.cmb_Submap.SetSelection(0)
+            self.opt["SubtitleMap"] = '-map 0:s?'
+            self.rdb_s.SetSelection(0)
+            self.opt["SubtitleEnc"] = ''
+
+        return
+    # ------------------------------------------------------------------#
+
+    def on_sub_enc(self, event):
+        """
+        Event on subtitle radiobox control
+        """
+        subcodec = self.rdb_s.GetStringSelection()
+        if subcodec == 'No Subtitles':
+            self.opt["SubtitleEnc"] = '-sn'
+            self.opt["SubtitleMap"] = ''
+            self.cmb_Submap.Disable()
+            return
+        if subcodec == 'MOV_TEXT':
+            self.cmb_Submap.SetSelection(0)
+            self.cmb_Submap.Disable()
+            self.opt["SubtitleMap"] = '-map 0:s?'
+            return
+        if not self.cmb_Submap.IsEnabled():
+            self.cmb_Submap.Enable()
+
+        smap = self.cmb_Submap.GetValue()
+        if smap.isnumeric():
+            idx = f':{smap}'
+        else:
+            idx = ''
+
+        if subcodec == 'Auto':
+            self.opt["SubtitleEnc"] = ''
+        elif subcodec == 'Copy':
+            self.opt["SubtitleEnc"] = f'-c:s{idx} copy'
+        else:
+            codec = Miscellaneous.SCODECS[subcodec]
+            self.opt["SubtitleEnc"] = f'-c:s{idx} {codec}'
+    # ------------------------------------------------------------------#
+
+    def on_sub_map(self, event):
         """
         Event on combobox list for subtitles
         """
         smap = self.cmb_Submap.GetValue()
-        if smap == 'None':
-            self.opt["SubtitleMap"] = '-sn'
-        elif smap == 'All':
+        if smap == 'All':
             self.opt["SubtitleMap"] = '-map 0:s?'
+        else:
+            self.opt["SubtitleMap"] = f'-map 0:s:{smap}'
+
+        self.on_sub_enc(None)
     # ------------------------------------------------------------------#
 
     def on_chapters(self, event):
