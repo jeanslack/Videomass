@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 07 July 2025 v6.1.15
+Sat, 09 July 2025 v6.1.15
 
   * Fixed `ValueError: could not convert string to float:` in
     long_processing_task.py using latest FFmpeg versions.
@@ -17,6 +17,7 @@ Thu, 07 July 2025 v6.1.15
   * [AV/CONVERSIONS] Removed OGV format from drop list because obsolete.
   * [AV/CONVERSIONS] Added subtitle stream item in Batch Mode summary dialog
     for user confirmation.
+  * Updated command line and man page.
 
 +------------------------------------+
 Wed, 30 July 2025 v6.1.13
