@@ -149,7 +149,7 @@ class MediaStreams(wx.Dialog):
         self.subt_ctrl.InsertColumn(1, _('Values'), width=400)
 
         # set layout
-        self.SetTitle(_('Streams Properties'))
+        self.SetTitle(_('Source Stream Properties'))
         self.SetMinSize((700, 600))
         # self.file_select.SetMinSize((-1, 150))
         self.SetSizer(sizerBase)

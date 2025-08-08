@@ -66,8 +66,6 @@ class AudioEncoders(scrolled.ScrolledPanel):
                             'ogg', 'mp3', 'opus', 'copy', 'mute'),
                   ('webm'): ('default', None, None, None, None, None, 'ogg',
                              None, 'opus', 'copy', 'mute'),
-                  ('ogv'): ('default', None, 'flac', None, None, None, 'ogg',
-                            None, 'opus', 'copy', 'mute'),
                   ('wav'): (None, 'wav', None, None, None, None, None, None,
                             None, 'copy', None),
                   ('mp3'): (None, None, None, None, None, None, None, 'mp3',

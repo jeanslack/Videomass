@@ -71,13 +71,14 @@ class Miscellaneous(wx.Panel):
                           name="Miscellaneous panel",
                           )
         sizerbase = wx.BoxSizer(wx.VERTICAL)
-        self.labinfo = wx.StaticText(self, wx.ID_ANY, label="",
-                                     style=wx.ALIGN_CENTRE_HORIZONTAL)
-        sizerbase.Add(self.labinfo, 0, wx.EXPAND | wx.ALL, 2)
+        labsub = wx.StaticText(self, wx.ID_ANY, label="",
+                               style=wx.ALIGN_CENTRE_HORIZONTAL)
+        sizerbase.Add(labsub, 0, wx.EXPAND | wx.ALL, 2)
         if self.appdata['ostype'] == 'Darwin':
-            self.labinfo.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labsub.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
-            self.labinfo.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labsub.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+        labsub.SetLabel(_("Subtitle Properties"))
         self.rdb_s = wx.RadioBox(self, wx.ID_ANY,
                                  (_("Subtitle Encoder")), size=(-1, -1),
                                  choices=list(Miscellaneous.SCODECS.keys()),
@@ -94,12 +95,13 @@ class Miscellaneous(wx.Panel):
         sizerbase.Add(line1, 0, wx.ALL | wx.EXPAND, 15)
         gridsub = wx.BoxSizer(wx.HORIZONTAL)
         sizerbase.Add(gridsub, 0, wx.ALL | wx.CENTRE, 5)
-        msg = _('Subtitle Mapping:')
+        msg = _('Index Selection:')
         txtSubmap = wx.StaticText(self, wx.ID_ANY, (msg))
         gridsub.Add(txtSubmap, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.cmb_Submap = wx.ComboBox(self, wx.ID_ANY,
-                                      choices=['All', '1', '2', '3', '4',
-                                               '5', '6', '7', '8',
+                                      choices=['All', '1', '2', '3', '4', '5',
+                                               '6', '7', '8', '9', '10', '11',
+                                               '12', '13', '14', '15', '16',
                                                ],
                                       size=(120, -1), style=wx.CB_DROPDOWN
                                       | wx.CB_READONLY,
@@ -110,8 +112,15 @@ class Miscellaneous(wx.Panel):
                               name=wx.StaticLineNameStr
                               )
         sizerbase.Add(line2, 0, wx.ALL | wx.EXPAND, 15)
-        ######################
-        sizerbase.Add((0, 15), 0)
+        sizerbase.Add((0, 25), 0)
+        labdata = wx.StaticText(self, wx.ID_ANY, label="",
+                                style=wx.ALIGN_CENTRE_HORIZONTAL)
+        sizerbase.Add(labdata, 0, wx.EXPAND | wx.ALL, 2)
+        if self.appdata['ostype'] == 'Darwin':
+            labdata.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+        else:
+            labdata.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+        labdata.SetLabel(_("Chapters and Metadata"))
         boxmetad = wx.BoxSizer(wx.HORIZONTAL)
         sizerbase.Add(boxmetad, 0, wx.ALL | wx.CENTRE, 5)
         self.ckbx_chap = wx.CheckBox(self, wx.ID_ANY, (_('Copy Chapters')))
@@ -123,9 +132,10 @@ class Miscellaneous(wx.Panel):
         self.SetSizerAndFit(sizerbase)
 
         tip = (_('Select "All" to include any source file subtitles in the '
-                 'output video.\n\nSelect "None" to exclude any subtitles '
-                 'stream in the output video.\n\nThis option is '
-                 'automatically ignored for output audio files.'))
+                 'output video.\n\nAlternatively, when possible, you can '
+                 'index the desired subtitle stream and exclude all others.'
+                 '\n\nThis option is automatically ignored for output audio '
+                 'files.'))
         self.cmb_Submap.SetToolTip(tip)
         tip = (_('Copy the chapter markers as is from source file. This '
                  'option is automatically ignored for output audio files.'))
@@ -145,10 +155,6 @@ class Miscellaneous(wx.Panel):
         """
         Reset all controls to default
         """
-
-        msg = _("Subtitle encoder and mapping")
-        self.labinfo.SetLabel(msg)
-
         self.cmb_Submap.SetSelection(0), self.on_sub_map(None)
         self.ckbx_chap.SetValue(True), self.on_chapters(None)
         self.ckbx_metad.SetValue(True), self.on_metadata(None)
@@ -156,11 +162,19 @@ class Miscellaneous(wx.Panel):
 
     def set_subt_radiobox(self):
         """
-        Sets compatible subtitle codec
-        for the selected video format. See S_FORMATS dict.
-        This method is called changing video format (container)
+        Sets compatible subtitle codec for the selected video format.
+        See `S_FORMATS` dict on this class. This method is called
+        changing video format (container)
+        This method is called by av_conversion.py file only.
         """
-        if not self.opt["OutputFormat"]:  # Copy, enable all audio enc
+        if self.opt["Media"] == 'Audio':
+            self.rdb_s.Disable(), self.cmb_Submap.Disable(),
+            self.ckbx_chap.Disable(), self.ckbx_metad.Disable()
+            return
+        self.rdb_s.Enable(), self.cmb_Submap.Enable(),
+        self.ckbx_chap.Enable(), self.ckbx_metad.Enable()
+
+        if not self.opt["OutputFormat"]:  # in Copy, enable all audio enc
             for n in range(self.rdb_s.GetCount()):
                 self.rdb_s.EnableItem(n, enable=True)
             self.cmb_Submap.Enable()
@@ -168,6 +182,10 @@ class Miscellaneous(wx.Panel):
             self.rdb_s.SetSelection(0)
             self.opt["SubtitleMap"] = '-map 0:s?'
             self.opt["SubtitleEnc"] = ''
+            return
+
+        if not [k for k in Miscellaneous.S_FORMATS if
+                self.opt["OutputFormat"] == k]:
             return
 
         for n, v in enumerate(Miscellaneous.S_FORMATS[
@@ -192,7 +210,6 @@ class Miscellaneous(wx.Panel):
             self.opt["SubtitleMap"] = ''
             self.rdb_s.SetSelection(8)
             self.opt["SubtitleEnc"] = '-sn'
-
         else:
             self.cmb_Submap.Enable()
             self.cmb_Submap.SetSelection(0)

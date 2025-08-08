@@ -88,7 +88,7 @@ class AV_Conv(wx.Panel):
                 "SVT-AV1": {"-c:v libsvtav1": ["mkv", "webm"]},
                 "SVT-AV1 10-bit": {"-c:v libsvtav1": ["mkv", "webm"]},
                 "VP9": {"-c:v libvpx-vp9": ["webm", "mkv"]},
-                "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "m4v", "ogv",
+                "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "m4v",
                                        "webm", "Copy"]}
                 })
     # Namings in the audio format selection on Container combobox:
@@ -468,6 +468,7 @@ class AV_Conv(wx.Panel):
         self.vencoder_panel_set()
         self.audioenc.audio_default()
         self.audioenc.set_audio_radiobox(None)
+        self.miscfunc.set_subt_radiobox()
     # ------------------------------------------------------------------#
 
     def on_Media(self, event):
@@ -487,12 +488,14 @@ class AV_Conv(wx.Panel):
             self.opt["OutputFormat"] = self.cmb_cont.GetValue()
             self.vencoder_panel_set()
             self.audioenc.set_audio_radiobox(None)
+            self.miscfunc.set_subt_radiobox()
 
         elif self.cmb_Media.GetValue() == 'Video':
             self.opt["Media"] = 'Video'
             self.cmb_vencoder.Enable()
             self.cmb_vencoder.SetSelection(2)
             self.videoCodec(self)
+            self.miscfunc.set_subt_radiobox()
     # ------------------------------------------------------------------#
 
     def on_Container(self, event):
@@ -1204,11 +1207,20 @@ class AV_Conv(wx.Panel):
         else:
             dest = self.appdata['outputdir']
 
+        if self.opt["Media"] == 'Audio':
+            subtitles = _('Disabled')
+        elif not self.opt["SubtitleEnc"]:
+            subtitles = _('Auto')
+        elif self.opt["SubtitleEnc"] == '-sn':
+            subtitles = _('No Subtitles')
+        else:
+            subtitles = self.opt["SubtitleEnc"].split()[1]
+
         passes = '1' if kwa["args"][1] == '' else '2'
 
         keys = (_("Batch processing items\nDestination\nAutomation/Preset"
-                  "\nEncoding passes\nOutput Format"
-                  "\nVideo Codec\nAudio Codec\nAudio Normalization"
+                  "\nEncoding passes\nOutput Format\nVideo Codec"
+                  "\nSubtitle Stream\nAudio Codec\nAudio Normalization"
                   "\nOutput multimedia type\nStart of segment"
                   "\nClip duration"
                   ))
@@ -1218,6 +1230,7 @@ class AV_Conv(wx.Panel):
                 f'{passes}\n'
                 f'{outputformat}\n'
                 f'{self.opt["VidCmbxStr"]}\n'
+                f'{subtitles}\n'
                 f'{self.opt["AudioCodStr"]}\n'
                 f'{normalize}\n'
                 f'{self.opt["Media"]}\n'
