@@ -99,10 +99,10 @@ class Miscellaneous(wx.Panel):
         txtSubmap = wx.StaticText(self, wx.ID_ANY, (msg))
         gridsub.Add(txtSubmap, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.cmb_Submap = wx.ComboBox(self, wx.ID_ANY,
-                                      choices=['All', '1', '2', '3', '4', '5',
-                                               '6', '7', '8', '9', '10', '11',
-                                               '12', '13', '14', '15', '16',
-                                               ],
+                                      choices=['All', '1', '2', '3',
+                                               '4', '5', '6', '7', '8', '9',
+                                               '10', '11', '12', '13', '14',
+                                               '15', '16',],
                                       size=(120, -1), style=wx.CB_DROPDOWN
                                       | wx.CB_READONLY,
                                       )
@@ -128,17 +128,14 @@ class Miscellaneous(wx.Panel):
         msg = _('Copy Metadata')
         self.ckbx_metad = wx.CheckBox(self, wx.ID_ANY, (msg))
         boxmetad.Add(self.ckbx_metad, 0, wx.LEFT, 20)
-
         self.SetSizerAndFit(sizerbase)
-
-        tip = (_('Select "All" to include any source file subtitles in the '
-                 'output video.\n\nAlternatively, when possible, you can '
-                 'index the desired subtitle stream and exclude all others.'
-                 '\n\nThis option is automatically ignored for output audio '
-                 'files.'))
+        tip = (_('Select "All" to include any possible subtitle stream in the '
+                 'output video.\n\nSelect "1-16" to indexing the desired '
+                 'subtitle stream and exclude all others, e.g "1" for the '
+                 'first available subtitle stream, "2" for the second '
+                 'subtitle stream, and so on.'))
         self.cmb_Submap.SetToolTip(tip)
-        tip = (_('Copy the chapter markers as is from source file. This '
-                 'option is automatically ignored for output audio files.'))
+        tip = (_('Copy the chapter markers as is from source file.'))
         self.ckbx_chap.SetToolTip(tip)
         tip = (_('Copy all incoming metadata from source file, such as '
                  'audio/video tags, titles, unique marks, and so on.'))
@@ -169,10 +166,10 @@ class Miscellaneous(wx.Panel):
         """
         if self.opt["Media"] == 'Audio':
             self.rdb_s.Disable(), self.cmb_Submap.Disable(),
-            self.ckbx_chap.Disable(), self.ckbx_metad.Disable()
+            self.ckbx_chap.Disable()
             return
-        self.rdb_s.Enable(), self.cmb_Submap.Enable(),
-        self.ckbx_chap.Enable(), self.ckbx_metad.Enable()
+        self.rdb_s.Enable(), self.cmb_Submap.Enable()
+        self.ckbx_chap.Enable()
 
         if not self.opt["OutputFormat"]:  # in Copy, enable all audio enc
             for n in range(self.rdb_s.GetCount()):
@@ -239,8 +236,8 @@ class Miscellaneous(wx.Panel):
             self.cmb_Submap.Enable()
 
         smap = self.cmb_Submap.GetValue()
-        if smap.isnumeric():
-            idx = f':{smap}'
+        if smap.isdigit():
+            idx = f':{str(int(smap) - 1)}'
         else:
             idx = ''
 
@@ -261,7 +258,7 @@ class Miscellaneous(wx.Panel):
         if smap == 'All':
             self.opt["SubtitleMap"] = '-map 0:s?'
         else:
-            self.opt["SubtitleMap"] = f'-map 0:s:{smap}'
+            self.opt["SubtitleMap"] = f'-map 0:s:{str(int(smap) - 1)}'
 
         self.on_sub_enc(None)
     # ------------------------------------------------------------------#
