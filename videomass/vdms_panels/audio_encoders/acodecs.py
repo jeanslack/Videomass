@@ -147,9 +147,9 @@ class AudioEncoders(scrolled.ScrolledPanel):
         sizproper.Add(txtAinmap, 0, wx.LEFT | wx.CENTRE, 20)
         self.cmb_A_inMap = wx.ComboBox(self, wx.ID_ANY,
                                        choices=['Auto', '1', '2', '3',
-                                               '4', '5', '6', '7', '8', '9',
-                                               '10', '11', '12', '13', '14',
-                                               '15', '16',],
+                                                '4', '5', '6', '7', '8', '9',
+                                                '10', '11', '12', '13', '14',
+                                                '15', '16',],
                                        size=(-1, -1), style=wx.CB_DROPDOWN
                                        | wx.CB_READONLY,
                                        )

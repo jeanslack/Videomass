@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.20.2024
+Rev: Aug.13.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -34,6 +34,56 @@ from videomass.vdms_utils.utils import Popen
 from videomass.vdms_io.make_filelog import logwrite
 if not platform.system() == 'Windows':
     import shlex
+
+
+def get_raw_cmdline_args(**kwa):
+    """
+    Return a list of raw command lines
+    """
+    if kwa['type'] == 'One pass':
+        model = simple_one_pass(1, 1, **kwa)
+
+    elif kwa['type'] == 'Two pass EBU':
+        model = one_pass_ebu(1, 1, **kwa)
+
+    elif kwa['type'] == 'Two pass VIDSTAB':
+        model = one_pass_stab(1, 1, **kwa)
+
+    elif kwa['type'] == 'Two pass':
+        model = one_pass(1, 1, **kwa)
+    else:
+        return
+
+    spl1 = model['stamp1'].split('\n')
+    idx1 = spl1.index('[COMMAND]:') + 1
+    cmd1 = spl1[idx1]
+
+    if not kwa["args"][1]:
+        return (cmd1,)
+
+    if kwa["type"] == 'Two pass EBU':
+        filters = (f'{kwa["EBU"]}'
+                   f':measured_I=<?>'
+                   f':measured_LRA=<?>'
+                   f':measured_TP=<?>'
+                   f':measured_thresh=<?>'
+                   f':offset=<?>'
+                   f':linear=true:dual_mono=true'
+                    )
+        model = two_pass_ebu(1, 1, filters, **kwa)
+
+    elif kwa['type'] == 'Two pass VIDSTAB':
+        model = two_pass_stab(1, 1, **kwa)
+
+    elif kwa['type'] == 'Two pass':
+        model = two_pass(1, 1, **kwa)
+
+    spl2 = model['stamp2'].split('\n')
+    idx2 = spl2.index('[COMMAND]:') + 1
+    cmd2 = spl2[idx2]
+
+    return(cmd1, cmd2)
+# ----------------------------------------------------------------------
 
 
 def ffmpeg_cmd_args():

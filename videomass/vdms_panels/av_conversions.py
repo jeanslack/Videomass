@@ -43,6 +43,8 @@ from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_dialogs.filter_stab import VidstabSet
 from videomass.vdms_dialogs.filter_colorcorrection import ColorEQ
 from videomass.vdms_dialogs.singlechoicedlg import SingleChoice
+from videomass.vdms_dialogs.avconv_cmd_line import Raw_Cmd_Line
+from videomass.vdms_threads.ffmpeg import get_raw_cmdline_args
 from . video_encoders.video_no_enc import Video_No_Enc
 from . video_encoders.mpeg4 import Mpeg_4
 from . video_encoders.av1_aom import AV1_Aom
@@ -53,6 +55,8 @@ from . video_encoders.hevc_x265 import Hevc_X265
 from . video_encoders.video_encodercopy import Copy_Vcodec
 from . audio_encoders.acodecs import AudioEncoders
 from . miscellaneous.miscell import Miscellaneous
+
+
 
 
 class AV_Conv(wx.Panel):
@@ -178,9 +182,18 @@ class AV_Conv(wx.Panel):
                                     )
         sizer_convin.Add(self.cmb_cont, 0, wx.LEFT | wx.CENTRE, 5)
         self.btn_saveprst = wx.Button(self, wx.ID_ANY,
-                                      _("Save profile"), size=(-1, -1))
+                                      "", size=(40, -1))
         self.btn_saveprst.SetBitmap(bmpsaveprf, wx.LEFT)
         sizer_convin.Add(self.btn_saveprst, 0, wx.LEFT | wx.CENTRE, 20)
+
+
+        self.btn_cmd = wx.Button(self, wx.ID_ANY,
+                                 _("Cmd line"), size=(-1, -1))
+        #self.btn_saveprst.SetBitmap(bmpsaveprf, wx.LEFT)
+        sizer_convin.Add(self.btn_cmd, 0, wx.LEFT | wx.CENTRE, 20)
+
+
+
         msg = _("Target")
         box1 = wx.StaticBox(self, wx.ID_ANY, msg)
         box_convin = wx.StaticBoxSizer(box1, wx.HORIZONTAL)
@@ -375,6 +388,8 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_vfilters_clear, self.btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_audio_preview,
                   self.audioenc.btn_audio_preview)
+
+        self.Bind(wx.EVT_BUTTON, self.on_cmd_line, self.btn_cmd)
 
         #  initialize default layout:
         self.cmb_vencoder.SetSelection(2)
@@ -848,17 +863,18 @@ class AV_Conv(wx.Panel):
             else:
                 kwargs = self.video_std()
 
-        elif self.opt["Media"] == 'Audio':
+            return kwargs
 
-            if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
-                kwargs = self.audio_ebu()
-            else:
-                kwargs = self.audio_std()
+        # self.opt["Media"] == 'Audio':
+        if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
+            kwargs = self.audio_ebu()
+        else:
+            kwargs = self.audio_std()
 
         return kwargs
     # ------------------------------------------------------------------#
 
-    def check_options(self, index=None):
+    def check_options(self, index=None, checkexists=True):
         """
         Update entries and file check.
         """
@@ -878,14 +894,12 @@ class AV_Conv(wx.Panel):
 
         filecheck = check_files(infile,
                                 self.appdata['outputdir'],
-                                self.appdata['outputdir_asinput'],
-                                self.appdata['filesuffix'],
+                                self.appdata['outputdir_asinput'], self.appdata['filesuffix'],
                                 self.opt["OutputFormat"],
                                 outfilenames,
-                                )
+                                checkexists=checkexists)
         if not filecheck:  # User changing idea or not such files exist
             return None
-
         return filecheck
     # ------------------------------------------------------------------#
 
@@ -1074,6 +1088,8 @@ class AV_Conv(wx.Panel):
                       'volume': [vol[5] for vol in audnorm],
                       'preset name': 'A/V Conversions - Video standard',
                       }
+        else:
+            return None
         return kwargs
     # ------------------------------------------------------------------#
 
@@ -1240,6 +1256,46 @@ class AV_Conv(wx.Panel):
         return {'key': keys, 'val': vals}
     # ------------------------------------------------------------------#
 
+    def on_cmd_line(self, event):
+        """
+        Displays the raw command line for the user.
+        """
+        try:
+            index = self.parent.file_src.index(self.parent.filedropselected)
+        except ValueError:
+            wx.MessageBox(_("Have to select an item in the file list first"),
+                          'Videomass', wx.ICON_INFORMATION, self)
+            return None
+
+        check = self.check_options(index=index, checkexists=False)
+        if not check:
+            return None
+        f_src, f_dest = check[0][0], check[1][0]
+        kwargs = self.get_codec_args()
+        dur, ss, et = update_timeseq_duration(self.parent.time_seq,
+                                              self.parent.duration
+                                              )
+        kwargs['extension'] = self.opt["OutputFormat"]
+        kwargs['pre-input-1'], kwargs['pre-input-2'] = '', ''
+        kwargs['source'] = f_src
+        kwargs['destination'] = f_dest
+        kwargs["duration"] = dur[index]
+        kwargs['start-time'], kwargs['end-time'] = ss, et
+        if kwargs.get("volume"):
+            kwargs["volume"] = kwargs["volume"][index]
+        else:
+            kwargs["volume"] = ''
+
+        cmd = get_raw_cmdline_args(**kwargs)
+
+        displaycmd = Raw_Cmd_Line(self, *cmd)
+        displaycmd.ShowModal()
+
+        #print(cmd)
+        return None
+    # ------------------------------------------------------------------#
+
+
     def save_to_preset(self, presetname):
         """
         Save the current profile in the Preset Manager
@@ -1255,12 +1311,13 @@ class AV_Conv(wx.Panel):
             else:
                 kwargs = self.video_std()
 
-        elif self.cmb_Media.GetValue() == 'Audio':
+        else:  # self.cmb_Media.GetValue() == 'Audio'
             self.opt["CmdAudioParams"] = self.audioenc.audio_options()
             if self.opt["EBU"][0] == 'EBU R128 (High-Quality)':
                 kwargs = self.audio_ebu()
             else:
                 kwargs = self.audio_std()
+
         fname = os.path.basename(presetname)
         title = _('Write profile on «{0}»').format(fname)
         args = kwargs["args"][0], kwargs["args"][1], self.opt["OutputFormat"]

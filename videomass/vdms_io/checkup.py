@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: April.17.2023
+Rev: Aug.13.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -98,19 +98,16 @@ def check_inout(file_sources, file_dest):
 # ------------------------------------------------------------------------#
 
 
-def check_files(file_sources,
-                dir_destin,
-                same_destin,
-                suffix,
-                extout,
-                outputnames
-                ):
+def check_files(*args, checkexists=True):
     """
     Build the full path filename for output files.
     return ([file_sources], [file_dest])
     None otherwise.
 
     """
+    file_sources, dir_destin, same_destin = args[0], args[1], args[2]
+    suffix, extout, outputnames = args[3], args[4], args[5]
+
     if not file_sources:
         return None
 
@@ -137,4 +134,6 @@ def check_files(file_sources,
                 pathname = os.path.join(dir_destin, f'{fname}.{extout}')
                 file_dest.append(pathname)
 
-    return check_inout(file_sources, file_dest)
+    if checkexists:
+        return check_inout(file_sources, file_dest)
+    return (file_sources, file_dest)

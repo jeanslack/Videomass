@@ -1,6 +1,7 @@
 ../../gui_app.py
 ../../vdms_dialogs/about_dialog.py
 ../../vdms_dialogs/audioproperties.py
+../../vdms_dialogs/avconv_cmd_line.py
 ../../vdms_dialogs/epilogue.py
 ../../vdms_dialogs/ffmpeg_codecs.py
 ../../vdms_dialogs/ffmpeg_conf.py
