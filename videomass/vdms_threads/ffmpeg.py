@@ -52,7 +52,7 @@ def get_raw_cmdline_args(**kwa):
     elif kwa['type'] == 'Two pass':
         model = one_pass(1, 1, **kwa)
     else:
-        return
+        return None
 
     spl1 = model['stamp1'].split('\n')
     idx1 = spl1.index('[COMMAND]:') + 1
@@ -69,7 +69,7 @@ def get_raw_cmdline_args(**kwa):
                    f':measured_thresh=<?>'
                    f':offset=<?>'
                    f':linear=true:dual_mono=true'
-                    )
+                   )
         model = two_pass_ebu(1, 1, filters, **kwa)
 
     elif kwa['type'] == 'Two pass VIDSTAB':
@@ -82,7 +82,7 @@ def get_raw_cmdline_args(**kwa):
     idx2 = spl2.index('[COMMAND]:') + 1
     cmd2 = spl2[idx2]
 
-    return(cmd1, cmd2)
+    return cmd1, cmd2
 # ----------------------------------------------------------------------
 
 

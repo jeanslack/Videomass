@@ -57,8 +57,6 @@ from . audio_encoders.acodecs import AudioEncoders
 from . miscellaneous.miscell import Miscellaneous
 
 
-
-
 class AV_Conv(wx.Panel):
     """
     Panel GUI for audio and video conversions
@@ -121,6 +119,7 @@ class AV_Conv(wx.Panel):
             bmpstab = get_bmp(icons['stabilizer'], ((16, 16)))
             bmpsaveprf = get_bmp(icons['addtoprst'], ((16, 16)))
             bmpcoloreq = get_bmp(icons['coloreq'], ((16, 16)))
+            bmpcmd = get_bmp(icons['cmdshow'], ((16, 16)))
         else:
             bmpplay = wx.Bitmap(icons['preview'], wx.BITMAP_TYPE_ANY)
             self.bmpreset = wx.Bitmap(icons['clear'], wx.BITMAP_TYPE_ANY)
@@ -133,6 +132,7 @@ class AV_Conv(wx.Panel):
             bmpstab = wx.Bitmap(icons['stabilizer'], wx.BITMAP_TYPE_ANY)
             bmpsaveprf = wx.Bitmap(icons['addtoprst'], wx.BITMAP_TYPE_ANY)
             bmpcoloreq = wx.Bitmap(icons['coloreq'], wx.BITMAP_TYPE_ANY)
+            bmpcmd = wx.Bitmap(icons['cmdshow'], wx.BITMAP_TYPE_ANY)
 
         # Default keys:values dictionary definition in this class
         self.opt = {"Media": "Video", "VidCmbxStr": "H.264",
@@ -181,19 +181,12 @@ class AV_Conv(wx.Panel):
                                     | wx.CB_READONLY,
                                     )
         sizer_convin.Add(self.cmb_cont, 0, wx.LEFT | wx.CENTRE, 5)
-        self.btn_saveprst = wx.Button(self, wx.ID_ANY,
-                                      "", size=(40, -1))
+        self.btn_saveprst = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
         self.btn_saveprst.SetBitmap(bmpsaveprf, wx.LEFT)
         sizer_convin.Add(self.btn_saveprst, 0, wx.LEFT | wx.CENTRE, 20)
-
-
-        self.btn_cmd = wx.Button(self, wx.ID_ANY,
-                                 _("Cmd line"), size=(-1, -1))
-        #self.btn_saveprst.SetBitmap(bmpsaveprf, wx.LEFT)
+        self.btn_cmd = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
+        self.btn_cmd.SetBitmap(bmpcmd, wx.LEFT)
         sizer_convin.Add(self.btn_cmd, 0, wx.LEFT | wx.CENTRE, 20)
-
-
-
         msg = _("Target")
         box1 = wx.StaticBox(self, wx.ID_ANY, msg)
         box_convin = wx.StaticBoxSizer(box1, wx.HORIZONTAL)
@@ -336,6 +329,8 @@ class AV_Conv(wx.Panel):
         # ---------------------- Tooltips
         tip = _('Save as a new profile of the Presets Manager.')
         self.btn_saveprst.SetToolTip(tip)
+        tip = _('Display the raw command line output for each selected file.')
+        self.btn_cmd.SetToolTip(tip)
         tip = (_('Available video encoders. "Copy" means that the video '
                  'stream will not be re-encoded and will allow you (depending '
                  'on the encoder) to change the container, audio codec and a '
@@ -894,10 +889,12 @@ class AV_Conv(wx.Panel):
 
         filecheck = check_files(infile,
                                 self.appdata['outputdir'],
-                                self.appdata['outputdir_asinput'], self.appdata['filesuffix'],
+                                self.appdata['outputdir_asinput'],
+                                self.appdata['filesuffix'],
                                 self.opt["OutputFormat"],
                                 outfilenames,
-                                checkexists=checkexists)
+                                checkexists=checkexists,
+                                )
         if not filecheck:  # User changing idea or not such files exist
             return None
         return filecheck
@@ -1291,10 +1288,8 @@ class AV_Conv(wx.Panel):
         displaycmd = Raw_Cmd_Line(self, *cmd)
         displaycmd.ShowModal()
 
-        #print(cmd)
         return None
     # ------------------------------------------------------------------#
-
 
     def save_to_preset(self, presetname):
         """
