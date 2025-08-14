@@ -144,8 +144,8 @@ class Raw_Cmd_Line(wx.Dialog):
         event on button help
         """
         msg = (_("The raw command lines reflect the AV-Conversions interface\n"
-                 "settings and apply to the individual file selected.\n"
-                 "Please note that in the second pass text field, any <?>\n"
+                 "settings and apply to the individual file selected.\n\n"
+                 "Please note that in the second pass command, any <?>\n"
                  "markers highlighted in red should be replaced with the\n"
                  "values given by the output of the first command."))
         win = NormalTransientPopup(self,

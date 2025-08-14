@@ -20,7 +20,8 @@ Thu, 14 August 2025 v6.1.15
     for user confirmation.
   * Updated command line and man page.
   * Improved tool tips for stream indexing controls.
-  * Added button to display a new raw command line dialog.
+  * [AV/CONVERSIONS] New feature: Added button to display the raw command
+    line dialog.
   * Updated File_Catalog.txt .
   * Some code improvements and refactoring.
 

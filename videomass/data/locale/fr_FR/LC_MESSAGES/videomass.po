@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.14\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-30 15:28+0200\n"
+"POT-Creation-Date: 2025-08-14 16:16+0200\n"
 "PO-Revision-Date: 2024-08-18 00:59+0200\n"
 "Last-Translator: Phil Aug <philiaug@live.fr>\n"
 "Language: fr_FR\n"
@@ -44,6 +44,27 @@ msgstr "Le débit audio (bitrate) affecte la compression du fichier et donc la q
 
 msgid "Bit depth is the number of bits of information in each sample, and it directly corresponds to the resolution of each sample. Bit depth is only meaningful in reference to a PCM digital signal. Non-PCM formats, such as lossy compression formats, do not have associated bit depths."
 msgstr "La profondeur du bit est le nombre d'informations inclus dans chaque échantillon, elle correspond directement à la résolution de chaque échantillon.La profondeur du bit est uniquement significative en référence à un signal numérique PCM.Les formats non PCM, tels que les formats de compression avec perte, n'ont pas de profondeur de bits associée."
+
+msgid "First pass command"
+msgstr ""
+
+msgid "Second pass command"
+msgstr ""
+
+msgid "Videomass - Raw Command Line"
+msgstr ""
+
+msgid "Read me"
+msgstr "Lisez moi"
+
+msgid ""
+"The raw command lines reflect the AV-Conversions interface\n"
+"settings and apply to the individual file selected.\n"
+"\n"
+"Please note that in the second pass command, any <?>\n"
+"markers highlighted in red should be replaced with the\n"
+"values given by the output of the first command."
+msgstr ""
 
 msgid "When finished, once the operations have been completed successfully:"
 msgstr "Une fois les opérations terminées et effectuées avec succès :"
@@ -204,9 +225,6 @@ msgstr "Afficher les méthodes d'accélération HW disponibles"
 
 msgid "Show license"
 msgstr "Afficher la licence"
-
-msgid "Read me"
-msgstr "Lisez moi"
 
 msgid "Show configuration"
 msgstr "Afficher la configuration"
@@ -686,8 +704,8 @@ msgstr "Propriétés"
 msgid "Values"
 msgstr "Valeurs"
 
-msgid "Streams Properties"
-msgstr "Propriétés du Stream"
+msgid "Source Stream Properties"
+msgstr ""
 
 msgid "Unable to open the clipboard on Format tab"
 msgstr "Impossible d'ouvrir le Presse-papiers sous l'onglet Format"
@@ -1828,9 +1846,6 @@ msgstr "Média:"
 msgid "Container:"
 msgstr "Conteneur:"
 
-msgid "Save profile"
-msgstr "Enregistrer le profil"
-
 msgid "Target"
 msgstr "Cible"
 
@@ -1839,6 +1854,9 @@ msgstr "Divers"
 
 msgid "Save as a new profile of the Presets Manager."
 msgstr "Enregistrer ce nouveau profil dans le Gestionnaire de Jeux de Profils."
+
+msgid "Displays the raw command line corresponding to each selected file."
+msgstr ""
 
 msgid "Available video encoders. \"Copy\" means that the video stream will not be re-encoded and will allow you (depending on the encoder) to change the container, audio codec and a few other parameters."
 msgstr "Codecs vidéo disponibles.\"Copy\" indique que le flux vidéo ne sera pas ré-encodé et permet (selon l'encodeur) de modifier le container, le codec audio et quelques paramètres."
@@ -1907,6 +1925,12 @@ msgstr "Valeurs de volume non détectées!Cliquez sur le bouton \"Détecter le v
 msgid "Off"
 msgstr "Off"
 
+msgid "Auto"
+msgstr ""
+
+msgid "No Subtitles"
+msgstr ""
+
 msgid ""
 "Batch processing items\n"
 "Destination\n"
@@ -1914,22 +1938,13 @@ msgid ""
 "Encoding passes\n"
 "Output Format\n"
 "Video Codec\n"
+"Subtitle Stream\n"
 "Audio Codec\n"
 "Audio Normalization\n"
 "Output multimedia type\n"
 "Start of segment\n"
 "Clip duration"
 msgstr ""
-"Eléments en file d'attente\n"
-"Destination\n"
-"Automatisation/Réglage\n"
-"Format de Sortie\n"
-"Codec Vidéo\n"
-"Codec Audio\n"
-"Normalisation Audio\n"
-"Type Sortie Multimédia\n"
-"Début de segment\n"
-"Durée du clip"
 
 #, python-brace-format
 msgid "Write profile on «{0}»"
@@ -2649,26 +2664,18 @@ msgid "Limiter for the maximum peak level or the mean level (when switch to RMS)
 msgstr "Limiteur pour l'écrêtage maximum ou le niveau moyen (lors du passage en RMS) en dBFS. De -99,0 à +0,0 ; la valeur par défaut pour le niveau PEAK est -1,0 ; la valeur par défaut pour RMS est -20,0"
 
 msgid ""
-"Normally on a video with correctly indexed streams and having one or more audio streams, the first audio stream should be indexed at \"1\", the second at \"2\" and so on (the video stream on the other hand is always indexed at \"0\"). In this case it is recommended to select the desired stream by setting a specific index, e.g \"1\" for for the first available audio stream.\n"
+"\"Auto\", lets FFmpeg select the audio stream to process (usually the first audio stream). If the source file(s) is just an audio track, it's recommend to always set this control to \"Auto.\"\n"
 "\n"
-"Set this control to \"Auto\" if the source file is simply an audio track."
+"\"1-16\", if a video file contains more than one audio stream, you can select a specific one, e.g \"1\" for the first available audio stream, \"2\" for the second audio stream, and so on."
 msgstr ""
-"Normalement, sur une vidéo avec des flux correctement indexés et ayant un ou plusieurs flux audio, le premier flux audio doit être indexé à « 1 », le second à « 2 » et ainsi de suite (le flux vidéo en revanche est toujours indexé à « 0 »). Dans ce cas, il est recommandé de sélectionner le flux souhaité en définissant un index spécifique, par exemple « 1 » pour le premier flux audio disponible."
-" \n"
-"Réglez cette commande sur « Auto » si le fichier source est une unique piste audio."
 
 msgid ""
 "\"Auto\" keeps all audio streams and processes only the one selected by the \"Index Selection\" control.\n"
 "\n"
-"\"All\" processes all audio streams in a video with the properties of the one selected by the \"Index Selection\" control.\n"
+"\"All\" processes all audio streams with the properties of the one selected by the \"Index Selection\" control. Don't use \"All\" to export audio files from videos.\n"
 "\n"
-"\"Index Only\" processes only the audio stream selected by the \"Index Selection\" control and removes all others from the video"
+"\"Index Only\" processes only the audio stream selected by the \"Index Selection\" control and removes all others from the output video."
 msgstr ""
-"\"Auto » conserve tous les flux audio et ne traite que celui sélectionné par la commande « Sélection d'index ».\n"
-"\n"
-"\"Tous\"  traite tous les flux audio d'une vidéo avec les propriétés de celui sélectionné par la commande \"Sélection d'index\". \n"
-"\n"
-"\"Index Uniquement » traite uniquement le flux audio sélectionné par la commande « Sélection d'index » et supprime tous les autres de la vidéo"
 
 msgid "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -16.0"
 msgstr "Cible d'intensité volume intégrée dans LUFS.De -70,0 à -5,0, valeur par défaut -16.0"
@@ -2716,7 +2723,13 @@ msgstr ""
 msgid "You need to import at least one file"
 msgstr ""
 
-msgid "Subtitle Mapping:"
+msgid "Subtitle Properties"
+msgstr ""
+
+msgid "Subtitle Encoder"
+msgstr ""
+
+msgid "Chapters and Metadata"
 msgstr ""
 
 msgid "Copy Chapters"
@@ -2726,26 +2739,16 @@ msgid "Copy Metadata"
 msgstr "Copier les metadonnées"
 
 msgid ""
-"Select \"All\" to include any source file subtitles in the output video.\n"
+"Select \"All\" to include any possible subtitle stream in the output video.\n"
 "\n"
-"Select \"None\" to exclude any subtitles stream in the output video.\n"
-"\n"
-"This option is automatically ignored for output audio files."
+"Select \"1-16\" to indexing the desired subtitle stream and exclude all others, e.g \"1\" for the first available subtitle stream, \"2\" for the second subtitle stream, and so on."
 msgstr ""
-"Sélectionnez « Tout » pour inclure les sous-titres du fichier source dans la vidéo de sortie.\n"
-"\n"
-"Sélectionnez « Aucun » pour exclure tout flux de sous-titres dans la vidéo de sortie.\n"
-"\n"
-"Cette option est automatiquement ignorée pour les fichiers audio en sortie."
 
-msgid "Copy the chapter markers as is from source file. This option is automatically ignored for output audio files."
-msgstr "Copiez les marqueurs de chapitre à l'identique du fichier source. Cette option est automatiquement ignorée pour les fichiers de sortie audio."
+msgid "Copy the chapter markers as is from source file."
+msgstr ""
 
 msgid "Copy all incoming metadata from source file, such as audio/video tags, titles, unique marks, and so on."
 msgstr "Copiez toutes les métadonnées entrantes à partir du fichier source, telles que des balises audio / vidéo, les titres, des marques uniques, etc."
-
-msgid "Additional options"
-msgstr "Options supplémentaires"
 
 msgid "Reload"
 msgstr "Recharger"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 6.1.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-30 15:28+0200\n"
+"POT-Creation-Date: 2025-08-14 16:16+0200\n"
 "PO-Revision-Date: 2025-07-27 12:27+0300\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language: ru_RU\n"
@@ -42,6 +42,27 @@ msgstr "Битрейт звука влияет на сжатие файла и, 
 
 msgid "Bit depth is the number of bits of information in each sample, and it directly corresponds to the resolution of each sample. Bit depth is only meaningful in reference to a PCM digital signal. Non-PCM formats, such as lossy compression formats, do not have associated bit depths."
 msgstr "Битовая глубина - это количество бит информации в каждом образце, и она напрямую соответствует разрешению каждого образца. Битовая глубина имеет значение только в отношении цифрового сигнала PCM. Форматы без PCM, такие как форматы сжатия с потерями, не имеют связанной битовой глубины."
+
+msgid "First pass command"
+msgstr ""
+
+msgid "Second pass command"
+msgstr ""
+
+msgid "Videomass - Raw Command Line"
+msgstr ""
+
+msgid "Read me"
+msgstr "Прочти меня"
+
+msgid ""
+"The raw command lines reflect the AV-Conversions interface\n"
+"settings and apply to the individual file selected.\n"
+"\n"
+"Please note that in the second pass command, any <?>\n"
+"markers highlighted in red should be replaced with the\n"
+"values given by the output of the first command."
+msgstr ""
 
 msgid "When finished, once the operations have been completed successfully:"
 msgstr "По завершении, как только операции будут успешно завершены:"
@@ -202,9 +223,6 @@ msgstr "Показать доступные методы аппаратного 
 
 msgid "Show license"
 msgstr "Показать лицензию"
-
-msgid "Read me"
-msgstr "Прочти меня"
 
 msgid "Show configuration"
 msgstr "Показать конфигурацию"
@@ -687,8 +705,8 @@ msgstr "Характеристики"
 msgid "Values"
 msgstr "Значения"
 
-msgid "Streams Properties"
-msgstr "Свойства потоков"
+msgid "Source Stream Properties"
+msgstr ""
 
 msgid "Unable to open the clipboard on Format tab"
 msgstr "Не удается открыть буфер обмена на вкладке «Формат»"
@@ -1831,9 +1849,6 @@ msgstr "Медиа:"
 msgid "Container:"
 msgstr "Контейнер:"
 
-msgid "Save profile"
-msgstr "Сохранить профиль"
-
 msgid "Target"
 msgstr "Target"
 
@@ -1842,6 +1857,9 @@ msgstr "Разное"
 
 msgid "Save as a new profile of the Presets Manager."
 msgstr "Сохранить как новый профиль в Менеджере Пресетов."
+
+msgid "Displays the raw command line corresponding to each selected file."
+msgstr ""
 
 msgid "Available video encoders. \"Copy\" means that the video stream will not be re-encoded and will allow you (depending on the encoder) to change the container, audio codec and a few other parameters."
 msgstr "Доступные видеокодеры. «Copy» означает, что видеопоток не будет перекодироваться и позволит вам (в зависимости от кодировщика) изменить контейнер, аудиокодек и некоторые другие параметры."
@@ -1913,6 +1931,12 @@ msgstr "Не обнаружены значения громкости! Нажм�
 msgid "Off"
 msgstr "Выключено"
 
+msgid "Auto"
+msgstr ""
+
+msgid "No Subtitles"
+msgstr ""
+
 msgid ""
 "Batch processing items\n"
 "Destination\n"
@@ -1920,23 +1944,13 @@ msgid ""
 "Encoding passes\n"
 "Output Format\n"
 "Video Codec\n"
+"Subtitle Stream\n"
 "Audio Codec\n"
 "Audio Normalization\n"
 "Output multimedia type\n"
 "Start of segment\n"
 "Clip duration"
 msgstr ""
-"Пакетная обработка элементов\n"
-"Место назначения\n"
-"Автоматизация/Пресет\n"
-"Encoding passes\n"
-"Выходной формат\n"
-"Видео кодек\n"
-"Аудиокодек\n"
-"Нормализация звука\n"
-"Тип полученного мультимедиа\n"
-"Начало сегмента\n"
-"Продолжительность клипа"
 
 #, python-brace-format
 msgid "Write profile on «{0}»"
@@ -2673,27 +2687,18 @@ msgid "Limiter for the maximum peak level or the mean level (when switch to RMS)
 msgstr "Ограничитель максимального пикового уровня или среднего уровня (при переключении на RMS) в dBFS. От -99,0 до +0,0; по умолчанию для уровня PEAK -1,0; по умолчанию для RMS -20.0"
 
 msgid ""
-"Normally on a video with correctly indexed streams and having one or more audio streams, the first audio stream should be indexed at \"1\", the second at \"2\" and so on (the video stream on the other hand is always indexed at \"0\"). In this case it is recommended to select the desired stream by setting a specific index, e.g \"1\" for for the first available audio stream.\n"
+"\"Auto\", lets FFmpeg select the audio stream to process (usually the first audio stream). If the source file(s) is just an audio track, it's recommend to always set this control to \"Auto.\"\n"
 "\n"
-"Set this control to \"Auto\" if the source file is simply an audio track."
+"\"1-16\", if a video file contains more than one audio stream, you can select a specific one, e.g \"1\" for the first available audio stream, \"2\" for the second audio stream, and so on."
 msgstr ""
-"Обычно в видео с правильно проиндексированными потоками и наличии одного или нескольких аудиопотоков первый аудиопоток должен быть проиндексирован как «1», второй как «2» и т. д. (с другой стороны, видеопоток всегда индексируется как « 0\"). В этом случае рекомендуется выбрать нужный поток, установив определенный индекс, например «1» для первого доступного аудиопотока.\n"
-"\n"
-"Установите для этого элемента управления значение «Авто», если исходный файл представляет собой просто звуковую дорожку."
 
 msgid ""
 "\"Auto\" keeps all audio streams and processes only the one selected by the \"Index Selection\" control.\n"
 "\n"
-"\"All\" processes all audio streams in a video with the properties of the one selected by the \"Index Selection\" control.\n"
+"\"All\" processes all audio streams with the properties of the one selected by the \"Index Selection\" control. Don't use \"All\" to export audio files from videos.\n"
 "\n"
-"\"Index Only\" processes only the audio stream selected by the \"Index Selection\" control and removes all others from the video"
+"\"Index Only\" processes only the audio stream selected by the \"Index Selection\" control and removes all others from the output video."
 msgstr ""
-"«Авто» сохраняет все аудиопотоки и обрабатывает только тот, \n"
-"который выбран с помощью элемента управления «Выбор индекса».\n"
-"\n"
-"«All» обрабатывает все аудиопотоки в видео со свойствами того, который выбран с помощью элемента управления «Выбор индекса».\n"
-"\n"
-"«Индекс Only» обрабатывает только аудиопоток, выбранный с помощью элемента управления «Выбор индекса», и удаляет все остальные из видео"
 
 msgid "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -16.0"
 msgstr "Интегрированная цель громкости в LUFS. От -70,0 до -5,0, по умолчанию - -16,0"
@@ -2742,8 +2747,14 @@ msgstr ""
 msgid "You need to import at least one file"
 msgstr "Вам необходимо импортировать хотя бы один файл"
 
-msgid "Subtitle Mapping:"
-msgstr "Отображение субтитров:"
+msgid "Subtitle Properties"
+msgstr ""
+
+msgid "Subtitle Encoder"
+msgstr ""
+
+msgid "Chapters and Metadata"
+msgstr ""
 
 msgid "Copy Chapters"
 msgstr "Копировать Главы"
@@ -2752,26 +2763,16 @@ msgid "Copy Metadata"
 msgstr "Копировать Метаданные"
 
 msgid ""
-"Select \"All\" to include any source file subtitles in the output video.\n"
+"Select \"All\" to include any possible subtitle stream in the output video.\n"
 "\n"
-"Select \"None\" to exclude any subtitles stream in the output video.\n"
-"\n"
-"This option is automatically ignored for output audio files."
+"Select \"1-16\" to indexing the desired subtitle stream and exclude all others, e.g \"1\" for the first available subtitle stream, \"2\" for the second subtitle stream, and so on."
 msgstr ""
-"Выберите «Все», чтобы включить любые субтитры исходного файла в выходное видео.\n"
-"\n"
-"Выберите «Нет», чтобы исключить любой поток субтитров из выходного видео.\n"
-"\n"
-"Эта опция автоматически игнорируется для выходных аудиофайлов."
 
-msgid "Copy the chapter markers as is from source file. This option is automatically ignored for output audio files."
-msgstr "Скопируйте маркеры глав как есть из исходного файла. Эта опция автоматически игнорируется для выходных аудиофайлов."
+msgid "Copy the chapter markers as is from source file."
+msgstr ""
 
 msgid "Copy all incoming metadata from source file, such as audio/video tags, titles, unique marks, and so on."
 msgstr "Скопируйте все входящие метаданные из исходного файла, такие как теги аудио/видео, заголовки, уникальные метки и т. д."
-
-msgid "Additional options"
-msgstr "Дополнительные опции"
 
 msgid "Reload"
 msgstr "Перезагрузить"

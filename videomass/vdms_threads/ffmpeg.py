@@ -38,7 +38,7 @@ if not platform.system() == 'Windows':
 
 def get_raw_cmdline_args(**kwa):
     """
-    Return a list of raw command lines
+    Return a list of raw command lines.
     """
     if kwa['type'] == 'One pass':
         model = simple_one_pass(1, 1, **kwa)

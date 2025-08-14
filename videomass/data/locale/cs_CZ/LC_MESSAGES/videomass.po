@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-30 15:28+0200\n"
+"POT-Creation-Date: 2025-08-14 16:16+0200\n"
 "PO-Revision-Date: 2024-07-17 16:33+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cs_CZ\n"
@@ -38,6 +38,27 @@ msgid "The audio bitrate affects the file compression and thus the quality of li
 msgstr ""
 
 msgid "Bit depth is the number of bits of information in each sample, and it directly corresponds to the resolution of each sample. Bit depth is only meaningful in reference to a PCM digital signal. Non-PCM formats, such as lossy compression formats, do not have associated bit depths."
+msgstr ""
+
+msgid "First pass command"
+msgstr ""
+
+msgid "Second pass command"
+msgstr ""
+
+msgid "Videomass - Raw Command Line"
+msgstr ""
+
+msgid "Read me"
+msgstr ""
+
+msgid ""
+"The raw command lines reflect the AV-Conversions interface\n"
+"settings and apply to the individual file selected.\n"
+"\n"
+"Please note that in the second pass command, any <?>\n"
+"markers highlighted in red should be replaced with the\n"
+"values given by the output of the first command."
 msgstr ""
 
 msgid "When finished, once the operations have been completed successfully:"
@@ -187,9 +208,6 @@ msgid "Show available HW acceleration methods"
 msgstr ""
 
 msgid "Show license"
-msgstr ""
-
-msgid "Read me"
 msgstr ""
 
 msgid "Show configuration"
@@ -633,7 +651,7 @@ msgstr ""
 msgid "Values"
 msgstr ""
 
-msgid "Streams Properties"
+msgid "Source Stream Properties"
 msgstr ""
 
 msgid "Unable to open the clipboard on Format tab"
@@ -1658,9 +1676,6 @@ msgstr ""
 msgid "Container:"
 msgstr ""
 
-msgid "Save profile"
-msgstr ""
-
 msgid "Target"
 msgstr ""
 
@@ -1668,6 +1683,9 @@ msgid "Miscellaneous"
 msgstr ""
 
 msgid "Save as a new profile of the Presets Manager."
+msgstr ""
+
+msgid "Displays the raw command line corresponding to each selected file."
 msgstr ""
 
 msgid "Available video encoders. \"Copy\" means that the video stream will not be re-encoded and will allow you (depending on the encoder) to change the container, audio codec and a few other parameters."
@@ -1728,6 +1746,12 @@ msgstr ""
 msgid "Off"
 msgstr ""
 
+msgid "Auto"
+msgstr ""
+
+msgid "No Subtitles"
+msgstr ""
+
 msgid ""
 "Batch processing items\n"
 "Destination\n"
@@ -1735,6 +1759,7 @@ msgid ""
 "Encoding passes\n"
 "Output Format\n"
 "Video Codec\n"
+"Subtitle Stream\n"
 "Audio Codec\n"
 "Audio Normalization\n"
 "Output multimedia type\n"
@@ -2345,17 +2370,17 @@ msgid "Limiter for the maximum peak level or the mean level (when switch to RMS)
 msgstr ""
 
 msgid ""
-"Normally on a video with correctly indexed streams and having one or more audio streams, the first audio stream should be indexed at \"1\", the second at \"2\" and so on (the video stream on the other hand is always indexed at \"0\"). In this case it is recommended to select the desired stream by setting a specific index, e.g \"1\" for for the first available audio stream.\n"
+"\"Auto\", lets FFmpeg select the audio stream to process (usually the first audio stream). If the source file(s) is just an audio track, it's recommend to always set this control to \"Auto.\"\n"
 "\n"
-"Set this control to \"Auto\" if the source file is simply an audio track."
+"\"1-16\", if a video file contains more than one audio stream, you can select a specific one, e.g \"1\" for the first available audio stream, \"2\" for the second audio stream, and so on."
 msgstr ""
 
 msgid ""
 "\"Auto\" keeps all audio streams and processes only the one selected by the \"Index Selection\" control.\n"
 "\n"
-"\"All\" processes all audio streams in a video with the properties of the one selected by the \"Index Selection\" control.\n"
+"\"All\" processes all audio streams with the properties of the one selected by the \"Index Selection\" control. Don't use \"All\" to export audio files from videos.\n"
 "\n"
-"\"Index Only\" processes only the audio stream selected by the \"Index Selection\" control and removes all others from the video"
+"\"Index Only\" processes only the audio stream selected by the \"Index Selection\" control and removes all others from the output video."
 msgstr ""
 
 msgid "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -16.0"
@@ -2398,7 +2423,13 @@ msgstr ""
 msgid "You need to import at least one file"
 msgstr ""
 
-msgid "Subtitle Mapping:"
+msgid "Subtitle Properties"
+msgstr ""
+
+msgid "Subtitle Encoder"
+msgstr ""
+
+msgid "Chapters and Metadata"
 msgstr ""
 
 msgid "Copy Chapters"
@@ -2408,20 +2439,15 @@ msgid "Copy Metadata"
 msgstr ""
 
 msgid ""
-"Select \"All\" to include any source file subtitles in the output video.\n"
+"Select \"All\" to include any possible subtitle stream in the output video.\n"
 "\n"
-"Select \"None\" to exclude any subtitles stream in the output video.\n"
-"\n"
-"This option is automatically ignored for output audio files."
+"Select \"1-16\" to indexing the desired subtitle stream and exclude all others, e.g \"1\" for the first available subtitle stream, \"2\" for the second subtitle stream, and so on."
 msgstr ""
 
-msgid "Copy the chapter markers as is from source file. This option is automatically ignored for output audio files."
+msgid "Copy the chapter markers as is from source file."
 msgstr ""
 
 msgid "Copy all incoming metadata from source file, such as audio/video tags, titles, unique marks, and so on."
-msgstr ""
-
-msgid "Additional options"
 msgstr ""
 
 msgid "Reload"

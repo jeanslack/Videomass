@@ -329,7 +329,8 @@ class AV_Conv(wx.Panel):
         # ---------------------- Tooltips
         tip = _('Save as a new profile of the Presets Manager.')
         self.btn_saveprst.SetToolTip(tip)
-        tip = _('Display the raw command line output for each selected file.')
+        tip = _('Displays the raw command line corresponding to each '
+                'selected file.')
         self.btn_cmd.SetToolTip(tip)
         tip = (_('Available video encoders. "Copy" means that the video '
                  'stream will not be re-encoded and will allow you (depending '
@@ -1255,7 +1256,7 @@ class AV_Conv(wx.Panel):
 
     def on_cmd_line(self, event):
         """
-        Displays the raw command line for the user.
+        Displays the raw command line output.
         """
         try:
             index = self.parent.file_src.index(self.parent.filedropselected)
