@@ -133,10 +133,18 @@ class Raw_Cmd_Line(wx.Dialog):
         self.pass_2_cmd.SetDefaultStyle(wx.TextAttr(foregrnd))
         self.pass_2_cmd.AppendText(self.cmd2)  # command 2
 
-        occurs = [x.start() for x in re.finditer('<?>', self.cmd2)]
-        colorquest = wx.TextAttr(wx.RED)
-        for w in occurs:
-            self.pass_2_cmd.SetStyle(w - 2, w - 2 + len('<?>'), colorquest)
+        if '<?>' in self.cmd2:
+            red = wx.TextAttr(wx.RED)
+            # tmp, lengh, offset = self.cmd2.split('<?>'), 0, 0
+            # for word in tmp:
+            #     lengh += len(word)
+            #     if '<?>' in self.cmd2[lengh:]:
+            #         start = (lengh + offset)
+            #         self.pass_2_cmd.SetStyle(start, start + len('<?>'), red)
+            #     offset += 3
+            matches = [x.start() for x in re.finditer(r'\<\?\>', self.cmd2)]
+            for idx in matches:
+                self.pass_2_cmd.SetStyle(idx, idx + len('<?>'), red)
     # ---------------------Callbacks (event handler)--------------------#
 
     def on_help(self, event):
@@ -145,7 +153,7 @@ class Raw_Cmd_Line(wx.Dialog):
         """
         msg = (_("The raw command lines reflect the AV-Conversions interface\n"
                  "settings and apply to the individual file selected.\n\n"
-                 "Please note that in the second pass command, any <?>\n"
+                 "Please note that using EBU R128 (High-Quality), any <?>\n"
                  "markers highlighted in red should be replaced with the\n"
                  "values given by the output of the first command."))
         win = NormalTransientPopup(self,
