@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.18\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-15 12:31+0200\n"
+"POT-Creation-Date: 2025-08-18 12:21+0200\n"
 "PO-Revision-Date: 2024-07-03 18:48+0200\n"
 "Last-Translator: Samuel / http://littlesvr.ca/ostd/\n"
 "Language: pt_BR\n"
@@ -1904,7 +1904,7 @@ msgstr ""
 msgid "Save as a new profile of the Presets Manager."
 msgstr "Remova a predefinição selecionada do Gerenciador de Predefinições"
 
-msgid "Displays the raw command line corresponding to each selected file."
+msgid "Displays the raw command line for the selected file."
 msgstr ""
 
 #, fuzzy
