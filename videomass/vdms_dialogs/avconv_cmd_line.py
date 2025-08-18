@@ -34,19 +34,19 @@ class Raw_Cmd_Line(wx.Dialog):
     This class represents a modal dialog box
     to display output command lines.
     """
-    LGREEN = '#52ee7d'
-    BLACK = '#1f1f1f'
+    get = wx.GetApp()
+    APPDATA = get.appset
     PASS_1 = _("First pass command")
     PASS_2 = _("Second pass command")
+    LGREEN = '#52ee7d'
+    BLACK = '#1f1f1f'
     # ------------------------------------------------------------------
 
     def __init__(self, parent, *args):
         """
         `args` class tuple, contain from 0 to 1 items.
         """
-        get = wx.GetApp()
-        self.appdata = get.appset
-        self.color = self.appdata['colorscheme']
+        self.charsize = None
         self.cmd1 = ' '.join(args[0].split())
         self.cmd2 = ' '.join(args[1].split()) if len(args) > 1 else ''
 
@@ -110,18 +110,17 @@ class Raw_Cmd_Line(wx.Dialog):
         """
         Populate TextCtrls
         """
-        if self.appdata['ostype'] == 'Darwin':
-            self.pass_1_cmd.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,
-                                            wx.NORMAL, wx.NORMAL))
-            self.pass_2_cmd.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,
-                                            wx.NORMAL, wx.NORMAL))
+        if Raw_Cmd_Line.APPDATA['ostype'] == 'Darwin':
+            self.charsize = 12
         else:
-            self.pass_1_cmd.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
-                                            wx.NORMAL, wx.NORMAL))
-            self.pass_2_cmd.SetFont(wx.Font(10, wx.FONTFAMILY_TELETYPE,
-                                            wx.NORMAL, wx.NORMAL))
+            self.charsize = 10
+
+        self.pass_1_cmd.SetFont(wx.Font(self.charsize, wx.FONTFAMILY_TELETYPE,
+                                        wx.NORMAL, wx.NORMAL))
+        self.pass_2_cmd.SetFont(wx.Font(self.charsize, wx.FONTFAMILY_TELETYPE,
+                                        wx.NORMAL, wx.NORMAL))
         backgrnd = '#232424'  # DARK GREY
-        foregrnd = '#49eb49'  # LIGHT GREEN
+        foregrnd = '#cfcfc2'  # MATTE WHITE
 
         self.pass_1_cmd.SetBackgroundColour(backgrnd)
         self.pass_1_cmd.Clear()
@@ -133,18 +132,62 @@ class Raw_Cmd_Line(wx.Dialog):
         self.pass_2_cmd.SetDefaultStyle(wx.TextAttr(foregrnd))
         self.pass_2_cmd.AppendText(self.cmd2)  # command 2
 
-        if '<?>' in self.cmd2:
-            red = wx.TextAttr(wx.RED)
-            # tmp, lengh, offset = self.cmd2.split('<?>'), 0, 0
-            # for word in tmp:
-            #     lengh += len(word)
-            #     if '<?>' in self.cmd2[lengh:]:
-            #         start = (lengh + offset)
-            #         self.pass_2_cmd.SetStyle(start, start + len('<?>'), red)
-            #     offset += 3
-            matches = [x.start() for x in re.finditer(r'\<\?\>', self.cmd2)]
-            for idx in matches:
-                self.pass_2_cmd.SetStyle(idx, idx + len('<?>'), red)
+        self.code_highlight()
+    # --------------------------------------------------------------#
+
+    def code_highlight(self):
+        """
+        event on button help
+        """
+        bold = wx.Font(self.charsize,
+                       wx.FONTFAMILY_TELETYPE, wx.NORMAL, wx.BOLD)
+
+        colours = {'green': wx.TextAttr('#49eb49', font=bold),
+                   'blue': wx.TextAttr('#118db5', font=bold),
+                   'azure': wx.TextAttr('#8AB8E6', font=bold),
+                   'grey': wx.TextAttr('#7a7c7d', font=bold),
+                   'yellow': wx.TextAttr('#fdbc4b', font=bold),
+                   'violet': wx.TextAttr('#8e44ad', font=bold),
+                   'orange': wx.TextAttr('#f67400', font=bold),
+                   'red': wx.TextAttr(wx.RED, font=bold),
+                   'white': wx.TextAttr(wx.WHITE, font=bold),
+                   }
+        keyflags = {(' -map', ' -map_chapters ',
+                     ' -map_metadata ', ' verbose '): colours['azure'],
+                    (' -c:v', ' -c:a', ' -c:s', ' -an', ' -vn',
+                     ' -sn', ' -dn'): colours['orange'],
+                    (' -i ',): colours['white'],
+                    (' -filter:v', ' -filter:a', ' -vf'):
+                        colours['violet'],
+                    ('volume=', 'loudnorm=', 'eq=', 'vidstabdetect=',
+                     'vidstabtransform=', 'nlmeans=', 'hqdn3d=', 'w3fdif=',
+                     'yadif=', 'interlace=', 'transpose=', 'crop=', 'scale=',
+                     'setdar=', 'setsar=', 'unsharp=',
+                     ' info '): colours['green'],
+                    (' -pass ', '.mkv', '.mp4', '.webm', '.avi', '.m4v',
+                     '.ogg', 'matroska', 'null', 'NUL', '-f null', '.wav',
+                     '.mp3', '.ac3', '.flac', '.m4a', '.aac', '.opus',
+                     ' warning '): colours['yellow'],
+                    (' -aspect', ' -r', ' -movflags',
+                     ' debug '): colours['blue'],
+                    (' -y ', ' -stats ', ' -hide_banner ',
+                     ' -loglevel '): colours['grey'],
+                    (r'\<\?\>', ' error '): colours['red'],
+                    }
+        for key in keyflags:
+            for flag in key:
+                matches1 = re.finditer(flag, self.cmd1)  # iterator
+                matches2 = re.finditer(flag, self.cmd2)  # iterator
+
+                for idx in matches1:
+                    self.pass_1_cmd.SetStyle(idx.start(),
+                                             idx.end(),
+                                             keyflags.get(key))
+                for idx in matches2:
+                    self.pass_2_cmd.SetStyle(idx.start(),
+                                             idx.end(),
+                                             keyflags.get(key))
+
     # ---------------------Callbacks (event handler)--------------------#
 
     def on_help(self, event):
