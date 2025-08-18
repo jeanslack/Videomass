@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 14 August 2025 v6.1.15
+Mon, 18 August 2025 v6.1.15
 
   * Fixed `ValueError: could not convert string to float:` in
     long_processing_task.py using latest FFmpeg versions.
@@ -24,6 +24,7 @@ Thu, 14 August 2025 v6.1.15
     line dialog.
   * Updated File_Catalog.txt .
   * Some code improvements and refactoring.
+  * Fixed bug when playing files with path names containing more than one space.
 
 +------------------------------------+
 Wed, 30 July 2025 v6.1.13

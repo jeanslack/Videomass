@@ -86,15 +86,15 @@ class FilePlay(Thread):
 
         """
         # time.sleep(.5)
-        cmd = " ".join(f'"{self.appdata["ffplay_cmd"]}" '
-                       f'{self.appdata["ffplay-default-args"]} '
-                       f'{self.appdata["ffplay_loglev"]} '
-                       f'{self.autoexit} '
-                       f'{self.time_seq[0]} '
-                       f'-i "{self.filename}" '
-                       f'{self.time_seq[1]} '
-                       f'{self.param}'.split()
-                       )
+        cmd = (f'"{self.appdata["ffplay_cmd"]}" '
+               f'{self.appdata["ffplay-default-args"]} '
+               f'{self.appdata["ffplay_loglev"]} '
+               f'{self.autoexit} '
+               f'{self.time_seq[0]} '
+               f'-i "{self.filename}" '
+               f'{self.time_seq[1]} '
+               f'{self.param}'
+               )
         self.logwrite(cmd)
 
         if not platform.system() == 'Windows':

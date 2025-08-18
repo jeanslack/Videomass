@@ -47,8 +47,8 @@ class Raw_Cmd_Line(wx.Dialog):
         `args` class tuple, contain from 0 to 1 items.
         """
         self.charsize = None
-        self.cmd1 = ' '.join(args[0].split())
-        self.cmd2 = ' '.join(args[1].split()) if len(args) > 1 else ''
+        self.cmd1 = args[0]
+        self.cmd2 = args[1] if len(args) > 1 else ''
 
         wx.Dialog.__init__(self, parent, -1,
                            _("Videomass - Raw Command Line"),
@@ -164,10 +164,10 @@ class Raw_Cmd_Line(wx.Dialog):
                      'yadif=', 'interlace=', 'transpose=', 'crop=', 'scale=',
                      'setdar=', 'setsar=', 'unsharp=',
                      ' info '): colours['green'],
-                    (' -pass ', '.mkv', '.mp4', '.webm', '.avi', '.m4v',
-                     '.ogg', 'matroska', 'null', 'NUL', '-f null', '.wav',
-                     '.mp3', '.ac3', '.flac', '.m4a', '.aac', '.opus',
-                     ' warning '): colours['yellow'],
+                    (' -pass ', '.mkv', '.mp4', '.webm', '.avi',
+                     '.m4v', '.ogg', '.wav', '.mp3', '.ac3',
+                     '.flac', '.m4a', '.aac', '.opus', 'matroska',
+                     'null', 'NUL', '-f null', ' warning '): colours['yellow'],
                     (' -aspect', ' -r', ' -movflags',
                      ' debug '): colours['blue'],
                     (' -y ', ' -stats ', ' -hide_banner ',
