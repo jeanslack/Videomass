@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.07.2025
+Rev: Aug.20.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -120,11 +120,12 @@ class MainFrame(wx.Frame):
             tsfont = 'C\\:/Windows/Fonts/Arial.ttf'
         else:
             tsfont = 'Arial'
+        fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # adaptative
         # set command line for timestamp
         ptshms = r"%{pts\:hms}"
         self.cmdtimestamp = (
             f"drawtext=fontfile='{tsfont}':text='{ptshms}':fontcolor=White:"
-            f"shadowcolor=Black:shadowx=1:shadowy=1:fontsize=32:"
+            f"shadowcolor=Black:shadowx=1:shadowy=1:{fontsize}:"
             f"box=1:boxcolor=DeepPink:x=(w-tw)/2:y=h-(2*lh)")
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)

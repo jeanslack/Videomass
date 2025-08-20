@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 18 August 2025 v6.1.15
+Wed, 20 August 2025 v6.1.15
 
   * Fixed `ValueError: could not convert string to float:` in
     long_processing_task.py using latest FFmpeg versions.
@@ -25,6 +25,15 @@ Mon, 18 August 2025 v6.1.15
   * Updated File_Catalog.txt .
   * Some code improvements and refactoring.
   * Fixed bug when playing files with path names containing more than one space.
+  * [FILE LIST] Fixed `UnboundLocalError:` by LEFT clicking on "Size" column
+    headers using the latest FFmpeg versions (which changed unit names e.g.
+    Mibyte to Mbyte etc.)
+  * Using ffplay, the draw timestamp font size dependent on height of the video.
+  * [TIMELINE] New feature: added ability to display waveform (resolve #140
+    feature request).
+  * [TIMELINE] Improved GUI layout and usability.
+  * [TIMELINE] Fixed a bug in file import where the total duration in the
+    timeline would get stuck at 23.59.59.999.
 
 +------------------------------------+
 Wed, 30 July 2025 v6.1.13

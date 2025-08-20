@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2023
+Rev: Aug.20.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -41,8 +41,6 @@ class Set_Timestamp(wx.Dialog):
         """
         Attributes defined here
 
-            self.fontsize:
-                The font size to be used for drawing text.
             self.box:
                 Used to draw a box around text using the background color.
                 The value must be either 1 (enable) or 0 (disable).
@@ -65,8 +63,6 @@ class Set_Timestamp(wx.Dialog):
 
         items = tscurrent.split(':')
         for i in items:
-            if 'fontsize=' in i:
-                self.fontsize = i.split('=')[1]
             if 'box=' in i:
                 self.boxenabled = i.split('=')[1]
             if 'fontcolor=' in i:
@@ -82,21 +78,8 @@ class Set_Timestamp(wx.Dialog):
         sbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, ("")),
                                  wx.VERTICAL)
         sizer_base.Add(sbox, 1, wx.ALL | wx.EXPAND, 5)
-        grid1 = wx.FlexGridSizer(cols=2, rows=5, vgap=0, hgap=0)
+        grid1 = wx.FlexGridSizer(cols=2, rows=4, vgap=0, hgap=0)
         sbox.Add(grid1, 0)
-        stfont = wx.StaticText(self, label=_('Font Size'))
-        grid1.Add(stfont, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        size = ('16', '20', '28', '32', '40', '48', '56', '64')
-        self.cmbx_fontsize = wx.ComboBox(self, wx.ID_ANY,
-                                         choices=size,
-                                         size=(90, -1),
-                                         style=wx.CB_DROPDOWN
-                                         | wx.CB_READONLY,
-                                         )
-        fsize = self.cmbx_fontsize.FindString(self.fontsize,
-                                              caseSensitive=False)
-        self.cmbx_fontsize.SetSelection(fsize)
-        grid1.Add(self.cmbx_fontsize, 0, wx.ALL, 5)
         colours = [("Azure"),
                    ("DeepPink"),
                    ("ForestGreen"),
@@ -151,18 +134,12 @@ class Set_Timestamp(wx.Dialog):
         gridexit.Add(self.btn_ok, 1, wx.LEFT, 5)
         sizer_base.Add(gridexit, 0, wx.ALL | wx.EXPAND, 5)
 
-        self.cmbx_fontsize.SetSize(self.cmbx_fontcolor.GetSize())
-        # tooltips:
-        tip = _('The timestamp size does not auto-adjust to the video size, '
-                'you have to set the size here')
-        self.cmbx_fontsize.SetToolTip(tip)
         # final settings:
         self.SetTitle(_("Timestamp settings"))
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
         # ----------------------Binding (EVT)--------------------------#
-        self.Bind(wx.EVT_COMBOBOX, self.on_Fontsize, self.cmbx_fontsize)
         self.Bind(wx.EVT_CHECKBOX, self.on_Box, self.check_enablebox)
         self.Bind(wx.EVT_COMBOBOX, self.on_Fontcolor, self.cmbx_fontcolor)
         self.Bind(wx.EVT_COMBOBOX, self.on_Shadowcolor, self.cmbx_shadowcolor)
@@ -181,14 +158,6 @@ class Set_Timestamp(wx.Dialog):
             self.stboxcolor.Disable()
 
     # ----------------------Event handler (callback)----------------------#
-
-    def on_Fontsize(self, event):
-        """
-        Get font size str on combobox
-
-        """
-        self.fontsize = self.cmbx_fontsize.GetStringSelection()
-    # ------------------------------------------------------------------#
 
     def on_Box(self, event):
         """
@@ -254,11 +223,12 @@ class Set_Timestamp(wx.Dialog):
             tsfont = 'C\\:/Windows/Fonts/Arial.ttf'
         else:
             tsfont = 'Arial'
+        fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # adaptative
 
         timestamp = (
             f"drawtext=fontfile='{tsfont}':text='{ptshms}':"
             f"fontcolor={self.fontcolor}:shadowcolor={self.shadowcolor}:"
-            f"shadowx=1:shadowy=1:fontsize={self.fontsize}:"
+            f"shadowx=1:shadowy=1:{fontsize}:"
             f"box={self.boxenabled}:boxcolor={self.boxcolor}:"
             f"x=(w-tw)/2:y=h-(2*lh)")
 

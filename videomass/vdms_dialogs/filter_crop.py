@@ -364,7 +364,7 @@ class Crop(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.btn_color.Bind(csel.EVT_COLOURSELECT, self.bob.oncolor)
-        # self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+
         pub.subscribe(self.to_real_scale_coords, "TO_REAL_SCALE")
 
         if not self.mills:
