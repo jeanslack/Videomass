@@ -408,6 +408,7 @@ class Float_TL(wx.MiniFrame):
                     tstamp,
                     self.parent.autoexit,
                     )
+
     # ----------------------------------------------------------------------
 
     def on_load_waveform(self, event):

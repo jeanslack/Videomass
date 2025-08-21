@@ -53,7 +53,7 @@ def stream_play(filepath, timeseq, param, autoexit):
             # thread.join() > attende fine thread, se no ritorna subito
             # error = thread.data
     except IOError:
-        wx.MessageBox(_("File does not exist or is invalid:  %s") % (
+        wx.MessageBox(_("Invalid or unsupported file:  %s") % (
             filepath), "Videomass", wx.ICON_EXCLAMATION, None)
 # -----------------------------------------------------------------------#
 

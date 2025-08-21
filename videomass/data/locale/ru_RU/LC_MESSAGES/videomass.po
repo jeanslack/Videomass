@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 6.1.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-18 12:21+0200\n"
+"POT-Creation-Date: 2025-08-21 14:55+0200\n"
 "PO-Revision-Date: 2025-07-27 12:27+0300\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language: ru_RU\n"
@@ -989,9 +989,6 @@ msgstr ""
 msgid "# will be replaced by ascending numbers starting with:"
 msgstr "# будут заменены возрастающими числами, начинающимися с:"
 
-msgid "Font Size"
-msgstr "Размер шрифта"
-
 msgid "Font Color"
 msgstr "Цвет шрифта"
 
@@ -1005,9 +1002,6 @@ msgstr "Показать текстовое поле"
 # Field color
 msgid "Box Color"
 msgstr "Цвет поля"
-
-msgid "The timestamp size does not auto-adjust to the video size, you have to set the size here"
-msgstr "Размер шкалы времени воспроизведения не подстраивается автоматически под размер видео, вы должны установить размер здесь"
 
 # непонятная timestamp
 msgid "Timestamp settings"
@@ -1328,8 +1322,8 @@ msgid "File(s) not found"
 msgstr "Файл(ы) не найден"
 
 #, python-format
-msgid "File does not exist or is invalid:  %s"
-msgstr "Файл не существует или недействителен:  %s"
+msgid "Invalid or unsupported file:  %s"
+msgstr ""
 
 msgid ""
 "Wait....\n"
@@ -1790,6 +1784,9 @@ msgstr "Миллисекунды"
 msgid "No source duration:"
 msgstr "Нет длительности источника:"
 
+msgid "Wave"
+msgstr ""
+
 #, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr "{0} {1}  |  Продолжительность сегмента: {2}"
@@ -1800,48 +1797,66 @@ msgstr "Регулировка \"Конец\""
 msgid "Start adjustment"
 msgstr "Регулировка \"Начало\""
 
+msgid "Toggles the display of the audio waveform in the background ruler"
+msgstr ""
+
+msgid "Reset segment on timeline"
+msgstr ""
+
+msgid "Timeline Editor Usage"
+msgstr "Использование редактора Timeline"
+
+msgid "Play segment"
+msgstr ""
+
+msgid "Invalid file format for playback."
+msgstr ""
+
+msgid "No segment selected in the timeline yet."
+msgstr ""
+
+msgid ""
+"Invalid segment selection!\n"
+"«End» cursor must be moved to the right side of the «Start» cursor."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"The selected source file does not contain any audio streams:\n"
+"\"{}\""
+msgstr ""
+
+msgid ""
+"The timeline editor allows you to trim slices of time on selected imported media.\n"
+"The \"time format\" used to report durations is expressed in hours, minutes, seconds\n"
+"and milliseconds (HH:MM:SS.ms).\n"
+"\n"
+"Note that importing new files, making new selection, deselection, deleting items,\n"
+"sorting items, will reset any previous settings to default values.\n"
+"\n"
+"If no source file has been imported into Videomass, the overall duration values will\n"
+"be set to the maximum allowed duration (default is 23:59:59.999).\n"
+"\n"
+"The \"Start\"/\"End\" duration values always refer to the initial position of the timeline.\n"
+"Additional setup information and warnings are shown on the timeline status bar."
+msgstr ""
+
 msgid "Source duration:"
 msgstr "Длительность источника:"
 
-msgid "WARNING: Invalid selection, out of range."
-msgstr "WARNING: Неверный выбор, вне допустимого диапазона."
+msgid "WARNING: Invalid segment selection, out of range."
+msgstr ""
 
 msgid ""
-"Start by dragging the bottom left handle,\n"
-"or right-click for options."
+"Start by dragging the handles in the left corners or\n"
+"click the Start/End adjustment buttons for fine tuning."
 msgstr ""
-"Начните с перетаскивания нижнего левого маркера \n"
-"или щелкните правой кнопкой мыши для выбора параметров."
 
 msgid "Start"
 msgstr "Начало"
 
 msgid "End"
 msgstr "Конец"
-
-msgid ""
-"The timeline editor is a tool that allows you to trim slices of time on selected imported media (see File List panel).\n"
-"\n"
-"The \"time format\" used to report durations is expressed in hours, minutes, seconds and milliseconds (HH:MM:SS.ms).\n"
-"\n"
-"Note that importing new files, making new selection, deselection, deleting items, sorting items (ie by LEFT clicking on the column headers), will reset any previous settings to default values.\n"
-"\n"
-"If the File List panel is empty or no source files are selected, the overall duration values will be set to 23:59:59.999, rather than the duration of a selected source file (see status bar messages).\n"
-"\n"
-"The \"Start\"/\"End\" duration values always refer to the initial position of the timeline: 00:00:00.000. For other informations as the segment duration and warnings, please refer to the status bar messages."
-msgstr ""
-"Редактор timeline — это инструмент, который позволяет обрезать фрагменты времени на выбранных импортированных медиафайлах (см. панель «Список файлов»).\n"
-"\n"
-"«Формат времени», используемый для сообщения о продолжительности, выражается в часах, минутах, секундах и миллисекундах (ЧЧ:ММ:СС.мс).\n"
-"\n"
-"Обратите внимание, что импорт новых файлов, новый выбор, отмена выбора, удаление элементов, сортировка элементов (т. е. нажатием левой кнопки мыши на заголовках столбцов) приведет к сбросу всех предыдущих настроек к значениям по умолчанию.\n"
-"\n"
-"Если панель «Список файлов» пуста или исходные файлы не выбраны, общие значения продолжительности будут установлены на 23:59:59,999, а не на продолжительность выбранного исходного файла (см. сообщения в строке состояния).\n"
-"\n"
-"Значения длительности «Начало» и «Конец» всегда относятся к начальному положению timeline: 00:00:00.000. Дополнительную информацию, такую ​​как продолжительность сегмента и предупреждения, можно найти в сообщениях строки состояния."
-
-msgid "Timeline Editor Usage"
-msgstr "Использование редактора Timeline"
 
 msgid "Media:"
 msgstr "Медиа:"
@@ -1912,8 +1927,8 @@ msgstr "Stabilize"
 msgid "Equalize"
 msgstr "Цветокоррекция"
 
-msgid "Unable to preview Video Stabilizer filter"
-msgstr "Невозможно просмотреть Stabilizer видеофильтр"
+msgid "To preview Stabilize filter, please click Preview button on Video Stabilizer Tool"
+msgstr ""
 
 msgid ""
 "Unsupported file:\n"

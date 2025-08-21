@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-18 12:21+0200\n"
+"POT-Creation-Date: 2025-08-21 14:55+0200\n"
 "PO-Revision-Date: 2024-07-17 16:34+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar_SA\n"
@@ -906,9 +906,6 @@ msgstr ""
 msgid "# will be replaced by ascending numbers starting with:"
 msgstr ""
 
-msgid "Font Size"
-msgstr ""
-
 msgid "Font Color"
 msgstr ""
 
@@ -919,9 +916,6 @@ msgid "Show text box"
 msgstr ""
 
 msgid "Box Color"
-msgstr ""
-
-msgid "The timestamp size does not auto-adjust to the video size, you have to set the size here"
 msgstr ""
 
 msgid "Timestamp settings"
@@ -1191,7 +1185,7 @@ msgid "File(s) not found"
 msgstr ""
 
 #, python-format
-msgid "File does not exist or is invalid:  %s"
+msgid "Invalid or unsupported file:  %s"
 msgstr ""
 
 msgid ""
@@ -1628,6 +1622,9 @@ msgstr ""
 msgid "No source duration:"
 msgstr ""
 
+msgid "Wave"
+msgstr ""
+
 #, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr ""
@@ -1638,36 +1635,65 @@ msgstr ""
 msgid "Start adjustment"
 msgstr ""
 
-msgid "Source duration:"
+msgid "Toggles the display of the audio waveform in the background ruler"
 msgstr ""
 
-msgid "WARNING: Invalid selection, out of range."
+msgid "Reset segment on timeline"
+msgstr ""
+
+msgid "Timeline Editor Usage"
+msgstr ""
+
+msgid "Play segment"
+msgstr ""
+
+msgid "Invalid file format for playback."
+msgstr ""
+
+msgid "No segment selected in the timeline yet."
 msgstr ""
 
 msgid ""
-"Start by dragging the bottom left handle,\n"
-"or right-click for options."
+"Invalid segment selection!\n"
+"«End» cursor must be moved to the right side of the «Start» cursor."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"The selected source file does not contain any audio streams:\n"
+"\"{}\""
+msgstr ""
+
+msgid ""
+"The timeline editor allows you to trim slices of time on selected imported media.\n"
+"The \"time format\" used to report durations is expressed in hours, minutes, seconds\n"
+"and milliseconds (HH:MM:SS.ms).\n"
+"\n"
+"Note that importing new files, making new selection, deselection, deleting items,\n"
+"sorting items, will reset any previous settings to default values.\n"
+"\n"
+"If no source file has been imported into Videomass, the overall duration values will\n"
+"be set to the maximum allowed duration (default is 23:59:59.999).\n"
+"\n"
+"The \"Start\"/\"End\" duration values always refer to the initial position of the timeline.\n"
+"Additional setup information and warnings are shown on the timeline status bar."
+msgstr ""
+
+msgid "Source duration:"
+msgstr ""
+
+msgid "WARNING: Invalid segment selection, out of range."
+msgstr ""
+
+msgid ""
+"Start by dragging the handles in the left corners or\n"
+"click the Start/End adjustment buttons for fine tuning."
 msgstr ""
 
 msgid "Start"
 msgstr ""
 
 msgid "End"
-msgstr ""
-
-msgid ""
-"The timeline editor is a tool that allows you to trim slices of time on selected imported media (see File List panel).\n"
-"\n"
-"The \"time format\" used to report durations is expressed in hours, minutes, seconds and milliseconds (HH:MM:SS.ms).\n"
-"\n"
-"Note that importing new files, making new selection, deselection, deleting items, sorting items (ie by LEFT clicking on the column headers), will reset any previous settings to default values.\n"
-"\n"
-"If the File List panel is empty or no source files are selected, the overall duration values will be set to 23:59:59.999, rather than the duration of a selected source file (see status bar messages).\n"
-"\n"
-"The \"Start\"/\"End\" duration values always refer to the initial position of the timeline: 00:00:00.000. For other informations as the segment duration and warnings, please refer to the status bar messages."
-msgstr ""
-
-msgid "Timeline Editor Usage"
 msgstr ""
 
 msgid "Media:"
@@ -1729,7 +1755,7 @@ msgstr ""
 msgid "Equalize"
 msgstr ""
 
-msgid "Unable to preview Video Stabilizer filter"
+msgid "To preview Stabilize filter, please click Preview button on Video Stabilizer Tool"
 msgstr ""
 
 msgid ""

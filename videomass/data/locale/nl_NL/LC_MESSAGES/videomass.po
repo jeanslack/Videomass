@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.18\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-18 12:21+0200\n"
+"POT-Creation-Date: 2025-08-21 14:55+0200\n"
 "PO-Revision-Date: 2024-07-03 18:48+0200\n"
 "Last-Translator: johannesdedoper <https://github.com/johannesdedoper>\n"
 "Language: nl_NL\n"
@@ -1022,9 +1022,6 @@ msgstr ""
 msgid "# will be replaced by ascending numbers starting with:"
 msgstr ""
 
-msgid "Font Size"
-msgstr "Lettertype grootte"
-
 msgid "Font Color"
 msgstr "Lettertype kleur"
 
@@ -1036,9 +1033,6 @@ msgstr "Toon tekstkader"
 
 msgid "Box Color"
 msgstr "Kader kleur"
-
-msgid "The timestamp size does not auto-adjust to the video size, you have to set the size here"
-msgstr "De tijdcode-grootte past zich niet automatisch aan bij de video-grootte, u moet het hier instellen"
 
 msgid "Timestamp settings"
 msgstr "Tijdcode instellingen"
@@ -1361,8 +1355,8 @@ msgid "File(s) not found"
 msgstr "Niet gevonden"
 
 #, python-format
-msgid "File does not exist or is invalid:  %s"
-msgstr "Bestand bestaat niet of is ongeldig:  %s"
+msgid "Invalid or unsupported file:  %s"
+msgstr ""
 
 msgid ""
 "Wait....\n"
@@ -1857,6 +1851,9 @@ msgstr ""
 msgid "No source duration:"
 msgstr ""
 
+msgid "Wave"
+msgstr ""
+
 #, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr ""
@@ -1868,16 +1865,61 @@ msgstr ""
 msgid "Start adjustment"
 msgstr "Start"
 
+msgid "Toggles the display of the audio waveform in the background ruler"
+msgstr ""
+
+msgid "Reset segment on timeline"
+msgstr ""
+
+#, fuzzy
+msgid "Timeline Editor Usage"
+msgstr "Toon tijdslijn\tCtrl+T"
+
+msgid "Play segment"
+msgstr ""
+
+msgid "Invalid file format for playback."
+msgstr ""
+
+msgid "No segment selected in the timeline yet."
+msgstr ""
+
+msgid ""
+"Invalid segment selection!\n"
+"«End» cursor must be moved to the right side of the «Start» cursor."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"The selected source file does not contain any audio streams:\n"
+"\"{}\""
+msgstr ""
+
+msgid ""
+"The timeline editor allows you to trim slices of time on selected imported media.\n"
+"The \"time format\" used to report durations is expressed in hours, minutes, seconds\n"
+"and milliseconds (HH:MM:SS.ms).\n"
+"\n"
+"Note that importing new files, making new selection, deselection, deleting items,\n"
+"sorting items, will reset any previous settings to default values.\n"
+"\n"
+"If no source file has been imported into Videomass, the overall duration values will\n"
+"be set to the maximum allowed duration (default is 23:59:59.999).\n"
+"\n"
+"The \"Start\"/\"End\" duration values always refer to the initial position of the timeline.\n"
+"Additional setup information and warnings are shown on the timeline status bar."
+msgstr ""
+
 #, fuzzy
 msgid "Source duration:"
 msgstr "Duur:"
 
-msgid "WARNING: Invalid selection, out of range."
+msgid "WARNING: Invalid segment selection, out of range."
 msgstr ""
 
 msgid ""
-"Start by dragging the bottom left handle,\n"
-"or right-click for options."
+"Start by dragging the handles in the left corners or\n"
+"click the Start/End adjustment buttons for fine tuning."
 msgstr ""
 
 #, fuzzy
@@ -1887,22 +1929,6 @@ msgstr "Start"
 #, fuzzy
 msgid "End"
 msgstr "Geactiveerd"
-
-msgid ""
-"The timeline editor is a tool that allows you to trim slices of time on selected imported media (see File List panel).\n"
-"\n"
-"The \"time format\" used to report durations is expressed in hours, minutes, seconds and milliseconds (HH:MM:SS.ms).\n"
-"\n"
-"Note that importing new files, making new selection, deselection, deleting items, sorting items (ie by LEFT clicking on the column headers), will reset any previous settings to default values.\n"
-"\n"
-"If the File List panel is empty or no source files are selected, the overall duration values will be set to 23:59:59.999, rather than the duration of a selected source file (see status bar messages).\n"
-"\n"
-"The \"Start\"/\"End\" duration values always refer to the initial position of the timeline: 00:00:00.000. For other informations as the segment duration and warnings, please refer to the status bar messages."
-msgstr ""
-
-#, fuzzy
-msgid "Timeline Editor Usage"
-msgstr "Toon tijdslijn\tCtrl+T"
 
 msgid "Media:"
 msgstr "Media:"
@@ -1973,8 +1999,8 @@ msgstr "Stabilisatie filter"
 msgid "Equalize"
 msgstr ""
 
-msgid "Unable to preview Video Stabilizer filter"
-msgstr "Geen preview van Video Stabilisatie filter mogelijk"
+msgid "To preview Stabilize filter, please click Preview button on Video Stabilizer Tool"
+msgstr ""
 
 msgid ""
 "Unsupported file:\n"
