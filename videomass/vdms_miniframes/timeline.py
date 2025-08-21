@@ -382,15 +382,19 @@ class Float_TL(wx.MiniFrame):
         if not self.file_selection():
             return
 
-        if (self.sourcedur == _('No source duration:')
-                or self.parent.time_seq == ""):
-            wx.MessageBox(_('File not playable or no timeline set yet.'),
+        if self.sourcedur == _('No source duration:'):
+            wx.MessageBox(_('Invalid file format for playback.'),
+                          _('Videomass - Warning!'), wx.ICON_WARNING, self)
+            return
+
+        if self.parent.time_seq == "":
+            wx.MessageBox(_('No segment selected in the timeline yet.'),
                           _('Videomass - Warning!'), wx.ICON_WARNING, self)
             return
 
         if self.invalidselection:
-            wx.MessageBox(_('Invalid selection!\n«End» cursor must be to the '
-                            'right side of the «Start» cursor.'),
+            wx.MessageBox(_('Invalid segment selection!\n«End» cursor must be '
+                            'moved to the right side of the «Start» cursor.'),
                           _('Videomass - Error!'), wx.ICON_ERROR, self)
             return
 
@@ -569,7 +573,7 @@ class Float_TL(wx.MiniFrame):
 
         if (self.bar_w <= self.bar_x or self.mills_end > self.milliseconds
            or self.mills_start < 0):
-            msg = _('WARNING: Invalid selection, out of range.')
+            msg = _('WARNING: Invalid segment selection, out of range.')
             self.statusbar_msg(f'{msg}', Float_TL.ORANGE, Float_TL.BLACK)
             return
 

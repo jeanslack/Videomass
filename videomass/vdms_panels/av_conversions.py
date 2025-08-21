@@ -529,7 +529,8 @@ class AV_Conv(wx.Panel):
         if not fget or not self.opt["VFilters"]:
             return
         if self.opt["Vidstabtransform"]:
-            wx.MessageBox(_("Unable to preview Video Stabilizer filter"),
+            wx.MessageBox(_("To preview Stabilize filter, please click "
+                            "Preview button on Video Stabilizer Tool"),
                           "Videomass", wx.ICON_INFORMATION, self)
             return
 
