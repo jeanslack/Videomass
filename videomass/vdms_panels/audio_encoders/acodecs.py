@@ -33,7 +33,7 @@ from videomass.vdms_dialogs.audioproperties import AudioProperties
 from videomass.vdms_utils.utils import get_volume_data
 from videomass.vdms_io.io_tools import volume_detect_process
 from videomass.vdms_dialogs.shownormlist import AudioVolNormal
-from videomass.vdms_io.io_tools import stream_play
+from videomass.vdms_threads.ffplay_file import FilePlay
 
 
 class AudioEncoders(scrolled.ScrolledPanel):
@@ -466,18 +466,33 @@ class AudioEncoders(scrolled.ScrolledPanel):
         else:
             return None
 
-        if self.maindata.checktimestamp:
-            args = (f'-showmode waves -vf "{self.maindata.cmdtimestamp}" '
-                    f'{afilter} {idx}')
-        else:
-            args = f'{afilter} {idx}'
-
-        stream_play(self.maindata.file_src[fileget[1]],
-                    self.maindata.time_seq,
-                    args,
-                    self.maindata.autoexit
-                    )
+        self.build_playfile_command(afilter,
+                                    idx,
+                                    self.maindata.file_src[fileget[1]]
+                                    )
         return None
+    # ------------------------------------------------------------------#
+
+    def build_playfile_command(self, afilter, index, filepath):
+        """
+        Build ffplay command for playback
+        """
+        autoexit = '-autoexit' if self.maindata.autoexit else ''
+
+        if self.maindata.checktimestamp:
+            args = (f'-showmode waves {autoexit} -i "{filepath}" '
+                    f'{self.maindata.time_seq} '
+                    f'-vf "{self.maindata.cmdtimestamp}" {afilter} {index}')
+        else:
+            args = (f'-showmode waves {autoexit} -i "{filepath}" '
+                    f'{self.maindata.time_seq} '
+                    f'{afilter} {index}')
+        try:
+            with open(filepath, encoding='utf-8'):
+                FilePlay(args)
+        except IOError:
+            wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
+                          "Videomass", wx.ICON_EXCLAMATION, self)
     # ------------------------------------------------------------------#
 
     def get_audio_stream(self, fileselected):

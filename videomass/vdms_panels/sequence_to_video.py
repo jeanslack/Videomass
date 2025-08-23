@@ -75,9 +75,8 @@ class SequenceToVideo(wx.Panel):
               "\n\n2. Use the Resize tool for images which "
               "have different sizes such as width and\nheight. "
               "It is optional in other cases."
-              "\n\n3. Use the Timeline editor (CTRL+T) to set the time "
-              "interval between images by adjusting\nthe \"End\" duration "
-              "value and leaving the \"Start\" value at 00:00:00.000."
+              "\n\n3. Set a time interval between images, or for a single "
+              "image if you use\n a single still image option."
               "\n\n4. Run the conversion."
               "\n\n\nThe produced video will have the name of the selected "
               "file in the 'File List' panel, which\nwill be saved in a "
@@ -124,10 +123,20 @@ class SequenceToVideo(wx.Panel):
         sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)
         siz_format = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_format)
-
         self.ckbx_static_img = wx.CheckBox(self, wx.ID_ANY,
                                            _('Enable a single still image'))
         boxctrl.Add(self.ckbx_static_img, 0, wx.ALL | wx.EXPAND, 5)
+        boxctrl.Add((15, 15), 0)
+        siz_sec = wx.BoxSizer(wx.HORIZONTAL)
+        boxctrl.Add(siz_sec)
+        msg = _('Time interval between images (in seconds):')
+        lbl_sec = wx.StaticText(self, wx.ID_ANY, label=msg)
+        siz_sec.Add(lbl_sec, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.spin_sec = wx.SpinCtrl(self, wx.ID_ANY, "1", min=1,
+                                    max=1000, size=(-1, -1),
+                                    style=wx.TE_PROCESS_ENTER
+                                    )
+        siz_sec.Add(self.spin_sec, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         boxctrl.Add((15, 15), 0)
         siz_pict = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_pict)
@@ -608,10 +617,7 @@ class SequenceToVideo(wx.Panel):
         """
         get arguments line for 'loop' or 'slide' modes
         """
-        if not self.parent.time_seq:
-            timeline = '00:00:01.000'
-        else:
-            timeline = self.parent.time_seq.split()[3]
+        timeline = integer_to_time(self.spin_sec.GetValue() * 1000)
 
         if self.ckbx_static_img.IsChecked():
             args = self.build_command_loop_image(timeline)
@@ -704,7 +710,7 @@ class SequenceToVideo(wx.Panel):
         """
         time = self.opt["Clock"]
         resize = _('Enabled') if self.opt["RESIZE"] else _('Disabled')
-        short = (self.opt["Shortest"][1])
+        short = self.opt["Shortest"][1]
         preinput = self.opt["Preinput"]
         duration = self.opt["Interval"]
         if self.ckbx_edit.IsChecked():

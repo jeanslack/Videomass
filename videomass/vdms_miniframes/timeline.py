@@ -35,7 +35,7 @@ from videomass.vdms_utils.utils import time_to_integer
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
-from videomass.vdms_io.io_tools import stream_play
+from videomass.vdms_threads.ffplay_file import FilePlayback_GetOutput
 
 
 class Time_Selector(wx.Dialog):
@@ -151,8 +151,8 @@ class Time_Selector(wx.Dialog):
 class Float_TL(wx.MiniFrame):
     """
     A graphical representation of the Float_TL object,
-    a floating bar (or ruler) for trimming and slicing time
-    segments from media.
+    a floating bar (ruler) for trimming and slicing time
+    segments from media duration.
 
     """
     get = wx.GetApp()
@@ -186,11 +186,12 @@ class Float_TL(wx.MiniFrame):
 
     def __init__(self, parent):
         """
+
         self.pix: scale pixels to milliseconds
         self.milliseconds: int(milliseconds)
         self.duration: see parent attr.
-        self.bar_w: pixel point val for END selection
-        self.bar_x: pixel point val for START selection
+        self.bar_w: END point value in pixel
+        self.bar_x: START point value in pixel
         """
         icons = Float_TL.ICONS
 
@@ -213,16 +214,17 @@ class Float_TL(wx.MiniFrame):
         self.milliseconds = 86399999  # 23:59:59:999
         self.clock_start = '00:00:00.000'  # seek position
         self.clock_end = '00:00:00.000'
-        self.mills_end = 0
-        self.mills_start = 0
+        self.mills_end = 0  # end point in milliseconds
+        self.mills_start = 0  # stat point in milliseconds
         self.pix = Float_TL.RW / self.milliseconds  # scale factor
-        self.bar_w = 0
-        self.bar_x = 0
-        self.pointpx = [0, 0]  # see `on_move()` `on_leftdown()`
+        self.bar_w = 0  # End point value in pixel
+        self.bar_x = 0  # Start point value in pixel
+        self.pointpx = [0, 0]  # mouse points (see on_move(), on_leftdown())
         self.sourcedur = _('No source duration:')
         self.filename = None  # selected filename on file list
         self.frame = None  # waveform image located on cache dir
-        self.invalidselection = False
+        self.invalidselection = False  # booleaan reference
+        self.playpoint = 0  # `x` point pixel representation
 
         wx.MiniFrame.__init__(self, parent, -1, style=wx.CAPTION | wx.CLOSE_BOX
                               | wx.SYSTEM_MENU | wx.FRAME_FLOAT_ON_PARENT
@@ -237,18 +239,22 @@ class Float_TL(wx.MiniFrame):
         sizer_base.Add(self.paneltime, 0, wx.ALL | wx.CENTRE, 2)
         sizer_btns = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(sizer_btns, 0, wx.ALL | wx.CENTRE, 5)
-        btn_play = wx.Button(panel, wx.ID_ANY, "", size=(40, -1))
-        btn_play.SetBitmap(bmp_play, wx.LEFT)
-        sizer_btns.Add(btn_play, 0, wx.RIGHT | wx.CENTRE, 20)
-        btn_tstart = wx.Button(panel, wx.ID_ANY, "", size=(40, -1))
-        btn_tstart.SetBitmap(bmp_tstart, wx.LEFT)
-        sizer_btns.Add(btn_tstart, 0, wx.CENTRE, 5)
-        btn_reset = wx.Button(panel, wx.ID_ANY, "", size=(40, -1))
-        btn_reset.SetBitmap(bmp_reset, wx.LEFT)
-        sizer_btns.Add(btn_reset, 0, wx.LEFT | wx.CENTRE, 5)
-        btn_tend = wx.Button(panel, wx.ID_ANY, "", size=(40, -1))
-        btn_tend.SetBitmap(bmp_tend, wx.LEFT)
-        sizer_btns.Add(btn_tend, 0, wx.LEFT | wx.CENTRE, 5)
+        self.btn_play = wx.Button(panel, wx.ID_ANY, "", size=(40, -1))
+        self.btn_play.SetBitmap(bmp_play, wx.LEFT)
+        sizer_btns.Add(self.btn_play, 0, wx.RIGHT | wx.CENTRE, 20)
+        self.counterplay = wx.StaticText(panel, wx.ID_ANY, ("00:00:00.000"))
+        self.counterplay.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL,
+                                         wx.BOLD, 0, ""))
+        sizer_btns.Add(self.counterplay, 0, wx.RIGHT | wx.CENTRE, 20)
+        self.btn_tstart = wx.Button(panel, wx.ID_ANY, "", size=(40, -1))
+        self.btn_tstart.SetBitmap(bmp_tstart, wx.LEFT)
+        sizer_btns.Add(self.btn_tstart, 0, wx.CENTRE, 5)
+        self.btn_reset = wx.Button(panel, wx.ID_ANY, "", size=(40, -1))
+        self.btn_reset.SetBitmap(bmp_reset, wx.LEFT)
+        sizer_btns.Add(self.btn_reset, 0, wx.LEFT | wx.CENTRE, 5)
+        self.btn_tend = wx.Button(panel, wx.ID_ANY, "", size=(40, -1))
+        self.btn_tend.SetBitmap(bmp_tend, wx.LEFT)
+        sizer_btns.Add(self.btn_tend, 0, wx.LEFT | wx.CENTRE, 5)
         self.btn_wave = wx.ToggleButton(panel, wx.ID_ANY, _("Wave"),
                                         size=(-1, -1))
         self.btn_wave.SetBitmap(bmp_wave, wx.LEFT)
@@ -289,30 +295,30 @@ class Float_TL(wx.MiniFrame):
 
         # ---------------------- Tooltips
         tip = _('End adjustment')
-        btn_tend.SetToolTip(tip)
+        self.btn_tend.SetToolTip(tip)
         tip = _('Start adjustment')
-        btn_tstart.SetToolTip(tip)
+        self.btn_tstart.SetToolTip(tip)
         tip = (_('Toggles the display of the audio waveform in the '
                  'background ruler'))
         self.btn_wave.SetToolTip(tip)
         tip = _('Reset segment on timeline')
-        btn_reset.SetToolTip(tip)
+        self.btn_reset.SetToolTip(tip)
         tip = _('Timeline Editor Usage')
         btn_readme.SetToolTip(tip)
         tip = _('Play segment')
-        btn_play.SetToolTip(tip)
+        self.btn_play.SetToolTip(tip)
 
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_TOGGLEBUTTON, self.on_load_waveform, self.btn_wave)
         self.Bind(wx.EVT_BUTTON,
                   lambda event: self.on_set_pos(event, mode='duration'),
-                  btn_tend)
+                  self.btn_tend)
         self.Bind(wx.EVT_BUTTON,
                   lambda event: self.on_set_pos(event, mode='start'),
-                  btn_tstart)
-        self.Bind(wx.EVT_BUTTON, self.on_trim_time_reset, btn_reset)
+                  self.btn_tstart)
+        self.Bind(wx.EVT_BUTTON, self.on_trim_time_reset, self.btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_readme)
-        self.Bind(wx.EVT_BUTTON, self.on_play_segment, btn_play)
+        self.Bind(wx.EVT_BUTTON, self.on_play_segment, self.btn_play)
         self.paneltime.Bind(wx.EVT_PAINT, self.OnPaint)
         self.paneltime.Bind(wx.EVT_LEFT_DOWN, self.on_leftdown)
         self.paneltime.Bind(wx.EVT_LEFT_UP, self.on_leftup)
@@ -321,6 +327,8 @@ class Float_TL(wx.MiniFrame):
         self.Bind(wx.EVT_CLOSE, self.on_close)
 
         pub.subscribe(self.set_values, "RESET_ON_CHANGED_LIST")
+        pub.subscribe(self.update_counter_thread, "UPDATE_PLAY_COUNTER")
+        pub.subscribe(self.end_playback_thread, "END_PLAY")
 
     def file_selection(self):
         """
@@ -348,8 +356,9 @@ class Float_TL(wx.MiniFrame):
         self.frame = os.path.join(f'{Float_TL.TMPSRC}', f'{name}.png')  # image
 
         arg = (f'-i "{self.filename}" -filter_complex '
-               f'"showwavespic=s=910x80:colors=white:split_channels=1" '
-               f'-update 1 -frames:v 1 "{self.frame}"')
+               f'"showwavespic=s={Float_TL.RW + 10}x{Float_TL.PH}'
+               f':colors=white:split_channels=1" -update 1 '
+               f'-frames:v 1 "{self.frame}"')
         thread = FFmpegGenericTask(arg, 'Timeline Waveform', logfile)
         thread.join()  # wait end thread
         error = thread.status
@@ -399,16 +408,67 @@ class Float_TL(wx.MiniFrame):
             return
 
         if self.parent.checktimestamp:
-            tstamp = f'-vf "{self.parent.cmdtimestamp}"'
+            scalef, tstamp = 'scale=w=360:h=-1,', f'{self.parent.cmdtimestamp}'
         else:
-            tstamp = ""
+            scalef, tstamp = 'scale=w=360:h=-1', ''
 
-        stream_play(self.file_selection()[0],
-                    self.parent.time_seq,
-                    tstamp,
-                    self.parent.autoexit,
-                    )
+        args = (f'-autoexit -i "{self.file_selection()[0]}" '
+                f'{self.parent.time_seq} -vf "{scalef}{tstamp}"')
 
+        try:
+            with open(self.file_selection()[0], encoding='utf-8'):
+                FilePlayback_GetOutput(args)
+        except IOError:
+            wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
+                          "Videomass", wx.ICON_EXCLAMATION, self)
+            return
+
+        self.btn_play.Disable()
+        self.btn_tstart.Disable()
+        self.btn_reset.Disable()
+        self.btn_tend.Disable()
+        self.paneltime.Disable()
+        self.playpoint = round(self.bar_x)
+    # ----------------------------------------------------------------------
+
+    def update_counter_thread(self, output, status):
+        """
+        This method uses pub/sub protocol subscribing "UPDATE_PLAY_COUNTER"
+        message. It is called by `FilePlay` class thread to update
+        the output lines of the ffplay stderr.
+        """
+        if status:
+            return
+
+        timemils = 0.0
+        if output:
+            line = output.split()
+            try:
+                timemils = float(line[0]) * 1000
+                res = integer_to_time(round(timemils))
+                self.counterplay.SetLabel(res)
+                self.onRedraw(wx.ClientDC(self.paneltime))
+                scaletopix = round(self.pix / (Float_TL.RW
+                                               / timemils) * Float_TL.RW)
+                pixpos = scaletopix
+                self.playpoint = pixpos
+
+            except (ValueError, ZeroDivisionError):
+                self.counterplay.SetLabel('N/A')
+    # ----------------------------------------------------------------------
+
+    def end_playback_thread(self):
+        """
+        This method uses pub/sub protocol subscribing "END_PLAY" message.
+        It is called by `FilePlay` class thread to indicate the end of the
+        thread.
+        """
+        self.paneltime.Enable()
+        self.btn_play.Enable()
+        self.btn_tstart.Enable()
+        self.btn_reset.Enable()
+        self.btn_tend.Enable()
+        self.playpoint = 0
     # ----------------------------------------------------------------------
 
     def on_load_waveform(self, event):
@@ -421,8 +481,9 @@ class Float_TL(wx.MiniFrame):
                 return
 
             if not self.get_audio_stream(self.file_selection()):
-                wx.MessageBox(_('The selected source file does not contain '
-                                'any audio streams:\n"{}"'
+                wx.MessageBox(_('Unable to create waveform.\nThe selected '
+                                'source file does not contain any audio '
+                                'streams:\n"{}"'
                                 ).format(self.file_selection()[0]),
                               _('Videomass - Warning!'), wx.ICON_WARNING, self)
                 self.btn_wave.SetValue(False)
@@ -485,6 +546,7 @@ class Float_TL(wx.MiniFrame):
         self.clock_start = '00:00:00.000'
         msg = _('{0} {1}  |  Segment Duration: {2}'
                 ).format(self.sourcedur, self.overalltime, '00:00:00.000')
+        self.counterplay.SetLabel('00:00:00.000')
         self.statusbar_msg(msg, None)
         self.parent.time_seq = ""
         self.onRedraw(wx.ClientDC(self.paneltime))
@@ -583,7 +645,8 @@ class Float_TL(wx.MiniFrame):
 
     def on_set_pos(self, event, mode=None):
         """
-        Event on mouse double click right button
+        Event on mouse double click right button.
+        Note that pixpos variable is the KEY
         """
         if mode == 'duration':
             clock, mode = self.clock_end, 'duration'
@@ -678,8 +741,8 @@ class Float_TL(wx.MiniFrame):
         self.ruler_notches(dc)
         self.text_time_indicator(dc, textcolor, selcolor)
 
-        # if self.onplayfile:
-        #     self.move_play_cursor(dc)
+        if self.playpoint:
+            self.move_play_cursor(dc)
     # ------------------------------------------------------------------#
 
     def text_time_indicator(self, dc, textcolor, selcolor):
@@ -742,20 +805,20 @@ class Float_TL(wx.MiniFrame):
 
     def move_play_cursor(self, dc):
         """
-        Not used, only for future implementation.
+        Experimental, only for future implementations.
         ------------------------------------------
-        This method should create a vertical green cursor that
+        This method should create a vertical colored cursor that
         slides from the start position to the end position as a
         file plays.
-        USAGE:
-        self.onplayfile = 0
-        for i in range(8):
-            self.onplayfile += 100
+        USAGE EXAMPLE:
+        self.playpoint = 100
+        for i in range(10):
             self.onRedraw(wx.ClientDC(self.paneltime))
+            self.playpoint += 50
         """
-        dc.SetBrush(wx.Brush(wx.GREEN, wx.BRUSHSTYLE_SOLID))
-        dc.SetPen(wx.Pen(wx.GREEN))
-        dc.DrawRectangle(self.onplayfile, -1, 4, 100)
+        dc.SetBrush(wx.Brush(wx.RED, wx.BRUSHSTYLE_SOLID))
+        dc.SetPen(wx.Pen(wx.RED))
+        dc.DrawRectangle(round(self.playpoint), 0, 3, 100)
         self.Update()
     # ------------------------------------------------------------------#
 

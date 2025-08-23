@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.18\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-21 14:55+0200\n"
+"POT-Creation-Date: 2025-08-23 11:55+0200\n"
 "PO-Revision-Date: 2024-07-03 18:48+0200\n"
 "Last-Translator: Samuel / http://littlesvr.ca/ostd/\n"
 "Language: pt_BR\n"
@@ -1331,10 +1331,6 @@ msgstr ""
 msgid "File(s) not found"
 msgstr "Não encontrado"
 
-#, python-format
-msgid "Invalid or unsupported file:  %s"
-msgstr ""
-
 #, fuzzy
 msgid ""
 "Wait....\n"
@@ -1872,8 +1868,13 @@ msgid ""
 "«End» cursor must be moved to the right side of the «Start» cursor."
 msgstr ""
 
+#, python-format
+msgid "Invalid or unsupported file:  %s"
+msgstr ""
+
 #, python-brace-format
 msgid ""
+"Unable to create waveform.\n"
 "The selected source file does not contain any audio streams:\n"
 "\"{}\""
 msgstr ""
@@ -2538,8 +2539,8 @@ msgid ""
 "2. Use the Resize tool for images which have different sizes such as width and\n"
 "height. It is optional in other cases.\n"
 "\n"
-"3. Use the Timeline editor (CTRL+T) to set the time interval between images by adjusting\n"
-"the \"End\" duration value and leaving the \"Start\" value at 00:00:00.000.\n"
+"3. Set a time interval between images, or for a single image if you use\n"
+" a single still image option.\n"
 "\n"
 "4. Run the conversion.\n"
 "\n"
@@ -2549,6 +2550,9 @@ msgid ""
 msgstr ""
 
 msgid "Enable a single still image"
+msgstr ""
+
+msgid "Time interval between images (in seconds):"
 msgstr ""
 
 msgid ""
@@ -2997,6 +3001,9 @@ msgstr "\"bom\" é o padrão e recomendado para a maioria dos aplicativos; \"mel
 msgid ""
 "If enabled, adds support for row based multithreading which greatly enhances the number of threads the encoder can utilise. This improves encoding speed significantly on systems that are otherwise underutilised when encoding VP9. Since the amount of additional threads depends on the number of \"tiles\", which itself depends on the video resolution, encoding higher resolution videos will see a "
 "larger performance improvement."
+msgstr ""
+
+msgid "Please, see «ffplay.log» file for error details.\n"
 msgstr ""
 
 #, python-brace-format

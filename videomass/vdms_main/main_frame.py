@@ -120,7 +120,7 @@ class MainFrame(wx.Frame):
             tsfont = 'C\\:/Windows/Fonts/Arial.ttf'
         else:
             tsfont = 'Arial'
-        fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # adaptative
+        fontsize = "fontsize=h/10:x=(w-text_w)/2:y=(h-text_h*2)"  # autosize
         # set command line for timestamp
         ptshms = r"%{pts\:hms}"
         self.cmdtimestamp = (

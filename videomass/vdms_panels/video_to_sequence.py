@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.08.2024
+Rev: Aug.23.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -456,7 +456,7 @@ class VideoToSequence(wx.Panel):
             if self.opt["Setsar"]:
                 setf = f'{setf},{self.opt["Setsar"]}'
             flt = (f'fps=10,{self.opt["Scale"]}:flags=lanczos,split=2 '
-                   f'[a][b]; [a] palettegen [pal]; [b] fifo [b]; [b] '
+                   f'[a][b]; [a] palettegen [pal]; [b] '
                    f'[pal] paletteuse{setf}')
             cmd = ('', f'-vf "{flt}" -loop 0')
 

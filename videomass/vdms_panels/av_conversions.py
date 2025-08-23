@@ -31,7 +31,7 @@ import wx.lib.scrolledpanel as scrolled
 from pubsub import pub
 from videomass.vdms_utils.utils import update_timeseq_duration
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_io.io_tools import stream_play
+from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_io.checkup import check_files
 from videomass.vdms_dialogs.epilogue import Formula
 from videomass.vdms_dialogs import setting_profiles
@@ -186,7 +186,7 @@ class AV_Conv(wx.Panel):
         sizer_convin.Add(self.btn_saveprst, 0, wx.LEFT | wx.CENTRE, 20)
         self.btn_cmd = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
         self.btn_cmd.SetBitmap(bmpcmd, wx.LEFT)
-        sizer_convin.Add(self.btn_cmd, 0, wx.LEFT | wx.CENTRE, 20)
+        sizer_convin.Add(self.btn_cmd, 0, wx.LEFT | wx.CENTRE, 5)
         msg = _("Target")
         box1 = wx.StaticBox(self, wx.ID_ANY, msg)
         box_convin = wx.StaticBoxSizer(box1, wx.HORIZONTAL)
@@ -535,14 +535,21 @@ class AV_Conv(wx.Panel):
             return
 
         flt = self.opt["VFilters"]
-        if self.parent.checktimestamp:
-            flt = f'{flt},"{self.parent.cmdtimestamp}"'
+        autoexit = '-autoexit' if self.parent.autoexit else ''
 
-        stream_play(self.parent.file_src[fget[1]],
-                    self.parent.time_seq,
-                    flt,
-                    self.parent.autoexit
-                    )
+        if self.parent.checktimestamp:
+            args = (f'{autoexit} -i "{self.parent.file_src[fget[1]]}" '
+                    f'{self.parent.time_seq} '
+                    f'{flt},"{self.parent.cmdtimestamp}"')
+        else:
+            args = f'{autoexit} -i "{self.parent.file_src[fget[1]]}" {flt}'
+        try:
+            with open(self.parent.file_src[fget[1]], encoding='utf-8'):
+                FilePlay(args)
+        except IOError:
+            wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
+                          "Videomass", wx.ICON_EXCLAMATION, self)
+            return
     # ------------------------------------------------------------------#
 
     def on_audio_preview(self, event):

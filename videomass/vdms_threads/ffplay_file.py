@@ -30,6 +30,7 @@ from threading import Thread
 import subprocess
 import platform
 import wx
+from pubsub import pub
 from videomass.vdms_io.make_filelog import make_log_template
 if not platform.system() == 'Windows':
     import shlex
@@ -39,8 +40,11 @@ def showmsgerr(msg):
     """
     Receive error messages via wxCallafter
     """
-    wx.MessageBox(f"FFplay ERROR:  {msg}",
+    if not msg:
+        msg = _('Please, see «ffplay.log» file for error details.\n')
+    wx.MessageBox(f"FFplay ERROR:\n{msg}",
                   _('Videomass - Error!'), wx.ICON_ERROR)
+# ----------------------------------------------------------------#
 
 
 def showmsginfo(msg):
@@ -48,31 +52,42 @@ def showmsginfo(msg):
     Receive info messages via wxCallafter
     """
     wx.MessageBox(f"FFplay:  {msg}", "Videomass", wx.ICON_INFORMATION)
+# ----------------------------------------------------------------#
+
+
+def logwrite(cmd, logf):
+    """
+    write ffplay command log
+    """
+    with open(logf, "a", encoding='utf-8') as log:
+        log.write(f"{cmd}\n")
+# ----------------------------------------------------------------#
+
+
+def logerror(error, logf):
+    """
+    write ffplay errors
+    """
+    with open(logf, "a", encoding='utf-8') as logerr:
+        logerr.write(f"\n[FFMPEG] FFplay OUTPUT:\n{error}\n")
+# ----------------------------------------------------------------#
 
 
 class FilePlay(Thread):
     """
-    Playback local file with ffplay media player via subprocess.Popen
-    class (ffplay is a player which need x-window-terminal-emulator)
-
+    Playback local file executing ffplay media player.
     """
-
-    def __init__(self, filepath, timeseq, param, autoexit):
+    def __init__(self, param=''):
         """
-        The self.FFPLAY_loglevel has flag 'error -hide_banner' by default,
-        see videomass.conf for details.
-        WARNING Do not use the "-stats" option as it does not work here.
+        Don't use the "-stats" option here to avoid too much verbose
+        output being shown in the message box as an error every time.
 
         """
-        get = wx.GetApp()  # get videomass wx.App attribute
+        get = wx.GetApp()
         self.appdata = get.appset
-        self.filename = filepath  # file name selected
-        self.time_seq = timeseq  # seeking
         self.param = param  # additional parameters if present
-        self.autoexit = '-autoexit' if autoexit else ''
         self.logf = os.path.join(self.appdata['logdir'], 'ffplay.log')
         make_log_template('ffplay.log', self.appdata['logdir'], mode="w")
-        # set initial file LOG
 
         Thread.__init__(self)
         self.start()
@@ -80,22 +95,91 @@ class FilePlay(Thread):
 
     def run(self):
         """
-        Get and redirect output errors on proc.returncode instance and on
-        OSError exception. Otherwise the getted output as information
-        given by error[1]
-
+        Executes ffplay command via subprocess.Popen .
+        IMPORTANT: do not use class Popen from utils.py here,
+        because 'info' flag do not work on MS-Windows using ffplay.
+        This is fixed using shell=True flag.
         """
-        # time.sleep(.5)
         cmd = (f'"{self.appdata["ffplay_cmd"]}" '
                f'{self.appdata["ffplay-default-args"]} '
                f'{self.appdata["ffplay_loglev"]} '
-               f'{self.autoexit} '
-               f'{self.time_seq[0]} '
-               f'-i "{self.filename}" '
-               f'{self.time_seq[1]} '
                f'{self.param}'
                )
-        self.logwrite(cmd)
+        logwrite(cmd, self.logf)
+
+        if not platform.system() == 'Windows':
+            cmd = shlex.split(cmd)
+            info = None
+            shell = False
+        else:
+            shell = True
+            info = None
+            # info = subprocess.STARTUPINFO()
+            # info.dwFlags |= subprocess.SW_HIDE
+        try:
+            with subprocess.Popen(cmd,
+                                  shell=shell,
+                                  stderr=subprocess.PIPE,
+                                  universal_newlines=True,
+                                  encoding=self.appdata['encoding'],
+                                  startupinfo=info,
+                                  ) as proc:
+
+                error = proc.communicate()[1]
+
+                if error:
+                    wx.CallAfter(showmsgerr, None)
+                    logerror(error, self.logf)  # append log error
+                    return
+
+        except OSError as err:
+            wx.CallAfter(showmsgerr, None)
+            logerror(err, self.logf)
+            # do not return here, go to END_PLAY directly
+
+        wx.CallAfter(pub.sendMessage, "END_PLAY")
+
+
+class FilePlayback_GetOutput(Thread):
+    """
+    Playback local file executing ffplay media player.
+    This class differs from `FilePlay` in that it implements
+    capturing and redirecting output messages from stderr.
+    """
+    def __init__(self, param=''):
+        """
+        The `stats` argument allows ffplay to update output
+        messages progressively. This allows parsing of the
+        output for progress information..
+
+        """
+        get = wx.GetApp()
+        self.appdata = get.appset
+        self.param = param  # additional parameters if present
+        self.stats = '-stats'
+        self.logf = os.path.join(self.appdata['logdir'], 'ffplay.log')
+        # set initial file LOG:
+        make_log_template('ffplay.log', self.appdata['logdir'], mode="w")
+
+        Thread.__init__(self)
+        self.start()
+    # ----------------------------------------------------------------#
+
+    def run(self):
+        """
+        Executes ffplay command via subprocess.Popen .
+        IMPORTANT: do not use class Popen from utils.py here,
+        because 'info' flag do not work on MS-Windows using ffplay.
+        This is fixed using shell=True flag.
+        """
+        # time.sleep(.5)
+        line = 'NO MESSAGE PROVIDED :-('
+        cmd = (f'"{self.appdata["ffplay_cmd"]}" '
+               f'{self.appdata["ffplay-default-args"]} '
+               f'{self.appdata["ffplay_loglev"]} {self.stats} '
+               f'{self.param}'
+               )
+        logwrite(cmd, self.logf)
 
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
@@ -112,35 +196,29 @@ class FilePlay(Thread):
             with subprocess.Popen(cmd,
                                   shell=shell,
                                   stderr=subprocess.PIPE,
+                                  bufsize=1,
                                   universal_newlines=True,
                                   encoding=self.appdata['encoding'],
                                   startupinfo=info,
                                   ) as proc:
-                error = proc.communicate()[1]
+                for line in proc.stderr:
+                    wx.CallAfter(pub.sendMessage,
+                                 "UPDATE_PLAY_COUNTER",
+                                 output=line,
+                                 status=0
+                                 )
+                if proc.wait():  # ..Failed
+                    wx.CallAfter(pub.sendMessage,
+                                 "UPDATE_PLAY_COUNTER",
+                                 output=None,
+                                 status=proc.wait(),
+                                 )
+                    logerror(f"{proc.wait()} {line}", self.logf)
+                    wx.CallAfter(showmsgerr, None)
 
-                if error:  # ffplay error
-                    wx.CallAfter(showmsginfo, error)
-                    self.logerror(error)  # append log error
-                    return
+        except OSError as err:
+            wx.CallAfter(showmsgerr, None)
+            logerror(err, self.logf)
+            # do not return here, go to END_PLAY
 
-        except OSError as err:  # subprocess error
-            wx.CallAfter(showmsgerr, err)
-            self.logerror(err)  # append log error
-            return
-    # ----------------------------------------------------------------#
-
-    def logwrite(self, cmd):
-        """
-        write ffplay command log
-        """
-        with open(self.logf, "a", encoding='utf-8') as log:
-            log.write(f"{cmd}\n")
-    # ----------------------------------------------------------------#
-
-    def logerror(self, error):
-        """
-        write ffplay errors
-        """
-        with open(self.logf, "a", encoding='utf-8') as logerr:
-            logerr.write(f"\n[FFMPEG] FFplay "
-                         f"OUTPUT:\n{error}\n")
+        wx.CallAfter(pub.sendMessage, "END_PLAY")

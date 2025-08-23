@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.26\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-21 14:55+0200\n"
+"POT-Creation-Date: 2025-08-23 11:55+0200\n"
 "PO-Revision-Date: 2025-04-19 11:19+0800\n"
 "Last-Translator: Gao Zimu <gaozimu_0502@163.com>\n"
 "Language: zh_CN\n"
@@ -1364,10 +1364,6 @@ msgstr "错误列表"
 msgid "File(s) not found"
 msgstr "文件未找到"
 
-#, python-format
-msgid "Invalid or unsupported file:  %s"
-msgstr ""
-
 #, fuzzy
 msgid ""
 "Wait....\n"
@@ -1860,8 +1856,13 @@ msgid ""
 "«End» cursor must be moved to the right side of the «Start» cursor."
 msgstr ""
 
+#, python-format
+msgid "Invalid or unsupported file:  %s"
+msgstr ""
+
 #, python-brace-format
 msgid ""
+"Unable to create waveform.\n"
 "The selected source file does not contain any audio streams:\n"
 "\"{}\""
 msgstr ""
@@ -2524,7 +2525,6 @@ msgstr ""
 msgid "Images need to be resized, please use Resize function."
 msgstr "图片需要调整大小，请使用调整大小功能。"
 
-#, fuzzy
 msgid ""
 "\n"
 "1. Import one or more image files such as JPG, PNG and BMP formats, then select one.\n"
@@ -2532,8 +2532,8 @@ msgid ""
 "2. Use the Resize tool for images which have different sizes such as width and\n"
 "height. It is optional in other cases.\n"
 "\n"
-"3. Use the Timeline editor (CTRL+T) to set the time interval between images by adjusting\n"
-"the \"End\" duration value and leaving the \"Start\" value at 00:00:00.000.\n"
+"3. Set a time interval between images, or for a single image if you use\n"
+" a single still image option.\n"
 "\n"
 "4. Run the conversion.\n"
 "\n"
@@ -2541,21 +2541,12 @@ msgid ""
 "The produced video will have the name of the selected file in the 'File List' panel, which\n"
 "will be saved in a folder named 'Still_Images' with a progressive digit, in the path you specify."
 msgstr ""
-"\n"
-"1. 导入一个或多个图像文件，如JPG、PNG和BMP格式，然后选择一个。\n"
-"\n"
-"2. 使用调整大小功能来调整具有不同尺寸的图像，如宽度和高度。在其他情况下，它是可选的。\n"
-"\n"
-"3.  使用时间轴编辑器（CTRL+T），通过滚动DURATION滑块设置图像之间的时间间隔。\n"
-"\n"
-"4. 4. 开始转换。\n"
-"\n"
-"\n"
-"产生的视频将在 \"队列文件 \"列表中具有所选文件的名称，它将被保存在一个名为 \"Still_Images \"\n"
-"的文件夹中，并在您指定的路径上有一个渐进的数字。"
 
 msgid "Enable a single still image"
 msgstr "启用单一静止图像"
+
+msgid "Time interval between images (in seconds):"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -3052,6 +3043,9 @@ msgstr "\"good \"是默认的，推荐用于大多数应用；\"best \"是推荐
 msgid ""
 "If enabled, adds support for row based multithreading which greatly enhances the number of threads the encoder can utilise. This improves encoding speed significantly on systems that are otherwise underutilised when encoding VP9. Since the amount of additional threads depends on the number of \"tiles\", which itself depends on the video resolution, encoding higher resolution videos will see a "
 "larger performance improvement."
+msgstr ""
+
+msgid "Please, see «ffplay.log» file for error details.\n"
 msgstr ""
 
 #, python-brace-format

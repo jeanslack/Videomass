@@ -28,7 +28,7 @@ import os
 import re
 import wx
 from pubsub import pub
-from videomass.vdms_io.io_tools import stream_play
+from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_threads.ffprobe import ffprobe
 from videomass.vdms_utils.utils import time_to_integer
 from videomass.vdms_utils.utils import to_bytes
@@ -504,12 +504,21 @@ class FileDnD(wx.Panel):
             return
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index, 1)
+
+        autoexit = '-autoexit' if self.parent.autoexit else ''
         if self.parent.checktimestamp:
-            tstamp = f'-vf "{self.parent.cmdtimestamp}"'
+            args = (f'{autoexit} -i "{item}" '
+                    f'{self.parent.time_seq} '
+                    f'-vf "{self.parent.cmdtimestamp}"')
         else:
-            tstamp = ""
-        stream_play(item, self.parent.time_seq,
-                    tstamp, self.parent.autoexit)
+            args = f'{autoexit} -i "{item}" {self.parent.time_seq}'
+        try:
+            with open(item, encoding='utf-8'):
+                FilePlay(args)
+        except IOError:
+            wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
+                          "Videomass", wx.ICON_EXCLAMATION, self)
+            return
     # ----------------------------------------------------------------------
 
     def on_delete_selected(self, event):

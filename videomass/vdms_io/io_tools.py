@@ -26,7 +26,6 @@ This file is part of Videomass.
 """
 import requests
 import wx
-from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_threads import generic_downloads
 from videomass.vdms_threads.volumedetect import VolumeDetectThread
 from videomass.vdms_threads.check_bin import (ff_conf,
@@ -36,26 +35,6 @@ from videomass.vdms_threads.check_bin import (ff_conf,
                                               )
 from videomass.vdms_utils.utils import open_default_application
 from videomass.vdms_dialogs.widget_utils import PopupDialog
-
-
-def stream_play(filepath, timeseq, param, autoexit):
-    """
-    Call Thread for playback with ffplay
-    """
-    if timeseq:
-        splseq = timeseq.split()
-        tseq = f'{splseq[0]} {splseq[1]}', f'{splseq[2]} {splseq[3]}'
-    else:
-        tseq = '', ''
-    try:
-        with open(filepath, encoding='utf-8'):
-            FilePlay(filepath, tseq, param, autoexit)
-            # thread.join() > attende fine thread, se no ritorna subito
-            # error = thread.data
-    except IOError:
-        wx.MessageBox(_("Invalid or unsupported file:  %s") % (
-            filepath), "Videomass", wx.ICON_EXCLAMATION, None)
-# -----------------------------------------------------------------------#
 
 
 def volume_detect_process(filelist, timeseq, audiomap, parent=None):
