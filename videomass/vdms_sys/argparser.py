@@ -63,12 +63,13 @@ def arguments():
     """Parser for command line options"""
     parser = argparse.ArgumentParser(description=('GUI for FFmpeg and'),)
     parser.add_argument('-v', '--version',
-                        help="Show the current version and exit",
+                        help="Show the current version and exit.",
                         action="store_true",
                         )
     parser.add_argument('-c', '--check',
-                        help=('List of executables used by Videomass '
-                              'found in your operating system'),
+                        help=("List of executables potentially usable by "
+                              "Videomass found in your operating system's "
+                              "environment variables."),
                         action="store_true",
                         )
     parser.add_argument('--make-portable',
@@ -95,14 +96,15 @@ def arguments():
             if key in ('Required', 'Recommended', 'Optional'):
                 for exe in val:
                     val[exe] = which(exe, mode=os.F_OK | os.X_OK, path=None)
-        print('\nList of executables used by Videomass:')
+        print('\nList of executables found in the environment '
+              'variables potentially usable by Videomass:')
         for key, val in deps.items():
             for exe, path in val.items():
                 if path:
                     print(f"\t[{key}] '{exe}' ...Ok")
                     print(f"\tpath: '{path}'\n")
                 else:
-                    print(f"\t[{key}] '{exe}' ...Not Installed")
+                    print(f"\t[{key}] '{exe}' ...Not Found")
                     print(f"\tpath: {path}\n")
         parser.exit(status=0, message=None)
 

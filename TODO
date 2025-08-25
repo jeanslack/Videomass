@@ -14,7 +14,7 @@ URGENCY: medium
 - main_frame.py need refactoring.
 
 -------------
-URGENCY: low (New implementations)
+URGENCY: low
 -------------
 
 - If you plan to refactor code and make it compatible only for wx.Python>=4.1.1:

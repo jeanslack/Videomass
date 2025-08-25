@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.26\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-30 15:28+0200\n"
+"POT-Creation-Date: 2025-08-23 11:55+0200\n"
 "PO-Revision-Date: 2025-04-19 11:19+0800\n"
 "Last-Translator: Gao Zimu <gaozimu_0502@163.com>\n"
 "Language: zh_CN\n"
@@ -42,6 +42,27 @@ msgstr "音频比特率影响文件的压缩，从而影响收听质量。该值
 
 msgid "Bit depth is the number of bits of information in each sample, and it directly corresponds to the resolution of each sample. Bit depth is only meaningful in reference to a PCM digital signal. Non-PCM formats, such as lossy compression formats, do not have associated bit depths."
 msgstr "位深是指每个样本的信息位数，它直接对应于每个样本的分辨率。比特深度只有在参考 PCM 数字信号时才有意义。非 PCM 格式，如有损压缩格式，没有相关的比特深度。"
+
+msgid "First pass command"
+msgstr ""
+
+msgid "Second pass command"
+msgstr ""
+
+msgid "Videomass - Raw Command Line"
+msgstr ""
+
+msgid "Read me"
+msgstr "说明"
+
+msgid ""
+"The raw command lines reflect the AV-Conversions interface\n"
+"settings and apply to the individual file selected.\n"
+"\n"
+"Please note that using EBU R128 (High-Quality), any <?>\n"
+"markers highlighted in red should be replaced with the\n"
+"values given by the output of the first command."
+msgstr ""
 
 msgid "When finished, once the operations have been completed successfully:"
 msgstr ""
@@ -198,9 +219,6 @@ msgstr "显示可用的硬件加速方法"
 
 msgid "Show license"
 msgstr "显示许可证"
-
-msgid "Read me"
-msgstr "说明"
 
 msgid "Show configuration"
 msgstr "显示配置"
@@ -727,8 +745,8 @@ msgstr "属性"
 msgid "Values"
 msgstr "值"
 
-msgid "Streams Properties"
-msgstr "流属性"
+msgid "Source Stream Properties"
+msgstr ""
 
 msgid "Unable to open the clipboard on Format tab"
 msgstr ""
@@ -1008,9 +1026,6 @@ msgstr ""
 msgid "# will be replaced by ascending numbers starting with:"
 msgstr ""
 
-msgid "Font Size"
-msgstr "字体大小"
-
 msgid "Font Color"
 msgstr "字体颜色"
 
@@ -1022,9 +1037,6 @@ msgstr "显示文本框"
 
 msgid "Box Color"
 msgstr "框的颜色"
-
-msgid "The timestamp size does not auto-adjust to the video size, you have to set the size here"
-msgstr "时间戳的大小不会根据视频的大小自动调整，你必须在这里设置大小"
 
 msgid "Timestamp settings"
 msgstr "时间戳设置"
@@ -1351,10 +1363,6 @@ msgstr "错误列表"
 
 msgid "File(s) not found"
 msgstr "文件未找到"
-
-#, python-format
-msgid "File does not exist or is invalid:  %s"
-msgstr "文件不存在或无效：%s"
 
 #, fuzzy
 msgid ""
@@ -1810,6 +1818,9 @@ msgstr "毫秒"
 msgid "No source duration:"
 msgstr ""
 
+msgid "Wave"
+msgstr ""
+
 #, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr ""
@@ -1821,16 +1832,66 @@ msgstr ""
 msgid "Start adjustment"
 msgstr "开始"
 
+msgid "Toggles the display of the audio waveform in the background ruler"
+msgstr ""
+
+msgid "Reset segment on timeline"
+msgstr ""
+
+#, fuzzy
+msgid "Timeline Editor Usage"
+msgstr "显示时间线\tCtrl+T"
+
+msgid "Play segment"
+msgstr ""
+
+msgid "Invalid file format for playback."
+msgstr ""
+
+msgid "No segment selected in the timeline yet."
+msgstr ""
+
+msgid ""
+"Invalid segment selection!\n"
+"«End» cursor must be moved to the right side of the «Start» cursor."
+msgstr ""
+
+#, python-format
+msgid "Invalid or unsupported file:  %s"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Unable to create waveform.\n"
+"The selected source file does not contain any audio streams:\n"
+"\"{}\""
+msgstr ""
+
+msgid ""
+"The timeline editor allows you to trim slices of time on selected imported media.\n"
+"The \"time format\" used to report durations is expressed in hours, minutes, seconds\n"
+"and milliseconds (HH:MM:SS.ms).\n"
+"\n"
+"Note that importing new files, making new selection, deselection, deleting items,\n"
+"sorting items, will reset any previous settings to default values.\n"
+"\n"
+"If no source file has been imported into Videomass, the overall duration values will\n"
+"be set to the maximum allowed duration (default is 23:59:59.999).\n"
+"\n"
+"The \"Start\"/\"End\" duration values always refer to the initial position of the timeline.\n"
+"Additional setup information and warnings are shown on the timeline status bar."
+msgstr ""
+
 #, fuzzy
 msgid "Source duration:"
 msgstr "持续时间："
 
-msgid "WARNING: Invalid selection, out of range."
+msgid "WARNING: Invalid segment selection, out of range."
 msgstr ""
 
 msgid ""
-"Start by dragging the bottom left handle,\n"
-"or right-click for options."
+"Start by dragging the handles in the left corners or\n"
+"click the Start/End adjustment buttons for fine tuning."
 msgstr ""
 
 #, fuzzy
@@ -1841,30 +1902,11 @@ msgstr "开始"
 msgid "End"
 msgstr "已启用"
 
-msgid ""
-"The timeline editor is a tool that allows you to trim slices of time on selected imported media (see File List panel).\n"
-"\n"
-"The \"time format\" used to report durations is expressed in hours, minutes, seconds and milliseconds (HH:MM:SS.ms).\n"
-"\n"
-"Note that importing new files, making new selection, deselection, deleting items, sorting items (ie by LEFT clicking on the column headers), will reset any previous settings to default values.\n"
-"\n"
-"If the File List panel is empty or no source files are selected, the overall duration values will be set to 23:59:59.999, rather than the duration of a selected source file (see status bar messages).\n"
-"\n"
-"The \"Start\"/\"End\" duration values always refer to the initial position of the timeline: 00:00:00.000. For other informations as the segment duration and warnings, please refer to the status bar messages."
-msgstr ""
-
-#, fuzzy
-msgid "Timeline Editor Usage"
-msgstr "显示时间线\tCtrl+T"
-
 msgid "Media:"
 msgstr "媒体："
 
 msgid "Container:"
 msgstr "容器："
-
-msgid "Save profile"
-msgstr "保存配置文件"
 
 msgid "Target"
 msgstr "目标"
@@ -1874,6 +1916,9 @@ msgstr "杂项"
 
 msgid "Save as a new profile of the Presets Manager."
 msgstr "另存为一个新的预设管理器配置文件。"
+
+msgid "Displays the raw command line for the selected file."
+msgstr ""
 
 msgid "Available video encoders. \"Copy\" means that the video stream will not be re-encoded and will allow you (depending on the encoder) to change the container, audio codec and a few other parameters."
 msgstr "可用的视频编解码器。“Copy” 不是一个编码器，但表明视频流不会被重新编码，并允许改变格式或其他参数。"
@@ -1921,8 +1966,8 @@ msgstr "稳定器"
 msgid "Equalize"
 msgstr "均衡器"
 
-msgid "Unable to preview Video Stabilizer filter"
-msgstr "无法预览视频稳定滤镜"
+msgid "To preview Stabilize filter, please click Preview button on Video Stabilizer Tool"
+msgstr ""
 
 msgid ""
 "Unsupported file:\n"
@@ -1942,7 +1987,12 @@ msgstr "未检测到的音量值! 点击 \"音量检测 \"按钮来分析音频�
 msgid "Off"
 msgstr "关闭"
 
-#, fuzzy
+msgid "Auto"
+msgstr ""
+
+msgid "No Subtitles"
+msgstr ""
+
 msgid ""
 "Batch processing items\n"
 "Destination\n"
@@ -1950,25 +2000,13 @@ msgid ""
 "Encoding passes\n"
 "Output Format\n"
 "Video Codec\n"
+"Subtitle Stream\n"
 "Audio Codec\n"
 "Audio Normalization\n"
 "Output multimedia type\n"
 "Start of segment\n"
 "Clip duration"
 msgstr ""
-"SUMMARY\\N\n"
-"\n"
-"Queued File （排队文件）。\n"
-"Output Format （输出格式） （输出格式\n"
-"Web Optimize\n"
-"Audio Codec\n"
-"Audio bit-rate （音频比特率\n"
-"Audio Channels\n"
-"Audio Rate （音频速率\n"
-"Bit per Sample （每个样本的比特数）。\n"
-"Audio Normalization （音频归一化） （音频归一化\n"
-"Time Period （时间周期\n"
-"Input Audio Map"
 
 #, python-brace-format
 msgid "Write profile on «{0}»"
@@ -2487,7 +2525,6 @@ msgstr ""
 msgid "Images need to be resized, please use Resize function."
 msgstr "图片需要调整大小，请使用调整大小功能。"
 
-#, fuzzy
 msgid ""
 "\n"
 "1. Import one or more image files such as JPG, PNG and BMP formats, then select one.\n"
@@ -2495,8 +2532,8 @@ msgid ""
 "2. Use the Resize tool for images which have different sizes such as width and\n"
 "height. It is optional in other cases.\n"
 "\n"
-"3. Use the Timeline editor (CTRL+T) to set the time interval between images by adjusting\n"
-"the \"End\" duration value and leaving the \"Start\" value at 00:00:00.000.\n"
+"3. Set a time interval between images, or for a single image if you use\n"
+" a single still image option.\n"
 "\n"
 "4. Run the conversion.\n"
 "\n"
@@ -2504,21 +2541,12 @@ msgid ""
 "The produced video will have the name of the selected file in the 'File List' panel, which\n"
 "will be saved in a folder named 'Still_Images' with a progressive digit, in the path you specify."
 msgstr ""
-"\n"
-"1. 导入一个或多个图像文件，如JPG、PNG和BMP格式，然后选择一个。\n"
-"\n"
-"2. 使用调整大小功能来调整具有不同尺寸的图像，如宽度和高度。在其他情况下，它是可选的。\n"
-"\n"
-"3.  使用时间轴编辑器（CTRL+T），通过滚动DURATION滑块设置图像之间的时间间隔。\n"
-"\n"
-"4. 4. 开始转换。\n"
-"\n"
-"\n"
-"产生的视频将在 \"队列文件 \"列表中具有所选文件的名称，它将被保存在一个名为 \"Still_Images \"\n"
-"的文件夹中，并在您指定的路径上有一个渐进的数字。"
 
 msgid "Enable a single still image"
 msgstr "启用单一静止图像"
+
+msgid "Time interval between images (in seconds):"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -2744,19 +2772,18 @@ msgid "Limiter for the maximum peak level or the mean level (when switch to RMS)
 msgstr "最大峰值电平或平均电平（当切换到RMS时）的限制器，单位为dBFS。从-99.0到+0.0；PEAK电平的默认值是-1.0；RMS的默认值是-20.0"
 
 msgid ""
-"Normally on a video with correctly indexed streams and having one or more audio streams, the first audio stream should be indexed at \"1\", the second at \"2\" and so on (the video stream on the other hand is always indexed at \"0\"). In this case it is recommended to select the desired stream by setting a specific index, e.g \"1\" for for the first available audio stream.\n"
+"\"Auto\", lets FFmpeg select the audio stream to process (usually the first audio stream). If the source file(s) is just an audio track, it's recommend to always set this control to \"Auto.\"\n"
 "\n"
-"Set this control to \"Auto\" if the source file is simply an audio track."
+"\"1-16\", if a video file contains more than one audio stream, you can select a specific one, e.g \"1\" for the first available audio stream, \"2\" for the second audio stream, and so on."
 msgstr ""
 
-#, fuzzy
 msgid ""
 "\"Auto\" keeps all audio streams and processes only the one selected by the \"Index Selection\" control.\n"
 "\n"
-"\"All\" processes all audio streams in a video with the properties of the one selected by the \"Index Selection\" control.\n"
+"\"All\" processes all audio streams with the properties of the one selected by the \"Index Selection\" control. Don't use \"All\" to export audio files from videos.\n"
 "\n"
-"\"Index Only\" processes only the audio stream selected by the \"Index Selection\" control and removes all others from the video"
-msgstr "\"自动 \"保留所有的音频流，但只处理所选索引中的一个；\"全部 \"保留所有的音频流，并以所选索引的属性处理它们；\"仅索引 \"只处理和保留所选索引的音频流。"
+"\"Index Only\" processes only the audio stream selected by the \"Index Selection\" control and removes all others from the output video."
+msgstr ""
 
 #, fuzzy
 msgid "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -16.0"
@@ -2808,7 +2835,13 @@ msgstr "激活两个通道的正常化。它使用 \"loudnorm \"滤波器对感�
 msgid "You need to import at least one file"
 msgstr ""
 
-msgid "Subtitle Mapping:"
+msgid "Subtitle Properties"
+msgstr ""
+
+msgid "Subtitle Encoder"
+msgstr ""
+
+msgid "Chapters and Metadata"
 msgstr ""
 
 msgid "Copy Chapters"
@@ -2818,22 +2851,16 @@ msgid "Copy Metadata"
 msgstr "复制元数据"
 
 msgid ""
-"Select \"All\" to include any source file subtitles in the output video.\n"
+"Select \"All\" to include any possible subtitle stream in the output video.\n"
 "\n"
-"Select \"None\" to exclude any subtitles stream in the output video.\n"
-"\n"
-"This option is automatically ignored for output audio files."
+"Select \"1-16\" to indexing the desired subtitle stream and exclude all others, e.g \"1\" for the first available subtitle stream, \"2\" for the second subtitle stream, and so on."
 msgstr ""
 
-msgid "Copy the chapter markers as is from source file. This option is automatically ignored for output audio files."
+msgid "Copy the chapter markers as is from source file."
 msgstr ""
 
 msgid "Copy all incoming metadata from source file, such as audio/video tags, titles, unique marks, and so on."
 msgstr ""
-
-#, fuzzy
-msgid "Additional options"
-msgstr "补充论据"
 
 #, fuzzy
 msgid "Reload"
@@ -3016,6 +3043,9 @@ msgstr "\"good \"是默认的，推荐用于大多数应用；\"best \"是推荐
 msgid ""
 "If enabled, adds support for row based multithreading which greatly enhances the number of threads the encoder can utilise. This improves encoding speed significantly on systems that are otherwise underutilised when encoding VP9. Since the amount of additional threads depends on the number of \"tiles\", which itself depends on the video resolution, encoding higher resolution videos will see a "
 "larger performance improvement."
+msgstr ""
+
+msgid "Please, see «ffplay.log» file for error details.\n"
 msgstr ""
 
 #, python-brace-format

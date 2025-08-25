@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.18\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-07-30 15:28+0200\n"
+"POT-Creation-Date: 2025-08-23 11:55+0200\n"
 "PO-Revision-Date: 2024-08-26 17:29-0600\n"
 "Last-Translator: José Alberto Valle Cid j.alberto.vc@gmail.com\n"
 "Language: es_MX\n"
@@ -42,6 +42,27 @@ msgstr "La frecuencia de bits (bitrate) del audio afecta la compresión y la cal
 
 msgid "Bit depth is the number of bits of information in each sample, and it directly corresponds to the resolution of each sample. Bit depth is only meaningful in reference to a PCM digital signal. Non-PCM formats, such as lossy compression formats, do not have associated bit depths."
 msgstr "La profundidad de bites el numero de bits de información en cada muestra, y se corresponde directamente a al resolución de cada muestra. La profundidad de bit solo es relevante para señales digitales PCM. Los formatos No-PCM, como los formatos compresos/con perdidas, no tienen asociados una profundidad de bits."
+
+msgid "First pass command"
+msgstr ""
+
+msgid "Second pass command"
+msgstr ""
+
+msgid "Videomass - Raw Command Line"
+msgstr ""
+
+msgid "Read me"
+msgstr "Leame"
+
+msgid ""
+"The raw command lines reflect the AV-Conversions interface\n"
+"settings and apply to the individual file selected.\n"
+"\n"
+"Please note that using EBU R128 (High-Quality), any <?>\n"
+"markers highlighted in red should be replaced with the\n"
+"values given by the output of the first command."
+msgstr ""
 
 msgid "When finished, once the operations have been completed successfully:"
 msgstr "Al finalizar las operaciones con éxito:"
@@ -202,9 +223,6 @@ msgstr "Ver métodos de aceleración por HW"
 
 msgid "Show license"
 msgstr "Mostrar licensia"
-
-msgid "Read me"
-msgstr "Leame"
 
 msgid "Show configuration"
 msgstr "Mostrar configuración"
@@ -682,8 +700,8 @@ msgstr "Propiedades"
 msgid "Values"
 msgstr "Valores"
 
-msgid "Streams Properties"
-msgstr "Propiedades de los Flujos"
+msgid "Source Stream Properties"
+msgstr ""
 
 msgid "Unable to open the clipboard on Format tab"
 msgstr "Np se puede abrir el portapapeles en la pestaña Formato"
@@ -958,9 +976,6 @@ msgstr ""
 msgid "# will be replaced by ascending numbers starting with:"
 msgstr "# Se reemplazara con números incrementales desde:"
 
-msgid "Font Size"
-msgstr "Tamaño de Letra"
-
 msgid "Font Color"
 msgstr "Color de Letra"
 
@@ -972,9 +987,6 @@ msgstr "Mostrar caja de texto"
 
 msgid "Box Color"
 msgstr "Color de la Caja"
-
-msgid "The timestamp size does not auto-adjust to the video size, you have to set the size here"
-msgstr "El tamaño de la estampa de tiempo no se auto ajusta al tamaño de video, configure aquí el tamaño"
 
 msgid "Timestamp settings"
 msgstr "Configurar Estampa de tiempo"
@@ -1285,10 +1297,6 @@ msgstr "Lista de Error"
 
 msgid "File(s) not found"
 msgstr "Archivo(s) no encontrado(s)"
-
-#, python-format
-msgid "File does not exist or is invalid:  %s"
-msgstr "Archivo no existe o invalido:  %s"
 
 msgid ""
 "Wait....\n"
@@ -1742,6 +1750,9 @@ msgstr "Milisegundos"
 msgid "No source duration:"
 msgstr "Sin duraci´on de la fuente:"
 
+msgid "Wave"
+msgstr ""
+
 #, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr "{0} {1}  |  Duración de Segmento: {2}"
@@ -1752,19 +1763,65 @@ msgstr "Ajuste de final"
 msgid "Start adjustment"
 msgstr "Iniciar ajuste"
 
+msgid "Toggles the display of the audio waveform in the background ruler"
+msgstr ""
+
+msgid "Reset segment on timeline"
+msgstr ""
+
+msgid "Timeline Editor Usage"
+msgstr "Uso del Editor de Linea de Tiempo"
+
+msgid "Play segment"
+msgstr ""
+
+msgid "Invalid file format for playback."
+msgstr ""
+
+msgid "No segment selected in the timeline yet."
+msgstr ""
+
+msgid ""
+"Invalid segment selection!\n"
+"«End» cursor must be moved to the right side of the «Start» cursor."
+msgstr ""
+
+#, python-format
+msgid "Invalid or unsupported file:  %s"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Unable to create waveform.\n"
+"The selected source file does not contain any audio streams:\n"
+"\"{}\""
+msgstr ""
+
+msgid ""
+"The timeline editor allows you to trim slices of time on selected imported media.\n"
+"The \"time format\" used to report durations is expressed in hours, minutes, seconds\n"
+"and milliseconds (HH:MM:SS.ms).\n"
+"\n"
+"Note that importing new files, making new selection, deselection, deleting items,\n"
+"sorting items, will reset any previous settings to default values.\n"
+"\n"
+"If no source file has been imported into Videomass, the overall duration values will\n"
+"be set to the maximum allowed duration (default is 23:59:59.999).\n"
+"\n"
+"The \"Start\"/\"End\" duration values always refer to the initial position of the timeline.\n"
+"Additional setup information and warnings are shown on the timeline status bar."
+msgstr ""
+
 msgid "Source duration:"
 msgstr "Duración de fuente:"
 
-msgid "WARNING: Invalid selection, out of range."
-msgstr "ADVERTENCIA: Selección invalida, fuera de rango."
+msgid "WARNING: Invalid segment selection, out of range."
+msgstr ""
 
 msgid ""
-"Start by dragging the bottom left handle,\n"
-"or right-click for options."
+"Start by dragging the handles in the left corners or\n"
+"click the Start/End adjustment buttons for fine tuning."
 msgstr ""
-"Empieza arrastrando el control inferior izquierdo,\n"
-"\n"
-"o presione con el botón derecho para ver las opciones."
 
 msgid "Start"
 msgstr "Iniciar"
@@ -1772,38 +1829,11 @@ msgstr "Iniciar"
 msgid "End"
 msgstr "Fin"
 
-msgid ""
-"The timeline editor is a tool that allows you to trim slices of time on selected imported media (see File List panel).\n"
-"\n"
-"The \"time format\" used to report durations is expressed in hours, minutes, seconds and milliseconds (HH:MM:SS.ms).\n"
-"\n"
-"Note that importing new files, making new selection, deselection, deleting items, sorting items (ie by LEFT clicking on the column headers), will reset any previous settings to default values.\n"
-"\n"
-"If the File List panel is empty or no source files are selected, the overall duration values will be set to 23:59:59.999, rather than the duration of a selected source file (see status bar messages).\n"
-"\n"
-"The \"Start\"/\"End\" duration values always refer to the initial position of the timeline: 00:00:00.000. For other informations as the segment duration and warnings, please refer to the status bar messages."
-msgstr ""
-"El editor de linea de tiempo le permite recortar partes seleccionadas del medio importado  (vea el panel Lista de Archivos).\n"
-"\n"
-"El  \"formato de tiempo\" usado para reportar la duración se expresa en horas, minutos, segundos y milisegundos (HH:MM:SS.ms).\n"
-"\n"
-"Note que al importar nuevos archivos, hacer o quitar una selección, quitar u ordenar objetos de la lista (p.ej presionando el botón izquierdo en la cabecera de una columna), regresara cualquier configuración a sus valores por defecto.\n"
-"\n"
-"Si el panel Lista de Archivos esta vació o no se seleccionan fuentes, los valores de duración se fijaran en 23:59:59.999, en vez de la duración de una fuente seleccionada (vea los mensajes en la barra de estado).\n"
-"\n"
-"Los valores \"Inicio\"/\"Fin\" siempre refieren al valor inicial de la linea de tiempo: 00:00:00.000. Para información sobre la duración del segmento y advertencias vea los mensajes en la barra de estado."
-
-msgid "Timeline Editor Usage"
-msgstr "Uso del Editor de Linea de Tiempo"
-
 msgid "Media:"
 msgstr "Medio:"
 
 msgid "Container:"
 msgstr "Contenedor:"
-
-msgid "Save profile"
-msgstr "Guardar perfil"
 
 msgid "Target"
 msgstr "Destino"
@@ -1813,6 +1843,9 @@ msgstr "Misceláneos"
 
 msgid "Save as a new profile of the Presets Manager."
 msgstr "Guardar nuevo perfil del Administrador de Presets."
+
+msgid "Displays the raw command line for the selected file."
+msgstr ""
 
 msgid "Available video encoders. \"Copy\" means that the video stream will not be re-encoded and will allow you (depending on the encoder) to change the container, audio codec and a few other parameters."
 msgstr "Codificadores de video disponibles. \"Copiar\" indica que el flujo de video no sera recodificado y permite (según el codificador) cambiar el contenedor, codificador de audio y algunos otros parámetros."
@@ -1864,8 +1897,8 @@ msgstr "Estabilizar"
 msgid "Equalize"
 msgstr "Equalizar"
 
-msgid "Unable to preview Video Stabilizer filter"
-msgstr "No se puede previsualizar el filtro Estabilizador de Video"
+msgid "To preview Stabilize filter, please click Preview button on Video Stabilizer Tool"
+msgstr ""
 
 msgid ""
 "Unsupported file:\n"
@@ -1883,6 +1916,12 @@ msgstr "¡No se detectaron valores de volumen! Presione el botón \"Detectar Vol
 msgid "Off"
 msgstr "Apagado"
 
+msgid "Auto"
+msgstr ""
+
+msgid "No Subtitles"
+msgstr ""
+
 msgid ""
 "Batch processing items\n"
 "Destination\n"
@@ -1890,23 +1929,13 @@ msgid ""
 "Encoding passes\n"
 "Output Format\n"
 "Video Codec\n"
+"Subtitle Stream\n"
 "Audio Codec\n"
 "Audio Normalization\n"
 "Output multimedia type\n"
 "Start of segment\n"
 "Clip duration"
 msgstr ""
-"Procesando por lotes\n"
-"Destino\n"
-"Automation/Preset\n"
-"Pasos de codificación\n"
-"Formato de Salida\n"
-"Codec de Video\n"
-"Codec de Audio\n"
-"Normalizar Audio\n"
-"Tipo de salida multimedia\n"
-"Segmento inicial\n"
-"Duración de Clip"
 
 #, python-brace-format
 msgid "Write profile on «{0}»"
@@ -2394,8 +2423,8 @@ msgid ""
 "2. Use the Resize tool for images which have different sizes such as width and\n"
 "height. It is optional in other cases.\n"
 "\n"
-"3. Use the Timeline editor (CTRL+T) to set the time interval between images by adjusting\n"
-"the \"End\" duration value and leaving the \"Start\" value at 00:00:00.000.\n"
+"3. Set a time interval between images, or for a single image if you use\n"
+" a single still image option.\n"
 "\n"
 "4. Run the conversion.\n"
 "\n"
@@ -2403,22 +2432,12 @@ msgid ""
 "The produced video will have the name of the selected file in the 'File List' panel, which\n"
 "will be saved in a folder named 'Still_Images' with a progressive digit, in the path you specify."
 msgstr ""
-"\n"
-"1. Importe uno o más archivos de imágenes en formato JPG, PNG y BMP , y seleccione uno.\n"
-"\n"
-"2. Usé la función Redimensionar en las imágenes que tengan altura y anchura\n"
-"diferentes. En otros casos es opcional.\n"
-"\n"
-"3. Usé el Editor de Linea de Tiempo (CTRL+T) para fijar el intervalo de tiempo entre las imágenes ajustando el valor \"FIN\" y dejando \"inicio\" en 00:00:00.000.\n"
-"\n"
-"4. Inicie la conversión.\n"
-"\n"
-"\n"
-"El video producido tendrá el nombre del archivo seleccionado en el panel 'Lista de Archivos' , \n"
-"y sera guardado en una carpeta llamada 'Still_Images' con un digito progresivo, en la trayectoria especificada."
 
 msgid "Enable a single still image"
 msgstr "Habilitar solo una imagen fija"
+
+msgid "Time interval between images (in seconds):"
+msgstr ""
 
 msgid ""
 "Force original aspect ratio using\n"
@@ -2633,26 +2652,18 @@ msgid "Limiter for the maximum peak level or the mean level (when switch to RMS)
 msgstr "Limita por máximo nivel de pico o por nivel promedio (cuando se usa RMS) en dBFS. Desde -99 a +0.0; predeterminado para nivel de pico es -1.0; para RMS es 20.0"
 
 msgid ""
-"Normally on a video with correctly indexed streams and having one or more audio streams, the first audio stream should be indexed at \"1\", the second at \"2\" and so on (the video stream on the other hand is always indexed at \"0\"). In this case it is recommended to select the desired stream by setting a specific index, e.g \"1\" for for the first available audio stream.\n"
+"\"Auto\", lets FFmpeg select the audio stream to process (usually the first audio stream). If the source file(s) is just an audio track, it's recommend to always set this control to \"Auto.\"\n"
 "\n"
-"Set this control to \"Auto\" if the source file is simply an audio track."
+"\"1-16\", if a video file contains more than one audio stream, you can select a specific one, e.g \"1\" for the first available audio stream, \"2\" for the second audio stream, and so on."
 msgstr ""
-"Normalmente en un video que contenga uno o mas flujos de audio que esté correctamente indexado, el primer flujo de audio tendrá el indice \"1\", el segundo \"2\" y así sucesivamente (el flujo de video siempre tendrá el indice \"0\"). Se recomienda seleccionar el flujo deseado fijando el indice, ej. \"1\"para el primer flujo de audio.\n"
-"\n"
-"Ponga este control en \"Auto\" si la fuente es una pista de audio ."
 
 msgid ""
 "\"Auto\" keeps all audio streams and processes only the one selected by the \"Index Selection\" control.\n"
 "\n"
-"\"All\" processes all audio streams in a video with the properties of the one selected by the \"Index Selection\" control.\n"
+"\"All\" processes all audio streams with the properties of the one selected by the \"Index Selection\" control. Don't use \"All\" to export audio files from videos.\n"
 "\n"
-"\"Index Only\" processes only the audio stream selected by the \"Index Selection\" control and removes all others from the video"
+"\"Index Only\" processes only the audio stream selected by the \"Index Selection\" control and removes all others from the output video."
 msgstr ""
-"\"Auto\" mantiene todos los flujos de audio pero solo procesa el seleccionado en el control \"Selección de Indice\".\n"
-"\n"
-"\"Todos\" procesa todos los flujos de audio con las propiedades del indice seleccionado en el control \"Selección de Indice\".\n"
-"\n"
-"\"Solo el Indice\" procesa solo el flujo de audio seleccionado en el control \"Selección de Indice\" y elimina el resto"
 
 msgid "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -16.0"
 msgstr "Intensidad Destino Integrada en LUFS. Desde -70.0 a -5.0, predeterminado -16.0"
@@ -2701,7 +2712,13 @@ msgstr ""
 msgid "You need to import at least one file"
 msgstr ""
 
-msgid "Subtitle Mapping:"
+msgid "Subtitle Properties"
+msgstr ""
+
+msgid "Subtitle Encoder"
+msgstr ""
+
+msgid "Chapters and Metadata"
 msgstr ""
 
 msgid "Copy Chapters"
@@ -2711,27 +2728,16 @@ msgid "Copy Metadata"
 msgstr "Copiar metadatos"
 
 msgid ""
-"Select \"All\" to include any source file subtitles in the output video.\n"
+"Select \"All\" to include any possible subtitle stream in the output video.\n"
 "\n"
-"Select \"None\" to exclude any subtitles stream in the output video.\n"
-"\n"
-"This option is automatically ignored for output audio files."
+"Select \"1-16\" to indexing the desired subtitle stream and exclude all others, e.g \"1\" for the first available subtitle stream, \"2\" for the second subtitle stream, and so on."
 msgstr ""
-"Seleccionar \"Todos\" incluirá cualquier archivo de subtítulos en la salida del video.\n"
-"\n"
-"Seleccionar \"Ninguno\"excluirá todo flujo de subtítulos en la salida del video.\n"
-"\n"
-"Se ignora esta opción sil la salida es archivo de audio."
 
-msgid "Copy the chapter markers as is from source file. This option is automatically ignored for output audio files."
-msgstr "Copiar las marcas de capítulos desde la fuente. Se ignora esta opción sil la salida es archivo de audio."
+msgid "Copy the chapter markers as is from source file."
+msgstr ""
 
 msgid "Copy all incoming metadata from source file, such as audio/video tags, titles, unique marks, and so on."
 msgstr "Copiar todos los metadatos desde la fuente, cosas como etiquetas de audio/video, títulos, marcas únicas, etc."
-
-#, fuzzy
-msgid "Additional options"
-msgstr "Argumentos Adicionales"
 
 #, fuzzy
 msgid "Reload"
@@ -2957,6 +2963,9 @@ msgid ""
 msgstr ""
 "Habilitarla, añade multiproceso por renglón que mejora el numero de hilos que el codificador puede usar. Esto mejora significativamente la velocidad de codificado al codificar en VP9, en sistemas que de otra manera están subutilizados. Ya que la cantidad adicional de hilos  depende del numero de \"cuadros\", lo que depende del la resolución del video, codificar videos con altas resoluciones "
 "mostrara un gran incremento en el desempeño."
+
+msgid "Please, see «ffplay.log» file for error details.\n"
+msgstr ""
 
 #, python-brace-format
 msgid "Supports ({0}) formats only, not ({1})"

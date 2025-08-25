@@ -43,17 +43,23 @@ Videomass can also be imported from the Python3 console (interactive mode):
 
 
 =====================================
-Compiles language translation catalog
+Translate the program into your language
 =====================================
 
-By default Videomass does not include the compiled catalog for language
-translations, i.e. `videomass.mo` files, especially on development source code.
-If you want to compile the language catalog to make the translations available
-on Videomass, use one of the following options based on your operating system
-requirements:
+By default, MO (aka Machine Object) files are not distributed with the
+source code and/or the Python sdist package, so the program will not be
+fully translated into your language. Compiling the language translation
+catalogs must be done on your machine by one of the following options:
 
-Using `generate_MO_files.sh` shell script (only for Linux, FreeBSD, MacOs)
---------------------------------------------------------------------------
+
+-1- Using PoEdit application: <https://poedit.net/>
+
+    Browse the directory corresponding to your language code:
+        "videomass/data/locale"
+    Open the videomass.po file using PoEdit, then save it (Ctrl+S). This is
+    enough to translate Videomass into your native language.
+
+-2- Using GNU-gettext utilities.
 
     Requires:
         - shell (/bin/bash)
@@ -63,17 +69,21 @@ Using `generate_MO_files.sh` shell script (only for Linux, FreeBSD, MacOs)
 
     ./develop/gettext_utils/generate_MO_files.sh
 
-
-Using `babelutils.py` python script (Platform-independent)
-----------------------------------------------------
+-3- Using `babel` Python package <https://pypi.org/project/babel/>
 
     Requires:
         - Python >= 3.9.0
-        - babel (installable via pip)
+        - pybabel (from `babel` package, installable via pip)
 
     cd Videomass (source directory)
+    pybabel compile --domain videomass --directory "videomass/data/locale"
 
-    python3 develop/gettext_utils/babelutils.py --compile --output-dir videomass/data/locale --domain videomass
+    To compile a single language file only, add the `--locale` option followed
+    by your locale code as argument (e.g. `de_DE`) to pybabel comand line.
+
+
+* Note that all the options listed above involve exiting and restarting
+  Videomass, then setting the proper language from the preferences dialog.
 
 
 ======================

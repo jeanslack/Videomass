@@ -47,7 +47,7 @@ class VolumeDetectThread(Thread):
     lack of ffmpeg of course.
 
     """
-    ERROR = 'Please, see volumedetected.log file for error details.\n'
+    ERROR = 'Please, see «volumedetected.log» file for error details.\n'
     STOP = '[Videomass]: STOP command received.'
 
     def __init__(self, timeseq, filelist, audiomap):

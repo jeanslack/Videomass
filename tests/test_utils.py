@@ -43,23 +43,24 @@ class TestToBytes(unittest.TestCase):
     """Test case for the to_bytes function."""
 
     def test_to_bytes_bytes(self):
-        self.assertEqual(to_bytes("596.00B"), 596.00)
-        self.assertEqual(to_bytes("133.55B"), 133.55)
+        self.assertEqual(to_bytes("596.00byte"), 596.00)
+        self.assertEqual(to_bytes("133.55byte"), 133.55)
 
     def test_to_bytes_kilobytes(self):
-        self.assertEqual(to_bytes("1.00KiB"), 1024.00)
-        self.assertEqual(to_bytes("5.55KiB"), 5683.20)
+        self.assertEqual(to_bytes("1.00Kibyte"), 1024.00)
+        self.assertEqual(to_bytes("5.55Kbyte"), 5683.20)
 
     def test_to_bytes_megabytes(self):
-        self.assertEqual(to_bytes("13.64MiB"), 14302576.64)
-        self.assertEqual(to_bytes("1.00MiB"), 1048576.00)
+        self.assertEqual(to_bytes("13.64Mibyte"), 14302576.64)
+        self.assertEqual(to_bytes("1.00Mbyte"), 1048576.00)
 
     def test_to_bytes_gigabytes(self):
-        self.assertEqual(to_bytes("1.00GiB"), 1073741824.00)
-        self.assertEqual(to_bytes("1.55GiB"), 1664299827.20)
+        self.assertEqual(to_bytes("1.00Gibyte"), 1073741824.00)
+        self.assertEqual(to_bytes("1.55Gbyte"), 1664299827.20)
 
     def test_to_bytes_terabytes(self):
-        self.assertEqual(to_bytes("1.00TiB"), 1099511627776.00)
+        self.assertEqual(to_bytes("1.00Tibyte"), 1099511627776.00)
+        self.assertEqual(to_bytes("1.00Tbyte"), 1099511627776.00)
 
 
 class Test_time_to_integer(unittest.TestCase):

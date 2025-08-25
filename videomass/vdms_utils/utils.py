@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.05.2024
+Rev: Aug.20.2025
 Code checker: flake8, pylint .
 
 This file is part of Videomass.
@@ -166,28 +166,27 @@ def format_bytes(num):
 # ------------------------------------------------------------------------
 
 
-def to_bytes(string, key='ydl'):
+def to_bytes(string):
     """
     Convert given size string to bytes, e.g.
     out = to_bytes('9.45MiB')
     It return a number 'float' object.
-    Updated on March 23 2022:
-        added key default arg.
-
+    Updated on Aug 20 2025.
     """
     value = 0.0
-    unit = ["byte", "Kibyte", "Mibyte", "Gibyte", "Tibyte",
-            "Pibyte", "Eibyte", "Zibyte", "Yibyte"]
-
-    if key == 'ydl':
-        unit = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
-
+    unit = {"Yibyte": 0, "Ybyte": 0, "Zibyte": 1, "Zbyte": 1,
+            "Eibyte": 2, "Ebyte": 2, "Pibyte": 3, "Pbyte": 3,
+            "Tibyte": 4, "Tbyte": 4, "Gibyte": 5, "Gbyte": 5,
+            "Mbyte": 6, "Mibyte": 6, "Kibyte": 7, "Kbyte": 7,
+            "byte": 8,
+            }
+    maxint = list(unit.values())
     const = 1024.0
 
-    for index, metric in enumerate(reversed(unit)):
+    for metric, val in unit.items():
         if metric in string:
             value = float(string.split(metric)[0])
-            exponent = index * (-1) + (len(unit) - 1)
+            exponent = val * (-1) + (max(maxint))
             break
 
     return round(value * (const ** exponent), 2)

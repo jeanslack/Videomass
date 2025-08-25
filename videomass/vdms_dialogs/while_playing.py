@@ -87,7 +87,7 @@ class WhilePlaying(wx.Dialog):
 
         label1 = wx.StaticText(panel, wx.ID_ANY, WhilePlaying.KEYS)
         label2 = wx.StaticText(panel, wx.ID_ANY, WhilePlaying.EXPLAN)
-        self.button_close = wx.Button(panel_base, wx.ID_CLOSE, "")
+        button_close = wx.Button(panel_base, wx.ID_CLOSE, "")
         # ----------------------Properties----------------------#
         self.SetTitle(_("Shortcut keys while playing with FFplay"))
 
@@ -99,7 +99,7 @@ class WhilePlaying(wx.Dialog):
         gr_s1.Add(label1, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
         gr_s1.Add(label2, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
         btngrid = wx.FlexGridSizer(1, 1, 0, 0)
-        btngrid.Add(self.button_close, 0, wx.ALL, 0)
+        btngrid.Add(button_close, 0, wx.ALL, 0)
         panel.SetSizer(gr_s1)
         sizer_base.Add(btngrid, flag=wx.ALL
                        | wx.ALIGN_RIGHT
@@ -114,7 +114,7 @@ class WhilePlaying(wx.Dialog):
         self.Layout()
 
         # binding
-        self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
+        self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
     # --------------------------------------------------------------#
 

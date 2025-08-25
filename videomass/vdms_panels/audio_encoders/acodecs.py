@@ -33,7 +33,7 @@ from videomass.vdms_dialogs.audioproperties import AudioProperties
 from videomass.vdms_utils.utils import get_volume_data
 from videomass.vdms_io.io_tools import volume_detect_process
 from videomass.vdms_dialogs.shownormlist import AudioVolNormal
-from videomass.vdms_io.io_tools import stream_play
+from videomass.vdms_threads.ffplay_file import FilePlay
 
 
 class AudioEncoders(scrolled.ScrolledPanel):
@@ -66,8 +66,6 @@ class AudioEncoders(scrolled.ScrolledPanel):
                             'ogg', 'mp3', 'opus', 'copy', 'mute'),
                   ('webm'): ('default', None, None, None, None, None, 'ogg',
                              None, 'opus', 'copy', 'mute'),
-                  ('ogv'): ('default', None, 'flac', None, None, None, 'ogg',
-                            None, 'opus', 'copy', 'mute'),
                   ('wav'): (None, 'wav', None, None, None, None, None, None,
                             None, 'copy', None),
                   ('mp3'): (None, None, None, None, None, None, None, 'mp3',
@@ -149,7 +147,9 @@ class AudioEncoders(scrolled.ScrolledPanel):
         sizproper.Add(txtAinmap, 0, wx.LEFT | wx.CENTRE, 20)
         self.cmb_A_inMap = wx.ComboBox(self, wx.ID_ANY,
                                        choices=['Auto', '1', '2', '3',
-                                                '4', '5', '6', '7', '8'],
+                                                '4', '5', '6', '7', '8', '9',
+                                                '10', '11', '12', '13', '14',
+                                                '15', '16',],
                                        size=(-1, -1), style=wx.CB_DROPDOWN
                                        | wx.CB_READONLY,
                                        )
@@ -268,22 +268,22 @@ class AudioEncoders(scrolled.ScrolledPanel):
                  '(when switch to RMS) in dBFS. From -99.0 to +0.0; default '
                  'for PEAK level is -1.0; default for RMS is -20.0'))
         self.spin_target.SetToolTip(tip)
-        tip = (_('Normally on a video with correctly indexed streams and '
-                 'having one or more audio streams, the first audio stream '
-                 'should be indexed at "1", the second at "2" and so on (the '
-                 'video stream on the other hand is always indexed at "0"). '
-                 'In this case it is recommended to select the desired stream '
-                 'by setting a specific index, e.g "1" for for the first '
-                 'available audio stream.\n\nSet this control to "Auto" if '
-                 'the source file is simply an audio track.'))
+        tip = (_('"Auto", lets FFmpeg select the audio stream to process '
+                 '(usually the first audio stream). If the source file(s) '
+                 'is just an audio track, it\'s recommend to always set this '
+                 'control to "Auto."\n\n"1-16", if a video file contains '
+                 'more than one audio stream, you can select a specific '
+                 'one, e.g "1" for the first available audio stream, '
+                 '"2" for the second audio stream, and so on.'))
         self.cmb_A_inMap.SetToolTip(tip)
         tip = (_('"Auto" keeps all audio streams and processes only the one '
                  'selected by the "Index Selection" control.\n\n'
-                 '"All" processes all audio streams in a video with the '
-                 'properties of the one selected by the "Index Selection" '
-                 'control.\n\n"Index Only" processes only the audio stream '
-                 'selected by the "Index Selection" control and removes all '
-                 'others from the video'))
+                 '"All" processes all audio streams with the properties '
+                 'of the one selected by the "Index Selection" control. '
+                 'Don\'t use "All" to export audio files from videos.\n\n'
+                 '"Index Only" processes only the audio stream selected by '
+                 'the "Index Selection" control and removes all others '
+                 'from the output video.'))
         self.cmb_A_outMap.SetToolTip(tip)
         tip = (_('Integrated Loudness Target in LUFS. '
                  'From -70.0 to -5.0, default is -16.0'))
@@ -466,18 +466,33 @@ class AudioEncoders(scrolled.ScrolledPanel):
         else:
             return None
 
-        if self.maindata.checktimestamp:
-            args = (f'-showmode waves -vf "{self.maindata.cmdtimestamp}" '
-                    f'{afilter} {idx}')
-        else:
-            args = f'{afilter} {idx}'
-
-        stream_play(self.maindata.file_src[fileget[1]],
-                    self.maindata.time_seq,
-                    args,
-                    self.maindata.autoexit
-                    )
+        self.build_playfile_command(afilter,
+                                    idx,
+                                    self.maindata.file_src[fileget[1]]
+                                    )
         return None
+    # ------------------------------------------------------------------#
+
+    def build_playfile_command(self, afilter, index, filepath):
+        """
+        Build ffplay command for playback
+        """
+        autoexit = '-autoexit' if self.maindata.autoexit else ''
+
+        if self.maindata.checktimestamp:
+            args = (f'-showmode waves {autoexit} -i "{filepath}" '
+                    f'{self.maindata.time_seq} '
+                    f'-vf "{self.maindata.cmdtimestamp}" {afilter} {index}')
+        else:
+            args = (f'-showmode waves {autoexit} -i "{filepath}" '
+                    f'{self.maindata.time_seq} '
+                    f'{afilter} {index}')
+        try:
+            with open(filepath, encoding='utf-8'):
+                FilePlay(args)
+        except IOError:
+            wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
+                          "Videomass", wx.ICON_EXCLAMATION, self)
     # ------------------------------------------------------------------#
 
     def get_audio_stream(self, fileselected):
@@ -492,14 +507,11 @@ class AudioEncoders(scrolled.ScrolledPanel):
         """
         selected = self.maindata.data_files[fileselected[1]].get('streams')
         isaudio = [a for a in selected if 'audio' in a.get('codec_type')]
+        idx = self.cmb_A_inMap.GetValue()
 
         if isaudio:
-            if not self.cmb_A_inMap.GetValue() == 'Auto':  # 1 to 8
-                if [v for v in selected if 'video' in v.get('codec_type')]:
-                    idx = int(self.cmb_A_inMap.GetValue())
-                else:
-                    idx = int(self.cmb_A_inMap.GetValue()) - 1
-                if not [x for x in isaudio if x.get('index') == idx]:
+            if idx.isdigit():  # not Auto
+                if not len(isaudio) - 1 == int(idx) - 1:
                     wx.MessageBox(_('Selected index does not exist or '
                                     'does not contain any audio streams'),
                                   'Videomass', wx.ICON_INFORMATION, self)

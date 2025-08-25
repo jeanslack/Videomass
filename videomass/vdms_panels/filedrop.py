@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.26.2025
+Rev: Aug.20.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -28,7 +28,7 @@ import os
 import re
 import wx
 from pubsub import pub
-from videomass.vdms_io.io_tools import stream_play
+from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_threads.ffprobe import ffprobe
 from videomass.vdms_utils.utils import time_to_integer
 from videomass.vdms_utils.utils import to_bytes
@@ -449,7 +449,7 @@ class FileDnD(wx.Panel):
                 curritems.sort(key=lambda item: item[2])
             elif event.GetColumn() == 4:
                 curritems.sort(key=lambda item:
-                               to_bytes(''.join(item[3].split()), 'ffmpeg'))
+                               to_bytes(''.join(item[3].split())))
             elif event.GetColumn() == 5:
                 curritems.sort(key=lambda item: item[4])
 
@@ -483,13 +483,15 @@ class FileDnD(wx.Panel):
             self.parent.rename_batch.Enable(False)
         self.parent.clearall.Enable(True)
 
+        selitem = None
+
         if setfocus:
             sel = self.flCtrl.GetFocusedItem()  # Get the current row
             selitem = sel if sel != -1 else 0
             self.flCtrl.Focus(selitem)  # make the line the current line
             self.flCtrl.Select(selitem, on=1)  # default event selection
 
-        pub.sendMessage("RESET_ON_CHANGED_LIST", msg=None)
+        pub.sendMessage("RESET_ON_CHANGED_LIST", msg=selitem)
     # ----------------------------------------------------------------------
 
     def on_play_select(self, event):
@@ -502,12 +504,21 @@ class FileDnD(wx.Panel):
             return
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index, 1)
+
+        autoexit = '-autoexit' if self.parent.autoexit else ''
         if self.parent.checktimestamp:
-            tstamp = f'-vf "{self.parent.cmdtimestamp}"'
+            args = (f'{autoexit} -i "{item}" '
+                    f'{self.parent.time_seq} '
+                    f'-vf "{self.parent.cmdtimestamp}"')
         else:
-            tstamp = ""
-        stream_play(item, self.parent.time_seq,
-                    tstamp, self.parent.autoexit)
+            args = f'{autoexit} -i "{item}" {self.parent.time_seq}'
+        try:
+            with open(item, encoding='utf-8'):
+                FilePlay(args)
+        except IOError:
+            wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
+                          "Videomass", wx.ICON_EXCLAMATION, self)
+            return
     # ----------------------------------------------------------------------
 
     def on_delete_selected(self, event):
@@ -538,7 +549,7 @@ class FileDnD(wx.Panel):
             self.file_src.pop(num)
             self.duration.pop(num)
             self.flCtrl.Select(num - 1)  # select the previous one
-        self.changes_in_progress(setfocus=False)  # reset timeline
+        self.changes_in_progress(setfocus=True)  # reset timeline
         # self.on_deselect(self)  # deselect removed file
 
         for x in range(self.flCtrl.GetItemCount()):
