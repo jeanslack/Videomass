@@ -210,7 +210,7 @@ class Float_TL(wx.MiniFrame):
 
         self.parent = parent
         self.duration = self.parent.duration
-        self.overalltime = '23:59:59.999'
+        self.overalltime = '00:00:00.000'
         self.milliseconds = 86399999  # 23:59:59:999
         self.clock_start = '00:00:00.000'  # seek position
         self.clock_end = '00:00:00.000'
@@ -229,44 +229,49 @@ class Float_TL(wx.MiniFrame):
         wx.MiniFrame.__init__(self, parent, -1, style=wx.CAPTION | wx.CLOSE_BOX
                               | wx.SYSTEM_MENU | wx.FRAME_FLOAT_ON_PARENT
                               )
-        panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
-                         | wx.BORDER_THEME)
+        self.panelbase = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
+                                  | wx.BORDER_THEME)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        self.paneltime = wx.Panel(panel, wx.ID_ANY,
-                                  size=(Float_TL.PW, Float_TL.PH),
-                                  style=wx.BORDER_SUNKEN,
-                                  )
-        sizer_base.Add(self.paneltime, 0, wx.ALL | wx.CENTRE, 2)
+        self.panelruler = wx.Panel(self.panelbase, wx.ID_ANY,
+                                   size=(Float_TL.PW, Float_TL.PH),
+                                   style=wx.BORDER_SUNKEN,
+                                   )
+        sizer_base.Add(self.panelruler, 0, wx.ALL | wx.CENTRE, 2)
         sizer_btns = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(sizer_btns, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_play = wx.Button(panel, wx.ID_ANY, "", size=(40, -1))
+        self.btn_play = wx.Button(self.panelbase, wx.ID_ANY, "", size=(40, -1))
         self.btn_play.SetBitmap(bmp_play, wx.LEFT)
         sizer_btns.Add(self.btn_play, 0, wx.RIGHT | wx.CENTRE, 20)
-        self.counterplay = wx.StaticText(panel, wx.ID_ANY, ("00:00:00.000"))
+        self.counterplay = wx.StaticText(self.panelbase, wx.ID_ANY,
+                                         ("00:00:00.000"))
         self.counterplay.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL,
                                          wx.BOLD, 0, ""))
         sizer_btns.Add(self.counterplay, 0, wx.RIGHT | wx.CENTRE, 20)
-        self.btn_tstart = wx.Button(panel, wx.ID_ANY, "", size=(40, -1))
+        self.btn_tstart = wx.Button(self.panelbase, wx.ID_ANY, "",
+                                    size=(40, -1))
         self.btn_tstart.SetBitmap(bmp_tstart, wx.LEFT)
         sizer_btns.Add(self.btn_tstart, 0, wx.CENTRE, 5)
-        self.btn_reset = wx.Button(panel, wx.ID_ANY, "", size=(40, -1))
+        self.btn_reset = wx.Button(self.panelbase, wx.ID_ANY, "",
+                                   size=(40, -1))
         self.btn_reset.SetBitmap(bmp_reset, wx.LEFT)
         sizer_btns.Add(self.btn_reset, 0, wx.LEFT | wx.CENTRE, 5)
-        self.btn_tend = wx.Button(panel, wx.ID_ANY, "", size=(40, -1))
+        self.btn_tend = wx.Button(self.panelbase, wx.ID_ANY, "",
+                                  size=(40, -1))
         self.btn_tend.SetBitmap(bmp_tend, wx.LEFT)
         sizer_btns.Add(self.btn_tend, 0, wx.LEFT | wx.CENTRE, 5)
-        self.btn_wave = wx.ToggleButton(panel, wx.ID_ANY, _("Wave"),
+        self.btn_wave = wx.ToggleButton(self.panelbase, wx.ID_ANY, _("Wave"),
                                         size=(-1, -1))
         self.btn_wave.SetBitmap(bmp_wave, wx.LEFT)
         sizer_btns.Add(self.btn_wave, 0, wx.LEFT | wx.CENTRE, 20)
-        btn_readme = wx.Button(panel, wx.ID_ANY, _("Read me"), size=(-1, -1))
+        btn_readme = wx.Button(self.panelbase, wx.ID_ANY, _("Read me"),
+                               size=(-1, -1))
         btn_readme.SetBackgroundColour(wx.Colour(Float_TL.READMEGREEN))
         btn_readme.SetForegroundColour(wx.Colour(Float_TL.READMEBLACK))
         sizer_btns.Add(btn_readme, 0, wx.LEFT | wx.CENTRE, 20)
 
         # ----------------------Properties ----------------------#
-        self.paneltime.SetBackgroundColour(wx.Colour(Float_TL.RULER_BKGRD))
-        # self.paneltime.SetBackgroundColour(wx.Colour(Float_TL.BLACK))
+        self.panelruler.SetBackgroundColour(wx.Colour(Float_TL.RULER_BKGRD))
+        # self.panelruler.SetBackgroundColour(wx.Colour(Float_TL.BLACK))
         self.SetTitle("Timeline Editor")
         self.sb = self.CreateStatusBar(1)
         msg = _('{0} {1}  |  Segment Duration: {2}'
@@ -274,7 +279,7 @@ class Float_TL(wx.MiniFrame):
         self.statusbar_msg(msg, None)
 
         # ----------------------Layout----------------------#
-        panel.SetSizer(sizer_base)
+        self.panelbase.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
 
@@ -292,6 +297,9 @@ class Float_TL(wx.MiniFrame):
             self.font_med = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         self.CentreOnScreen()
         # print(self.GetSize())
+
+        # ---------------------- disable all controls by default
+        self.panelbase.Disable()
 
         # ---------------------- Tooltips
         tip = _('End adjustment')
@@ -319,11 +327,11 @@ class Float_TL(wx.MiniFrame):
         self.Bind(wx.EVT_BUTTON, self.on_trim_time_reset, self.btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_readme)
         self.Bind(wx.EVT_BUTTON, self.on_play_segment, self.btn_play)
-        self.paneltime.Bind(wx.EVT_PAINT, self.OnPaint)
-        self.paneltime.Bind(wx.EVT_LEFT_DOWN, self.on_leftdown)
-        self.paneltime.Bind(wx.EVT_LEFT_UP, self.on_leftup)
-        self.paneltime.Bind(wx.EVT_LEFT_DCLICK, self.on_set_pos)
-        self.paneltime.Bind(wx.EVT_MOTION, self.on_move)
+        self.panelruler.Bind(wx.EVT_PAINT, self.OnPaint)
+        self.panelruler.Bind(wx.EVT_LEFT_DOWN, self.on_leftdown)
+        self.panelruler.Bind(wx.EVT_LEFT_UP, self.on_leftup)
+        self.panelruler.Bind(wx.EVT_LEFT_DCLICK, self.on_set_pos)
+        self.panelruler.Bind(wx.EVT_MOTION, self.on_move)
         self.Bind(wx.EVT_CLOSE, self.on_close)
 
         pub.subscribe(self.set_values, "RESET_ON_CHANGED_LIST")
@@ -427,7 +435,7 @@ class Float_TL(wx.MiniFrame):
         self.btn_tstart.Disable()
         self.btn_reset.Disable()
         self.btn_tend.Disable()
-        self.paneltime.Disable()
+        self.panelruler.Disable()
         self.playpoint = round(self.bar_x)
     # ----------------------------------------------------------------------
 
@@ -447,7 +455,7 @@ class Float_TL(wx.MiniFrame):
                 timemils = float(line[0]) * 1000
                 res = integer_to_time(round(timemils))
                 self.counterplay.SetLabel(res)
-                self.onRedraw(wx.ClientDC(self.paneltime))
+                self.onRedraw(wx.ClientDC(self.panelruler))
                 scaletopix = round(self.pix / (Float_TL.RW
                                                / timemils) * Float_TL.RW)
                 pixpos = scaletopix
@@ -463,7 +471,7 @@ class Float_TL(wx.MiniFrame):
         It is called by `FilePlay` class thread to indicate the end of the
         thread.
         """
-        self.paneltime.Enable()
+        self.panelruler.Enable()
         self.btn_play.Enable()
         self.btn_tstart.Enable()
         self.btn_reset.Enable()
@@ -495,27 +503,27 @@ class Float_TL(wx.MiniFrame):
         else:
             self.frame = None
 
-        self.onRedraw(wx.ClientDC(self.paneltime))
+        self.onRedraw(wx.ClientDC(self.panelruler))
     # ----------------------------------------------------------------------
 
     def on_help(self, event):
         """
         Event clicking on button Read me.
         """
-        msg = (_("The timeline editor allows you to trim slices "
-                 "of time on selected imported media.\n"
-                 "The \"time format\" used to report durations is expressed "
-                 "in hours, minutes, seconds\nand milliseconds (HH:MM:SS.ms)."
-                 "\n\nNote that importing new files, making new selection, "
-                 "deselection, deleting items,\nsorting items, will reset any "
-                 "previous settings to default values.\n\n"
-                 "If no source file has been imported into Videomass, the "
-                 "overall duration values will\nbe set to the maximum allowed "
-                 "duration (default is 23:59:59.999).\n\n"
-                 "The \"Start\"/\"End\" duration values always refer to the "
-                 "initial position of the timeline.\nAdditional setup "
-                 "information and warnings are shown on the timeline "
-                 "status bar."
+        msg = (_("The timeline editor allows you to trim slices of time on "
+                 "selected files.\nThe time format used to report durations "
+                 "is expressed in hours, minutes,\nseconds and milliseconds "
+                 "(HH:MM:SS.ms).\n\nThe «Start»/«End» duration values always "
+                 "refer to the initial position of\na overall duration. "
+                 "The overall duration of a file and the duration of a\n"
+                 "selected segment (including warnings) are displayed on the "
+                 "timeline\nstatus bar.\n\nPlease note that actions such as "
+                 "importing new files, selecting, deselecting,\ndeleting, and "
+                 "sorting items will reset the timeline to its default "
+                 "values.\n\nIf no source file, the duration values ​​will be "
+                 "set to the default value\n(00:00:00.000) and all timeline "
+                 "controls will be disabled.\nThis behavior also applies when "
+                 "deselecting files."
                  ))
         win = NormalTransientPopup(self,
                                    wx.SIMPLE_BORDER,
@@ -549,7 +557,7 @@ class Float_TL(wx.MiniFrame):
         self.counterplay.SetLabel('00:00:00.000')
         self.statusbar_msg(msg, None)
         self.parent.time_seq = ""
-        self.onRedraw(wx.ClientDC(self.paneltime))
+        self.onRedraw(wx.ClientDC(self.panelruler))
     # ------------------------------------------------------------------#
 
     def set_values(self, msg):
@@ -562,16 +570,21 @@ class Float_TL(wx.MiniFrame):
         self.sourcedur = _('No source duration:')
         if msg is None:
             self.milliseconds = 86399999
+            self.overalltime = '00:00:00.000'
+            self.panelbase.Disable()
         else:
             if self.duration[msg] < 100:
                 self.milliseconds = 86399999
+                self.panelbase.Disable()
+                self.overalltime = '00:00:00.000'
             else:
                 self.milliseconds = self.duration[msg]
                 self.sourcedur = _('Source duration:')
+                self.panelbase.Enable()
+                self.overalltime = integer_to_time(self.milliseconds)
 
         self.btn_wave.SetValue(False)
         self.frame = None
-        self.overalltime = integer_to_time(self.milliseconds)
         self.on_trim_time_reset(None)
     # ------------------------------------------------------------------#
 
@@ -601,20 +614,20 @@ class Float_TL(wx.MiniFrame):
             self.bar_w = self.pointpx[0]
             self.mills_end = int(round(self.bar_w / self.pix))
             self.clock_end = integer_to_time(self.mills_end)
-            self.onRedraw(wx.ClientDC(self.paneltime))
+            self.onRedraw(wx.ClientDC(self.panelruler))
 
         elif self.pointpx[1] < 30:
             self.bar_x = self.pointpx[0]
             self.mills_start = int(round(self.bar_x / self.pix))
             self.clock_start = integer_to_time(self.mills_start)
-            self.onRedraw(wx.ClientDC(self.paneltime))
+            self.onRedraw(wx.ClientDC(self.panelruler))
     # ------------------------------------------------------------------#
 
     def on_leftdown(self, event):
         """
         Event on clicking the left mouse button
         """
-        self.paneltime.SetCursor(wx.Cursor(wx.CURSOR_HAND))
+        self.panelruler.SetCursor(wx.Cursor(wx.CURSOR_HAND))
         self.pointpx = event.GetPosition()
         if self.pointpx[0] >= Float_TL.RW:
             return
@@ -628,7 +641,7 @@ class Float_TL(wx.MiniFrame):
         Event on releasing the left mouse button
 
         """
-        self.paneltime.SetCursor(wx.Cursor(wx.CURSOR_ARROW))
+        self.panelruler.SetCursor(wx.Cursor(wx.CURSOR_ARROW))
 
         if self.bar_w == 0 and self.bar_x == 0:
             self.set_time_seq(isset=False)
@@ -674,7 +687,7 @@ class Float_TL(wx.MiniFrame):
                     self.mills_end = data[1]
                     self.clock_end = data[0]
 
-                self.onRedraw(wx.ClientDC(self.paneltime))
+                self.onRedraw(wx.ClientDC(self.panelruler))
                 self.on_leftup(None)
     # ------------------------------------------------------------------#
 
@@ -701,8 +714,8 @@ class Float_TL(wx.MiniFrame):
         """
         wx.PaintDC event
         """
-        dc = wx.PaintDC(self.paneltime)  # draw window boundary
-        self.paneltime.Refresh()  # needed on wayland to make it work
+        dc = wx.PaintDC(self.panelruler)  # draw window boundary
+        self.panelruler.Refresh()  # needed on wayland to make it work
         self.onRedraw(dc)
     # ------------------------------------------------------------------#
 
@@ -714,7 +727,7 @@ class Float_TL(wx.MiniFrame):
         msg = (_('Start by dragging the handles in the left corners or\n'
                  'click the Start/End adjustment buttons for fine tuning.'))
         if 'wxMSW' in wx.PlatformInfo:
-            self.paneltime.SetDoubleBuffered(True)  # prevents flickers
+            self.panelruler.SetDoubleBuffered(True)  # prevents flickers
         dc.Clear()
 
         if self.frame:
@@ -813,7 +826,7 @@ class Float_TL(wx.MiniFrame):
         USAGE EXAMPLE:
         self.playpoint = 100
         for i in range(10):
-            self.onRedraw(wx.ClientDC(self.paneltime))
+            self.onRedraw(wx.ClientDC(self.panelruler))
             self.playpoint += 50
         """
         dc.SetBrush(wx.Brush(wx.RED, wx.BRUSHSTYLE_SOLID))
