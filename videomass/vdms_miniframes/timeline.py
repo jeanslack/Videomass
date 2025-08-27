@@ -172,6 +172,7 @@ class Float_TL(wx.MiniFrame):
     RULER_BKGRD = '#84D2C9'  # CYAN for ruler background
     TEXTDEF = '#B1F2E8'  # Light CYAN
     SELECTION = (100, 250, 144, 100)  # Light CYAN
+    # SELECTION = '#B1F2E8'  # Light CYAN
     DELIMITER_COLOR = '#009DCB'  # Azure for margin selection
     TEXT_PEN_COLOR = '#020D0F'  # black for draw lines
     DURATION_START = '#E95420'  # Light orange for duration/start indicators
@@ -237,8 +238,8 @@ class Float_TL(wx.MiniFrame):
                                    style=wx.BORDER_SUNKEN,
                                    )
         sizer_base.Add(self.panelruler, 0, wx.ALL | wx.CENTRE, 2)
-        sizer_btns = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_base.Add(sizer_btns, 0, wx.ALL | wx.CENTRE, 5)
+        sizer_btns = wx.FlexGridSizer(0, 7, 0, 0)
+        sizer_base.Add(sizer_btns, 0, wx.ALL | wx.CENTRE, 8)
         self.btn_play = wx.Button(self.panelbase, wx.ID_ANY, "", size=(40, -1))
         self.btn_play.SetBitmap(bmp_play, wx.LEFT)
         sizer_btns.Add(self.btn_play, 0, wx.RIGHT | wx.CENTRE, 20)
@@ -510,21 +511,21 @@ class Float_TL(wx.MiniFrame):
         """
         Event clicking on button Read me.
         """
-        msg = (_("The timeline editor allows you to trim slices of time on "
-                 "selected files.\nThe time format used to report durations "
-                 "is expressed in hours, minutes,\nseconds and milliseconds "
-                 "(HH:MM:SS.ms).\n\nThe «Start»/«End» duration values always "
-                 "refer to the initial position of\na overall duration. "
-                 "The overall duration of a file and the duration of a\n"
-                 "selected segment (including warnings) are displayed on the "
-                 "timeline\nstatus bar.\n\nPlease note that actions such as "
-                 "importing new files, selecting, deselecting,\ndeleting, and "
-                 "sorting items will reset the timeline to its default "
-                 "values.\n\nIf no source file, the duration values ​​will be "
-                 "set to the default value\n(00:00:00.000) and all timeline "
-                 "controls will be disabled.\nThis behavior also applies when "
-                 "deselecting files."
-                 ))
+        msg = (_('The timeline editor allows you to trim slices of time on '
+                 'selected files.\nThe time format used to report durations '
+                 'is expressed in hours, minutes,\nseconds and milliseconds '
+                 '(HH:MM:SS.ms).\n\nThe «Start»/«End» duration values always '
+                 'refer to the initial position of\na overall duration. '
+                 'The overall duration of a file and the duration of a\n'
+                 'selected segment (including warnings) are displayed on the '
+                 'timeline\nstatus bar.\n\nPlease note that actions such as '
+                 'importing new files, selecting, deselecting,\ndeleting, and '
+                 'sorting items will reset the timeline to its default '
+                 'values.\n\nIf no source file, the duration values ​​will be '
+                 'set to the default value\n(00:00:00.000) and all timeline '
+                 'controls will be disabled.\nThis behavior also applies when '
+                 'deselecting files.'))
+
         win = NormalTransientPopup(self,
                                    wx.SIMPLE_BORDER,
                                    msg,
@@ -726,15 +727,9 @@ class Float_TL(wx.MiniFrame):
         """
         msg = (_('Start by dragging the handles in the left corners or\n'
                  'click the Start/End adjustment buttons for fine tuning.'))
-        if 'wxMSW' in wx.PlatformInfo:
+        if Float_TL.OS == 'Windows':
             self.panelruler.SetDoubleBuffered(True)  # prevents flickers
         dc.Clear()
-
-        if self.frame:
-            bmp = wx.Image(self.frame, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        else:
-            bmp = wx.Bitmap(910, 80)
-        dc.DrawBitmap(bmp, 0, 0, True)
 
         # set start/end text colors
         if self.bar_w == 0 and self.bar_x == 0:
@@ -751,11 +746,19 @@ class Float_TL(wx.MiniFrame):
             self.invalidselection = False
             selcolor, textcolor = Float_TL.SELECTION, Float_TL.DURATION_START
 
-        self.ruler_notches(dc)
+        if self.frame and Float_TL.OS != 'Windows':
+            bmp = wx.Image(self.frame, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+            dc.DrawBitmap(bmp, 0, 0, True)
+
         self.text_time_indicator(dc, textcolor, selcolor)
+        self.ruler_notches(dc)
 
         if self.playpoint:
             self.move_play_cursor(dc)
+
+        if self.frame and Float_TL.OS == 'Windows':
+            bmp = wx.Image(self.frame, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+            dc.DrawBitmap(bmp, 0, 0, True)
     # ------------------------------------------------------------------#
 
     def text_time_indicator(self, dc, textcolor, selcolor):
@@ -848,7 +851,7 @@ class Float_TL(wx.MiniFrame):
                 self.sb.SetBackgroundColour(bcolor)
                 self.sb.SetForegroundColour(fcolor)
 
-        if 'wxMSW' in wx.PlatformInfo:
+        if Float_TL.OS == 'Windows':
             self.sb.SetDoubleBuffered(True)  # prevents flickers
         self.sb.SetStatusText(msg)
         self.sb.Refresh()
