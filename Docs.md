@@ -12,7 +12,7 @@ Online documentation is work in progress.
 ## User's Guide
 {: .bg-green-300}
 
-The User Guide was written in English and is available in PDF format only (update to v6.1.12).
+English User Guide in PDF format (update to v6.1.12).
 
 - [User Interface Overview](User-guide/User_Interface_Overview_en.pdf)
 - [Toolbars](User-guide/Toolbars_en.pdf)
@@ -20,6 +20,10 @@ The User Guide was written in English and is available in PDF format only (updat
 - [Presets Manager](User-guide/Presets_Manager_en.pdf)
 - [Timeline Usage](User-guide/Timeline_en.pdf)
 - [Video Filters](User-guide/Video_filters_en.pdf)
+
+Browse User Guides translated into other languages:
+
+- [Russian (beta)](User-Guide/Russian/)
 
 ## Demo videos and screencasts
 {: .bg-green-300}
