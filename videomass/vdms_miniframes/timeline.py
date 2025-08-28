@@ -240,6 +240,7 @@ class Float_TL(wx.MiniFrame):
                                    )
         sizer_base.Add(self.panelruler, 0, wx.ALL | wx.CENTRE, 2)
         sizer_btns = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_btns = wx.FlexGridSizer(0, 7, 0, 0)
         sizer_base.Add(sizer_btns, 0, wx.ALL | wx.CENTRE, 8)
         self.btn_play = wx.Button(self.panelbase, wx.ID_ANY, "", size=(40, -1))
         self.btn_play.SetBitmap(bmp_play, wx.LEFT)
@@ -249,7 +250,8 @@ class Float_TL(wx.MiniFrame):
                                          ("00:00:00.000"))
         self.counterplay.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL,
                                          wx.BOLD, 0, ""))
-        sizer_btns.Add(self.counterplay, 0, wx.RIGHT | wx.CENTRE, 20)
+        sizer_btns.Add(self.counterplay, 0, wx.RIGHT | wx.ALIGN_CENTRE_VERTICAL
+                       | wx.ALIGN_CENTRE_HORIZONTAL, 20)
         if Float_TL.OS == 'Windows':
             self.counterplay.Hide()
             self.btn_play.Hide()

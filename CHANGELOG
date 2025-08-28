@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 28 August 2025 v6.1.15
+Thu, 28 August 2025 v6.1.18
 
   * Fixed `ValueError: could not convert string to float:` in
     long_processing_task.py using latest FFmpeg versions.
