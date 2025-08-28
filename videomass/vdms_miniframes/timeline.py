@@ -243,11 +243,15 @@ class Float_TL(wx.MiniFrame):
         self.btn_play = wx.Button(self.panelbase, wx.ID_ANY, "", size=(40, -1))
         self.btn_play.SetBitmap(bmp_play, wx.LEFT)
         sizer_btns.Add(self.btn_play, 0, wx.RIGHT | wx.CENTRE, 20)
+
         self.counterplay = wx.StaticText(self.panelbase, wx.ID_ANY,
                                          ("00:00:00.000"))
         self.counterplay.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL,
                                          wx.BOLD, 0, ""))
         sizer_btns.Add(self.counterplay, 0, wx.RIGHT | wx.CENTRE, 20)
+        if Float_TL.OS == 'Windows':
+            self.counterplay.Hide()
+            self.btn_play.Hide()
         self.btn_tstart = wx.Button(self.panelbase, wx.ID_ANY, "",
                                     size=(40, -1))
         self.btn_tstart.SetBitmap(bmp_tstart, wx.LEFT)
@@ -296,7 +300,7 @@ class Float_TL(wx.MiniFrame):
         else:
             self.SetSize((930, 150))
             self.font_med = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
-        self.CentreOnScreen()
+        # self.CentreOnScreen()
         # print(self.GetSize())
 
         # ---------------------- disable all controls by default
