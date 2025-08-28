@@ -229,6 +229,7 @@ class Float_TL(wx.MiniFrame):
 
         wx.MiniFrame.__init__(self, parent, -1, style=wx.CAPTION | wx.CLOSE_BOX
                               | wx.SYSTEM_MENU | wx.FRAME_FLOAT_ON_PARENT
+                              | wx.RESIZE_BORDER
                               )
         self.panelbase = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
                                   | wx.BORDER_THEME)
@@ -238,7 +239,7 @@ class Float_TL(wx.MiniFrame):
                                    style=wx.BORDER_SUNKEN,
                                    )
         sizer_base.Add(self.panelruler, 0, wx.ALL | wx.CENTRE, 2)
-        sizer_btns = wx.FlexGridSizer(0, 7, 0, 0)
+        sizer_btns = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(sizer_btns, 0, wx.ALL | wx.CENTRE, 8)
         self.btn_play = wx.Button(self.panelbase, wx.ID_ANY, "", size=(40, -1))
         self.btn_play.SetBitmap(bmp_play, wx.LEFT)
@@ -288,20 +289,16 @@ class Float_TL(wx.MiniFrame):
         sizer_base.Fit(self)
         self.Layout()
 
+        self.SetMinSize((920, 190))
+
         if Float_TL.OS == 'Linux':
-            self.SetSize((920, 135))
             self.font_med = wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         elif Float_TL.OS == 'Windows':
             self.font_med = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
-            self.SetSize((935, 150))
         elif Float_TL.OS == 'Darwin':
-            self.SetSize((915, 130))
             self.font_med = wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         else:
-            self.SetSize((930, 150))
             self.font_med = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
-        # self.CentreOnScreen()
-        # print(self.GetSize())
 
         # ---------------------- disable all controls by default
         self.panelbase.Disable()
