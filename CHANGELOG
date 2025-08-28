@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sat, 23 August 2025 v6.1.15
+Thu, 28 August 2025 v6.1.15
 
   * Fixed `ValueError: could not convert string to float:` in
     long_processing_task.py using latest FFmpeg versions.
@@ -29,15 +29,21 @@ Sat, 23 August 2025 v6.1.15
     headers using the latest FFmpeg versions (which changed unit names e.g.
     Mibyte to Mbyte etc.)
   * Using ffplay, the draw timestamp font size dependent on height of the video.
-  * [TIMELINE] New feature: added ability to display waveform (resolve #140
+  * [TIMELINE] New feature: Added ability to display waveform (resolve #140
     feature request).
+  * [TIMELINE] New feature (only available for Linux/FreeBSD/MacOS for now):
+    Added a convenient playback feature to the timeline with some additions
+    like a progress meter/cursor.
   * [TIMELINE] Improved GUI layout and usability.
-  * [TIMELINE] Fixed a bug in file import where the total duration in the
+  * [TIMELINE] Fixed a bug in file import where the overall duration in the
     timeline would get stuck at 23.59.59.999.
+  * [TIMELINE] Fixed the overall duration to 00:00:00.000 if no files were
+    imported or selected. In these cases, the timeline controls will now be disabled.
   * [FROM VIDEO TO PICTURES] Removed the `fifo` filter for GIF creation because
     it was removed from recent versions of FFmpeg (it also seems unnecessary).
   * [STILL IMAGE MAKER] Iproved usability setting the images time interval.
-
+  * Update Italian language (thanks to @Bovirus and @jeanslack).
+  * Update Russian language (thanks to ChourS)
 
 +------------------------------------+
 Wed, 30 July 2025 v6.1.13

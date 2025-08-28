@@ -31,6 +31,7 @@ import subprocess
 import platform
 import wx
 from pubsub import pub
+from videomass.vdms_utils.utils import Popen
 from videomass.vdms_io.make_filelog import make_log_template
 if not platform.system() == 'Windows':
     import shlex
@@ -150,7 +151,7 @@ class FilePlayback_GetOutput(Thread):
         """
         The `stats` argument allows ffplay to update output
         messages progressively. This allows parsing of the
-        output for progress information..
+        output for progress informations.
 
         """
         get = wx.GetApp()
@@ -167,10 +168,7 @@ class FilePlayback_GetOutput(Thread):
 
     def run(self):
         """
-        Executes ffplay command via subprocess.Popen .
-        IMPORTANT: do not use class Popen from utils.py here,
-        because 'info' flag do not work on MS-Windows using ffplay.
-        This is fixed using shell=True flag.
+        Executes ffplay command via Popen from utils.py.
         """
         # time.sleep(.5)
         line = 'NO MESSAGE PROVIDED :-('
@@ -183,24 +181,13 @@ class FilePlayback_GetOutput(Thread):
 
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
-            info = None
-            shell = False
-        else:
-            # NOTE: on MS-Windows, 'info' flag do not work with ffplay
-            # is Fixed with shell=True flag.
-            shell = True
-            info = None
-            # info = subprocess.STARTUPINFO()
-            # info.dwFlags |= subprocess.SW_HIDE
         try:
-            with subprocess.Popen(cmd,
-                                  shell=shell,
-                                  stderr=subprocess.PIPE,
-                                  bufsize=1,
-                                  universal_newlines=True,
-                                  encoding=self.appdata['encoding'],
-                                  startupinfo=info,
-                                  ) as proc:
+            with Popen(cmd,
+                       stderr=subprocess.PIPE,
+                       bufsize=1,
+                       universal_newlines=True,
+                       encoding=self.appdata['encoding'],
+                       ) as proc:
                 for line in proc.stderr:
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_PLAY_COUNTER",

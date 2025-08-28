@@ -51,7 +51,7 @@ class Raw_Cmd_Line(wx.Dialog):
         self.cmd2 = args[1] if len(args) > 1 else ''
 
         wx.Dialog.__init__(self, parent, -1,
-                           _("Videomass - Raw Command Line"),
+                           _("Videomass - RAW Commands"),
                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         size_base = wx.BoxSizer(wx.VERTICAL)
 
@@ -194,8 +194,9 @@ class Raw_Cmd_Line(wx.Dialog):
         """
         event on button help
         """
-        msg = (_("The raw command lines reflect the AV-Conversions interface\n"
-                 "settings and apply to the individual file selected.\n\n"
+        msg = (_("The RAW commands reflect the user settings made on\n"
+                 "AV-Conversions interface and apply only to the individual\n"
+                 "selected file.\n\n"
                  "Please note that using EBU R128 (High-Quality), any <?>\n"
                  "markers highlighted in red should be replaced with the\n"
                  "values given by the output of the first command."))

@@ -329,7 +329,7 @@ class AV_Conv(wx.Panel):
         # ---------------------- Tooltips
         tip = _('Save as a new profile of the Presets Manager.')
         self.btn_saveprst.SetToolTip(tip)
-        tip = _('Displays the raw command line for the selected file.')
+        tip = _('Displays the RAW commands of the selected file.')
         self.btn_cmd.SetToolTip(tip)
         tip = (_('Available video encoders. "Copy" means that the video '
                  'stream will not be re-encoded and will allow you (depending '
