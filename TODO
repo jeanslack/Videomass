@@ -3,6 +3,10 @@
 URGENCY: to do soon
 --------------------
 
+Consider automatically opening the log window to the specific log when errors are reported (e.g. volumedetect, etc.).
+
+- When the user selects one of the files in `File List`, opening any dialog box with the same file list as `File List` causes the selected file to be automatically selected.
+
 --------------
 URGENCY: high
 --------------
