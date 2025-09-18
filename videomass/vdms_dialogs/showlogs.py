@@ -44,6 +44,7 @@ class ShowLogs(wx.Dialog):
         self.dirlog > log location directory
         self.logdata > dict object {KEY=file name.log: VAL=log data, ...}
         self.selected > None if item on listctrl is not selected
+        self.applognames > Supported lognames list
 
         """
         self.dirlog = dirlog
