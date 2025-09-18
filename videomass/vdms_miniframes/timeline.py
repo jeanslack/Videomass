@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: April.07.2023
+Rev: Sep.18.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -35,6 +35,7 @@ from videomass.vdms_utils.utils import time_to_integer
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_io.io_tools import show_msg_notify
 from videomass.vdms_threads.ffplay_file import FilePlayback_GetOutput
 
 
@@ -376,8 +377,8 @@ class Float_TL(wx.MiniFrame):
         error = thread.status
         if error:
             self.frame = None
-            wx.MessageBox(f'{error}', _('Videomass - Error!'), wx.ICON_ERROR)
-
+            show_msg_notify(self.GetParent(),
+                            logname=os.path.basename(logfile))
         return self.frame
     # ------------------------------------------------------------------#
 
@@ -429,7 +430,7 @@ class Float_TL(wx.MiniFrame):
 
         try:
             with open(self.file_selection()[0], encoding='utf-8'):
-                FilePlayback_GetOutput(args)
+                FilePlayback_GetOutput(self.GetParent(), args)
         except IOError:
             wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
                           "Videomass", wx.ICON_EXCLAMATION, self)

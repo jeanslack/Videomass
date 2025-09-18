@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.18.2025
+Rev: July.10.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -37,56 +37,19 @@ from videomass.vdms_utils.utils import open_default_application
 from videomass.vdms_dialogs.widget_utils import PopupDialog
 
 
-def show_msg_notify(parent, warnlev: str = 'error', logname : str = 'log',
-                    addmsg=None, showlogdialog=True):
+def showmsgerr_stderr(parent, logname, caption=_('Videomass - Error!'),
+                      ico=wx.ICON_ERROR):
     """
-    This function shows and characterizes pop-up dialog messages
-    according to the passed arguments. It can be used to notify
-    errors, warnings, and information at the end of threads.
-
-    The `parent` is the child (given by `GetParent()` method) and must
-    descend from the first ancestor which is a top-level window
-    (i.e `main_frame`).
-
-    Default parameter `warnlev` accepts one of the following
-    strings: "info", "warning", "error", default is "error".
-
-    Default parameter `logname` must be a string containing
-    the basename of the file to be displayed in the log file
-    dialog. See `applognames` for a list of supported lognames.
-
-    Default parameter `addmsg`, which represents the body of a message.
-    Default parameter `showlogdialog`, which displays the additional
-    log file dialog after the pop-up message has been confirmed.
-
+    Show message from stderr of various process.
+    The `logname` must be a string containing the basename of
+    the file to be displayed in the log dialog.
+    The `parent` must descend from the first ancestor which
+    is a top-level window (main_frame).
     """
-    get = wx.GetApp()
-    applognames = get.appset['applognames']  # list of logs files included
-    if addmsg:
-        msg = addmsg
-    else:
-        msg = _('Please, see «{0}» file for details.').format(logname)
-
-    if warnlev in ('info', 'information'):
-        ico = wx.ICON_INFORMATION
-        caption =  'Videomass'
-
-    elif warnlev in ('warn', 'warning'):
-        ico=wx.ICON_INFORMATION
-        caption = _('Videomass - Warning!')
-    elif warnlev in ('err', 'error'):
-        caption = _('Videomass - Error!')
-        ico = wx.ICON_ERROR
-    else:
-        raise ValueError("The `warnlev` argument only accepts 'information', "
-                         "'warning', 'error' or, more briefly, 'info', "
-                         "'warn', 'err'. Default is 'error'")
-
+    msg = _('Please, see «{0}» file for error details.').format(logname)
     wx.MessageBox(msg, caption, ico, parent)
-
-    if showlogdialog and logname in applognames:
-        toplevparent = wx.GetTopLevelParent(parent)
-        toplevparent.view_logs(None, flog=logname)
+    toplevparent = wx.GetTopLevelParent(parent)
+    toplevparent.view_logs(None, flog=logname)
 # ----------------------------------------------------------------#
 
 
@@ -100,27 +63,16 @@ def volume_detect_process(filelist, timeseq, audiomap, parent=None):
         tseq = f'{splseq[0]} {splseq[1]}', f'{splseq[2]} {splseq[3]}'
     else:
         tseq = '', ''
-
     thread = VolumeDetectThread(tseq, filelist, audiomap)
     dlgload = PopupDialog(parent,
-                        _("Videomass - Loading..."),
-                        _("Wait....\nAudio peak analysis."),
-                        thread,
-                        )
+                          _("Videomass - Loading..."),
+                          _("Wait....\nAudio peak analysis."),
+                          thread,
+                          )
     dlgload.ShowModal()
     # thread.join()
     data = thread.data
     dlgload.Destroy()
-
-    if data[1]:
-        if data[1] == 'ERROR':
-            show_msg_notify(parent, logname='volumedetected.log')
-
-        elif data[1] == 'STOP':
-            msg = 'volumedetect: STOP command event received.'
-            show_msg_notify(parent, warnlev='info',
-                            logname='volumedetected.log',
-                            addmsg=msg, showlogdialog=False)
 
     return data
 # -------------------------------------------------------------------------#

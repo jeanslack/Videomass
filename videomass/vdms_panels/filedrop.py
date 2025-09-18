@@ -514,7 +514,7 @@ class FileDnD(wx.Panel):
             args = f'{autoexit} -i "{item}" {self.parent.time_seq}'
         try:
             with open(item, encoding='utf-8'):
-                FilePlay(args)
+                FilePlay(self.GetParent(), args)
         except IOError:
             wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
                           "Videomass", wx.ICON_EXCLAMATION, self)

@@ -6,23 +6,23 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.18.2025
+Rev: Sep.03.2025
 Code checker: flake8, pylint
 
-This file is part of Videomass.
+This file is part of Vidtuber.
 
-   Videomass is free software: you can redistribute it and/or modify
+   Vidtuber is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
-   Videomass is distributed in the hope that it will be useful,
+   Vidtuber is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+   along with Vidtuber.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
 import wx
@@ -31,13 +31,19 @@ from pubsub import pub
 
 class ShowLogs(wx.Dialog):
     """
-    Displays log data files defined in `applognames` attribute.
+    Displays log data files defined in related LOGNAMES.
     This class accept a `dirlog` string objetc (the log location
     directory) and an optional `speclogname` string object
-    (a specific log name to display, from those defined in
-    `applognames` attribute).
+    (a specific log name to display, from those defined in LOGNAMES).
 
     """
+    # list of log names to include
+    LOGNAMES = ('Generic_Task.log',
+                'Downloader.log',
+                'Shutdown.log',
+                'Drag_And_Drop.log',
+                )
+
     def __init__(self, parent, dirlog, speclogname=None):
         """
         Attributes defined here:
@@ -51,9 +57,8 @@ class ShowLogs(wx.Dialog):
         self.selected = None
         get = wx.GetApp()  # get data from bootstrap
         colorscheme = get.appset['colorscheme']
-        vidicon = get.iconset['videomass']
+        vidicon = get.iconset['vidtuber']
         ostype = get.appset['ostype']
-        self.applognames = get.appset['applognames']  # valid lognames
 
         wx.Dialog.__init__(self, None,
                            style=wx.DEFAULT_DIALOG_STYLE
@@ -142,7 +147,7 @@ class ShowLogs(wx.Dialog):
         if not logfile:
             return
         logname = os.path.basename(logfile)
-        if logname in self.applognames:
+        if logname in ShowLogs.LOGNAMES:
             idx = self.log_select.FindItem(-1, logname)
             if not idx == -1:
                 self.log_select.Focus(idx)  # make the line the current line
@@ -157,7 +162,7 @@ class ShowLogs(wx.Dialog):
         """
         if not self.selected:
             wx.MessageBox(_('Select a log file'),
-                          'Videomass', wx.ICON_INFORMATION)
+                          'Vidtuber', wx.ICON_INFORMATION)
             return
 
         index = self.log_select.GetFocusedItem()
@@ -187,7 +192,7 @@ class ShowLogs(wx.Dialog):
         self.log_select.DeleteAllItems()
         index = 0
         for f in os.listdir(self.dirlog):
-            if os.path.basename(f) in self.applognames:  # append listed only
+            if os.path.basename(f) in ShowLogs.LOGNAMES:  # append listed only
                 with open(os.path.join(self.dirlog, f),
                           'r', encoding='utf-8') as log:
                     self.logdata[f] = log.read()  # set value

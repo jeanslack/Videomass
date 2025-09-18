@@ -179,7 +179,6 @@ class Choose_Topic(wx.Panel):
         """
         self.parent.topicname = 'Presets Manager'
         self.parent.switch_file_import(self)
-
     # ------------------------------------------------------------------#
 
     def on_avconversions(self, event):

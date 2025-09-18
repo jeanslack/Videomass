@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2023
+Rev: Sep.18.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -31,6 +31,7 @@ import wx.lib.statbmp
 import wx.lib.colourselect as csel
 from pubsub import pub
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_io.io_tools import show_msg_notify
 from videomass.vdms_utils.utils import time_to_integer
 from videomass.vdms_utils.utils import integer_to_time
 from videomass.vdms_utils.utils import clockset
@@ -424,7 +425,8 @@ class Crop(wx.Dialog):
         thread.join()  # wait end thread
         error = thread.status
         if error:
-            wx.MessageBox(f'{error}', _('Videomass - Error!'), wx.ICON_ERROR)
+            show_msg_notify(self.GetParent(),
+                            logname=os.path.basename(logfile))
             return
         if sseg:
             with open(self.fileclock, "w", encoding='utf-8') as atime:

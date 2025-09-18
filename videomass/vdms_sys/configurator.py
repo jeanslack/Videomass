@@ -375,6 +375,16 @@ class DataSource():
                  'ffplay-default-args': '-hide_banner',
                  'auto-restart-app': False,
                  'make_portable': self.makeportable,
+                 'applognames': ('volumedetected.log',
+                                 'AV Conversions.log',
+                                 'Presets Manager.log',
+                                 'ffplay.log',
+                                 'Concatenate Media File.log',
+                                 'From Movie to Pictures.log',
+                                 'Still Image Maker.log',
+                                 'generic_task.log',
+                                 'Queue Processing.log',
+                                 'Shutdown.log'),
                  **userconf
                  })
     # --------------------------------------------------------------------

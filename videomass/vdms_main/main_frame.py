@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.20.2025
+Rev: Sept.17.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -65,8 +65,8 @@ from videomass.vdms_threads.shutdown import shutdown_system
 
 class MainFrame(wx.Frame):
     """
-    This is the main frame top window for panels
-    implementation and/or other children frames.
+    This main frame is the first ancestor aka the top-level
+    window for implementing panels and/or other child frames.
     """
     # colour rappresentetion in rgb
     AZURE_NEON = 158, 201, 232
@@ -1020,16 +1020,17 @@ class MainFrame(wx.Frame):
 
     def view_logs(self, event, flog=None):
         """
-        Show to view log files dialog
+        Displays log file dialog
         flog: filename to select on showlog if any.
         """
         if self.showlogs:
             self.showlogs.Raise()
+            self.showlogs.on_flog_select(flog)
             return
 
         self.showlogs = ShowLogs(self,
                                  self.appdata['logdir'],
-                                 self.appdata['ostype'],
+                                 speclogname=flog,
                                  )
         self.showlogs.Show()
     # ------------------------------------------------------------------#
@@ -1406,7 +1407,7 @@ class MainFrame(wx.Frame):
         self.clearall.Enable(False)
         self.rename.Enable(False)
         self.rename_batch.Enable(False)
-        self.SetTitle(_('Videomass'))
+        self.SetTitle('Videomass')
         self.statusbar_msg(_('Ready'), None)
         self.Layout()
     # ------------------------------------------------------------------#

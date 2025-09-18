@@ -489,7 +489,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
                     f'{afilter} {index}')
         try:
             with open(filepath, encoding='utf-8'):
-                FilePlay(args)
+                FilePlay(self.GetParent(), args)
         except IOError:
             wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
                           "Videomass", wx.ICON_EXCLAMATION, self)
@@ -811,12 +811,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
                                      self.opt["AudioIndex"],
                                      parent=self.GetParent(),
                                      )
-        if data[1]:
-            if data[1][0] == 'ERROR':
-                caption, ico = _('Videomass - Error!'), wx.ICON_ERROR
-            elif data[1][0] == 'INFO':
-                caption, ico = 'Videomass', wx.ICON_INFORMATION
-            wx.MessageBox(f"{data[1][1]}", caption, ico, self)
+        if data[1]:  # see `volume_detect_process` in `io_tools`
             return
 
         if self.rdbx_normalize.GetSelection() == 1:  # PEAK

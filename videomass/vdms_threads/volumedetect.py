@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.26.2025
+Rev: Sep.18.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -47,8 +47,7 @@ class VolumeDetectThread(Thread):
     lack of ffmpeg of course.
 
     """
-    ERROR = 'Please, see «volumedetected.log» file for error details.\n'
-    STOP = '[Videomass]: STOP command received.'
+    STOP = 'STOP command received by signal event.\nTerminated process.'
 
     def __init__(self, timeseq, filelist, audiomap):
         """
@@ -120,20 +119,21 @@ class VolumeDetectThread(Thread):
 
                         if self.stop_work_thread:
                             proc.stdin.write('q')  # stop ffmpeg
-                            output = proc.communicate()[1]
+                            proc.communicate()[1]
+                            output = VolumeDetectThread.STOP
                             proc.wait()
-                            self.status = 'INFO', VolumeDetectThread.STOP
+                            self.status = 'STOP'
                             break
 
                         if proc.wait():
                             output = proc.communicate()[1]
-                            self.status = 'ERROR', VolumeDetectThread.ERROR
+                            self.status = 'ERROR'
                             break
 
                     volume.append((maxv, meanv))
 
             except (OSError, FileNotFoundError) as err:
-                self.status = 'ERROR', VolumeDetectThread.ERROR
+                self.status = 'ERROR'
                 output = err
 
             if self.status:
