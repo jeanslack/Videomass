@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.26.2025
+Rev: Sep.16.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -489,7 +489,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
                     f'{afilter} {index}')
         try:
             with open(filepath, encoding='utf-8'):
-                FilePlay(args)
+                FilePlay(self.GetParent(), args)
         except IOError:
             wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
                           "Videomass", wx.ICON_EXCLAMATION, self)
@@ -500,8 +500,11 @@ class AudioEncoders(scrolled.ScrolledPanel):
         Given a selected media file (object of type `file_selection()`),
         it evaluates whether it contains any audio streams and any
         indexes based on selected index (audio map).
-        If no audio streams or no audio index it Returns None,
-        True otherwise.
+
+        If there are no audio streams in the source file or the index
+        does not match one of the existing audio streams, returns None.
+        Return a list of audio indexes otherwise.
+
         See `on_audio_preview()` method for usage.
 
         """
@@ -510,19 +513,20 @@ class AudioEncoders(scrolled.ScrolledPanel):
         idx = self.cmb_A_inMap.GetValue()
 
         if isaudio:
-            if idx.isdigit():  # not Auto
-                if not len(isaudio) - 1 == int(idx) - 1:
-                    wx.MessageBox(_('Selected index does not exist or '
-                                    'does not contain any audio streams'),
-                                  'Videomass', wx.ICON_INFORMATION, self)
+            streamindexes = list(x.get('index') for x in isaudio)
+            if idx.isdigit():  # e.g user has selected an index (1-16)
+                if not int(idx) - 1 in range(len(streamindexes)):
+                    wx.MessageBox(_('The selected index does not '
+                                    'exist in the source file:\n"{}"'
+                                    ).format(fileselected[0]),
+                                  'Videomass', wx.ICON_ERROR, self)
                     return None
+            return streamindexes  # e.g user has selected 'Auto'
         else:
-            wx.MessageBox(_('ERROR: Missing audio stream:\n"{}"'
-                            ).format(fileselected[0]),
-                          _('Videomass - Error!'), wx.ICON_ERROR, self)
-            return None
-
-        return True
+            wx.MessageBox(_('The source file does not contain any '
+                            'audio stream:\n"{}"').format(fileselected[0]),
+                          'Videomass', wx.ICON_ERROR, self)
+        return None
     # ------------------------------------------------------------------#
 
     def set_audio_radiobox(self, event):
@@ -807,12 +811,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
                                      self.opt["AudioIndex"],
                                      parent=self.GetParent(),
                                      )
-        if data[1]:
-            if data[1][0] == 'ERROR':
-                caption, ico = _('Videomass - Error!'), wx.ICON_ERROR
-            elif data[1][0] == 'INFO':
-                caption, ico = 'Videomass', wx.ICON_INFORMATION
-            wx.MessageBox(f"{data[1][1]}", caption, ico, self)
+        if data[1]:  # see `volume_detect_process` in `io_tools`
             return
 
         if self.rdbx_normalize.GetSelection() == 1:  # PEAK

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.14\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-27 14:38+0200\n"
+"POT-Creation-Date: 2025-09-19 13:06+0200\n"
 "PO-Revision-Date: 2024-08-18 00:59+0200\n"
 "Last-Translator: Phil Aug <philiaug@live.fr>\n"
 "Language: fr_FR\n"
@@ -1306,6 +1306,10 @@ msgstr "Liste d'erreurs"
 msgid "File(s) not found"
 msgstr "Fichier(s)Introuvable(s)"
 
+#, python-brace-format
+msgid "Please, see «{0}» file for details."
+msgstr ""
+
 msgid ""
 "Wait....\n"
 "Audio peak analysis."
@@ -1702,9 +1706,6 @@ msgstr "Ajouter à la file d'attente"
 
 msgid "Show queue"
 msgstr "Afficher la file d'attente"
-
-msgid "Videomass"
-msgstr "Videomass"
 
 msgid "Videomass - File List"
 msgstr "Videomass - liste fichier"
@@ -2701,16 +2702,17 @@ msgstr "Cible de plage d'intensité volume dans LUFS. De +1.0 à +20.0, la valeu
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
 msgstr "Lis  le flux audio sélectionné dans la commande « Sélection d'index ». À l'aide de cette fonction, vous pouvez tester le résultat de la normalisation audio."
 
-msgid "Selected index does not exist or does not contain any audio streams"
-msgstr "L'index sélectionné n'existe pas ou ne contient aucun flux audio"
+#, python-brace-format
+msgid ""
+"The selected index does not exist in the source file:\n"
+"\"{}\""
+msgstr ""
 
 #, python-brace-format
 msgid ""
-"ERROR: Missing audio stream:\n"
+"The source file does not contain any audio stream:\n"
 "\"{}\""
 msgstr ""
-"ERREUR: Aucun flux audio:\n"
-"\"{}\""
 
 msgid "PEAK level normalization, which will produce a maximum peak level equal to the set target level."
 msgstr "Active la normalisation du niveau d'écrêtage, qui produira un niveau de crête maximal égal au niveau cible définie."
@@ -2989,9 +2991,6 @@ msgid ""
 msgstr ""
 "S'il est activé, ajoute la prise en charge du multithreading basé qui améliore considérablement le nombre de threads que l'encodeur peut utiliser. Cela améliore considérablement la vitesse d'encodage sur des systèmes qui sont autrement sous-utilisés lors de l'encodage  VP9. Étant donné que la quantité de threads supplémentaires dépend du nombre de \"tiles\", qui dépend lui-même de la résolution"
 " vidéo, les vidéos de résolution plus élevée verront une amélioration des performances plus importante."
-
-msgid "Please, see «ffplay.log» file for error details.\n"
-msgstr ""
 
 #, python-brace-format
 msgid "Supports ({0}) formats only, not ({1})"

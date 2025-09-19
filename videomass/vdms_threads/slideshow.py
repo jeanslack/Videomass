@@ -33,7 +33,7 @@ import platform
 import wx
 from pubsub import pub
 from videomass.vdms_utils.utils import Popen
-from videomass.vdms_io.make_filelog import logwrite
+from videomass.vdms_io.make_filelog import tolog
 if not platform.system() == 'Windows':
     import shlex
 
@@ -45,7 +45,7 @@ def convert_images(*varargs, **kwargs):
     """
     flist = varargs[0]
     tmpdir = varargs[1]
-    logname = varargs[2]
+    logfile = varargs[2]
     imagenames = varargs[3]
 
     count1 = (f'Preparing temporary files...\nSource: Imported file list\n'
@@ -60,9 +60,9 @@ def convert_images(*varargs, **kwargs):
     args = (f'"{kwargs["ffmpeg_cmd"]}" '
             f'{kwargs["ffmpeg-default-args"]} '
             f'{kwargs["ffmpeg_loglev"]} ')
-    logwrite(f'Preparing temporary files...\n'
-             f'\n[COMMAND:]\n{args}', '', logname)
-
+    tolog(f'Preparing temporary files...\n'
+          f'\n[COMMAND:]\n{args}', logfile, sep=True, wdate=True
+          )
     for files in flist:
         prognum += 1
         tmpf = os.path.join(tmpdir, f'{imagenames}{prognum}.bmp')
@@ -87,8 +87,9 @@ def convert_images(*varargs, **kwargs):
                                  duration=0,
                                  status=proc1.wait(),
                                  )
-                    logwrite('', (f"[VIDEOMASS]: Error Exit Status: "
-                                  f"{proc1.wait()} {error}"), logname)
+                    tolog(f"[VIDEOMASS]: Error Exit Status: "
+                          f"{proc1.wait()} {error}", logfile
+                          )
                     time.sleep(1)
                     return error
 
@@ -127,7 +128,7 @@ def resizing_process(*varargs, **kwargs):
     flist = varargs[0]
     tmpdir = varargs[1]
     cmdargs = varargs[2]
-    logname = varargs[3]
+    logfile = varargs[3]
 
     count1 = (f'\n\nFile resizing...\nSource: Temporary directory\n'
               f'Destination: "{tmpdir}"')
@@ -146,7 +147,7 @@ def resizing_process(*varargs, **kwargs):
              f'{kwargs["ffmpeg_loglev"]} '
              f'-i "{tmpf}" {cmdargs} "{tmpfout}"'
              )
-    logwrite(f'\nFile resizing...\n\n[COMMAND]:\n{cmd_1}', '', logname)
+    tolog(f'\nFile resizing...\n\n[COMMAND]:\n{cmd_1}', logfile)
 
     if not platform.system() == 'Windows':
         cmd_1 = shlex.split(cmd_1)
@@ -167,8 +168,9 @@ def resizing_process(*varargs, **kwargs):
                              duration=0,
                              status=proc1.wait(),
                              )
-                logwrite('', (f"[VIDEOMASS]: Error Exit Status: "
-                              f"{proc1.wait()} {error}"), logname)
+                tolog(f"[VIDEOMASS]: Error Exit Status: "
+                      f"{proc1.wait()} {error}", logfile
+                      )
                 time.sleep(1)
                 return error
 
@@ -179,7 +181,7 @@ def resizing_process(*varargs, **kwargs):
                          duration=0,
                          status=0,
                          )
-            logwrite('', error, logname)
+            tolog(error, logfile)
             time.sleep(1)
 
     except (OSError, FileNotFoundError) as err:  # cmd not found
@@ -288,8 +290,7 @@ class SlideshowMaker(Thread):
                          duration=self.duration,
                          end='CONTINUE',
                          )
-
-            logwrite(log, '', self.logfile)
+            tolog(log, self.logfile)
             time.sleep(1)
 
             if not self.appdata['ostype'] == 'Windows':
@@ -320,7 +321,7 @@ class SlideshowMaker(Thread):
                                          duration=self.kwa['duration'],
                                          status=1,
                                          )
-                            logwrite('', out, self.logfile)
+                            tolog(out, self.logfile)
                             time.sleep(1)
                             self.end_process(None)
                             return
@@ -333,8 +334,9 @@ class SlideshowMaker(Thread):
                                      duration=self.kwa['duration'],
                                      status=proc2.wait(),
                                      )
-                        logwrite('', (f"[VIDEOMASS]: Error Exit Status: "
-                                      f"{proc2.wait()} {out}"), self.logfile)
+                        tolog(f"[VIDEOMASS]: Error Exit Status: "
+                              f"{proc2.wait()} {out}", self.logfile
+                              )
                         time.sleep(1)
 
                     else:  # status ok
@@ -352,7 +354,7 @@ class SlideshowMaker(Thread):
                              duration=0,
                              end='ERROR',
                              )
-                logwrite('', err, self.logfile)
+                tolog(err, self.logfile)
         self.end_process(filedone)
 
     def end_process(self, filedone):

@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.20.2024
+Rev: Sep.18.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -32,62 +32,27 @@ import platform
 import wx
 from pubsub import pub
 from videomass.vdms_utils.utils import Popen
-from videomass.vdms_io.make_filelog import make_log_template
+from videomass.vdms_io.io_tools import show_msg_notify
+from videomass.vdms_io.make_filelog import make_log_template, tolog
 if not platform.system() == 'Windows':
     import shlex
-
-
-def showmsgerr(msg):
-    """
-    Receive error messages via wxCallafter
-    """
-    if not msg:
-        msg = _('Please, see «ffplay.log» file for error details.\n')
-    wx.MessageBox(f"FFplay ERROR:\n{msg}",
-                  _('Videomass - Error!'), wx.ICON_ERROR)
-# ----------------------------------------------------------------#
-
-
-def showmsginfo(msg):
-    """
-    Receive info messages via wxCallafter
-    """
-    wx.MessageBox(f"FFplay:  {msg}", "Videomass", wx.ICON_INFORMATION)
-# ----------------------------------------------------------------#
-
-
-def logwrite(cmd, logf):
-    """
-    write ffplay command log
-    """
-    with open(logf, "a", encoding='utf-8') as log:
-        log.write(f"{cmd}\n")
-# ----------------------------------------------------------------#
-
-
-def logerror(error, logf):
-    """
-    write ffplay errors
-    """
-    with open(logf, "a", encoding='utf-8') as logerr:
-        logerr.write(f"\n[FFMPEG] FFplay OUTPUT:\n{error}\n")
-# ----------------------------------------------------------------#
 
 
 class FilePlay(Thread):
     """
     Playback local file executing ffplay media player.
     """
-    def __init__(self, param=''):
+    def __init__(self, parent, param=''):
         """
         Don't use the "-stats" option here to avoid too much verbose
         output being shown in the message box as an error every time.
 
         """
+        self.parent = parent  # is the top-level window (main_frame)
         get = wx.GetApp()
         self.appdata = get.appset
-        self.param = param  # additional parameters if present
-        self.logf = os.path.join(self.appdata['logdir'], 'ffplay.log')
+        self.param = param  # additional parameters if presentì
+        self.logfile = os.path.join(self.appdata['logdir'], 'ffplay.log')
         make_log_template('ffplay.log', self.appdata['logdir'], mode="w")
 
         Thread.__init__(self)
@@ -106,7 +71,8 @@ class FilePlay(Thread):
                f'{self.appdata["ffplay_loglev"]} '
                f'{self.param}'
                )
-        logwrite(cmd, self.logf)
+        tolog(f'INFO: VIDEOMASS COMMAND: {cmd}', self.logfile,
+              sep=True, wdate=True)
 
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
@@ -129,13 +95,14 @@ class FilePlay(Thread):
                 error = proc.communicate()[1]
 
                 if error:
-                    wx.CallAfter(showmsgerr, None)
-                    logerror(error, self.logf)  # append log error
+                    tolog(f"[FFPLAY] OUTPUT ERROR:\n{error}", self.logfile)
+                    wx.CallAfter(show_msg_notify, self.parent,
+                                 logname='ffplay.log')
                     return
 
         except OSError as err:
-            wx.CallAfter(showmsgerr, None)
-            logerror(err, self.logf)
+            tolog(f'[VIDEOMASS]: ERROR: {err}', self.logfile)
+            wx.CallAfter(show_msg_notify, self.parent, logname='ffplay.log')
             # do not return here, go to END_PLAY directly
 
         wx.CallAfter(pub.sendMessage, "END_PLAY")
@@ -147,18 +114,19 @@ class FilePlayback_GetOutput(Thread):
     This class differs from `FilePlay` in that it implements
     capturing and redirecting output messages from stderr.
     """
-    def __init__(self, param=''):
+    def __init__(self, parent, param=''):
         """
         The `stats` argument allows ffplay to update output
         messages progressively. This allows parsing of the
         output for progress informations.
 
         """
+        self.parent = parent  # is the top-level window (main_frame)
         get = wx.GetApp()
         self.appdata = get.appset
         self.param = param  # additional parameters if present
         self.stats = '-stats'
-        self.logf = os.path.join(self.appdata['logdir'], 'ffplay.log')
+        self.logfile = os.path.join(self.appdata['logdir'], 'ffplay.log')
         # set initial file LOG:
         make_log_template('ffplay.log', self.appdata['logdir'], mode="w")
 
@@ -177,8 +145,9 @@ class FilePlayback_GetOutput(Thread):
                f'{self.appdata["ffplay_loglev"]} {self.stats} '
                f'{self.param}'
                )
-        logwrite(cmd, self.logf)
-
+        tolog(f'INFO: VIDEOMASS COMMAND: {cmd}', self.logfile,
+              sep=True, wdate=True
+              )
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
         try:
@@ -200,12 +169,13 @@ class FilePlayback_GetOutput(Thread):
                                  output=None,
                                  status=proc.wait(),
                                  )
-                    logerror(f"{proc.wait()} {line}", self.logf)
-                    wx.CallAfter(showmsgerr, None)
+                    tolog(f"[FFPLAY] ERROR:\n{line}", self.logfile)
+                    wx.CallAfter(show_msg_notify, self.parent,
+                                 logname='ffplay.log')
 
         except OSError as err:
-            wx.CallAfter(showmsgerr, None)
-            logerror(err, self.logf)
+            tolog(f'[VIDEOMASS]: ERROR: {err}', self.logfile)
+            wx.CallAfter(show_msg_notify, self.parent, logname='ffplay.log')
             # do not return here, go to END_PLAY
 
         wx.CallAfter(pub.sendMessage, "END_PLAY")

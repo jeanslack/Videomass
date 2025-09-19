@@ -27,23 +27,7 @@ This file is part of Videomass.
 import subprocess
 import wx
 from videomass.vdms_utils.utils import Popen
-from videomass.vdms_io.make_filelog import make_log_template
-
-
-def logwrite(logfile, cmd):
-    """
-    write ffmpeg command log
-    """
-    with open(logfile, "a", encoding='utf-8') as log:
-        log.write(f"{cmd}\n")
-
-
-def logerror(logfile, output):
-    """
-    write ffmpeg volumedected errors
-    """
-    with open(logfile, "a", encoding='utf-8') as logerr:
-        logerr.write(f"\nERRORS:\n{output}\n")
+from videomass.vdms_io.make_filelog import make_log_template, tolog
 
 
 def shutdown_system(password=None):
@@ -76,6 +60,10 @@ def shutdown_system(password=None):
     else:
         return 'Error: unsupported platform'
 
+    tolog(f'INFO: VIDEOMASS COMMAND: {" ".join(cmd)}',
+          logfile, sep=True, wdate=True
+          )
+
     try:
         with Popen(cmd,
                    stdin=subprocess.PIPE,
@@ -87,11 +75,11 @@ def shutdown_system(password=None):
 
             output = proc.communicate(password)[1]
             proc.wait()
-            logwrite(logfile, output)
+            tolog(output, logfile)
             return not output or output == "Password:"
 
     except (OSError, FileNotFoundError) as err:
-        logerror(logfile, output)
+        tolog(f'VIDEOMASS: ERROR: {err}', logfile)
         return err
 
     return None

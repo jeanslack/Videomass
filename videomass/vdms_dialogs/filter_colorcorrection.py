@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2023
+Rev: Sep.18.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -32,6 +32,7 @@ from videomass.vdms_utils.utils import integer_to_time
 from videomass.vdms_utils.utils import clockset
 from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_io.io_tools import show_msg_notify
 
 
 class ColorEQ(wx.Dialog):
@@ -289,6 +290,8 @@ class ColorEQ(wx.Dialog):
         thread.join()  # wait end thread
         error = thread.status
         if error:
+            show_msg_notify(self.GetParent(),
+                            logname=os.path.basename(logfile))
             return error
         return None
     # -----------------------------------------------------------------------#
@@ -349,8 +352,6 @@ class ColorEQ(wx.Dialog):
         """
         error = self.process(self.frameedit, equalizer=equalizer)
         if error:
-            wx.MessageBox(f'{error}', _('Videomass - Error!'),
-                          wx.ICON_ERROR, self)
             return
         self.loader_initial_edit()
     # -----------------------------------------------------------------------#

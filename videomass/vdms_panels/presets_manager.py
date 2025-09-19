@@ -566,7 +566,7 @@ class PrstPan(wx.Panel):
         os.replace(s, d)
 
         wx.MessageBox(_('The preset "{0}" was successfully '
-                        'removed').format(prstname), _('Videomass'),
+                        'removed').format(prstname), 'Videomass',
                       wx.OK, self
                       )
         self.reset_list(True)

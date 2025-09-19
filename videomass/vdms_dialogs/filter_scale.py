@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.21.2024
+Rev: Sep.18.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -31,6 +31,7 @@ import wx
 from videomass.vdms_io import io_tools
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_io.io_tools import show_msg_notify
 from videomass.vdms_utils.utils import time_to_integer
 from videomass.vdms_utils.utils import integer_to_time
 from videomass.vdms_io.make_filelog import make_log_template
@@ -355,6 +356,8 @@ class Scale(wx.Dialog):
         thread = FFmpegGenericTask(arg, 'Scale', logfile)
         error = thread.status
         if error:
+            show_msg_notify(self.GetParent(),
+                            logname=os.path.basename(logfile))
             return error
         return None
     # ----------------------Event handler (callback)---------------------#
@@ -391,8 +394,6 @@ class Scale(wx.Dialog):
         concat = self.concat_filter(self.getvalue())
         error = self.process(concat)
         if error:
-            wx.MessageBox(f'{error}', _('Videomass - Error!'),
-                          wx.ICON_ERROR, self)
             return
 
         if os.path.exists(self.frame) and os.path.isfile(self.frame):

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.07.2025
+Rev: Sep.18.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -545,7 +545,7 @@ class AV_Conv(wx.Panel):
             args = f'{autoexit} -i "{self.parent.file_src[fget[1]]}" {flt}'
         try:
             with open(self.parent.file_src[fget[1]], encoding='utf-8'):
-                FilePlay(args)
+                FilePlay(self.GetParent(), args)
         except IOError:
             wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
                           "Videomass", wx.ICON_EXCLAMATION, self)

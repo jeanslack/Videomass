@@ -31,7 +31,7 @@ import platform
 import wx
 from pubsub import pub
 from videomass.vdms_utils.utils import Popen
-from videomass.vdms_io.make_filelog import logwrite
+from videomass.vdms_io.make_filelog import tolog
 if not platform.system() == 'Windows':
     import shlex
 
@@ -91,7 +91,7 @@ class ConcatDemuxer(Thread):
                      duration=self.kwa['duration'],
                      end='CONTINUE',
                      )
-        logwrite(stamp, '', self.logfile)  # write n/n + command only
+        tolog(stamp, self.logfile, sep=True, wdate=True)
 
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
@@ -120,7 +120,7 @@ class ConcatDemuxer(Thread):
                                      duration=self.kwa['duration'],
                                      status=1,
                                      )
-                        logwrite('', out, self.logfile)
+                        tolog(out, self.logfile)
                         time.sleep(1)
                         wx.CallAfter(pub.sendMessage, "END_EVT",
                                      filetotrash=filedone)
@@ -134,8 +134,9 @@ class ConcatDemuxer(Thread):
                                  duration=self.kwa['duration'],
                                  status=proc.wait(),
                                  )
-                    logwrite('', (f"[VIDEOMASS]: Error Exit Status: "
-                                  f"{proc.wait()} {out}"), self.logfile)
+                    tolog(f"[VIDEOMASS]: Error Exit Status: "
+                          f"{proc.wait()} {out}", self.logfile
+                          )
                     time.sleep(1)
 
                 else:  # Done
@@ -153,7 +154,7 @@ class ConcatDemuxer(Thread):
                          duration=0,
                          end='ERROR',
                          )
-            logwrite('', err, self.logfile)
+            tolog(err, self.logfile)
 
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=filedone)

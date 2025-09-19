@@ -31,7 +31,7 @@ import platform
 import wx
 from pubsub import pub
 from videomass.vdms_utils.utils import Popen
-from videomass.vdms_io.make_filelog import logwrite
+from videomass.vdms_io.make_filelog import tolog
 if not platform.system() == 'Windows':
     import shlex
 
@@ -349,7 +349,7 @@ class FFmpeg(Thread):
                          duration=kwa['duration'],
                          end='CONTINUE',
                          )
-            logwrite(model['stamp1'], '', self.logfile)
+            tolog(model['stamp1'], self.logfile, sep=True, wdate=True)
             try:
                 with Popen(model['pass1'],
                            stderr=subprocess.PIPE,
@@ -376,7 +376,8 @@ class FFmpeg(Thread):
                                          duration=kwa['duration'],
                                          status=1,
                                          )
-                            logwrite('', out, self.logfile)
+                            tolog(out, self.logfile)
+
                             time.sleep(.5)
                             wx.CallAfter(pub.sendMessage, "END_EVT",
                                          filetotrash=None)
@@ -396,8 +397,9 @@ class FFmpeg(Thread):
                                      duration=kwa['duration'],
                                      status=proc1.wait(),
                                      )
-                        logwrite('', (f"[VIDEOMASS]: Error Exit Status: "
-                                      f"{proc1.wait()} {out}"), self.logfile)
+                        tolog(f"[VIDEOMASS]: Error Exit Status: "
+                              f"{proc1.wait()} {out}", self.logfile
+                              )
                         time.sleep(1)
                         continue
 
@@ -408,7 +410,7 @@ class FFmpeg(Thread):
                              duration=0,
                              end='ERROR'
                              )
-                logwrite('', err, self.logfile)
+                tolog(err, self.logfile)
                 break
 
             if proc1.wait() == 0:  # ..Finished
@@ -449,7 +451,7 @@ class FFmpeg(Thread):
                          duration=kwa['duration'],
                          end='CONTINUE',
                          )
-            logwrite(model['stamp2'], '', self.logfile)
+            tolog(model['stamp2'], self.logfile)
 
             with Popen(model['pass2'],
                        stderr=subprocess.PIPE,
@@ -476,7 +478,7 @@ class FFmpeg(Thread):
                                      duration=kwa['duration'],
                                      status=1,
                                      )
-                        logwrite('', out, self.logfile)
+                        tolog(out, self.logfile)
                         time.sleep(.5)
                         wx.CallAfter(pub.sendMessage, "END_EVT",
                                      filetotrash=None)
@@ -490,8 +492,9 @@ class FFmpeg(Thread):
                                  duration=kwa['duration'],
                                  status=proc2.wait(),
                                  )
-                    logwrite('', (f"[VIDEOMASS]: Error Exit Status: "
-                                  f"{proc2.wait()} {out}"), self.logfile)
+                    tolog(f"[VIDEOMASS]: Error Exit Status: "
+                          f"{proc2.wait()} {out}", self.logfile
+                          )
                     time.sleep(1)
                     continue
 
