@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass - IT - 25.08.2025\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-27 14:38+0200\n"
-"PO-Revision-Date: 2025-09-02 23:36+0200\n"
+"POT-Creation-Date: 2025-09-19 13:06+0200\n"
+"PO-Revision-Date: 2025-09-19 13:15+0200\n"
 "Last-Translator: bovirus <bovirus@gmail.com>\n"
 "Language-Team: bovirus (bovirus@gmail.com)\n"
 "Language: it_IT\n"
@@ -1316,6 +1316,10 @@ msgstr "Elenco errori"
 msgid "File(s) not found"
 msgstr "File non trovati"
 
+#, python-brace-format
+msgid "Please, see «{0}» file for details."
+msgstr "I dettagli sono consultabili nel log «{0}»."
+
 msgid ""
 "Wait....\n"
 "Audio peak analysis."
@@ -1698,9 +1702,6 @@ msgstr "Aggiungi a coda"
 
 msgid "Show queue"
 msgstr "Visualizza coda"
-
-msgid "Videomass"
-msgstr "Videomass"
 
 msgid "Videomass - File List"
 msgstr "Videomass - Elenco file"
@@ -2768,15 +2769,20 @@ msgstr "Target dell'intervallo loudness in LUFS. Da +1.0 a +20.0, il valore pred
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
 msgstr "Riproduci il flusso audio selezionato nel controllo \"Selezione indice\". Utilizzando questa funzione è possibile testare il risultato della normalizzazione audio."
 
-msgid "Selected index does not exist or does not contain any audio streams"
-msgstr "L'indice selezionato non esiste o non contiene alcun flusso audio"
+#, python-brace-format
+msgid ""
+"The selected index does not exist in the source file:\n"
+"\"{}\""
+msgstr ""
+"L'indice selezionato non esiste nel file sorgente:\n"
+"\"{}\""
 
 #, python-brace-format
 msgid ""
-"ERROR: Missing audio stream:\n"
+"The source file does not contain any audio stream:\n"
 "\"{}\""
 msgstr ""
-"ERRORE: flusso audio mancante:\n"
+"Il file sorgente non contiene flussi audio:\n"
 "\"{}\""
 
 msgid "PEAK level normalization, which will produce a maximum peak level equal to the set target level."
@@ -3078,9 +3084,6 @@ msgstr ""
 "Se abilitato, aggiunge il supporto per il multi threading basato su righe che aumenta notevolmente il numero di thread che il codificatore può usare. \n"
 "Ciò migliora significativamente la velocità di codifica su sistemi che altrimenti sarebbero sotto usati durante la codifica VP9. \n"
 "Poiché la quantità di thread aggiuntivi dipende dal numero di \"riquadri\", che a sua volta dipende dalla risoluzione video, la codifica di video a risoluzione più elevata vedrà un maggiore miglioramento delle prestazioni."
-
-msgid "Please, see «ffplay.log» file for error details.\n"
-msgstr "Per i dettagli dell'errore consulta il file «ffplay.log».\n"
 
 #, python-brace-format
 msgid "Supports ({0}) formats only, not ({1})"

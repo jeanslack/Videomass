@@ -516,16 +516,16 @@ class AudioEncoders(scrolled.ScrolledPanel):
             streamindexes = list(x.get('index') for x in isaudio)
             if idx.isdigit():  # e.g user has selected an index (1-16)
                 if not int(idx) - 1 in range(len(streamindexes)):
-                    wx.MessageBox(_('Selected index does not exist or the '
-                                    'source file does not contain any audio '
-                                    'streams.'),
-                                  'Videomass', wx.ICON_INFORMATION, self)
+                    wx.MessageBox(_('The selected index does not '
+                                    'exist in the source file:\n"{}"'
+                                    ).format(fileselected[0]),
+                                  'Videomass', wx.ICON_ERROR, self)
                     return None
             return streamindexes  # e.g user has selected 'Auto'
         else:
-            wx.MessageBox(_('ERROR: Missing audio stream:\n"{}"'
-                            ).format(fileselected[0]),
-                          _('Videomass - Error!'), wx.ICON_ERROR, self)
+            wx.MessageBox(_('The source file does not contain any '
+                            'audio stream:\n"{}"').format(fileselected[0]),
+                            'Videomass', wx.ICON_ERROR, self)
         return None
     # ------------------------------------------------------------------#
 

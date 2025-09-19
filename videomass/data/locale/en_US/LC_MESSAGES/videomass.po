@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.18\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-27 14:38+0200\n"
+"POT-Creation-Date: 2025-09-19 13:06+0200\n"
 "PO-Revision-Date: 2024-07-03 18:44+0200\n"
 "Last-Translator: \n"
 "Language: en_US\n"
@@ -1185,6 +1185,10 @@ msgstr ""
 msgid "File(s) not found"
 msgstr ""
 
+#, python-brace-format
+msgid "Please, see «{0}» file for details."
+msgstr ""
+
 msgid ""
 "Wait....\n"
 "Audio peak analysis."
@@ -1546,9 +1550,6 @@ msgid "Add to Queue"
 msgstr ""
 
 msgid "Show queue"
-msgstr ""
-
-msgid "Videomass"
 msgstr ""
 
 msgid "Videomass - File List"
@@ -2431,12 +2432,15 @@ msgstr ""
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
 msgstr ""
 
-msgid "Selected index does not exist or does not contain any audio streams"
+#, python-brace-format
+msgid ""
+"The selected index does not exist in the source file:\n"
+"\"{}\""
 msgstr ""
 
 #, python-brace-format
 msgid ""
-"ERROR: Missing audio stream:\n"
+"The source file does not contain any audio stream:\n"
 "\"{}\""
 msgstr ""
 
@@ -2650,9 +2654,6 @@ msgstr ""
 msgid ""
 "If enabled, adds support for row based multithreading which greatly enhances the number of threads the encoder can utilise. This improves encoding speed significantly on systems that are otherwise underutilised when encoding VP9. Since the amount of additional threads depends on the number of \"tiles\", which itself depends on the video resolution, encoding higher resolution videos will see a "
 "larger performance improvement."
-msgstr ""
-
-msgid "Please, see «ffplay.log» file for error details.\n"
 msgstr ""
 
 #, python-brace-format

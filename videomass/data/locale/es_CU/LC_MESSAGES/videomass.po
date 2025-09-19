@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.18\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-27 14:38+0200\n"
+"POT-Creation-Date: 2025-09-19 13:06+0200\n"
 "PO-Revision-Date: 2024-08-26 17:29-0600\n"
 "Last-Translator: José Alberto Valle Cid j.alberto.vc@gmail.com\n"
 "Language: es_CU\n"
@@ -1299,6 +1299,10 @@ msgstr "Lista de Error"
 msgid "File(s) not found"
 msgstr "Archivo(s) no encontrado(s)"
 
+#, python-brace-format
+msgid "Please, see «{0}» file for details."
+msgstr ""
+
 msgid ""
 "Wait....\n"
 "Audio peak analysis."
@@ -1676,9 +1680,6 @@ msgstr "Añadir a la Lista"
 
 msgid "Show queue"
 msgstr "Mostrar lista"
-
-msgid "Videomass"
-msgstr "Videomass"
 
 msgid "Videomass - File List"
 msgstr "Videomass - Lista de Archivos"
@@ -2684,16 +2685,17 @@ msgstr "Rango de Intensidad Destino en LUFS. Desde +1.0 a +20.0, predeterminado 
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
 msgstr "Reproducir el flujo de audio seleccionado en la \"Selección de Indice\". Con esta función puede probar el resultado de normalizar el audio."
 
-msgid "Selected index does not exist or does not contain any audio streams"
-msgstr "El indice seleccionado no existe o no contiene flujos de audio"
+#, python-brace-format
+msgid ""
+"The selected index does not exist in the source file:\n"
+"\"{}\""
+msgstr ""
 
 #, python-brace-format
 msgid ""
-"ERROR: Missing audio stream:\n"
+"The source file does not contain any audio stream:\n"
 "\"{}\""
 msgstr ""
-"ERROR: Falta flujo de audio:\n"
-"\"{}\""
 
 msgid "PEAK level normalization, which will produce a maximum peak level equal to the set target level."
 msgstr "Normalización de nivel de pico, produce un nivel de pico máximo igual al configurado."
@@ -2969,9 +2971,6 @@ msgid ""
 msgstr ""
 "Habilitarla, añade multiproceso por renglón que mejora el numero de hilos que el codificador puede usar. Esto mejora significativamente la velocidad de codificado al codificar en VP9, en sistemas que de otra manera están subutilizados. Ya que la cantidad adicional de hilos  depende del numero de \"cuadros\", lo que depende del la resolución del video, codificar videos con altas resoluciones "
 "mostrara un gran incremento en el desempeño."
-
-msgid "Please, see «ffplay.log» file for error details.\n"
-msgstr ""
 
 #, python-brace-format
 msgid "Supports ({0}) formats only, not ({1})"

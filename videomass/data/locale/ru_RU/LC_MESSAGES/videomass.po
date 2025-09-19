@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 6.1.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-27 14:38+0200\n"
+"POT-Creation-Date: 2025-09-19 13:06+0200\n"
 "PO-Revision-Date: 2025-08-25 06:14+0300\n"
 "Last-Translator: ChourS <ChourS2008@yandex.ru>\n"
 "Language: ru_RU\n"
@@ -1322,6 +1322,10 @@ msgstr "Список ошибок"
 msgid "File(s) not found"
 msgstr "Файл(ы) не найден"
 
+#, python-brace-format
+msgid "Please, see «{0}» file for details."
+msgstr ""
+
 msgid ""
 "Wait....\n"
 "Audio peak analysis."
@@ -1704,9 +1708,6 @@ msgstr "Добавить в очередь"
 
 msgid "Show queue"
 msgstr "Показать очередь"
-
-msgid "Videomass"
-msgstr "Videomass"
 
 msgid "Videomass - File List"
 msgstr "Videomass - Список файлов"
@@ -2749,16 +2750,17 @@ msgstr "Целевой диапазон громкости в LUFS. От +1,0 д
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
 msgstr "Воспроизведите аудиопоток, выбранный в элементе управления «Выбор индекса». Используя эту функцию, вы можете проверить результат нормализации звука."
 
-msgid "Selected index does not exist or does not contain any audio streams"
-msgstr "Выбранный индекс не существует или не содержит никаких аудиопотоков"
+#, python-brace-format
+msgid ""
+"The selected index does not exist in the source file:\n"
+"\"{}\""
+msgstr ""
 
 #, python-brace-format
 msgid ""
-"ERROR: Missing audio stream:\n"
+"The source file does not contain any audio stream:\n"
 "\"{}\""
 msgstr ""
-"ОШИБКА: Отсутствует аудиопоток:\n"
-"\"{}\""
 
 msgid "PEAK level normalization, which will produce a maximum peak level equal to the set target level."
 msgstr "Нормализация уровня PEAK, которая обеспечивает максимальный пиковый уровень, равный установленному целевому уровню."
@@ -3035,9 +3037,6 @@ msgid ""
 msgstr ""
 "Если этот параметр включен, добавляется поддержка многопоточности на основе строк, что значительно увеличивает количество потоков, которые может использовать кодер. Это значительно повышает скорость кодирования в системах, которые в противном случае недостаточно используются при кодировании VP9. Поскольку количество дополнительных потоков зависит от количества «плиток», которое в свою очередь "
 "зависит от разрешения видео, кодирование видео с более высоким разрешением приведет к большему повышению производительности."
-
-msgid "Please, see «ffplay.log» file for error details.\n"
-msgstr "Пожалуйста, смотрите файл «ffplay.log» для получения подробной информации об ошибке.\n"
 
 #, python-brace-format
 msgid "Supports ({0}) formats only, not ({1})"
