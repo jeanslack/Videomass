@@ -37,7 +37,7 @@ from videomass.vdms_utils.utils import open_default_application
 from videomass.vdms_dialogs.widget_utils import PopupDialog
 
 
-def show_msg_notify(parent, warnlev: str = 'error', logname : str = 'log',
+def show_msg_notify(parent, warnlev: str = 'error', logname: str = 'log',
                     addmsg=None, showlogdialog=True):
     """
     This function shows and characterizes pop-up dialog messages
@@ -62,6 +62,7 @@ def show_msg_notify(parent, warnlev: str = 'error', logname : str = 'log',
     """
     get = wx.GetApp()
     applognames = get.appset['applognames']  # list of logs files included
+
     if addmsg:
         msg = addmsg
     else:
@@ -69,10 +70,9 @@ def show_msg_notify(parent, warnlev: str = 'error', logname : str = 'log',
 
     if warnlev in ('info', 'information'):
         ico = wx.ICON_INFORMATION
-        caption =  'Videomass'
-
+        caption = 'Videomass'
     elif warnlev in ('warn', 'warning'):
-        ico=wx.ICON_INFORMATION
+        ico = wx.ICON_INFORMATION
         caption = _('Videomass - Warning!')
     elif warnlev in ('err', 'error'):
         caption = _('Videomass - Error!')
@@ -103,10 +103,10 @@ def volume_detect_process(filelist, timeseq, audiomap, parent=None):
 
     thread = VolumeDetectThread(tseq, filelist, audiomap)
     dlgload = PopupDialog(parent,
-                        _("Videomass - Loading..."),
-                        _("Wait....\nAudio peak analysis."),
-                        thread,
-                        )
+                          _("Videomass - Loading..."),
+                          _("Wait....\nAudio peak analysis."),
+                          thread,
+                          )
     dlgload.ShowModal()
     # thread.join()
     data = thread.data

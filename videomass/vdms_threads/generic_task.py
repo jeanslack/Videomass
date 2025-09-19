@@ -6,7 +6,7 @@ Compatibility: Python3 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.23.2024
+Rev: Sep.19.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -30,26 +30,9 @@ import subprocess
 import wx
 from pubsub import pub
 from videomass.vdms_utils.utils import Popen
+from videomass.vdms_io.make_filelog import tolog
 if not platform.system() == 'Windows':
     import shlex
-
-
-def logwrite(logfile, cmd):
-    """
-    write ffmpeg command log
-    """
-    with open(logfile, "a", encoding='utf-8') as log:
-        log.write(f"{cmd}\n")
-# ----------------------------------------------------------------#
-
-
-def logerror(logfile, output):
-    """
-    write ffmpeg errors
-    """
-    with open(logfile, "a", encoding='utf-8') as logerr:
-        logerr.write(f"\n[FFMPEG] generic_task ERRORS:\n{output}\n")
-# ----------------------------------------------------------------#
 
 
 class FFmpegGenericTaskOutLines(Thread):
@@ -73,8 +56,8 @@ class FFmpegGenericTaskOutLines(Thread):
     Return: None
 
     """
-    ERROR = 'Please, see "generic_task.log" file for error details.'
-    STOP = '[Videomass]: STOP command received.'
+    STOP = ('WARNING: [VIDEOMASS]: STOP command received by signal '
+            'event.\nTerminated process ')
 
     def __init__(self, args, procname='Unknown', logfile='logfile.log'):
         """
@@ -113,8 +96,10 @@ class FFmpegGenericTaskOutLines(Thread):
                f'{self.appdata["ffmpeg_loglev"]} '
                f'{self.args}'
                )
-        logwrite(self.logfile, f'From: {self.procname}\n{cmd}\n')
-
+        tolog(f'INFO: VIDEOMASS TASK: {self.procname}\n'
+              f'INFO: VIDEOMASS COMMAND: {cmd}', self.logfile,
+              sep=True, wdate=True
+              )
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
         try:
@@ -130,23 +115,25 @@ class FFmpegGenericTaskOutLines(Thread):
                         proc.stdin.write('q')  # stop ffmpeg
                         output = proc.communicate()[1]
                         proc.wait()
-                        self.status = FFmpegGenericTask.STOP
+                        tolog(FFmpegGenericTaskOutLines.STOP
+                              + f'with PID {proc.pid}', self.logfile
+                              )
+                        self.status = 'STOP'
                         break
 
                     if proc.wait():
                         output = proc.communicate()[1]
-                        self.status = FFmpegGenericTask.ERROR
+                        tolog(f"[FFMPEG] ERROR:\n{output}", self.logfile)
+                        self.status = 'ERROR'
                         break
 
         except (OSError, FileNotFoundError) as err:
-            self.status = err
-            output = err
+            tolog(f'[VIDEOMASS]: ERROR: {err}', self.logfile)
+            self.status = 'ERROR'
 
-        if self.status:
-            logerror(self.logfile, output)
-        else:
+        if not self.status:
             output = ''.join(outlist)
-            logwrite(self.logfile, f'[FFMPEG]:\n{output}')
+            tolog(f'INFO: [FFMPEG] OUTPUT:\n{output}', self.logfile)
 
         wx.CallAfter(pub.sendMessage,
                      "RESULT_EVT",
@@ -215,8 +202,10 @@ class FFmpegGenericTask(Thread):
                f'{self.appdata["ffmpeg_loglev"]} '
                f'{self.args}'
                )
-        logwrite(self.logfile, f'From: {self.procname}\n{cmd}\n')
-
+        tolog(f'INFO: VIDEOMASS TASK: {self.procname}\n'
+              f'INFO: VIDEOMASS COMMAND: {cmd}', self.logfile,
+              sep=True, wdate=True
+              )
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
         try:
@@ -226,15 +215,15 @@ class FFmpegGenericTask(Thread):
                        encoding=self.appdata["encoding"],
                        ) as proc:
                 output = proc.communicate()[1]
-                logwrite(self.logfile, f'[FFMPEG]:\n{output}')
+                tolog(f'INFO: [FFMPEG] OUTPUT:\n{output}', self.logfile)
                 if proc.returncode:  # ffmpeg error
-                    self.status = output
+                    self.status = f"[FFMPEG] OUTPUT ERROR:\n{output}"
 
         except OSError as err:  # command not found
-            self.status = err
+            self.status = f"[VIDEOMASS]: ERROR:\n{err}"
 
         if self.status:
-            logerror(self.logfile, self.status)
+            tolog(f"{self.status}", self.logfile)
 
         wx.CallAfter(pub.sendMessage,
                      "RESULT_EVT",

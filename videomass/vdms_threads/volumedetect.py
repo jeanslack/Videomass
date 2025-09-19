@@ -31,7 +31,7 @@ import platform
 import wx
 from pubsub import pub
 from videomass.vdms_utils.utils import Popen
-from videomass.vdms_io.make_filelog import make_log_template
+from videomass.vdms_io.make_filelog import make_log_template, tolog
 if not platform.system() == 'Windows':
     import shlex
 
@@ -47,7 +47,8 @@ class VolumeDetectThread(Thread):
     lack of ffmpeg of course.
 
     """
-    STOP = 'STOP command received by signal event.\nTerminated process.'
+    STOP = ('WARNING: [VIDEOMASS]: STOP command received by signal '
+            'event.\nTerminated process ')
 
     def __init__(self, timeseq, filelist, audiomap):
         """
@@ -69,7 +70,8 @@ class VolumeDetectThread(Thread):
         self.status = None
         self.data = None
         self.nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
-        self.logf = os.path.join(self.appdata['logdir'], 'volumedetected.log')
+        self.logfile = os.path.join(self.appdata['logdir'],
+                                    'volumedetected.log')
         make_log_template('volumedetected.log',
                           self.appdata['logdir'], mode="w")  # initial LOG
 
@@ -98,7 +100,8 @@ class VolumeDetectThread(Thread):
                    f'-af volumedetect -vn -sn -dn -f null '
                    f'{self.nul}'
                    )
-            self.logwrite(cmd)
+            tolog(f'INFO: VIDEOMASS COMMAND: {cmd}',
+                  self.logfile, sep=True, wdate=True)
 
             if not platform.system() == 'Windows':
                 cmd = shlex.split(cmd)
@@ -120,24 +123,26 @@ class VolumeDetectThread(Thread):
                         if self.stop_work_thread:
                             proc.stdin.write('q')  # stop ffmpeg
                             proc.communicate()[1]
-                            output = VolumeDetectThread.STOP
+                            out = (VolumeDetectThread.STOP
+                                   + f'with PID {proc.pid}')
+                            tolog(out, self.logfile)
                             proc.wait()
                             self.status = 'STOP'
                             break
 
                         if proc.wait():
                             output = proc.communicate()[1]
+                            tolog(f"[FFMPEG] ERROR:\n{output}", self.logfile)
                             self.status = 'ERROR'
                             break
 
                     volume.append((maxv, meanv))
 
             except (OSError, FileNotFoundError) as err:
+                tolog(f'[VIDEOMASS]: ERROR: {err}', self.logfile)
                 self.status = 'ERROR'
-                output = err
 
             if self.status:
-                self.logerror(output)
                 break
 
         self.data = (volume, self.status)
@@ -146,24 +151,6 @@ class VolumeDetectThread(Thread):
                      "RESULT_EVT",
                      status=''
                      )
-    # ----------------------------------------------------------------#
-
-    def logwrite(self, cmd):
-        """
-        write ffmpeg command log
-        """
-        with open(self.logf, "a", encoding='utf-8') as log:
-            line = '=' * 80
-            log.write(f"\n{line}\n{cmd}\n")
-    # ----------------------------------------------------------------#
-
-    def logerror(self, output):
-        """
-        write ffmpeg volumedected errors
-        """
-        with open(self.logf, "a", encoding='utf-8') as logerr:
-            logerr.write(f"\n[FFMPEG] volumedetect "
-                         f"ERRORS:\n{output}\n")
     # ----------------------------------------------------------------#
 
     def stop(self):

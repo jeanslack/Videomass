@@ -6,7 +6,7 @@ Compatibility: Python3, Python2
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.08.2024
+Rev: Sep.19.2025
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -29,20 +29,27 @@ import time
 import os
 
 
-def logwrite(cmd, stderr, logfile, txtenc="utf-8"):
+def tolog(info, logfile, sep=False, wdate=False, txtenc="utf-8"):
     """
-    This function writes status messages
-    to a given `logfile` during a process.
+    This function writes log events as information messages
+    to a given `logfile` during the processes.
     """
-    sep = ('\n==============================================='
-           '==============================================\n')
-    if stderr:
-        apnd = f"\n{stderr}\n"
+    if sep:
+        line = '\n' + '-' * 80 + '\n'
     else:
-        apnd = f"{sep}{cmd}\n\n"
+        line = '\n'
+
+    if wdate:
+        curdate = time.strftime("%c")  # date/time
+        strdate = f'DATE: {curdate}\n'
+    else:
+        strdate = ''
+
+    apnd = f'{line}{strdate}{info}\n'
 
     with open(logfile, "a", encoding=txtenc) as log:
         log.write(apnd)
+# ----------------------------------------------------------------#
 
 
 def make_log_template(logname, logdir, mode="a", txtenc="utf-8"):
@@ -56,15 +63,17 @@ def make_log_template(logname, logdir, mode="a", txtenc="utf-8"):
 
     Returns an absolute/relative pathname of the logfile.
     """
+    sep = '=' * 80
     current_date = time.strftime("%c")  # date/time
     logfile = os.path.join(logdir, logname)
 
     with open(logfile, mode, encoding=txtenc) as log:
-        log.write(f"""
-[DATE]: {current_date}
+        log.write(f"""{sep}
 
-[LOCATION]: "{logfile}"
+[PROGRAM NAME]: Videomass
 
-[VIDEOMASS]:
+[SESSION DATE]: {current_date}
+
+[LOGFILE LOCATION]: "{logfile}"
 """)
     return logfile

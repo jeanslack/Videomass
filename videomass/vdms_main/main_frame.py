@@ -1838,6 +1838,7 @@ class MainFrame(wx.Frame):
                 msg = (_("Error while shutting down. Please see "
                          "file log for details."))
                 wx.LogError(msg)
+                self.view_logs(None, flog='Shutdown.log')
     # ------------------------------------------------------------------#
 
     def auto_exit(self):
