@@ -8,11 +8,14 @@ Change Log:
 
 
 +------------------------------------+
-Tue, 16 September 2025 v6.1.20
+Fri, 19 September 2025 v6.1.20
 
-  * Fixed Index Selection doesn't work #412
+  * Fixed the annoying issue when selecting a specific audio index on files
+    containing more than one audio stream #412 .
   * Improved log management.
   * Fixed log writing.
+  * The file selected in the file list panel will also be selected in Source
+    Stream Properties window.
 
 +------------------------------------+
 Thu, 28 August 2025 v6.1.18

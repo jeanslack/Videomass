@@ -313,8 +313,13 @@ class MainFrame(wx.Frame):
         if self.mediastreams:
             self.mediastreams.Raise()
             return
-        self.mediastreams = MediaStreams(self.data_files,
-                                         self.appdata['ostype'])
+
+        if self.filedropselected:  # is not None
+            indx = self.file_src.index(self.filedropselected)
+        else:
+            indx = 0
+
+        self.mediastreams = MediaStreams(self.data_files, selindx=indx)
         self.mediastreams.Show()
     # ------------------------------------------------------------------#
 

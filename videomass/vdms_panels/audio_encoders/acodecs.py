@@ -525,7 +525,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         else:
             wx.MessageBox(_('The source file does not contain any '
                             'audio stream:\n"{}"').format(fileselected[0]),
-                            'Videomass', wx.ICON_ERROR, self)
+                          'Videomass', wx.ICON_ERROR, self)
         return None
     # ------------------------------------------------------------------#
 

@@ -33,7 +33,7 @@ class MediaStreams(wx.Dialog):
     Display streams information using ffprobe json data.
     """
 
-    def __init__(self, data, OS):
+    def __init__(self, data, selindx: int = 0):
         """
         list(data):
             contains ffprobe data from `MainFrame.self.data_files`.
@@ -185,8 +185,8 @@ class MediaStreams(wx.Dialog):
         self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
 
         if data:
-            self.file_select.Focus(0)  # make the line the current line
-            self.file_select.Select(0, on=1)  # default event selection
+            self.file_select.Focus(selindx)  # make the line the current line
+            self.file_select.Select(selindx, on=1)  # default event selection
 
         self.typelist = None
 
