@@ -61,7 +61,7 @@ def info_this_platform():
 
 def arguments():
     """Parser for command line options"""
-    parser = argparse.ArgumentParser(description=('GUI for FFmpeg and'),)
+    parser = argparse.ArgumentParser(description=('Advanced GUI for FFmpeg'),)
     parser.add_argument('-v', '--version',
                         help="Show the current version and exit.",
                         action="store_true",

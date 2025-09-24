@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.18\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-19 13:06+0200\n"
+"POT-Creation-Date: 2025-09-24 22:21+0200\n"
 "PO-Revision-Date: 2024-08-26 17:29-0600\n"
 "Last-Translator: José Alberto Valle Cid j.alberto.vc@gmail.com\n"
 "Language: es_ES\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.17.0\n"
+"Generated-By: Babel 2.10.3\n"
 
 #, python-brace-format
 msgid ""
@@ -2659,7 +2659,7 @@ msgid "Limiter for the maximum peak level or the mean level (when switch to RMS)
 msgstr "Limita por máximo nivel de pico o por nivel promedio (cuando se usa RMS) en dBFS. Desde -99 a +0.0; predeterminado para nivel de pico es -1.0; para RMS es 20.0"
 
 msgid ""
-"\"Auto\", lets FFmpeg select the audio stream to process (usually the first audio stream). If the source file(s) is just an audio track, it's recommend to always set this control to \"Auto.\"\n"
+"\"Auto\", lets FFmpeg select the audio stream to process (usually the first audio stream). If the source file(s) is just an audio track, it's recommend to always set this control to \"Auto\".\n"
 "\n"
 "\"1-16\", if a video file contains more than one audio stream, you can select a specific one, e.g \"1\" for the first available audio stream, \"2\" for the second audio stream, and so on."
 msgstr ""
@@ -2685,9 +2685,8 @@ msgstr "Rango de Intensidad Destino en LUFS. Desde +1.0 a +20.0, predeterminado 
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
 msgstr "Reproducir el flujo de audio seleccionado en la \"Selección de Indice\". Con esta función puede probar el resultado de normalizar el audio."
 
-#, python-brace-format
 msgid ""
-"The selected index does not exist in the source file:\n"
+"Index does not exist in the selected source file:\n"
 "\"{}\""
 msgstr ""
 

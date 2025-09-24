@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass - IT - 25.08.2025\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-19 13:06+0200\n"
-"PO-Revision-Date: 2025-09-19 13:15+0200\n"
+"POT-Creation-Date: 2025-09-24 22:21+0200\n"
+"PO-Revision-Date: 2025-09-24 22:25+0200\n"
 "Last-Translator: bovirus <bovirus@gmail.com>\n"
 "Language-Team: bovirus (bovirus@gmail.com)\n"
 "Language: it_IT\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Generated-By: Babel 2.17.0\n"
+"Generated-By: Babel 2.10.3\n"
 "X-Generator: Poedit 3.2.2\n"
 
 #, python-brace-format
@@ -2736,7 +2736,7 @@ msgid "Limiter for the maximum peak level or the mean level (when switch to RMS)
 msgstr "Limitatore per il livello massimo di picco o il livello medio (quando si passa a RMS) in dBFS. Da -99,0 a +0,0; il valore predefinito per il livello PEAK è -1,0; il valore predefinito per RMS è -20,0"
 
 msgid ""
-"\"Auto\", lets FFmpeg select the audio stream to process (usually the first audio stream). If the source file(s) is just an audio track, it's recommend to always set this control to \"Auto.\"\n"
+"\"Auto\", lets FFmpeg select the audio stream to process (usually the first audio stream). If the source file(s) is just an audio track, it's recommend to always set this control to \"Auto\".\n"
 "\n"
 "\"1-16\", if a video file contains more than one audio stream, you can select a specific one, e.g \"1\" for the first available audio stream, \"2\" for the second audio stream, and so on."
 msgstr ""
@@ -2769,12 +2769,11 @@ msgstr "Target dell'intervallo loudness in LUFS. Da +1.0 a +20.0, il valore pred
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
 msgstr "Riproduci il flusso audio selezionato nel controllo \"Selezione indice\". Utilizzando questa funzione è possibile testare il risultato della normalizzazione audio."
 
-#, python-brace-format
 msgid ""
-"The selected index does not exist in the source file:\n"
+"Index does not exist in the selected source file:\n"
 "\"{}\""
 msgstr ""
-"L'indice selezionato non esiste nel file sorgente:\n"
+"Indice inesistente nel file sorgente selezionato:\n"
 "\"{}\""
 
 #, python-brace-format

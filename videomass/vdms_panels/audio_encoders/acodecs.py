@@ -271,7 +271,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         tip = (_('"Auto", lets FFmpeg select the audio stream to process '
                  '(usually the first audio stream). If the source file(s) '
                  'is just an audio track, it\'s recommend to always set this '
-                 'control to "Auto."\n\n"1-16", if a video file contains '
+                 'control to "Auto".\n\n"1-16", if a video file contains '
                  'more than one audio stream, you can select a specific '
                  'one, e.g "1" for the first available audio stream, '
                  '"2" for the second audio stream, and so on.'))
@@ -516,8 +516,8 @@ class AudioEncoders(scrolled.ScrolledPanel):
             streamindexes = list(x.get('index') for x in isaudio)
             if idx.isdigit():  # e.g user has selected an index (1-16)
                 if not int(idx) - 1 in range(len(streamindexes)):
-                    wx.MessageBox(_('The selected index does not '
-                                    'exist in the source file:\n"{}"'
+                    wx.MessageBox(_('Index does not exist in the '
+                                    'selected source file:\n"{}"'
                                     ).format(fileselected[0]),
                                   'Videomass', wx.ICON_ERROR, self)
                     return None

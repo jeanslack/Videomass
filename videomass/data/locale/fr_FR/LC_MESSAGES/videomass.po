@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 5.0.14\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-19 13:06+0200\n"
+"POT-Creation-Date: 2025-09-24 22:21+0200\n"
 "PO-Revision-Date: 2024-08-18 00:59+0200\n"
 "Last-Translator: Phil Aug <philiaug@live.fr>\n"
 "Language: fr_FR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.17.0\n"
+"Generated-By: Babel 2.10.3\n"
 
 #, python-brace-format
 msgid ""
@@ -2677,7 +2677,7 @@ msgid "Limiter for the maximum peak level or the mean level (when switch to RMS)
 msgstr "Limiteur pour l'écrêtage maximum ou le niveau moyen (lors du passage en RMS) en dBFS. De -99,0 à +0,0 ; la valeur par défaut pour le niveau PEAK est -1,0 ; la valeur par défaut pour RMS est -20,0"
 
 msgid ""
-"\"Auto\", lets FFmpeg select the audio stream to process (usually the first audio stream). If the source file(s) is just an audio track, it's recommend to always set this control to \"Auto.\"\n"
+"\"Auto\", lets FFmpeg select the audio stream to process (usually the first audio stream). If the source file(s) is just an audio track, it's recommend to always set this control to \"Auto\".\n"
 "\n"
 "\"1-16\", if a video file contains more than one audio stream, you can select a specific one, e.g \"1\" for the first available audio stream, \"2\" for the second audio stream, and so on."
 msgstr ""
@@ -2702,9 +2702,8 @@ msgstr "Cible de plage d'intensité volume dans LUFS. De +1.0 à +20.0, la valeu
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
 msgstr "Lis  le flux audio sélectionné dans la commande « Sélection d'index ». À l'aide de cette fonction, vous pouvez tester le résultat de la normalisation audio."
 
-#, python-brace-format
 msgid ""
-"The selected index does not exist in the source file:\n"
+"Index does not exist in the selected source file:\n"
 "\"{}\""
 msgstr ""
 
