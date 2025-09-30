@@ -8,15 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 6.1.20\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-24 22:21+0200\n"
+"POT-Creation-Date: 2025-09-30 11:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.3\n"
+"Generated-By: Babel 2.17.0\n"
 
+#, python-brace-format
 msgid ""
 "Unexpected error while deleting file contents:\n"
 "\n"
@@ -306,6 +307,7 @@ msgstr ""
 msgid "Videomass - Error!"
 msgstr ""
 
+#, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr ""
 
@@ -826,6 +828,7 @@ msgstr ""
 msgid "Videomass - Warning!"
 msgstr ""
 
+#, python-brace-format
 msgid "{} location"
 msgstr ""
 
@@ -948,6 +951,7 @@ msgstr ""
 msgid "Formats must be comma-separated"
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "ERROR: Keys mismatched for requested data.\n"
 "Invalid file: «{0}»"
@@ -1045,6 +1049,7 @@ msgid ""
 "New releases fix bugs and offer new features."
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "\n"
 "\n"
@@ -1115,6 +1120,7 @@ msgstr ""
 msgid "Click the \"Next\" button"
 msgstr ""
 
+#, python-brace-format
 msgid "'{}' is not installed on your computer. Install it or indicate another location by clicking the 'Locate' button."
 msgstr ""
 
@@ -1156,6 +1162,7 @@ msgstr ""
 msgid "Finish"
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "Output folder does not exist:\n"
 "\n"
@@ -1177,6 +1184,7 @@ msgstr ""
 msgid "File(s) not found"
 msgstr ""
 
+#, python-brace-format
 msgid "Please, see «{0}» file for details."
 msgstr ""
 
@@ -1197,6 +1205,7 @@ msgid ""
 "Would you like to keep them in the queue?"
 msgstr ""
 
+#, python-brace-format
 msgid "Queue ({0})"
 msgstr ""
 
@@ -1284,12 +1293,14 @@ msgstr ""
 msgid "Check for preset updates"
 msgstr ""
 
+#, python-brace-format
 msgid "Check for new presets updates from {0}"
 msgstr ""
 
 msgid "Get latest presets"
 msgstr ""
 
+#, python-brace-format
 msgid "Get the latest presets from {0}"
 msgstr ""
 
@@ -1443,6 +1454,7 @@ msgstr ""
 msgid "No default folder has been set for the destination of the encodings. The current setting is \"Same destination paths as source files\"."
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "'{}':\n"
 "No such file or directory"
@@ -1451,14 +1463,17 @@ msgstr ""
 msgid "Are you sure to empty trash folder?"
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "'{}':\n"
 "There are no files to delete."
 msgstr ""
 
+#, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr ""
 
+#, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr ""
 
@@ -1467,12 +1482,14 @@ msgid ""
 "The archive is being downloaded"
 msgstr ""
 
+#, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr ""
 
 msgid "Some changes require restarting the application."
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "{0}\n"
 "\n"
@@ -1482,6 +1499,7 @@ msgstr ""
 msgid "Restart Videomass?"
 msgstr ""
 
+#, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr ""
 
@@ -1509,7 +1527,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-msgid "Play the selected imput file"
+msgid "Play the selected input file"
 msgstr ""
 
 msgid "Play"
@@ -1563,6 +1581,7 @@ msgstr ""
 msgid "Videomass - FFmpeg Message Monitoring"
 msgstr ""
 
+#, python-brace-format
 msgid "The system will turn off in {0} seconds"
 msgstr ""
 
@@ -1572,6 +1591,7 @@ msgstr ""
 msgid "Error while shutting down. Please see file log for details."
 msgstr ""
 
+#, python-brace-format
 msgid "Exiting the application in {0} seconds"
 msgstr ""
 
@@ -1602,6 +1622,7 @@ msgstr ""
 msgid "Wave"
 msgstr ""
 
+#, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr ""
 
@@ -1638,6 +1659,7 @@ msgstr ""
 msgid "Invalid or unsupported file:  %s"
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "Unable to create waveform.\n"
 "The selected source file does not contain any audio streams:\n"
@@ -1694,7 +1716,7 @@ msgstr ""
 msgid "Save as a new profile of the Presets Manager."
 msgstr ""
 
-msgid "Displays the RAW commands of the selected file."
+msgid "Displays the RAW commands for the selected file."
 msgstr ""
 
 msgid "Available video encoders. \"Copy\" means that the video stream will not be re-encoded and will allow you (depending on the encoder) to change the container, audio codec and a few other parameters."
@@ -1776,6 +1798,7 @@ msgid ""
 "Clip duration"
 msgstr ""
 
+#, python-brace-format
 msgid "Write profile on «{0}»"
 msgstr ""
 
@@ -1785,6 +1808,7 @@ msgstr ""
 msgid "Invalid file name, make sure to provide a valid name including the «.json» extension"
 msgstr ""
 
+#, python-brace-format
 msgid "Cannot save current data in file «{}»."
 msgstr ""
 
@@ -1806,6 +1830,7 @@ msgstr ""
 msgid "Welcome to Videomass"
 msgstr ""
 
+#, python-brace-format
 msgid "Version {}"
 msgstr ""
 
@@ -1889,6 +1914,7 @@ msgstr ""
 msgid "File without format extension: please give an appropriate extension to the file name, example '.mkv', '.avi', '.mp3', etc."
 msgstr ""
 
+#, python-brace-format
 msgid "Name has illegal characters like: {0}"
 msgstr ""
 
@@ -1949,6 +1975,7 @@ msgstr ""
 msgid "Rename in batch"
 msgstr ""
 
+#, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr ""
 
@@ -2057,6 +2084,7 @@ msgstr ""
 msgid "Refresh the presets list"
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "Outdated presets version found: v{1}\n"
 "A new version is available: v{0}\n"
@@ -2078,24 +2106,28 @@ msgstr ""
 msgid "Supported Format List"
 msgstr ""
 
+#, python-brace-format
 msgid "Cannot save current data in file '{}'."
 msgstr ""
 
 msgid "You just successfully created a new preset!"
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
 "\n"
 " It will be moved to the \"Removals\" subfolder inside the presets folder."
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "{}\n"
 "\n"
 "Sorry, removal failed, cannot continue.."
 msgstr ""
 
+#, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
 msgstr ""
 
@@ -2152,6 +2184,7 @@ msgid ""
 "Do you want to continue?"
 msgstr ""
 
+#, python-brace-format
 msgid "Edit profile on «{0}»"
 msgstr ""
 
@@ -2228,24 +2261,29 @@ msgstr ""
 msgid "Open Audio File"
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "Invalid file: '{}'\n"
 "\n"
 "{}"
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "Invalid file: '{}'\n"
 "\n"
 "It doesn't appear to be an audio file."
 msgstr ""
 
+#, python-brace-format
 msgid "Invalid file: '{}'"
 msgstr ""
 
+#, python-brace-format
 msgid "Unsupported format '{}'"
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "File does not exist:\n"
 "\n"
@@ -2393,11 +2431,13 @@ msgstr ""
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "Index does not exist in the selected source file:\n"
 "\"{}\""
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "The source file does not contain any audio stream:\n"
 "\"{}\""
@@ -2615,6 +2655,7 @@ msgid ""
 "larger performance improvement."
 msgstr ""
 
+#, python-brace-format
 msgid "Supports ({0}) formats only, not ({1})"
 msgstr ""
 
@@ -2633,6 +2674,7 @@ msgstr ""
 msgid "Import queue file"
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "ERROR: invalid data found loading queue file.\n"
 "«{0}»\n"

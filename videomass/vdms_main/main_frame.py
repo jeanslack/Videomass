@@ -1317,7 +1317,7 @@ class MainFrame(wx.Frame):
         home = self.toolbar.AddTool(5, _('Home'), bmphome,
                                     tip, wx.ITEM_NORMAL
                                     )
-        tip = _("Play the selected imput file")
+        tip = _("Play the selected input file")
         play = self.toolbar.AddTool(35, _('Play'), bmpplay,
                                     tip, wx.ITEM_NORMAL
                                     )

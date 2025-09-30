@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass - IT - 25.08.2025\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-24 22:21+0200\n"
-"PO-Revision-Date: 2025-09-24 22:25+0200\n"
+"POT-Creation-Date: 2025-09-30 11:29+0200\n"
+"PO-Revision-Date: 2025-09-30 11:34+0200\n"
 "Last-Translator: bovirus <bovirus@gmail.com>\n"
 "Language-Team: bovirus (bovirus@gmail.com)\n"
 "Language: it_IT\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Generated-By: Babel 2.10.3\n"
+"Generated-By: Babel 2.17.0\n"
 "X-Generator: Poedit 3.2.2\n"
 
 #, python-brace-format
@@ -1679,7 +1679,7 @@ msgstr "Pannello principale"
 msgid "Home"
 msgstr "Principale"
 
-msgid "Play the selected imput file"
+msgid "Play the selected input file"
 msgstr "Riproduci il file sorgente selezionato"
 
 msgid "Play"
@@ -1896,7 +1896,7 @@ msgstr "Varie"
 msgid "Save as a new profile of the Presets Manager."
 msgstr "Salva come nuovo profilo in Gestione profili."
 
-msgid "Displays the RAW commands of the selected file."
+msgid "Displays the RAW commands for the selected file."
 msgstr "Mostra i comandi RAW del file selezionato."
 
 msgid "Available video encoders. \"Copy\" means that the video stream will not be re-encoded and will allow you (depending on the encoder) to change the container, audio codec and a few other parameters."
@@ -2769,6 +2769,7 @@ msgstr "Target dell'intervallo loudness in LUFS. Da +1.0 a +20.0, il valore pred
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
 msgstr "Riproduci il flusso audio selezionato nel controllo \"Selezione indice\". Utilizzando questa funzione è possibile testare il risultato della normalizzazione audio."
 
+#, python-brace-format
 msgid ""
 "Index does not exist in the selected source file:\n"
 "\"{}\""
