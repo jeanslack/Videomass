@@ -15,12 +15,10 @@ Install from [PyPi package](Python_Package) or [Run Videomass from source code](
 
 ---
 
-## Old version Disk Image
-[Videomass 4.0.1 Disk Image](https://github.com/jeanslack/Videomass/releases/download/v4.0.1/Videomass-v4.0.1-x86_64.dmg){: .btn .btn-green .fs-5 .mb-4 .mb-md-0 }   
+### Notice
+{: .bg-yellow-300 .text-grey-dk-100}
 
-Minimum requirements:
-- macOS High Sierra 10.13.6
-- x86_64 Architecture
+There is currently no updated standalone package in DMG (Disk Image) format. All old DMG files are still available in the Videomass repository but are now deprecated and their use is not recommended.
 
 
 For any application-related issues, please read 
