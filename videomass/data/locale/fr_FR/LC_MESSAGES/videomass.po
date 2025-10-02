@@ -5,18 +5,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 5.0.14\n"
+"Project-Id-Version: Videomass 6.1.20\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-24 22:21+0200\n"
-"PO-Revision-Date: 2024-08-18 00:59+0200\n"
+"POT-Creation-Date: 2025-09-30 11:29+0200\n"
+"PO-Revision-Date: 2025-09-30 11:33+0200\n"
 "Last-Translator: Phil Aug <philiaug@live.fr>\n"
-"Language: fr_FR\n"
 "Language-Team: French (FR)\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: Babel 2.17.0\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, python-brace-format
 msgid ""
@@ -29,15 +30,15 @@ msgstr ""
 "{0}"
 
 msgid "Cross-platform graphical user interface for FFmpeg\n"
-msgstr ""
+msgstr "Interface utilisateur graphique multiplateforme pour FFmpeg\n"
 
 msgid "Videomass supports mono and stereo audio channels. If you are not sure set to \"Auto\" and source values will be copied."
 msgstr "Videomass supporte les canaux mono et stéréo. Si vous n'êtes pas sûr choisissez \"Auto\" et les valeurs d'origine seront dupliquées.."
 
 msgid "The audio Rate (or sample-rate) is the sound sampling frequency and is measured in Hertz. The higher the frequency, the more true it will be to the sound source and the more the file will increase in size. For audio CD playback, set a sampling frequency of 44100 kHz. If you are not sure, set to \"Auto\" and source values will be copied."
 msgstr ""
-"Le débit audio (ou fréquence d'échantillonnage) est la fréquence d'échantillonnage du son, elle est calculée en Hertz.Plus la fréquence est élevée, plus elle se rapproche de la source originale du son et plus le fichier augmente en taille.Pour la lecture de CD audio, définissez une fréquence d'échantillonnage de 44100 kHz.Si vous n'êtes pas sûr, réglez sur \"Auto\" et les valeurs sources seront"
-" dupliquées.."
+"Le débit audio (ou fréquence d'échantillonnage) est la fréquence d'échantillonnage du son, elle est calculée en Hertz.Plus la fréquence est élevée, plus elle se rapproche de la source originale du son et plus le fichier augmente en taille.Pour la lecture de CD audio, définissez une fréquence d'échantillonnage de 44100 kHz.Si vous n'êtes pas sûr, réglez sur \"Auto\" et les valeurs sources "
+"seront dupliquées.."
 
 msgid "The audio bitrate affects the file compression and thus the quality of listening. The higher the value, the higher the quality."
 msgstr "Le débit audio (bitrate) affecte la compression du fichier et donc la qualité de l'écoute.Plus la valeur est élevée, meilleure est la qualité."
@@ -46,13 +47,13 @@ msgid "Bit depth is the number of bits of information in each sample, and it dir
 msgstr "La profondeur du bit est le nombre d'informations inclus dans chaque échantillon, elle correspond directement à la résolution de chaque échantillon.La profondeur du bit est uniquement significative en référence à un signal numérique PCM.Les formats non PCM, tels que les formats de compression avec perte, n'ont pas de profondeur de bits associée."
 
 msgid "First pass command"
-msgstr ""
+msgstr "Équipe pour le premier passage"
 
 msgid "Second pass command"
-msgstr ""
+msgstr "Équipe pour la deuxième passe"
 
 msgid "Videomass - RAW Commands"
-msgstr ""
+msgstr "Videomass - RAW Commandes"
 
 msgid "Read me"
 msgstr "Lisez moi"
@@ -66,6 +67,13 @@ msgid ""
 "markers highlighted in red should be replaced with the\n"
 "values given by the output of the first command."
 msgstr ""
+"Les commandes RAW reflètent les paramètres définis par l'utilisateur \n"
+"dans l'interface AV-Conversions et s'appliquent uniquement \n"
+"au fichier sélectionné.\n"
+"\n"
+"Veuillez noter qu'en utilisant EBU R128 (Haute qualité), tout <?> \n"
+"les marqueurs surlignés en rouge doivent être remplacés par \n"
+"les valeurs données dans la sortie de la première commande."
 
 msgid "When finished, once the operations have been completed successfully:"
 msgstr "Une fois les opérations terminées et effectuées avec succès :"
@@ -603,8 +611,8 @@ msgid ""
 "Set the number of frames (value*2 + 1) used for lowpass filtering the camera movements. Default value is 15. For example a number of 10 means that 21 frames are used (10 in the past and 10 in the future) to smoothen the motion in the video. A larger value leads to a smoother video, but limits the acceleration of the camera (pan/tilt movements). 0 is a special case where a static camera is "
 "simulated."
 msgstr ""
-"Définit  le nombre de trames (valeur * 2 + 1) utilisé pour un filtrage en lowpass des mouvements de la caméra.La valeur par défaut est de 15. Par exemple, un nombre de 10 signifie que 21 images seront utilisées (10 avant et 10 après) pour fluidifier le mouvement de la vidéo.Une valeur plus grande rend la vidéo plus fluide, mais limite l'accélération de la caméra (mouvements Pan / Tilt).0 est un"
-" cas particulier où une caméra statique est simulée."
+"Définit  le nombre de trames (valeur * 2 + 1) utilisé pour un filtrage en lowpass des mouvements de la caméra.La valeur par défaut est de 15. Par exemple, un nombre de 10 signifie que 21 images seront utilisées (10 avant et 10 après) pour fluidifier le mouvement de la vidéo.Une valeur plus grande rend la vidéo plus fluide, mais limite l'accélération de la caméra (mouvements Pan / Tilt).0 est "
+"un cas particulier où une caméra statique est simulée."
 
 msgid "Set the camera path optimization algorithm. Values are: `gauss`: gaussian kernel low-pass filter on camera motion (default), and `avg`: averaging on transformations"
 msgstr "Définit l'algorithme d'optimisation du chemin de la caméra.Les valeurs sont: filtre «gauss»: gaussian kernel low-pass pour le mouvement de la caméra (par défaut) et `avg»: valeurs moyennes des transformations"
@@ -706,7 +714,7 @@ msgid "Values"
 msgstr "Valeurs"
 
 msgid "Source Stream Properties"
-msgstr ""
+msgstr "Propriétés du Flux Source"
 
 msgid "Unable to open the clipboard on Format tab"
 msgstr "Impossible d'ouvrir le Presse-papiers sous l'onglet Format"
@@ -865,10 +873,10 @@ msgstr ""
 "ne changez que si vous savez ce que vous faites.\n"
 
 msgid "Set logging level flags used by FFmpeg"
-msgstr ""
+msgstr "Définir les indicateurs de niveau de journalisation utilisés par FFmpeg"
 
 msgid "Set logging level flags used by FFplay"
-msgstr ""
+msgstr "Définir les indicateurs de niveau de journalisation utilisés par FFplay"
 
 msgid "FFmpeg logging levels"
 msgstr "Niveaux de journalisation FFmpeg"
@@ -1016,9 +1024,8 @@ msgstr "Description longue du profil"
 # | msgid ""
 # | "One or more comma-separated format names that are not compatible with "
 # | "this profile."
-#, fuzzy
 msgid "One or more comma-separated format names compatible with this profile"
-msgstr "Un ou plusieurs noms de format séparés par une virgule incompatibles avec  ce profil."
+msgstr "Un ou plusieurs noms de format séparés par une virgule incompatibles avec  ce profil"
 
 msgid "Output format extension. Leave empty to copy codec and format"
 msgstr "Extension du format de sortie.Laisser vide pour copier le codec et le format"
@@ -1218,12 +1225,16 @@ msgid ""
 "If you have already installed FFmpeg on your operating system,\n"
 "click the \"Auto-detection\" button."
 msgstr ""
+"Si vous avez déjà installé FFmpeg sur votre système d'exploitation,\n"
+"cliquez sur le bouton \"Détection automatique\"."
 
 msgid ""
 "If you want to use a version of FFmpeg located on your filesystem\n"
 "but not installed on your operating system,\n"
 "click the \"Locate\" button."
 msgstr ""
+"Si vous souhaitez utiliser une version de FFmpeg située sur votre système de fichiers\n"
+"mais non installée sur votre système d'exploitation, cliquez sur le bouton \"Localiser\"."
 
 msgid "Auto-detection"
 msgstr "Auto-détection"
@@ -1308,7 +1319,7 @@ msgstr "Fichier(s)Introuvable(s)"
 
 #, python-brace-format
 msgid "Please, see «{0}» file for details."
-msgstr ""
+msgstr "Veuillez consulter le fichier «{0}» pour plus de détails."
 
 msgid ""
 "Wait....\n"
@@ -1486,49 +1497,43 @@ msgid "Home panel\tCtrl+Shift+H"
 msgstr "Ecran d'Accueil\tCtrl+Shift+H"
 
 # | msgid "Go to the 'Home' panel"
-#, fuzzy
 msgid "Go to the «Home» panel"
-msgstr "Retour à \"Ecran d'Accueil\""
+msgstr "Allez dans le panneau \" Accueil»"
 
 msgid "Presets Manager\tCtrl+Shift+P"
 msgstr "Gestion des Jeux de Profils\tCtrl+Shift+P"
 
 # | msgid "Go to the 'Presets Manager' panel"
-#, fuzzy
 msgid "Go to the «Presets Manager» panel"
-msgstr "Aller sur le panneau \"Gestion des Jeux de Profils\""
+msgstr "Allez dans le panneau \"Gestionnaire de Préréglages\""
 
 msgid "A/V Conversions\tCtrl+Shift+V"
 msgstr "Conversions Audio/Vidéo\tCtrl+Shift+V"
 
 # | msgid "Go to the 'A/V Conversions' panel"
-#, fuzzy
 msgid "Go to the «A/V Conversions» panel"
-msgstr "Aller au panneau 'Conversions Audio/Vidéo'"
+msgstr "Allez dans le panneau» Conversions A/V\""
 
 msgid "Concatenate Demuxer\tCtrl+Shift+D"
 msgstr "Fusion et Démultipléxage\tCtrl+Shift+D"
 
 # | msgid "Go to the 'Concatenate Demuxer' panel"
-#, fuzzy
 msgid "Go to the «Concatenate Demuxer» panel"
-msgstr "Aller sur le panneau Assemblage et Démultipléxage"
+msgstr "Allez dans le panneau \"Concaténer le Démultiplexeur»"
 
 msgid "Still Image Maker\tCtrl+Shift+I"
 msgstr "Film à partir d'image(s)\tCtrl+Shift+I"
 
 # | msgid "Go to the 'Still Image Maker' panel"
-#, fuzzy
 msgid "Go to the «Still Image Maker» panel"
-msgstr "Aller au panneau 'Film à partir d'image(s)"
+msgstr "Allez dans le panneau \" Créateur d'images fixes»"
 
 msgid "From Movie to Pictures\tCtrl+Shift+S"
 msgstr "Image(s) à partir d'un Film \tCtrl+Shift+S"
 
 # | msgid "Go to the 'From Movie to Pictures' panel"
-#, fuzzy
 msgid "Go to the «From Movie to Pictures» panel"
-msgstr "Aller au panneau \"Créer  Image(s) à partir d'un Film\""
+msgstr "Allez dans le panneau \" Du film aux images»"
 
 msgid "Output monitor\tCtrl+Shift+O"
 msgstr "Moniteur de sortie\tCtrl+Shift+O"
@@ -1558,22 +1563,22 @@ msgid "Issue tracker"
 msgstr "Traqueur d'incidents"
 
 msgid "Contribute to the project"
-msgstr ""
+msgstr "Contribuer au projet"
 
 msgid "Sponsor this project"
-msgstr ""
+msgstr "Parrainez ce projet"
 
 msgid "Become a developer supporter"
-msgstr ""
+msgstr "Devenez un supporter développeur"
 
 msgid "Donate"
-msgstr ""
+msgstr "Sacrifier"
 
 msgid "Donate to the app developer"
-msgstr ""
+msgstr "Faire un don au développeur de l'application"
 
 msgid "Other projects by the developer"
-msgstr ""
+msgstr "Autres projets du développeur"
 
 msgid "About Videomass"
 msgstr "A propos de Videomass"
@@ -1658,33 +1663,28 @@ msgid "Congratulation! You are already using the latest version.\n"
 msgstr "Félicitations! Vous utilisez déjà la dernière version\n"
 
 # | msgid "Go to the previous panel"
-#, fuzzy
 msgid "Previous panel"
-msgstr "Revenir au panneau précédent"
+msgstr "Panneau précédent"
 
 msgid "Back"
 msgstr "Précédent"
 
 # | msgid "Next >"
-#, fuzzy
 msgid "Next panel"
-msgstr "Suivant >"
+msgstr "Panneau suivant"
 
 msgid "Next"
 msgstr "Suivant"
 
 # | msgid "Go to the 'Home' panel"
-#, fuzzy
 msgid "Home panel"
-msgstr "Retour à \"Ecran d'Accueil\""
+msgstr "Panneau d'accueil"
 
 msgid "Home"
 msgstr "Accueil"
 
-# | msgid "Delete the selected profile"
-#, fuzzy
-msgid "Play the selected imput file"
-msgstr "Supprimer le profil sélectionné"
+msgid "Play the selected input file"
+msgstr "Lire le fichier d'entrée sélectionné"
 
 msgid "Play"
 msgstr "Lecture"
@@ -1742,7 +1742,7 @@ msgstr "Videomass - Messages de sortie FFMPEG"
 
 #, python-brace-format
 msgid "The system will turn off in {0} seconds"
-msgstr ""
+msgstr "Le système s'éteindra dans {0} secondes"
 
 msgid "Videomass - Shutdown!"
 msgstr "Videomass - Arrêt !"
@@ -1751,9 +1751,9 @@ msgid "Error while shutting down. Please see file log for details."
 msgstr "Erreur à la fermeture. Consulter le fichier log pour plus de détails."
 
 # | msgid "Exit the application"
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Exiting the application in {0} seconds"
-msgstr "Quitter l'application"
+msgstr "Quitter l'application en {0} secondes"
 
 msgid "Videomass - Exiting!"
 msgstr "Videomass -  en cours d'arrêt !"
@@ -1780,7 +1780,7 @@ msgid "No source duration:"
 msgstr "Aucune durée source :"
 
 msgid "Wave"
-msgstr ""
+msgstr "Vague"
 
 #, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
@@ -1793,31 +1793,33 @@ msgid "Start adjustment"
 msgstr "Réglage de départ"
 
 msgid "Toggles the display of the audio waveform in the background ruler"
-msgstr ""
+msgstr "Bascule l'affichage de la forme d'onde audio dans la règle d'arrière-plan"
 
 msgid "Reset segment on timeline"
-msgstr ""
+msgstr "Réinitialiser le segment sur la chronologie"
 
 msgid "Timeline Editor Usage"
 msgstr "Utilisation de la timeline"
 
 msgid "Play segment"
-msgstr ""
+msgstr "Segment de lecture"
 
 msgid "Invalid file format for playback."
-msgstr ""
+msgstr "Format de fichier non valide pour la lecture."
 
 msgid "No segment selected in the timeline yet."
-msgstr ""
+msgstr "Aucun segment n'a encore été sélectionné dans la chronologie."
 
 msgid ""
 "Invalid segment selection!\n"
 "«End» cursor must be moved to the right side of the «Start» cursor."
 msgstr ""
+"Sélection de segment non valide!\n"
+"Vous devez déplacer le curseur \"Fin\" vers la droite du curseur \"Début\"."
 
 #, python-format
 msgid "Invalid or unsupported file:  %s"
-msgstr ""
+msgstr "Fichier invalide ou non pris en charge:  %s"
 
 #, python-brace-format
 msgid ""
@@ -1825,6 +1827,9 @@ msgid ""
 "The selected source file does not contain any audio streams:\n"
 "\"{}\""
 msgstr ""
+"Impossible de créer une forme d'onde.\n"
+"Le fichier source sélectionné ne contient aucun flux audio:\n"
+"\"{}\""
 
 msgid ""
 "The timeline editor allows you to trim slices of time on selected files.\n"
@@ -1843,17 +1848,36 @@ msgid ""
 "(00:00:00.000) and all timeline controls will be disabled.\n"
 "This behavior also applies when deselecting files."
 msgstr ""
+"L'éditeur de chronologie vous permet de couper des tranches de temps sur \n"
+"des fichiers sélectionnés.\n"
+"Le format horaire utilisé pour les durées de rapport est exprimé en heures,\n"
+"minutes, secondes et millisecondes (HH:MM:SS.ms).\n"
+"\n"
+"Les valeurs de durée»Début«/» Fin \" se réfèrent toujours à la position initiale \n"
+"d'une durée globale. La durée globale d'un fichier et la durée d'un segment \n"
+"sélectionné (y compris les avertissements) sont affichées dans la barre d'état\n"
+"de la chronologie.\n"
+"\n"
+"Veuillez noter que des actions telles que l'importation de nouveaux fichiers,\n"
+"la sélection, la désélectionnation, la suppression et le tri des éléments entraînent\n"
+"une réinitialisation valeurs de la chronologie à la valeur par défaut.\n"
+"\n"
+"S'il n'y a pas de fichier source, les valeurs de durée seront définies sur la valeur \n"
+"par défaut (00:00:00.000) et tous les contrôles de la chronologie seront désactivés.\n"
+"Ce comportement s'applique également lors de la désélection de fichiers."
 
 msgid "Source duration:"
 msgstr "Durée source:"
 
 msgid "WARNING: Invalid segment selection, out of range."
-msgstr ""
+msgstr "AVERTISSEMENT: Sélection de segment non valide, hors plage."
 
 msgid ""
 "Start by dragging the handles in the left corners or\n"
 "click the Start/End adjustment buttons for fine tuning."
 msgstr ""
+"Commencez par faire glisser les poignées dans les coins de gauche\n"
+"ou cliquez sur les boutons de réglage de \"Début\"/\"Fin\" pour un réglage fin."
 
 msgid "Start"
 msgstr "Début"
@@ -1876,8 +1900,8 @@ msgstr "Divers"
 msgid "Save as a new profile of the Presets Manager."
 msgstr "Enregistrer ce nouveau profil dans le Gestionnaire de Jeux de Profils."
 
-msgid "Displays the RAW commands of the selected file."
-msgstr ""
+msgid "Displays the RAW commands for the selected file."
+msgstr "Affiche les commandes RAW pour le fichier sélectionné."
 
 msgid "Available video encoders. \"Copy\" means that the video stream will not be re-encoded and will allow you (depending on the encoder) to change the container, audio codec and a few other parameters."
 msgstr "Codecs vidéo disponibles.\"Copy\" indique que le flux vidéo ne sera pas ré-encodé et permet (selon l'encodeur) de modifier le container, le codec audio et quelques paramètres."
@@ -1928,7 +1952,7 @@ msgid "Equalize"
 msgstr "Egaliser"
 
 msgid "To preview Stabilize filter, please click Preview button on Video Stabilizer Tool"
-msgstr ""
+msgstr "Pour prévisualiser le filtre de Stabilisation, veuillez cliquer sur le bouton Aperçu de l'outil de Stabilisation Vidéo"
 
 msgid ""
 "Unsupported file:\n"
@@ -1947,10 +1971,10 @@ msgid "Off"
 msgstr "Off"
 
 msgid "Auto"
-msgstr ""
+msgstr "Automatique"
 
 msgid "No Subtitles"
-msgstr ""
+msgstr "Pas De Sous-Titres"
 
 msgid ""
 "Batch processing items\n"
@@ -1966,6 +1990,18 @@ msgid ""
 "Start of segment\n"
 "Clip duration"
 msgstr ""
+"Articles de traitement par lots\n"
+"Destination\n"
+"Automatisation / Préréglage\n"
+"Passes d'encodage\n"
+"Format de Sortie\n"
+"Codec Vidéo\n"
+"Flux de Sous-titres\n"
+"Codecs Audio\n"
+"Normalisation Audio\n"
+"Type de sortie multimédia\n"
+"Début du segment\n"
+"Durée du clip"
 
 #, python-brace-format
 msgid "Write profile on «{0}»"
@@ -2070,10 +2106,10 @@ msgstr ""
 "- Les fichiers audio doivent avoir exactement les mêmes formats, mêmes codecs et  même fréquence d'échantillonnage."
 
 msgid "Videomass Documentation:"
-msgstr ""
+msgstr "Documentation de Videomass:"
 
 msgid "Official FFmpeg documentation:"
-msgstr ""
+msgstr "Documentation officielle FFmpeg:"
 
 msgid ""
 "Items to concatenate\n"
@@ -2459,12 +2495,29 @@ msgid ""
 "The produced video will have the name of the selected file in the 'File List' panel, which\n"
 "will be saved in a folder named 'Still_Images' with a progressive digit, in the path you specify."
 msgstr ""
+"\n"
+"1. Importez un ou plusieurs fichiers image tels que les formats JPG, PNG et BMP \n"
+"(même en mode mixte), puis sélectionnez-en un comme point de départ.\n"
+"\n"
+"2. Utilisez l'outil de redimensionnement si vos images ont des dimensions de largeur et\n"
+"de hauteur différentes.\n"
+"Vous n'avez besoin de le faire qu'une seule fois pour que le fichier sélectionné \n"
+"redimensionne automatiquement les autres images.\n"
+"Sinon, c'est facultatif.\n"
+"\n"
+"3. Définissez un intervalle de temps entre les images ou pour une seule image si vous activez\n"
+"l'option \"Activer une seule image fixe\".\n"
+"\n"
+"4. Exécutez la conversion\n"
+"\n"
+"\n"
+"La vidéo produite aura le nom du fichier sélectionné dans le panneau \"Liste des fichiers\", qui sera enregistré dans un dossier nommé \"Still_Images\" avec un chiffre progressif, dans le chemin que vous spécifiez."
 
 msgid "Enable a single still image"
 msgstr "Activer une seule image fixe"
 
 msgid "Time interval between images (in seconds):"
-msgstr ""
+msgstr "Intervalle de temps entre les images (en secondes):"
 
 msgid ""
 "Force original aspect ratio using\n"
@@ -2681,6 +2734,9 @@ msgid ""
 "\n"
 "\"1-16\", if a video file contains more than one audio stream, you can select a specific one, e.g \"1\" for the first available audio stream, \"2\" for the second audio stream, and so on."
 msgstr ""
+"\"Auto\" , permet à FFmpeg de sélectionner le flux audio à traiter (généralement le premier flux audio). Si le ou les fichiers source ne sont qu'une piste audio, il est recommandé de toujours régler ce contrôle sur \"Auto\".\n"
+"\n"
+"\"1-16\", si un fichier vidéo contient plus d'un flux audio, vous pouvez en sélectionner un spécifique, par exemple \"1\" pour le premier flux audio disponible, \"2\" pour le deuxième flux audio, et ainsi de suite."
 
 msgid ""
 "\"Auto\" keeps all audio streams and processes only the one selected by the \"Index Selection\" control.\n"
@@ -2689,6 +2745,11 @@ msgid ""
 "\n"
 "\"Index Only\" processes only the audio stream selected by the \"Index Selection\" control and removes all others from the output video."
 msgstr ""
+"\"Auto\" conserve tous les flux audio et ne traite que celui sélectionné par le contrôle \"Sélection d'index\".\n"
+"\n"
+"\"All\" traite tous les flux audio avec les propriétés de celui sélectionné par le contrôle \"Sélection d'index\". N'utilisez pas \"Tous\" pour exporter des fichiers audio à partir de vidéos.\n"
+"\n"
+"\"Index uniquement\" ne traite que le flux audio sélectionné par le contrôle \"Sélection d'index\" et supprime tous les autres de la vidéo de sortie."
 
 msgid "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -16.0"
 msgstr "Cible d'intensité volume intégrée dans LUFS.De -70,0 à -5,0, valeur par défaut -16.0"
@@ -2702,16 +2763,21 @@ msgstr "Cible de plage d'intensité volume dans LUFS. De +1.0 à +20.0, la valeu
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
 msgstr "Lis  le flux audio sélectionné dans la commande « Sélection d'index ». À l'aide de cette fonction, vous pouvez tester le résultat de la normalisation audio."
 
+#, python-brace-format
 msgid ""
 "Index does not exist in the selected source file:\n"
 "\"{}\""
 msgstr ""
+"L'index n'existe pas dans le fichier source sélectionné:\n"
+"\"{}\""
 
 #, python-brace-format
 msgid ""
 "The source file does not contain any audio stream:\n"
 "\"{}\""
 msgstr ""
+"Le fichier source ne contient aucun flux audio:\n"
+"\"{}\""
 
 msgid "PEAK level normalization, which will produce a maximum peak level equal to the set target level."
 msgstr "Active la normalisation du niveau d'écrêtage, qui produira un niveau de crête maximal égal au niveau cible définie."
@@ -2734,16 +2800,16 @@ msgstr ""
 "l'algorithme EBU R128. Idéal pour le post-traitement."
 
 msgid "You need to import at least one file"
-msgstr ""
+msgstr "Vous devez importer au moins un fichier"
 
 msgid "Subtitle Properties"
-msgstr ""
+msgstr "Propriétés des Sous-Titres"
 
 msgid "Subtitle Encoder"
-msgstr ""
+msgstr "Encodeur de Sous-titres"
 
 msgid "Chapters and Metadata"
-msgstr ""
+msgstr "Chapitres et Métadonnées"
 
 msgid "Copy Chapters"
 msgstr "Copier les chapîtres"
@@ -2756,9 +2822,13 @@ msgid ""
 "\n"
 "Select \"1-16\" to indexing the desired subtitle stream and exclude all others, e.g \"1\" for the first available subtitle stream, \"2\" for the second subtitle stream, and so on."
 msgstr ""
+"Sélectionnez \"Tous\" pour inclure tout flux de sous-titres possible dans la vidéo de sortie.\n"
+"\n"
+"Sélectionnez \"1-16\" pour indexer le flux de sous-titres souhaité et exclure tous les autres, par exemple \"1\" pour le premier flux de sous-titres disponible,\n"
+"\"2\" pour le second flux de sous-titres, et ainsi de suite."
 
 msgid "Copy the chapter markers as is from source file."
-msgstr ""
+msgstr "Copiez les marqueurs de chapitre tels quels à partir du fichier source."
 
 msgid "Copy all incoming metadata from source file, such as audio/video tags, titles, unique marks, and so on."
 msgstr "Copiez toutes les métadonnées entrantes à partir du fichier source, telles que des balises audio / vidéo, les titres, des marques uniques, etc."
@@ -2916,18 +2986,20 @@ msgid "The default FourCC stored in an MPEG-4-coded file will be FMP4. If you wa
 msgstr "Le FourCC par défaut stocké dans un fichier codé en MPEG-4 sera FMP4. Si vous voulez un FourCC différent, réglez cette option sur xvid pour forcer le FourCC xvid à être stocké en tant que vidéo FourCC plutôt que par défaut."
 
 # | msgid "Video Codec"
-#, fuzzy
 msgid "Copy Video Codec"
-msgstr "Codec Vidéo"
+msgstr "Copier le Codec Vidéo"
 
 msgid ""
 "This will just copy the video track as is, without any video re-encoding.\n"
 "You will only be able to change output format, select other audio encoders and\n"
 "a few other options."
 msgstr ""
+"Cela copiera simplement la piste vidéo telle quelle, sans aucun réencodage vidéo.\n"
+"Vous ne pourrez modifier que le format de sortie, sélectionner d'autres encodeurs audio\n"
+"et quelques autres options."
 
 msgid "Video export disabled"
-msgstr ""
+msgstr "Exportation vidéo désactivée"
 
 # | msgid ""
 # | "...The Media target you just selected will only allow you to save files "
@@ -2936,15 +3008,15 @@ msgstr ""
 # "
 # | "to\n"
 # | "video files."
-#, fuzzy
 msgid ""
 "The Media target you just selected will only allow you to export files as audio tracks.\n"
 "You can then process audio source files only or extract indexed audio streams on\n"
 "video files."
 msgstr ""
-"... La cible multimédia que vous venez de sélectionner vous permettra uniquement d'enregistrer des fichiers en tant que pistes audio.\n"
-"Vous pouvez ensuite traiter des fichiers sources audio ou extraire des flux audio indexés sur\n"
-"fichiers vidéo."
+"La cible multimédia que vous venez de sélectionner vous permettra uniquement d'exporter \n"
+"des fichiers sous forme de pistes audio.\n"
+"Vous pouvez ensuite traiter uniquement les fichiers source audio ou extraire des flux audio indexés\n"
+"sur des fichiers vidéo."
 
 msgid ""
 "Speed sets how efficient the compression will be.\n"
@@ -2976,20 +3048,20 @@ msgid ""
 "\n"
 "\"realtime\" is recommended for live / fast encoding."
 msgstr ""
-"Temps d'encodage\n"
+"Temps d'encodage.\n"
 "\n"
 "\"Bon\" est la valeur par défaut recommandée pour la plupart des applications;\n"
 "\n"
 "\"Meilleur\" est recommandé si vous avez beaucoup de temps et que vous voulez bénéficier de la meilleure efficacité de compression;\n"
 "\n"
-"\"en temps réel\" est recommandé pour le codage direct / rapide"
+"\"en temps réel\" est recommandé pour le codage direct / rapide."
 
 msgid ""
 "If enabled, adds support for row based multithreading which greatly enhances the number of threads the encoder can utilise. This improves encoding speed significantly on systems that are otherwise underutilised when encoding VP9. Since the amount of additional threads depends on the number of \"tiles\", which itself depends on the video resolution, encoding higher resolution videos will see a "
 "larger performance improvement."
 msgstr ""
-"S'il est activé, ajoute la prise en charge du multithreading basé qui améliore considérablement le nombre de threads que l'encodeur peut utiliser. Cela améliore considérablement la vitesse d'encodage sur des systèmes qui sont autrement sous-utilisés lors de l'encodage  VP9. Étant donné que la quantité de threads supplémentaires dépend du nombre de \"tiles\", qui dépend lui-même de la résolution"
-" vidéo, les vidéos de résolution plus élevée verront une amélioration des performances plus importante."
+"S'il est activé, ajoute la prise en charge du multithreading basé qui améliore considérablement le nombre de threads que l'encodeur peut utiliser. Cela améliore considérablement la vitesse d'encodage sur des systèmes qui sont autrement sous-utilisés lors de l'encodage  VP9. Étant donné que la quantité de threads supplémentaires dépend du nombre de \"tiles\", qui dépend lui-même de la "
+"résolution vidéo, les vidéos de résolution plus élevée verront une amélioration des performances plus importante."
 
 #, python-brace-format
 msgid "Supports ({0}) formats only, not ({1})"
@@ -3043,4 +3115,3 @@ msgstr "N'ajoutez que les éléments actuellement manquants à la file d'attente
 
 msgid "Remove the current queue and replace it with the imported one."
 msgstr "Supprimez la file d'attente actuelle et remplacez-la par la file d'attente importée."
-

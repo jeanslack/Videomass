@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-24 22:21+0200\n"
+"POT-Creation-Date: 2025-09-30 11:29+0200\n"
 "PO-Revision-Date: 2024-07-17 16:33+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cs_CZ\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.3\n"
+"Generated-By: Babel 2.17.0\n"
 
 #, python-brace-format
 msgid ""
@@ -1528,7 +1528,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-msgid "Play the selected imput file"
+msgid "Play the selected input file"
 msgstr ""
 
 msgid "Play"
@@ -1717,7 +1717,7 @@ msgstr ""
 msgid "Save as a new profile of the Presets Manager."
 msgstr ""
 
-msgid "Displays the RAW commands of the selected file."
+msgid "Displays the RAW commands for the selected file."
 msgstr ""
 
 msgid "Available video encoders. \"Copy\" means that the video stream will not be re-encoded and will allow you (depending on the encoder) to change the container, audio codec and a few other parameters."
@@ -2432,6 +2432,7 @@ msgstr ""
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
 msgstr ""
 
+#, python-brace-format
 msgid ""
 "Index does not exist in the selected source file:\n"
 "\"{}\""
