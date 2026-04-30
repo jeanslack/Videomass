@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-09-30 11:29+0200\n"
-"PO-Revision-Date: 2024-07-17 16:40+0200\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: de_DE\n"
+"PO-Revision-Date: 2026-04-30 08:43+0200\n"
+"Last-Translator: \n"
 "Language-Team: de_DE <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.17.0\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, python-brace-format
 msgid ""
@@ -24,33 +25,51 @@ msgid ""
 "\n"
 "{0}"
 msgstr ""
+"Unerwarteter Fehler beim Löschen der Dateiinhalte:\n"
+"\n"
+"{0}"
 
 msgid "Cross-platform graphical user interface for FFmpeg\n"
+msgstr "Grafisches Interface für FFmpeg\n"
+
+msgid ""
+"Videomass supports mono and stereo audio channels. If you are not sure set "
+"to \"Auto\" and source values will be copied."
+msgstr ""
+"Videomass unterstützt Mono und Stereo Audio Kanäle. Wenn Sie sich nicht "
+"sicher sind, setzen Sie den Wert auf \"Auto\" und die Quellen werden kopiert."
+
+msgid ""
+"The audio Rate (or sample-rate) is the sound sampling frequency and is "
+"measured in Hertz. The higher the frequency, the more true it will be to the "
+"sound source and the more the file will increase in size. For audio CD "
+"playback, set a sampling frequency of 44100 kHz. If you are not sure, set to "
+"\"Auto\" and source values will be copied."
 msgstr ""
 
-msgid "Videomass supports mono and stereo audio channels. If you are not sure set to \"Auto\" and source values will be copied."
+msgid ""
+"The audio bitrate affects the file compression and thus the quality of "
+"listening. The higher the value, the higher the quality."
 msgstr ""
 
-msgid "The audio Rate (or sample-rate) is the sound sampling frequency and is measured in Hertz. The higher the frequency, the more true it will be to the sound source and the more the file will increase in size. For audio CD playback, set a sampling frequency of 44100 kHz. If you are not sure, set to \"Auto\" and source values will be copied."
-msgstr ""
-
-msgid "The audio bitrate affects the file compression and thus the quality of listening. The higher the value, the higher the quality."
-msgstr ""
-
-msgid "Bit depth is the number of bits of information in each sample, and it directly corresponds to the resolution of each sample. Bit depth is only meaningful in reference to a PCM digital signal. Non-PCM formats, such as lossy compression formats, do not have associated bit depths."
+msgid ""
+"Bit depth is the number of bits of information in each sample, and it "
+"directly corresponds to the resolution of each sample. Bit depth is only "
+"meaningful in reference to a PCM digital signal. Non-PCM formats, such as "
+"lossy compression formats, do not have associated bit depths."
 msgstr ""
 
 msgid "First pass command"
-msgstr ""
+msgstr "Befehl für den ersten Durchgang"
 
 msgid "Second pass command"
-msgstr ""
+msgstr "Befehl für den zweiten Durchgang"
 
 msgid "Videomass - RAW Commands"
-msgstr ""
+msgstr "Videomass - RAW Kommandos"
 
 msgid "Read me"
-msgstr ""
+msgstr "README"
 
 msgid ""
 "The RAW commands reflect the user settings made on\n"
@@ -61,96 +80,104 @@ msgid ""
 "markers highlighted in red should be replaced with the\n"
 "values given by the output of the first command."
 msgstr ""
+"Die RAW-Befehle spiegeln die Benutzereinstellungen wider,\n"
+"die in der AV-Conversions-Oberfläche vorgenommen wurden,\n"
+"und gelten nur für die jeweils ausgewählte Datei.\n"
+"\n"
+"Hinweis: Bei Verwendung von EBU R128 (High-Quality)\n"
+"sollten alle rot markierten <?>-Markierungen durch die Werte\n"
+"ersetzt werden, die die Ausgabe des ersten Befehls liefert."
 
 msgid "When finished, once the operations have been completed successfully:"
 msgstr ""
+"Wenn Sie fertig sind und die Vorgänge erfolgreich abgeschlossen wurden:"
 
 msgid "Trash the source files"
-msgstr ""
+msgstr "Lösche die Quelldaten"
 
 msgid "Clear the File List"
-msgstr ""
+msgstr "Leere die Datei-Liste"
 
 msgid "Run"
-msgstr ""
+msgstr "Start"
 
 msgid "Videomass - Batch Mode"
-msgstr ""
+msgstr "Videomass - Massenverarbeitungs Modus"
 
 msgid "FFmpeg encoders"
-msgstr ""
+msgstr "FFmpeg Encoder"
 
 msgid "supported encoders"
-msgstr ""
+msgstr "Unterstützte Encoder"
 
 msgid "FFmpeg decoders"
-msgstr ""
+msgstr "FFmpeg Decoder"
 
 msgid "supported decoders"
-msgstr ""
+msgstr "Unterstützte Decoder"
 
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 msgid "Subtitle"
-msgstr ""
+msgstr "Untertitel"
 
 msgid "description"
-msgstr ""
+msgstr "Beschreibung"
 
 msgid "Informations"
-msgstr ""
+msgstr "Informationen"
 
 msgid "Flags settings"
-msgstr ""
+msgstr "Flags Einstellungen"
 
 msgid "Flags enabled"
-msgstr ""
+msgstr "Flags aktiviert"
 
 msgid "Flags disabled"
-msgstr ""
+msgstr "Flags deaktiviert"
 
 msgid "FFmpeg configuration"
-msgstr ""
+msgstr "FFmpeg Konfiguration"
 
 msgid "flags"
-msgstr ""
+msgstr "Flags"
 
 msgid "options"
-msgstr ""
+msgstr "Optionen"
 
 msgid "status"
-msgstr ""
+msgstr "Status"
 
 msgid "FFprobe   ...not found !"
-msgstr ""
+msgstr "FFprobe   ...nicht gefunden!"
 
 msgid "FFplay   ...not found !"
-msgstr ""
+msgstr "FFplay   ...nicht gefunden!"
 
 msgid "Enabled"
-msgstr ""
+msgstr "Aktiviert"
 
 msgid "Disabled"
-msgstr ""
+msgstr "Deaktiviert"
 
 msgid "Demuxing only"
-msgstr ""
+msgstr "Nur Demuxing"
 
 msgid "Muxing only"
-msgstr ""
+msgstr "Nur Muxing"
 
 msgid "Demuxing/Muxing support"
-msgstr ""
+msgstr "Unterstützung von De- bzw. Muxing"
 
 msgid "FFmpeg file formats"
-msgstr ""
+msgstr "FFmpeg Dateiformate"
 
 msgid "supported formats"
-msgstr ""
+msgstr "Unterstützte Formate"
 
 msgid ""
 "Contextual help based on the argument entered in the additional text field.\n"
@@ -160,86 +187,93 @@ msgid ""
 "For the list of decoders click on the \"Decoders\" button.\n"
 "For the muxers and demuxers click on the \"Muxers and Demuxers\" button.\n"
 "For the filters, select \"Show available filters\" in the drop down menu.\n"
-"For the bsf, select \"Show available bitstream filters\" in the drop down menu.\n"
-"For the protocols, select \"Show available protocols\" in the drop down menu.\n"
+"For the bsf, select \"Show available bitstream filters\" in the drop down "
+"menu.\n"
+"For the protocols, select \"Show available protocols\" in the drop down "
+"menu.\n"
 "\n"
 "Some examples:"
 msgstr ""
 
 msgid "Help topic"
-msgstr ""
+msgstr "Hilfsthemen"
 
 msgid "List basic options"
-msgstr ""
+msgstr "Auflistung grundlegender Optionen"
 
 msgid "List more options"
-msgstr ""
+msgstr "Auflistung von weiteren Optionen"
 
 msgid "List all options (very long)"
-msgstr ""
+msgstr "Auflistung aller Optionen (sehr viele)"
 
 msgid "Show available devices"
-msgstr ""
+msgstr "Zeige verfügbare Geräte"
 
 msgid "Show available bit stream filters"
-msgstr ""
+msgstr "Zeige verfügbare Bit-Stream Filter"
 
 msgid "Show available protocols"
-msgstr ""
+msgstr "Zeige verfügbare Protokolle"
 
 msgid "Show available filters"
-msgstr ""
+msgstr "Zeige verfügbare Filter"
 
 msgid "Show available pixel formats"
-msgstr ""
+msgstr "Zeige verfügbare Pixel Formate"
 
 msgid "Show available audio sample formats"
-msgstr ""
+msgstr "Zeige verfügbare Audio Sample Formate"
 
 msgid "Show available color names"
-msgstr ""
+msgstr "Zeige verfügbare Farb-Namen"
 
 msgid "List sources of the input device"
-msgstr ""
+msgstr "Auflistung von Eingängen des Eingabegeräts"
 
 msgid "List sinks of the output device"
-msgstr ""
+msgstr "Auflistung von Ausgängen des Ausgabegeräts"
 
 msgid "Show available HW acceleration methods"
-msgstr ""
+msgstr "Zeige verfügbare Hardwarebeschleunigungen"
 
 msgid "Show license"
-msgstr ""
+msgstr "Zeige Lizenz"
 
 msgid "Show configuration"
-msgstr ""
+msgstr "Zeige Konfiguration"
 
 msgid "Encoders"
-msgstr ""
+msgstr "Encoder"
 
 msgid "Decoders"
-msgstr ""
+msgstr "Decoder"
 
 msgid "Muxers and Demuxers"
-msgstr ""
+msgstr "Muxer und Demuxer"
 
 msgid "help topic list"
-msgstr ""
+msgstr "Liste der Hilfsthemen"
 
 msgid "Type the argument here and confirm with the enter key on your keyboard"
 msgstr ""
+"Geben Sie hier das Argument an und bestätigen Sie mit der Eingabe-Taste "
+"Ihrer Tastatur"
 
 msgid "The search function allows you to find entries in the current topic"
 msgstr ""
+"Die Suchfunktion ermöglicht Ihnen Einträge im aktuellen Thema zu finden"
 
 msgid "Ignore case"
-msgstr ""
+msgstr "Groß-/Kleinschreibung ignorieren"
 
 msgid "Ignore case distinctions: characters with different case will match."
 msgstr ""
+"Unterschiede in der Groß-/Kleinschreibung ingorieren: Zeichen mit "
+"unterschiedlicher Schreibweise werden akzeptiert."
 
 msgid "FFmpeg help topics"
-msgstr ""
+msgstr "FFmpeg Hilfsthemen"
 
 msgid ""
 "This is a multifunctional search tool useful for local help searches\n"
@@ -252,101 +286,115 @@ msgid ""
 "it's likely that your version of FFmpeg is too old or not configured\n"
 "with those features."
 msgstr ""
+"Dies ist ein multifunktionales Suchwerkzeug, das sich für die lokale Suche\n"
+"nach Hilfe zu verschiedenen FFmpeg-Themen und -Optionen eignet. Die "
+"Suchfunktion,\n"
+"ähnelt stark der Funktion von „grep“ in der Unix-Shell, jedoch in Echtzeit.\n"
+"\n"
+"Wenn Sie keine Unterstützung für einen bestimmten Codec oder eine bestimmte "
+"Funktion finden,\n"
+"ist Ihre FFmpeg-Version möglicherweise zu alt oder nicht\n"
+"für diese Funktionen konfiguriert."
 
 msgid ""
 "\n"
 "  ..Nothing available"
 msgstr ""
+"\n"
+"  ..Nichts verfügbar"
 
 msgid ""
 "\n"
 "  ..Not found"
 msgstr ""
+"\n"
+"  ..Nicht gefunden"
 
 msgid "Before"
-msgstr ""
+msgstr "Davor"
 
 msgid "After"
-msgstr ""
+msgstr "Danach"
 
 msgid "Search for a specific frame"
-msgstr ""
+msgstr "Suche nach einem spezifischen Frame"
 
 msgid "Load"
-msgstr ""
+msgstr "Laden"
 
 msgid "Color EQ"
-msgstr ""
+msgstr "Farb EQ"
 
 msgid "Contrast:"
-msgstr ""
+msgstr "Kontrast:"
 
 msgid "-100 to +100, default value 0"
-msgstr ""
+msgstr "-100 bis +100, Standardwert: 0"
 
 msgid "Brightness:"
-msgstr ""
+msgstr "Helligkeit:"
 
 msgid "Saturation:"
-msgstr ""
+msgstr "Sättigung:"
 
 msgid "0 to 300, default value 100"
-msgstr ""
+msgstr "0 bis 300, Standardwert: 100"
 
 msgid "Gamma:"
-msgstr ""
+msgstr "Gamma:"
 
 msgid "0 to 100, default value 10"
-msgstr ""
+msgstr "0 bis 100, Standardwert: 10"
 
 msgid "Reset"
-msgstr ""
+msgstr "Zurücksetzen"
 
 msgid "Color Correction EQ Tool"
-msgstr ""
+msgstr "Farbkorrektur EQ Werkzeug"
 
 msgid "Videomass - Error!"
-msgstr ""
+msgstr "Videomass - Fehler!"
 
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
-msgstr ""
+msgstr "Quellauflösung: {0} x {1} Pixel"
 
 msgid "Crop color"
-msgstr ""
+msgstr "Farbe der Schnittfläche"
 
 msgid "Cropping area selection "
-msgstr ""
+msgstr "Auswahl der Schnittfläche "
 
 msgid "Height"
-msgstr ""
+msgstr "Höhe"
 
 msgid "Center"
-msgstr ""
+msgstr "Mitte"
 
 msgid "Width"
-msgstr ""
+msgstr "Breite"
 
 msgid "Crop Tool"
-msgstr ""
+msgstr "Ausschneidewerkzeug"
 
 msgid "Choose the color to draw the cropping area"
-msgstr ""
+msgstr "Wähle die Farbe, in der die Schnittfläche gezeichnet werden soll"
 
 msgid "Crop to width"
-msgstr ""
+msgstr "Schneide auf Breite"
 
 msgid "Move vertically (set to -1 to center the vertical axis)"
-msgstr ""
+msgstr "Vertikal bewegen (auf -1 setzen, um die vertikale Achse zu zentrieren)"
 
 msgid "Move horizontally (set to -1 to center the horizontal axis)"
 msgstr ""
+"Horizontal bewegen (auf -1 setzen, um die horizontale Achse zu zentrieren)"
 
 msgid "Crop to height"
-msgstr ""
+msgstr "Schneide auf Höhe"
 
 msgid "Advanced Options"
-msgstr ""
+msgstr "Erweiterte Optionen"
 
 msgid "Deinterlace"
 msgstr ""
@@ -355,33 +403,40 @@ msgid "Interlace"
 msgstr ""
 
 msgid "Deinterlaces with w3fdif filter"
-msgstr ""
+msgstr "Deinterlace mit w3fdif Filter"
 
 msgid "Deinterlaces with yadif filter"
-msgstr ""
+msgstr "Deinterlace mit yadif Filter"
 
 msgid "Interlaces with interlace filter"
-msgstr ""
+msgstr "Interlace mit interlace Filter"
 
 msgid "Deinterlacing and Interlacing"
-msgstr ""
+msgstr "Deinterlacing und Interlacing"
 
 msgid "Deinterlace the input video with `w3fdif` filter"
-msgstr ""
+msgstr "Deinterlace das Input-Video mit dem `w3fdif` Filter"
 
 msgid "Set the interlacing filter coefficients."
-msgstr ""
+msgstr "Setze die Interlacing-Filter Koeffizienten."
 
 msgid "Specify which frames to deinterlace."
 msgstr ""
+"Wähle die Einzelbilder, auf die das Deinterlace angewendet werden soll."
 
-msgid "Deinterlace the input video with `yadif` filter. Using FFmpeg, this is the best and fastest choice"
+msgid ""
+"Deinterlace the input video with `yadif` filter. Using FFmpeg, this is the "
+"best and fastest choice"
 msgstr ""
+"Deinterlace auf das Input-Video mit dem `yadif` Filter. FFmpeg ist hier die "
+"beste Wahl"
 
 msgid ""
 "mode\n"
 "The interlacing mode to adopt."
 msgstr ""
+"Modus\n"
+"Der Interlacing Modus, der angewendet werden soll."
 
 msgid ""
 "parity\n"
@@ -393,66 +448,81 @@ msgstr ""
 
 msgid ""
 "scan:\n"
-"determines whether the interlaced frame is taken from the even (tff - default) or odd (bff) lines of the progressive frame."
+"determines whether the interlaced frame is taken from the even (tff - "
+"default) or odd (bff) lines of the progressive frame."
 msgstr ""
 
 msgid ""
 "lowpass:\n"
-"Enable (default) or disable the vertical lowpass filter to avoid twitter interlacing and reduce moire patterns.\n"
+"Enable (default) or disable the vertical lowpass filter to avoid twitter "
+"interlacing and reduce moire patterns.\n"
 "Default is no setting."
 msgstr ""
 
 msgid "Denoiser Filters"
-msgstr ""
+msgstr "Entrauschungsfilter"
 
 msgid "Enable nlmeans denoiser"
-msgstr ""
+msgstr "Aktiviere den nlmeans Entrauscher"
 
 msgid "nlmeans options"
-msgstr ""
+msgstr "nlmeans Optionen"
 
 msgid "Enable hqdn3d denoiser"
-msgstr ""
+msgstr "Aktiviere den hqdn3d Entrauscher"
 
 msgid "hqdn3d options"
-msgstr ""
+msgstr "hqdn3d Optionen"
 
 msgid "Denoiser Tool"
-msgstr ""
+msgstr "Entrauschungswerkzeug"
 
 msgid ""
 "nlmeans:\n"
-"Denoise frames using Non-Local Means algorithm is capable of restoring video sequences, even with strong noise. It is ideal for enhancing the quality of old VHS tapes."
+"Denoise frames using Non-Local Means algorithm is capable of restoring video "
+"sequences, even with strong noise. It is ideal for enhancing the quality of "
+"old VHS tapes."
 msgstr ""
+"nlmeans:\n"
+"Nutzung des nlmeans (Non-Local Means) Alghorithmus zum Entrauschen ist in "
+"der Lage Videosequenzen wiederherzustellen, selbst wenn diese stakt "
+"verrauscht sind. Das ist bspw. ideal zum Verbessern der Qualität alter VHS "
+"Kasetten."
 
 msgid ""
 "hqdn3d:\n"
-"This is a high precision/quality 3d denoise filter. It aims to reduce image noise, producing smooth images and making still images really still. It should enhance compressibility."
+"This is a high precision/quality 3d denoise filter. It aims to reduce image "
+"noise, producing smooth images and making still images really still. It "
+"should enhance compressibility."
 msgstr ""
+"hqdn3d:\n"
+"Dies ist ein hoch genauer und hochqualitativer 3D Entrauschungsfilter. Sein "
+"Ziel ist es Bildrauschen zu reduzieren, um u.a. qualitativ hochwertige "
+"Standbilder erzeugen zu können. Die verbessert auch die Komprimierbarkeit."
 
 msgid "View result"
-msgstr ""
+msgstr "Zeige Ergebnis"
 
 msgid "New size in pixels"
-msgstr ""
+msgstr "Neue Größe in Pixeln"
 
 msgid "Width:"
-msgstr ""
+msgstr "Breite:"
 
 msgid "Height:"
-msgstr ""
+msgstr "Höhe:"
 
 msgid "Constrain proportions (keep aspect ratio)"
-msgstr ""
+msgstr "Proportionen behalten (Seitenverhältnis)"
 
 msgid "Which dimension to adjust?"
-msgstr ""
+msgstr "Welche Dimension angepassen?"
 
 msgid "Aspect Ratio"
-msgstr ""
+msgstr "Seitenverhältnis"
 
 msgid "Setdar filter (display aspect ratio) example 16/9, 4/3 "
-msgstr ""
+msgstr "Setdar Filter (Monitor Seitenverhältnisse) bspw. 16/9, 3/4 "
 
 msgid "Numerator"
 msgstr ""
@@ -461,172 +531,230 @@ msgid "Denominator"
 msgstr ""
 
 msgid "Setsar filter (sample aspect ratio) example 1/1"
-msgstr ""
+msgstr "Setsar Filter (genaue Seitenverhältnisse) bspw. 1/1"
 
 msgid "Resize Tool"
-msgstr ""
+msgstr "Vergrößerungswerkzeug"
 
 msgid "Scale filter, set to 0 to disable"
-msgstr ""
+msgstr "Skailierungsfilter, auf \"0\" setzen zum deaktivieren"
 
 msgid "Display Aspect Ratio. Set to 0 to disable"
-msgstr ""
+msgstr "Monitor Seitenverhältnis. Auf \"0\" setzen zum deaktivieren"
 
 msgid ""
 "Sample (aka Pixel) Aspect Ratio.\n"
 "Set to 0 to disable"
 msgstr ""
+"Pixelgenaues Seitenverhältnis\n"
+"Auf \"0\" setzen zum deaktivieren"
 
 msgid ""
-"If you want to keep the aspect ratio, select \"Constrain proportions\" below and\n"
-"specify only one dimension, either width or height, and set the other dimension\n"
+"If you want to keep the aspect ratio, select \"Constrain proportions\" below "
+"and\n"
+"specify only one dimension, either width or height, and set the other "
+"dimension\n"
 "to -1 or -2 (some codecs require -2, so you should do some testing first)."
 msgstr ""
 
 msgid "Enable stabilizer"
-msgstr ""
+msgstr "Stabilisation aktivieren"
 
 msgid "Create a side-by-side comparison video"
-msgstr ""
+msgstr "Erstelle ein Seite-an-Seite Vergleichsvideo"
 
 msgid "Create a snapshot"
-msgstr ""
+msgstr "Erstelle eine Vorschau"
 
 msgid "Preview"
-msgstr ""
+msgstr "Vorschau"
 
 msgid "Duration seconds:"
-msgstr ""
+msgstr "Länge in Sekunden:"
 
 msgid "Video Detect"
-msgstr ""
+msgstr "Video Erkennung"
 
 msgid "[TRIPOD] Enable tripod mode if checked"
-msgstr ""
+msgstr "Aktiviert den Stativ-Modus"
 
 msgid "Video transform"
-msgstr ""
+msgstr "Video Transformierung"
 
 msgid "[OPTALGO] optimization algorithm"
-msgstr ""
+msgstr "Optimierungsalgorithmus"
 
 msgid "[CROP] Specify how to deal with borders at movement compensation"
-msgstr ""
+msgstr "Einstellen wie mit Kanten bei Bewegung umgegangen werden soll"
 
 msgid "[INVERT] Invert transforms if checked"
-msgstr ""
+msgstr "Invertierung der Transformierung"
 
-msgid "[RELATIVE] Consider transforms as relative to previous frame if checked, absolute if unchecked"
+msgid ""
+"[RELATIVE] Consider transforms as relative to previous frame if checked, "
+"absolute if unchecked"
 msgstr ""
+"Bewerte Veränderungen als 'relativ' zum vorherigen Bild wenn aktiviert, "
+"'absolut' wenn deaktiviert"
 
 msgid "Specify type of interpolation"
-msgstr ""
+msgstr "Typ der Interpolation"
 
-msgid "[TRIPOD2] virtual tripod mode, equivalent to relative=unchecked:smoothing=0"
-msgstr ""
+msgid ""
+"[TRIPOD2] virtual tripod mode, equivalent to relative=unchecked:smoothing=0"
+msgstr "Virtueller Stativ-Modus, Äquivalent zu relative=unchecked:smoothing=0"
 
 msgid "Unsharp filter:"
-msgstr ""
+msgstr "Unscharf Filter:"
 
 msgid "Seek to a position on the video."
-msgstr ""
+msgstr "Spule zu einer bestimmten Position im Video."
 
 msgid "Make a snapshot of the video with the settings made."
-msgstr ""
+msgstr "Erstelle ein Standbild des Videos mit den getroffenen Einstellungen."
 
-msgid "Set the snapshot duration from 3 to 15 seconds from the seek position, default is 5 seconds."
+msgid ""
+"Set the snapshot duration from 3 to 15 seconds from the seek position, "
+"default is 5 seconds."
 msgstr ""
+"Setze die Standbildlänge zwischen 3 und 15 Sekunden von der Such-Position, "
+"Standardwert: 5 Sekunden."
 
-msgid "Set how shaky the video is and how quick the camera is. A value of 1 means little shakiness, a value of 10 means strong shakiness. Default value is 5."
-msgstr ""
-
-msgid "Set the accuracy of the detection process. A value of 1 means low accuracy, a value of 15 means high accuracy. Default value is 15."
-msgstr ""
-
-msgid "Set stepsize of the search process. The region around minimum is scanned with 1 pixel resolution. Default value is 6."
-msgstr ""
-
-msgid "Set minimum contrast. Below this value a local measurement field is discarded. The range is 0-1. Default value is 0.25."
-msgstr ""
-
-msgid "Set reference frame number for tripod mode. If enabled, the motion of the frames is compared to a reference frame in the filtered stream, identified by the specified number. The idea is to compensate all movements in a more-or-less static scene and keep the camera view absolutely still. The frames are counted starting from 1."
+msgid ""
+"Set how shaky the video is and how quick the camera is. A value of 1 means "
+"little shakiness, a value of 10 means strong shakiness. Default value is 5."
 msgstr ""
 
 msgid ""
-"Set the number of frames (value*2 + 1) used for lowpass filtering the camera movements. Default value is 15. For example a number of 10 means that 21 frames are used (10 in the past and 10 in the future) to smoothen the motion in the video. A larger value leads to a smoother video, but limits the acceleration of the camera (pan/tilt movements). 0 is a special case where a static camera is "
-"simulated."
+"Set the accuracy of the detection process. A value of 1 means low accuracy, "
+"a value of 15 means high accuracy. Default value is 15."
 msgstr ""
 
-msgid "Set the camera path optimization algorithm. Values are: `gauss`: gaussian kernel low-pass filter on camera motion (default), and `avg`: averaging on transformations"
+msgid ""
+"Set stepsize of the search process. The region around minimum is scanned "
+"with 1 pixel resolution. Default value is 6."
 msgstr ""
 
-msgid "Set maximal angle in radians (degree*PI/180) to rotate frames. Default value is -1, meaning no limit."
+msgid ""
+"Set minimum contrast. Below this value a local measurement field is "
+"discarded. The range is 0-1. Default value is 0.25."
 msgstr ""
 
-msgid "Specify how to deal with borders that may be visible due to movement compensation. Values are: `keep` keep image information from previous frame (default), `black` fill the border black"
+msgid ""
+"Set reference frame number for tripod mode. If enabled, the motion of the "
+"frames is compared to a reference frame in the filtered stream, identified "
+"by the specified number. The idea is to compensate all movements in a more-"
+"or-less static scene and keep the camera view absolutely still. The frames "
+"are counted starting from 1."
+msgstr ""
+
+msgid ""
+"Set the number of frames (value*2 + 1) used for lowpass filtering the camera "
+"movements. Default value is 15. For example a number of 10 means that 21 "
+"frames are used (10 in the past and 10 in the future) to smoothen the motion "
+"in the video. A larger value leads to a smoother video, but limits the "
+"acceleration of the camera (pan/tilt movements). 0 is a special case where a "
+"static camera is simulated."
+msgstr ""
+
+msgid ""
+"Set the camera path optimization algorithm. Values are: `gauss`: gaussian "
+"kernel low-pass filter on camera motion (default), and `avg`: averaging on "
+"transformations"
+msgstr ""
+
+msgid ""
+"Set maximal angle in radians (degree*PI/180) to rotate frames. Default value "
+"is -1, meaning no limit."
+msgstr ""
+
+msgid ""
+"Specify how to deal with borders that may be visible due to movement "
+"compensation. Values are: `keep` keep image information from previous frame "
+"(default), `black` fill the border black"
 msgstr ""
 
 msgid "Invert transforms if checked. Default is unchecked."
 msgstr ""
 
-msgid "Consider transforms as relative to previous frame if checked, absolute if unchecked. Default is checked."
+msgid ""
+"Consider transforms as relative to previous frame if checked, absolute if "
+"unchecked. Default is checked."
 msgstr ""
 
-msgid "Set percentage to zoom. A positive value will result in a zoom-in effect, a negative value in a zoom-out effect. Default value is 0 (no zoom)."
+msgid ""
+"Set percentage to zoom. A positive value will result in a zoom-in effect, a "
+"negative value in a zoom-out effect. Default value is 0 (no zoom)."
 msgstr ""
 
-msgid "Set optimal zooming to avoid borders. Accepted values are: `0` disabled, `1` optimal static zoom value is determined (only very strong movements will lead to visible borders) (default), `2` optimal adaptive zoom value is determined (no borders will be visible), see zoomspeed. Note that the value given at zoom is added to the one calculated here."
+msgid ""
+"Set optimal zooming to avoid borders. Accepted values are: `0` disabled, `1` "
+"optimal static zoom value is determined (only very strong movements will "
+"lead to visible borders) (default), `2` optimal adaptive zoom value is "
+"determined (no borders will be visible), see zoomspeed. Note that the value "
+"given at zoom is added to the one calculated here."
 msgstr ""
 
-msgid "Set percent to zoom maximally each frame (enabled when optzoom is set to 2). Range is from 0 to 5, default value is 0.25."
+msgid ""
+"Set percent to zoom maximally each frame (enabled when optzoom is set to 2). "
+"Range is from 0 to 5, default value is 0.25."
 msgstr ""
 
-msgid "Specify type of interpolation. Available values are: `no` no interpolation, `linear` linear only horizontal, `bilinear` linear in both directions (default), `bicubic` cubic in both directions (slow)"
+msgid ""
+"Specify type of interpolation. Available values are: `no` no interpolation, "
+"`linear` linear only horizontal, `bilinear` linear in both directions "
+"(default), `bicubic` cubic in both directions (slow)"
 msgstr ""
 
-msgid "Enable virtual tripod mode if checked, which is equivalent to relative=0:smoothing=0. Default is unchecked. Use also tripod option of vidstabdetect."
+msgid ""
+"Enable virtual tripod mode if checked, which is equivalent to relative=0:"
+"smoothing=0. Default is unchecked. Use also tripod option of vidstabdetect."
 msgstr ""
 
-msgid "Sharpen or blur the input video. Note the use of the unsharp filter which is always recommended."
+msgid ""
+"Sharpen or blur the input video. Note the use of the unsharp filter which is "
+"always recommended."
 msgstr ""
 
 msgid "Video Stabilizer Tool"
-msgstr ""
+msgstr "Video Stabilisierungswerkzeug"
 
 msgid "Videomass - Loading..."
-msgstr ""
+msgstr "Videomass - Laden..."
 
 msgid ""
 "Please wait,\n"
 "This process will take a few seconds."
 msgstr ""
+"Bitte warten,\n"
+"Dieser Prozess dauert einige Sekunden."
 
 msgid "Default position"
-msgstr ""
+msgstr "Standard Position"
 
 msgid "Rotation setting"
-msgstr ""
+msgstr "Dreh Einstellungen"
 
 msgid "90° (left)"
-msgstr ""
+msgstr "90° (links)"
 
 msgid "90° (right)"
-msgstr ""
+msgstr "90° (rechs)"
 
 msgid "180°"
 msgstr ""
 
 msgid "Transpose Tool"
-msgstr ""
+msgstr "Austauschwerkzeug"
 
 msgid "Rotate 90 degrees right"
-msgstr ""
+msgstr "Drehe um 90 Grad nach rechts"
 
 msgid "Rotate 180 degrees"
-msgstr ""
+msgstr "Drehe um 180 Grad"
 
 msgid "Rotate 90 degrees left"
-msgstr ""
+msgstr "Drehe um 90 Grad nach links"
 
 msgid "Format"
 msgstr ""
@@ -638,261 +766,301 @@ msgid "Audio Streams"
 msgstr ""
 
 msgid "Subtitle Streams"
-msgstr ""
+msgstr "Untertitel Stream"
 
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Kopieren in die Zwischenablage"
 
 msgid "FILE SELECTION"
-msgstr ""
+msgstr "DATEI AUSWAHL"
 
 msgid "Properties"
-msgstr ""
+msgstr "Einstellungen"
 
 msgid "Values"
-msgstr ""
+msgstr "Werte"
 
 msgid "Source Stream Properties"
-msgstr ""
+msgstr "Quell Stream Einstellungen"
 
 msgid "Unable to open the clipboard on Format tab"
-msgstr ""
+msgstr "Kann die Zwischenablage im Format Tab nicht öffnen"
 
 msgid "Unable to open the clipboard on Video Streams tab"
-msgstr ""
+msgstr "Kann die Zwischenablage im Video Stream Tab nicht öffnen"
 
 msgid "Unable to open the clipboard on Audio Streams tab"
-msgstr ""
+msgstr "Kann die Zwischenablage im Audio Stream Tab nicht öffnen"
 
 msgid "Unable to open the clipboard on Subtitle Streams tab"
-msgstr ""
+msgstr "Kann die Zwischenablage im Untertitel Stream Tab nicht öffnen"
 
 msgid "Where do you prefer to save your transcodes?"
-msgstr ""
+msgstr "Wo möchten Sie Ihre Transkodierungen speichern?"
 
 msgid "Change"
-msgstr ""
+msgstr "Ändern"
 
 msgid "Same destination paths as source files"
-msgstr ""
+msgstr "Gleiche Zielpfade wie die Quelldaten"
 
 msgid "Assign optional suffix to destination file names:"
-msgstr ""
+msgstr "Zusätzlicher Suffix für die Zieldateinamen:"
 
 msgid "File removal preferences"
-msgstr ""
+msgstr "Datei Löscheinstellungen"
 
 msgid "Trash the source files after successful encoding"
-msgstr ""
+msgstr "Lösche die Quelldaten nach erfolgreicher Encodierung"
 
 msgid "File Preferences"
-msgstr ""
+msgstr "Datei Einstellungen"
 
 msgid "Location of executables"
-msgstr ""
+msgstr "Speicherort der Programme"
 
 msgid ""
-"FFmpeg can be built by enabling/disabling its options and this depends on your needs.\n"
-"For some use cases it is possible to provide a custom build of FFmpeg where you can specify\n"
+"FFmpeg can be built by enabling/disabling its options and this depends on "
+"your needs.\n"
+"For some use cases it is possible to provide a custom build of FFmpeg where "
+"you can specify\n"
 "it in this preferences tab."
 msgstr ""
 
 msgid "Enable a custom location to run FFmpeg"
-msgstr ""
+msgstr "Benutzerdefinierter Pfad für die Ausführung von FFmpeg"
 
 msgid "Enable a custom location to run FFprobe"
-msgstr ""
+msgstr "Benutzerdefinierter Pfad für die Ausführung von FFprobe"
 
 msgid "Enable a custom location to run FFplay"
-msgstr ""
+msgstr "Benutzerdefinierter Pfad für die Ausführung von FFplay"
 
 msgid "FFmpeg"
 msgstr ""
 
 msgid "Look and Feel (requires application restart)"
-msgstr ""
+msgstr "Look and Feel (benötigt Neustart der Anwendung)"
 
 msgid "Icon themes"
-msgstr ""
+msgstr "Icon Themes"
 
 msgid "At the top of window (default)"
-msgstr ""
+msgstr "Oben am Fenster (standard)"
 
 msgid "At the bottom of window"
-msgstr ""
+msgstr "Unten am Fenster"
 
 msgid "At the right of window"
-msgstr ""
+msgstr "Rechts am Fenster"
 
 msgid "At the left of window"
-msgstr ""
+msgstr "Links am Fenster"
 
 msgid "Place the toolbar"
-msgstr ""
+msgstr "Platziere die Toolbar"
 
 msgid "Toolbar's icons size:"
-msgstr ""
+msgstr "Icongröße in der Toolbar:"
 
 msgid "Application Language (requires application restart)"
-msgstr ""
+msgstr "Sprache der Anwendung (benötigt Neustart der Anwendung)"
 
 msgid "Look and Language"
-msgstr ""
+msgstr "Aussehen und Sprache"
 
 msgid "Upon exiting the application"
-msgstr ""
+msgstr "Bis zum Beenden der Anwendung"
 
 msgid "Always ask me to confirm"
-msgstr ""
+msgstr "Verlange immer eine Bestätigung"
 
 msgid "Clean the log files"
-msgstr ""
+msgstr "Lösche die Logfiles"
 
 msgid "Remove cached files"
-msgstr ""
+msgstr "Entferne gecachte Dateien"
 
 msgid "On operations completion"
 msgstr ""
 
-msgid "These settings will remain active until the application is closed, If necessary, remember to reactivate them."
+msgid ""
+"These settings will remain active until the application is closed, If "
+"necessary, remember to reactivate them."
 msgstr ""
+"Diese Einstellungen bleiben akiv, bis die Anwendung geschlossen wird. Falls "
+"nötig aktivieren Sie diese wieder."
 
 msgid "Exit the application"
-msgstr ""
+msgstr "Schließen der Anwendung"
 
 msgid "Shutdown the system"
-msgstr ""
+msgstr "Betriebsystem herunterfahren"
 
 msgid "SUDO password:"
-msgstr ""
+msgstr "SUDO Passwort:"
 
 msgid "Exit and Shutdown"
-msgstr ""
+msgstr "Schließen und das Betriebssystem herunterfahren"
 
 msgid "Specify the character encoding format"
-msgstr ""
+msgstr "Wähle den Zeichensatz"
 
 msgid ""
-"Although UTF-8 is the default and most widely used standard encoding format, it is not the only encoding format available.\n"
-"Some file metadata may still contain non-UTF-8 character encodings resulting in the error \"'utf-8' codec can't decode bytes...\".\n"
-"If you know the encoding format the file was written in, you can try specifying it here, e.g. ISO 8859-1, ISO 8859-16, etc."
+"Although UTF-8 is the default and most widely used standard encoding format, "
+"it is not the only encoding format available.\n"
+"Some file metadata may still contain non-UTF-8 character encodings resulting "
+"in the error \"'utf-8' codec can't decode bytes...\".\n"
+"If you know the encoding format the file was written in, you can try "
+"specifying it here, e.g. ISO 8859-1, ISO 8859-16, etc."
 msgstr ""
 
 msgid "Character encoding:"
-msgstr ""
+msgstr "Zeichensatz:"
 
 msgid "Default application directories"
-msgstr ""
+msgstr "Standardverzeichnisse der Anwendung"
 
 msgid "Configuration directory"
-msgstr ""
+msgstr "Verzeichnis der Konfiguration"
 
 msgid "Cache directory"
-msgstr ""
+msgstr "Verzeichnis des Caches"
 
 msgid "Log directory"
-msgstr ""
+msgstr "Verzeichnis der Logs"
 
 msgid "Advanced"
-msgstr ""
+msgstr "Erweitert"
 
 msgid ""
-"The following settings affect output messages and the log messages during transcoding processes.\n"
-"Be careful, by changing these settings some functions of the application may not work correctly,\n"
+"The following settings affect output messages and the log messages during "
+"transcoding processes.\n"
+"Be careful, by changing these settings some functions of the application may "
+"not work correctly,\n"
 "change only if you know what you are doing.\n"
 msgstr ""
 
 msgid "Set logging level flags used by FFmpeg"
-msgstr ""
+msgstr "Setze Log-Level Flags, die FFmpeg benutzt"
 
 msgid "Set logging level flags used by FFplay"
-msgstr ""
+msgstr "Setze Log-Level Flags, die FFplay benutzt"
 
 msgid "FFmpeg logging levels"
-msgstr ""
+msgstr "FFmpeg Log-Levels"
 
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr ""
+"Durch das setzen eines zusätzlichen Suffix, kann verhindert werden, dass "
+"Dateien überschirieben werden"
 
-msgid "Type sudo password here, only for Unix-like operating systems, not for MS Windows"
+msgid ""
+"Type sudo password here, only for Unix-like operating systems, not for MS "
+"Windows"
 msgstr ""
+"Geben Sie hier ihr sudo Passwort an, dies ist nur für *nix-Betriebsysteme "
+"von Relevanz, nicht für MS Windows"
 
 msgid "Preferences"
-msgstr ""
+msgstr "Einstellungen"
 
 msgid "Choose Destination"
-msgstr ""
+msgstr "Wähle das Zielverzeichnis"
 
-msgid "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and the underscore (\"_\"). Spaces are not allowed."
+msgid ""
+"Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
+"the underscore (\"_\"). Spaces are not allowed."
 msgstr ""
+"Ausschließlich alphanumerische Zeichen erlaubt. Es können nur Bindestriche "
+"(\"-\") und Unterstriche (\"_\") verwendet werden. Leerzeichen sind nicht "
+"erlaubt."
 
 msgid "Videomass - Warning!"
-msgstr ""
+msgstr "Videomass - Warnung!"
 
 #, python-brace-format
 msgid "{} location"
-msgstr ""
+msgstr "{} Verzeichnis"
 
-msgid "One-Pass, Do not start with `ffmpeg -i filename`; do not end with `output-filename`"
+msgid ""
+"One-Pass, Do not start with `ffmpeg -i filename`; do not end with `output-"
+"filename`"
 msgstr ""
+"One-Pass, dieser Befehl startet nicht mit `ffmpeg -i Name-der-Quelldatei`; "
+"und endet nicht mit `Name-der-Zieldatei`"
 
-msgid "Two-Pass (optional), Do not start with `ffmpeg -i filename`; do not end with `output-filename`"
+msgid ""
+"Two-Pass (optional), Do not start with `ffmpeg -i filename`; do not end with "
+"`output-filename`"
 msgstr ""
+"Two-Pass (optional), dieser Befehl startet nicht mit `ffmpeg -i Name-der-"
+"Quelldatei`; und endet nicht mit `Name-der-Zieldatei`"
 
 msgid "Videomass - Edit the selected item in the queue"
-msgstr ""
+msgstr "Videomass - Bearbeite das ausgwählte Objekt in der Warteschlange"
 
 msgid "Pre-input arguments for One-Pass (optional)"
-msgstr ""
+msgstr "Optionen vor dem Input im One-Pass-Modus (optional)"
 
 msgid "FFmpeg arguments for one-pass encoding"
-msgstr ""
+msgstr "FFmpeg Optionen für die One-Pass Encodierung"
 
-msgid "Any optional arguments to add before input file on the one-pass encoding, e.g required names of some hardware accelerations like -hwaccel to use with CUDA."
+msgid ""
+"Any optional arguments to add before input file on the one-pass encoding, e."
+"g required names of some hardware accelerations like -hwaccel to use with "
+"CUDA."
 msgstr ""
 
 msgid "Pre-input arguments for Two-Pass (optional)"
-msgstr ""
+msgstr "Optionen vor dem Input im Two-Pass-Modus (optional)"
 
 msgid "FFmpeg arguments for two-pass encoding"
-msgstr ""
+msgstr "FFmpeg Optionen für die Two-Pass Encodierung"
 
-msgid "Any optional arguments to add before input file on the two-pass encoding, e.g required names of some hardware accelerations like -hwaccel to use with CUDA."
+msgid ""
+"Any optional arguments to add before input file on the two-pass encoding, e."
+"g required names of some hardware accelerations like -hwaccel to use with "
+"CUDA."
 msgstr ""
 
 msgid "Edit"
-msgstr ""
+msgstr "Anpassen"
 
 msgid "Remove"
-msgstr ""
+msgstr "Löschen"
 
 msgid "Remove all"
-msgstr ""
+msgstr "Alle löschen"
 
 msgid ""
 "Export\n"
 "queue file"
 msgstr ""
+"Export\n"
+"Warteschlange"
 
 msgid ""
 "Import\n"
 "queue file"
 msgstr ""
+"Import\n"
+"Warteschlange"
 
 msgid "Destination file name"
-msgstr ""
+msgstr "Ziel-Dateiname"
 
 msgid "Remove all items in the queue"
-msgstr ""
+msgstr "Entferne alle Objekte der Warteschlange"
 
 msgid "Videomass - Queue"
-msgstr ""
+msgstr "Videomass - Warteschlange"
 
 msgid "Export queue file"
-msgstr ""
+msgstr "Export Warteschlange"
 
 msgid "Same as source"
-msgstr ""
+msgstr "Identisch zur Quelle"
 
 msgid ""
 "Source\n"
@@ -905,121 +1073,126 @@ msgid ""
 msgstr ""
 
 msgid "# will be replaced by ascending numbers starting with:"
-msgstr ""
+msgstr "# wird durch aufsteigende Zahlen ersetzt - startet mit:"
 
 msgid "Font Color"
-msgstr ""
+msgstr "Schriftfarbe"
 
 msgid "Shadow Color"
-msgstr ""
+msgstr "Schattenfarbe"
 
 msgid "Show text box"
-msgstr ""
+msgstr "Zeige Textbox"
 
 msgid "Box Color"
-msgstr ""
+msgstr "Boxfarbe"
 
 msgid "Timestamp settings"
-msgstr ""
+msgstr "Zeitstempel Einstellungen"
 
 msgid "Supported Formats list (optional). Do not include the `.`"
-msgstr ""
+msgstr "Liste unterstützter Formate (optional). Ohne `.`"
 
 msgid "Output Format. Empty to copy format and codec. Do not include the `.`"
-msgstr ""
+msgstr "Ziel Format. Leer lassen um Format und Codec zu kopieren. Ohne `.`"
 
 msgid "Profile Name"
-msgstr ""
+msgstr "Name des Profils"
 
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 msgid "A short profile name"
-msgstr ""
+msgstr "Kurzer Profilname"
 
 msgid "A long description of the profile"
-msgstr ""
+msgstr "Lange Beschreibung des Profils"
 
 msgid "One or more comma-separated format names compatible with this profile"
 msgstr ""
+"Einer oder mehrere Format Namen (kommasepariert), die mit diesem Profil "
+"kompatibel sind"
 
 msgid "Output format extension. Leave empty to copy codec and format"
 msgstr ""
+"Ziel-Format Dateiendung. Leer lassen um den Codec und das Format zu kopieren"
 
 msgid "Incomplete profile assignments"
-msgstr ""
+msgstr "Profilangaben nicht komplett"
 
 msgid "Formats must be comma-separated"
-msgstr ""
+msgstr "Formate müssen kommasepariert sein"
 
 #, python-brace-format
 msgid ""
 "ERROR: Keys mismatched for requested data.\n"
 "Invalid file: «{0}»"
 msgstr ""
+"FEHLER: Schlüssel unpassend für die angefragten Daten. (Key missmatch)\n"
+"Ungültige Datei: «{0}»"
 
 msgid "Profile already stored with same name"
-msgstr ""
+msgstr "Profil mit diesem Namen existiert bereits"
 
 msgid "Profile stored successfully!"
-msgstr ""
+msgstr "Profil erfolgreich gespeichert!"
 
 msgid "Profile change successful!"
-msgstr ""
+msgstr "Profil erfolgreich geändert!"
 
 msgid "Log file list"
-msgstr ""
+msgstr "Liste der Logdateien"
 
 msgid "Log messages"
-msgstr ""
+msgstr "Log Einträge"
 
 msgid "Refresh log messages"
-msgstr ""
+msgstr "Log Einträge neu laden"
 
 msgid "Clear log messages"
-msgstr ""
+msgstr "Log Einträge löschen"
 
 msgid "Select a log file"
-msgstr ""
+msgstr "Wähle eine Log Datei"
 
 msgid "Are you sure you want to clear the selected log file?"
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie die gewählte Log Datei löschen möchten?"
 
 msgid "Please confirm"
-msgstr ""
+msgstr "Bitte bestätigen"
 
 msgid "File name"
-msgstr ""
+msgstr "Datei Name"
 
 msgid "Max volume dBFS"
-msgstr ""
+msgstr "Maximale Lautstärke dBFS"
 
 msgid "Mean volume dBFS"
-msgstr ""
+msgstr "Durchschnittliche Lautstärke dBFS"
 
 msgid "Offset dBFS"
-msgstr ""
+msgstr "Abstand dBFS"
 
 msgid "Result dBFS"
-msgstr ""
+msgstr "Ergebnis dBFS"
 
 msgid "Post-normalization references:"
-msgstr ""
+msgstr "Referenz nach der Normalisation:"
 
 msgid "=  Clipped peaks"
 msgstr ""
 
 msgid "=  No changes"
-msgstr ""
+msgstr "=  Keine Änderungen"
 
 msgid "=  Below max peak"
 msgstr ""
 
 msgid "RMS-based volume statistics"
-msgstr ""
+msgstr "Lautstärkestatistiken basierend auf RMS"
 
 msgid "PEAK-based volume statistics"
-msgstr ""
+msgstr "Lautstärkestatistiken basierend auf PEAK"
 
 msgid ""
 "...It means the resulting audio will be clipped,\n"
@@ -1039,16 +1212,19 @@ msgid ""
 msgstr ""
 
 msgid "Get Latest Version"
-msgstr ""
+msgstr "Lade die neueste Version"
 
 msgid "Checking for newer version"
-msgstr ""
+msgstr "Prüfe auf neuere Version"
 
 msgid ""
 "\n"
 "\n"
 "New releases fix bugs and offer new features."
 msgstr ""
+"\n"
+"\n"
+"Neue Versionen beheben Fehler und beinhalten neue Funktionen."
 
 #, python-brace-format
 msgid ""
@@ -1057,6 +1233,10 @@ msgid ""
 "This is Videomass v.{0}\n"
 "\n"
 msgstr ""
+"\n"
+"\n"
+"Dies ist Videomass v.{0}\n"
+"\n"
 
 msgid ""
 "q, ESC\n"
@@ -1081,87 +1261,108 @@ msgid ""
 msgstr ""
 
 msgid "Shortcut keys while playing with FFplay"
-msgstr ""
+msgstr "Tastenkombinationen für die Wiedergabe mit FFplay"
 
 msgid "Stop"
 msgstr ""
 
 msgid "Please take a moment to set up the application"
-msgstr ""
+msgstr "Bitte nehmen Sie sich einen Moment Zeit die Anwendung einzurichten"
 
 msgid "Click the \"Next\" button to get started"
-msgstr ""
+msgstr "Wählen Sie \"Weiter\" um zu starten"
 
 msgid "Welcome to the Videomass Wizard!"
-msgstr ""
+msgstr "Willkommen zum Einrichtungsassistenten von Videomass!"
 
 msgid "Videomass is an application based on FFmpeg\n"
-msgstr ""
+msgstr "Videomass ist eine Anwendung basierend auf FFmpeg\n"
 
 msgid "If FFmpeg is not on your computer, this application will be unusable"
 msgstr ""
+"Befindet sich FFmpeg nicht auf ihrem Computer, können Sie diese Anwendung "
+"nicht verwenden"
 
 msgid ""
 "If you have already installed FFmpeg on your operating system,\n"
 "click the \"Auto-detection\" button."
 msgstr ""
+"Haben Sie FFmpeg bereits auf ihrem Computer installiert,\n"
+"klicken sie den \"Automatisch Erkennen\" Knopf."
 
 msgid ""
 "If you want to use a version of FFmpeg located on your filesystem\n"
 "but not installed on your operating system,\n"
 "click the \"Locate\" button."
 msgstr ""
+"Möchten Sie eine Version von FFmpeg verwenden, die entpackt\n"
+"in Ihrem Dateisytem liegt, aber nicht installiert ist,\n"
+"klicken Sie den \"Lokalisieren\" Knopf."
 
 msgid "Auto-detection"
-msgstr ""
+msgstr "Automatisch Erkennen"
 
 msgid "Locate"
-msgstr ""
+msgstr "Lokalisieren"
 
 msgid "Click the \"Next\" button"
-msgstr ""
+msgstr "Klicken sie den \"Weiter\" Knopf"
 
 #, python-brace-format
-msgid "'{}' is not installed on your computer. Install it or indicate another location by clicking the 'Locate' button."
+msgid ""
+"'{}' is not installed on your computer. Install it or indicate another "
+"location by clicking the 'Locate' button."
 msgstr ""
+"'{}' ist auf Ihrem Computer nicht installiert. Installieren Sie es oder "
+"geben Sie einen anderen Speicherort an durch das Klicken auf den "
+"\"Lokalisieren\" Knopf."
 
 msgid ""
 "Videomass already seems to include FFmpeg.\n"
 "\n"
 "Do you want to use that?"
 msgstr ""
+"Videomass scheint bereits eine Version von FFmpeg zu beinhalten.\n"
+"\n"
+"Soll diese verwendet werden?"
 
 msgid "Locating FFmpeg executables\n"
-msgstr ""
+msgstr "Suche nach FFmpeg Binärdateien\n"
 
 msgid ""
 "\"ffmpeg\", \"ffprobe\" and \"ffplay\" are required. Complete all\n"
 "the text boxes below by clicking on the respective buttons."
 msgstr ""
+"\"ffmpeg\", \"ffprobe\" und \"ffplay\" Werden benötigt. Füllen Sie\n"
+"alle Pfadangaben durch das Klicken auf die entsprechenden Knöpfe."
 
 msgid "Wizard completed successfully!\n"
-msgstr ""
+msgstr "Der Einrichtungsassistent ist erfolgreich abgeschlossen!\n"
 
-msgid "Remember that you can always change these settings later, through the Preferences dialog."
+msgid ""
+"Remember that you can always change these settings later, through the "
+"Preferences dialog."
 msgstr ""
+"Merke: Sie können auch später noch alle Einstellungen über den "
+"\"Einstellungen\" Dialog verändern."
 
 msgid "Thank You!"
-msgstr ""
+msgstr "Vielen Dank!"
 
 msgid "To exit click the \"Finish\" button"
-msgstr ""
+msgstr "Um zu beenden klicken Sie den \"Fertigstellen\" Knopf"
 
 msgid "< Previous"
-msgstr ""
+msgstr "< Zurück"
 
 msgid "Next >"
-msgstr ""
+msgstr "Weiter >"
 
 msgid "Videomass Wizard"
-msgstr ""
+msgstr "Videomass Einrichtungsassistent"
 
 msgid "Finish"
-msgstr ""
+msgstr "Fertigstellen"
 
 #, python-brace-format
 msgid ""
@@ -1169,326 +1370,360 @@ msgid ""
 "\n"
 "\"{}\"\n"
 msgstr ""
+"Das Ziel Verzeichnis existiert nicht:\n"
+"\n"
+"\"{}\"\n"
 
 msgid "Files already exist, do you want to overwrite them?"
-msgstr ""
+msgstr "Die Datei existiert bereits, wollen Sie diese überschreiben?"
 
 msgid "Already exist"
-msgstr ""
+msgstr "Existiert bereits"
 
 msgid "Not found"
-msgstr ""
+msgstr "Nicht gefunden"
 
 msgid "Error list"
-msgstr ""
+msgstr "Fehlerliste"
 
 msgid "File(s) not found"
-msgstr ""
+msgstr "Datei(en) nicht gefunden"
 
 #, python-brace-format
 msgid "Please, see «{0}» file for details."
-msgstr ""
+msgstr "Für mehr Details sehen Sie sich die «{0}» Datei an."
 
 msgid ""
 "Wait....\n"
 "Audio peak analysis."
 msgstr ""
+"Bitte warten...\n"
+"Audio Peak Analyse."
 
 msgid "Videomass - Downloading..."
-msgstr ""
+msgstr "Videomass - Es wird heruntergeladen..."
 
 msgid "Ready"
-msgstr ""
+msgstr "Bereit"
 
 msgid ""
 "Not all items in the queue were completed.\n"
 "\n"
 "Would you like to keep them in the queue?"
 msgstr ""
+"Es wurden nicht alle Objekte der Warteschlange abgeschlossen.\n"
+"\n"
+"Wollen Sie diese in der Warteschlange behalten?"
 
 #, python-brace-format
 msgid "Queue ({0})"
-msgstr ""
+msgstr "Warteschlange ({0})"
 
 msgid "Queue"
-msgstr ""
+msgstr "Warteschlange"
 
-msgid "There are still active windows with running processes, make sure you finish your work before exit."
+msgid ""
+"There are still active windows with running processes, make sure you finish "
+"your work before exit."
 msgstr ""
+"Es gibt noch Fenster mit laufenden Prozessen. Bitte stellen Sie sicher, Ihre "
+"Arbeit fertigzustellen bevor sie beenden."
 
 msgid "Are you sure you want to exit the application?"
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie die Anwendung beenden wollen?"
 
 msgid "Exit"
-msgstr ""
+msgstr "Beenden"
 
 msgid "Import files\tCtrl+O"
-msgstr ""
+msgstr "Dateien importieren\tStrg+O"
 
 msgid "Open destination folder of encodings\tCtrl+D"
-msgstr ""
+msgstr "Öffne Ziel Verzeichnis für Encodierungen\tStrg+D"
 
 msgid "Load queue file"
-msgstr ""
+msgstr "Lade Warteschlangen Datei"
 
 msgid "Load a previously exported queue file"
-msgstr ""
+msgstr "Lade eine zuvor exportierte Warteschlangen Datei"
 
 msgid "Open trash"
-msgstr ""
+msgstr "Öffne den Papierkorb"
 
 msgid "Open the Videomass trash folder"
-msgstr ""
+msgstr "Öffne den Videomass Papierkorb"
 
 msgid "Empty trash"
-msgstr ""
+msgstr "Leere den Papierkorb"
 
 msgid "Delete all files in the Videomass trash folder"
-msgstr ""
+msgstr "Lösche alle Dateien im Videomass Papierkorb"
 
 msgid "Exit\tCtrl+Q"
-msgstr ""
+msgstr "Beenden\tStrg+Q"
 
 msgid "Completely exit the application"
-msgstr ""
+msgstr "Anwendung komplett beenden"
 
 msgid "File"
-msgstr ""
+msgstr "Datei"
 
 msgid "Rename selected file\tCtrl+R"
-msgstr ""
+msgstr "Ausgewählte Datei umbenennen\tStrg+R"
 
 msgid "Rename the destination of the selected file"
-msgstr ""
+msgstr "Umbenennen des Ziel Verzeichnisses der ausgewählten Datei"
 
 msgid "Batch rename files\tCtrl+B"
-msgstr ""
+msgstr "Batch Umbenennen von Dateien\tStrg+B"
 
 msgid "Numerically renames the destination of all items in the list"
 msgstr ""
 
 msgid "Remove selected entry\tDEL"
-msgstr ""
+msgstr "Entferne ausgewählten Eintrag\tEntf"
 
 msgid "Remove the selected file from the list"
-msgstr ""
+msgstr "Entferne den ausgewählten Eintrag von der Liste"
 
 msgid "Clear list\tShift+DEL"
-msgstr ""
+msgstr "Leere die Liste\tStrg+Entf"
 
 msgid "Clear the file list"
-msgstr ""
+msgstr "Leere die Datei Liste"
 
 msgid "Preferences\tCtrl+P"
-msgstr ""
+msgstr "Einstellungen\tStrg+P"
 
 msgid "Application preferences"
-msgstr ""
+msgstr "Anwendungs Einstellungen"
 
 msgid "Find FFmpeg topics"
-msgstr ""
+msgstr "Verfügbare FFmpeg Parameter"
 
 msgid "A useful tool to search for FFmpeg help topics and options"
-msgstr ""
+msgstr "Ein nützliches Werkzeug um Hilfe zu FFmpeg Optionen zu finden"
 
 msgid "Check for preset updates"
-msgstr ""
+msgstr "Prüfe auf Updates der Presets"
 
 #, python-brace-format
 msgid "Check for new presets updates from {0}"
-msgstr ""
+msgstr "Prüfe auf neue Updates der Presets von {0}"
 
 msgid "Get latest presets"
-msgstr ""
+msgstr "Hole neueste Presets"
 
 #, python-brace-format
 msgid "Get the latest presets from {0}"
-msgstr ""
+msgstr "Hole neueste Presets von {0}"
 
 msgid "Work notes\tCtrl+N"
-msgstr ""
+msgstr "Notizen\tStrg+N"
 
 msgid "Read and write useful notes and reminders."
-msgstr ""
+msgstr "Schreiben Sie hier Notizen und Erinnerungen nieder."
 
 msgid "Tools"
-msgstr ""
+msgstr "Werkzeuge"
 
 msgid "Show FFmpeg's built-in configuration capabilities"
-msgstr ""
+msgstr "Zeige FFmpeg's eigene Konfigurationsparameter"
 
 msgid "Muxers and demuxers available on your version of FFmpeg"
-msgstr ""
+msgstr "Muxer und Demuxer, die in deiner Verson von FFmpeg vorhanden sind"
 
 msgid "Encoders available on your version of FFmpeg"
-msgstr ""
+msgstr "Encoder, die in deiner Verson von FFmpeg vorhanden sind"
 
 msgid "Decoders available on your version of FFmpeg"
-msgstr ""
+msgstr "Decoder, die in deiner Verson von FFmpeg vorhanden sind"
 
 msgid "Enable timestamps on playback"
-msgstr ""
+msgstr "Aktiviere Zeitstempel in der Wiedergabe"
 
 msgid "Displays timestamp when playing media with FFplay"
-msgstr ""
+msgstr "Zeige Zeitstempel bei der Wiedergabe mit FFplay"
 
 msgid "Auto-exit after playback"
-msgstr ""
+msgstr "Automatisches Beenden nach der Wiedergabe"
 
 msgid "If checked, the FFplay window will auto-close when playback is complete"
 msgstr ""
+"Wenn ausgewählt, schließt sich das FFplay Fenster automatisch wenn die "
+"Wiedergabe beendet ist"
 
 msgid "Customize the timestamp style"
-msgstr ""
+msgstr "Style des Zeitstempels einstellen"
 
 msgid "While playing..."
-msgstr ""
+msgstr "Während abgespielt wird..."
 
 msgid "Show useful shortcut keys when playing or previewing using FFplay"
 msgstr ""
+"Zeige nützliche Tastenkürzel für die Wiedergabe oder Vorschau mit FFplay"
 
 msgid "Show timeline editor\tCtrl+T"
-msgstr ""
+msgstr "Zeige den Zeitstrahl Editor\tStrg+T"
 
-msgid "Set duration or trim slices of time to remove unwanted parts from your files"
+msgid ""
+"Set duration or trim slices of time to remove unwanted parts from your files"
 msgstr ""
+"Setze die Dauer deiner Dateien oder entferne unerwünschte Teile aus diesen"
 
 msgid "View"
-msgstr ""
+msgstr "Ansicht"
 
 msgid "Home panel\tCtrl+Shift+H"
-msgstr ""
+msgstr "Startseite\tStrg+Umschalt+H"
 
 msgid "Go to the «Home» panel"
-msgstr ""
+msgstr "Gehe zur «Startseite»"
 
 msgid "Presets Manager\tCtrl+Shift+P"
-msgstr ""
+msgstr "Voreinstellungen verwalten\tStrg+Umschalt+P"
 
 msgid "Go to the «Presets Manager» panel"
-msgstr ""
+msgstr "Gehe zu «Voreinstellungen verwalten»"
 
 msgid "A/V Conversions\tCtrl+Shift+V"
-msgstr ""
+msgstr "A/V Umwandlung\tStrg+Umschalt+V"
 
 msgid "Go to the «A/V Conversions» panel"
-msgstr ""
+msgstr "Gehe zu «A/V Umwandlung»"
 
 msgid "Concatenate Demuxer\tCtrl+Shift+D"
-msgstr ""
+msgstr "Verkette Demuxer\tStrg+Umschalt+D"
 
 msgid "Go to the «Concatenate Demuxer» panel"
-msgstr ""
+msgstr "Gehe zu «Verkette Demuxer»"
 
 msgid "Still Image Maker\tCtrl+Shift+I"
-msgstr ""
+msgstr "Standbild Erstellung\tStrg+Umschalt+I"
 
 msgid "Go to the «Still Image Maker» panel"
-msgstr ""
+msgstr "Gehe zu «Standbild Erstellung»"
 
 msgid "From Movie to Pictures\tCtrl+Shift+S"
-msgstr ""
+msgstr "Von Video zu Bildern\tStrg+Umschalt+S"
 
 msgid "Go to the «From Movie to Pictures» panel"
-msgstr ""
+msgstr "Gehe zu «Von Video zu Bildern»"
 
 msgid "Output monitor\tCtrl+Shift+O"
-msgstr ""
+msgstr "Fortschritt\tStrg+Umschalt+O"
 
 msgid "Keeps track of the output for debugging errors"
 msgstr ""
+"Halte ein Auge auf die Ausgabe um Fehler der Fehlerbeseitigung zu sehen"
 
 msgid "Go"
-msgstr ""
+msgstr "Los"
 
 msgid "User guide"
-msgstr ""
+msgstr "Benutzerhandbuch (online)"
 
 msgid "System version"
-msgstr ""
+msgstr "System Version"
 
-msgid "Get version about your operating system, version of Python and wxPython."
+msgid ""
+"Get version about your operating system, version of Python and wxPython."
 msgstr ""
+"Zeige Informationen zu Ihrem Betriebsystem, der Version von Python und "
+"wxPython an."
 
 msgid "Show log files\tCtrl+L"
-msgstr ""
+msgstr "Zeige die Logs\tStrg+L"
 
 msgid "Viewing log messages"
-msgstr ""
+msgstr "Zeige Log Nachrichten an"
 
 msgid "Issue tracker"
-msgstr ""
+msgstr "Issue-Tracker"
 
 msgid "Contribute to the project"
-msgstr ""
+msgstr "Tragen Sie etwas zum Projekt bei"
 
 msgid "Sponsor this project"
-msgstr ""
+msgstr "Werden Sie Sponsor"
 
 msgid "Become a developer supporter"
-msgstr ""
+msgstr "Werden Sie ein Supporter für Entwickler"
 
 msgid "Donate"
-msgstr ""
+msgstr "Spenden"
 
 msgid "Donate to the app developer"
-msgstr ""
+msgstr "Spenden für den App Entwickler"
 
 msgid "Other projects by the developer"
-msgstr ""
+msgstr "Andere Projekte des Entwicklers"
 
 msgid "About Videomass"
-msgstr ""
+msgstr "Über Videomass"
 
 msgid "Check for newer version"
-msgstr ""
+msgstr "Prüfe auf neuere Version"
 
 msgid "Check for the latest Videomass version"
-msgstr ""
+msgstr "Prüfe auf die neueste Version von Videomass"
 
 msgid "Help"
-msgstr ""
+msgstr "Hilfe"
 
 msgid "Import files"
-msgstr ""
+msgstr "Importiere Dateien"
 
-msgid "No default folder has been set for the destination of the encodings. The current setting is \"Same destination paths as source files\"."
+msgid ""
+"No default folder has been set for the destination of the encodings. The "
+"current setting is \"Same destination paths as source files\"."
 msgstr ""
+"Es wurde noch kein Standard Ziel-Verzeichnis für die fertigen "
+"Konvertierungen gesetzt. Die aktuelle Einstellung ist \"Gleiche Zielpfade "
+"wie die Quelldaten\"."
 
 #, python-brace-format
 msgid ""
 "'{}':\n"
 "No such file or directory"
 msgstr ""
+"'{}':\n"
+"Datei oder Verzeichnis existiert nicht"
 
 msgid "Are you sure to empty trash folder?"
-msgstr ""
+msgstr "Wollen Sie wirklich den Papierkorb leeren?"
 
 #, python-brace-format
 msgid ""
 "'{}':\n"
 "There are no files to delete."
 msgstr ""
+"'{}':\n"
+"Es gibt keine Dateien zu löschen."
 
 #, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr ""
+"Release v{0} ist installiert. Ein neues Release der Voreinstellungen ist "
+"verfügbar: {1}"
 
 #, python-brace-format
 msgid "Installed release v{0}. No new updates found."
-msgstr ""
+msgstr "Release v{0} ist installiert. Keine neuen Aktualisierungen gefunden."
 
 msgid ""
 "Wait....\n"
 "The archive is being downloaded"
 msgstr ""
+"Bitte warten...\n"
+"Das Archiv wird heruntergeladen"
 
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
-msgstr ""
+msgstr "Erfolgreich heruntergeladen nach: \"{0}\""
 
 msgid "Some changes require restarting the application."
-msgstr ""
+msgstr "Für einige Änderungen muss die Anwendung neu gestartet werden."
 
 #, python-brace-format
 msgid ""
@@ -1496,169 +1731,187 @@ msgid ""
 "\n"
 "Do you want to restart the application now?"
 msgstr ""
+"{0}\n"
+"\n"
+"Möchten Sie die Anwendung jetzt neu starten?"
 
 msgid "Restart Videomass?"
-msgstr ""
+msgstr "Videomass neu starten?"
 
 #, python-brace-format
 msgid "A new release is available - v.{0}\n"
-msgstr ""
+msgstr "Eine neue Version ist verfügbar - v.{0}\n"
 
+#, fuzzy
 msgid "You are using a development version that has not yet been released!\n"
 msgstr ""
+"Sie benutzen eine Entwicklungs-Version, die noch nicht veröffentlicht "
+"wurde!\n"
 
 msgid "Congratulation! You are already using the latest version.\n"
-msgstr ""
+msgstr "Gratulation! Sie benutzen die neueste Version.\n"
 
 msgid "Previous panel"
-msgstr ""
+msgstr "Vorherige Seite"
 
 msgid "Back"
-msgstr ""
+msgstr "Zurück"
 
 msgid "Next panel"
-msgstr ""
+msgstr "Nächste Seite"
 
 msgid "Next"
-msgstr ""
+msgstr "Weiter"
 
 msgid "Home panel"
-msgstr ""
+msgstr "Startseite"
 
 msgid "Home"
-msgstr ""
+msgstr "Start"
 
 msgid "Play the selected input file"
-msgstr ""
+msgstr "Ausgewählte Quell-Datei abspielen"
 
 msgid "Play"
-msgstr ""
+msgstr "Abspielen"
 
 msgid "Get informative data about imported media streams"
-msgstr ""
+msgstr "Zeige Informationen über imortierte Medien Streams an"
 
 msgid "Start batch processing"
-msgstr ""
+msgstr "Starte die Batch Verarbeitung"
 
 msgid "Stops current process"
-msgstr ""
+msgstr "Stoppe den aktuellen Prozess"
 
 msgid "Add an item to Queue"
-msgstr ""
+msgstr "Füge einen Eintrag zur Warteschlange hinzu"
 
 msgid "Add to Queue"
-msgstr ""
+msgstr "Füge der Warteschlange hinzu"
 
 msgid "Show queue"
-msgstr ""
+msgstr "Zeige Warteschlange"
 
 msgid "Videomass - File List"
-msgstr ""
+msgstr "Videomass - Dateiliste"
 
 msgid "Videomass - AV Conversions"
-msgstr ""
+msgstr "Videomass - A/V Umwandlung"
 
 msgid "Videomass - Presets Manager"
-msgstr ""
+msgstr "Videomass - Voreinstellungen Verwalten"
 
 msgid "Videomass - Concatenate Demuxer"
-msgstr ""
+msgstr "Videomass - Verkette Demuxer"
 
 msgid "Videomass - From Movie to Pictures"
-msgstr ""
+msgstr "Videomass - Von Video zu Bildern"
 
 msgid "Videomass - Still Image Maker"
-msgstr ""
+msgstr "Videomass - Standbild Erstellung"
 
 msgid "Have to select an item in the file list first"
-msgstr ""
+msgstr "Sie müssen zuerst ein Objekt in der Liste der Dateien auswählen"
 
 msgid ""
 "An item with the same destination file already exists.\n"
 "\n"
 "Do you want to replace it by adding the new item to the queue?"
 msgstr ""
+"Ein Objekt mit dem gleichen Ziel existiert bereits.\n"
+"\n"
+"Wollen Sie dieses ersetzen?"
 
 msgid "Videomass - FFmpeg Message Monitoring"
-msgstr ""
+msgstr "Videomass - FFmpeg Status"
 
 #, python-brace-format
 msgid "The system will turn off in {0} seconds"
-msgstr ""
+msgstr "Das Betriebssystem wird in {0} Sekunden abgeschaltet"
 
 msgid "Videomass - Shutdown!"
-msgstr ""
+msgstr "Videomass - Herunterfahren!"
 
 msgid "Error while shutting down. Please see file log for details."
 msgstr ""
+"Es ist ein Fehler aufgetreten beim Versuch das System herunterzufahren. "
+"Bitte prüfen Sie die Logs für mehr Informationen."
 
 #, python-brace-format
 msgid "Exiting the application in {0} seconds"
-msgstr ""
+msgstr "Die Anwendung wird in {0} Sekunden geschlossen"
 
 msgid "Videomass - Exiting!"
-msgstr ""
+msgstr "Videomass - Beenden!"
 
 msgid "Start point adjustment"
-msgstr ""
+msgstr "Anpassung Startzeitpunkt"
 
 msgid "End point adjustment"
-msgstr ""
+msgstr "Anpassung Endzeitpunkt"
 
 msgid "Hours"
-msgstr ""
+msgstr "Stunden"
 
 msgid "Minutes"
-msgstr ""
+msgstr "Minuten"
 
 msgid "Seconds"
-msgstr ""
+msgstr "Sekunden"
 
 msgid "Milliseconds"
-msgstr ""
+msgstr "Millisekunden"
 
+#, fuzzy
 msgid "No source duration:"
-msgstr ""
+msgstr "Keine Dauer der Quelle:"
 
+#, fuzzy
 msgid "Wave"
-msgstr ""
+msgstr "Welle"
 
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
-msgstr ""
+msgstr "{0} {1}  |  Dauer des Abschnitts: {2}"
 
 msgid "End adjustment"
-msgstr ""
+msgstr "Anpassung Ende"
 
 msgid "Start adjustment"
-msgstr ""
+msgstr "Anpassung Start"
 
+#, fuzzy
 msgid "Toggles the display of the audio waveform in the background ruler"
-msgstr ""
+msgstr "Aktiviert die Anzeige der Audiovisualisierung im Hintergrundlineal"
 
 msgid "Reset segment on timeline"
-msgstr ""
+msgstr "Abschnitt im Zeitstrahl zurücksetzen"
 
+#, fuzzy
 msgid "Timeline Editor Usage"
-msgstr ""
+msgstr "Zeitstrahl Editor Benutzung"
 
 msgid "Play segment"
-msgstr ""
+msgstr "Wiedergabe des Abschnitts"
 
 msgid "Invalid file format for playback."
-msgstr ""
+msgstr "Ungültiges Dateiformat für Wiedergabe."
 
 msgid "No segment selected in the timeline yet."
-msgstr ""
+msgstr "Bisher kein Abschnitt im Zeitstrahl ausgewählt."
 
 msgid ""
 "Invalid segment selection!\n"
 "«End» cursor must be moved to the right side of the «Start» cursor."
 msgstr ""
+"Ungültige Abschnitt Auswahl!\n"
+"Die «Ende» Markierung muss sich auf der rechten Seite der «Start» Markierung "
+"befinden."
 
 #, python-format
 msgid "Invalid or unsupported file:  %s"
-msgstr ""
+msgstr "Ungültige oder nicht unterstützte Datei:  %s"
 
 #, python-brace-format
 msgid ""
@@ -1666,6 +1919,9 @@ msgid ""
 "The selected source file does not contain any audio streams:\n"
 "\"{}\""
 msgstr ""
+"Kann keine Audiovisualisierung erstellen.\n"
+"Die ausgewählte Quell-Datei enthhält keine Audio Streams:\n"
+"\"{}\""
 
 msgid ""
 "The timeline editor allows you to trim slices of time on selected files.\n"
@@ -1677,65 +1933,120 @@ msgid ""
 "selected segment (including warnings) are displayed on the timeline\n"
 "status bar.\n"
 "\n"
-"Please note that actions such as importing new files, selecting, deselecting,\n"
+"Please note that actions such as importing new files, selecting, "
+"deselecting,\n"
 "deleting, and sorting items will reset the timeline to its default values.\n"
 "\n"
 "If no source file, the duration values ​​will be set to the default value\n"
 "(00:00:00.000) and all timeline controls will be disabled.\n"
 "This behavior also applies when deselecting files."
 msgstr ""
+"Mit dem Zeitstrahl-Editor können Sie Zeitabschnitte in ausgewählten Dateien "
+"zuschneiden.\n"
+"Das Zeitformat wird angegeben in Stunden (H), Minuten (M), Sekunden (S)\n"
+"und Millisekunden (ms) (HH:MM:SS.ms).\n"
+"\n"
+"Die Zeitwerte für «Start» und «Ende» beziehen sich immer auf den "
+"Anfangspunkt\n"
+"der Gesamtdauer. Die Gesamtdauer einer Datei und die Dauer eines\n"
+"ausgewählten Abschnitts werden in der Statusleiste\n"
+"des Zeitstrahls angezeigt (einschließlich Warnungen).\n"
+"\n"
+"Bitte beachten Sie, dass Aktionen wie das Importieren neuer Dateien, das "
+"Auswählen, Abwählen,\n"
+"Löschen und Sortieren von Elementen den Zeitstrahl auf seine Standardwerte "
+"zurücksetzt.\n"
+"\n"
+"Wenn keine Quelldatei vorhanden ist, werden die Dauerwerte auf den "
+"Standardwert\n"
+"(00:00:00.000) gesetzt und alle Steuerelemente der Zeitleiste deaktiviert.\n"
+"Dieses Verhalten gilt auch beim Abwählen von Dateien.\n"
+"\n"
+"Übersetzt mit DeepL.com (kostenlose Version)"
 
 msgid "Source duration:"
-msgstr ""
+msgstr "Dauer der Quelle:"
 
 msgid "WARNING: Invalid segment selection, out of range."
-msgstr ""
+msgstr "WARNUNG: Ungültige Auswahl an Abschnitten. (Out of Range)"
 
 msgid ""
 "Start by dragging the handles in the left corners or\n"
 "click the Start/End adjustment buttons for fine tuning."
 msgstr ""
+"Beginnen Sie die Einzüge in den linken Ecken zu bewegen\n"
+"oder benutzen Sie die Start/Ende Anpassungs Knöpfe für die Feineinstellung."
 
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 msgid "End"
-msgstr ""
+msgstr "Ende"
 
 msgid "Media:"
-msgstr ""
+msgstr "Medien:"
 
 msgid "Container:"
-msgstr ""
+msgstr "Container:"
 
 msgid "Target"
-msgstr ""
+msgstr "Ziel"
 
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Sonstiges"
 
 msgid "Save as a new profile of the Presets Manager."
-msgstr ""
+msgstr "Speichere als neues Profil in die Voreinstellungen."
 
 msgid "Displays the RAW commands for the selected file."
-msgstr ""
-
-msgid "Available video encoders. \"Copy\" means that the video stream will not be re-encoded and will allow you (depending on the encoder) to change the container, audio codec and a few other parameters."
-msgstr ""
+msgstr "Zeige die Befehle für die gewählte Datei."
 
 msgid ""
-"Container format. It is usually represented by the file extension (output format).\n"
-"\n"
-"If the Media target is set to \"Video\" and the Video Encoder to \"Copy\", optionally you can set this control to \"Copy\" the same container as source file.\n"
-"\n"
-"If the media target is set to \"Audio\", you can extract only the audio streams from videos, or simply convert audio source files."
+"Available video encoders. \"Copy\" means that the video stream will not be "
+"re-encoded and will allow you (depending on the encoder) to change the "
+"container, audio codec and a few other parameters."
 msgstr ""
+"Verfügaber Video Encover. \"Kopieren\" bedeutet, dass der Video Stream nicht "
+"neu encodiert wird. Dies erlaubt die Änderung des Containers (abhängig vom "
+"Encoder), des Audo Codecs und einige andere Optionen."
 
 msgid ""
-"Set output files target: \"Video\" to save output files as video files; \"Audio\" to save files using an audio encoder and format.\n"
+"Container format. It is usually represented by the file extension (output "
+"format).\n"
 "\n"
-"Note that by using \"Audio\" as the target, you will still be able to work on the video source files but you will only be able to extract the audio streams, convert them and apply audio filters such as normalization."
+"If the Media target is set to \"Video\" and the Video Encoder to \"Copy\", "
+"optionally you can set this control to \"Copy\" the same container as source "
+"file.\n"
+"\n"
+"If the media target is set to \"Audio\", you can extract only the audio "
+"streams from videos, or simply convert audio source files."
 msgstr ""
+"Container Format. Entspricht i.d.R. der Dateiendung (Ausgabe Format).\n"
+"\n"
+"Ist das Medien Ziel auf \"Video\" gestellt und der Video Encoder auf "
+"\"Kopieren\", können Sie optional diese Einstellung ebenfalls auf "
+"\"Kopieren\" stellen, um den gleichen Container zu erhalten, wie die Quell-"
+"Datei.\n"
+"\n"
+"Ist das Medien Ziel auf \"Audio\" gestellt, wird der Ton eines Videos "
+"extrahiert, oder einfach eine Konvertierung der Audio-Quelle durchgeführt."
+
+msgid ""
+"Set output files target: \"Video\" to save output files as video files; "
+"\"Audio\" to save files using an audio encoder and format.\n"
+"\n"
+"Note that by using \"Audio\" as the target, you will still be able to work "
+"on the video source files but you will only be able to extract the audio "
+"streams, convert them and apply audio filters such as normalization."
+msgstr ""
+"Auswahl des Ziel-Formats: \"Video\" speichert Dateien als Video-Dateien; "
+"\"Audio\" speichert Dateien unter Verwendung eines Audio Encoders in einem "
+"Audio-Format.\n"
+"\n"
+"Hinweis: Wird \"Audio\" als Ziel-Format gewählt, kann weiterhin mit Video "
+"Quell-Daten gearbeitet werden, aber es werden ausschließlich die Audio-"
+"Streams verarbeitet, so können auch Audio Filter wie \"Normalisierung\" "
+"verwendet werden."
 
 msgid "Preview video filters"
 msgstr ""
@@ -1761,7 +2072,9 @@ msgstr ""
 msgid "Equalize"
 msgstr ""
 
-msgid "To preview Stabilize filter, please click Preview button on Video Stabilizer Tool"
+msgid ""
+"To preview Stabilize filter, please click Preview button on Video Stabilizer "
+"Tool"
 msgstr ""
 
 msgid ""
@@ -1772,7 +2085,9 @@ msgstr ""
 msgid "The file is not a frame or a video file"
 msgstr ""
 
-msgid "Undetected volume values! Click the \"Volume detect\" button to analyze audio volume data."
+msgid ""
+"Undetected volume values! Click the \"Volume detect\" button to analyze "
+"audio volume data."
 msgstr ""
 
 msgid "Off"
@@ -1806,7 +2121,9 @@ msgstr ""
 msgid "Enter name for new preset"
 msgstr ""
 
-msgid "Invalid file name, make sure to provide a valid name including the «.json» extension"
+msgid ""
+"Invalid file name, make sure to provide a valid name including the «.json» "
+"extension"
 msgstr ""
 
 #, python-brace-format
@@ -1836,64 +2153,99 @@ msgid "Version {}"
 msgstr ""
 
 msgid "Presets Manager"
-msgstr ""
+msgstr "Voreinstellungen Verwalten"
 
 msgid "AV-Conversions"
 msgstr ""
 
 msgid "Concatenate media files"
-msgstr ""
+msgstr "Verkette Medien Dateien"
 
 msgid "Still Image Maker"
-msgstr ""
+msgstr "Standbild Erstellung"
 
 msgid "From Movie to Pictures"
+msgstr "Von Video zu Bildern"
+
+msgid ""
+"Create, edit and use quickly your favorite FFmpeg presets and profiles with "
+"full formats support and codecs."
 msgstr ""
 
-msgid "Create, edit and use quickly your favorite FFmpeg presets and profiles with full formats support and codecs."
+msgid ""
+"A set of useful tools for audio and video conversions. Save your profiles "
+"and reuse them with Presets Manager."
 msgstr ""
 
-msgid "A set of useful tools for audio and video conversions. Save your profiles and reuse them with Presets Manager."
+msgid ""
+"Concatenate multiple media files based on import order without re-encoding"
 msgstr ""
+"Verkette mehrere Medien Dateien in der Reihenfolge es Import ohne diese neu "
+"zu encodieren"
 
-msgid "Concatenate multiple media files based on import order without re-encoding"
-msgstr ""
-
-msgid "Create video from a sequence of images, based on import order, with the ability to add an audio file."
+msgid ""
+"Create video from a sequence of images, based on import order, with the "
+"ability to add an audio file."
 msgstr ""
 
 msgid "Extract images (frames) from your movies in JPG, PNG, BMP, GIF formats."
 msgstr ""
 
 msgid "At least two files are required to perform concatenation."
-msgstr ""
+msgstr "Es werden mindestens zwei Dateien benötigt um diese zu verketten."
 
 msgid "Invalid data found"
-msgstr ""
+msgstr "Ungültige Daten"
 
-msgid "The files do not have the same \"codec_types\", same \"sample_rate\" or same \"width\" or \"height\". Unable to proceed."
+msgid ""
+"The files do not have the same \"codec_types\", same \"sample_rate\" or same "
+"\"width\" or \"height\". Unable to proceed."
 msgstr ""
+"Die Daten haben nicht den gleichen \"Codec\", die gleiche \"Sample Rate\" "
+"oder \"Auflösung\". Fortfahren unmöglich."
 
 msgid ""
 "\n"
-"- The concatenation function is performed only with Audio files or only with Video files.\n"
+"- The concatenation function is performed only with Audio files or only with "
+"Video files.\n"
 "\n"
-"- The order of concatenation depends on the order in which the files were added.\n"
+"- The order of concatenation depends on the order in which the files were "
+"added.\n"
 "\n"
-"- The output file name will have the same name as the first file added (also depends on the\n"
+"- The output file name will have the same name as the first file added (also "
+"depends on the\n"
 "  settings made in the preferences dialog or the renaming functions used).\n"
 "\n"
 "- Video files must have exactly same streams, same codecs and same\n"
 "  width/height, but can be wrapped in different container formats.\n"
 "\n"
-"- Audio files must have exactly the same formats, same codecs with equal sample rate."
+"- Audio files must have exactly the same formats, same codecs with equal "
+"sample rate."
 msgstr ""
+"\n"
+"- Die Funktion der Verkettung kann ausschließlich mit Audio Dateien oder "
+"Video Dateien erfolgen.\n"
+"\n"
+"- Die Reihenfolge der Verkettung hängt von der Reihenfolge ab, in der die "
+"Dateien hinzugefügt wurden.\n"
+"\n"
+"- Die Ziel-Datei wird den gleichen Namen tragen wie die erste Datei, die "
+"hinzugefügt wurde (dies hängt auch davon ab,\n"
+"welche Einstellungen im Einstellungsdialog getroffen wurden oder welche "
+"Umbenennungsfunktionen benutzt werden).\n"
+"\n"
+"- Video Dateien müssen alle die gleichen Streams, Codecs und Auflösungen "
+"besitzen,\n"
+"können sich aber in unterschiedlichen Container Formaten befinden.\n"
+"\n"
+"- Audio Dateien müssen alle die gleichen Formate, Codecs und Sampling Raten "
+"besitzen."
 
 msgid "Videomass Documentation:"
-msgstr ""
+msgstr "Videomass Dokumentation:"
 
 msgid "Official FFmpeg documentation:"
-msgstr ""
+msgstr "Offizielle FFmpeg Dokumentation:"
 
 msgid ""
 "Items to concatenate\n"
@@ -1902,113 +2254,123 @@ msgid ""
 "Output multimedia type\n"
 "Duration"
 msgstr ""
+"Objekte zur Verkettung\n"
+"Datei Ziel\n"
+"Ausgabe Format\n"
+"Multimediatyp der Ausgabe\n"
+"Dauer"
 
 msgid "File has illegal characters like:"
-msgstr ""
+msgstr "Die Datei enthält ungültige Zeichen, wie:"
 
 msgid "Invalid character found in path name: (\")"
-msgstr ""
+msgstr "Ungültiges Zeichen im Pfad entdeckt: (\")"
 
 msgid "Directories are not allowed, just add files, please."
-msgstr ""
+msgstr "Keine Verzeichnisse erlaubt, bitte nur Dateien hinzufügen."
 
-msgid "File without format extension: please give an appropriate extension to the file name, example '.mkv', '.avi', '.mp3', etc."
+msgid ""
+"File without format extension: please give an appropriate extension to the "
+"file name, example '.mkv', '.avi', '.mp3', etc."
 msgstr ""
+"Datei ohne Dateiendung: Bitte geben Sie eine gültige Dateiendung an, bspw. '."
+"mkv', '.avi', '.mp3', usw."
 
 #, python-brace-format
 msgid "Name has illegal characters like: {0}"
-msgstr ""
+msgstr "Der Name enthält ungültige Zeichen, wie: {0}"
 
 msgid "Name already in use:"
-msgstr ""
+msgstr "Der Name wird bereits verwendet:"
 
 msgid "Duplicate file, it has already been added to the list."
-msgstr ""
+msgstr "Doppelte Datei, sie wurde bereits der Liste hinzugefügt."
 
 msgid "Rejected files"
-msgstr ""
+msgstr "Abgelehnte Dateien"
 
 msgid "Source file"
-msgstr ""
+msgstr "Quell-Datei"
 
 msgid "Duration"
-msgstr ""
+msgstr "Dauer"
 
 msgid "Media type"
-msgstr ""
+msgstr "Medien Typ"
 
 msgid "Size"
-msgstr ""
+msgstr "Größe"
 
 msgid "Drag one or more files below"
-msgstr ""
+msgstr "Ziehe eine oder mehrere Datei(en) in das Feld unten"
 
 msgid "Save to:"
-msgstr ""
+msgstr "Speichern nach:"
 
 msgid "Set a new destination folder for encodings"
-msgstr ""
+msgstr "Setzen Sie ein neues Ziel-Verzeichnis für Encodierungen"
 
 msgid "Encodings destination folder"
-msgstr ""
+msgstr "Ziel-Verzeichnis für Encodierungen"
 
 msgid "Play file"
-msgstr ""
+msgstr "Datei abspielen"
 
 msgid "Drag two or more Audio/Video files below"
-msgstr ""
+msgstr "Ziehe eine oder mehrere Audio/Video Datei(en) in das Feld unten"
 
 msgid "Drag one or more Image files below"
-msgstr ""
+msgstr "Ziehe ein oder mehrere Bild(er) in das Feld unten"
 
 msgid "Drag one or more Video files below"
-msgstr ""
+msgstr "Ziehe ein oder mehrere Video(s) in das Feld unten"
 
 msgid "Rename the file destination"
-msgstr ""
+msgstr "Benenne die Ziel-Datei um"
 
 msgid "Rename the selected file to:"
-msgstr ""
+msgstr "Benenne die ausgewählte Datei um in:"
 
 msgid "Add Files"
-msgstr ""
+msgstr "Dateien hinzufügen"
 
 msgid "Rename in batch"
-msgstr ""
+msgstr "Massenhaft umbenennen"
 
 #, python-brace-format
 msgid "Rename the {0} items to:"
-msgstr ""
+msgstr "Benenne die {0} Objekte um zu:"
 
 msgid "New Name #"
-msgstr ""
+msgstr "Neuer Name #"
 
 msgid "Sorry, all task failed !"
-msgstr ""
+msgstr "Sorry, alle Aufgaben fehlgeschlagen!"
 
 msgid "The process was stopped due to a fatal error."
-msgstr ""
+msgstr "Der Prozess ist wegen eines fatalen Fehlers abgebrochen."
 
 msgid "Interrupted Process !"
-msgstr ""
+msgstr "Prozess unterbrochen!"
 
 msgid "Successfully completed !"
-msgstr ""
+msgstr "Erfolgreich abgeschlossen!"
 
 msgid "Not everything was successful."
-msgstr ""
+msgstr "Nicht alles war erfolgreich."
 
 msgid "Encoding Status"
-msgstr ""
+msgstr "Status der Encodierung"
 
 msgid "Current Log"
-msgstr ""
+msgstr "Akutelles Log"
 
 msgid "Fatal Error !"
-msgstr ""
+msgstr "Fataler Fehler!"
 
+#, fuzzy
 msgid "Get your files at the destination you specified"
-msgstr ""
+msgstr "Sie bekommen Ihre Datei dort, wo Sie es spezifiziert haben"
 
 msgid "For more details please read the Current Log."
 msgstr ""
@@ -2090,9 +2452,11 @@ msgid ""
 "Outdated presets version found: v{1}\n"
 "A new version is available: v{0}\n"
 "\n"
-"This update provides new presets included on the latest versions of Videomass.\n"
+"This update provides new presets included on the latest versions of "
+"Videomass.\n"
 "\n"
-"To avoid data loss and allow for possible recovery, the outdated presets folder will be backed up in the program configuration directory:\n"
+"To avoid data loss and allow for possible recovery, the outdated presets "
+"folder will be backed up in the program configuration directory:\n"
 "«{2}»\n"
 "\n"
 "Do you want to perform this update now?"
@@ -2145,7 +2509,8 @@ msgid "Open the preset you want to restore"
 msgstr ""
 
 msgid ""
-"This preset already exists and is about to be updated. Don't worry, it will keep all your saved profiles.\n"
+"This preset already exists and is about to be updated. Don't worry, it will "
+"keep all your saved profiles.\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
@@ -2154,7 +2519,8 @@ msgid "Restore successful"
 msgstr ""
 
 msgid ""
-"This will update the presets database. Don't worry, it will keep all your saved profiles.\n"
+"This will update the presets database. Don't worry, it will keep all your "
+"saved profiles.\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
@@ -2169,7 +2535,8 @@ msgid "The selected preset is not part of Videomass's default presets."
 msgstr ""
 
 msgid ""
-"Be careful! The selected preset will be overwritten with the default one. Your profiles may be deleted!\n"
+"Be careful! The selected preset will be overwritten with the default one. "
+"Your profiles may be deleted!\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
@@ -2178,9 +2545,11 @@ msgid "Successful recovery"
 msgstr ""
 
 msgid ""
-"Be careful! This action will restore all presets to default ones. Your profiles may be deleted!\n"
+"Be careful! This action will restore all presets to default ones. Your "
+"profiles may be deleted!\n"
 "\n"
-"In any case, to avoid data loss, the presets folder will be backed up in the program's configuration directory.\n"
+"In any case, to avoid data loss, the presets folder will be backed up in the "
+"program's configuration directory.\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
@@ -2189,7 +2558,9 @@ msgstr ""
 msgid "Edit profile on «{0}»"
 msgstr ""
 
-msgid "Are you sure you want to delete the selected profile? It will no longer be possible to recover it."
+msgid ""
+"Are you sure you want to delete the selected profile? It will no longer be "
+"possible to recover it."
 msgstr ""
 
 msgid "First select a profile in the list"
@@ -2219,11 +2590,14 @@ msgstr ""
 
 msgid ""
 "\n"
-"1. Import one or more image files such as JPG, PNG and BMP formats (even in mixed mode),\n"
+"1. Import one or more image files such as JPG, PNG and BMP formats (even in "
+"mixed mode),\n"
 "then select one as your starting point.\n"
 "\n"
-"2. Use the Resize tool if your images have different width and height dimensions.\n"
-"You only need to do this once for the selected file to automatically resize the other images.\n"
+"2. Use the Resize tool if your images have different width and height "
+"dimensions.\n"
+"You only need to do this once for the selected file to automatically resize "
+"the other images.\n"
 "Otherwise, it's optional.\n"
 "\n"
 "3. Set a time interval between images, or for a single image if you\n"
@@ -2232,8 +2606,10 @@ msgid ""
 "4. Run the conversion.\n"
 "\n"
 "\n"
-"The produced video will have the name of the selected file in the 'File List' panel, which\n"
-"will be saved in a folder named 'Still_Images' with a progressive digit, in the path you specify."
+"The produced video will have the name of the selected file in the 'File "
+"List' panel, which\n"
+"will be saved in a folder named 'Still_Images' with a progressive digit, in "
+"the path you specify."
 msgstr ""
 
 msgid "Enable a single still image"
@@ -2308,12 +2684,25 @@ msgid ""
 "Still image duration\n"
 "Overall video duration"
 msgstr ""
+"Objekte zur Verkettung\n"
+"Ziel Dateiname\n"
+"Ziel Verzeichnis\n"
+"Ausgabe Format\n"
+"Zusätzliche Parameter\n"
+"Audio Datei\n"
+"Kürzestes\n"
+"Vergrößern oder Verkleinern\n"
+"Vor dem Input\n"
+"Bilder pro Sekunde (FPS)\n"
+"Standbild Dauer\n"
+"Komplette Dauer des Videos"
 
 msgid ""
 "\n"
 "1. Import one or more video files, then select one.\n"
 "\n"
-"2. To select a slice of time use the Timeline editor (CTRL+T) by adjusting the\n"
+"2. To select a slice of time use the Timeline editor (CTRL+T) by adjusting "
+"the\n"
 "\"End\" and the \"Start\" duration values.\n"
 "\n"
 "3. Select an output format (jpg, png, bmp).\n"
@@ -2349,7 +2738,9 @@ msgstr ""
 msgid "Other unofficial resources:"
 msgstr ""
 
-msgid "Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images will be extracted."
+msgid ""
+"Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images "
+"will be extracted."
 msgstr ""
 
 msgid "Spaces around the mosaic tiles. From 0 to 32 pixels"
@@ -2400,27 +2791,41 @@ msgstr ""
 msgid "Target level:"
 msgstr ""
 
-msgid "Gets maximum volume and average volume data in dBFS, then calculates the offset amount for audio normalization."
-msgstr ""
-
-msgid "Limiter for the maximum peak level or the mean level (when switch to RMS) in dBFS. From -99.0 to +0.0; default for PEAK level is -1.0; default for RMS is -20.0"
+msgid ""
+"Gets maximum volume and average volume data in dBFS, then calculates the "
+"offset amount for audio normalization."
 msgstr ""
 
 msgid ""
-"\"Auto\", lets FFmpeg select the audio stream to process (usually the first audio stream). If the source file(s) is just an audio track, it's recommend to always set this control to \"Auto\".\n"
-"\n"
-"\"1-16\", if a video file contains more than one audio stream, you can select a specific one, e.g \"1\" for the first available audio stream, \"2\" for the second audio stream, and so on."
+"Limiter for the maximum peak level or the mean level (when switch to RMS) in "
+"dBFS. From -99.0 to +0.0; default for PEAK level is -1.0; default for RMS is "
+"-20.0"
 msgstr ""
 
 msgid ""
-"\"Auto\" keeps all audio streams and processes only the one selected by the \"Index Selection\" control.\n"
+"\"Auto\", lets FFmpeg select the audio stream to process (usually the first "
+"audio stream). If the source file(s) is just an audio track, it's recommend "
+"to always set this control to \"Auto\".\n"
 "\n"
-"\"All\" processes all audio streams with the properties of the one selected by the \"Index Selection\" control. Don't use \"All\" to export audio files from videos.\n"
-"\n"
-"\"Index Only\" processes only the audio stream selected by the \"Index Selection\" control and removes all others from the output video."
+"\"1-16\", if a video file contains more than one audio stream, you can "
+"select a specific one, e.g \"1\" for the first available audio stream, \"2\" "
+"for the second audio stream, and so on."
 msgstr ""
 
-msgid "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -16.0"
+msgid ""
+"\"Auto\" keeps all audio streams and processes only the one selected by the "
+"\"Index Selection\" control.\n"
+"\n"
+"\"All\" processes all audio streams with the properties of the one selected "
+"by the \"Index Selection\" control. Don't use \"All\" to export audio files "
+"from videos.\n"
+"\n"
+"\"Index Only\" processes only the audio stream selected by the \"Index "
+"Selection\" control and removes all others from the output video."
+msgstr ""
+
+msgid ""
+"Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -16.0"
 msgstr ""
 
 msgid "Maximum True Peak in dBTP. From -1.5 to +0.0, default is -2.0"
@@ -2429,7 +2834,9 @@ msgstr ""
 msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +11.0"
 msgstr ""
 
-msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
+msgid ""
+"Play the audio stream selected in the \"Index Selection\" control. Using "
+"this function you can test the result of audio normalization."
 msgstr ""
 
 #, python-brace-format
@@ -2444,19 +2851,26 @@ msgid ""
 "\"{}\""
 msgstr ""
 
-msgid "PEAK level normalization, which will produce a maximum peak level equal to the set target level."
-msgstr ""
-
-msgid "RMS-based normalization, which according to mean volume calculates the amount of gain to reach same average power signal."
+msgid ""
+"PEAK level normalization, which will produce a maximum peak level equal to "
+"the set target level."
 msgstr ""
 
 msgid ""
-"Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements the EBU R128 algorithm.\n"
-"Ideal for live normalization. It produces worse results than the High-quality two-pass Loudnorm normalization, but is faster."
+"RMS-based normalization, which according to mean volume calculates the "
+"amount of gain to reach same average power signal."
 msgstr ""
 
 msgid ""
-"High-quality two-pass Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements\n"
+"Loudnorm normalization. Normalizes the perceived loudness using the "
+"\"loudnorm\" filter, which implements the EBU R128 algorithm.\n"
+"Ideal for live normalization. It produces worse results than the High-"
+"quality two-pass Loudnorm normalization, but is faster."
+msgstr ""
+
+msgid ""
+"High-quality two-pass Loudnorm normalization. Normalizes the perceived "
+"loudness using the \"loudnorm\" filter, which implements\n"
 "the EBU R128 algorithm. Ideal for postprocessing."
 msgstr ""
 
@@ -2481,13 +2895,17 @@ msgstr ""
 msgid ""
 "Select \"All\" to include any possible subtitle stream in the output video.\n"
 "\n"
-"Select \"1-16\" to indexing the desired subtitle stream and exclude all others, e.g \"1\" for the first available subtitle stream, \"2\" for the second subtitle stream, and so on."
+"Select \"1-16\" to indexing the desired subtitle stream and exclude all "
+"others, e.g \"1\" for the first available subtitle stream, \"2\" for the "
+"second subtitle stream, and so on."
 msgstr ""
 
 msgid "Copy the chapter markers as is from source file."
 msgstr ""
 
-msgid "Copy all incoming metadata from source file, such as audio/video tags, titles, unique marks, and so on."
+msgid ""
+"Copy all incoming metadata from source file, such as audio/video tags, "
+"titles, unique marks, and so on."
 msgstr ""
 
 msgid "Reload"
@@ -2499,7 +2917,9 @@ msgstr ""
 msgid "Reloads the selected video encoder settings. Changes will be discarded."
 msgstr ""
 
-msgid "Constant rate factor. Lower values correspond to higher quality and greater file size. Set to -1 to disable this control."
+msgid ""
+"Constant rate factor. Lower values correspond to higher quality and greater "
+"file size. Set to -1 to disable this control."
 msgstr ""
 
 msgid "Number of tile rows to use, default changes per resolution"
@@ -2514,77 +2934,115 @@ msgstr ""
 msgid "It can reduce the file size, but takes longer."
 msgstr ""
 
-msgid "Set minimum bitrate tolerance. Most useful in setting up a CBR encode. It is of little use otherwise. Set to -1 to disable this control."
+msgid ""
+"Set minimum bitrate tolerance. Most useful in setting up a CBR encode. It is "
+"of little use otherwise. Set to -1 to disable this control."
 msgstr ""
 
-msgid "Specifies a maximum tolerance. Requires bufsize to be set. Set to -1 to disable this control."
+msgid ""
+"Specifies a maximum tolerance. Requires bufsize to be set. Set to -1 to "
+"disable this control."
 msgstr ""
 
-msgid "Set ratecontrol buffer size, which determines the variability of the output bitrate. Set to -1 to disable this control."
+msgid ""
+"Set ratecontrol buffer size, which determines the variability of the output "
+"bitrate. Set to -1 to disable this control."
 msgstr ""
 
-msgid "Specifies the target (average) bit rate for the encoder to use. Higher value = higher quality. Set -1 to disable this control."
+msgid ""
+"Specifies the target (average) bit rate for the encoder to use. Higher value "
+"= higher quality. Set -1 to disable this control."
 msgstr ""
 
 msgid "Video width and video height ratio."
 msgstr ""
 
-msgid "Frame rate (frames per second). Frames repeat a given number of times per second. In some countries this is 30 for NTSC, other countries (like Italy) use 25 for PAL"
-msgstr ""
-
-msgid "Quality/Speed ratio modifier. CPU Used sets how efficient the compression will be. Lower values mean slower encoding with better quality, and vice-versa. Valid values are from 0 to 8 inclusive."
-msgstr ""
-
-msgid "Quality and compression efficiency vs speed trade-off. \"good\" is the default and recommended for most applications; \"realtime\" is recommended for live/fast encoding (live streaming, video conferencing, etc); \"allintra\" for All Intra encoding."
+msgid ""
+"Frame rate (frames per second). Frames repeat a given number of times per "
+"second. In some countries this is 30 for NTSC, other countries (like Italy) "
+"use 25 for PAL"
 msgstr ""
 
 msgid ""
-"Row Multi-Threading enables row-based multi-threading which maximizes CPU usage.\n"
-"\n"
-"To enable fast decoding performance, also set tiles (i.e. Tile Columns 4 and Tile Rows 1 or Tile Columns 2 and Tile Rows 2 for 4 tiles).\n"
-"\n"
-"Enabling Row Multi-Threading is only faster when the CPU has more threads than the number of encoded tiles."
+"Quality/Speed ratio modifier. CPU Used sets how efficient the compression "
+"will be. Lower values mean slower encoding with better quality, and vice-"
+"versa. Valid values are from 0 to 8 inclusive."
 msgstr ""
 
 msgid ""
-"presets 1-3 represent extremely high efficiency, for use when encode time is not important and quality/size of the resulting video file is critical.\n"
+"Quality and compression efficiency vs speed trade-off. \"good\" is the "
+"default and recommended for most applications; \"realtime\" is recommended "
+"for live/fast encoding (live streaming, video conferencing, etc); "
+"\"allintra\" for All Intra encoding."
+msgstr ""
+
+msgid ""
+"Row Multi-Threading enables row-based multi-threading which maximizes CPU "
+"usage.\n"
 "\n"
-"Presets 4-6 are commonly used by home enthusiasts as they represent a balance of efficiency and reasonable compute time.\n"
+"To enable fast decoding performance, also set tiles (i.e. Tile Columns 4 and "
+"Tile Rows 1 or Tile Columns 2 and Tile Rows 2 for 4 tiles).\n"
+"\n"
+"Enabling Row Multi-Threading is only faster when the CPU has more threads "
+"than the number of encoded tiles."
+msgstr ""
+
+msgid ""
+"presets 1-3 represent extremely high efficiency, for use when encode time is "
+"not important and quality/size of the resulting video file is critical.\n"
+"\n"
+"Presets 4-6 are commonly used by home enthusiasts as they represent a "
+"balance of efficiency and reasonable compute time.\n"
 "\n"
 "Presets between 7 and 12 are used for fast and real-time encoding.\n"
 "\n"
-"Preset 13 is even faster but not intended for direct human consumption--it can be used, for example, as a per-scene quality metric in VOD applications. One should use the lowest preset that is tolerable."
+"Preset 13 is even faster but not intended for direct human consumption--it "
+"can be used, for example, as a per-scene quality metric in VOD applications. "
+"One should use the lowest preset that is tolerable."
 msgstr ""
 
 msgid ""
 "Constant rate factor. This parameter governs the quality/size trade-off.\n"
 "\n"
-"Higher CRF values will result in a final output that takes less space, but begins to lose detail.\n"
+"Higher CRF values will result in a final output that takes less space, but "
+"begins to lose detail.\n"
 "\n"
-"Lower CRF values retain more detail at the cost of larger file sizes. A good starting point for 1080p video is 30.\n"
+"Lower CRF values retain more detail at the cost of larger file sizes. A good "
+"starting point for 1080p video is 30.\n"
 "\n"
 "Set to -1 to disable this control."
 msgstr ""
 
 msgid ""
-"The \"Film Grain\" parameter allows SVT-AV1 to detect and delete film grain from the source video, and replace it with synthetic grain of the same character, resulting in significant bitrate savings.\n"
+"The \"Film Grain\" parameter allows SVT-AV1 to detect and delete film grain "
+"from the source video, and replace it with synthetic grain of the same "
+"character, resulting in significant bitrate savings.\n"
 "\n"
-"A value of 8 is a reasonable starting point for live-action video with a normal amount of grain.\n"
+"A value of 8 is a reasonable starting point for live-action video with a "
+"normal amount of grain.\n"
 "\n"
-"Higher values in the range of 10-15 enable more aggressive use of this technique for video with lots of natural grain.\n"
+"Higher values in the range of 10-15 enable more aggressive use of this "
+"technique for video with lots of natural grain.\n"
 "\n"
 "For 2D animation, lower values in the range of 4-6 are often appropriate. \n"
 "\n"
-"If the source video does not have natural grain, this parameter can be set to -1 to disable it or at least 0."
+"If the source video does not have natural grain, this parameter can be set "
+"to -1 to disable it or at least 0."
 msgstr ""
 
 msgid ""
-"If enabled, the \"Film Grain Denoiser\" option can mitigate the detail removal caused by high \"Film Grain\" values required to preserve the look of very grainy films\n"
+"If enabled, the \"Film Grain Denoiser\" option can mitigate the detail "
+"removal caused by high \"Film Grain\" values required to preserve the look "
+"of very grainy films\n"
 "\n"
-"By default, the denoised frames are passed to be encoded as the final pictures, enabling this feature will lead to the original frames to be used instead. "
+"By default, the denoised frames are passed to be encoded as the final "
+"pictures, enabling this feature will lead to the original frames to be used "
+"instead. "
 msgstr ""
 
-msgid "Enables encoder optimization to produce faster (less CPU intensive) bit streams to decode, similar to the fastdecode tuning in x264 and x265."
+msgid ""
+"Enables encoder optimization to produce faster (less CPU intensive) bit "
+"streams to decode, similar to the fastdecode tuning in x264 and x265."
 msgstr ""
 
 msgid "Set profile restrictions"
@@ -2599,16 +3057,26 @@ msgstr ""
 msgid "Set the encoding preset (default \"medium\")"
 msgstr ""
 
-msgid "specifies the target (average) bit rate for the encoder to use. Higher value = higher quality. Set -1 to disable this control."
+msgid ""
+"specifies the target (average) bit rate for the encoder to use. Higher value "
+"= higher quality. Set -1 to disable this control."
 msgstr ""
 
-msgid "Variable Bit Rate. From 0-30, with 1 being highest quality/largest filesize and 30 being the lowest quality/smallest filesize. Set to -1 to disable this control."
+msgid ""
+"Variable Bit Rate. From 0-30, with 1 being highest quality/largest filesize "
+"and 30 being the lowest quality/smallest filesize. Set to -1 to disable this "
+"control."
 msgstr ""
 
-msgid "Frames repeat a given number of times per second. In some countries this is 30 for NTSC, other countries (like Italy) use 25 for PAL"
+msgid ""
+"Frames repeat a given number of times per second. In some countries this is "
+"30 for NTSC, other countries (like Italy) use 25 for PAL"
 msgstr ""
 
-msgid "The default FourCC stored in an MPEG-4-coded file will be FMP4. If you want a different FourCC, set this option to xvid to force the FourCC xvid to be stored as the video FourCC rather than the default."
+msgid ""
+"The default FourCC stored in an MPEG-4-coded file will be FMP4. If you want "
+"a different FourCC, set this option to xvid to force the FourCC xvid to be "
+"stored as the video FourCC rather than the default."
 msgstr ""
 
 msgid "Copy Video Codec"
@@ -2616,7 +3084,8 @@ msgstr ""
 
 msgid ""
 "This will just copy the video track as is, without any video re-encoding.\n"
-"You will only be able to change output format, select other audio encoders and\n"
+"You will only be able to change output format, select other audio encoders "
+"and\n"
 "a few other options."
 msgstr ""
 
@@ -2624,21 +3093,27 @@ msgid "Video export disabled"
 msgstr ""
 
 msgid ""
-"The Media target you just selected will only allow you to export files as audio tracks.\n"
-"You can then process audio source files only or extract indexed audio streams on\n"
+"The Media target you just selected will only allow you to export files as "
+"audio tracks.\n"
+"You can then process audio source files only or extract indexed audio "
+"streams on\n"
 "video files."
 msgstr ""
 
 msgid ""
 "Speed sets how efficient the compression will be.\n"
 "\n"
-"When the Quality parameter is \"good\" or \"best\", values for Speed can be set between 0 and 5.\n"
+"When the Quality parameter is \"good\" or \"best\", values for Speed can be "
+"set between 0 and 5.\n"
 "\n"
-"Using 1 or 2 will increase encoding speed at the expense of having some impact on quality and rate control accuracy.\n"
+"Using 1 or 2 will increase encoding speed at the expense of having some "
+"impact on quality and rate control accuracy.\n"
 "\n"
-"4 or 5 will turn off rate distortion optimization, having even more of an impact on quality.\n"
+"4 or 5 will turn off rate distortion optimization, having even more of an "
+"impact on quality.\n"
 "\n"
-"When the Quality is set to realtime, the available values for Speed are 0 to 8."
+"When the Quality is set to realtime, the available values for Speed are 0 to "
+"8."
 msgstr ""
 
 msgid ""
@@ -2646,14 +3121,19 @@ msgid ""
 "\n"
 "\"good\" is the default and recommended for most applications;\n"
 "\n"
-"\"best\" is recommended if you have lots of time and want the best compression efficiency;\n"
+"\"best\" is recommended if you have lots of time and want the best "
+"compression efficiency;\n"
 "\n"
 "\"realtime\" is recommended for live / fast encoding."
 msgstr ""
 
 msgid ""
-"If enabled, adds support for row based multithreading which greatly enhances the number of threads the encoder can utilise. This improves encoding speed significantly on systems that are otherwise underutilised when encoding VP9. Since the amount of additional threads depends on the number of \"tiles\", which itself depends on the video resolution, encoding higher resolution videos will see a "
-"larger performance improvement."
+"If enabled, adds support for row based multithreading which greatly enhances "
+"the number of threads the encoder can utilise. This improves encoding speed "
+"significantly on systems that are otherwise underutilised when encoding VP9. "
+"Since the amount of additional threads depends on the number of \"tiles\", "
+"which itself depends on the video resolution, encoding higher resolution "
+"videos will see a larger performance improvement."
 msgstr ""
 
 #, python-brace-format
@@ -2669,7 +3149,8 @@ msgstr ""
 msgid ""
 "No presets found.\n"
 "\n"
-"Possible solution: open the Presets Manager panel, go to the presets column and try to click the \"Restore all...\" button"
+"Possible solution: open the Presets Manager panel, go to the presets column "
+"and try to click the \"Restore all...\" button"
 msgstr ""
 
 msgid "Import queue file"
@@ -2699,4 +3180,3 @@ msgstr ""
 
 msgid "Remove the current queue and replace it with the imported one."
 msgstr ""
-
