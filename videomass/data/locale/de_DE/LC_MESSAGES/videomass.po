@@ -1,16 +1,16 @@
 # German (Germany) translations for Videomass.
 # Copyright (C) 2025 ORGANIZATION
 # This file is distributed under the same license as the Videomass project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+# schenklklopfer <https://github.com/schenklklopfer>, 2026.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"Project-Id-Version: Videomass 6.1.20\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-30 11:29+0200\n"
 "PO-Revision-Date: 2026-04-30 08:43+0200\n"
-"Last-Translator: \n"
-"Language-Team: de_DE <LL@li.org>\n"
+"Last-Translator: schenklklopfer <https://github.com/schenklklopfer>\n"
+"Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"

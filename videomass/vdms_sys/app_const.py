@@ -5,9 +5,9 @@ Purpose: Application constants
 Created: 06/04/2012
 
 Edited by Gianluca (jeanslack) Pernigotto
-Update: July 28 2024
+Update: May.03.2026
 
-Visit the complete list of the wx.Language CONSTANT identifiers at:
+For the complete list of the wx.Language CONSTANT identifiers please visit:
 <https://docs.wxpython.org/wx.Language.enumeration.html#wx-language>
 """
 

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.13.2022
+Rev: May.03.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -72,6 +72,7 @@ def show_about_dlg(parent, videomass_icon, aboutrel=about_app):
     info.AddTranslator("Phil Aug <philiaug@live.fr> (fr_FR)")
     info.AddTranslator("MaiJZ https://github.com/maijz128 (zh_CN)")
     info.AddTranslator("Peter Dave Hello <hsu@peterdavehello.org> (zh_TW)")
+    info.AddTranslator("schenklklopfer <@schenklklopfer> (de_DE)")
 
     info.SetArtists(['WxPython Phoenix <wxpython-users@googlegroups.com>',
                      'Gianluca Pernigotto <jeanlucperni@gmail.com>'])

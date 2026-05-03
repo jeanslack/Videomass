@@ -7,13 +7,15 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 30 September 2025 v6.1.22
+Thu, 30 April 2026 v6.1.22
 
-  * Fixed typos.
+  * Fixed some typos.
   * Updated translation catalogs.
   * Updated Italian language (@jeanslack).
   * Updated Russian language (thanks to ChourS).
   * Updated French language (thanks to ChourS).
+  * Added zh_TW Traditional Chinese locale (thanks @PeterDaveHello).
+  * Updates German translation (thanks @schenklklopfer).
 
 +------------------------------------+
 Fri, 19 September 2025 v6.1.20
