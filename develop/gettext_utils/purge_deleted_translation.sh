@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: July.11.2025
 #

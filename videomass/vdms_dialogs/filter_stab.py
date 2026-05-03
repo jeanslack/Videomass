@@ -4,7 +4,7 @@ Name: filter_stab.py
 Porpose: Show dialog to get vidstab data based on FFmpeg syntax
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Sep.18.2025
 Code checker: flake8, pylint

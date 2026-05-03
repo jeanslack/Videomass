@@ -4,7 +4,7 @@ Name: ffmpeg.py
 Porpose: FFmpeg long processing task
 Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Aug.13.2025
 Code checker: flake8, pylint

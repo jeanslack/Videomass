@@ -4,7 +4,7 @@ Name: preferences.py
 Porpose: videomass setup dialog
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: June.05.2025
 Code checker: flake8, pylint

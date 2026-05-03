@@ -1,7 +1,7 @@
 # encoding: utf-8
 Videomass
 Author: Gianluca (jeanslack) Pernigotto
-Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 License: GPL3
 
 Change Log:
@@ -16,6 +16,7 @@ Thu, 30 April 2026 v6.1.22
   * Updated French language (thanks to ChourS).
   * Added zh_TW Traditional Chinese locale (thanks @PeterDaveHello).
   * Updates German translation (thanks @schenklklopfer).
+  * Updates CopyLeft date.
 
 +------------------------------------+
 Fri, 19 September 2025 v6.1.20

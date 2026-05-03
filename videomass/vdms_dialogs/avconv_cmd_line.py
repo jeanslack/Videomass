@@ -4,7 +4,7 @@ Name: avconv_cmd_line.py
 Porpose: Shows the output raw command lines.
 Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
 Rev: Aug.13.2025
 Code checker: flake8, pylint

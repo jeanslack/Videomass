@@ -4,7 +4,7 @@
 Porpose: Conveniently wraps the Babel API to suit your specific needs,
          independently of the GNU-xgettext utilities.
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-Copyleft - 2025 Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: Distributed under the terms of the GPL3 License.
 Rev: July.29.2025
 Code checker: flake8, pylint
