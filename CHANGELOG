@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Thu, 30 April 2026 v6.1.22
+Sun, 04 October 2026 v6.1.22
 
   * Fixed some typos.
   * Updated translation catalogs.
@@ -17,6 +17,7 @@ Thu, 30 April 2026 v6.1.22
   * Added zh_TW Traditional Chinese locale (thanks @PeterDaveHello).
   * Updates German translation (thanks @schenklklopfer).
   * Updates CopyLeft date.
+  * Updates Arabic (Saudi Arabia) translations (thanks @vfggf95565).
 
 +------------------------------------+
 Fri, 19 September 2025 v6.1.20
