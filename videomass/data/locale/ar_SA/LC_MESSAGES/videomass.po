@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-09-30 11:29+0200\n"
-"PO-Revision-Date: 2024-07-17 16:34+0200\n"
+"PO-Revision-Date: 2026-10-02 11:59+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: ar_SA\n"
 "Language-Team: ar_SA <LL@li.org>\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=0 && n%100<=2 ? 4 : 5);\n"
+"Language: ar_SA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=0 && n%100<=2 ? 4 : 5);\n"
 "Generated-By: Babel 2.17.0\n"
 
 #, python-brace-format
@@ -24,33 +24,36 @@ msgid ""
 "\n"
 "{0}"
 msgstr ""
+"خطأ غير متوقع أثناء حذف محتويات الملف:\n"
+"\n"
+"{0}"
 
 msgid "Cross-platform graphical user interface for FFmpeg\n"
-msgstr ""
+msgstr "واجهة رسومية متعددة المنصات لـ FFmpeg\n"
 
 msgid "Videomass supports mono and stereo audio channels. If you are not sure set to \"Auto\" and source values will be copied."
-msgstr ""
+msgstr "يدعم Videomass قنوات الصوت أحادية وثنائية (ستيريو). إذا لم تكن متأكدًا فاختر \"تلقائي\" وسيتم نسخ قيم المصدر."
 
 msgid "The audio Rate (or sample-rate) is the sound sampling frequency and is measured in Hertz. The higher the frequency, the more true it will be to the sound source and the more the file will increase in size. For audio CD playback, set a sampling frequency of 44100 kHz. If you are not sure, set to \"Auto\" and source values will be copied."
-msgstr ""
+msgstr "معدل الصوت (أو معدل العينة) هو تردد أخذ عينات الصوت ويُقاس بالهرتز. كلما زاد التردد كان الملف أكثر أمانة لمصدر الصوت وزاد حجمه. لتشغيل أقراص الصوت CD اضبط تردد العينات على 44100 هرتز. إذا لم تكن متأكدًا فاختر \"تلقائي\" وسيتم نسخ قيم المصدر."
 
 msgid "The audio bitrate affects the file compression and thus the quality of listening. The higher the value, the higher the quality."
-msgstr ""
+msgstr "يؤثر معدل بت الصوت على ضغط الملف وبالتالي على جودة الاستماع. كلما زادت القيمة ارتفعت الجودة."
 
 msgid "Bit depth is the number of bits of information in each sample, and it directly corresponds to the resolution of each sample. Bit depth is only meaningful in reference to a PCM digital signal. Non-PCM formats, such as lossy compression formats, do not have associated bit depths."
-msgstr ""
+msgstr "عمق البت هو عدد البتات المخصصة لكل عينة، وهو يقابل مباشرة دقة كل عينة. لا يكون لعمق البت معنى إلا في حالة إشارة PCM الرقمية. أما الصيغ غير PCM، مثل صيغ الضغط مع فقدان، فليس لها عمق بت."
 
 msgid "First pass command"
-msgstr ""
+msgstr "أمر المرور الأول"
 
 msgid "Second pass command"
-msgstr ""
+msgstr "أمر المرور الثاني"
 
 msgid "Videomass - RAW Commands"
-msgstr ""
+msgstr "Videomass - أوامر RAW"
 
 msgid "Read me"
-msgstr ""
+msgstr "اقرأني"
 
 msgid ""
 "The RAW commands reflect the user settings made on\n"
@@ -61,96 +64,103 @@ msgid ""
 "markers highlighted in red should be replaced with the\n"
 "values given by the output of the first command."
 msgstr ""
+"تعكس أوامر RAW الإعدادات التي أجراها المستخدم في\n"
+"واجهة تحويلات الصوت والفيديو، وتنطبق فقط على الملف\n"
+"المحدد.\n"
+"\n"
+"يرجى ملاحظة أنه عند استخدام EBU R128 (جودة عالية)، يجب\n"
+"استبدال أي علامات <?> مظللة بالأحمر بالقيم الناتجة\n"
+"عن مخرجات الأمر الأول."
 
 msgid "When finished, once the operations have been completed successfully:"
-msgstr ""
+msgstr "عند الانتهاء، بعد إتمام العمليات بنجاح:"
 
 msgid "Trash the source files"
-msgstr ""
+msgstr "نقل الملفات المصدر إلى سلة المهملات"
 
 msgid "Clear the File List"
-msgstr ""
+msgstr "مسح قائمة الملفات"
 
 msgid "Run"
-msgstr ""
+msgstr "تشغيل"
 
 msgid "Videomass - Batch Mode"
-msgstr ""
+msgstr "Videomass - الوضع الدفعي"
 
 msgid "FFmpeg encoders"
-msgstr ""
+msgstr "مرمِّزات FFmpeg"
 
 msgid "supported encoders"
-msgstr ""
+msgstr "المرمِّزات المدعومة"
 
 msgid "FFmpeg decoders"
-msgstr ""
+msgstr "مفكِّكات ترميز FFmpeg"
 
 msgid "supported decoders"
-msgstr ""
+msgstr "مفكِّكات الترميز المدعومة"
 
 msgid "Video"
-msgstr ""
+msgstr "فيديو"
 
 msgid "Audio"
-msgstr ""
+msgstr "صوت"
 
 msgid "Subtitle"
-msgstr ""
+msgstr "ترجمة"
 
 msgid "description"
-msgstr ""
+msgstr "الوصف"
 
 msgid "Informations"
-msgstr ""
+msgstr "معلومات"
 
 msgid "Flags settings"
-msgstr ""
+msgstr "إعدادات الأعلام"
 
 msgid "Flags enabled"
-msgstr ""
+msgstr "الأعلام المفعّلة"
 
 msgid "Flags disabled"
-msgstr ""
+msgstr "الأعلام المعطّلة"
 
 msgid "FFmpeg configuration"
-msgstr ""
+msgstr "إعدادات FFmpeg"
 
 msgid "flags"
-msgstr ""
+msgstr "الأعلام"
 
 msgid "options"
-msgstr ""
+msgstr "الخيارات"
 
 msgid "status"
-msgstr ""
+msgstr "الحالة"
 
 msgid "FFprobe   ...not found !"
-msgstr ""
+msgstr "FFprobe   ...غير موجود !"
 
 msgid "FFplay   ...not found !"
-msgstr ""
+msgstr "FFplay   ...غير موجود !"
 
 msgid "Enabled"
-msgstr ""
+msgstr "مفعّل"
 
 msgid "Disabled"
-msgstr ""
+msgstr "معطّل"
 
 msgid "Demuxing only"
-msgstr ""
+msgstr "فصل فقط (Demuxing)"
 
 msgid "Muxing only"
-msgstr ""
+msgstr "دمج فقط (Muxing)"
 
 msgid "Demuxing/Muxing support"
-msgstr ""
+msgstr "دعم الفصل والدمج (Demuxing/Muxing)"
 
 msgid "FFmpeg file formats"
-msgstr ""
+msgstr "صيغ ملفات FFmpeg"
 
 msgid "supported formats"
-msgstr ""
+msgstr "الصيغ المدعومة"
 
 msgid ""
 "Contextual help based on the argument entered in the additional text field.\n"
@@ -165,81 +175,92 @@ msgid ""
 "\n"
 "Some examples:"
 msgstr ""
+"مساعدة سياقية بناءً على الوسيط المُدخَل في حقل النص الإضافي.\n"
+"يتكون كل وسيط من النوع واسم خاص بالنوع.\n"
+"\n"
+"لقائمة المرمِّزات انقر على زر \"المرمِّزات\".\n"
+"لقائمة مفكِّكات الترميز انقر على زر \"مفكِّكات الترميز\".\n"
+"لأدوات الدمج والفصل انقر على زر \"أدوات الدمج والفصل\".\n"
+"للمرشحات اختر \"إظهار المرشحات المتاحة\" من القائمة المنسدلة.\n"
+"لمرشحات bsf اختر \"إظهار مرشحات تدفق البتات المتاحة\" من القائمة المنسدلة.\n"
+"للبروتوكولات اختر \"إظهار البروتوكولات المتاحة\" من القائمة المنسدلة.\n"
+"\n"
+"بعض الأمثلة:"
 
 msgid "Help topic"
-msgstr ""
+msgstr "موضوع المساعدة"
 
 msgid "List basic options"
-msgstr ""
+msgstr "عرض الخيارات الأساسية"
 
 msgid "List more options"
-msgstr ""
+msgstr "عرض خيارات إضافية"
 
 msgid "List all options (very long)"
-msgstr ""
+msgstr "عرض جميع الخيارات (طويل جدًا)"
 
 msgid "Show available devices"
-msgstr ""
+msgstr "إظهار الأجهزة المتاحة"
 
 msgid "Show available bit stream filters"
-msgstr ""
+msgstr "إظهار مرشحات تدفق البتات المتاحة"
 
 msgid "Show available protocols"
-msgstr ""
+msgstr "إظهار البروتوكولات المتاحة"
 
 msgid "Show available filters"
-msgstr ""
+msgstr "إظهار المرشحات المتاحة"
 
 msgid "Show available pixel formats"
-msgstr ""
+msgstr "إظهار صيغ البكسل المتاحة"
 
 msgid "Show available audio sample formats"
-msgstr ""
+msgstr "إظهار صيغ عينات الصوت المتاحة"
 
 msgid "Show available color names"
-msgstr ""
+msgstr "إظهار أسماء الألوان المتاحة"
 
 msgid "List sources of the input device"
-msgstr ""
+msgstr "عرض مصادر جهاز الإدخال"
 
 msgid "List sinks of the output device"
-msgstr ""
+msgstr "عرض وجهات جهاز الإخراج"
 
 msgid "Show available HW acceleration methods"
-msgstr ""
+msgstr "إظهار طرق تسريع العتاد المتاحة"
 
 msgid "Show license"
-msgstr ""
+msgstr "إظهار الترخيص"
 
 msgid "Show configuration"
-msgstr ""
+msgstr "إظهار الإعدادات"
 
 msgid "Encoders"
-msgstr ""
+msgstr "المرمِّزات"
 
 msgid "Decoders"
-msgstr ""
+msgstr "مفكِّكات الترميز"
 
 msgid "Muxers and Demuxers"
-msgstr ""
+msgstr "أدوات الدمج والفصل"
 
 msgid "help topic list"
-msgstr ""
+msgstr "قائمة مواضيع المساعدة"
 
 msgid "Type the argument here and confirm with the enter key on your keyboard"
-msgstr ""
+msgstr "اكتب الوسيط هنا ثم أكّد بمفتاح الإدخال في لوحة المفاتيح"
 
 msgid "The search function allows you to find entries in the current topic"
-msgstr ""
+msgstr "تتيح لك وظيفة البحث العثور على إدخالات في الموضوع الحالي"
 
 msgid "Ignore case"
-msgstr ""
+msgstr "تجاهل حالة الأحرف"
 
 msgid "Ignore case distinctions: characters with different case will match."
-msgstr ""
+msgstr "تجاهل الفروق في حالة الأحرف: ستتطابق الأحرف ذات الحالات المختلفة."
 
 msgid "FFmpeg help topics"
-msgstr ""
+msgstr "مواضيع مساعدة FFmpeg"
 
 msgid ""
 "This is a multifunctional search tool useful for local help searches\n"
@@ -252,647 +273,690 @@ msgid ""
 "it's likely that your version of FFmpeg is too old or not configured\n"
 "with those features."
 msgstr ""
+"هذه أداة بحث متعددة الوظائف مفيدة للبحث المحلي في المساعدة\n"
+"عبر عدة مواضيع وخيارات في FFmpeg. تشبه أداة البحث، التي\n"
+"تعثر على التطابقات في النص الناتج عن الوسيط المختار،\n"
+"ما يفعله grep في صدفة Unix، لكنها هنا تعمل في الوقت الفعلي.\n"
+"\n"
+"إذا لم تجد دعمًا لمرمِّز معين أو ميزة أخرى،\n"
+"فمن المحتمل أن إصدار FFmpeg لديك قديم جدًا أو غير مهيأ\n"
+"بهذه الميزات."
 
 msgid ""
 "\n"
 "  ..Nothing available"
 msgstr ""
+"\n"
+"  ..لا يوجد شيء متاح"
 
 msgid ""
 "\n"
 "  ..Not found"
 msgstr ""
+"\n"
+"  ..لم يتم العثور على شيء"
 
 msgid "Before"
-msgstr ""
+msgstr "قبل"
 
 msgid "After"
-msgstr ""
+msgstr "بعد"
 
 msgid "Search for a specific frame"
-msgstr ""
+msgstr "البحث عن إطار محدد"
 
 msgid "Load"
-msgstr ""
+msgstr "تحميل"
 
 msgid "Color EQ"
-msgstr ""
+msgstr "موازن الألوان"
 
 msgid "Contrast:"
-msgstr ""
+msgstr "التباين:"
 
 msgid "-100 to +100, default value 0"
-msgstr ""
+msgstr "من -100 إلى +100، القيمة الافتراضية 0"
 
 msgid "Brightness:"
-msgstr ""
+msgstr "السطوع:"
 
 msgid "Saturation:"
-msgstr ""
+msgstr "التشبع:"
 
 msgid "0 to 300, default value 100"
-msgstr ""
+msgstr "من 0 إلى 300، القيمة الافتراضية 100"
 
 msgid "Gamma:"
-msgstr ""
+msgstr "غاما:"
 
 msgid "0 to 100, default value 10"
-msgstr ""
+msgstr "من 0 إلى 100، القيمة الافتراضية 10"
 
 msgid "Reset"
-msgstr ""
+msgstr "إعادة ضبط"
 
 msgid "Color Correction EQ Tool"
-msgstr ""
+msgstr "أداة تصحيح الألوان (EQ)"
 
 msgid "Videomass - Error!"
-msgstr ""
+msgstr "Videomass - خطأ!"
 
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
-msgstr ""
+msgstr "حجم المصدر: {0} × {1} بكسل"
 
 msgid "Crop color"
-msgstr ""
+msgstr "لون القص"
 
 msgid "Cropping area selection "
-msgstr ""
+msgstr "تحديد منطقة القص "
 
 msgid "Height"
-msgstr ""
+msgstr "الارتفاع"
 
 msgid "Center"
-msgstr ""
+msgstr "توسيط"
 
 msgid "Width"
-msgstr ""
+msgstr "العرض"
 
 msgid "Crop Tool"
-msgstr ""
+msgstr "أداة القص"
 
 msgid "Choose the color to draw the cropping area"
-msgstr ""
+msgstr "اختر اللون المستخدم لرسم منطقة القص"
 
 msgid "Crop to width"
-msgstr ""
+msgstr "القص حسب العرض"
 
 msgid "Move vertically (set to -1 to center the vertical axis)"
-msgstr ""
+msgstr "تحريك عموديًا (اضبط على -1 لتوسيط المحور العمودي)"
 
 msgid "Move horizontally (set to -1 to center the horizontal axis)"
-msgstr ""
+msgstr "تحريك أفقيًا (اضبط على -1 لتوسيط المحور الأفقي)"
 
 msgid "Crop to height"
-msgstr ""
+msgstr "القص حسب الارتفاع"
 
 msgid "Advanced Options"
-msgstr ""
+msgstr "خيارات متقدمة"
 
 msgid "Deinterlace"
-msgstr ""
+msgstr "إزالة التداخل"
 
 msgid "Interlace"
-msgstr ""
+msgstr "تداخل"
 
 msgid "Deinterlaces with w3fdif filter"
-msgstr ""
+msgstr "إزالة التداخل بمرشح w3fdif"
 
 msgid "Deinterlaces with yadif filter"
-msgstr ""
+msgstr "إزالة التداخل بمرشح yadif"
 
 msgid "Interlaces with interlace filter"
-msgstr ""
+msgstr "التداخل بمرشح interlace"
 
 msgid "Deinterlacing and Interlacing"
-msgstr ""
+msgstr "إزالة التداخل والتداخل"
 
 msgid "Deinterlace the input video with `w3fdif` filter"
-msgstr ""
+msgstr "إزالة التداخل من فيديو الإدخال بمرشح `w3fdif`"
 
 msgid "Set the interlacing filter coefficients."
-msgstr ""
+msgstr "ضبط معاملات مرشح التداخل."
 
 msgid "Specify which frames to deinterlace."
-msgstr ""
+msgstr "تحديد الإطارات المراد إزالة التداخل منها."
 
 msgid "Deinterlace the input video with `yadif` filter. Using FFmpeg, this is the best and fastest choice"
-msgstr ""
+msgstr "إزالة التداخل من فيديو الإدخال بمرشح `yadif`. عند استخدام FFmpeg، هذا هو الخيار الأفضل والأسرع"
 
 msgid ""
 "mode\n"
 "The interlacing mode to adopt."
 msgstr ""
+"mode\n"
+"وضع التداخل المراد اعتماده."
 
 msgid ""
 "parity\n"
 "The picture field parity assumed for the input interlaced video."
 msgstr ""
+"parity\n"
+"تكافؤ حقل الصورة المفترض لفيديو الإدخال المتداخل."
 
 msgid "Simple interlacing filter from progressive contents."
-msgstr ""
+msgstr "مرشح تداخل بسيط للمحتوى التدريجي."
 
 msgid ""
 "scan:\n"
 "determines whether the interlaced frame is taken from the even (tff - default) or odd (bff) lines of the progressive frame."
 msgstr ""
+"scan:\n"
+"يحدد ما إذا كان الإطار المتداخل مأخوذًا من الأسطر الزوجية (tff - الافتراضي) أو الفردية (bff) للإطار التدريجي."
 
 msgid ""
 "lowpass:\n"
 "Enable (default) or disable the vertical lowpass filter to avoid twitter interlacing and reduce moire patterns.\n"
 "Default is no setting."
 msgstr ""
+"lowpass:\n"
+"تفعيل (الافتراضي) أو تعطيل مرشح التمرير المنخفض العمودي لتجنب الارتعاش في التداخل وتقليل أنماط الموارية (moire).\n"
+"الافتراضي هو عدم الضبط."
 
 msgid "Denoiser Filters"
-msgstr ""
+msgstr "مرشحات إزالة الضجيج"
 
 msgid "Enable nlmeans denoiser"
-msgstr ""
+msgstr "تفعيل مزيل الضجيج nlmeans"
 
 msgid "nlmeans options"
-msgstr ""
+msgstr "خيارات nlmeans"
 
 msgid "Enable hqdn3d denoiser"
-msgstr ""
+msgstr "تفعيل مزيل الضجيج hqdn3d"
 
 msgid "hqdn3d options"
-msgstr ""
+msgstr "خيارات hqdn3d"
 
 msgid "Denoiser Tool"
-msgstr ""
+msgstr "أداة إزالة الضجيج"
 
 msgid ""
 "nlmeans:\n"
 "Denoise frames using Non-Local Means algorithm is capable of restoring video sequences, even with strong noise. It is ideal for enhancing the quality of old VHS tapes."
 msgstr ""
+"nlmeans:\n"
+"إزالة الضجيج من الإطارات بخوارزمية المتوسطات غير المحلية (Non-Local Means) قادرة على استعادة المقاطع المرئية حتى مع الضجيج الشديد. وهي مثالية لتحسين جودة أشرطة VHS القديمة."
 
 msgid ""
 "hqdn3d:\n"
 "This is a high precision/quality 3d denoise filter. It aims to reduce image noise, producing smooth images and making still images really still. It should enhance compressibility."
 msgstr ""
+"hqdn3d:\n"
+"هذا مرشح ثلاثي الأبعاد عالي الدقة/الجودة لإزالة الضجيج. يهدف إلى تقليل ضجيج الصورة وإنتاج صور ناعمة وجعل الصور الثابتة ثابتة فعلًا. ومن شأنه تحسين قابلية الضغط."
 
 msgid "View result"
-msgstr ""
+msgstr "عرض النتيجة"
 
 msgid "New size in pixels"
-msgstr ""
+msgstr "الحجم الجديد بالبكسل"
 
 msgid "Width:"
-msgstr ""
+msgstr "العرض:"
 
 msgid "Height:"
-msgstr ""
+msgstr "الارتفاع:"
 
 msgid "Constrain proportions (keep aspect ratio)"
-msgstr ""
+msgstr "تقييد النسب (الحفاظ على نسبة العرض إلى الارتفاع)"
 
 msgid "Which dimension to adjust?"
-msgstr ""
+msgstr "أي بُعد تريد تعديله؟"
 
 msgid "Aspect Ratio"
-msgstr ""
+msgstr "نسبة العرض إلى الارتفاع"
 
 msgid "Setdar filter (display aspect ratio) example 16/9, 4/3 "
-msgstr ""
+msgstr "مرشح Setdar (نسبة عرض الشاشة) مثال 16/9، 4/3 "
 
 msgid "Numerator"
-msgstr ""
+msgstr "البسط"
 
 msgid "Denominator"
-msgstr ""
+msgstr "المقام"
 
 msgid "Setsar filter (sample aspect ratio) example 1/1"
-msgstr ""
+msgstr "مرشح Setsar (نسبة أبعاد العينة) مثال 1/1"
 
 msgid "Resize Tool"
-msgstr ""
+msgstr "أداة تغيير الحجم"
 
 msgid "Scale filter, set to 0 to disable"
-msgstr ""
+msgstr "مرشح التحجيم، اضبط على 0 للتعطيل"
 
 msgid "Display Aspect Ratio. Set to 0 to disable"
-msgstr ""
+msgstr "نسبة عرض الشاشة (DAR). اضبط على 0 للتعطيل"
 
 msgid ""
 "Sample (aka Pixel) Aspect Ratio.\n"
 "Set to 0 to disable"
 msgstr ""
+"نسبة أبعاد العينة (أو البكسل).\n"
+"اضبط على 0 للتعطيل"
 
 msgid ""
 "If you want to keep the aspect ratio, select \"Constrain proportions\" below and\n"
 "specify only one dimension, either width or height, and set the other dimension\n"
 "to -1 or -2 (some codecs require -2, so you should do some testing first)."
 msgstr ""
+"إذا أردت الحفاظ على نسبة العرض إلى الارتفاع، فحدد \"تقييد النسب\" أدناه و\n"
+"أدخل بُعدًا واحدًا فقط، العرض أو الارتفاع، واضبط البعد الآخر\n"
+"على -1 أو -2 (بعض المرمِّزات تتطلب -2، لذا يُفضّل إجراء بعض الاختبارات أولًا)."
 
 msgid "Enable stabilizer"
-msgstr ""
+msgstr "تفعيل المثبّت"
 
 msgid "Create a side-by-side comparison video"
-msgstr ""
+msgstr "إنشاء فيديو مقارنة جنبًا إلى جنب"
 
 msgid "Create a snapshot"
-msgstr ""
+msgstr "إنشاء لقطة"
 
 msgid "Preview"
-msgstr ""
+msgstr "معاينة"
 
 msgid "Duration seconds:"
-msgstr ""
+msgstr "المدة بالثواني:"
 
 msgid "Video Detect"
-msgstr ""
+msgstr "كشف الفيديو"
 
 msgid "[TRIPOD] Enable tripod mode if checked"
-msgstr ""
+msgstr "[TRIPOD] تفعيل وضع الحامل الثلاثي عند تحديده"
 
 msgid "Video transform"
-msgstr ""
+msgstr "تحويل الفيديو"
 
 msgid "[OPTALGO] optimization algorithm"
-msgstr ""
+msgstr "[OPTALGO] خوارزمية التحسين"
 
 msgid "[CROP] Specify how to deal with borders at movement compensation"
-msgstr ""
+msgstr "[CROP] تحديد كيفية التعامل مع الحواف عند تعويض الحركة"
 
 msgid "[INVERT] Invert transforms if checked"
-msgstr ""
+msgstr "[INVERT] عكس التحويلات عند تحديده"
 
 msgid "[RELATIVE] Consider transforms as relative to previous frame if checked, absolute if unchecked"
-msgstr ""
+msgstr "[RELATIVE] اعتبار التحويلات نسبية للإطار السابق عند تحديده، ومطلقة عند عدم تحديده"
 
 msgid "Specify type of interpolation"
-msgstr ""
+msgstr "تحديد نوع الاستيفاء"
 
 msgid "[TRIPOD2] virtual tripod mode, equivalent to relative=unchecked:smoothing=0"
-msgstr ""
+msgstr "[TRIPOD2] وضع الحامل الثلاثي الافتراضي، يعادل relative=غير محدد:smoothing=0"
 
 msgid "Unsharp filter:"
-msgstr ""
+msgstr "مرشح Unsharp:"
 
 msgid "Seek to a position on the video."
-msgstr ""
+msgstr "الانتقال إلى موضع في الفيديو."
 
 msgid "Make a snapshot of the video with the settings made."
-msgstr ""
+msgstr "إنشاء لقطة من الفيديو بالإعدادات المحددة."
 
 msgid "Set the snapshot duration from 3 to 15 seconds from the seek position, default is 5 seconds."
-msgstr ""
+msgstr "حدد مدة اللقطة من 3 إلى 15 ثانية بدءًا من موضع الانتقال، والافتراضي 5 ثوانٍ."
 
 msgid "Set how shaky the video is and how quick the camera is. A value of 1 means little shakiness, a value of 10 means strong shakiness. Default value is 5."
-msgstr ""
+msgstr "يحدد مدى اهتزاز الفيديو وسرعة حركة الكاميرا. القيمة 1 تعني اهتزازًا خفيفًا والقيمة 10 تعني اهتزازًا شديدًا. القيمة الافتراضية 5."
 
 msgid "Set the accuracy of the detection process. A value of 1 means low accuracy, a value of 15 means high accuracy. Default value is 15."
-msgstr ""
+msgstr "يحدد دقة عملية الكشف. القيمة 1 تعني دقة منخفضة والقيمة 15 تعني دقة عالية. القيمة الافتراضية 15."
 
 msgid "Set stepsize of the search process. The region around minimum is scanned with 1 pixel resolution. Default value is 6."
-msgstr ""
+msgstr "يحدد حجم خطوة عملية البحث. تُفحص المنطقة المحيطة بالحد الأدنى بدقة بكسل واحد. القيمة الافتراضية 6."
 
 msgid "Set minimum contrast. Below this value a local measurement field is discarded. The range is 0-1. Default value is 0.25."
-msgstr ""
+msgstr "يحدد الحد الأدنى للتباين. أسفل هذه القيمة يُستبعد حقل القياس المحلي. النطاق 0-1. القيمة الافتراضية 0.25."
 
 msgid "Set reference frame number for tripod mode. If enabled, the motion of the frames is compared to a reference frame in the filtered stream, identified by the specified number. The idea is to compensate all movements in a more-or-less static scene and keep the camera view absolutely still. The frames are counted starting from 1."
-msgstr ""
+msgstr "يحدد رقم الإطار المرجعي لوضع الحامل الثلاثي. عند التفعيل تتم مقارنة حركة الإطارات بإطار مرجعي في التدفق المرشَّح يُحدَّد بالرقم المعطى. الفكرة هي تعويض جميع الحركات في مشهد شبه ثابت وإبقاء منظور الكاميرا ثابتًا تمامًا. يبدأ ترقيم الإطارات من 1."
 
-msgid ""
-"Set the number of frames (value*2 + 1) used for lowpass filtering the camera movements. Default value is 15. For example a number of 10 means that 21 frames are used (10 in the past and 10 in the future) to smoothen the motion in the video. A larger value leads to a smoother video, but limits the acceleration of the camera (pan/tilt movements). 0 is a special case where a static camera is "
-"simulated."
-msgstr ""
+msgid "Set the number of frames (value*2 + 1) used for lowpass filtering the camera movements. Default value is 15. For example a number of 10 means that 21 frames are used (10 in the past and 10 in the future) to smoothen the motion in the video. A larger value leads to a smoother video, but limits the acceleration of the camera (pan/tilt movements). 0 is a special case where a static camera is simulated."
+msgstr "يحدد عدد الإطارات (القيمة*2 + 1) المستخدمة في ترشيح التمرير المنخفض لحركات الكاميرا. القيمة الافتراضية 15. فمثلًا الرقم 10 يعني استخدام 21 إطارًا (10 من الماضي و10 من المستقبل) لتنعيم الحركة في الفيديو. القيمة الأكبر تعطي فيديو أنعم لكنها تحد من تسارع الكاميرا (حركات الإمالة والتدوير). القيمة 0 حالة خاصة تُحاكي كاميرا ثابتة."
 
 msgid "Set the camera path optimization algorithm. Values are: `gauss`: gaussian kernel low-pass filter on camera motion (default), and `avg`: averaging on transformations"
-msgstr ""
+msgstr "يحدد خوارزمية تحسين مسار الكاميرا. القيم: `gauss`: مرشح تمرير منخفض بنواة غاوسية على حركة الكاميرا (الافتراضي)، و`avg`: حساب المتوسط على التحويلات"
 
 msgid "Set maximal angle in radians (degree*PI/180) to rotate frames. Default value is -1, meaning no limit."
-msgstr ""
+msgstr "يحدد أقصى زاوية بالراديان (الدرجات*π/180) لتدوير الإطارات. القيمة الافتراضية -1 وتعني بلا حد."
 
 msgid "Specify how to deal with borders that may be visible due to movement compensation. Values are: `keep` keep image information from previous frame (default), `black` fill the border black"
-msgstr ""
+msgstr "يحدد كيفية التعامل مع الحواف التي قد تظهر بسبب تعويض الحركة. القيم: `keep` الاحتفاظ بمعلومات الصورة من الإطار السابق (الافتراضي)، `black` ملء الحافة باللون الأسود"
 
 msgid "Invert transforms if checked. Default is unchecked."
-msgstr ""
+msgstr "عكس التحويلات عند التحديد. الافتراضي غير محدد."
 
 msgid "Consider transforms as relative to previous frame if checked, absolute if unchecked. Default is checked."
-msgstr ""
+msgstr "اعتبار التحويلات نسبية للإطار السابق عند التحديد، ومطلقة عند عدم التحديد. الافتراضي محدد."
 
 msgid "Set percentage to zoom. A positive value will result in a zoom-in effect, a negative value in a zoom-out effect. Default value is 0 (no zoom)."
-msgstr ""
+msgstr "يحدد النسبة المئوية للتكبير. القيمة الموجبة تعطي تأثير تكبير والسالبة تأثير تصغير. القيمة الافتراضية 0 (بلا تكبير)."
 
 msgid "Set optimal zooming to avoid borders. Accepted values are: `0` disabled, `1` optimal static zoom value is determined (only very strong movements will lead to visible borders) (default), `2` optimal adaptive zoom value is determined (no borders will be visible), see zoomspeed. Note that the value given at zoom is added to the one calculated here."
-msgstr ""
+msgstr "يحدد التكبير الأمثل لتجنب الحواف. القيم المقبولة: `0` معطّل، `1` يُحدَّد قيمة التكبير الثابت الأمثل (الحركات القوية جدًا فقط ستؤدي إلى حواف مرئية) (الافتراضي)، `2` تُحدَّد قيمة التكبير التكيفي الأمثل (لن تظهر أي حواف)، راجع zoomspeed. لاحظ أن القيمة المعطاة في zoom تُضاف إلى القيمة المحسوبة هنا."
 
 msgid "Set percent to zoom maximally each frame (enabled when optzoom is set to 2). Range is from 0 to 5, default value is 0.25."
-msgstr ""
+msgstr "يحدد النسبة المئوية القصوى للتكبير في كل إطار (تُفعَّل عند ضبط optzoom على 2). النطاق من 0 إلى 5، والقيمة الافتراضية 0.25."
 
 msgid "Specify type of interpolation. Available values are: `no` no interpolation, `linear` linear only horizontal, `bilinear` linear in both directions (default), `bicubic` cubic in both directions (slow)"
-msgstr ""
+msgstr "يحدد نوع الاستيفاء. القيم المتاحة: `no` بلا استيفاء، `linear` خطي أفقيًا فقط، `bilinear` خطي في الاتجاهين (الافتراضي)، `bicubic` تكعيبي في الاتجاهين (بطيء)"
 
 msgid "Enable virtual tripod mode if checked, which is equivalent to relative=0:smoothing=0. Default is unchecked. Use also tripod option of vidstabdetect."
-msgstr ""
+msgstr "تفعيل وضع الحامل الثلاثي الافتراضي عند التحديد، وهو يعادل relative=0:smoothing=0. الافتراضي غير محدد. استخدم أيضًا خيار tripod في vidstabdetect."
 
 msgid "Sharpen or blur the input video. Note the use of the unsharp filter which is always recommended."
-msgstr ""
+msgstr "زيادة حدة فيديو الإدخال أو تمويهه. لاحظ أن استخدام مرشح unsharp موصى به دائمًا."
 
 msgid "Video Stabilizer Tool"
-msgstr ""
+msgstr "أداة تثبيت الفيديو"
 
 msgid "Videomass - Loading..."
-msgstr ""
+msgstr "Videomass - جارٍ التحميل..."
 
 msgid ""
 "Please wait,\n"
 "This process will take a few seconds."
 msgstr ""
+"يرجى الانتظار،\n"
+"ستستغرق هذه العملية بضع ثوانٍ."
 
 msgid "Default position"
-msgstr ""
+msgstr "الوضع الافتراضي"
 
 msgid "Rotation setting"
-msgstr ""
+msgstr "إعداد التدوير"
 
 msgid "90° (left)"
-msgstr ""
+msgstr "90° (يسار)"
 
 msgid "90° (right)"
-msgstr ""
+msgstr "90° (يمين)"
 
 msgid "180°"
-msgstr ""
+msgstr "180°"
 
 msgid "Transpose Tool"
-msgstr ""
+msgstr "أداة التدوير"
 
 msgid "Rotate 90 degrees right"
-msgstr ""
+msgstr "تدوير 90 درجة لليمين"
 
 msgid "Rotate 180 degrees"
-msgstr ""
+msgstr "تدوير 180 درجة"
 
 msgid "Rotate 90 degrees left"
-msgstr ""
+msgstr "تدوير 90 درجة لليسار"
 
 msgid "Format"
-msgstr ""
+msgstr "الصيغة"
 
 msgid "Video Stream"
-msgstr ""
+msgstr "تدفق الفيديو"
 
 msgid "Audio Streams"
-msgstr ""
+msgstr "تدفقات الصوت"
 
 msgid "Subtitle Streams"
-msgstr ""
+msgstr "تدفقات الترجمة"
 
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "نسخ إلى الحافظة"
 
 msgid "FILE SELECTION"
-msgstr ""
+msgstr "اختيار الملف"
 
 msgid "Properties"
-msgstr ""
+msgstr "الخصائص"
 
 msgid "Values"
-msgstr ""
+msgstr "القيم"
 
 msgid "Source Stream Properties"
-msgstr ""
+msgstr "خصائص تدفق المصدر"
 
 msgid "Unable to open the clipboard on Format tab"
-msgstr ""
+msgstr "تعذر فتح الحافظة في تبويب الصيغة"
 
 msgid "Unable to open the clipboard on Video Streams tab"
-msgstr ""
+msgstr "تعذر فتح الحافظة في تبويب تدفقات الفيديو"
 
 msgid "Unable to open the clipboard on Audio Streams tab"
-msgstr ""
+msgstr "تعذر فتح الحافظة في تبويب تدفقات الصوت"
 
 msgid "Unable to open the clipboard on Subtitle Streams tab"
-msgstr ""
+msgstr "تعذر فتح الحافظة في تبويب تدفقات الترجمة"
 
 msgid "Where do you prefer to save your transcodes?"
-msgstr ""
+msgstr "أين تفضل حفظ الملفات المحوّلة؟"
 
 msgid "Change"
-msgstr ""
+msgstr "تغيير"
 
 msgid "Same destination paths as source files"
-msgstr ""
+msgstr "نفس مسارات الملفات المصدر"
 
 msgid "Assign optional suffix to destination file names:"
-msgstr ""
+msgstr "تعيين لاحقة اختيارية لأسماء ملفات الوجهة:"
 
 msgid "File removal preferences"
-msgstr ""
+msgstr "تفضيلات حذف الملفات"
 
 msgid "Trash the source files after successful encoding"
-msgstr ""
+msgstr "نقل الملفات المصدر إلى سلة المهملات بعد نجاح الترميز"
 
 msgid "File Preferences"
-msgstr ""
+msgstr "تفضيلات الملفات"
 
 msgid "Location of executables"
-msgstr ""
+msgstr "موقع الملفات التنفيذية"
 
 msgid ""
 "FFmpeg can be built by enabling/disabling its options and this depends on your needs.\n"
 "For some use cases it is possible to provide a custom build of FFmpeg where you can specify\n"
 "it in this preferences tab."
 msgstr ""
+"يمكن بناء FFmpeg بتفعيل/تعطيل خياراته حسب احتياجاتك.\n"
+"وفي بعض حالات الاستخدام يمكن توفير بناء مخصص من FFmpeg\n"
+"تحدده في تبويب التفضيلات هذا."
 
 msgid "Enable a custom location to run FFmpeg"
-msgstr ""
+msgstr "تفعيل موقع مخصص لتشغيل FFmpeg"
 
 msgid "Enable a custom location to run FFprobe"
-msgstr ""
+msgstr "تفعيل موقع مخصص لتشغيل FFprobe"
 
 msgid "Enable a custom location to run FFplay"
-msgstr ""
+msgstr "تفعيل موقع مخصص لتشغيل FFplay"
 
 msgid "FFmpeg"
-msgstr ""
+msgstr "FFmpeg"
 
 msgid "Look and Feel (requires application restart)"
-msgstr ""
+msgstr "المظهر والسلوك (يتطلب إعادة تشغيل التطبيق)"
 
 msgid "Icon themes"
-msgstr ""
+msgstr "سمات الأيقونات"
 
 msgid "At the top of window (default)"
-msgstr ""
+msgstr "أعلى النافذة (الافتراضي)"
 
 msgid "At the bottom of window"
-msgstr ""
+msgstr "أسفل النافذة"
 
 msgid "At the right of window"
-msgstr ""
+msgstr "يمين النافذة"
 
 msgid "At the left of window"
-msgstr ""
+msgstr "يسار النافذة"
 
 msgid "Place the toolbar"
-msgstr ""
+msgstr "موضع شريط الأدوات"
 
 msgid "Toolbar's icons size:"
-msgstr ""
+msgstr "حجم أيقونات شريط الأدوات:"
 
 msgid "Application Language (requires application restart)"
-msgstr ""
+msgstr "لغة التطبيق (تتطلب إعادة تشغيل التطبيق)"
 
 msgid "Look and Language"
-msgstr ""
+msgstr "المظهر واللغة"
 
 msgid "Upon exiting the application"
-msgstr ""
+msgstr "عند الخروج من التطبيق"
 
 msgid "Always ask me to confirm"
-msgstr ""
+msgstr "اطلب مني التأكيد دائمًا"
 
 msgid "Clean the log files"
-msgstr ""
+msgstr "تنظيف ملفات السجل"
 
 msgid "Remove cached files"
-msgstr ""
+msgstr "إزالة الملفات المخزنة مؤقتًا"
 
 msgid "On operations completion"
-msgstr ""
+msgstr "عند اكتمال العمليات"
 
 msgid "These settings will remain active until the application is closed, If necessary, remember to reactivate them."
-msgstr ""
+msgstr "ستبقى هذه الإعدادات فعّالة حتى إغلاق التطبيق. إذا لزم الأمر، تذكّر إعادة تفعيلها."
 
 msgid "Exit the application"
-msgstr ""
+msgstr "الخروج من التطبيق"
 
 msgid "Shutdown the system"
-msgstr ""
+msgstr "إيقاف تشغيل النظام"
 
 msgid "SUDO password:"
-msgstr ""
+msgstr "كلمة مرور SUDO:"
 
 msgid "Exit and Shutdown"
-msgstr ""
+msgstr "الخروج وإيقاف التشغيل"
 
 msgid "Specify the character encoding format"
-msgstr ""
+msgstr "تحديد صيغة ترميز الأحرف"
 
 msgid ""
 "Although UTF-8 is the default and most widely used standard encoding format, it is not the only encoding format available.\n"
 "Some file metadata may still contain non-UTF-8 character encodings resulting in the error \"'utf-8' codec can't decode bytes...\".\n"
 "If you know the encoding format the file was written in, you can try specifying it here, e.g. ISO 8859-1, ISO 8859-16, etc."
 msgstr ""
+"رغم أن UTF-8 هي صيغة الترميز الافتراضية والأكثر استخدامًا، فهي ليست الوحيدة المتاحة.\n"
+"قد تحتوي بعض البيانات الوصفية للملفات على ترميزات أحرف غير UTF-8 مما يؤدي إلى الخطأ \"'utf-8' codec can't decode bytes...\".\n"
+"إذا كنت تعرف صيغة الترميز التي كُتب بها الملف، يمكنك محاولة تحديدها هنا، مثل ISO 8859-1 وISO 8859-16 وغيرها."
 
 msgid "Character encoding:"
-msgstr ""
+msgstr "ترميز الأحرف:"
 
 msgid "Default application directories"
-msgstr ""
+msgstr "مجلدات التطبيق الافتراضية"
 
 msgid "Configuration directory"
-msgstr ""
+msgstr "مجلد الإعدادات"
 
 msgid "Cache directory"
-msgstr ""
+msgstr "مجلد الذاكرة المؤقتة"
 
 msgid "Log directory"
-msgstr ""
+msgstr "مجلد السجلات"
 
 msgid "Advanced"
-msgstr ""
+msgstr "متقدم"
 
 msgid ""
 "The following settings affect output messages and the log messages during transcoding processes.\n"
 "Be careful, by changing these settings some functions of the application may not work correctly,\n"
 "change only if you know what you are doing.\n"
 msgstr ""
+"تؤثر الإعدادات التالية على رسائل المخرجات ورسائل السجل أثناء عمليات التحويل.\n"
+"احذر، فتغيير هذه الإعدادات قد يؤدي إلى عدم عمل بعض وظائف التطبيق بشكل صحيح،\n"
+"لا تغيّرها إلا إذا كنت تعرف ما تفعله.\n"
 
 msgid "Set logging level flags used by FFmpeg"
-msgstr ""
+msgstr "ضبط أعلام مستوى السجل التي يستخدمها FFmpeg"
 
 msgid "Set logging level flags used by FFplay"
-msgstr ""
+msgstr "ضبط أعلام مستوى السجل التي يستخدمها FFplay"
 
 msgid "FFmpeg logging levels"
-msgstr ""
+msgstr "مستويات سجل FFmpeg"
 
 msgid "By assigning an additional suffix you could avoid overwriting files"
-msgstr ""
+msgstr "بتعيين لاحقة إضافية يمكنك تجنب الكتابة فوق الملفات"
 
 msgid "Type sudo password here, only for Unix-like operating systems, not for MS Windows"
-msgstr ""
+msgstr "اكتب كلمة مرور sudo هنا، لأنظمة التشغيل الشبيهة بـ Unix فقط، وليس لـ MS Windows"
 
 msgid "Preferences"
-msgstr ""
+msgstr "التفضيلات"
 
 msgid "Choose Destination"
-msgstr ""
+msgstr "اختر الوجهة"
 
 msgid "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and the underscore (\"_\"). Spaces are not allowed."
-msgstr ""
+msgstr "أدخل أحرفًا وأرقامًا فقط. يمكنك أيضًا استخدام الواصلة (\"-\") والشرطة السفلية (\"_\"). المسافات غير مسموح بها."
 
 msgid "Videomass - Warning!"
-msgstr ""
+msgstr "Videomass - تحذير!"
 
 #, python-brace-format
 msgid "{} location"
-msgstr ""
+msgstr "موقع {}"
 
 msgid "One-Pass, Do not start with `ffmpeg -i filename`; do not end with `output-filename`"
-msgstr ""
+msgstr "مرور واحد، لا تبدأ بـ `ffmpeg -i filename`؛ ولا تنهِ بـ `output-filename`"
 
 msgid "Two-Pass (optional), Do not start with `ffmpeg -i filename`; do not end with `output-filename`"
-msgstr ""
+msgstr "مروران (اختياري)، لا تبدأ بـ `ffmpeg -i filename`؛ ولا تنهِ بـ `output-filename`"
 
 msgid "Videomass - Edit the selected item in the queue"
-msgstr ""
+msgstr "Videomass - تعديل العنصر المحدد في قائمة الانتظار"
 
 msgid "Pre-input arguments for One-Pass (optional)"
-msgstr ""
+msgstr "وسائط ما قبل الإدخال للمرور الواحد (اختياري)"
 
 msgid "FFmpeg arguments for one-pass encoding"
-msgstr ""
+msgstr "وسائط FFmpeg للترميز بمرور واحد"
 
 msgid "Any optional arguments to add before input file on the one-pass encoding, e.g required names of some hardware accelerations like -hwaccel to use with CUDA."
-msgstr ""
+msgstr "أي وسائط اختيارية تُضاف قبل ملف الإدخال في الترميز بمرور واحد، مثل الأسماء المطلوبة لبعض تسريعات العتاد كـ -hwaccel للاستخدام مع CUDA."
 
 msgid "Pre-input arguments for Two-Pass (optional)"
-msgstr ""
+msgstr "وسائط ما قبل الإدخال للمرورين (اختياري)"
 
 msgid "FFmpeg arguments for two-pass encoding"
-msgstr ""
+msgstr "وسائط FFmpeg للترميز بمرورين"
 
 msgid "Any optional arguments to add before input file on the two-pass encoding, e.g required names of some hardware accelerations like -hwaccel to use with CUDA."
-msgstr ""
+msgstr "أي وسائط اختيارية تُضاف قبل ملف الإدخال في الترميز بمرورين، مثل الأسماء المطلوبة لبعض تسريعات العتاد كـ -hwaccel للاستخدام مع CUDA."
 
 msgid "Edit"
-msgstr ""
+msgstr "تعديل"
 
 msgid "Remove"
-msgstr ""
+msgstr "إزالة"
 
 msgid "Remove all"
-msgstr ""
+msgstr "إزالة الكل"
 
 msgid ""
 "Export\n"
 "queue file"
 msgstr ""
+"تصدير\n"
+"ملف القائمة"
 
 msgid ""
 "Import\n"
 "queue file"
 msgstr ""
+"استيراد\n"
+"ملف القائمة"
 
 msgid "Destination file name"
-msgstr ""
+msgstr "اسم ملف الوجهة"
 
 msgid "Remove all items in the queue"
-msgstr ""
+msgstr "إزالة جميع العناصر من قائمة الانتظار"
 
 msgid "Videomass - Queue"
-msgstr ""
+msgstr "Videomass - قائمة الانتظار"
 
 msgid "Export queue file"
-msgstr ""
+msgstr "تصدير ملف قائمة الانتظار"
 
 msgid "Same as source"
-msgstr ""
+msgstr "نفس المصدر"
 
 msgid ""
 "Source\n"
@@ -903,123 +967,132 @@ msgid ""
 "Start of segment\n"
 "Clip duration"
 msgstr ""
+"المصدر\n"
+"وجهة الملف\n"
+"الأتمتة/الإعداد المسبق\n"
+"مرورات الترميز\n"
+"صيغة الإخراج\n"
+"بداية المقطع\n"
+"مدة المقطع"
 
 msgid "# will be replaced by ascending numbers starting with:"
-msgstr ""
+msgstr "سيتم استبدال # بأرقام تصاعدية تبدأ من:"
 
 msgid "Font Color"
-msgstr ""
+msgstr "لون الخط"
 
 msgid "Shadow Color"
-msgstr ""
+msgstr "لون الظل"
 
 msgid "Show text box"
-msgstr ""
+msgstr "إظهار مربع النص"
 
 msgid "Box Color"
-msgstr ""
+msgstr "لون المربع"
 
 msgid "Timestamp settings"
-msgstr ""
+msgstr "إعدادات الطابع الزمني"
 
 msgid "Supported Formats list (optional). Do not include the `.`"
-msgstr ""
+msgstr "قائمة الصيغ المدعومة (اختياري). لا تضع `.`"
 
 msgid "Output Format. Empty to copy format and codec. Do not include the `.`"
-msgstr ""
+msgstr "صيغة الإخراج. اتركها فارغة لنسخ الصيغة والمرمِّز. لا تضع `.`"
 
 msgid "Profile Name"
-msgstr ""
+msgstr "اسم الإعداد"
 
 msgid "Description"
-msgstr ""
+msgstr "الوصف"
 
 msgid "A short profile name"
-msgstr ""
+msgstr "اسم قصير للإعداد"
 
 msgid "A long description of the profile"
-msgstr ""
+msgstr "وصف مطوّل للإعداد"
 
 msgid "One or more comma-separated format names compatible with this profile"
-msgstr ""
+msgstr "اسم صيغة واحد أو أكثر مفصولة بفواصل ومتوافقة مع هذا الإعداد"
 
 msgid "Output format extension. Leave empty to copy codec and format"
-msgstr ""
+msgstr "امتداد صيغة الإخراج. اتركه فارغًا لنسخ المرمِّز والصيغة"
 
 msgid "Incomplete profile assignments"
-msgstr ""
+msgstr "تعيينات الإعداد غير مكتملة"
 
 msgid "Formats must be comma-separated"
-msgstr ""
+msgstr "يجب فصل الصيغ بفواصل"
 
 #, python-brace-format
 msgid ""
 "ERROR: Keys mismatched for requested data.\n"
 "Invalid file: «{0}»"
 msgstr ""
+"خطأ: عدم تطابق المفاتيح مع البيانات المطلوبة.\n"
+"ملف غير صالح: «{0}»"
 
 msgid "Profile already stored with same name"
-msgstr ""
+msgstr "يوجد إعداد محفوظ بنفس الاسم"
 
 msgid "Profile stored successfully!"
-msgstr ""
+msgstr "تم حفظ الإعداد بنجاح!"
 
 msgid "Profile change successful!"
-msgstr ""
+msgstr "تم تغيير الإعداد بنجاح!"
 
 msgid "Log file list"
-msgstr ""
+msgstr "قائمة ملفات السجل"
 
 msgid "Log messages"
-msgstr ""
+msgstr "رسائل السجل"
 
 msgid "Refresh log messages"
-msgstr ""
+msgstr "تحديث رسائل السجل"
 
 msgid "Clear log messages"
-msgstr ""
+msgstr "مسح رسائل السجل"
 
 msgid "Select a log file"
-msgstr ""
+msgstr "اختر ملف سجل"
 
 msgid "Are you sure you want to clear the selected log file?"
-msgstr ""
+msgstr "هل أنت متأكد من رغبتك في مسح ملف السجل المحدد؟"
 
 msgid "Please confirm"
-msgstr ""
+msgstr "يرجى التأكيد"
 
 msgid "File name"
-msgstr ""
+msgstr "اسم الملف"
 
 msgid "Max volume dBFS"
-msgstr ""
+msgstr "أقصى مستوى صوت dBFS"
 
 msgid "Mean volume dBFS"
-msgstr ""
+msgstr "متوسط مستوى الصوت dBFS"
 
 msgid "Offset dBFS"
-msgstr ""
+msgstr "الإزاحة dBFS"
 
 msgid "Result dBFS"
-msgstr ""
+msgstr "النتيجة dBFS"
 
 msgid "Post-normalization references:"
-msgstr ""
+msgstr "مراجع ما بعد التطبيع:"
 
 msgid "=  Clipped peaks"
-msgstr ""
+msgstr "=  قمم مقصوصة"
 
 msgid "=  No changes"
-msgstr ""
+msgstr "=  بلا تغيير"
 
 msgid "=  Below max peak"
-msgstr ""
+msgstr "=  أقل من أقصى قمة"
 
 msgid "RMS-based volume statistics"
-msgstr ""
+msgstr "إحصاءات مستوى الصوت المبنية على RMS"
 
 msgid "PEAK-based volume statistics"
-msgstr ""
+msgstr "إحصاءات مستوى الصوت المبنية على PEAK"
 
 msgid ""
 "...It means the resulting audio will be clipped,\n"
@@ -1027,28 +1100,39 @@ msgid ""
 "level. This results in data loss and the audio may\n"
 "sound distorted."
 msgstr ""
+"...يعني أن الصوت الناتج سيتعرض للقص،\n"
+"لأن مستوى صوته أعلى من الحد الأقصى 0 ديسيبل.\n"
+"وهذا يؤدي إلى فقدان بيانات وقد يبدو\n"
+"الصوت مشوهًا."
 
 msgid ""
 "...It means the resulting audio will not change,\n"
 "because it's equal to the source."
 msgstr ""
+"...يعني أن الصوت الناتج لن يتغير،\n"
+"لأنه مساوٍ للمصدر."
 
 msgid ""
 "...It means an audio signal will be produced with\n"
 "a lower volume than the source."
 msgstr ""
+"...يعني أنه سيُنتَج إشارة صوتية\n"
+"بمستوى أقل من المصدر."
 
 msgid "Get Latest Version"
-msgstr ""
+msgstr "الحصول على أحدث إصدار"
 
 msgid "Checking for newer version"
-msgstr ""
+msgstr "جارٍ البحث عن إصدار أحدث"
 
 msgid ""
 "\n"
 "\n"
 "New releases fix bugs and offer new features."
 msgstr ""
+"\n"
+"\n"
+"تُصلح الإصدارات الجديدة الأخطاء وتقدم ميزات جديدة."
 
 #, python-brace-format
 msgid ""
@@ -1057,6 +1141,10 @@ msgid ""
 "This is Videomass v.{0}\n"
 "\n"
 msgstr ""
+"\n"
+"\n"
+"هذا هو Videomass الإصدار {0}\n"
+"\n"
 
 msgid ""
 "q, ESC\n"
@@ -1079,89 +1167,118 @@ msgid ""
 "right mouse click\n"
 "left mouse double-click"
 msgstr ""
+"q, ESC\n"
+"f\n"
+"p, SPC\n"
+"m\n"
+"9, 0\n"
+"/, *\n"
+"a\n"
+"v\n"
+"t\n"
+"c\n"
+"w\n"
+"s\n"
+"\n"
+"يسار/يمين\n"
+"أسفل/أعلى\n"
+"page down/page up\n"
+"\n"
+"نقرة بزر الفأرة الأيمن\n"
+"نقر مزدوج بزر الفأرة الأيسر"
 
 msgid "Shortcut keys while playing with FFplay"
-msgstr ""
+msgstr "مفاتيح الاختصار أثناء التشغيل باستخدام FFplay"
 
 msgid "Stop"
-msgstr ""
+msgstr "إيقاف"
 
 msgid "Please take a moment to set up the application"
-msgstr ""
+msgstr "يرجى تخصيص بعض الوقت لإعداد التطبيق"
 
 msgid "Click the \"Next\" button to get started"
-msgstr ""
+msgstr "انقر على زر \"التالي\" للبدء"
 
 msgid "Welcome to the Videomass Wizard!"
-msgstr ""
+msgstr "مرحبًا بك في معالج Videomass!"
 
 msgid "Videomass is an application based on FFmpeg\n"
-msgstr ""
+msgstr "Videomass تطبيق قائم على FFmpeg\n"
 
 msgid "If FFmpeg is not on your computer, this application will be unusable"
-msgstr ""
+msgstr "إذا لم يكن FFmpeg موجودًا على جهازك فلن يكون هذا التطبيق قابلًا للاستخدام"
 
 msgid ""
 "If you have already installed FFmpeg on your operating system,\n"
 "click the \"Auto-detection\" button."
 msgstr ""
+"إذا كنت قد ثبّتّ FFmpeg على نظام التشغيل لديك،\n"
+"فانقر على زر \"كشف تلقائي\"."
 
 msgid ""
 "If you want to use a version of FFmpeg located on your filesystem\n"
 "but not installed on your operating system,\n"
 "click the \"Locate\" button."
 msgstr ""
+"إذا أردت استخدام إصدار من FFmpeg موجود على نظام ملفاتك\n"
+"لكنه غير مثبّت على نظام التشغيل،\n"
+"فانقر على زر \"تحديد الموقع\"."
 
 msgid "Auto-detection"
-msgstr ""
+msgstr "كشف تلقائي"
 
 msgid "Locate"
-msgstr ""
+msgstr "تحديد الموقع"
 
 msgid "Click the \"Next\" button"
-msgstr ""
+msgstr "انقر على زر \"التالي\""
 
 #, python-brace-format
 msgid "'{}' is not installed on your computer. Install it or indicate another location by clicking the 'Locate' button."
-msgstr ""
+msgstr "'{}' غير مثبّت على جهازك. ثبّته أو حدد موقعًا آخر بالنقر على زر 'تحديد الموقع'."
 
 msgid ""
 "Videomass already seems to include FFmpeg.\n"
 "\n"
 "Do you want to use that?"
 msgstr ""
+"يبدو أن Videomass يتضمن FFmpeg بالفعل.\n"
+"\n"
+"هل تريد استخدامه؟"
 
 msgid "Locating FFmpeg executables\n"
-msgstr ""
+msgstr "تحديد موقع ملفات FFmpeg التنفيذية\n"
 
 msgid ""
 "\"ffmpeg\", \"ffprobe\" and \"ffplay\" are required. Complete all\n"
 "the text boxes below by clicking on the respective buttons."
 msgstr ""
+"\"ffmpeg\" و\"ffprobe\" و\"ffplay\" مطلوبة. أكمل جميع\n"
+"مربعات النص أدناه بالنقر على الأزرار المقابلة."
 
 msgid "Wizard completed successfully!\n"
-msgstr ""
+msgstr "اكتمل المعالج بنجاح!\n"
 
 msgid "Remember that you can always change these settings later, through the Preferences dialog."
-msgstr ""
+msgstr "تذكّر أنه يمكنك دائمًا تغيير هذه الإعدادات لاحقًا من خلال نافذة التفضيلات."
 
 msgid "Thank You!"
-msgstr ""
+msgstr "شكرًا لك!"
 
 msgid "To exit click the \"Finish\" button"
-msgstr ""
+msgstr "للخروج انقر على زر \"إنهاء\""
 
 msgid "< Previous"
-msgstr ""
+msgstr "< السابق"
 
 msgid "Next >"
-msgstr ""
+msgstr "التالي >"
 
 msgid "Videomass Wizard"
-msgstr ""
+msgstr "معالج Videomass"
 
 msgid "Finish"
-msgstr ""
+msgstr "إنهاء"
 
 #, python-brace-format
 msgid ""
@@ -1169,326 +1286,340 @@ msgid ""
 "\n"
 "\"{}\"\n"
 msgstr ""
+"مجلد الإخراج غير موجود:\n"
+"\n"
+"\"{}\"\n"
 
 msgid "Files already exist, do you want to overwrite them?"
-msgstr ""
+msgstr "الملفات موجودة بالفعل، هل تريد الكتابة فوقها؟"
 
 msgid "Already exist"
-msgstr ""
+msgstr "موجود بالفعل"
 
 msgid "Not found"
-msgstr ""
+msgstr "غير موجود"
 
 msgid "Error list"
-msgstr ""
+msgstr "قائمة الأخطاء"
 
 msgid "File(s) not found"
-msgstr ""
+msgstr "الملفات غير موجودة"
 
 #, python-brace-format
 msgid "Please, see «{0}» file for details."
-msgstr ""
+msgstr "يرجى مراجعة الملف «{0}» للاطلاع على التفاصيل."
 
 msgid ""
 "Wait....\n"
 "Audio peak analysis."
 msgstr ""
+"انتظر....\n"
+"تحليل ذروة الصوت."
 
 msgid "Videomass - Downloading..."
-msgstr ""
+msgstr "Videomass - جارٍ التنزيل..."
 
 msgid "Ready"
-msgstr ""
+msgstr "جاهز"
 
 msgid ""
 "Not all items in the queue were completed.\n"
 "\n"
 "Would you like to keep them in the queue?"
 msgstr ""
+"لم تكتمل جميع العناصر في قائمة الانتظار.\n"
+"\n"
+"هل تريد إبقاءها في قائمة الانتظار؟"
 
 #, python-brace-format
 msgid "Queue ({0})"
-msgstr ""
+msgstr "قائمة الانتظار ({0})"
 
 msgid "Queue"
-msgstr ""
+msgstr "قائمة الانتظار"
 
 msgid "There are still active windows with running processes, make sure you finish your work before exit."
-msgstr ""
+msgstr "ما زالت هناك نوافذ نشطة بها عمليات قيد التشغيل، تأكد من إنهاء عملك قبل الخروج."
 
 msgid "Are you sure you want to exit the application?"
-msgstr ""
+msgstr "هل أنت متأكد من رغبتك في الخروج من التطبيق؟"
 
 msgid "Exit"
-msgstr ""
+msgstr "خروج"
 
 msgid "Import files\tCtrl+O"
-msgstr ""
+msgstr "استيراد ملفات\tCtrl+O"
 
 msgid "Open destination folder of encodings\tCtrl+D"
-msgstr ""
+msgstr "فتح مجلد وجهة التحويلات\tCtrl+D"
 
 msgid "Load queue file"
-msgstr ""
+msgstr "تحميل ملف قائمة الانتظار"
 
 msgid "Load a previously exported queue file"
-msgstr ""
+msgstr "تحميل ملف قائمة انتظار تم تصديره سابقًا"
 
 msgid "Open trash"
-msgstr ""
+msgstr "فتح سلة المهملات"
 
 msgid "Open the Videomass trash folder"
-msgstr ""
+msgstr "فتح مجلد سلة مهملات Videomass"
 
 msgid "Empty trash"
-msgstr ""
+msgstr "إفراغ سلة المهملات"
 
 msgid "Delete all files in the Videomass trash folder"
-msgstr ""
+msgstr "حذف جميع الملفات في مجلد سلة مهملات Videomass"
 
 msgid "Exit\tCtrl+Q"
-msgstr ""
+msgstr "خروج\tCtrl+Q"
 
 msgid "Completely exit the application"
-msgstr ""
+msgstr "الخروج من التطبيق بالكامل"
 
 msgid "File"
-msgstr ""
+msgstr "ملف"
 
 msgid "Rename selected file\tCtrl+R"
-msgstr ""
+msgstr "إعادة تسمية الملف المحدد\tCtrl+R"
 
 msgid "Rename the destination of the selected file"
-msgstr ""
+msgstr "إعادة تسمية وجهة الملف المحدد"
 
 msgid "Batch rename files\tCtrl+B"
-msgstr ""
+msgstr "إعادة تسمية الملفات دفعة واحدة\tCtrl+B"
 
 msgid "Numerically renames the destination of all items in the list"
-msgstr ""
+msgstr "إعادة تسمية وجهة جميع عناصر القائمة بأرقام متسلسلة"
 
 msgid "Remove selected entry\tDEL"
-msgstr ""
+msgstr "إزالة الإدخال المحدد\tDEL"
 
 msgid "Remove the selected file from the list"
-msgstr ""
+msgstr "إزالة الملف المحدد من القائمة"
 
 msgid "Clear list\tShift+DEL"
-msgstr ""
+msgstr "مسح القائمة\tShift+DEL"
 
 msgid "Clear the file list"
-msgstr ""
+msgstr "مسح قائمة الملفات"
 
 msgid "Preferences\tCtrl+P"
-msgstr ""
+msgstr "التفضيلات\tCtrl+P"
 
 msgid "Application preferences"
-msgstr ""
+msgstr "تفضيلات التطبيق"
 
 msgid "Find FFmpeg topics"
-msgstr ""
+msgstr "البحث في مواضيع FFmpeg"
 
 msgid "A useful tool to search for FFmpeg help topics and options"
-msgstr ""
+msgstr "أداة مفيدة للبحث في مواضيع وخيارات مساعدة FFmpeg"
 
 msgid "Check for preset updates"
-msgstr ""
+msgstr "التحقق من تحديثات الإعدادات المسبقة"
 
 #, python-brace-format
 msgid "Check for new presets updates from {0}"
-msgstr ""
+msgstr "التحقق من وجود تحديثات جديدة للإعدادات المسبقة من {0}"
 
 msgid "Get latest presets"
-msgstr ""
+msgstr "الحصول على أحدث الإعدادات المسبقة"
 
 #, python-brace-format
 msgid "Get the latest presets from {0}"
-msgstr ""
+msgstr "الحصول على أحدث الإعدادات المسبقة من {0}"
 
 msgid "Work notes\tCtrl+N"
-msgstr ""
+msgstr "ملاحظات العمل\tCtrl+N"
 
 msgid "Read and write useful notes and reminders."
-msgstr ""
+msgstr "اقرأ واكتب ملاحظات وتذكيرات مفيدة."
 
 msgid "Tools"
-msgstr ""
+msgstr "أدوات"
 
 msgid "Show FFmpeg's built-in configuration capabilities"
-msgstr ""
+msgstr "إظهار إمكانيات الإعدادات المضمّنة في FFmpeg"
 
 msgid "Muxers and demuxers available on your version of FFmpeg"
-msgstr ""
+msgstr "أدوات الدمج والفصل المتاحة في إصدار FFmpeg لديك"
 
 msgid "Encoders available on your version of FFmpeg"
-msgstr ""
+msgstr "المرمِّزات المتاحة في إصدار FFmpeg لديك"
 
 msgid "Decoders available on your version of FFmpeg"
-msgstr ""
+msgstr "مفكِّكات الترميز المتاحة في إصدار FFmpeg لديك"
 
 msgid "Enable timestamps on playback"
-msgstr ""
+msgstr "تفعيل الطوابع الزمنية أثناء التشغيل"
 
 msgid "Displays timestamp when playing media with FFplay"
-msgstr ""
+msgstr "يعرض الطابع الزمني عند تشغيل الوسائط باستخدام FFplay"
 
 msgid "Auto-exit after playback"
-msgstr ""
+msgstr "إغلاق تلقائي بعد التشغيل"
 
 msgid "If checked, the FFplay window will auto-close when playback is complete"
-msgstr ""
+msgstr "عند التحديد، ستُغلق نافذة FFplay تلقائيًا عند انتهاء التشغيل"
 
 msgid "Customize the timestamp style"
-msgstr ""
+msgstr "تخصيص نمط الطابع الزمني"
 
 msgid "While playing..."
-msgstr ""
+msgstr "أثناء التشغيل..."
 
 msgid "Show useful shortcut keys when playing or previewing using FFplay"
-msgstr ""
+msgstr "إظهار مفاتيح الاختصار المفيدة عند التشغيل أو المعاينة باستخدام FFplay"
 
 msgid "Show timeline editor\tCtrl+T"
-msgstr ""
+msgstr "إظهار محرر الخط الزمني\tCtrl+T"
 
 msgid "Set duration or trim slices of time to remove unwanted parts from your files"
-msgstr ""
+msgstr "حدد المدة أو اقتطع شرائح زمنية لإزالة الأجزاء غير المرغوبة من ملفاتك"
 
 msgid "View"
-msgstr ""
+msgstr "عرض"
 
 msgid "Home panel\tCtrl+Shift+H"
-msgstr ""
+msgstr "اللوحة الرئيسية\tCtrl+Shift+H"
 
 msgid "Go to the «Home» panel"
-msgstr ""
+msgstr "الانتقال إلى لوحة «الرئيسية»"
 
 msgid "Presets Manager\tCtrl+Shift+P"
-msgstr ""
+msgstr "مدير الإعدادات المسبقة\tCtrl+Shift+P"
 
 msgid "Go to the «Presets Manager» panel"
-msgstr ""
+msgstr "الانتقال إلى لوحة «مدير الإعدادات المسبقة»"
 
 msgid "A/V Conversions\tCtrl+Shift+V"
-msgstr ""
+msgstr "تحويلات الصوت والفيديو\tCtrl+Shift+V"
 
 msgid "Go to the «A/V Conversions» panel"
-msgstr ""
+msgstr "الانتقال إلى لوحة «تحويلات الصوت والفيديو»"
 
 msgid "Concatenate Demuxer\tCtrl+Shift+D"
-msgstr ""
+msgstr "فاصل الدمج (Concatenate Demuxer)\tCtrl+Shift+D"
 
 msgid "Go to the «Concatenate Demuxer» panel"
-msgstr ""
+msgstr "الانتقال إلى لوحة «فاصل الدمج (Concatenate Demuxer)»"
 
 msgid "Still Image Maker\tCtrl+Shift+I"
-msgstr ""
+msgstr "صانع الصور الثابتة\tCtrl+Shift+I"
 
 msgid "Go to the «Still Image Maker» panel"
-msgstr ""
+msgstr "الانتقال إلى لوحة «صانع الصور الثابتة»"
 
 msgid "From Movie to Pictures\tCtrl+Shift+S"
-msgstr ""
+msgstr "من فيلم إلى صور\tCtrl+Shift+S"
 
 msgid "Go to the «From Movie to Pictures» panel"
-msgstr ""
+msgstr "الانتقال إلى لوحة «من فيلم إلى صور»"
 
 msgid "Output monitor\tCtrl+Shift+O"
-msgstr ""
+msgstr "شاشة المخرجات\tCtrl+Shift+O"
 
 msgid "Keeps track of the output for debugging errors"
-msgstr ""
+msgstr "تتبّع المخرجات لتصحيح الأخطاء"
 
 msgid "Go"
-msgstr ""
+msgstr "انتقال"
 
 msgid "User guide"
-msgstr ""
+msgstr "دليل المستخدم"
 
 msgid "System version"
-msgstr ""
+msgstr "إصدار النظام"
 
 msgid "Get version about your operating system, version of Python and wxPython."
-msgstr ""
+msgstr "الحصول على معلومات إصدار نظام التشغيل وبايثون وwxPython لديك."
 
 msgid "Show log files\tCtrl+L"
-msgstr ""
+msgstr "إظهار ملفات السجل\tCtrl+L"
 
 msgid "Viewing log messages"
-msgstr ""
+msgstr "عرض رسائل السجل"
 
 msgid "Issue tracker"
-msgstr ""
+msgstr "متتبع المشكلات"
 
 msgid "Contribute to the project"
-msgstr ""
+msgstr "المساهمة في المشروع"
 
 msgid "Sponsor this project"
-msgstr ""
+msgstr "ادعم هذا المشروع"
 
 msgid "Become a developer supporter"
-msgstr ""
+msgstr "كن داعمًا للمطوّر"
 
 msgid "Donate"
-msgstr ""
+msgstr "تبرّع"
 
 msgid "Donate to the app developer"
-msgstr ""
+msgstr "التبرع لمطوّر التطبيق"
 
 msgid "Other projects by the developer"
-msgstr ""
+msgstr "مشاريع أخرى للمطوّر"
 
 msgid "About Videomass"
-msgstr ""
+msgstr "حول Videomass"
 
 msgid "Check for newer version"
-msgstr ""
+msgstr "التحقق من وجود إصدار أحدث"
 
 msgid "Check for the latest Videomass version"
-msgstr ""
+msgstr "التحقق من أحدث إصدار من Videomass"
 
 msgid "Help"
-msgstr ""
+msgstr "مساعدة"
 
 msgid "Import files"
-msgstr ""
+msgstr "استيراد ملفات"
 
 msgid "No default folder has been set for the destination of the encodings. The current setting is \"Same destination paths as source files\"."
-msgstr ""
+msgstr "لم يتم تعيين مجلد افتراضي لوجهة التحويلات. الإعداد الحالي هو \"نفس مسارات الملفات المصدر\"."
 
 #, python-brace-format
 msgid ""
 "'{}':\n"
 "No such file or directory"
 msgstr ""
+"'{}':\n"
+"لا يوجد ملف أو مجلد بهذا الاسم"
 
 msgid "Are you sure to empty trash folder?"
-msgstr ""
+msgstr "هل أنت متأكد من رغبتك في إفراغ سلة المهملات؟"
 
 #, python-brace-format
 msgid ""
 "'{}':\n"
 "There are no files to delete."
 msgstr ""
+"'{}':\n"
+"لا توجد ملفات لحذفها."
 
 #, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
-msgstr ""
+msgstr "الإصدار المثبّت v{0}. يتوفر إصدار جديد من الإعدادات المسبقة {1}"
 
 #, python-brace-format
 msgid "Installed release v{0}. No new updates found."
-msgstr ""
+msgstr "الإصدار المثبّت v{0}. لا توجد تحديثات جديدة."
 
 msgid ""
 "Wait....\n"
 "The archive is being downloaded"
 msgstr ""
+"انتظر....\n"
+"جارٍ تنزيل الأرشيف"
 
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
-msgstr ""
+msgstr "تم التنزيل بنجاح إلى \"{0}\""
 
 msgid "Some changes require restarting the application."
-msgstr ""
+msgstr "تتطلب بعض التغييرات إعادة تشغيل التطبيق."
 
 #, python-brace-format
 msgid ""
@@ -1496,169 +1627,177 @@ msgid ""
 "\n"
 "Do you want to restart the application now?"
 msgstr ""
+"{0}\n"
+"\n"
+"هل تريد إعادة تشغيل التطبيق الآن؟"
 
 msgid "Restart Videomass?"
-msgstr ""
+msgstr "إعادة تشغيل Videomass؟"
 
 #, python-brace-format
 msgid "A new release is available - v.{0}\n"
-msgstr ""
+msgstr "يتوفر إصدار جديد - v.{0}\n"
 
 msgid "You are using a development version that has not yet been released!\n"
-msgstr ""
+msgstr "أنت تستخدم نسخة تطوير لم تصدر بعد!\n"
 
 msgid "Congratulation! You are already using the latest version.\n"
-msgstr ""
+msgstr "تهانينا! أنت تستخدم أحدث إصدار بالفعل.\n"
 
 msgid "Previous panel"
-msgstr ""
+msgstr "اللوحة السابقة"
 
 msgid "Back"
-msgstr ""
+msgstr "رجوع"
 
 msgid "Next panel"
-msgstr ""
+msgstr "اللوحة التالية"
 
 msgid "Next"
-msgstr ""
+msgstr "التالي"
 
 msgid "Home panel"
-msgstr ""
+msgstr "اللوحة الرئيسية"
 
 msgid "Home"
-msgstr ""
+msgstr "الرئيسية"
 
 msgid "Play the selected input file"
-msgstr ""
+msgstr "تشغيل ملف الإدخال المحدد"
 
 msgid "Play"
-msgstr ""
+msgstr "تشغيل"
 
 msgid "Get informative data about imported media streams"
-msgstr ""
+msgstr "الحصول على بيانات معلوماتية عن تدفقات الوسائط المستوردة"
 
 msgid "Start batch processing"
-msgstr ""
+msgstr "بدء المعالجة الدفعية"
 
 msgid "Stops current process"
-msgstr ""
+msgstr "إيقاف العملية الحالية"
 
 msgid "Add an item to Queue"
-msgstr ""
+msgstr "إضافة عنصر إلى قائمة الانتظار"
 
 msgid "Add to Queue"
-msgstr ""
+msgstr "إضافة إلى قائمة الانتظار"
 
 msgid "Show queue"
-msgstr ""
+msgstr "إظهار قائمة الانتظار"
 
 msgid "Videomass - File List"
-msgstr ""
+msgstr "Videomass - قائمة الملفات"
 
 msgid "Videomass - AV Conversions"
-msgstr ""
+msgstr "Videomass - تحويلات الصوت والفيديو"
 
 msgid "Videomass - Presets Manager"
-msgstr ""
+msgstr "Videomass - مدير الإعدادات المسبقة"
 
 msgid "Videomass - Concatenate Demuxer"
-msgstr ""
+msgstr "Videomass - فاصل الدمج (Concatenate Demuxer)"
 
 msgid "Videomass - From Movie to Pictures"
-msgstr ""
+msgstr "Videomass - من فيلم إلى صور"
 
 msgid "Videomass - Still Image Maker"
-msgstr ""
+msgstr "Videomass - صانع الصور الثابتة"
 
 msgid "Have to select an item in the file list first"
-msgstr ""
+msgstr "يجب تحديد عنصر في قائمة الملفات أولًا"
 
 msgid ""
 "An item with the same destination file already exists.\n"
 "\n"
 "Do you want to replace it by adding the new item to the queue?"
 msgstr ""
+"يوجد عنصر بنفس ملف الوجهة بالفعل.\n"
+"\n"
+"هل تريد استبداله بإضافة العنصر الجديد إلى قائمة الانتظار؟"
 
 msgid "Videomass - FFmpeg Message Monitoring"
-msgstr ""
+msgstr "Videomass - مراقبة رسائل FFmpeg"
 
 #, python-brace-format
 msgid "The system will turn off in {0} seconds"
-msgstr ""
+msgstr "سيتم إيقاف تشغيل النظام خلال {0} ثانية"
 
 msgid "Videomass - Shutdown!"
-msgstr ""
+msgstr "Videomass - إيقاف التشغيل!"
 
 msgid "Error while shutting down. Please see file log for details."
-msgstr ""
+msgstr "حدث خطأ أثناء إيقاف التشغيل. يرجى مراجعة ملف السجل للتفاصيل."
 
 #, python-brace-format
 msgid "Exiting the application in {0} seconds"
-msgstr ""
+msgstr "سيتم الخروج من التطبيق خلال {0} ثانية"
 
 msgid "Videomass - Exiting!"
-msgstr ""
+msgstr "Videomass - جارٍ الخروج!"
 
 msgid "Start point adjustment"
-msgstr ""
+msgstr "ضبط نقطة البداية"
 
 msgid "End point adjustment"
-msgstr ""
+msgstr "ضبط نقطة النهاية"
 
 msgid "Hours"
-msgstr ""
+msgstr "ساعات"
 
 msgid "Minutes"
-msgstr ""
+msgstr "دقائق"
 
 msgid "Seconds"
-msgstr ""
+msgstr "ثوانٍ"
 
 msgid "Milliseconds"
-msgstr ""
+msgstr "أجزاء من الثانية (ميلي ثانية)"
 
 msgid "No source duration:"
-msgstr ""
+msgstr "لا توجد مدة للمصدر:"
 
 msgid "Wave"
-msgstr ""
+msgstr "موجة"
 
 #, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
-msgstr ""
+msgstr "{0} {1}  |  مدة المقطع: {2}"
 
 msgid "End adjustment"
-msgstr ""
+msgstr "ضبط النهاية"
 
 msgid "Start adjustment"
-msgstr ""
+msgstr "ضبط البداية"
 
 msgid "Toggles the display of the audio waveform in the background ruler"
-msgstr ""
+msgstr "تبديل عرض الموجة الصوتية في المسطرة الخلفية"
 
 msgid "Reset segment on timeline"
-msgstr ""
+msgstr "إعادة ضبط المقطع على الخط الزمني"
 
 msgid "Timeline Editor Usage"
-msgstr ""
+msgstr "استخدام محرر الخط الزمني"
 
 msgid "Play segment"
-msgstr ""
+msgstr "تشغيل المقطع"
 
 msgid "Invalid file format for playback."
-msgstr ""
+msgstr "صيغة ملف غير صالحة للتشغيل."
 
 msgid "No segment selected in the timeline yet."
-msgstr ""
+msgstr "لم يتم تحديد أي مقطع على الخط الزمني بعد."
 
 msgid ""
 "Invalid segment selection!\n"
 "«End» cursor must be moved to the right side of the «Start» cursor."
 msgstr ""
+"تحديد المقطع غير صالح!\n"
+"يجب تحريك مؤشر «النهاية» إلى يمين مؤشر «البداية»."
 
 #, python-format
 msgid "Invalid or unsupported file:  %s"
-msgstr ""
+msgstr "ملف غير صالح أو غير مدعوم:  %s"
 
 #, python-brace-format
 msgid ""
@@ -1666,6 +1805,9 @@ msgid ""
 "The selected source file does not contain any audio streams:\n"
 "\"{}\""
 msgstr ""
+"تعذر إنشاء الموجة الصوتية.\n"
+"لا يحتوي ملف المصدر المحدد على أي تدفقات صوتية:\n"
+"\"{}\""
 
 msgid ""
 "The timeline editor allows you to trim slices of time on selected files.\n"
@@ -1684,44 +1826,60 @@ msgid ""
 "(00:00:00.000) and all timeline controls will be disabled.\n"
 "This behavior also applies when deselecting files."
 msgstr ""
+"يتيح لك محرر الخط الزمني اقتطاع شرائح زمنية من الملفات المحددة.\n"
+"صيغة الوقت المستخدمة لعرض المدد هي الساعات والدقائق\n"
+"والثواني وأجزاء الثانية (HH:MM:SS.ms).\n"
+"\n"
+"تشير قيم مدة «البداية»/«النهاية» دائمًا إلى الموضع الابتدائي\n"
+"للمدة الإجمالية. وتُعرض المدة الإجمالية للملف ومدة\n"
+"المقطع المحدد (بما في ذلك التحذيرات) في شريط حالة الخط الزمني.\n"
+"\n"
+"يرجى ملاحظة أن إجراءات مثل استيراد ملفات جديدة وتحديد العناصر وإلغاء تحديدها\n"
+"وحذفها وفرزها ستعيد الخط الزمني إلى قيمه الافتراضية.\n"
+"\n"
+"إذا لم يكن هناك ملف مصدر، فستُضبط قيم المدة على القيمة الافتراضية\n"
+"(00:00:00.000) وسيتم تعطيل جميع عناصر تحكم الخط الزمني.\n"
+"ينطبق هذا السلوك أيضًا عند إلغاء تحديد الملفات."
 
 msgid "Source duration:"
-msgstr ""
+msgstr "مدة المصدر:"
 
 msgid "WARNING: Invalid segment selection, out of range."
-msgstr ""
+msgstr "تحذير: تحديد المقطع غير صالح، خارج النطاق."
 
 msgid ""
 "Start by dragging the handles in the left corners or\n"
 "click the Start/End adjustment buttons for fine tuning."
 msgstr ""
+"ابدأ بسحب المقابض في الزوايا اليسرى أو\n"
+"انقر على أزرار ضبط البداية/النهاية للضبط الدقيق."
 
 msgid "Start"
-msgstr ""
+msgstr "البداية"
 
 msgid "End"
-msgstr ""
+msgstr "النهاية"
 
 msgid "Media:"
-msgstr ""
+msgstr "الوسائط:"
 
 msgid "Container:"
-msgstr ""
+msgstr "الحاوية:"
 
 msgid "Target"
-msgstr ""
+msgstr "الهدف"
 
 msgid "Miscellaneous"
-msgstr ""
+msgstr "متفرقات"
 
 msgid "Save as a new profile of the Presets Manager."
-msgstr ""
+msgstr "الحفظ كإعداد جديد في مدير الإعدادات المسبقة."
 
 msgid "Displays the RAW commands for the selected file."
-msgstr ""
+msgstr "يعرض أوامر RAW للملف المحدد."
 
 msgid "Available video encoders. \"Copy\" means that the video stream will not be re-encoded and will allow you (depending on the encoder) to change the container, audio codec and a few other parameters."
-msgstr ""
+msgstr "مرمِّزات الفيديو المتاحة. \"نسخ\" يعني أن تدفق الفيديو لن يُعاد ترميزه، وسيتيح لك (حسب المرمِّز) تغيير الحاوية ومرمِّز الصوت وبعض المعاملات الأخرى."
 
 msgid ""
 "Container format. It is usually represented by the file extension (output format).\n"
@@ -1730,59 +1888,69 @@ msgid ""
 "\n"
 "If the media target is set to \"Audio\", you can extract only the audio streams from videos, or simply convert audio source files."
 msgstr ""
+"صيغة الحاوية. تُمثَّل عادةً بامتداد الملف (صيغة الإخراج).\n"
+"\n"
+"إذا كان هدف الوسائط \"فيديو\" ومرمِّز الفيديو \"نسخ\"، فيمكنك اختياريًا ضبط هذا التحكم على \"نسخ\" لاستخدام نفس حاوية الملف المصدر.\n"
+"\n"
+"إذا كان هدف الوسائط \"صوت\"، فيمكنك استخراج تدفقات الصوت فقط من مقاطع الفيديو، أو ببساطة تحويل ملفات الصوت المصدر."
 
 msgid ""
 "Set output files target: \"Video\" to save output files as video files; \"Audio\" to save files using an audio encoder and format.\n"
 "\n"
 "Note that by using \"Audio\" as the target, you will still be able to work on the video source files but you will only be able to extract the audio streams, convert them and apply audio filters such as normalization."
 msgstr ""
+"حدد هدف ملفات الإخراج: \"فيديو\" لحفظ ملفات الإخراج كملفات فيديو؛ و\"صوت\" لحفظ الملفات باستخدام مرمِّز وصيغة صوتية.\n"
+"\n"
+"لاحظ أنه عند استخدام \"صوت\" كهدف، ستظل قادرًا على العمل على ملفات الفيديو المصدر لكنك ستتمكن فقط من استخراج تدفقات الصوت وتحويلها وتطبيق مرشحات الصوت مثل التطبيع."
 
 msgid "Preview video filters"
-msgstr ""
+msgstr "معاينة مرشحات الفيديو"
 
 msgid "Disable active filters"
-msgstr ""
+msgstr "تعطيل المرشحات النشطة"
 
 msgid "Resize"
-msgstr ""
+msgstr "تغيير الحجم"
 
 msgid "Crop"
-msgstr ""
+msgstr "قص"
 
 msgid "Transpose"
-msgstr ""
+msgstr "تدوير"
 
 msgid "Denoise"
-msgstr ""
+msgstr "إزالة الضجيج"
 
 msgid "Stabilize"
-msgstr ""
+msgstr "تثبيت"
 
 msgid "Equalize"
-msgstr ""
+msgstr "موازنة"
 
 msgid "To preview Stabilize filter, please click Preview button on Video Stabilizer Tool"
-msgstr ""
+msgstr "لمعاينة مرشح التثبيت، يرجى النقر على زر المعاينة في أداة تثبيت الفيديو"
 
 msgid ""
 "Unsupported file:\n"
 "Missing decoder or library? Check FFmpeg configuration."
 msgstr ""
+"ملف غير مدعوم:\n"
+"مفكّك ترميز أو مكتبة مفقودة؟ تحقق من إعدادات FFmpeg."
 
 msgid "The file is not a frame or a video file"
-msgstr ""
+msgstr "الملف ليس إطارًا ولا ملف فيديو"
 
 msgid "Undetected volume values! Click the \"Volume detect\" button to analyze audio volume data."
-msgstr ""
+msgstr "قيم مستوى الصوت غير مكتشفة! انقر على زر \"كشف مستوى الصوت\" لتحليل بيانات مستوى الصوت."
 
 msgid "Off"
-msgstr ""
+msgstr "إيقاف"
 
 msgid "Auto"
-msgstr ""
+msgstr "تلقائي"
 
 msgid "No Subtitles"
-msgstr ""
+msgstr "بدون ترجمة"
 
 msgid ""
 "Batch processing items\n"
@@ -1798,81 +1966,93 @@ msgid ""
 "Start of segment\n"
 "Clip duration"
 msgstr ""
+"عناصر المعالجة الدفعية\n"
+"الوجهة\n"
+"الأتمتة/الإعداد المسبق\n"
+"مرورات الترميز\n"
+"صيغة الإخراج\n"
+"مرمِّز الفيديو\n"
+"تدفق الترجمة\n"
+"مرمِّز الصوت\n"
+"تطبيع الصوت\n"
+"نوع الوسائط الناتجة\n"
+"بداية المقطع\n"
+"مدة المقطع"
 
 #, python-brace-format
 msgid "Write profile on «{0}»"
-msgstr ""
+msgstr "كتابة الإعداد في «{0}»"
 
 msgid "Enter name for new preset"
-msgstr ""
+msgstr "أدخل اسمًا للإعداد المسبق الجديد"
 
 msgid "Invalid file name, make sure to provide a valid name including the «.json» extension"
-msgstr ""
+msgstr "اسم ملف غير صالح، تأكد من إدخال اسم صالح يتضمن الامتداد «.json»"
 
 #, python-brace-format
 msgid "Cannot save current data in file «{}»."
-msgstr ""
+msgstr "تعذر حفظ البيانات الحالية في الملف «{}»."
 
 msgid "Open Videomass preset"
-msgstr ""
+msgstr "فتح إعداد Videomass مسبق"
 
 msgid "Videomass - Save new profile"
-msgstr ""
+msgstr "Videomass - حفظ إعداد جديد"
 
 msgid "Where do you want to save this profile?"
-msgstr ""
+msgstr "أين تريد حفظ هذا الإعداد؟"
 
 msgid "Save the profile to a new preset"
-msgstr ""
+msgstr "حفظ الإعداد في إعداد مسبق جديد"
 
 msgid "Save the profile to an existing preset"
-msgstr ""
+msgstr "حفظ الإعداد في إعداد مسبق موجود"
 
 msgid "Welcome to Videomass"
-msgstr ""
+msgstr "مرحبًا بك في Videomass"
 
 #, python-brace-format
 msgid "Version {}"
-msgstr ""
+msgstr "الإصدار {}"
 
 msgid "Presets Manager"
-msgstr ""
+msgstr "مدير الإعدادات المسبقة"
 
 msgid "AV-Conversions"
-msgstr ""
+msgstr "تحويلات الصوت والفيديو"
 
 msgid "Concatenate media files"
-msgstr ""
+msgstr "دمج ملفات الوسائط"
 
 msgid "Still Image Maker"
-msgstr ""
+msgstr "صانع الصور الثابتة"
 
 msgid "From Movie to Pictures"
-msgstr ""
+msgstr "من فيلم إلى صور"
 
 msgid "Create, edit and use quickly your favorite FFmpeg presets and profiles with full formats support and codecs."
-msgstr ""
+msgstr "أنشئ وعدّل واستخدم بسرعة إعدادات FFmpeg المسبقة وملفاتك الشخصية المفضلة مع دعم كامل للصيغ والمرمِّزات."
 
 msgid "A set of useful tools for audio and video conversions. Save your profiles and reuse them with Presets Manager."
-msgstr ""
+msgstr "مجموعة أدوات مفيدة لتحويل الصوت والفيديو. احفظ إعداداتك وأعد استخدامها مع مدير الإعدادات المسبقة."
 
 msgid "Concatenate multiple media files based on import order without re-encoding"
-msgstr ""
+msgstr "دمج عدة ملفات وسائط حسب ترتيب الاستيراد دون إعادة ترميز"
 
 msgid "Create video from a sequence of images, based on import order, with the ability to add an audio file."
-msgstr ""
+msgstr "إنشاء فيديو من سلسلة صور، حسب ترتيب الاستيراد، مع إمكانية إضافة ملف صوتي."
 
 msgid "Extract images (frames) from your movies in JPG, PNG, BMP, GIF formats."
-msgstr ""
+msgstr "استخراج الصور (الإطارات) من أفلامك بصيغ JPG وPNG وBMP وGIF."
 
 msgid "At least two files are required to perform concatenation."
-msgstr ""
+msgstr "يلزم ملفان على الأقل لإجراء الدمج."
 
 msgid "Invalid data found"
-msgstr ""
+msgstr "بيانات غير صالحة"
 
 msgid "The files do not have the same \"codec_types\", same \"sample_rate\" or same \"width\" or \"height\". Unable to proceed."
-msgstr ""
+msgstr "الملفات لا تملك نفس \"codec_types\" أو نفس \"sample_rate\" أو نفس \"width\" أو \"height\". تعذر المتابعة."
 
 msgid ""
 "\n"
@@ -1888,12 +2068,24 @@ msgid ""
 "\n"
 "- Audio files must have exactly the same formats, same codecs with equal sample rate."
 msgstr ""
+"\n"
+"- تُنفَّذ وظيفة الدمج مع ملفات الصوت فقط أو ملفات الفيديو فقط.\n"
+"\n"
+"- يعتمد ترتيب الدمج على ترتيب إضافة الملفات.\n"
+"\n"
+"- سيحمل ملف الإخراج نفس اسم أول ملف تمت إضافته (ويعتمد أيضًا على\n"
+"  الإعدادات في نافذة التفضيلات أو وظائف إعادة التسمية المستخدمة).\n"
+"\n"
+"- يجب أن تحتوي ملفات الفيديو على نفس التدفقات تمامًا ونفس المرمِّزات ونفس\n"
+"  العرض/الارتفاع، ولكن يمكن أن تكون في حاويات بصيغ مختلفة.\n"
+"\n"
+"- يجب أن تكون ملفات الصوت بنفس الصيغ تمامًا ونفس المرمِّزات وبنفس معدل العينة."
 
 msgid "Videomass Documentation:"
-msgstr ""
+msgstr "توثيق Videomass:"
 
 msgid "Official FFmpeg documentation:"
-msgstr ""
+msgstr "توثيق FFmpeg الرسمي:"
 
 msgid ""
 "Items to concatenate\n"
@@ -1902,188 +2094,193 @@ msgid ""
 "Output multimedia type\n"
 "Duration"
 msgstr ""
+"العناصر المراد دمجها\n"
+"وجهة الملف\n"
+"صيغة الإخراج\n"
+"نوع الوسائط الناتجة\n"
+"المدة"
 
 msgid "File has illegal characters like:"
-msgstr ""
+msgstr "يحتوي الملف على أحرف غير مسموحة مثل:"
 
 msgid "Invalid character found in path name: (\")"
-msgstr ""
+msgstr "تم العثور على حرف غير صالح في اسم المسار: (\")"
 
 msgid "Directories are not allowed, just add files, please."
-msgstr ""
+msgstr "المجلدات غير مسموحة، يرجى إضافة ملفات فقط."
 
 msgid "File without format extension: please give an appropriate extension to the file name, example '.mkv', '.avi', '.mp3', etc."
-msgstr ""
+msgstr "ملف بلا امتداد صيغة: يرجى إعطاء الملف امتدادًا مناسبًا، مثل '.mkv' أو '.avi' أو '.mp3' وغيرها."
 
 #, python-brace-format
 msgid "Name has illegal characters like: {0}"
-msgstr ""
+msgstr "يحتوي الاسم على أحرف غير مسموحة مثل: {0}"
 
 msgid "Name already in use:"
-msgstr ""
+msgstr "الاسم مستخدم بالفعل:"
 
 msgid "Duplicate file, it has already been added to the list."
-msgstr ""
+msgstr "ملف مكرر، تمت إضافته بالفعل إلى القائمة."
 
 msgid "Rejected files"
-msgstr ""
+msgstr "الملفات المرفوضة"
 
 msgid "Source file"
-msgstr ""
+msgstr "الملف المصدر"
 
 msgid "Duration"
-msgstr ""
+msgstr "المدة"
 
 msgid "Media type"
-msgstr ""
+msgstr "نوع الوسائط"
 
 msgid "Size"
-msgstr ""
+msgstr "الحجم"
 
 msgid "Drag one or more files below"
-msgstr ""
+msgstr "اسحب ملفًا واحدًا أو أكثر إلى الأسفل"
 
 msgid "Save to:"
-msgstr ""
+msgstr "حفظ في:"
 
 msgid "Set a new destination folder for encodings"
-msgstr ""
+msgstr "تعيين مجلد وجهة جديد للتحويلات"
 
 msgid "Encodings destination folder"
-msgstr ""
+msgstr "مجلد وجهة التحويلات"
 
 msgid "Play file"
-msgstr ""
+msgstr "تشغيل الملف"
 
 msgid "Drag two or more Audio/Video files below"
-msgstr ""
+msgstr "اسحب ملفين أو أكثر من ملفات الصوت/الفيديو إلى الأسفل"
 
 msgid "Drag one or more Image files below"
-msgstr ""
+msgstr "اسحب ملف صورة واحدًا أو أكثر إلى الأسفل"
 
 msgid "Drag one or more Video files below"
-msgstr ""
+msgstr "اسحب ملف فيديو واحدًا أو أكثر إلى الأسفل"
 
 msgid "Rename the file destination"
-msgstr ""
+msgstr "إعادة تسمية وجهة الملف"
 
 msgid "Rename the selected file to:"
-msgstr ""
+msgstr "إعادة تسمية الملف المحدد إلى:"
 
 msgid "Add Files"
-msgstr ""
+msgstr "إضافة ملفات"
 
 msgid "Rename in batch"
-msgstr ""
+msgstr "إعادة التسمية دفعة واحدة"
 
 #, python-brace-format
 msgid "Rename the {0} items to:"
-msgstr ""
+msgstr "إعادة تسمية العناصر ({0}) إلى:"
 
 msgid "New Name #"
-msgstr ""
+msgstr "الاسم الجديد #"
 
 msgid "Sorry, all task failed !"
-msgstr ""
+msgstr "عذرًا، فشلت جميع المهام!"
 
 msgid "The process was stopped due to a fatal error."
-msgstr ""
+msgstr "توقفت العملية بسبب خطأ فادح."
 
 msgid "Interrupted Process !"
-msgstr ""
+msgstr "تمت مقاطعة العملية!"
 
 msgid "Successfully completed !"
-msgstr ""
+msgstr "اكتمل بنجاح!"
 
 msgid "Not everything was successful."
-msgstr ""
+msgstr "لم ينجح كل شيء."
 
 msgid "Encoding Status"
-msgstr ""
+msgstr "حالة الترميز"
 
 msgid "Current Log"
-msgstr ""
+msgstr "السجل الحالي"
 
 msgid "Fatal Error !"
-msgstr ""
+msgstr "خطأ فادح!"
 
 msgid "Get your files at the destination you specified"
-msgstr ""
+msgstr "احصل على ملفاتك في الوجهة التي حددتها"
 
 msgid "For more details please read the Current Log."
-msgstr ""
+msgstr "لمزيد من التفاصيل يرجى قراءة السجل الحالي."
 
 msgid "...Finished"
-msgstr ""
+msgstr "...انتهى"
 
 msgid "Please wait... interruption in progress"
-msgstr ""
+msgstr "يرجى الانتظار... جارٍ إيقاف العملية"
 
 msgid "...Interrupted"
-msgstr ""
+msgstr "...تمت المقاطعة"
 
 msgid "Presets"
-msgstr ""
+msgstr "الإعدادات المسبقة"
 
 msgid "Write"
-msgstr ""
+msgstr "كتابة"
 
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 msgid "Duplicate"
-msgstr ""
+msgstr "تكرار"
 
 msgid "Profiles"
-msgstr ""
+msgstr "الإعدادات الشخصية (الملفات الشخصية)"
 
 msgid "One-Pass Encoding"
-msgstr ""
+msgstr "ترميز بمرور واحد"
 
 msgid "Two-Pass Encoding"
-msgstr ""
+msgstr "ترميز بمرورين"
 
 msgid "Choose a preset and view its profiles"
-msgstr ""
+msgstr "اختر إعدادًا مسبقًا واعرض ملفاته الشخصية"
 
 msgid "Write a new profile and save it in the selected preset"
-msgstr ""
+msgstr "اكتب ملفًا شخصيًا جديدًا واحفظه في الإعداد المسبق المحدد"
 
 msgid "Delete the selected profile"
-msgstr ""
+msgstr "حذف الملف الشخصي المحدد"
 
 msgid "Edit the selected profile"
-msgstr ""
+msgstr "تعديل الملف الشخصي المحدد"
 
 msgid "Duplicate the selected profile"
-msgstr ""
+msgstr "تكرار الملف الشخصي المحدد"
 
 msgid "Create new preset"
-msgstr ""
+msgstr "إنشاء إعداد مسبق جديد"
 
 msgid "Remove selected preset"
-msgstr ""
+msgstr "إزالة الإعداد المسبق المحدد"
 
 msgid "Backup selected preset"
-msgstr ""
+msgstr "نسخ احتياطي للإعداد المسبق المحدد"
 
 msgid "Backup the presets folder"
-msgstr ""
+msgstr "نسخ احتياطي لمجلد الإعدادات المسبقة"
 
 msgid "Restore a preset"
-msgstr ""
+msgstr "استعادة إعداد مسبق"
 
 msgid "Restore a presets folder"
-msgstr ""
+msgstr "استعادة مجلد الإعدادات المسبقة"
 
 msgid "Resets the selected preset to default values"
-msgstr ""
+msgstr "إعادة الإعداد المسبق المحدد إلى القيم الافتراضية"
 
 msgid "Reset all presets to default values"
-msgstr ""
+msgstr "إعادة جميع الإعدادات المسبقة إلى القيم الافتراضية"
 
 msgid "Refresh the presets list"
-msgstr ""
+msgstr "تحديث قائمة الإعدادات المسبقة"
 
 #, python-brace-format
 msgid ""
@@ -2097,22 +2294,31 @@ msgid ""
 "\n"
 "Do you want to perform this update now?"
 msgstr ""
+"تم العثور على إصدار قديم من الإعدادات المسبقة: v{1}\n"
+"يتوفر إصدار جديد: v{0}\n"
+"\n"
+"يوفر هذا التحديث إعدادات مسبقة جديدة مضمّنة في أحدث إصدارات Videomass.\n"
+"\n"
+"لتجنب فقدان البيانات والسماح باستعادتها عند الحاجة، سيتم عمل نسخة احتياطية من مجلد الإعدادات المسبقة القديم في مجلد إعدادات البرنامج:\n"
+"«{2}»\n"
+"\n"
+"هل تريد إجراء هذا التحديث الآن؟"
 
 msgid "Name"
-msgstr ""
+msgstr "الاسم"
 
 msgid "Output Format"
-msgstr ""
+msgstr "صيغة الإخراج"
 
 msgid "Supported Format List"
-msgstr ""
+msgstr "قائمة الصيغ المدعومة"
 
 #, python-brace-format
 msgid "Cannot save current data in file '{}'."
-msgstr ""
+msgstr "تعذر حفظ البيانات الحالية في الملف '{}'."
 
 msgid "You just successfully created a new preset!"
-msgstr ""
+msgstr "لقد أنشأت إعدادًا مسبقًا جديدًا بنجاح!"
 
 #, python-brace-format
 msgid ""
@@ -2120,6 +2326,9 @@ msgid ""
 "\n"
 " It will be moved to the \"Removals\" subfolder inside the presets folder."
 msgstr ""
+"هل أنت متأكد من رغبتك في إزالة الإعداد المسبق \"{}\"؟\n"
+"\n"
+" سيتم نقله إلى المجلد الفرعي \"Removals\" داخل مجلد الإعدادات المسبقة."
 
 #, python-brace-format
 msgid ""
@@ -2127,55 +2336,67 @@ msgid ""
 "\n"
 "Sorry, removal failed, cannot continue.."
 msgstr ""
+"{}\n"
+"\n"
+"عذرًا، فشلت الإزالة، لا يمكن المتابعة.."
 
 #, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
-msgstr ""
+msgstr "تمت إزالة الإعداد المسبق \"{0}\" بنجاح"
 
 msgid "Open a destination folder"
-msgstr ""
+msgstr "فتح مجلد وجهة"
 
 msgid "A file with this name already exists, do you want to overwrite it?"
-msgstr ""
+msgstr "يوجد ملف بهذا الاسم بالفعل، هل تريد الكتابة فوقه؟"
 
 msgid "Backup completed successfully"
-msgstr ""
+msgstr "اكتمل النسخ الاحتياطي بنجاح"
 
 msgid "Open the preset you want to restore"
-msgstr ""
+msgstr "افتح الإعداد المسبق الذي تريد استعادته"
 
 msgid ""
 "This preset already exists and is about to be updated. Don't worry, it will keep all your saved profiles.\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
+"هذا الإعداد المسبق موجود بالفعل وعلى وشك التحديث. لا تقلق، سيحتفظ بجميع ملفاتك الشخصية المحفوظة.\n"
+"\n"
+"هل تريد المتابعة؟"
 
 msgid "Restore successful"
-msgstr ""
+msgstr "تمت الاستعادة بنجاح"
 
 msgid ""
 "This will update the presets database. Don't worry, it will keep all your saved profiles.\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
+"سيؤدي هذا إلى تحديث قاعدة بيانات الإعدادات المسبقة. لا تقلق، ستحتفظ بجميع ملفاتك الشخصية المحفوظة.\n"
+"\n"
+"هل تريد المتابعة؟"
 
 msgid "Open the presets folder to restore"
-msgstr ""
+msgstr "افتح مجلد الإعدادات المسبقة المراد استعادته"
 
 msgid "The presets database has been successfully updated"
-msgstr ""
+msgstr "تم تحديث قاعدة بيانات الإعدادات المسبقة بنجاح"
 
 msgid "The selected preset is not part of Videomass's default presets."
-msgstr ""
+msgstr "الإعداد المسبق المحدد ليس من الإعدادات المسبقة الافتراضية في Videomass."
 
 msgid ""
 "Be careful! The selected preset will be overwritten with the default one. Your profiles may be deleted!\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
+"انتبه! سيتم الكتابة فوق الإعداد المسبق المحدد بالإعداد الافتراضي. قد تُحذف ملفاتك الشخصية!\n"
+"\n"
+"هل تريد المتابعة؟"
 
 msgid "Successful recovery"
-msgstr ""
+msgstr "تمت الاستعادة بنجاح"
 
 msgid ""
 "Be careful! This action will restore all presets to default ones. Your profiles may be deleted!\n"
@@ -2184,24 +2405,31 @@ msgid ""
 "\n"
 "Do you want to continue?"
 msgstr ""
+"انتبه! سيعيد هذا الإجراء جميع الإعدادات المسبقة إلى الإعدادات الافتراضية. قد تُحذف ملفاتك الشخصية!\n"
+"\n"
+"وعلى أي حال، لتجنب فقدان البيانات، سيتم عمل نسخة احتياطية من مجلد الإعدادات المسبقة في مجلد إعدادات البرنامج.\n"
+"\n"
+"هل تريد المتابعة؟"
 
 #, python-brace-format
 msgid "Edit profile on «{0}»"
-msgstr ""
+msgstr "تعديل الملف الشخصي في «{0}»"
 
 msgid "Are you sure you want to delete the selected profile? It will no longer be possible to recover it."
-msgstr ""
+msgstr "هل أنت متأكد من رغبتك في حذف الملف الشخصي المحدد؟ لن يكون من الممكن استعادته بعد ذلك."
 
 msgid "First select a profile in the list"
-msgstr ""
+msgstr "حدد ملفًا شخصيًا في القائمة أولًا"
 
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
 msgstr ""
+"تم تغيير أمر الملف الشخصي المحدد يدويًا.\n"
+"هل تريد تطبيقه أثناء عملية التحويل؟"
 
 msgid "Don't show this dialog again"
-msgstr ""
+msgstr "عدم إظهار هذا الحوار مرة أخرى"
 
 msgid ""
 "Batch processing items\n"
@@ -2213,9 +2441,17 @@ msgid ""
 "Start of segment\n"
 "Clip duration"
 msgstr ""
+"عناصر المعالجة الدفعية\n"
+"الوجهة\n"
+"الأتمتة/الإعداد المسبق\n"
+"مرورات الترميز\n"
+"الملف الشخصي المستخدم\n"
+"صيغة الإخراج\n"
+"بداية المقطع\n"
+"مدة المقطع"
 
 msgid "Images need to be resized, please use Resize function."
-msgstr ""
+msgstr "يجب تغيير حجم الصور، يرجى استخدام وظيفة تغيير الحجم."
 
 msgid ""
 "\n"
@@ -2235,32 +2471,50 @@ msgid ""
 "The produced video will have the name of the selected file in the 'File List' panel, which\n"
 "will be saved in a folder named 'Still_Images' with a progressive digit, in the path you specify."
 msgstr ""
+"\n"
+"1. استورد ملف صورة أو أكثر بصيغ مثل JPG وPNG وBMP (حتى في وضع مختلط)،\n"
+"ثم حدد واحدًا منها كنقطة بداية.\n"
+"\n"
+"2. استخدم أداة تغيير الحجم إذا كانت صورك مختلفة في العرض والارتفاع.\n"
+"تحتاج إلى فعل ذلك مرة واحدة فقط للملف المحدد ليتم تغيير حجم الصور الأخرى تلقائيًا.\n"
+"وإلا فهو اختياري.\n"
+"\n"
+"3. حدد فاصلًا زمنيًا بين الصور، أو لصورة واحدة إذا فعّلت\n"
+"خيار «تفعيل صورة ثابتة واحدة».\n"
+"\n"
+"4. شغّل التحويل.\n"
+"\n"
+"\n"
+"سيحمل الفيديو الناتج اسم الملف المحدد في لوحة 'قائمة الملفات'، وسيُحفظ\n"
+"في مجلد باسم 'Still_Images' مع رقم متسلسل، في المسار الذي تحدده."
 
 msgid "Enable a single still image"
-msgstr ""
+msgstr "تفعيل صورة ثابتة واحدة"
 
 msgid "Time interval between images (in seconds):"
-msgstr ""
+msgstr "الفاصل الزمني بين الصور (بالثواني):"
 
 msgid ""
 "Force original aspect ratio using\n"
 "padding rather than stretching"
 msgstr ""
+"فرض نسبة العرض إلى الارتفاع الأصلية باستخدام\n"
+"الحشو بدلًا من التمديد"
 
 msgid "Include audio file"
-msgstr ""
+msgstr "تضمين ملف صوتي"
 
 msgid "Play the video until audio track finishes"
-msgstr ""
+msgstr "تشغيل الفيديو حتى ينتهي المسار الصوتي"
 
 msgid "Open audio file"
-msgstr ""
+msgstr "فتح ملف صوتي"
 
 msgid "Additional arguments"
-msgstr ""
+msgstr "وسائط إضافية"
 
 msgid "Open Audio File"
-msgstr ""
+msgstr "فتح ملف صوتي"
 
 #, python-brace-format
 msgid ""
@@ -2268,6 +2522,9 @@ msgid ""
 "\n"
 "{}"
 msgstr ""
+"ملف غير صالح: '{}'\n"
+"\n"
+"{}"
 
 #, python-brace-format
 msgid ""
@@ -2275,14 +2532,17 @@ msgid ""
 "\n"
 "It doesn't appear to be an audio file."
 msgstr ""
+"ملف غير صالح: '{}'\n"
+"\n"
+"يبدو أنه ليس ملفًا صوتيًا."
 
 #, python-brace-format
 msgid "Invalid file: '{}'"
-msgstr ""
+msgstr "ملف غير صالح: '{}'"
 
 #, python-brace-format
 msgid "Unsupported format '{}'"
-msgstr ""
+msgstr "صيغة غير مدعومة '{}'"
 
 #, python-brace-format
 msgid ""
@@ -2290,9 +2550,12 @@ msgid ""
 "\n"
 "\"{}\"\n"
 msgstr ""
+"الملف غير موجود:\n"
+"\n"
+"\"{}\"\n"
 
 msgid "ERROR"
-msgstr ""
+msgstr "خطأ"
 
 msgid ""
 "Items to concatenate\n"
@@ -2308,6 +2571,18 @@ msgid ""
 "Still image duration\n"
 "Overall video duration"
 msgstr ""
+"العناصر المراد دمجها\n"
+"اسم ملف الإخراج\n"
+"الوجهة\n"
+"صيغة الإخراج\n"
+"وسائط إضافية\n"
+"ملف صوتي\n"
+"الأقصر\n"
+"تغيير الحجم\n"
+"ما قبل الإدخال\n"
+"عدد الإطارات في الثانية (FPS)\n"
+"مدة الصورة الثابتة\n"
+"المدة الإجمالية للفيديو"
 
 msgid ""
 "\n"
@@ -2324,39 +2599,52 @@ msgid ""
 "The images produced will be saved in a folder named 'Movie_to_Pictures'\n"
 "with a progressive digit, in the path you specify."
 msgstr ""
+"\n"
+"1. استورد ملف فيديو أو أكثر ثم حدد واحدًا منها.\n"
+"\n"
+"2. لتحديد شريحة زمنية استخدم محرر الخط الزمني (CTRL+T) بضبط\n"
+"قيمتي المدة \"النهاية\" و\"البداية\".\n"
+"\n"
+"3. اختر صيغة الإخراج (jpg أو png أو bmp).\n"
+"\n"
+"4. ابدأ التحويل.\n"
+"\n"
+"\n"
+"ستُحفظ الصور الناتجة في مجلد باسم 'Movie_to_Pictures'\n"
+"مع رقم متسلسل، في المسار الذي تحدده."
 
 msgid "Create thumbnails"
-msgstr ""
+msgstr "إنشاء صور مصغّرة"
 
 msgid "Create tiled mosaics"
-msgstr ""
+msgstr "إنشاء فسيفساء مرتبة"
 
 msgid "Create animated GIF"
-msgstr ""
+msgstr "إنشاء صورة GIF متحركة"
 
 msgid "Options"
-msgstr ""
+msgstr "خيارات"
 
 msgid "Output format:"
-msgstr ""
+msgstr "صيغة الإخراج:"
 
 msgid "Rows:"
-msgstr ""
+msgstr "الصفوف:"
 
 msgid "Columns:"
-msgstr ""
+msgstr "الأعمدة:"
 
 msgid "Other unofficial resources:"
-msgstr ""
+msgstr "موارد أخرى غير رسمية:"
 
 msgid "Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images will be extracted."
-msgstr ""
+msgstr "ضبط معدل الإطارات من 0.1 إلى 30.0 إطار/ثانية. كلما زادت هذه القيمة زاد عدد الصور المستخرجة."
 
 msgid "Spaces around the mosaic tiles. From 0 to 32 pixels"
-msgstr ""
+msgstr "المسافات حول بلاطات الفسيفساء. من 0 إلى 32 بكسل"
 
 msgid "Spaces around the mosaic borders. From 0 to 32 pixels"
-msgstr ""
+msgstr "المسافات حول حواف الفسيفساء. من 0 إلى 32 بكسل"
 
 msgid ""
 "Selected File\n"
@@ -2372,45 +2660,60 @@ msgid ""
 "Start of segment\n"
 "Duration"
 msgstr ""
+"الملف المحدد\n"
+"صيغة الإخراج\n"
+"الوجهة\n"
+"المعدل (fps)\n"
+"تغيير الحجم\n"
+"صفوف الفسيفساء\n"
+"أعمدة الفسيفساء\n"
+"حشو الفسيفساء\n"
+"هامش الفسيفساء\n"
+"وسائط مخصصة\n"
+"بداية المقطع\n"
+"المدة"
 
 msgid "Audio encoder settings, mapping and filters"
-msgstr ""
+msgstr "إعدادات مرمِّز الصوت والتعيين والمرشحات"
 
 msgid "Audio Encoder"
-msgstr ""
+msgstr "مرمِّز الصوت"
 
 msgid "Settings"
-msgstr ""
+msgstr "الإعدادات"
 
 msgid "Index Selection:"
-msgstr ""
+msgstr "اختيار الفهرس:"
 
 msgid "Map:"
-msgstr ""
+msgstr "التعيين:"
 
 msgid "Normalization"
-msgstr ""
+msgstr "التطبيع"
 
 msgid "Volume detect"
-msgstr ""
+msgstr "كشف مستوى الصوت"
 
 msgid "Volume Statistics"
-msgstr ""
+msgstr "إحصاءات مستوى الصوت"
 
 msgid "Target level:"
-msgstr ""
+msgstr "المستوى المستهدف:"
 
 msgid "Gets maximum volume and average volume data in dBFS, then calculates the offset amount for audio normalization."
-msgstr ""
+msgstr "يحصل على بيانات أقصى مستوى للصوت ومتوسطه بوحدة dBFS، ثم يحسب مقدار الإزاحة اللازمة لتطبيع الصوت."
 
 msgid "Limiter for the maximum peak level or the mean level (when switch to RMS) in dBFS. From -99.0 to +0.0; default for PEAK level is -1.0; default for RMS is -20.0"
-msgstr ""
+msgstr "حد أقصى لمستوى القمة أو لمستوى المتوسط (عند التبديل إلى RMS) بوحدة dBFS. من -99.0 إلى +0.0؛ الافتراضي لمستوى PEAK هو -1.0؛ والافتراضي لـ RMS هو -20.0"
 
 msgid ""
 "\"Auto\", lets FFmpeg select the audio stream to process (usually the first audio stream). If the source file(s) is just an audio track, it's recommend to always set this control to \"Auto\".\n"
 "\n"
 "\"1-16\", if a video file contains more than one audio stream, you can select a specific one, e.g \"1\" for the first available audio stream, \"2\" for the second audio stream, and so on."
 msgstr ""
+"\"تلقائي\"، يترك لـ FFmpeg اختيار تدفق الصوت المراد معالجته (عادةً أول تدفق صوتي). إذا كان ملف المصدر مجرد مسار صوتي، يُنصح بضبط هذا التحكم دائمًا على \"تلقائي\".\n"
+"\n"
+"\"1-16\"، إذا كان ملف الفيديو يحتوي على أكثر من تدفق صوتي، يمكنك اختيار تدفق محدد، مثل \"1\" لأول تدفق صوتي متاح، و\"2\" للتدفق الصوتي الثاني، وهكذا."
 
 msgid ""
 "\"Auto\" keeps all audio streams and processes only the one selected by the \"Index Selection\" control.\n"
@@ -2419,124 +2722,140 @@ msgid ""
 "\n"
 "\"Index Only\" processes only the audio stream selected by the \"Index Selection\" control and removes all others from the output video."
 msgstr ""
+"\"تلقائي\" يحتفظ بجميع تدفقات الصوت ويعالج فقط التدفق المحدد في عنصر التحكم \"اختيار الفهرس\".\n"
+"\n"
+"\"الكل\" يعالج جميع تدفقات الصوت بخصائص التدفق المحدد في عنصر التحكم \"اختيار الفهرس\". لا تستخدم \"الكل\" لتصدير ملفات صوتية من مقاطع الفيديو.\n"
+"\n"
+"\"الفهرس فقط\" يعالج فقط تدفق الصوت المحدد في عنصر التحكم \"اختيار الفهرس\" ويزيل جميع التدفقات الأخرى من فيديو الإخراج."
 
 msgid "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -16.0"
-msgstr ""
+msgstr "مستوى الجهارة المتكاملة المستهدف بوحدة LUFS. من -70.0 إلى -5.0، والافتراضي -16.0"
 
 msgid "Maximum True Peak in dBTP. From -1.5 to +0.0, default is -2.0"
-msgstr ""
+msgstr "أقصى قمة حقيقية بوحدة dBTP. من -1.5 إلى +0.0، والافتراضي -2.0"
 
 msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +11.0"
-msgstr ""
+msgstr "نطاق الجهارة المستهدف بوحدة LUFS. من +1.0 إلى +20.0، والافتراضي +11.0"
 
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
-msgstr ""
+msgstr "تشغيل تدفق الصوت المحدد في عنصر التحكم \"اختيار الفهرس\". باستخدام هذه الوظيفة يمكنك اختبار نتيجة تطبيع الصوت."
 
 #, python-brace-format
 msgid ""
 "Index does not exist in the selected source file:\n"
 "\"{}\""
 msgstr ""
+"الفهرس غير موجود في ملف المصدر المحدد:\n"
+"\"{}\""
 
 #, python-brace-format
 msgid ""
 "The source file does not contain any audio stream:\n"
 "\"{}\""
 msgstr ""
+"لا يحتوي ملف المصدر على أي تدفق صوتي:\n"
+"\"{}\""
 
 msgid "PEAK level normalization, which will produce a maximum peak level equal to the set target level."
-msgstr ""
+msgstr "تطبيع مستوى PEAK، والذي سينتج أقصى مستوى قمة مساويًا للمستوى المستهدف المحدد."
 
 msgid "RMS-based normalization, which according to mean volume calculates the amount of gain to reach same average power signal."
-msgstr ""
+msgstr "تطبيع قائم على RMS، يحسب بحسب متوسط مستوى الصوت مقدار الكسب اللازم للوصول إلى نفس متوسط قدرة الإشارة."
 
 msgid ""
 "Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements the EBU R128 algorithm.\n"
 "Ideal for live normalization. It produces worse results than the High-quality two-pass Loudnorm normalization, but is faster."
 msgstr ""
+"تطبيع Loudnorm. يطبّع الجهارة المُدرَكة باستخدام مرشح \"loudnorm\" الذي ينفذ خوارزمية EBU R128.\n"
+"مثالي للتطبيع المباشر. ينتج نتائج أسوأ من تطبيع Loudnorm عالي الجودة بمرورين، لكنه أسرع."
 
 msgid ""
 "High-quality two-pass Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements\n"
 "the EBU R128 algorithm. Ideal for postprocessing."
 msgstr ""
+"تطبيع Loudnorm عالي الجودة بمرورين. يطبّع الجهارة المُدرَكة باستخدام مرشح \"loudnorm\" الذي ينفذ\n"
+"خوارزمية EBU R128. مثالي للمعالجة اللاحقة."
 
 msgid "You need to import at least one file"
-msgstr ""
+msgstr "يجب استيراد ملف واحد على الأقل"
 
 msgid "Subtitle Properties"
-msgstr ""
+msgstr "خصائص الترجمة"
 
 msgid "Subtitle Encoder"
-msgstr ""
+msgstr "مرمِّز الترجمة"
 
 msgid "Chapters and Metadata"
-msgstr ""
+msgstr "الفصول والبيانات الوصفية"
 
 msgid "Copy Chapters"
-msgstr ""
+msgstr "نسخ الفصول"
 
 msgid "Copy Metadata"
-msgstr ""
+msgstr "نسخ البيانات الوصفية"
 
 msgid ""
 "Select \"All\" to include any possible subtitle stream in the output video.\n"
 "\n"
 "Select \"1-16\" to indexing the desired subtitle stream and exclude all others, e.g \"1\" for the first available subtitle stream, \"2\" for the second subtitle stream, and so on."
 msgstr ""
+"اختر \"الكل\" لتضمين أي تدفق ترجمة ممكن في فيديو الإخراج.\n"
+"\n"
+"اختر \"1-16\" لفهرسة تدفق الترجمة المطلوب واستبعاد جميع التدفقات الأخرى، مثل \"1\" لأول تدفق ترجمة متاح، و\"2\" لتدفق الترجمة الثاني، وهكذا."
 
 msgid "Copy the chapter markers as is from source file."
-msgstr ""
+msgstr "نسخ علامات الفصول كما هي من ملف المصدر."
 
 msgid "Copy all incoming metadata from source file, such as audio/video tags, titles, unique marks, and so on."
-msgstr ""
+msgstr "نسخ جميع البيانات الوصفية الواردة من ملف المصدر، مثل وسوم الصوت/الفيديو والعناوين والعلامات الفريدة وغيرها."
 
 msgid "Reload"
-msgstr ""
+msgstr "إعادة تحميل"
 
 msgid "Optimize for Web"
-msgstr ""
+msgstr "تحسين للويب"
 
 msgid "Reloads the selected video encoder settings. Changes will be discarded."
-msgstr ""
+msgstr "يعيد تحميل إعدادات مرمِّز الفيديو المحدد. سيتم تجاهل التغييرات."
 
 msgid "Constant rate factor. Lower values correspond to higher quality and greater file size. Set to -1 to disable this control."
-msgstr ""
+msgstr "عامل المعدل الثابت (CRF). القيم الأقل تقابل جودة أعلى وحجم ملف أكبر. اضبط على -1 لتعطيل هذا التحكم."
 
 msgid "Number of tile rows to use, default changes per resolution"
-msgstr ""
+msgstr "عدد صفوف البلاطات المستخدمة، يتغير الافتراضي حسب الدقة"
 
 msgid "Number of tile columns to use, default changes per resolution"
-msgstr ""
+msgstr "عدد أعمدة البلاطات المستخدمة، يتغير الافتراضي حسب الدقة"
 
 msgid "Set the Group Of Picture (GOP). Set to -1 to disable this control."
-msgstr ""
+msgstr "ضبط مجموعة الصور (GOP). اضبط على -1 لتعطيل هذا التحكم."
 
 msgid "It can reduce the file size, but takes longer."
-msgstr ""
+msgstr "يمكنه تقليل حجم الملف لكنه يستغرق وقتًا أطول."
 
 msgid "Set minimum bitrate tolerance. Most useful in setting up a CBR encode. It is of little use otherwise. Set to -1 to disable this control."
-msgstr ""
+msgstr "ضبط الحد الأدنى لتسامح معدل البت. الأكثر فائدة في إعداد ترميز CBR. وفائدته قليلة في غير ذلك. اضبط على -1 لتعطيل هذا التحكم."
 
 msgid "Specifies a maximum tolerance. Requires bufsize to be set. Set to -1 to disable this control."
-msgstr ""
+msgstr "يحدد حدًا أقصى للتسامح. يتطلب ضبط bufsize. اضبط على -1 لتعطيل هذا التحكم."
 
 msgid "Set ratecontrol buffer size, which determines the variability of the output bitrate. Set to -1 to disable this control."
-msgstr ""
+msgstr "ضبط حجم مخزن التحكم بالمعدل، والذي يحدد تباين معدل بت الإخراج. اضبط على -1 لتعطيل هذا التحكم."
 
 msgid "Specifies the target (average) bit rate for the encoder to use. Higher value = higher quality. Set -1 to disable this control."
-msgstr ""
+msgstr "يحدد معدل البت المستهدف (المتوسط) الذي يستخدمه المرمِّز. القيمة الأعلى = جودة أعلى. اضبط -1 لتعطيل هذا التحكم."
 
 msgid "Video width and video height ratio."
-msgstr ""
+msgstr "نسبة عرض الفيديو إلى ارتفاعه."
 
 msgid "Frame rate (frames per second). Frames repeat a given number of times per second. In some countries this is 30 for NTSC, other countries (like Italy) use 25 for PAL"
-msgstr ""
+msgstr "معدل الإطارات (إطار في الثانية). تتكرر الإطارات عددًا معينًا من المرات في الثانية. في بعض الدول يكون 30 لنظام NTSC، وفي دول أخرى (مثل إيطاليا) يُستخدم 25 لنظام PAL"
 
 msgid "Quality/Speed ratio modifier. CPU Used sets how efficient the compression will be. Lower values mean slower encoding with better quality, and vice-versa. Valid values are from 0 to 8 inclusive."
-msgstr ""
+msgstr "معدّل نسبة الجودة/السرعة. يحدد CPU Used مدى كفاءة الضغط. القيم الأقل تعني ترميزًا أبطأ بجودة أفضل، والعكس صحيح. القيم الصالحة من 0 إلى 8 شاملة."
 
 msgid "Quality and compression efficiency vs speed trade-off. \"good\" is the default and recommended for most applications; \"realtime\" is recommended for live/fast encoding (live streaming, video conferencing, etc); \"allintra\" for All Intra encoding."
-msgstr ""
+msgstr "المفاضلة بين الجودة وكفاءة الضغط مقابل السرعة. \"good\" هو الافتراضي والموصى به لمعظم التطبيقات؛ و\"realtime\" موصى به للترميز المباشر/السريع (البث المباشر، مؤتمرات الفيديو، إلخ)؛ و\"allintra\" لترميز All Intra."
 
 msgid ""
 "Row Multi-Threading enables row-based multi-threading which maximizes CPU usage.\n"
@@ -2545,6 +2864,11 @@ msgid ""
 "\n"
 "Enabling Row Multi-Threading is only faster when the CPU has more threads than the number of encoded tiles."
 msgstr ""
+"يُفعّل تعدد المسارات القائم على الصفوف (Row Multi-Threading) مما يزيد استخدام المعالج إلى أقصى حد.\n"
+"\n"
+"لتفعيل أداء فك ترميز سريع، اضبط أيضًا البلاطات (أي Tile Columns 4 وTile Rows 1، أو Tile Columns 2 وTile Rows 2 لـ 4 بلاطات).\n"
+"\n"
+"لا يكون تفعيل Row Multi-Threading أسرع إلا إذا كان عدد مسارات المعالج أكبر من عدد البلاطات المرمَّزة."
 
 msgid ""
 "presets 1-3 represent extremely high efficiency, for use when encode time is not important and quality/size of the resulting video file is critical.\n"
@@ -2555,6 +2879,13 @@ msgid ""
 "\n"
 "Preset 13 is even faster but not intended for direct human consumption--it can be used, for example, as a per-scene quality metric in VOD applications. One should use the lowest preset that is tolerable."
 msgstr ""
+"الإعدادات المسبقة 1-3 تمثل كفاءة عالية جدًا، وتُستخدم عندما لا يكون وقت الترميز مهمًا وتكون جودة/حجم ملف الفيديو الناتج حاسمة.\n"
+"\n"
+"الإعدادات 4-6 يستخدمها الهواة المنزليون عادةً لأنها تمثل توازنًا بين الكفاءة ووقت المعالجة المعقول.\n"
+"\n"
+"الإعدادات بين 7 و12 تُستخدم للترميز السريع وفي الوقت الفعلي.\n"
+"\n"
+"الإعداد 13 أسرع لكنه غير مخصص للاستهلاك البشري المباشر؛ ويمكن استخدامه مثلًا كمقياس جودة لكل مشهد في تطبيقات الفيديو عند الطلب (VOD). ينبغي استخدام أدنى إعداد مسبق يمكن تحمّله."
 
 msgid ""
 "Constant rate factor. This parameter governs the quality/size trade-off.\n"
@@ -2565,6 +2896,13 @@ msgid ""
 "\n"
 "Set to -1 to disable this control."
 msgstr ""
+"عامل المعدل الثابت (CRF). يتحكم هذا المعامل في المفاضلة بين الجودة والحجم.\n"
+"\n"
+"قيم CRF الأعلى تعطي ناتجًا نهائيًا يشغل مساحة أقل لكنه يبدأ بفقدان التفاصيل.\n"
+"\n"
+"قيم CRF الأقل تحتفظ بمزيد من التفاصيل على حساب حجم ملف أكبر. نقطة بداية جيدة لفيديو 1080p هي 30.\n"
+"\n"
+"اضبط على -1 لتعطيل هذا التحكم."
 
 msgid ""
 "The \"Film Grain\" parameter allows SVT-AV1 to detect and delete film grain from the source video, and replace it with synthetic grain of the same character, resulting in significant bitrate savings.\n"
@@ -2577,57 +2915,75 @@ msgid ""
 "\n"
 "If the source video does not have natural grain, this parameter can be set to -1 to disable it or at least 0."
 msgstr ""
+"يتيح معامل \"Film Grain\" لـ SVT-AV1 اكتشاف حبيبات الفيلم في الفيديو المصدر وحذفها، واستبدالها بحبيبات اصطناعية من الطابع نفسه، مما يوفر قدرًا كبيرًا من معدل البت.\n"
+"\n"
+"القيمة 8 نقطة بداية معقولة للفيديو الحقيقي بكمية حبيبات عادية.\n"
+"\n"
+"القيم الأعلى في النطاق 10-15 تفعّل هذه التقنية بشكل أكثر حدة للفيديو ذي الحبيبات الطبيعية الكثيرة.\n"
+"\n"
+"وللرسوم المتحركة ثنائية الأبعاد غالبًا ما تكون القيم الأقل في النطاق 4-6 مناسبة.\n"
+"\n"
+"إذا لم يكن في الفيديو المصدر حبيبات طبيعية، يمكن ضبط هذا المعامل على -1 لتعطيله أو على 0 على الأقل."
 
 msgid ""
 "If enabled, the \"Film Grain Denoiser\" option can mitigate the detail removal caused by high \"Film Grain\" values required to preserve the look of very grainy films\n"
 "\n"
 "By default, the denoised frames are passed to be encoded as the final pictures, enabling this feature will lead to the original frames to be used instead. "
 msgstr ""
+"عند التفعيل، يمكن لخيار \"Film Grain Denoiser\" التخفيف من إزالة التفاصيل الناتجة عن قيم \"Film Grain\" العالية اللازمة للحفاظ على مظهر الأفلام ذات الحبيبات الكثيفة\n"
+"\n"
+"افتراضيًا تُمرَّر الإطارات منزوعة الضجيج ليتم ترميزها كصور نهائية، وتفعيل هذه الميزة سيؤدي إلى استخدام الإطارات الأصلية بدلًا من ذلك. "
 
 msgid "Enables encoder optimization to produce faster (less CPU intensive) bit streams to decode, similar to the fastdecode tuning in x264 and x265."
-msgstr ""
+msgstr "يفعّل تحسين المرمِّز لإنتاج تدفقات بتات أسرع (أقل استهلاكًا للمعالج) في فك الترميز، على غرار ضبط fastdecode في x264 وx265."
 
 msgid "Set profile restrictions"
-msgstr ""
+msgstr "ضبط قيود الملف الشخصي (Profile)"
 
 msgid "Specify level for a selected profile"
-msgstr ""
+msgstr "تحديد المستوى (Level) للملف الشخصي المحدد"
 
 msgid "Tune the encoding params"
-msgstr ""
+msgstr "ضبط معاملات الترميز (Tune)"
 
 msgid "Set the encoding preset (default \"medium\")"
-msgstr ""
+msgstr "ضبط الإعداد المسبق للترميز (الافتراضي \"medium\")"
 
 msgid "specifies the target (average) bit rate for the encoder to use. Higher value = higher quality. Set -1 to disable this control."
-msgstr ""
+msgstr "يحدد معدل البت المستهدف (المتوسط) الذي يستخدمه المرمِّز. القيمة الأعلى = جودة أعلى. اضبط -1 لتعطيل هذا التحكم."
 
 msgid "Variable Bit Rate. From 0-30, with 1 being highest quality/largest filesize and 30 being the lowest quality/smallest filesize. Set to -1 to disable this control."
-msgstr ""
+msgstr "معدل بت متغير. من 0-30، حيث 1 أعلى جودة/أكبر حجم ملف و30 أقل جودة/أصغر حجم ملف. اضبط على -1 لتعطيل هذا التحكم."
 
 msgid "Frames repeat a given number of times per second. In some countries this is 30 for NTSC, other countries (like Italy) use 25 for PAL"
-msgstr ""
+msgstr "تتكرر الإطارات عددًا معينًا من المرات في الثانية. في بعض الدول يكون 30 لنظام NTSC، وفي دول أخرى (مثل إيطاليا) يُستخدم 25 لنظام PAL"
 
 msgid "The default FourCC stored in an MPEG-4-coded file will be FMP4. If you want a different FourCC, set this option to xvid to force the FourCC xvid to be stored as the video FourCC rather than the default."
-msgstr ""
+msgstr "قيمة FourCC الافتراضية المخزنة في ملف مرمَّز بـ MPEG-4 هي FMP4. إذا أردت FourCC مختلفًا، فاضبط هذا الخيار على xvid لفرض تخزين FourCC باسم xvid كـ FourCC للفيديو بدلًا من الافتراضي."
 
 msgid "Copy Video Codec"
-msgstr ""
+msgstr "نسخ مرمِّز الفيديو"
 
 msgid ""
 "This will just copy the video track as is, without any video re-encoding.\n"
 "You will only be able to change output format, select other audio encoders and\n"
 "a few other options."
 msgstr ""
+"سيؤدي هذا إلى نسخ مسار الفيديو كما هو دون أي إعادة ترميز للفيديو.\n"
+"ستتمكن فقط من تغيير صيغة الإخراج واختيار مرمِّزات صوت أخرى\n"
+"وبعض الخيارات الأخرى."
 
 msgid "Video export disabled"
-msgstr ""
+msgstr "تصدير الفيديو معطّل"
 
 msgid ""
 "The Media target you just selected will only allow you to export files as audio tracks.\n"
 "You can then process audio source files only or extract indexed audio streams on\n"
 "video files."
 msgstr ""
+"هدف الوسائط الذي حددته للتو سيسمح لك بتصدير الملفات كمسارات صوتية فقط.\n"
+"يمكنك حينها معالجة ملفات الصوت المصدر فقط أو استخراج تدفقات الصوت المفهرسة من\n"
+"ملفات الفيديو."
 
 msgid ""
 "Speed sets how efficient the compression will be.\n"
@@ -2640,6 +2996,15 @@ msgid ""
 "\n"
 "When the Quality is set to realtime, the available values for Speed are 0 to 8."
 msgstr ""
+"تحدد السرعة (Speed) مدى كفاءة الضغط.\n"
+"\n"
+"عندما يكون معامل الجودة \"good\" أو \"best\"، يمكن ضبط قيم السرعة بين 0 و5.\n"
+"\n"
+"استخدام 1 أو 2 سيزيد سرعة الترميز على حساب تأثير ما على الجودة ودقة التحكم بالمعدل.\n"
+"\n"
+"4 أو 5 سيوقفان تحسين تشويه المعدل (rate distortion optimization)، مما يؤثر أكثر على الجودة.\n"
+"\n"
+"عند ضبط الجودة على realtime تكون قيم السرعة المتاحة من 0 إلى 8."
 
 msgid ""
 "Time to spend encoding.\n"
@@ -2650,30 +3015,38 @@ msgid ""
 "\n"
 "\"realtime\" is recommended for live / fast encoding."
 msgstr ""
+"الوقت المخصص للترميز.\n"
+"\n"
+"\"good\" هو الافتراضي والموصى به لمعظم التطبيقات؛\n"
+"\n"
+"\"best\" موصى به إذا كان لديك وقت كافٍ وتريد أفضل كفاءة ضغط؛\n"
+"\n"
+"\"realtime\" موصى به للترميز المباشر / السريع."
 
-msgid ""
-"If enabled, adds support for row based multithreading which greatly enhances the number of threads the encoder can utilise. This improves encoding speed significantly on systems that are otherwise underutilised when encoding VP9. Since the amount of additional threads depends on the number of \"tiles\", which itself depends on the video resolution, encoding higher resolution videos will see a "
-"larger performance improvement."
-msgstr ""
+msgid "If enabled, adds support for row based multithreading which greatly enhances the number of threads the encoder can utilise. This improves encoding speed significantly on systems that are otherwise underutilised when encoding VP9. Since the amount of additional threads depends on the number of \"tiles\", which itself depends on the video resolution, encoding higher resolution videos will see a larger performance improvement."
+msgstr "عند التفعيل، يضيف دعمًا لتعدد المسارات القائم على الصفوف مما يعزز كثيرًا عدد المسارات التي يمكن للمرمِّز استخدامها. يحسّن ذلك سرعة الترميز بشكل كبير على الأنظمة التي لا تُستغل بالكامل عند ترميز VP9. وبما أن عدد المسارات الإضافية يعتمد على عدد \"البلاطات\"، وهو بدوره يعتمد على دقة الفيديو، فإن ترميز مقاطع الفيديو عالية الدقة سيشهد تحسنًا أكبر في الأداء."
 
 #, python-brace-format
 msgid "Supports ({0}) formats only, not ({1})"
-msgstr ""
+msgstr "يدعم صيغ ({0}) فقط، وليس ({1})"
 
 msgid "File formats not supported by the selected profile"
-msgstr ""
+msgstr "صيغ الملفات غير مدعومة في الملف الشخصي المحدد"
 
 msgid "Warning"
-msgstr ""
+msgstr "تحذير"
 
 msgid ""
 "No presets found.\n"
 "\n"
 "Possible solution: open the Presets Manager panel, go to the presets column and try to click the \"Restore all...\" button"
 msgstr ""
+"لم يتم العثور على إعدادات مسبقة.\n"
+"\n"
+"حل محتمل: افتح لوحة مدير الإعدادات المسبقة، وانتقل إلى عمود الإعدادات المسبقة وجرّب النقر على زر \"استعادة الكل...\""
 
 msgid "Import queue file"
-msgstr ""
+msgstr "استيراد ملف قائمة الانتظار"
 
 #, python-brace-format
 msgid ""
@@ -2682,21 +3055,26 @@ msgid ""
 "\n"
 "Cannot contain multiple occurrences in `destination` keys value."
 msgstr ""
+"خطأ: تم العثور على بيانات غير صالحة أثناء تحميل ملف قائمة الانتظار.\n"
+"«{0}»\n"
+"\n"
+"لا يمكن أن تحتوي قيمة مفاتيح `destination` على تكرارات متعددة."
 
 msgid "Videomass - Add Items to Queue"
-msgstr ""
+msgstr "Videomass - إضافة عناصر إلى قائمة الانتظار"
 
 msgid ""
 "Multiple items with identical names and destination paths cannot coexist.\n"
 "Please choose one of the following actions:"
 msgstr ""
+"لا يمكن أن تتعايش عناصر متعددة بأسماء ومسارات وجهة متطابقة.\n"
+"يرجى اختيار أحد الإجراءات التالية:"
 
 msgid "Replace occurrences with items from the imported queue."
-msgstr ""
+msgstr "استبدال التكرارات بعناصر من قائمة الانتظار المستوردة."
 
 msgid "Add only the currently missing items to the queue."
-msgstr ""
+msgstr "إضافة العناصر المفقودة حاليًا فقط إلى قائمة الانتظار."
 
 msgid "Remove the current queue and replace it with the imported one."
-msgstr ""
-
+msgstr "إزالة قائمة الانتظار الحالية واستبدالها بالمستوردة."
