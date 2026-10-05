@@ -5,7 +5,11 @@ build-backend = "hatchling.build"
 [project]
 name = "videomass"
 dynamic = ["version"]
-readme = "README.md"
+dependencies = [
+    "wxpython>=4.0.7;platform_system == 'Windows' or platform_system == 'Darwin'",
+    "pypubsub>=4.0.3",
+    "requests"
+]
 requires-python = ">=3.9"
 authors = [
   {name = "Gianluca Pernigotto", email = "jeanlucperni@gmail.com"}
@@ -14,6 +18,7 @@ maintainers = [
   {name = "Gianluca Pernigotto", email = "jeanlucperni@gmail.com"}
 ]
 description = "Videomass is a cross-platform GUI for FFmpeg"
+readme = "README.md"
 license =  {text = "GNU General Public License v3 (GPLv3)"}
 keywords = [
     "videomass",
@@ -51,11 +56,6 @@ classifiers = [
     "Topic :: Multimedia :: Video :: Conversion",
     "Topic :: Multimedia :: Sound/Audio :: Conversion"
 ]
-dependencies = [
-    "wxpython>=4.0.7;platform_system == 'Windows' or platform_system == 'Darwin'",
-    "pypubsub>=4.0.3",
-    "requests"
-]
 
 [project.optional-dependencies]
 cli = []
@@ -75,7 +75,8 @@ pyinstaller = [
 [tool.hatch.build.hooks.custom]  # see hatch_build.py file
 # https://github.com/pypa/hatch/discussions/1047
 dependencies = [
-    "babel"
+    "babel",
+    "setuptools"
 ]
 
 [tool.hatch.version]
@@ -130,12 +131,12 @@ artifacts = [
 "videomass/data/hicolor/256x256/apps/videomass.png" = "share/icons/hicolor/256x256/apps/videomass.png"
 "videomass/data/hicolor/scalable/apps/videomass.svg" = "share/icons/hicolor/scalable/apps/videomass.svg"
 
-[project.gui-scripts]
-videomass = "videomass.gui_app:main"
-
 [project.urls]
 Homepage = "https://jeanslack.github.io/Videomass/"
 Documentation = "https://jeanslack.github.io/Videomass/Docs.html"
 Wiki = "https://github.com/jeanslack/Videomass/wiki"
 Repository = "https://github.com/jeanslack/Videomass"
 Issues = "https://github.com/jeanslack/Videomass/issues"
+
+[project.gui-scripts]
+videomass = "videomass.gui_app:main"

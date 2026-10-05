@@ -23,15 +23,18 @@
   <screenshots>
     <screenshot type="default">
       <caption>Videomass main panel</caption>
-      <image width="850" height="598">>https://jeanslack.github.io/Videomass/images/screenshots/HomePanel.png</image>
+      <image width="850" height="598">https://jeanslack.github.io/Videomass/images/screenshots/HomePanel.png</image>
     </screenshot>
   </screenshots>
   <url type="homepage">https://jeanslack.github.io/Videomass/</url>
   <url type="bugtracker">https://github.com/jeanslack/Videomass/issues</url>
   <url type="help">https://jeanslack.github.io/Videomass/Docs.html</url>
   <url type="translate">https://jeanslack.github.io/Videomass/Pages/Localization_Guidelines</url>
-  <developer_name>Gianluca Pernigotto (jeanslack)</developer_name>
+  <developer id="io.github.jeanslack">
+    <name>Gianluca Pernigotto (jeanslack)</name>
+  </developer>
   <provides>
     <binary>videomass</binary>
   </provides>
+  <content_rating type="oars-1.1" />
 </component>

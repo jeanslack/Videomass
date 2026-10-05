@@ -6,8 +6,8 @@ Source: https://github.com/jeanslack/Videomass
 # Please double check copyright with the licensecheck(1) command.
 
 Files:     *
-Copyright: 2025 Gianluca Pernigotto
-License:   GPL-3.0+
+Copyright: 2026 Gianluca Pernigotto
+License:   FSFAP
  All files are part of Videomass.
  .
  Videomass is free software: you can redistribute it and/or modify

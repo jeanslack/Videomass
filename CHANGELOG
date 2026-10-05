@@ -18,6 +18,10 @@ Sun, 04 October 2026 v6.1.22
   * Updates German translation (thanks @schenklklopfer).
   * Updates CopyLeft date.
   * Updates Arabic (Saudi Arabia) translations (thanks @vfggf95565).
+  * Updates pyproject.toml file + added `setuptools` as new dependency entry
+    to `tool.hatch.build.hooks.custom` build hook. This should prevent Python
+    import errors during the build process.
+  * Fixed inconsistencies in `xdg/*appdata.xml` file and `debian/copyright`
 
 +------------------------------------+
 Fri, 19 September 2025 v6.1.20
