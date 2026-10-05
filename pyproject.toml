@@ -10,7 +10,7 @@ dependencies = [
     "pypubsub>=4.0.3",
     "requests"
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 authors = [
   {name = "Gianluca Pernigotto", email = "jeanlucperni@gmail.com"}
 ]
@@ -47,11 +47,11 @@ classifiers = [
     "Natural Language :: Russian",
     "Natural Language :: Spanish",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Multimedia :: Video",
     "Topic :: Multimedia :: Video :: Conversion",
     "Topic :: Multimedia :: Sound/Audio :: Conversion"

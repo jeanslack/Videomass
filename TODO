@@ -29,3 +29,4 @@ URGENCY: low
 
   However, note that these operations leads to make Videomass code incompatible
   for wxPython4.0.7
+  NOTE: Support for wxPython v4.0.7 on Ubuntu 22.04 LTS will end in April 2027.

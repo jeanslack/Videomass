@@ -13,7 +13,7 @@ Homepage: https://github.com/jeanslack/Videomass
 Rules-Requires-Root: no
 #Vcs-Git: https://salsa.debian.org/debian/videomass.git
 #Vcs-Browser: https://salsa.debian.org/debian/videomass
-X-Python3-Version: >= 3.8
+X-Python3-Version: >= 3.10
 
 Package: videomass
 Architecture: all

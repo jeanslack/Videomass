@@ -18,7 +18,7 @@ Base application dependencies
 =============================
 
     Requires:
-        - Python >=3.9.0
+        - Python >=3.10.0
         - wxPython >=4.0.7
         - PyPubSub >=4.0.3
         - requests
@@ -72,7 +72,7 @@ catalogs must be done on your machine by one of the following options:
 -3- Using `babel` Python package <https://pypi.org/project/babel/>
 
     Requires:
-        - Python >= 3.9.0
+        - Python >= 3.10.0
         - pybabel (from `babel` package, installable via pip)
 
     cd Videomass (source directory)
