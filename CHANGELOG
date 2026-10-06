@@ -7,16 +7,17 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sun, 04 October 2026 v6.1.22
+Tue, 06 October 2026 v6.1.22
 
+  * Requires Python version >= 3.10 .
+  * Updates CopyLeft date.
   * Fixed some typos.
   * Updated translation catalogs.
-  * Updated Italian language (@jeanslack).
+  * Updated Italian language (by jeanslack).
   * Updated Russian language (thanks to ChourS).
   * Updated French language (thanks to ChourS).
-  * Added zh_TW Traditional Chinese locale (thanks @PeterDaveHello).
+  * Added zh_TW Traditional Chinese locale (thanks @PeterDaveHello @userwljs).
   * Updates German translation (thanks @schenklklopfer).
-  * Updates CopyLeft date.
   * Updates Arabic (Saudi Arabia) translations (thanks @vfggf95565).
   * Updates pyproject.toml file + added `setuptools` as new dependency entry
     to `tool.hatch.build.hooks.custom` build hook. This should prevent Python
