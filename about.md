@@ -41,10 +41,13 @@ sources are available at [FFmpeg.org](https://www.ffmpeg.org/)
 
 ## Translators
 
+- Arabic (Saudi Arabia) - AbdEl-Rahman Mohammed Hassan <https://github.com/vfggf95565>
 - Chinese (Simplified) - MaiJZ <https://github.com/maijz128>
+- Chinese (Taiwan) Traditional Chinese  - userwljs <https://github.com/userwljs>
 - Dutch - Roelof Berkepeis <roelof@imoma.eu>
-- Dutch - @johannesdedoper <https://github.com/johannesdedoper>
+- Dutch - johannesdedoper <https://github.com/johannesdedoper>
 - French - Phil Aug <philiaug@live.fr>
+- German - schenklklopfer <https://github.com/schenklklopfer>
 - Italian - Gianluca Pernigotto <jeanlucperni@gmail.com>
 - Italian - bovirus <bovirus@gmail.com>
 - Portuguese (Brazilian) - Samuel <http://littlesvr.ca/ostd/>
