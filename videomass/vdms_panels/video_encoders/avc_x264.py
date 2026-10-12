@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.28.2024
+Rev: Oct.12.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -102,7 +102,7 @@ class Avc_X264(scrolled.ScrolledPanel):
         boxset.Add(self.ckbx_web, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
 
         sizerbase.Add(boxset, 0, wx.TOP | wx.CENTRE, 10)
-        sizerbase.Add((0, 15), 0)
+        sizerbase.AddSpacer(15)
         boxcrf = wx.BoxSizer(wx.HORIZONTAL)
         labcrf = wx.StaticText(self, wx.ID_ANY, 'CRF:')
         boxcrf.Add(labcrf, 0, wx.ALIGN_CENTER, 2)
@@ -112,7 +112,7 @@ class Avc_X264(scrolled.ScrolledPanel):
         boxcrf.Add(self.slider_crf, 0, wx.LEFT | wx.ALIGN_CENTER, 2)
         self.labcrfmt = wx.StaticText(self, wx.ID_ANY, '')
         boxcrf.Add(self.labcrfmt, 0, wx.LEFT | wx.ALIGN_CENTER, 2)
-        boxcrf.Add((20, 0), 0)
+        boxcrf.AddSpacer(20)
         labpresets = wx.StaticText(self, wx.ID_ANY, 'Preset:')
         boxcrf.Add(labpresets, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.cmb_preset = wx.ComboBox(self, wx.ID_ANY,
@@ -136,12 +136,12 @@ class Avc_X264(scrolled.ScrolledPanel):
                                        | wx.CB_READONLY,
                                        )
         gridcod.Add(self.cmb_profile, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        gridcod.Add((40, 0), 0)
+        gridcod.AddSpacer(40)
         labpass = wx.StaticText(self, wx.ID_ANY, 'Passes:')
         gridcod.Add(labpass, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.ckbx_pass = wx.CheckBox(self, wx.ID_ANY, "Two-Pass Encoding")
         gridcod.Add(self.ckbx_pass, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        gridcod.Add((40, 0), 0)
+        gridcod.AddSpacer(40)
         labminr = wx.StaticText(self, wx.ID_ANY, 'Minrate (kbps):')
         gridcod.Add(labminr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.spin_minr = wx.SpinCtrl(self, wx.ID_ANY,
@@ -157,7 +157,7 @@ class Avc_X264(scrolled.ScrolledPanel):
                                      style=wx.CB_DROPDOWN | wx.CB_READONLY
                                      )
         gridcod.Add(self.cmb_level, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        gridcod.Add((40, 0), 0)
+        gridcod.AddSpacer(40)
         stextbitr = wx.StaticText(self, wx.ID_ANY, 'Bitrate (kbps):')
         gridcod.Add(stextbitr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.spin_vbrate = wx.SpinCtrl(self, wx.ID_ANY,
@@ -166,7 +166,7 @@ class Avc_X264(scrolled.ScrolledPanel):
                                        style=wx.TE_PROCESS_ENTER
                                        )
         gridcod.Add(self.spin_vbrate, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        gridcod.Add((40, 0), 0)
+        gridcod.AddSpacer(40)
         labmaxr = wx.StaticText(self, wx.ID_ANY, 'Maxrate (kbps):')
         gridcod.Add(labmaxr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.spin_maxr = wx.SpinCtrl(self, wx.ID_ANY,
@@ -182,7 +182,7 @@ class Avc_X264(scrolled.ScrolledPanel):
                                     | wx.CB_READONLY,
                                     )
         gridcod.Add(self.cmb_tune, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        gridcod.Add((40, 0), 0)
+        gridcod.AddSpacer(40)
         labpixfrm = wx.StaticText(self, wx.ID_ANY, 'Bit Depth:')
         gridcod.Add(labpixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.cmb_pixfrm = wx.ComboBox(self, wx.ID_ANY,
@@ -191,7 +191,7 @@ class Avc_X264(scrolled.ScrolledPanel):
                                       | wx.CB_READONLY,
                                       )
         gridcod.Add(self.cmb_pixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        gridcod.Add((40, 0), 0)
+        gridcod.AddSpacer(40)
         labbuffer = wx.StaticText(self, wx.ID_ANY, 'Bufsize (kbps):')
         gridcod.Add(labbuffer, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.spin_bufsize = wx.SpinCtrl(self, wx.ID_ANY,

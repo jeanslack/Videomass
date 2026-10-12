@@ -56,7 +56,7 @@ class Denoisers(wx.Dialog):
         sbox = wx.StaticBox(self, wx.ID_ANY, (_("Denoiser Filters")))
         zone = wx.StaticBoxSizer(sbox, wx.VERTICAL)
         sizer_base.Add(zone, 1, wx.ALL | wx.EXPAND, 5)
-        self.ckbx_nlmeans = wx.CheckBox(self, wx.ID_ANY,
+        self.ckbx_nlmeans = wx.CheckBox(sbox, wx.ID_ANY,
                                         (_("Enable nlmeans denoiser"))
                                         )
         grid_den = wx.FlexGridSizer(2, 2, 0, 0)
@@ -70,7 +70,7 @@ class Denoisers(wx.Dialog):
                    ("Heavy - really noisy inputs"),
                    ("Light - good quality inputs")
                    ]
-        self.rdb_nlmeans = wx.RadioBox(self, wx.ID_ANY, (_("nlmeans options")),
+        self.rdb_nlmeans = wx.RadioBox(sbox, wx.ID_ANY, (_("nlmeans options")),
                                        choices=nlmeans, majorDimension=0,
                                        style=wx.RA_SPECIFY_ROWS
                                        )
@@ -78,7 +78,7 @@ class Denoisers(wx.Dialog):
                      | wx.ALIGN_CENTER_VERTICAL
                      | wx.ALIGN_CENTER_HORIZONTAL,
                      5)
-        self.ckbx_hqdn3d = wx.CheckBox(self, wx.ID_ANY,
+        self.ckbx_hqdn3d = wx.CheckBox(sbox, wx.ID_ANY,
                                        (_("Enable hqdn3d denoiser"))
                                        )
         grid_den.Add(self.ckbx_hqdn3d, 0, wx.ALL
@@ -88,7 +88,7 @@ class Denoisers(wx.Dialog):
         hqdn3d = [("Default"), ("Conservative [4.0:4.0:3.0:3.0]"),
                   ("Old VHS tapes restoration [9.0:5.0:3.0:3.0]")
                   ]
-        self.rdb_hqdn3d = wx.RadioBox(self, wx.ID_ANY, (_("hqdn3d options")),
+        self.rdb_hqdn3d = wx.RadioBox(sbox, wx.ID_ANY, (_("hqdn3d options")),
                                       choices=hqdn3d, majorDimension=0,
                                       style=wx.RA_SPECIFY_ROWS
                                       )

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.23.2025
+Rev: Oct.12.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -94,15 +94,16 @@ class VideoToSequence(wx.Panel):
                                     )
         sizer.Add(self.rdbx_opt, 0, wx.ALL | wx.EXPAND, 5)
         self.rdbx_opt.SetSelection(0)
-        boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
+        sbox = wx.StaticBox(self, wx.ID_ANY)
+        boxctrl = wx.StaticBoxSizer(sbox, wx.VERTICAL)
         sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)
         siz_format = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_format)
         siz_ctrl = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_ctrl)
-        self.lbl_rate = wx.StaticText(self, wx.ID_ANY, label="FPS:")
+        self.lbl_rate = wx.StaticText(sbox, wx.ID_ANY, label="FPS:")
         siz_ctrl.Add(self.lbl_rate, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_rate = FS.FloatSpin(self, wx.ID_ANY,
+        self.spin_rate = FS.FloatSpin(sbox, wx.ID_ANY,
                                       min_val=0.1, max_val=30.0,
                                       increment=0.1, value=0.2,
                                       agwStyle=FS.FS_LEFT, size=(120, -1)
@@ -110,16 +111,16 @@ class VideoToSequence(wx.Panel):
         self.spin_rate.SetFormat("%f")
         self.spin_rate.SetDigits(1)
         siz_ctrl.Add(self.spin_rate, 0, wx.ALL, 5)
-        self.btn_resize = wx.Button(self, wx.ID_ANY, _("Resize"),
+        self.btn_resize = wx.Button(sbox, wx.ID_ANY, _("Resize"),
                                     size=(-1, -1)
                                     )
         self.btn_resize.SetBitmap(bmpresize, wx.LEFT)
         siz_ctrl.Add(self.btn_resize, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.lbl_frmt = wx.StaticText(self, wx.ID_ANY,
+        self.lbl_frmt = wx.StaticText(sbox, wx.ID_ANY,
                                       label=_("Output format:")
                                       )
         siz_ctrl.Add(self.lbl_frmt, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.cmb_frmt = wx.ComboBox(self, wx.ID_ANY,
+        self.cmb_frmt = wx.ComboBox(sbox, wx.ID_ANY,
                                     choices=['jpeg', 'png', 'bmp', 'gif'],
                                     size=(160, -1), style=wx.CB_DROPDOWN
                                     | wx.CB_READONLY,
@@ -128,39 +129,39 @@ class VideoToSequence(wx.Panel):
         self.cmb_frmt.SetSelection(2)
         siz_tile = wx.FlexGridSizer(4, 4, 0, 0)
         boxctrl.Add(siz_tile, 0, wx.TOP | wx.BOTTOM, 10)
-        self.lbl_rows = wx.StaticText(self, wx.ID_ANY, label=_("Rows:"))
+        self.lbl_rows = wx.StaticText(sbox, wx.ID_ANY, label=_("Rows:"))
         siz_tile.Add(self.lbl_rows, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.lbl_rows.Disable()
-        self.spin_rows = wx.SpinCtrl(self, wx.ID_ANY, "4", min=2,
+        self.spin_rows = wx.SpinCtrl(sbox, wx.ID_ANY, "4", min=2,
                                      max=32, size=(-1, -1),
                                      style=wx.TE_PROCESS_ENTER
                                      )
         siz_tile.Add(self.spin_rows, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_rows.Disable()
-        self.lbl_cols = wx.StaticText(self, wx.ID_ANY,
+        self.lbl_cols = wx.StaticText(sbox, wx.ID_ANY,
                                       label=_("Columns:"))
         siz_tile.Add(self.lbl_cols, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.lbl_cols.Disable()
-        self.spin_cols = wx.SpinCtrl(self, wx.ID_ANY, "4", min=2,
+        self.spin_cols = wx.SpinCtrl(sbox, wx.ID_ANY, "4", min=2,
                                      max=32, size=(-1, -1),
                                      style=wx.TE_PROCESS_ENTER
                                      )
         siz_tile.Add(self.spin_cols, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_cols.Disable()
-        self.lbl_pad = wx.StaticText(self, wx.ID_ANY, label="Padding:")
+        self.lbl_pad = wx.StaticText(sbox, wx.ID_ANY, label="Padding:")
         siz_tile.Add(self.lbl_pad, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.lbl_pad.Disable()
-        self.spin_pad = wx.SpinCtrl(self, wx.ID_ANY, "2", min=0,
+        self.spin_pad = wx.SpinCtrl(sbox, wx.ID_ANY, "2", min=0,
                                     max=32, size=(-1, -1),
                                     style=wx.TE_PROCESS_ENTER
                                     )
         siz_tile.Add(self.spin_pad, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_pad.Disable()
 
-        self.lbl_marg = wx.StaticText(self, wx.ID_ANY, label="Margin:")
+        self.lbl_marg = wx.StaticText(sbox, wx.ID_ANY, label="Margin:")
         siz_tile.Add(self.lbl_marg, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
         self.lbl_marg.Disable()
-        self.spin_marg = wx.SpinCtrl(self, wx.ID_ANY, "2", min=0,
+        self.spin_marg = wx.SpinCtrl(sbox, wx.ID_ANY, "2", min=0,
                                      max=32, size=(-1, -1),
                                      style=wx.TE_PROCESS_ENTER
                                      )
@@ -168,9 +169,9 @@ class VideoToSequence(wx.Panel):
         self.spin_marg.Disable()
         siz_addparams = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_addparams, 0, wx.EXPAND, 0)
-        self.ckbx_edit = wx.CheckBox(self, wx.ID_ANY, _('Edit'))
+        self.ckbx_edit = wx.CheckBox(sbox, wx.ID_ANY, _('Edit'))
         siz_addparams.Add(self.ckbx_edit, 0, wx.ALL | wx.EXPAND, 5)
-        self.txt_args = wx.TextCtrl(self, wx.ID_ANY, size=(700, -1),)
+        self.txt_args = wx.TextCtrl(sbox, wx.ID_ANY, size=(700, -1),)
         siz_addparams.Add(self.txt_args, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_args.Disable()
         sizer.Add((20, 20))

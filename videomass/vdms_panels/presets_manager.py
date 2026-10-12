@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2025
+Rev: Oct.12.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -126,104 +126,109 @@ class PrstPan(wx.Panel):
                        ])
         wx.Panel.__init__(self, parent, -1)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
+        boxprst = wx.StaticBox(self, wx.ID_ANY, _("Presets"))
+        boxpresets = wx.StaticBoxSizer(boxprst, wx.VERTICAL)
         # ------- BOX PRESETS
         fgs1 = wx.BoxSizer(wx.HORIZONTAL)
-        self.cmbx_prst = wx.ComboBox(self, wx.ID_ANY,
+        self.cmbx_prst = wx.ComboBox(boxprst, wx.ID_ANY,
                                      choices=prst,
                                      size=(150, -1),
                                      style=wx.CB_DROPDOWN
                                      | wx.CB_READONLY,
                                      )
         fgs1.Add(self.cmbx_prst, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_newpreset = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
+        self.btn_newpreset = wx.Button(boxprst, wx.ID_ANY, "", size=(40, -1))
         self.btn_newpreset.SetBitmap(bmpnewprst, wx.LEFT)
         fgs1.Add(self.btn_newpreset, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_delpreset = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
+        self.btn_delpreset = wx.Button(boxprst, wx.ID_ANY, "", size=(40, -1))
         self.btn_delpreset.SetBitmap(bmpdelprst, wx.LEFT)
         fgs1.Add(self.btn_delpreset, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_savecopy = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
+        self.btn_savecopy = wx.Button(boxprst, wx.ID_ANY, "", size=(40, -1))
         self.btn_savecopy.SetBitmap(bmpexpsel, wx.LEFT)
         fgs1.Add(self.btn_savecopy, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_saveall = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
+        self.btn_saveall = wx.Button(boxprst, wx.ID_ANY, "", size=(40, -1))
         self.btn_saveall.SetBitmap(bmpexpall, wx.LEFT)
         fgs1.Add(self.btn_saveall, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_restore = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
+        self.btn_restore = wx.Button(boxprst, wx.ID_ANY, "", size=(40, -1))
         self.btn_restore.SetBitmap(bmpimpprst, wx.LEFT)
         fgs1.Add(self.btn_restore, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_restoreall = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
+        self.btn_restoreall = wx.Button(boxprst, wx.ID_ANY, "", size=(40, -1))
         self.btn_restoreall.SetBitmap(bmpimpdir, wx.LEFT)
         fgs1.Add(self.btn_restoreall, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_restoredef = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
+        self.btn_restoredef = wx.Button(boxprst, wx.ID_ANY, "", size=(40, -1))
         self.btn_restoredef.SetBitmap(bmprestsel, wx.LEFT)
         fgs1.Add(self.btn_restoredef, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_restorealldefault = wx.Button(self, wx.ID_ANY,
+        self.btn_restorealldefault = wx.Button(boxprst, wx.ID_ANY,
                                                "", size=(40, -1))
         self.btn_restorealldefault.SetBitmap(bmprestall, wx.LEFT)
         fgs1.Add(self.btn_restorealldefault, 0, wx.ALL | wx.CENTRE, 5)
-        self.btn_refresh = wx.Button(self, wx.ID_ANY, "", size=(40, -1))
+        self.btn_refresh = wx.Button(boxprst, wx.ID_ANY, "", size=(40, -1))
         self.btn_refresh.SetBitmap(bmpreload, wx.LEFT)
         fgs1.Add(self.btn_refresh, 0, wx.ALL | wx.CENTRE, 5)
-        boxprst = wx.StaticBox(self, wx.ID_ANY, _("Presets"))
-        boxpresets = wx.StaticBoxSizer(boxprst, wx.VERTICAL)
-        sizer_base.Add(boxpresets, 0, wx.ALL | wx.EXPAND, 5)
+        # boxprst = wx.StaticBox(self, wx.ID_ANY, _("Presets"))
+        # boxpresets = wx.StaticBoxSizer(boxprst, wx.VERTICAL)
         boxpresets.Add(fgs1, 0, wx.ALL, 5)
+        sizer_base.Add(boxpresets, 0, wx.ALL | wx.EXPAND, 5)
+
         # ------ LIST CONTROL & BOX PROFILES
+        boxprof_obj = wx.StaticBox(self, wx.ID_ANY, _('Profiles'))
+        boxprofiles = wx.StaticBoxSizer(boxprof_obj, wx.VERTICAL)
         # --- listctrl
-        self.lctrl = wx.ListCtrl(self, wx.ID_ANY,
+        self.lctrl = wx.ListCtrl(boxprof_obj, wx.ID_ANY,
                                  style=wx.LC_REPORT
                                  | wx.SUNKEN_BORDER
                                  | wx.LC_SINGLE_SEL,
                                  )
         # --- profile buttons
         grid_profiles = wx.FlexGridSizer(0, 4, 0, 5)
-        self.btn_newprofile = wx.Button(self, wx.ID_ANY,
+        self.btn_newprofile = wx.Button(boxprof_obj, wx.ID_ANY,
                                         _("Write"), size=(-1, -1))
         self.btn_newprofile.SetBitmap(bmpnewprf, wx.LEFT)
         grid_profiles.Add(self.btn_newprofile, 0, wx.ALL, 0)
-        self.btn_delprofile = wx.Button(self, wx.ID_ANY,
+        self.btn_delprofile = wx.Button(boxprof_obj, wx.ID_ANY,
                                         _("Delete"), size=(-1, -1))
         self.btn_delprofile.SetBitmap(bmpdelprf, wx.LEFT)
         self.btn_delprofile.Disable()
         grid_profiles.Add(self.btn_delprofile, 0, wx.ALL, 0)
-        self.btn_editprofile = wx.Button(self, wx.ID_ANY,
+        self.btn_editprofile = wx.Button(boxprof_obj, wx.ID_ANY,
                                          _("Edit"), size=(-1, -1))
         self.btn_editprofile.SetBitmap(bmpeditprf, wx.LEFT)
         self.btn_editprofile.Disable()
         grid_profiles.Add(self.btn_editprofile, 0, wx.ALL, 0)
-        self.btn_copyprofile = wx.Button(self, wx.ID_ANY,
+        self.btn_copyprofile = wx.Button(boxprof_obj, wx.ID_ANY,
                                          _("Duplicate"), size=(-1, -1))
         self.btn_copyprofile.SetBitmap(bmpcopyprf, wx.LEFT)
         self.btn_copyprofile.Disable()
         grid_profiles.Add(self.btn_copyprofile, 0, wx.ALL, 0)
-        boxprofiles = wx.StaticBoxSizer(wx.StaticBox(
-            self, wx.ID_ANY, _('Profiles')), wx.VERTICAL)
         boxprofiles.Add(self.lctrl, 1, wx.ALL | wx.EXPAND, 5)
         boxprofiles.Add(grid_profiles, 0, wx.ALL, 5)
         sizer_base.Add(boxprofiles, 1, wx.ALL | wx.EXPAND, 5)
         # ------- command line
         grd_cmd = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(grd_cmd, 0, wx.EXPAND)
+        # --- One-Pass Encoding
         sbox1 = wx.StaticBox(self, wx.ID_ANY, _("One-Pass Encoding"))
         box_cmd1 = wx.StaticBoxSizer(sbox1, wx.VERTICAL)
         grd_cmd.Add(box_cmd1, 1, wx.ALL | wx.EXPAND, 5)
-        self.txt_1cmd = wx.TextCtrl(self, wx.ID_ANY, "",
+        self.txt_1cmd = wx.TextCtrl(sbox1, wx.ID_ANY, "",
                                     size=(-1, 120), style=wx.TE_MULTILINE
                                     | wx.TE_PROCESS_ENTER,
                                     )
         box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 5)
-        self.pass_1_pre = wx.TextCtrl(self, wx.ID_ANY, "",
+        self.pass_1_pre = wx.TextCtrl(sbox1, wx.ID_ANY, "",
                                       style=wx.TE_PROCESS_ENTER,
                                       )
         box_cmd1.Add(self.pass_1_pre, 0, wx.ALL | wx.EXPAND, 5)
+        # --- Two-Pass Encoding
         sbox2 = wx.StaticBox(self, wx.ID_ANY, _("Two-Pass Encoding"))
         box_cmd2 = wx.StaticBoxSizer(sbox2, wx.VERTICAL)
         grd_cmd.Add(box_cmd2, 1, wx.ALL | wx.EXPAND, 5)
-        self.txt_2cmd = wx.TextCtrl(self, wx.ID_ANY, "",
+        self.txt_2cmd = wx.TextCtrl(sbox2, wx.ID_ANY, "",
                                     size=(-1, 120), style=wx.TE_MULTILINE
                                     | wx.TE_PROCESS_ENTER,
                                     )
         box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND, 5)
-        self.pass_2_pre = wx.TextCtrl(self, wx.ID_ANY, "",
+        self.pass_2_pre = wx.TextCtrl(sbox2, wx.ID_ANY, "",
                                       style=wx.TE_PROCESS_ENTER,
                                       )
         box_cmd2.Add(self.pass_2_pre, 0, wx.ALL | wx.EXPAND, 5)

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.16.2025
+Rev: Oct.12.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -183,7 +183,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
                                           style=wx.RA_SPECIFY_ROWS,
                                           )
         sizer_a_normaliz.Add(self.rdbx_normalize, 0, wx.ALL | wx.CENTRE, 5)
-        sizer_a_normaliz.Add((0, 10), 0)
+        sizer_a_normaliz.AddSpacer(10)
 
         grid_peak = wx.FlexGridSizer(1, 4, 15, 4)
         sizer_a_normaliz.Add(grid_peak, 0, wx.ALL | wx.CENTRE, 5)
@@ -211,7 +211,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
                                            style=wx.ALIGN_CENTRE_HORIZONTAL)
         sizer_a_normaliz.Add(self.lab_help_norm, 0, wx.ALL | wx.CENTRE, 5)
 
-        sizer_a_normaliz.Add((0, 15), 0)
+        sizer_a_normaliz.AddSpacer(15)
         grid_ebu = wx.FlexGridSizer(1, 6, 0, 0)
         sizer_a_normaliz.Add(grid_ebu, 0, wx.ALL | wx.CENTRE, 5)
         lab_i = wx.StaticText(self, wx.ID_ANY, ("IL:"))
