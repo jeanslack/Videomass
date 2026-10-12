@@ -16,9 +16,8 @@
 #     debmake
 #     pybuild-plugin-pyproject
 #     python3-hatchling
-#     python3-setuptools
 #
-#     ~# apt update && apt install python3-pip python3-all python3-babel debhelper dh-python devscripts debmake pybuild-plugin-pyproject python3-setuptools python3-hatchling
+#     ~# apt update && apt install python3-pip python3-all python3-babel debhelper dh-python devscripts debmake pybuild-plugin-pyproject python3-hatchling
 #
 # - Download the upstream tarball as the `package-version.tar.gz` file.
 # - Untar to create many files under the package-version/ directory.

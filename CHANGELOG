@@ -9,12 +9,29 @@ Change Log:
 +------------------------------------+
 Mon, 12 October 2026 v6.1.24
 
-+------------------------------------+
-Tue, 06 October 2026 v6.1.22
-
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Fixed error messages defined in wxPython debugging; this will make the
     application ready (and cleaner) for the latest versions of this toolkit.
+  * Improved building package using hatchling.
+  * Removed `setuptools` from dependencies.
+
++------------------------------------+
+Tue, 06 October 2026 v6.1.22
+
+  * Requires Python version >= 3.10 .
+  * Updates CopyLeft date.
+  * Fixed some typos.
+  * Updated translation catalogs.
+  * Updated Italian language (by jeanslack).
+  * Updated Russian language (thanks to ChourS).
+  * Updated French language (thanks to ChourS).
+  * Added zh_TW Traditional Chinese locale (thanks @PeterDaveHello @userwljs).
+  * Updates German translation (thanks @schenklklopfer).
+  * Updates Arabic (Saudi Arabia) translations (thanks @vfggf95565).
+  * Updates pyproject.toml file + added `setuptools` as new dependency entry
+    to `tool.hatch.build.hooks.custom` build hook. This should prevent Python
+    import errors during the build process.
+  * Fixed inconsistencies in `xdg/*appdata.xml` file and `debian/copyright`
 
 +------------------------------------+
 Fri, 19 September 2025 v6.1.20

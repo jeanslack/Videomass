@@ -8,7 +8,7 @@ Porpose: Defines code that will be executed at various stages
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.22.2024
+Rev: Oct.12.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -27,15 +27,17 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from pathlib import Path
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
-from babel.messages.frontend import compile_catalog
+from babel.messages.pofile import read_po
+from babel.messages.mofile import write_mo
 
 
 class VideomassLanguageBuildHook(BuildHookInterface):
     """
-    Compile the translation files from their PO-format into
-    their binary representating MO-format using python `babel`
-    pluggin.
+    Compile the translation files from portable object (.po format)
+    into the binary machine object (.mo format) using Babel's core APIs
+    without depending on setuptools.
     """
     def initialize(self, version, build_data):
         """
@@ -43,10 +45,18 @@ class VideomassLanguageBuildHook(BuildHookInterface):
         distribution (wheel). Source distribution (sdist)
         does not have to include MO files.
         """
-        if self.target_name == "wheel":
-            cmd = compile_catalog()
-            cmd.directory = "videomass/data/locale/"
-            cmd.domain = "videomass"
-            cmd.statistics = True
-            cmd.finalize_options()
-            cmd.run()
+        if self.target_name != "wheel":
+            return
+
+        localedir = Path("videomass/data/locale")
+        if not localedir.exists():
+            return
+
+        for po_path in localedir.rglob("*.po"):
+            mo_path = po_path.with_suffix(".mo")
+            print(f'Compiling "{po_path}" to "{mo_path}"...')
+            with open(po_path, 'r', encoding='utf-8') as po_file:
+                catalog = read_po(po_file)
+
+            with open(mo_path, 'wb') as mo_file:
+                write_mo(mo_file, catalog)
