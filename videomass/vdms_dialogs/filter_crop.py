@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.18.2025
+Rev: Oct.12.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -239,10 +239,10 @@ class Crop(wx.Dialog):
                                            self.pencolor)
         sizersize.Add(self.btn_color, 0, wx.CENTER | wx.ALL, 5)
         msg = _("Search for a specific frame")
-        sizer_load = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg)),
-                                       wx.HORIZONTAL)
+        sbox0 = wx.StaticBox(self, wx.ID_ANY, (msg))
+        sizer_load = wx.StaticBoxSizer(sbox0, wx.HORIZONTAL)
         sizerBase.Add(sizer_load, 0, wx.ALL | wx.CENTER, 5)
-        self.sld_time = wx.Slider(self, wx.ID_ANY,
+        self.sld_time = wx.Slider(sbox0, wx.ID_ANY,
                                   time_to_integer(self.clock),
                                   0,
                                   1 if not self.mills else self.mills,
@@ -250,19 +250,19 @@ class Crop(wx.Dialog):
                                   style=wx.SL_HORIZONTAL,
                                   )
         sizer_load.Add(self.sld_time, 0, wx.ALL | wx.CENTER, 5)
-        self.txttime = wx.StaticText(self, wx.ID_ANY, self.clock)
+        self.txttime = wx.StaticText(sbox0, wx.ID_ANY, self.clock)
         sizer_load.Add(self.txttime, 0, wx.ALL | wx.CENTER, 10)
-        self.btn_load = wx.Button(self, wx.ID_ANY, _("Load"))
+        self.btn_load = wx.Button(sbox0, wx.ID_ANY, _("Load"))
         self.btn_load.Disable()
         sizer_load.Add(self.btn_load, 0, wx.ALL | wx.CENTER, 5)
-        boxs = wx.StaticBox(self, wx.ID_ANY, (_("Cropping area selection ")))
-        sizerLabel = wx.StaticBoxSizer(boxs, wx.VERTICAL)
+        sbox1 = wx.StaticBox(self, wx.ID_ANY, (_("Cropping area selection ")))
+        sizerLabel = wx.StaticBoxSizer(sbox1, wx.VERTICAL)
         sizerBase.Add(sizerLabel, 0, wx.ALL | wx.EXPAND, 5)
         boxctrl = wx.BoxSizer(wx.VERTICAL)
         sizerLabel.Add(boxctrl, 0, wx.CENTRE)
-        label_height = wx.StaticText(self, wx.ID_ANY, (_("Height")))
+        label_height = wx.StaticText(sbox1, wx.ID_ANY, (_("Height")))
         boxctrl.Add(label_height, 0, wx.ALL | wx.CENTRE, 0)
-        self.spin_h = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
+        self.spin_h = wx.SpinCtrl(sbox1, wx.ID_ANY, "0", min=0,
                                   max=self.height, size=(-1, -1),
                                   style=wx.TE_PROCESS_ENTER
                                   | wx.SP_ARROW_KEYS,
@@ -270,20 +270,20 @@ class Crop(wx.Dialog):
         boxctrl.Add(self.spin_h, 0, wx.CENTRE)
         grid_sizerBase = wx.FlexGridSizer(1, 5, 0, 0)
         boxctrl.Add(grid_sizerBase, 0, wx.CENTRE, 0)
-        label_X = wx.StaticText(self, wx.ID_ANY, ("X"))
+        label_X = wx.StaticText(sbox1, wx.ID_ANY, ("X"))
         grid_sizerBase.Add(label_X, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        self.spin_x = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-1,
+        self.spin_x = wx.SpinCtrl(sbox1, wx.ID_ANY, "0", min=-1,
                                   max=self.width, size=(-1, -1),
                                   style=wx.TE_PROCESS_ENTER
                                   | wx.SP_ARROW_KEYS
                                   )
         grid_sizerBase.Add(self.spin_x, 0, wx.ALL | wx.CENTRE, 5)
 
-        self.btn_centre = wx.Button(self, wx.ID_ANY, _("Center"))
+        self.btn_centre = wx.Button(sbox1, wx.ID_ANY, _("Center"))
         grid_sizerBase.Add(self.btn_centre, 0, wx.ALL
                            | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_w = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
+        self.spin_w = wx.SpinCtrl(sbox1, wx.ID_ANY, "0", min=0,
                                   max=self.width,
                                   size=(-1, -1),
                                   style=wx.TE_PROCESS_ENTER
@@ -291,16 +291,16 @@ class Crop(wx.Dialog):
                                   )
         grid_sizerBase.Add(self.spin_w, 0, wx.ALL | wx.CENTRE, 5)
 
-        label_width = wx.StaticText(self, wx.ID_ANY, (_("Width")))
+        label_width = wx.StaticText(sbox1, wx.ID_ANY, (_("Width")))
         grid_sizerBase.Add(label_width, 0, wx.RIGHT
                            | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_y = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-1,
+        self.spin_y = wx.SpinCtrl(sbox1, wx.ID_ANY, "0", min=-1,
                                   max=self.height, size=(-1, -1),
                                   style=wx.TE_PROCESS_ENTER
                                   | wx.SP_ARROW_KEYS
                                   )
         boxctrl.Add(self.spin_y, 0, wx.CENTRE)
-        label_Y = wx.StaticText(self, wx.ID_ANY, ("Y"))
+        label_Y = wx.StaticText(sbox1, wx.ID_ANY, ("Y"))
         boxctrl.Add(label_Y, 0, wx.BOTTOM | wx.CENTRE, 5)
 
         # ----- confirm buttons section

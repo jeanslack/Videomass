@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.18.2025
+Rev: Oct.12.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -86,19 +86,19 @@ class Transpose(wx.Dialog):
         sizerBase.Add(self.statictxt, 0, wx.CENTER | wx.EXPAND)
         sizerBase.Add(10, 10)
         msg = _("Rotation setting")
-        sizerLabel = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg)),
-                                       wx.VERTICAL)
+        sbox = wx.StaticBox(self, wx.ID_ANY, (msg))
+        sizerLabel = wx.StaticBoxSizer(sbox, wx.VERTICAL)
         sizerBase.Add(sizerLabel, 0, wx.ALL | wx.EXPAND, 5)
         boxctrl = wx.BoxSizer(wx.VERTICAL)
         sizerLabel.Add(boxctrl, 0, wx.CENTRE)
         grid_sizerBase = wx.GridSizer(1, 2, 0, 0)
-        self.button_left = wx.Button(self, wx.ID_ANY,
+        self.button_left = wx.Button(sbox, wx.ID_ANY,
                                      (_("90° (left)")))  # ruota sx
         grid_sizerBase.Add(self.button_left, 0, wx.ALL | wx.CENTRE, 5)
-        self.button_right = wx.Button(self, wx.ID_ANY, (_("90° (right)")))
+        self.button_right = wx.Button(sbox, wx.ID_ANY, (_("90° (right)")))
         grid_sizerBase.Add(self.button_right, 0, wx.ALL | wx.CENTRE, 5)
         boxctrl.Add(grid_sizerBase, 0, wx.EXPAND)
-        self.button_down = wx.Button(self, wx.ID_ANY,
+        self.button_down = wx.Button(sbox, wx.ID_ANY,
                                      (_("180°")))  # capovolgi sotto
         boxctrl.Add(self.button_down, 0, wx.ALL | wx.CENTRE, 5)
 

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.09.2024
+Rev: Oct.12.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -54,60 +54,60 @@ class Deinterlace(wx.Dialog):
 
         self.enable_opt = wx.ToggleButton(self, wx.ID_ANY,
                                           _("Advanced Options"))
-        boxs = wx.StaticBox(self, wx.ID_ANY, (_("Deinterlace")))
-        zone1 = wx.StaticBoxSizer(boxs, wx.VERTICAL)
-        boxs = wx.StaticBox(self, wx.ID_ANY, (_("Interlace")))
-        zone2 = wx.StaticBoxSizer(boxs, wx.VERTICAL)
+        box0 = wx.StaticBox(self, wx.ID_ANY, (_("Deinterlace")))
+        zone1 = wx.StaticBoxSizer(box0, wx.VERTICAL)
 
-        self.ckbx_deintW3fdif = wx.CheckBox(self, wx.ID_ANY,
+        self.ckbx_deintW3fdif = wx.CheckBox(box0, wx.ID_ANY,
                                             (_("Deinterlaces with "
                                                "w3fdif filter"))
                                             )
-        self.rdbx_w3fdif = wx.RadioBox(self, wx.ID_ANY, ("Filter"),
+        self.rdbx_w3fdif = wx.RadioBox(box0, wx.ID_ANY, ("Filter"),
                                        choices=[("simple"), ("complex")],
                                        majorDimension=0,
                                        style=wx.RA_SPECIFY_ROWS
                                        )
-        self.rdbx_w3fdif_d = wx.RadioBox(self, wx.ID_ANY, ("Deint"),
+        self.rdbx_w3fdif_d = wx.RadioBox(box0, wx.ID_ANY, ("Deint"),
                                          choices=[("all"), ("interlaced")],
                                          majorDimension=0,
                                          style=wx.RA_SPECIFY_ROWS
                                          )
-        self.ckbx_deintYadif = wx.CheckBox(self, wx.ID_ANY,
+        self.ckbx_deintYadif = wx.CheckBox(box0, wx.ID_ANY,
                                            (_("Deinterlaces with "
                                               "yadif filter"))
                                            )
         yadif = [("0, send_frame"), ("1, send_field"),
                  ("2, send_frame_nospatial"), ("3, send_field_nospatial")
                  ]
-        self.rdbx_Yadif_mode = wx.RadioBox(self, wx.ID_ANY, ("Mode"),
+        self.rdbx_Yadif_mode = wx.RadioBox(box0, wx.ID_ANY, ("Mode"),
                                            choices=yadif, majorDimension=0,
                                            style=wx.RA_SPECIFY_ROWS
                                            )
-        self.rdbx_Yadif_parity = wx.RadioBox(self, wx.ID_ANY, ("Parity"),
+        self.rdbx_Yadif_parity = wx.RadioBox(box0, wx.ID_ANY, ("Parity"),
                                              choices=[("0, tff"),
                                                       ("1, bff"),
                                                       ("-1, auto")],
                                              majorDimension=0,
                                              style=wx.RA_SPECIFY_ROWS
                                              )
-        self.rdbx_Yadif_deint = wx.RadioBox(self, wx.ID_ANY, ("Deint"),
+        self.rdbx_Yadif_deint = wx.RadioBox(box0, wx.ID_ANY, ("Deint"),
                                             choices=[("0, all"),
                                                      ("1, interlaced")],
                                             majorDimension=0,
                                             style=wx.RA_SPECIFY_ROWS
                                             )
-        self.ckbx_interlace = wx.CheckBox(self, wx.ID_ANY,
+        box1 = wx.StaticBox(self, wx.ID_ANY, (_("Interlace")))
+        zone2 = wx.StaticBoxSizer(box1, wx.VERTICAL)
+        self.ckbx_interlace = wx.CheckBox(box1, wx.ID_ANY,
                                           (_("Interlaces with "
                                              "interlace filter"))
                                           )
-        self.rdbx_inter_scan = wx.RadioBox(self, wx.ID_ANY, ("Scanning mode"),
+        self.rdbx_inter_scan = wx.RadioBox(box1, wx.ID_ANY, ("Scanning mode"),
                                            choices=[("scan=tff"),
                                                     ("scan=bff")],
                                            majorDimension=0,
                                            style=wx.RA_SPECIFY_ROWS
                                            )
-        self.rdbx_inter_lowpass = wx.RadioBox(self, wx.ID_ANY,
+        self.rdbx_inter_lowpass = wx.RadioBox(box1, wx.ID_ANY,
                                               ("Set vertical low-pass filter"),
                                               choices=[("lowpass=0"),
                                                        ("lowpass=1")],

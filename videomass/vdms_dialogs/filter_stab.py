@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.18.2025
+Rev: Oct.12.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -94,7 +94,7 @@ class VidstabSet(wx.Dialog):
         boxtime = wx.BoxSizer(wx.HORIZONTAL)
         sizertime.Add(boxtime, 0, wx.ALL | wx.CENTER, 5)
 
-        self.sld_time = wx.Slider(self, wx.ID_ANY,
+        self.sld_time = wx.Slider(stboxtime, wx.ID_ANY,
                                   time_to_integer(self.clock),
                                   0,
                                   1 if not self.mills else self.mills,
@@ -102,30 +102,31 @@ class VidstabSet(wx.Dialog):
                                   style=wx.SL_HORIZONTAL,
                                   )
         boxtime.Add(self.sld_time, 0, wx.CENTER, 0)
-        self.lab_time = wx.StaticText(self, wx.ID_ANY, self.clock)
+        self.lab_time = wx.StaticText(stboxtime, wx.ID_ANY, self.clock)
         boxtime.Add(self.lab_time, 0, wx.LEFT | wx.CENTER, 20)
-        self.btn_snap = wx.Button(self, wx.ID_ANY, _("Preview"))
+        self.btn_snap = wx.Button(stboxtime, wx.ID_ANY, _("Preview"))
         self.btn_snap.Disable()
         boxtime.Add(self.btn_snap, 0, wx.LEFT | wx.CENTER, 20)
-        self.lab_dur = wx.StaticText(self, wx.ID_ANY, _("Duration seconds:"))
+        self.lab_dur = wx.StaticText(stboxtime,
+                                     wx.ID_ANY, _("Duration seconds:"))
         boxtime.Add(self.lab_dur, 0, wx.LEFT | wx.CENTER, 20)
-        self.spin_dur = wx.SpinCtrl(self, wx.ID_ANY, "5",
+        self.spin_dur = wx.SpinCtrl(stboxtime, wx.ID_ANY, "5",
                                     min=3, max=15,
                                     style=wx.TE_PROCESS_ENTER
                                     | wx.SP_ARROW_KEYS,
                                     )
         boxtime.Add(self.spin_dur, 0, wx.LEFT | wx.CENTER, 2)
         # Box detect
-        sbox = wx.StaticBox(self, wx.ID_ANY, (_("Video Detect")))
-        box_detect = wx.StaticBoxSizer(sbox, wx.VERTICAL)
+        sbox0 = wx.StaticBox(self, wx.ID_ANY, (_("Video Detect")))
+        box_detect = wx.StaticBoxSizer(sbox0, wx.VERTICAL)
         sizerBase.Add(box_detect, 0, wx.ALL | wx.EXPAND, 5)
         Flex_detect1 = wx.FlexGridSizer(1, 6, 0, 0)
         box_detect.Add(Flex_detect1, 0, wx.ALL, 5)
-        self.lab_shake = wx.StaticText(self, wx.ID_ANY, ("Shakiness:"))
+        self.lab_shake = wx.StaticText(sbox0, wx.ID_ANY, ("Shakiness:"))
         Flex_detect1.Add(self.lab_shake, 0, wx.RIGHT
                          | wx.ALIGN_CENTER_VERTICAL, 2
                          )
-        self.spin_shake = wx.SpinCtrl(self, wx.ID_ANY, "5",
+        self.spin_shake = wx.SpinCtrl(sbox0, wx.ID_ANY, "5",
                                       min=1, max=10,
                                       style=wx.TE_PROCESS_ENTER
                                       | wx.SP_ARROW_KEYS
@@ -133,11 +134,11 @@ class VidstabSet(wx.Dialog):
         Flex_detect1.Add(self.spin_shake, 0, wx.RIGHT
                          | wx.ALIGN_CENTER_VERTICAL, 15
                          )
-        self.lab_accuracy = wx.StaticText(self, wx.ID_ANY, ("Accuracy:"))
+        self.lab_accuracy = wx.StaticText(sbox0, wx.ID_ANY, ("Accuracy:"))
         Flex_detect1.Add(self.lab_accuracy, 0, wx.RIGHT
                          | wx.ALIGN_CENTER_VERTICAL, 2
                          )
-        self.spin_accuracy = wx.SpinCtrl(self, wx.ID_ANY, "15",
+        self.spin_accuracy = wx.SpinCtrl(sbox0, wx.ID_ANY, "15",
                                          min=1, max=15,
                                          style=wx.TE_PROCESS_ENTER
                                          | wx.SP_ARROW_KEYS
@@ -145,11 +146,11 @@ class VidstabSet(wx.Dialog):
         Flex_detect1.Add(self.spin_accuracy, 0, wx.RIGHT
                          | wx.ALIGN_CENTER_VERTICAL, 15
                          )
-        self.lab_stepsize = wx.StaticText(self, wx.ID_ANY, ("Stepsize:"))
+        self.lab_stepsize = wx.StaticText(sbox0, wx.ID_ANY, ("Stepsize:"))
         Flex_detect1.Add(self.lab_stepsize, 0, wx.RIGHT
                          | wx.ALIGN_CENTER_VERTICAL, 2
                          )
-        self.spin_stepsize = wx.SpinCtrl(self, wx.ID_ANY, "6",
+        self.spin_stepsize = wx.SpinCtrl(sbox0, wx.ID_ANY, "6",
                                          min=1, max=10000,
                                          style=wx.TE_PROCESS_ENTER
                                          | wx.SP_ARROW_KEYS
@@ -159,10 +160,10 @@ class VidstabSet(wx.Dialog):
                          )
         Flex_detect2 = wx.FlexGridSizer(1, 4, 0, 0)
         box_detect.Add(Flex_detect2, 0, wx.ALL, 5)
-        self.lab_mincontr = wx.StaticText(self, wx.ID_ANY, ("Mincontrast:"))
+        self.lab_mincontr = wx.StaticText(sbox0, wx.ID_ANY, ("Mincontrast:"))
         Flex_detect2.Add(self.lab_mincontr, 0, wx.RIGHT
                          | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.spin_mincontr = FS.FloatSpin(self, wx.ID_ANY,
+        self.spin_mincontr = FS.FloatSpin(sbox0, wx.ID_ANY,
                                           min_val=0, max_val=1,
                                           increment=0.01, value=0.25,
                                           agwStyle=FS.FS_LEFT,
@@ -175,22 +176,22 @@ class VidstabSet(wx.Dialog):
                          )
         Flex_detect2.Add((15, 0), 0, wx.ALL, 5)
         lab = _("[TRIPOD] Enable tripod mode if checked")
-        self.ckbx_tripod1 = wx.CheckBox(self, wx.ID_ANY, lab)
+        self.ckbx_tripod1 = wx.CheckBox(sbox0, wx.ID_ANY, lab)
         Flex_detect2.Add(self.ckbx_tripod1, 0, wx.ALL
                          | wx.ALIGN_CENTER_VERTICAL, 5
                          )
         # Box transform
         sizerBase.Add((15, 0), 0, wx.ALL, 5)
-        sbox = wx.StaticBox(self, wx.ID_ANY, (_("Video transform")))
-        box_trans = wx.StaticBoxSizer(sbox, wx.VERTICAL)
+        sbox1 = wx.StaticBox(self, wx.ID_ANY, (_("Video transform")))
+        box_trans = wx.StaticBoxSizer(sbox1, wx.VERTICAL)
         sizerBase.Add(box_trans, 1, wx.ALL | wx.EXPAND, 5)
         flex_trans1 = wx.FlexGridSizer(1, 5, 0, 0)
         box_trans.Add(flex_trans1, 0, wx.ALL, 5)
-        self.lab_smooth = wx.StaticText(self, wx.ID_ANY, ("Smoothing:"))
+        self.lab_smooth = wx.StaticText(sbox1, wx.ID_ANY, ("Smoothing:"))
         flex_trans1.Add(self.lab_smooth, 0, wx.RIGHT
                         | wx.ALIGN_CENTER_VERTICAL, 2
                         )
-        self.spin_smooth = wx.SpinCtrl(self, wx.ID_ANY, "15",
+        self.spin_smooth = wx.SpinCtrl(sbox1, wx.ID_ANY, "15",
                                        min=0, max=30,
                                        style=wx.TE_PROCESS_ENTER
                                        | wx.SP_ARROW_KEYS,
@@ -199,7 +200,7 @@ class VidstabSet(wx.Dialog):
         flex_trans1.Add(self.spin_smooth, 0, wx.RIGHT
                         | wx.ALIGN_CENTER_VERTICAL, 15
                         )
-        self.rdb_optalgo = wx.RadioBox(self, wx.ID_ANY,
+        self.rdb_optalgo = wx.RadioBox(sbox1, wx.ID_ANY,
                                        (_("[OPTALGO] optimization algorithm")),
                                        choices=[("gauss"), ("avg")],
                                        majorDimension=1,
@@ -208,11 +209,11 @@ class VidstabSet(wx.Dialog):
         flex_trans1.Add(self.rdb_optalgo, 0, wx.RIGHT
                         | wx.ALIGN_CENTER_VERTICAL, 15
                         )
-        self.lab_maxangle = wx.StaticText(self, wx.ID_ANY, ("Maxangle:"))
+        self.lab_maxangle = wx.StaticText(sbox1, wx.ID_ANY, ("Maxangle:"))
         flex_trans1.Add(self.lab_maxangle, 0, wx.RIGHT
                         | wx.ALIGN_CENTER_VERTICAL, 2
                         )
-        self.spin_maxangle = wx.SpinCtrl(self, wx.ID_ANY, "-1",
+        self.spin_maxangle = wx.SpinCtrl(sbox1, wx.ID_ANY, "-1",
                                          min=-1, max=360,
                                          style=wx.TE_PROCESS_ENTER
                                          | wx.SP_ARROW_KEYS,
@@ -221,7 +222,7 @@ class VidstabSet(wx.Dialog):
         flex_trans1.Add(self.spin_maxangle, 0, wx.RIGHT
                         | wx.ALIGN_CENTER_VERTICAL, 5
                         )
-        self.rdb_crop = wx.RadioBox(self, wx.ID_ANY,
+        self.rdb_crop = wx.RadioBox(sbox1, wx.ID_ANY,
                                     (_("[CROP] Specify how to deal with "
                                         "borders at movement compensation")),
                                     choices=[("keep"), ("black")],
@@ -230,19 +231,19 @@ class VidstabSet(wx.Dialog):
                                     )
         box_trans.Add(self.rdb_crop, 0, wx.ALL, 5)
         lab = _("[INVERT] Invert transforms if checked")
-        self.ckbx_invert = wx.CheckBox(self, wx.ID_ANY, lab)
+        self.ckbx_invert = wx.CheckBox(sbox1, wx.ID_ANY, lab)
         box_trans.Add(self.ckbx_invert, 0, wx.ALL, 5)
         lab = _("[RELATIVE] Consider transforms as relative to previous "
                 "frame if checked, absolute if unchecked")
-        self.ckbx_relative = wx.CheckBox(self, wx.ID_ANY, lab)
+        self.ckbx_relative = wx.CheckBox(sbox1, wx.ID_ANY, lab)
         box_trans.Add(self.ckbx_relative, 0, wx.ALL, 5)
         flex_trans2 = wx.FlexGridSizer(1, 6, 0, 0)
         box_trans.Add(flex_trans2, 0, wx.ALL, 5)
-        self.lab_zoom = wx.StaticText(self, wx.ID_ANY, ("Zoom:"))
+        self.lab_zoom = wx.StaticText(sbox1, wx.ID_ANY, ("Zoom:"))
         flex_trans2.Add(self.lab_zoom, 0, wx.RIGHT
                         | wx.ALIGN_CENTER_VERTICAL, 2
                         )
-        self.spin_zoom = wx.SpinCtrl(self, wx.ID_ANY, "0",
+        self.spin_zoom = wx.SpinCtrl(sbox1, wx.ID_ANY, "0",
                                      min=0, max=100,
                                      style=wx.TE_PROCESS_ENTER
                                      | wx.SP_ARROW_KEYS,
@@ -251,11 +252,11 @@ class VidstabSet(wx.Dialog):
         flex_trans2.Add(self.spin_zoom, 0, wx.RIGHT
                         | wx.ALIGN_CENTER_VERTICAL, 15
                         )
-        self.lab_optzoom = wx.StaticText(self, wx.ID_ANY, ("OptZoom:"))
+        self.lab_optzoom = wx.StaticText(sbox1, wx.ID_ANY, ("OptZoom:"))
         flex_trans2.Add(self.lab_optzoom, 0, wx.RIGHT
                         | wx.ALIGN_CENTER_VERTICAL, 2
                         )
-        self.spin_optzoom = wx.SpinCtrl(self, wx.ID_ANY, "1",
+        self.spin_optzoom = wx.SpinCtrl(sbox1, wx.ID_ANY, "1",
                                         min=0, max=2,
                                         style=wx.TE_PROCESS_ENTER
                                         | wx.SP_ARROW_KEYS,
@@ -264,11 +265,11 @@ class VidstabSet(wx.Dialog):
         flex_trans2.Add(self.spin_optzoom, 0, wx.RIGHT
                         | wx.ALIGN_CENTER_VERTICAL, 15
                         )
-        self.lab_zoomspeed = wx.StaticText(self, wx.ID_ANY, ("Zoom speed:"))
+        self.lab_zoomspeed = wx.StaticText(sbox1, wx.ID_ANY, ("Zoom speed:"))
         flex_trans2.Add(self.lab_zoomspeed, 0, wx.RIGHT
                         | wx.ALIGN_CENTER_VERTICAL, 2
                         )
-        self.spin_zoomspeed = FS.FloatSpin(self, wx.ID_ANY,
+        self.spin_zoomspeed = FS.FloatSpin(sbox1, wx.ID_ANY,
                                            min_val=0, max_val=5,
                                            increment=0.05, value=0.25,
                                            agwStyle=FS.FS_LEFT, size=(120, -1)
@@ -276,7 +277,7 @@ class VidstabSet(wx.Dialog):
         self.spin_zoomspeed.SetFormat("%f")
         self.spin_zoomspeed.SetDigits(2)
         flex_trans2.Add(self.spin_zoomspeed, 0, wx.RIGHT, 5)
-        self.rdb_interpol = wx.RadioBox(self, wx.ID_ANY,
+        self.rdb_interpol = wx.RadioBox(sbox1, wx.ID_ANY,
                                         (_("Specify type of interpolation")),
                                         choices=[("no"), ("linear"),
                                                  ("bilinear"), ("bicubic")],
@@ -287,16 +288,16 @@ class VidstabSet(wx.Dialog):
         box_trans.Add(self.rdb_interpol, 0, wx.ALL, 5)
         lab = _("[TRIPOD2] virtual tripod mode, equivalent to "
                 "relative=unchecked:smoothing=0")
-        self.ckbx_tripod2 = wx.CheckBox(self, wx.ID_ANY, lab)
+        self.ckbx_tripod2 = wx.CheckBox(sbox1, wx.ID_ANY, lab)
         box_trans.Add(self.ckbx_tripod2, 0, wx.ALL, 5)
         flex_trans3 = wx.FlexGridSizer(1, 2, 0, 0)
         box_trans.Add(flex_trans3, 0, wx.ALL, 5)
-        self.lab_unsharp = wx.StaticText(self, wx.ID_ANY,
+        self.lab_unsharp = wx.StaticText(sbox1, wx.ID_ANY,
                                          (_("Unsharp filter:")))
         flex_trans3.Add(self.lab_unsharp, 0, wx.RIGHT
                         | wx.ALIGN_CENTER_VERTICAL, 2
                         )
-        self.txt_unsharp = wx.TextCtrl(self, wx.ID_ANY,
+        self.txt_unsharp = wx.TextCtrl(sbox1, wx.ID_ANY,
                                        value="unsharp=5:5:0.8:3:3:0.4",
                                        size=(500, -1),
                                        )

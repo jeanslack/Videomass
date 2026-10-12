@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.22.2024
+Rev: Oct.12.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -121,20 +121,21 @@ class SequenceToVideo(wx.Panel):
         sizer.Add(btn_help, 0, wx.ALL, 5)
         sizer.Add((20, 20))
         # sizer.Add((5, 5))
-        boxctrl = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY), wx.VERTICAL)
+        sbox = wx.StaticBox(self, wx.ID_ANY)
+        boxctrl = wx.StaticBoxSizer(sbox, wx.VERTICAL)
         sizer.Add(boxctrl, 0, wx.ALL | wx.EXPAND, 5)
         siz_format = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_format)
-        self.ckbx_static_img = wx.CheckBox(self, wx.ID_ANY,
+        self.ckbx_static_img = wx.CheckBox(sbox, wx.ID_ANY,
                                            _('Enable a single still image'))
         boxctrl.Add(self.ckbx_static_img, 0, wx.ALL | wx.EXPAND, 5)
         boxctrl.Add((15, 15), 0)
         siz_sec = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_sec)
         msg = _('Time interval between images (in seconds):')
-        lbl_sec = wx.StaticText(self, wx.ID_ANY, label=msg)
+        lbl_sec = wx.StaticText(sbox, wx.ID_ANY, label=msg)
         siz_sec.Add(lbl_sec, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_sec = wx.SpinCtrl(self, wx.ID_ANY, "1", min=1,
+        self.spin_sec = wx.SpinCtrl(sbox, wx.ID_ANY, "1", min=1,
                                     max=1000, size=(-1, -1),
                                     style=wx.TE_PROCESS_ENTER
                                     )
@@ -142,9 +143,9 @@ class SequenceToVideo(wx.Panel):
         boxctrl.Add((15, 15), 0)
         siz_pict = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_pict)
-        lbl_fps = wx.StaticText(self, wx.ID_ANY, label="FPS:")
+        lbl_fps = wx.StaticText(sbox, wx.ID_ANY, label="FPS:")
         siz_pict.Add(lbl_fps, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.cmb_fps = wx.ComboBox(self, wx.ID_ANY,
+        self.cmb_fps = wx.ComboBox(sbox, wx.ID_ANY,
                                    choices=[("None"),
                                             ("ntsc"),
                                             ("pal"),
@@ -164,12 +165,12 @@ class SequenceToVideo(wx.Panel):
                                    )
         siz_pict.Add(self.cmb_fps, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_fps.SetSelection(10)
-        self.btn_resize = wx.Button(self, wx.ID_ANY, _("Resize"),
+        self.btn_resize = wx.Button(sbox, wx.ID_ANY, _("Resize"),
                                     size=(-1, -1)
                                     )
         self.btn_resize.SetBitmap(bmpresize, wx.LEFT)
         siz_pict.Add(self.btn_resize, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.ckbx_far = wx.CheckBox(self, wx.ID_ANY,
+        self.ckbx_far = wx.CheckBox(sbox, wx.ID_ANY,
                                     _('Force original aspect ratio using\n'
                                       'padding rather than stretching'))
         siz_pict.Add(self.ckbx_far, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
@@ -178,9 +179,9 @@ class SequenceToVideo(wx.Panel):
         boxctrl.Add((15, 15), 0)
         siz_audio = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_audio)
-        self.ckbx_audio = wx.CheckBox(self, wx.ID_ANY, _('Include audio file'))
+        self.ckbx_audio = wx.CheckBox(sbox, wx.ID_ANY, _('Include audio file'))
         siz_audio.Add(self.ckbx_audio, 0, wx.ALL | wx.CENTRE, 5)
-        self.ckbx_shortest = wx.CheckBox(self, wx.ID_ANY,
+        self.ckbx_shortest = wx.CheckBox(sbox, wx.ID_ANY,
                                          _('Play the video until '
                                            'audio track finishes'
                                            ))
@@ -188,7 +189,7 @@ class SequenceToVideo(wx.Panel):
         self.ckbx_shortest.Disable()
         siz_afile = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_afile)
-        self.btn_openaudio = wx.Button(self, wx.ID_ANY, _("Open audio file"),
+        self.btn_openaudio = wx.Button(sbox, wx.ID_ANY, _("Open audio file"),
                                        size=(-1, -1)
                                        )
         self.btn_openaudio.SetBitmap(bmpatrack, wx.LEFT)
@@ -196,7 +197,7 @@ class SequenceToVideo(wx.Panel):
                       | wx.ALIGN_CENTER_VERTICAL, 5)
         self.btn_openaudio.Disable()
 
-        self.txt_apath = wx.TextCtrl(self, wx.ID_ANY, size=(500, -1),
+        self.txt_apath = wx.TextCtrl(sbox, wx.ID_ANY, size=(500, -1),
                                      style=wx.TE_READONLY
                                      )
         siz_afile.Add(self.txt_apath, 0, wx.ALL, 5)
@@ -206,10 +207,10 @@ class SequenceToVideo(wx.Panel):
         siz_addparams = wx.BoxSizer(wx.HORIZONTAL)
         boxctrl.Add(siz_addparams, 0, wx.EXPAND, 0)
 
-        self.ckbx_edit = wx.CheckBox(self, wx.ID_ANY,
+        self.ckbx_edit = wx.CheckBox(sbox, wx.ID_ANY,
                                      _('Additional arguments'))
         siz_addparams.Add(self.ckbx_edit, 0, wx.ALL | wx.CENTRE, 5)
-        self.txt_addparams = wx.TextCtrl(self, wx.ID_ANY,
+        self.txt_addparams = wx.TextCtrl(sbox, wx.ID_ANY,
                                          value=('-c:v libx264 -crf 23 '
                                                 '-tune:v stillimage'),
                                          size=(-1, -1),)

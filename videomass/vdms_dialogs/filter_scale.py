@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.18.2025
+Rev: Oct.12.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -82,14 +82,14 @@ class Scale(wx.Dialog):
         btn_view = wx.Button(self, wx.ID_ANY, _("View result"))
         grid_opt.Add(btn_view, 0, wx.ALL, 5)
         # ----- Scale section:
-        box_scale = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                      _("New size in pixels"))), wx.VERTICAL)
+        sbox0 = wx.StaticBox(self, wx.ID_ANY, (_("New size in pixels")))
+        box_scale = wx.StaticBoxSizer(sbox0, wx.VERTICAL)
         sizerBase.Add(box_scale, 0, wx.ALL | wx.EXPAND, 5)
         Flex_scale = wx.FlexGridSizer(1, 4, 0, 0)
         box_scale.Add(Flex_scale, 0, wx.ALL | wx.CENTER, 5)
-        label_width = wx.StaticText(self, wx.ID_ANY, (_("Width:")))
+        label_width = wx.StaticText(sbox0, wx.ID_ANY, (_("Width:")))
         Flex_scale.Add(label_width, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_scale_width = wx.SpinCtrl(self, wx.ID_ANY, "0",
+        self.spin_scale_width = wx.SpinCtrl(sbox0, wx.ID_ANY, "0",
                                             min=0, max=9000,
                                             style=wx.TE_PROCESS_ENTER
                                             | wx.SP_ARROW_KEYS
@@ -97,9 +97,9 @@ class Scale(wx.Dialog):
         Flex_scale.Add(self.spin_scale_width, 0, wx.ALL
                        | wx.ALIGN_CENTER_VERTICAL, 5
                        )
-        label_height = wx.StaticText(self, wx.ID_ANY, (_("Height:")))
+        label_height = wx.StaticText(sbox0, wx.ID_ANY, (_("Height:")))
         Flex_scale.Add(label_height, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_scale_height = wx.SpinCtrl(self, wx.ID_ANY, "0",
+        self.spin_scale_height = wx.SpinCtrl(sbox0, wx.ID_ANY, "0",
                                              min=0, max=9000,
                                              style=wx.TE_PROCESS_ENTER
                                              | wx.SP_ARROW_KEYS
@@ -109,15 +109,15 @@ class Scale(wx.Dialog):
                        )
         dim = _("Source size: {0} x {1} pixels").format(kwa['width'],
                                                         kwa['height'])
-        label_sdim = wx.StaticText(self, wx.ID_ANY, dim)
+        label_sdim = wx.StaticText(sbox0, wx.ID_ANY, dim)
         box_scale.Add(label_sdim, 0, wx.BOTTOM | wx.CENTER, 10)
         # ----- options
         box_scale.Add((5, 5))
         lab = _("Constrain proportions (keep aspect ratio)")
-        self.ckbx_keep = wx.CheckBox(self, wx.ID_ANY, lab)
+        self.ckbx_keep = wx.CheckBox(sbox0, wx.ID_ANY, lab)
         box_scale.Add(self.ckbx_keep, 0, wx.CENTER, 0)
         # grid_opt.Add((30, 0), 0, wx.ALL, 5)
-        self.rdb_scale = wx.RadioBox(self, wx.ID_ANY,
+        self.rdb_scale = wx.RadioBox(sbox0, wx.ID_ANY,
                                      (_("Which dimension to adjust?")),
                                      choices=[_("Width"), _("Height")],
                                      majorDimension=1,
@@ -127,17 +127,17 @@ class Scale(wx.Dialog):
         box_scale.Add(self.rdb_scale, 0, wx.ALL | wx.CENTER, 10)
         # ----- setdar section:
         sizerBase.Add((15, 0), 0, wx.ALL, 5)
-        sbox = wx.StaticBox(self, wx.ID_ANY, (_("Aspect Ratio")))
-        box_ar = wx.StaticBoxSizer(sbox, wx.VERTICAL)
+        sbox1 = wx.StaticBox(self, wx.ID_ANY, (_("Aspect Ratio")))
+        box_ar = wx.StaticBoxSizer(sbox1, wx.VERTICAL)
         sizerBase.Add(box_ar, 1, wx.ALL | wx.EXPAND, 5)
         lab1 = _("Setdar filter (display aspect ratio) example 16/9, 4/3 ")
-        self.lab_dar = wx.StaticText(self, wx.ID_ANY, (lab1))
+        self.lab_dar = wx.StaticText(sbox1, wx.ID_ANY, (lab1))
         box_ar.Add(self.lab_dar, 0, wx.ALL | wx.CENTRE, 5)
         Flex_dar = wx.FlexGridSizer(1, 5, 0, 0)
         box_ar.Add(Flex_dar, 0, wx.ALL | wx.CENTRE, 5)
-        self.label_num = wx.StaticText(self, wx.ID_ANY, (_("Numerator")))
+        self.label_num = wx.StaticText(sbox1, wx.ID_ANY, (_("Numerator")))
         Flex_dar.Add(self.label_num, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_setdarNum = wx.SpinCtrl(self, wx.ID_ANY,
+        self.spin_setdarNum = wx.SpinCtrl(sbox1, wx.ID_ANY,
                                           "0", min=0, max=99,
                                           style=wx.TE_PROCESS_ENTER
                                           | wx.SP_ARROW_KEYS,
@@ -146,12 +146,12 @@ class Scale(wx.Dialog):
         Flex_dar.Add(self.spin_setdarNum, 0, wx.ALL
                      | wx.ALIGN_CENTER_VERTICAL, 5
                      )
-        self.label_sepdar = wx.StaticText(self, wx.ID_ANY, ("/"))
+        self.label_sepdar = wx.StaticText(sbox1, wx.ID_ANY, ("/"))
         self.label_sepdar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL,
                                   wx.BOLD, 0, ""))
         Flex_dar.Add(self.label_sepdar, 0, wx.ALL
                      | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_setdarDen = wx.SpinCtrl(self, wx.ID_ANY, "0",
+        self.spin_setdarDen = wx.SpinCtrl(sbox1, wx.ID_ANY, "0",
                                           min=0, max=99,
                                           style=wx.TE_PROCESS_ENTER
                                           | wx.SP_ARROW_KEYS,
@@ -160,18 +160,18 @@ class Scale(wx.Dialog):
         Flex_dar.Add(self.spin_setdarDen, 0, wx.ALL
                      | wx.ALIGN_CENTER_VERTICAL, 5
                      )
-        self.label_den = wx.StaticText(self, wx.ID_ANY, (_("Denominator")))
+        self.label_den = wx.StaticText(sbox1, wx.ID_ANY, (_("Denominator")))
         Flex_dar.Add(self.label_den, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         # ----- setsar section:
         box_ar.Add((15, 0), 0, wx.ALL, 5)
         lab2 = _("Setsar filter (sample aspect ratio) example 1/1")
-        self.lab_sar = wx.StaticText(self, wx.ID_ANY, (lab2))
+        self.lab_sar = wx.StaticText(sbox1, wx.ID_ANY, (lab2))
         box_ar.Add(self.lab_sar, 0, wx.ALL | wx.CENTRE, 5)
         Flex_sar = wx.FlexGridSizer(1, 5, 0, 0)
         box_ar.Add(Flex_sar, 0, wx.ALL | wx.CENTRE, 5)
-        self.label_num1 = wx.StaticText(self, wx.ID_ANY, (_("Numerator")))
+        self.label_num1 = wx.StaticText(sbox1, wx.ID_ANY, (_("Numerator")))
         Flex_sar.Add(self.label_num1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_setsarNum = wx.SpinCtrl(self, wx.ID_ANY, "0",
+        self.spin_setsarNum = wx.SpinCtrl(sbox1, wx.ID_ANY, "0",
                                           min=0, max=99,
                                           style=wx.TE_PROCESS_ENTER
                                           | wx.SP_ARROW_KEYS,
@@ -180,12 +180,12 @@ class Scale(wx.Dialog):
         Flex_sar.Add(self.spin_setsarNum, 0, wx.ALL
                      | wx.ALIGN_CENTER_VERTICAL, 5
                      )
-        self.label_sepsar = wx.StaticText(self, wx.ID_ANY, ("/"))
+        self.label_sepsar = wx.StaticText(sbox1, wx.ID_ANY, ("/"))
         self.label_sepsar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL,
                                   wx.BOLD, 0, ""))
         Flex_sar.Add(self.label_sepsar, 0, wx.ALL
                      | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_setsarDen = wx.SpinCtrl(self, wx.ID_ANY, "0",
+        self.spin_setsarDen = wx.SpinCtrl(sbox1, wx.ID_ANY, "0",
                                           min=0, max=99,
                                           style=wx.TE_PROCESS_ENTER
                                           | wx.SP_ARROW_KEYS,
@@ -194,7 +194,7 @@ class Scale(wx.Dialog):
         Flex_sar.Add(self.spin_setsarDen, 0, wx.ALL
                      | wx.ALIGN_CENTER_VERTICAL, 5
                      )
-        self.label_den1 = wx.StaticText(self, wx.ID_ANY, (_("Denominator")))
+        self.label_den1 = wx.StaticText(sbox1, wx.ID_ANY, (_("Denominator")))
         Flex_sar.Add(self.label_den1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
         # ----- confirm buttons section

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.18.2025
+Rev: Oct.12.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -106,7 +106,7 @@ class ColorEQ(wx.Dialog):
         stboxtime = wx.StaticBox(self, wx.ID_ANY, msg)
         sizertime = wx.StaticBoxSizer(stboxtime, wx.HORIZONTAL)
         sizerBase.Add(sizertime, 0, wx.ALL | wx.CENTER, 5)
-        self.sld_time = wx.Slider(self, wx.ID_ANY,
+        self.sld_time = wx.Slider(stboxtime, wx.ID_ANY,
                                   time_to_integer(self.clock),
                                   0,
                                   1 if not self.mills else self.mills,
@@ -114,9 +114,9 @@ class ColorEQ(wx.Dialog):
                                   style=wx.SL_HORIZONTAL,
                                   )
         sizertime.Add(self.sld_time, 0, wx.ALL | wx.CENTER, 5)
-        self.txttime = wx.StaticText(self, wx.ID_ANY, self.clock)
+        self.txttime = wx.StaticText(stboxtime, wx.ID_ANY, self.clock)
         sizertime.Add(self.txttime, 0, wx.ALL | wx.CENTER, 5)
-        self.btn_load = wx.Button(self, wx.ID_ANY, _("Load"))
+        self.btn_load = wx.Button(stboxtime, wx.ID_ANY, _("Load"))
         self.btn_load.Disable()
         sizertime.Add(self.btn_load, 0, wx.ALL | wx.CENTER, 5)
         boxcolor = wx.StaticBox(self, wx.ID_ANY, (_("Color EQ")))
@@ -125,10 +125,10 @@ class ColorEQ(wx.Dialog):
         sizerflex1 = wx.FlexGridSizer(0, 4, 0, 0)
         sizercolor.Add(sizerflex1, 0, wx.ALL | wx.CENTRE, 5)
 
-        lbl_contrast = wx.StaticText(self, wx.ID_ANY, _('Contrast:'))
+        lbl_contrast = wx.StaticText(boxcolor, wx.ID_ANY, _('Contrast:'))
         sizerflex1.Add(lbl_contrast, 0, wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 0)
-        self.sld_contrast = wx.Slider(self, wx.ID_ANY, 0, -100, 100,
+        self.sld_contrast = wx.Slider(boxcolor, wx.ID_ANY, 0, -100, 100,
                                       size=(200, -1), style=wx.SL_HORIZONTAL
                                       | wx.SL_AUTOTICKS
                                       | wx.SL_LABELS,
@@ -138,11 +138,11 @@ class ColorEQ(wx.Dialog):
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 10)
 
-        lbl_brigh = wx.StaticText(self, wx.ID_ANY, _('Brightness:'))
+        lbl_brigh = wx.StaticText(boxcolor, wx.ID_ANY, _('Brightness:'))
         sizerflex1.Add(lbl_brigh, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 20)
-        self.sld_brightness = wx.Slider(self, wx.ID_ANY, 0, -100, 100,
+        self.sld_brightness = wx.Slider(boxcolor, wx.ID_ANY, 0, -100, 100,
                                         size=(200, -1), style=wx.SL_HORIZONTAL
                                         | wx.SL_AUTOTICKS
                                         | wx.SL_LABELS,
@@ -151,16 +151,16 @@ class ColorEQ(wx.Dialog):
         sizerflex1.Add(self.sld_brightness, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 10)
-        line = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+        line = wx.StaticLine(boxcolor, wx.ID_ANY, pos=wx.DefaultPosition,
                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
                              name=wx.StaticLineNameStr,
                              )
         sizercolor.Add(line, 0, wx.ALL | wx.EXPAND, 5)
         sizerflex2 = wx.FlexGridSizer(0, 4, 0, 0)
-        lbl_sat = wx.StaticText(self, wx.ID_ANY, _('Saturation:'))
+        lbl_sat = wx.StaticText(boxcolor, wx.ID_ANY, _('Saturation:'))
         sizerflex2.Add(lbl_sat, 0, wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 0)
-        self.sld_saturation = wx.Slider(self, wx.ID_ANY, 100, 0, 300,
+        self.sld_saturation = wx.Slider(boxcolor, wx.ID_ANY, 100, 0, 300,
                                         size=(200, -1), style=wx.SL_HORIZONTAL
                                         | wx.SL_AUTOTICKS
                                         | wx.SL_LABELS,
@@ -169,11 +169,11 @@ class ColorEQ(wx.Dialog):
         sizerflex2.Add(self.sld_saturation, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 10)
-        lbl_gam = wx.StaticText(self, wx.ID_ANY, _('Gamma:'))
+        lbl_gam = wx.StaticText(boxcolor, wx.ID_ANY, _('Gamma:'))
         sizerflex2.Add(lbl_gam, 0, wx.LEFT
                        | wx.ALIGN_CENTRE_VERTICAL
                        | wx.ALIGN_CENTRE_HORIZONTAL, 20)
-        self.sld_gamma = wx.Slider(self, wx.ID_ANY, 10, 0, 100,
+        self.sld_gamma = wx.Slider(boxcolor, wx.ID_ANY, 10, 0, 100,
                                    size=(200, -1), style=wx.SL_HORIZONTAL
                                    | wx.SL_AUTOTICKS
                                    | wx.SL_LABELS,

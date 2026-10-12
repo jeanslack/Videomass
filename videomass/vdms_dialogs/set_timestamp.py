@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.20.2025
+Rev: Oct.12.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -75,11 +75,11 @@ class Set_Timestamp(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
 
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        sbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, ("")),
-                                 wx.VERTICAL)
-        sizer_base.Add(sbox, 1, wx.ALL | wx.EXPAND, 5)
+        sbox = wx.StaticBox(self, wx.ID_ANY, (""))
+        boxctrl = wx.StaticBoxSizer(sbox, wx.VERTICAL)
+        sizer_base.Add(boxctrl, 1, wx.ALL | wx.EXPAND, 5)
         grid1 = wx.FlexGridSizer(cols=2, rows=4, vgap=0, hgap=0)
-        sbox.Add(grid1, 0)
+        boxctrl.Add(grid1, 0)
         colours = [("Azure"),
                    ("DeepPink"),
                    ("ForestGreen"),
@@ -91,9 +91,9 @@ class Set_Timestamp(wx.Dialog):
                    ("Black"),
                    ("Yellow"),
                    ]
-        stfontcolor = wx.StaticText(self, label=_("Font Color"))
+        stfontcolor = wx.StaticText(sbox, label=_("Font Color"))
         grid1.Add(stfontcolor, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.cmbx_fontcolor = wx.ComboBox(self, wx.ID_ANY,
+        self.cmbx_fontcolor = wx.ComboBox(sbox, wx.ID_ANY,
                                           choices=colours,
                                           size=(-1, -1),
                                           style=wx.CB_DROPDOWN
@@ -101,9 +101,9 @@ class Set_Timestamp(wx.Dialog):
                                           )
         self.cmbx_fontcolor.SetSelection(colours.index(self.fontcolor))
         grid1.Add(self.cmbx_fontcolor, 0, wx.ALL, 5)
-        stshadowcolor = wx.StaticText(self, label=_("Shadow Color"))
+        stshadowcolor = wx.StaticText(sbox, label=_("Shadow Color"))
         grid1.Add(stshadowcolor, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.cmbx_shadowcolor = wx.ComboBox(self, wx.ID_ANY,
+        self.cmbx_shadowcolor = wx.ComboBox(sbox, wx.ID_ANY,
                                             choices=colours,
                                             size=(-1, -1),
                                             style=wx.CB_DROPDOWN
@@ -111,14 +111,14 @@ class Set_Timestamp(wx.Dialog):
                                             )
         self.cmbx_shadowcolor.SetSelection(colours.index(self.shadowcolor))
         grid1.Add(self.cmbx_shadowcolor, 0, wx.ALL, 5)
-        self.check_enablebox = wx.CheckBox(self, wx.ID_ANY,
+        self.check_enablebox = wx.CheckBox(sbox, wx.ID_ANY,
                                            (_("Show text box"))
                                            )
         grid1.Add(self.check_enablebox, 0, wx.ALL, 5)
         grid1.Add((5, 5))
-        self.stboxcolor = wx.StaticText(self, label=_("Box Color"))
+        self.stboxcolor = wx.StaticText(sbox, label=_("Box Color"))
         grid1.Add(self.stboxcolor, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.cmbx_boxcolor = wx.ComboBox(self, wx.ID_ANY,
+        self.cmbx_boxcolor = wx.ComboBox(sbox, wx.ID_ANY,
                                          choices=colours,
                                          size=(-1, -1),
                                          style=wx.CB_DROPDOWN
