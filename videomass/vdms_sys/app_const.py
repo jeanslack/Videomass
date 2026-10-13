@@ -32,10 +32,8 @@ supLang = {  # languages you want to support.
     "de_DE": (wx.LANGUAGE_GERMAN, ("German (Germany)")),
     "hu_HU": (wx.LANGUAGE_HUNGARIAN, ("Hungarian (Hungary)")),
     "it_IT": (wx.LANGUAGE_ITALIAN, ("Italian")),
-    "pt_BR": (wx.LANGUAGE_PORTUGUESE_BRAZILIAN,
-                ("Portuguese (Brazilian)")),
+    "pt_BR": (wx.LANGUAGE_PORTUGUESE_BRAZILIAN, ("Portuguese (Brazilian)")),
     "ru_RU": (wx.LANGUAGE_RUSSIAN, ("Russian")),
     "es_ES": (wx.LANGUAGE_SPANISH, ("Spanish (Spain)")),
     "es_MX": (wx.LANGUAGE_SPANISH_MEXICAN, ("Spanish (Mexico)")),
-    "es_CU": (wx.LANGUAGE_SPANISH, ("Spanish (Cuba)")),
-    }
+    "es_CU": (wx.LANGUAGE_SPANISH, ("Spanish (Cuba)")), }

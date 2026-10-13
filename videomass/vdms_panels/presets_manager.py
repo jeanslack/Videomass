@@ -27,7 +27,6 @@ This file is part of Videomass.
 """
 import time
 import os
-import sys
 import wx
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.presets_manager_utils import json_data

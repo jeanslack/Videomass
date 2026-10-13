@@ -25,7 +25,6 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import sys
 import webbrowser
 import wx
 from videomass.vdms_utils.utils import detect_binaries
