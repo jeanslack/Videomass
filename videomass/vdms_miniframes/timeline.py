@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.18.2025
+Rev: Oct.13.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,7 +25,6 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import sys
 import wx
 import wx.adv
 from pubsub import pub
@@ -196,19 +195,11 @@ class Float_TL(wx.MiniFrame):
         self.bar_x: START point value in pixel
         """
         icons = Float_TL.ICONS
-
-        if 'wx.svg' in sys.modules:  # only available in wx version 4.1 to up
-            bmp_reset = get_bmp(icons['clear'], ((16, 16)))
-            bmp_tstart = get_bmp(icons['start_time'], ((16, 16)))
-            bmp_tend = get_bmp(icons['end_time'], ((16, 16)))
-            bmp_wave = get_bmp(icons['waveform'], ((16, 16)))
-            bmp_play = get_bmp(icons['playback'], ((16, 16)))
-        else:
-            bmp_reset = wx.Bitmap(icons['clear'], wx.BITMAP_TYPE_ANY)
-            bmp_tstart = wx.Bitmap(icons['start_time'], wx.BITMAP_TYPE_ANY)
-            bmp_tend = wx.Bitmap(icons['end_time'], wx.BITMAP_TYPE_ANY)
-            bmp_wave = wx.Bitmap(icons['waveform'], wx.BITMAP_TYPE_ANY)
-            bmp_play = wx.Bitmap(icons['playback'], wx.BITMAP_TYPE_ANY)
+        bmp_reset = get_bmp(icons['clear'], ((16, 16)))
+        bmp_tstart = get_bmp(icons['start_time'], ((16, 16)))
+        bmp_tend = get_bmp(icons['end_time'], ((16, 16)))
+        bmp_wave = get_bmp(icons['waveform'], ((16, 16)))
+        bmp_play = get_bmp(icons['playback'], ((16, 16)))
 
         self.parent = parent
         self.duration = self.parent.duration

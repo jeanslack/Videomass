@@ -6,11 +6,11 @@ build-backend = "hatchling.build"
 name = "videomass"
 dynamic = ["version"]
 dependencies = [
-    "wxpython>=4.0.7;platform_system == 'Windows' or platform_system == 'Darwin'",
+    "wxpython>=4.1.1;platform_system == 'Windows' or platform_system == 'Darwin'",
     "pypubsub>=4.0.3",
     "requests"
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [
   {name = "Gianluca Pernigotto", email = "jeanlucperni@gmail.com"}
 ]
@@ -36,6 +36,7 @@ classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Natural Language :: Arabic",
     "Natural Language :: Chinese (Simplified)",
+    "Natural Language :: Chinese (Traditional)",
     "Natural Language :: Czech",
     "Natural Language :: Dutch",
     "Natural Language :: English",
@@ -47,7 +48,6 @@ classifiers = [
     "Natural Language :: Russian",
     "Natural Language :: Spanish",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",

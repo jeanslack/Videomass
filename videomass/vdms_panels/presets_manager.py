@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.12.2026
+Rev: Oct.13.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -27,7 +27,6 @@ This file is part of Videomass.
 """
 import time
 import os
-import sys
 import wx
 from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass.vdms_utils.presets_manager_utils import json_data
@@ -90,35 +89,19 @@ class PrstPan(wx.Panel):
         self.txtcmdedited = True  # show warning if cmdline is edited
         self.check_presets_version = False  # see `update_preset_state`
 
-        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-            bmpnewprf = get_bmp(icons['profile_add'], ((16, 16)))
-            bmpeditprf = get_bmp(icons['profile_edit'], ((16, 16)))
-            bmpdelprf = get_bmp(icons['profile_del'], ((16, 16)))
-            bmpcopyprf = get_bmp(icons['profile_copy'], ((16, 16)))
-            bmpdelprst = get_bmp(icons['delpreset'], ((16, 16)))
-            bmpexpall = get_bmp(icons['exportall'], ((16, 16)))
-            bmpexpsel = get_bmp(icons['exportselected'], ((16, 16)))
-            bmpimpdir = get_bmp(icons['importfolder'], ((16, 16)))
-            bmpimpprst = get_bmp(icons['importpreset'], ((16, 16)))
-            bmpnewprst = get_bmp(icons['newpreset'], ((16, 16)))
-            bmpreload = get_bmp(icons['reload'], ((16, 16)))
-            bmprestall = get_bmp(icons['restoreall'], ((16, 16)))
-            bmprestsel = get_bmp(icons['restoreselected'], ((16, 16)))
-        else:
-            bmpnewprf = wx.Bitmap(icons['profile_add'], wx.BITMAP_TYPE_ANY)
-            bmpeditprf = wx.Bitmap(icons['profile_edit'], wx.BITMAP_TYPE_ANY)
-            bmpdelprf = wx.Bitmap(icons['profile_del'], wx.BITMAP_TYPE_ANY)
-            bmpcopyprf = wx.Bitmap(icons['profile_copy'], wx.BITMAP_TYPE_ANY)
-            bmpdelprst = wx.Bitmap(icons['delpreset'], wx.BITMAP_TYPE_ANY)
-            bmpexpall = wx.Bitmap(icons['exportall'], wx.BITMAP_TYPE_ANY)
-            bmpexpsel = wx.Bitmap(icons['exportselected'], wx.BITMAP_TYPE_ANY)
-            bmpimpdir = wx.Bitmap(icons['importfolder'], wx.BITMAP_TYPE_ANY)
-            bmpimpprst = wx.Bitmap(icons['importpreset'], wx.BITMAP_TYPE_ANY)
-            bmpnewprst = wx.Bitmap(icons['newpreset'], wx.BITMAP_TYPE_ANY)
-            bmpreload = wx.Bitmap(icons['reload'], wx.BITMAP_TYPE_ANY)
-            bmprestall = wx.Bitmap(icons['restoreall'], wx.BITMAP_TYPE_ANY)
-            bmprestsel = wx.Bitmap(icons['restoreselected'],
-                                   wx.BITMAP_TYPE_ANY)
+        bmpnewprf = get_bmp(icons['profile_add'], ((16, 16)))
+        bmpeditprf = get_bmp(icons['profile_edit'], ((16, 16)))
+        bmpdelprf = get_bmp(icons['profile_del'], ((16, 16)))
+        bmpcopyprf = get_bmp(icons['profile_copy'], ((16, 16)))
+        bmpdelprst = get_bmp(icons['delpreset'], ((16, 16)))
+        bmpexpall = get_bmp(icons['exportall'], ((16, 16)))
+        bmpexpsel = get_bmp(icons['exportselected'], ((16, 16)))
+        bmpimpdir = get_bmp(icons['importfolder'], ((16, 16)))
+        bmpimpprst = get_bmp(icons['importpreset'], ((16, 16)))
+        bmpnewprst = get_bmp(icons['newpreset'], ((16, 16)))
+        bmpreload = get_bmp(icons['reload'], ((16, 16)))
+        bmprestall = get_bmp(icons['restoreall'], ((16, 16)))
+        bmprestsel = get_bmp(icons['restoreselected'], ((16, 16)))
 
         prst = sorted([os.path.splitext(x)[0] for x in
                        os.listdir(self.user_prst) if

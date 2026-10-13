@@ -25,7 +25,6 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import sys
 import webbrowser
 import wx
 from videomass.vdms_utils.utils import detect_binaries
@@ -229,9 +228,6 @@ class SetUp(wx.Dialog):
                                           )
         gridTBsize.Add(self.cmbx_iconsSize, 0, wx.TOP
                        | wx.ALIGN_CENTER_VERTICAL, 5)
-        if 'wx.svg' not in sys.modules:  # only in wx version 4.1 to up
-            self.cmbx_iconsSize.Disable()
-            lab1_appearance.Disable()
         sizerAppearance.Add((0, 10))
         msg = _('Application Language (requires application restart)')
         lablang = wx.StaticText(tabThree, wx.ID_ANY, msg)

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.13.2024
+Rev: Oct.13.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,10 +24,8 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-try:
-    from wx.svg import SVGimage
-except ModuleNotFoundError:
-    pass
+
+from wx.svg import SVGimage
 
 
 def get_bmp(imgfile, size):
