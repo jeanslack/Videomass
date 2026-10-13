@@ -229,9 +229,6 @@ class SetUp(wx.Dialog):
                                           )
         gridTBsize.Add(self.cmbx_iconsSize, 0, wx.TOP
                        | wx.ALIGN_CENTER_VERTICAL, 5)
-        if 'wx.svg' not in sys.modules:  # only in wx version 4.1 to up
-            self.cmbx_iconsSize.Disable()
-            lab1_appearance.Disable()
         sizerAppearance.Add((0, 10))
         msg = _('Application Language (requires application restart)')
         lablang = wx.StaticText(tabThree, wx.ID_ANY, msg)

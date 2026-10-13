@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.12.2026
+Rev: Oct.13.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -68,12 +68,8 @@ class VideoToSequence(wx.Panel):
         icons = get.iconset
         self.opt = {"Scale": "scale=w=320:h=-1", "Setdar": "", "Setsar": ""}
 
-        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-            bmpresize = get_bmp(icons['scale'], ((16, 16)))
-            self.bmpreset = get_bmp(icons['clear'], ((16, 16)))
-        else:
-            bmpresize = wx.Bitmap(icons['scale'], wx.BITMAP_TYPE_ANY)
-            self.bmpreset = wx.Bitmap(icons['clear'], wx.BITMAP_TYPE_ANY)
+        bmpresize = get_bmp(icons['scale'], ((16, 16)))
+        self.bmpreset = get_bmp(icons['clear'], ((16, 16)))
 
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
         sizer = wx.BoxSizer(wx.VERTICAL)

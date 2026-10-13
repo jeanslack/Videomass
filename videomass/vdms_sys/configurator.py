@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.14.2025
+Rev: Oct.13.2026
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -434,7 +434,7 @@ class DataSource():
                     }
 
         choose = iconames.get(icontheme)  # set appropriate icontheme
-        ext = 'svg' if 'wx.svg' in sys.modules else 'png'
+        ext = 'svg'
         iconset = (self.prg_icon,
                    f"{choose.get('x48')}/icon_videoconversions.{ext}",
                    f"{choose.get('x22')}/convert.{ext}",

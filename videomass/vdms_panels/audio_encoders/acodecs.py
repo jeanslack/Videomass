@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.12.2026
+Rev: Oct.13.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -94,16 +94,10 @@ class AudioEncoders(scrolled.ScrolledPanel):
         self.opt = opt
         icons = self.maindata.icons
 
-        if 'wx.svg' in sys.modules:  # only available in wx version 4.1 to up
-            bmpapreview = get_bmp(icons['preview_audio'], ((16, 16)))
-            bmpanalyzes = get_bmp(icons['volanalyze'], ((16, 16)))
-            bmpasettings = get_bmp(icons['settings'], ((16, 16)))
-            bmppeaklevel = get_bmp(icons['audiovolume'], ((16, 16)))
-        else:
-            bmpapreview = wx.Bitmap(icons['preview_audio'], wx.BITMAP_TYPE_ANY)
-            bmpanalyzes = wx.Bitmap(icons['volanalyze'], wx.BITMAP_TYPE_ANY)
-            bmpasettings = wx.Bitmap(icons['settings'], wx.BITMAP_TYPE_ANY)
-            bmppeaklevel = wx.Bitmap(icons['audiovolume'], wx.BITMAP_TYPE_ANY)
+        bmpapreview = get_bmp(icons['preview_audio'], ((16, 16)))
+        bmpanalyzes = get_bmp(icons['volanalyze'], ((16, 16)))
+        bmpasettings = get_bmp(icons['settings'], ((16, 16)))
+        bmppeaklevel = get_bmp(icons['audiovolume'], ((16, 16)))
 
         scrolled.ScrolledPanel.__init__(self, parent, -1,
                                         size=(1024, 1024),
