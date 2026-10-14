@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 12 October 2026 v6.1.24
+Mon, 14 October 2026 v6.1.24
 
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Backward compatibility with wxPython4.0.7 has been dropped.
@@ -16,6 +16,7 @@ Mon, 12 October 2026 v6.1.24
     application ready (and cleaner) for the latest versions of this toolkit.
   * Improved building package using hatchling.
   * Removed `setuptools` from dependencies.
+  * Fixed UI Dark mode issue on Windows11 using Dark system theme #23 .
 
 +------------------------------------+
 Tue, 06 October 2026 v6.1.22

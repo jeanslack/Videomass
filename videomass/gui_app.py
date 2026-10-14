@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.13.2026
+Rev: Oct.14.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -29,7 +29,6 @@ import sys
 from shutil import which, rmtree
 import builtins
 import wx
-from wx.svg import SVGimage
 from videomass.vdms_sys.argparser import arguments
 from videomass.vdms_sys.configurator import DataSource
 from videomass.vdms_sys import app_const as appC
@@ -87,6 +86,8 @@ class Videomass(wx.App):
         self.appset['DISPLAY_SIZE'] = wx.GetDisplaySize()  # get monitor res
         if hasattr(wx.SystemSettings, 'GetAppearance'):
             appear = wx.SystemSettings.GetAppearance()
+            if appear.IsSystemDark():
+                self.SetAppearance(Videomass.Appearance.Dark)
             self.appset['IS_DARK_THEME'] = appear.IsDark()
 
         self.iconset = self.data.icons_set(self.appset['icontheme'])
