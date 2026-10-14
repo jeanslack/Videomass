@@ -86,7 +86,7 @@ class Videomass(wx.App):
         self.appset['DISPLAY_SIZE'] = wx.GetDisplaySize()  # get monitor res
         if hasattr(wx.SystemSettings, 'GetAppearance'):
             appear = wx.SystemSettings.GetAppearance()
-            if hasattr(appear, 'IsSystemDark'): # from wx>=4.3.0
+            if hasattr(appear, 'IsSystemDark'):  # from wx>=4.3.0
                 if appear.IsSystemDark():
                     self.SetAppearance(Videomass.Appearance.Dark)
             self.appset['IS_DARK_THEME'] = appear.IsDark()
