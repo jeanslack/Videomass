@@ -12,11 +12,14 @@ Mon, 14 October 2026 v6.1.24
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Backward compatibility with wxPython4.0.7 has been dropped.
   * Starting with this version, only wxPython4.1.1 or later is supported.
-  * Fixed error messages defined in wxPython debugging; this will make the
-    application ready (and cleaner) for the latest versions of this toolkit.
-  * Improved building package using hatchling.
-  * Removed `setuptools` from dependencies.
-  * Fixed UI Dark mode issue on Windows11 using Dark system theme #23 .
+  * Fixed debug messages in wxPython4.3.2; this will make the application ready
+    (and cleaner) for the latest versions of the toolkit.
+  * Improved building package using hatchling. This removes `setuptools` from
+    dependencies.
+  * Fixed UI Dark mode issue on Windows11 using Dark system theme (see #23).
+    This fix applies only in wxPython v4.3 or higher. Note that changes to the
+    system theme will not be immediately reflected in the GUI if the application
+    is running. Restart the application for the changes to take effect.
 
 +------------------------------------+
 Tue, 06 October 2026 v6.1.22

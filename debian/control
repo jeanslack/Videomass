@@ -19,7 +19,7 @@ Architecture: all
 Multi-Arch: foreign
 Depends: python3-pubsub,
          python3-requests,
-         python3-wxgtk4.0,
+         python3-wxgtk4.0 (>= 4.1.1),
          ffmpeg,
          ${misc:Depends},
          ${python3:Depends}
