@@ -60,37 +60,37 @@ class Time_Selector(wx.Dialog):
         staticbox1.Add(boxsiz1, 0, wx.ALL | wx.ALIGN_CENTER, 0)
         sizer_base.Add(staticbox1, 0, wx.ALL | wx.EXPAND, 5)
 
-        self.box_hour = wx.SpinCtrl(self, wx.ID_ANY,
+        self.box_hour = wx.SpinCtrl(boxs, wx.ID_ANY,
                                     value=f"{clockstr[0:2]}",
                                     min=0, max=23,
                                     style=wx.SP_ARROW_KEYS)
 
         boxsiz1.Add(self.box_hour, 0, wx.ALL | wx.ALIGN_CENTER, 5)
-        lab1 = wx.StaticText(self, wx.ID_ANY, (":"))
+        lab1 = wx.StaticText(boxs, wx.ID_ANY, (":"))
         lab1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         boxsiz1.Add(lab1, 0, wx.ALIGN_CENTER, 5)
 
-        self.box_min = wx.SpinCtrl(self, wx.ID_ANY,
+        self.box_min = wx.SpinCtrl(boxs, wx.ID_ANY,
                                    value=f"{clockstr[3:5]}",
                                    min=0, max=59,
                                    style=wx.SP_ARROW_KEYS)
 
         boxsiz1.Add(self.box_min, 0, wx.ALL | wx.ALIGN_CENTER, 5)
-        lab2 = wx.StaticText(self, wx.ID_ANY, (":"))
+        lab2 = wx.StaticText(boxs, wx.ID_ANY, (":"))
         lab2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         boxsiz1.Add(lab2, 0, wx.ALIGN_CENTER, 5)
 
-        self.box_sec = wx.SpinCtrl(self, wx.ID_ANY,
+        self.box_sec = wx.SpinCtrl(boxs, wx.ID_ANY,
                                    value=f"{clockstr[6:8]}",
                                    min=0, max=59,
                                    style=wx.SP_ARROW_KEYS)
 
         boxsiz1.Add(self.box_sec, 0, wx.ALL | wx.ALIGN_CENTER, 5)
-        lab3 = wx.StaticText(self, wx.ID_ANY, ("."))
+        lab3 = wx.StaticText(boxs, wx.ID_ANY, ("."))
         lab3.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         boxsiz1.Add(lab3, 0, wx.ALIGN_CENTER, 5)
 
-        self.box_mills = wx.SpinCtrl(self, wx.ID_ANY,
+        self.box_mills = wx.SpinCtrl(boxs, wx.ID_ANY,
                                      value=f"{clockstr[9:12]}",
                                      min=000, max=999,
                                      style=wx.SP_ARROW_KEYS)
