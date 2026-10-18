@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 14 October 2026 v6.1.24
+Sun, 18 October 2026 v6.1.24
 
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Backward compatibility with wxPython v4.0.7 has been dropped.
@@ -20,6 +20,7 @@ Mon, 14 October 2026 v6.1.24
     This fix applies only in wxPython v4.3 or higher. Note that changes to the
     system theme will not be immediately reflected in the GUI if the application
     is running. Restart the application for the changes to take effect.
+  * Improved main panel layout.
 
 +------------------------------------+
 Tue, 06 October 2026 v6.1.22

@@ -631,7 +631,7 @@ class MainFrame(wx.Frame):
                                           'Videomass/Contribute.html'))
         spons = helpButton.Append(wx.ID_ANY, _("Sponsor this project"),
                                   _("Become a developer supporter"))
-        donat = helpButton.Append(wx.ID_ANY, _("Donate"),
+        donat = helpButton.Append(wx.ID_ANY, _("Donate now ❤️"),
                                   _("Donate to the app developer"))
         helpButton.AppendSeparator()
         projButton = wx.Menu()  # projects sub menu
