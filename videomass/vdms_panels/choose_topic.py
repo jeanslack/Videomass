@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.13.2026
+Rev: Oct.18.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -51,18 +51,20 @@ class Choose_Topic(wx.Panel):
         bmpConcat = get_bmp(self.icons['concatenate'], ((48, 48)))
         bmpSlideshow = get_bmp(self.icons['slideshow'], ((48, 48)))
         bmpTopictures = get_bmp(self.icons['videotopictures'], ((48, 48)))
+        bmpPaypal = get_bmp(self.icons['paypaldon'], ((48, 48)))
 
         wx.Panel.__init__(self, parent, -1, style=wx.TAB_TRAVERSAL)
 
         welcome = wx.StaticText(self, wx.ID_ANY, (_("Welcome to Videomass")),
                                 style=wx.ALIGN_CENTER)
-        version = wx.StaticText(self, wx.ID_ANY, (_('Version {}'
-                                                    ).format(VERSION)))
+        version = wx.StaticText(self, wx.ID_ANY,
+                                (_('Version {}').format(VERSION)),
+                                style=wx.ALIGN_CENTER
+                                )
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizer_base.Add(50, 50)
-        sizer_base.Add(welcome, 0, wx.EXPAND, 0)
-        sizer_base.Add(20, 20)
-        sizer_base.Add(version, 0, wx.BOTTOM | wx.ALIGN_CENTER, 0)
+        sizer_base.Add(welcome, 0, wx.EXPAND | wx.TOP, 10)
+        sizer_base.Add(version, 0, wx.BOTTOM | wx.ALIGN_CENTER, 10)
         if self.appdata['ostype'] == 'Windows':
             style = wx.BU_LEFT | wx.BORDER_NONE
         else:
@@ -83,28 +85,30 @@ class Choose_Topic(wx.Panel):
                                   size=(300, -1), style=style)
         videotoimages.SetBitmap(bmpTopictures, wx.LEFT)
         grid_btntop = wx.FlexGridSizer(1, 2, 20, 20)
-        grid_btntop.AddMany([(presets_mng, 0, wx.EXPAND, 5),
-                             (avconv, 0, wx.EXPAND, 5),
+        grid_btntop.AddMany([(presets_mng, 0, wx.EXPAND),
+                             (avconv, 0, wx.EXPAND)
                              ])
-        sizer_base.Add(80, 80)
-        sizer_base.Add(grid_btntop, 0, wx.ALIGN_CENTER_VERTICAL
-                       | wx.ALIGN_CENTER_HORIZONTAL, 5,
-                       )
-
-        grid_btncntr = wx.FlexGridSizer(1, 1, 20, 20)
-        grid_btncntr.Add(conc, 0, wx.EXPAND, 5)
-        sizer_base.Add(20, 20)
-        sizer_base.Add(grid_btncntr, 0, wx.ALIGN_CENTER_VERTICAL
-                       | wx.ALIGN_CENTER_HORIZONTAL, 5,
-                       )
-        sizer_base.Add(20, 20)
         grid_btnbot = wx.FlexGridSizer(2, 2, 20, 20)
-        grid_btnbot.AddMany([(slideshow, 0, wx.EXPAND, 5),
-                             (videotoimages, 0, wx.EXPAND, 5),
+        grid_btnbot.AddMany([(slideshow, 0, wx.EXPAND),
+                             (videotoimages, 0, wx.EXPAND)
                              ])
-        sizer_base.Add(grid_btnbot, 0, wx.ALIGN_CENTER_VERTICAL
-                       | wx.ALIGN_CENTER_HORIZONTAL, 5,
-                       )
+        sizer_base.Add(grid_btntop, 0, wx.ALIGN_CENTER | wx.TOP, 20)
+        sizer_base.Add(conc, 0, wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM, 20)
+        sizer_base.Add(grid_btnbot, 0, wx.ALIGN_CENTER | wx.BOTTOM, 30)
+
+        # Pushes everything that follows toward the bottom of the panel
+        sizer_base.AddStretchSpacer(1)  # proportional stretching
+        btn_don = wx.BitmapButton(self, wx.ID_ANY, bmpPaypal,
+                                  size=wx.DefaultSize, style=wx.LEFT)
+        sizer_base.Add(btn_don, 0, wx.ALIGN_CENTER, 0)
+
+        msg = (_('This is free and open-source software. If you find it '
+                 'useful, please consider making a donation to support '
+                 'its development. Thank you ❤️'))
+        donations = wx.StaticText(self, wx.ID_ANY, msg, style=wx.ALIGN_CENTER)
+        donations.Wrap(500)
+        sizer_base.Add(donations, 0, wx.EXPAND | wx.TOP | wx.BOTTOM, 10)
+        sizer_base.Add(0, 10)
         self.SetSizerAndFit(sizer_base)
 
         # ---------------------- Tooltips
@@ -126,6 +130,9 @@ class Choose_Topic(wx.Panel):
                  'in JPG, PNG, BMP, GIF formats.'))
         videotoimages.SetToolTip(tip)
 
+        tip = _('Click here to make a donation to the Videomass project.')
+        btn_don.SetToolTip(tip)
+
         if self.appdata['ostype'] == 'Darwin':
             welcome.SetFont(wx.Font(16, wx.SWISS, wx.NORMAL, wx.BOLD))
             version.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.NORMAL))
@@ -143,6 +150,7 @@ class Choose_Topic(wx.Panel):
                 self.SetBackgroundColour('#2C001E')  # Dark Aubergine
             welcome.SetForegroundColour('#E95420')  # Ubuntu orange
             version.SetForegroundColour('#E95420')  # Ubuntu orange
+            donations.SetForegroundColour('#E95420')  # Ubuntu orange
         elif self.appdata['IS_DARK_THEME'] is False:
             if icontheme in ('Videomass-Colours',
                              'Videomass-Dark',
@@ -153,12 +161,19 @@ class Choose_Topic(wx.Panel):
                 self.SetBackgroundColour('#2C001E')  # Dark Aubergine
                 welcome.SetForegroundColour('#E95420')  # Ubuntu orange
                 version.SetForegroundColour('#E95420')  # Ubuntu orange
+                donations.SetForegroundColour('#E95420')  # Ubuntu orange
 
+        self.Bind(wx.EVT_BUTTON, self.on_donate, btn_don)
         self.Bind(wx.EVT_BUTTON, self.on_avconversions, avconv)
         self.Bind(wx.EVT_BUTTON, self.on_prst_mng, presets_mng)
         self.Bind(wx.EVT_BUTTON, self.on_concatenate, conc)
         self.Bind(wx.EVT_BUTTON, self.on_slideshow, slideshow)
         self.Bind(wx.EVT_BUTTON, self.on_to_pictures, videotoimages)
+    # ------------------------------------------------------------------#
+
+    def on_donate(self, event):
+        """Go to donation page"""
+        self.parent.donate_to_dev(None)
     # ------------------------------------------------------------------#
 
     def on_prst_mng(self, event):

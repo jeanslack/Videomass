@@ -1,22 +1,24 @@
-# Traditional Chinese (Taiwan) translations for Videomass.
-# Copyright (C) 2025 THE Videomass'S COPYRIGHT HOLDER
+# Chinese (Traditional, Taiwan) translations for Videomass.
+# Copyright (C) 2026 ORGANIZATION
 # This file is distributed under the same license as the Videomass project.
-# Peter Dave Hello <hsu@peterdavehello.org>, 2026.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 6.1.20\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-30 11:29+0200\n"
+"POT-Creation-Date: 2026-10-20 22:15+0200\n"
 "PO-Revision-Date: 2026-02-25 03:16+0800\n"
 "Last-Translator: Peter Dave Hello <hsu@peterdavehello.org>\n"
-"Language-Team: \n"
 "Language: zh_TW\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
 
+#: videomass/gui_app.py:195
 #, python-brace-format
 msgid ""
 "Unexpected error while deleting file contents:\n"
@@ -27,40 +29,44 @@ msgstr ""
 "\n"
 "{0}"
 
+#: videomass/vdms_dialogs/about_dialog.py:52
 msgid "Cross-platform graphical user interface for FFmpeg\n"
 msgstr "FFmpeg 的跨平台圖形使用者介面\n"
 
+#: videomass/vdms_dialogs/audioproperties.py:224
 msgid "Videomass supports mono and stereo audio channels. If you are not sure set to \"Auto\" and source values will be copied."
-msgstr ""
-"Videomass 支援單聲道與立體聲聲道。如果您不確定，請設為「自動」，系統將會複製"
-"來源數值。"
+msgstr "Videomass 支援單聲道與立體聲聲道。如果您不確定，請設為「自動」，系統將會複製來源數值。"
 
+#: videomass/vdms_dialogs/audioproperties.py:228
 msgid "The audio Rate (or sample-rate) is the sound sampling frequency and is measured in Hertz. The higher the frequency, the more true it will be to the sound source and the more the file will increase in size. For audio CD playback, set a sampling frequency of 44100 kHz. If you are not sure, set to \"Auto\" and source values will be copied."
-msgstr ""
-"音訊頻率 (或取樣率) 是聲音取樣的頻率，以赫茲 (Hertz) 為單位。頻率越高，聲音越"
-"接近原始來源，但檔案也會越大。若是音訊 CD 播放，請將取樣頻率設為 44100 kHz。"
-"如果您不確定，請設為「自動」，系統將會複製來源數值。"
+msgstr "音訊頻率 (或取樣率) 是聲音取樣的頻率，以赫茲 (Hertz) 為單位。頻率越高，聲音越接近原始來源，但檔案也會越大。若是音訊 CD 播放，請將取樣頻率設為 44100 kHz。如果您不確定，請設為「自動」，系統將會複製來源數值。"
 
+#: videomass/vdms_dialogs/audioproperties.py:237
 msgid "The audio bitrate affects the file compression and thus the quality of listening. The higher the value, the higher the quality."
 msgstr "音訊位元率會影響檔案壓縮率，進而影響聆聽品質。數值越高，品質越好。"
 
+#: videomass/vdms_dialogs/audioproperties.py:241
 msgid "Bit depth is the number of bits of information in each sample, and it directly corresponds to the resolution of each sample. Bit depth is only meaningful in reference to a PCM digital signal. Non-PCM formats, such as lossy compression formats, do not have associated bit depths."
-msgstr ""
-"位元深度是每個樣本中的資訊位元數，直接對應每個樣本的解析度。位元深度僅對 PCM "
-"數位訊號有意義。非 PCM 格式 (例如失真壓縮格式) 沒有相關聯的位元深度。"
+msgstr "位元深度是每個樣本中的資訊位元數，直接對應每個樣本的解析度。位元深度僅對 PCM 數位訊號有意義。非 PCM 格式 (例如失真壓縮格式) 沒有相關聯的位元深度。"
 
+#: videomass/vdms_dialogs/avconv_cmd_line.py:39
 msgid "First pass command"
 msgstr "第一階段指令"
 
+#: videomass/vdms_dialogs/avconv_cmd_line.py:40
 msgid "Second pass command"
 msgstr "第二階段指令"
 
+#: videomass/vdms_dialogs/avconv_cmd_line.py:54
 msgid "Videomass - RAW Commands"
 msgstr "Videomass - RAW 指令"
 
+#: videomass/vdms_dialogs/avconv_cmd_line.py:61 videomass/vdms_dialogs/ffmpeg_help.py:117 videomass/vdms_dialogs/filter_scale.py:77 videomass/vdms_dialogs/shownormlist.py:98 videomass/vdms_dialogs/shownormlist.py:107 videomass/vdms_dialogs/shownormlist.py:116 videomass/vdms_miniframes/timeline.py:266 videomass/vdms_panels/concatenate.py:117 videomass/vdms_panels/sequence_to_video.py:112
+#: videomass/vdms_panels/video_to_sequence.py:76
 msgid "Read me"
 msgstr "讀我"
 
+#: videomass/vdms_dialogs/avconv_cmd_line.py:197
 msgid ""
 "The RAW commands reflect the user settings made on\n"
 "AV-Conversions interface and apply only to the individual\n"
@@ -78,96 +84,127 @@ msgstr ""
 "標記都應替換為\n"
 "第一階段指令輸出所提供的數值。"
 
+#: videomass/vdms_dialogs/epilogue.py:74 videomass/vdms_dialogs/queuedlg.py:120
 msgid "When finished, once the operations have been completed successfully:"
 msgstr "當操作成功完成後："
 
+#: videomass/vdms_dialogs/epilogue.py:80 videomass/vdms_dialogs/queuedlg.py:126
 msgid "Trash the source files"
 msgstr "將來源檔案移至垃圾桶"
 
+#: videomass/vdms_dialogs/epilogue.py:84 videomass/vdms_dialogs/queuedlg.py:130
 msgid "Clear the File List"
 msgstr "清除檔案清單"
 
+#: videomass/vdms_dialogs/epilogue.py:91 videomass/vdms_dialogs/queuedlg.py:142 videomass/vdms_main/main_frame.py:1314
 msgid "Run"
 msgstr "執行"
 
+#: videomass/vdms_dialogs/epilogue.py:97
 msgid "Videomass - Batch Mode"
 msgstr "Videomass - 批次模式"
 
+#: videomass/vdms_dialogs/ffmpeg_codecs.py:47
 msgid "FFmpeg encoders"
 msgstr "FFmpeg 編碼器"
 
+#: videomass/vdms_dialogs/ffmpeg_codecs.py:48
 msgid "supported encoders"
 msgstr "支援的編碼器"
 
+#: videomass/vdms_dialogs/ffmpeg_codecs.py:50
 msgid "FFmpeg decoders"
 msgstr "FFmpeg 解碼器"
 
+#: videomass/vdms_dialogs/ffmpeg_codecs.py:51
 msgid "supported decoders"
 msgstr "支援的解碼器"
 
+#: videomass/vdms_dialogs/ffmpeg_codecs.py:77 videomass/vdms_panels/av_conversions.py:285
 msgid "Video"
 msgstr "視訊"
 
+#: videomass/vdms_dialogs/ffmpeg_codecs.py:87 videomass/vdms_panels/av_conversions.py:298
 msgid "Audio"
 msgstr "音訊"
 
+#: videomass/vdms_dialogs/ffmpeg_codecs.py:97
 msgid "Subtitle"
 msgstr "字幕"
 
+#: videomass/vdms_dialogs/ffmpeg_codecs.py:114 videomass/vdms_dialogs/ffmpeg_codecs.py:123 videomass/vdms_dialogs/ffmpeg_codecs.py:132 videomass/vdms_dialogs/ffmpeg_formats.py:112 videomass/vdms_dialogs/ffmpeg_formats.py:115 videomass/vdms_dialogs/ffmpeg_formats.py:118
 msgid "description"
 msgstr "描述"
 
+#: videomass/vdms_dialogs/ffmpeg_conf.py:72
 msgid "Informations"
 msgstr "資訊"
 
+#: videomass/vdms_dialogs/ffmpeg_conf.py:83
 msgid "Flags settings"
 msgstr "旗標設定"
 
+#: videomass/vdms_dialogs/ffmpeg_conf.py:93
 msgid "Flags enabled"
 msgstr "已啟用旗標"
 
+#: videomass/vdms_dialogs/ffmpeg_conf.py:103
 msgid "Flags disabled"
 msgstr "已停用旗標"
 
+#: videomass/vdms_dialogs/ffmpeg_conf.py:116
 msgid "FFmpeg configuration"
 msgstr "FFmpeg 設定"
 
+#: videomass/vdms_dialogs/ffmpeg_conf.py:124
 msgid "flags"
 msgstr "旗標"
 
+#: videomass/vdms_dialogs/ffmpeg_conf.py:125 videomass/vdms_dialogs/ffmpeg_conf.py:129 videomass/vdms_dialogs/ffmpeg_conf.py:133
 msgid "options"
 msgstr "選項"
 
+#: videomass/vdms_dialogs/ffmpeg_conf.py:128 videomass/vdms_dialogs/ffmpeg_conf.py:132
 msgid "status"
 msgstr "狀態"
 
+#: videomass/vdms_dialogs/ffmpeg_conf.py:167
 msgid "FFprobe   ...not found !"
 msgstr "找不到 FFprobe！"
 
+#: videomass/vdms_dialogs/ffmpeg_conf.py:175
 msgid "FFplay   ...not found !"
 msgstr "找不到 FFplay！"
 
+#: videomass/vdms_dialogs/ffmpeg_conf.py:205 videomass/vdms_panels/sequence_to_video.py:709 videomass/vdms_panels/video_to_sequence.py:602
 msgid "Enabled"
 msgstr "已啟用"
 
+#: videomass/vdms_dialogs/ffmpeg_conf.py:216 videomass/vdms_panels/av_conversions.py:1218 videomass/vdms_panels/sequence_to_video.py:709 videomass/vdms_panels/video_to_sequence.py:606
 msgid "Disabled"
 msgstr "已停用"
 
+#: videomass/vdms_dialogs/ffmpeg_formats.py:71
 msgid "Demuxing only"
 msgstr "僅解多工 (Demuxing)"
 
+#: videomass/vdms_dialogs/ffmpeg_formats.py:82
 msgid "Muxing only"
 msgstr "僅多工 (Muxing)"
 
+#: videomass/vdms_dialogs/ffmpeg_formats.py:93
 msgid "Demuxing/Muxing support"
 msgstr "解多工/多工支援"
 
+#: videomass/vdms_dialogs/ffmpeg_formats.py:104
 msgid "FFmpeg file formats"
 msgstr "FFmpeg 檔案格式"
 
+#: videomass/vdms_dialogs/ffmpeg_formats.py:111 videomass/vdms_dialogs/ffmpeg_formats.py:114 videomass/vdms_dialogs/ffmpeg_formats.py:117
 msgid "supported formats"
 msgstr "支援的格式"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:46
 msgid ""
 "Contextual help based on the argument entered in the additional text field.\n"
 "Each argument consists of the type and a type-specific name.\n"
@@ -193,81 +230,107 @@ msgstr ""
 "\n"
 "部分範例："
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:68 videomass/vdms_dialogs/ffmpeg_help.py:301 videomass/vdms_dialogs/ffmpeg_help.py:315
 msgid "Help topic"
 msgstr "說明主題"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:69
 msgid "List basic options"
 msgstr "列出基本選項"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:70
 msgid "List more options"
 msgstr "列出更多選項"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:71
 msgid "List all options (very long)"
 msgstr "列出所有選項 (非常長)"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:72
 msgid "Show available devices"
 msgstr "顯示可用的裝置"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:73
 msgid "Show available bit stream filters"
 msgstr "顯示可用的位元串流過濾器"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:74
 msgid "Show available protocols"
 msgstr "顯示可用的通訊協定"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:75
 msgid "Show available filters"
 msgstr "顯示可用的過濾器"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:76
 msgid "Show available pixel formats"
 msgstr "顯示可用的像素格式"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:77
 msgid "Show available audio sample formats"
 msgstr "顯示可用的音訊取樣格式"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:78
 msgid "Show available color names"
 msgstr "顯示可用的顏色名稱"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:79
 msgid "List sources of the input device"
 msgstr "列出輸入裝置的來源"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:80
 msgid "List sinks of the output device"
 msgstr "列出輸出裝置的接收端"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:81
 msgid "Show available HW acceleration methods"
 msgstr "顯示可用的硬體加速方法"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:82
 msgid "Show license"
 msgstr "顯示授權"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:123 videomass/vdms_main/main_frame.py:539
 msgid "Show configuration"
 msgstr "顯示設定"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:127 videomass/vdms_main/main_frame.py:547
 msgid "Encoders"
 msgstr "編碼器"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:131 videomass/vdms_main/main_frame.py:550
 msgid "Decoders"
 msgstr "解碼器"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:135 videomass/vdms_main/main_frame.py:543
 msgid "Muxers and Demuxers"
 msgstr "多工器與解多工器"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:165
 msgid "help topic list"
 msgstr "說明主題清單"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:184
 msgid "Type the argument here and confirm with the enter key on your keyboard"
 msgstr "請在此輸入引數，並按鍵盤上的 Enter 鍵確認"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:192
 msgid "The search function allows you to find entries in the current topic"
 msgstr "搜尋功能可讓您在目前的主題中尋找項目"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:195
 msgid "Ignore case"
 msgstr "忽略大小寫"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:196
 msgid "Ignore case distinctions: characters with different case will match."
 msgstr "忽略大小寫區別：不同大小寫的字元也會視為符合。"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:206
 msgid "FFmpeg help topics"
 msgstr "FFmpeg 說明主題"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:254
 msgid ""
 "This is a multifunctional search tool useful for local help searches\n"
 "on multiple FFmpeg topics and options. The search control, to\n"
@@ -289,6 +352,7 @@ msgstr ""
 "可能是您的 FFmpeg 版本太舊，或未設定\n"
 "這些功能。"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:320 videomass/vdms_dialogs/ffmpeg_help.py:345 videomass/vdms_dialogs/ffmpeg_help.py:371
 msgid ""
 "\n"
 "  ..Nothing available"
@@ -296,6 +360,7 @@ msgstr ""
 "\n"
 "  ..沒有可用的資料"
 
+#: videomass/vdms_dialogs/ffmpeg_help.py:391
 msgid ""
 "\n"
 "  ..Not found"
@@ -303,122 +368,165 @@ msgstr ""
 "\n"
 "  ..找不到"
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:93
 msgid "Before"
 msgstr "之前"
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:99
 msgid "After"
 msgstr "之後"
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:105 videomass/vdms_dialogs/filter_crop.py:241
 msgid "Search for a specific frame"
 msgstr "搜尋特定畫格"
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:119 videomass/vdms_dialogs/filter_crop.py:255
 msgid "Load"
 msgstr "載入"
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:122
 msgid "Color EQ"
 msgstr "色彩 EQ"
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:128
 msgid "Contrast:"
 msgstr "對比度："
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:136 videomass/vdms_dialogs/filter_colorcorrection.py:150
 msgid "-100 to +100, default value 0"
 msgstr "-100 到 +100，預設值為 0"
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:141
 msgid "Brightness:"
 msgstr "亮度："
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:160
 msgid "Saturation:"
 msgstr "飽和度："
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:168
 msgid "0 to 300, default value 100"
 msgstr "0 到 300，預設值為 100"
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:172
 msgid "Gamma:"
 msgstr "Gamma:"
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:181
 msgid "0 to 100, default value 10"
 msgstr "0 到 100，預設值為 10"
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:198 videomass/vdms_dialogs/filter_crop.py:317 videomass/vdms_dialogs/filter_deinterlace.py:209 videomass/vdms_dialogs/filter_denoisers.py:110 videomass/vdms_dialogs/filter_scale.py:211 videomass/vdms_dialogs/filter_stab.py:318 videomass/vdms_dialogs/filter_transpose.py:116
 msgid "Reset"
 msgstr "重設"
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:212
 msgid "Color Correction EQ Tool"
 msgstr "色彩校正 EQ 工具"
 
+#: videomass/vdms_dialogs/filter_colorcorrection.py:393 videomass/vdms_dialogs/filter_colorcorrection.py:400 videomass/vdms_dialogs/filter_scale.py:290 videomass/vdms_dialogs/mediainfo.py:245 videomass/vdms_dialogs/mediainfo.py:265 videomass/vdms_dialogs/mediainfo.py:285 videomass/vdms_dialogs/mediainfo.py:305 videomass/vdms_dialogs/setting_profiles.py:281
+#: videomass/vdms_dialogs/setting_profiles.py:289 videomass/vdms_io/checkup.py:45 videomass/vdms_io/checkup.py:93 videomass/vdms_io/io_tools.py:78 videomass/vdms_io/io_tools.py:187 videomass/vdms_main/main_frame.py:909 videomass/vdms_main/main_frame.py:944 videomass/vdms_main/main_frame.py:966 videomass/vdms_main/main_frame.py:984 videomass/vdms_main/main_frame.py:1004
+#: videomass/vdms_miniframes/timeline.py:411 videomass/vdms_panels/concatenate.py:186 videomass/vdms_panels/long_processing_task.py:60 videomass/vdms_panels/presets_manager.py:415 videomass/vdms_panels/presets_manager.py:479 videomass/vdms_panels/presets_manager.py:549 videomass/vdms_panels/presets_manager.py:588 videomass/vdms_panels/presets_manager.py:608
+#: videomass/vdms_panels/presets_manager.py:646 videomass/vdms_panels/presets_manager.py:690 videomass/vdms_panels/presets_manager.py:703 videomass/vdms_panels/presets_manager.py:710 videomass/vdms_panels/presets_manager.py:745 videomass/vdms_panels/presets_manager.py:774 videomass/vdms_panels/presets_manager.py:780 videomass/vdms_panels/sequence_to_video.py:473
+#: videomass/vdms_panels/sequence_to_video.py:479 videomass/vdms_panels/sequence_to_video.py:567 videomass/vdms_panels/sequence_to_video.py:577 videomass/vdms_panels/sequence_to_video.py:594 videomass/vdms_panels/sequence_to_video.py:602 videomass/vdms_panels/sequence_to_video.py:608 videomass/vdms_panels/sequence_to_video.py:646 videomass/vdms_panels/sequence_to_video.py:692
+#: videomass/vdms_panels/video_to_sequence.py:508 videomass/vdms_panels/video_to_sequence.py:579 videomass/vdms_utils/presets_manager_utils.py:86 videomass/vdms_utils/presets_manager_utils.py:95 videomass/vdms_utils/queue_utils.py:68 videomass/vdms_utils/queue_utils.py:82 videomass/vdms_utils/queue_utils.py:95
 msgid "Videomass - Error!"
 msgstr "Videomass - 錯誤！"
 
+#: videomass/vdms_dialogs/filter_crop.py:230 videomass/vdms_dialogs/filter_scale.py:110
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "來源大小：{0} x {1} 像素"
 
+#: videomass/vdms_dialogs/filter_crop.py:238
 msgid "Crop color"
 msgstr "裁切顏色"
 
+#: videomass/vdms_dialogs/filter_crop.py:258
 msgid "Cropping area selection "
 msgstr "裁切區域選取 "
 
+#: videomass/vdms_dialogs/filter_crop.py:263 videomass/vdms_dialogs/filter_scale.py:122
 msgid "Height"
 msgstr "高度"
 
+#: videomass/vdms_dialogs/filter_crop.py:283
 msgid "Center"
 msgstr "置中"
 
+#: videomass/vdms_dialogs/filter_crop.py:294 videomass/vdms_dialogs/filter_scale.py:122
 msgid "Width"
 msgstr "寬度"
 
+#: videomass/vdms_dialogs/filter_crop.py:339
 msgid "Crop Tool"
 msgstr "裁切工具"
 
+#: videomass/vdms_dialogs/filter_crop.py:340
 msgid "Choose the color to draw the cropping area"
 msgstr "請選擇繪製裁切區域的顏色"
 
+#: videomass/vdms_dialogs/filter_crop.py:342
 msgid "Crop to width"
 msgstr "裁切至寬度"
 
+#: videomass/vdms_dialogs/filter_crop.py:343
 msgid "Move vertically (set to -1 to center the vertical axis)"
 msgstr "垂直移動 (設為 -1 以將垂直軸置中)"
 
+#: videomass/vdms_dialogs/filter_crop.py:345
 msgid "Move horizontally (set to -1 to center the horizontal axis)"
 msgstr "水平移動 (設為 -1 以將水平軸置中)"
 
+#: videomass/vdms_dialogs/filter_crop.py:347
 msgid "Crop to height"
 msgstr "裁切至高度"
 
+#: videomass/vdms_dialogs/filter_deinterlace.py:56
 msgid "Advanced Options"
 msgstr "進階選項"
 
+#: videomass/vdms_dialogs/filter_deinterlace.py:57 videomass/vdms_panels/av_conversions.py:346
 msgid "Deinterlace"
 msgstr "去交錯"
 
-msgid "Interlace"
-msgstr "交錯"
-
+#: videomass/vdms_dialogs/filter_deinterlace.py:61
 msgid "Deinterlaces with w3fdif filter"
 msgstr "使用 w3fdif 過濾器去交錯"
 
+#: videomass/vdms_dialogs/filter_deinterlace.py:75
 msgid "Deinterlaces with yadif filter"
 msgstr "使用 yadif 過濾器去交錯"
 
+#: videomass/vdms_dialogs/filter_deinterlace.py:98
+msgid "Interlace"
+msgstr "交錯"
+
+#: videomass/vdms_dialogs/filter_deinterlace.py:101
 msgid "Interlaces with interlace filter"
 msgstr "使用 interlace 過濾器交錯"
 
+#: videomass/vdms_dialogs/filter_deinterlace.py:118
 msgid "Deinterlacing and Interlacing"
 msgstr "去交錯與交錯"
 
+#: videomass/vdms_dialogs/filter_deinterlace.py:144
 msgid "Deinterlace the input video with `w3fdif` filter"
 msgstr "使用 `w3fdif` 過濾器對輸入視訊去交錯"
 
+#: videomass/vdms_dialogs/filter_deinterlace.py:146
 msgid "Set the interlacing filter coefficients."
 msgstr "設定交錯過濾器係數。"
 
+#: videomass/vdms_dialogs/filter_deinterlace.py:148 videomass/vdms_dialogs/filter_deinterlace.py:158
 msgid "Specify which frames to deinterlace."
 msgstr "指定要進行去交錯的畫格。"
 
+#: videomass/vdms_dialogs/filter_deinterlace.py:150
 msgid "Deinterlace the input video with `yadif` filter. Using FFmpeg, this is the best and fastest choice"
-msgstr ""
-"使用 `yadif` 過濾器對輸入視訊去交錯。在使用 FFmpeg 時，這是最佳且最快的選擇"
+msgstr "使用 `yadif` 過濾器對輸入視訊去交錯。在使用 FFmpeg 時，這是最佳且最快的選擇"
 
+#: videomass/vdms_dialogs/filter_deinterlace.py:153
 msgid ""
 "mode\n"
 "The interlacing mode to adopt."
@@ -426,6 +534,7 @@ msgstr ""
 "模式\n"
 "要採用的交錯模式。"
 
+#: videomass/vdms_dialogs/filter_deinterlace.py:155
 msgid ""
 "parity\n"
 "The picture field parity assumed for the input interlaced video."
@@ -433,9 +542,11 @@ msgstr ""
 "同位\n"
 "輸入交錯視訊所假設的圖片場同位。"
 
+#: videomass/vdms_dialogs/filter_deinterlace.py:160
 msgid "Simple interlacing filter from progressive contents."
 msgstr "來自漸進式內容的簡易交錯過濾器。"
 
+#: videomass/vdms_dialogs/filter_deinterlace.py:162
 msgid ""
 "scan:\n"
 "determines whether the interlaced frame is taken from the even (tff - default) or odd (bff) lines of the progressive frame."
@@ -443,6 +554,7 @@ msgstr ""
 "掃描：\n"
 "決定交錯畫格是取自漸進式畫格的偶數 (tff - 預設) 還是奇數 (bff) 行。"
 
+#: videomass/vdms_dialogs/filter_deinterlace.py:166
 msgid ""
 "lowpass:\n"
 "Enable (default) or disable the vertical lowpass filter to avoid twitter interlacing and reduce moire patterns.\n"
@@ -452,82 +564,103 @@ msgstr ""
 "啟用 (預設) 或停用垂直低通過濾器，以避免閃爍交錯並減少摩爾紋。\n"
 "預設為無設定。"
 
+#: videomass/vdms_dialogs/filter_denoisers.py:56
 msgid "Denoiser Filters"
 msgstr "降噪過濾器"
 
+#: videomass/vdms_dialogs/filter_denoisers.py:60
 msgid "Enable nlmeans denoiser"
 msgstr "啟用 nlmeans 降噪器"
 
+#: videomass/vdms_dialogs/filter_denoisers.py:73
 msgid "nlmeans options"
 msgstr "nlmeans 選項"
 
+#: videomass/vdms_dialogs/filter_denoisers.py:82
 msgid "Enable hqdn3d denoiser"
 msgstr "啟用 hqdn3d 降噪器"
 
+#: videomass/vdms_dialogs/filter_denoisers.py:91
 msgid "hqdn3d options"
 msgstr "hqdn3d 選項"
 
+#: videomass/vdms_dialogs/filter_denoisers.py:116
 msgid "Denoiser Tool"
 msgstr "降噪工具"
 
+#: videomass/vdms_dialogs/filter_denoisers.py:117
 msgid ""
 "nlmeans:\n"
 "Denoise frames using Non-Local Means algorithm is capable of restoring video sequences, even with strong noise. It is ideal for enhancing the quality of old VHS tapes."
 msgstr ""
 "nlmeans:\n"
-"使用非局部均值 (Non-Local Means) 演算法對畫格進行降噪，即使有強烈雜訊也能還原"
-"視訊序列。這非常適合用於增強舊 VHS 錄影帶的品質。"
+"使用非局部均值 (Non-Local Means) 演算法對畫格進行降噪，即使有強烈雜訊也能還原視訊序列。這非常適合用於增強舊 VHS 錄影帶的品質。"
 
+#: videomass/vdms_dialogs/filter_denoisers.py:122
 msgid ""
 "hqdn3d:\n"
 "This is a high precision/quality 3d denoise filter. It aims to reduce image noise, producing smooth images and making still images really still. It should enhance compressibility."
 msgstr ""
 "hqdn3d:\n"
-"這是高精確度/高品質的 3D 降噪過濾器。其目標是減少影像雜訊，產生平滑的影像，並"
-"讓靜止影像更加穩定。這應能增強壓縮率。"
+"這是高精確度/高品質的 3D 降噪過濾器。其目標是減少影像雜訊，產生平滑的影像，並讓靜止影像更加穩定。這應能增強壓縮率。"
 
+#: videomass/vdms_dialogs/filter_scale.py:82
 msgid "View result"
 msgstr "檢視結果"
 
+#: videomass/vdms_dialogs/filter_scale.py:85
 msgid "New size in pixels"
 msgstr "新大小 (像素)"
 
+#: videomass/vdms_dialogs/filter_scale.py:90
 msgid "Width:"
 msgstr "寬度："
 
+#: videomass/vdms_dialogs/filter_scale.py:100
 msgid "Height:"
 msgstr "高度："
 
+#: videomass/vdms_dialogs/filter_scale.py:116
 msgid "Constrain proportions (keep aspect ratio)"
 msgstr "限制比例 (保持長寬比)"
 
+#: videomass/vdms_dialogs/filter_scale.py:121
 msgid "Which dimension to adjust?"
 msgstr "要調整哪個維度？"
 
+#: videomass/vdms_dialogs/filter_scale.py:130
 msgid "Aspect Ratio"
 msgstr "長寬比"
 
+#: videomass/vdms_dialogs/filter_scale.py:133
 msgid "Setdar filter (display aspect ratio) example 16/9, 4/3 "
 msgstr "Setdar 過濾器 (顯示長寬比) 範例 16/9, 4/3 "
 
+#: videomass/vdms_dialogs/filter_scale.py:138 videomass/vdms_dialogs/filter_scale.py:172
 msgid "Numerator"
 msgstr "分子"
 
+#: videomass/vdms_dialogs/filter_scale.py:163 videomass/vdms_dialogs/filter_scale.py:197
 msgid "Denominator"
 msgstr "分母"
 
+#: videomass/vdms_dialogs/filter_scale.py:167
 msgid "Setsar filter (sample aspect ratio) example 1/1"
 msgstr "Setsar 過濾器 (取樣長寬比) 範例 1/1"
 
+#: videomass/vdms_dialogs/filter_scale.py:218
 msgid "Resize Tool"
 msgstr "調整大小工具"
 
+#: videomass/vdms_dialogs/filter_scale.py:219
 msgid "Scale filter, set to 0 to disable"
 msgstr "縮放過濾器，設為 0 以停用"
 
+#: videomass/vdms_dialogs/filter_scale.py:222
 msgid "Display Aspect Ratio. Set to 0 to disable"
 msgstr "顯示長寬比。設為 0 以停用"
 
+#: videomass/vdms_dialogs/filter_scale.py:225
 msgid ""
 "Sample (aka Pixel) Aspect Ratio.\n"
 "Set to 0 to disable"
@@ -535,154 +668,170 @@ msgstr ""
 "取樣 (即像素) 長寬比。\n"
 "設為 0 以停用"
 
+#: videomass/vdms_dialogs/filter_scale.py:372
 msgid ""
-"If you want to keep the aspect ratio, select \"Constrain proportions\" below and\n"
-"specify only one dimension, either width or height, and set the other dimension\n"
-"to -1 or -2 (some codecs require -2, so you should do some testing first)."
+"If you want to maintain the aspect ratio, select \"Constrain proportions\" below and specify only one dimension, width or height, and set the other dimension to -1 or -2.\n"
+"\n"
+"Setting the value to -1 will cause FFmpeg to calculate the perfect mathematical proportion, but without checking for divisibility.\n"
+"\n"
+"By setting the value to -2, you will tell FFmpeg to do exactly the same proportional calculation, but force the result to round to the nearest even number.\n"
+"\n"
+"Also note that some codecs strictly require -2, so you should do some testing first.\n"
+"\n"
+"Click the Help button for full documentation on this filter."
 msgstr ""
-"如果您想保持長寬比，請選取下方的「限制比例」，並\n"
-"僅指定寬度或高度其中一個維度，然後將另一個維度設定\n"
-"為 -1 或 -2 (某些編解碼器需要 -2，因此您應先進行測試)。"
 
+#: videomass/vdms_dialogs/filter_stab.py:82
 msgid "Enable stabilizer"
 msgstr "啟用穩定器"
 
+#: videomass/vdms_dialogs/filter_stab.py:84
 msgid "Create a side-by-side comparison video"
 msgstr "建立並排比較視訊"
 
+#: videomass/vdms_dialogs/filter_stab.py:89
 msgid "Create a snapshot"
 msgstr "建立快照"
 
+#: videomass/vdms_dialogs/filter_stab.py:107 videomass/vdms_panels/audio_encoders/acodecs.py:160
 msgid "Preview"
 msgstr "預覽"
 
+#: videomass/vdms_dialogs/filter_stab.py:111
 msgid "Duration seconds:"
 msgstr "持續時間 (秒)："
 
+#: videomass/vdms_dialogs/filter_stab.py:120
 msgid "Video Detect"
 msgstr "視訊偵測"
 
+#: videomass/vdms_dialogs/filter_stab.py:178
 msgid "[TRIPOD] Enable tripod mode if checked"
 msgstr "[TRIPOD] 若勾選則啟用腳架模式"
 
+#: videomass/vdms_dialogs/filter_stab.py:185
 msgid "Video transform"
 msgstr "視訊轉換"
 
+#: videomass/vdms_dialogs/filter_stab.py:204
 msgid "[OPTALGO] optimization algorithm"
 msgstr "[OPTALGO] 最佳化演算法"
 
+#: videomass/vdms_dialogs/filter_stab.py:226
 msgid "[CROP] Specify how to deal with borders at movement compensation"
 msgstr "[CROP] 指定移動補償時如何處理邊框"
 
+#: videomass/vdms_dialogs/filter_stab.py:233
 msgid "[INVERT] Invert transforms if checked"
 msgstr "[INVERT] 若勾選則反轉轉換"
 
+#: videomass/vdms_dialogs/filter_stab.py:236
 msgid "[RELATIVE] Consider transforms as relative to previous frame if checked, absolute if unchecked"
 msgstr "[RELATIVE] 若勾選，則將轉換視為相對於前一個畫格；若取消勾選，則視為絕對轉換"
 
+#: videomass/vdms_dialogs/filter_stab.py:281
 msgid "Specify type of interpolation"
 msgstr "指定插補類型"
 
+#: videomass/vdms_dialogs/filter_stab.py:289
 msgid "[TRIPOD2] virtual tripod mode, equivalent to relative=unchecked:smoothing=0"
 msgstr "[TRIPOD2] 虛擬腳架模式，等同於 relative=unchecked:smoothing=0"
 
+#: videomass/vdms_dialogs/filter_stab.py:296
 msgid "Unsharp filter:"
 msgstr "反銳化遮罩過濾器："
 
+#: videomass/vdms_dialogs/filter_stab.py:325
 msgid "Seek to a position on the video."
 msgstr "搜尋視訊上的位置。"
 
+#: videomass/vdms_dialogs/filter_stab.py:327
 msgid "Make a snapshot of the video with the settings made."
 msgstr "使用所做的設定建立視訊快照。"
 
+#: videomass/vdms_dialogs/filter_stab.py:329
 msgid "Set the snapshot duration from 3 to 15 seconds from the seek position, default is 5 seconds."
 msgstr "設定快照持續時間，從搜尋位置開始 3 到 15 秒，預設為 5 秒。"
 
+#: videomass/vdms_dialogs/filter_stab.py:333
 msgid "Set how shaky the video is and how quick the camera is. A value of 1 means little shakiness, a value of 10 means strong shakiness. Default value is 5."
-msgstr ""
-"設定視訊的晃動程度與攝影機的速度。數值 1 表示輕微晃動，數值 10 表示強烈晃動。"
-"預設值為 5。"
+msgstr "設定視訊的晃動程度與攝影機的速度。數值 1 表示輕微晃動，數值 10 表示強烈晃動。預設值為 5。"
 
+#: videomass/vdms_dialogs/filter_stab.py:337
 msgid "Set the accuracy of the detection process. A value of 1 means low accuracy, a value of 15 means high accuracy. Default value is 15."
-msgstr ""
-"設定偵測過程的準確度。數值 1 表示低準確度，數值 15 表示高準確度。預設值為 "
-"15。"
+msgstr "設定偵測過程的準確度。數值 1 表示低準確度，數值 15 表示高準確度。預設值為 15。"
 
+#: videomass/vdms_dialogs/filter_stab.py:341
 msgid "Set stepsize of the search process. The region around minimum is scanned with 1 pixel resolution. Default value is 6."
-msgstr ""
-"設定搜尋過程的步長。最小值周圍的區域會以 1 像素解析度進行掃描。預設值為 6。"
+msgstr "設定搜尋過程的步長。最小值周圍的區域會以 1 像素解析度進行掃描。預設值為 6。"
 
+#: videomass/vdms_dialogs/filter_stab.py:345
 msgid "Set minimum contrast. Below this value a local measurement field is discarded. The range is 0-1. Default value is 0.25."
-msgstr ""
-"設定最小對比度。低於此數值時，將捨棄局部測量場。範圍為 0-1。預設值為 0.25。"
+msgstr "設定最小對比度。低於此數值時，將捨棄局部測量場。範圍為 0-1。預設值為 0.25。"
 
+#: videomass/vdms_dialogs/filter_stab.py:348
 msgid "Set reference frame number for tripod mode. If enabled, the motion of the frames is compared to a reference frame in the filtered stream, identified by the specified number. The idea is to compensate all movements in a more-or-less static scene and keep the camera view absolutely still. The frames are counted starting from 1."
-msgstr ""
-"設定腳架模式的參考畫格編號。若啟用，畫格的動作將會與過濾串流中的參考畫格進行"
-"比較 (由指定編號識別)。其概念是補償或多或少靜態場景中的所有移動，並讓攝影機視"
-"野保持絕對靜止。畫格從 1 開始計數。"
+msgstr "設定腳架模式的參考畫格編號。若啟用，畫格的動作將會與過濾串流中的參考畫格進行比較 (由指定編號識別)。其概念是補償或多或少靜態場景中的所有移動，並讓攝影機視野保持絕對靜止。畫格從 1 開始計數。"
 
+#: videomass/vdms_dialogs/filter_stab.py:357
 msgid ""
 "Set the number of frames (value*2 + 1) used for lowpass filtering the camera movements. Default value is 15. For example a number of 10 means that 21 frames are used (10 in the past and 10 in the future) to smoothen the motion in the video. A larger value leads to a smoother video, but limits the acceleration of the camera (pan/tilt movements). 0 is a special case where a static camera is "
 "simulated."
-msgstr ""
-"設定用於攝影機移動低通過濾的畫格數 (數值*2 + 1)。預設值為 15。例如，數值 10 "
-"表示使用 21 個畫格 (過去 10 個與未來 10 個) 來平滑視訊中的動作。較大的數值會"
-"產生較平滑的視訊，但會限制攝影機的加速度 (平移/傾斜移動)。0 是模擬靜態攝影機"
-"的特殊情況。"
+msgstr "設定用於攝影機移動低通過濾的畫格數 (數值*2 + 1)。預設值為 15。例如，數值 10 表示使用 21 個畫格 (過去 10 個與未來 10 個) 來平滑視訊中的動作。較大的數值會產生較平滑的視訊，但會限制攝影機的加速度 (平移/傾斜移動)。0 是模擬靜態攝影機的特殊情況。"
 
+#: videomass/vdms_dialogs/filter_stab.py:365
 msgid "Set the camera path optimization algorithm. Values are: `gauss`: gaussian kernel low-pass filter on camera motion (default), and `avg`: averaging on transformations"
-msgstr ""
-"設定攝影機路徑最佳化演算法。數值為：`gauss`：攝影機動作的高斯核心低通過濾器 "
-"(預設)，以及 `avg`：轉換的平均值"
+msgstr "設定攝影機路徑最佳化演算法。數值為：`gauss`：攝影機動作的高斯核心低通過濾器 (預設)，以及 `avg`：轉換的平均值"
 
+#: videomass/vdms_dialogs/filter_stab.py:369
 msgid "Set maximal angle in radians (degree*PI/180) to rotate frames. Default value is -1, meaning no limit."
-msgstr ""
-"設定旋轉畫格的最大角度 (以弧度為單位，度數*PI/180)。預設值為 -1，表示無限制。"
+msgstr "設定旋轉畫格的最大角度 (以弧度為單位，度數*PI/180)。預設值為 -1，表示無限制。"
 
+#: videomass/vdms_dialogs/filter_stab.py:372
 msgid "Specify how to deal with borders that may be visible due to movement compensation. Values are: `keep` keep image information from previous frame (default), `black` fill the border black"
-msgstr ""
-"指定如何處理因移動補償而可能顯示的邊框。數值為：`keep` 保留前一個畫格的影像資"
-"訊 (預設)，`black` 將邊框填滿黑色"
+msgstr "指定如何處理因移動補償而可能顯示的邊框。數值為：`keep` 保留前一個畫格的影像資訊 (預設)，`black` 將邊框填滿黑色"
 
+#: videomass/vdms_dialogs/filter_stab.py:377
 msgid "Invert transforms if checked. Default is unchecked."
 msgstr "若勾選則反轉轉換。預設為取消勾選。"
 
+#: videomass/vdms_dialogs/filter_stab.py:379
 msgid "Consider transforms as relative to previous frame if checked, absolute if unchecked. Default is checked."
 msgstr "若勾選，則將轉換視為相對於前一個畫格；若取消勾選，則視為絕對轉換。預設為勾選。"
 
+#: videomass/vdms_dialogs/filter_stab.py:382
 msgid "Set percentage to zoom. A positive value will result in a zoom-in effect, a negative value in a zoom-out effect. Default value is 0 (no zoom)."
 msgstr "設定縮放百分比。正值會產生放大效果，負值會產生縮小效果。預設值為 0 (不縮放)。"
 
+#: videomass/vdms_dialogs/filter_stab.py:386
 msgid "Set optimal zooming to avoid borders. Accepted values are: `0` disabled, `1` optimal static zoom value is determined (only very strong movements will lead to visible borders) (default), `2` optimal adaptive zoom value is determined (no borders will be visible), see zoomspeed. Note that the value given at zoom is added to the one calculated here."
-msgstr ""
-"設定最佳縮放以避免邊框。接受的數值為：`0` 停用，`1` 決定最佳靜態縮放值 (只有"
-"非常強烈的移動才會導致可見邊框) (預設)，`2` 決定最佳適應性縮放值 (不會有可見"
-"邊框)，請參閱 zoomspeed。請注意，在 zoom 給定的數值會加到此處計算的數值上。"
+msgstr "設定最佳縮放以避免邊框。接受的數值為：`0` 停用，`1` 決定最佳靜態縮放值 (只有非常強烈的移動才會導致可見邊框) (預設)，`2` 決定最佳適應性縮放值 (不會有可見邊框)，請參閱 zoomspeed。請注意，在 zoom 給定的數值會加到此處計算的數值上。"
 
+#: videomass/vdms_dialogs/filter_stab.py:393
 msgid "Set percent to zoom maximally each frame (enabled when optzoom is set to 2). Range is from 0 to 5, default value is 0.25."
-msgstr ""
-"設定每個畫格的最大縮放百分比 (當 optzoom 設為 2 時啟用)。範圍從 0 到 5，預設值為 0.25。"
+msgstr "設定每個畫格的最大縮放百分比 (當 optzoom 設為 2 時啟用)。範圍從 0 到 5，預設值為 0.25。"
 
+#: videomass/vdms_dialogs/filter_stab.py:397
 msgid "Specify type of interpolation. Available values are: `no` no interpolation, `linear` linear only horizontal, `bilinear` linear in both directions (default), `bicubic` cubic in both directions (slow)"
-msgstr ""
-"指定插補類型。可用的數值為：`no` 不插補，`linear` 僅水平線性，`bilinear` 雙向"
-"線性 (預設)，`bicubic` 雙向三次 (慢)"
+msgstr "指定插補類型。可用的數值為：`no` 不插補，`linear` 僅水平線性，`bilinear` 雙向線性 (預設)，`bicubic` 雙向三次 (慢)"
 
+#: videomass/vdms_dialogs/filter_stab.py:402
 msgid "Enable virtual tripod mode if checked, which is equivalent to relative=0:smoothing=0. Default is unchecked. Use also tripod option of vidstabdetect."
-msgstr ""
-"若勾選則啟用虛擬腳架模式，等同於 relative=0:smoothing=0。預設為取消勾選。亦請"
-"使用 vidstabdetect 的 tripod 選項。"
+msgstr "若勾選則啟用虛擬腳架模式，等同於 relative=0:smoothing=0。預設為取消勾選。亦請使用 vidstabdetect 的 tripod 選項。"
 
+#: videomass/vdms_dialogs/filter_stab.py:407
 msgid "Sharpen or blur the input video. Note the use of the unsharp filter which is always recommended."
 msgstr "銳化或模糊輸入視訊。請注意，總是建議使用反銳化遮罩過濾器。"
 
+#: videomass/vdms_dialogs/filter_stab.py:411
 msgid "Video Stabilizer Tool"
 msgstr "視訊穩定器工具"
 
+#: videomass/vdms_dialogs/filter_stab.py:537 videomass/vdms_io/io_tools.py:106
 msgid "Videomass - Loading..."
 msgstr "Videomass - 正在載入..."
 
+#: videomass/vdms_dialogs/filter_stab.py:538
 msgid ""
 "Please wait,\n"
 "This process will take a few seconds."
@@ -690,96 +839,127 @@ msgstr ""
 "請稍候，\n"
 "此程序將花費幾秒鐘。"
 
+#: videomass/vdms_dialogs/filter_transpose.py:82 videomass/vdms_dialogs/filter_transpose.py:302
 msgid "Default position"
 msgstr "預設位置"
 
+#: videomass/vdms_dialogs/filter_transpose.py:88
 msgid "Rotation setting"
 msgstr "旋轉設定"
 
+#: videomass/vdms_dialogs/filter_transpose.py:96
 msgid "90° (left)"
 msgstr "90° (向左)"
 
+#: videomass/vdms_dialogs/filter_transpose.py:98
 msgid "90° (right)"
 msgstr "90° (向右)"
 
+#: videomass/vdms_dialogs/filter_transpose.py:102
 msgid "180°"
 msgstr "180°"
 
+#: videomass/vdms_dialogs/filter_transpose.py:123
 msgid "Transpose Tool"
 msgstr "轉置工具"
 
+#: videomass/vdms_dialogs/filter_transpose.py:238
 msgid "Rotate 90 degrees right"
 msgstr "向右旋轉 90 度"
 
+#: videomass/vdms_dialogs/filter_transpose.py:260
 msgid "Rotate 180 degrees"
 msgstr "旋轉 180 度"
 
+#: videomass/vdms_dialogs/filter_transpose.py:281
 msgid "Rotate 90 degrees left"
 msgstr "向左旋轉 90 度"
 
+#: videomass/vdms_dialogs/mediainfo.py:82
 msgid "Format"
 msgstr "格式"
 
+#: videomass/vdms_dialogs/mediainfo.py:96
 msgid "Video Stream"
 msgstr "視訊串流"
 
+#: videomass/vdms_dialogs/mediainfo.py:109
 msgid "Audio Streams"
 msgstr "音訊串流"
 
+#: videomass/vdms_dialogs/mediainfo.py:122
 msgid "Subtitle Streams"
 msgstr "字幕串流"
 
+#: videomass/vdms_dialogs/mediainfo.py:126
 msgid "Copy to clipboard"
 msgstr "複製到剪貼簿"
 
+#: videomass/vdms_dialogs/mediainfo.py:137
 msgid "FILE SELECTION"
 msgstr "檔案選取"
 
+#: videomass/vdms_dialogs/mediainfo.py:139 videomass/vdms_dialogs/mediainfo.py:142 videomass/vdms_dialogs/mediainfo.py:145 videomass/vdms_dialogs/mediainfo.py:148 videomass/vdms_main/main_frame.py:1310
 msgid "Properties"
 msgstr "屬性"
 
+#: videomass/vdms_dialogs/mediainfo.py:140 videomass/vdms_dialogs/mediainfo.py:143 videomass/vdms_dialogs/mediainfo.py:146 videomass/vdms_dialogs/mediainfo.py:149
 msgid "Values"
 msgstr "數值"
 
+#: videomass/vdms_dialogs/mediainfo.py:152
 msgid "Source Stream Properties"
 msgstr "來源串流屬性"
 
+#: videomass/vdms_dialogs/mediainfo.py:244
 msgid "Unable to open the clipboard on Format tab"
 msgstr "無法在 [格式] 分頁開啟剪貼簿"
 
+#: videomass/vdms_dialogs/mediainfo.py:263
 msgid "Unable to open the clipboard on Video Streams tab"
 msgstr "無法在 [視訊串流] 分頁開啟剪貼簿"
 
+#: videomass/vdms_dialogs/mediainfo.py:283
 msgid "Unable to open the clipboard on Audio Streams tab"
 msgstr "無法在 [音訊串流] 分頁開啟剪貼簿"
 
+#: videomass/vdms_dialogs/mediainfo.py:303
 msgid "Unable to open the clipboard on Subtitle Streams tab"
 msgstr "無法在 [字幕串流] 分頁開啟剪貼簿"
 
+#: videomass/vdms_dialogs/preferences.py:89
 msgid "Where do you prefer to save your transcodes?"
 msgstr "您希望將轉碼檔案儲存到哪裡？"
 
+#: videomass/vdms_dialogs/preferences.py:100 videomass/vdms_dialogs/preferences.py:127 videomass/vdms_dialogs/preferences.py:148 videomass/vdms_dialogs/preferences.py:160 videomass/vdms_dialogs/preferences.py:172 videomass/vdms_panels/filedrop.py:284
 msgid "Change"
 msgstr "變更"
 
+#: videomass/vdms_dialogs/preferences.py:102 videomass/vdms_panels/av_conversions.py:1213 videomass/vdms_panels/filedrop.py:613 videomass/vdms_panels/presets_manager.py:1039
 msgid "Same destination paths as source files"
 msgstr "與來源檔案相同的目的地路徑"
 
+#: videomass/vdms_dialogs/preferences.py:107
 msgid "Assign optional suffix to destination file names:"
 msgstr "指派選用的後綴到目的地檔案名稱："
 
+#: videomass/vdms_dialogs/preferences.py:113
 msgid "File removal preferences"
 msgstr "檔案移除偏好設定"
 
+#: videomass/vdms_dialogs/preferences.py:117
 msgid "Trash the source files after successful encoding"
 msgstr "編碼成功後將來源檔案移至垃圾桶"
 
+#: videomass/vdms_dialogs/preferences.py:130
 msgid "File Preferences"
 msgstr "檔案偏好設定"
 
+#: videomass/vdms_dialogs/preferences.py:137
 msgid "Location of executables"
 msgstr "執行檔位置"
 
+#: videomass/vdms_dialogs/preferences.py:139
 msgid ""
 "FFmpeg can be built by enabling/disabling its options and this depends on your needs.\n"
 "For some use cases it is possible to provide a custom build of FFmpeg where you can specify\n"
@@ -789,110 +969,141 @@ msgstr ""
 "在某些使用案例中，可能需要提供自訂建置的 FFmpeg，您可以在\n"
 "此偏好設定分頁中指定它。"
 
+#: videomass/vdms_dialogs/preferences.py:146
 msgid "Enable a custom location to run FFmpeg"
 msgstr "啟用自訂位置以執行 FFmpeg"
 
+#: videomass/vdms_dialogs/preferences.py:158
 msgid "Enable a custom location to run FFprobe"
 msgstr "啟用自訂位置以執行 FFprobe"
 
+#: videomass/vdms_dialogs/preferences.py:170
 msgid "Enable a custom location to run FFplay"
 msgstr "啟用自訂位置以執行 FFplay"
 
+#: videomass/vdms_dialogs/preferences.py:182
 msgid "FFmpeg"
 msgstr "FFmpeg"
 
+#: videomass/vdms_dialogs/preferences.py:188
 msgid "Look and Feel (requires application restart)"
 msgstr "外觀與風格 (需要重新啟動應用程式)"
 
+#: videomass/vdms_dialogs/preferences.py:193
 msgid "Icon themes"
 msgstr "圖示主題"
 
+#: videomass/vdms_dialogs/preferences.py:207
 msgid "At the top of window (default)"
 msgstr "在視窗頂端 (預設)"
 
+#: videomass/vdms_dialogs/preferences.py:208
 msgid "At the bottom of window"
 msgstr "在視窗底部"
 
+#: videomass/vdms_dialogs/preferences.py:209
 msgid "At the right of window"
 msgstr "在視窗右側"
 
+#: videomass/vdms_dialogs/preferences.py:210
 msgid "At the left of window"
 msgstr "在視窗左側"
 
+#: videomass/vdms_dialogs/preferences.py:212
 msgid "Place the toolbar"
 msgstr "工具列位置"
 
+#: videomass/vdms_dialogs/preferences.py:221
 msgid "Toolbar's icons size:"
 msgstr "工具列圖示大小："
 
+#: videomass/vdms_dialogs/preferences.py:232
 msgid "Application Language (requires application restart)"
 msgstr "應用程式語言 (需要重新啟動應用程式)"
 
+#: videomass/vdms_dialogs/preferences.py:244
 msgid "Look and Language"
 msgstr "外觀與語言"
 
+#: videomass/vdms_dialogs/preferences.py:250
 msgid "Upon exiting the application"
 msgstr "退出應用程式時"
 
+#: videomass/vdms_dialogs/preferences.py:255
 msgid "Always ask me to confirm"
 msgstr "總是詢問我以確認"
 
+#: videomass/vdms_dialogs/preferences.py:257
 msgid "Clean the log files"
 msgstr "清除記錄檔"
 
+#: videomass/vdms_dialogs/preferences.py:260
 msgid "Remove cached files"
 msgstr "移除快取檔案"
 
+#: videomass/vdms_dialogs/preferences.py:264
 msgid "On operations completion"
 msgstr "操作完成時"
 
+#: videomass/vdms_dialogs/preferences.py:267
 msgid "These settings will remain active until the application is closed, If necessary, remember to reactivate them."
 msgstr "這些設定將保持啟用直到應用程式關閉，如有必要，請記得重新啟用它們。"
 
+#: videomass/vdms_dialogs/preferences.py:272
 msgid "Exit the application"
 msgstr "退出應用程式"
 
+#: videomass/vdms_dialogs/preferences.py:275
 msgid "Shutdown the system"
 msgstr "關閉系統"
 
+#: videomass/vdms_dialogs/preferences.py:279
 msgid "SUDO password:"
 msgstr "SUDO 密碼："
 
+#: videomass/vdms_dialogs/preferences.py:288
 msgid "Exit and Shutdown"
 msgstr "退出並關機"
 
+#: videomass/vdms_dialogs/preferences.py:294
 msgid "Specify the character encoding format"
 msgstr "指定字元編碼格式"
 
+#: videomass/vdms_dialogs/preferences.py:297
 msgid ""
 "Although UTF-8 is the default and most widely used standard encoding format, it is not the only encoding format available.\n"
 "Some file metadata may still contain non-UTF-8 character encodings resulting in the error \"'utf-8' codec can't decode bytes...\".\n"
 "If you know the encoding format the file was written in, you can try specifying it here, e.g. ISO 8859-1, ISO 8859-16, etc."
 msgstr ""
 "雖然 UTF-8 是預設且最廣泛使用的標準編碼格式，但它並非唯一可用的編碼格式。\n"
-"某些檔案中繼資料可能仍包含非 UTF-8 字元編碼，導致錯誤「'utf-8' codec can't "
-"decode bytes...」。\n"
-"如果您知道檔案寫入時的編碼格式，可以嘗試在此指定，例如 ISO 8859-1、ISO "
-"8859-16 等。"
+"某些檔案中繼資料可能仍包含非 UTF-8 字元編碼，導致錯誤「'utf-8' codec can't decode bytes...」。\n"
+"如果您知道檔案寫入時的編碼格式，可以嘗試在此指定，例如 ISO 8859-1、ISO 8859-16 等。"
 
+#: videomass/vdms_dialogs/preferences.py:307
 msgid "Character encoding:"
 msgstr "字元編碼："
 
+#: videomass/vdms_dialogs/preferences.py:316
 msgid "Default application directories"
 msgstr "預設應用程式目錄"
 
+#: videomass/vdms_dialogs/preferences.py:320
 msgid "Configuration directory"
 msgstr "設定目錄"
 
+#: videomass/vdms_dialogs/preferences.py:333
 msgid "Cache directory"
 msgstr "快取目錄"
 
+#: videomass/vdms_dialogs/preferences.py:345
 msgid "Log directory"
 msgstr "記錄目錄"
 
+#: videomass/vdms_dialogs/preferences.py:359
 msgid "Advanced"
 msgstr "進階"
 
+#: videomass/vdms_dialogs/preferences.py:365
 msgid ""
 "The following settings affect output messages and the log messages during transcoding processes.\n"
 "Be careful, by changing these settings some functions of the application may not work correctly,\n"
@@ -902,80 +1113,97 @@ msgstr ""
 "請小心，變更這些設定可能會導致應用程式的某些功能無法正常運作，\n"
 "除非您知道自己在做什麼，否則請勿變更。\n"
 
+#: videomass/vdms_dialogs/preferences.py:372
 msgid "Set logging level flags used by FFmpeg"
 msgstr "設定 FFmpeg 使用的記錄層級旗標"
 
+#: videomass/vdms_dialogs/preferences.py:379
 msgid "Set logging level flags used by FFplay"
 msgstr "設定 FFplay 使用的記錄層級旗標"
 
+#: videomass/vdms_dialogs/preferences.py:387
 msgid "FFmpeg logging levels"
 msgstr "FFmpeg 記錄層級"
 
+#: videomass/vdms_dialogs/preferences.py:433
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr "透過指派額外的後綴，您可以避免覆寫檔案"
 
+#: videomass/vdms_dialogs/preferences.py:436
 msgid "Type sudo password here, only for Unix-like operating systems, not for MS Windows"
 msgstr "請在此輸入 sudo 密碼，僅適用於 Unix-like 作業系統，不適用於 MS Windows"
 
+#: videomass/vdms_dialogs/preferences.py:439
 msgid "Preferences"
 msgstr "偏好設定"
 
+#: videomass/vdms_dialogs/preferences.py:592 videomass/vdms_dialogs/preferences.py:672 videomass/vdms_main/main_frame.py:884 videomass/vdms_main/main_frame.py:1066
 msgid "Choose Destination"
 msgstr "選擇目的地"
 
+#: videomass/vdms_dialogs/preferences.py:623
 msgid "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and the underscore (\"_\"). Spaces are not allowed."
-msgstr ""
-"請僅輸入英數字元。您也可以使用連字號 (\"-\") 與底線 (\"_\")。不允許使用空格。"
+msgstr "請僅輸入英數字元。您也可以使用連字號 (\"-\") 與底線 (\"_\")。不允許使用空格。"
 
+#: videomass/vdms_dialogs/preferences.py:638 videomass/vdms_dialogs/setting_profiles.py:257 videomass/vdms_dialogs/setting_profiles.py:264 videomass/vdms_dialogs/setting_profiles.py:286 videomass/vdms_dialogs/setting_profiles.py:309 videomass/vdms_io/io_tools.py:76 videomass/vdms_main/main_frame.py:404 videomass/vdms_main/main_frame.py:426 videomass/vdms_miniframes/timeline.py:400
+#: videomass/vdms_miniframes/timeline.py:405 videomass/vdms_miniframes/timeline.py:492 videomass/vdms_panels/av_conversions.py:614 videomass/vdms_panels/av_conversions.py:621 videomass/vdms_panels/sequence_to_video.py:358 videomass/vdms_panels/video_to_sequence.py:395
 msgid "Videomass - Warning!"
 msgstr "Videomass - 警告！"
 
+#: videomass/vdms_dialogs/preferences.py:727 videomass/vdms_dialogs/preferences.py:767 videomass/vdms_dialogs/preferences.py:807 videomass/vdms_dialogs/wizard_dlg.py:365 videomass/vdms_dialogs/wizard_dlg.py:384 videomass/vdms_dialogs/wizard_dlg.py:403
 #, python-brace-format
 msgid "{} location"
 msgstr "{} 位置"
 
+#: videomass/vdms_dialogs/queue_edit.py:36 videomass/vdms_dialogs/setting_profiles.py:38
 msgid "One-Pass, Do not start with `ffmpeg -i filename`; do not end with `output-filename`"
-msgstr ""
-"單次行程 (One-Pass)，請勿以 `ffmpeg -i filename` 開頭；請勿以 `output-"
-"filename` 結尾"
+msgstr "單次行程 (One-Pass)，請勿以 `ffmpeg -i filename` 開頭；請勿以 `output-filename` 結尾"
 
+#: videomass/vdms_dialogs/queue_edit.py:40 videomass/vdms_dialogs/setting_profiles.py:42
 msgid "Two-Pass (optional), Do not start with `ffmpeg -i filename`; do not end with `output-filename`"
-msgstr ""
-"二次行程 (Two-Pass) (選用)，請勿以 `ffmpeg -i filename` 開頭；請勿以 `output-"
-"filename` 結尾"
+msgstr "二次行程 (Two-Pass) (選用)，請勿以 `ffmpeg -i filename` 開頭；請勿以 `output-filename` 結尾"
 
+#: videomass/vdms_dialogs/queue_edit.py:59
 msgid "Videomass - Edit the selected item in the queue"
 msgstr "Videomass - 編輯佇列中選取的項目"
 
+#: videomass/vdms_dialogs/queue_edit.py:71 videomass/vdms_dialogs/setting_profiles.py:92
 msgid "Pre-input arguments for One-Pass (optional)"
 msgstr "單次行程的預輸入引數 (選用)"
 
+#: videomass/vdms_dialogs/queue_edit.py:82 videomass/vdms_dialogs/setting_profiles.py:151 videomass/vdms_panels/presets_manager.py:244
 msgid "FFmpeg arguments for one-pass encoding"
 msgstr "單次行程編碼的 FFmpeg 引數"
 
+#: videomass/vdms_dialogs/queue_edit.py:88 videomass/vdms_dialogs/setting_profiles.py:158 videomass/vdms_panels/presets_manager.py:248
 msgid "Any optional arguments to add before input file on the one-pass encoding, e.g required names of some hardware accelerations like -hwaccel to use with CUDA."
 msgstr "在單次行程編碼的輸入檔案前加入任何選用引數，例如使用 CUDA 時所需的一些硬體加速名稱，如 -hwaccel。"
 
+#: videomass/vdms_dialogs/queue_edit.py:102 videomass/vdms_dialogs/setting_profiles.py:98
 msgid "Pre-input arguments for Two-Pass (optional)"
 msgstr "二次行程的預輸入引數 (選用)"
 
+#: videomass/vdms_dialogs/queue_edit.py:113 videomass/vdms_dialogs/setting_profiles.py:152 videomass/vdms_panels/presets_manager.py:246
 msgid "FFmpeg arguments for two-pass encoding"
 msgstr "二次行程編碼的 FFmpeg 引數"
 
+#: videomass/vdms_dialogs/queue_edit.py:120 videomass/vdms_dialogs/setting_profiles.py:162 videomass/vdms_panels/presets_manager.py:252
 msgid "Any optional arguments to add before input file on the two-pass encoding, e.g required names of some hardware accelerations like -hwaccel to use with CUDA."
-msgstr ""
-"在二次行程編碼的輸入檔案前加入任何選用引數，例如使用 CUDA 時所需的一些硬體加"
-"速名稱，如 -hwaccel。"
+msgstr "在二次行程編碼的輸入檔案前加入任何選用引數，例如使用 CUDA 時所需的一些硬體加速名稱，如 -hwaccel。"
 
+#: videomass/vdms_dialogs/queuedlg.py:65 videomass/vdms_main/main_frame.py:513 videomass/vdms_panels/presets_manager.py:178 videomass/vdms_panels/video_to_sequence.py:167
 msgid "Edit"
 msgstr "編輯"
 
+#: videomass/vdms_dialogs/queuedlg.py:68
 msgid "Remove"
 msgstr "移除"
 
+#: videomass/vdms_dialogs/queuedlg.py:71
 msgid "Remove all"
 msgstr "全部移除"
 
+#: videomass/vdms_dialogs/queuedlg.py:74
 msgid ""
 "Export\n"
 "queue file"
@@ -983,6 +1211,7 @@ msgstr ""
 "匯出\n"
 "佇列檔案"
 
+#: videomass/vdms_dialogs/queuedlg.py:77
 msgid ""
 "Import\n"
 "queue file"
@@ -990,21 +1219,27 @@ msgstr ""
 "匯入\n"
 "佇列檔案"
 
+#: videomass/vdms_dialogs/queuedlg.py:85 videomass/vdms_panels/filedrop.py:273
 msgid "Destination file name"
 msgstr "目的地檔案名稱"
 
+#: videomass/vdms_dialogs/queuedlg.py:137
 msgid "Remove all items in the queue"
 msgstr "移除佇列中的所有項目"
 
+#: videomass/vdms_dialogs/queuedlg.py:151
 msgid "Videomass - Queue"
 msgstr "Videomass - 佇列"
 
+#: videomass/vdms_dialogs/queuedlg.py:228
 msgid "Export queue file"
 msgstr "匯出佇列檔案"
 
+#: videomass/vdms_dialogs/queuedlg.py:296 videomass/vdms_panels/av_conversions.py:1208 videomass/vdms_panels/presets_manager.py:1033 videomass/vdms_panels/video_to_sequence.py:596
 msgid "Same as source"
 msgstr "與來源相同"
 
+#: videomass/vdms_dialogs/queuedlg.py:301
 msgid ""
 "Source\n"
 "File destination\n"
@@ -1022,54 +1257,71 @@ msgstr ""
 "片段開始\n"
 "剪輯持續時間"
 
+#: videomass/vdms_dialogs/renamer.py:76
 msgid "# will be replaced by ascending numbers starting with:"
 msgstr "# 將會被替換為遞增數字，起始於："
 
+#: videomass/vdms_dialogs/set_timestamp.py:94
 msgid "Font Color"
 msgstr "字型顏色"
 
+#: videomass/vdms_dialogs/set_timestamp.py:104
 msgid "Shadow Color"
 msgstr "陰影顏色"
 
+#: videomass/vdms_dialogs/set_timestamp.py:115
 msgid "Show text box"
 msgstr "顯示文字方塊"
 
+#: videomass/vdms_dialogs/set_timestamp.py:119
 msgid "Box Color"
 msgstr "方塊顏色"
 
+#: videomass/vdms_dialogs/set_timestamp.py:138 videomass/vdms_main/main_frame.py:564
 msgid "Timestamp settings"
 msgstr "時間戳記設定"
 
+#: videomass/vdms_dialogs/setting_profiles.py:46
 msgid "Supported Formats list (optional). Do not include the `.`"
 msgstr "支援的格式清單 (選用)。請勿包含 `.`"
 
+#: videomass/vdms_dialogs/setting_profiles.py:47
 msgid "Output Format. Empty to copy format and codec. Do not include the `.`"
 msgstr "輸出格式。留空以複製格式與編解碼器。請勿包含 `.`"
 
+#: videomass/vdms_dialogs/setting_profiles.py:70
 msgid "Profile Name"
 msgstr "設定檔名稱"
 
+#: videomass/vdms_dialogs/setting_profiles.py:74 videomass/vdms_panels/presets_manager.py:393
 msgid "Description"
 msgstr "描述"
 
+#: videomass/vdms_dialogs/setting_profiles.py:149
 msgid "A short profile name"
 msgstr "簡短的設定檔名稱"
 
+#: videomass/vdms_dialogs/setting_profiles.py:150
 msgid "A long description of the profile"
 msgstr "設定檔的詳細描述"
 
+#: videomass/vdms_dialogs/setting_profiles.py:153
 msgid "One or more comma-separated format names compatible with this profile"
 msgstr "一個或多個與此設定檔相容的格式名稱 (以逗號分隔)"
 
+#: videomass/vdms_dialogs/setting_profiles.py:155
 msgid "Output format extension. Leave empty to copy codec and format"
 msgstr "輸出格式副檔名。留空以複製編解碼器與格式"
 
+#: videomass/vdms_dialogs/setting_profiles.py:256
 msgid "Incomplete profile assignments"
 msgstr "不完整的設定檔指派"
 
+#: videomass/vdms_dialogs/setting_profiles.py:263
 msgid "Formats must be comma-separated"
 msgstr "格式必須以逗號分隔"
 
+#: videomass/vdms_dialogs/setting_profiles.py:279 videomass/vdms_utils/queue_utils.py:80
 #, python-brace-format
 msgid ""
 "ERROR: Keys mismatched for requested data.\n"
@@ -1078,69 +1330,92 @@ msgstr ""
 "錯誤：請求資料的鍵值不符。\n"
 "無效檔案：«{0}»"
 
+#: videomass/vdms_dialogs/setting_profiles.py:285 videomass/vdms_dialogs/setting_profiles.py:308
 msgid "Profile already stored with same name"
 msgstr "已儲存相同名稱的設定檔"
 
+#: videomass/vdms_dialogs/setting_profiles.py:293
 msgid "Profile stored successfully!"
 msgstr "設定檔儲存成功！"
 
+#: videomass/vdms_dialogs/setting_profiles.py:311
 msgid "Profile change successful!"
 msgstr "設定檔變更成功！"
 
+#: videomass/vdms_dialogs/showlogs.py:73
 msgid "Log file list"
 msgstr "記錄檔清單"
 
+#: videomass/vdms_dialogs/showlogs.py:75 videomass/vdms_dialogs/showlogs.py:109
 msgid "Log messages"
 msgstr "記錄訊息"
 
+#: videomass/vdms_dialogs/showlogs.py:98
 msgid "Refresh log messages"
 msgstr "重新整理記錄訊息"
 
+#: videomass/vdms_dialogs/showlogs.py:100
 msgid "Clear log messages"
 msgstr "清除記錄訊息"
 
+#: videomass/vdms_dialogs/showlogs.py:160
 msgid "Select a log file"
 msgstr "選取記錄檔"
 
+#: videomass/vdms_dialogs/showlogs.py:167
 msgid "Are you sure you want to clear the selected log file?"
 msgstr "您確定要清除選取的記錄檔嗎？"
 
+#: videomass/vdms_dialogs/showlogs.py:168 videomass/vdms_dialogs/wizard_dlg.py:251 videomass/vdms_io/checkup.py:68 videomass/vdms_main/main_frame.py:205 videomass/vdms_main/main_frame.py:803 videomass/vdms_main/main_frame.py:1677 videomass/vdms_panels/presets_manager.py:338 videomass/vdms_panels/presets_manager.py:539 videomass/vdms_panels/presets_manager.py:579
+#: videomass/vdms_panels/presets_manager.py:638 videomass/vdms_panels/presets_manager.py:673 videomass/vdms_panels/presets_manager.py:738 videomass/vdms_panels/presets_manager.py:764 videomass/vdms_panels/presets_manager.py:863 videomass/vdms_panels/presets_manager.py:893
 msgid "Please confirm"
 msgstr "請確認"
 
+#: videomass/vdms_dialogs/shownormlist.py:83
 msgid "File name"
 msgstr "檔案名稱"
 
+#: videomass/vdms_dialogs/shownormlist.py:84
 msgid "Max volume dBFS"
 msgstr "最大音量 dBFS"
 
+#: videomass/vdms_dialogs/shownormlist.py:85
 msgid "Mean volume dBFS"
 msgstr "平均音量 dBFS"
 
+#: videomass/vdms_dialogs/shownormlist.py:86
 msgid "Offset dBFS"
 msgstr "偏移 dBFS"
 
+#: videomass/vdms_dialogs/shownormlist.py:87
 msgid "Result dBFS"
 msgstr "結果 dBFS"
 
+#: videomass/vdms_dialogs/shownormlist.py:92
 msgid "Post-normalization references:"
 msgstr "正規化後參考："
 
+#: videomass/vdms_dialogs/shownormlist.py:102
 msgid "=  Clipped peaks"
 msgstr "=  截斷峰值"
 
+#: videomass/vdms_dialogs/shownormlist.py:111
 msgid "=  No changes"
 msgstr "=  無變更"
 
+#: videomass/vdms_dialogs/shownormlist.py:121
 msgid "=  Below max peak"
 msgstr "=  低於最大峰值"
 
+#: videomass/vdms_dialogs/shownormlist.py:166 videomass/vdms_panels/audio_encoders/acodecs.py:845
 msgid "RMS-based volume statistics"
 msgstr "基於 RMS 的音量統計"
 
+#: videomass/vdms_dialogs/shownormlist.py:191 videomass/vdms_panels/audio_encoders/acodecs.py:843
 msgid "PEAK-based volume statistics"
 msgstr "基於 PEAK 的音量統計"
 
+#: videomass/vdms_dialogs/shownormlist.py:216
 msgid ""
 "...It means the resulting audio will be clipped,\n"
 "because its volume is higher than the maximum 0 db\n"
@@ -1152,6 +1427,7 @@ msgstr ""
 "等級。這會導致資料遺失，且音訊\n"
 "聽起來可能會失真。"
 
+#: videomass/vdms_dialogs/shownormlist.py:242
 msgid ""
 "...It means the resulting audio will not change,\n"
 "because it's equal to the source."
@@ -1159,6 +1435,7 @@ msgstr ""
 "...這表示產生的音訊將不會改變，\n"
 "因為它與來源相同。"
 
+#: videomass/vdms_dialogs/shownormlist.py:266
 msgid ""
 "...It means an audio signal will be produced with\n"
 "a lower volume than the source."
@@ -1166,12 +1443,15 @@ msgstr ""
 "...這表示產生的音訊訊號\n"
 "音量將低於來源。"
 
+#: videomass/vdms_dialogs/videomass_check_version.py:63
 msgid "Get Latest Version"
 msgstr "取得最新版本"
 
+#: videomass/vdms_dialogs/videomass_check_version.py:67
 msgid "Checking for newer version"
 msgstr "正在檢查是否有較新版本"
 
+#: videomass/vdms_dialogs/videomass_check_version.py:95
 msgid ""
 "\n"
 "\n"
@@ -1181,6 +1461,7 @@ msgstr ""
 "\n"
 "新版本修正了錯誤並提供新功能。"
 
+#: videomass/vdms_dialogs/videomass_check_version.py:96
 #, python-brace-format
 msgid ""
 "\n"
@@ -1193,6 +1474,7 @@ msgstr ""
 "這是 Videomass v.{0}\n"
 "\n"
 
+#: videomass/vdms_dialogs/while_playing.py:37
 msgid ""
 "q, ESC\n"
 "f\n"
@@ -1234,27 +1516,35 @@ msgstr ""
 "按滑鼠右鍵\n"
 "按兩下滑鼠左鍵"
 
+#: videomass/vdms_dialogs/while_playing.py:92
 msgid "Shortcut keys while playing with FFplay"
 msgstr "使用 FFplay 播放時的快速鍵"
 
+#: videomass/vdms_dialogs/widget_utils.py:129 videomass/vdms_main/main_frame.py:1318
 msgid "Stop"
 msgstr "停止"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:63
 msgid "Please take a moment to set up the application"
 msgstr "請花一點時間設定應用程式"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:64
 msgid "Click the \"Next\" button to get started"
 msgstr "按一下 [下一步] 按鈕以開始"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:79
 msgid "Welcome to the Videomass Wizard!"
 msgstr "歡迎使用 Videomass 精靈！"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:123
 msgid "Videomass is an application based on FFmpeg\n"
 msgstr "Videomass 是一個基於 FFmpeg 的應用程式\n"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:125
 msgid "If FFmpeg is not on your computer, this application will be unusable"
 msgstr "如果您的電腦上沒有 FFmpeg，此應用程式將無法使用"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:128
 msgid ""
 "If you have already installed FFmpeg on your operating system,\n"
 "click the \"Auto-detection\" button."
@@ -1262,6 +1552,7 @@ msgstr ""
 "如果您已經在作業系統上安裝 FFmpeg，\n"
 "請按一下 [自動偵測] 按鈕。"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:131
 msgid ""
 "If you want to use a version of FFmpeg located on your filesystem\n"
 "but not installed on your operating system,\n"
@@ -1271,19 +1562,24 @@ msgstr ""
 "但未安裝在作業系統上的 FFmpeg 版本，\n"
 "請按一下 [定位] 按鈕。"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:162
 msgid "Auto-detection"
 msgstr "自動偵測"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:164
 msgid "Locate"
 msgstr "定位"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:214
 msgid "Click the \"Next\" button"
 msgstr "按一下 [下一步] 按鈕"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:235
 #, python-brace-format
 msgid "'{}' is not installed on your computer. Install it or indicate another location by clicking the 'Locate' button."
 msgstr "您的電腦上未安裝 '{}'。請安裝它，或按一下 [定位] 按鈕指定其他位置。"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:249
 msgid ""
 "Videomass already seems to include FFmpeg.\n"
 "\n"
@@ -1293,9 +1589,11 @@ msgstr ""
 "\n"
 "您要使用它嗎？"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:275
 msgid "Locating FFmpeg executables\n"
 msgstr "正在定位 FFmpeg 執行檔\n"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:277
 msgid ""
 "\"ffmpeg\", \"ffprobe\" and \"ffplay\" are required. Complete all\n"
 "the text boxes below by clicking on the respective buttons."
@@ -1303,30 +1601,39 @@ msgstr ""
 "需要 \"ffmpeg\"、\"ffprobe\" 與 \"ffplay\"。請按一下\n"
 "各自的按鈕以完成下方所有文字方塊。"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:437
 msgid "Wizard completed successfully!\n"
 msgstr "精靈已成功完成！\n"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:438
 msgid "Remember that you can always change these settings later, through the Preferences dialog."
 msgstr "請記住，您隨時可以稍後透過偏好設定對話方塊變更這些設定。"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:440
 msgid "Thank You!"
 msgstr "謝謝您！"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:441
 msgid "To exit click the \"Finish\" button"
 msgstr "若要退出，請按一下 [完成] 按鈕"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:527
 msgid "< Previous"
 msgstr "< 上一步"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:530 videomass/vdms_dialogs/wizard_dlg.py:613
 msgid "Next >"
 msgstr "下一步 >"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:535
 msgid "Videomass Wizard"
 msgstr "Videomass 精靈"
 
+#: videomass/vdms_dialogs/wizard_dlg.py:563 videomass/vdms_dialogs/wizard_dlg.py:586 videomass/vdms_dialogs/wizard_dlg.py:591
 msgid "Finish"
 msgstr "完成"
 
+#: videomass/vdms_io/checkup.py:44 videomass/vdms_io/checkup.py:92
 #, python-brace-format
 msgid ""
 "Output folder does not exist:\n"
@@ -1337,25 +1644,32 @@ msgstr ""
 "\n"
 "\"{}\"\n"
 
+#: videomass/vdms_io/checkup.py:65
 msgid "Files already exist, do you want to overwrite them?"
 msgstr "檔案已存在，您要覆寫它們嗎？"
 
+#: videomass/vdms_io/checkup.py:67
 msgid "Already exist"
 msgstr "已存在"
 
+#: videomass/vdms_io/checkup.py:81
 msgid "Not found"
 msgstr "找不到"
 
+#: videomass/vdms_io/checkup.py:82 videomass/vdms_panels/filedrop.py:196
 msgid "Error list"
 msgstr "錯誤清單"
 
+#: videomass/vdms_io/checkup.py:83
 msgid "File(s) not found"
 msgstr "找不到檔案"
 
+#: videomass/vdms_io/io_tools.py:69
 #, python-brace-format
 msgid "Please, see «{0}» file for details."
 msgstr "請參閱 «{0}» 檔案以取得詳細資料。"
 
+#: videomass/vdms_io/io_tools.py:107
 msgid ""
 "Wait....\n"
 "Audio peak analysis."
@@ -1363,12 +1677,15 @@ msgstr ""
 "請稍候....\n"
 "音訊峰值分析。"
 
+#: videomass/vdms_io/io_tools.py:222
 msgid "Videomass - Downloading..."
 msgstr "Videomass - 正在下載..."
 
+#: videomass/vdms_main/main_frame.py:186 videomass/vdms_main/main_frame.py:1401 videomass/vdms_main/main_frame.py:1433
 msgid "Ready"
 msgstr "就緒"
 
+#: videomass/vdms_main/main_frame.py:203
 msgid ""
 "Not all items in the queue were completed.\n"
 "\n"
@@ -1378,256 +1695,340 @@ msgstr ""
 "\n"
 "您要將它們保留在佇列中嗎？"
 
+#: videomass/vdms_main/main_frame.py:224
 #, python-brace-format
 msgid "Queue ({0})"
 msgstr "佇列 ({0})"
 
+#: videomass/vdms_main/main_frame.py:229 videomass/vdms_main/main_frame.py:1326
 msgid "Queue"
 msgstr "佇列"
 
+#: videomass/vdms_main/main_frame.py:401 videomass/vdms_main/main_frame.py:423
 msgid "There are still active windows with running processes, make sure you finish your work before exit."
 msgstr "仍有包含執行中程序的活動視窗，請確保在退出前完成您的工作。"
 
+#: videomass/vdms_main/main_frame.py:408
 msgid "Are you sure you want to exit the application?"
 msgstr "您確定要退出應用程式嗎？"
 
+#: videomass/vdms_main/main_frame.py:410
 msgid "Exit"
 msgstr "退出"
 
+#: videomass/vdms_main/main_frame.py:468
 msgid "Import files\tCtrl+O"
 msgstr "匯入檔案 (&O)\tCtrl+O"
 
+#: videomass/vdms_main/main_frame.py:471
 msgid "Open destination folder of encodings\tCtrl+D"
 msgstr "開啟編碼目的地資料夾 (&D)\tCtrl+D"
 
+#: videomass/vdms_main/main_frame.py:474
 msgid "Load queue file"
 msgstr "載入佇列檔案 (&L)"
 
+#: videomass/vdms_main/main_frame.py:475
 msgid "Load a previously exported queue file"
 msgstr "載入先前匯出的佇列檔案"
 
+#: videomass/vdms_main/main_frame.py:478
 msgid "Open trash"
 msgstr "開啟垃圾桶 (&T)"
 
+#: videomass/vdms_main/main_frame.py:479
 msgid "Open the Videomass trash folder"
 msgstr "開啟 Videomass 垃圾桶資料夾"
 
+#: videomass/vdms_main/main_frame.py:481
 msgid "Empty trash"
 msgstr "清空垃圾桶 (&E)"
 
+#: videomass/vdms_main/main_frame.py:482
 msgid "Delete all files in the Videomass trash folder"
 msgstr "刪除 Videomass 垃圾桶資料夾中的所有檔案"
 
+#: videomass/vdms_main/main_frame.py:485
 msgid "Exit\tCtrl+Q"
 msgstr "退出 (&Q)\tCtrl+Q"
 
+#: videomass/vdms_main/main_frame.py:486
 msgid "Completely exit the application"
 msgstr "完全退出應用程式"
 
+#: videomass/vdms_main/main_frame.py:487
 msgid "File"
 msgstr "檔案 (&F)"
 
+#: videomass/vdms_main/main_frame.py:491 videomass/vdms_panels/filedrop.py:340 videomass/vdms_panels/filedrop.py:381
 msgid "Rename selected file\tCtrl+R"
 msgstr "重新命名選取的檔案 (&R)\tCtrl+R"
 
+#: videomass/vdms_main/main_frame.py:492
 msgid "Rename the destination of the selected file"
 msgstr "重新命名選取檔案的目的地"
 
+#: videomass/vdms_main/main_frame.py:495 videomass/vdms_panels/filedrop.py:341 videomass/vdms_panels/filedrop.py:384
 msgid "Batch rename files\tCtrl+B"
 msgstr "批次重新命名檔案 (&B)\tCtrl+B"
 
+#: videomass/vdms_main/main_frame.py:496
 msgid "Numerically renames the destination of all items in the list"
 msgstr "以數字重新命名清單中所有項目的目的地"
 
+#: videomass/vdms_main/main_frame.py:501 videomass/vdms_panels/filedrop.py:343 videomass/vdms_panels/filedrop.py:388
 msgid "Remove selected entry\tDEL"
 msgstr "移除選取的項目\tDEL"
 
+#: videomass/vdms_main/main_frame.py:502
 msgid "Remove the selected file from the list"
 msgstr "從清單中移除選取的檔案"
 
+#: videomass/vdms_main/main_frame.py:505 videomass/vdms_panels/filedrop.py:344 videomass/vdms_panels/filedrop.py:391
 msgid "Clear list\tShift+DEL"
 msgstr "清除清單\tShift+DEL"
 
+#: videomass/vdms_main/main_frame.py:506
 msgid "Clear the file list"
 msgstr "清除檔案清單"
 
+#: videomass/vdms_main/main_frame.py:511
 msgid "Preferences\tCtrl+P"
 msgstr "偏好設定 (&P)\tCtrl+P"
 
+#: videomass/vdms_main/main_frame.py:512
 msgid "Application preferences"
 msgstr "應用程式偏好設定"
 
+#: videomass/vdms_main/main_frame.py:517
 msgid "Find FFmpeg topics"
 msgstr "尋找 FFmpeg 主題 (&F)"
 
+#: videomass/vdms_main/main_frame.py:518
 msgid "A useful tool to search for FFmpeg help topics and options"
 msgstr "搜尋 FFmpeg 說明主題與選項的實用工具"
 
+#: videomass/vdms_main/main_frame.py:523
 msgid "Check for preset updates"
 msgstr "檢查預設設定更新 (&C)"
 
+#: videomass/vdms_main/main_frame.py:524
 #, python-brace-format
 msgid "Check for new presets updates from {0}"
 msgstr "從 {0} 檢查新的預設設定更新"
 
+#: videomass/vdms_main/main_frame.py:526
 msgid "Get latest presets"
 msgstr "取得最新預設設定 (&G)"
 
+#: videomass/vdms_main/main_frame.py:527
 #, python-brace-format
 msgid "Get the latest presets from {0}"
 msgstr "從 {0} 取得最新預設設定"
 
+#: videomass/vdms_main/main_frame.py:530
 msgid "Work notes\tCtrl+N"
 msgstr "工作筆記 (&N)\tCtrl+N"
 
+#: videomass/vdms_main/main_frame.py:531
 msgid "Read and write useful notes and reminders."
 msgstr "讀取與寫入實用的筆記與提醒。"
 
+#: videomass/vdms_main/main_frame.py:533
 msgid "Tools"
 msgstr "工具 (&T)"
 
+#: videomass/vdms_main/main_frame.py:540
 msgid "Show FFmpeg's built-in configuration capabilities"
 msgstr "顯示 FFmpeg 的內建設定功能"
 
+#: videomass/vdms_main/main_frame.py:544
 msgid "Muxers and demuxers available on your version of FFmpeg"
 msgstr "您 FFmpeg 版本上可用的多工器與解多工器"
 
+#: videomass/vdms_main/main_frame.py:548
 msgid "Encoders available on your version of FFmpeg"
 msgstr "您 FFmpeg 版本上可用的編碼器"
 
+#: videomass/vdms_main/main_frame.py:551
 msgid "Decoders available on your version of FFmpeg"
 msgstr "您 FFmpeg 版本上可用的解碼器"
 
+#: videomass/vdms_main/main_frame.py:555
 msgid "Enable timestamps on playback"
 msgstr "播放時啟用時間戳記 (&E)"
 
+#: videomass/vdms_main/main_frame.py:556
 msgid "Displays timestamp when playing media with FFplay"
 msgstr "使用 FFplay 播放媒體時顯示時間戳記"
 
+#: videomass/vdms_main/main_frame.py:559
 msgid "Auto-exit after playback"
 msgstr "播放後自動退出 (&A)"
 
+#: videomass/vdms_main/main_frame.py:560
 msgid "If checked, the FFplay window will auto-close when playback is complete"
 msgstr "若勾選，FFplay 視窗將在播放完成時自動關閉"
 
+#: videomass/vdms_main/main_frame.py:564
 msgid "Customize the timestamp style"
 msgstr "自訂時間戳記樣式"
 
+#: videomass/vdms_main/main_frame.py:567
 msgid "While playing..."
 msgstr "播放時...(&W)"
 
+#: videomass/vdms_main/main_frame.py:568
 msgid "Show useful shortcut keys when playing or previewing using FFplay"
 msgstr "顯示使用 FFplay 播放或預覽時的實用快速鍵"
 
+#: videomass/vdms_main/main_frame.py:572
 msgid "Show timeline editor\tCtrl+T"
 msgstr "顯示時間軸編輯器 (&T)\tCtrl+T"
 
+#: videomass/vdms_main/main_frame.py:573
 msgid "Set duration or trim slices of time to remove unwanted parts from your files"
 msgstr "設定持續時間或修剪時間片段，以移除檔案中不需要的部分"
 
+#: videomass/vdms_main/main_frame.py:577
 msgid "View"
 msgstr "檢視 (&V)"
 
+#: videomass/vdms_main/main_frame.py:584
 msgid "Home panel\tCtrl+Shift+H"
 msgstr "首頁面板 (&H)\tCtrl+Shift+H"
 
+#: videomass/vdms_main/main_frame.py:585
 msgid "Go to the «Home» panel"
 msgstr "前往 «首頁» 面板"
 
+#: videomass/vdms_main/main_frame.py:588
 msgid "Presets Manager\tCtrl+Shift+P"
 msgstr "預設設定管理員 (&P)\tCtrl+Shift+P"
 
+#: videomass/vdms_main/main_frame.py:589
 msgid "Go to the «Presets Manager» panel"
 msgstr "前往 «預設設定管理員» 面板"
 
+#: videomass/vdms_main/main_frame.py:591
 msgid "A/V Conversions\tCtrl+Shift+V"
 msgstr "影音轉換 (&V)\tCtrl+Shift+V"
 
+#: videomass/vdms_main/main_frame.py:592
 msgid "Go to the «A/V Conversions» panel"
 msgstr "前往 «影音轉換» 面板"
 
+#: videomass/vdms_main/main_frame.py:594
 msgid "Concatenate Demuxer\tCtrl+Shift+D"
 msgstr "串接解多工器 (&D)\tCtrl+Shift+D"
 
+#: videomass/vdms_main/main_frame.py:595
 msgid "Go to the «Concatenate Demuxer» panel"
 msgstr "前往 «串接解多工器» 面板"
 
+#: videomass/vdms_main/main_frame.py:598
 msgid "Still Image Maker\tCtrl+Shift+I"
 msgstr "靜態影像製作器 (&I)\tCtrl+Shift+I"
 
+#: videomass/vdms_main/main_frame.py:599
 msgid "Go to the «Still Image Maker» panel"
 msgstr "前往 «靜態影像製作器» 面板"
 
+#: videomass/vdms_main/main_frame.py:601
 msgid "From Movie to Pictures\tCtrl+Shift+S"
 msgstr "從影片轉圖片 (&S)\tCtrl+Shift+S"
 
+#: videomass/vdms_main/main_frame.py:602
 msgid "Go to the «From Movie to Pictures» panel"
 msgstr "前往 «從影片轉圖片» 面板"
 
+#: videomass/vdms_main/main_frame.py:605
 msgid "Output monitor\tCtrl+Shift+O"
 msgstr "輸出監控 (&O)\tCtrl+Shift+O"
 
+#: videomass/vdms_main/main_frame.py:606
 msgid "Keeps track of the output for debugging errors"
 msgstr "追蹤輸出以偵錯"
 
+#: videomass/vdms_main/main_frame.py:608
 msgid "Go"
 msgstr "前往 (&G)"
 
+#: videomass/vdms_main/main_frame.py:612
 msgid "User guide"
 msgstr "使用者指南 (&U)"
 
+#: videomass/vdms_main/main_frame.py:616
 msgid "System version"
 msgstr "系統版本 (&S)"
 
+#: videomass/vdms_main/main_frame.py:617
 msgid "Get version about your operating system, version of Python and wxPython."
 msgstr "取得您的作業系統、Python 與 wxPython 的版本。"
 
+#: videomass/vdms_main/main_frame.py:621
 msgid "Show log files\tCtrl+L"
 msgstr "顯示記錄檔 (&L)\tCtrl+L"
 
+#: videomass/vdms_main/main_frame.py:622
 msgid "Viewing log messages"
 msgstr "檢視記錄訊息"
 
+#: videomass/vdms_main/main_frame.py:625
 msgid "Issue tracker"
 msgstr "問題追蹤器 (&I)"
 
+#: videomass/vdms_main/main_frame.py:629
 msgid "Contribute to the project"
 msgstr "貢獻至專案"
 
+#: videomass/vdms_main/main_frame.py:632
 msgid "Sponsor this project"
 msgstr "贊助此專案 (&S)"
 
+#: videomass/vdms_main/main_frame.py:633
 msgid "Become a developer supporter"
 msgstr "成為開發者的支持者"
 
-msgid "Donate"
+#: videomass/vdms_main/main_frame.py:634
+#, fuzzy
+msgid "Donate now ❤️"
 msgstr "捐款 (&D)"
 
-msgid "Donate to the app developer"
-msgstr "捐款給應用程式開發者"
+#: videomass/vdms_main/main_frame.py:635
+#, fuzzy
+msgid "Donate to the Videomass project."
+msgstr "貢獻至專案"
 
+#: videomass/vdms_main/main_frame.py:639
 msgid "Other projects by the developer"
 msgstr "開發者的其他專案 (&O)"
 
+#: videomass/vdms_main/main_frame.py:655
 msgid "About Videomass"
 msgstr "關於 Videomass(&A)"
 
+#: videomass/vdms_main/main_frame.py:656
 msgid "Check for newer version"
 msgstr "檢查是否有較新版本 (&C)"
 
+#: videomass/vdms_main/main_frame.py:657
 msgid "Check for the latest Videomass version"
 msgstr "檢查最新的 Videomass 版本"
 
+#: videomass/vdms_main/main_frame.py:659
 msgid "Help"
 msgstr "說明 (&H)"
 
+#: videomass/vdms_main/main_frame.py:734
 msgid "Import files"
 msgstr "匯入檔案"
 
+#: videomass/vdms_main/main_frame.py:757
 msgid "No default folder has been set for the destination of the encodings. The current setting is \"Same destination paths as source files\"."
-msgstr ""
-"尚未設定編碼目的地的預設資料夾。目前的設定是「與來源檔案相同的目的地路徑」。"
+msgstr "尚未設定編碼目的地的預設資料夾。目前的設定是「與來源檔案相同的目的地路徑」。"
 
+#: videomass/vdms_main/main_frame.py:789 videomass/vdms_main/main_frame.py:814
 #, python-brace-format
 msgid ""
 "'{}':\n"
@@ -1636,9 +2037,11 @@ msgstr ""
 "'{}'：\n"
 "沒有此檔案或目錄"
 
+#: videomass/vdms_main/main_frame.py:802
 msgid "Are you sure to empty trash folder?"
 msgstr "您確定要清空垃圾桶資料夾嗎？"
 
+#: videomass/vdms_main/main_frame.py:810
 #, python-brace-format
 msgid ""
 "'{}':\n"
@@ -1647,14 +2050,17 @@ msgstr ""
 "'{}'：\n"
 "沒有要刪除的檔案。"
 
+#: videomass/vdms_main/main_frame.py:867
 #, python-brace-format
 msgid "Installed release v{0}. A new presets release is available {1}"
 msgstr "已安裝版本 v{0}。有新的預設設定版本可用 {1}"
 
+#: videomass/vdms_main/main_frame.py:871
 #, python-brace-format
 msgid "Installed release v{0}. No new updates found."
 msgstr "已安裝版本 v{0}。找不到新的更新。"
 
+#: videomass/vdms_main/main_frame.py:901
 msgid ""
 "Wait....\n"
 "The archive is being downloaded"
@@ -1662,13 +2068,16 @@ msgstr ""
 "請稍候....\n"
 "正在下載封存檔"
 
+#: videomass/vdms_main/main_frame.py:913
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "成功下載至 \"{0}\""
 
+#: videomass/vdms_main/main_frame.py:1126
 msgid "Some changes require restarting the application."
 msgstr "某些變更需要重新啟動應用程式。"
 
+#: videomass/vdms_main/main_frame.py:1132
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -1679,82 +2088,108 @@ msgstr ""
 "\n"
 "您要立即重新啟動應用程式嗎？"
 
+#: videomass/vdms_main/main_frame.py:1134
 msgid "Restart Videomass?"
 msgstr "重新啟動 Videomass？"
 
+#: videomass/vdms_main/main_frame.py:1213
 #, python-brace-format
 msgid "A new release is available - v.{0}\n"
 msgstr "有新版本可用 - v.{0}\n"
 
+#: videomass/vdms_main/main_frame.py:1216
 msgid "You are using a development version that has not yet been released!\n"
 msgstr "您正在使用尚未釋出的開發版本！\n"
 
+#: videomass/vdms_main/main_frame.py:1219
 msgid "Congratulation! You are already using the latest version.\n"
 msgstr "恭喜！您已經在使用最新版本。\n"
 
+#: videomass/vdms_main/main_frame.py:1293
 msgid "Previous panel"
 msgstr "上一個面板"
 
+#: videomass/vdms_main/main_frame.py:1294
 msgid "Back"
 msgstr "上一步"
 
+#: videomass/vdms_main/main_frame.py:1297
 msgid "Next panel"
 msgstr "下一個面板"
 
+#: videomass/vdms_main/main_frame.py:1298
 msgid "Next"
 msgstr "下一步"
 
+#: videomass/vdms_main/main_frame.py:1301
 msgid "Home panel"
 msgstr "首頁面板"
 
+#: videomass/vdms_main/main_frame.py:1302
 msgid "Home"
 msgstr "首頁"
 
+#: videomass/vdms_main/main_frame.py:1305
 msgid "Play the selected input file"
 msgstr "播放選取的輸入檔案"
 
+#: videomass/vdms_main/main_frame.py:1306
 msgid "Play"
 msgstr "播放"
 
+#: videomass/vdms_main/main_frame.py:1309
 msgid "Get informative data about imported media streams"
 msgstr "取得關於匯入媒體串流的資訊資料"
 
+#: videomass/vdms_main/main_frame.py:1313
 msgid "Start batch processing"
 msgstr "開始批次處理"
 
+#: videomass/vdms_main/main_frame.py:1317
 msgid "Stops current process"
 msgstr "停止目前程序"
 
+#: videomass/vdms_main/main_frame.py:1321
 msgid "Add an item to Queue"
 msgstr "新增項目至佇列"
 
+#: videomass/vdms_main/main_frame.py:1322
 msgid "Add to Queue"
 msgstr "加入佇列"
 
+#: videomass/vdms_main/main_frame.py:1325
 msgid "Show queue"
 msgstr "顯示佇列"
 
+#: videomass/vdms_main/main_frame.py:1434
 msgid "Videomass - File List"
 msgstr "Videomass - 檔案清單"
 
+#: videomass/vdms_main/main_frame.py:1451
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - 影音轉換"
 
+#: videomass/vdms_main/main_frame.py:1480
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - 預設設定管理員"
 
+#: videomass/vdms_main/main_frame.py:1510
 msgid "Videomass - Concatenate Demuxer"
 msgstr "Videomass - 串接解多工器"
 
+#: videomass/vdms_main/main_frame.py:1539
 msgid "Videomass - From Movie to Pictures"
 msgstr "Videomass - 從影片轉圖片"
 
+#: videomass/vdms_main/main_frame.py:1568
 msgid "Videomass - Still Image Maker"
 msgstr "Videomass - 靜態影像製作器"
 
+#: videomass/vdms_main/main_frame.py:1652 videomass/vdms_miniframes/timeline.py:344 videomass/vdms_panels/av_conversions.py:586 videomass/vdms_panels/av_conversions.py:1257 videomass/vdms_panels/filedrop.py:502 videomass/vdms_panels/filedrop.py:627 videomass/vdms_panels/sequence_to_video.py:328 videomass/vdms_panels/video_to_sequence.py:365 videomass/vdms_panels/video_to_sequence.py:497
 msgid "Have to select an item in the file list first"
 msgstr "必須先在檔案清單中選取項目"
 
+#: videomass/vdms_main/main_frame.py:1674
 msgid ""
 "An item with the same destination file already exists.\n"
 "\n"
@@ -1764,78 +2199,102 @@ msgstr ""
 "\n"
 "您要加入新項目至佇列以取代它嗎？"
 
+#: videomass/vdms_main/main_frame.py:1695
 msgid "Videomass - FFmpeg Message Monitoring"
 msgstr "Videomass - FFmpeg 訊息監控"
 
+#: videomass/vdms_main/main_frame.py:1820
 #, python-brace-format
 msgid "The system will turn off in {0} seconds"
 msgstr "系統將在 {0} 秒後關閉"
 
+#: videomass/vdms_main/main_frame.py:1821
 msgid "Videomass - Shutdown!"
 msgstr "Videomass - 關機！"
 
+#: videomass/vdms_main/main_frame.py:1828
 msgid "Error while shutting down. Please see file log for details."
 msgstr "關機時發生錯誤。請參閱檔案記錄以取得詳細資料。"
 
+#: videomass/vdms_main/main_frame.py:1841
 #, python-brace-format
 msgid "Exiting the application in {0} seconds"
 msgstr "應用程式將在 {0} 秒後退出"
 
+#: videomass/vdms_main/main_frame.py:1842
 msgid "Videomass - Exiting!"
 msgstr "Videomass - 正在退出！"
 
+#: videomass/vdms_miniframes/timeline.py:54
 msgid "Start point adjustment"
 msgstr "起點調整"
 
+#: videomass/vdms_miniframes/timeline.py:56
 msgid "End point adjustment"
 msgstr "終點調整"
 
+#: videomass/vdms_miniframes/timeline.py:113
 msgid "Hours"
 msgstr "小時"
 
+#: videomass/vdms_miniframes/timeline.py:114
 msgid "Minutes"
 msgstr "分鐘"
 
+#: videomass/vdms_miniframes/timeline.py:115
 msgid "Seconds"
 msgstr "秒"
 
+#: videomass/vdms_miniframes/timeline.py:116
 msgid "Milliseconds"
 msgstr "毫秒"
 
+#: videomass/vdms_miniframes/timeline.py:216 videomass/vdms_miniframes/timeline.py:398 videomass/vdms_miniframes/timeline.py:566
 msgid "No source duration:"
 msgstr "無來源持續時間："
 
+#: videomass/vdms_miniframes/timeline.py:262
 msgid "Wave"
 msgstr "波形"
 
+#: videomass/vdms_miniframes/timeline.py:277 videomass/vdms_miniframes/timeline.py:551 videomass/vdms_miniframes/timeline.py:594 videomass/vdms_miniframes/timeline.py:599 videomass/vdms_miniframes/timeline.py:703
 #, python-brace-format
 msgid "{0} {1}  |  Segment Duration: {2}"
 msgstr "{0} {1}  |  片段持續時間：{2}"
 
+#: videomass/vdms_miniframes/timeline.py:301
 msgid "End adjustment"
 msgstr "終點調整"
 
+#: videomass/vdms_miniframes/timeline.py:303
 msgid "Start adjustment"
 msgstr "起點調整"
 
+#: videomass/vdms_miniframes/timeline.py:305
 msgid "Toggles the display of the audio waveform in the background ruler"
 msgstr "切換在背景尺規顯示音訊波形"
 
+#: videomass/vdms_miniframes/timeline.py:308
 msgid "Reset segment on timeline"
 msgstr "重設時間軸上的片段"
 
+#: videomass/vdms_miniframes/timeline.py:310
 msgid "Timeline Editor Usage"
 msgstr "時間軸編輯器用法"
 
+#: videomass/vdms_miniframes/timeline.py:312
 msgid "Play segment"
 msgstr "播放片段"
 
+#: videomass/vdms_miniframes/timeline.py:399
 msgid "Invalid file format for playback."
 msgstr "無效的播放檔案格式。"
 
+#: videomass/vdms_miniframes/timeline.py:404
 msgid "No segment selected in the timeline yet."
 msgstr "尚未在時間軸選取片段。"
 
+#: videomass/vdms_miniframes/timeline.py:409
 msgid ""
 "Invalid segment selection!\n"
 "«End» cursor must be moved to the right side of the «Start» cursor."
@@ -1843,10 +2302,12 @@ msgstr ""
 "無效的片段選取！\n"
 "«終點» 游標必須移動到 «起點» 游標的右側。"
 
+#: videomass/vdms_miniframes/timeline.py:426 videomass/vdms_panels/audio_encoders/acodecs.py:487 videomass/vdms_panels/av_conversions.py:536 videomass/vdms_panels/filedrop.py:519
 #, python-format
 msgid "Invalid or unsupported file:  %s"
 msgstr "無效或不支援的檔案： %s"
 
+#: videomass/vdms_miniframes/timeline.py:488
 #, python-brace-format
 msgid ""
 "Unable to create waveform.\n"
@@ -1857,6 +2318,7 @@ msgstr ""
 "選取的來源檔案不包含任何音訊串流：\n"
 "\"{}\""
 
+#: videomass/vdms_miniframes/timeline.py:509
 msgid ""
 "The timeline editor allows you to trim slices of time on selected files.\n"
 "The time format used to report durations is expressed in hours, minutes,\n"
@@ -1890,12 +2352,15 @@ msgstr ""
 "(00:00:00.000)，且所有時間軸控制項將被停用。\n"
 "此行為也適用於取消選取檔案時。"
 
+#: videomass/vdms_miniframes/timeline.py:578
 msgid "Source duration:"
 msgstr "來源持續時間："
 
+#: videomass/vdms_miniframes/timeline.py:648
 msgid "WARNING: Invalid segment selection, out of range."
 msgstr "警告：無效的片段選取，超出範圍。"
 
+#: videomass/vdms_miniframes/timeline.py:723
 msgid ""
 "Start by dragging the handles in the left corners or\n"
 "click the Start/End adjustment buttons for fine tuning."
@@ -1903,35 +2368,43 @@ msgstr ""
 "從左下角拖曳控制點開始，或\n"
 "按一下 [起點/終點調整] 按鈕進行微調。"
 
+#: videomass/vdms_miniframes/timeline.py:770
 msgid "Start"
 msgstr "開始"
 
+#: videomass/vdms_miniframes/timeline.py:771
 msgid "End"
 msgstr "結束"
 
-msgid "Media:"
-msgstr "媒體："
-
-msgid "Container:"
-msgstr "容器："
-
+#: videomass/vdms_panels/av_conversions.py:142
 msgid "Target"
 msgstr "目標"
 
+#: videomass/vdms_panels/av_conversions.py:145
+msgid "Media:"
+msgstr "媒體："
+
+#: videomass/vdms_panels/av_conversions.py:161
+msgid "Container:"
+msgstr "容器："
+
+#: videomass/vdms_panels/av_conversions.py:309
 msgid "Miscellaneous"
 msgstr "雜項"
 
+#: videomass/vdms_panels/av_conversions.py:316
 msgid "Save as a new profile of the Presets Manager."
 msgstr "另存為預設設定管理員的新設定檔。"
 
+#: videomass/vdms_panels/av_conversions.py:318
 msgid "Displays the RAW commands for the selected file."
 msgstr "顯示選取檔案的 RAW 指令。"
 
+#: videomass/vdms_panels/av_conversions.py:320
 msgid "Available video encoders. \"Copy\" means that the video stream will not be re-encoded and will allow you (depending on the encoder) to change the container, audio codec and a few other parameters."
-msgstr ""
-"可用的視訊編碼器。「複製」表示視訊串流將不會重新編碼，並允許您 (取決於編碼"
-"器) 變更容器、音訊編解碼器與其他少數參數。"
+msgstr "可用的視訊編碼器。「複製」表示視訊串流將不會重新編碼，並允許您 (取決於編碼器) 變更容器、音訊編解碼器與其他少數參數。"
 
+#: videomass/vdms_panels/av_conversions.py:325
 msgid ""
 "Container format. It is usually represented by the file extension (output format).\n"
 "\n"
@@ -1941,50 +2414,57 @@ msgid ""
 msgstr ""
 "容器格式。通常以副檔名 (輸出格式) 表示。\n"
 "\n"
-"如果媒體目標設為「視訊」，且視訊編碼器設為「複製」，您可以選擇性將此控制項設"
-"為「複製」，以使用與來源檔案相同的容器。\n"
+"如果媒體目標設為「視訊」，且視訊編碼器設為「複製」，您可以選擇性將此控制項設為「複製」，以使用與來源檔案相同的容器。\n"
 "\n"
-"如果媒體目標設為「音訊」，您可以只從視訊中擷取音訊串流，或單純轉換音訊來源檔"
-"案。"
+"如果媒體目標設為「音訊」，您可以只從視訊中擷取音訊串流，或單純轉換音訊來源檔案。"
 
+#: videomass/vdms_panels/av_conversions.py:333
 msgid ""
 "Set output files target: \"Video\" to save output files as video files; \"Audio\" to save files using an audio encoder and format.\n"
 "\n"
 "Note that by using \"Audio\" as the target, you will still be able to work on the video source files but you will only be able to extract the audio streams, convert them and apply audio filters such as normalization."
 msgstr ""
-"設定輸出檔案目標：「視訊」將輸出檔案儲存為視訊檔案；「音訊」則使用音訊編碼器"
-"與格式儲存檔案。\n"
+"設定輸出檔案目標：「視訊」將輸出檔案儲存為視訊檔案；「音訊」則使用音訊編碼器與格式儲存檔案。\n"
 "\n"
-"請注意，使用「音訊」作為目標時，您仍可處理視訊來源檔案，但只能擷取音訊串流、"
-"轉換它們，並套用音訊過濾器 (例如正規化)。"
+"請注意，使用「音訊」作為目標時，您仍可處理視訊來源檔案，但只能擷取音訊串流、轉換它們，並套用音訊過濾器 (例如正規化)。"
 
+#: videomass/vdms_panels/av_conversions.py:341
 msgid "Preview video filters"
 msgstr "預覽視訊過濾器"
 
+#: videomass/vdms_panels/av_conversions.py:342
 msgid "Disable active filters"
 msgstr "停用作用中的過濾器"
 
+#: videomass/vdms_panels/av_conversions.py:343 videomass/vdms_panels/sequence_to_video.py:162 videomass/vdms_panels/video_to_sequence.py:109
 msgid "Resize"
 msgstr "調整大小"
 
+#: videomass/vdms_panels/av_conversions.py:344
 msgid "Crop"
 msgstr "裁切"
 
+#: videomass/vdms_panels/av_conversions.py:345
 msgid "Transpose"
 msgstr "轉置"
 
+#: videomass/vdms_panels/av_conversions.py:347
 msgid "Denoise"
 msgstr "降噪"
 
+#: videomass/vdms_panels/av_conversions.py:348
 msgid "Stabilize"
 msgstr "穩定"
 
+#: videomass/vdms_panels/av_conversions.py:349
 msgid "Equalize"
 msgstr "等化"
 
+#: videomass/vdms_panels/av_conversions.py:518
 msgid "To preview Stabilize filter, please click Preview button on Video Stabilizer Tool"
 msgstr "若要預覽穩定過濾器，請按一下 [視訊穩定器工具] 上的 [預覽] 按鈕"
 
+#: videomass/vdms_panels/av_conversions.py:611
 msgid ""
 "Unsupported file:\n"
 "Missing decoder or library? Check FFmpeg configuration."
@@ -1992,21 +2472,27 @@ msgstr ""
 "不支援的檔案：\n"
 "缺少解碼器或函式庫？請檢查 FFmpeg 設定。"
 
+#: videomass/vdms_panels/av_conversions.py:620 videomass/vdms_panels/sequence_to_video.py:357 videomass/vdms_panels/video_to_sequence.py:394
 msgid "The file is not a frame or a video file"
 msgstr "該檔案不是畫格或視訊檔案"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:427 videomass/vdms_panels/av_conversions.py:871
 msgid "Undetected volume values! Click the \"Volume detect\" button to analyze audio volume data."
 msgstr "未偵測到音量數值！按一下 [音量偵測] 按鈕以分析音訊音量資料。"
 
+#: videomass/vdms_panels/av_conversions.py:1202
 msgid "Off"
 msgstr "關閉"
 
+#: videomass/vdms_panels/av_conversions.py:1220
 msgid "Auto"
 msgstr "自動"
 
+#: videomass/vdms_panels/av_conversions.py:1222
 msgid "No Subtitles"
 msgstr "無字幕"
 
+#: videomass/vdms_panels/av_conversions.py:1228
 msgid ""
 "Batch processing items\n"
 "Destination\n"
@@ -2034,87 +2520,114 @@ msgstr ""
 "片段開始\n"
 "剪輯持續時間"
 
+#: videomass/vdms_panels/av_conversions.py:1311 videomass/vdms_panels/presets_manager.py:803
 #, python-brace-format
 msgid "Write profile on «{0}»"
 msgstr "寫入設定檔於 «{0}»"
 
+#: videomass/vdms_panels/av_conversions.py:1331 videomass/vdms_panels/presets_manager.py:502
 msgid "Enter name for new preset"
 msgstr "輸入新預設設定名稱"
 
+#: videomass/vdms_panels/av_conversions.py:1341 videomass/vdms_panels/presets_manager.py:513
 msgid "Invalid file name, make sure to provide a valid name including the «.json» extension"
 msgstr "無效的檔案名稱，請確認提供包含 «.json» 副檔名的有效名稱"
 
+#: videomass/vdms_panels/av_conversions.py:1349
 #, python-brace-format
 msgid "Cannot save current data in file «{}»."
 msgstr "無法將目前資料儲存於檔案 «{}» 中。"
 
+#: videomass/vdms_panels/av_conversions.py:1354
 msgid "Open Videomass preset"
 msgstr "開啟 Videomass 預設設定"
 
+#: videomass/vdms_panels/av_conversions.py:1372
 msgid "Videomass - Save new profile"
 msgstr "Videomass - 儲存新設定檔"
 
+#: videomass/vdms_panels/av_conversions.py:1373
 msgid "Where do you want to save this profile?"
 msgstr "您要將此設定檔儲存在哪裡？"
 
+#: videomass/vdms_panels/av_conversions.py:1374
 msgid "Save the profile to a new preset"
 msgstr "將設定檔儲存至新預設設定"
 
+#: videomass/vdms_panels/av_conversions.py:1375
 msgid "Save the profile to an existing preset"
 msgstr "將設定檔儲存至現有預設設定"
 
+#: videomass/vdms_panels/choose_topic.py:58
 msgid "Welcome to Videomass"
 msgstr "歡迎使用 Videomass"
 
+#: videomass/vdms_panels/choose_topic.py:61
 #, python-brace-format
 msgid "Version {}"
 msgstr "版本 {}"
 
+#: videomass/vdms_panels/choose_topic.py:72
 msgid "Presets Manager"
 msgstr "預設設定管理員"
 
+#: videomass/vdms_panels/choose_topic.py:75
 msgid "AV-Conversions"
 msgstr "影音轉換"
 
+#: videomass/vdms_panels/choose_topic.py:78
 msgid "Concatenate media files"
 msgstr "串接媒體檔案"
 
+#: videomass/vdms_panels/choose_topic.py:81
 msgid "Still Image Maker"
 msgstr "靜態影像製作器"
 
+#: videomass/vdms_panels/choose_topic.py:84
 msgid "From Movie to Pictures"
 msgstr "從影片轉圖片"
 
+#: videomass/vdms_panels/choose_topic.py:105
+msgid "This is free and open-source software. If you find it useful, please consider making a donation to support its development. Thank you ❤️"
+msgstr ""
+
+#: videomass/vdms_panels/choose_topic.py:115
 msgid "Create, edit and use quickly your favorite FFmpeg presets and profiles with full formats support and codecs."
-msgstr ""
-"建立、編輯並快速使用您最愛的 FFmpeg 預設設定與設定檔，並支援完整的格式與編解"
-"碼器。"
+msgstr "建立、編輯並快速使用您最愛的 FFmpeg 預設設定與設定檔，並支援完整的格式與編解碼器。"
 
+#: videomass/vdms_panels/choose_topic.py:119
 msgid "A set of useful tools for audio and video conversions. Save your profiles and reuse them with Presets Manager."
-msgstr ""
-"一組用於音訊與視訊轉換的實用工具。儲存您的設定檔，並使用預設設定管理員重複使"
-"用它們。"
+msgstr "一組用於音訊與視訊轉換的實用工具。儲存您的設定檔，並使用預設設定管理員重複使用它們。"
 
+#: videomass/vdms_panels/choose_topic.py:123
 msgid "Concatenate multiple media files based on import order without re-encoding"
 msgstr "依據匯入順序串接多個媒體檔案，無需重新編碼"
 
+#: videomass/vdms_panels/choose_topic.py:126
 msgid "Create video from a sequence of images, based on import order, with the ability to add an audio file."
 msgstr "依據匯入順序從影像序列建立視訊，並可加入音訊檔案。"
 
+#: videomass/vdms_panels/choose_topic.py:129
 msgid "Extract images (frames) from your movies in JPG, PNG, BMP, GIF formats."
 msgstr "從您的影片中擷取 JPG、PNG、BMP、GIF 格式的影像 (畫格)。"
 
+#: videomass/vdms_panels/choose_topic.py:133
+msgid "Click here to make a donation to the Videomass project."
+msgstr ""
+
+#: videomass/vdms_panels/concatenate.py:47
 msgid "At least two files are required to perform concatenation."
 msgstr "至少需要兩個檔案才能執行串接。"
 
+#: videomass/vdms_panels/concatenate.py:63
 msgid "Invalid data found"
 msgstr "發現無效資料"
 
+#: videomass/vdms_panels/concatenate.py:68
 msgid "The files do not have the same \"codec_types\", same \"sample_rate\" or same \"width\" or \"height\". Unable to proceed."
-msgstr ""
-"檔案沒有相同的 \"codec_types\"、\"sample_rate\" 或相同的 \"width\" 或 "
-"\"height\"。無法繼續。"
+msgstr "檔案沒有相同的 \"codec_types\"、\"sample_rate\" 或相同的 \"width\" 或 \"height\"。無法繼續。"
 
+#: videomass/vdms_panels/concatenate.py:84
 msgid ""
 "\n"
 "- The concatenation function is performed only with Audio files or only with Video files.\n"
@@ -2142,12 +2655,15 @@ msgstr ""
 "\n"
 "- 音訊檔案必須擁有完全相同的格式、相同的編解碼器以及相同的取樣率。"
 
+#: videomass/vdms_panels/concatenate.py:125
 msgid "Videomass Documentation:"
 msgstr "Videomass 文件："
 
+#: videomass/vdms_panels/concatenate.py:136 videomass/vdms_panels/sequence_to_video.py:218 videomass/vdms_panels/video_to_sequence.py:177
 msgid "Official FFmpeg documentation:"
 msgstr "官方 FFmpeg 文件："
 
+#: videomass/vdms_panels/concatenate.py:253
 msgid ""
 "Items to concatenate\n"
 "File destination\n"
@@ -2161,190 +2677,249 @@ msgstr ""
 "輸出多媒體類型\n"
 "持續時間"
 
+#: videomass/vdms_panels/filedrop.py:45
 msgid "File has illegal characters like:"
 msgstr "檔案包含非法字元，例如："
 
+#: videomass/vdms_panels/filedrop.py:46
 msgid "Invalid character found in path name: (\")"
 msgstr "在路徑名稱中發現無效字元：(\")"
 
+#: videomass/vdms_panels/filedrop.py:47
 msgid "Directories are not allowed, just add files, please."
 msgstr "不允許使用目錄，請只加入檔案。"
 
+#: videomass/vdms_panels/filedrop.py:48
 msgid "File without format extension: please give an appropriate extension to the file name, example '.mkv', '.avi', '.mp3', etc."
-msgstr ""
-"檔案沒有格式副檔名：請給予檔案名稱適當的副檔名，例如 '.mkv'、'.avi'、'.mp3' "
-"等。"
+msgstr "檔案沒有格式副檔名：請給予檔案名稱適當的副檔名，例如 '.mkv'、'.avi'、'.mp3' 等。"
 
+#: videomass/vdms_panels/filedrop.py:84
 #, python-brace-format
 msgid "Name has illegal characters like: {0}"
 msgstr "名稱包含非法字元，例如：{0}"
 
+#: videomass/vdms_panels/filedrop.py:85
 msgid "Name already in use:"
 msgstr "名稱已在使用中："
 
+#: videomass/vdms_panels/filedrop.py:185
 msgid "Duplicate file, it has already been added to the list."
 msgstr "重複的檔案，它已經被加入清單中。"
 
+#: videomass/vdms_panels/filedrop.py:197
 msgid "Rejected files"
 msgstr "被拒絕的檔案"
 
+#: videomass/vdms_panels/filedrop.py:269
 msgid "Source file"
 msgstr "來源檔案"
 
+#: videomass/vdms_panels/filedrop.py:270
 msgid "Duration"
 msgstr "持續時間"
 
+#: videomass/vdms_panels/filedrop.py:271
 msgid "Media type"
 msgstr "媒體類型"
 
+#: videomass/vdms_panels/filedrop.py:272
 msgid "Size"
 msgstr "大小"
 
+#: videomass/vdms_panels/filedrop.py:275 videomass/vdms_panels/filedrop.py:405
 msgid "Drag one or more files below"
 msgstr "將一個或多個檔案拖曳至下方"
 
+#: videomass/vdms_panels/filedrop.py:282
 msgid "Save to:"
 msgstr "儲存至："
 
+#: videomass/vdms_panels/filedrop.py:306
 msgid "Set a new destination folder for encodings"
 msgstr "設定新的編碼目的地資料夾"
 
+#: videomass/vdms_panels/filedrop.py:308
 msgid "Encodings destination folder"
 msgstr "編碼目的地資料夾"
 
+#: videomass/vdms_panels/filedrop.py:338 videomass/vdms_panels/filedrop.py:394
 msgid "Play file"
 msgstr "播放檔案"
 
+#: videomass/vdms_panels/filedrop.py:408
 msgid "Drag two or more Audio/Video files below"
 msgstr "將兩個或多個音訊/視訊檔案拖曳至下方"
 
+#: videomass/vdms_panels/filedrop.py:412
 msgid "Drag one or more Image files below"
 msgstr "將一個或多個影像檔案拖曳至下方"
 
+#: videomass/vdms_panels/filedrop.py:415
 msgid "Drag one or more Video files below"
 msgstr "將一個或多個視訊檔案拖曳至下方"
 
+#: videomass/vdms_panels/filedrop.py:634
 msgid "Rename the file destination"
 msgstr "重新命名檔案目的地"
 
+#: videomass/vdms_panels/filedrop.py:635
 msgid "Rename the selected file to:"
 msgstr "將選取的檔案重新命名為："
 
+#: videomass/vdms_panels/filedrop.py:649 videomass/vdms_panels/filedrop.py:659 videomass/vdms_panels/filedrop.py:690
 msgid "Add Files"
 msgstr "加入檔案"
 
+#: videomass/vdms_panels/filedrop.py:666
 msgid "Rename in batch"
 msgstr "批次重新命名"
 
+#: videomass/vdms_panels/filedrop.py:667
 #, python-brace-format
 msgid "Rename the {0} items to:"
 msgstr "將 {0} 個項目重新命名為："
 
+#: videomass/vdms_panels/filedrop.py:669
 msgid "New Name #"
 msgstr "新名稱 #"
 
+#: videomass/vdms_panels/long_processing_task.py:114
 msgid "Sorry, all task failed !"
 msgstr "抱歉，所有工作皆失敗！"
 
+#: videomass/vdms_panels/long_processing_task.py:115
 msgid "The process was stopped due to a fatal error."
 msgstr "由於發生嚴重錯誤，程序已停止。"
 
+#: videomass/vdms_panels/long_processing_task.py:116
 msgid "Interrupted Process !"
 msgstr "程序已中斷！"
 
+#: videomass/vdms_panels/long_processing_task.py:117
 msgid "Successfully completed !"
 msgstr "成功完成！"
 
+#: videomass/vdms_panels/long_processing_task.py:118
 msgid "Not everything was successful."
 msgstr "並非所有項目都成功。"
 
+#: videomass/vdms_panels/long_processing_task.py:148
 msgid "Encoding Status"
 msgstr "編碼狀態"
 
+#: videomass/vdms_panels/long_processing_task.py:152
 msgid "Current Log"
 msgstr "目前記錄"
 
+#: videomass/vdms_panels/long_processing_task.py:353
 msgid "Fatal Error !"
 msgstr "嚴重錯誤！"
 
+#: videomass/vdms_panels/long_processing_task.py:362
 msgid "Get your files at the destination you specified"
 msgstr "在您指定的目的地取得您的檔案"
 
+#: videomass/vdms_panels/long_processing_task.py:376
 msgid "For more details please read the Current Log."
 msgstr "如需更多詳細資料，請閱讀目前記錄。"
 
+#: videomass/vdms_panels/long_processing_task.py:379
 msgid "...Finished"
 msgstr "...已完成"
 
+#: videomass/vdms_panels/long_processing_task.py:398
 msgid "Please wait... interruption in progress"
 msgstr "請稍候... 正在中斷"
 
+#: videomass/vdms_panels/long_processing_task.py:401
 msgid "...Interrupted"
 msgstr "...已中斷"
 
+#: videomass/vdms_panels/presets_manager.py:112
 msgid "Presets"
 msgstr "預設設定"
 
-msgid "Write"
-msgstr "寫入"
-
-msgid "Delete"
-msgstr "刪除"
-
-msgid "Duplicate"
-msgstr "複製"
-
+#: videomass/vdms_panels/presets_manager.py:158
 msgid "Profiles"
 msgstr "設定檔"
 
+#: videomass/vdms_panels/presets_manager.py:169
+msgid "Write"
+msgstr "寫入"
+
+#: videomass/vdms_panels/presets_manager.py:173
+msgid "Delete"
+msgstr "刪除"
+
+#: videomass/vdms_panels/presets_manager.py:183
+msgid "Duplicate"
+msgstr "複製"
+
+#: videomass/vdms_panels/presets_manager.py:194
 msgid "One-Pass Encoding"
 msgstr "單次行程 (One-Pass) 編碼"
 
+#: videomass/vdms_panels/presets_manager.py:207
 msgid "Two-Pass Encoding"
 msgstr "二次行程 (Two-Pass) 編碼"
 
+#: videomass/vdms_panels/presets_manager.py:221
 msgid "Choose a preset and view its profiles"
 msgstr "選擇預設設定並檢視其設定檔"
 
+#: videomass/vdms_panels/presets_manager.py:222
 msgid "Write a new profile and save it in the selected preset"
 msgstr "寫入新設定檔並儲存於選取的預設設定"
 
+#: videomass/vdms_panels/presets_manager.py:224
 msgid "Delete the selected profile"
 msgstr "刪除選取的設定檔"
 
+#: videomass/vdms_panels/presets_manager.py:225
 msgid "Edit the selected profile"
 msgstr "編輯選取的設定檔"
 
+#: videomass/vdms_panels/presets_manager.py:226
 msgid "Duplicate the selected profile"
 msgstr "複製選取的設定檔"
 
+#: videomass/vdms_panels/presets_manager.py:227
 msgid "Create new preset"
 msgstr "建立新預設設定"
 
+#: videomass/vdms_panels/presets_manager.py:229
 msgid "Remove selected preset"
 msgstr "移除選取的預設設定"
 
+#: videomass/vdms_panels/presets_manager.py:231
 msgid "Backup selected preset"
 msgstr "備份選取的預設設定"
 
+#: videomass/vdms_panels/presets_manager.py:233
 msgid "Backup the presets folder"
 msgstr "備份預設設定資料夾"
 
+#: videomass/vdms_panels/presets_manager.py:235
 msgid "Restore a preset"
 msgstr "還原預設設定"
 
+#: videomass/vdms_panels/presets_manager.py:237
 msgid "Restore a presets folder"
 msgstr "還原預設設定資料夾"
 
+#: videomass/vdms_panels/presets_manager.py:239
 msgid "Resets the selected preset to default values"
 msgstr "將選取的預設設定重設為預設值"
 
+#: videomass/vdms_panels/presets_manager.py:241
 msgid "Reset all presets to default values"
 msgstr "將所有預設設定重設為預設值"
 
+#: videomass/vdms_panels/presets_manager.py:243
 msgid "Refresh the presets list"
 msgstr "重新整理預設設定清單"
 
+#: videomass/vdms_panels/presets_manager.py:327
 #, python-brace-format
 msgid ""
 "Outdated presets version found: v{1}\n"
@@ -2362,28 +2937,33 @@ msgstr ""
 "\n"
 "此更新提供 Videomass 最新版本中包含的新預設設定。\n"
 "\n"
-"為避免資料遺失並允許可能的還原，過期的預設設定資料夾將會備份在程式設定目錄"
-"中：\n"
+"為避免資料遺失並允許可能的還原，過期的預設設定資料夾將會備份在程式設定目錄中：\n"
 "«{2}»\n"
 "\n"
 "您要立即執行此更新嗎？"
 
+#: videomass/vdms_panels/presets_manager.py:392
 msgid "Name"
 msgstr "名稱"
 
+#: videomass/vdms_panels/presets_manager.py:394
 msgid "Output Format"
 msgstr "輸出格式"
 
+#: videomass/vdms_panels/presets_manager.py:395
 msgid "Supported Format List"
 msgstr "支援格式清單"
 
+#: videomass/vdms_panels/presets_manager.py:520
 #, python-brace-format
 msgid "Cannot save current data in file '{}'."
 msgstr "無法將目前資料儲存於檔案 '{}'。"
 
+#: videomass/vdms_panels/presets_manager.py:524
 msgid "You just successfully created a new preset!"
 msgstr "您剛才已成功建立新預設設定！"
 
+#: videomass/vdms_panels/presets_manager.py:536
 #, python-brace-format
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
@@ -2394,6 +2974,7 @@ msgstr ""
 "\n"
 " 它將會被移至預設設定資料夾內的 \"Removals\" 子資料夾。"
 
+#: videomass/vdms_panels/presets_manager.py:547
 #, python-brace-format
 msgid ""
 "{}\n"
@@ -2404,22 +2985,28 @@ msgstr ""
 "\n"
 "抱歉，移除失敗，無法繼續.."
 
+#: videomass/vdms_panels/presets_manager.py:557
 #, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
 msgstr "預設設定 \"{0}\" 已成功移除"
 
+#: videomass/vdms_panels/presets_manager.py:572 videomass/vdms_panels/presets_manager.py:601
 msgid "Open a destination folder"
 msgstr "開啟目的地資料夾"
 
+#: videomass/vdms_panels/presets_manager.py:577
 msgid "A file with this name already exists, do you want to overwrite it?"
 msgstr "此名稱的檔案已存在，您要覆寫它嗎？"
 
+#: videomass/vdms_panels/presets_manager.py:591 videomass/vdms_panels/presets_manager.py:611
 msgid "Backup completed successfully"
 msgstr "備份成功完成"
 
+#: videomass/vdms_panels/presets_manager.py:620
 msgid "Open the preset you want to restore"
 msgstr "開啟您要還原的預設設定"
 
+#: videomass/vdms_panels/presets_manager.py:634
 msgid ""
 "This preset already exists and is about to be updated. Don't worry, it will keep all your saved profiles.\n"
 "\n"
@@ -2429,9 +3016,11 @@ msgstr ""
 "\n"
 "您要繼續嗎？"
 
+#: videomass/vdms_panels/presets_manager.py:652
 msgid "Restore successful"
 msgstr "還原成功"
 
+#: videomass/vdms_panels/presets_manager.py:670
 msgid ""
 "This will update the presets database. Don't worry, it will keep all your saved profiles.\n"
 "\n"
@@ -2441,15 +3030,19 @@ msgstr ""
 "\n"
 "您要繼續嗎？"
 
+#: videomass/vdms_panels/presets_manager.py:678
 msgid "Open the presets folder to restore"
 msgstr "開啟要還原的預設設定資料夾"
 
+#: videomass/vdms_panels/presets_manager.py:714
 msgid "The presets database has been successfully updated"
 msgstr "預設設定資料庫已成功更新"
 
+#: videomass/vdms_panels/presets_manager.py:729
 msgid "The selected preset is not part of Videomass's default presets."
 msgstr "選取的預設設定並非 Videomass 預設設定的一部分。"
 
+#: videomass/vdms_panels/presets_manager.py:734
 msgid ""
 "Be careful! The selected preset will be overwritten with the default one. Your profiles may be deleted!\n"
 "\n"
@@ -2459,9 +3052,11 @@ msgstr ""
 "\n"
 "您要繼續嗎？"
 
+#: videomass/vdms_panels/presets_manager.py:749 videomass/vdms_panels/presets_manager.py:783
 msgid "Successful recovery"
 msgstr "成功還原"
 
+#: videomass/vdms_panels/presets_manager.py:758
 msgid ""
 "Be careful! This action will restore all presets to default ones. Your profiles may be deleted!\n"
 "\n"
@@ -2475,16 +3070,20 @@ msgstr ""
 "\n"
 "您要繼續嗎？"
 
+#: videomass/vdms_panels/presets_manager.py:822
 #, python-brace-format
 msgid "Edit profile on «{0}»"
 msgstr "編輯設定檔於 «{0}»"
 
+#: videomass/vdms_panels/presets_manager.py:861
 msgid "Are you sure you want to delete the selected profile? It will no longer be possible to recover it."
 msgstr "您確定要刪除選取的設定檔嗎？它將無法再還原。"
 
+#: videomass/vdms_panels/presets_manager.py:880
 msgid "First select a profile in the list"
 msgstr "請先在清單中選取設定檔"
 
+#: videomass/vdms_panels/presets_manager.py:888
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
@@ -2492,9 +3091,11 @@ msgstr ""
 "選取的設定檔指令已手動變更。\n"
 "您要在轉換過程套用它嗎？"
 
+#: videomass/vdms_panels/presets_manager.py:898
 msgid "Don't show this dialog again"
 msgstr "不再顯示此對話方塊"
 
+#: videomass/vdms_panels/presets_manager.py:1043
 msgid ""
 "Batch processing items\n"
 "Destination\n"
@@ -2514,9 +3115,11 @@ msgstr ""
 "片段開始\n"
 "剪輯持續時間"
 
+#: videomass/vdms_panels/sequence_to_video.py:53
 msgid "Images need to be resized, please use Resize function."
 msgstr "影像需要調整大小，請使用調整大小功能。"
 
+#: videomass/vdms_panels/sequence_to_video.py:72
 msgid ""
 "\n"
 "1. Import one or more image files such as JPG, PNG and BMP formats (even in mixed mode),\n"
@@ -2552,12 +3155,15 @@ msgstr ""
 "產生的視訊將會以 [檔案清單] 面板中選取的檔案命名，\n"
 "並儲存在您指定路徑中名為 'Still_Images' 的資料夾內，並附上遞增數字。"
 
+#: videomass/vdms_panels/sequence_to_video.py:124
 msgid "Enable a single still image"
 msgstr "啟用單一靜態影像"
 
+#: videomass/vdms_panels/sequence_to_video.py:129
 msgid "Time interval between images (in seconds):"
 msgstr "影像之間的時間間隔 (秒)："
 
+#: videomass/vdms_panels/sequence_to_video.py:168
 msgid ""
 "Force original aspect ratio using\n"
 "padding rather than stretching"
@@ -2565,21 +3171,27 @@ msgstr ""
 "強制使用填補而非拉伸\n"
 "來維持原始長寬比"
 
+#: videomass/vdms_panels/sequence_to_video.py:176
 msgid "Include audio file"
 msgstr "包含音訊檔案"
 
+#: videomass/vdms_panels/sequence_to_video.py:179
 msgid "Play the video until audio track finishes"
 msgstr "播放視訊直到音軌結束"
 
+#: videomass/vdms_panels/sequence_to_video.py:186 videomass/vdms_panels/sequence_to_video.py:445
 msgid "Open audio file"
 msgstr "開啟音訊檔案"
 
+#: videomass/vdms_panels/sequence_to_video.py:205
 msgid "Additional arguments"
 msgstr "附加引數"
 
+#: videomass/vdms_panels/sequence_to_video.py:460
 msgid "Open Audio File"
 msgstr "開啟音訊檔案"
 
+#: videomass/vdms_panels/sequence_to_video.py:472
 #, python-brace-format
 msgid ""
 "Invalid file: '{}'\n"
@@ -2590,6 +3202,7 @@ msgstr ""
 "\n"
 "{}"
 
+#: videomass/vdms_panels/sequence_to_video.py:477
 #, python-brace-format
 msgid ""
 "Invalid file: '{}'\n"
@@ -2600,14 +3213,17 @@ msgstr ""
 "\n"
 "它似乎不是音訊檔案。"
 
+#: videomass/vdms_panels/sequence_to_video.py:566 videomass/vdms_panels/sequence_to_video.py:593 videomass/vdms_panels/video_to_sequence.py:507
 #, python-brace-format
 msgid "Invalid file: '{}'"
 msgstr "無效的檔案：'{}'"
 
+#: videomass/vdms_panels/sequence_to_video.py:576 videomass/vdms_panels/sequence_to_video.py:601
 #, python-brace-format
 msgid "Unsupported format '{}'"
 msgstr "不支援的格式 '{}'"
 
+#: videomass/vdms_panels/sequence_to_video.py:582 videomass/vdms_panels/sequence_to_video.py:606
 #, python-brace-format
 msgid ""
 "File does not exist:\n"
@@ -2618,9 +3234,11 @@ msgstr ""
 "\n"
 "\"{}\"\n"
 
+#: videomass/vdms_panels/sequence_to_video.py:583
 msgid "ERROR"
 msgstr "錯誤"
 
+#: videomass/vdms_panels/sequence_to_video.py:718
 msgid ""
 "Items to concatenate\n"
 "Output filename\n"
@@ -2648,6 +3266,7 @@ msgstr ""
 "靜態影像持續時間\n"
 "整體視訊持續時間"
 
+#: videomass/vdms_panels/video_to_sequence.py:49
 msgid ""
 "\n"
 "1. Import one or more video files, then select one.\n"
@@ -2677,39 +3296,51 @@ msgstr ""
 "產生的影像將會儲存在您指定路徑中名為 'Movie_to_Pictures'\n"
 "的資料夾內，並附上遞增數字。"
 
+#: videomass/vdms_panels/video_to_sequence.py:81
 msgid "Create thumbnails"
 msgstr "建立縮圖"
 
+#: videomass/vdms_panels/video_to_sequence.py:82
 msgid "Create tiled mosaics"
 msgstr "建立平鋪馬賽克"
 
+#: videomass/vdms_panels/video_to_sequence.py:83
 msgid "Create animated GIF"
 msgstr "建立動畫 GIF"
 
+#: videomass/vdms_panels/video_to_sequence.py:85
 msgid "Options"
 msgstr "選項"
 
+#: videomass/vdms_panels/video_to_sequence.py:115
 msgid "Output format:"
 msgstr "輸出格式："
 
+#: videomass/vdms_panels/video_to_sequence.py:127
 msgid "Rows:"
 msgstr "列："
 
+#: videomass/vdms_panels/video_to_sequence.py:137
 msgid "Columns:"
 msgstr "行："
 
+#: videomass/vdms_panels/video_to_sequence.py:201
 msgid "Other unofficial resources:"
 msgstr "其他非官方資源："
 
+#: videomass/vdms_panels/video_to_sequence.py:225
 msgid "Set FPS control from 0.1 to 30.0 fps. The higher this value, the more images will be extracted."
 msgstr "設定 FPS 控制，從 0.1 到 30.0 fps。數值越高，擷取的影像越多。"
 
+#: videomass/vdms_panels/video_to_sequence.py:228
 msgid "Spaces around the mosaic tiles. From 0 to 32 pixels"
 msgstr "馬賽克磚周圍的空間。從 0 到 32 像素"
 
+#: videomass/vdms_panels/video_to_sequence.py:230
 msgid "Spaces around the mosaic borders. From 0 to 32 pixels"
 msgstr "馬賽克邊框周圍的空間。從 0 到 32 像素"
 
+#: videomass/vdms_panels/video_to_sequence.py:622
 msgid ""
 "Selected File\n"
 "Output Format\n"
@@ -2737,52 +3368,61 @@ msgstr ""
 "片段開始\n"
 "持續時間"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:109
 msgid "Audio encoder settings, mapping and filters"
 msgstr "音訊編碼器設定、對應與過濾器"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:119
 msgid "Audio Encoder"
 msgstr "音訊編碼器"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:128
 msgid "Settings"
 msgstr "設定"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:139 videomass/vdms_panels/miscellaneous/miscell.py:98
 msgid "Index Selection:"
 msgstr "索引選取："
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:150
 msgid "Map:"
 msgstr "對應："
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:173
 msgid "Normalization"
 msgstr "正規化"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:184
 msgid "Volume detect"
 msgstr "音量偵測"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:188
 msgid "Volume Statistics"
 msgstr "音量統計"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:192
 msgid "Target level:"
 msgstr "目標等級："
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:257
 msgid "Gets maximum volume and average volume data in dBFS, then calculates the offset amount for audio normalization."
 msgstr "取得 dBFS 中的最大音量與平均音量資料，然後計算音訊正規化的偏移量。"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:260
 msgid "Limiter for the maximum peak level or the mean level (when switch to RMS) in dBFS. From -99.0 to +0.0; default for PEAK level is -1.0; default for RMS is -20.0"
-msgstr ""
-"dBFS 中最大峰值等級或平均等級 (切換至 RMS 時) 的限制器。從 -99.0 到 +0.0；"
-"PEAK 等級預設為 -1.0；RMS 預設為 -20.0"
+msgstr "dBFS 中最大峰值等級或平均等級 (切換至 RMS 時) 的限制器。從 -99.0 到 +0.0；PEAK 等級預設為 -1.0；RMS 預設為 -20.0"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:264
 msgid ""
 "\"Auto\", lets FFmpeg select the audio stream to process (usually the first audio stream). If the source file(s) is just an audio track, it's recommend to always set this control to \"Auto\".\n"
 "\n"
 "\"1-16\", if a video file contains more than one audio stream, you can select a specific one, e.g \"1\" for the first available audio stream, \"2\" for the second audio stream, and so on."
 msgstr ""
-"「自動」，讓 FFmpeg 選取要處理的音訊串流 (通常是第一個音訊串流)。如果來源檔案"
-"只是音軌，建議總是將此控制項設為「自動」。\n"
+"「自動」，讓 FFmpeg 選取要處理的音訊串流 (通常是第一個音訊串流)。如果來源檔案只是音軌，建議總是將此控制項設為「自動」。\n"
 "\n"
-"「1-16」，如果視訊檔案包含多個音訊串流，您可以選取特定的一個，例如 \"1\" 代表"
-"第一個可用的音訊串流，\"2\" 代表第二個音訊串流，依此類推。"
+"「1-16」，如果視訊檔案包含多個音訊串流，您可以選取特定的一個，例如 \"1\" 代表第一個可用的音訊串流，\"2\" 代表第二個音訊串流，依此類推。"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:272
 msgid ""
 "\"Auto\" keeps all audio streams and processes only the one selected by the \"Index Selection\" control.\n"
 "\n"
@@ -2792,25 +3432,27 @@ msgid ""
 msgstr ""
 "「自動」保留所有音訊串流，並僅處理「索引選取」控制項所選取的那一個。\n"
 "\n"
-"「全部」處理所有音訊串流，並套用「索引選取」控制項所選取者的屬性。請勿使用"
-"「全部」從視訊匯出音訊檔案。\n"
+"「全部」處理所有音訊串流，並套用「索引選取」控制項所選取者的屬性。請勿使用「全部」從視訊匯出音訊檔案。\n"
 "\n"
-"「僅索引」僅處理「索引選取」控制項所選取的音訊串流，並從輸出視訊中移除所有其"
-"他串流。"
+"「僅索引」僅處理「索引選取」控制項所選取的音訊串流，並從輸出視訊中移除所有其他串流。"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:281
 msgid "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -16.0"
 msgstr "LUFS 中的整合響度目標。從 -70.0 到 -5.0，預設為 -16.0"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:284
 msgid "Maximum True Peak in dBTP. From -1.5 to +0.0, default is -2.0"
 msgstr "dBTP 中的最大真實峰值。從 -1.5 到 +0.0，預設為 -2.0"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:287
 msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +11.0"
 msgstr "LUFS 中的響度範圍目標。從 +1.0 到 +20.0，預設為 +11.0"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:290
 msgid "Play the audio stream selected in the \"Index Selection\" control. Using this function you can test the result of audio normalization."
-msgstr ""
-"播放「索引選取」控制項中選取的音訊串流。使用此功能可測試音訊正規化的結果。"
+msgstr "播放「索引選取」控制項中選取的音訊串流。使用此功能可測試音訊正規化的結果。"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:512
 #, python-brace-format
 msgid ""
 "Index does not exist in the selected source file:\n"
@@ -2819,6 +3461,7 @@ msgstr ""
 "選取的來源檔案中不存在索引：\n"
 "\"{}\""
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:519
 #, python-brace-format
 msgid ""
 "The source file does not contain any audio stream:\n"
@@ -2827,46 +3470,55 @@ msgstr ""
 "來源檔案不包含任何音訊串流：\n"
 "\"{}\""
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:735
 msgid "PEAK level normalization, which will produce a maximum peak level equal to the set target level."
 msgstr "PEAK 等級正規化，將產生等於設定目標等級的最大峰值等級。"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:738
 msgid "RMS-based normalization, which according to mean volume calculates the amount of gain to reach same average power signal."
 msgstr "基於 RMS 的正規化，依據平均音量計算增益量，以達到相同的平均功率訊號。"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:742
 msgid ""
 "Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements the EBU R128 algorithm.\n"
 "Ideal for live normalization. It produces worse results than the High-quality two-pass Loudnorm normalization, but is faster."
 msgstr ""
-"Loudnorm 正規化。使用 \"loudnorm\" 過濾器將感知響度正規化，實作 EBU R128 演算"
-"法。\n"
+"Loudnorm 正規化。使用 \"loudnorm\" 過濾器將感知響度正規化，實作 EBU R128 演算法。\n"
 "非常適合即時正規化。其結果比高品質二次行程 Loudnorm 正規化差，但速度較快。"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:749
 msgid ""
 "High-quality two-pass Loudnorm normalization. Normalizes the perceived loudness using the \"loudnorm\" filter, which implements\n"
 "the EBU R128 algorithm. Ideal for postprocessing."
 msgstr ""
-"高品質二次行程 Loudnorm 正規化。使用 \"loudnorm\" 過濾器將感知響度正規化，實"
-"作\n"
+"高品質二次行程 Loudnorm 正規化。使用 \"loudnorm\" 過濾器將感知響度正規化，實作\n"
 "EBU R128 演算法。非常適合後製處理。"
 
+#: videomass/vdms_panels/audio_encoders/acodecs.py:798
 msgid "You need to import at least one file"
 msgstr "您至少需要匯入一個檔案"
 
+#: videomass/vdms_panels/miscellaneous/miscell.py:81
 msgid "Subtitle Properties"
 msgstr "字幕屬性"
 
+#: videomass/vdms_panels/miscellaneous/miscell.py:83
 msgid "Subtitle Encoder"
 msgstr "字幕編碼器"
 
+#: videomass/vdms_panels/miscellaneous/miscell.py:123
 msgid "Chapters and Metadata"
 msgstr "章節與中繼資料"
 
+#: videomass/vdms_panels/miscellaneous/miscell.py:126
 msgid "Copy Chapters"
 msgstr "複製章節"
 
+#: videomass/vdms_panels/miscellaneous/miscell.py:128
 msgid "Copy Metadata"
 msgstr "複製中繼資料"
 
+#: videomass/vdms_panels/miscellaneous/miscell.py:132
 msgid ""
 "Select \"All\" to include any possible subtitle stream in the output video.\n"
 "\n"
@@ -2874,78 +3526,81 @@ msgid ""
 msgstr ""
 "選取「全部」以在輸出視訊中包含任何可能的字幕串流。\n"
 "\n"
-"選取 \"1-16\" 以索引所需的字幕串流並排除所有其他串流，例如 \"1\" 代表第一個可"
-"用的字幕串流，\"2\" 代表第二個字幕串流，依此類推。"
+"選取 \"1-16\" 以索引所需的字幕串流並排除所有其他串流，例如 \"1\" 代表第一個可用的字幕串流，\"2\" 代表第二個字幕串流，依此類推。"
 
+#: videomass/vdms_panels/miscellaneous/miscell.py:138
 msgid "Copy the chapter markers as is from source file."
 msgstr "從來源檔案依原樣複製章節標記。"
 
+#: videomass/vdms_panels/miscellaneous/miscell.py:140
 msgid "Copy all incoming metadata from source file, such as audio/video tags, titles, unique marks, and so on."
-msgstr ""
-"從來源檔案複製所有傳入的中繼資料，例如音訊/視訊標籤、標題、唯一標記等。"
+msgstr "從來源檔案複製所有傳入的中繼資料，例如音訊/視訊標籤、標題、唯一標記等。"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:89 videomass/vdms_panels/video_encoders/av1_svt.py:120 videomass/vdms_panels/video_encoders/avc_x264.py:90 videomass/vdms_panels/video_encoders/hevc_x265.py:98 videomass/vdms_panels/video_encoders/mpeg4.py:71 videomass/vdms_panels/video_encoders/vp9_webm.py:131
 msgid "Reload"
 msgstr "重新載入"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:101 videomass/vdms_panels/video_encoders/av1_svt.py:129 videomass/vdms_panels/video_encoders/avc_x264.py:101 videomass/vdms_panels/video_encoders/hevc_x265.py:109 videomass/vdms_panels/video_encoders/mpeg4.py:82 videomass/vdms_panels/video_encoders/video_encodercopy.py:97 videomass/vdms_panels/video_encoders/vp9_webm.py:141
 msgid "Optimize for Web"
 msgstr "針對網頁最佳化"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:247 videomass/vdms_panels/video_encoders/av1_svt.py:313 videomass/vdms_panels/video_encoders/avc_x264.py:242 videomass/vdms_panels/video_encoders/hevc_x265.py:250 videomass/vdms_panels/video_encoders/mpeg4.py:198 videomass/vdms_panels/video_encoders/vp9_webm.py:288
 msgid "Reloads the selected video encoder settings. Changes will be discarded."
 msgstr "重新載入選取的視訊編碼器設定。變更將被捨棄。"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:250 videomass/vdms_panels/video_encoders/avc_x264.py:273 videomass/vdms_panels/video_encoders/hevc_x265.py:277 videomass/vdms_panels/video_encoders/vp9_webm.py:291
 msgid "Constant rate factor. Lower values correspond to higher quality and greater file size. Set to -1 to disable this control."
-msgstr ""
-"固定速率因子 (CRF)。較低的數值對應較高的品質與較大的檔案大小。設為 -1 以停用"
-"此控制項。"
+msgstr "固定速率因子 (CRF)。較低的數值對應較高的品質與較大的檔案大小。設為 -1 以停用此控制項。"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:254 videomass/vdms_panels/video_encoders/av1_svt.py:357 videomass/vdms_panels/video_encoders/vp9_webm.py:295
 msgid "Number of tile rows to use, default changes per resolution"
 msgstr "使用的圖塊列數，預設值隨解析度變更"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:256 videomass/vdms_panels/video_encoders/av1_svt.py:359 videomass/vdms_panels/video_encoders/vp9_webm.py:297
 msgid "Number of tile columns to use, default changes per resolution"
 msgstr "使用的圖塊行數，預設值隨解析度變更"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:259 videomass/vdms_panels/video_encoders/av1_svt.py:368 videomass/vdms_panels/video_encoders/avc_x264.py:253 videomass/vdms_panels/video_encoders/hevc_x265.py:261 videomass/vdms_panels/video_encoders/mpeg4.py:201 videomass/vdms_panels/video_encoders/vp9_webm.py:300
 msgid "Set the Group Of Picture (GOP). Set to -1 to disable this control."
 msgstr "設定圖片群組 (GOP)。設為 -1 以停用此控制項。"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:262 videomass/vdms_panels/video_encoders/av1_svt.py:371 videomass/vdms_panels/video_encoders/avc_x264.py:256 videomass/vdms_panels/video_encoders/hevc_x265.py:264 videomass/vdms_panels/video_encoders/mpeg4.py:204 videomass/vdms_panels/video_encoders/vp9_webm.py:303
 msgid "It can reduce the file size, but takes longer."
 msgstr "它可以減少檔案大小，但花費時間較長。"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:264 videomass/vdms_panels/video_encoders/av1_svt.py:373 videomass/vdms_panels/video_encoders/avc_x264.py:258 videomass/vdms_panels/video_encoders/hevc_x265.py:266 videomass/vdms_panels/video_encoders/mpeg4.py:206 videomass/vdms_panels/video_encoders/vp9_webm.py:305
 msgid "Set minimum bitrate tolerance. Most useful in setting up a CBR encode. It is of little use otherwise. Set to -1 to disable this control."
-msgstr ""
-"設定最小位元率容許範圍。在設定 CBR 編碼時最有用。否則用途不大。設為 -1 以停用"
-"此控制項。"
+msgstr "設定最小位元率容許範圍。在設定 CBR 編碼時最有用。否則用途不大。設為 -1 以停用此控制項。"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:268 videomass/vdms_panels/video_encoders/av1_svt.py:377 videomass/vdms_panels/video_encoders/avc_x264.py:262 videomass/vdms_panels/video_encoders/hevc_x265.py:270 videomass/vdms_panels/video_encoders/mpeg4.py:210 videomass/vdms_panels/video_encoders/vp9_webm.py:309
 msgid "Specifies a maximum tolerance. Requires bufsize to be set. Set to -1 to disable this control."
 msgstr "指定最大容許範圍。需要設定 bufsize。設為 -1 以停用此控制項。"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:271 videomass/vdms_panels/video_encoders/av1_svt.py:380 videomass/vdms_panels/video_encoders/avc_x264.py:265 videomass/vdms_panels/video_encoders/hevc_x265.py:273 videomass/vdms_panels/video_encoders/mpeg4.py:213 videomass/vdms_panels/video_encoders/vp9_webm.py:312
 msgid "Set ratecontrol buffer size, which determines the variability of the output bitrate. Set to -1 to disable this control."
-msgstr ""
-"設定速率控制緩衝區大小，這決定了輸出位元率的變異性。設為 -1 以停用此控制項。"
+msgstr "設定速率控制緩衝區大小，這決定了輸出位元率的變異性。設為 -1 以停用此控制項。"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:275 videomass/vdms_panels/video_encoders/av1_svt.py:384 videomass/vdms_panels/video_encoders/avc_x264.py:277 videomass/vdms_panels/video_encoders/hevc_x265.py:281 videomass/vdms_panels/video_encoders/mpeg4.py:231 videomass/vdms_panels/video_encoders/vp9_webm.py:316
 msgid "Specifies the target (average) bit rate for the encoder to use. Higher value = higher quality. Set -1 to disable this control."
-msgstr ""
-"指定編碼器使用的目標 (平均) 位元率。數值越高 = 品質越高。設為 -1 以停用此控制"
-"項。"
+msgstr "指定編碼器使用的目標 (平均) 位元率。數值越高 = 品質越高。設為 -1 以停用此控制項。"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:279 videomass/vdms_panels/video_encoders/av1_svt.py:388 videomass/vdms_panels/video_encoders/avc_x264.py:281 videomass/vdms_panels/video_encoders/hevc_x265.py:285 videomass/vdms_panels/video_encoders/mpeg4.py:235 videomass/vdms_panels/video_encoders/video_encodercopy.py:131 videomass/vdms_panels/video_encoders/vp9_webm.py:320
 msgid "Video width and video height ratio."
 msgstr "視訊寬度與視訊高度比率。"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:281 videomass/vdms_panels/video_encoders/av1_svt.py:390 videomass/vdms_panels/video_encoders/avc_x264.py:283 videomass/vdms_panels/video_encoders/hevc_x265.py:287 videomass/vdms_panels/video_encoders/mpeg4.py:237 videomass/vdms_panels/video_encoders/vp9_webm.py:322
 msgid "Frame rate (frames per second). Frames repeat a given number of times per second. In some countries this is 30 for NTSC, other countries (like Italy) use 25 for PAL"
-msgstr ""
-"畫格率 (每秒畫格數)。畫格每秒重複特定次數。在某些國家 NTSC 為 30，其他國家 "
-"(如義大利) PAL 使用 25"
+msgstr "畫格率 (每秒畫格數)。畫格每秒重複特定次數。在某些國家 NTSC 為 30，其他國家 (如義大利) PAL 使用 25"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:285
 msgid "Quality/Speed ratio modifier. CPU Used sets how efficient the compression will be. Lower values mean slower encoding with better quality, and vice-versa. Valid values are from 0 to 8 inclusive."
-msgstr ""
-"品質/速度比率修飾符。CPU 使用率設定壓縮效率。較低的數值表示編碼較慢但品質較"
-"好，反之亦然。有效數值為 0 到 8 (含)。"
+msgstr "品質/速度比率修飾符。CPU 使用率設定壓縮效率。較低的數值表示編碼較慢但品質較好，反之亦然。有效數值為 0 到 8 (含)。"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:290
 msgid "Quality and compression efficiency vs speed trade-off. \"good\" is the default and recommended for most applications; \"realtime\" is recommended for live/fast encoding (live streaming, video conferencing, etc); \"allintra\" for All Intra encoding."
-msgstr ""
-"品質與壓縮效率 vs 速度的權衡。\"good\" 是預設值，推薦大多數應用程式使用；"
-"\"realtime\" 推薦用於即時/快速編碼 (直播串流、視訊會議等)；\"allintra\" 用於"
-"全幀內編碼。"
+msgstr "品質與壓縮效率 vs 速度的權衡。\"good\" 是預設值，推薦大多數應用程式使用；\"realtime\" 推薦用於即時/快速編碼 (直播串流、視訊會議等)；\"allintra\" 用於全幀內編碼。"
 
+#: videomass/vdms_panels/video_encoders/av1_aom.py:297
 msgid ""
 "Row Multi-Threading enables row-based multi-threading which maximizes CPU usage.\n"
 "\n"
@@ -2955,11 +3610,11 @@ msgid ""
 msgstr ""
 "列多執行緒啟用基於列的多執行緒，可最大化 CPU 使用率。\n"
 "\n"
-"若要啟用快速解碼效能，也請設定圖塊 (例如圖塊行 4 與圖塊列 1，或圖塊行 2 與圖"
-"塊列 2，共 4 個圖塊)。\n"
+"若要啟用快速解碼效能，也請設定圖塊 (例如圖塊行 4 與圖塊列 1，或圖塊行 2 與圖塊列 2，共 4 個圖塊)。\n"
 "\n"
 "只有當 CPU 的執行緒數多於編碼圖塊數時，啟用列多執行緒才會比較快。"
 
+#: videomass/vdms_panels/video_encoders/av1_svt.py:316
 msgid ""
 "presets 1-3 represent extremely high efficiency, for use when encode time is not important and quality/size of the resulting video file is critical.\n"
 "\n"
@@ -2969,16 +3624,15 @@ msgid ""
 "\n"
 "Preset 13 is even faster but not intended for direct human consumption--it can be used, for example, as a per-scene quality metric in VOD applications. One should use the lowest preset that is tolerable."
 msgstr ""
-"預設設定 1-3 代表極高效率，用於編碼時間不重要，但結果視訊檔案的品質/大小至關"
-"重要時。\n"
+"預設設定 1-3 代表極高效率，用於編碼時間不重要，但結果視訊檔案的品質/大小至關重要時。\n"
 "\n"
 "預設設定 4-6 通常為家庭愛好者使用，因為它們代表效率與合理計算時間的平衡。\n"
 "\n"
 "預設設定 7 到 12 用於快速與即時編碼。\n"
 "\n"
-"預設設定 13 更快，但不適合直接供人觀看——例如可用作 VOD 應用程式中的每場景品質"
-"指標。應使用可容忍的最低預設設定。"
+"預設設定 13 更快，但不適合直接供人觀看——例如可用作 VOD 應用程式中的每場景品質指標。應使用可容忍的最低預設設定。"
 
+#: videomass/vdms_panels/video_encoders/av1_svt.py:327
 msgid ""
 "Constant rate factor. This parameter governs the quality/size trade-off.\n"
 "\n"
@@ -2992,11 +3646,11 @@ msgstr ""
 "\n"
 "較高的 CRF 數值會導致最終輸出佔用較少空間，但開始失去細節。\n"
 "\n"
-"較低的 CRF 數值會保留更多細節，代價是檔案較大。1080p 視訊的一個良好起點是 "
-"30。\n"
+"較低的 CRF 數值會保留更多細節，代價是檔案較大。1080p 視訊的一個良好起點是 30。\n"
 "\n"
 "設為 -1 以停用此控制項。"
 
+#: videomass/vdms_panels/video_encoders/av1_svt.py:334
 msgid ""
 "The \"Film Grain\" parameter allows SVT-AV1 to detect and delete film grain from the source video, and replace it with synthetic grain of the same character, resulting in significant bitrate savings.\n"
 "\n"
@@ -3008,8 +3662,7 @@ msgid ""
 "\n"
 "If the source video does not have natural grain, this parameter can be set to -1 to disable it or at least 0."
 msgstr ""
-"「底片顆粒」參數允許 SVT-AV1 偵測並刪除來源視訊中的底片顆粒，並以相同特性的合"
-"成顆粒取代，從而顯著節省位元率。\n"
+"「底片顆粒」參數允許 SVT-AV1 偵測並刪除來源視訊中的底片顆粒，並以相同特性的合成顆粒取代，從而顯著節省位元率。\n"
 "\n"
 "對於具有正常顆粒量的實景視訊，數值 8 是一個合理的起點。\n"
 "\n"
@@ -3019,56 +3672,57 @@ msgstr ""
 "\n"
 "如果來源視訊沒有自然顆粒，此參數可設為 -1 以停用，或至少設為 0。"
 
+#: videomass/vdms_panels/video_encoders/av1_svt.py:346
 msgid ""
 "If enabled, the \"Film Grain Denoiser\" option can mitigate the detail removal caused by high \"Film Grain\" values required to preserve the look of very grainy films\n"
 "\n"
 "By default, the denoised frames are passed to be encoded as the final pictures, enabling this feature will lead to the original frames to be used instead. "
 msgstr ""
-"若啟用，「底片顆粒降噪器」選項可減輕因保留高顆粒感影片外觀所需的高「底片顆"
-"粒」數值所造成的細節移除\n"
+"若啟用，「底片顆粒降噪器」選項可減輕因保留高顆粒感影片外觀所需的高「底片顆粒」數值所造成的細節移除\n"
 "\n"
-"預設情況下，降噪後的畫格會被傳遞編碼為最終圖片，啟用此功能將導致改用原始畫"
-"格。"
+"預設情況下，降噪後的畫格會被傳遞編碼為最終圖片，啟用此功能將導致改用原始畫格。"
 
+#: videomass/vdms_panels/video_encoders/av1_svt.py:353
 msgid "Enables encoder optimization to produce faster (less CPU intensive) bit streams to decode, similar to the fastdecode tuning in x264 and x265."
-msgstr ""
-"啟用編碼器最佳化以產生解碼速度更快 (較不消耗 CPU) 的位元串流，類似於 x264 與 "
-"x265 中的 fastdecode 調整。"
+msgstr "啟用編碼器最佳化以產生解碼速度更快 (較不消耗 CPU) 的位元串流，類似於 x264 與 x265 中的 fastdecode 調整。"
 
+#: videomass/vdms_panels/video_encoders/av1_svt.py:362 videomass/vdms_panels/video_encoders/avc_x264.py:247 videomass/vdms_panels/video_encoders/hevc_x265.py:255
 msgid "Set profile restrictions"
 msgstr "設定設定檔限制"
 
+#: videomass/vdms_panels/video_encoders/av1_svt.py:364 videomass/vdms_panels/video_encoders/avc_x264.py:249 videomass/vdms_panels/video_encoders/hevc_x265.py:257
 msgid "Specify level for a selected profile"
 msgstr "指定選取設定檔的等級"
 
+#: videomass/vdms_panels/video_encoders/av1_svt.py:366 videomass/vdms_panels/video_encoders/avc_x264.py:251 videomass/vdms_panels/video_encoders/hevc_x265.py:259
 msgid "Tune the encoding params"
 msgstr "調整編碼參數"
 
+#: videomass/vdms_panels/video_encoders/avc_x264.py:245 videomass/vdms_panels/video_encoders/hevc_x265.py:253
 msgid "Set the encoding preset (default \"medium\")"
 msgstr "設定編碼預設設定 (預設 \"medium\")"
 
+#: videomass/vdms_panels/video_encoders/avc_x264.py:269
 msgid "specifies the target (average) bit rate for the encoder to use. Higher value = higher quality. Set -1 to disable this control."
-msgstr ""
-"指定編碼器使用的目標 (平均) 位元率。數值越高 = 品質越高。設為 -1 以停用此控制"
-"項。"
+msgstr "指定編碼器使用的目標 (平均) 位元率。數值越高 = 品質越高。設為 -1 以停用此控制項。"
 
+#: videomass/vdms_panels/video_encoders/mpeg4.py:217
 msgid "Variable Bit Rate. From 0-30, with 1 being highest quality/largest filesize and 30 being the lowest quality/smallest filesize. Set to -1 to disable this control."
-msgstr ""
-"變動位元率 (VBR)。從 0-30，1 為最高品質/最大檔案大小，30 為最低品質/最小檔案"
-"大小。設為 -1 以停用此控制項。"
+msgstr "變動位元率 (VBR)。從 0-30，1 為最高品質/最大檔案大小，30 為最低品質/最小檔案大小。設為 -1 以停用此控制項。"
 
+#: videomass/vdms_panels/video_encoders/mpeg4.py:222 videomass/vdms_panels/video_encoders/video_encodercopy.py:133
 msgid "Frames repeat a given number of times per second. In some countries this is 30 for NTSC, other countries (like Italy) use 25 for PAL"
-msgstr ""
-"畫格每秒重複特定次數。在某些國家 NTSC 為 30，其他國家 (如義大利) PAL 使用 25"
+msgstr "畫格每秒重複特定次數。在某些國家 NTSC 為 30，其他國家 (如義大利) PAL 使用 25"
 
+#: videomass/vdms_panels/video_encoders/mpeg4.py:226
 msgid "The default FourCC stored in an MPEG-4-coded file will be FMP4. If you want a different FourCC, set this option to xvid to force the FourCC xvid to be stored as the video FourCC rather than the default."
-msgstr ""
-"儲存在 MPEG-4 編碼檔案中的預設 FourCC 為 FMP4。如果您想要不同的 FourCC，請將"
-"此選項設為 xvid，以強制儲存 FourCC xvid 為視訊 FourCC，而非預設值。"
+msgstr "儲存在 MPEG-4 編碼檔案中的預設 FourCC 為 FMP4。如果您想要不同的 FourCC，請將此選項設為 xvid，以強制儲存 FourCC xvid 為視訊 FourCC，而非預設值。"
 
+#: videomass/vdms_panels/video_encoders/video_encodercopy.py:162
 msgid "Copy Video Codec"
 msgstr "複製視訊編解碼器"
 
+#: videomass/vdms_panels/video_encoders/video_encodercopy.py:163
 msgid ""
 "This will just copy the video track as is, without any video re-encoding.\n"
 "You will only be able to change output format, select other audio encoders and\n"
@@ -3078,9 +3732,11 @@ msgstr ""
 "您只能變更輸出格式、選取其他音訊編碼器以及\n"
 "其他少數選項。"
 
+#: videomass/vdms_panels/video_encoders/video_no_enc.py:74
 msgid "Video export disabled"
 msgstr "視訊匯出已停用"
 
+#: videomass/vdms_panels/video_encoders/video_no_enc.py:75
 msgid ""
 "The Media target you just selected will only allow you to export files as audio tracks.\n"
 "You can then process audio source files only or extract indexed audio streams on\n"
@@ -3090,6 +3746,7 @@ msgstr ""
 "您只能處理音訊來源檔案，或擷取視訊檔案上的\n"
 "索引音訊串流。"
 
+#: videomass/vdms_panels/video_encoders/vp9_webm.py:326
 msgid ""
 "Speed sets how efficient the compression will be.\n"
 "\n"
@@ -3111,6 +3768,7 @@ msgstr ""
 "\n"
 "當品質設為 realtime 時，速度的可用數值為 0 到 8。"
 
+#: videomass/vdms_panels/video_encoders/vp9_webm.py:335
 msgid ""
 "Time to spend encoding.\n"
 "\n"
@@ -3128,25 +3786,26 @@ msgstr ""
 "\n"
 "\"realtime\" 推薦用於直播 / 快速編碼。"
 
+#: videomass/vdms_panels/video_encoders/vp9_webm.py:341
 msgid ""
 "If enabled, adds support for row based multithreading which greatly enhances the number of threads the encoder can utilise. This improves encoding speed significantly on systems that are otherwise underutilised when encoding VP9. Since the amount of additional threads depends on the number of \"tiles\", which itself depends on the video resolution, encoding higher resolution videos will see a "
 "larger performance improvement."
-msgstr ""
-"若啟用，將加入對基於列的多執行緒支援，這會大幅提升編碼器可利用的執行緒數量。"
-"這在編碼 VP9 時，可顯著改善原本未充分利用的系統上的編碼速度。由於額外執行緒的"
-"數量取決於「圖塊」數量，而圖塊數量又取決於視訊解析度，因此編碼較高解析度的視"
-"訊將會看到較大的效能改善。"
+msgstr "若啟用，將加入對基於列的多執行緒支援，這會大幅提升編碼器可利用的執行緒數量。這在編碼 VP9 時，可顯著改善原本未充分利用的系統上的編碼速度。由於額外執行緒的數量取決於「圖塊」數量，而圖塊數量又取決於視訊解析度，因此編碼較高解析度的視訊將會看到較大的效能改善。"
 
+#: videomass/vdms_utils/presets_manager_utils.py:46
 #, python-brace-format
 msgid "Supports ({0}) formats only, not ({1})"
 msgstr "僅支援 ({0}) 格式，不支援 ({1})"
 
+#: videomass/vdms_utils/presets_manager_utils.py:49
 msgid "File formats not supported by the selected profile"
 msgstr "選取的設定檔不支援檔案格式"
 
+#: videomass/vdms_utils/presets_manager_utils.py:52
 msgid "Warning"
 msgstr "警告"
 
+#: videomass/vdms_utils/presets_manager_utils.py:90
 msgid ""
 "No presets found.\n"
 "\n"
@@ -3154,12 +3813,13 @@ msgid ""
 msgstr ""
 "找不到預設設定。\n"
 "\n"
-"可能的解決方案：開啟 [預設設定管理員] 面板，前往預設設定欄位，嘗試按一下 [全"
-"部還原...] 按鈕"
+"可能的解決方案：開啟 [預設設定管理員] 面板，前往預設設定欄位，嘗試按一下 [全部還原...] 按鈕"
 
+#: videomass/vdms_utils/queue_utils.py:54
 msgid "Import queue file"
 msgstr "匯入佇列檔案"
 
+#: videomass/vdms_utils/queue_utils.py:89
 #, python-brace-format
 msgid ""
 "ERROR: invalid data found loading queue file.\n"
@@ -3172,9 +3832,11 @@ msgstr ""
 "\n"
 "`destination` 鍵值中不能包含多次出現。"
 
+#: videomass/vdms_utils/queue_utils.py:118
 msgid "Videomass - Add Items to Queue"
 msgstr "Videomass - 新增項目至佇列"
 
+#: videomass/vdms_utils/queue_utils.py:119
 msgid ""
 "Multiple items with identical names and destination paths cannot coexist.\n"
 "Please choose one of the following actions:"
@@ -3182,12 +3844,15 @@ msgstr ""
 "具有相同名稱與目的地路徑的多個項目無法共存。\n"
 "請選擇以下動作之一："
 
+#: videomass/vdms_utils/queue_utils.py:123
 msgid "Replace occurrences with items from the imported queue."
 msgstr "使用匯入佇列中的項目取代出現的項目。"
 
+#: videomass/vdms_utils/queue_utils.py:124
 msgid "Add only the currently missing items to the queue."
 msgstr "僅將目前缺少的項目加入佇列。"
 
+#: videomass/vdms_utils/queue_utils.py:125
 msgid "Remove the current queue and replace it with the imported one."
 msgstr "移除目前佇列並以匯入的佇列取代。"
 

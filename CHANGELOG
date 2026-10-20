@@ -7,19 +7,28 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mon, 14 October 2026 v6.1.24
+Tue, 20 October 2026 v6.1.24
 
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Backward compatibility with wxPython v4.0.7 has been dropped.
   * Starting with this version, only wxPython4.1.1 or later is supported.
-  * Fixed debug messages in wxPython v4.3.2; this will make the application ready
-    (and cleaner) for the latest versions of the toolkit.
+  * Fixed debug messages in wxPython v4.3.2; this will make the application
+    ready (and cleaner) for the latest versions of the toolkit.
   * Improved building package using hatchling. This removes `setuptools` from
-    dependencies.
+    dependencies :-).
   * Fixed UI Dark mode issue on Windows11 using Dark system theme (see #23).
     This fix applies only in wxPython v4.3 or higher. Note that changes to the
     system theme will not be immediately reflected in the GUI if the application
     is running. Restart the application for the changes to take effect.
+  * Improved main panel layout.
+  * Improved filter Scale: Allows negative numbers to be entered even when the
+    "Constrain Proportions" checkbox is disabled (unchecked). This should make
+    the interface more intuitive and consistent in terms of use.
+  * Improved `NormalTransientPopup` class: it now supports automatic line
+    wrapping - based on a width in pixels specified as an integer argument -
+    for the text displayed in the popup.
+  * New explanations of the Resize filter have been added and are displayed
+    when clicking the "Read me" button. These are highly recommended.
 
 +------------------------------------+
 Tue, 06 October 2026 v6.1.22

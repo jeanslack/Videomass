@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.13.2026
+Rev: Oct.18.2026
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -407,7 +407,7 @@ class DataSource():
                 'add-queue', 'delpreset', 'exportall', 'exportselected',
                 'importfolder', 'importpreset', 'newpreset', 'reload',
                 'restoreall', 'restoreselected', 'cmdshow', 'start_time',
-                'end_time', 'waveform'
+                'end_time', 'waveform', 'paypaldon'
                 )  # must match with items on `iconset` tuple, see following
 
         icodir = self.dataloc['icodir']
@@ -484,6 +484,7 @@ class DataSource():
                    f"{choose.get('x16')}/start_time.{ext}",
                    f"{choose.get('x16')}/end_time.{ext}",
                    f"{choose.get('x16')}/waveform.{ext}",
+                   f"{choose.get('x48')}/paypaldon.{ext}",
                    )
         values = (os.path.join(norm) for norm in iconset)  # normalize pathns
 
