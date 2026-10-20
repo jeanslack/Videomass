@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.12.2026
+Rev: Oct.20.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -90,7 +90,7 @@ class Scale(wx.Dialog):
         label_width = wx.StaticText(sbox0, wx.ID_ANY, (_("Width:")))
         Flex_scale.Add(label_width, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_scale_width = wx.SpinCtrl(sbox0, wx.ID_ANY, "0",
-                                            min=0, max=9000,
+                                            min=-2, max=9000,
                                             style=wx.TE_PROCESS_ENTER
                                             | wx.SP_ARROW_KEYS
                                             )
@@ -100,7 +100,7 @@ class Scale(wx.Dialog):
         label_height = wx.StaticText(sbox0, wx.ID_ANY, (_("Height:")))
         Flex_scale.Add(label_height, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_scale_height = wx.SpinCtrl(sbox0, wx.ID_ANY, "0",
-                                             min=0, max=9000,
+                                             min=-2, max=9000,
                                              style=wx.TE_PROCESS_ENTER
                                              | wx.SP_ARROW_KEYS
                                              )
@@ -241,6 +241,8 @@ class Scale(wx.Dialog):
 
         # ----------------------Binding (EVT)--------------------------#
         self.Bind(wx.EVT_BUTTON, self.on_image_viewer, btn_view)
+        self.Bind(wx.EVT_TEXT, self.on_negative_width, self.spin_scale_width)
+        self.Bind(wx.EVT_TEXT, self.on_negative_height, self.spin_scale_height)
         self.Bind(wx.EVT_CHECKBOX, self.on_constrain, self.ckbx_keep)
         self.Bind(wx.EVT_RADIOBOX, self.on_dimension, self.rdb_scale)
         self.Bind(wx.EVT_BUTTON, self.on_readme, btn_readme)
@@ -364,19 +366,26 @@ class Scale(wx.Dialog):
 
     def on_readme(self, event):
         """
-        event on button help
+        event on button Read me
         """
-        msg = (_('If you want to keep the aspect ratio, select "Constrain '
-                 'proportions" below and\nspecify only one dimension, either '
-                 'width or height, and set the other dimension\nto -1 or -2 '
-                 '(some codecs require -2, so you should do some testing '
-                 'first).'))
+        msg = (_("If you want to maintain the aspect ratio, select "
+                 "\"Constrain proportions\" below and specify only one "
+                 "dimension, width or height, and set the other dimension to "
+                 "-1 or -2.\n\nSetting the value to -1 will cause FFmpeg to "
+                 "calculate the perfect mathematical proportion, but without "
+                 "checking for divisibility.\n\nBy setting the value to -2, "
+                 "you will tell FFmpeg to do exactly the same proportional "
+                 "calculation, but force the result to round to the nearest "
+                 "even number.\n\nAlso note that some codecs strictly require "
+                 "-2, so you should do some testing first.\n\nClick the Help "
+                 "button for full documentation on this filter."))
         win = NormalTransientPopup(self,
                                    wx.SIMPLE_BORDER,
                                    msg,
                                    Scale.LGREEN,
-                                   Scale.BLACK)
-
+                                   Scale.BLACK,
+                                   wrap=500
+                                   )
         # Show the popup right below or above the button
         # depending on available screen space...
         btn = event.GetEventObject()
@@ -401,6 +410,38 @@ class Scale(wx.Dialog):
             io_tools.openpath(self.frame)
     # ------------------------------------------------------------------#
 
+    def on_negative_width(self, event):
+        """
+        SpinCtrl event (EVT_TEXT) generated when the value changes.
+        Automatically enable the "Constrain Proportions (keep aspect ratio)"
+        feature when the user enters negative numbers -1 or -2.
+        This event will generate code that will let FFmpeg calculate
+        the image height scaling. That is, exactly the same as when the
+        "Constrain Proportion" checkbox is checked.
+        """
+        if not self.ckbx_keep.IsChecked():
+            if self.spin_scale_width.GetValue() in (-1, -2):
+                self.ckbx_keep.SetValue(True)
+                self.rdb_scale.SetSelection(1)  # call this before on_constrain
+                self.on_constrain(None)
+    # ------------------------------------------------------------------#
+
+    def on_negative_height(self, event):
+        """
+        SpinCtrl event (EVT_TEXT) generated when the value changes.
+        Automatically enable the "Constrain Proportions (keep aspect ratio)"
+        feature when the user enters negative numbers -1 or -2.
+        This event will generate code that will let FFmpeg calculate
+        the image width scaling. That is, exactly the same as when the
+        "Constrain Proportion" checkbox is checked.
+        """
+        if not self.ckbx_keep.IsChecked():
+            if self.spin_scale_height.GetValue() in (-1, -2):
+                self.ckbx_keep.SetValue(True)
+                self.rdb_scale.SetSelection(0)  # call this before on_constrain
+                self.on_constrain(None)
+    # ------------------------------------------------------------------#
+
     def on_constrain(self, event):
         """
         Evaluate CheckBox status
@@ -421,21 +462,31 @@ class Scale(wx.Dialog):
         """
         if self.rdb_scale.IsEnabled():
             if self.rdb_scale.GetSelection() == 0:
+                val = self.spin_scale_height.GetValue()
                 self.spin_scale_height.SetMin(-2)
                 self.spin_scale_height.SetMax(-1)
                 self.spin_scale_width.SetMin(0)
                 self.spin_scale_width.SetMax(9000)
+                if val in (-1, -2):
+                    self.spin_scale_height.SetValue(val)
 
             elif self.rdb_scale.GetSelection() == 1:
+                val = self.spin_scale_width.GetValue()
                 self.spin_scale_width.SetMin(-2)
                 self.spin_scale_width.SetMax(-1)
                 self.spin_scale_height.SetMax(9000)
                 self.spin_scale_height.SetMin(0)
+                if val in (-1, -2):
+                    self.spin_scale_width.SetValue(val)
         else:
-            self.spin_scale_width.SetMin(0)
+            self.spin_scale_width.SetMin(-2)
             self.spin_scale_width.SetMax(9000)
-            self.spin_scale_height.SetMin(0)
+            self.spin_scale_height.SetMin(-2)
             self.spin_scale_height.SetMax(9000)
+            if self.spin_scale_width.GetValue() in (-1, -2):
+                self.spin_scale_width.SetValue(0)
+            if self.spin_scale_height.GetValue() in (-1, -2):
+                self.spin_scale_height.SetValue(0)
     # ------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -497,6 +548,14 @@ class Scale(wx.Dialog):
 
         if self.width == '0' or self.height == '0':
             size = ''
+        elif self.width in ('-1', '-2') or self.height in ('-1', '-2'):
+            if self.width in ('-1', '-2') and self.height in ('-1', '-2'):
+                size = ''
+            else:
+                size = f'scale=w={self.width}:h={self.height}'
+                diction['scale'] = size
+            self.darNum, self.darDen = '0', '0'
+            self.sarNum, self.sarDen = '0', '0'
         else:
             size = f'scale=w={self.width}:h={self.height}'
             diction['scale'] = size

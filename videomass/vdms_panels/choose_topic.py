@@ -98,8 +98,8 @@ class Choose_Topic(wx.Panel):
 
         # Pushes everything that follows toward the bottom of the panel
         sizer_base.AddStretchSpacer(1)  # proportional stretching
-        btn_don = wx.Button(self, wx.ID_ANY, (''), size=(100, -1), style=style)
-        btn_don.SetBitmap(bmpPaypal, wx.LEFT)
+        btn_don = wx.BitmapButton(self, wx.ID_ANY, bmpPaypal,
+                                  size=wx.DefaultSize, style=wx.LEFT)
         sizer_base.Add(btn_don, 0, wx.ALIGN_CENTER, 0)
 
         msg = (_('This is free and open-source software. If you find it '
@@ -129,6 +129,9 @@ class Choose_Topic(wx.Panel):
         tip = (_('Extract images (frames) from your movies '
                  'in JPG, PNG, BMP, GIF formats.'))
         videotoimages.SetToolTip(tip)
+
+        tip = _('Click here to make a donation to the Videomass project.')
+        btn_don.SetToolTip(tip)
 
         if self.appdata['ostype'] == 'Darwin':
             welcome.SetFont(wx.Font(16, wx.SWISS, wx.NORMAL, wx.BOLD))

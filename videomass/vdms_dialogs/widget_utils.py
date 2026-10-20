@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Nov.27.2021
+Rev: Oct.20.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -32,13 +32,33 @@ from pubsub import pub
 
 class NormalTransientPopup(wx.PopupTransientWindow):
     """
-    Adds a bit of text and mouse movement to the wx.PopupWindow
+    Adds a bit of text and mouse movement to the wx.PopupWindow.
+    The purpose of this popup is to display a box with helpful
+    explanations that users can immediately consult without
+    cluttering the main GUI with too much text.
     """
-    def __init__(self, parent, style, message, backgrdcol, foregrdcol):
+    def __init__(self,
+                 parent,
+                 style,
+                 message,
+                 backgrdcol,
+                 foregrdcol,
+                 wrap=-1
+                 ):
+        """
+        Some word on these parameters:
+        - message: the text you want showing in the popup.
+        - backgrdcol: the background colour code (RGB or html)
+        - foregrdcol: The text colour code
+        - wrap = width in pixels specified as an integer argument
+          for the text displayed in the popup.
+        """
         wx.PopupTransientWindow.__init__(self, parent, style)
         panel = wx.Panel(self)
         panel.SetBackgroundColour(backgrdcol)
         st = wx.StaticText(panel, -1, message)
+        if wrap > -1:
+            st.Wrap(wrap)
         st.SetForegroundColour(wx.Colour(foregrdcol))
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(st, 0, wx.ALL, 5)

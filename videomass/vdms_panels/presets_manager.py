@@ -120,6 +120,7 @@ class PrstPan(wx.Panel):
                                      | wx.CB_READONLY,
                                      )
         fgs1.Add(self.cmbx_prst, 0, wx.ALL | wx.CENTRE, 5)
+        fgs1.Add(10, 0)
         self.btn_newpreset = wx.Button(boxprst, wx.ID_ANY, "", size=(40, -1))
         self.btn_newpreset.SetBitmap(bmpnewprst, wx.LEFT)
         fgs1.Add(self.btn_newpreset, 0, wx.ALL | wx.CENTRE, 5)
