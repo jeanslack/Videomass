@@ -24,19 +24,21 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import time
 import os
+import time
 from shutil import move
-from pubsub import pub
+
 import wx
+from pubsub import pub
+
 from videomass.vdms_dialogs.widget_utils import notification_area
+from videomass.vdms_io import io_tools
 from videomass.vdms_io.make_filelog import make_log_template
+from videomass.vdms_threads.concat_demuxer import ConcatDemuxer
 from videomass.vdms_threads.ffmpeg import FFmpeg
 from videomass.vdms_threads.image_extractor import PicturesFromVideo
-from videomass.vdms_threads.concat_demuxer import ConcatDemuxer
 from videomass.vdms_threads.slideshow import SlideshowMaker
-from videomass.vdms_utils.utils import (time_to_integer, integer_to_time)
-from videomass.vdms_io import io_tools
+from videomass.vdms_utils.utils import integer_to_time, time_to_integer
 
 
 def delete_file_source(flist, trashdir):
@@ -49,12 +51,11 @@ def delete_file_source(flist, trashdir):
     see `for name ...` loop below.
     """
     filenotfounderror = None
-    if not os.path.exists(trashdir):
-        if not os.path.isdir(trashdir):
-            try:
-                os.mkdir(trashdir, mode=0o777)
-            except FileNotFoundError as err:
-                filenotfounderror = err
+    if not os.path.exists(trashdir) and not os.path.isdir(trashdir):
+        try:
+            os.mkdir(trashdir, mode=0o777)
+        except FileNotFoundError as err:
+            filenotfounderror = err
 
     if filenotfounderror is not None:
         wx.MessageBox(f"{filenotfounderror}", _('Videomass - Error!'),
@@ -116,10 +117,6 @@ class LogOut(wx.Panel):
     MSG_interrupted = _('Interrupted Process !')
     MSG_completed = _('Successfully completed !')
     MSG_unfinished = _('Not everything was successful.')
-
-    WHITE = '#fbf4f4'  # white for background status bar
-    BLACK = '#060505'  # black for background status bar
-    YELLOW = '#bd9f00'
     # ------------------------------------------------------------------#
 
     def __init__(self, parent):
@@ -305,7 +302,7 @@ class LogOut(wx.Panel):
                     eta = "   ETA: N/A"
             else:
                 eta = ""
-            self.labprog.SetLabel(f'Processing: {str(int(percentage))}% {eta}')
+            self.labprog.SetLabel(f'Processing: {int(percentage)}% {eta}')
             self.labffmpeg.SetLabel(' | '.join(ffprog))
 
         else:
@@ -380,10 +377,10 @@ class LogOut(wx.Panel):
             self.txtout.AppendText(f"\n{endmsg}\n")
             self.barprog.SetValue(0)
 
-            if filetotrash:  # move processed files to Videomass trash folder
-                if self.parent.movetotrash:
-                    trashdir = self.appdata['trashdir_loc']
-                    delete_file_source(filetotrash, trashdir)  # filelist, dir
+            if filetotrash and self.parent.movetotrash:
+                # move processed files to Videomass trash folder
+                trashdir = self.appdata['trashdir_loc']
+                delete_file_source(filetotrash, trashdir)  # filelist, dir
 
         self.txtout.AppendText('\n')
         self.reset_all()
@@ -395,10 +392,6 @@ class LogOut(wx.Panel):
         The user change idea and was stop process
         """
         self.thread_type.stop()
-        self.parent.statusbar_msg(_("Please wait... interruption in progress"),
-                                  LogOut.YELLOW, LogOut.BLACK)
-        self.thread_type.join()
-        self.parent.statusbar_msg(_("...Interrupted"), None)
         self.abort = True
         # event.Skip()
     # ----------------------------------------------------------------------

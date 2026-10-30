@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.14.2022
+Rev: Oct.30.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,9 +25,10 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import shutil
-import ssl
+import urllib.error
 import urllib.request
 from threading import Thread
+
 import requests
 import wx
 from pubsub import pub
@@ -63,12 +64,12 @@ class FileDownloading(Thread):
         """
         Check for new version release
         """
-        # HACK fix soon the ssl certificate
-        context = ssl._create_unverified_context()
         headers = {'User-Agent': 'Mozilla/5.0'}
         page = urllib.request.Request(self.url, headers=headers)
         try:
-            with urllib.request.urlopen(page, context=context) as \
+            # Removed the disabling of SSL certificate validation
+            # for security reasons (SAST compliance)
+            with urllib.request.urlopen(page) as \
                     response, open(self.filename, 'wb') as out_file:
                 shutil.copyfileobj(response, out_file)
 
@@ -91,23 +92,28 @@ class FileDownloading(Thread):
 
 def download_bigfile(url, filename):
     """
-    network download operation via `requests`. It is used to
+    Network download operation via `requests`. It is used to
     download big files and save them on filesystem.
+
+    Example to get tarball_url name from github:
+    `get_github_releases(url, keyname)` see function on IO module.
+    url = 'https://api.github.com/repos/jeanslack/Vidtuber/releases/latest'
+    filename = '/home/gianluca/Modelli/porzione.tar.gz'
 
     """
     # ------------------------------------------
-    # this section is an example to get tarball_url name from github.
-    # Use `get_github_releases(url, keyname)` function on IO module
-    url = 'https://api.github.com/repos/jeanslack/Videomass/releases/latest'
-    filename = '/home/gianluca/Modelli/porzione.tar.gz'
-    response = requests.get(url, timeout=10)
-    tarball = response.json()["tarball_url"]
-    # -------------------------------------------
 
-    with requests.get(tarball, stream=True, timeout=10) as dwnl:
+    # Se l'URL punta alle API GitHub, estrae dinamicamente link tarball reale
+    if "api.github.com" in url:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        url = response.json()["tarball_url"]
+
+    # Removed encoding='utf-8' not compatible with binary mode 'wb'
+    with requests.get(url, stream=True, timeout=10) as dwnl:
         dwnl.raise_for_status()
-        with open(filename, 'wb', encoding='utf-8') as fname:
+        with open(filename, 'wb') as fname:
             for chunk in dwnl.iter_content(chunk_size=8192):
-                fname.write(chunk)
+                fname.writelines(chunk)
 
     return filename

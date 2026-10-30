@@ -7,7 +7,7 @@ Platform: all platforms
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Feb.17.2022
+Rev: Oct.30.2026
 Code checker: flake8, pylint
 
 This file is part of FFcuesplitter.
@@ -25,10 +25,11 @@ This file is part of FFcuesplitter.
    You should have received a copy of the GNU General Public License
    along with FFcuesplitter.  If not, see <http://www.gnu.org/licenses/>.
 """
-import subprocess
-import shlex
-import platform
 import json
+import platform
+import shlex
+import subprocess
+
 from videomass.vdms_utils.utils import Popen
 
 

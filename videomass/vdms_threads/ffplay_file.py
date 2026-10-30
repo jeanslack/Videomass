@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.18.2025
+Rev: Oct.30.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,15 +26,18 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-from threading import Thread
-import subprocess
 import platform
+import subprocess
+from threading import Thread
+
 import wx
 from pubsub import pub
-from videomass.vdms_utils.utils import Popen
+
 from videomass.vdms_io.io_tools import show_msg_notify
 from videomass.vdms_io.make_filelog import make_log_template, tolog
-if not platform.system() == 'Windows':
+from videomass.vdms_utils.utils import Popen
+
+if platform.system() != 'Windows':
     import shlex
 
 
@@ -74,7 +77,7 @@ class FilePlay(Thread):
         tolog(f'INFO: VIDEOMASS COMMAND: {cmd}', self.logfile,
               sep=True, wdate=True)
 
-        if not platform.system() == 'Windows':
+        if platform.system() != 'Windows':
             cmd = shlex.split(cmd)
             info = None
             shell = False
@@ -148,7 +151,7 @@ class FilePlayback_GetOutput(Thread):
         tolog(f'INFO: VIDEOMASS COMMAND: {cmd}', self.logfile,
               sep=True, wdate=True
               )
-        if not platform.system() == 'Windows':
+        if platform.system() != 'Windows':
             cmd = shlex.split(cmd)
         try:
             with Popen(cmd,

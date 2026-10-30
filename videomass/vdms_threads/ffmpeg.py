@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.13.2025
+Rev: Oct.30.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,15 +24,18 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-from threading import Thread
-import time
-import subprocess
 import platform
+import subprocess
+import time
+from threading import Thread
+
 import wx
 from pubsub import pub
-from videomass.vdms_utils.utils import Popen
+
 from videomass.vdms_io.make_filelog import tolog
-if not platform.system() == 'Windows':
+from videomass.vdms_utils.utils import Popen
+
+if platform.system() != 'Windows':
     import shlex
 
 
@@ -117,7 +120,7 @@ def one_pass(*args, **kwa):
               f'Source: "{kwa["source"]}"\nDestination: "{nul}"')
     stamp1 = f'{count1}\n\n[COMMAND]:\n{pass1}'
 
-    if not platform.system() == 'Windows':
+    if platform.system() != 'Windows':
         pass1 = shlex.split(pass1)
 
     return {'pass1': pass1, 'count1': count1, 'stamp1': stamp1}
@@ -145,7 +148,7 @@ def two_pass(*args, **kwa):
               )
     stamp2 = f'\n{count2}\n\n[COMMAND]:\n{pass2}'
 
-    if not platform.system() == 'Windows':
+    if platform.system() != 'Windows':
         pass2 = shlex.split(pass2)
 
     return {'pass2': pass2, 'count2': count2, 'stamp2': stamp2}
@@ -172,7 +175,7 @@ def one_pass_stab(*args, **kwa):
               f'"{kwa["source"]}"\nDestination: "{nul}"')
     stamp1 = f'{count1}\n\n[COMMAND]:\n{pass1}'
 
-    if not platform.system() == 'Windows':
+    if platform.system() != 'Windows':
         pass1 = shlex.split(pass1)
 
     return {'pass1': pass1, 'count1': count1, 'stamp1': stamp1}
@@ -199,7 +202,7 @@ def two_pass_stab(*args, **kwa):
               f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"')
     stamp2 = f'\n{count2}\n\n[COMMAND]:\n{pass2}'
 
-    if not platform.system() == 'Windows':
+    if platform.system() != 'Windows':
         pass2 = shlex.split(pass2)
 
     return {'pass2': pass2, 'count2': count2, 'stamp2': stamp2}
@@ -225,7 +228,7 @@ def simple_one_pass(*args, **kwa):
               f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"')
     stamp1 = f'{count1}\n\n[COMMAND]:\n{pass1}'
 
-    if not platform.system() == 'Windows':
+    if platform.system() != 'Windows':
         pass1 = shlex.split(pass1)
 
     return {'pass1': pass1, 'count1': count1, 'stamp1': stamp1}
@@ -252,7 +255,7 @@ def one_pass_ebu(*args, **kwa):
               f'"{kwa["source"]}"\nDestination: "{nul}"')
     stamp1 = f'{count1}\n\n[COMMAND]:\n{pass1}'
 
-    if not platform.system() == 'Windows':
+    if platform.system() != 'Windows':
         pass1 = shlex.split(pass1)
 
     summary = {'Input Integrated:': None, 'Input True Peak:': None,
@@ -287,7 +290,7 @@ def two_pass_ebu(*args, **kwa):
               f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"')
     stamp2 = f'\n{count2}\n\n[COMMAND]:\n{pass2}'
 
-    if not platform.system() == 'Windows':
+    if platform.system() != 'Windows':
         pass2 = shlex.split(pass2)
 
     return {'pass2': pass2, 'count2': count2, 'stamp2': stamp2}
@@ -314,10 +317,11 @@ class FFmpeg(Thread):
         get = wx.GetApp()  # get data from bootstrap
         self.appdata = get.appset
         self.stop_work_thread = False  # set stop ffmpeg
-        self.count = 0  # count for loop
+        self.count = 0  # count loops
         self.logfile = args[0]  # log filename
         self.kwargs = args[1]  # it is a list of dictionaries
         self.nargs = len(self.kwargs)  # how many items...
+        self.fatal = None  # fatal error I/O flag
 
         Thread.__init__(self)
         self.start()
@@ -357,9 +361,9 @@ class FFmpeg(Thread):
                            bufsize=1,
                            universal_newlines=True,
                            encoding=self.appdata['encoding'],
-                           ) as proc1:
+                           ) as self.proc1:
 
-                    for line in proc1.stderr:
+                    for line in self.proc1.stderr:
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
                                      output=line,
@@ -367,9 +371,10 @@ class FFmpeg(Thread):
                                      status=0
                                      )
                         if self.stop_work_thread:
-                            proc1.stdin.write('q')  # stop ffmpeg
-                            out = proc1.communicate()[1]
-                            proc1.wait()
+                            if self.fatal: return
+                            out = self.proc1.communicate()[1]
+                            self.proc1.wait()
+
                             wx.CallAfter(pub.sendMessage,
                                          "UPDATE_EVT",
                                          output='STOP',
@@ -389,16 +394,16 @@ class FFmpeg(Thread):
                                 if line.startswith(k):
                                     summary[k] = line.split(':')[1].split()[0]
 
-                    if proc1.wait():  # ..Failed
-                        out = proc1.communicate()[1]
+                    if self.proc1.wait():  # ..Failed
+                        out = self.proc1.communicate()[1]
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
                                      output='FAILED',
                                      duration=kwa['duration'],
-                                     status=proc1.wait(),
+                                     status=self.proc1.wait(),
                                      )
                         tolog(f"[VIDEOMASS]: Error Exit Status: "
-                              f"{proc1.wait()} {out}", self.logfile
+                              f"{self.proc1.wait()} {out}", self.logfile
                               )
                         time.sleep(1)
                         continue
@@ -413,7 +418,7 @@ class FFmpeg(Thread):
                 tolog(err, self.logfile)
                 break
 
-            if proc1.wait() == 0:  # ..Finished
+            if self.proc1.wait() == 0:  # ..Finished
                 if not kwa["args"][1]:
                     filedone.append(kwa["source"])
                 wx.CallAfter(pub.sendMessage,
@@ -459,9 +464,9 @@ class FFmpeg(Thread):
                        bufsize=1,
                        universal_newlines=True,
                        encoding=self.appdata['encoding'],
-                       ) as proc2:
+                       ) as self.proc2:
 
-                for line2 in proc2.stderr:
+                for line2 in self.proc2.stderr:
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line2,
@@ -469,9 +474,10 @@ class FFmpeg(Thread):
                                  status=0,
                                  )
                     if self.stop_work_thread:
-                        proc2.stdin.write('q')  # stop ffmpeg
-                        out = proc2.communicate()[1]
-                        proc2.wait()
+                        if self.fatal: return
+                        out = self.proc2.communicate()[1]
+                        self.proc2.wait()
+
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
                                      output='STOP',
@@ -484,21 +490,21 @@ class FFmpeg(Thread):
                                      filetotrash=None)
                         return
 
-                if proc2.wait():  # ..Failed
-                    out = proc2.communicate()[1]
+                if self.proc2.wait():  # ..Failed
+                    out = self.proc2.communicate()[1]
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output='FAILED',
                                  duration=kwa['duration'],
-                                 status=proc2.wait(),
+                                 status=self.proc2.wait(),
                                  )
                     tolog(f"[VIDEOMASS]: Error Exit Status: "
-                          f"{proc2.wait()} {out}", self.logfile
+                          f"{self.proc2.wait()} {out}", self.logfile
                           )
                     time.sleep(1)
                     continue
 
-            if proc2.wait() == 0:  # ..Finished
+            if self.proc2.wait() == 0:  # ..Finished
                 filedone.append(kwa["source"])
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
@@ -512,6 +518,56 @@ class FFmpeg(Thread):
 
     def stop(self):
         """
-        Sets the stop work thread to terminate the process
+        Sets the stop work thread to terminate the current process.
+        This method has been revised and expanded to make the GUI
+        more responsive and less dependent on the subprocess's output
+        messages during `readlines` loops. This speeds up the process
+        of closing the subprocess within the background thread while
+        also improving error handling, ensuring the GUI remains completely
+        free from potential blocks or freezes while waiting for termination
+        outputs.
+
+        `flush()` forces Python to immediately clear the write buffer
+         and send the 'q' char to the pipe connected to FFmpeg.
+
+        WARNING:
+        How catch ValueError for tests:
+            if proc.stdin:
+            proc.stdin.close()
         """
         self.stop_work_thread = True
+        proc = None
+
+        # Check if the process is still running (.poll())
+        if hasattr(self, 'proc1') and self.proc1.poll() is None:
+            proc = self.proc1
+
+        if hasattr(self, 'proc2') and self.proc2.poll() is None:
+            proc = self.proc2
+
+        # Check if the process exists
+        if proc is not None:
+            try:
+                # Verify that stdin is open and available before writing
+                if proc.stdin and not proc.stdin.closed:
+                    proc.stdin.write('q')
+                    proc.stdin.flush()
+
+            # Make sure the process isn't already finished
+            except (BrokenPipeError, ValueError, AttributeError,
+                    OSError) as err:
+                self.fatal = True
+
+                wx.CallAfter(pub.sendMessage,
+                             "COUNT_EVT",
+                             count=f"CRASH_STOP: {err}",
+                             duration=0,
+                             end='ERROR',
+                             )
+                tolog(f"[VIDEOMASS]: FATAL ERROR: {err}", self.logfile)
+
+                # Force event end notification to unlock GUI
+                time.sleep(.5)
+                wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=None)
+
+                return

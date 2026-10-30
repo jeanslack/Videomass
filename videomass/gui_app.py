@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.14.2026
+Rev: Oct.29.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,15 +24,18 @@ This file is part of Videomass.
     You should have received a copy of the GNU General Public License
     along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+import builtins
 import os
 import sys
-from shutil import which, rmtree
-import builtins
+from shutil import rmtree, which
+
 import wx
+
+from videomass.vdms_sys import app_const as appC
 from videomass.vdms_sys.argparser import arguments
 from videomass.vdms_sys.configurator import DataSource
-from videomass.vdms_sys import app_const as appC
 from videomass.vdms_utils.utils import del_filecontents
+
 # from videomass.vdms_sys.external_package import importer_init_file
 
 # add translation macro to builtin similar to what gettext does
@@ -86,9 +89,8 @@ class Videomass(wx.App):
         self.appset['DISPLAY_SIZE'] = wx.GetDisplaySize()  # get monitor res
         if hasattr(wx.SystemSettings, 'GetAppearance'):
             appear = wx.SystemSettings.GetAppearance()
-            if hasattr(appear, 'IsSystemDark'):  # from wx>=4.3.0
-                if appear.IsSystemDark():
-                    self.SetAppearance(Videomass.Appearance.Dark)
+            if hasattr(appear, 'IsSystemDark') and appear.IsSystemDark():
+                self.SetAppearance(Videomass.Appearance.Dark)
             self.appset['IS_DARK_THEME'] = appear.IsDark()
 
         self.iconset = self.data.icons_set(self.appset['icontheme'])
@@ -175,59 +177,81 @@ class Videomass(wx.App):
         if self.appset['clearcache']:
             tmp = os.path.join(self.appset['cachedir'], 'tmp')
             if os.path.exists(tmp):
+                failed_cachef = None
                 for cache in os.listdir(tmp):
                     fcache = os.path.join(tmp, cache)
-                    if os.path.isfile(fcache):
-                        os.remove(fcache)
-                    elif os.path.isdir:
-                        rmtree(fcache)
+                    try:
+                        if os.path.isfile(fcache) or os.path.islink(fcache):
+                            os.remove(fcache)
+                        elif os.path.isdir(fcache):
+                            rmtree(fcache)
+                    except OSError:
+                        failed_cachef = True
+
+                if failed_cachef:
+                    wx.MessageBox(_("Could not erase some cache files."),
+                                  'Videomass', wx.ICON_WARNING)
 
         if self.appset['clearlogfiles']:
             logdir = self.appset['logdir']
             if os.path.exists(logdir):
                 flist = os.listdir(logdir)
                 if flist:
+                    failed_logf = []
                     for logname in flist:
                         logfile = os.path.join(logdir, logname)
                         try:
                             del_filecontents(logfile)
-                        except Exception as err:
-                            wx.MessageBox(_("Unexpected error while deleting "
-                                            "file contents:\n\n"
-                                            "{0}").format(err),
-                                          'Videomass', wx.ICON_STOP)
-                            return False
+                        except OSError as err:
+                            failed_logf.append(f"{logname} ({err})")
+
+                    if failed_logf:
+                        errors_str = "\n".join(failed_logf)
+                        wx.MessageBox(_("Could not clear some log files."
+                                      "\n\n{0}").format(errors_str),
+                                      'Videomass', wx.ICON_WARNING)
 
         if self.appset['auto-restart-app']:
-            auto_restart(self.appset['app'], self.appset['make_portable'])
-            return True
-
+            try:
+                auto_restart(self.appset['app'], self.appset['make_portable'])
+                return True
+            except OSError as err:  # executable not found or failed
+                wx.MessageBox(_("Failed to auto-restart the application:\n\n"
+                                "{0}").format(err),
+                              'Videomass', wx.ICON_WARNING)
         return True
     # -------------------------------------------------------------------
 
 
 def auto_restart(apptype, portmode):
     """
-    This function spawn the same executable again, automatically
-    restarting this application if required, for example after
-    the wizard dialog ends or after applying settings that require
-    the application to be restarted. Note that this behavior
-    it is disabled using the Python interpreter (interactive
-    mode).
+    This function spawns the same executable again, automatically
+    restarting this application if required.
     """
-    if not ''.join(sys.argv) or sys.argv[0].startswith('-'):
+    # Avoid restart in interactive mode (python shell)
+    if not sys.argv or sys.argv[0].startswith('-'):
         sys.exit()
 
     if apptype == 'pyinstaller':
-        wx.Execute(f'{sys.executable}', flags=wx.EXEC_SYNC)
-    else:
-        makeportable = '' if not portmode else fr'--make-portable "{portmode}"'
+        cmd_list = [sys.executable]  # (videomass.exe)
+    else:  # source
+        cmd_list = [sys.executable, sys.argv[0]]
 
-        if os.path.basename(sys.argv[0]) == 'launcher':
-            cmdargs = f'{sys.executable} {sys.argv[0]} {makeportable}'
-        else:
-            cmdargs = f'{sys.argv[0]} {makeportable}'
-        wx.Execute(f'{cmdargs}', flags=wx.EXEC_SYNC)
+    if portmode:
+        cmd_list.extend(['--make-portable', str(portmode)])
+
+    for arg in sys.argv[1:]:
+        if (arg not in cmd_list and arg != portmode and arg
+           != '--make-portable'):
+            cmd_list.append(arg)
+    try:
+        # do not use EXEC_SYNC here, use EXEC_ASYNC instead !
+        wx.Execute(' '.join(f'"{arg}"' for arg in cmd_list),
+                   flags=wx.EXEC_ASYNC)
+
+    except OSError as err:
+        # Raise the OSError exception so that OnExit can catch it
+        raise OSError(f"Unable to initiate the restart process: {err}")
 
 
 def main():

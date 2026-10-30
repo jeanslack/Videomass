@@ -139,3 +139,10 @@ Issues = "https://github.com/jeanslack/Videomass/issues"
 
 [project.gui-scripts]
 videomass = "videomass.gui_app:main"
+
+# Ruff linter configuration
+[tool.ruff]
+builtins = ["_"]
+
+[tool.ruff.lint]
+# add or remove other rules here (e.g., select, ignore, etc.)

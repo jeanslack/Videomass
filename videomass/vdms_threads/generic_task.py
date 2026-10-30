@@ -6,7 +6,7 @@ Compatibility: Python3 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.19.2025
+Rev: Oct.30.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,14 +24,17 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-from threading import Thread
 import platform
 import subprocess
+from threading import Thread
+
 import wx
 from pubsub import pub
-from videomass.vdms_utils.utils import Popen
+
 from videomass.vdms_io.make_filelog import tolog
-if not platform.system() == 'Windows':
+from videomass.vdms_utils.utils import Popen
+
+if platform.system() != 'Windows':
     import shlex
 
 
@@ -100,7 +103,7 @@ class FFmpegGenericTaskOutLines(Thread):
               f'INFO: VIDEOMASS COMMAND: {cmd}', self.logfile,
               sep=True, wdate=True
               )
-        if not platform.system() == 'Windows':
+        if platform.system() != 'Windows':
             cmd = shlex.split(cmd)
         try:
             with Popen(cmd,
@@ -206,7 +209,7 @@ class FFmpegGenericTask(Thread):
               f'INFO: VIDEOMASS COMMAND: {cmd}', self.logfile,
               sep=True, wdate=True
               )
-        if not platform.system() == 'Windows':
+        if platform.system() != 'Windows':
             cmd = shlex.split(cmd)
         try:
             with Popen(cmd,

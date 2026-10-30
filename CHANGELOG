@@ -7,11 +7,11 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Tue, 20 October 2026 v6.1.24
+Sat, 31 October 2026 v6.1.24
 
   * Requires Python version >= 3.11 (Because Python3.10 EOL).
   * Backward compatibility with wxPython v4.0.7 has been dropped.
-  * Starting with this version, only wxPython4.1.1 or later is supported.
+  * Requires wxPython >= 4.1.1 .
   * Fixed debug messages in wxPython v4.3.2; this will make the application
     ready (and cleaner) for the latest versions of the toolkit.
   * Improved building package using hatchling. This removes `setuptools` from
@@ -27,8 +27,22 @@ Tue, 20 October 2026 v6.1.24
   * Improved `NormalTransientPopup` class: it now supports automatic line
     wrapping - based on a width in pixels specified as an integer argument -
     for the text displayed in the popup.
-  * New explanations of the Resize filter have been added and are displayed
-    when clicking the "Read me" button. These are highly recommended.
+  * Updated help clicking on "Read me" button for Resize filter.
+  * Code refactoring performed on the following files: gui_app.py [ OnExit(),
+    auto_restart() ], utils.py [ Popen(), open_default_application(),
+    format_bytes(), to_bytes(), time_to_integer(), integer_to_time(),
+    del_filecontents(), copy_on(), ], shutdown.py, main_frame.py [
+    auto_shutdown(), click_stop(), write_option_before_exit(),
+    check_new_releases(), prst_checkversion(), prst_downloader(), ],
+    generic_download.py, io_tools.py [ get_github_releases() ].
+  * Improved error handles on file operations during application exit.
+  * Fixed background process using auto-restart (wx.EXEC_ASYNC).
+  * Improved handling of forced FFmpeg terminations (stop) to make the GUI more
+    responsive and less dependent on the subprocess's output messages during
+    `readlines` loops. This speeds up the process of closing the subprocess
+    within the background thread while also improving error handling,
+    ensuring the GUI remains completely free from potential blocks or freezes
+    while waiting for termination outputs.
 
 +------------------------------------+
 Tue, 06 October 2026 v6.1.22

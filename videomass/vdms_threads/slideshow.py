@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.08.2024
+Rev: Oct.30.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,16 +25,19 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import tempfile
-from threading import Thread
-import time
-import subprocess
 import platform
+import subprocess
+import tempfile
+import time
+from threading import Thread
+
 import wx
 from pubsub import pub
-from videomass.vdms_utils.utils import Popen
+
 from videomass.vdms_io.make_filelog import tolog
-if not platform.system() == 'Windows':
+from videomass.vdms_utils.utils import Popen
+
+if platform.system() != 'Windows':
     import shlex
 
 
@@ -56,19 +59,17 @@ def convert_images(*varargs, **kwargs):
                  duration=len(flist),
                  end='CONTINUE',
                  )
-    prognum = 0
     args = (f'"{kwargs["ffmpeg_cmd"]}" '
             f'{kwargs["ffmpeg-default-args"]} '
             f'{kwargs["ffmpeg_loglev"]} ')
     tolog(f'Preparing temporary files...\n'
           f'\n[COMMAND:]\n{args}', logfile, sep=True, wdate=True
           )
-    for files in flist:
-        prognum += 1
+    for prognum, files in enumerate(flist, start=1):
         tmpf = os.path.join(tmpdir, f'{imagenames}{prognum}.bmp')
         cmd_1 = f'{args} -i "{files}" "{tmpf}"'
 
-        if not platform.system() == 'Windows':
+        if platform.system() != 'Windows':
             cmd_1 = shlex.split(cmd_1)
         try:
             with Popen(cmd_1,
@@ -149,7 +150,7 @@ def resizing_process(*varargs, **kwargs):
              )
     tolog(f'\nFile resizing...\n\n[COMMAND]:\n{cmd_1}', logfile)
 
-    if not platform.system() == 'Windows':
+    if platform.system() != 'Windows':
         cmd_1 = shlex.split(cmd_1)
     try:
         with Popen(cmd_1,
@@ -293,7 +294,7 @@ class SlideshowMaker(Thread):
             tolog(log, self.logfile)
             time.sleep(1)
 
-            if not self.appdata['ostype'] == 'Windows':
+            if self.appdata['ostype'] != 'Windows':
                 cmd_2 = shlex.split(cmd_2)
 
             try:

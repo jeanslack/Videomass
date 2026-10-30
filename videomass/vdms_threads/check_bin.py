@@ -6,7 +6,7 @@ Compatibility: Python3 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.15.2021
+Rev: Oct.30.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,6 +26,7 @@ This file is part of Videomass.
 """
 
 import subprocess
+
 from videomass.vdms_utils.utils import Popen
 
 
@@ -39,12 +40,8 @@ def subp(args, ostype):
         *ostype* result of the platform.system()
 
     """
-    cmd = []
-    for opt in args:
-        cmd.append(opt)
-
     if ostype == 'Windows':
-        cmd = ' '.join(cmd)
+        cmd = ' '.join(args)
     try:
         with Popen(cmd,
                    stdout=subprocess.PIPE,
@@ -192,9 +189,8 @@ def ff_codecs(ffmpeg_url, type_opt, ostype):
             if 'A..... = Audio' not in sup:
                 dic['Audio'].append(sup.strip())
 
-        elif sup.strip().startswith('S'):
-            if 'S..... = Subtitle' not in sup:
-                dic['Subtitle'].append(sup.strip())
+        elif sup.strip().startswith('S') and 'S..... = Subtitle' not in sup:
+            dic['Subtitle'].append(sup.strip())
 
     return dic
 # -------------------------------------------------------------------#

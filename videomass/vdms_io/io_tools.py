@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.18.2025
+Rev: Oct.30.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,15 +26,17 @@ This file is part of Videomass.
 """
 import requests
 import wx
-from videomass.vdms_threads import generic_downloads
-from videomass.vdms_threads.volumedetect import VolumeDetectThread
-from videomass.vdms_threads.check_bin import (ff_conf,
-                                              ff_formats,
-                                              ff_codecs,
-                                              ff_topics,
-                                              )
-from videomass.vdms_utils.utils import open_default_application
+
 from videomass.vdms_dialogs.widget_utils import PopupDialog
+from videomass.vdms_threads import generic_downloads
+from videomass.vdms_threads.check_bin import (
+    ff_codecs,
+    ff_conf,
+    ff_formats,
+    ff_topics,
+)
+from videomass.vdms_threads.volumedetect import VolumeDetectThread
+from videomass.vdms_utils.utils import open_default_application
 
 
 def show_msg_notify(parent, warnlev: str = 'error', logname: str = 'log',
@@ -198,19 +200,13 @@ def get_github_releases(url, keyname):
     """
     try:
         response = requests.get(url, timeout=15)
-        not_found = None, None
-    except Exception as err:
-        not_found = 'request error:', err
-    else:
-        try:
-            version = response.json()[f"{keyname}"]
-        except Exception as err:
-            not_found = 'response error:', err
-
-    if not_found[0]:
-        return not_found
-
-    return version, None
+        response.raise_for_status()
+        version = response.json()[f"{keyname}"]
+        return version, None
+    except requests.RequestException as err:
+        return None, err
+    except (KeyError, ValueError, TypeError) as err:
+        return None, err
 # --------------------------------------------------------------------------#
 
 

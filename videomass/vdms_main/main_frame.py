@@ -26,40 +26,48 @@ This file is part of Videomass.
 """
 import os
 import webbrowser
+
 import wx
 from pubsub import pub
-from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_utils.queue_utils import load_json_file_queue
-from videomass.vdms_utils.queue_utils import write_json_file_queue
-from videomass.vdms_utils.queue_utils import extend_data_queue
-from videomass.vdms_dialogs import preferences
-from videomass.vdms_dialogs import set_timestamp
-from videomass.vdms_dialogs import about_dialog
-from videomass.vdms_dialogs import videomass_check_version
-from videomass.vdms_dialogs.while_playing import WhilePlaying
-from videomass.vdms_dialogs.ffmpeg_conf import FFmpegConf
+
+from videomass.vdms_dialogs import (
+    about_dialog,
+    preferences,
+    set_timestamp,
+    videomass_check_version,
+)
 from videomass.vdms_dialogs.ffmpeg_codecs import FFmpegCodecs
+from videomass.vdms_dialogs.ffmpeg_conf import FFmpegConf
 from videomass.vdms_dialogs.ffmpeg_formats import FFmpegFormats
-from videomass.vdms_dialogs.queuedlg import QueueManager
-from videomass.vdms_dialogs.mediainfo import MediaStreams
-from videomass.vdms_dialogs.showlogs import ShowLogs
 from videomass.vdms_dialogs.ffmpeg_help import FFmpegHelp
+from videomass.vdms_dialogs.mediainfo import MediaStreams
+from videomass.vdms_dialogs.queuedlg import QueueManager
+from videomass.vdms_dialogs.showlogs import ShowLogs
+from videomass.vdms_dialogs.while_playing import WhilePlaying
 from videomass.vdms_dialogs.widget_utils import CountDownDlg
-from videomass.vdms_miniframes import timeline
-from videomass.vdms_panels import choose_topic
-from videomass.vdms_panels import filedrop
-from videomass.vdms_panels import av_conversions
-from videomass.vdms_panels import concatenate
-from videomass.vdms_panels import video_to_sequence
-from videomass.vdms_panels import sequence_to_video
-from videomass.vdms_panels.long_processing_task import LogOut
-from videomass.vdms_panels import presets_manager
 from videomass.vdms_io import io_tools
+from videomass.vdms_miniframes import timeline
+from videomass.vdms_panels import (
+    av_conversions,
+    choose_topic,
+    concatenate,
+    filedrop,
+    presets_manager,
+    sequence_to_video,
+    video_to_sequence,
+)
+from videomass.vdms_panels.long_processing_task import LogOut
 from videomass.vdms_sys.about_app import VERSION
-from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_sys.argparser import info_this_platform
-from videomass.vdms_utils.utils import copydir_recursively
+from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_threads.shutdown import shutdown_system
+from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.queue_utils import (
+    extend_data_queue,
+    load_json_file_queue,
+    write_json_file_queue,
+)
+from videomass.vdms_utils.utils import copydir_recursively
 
 
 class MainFrame(wx.Frame):
@@ -254,7 +262,7 @@ class MainFrame(wx.Frame):
         self.sb.Refresh()
     # ------------------------------------------------------------------#
 
-    def menu_go_items(self, enablelist: list = None):
+    def menu_go_items(self, enablelist: tuple[int] | None = None):
         """
         Enables `Go` menu bar items based on showing panels.
         The `enablelist` default arg is a boolean list containing
@@ -365,20 +373,15 @@ class MainFrame(wx.Frame):
         sett = confmanager.read_options()
         sett['main_window_size'] = list(self.GetSize())
         sett['main_window_pos'] = list(self.GetPosition())
-        prstcolwidth = [self.PrstsPanel.lctrl.GetColumnWidth(0),
-                        self.PrstsPanel.lctrl.GetColumnWidth(1),
-                        self.PrstsPanel.lctrl.GetColumnWidth(2),
-                        self.PrstsPanel.lctrl.GetColumnWidth(3),
-                        ]
-        sett['prstmng_column_width'] = prstcolwidth
-        filedropcolwidth = [self.fileDnDTarget.flCtrl.GetColumnWidth(0),
-                            self.fileDnDTarget.flCtrl.GetColumnWidth(1),
-                            self.fileDnDTarget.flCtrl.GetColumnWidth(2),
-                            self.fileDnDTarget.flCtrl.GetColumnWidth(3),
-                            self.fileDnDTarget.flCtrl.GetColumnWidth(4),
-                            self.fileDnDTarget.flCtrl.GetColumnWidth(5),
-                            ]
-        sett['filedrop_column_width'] = filedropcolwidth
+
+        prst = self.PrstsPanel.lctrl
+        prstcw = [prst.GetColumnWidth(i) for i in range(prst.GetColumnCount())]
+        sett['prstmng_column_width'] = prstcw
+
+        fdrop = self.fileDnDTarget.flCtrl
+        fdcw = [fdrop.GetColumnWidth(i) for i in range(fdrop.GetColumnCount())]
+        sett['filedrop_column_width'] = fdcw
+
         confmanager.write_options(**sett)
     # ------------------------------------------------------------------#
 
@@ -386,9 +389,8 @@ class MainFrame(wx.Frame):
         """
         Check currently running processes
         """
-        if self.ProcessPanel.IsShown():
-            if self.ProcessPanel.thread_type is not None:
-                return True
+        return (self.ProcessPanel.IsShown() and self.ProcessPanel.thread_type
+                is not None)
 
         return False
     # ------------------------------------------------------------------#
@@ -404,12 +406,13 @@ class MainFrame(wx.Frame):
                           _('Videomass - Warning!'), wx.ICON_WARNING, self)
             return
 
-        if self.appdata['warnexiting']:
-            if wx.MessageBox(_('Are you sure you want to exit '
-                               'the application?'),
-                             _('Exit'), wx.ICON_QUESTION | wx.CANCEL
-                             | wx.YES_NO, self) != wx.YES:
-                return
+        if (self.appdata['warnexiting'] and
+            wx.MessageBox(_('Are you sure you want to exit '
+                            'the application?'), _('Exit'),
+                          wx.ICON_QUESTION | wx.CANCEL
+                          | wx.YES_NO, self) != wx.YES):
+            return
+
         self.write_option_before_exit()
         self.destroy_orphaned_window()
         self.destroy_application()
@@ -856,13 +859,13 @@ class MainFrame(wx.Frame):
 
         newversion = io_tools.get_github_releases(url, "tag_name")
 
-        if newversion[0] in ['request error:', 'response error:']:
-            wx.MessageBox(f"{newversion[0]} {newversion[1]}",
-                          f"{newversion[0]}", wx.ICON_ERROR, self)
+        if newversion[1]:
+            caption = f'Videomass - {newversion[1].__class__.__name__}'
+            wx.MessageBox(str(newversion[1]), caption, wx.ICON_ERROR, self)
             return
 
-        latest = sum((int(x) for x in newversion[0][1:].split('.')))
-        current = sum((int(x) for x in fread.split('.')))
+        latest = sum(int(x) for x in newversion[0][1:].split('.'))
+        current = sum(int(x) for x in fread.split('.'))
         if latest > current:
             wx.MessageBox(_("Installed release v{0}. A new presets release "
                             "is available {1}").format(fread, newversion[0]),
@@ -891,9 +894,9 @@ class MainFrame(wx.Frame):
 
         tarball = io_tools.get_github_releases(url, "tarball_url")
 
-        if tarball[0] in ['request error:', 'response error:']:
-            wx.MessageBox(f"{tarball[0]} {tarball[1]}",
-                          f"{tarball[0]}", wx.ICON_ERROR, self)
+        if tarball[1]:
+            caption = f'Videomass - {tarball[1].__class__.__name__}'
+            wx.MessageBox(str(tarball[1]), caption, wx.ICON_ERROR, self)
             return
 
         name = f"Videomass-presets-{tarball[0].split('/v')[-1]}.tar.gz"
@@ -1128,13 +1131,15 @@ class MainFrame(wx.Frame):
             if set_up.ShowModal() == wx.ID_OK:
                 changes = set_up.getvalue()
                 self.fileDnDTarget.on_file_save(self.appdata['outputdir'])
-                if [x for x in changes if x is False]:
-                    if wx.MessageBox(_("{0}\n\nDo you want to restart "
-                                       "the application now?").format(msg),
-                                     _('Restart Videomass?'), wx.ICON_QUESTION
-                                     | wx.CANCEL | wx.YES_NO, self) == wx.YES:
-                        self.appdata['auto-restart-app'] = True
-                        self.on_Kill()
+
+                if ([x for x in changes if x is False] and
+                     wx.MessageBox(_("{0}\n\nDo you want to restart "
+                                     "the application now?").format(msg),
+                                   _('Restart Videomass?'), wx.ICON_QUESTION
+                                   | wx.CANCEL | wx.YES_NO, self) == wx.YES):
+
+                    self.appdata['auto-restart-app'] = True
+                    self.on_Kill()
     # ------------------------------------------------------------------#
     # --------- Menu Help  ###
 
@@ -1196,22 +1201,22 @@ class MainFrame(wx.Frame):
         """
         url = ("https://api.github.com/repos/jeanslack/"
                "Videomass/releases/latest")
-        version = io_tools.get_github_releases(url, "tag_name")
+        vers = io_tools.get_github_releases(url, "tag_name")
 
-        if version[0] in ['request error:', 'response error:']:
-            wx.MessageBox(f"{version[0]} {version[1]}",
-                          f"{version[0]}", wx.ICON_ERROR, self)
+        if vers[1]:
+            caption = f'Videomass - {vers[1].__class__.__name__}'
+            wx.MessageBox(str(vers[1]), caption, wx.ICON_ERROR, self)
             return
 
-        version = version[0].split('v')[1]
-        major, minor, micro = version.split('.')
+        vers = vers[0].split('v')[1]
+        major, minor, micro = vers.split('.')
         released_version = int(f'{major}{minor}{micro}')
         major, minor, micro = VERSION.split('.')
         this_version = int(f'{major}{minor}{micro}')
 
         if released_version > this_version:
             msg = _('A new release is available - '
-                    'v.{0}\n').format(version)
+                    'v.{0}\n').format(vers)
         elif this_version > released_version:
             msg = _('You are using a development version '
                     'that has not yet been released!\n')
@@ -1221,7 +1226,7 @@ class MainFrame(wx.Frame):
 
         dlg = videomass_check_version.CheckNewVersion(self,
                                                       msg,
-                                                      version,
+                                                      vers,
                                                       VERSION,
                                                       )
         dlg.ShowModal()
@@ -1618,7 +1623,7 @@ class MainFrame(wx.Frame):
                 self.removequeue = data[3]
                 if not self.queuelist:
                     self.toolbar.EnableTool(37, False)
-                    return None
+                    return
                 self.switch_to_processing('Queue Processing',
                                           'Queue Processing.log',
                                           datalist=self.queuelist
@@ -1626,7 +1631,7 @@ class MainFrame(wx.Frame):
             else:
                 if not self.queuelist:
                     self.toolbar.EnableTool(37, False)
-        return None
+        return
     # ------------------------------------------------------------------#
 
     def end_queue_processing(self, msg):
@@ -1705,7 +1710,7 @@ class MainFrame(wx.Frame):
         self.clearall.Enable(False)
         self.rename.Enable(False)
         self.rename_batch.Enable(False)
-        if not args[0] == 'View':
+        if args[0] != 'View':
             self.menu_go_items((0, 0, 0, 0, 0, 0, 0))  # Go menu items
             self.openmedia.Enable(False)
             self.loadqueue.Enable(False)
@@ -1753,9 +1758,11 @@ class MainFrame(wx.Frame):
         """
         Click stop toolbar event, set to abort True the current process
         """
-        if self.ProcessPanel.IsShown():
-            if self.ProcessPanel.thread_type:
-                self.ProcessPanel.on_stop()
+        if self.ProcessPanel.IsShown() and self.ProcessPanel.thread_type:
+            self.toolbar.EnableTool(8, False)  # disable stop btn
+            self.statusbar_msg(_("Please wait... interruption in progress"),
+                               MainFrame.YELLOW, MainFrame.BLACK)
+            self.ProcessPanel.on_stop()
     # ------------------------------------------------------------------#
 
     def process_terminated(self, msg):
@@ -1770,6 +1777,7 @@ class MainFrame(wx.Frame):
 
         [self.toolbar.EnableTool(x, True) for x in (3, 5, 7)]
         self.toolbar.EnableTool(8, False)
+        self.statusbar_msg(_("...Interrupted"), None)
 
         if self.emptylist:
             self.fileDnDTarget.delete_all(self)
@@ -1815,15 +1823,24 @@ class MainFrame(wx.Frame):
         if self.checks_running_processes():
             return
 
+        # Securely pre-detect password before writing options to disk
+        sudo_pwd = self.appdata.get('sudo_password', None)
+
         self.write_option_before_exit()
 
         msgdlg = _('The system will turn off in {0} seconds')
         title = _('Videomass - Shutdown!')
-        dlg = CountDownDlg(self, timeout=59, message=msgdlg, caption=title)
+
+        # dispays countdown popup
+        dlg = CountDownDlg(self, timeout=5, message=msgdlg, caption=title)
         res = dlg.ShowModal() == wx.ID_OK
         dlg.Destroy()
+
         if res:
-            succ = shutdown_system(self.appdata['sudo_password'])
+            # Passing the extracted credential temporarily
+            succ = shutdown_system(sudo_pwd)
+
+            # if exception (i.e OSError or False)
             if not succ:
                 msg = (_("Error while shutting down. Please see "
                          "file log for details."))

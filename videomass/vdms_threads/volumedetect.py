@@ -25,14 +25,17 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-from threading import Thread
-import subprocess
 import platform
+import subprocess
+from threading import Thread
+
 import wx
 from pubsub import pub
-from videomass.vdms_utils.utils import Popen
+
 from videomass.vdms_io.make_filelog import make_log_template, tolog
-if not platform.system() == 'Windows':
+from videomass.vdms_utils.utils import Popen
+
+if platform.system() != 'Windows':
     import shlex
 
 
@@ -103,7 +106,7 @@ class VolumeDetectThread(Thread):
             tolog(f'INFO: VIDEOMASS COMMAND: {cmd}',
                   self.logfile, sep=True, wdate=True)
 
-            if not platform.system() == 'Windows':
+            if platform.system() != 'Windows':
                 cmd = shlex.split(cmd)
             try:
                 with Popen(cmd,

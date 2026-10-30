@@ -3,6 +3,15 @@
 URGENCY: to do soon
 --------------------
 
+- testare applicazione congelata pyinstaller e verificare i restar automatici con ps
+    watch -n 0.5 "ps aux | grep -i python"
+    o meglio:
+    watch -n 0.5 "ps -ef | grep -i python"
+    o gestore processi
+- testare gestione errori in OnExit() cancellazione file in chiusura
+- Modificare Guida ODT in filtro Resize
+- Rigenerare locale - ci sono nuove stringhe e cambiamenti
+
 --------------
 URGENCY: high
 --------------

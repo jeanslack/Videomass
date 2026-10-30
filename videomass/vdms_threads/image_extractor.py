@@ -24,15 +24,18 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-from threading import Thread
-import time
-import subprocess
 import platform
+import subprocess
+import time
+from threading import Thread
+
 import wx
 from pubsub import pub
-from videomass.vdms_utils.utils import Popen
+
 from videomass.vdms_io.make_filelog import tolog
-if not platform.system() == 'Windows':
+from videomass.vdms_utils.utils import Popen
+
+if platform.system() != 'Windows':
     import shlex
 
 
@@ -94,7 +97,7 @@ class PicturesFromVideo(Thread):
                      )
         tolog(com, self.logfile, sep=True, wdate=True)
 
-        if not platform.system() == 'Windows':
+        if platform.system() != 'Windows':
             cmd = shlex.split(cmd)
         try:
             with Popen(cmd,
