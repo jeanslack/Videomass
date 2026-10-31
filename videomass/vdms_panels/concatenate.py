@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.25.2024
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,12 +25,14 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+
 import wx
 import wx.lib.agw.hyperlink as hpl
-from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
-from videomass.vdms_utils.utils import integer_to_time
-from videomass.vdms_io.checkup import check_files
+
 from videomass.vdms_dialogs.epilogue import Formula
+from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
+from videomass.vdms_io.checkup import check_files
+from videomass.vdms_utils.utils import integer_to_time
 
 
 def compare_media_param(data):
@@ -62,7 +64,8 @@ def compare_media_param(data):
     if not com:
         return ('error', _('Invalid data found'))
 
-    totest = list(com.values())[0]
+    totest = next(iter(com.values()))
+
     if not all(val == totest for val in com.values()):
         return ('error',
                 _('The files do not have the same "codec_types", '

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.07.2025
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,6 +24,8 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Any, ClassVar
+
 import wx
 
 
@@ -33,28 +35,30 @@ class Miscellaneous(wx.Panel):
     controls for A/V Conversions.
     """
     # Namings in the subtitle codec selection on subtitle radio box:
-    SCODECS = {('Auto'): (""),
-               ('MOV_TEXT'): ("mov_text"),
-               ('SUBRIP'): ("subrip"),
-               ('WEBVTT'): ("webvtt"),
-               ('ASS'): ("alac"),
-               ('SSA'): ("ac3"),
-               ('SRT'): ("libvorbis"),
-               ('Copy'): ("copy"),
-               ('No Subtitles'): ("-sn")
-               }
+    SCODECS: ClassVar[dict[str, Any]] = {
+        ('Auto'): (""),
+        ('MOV_TEXT'): ("mov_text"),
+        ('SUBRIP'): ("subrip"),
+        ('WEBVTT'): ("webvtt"),
+        ('ASS'): ("alac"),
+        ('SSA'): ("ac3"),
+        ('SRT'): ("libvorbis"),
+        ('Copy'): ("copy"),
+        ('No Subtitles'): ("-sn")
+    }
     # compatibility between video formats and related subtitle formats:
-    S_FORMATS = {('avi'): ('default', None, None, None, None, None, None,
-                           'copy', 'No Subtitles'),
-                 ('mp4'): ('default', 'mov_text', None, None, None, None, None,
-                           'copy', 'No Subtitles'),
-                 ('m4v'): ('default', 'mov_text', None, None, None, None, None,
-                           'copy', 'No Subtitles'),
-                 ('mkv'): ('default', None, 'subrip', 'webvtt', 'ass', 'ssa',
-                           'srt', 'copy', 'No Subtitles'),
-                 ('webm'): ('default', None, None, 'webvtt', None, None, None,
-                            'copy', 'No Subtitles'),
-                 }
+    S_FORMATS: ClassVar[dict[str, Any]] = {
+        ('avi'): ('default', None, None, None, None, None, None,
+                  'copy', 'No Subtitles'),
+        ('mp4'): ('default', 'mov_text', None, None, None, None, None,
+                  'copy', 'No Subtitles'),
+        ('m4v'): ('default', 'mov_text', None, None, None, None, None,
+                  'copy', 'No Subtitles'),
+        ('mkv'): ('default', None, 'subrip', 'webvtt', 'ass', 'ssa',
+                  'srt', 'copy', 'No Subtitles'),
+        ('webm'): ('default', None, None, 'webvtt', None, None, None,
+                   'copy', 'No Subtitles'),
+    }
 
     def __init__(self, parent, opt):
         """
@@ -237,7 +241,7 @@ class Miscellaneous(wx.Panel):
 
         smap = self.cmb_Submap.GetValue()
         if smap.isdigit():
-            idx = f':{str(int(smap) - 1)}'
+            idx = f':{(int(smap) - 1)}'
         else:
             idx = ''
 
@@ -258,7 +262,7 @@ class Miscellaneous(wx.Panel):
         if smap == 'All':
             self.opt["SubtitleMap"] = '-map 0:s?'
         else:
-            self.opt["SubtitleMap"] = f'-map 0:s:{str(int(smap) - 1)}'
+            self.opt["SubtitleMap"] = f'-map 0:s:{(int(smap) - 1)}'
 
         self.on_sub_enc(None)
     # ------------------------------------------------------------------#

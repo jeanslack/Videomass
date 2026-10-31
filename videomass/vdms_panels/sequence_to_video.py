@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.20.2026
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,16 +25,20 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+
 import wx
 import wx.lib.agw.hyperlink as hpl
-from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
-from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+
 from videomass.vdms_dialogs.epilogue import Formula
 from videomass.vdms_dialogs.filter_scale import Scale
+from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_threads.ffprobe import ffprobe
-from videomass.vdms_utils.utils import trailing_name_with_prog_digit
-from videomass.vdms_utils.utils import time_to_integer
-from videomass.vdms_utils.utils import integer_to_time
+from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.utils import (
+    integer_to_time,
+    time_to_integer,
+    trailing_name_with_prog_digit,
+)
 
 
 def check_images_size(flist):
@@ -660,9 +664,9 @@ class SequenceToVideo(wx.Panel):
             countmax = len(files)
             if self.check_to_slide(files):
                 return
-            if not self.opt["RESIZE"] and countmax != 1:
-                if check_images_size(self.parent.data_files):
-                    return
+            if (not self.opt["RESIZE"] and countmax != 1
+               and check_images_size(self.parent.data_files)):
+                return
 
         args = self.get_args_line()  # get args for command line
         kwargs = {'logname': 'Still Image Maker.log',

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.24.2024
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -67,6 +67,8 @@ class PicturesFromVideo(Thread):
         self.count = 0  # count first for loop
         self.logfile = args[0]  # log filename
         self.kwa = kwargs
+        self.fatal = None  # fatal error I/O flag before `communicate`
+        self.process = None  # process data set on context
 
         Thread.__init__(self)
         self.start()  # self.run()
@@ -106,8 +108,8 @@ class PicturesFromVideo(Thread):
                        bufsize=1,
                        universal_newlines=True,
                        encoding=self.appdata['encoding'],
-                       ) as proc:
-                for line in proc.stderr:
+                       ) as self.process:
+                for line in self.process.stderr:
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line,
@@ -115,9 +117,10 @@ class PicturesFromVideo(Thread):
                                  status=0,
                                  )
                     if self.stop_work_thread:
-                        proc.stdin.write('q')  # stop ffmpeg
-                        out = proc.communicate()[1]
-                        proc.wait()
+                        if self.fatal:
+                            return
+                        out = self.process.communicate()[1]
+                        self.process.wait()
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
                                      output='STOP',
@@ -130,16 +133,16 @@ class PicturesFromVideo(Thread):
                                      filetotrash=None)
                         return
 
-                if proc.wait():  # error
-                    out = proc.communicate()[1]
+                if self.process.wait():  # error
+                    out = self.process.communicate()[1]
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output='FAILED',
                                  duration=self.kwa['duration'],
-                                 status=proc.wait(),
+                                 status=self.process.wait(),
                                  )
                     tolog(f"[VIDEOMASS]: Error Exit Status: "
-                          f"{proc.wait()} {out}", self.logfile
+                          f"{self.process.wait()} {out}", self.logfile
                           )
                     time.sleep(1)
 
@@ -166,6 +169,53 @@ class PicturesFromVideo(Thread):
 
     def stop(self):
         """
-        Sets the stop work thread to terminate the process
+        Sets the stop work thread to terminate the current process.
+        This method has been revised and expanded to make the GUI
+        more responsive and less dependent on the subprocess's output
+        messages during `readlines` loops. This speeds up the process
+        of closing the subprocess within the background thread while
+        also improving error handling, ensuring the GUI remains completely
+        free from potential blocks or freezes while waiting for termination
+        outputs.
+
+        `flush()` forces Python to immediately clear the write buffer
+         and send the 'q' char to the pipe connected to FFmpeg.
+
+        WARNING:
+        How catch ValueError for tests:
+            replaace `proc.stdin and not proc.stdin.closed` with:
+                if proc.stdin:  # WARNING ALERT  remove after test
+            place `proc.stdin.close()` on top `proc.stdin.write('q')`
+                proc.stdin.close()  # WARNING ALERT remove after test
         """
         self.stop_work_thread = True
+
+        try:
+            proc = self.process if self.process.poll() is None else None
+        except AttributeError:
+            proc = None
+
+        # Check if the process exists
+        if proc is not None:
+            try:
+                # Verify that stdin is open and available before writing
+                if proc.stdin and not proc.stdin.closed:
+                    proc.stdin.write('q')  # stop ffmpeg
+                    proc.stdin.flush()
+
+            # Make sure the process isn't already finished
+            except (BrokenPipeError, ValueError, AttributeError,
+                    OSError) as err:
+                self.fatal = True
+                msg = "CRASH_STOP: forcing FFmpeg to terminate"
+                wx.CallAfter(pub.sendMessage,
+                             "COUNT_EVT",
+                             count=f"{msg}: {err}",
+                             duration=0,
+                             end='ERROR',
+                             )
+                tolog(f"[VIDEOMASS]: {msg}: {err}", self.logfile)
+
+                # Force event end notification to unlock GUI
+                time.sleep(.5)
+                wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=None)

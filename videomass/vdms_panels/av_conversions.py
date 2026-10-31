@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.13.2026
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,35 +25,39 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+from typing import Any, ClassVar
+
 import wx
 import wx.lib.scrolledpanel as scrolled
 from pubsub import pub
-from videomass.vdms_utils.utils import update_timeseq_duration
-from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_threads.ffplay_file import FilePlay
-from videomass.vdms_io.checkup import check_files
-from videomass.vdms_dialogs.epilogue import Formula
+
 from videomass.vdms_dialogs import setting_profiles
+from videomass.vdms_dialogs.avconv_cmd_line import Raw_Cmd_Line
+from videomass.vdms_dialogs.epilogue import Formula
+from videomass.vdms_dialogs.filter_colorcorrection import ColorEQ
 from videomass.vdms_dialogs.filter_crop import Crop
-from videomass.vdms_dialogs.filter_transpose import Transpose
-from videomass.vdms_dialogs.filter_denoisers import Denoisers
 from videomass.vdms_dialogs.filter_deinterlace import Deinterlace
+from videomass.vdms_dialogs.filter_denoisers import Denoisers
 from videomass.vdms_dialogs.filter_scale import Scale
 from videomass.vdms_dialogs.filter_stab import VidstabSet
-from videomass.vdms_dialogs.filter_colorcorrection import ColorEQ
+from videomass.vdms_dialogs.filter_transpose import Transpose
 from videomass.vdms_dialogs.singlechoicedlg import SingleChoice
-from videomass.vdms_dialogs.avconv_cmd_line import Raw_Cmd_Line
+from videomass.vdms_io.checkup import check_files
 from videomass.vdms_threads.ffmpeg import get_raw_cmdline_args
-from . video_encoders.video_no_enc import Video_No_Enc
-from . video_encoders.mpeg4 import Mpeg_4
-from . video_encoders.av1_aom import AV1_Aom
-from . video_encoders.av1_svt import AV1_Svt
-from . video_encoders.vp9_webm import Vp9_WebM
-from . video_encoders.avc_x264 import Avc_X264
-from . video_encoders.hevc_x265 import Hevc_X265
-from . video_encoders.video_encodercopy import Copy_Vcodec
-from . audio_encoders.acodecs import AudioEncoders
-from . miscellaneous.miscell import Miscellaneous
+from videomass.vdms_threads.ffplay_file import FilePlay
+from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.utils import update_timeseq_duration
+
+from .audio_encoders.acodecs import AudioEncoders
+from .miscellaneous.miscell import Miscellaneous
+from .video_encoders.av1_aom import AV1_Aom
+from .video_encoders.av1_svt import AV1_Svt
+from .video_encoders.avc_x264 import Avc_X264
+from .video_encoders.hevc_x265 import Hevc_X265
+from .video_encoders.mpeg4 import Mpeg_4
+from .video_encoders.video_encodercopy import Copy_Vcodec
+from .video_encoders.video_no_enc import Video_No_Enc
+from .video_encoders.vp9_webm import Vp9_WebM
 
 
 class AV_Conv(wx.Panel):
@@ -75,23 +79,24 @@ class AV_Conv(wx.Panel):
     BLACK = '#060505'
 
     # MUXERS dictionary:
-    MUXERS = {'mkv': 'matroska', 'avi': 'avi', 'mp4': 'mp4',
-              'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',
-              }
+    MUXERS: ClassVar[dict[str, Any]] = {
+        'mkv': 'matroska', 'avi': 'avi', 'mp4': 'mp4',
+        'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',
+    }
     # Namings in the video container selection combo box:
-    VCODECS = ({"MPEG-4": {"-c:v mpeg4": ["avi"]},
-                "XVID MPEG-4": {"-c:v libxvid": ["avi"]},
-                "H.264": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
-                "H.264 10-bit": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
-                "H.265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
-                "H.265 10-bit": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
-                "AOM-AV1": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
-                "SVT-AV1": {"-c:v libsvtav1": ["mkv", "webm"]},
-                "SVT-AV1 10-bit": {"-c:v libsvtav1": ["mkv", "webm"]},
-                "VP9": {"-c:v libvpx-vp9": ["webm", "mkv"]},
-                "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "m4v",
-                                       "webm", "Copy"]}
-                })
+    VCODECS: ClassVar[dict[str, Any]] = (
+        {"MPEG-4": {"-c:v mpeg4": ["avi"]},
+         "XVID MPEG-4": {"-c:v libxvid": ["avi"]},
+         "H.264": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
+         "H.264 10-bit": {"-c:v libx264": ["mkv", "mp4", "avi", "m4v"]},
+         "H.265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
+         "H.265 10-bit": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
+         "AOM-AV1": {"-c:v libaom-av1": ["mkv", "webm", "mp4"]},
+         "SVT-AV1": {"-c:v libsvtav1": ["mkv", "webm"]},
+         "SVT-AV1 10-bit": {"-c:v libsvtav1": ["mkv", "webm"]},
+         "VP9": {"-c:v libvpx-vp9": ["webm", "mkv"]},
+         "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "m4v", "webm", "Copy"]}}
+    )
     # Namings in the audio format selection on Container combobox:
     A_FORMATS = ('wav', 'mp3', 'ac3', 'ogg', 'flac', 'm4a', 'aac', 'opus')
     # ------------------------------------------------------------------#
@@ -160,7 +165,7 @@ class AV_Conv(wx.Panel):
         sizer_convin.Add(self.cmb_vencoder, 0, wx.LEFT | wx.CENTRE, 5)
         txtFormat = wx.StaticText(box1, wx.ID_ANY, _('Container:'))
         sizer_convin.Add(txtFormat, 0, wx.LEFT | wx.CENTRE, 20)
-        choices = list(AV_Conv.VCODECS['H.264'].values())[0]
+        choices = next(iter(AV_Conv.VCODECS['H.264'].values()))
         self.cmb_cont = wx.ComboBox(box1, wx.ID_ANY,
                                     choices=choices,
                                     size=(100, -1),
@@ -453,7 +458,7 @@ class AV_Conv(wx.Panel):
         This event triggers the setting to the default values.
         """
         selected = AV_Conv.VCODECS.get(self.cmb_vencoder.GetValue())
-        libcodec = list(selected.keys())[0]
+        libcodec = next(iter(selected.keys()))
         self.cmb_cont.Clear()
         for f in selected.values():
             self.cmb_cont.Append((f),)
@@ -522,18 +527,20 @@ class AV_Conv(wx.Panel):
 
         flt = self.opt["VFilters"]
         autoexit = '-autoexit' if self.parent.autoexit else ''
+        filesel = self.parent.file_src[fget[1]]
 
         if self.parent.checktimestamp:
-            args = (f'{autoexit} -i "{self.parent.file_src[fget[1]]}" '
+            args = (f'{autoexit} -i "{filesel}" '
                     f'{self.parent.time_seq} '
                     f'{flt},"{self.parent.cmdtimestamp}"')
         else:
-            args = f'{autoexit} -i "{self.parent.file_src[fget[1]]}" {flt}'
+            args = f'{autoexit} -i "{filesel}" {flt}'
+
         try:
-            with open(self.parent.file_src[fget[1]], encoding='utf-8'):
+            with open(filesel, encoding='utf-8'):
                 FilePlay(self.GetParent(), args)
-        except IOError:
-            wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
+        except OSError:
+            wx.MessageBox(_("Invalid or unsupported file:  %s") % (filesel),
                           "Videomass", wx.ICON_EXCLAMATION, self)
             return
     # ------------------------------------------------------------------#
@@ -936,7 +943,7 @@ class AV_Conv(wx.Panel):
 
         check = self.check_options()
         if not check:
-            return None
+            return
 
         f_src, f_dest = check
         kwargs = self.get_codec_args()
@@ -972,7 +979,7 @@ class AV_Conv(wx.Panel):
                                              logname,
                                              datalist=batchlist
                                              )
-        return None
+        return
     # ------------------------------------------------------------------#
 
     def video_stabilizer(self):
@@ -1256,11 +1263,11 @@ class AV_Conv(wx.Panel):
         except ValueError:
             wx.MessageBox(_("Have to select an item in the file list first"),
                           'Videomass', wx.ICON_INFORMATION, self)
-            return None
+            return
 
         check = self.check_options(index=index, checkexists=False)
         if not check:
-            return None
+            return
         f_src, f_dest = check[0][0], check[1][0]
         kwargs = self.get_codec_args()
         dur, ss, et = update_timeseq_duration(self.parent.time_seq,
@@ -1282,7 +1289,7 @@ class AV_Conv(wx.Panel):
         displaycmd = Raw_Cmd_Line(self, *cmd)
         displaycmd.ShowModal()
 
-        return None
+        return
     # ------------------------------------------------------------------#
 
     def save_to_preset(self, presetname):
@@ -1345,7 +1352,7 @@ class AV_Conv(wx.Panel):
             try:
                 with open(filename, 'w', encoding='utf-8') as file:
                     file.write('[]')
-            except IOError:
+            except OSError:
                 wx.LogError(_("Cannot save current "
                               "data in file «{}».").format(filename))
                 return None

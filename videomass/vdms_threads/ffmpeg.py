@@ -321,7 +321,8 @@ class FFmpeg(Thread):
         self.logfile = args[0]  # log filename
         self.kwargs = args[1]  # it is a list of dictionaries
         self.nargs = len(self.kwargs)  # how many items...
-        self.fatal = None  # fatal error I/O flag
+        self.fatal = None  # fatal error I/O flag before `communicate`
+        self.process = None  # process data set on context
 
         Thread.__init__(self)
         self.start()
@@ -361,9 +362,9 @@ class FFmpeg(Thread):
                            bufsize=1,
                            universal_newlines=True,
                            encoding=self.appdata['encoding'],
-                           ) as self.proc1:
+                           ) as self.process:
 
-                    for line in self.proc1.stderr:
+                    for line in self.process.stderr:
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
                                      output=line,
@@ -371,9 +372,10 @@ class FFmpeg(Thread):
                                      status=0
                                      )
                         if self.stop_work_thread:
-                            if self.fatal: return
-                            out = self.proc1.communicate()[1]
-                            self.proc1.wait()
+                            if self.fatal:
+                                return
+                            out = self.process.communicate()[1]
+                            self.process.wait()
 
                             wx.CallAfter(pub.sendMessage,
                                          "UPDATE_EVT",
@@ -394,16 +396,16 @@ class FFmpeg(Thread):
                                 if line.startswith(k):
                                     summary[k] = line.split(':')[1].split()[0]
 
-                    if self.proc1.wait():  # ..Failed
-                        out = self.proc1.communicate()[1]
+                    if self.process.wait():  # ..Failed
+                        out = self.process.communicate()[1]
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
                                      output='FAILED',
                                      duration=kwa['duration'],
-                                     status=self.proc1.wait(),
+                                     status=self.process.wait(),
                                      )
                         tolog(f"[VIDEOMASS]: Error Exit Status: "
-                              f"{self.proc1.wait()} {out}", self.logfile
+                              f"{self.process.wait()} {out}", self.logfile
                               )
                         time.sleep(1)
                         continue
@@ -418,7 +420,7 @@ class FFmpeg(Thread):
                 tolog(err, self.logfile)
                 break
 
-            if self.proc1.wait() == 0:  # ..Finished
+            if self.process.wait() == 0:  # ..Finished
                 if not kwa["args"][1]:
                     filedone.append(kwa["source"])
                 wx.CallAfter(pub.sendMessage,
@@ -464,9 +466,9 @@ class FFmpeg(Thread):
                        bufsize=1,
                        universal_newlines=True,
                        encoding=self.appdata['encoding'],
-                       ) as self.proc2:
+                       ) as self.process:
 
-                for line2 in self.proc2.stderr:
+                for line2 in self.process.stderr:
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line2,
@@ -474,9 +476,10 @@ class FFmpeg(Thread):
                                  status=0,
                                  )
                     if self.stop_work_thread:
-                        if self.fatal: return
-                        out = self.proc2.communicate()[1]
-                        self.proc2.wait()
+                        if self.fatal:
+                            return
+                        out = self.process.communicate()[1]
+                        self.process.wait()
 
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
@@ -490,21 +493,21 @@ class FFmpeg(Thread):
                                      filetotrash=None)
                         return
 
-                if self.proc2.wait():  # ..Failed
-                    out = self.proc2.communicate()[1]
+                if self.process.wait():  # ..Failed
+                    out = self.process.communicate()[1]
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output='FAILED',
                                  duration=kwa['duration'],
-                                 status=self.proc2.wait(),
+                                 status=self.process.wait(),
                                  )
                     tolog(f"[VIDEOMASS]: Error Exit Status: "
-                          f"{self.proc2.wait()} {out}", self.logfile
+                          f"{self.process.wait()} {out}", self.logfile
                           )
                     time.sleep(1)
                     continue
 
-            if self.proc2.wait() == 0:  # ..Finished
+            if self.process.wait() == 0:  # ..Finished
                 filedone.append(kwa["source"])
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
@@ -532,42 +535,39 @@ class FFmpeg(Thread):
 
         WARNING:
         How catch ValueError for tests:
-            if proc.stdin:
-            proc.stdin.close()
+            replaace `proc.stdin and not proc.stdin.closed` with:
+                if proc.stdin:  # WARNING ALERT  remove after test
+            place `proc.stdin.close()` on top `proc.stdin.write('q')`
+                proc.stdin.close()  # WARNING ALERT remove after test
         """
         self.stop_work_thread = True
-        proc = None
 
-        # Check if the process is still running (.poll())
-        if hasattr(self, 'proc1') and self.proc1.poll() is None:
-            proc = self.proc1
-
-        if hasattr(self, 'proc2') and self.proc2.poll() is None:
-            proc = self.proc2
+        try:
+            proc = self.process if self.process.poll() is None else None
+        except AttributeError:
+            proc = None
 
         # Check if the process exists
         if proc is not None:
             try:
                 # Verify that stdin is open and available before writing
                 if proc.stdin and not proc.stdin.closed:
-                    proc.stdin.write('q')
+                    proc.stdin.write('q')  # stop ffmpeg
                     proc.stdin.flush()
 
             # Make sure the process isn't already finished
             except (BrokenPipeError, ValueError, AttributeError,
                     OSError) as err:
                 self.fatal = True
-
+                msg = "CRASH_STOP: forcing FFmpeg to terminate"
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
-                             count=f"CRASH_STOP: {err}",
+                             count=f"{msg}: {err}",
                              duration=0,
                              end='ERROR',
                              )
-                tolog(f"[VIDEOMASS]: FATAL ERROR: {err}", self.logfile)
+                tolog(f"[VIDEOMASS]: {msg}: {err}", self.logfile)
 
                 # Force event end notification to unlock GUI
                 time.sleep(.5)
                 wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=None)
-
-                return

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.06.2024
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,6 +24,8 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Any, ClassVar
+
 import wx
 import wx.lib.scrolledpanel as scrolled
 
@@ -33,15 +35,17 @@ class Mpeg_4(scrolled.ScrolledPanel):
     This scroll panel implements video controls functions
     for MPEG4-part2 encoder on A/V Conversions.
     """
-    ASPECTRATIO = [("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
-                   ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
-                   ("16:10"), ("19:10"), ("21:9"), ("32:9"),
-                   ]
-    FPS = [("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
-           ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
-           ]
+    ASPECTRATIO: ClassVar[dict[str, Any]] = [
+        ("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
+        ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
+        ("16:10"), ("19:10"), ("21:9"), ("32:9"),
+    ]
+    FPS: ClassVar[dict[str, Any]] = [
+        ("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
+        ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
+    ]
     # supported libx264 Bit Depths (10bit need 0 to 63 cfr quantizer scale)
-    PIXELFRMT = [('Auto'), ('yuv420p')]
+    PIXELFRMT: ClassVar[dict[str, Any]] = [('Auto'), ('yuv420p')]
 
     PRESET = ('Default',)
 
@@ -382,7 +386,7 @@ class Mpeg_4(scrolled.ScrolledPanel):
 
         num = self.slider_crf.GetValue()
         self.labcrfmt.SetLabel(str(num))
-        val = num + 1 if not num == -1 else ""
+        val = num + 1 if num != -1 else ""
         self.opt["CRF"] = val if val == "" else f"-qscale:v {val}"
     # ------------------------------------------------------------------#
 

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.18.2025
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,8 +25,9 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import platform
 import subprocess
+import sys
+import time
 from threading import Thread
 
 import wx
@@ -35,7 +36,7 @@ from pubsub import pub
 from videomass.vdms_io.make_filelog import make_log_template, tolog
 from videomass.vdms_utils.utils import Popen
 
-if platform.system() != 'Windows':
+if sys.platform != 'win32':
     import shlex
 
 
@@ -72,7 +73,9 @@ class VolumeDetectThread(Thread):
         self.audiomap = audiomap
         self.status = None
         self.data = None
-        self.nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
+        self.fatal = None  # fatal error I/O flag before `communicate`
+        self.process = None  # process data set on context
+        self.nul = 'NUL' if sys.platform == 'win32' else '/dev/null'
         self.logfile = os.path.join(self.appdata['logdir'],
                                     'volumedetected.log')
         make_log_template('volumedetected.log',
@@ -106,7 +109,7 @@ class VolumeDetectThread(Thread):
             tolog(f'INFO: VIDEOMASS COMMAND: {cmd}',
                   self.logfile, sep=True, wdate=True)
 
-            if platform.system() != 'Windows':
+            if sys.platform != 'win32':
                 cmd = shlex.split(cmd)
             try:
                 with Popen(cmd,
@@ -115,26 +118,27 @@ class VolumeDetectThread(Thread):
                            bufsize=1,
                            universal_newlines=True,
                            encoding=self.appdata['encoding'],
-                           ) as proc:
+                           ) as self.process:
                     meanv, maxv = '', ''
-                    for line in proc.stderr:
+                    for line in self.process.stderr:
                         if 'max_volume:' in line:
                             maxv = line.split(':')[1].strip()
                         if 'mean_volume:' in line:
                             meanv = line.split(':')[1].strip()
 
                         if self.stop_work_thread:
-                            proc.stdin.write('q')  # stop ffmpeg
-                            proc.communicate()[1]
+                            if self.fatal:
+                                return
+                            self.process.communicate()[1]
                             out = (VolumeDetectThread.STOP
-                                   + f'with PID {proc.pid}')
+                                   + f'with PID {self.process.pid}')
                             tolog(out, self.logfile)
-                            proc.wait()
+                            self.process.wait()
                             self.status = 'STOP'
                             break
 
-                        if proc.wait():
-                            output = proc.communicate()[1]
+                        if self.process.wait():
+                            output = self.process.communicate()[1]
                             tolog(f"[FFMPEG] ERROR:\n{output}", self.logfile)
                             self.status = 'ERROR'
                             break
@@ -158,6 +162,53 @@ class VolumeDetectThread(Thread):
 
     def stop(self):
         """
-        Sets the stop work thread to terminate the process
+        Sets the stop work thread to terminate the current process.
+        This method has been revised and expanded to make the GUI
+        more responsive and less dependent on the subprocess's output
+        messages during `readlines` loops. This speeds up the process
+        of closing the subprocess within the background thread while
+        also improving error handling, ensuring the GUI remains completely
+        free from potential blocks or freezes while waiting for termination
+        outputs.
+
+        `flush()` forces Python to immediately clear the write buffer
+         and send the 'q' char to the pipe connected to FFmpeg.
+
+        WARNING:
+        How catch ValueError for tests:
+            replaace `proc.stdin and not proc.stdin.closed` with:
+                if proc.stdin:  # WARNING ALERT  remove after test
+            place `proc.stdin.close()` on top `proc.stdin.write('q')`
+                proc.stdin.close()  # WARNING ALERT remove after test
         """
         self.stop_work_thread = True
+
+        try:
+            proc = self.process if self.process.poll() is None else None
+        except AttributeError:
+            proc = None
+
+        # Check if the process exists
+        if proc is not None:
+            try:
+                # Verify that stdin is open and available before writing
+                if proc.stdin and not proc.stdin.closed:
+                    proc.stdin.write('q')  # stop ffmpeg
+                    proc.stdin.flush()
+
+            # Make sure the process isn't already finished
+            except (BrokenPipeError, ValueError, AttributeError,
+                    OSError) as err:
+                self.fatal = True
+                msg = "CRASH_STOP: forcing FFmpeg to terminate"
+                wx.CallAfter(pub.sendMessage,
+                             "COUNT_EVT",
+                             count=f"{msg}: {err}",
+                             duration=0,
+                             end='ERROR',
+                             )
+                tolog(f"[VIDEOMASS]: {msg}: {err}", self.logfile)
+
+                # Force event end notification to unlock GUI
+                time.sleep(.5)
+                wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=None)

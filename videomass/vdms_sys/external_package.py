@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.19.2024
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,11 +24,11 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
-import sys
 import importlib
 import importlib.machinery
 import importlib.util
+import os
+import sys
 
 
 def importer_package_dir(pkg, path):
@@ -47,7 +47,7 @@ def importer_package_dir(pkg, path):
     return None
 
 
-def importer_init_file(path, test: list = None):
+def importer_init_file(path: str, test: list | None = None):
     """
     Given a pathname to a python package, import relative
     `__init__` file.

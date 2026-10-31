@@ -12,6 +12,13 @@ URGENCY: to do soon
 - Modificare Guida ODT in filtro Resize
 - Rigenerare locale - ci sono nuove stringhe e cambiamenti
 
+-prova convertire due file, il primo lo lasci concludere, il secondo lo stoppi alla prima passata e poi alla seconda passata. Osserva con i print sul metodo stop della classe ffmpeg.
+
+- Cerca con kate: Compatibility: Python3
+  e sostituisci con Compatibility: Python >= 3.11
+
+
+
 --------------
 URGENCY: high
 --------------

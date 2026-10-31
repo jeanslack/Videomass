@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.18.2026
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -25,10 +25,11 @@ Code checker: flake8, pylint
     along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
-import sys
 import platform
-from videomass.vdms_utils.utils import copydir_recursively
+import sys
+
 from videomass.vdms_sys.settings_manager import ConfigManager
+from videomass.vdms_utils.utils import copydir_recursively
 
 
 def msg(arg):
@@ -49,7 +50,7 @@ def create_dirs(dirname, fconf):
     if not os.path.exists(dirname):
         try:
             os.makedirs(dirname, mode=0o777)
-        except Exception as err:
+        except OSError as err:
             return {'ERROR': err}
 
     return {'R': None}
@@ -80,7 +81,7 @@ def restore_dirconf(dirconf, srcdata, portable):
         try:
             if not os.path.exists(transoutdir):
                 os.makedirs(transoutdir, mode=0o777)
-        except Exception as err:
+        except OSError as err:
             return {'ERROR': err}
 
     return {'R': None}
@@ -264,7 +265,7 @@ def data_location(kwargs):
             }
 
 
-class DataSource():
+class DataSource:
     """
     DataSource class determines the Videomass's
     configuration according to the used Operating

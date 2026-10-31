@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.13.2026
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,16 +25,20 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+
 import wx
-import wx.lib.agw.hyperlink as hpl
 import wx.lib.agw.floatspin as FS
-from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
-from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_dialogs.filter_scale import Scale
-from videomass.vdms_io.checkup import check_files
+import wx.lib.agw.hyperlink as hpl
+
 from videomass.vdms_dialogs.epilogue import Formula
-from videomass.vdms_utils.utils import trailing_name_with_prog_digit
-from videomass.vdms_utils.utils import update_timeseq_duration
+from videomass.vdms_dialogs.filter_scale import Scale
+from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
+from videomass.vdms_io.checkup import check_files
+from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.utils import (
+    trailing_name_with_prog_digit,
+    update_timeseq_duration,
+)
 
 
 class VideoToSequence(wx.Panel):
@@ -441,9 +445,10 @@ class VideoToSequence(wx.Panel):
                 scale = f'{scale},{self.opt["Setdar"]}'
             if self.opt["Setsar"]:
                 scale = f'{scale},{self.opt["Setsar"]}'
-            cmd = ('-skip_frame nokey', f'-vf "{scale},tile={rows}x{cols}:'
-                   f'padding={pad}:margin={marg}:color=White" -an '
-                   f'-fps_mode vfr')
+
+            cmd = ('-skip_frame nokey',
+                   (f'-vf "{scale},tile={rows}x{cols}:padding={pad}:margin'
+                    f'={marg}:color=White" -an -fps_mode vfr'))
 
         elif self.rdbx_opt.GetSelection() == 2:
             setf = ''
@@ -454,6 +459,7 @@ class VideoToSequence(wx.Panel):
             flt = (f'fps=10,{self.opt["Scale"]}:flags=lanczos,split=2 '
                    f'[a][b]; [a] palettegen [pal]; [b] '
                    f'[pal] paletteuse{setf}')
+
             cmd = ('', f'-vf "{flt}" -loop 0')
 
         elif self.rdbx_opt.GetSelection() == 0:
@@ -464,22 +470,17 @@ class VideoToSequence(wx.Panel):
                 scale = f'{scale},{self.opt["Setsar"]}'
 
             arg = {'jpeg': ('',
-                            f'-fps_mode cfr -r {self.spin_rate.GetValue()} '
-                            f'-vf "{scale}" -pix_fmt yuvj420p'
-                            ),
+                            (f'-fps_mode cfr -r {self.spin_rate.GetValue()} '
+                             f'-vf "{scale}" -pix_fmt yuvj420p')),
                    'png': ('',
-                           f'-fps_mode cfr -r {self.spin_rate.GetValue()} '
-                           f'-vf "{scale}" -pix_fmt rgb24'
-                           ),
+                           (f'-fps_mode cfr -r {self.spin_rate.GetValue()} '
+                            f'-vf "{scale}" -pix_fmt rgb24')),
                    'bmp': ('',
-                           f'-fps_mode cfr -r {self.spin_rate.GetValue()} '
-                           f'-vf "{scale}" -pix_fmt bgr24'
-                           ),
+                           (f'-fps_mode cfr -r {self.spin_rate.GetValue()} '
+                            f'-vf "{scale}" -pix_fmt bgr24')),
                    'gif': ('',
-                           f'-fps_mode cfr -r {self.spin_rate.GetValue()} '
-                           f'-vf "{scale}"'
-                           )
-                   }
+                           (f'-fps_mode cfr -r {self.spin_rate.GetValue()} '
+                            f'-vf "{scale}"'))}
             cmd = arg[fmt]
 
         return cmd

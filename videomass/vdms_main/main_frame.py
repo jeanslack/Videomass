@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.13.2026
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -406,11 +406,11 @@ class MainFrame(wx.Frame):
                           _('Videomass - Warning!'), wx.ICON_WARNING, self)
             return
 
-        if (self.appdata['warnexiting'] and
-            wx.MessageBox(_('Are you sure you want to exit '
-                            'the application?'), _('Exit'),
-                          wx.ICON_QUESTION | wx.CANCEL
-                          | wx.YES_NO, self) != wx.YES):
+        if (self.appdata['warnexiting']
+            and wx.MessageBox(_('Are you sure you want to exit '
+                                'the application?'), _('Exit'),
+                              wx.ICON_QUESTION | wx.CANCEL
+                              | wx.YES_NO, self) != wx.YES):
             return
 
         self.write_option_before_exit()
@@ -1132,11 +1132,12 @@ class MainFrame(wx.Frame):
                 changes = set_up.getvalue()
                 self.fileDnDTarget.on_file_save(self.appdata['outputdir'])
 
-                if ([x for x in changes if x is False] and
-                     wx.MessageBox(_("{0}\n\nDo you want to restart "
-                                     "the application now?").format(msg),
-                                   _('Restart Videomass?'), wx.ICON_QUESTION
-                                   | wx.CANCEL | wx.YES_NO, self) == wx.YES):
+                if ([x for x in changes if x is False]
+                    and wx.MessageBox(_("{0}\n\nDo you want to restart "
+                                        "the application now?").format(msg),
+                                      _('Restart Videomass?'),
+                                      wx.ICON_QUESTION | wx.CANCEL
+                                      | wx.YES_NO, self) == wx.YES):
 
                     self.appdata['auto-restart-app'] = True
                     self.on_Kill()

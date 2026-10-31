@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.12.2024
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,6 +24,8 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Any, ClassVar
+
 import wx
 import wx.lib.scrolledpanel as scrolled
 
@@ -83,19 +85,22 @@ class Vp9_WebM(scrolled.ScrolledPanel):
     for VP9-WEBM encoder on A/V Conversions.
     """
     # supported vp9 Bit Depths (pixel formats)
-    PIXELFRMT = [('Auto'), ('yuv420p'), ('yuva420p'), ('yuv422p'),
-                 ('yuv440p'), ('yuv444p'), ('yuv420p10le'), ('yuv422p10le'),
-                 ('yuv440p10le'), ('yuv444p10le'), ('yuv420p12le'),
-                 ('yuv422p12le'), ('yuv440p12le'), ('yuv444p12le'), ('gbrp'),
-                 ('gbrp10le'), ('gbrp12le'),
-                 ]
-    ASPECTRATIO = [("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
-                   ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
-                   ("16:10"), ("19:10"), ("21:9"), ("32:9"),
-                   ]
-    FPS = [("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
-           ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
-           ]
+    PIXELFRMT: ClassVar[dict[str, Any]] = [
+        ('Auto'), ('yuv420p'), ('yuva420p'), ('yuv422p'),
+        ('yuv440p'), ('yuv444p'), ('yuv420p10le'), ('yuv422p10le'),
+        ('yuv440p10le'), ('yuv444p10le'), ('yuv420p12le'),
+        ('yuv422p12le'), ('yuv440p12le'), ('yuv444p12le'), ('gbrp'),
+        ('gbrp10le'), ('gbrp12le'),
+    ]
+    ASPECTRATIO: ClassVar[dict[str, Any]] = [
+        ("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
+        ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
+        ("16:10"), ("19:10"), ("21:9"), ("32:9"),
+    ]
+    FPS: ClassVar[dict[str, Any]] = [
+        ("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
+        ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
+    ]
     PRESET = ('Default',
               'Average Bitrate (ABR)',
               'Constant quality 2-pass (CQ)',

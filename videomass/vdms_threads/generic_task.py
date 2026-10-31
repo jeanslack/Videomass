@@ -2,11 +2,11 @@
 """
 Name: generic_task.py
 Porpose: Execute a generic task with FFmpeg
-Compatibility: Python3 (Unix, Windows)
+Compatibility: Python3 (Unix, win32)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.30.2026
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,8 +24,9 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import platform
 import subprocess
+import sys
+import time
 from threading import Thread
 
 import wx
@@ -34,7 +35,7 @@ from pubsub import pub
 from videomass.vdms_io.make_filelog import tolog
 from videomass.vdms_utils.utils import Popen
 
-if platform.system() != 'Windows':
+if sys.platform != 'win32':
     import shlex
 
 
@@ -83,6 +84,8 @@ class FFmpegGenericTaskOutLines(Thread):
         self.procname = procname
         self.args = args
         self.status = None
+        self.fatal = None  # fatal error I/O flag before `communicate`
+        self.process = None  # process data set on context
 
         Thread.__init__(self)
         self.start()
@@ -103,7 +106,7 @@ class FFmpegGenericTaskOutLines(Thread):
               f'INFO: VIDEOMASS COMMAND: {cmd}', self.logfile,
               sep=True, wdate=True
               )
-        if platform.system() != 'Windows':
+        if sys.platform != 'win32':
             cmd = shlex.split(cmd)
         try:
             with Popen(cmd,
@@ -111,21 +114,22 @@ class FFmpegGenericTaskOutLines(Thread):
                        stdin=subprocess.PIPE,
                        universal_newlines=True,
                        encoding=self.appdata["encoding"],
-                       ) as proc:
-                for line in proc.stderr:
+                       ) as self.process:
+                for line in self.process.stderr:
                     outlist.append(line)
                     if self.stop_work_thread:
-                        proc.stdin.write('q')  # stop ffmpeg
-                        output = proc.communicate()[1]
-                        proc.wait()
+                        if self.fatal:
+                            return
+                        output = self.process.communicate()[1]
+                        self.process.wait()
                         tolog(FFmpegGenericTaskOutLines.STOP
-                              + f'with PID {proc.pid}', self.logfile
+                              + f'with PID {self.process.pid}', self.logfile
                               )
                         self.status = 'STOP'
                         break
 
-                    if proc.wait():
-                        output = proc.communicate()[1]
+                    if self.process.wait():
+                        output = self.process.communicate()[1]
                         tolog(f"[FFMPEG] ERROR:\n{output}", self.logfile)
                         self.status = 'ERROR'
                         break
@@ -146,9 +150,56 @@ class FFmpegGenericTaskOutLines(Thread):
 
     def stop(self):
         """
-        Sets the stop work thread to terminate the process
+        Sets the stop work thread to terminate the current process.
+        This method has been revised and expanded to make the GUI
+        more responsive and less dependent on the subprocess's output
+        messages during `readlines` loops. This speeds up the process
+        of closing the subprocess within the background thread while
+        also improving error handling, ensuring the GUI remains completely
+        free from potential blocks or freezes while waiting for termination
+        outputs.
+
+        `flush()` forces Python to immediately clear the write buffer
+         and send the 'q' char to the pipe connected to FFmpeg.
+
+        WARNING:
+        How catch ValueError for tests:
+            replaace `proc.stdin and not proc.stdin.closed` with:
+                if proc.stdin:  # WARNING ALERT  remove after test
+            place `proc.stdin.close()` on top `proc.stdin.write('q')`
+                proc.stdin.close()  # WARNING ALERT remove after test
         """
         self.stop_work_thread = True
+
+        try:
+            proc = self.process if self.process.poll() is None else None
+        except AttributeError:
+            proc = None
+
+        # Check if the process exists
+        if proc is not None:
+            try:
+                # Verify that stdin is open and available before writing
+                if proc.stdin and not proc.stdin.closed:
+                    proc.stdin.write('q')  # stop ffmpeg
+                    proc.stdin.flush()
+
+            # Make sure the process isn't already finished
+            except (BrokenPipeError, ValueError, AttributeError,
+                    OSError) as err:
+                self.fatal = True
+                msg = "CRASH_STOP: forcing FFmpeg to terminate"
+                wx.CallAfter(pub.sendMessage,
+                             "COUNT_EVT",
+                             count=f"{msg}: {err}",
+                             duration=0,
+                             end='ERROR',
+                             )
+                tolog(f"[VIDEOMASS]: {msg}: {err}", self.logfile)
+
+                # Force event end notification to unlock GUI
+                time.sleep(.5)
+                wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=None)
 
 
 class FFmpegGenericTask(Thread):
@@ -209,7 +260,7 @@ class FFmpegGenericTask(Thread):
               f'INFO: VIDEOMASS COMMAND: {cmd}', self.logfile,
               sep=True, wdate=True
               )
-        if platform.system() != 'Windows':
+        if sys.platform != 'win32':
             cmd = shlex.split(cmd)
         try:
             with Popen(cmd,

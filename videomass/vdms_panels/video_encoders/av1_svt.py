@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.11.2024
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,6 +24,8 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Any, ClassVar
+
 import wx
 import wx.lib.scrolledpanel as scrolled
 
@@ -71,23 +73,28 @@ class AV1_Svt(scrolled.ScrolledPanel):
 
     """
     # profile/tunes used by libsvtav1
-    SVT_OPT = {("Profiles"): ("Auto", "main", "high", "professional"),
-               ("Tunes"): ("Auto", "psnr", "vq", "ssim")
-               }
+    SVT_OPT: ClassVar[dict[str, Any]] = {
+        ("Profiles"): ("Auto", "main", "high", "professional"),
+        ("Tunes"): ("Auto", "psnr", "vq", "ssim")
+    }
     # levels libsvtav1 (Auto = 0 as param)
     LEVELS = ('Auto', '2.0', '2.1', '2.2', '2.3', '3.0', '3.1', '3.2',
               '3.3', '4.0', '4.1', '4.2', '4.3', '5.0', '5.1', '5.2', '5.3',
               '6.0', '6.1', '6.2', '6.3', '7.0', '7.1', '7.2', '7.3',
               )
     # supported libsvtav1 Bit Depths
-    PIXELFRMT = [('Auto'), ('yuv420p'), ('yuv420p10le')]
-    ASPECTRATIO = [("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
-                   ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
-                   ("16:10"), ("19:10"), ("21:9"), ("32:9"),
-                   ]
-    FPS = [("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
-           ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
-           ]
+    PIXELFRMT: ClassVar[dict[str, Any]] = [
+        ('Auto'), ('yuv420p'), ('yuv420p10le')
+    ]
+    ASPECTRATIO: ClassVar[dict[str, Any]] = [
+        ("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
+        ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
+        ("16:10"), ("19:10"), ("21:9"), ("32:9"),
+    ]
+    FPS: ClassVar[dict[str, Any]] = [
+        ("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
+        ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
+    ]
 
     PRESET = ('Default',
               'Fast/Realtime Encoding',

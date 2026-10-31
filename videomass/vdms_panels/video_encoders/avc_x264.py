@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.12.2026
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,6 +24,8 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Any, ClassVar
+
 import wx
 import wx.lib.scrolledpanel as scrolled
 
@@ -34,35 +36,35 @@ class Avc_X264(scrolled.ScrolledPanel):
     for H.264-AVC encoder on A/V Conversions.
     """
     # presets used by h264 and h265:
-    H264_OPT = {("Presets"): ("None", "ultrafast", "superfast",
-                              "veryfast", "faster", "fast", "medium",
-                              "slow", "slower", "veryslow", "placebo"
-                              ),
-                ("Profiles"): ("None", "baseline", "main", "high",
-                               "high10", "high422", "high444"
-                               ),
-                ("Tunes"): ("None", "film", "animation", "grain",
-                            "stillimage", "psnr", "ssim", "fastdecode",
-                            "zerolatency"
-                            )
-                }
+    H264_OPT: ClassVar[dict[str, Any]] = {
+        ("Presets"): ("None", "ultrafast", "superfast",
+                      "veryfast", "faster", "fast", "medium",
+                      "slow", "slower", "veryslow", "placebo"),
+        ("Profiles"): ("None", "baseline", "main", "high",
+                       "high10", "high422", "high444"),
+        ("Tunes"): ("None", "film", "animation", "grain",
+                    "stillimage", "psnr", "ssim", "fastdecode", "zerolatency")
+    }
     # profile level for profiles x264/x265
     LEVELS = ('None', '1.0', '2.0', '2.1', '3.0', '3.1', '4.0', '4.1',
               '5.0', '5.1', '5.2', '6.0', '6.1', '6.2', '8.5'
               )
     # supported libx264 Bit Depths (10bit need 0 to 63 cfr quantizer scale)
-    PIXELFRMT = [('Auto'), ('gray'), ('gray10le'), ('nv12'), ('nv16'),
-                 ('nv20le'), ('nv21'), ('yuv420p'), ('yuv420p10le'),
-                 ('yuv422p'), ('yuv422p10le'), ('yuv444p'), ('yuv444p10le'),
-                 ('yuvj420p'), ('yuvj422p'), ('yuvj444p'),
-                 ]
-    ASPECTRATIO = [("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
-                   ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
-                   ("16:10"), ("19:10"), ("21:9"), ("32:9"),
-                   ]
-    FPS = [("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
-           ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
-           ]
+    PIXELFRMT: ClassVar[dict[str, Any]] = [
+        ('Auto'), ('gray'), ('gray10le'), ('nv12'), ('nv16'),
+        ('nv20le'), ('nv21'), ('yuv420p'), ('yuv420p10le'),
+        ('yuv422p'), ('yuv422p10le'), ('yuv444p'), ('yuv444p10le'),
+        ('yuvj420p'), ('yuvj422p'), ('yuvj444p'),
+    ]
+    ASPECTRATIO: ClassVar[dict[str, Any]] = [
+        ("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
+        ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
+        ("16:10"), ("19:10"), ("21:9"), ("32:9"),
+    ]
+    FPS: ClassVar[dict[str, Any]] = [
+        ("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
+        ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
+    ]
     PRESET = ('Default',)
 
     def __init__(self, parent, opt):

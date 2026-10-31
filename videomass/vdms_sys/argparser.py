@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: May.29.2023
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,15 +24,14 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+import argparse
 import os
+import platform
 import sys
 from shutil import which
-import argparse
-import platform
-from videomass.vdms_sys.about_app import (RELNAME,
-                                          VERSION,
-                                          RELSTATE
-                                          )
+
+from videomass.vdms_sys.about_app import RELNAME, RELSTATE, VERSION
+
 try:
     import wx
     MSGWX = f"{wx.version()}"

@@ -6,7 +6,7 @@ Compatibility: Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.10.2025
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
  This file is part of Videomass.
@@ -24,8 +24,9 @@ Code checker: flake8, pylint
     You should have received a copy of the GNU General Public License
     along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
 import json
+import os
+from typing import Any, ClassVar
 
 
 class ConfigManager:
@@ -151,36 +152,37 @@ class ConfigManager:
 
     """
     VERSION = 8.5
-    DEFAULT_OPTIONS = {"confversion": VERSION,
-                       "shutdown": False,
-                       "sudo_password": "",
-                       "auto_exit": False,
-                       "encoding": "utf-8",
-                       "outputdir": "",
-                       "outputdir_asinput": False,
-                       "filesuffix": "",
-                       "ffmpeg_cmd": "",
-                       "ffmpeg_islocal": False,
-                       "ffmpeg_loglev": "-loglevel info",
-                       "ffplay_cmd": "",
-                       "ffplay_islocal": False,
-                       "ffplay_loglev": "-loglevel error",
-                       "ffprobe_cmd": "",
-                       "ffprobe_islocal": False,
-                       "warnexiting": True,
-                       "icontheme": "Videomass-Colours",
-                       "toolbarsize": 24,
-                       "toolbarpos": 3,
-                       "main_window_size": [850, 560],
-                       "main_window_pos": [0, 0],
-                       "clearcache": True,
-                       "clearlogfiles": False,
-                       "move_file_to_trash": False,
-                       "trashdir_loc": "",
-                       "locale_name": "Default",
-                       "prstmng_column_width": [250, 350, 200, 220],
-                       "filedrop_column_width": [30, 200, 200, 200, 150, 200],
-                       }
+    DEFAULT_OPTIONS: ClassVar[dict[str, Any]] = {
+        "confversion": VERSION,
+        "shutdown": False,
+        "sudo_password": "",
+        "auto_exit": False,
+        "encoding": "utf-8",
+        "outputdir": "",
+        "outputdir_asinput": False,
+        "filesuffix": "",
+        "ffmpeg_cmd": "",
+        "ffmpeg_islocal": False,
+        "ffmpeg_loglev": "-loglevel info",
+        "ffplay_cmd": "",
+        "ffplay_islocal": False,
+        "ffplay_loglev": "-loglevel error",
+        "ffprobe_cmd": "",
+        "ffprobe_islocal": False,
+        "warnexiting": True,
+        "icontheme": "Videomass-Colours",
+        "toolbarsize": 24,
+        "toolbarpos": 3,
+        "main_window_size": [850, 560],
+        "main_window_pos": [0, 0],
+        "clearcache": True,
+        "clearlogfiles": False,
+        "move_file_to_trash": False,
+        "trashdir_loc": "",
+        "locale_name": "Default",
+        "prstmng_column_width": [250, 350, 200, 220],
+        "filedrop_column_width": [30, 200, 200, 200, 150, 200],
+    }
 
     def __init__(self, filename, makeportable=None):
         """

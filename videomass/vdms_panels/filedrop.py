@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.20.2025
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,14 +26,15 @@ This file is part of Videomass.
 """
 import os
 import re
+
 import wx
 from pubsub import pub
+
+from videomass.vdms_dialogs.list_warning import ListWarning
+from videomass.vdms_dialogs.renamer import Renamer
 from videomass.vdms_threads.ffplay_file import FilePlay
 from videomass.vdms_threads.ffprobe import ffprobe
-from videomass.vdms_utils.utils import time_to_integer
-from videomass.vdms_utils.utils import to_bytes
-from videomass.vdms_dialogs.renamer import Renamer
-from videomass.vdms_dialogs.list_warning import ListWarning
+from videomass.vdms_utils.utils import time_to_integer, to_bytes
 
 
 def fullpathname_sanitize(fullpathfilename):
@@ -149,7 +150,7 @@ class MyListCtrl(wx.ListCtrl):
             self.InsertItem(self.index, str(self.index + 1))
             self.SetItem(self.index, 1, path)
 
-            if 'duration' not in probe['format'].keys():
+            if 'duration' not in probe['format']:
                 self.SetItem(self.index, 2, 'N/A')
                 # NOTE these are my custom adds to probe data
                 probe['format']['time'] = '00:00:00.000'
@@ -515,8 +516,8 @@ class FileDnD(wx.Panel):
         try:
             with open(item, encoding='utf-8'):
                 FilePlay(self.GetParent(), args)
-        except IOError:
-            wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
+        except OSError:
+            wx.MessageBox(_("Invalid or unsupported file:  %s") % (item),
                           "Videomass", wx.ICON_EXCLAMATION, self)
             return
     # ----------------------------------------------------------------------

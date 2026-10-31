@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.13.2026
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,15 +24,18 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Any, ClassVar
+
 import wx
-import wx.lib.scrolledpanel as scrolled
 import wx.lib.agw.floatspin as FS
-from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+import wx.lib.scrolledpanel as scrolled
+
 from videomass.vdms_dialogs.audioproperties import AudioProperties
-from videomass.vdms_utils.utils import get_volume_data
-from videomass.vdms_io.io_tools import volume_detect_process
 from videomass.vdms_dialogs.shownormlist import AudioVolNormal
+from videomass.vdms_io.io_tools import volume_detect_process
 from videomass.vdms_threads.ffplay_file import FilePlay
+from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.utils import get_volume_data
 
 
 class AudioEncoders(scrolled.ScrolledPanel):
@@ -42,46 +45,48 @@ class AudioEncoders(scrolled.ScrolledPanel):
     """
     VIOLET = '#D64E93'
     # Namings in the audio codec selection on audio radio box:
-    ACODECS = {('Auto'): (""),
-               ('PCM'): ("pcm_s16le"),
-               ('FLAC'): ("flac"),
-               ('AAC'): ("aac"),
-               ('ALAC'): ("alac"),
-               ('AC3'): ("ac3"),
-               ('VORBIS'): ("libvorbis"),
-               ('LAME'): ("libmp3lame"),
-               ('OPUS'): ("libopus"),
-               ('Copy'): ("copy"),
-               ('No Audio'): ("-an")
-               }
+    ACODECS: ClassVar[dict[str, Any]] = {
+        ('Auto'): (""),
+        ('PCM'): ("pcm_s16le"),
+        ('FLAC'): ("flac"),
+        ('AAC'): ("aac"),
+        ('ALAC'): ("alac"),
+        ('AC3'): ("ac3"),
+        ('VORBIS'): ("libvorbis"),
+        ('LAME'): ("libmp3lame"),
+        ('OPUS'): ("libopus"),
+        ('Copy'): ("copy"),
+        ('No Audio'): ("-an")
+    }
     # compatibility between video formats and related audio codecs:
-    AV_FORMATS = {('avi'): ('default', 'wav', None, None, None, 'ac3', None,
-                            'mp3', None, 'copy', 'mute'),
-                  ('mp4'): ('default', None, None, 'aac', None, 'ac3', None,
-                            'mp3', 'opus', 'copy', 'mute'),
-                  ('m4v'): ('default', None, None, 'aac', 'alac', None, None,
-                            None, None, 'copy', 'mute'),
-                  ('mkv'): ('default', 'wav', 'flac', 'aac', None, 'ac3',
-                            'ogg', 'mp3', 'opus', 'copy', 'mute'),
-                  ('webm'): ('default', None, None, None, None, None, 'ogg',
-                             None, 'opus', 'copy', 'mute'),
-                  ('wav'): (None, 'wav', None, None, None, None, None, None,
-                            None, 'copy', None),
-                  ('mp3'): (None, None, None, None, None, None, None, 'mp3',
-                            None, 'copy', None),
-                  ('ac3'): (None, None, None, None, None, 'ac3', None, None,
-                            None, 'copy', None),
-                  ('ogg'): (None, None, None, None, None, None, 'ogg', None,
-                            'opus', 'copy', None),
-                  ('flac'): (None, None, 'flac', None, None, None, None, None,
-                             None, 'copy', None),
-                  ('m4a'): (None, None, None, None, 'alac', None, None, None,
-                            None, 'copy', None),
-                  ('aac'): (None, None, None, 'aac', None, None, None, None,
-                            None, 'copy', None),
-                  ('opus'): (None, None, None, None, None, None, None, None,
-                             'opus', 'copy', None),
-                  }
+    AV_FORMATS: ClassVar[dict[str, Any]] = {
+        ('avi'): ('default', 'wav', None, None, None, 'ac3', None,
+                  'mp3', None, 'copy', 'mute'),
+        ('mp4'): ('default', None, None, 'aac', None, 'ac3', None,
+                  'mp3', 'opus', 'copy', 'mute'),
+        ('m4v'): ('default', None, None, 'aac', 'alac', None, None,
+                  None, None, 'copy', 'mute'),
+        ('mkv'): ('default', 'wav', 'flac', 'aac', None, 'ac3',
+                  'ogg', 'mp3', 'opus', 'copy', 'mute'),
+        ('webm'): ('default', None, None, None, None, None, 'ogg',
+                   None, 'opus', 'copy', 'mute'),
+        ('wav'): (None, 'wav', None, None, None, None, None, None,
+                  None, 'copy', None),
+        ('mp3'): (None, None, None, None, None, None, None, 'mp3',
+                  None, 'copy', None),
+        ('ac3'): (None, None, None, None, None, 'ac3', None, None,
+                  None, 'copy', None),
+        ('ogg'): (None, None, None, None, None, None, 'ogg', None,
+                  'opus', 'copy', None),
+        ('flac'): (None, None, 'flac', None, None, None, None, None,
+                   None, 'copy', None),
+        ('m4a'): (None, None, None, None, 'alac', None, None, None,
+                  None, 'copy', None),
+        ('aac'): (None, None, None, 'aac', None, None, None, None,
+                  None, 'copy', None),
+        ('opus'): (None, None, None, None, None, None, None, None,
+                   'opus', 'copy', None),
+    }
 
     def __init__(self, parent, opt, maindata):
         """
@@ -322,17 +327,17 @@ class AudioEncoders(scrolled.ScrolledPanel):
         elif self.rdbx_normalize.GetSelection() == 3:
             del self.opt["PEAK"][:]
             del self.opt["RMS"][:]
-            loud = (f'-filter:a: loudnorm=I={str(self.spin_i.GetValue())}'
-                    f':LRA={str(self.spin_lra.GetValue())}'
-                    f':TP={str(self.spin_tp.GetValue())}')
+            loud = (f'-filter:a: loudnorm=I={(self.spin_i.GetValue())}'
+                    f':LRA={(self.spin_lra.GetValue())}'
+                    f':TP={(self.spin_tp.GetValue())}')
             self.opt["EBU"][1] = loud
 
         elif self.rdbx_normalize.GetSelection() == 4:
             del self.opt["PEAK"][:]
             del self.opt["RMS"][:]
-            loud = (f'loudnorm=I={str(self.spin_i.GetValue())}:'
-                    f'TP={str(self.spin_tp.GetValue())}:'
-                    f'LRA={str(self.spin_lra.GetValue())}:'
+            loud = (f'loudnorm=I={(self.spin_i.GetValue())}:'
+                    f'TP={(self.spin_tp.GetValue())}:'
+                    f'LRA={(self.spin_lra.GetValue())}:'
                     f'print_format=summary'
                     )
             self.opt["EBU"][1] = loud
@@ -437,7 +442,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         if self.cmb_A_inMap.GetValue() == 'Auto':
             idx = ''
         else:
-            idx = f'-ast a:{str(int(self.cmb_A_inMap.GetValue()) - 1)}'
+            idx = f'-ast a:{(int(self.cmb_A_inMap.GetValue()) - 1)}'
 
         if self.rdbx_normalize.GetSelection() == 0:
             afilter = ''
@@ -453,9 +458,9 @@ class AudioEncoders(scrolled.ScrolledPanel):
             afilter = f'-af {self.opt["RMS"][fileget[1]][5].split()[1]}'
 
         elif self.rdbx_normalize.GetSelection() in (3, 4):
-            afilter = (f'-af loudnorm=I={str(self.spin_i.GetValue())}'
-                       f':LRA={str(self.spin_lra.GetValue())}'
-                       f':TP={str(self.spin_tp.GetValue())}')
+            afilter = (f'-af loudnorm=I={(self.spin_i.GetValue())}'
+                       f':LRA={(self.spin_lra.GetValue())}'
+                       f':TP={(self.spin_tp.GetValue())}')
         else:
             return None
 
@@ -483,7 +488,7 @@ class AudioEncoders(scrolled.ScrolledPanel):
         try:
             with open(filepath, encoding='utf-8'):
                 FilePlay(self.GetParent(), args)
-        except IOError:
+        except OSError:
             wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
                           "Videomass", wx.ICON_EXCLAMATION, self)
     # ------------------------------------------------------------------#
@@ -506,14 +511,14 @@ class AudioEncoders(scrolled.ScrolledPanel):
         idx = self.cmb_A_inMap.GetValue()
 
         if isaudio:
-            streamindexes = list(x.get('index') for x in isaudio)
-            if idx.isdigit():  # e.g user has selected an index (1-16)
-                if not int(idx) - 1 in range(len(streamindexes)):
-                    wx.MessageBox(_('Index does not exist in the '
-                                    'selected source file:\n"{}"'
-                                    ).format(fileselected[0]),
-                                  'Videomass', wx.ICON_ERROR, self)
-                    return None
+            streamindexes = [x.get('index') for x in isaudio]
+            # e.g user has selected an index (1-16)
+            if idx.isdigit() and not int(idx) - 1 in range(len(streamindexes)):
+                wx.MessageBox(_('Index does not exist in the '
+                                'selected source file:\n"{}"'
+                                ).format(fileselected[0]),
+                              'Videomass', wx.ICON_ERROR, self)
+                return None
             return streamindexes  # e.g user has selected 'Auto'
         else:
             wx.MessageBox(_('The source file does not contain any '
@@ -696,9 +701,9 @@ class AudioEncoders(scrolled.ScrolledPanel):
             idx = str(int(self.cmb_A_inMap.GetValue()) - 1)
             self.opt["AudioIndex"] = f'-map 0:a:{idx}'
 
-        if self.rdbx_normalize.GetSelection() in [1, 2]:
-            if not self.btn_voldect.IsEnabled():
-                self.btn_voldect.Enable()
+        if (self.rdbx_normalize.GetSelection() in [1, 2]
+           and not self.btn_voldect.IsEnabled()):
+            self.btn_voldect.Enable()
 
         self.on_audio_mapping(None)
     # ------------------------------------------------------------------#

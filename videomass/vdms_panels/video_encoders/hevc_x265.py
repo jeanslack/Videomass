@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.04.2023
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,6 +24,8 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Any, ClassVar
+
 import wx
 import wx.lib.scrolledpanel as scrolled
 
@@ -33,39 +35,40 @@ class Hevc_X265(scrolled.ScrolledPanel):
     This scroll panel implements video controls functions
     for H.265-HEVC encoder on A/V Conversions.
     """
-    ASPECTRATIO = [("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
-                   ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
-                   ("16:10"), ("19:10"), ("21:9"), ("32:9"),
-                   ]
-    FPS = [("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
-           ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
-           ]
-    PIXELFRMT = [('Auto'), ('yuv420p'), ('yuvj420p'), ('yuv422p'),
-                 ('yuvj422p'), ('yuv444p'), ('yuvj444p'), ('gbrp'),
-                 ('yuv420p10le'), ('yuv422p10le'), ('yuv444p10le'),
-                 ('gbrp10le'), ('yuv420p12le'), ('yuv422p12le'),
-                 ('yuv444p12le'), ('gbrp12le'), ('gray'), ('gray10le'),
-                 ('gray12le')
-                 ]
+    ASPECTRATIO: ClassVar[dict[str, Any]] = [
+        ("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
+        ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
+        ("16:10"), ("19:10"), ("21:9"), ("32:9"),
+    ]
+    FPS: ClassVar[dict[str, Any]] = [
+        ("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
+        ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
+    ]
+    PIXELFRMT: ClassVar[dict[str, Any]] = [
+        ('Auto'), ('yuv420p'), ('yuvj420p'), ('yuv422p'),
+        ('yuvj422p'), ('yuv444p'), ('yuvj444p'), ('gbrp'),
+        ('yuv420p10le'), ('yuv422p10le'), ('yuv444p10le'),
+        ('gbrp10le'), ('yuv420p12le'), ('yuv422p12le'),
+        ('yuv444p12le'), ('gbrp12le'), ('gray'), ('gray10le'),
+        ('gray12le')
+    ]
     # Used by h265 only
-    H265_OPT = {("Presets"): ("None", "ultrafast", "superfast",
-                              "veryfast", "faster", "fast", "medium",
-                              "slow", "slower", "veryslow", "placebo"
-                              ),
-                ("Profiles"): ("None", "main", "main10", "mainstillpicture",
-                               "msp", "main-intra", "main10-intra",
-                               "main444-8", "main444-intra",
-                               "main444-stillpicture", "main422-10",
-                               "main422-10-intra", "main444-10",
-                               "main444-10-intra", "main12", "main12-intra",
-                               "main422-12", "main422-12-intra", "main444-12",
-                               "main444-12-intra", "main444-16-intra",
-                               "main444-16-stillpicture"
-                               ),
-                ("Tunes"): ("None", "grain", "psnr", "ssim", "fastdecode",
-                            "zerolatency"
-                            )
-                }
+    H265_OPT: ClassVar[dict[str, Any]] = {
+        ("Presets"): ("None", "ultrafast", "superfast",
+                      "veryfast", "faster", "fast", "medium",
+                      "slow", "slower", "veryslow", "placebo"),
+        ("Profiles"): ("None", "main", "main10", "mainstillpicture",
+                       "msp", "main-intra", "main10-intra",
+                       "main444-8", "main444-intra",
+                       "main444-stillpicture", "main422-10",
+                       "main422-10-intra", "main444-10",
+                       "main444-10-intra", "main12", "main12-intra",
+                       "main422-12", "main422-12-intra", "main444-12",
+                       "main444-12-intra", "main444-16-intra",
+                       "main444-16-stillpicture"),
+        ("Tunes"): ("None", "grain", "psnr", "ssim", "fastdecode",
+                    "zerolatency")
+    }
     # profile level for h265
     LEVELS = ('None', '1', '2', '2.1', '3', '3.1', '4', '4.1',
               '5', '5.1', '5.2', '6', '6.1', '6.2', '8.5'

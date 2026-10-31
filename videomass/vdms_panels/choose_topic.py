@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.18.2026
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,8 +25,9 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import wx
-from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+
 from videomass.vdms_sys.about_app import VERSION
+from videomass.vdms_utils.get_bmpfromsvg import get_bmp
 
 
 class Choose_Topic(wx.Panel):

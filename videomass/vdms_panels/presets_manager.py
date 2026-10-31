@@ -7,7 +7,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.13.2026
+Rev: Oct.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,23 +25,29 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import time
 import os
+import time
+
 import wx
-from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_utils.presets_manager_utils import json_data
-from videomass.vdms_utils.presets_manager_utils import supported_formats
-from videomass.vdms_utils.presets_manager_utils import delete_profiles
-from videomass.vdms_utils.presets_manager_utils import update_oudated_profiles
-from videomass.vdms_utils.presets_manager_utils import write_new_profile
-from videomass.vdms_utils.utils import copy_restore
-from videomass.vdms_utils.utils import copy_on
-from videomass.vdms_utils.utils import copydir_recursively
-from videomass.vdms_utils.utils import copy_missing_data
-from videomass.vdms_utils.utils import update_timeseq_duration
-from videomass.vdms_io.checkup import check_files
+
 from videomass.vdms_dialogs import setting_profiles
 from videomass.vdms_dialogs.epilogue import Formula
+from videomass.vdms_io.checkup import check_files
+from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.presets_manager_utils import (
+    delete_profiles,
+    json_data,
+    supported_formats,
+    update_oudated_profiles,
+    write_new_profile,
+)
+from videomass.vdms_utils.utils import (
+    copy_missing_data,
+    copy_on,
+    copy_restore,
+    copydir_recursively,
+    update_timeseq_duration,
+)
 
 
 class PrstPan(wx.Panel):
@@ -319,8 +325,8 @@ class PrstPan(wx.Panel):
         with open(srctext, "r", encoding='utf-8') as vers:
             srcversion = vers.read().strip()
 
-        old = sum((int(x) for x in confversion.split('.')))
-        updated = sum((int(x) for x in srcversion.split('.')))
+        old = sum(int(x) for x in confversion.split('.'))
+        updated = sum(int(x) for x in srcversion.split('.'))
         self.check_presets_version = True
 
         if updated > old:
@@ -401,9 +407,7 @@ class PrstPan(wx.Panel):
         if collections == 'error':
             return
         try:
-            index = 0
-            for name in collections:
-                index += 1
+            for index, name in enumerate(collections, start=1):
                 rows = self.lctrl.InsertItem(index, name['Name'])
                 self.lctrl.SetItem(rows, 0, name['Name'])
                 self.lctrl.SetItem(rows, 1, name["Description"])
@@ -411,7 +415,7 @@ class PrstPan(wx.Panel):
                 self.lctrl.SetItem(rows, 3, name["Supported_list"])
 
         except (TypeError, KeyError) as err:
-            wx.MessageBox(f"ERROR: {str(err)}.\nInvalid file: «{tofile}»",
+            wx.MessageBox(f"ERROR: {err}.\nInvalid file: «{tofile}»",
                           _('Videomass - Error!'), wx.ICON_ERROR, self)
             return
     # ----------------------Event handler (callback)----------------------#
@@ -475,7 +479,7 @@ class PrstPan(wx.Panel):
                     self.array.append(name["Preinput_2"])
 
         except KeyError as err:
-            wx.MessageBox(f'key error {str(err)}\nInvalid file: «{tofile}»',
+            wx.MessageBox(f'key error {err}\nInvalid file: «{tofile}»',
                           _('Videomass - Error!'), wx.ICON_ERROR, self)
             return
 
@@ -516,7 +520,7 @@ class PrstPan(wx.Panel):
             try:
                 with open(filename, 'w', encoding='utf-8') as file:
                     file.write('[]')
-            except IOError:
+            except OSError:
                 wx.LogError(_("Cannot save current "
                               "data in file '{}'.").format(filename))
                 return
@@ -573,12 +577,12 @@ class PrstPan(wx.Panel):
                            "", style=wx.DD_DEFAULT_STYLE)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
-            if os.path.exists(os.path.join(path, combvalue + '.json')):
-                if wx.MessageBox(_('A file with this name already exists, '
-                                   'do you want to overwrite it?'),
-                                 _('Please confirm'), wx.ICON_QUESTION
-                                 | wx.CANCEL | wx.YES_NO, self) != wx.YES:
-                    return
+            if (os.path.exists(os.path.join(path, combvalue + '.json'))
+                and wx.MessageBox(_('A file with this name already exists, '
+                                    'do you want to overwrite it?'),
+                                  _('Please confirm'), wx.ICON_QUESTION
+                                  | wx.CANCEL | wx.YES_NO, self) != wx.YES):
+                return
 
             status = copy_restore(tofile,
                                   os.path.join(path, combvalue + '.json'))
@@ -882,29 +886,27 @@ class PrstPan(wx.Panel):
             return None
 
         if (self.array[2].strip() != self.txt_1cmd.GetValue().strip()
-                or self.array[3].strip() != self.txt_2cmd.GetValue().strip()):
-            if self.txtcmdedited:
+           or self.array[3].strip() != self.txt_2cmd.GetValue().strip()
+           and self.txtcmdedited):
 
-                msg = _("The selected profile command has been "
-                        "changed manually.\n"
-                        "Do you want to apply it "
-                        "during the conversion process?")
-                dlg = wx.RichMessageDialog(self, msg,
-                                           _("Please confirm"),
-                                           wx.ICON_QUESTION
-                                           | wx.CANCEL
-                                           | wx.YES_NO,
-                                           )
-                dlg.ShowCheckBox(_("Don't show this dialog again"))
+            msg = (_("The selected profile command has been "
+                     "changed manually.\n"
+                     "Do you want to apply it "
+                     "during the conversion process?"))
+            dlg = wx.RichMessageDialog(self, msg, _("Please confirm"),
+                                       wx.ICON_QUESTION | wx.CANCEL
+                                       | wx.YES_NO,
+                                       )
+            dlg.ShowCheckBox(_("Don't show this dialog again"))
 
-                if dlg.ShowModal() != wx.ID_YES:
-                    if dlg.IsCheckBoxChecked():
-                        # make sure we won't show it again the next time
-                        self.txtcmdedited = False
-                    return None
+            if dlg.ShowModal() != wx.ID_YES:
                 if dlg.IsCheckBoxChecked():
                     # make sure we won't show it again the next time
                     self.txtcmdedited = False
+                return None
+            if dlg.IsCheckBoxChecked():
+                # make sure we won't show it again the next time
+                self.txtcmdedited = False
 
         if index is not None:
             infile = [self.parent.file_src[index]]
@@ -989,7 +991,7 @@ class PrstPan(wx.Panel):
 
         check = self.check_options()
         if not check:
-            return None
+            return
 
         f_src, f_dest = check
         kwargs = self.get_codec_args()
@@ -1019,7 +1021,7 @@ class PrstPan(wx.Panel):
             self.parent.switch_to_processing(kwargs["type"],
                                              logname,
                                              datalist=batchlist)
-        return None
+        return
     # ----------------------------------------------------------------#
 
     def update_dict(self, cntmax, **kwa):
