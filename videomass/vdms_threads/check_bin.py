@@ -30,7 +30,7 @@ import subprocess
 from videomass.vdms_utils.utils import Popen
 
 
-def subp(args, ostype):
+def subp(cmdargs: list, ostype: str):
     """
     Execute commands which *do not* need to read the stdout/stderr in
     real time.
@@ -40,8 +40,8 @@ def subp(args, ostype):
         *ostype* result of the platform.system()
 
     """
-    if ostype == 'Windows':
-        cmd = ' '.join(args)
+    cmd = ' '.join(cmdargs) if ostype == 'Windows' else cmdargs
+
     try:
         with Popen(cmd,
                    stdout=subprocess.PIPE,
