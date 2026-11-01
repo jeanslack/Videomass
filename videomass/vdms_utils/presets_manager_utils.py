@@ -25,9 +25,11 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os
 import json
+import os
+
 import wx
+
 from videomass.vdms_dialogs.list_warning import ListWarning
 
 
@@ -39,7 +41,7 @@ def supported_formats(supp, file_sources):
     items = ''.join(supp.split()).split(',')
     errors = {}
 
-    if not items == ['']:
+    if items != ['']:
         for src in file_sources:
             if os.path.splitext(src)[1].split('.')[1] not in items:
                 ext = os.path.splitext(src)[1].split('.')[1]
@@ -82,7 +84,7 @@ def json_data(filename):
         with open(filename, 'r', encoding='utf-8') as fln:
             data = json.load(fln)
     except json.decoder.JSONDecodeError as err:
-        wx.MessageBox(f"ERROR: {str(err)}.\nInvalid file: «{filename}»",
+        wx.MessageBox(f"ERROR: {err}.\nInvalid file: «{filename}»",
                       _('Videomass - Error!'), wx.ICON_ERROR | wx.OK, None)
         return 'error'
 
@@ -106,7 +108,7 @@ def delete_profiles(filename, profilename):
     with open(filename, 'r', encoding='utf-8') as fln:
         data = json.load(fln)
 
-    new_data = [obj for obj in data if not obj["Name"] == profilename]
+    new_data = [obj for obj in data if obj["Name"] != profilename]
 
     with open(filename, 'w', encoding='utf-8') as outfile:
         json.dump(new_data, outfile, ensure_ascii=False, indent=4)
@@ -123,13 +125,13 @@ def update_oudated_profiles(new, old):
             try:
                 incoming = json.load(newf)
             except json.decoder.JSONDecodeError as err:
-                return f"ERROR: {str(err)}.\nInvalid file: «{new}»"
+                return f"ERROR: {err}.\nInvalid file: «{new}»"
 
         with open(old, 'r', encoding='utf-8') as oldf:
             try:
                 outcoming = json.load(oldf)
             except json.decoder.JSONDecodeError as err:
-                return f"ERROR: {str(err)}.\nInvalid file: «{old}»"
+                return f"ERROR: {err}.\nInvalid file: «{old}»"
 
         items_new = {value["Name"]: value for value in incoming}
         items_old = {value["Name"]: value for value in outcoming}
@@ -153,7 +155,7 @@ def write_new_profile(filename, **kwargs):
         try:
             stored_data = json.load(infile)
         except json.decoder.JSONDecodeError as err:
-            return f"ERROR: {str(err)}.\nInvalid file: «{filename}»"
+            return f"ERROR: {err}.\nInvalid file: «{filename}»"
 
     keys = ('Name', 'Description', 'First_pass',
             'Second_pass', 'Supported_list', 'Output_extension',

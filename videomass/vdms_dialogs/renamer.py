@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2022
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import re
+
 import wx
 
 
@@ -49,13 +50,8 @@ class Renamer(wx.Dialog):
 
     """
 
-    def __init__(self,
-                 parent,
-                 nameprop=str('New name'),
-                 caption=str('Caption'),
-                 message=str('Message'),
-                 mode=int(0),
-                 ):
+    def __init__(self, parent, nameprop='New name', caption='Caption',
+                 message='Message', mode=0):
         """
         Parameters:
 

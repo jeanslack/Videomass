@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.03.2024
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -24,6 +24,8 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Any, ClassVar
+
 import wx
 
 
@@ -193,15 +195,17 @@ class AudioProperties(wx.Dialog):
         sel_br = self.rdb_bitrate.GetStringSelection()
         sel_bd = self.rdb_bitdepth.GetStringSelection()
 
-        return ([v for v in self.channels.values() if sel_ch in v[0]][0],
-                [v for v in self.sample_rate.values() if sel_sr in v[0]][0],
-                [v for v in self.bitrate.values() if sel_br in v[0]][0],
-                [v for v in self.bitdepth.values() if sel_bd in v[0]][0],
+
+
+        return (next(v for v in self.channels.values() if sel_ch in v[0]),
+                next(v for v in self.sample_rate.values() if sel_sr in v[0]),
+                next(v for v in self.bitrate.values() if sel_br in v[0]),
+                next(v for v in self.bitdepth.values() if sel_bd in v[0]),
                 )
 # ----------------------------------------------------------------------#
 
 
-class AudioParameters():
+class AudioParameters:
     """
     It provides an adequate representation of the adjustment
     parameters related to some audio codecs as bitrate, sample
@@ -245,13 +249,14 @@ class AudioParameters():
                           'Non-PCM formats, such as lossy compression '
                           'formats, do not have associated bit depths.'
                           ))
-    SAMPLE_RATE = {0: ("Auto", ""),
-                   1: ("44100 Hz ", "-ar 44100"),
-                   2: ("48000 Hz ", "-ar 48000"),
-                   3: ("88200 Hz ", "-ar 88200"),
-                   4: ("96000 Hz ", "-ar 96000"),
-                   5: ("192000 Hz ", "-ar 192000"),
-                   }
+    SAMPLE_RATE: ClassVar[dict[str, Any]] = {
+        0: ("Auto", ""),
+        1: ("44100 Hz ", "-ar 44100"),
+        2: ("48000 Hz ", "-ar 48000"),
+        3: ("88200 Hz ", "-ar 88200"),
+        4: ("96000 Hz ", "-ar 96000"),
+        5: ("192000 Hz ", "-ar 192000"),
+    }
     # ----------------------------------------------------------------#
 
     def __init__(self, acodecname: str):

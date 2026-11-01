@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.04.2026
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -27,6 +27,7 @@ This file is part of Videomass.
 
 import wx
 import wx.adv
+
 from videomass.vdms_sys import about_app
 
 

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.12.2026
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,13 +26,13 @@ This file is part of Videomass.
 """
 import os
 import webbrowser
+
 import wx
-from videomass.vdms_utils.utils import time_to_integer
-from videomass.vdms_utils.utils import integer_to_time
-from videomass.vdms_utils.utils import clockset
+
+from videomass.vdms_io.io_tools import show_msg_notify
 from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
-from videomass.vdms_io.io_tools import show_msg_notify
+from videomass.vdms_utils.utils import clockset, integer_to_time, time_to_integer
 
 
 class ColorEQ(wx.Dialog):

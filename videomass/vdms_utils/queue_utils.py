@@ -24,9 +24,11 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
 import json
+import os
+
 import wx
+
 from videomass.vdms_dialogs.singlechoicedlg import SingleChoice
 
 
@@ -64,7 +66,7 @@ def load_json_file_queue(newincoming=None):
             newdata = json.load(fln)
 
     except json.decoder.JSONDecodeError as err:
-        wx.MessageBox(f"ERROR: {str(err)}.\nInvalid file: «{newincoming}»",
+        wx.MessageBox(f"ERROR: {err}.\nInvalid file: «{newincoming}»",
                       _('Videomass - Error!'), wx.STAY_ON_TOP
                       | wx.ICON_ERROR
                       | wx.OK,

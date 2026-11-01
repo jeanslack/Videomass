@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.13.2026
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,17 +25,18 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+
 import wx
 import wx.adv
 from pubsub import pub
-from videomass.vdms_utils.get_bmpfromsvg import get_bmp
-from videomass.vdms_utils.utils import integer_to_time
-from videomass.vdms_utils.utils import time_to_integer
+
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
-from videomass.vdms_io.make_filelog import make_log_template
-from videomass.vdms_threads.generic_task import FFmpegGenericTask
 from videomass.vdms_io.io_tools import show_msg_notify
+from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_threads.ffplay_file import FilePlayback_GetOutput
+from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_utils.get_bmpfromsvg import get_bmp
+from videomass.vdms_utils.utils import integer_to_time, time_to_integer
 
 
 class Time_Selector(wx.Dialog):
@@ -416,14 +417,15 @@ class Float_TL(wx.MiniFrame):
         else:
             scalef, tstamp = 'scale=w=360:h=-1', ''
 
-        args = (f'-autoexit -i "{self.file_selection()[0]}" '
+        filesel = self.file_selection()[0]
+        args = (f'-autoexit -i "{filesel}" '
                 f'{self.parent.time_seq} -vf "{scalef}{tstamp}"')
 
         try:
-            with open(self.file_selection()[0], encoding='utf-8'):
+            with open(filesel, encoding='utf-8'):
                 FilePlayback_GetOutput(self.GetParent(), args)
-        except IOError:
-            wx.MessageBox(_("Invalid or unsupported file:  %s") % (filepath),
+        except OSError:
+            wx.MessageBox(_("Invalid or unsupported file:  %s") % (filesel),
                           "Videomass", wx.ICON_EXCLAMATION, self)
             return
 
@@ -516,7 +518,7 @@ class Float_TL(wx.MiniFrame):
                  'timeline\nstatus bar.\n\nPlease note that actions such as '
                  'importing new files, selecting, deselecting,\ndeleting, and '
                  'sorting items will reset the timeline to its default '
-                 'values.\n\nIf no source file, the duration values ​​will be '
+                 'values.\n\nIf no source file, the duration values will be '
                  'set to the default value\n(00:00:00.000) and all timeline '
                  'controls will be disabled.\nThis behavior also applies when '
                  'deselecting files.'))
@@ -608,13 +610,13 @@ class Float_TL(wx.MiniFrame):
         """
         if self.pointpx[1] > 30:
             self.bar_w = self.pointpx[0]
-            self.mills_end = int(round(self.bar_w / self.pix))
+            self.mills_end = round(self.bar_w / self.pix)
             self.clock_end = integer_to_time(self.mills_end)
             self.onRedraw(wx.ClientDC(self.panelruler))
 
         elif self.pointpx[1] < 30:
             self.bar_x = self.pointpx[0]
-            self.mills_start = int(round(self.bar_x / self.pix))
+            self.mills_start = round(self.bar_x / self.pix)
             self.clock_start = integer_to_time(self.mills_start)
             self.onRedraw(wx.ClientDC(self.panelruler))
     # ------------------------------------------------------------------#
@@ -696,9 +698,8 @@ class Float_TL(wx.MiniFrame):
             if self.pointpx[1] > 30:
                 if self.mills_end == self.milliseconds:
                     return
-            elif self.pointpx[1] < 30:
-                if self.mills_start == 0:
-                    return
+            elif self.pointpx[1] < 30 and self.mills_start == 0:
+                return
             dur = integer_to_time(self.mills_end - self.mills_start)
             msg = _('{0} {1}  |  Segment Duration: {2}'
                     ).format(self.sourcedur, self.overalltime, dur)
@@ -803,14 +804,11 @@ class Float_TL(wx.MiniFrame):
         dc.SetTextForeground(Float_TL.TEXT_PEN_COLOR)
 
         for i in range(Float_TL.RW):
-            if not i % 600:
-                dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 10)
-            elif not i % 300:
-                dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 10)
-            elif not i % 150:
+            if not i % 600 or not i % 300 or not i % 150:
                 dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 10)
             elif not i % 25:
                 dc.DrawLine(i + Float_TL.RM, 0, i + Float_TL.RM, 5)
+
         dc.DrawLine(i, 0, i, 10)
     # ------------------------------------------------------------------#
 

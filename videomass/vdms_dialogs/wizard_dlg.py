@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.10.2025
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,9 +25,11 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+
 import wx
-from videomass.vdms_utils.utils import detect_binaries
+
 from videomass.vdms_sys.settings_manager import ConfigManager
+from videomass.vdms_utils.utils import detect_binaries
 
 
 def write_changes(ffmpeg, ffplay, ffprobe, binfound):
@@ -45,7 +47,7 @@ def write_changes(ffmpeg, ffplay, ffprobe, binfound):
     dataread['ffmpeg_cmd'] = ffmpeg
     dataread['ffprobe_cmd'] = ffprobe
     dataread['ffplay_cmd'] = ffplay
-    local = not binfound == 'system'
+    local = binfound != 'system'
     dataread['ffmpeg_islocal'] = local
     dataread['ffprobe_islocal'] = local
     dataread['ffplay_islocal'] = local
@@ -245,12 +247,12 @@ class PageTwo(wx.Panel):
             elif not status[0]:
                 path.append(status[1])
 
-        if exiting == 'provided':
-            if wx.MessageBox(_("Videomass already seems to include "
+        if (exiting == 'provided'
+           and wx.MessageBox(_("Videomass already seems to include "
                                "FFmpeg.\n\nDo you want to use that?"),
                              _('Please confirm'), wx.ICON_QUESTION
-                             | wx.CANCEL | wx.YES_NO, self) != wx.YES:
-                return
+                             | wx.CANCEL | wx.YES_NO, self) != wx.YES):
+            return
 
         self.parent.ffmpeg = PageTwo.GETPATH(path[0])
         self.parent.ffprobe = PageTwo.GETPATH(path[1])
@@ -368,13 +370,13 @@ class PageThree(wx.Panel):
                            f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
 
-            if dlgfile.ShowModal() == wx.ID_OK:
-                if os.path.basename(dlgfile.GetPath()) == self.ffmpeg:
-                    self.ffmpegTxt.Clear()
-                    ffmpegpath = PageThree.GETPATH(dlgfile.GetPath())
-                    self.ffmpegTxt.write(ffmpegpath)
-                    self.parent.ffmpeg = ffmpegpath
-                    self.check_text_fields()
+            if (dlgfile.ShowModal() == wx.ID_OK
+               and os.path.basename(dlgfile.GetPath()) == self.ffmpeg):
+                self.ffmpegTxt.Clear()
+                ffmpegpath = PageThree.GETPATH(dlgfile.GetPath())
+                self.ffmpegTxt.write(ffmpegpath)
+                self.parent.ffmpeg = ffmpegpath
+                self.check_text_fields()
     # -------------------------------------------------------------------#
 
     def on_ffprobe(self, event):
@@ -387,13 +389,13 @@ class PageThree(wx.Panel):
                            f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
 
-            if dlgfile.ShowModal() == wx.ID_OK:
-                if os.path.basename(dlgfile.GetPath()) == self.ffprobe:
-                    self.ffprobeTxt.Clear()
-                    ffprobepath = PageThree.GETPATH(dlgfile.GetPath())
-                    self.ffprobeTxt.write(ffprobepath)
-                    self.parent.ffprobe = ffprobepath
-                    self.check_text_fields()
+            if (dlgfile.ShowModal() == wx.ID_OK
+               and os.path.basename(dlgfile.GetPath()) == self.ffprobe):
+                self.ffprobeTxt.Clear()
+                ffprobepath = PageThree.GETPATH(dlgfile.GetPath())
+                self.ffprobeTxt.write(ffprobepath)
+                self.parent.ffprobe = ffprobepath
+                self.check_text_fields()
     # -------------------------------------------------------------------#
 
     def on_ffplay(self, event):
@@ -406,13 +408,13 @@ class PageThree(wx.Panel):
                            f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
 
-            if dlgfile.ShowModal() == wx.ID_OK:
-                if os.path.basename(dlgfile.GetPath()) == self.ffplay:
-                    self.ffplayTxt.Clear()
-                    ffplaypath = PageThree.GETPATH(dlgfile.GetPath())
-                    self.ffplayTxt.write(ffplaypath)
-                    self.parent.ffplay = ffplaypath
-                    self.check_text_fields()
+            if (dlgfile.ShowModal() == wx.ID_OK
+               and os.path.basename(dlgfile.GetPath()) == self.ffplay):
+                self.ffplayTxt.Clear()
+                ffplaypath = PageThree.GETPATH(dlgfile.GetPath())
+                self.ffplayTxt.write(ffplaypath)
+                self.parent.ffplay = ffplaypath
+                self.check_text_fields()
     # -------------------------------------------------------------------#
 
     def check_text_fields(self):

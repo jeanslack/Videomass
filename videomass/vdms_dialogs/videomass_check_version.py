@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2023
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import webbrowser
+
 import wx
 
 
@@ -128,8 +129,8 @@ class CheckNewVersion(wx.Dialog):
                 page = ('https://jeanslack.github.io/Videomass'
                         '/Pages/Packages/MacOS.html')
             else:
-                page = page = ('https://github.com/jeanslack/'
-                               'Videomass/releases/latest/')
+                page = ('https://github.com/jeanslack/'
+                        'Videomass/releases/latest/')
 
         elif CheckNewVersion.OS == 'Windows':
 

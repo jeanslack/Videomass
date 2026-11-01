@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.14.2023
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,8 +26,11 @@ This file is part of Videomass.
 
 """
 import re
+from typing import Any, ClassVar
+
 import wx
 from pubsub import pub
+
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 from videomass.vdms_io import io_tools
 
@@ -65,22 +68,23 @@ class FFmpegHelp(wx.Dialog):
                 '\n\tbsf = av1_frame_merge'
                 '\n\tprotocol = bluray'
                 )
-    ARGS_OPT = {_("Help topic"): ['--help', ''],
-                _("List basic options"): ['-h', ''],
-                _("List more options"): ['-h', 'long'],
-                _("List all options (very long)"): ['-h', 'full'],
-                _("Show available devices"): ['-devices'],
-                _("Show available bit stream filters"): ['-bsfs'],
-                _("Show available protocols"): ['-protocols'],
-                _("Show available filters"): ['-filters'],
-                _("Show available pixel formats"): ['-pix_fmts'],
-                _("Show available audio sample formats"): ['-sample_fmts'],
-                _("Show available color names"): ['-colors'],
-                _("List sources of the input device"): ['-sources'],
-                _("List sinks of the output device"): ['-sinks'],
-                _("Show available HW acceleration methods"): ['-hwaccels'],
-                _("Show license"): ['-L'],
-                }
+    ARGS_OPT: ClassVar[dict[str, Any]] = {
+        _("Help topic"): ['--help', ''],
+        _("List basic options"): ['-h', ''],
+        _("List more options"): ['-h', 'long'],
+        _("List all options (very long)"): ['-h', 'full'],
+        _("Show available devices"): ['-devices'],
+        _("Show available bit stream filters"): ['-bsfs'],
+        _("Show available protocols"): ['-protocols'],
+        _("Show available filters"): ['-filters'],
+        _("Show available pixel formats"): ['-pix_fmts'],
+        _("Show available audio sample formats"): ['-sample_fmts'],
+        _("Show available color names"): ['-colors'],
+        _("List sources of the input device"): ['-sources'],
+        _("List sinks of the output device"): ['-sinks'],
+        _("Show available HW acceleration methods"): ['-hwaccels'],
+        _("Show license"): ['-L'],
+    }
     MAIN_CHOICES = tuple(ARGS_OPT.keys())
     ARGS = ('encoder', 'decoder', 'muxer', 'demuxer',
             'filter', 'bsf', 'protocol')

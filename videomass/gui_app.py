@@ -36,8 +36,6 @@ from videomass.vdms_sys.argparser import arguments
 from videomass.vdms_sys.configurator import DataSource
 from videomass.vdms_utils.utils import del_filecontents
 
-# from videomass.vdms_sys.external_package import importer_init_file
-
 # add translation macro to builtin similar to what gettext does
 builtins.__dict__['_'] = wx.GetTranslation
 
@@ -241,8 +239,8 @@ def auto_restart(apptype, portmode):
         cmd_list.extend(['--make-portable', str(portmode)])
 
     for arg in sys.argv[1:]:
-        if (arg not in cmd_list and arg != portmode and arg
-           != '--make-portable'):
+        if (arg not in cmd_list
+           and arg != portmode and arg != '--make-portable'):
             cmd_list.append(arg)
     try:
         # do not use EXEC_SYNC here, use EXEC_ASYNC instead !

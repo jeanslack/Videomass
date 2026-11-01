@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: June.05.2025
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,11 +26,14 @@ This file is part of Videomass.
 """
 import os
 import webbrowser
+from typing import Any, ClassVar
+
 import wx
-from videomass.vdms_utils.utils import detect_binaries
+
 from videomass.vdms_io import io_tools
-from videomass.vdms_sys.settings_manager import ConfigManager
 from videomass.vdms_sys.app_const import supLang
+from videomass.vdms_sys.settings_manager import ConfigManager
+from videomass.vdms_utils.utils import detect_binaries
 
 
 class SetUp(wx.Dialog):
@@ -38,18 +41,20 @@ class SetUp(wx.Dialog):
     Represents settings and configuration
     storing of the program.
     """
-    FFPLAY_LOGLEV = [("quiet (Show nothing at all)"),
-                     ("fatal (Only show fatal errors)"),
-                     ("error (Show all errors)"),
-                     ("warning (Show all warnings and errors)"),
-                     ("info (Show informative messages during processing)")
-                     ]
-    FFMPEG_LOGLEV = [("error (Show all errors)"),
-                     ("warning (Show all warnings and errors)"),
-                     ("info (Show informative messages during processing)"),
-                     ("verbose (Same as `info`, except more verbose)"),
-                     ("debug (Show everything, including debugging info)")
-                     ]
+    FFPLAY_LOGLEV: ClassVar[dict[str, Any]] = [
+        ("quiet (Show nothing at all)"),
+        ("fatal (Only show fatal errors)"),
+        ("error (Show all errors)"),
+        ("warning (Show all warnings and errors)"),
+        ("info (Show informative messages during processing)")
+    ]
+    FFMPEG_LOGLEV: ClassVar[dict[str, Any]] = [
+        ("error (Show all errors)"),
+        ("warning (Show all warnings and errors)"),
+        ("info (Show informative messages during processing)"),
+        ("verbose (Same as `info`, except more verbose)"),
+        ("debug (Show everything, including debugging info)")
+    ]
     # -----------------------------------------------------------------
 
     def __init__(self, parent):
@@ -500,9 +505,9 @@ class SetUp(wx.Dialog):
         self.ckbx_exitapp.SetValue(self.appdata["auto_exit"])
         self.ckbx_turnoff.SetValue(self.appdata["shutdown"])
         self.txtctrl_sudo.SetValue(self.appdata.get("sudo_password", ''))
-        if self.ckbx_turnoff.GetValue():
-            if self.appdata['ostype'] != 'Windows':
-                self.labsudo.Enable(), self.txtctrl_sudo.Enable()
+        if (self.ckbx_turnoff.GetValue()
+           and self.appdata['ostype'] != 'Windows'):
+            self.labsudo.Enable(), self.txtctrl_sudo.Enable()
 
         if not self.settings['move_file_to_trash']:
             self.txtctrl_trash.Disable()
@@ -518,7 +523,7 @@ class SetUp(wx.Dialog):
             self.ckbx_same_dest.SetValue(True)
             self.btn_fsave.Disable()
             self.txtctrl_FFpath.Disable()
-            if not self.appdata['filesuffix'] == "":
+            if self.appdata['filesuffix'] != "":
                 self.text_suffix.AppendText(self.appdata['filesuffix'])
     # --------------------------------------------------------------------#
 
@@ -630,15 +635,14 @@ class SetUp(wx.Dialog):
             self.text_suffix.SetBackgroundColour(wx.NullColour)
             self.text_suffix.Clear()
 
-        if not suffix == '':
+        if suffix != '':
             for c in suffix:
-                if c not in ('_', '-'):
-                    if not c.isalnum():  # is not alphanumeric
-                        self.text_suffix.SetBackgroundColour('#988313')
-                        wx.MessageBox(msg, _('Videomass - Warning!'),
-                                      wx.ICON_WARNING)
-                        self.settings['filesuffix'] = ""
-                        return
+                if c not in ('_', '-') and not c.isalnum():  # is not alphanum.
+                    self.text_suffix.SetBackgroundColour('#988313')
+                    wx.MessageBox(msg, _('Videomass - Warning!'),
+                                  wx.ICON_WARNING)
+                    self.settings['filesuffix'] = ""
+                    return
 
             self.settings['filesuffix'] = suffix
         else:
@@ -730,12 +734,12 @@ class SetUp(wx.Dialog):
                            f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
 
-            if fdlg.ShowModal() == wx.ID_OK:
-                if os.path.basename(fdlg.GetPath()) == self.ffmpeg:
-                    self.txtctrl_ffmpeg.Clear()
-                    getpath = self.appdata['getpath'](fdlg.GetPath())
-                    self.txtctrl_ffmpeg.write(getpath)
-                    self.settings['ffmpeg_cmd'] = getpath
+            if (fdlg.ShowModal() == wx.ID_OK
+               and os.path.basename(fdlg.GetPath()) == self.ffmpeg):
+                self.txtctrl_ffmpeg.Clear()
+                getpath = self.appdata['getpath'](fdlg.GetPath())
+                self.txtctrl_ffmpeg.write(getpath)
+                self.settings['ffmpeg_cmd'] = getpath
     # --------------------------------------------------------------------#
 
     def exeFFprobe(self, event):
@@ -770,12 +774,12 @@ class SetUp(wx.Dialog):
                            f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
 
-            if fdlg.ShowModal() == wx.ID_OK:
-                if os.path.basename(fdlg.GetPath()) == self.ffprobe:
-                    self.txtctrl_ffprobe.Clear()
-                    getpath = self.appdata['getpath'](fdlg.GetPath())
-                    self.txtctrl_ffprobe.write(getpath)
-                    self.settings['ffprobe_cmd'] = getpath
+            if (fdlg.ShowModal() == wx.ID_OK
+               and os.path.basename(fdlg.GetPath()) == self.ffprobe):
+                self.txtctrl_ffprobe.Clear()
+                getpath = self.appdata['getpath'](fdlg.GetPath())
+                self.txtctrl_ffprobe.write(getpath)
+                self.settings['ffprobe_cmd'] = getpath
     # --------------------------------------------------------------------#
 
     def exeFFplay(self, event):
@@ -810,12 +814,12 @@ class SetUp(wx.Dialog):
                            f"All files (*.*)|*.*",
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
 
-            if fdlg.ShowModal() == wx.ID_OK:
-                if os.path.basename(fdlg.GetPath()) == self.ffplay:
-                    self.txtctrl_ffplay.Clear()
-                    getpath = self.appdata['getpath'](fdlg.GetPath())
-                    self.txtctrl_ffplay.write(getpath)
-                    self.settings['ffplay_cmd'] = getpath
+            if (fdlg.ShowModal() == wx.ID_OK
+               and os.path.basename(fdlg.GetPath()) == self.ffplay):
+                self.txtctrl_ffplay.Clear()
+                getpath = self.appdata['getpath'](fdlg.GetPath())
+                self.txtctrl_ffplay.write(getpath)
+                self.settings['ffplay_cmd'] = getpath
     # ---------------------------------------------------------------------#
 
     def on_Iconthemes(self, event):
@@ -844,10 +848,9 @@ class SetUp(wx.Dialog):
         """
         Exit the app At the end of the operations
         """
-        if self.ckbx_exitapp.GetValue():
-            if self.ckbx_turnoff.IsChecked():
-                self.ckbx_turnoff.SetValue(False)
-                self.on_shutdown_after(None)
+        if self.ckbx_exitapp.GetValue() and self.ckbx_turnoff.IsChecked():
+            self.ckbx_turnoff.SetValue(False)
+            self.on_shutdown_after(None)
     # --------------------------------------------------------------------#
 
     def on_shutdown_after(self, event):

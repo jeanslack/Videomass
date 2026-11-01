@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: July.17.2023
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -163,10 +163,10 @@ class MediaStreams(wx.Dialog):
 
         flist = [x['format']['filename'] for x in self.data
                  if x['format']['filename']]
-        index = 0
-        for files in flist:
+
+        for index, files in enumerate(flist):
             self.file_select.InsertItem(index, files)
-            index += 1
+
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.file_select)
 

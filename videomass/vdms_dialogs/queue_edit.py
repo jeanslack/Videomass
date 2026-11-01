@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Apr.03.2024
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -33,14 +33,14 @@ class Edit_Queue_Item(wx.Dialog):
     before run the process.
 
     """
-    PASS_1 = _("One-Pass, Do not start with `ffmpeg "
+    PASS_1 = (_("One-Pass, Do not start with `ffmpeg "
                "-i filename`; do not end with "
                "`output-filename`"
-               )
-    PASS_2 = _("Two-Pass (optional), Do not start with "
+               ))
+    PASS_2 = (_("Two-Pass (optional), Do not start with "
                "`ffmpeg -i filename`; do not end with "
                "`output-filename`"
-               )
+               ))
     # ------------------------------------------------------------------
 
     def __init__(self, parent, kwargs):

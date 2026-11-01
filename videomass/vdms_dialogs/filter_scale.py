@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.20.2026
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -27,14 +27,15 @@ This file is part of Videomass.
 import os
 import time
 import webbrowser
+
 import wx
-from videomass.vdms_io import io_tools
+
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
-from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_io import io_tools
 from videomass.vdms_io.io_tools import show_msg_notify
-from videomass.vdms_utils.utils import time_to_integer
-from videomass.vdms_utils.utils import integer_to_time
 from videomass.vdms_io.make_filelog import make_log_template
+from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_utils.utils import integer_to_time, time_to_integer
 
 
 class Scale(wx.Dialog):
@@ -419,11 +420,11 @@ class Scale(wx.Dialog):
         the image height scaling. That is, exactly the same as when the
         "Constrain Proportion" checkbox is checked.
         """
-        if not self.ckbx_keep.IsChecked():
-            if self.spin_scale_width.GetValue() in (-1, -2):
-                self.ckbx_keep.SetValue(True)
-                self.rdb_scale.SetSelection(1)  # call this before on_constrain
-                self.on_constrain(None)
+        if (not self.ckbx_keep.IsChecked()
+           and self.spin_scale_width.GetValue() in (-1, -2)):
+            self.ckbx_keep.SetValue(True)
+            self.rdb_scale.SetSelection(1)  # call this before on_constrain
+            self.on_constrain(None)
     # ------------------------------------------------------------------#
 
     def on_negative_height(self, event):
@@ -435,11 +436,11 @@ class Scale(wx.Dialog):
         the image width scaling. That is, exactly the same as when the
         "Constrain Proportion" checkbox is checked.
         """
-        if not self.ckbx_keep.IsChecked():
-            if self.spin_scale_height.GetValue() in (-1, -2):
-                self.ckbx_keep.SetValue(True)
-                self.rdb_scale.SetSelection(0)  # call this before on_constrain
-                self.on_constrain(None)
+        if (not self.ckbx_keep.IsChecked()
+           and self.spin_scale_height.GetValue() in (-1, -2)):
+            self.ckbx_keep.SetValue(True)
+            self.rdb_scale.SetSelection(0)  # call this before on_constrain
+            self.on_constrain(None)
     # ------------------------------------------------------------------#
 
     def on_constrain(self, event):

@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Sep.18.2025
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,6 +25,7 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+
 import wx
 from pubsub import pub
 
@@ -145,7 +146,7 @@ class ShowLogs(wx.Dialog):
         logname = os.path.basename(logfile)
         if logname in self.applognames:
             idx = self.log_select.FindItem(-1, logname)
-            if not idx == -1:
+            if idx != -1:
                 self.log_select.Focus(idx)  # make the line the current line
                 self.log_select.Select(idx, on=1)  # default event selection
                 self.on_select(self)

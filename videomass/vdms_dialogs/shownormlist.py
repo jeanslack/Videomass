@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: March.09.2023
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -26,6 +26,7 @@ This file is part of Videomass.
 """
 import wx
 from pubsub import pub
+
 from videomass.vdms_dialogs.widget_utils import NormalTransientPopup
 
 

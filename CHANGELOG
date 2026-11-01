@@ -36,13 +36,17 @@ Sat, 31 October 2026 v6.1.24
     check_new_releases(), prst_checkversion(), prst_downloader(), ],
     generic_download.py, io_tools.py [ get_github_releases() ].
   * Improved error handles on file operations during application exit.
-  * Fixed background process using auto-restart (wx.EXEC_ASYNC).
+    Specifically for deleting cache files and cleaning log files.
+  * Fixed issue where Videomass processes would accumulate with each automatic
+    app restart, remaining stuck in the background. Changed `wx.EXEC_SYNC` to
+    `wx.EXEC_ASYNC`.
   * Improved handling of forced FFmpeg terminations (stop) to make the GUI more
     responsive and less dependent on the subprocess's output messages during
     `readlines` loops. This speeds up the process of closing the subprocess
     within the background thread while also improving error handling,
     ensuring the GUI remains completely free from potential blocks or freezes
     while waiting for termination outputs.
+  * Improved code for Python >= 3.11 compatibility using Ruff linter.
 
 +------------------------------------+
 Tue, 06 October 2026 v6.1.22

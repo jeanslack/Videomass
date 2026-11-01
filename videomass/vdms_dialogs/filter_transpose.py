@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.12.2026
+Rev: Nov.01.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -27,12 +27,13 @@ This file is part of Videomass.
 import os
 import webbrowser
 from math import pi as pigreco
+
 import wx
-from videomass.vdms_threads.generic_task import FFmpegGenericTask
+
 from videomass.vdms_io.io_tools import show_msg_notify
-from videomass.vdms_utils.utils import time_to_integer
-from videomass.vdms_utils.utils import integer_to_time
 from videomass.vdms_io.make_filelog import make_log_template
+from videomass.vdms_threads.generic_task import FFmpegGenericTask
+from videomass.vdms_utils.utils import integer_to_time, time_to_integer
 
 
 class Transpose(wx.Dialog):
@@ -65,7 +66,7 @@ class Transpose(wx.Dialog):
         self.h_ratio = int((self.v_height / self.v_width) * self.thr)
         self.w_ratio = int((self.v_width / self.v_height) * self.h_ratio)
         self.current_angle = 0
-        self.center = (int((self.w_ratio / 2)), int((self.h_ratio / 2)))
+        self.center = int(self.w_ratio / 2), int(self.h_ratio / 2)
         self.transpose = {'degrees': ['', 0]}
         self.video = kwa['filename']
         name = os.path.splitext(os.path.basename(self.video))[0]

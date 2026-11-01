@@ -6,7 +6,7 @@ Compatibility: Python3, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Mar.25.2024
+Rev: Nov.31.2026
 Code checker: flake8, pylint
 
 This file is part of Videomass.
@@ -25,12 +25,16 @@ This file is part of Videomass.
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+
 import wx
 import wx.lib.scrolledpanel as scrolled
-from videomass.vdms_utils.queue_utils import load_json_file_queue
-from videomass.vdms_utils.queue_utils import write_json_file_queue
-from videomass.vdms_utils.queue_utils import extend_data_queue
+
 from videomass.vdms_dialogs.queue_edit import Edit_Queue_Item
+from videomass.vdms_utils.queue_utils import (
+    extend_data_queue,
+    load_json_file_queue,
+    write_json_file_queue,
+)
 
 
 class QueueManager(wx.Dialog):
@@ -83,11 +87,10 @@ class QueueManager(wx.Dialog):
                                    )
         # self.quelist.SetMinSize((400, 500))
         self.quelist.InsertColumn(0, _('Destination file name'), width=700)
-        index = 0
-        for items in self.datalist:  # populate listctrl:
+
+        for index, items in enumerate(self.datalist):  # populate listctrl:
             desttitle = os.path.basename(items['destination'])
             self.quelist.InsertItem(index, desttitle)
-            index += 1
 
         sizervert = wx.BoxSizer(wx.VERTICAL)
         sizerbase.Add(sizervert, 1, wx.EXPAND)
@@ -204,15 +207,13 @@ class QueueManager(wx.Dialog):
             return
 
         self.quelist.DeleteAllItems()
-        index = 0
-        for item in self.datalist:  # populate listctrl:
-            desttitle = os.path.basename(item['destination'])
+        for index, items in enumerate(self.datalist):  # populate listctrl:
+            desttitle = os.path.basename(items['destination'])
             self.quelist.InsertItem(index, desttitle)
-            index += 1
 
         write_json_file_queue(self.datalist)
 
-        if not selidx == -1:
+        if selidx != -1:
             self.quelist.Focus(selidx)  # make the line the current line
             self.quelist.Select(selidx, on=1)  # default event selection
         self.parent.queue_tool_counter()

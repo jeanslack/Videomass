@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
 Name: hatch_build.py
@@ -28,9 +27,10 @@ This file is part of Videomass.
 """
 
 from pathlib import Path
-from hatchling.builders.hooks.plugin.interface import BuildHookInterface
-from babel.messages.pofile import read_po
+
 from babel.messages.mofile import write_mo
+from babel.messages.pofile import read_po
+from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 
 
 class VideomassLanguageBuildHook(BuildHookInterface):

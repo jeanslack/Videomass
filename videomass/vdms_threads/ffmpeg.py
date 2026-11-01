@@ -552,7 +552,7 @@ class FFmpeg(Thread):
             try:
                 # Verify that stdin is open and available before writing
                 if proc.stdin and not proc.stdin.closed:
-                    proc.stdin.write('q')  # stop ffmpeg
+                    proc.stdin.write('q')  # quit/stop ffmpeg
                     proc.stdin.flush()
 
             # Make sure the process isn't already finished
