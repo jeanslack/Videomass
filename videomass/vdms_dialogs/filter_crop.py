@@ -35,7 +35,11 @@ from pubsub import pub
 from videomass.vdms_io.io_tools import show_msg_notify
 from videomass.vdms_io.make_filelog import make_log_template
 from videomass.vdms_threads.generic_task import FFmpegGenericTask
-from videomass.vdms_utils.utils import clockset, integer_to_time, time_to_integer
+from videomass.vdms_utils.utils import (
+    clockset,
+    integer_to_time,
+    time_to_integer,
+)
 
 
 def make_bitmap(width, height, fname):

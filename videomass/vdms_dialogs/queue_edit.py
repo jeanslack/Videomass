@@ -34,13 +34,13 @@ class Edit_Queue_Item(wx.Dialog):
 
     """
     PASS_1 = (_("One-Pass, Do not start with `ffmpeg "
-               "-i filename`; do not end with "
-               "`output-filename`"
-               ))
+                "-i filename`; do not end with "
+                "`output-filename`"
+                ))
     PASS_2 = (_("Two-Pass (optional), Do not start with "
-               "`ffmpeg -i filename`; do not end with "
-               "`output-filename`"
-               ))
+                "`ffmpeg -i filename`; do not end with "
+                "`output-filename`"
+                ))
     # ------------------------------------------------------------------
 
     def __init__(self, parent, kwargs):

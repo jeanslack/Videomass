@@ -143,6 +143,7 @@ videomass = "videomass.gui_app:main"
 # Ruff linter configuration
 [tool.ruff]
 builtins = ["_"]
+line-length = 79
 
 [tool.ruff.lint]
 # add or remove other rules here (e.g., select, ignore, etc.)

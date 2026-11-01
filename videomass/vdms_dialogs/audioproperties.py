@@ -195,8 +195,6 @@ class AudioProperties(wx.Dialog):
         sel_br = self.rdb_bitrate.GetStringSelection()
         sel_bd = self.rdb_bitdepth.GetStringSelection()
 
-
-
         return (next(v for v in self.channels.values() if sel_ch in v[0]),
                 next(v for v in self.sample_rate.values() if sel_sr in v[0]),
                 next(v for v in self.bitrate.values() if sel_br in v[0]),
