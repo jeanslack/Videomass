@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: avconv_cmd_line.py
-Porpose: Shows the output raw command lines.
-Compatibility: Python3, wxPython Phoenix
+Purpose: Shows the output raw command lines.
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

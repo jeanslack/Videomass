@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: ffmpeg_formats.py
-Porpose: Show the available formats on the FFmpeg
-Compatibility: Python3, wxPython Phoenix
+Purpose: Show the available formats on the FFmpeg
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

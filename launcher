@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 """
 Name: launcher.py
-Porpose: main launch script of videomass
+Purpose: main launch script of videomass
 Compatibility: Python2, Python3
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>

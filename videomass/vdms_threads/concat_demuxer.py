@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: concat_demuxer.py
-Porpose: FFmpeg long processing task for Concatenation processing
-Compatibility: Python3, wxPython4 Phoenix
+Purpose: FFmpeg long processing task for Concatenation processing
+Compatibility: Python >= 3.11, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
@@ -105,7 +105,7 @@ class ConcatDemuxer(Thread):
                        stderr=subprocess.PIPE,
                        stdin=subprocess.PIPE,
                        bufsize=1,
-                       universal_newlines=True,
+                       text=True,
                        encoding=self.appdata['encoding'],
                        ) as self.process:
                 for line in self.process.stderr:

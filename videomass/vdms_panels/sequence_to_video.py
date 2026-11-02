@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: sequence_to_video.py
-Porpose: A slideshow maker based on FFmpeg
-Compatibility: Python3, wxPython Phoenix
+Purpose: A slideshow maker based on FFmpeg
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

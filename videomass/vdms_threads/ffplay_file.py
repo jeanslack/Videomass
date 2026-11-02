@@ -2,8 +2,8 @@
 
 """
 Name: ffplay_file.py
-Porpose: playback media file via ffplay
-Compatibility: Python3, wxPython Phoenix
+Purpose: playback media file via ffplay
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
@@ -90,7 +90,7 @@ class FilePlay(Thread):
             with subprocess.Popen(cmd,
                                   shell=shell,
                                   stderr=subprocess.PIPE,
-                                  universal_newlines=True,
+                                  text=True,
                                   encoding=self.appdata['encoding'],
                                   startupinfo=info,
                                   ) as proc:
@@ -157,7 +157,7 @@ class FilePlayback_GetOutput(Thread):
             with Popen(cmd,
                        stderr=subprocess.PIPE,
                        bufsize=1,
-                       universal_newlines=True,
+                       text=True,
                        encoding=self.appdata['encoding'],
                        ) as proc:
                 for line in proc.stderr:

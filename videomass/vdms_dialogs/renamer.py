@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: renamer.py
-Porpose: batch and single file renamer
-Compatibility: Python3, wxPython Phoenix
+Purpose: batch and single file renamer
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

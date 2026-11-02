@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 FileName: av_conversions.py
-Porpose: audio/video conversions interface
-Compatibility: Python3, wxPython4 Phoenix
+Purpose: audio/video conversions interface
+Compatibility: Python >= 3.11, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

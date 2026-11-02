@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: check_bin.py
-Porpose: Gets the output to display the features of FFmpeg
-Compatibility: Python3 (Unix, Windows)
+Purpose: Gets the output to display the features of FFmpeg
+Compatibility: Python >= 3.11 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
@@ -46,7 +46,7 @@ def subp(cmdargs: list, ostype: str):
         with Popen(cmd,
                    stdout=subprocess.PIPE,
                    stderr=subprocess.STDOUT,
-                   universal_newlines=True,  # mod text
+                   text=True,  # mod text
                    encoding='utf-8',
                    ) as proc:
             out = proc.communicate()

@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: main_frame.py
-Porpose: top window main frame
-Compatibility: Python3, wxPython Phoenix
+Purpose: top window main frame
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

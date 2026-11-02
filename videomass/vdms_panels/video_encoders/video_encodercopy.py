@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 FileName: video_encodercopy.py
-Porpose: Contains copy-codec functionalities for A/V Conversions
-Compatibility: Python3, wxPython4 Phoenix
+Purpose: Contains copy-codec functionalities for A/V Conversions
+Compatibility: Python >= 3.11, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

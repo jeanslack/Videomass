@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: generic_task.py
-Porpose: Execute a generic task with FFmpeg
-Compatibility: Python3 (Unix, win32)
+Purpose: Execute a generic task with FFmpeg
+Compatibility: Python >= 3.11 (Unix, win32)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
@@ -112,7 +112,7 @@ class FFmpegGenericTaskOutLines(Thread):
             with Popen(cmd,
                        stderr=subprocess.PIPE,
                        stdin=subprocess.PIPE,
-                       universal_newlines=True,
+                       text=True,
                        encoding=self.appdata["encoding"],
                        ) as self.process:
                 for line in self.process.stderr:
@@ -265,7 +265,7 @@ class FFmpegGenericTask(Thread):
         try:
             with Popen(cmd,
                        stderr=subprocess.PIPE,
-                       universal_newlines=True,
+                       text=True,
                        encoding=self.appdata["encoding"],
                        ) as proc:
                 output = proc.communicate()[1]

@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: argparser.py
-Porpose: Videomass Command line arguments
-Compatibility: Python3
+Purpose: Videomass Command line arguments
+Compatibility: Python >= 3.11
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

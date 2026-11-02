@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 Name: hatch_build.py
-Porpose: Defines code that will be executed at various stages
+Purpose: Defines code that will be executed at various stages
          of the build process, see [tool.hatch.build.hooks.custom] on
          pyproject.toml file.
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -25,7 +25,6 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from pathlib import Path
 
 from babel.messages.mofile import write_mo
@@ -39,6 +38,7 @@ class VideomassLanguageBuildHook(BuildHookInterface):
     into the binary machine object (.mo format) using Babel's core APIs
     without depending on setuptools.
     """
+
     def initialize(self, version, build_data):
         """
         Compile catalog only if the target includes binary
@@ -52,9 +52,12 @@ class VideomassLanguageBuildHook(BuildHookInterface):
         if not localedir.exists():
             return
 
+        print(f'\nCompiling directory: "{localedir}"\n')
+
         for po_path in localedir.rglob("*.po"):
             mo_path = po_path.with_suffix(".mo")
-            print(f'Compiling "{po_path}" to "{mo_path}"...')
+            print(f'Compiling "{po_path.replace(localedir, "")}" '
+                  f'to "{mo_path.replace(localedir, "")}"...')
             with open(po_path, 'r', encoding='utf-8') as po_file:
                 catalog = read_po(po_file)
 

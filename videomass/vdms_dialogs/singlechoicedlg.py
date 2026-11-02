@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: singlechoice.py
-Porpose: shows a single choice dialog box
-Compatibility: Python3, wxPython Phoenix
+Purpose: shows a single choice dialog box
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

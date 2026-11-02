@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: ffprobe.py
-Porpose: simple cross-platform wrap for ffprobe
-Compatibility: Python3
+Purpose: simple cross-platform wrap for ffprobe
+Compatibility: Python >= 3.11
 Platform: all platforms
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -85,7 +85,7 @@ def ffprobe(filename, cmd='ffprobe', txtenc='utf-8', **kwargs):
                    stdout=subprocess.PIPE,
                    stderr=subprocess.PIPE,
                    bufsize=1,
-                   universal_newlines=True,
+                   text=True,
                    encoding=txtenc,
                    ) as proc:
             output, error = proc.communicate()

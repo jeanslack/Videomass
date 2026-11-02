@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: while_playing.py
-Porpose: Show box with shortcuts keyboard when playback with FFplay
-Compatibility: Python3, wxPython4
+Purpose: Show box with shortcuts keyboard when playback with FFplay
+Compatibility: Python >= 3.11, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

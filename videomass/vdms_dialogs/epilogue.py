@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: epilogue.py
-Porpose: shows dialog box before start process
-Compatibility: Python3, wxPython Phoenix
+Purpose: shows dialog box before start process
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

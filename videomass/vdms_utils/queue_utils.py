@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: queue_utils.py
-Porpose: utils for queue managements
-Compatibility: Python3, wxPython Phoenix
+Purpose: utils for queue managements
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

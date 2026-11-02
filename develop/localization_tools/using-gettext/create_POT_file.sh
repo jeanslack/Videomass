@@ -8,7 +8,7 @@
 # PORPOSE: Create a new `videomass.pot` file with the latest strings.
 #
 # USAGE: ~$ cd /Videomass/source/directory
-#        ~$ develop/gettext_utils/make_pot.sh
+#        ~$ develop/localization_tools/using-gettex/make_pot.sh
 
 TARGET="videomass/data/locale"  # relative path to "locale" directory
 POTFILE="$TARGET/videomass.pot"  # store the new .pot file here

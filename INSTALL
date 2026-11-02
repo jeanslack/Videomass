@@ -67,19 +67,18 @@ catalogs must be done on your machine by one of the following options:
 
     cd Videomass (source directory)
 
-    ./develop/gettext_utils/generate_MO_files.sh
+    ./develop/localization_tools/using-gettext/generate_MO_files.sh
 
 -3- Using `babel` Python package <https://pypi.org/project/babel/>
 
     Requires:
-        - Python >= 3.10.0
         - pybabel (from `babel` package, installable via pip)
 
     cd Videomass (source directory)
     pybabel compile --domain videomass --directory "videomass/data/locale"
 
-    To compile a single language file only, add the `--locale` option followed
-    by your locale code as argument (e.g. `de_DE`) to pybabel comand line.
+    To compile a single language file only, add the `--locale` argument followed
+    by your locale code, example: `--locale de_DE` to pybabel comand line.
 
 
 * Note that all the options listed above involve exiting and restarting

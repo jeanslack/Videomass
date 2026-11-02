@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: shownormlist.py
-Porpose: Show audio volume data list (PEAK/RMS only)
-Compatibility: Python3, wxPython4
+Purpose: Show audio volume data list (PEAK/RMS only)
+Compatibility: Python >= 3.11, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

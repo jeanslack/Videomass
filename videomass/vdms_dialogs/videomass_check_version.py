@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: videomass_check_version.py
-Porpose: shows informative messages on version in use and new releases
-Compatibility: Python3, wxPython Phoenix
+Purpose: shows informative messages on version in use and new releases
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

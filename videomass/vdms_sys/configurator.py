@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: configurator.py
-Porpose: Set Videomass configuration on startup
-Compatibility: Python3
+Purpose: Set Videomass configuration on startup
+Compatibility: Python >= 3.11
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

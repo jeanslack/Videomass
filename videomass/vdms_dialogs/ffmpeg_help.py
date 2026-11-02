@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: ffmpeg_help.py
-Porpose: Show a window to search for FFmpeg help topics
-Compatibility: Python3, wxPython4
+Purpose: Show a window to search for FFmpeg help topics
+Compatibility: Python >= 3.11, wxPython4
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

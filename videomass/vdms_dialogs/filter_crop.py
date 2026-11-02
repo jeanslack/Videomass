@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: filter_crop.py
-Porpose: A dialog to get video crop values based on FFmpeg syntax
-Compatibility: Python3, wxPython Phoenix
+Purpose: A dialog to get video crop values based on FFmpeg syntax
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

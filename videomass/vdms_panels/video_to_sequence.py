@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: video_to_sequence.py
-Porpose: A simple images extractor UI
-Compatibility: Python3, wxPython Phoenix
+Purpose: A simple images extractor UI
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

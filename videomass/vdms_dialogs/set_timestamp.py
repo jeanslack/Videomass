@@ -2,8 +2,8 @@
 
 """
 Name: set_timestamp.py
-Porpose: timestamp setting on FFplay
-Compatibility: Python3, wxPython Phoenix
+Purpose: timestamp setting on FFplay
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

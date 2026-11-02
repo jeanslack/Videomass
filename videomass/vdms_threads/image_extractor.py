@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: pictures_exporting.py
-Porpose: FFmpeg long processing task on save as pictures
-Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
+Purpose: FFmpeg long processing task on save as pictures
+Compatibility: Python >= 3.11, wxPython4 Phoenix (OS Unix-like only)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
@@ -106,7 +106,7 @@ class PicturesFromVideo(Thread):
                        stderr=subprocess.PIPE,
                        stdin=subprocess.PIPE,
                        bufsize=1,
-                       universal_newlines=True,
+                       text=True,
                        encoding=self.appdata['encoding'],
                        ) as self.process:
                 for line in self.process.stderr:

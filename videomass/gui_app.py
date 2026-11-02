@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: gui_app.py
-Porpose: bootstrap for Videomass app.
-Compatibility: Python3, wxPython Phoenix
+Purpose: bootstrap for Videomass app.
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
@@ -187,7 +187,7 @@ class Videomass(wx.App):
                         failed_cachef = True
 
                 if failed_cachef:
-                    wx.MessageBox(_("Could not erase some cache files."),
+                    wx.MessageBox(_("Unable to delete some cache files."),
                                   'Videomass', wx.ICON_WARNING)
 
         if self.appset['clearlogfiles']:

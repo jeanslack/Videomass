@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: wizard_dlg.py
-Porpose: wizard setup dialog for Videomass
-Compatibility: Python3, wxPython Phoenix
+Purpose: wizard setup dialog for Videomass
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

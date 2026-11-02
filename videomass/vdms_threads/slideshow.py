@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: slideshow.py
-Porpose: FFmpeg long processing task
-Compatibility: Python3, wxPython4 Phoenix
+Purpose: FFmpeg long processing task
+Compatibility: Python >= 3.11, wxPython4 Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
@@ -75,7 +75,7 @@ def convert_images(*varargs, **kwargs):
             with Popen(cmd_1,
                        stderr=subprocess.PIPE,
                        bufsize=1,
-                       universal_newlines=True,
+                       text=True,
                        encoding=kwargs['encoding'],
                        ) as proc1:
                 error = proc1.communicate()[1]
@@ -156,7 +156,7 @@ def resizing_process(*varargs, **kwargs):
         with Popen(cmd_1,
                    stderr=subprocess.PIPE,
                    bufsize=1,
-                   universal_newlines=True,
+                   text=True,
                    encoding=kwargs['encoding'],
                    ) as proc1:
             error = proc1.communicate()[1]
@@ -302,7 +302,7 @@ class SlideshowMaker(Thread):
                            stderr=subprocess.PIPE,
                            stdin=subprocess.PIPE,
                            bufsize=1,
-                           universal_newlines=True,
+                           text=True,
                            encoding=self.appdata['encoding'],
                            ) as proc2:
                     for line in proc2.stderr:

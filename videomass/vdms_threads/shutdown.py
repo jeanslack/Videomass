@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: shutdown.py
-Porpose: Execute shutdown system using subprocess
-Compatibility: Python3 (Unix, Windows)
+Purpose: Execute shutdown system using subprocess
+Compatibility: Python >= 3.11 (Unix, Windows)
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
@@ -76,7 +76,7 @@ def shutdown_system(password=None):
                    stdin=subprocess.PIPE,
                    stdout=subprocess.PIPE,
                    stderr=subprocess.PIPE,
-                   universal_newlines=True,
+                   text=True,
                    encoding='utf-8',
                    ) as proc:
             # Communicates input in an isolated manner and

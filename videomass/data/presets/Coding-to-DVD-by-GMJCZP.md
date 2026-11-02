@@ -11,7 +11,7 @@ In this script you can find a lot of settings for different quality targets that
 ```bash
 #!/bin/bash
 #
-# Porpose: Coding to DVD with FFMPEG.
+# Purpose: Coding to DVD with FFMPEG.
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 #
 # DESCRITION:

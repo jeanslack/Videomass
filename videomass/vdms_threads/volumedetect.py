@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: volumedetect.py
-Porpose: Get FFmpeg audio Peak level volume analyzes
-Compatibility: Python3, wxPython Phoenix
+Purpose: Get FFmpeg audio Peak level volume analyzes
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
@@ -116,7 +116,7 @@ class VolumeDetectThread(Thread):
                            stderr=subprocess.PIPE,
                            stdin=subprocess.PIPE,
                            bufsize=1,
-                           universal_newlines=True,
+                           text=True,
                            encoding=self.appdata['encoding'],
                            ) as self.process:
                     meanv, maxv = '', ''

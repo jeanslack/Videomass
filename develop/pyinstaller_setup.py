@@ -1,13 +1,12 @@
-#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
 Name: pyinstaller_setup.py
-Porpose: Provide build options to bundle the Videomass application.
+Purpose: Provide build options to bundle the Videomass application.
 Platform: Gnu-Linux, MacOs, MS-Windows
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Aug.04.2024
+Rev: Nov.02.2026
 
 This file is part of Videomass.
 
@@ -24,31 +23,32 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
-import os
-import sys
-import shutil
-import platform
 import argparse
-import time
+import glob
+import os
+import platform
+import shutil
 import subprocess
+import sys
+import time
+
+from babel.messages.mofile import write_mo
+from babel.messages.pofile import read_po
 
 for x in ('pyinstaller', 'pyi-makespec'):
     if not shutil.which(x):
         sys.exit(f'ERROR: {x} is required, please install '
                  f'`pyinstaller` before launch this script.')
-try:
-    from babel.messages.frontend import compile_catalog
-except ModuleNotFoundError as modulerror:
-    sys.exit(f'ERROR: {modulerror}\nBabel for Python3 is required, '
-             f'please install babel before launch this script.')
 
 THIS = os.path.realpath(os.path.abspath(__file__))
 sys.path.insert(0, os.getcwd())
+
 try:
     from videomass.vdms_sys import about_app
 except ModuleNotFoundError as modulerror:
     sys.exit(f'ERROR: {modulerror}\nMake sure to cd to Videomass source '
              f'directory first.')
+
 SCRIPT = 'launcher'
 NAME = about_app.PRGNAME
 BINARY = SCRIPT
@@ -69,17 +69,27 @@ def build_language_catalog():
         continue
 
     if quest in ('y', 'Y'):
-        try:
-            cmd = compile_catalog()
-            cmd.directory = os.path.join('videomass', 'data', 'locale')
-            cmd.domain = "videomass"
-            cmd.statistics = True
-            cmd.finalize_options()
-            cmd.run()
-        except Exception as err:
-            sys.exit(err)
+        localedir = os.path.join('videomass', 'data', 'locale')
 
-        print("....MO files Compiled successfully!")
+        if not os.path.exists(localedir):
+            sys.exit(f"ERROR! Not found: \"{localedir}\"")
+
+        print(f'\nCompiling directory: "{localedir}"\n')
+
+        popath = glob.glob(f'{localedir}/**/*.po', recursive=True)
+        for pf in popath:
+            if os.path.exists(pf):
+                mf = os.path.splitext(pf)[0] + '.mo'
+                print(f'Compiling "{pf.replace(localedir, "")}" '
+                      f'to "{mf.replace(localedir, "")}"...')
+
+                with open(pf, 'r', encoding='utf-8') as po_file:
+                    catalog = read_po(po_file)
+
+                with open(mf, 'wb') as mo_file:
+                    write_mo(mo_file, catalog)
+
+        print("....MO files Compiled successfully!\n")
 
 
 def videomass_data_source(name=NAME, release=about_app):
@@ -121,7 +131,7 @@ def videomass_data_source(name=NAME, release=about_app):
             }
 
 
-class PyinstallerSpec():
+class PyinstallerSpec:
     """
     This class structures the information data flow,
     arranges the paths of the files and directories

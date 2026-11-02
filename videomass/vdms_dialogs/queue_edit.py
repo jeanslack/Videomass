@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: edit_queue.py
-Porpose: edit a selected item queue
-Compatibility: Python3, wxPython Phoenix
+Purpose: edit a selected item queue
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

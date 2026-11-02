@@ -2,8 +2,8 @@
 
 """
 Name: presets_manager.py
-Porpose: ffmpeg's presets manager panel
-Compatibility: Python3, wxPython Phoenix
+Purpose: ffmpeg's presets manager panel
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

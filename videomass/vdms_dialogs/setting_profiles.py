@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: setting_profiles.py
-Porpose: profiles storing and profiles editing dialog
-Compatibility: Python3, wxPython Phoenix
+Purpose: profiles storing and profiles editing dialog
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 Name: audioproperties.py
-Porpose: A dialog interface for audio parameter settings
-Compatibility: Python3, wxPython Phoenix
+Purpose: A dialog interface for audio parameter settings
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3

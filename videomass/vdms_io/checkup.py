@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 """
 File Name: checkup.py
-Porpose: input/output file check
-Compatibility: Python3, wxPython Phoenix
+Purpose: input/output file check
+Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
