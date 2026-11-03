@@ -140,7 +140,36 @@ Issues = "https://github.com/jeanslack/Videomass/issues"
 [project.gui-scripts]
 videomass = "videomass.gui_app:main"
 
-# Ruff linter configuration
+# ---------------------------------------- Pylint linter configuration
+
+[tool.pylint.master]
+# Carica l'estensione per il controllo dei moduli C/C++ generati a runtime
+load-plugins = "pylint.extensions.docparams"
+
+[tool.pylint.typecheck]
+# RISOLVE GLI ERRORE E1101 (no-member):
+# Dice a Pylint di ignorare la mancanza di attributi/metodi dentro il modulo wx
+generated-members = ["wx.*"]
+
+[tool.pylint.variables]
+# RISOLVE L'ERRORE E0602 per '_':
+# Dice a Pylint che la funzione '_' esiste a livello globale (es. per le traduzioni i18n)
+additional-builtins = ["_"]
+
+[tool.pylint.messages_control]
+# Disattiva le regole che entrano in conflitto con lo stile di wxPython
+disable = [
+    "invalid-name",      # wxPython usa il CamelCase per i metodi (es. ShowModal), Python vuole lo snake_case
+    "unused-argument",   # I gestori di eventi di wx richiedono l'argomento 'event', anche se spesso non lo usi
+    "too-many-ancestors" # Le classi di wxPython (es. wx.Frame) hanno catene di ereditarietà molto profonde
+]
+
+[tool.pylint.format]
+# Opzionale: Alza il limite di lunghezza delle righe a 120 caratteri
+# (molto utile per le lunghe righe di configurazione dei widget grafici)
+max-line-length = 80
+
+# --------------------------------------- Ruff linter configuration
 [tool.ruff]
 # Ignores F821 Undefined name '_'
 builtins = ["_"]
