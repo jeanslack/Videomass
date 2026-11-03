@@ -24,6 +24,7 @@ Code checker: flake8, pylint
     You should have received a copy of the GNU General Public License
     along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import json
 import os
 from typing import Any, ClassVar
@@ -151,6 +152,7 @@ class ConfigManager:
         column width in the File Drop panel.
 
     """
+
     VERSION = 8.5
     DEFAULT_OPTIONS: ClassVar[dict[str, Any]] = {
         "confversion": VERSION,
@@ -197,10 +199,10 @@ class ConfigManager:
         if self.makeportable:
             trscodepath = os.path.join(makeportable, "Media", "Transcoding")
             trscodedir = os.path.relpath(trscodepath)
-            ConfigManager.DEFAULT_OPTIONS['outputdir'] = trscodedir
+            ConfigManager.DEFAULT_OPTIONS["outputdir"] = trscodedir
             self.trscodedir = trscodedir
         else:
-            self.trscodedir = os.path.expanduser('~')
+            self.trscodedir = os.path.expanduser("~")
 
     def write_options(self, **options):
         """
@@ -213,13 +215,10 @@ class ConfigManager:
         else:
             set_options = ConfigManager.DEFAULT_OPTIONS
 
-        with open(self.filename, "w", encoding='utf-8') as settings_file:
-
-            json.dump(set_options,
-                      settings_file,
-                      indent=4,
-                      separators=(",", ": ")
-                      )
+        with open(self.filename, "w", encoding="utf-8") as settings_file:
+            json.dump(
+                set_options, settings_file, indent=4, separators=(",", ": ")
+            )
 
     def read_options(self):
         """
@@ -227,7 +226,7 @@ class ConfigManager:
         Returns: current options, `None` otherwise.
         Raise: json.JSONDecodeError
         """
-        with open(self.filename, 'r', encoding='utf-8') as settings_file:
+        with open(self.filename, "r", encoding="utf-8") as settings_file:
             try:
                 options = json.load(settings_file)
             except json.JSONDecodeError:
@@ -243,11 +242,11 @@ class ConfigManager:
         (such as pendrives, hard drives, etc.) or to deleted directories.
         Returns a dict object.
         """
-        trscpath = options['outputdir']
+        trscpath = options["outputdir"]
         if not os.path.exists(trscpath) and not os.path.isdir(trscpath):
             if self.makeportable:
-                options['outputdir'] = self.trscodedir
+                options["outputdir"] = self.trscodedir
             else:
-                options['outputdir'] = f"{os.path.expanduser('~')}"
+                options["outputdir"] = f"{os.path.expanduser('~')}"
 
         return options

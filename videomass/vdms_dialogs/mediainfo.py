@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import wx
 from pubsub import pub
 
@@ -40,27 +41,28 @@ class MediaStreams(wx.Dialog):
         """
         self.data = data
         get = wx.GetApp()  # get data from bootstrap
-        if get.appset['IS_DARK_THEME'] is True:
-            self.mark = '#174573'
-        elif get.appset['IS_DARK_THEME'] is False:
-            self.mark = '#3bbbe6'
+        if get.appset["IS_DARK_THEME"] is True:
+            self.mark = "#174573"
+        elif get.appset["IS_DARK_THEME"] is False:
+            self.mark = "#3bbbe6"
         else:
-            self.mark = '#808080'
-        self.colorscheme = get.appset['colorscheme']
-        vidicon = get.iconset['videomass']
+            self.mark = "#808080"
+        self.colorscheme = get.appset["colorscheme"]
+        vidicon = get.iconset["videomass"]
 
-        wx.Dialog.__init__(self, None,
-                           style=wx.DEFAULT_DIALOG_STYLE
-                           | wx.RESIZE_BORDER
-                           | wx.DIALOG_NO_PARENT
-                           )
+        wx.Dialog.__init__(
+            self,
+            None,
+            style=wx.DEFAULT_DIALOG_STYLE
+            | wx.RESIZE_BORDER
+            | wx.DIALOG_NO_PARENT,
+        )
         sizerBase = wx.BoxSizer(wx.VERTICAL)
-        self.file_select = wx.ListCtrl(self,
-                                       wx.ID_ANY,
-                                       style=wx.LC_REPORT
-                                       | wx.SUNKEN_BORDER
-                                       | wx.LC_SINGLE_SEL,
-                                       )
+        self.file_select = wx.ListCtrl(
+            self,
+            wx.ID_ANY,
+            style=wx.LC_REPORT | wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL,
+        )
         sizerBase.Add(self.file_select, 0, wx.ALL | wx.EXPAND, 5)
 
         notebook = wx.Notebook(self, wx.ID_ANY)
@@ -69,13 +71,12 @@ class MediaStreams(wx.Dialog):
         sizerBase.Add(grid_notebook, 1, wx.EXPAND, 0)
         #  tab format
         nb_panel_1 = wx.Panel(notebook, wx.ID_ANY)
-        self.format_ctrl = wx.ListCtrl(nb_panel_1,
-                                       wx.ID_ANY,
-                                       style=wx.LC_REPORT
-                                       | wx.SUNKEN_BORDER
-                                       | wx.LC_SINGLE_SEL,
-                                       name='format',
-                                       )
+        self.format_ctrl = wx.ListCtrl(
+            nb_panel_1,
+            wx.ID_ANY,
+            style=wx.LC_REPORT | wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL,
+            name="format",
+        )
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab1.Add(self.format_ctrl, 1, wx.ALL | wx.EXPAND, 5)
         nb_panel_1.SetSizer(sizer_tab1)
@@ -83,39 +84,36 @@ class MediaStreams(wx.Dialog):
         #  tab video
         nb_panel_2 = wx.Panel(notebook, wx.ID_ANY)
 
-        self.video_ctrl = wx.ListCtrl(nb_panel_2,
-                                      wx.ID_ANY,
-                                      style=wx.LC_REPORT
-                                      | wx.SUNKEN_BORDER
-                                      | wx.LC_SINGLE_SEL,
-                                      name='video'
-                                      )
+        self.video_ctrl = wx.ListCtrl(
+            nb_panel_2,
+            wx.ID_ANY,
+            style=wx.LC_REPORT | wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL,
+            name="video",
+        )
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2.Add(self.video_ctrl, 1, wx.ALL | wx.EXPAND, 5)
         nb_panel_2.SetSizer(sizer_tab2)
         notebook.AddPage(nb_panel_2, (_("Video Stream")))
         #  tab audio
         nb_panel_3 = wx.Panel(notebook, wx.ID_ANY)
-        self.audio_ctrl = wx.ListCtrl(nb_panel_3,
-                                      wx.ID_ANY,
-                                      style=wx.LC_REPORT
-                                      | wx.SUNKEN_BORDER
-                                      | wx.LC_SINGLE_SEL,
-                                      name='audio'
-                                      )
+        self.audio_ctrl = wx.ListCtrl(
+            nb_panel_3,
+            wx.ID_ANY,
+            style=wx.LC_REPORT | wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL,
+            name="audio",
+        )
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab3.Add(self.audio_ctrl, 1, wx.ALL | wx.EXPAND, 5)
         nb_panel_3.SetSizer(sizer_tab3)
         notebook.AddPage(nb_panel_3, (_("Audio Streams")))
         #  tab subtitle
         nb_panel_4 = wx.Panel(notebook, wx.ID_ANY)
-        self.subt_ctrl = wx.ListCtrl(nb_panel_4,
-                                     wx.ID_ANY,
-                                     style=wx.LC_REPORT
-                                     | wx.SUNKEN_BORDER
-                                     | wx.LC_SINGLE_SEL,
-                                     name='subtitle'
-                                     )
+        self.subt_ctrl = wx.ListCtrl(
+            nb_panel_4,
+            wx.ID_ANY,
+            style=wx.LC_REPORT | wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL,
+            name="subtitle",
+        )
         sizer_tab4 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab4.Add(self.subt_ctrl, 1, wx.ALL | wx.EXPAND, 5)
         nb_panel_4.SetSizer(sizer_tab4)
@@ -134,22 +132,22 @@ class MediaStreams(wx.Dialog):
         sizerBase.Add(gridbtns, 0, wx.EXPAND)
 
         # ----------------------Properties----------------------#
-        self.file_select.InsertColumn(0, _('FILE SELECTION'), width=600)
+        self.file_select.InsertColumn(0, _("FILE SELECTION"), width=600)
 
-        self.format_ctrl.InsertColumn(0, _('Properties'), width=200)
-        self.format_ctrl.InsertColumn(1, _('Values'), width=400)
+        self.format_ctrl.InsertColumn(0, _("Properties"), width=200)
+        self.format_ctrl.InsertColumn(1, _("Values"), width=400)
 
-        self.video_ctrl.InsertColumn(0, _('Properties'), width=200)
-        self.video_ctrl.InsertColumn(1, _('Values'), width=400)
+        self.video_ctrl.InsertColumn(0, _("Properties"), width=200)
+        self.video_ctrl.InsertColumn(1, _("Values"), width=400)
 
-        self.audio_ctrl.InsertColumn(0, _('Properties'), width=200)
-        self.audio_ctrl.InsertColumn(1, _('Values'), width=400)
+        self.audio_ctrl.InsertColumn(0, _("Properties"), width=200)
+        self.audio_ctrl.InsertColumn(1, _("Values"), width=400)
 
-        self.subt_ctrl.InsertColumn(0, _('Properties'), width=200)
-        self.subt_ctrl.InsertColumn(1, _('Values'), width=400)
+        self.subt_ctrl.InsertColumn(0, _("Properties"), width=200)
+        self.subt_ctrl.InsertColumn(1, _("Values"), width=400)
 
         # set layout
-        self.SetTitle(_('Source Stream Properties'))
+        self.SetTitle(_("Source Stream Properties"))
         self.SetMinSize((700, 600))
         # self.file_select.SetMinSize((-1, 150))
         self.SetSizer(sizerBase)
@@ -161,8 +159,11 @@ class MediaStreams(wx.Dialog):
         self.Layout()
         self.CentreOnScreen()
 
-        flist = [x['format']['filename'] for x in self.data
-                 if x['format']['filename']]
+        flist = [
+            x["format"]["filename"]
+            for x in self.data
+            if x["format"]["filename"]
+        ]
 
         for index, files in enumerate(flist):
             self.file_select.InsertItem(index, files)
@@ -198,6 +199,7 @@ class MediaStreams(wx.Dialog):
         """
         self.btn_copyclip.Disable()
         self.typelist = None
+
     # ----------------------------------------------------------------------
 
     def on_selected(self, event):
@@ -209,6 +211,7 @@ class MediaStreams(wx.Dialog):
             return
         self.typelist = event.GetEventObject().Name
         self.btn_copyclip.Enable()
+
     # ----------------------------------------------------------------------
 
     def on_copy_to_clipboard(self, event):
@@ -216,14 +219,15 @@ class MediaStreams(wx.Dialog):
         Click on copy to clipboard button, evaluate which
         checklist you are using, then call the appropriate method.
         """
-        if self.typelist == 'format':
+        if self.typelist == "format":
             self.on_format()
-        elif self.typelist == 'video':
+        elif self.typelist == "video":
             self.on_video()
-        elif self.typelist == 'audio':
+        elif self.typelist == "audio":
             self.on_audio()
-        elif self.typelist == 'subtitle':
+        elif self.typelist == "subtitle":
             self.on_sub()
+
     # ----------------------------------------------------------------------
 
     def on_format(self):
@@ -235,14 +239,19 @@ class MediaStreams(wx.Dialog):
             return
         col0 = self.format_ctrl.GetItemText(item, col=0)
         col1 = self.format_ctrl.GetItemText(item, col=1)
-        text = f'{col0}: {col1}'
+        text = f"{col0}: {col1}"
         if wx.TheClipboard.Open():
             data_object = wx.TextDataObject(text)
             wx.TheClipboard.SetData(data_object)
             wx.TheClipboard.Close()
         else:
-            wx.MessageBox(_('Unable to open the clipboard on Format tab'),
-                          _('Videomass - Error!'), wx.ICON_ERROR, self)
+            wx.MessageBox(
+                _("Unable to open the clipboard on Format tab"),
+                _("Videomass - Error!"),
+                wx.ICON_ERROR,
+                self,
+            )
+
     # ----------------------------------------------------------------------
 
     def on_video(self):
@@ -254,15 +263,19 @@ class MediaStreams(wx.Dialog):
             return
         col0 = self.video_ctrl.GetItemText(item, col=0)
         col1 = self.video_ctrl.GetItemText(item, col=1)
-        text = f'{col0}: {col1}'
+        text = f"{col0}: {col1}"
         if wx.TheClipboard.Open():
             data_object = wx.TextDataObject(text)
             wx.TheClipboard.SetData(data_object)
             wx.TheClipboard.Close()
         else:
-            wx.MessageBox(_('Unable to open the clipboard on '
-                            'Video Streams tab'),
-                          _('Videomass - Error!'), wx.ICON_ERROR, self)
+            wx.MessageBox(
+                _("Unable to open the clipboard on Video Streams tab"),
+                _("Videomass - Error!"),
+                wx.ICON_ERROR,
+                self,
+            )
+
     # ----------------------------------------------------------------------
 
     def on_audio(self):
@@ -274,15 +287,19 @@ class MediaStreams(wx.Dialog):
             return
         col0 = self.audio_ctrl.GetItemText(item, col=0)
         col1 = self.audio_ctrl.GetItemText(item, col=1)
-        text = f'{col0}: {col1}'
+        text = f"{col0}: {col1}"
         if wx.TheClipboard.Open():
             data_object = wx.TextDataObject(text)
             wx.TheClipboard.SetData(data_object)
             wx.TheClipboard.Close()
         else:
-            wx.MessageBox(_('Unable to open the clipboard on '
-                            'Audio Streams tab'),
-                          _('Videomass - Error!'), wx.ICON_ERROR, self)
+            wx.MessageBox(
+                _("Unable to open the clipboard on Audio Streams tab"),
+                _("Videomass - Error!"),
+                wx.ICON_ERROR,
+                self,
+            )
+
     # ----------------------------------------------------------------------
 
     def on_sub(self):
@@ -294,15 +311,19 @@ class MediaStreams(wx.Dialog):
             return
         col0 = self.subt_ctrl.GetItemText(item, col=0)
         col1 = self.subt_ctrl.GetItemText(item, col=1)
-        text = f'{col0}: {col1}'
+        text = f"{col0}: {col1}"
         if wx.TheClipboard.Open():
             data_object = wx.TextDataObject(text)
             wx.TheClipboard.SetData(data_object)
             wx.TheClipboard.Close()
         else:
-            wx.MessageBox(_('Unable to open the clipboard on '
-                            'Subtitle Streams tab'),
-                          _('Videomass - Error!'), wx.ICON_ERROR, self)
+            wx.MessageBox(
+                _("Unable to open the clipboard on Subtitle Streams tab"),
+                _("Videomass - Error!"),
+                wx.ICON_ERROR,
+                self,
+            )
+
     # ----------------------------------------------------------------------
 
     def on_select(self, event):
@@ -322,51 +343,55 @@ class MediaStreams(wx.Dialog):
         index = 0
 
         for x in self.data:
-            if x.get('format').get('filename') == item:
+            if x.get("format").get("filename") == item:
                 select = self.data[self.data.index(x)]
-                for k, v in x.get('format').items():
+                for k, v in x.get("format").items():
                     self.format_ctrl.InsertItem(index, str(k))
                     self.format_ctrl.SetItem(index, 1, str(v))
                     index += 1
 
-        if select.get('streams'):
+        if select.get("streams"):
             index = 0
-            for t in select.get('streams'):
-                if t.get('codec_type') == 'video':
+            for t in select.get("streams"):
+                if t.get("codec_type") == "video":
                     for k, v in t.items():
                         self.video_ctrl.InsertItem(index, str(k))
                         self.video_ctrl.SetItem(index, 1, str(v))
-                        if k == 'index':
-                            self.video_ctrl.SetItemBackgroundColour(index,
-                                                                    self.mark)
+                        if k == "index":
+                            self.video_ctrl.SetItemBackgroundColour(
+                                index, self.mark
+                            )
                         index += 1
             index = 0
-            for t in select.get('streams'):
-                if t.get('codec_type') == 'audio':
+            for t in select.get("streams"):
+                if t.get("codec_type") == "audio":
                     for k, v in t.items():
                         self.audio_ctrl.InsertItem(index, str(k))
                         self.audio_ctrl.SetItem(index, 1, str(v))
-                        if k == 'index':
-                            self.audio_ctrl.SetItemBackgroundColour(index,
-                                                                    self.mark)
+                        if k == "index":
+                            self.audio_ctrl.SetItemBackgroundColour(
+                                index, self.mark
+                            )
                         index += 1
             index = 0
-            for t in select.get('streams'):
-                if t.get('codec_type') == 'subtitle':
+            for t in select.get("streams"):
+                if t.get("codec_type") == "subtitle":
                     for k, v in t.items():
                         self.subt_ctrl.InsertItem(index, str(k))
                         self.subt_ctrl.SetItem(index, 1, str(v))
-                        if k == 'index':
-                            self.subt_ctrl.SetItemBackgroundColour(index,
-                                                                   self.mark)
+                        if k == "index":
+                            self.subt_ctrl.SetItemBackgroundColour(
+                                index, self.mark
+                            )
                         index += 1
 
         self.btn_copyclip.Disable()
         self.typelist = None
+
     # ----------------------------------------------------------------------
 
     def on_close(self, event):
         """
         Destroy this dialog
         """
-        pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg='MediaStreams')
+        pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg="MediaStreams")

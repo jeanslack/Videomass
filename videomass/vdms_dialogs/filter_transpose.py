@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import os
 import webbrowser
 from math import pi as pigreco
@@ -41,13 +42,14 @@ class Transpose(wx.Dialog):
     A dialog tool to get video transpose data based on FFmpeg syntax.
 
     """
+
     get = wx.GetApp()
     appdata = get.appset
-    LOGDIR = appdata['logdir']
-    TMPROOT = os.path.join(get.appset['cachedir'], 'tmp', 'Transpose')
-    TMPSRC = os.path.join(TMPROOT, 'tmpsrc')
+    LOGDIR = appdata["logdir"]
+    TMPROOT = os.path.join(get.appset["cachedir"], "tmp", "Transpose")
+    TMPSRC = os.path.join(TMPROOT, "tmpsrc")
     os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
-    BACKGROUND = '#1b0413'
+    BACKGROUND = "#1b0413"
 
     def __init__(self, parent, *args, **kwa):
         """
@@ -59,31 +61,36 @@ class Transpose(wx.Dialog):
                   into the list or the selected one if many.
         duration: Overall time duration of video.
         """
-        self.v_width = kwa['width']
-        self.v_height = kwa['height']
+        self.v_width = kwa["width"]
+        self.v_height = kwa["height"]
         # resizing values preserving aspect ratio for pseudo-monitor
         self.thr = 150 if self.v_height > self.v_width else 270
         self.h_ratio = int((self.v_height / self.v_width) * self.thr)
         self.w_ratio = int((self.v_width / self.v_height) * self.h_ratio)
         self.current_angle = 0
         self.center = int(self.w_ratio / 2), int(self.h_ratio / 2)
-        self.transpose = {'degrees': ['', 0]}
-        self.video = kwa['filename']
+        self.transpose = {"degrees": ["", 0]}
+        self.video = kwa["filename"]
         name = os.path.splitext(os.path.basename(self.video))[0]
-        self.frame = os.path.join(Transpose.TMPSRC, f'{name}.png')
+        self.frame = os.path.join(Transpose.TMPSRC, f"{name}.png")
         self.stbitmap = None
         self.bmp = None
-        self.mills = time_to_integer(kwa['duration'].split('.')[0])
+        self.mills = time_to_integer(kwa["duration"].split(".")[0])
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        self.panelimg = wx.Panel(self, wx.ID_ANY, size=(270, 270),)
+        self.panelimg = wx.Panel(
+            self,
+            wx.ID_ANY,
+            size=(270, 270),
+        )
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         sizerBase.Add(self.panelimg, 0, wx.ALL | wx.CENTER, 5)
-        self.statictxt = wx.StaticText(self, wx.ID_ANY,
-                                       label=_("Default position"),
-                                       style=wx.ST_NO_AUTORESIZE
-                                       | wx.ALIGN_CENTRE_HORIZONTAL,
-                                       )
+        self.statictxt = wx.StaticText(
+            self,
+            wx.ID_ANY,
+            label=_("Default position"),
+            style=wx.ST_NO_AUTORESIZE | wx.ALIGN_CENTRE_HORIZONTAL,
+        )
         sizerBase.Add(self.statictxt, 0, wx.CENTER | wx.EXPAND)
         sizerBase.Add(10, 10)
         msg = _("Rotation setting")
@@ -93,14 +100,16 @@ class Transpose(wx.Dialog):
         boxctrl = wx.BoxSizer(wx.VERTICAL)
         sizerLabel.Add(boxctrl, 0, wx.CENTRE)
         grid_sizerBase = wx.GridSizer(1, 2, 0, 0)
-        self.button_left = wx.Button(sbox, wx.ID_ANY,
-                                     (_("90° (left)")))  # ruota sx
+        self.button_left = wx.Button(
+            sbox, wx.ID_ANY, (_("90° (left)"))
+        )  # ruota sx
         grid_sizerBase.Add(self.button_left, 0, wx.ALL | wx.CENTRE, 5)
         self.button_right = wx.Button(sbox, wx.ID_ANY, (_("90° (right)")))
         grid_sizerBase.Add(self.button_right, 0, wx.ALL | wx.CENTRE, 5)
         boxctrl.Add(grid_sizerBase, 0, wx.EXPAND)
-        self.button_down = wx.Button(sbox, wx.ID_ANY,
-                                     (_("180°")))  # capovolgi sotto
+        self.button_down = wx.Button(
+            sbox, wx.ID_ANY, (_("180°"))
+        )  # capovolgi sotto
         boxctrl.Add(self.button_down, 0, wx.ALL | wx.CENTRE, 5)
 
         # ----- confirm buttons section
@@ -123,7 +132,7 @@ class Transpose(wx.Dialog):
         # ----------------------Properties--------------------------------#
         self.SetTitle(_("Transpose Tool"))
         self.panelimg.SetBackgroundColour(wx.Colour(Transpose.BACKGROUND))
-        if Transpose.appdata['ostype'] == 'Darwin':
+        if Transpose.appdata["ostype"] == "Darwin":
             self.statictxt.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
         else:
             self.statictxt.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
@@ -137,15 +146,15 @@ class Transpose(wx.Dialog):
             self.statictxt.SetLabel(args[1])
 
             if args[0] == "transpose=1":
-                self.transpose['degrees'] = ["transpose=1", 90]
+                self.transpose["degrees"] = ["transpose=1", 90]
                 self.rotate90(90)
 
             elif args[0] == "transpose=2,transpose=2":
-                self.transpose['degrees'] = ["transpose=2,transpose=2", 180]
+                self.transpose["degrees"] = ["transpose=2,transpose=2", 180]
                 self.rotate90(180)
 
             elif args[0] == "transpose=2":
-                self.transpose['degrees'] = ["transpose=2", 270]
+                self.transpose["degrees"] = ["transpose=2", 270]
                 self.rotate90(270)
 
         # ----------------------Binding (EVT)---------------------------------#
@@ -156,6 +165,7 @@ class Transpose(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+
     # ------------------------------------------------------------------#
 
     def process(self):
@@ -164,25 +174,30 @@ class Transpose(wx.Dialog):
         on this process is set to the total length of the
         movie divided by two.
         """
-        logfile = make_log_template('generic_task.log',
-                                    Transpose.LOGDIR,
-                                    mode="w",
-                                    )
+        logfile = make_log_template(
+            "generic_task.log",
+            Transpose.LOGDIR,
+            mode="w",
+        )
         if not self.mills:
-            sseg = ''
+            sseg = ""
         else:
             stime = integer_to_time(int(self.mills / 2), False)
-            sseg = f'-ss {stime}'
-        arg = (f'{sseg} -i "{self.video}" -f image2 '
-               f'-update 1 -frames:v 1 "{self.frame}"')
-        thread = FFmpegGenericTask(arg, 'Transpose', logfile)
+            sseg = f"-ss {stime}"
+        arg = (
+            f'{sseg} -i "{self.video}" -f image2 '
+            f'-update 1 -frames:v 1 "{self.frame}"'
+        )
+        thread = FFmpegGenericTask(arg, "Transpose", logfile)
         thread.join()  # wait end thread
         error = thread.status
         if error:
-            show_msg_notify(self.GetParent(),
-                            logname=os.path.basename(logfile))
+            show_msg_notify(
+                self.GetParent(), logname=os.path.basename(logfile)
+            )
             return error
         return None
+
     # ------------------------------------------------------------------------#
 
     def image_loader(self):
@@ -200,6 +215,7 @@ class Transpose(wx.Dialog):
         self.stbitmap = wx.StaticBitmap(self.panelimg, wx.ID_ANY, self.bmp)
         self.panelimg.Layout()
         self.on_reset(self)  # make default position
+
     # ------------------------------------------------------------------#
 
     def rotate90(self, degrees):
@@ -210,9 +226,9 @@ class Transpose(wx.Dialog):
         # neg. value rot. clockwise:
         val = float(self.current_angle * -pigreco / 180)
         image = self.bmp.ConvertToImage()
-        image = image.Scale(self.w_ratio, self.h_ratio,
-                            wx.IMAGE_QUALITY_NORMAL
-                            )
+        image = image.Scale(
+            self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL
+        )
         image = image.Rotate(val, self.center)
         self.stbitmap.SetBitmap(wx.Bitmap(image))
         self.panelimg.Layout()
@@ -223,85 +239,89 @@ class Transpose(wx.Dialog):
         """
         Rotate 90 degrees right
         """
-        if self.transpose['degrees'][1] == 0:
+        if self.transpose["degrees"][1] == 0:
             self.rotate90(90)
 
-        elif self.transpose['degrees'][1] == 90:
+        elif self.transpose["degrees"][1] == 90:
             return
 
-        elif self.transpose['degrees'][1] == 180:
+        elif self.transpose["degrees"][1] == 180:
             self.rotate90(270)
 
-        elif self.transpose['degrees'][1] == 270:
+        elif self.transpose["degrees"][1] == 270:
             self.rotate90(180)
 
-        self.transpose['degrees'] = ["transpose=1", 90]
+        self.transpose["degrees"] = ["transpose=1", 90]
         self.statictxt.SetLabel(_("Rotate 90 degrees right"))
 
         self.Layout()
+
     # ------------------------------------------------------------------#
 
     def on_down(self, event):
         """
         Rotate 180 degrees
         """
-        if self.transpose['degrees'][1] == 0:
+        if self.transpose["degrees"][1] == 0:
             self.rotate90(180)
 
-        elif self.transpose['degrees'][1] == 90:
+        elif self.transpose["degrees"][1] == 90:
             self.rotate90(90)
 
-        elif self.transpose['degrees'][1] == 180:
+        elif self.transpose["degrees"][1] == 180:
             return
 
-        elif self.transpose['degrees'][1] == 270:
+        elif self.transpose["degrees"][1] == 270:
             self.rotate90(270)
 
-        self.transpose['degrees'] = ["transpose=2,transpose=2", 180]
+        self.transpose["degrees"] = ["transpose=2,transpose=2", 180]
         self.statictxt.SetLabel(_("Rotate 180 degrees"))
         self.Layout()
+
     # ------------------------------------------------------------------#
 
     def on_left(self, event):
         """
         Rotate 90 degrees left
         """
-        if self.transpose['degrees'][1] == 0:
+        if self.transpose["degrees"][1] == 0:
             self.rotate90(270)
 
-        elif self.transpose['degrees'][1] == 90:
+        elif self.transpose["degrees"][1] == 90:
             self.rotate90(180)
 
-        elif self.transpose['degrees'][1] == 180:
+        elif self.transpose["degrees"][1] == 180:
             self.rotate90(90)
 
-        elif self.transpose['degrees'][1] == 270:
+        elif self.transpose["degrees"][1] == 270:
             return
 
-        self.transpose['degrees'] = ["transpose=2", 270]
+        self.transpose["degrees"] = ["transpose=2", 270]
         self.statictxt.SetLabel(_("Rotate 90 degrees left"))
         self.Layout()
+
     # ------------------------------------------------------------------#
 
     def on_reset(self, event):
         """
         Revert to default positioning
         """
-        if self.transpose['degrees'][1] == 0:
+        if self.transpose["degrees"][1] == 0:
             pass
 
-        elif self.transpose['degrees'][1] == 90:
+        elif self.transpose["degrees"][1] == 90:
             self.rotate90(270)
 
-        elif self.transpose['degrees'][1] == 180:
+        elif self.transpose["degrees"][1] == 180:
             self.rotate90(180)
 
-        elif self.transpose['degrees'][1] == 270:
+        elif self.transpose["degrees"][1] == 270:
             self.rotate90(90)
 
-        self.transpose['degrees'] = ["", 0]
+        self.transpose["degrees"] = ["", 0]
         self.statictxt.SetLabel(_("Default position"))
         self.Layout()
+
     # ------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -310,12 +330,15 @@ class Transpose(wx.Dialog):
         see <https://docs.python.org/3.8/library/webbrowser.html>
 
         """
-        page = ('https://jeanslack.github.io/Videomass/User-guide/'
-                'Video_filters_en.pdf#%5B%7B%22num%22%3A19%2C%22gen'
-                '%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C711.'
-                '639%2C0%5D')
+        page = (
+            "https://jeanslack.github.io/Videomass/User-guide/"
+            "Video_filters_en.pdf#%5B%7B%22num%22%3A19%2C%22gen"
+            "%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C711."
+            "639%2C0%5D"
+        )
 
         webbrowser.open(page)
+
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
@@ -323,6 +346,7 @@ class Transpose(wx.Dialog):
         Close this dialog without saving anything
         """
         event.Skip()
+
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):
@@ -330,6 +354,7 @@ class Transpose(wx.Dialog):
         Don't use self.Destroy() in this dialog
         """
         event.Skip()
+
     # ------------------------------------------------------------------#
 
     def getvalue(self):
@@ -338,4 +363,4 @@ class Transpose(wx.Dialog):
         from the caller. See the caller for more info and usage.
         """
         msg = self.statictxt.GetLabel()
-        return (self.transpose['degrees'][0], msg)
+        return (self.transpose["degrees"][0], msg)

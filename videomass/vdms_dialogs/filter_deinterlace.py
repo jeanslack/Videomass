@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import webbrowser
 
 import wx
@@ -36,6 +37,7 @@ class Deinterlace(wx.Dialog):
     See ``av_conversions.py`` -> ``on_Set_deinterlace`` method
     for how to use this class.
     """
+
     get = wx.GetApp()
     appdata = get.appset
 
@@ -53,68 +55,85 @@ class Deinterlace(wx.Dialog):
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
 
-        self.enable_opt = wx.ToggleButton(self, wx.ID_ANY,
-                                          _("Advanced Options"))
+        self.enable_opt = wx.ToggleButton(
+            self, wx.ID_ANY, _("Advanced Options")
+        )
         box0 = wx.StaticBox(self, wx.ID_ANY, (_("Deinterlace")))
         zone1 = wx.StaticBoxSizer(box0, wx.VERTICAL)
 
-        self.ckbx_deintW3fdif = wx.CheckBox(box0, wx.ID_ANY,
-                                            (_("Deinterlaces with "
-                                               "w3fdif filter"))
-                                            )
-        self.rdbx_w3fdif = wx.RadioBox(box0, wx.ID_ANY, ("Filter"),
-                                       choices=[("simple"), ("complex")],
-                                       majorDimension=0,
-                                       style=wx.RA_SPECIFY_ROWS
-                                       )
-        self.rdbx_w3fdif_d = wx.RadioBox(box0, wx.ID_ANY, ("Deint"),
-                                         choices=[("all"), ("interlaced")],
-                                         majorDimension=0,
-                                         style=wx.RA_SPECIFY_ROWS
-                                         )
-        self.ckbx_deintYadif = wx.CheckBox(box0, wx.ID_ANY,
-                                           (_("Deinterlaces with "
-                                              "yadif filter"))
-                                           )
-        yadif = [("0, send_frame"), ("1, send_field"),
-                 ("2, send_frame_nospatial"), ("3, send_field_nospatial")
-                 ]
-        self.rdbx_Yadif_mode = wx.RadioBox(box0, wx.ID_ANY, ("Mode"),
-                                           choices=yadif, majorDimension=0,
-                                           style=wx.RA_SPECIFY_ROWS
-                                           )
-        self.rdbx_Yadif_parity = wx.RadioBox(box0, wx.ID_ANY, ("Parity"),
-                                             choices=[("0, tff"),
-                                                      ("1, bff"),
-                                                      ("-1, auto")],
-                                             majorDimension=0,
-                                             style=wx.RA_SPECIFY_ROWS
-                                             )
-        self.rdbx_Yadif_deint = wx.RadioBox(box0, wx.ID_ANY, ("Deint"),
-                                            choices=[("0, all"),
-                                                     ("1, interlaced")],
-                                            majorDimension=0,
-                                            style=wx.RA_SPECIFY_ROWS
-                                            )
+        self.ckbx_deintW3fdif = wx.CheckBox(
+            box0, wx.ID_ANY, (_("Deinterlaces with w3fdif filter"))
+        )
+        self.rdbx_w3fdif = wx.RadioBox(
+            box0,
+            wx.ID_ANY,
+            ("Filter"),
+            choices=[("simple"), ("complex")],
+            majorDimension=0,
+            style=wx.RA_SPECIFY_ROWS,
+        )
+        self.rdbx_w3fdif_d = wx.RadioBox(
+            box0,
+            wx.ID_ANY,
+            ("Deint"),
+            choices=[("all"), ("interlaced")],
+            majorDimension=0,
+            style=wx.RA_SPECIFY_ROWS,
+        )
+        self.ckbx_deintYadif = wx.CheckBox(
+            box0, wx.ID_ANY, (_("Deinterlaces with yadif filter"))
+        )
+        yadif = [
+            ("0, send_frame"),
+            ("1, send_field"),
+            ("2, send_frame_nospatial"),
+            ("3, send_field_nospatial"),
+        ]
+        self.rdbx_Yadif_mode = wx.RadioBox(
+            box0,
+            wx.ID_ANY,
+            ("Mode"),
+            choices=yadif,
+            majorDimension=0,
+            style=wx.RA_SPECIFY_ROWS,
+        )
+        self.rdbx_Yadif_parity = wx.RadioBox(
+            box0,
+            wx.ID_ANY,
+            ("Parity"),
+            choices=[("0, tff"), ("1, bff"), ("-1, auto")],
+            majorDimension=0,
+            style=wx.RA_SPECIFY_ROWS,
+        )
+        self.rdbx_Yadif_deint = wx.RadioBox(
+            box0,
+            wx.ID_ANY,
+            ("Deint"),
+            choices=[("0, all"), ("1, interlaced")],
+            majorDimension=0,
+            style=wx.RA_SPECIFY_ROWS,
+        )
         box1 = wx.StaticBox(self, wx.ID_ANY, (_("Interlace")))
         zone2 = wx.StaticBoxSizer(box1, wx.VERTICAL)
-        self.ckbx_interlace = wx.CheckBox(box1, wx.ID_ANY,
-                                          (_("Interlaces with "
-                                             "interlace filter"))
-                                          )
-        self.rdbx_inter_scan = wx.RadioBox(box1, wx.ID_ANY, ("Scanning mode"),
-                                           choices=[("scan=tff"),
-                                                    ("scan=bff")],
-                                           majorDimension=0,
-                                           style=wx.RA_SPECIFY_ROWS
-                                           )
-        self.rdbx_inter_lowpass = wx.RadioBox(box1, wx.ID_ANY,
-                                              ("Set vertical low-pass filter"),
-                                              choices=[("lowpass=0"),
-                                                       ("lowpass=1")],
-                                              majorDimension=0,
-                                              style=wx.RA_SPECIFY_ROWS
-                                              )
+        self.ckbx_interlace = wx.CheckBox(
+            box1, wx.ID_ANY, (_("Interlaces with interlace filter"))
+        )
+        self.rdbx_inter_scan = wx.RadioBox(
+            box1,
+            wx.ID_ANY,
+            ("Scanning mode"),
+            choices=[("scan=tff"), ("scan=bff")],
+            majorDimension=0,
+            style=wx.RA_SPECIFY_ROWS,
+        )
+        self.rdbx_inter_lowpass = wx.RadioBox(
+            box1,
+            wx.ID_ANY,
+            ("Set vertical low-pass filter"),
+            choices=[("lowpass=0"), ("lowpass=1")],
+            majorDimension=0,
+            style=wx.RA_SPECIFY_ROWS,
+        )
         # set Properties
         self.SetTitle(_("Deinterlacing and Interlacing"))
         self.rdbx_w3fdif.Hide()
@@ -142,31 +161,45 @@ class Deinterlace(wx.Dialog):
         self.rdbx_inter_scan.Disable()
         self.rdbx_inter_lowpass.Disable()
 
-        self.ckbx_deintW3fdif.SetToolTip(_('Deinterlace the input video '
-                                           'with `w3fdif` filter'))
-        self.rdbx_w3fdif.SetToolTip(_('Set the interlacing filter '
-                                      'coefficients.'))
-        self.rdbx_w3fdif_d.SetToolTip(_('Specify which frames to '
-                                        'deinterlace.'))
-        toolt = _('Deinterlace the input video with `yadif` filter. '
-                  'Using FFmpeg, this is the best and fastest choice')
+        self.ckbx_deintW3fdif.SetToolTip(
+            _("Deinterlace the input video with `w3fdif` filter")
+        )
+        self.rdbx_w3fdif.SetToolTip(
+            _("Set the interlacing filter coefficients.")
+        )
+        self.rdbx_w3fdif_d.SetToolTip(
+            _("Specify which frames to deinterlace.")
+        )
+        toolt = _(
+            "Deinterlace the input video with `yadif` filter. "
+            "Using FFmpeg, this is the best and fastest choice"
+        )
         self.ckbx_deintYadif.SetToolTip(toolt)
-        self.rdbx_Yadif_mode.SetToolTip(_('mode\n'
-                                          'The interlacing mode to adopt.'))
-        toolt = _('parity\nThe picture field parity assumed for the '
-                  'input interlaced video.')
+        self.rdbx_Yadif_mode.SetToolTip(
+            _("mode\nThe interlacing mode to adopt.")
+        )
+        toolt = _(
+            "parity\nThe picture field parity assumed for the "
+            "input interlaced video."
+        )
         self.rdbx_Yadif_parity.SetToolTip(toolt)
-        self.rdbx_Yadif_deint.SetToolTip(_('Specify which frames to '
-                                           'deinterlace.'))
-        self.ckbx_interlace.SetToolTip(_('Simple interlacing filter from '
-                                         'progressive contents.'))
-        toolt = _('scan:\ndetermines whether the interlaced frame is '
-                  'taken from the even (tff - default) or odd (bff) '
-                  'lines of the progressive frame.')
+        self.rdbx_Yadif_deint.SetToolTip(
+            _("Specify which frames to deinterlace.")
+        )
+        self.ckbx_interlace.SetToolTip(
+            _("Simple interlacing filter from progressive contents.")
+        )
+        toolt = _(
+            "scan:\ndetermines whether the interlaced frame is "
+            "taken from the even (tff - default) or odd (bff) "
+            "lines of the progressive frame."
+        )
         self.rdbx_inter_scan.SetToolTip(toolt)
-        toolt = _('lowpass:\nEnable (default) or disable the vertical '
-                  'lowpass filter to avoid twitter interlacing and reduce '
-                  'moire patterns.\nDefault is no setting.')
+        toolt = _(
+            "lowpass:\nEnable (default) or disable the vertical "
+            "lowpass filter to avoid twitter interlacing and reduce "
+            "moire patterns.\nDefault is no setting."
+        )
         self.rdbx_inter_lowpass.SetToolTip(toolt)
 
         self.sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -174,25 +207,34 @@ class Deinterlace(wx.Dialog):
         self.sizer_base.Add(zone1, 0, wx.ALL | wx.EXPAND, 5)
         grid_w3fdif = wx.FlexGridSizer(1, 4, 0, 0)
         zone1.Add(grid_w3fdif)
-        grid_w3fdif.Add(self.ckbx_deintW3fdif, 0, wx.ALL
-                        | wx.ALIGN_CENTER_VERTICAL
-                        | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_w3fdif.Add(
+            self.ckbx_deintW3fdif,
+            0,
+            wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL,
+            5,
+        )
         grid_w3fdif.Add(self.rdbx_w3fdif, 0, wx.ALL, 5)
         grid_w3fdif.Add(self.rdbx_w3fdif_d, 0, wx.ALL, 5)
         grid_yadif = wx.FlexGridSizer(1, 4, 0, 0)
         zone1.Add(grid_yadif)
-        grid_yadif.Add(self.ckbx_deintYadif, 0, wx.ALL
-                       | wx.ALIGN_CENTER_VERTICAL
-                       | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_yadif.Add(
+            self.ckbx_deintYadif,
+            0,
+            wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL,
+            5,
+        )
         grid_yadif.Add(self.rdbx_Yadif_mode, 0, wx.ALL, 5)
         grid_yadif.Add(self.rdbx_Yadif_parity, 0, wx.ALL, 5)
         grid_yadif.Add(self.rdbx_Yadif_deint, 0, wx.ALL, 5)
         self.sizer_base.Add(zone2, 0, wx.ALL | wx.EXPAND, 5)
         inter_grid = wx.FlexGridSizer(1, 3, 0, 0)
         zone2.Add(inter_grid)
-        inter_grid.Add(self.ckbx_interlace, 0, wx.ALL
-                       | wx.ALIGN_CENTER_VERTICAL
-                       | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        inter_grid.Add(
+            self.ckbx_interlace,
+            0,
+            wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL,
+            5,
+        )
         inter_grid.Add(self.rdbx_inter_scan, 0, wx.ALL, 5)
         inter_grid.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 5)
 
@@ -240,57 +282,58 @@ class Deinterlace(wx.Dialog):
         """
         set default or set in according with previusly activated option
         """
-        if 'deinterlace' in self.cmd_opt:
-            if self.cmd_opt["deinterlace"].startswith('yadif'):
+        if "deinterlace" in self.cmd_opt:
+            if self.cmd_opt["deinterlace"].startswith("yadif"):
                 self.ckbx_deintYadif.SetValue(True)
                 self.ckbx_deintW3fdif.Disable()
                 self.ckbx_interlace.Disable()
                 self.rdbx_Yadif_mode.Enable()
                 self.rdbx_Yadif_parity.Enable()
                 self.rdbx_Yadif_deint.Enable()
-                indx = self.cmd_opt["deinterlace"].split('=')[1].split(':')
-                parity = 2 if indx[1] == '-1' else indx[1]
+                indx = self.cmd_opt["deinterlace"].split("=")[1].split(":")
+                parity = 2 if indx[1] == "-1" else indx[1]
                 self.rdbx_Yadif_mode.SetSelection(int(indx[0]))
                 self.rdbx_Yadif_parity.SetSelection(int(parity))
                 self.rdbx_Yadif_deint.SetSelection(int(indx[2]))
 
-            elif self.cmd_opt["deinterlace"].startswith('w3fdif'):
+            elif self.cmd_opt["deinterlace"].startswith("w3fdif"):
                 self.ckbx_deintW3fdif.SetValue(True)
                 self.ckbx_deintYadif.Disable()
                 self.ckbx_interlace.Disable()
                 self.rdbx_w3fdif.Enable()
                 self.rdbx_w3fdif_d.Enable()
-                indx = self.cmd_opt["deinterlace"].split(':')
-                if indx[0].split('=')[2] == 'complex':
+                indx = self.cmd_opt["deinterlace"].split(":")
+                if indx[0].split("=")[2] == "complex":
                     self.rdbx_w3fdif.SetSelection(1)
-                elif indx[0].split('=')[2] == 'simple':
+                elif indx[0].split("=")[2] == "simple":
                     self.rdbx_w3fdif.SetSelection(0)
-                if indx[1].split('=')[1] == 'all':
+                if indx[1].split("=")[1] == "all":
                     self.rdbx_w3fdif_d.SetSelection(0)
-                elif indx[1].split('=')[1] == 'interlaced':
+                elif indx[1].split("=")[1] == "interlaced":
                     self.rdbx_w3fdif_d.SetSelection(1)
 
-        elif 'interlace' in self.cmd_opt:
+        elif "interlace" in self.cmd_opt:
             self.ckbx_interlace.SetValue(True)
             self.ckbx_deintW3fdif.Disable()
             self.ckbx_deintYadif.Disable()
             self.rdbx_inter_scan.Enable()
             self.rdbx_inter_lowpass.Enable()
-            scan = self.cmd_opt["interlace"].split('=')[2].split(':')
-            if 'tff' in scan[0]:
+            scan = self.cmd_opt["interlace"].split("=")[2].split(":")
+            if "tff" in scan[0]:
                 scan = 0
-            elif 'bff' in scan[0]:
+            elif "bff" in scan[0]:
                 scan = 1
             self.rdbx_inter_scan.SetSelection(scan)
 
-            lowpass = self.cmd_opt["interlace"].split(':')
-            if 'lowpass=0' in lowpass[1]:
+            lowpass = self.cmd_opt["interlace"].split(":")
+            if "lowpass=0" in lowpass[1]:
                 lowpass = 0
-            elif 'lowpass=1' in lowpass[1]:
+            elif "lowpass=1" in lowpass[1]:
                 lowpass = 1
             self.rdbx_inter_lowpass.SetSelection(lowpass)
         else:
             pass
+
     # --------------------Event handler (callback)----------------------#
 
     def on_DeintW3fdif(self, event):
@@ -310,6 +353,7 @@ class Deinterlace(wx.Dialog):
             self.ckbx_deintYadif.Enable()
             self.ckbx_interlace.Enable()
             self.cmd_opt.clear()
+
     # ------------------------------------------------------------------#
 
     def on_W3fdif_filter(self, event):
@@ -318,9 +362,12 @@ class Deinterlace(wx.Dialog):
         radiobox control for setting the additional parameter
         to `simple` or `complex`, default is `complex`.
         """
-        val = (f"w3fdif=filter={self.rdbx_w3fdif.GetStringSelection()}:"
-               f"deint={self.rdbx_w3fdif_d.GetStringSelection()}")
+        val = (
+            f"w3fdif=filter={self.rdbx_w3fdif.GetStringSelection()}:"
+            f"deint={self.rdbx_w3fdif_d.GetStringSelection()}"
+        )
         self.cmd_opt["deinterlace"] = val
+
     # ------------------------------------------------------------------#
 
     def on_W3fdif_deint(self, event):
@@ -329,9 +376,12 @@ class Deinterlace(wx.Dialog):
         radiobox control for setting the additional parameters
         to `all` or `interlaced`, default is `all`.
         """
-        val = (f"w3fdif=filter={self.rdbx_w3fdif.GetStringSelection()}:"
-               f"deint={self.rdbx_w3fdif_d.GetStringSelection()}")
+        val = (
+            f"w3fdif=filter={self.rdbx_w3fdif.GetStringSelection()}:"
+            f"deint={self.rdbx_w3fdif_d.GetStringSelection()}"
+        )
         self.cmd_opt["deinterlace"] = val
+
     # ------------------------------------------------------------------#
 
     def on_DeintYadif(self, event):
@@ -353,6 +403,7 @@ class Deinterlace(wx.Dialog):
             self.rdbx_Yadif_deint.Disable()
             self.ckbx_interlace.Enable()
             self.cmd_opt.clear()
+
     # ------------------------------------------------------------------#
 
     def on_modeYadif(self, event):
@@ -360,10 +411,13 @@ class Deinterlace(wx.Dialog):
         When `yadif` is enabled, even enables the `Mode`
         radiobox control for setting additional parameters.
         """
-        parity = self.rdbx_Yadif_parity.GetStringSelection().split(',')
-        val = (f"yadif={self.rdbx_Yadif_mode.GetStringSelection()[0]}:"
-               f"{parity[0]}:{self.rdbx_Yadif_deint.GetStringSelection()[0]}")
+        parity = self.rdbx_Yadif_parity.GetStringSelection().split(",")
+        val = (
+            f"yadif={self.rdbx_Yadif_mode.GetStringSelection()[0]}:"
+            f"{parity[0]}:{self.rdbx_Yadif_deint.GetStringSelection()[0]}"
+        )
         self.cmd_opt["deinterlace"] = val
+
     # ------------------------------------------------------------------#
 
     def on_parityYadif(self, event):
@@ -371,11 +425,14 @@ class Deinterlace(wx.Dialog):
         When `yadif` is enabled, even enables the `Parity`
         radiobox control for setting additional parameters.
         """
-        parity = self.rdbx_Yadif_parity.GetStringSelection().split(',')
+        parity = self.rdbx_Yadif_parity.GetStringSelection().split(",")
 
-        val = (f"yadif={self.rdbx_Yadif_mode.GetStringSelection()[0]}:"
-               f"{parity[0]}:{self.rdbx_Yadif_deint.GetStringSelection()[0]}")
+        val = (
+            f"yadif={self.rdbx_Yadif_mode.GetStringSelection()[0]}:"
+            f"{parity[0]}:{self.rdbx_Yadif_deint.GetStringSelection()[0]}"
+        )
         self.cmd_opt["deinterlace"] = val
+
     # ------------------------------------------------------------------#
 
     def on_deintYadif(self, event):
@@ -383,10 +440,13 @@ class Deinterlace(wx.Dialog):
         When `yadif` is enabled, even enables the `Deint`
         radiobox control for setting additional parameters.
         """
-        parity = self.rdbx_Yadif_parity.GetStringSelection().split(',')
-        val = (f"yadif={self.rdbx_Yadif_mode.GetStringSelection()[0]}:"
-               f"{parity[0]}:{self.rdbx_Yadif_deint.GetStringSelection()[0]}")
+        parity = self.rdbx_Yadif_parity.GetStringSelection().split(",")
+        val = (
+            f"yadif={self.rdbx_Yadif_mode.GetStringSelection()[0]}:"
+            f"{parity[0]}:{self.rdbx_Yadif_deint.GetStringSelection()[0]}"
+        )
         self.cmd_opt["deinterlace"] = val
+
     # ------------------------------------------------------------------#
 
     def on_Interlace(self, event):
@@ -406,6 +466,7 @@ class Deinterlace(wx.Dialog):
             self.rdbx_inter_scan.Disable()
             self.rdbx_inter_lowpass.Disable()
             self.cmd_opt.clear()
+
     # ------------------------------------------------------------------#
 
     def on_intScan(self, event):
@@ -413,9 +474,12 @@ class Deinterlace(wx.Dialog):
         When `interlace` is enabled, even enables the `Scanning mode`
         radiobox control for setting additional parameters.
         """
-        val = (f"interlace={self.rdbx_inter_scan.GetStringSelection()}:"
-               f"{self.rdbx_inter_lowpass.GetStringSelection()}")
+        val = (
+            f"interlace={self.rdbx_inter_scan.GetStringSelection()}:"
+            f"{self.rdbx_inter_lowpass.GetStringSelection()}"
+        )
         self.cmd_opt["interlace"] = val
+
     # ------------------------------------------------------------------#
 
     def on_intLowpass(self, event):
@@ -424,9 +488,12 @@ class Deinterlace(wx.Dialog):
         `Set vertical low-pass filter` radiobox control
         for setting additional parameters.
         """
-        val = (f"interlace={self.rdbx_inter_scan.GetStringSelection()}:"
-               f"{self.rdbx_inter_lowpass.GetStringSelection()}")
+        val = (
+            f"interlace={self.rdbx_inter_scan.GetStringSelection()}:"
+            f"{self.rdbx_inter_lowpass.GetStringSelection()}"
+        )
         self.cmd_opt["interlace"] = val
+
     # ------------------------------------------------------------------#
 
     def Advanced_Opt(self, event):
@@ -483,6 +550,7 @@ class Deinterlace(wx.Dialog):
         self.rdbx_Yadif_deint.Disable()
         self.rdbx_inter_scan.Disable()
         self.rdbx_inter_lowpass.Disable()
+
     # ------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -490,12 +558,15 @@ class Deinterlace(wx.Dialog):
         Open default web browser via Python Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        page = ('https://jeanslack.github.io/Videomass/User-guide/'
-                'Video_filters_en.pdf#%5B%7B%22num%22%3A19%2C%22gen'
-                '%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C468.'
-                '539%2C0%5D')
+        page = (
+            "https://jeanslack.github.io/Videomass/User-guide/"
+            "Video_filters_en.pdf#%5B%7B%22num%22%3A19%2C%22gen"
+            "%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C468."
+            "539%2C0%5D"
+        )
 
         webbrowser.open(page)
+
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
@@ -503,6 +574,7 @@ class Deinterlace(wx.Dialog):
         Close this dialog without saving anything
         """
         event.Skip()
+
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):
@@ -510,6 +582,7 @@ class Deinterlace(wx.Dialog):
         Don't use self.Destroy() in this dialog
         """
         event.Skip()
+
     # ------------------------------------------------------------------#
 
     def getvalue(self):

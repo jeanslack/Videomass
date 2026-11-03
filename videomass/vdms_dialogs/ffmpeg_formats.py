@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import wx
 from pubsub import pub
 
@@ -34,6 +35,7 @@ class FFmpegFormats(wx.Dialog):
     the formats available on FFmpeg
 
     """
+
     def __init__(self, dict_formats, OS):
         """
         with 'None' not depend from parent:
@@ -45,48 +47,52 @@ class FFmpegFormats(wx.Dialog):
 
         """
         get = wx.GetApp()  # get data from bootstrap
-        vidicon = get.iconset['videomass']
-        wx.Dialog.__init__(self, None,
-                           style=wx.DEFAULT_DIALOG_STYLE
-                           | wx.RESIZE_BORDER
-                           | wx.DIALOG_NO_PARENT
-                           )
+        vidicon = get.iconset["videomass"]
+        wx.Dialog.__init__(
+            self,
+            None,
+            style=wx.DEFAULT_DIALOG_STYLE
+            | wx.RESIZE_BORDER
+            | wx.DIALOG_NO_PARENT,
+        )
         # add panel
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL
-                              | wx.BORDER_THEME,
-                              )
+        self.panel = wx.Panel(
+            self,
+            wx.ID_ANY,
+            style=wx.TAB_TRAVERSAL | wx.BORDER_THEME,
+        )
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         notebook = wx.Notebook(self.panel, wx.ID_ANY)
         sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)
         # ----- nb1
         notebook_pane_1 = wx.Panel(notebook, wx.ID_ANY)
-        dmx = wx.ListCtrl(notebook_pane_1,
-                          wx.ID_ANY,
-                          style=wx.LC_REPORT
-                          | wx.SUNKEN_BORDER,
-                          )
+        dmx = wx.ListCtrl(
+            notebook_pane_1,
+            wx.ID_ANY,
+            style=wx.LC_REPORT | wx.SUNKEN_BORDER,
+        )
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab1.Add(dmx, 1, wx.ALL | wx.EXPAND, 5)
         notebook_pane_1.SetSizer(sizer_tab1)
         notebook.AddPage(notebook_pane_1, (_("Demuxing only")))
         # ----- nb2
         notebook_pane_2 = wx.Panel(notebook, wx.ID_ANY)
-        mx = wx.ListCtrl(notebook_pane_2,
-                         wx.ID_ANY,
-                         style=wx.LC_REPORT
-                         | wx.SUNKEN_BORDER,
-                         )
+        mx = wx.ListCtrl(
+            notebook_pane_2,
+            wx.ID_ANY,
+            style=wx.LC_REPORT | wx.SUNKEN_BORDER,
+        )
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2.Add(mx, 1, wx.ALL | wx.EXPAND, 5)
         notebook_pane_2.SetSizer(sizer_tab2)
         notebook.AddPage(notebook_pane_2, (_("Muxing only")))
         # ----- nb3
         notebook_pane_3 = wx.Panel(notebook, wx.ID_ANY)
-        dmx_mx = wx.ListCtrl(notebook_pane_3,
-                             wx.ID_ANY,
-                             style=wx.LC_REPORT
-                             | wx.SUNKEN_BORDER,
-                             )
+        dmx_mx = wx.ListCtrl(
+            notebook_pane_3,
+            wx.ID_ANY,
+            style=wx.LC_REPORT | wx.SUNKEN_BORDER,
+        )
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab3.Add(dmx_mx, 1, wx.ALL | wx.EXPAND, 5)
         notebook_pane_3.SetSizer(sizer_tab3)
@@ -108,16 +114,16 @@ class FFmpegFormats(wx.Dialog):
         sizer_base.Fit(self)
         self.Layout()
         # ----------------------Properties----------------------#
-        dmx.InsertColumn(0, _('supported formats'), width=180)
-        dmx.InsertColumn(1, _('description'), width=450)
+        dmx.InsertColumn(0, _("supported formats"), width=180)
+        dmx.InsertColumn(1, _("description"), width=450)
         # mx.SetMinSize((500, 400))
-        mx.InsertColumn(0, _('supported formats'), width=180)
-        mx.InsertColumn(1, _('description'), width=450)
+        mx.InsertColumn(0, _("supported formats"), width=180)
+        mx.InsertColumn(1, _("description"), width=450)
         # dmx_mx.SetMinSize((500, 400))
-        dmx_mx.InsertColumn(0, _('supported formats'), width=180)
-        dmx_mx.InsertColumn(1, _('description'), width=450)
+        dmx_mx.InsertColumn(0, _("supported formats"), width=180)
+        dmx_mx.InsertColumn(1, _("description"), width=450)
 
-        if OS == 'Darwin':
+        if OS == "Darwin":
             dmx.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
             mx.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
             dmx_mx.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
@@ -133,12 +139,12 @@ class FFmpegFormats(wx.Dialog):
 
         # populate dmx listctrl output:
         index = 0
-        ds = dict_formats['Demuxing Supported']
+        ds = dict_formats["Demuxing Supported"]
         if ds:
             for a in ds:
                 s = " ".join(a.split()).split(None, 1)
                 if len(s) == 1:
-                    key, value = s[0], ''
+                    key, value = s[0], ""
                 else:
                     key, value = s[0], s[1]
                 dmx.InsertItem(index, key)
@@ -147,12 +153,12 @@ class FFmpegFormats(wx.Dialog):
 
         # populate mx listctrl output:
         index = 0
-        ms = dict_formats['Muxing Supported']
+        ms = dict_formats["Muxing Supported"]
         if ms:
             for a in ms:
                 s = " ".join(a.split()).split(None, 1)
                 if len(s) == 1:
-                    key, value = s[0], ''
+                    key, value = s[0], ""
                 else:
                     key, value = s[0], s[1]
                 mx.InsertItem(index, key)
@@ -166,7 +172,7 @@ class FFmpegFormats(wx.Dialog):
             for a in mds:
                 s = " ".join(a.split()).split(None, 1)
                 if len(s) == 1:
-                    key, value = s[0], ''
+                    key, value = s[0], ""
                 else:
                     key, value = s[0], s[1]
                 dmx_mx.InsertItem(index, key)
@@ -183,4 +189,4 @@ class FFmpegFormats(wx.Dialog):
         """
         Destroy this window
         """
-        pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg='FFmpegFormats')
+        pub.sendMessage("DESTROY_ORPHANED_WINDOWS", msg="FFmpegFormats")

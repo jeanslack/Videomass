@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import webbrowser
 
 import wx
@@ -35,6 +36,7 @@ class Denoisers(wx.Dialog):
     based on FFmpeg syntax.
 
     """
+
     get = wx.GetApp()
     appdata = get.appset
 
@@ -50,53 +52,72 @@ class Denoisers(wx.Dialog):
         if denoiser:
             self.denoiser = denoiser
         else:
-            self.denoiser = ''
+            self.denoiser = ""
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sbox = wx.StaticBox(self, wx.ID_ANY, (_("Denoiser Filters")))
         zone = wx.StaticBoxSizer(sbox, wx.VERTICAL)
         sizer_base.Add(zone, 1, wx.ALL | wx.EXPAND, 5)
-        self.ckbx_nlmeans = wx.CheckBox(sbox, wx.ID_ANY,
-                                        (_("Enable nlmeans denoiser"))
-                                        )
+        self.ckbx_nlmeans = wx.CheckBox(
+            sbox, wx.ID_ANY, (_("Enable nlmeans denoiser"))
+        )
         grid_den = wx.FlexGridSizer(2, 2, 0, 0)
         zone.Add(grid_den)
-        grid_den.Add(self.ckbx_nlmeans, 0, wx.ALL
-                     | wx.ALIGN_CENTER_VERTICAL
-                     | wx.ALIGN_CENTER_HORIZONTAL,
-                     5)
-        nlmeans = [("Default"),
-                   ("Old VHS tapes - good starting point restoration"),
-                   ("Heavy - really noisy inputs"),
-                   ("Light - good quality inputs")
-                   ]
-        self.rdb_nlmeans = wx.RadioBox(sbox, wx.ID_ANY, (_("nlmeans options")),
-                                       choices=nlmeans, majorDimension=0,
-                                       style=wx.RA_SPECIFY_ROWS
-                                       )
-        grid_den.Add(self.rdb_nlmeans, 0, wx.ALL
-                     | wx.ALIGN_CENTER_VERTICAL
-                     | wx.ALIGN_CENTER_HORIZONTAL,
-                     5)
-        self.ckbx_hqdn3d = wx.CheckBox(sbox, wx.ID_ANY,
-                                       (_("Enable hqdn3d denoiser"))
-                                       )
-        grid_den.Add(self.ckbx_hqdn3d, 0, wx.ALL
-                     | wx.ALIGN_CENTER_VERTICAL
-                     | wx.ALIGN_CENTER_HORIZONTAL,
-                     5)
-        hqdn3d = [("Default"), ("Conservative [4.0:4.0:3.0:3.0]"),
-                  ("Old VHS tapes restoration [9.0:5.0:3.0:3.0]")
-                  ]
-        self.rdb_hqdn3d = wx.RadioBox(sbox, wx.ID_ANY, (_("hqdn3d options")),
-                                      choices=hqdn3d, majorDimension=0,
-                                      style=wx.RA_SPECIFY_ROWS
-                                      )
-        grid_den.Add(self.rdb_hqdn3d, 0, wx.ALL
-                     | wx.ALIGN_CENTER_VERTICAL
-                     | wx.ALIGN_CENTER_HORIZONTAL,
-                     5)
+        grid_den.Add(
+            self.ckbx_nlmeans,
+            0,
+            wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL,
+            5,
+        )
+        nlmeans = [
+            ("Default"),
+            ("Old VHS tapes - good starting point restoration"),
+            ("Heavy - really noisy inputs"),
+            ("Light - good quality inputs"),
+        ]
+        self.rdb_nlmeans = wx.RadioBox(
+            sbox,
+            wx.ID_ANY,
+            (_("nlmeans options")),
+            choices=nlmeans,
+            majorDimension=0,
+            style=wx.RA_SPECIFY_ROWS,
+        )
+        grid_den.Add(
+            self.rdb_nlmeans,
+            0,
+            wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL,
+            5,
+        )
+        self.ckbx_hqdn3d = wx.CheckBox(
+            sbox, wx.ID_ANY, (_("Enable hqdn3d denoiser"))
+        )
+        grid_den.Add(
+            self.ckbx_hqdn3d,
+            0,
+            wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL,
+            5,
+        )
+        hqdn3d = [
+            ("Default"),
+            ("Conservative [4.0:4.0:3.0:3.0]"),
+            ("Old VHS tapes restoration [9.0:5.0:3.0:3.0]"),
+        ]
+        self.rdb_hqdn3d = wx.RadioBox(
+            sbox,
+            wx.ID_ANY,
+            (_("hqdn3d options")),
+            choices=hqdn3d,
+            majorDimension=0,
+            style=wx.RA_SPECIFY_ROWS,
+        )
+        grid_den.Add(
+            self.rdb_hqdn3d,
+            0,
+            wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER_HORIZONTAL,
+            5,
+        )
         # ----- confirm buttons section
         gridbtns = wx.GridSizer(1, 2, 0, 0)
         gridhelp = wx.GridSizer(1, 1, 0, 0)
@@ -115,15 +136,19 @@ class Denoisers(wx.Dialog):
         sizer_base.Add(gridbtns, 0, wx.EXPAND)
         # ----- Set properties
         self.SetTitle(_("Denoiser Tool"))
-        tool = _('nlmeans:\nDenoise frames using Non-Local Means algorithm '
-                 'is capable of restoring video sequences, even with strong '
-                 'noise. It is ideal for enhancing the quality of old VHS '
-                 'tapes.')
+        tool = _(
+            "nlmeans:\nDenoise frames using Non-Local Means algorithm "
+            "is capable of restoring video sequences, even with strong "
+            "noise. It is ideal for enhancing the quality of old VHS "
+            "tapes."
+        )
         self.ckbx_nlmeans.SetToolTip(tool)
-        tool = _('hqdn3d:\nThis is a high precision/quality 3d denoise '
-                 'filter. It aims to reduce image noise, producing smooth '
-                 'images and making still images really still. It should '
-                 'enhance compressibility.')
+        tool = _(
+            "hqdn3d:\nThis is a high precision/quality 3d denoise "
+            "filter. It aims to reduce image noise, producing smooth "
+            "images and making still images really still. It should "
+            "enhance compressibility."
+        )
         self.ckbx_hqdn3d.SetToolTip(tool)
         # ----- Set layout
         self.SetSizer(sizer_base)
@@ -147,16 +172,16 @@ class Denoisers(wx.Dialog):
         Set default or set in according with previusly activated option
         """
         if self.denoiser:
-            if self.denoiser.startswith('nlmeans'):
-                spl = self.denoiser.split('=')
+            if self.denoiser.startswith("nlmeans"):
+                spl = self.denoiser.split("=")
                 if len(spl) == 1:
                     self.rdb_nlmeans.SetSelection(0)
                 else:
-                    if spl[1] == '8:3:2':
+                    if spl[1] == "8:3:2":
                         self.rdb_nlmeans.SetSelection(1)
-                    if spl[1] == '10:5:3':
+                    if spl[1] == "10:5:3":
                         self.rdb_nlmeans.SetSelection(2)
-                    if spl[1] == '6:3:1':
+                    if spl[1] == "6:3:1":
                         self.rdb_nlmeans.SetSelection(3)
                 self.ckbx_nlmeans.SetValue(True)
                 self.ckbx_hqdn3d.SetValue(False)
@@ -165,14 +190,14 @@ class Denoisers(wx.Dialog):
                 self.rdb_nlmeans.Enable()
                 self.rdb_hqdn3d.Disable()
 
-            elif self.denoiser.startswith('hqdn3d'):
-                spl = self.denoiser.split('=')
+            elif self.denoiser.startswith("hqdn3d"):
+                spl = self.denoiser.split("=")
                 if len(spl) == 1:
                     self.rdb_hqdn3d.SetSelection(0)
                 else:
-                    if spl[1] == '4.0:4.0:3.0:3.0':
+                    if spl[1] == "4.0:4.0:3.0:3.0":
                         self.rdb_hqdn3d.SetSelection(1)
-                    if spl[1] == '9.0:5.0:3.0:3.0':
+                    if spl[1] == "9.0:5.0:3.0:3.0":
                         self.rdb_hqdn3d.SetSelection(2)
 
                 self.ckbx_nlmeans.SetValue(False)
@@ -206,6 +231,7 @@ class Denoisers(wx.Dialog):
             self.rdb_nlmeans.Disable()
             self.ckbx_hqdn3d.Enable()
             self.denoiser = ""
+
     # ------------------------------------------------------------------#
 
     def on_nlmeans_opt(self, event):
@@ -222,6 +248,7 @@ class Denoisers(wx.Dialog):
             self.denoiser = "nlmeans=10:5:3"
         elif opt == "Light - good quality inputs":
             self.denoiser = "nlmeans=6:3:1"
+
     # ------------------------------------------------------------------#
 
     def on_hqdn3d(self, event):
@@ -237,6 +264,7 @@ class Denoisers(wx.Dialog):
             self.ckbx_nlmeans.Enable()
             self.rdb_hqdn3d.Disable()
             self.denoiser = ""
+
     # ------------------------------------------------------------------#
 
     def on_hqdn3d_opt(self, event):
@@ -253,6 +281,7 @@ class Denoisers(wx.Dialog):
 
         elif opt == "Old VHS tapes restoration [9.0:5.0:3.0:3.0]":
             self.denoiser = "hqdn3d=9.0:5.0:3.0:3.0"
+
     # ------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -260,12 +289,15 @@ class Denoisers(wx.Dialog):
         Open default web browser via Python Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        page = ('https://jeanslack.github.io/Videomass/User-guide/'
-                'Video_filters_en.pdf#%5B%7B%22num%22%3A25%2C%22gen'
-                '%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C573.'
-                '439%2C0%5D')
+        page = (
+            "https://jeanslack.github.io/Videomass/User-guide/"
+            "Video_filters_en.pdf#%5B%7B%22num%22%3A25%2C%22gen"
+            "%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C573."
+            "439%2C0%5D"
+        )
 
         webbrowser.open(page)
+
     # ------------------------------------------------------------------#
 
     def on_reset(self, event):
@@ -281,6 +313,7 @@ class Denoisers(wx.Dialog):
         self.rdb_nlmeans.Disable()
         self.rdb_hqdn3d.SetSelection(0)
         self.rdb_hqdn3d.Disable()
+
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
@@ -288,6 +321,7 @@ class Denoisers(wx.Dialog):
         Close this dialog without saving anything
         """
         event.Skip()
+
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):
@@ -295,6 +329,7 @@ class Denoisers(wx.Dialog):
         Don't use self.Destroy() in this dialog
         """
         event.Skip()
+
     # ------------------------------------------------------------------#
 
     def getvalue(self):

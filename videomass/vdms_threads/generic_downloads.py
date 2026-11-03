@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import shutil
 import urllib.error
 import urllib.request
@@ -58,19 +59,22 @@ class FileDownloading(Thread):
 
         Thread.__init__(self)
         self.start()  # start the thread (va in self.run())
+
     # ----------------------------------------------------------------#
 
     def run(self):
         """
         Check for new version release
         """
-        headers = {'User-Agent': 'Mozilla/5.0'}
+        headers = {"User-Agent": "Mozilla/5.0"}
         page = urllib.request.Request(self.url, headers=headers)
         try:
             # Removed the disabling of SSL certificate validation
             # for security reasons (SAST compliance)
-            with urllib.request.urlopen(page) as \
-                    response, open(self.filename, 'wb') as out_file:
+            with (
+                urllib.request.urlopen(page) as response,
+                open(self.filename, "wb") as out_file,
+            ):
                 shutil.copyfileobj(response, out_file)
 
             self.status = self.url, None
@@ -83,10 +87,9 @@ class FileDownloading(Thread):
 
         self.data = self.status
 
-        wx.CallAfter(pub.sendMessage,
-                     "RESULT_EVT",
-                     status=''
-                     )
+        wx.CallAfter(pub.sendMessage, "RESULT_EVT", status="")
+
+
 # ---------------------------------------------------------------------#
 
 
@@ -112,7 +115,7 @@ def download_bigfile(url, filename):
     # Removed encoding='utf-8' not compatible with binary mode 'wb'
     with requests.get(url, stream=True, timeout=10) as dwnl:
         dwnl.raise_for_status()
-        with open(filename, 'wb') as fname:
+        with open(filename, "wb") as fname:
             for chunk in dwnl.iter_content(chunk_size=8192):
                 fname.writelines(chunk)
 

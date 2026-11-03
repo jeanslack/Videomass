@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import platform
 import subprocess
 import time
@@ -35,7 +36,8 @@ from pubsub import pub
 from videomass.vdms_io.make_filelog import tolog
 from videomass.vdms_utils.utils import Popen
 
-if platform.system() != 'Windows':
+
+if platform.system() != "Windows":
     import shlex
 
 
@@ -43,49 +45,52 @@ def get_raw_cmdline_args(**kwa):
     """
     Return a list of raw command lines.
     """
-    if kwa['type'] == 'One pass':
+    if kwa["type"] == "One pass":
         model = simple_one_pass(1, 1, **kwa)
 
-    elif kwa['type'] == 'Two pass EBU':
+    elif kwa["type"] == "Two pass EBU":
         model = one_pass_ebu(1, 1, **kwa)
 
-    elif kwa['type'] == 'Two pass VIDSTAB':
+    elif kwa["type"] == "Two pass VIDSTAB":
         model = one_pass_stab(1, 1, **kwa)
 
-    elif kwa['type'] == 'Two pass':
+    elif kwa["type"] == "Two pass":
         model = one_pass(1, 1, **kwa)
     else:
         return None
 
-    spl1 = model['stamp1'].split('\n')
-    idx1 = spl1.index('[COMMAND]:') + 1
+    spl1 = model["stamp1"].split("\n")
+    idx1 = spl1.index("[COMMAND]:") + 1
     cmd1 = spl1[idx1]
 
     if not kwa["args"][1]:
         return (cmd1,)
 
-    if kwa["type"] == 'Two pass EBU':
-        filters = (f'{kwa["EBU"]}'
-                   f':measured_I=<?>'
-                   f':measured_LRA=<?>'
-                   f':measured_TP=<?>'
-                   f':measured_thresh=<?>'
-                   f':offset=<?>'
-                   f':linear=true:dual_mono=true'
-                   )
+    if kwa["type"] == "Two pass EBU":
+        filters = (
+            f"{kwa['EBU']}"
+            f":measured_I=<?>"
+            f":measured_LRA=<?>"
+            f":measured_TP=<?>"
+            f":measured_thresh=<?>"
+            f":offset=<?>"
+            f":linear=true:dual_mono=true"
+        )
         model = two_pass_ebu(1, 1, filters, **kwa)
 
-    elif kwa['type'] == 'Two pass VIDSTAB':
+    elif kwa["type"] == "Two pass VIDSTAB":
         model = two_pass_stab(1, 1, **kwa)
 
-    elif kwa['type'] == 'Two pass':
+    elif kwa["type"] == "Two pass":
         model = two_pass(1, 1, **kwa)
 
-    spl2 = model['stamp2'].split('\n')
-    idx2 = spl2.index('[COMMAND]:') + 1
+    spl2 = model["stamp2"].split("\n")
+    idx2 = spl2.index("[COMMAND]:") + 1
     cmd2 = spl2[idx2]
 
     return cmd1, cmd2
+
+
 # ----------------------------------------------------------------------
 
 
@@ -95,9 +100,13 @@ def ffmpeg_cmd_args():
     """
     get = wx.GetApp()
     appdata = get.appset
-    defargs = f'-y -stats -hide_banner {appdata["ffmpeg_loglev"]}'
-    return {"ffmpeg_cmd": appdata["ffmpeg_cmd"],
-            "ffmpeg-default-args": defargs}
+    defargs = f"-y -stats -hide_banner {appdata['ffmpeg_loglev']}"
+    return {
+        "ffmpeg_cmd": appdata["ffmpeg_cmd"],
+        "ffmpeg-default-args": defargs,
+    }
+
+
 # ----------------------------------------------------------------------
 
 
@@ -106,24 +115,29 @@ def one_pass(*args, **kwa):
     Command builder for first pass of two
     """
     cmd = ffmpeg_cmd_args()
-    nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
-    pass1 = (f'"{cmd["ffmpeg_cmd"]}" '
-             f'{cmd["ffmpeg-default-args"]} '
-             f'{kwa.get("pre-input-1", "")} '
-             f'{kwa["start-time"]} '
-             f'-i "{kwa["source"]}" '
-             f'{kwa["end-time"]} '
-             f'{kwa["args"][0]} '
-             f'{nul}'
-             )
-    count1 = (f'File {args[0]}/{args[1]} - Pass One\n'
-              f'Source: "{kwa["source"]}"\nDestination: "{nul}"')
-    stamp1 = f'{count1}\n\n[COMMAND]:\n{pass1}'
+    nul = "NUL" if platform.system() == "Windows" else "/dev/null"
+    pass1 = (
+        f'"{cmd["ffmpeg_cmd"]}" '
+        f"{cmd['ffmpeg-default-args']} "
+        f"{kwa.get('pre-input-1', '')} "
+        f"{kwa['start-time']} "
+        f'-i "{kwa["source"]}" '
+        f"{kwa['end-time']} "
+        f"{kwa['args'][0]} "
+        f"{nul}"
+    )
+    count1 = (
+        f"File {args[0]}/{args[1]} - Pass One\n"
+        f'Source: "{kwa["source"]}"\nDestination: "{nul}"'
+    )
+    stamp1 = f"{count1}\n\n[COMMAND]:\n{pass1}"
 
-    if platform.system() != 'Windows':
+    if platform.system() != "Windows":
         pass1 = shlex.split(pass1)
 
-    return {'pass1': pass1, 'count1': count1, 'stamp1': stamp1}
+    return {"pass1": pass1, "count1": count1, "stamp1": stamp1}
+
+
 # ----------------------------------------------------------------------
 
 
@@ -132,26 +146,30 @@ def two_pass(*args, **kwa):
     Command builder for second pass of two
     """
     cmd = ffmpeg_cmd_args()
-    pass2 = (f'"{cmd["ffmpeg_cmd"]}" '
-             f'{cmd["ffmpeg-default-args"]} '
-             f'{kwa.get("pre-input-2", "")} '
-             f'{kwa["start-time"]} '
-             f'-i "{kwa["source"]}" '
-             f'{kwa["end-time"]} '
-             f'{kwa["args"][1]} '
-             f'{kwa.get("volume", "")} '
-             f'"{kwa["destination"]}"'
-             )
-    count2 = (f'File {args[0]}/{args[1]} - Pass Two\n'
-              f'Source: "{kwa["source"]}"\nDestination: '
-              f'"{kwa["destination"]}"'
-              )
-    stamp2 = f'\n{count2}\n\n[COMMAND]:\n{pass2}'
+    pass2 = (
+        f'"{cmd["ffmpeg_cmd"]}" '
+        f"{cmd['ffmpeg-default-args']} "
+        f"{kwa.get('pre-input-2', '')} "
+        f"{kwa['start-time']} "
+        f'-i "{kwa["source"]}" '
+        f"{kwa['end-time']} "
+        f"{kwa['args'][1]} "
+        f"{kwa.get('volume', '')} "
+        f'"{kwa["destination"]}"'
+    )
+    count2 = (
+        f"File {args[0]}/{args[1]} - Pass Two\n"
+        f'Source: "{kwa["source"]}"\nDestination: '
+        f'"{kwa["destination"]}"'
+    )
+    stamp2 = f"\n{count2}\n\n[COMMAND]:\n{pass2}"
 
-    if platform.system() != 'Windows':
+    if platform.system() != "Windows":
         pass2 = shlex.split(pass2)
 
-    return {'pass2': pass2, 'count2': count2, 'stamp2': stamp2}
+    return {"pass2": pass2, "count2": count2, "stamp2": stamp2}
+
+
 # ----------------------------------------------------------------------
 
 
@@ -160,25 +178,30 @@ def one_pass_stab(*args, **kwa):
     Command builder for one pass video stabilizer
     """
     cmd = ffmpeg_cmd_args()
-    nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
-    pass1 = (f'"{cmd["ffmpeg_cmd"]}" '
-             f'{cmd["ffmpeg-default-args"]} '
-             f'{kwa.get("pre-input-1", "")} '
-             f'{kwa["start-time"]} '
-             f'-i "{kwa["source"]}" '
-             f'{kwa["end-time"]} '
-             f'{kwa["args"][0]} '
-             f'{nul}'
-             )
-    count1 = (f'File {args[0]}/{args[1]} - Pass One\n'
-              f'Detecting statistics for measurements...\n\nSource: '
-              f'"{kwa["source"]}"\nDestination: "{nul}"')
-    stamp1 = f'{count1}\n\n[COMMAND]:\n{pass1}'
+    nul = "NUL" if platform.system() == "Windows" else "/dev/null"
+    pass1 = (
+        f'"{cmd["ffmpeg_cmd"]}" '
+        f"{cmd['ffmpeg-default-args']} "
+        f"{kwa.get('pre-input-1', '')} "
+        f"{kwa['start-time']} "
+        f'-i "{kwa["source"]}" '
+        f"{kwa['end-time']} "
+        f"{kwa['args'][0]} "
+        f"{nul}"
+    )
+    count1 = (
+        f"File {args[0]}/{args[1]} - Pass One\n"
+        f"Detecting statistics for measurements...\n\nSource: "
+        f'"{kwa["source"]}"\nDestination: "{nul}"'
+    )
+    stamp1 = f"{count1}\n\n[COMMAND]:\n{pass1}"
 
-    if platform.system() != 'Windows':
+    if platform.system() != "Windows":
         pass1 = shlex.split(pass1)
 
-    return {'pass1': pass1, 'count1': count1, 'stamp1': stamp1}
+    return {"pass1": pass1, "count1": count1, "stamp1": stamp1}
+
+
 # ----------------------------------------------------------------------
 
 
@@ -187,25 +210,30 @@ def two_pass_stab(*args, **kwa):
     Command builder for two pass video stabilizer
     """
     cmd = ffmpeg_cmd_args()
-    pass2 = (f'"{cmd["ffmpeg_cmd"]}" '
-             f'{cmd["ffmpeg-default-args"]} '
-             f'{kwa.get("pre-input-2", "")} '
-             f'{kwa["start-time"]} '
-             f'-i "{kwa["source"]}" '
-             f'{kwa["end-time"]} '
-             f'{kwa["args"][1]} '
-             f'{kwa.get("volume", "")} '
-             f'"{kwa["destination"]}"'
-             )
-    count2 = (f'File {args[0]}/{args[1]} - Pass Two\n'
-              f'Application of Audio/Video filters...\n\nSource: '
-              f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"')
-    stamp2 = f'\n{count2}\n\n[COMMAND]:\n{pass2}'
+    pass2 = (
+        f'"{cmd["ffmpeg_cmd"]}" '
+        f"{cmd['ffmpeg-default-args']} "
+        f"{kwa.get('pre-input-2', '')} "
+        f"{kwa['start-time']} "
+        f'-i "{kwa["source"]}" '
+        f"{kwa['end-time']} "
+        f"{kwa['args'][1]} "
+        f"{kwa.get('volume', '')} "
+        f'"{kwa["destination"]}"'
+    )
+    count2 = (
+        f"File {args[0]}/{args[1]} - Pass Two\n"
+        f"Application of Audio/Video filters...\n\nSource: "
+        f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"'
+    )
+    stamp2 = f"\n{count2}\n\n[COMMAND]:\n{pass2}"
 
-    if platform.system() != 'Windows':
+    if platform.system() != "Windows":
         pass2 = shlex.split(pass2)
 
-    return {'pass2': pass2, 'count2': count2, 'stamp2': stamp2}
+    return {"pass2": pass2, "count2": count2, "stamp2": stamp2}
+
+
 # ----------------------------------------------------------------------
 
 
@@ -214,24 +242,29 @@ def simple_one_pass(*args, **kwa):
     Command builder for one pass ebu
     """
     cmd = ffmpeg_cmd_args()
-    pass1 = (f'"{cmd["ffmpeg_cmd"]}" '
-             f'{cmd["ffmpeg-default-args"]} '
-             f'{kwa.get("pre-input-1", "")} '
-             f'{kwa["start-time"]} '
-             f'-i "{kwa["source"]}" '
-             f'{kwa["end-time"]} '
-             f'{kwa["args"][0]} '
-             f'{kwa.get("volume", "")} '
-             f'"{kwa["destination"]}"'
-             )
-    count1 = (f'File {args[0]}/{args[1]}\nSource: '
-              f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"')
-    stamp1 = f'{count1}\n\n[COMMAND]:\n{pass1}'
+    pass1 = (
+        f'"{cmd["ffmpeg_cmd"]}" '
+        f"{cmd['ffmpeg-default-args']} "
+        f"{kwa.get('pre-input-1', '')} "
+        f"{kwa['start-time']} "
+        f'-i "{kwa["source"]}" '
+        f"{kwa['end-time']} "
+        f"{kwa['args'][0]} "
+        f"{kwa.get('volume', '')} "
+        f'"{kwa["destination"]}"'
+    )
+    count1 = (
+        f"File {args[0]}/{args[1]}\nSource: "
+        f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"'
+    )
+    stamp1 = f"{count1}\n\n[COMMAND]:\n{pass1}"
 
-    if platform.system() != 'Windows':
+    if platform.system() != "Windows":
         pass1 = shlex.split(pass1)
 
-    return {'pass1': pass1, 'count1': count1, 'stamp1': stamp1}
+    return {"pass1": pass1, "count1": count1, "stamp1": stamp1}
+
+
 # ----------------------------------------------------------------------
 
 
@@ -240,32 +273,47 @@ def one_pass_ebu(*args, **kwa):
     Command builder for one pass ebu
     """
     cmd = ffmpeg_cmd_args()
-    nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
-    pass1 = (f'"{cmd["ffmpeg_cmd"]}" '
-             f'{cmd["ffmpeg-default-args"]} '
-             f'{kwa.get("pre-input-1", "")} '
-             f'{kwa["start-time"]} '
-             f'-i "{kwa["source"]}" '
-             f'{kwa["end-time"]} '
-             f'{kwa["args"][0]} '
-             f'{nul}'
-             )
-    count1 = (f'File {args[0]}/{args[1]} - Pass One\n'
-              f'Detecting statistics for measurements...\n\nSource: '
-              f'"{kwa["source"]}"\nDestination: "{nul}"')
-    stamp1 = f'{count1}\n\n[COMMAND]:\n{pass1}'
+    nul = "NUL" if platform.system() == "Windows" else "/dev/null"
+    pass1 = (
+        f'"{cmd["ffmpeg_cmd"]}" '
+        f"{cmd['ffmpeg-default-args']} "
+        f"{kwa.get('pre-input-1', '')} "
+        f"{kwa['start-time']} "
+        f'-i "{kwa["source"]}" '
+        f"{kwa['end-time']} "
+        f"{kwa['args'][0]} "
+        f"{nul}"
+    )
+    count1 = (
+        f"File {args[0]}/{args[1]} - Pass One\n"
+        f"Detecting statistics for measurements...\n\nSource: "
+        f'"{kwa["source"]}"\nDestination: "{nul}"'
+    )
+    stamp1 = f"{count1}\n\n[COMMAND]:\n{pass1}"
 
-    if platform.system() != 'Windows':
+    if platform.system() != "Windows":
         pass1 = shlex.split(pass1)
 
-    summary = {'Input Integrated:': None, 'Input True Peak:': None,
-               'Input LRA:': None, 'Input Threshold:': None,
-               'Output Integrated:': None, 'Output True Peak:': None,
-               'Output LRA:': None, 'Output Threshold:': None,
-               'Normalization Type:': None, 'Target Offset:': None
-               }
-    return {'pass1': pass1, 'count1': count1,
-            'stamp1': stamp1, 'summary': summary}
+    summary = {
+        "Input Integrated:": None,
+        "Input True Peak:": None,
+        "Input LRA:": None,
+        "Input Threshold:": None,
+        "Output Integrated:": None,
+        "Output True Peak:": None,
+        "Output LRA:": None,
+        "Output Threshold:": None,
+        "Normalization Type:": None,
+        "Target Offset:": None,
+    }
+    return {
+        "pass1": pass1,
+        "count1": count1,
+        "stamp1": stamp1,
+        "summary": summary,
+    }
+
+
 # ----------------------------------------------------------------------
 
 
@@ -274,26 +322,31 @@ def two_pass_ebu(*args, **kwa):
     Command builder for two pass ebu
     """
     cmd = ffmpeg_cmd_args()
-    pass2 = (f'"{cmd["ffmpeg_cmd"]}" '
-             f'{cmd["ffmpeg-default-args"]} '
-             f'{kwa.get("pre-input-2", "")} '
-             f'{kwa["start-time"]} '
-             f'-i "{kwa["source"]}" '
-             f'{kwa["end-time"]} '
-             f'{kwa["args"][1]} '
-             f'-filter:a:{kwa["audiomap"][1]} '
-             f'{args[2]} '
-             f'"{kwa["destination"]}"'
-             )
-    count2 = (f'File {args[0]}/{args[1]} - Pass Two\n'
-              f'Application of Audio/Video filters...\n\nSource: '
-              f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"')
-    stamp2 = f'\n{count2}\n\n[COMMAND]:\n{pass2}'
+    pass2 = (
+        f'"{cmd["ffmpeg_cmd"]}" '
+        f"{cmd['ffmpeg-default-args']} "
+        f"{kwa.get('pre-input-2', '')} "
+        f"{kwa['start-time']} "
+        f'-i "{kwa["source"]}" '
+        f"{kwa['end-time']} "
+        f"{kwa['args'][1]} "
+        f"-filter:a:{kwa['audiomap'][1]} "
+        f"{args[2]} "
+        f'"{kwa["destination"]}"'
+    )
+    count2 = (
+        f"File {args[0]}/{args[1]} - Pass Two\n"
+        f"Application of Audio/Video filters...\n\nSource: "
+        f'"{kwa["source"]}"\nDestination: "{kwa["destination"]}"'
+    )
+    stamp2 = f"\n{count2}\n\n[COMMAND]:\n{pass2}"
 
-    if platform.system() != 'Windows':
+    if platform.system() != "Windows":
         pass2 = shlex.split(pass2)
 
-    return {'pass2': pass2, 'count2': count2, 'stamp2': stamp2}
+    return {"pass2": pass2, "count2": count2, "stamp2": stamp2}
+
+
 # ----------------------------------------------------------------------
 
 
@@ -308,6 +361,7 @@ class FFmpeg(Thread):
     from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 
     """
+
     def __init__(self, *args):
         """
         Called from `long_processing_task.topic_thread`.
@@ -334,189 +388,208 @@ class FFmpeg(Thread):
         filedone = []
         for kwa in self.kwargs:
             self.count += 1
-            if kwa['type'] == 'One pass':
+            if kwa["type"] == "One pass":
                 model = simple_one_pass(self.count, self.nargs, **kwa)
 
-            elif kwa['type'] == 'Two pass EBU':
+            elif kwa["type"] == "Two pass EBU":
                 model = one_pass_ebu(self.count, self.nargs, **kwa)
 
-            elif kwa['type'] == 'Two pass VIDSTAB':
+            elif kwa["type"] == "Two pass VIDSTAB":
                 model = one_pass_stab(self.count, self.nargs, **kwa)
 
-            elif kwa['type'] == 'Two pass':
+            elif kwa["type"] == "Two pass":
                 model = one_pass(self.count, self.nargs, **kwa)
             else:
                 return
 
-            wx.CallAfter(pub.sendMessage,
-                         "COUNT_EVT",
-                         count=model['count1'],
-                         duration=kwa['duration'],
-                         end='CONTINUE',
-                         )
-            tolog(model['stamp1'], self.logfile, sep=True, wdate=True)
+            wx.CallAfter(
+                pub.sendMessage,
+                "COUNT_EVT",
+                count=model["count1"],
+                duration=kwa["duration"],
+                end="CONTINUE",
+            )
+            tolog(model["stamp1"], self.logfile, sep=True, wdate=True)
             try:
-                with Popen(model['pass1'],
-                           stderr=subprocess.PIPE,
-                           stdin=subprocess.PIPE,
-                           bufsize=1,
-                           text=True,
-                           encoding=self.appdata['encoding'],
-                           ) as self.process:
-
+                with Popen(
+                    model["pass1"],
+                    stderr=subprocess.PIPE,
+                    stdin=subprocess.PIPE,
+                    bufsize=1,
+                    text=True,
+                    encoding=self.appdata["encoding"],
+                ) as self.process:
                     for line in self.process.stderr:
-                        wx.CallAfter(pub.sendMessage,
-                                     "UPDATE_EVT",
-                                     output=line,
-                                     duration=kwa['duration'],
-                                     status=0
-                                     )
+                        wx.CallAfter(
+                            pub.sendMessage,
+                            "UPDATE_EVT",
+                            output=line,
+                            duration=kwa["duration"],
+                            status=0,
+                        )
                         if self.stop_work_thread:
                             if self.fatal:
                                 return
                             out = self.process.communicate()[1]
                             self.process.wait()
 
-                            wx.CallAfter(pub.sendMessage,
-                                         "UPDATE_EVT",
-                                         output='STOP',
-                                         duration=kwa['duration'],
-                                         status=1,
-                                         )
+                            wx.CallAfter(
+                                pub.sendMessage,
+                                "UPDATE_EVT",
+                                output="STOP",
+                                duration=kwa["duration"],
+                                status=1,
+                            )
                             tolog(out, self.logfile)
 
-                            time.sleep(.5)
-                            wx.CallAfter(pub.sendMessage, "END_EVT",
-                                         filetotrash=None)
+                            time.sleep(0.5)
+                            wx.CallAfter(
+                                pub.sendMessage, "END_EVT", filetotrash=None
+                            )
                             return
 
-                        if kwa["type"] == 'Two pass EBU':
-                            summary = model['summary']
+                        if kwa["type"] == "Two pass EBU":
+                            summary = model["summary"]
                             for k in summary:
                                 if line.startswith(k):
-                                    summary[k] = line.split(':')[1].split()[0]
+                                    summary[k] = line.split(":")[1].split()[0]
 
                     if self.process.wait():  # ..Failed
                         out = self.process.communicate()[1]
-                        wx.CallAfter(pub.sendMessage,
-                                     "UPDATE_EVT",
-                                     output='FAILED',
-                                     duration=kwa['duration'],
-                                     status=self.process.wait(),
-                                     )
-                        tolog(f"[VIDEOMASS]: Error Exit Status: "
-                              f"{self.process.wait()} {out}", self.logfile
-                              )
+                        wx.CallAfter(
+                            pub.sendMessage,
+                            "UPDATE_EVT",
+                            output="FAILED",
+                            duration=kwa["duration"],
+                            status=self.process.wait(),
+                        )
+                        tolog(
+                            f"[VIDEOMASS]: Error Exit Status: "
+                            f"{self.process.wait()} {out}",
+                            self.logfile,
+                        )
                         time.sleep(1)
                         continue
 
             except (OSError, FileNotFoundError) as err:
-                wx.CallAfter(pub.sendMessage,
-                             "COUNT_EVT",
-                             count=err,
-                             duration=0,
-                             end='ERROR'
-                             )
+                wx.CallAfter(
+                    pub.sendMessage,
+                    "COUNT_EVT",
+                    count=err,
+                    duration=0,
+                    end="ERROR",
+                )
                 tolog(err, self.logfile)
                 break
 
             if self.process.wait() == 0:  # ..Finished
                 if not kwa["args"][1]:
                     filedone.append(kwa["source"])
-                wx.CallAfter(pub.sendMessage,
-                             "COUNT_EVT",
-                             count='',
-                             duration=kwa['duration'],
-                             end='DONE'
-                             )
+                wx.CallAfter(
+                    pub.sendMessage,
+                    "COUNT_EVT",
+                    count="",
+                    duration=kwa["duration"],
+                    end="DONE",
+                )
 
             if not kwa["args"][1]:
                 continue
 
             # --------------- second pass ----------------#
-            if kwa["type"] == 'Two pass EBU':
-                filters = (f'{kwa["EBU"]}'
-                           f':measured_I={summary["Input Integrated:"]}'
-                           f':measured_LRA={summary["Input LRA:"]}'
-                           f':measured_TP={summary["Input True Peak:"]}'
-                           f':measured_thresh={summary["Input Threshold:"]}'
-                           f':offset={summary["Target Offset:"]}'
-                           f':linear=true:dual_mono=true'
-                           )
+            if kwa["type"] == "Two pass EBU":
+                filters = (
+                    f"{kwa['EBU']}"
+                    f":measured_I={summary['Input Integrated:']}"
+                    f":measured_LRA={summary['Input LRA:']}"
+                    f":measured_TP={summary['Input True Peak:']}"
+                    f":measured_thresh={summary['Input Threshold:']}"
+                    f":offset={summary['Target Offset:']}"
+                    f":linear=true:dual_mono=true"
+                )
                 model = two_pass_ebu(self.count, self.nargs, filters, **kwa)
-                time.sleep(.5)
+                time.sleep(0.5)
 
-            elif kwa['type'] == 'Two pass VIDSTAB':
+            elif kwa["type"] == "Two pass VIDSTAB":
                 model = two_pass_stab(self.count, self.nargs, **kwa)
 
-            elif kwa['type'] == 'Two pass':
+            elif kwa["type"] == "Two pass":
                 model = two_pass(self.count, self.nargs, **kwa)
 
-            wx.CallAfter(pub.sendMessage,
-                         "COUNT_EVT",
-                         count=model['count2'],
-                         duration=kwa['duration'],
-                         end='CONTINUE',
-                         )
-            tolog(model['stamp2'], self.logfile)
+            wx.CallAfter(
+                pub.sendMessage,
+                "COUNT_EVT",
+                count=model["count2"],
+                duration=kwa["duration"],
+                end="CONTINUE",
+            )
+            tolog(model["stamp2"], self.logfile)
 
-            with Popen(model['pass2'],
-                       stderr=subprocess.PIPE,
-                       stdin=subprocess.PIPE,
-                       bufsize=1,
-                       text=True,
-                       encoding=self.appdata['encoding'],
-                       ) as self.process:
-
+            with Popen(
+                model["pass2"],
+                stderr=subprocess.PIPE,
+                stdin=subprocess.PIPE,
+                bufsize=1,
+                text=True,
+                encoding=self.appdata["encoding"],
+            ) as self.process:
                 for line2 in self.process.stderr:
-                    wx.CallAfter(pub.sendMessage,
-                                 "UPDATE_EVT",
-                                 output=line2,
-                                 duration=kwa['duration'],
-                                 status=0,
-                                 )
+                    wx.CallAfter(
+                        pub.sendMessage,
+                        "UPDATE_EVT",
+                        output=line2,
+                        duration=kwa["duration"],
+                        status=0,
+                    )
                     if self.stop_work_thread:
                         if self.fatal:
                             return
                         out = self.process.communicate()[1]
                         self.process.wait()
 
-                        wx.CallAfter(pub.sendMessage,
-                                     "UPDATE_EVT",
-                                     output='STOP',
-                                     duration=kwa['duration'],
-                                     status=1,
-                                     )
+                        wx.CallAfter(
+                            pub.sendMessage,
+                            "UPDATE_EVT",
+                            output="STOP",
+                            duration=kwa["duration"],
+                            status=1,
+                        )
                         tolog(out, self.logfile)
-                        time.sleep(.5)
-                        wx.CallAfter(pub.sendMessage, "END_EVT",
-                                     filetotrash=None)
+                        time.sleep(0.5)
+                        wx.CallAfter(
+                            pub.sendMessage, "END_EVT", filetotrash=None
+                        )
                         return
 
                 if self.process.wait():  # ..Failed
                     out = self.process.communicate()[1]
-                    wx.CallAfter(pub.sendMessage,
-                                 "UPDATE_EVT",
-                                 output='FAILED',
-                                 duration=kwa['duration'],
-                                 status=self.process.wait(),
-                                 )
-                    tolog(f"[VIDEOMASS]: Error Exit Status: "
-                          f"{self.process.wait()} {out}", self.logfile
-                          )
+                    wx.CallAfter(
+                        pub.sendMessage,
+                        "UPDATE_EVT",
+                        output="FAILED",
+                        duration=kwa["duration"],
+                        status=self.process.wait(),
+                    )
+                    tolog(
+                        f"[VIDEOMASS]: Error Exit Status: "
+                        f"{self.process.wait()} {out}",
+                        self.logfile,
+                    )
                     time.sleep(1)
                     continue
 
             if self.process.wait() == 0:  # ..Finished
                 filedone.append(kwa["source"])
-                wx.CallAfter(pub.sendMessage,
-                             "COUNT_EVT",
-                             count='',
-                             duration=kwa['duration'],
-                             end='DONE'
-                             )
-        time.sleep(.5)
+                wx.CallAfter(
+                    pub.sendMessage,
+                    "COUNT_EVT",
+                    count="",
+                    duration=kwa["duration"],
+                    end="DONE",
+                )
+        time.sleep(0.5)
         wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=filedone)
+
     # --------------------------------------------------------------------#
 
     def stop(self):
@@ -552,22 +625,27 @@ class FFmpeg(Thread):
             try:
                 # Verify that stdin is open and available before writing
                 if proc.stdin and not proc.stdin.closed:
-                    proc.stdin.write('q')  # quit/stop ffmpeg
+                    proc.stdin.write("q")  # quit/stop ffmpeg
                     proc.stdin.flush()
 
             # Make sure the process isn't already finished
-            except (BrokenPipeError, ValueError, AttributeError,
-                    OSError) as err:
+            except (
+                BrokenPipeError,
+                ValueError,
+                AttributeError,
+                OSError,
+            ) as err:
                 self.fatal = True
                 msg = "CRASH_STOP: forcing FFmpeg to terminate"
-                wx.CallAfter(pub.sendMessage,
-                             "COUNT_EVT",
-                             count=f"{msg}: {err}",
-                             duration=0,
-                             end='ERROR',
-                             )
+                wx.CallAfter(
+                    pub.sendMessage,
+                    "COUNT_EVT",
+                    count=f"{msg}: {err}",
+                    duration=0,
+                    end="ERROR",
+                )
                 tolog(f"[VIDEOMASS]: {msg}: {err}", self.logfile)
 
                 # Force event end notification to unlock GUI
-                time.sleep(.5)
+                time.sleep(0.5)
                 wx.CallAfter(pub.sendMessage, "END_EVT", filetotrash=None)

@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import shutil
 import subprocess
 
@@ -39,10 +40,10 @@ def shutdown_system(password=None):
     """
     get = wx.GetApp()
     appdata = get.appset
-    ostype = appdata['ostype']
-    logfile = make_log_template("Shutdown.log", appdata['logdir'], mode="w")
+    ostype = appdata["ostype"]
+    logfile = make_log_template("Shutdown.log", appdata["logdir"], mode="w")
 
-    if ostype == 'Linux':
+    if ostype == "Linux":
         if password:
             password = f"{password}\n"
             cmd = ["sudo", "-S", "shutdown", "-h", "now"]
@@ -54,31 +55,35 @@ def shutdown_system(password=None):
             else:
                 cmd = ["shutdown", "-h", "now"]
 
-    elif ostype == 'Darwin':
+    elif ostype == "Darwin":
         password = f"{password}\n"
         cmd = ["sudo", "-S", "shutdown", "-h", "now"]
 
-    elif ostype == 'Windows':
+    elif ostype == "Windows":
         cmd = ["shutdown", "/s", "/t", "1"]
 
-    elif ostype in ['OpenBSD', 'FreeBSD']:
+    elif ostype in ["OpenBSD", "FreeBSD"]:
         password = f"{password}\n"
         cmd = ["sudo", "-S", "shutdown", "-p", "now"]
 
     else:
-        return 'Error: unsupported platform'
+        return "Error: unsupported platform"
 
-    tolog(f'INFO: VIDEOMASS COMMAND: {" ".join(cmd)}',
-          logfile, sep=True, wdate=True
-          )
+    tolog(
+        f"INFO: VIDEOMASS COMMAND: {' '.join(cmd)}",
+        logfile,
+        sep=True,
+        wdate=True,
+    )
     try:
-        with Popen(cmd,
-                   stdin=subprocess.PIPE,
-                   stdout=subprocess.PIPE,
-                   stderr=subprocess.PIPE,
-                   text=True,
-                   encoding='utf-8',
-                   ) as proc:
+        with Popen(
+            cmd,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding="utf-8",
+        ) as proc:
             # Communicates input in an isolated manner and
             # safely extracts stdout and stderr
             stdout_data, stderr_data = proc.communicate(input=password)
@@ -99,7 +104,7 @@ def shutdown_system(password=None):
             return proc.returncode == 0
 
     except (OSError, FileNotFoundError) as err:
-        tolog(f'VIDEOMASS: ERROR: {err}', logfile)
+        tolog(f"VIDEOMASS: ERROR: {err}", logfile)
         return err
 
     return None

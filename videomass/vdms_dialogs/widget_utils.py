@@ -37,14 +37,10 @@ class NormalTransientPopup(wx.PopupTransientWindow):
     explanations that users can immediately consult without
     cluttering the main GUI with too much text.
     """
-    def __init__(self,
-                 parent,
-                 style,
-                 message,
-                 backgrdcol,
-                 foregrdcol,
-                 wrap=-1
-                 ):
+
+    def __init__(
+        self, parent, style, message, backgrdcol, foregrdcol, wrap=-1
+    ):
         """
         Some word on these parameters:
         - message: the text you want showing in the popup.
@@ -79,11 +75,9 @@ def notification_area(title, message, flag, timeout=5):
     notify.SetMessage("It's a message!")
     notify.SetParent(self)
     """
-    notify = wx.adv.NotificationMessage(title=title,
-                                        message=message,
-                                        parent=None,
-                                        flags=flag
-                                        )
+    notify = wx.adv.NotificationMessage(
+        title=title, message=message, parent=None, flags=flag
+    )
     notify.Show(timeout=timeout)  # 1 for short timeout, 100 for long timeout
     # notify.Close()       # Hides the notification.
 
@@ -103,20 +97,24 @@ class PopupDialog(wx.Dialog):
             loadDlg.ShowModal()
             loadDlg.Destroy()
     """
-    def __init__(self, parent=None,
-                 caption='Pop-Up Dialog',
-                 msg="Wait, I'm completing a task...",
-                 thread=None,
-                 ):
+
+    def __init__(
+        self,
+        parent=None,
+        caption="Pop-Up Dialog",
+        msg="Wait, I'm completing a task...",
+        thread=None,
+    ):
         # Create a dialog
-        wx.Dialog.__init__(self, parent, -1, caption, size=(350, 150),
-                           style=wx.CAPTION)
+        wx.Dialog.__init__(
+            self, parent, -1, caption, size=(350, 150), style=wx.CAPTION
+        )
         # Add sizers
         self.thread = thread
         boxv = wx.BoxSizer(wx.VERTICAL)
         boxh = wx.BoxSizer(wx.HORIZONTAL)
 
-        if hasattr(wx, 'ActivityIndicator'):  # wxPython => 4.1
+        if hasattr(wx, "ActivityIndicator"):  # wxPython => 4.1
             # activity add indicator
             ai = wx.ActivityIndicator(self)
             ai.Start()
@@ -127,9 +125,9 @@ class PopupDialog(wx.Dialog):
         boxv.Add(boxh, 0, wx.EXPAND)
         # Add an Info graphic
         bitmap = wx.Bitmap(48, 48)
-        bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION,
-                                          wx.ART_MESSAGE_BOX, (48, 48)
-                                          )
+        bitmap = wx.ArtProvider.GetBitmap(
+            wx.ART_INFORMATION, wx.ART_MESSAGE_BOX, (48, 48)
+        )
         graphic = wx.StaticBitmap(self, -1, bitmap)
         boxh.Add(graphic, 0, wx.TOP | wx.ALL, 10)
 
@@ -148,6 +146,7 @@ class PopupDialog(wx.Dialog):
         self.Layout()
 
         pub.subscribe(self.getMessage, "RESULT_EVT")
+
     # ----------------------------------------------------------#
 
     def on_stop(self, event):
@@ -199,8 +198,9 @@ class CountDownDlg(wx.Dialog):
         if res:
             ...other code here
     """
+
     get = wx.GetApp()  # get data from bootstrap
-    APPICON = get.iconset['videomass']
+    APPICON = get.iconset["videomass"]
     TIMER_INTERVAL = 1000  # milliseconds
 
     def __init__(self, parent, timeout, message, caption):
@@ -218,10 +218,12 @@ class CountDownDlg(wx.Dialog):
         # ------ Add widget controls
         sizbase = wx.BoxSizer(wx.VERTICAL)
         sizbase.Add((0, 20), 0)
-        self.msgtxt = wx.StaticText(self, wx.ID_ANY,
-                                    self.message.format(self.timeout),
-                                    style=wx.ALIGN_CENTRE_VERTICAL
-                                    )
+        self.msgtxt = wx.StaticText(
+            self,
+            wx.ID_ANY,
+            self.message.format(self.timeout),
+            style=wx.ALIGN_CENTRE_VERTICAL,
+        )
         sizbase.Add(self.msgtxt, 1, wx.ALL | wx.ALIGN_CENTRE, 5)
         # ------ bottom layout buttons
         sizbott = wx.BoxSizer(wx.HORIZONTAL)
@@ -232,8 +234,9 @@ class CountDownDlg(wx.Dialog):
         sizbase.Add(sizbott, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         # ------ Properties
         icon = wx.Icon()
-        icon.CopyFromBitmap(wx.Bitmap(CountDownDlg.APPICON,
-                                      wx.BITMAP_TYPE_ANY))
+        icon.CopyFromBitmap(
+            wx.Bitmap(CountDownDlg.APPICON, wx.BITMAP_TYPE_ANY)
+        )
         self.SetIcon(icon)
         self.SetTitle(caption)
         self.SetMinSize((400, 150))
@@ -245,6 +248,7 @@ class CountDownDlg(wx.Dialog):
         self.timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.on_timer, self.timer)
         self.timer.Start(self.TIMER_INTERVAL)
+
     # ------------------------------------------------------------------#
 
     def autodestroy(self):

@@ -40,24 +40,27 @@ def subp(cmdargs: list, ostype: str):
         *ostype* result of the platform.system()
 
     """
-    cmd = ' '.join(cmdargs) if ostype == 'Windows' else cmdargs
+    cmd = " ".join(cmdargs) if ostype == "Windows" else cmdargs
 
     try:
-        with Popen(cmd,
-                   stdout=subprocess.PIPE,
-                   stderr=subprocess.STDOUT,
-                   text=True,  # mod text
-                   encoding='utf-8',
-                   ) as proc:
+        with Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,  # mod text
+            encoding="utf-8",
+        ) as proc:
             out = proc.communicate()
 
             if proc.returncode:  # if returncode == 1
-                return ('Not found', out[0])
+                return ("Not found", out[0])
 
     except (OSError, FileNotFoundError) as oserr:  # no executable found
-        return ('Not found', oserr)
+        return ("Not found", oserr)
 
-    return ('None', out[0])
+    return ("None", out[0])
+
+
 # -----------------------------------------------------------#
 
 
@@ -76,43 +79,45 @@ def ff_conf(ffmpeg_url, ostype):
     """
 
     # ------- grab generic informations:
-    version = subp([ffmpeg_url, '-loglevel', 'error', '-version'], ostype)
+    version = subp([ffmpeg_url, "-loglevel", "error", "-version"], ostype)
 
-    if 'Not found' in version[0]:
+    if "Not found" in version[0]:
         return (version[0], version[1])
 
     enable, disable, others, conf, info = [], [], [], [], []
 
-    for vers in version[1].split('\n'):
-        if 'ffmpeg version' in vers:
+    for vers in version[1].split("\n"):
+        if "ffmpeg version" in vers:
             info.append(vers.strip())
 
-        if 'built with' in vers:
+        if "built with" in vers:
             info.append(vers.strip())
 
     # ------- grab buildconf:
-    build = subp([ffmpeg_url, '-loglevel', 'error', '-buildconf'], ostype)
+    build = subp([ffmpeg_url, "-loglevel", "error", "-buildconf"], ostype)
 
-    if 'Not found' in build[0]:
+    if "Not found" in build[0]:
         return (build[0], build[1])
 
-    for bld in build[1].split('\n'):
+    for bld in build[1].split("\n"):
         conf.append(bld.strip())
 
     for enc in conf:
-        if enc.startswith('--enable'):
-            enable.append(enc.split('--enable-')[1])
+        if enc.startswith("--enable"):
+            enable.append(enc.split("--enable-")[1])
 
-        elif enc.startswith('--disable'):
-            disable.append(enc.split('--disable-')[1])
+        elif enc.startswith("--disable"):
+            disable.append(enc.split("--disable-")[1])
 
         else:
             others.append(enc)
 
-    if 'configuration:' in others:
-        others.remove('configuration:')
+    if "configuration:" in others:
+        others.remove("configuration:")
 
     return (info, others, enable, disable)
+
+
 # -------------------------------------------------------------------#
 
 
@@ -128,26 +133,29 @@ def ff_formats(ffmpeg_url, ostype):
     """
 
     # ------- grab buildconf:
-    ret = subp([ffmpeg_url, '-loglevel', 'error', '-formats'], ostype)
+    ret = subp([ffmpeg_url, "-loglevel", "error", "-formats"], ostype)
 
-    if 'Not found' in ret[0]:
+    if "Not found" in ret[0]:
         return {ret[0]: ret[1]}
 
-    frmt = ret[1].split('\n')
+    frmt = ret[1].split("\n")
 
-    dic = {'Demuxing Supported': [],
-           'Muxing Supported': [],
-           'Mux/Demux Supported': [],
-           }
+    dic = {
+        "Demuxing Supported": [],
+        "Muxing Supported": [],
+        "Mux/Demux Supported": [],
+    }
     for its in frmt:
-        if its.strip().startswith('D '):
-            dic['Demuxing Supported'].append(its.replace('D', '', 1).strip())
-        elif its.strip().startswith('E '):
-            dic['Muxing Supported'].append(its.replace('E', '', 1).strip())
-        elif its.strip().startswith('DE '):
-            dic['Mux/Demux Supported'].append(its.replace('DE', '', 1).strip())
+        if its.strip().startswith("D "):
+            dic["Demuxing Supported"].append(its.replace("D", "", 1).strip())
+        elif its.strip().startswith("E "):
+            dic["Muxing Supported"].append(its.replace("E", "", 1).strip())
+        elif its.strip().startswith("DE "):
+            dic["Mux/Demux Supported"].append(its.replace("DE", "", 1).strip())
 
     return dic
+
+
 # -------------------------------------------------------------------#
 
 
@@ -171,28 +179,30 @@ def ff_codecs(ffmpeg_url, type_opt, ostype):
     """
 
     # ------- grab encoders or decoders output:
-    ret = subp([ffmpeg_url, '-loglevel', 'error', type_opt], ostype)
+    ret = subp([ffmpeg_url, "-loglevel", "error", type_opt], ostype)
 
-    if 'Not found' in ret[0]:
-        return ({ret[0], ret[1]})
+    if "Not found" in ret[0]:
+        return {ret[0], ret[1]}
 
-    codecs = ret[1].split('\n')
+    codecs = ret[1].split("\n")
 
-    dic = {'Video': [], 'Audio': [], 'Subtitle': []}
+    dic = {"Video": [], "Audio": [], "Subtitle": []}
 
     for sup in codecs:
-        if sup.strip().startswith('V'):
-            if 'V..... = Video' not in sup:
-                dic['Video'].append(sup.strip())
+        if sup.strip().startswith("V"):
+            if "V..... = Video" not in sup:
+                dic["Video"].append(sup.strip())
 
-        elif sup.strip().startswith('A'):
-            if 'A..... = Audio' not in sup:
-                dic['Audio'].append(sup.strip())
+        elif sup.strip().startswith("A"):
+            if "A..... = Audio" not in sup:
+                dic["Audio"].append(sup.strip())
 
-        elif sup.strip().startswith('S') and 'S..... = Subtitle' not in sup:
-            dic['Subtitle'].append(sup.strip())
+        elif sup.strip().startswith("S") and "S..... = Subtitle" not in sup:
+            dic["Subtitle"].append(sup.strip())
 
     return dic
+
+
 # -------------------------------------------------------------------#
 
 
@@ -203,10 +213,10 @@ def ff_topics(ffmpeg_url, topic, ostype):
     """
 
     # ------ get output:
-    arr = [ffmpeg_url, '-loglevel', 'error'] + list(topic)
+    arr = [ffmpeg_url, "-loglevel", "error"] + list(topic)
     ret = subp(arr, ostype)
 
-    if 'Not found' in ret[0]:
+    if "Not found" in ret[0]:
         return (ret[0], ret[1])
 
-    return ('None', ret[1])
+    return ("None", ret[1])

@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 from typing import Any, ClassVar
 
 import wx
@@ -35,19 +36,43 @@ class Mpeg_4(scrolled.ScrolledPanel):
     This scroll panel implements video controls functions
     for MPEG4-part2 encoder on A/V Conversions.
     """
+
     ASPECTRATIO: ClassVar[dict[str, Any]] = [
-        ("Auto"), ("1:1"), ("1.3333"), ("1.7777"), ("2.4:1"),
-        ("3:2"), ("4:3"), ("5:4"), ("8:7"), ("14:10"), ("16:9"),
-        ("16:10"), ("19:10"), ("21:9"), ("32:9"),
+        ("Auto"),
+        ("1:1"),
+        ("1.3333"),
+        ("1.7777"),
+        ("2.4:1"),
+        ("3:2"),
+        ("4:3"),
+        ("5:4"),
+        ("8:7"),
+        ("14:10"),
+        ("16:9"),
+        ("16:10"),
+        ("19:10"),
+        ("21:9"),
+        ("32:9"),
     ]
     FPS: ClassVar[dict[str, Any]] = [
-        ("Auto"), ("ntsc"), ("pal"), ("film"), ("23.976"), ("24"),
-        ("25"), ("29.97"), ("30"), ("48"), ("50"), ("59.94"), ("60"),
+        ("Auto"),
+        ("ntsc"),
+        ("pal"),
+        ("film"),
+        ("23.976"),
+        ("24"),
+        ("25"),
+        ("29.97"),
+        ("30"),
+        ("48"),
+        ("50"),
+        ("59.94"),
+        ("60"),
     ]
     # supported libx264 Bit Depths (10bit need 0 to 63 cfr quantizer scale)
-    PIXELFRMT: ClassVar[dict[str, Any]] = [('Auto'), ('yuv420p')]
+    PIXELFRMT: ClassVar[dict[str, Any]] = [("Auto"), ("yuv420p")]
 
-    PRESET = ('Default',)
+    PRESET = ("Default",)
 
     def __init__(self, parent, opt):
         """
@@ -57,141 +82,183 @@ class Mpeg_4(scrolled.ScrolledPanel):
         self.appdata = get.appset
         self.parent = parent  # parent is the `nb_Video` here.
         self.opt = opt
-        scrolled.ScrolledPanel.__init__(self, parent, -1,
-                                        size=(1024, 1024),
-                                        style=wx.TAB_TRAVERSAL
-                                        | wx.BORDER_NONE,
-                                        name="mpeg4-part2 scrolledpanel",
-                                        )
+        scrolled.ScrolledPanel.__init__(
+            self,
+            parent,
+            -1,
+            size=(1024, 1024),
+            style=wx.TAB_TRAVERSAL | wx.BORDER_NONE,
+            name="mpeg4-part2 scrolledpanel",
+        )
         sizerbase = wx.BoxSizer(wx.VERTICAL)
         self.labinfo = wx.StaticText(self, wx.ID_ANY, label="")
         sizerbase.Add(self.labinfo, 0, wx.ALL | wx.CENTER, 2)
-        if self.appdata['ostype'] == 'Darwin':
+        if self.appdata["ostype"] == "Darwin":
             self.labinfo.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
             self.labinfo.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
         boxset = wx.BoxSizer(wx.HORIZONTAL)
         self.btn_reset = wx.Button(self, wx.ID_ANY, _("Reload"), size=(-1, -1))
-        boxset.Add(self.btn_reset, 0,)
-        self.cmb_defprst = wx.ComboBox(self, wx.ID_ANY,
-                                       choices=Mpeg_4.PRESET,
-                                       size=(-1, -1), style=wx.CB_DROPDOWN
-                                       | wx.CB_READONLY,
-                                       )
+        boxset.Add(
+            self.btn_reset,
+            0,
+        )
+        self.cmb_defprst = wx.ComboBox(
+            self,
+            wx.ID_ANY,
+            choices=Mpeg_4.PRESET,
+            size=(-1, -1),
+            style=wx.CB_DROPDOWN | wx.CB_READONLY,
+        )
         self.cmb_defprst.SetSelection(0)
         self.cmb_defprst.Disable()
 
         boxset.Add(self.cmb_defprst, 0, wx.LEFT, 20)
-        self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_('Optimize for Web')))
+        self.ckbx_web = wx.CheckBox(self, wx.ID_ANY, (_("Optimize for Web")))
         boxset.Add(self.ckbx_web, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
         sizerbase.Add(boxset, 0, wx.TOP | wx.CENTRE, 10)
         sizerbase.Add((0, 15), 0)
         boxcrf = wx.BoxSizer(wx.HORIZONTAL)
-        labcrf = wx.StaticText(self, wx.ID_ANY, 'QP:')
+        labcrf = wx.StaticText(self, wx.ID_ANY, "QP:")
         boxcrf.Add(labcrf, 0, wx.ALIGN_CENTER)
-        self.slider_crf = wx.Slider(self, wx.ID_ANY, 1, -1, 31,
-                                    size=(250, -1), style=wx.SL_HORIZONTAL
-                                    )
+        self.slider_crf = wx.Slider(
+            self, wx.ID_ANY, 1, -1, 31, size=(250, -1), style=wx.SL_HORIZONTAL
+        )
         boxcrf.Add(self.slider_crf, 0, wx.LEFT | wx.RIGHT | wx.ALIGN_CENTER, 2)
-        self.labcrfmt = wx.StaticText(self, wx.ID_ANY, '')
+        self.labcrfmt = wx.StaticText(self, wx.ID_ANY, "")
         boxcrf.Add(self.labcrfmt, 0, wx.ALIGN_CENTER)
         boxcrf.Add((20, 0), 0)
-        labvtag = wx.StaticText(self, wx.ID_ANY, 'FourCC (vtag):')
+        labvtag = wx.StaticText(self, wx.ID_ANY, "FourCC (vtag):")
         boxcrf.Add(labvtag, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.cmb_vtag = wx.ComboBox(self, wx.ID_ANY,
-                                    choices=["Auto", "xvid"],
-                                    size=(-1, -1), style=wx.CB_DROPDOWN
-                                    | wx.CB_READONLY,
-                                    )
+        self.cmb_vtag = wx.ComboBox(
+            self,
+            wx.ID_ANY,
+            choices=["Auto", "xvid"],
+            size=(-1, -1),
+            style=wx.CB_DROPDOWN | wx.CB_READONLY,
+        )
         boxcrf.Add(self.cmb_vtag, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         sizerbase.Add(boxcrf, 0, wx.ALL | wx.CENTER, 0)
 
-        line0 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=(-1, -1), style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
+        line0 = wx.StaticLine(
+            self,
+            wx.ID_ANY,
+            pos=wx.DefaultPosition,
+            size=(-1, -1),
+            style=wx.LI_HORIZONTAL,
+            name=wx.StaticLineNameStr,
+        )
         sizerbase.Add(line0, 0, wx.ALL | wx.EXPAND, 15)
         gridcod = wx.FlexGridSizer(5, 5, 0, 0)
-        labpass = wx.StaticText(self, wx.ID_ANY, 'Passes:')
+        labpass = wx.StaticText(self, wx.ID_ANY, "Passes:")
         gridcod.Add(labpass, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         self.ckbx_pass = wx.CheckBox(self, wx.ID_ANY, "Two-Pass Encoding")
         gridcod.Add(self.ckbx_pass, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         gridcod.Add((40, 0), 0)
-        labminr = wx.StaticText(self, wx.ID_ANY, 'Minrate (kbps):')
+        labminr = wx.StaticText(self, wx.ID_ANY, "Minrate (kbps):")
         gridcod.Add(labminr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.spin_minr = wx.SpinCtrl(self, wx.ID_ANY,
-                                     "-1", min=-1, max=900000,
-                                     style=wx.TE_PROCESS_ENTER
-                                     )
+        self.spin_minr = wx.SpinCtrl(
+            self,
+            wx.ID_ANY,
+            "-1",
+            min=-1,
+            max=900000,
+            style=wx.TE_PROCESS_ENTER,
+        )
         gridcod.Add(self.spin_minr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        stextbitr = wx.StaticText(self, wx.ID_ANY, 'Bitrate (kbps):')
+        stextbitr = wx.StaticText(self, wx.ID_ANY, "Bitrate (kbps):")
         gridcod.Add(stextbitr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.spin_vbrate = wx.SpinCtrl(self, wx.ID_ANY,
-                                       "-1", min=-1, max=204800,
-                                       size=(150, -1),
-                                       style=wx.TE_PROCESS_ENTER
-                                       )
+        self.spin_vbrate = wx.SpinCtrl(
+            self,
+            wx.ID_ANY,
+            "-1",
+            min=-1,
+            max=204800,
+            size=(150, -1),
+            style=wx.TE_PROCESS_ENTER,
+        )
         gridcod.Add(self.spin_vbrate, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         gridcod.Add((40, 0), 0)
-        labmaxr = wx.StaticText(self, wx.ID_ANY, 'Maxrate (kbps):')
+        labmaxr = wx.StaticText(self, wx.ID_ANY, "Maxrate (kbps):")
         gridcod.Add(labmaxr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.spin_maxr = wx.SpinCtrl(self, wx.ID_ANY,
-                                     "-1", min=-1, max=900000,
-                                     style=wx.TE_PROCESS_ENTER
-                                     )
+        self.spin_maxr = wx.SpinCtrl(
+            self,
+            wx.ID_ANY,
+            "-1",
+            min=-1,
+            max=900000,
+            style=wx.TE_PROCESS_ENTER,
+        )
         gridcod.Add(self.spin_maxr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        labpixfrm = wx.StaticText(self, wx.ID_ANY, 'Bit Depth:')
+        labpixfrm = wx.StaticText(self, wx.ID_ANY, "Bit Depth:")
         gridcod.Add(labpixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.cmb_pixfrm = wx.ComboBox(self, wx.ID_ANY,
-                                      choices=Mpeg_4.PIXELFRMT,
-                                      size=(150, -1), style=wx.CB_DROPDOWN
-                                      | wx.CB_READONLY,
-                                      )
+        self.cmb_pixfrm = wx.ComboBox(
+            self,
+            wx.ID_ANY,
+            choices=Mpeg_4.PIXELFRMT,
+            size=(150, -1),
+            style=wx.CB_DROPDOWN | wx.CB_READONLY,
+        )
         gridcod.Add(self.cmb_pixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         gridcod.Add((40, 0), 0)
-        labbuffer = wx.StaticText(self, wx.ID_ANY, 'Bufsize (kbps):')
+        labbuffer = wx.StaticText(self, wx.ID_ANY, "Bufsize (kbps):")
         gridcod.Add(labbuffer, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
-        self.spin_bufsize = wx.SpinCtrl(self, wx.ID_ANY,
-                                        "-1", min=-1, max=900000,
-                                        style=wx.TE_PROCESS_ENTER
-                                        )
+        self.spin_bufsize = wx.SpinCtrl(
+            self,
+            wx.ID_ANY,
+            "-1",
+            min=-1,
+            max=900000,
+            style=wx.TE_PROCESS_ENTER,
+        )
         gridcod.Add(self.spin_bufsize, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 2)
         sizerbase.Add(gridcod, 0, wx.ALL | wx.CENTER, 0)
 
         # Options -------------------------------------------
-        line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                              size=(-1, -1), style=wx.LI_HORIZONTAL,
-                              name=wx.StaticLineNameStr
-                              )
+        line1 = wx.StaticLine(
+            self,
+            wx.ID_ANY,
+            pos=wx.DefaultPosition,
+            size=(-1, -1),
+            style=wx.LI_HORIZONTAL,
+            name=wx.StaticLineNameStr,
+        )
         sizerbase.Add(line1, 0, wx.ALL | wx.EXPAND, 15)
 
         # other Options -------------------------------------------
         gridopt = wx.FlexGridSizer(1, 6, 0, 0)
-        labvaspect = wx.StaticText(self, wx.ID_ANY, 'Aspect Ratio:')
+        labvaspect = wx.StaticText(self, wx.ID_ANY, "Aspect Ratio:")
         gridopt.Add(labvaspect, 0, wx.ALIGN_CENTER_VERTICAL)
-        self.cmb_vaspect = wx.ComboBox(self, wx.ID_ANY,
-                                       choices=Mpeg_4.ASPECTRATIO,
-                                       size=(120, -1), style=wx.CB_DROPDOWN
-                                       | wx.CB_READONLY,
-                                       )
+        self.cmb_vaspect = wx.ComboBox(
+            self,
+            wx.ID_ANY,
+            choices=Mpeg_4.ASPECTRATIO,
+            size=(120, -1),
+            style=wx.CB_DROPDOWN | wx.CB_READONLY,
+        )
         gridopt.Add(self.cmb_vaspect, 0, wx.LEFT | wx.CENTER, 5)
-        labfps = wx.StaticText(self, wx.ID_ANY, 'FPS:')
+        labfps = wx.StaticText(self, wx.ID_ANY, "FPS:")
         gridopt.Add(labfps, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
-        self.cmb_fps = wx.ComboBox(self, wx.ID_ANY,
-                                   choices=Mpeg_4.FPS,
-                                   size=(120, -1),
-                                   style=wx.CB_DROPDOWN
-                                   | wx.CB_READONLY,
-                                   )
+        self.cmb_fps = wx.ComboBox(
+            self,
+            wx.ID_ANY,
+            choices=Mpeg_4.FPS,
+            size=(120, -1),
+            style=wx.CB_DROPDOWN | wx.CB_READONLY,
+        )
         gridopt.Add(self.cmb_fps, 0, wx.LEFT | wx.CENTER, 5)
         lab_gop = wx.StaticText(self, wx.ID_ANY, ("GOP:"))
         gridopt.Add(lab_gop, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 20)
-        self.spin_gop = wx.SpinCtrl(self, wx.ID_ANY,
-                                    "12", min=-1,
-                                    max=1000, size=(-1, -1),
-                                    style=wx.TE_PROCESS_ENTER,
-                                    )
+        self.spin_gop = wx.SpinCtrl(
+            self,
+            wx.ID_ANY,
+            "12",
+            min=-1,
+            max=1000,
+            size=(-1, -1),
+            style=wx.TE_PROCESS_ENTER,
+        )
         gridopt.Add(self.spin_gop, 0, wx.LEFT | wx.CENTRE, 5)
         sizerbase.Add(gridopt, 0, wx.ALL | wx.CENTER, 0)
 
@@ -199,48 +266,68 @@ class Mpeg_4(scrolled.ScrolledPanel):
         self.SetAutoLayout(1)
         self.SetupScrolling()
 
-        tip = (_('Reloads the selected video encoder settings. '
-                 'Changes will be discarded.'))
+        tip = _(
+            "Reloads the selected video encoder settings. "
+            "Changes will be discarded."
+        )
         self.btn_reset.SetToolTip(tip)
-        tip = (_('Set the Group Of Picture (GOP). Set to -1 to disable '
-                 'this control.'))
+        tip = _(
+            "Set the Group Of Picture (GOP). Set to -1 to disable "
+            "this control."
+        )
         self.spin_gop.SetToolTip(tip)
-        tip = _('It can reduce the file size, but takes longer.')
+        tip = _("It can reduce the file size, but takes longer.")
         self.ckbx_pass.SetToolTip(tip)
-        tip = (_('Set minimum bitrate tolerance. Most useful in setting up '
-                 'a CBR encode. It is of little use otherwise. Set to -1 to '
-                 'disable this control.'))
+        tip = _(
+            "Set minimum bitrate tolerance. Most useful in setting up "
+            "a CBR encode. It is of little use otherwise. Set to -1 to "
+            "disable this control."
+        )
         self.spin_minr.SetToolTip(tip)
-        tip = (_('Specifies a maximum tolerance. Requires bufsize to be set. '
-                 'Set to -1 to disable this control.'))
+        tip = _(
+            "Specifies a maximum tolerance. Requires bufsize to be set. "
+            "Set to -1 to disable this control."
+        )
         self.spin_maxr.SetToolTip(tip)
-        tip = (_('Set ratecontrol buffer size, which determines the '
-                 'variability of the output bitrate. '
-                 'Set to -1 to disable this control.'))
+        tip = _(
+            "Set ratecontrol buffer size, which determines the "
+            "variability of the output bitrate. "
+            "Set to -1 to disable this control."
+        )
         self.spin_bufsize.SetToolTip(tip)
-        tip = (_('Variable Bit Rate. From 0-30, with 1 being highest '
-                 'quality/largest filesize and 30 being the lowest '
-                 'quality/smallest filesize. Set to -1 to disable '
-                 'this control.'))
+        tip = _(
+            "Variable Bit Rate. From 0-30, with 1 being highest "
+            "quality/largest filesize and 30 being the lowest "
+            "quality/smallest filesize. Set to -1 to disable "
+            "this control."
+        )
         self.slider_crf.SetToolTip(tip)
-        tip = (_('Frames repeat a given number of times per second. In some '
-                 'countries this is 30 for NTSC, other countries (like '
-                 'Italy) use 25 for PAL'))
+        tip = _(
+            "Frames repeat a given number of times per second. In some "
+            "countries this is 30 for NTSC, other countries (like "
+            "Italy) use 25 for PAL"
+        )
         self.cmb_fps.SetToolTip(tip)
-        tip = (_('The default FourCC stored in an MPEG-4-coded file will be '
-                 'FMP4. If you want a different FourCC, set this option '
-                 'to xvid to force the FourCC xvid to be stored '
-                 'as the video FourCC rather than the default.'))
+        tip = _(
+            "The default FourCC stored in an MPEG-4-coded file will be "
+            "FMP4. If you want a different FourCC, set this option "
+            "to xvid to force the FourCC xvid to be stored "
+            "as the video FourCC rather than the default."
+        )
         self.cmb_vtag.SetToolTip(tip)
-        tip = (_('Specifies the target (average) bit rate for the encoder '
-                 'to use. Higher value = higher quality. Set -1 to disable '
-                 'this control.'))
+        tip = _(
+            "Specifies the target (average) bit rate for the encoder "
+            "to use. Higher value = higher quality. Set -1 to disable "
+            "this control."
+        )
         self.spin_vbrate.SetToolTip(tip)
-        tip = _('Video width and video height ratio.')
+        tip = _("Video width and video height ratio.")
         self.cmb_vaspect.SetToolTip(tip)
-        tip = (_('Frame rate (frames per second). Frames repeat a given '
-                 'number of times per second. In some countries this is 30 '
-                 'for NTSC, other countries (like Italy) use 25 for PAL'))
+        tip = _(
+            "Frame rate (frames per second). Frames repeat a given "
+            "number of times per second. In some countries this is 30 "
+            "for NTSC, other countries (like Italy) use 25 for PAL"
+        )
         self.cmb_fps.SetToolTip(tip)
 
         self.Bind(wx.EVT_BUTTON, self.reset_args, self.btn_reset)
@@ -256,20 +343,23 @@ class Mpeg_4(scrolled.ScrolledPanel):
         self.Bind(wx.EVT_SPINCTRL, self.on_max_rate, self.spin_maxr)
         self.Bind(wx.EVT_SPINCTRL, self.on_buffer_size, self.spin_bufsize)
         self.Bind(wx.EVT_COMBOBOX, self.on_bit_depth, self.cmb_pixfrm)
+
     # ------------------------------------------------------------------#
 
     def video_options(self):
         """
         Get all video parameters
         """
-        return (f'{self.opt["VideoMap"]} {self.opt["VideoCodec"]} '
-                f'{self.opt["FourCC"]} {self.opt["VideoBitrate"]} '
-                f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
-                f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
-                f'{self.opt["GOP"]} {self.opt["AspectRatio"]} '
-                f'{self.opt["FPS"]} '
-                f'{self.opt["PixFmt"]} {self.opt["WebOptim"]}'
-                )
+        return (
+            f"{self.opt['VideoMap']} {self.opt['VideoCodec']} "
+            f"{self.opt['FourCC']} {self.opt['VideoBitrate']} "
+            f"{self.opt['MinRate']} {self.opt['MaxRate']} "
+            f"{self.opt['Bufsize']} {self.opt['CRF']} "
+            f"{self.opt['GOP']} {self.opt['AspectRatio']} "
+            f"{self.opt['FPS']} "
+            f"{self.opt['PixFmt']} {self.opt['WebOptim']}"
+        )
+
     # ------------------------------------------------------------------#
 
     def default(self):
@@ -281,13 +371,15 @@ class Mpeg_4(scrolled.ScrolledPanel):
         self.slider_crf.SetMax(30)
         self.slider_crf.SetValue(2), self.on_crf(None, False)
         self.cmb_pixfrm.SetSelection(1), self.on_bit_depth(None, False)
-        if self.opt["VidCmbxStr"] == 'XVID MPEG-4':
-            self.labinfo.SetLabel("XVID MPEG-4 Part 2 "
-                                  "(Moving Picture Experts Group) ")
+        if self.opt["VidCmbxStr"] == "XVID MPEG-4":
+            self.labinfo.SetLabel(
+                "XVID MPEG-4 Part 2 (Moving Picture Experts Group) "
+            )
             self.cmb_vtag.SetSelection(1), self.on_vtag(None, False)
         else:
-            self.labinfo.SetLabel("MPEG-4 Part 2 "
-                                  "(Moving Picture Experts Group) ")
+            self.labinfo.SetLabel(
+                "MPEG-4 Part 2 (Moving Picture Experts Group) "
+            )
             self.cmb_vtag.SetSelection(0), self.on_vtag(None, False)
         self.spin_vbrate.SetValue(-1), self.on_vbitrate(None, False)
         self.spin_gop.SetValue(-1), self.on_gop(None, False)
@@ -297,6 +389,7 @@ class Mpeg_4(scrolled.ScrolledPanel):
         self.spin_maxr.SetValue(-1), self.on_max_rate(None, False)
         self.spin_bufsize.SetValue(-1), self.on_buffer_size(None, False)
         self.btn_reset.Disable()
+
     # ------------------------------------------------------------------#
 
     def reset_args(self, event):
@@ -304,6 +397,7 @@ class Mpeg_4(scrolled.ScrolledPanel):
         Set default event
         """
         self.default()
+
     # ------------------------------------------------------------------#
 
     def on_bit_depth(self, event, btnreset=True):
@@ -314,7 +408,8 @@ class Mpeg_4(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.cmb_pixfrm.GetValue()
-        self.opt["PixFmt"] = '' if val == 'Auto' else f'-pix_fmt {val}'
+        self.opt["PixFmt"] = "" if val == "Auto" else f"-pix_fmt {val}"
+
     # ------------------------------------------------------------------#
 
     def on_min_rate(self, event, btnreset=True):
@@ -325,7 +420,8 @@ class Mpeg_4(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.spin_minr.GetValue()
-        self.opt["MinRate"] = '' if val == -1 else f'-minrate {val}k'
+        self.opt["MinRate"] = "" if val == -1 else f"-minrate {val}k"
+
     # ------------------------------------------------------------------#
 
     def on_max_rate(self, event, btnreset=True):
@@ -336,7 +432,8 @@ class Mpeg_4(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.spin_maxr.GetValue()
-        self.opt["MaxRate"] = '' if val == -1 else f'-maxrate {val}k'
+        self.opt["MaxRate"] = "" if val == -1 else f"-maxrate {val}k"
+
     # ------------------------------------------------------------------#
 
     def on_buffer_size(self, event, btnreset=True):
@@ -347,7 +444,8 @@ class Mpeg_4(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.spin_bufsize.GetValue()
-        self.opt["Bufsize"] = '' if val == -1 else f'-bufsize {val}k'
+        self.opt["Bufsize"] = "" if val == -1 else f"-bufsize {val}k"
+
     # ------------------------------------------------------------------#
 
     def on_web_optimize(self, event, btnreset=True):
@@ -359,7 +457,8 @@ class Mpeg_4(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         check = self.ckbx_web.IsChecked()
-        self.opt["WebOptim"] = '-movflags faststart' if check else ''
+        self.opt["WebOptim"] = "-movflags faststart" if check else ""
+
     # ------------------------------------------------------------------#
 
     def on_vbitrate(self, event, btnreset=True):
@@ -373,6 +472,7 @@ class Mpeg_4(scrolled.ScrolledPanel):
 
         val = self.spin_vbrate.GetValue()
         self.opt["VideoBitrate"] = "" if val == -1 else f"-b:v {val}k"
+
     # ------------------------------------------------------------------#
 
     def on_crf(self, event, btnreset=True):
@@ -388,6 +488,7 @@ class Mpeg_4(scrolled.ScrolledPanel):
         self.labcrfmt.SetLabel(str(num))
         val = num + 1 if num != -1 else ""
         self.opt["CRF"] = val if val == "" else f"-qscale:v {val}"
+
     # ------------------------------------------------------------------#
 
     def on_pass(self, event, btnreset=True):
@@ -399,8 +500,8 @@ class Mpeg_4(scrolled.ScrolledPanel):
 
         if self.ckbx_pass.IsChecked():
             self.opt["Passes"] = "2"
-            self.opt["passlogfile1"] = '-pass 1'
-            self.opt["passlogfile2"] = '-pass 2'
+            self.opt["passlogfile1"] = "-pass 1"
+            self.opt["passlogfile2"] = "-pass 2"
             self.slider_crf.SetValue(-1)
             self.slider_crf.Disable()
             self.spin_vbrate.SetValue(6000)
@@ -416,6 +517,7 @@ class Mpeg_4(scrolled.ScrolledPanel):
 
         self.on_vbitrate(None, False)
         self.on_crf(None, False)
+
     # ------------------------------------------------------------------#
 
     def on_vtag(self, event, btnreset=True):
@@ -426,7 +528,8 @@ class Mpeg_4(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         sel = self.cmb_vtag.GetStringSelection()
-        self.opt["FourCC"] = '' if sel == 'Auto' else f'-vtag {sel}'
+        self.opt["FourCC"] = "" if sel == "Auto" else f"-vtag {sel}"
+
     # ------------------------------------------------------------------#
 
     def on_gop(self, event, btnreset=True):
@@ -437,7 +540,8 @@ class Mpeg_4(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.spin_gop.GetValue()
-        self.opt["GOP"] = '' if val == -1 else f'-g {val}'
+        self.opt["GOP"] = "" if val == -1 else f"-g {val}"
+
     # ------------------------------------------------------------------#
 
     def on_vaspect(self, event, btnreset=True):
@@ -448,7 +552,8 @@ class Mpeg_4(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         val = self.cmb_vaspect.GetValue()
-        self.opt["AspectRatio"] = '' if val == 'Auto' else f'-aspect {val}'
+        self.opt["AspectRatio"] = "" if val == "Auto" else f"-aspect {val}"
+
     # ------------------------------------------------------------------#
 
     def on_rate_fps(self, event, btnreset=True):
@@ -459,5 +564,6 @@ class Mpeg_4(scrolled.ScrolledPanel):
             self.btn_reset.Enable()
 
         fps = self.cmb_fps.GetValue()
-        self.opt["FPS"] = '' if fps == 'Auto' else f'-r {fps}'
+        self.opt["FPS"] = "" if fps == "Auto" else f"-r {fps}"
+
     # ------------------------------------------------------------------#

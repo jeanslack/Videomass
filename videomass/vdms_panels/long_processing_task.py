@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import os
 import time
 from shutil import move
@@ -58,14 +59,16 @@ def delete_file_source(flist, trashdir):
             filenotfounderror = err
 
     if filenotfounderror is not None:
-        wx.MessageBox(f"{filenotfounderror}", _('Videomass - Error!'),
-                      wx.ICON_ERROR)
+        wx.MessageBox(
+            f"{filenotfounderror}", _("Videomass - Error!"), wx.ICON_ERROR
+        )
     else:
-        date = time.strftime('%H%M%S-%a_%d_%B_%Y')
+        date = time.strftime("%H%M%S-%a_%d_%B_%Y")
         for name in set(flist):
             if os.path.exists(name) and os.path.isfile(name):
-                dest = os.path.join(trashdir,
-                                    f'{date}_{os.path.basename(name)}')
+                dest = os.path.join(
+                    trashdir, f"{date}_{os.path.basename(name)}"
+                )
                 move(name, dest)
 
 
@@ -96,6 +99,8 @@ def pairwise(iterable):
     """
     itobj = iter(iterable)  # list_iterator object
     return zip(itobj, itobj)  # zip object pairs from list iterable object
+
+
 # ----------------------------------------------------------------------#
 
 
@@ -108,15 +113,16 @@ class LogOut(wx.Panel):
     process and close the panel at the end.
 
     """
+
     # used msg on text
-    MSG_done = '[Videomass]: SUCCESS !'
-    MSG_failed = '[Videomass]: FAILED !'
-    MSG_stop = '[Videomass]: STOP command received.'
-    MSG_taskfailed = _('Sorry, all task failed !')
+    MSG_done = "[Videomass]: SUCCESS !"
+    MSG_failed = "[Videomass]: FAILED !"
+    MSG_stop = "[Videomass]: STOP command received."
+    MSG_taskfailed = _("Sorry, all task failed !")
     MSG_fatalerror = _("The process was stopped due to a fatal error.")
-    MSG_interrupted = _('Interrupted Process !')
-    MSG_completed = _('Successfully completed !')
-    MSG_unfinished = _('Not everything was successful.')
+    MSG_interrupted = _("Interrupted Process !")
+    MSG_completed = _("Successfully completed !")
+    MSG_unfinished = _("Not everything was successful.")
     # ------------------------------------------------------------------#
 
     def __init__(self, parent):
@@ -138,22 +144,24 @@ class LogOut(wx.Panel):
         self.logfile = None  # log pathname, None otherwise
         self.result = []  # result of the final process
         self.count = 0  # keeps track of the counts (see `update_count`)
-        self.clr = self.appdata['colorscheme']
+        self.clr = self.appdata["colorscheme"]
 
         wx.Panel.__init__(self, parent=parent)
 
         infolbl = _("Encoding Status")
         lbl = wx.StaticText(self, label=infolbl)
-        if self.appdata['ostype'] != 'Darwin':
+        if self.appdata["ostype"] != "Darwin":
             lbl.SetLabelMarkup(f"<b>{infolbl}</b>")
-        self.btn_viewlog = wx.Button(self, wx.ID_ANY, _("Current Log"),
-                                     size=(-1, -1))
+        self.btn_viewlog = wx.Button(
+            self, wx.ID_ANY, _("Current Log"), size=(-1, -1)
+        )
         self.btn_viewlog.Disable()
-        self.txtout = wx.TextCtrl(self, wx.ID_ANY, "",
-                                  style=wx.TE_MULTILINE
-                                  | wx.TE_READONLY
-                                  | wx.TE_RICH2
-                                  )
+        self.txtout = wx.TextCtrl(
+            self,
+            wx.ID_ANY,
+            "",
+            style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH2,
+        )
         self.barprog = wx.Gauge(self, wx.ID_ANY, range=0)
         self.labprog = wx.StaticText(self, label="")
         self.labffmpeg = wx.StaticText(self, label="")
@@ -165,13 +173,17 @@ class LogOut(wx.Panel):
         sizer.Add(self.barprog, 0, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.labprog, 0, wx.ALL, 5)
         sizer.Add(self.labffmpeg, 0, wx.ALL, 5)
-        line = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                             size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                             name=wx.StaticLineNameStr,
-                             )
+        line = wx.StaticLine(
+            self,
+            wx.ID_ANY,
+            pos=wx.DefaultPosition,
+            size=wx.DefaultSize,
+            style=wx.LI_HORIZONTAL,
+            name=wx.StaticLineNameStr,
+        )
         sizer.Add(line, 0, wx.ALL | wx.EXPAND, 5)
         # set_properties:
-        self.txtout.SetBackgroundColour(self.clr['BACKGRD'])
+        self.txtout.SetBackgroundColour(self.clr["BACKGRD"])
         self.SetSizerAndFit(sizer)
         # ------------------------------------------
         self.Bind(wx.EVT_BUTTON, self.view_log, self.btn_viewlog)
@@ -179,6 +191,7 @@ class LogOut(wx.Panel):
         pub.subscribe(self.update_display, "UPDATE_EVT")
         pub.subscribe(self.update_count, "COUNT_EVT")
         pub.subscribe(self.end_proc, "END_EVT")
+
     # ----------------------------------------------------------------------
 
     def view_log(self, event):
@@ -189,42 +202,50 @@ class LogOut(wx.Panel):
             fname = str(self.logfile)
             if os.path.exists(fname) and os.path.isfile(fname):
                 io_tools.openpath(fname)
+
     # ----------------------------------------------------------------------
 
-    def topic_thread(self, args, data, previous='View', mode='w'):
+    def topic_thread(self, args, data, previous="View", mode="w"):
         """
         This method is resposible to create the Thread instance.
 
         """
         self.previous = previous  # stores the panel from which it starts
 
-        if args[0] == 'View':
+        if args[0] == "View":
             return
 
         self.txtout.Clear()
-        self.labprog.SetLabel('')
-        self.labffmpeg.SetLabel('')
+        self.labprog.SetLabel("")
+        self.labffmpeg.SetLabel("")
         self.btn_viewlog.Disable()
 
-        self.logfile = make_log_template(args[1],
-                                         self.appdata['logdir'],
-                                         mode,  # w or a
-                                         )
-        if args[0] in ('One pass', 'Two pass', 'Two pass EBU',
-                       'Two pass VIDSTAB', 'Queue Processing'):
+        self.logfile = make_log_template(
+            args[1],
+            self.appdata["logdir"],
+            mode,  # w or a
+        )
+        if args[0] in (
+            "One pass",
+            "Two pass",
+            "Two pass EBU",
+            "Two pass VIDSTAB",
+            "Queue Processing",
+        ):
             self.thread_type = FFmpeg(self.logfile, data)
 
-        elif args[0] == 'video_to_sequence':
+        elif args[0] == "video_to_sequence":
             self.with_eta = False
             self.thread_type = PicturesFromVideo(self.logfile, **data)
 
-        elif args[0] == 'sequence_to_video':
+        elif args[0] == "sequence_to_video":
             self.with_eta = False
             self.thread_type = SlideshowMaker(self.logfile, **data)
 
-        elif args[0] == 'concat_demuxer':
+        elif args[0] == "concat_demuxer":
             self.with_eta = False
             self.thread_type = ConcatDemuxer(self.logfile, **data)
+
     # ----------------------------------------------------------------------
 
     def append_messages(self, output):
@@ -233,25 +254,27 @@ class LogOut(wx.Panel):
         Since not all ffmpeg messages are errors, sometimes
         it happens to see more output marked with yellow color.
         """
-        with open(self.logfile, "a", encoding='utf-8') as logerr:
+        with open(self.logfile, "a", encoding="utf-8") as logerr:
             logerr.write(f"[FFMPEG]: {output}")
 
-        if [x for x in ('info', 'Info') if x in output]:
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['INFO']))
-            self.txtout.AppendText(f'{output}')
+        if [x for x in ("info", "Info") if x in output]:
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["INFO"]))
+            self.txtout.AppendText(f"{output}")
 
-        elif [x for x in ('Failed', 'failed', 'Error', 'error')
-                if x in output]:
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR0']))
-            self.txtout.AppendText(f'{output}')
+        elif [
+            x for x in ("Failed", "failed", "Error", "error") if x in output
+        ]:
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["ERR0"]))
+            self.txtout.AppendText(f"{output}")
 
-        elif [x for x in ('warning', 'Warning', 'warn') if x in output]:
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['WARN']))
-            self.txtout.AppendText(f'{output}')
+        elif [x for x in ("warning", "Warning", "warn") if x in output]:
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["WARN"]))
+            self.txtout.AppendText(f"{output}")
 
         else:
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT3']))
-            self.txtout.AppendText(f'{output}')
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["TXT3"]))
+            self.txtout.AppendText(f"{output}")
+
     # ----------------------------------------------------------------------
 
     def update_display(self, output, duration, status):
@@ -262,17 +285,17 @@ class LogOut(wx.Panel):
         This method can be used even for non-loop threads.
         """
         if status != 0:  # error, exit status of the p.wait
-            if output == 'STOP':
-                msg, color = LogOut.MSG_stop, self.clr['ABORT']
+            if output == "STOP":
+                msg, color = LogOut.MSG_stop, self.clr["ABORT"]
             else:
-                msg, color = LogOut.MSG_failed, self.clr['ERR1']
+                msg, color = LogOut.MSG_failed, self.clr["ERR1"]
             self.txtout.SetDefaultStyle(wx.TextAttr(color))
             self.txtout.AppendText(f"\n\n{msg}")
-            self.result.append('failed')
+            self.result.append("failed")
             return  # must be return here
 
-        if 'time=' in output:  # ...in processing
-            i = output.index('time=') + 5
+        if "time=" in output:  # ...in processing
+            i = output.index("time=") + 5
             pos = output[i:].split()[0]
             msec = time_to_integer(pos)
 
@@ -283,16 +306,17 @@ class LogOut(wx.Panel):
             else:
                 self.barprog.SetValue(msec)
 
-            percentage = round((msec / duration) * 100 if
-                               duration != 0 else 100)
-            out = [a for a in "=".join(output.split()).split('=') if a]
+            percentage = round(
+                (msec / duration) * 100 if duration != 0 else 100
+            )
+            out = [a for a in "=".join(output.split()).split("=") if a]
             ffprog = []
             for key, val in pairwise(out):
                 ffprog.append(f"{key}: {val}")
             if self.with_eta:
-                if 'speed=' in output:
-                    speed = output.split('speed=')[-1].strip().split('x')[0]
-                    if speed in ('N/A', '0') or 'N/A' in speed:
+                if "speed=" in output:
+                    speed = output.split("speed=")[-1].strip().split("x")[0]
+                    if speed in ("N/A", "0") or "N/A" in speed:
                         eta = "   ETA: N/A"
                     else:  # is float
                         rem = (duration - msec) / float(speed)
@@ -302,42 +326,44 @@ class LogOut(wx.Panel):
                     eta = "   ETA: N/A"
             else:
                 eta = ""
-            self.labprog.SetLabel(f'Processing: {int(percentage)}% {eta}')
-            self.labffmpeg.SetLabel(' | '.join(ffprog))
+            self.labprog.SetLabel(f"Processing: {int(percentage)}% {eta}")
+            self.labffmpeg.SetLabel(" | ".join(ffprog))
 
         else:
             self.append_messages(output)
+
     # ----------------------------------------------------------------------
 
     def update_count(self, count, duration, end):
         """
         Receive messages from file count, loop or non-loop thread.
         """
-        if end == 'DONE':
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['SUCCESS']))
+        if end == "DONE":
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["SUCCESS"]))
             self.txtout.AppendText(f"\n{LogOut.MSG_done}")
             # set end values for percentage and ETA
             if self.with_eta:
                 newlab = self.labprog.GetLabel().split()
-                if 'Processing:' in newlab:
-                    newlab[1] = '100%   '
-                if 'ETA:' in newlab:
-                    newlab[3] = '00:00:00.000'
+                if "Processing:" in newlab:
+                    newlab[1] = "100%   "
+                if "ETA:" in newlab:
+                    newlab[3] = "00:00:00.000"
                 self.labprog.SetLabel(" ".join(newlab))
             else:
-                self.labprog.SetLabel('Processing: 100%')
+                self.labprog.SetLabel("Processing: 100%")
             return
 
-        if end == 'ERROR':
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ERR1']))
-            self.txtout.AppendText(f'\nERROR: {count}\n')
+        if end == "ERROR":
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["ERR1"]))
+            self.txtout.AppendText(f"\nERROR: {count}\n")
             self.error = True
         else:
             self.barprog.SetRange(duration)  # set overall duration range
             self.barprog.SetValue(0)  # reset bar progress
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
-            self.txtout.AppendText(f'\n{count}\n')
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["TXT0"]))
+            self.txtout.AppendText(f"\n{count}\n")
         self.count += 1
+
     # ----------------------------------------------------------------------
 
     def end_proc(self, filetotrash):
@@ -345,23 +371,25 @@ class LogOut(wx.Panel):
         At the end of the process
         """
         if self.error:
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["TXT0"]))
             self.txtout.AppendText(f"{LogOut.MSG_fatalerror}")
-            notification_area(_("Fatal Error !"), LogOut.MSG_fatalerror,
-                              wx.ICON_ERROR)
+            notification_area(
+                _("Fatal Error !"), LogOut.MSG_fatalerror, wx.ICON_ERROR
+            )
         elif self.abort:
-            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['ABORT']))
+            self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["ABORT"]))
             self.txtout.AppendText(f"\n{LogOut.MSG_interrupted}\n")
         else:
             if not self.result:
                 endmsg = LogOut.MSG_completed
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
-                notification_area(endmsg, _("Get your files at the "
-                                            "destination you specified"),
-                                  wx.ICON_INFORMATION,
-                                  )
-                if os.path.basename(self.logfile) == 'Queue Processing.log':
-                    pub.sendMessage("QUEUE PROCESS SUCCESSFULLY", msg='Done')
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["TXT0"]))
+                notification_area(
+                    endmsg,
+                    _("Get your files at the destination you specified"),
+                    wx.ICON_INFORMATION,
+                )
+                if os.path.basename(self.logfile) == "Queue Processing.log":
+                    pub.sendMessage("QUEUE PROCESS SUCCESSFULLY", msg="Done")
 
             else:
                 if len(self.result) == self.count:
@@ -369,22 +397,26 @@ class LogOut(wx.Panel):
                 else:
                     endmsg = LogOut.MSG_unfinished
 
-                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr['TXT0']))
-                notification_area(endmsg, _("For more details please read the "
-                                            "Current Log."), wx.ICON_ERROR)
+                self.txtout.SetDefaultStyle(wx.TextAttr(self.clr["TXT0"]))
+                notification_area(
+                    endmsg,
+                    _("For more details please read the Current Log."),
+                    wx.ICON_ERROR,
+                )
 
-            self.parent.statusbar_msg(_('...Finished'), None)
+            self.parent.statusbar_msg(_("...Finished"), None)
             self.txtout.AppendText(f"\n{endmsg}\n")
             self.barprog.SetValue(0)
 
             if filetotrash and self.parent.movetotrash:
                 # move processed files to Videomass trash folder
-                trashdir = self.appdata['trashdir_loc']
+                trashdir = self.appdata["trashdir_loc"]
                 delete_file_source(filetotrash, trashdir)  # filelist, dir
 
-        self.txtout.AppendText('\n')
+        self.txtout.AppendText("\n")
         self.reset_all()
-        pub.sendMessage("PROCESS TERMINATED", msg='Terminated')
+        pub.sendMessage("PROCESS TERMINATED", msg="Terminated")
+
     # ----------------------------------------------------------------------
 
     def on_stop(self):
@@ -394,6 +426,7 @@ class LogOut(wx.Panel):
         self.thread_type.stop()
         self.abort = True
         # event.Skip()
+
     # ----------------------------------------------------------------------
 
     def reset_all(self):
@@ -407,4 +440,5 @@ class LogOut(wx.Panel):
         self.count = 0
         self.with_eta = True  # restoring time remaining display
         self.btn_viewlog.Enable()
+
     # ----------------------------------------------------------------------

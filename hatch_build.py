@@ -25,6 +25,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 from pathlib import Path
 
 from babel.messages.mofile import write_mo
@@ -56,10 +57,12 @@ class VideomassLanguageBuildHook(BuildHookInterface):
 
         for po_path in localedir.rglob("*.po"):
             mo_path = po_path.with_suffix(".mo")
-            print(f'Compiling "{po_path.replace(localedir, "")}" '
-                  f'to "{mo_path.replace(localedir, "")}"...')
-            with open(po_path, 'r', encoding='utf-8') as po_file:
+            print(
+                f'Compiling "{po_path.replace(localedir, "")}" '
+                f'to "{mo_path.replace(localedir, "")}"...'
+            )
+            with open(po_path, "r", encoding="utf-8") as po_file:
                 catalog = read_po(po_file)
 
-            with open(mo_path, 'wb') as mo_file:
+            with open(mo_path, "wb") as mo_file:
                 write_mo(mo_file, catalog)

@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import os
 
 import wx
@@ -39,18 +40,18 @@ def write_changes(ffmpeg, ffplay, ffprobe, binfound):
     """
     get = wx.GetApp()
     appdata = get.appset
-    conf = ConfigManager(appdata['fileconfpath'])
+    conf = ConfigManager(appdata["fileconfpath"])
     dataread = conf.read_options()
-    if not dataread['trashdir_loc'].strip():
+    if not dataread["trashdir_loc"].strip():
         # prevent Nonetype error saving settings from preferences
-        dataread['trashdir_loc'] = appdata['trashdir_default']
-    dataread['ffmpeg_cmd'] = ffmpeg
-    dataread['ffprobe_cmd'] = ffprobe
-    dataread['ffplay_cmd'] = ffplay
-    local = binfound != 'system'
-    dataread['ffmpeg_islocal'] = local
-    dataread['ffprobe_islocal'] = local
-    dataread['ffplay_islocal'] = local
+        dataread["trashdir_loc"] = appdata["trashdir_default"]
+    dataread["ffmpeg_cmd"] = ffmpeg
+    dataread["ffprobe_cmd"] = ffprobe
+    dataread["ffplay_cmd"] = ffplay
+    local = binfound != "system"
+    dataread["ffmpeg_islocal"] = local
+    dataread["ffprobe_islocal"] = local
+    dataread["ffplay_islocal"] = local
 
     conf.write_options(**dataread)
 
@@ -60,8 +61,9 @@ class PageOne(wx.Panel):
     This is the first panel displayed on Wizard dialog box
 
     """
+
     get = wx.GetApp()
-    OS = get.appset['ostype']
+    OS = get.appset["ostype"]
     MSG2 = _("Please take a moment to set up the application")
     MSG3 = _('Click the "Next" button to get started')
 
@@ -77,16 +79,20 @@ class PageOne(wx.Panel):
         img = img.Scale(64, 64, wx.IMAGE_QUALITY_NORMAL)
         img = img.ConvertToBitmap()
         bitmap_vdms = wx.StaticBitmap(self, wx.ID_ANY, img)
-        lab1 = wx.StaticText(self, wx.ID_ANY,
-                             _("Welcome to the Videomass Wizard!"))
-        lab2 = wx.StaticText(self, wx.ID_ANY, PageOne.MSG2,
-                             style=wx.ST_ELLIPSIZE_END
-                             | wx.ALIGN_CENTRE_HORIZONTAL,
-                             )
-        lab3 = wx.StaticText(self, wx.ID_ANY, PageOne.MSG3,
-                             style=wx.ALIGN_CENTRE_HORIZONTAL)
+        lab1 = wx.StaticText(
+            self, wx.ID_ANY, _("Welcome to the Videomass Wizard!")
+        )
+        lab2 = wx.StaticText(
+            self,
+            wx.ID_ANY,
+            PageOne.MSG2,
+            style=wx.ST_ELLIPSIZE_END | wx.ALIGN_CENTRE_HORIZONTAL,
+        )
+        lab3 = wx.StaticText(
+            self, wx.ID_ANY, PageOne.MSG3, style=wx.ALIGN_CENTRE_HORIZONTAL
+        )
 
-        if PageOne.OS == 'Darwin':
+        if PageOne.OS == "Darwin":
             lab1.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
             lab2.SetFont(wx.Font(13, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
         else:
@@ -117,22 +123,28 @@ class PageTwo(wx.Panel):
         - Auto-detect the executables in environment variables.
         - Manually set the user's preferred executables.
     """
+
     get = wx.GetApp()
-    OS = get.appset['ostype']
-    GETPATH = get.appset['getpath']
-    FFMPEG_LOCALDIR = get.appset['FFMPEG_DIR']
+    OS = get.appset["ostype"]
+    GETPATH = get.appset["getpath"]
+    FFMPEG_LOCALDIR = get.appset["FFMPEG_DIR"]
 
-    MSG0 = _('Videomass is an application based on FFmpeg\n')
+    MSG0 = _("Videomass is an application based on FFmpeg\n")
 
-    MSG1 = (_('If FFmpeg is not on your computer, this application '
-              'will be unusable'))
+    MSG1 = _(
+        "If FFmpeg is not on your computer, this application will be unusable"
+    )
 
-    MSG2 = (_('If you have already installed FFmpeg on your operating '
-              'system,\nclick the "Auto-detection" button.'))
+    MSG2 = _(
+        "If you have already installed FFmpeg on your operating "
+        'system,\nclick the "Auto-detection" button.'
+    )
 
-    MSG3 = (_('If you want to use a version of FFmpeg located on your '
-              'filesystem\nbut not installed on your operating system,\n'
-              'click the "Locate" button.'))
+    MSG3 = _(
+        "If you want to use a version of FFmpeg located on your "
+        "filesystem\nbut not installed on your operating system,\n"
+        'click the "Locate" button.'
+    )
 
     def __init__(self, parent):
         """
@@ -147,38 +159,51 @@ class PageTwo(wx.Panel):
 
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizerText = wx.BoxSizer(wx.VERTICAL)
-        lab0 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG0,
-                             style=wx.ST_ELLIPSIZE_END
-                             | wx.ALIGN_CENTRE_HORIZONTAL,
-                             )
-        lab1 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG1,
-                             style=wx.ALIGN_CENTRE_HORIZONTAL)
-        lab2 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG2,
-                             style=wx.ST_ELLIPSIZE_END
-                             | wx.ALIGN_CENTRE_HORIZONTAL,
-                             )
-        lab3 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG3,
-                             style=wx.ST_ELLIPSIZE_END
-                             | wx.ALIGN_CENTRE_HORIZONTAL,
-                             )
-        self.detectBtn = wx.Button(self, wx.ID_ANY, _("Auto-detection"),
-                                   size=(250, -1))
-        self.locateBtn = wx.Button(self, wx.ID_ANY, _("Locate"),
-                                   size=(250, -1))
-        self.labFFpath = wx.StaticText(self, wx.ID_ANY, "",
-                                       style=wx.ST_ELLIPSIZE_END
-                                       | wx.ALIGN_CENTRE_HORIZONTAL,
-                                       )
-        if PageTwo.OS == 'Darwin':
+        lab0 = wx.StaticText(
+            self,
+            wx.ID_ANY,
+            PageTwo.MSG0,
+            style=wx.ST_ELLIPSIZE_END | wx.ALIGN_CENTRE_HORIZONTAL,
+        )
+        lab1 = wx.StaticText(
+            self, wx.ID_ANY, PageTwo.MSG1, style=wx.ALIGN_CENTRE_HORIZONTAL
+        )
+        lab2 = wx.StaticText(
+            self,
+            wx.ID_ANY,
+            PageTwo.MSG2,
+            style=wx.ST_ELLIPSIZE_END | wx.ALIGN_CENTRE_HORIZONTAL,
+        )
+        lab3 = wx.StaticText(
+            self,
+            wx.ID_ANY,
+            PageTwo.MSG3,
+            style=wx.ST_ELLIPSIZE_END | wx.ALIGN_CENTRE_HORIZONTAL,
+        )
+        self.detectBtn = wx.Button(
+            self, wx.ID_ANY, _("Auto-detection"), size=(250, -1)
+        )
+        self.locateBtn = wx.Button(
+            self, wx.ID_ANY, _("Locate"), size=(250, -1)
+        )
+        self.labFFpath = wx.StaticText(
+            self,
+            wx.ID_ANY,
+            "",
+            style=wx.ST_ELLIPSIZE_END | wx.ALIGN_CENTRE_HORIZONTAL,
+        )
+        if PageTwo.OS == "Darwin":
             lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
             lab1.SetFont(wx.Font(10, wx.SWISS, wx.ITALIC, wx.NORMAL, 0, ""))
-            self.labFFpath.SetFont(wx.Font(13, wx.MODERN,
-                                           wx.NORMAL, wx.BOLD, 0, ""))
+            self.labFFpath.SetFont(
+                wx.Font(13, wx.MODERN, wx.NORMAL, wx.BOLD, 0, "")
+            )
         else:
             lab0.SetFont(wx.Font(12, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
             lab1.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL, 0, ""))
-            self.labFFpath.SetFont(wx.Font(10, wx.MODERN,
-                                           wx.NORMAL, wx.BOLD, 0, ""))
+            self.labFFpath.SetFont(
+                wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD, 0, "")
+            )
         # layout
         sizer_base.Add((0, 50), 0)
         sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
@@ -203,6 +228,7 @@ class PageTwo(wx.Panel):
         # bindings
         self.Bind(wx.EVT_BUTTON, self.detectbin, self.detectBtn)
         self.Bind(wx.EVT_BUTTON, self.Locate, self.locateBtn)
+
     # -------------------------------------------------------------------#
 
     def Locate(self, event):
@@ -215,6 +241,7 @@ class PageTwo(wx.Panel):
         self.detectBtn.Enable()
         self.labFFpath.SetLabel(_('Click the "Next" button'))
         self.Layout()
+
     # -------------------------------------------------------------------#
 
     def detectbin(self, event):
@@ -223,35 +250,49 @@ class PageTwo(wx.Panel):
         detect FFmpeg based on the OS environment variables.
 
         """
-        if PageTwo.OS == 'Windows':
-            executable = ['ffmpeg.exe', 'ffprobe.exe', 'ffplay.exe']
+        if PageTwo.OS == "Windows":
+            executable = ["ffmpeg.exe", "ffprobe.exe", "ffplay.exe"]
         else:
-            executable = ['ffmpeg', 'ffprobe', 'ffplay']
+            executable = ["ffmpeg", "ffprobe", "ffplay"]
 
         exiting = None
         path = []
         for exe in executable:
             status = detect_binaries(exe, PageTwo.FFMPEG_LOCALDIR)
 
-            if status[0] == 'not installed':
-                wx.MessageBox(_("'{}' is not installed on your computer. "
-                                "Install it or indicate another location by "
-                                "clicking the 'Locate' button.").format(exe),
-                              'Videomass: Warning', wx.ICON_EXCLAMATION, self)
+            if status[0] == "not installed":
+                wx.MessageBox(
+                    _(
+                        "'{}' is not installed on your computer. "
+                        "Install it or indicate another location by "
+                        "clicking the 'Locate' button."
+                    ).format(exe),
+                    "Videomass: Warning",
+                    wx.ICON_EXCLAMATION,
+                    self,
+                )
                 return
 
-            if status[0] == 'provided':
+            if status[0] == "provided":
                 exiting = status[0]
                 path.append(status[1])
 
             elif not status[0]:
                 path.append(status[1])
 
-        if (exiting == 'provided'
-           and wx.MessageBox(_("Videomass already seems to include "
-                               "FFmpeg.\n\nDo you want to use that?"),
-                             _('Please confirm'), wx.ICON_QUESTION
-                             | wx.CANCEL | wx.YES_NO, self) != wx.YES):
+        if (
+            exiting == "provided"
+            and wx.MessageBox(
+                _(
+                    "Videomass already seems to include "
+                    "FFmpeg.\n\nDo you want to use that?"
+                ),
+                _("Please confirm"),
+                wx.ICON_QUESTION | wx.CANCEL | wx.YES_NO,
+                self,
+            )
+            != wx.YES
+        ):
             return
 
         self.parent.ffmpeg = PageTwo.GETPATH(path[0])
@@ -270,14 +311,17 @@ class PageThree(wx.Panel):
     ffplay executables to setting attributes on parent class.
 
     """
+
     get = wx.GetApp()
-    OS = get.appset['ostype']
-    GETPATH = get.appset['getpath']
+    OS = get.appset["ostype"]
+    GETPATH = get.appset["getpath"]
 
-    MSG0 = _('Locating FFmpeg executables\n')
+    MSG0 = _("Locating FFmpeg executables\n")
 
-    MSG1 = (_('"ffmpeg", "ffprobe" and "ffplay" are required. Complete all\n'
-              'the text boxes below by clicking on the respective buttons.'))
+    MSG1 = _(
+        '"ffmpeg", "ffprobe" and "ffplay" are required. Complete all\n'
+        "the text boxes below by clicking on the respective buttons."
+    )
 
     def __init__(self, parent):
         """
@@ -289,51 +333,54 @@ class PageThree(wx.Panel):
 
         self.parent = parent
 
-        if PageTwo.OS == 'Windows':
-            self.ffmpeg = 'ffmpeg.exe'
-            self.ffprobe = 'ffprobe.exe'
-            self.ffplay = 'ffplay.exe'
+        if PageTwo.OS == "Windows":
+            self.ffmpeg = "ffmpeg.exe"
+            self.ffprobe = "ffprobe.exe"
+            self.ffplay = "ffplay.exe"
         else:
-            self.ffmpeg = 'ffmpeg'
-            self.ffprobe = 'ffprobe'
-            self.ffplay = 'ffplay'
+            self.ffmpeg = "ffmpeg"
+            self.ffprobe = "ffprobe"
+            self.ffplay = "ffplay"
 
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizerText = wx.BoxSizer(wx.VERTICAL)
-        lab0 = wx.StaticText(self, wx.ID_ANY, PageThree.MSG0,
-                             style=wx.ST_ELLIPSIZE_END
-                             | wx.ALIGN_CENTRE_HORIZONTAL,
-                             )
-        lab1 = wx.StaticText(self, wx.ID_ANY, PageThree.MSG1,
-                             style=wx.ST_ELLIPSIZE_END
-                             | wx.ALIGN_CENTRE_HORIZONTAL,
-                             )
+        lab0 = wx.StaticText(
+            self,
+            wx.ID_ANY,
+            PageThree.MSG0,
+            style=wx.ST_ELLIPSIZE_END | wx.ALIGN_CENTRE_HORIZONTAL,
+        )
+        lab1 = wx.StaticText(
+            self,
+            wx.ID_ANY,
+            PageThree.MSG1,
+            style=wx.ST_ELLIPSIZE_END | wx.ALIGN_CENTRE_HORIZONTAL,
+        )
         #  ffmpeg
         gridffmpeg = wx.BoxSizer(wx.HORIZONTAL)
-        self.ffmpegTxt = wx.TextCtrl(self, wx.ID_ANY, "",
-                                     style=wx.TE_READONLY)
+        self.ffmpegTxt = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_READONLY)
         gridffmpeg.Add(self.ffmpegTxt, 1, wx.ALL, 5)
 
         self.ffmpegBtn = wx.Button(self, wx.ID_ANY, "ffmpeg")
         gridffmpeg.Add(self.ffmpegBtn, 0, wx.RIGHT | wx.CENTER, 5)
         #  ffprobe
         gridffprobe = wx.BoxSizer(wx.HORIZONTAL)
-        self.ffprobeTxt = wx.TextCtrl(self, wx.ID_ANY, "",
-                                      style=wx.TE_READONLY)
+        self.ffprobeTxt = wx.TextCtrl(
+            self, wx.ID_ANY, "", style=wx.TE_READONLY
+        )
         gridffprobe.Add(self.ffprobeTxt, 1, wx.ALL, 5)
 
         self.ffprobeBtn = wx.Button(self, wx.ID_ANY, "ffprobe")
         gridffprobe.Add(self.ffprobeBtn, 0, wx.RIGHT | wx.CENTER, 5)
         #  ffplay
         gridffplay = wx.BoxSizer(wx.HORIZONTAL)
-        self.ffplayTxt = wx.TextCtrl(self, wx.ID_ANY, "",
-                                     style=wx.TE_READONLY)
+        self.ffplayTxt = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_READONLY)
         gridffplay.Add(self.ffplayTxt, 1, wx.ALL, 5)
 
         self.ffplayBtn = wx.Button(self, wx.ID_ANY, "ffplay")
         gridffplay.Add(self.ffplayBtn, 0, wx.RIGHT | wx.CENTER, 5)
 
-        if PageThree.OS == 'Darwin':
+        if PageThree.OS == "Darwin":
             lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
         else:
             lab0.SetFont(wx.Font(12, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
@@ -358,63 +405,85 @@ class PageThree(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_ffmpeg, self.ffmpegBtn)
         self.Bind(wx.EVT_BUTTON, self.on_ffprobe, self.ffprobeBtn)
         self.Bind(wx.EVT_BUTTON, self.on_ffplay, self.ffplayBtn)
+
     # -------------------------------------------------------------------#
 
     def on_ffmpeg(self, event):
         """
         Open filedialog to locate ffmpeg executable
         """
-        with wx.FileDialog(self, _("{} location").format(self.ffmpeg),
-                           "", "", "ffmpeg binary "
-                           f"(*{self.ffmpeg})|*{self.ffmpeg}| "
-                           f"All files (*.*)|*.*",
-                           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
-
-            if (dlgfile.ShowModal() == wx.ID_OK
-               and os.path.basename(dlgfile.GetPath()) == self.ffmpeg):
+        with wx.FileDialog(
+            self,
+            _("{} location").format(self.ffmpeg),
+            "",
+            "",
+            "ffmpeg binary "
+            f"(*{self.ffmpeg})|*{self.ffmpeg}| "
+            f"All files (*.*)|*.*",
+            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST,
+        ) as dlgfile:
+            if (
+                dlgfile.ShowModal() == wx.ID_OK
+                and os.path.basename(dlgfile.GetPath()) == self.ffmpeg
+            ):
                 self.ffmpegTxt.Clear()
                 ffmpegpath = PageThree.GETPATH(dlgfile.GetPath())
                 self.ffmpegTxt.write(ffmpegpath)
                 self.parent.ffmpeg = ffmpegpath
                 self.check_text_fields()
+
     # -------------------------------------------------------------------#
 
     def on_ffprobe(self, event):
         """
         Open filedialog to locate ffprobe executable
         """
-        with wx.FileDialog(self, _("{} location").format(self.ffprobe),
-                           "", "", "ffprobe binary "
-                           f"(*{self.ffprobe})|*{self.ffprobe}| "
-                           f"All files (*.*)|*.*",
-                           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
-
-            if (dlgfile.ShowModal() == wx.ID_OK
-               and os.path.basename(dlgfile.GetPath()) == self.ffprobe):
+        with wx.FileDialog(
+            self,
+            _("{} location").format(self.ffprobe),
+            "",
+            "",
+            "ffprobe binary "
+            f"(*{self.ffprobe})|*{self.ffprobe}| "
+            f"All files (*.*)|*.*",
+            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST,
+        ) as dlgfile:
+            if (
+                dlgfile.ShowModal() == wx.ID_OK
+                and os.path.basename(dlgfile.GetPath()) == self.ffprobe
+            ):
                 self.ffprobeTxt.Clear()
                 ffprobepath = PageThree.GETPATH(dlgfile.GetPath())
                 self.ffprobeTxt.write(ffprobepath)
                 self.parent.ffprobe = ffprobepath
                 self.check_text_fields()
+
     # -------------------------------------------------------------------#
 
     def on_ffplay(self, event):
         """
         Open filedialog to locate ffplay executable
         """
-        with wx.FileDialog(self, _("{} location").format(self.ffplay),
-                           "", "", "ffplay binary "
-                           f"(*{self.ffplay})|*{self.ffplay}| "
-                           f"All files (*.*)|*.*",
-                           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
-
-            if (dlgfile.ShowModal() == wx.ID_OK
-               and os.path.basename(dlgfile.GetPath()) == self.ffplay):
+        with wx.FileDialog(
+            self,
+            _("{} location").format(self.ffplay),
+            "",
+            "",
+            "ffplay binary "
+            f"(*{self.ffplay})|*{self.ffplay}| "
+            f"All files (*.*)|*.*",
+            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST,
+        ) as dlgfile:
+            if (
+                dlgfile.ShowModal() == wx.ID_OK
+                and os.path.basename(dlgfile.GetPath()) == self.ffplay
+            ):
                 self.ffplayTxt.Clear()
                 ffplaypath = PageThree.GETPATH(dlgfile.GetPath())
                 self.ffplayTxt.write(ffplaypath)
                 self.parent.ffplay = ffplaypath
                 self.check_text_fields()
+
     # -------------------------------------------------------------------#
 
     def check_text_fields(self):
@@ -422,8 +491,11 @@ class PageThree(wx.Panel):
         Text boxes must not be empty to enable the
         `parent.Next` button.
         """
-        if (self.ffprobeTxt.GetValue() and self.ffmpegTxt.GetValue()
-                and self.ffplayTxt.GetValue()):
+        if (
+            self.ffprobeTxt.GetValue()
+            and self.ffmpegTxt.GetValue()
+            and self.ffplayTxt.GetValue()
+        ):
             self.parent.btnNext.Enable()
         else:
             self.parent.btnNext.Disable()
@@ -434,11 +506,14 @@ class PageFinish(wx.Panel):
     This is the last panel displayed on Wizard dialog box
 
     """
+
     get = wx.GetApp()
-    OS = get.appset['ostype']
+    OS = get.appset["ostype"]
     MSG0 = _("Wizard completed successfully!\n")
-    MSG1 = (_("Remember that you can always change these settings "
-              "later, through the Preferences dialog."))
+    MSG1 = _(
+        "Remember that you can always change these settings "
+        "later, through the Preferences dialog."
+    )
     MSG3 = _("Thank You!")
     MSG2 = _('To exit click the "Finish" button')
 
@@ -449,19 +524,19 @@ class PageFinish(wx.Panel):
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
 
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        lab0 = wx.StaticText(self, wx.ID_ANY, PageFinish.MSG0,
-                             style=wx.ALIGN_CENTRE_HORIZONTAL
-                             )
-        lab1 = wx.StaticText(self, wx.ID_ANY, PageFinish.MSG1,
-                             style=wx.ALIGN_CENTRE_HORIZONTAL
-                             )
-        lab2 = wx.StaticText(self, wx.ID_ANY, PageFinish.MSG2,
-                             style=wx.ALIGN_CENTRE_HORIZONTAL
-                             )
-        lab3 = wx.StaticText(self, wx.ID_ANY, PageFinish.MSG3,
-                             style=wx.ALIGN_CENTRE_HORIZONTAL
-                             )
-        if PageFinish.OS == 'Darwin':
+        lab0 = wx.StaticText(
+            self, wx.ID_ANY, PageFinish.MSG0, style=wx.ALIGN_CENTRE_HORIZONTAL
+        )
+        lab1 = wx.StaticText(
+            self, wx.ID_ANY, PageFinish.MSG1, style=wx.ALIGN_CENTRE_HORIZONTAL
+        )
+        lab2 = wx.StaticText(
+            self, wx.ID_ANY, PageFinish.MSG2, style=wx.ALIGN_CENTRE_HORIZONTAL
+        )
+        lab3 = wx.StaticText(
+            self, wx.ID_ANY, PageFinish.MSG3, style=wx.ALIGN_CENTRE_HORIZONTAL
+        )
+        if PageFinish.OS == "Darwin":
             lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
             lab1.SetFont(wx.Font(10, wx.SWISS, wx.ITALIC, wx.NORMAL, 0, ""))
             lab3.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
@@ -493,6 +568,7 @@ class Wizard(wx.Dialog):
     during the startup.
 
     """
+
     def __init__(self, icon_videomass):
         """
         The attributes of ffmpeg, ffprobe, ffplay are set
@@ -503,10 +579,12 @@ class Wizard(wx.Dialog):
         self.ffprobe = None
         self.ffplay = None
 
-        wx.Dialog.__init__(self, None, -1,
-                           style=wx.DEFAULT_DIALOG_STYLE
-                           | wx.RESIZE_BORDER,
-                           )
+        wx.Dialog.__init__(
+            self,
+            None,
+            -1,
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
+        )
         mainSizer = wx.BoxSizer(wx.VERTICAL)  # sizer base global
         self.pageOne = PageOne(self, icon_videomass)  # start...
         self.pageTwo = PageTwo(self)  # choose ffmpeg modality
@@ -555,6 +633,7 @@ class Wizard(wx.Dialog):
         Destroy app
         """
         self.Destroy()
+
     # -------------------------------------------------------------------#
 
     def on_Next(self, event):
@@ -562,37 +641,41 @@ class Wizard(wx.Dialog):
         Shows next panel when the 'Next' button is clicked.
 
         """
-        if self.btnNext.GetLabel() == _('Finish'):
+        if self.btnNext.GetLabel() == _("Finish"):
             self.wizard_Finish()
 
         if self.pageOne.IsShown():
             self.pageOne.Hide()
             self.pageTwo.Show()
             self.btnBack.Enable()
-            if (self.pageTwo.locateBtn.IsEnabled()
-                    and self.pageTwo.detectBtn.IsEnabled()):
+            if (
+                self.pageTwo.locateBtn.IsEnabled()
+                and self.pageTwo.detectBtn.IsEnabled()
+            ):
                 self.btnNext.Disable()
 
         elif self.pageTwo.IsShown():
-
             if self.pageTwo.detectBtn.IsEnabled():
                 self.pageTwo.Hide()
                 self.pageThree.Show()
-                if (not self.pageThree.ffmpegTxt.GetValue()
-                        and not self.pageThree.ffprobeTxt.GetValue()
-                        and not self.pageThree.ffplayTxt.GetValue()):
+                if (
+                    not self.pageThree.ffmpegTxt.GetValue()
+                    and not self.pageThree.ffprobeTxt.GetValue()
+                    and not self.pageThree.ffplayTxt.GetValue()
+                ):
                     self.btnNext.Disable()
             else:
                 self.pageTwo.Hide()
                 self.pageFinish.Show()
-                self.btnNext.SetLabel(_('Finish'))
+                self.btnNext.SetLabel(_("Finish"))
 
         elif self.pageThree.IsShown():
             self.pageThree.Hide()
             self.pageFinish.Show()
-            self.btnNext.SetLabel(_('Finish'))
+            self.btnNext.SetLabel(_("Finish"))
 
         self.Layout()
+
     # -------------------------------------------------------------------#
 
     def on_Back(self, event):
@@ -612,7 +695,7 @@ class Wizard(wx.Dialog):
             self.btnNext.Enable()
 
         elif self.pageFinish.IsShown():
-            self.btnNext.SetLabel(_('Next >'))
+            self.btnNext.SetLabel(_("Next >"))
             self.pageFinish.Hide()
             if self.pageTwo.locateBtn.IsEnabled():
                 self.pageTwo.Show()
@@ -620,6 +703,7 @@ class Wizard(wx.Dialog):
                 self.pageThree.Show()
 
         self.Layout()
+
     # -------------------------------------------------------------------#
 
     def wizard_Finish(self):
@@ -629,16 +713,12 @@ class Wizard(wx.Dialog):
 
         """
         if not self.pageTwo.locateBtn.IsEnabled():
-            binfound = 'local'
+            binfound = "local"
         else:  # if not self.pageTwo.detectBtn.IsEnabled():
-            binfound = 'system'
+            binfound = "system"
 
-        write_changes(self.ffmpeg,
-                      self.ffplay,
-                      self.ffprobe,
-                      binfound
-                      )
+        write_changes(self.ffmpeg, self.ffplay, self.ffprobe, binfound)
         get = wx.GetApp()
         appdata = get.appset
-        appdata['auto-restart-app'] = True
+        appdata["auto-restart-app"] = True
         self.Destroy()

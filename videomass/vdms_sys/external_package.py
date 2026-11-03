@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import importlib
 import importlib.machinery
 import importlib.util
@@ -62,10 +63,10 @@ def importer_init_file(path: str, test: list[str] | None = None):
              submod)
     """
     pkgname = os.path.basename(path)
-    initpath = os.path.join(path, '__init__.py')
+    initpath = os.path.join(path, "__init__.py")
 
     if not os.path.exists(initpath) or not os.path.isfile(initpath):
-        return f'No such file or directory: «{initpath}»'
+        return f"No such file or directory: «{initpath}»"
 
     spec = importlib.util.spec_from_file_location(pkgname, initpath)
     newmodule = importlib.util.module_from_spec(spec)

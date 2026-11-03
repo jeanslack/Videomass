@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import glob
 import math
 import os
@@ -47,19 +48,22 @@ class Popen(subprocess.Popen):
     a-process-in-pythonw-with-popen-without-a-console?lq=1>
 
     """
+
     def __init__(self, *args, **kwargs):
         """
         On MSWindows, retrieves the existing startupinfo or creates
         a new one if it is missing.
         """
-        if sys.platform == 'win32':
-            startupinfo = kwargs.get('startupinfo')
+        if sys.platform == "win32":
+            startupinfo = kwargs.get("startupinfo")
             if startupinfo is None:
                 startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            kwargs['startupinfo'] = startupinfo
+            kwargs["startupinfo"] = startupinfo
 
         super().__init__(*args, **kwargs)
+
+
 # ------------------------------------------------------------------------
 
 
@@ -77,7 +81,7 @@ def open_default_application(pathname):
     # make pathname normalized for max compatibility
     real_path = os.path.realpath(pathname)
 
-    if sys.platform == 'win32':
+    if sys.platform == "win32":
         try:
             os.startfile(real_path)
             return None
@@ -85,10 +89,10 @@ def open_default_application(pathname):
         except OSError as error:
             return str(error)
 
-    if sys.platform == 'darwin':
-        cmd = ['open', real_path]
+    if sys.platform == "darwin":
+        cmd = ["open", real_path]
     else:  # Linux, FreeBSD, etc.
-        cmd = ['xdg-open', real_path]
+        cmd = ["xdg-open", real_path]
 
     try:
         # Uses Popen class defined above in this module intead of run().
@@ -99,11 +103,14 @@ def open_default_application(pathname):
         return None
     except (OSError, subprocess.SubprocessError) as error:
         return str(error)
+
+
 # ------------------------------------------------------------------------
 
 
-def get_volume_data(filename, detect: list,
-                    gain='-1.0', target='PEAK', audiomap='') -> tuple:
+def get_volume_data(
+    filename, detect: list, gain="-1.0", target="PEAK", audiomap=""
+) -> tuple:
     """
     Given a filename, a detect object from `VolumeDetectThread`
     and a target level, it returns a volumedata object with
@@ -115,37 +122,39 @@ def get_volume_data(filename, detect: list,
     """
     volumedata = []
     volumedata.append(filename)
-    if target == 'PEAK':
-        maxvol = detect[0].split('dB')[0].strip()
+    if target == "PEAK":
+        maxvol = detect[0].split("dB")[0].strip()
         volumedata.append(maxvol)
-        meanvol = detect[1].split('dB')[0].strip()
+        meanvol = detect[1].split("dB")[0].strip()
         volumedata.append(meanvol)
         offset = float(maxvol) - float(gain)
         volumedata.append(str(offset))
         result = float(maxvol) - float(offset)
         volumedata.append(str(result))
         if float(maxvol) == float(gain):
-            volume = '  '
+            volume = "  "
         else:
-            volume = f'-filter:a:{audiomap} volume={-offset:f}dB'
+            volume = f"-filter:a:{audiomap} volume={-offset:f}dB"
         volumedata.append(volume)
 
-    elif target == 'RMS':
-        maxvol = detect[0].split('dB')[0].strip()
+    elif target == "RMS":
+        maxvol = detect[0].split("dB")[0].strip()
         volumedata.append(maxvol)
-        meanvol = detect[1].split('dB')[0].strip()
+        meanvol = detect[1].split("dB")[0].strip()
         volumedata.append(meanvol)
         offset = float(meanvol) - float(gain)
         volumedata.append(str(offset))
         result = float(maxvol) - offset
         volumedata.append(str(result))
         if offset == 0.0:
-            volume = '  '
+            volume = "  "
         else:
-            volume = f'-filter:a:{audiomap} volume={-offset:f}dB'
+            volume = f"-filter:a:{audiomap} volume={-offset:f}dB"
         volumedata.append(volume)
 
     return tuple(volumedata)
+
+
 # ------------------------------------------------------------------------
 
 
@@ -160,18 +169,19 @@ def format_bytes(num):
     if num <= 0.0:  # handles null, negative, or sub-byte values
         return "0.00B"
 
-    unit = ["B", "KiB", "MiB", "GiB", "TiB",
-            "PiB", "EiB", "ZiB", "YiB"]
+    unit = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
     const = 1024.0
 
     exponent = int(math.log(num, const))
     exponent = max(0, min(exponent, len(unit) - 1))
 
     suffix = unit[exponent]  # unit index
-    output_value = num / (const ** exponent)
+    output_value = num / (const**exponent)
 
     # return "%.2f%s" % (output_value, suffix)
     return f"{output_value:.2f}{suffix}"
+
+
 # ------------------------------------------------------------------------
 
 
@@ -182,11 +192,23 @@ def to_bytes(string):
     It returns a float object.
     """
     unit = {
-        "Yibyte": 8, "Ybyte": 8, "Zibyte": 7, "Zbyte": 7,
-        "Eibyte": 6, "Ebyte": 6, "Pibyte": 5, "Pbyte": 5,
-        "Tibyte": 4, "Tbyte": 4, "Gibyte": 3, "Gbyte": 3,
-        "Mibyte": 2, "Mbyte": 2, "Kibyte": 1, "Kbyte": 1,
-        "byte": 0
+        "Yibyte": 8,
+        "Ybyte": 8,
+        "Zibyte": 7,
+        "Zbyte": 7,
+        "Eibyte": 6,
+        "Ebyte": 6,
+        "Pibyte": 5,
+        "Pbyte": 5,
+        "Tibyte": 4,
+        "Tbyte": 4,
+        "Gibyte": 3,
+        "Gbyte": 3,
+        "Mibyte": 2,
+        "Mbyte": 2,
+        "Kibyte": 1,
+        "Kbyte": 1,
+        "byte": 0,
     }
 
     const = 1024.0
@@ -213,11 +235,13 @@ def to_bytes(string):
         except ValueError:
             pass
 
-    return round(value * (const ** exponent), 2)
+    return round(value * (const**exponent), 2)
+
+
 # ------------------------------------------------------------------------
 
 
-def time_to_integer(timef: str = '0', sec=False, rnd=False) -> int:
+def time_to_integer(timef: str = "0", sec=False, rnd=False) -> int:
     """
     Converts strings representing the 24-hour format to an
     integer equivalent to the time duration in milliseconds
@@ -275,6 +299,7 @@ def time_to_integer(timef: str = '0', sec=False, rnd=False) -> int:
         return int(total_ms / 1000)
     return int(total_ms)
 
+
 # ------------------------------------------------------------------------
 
 
@@ -312,8 +337,11 @@ def integer_to_time(integer: int = 0, mills=True, rnd=False) -> str:
     # truncates; otherwise, it adds one full second.
     if not mills and rnd:
         remainder = integer % 1000
-        integer = ((integer + 1000 - remainder)
-                   if remainder >= 500 else (integer - remainder))
+        integer = (
+            (integer + 1000 - remainder)
+            if remainder >= 500
+            else (integer - remainder)
+        )
 
     # The sexagesimal division should never produce ":60"
     minutes, sec_remainder = divmod(integer, 60000)
@@ -327,6 +355,8 @@ def integer_to_time(integer: int = 0, mills=True, rnd=False) -> str:
     # stage (if rnd=True), or it should simply be truncated
     seconds_int = int(sec_remainder / 1000)
     return f"{hours:02}:{minutes:02}:{seconds_int:02}"
+
+
 # ------------------------------------------------------------------------
 
 
@@ -344,6 +374,8 @@ def copy_missing_data(srcd, destd):
                 copy_restore(os.path.join(srcd, f), os.path.join(destd, f))
             elif os.path.isdir(os.path.join(srcd, f)):
                 copydir_recursively(os.path.join(srcd, f), destd)
+
+
 # ------------------------------------------------------------------------
 
 
@@ -367,6 +399,8 @@ def copy_restore(srcfile, destfile):
         return str(err)
 
     return None
+
+
 # ------------------------------------------------------------------#
 
 
@@ -392,6 +426,8 @@ def copydir_recursively(srcdir, destdir, extraname=None):
         return err
 
     return None
+
+
 # ------------------------------------------------------------------#
 
 
@@ -420,11 +456,13 @@ def copy_on(ext, sourcedir, destdir, overw=True):
         if not overw and os.path.basename(fln) in destpath:
             continue
         try:
-            shutil.copy(fln, f'{destdir}')
+            shutil.copy(fln, f"{destdir}")
         except OSError as error:
             # problems with permissions
             return error
     return None
+
+
 # ------------------------------------------------------------------#
 
 
@@ -456,12 +494,14 @@ def del_filecontents(filename):
     """
     try:
         if os.path.getsize(filename) > 0:
-            with open(filename, "w", encoding='utf-8'):
+            with open(filename, "w", encoding="utf-8"):
                 pass
     except OSError:
         # Atomic fallback for I/O issues
-        with open(filename, "r+", encoding='utf-8') as fname:
+        with open(filename, "r+", encoding="utf-8") as fname:
             fname.truncate(0)
+
+
 # ------------------------------------------------------------------#
 
 
@@ -488,24 +528,27 @@ def trailing_name_with_prog_digit(destpath, argname) -> str:
         raise TypeError("Only a string (str) object is expected.")
 
     name, ext = os.path.splitext(argname)
-    name = re.sub(r"[\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}]", '', name)
-    name = name.strip().strip('.')  # removes lead./trail. spaces and dots
+    name = re.sub(r"[\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}]", "", name)
+    name = name.strip().strip(".")  # removes lead./trail. spaces and dots
     ext = ext.strip()  # removes lead./trail. spaces
     alreadynumbered = []
 
     for items in os.listdir(destpath):
-        match = items.rsplit(sep=' - ', maxsplit=1)
+        match = items.rsplit(sep=" - ", maxsplit=1)
         if len(match) == 2 and match[0] == name and match[1].strip().isdigit():
             alreadynumbered.append(int(match[1]))  # append digit as int
 
     if alreadynumbered:
         prog = max(alreadynumbered) + 1
-        newdirname = os.path.join(destpath,
-                                  f'{name} - {str(prog).zfill(2)}' + ext)
+        newdirname = os.path.join(
+            destpath, f"{name} - {str(prog).zfill(2)}" + ext
+        )
     else:
-        newdirname = os.path.join(destpath, f'{name} - 01' + ext)
+        newdirname = os.path.join(destpath, f"{name} - 01" + ext)
 
     return newdirname
+
+
 # ------------------------------------------------------------------#
 
 
@@ -532,24 +575,27 @@ def leading_name_with_prog_digit(destpath, argname) -> str:
         raise TypeError("Only a string (str) object is expected.")
 
     name, ext = os.path.splitext(argname)
-    name = re.sub(r"[\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}]", '', name)
-    name = name.strip().strip('.')  # removes lead./trail. spaces and dots
+    name = re.sub(r"[\'\^\`\~\"\#\'\%\&\*\:\<\>\?\/\\\{\|\}]", "", name)
+    name = name.strip().strip(".")  # removes lead./trail. spaces and dots
     ext = ext.strip()  # removes lead./trail. spaces
     alreadynumbered = []
 
     for items in os.listdir(destpath):
-        match = items.split(sep=' - ', maxsplit=1)
+        match = items.split(sep=" - ", maxsplit=1)
         if len(match) == 2 and match[1] == name and match[0].strip().isdigit():
             alreadynumbered.append(int(match[0]))
 
     if alreadynumbered:
         prog = max(alreadynumbered) + 1
-        newdirname = os.path.join(destpath,
-                                  f'{str(prog).zfill(2)} - {name}' + ext)
+        newdirname = os.path.join(
+            destpath, f"{str(prog).zfill(2)} - {name}" + ext
+        )
     else:
-        newdirname = os.path.join(destpath, f'01 - {name}' + ext)
+        newdirname = os.path.join(destpath, f"01 - {name}" + ext)
 
     return newdirname
+
+
 # ------------------------------------------------------------------#
 
 
@@ -561,22 +607,24 @@ def clockset(duration, fileclock):
     file. Returns a clock object of type dict conforming to the
     referenced media file.
     """
-    duration = duration.split('.')[0]
+    duration = duration.split(".")[0]
     millis = time_to_integer(duration)
     if not millis:
-        clock = {'duration': '00:00:00', 'millis': 0}
+        clock = {"duration": "00:00:00", "millis": 0}
     else:
         if os.path.exists(fileclock):
-            with open(fileclock, "r", encoding='utf-8') as atime:
+            with open(fileclock, "r", encoding="utf-8") as atime:
                 clockread = atime.read().strip()
                 if time_to_integer(clockread) <= millis:
-                    clock = {'duration': clockread, 'millis': millis}
+                    clock = {"duration": clockread, "millis": millis}
                 else:
-                    clock = {'duration': duration, 'millis': millis}
+                    clock = {"duration": duration, "millis": millis}
         else:
-            clock = {'duration': '00:00:00', 'millis': millis}
+            clock = {"duration": "00:00:00", "millis": millis}
 
     return clock
+
+
 # ------------------------------------------------------------------#
 
 
@@ -587,15 +635,17 @@ def update_timeseq_duration(time_seq, duration):
     if time_seq:
         ms = time_to_integer(time_seq.split()[3])  # -t duration
         splseq = time_seq.split()
-        tseq = f'{splseq[0]} {splseq[1]}', f'{splseq[2]} {splseq[3]}'
+        tseq = f"{splseq[0]} {splseq[1]}", f"{splseq[2]} {splseq[3]}"
         dur = [ms for n in duration]
         duration = dur
         timestart = tseq[0]
         endtime = tseq[1]
     else:
-        timestart, endtime = '', ''
+        timestart, endtime = "", ""
 
     return duration, timestart, endtime
+
+
 # ------------------------------------------------------------------#
 
 
@@ -623,5 +673,5 @@ def detect_binaries(name, extradir=None):
     if extradir:  # check onto extradir
         execpath = os.path.join(extradir, "bin", name)
         if os.path.isfile(execpath):
-            return 'provided', execpath
-    return 'not installed', None
+            return "provided", execpath
+    return "not installed", None

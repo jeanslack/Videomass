@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import json
 import os
 
@@ -39,9 +40,11 @@ def write_json_file_queue(data, queuefile=None):
     if not queuefile:
         get = wx.GetApp()
         appdata = get.appset
-        queuefile = os.path.join(appdata["confdir"], 'queue.backup')
-    with open(queuefile, 'w', encoding='utf-8') as outfile:
+        queuefile = os.path.join(appdata["confdir"], "queue.backup")
+    with open(queuefile, "w", encoding="utf-8") as outfile:
         json.dump(data, outfile, ensure_ascii=False, indent=4)
+
+
 # --------------------------------------------------------------------
 
 
@@ -53,51 +56,74 @@ def load_json_file_queue(newincoming=None):
     """
     if not newincoming:
         wild = "Source (*.json)|*.json| All files (*.*)|*.*"
-        with wx.FileDialog(None, _("Import queue file"),
-                           defaultDir=os.path.expanduser('~'),
-                           wildcard=wild,
-                           style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fdlg:
-
+        with wx.FileDialog(
+            None,
+            _("Import queue file"),
+            defaultDir=os.path.expanduser("~"),
+            wildcard=wild,
+            style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST,
+        ) as fdlg:
             if fdlg.ShowModal() == wx.ID_CANCEL:
                 return None
             newincoming = fdlg.GetPath()
     try:
-        with open(newincoming, 'r', encoding='utf-8') as fln:
+        with open(newincoming, "r", encoding="utf-8") as fln:
             newdata = json.load(fln)
 
     except json.decoder.JSONDecodeError as err:
-        wx.MessageBox(f"ERROR: {err}.\nInvalid file: «{newincoming}»",
-                      _('Videomass - Error!'), wx.STAY_ON_TOP
-                      | wx.ICON_ERROR
-                      | wx.OK,
-                      None
-                      )
+        wx.MessageBox(
+            f"ERROR: {err}.\nInvalid file: «{newincoming}»",
+            _("Videomass - Error!"),
+            wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK,
+            None,
+        )
         return None
 
-    keys = ('type', 'args', 'extension', 'logname', 'source', 'preset name',
-            'destination', 'duration', 'start-time', 'end-time',)
+    keys = (
+        "type",
+        "args",
+        "extension",
+        "logname",
+        "source",
+        "preset name",
+        "destination",
+        "duration",
+        "start-time",
+        "end-time",
+    )
     for ck in newdata:
         for key in keys:
             if key not in ck:
-                msg = (_('ERROR: Keys mismatched for requested data.\n'
-                         'Invalid file: «{0}»').format(newincoming))
-                wx.MessageBox(msg, _('Videomass - Error!'), wx.STAY_ON_TOP
-                              | wx.ICON_ERROR
-                              | wx.OK,
-                              None
-                              )
+                msg = _(
+                    "ERROR: Keys mismatched for requested data.\n"
+                    "Invalid file: «{0}»"
+                ).format(newincoming)
+                wx.MessageBox(
+                    msg,
+                    _("Videomass - Error!"),
+                    wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK,
+                    None,
+                )
                 return None
     occurences = []
-    msg = (_('ERROR: invalid data found loading queue file.\n'
-             '«{0}»\n\nCannot contain multiple occurrences '
-             'in `destination` keys value.').format(newincoming))
+    msg = _(
+        "ERROR: invalid data found loading queue file.\n"
+        "«{0}»\n\nCannot contain multiple occurrences "
+        "in `destination` keys value."
+    ).format(newincoming)
     for item in newdata:
-        occurences.append(item['destination'])
+        occurences.append(item["destination"])
     if any(occurences.count(x) > 1 for x in occurences):
-        wx.MessageBox(msg, _('Videomass - Error!'),
-                      wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK, None)
+        wx.MessageBox(
+            msg,
+            _("Videomass - Error!"),
+            wx.STAY_ON_TOP | wx.ICON_ERROR | wx.OK,
+            None,
+        )
         return None
     return newdata
+
+
 # --------------------------------------------------------------------
 
 
@@ -112,23 +138,33 @@ def extend_data_queue(parent, currentqueue: list, newqueue: list) -> list:
     indx_new = []
     for indx1, olditem in enumerate(currentqueue):
         for indx2, newitem in enumerate(newqueue):
-            if olditem['destination'] == newitem['destination']:
+            if olditem["destination"] == newitem["destination"]:
                 indx_orig.append(indx1)
                 indx_new.append(indx2)
 
     if indx_orig and indx_new:
-        caption = _('Videomass - Add Items to Queue')
-        message = (_('Multiple items with identical names and destination '
-                     'paths cannot coexist.\nPlease choose one of the '
-                     'following actions:'))
+        caption = _("Videomass - Add Items to Queue")
+        message = _(
+            "Multiple items with identical names and destination "
+            "paths cannot coexist.\nPlease choose one of the "
+            "following actions:"
+        )
         choices = (
-            _('Replace occurrences with items from the imported queue.'),
-            _('Add only the currently missing items to the queue.'),
-            _('Remove the current queue and replace it with the imported '
-              'one.'))
+            _("Replace occurrences with items from the imported queue."),
+            _("Add only the currently missing items to the queue."),
+            _(
+                "Remove the current queue and replace it with the imported "
+                "one."
+            ),
+        )
         selected = None
-        with SingleChoice(parent, caption, message, choices, setsel=2,
-                          ) as dlg:
+        with SingleChoice(
+            parent,
+            caption,
+            message,
+            choices,
+            setsel=2,
+        ) as dlg:
             if dlg.ShowModal() == wx.ID_OK:
                 selected = dlg.getvalue()
 

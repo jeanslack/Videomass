@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import os
 
 import wx
@@ -43,9 +44,14 @@ def check_destination_dir(file_dest):
     if os.path.exists(drn) and os.path.isdir(drn):
         return None
 
-    wx.MessageBox(_('Output folder does not exist:\n\n"{}"\n').format(drn),
-                  _('Videomass - Error!'), wx.ICON_ERROR)
+    wx.MessageBox(
+        _('Output folder does not exist:\n\n"{}"\n').format(drn),
+        _("Videomass - Error!"),
+        wx.ICON_ERROR,
+    )
     return True
+
+
 # ------------------------------------------------------------------------#
 
 
@@ -64,13 +70,14 @@ def check_inout(file_sources, file_dest):
             files_ow.append(f'"{files}"')
 
     if files_ow:
-        msg = _('Files already exist, do you want to overwrite them?')
-        with ListWarning(None,
-                         dict.fromkeys(files_ow, _('Already exist')),
-                         caption=_('Please confirm'),
-                         header=msg,
-                         buttons='CONFIRM',
-                         ) as log:
+        msg = _("Files already exist, do you want to overwrite them?")
+        with ListWarning(
+            None,
+            dict.fromkeys(files_ow, _("Already exist")),
+            caption=_("Please confirm"),
+            header=msg,
+            buttons="CONFIRM",
+        ) as log:
             if log.ShowModal() != wx.ID_YES:
                 return None
 
@@ -79,24 +86,29 @@ def check_inout(file_sources, file_dest):
         if not os.path.isfile(os.path.abspath(fln)):
             files_exist.append(f'"{fln}"')
     if files_exist:
-        with ListWarning(None,
-                         dict.fromkeys(files_exist, _('Not found')),
-                         caption=_('Error list'),
-                         header=_('File(s) not found'),
-                         buttons='OK',
-                         ) as log:
+        with ListWarning(
+            None,
+            dict.fromkeys(files_exist, _("Not found")),
+            caption=_("Error list"),
+            header=_("File(s) not found"),
+            buttons="OK",
+        ) as log:
             log.ShowModal()
         return None
     # --------------- CHECK FOR EXISTING DIRECTORIES:
     for drn in file_dest:
         drn = os.path.abspath(os.path.dirname(drn))
         if not os.path.isdir(drn):
-            wx.MessageBox(_('Output folder does not exist:\n\n"{}"\n').format(
-                          drn), _('Videomass - Error!'), wx.ICON_ERROR
-                          )
+            wx.MessageBox(
+                _('Output folder does not exist:\n\n"{}"\n').format(drn),
+                _("Videomass - Error!"),
+                wx.ICON_ERROR,
+            )
             return None
 
     return (file_sources, file_dest)
+
+
 # ------------------------------------------------------------------------#
 
 
@@ -122,18 +134,18 @@ def check_files(*args, checkexists=True):
             basename = os.path.basename(path)
             copyext = os.path.splitext(basename)[1]  # ext
             if same_destin:
-                pathname = os.path.join(dirname, f'{fname}{suffix}{copyext}')
+                pathname = os.path.join(dirname, f"{fname}{suffix}{copyext}")
                 file_dest.append(pathname)
             else:
-                pathname = os.path.join(dir_destin, f'{fname}{copyext}')
+                pathname = os.path.join(dir_destin, f"{fname}{copyext}")
                 file_dest.append(pathname)
 
         else:  # uses one extension for all output
             if same_destin:
-                pathname = os.path.join(dirname, f'{fname}{suffix}.{extout}')
+                pathname = os.path.join(dirname, f"{fname}{suffix}.{extout}")
                 file_dest.append(pathname)
             else:
-                pathname = os.path.join(dir_destin, f'{fname}.{extout}')
+                pathname = os.path.join(dir_destin, f"{fname}.{extout}")
                 file_dest.append(pathname)
 
     if checkexists:

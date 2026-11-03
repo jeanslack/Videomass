@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 import os
 import webbrowser
 
@@ -72,6 +73,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
     motions, mouse clicks and so on).
     see <https://docs.wxpython.org/wx.lib.statbmp.html>
     """
+
     def __init__(self, parent, bitmap, idNum, imgFile, **kwargs):
         """
         Attributes defines the rectangle dimensions and coordinates,
@@ -82,8 +84,9 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         self.startpos = 0, 0  # start x,y axis on initial clicked
         self.bc = (255, 0, 0, 255)  # background color
 
-        wx.lib.statbmp.GenStaticBitmap.__init__(self, parent, -1,
-                                                bitmap, **kwargs)
+        wx.lib.statbmp.GenStaticBitmap.__init__(
+            self, parent, -1, bitmap, **kwargs
+        )
         self.bitmap = bitmap
 
         self.Bind(wx.EVT_PAINT, self.OnPaint)
@@ -92,6 +95,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         self.Bind(wx.EVT_LEFT_UP, self.on_leftup)
 
         self.SetCursor(wx.Cursor(wx.CURSOR_CROSS))
+
     # ------------------------------------------------------------------#
 
     def on_leftdown(self, event):
@@ -101,6 +105,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         """
         self.CaptureMouse()
         self.startpos = event.GetPosition()
+
     # ------------------------------------------------------------------#
 
     def on_move(self, event):
@@ -112,6 +117,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
             rect = wx.Rect(self.startpos, event.GetPosition())
             pub.sendMessage("TO_REAL_SCALE", msg=rect)
             self.onRedraw(rect)
+
     # ------------------------------------------------------------------#
 
     def on_leftup(self, event):
@@ -121,6 +127,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         if self.HasCapture():
             self.ReleaseMouse()
         self.startpos = 0, 0
+
     # ------------------------------------------------------------------#
 
     def OnPaint(self, event=None):
@@ -132,6 +139,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         wx.PaintDC(self)  # draw window boundary
         self.Refresh()  # needed on wayland to make it work
         self.onRedraw(self.rect)
+
     # ------------------------------------------------------------------#
 
     def onRedraw(self, rect):
@@ -143,7 +151,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         """
         self.rect = rect
         dc = wx.ClientDC(self)
-        if 'wxMac' not in wx.PlatformInfo:
+        if "wxMac" not in wx.PlatformInfo:
             self.SetDoubleBuffered(True)  # prevents flickers
             dc = wx.GCDC(dc)  # needed for brush transparency
         dc.Clear()
@@ -152,6 +160,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         bcolor = wx.Colour(self.bc[0], self.bc[1], self.bc[2], 40)
         dc.SetBrush(wx.Brush(bcolor))
         dc.DrawRectangle(self.rect)
+
     # ------------------------------------------------------------------#
 
     def oncolor(self, event, color=None):
@@ -164,6 +173,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
             color = event.GetValue()
             self.bc = color
             self.onRedraw(self.rect)
+
     # ------------------------------------------------------------------#
 
     def setbitmap(self, bitmap):
@@ -180,13 +190,14 @@ class Crop(wx.Dialog):
     See ``av_conversions.py`` -> ``on_Set_crop`` method/event
     for how to use this class.
     """
+
     get = wx.GetApp()
-    OS = get.appset['ostype']
-    LOGDIR = get.appset['logdir']
-    TMPROOT = os.path.join(get.appset['cachedir'], 'tmp', 'Crop')
-    TMPSRC = os.path.join(TMPROOT, 'tmpsrc')
+    OS = get.appset["ostype"]
+    LOGDIR = get.appset["logdir"]
+    TMPROOT = os.path.join(get.appset["cachedir"], "tmp", "Crop")
+    TMPSRC = os.path.join(TMPROOT, "tmpsrc")
     os.makedirs(TMPSRC, mode=0o777, exist_ok=True)
-    BACKGROUND = '#1b0413'
+    BACKGROUND = "#1b0413"
 
     def __init__(self, parent, *args, **kwa):
         """
@@ -210,49 +221,54 @@ class Crop(wx.Dialog):
         self.y_dc = 0
         self.x_dc = 0
         # current video size
-        self.width = kwa['width']
-        self.height = kwa['height']
+        self.width = kwa["width"]
+        self.height = kwa["height"]
         # scale preserving aspect ratio
         toscale = 220 if self.height >= self.width else 350
         self.h_scaled = round((self.height / self.width) * toscale)
         self.w_scaled = round((self.width / self.height) * self.h_scaled)
-        self.filename = kwa['filename']  # selected filename on file list
+        self.filename = kwa["filename"]  # selected filename on file list
         name = os.path.splitext(os.path.basename(self.filename))[0]
-        self.frame = os.path.join(f'{Crop.TMPSRC}', f'{name}.png')  # image
-        self.fileclock = os.path.join(Crop.TMPROOT, f'{name}.clock')
-        tcheck = clockset(kwa['duration'], self.fileclock)
-        self.clock = tcheck['duration']
-        self.mills = tcheck['millis']
+        self.frame = os.path.join(f"{Crop.TMPSRC}", f"{name}.png")  # image
+        self.fileclock = os.path.join(Crop.TMPROOT, f"{name}.clock")
+        tcheck = clockset(kwa["duration"], self.fileclock)
+        self.clock = tcheck["duration"]
+        self.mills = tcheck["millis"]
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
-        self.panelrect = wx.Panel(self, wx.ID_ANY,
-                                  size=(self.w_scaled, self.h_scaled)
-                                  )
+        self.panelrect = wx.Panel(
+            self, wx.ID_ANY, size=(self.w_scaled, self.h_scaled)
+        )
         sizerBase.Add(self.panelrect, 0, wx.ALL | wx.CENTER, 5)
         sizersize = wx.BoxSizer(wx.VERTICAL)
         sizerBase.Add(sizersize, 0, wx.ALL | wx.CENTER, 5)
-        msg = _("Source size: {0} x {1} pixels").format(self.width,
-                                                        self.height)
-        label1 = wx.StaticText(self, wx.ID_ANY,
-                               label=msg,
-                               style=wx.ST_NO_AUTORESIZE
-                               | wx.ALIGN_CENTRE_HORIZONTAL,
-                               )
+        msg = _("Source size: {0} x {1} pixels").format(
+            self.width, self.height
+        )
+        label1 = wx.StaticText(
+            self,
+            wx.ID_ANY,
+            label=msg,
+            style=wx.ST_NO_AUTORESIZE | wx.ALIGN_CENTRE_HORIZONTAL,
+        )
         sizersize.Add(label1, 0, wx.CENTER | wx.EXPAND)
-        self.btn_color = csel.ColourSelect(self, -1, _("Crop color"),
-                                           self.pencolor)
+        self.btn_color = csel.ColourSelect(
+            self, -1, _("Crop color"), self.pencolor
+        )
         sizersize.Add(self.btn_color, 0, wx.CENTER | wx.ALL, 5)
         msg = _("Search for a specific frame")
         sbox0 = wx.StaticBox(self, wx.ID_ANY, (msg))
         sizer_load = wx.StaticBoxSizer(sbox0, wx.HORIZONTAL)
         sizerBase.Add(sizer_load, 0, wx.ALL | wx.CENTER, 5)
-        self.sld_time = wx.Slider(sbox0, wx.ID_ANY,
-                                  time_to_integer(self.clock),
-                                  0,
-                                  1 if not self.mills else self.mills,
-                                  size=(250, -1),
-                                  style=wx.SL_HORIZONTAL,
-                                  )
+        self.sld_time = wx.Slider(
+            sbox0,
+            wx.ID_ANY,
+            time_to_integer(self.clock),
+            0,
+            1 if not self.mills else self.mills,
+            size=(250, -1),
+            style=wx.SL_HORIZONTAL,
+        )
         sizer_load.Add(self.sld_time, 0, wx.ALL | wx.CENTER, 5)
         self.txttime = wx.StaticText(sbox0, wx.ID_ANY, self.clock)
         sizer_load.Add(self.txttime, 0, wx.ALL | wx.CENTER, 10)
@@ -266,43 +282,60 @@ class Crop(wx.Dialog):
         sizerLabel.Add(boxctrl, 0, wx.CENTRE)
         label_height = wx.StaticText(sbox1, wx.ID_ANY, (_("Height")))
         boxctrl.Add(label_height, 0, wx.ALL | wx.CENTRE, 0)
-        self.spin_h = wx.SpinCtrl(sbox1, wx.ID_ANY, "0", min=0,
-                                  max=self.height, size=(-1, -1),
-                                  style=wx.TE_PROCESS_ENTER
-                                  | wx.SP_ARROW_KEYS,
-                                  )
+        self.spin_h = wx.SpinCtrl(
+            sbox1,
+            wx.ID_ANY,
+            "0",
+            min=0,
+            max=self.height,
+            size=(-1, -1),
+            style=wx.TE_PROCESS_ENTER | wx.SP_ARROW_KEYS,
+        )
         boxctrl.Add(self.spin_h, 0, wx.CENTRE)
         grid_sizerBase = wx.FlexGridSizer(1, 5, 0, 0)
         boxctrl.Add(grid_sizerBase, 0, wx.CENTRE, 0)
         label_X = wx.StaticText(sbox1, wx.ID_ANY, ("X"))
         grid_sizerBase.Add(label_X, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        self.spin_x = wx.SpinCtrl(sbox1, wx.ID_ANY, "0", min=-1,
-                                  max=self.width, size=(-1, -1),
-                                  style=wx.TE_PROCESS_ENTER
-                                  | wx.SP_ARROW_KEYS
-                                  )
+        self.spin_x = wx.SpinCtrl(
+            sbox1,
+            wx.ID_ANY,
+            "0",
+            min=-1,
+            max=self.width,
+            size=(-1, -1),
+            style=wx.TE_PROCESS_ENTER | wx.SP_ARROW_KEYS,
+        )
         grid_sizerBase.Add(self.spin_x, 0, wx.ALL | wx.CENTRE, 5)
 
         self.btn_centre = wx.Button(sbox1, wx.ID_ANY, _("Center"))
-        grid_sizerBase.Add(self.btn_centre, 0, wx.ALL
-                           | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_w = wx.SpinCtrl(sbox1, wx.ID_ANY, "0", min=0,
-                                  max=self.width,
-                                  size=(-1, -1),
-                                  style=wx.TE_PROCESS_ENTER
-                                  | wx.SP_ARROW_KEYS,
-                                  )
+        grid_sizerBase.Add(
+            self.btn_centre, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5
+        )
+        self.spin_w = wx.SpinCtrl(
+            sbox1,
+            wx.ID_ANY,
+            "0",
+            min=0,
+            max=self.width,
+            size=(-1, -1),
+            style=wx.TE_PROCESS_ENTER | wx.SP_ARROW_KEYS,
+        )
         grid_sizerBase.Add(self.spin_w, 0, wx.ALL | wx.CENTRE, 5)
 
         label_width = wx.StaticText(sbox1, wx.ID_ANY, (_("Width")))
-        grid_sizerBase.Add(label_width, 0, wx.RIGHT
-                           | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_y = wx.SpinCtrl(sbox1, wx.ID_ANY, "0", min=-1,
-                                  max=self.height, size=(-1, -1),
-                                  style=wx.TE_PROCESS_ENTER
-                                  | wx.SP_ARROW_KEYS
-                                  )
+        grid_sizerBase.Add(
+            label_width, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 5
+        )
+        self.spin_y = wx.SpinCtrl(
+            sbox1,
+            wx.ID_ANY,
+            "0",
+            min=-1,
+            max=self.height,
+            size=(-1, -1),
+            style=wx.TE_PROCESS_ENTER | wx.SP_ARROW_KEYS,
+        )
         boxctrl.Add(self.spin_y, 0, wx.CENTRE)
         label_Y = wx.StaticText(sbox1, wx.ID_ANY, ("Y"))
         boxctrl.Add(label_Y, 0, wx.BOTTOM | wx.CENTRE, 5)
@@ -335,20 +368,23 @@ class Crop(wx.Dialog):
 
         # ----------------------Properties-----------------------#
         self.panelrect.SetBackgroundColour(wx.Colour(Crop.BACKGROUND))
-        if Crop.OS == 'Darwin':
+        if Crop.OS == "Darwin":
             label1.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
             label1.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
         self.SetTitle(_("Crop Tool"))
-        self.btn_color.SetToolTip(_('Choose the color to draw '
-                                    'the cropping area'))
-        self.spin_w.SetToolTip(_('Crop to width'))
-        self.spin_y.SetToolTip(_('Move vertically (set to -1 to center '
-                                 'the vertical axis)'))
-        self.spin_x.SetToolTip(_('Move horizontally (set to -1 to center '
-                                 'the horizontal axis)'))
-        self.spin_h.SetToolTip(_('Crop to height'))
+        self.btn_color.SetToolTip(
+            _("Choose the color to draw the cropping area")
+        )
+        self.spin_w.SetToolTip(_("Crop to width"))
+        self.spin_y.SetToolTip(
+            _("Move vertically (set to -1 to center the vertical axis)")
+        )
+        self.spin_x.SetToolTip(
+            _("Move horizontally (set to -1 to center the horizontal axis)")
+        )
+        self.spin_h.SetToolTip(_("Crop to height"))
 
         # ----- Set layout
         self.SetSizer(sizerBase)
@@ -377,6 +413,7 @@ class Crop(wx.Dialog):
 
         if args[0]:  # fcrop previusly values
             self.default(args[0], args[1])
+
     # ------------------------------------------------------------------#
 
     def default(self, fcrop, colorcrop):
@@ -384,7 +421,7 @@ class Crop(wx.Dialog):
         Set controls to previous settings when reopening
         the Crop dialog
         """
-        s = fcrop.split(':')
+        s = fcrop.split(":")
         s[0] = s[0][5:]  # removing `crop=` word on first item
         self.spin_w.SetValue(int(s[0][2:]))
         self.spin_h.SetValue(int(s[1][2:]))
@@ -393,6 +430,7 @@ class Crop(wx.Dialog):
         self.btn_color.SetValue(colorcrop)
         self.bob.oncolor(None, color=colorcrop)
         self.onDrawing()
+
     # ------------------------------------------------------------------#
 
     def on_Seek(self, event):
@@ -404,6 +442,7 @@ class Crop(wx.Dialog):
         self.txttime.SetLabel(clock)  # update StaticText
         if not self.btn_load.IsEnabled():
             self.btn_load.Enable()
+
     # ------------------------------------------------------------------#
 
     def make_frame_from_file(self, event):
@@ -415,29 +454,33 @@ class Crop(wx.Dialog):
         greater than the max time nor less than the min time
         (see the `seek` callback above)
         """
-        logfile = make_log_template('generic_task.log', Crop.LOGDIR, mode="w")
+        logfile = make_log_template("generic_task.log", Crop.LOGDIR, mode="w")
         if not self.mills:
-            sseg = ''
+            sseg = ""
         else:
             seek = self.sld_time.GetValue()
             self.clock = integer_to_time(seek, False)  # to 24-HH
-            sseg = f'-ss {self.clock}'
+            sseg = f"-ss {self.clock}"
 
-        arg = (f'{sseg} -i "{self.filename}" -f image2 '
-               f'-update 1 -frames:v 1 "{self.frame}"')
-        thread = FFmpegGenericTask(arg, 'Crop', logfile)
+        arg = (
+            f'{sseg} -i "{self.filename}" -f image2 '
+            f'-update 1 -frames:v 1 "{self.frame}"'
+        )
+        thread = FFmpegGenericTask(arg, "Crop", logfile)
         thread.join()  # wait end thread
         error = thread.status
         if error:
-            show_msg_notify(self.GetParent(),
-                            logname=os.path.basename(logfile))
+            show_msg_notify(
+                self.GetParent(), logname=os.path.basename(logfile)
+            )
             return
         if sseg:
-            with open(self.fileclock, "w", encoding='utf-8') as atime:
+            with open(self.fileclock, "w", encoding="utf-8") as atime:
                 atime.write(self.clock)
         self.btn_load.Disable()
         bmp = make_bitmap(self.w_scaled, self.h_scaled, self.frame)
         self.bob.setbitmap(bmp)
+
     # ------------------------------------------------------------------#
 
     def to_real_scale_coords(self, msg):
@@ -452,6 +495,7 @@ class Crop(wx.Dialog):
         self.spin_y.SetValue(round(msg[1] * y_scale))
         self.spin_w.SetValue(round(msg[2] * x_scale))
         self.spin_h.SetValue(round(msg[3] * y_scale))
+
     # ------------------------------------------------------------------#
 
     def onDrawing(self):
@@ -477,6 +521,7 @@ class Crop(wx.Dialog):
 
         rect = (self.x_dc, self.y_dc, self.w_dc, self.h_dc)
         self.bob.onRedraw([round(r) for r in rect])
+
     # ------------------------------------------------------------------#
 
     def onWidth(self, event):
@@ -485,6 +530,7 @@ class Crop(wx.Dialog):
 
         """
         self.onDrawing()
+
     # ------------------------------------------------------------------#
 
     def onHeight(self, event):
@@ -492,6 +538,7 @@ class Crop(wx.Dialog):
         Height adjustment event, self.spin_h callback
         """
         self.onDrawing()
+
     # ------------------------------------------------------------------#
 
     def onX(self, event):
@@ -499,6 +546,7 @@ class Crop(wx.Dialog):
         Event on Horizontal axis (X) adjustment, self.spin_x callback
         """
         self.onDrawing()
+
     # ------------------------------------------------------------------#
 
     def onY(self, event):
@@ -506,6 +554,7 @@ class Crop(wx.Dialog):
         Event on Vertical axis (Y) adjustment, self.spin_y callback
         """
         self.onDrawing()
+
     # ------------------------------------------------------------------#
 
     def onCentre(self, event):
@@ -517,6 +566,7 @@ class Crop(wx.Dialog):
         y = (self.height / 2) - (self.spin_h.GetValue() / 2)
         self.spin_y.SetValue(round(y))
         self.onDrawing()
+
     # ------------------------------------------------------------------#
 
     def on_reset(self, event):
@@ -532,6 +582,7 @@ class Crop(wx.Dialog):
         self.spin_h.SetValue(0)
         self.spin_y.SetValue(0)
         self.onDrawing()
+
     # ------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -540,12 +591,15 @@ class Crop(wx.Dialog):
         see <https://docs.python.org/3.8/library/webbrowser.html>
 
         """
-        page = ('https://jeanslack.github.io/Videomass/User-guide/'
-                'Video_filters_en.pdf#%5B%7B%22num%22%3A13%2C%22gen'
-                '%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C785.'
-                '189%2C0%5D')
+        page = (
+            "https://jeanslack.github.io/Videomass/User-guide/"
+            "Video_filters_en.pdf#%5B%7B%22num%22%3A13%2C%22gen"
+            "%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C56.7%2C785."
+            "189%2C0%5D"
+        )
 
         webbrowser.open(page)
+
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
@@ -553,6 +607,7 @@ class Crop(wx.Dialog):
         Close this dialog without saving anything
         """
         event.Skip()
+
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):
@@ -560,6 +615,7 @@ class Crop(wx.Dialog):
         Don't use self.Destroy() in this dialog
         """
         event.Skip()
+
     # ------------------------------------------------------------------#
 
     def getvalue(self):
@@ -577,18 +633,18 @@ class Crop(wx.Dialog):
         if width and height:
             if x_axis == -1:
                 pos = round((self.width / 2) - (width / 2))
-                horiz_pos = f'x={pos}:'
+                horiz_pos = f"x={pos}:"
             else:
-                horiz_pos = f'x={x_axis}:'
+                horiz_pos = f"x={x_axis}:"
 
             if y_axis == -1:
                 pos = round((self.height / 2) - (height / 2))
-                vert_pos = f'y={pos}:'
+                vert_pos = f"y={pos}:"
             else:
-                vert_pos = f'y={y_axis}:'
+                vert_pos = f"y={y_axis}:"
 
-            val = f'w={width}:h={height}:{horiz_pos}{vert_pos}'
-            crop = val[:len(val) - 1]  # remove last ':' string
+            val = f"w={width}:h={height}:{horiz_pos}{vert_pos}"
+            crop = val[: len(val) - 1]  # remove last ':' string
             color = self.btn_color.GetValue()
             return crop, color
 

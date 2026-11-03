@@ -24,6 +24,7 @@ This file is part of Videomass.
    You should have received a copy of the GNU General Public License
    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 from typing import Any, ClassVar
 
 import wx
@@ -38,6 +39,7 @@ class AudioProperties(wx.Dialog):
     See ``av_conversions.py`` -> ``audio_dialog`` method for
     how to use this class.
     """
+
     def __init__(self, parent, *args):
         """
         The given 'codecname' parameter represents the
@@ -54,47 +56,55 @@ class AudioProperties(wx.Dialog):
         self.bitrate = audiodata.bitrate
         self.bitdepth = audiodata.bitdepth
 
-        wx.Dialog.__init__(self, parent, -1, title=args[1],
-                           style=wx.DEFAULT_DIALOG_STYLE
-                           )
+        wx.Dialog.__init__(
+            self, parent, -1, title=args[1], style=wx.DEFAULT_DIALOG_STYLE
+        )
         sizerbase = wx.BoxSizer(wx.VERTICAL)
         boxctrls = wx.BoxSizer(wx.HORIZONTAL)
         sizerbase.Add(boxctrls, 0, wx.ALL | wx.CENTRE, 0)
 
         bitrate_list = [a[0] for a in self.bitrate.values()]
-        self.rdb_bitrate = wx.RadioBox(self, wx.ID_ANY,
-                                       ("Compression level"),
-                                       choices=bitrate_list,
-                                       majorDimension=0,
-                                       style=wx.RA_SPECIFY_ROWS,
-                                       )
+        self.rdb_bitrate = wx.RadioBox(
+            self,
+            wx.ID_ANY,
+            ("Compression level"),
+            choices=bitrate_list,
+            majorDimension=0,
+            style=wx.RA_SPECIFY_ROWS,
+        )
         boxctrls.Add(self.rdb_bitrate, 0, wx.ALL, 5)
 
         channel_list = [a[0] for a in self.channels.values()]
-        self.rdb_channels = wx.RadioBox(self, wx.ID_ANY,
-                                        ("Channels"),
-                                        choices=channel_list,
-                                        majorDimension=0,
-                                        style=wx.RA_SPECIFY_ROWS,
-                                        )
+        self.rdb_channels = wx.RadioBox(
+            self,
+            wx.ID_ANY,
+            ("Channels"),
+            choices=channel_list,
+            majorDimension=0,
+            style=wx.RA_SPECIFY_ROWS,
+        )
         boxctrls.Add(self.rdb_channels, 0, wx.ALL, 5)
 
         samplerate_list = [a[0] for a in self.sample_rate.values()]
-        self.rdb_sample_r = wx.RadioBox(self, wx.ID_ANY,
-                                        ("Sample rate"),
-                                        choices=samplerate_list,
-                                        majorDimension=0,
-                                        style=wx.RA_SPECIFY_ROWS,
-                                        )
+        self.rdb_sample_r = wx.RadioBox(
+            self,
+            wx.ID_ANY,
+            ("Sample rate"),
+            choices=samplerate_list,
+            majorDimension=0,
+            style=wx.RA_SPECIFY_ROWS,
+        )
         boxctrls.Add(self.rdb_sample_r, 0, wx.ALL, 5)
 
         bitdepth_list = [a[0] for a in self.bitdepth.values()]
-        self.rdb_bitdepth = wx.RadioBox(self, wx.ID_ANY,
-                                        ("Bit per Sample (bit depth)"),
-                                        choices=bitdepth_list,
-                                        majorDimension=0,
-                                        style=wx.RA_SPECIFY_ROWS,
-                                        )
+        self.rdb_bitdepth = wx.RadioBox(
+            self,
+            wx.ID_ANY,
+            ("Bit per Sample (bit depth)"),
+            choices=bitdepth_list,
+            majorDimension=0,
+            style=wx.RA_SPECIFY_ROWS,
+        )
         boxctrls.Add(self.rdb_bitdepth, 0, wx.ALL, 5)
 
         # ---------------------- Bottom buttons ----------------------
@@ -114,13 +124,13 @@ class AudioProperties(wx.Dialog):
         self.Layout()
 
         # ----------------------Properties----------------------
-        if self.rdb_bitrate.GetStringSelection() == 'Not applicable ':
+        if self.rdb_bitrate.GetStringSelection() == "Not applicable ":
             self.rdb_bitrate.Hide()
 
-        if self.rdb_bitdepth.GetStringSelection() == 'Not applicable ':
+        if self.rdb_bitdepth.GetStringSelection() == "Not applicable ":
             self.rdb_bitdepth.Hide()
 
-        if self.rdb_sample_r.GetStringSelection() == 'Not applicable ':
+        if self.rdb_sample_r.GetStringSelection() == "Not applicable ":
             self.rdb_sample_r.Hide()
 
         self.rdb_bitrate.SetToolTip(audiodata.BITRATE_TOOLTIP)
@@ -162,6 +172,7 @@ class AudioProperties(wx.Dialog):
         self.rdb_bitdepth.SetSelection(0)
         self.rdb_bitrate.SetSelection(0)
         self.rdb_channels.SetSelection(0)
+
     # ------------------------------------------------------------------#
 
     def on_cancel(self, event):
@@ -169,6 +180,7 @@ class AudioProperties(wx.Dialog):
         Cancel this dialog without saving anything
         """
         event.Skip()
+
     # ------------------------------------------------------------------#
 
     def on_apply(self, event):
@@ -176,6 +188,7 @@ class AudioProperties(wx.Dialog):
         Don't use self.Destroy() in this dialog
         """
         event.Skip()
+
     # ------------------------------------------------------------------#
 
     def getvalue(self):
@@ -195,11 +208,14 @@ class AudioProperties(wx.Dialog):
         sel_br = self.rdb_bitrate.GetStringSelection()
         sel_bd = self.rdb_bitdepth.GetStringSelection()
 
-        return (next(v for v in self.channels.values() if sel_ch in v[0]),
-                next(v for v in self.sample_rate.values() if sel_sr in v[0]),
-                next(v for v in self.bitrate.values() if sel_br in v[0]),
-                next(v for v in self.bitdepth.values() if sel_bd in v[0]),
-                )
+        return (
+            next(v for v in self.channels.values() if sel_ch in v[0]),
+            next(v for v in self.sample_rate.values() if sel_sr in v[0]),
+            next(v for v in self.bitrate.values() if sel_br in v[0]),
+            next(v for v in self.bitdepth.values() if sel_bd in v[0]),
+        )
+
+
 # ----------------------------------------------------------------------#
 
 
@@ -223,30 +239,35 @@ class AudioParameters:
         >>>    ffmpeg_flags = [a[1] for a in adata.sample_rate.values()]
 
     """
-    CHANNEL_TOOLTIP = (_('Videomass supports mono and stereo audio channels. '
-                         'If you are not sure set to "Auto" and source values '
-                         'will be copied.'
-                         ))
-    SAMPLE_RATE_TOOLTIP = (_('The audio Rate (or sample-rate) is the sound '
-                             'sampling frequency and is measured in Hertz. '
-                             'The higher the frequency, the more true it '
-                             'will be to the sound source and the more the '
-                             'file will increase in size. For audio CD '
-                             'playback, set a sampling frequency of 44100 '
-                             'kHz. If you are not sure, set to "Auto" and '
-                             'source values will be copied.'
-                             ))
-    BITRATE_TOOLTIP = (_('The audio bitrate affects the file compression and '
-                         'thus the quality of listening. The higher the '
-                         'value, the higher the quality.'
-                         ))
-    BITDEPTH_TOOLTIP = (_('Bit depth is the number of bits of information in '
-                          'each sample, and it directly corresponds to the '
-                          'resolution of each sample. Bit depth is only '
-                          'meaningful in reference to a PCM digital signal. '
-                          'Non-PCM formats, such as lossy compression '
-                          'formats, do not have associated bit depths.'
-                          ))
+
+    CHANNEL_TOOLTIP = _(
+        "Videomass supports mono and stereo audio channels. "
+        'If you are not sure set to "Auto" and source values '
+        "will be copied."
+    )
+    SAMPLE_RATE_TOOLTIP = _(
+        "The audio Rate (or sample-rate) is the sound "
+        "sampling frequency and is measured in Hertz. "
+        "The higher the frequency, the more true it "
+        "will be to the sound source and the more the "
+        "file will increase in size. For audio CD "
+        "playback, set a sampling frequency of 44100 "
+        'kHz. If you are not sure, set to "Auto" and '
+        "source values will be copied."
+    )
+    BITRATE_TOOLTIP = _(
+        "The audio bitrate affects the file compression and "
+        "thus the quality of listening. The higher the "
+        "value, the higher the quality."
+    )
+    BITDEPTH_TOOLTIP = _(
+        "Bit depth is the number of bits of information in "
+        "each sample, and it directly corresponds to the "
+        "resolution of each sample. Bit depth is only "
+        "meaningful in reference to a PCM digital signal. "
+        "Non-PCM formats, such as lossy compression "
+        "formats, do not have associated bit depths."
+    )
     SAMPLE_RATE: ClassVar[dict[str, Any]] = {
         0: ("Auto", ""),
         1: ("44100 Hz ", "-ar 44100"),
@@ -268,30 +289,31 @@ class AudioParameters:
         this class sets all instance attributes with appropriate
         class method.
         """
-        self.sample_rate = {0: ('Not applicable ', "")}
-        self.channels = {0: ('Not applicable ', "")}
-        self.bitrate = {0: ('Not applicable ', "")}
-        self.bitdepth = {0: ('Not applicable ', "")}
+        self.sample_rate = {0: ("Not applicable ", "")}
+        self.channels = {0: ("Not applicable ", "")}
+        self.bitrate = {0: ("Not applicable ", "")}
+        self.bitdepth = {0: ("Not applicable ", "")}
         self.unsupported = None
 
-        if acodecname in ('PCM', 'wav', 'aiff'):
+        if acodecname in ("PCM", "wav", "aiff"):
             self.pcm()
-        elif acodecname in ('FLAC', 'flac'):
+        elif acodecname in ("FLAC", "flac"):
             self.flac()
-        elif acodecname in ('ALAC', 'alac', 'm4a'):
+        elif acodecname in ("ALAC", "alac", "m4a"):
             self.alac()
-        elif acodecname in ('AAC', 'aac'):
+        elif acodecname in ("AAC", "aac"):
             self.aac()
-        elif acodecname in ('AC3', 'ac3'):
+        elif acodecname in ("AC3", "ac3"):
             self.ac3()
-        elif acodecname in ('VORBIS', 'ogg', 'oga'):
+        elif acodecname in ("VORBIS", "ogg", "oga"):
             self.vorbis()
-        elif acodecname in ('LAME', 'mp3'):
+        elif acodecname in ("LAME", "mp3"):
             self.lame()
-        elif acodecname in ('OPUS', 'opus'):
+        elif acodecname in ("OPUS", "opus"):
             self.opus()
         else:
-            self.unsupported = f'Unsupported codec: {acodecname}'
+            self.unsupported = f"Unsupported codec: {acodecname}"
+
     # -----------------------------------------------------------------#
 
     def pcm(self):
@@ -299,15 +321,18 @@ class AudioParameters:
         Set the PCM codec parameters
         """
         self.sample_rate = AudioParameters.SAMPLE_RATE
-        self.channels = {0: ("Auto", ""),
-                         1: ("Mono", "-ac 1"),
-                         2: ("Stereo", "-ac 2"),
-                         }
-        self.bitdepth = {0: ("Auto", ""),
-                         1: ("16 bit", "pcm_s16le"),
-                         2: ("24 bit", "pcm_s24le"),
-                         4: ("32 bit", "pcm_s32le"),
-                         }
+        self.channels = {
+            0: ("Auto", ""),
+            1: ("Mono", "-ac 1"),
+            2: ("Stereo", "-ac 2"),
+        }
+        self.bitdepth = {
+            0: ("Auto", ""),
+            1: ("16 bit", "pcm_s16le"),
+            2: ("24 bit", "pcm_s24le"),
+            4: ("32 bit", "pcm_s32le"),
+        }
+
     # -----------------------------------------------------------------#
 
     def flac(self):
@@ -315,21 +340,24 @@ class AudioParameters:
         Set the FLAC codec parameters
         """
         self.sample_rate = AudioParameters.SAMPLE_RATE
-        self.channels = {0: ("Auto", ""),
-                         1: ("Mono", "-ac 1"),
-                         2: ("Stereo", "-ac 2"),
-                         }
-        self.bitrate = {0: ("Auto", ""),
-                        1: ("very high quality", "-compression_level 0"),
-                        2: ("quality 1", "-compression_level 1"),
-                        3: ("quality 2", "-compression_level 2"),
-                        4: ("quality 3", "-compression_level 3"),
-                        5: ("quality 4", "-compression_level 4"),
-                        6: ("Default quality", "-compression_level 5"),
-                        7: ("quality 6", "-compression_level 6"),
-                        8: ("quality 7", "-compression_level 7"),
-                        9: ("low quality", "-compression_level 8"),
-                        }
+        self.channels = {
+            0: ("Auto", ""),
+            1: ("Mono", "-ac 1"),
+            2: ("Stereo", "-ac 2"),
+        }
+        self.bitrate = {
+            0: ("Auto", ""),
+            1: ("very high quality", "-compression_level 0"),
+            2: ("quality 1", "-compression_level 1"),
+            3: ("quality 2", "-compression_level 2"),
+            4: ("quality 3", "-compression_level 3"),
+            5: ("quality 4", "-compression_level 4"),
+            6: ("Default quality", "-compression_level 5"),
+            7: ("quality 6", "-compression_level 6"),
+            8: ("quality 7", "-compression_level 7"),
+            9: ("low quality", "-compression_level 8"),
+        }
+
     # -----------------------------------------------------------------#
 
     def alac(self):
@@ -337,10 +365,12 @@ class AudioParameters:
         Set the ALAC codec parameters
         """
         self.sample_rate = AudioParameters.SAMPLE_RATE
-        self.channels = {0: ("Auto", ""),
-                         1: ("Mono", "-ac 1"),
-                         2: ("Stereo", "-ac 2"),
-                         }
+        self.channels = {
+            0: ("Auto", ""),
+            1: ("Mono", "-ac 1"),
+            2: ("Stereo", "-ac 2"),
+        }
+
     # -----------------------------------------------------------------#
 
     def opus(self):
@@ -348,24 +378,26 @@ class AudioParameters:
         Set the OPUS codec parameters
         """
         # self.sample_rate
-        self.channels = {0: ("Auto", ""),
-                         1: ("Mono", "-ac 1"),
-                         2: ("Stereo", "-ac 2"),
-                         }
-        self.bitrate = {0: ("Auto", ""),
-                        1: ("low quality 0", "-compression_level 0"),
-                        2: ("low quality 1", "-compression_level 1"),
-                        3: ("quality 2", "-compression_level 2"),
-                        4: ("quality 3", "-compression_level 3"),
-                        5: ("quality 4", "-compression_level 4"),
-                        6: ("medium quality 5", "-compression_level 5"),
-                        7: ("quality 6", "-compression_level 6"),
-                        8: ("quality 7", "-compression_level 7"),
-                        9: ("quality 8", "-compression_level 8"),
-                        10: ("high quality 9", "-compression_level 9"),
-                        11: ("highest quality 10 (default)",
-                             "-compression_level 10"),
-                        }
+        self.channels = {
+            0: ("Auto", ""),
+            1: ("Mono", "-ac 1"),
+            2: ("Stereo", "-ac 2"),
+        }
+        self.bitrate = {
+            0: ("Auto", ""),
+            1: ("low quality 0", "-compression_level 0"),
+            2: ("low quality 1", "-compression_level 1"),
+            3: ("quality 2", "-compression_level 2"),
+            4: ("quality 3", "-compression_level 3"),
+            5: ("quality 4", "-compression_level 4"),
+            6: ("medium quality 5", "-compression_level 5"),
+            7: ("quality 6", "-compression_level 6"),
+            8: ("quality 7", "-compression_level 7"),
+            9: ("quality 8", "-compression_level 8"),
+            10: ("high quality 9", "-compression_level 9"),
+            11: ("highest quality 10 (default)", "-compression_level 10"),
+        }
+
     # -----------------------------------------------------------------#
 
     def aac(self):
@@ -373,18 +405,21 @@ class AudioParameters:
         Set the AAC codec parameters
         """
         self.sample_rate = AudioParameters.SAMPLE_RATE
-        self.channels = {0: ("Auto", ""),
-                         1: ("Mono", "-ac 1"),
-                         2: ("Stereo", "-ac 2"),
-                         3: ("MultiChannel 5.1", "-ac 6"),
-                         }
-        self.bitrate = {0: ("Auto", ""),
-                        1: ("low quality", "-b:a 128k"),
-                        2: ("medium/low quality", "-b:a 160k"),
-                        3: ("medium quality", "-b:a 192k"),
-                        4: ("good quality", "-b:a 260k"),
-                        5: ("very good quality", "-b:a 320k"),
-                        }
+        self.channels = {
+            0: ("Auto", ""),
+            1: ("Mono", "-ac 1"),
+            2: ("Stereo", "-ac 2"),
+            3: ("MultiChannel 5.1", "-ac 6"),
+        }
+        self.bitrate = {
+            0: ("Auto", ""),
+            1: ("low quality", "-b:a 128k"),
+            2: ("medium/low quality", "-b:a 160k"),
+            3: ("medium quality", "-b:a 192k"),
+            4: ("good quality", "-b:a 260k"),
+            5: ("very good quality", "-b:a 320k"),
+        }
+
     # -----------------------------------------------------------------#
 
     def ac3(self):
@@ -392,22 +427,25 @@ class AudioParameters:
         Set the AC3 codec parameters
         """
         self.sample_rate = AudioParameters.SAMPLE_RATE
-        self.channels = {0: ("Auto", ""),
-                         1: ("Mono", "-ac 1"),
-                         2: ("Stereo", "-ac 2"),
-                         3: ("MultiChannel 5.1", "-ac 6"),
-                         }
-        self.bitrate = {0: ("Auto", ""),
-                        1: ("low quality", "-b:a 192k"),
-                        2: ("224 kbit/s", "-b:a 224k"),
-                        3: ("256 kbit/s", "-b:a 256k"),
-                        4: ("320 kbit/s", "-b:a 320k"),
-                        5: ("384 kbit/s", "-b:a 384k"),
-                        6: ("448 kbit/s", "-b:a 448k"),
-                        7: ("512 kbit/s", "-b:a 512k"),
-                        8: ("576 kbit/s", "-b:a 576k"),
-                        9: ("very good quality", "-b:a 640k"),
-                        }
+        self.channels = {
+            0: ("Auto", ""),
+            1: ("Mono", "-ac 1"),
+            2: ("Stereo", "-ac 2"),
+            3: ("MultiChannel 5.1", "-ac 6"),
+        }
+        self.bitrate = {
+            0: ("Auto", ""),
+            1: ("low quality", "-b:a 192k"),
+            2: ("224 kbit/s", "-b:a 224k"),
+            3: ("256 kbit/s", "-b:a 256k"),
+            4: ("320 kbit/s", "-b:a 320k"),
+            5: ("384 kbit/s", "-b:a 384k"),
+            6: ("448 kbit/s", "-b:a 448k"),
+            7: ("512 kbit/s", "-b:a 512k"),
+            8: ("576 kbit/s", "-b:a 576k"),
+            9: ("very good quality", "-b:a 640k"),
+        }
+
     # -----------------------------------------------------------------#
 
     def vorbis(self):
@@ -415,22 +453,25 @@ class AudioParameters:
         Set the VORBIS codec parameters
         """
         self.sample_rate = AudioParameters.SAMPLE_RATE
-        self.channels = {0: ("Auto", ""),
-                         1: ("Mono", "-ac 1"),
-                         2: ("Stereo", "-ac 2"),
-                         }
-        self.bitrate = {0: ("Auto", ""),
-                        1: ("very poor quality", "-aq 1"),
-                        2: ("VBR 92 kbit/s", "-aq 2"),
-                        3: ("VBR 128 kbit/s", "-aq 3"),
-                        4: ("VBR 160 kbit/s", "-aq 4"),
-                        5: ("VBR 175 kbit/s", "-aq 5"),
-                        6: ("VBR 192 kbit/s", "-aq 6"),
-                        7: ("VBR 220 kbit/s", "-aq 7"),
-                        8: ("VBR 260 kbit/s", "-aq 8"),
-                        9: ("VBR 320 kbit/s", "-aq 9"),
-                        10: ("very good quality", "-aq 10"),
-                        }
+        self.channels = {
+            0: ("Auto", ""),
+            1: ("Mono", "-ac 1"),
+            2: ("Stereo", "-ac 2"),
+        }
+        self.bitrate = {
+            0: ("Auto", ""),
+            1: ("very poor quality", "-aq 1"),
+            2: ("VBR 92 kbit/s", "-aq 2"),
+            3: ("VBR 128 kbit/s", "-aq 3"),
+            4: ("VBR 160 kbit/s", "-aq 4"),
+            5: ("VBR 175 kbit/s", "-aq 5"),
+            6: ("VBR 192 kbit/s", "-aq 6"),
+            7: ("VBR 220 kbit/s", "-aq 7"),
+            8: ("VBR 260 kbit/s", "-aq 8"),
+            9: ("VBR 320 kbit/s", "-aq 9"),
+            10: ("very good quality", "-aq 10"),
+        }
+
     # -----------------------------------------------------------------#
 
     def lame(self):
@@ -438,14 +479,16 @@ class AudioParameters:
         Set the LAME codec parameters
         """
         self.sample_rate = AudioParameters.SAMPLE_RATE
-        self.channels = {0: ("Auto", ""),
-                         1: ("Mono", "-ac 1"),
-                         2: ("Stereo", "-ac 2"),
-                         }
-        self.bitrate = {0: ("Auto", ""),
-                        1: ("VBR 128 kbit/s (low quality)", "-b:a 128k"),
-                        2: ("VBR 160 kbit/s", "-b:a 160k"),
-                        3: ("VBR 192 kbit/s", "-b:a 192k"),
-                        4: ("VBR 260 kbit/s", "-b:a 260k"),
-                        5: ("CBR 320 kbit/s (very good quality)", "-b:a 320k"),
-                        }
+        self.channels = {
+            0: ("Auto", ""),
+            1: ("Mono", "-ac 1"),
+            2: ("Stereo", "-ac 2"),
+        }
+        self.bitrate = {
+            0: ("Auto", ""),
+            1: ("VBR 128 kbit/s (low quality)", "-b:a 128k"),
+            2: ("VBR 160 kbit/s", "-b:a 160k"),
+            3: ("VBR 192 kbit/s", "-b:a 192k"),
+            4: ("VBR 260 kbit/s", "-b:a 260k"),
+            5: ("CBR 320 kbit/s (very good quality)", "-b:a 320k"),
+        }

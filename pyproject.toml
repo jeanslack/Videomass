@@ -142,8 +142,37 @@ videomass = "videomass.gui_app:main"
 
 # Ruff linter configuration
 [tool.ruff]
+# Ignores F821 Undefined name '_'
 builtins = ["_"]
+# Limit code line length to 79 characters
 line-length = 79
+# Minimun Python version of the project
+target-version = "py311"
 
 [tool.ruff.lint]
 # add or remove other rules here (e.g., select, ignore, etc.)
+
+# # Select the rule groups to activate
+# select = [
+#     "E",   # Errori di pycodestyle (stile e spaziature)
+#     "W",   # Warning di pycodestyle (linee vuote, spazi a fine riga)
+#     "F",   # Pyflakes (variabili non usate, errori di sintassi)
+#     "I",   # Isort (ordinamento automatico degli import secondo PEP 8)
+#     "D",   # Pydocstyle (convenzioni sulle docstring di PEP 257)
+#     "UP",  # Pyupgrade (suggerisce la sintassi Python più moderna)
+# ]
+# # You can ignore specific rules if they are too invasive (e.g. the docstring on the first line)
+# ignore = [
+#     "D100", # Manca la docstring all'inizio del file modulo
+#     "D104", # Manca la docstring nel file __init__.py
+# ]
+
+[tool.ruff.lint.isort]
+# Configure isort to group imports cleanly
+combine-as-imports = true
+lines-after-imports = 2 # PEP 8 richiede esattamente 2 linee vuote dopo gli import prima del codice
+
+[tool.ruff.format]
+# Configure the formatter to align with my style choices
+quote-style = "double"
+indent-style = "space"
