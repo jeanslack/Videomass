@@ -739,7 +739,8 @@ class AudioEncoders(scrolled.ScrolledPanel):
             )
         try:
             with open(filepath, encoding="utf-8"):
-                FilePlay(self.GetParent(), args)
+                playback = FilePlay(self.GetParent(), args)
+                playback.start()
         except OSError:
             wx.MessageBox(
                 _("Invalid or unsupported file:  %s") % (filepath),

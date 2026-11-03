@@ -495,7 +495,8 @@ class Float_TL(wx.MiniFrame):
 
         try:
             with open(filesel, encoding="utf-8"):
-                FilePlayback_GetOutput(self.GetParent(), args)
+                playback = FilePlayback_GetOutput(self.GetParent(), args)
+                playback.start()
         except OSError:
             wx.MessageBox(
                 _("Invalid or unsupported file:  %s") % (filesel),

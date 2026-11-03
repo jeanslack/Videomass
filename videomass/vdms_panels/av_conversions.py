@@ -609,7 +609,8 @@ class AV_Conv(wx.Panel):
 
         try:
             with open(filesel, encoding="utf-8"):
-                FilePlay(self.GetParent(), args)
+                playback = FilePlay(self.GetParent(), args)
+                playback.start()
         except OSError:
             wx.MessageBox(
                 _("Invalid or unsupported file:  %s") % (filesel),

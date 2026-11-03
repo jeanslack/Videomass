@@ -487,6 +487,13 @@ class MainFrame(wx.Frame):
         Permanent exit from the application.
         Do not use this method directly.
         """
+        from videomass.vdms_threads.ffplay_file import BaseFilePlay
+
+        BaseFilePlay.stop_all()
+
+        # 2. Lasciamo una minima frazione di secondo (opzionale ma consigliata)
+        # per permettere ai thread di sbloccarsi e svuotare la coda degli eventi wx
+        wx.SafeYield()
         self.Destroy()
 
     # ------------------------------------------------------------------#

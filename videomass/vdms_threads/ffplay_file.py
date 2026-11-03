@@ -7,8 +7,8 @@ Compatibility: Python >= 3.11, wxPython Phoenix
 Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 Copyleft - 2026 Gianluca Pernigotto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: Oct.30.2026
-Code checker: flake8, pylint
+Rev: Nov.03.2026
+Code checker: flake8, pylint, ruff
 
 This file is part of Videomass.
 
@@ -27,178 +27,266 @@ This file is part of Videomass.
 """
 
 import os
-import platform
+import shlex
 import subprocess
-from threading import Thread
+from threading import Lock, Thread
+from typing import ClassVar
 
 import wx
 from pubsub import pub
 
 from videomass.vdms_io.io_tools import show_msg_notify
 from videomass.vdms_io.make_filelog import make_log_template, tolog
-from videomass.vdms_utils.utils import Popen
 
 
-if platform.system() != "Windows":
-    import shlex
-
-
-class FilePlay(Thread):
+class BaseFilePlay(Thread):
     """
-    Playback local file executing ffplay media player.
+    Base class for the shared management of playback using ffplay.
+
+    NOTE: The attributes defined here keep track of all active
+          processes and are shared by all instances of this class.
     """
+
+    _active_processes: ClassVar[set] = set()
+    _is_exiting: ClassVar[bool] = False
+    _lock: ClassVar[Lock] = Lock()  # thread-safety of the shared set
+
+    # ----------------------------------------------------------------------
 
     def __init__(self, parent, param=""):
         """
-        Don't use the "-stats" option here to avoid too much verbose
-        output being shown in the message box as an error every time.
-
-        """
-        self.parent = parent  # is the top-level window (main_frame)
-        get = wx.GetApp()
-        self.appdata = get.appset
-        self.param = param  # additional parameters if present
-        self.logfile = os.path.join(self.appdata["logdir"], "ffplay.log")
-        make_log_template("ffplay.log", self.appdata["logdir"], mode="w")
+        The main init thread
+        It is better to wait for initialization to complete in
+        the child classes before calling run(). For this reason,
+        start() has been moved to the individual instances."""
 
         Thread.__init__(self)
-        self.start()
 
-    # ----------------------------------------------------------------#
-
-    def run(self):
-        """
-        Executes ffplay command via subprocess.Popen .
-        IMPORTANT: do not use class Popen from utils.py here,
-        because 'info' flag do not work on MS-Windows using ffplay.
-        This is fixed using shell=True flag.
-        """
-        cmd = (
-            f'"{self.appdata["ffplay_cmd"]}" '
-            f"{self.appdata['ffplay-default-args']} "
-            f"{self.appdata['ffplay_loglev']} "
-            f"{self.param}"
-        )
-        tolog(
-            f"INFO: VIDEOMASS COMMAND: {cmd}",
-            self.logfile,
-            sep=True,
-            wdate=True,
-        )
-
-        if platform.system() != "Windows":
-            cmd = shlex.split(cmd)
-            info = None
-            shell = False
-        else:
-            shell = True
-            info = None
-            # info = subprocess.STARTUPINFO()
-            # info.dwFlags |= subprocess.SW_HIDE
-        try:
-            with subprocess.Popen(
-                cmd,
-                shell=shell,
-                stderr=subprocess.PIPE,
-                text=True,
-                encoding=self.appdata["encoding"],
-                startupinfo=info,
-            ) as proc:
-                error = proc.communicate()[1]
-
-                if error:
-                    tolog(f"[FFPLAY] OUTPUT ERROR:\n{error}", self.logfile)
-                    wx.CallAfter(
-                        show_msg_notify, self.parent, logname="ffplay.log"
-                    )
-                    return
-
-        except OSError as err:
-            tolog(f"[VIDEOMASS]: ERROR: {err}", self.logfile)
-            wx.CallAfter(show_msg_notify, self.parent, logname="ffplay.log")
-            # do not return here, go to END_PLAY directly
-
-        wx.CallAfter(pub.sendMessage, "END_PLAY")
-
-
-class FilePlayback_GetOutput(Thread):
-    """
-    Playback local file executing ffplay media player.
-    This class differs from `FilePlay` in that it implements
-    capturing and redirecting output messages from stderr.
-    """
-
-    def __init__(self, parent, param=""):
-        """
-        The `stats` argument allows ffplay to update output
-        messages progressively. This allows parsing of the
-        output for progress informations.
-
-        """
         self.parent = parent  # is the top-level window (main_frame)
         get = wx.GetApp()
         self.appdata = get.appset
         self.param = param  # additional parameters if present
-        self.stats = "-stats"
         self.logfile = os.path.join(self.appdata["logdir"], "ffplay.log")
+        self.process = None
+
         # set initial log file:
         make_log_template("ffplay.log", self.appdata["logdir"], mode="w")
 
-        Thread.__init__(self)
-        self.start()
+    # ----------------------------------------------------------------------
 
-    # ----------------------------------------------------------------#
+    def _prepare_command(self, extra_args=""):
+        """Prepare and format the command in a cross-platform way."""
 
-    def run(self):
-        """
-        Executes ffplay command via Popen from utils.py.
-        """
-        # time.sleep(.5)
-        line = "NO MESSAGE PROVIDED :-("
-        cmd = (
-            f'"{self.appdata["ffplay_cmd"]}" '
-            f"{self.appdata['ffplay-default-args']} "
-            f"{self.appdata['ffplay_loglev']} {self.stats} "
-            f"{self.param}"
-        )
+        cmd_parts = [
+            f'"{self.appdata["ffplay_cmd"]}"',
+            self.appdata.get("ffplay-default-args", ""),
+            self.appdata.get("ffplay_loglev", ""),
+            extra_args,
+            self.param,
+        ]
+        cmd = " ".join([str(part).strip() for part in cmd_parts if part])
         tolog(
             f"INFO: VIDEOMASS COMMAND: {cmd}",
             self.logfile,
             sep=True,
             wdate=True,
         )
-        if platform.system() != "Windows":
-            cmd = shlex.split(cmd)
+
+        if self.appdata["ostype"] != "Windows":
+            return shlex.split(cmd)
+        return cmd
+
+    # ----------------------------------------------------------------------
+
+    def _handle_error(self, error_msg):
+        """Centralized error handling."""
+        tolog(error_msg, self.logfile)
+
+        if BaseFilePlay._is_exiting:
+            return
+
+        wx.CallAfter(show_msg_notify, self.parent, logname="ffplay.log")
+
+    # ----------------------------------------------------------------------
+
+    def _finalize_play(self):
+        """Always notify the GUI when playback ends."""
+        if BaseFilePlay._is_exiting:
+            return
+
+        wx.CallAfter(pub.sendMessage, "END_PLAY")
+
+    # ----------------------------------------------------------------------
+
+    @classmethod
+    def stop_all(cls):
+        """If the user closes the Videomass app, this method
+        will also force close ALL open ffplay windows."""
+
+        with cls._lock:  # block concurency access on closing app
+            # Closing Videomass while ffplay is in execution
+            cls._is_exiting = True
+
+            for proc in list(cls._active_processes):
+                if proc.poll() is None:
+                    try:
+                        proc.terminate()
+                        proc.wait(timeout=1)
+                    except (OSError, subprocess.TimeoutExpired):
+                        pass
+            cls._active_processes.clear()
+
+
+# ----------------------------------------------------------------------
+
+
+class FilePlay(BaseFilePlay):
+    """Simple file playback using ffplay, without progress tracking."""
+
+    def run(self):
+        """
+        Start thread. Executes ffplay command
+        """
+        cmd = self._prepare_command()  # Don't use the "-stats" arg here!
+        shell = self.appdata["ostype"] == "Windows"
+        creationflags = subprocess.CREATE_NO_WINDOW if shell else 0
+
         try:
-            with Popen(
+            self.process = subprocess.Popen(
+                cmd,
+                shell=shell,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.PIPE,
+                text=True,
+                encoding=self.appdata["encoding"],
+                creationflags=creationflags,
+            )
+
+            with BaseFilePlay._lock:
+                BaseFilePlay._active_processes.add(self.process)
+
+            __, error = self.process.communicate()
+
+            if BaseFilePlay._is_exiting:
+                return
+
+            if self.process.returncode != 0 and error:
+                self._handle_error(f"[FFPLAY] OUTPUT ERROR:\n{error}")
+                return
+
+        except OSError as err:
+            self._handle_error(f"[VIDEOMASS]: ERROR: {err}")
+            return
+
+        finally:
+            if self.process:
+                try:
+                    if self.process.stderr:
+                        self.process.stderr.close()
+                except OSError:
+                    pass
+
+            with BaseFilePlay._lock:
+                if self.process in BaseFilePlay._active_processes:
+                    BaseFilePlay._active_processes.remove(self.process)
+
+        self._finalize_play()
+
+
+# ----------------------------------------------------------------------
+
+
+class FilePlayback_GetOutput(BaseFilePlay):
+    """
+    Playback local file executing ffplay media player.
+    This class differs from `FilePlay` in that it implements
+    capturing and redirecting output messages from stderr
+    in real time.
+    """
+
+    def run(self):
+        """
+        Start thread. Executes ffplay command.
+        RESOLVES ResourceWarning: Ensures that all I/O channels
+        opened by the process are explicitly closed before the
+        thread is destroyed, and safely removes all processes
+        from the global set at the end of the thread.
+        See the `finally` clause.
+        """
+        # -stats argument updates output messages progressively
+        cmd = self._prepare_command(extra_args="-stats")
+        full_output = []
+        creationflags = (
+            subprocess.CREATE_NO_WINDOW
+            if self.appdata["ostype"] == "Windows"
+            else 0
+        )
+        try:
+            self.process = subprocess.Popen(
                 cmd,
                 stderr=subprocess.PIPE,
                 bufsize=1,
                 text=True,
                 encoding=self.appdata["encoding"],
-            ) as proc:
-                for line in proc.stderr:
+                creationflags=creationflags,
+            )
+
+            with BaseFilePlay._lock:
+                BaseFilePlay._active_processes.add(self.process)
+
+            try:
+                for line in self.process.stderr:
+                    full_output.append(line)  # for the log in case of errors
+
+                    if BaseFilePlay._is_exiting:
+                        return
+
                     wx.CallAfter(
                         pub.sendMessage,
                         "UPDATE_PLAY_COUNTER",
                         output=line,
                         status=0,
                     )
-                if proc.wait():  # ..Failed
-                    wx.CallAfter(
-                        pub.sendMessage,
-                        "UPDATE_PLAY_COUNTER",
-                        output=None,
-                        status=proc.wait(),
-                    )
-                    tolog(f"[FFPLAY] ERROR:\n{line}", self.logfile)
-                    wx.CallAfter(
-                        show_msg_notify, self.parent, logname="ffplay.log"
-                    )
+            except ValueError:
+                # file descriptor is forcibly closed from the outside
+                if BaseFilePlay._is_exiting:
+                    return
+
+            return_code = self.process.wait()
+
+            if BaseFilePlay._is_exiting:
+                return
+
+            if return_code != 0:
+                wx.CallAfter(
+                    pub.sendMessage,
+                    "UPDATE_PLAY_COUNTER",
+                    output=None,
+                    status=return_code,
+                )
+                error_context = "".join(full_output[-5:])
+                self._handle_error(
+                    f"[FFPLAY] ERROR (Exit Code "
+                    f"{return_code}):\n{error_context}"
+                )
+                return
 
         except OSError as err:
-            tolog(f"[VIDEOMASS]: ERROR: {err}", self.logfile)
-            wx.CallAfter(show_msg_notify, self.parent, logname="ffplay.log")
-            # do not return here, go to END_PLAY
+            self._handle_error(f"[VIDEOMASS]: ERROR: {err}")
+            return
 
-        wx.CallAfter(pub.sendMessage, "END_PLAY")
+        finally:
+            if self.process:
+                try:
+                    if self.process.stderr:
+                        self.process.stderr.close()
+                    if self.process.stdout:
+                        self.process.stdout.close()
+                except OSError:
+                    pass
+
+            with BaseFilePlay._lock:
+                if self.process in BaseFilePlay._active_processes:
+                    BaseFilePlay._active_processes.remove(self.process)
+
+        self._finalize_play()
