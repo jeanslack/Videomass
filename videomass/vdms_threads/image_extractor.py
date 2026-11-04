@@ -100,8 +100,7 @@ class PicturesFromVideo(BaseVideomassThread):
         )
         tolog(com, self.logfile, sep=True, wdate=True)
 
-        if sys.platform != "win32":
-            cmd = shlex.split(cmd)
+        cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
         try:
             with subprocess.Popen(
                 cmd,

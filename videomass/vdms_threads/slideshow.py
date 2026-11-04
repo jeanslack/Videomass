@@ -78,9 +78,8 @@ def convert_images(*varargs, **kwargs):
     for prognum, files in enumerate(flist, start=1):
         tmpf = os.path.join(tmpdir, f"{imagenames}{prognum}.bmp")
         cmd_1 = f'{args} -i "{files}" "{tmpf}"'
+        cmd_1 = shlex.split(cmd_1) if sys.platform != "win32" else cmd_1
 
-        if sys.platform != "win32":
-            cmd_1 = shlex.split(cmd_1)
         try:
             with subprocess.Popen(
                 cmd_1,
@@ -169,8 +168,7 @@ def resizing_process(*varargs, **kwargs):
     )
     tolog(f"\nFile resizing...\n\n[COMMAND]:\n{cmd_1}", logfile)
 
-    if sys.platform != "win32":
-        cmd_1 = shlex.split(cmd_1)
+    cmd_1 = shlex.split(cmd_1) if sys.platform != "win32" else cmd_1
     try:
         with subprocess.Popen(
             cmd_1,

@@ -110,8 +110,7 @@ class FFmpegGenericTaskOutLines(BaseVideomassThread):
             sep=True,
             wdate=True,
         )
-        if sys.platform != "win32":
-            cmd = shlex.split(cmd)
+        cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
         try:
             with subprocess.Popen(
                 cmd,
@@ -222,8 +221,7 @@ class FFmpegGenericTask(Thread):
             sep=True,
             wdate=True,
         )
-        if sys.platform != "win32":
-            cmd = shlex.split(cmd)
+        cmd = shlex.split(cmd) if sys.platform != "win32" else cmd
         try:
             with subprocess.Popen(
                 cmd,

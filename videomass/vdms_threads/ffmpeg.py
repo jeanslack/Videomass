@@ -131,8 +131,7 @@ def one_pass(*args, **kwa):
     )
     stamp1 = f"{count1}\n\n[COMMAND]:\n{pass1}"
 
-    if sys.platform != "win32":
-        pass1 = shlex.split(pass1)
+    pass1 = shlex.split(pass1) if sys.platform != "win32" else pass1
 
     return {"pass1": pass1, "count1": count1, "stamp1": stamp1}
 
@@ -163,8 +162,7 @@ def two_pass(*args, **kwa):
     )
     stamp2 = f"\n{count2}\n\n[COMMAND]:\n{pass2}"
 
-    if sys.platform != "win32":
-        pass2 = shlex.split(pass2)
+    pass2 = shlex.split(pass2) if sys.platform != "win32" else pass2
 
     return {"pass2": pass2, "count2": count2, "stamp2": stamp2}
 
@@ -195,8 +193,7 @@ def one_pass_stab(*args, **kwa):
     )
     stamp1 = f"{count1}\n\n[COMMAND]:\n{pass1}"
 
-    if sys.platform != "win32":
-        pass1 = shlex.split(pass1)
+    pass1 = shlex.split(pass1) if sys.platform != "win32" else pass1
 
     return {"pass1": pass1, "count1": count1, "stamp1": stamp1}
 
@@ -227,8 +224,7 @@ def two_pass_stab(*args, **kwa):
     )
     stamp2 = f"\n{count2}\n\n[COMMAND]:\n{pass2}"
 
-    if sys.platform != "win32":
-        pass2 = shlex.split(pass2)
+    pass2 = shlex.split(pass2) if sys.platform != "win32" else pass2
 
     return {"pass2": pass2, "count2": count2, "stamp2": stamp2}
 
@@ -258,8 +254,7 @@ def simple_one_pass(*args, **kwa):
     )
     stamp1 = f"{count1}\n\n[COMMAND]:\n{pass1}"
 
-    if sys.platform != "win32":
-        pass1 = shlex.split(pass1)
+    pass1 = shlex.split(pass1) if sys.platform != "win32" else pass1
 
     return {"pass1": pass1, "count1": count1, "stamp1": stamp1}
 
@@ -290,8 +285,7 @@ def one_pass_ebu(*args, **kwa):
     )
     stamp1 = f"{count1}\n\n[COMMAND]:\n{pass1}"
 
-    if sys.platform != "win32":
-        pass1 = shlex.split(pass1)
+    pass1 = shlex.split(pass1) if sys.platform != "win32" else pass1
 
     summary = {
         "Input Integrated:": None,
@@ -340,8 +334,7 @@ def two_pass_ebu(*args, **kwa):
     )
     stamp2 = f"\n{count2}\n\n[COMMAND]:\n{pass2}"
 
-    if sys.platform != "win32":
-        pass2 = shlex.split(pass2)
+    pass2 = shlex.split(pass2) if sys.platform != "win32" else pass2
 
     return {"pass2": pass2, "count2": count2, "stamp2": stamp2}
 

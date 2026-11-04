@@ -29,7 +29,7 @@ This file is part of FFcuesplitter.
 import json
 import shlex
 import subprocess
-from sys import platform as ostype
+import sys
 
 
 def from_kwargs_to_args(kwargs):
@@ -79,8 +79,10 @@ def ffprobe(filename, cmd="ffprobe", txtenc="utf-8", **kwargs):
         f"{' '.join(from_kwargs_to_args(kwargs))} "
         f'"{filename}"'
     )
-    args = shlex.split(args) if ostype != "win32" else args
-    creationflags = subprocess.CREATE_NO_WINDOW if ostype == "win32" else 0
+    args = shlex.split(args) if sys.platform != "win32" else args
+    creationflags = (
+        subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
+    )
     try:
         with subprocess.Popen(
             args,
